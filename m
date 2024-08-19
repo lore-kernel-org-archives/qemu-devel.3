@@ -4,82 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0473EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 15:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22BAEC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 15:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg4NX-0000mT-3h; Mon, 19 Aug 2024 11:33:07 -0400
+	id 1sg4Uv-0002Oz-FB; Mon, 19 Aug 2024 11:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sg4NV-0000ko-Kw
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:33:05 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sg4NU-0002Qa-0I
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:33:05 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-5da6865312eso3056116eaf.3
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 08:33:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724081582; x=1724686382; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=J6vJFmQF93SsLF/G3lx3rTzWRy3T6+zAGHPX0bVIurE=;
- b=UAEhZSGtFiJMHlwLF6J76cOjzM3Hjoiux/nmM5f3hYKM+HWcdI4kgQmPKJZZTapc2Z
- sJ7kwgDWowuEYcmrYjHcmrdqa+qMUwd945oV/sKOrCa3b4P1ktN746fIw6Idlg2qo8iT
- MnPHDyy3pVyCqNhe95T0ejOlLbak2drcrE2cAu+dY16huObioHMelLmte78HV2B29Ht/
- nsZ13HbJ1wuRkcJajkC/ulpJCjfanuodHeek8T9Wjab+HvZnjioKmAVNJnSa0lgl4Yl/
- E0mRLUXOu3i+NNz2S/bBAnnEdnuW6XjXre4KFz0He9Y6kH5kw0EfEVTho1IbK8n8K8+Z
- TQbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724081582; x=1724686382;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=J6vJFmQF93SsLF/G3lx3rTzWRy3T6+zAGHPX0bVIurE=;
- b=KBQ/ylkB0KhR42wKeIvyFeDdimig2mAAl+kh+xrsmfvjPq+xC/gMGOSAVAwQBsBscr
- XlBj849TpTrUapbonRBL340iV66e62YwL7I1aeSWtdmMxxBD4EWowO9Ay/7Vhy1uv76i
- dZI2I9eyLXpSfkJ/3UChR+uA7HZbHJzAmuud567f4yGJvY/eSXkB6rui6R62o6i0zwQZ
- C1hngUoSCQ4KYXGMOMaXZt/IzG5UMd7bZV+l+5YIc6wkBy/w4ZkNwlqmJY2ULt0pGR2s
- FQw17OYO6cXBXS5h3jJp/xLtin16AKBCurRaYj9YUko0txyi6Qc8slHoIsWxvigQUAeI
- iItQ==
-X-Gm-Message-State: AOJu0YxTFvvCohUj2Fb/tpkRkQDR3Ag1fYSaK3lU9LVIOM3hJI2g01Cs
- Qik3ajPYU/3grSm2nTZVpUKEv+aYxAA6oo9PxlgJdJAAqgIPXT7goP4p6mJnBoP1mwWAIO7iizJ
- +6zRGXjZpWJdCZ38bbjCsHrFLZlk=
-X-Google-Smtp-Source: AGHT+IF2bZzTLdoPaGyrPF/haNWpEnJuIGfh7V1uQwXk0p2jV3zdcyxjTmsLCCOulrIs9mOVkV1v9lrJyNoOzFygo/Y=
-X-Received: by 2002:a05:6358:7e9b:b0:1ac:660a:8a69 with SMTP id
- e5c5f4694b2df-1b3931c3412mr1594170055d.18.1724081582333; Mon, 19 Aug 2024
- 08:33:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sg4Uu-0002OU-5Y
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:40:44 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sg4Ur-0003gY-1a
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:40:43 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WncD36CTkz6K97G;
+ Mon, 19 Aug 2024 23:37:23 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 75B651400C9;
+ Mon, 19 Aug 2024 23:40:26 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 19 Aug
+ 2024 16:40:25 +0100
+Date: Mon, 19 Aug 2024 16:40:24 +0100
+To: John Groves <John@groves.net>
+CC: David Hildenbrand <david@redhat.com>, <linux-mm@kvack.org>,
+ <linux-cxl@vger.kernel.org>, Davidlohr Bueso <dave@stgolabs.net>, Ira Weiny
+ <ira.weiny@intel.com>, <virtualization@lists.linux.dev>, Oscar Salvador
+ <osalvador@suse.de>, <qemu-devel@nongnu.org>, Dave Jiang
+ <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
+ <linuxarm@huawei.com>, <wangkefeng.wang@huawei.com>, John Groves
+ <jgroves@micron.com>, "Fan Ni" <fan.ni@samsung.com>, "Navneet Singh"
+ <navneet.singh@intel.com>, "=?UTF-8?Q?=E2=80=9CMichael?= S. =?UTF-8?Q?Tsi?=
+ =?UTF-8?Q?rkin=E2=80=9D?=" <mst@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Philippe =?UTF-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [RFC] Virtualizing tagged disaggregated memory capacity (app
+ specific, multi host shared)
+Message-ID: <20240819164024.00005a0a@Huawei.com>
+In-Reply-To: <sjz2xzwkgkq6bun5lssqbsimbggczarotpjdhcsq3itoq5h7jc@x5ormqciwofo>
+References: <20240815172223.00001ca7@Huawei.com>
+ <sjz2xzwkgkq6bun5lssqbsimbggczarotpjdhcsq3itoq5h7jc@x5ormqciwofo>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240818114257.21456-1-dorjoychy111@gmail.com>
- <20240818114257.21456-5-dorjoychy111@gmail.com>
- <bffedf65-6046-4264-a2fe-011ff8c58860@amazon.com>
-In-Reply-To: <bffedf65-6046-4264-a2fe-011ff8c58860@amazon.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Mon, 19 Aug 2024 21:32:55 +0600
-Message-ID: <CAFfO_h7+FEzp-FrYM68A104CyNKgUfEReB+o9gYg5i-f=5DsVg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] machine/nitro-enclave: Add built-in Nitro Secure
- Module device
-To: Alexander Graf <graf@amazon.com>, berrange@redhat.com
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, stefanha@redhat.com, 
- pbonzini@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=dorjoychy111@gmail.com; helo=mail-oo1-xc34.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,123 +77,200 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 19, 2024 at 4:13=E2=80=AFPM Alexander Graf <graf@amazon.com> wr=
-ote:
->
-> Hey Dorjoy,
->
-> On 18.08.24 13:42, Dorjoy Chowdhury wrote:
-> > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device which
-> > is used for stripped down TPM functionality like attestation. This comm=
-it
-> > adds the built-in NSM device in the nitro-enclave machine type.
-> >
-> > In Nitro Enclaves, all the PCRs start in a known zero state and the fir=
-st
-> > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and PCR=
-8
-> > contain the SHA384 hashes related to the EIF file used to boot the
-> > VM for validation.
-> >
-> > Some optional nitro-enclave machine options have been added:
-> >      - 'id': Enclave identifier, reflected in the module-id of the NSM
-> > device. If not provided, a default id will be set.
-> >      - 'parent-role': Parent instance IAM role ARN, reflected in PCR3
-> > of the NSM device.
-> >      - 'parent-id': Parent instance identifier, reflected in PCR4 of th=
-e
-> > NSM device.
-> >
-> > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > ---
-> >   crypto/meson.build              |   2 +-
-> >   crypto/x509-utils.c             |  73 +++++++++++
->
->
-> Can you please put this new API into its own patch file?
->
->
-> >   hw/core/eif.c                   | 225 +++++++++++++++++++++++++++++--=
--
-> >   hw/core/eif.h                   |   5 +-
->
->
-> These changes to eif.c should ideally already be part of the patch that
-> introduces eif.c (patch 1), no? In fact, do you think you can make the
-> whole eif logic its own patch file?
->
->
-> >   hw/core/meson.build             |   4 +-
-> >   hw/i386/Kconfig                 |   1 +
-> >   hw/i386/nitro_enclave.c         | 141 +++++++++++++++++++-
-> >   include/crypto/x509-utils.h     |  22 ++++
-> >   include/hw/i386/nitro_enclave.h |  26 ++++
-> >   9 files changed, 479 insertions(+), 20 deletions(-)
-> >   create mode 100644 crypto/x509-utils.c
-> >   create mode 100644 include/crypto/x509-utils.h
-> >
-> > diff --git a/crypto/meson.build b/crypto/meson.build
-> > index c46f9c22a7..09633194ed 100644
-> > --- a/crypto/meson.build
-> > +++ b/crypto/meson.build
-> > @@ -62,7 +62,7 @@ endif
-> >   if gcrypt.found()
-> >     util_ss.add(gcrypt, files('random-gcrypt.c'))
-> >   elif gnutls.found()
-> > -  util_ss.add(gnutls, files('random-gnutls.c'))
-> > +  util_ss.add(gnutls, files('random-gnutls.c', 'x509-utils.c'))
->
->
-> What if we don't have gnutls. Will everything still compile or do we
-> need to add any dependencies?
->
->
+On Sun, 18 Aug 2024 21:12:34 -0500
+John Groves <John@groves.net> wrote:
 
-[...]
+> On 24/08/15 05:22PM, Jonathan Cameron wrote:
+> > Introduction
+> > ============
+> > 
+> > If we think application specific memory (including inter-host shared memory) is
+> > a thing, it will also be a thing people want to use with virtual machines,
+> > potentially nested. So how do we present it at the Host to VM boundary?
+> > 
+> > This RFC is perhaps premature given we haven't yet merged upstream support for
+> > the bare metal case. However I'd like to get the discussion going given we've
+> > touched briefly on this in a number of CXL sync calls and it is clear no one is  
+> 
+> Excellent write-up, thanks Jonathan.
+> 
+> Hannes' idea of an in-person discussion at LPC is a great idea - count me in.
 
-> >
-> > diff --git a/hw/core/meson.build b/hw/core/meson.build
-> > index f32d1ad943..8dc4552e35 100644
-> > --- a/hw/core/meson.build
-> > +++ b/hw/core/meson.build
-> > @@ -12,6 +12,8 @@ hwcore_ss.add(files(
-> >     'qdev-clock.c',
-> >   ))
-> >
-> > +libcbor =3D dependency('libcbor', version: '>=3D0.7.0')
-> > +
-> >   common_ss.add(files('cpu-common.c'))
-> >   common_ss.add(files('machine-smp.c'))
-> >   system_ss.add(when: 'CONFIG_FITLOADER', if_true: files('loader-fit.c'=
-))
-> > @@ -24,7 +26,7 @@ system_ss.add(when: 'CONFIG_REGISTER', if_true: files=
-('register.c'))
-> >   system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c')=
-)
-> >   system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
-> >   system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt=
-.c'))
-> > -system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c'), =
-zlib])
-> > +system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c'), =
-zlib, libcbor, gnutls])
->
->
-> Ah, you add the gnutls dependency here. Great! However, this means we
-> now make gnutls (and libcbor) a mandatory dependency for the default
-> configuration. Does configure know about that? I believe before gnutls
-> was optional, right?
->
+Had a feeling you might say that ;)
 
-I see gnutls is not a required dependency in the root meson.build. I
-am not sure what we should do here.
+> 
+> As the proprietor of famfs [1] I have many thoughts.
+> 
+> First, I like the concept of application-specific memory (ASM), but I wonder
+> if there might be a better term for it. ASM suggests that there is one
+> application, but I'd suggest that a more concise statement of the concept
+> is that the Linux kernel never accesses or mutates the memory - even though
+> multiple apps might share it (e.g. via famfs). It's a subtle point, but
+> an important one for RAS etc. ASM might better be called non-kernel-managed
+> memory - though that name does not have as good a ring to it. Will mull this
+> over further...
 
-Hey Daniel, do you have any suggestions about how this dependency
-should be included?
+Naming is always the hard bit :)  I agree that one doesn't work for
+shared capacity. You can tell I didn't start there :)
 
-Regards,
-Dorjoy
+> 
+> Now a few level-setting comments on CXL and Dynamic Capacity Devices (DCDs),
+> some of which will be obvious to many of you:
+> 
+> * A DCD is just a memory device with an allocator and host-level
+>   access-control built in.
+> * Usable memory from a DCD is not available until the fabric manger (likely
+>   on behalf of an orchestrator) performs an Initiate Dynamic Capacity Add
+>   command to the DCD.
+> * A DCD allocation has a tag (uuid) which is the invariant way of identifying
+>   the memory from that allocation.
+> * The tag becomes known to the host from the DCD extents provided via
+>   a CXL event following succesful allocation.
+> * The memory associated with a tagged allocation will surface as a dax device
+>   on each host that has access to it. But of course dax device naming &
+>   numbering won't be consistent across separate hosts - so we need to use
+>   the uuid's to find specific memory.
+> 
+> A few less foundational observations:
+> 
+> * It does not make sense to "online" shared or sharable memory as system-ram,
+>   because system-ram gets zeroed, which blows up use cases for sharable memory.
+>   So the default for sharable memory must be devdax mode.
+(CXL specific diversion)
+
+Absolutely agree this this. There is a 'corner' that irritates me in the spec though
+which is that there is no distinction between shareable and shared capacity.
+If we are in a constrained setup with limited HPA or DPA space, we may not want
+to have separate DCD regions for these.  Thus it is plausible that an orchestrator
+might tell a memory appliance to present memory for general use and yet it
+surfaces as shareable.  So there may need to be an opt in path at least for
+going ahead and using this memory as normal RAM.
+
+> * Tags are mandatory for sharable allocations, and allowed but optional for
+>   non-sharable allocations. The implication is that non-sharable allocations
+>   may get onlined automatically as system-ram, so we don't need a namespace
+>   for those. (I argued for mandatory tags on all allocations - hey you don't
+>   have to use them - but encountered objections and dropped it.)
+> * CXL access control only goes to host root ports; CXL has no concept of
+>   giving access to a VM. So some component on a host (perhaps logically
+>   an orchestrator component) needs to plumb memory to VMs as appropriate.
+
+Yes.  It's some mashup of an orchestrator and VMM / libvirt, local library
+of your choice. We can just group into into the ill defined concept of
+a distributed orchestrator.
+
+> 
+> So tags are a namespace to find specific memory "allocations" (which in the
+> CXL consortium, we usually refer to as "tagged capacity").
+> 
+> In an orchestrated environment, the orchestrator would allocate resources
+> (including tagged memory capacity), make that capacity visible on the right
+> host(s), and then provide the tag when starting the app if needed.
+> 
+> if (e.g.) the memory cotains a famfs file system, famfs needs the uuid of the
+> root memory allocation to find the right memory device. Once mounted, it's a
+> file sytem so apps can be directed to the mount path. Apps that consume the
+> dax devices directly also need the uuid because /dev/dax0.0 is not invariant
+> across a cluster...
+> 
+> I have been assuming that when the CXL stack discovers a new DCD allocation,
+> it will configure the devdax device and provide some way to find it by tag.
+> /sys/cxl/<tag>/dev or whatever. That works as far as it goes, but I'm coming
+> around to thinking that the uuid-to-dax map should not be overtly CXL-specific.
+
+Agreed. Whether that's a nice kernel side thing, or a utility pulling data
+from various kernel subsystem interfaces doesn't really matter. I'd prefer
+the kernel presents this but maybe that won't work for some reason.
+
+> 
+> General thoughts regarding VMs and qemu
+> 
+> Physical connections to CXL memory are handled by physical servers. I don't
+> think there is a scenario in which a VM should interact directly with the
+> pcie function(s) of CXL devices. They will be configured as dax devices
+> (findable by their tags!) by the host OS, and should be provided to VMs
+> (when appropriate) as DAX devices. And software in a VM needs to be able to
+> find the right DAX device the same way it would running on bare metal - by
+> the tag.
+
+Limiting to typical type 3 memory pool devices. Agreed. The other CXL device
+types are a can or worms for another day.
+
+> 
+> Qemu can already get memory from files (-object memory-backend-file,...), and
+> I believe this works whether it's an actual file or a devdax device. So far,
+> so good.
+> 
+> Qemu can back a virtual pmem device by one of these, but currently (AFAIK)
+> not a virtual devdax device. I think virtual devdax is needed as a first-class
+> abstraction. If we can add the tag as a property of the memory-backend-file,
+> we're almost there - we just need away to lookup a daxdev by tag.
+
+I'm not sure that is simple. We'd need to define a new interface capable of:
+1) Hotplug - potentially of many separate regions (think nested VMs).
+   That more or less rules out using separate devices on a discoverable hotpluggable
+   bus. We'd run out of bus numbers too quickly if putting them on PCI.
+   ACPI style hotplug is worse because we have to provision slots at the outset.
+2) Runtime provision of metadata - performance data very least (bandwidth /
+   latency etc). In theory could wire up ACPI _HMA but no one has ever bothered.
+3) Probably do want async error signaling.  We 'could' do that with
+   FW first error injection - I'm not sure it's a good idea but it's definitely
+   an option.
+
+A locked down CXL device is a bit more than that, but not very much more.
+It's easy to fake registers for things that are always in one state so
+that the software stack is happy.
+
+virtio-mem has some of the parts and could perhaps be augmented
+to support this use case with the advantage of no implicit tie to CXL.
+
+
+> 
+> Summary thoughts:
+> 
+> * A mechanism for resolving tags to "tagged capacity" devdax devices is
+>   essential (and I don't think there are specific proposals about this
+>   mechanism so far).
+
+Agreed.
+
+> * Said mechanism should not be explicitly CXL-specific.
+
+Somewhat agreed, but I don't want to invent a new spec just to avoid explicit
+ties to CXL. I'm not against using CXL to present HBM / ACPI Specific Purpose
+memory for example to a VM. It will trivially work if that is what a user
+wants to do and also illustrates that this stuff doesn't necessarily just
+apply to capacity on a memory pool - it might just be 'weird' memory on the host.
+
+> * Finding a tagged capacity devdax device in a VM should work the same as it
+>   does running on bare metal.
+
+Absolutely - that's a requirement.
+
+> * The file-backed (and devdax-backed) devdax abstraction is needed in qemu.
+
+Maybe. I'm not convinced the abstraction is needed at that particular level.
+
+> * Beyond that, I'm not yet sure what the lookup mechanism should be. Extra
+>   points for being easy to implement in both physical and virtual systems.
+
+For physical systems we aren't going to get agreement :(  For the systems
+I have visibility of there will be some diversity in hardware, but the
+presentation to userspace and up consistency should be doable.
+
+Jonathan
+
+> 
+> Thanks for teeing this up!
+> John
+> 
+> 
+> [1] https://github.com/cxl-micron-reskit/famfs/blob/master/README.md
+> 
+
 
