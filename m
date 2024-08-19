@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37540C5320E
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 09:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41566C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 09:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfyTm-00028h-VR; Mon, 19 Aug 2024 05:15:10 -0400
+	id 1sfyXL-0006Tr-Ba; Mon, 19 Aug 2024 05:18:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=954944eb4=graf@amazon.de>)
- id 1sfyTl-00028D-Bv
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 05:15:09 -0400
-Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=954944eb4=graf@amazon.de>)
- id 1sfyTj-0003g1-AQ
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 05:15:09 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sfyXJ-0006Sx-IX; Mon, 19 Aug 2024 05:18:49 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sfyXH-00042B-TT; Mon, 19 Aug 2024 05:18:49 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-52efc60a6e6so5982341e87.1; 
+ Mon, 19 Aug 2024 02:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1724058907; x=1755594907;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=Ac4XxlNOiNdqMjF4A6zZFYnRRYM2pVz/xNCVNc4QQcw=;
- b=QhAr6iI7AWeo2K7zXEY7hfW7Gb9TnKxzz8rcF0Z8nXhmvUbDjeh4btxJ
- JSU3D9lL8bwy638gk34mfON06tTaZ5Prwz8LDZHEKkIUd+yen4dp9L7xo
- gdQUkALRiqoLCu9a/FdSObjoew0MtP6riN8PH+EblE1jquAAHFzOoorZg 8=;
-X-IronPort-AV: E=Sophos;i="6.10,158,1719878400"; d="scan'208";a="427652735"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
- by smtp-border-fw-6002.iad6.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2024 09:15:02 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.7.35:50242]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.57.153:2525]
- with esmtp (Farcaster)
- id c17c806e-febf-4a04-82b7-6af7ea62ce23; Mon, 19 Aug 2024 09:15:01 +0000 (UTC)
-X-Farcaster-Flow-ID: c17c806e-febf-4a04-82b7-6af7ea62ce23
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Mon, 19 Aug 2024 09:15:01 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Mon, 19 Aug 2024
- 09:14:58 +0000
-Message-ID: <6668cd68-ff37-4f92-85bb-73852b4ef260@amazon.com>
-Date: Mon, 19 Aug 2024 11:14:56 +0200
+ d=gmail.com; s=20230601; t=1724059125; x=1724663925; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Fo+zRAirlR/3/CCYJXinTtsL4vvwe5GcCC5LM+JDNl0=;
+ b=NjAzgI1usbPcA8QEWyr4HidNKDTjMTFttjQFeHPfckiC3R0FwlfU0s/FdXGjW8CZbr
+ HxQ2dcSkAOr5fIXE1sS10O8lkKWcST4IkgIUkCckFLrSNVXRuGyrH47dQW1qNHOsgyjH
+ qU96Q160VzLXflqWtX2Hny+aTjQCVhaO6TgkcY9UihXEUSMqeHo4tOcacgCA6QFSEAOI
+ ABkueYghxbZ7hqBnUMnY45rhZ8556R1aYxgH+3lxk/fZbqQsl+qZSAmGB8jFlY3Ei2zN
+ rAEc2r7KMDC0rzXIT4aa4H+yRFW3EYNeBz/PrgjTK2HS3O9d4zf4VXwzDrkWMvgzUpdX
+ fyrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724059125; x=1724663925;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Fo+zRAirlR/3/CCYJXinTtsL4vvwe5GcCC5LM+JDNl0=;
+ b=eLVQp6mMeZOJHdqm2UVKqoFqQM2e3/ojMYlKaEywacWo4zyH5pVBz4dtb3f98NHbfj
+ sbxScjgN9h13FjSaW4DiKv12Tb8RAWIFvYnXumqkEOthSAtXory5T89NKMcBIA8lmaGM
+ ZWXEV30Tbg+hX3/VK28r8tBgfrD8YVosBeisI9ra3jkRXQHCJO6lZaFZIyrX7VYdLNyP
+ D7oBFGD6Uf8XHRv62gAvHWHV1mPPrjgznbSA9Ag45rnU3485so+8jeWLmVRpOgT/pRGQ
+ bhRj/9QrVFtRl6tX4kv0Q4MkA0xMeeIq5ni1NflJjUbJqQt5Eh5DobnKAzwPR1KjsIFB
+ tIFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVIxYNy7hfx4Aem+gI1cQT+YJ7TdKieH9k3Rgxrlfqct4dQRLgh68DJBrHYg2FQo7kWyKc1TiJKi1iknRl7+b+766qvxyY=
+X-Gm-Message-State: AOJu0YxmOz6cxIzBWFyRq/4O47zrmanInr2/K1JBTgkoasvIN1o3JVEv
+ ONUxDDKfV3g1hJzIzihywJM3mAmXpFX9Ujvq9lDlaGm7rMBj7ud8
+X-Google-Smtp-Source: AGHT+IF4ICcXTcHQYqKPZFthIwFwFNG7PPijwSl1YBeB3rUtc+aWDW2k7f+Vnn0z2ntl6xP+r+V7rg==
+X-Received: by 2002:a05:6512:6d6:b0:532:fdba:e7c9 with SMTP id
+ 2adb3069b0e04-5331c6e3e9bmr5892084e87.56.1724059124633; 
+ Mon, 19 Aug 2024 02:18:44 -0700 (PDT)
+Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8383946a7dsm611968566b.181.2024.08.19.02.18.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Aug 2024 02:18:44 -0700 (PDT)
+Date: Mon, 19 Aug 2024 08:22:24 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?UTF-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Joelle van Dyne <j@getutm.app>
+Subject: Re: [PATCH-for-9.1 v3 0/2] hw/i386/pc: Fix vmport option handling
+In-Reply-To: <IrhtgC0oPtusYG_0cOwVYOuOr0UpK0YLNYNtxDQ2_lqgtcVBzVr-gYNUzggvmO9tHdmf65aO8Zoab-ERkyQbtjx9u2VuHEYZ_3r0Wb25huw=@szczek.dev>
+References: <IrhtgC0oPtusYG_0cOwVYOuOr0UpK0YLNYNtxDQ2_lqgtcVBzVr-gYNUzggvmO9tHdmf65aO8Zoab-ERkyQbtjx9u2VuHEYZ_3r0Wb25huw=@szczek.dev>
+Message-ID: <C0801D58-5A75-4F8B-B0F1-765B9B3FE1A2@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] device/virtio-nsm: Support for Nitro Secure Module
- device
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>, <qemu-devel@nongnu.org>
-CC: <agraf@csgraf.de>, <stefanha@redhat.com>, <pbonzini@redhat.com>,
- <slp@redhat.com>, <richard.henderson@linaro.org>, <eduardo@habkost.net>,
- <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <berrange@redhat.com>,
- <philmd@linaro.org>
-References: <20240818114257.21456-1-dorjoychy111@gmail.com>
- <20240818114257.21456-4-dorjoychy111@gmail.com>
-Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <20240818114257.21456-4-dorjoychy111@gmail.com>
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D044UWB001.ant.amazon.com (10.13.139.171) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=52.95.49.90;
- envelope-from=prvs=954944eb4=graf@amazon.de; helo=smtp-fw-6002.amazon.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,78 +97,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIDE4LjA4LjI0IDEzOjQyLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgo+IE5pdHJvIFNlY3Vy
-ZSBNb2R1bGUgKE5TTSlbMV0gZGV2aWNlIGlzIHVzZWQgaW4gQVdTIE5pdHJvIEVuY2xhdmVzIGZv
-cgo+IHN0cmlwcGVkIGRvd24gVFBNIGZ1bmN0aW9uYWxpdHkgbGlrZSBjcnlwdG9ncmFwaGljIGF0
-dGVzdGF0aW9uLiBUaGUKPiByZXF1ZXN0cyB0byBhbmQgcmVzcG9uc2VzIGZyb20gTlNNIGRldmlj
-ZSBhcmUgQ0JPUlsyXSBlbmNvZGVkLgo+Cj4gVGhpcyBjb21taXQgYWRkcyBzdXBwb3J0IGZvciBO
-U00gZGV2aWNlIGluIFFFTVUuIEFsdGhvdWdoIHJlbGF0ZWQgdG8KPiBBV1MgTml0cm8gRW5jbGF2
-ZXMsIHRoZSB2aXJpdG8tbnNtIGRldmljZSBpcyBpbmRlcGVuZGVudCBhbmQgY2FuIGJlCj4gdXNl
-ZCBpbiBvdGhlciBtYWNoaW5lIHR5cGVzIGFzIHdlbGwuIFRoZSBsaWJjYm9yWzNdIGxpYnJhcnkg
-aGFzIGJlZW4KPiB1c2VkIGZvciB0aGUgQ0JPUiBlbmNvZGluZyBhbmQgZGVjb2RpbmcgZnVuY3Rp
-b25hbGl0aWVzLgo+Cj4gWzFdIGh0dHBzOi8vbGlzdHMub2FzaXMtb3Blbi5vcmcvYXJjaGl2ZXMv
-dmlydGlvLWNvbW1lbnQvMjAyMzEwL21zZzAwMzg3Lmh0bWwKPiBbMl0gaHR0cDovL2Nib3IuaW8v
-Cj4gWzNdIGh0dHBzOi8vbGliY2Jvci5yZWFkdGhlZG9jcy5pby9lbi9sYXRlc3QvCj4KPiBTaWdu
-ZWQtb2ZmLWJ5OiBEb3Jqb3kgQ2hvd2RodXJ5IDxkb3Jqb3ljaHkxMTFAZ21haWwuY29tPgoKClsu
-Li5dCgoKPiArc3RhdGljIGJvb2wgYWRkX3BheWxvYWRfdG9fY29zZShjYm9yX2l0ZW1fdCAqY29z
-ZSwgVmlydElPTlNNICp2bnNtKQo+ICt7Cj4gKyAgICBjYm9yX2l0ZW1fdCAqcm9vdCA9IE5VTEw7
-Cj4gKyAgICBjYm9yX2l0ZW1fdCAqbmVzdGVkX21hcDsKPiArICAgIGNib3JfaXRlbV90ICpicyA9
-IE5VTEw7Cj4gKyAgICBzaXplX3QgbG9ja2VkX2NudDsKPiArICAgIHVpbnQ4X3QgaW5kW05TTV9N
-QVhfUENSU107Cj4gKyAgICBzaXplX3QgcGF5bG9hZF9tYXBfc2l6ZSA9IDY7Cj4gKyAgICBzaXpl
-X3QgbGVuOwo+ICsgICAgc3RydWN0IFBDUkluZm8gKnBjcjsKPiArICAgIHVpbnQ4X3QgemVyb1s2
-NF0gPSB7MH07Cj4gKyAgICBib29sIHIgPSBmYWxzZTsKPiArICAgIHNpemVfdCBidWZfbGVuID0g
-MTYzODQ7Cj4gKyAgICB1aW50OF90ICpidWYgPSBnX21hbGxvYyhidWZfbGVuKTsKPiArCj4gKyAg
-ICBpZiAodm5zbS0+cHVibGljX2tleV9sZW4gPiAwKSB7Cj4gKyAgICAgICAgcGF5bG9hZF9tYXBf
-c2l6ZSsrOwo+ICsgICAgfQo+ICsgICAgaWYgKHZuc20tPnVzZXJfZGF0YV9sZW4gPiAwKSB7Cj4g
-KyAgICAgICAgcGF5bG9hZF9tYXBfc2l6ZSsrOwo+ICsgICAgfQo+ICsgICAgaWYgKHZuc20tPm5v
-bmNlX2xlbiA+IDApIHsKPiArICAgICAgICBwYXlsb2FkX21hcF9zaXplKys7Cj4gKyAgICB9CgoK
-Tm93IHRoYXQgeW91J3JlIGFsd2F5cyBlbWl0dGluZyB1c2VyX2RhdGEgYW5kIG5vbmNlLCB5b3Ug
-c2hvdWxkIGluY2x1ZGUgCnRoZW0gaW4gcGF5bG9hZF9tYXBfc2l6ZSB1bmNvbmRpdGlvbmFsbHkg
-YXMgd2VsbDsgb3RoZXJ3aXNlIHlvdXIgbWFwIGlzIAp0b28gc21hbGwgdG8gaG9sZCBhbGwgbWVt
-YmVycy4KCkluIGFkZGl0aW9uLCBhIHJlYWwgTml0cm8gRW5jbGF2ZSBhdHRlc3RhdGlvbiBkb2N1
-bWVudCB3aWxsIHJldHVybiBOdWxsIApvYmplY3RzIGZvciB0aGVzZSBmaWVsZHMgd2hlbiB0aGV5
-J3JlIG5vdCBzZXQgaW5zdGVhZCBvZiBlbXB0eSBzdHJpbmdzLiAKV2l0aCB0aGUgcGF0Y2ggYmVs
-b3cgSSB3YXMgYWJsZSB0byBnZW5lcmF0ZSBhIGRvYyB0aGF0IGxvb2tzIHZlcnkgCnNpbWlsYXIg
-dG8gYSByZWFsIG9uZToKCmRpZmYgLS1naXQgYS9ody92aXJ0aW8vY2Jvci1oZWxwZXJzLmMgYi9o
-dy92aXJ0aW8vY2Jvci1oZWxwZXJzLmMKaW5kZXggNTE0MDAyMGQ0ZS4uZmZlY2M5N2M0OCAxMDA2
-NDQKLS0tIGEvaHcvdmlydGlvL2Nib3ItaGVscGVycy5jCisrKyBiL2h3L3ZpcnRpby9jYm9yLWhl
-bHBlcnMuYwpAQCAtMTQwLDcgKzE0MCwxMSBAQCBib29sIHFlbXVfY2Jvcl9hZGRfYnl0ZXN0cmlu
-Z190b19tYXAoY2Jvcl9pdGVtX3QgCiptYXAsIGNvbnN0IGNoYXIgKmtleSwKIMKgwqDCoMKgIGlm
-ICgha2V5X2Nib3IpIHsKIMKgwqDCoMKgwqDCoMKgwqAgZ290byBjbGVhbnVwOwogwqDCoMKgwqAg
-fQotwqDCoMKgIHZhbHVlX2Nib3IgPSBjYm9yX2J1aWxkX2J5dGVzdHJpbmcoYXJyLCBsZW4pOwor
-wqDCoMKgIGlmIChsZW4pIHsKK8KgwqDCoMKgwqDCoMKgIHZhbHVlX2Nib3IgPSBjYm9yX2J1aWxk
-X2J5dGVzdHJpbmcoYXJyLCBsZW4pOworwqDCoMKgIH0gZWxzZSB7CivCoMKgwqDCoMKgwqDCoCB2
-YWx1ZV9jYm9yID0gY2Jvcl9uZXdfbnVsbCgpOworwqDCoMKgIH0KIMKgwqDCoMKgIGlmICghdmFs
-dWVfY2JvcikgewogwqDCoMKgwqDCoMKgwqDCoCBnb3RvIGNsZWFudXA7CiDCoMKgwqDCoCB9CkBA
-IC0yNDEsNyArMjQ1LDExIEBAIGJvb2wgCnFlbXVfY2Jvcl9hZGRfdWludDhfa2V5X2J5dGVzdHJp
-bmdfdG9fbWFwKGNib3JfaXRlbV90ICptYXAsIHVpbnQ4X3Qga2V5LAogwqDCoMKgwqAgaWYgKCFr
-ZXlfY2JvcikgewogwqDCoMKgwqDCoMKgwqDCoCBnb3RvIGNsZWFudXA7CiDCoMKgwqDCoCB9Ci3C
-oMKgwqAgdmFsdWVfY2JvciA9IGNib3JfYnVpbGRfYnl0ZXN0cmluZyhidWYsIGxlbik7CivCoMKg
-wqAgaWYgKGxlbikgeworwqDCoMKgwqDCoMKgwqAgdmFsdWVfY2JvciA9IGNib3JfYnVpbGRfYnl0
-ZXN0cmluZyhidWYsIGxlbik7CivCoMKgwqAgfSBlbHNlIHsKK8KgwqDCoMKgwqDCoMKgIHZhbHVl
-X2Nib3IgPSBjYm9yX25ld19udWxsKCk7CivCoMKgwqAgfQogwqDCoMKgwqAgaWYgKCF2YWx1ZV9j
-Ym9yKSB7CiDCoMKgwqDCoMKgwqDCoMKgIGdvdG8gY2xlYW51cDsKIMKgwqDCoMKgIH0KZGlmZiAt
-LWdpdCBhL2h3L3ZpcnRpby92aXJ0aW8tbnNtLmMgYi9ody92aXJ0aW8vdmlydGlvLW5zbS5jCmlu
-ZGV4IGU5MTg0OGEyYjAuLmI0NWQ5N2VmZTIgMTAwNjQ0Ci0tLSBhL2h3L3ZpcnRpby92aXJ0aW8t
-bnNtLmMKKysrIGIvaHcvdmlydGlvL3ZpcnRpby1uc20uYwpAQCAtMTEyNiw3ICsxMTI2LDcgQEAg
-c3RhdGljIGJvb2wgYWRkX3BheWxvYWRfdG9fY29zZShjYm9yX2l0ZW1fdCAqY29zZSwgClZpcnRJ
-T05TTSAqdm5zbSkKIMKgwqDCoMKgIGNib3JfaXRlbV90ICpicyA9IE5VTEw7CiDCoMKgwqDCoCBz
-aXplX3QgbG9ja2VkX2NudDsKIMKgwqDCoMKgIHVpbnQ4X3QgaW5kW05TTV9NQVhfUENSU107Ci3C
-oMKgwqAgc2l6ZV90IHBheWxvYWRfbWFwX3NpemUgPSA2OworwqDCoMKgIHNpemVfdCBwYXlsb2Fk
-X21hcF9zaXplID0gODsKIMKgwqDCoMKgIHNpemVfdCBsZW47CiDCoMKgwqDCoCBzdHJ1Y3QgUENS
-SW5mbyAqcGNyOwogwqDCoMKgwqAgdWludDhfdCB6ZXJvWzY0XSA9IHswfTsKQEAgLTExMzcsMTIg
-KzExMzcsNiBAQCBzdGF0aWMgYm9vbCBhZGRfcGF5bG9hZF90b19jb3NlKGNib3JfaXRlbV90IAoq
-Y29zZSwgVmlydElPTlNNICp2bnNtKQogwqDCoMKgwqAgaWYgKHZuc20tPnB1YmxpY19rZXlfbGVu
-ID4gMCkgewogwqDCoMKgwqDCoMKgwqDCoCBwYXlsb2FkX21hcF9zaXplKys7CiDCoMKgwqDCoCB9
-Ci3CoMKgwqAgaWYgKHZuc20tPnVzZXJfZGF0YV9sZW4gPiAwKSB7Ci3CoMKgwqDCoMKgwqDCoCBw
-YXlsb2FkX21hcF9zaXplKys7Ci3CoMKgwqAgfQotwqDCoMKgIGlmICh2bnNtLT5ub25jZV9sZW4g
-PiAwKSB7Ci3CoMKgwqDCoMKgwqDCoCBwYXlsb2FkX21hcF9zaXplKys7Ci3CoMKgwqAgfQogwqDC
-oMKgwqAgcm9vdCA9IGNib3JfbmV3X2RlZmluaXRlX21hcChwYXlsb2FkX21hcF9zaXplKTsKIMKg
-wqDCoMKgIGlmICghcm9vdCkgewogwqDCoMKgwqDCoMKgwqDCoCBnb3RvIGNsZWFudXA7CgoKQWxl
-eAoKCgoKQW1hem9uIFdlYiBTZXJ2aWNlcyBEZXZlbG9wbWVudCBDZW50ZXIgR2VybWFueSBHbWJI
-CktyYXVzZW5zdHIuIDM4CjEwMTE3IEJlcmxpbgpHZXNjaGFlZnRzZnVlaHJ1bmc6IENocmlzdGlh
-biBTY2hsYWVnZXIsIEpvbmF0aGFuIFdlaXNzCkVpbmdldHJhZ2VuIGFtIEFtdHNnZXJpY2h0IENo
-YXJsb3R0ZW5idXJnIHVudGVyIEhSQiAyNTc3NjQgQgpTaXR6OiBCZXJsaW4KVXN0LUlEOiBERSAz
-NjUgNTM4IDU5Nwo=
 
+
+Am 17=2E August 2024 15:24:31 UTC schrieb "Kamil Szcz=C4=99k" <kamil@szcze=
+k=2Edev>:
+>Some time ago a new option to disable the built-in i8042 controller was
+>introduced (commit 4ccd5fe22feb95137d325f422016a6473541fe9f)=2E This
+>however introduced a side-effect - disabling this controller resulted
+>in vmport's creation being omitted, regardless if it was enabled
+>implicitly or explicitly=2E This patch series aims to clean up vmport
+>option handling and introduces additional validation for these options=2E
+>
+>Changelog:
+>
+>v2 -> v3:
+>  - Move vmport=3Dauto -> vmport=3Don/off conversion to a shared code pat=
+h
+>  - Reword documentation for the vmport option, "and/or" =3D> "or"
+
+The vmport handling is now confined to pc=2Ec=2E Excellent!
+
+Series:
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+
+>
+>v1 -> v2:
+>  - Exit with a useful error message instead of issuing a warning
+>
+>Kamil Szcz=C4=99k (2):
+>  hw/i386/pc: Unify vmport=3Dauto handling
+>  hw/i386/pc: Ensure vmport prerequisites are fulfilled
+>
+> hw/i386/pc=2Ec      | 14 ++++++++++++--
+> hw/i386/pc_piix=2Ec |  5 -----
+> hw/i386/pc_q35=2Ec  |  5 -----
+> qemu-options=2Ehx   |  4 ++--
+> 4 files changed, 14 insertions(+), 14 deletions(-)
+>
 
