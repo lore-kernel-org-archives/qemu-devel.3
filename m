@@ -4,96 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52362C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 15:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0473EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 15:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg4Ml-00086s-HY; Mon, 19 Aug 2024 11:32:19 -0400
+	id 1sg4NX-0000mT-3h; Mon, 19 Aug 2024 11:33:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg4Mk-00086N-Mp
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:32:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg4Mj-0002MD-4X
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:32:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724081535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ozxUPVSJI6kso7t+QsOJshko8hZwmEb+We/ntxe7yb0=;
- b=ieXwifA85xNqRwx5zioPNn8PY3SXNCDIma63kHlSCb6zFJzXiZIk66EdvXcFWD8SI+ajif
- /gTZuYNEFX0gg84p96eGBfcfygs6rDo0wUyQ1frVrnbxAK35BD5U/6w1Nx5OOzSGlxY9OX
- 8r9pPUcjvaTPDEKXx9ist3XT4iJs4Bk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-a7N0bDtiMDO6l804beWa5w-1; Mon, 19 Aug 2024 11:32:13 -0400
-X-MC-Unique: a7N0bDtiMDO6l804beWa5w-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-427ffa0c9c7so49373415e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 08:32:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sg4NV-0000ko-Kw
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:33:05 -0400
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sg4NU-0002Qa-0I
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:33:05 -0400
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5da6865312eso3056116eaf.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 08:33:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1724081582; x=1724686382; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J6vJFmQF93SsLF/G3lx3rTzWRy3T6+zAGHPX0bVIurE=;
+ b=UAEhZSGtFiJMHlwLF6J76cOjzM3Hjoiux/nmM5f3hYKM+HWcdI4kgQmPKJZZTapc2Z
+ sJ7kwgDWowuEYcmrYjHcmrdqa+qMUwd945oV/sKOrCa3b4P1ktN746fIw6Idlg2qo8iT
+ MnPHDyy3pVyCqNhe95T0ejOlLbak2drcrE2cAu+dY16huObioHMelLmte78HV2B29Ht/
+ nsZ13HbJ1wuRkcJajkC/ulpJCjfanuodHeek8T9Wjab+HvZnjioKmAVNJnSa0lgl4Yl/
+ E0mRLUXOu3i+NNz2S/bBAnnEdnuW6XjXre4KFz0He9Y6kH5kw0EfEVTho1IbK8n8K8+Z
+ TQbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724081533; x=1724686333;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1724081582; x=1724686382;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ozxUPVSJI6kso7t+QsOJshko8hZwmEb+We/ntxe7yb0=;
- b=tukeHY7MSLRsl9XJ8aQncmmJY8EfAyWLjW8DmsvCAxtcaASWEBi2lrQWOUjkltfbdn
- 98xdyISYL3EED1b7xxvxkxE7itpjN8guLXpE6OF4A7Kcu4u89k6WD1VvR21qWXkqKVgS
- NkLL2tpr0+3uWUeH3ybrKMw1lcK6MNDmHf7oCmBgniFFOMo9KdSAgYZk/FW0+cYDxms0
- LaYcTtFjjFU2rbRu6ZwGki7ooudxbYStyA7r5tqS46jsjxUJWjW8rvusl3SCj7Su3PkI
- 4dReSJmYVPO5gEbNQ5TVf/wVUytbyW03q5C0gCuPoKQOXca6VA4R8txvBau544jLwZlL
- 2AWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6coXJdYXA9ZdpcMt2WtxK1/3XpJvnvhO4vSfj0ZydnIkJZPBQC5jtEHeOFKwZXEHu0HYLaNozNyEBIbixpxXJEPKrzag=
-X-Gm-Message-State: AOJu0Yw3vftspgEu+v9qoYwA0fW6kiuyzqmQHN0no6pZgelMNitfF6YK
- wQLxFmn0XnMNxHAsUzgRYiwBwCbFJ4b5YT5q8geY6N49cY7IAxSeaepsiELvRzm4XjEGP1ZTzKr
- NRsgzD2eZbICGkwm6WBisa8gwBIbEbq7CjJwb2DVCYu2unvIQJebk
-X-Received: by 2002:a05:600c:4584:b0:428:e820:37b6 with SMTP id
- 5b1f17b1804b1-429ed7ed57emr101663945e9.31.1724081532667; 
- Mon, 19 Aug 2024 08:32:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjJOVz81cDAWeYCRV7PLYOVDP2aNnS/w1vJD/KxzLitEulR2NEIOYvqqOKNzO3RWG2Lnjmog==
-X-Received: by 2002:a05:600c:4584:b0:428:e820:37b6 with SMTP id
- 5b1f17b1804b1-429ed7ed57emr101663645e9.31.1724081532143; 
- Mon, 19 Aug 2024 08:32:12 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ed649019sm114501175e9.8.2024.08.19.08.32.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 08:32:11 -0700 (PDT)
-Date: Mon, 19 Aug 2024 17:32:10 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, qemu-devel@nongnu.org, zhao1.liu@intel.com, John
- Levon <john.levon@nutanix.com>, Manish <manish.mishra@nutanix.com>
-Subject: Re: [PATCH v2] i386/cpu: Introduce enable_cpuid_0x1f to force
- exposing CPUID 0x1f
-Message-ID: <20240819173210.7db4ca33@imammedo.users.ipa.redhat.com>
-In-Reply-To: <985da2cc-5281-4986-b1bb-0334179ece6d@intel.com>
-References: <20240813033145.279307-1-xiaoyao.li@intel.com>
- <20240813112734.6b2394b9@imammedo.users.ipa.redhat.com>
- <13ab0652-8223-4c04-be63-09a7a81467af@intel.com>
- <985da2cc-5281-4986-b1bb-0334179ece6d@intel.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=J6vJFmQF93SsLF/G3lx3rTzWRy3T6+zAGHPX0bVIurE=;
+ b=KBQ/ylkB0KhR42wKeIvyFeDdimig2mAAl+kh+xrsmfvjPq+xC/gMGOSAVAwQBsBscr
+ XlBj849TpTrUapbonRBL340iV66e62YwL7I1aeSWtdmMxxBD4EWowO9Ay/7Vhy1uv76i
+ dZI2I9eyLXpSfkJ/3UChR+uA7HZbHJzAmuud567f4yGJvY/eSXkB6rui6R62o6i0zwQZ
+ C1hngUoSCQ4KYXGMOMaXZt/IzG5UMd7bZV+l+5YIc6wkBy/w4ZkNwlqmJY2ULt0pGR2s
+ FQw17OYO6cXBXS5h3jJp/xLtin16AKBCurRaYj9YUko0txyi6Qc8slHoIsWxvigQUAeI
+ iItQ==
+X-Gm-Message-State: AOJu0YxTFvvCohUj2Fb/tpkRkQDR3Ag1fYSaK3lU9LVIOM3hJI2g01Cs
+ Qik3ajPYU/3grSm2nTZVpUKEv+aYxAA6oo9PxlgJdJAAqgIPXT7goP4p6mJnBoP1mwWAIO7iizJ
+ +6zRGXjZpWJdCZ38bbjCsHrFLZlk=
+X-Google-Smtp-Source: AGHT+IF2bZzTLdoPaGyrPF/haNWpEnJuIGfh7V1uQwXk0p2jV3zdcyxjTmsLCCOulrIs9mOVkV1v9lrJyNoOzFygo/Y=
+X-Received: by 2002:a05:6358:7e9b:b0:1ac:660a:8a69 with SMTP id
+ e5c5f4694b2df-1b3931c3412mr1594170055d.18.1724081582333; Mon, 19 Aug 2024
+ 08:33:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20240818114257.21456-1-dorjoychy111@gmail.com>
+ <20240818114257.21456-5-dorjoychy111@gmail.com>
+ <bffedf65-6046-4264-a2fe-011ff8c58860@amazon.com>
+In-Reply-To: <bffedf65-6046-4264-a2fe-011ff8c58860@amazon.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Mon, 19 Aug 2024 21:32:55 +0600
+Message-ID: <CAFfO_h7+FEzp-FrYM68A104CyNKgUfEReB+o9gYg5i-f=5DsVg@mail.gmail.com>
+Subject: Re: [PATCH v4 4/6] machine/nitro-enclave: Add built-in Nitro Secure
+ Module device
+To: Alexander Graf <graf@amazon.com>, berrange@redhat.com
+Cc: qemu-devel@nongnu.org, agraf@csgraf.de, stefanha@redhat.com, 
+ pbonzini@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
+ eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com, 
+ philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-oo1-xc34.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,55 +96,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Aug 2024 00:39:57 +0800
-Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+On Mon, Aug 19, 2024 at 4:13=E2=80=AFPM Alexander Graf <graf@amazon.com> wr=
+ote:
+>
+> Hey Dorjoy,
+>
+> On 18.08.24 13:42, Dorjoy Chowdhury wrote:
+> > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device which
+> > is used for stripped down TPM functionality like attestation. This comm=
+it
+> > adds the built-in NSM device in the nitro-enclave machine type.
+> >
+> > In Nitro Enclaves, all the PCRs start in a known zero state and the fir=
+st
+> > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and PCR=
+8
+> > contain the SHA384 hashes related to the EIF file used to boot the
+> > VM for validation.
+> >
+> > Some optional nitro-enclave machine options have been added:
+> >      - 'id': Enclave identifier, reflected in the module-id of the NSM
+> > device. If not provided, a default id will be set.
+> >      - 'parent-role': Parent instance IAM role ARN, reflected in PCR3
+> > of the NSM device.
+> >      - 'parent-id': Parent instance identifier, reflected in PCR4 of th=
+e
+> > NSM device.
+> >
+> > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > ---
+> >   crypto/meson.build              |   2 +-
+> >   crypto/x509-utils.c             |  73 +++++++++++
+>
+>
+> Can you please put this new API into its own patch file?
+>
+>
+> >   hw/core/eif.c                   | 225 +++++++++++++++++++++++++++++--=
+-
+> >   hw/core/eif.h                   |   5 +-
+>
+>
+> These changes to eif.c should ideally already be part of the patch that
+> introduces eif.c (patch 1), no? In fact, do you think you can make the
+> whole eif logic its own patch file?
+>
+>
+> >   hw/core/meson.build             |   4 +-
+> >   hw/i386/Kconfig                 |   1 +
+> >   hw/i386/nitro_enclave.c         | 141 +++++++++++++++++++-
+> >   include/crypto/x509-utils.h     |  22 ++++
+> >   include/hw/i386/nitro_enclave.h |  26 ++++
+> >   9 files changed, 479 insertions(+), 20 deletions(-)
+> >   create mode 100644 crypto/x509-utils.c
+> >   create mode 100644 include/crypto/x509-utils.h
+> >
+> > diff --git a/crypto/meson.build b/crypto/meson.build
+> > index c46f9c22a7..09633194ed 100644
+> > --- a/crypto/meson.build
+> > +++ b/crypto/meson.build
+> > @@ -62,7 +62,7 @@ endif
+> >   if gcrypt.found()
+> >     util_ss.add(gcrypt, files('random-gcrypt.c'))
+> >   elif gnutls.found()
+> > -  util_ss.add(gnutls, files('random-gnutls.c'))
+> > +  util_ss.add(gnutls, files('random-gnutls.c', 'x509-utils.c'))
+>
+>
+> What if we don't have gnutls. Will everything still compile or do we
+> need to add any dependencies?
+>
+>
 
-> On 8/13/2024 10:51 PM, Xiaoyao Li wrote:
-> > On 8/13/2024 5:27 PM, Igor Mammedov wrote: =20
-> >> On Mon, 12 Aug 2024 23:31:45 -0400
-> >> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
-> >> =20
-> >>> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
-> >>> when topology level that cannot be enumerated by leaf 0xB, e.g., die =
-or
-> >>> module level, are configured for the guest, e.g., -smp xx,dies=3D2.
-> >>>
-> >>> However, 1) TDX architecture forces to require CPUID 0x1f to=20
-> >>> configure CPU
-> >>> topology. and 2) There is a bug in Windows that Windows 10/11 expects=
-=20
-> >>> valid
-> >>> 0x1f leafs when the maximum basic leaf > 0x1f[1]. =20
-> >> =C2=A0 1. will it boot if you use older cpu model? =20
-> >=20
-> > It can boot with any cpu model that has .level < 0x1f. =20
->=20
-> I realize just now that we don't need to introduce "x-cpuid-1f" as the=20
-> workaround for buggy windows. We can always workaround it by limiting=20
-> the maximum basic CPUID leaf to less than 0x1f, i.e., -cpu xxx,level=3D0x=
-1e
+[...]
 
-I'd suggest to add this to change log into 'known issues' section.
-(I mean Windows bug symptoms and suggested workaround) =20
+> >
+> > diff --git a/hw/core/meson.build b/hw/core/meson.build
+> > index f32d1ad943..8dc4552e35 100644
+> > --- a/hw/core/meson.build
+> > +++ b/hw/core/meson.build
+> > @@ -12,6 +12,8 @@ hwcore_ss.add(files(
+> >     'qdev-clock.c',
+> >   ))
+> >
+> > +libcbor =3D dependency('libcbor', version: '>=3D0.7.0')
+> > +
+> >   common_ss.add(files('cpu-common.c'))
+> >   common_ss.add(files('machine-smp.c'))
+> >   system_ss.add(when: 'CONFIG_FITLOADER', if_true: files('loader-fit.c'=
+))
+> > @@ -24,7 +26,7 @@ system_ss.add(when: 'CONFIG_REGISTER', if_true: files=
+('register.c'))
+> >   system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c')=
+)
+> >   system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+> >   system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt=
+.c'))
+> > -system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c'), =
+zlib])
+> > +system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c'), =
+zlib, libcbor, gnutls])
+>
+>
+> Ah, you add the gnutls dependency here. Great! However, this means we
+> now make gnutls (and libcbor) a mandatory dependency for the default
+> configuration. Does configure know about that? I believe before gnutls
+> was optional, right?
+>
 
->=20
-> I think we can ignore this patch for now. I will re-submit it with TDX=20
-> enabling series, and with "x-cpuid-1f" interface removed.
->=20
-> >> =C2=A0 2. how user would know that this option would be needed? =20
-> >=20
-> > Honestly, I don't have an answer for it.
-> >=20
-> > I'm not sure if it is the duty of QEMU to identify this case and print=
-=20
-> > some hint to user. It's the bug of Windows, maybe Mircosoft should put=
-=20
-> > something in their known bugs list for users?
-I guess you've answered your own question alredy we have a workaround
-and there is not need for yet another option that user won't know how to us=
-e.
+I see gnutls is not a required dependency in the root meson.build. I
+am not sure what we should do here.
 
-As for configuring workaround, it's upto upper layers which know what OS
-would be running in VM. =20
+Hey Daniel, do you have any suggestions about how this dependency
+should be included?
 
+Regards,
+Dorjoy
 
