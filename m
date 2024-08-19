@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226C7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68ECFC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBGC-0007qv-Nv; Mon, 19 Aug 2024 18:54:00 -0400
+	id 1sgBGC-0007qd-Lr; Mon, 19 Aug 2024 18:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBF0-0002Pa-BQ
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:47 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEr-0001rZ-QW
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:40 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEy-0000pr-NS
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:46 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-428141be2ddso37493345e9.2
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEp-0000mg-8n
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:36 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4281ca54fd3so38751555e9.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107962; x=1724712762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107953; x=1724712753; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3pBm6V4tkAnYFc+ZirSS/Y/4pdgPe/X+of3pcxo2Q7E=;
- b=INfzaB0Ks+ahSo489RyNOjB7L15rmMqUWzCuft3oyjRsJJsvpEAwQCri1RdKMjhvht
- jw+KeHFuKQYb9zy1Ux4b7YJH7SfpMsWs/2mtJV7MSE7bVTeBNVhMxqDm1bl/nWnz7vQX
- 4avz+ME0I6I41NJYM4fueDTYdWuG9WQASlUuis0Qmv6au3YIG1tVjUUghGcvJxDxynmb
- SLyQyFKQYQSI5j3ych84IckmVwvPLRFT870LcQwpbL2YS5hVyPAA0h0PETlRjWBOBNZE
- 0UqCLjpXXbfB7wKiBFVCFNHhSM0hfUGbQ7YVo2s1nQx1xUV9a+J8DeZB84vHikf4PYjx
- VU+Q==
+ bh=CfFtvwBUu6O5iys7XE1dWmkEu565Z9xC0zCU21IHrTk=;
+ b=dUQya8JDiDTeZj10U3FuTExL9MYWkrIW9I6W9reYNgC9WQ0eG9EEkVkHGAS1ColXHR
+ 5oTwuVDeaqvtFEn/j0qmycx+IjNNQmYc6Nw+pxplOpJKxoT1rRK1/Dkh/8/qJ4wdodHE
+ Fo9Jlgdfn/K8RxDo0nyt3k8xJhgCWfr0fg8z7OONdNHih9PG4/9k0KJg82WPsUAam/fh
+ u5dBu2nC6UQ/aApMowBQ9K9NxN8kNH4TBEAjhJnvhklL2JdEMAagPVEt3tjGRFIlNXYR
+ NVj34ZHKF75iFg/c0cwHqBdrY+PwYjg8o1OUkBkYOM9Zvh8syO3+0nrIQ9AlTqKmPacZ
+ kgWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107962; x=1724712762;
+ d=1e100.net; s=20230601; t=1724107953; x=1724712753;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3pBm6V4tkAnYFc+ZirSS/Y/4pdgPe/X+of3pcxo2Q7E=;
- b=aBJUjQEX/Uk38t3zrzIxgfb0f16/JJAvHeYm7fjhWletgkrNZk3XWynhVoTErCVym6
- asKiz61S1k1dXJ82pTadQsWy7bhqYNZ07WMHn0n+ZVlypafzvQm1m6GnfYGtNWhyp3NB
- gLLOaMWe5sdK0IrYETRUmLWEUnXBukOaUNbNS3eQ46j7FtQT0mCjCT4e0WoTu/5ufr3Y
- Hn/KcDqcdcLA57iBgtzsPqg1SqD4QKLfh5hGJr04Ribkyn8DrfQG+JevU5xI0DAQicjR
- 36Gz2qufPWlajf9+ImKXTY0LYEBwkXJ56eX4CLaJcjsKIgLRQ+ocP1EL+ztpj2G3JfM4
- U5pA==
-X-Gm-Message-State: AOJu0YyANwwngx6xsiqr27b7mJT0z3EBTjG7ePKOzSuqP+6VhVxxBOq9
- KGO8MNSgPKeZ4a/i/CftN+4brRmJe0ShpE6PkOUO9aZIg1BCWSMf4oFt5P4Cbe20HSWjxExQOg9
- QGYg=
-X-Google-Smtp-Source: AGHT+IGCsDoBkmmL9a6NkyCXQz+PNOWnKA5h4I+zJkmOwB+9ePw3LsP+7F1zreFZlQw+OcjjwrSc3Q==
-X-Received: by 2002:a05:600c:1f83:b0:426:5e91:3ff1 with SMTP id
- 5b1f17b1804b1-429ed7d1a13mr84497905e9.24.1724107962118; 
- Mon, 19 Aug 2024 15:52:42 -0700 (PDT)
+ bh=CfFtvwBUu6O5iys7XE1dWmkEu565Z9xC0zCU21IHrTk=;
+ b=RCYGTvyTr9h561UOX2dYuq9jIzCosz9OH+oRoclHwmOJyRh/F1rSlNNWJ9nLJ+6dNH
+ BwPOxQp+zydaYlYOkLY8j01Zx9o1gVHLevjSDNDUR9DqR51vmL5p/AG8oUXKUPXpzqOl
+ gi1crrbCbLMqec67o5Ctpx4cUap/k0cKgdWaWjdPZC4l8LUfg+knhyAitfe+GHVj0HQd
+ RxtZxMabFZaY6JPuF7RbYRY8cKnP6Klf9ou94qwtNfJGMWRCt/tUcBnNr5XpcVbHlCBk
+ gYgCSv0OwCeqMmmxdWe4PtKsE8ZITS++wMnvKTGUF6VlTw1mLWHeUtHbbQg1RLP0PdHA
+ ohNw==
+X-Gm-Message-State: AOJu0Yyx42akQu1UMRFYY+g2bS6w9AiSL8gdYnfdLbH0bafp6b7TRojT
+ FKG++IlswqwQnhpOk4WvgjPf+cBODHVRjnURKNS44Lrd9aMSojNeSdukvJdr0tQ+ZSMvIg7FSPN
+ Ilrw=
+X-Google-Smtp-Source: AGHT+IHrQr4YwIT9vzFLmUWWj50emigoEoElZZMUbBMnBJhvxKUtG8dDJm3ZwXFuFNKG2TBfWqcy9A==
+X-Received: by 2002:adf:a408:0:b0:368:4910:8f49 with SMTP id
+ ffacd0b85a97d-37194315ae6mr10221794f8f.12.1724107953195; 
+ Mon, 19 Aug 2024 15:52:33 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898497f0sm11573714f8f.39.2024.08.19.15.52.41
+ ffacd0b85a97d-37189896be4sm11657731f8f.77.2024.08.19.15.52.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:52:41 -0700 (PDT)
+ Mon, 19 Aug 2024 15:52:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Kamil=20Szcz=C4=99k?= <kamil@szczek.dev>,
- Bernhard Beschow <shentey@gmail.com>,
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 18/20] hw/i386/pc: Unify vmport=auto handling
-Date: Tue, 20 Aug 2024 00:51:14 +0200
-Message-ID: <20240819225116.17928-19-philmd@linaro.org>
+Subject: [PULL 16/20] target/sparc: Restrict STQF to sparcv9
+Date: Tue, 20 Aug 2024 00:51:12 +0200
+Message-ID: <20240819225116.17928-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,72 +94,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kamil Szczęk <kamil@szczek.dev>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The code which translates vmport=auto to on/off is currently separate
-for each PC machine variant, while being functionally equivalent.
-This moves the translation into a shared initialization function, while
-also tightening the enum assertion.
+Prior to sparcv9, the same encoding was STDFQ.
 
-Signed-off-by: Kamil Szczęk <kamil@szczek.dev>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 06c060d9e5b ("target/sparc: Move simple fp load/store to decodetree")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <v8pz1uwgIYWkidgZK-o8H-qJvnSyl0641XVmNO43Qls307AA3QRPuad_py6xGe0JAxB6yDEe76oZ8tau_n-2Y6sJBCKzCujNbEUUFhd-ahI=@szczek.dev>
+Message-ID: <20240816072311.353234-2-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc.c      | 5 +++++
- hw/i386/pc_piix.c | 5 -----
- hw/i386/pc_q35.c  | 5 -----
- 3 files changed, 5 insertions(+), 10 deletions(-)
+ target/sparc/insns.decode | 2 +-
+ target/sparc/translate.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index c74931d577..72229a24ff 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1217,6 +1217,11 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-         isa_realize_and_unref(pcms->pcspk, isa_bus, &error_fatal);
-     }
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index fbcb4f7aef..5fd478191a 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -644,7 +644,7 @@ STF         11 ..... 100100 ..... . .............          @r_r_ri_na
+ STFSR       11 00000 100101 ..... . .............          @n_r_ri
+ STXFSR      11 00001 100101 ..... . .............          @n_r_ri
+ {
+-  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na
++  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na # v9
+   STDFQ     11 ----- 100110 ----- - -------------
+ }
+ STDF        11 ..... 100111 ..... . .............          @d_r_ri_na
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 113639083b..c803e8d1ba 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -4521,7 +4521,7 @@ static bool do_st_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
  
-+    assert(pcms->vmport >= 0 && pcms->vmport < ON_OFF_AUTO__MAX);
-+    if (pcms->vmport == ON_OFF_AUTO_AUTO) {
-+        pcms->vmport = xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-+    }
-+
-     /* Super I/O */
-     pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
-                     pcms->vmport != ON_OFF_AUTO_ON);
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index d9e69243b4..347afa4c37 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -310,11 +310,6 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+ TRANS(STF, ALL, do_st_fpr, a, MO_32)
+ TRANS(STDF, ALL, do_st_fpr, a, MO_64)
+-TRANS(STQF, ALL, do_st_fpr, a, MO_128)
++TRANS(STQF, 64, do_st_fpr, a, MO_128)
  
-     pc_vga_init(isa_bus, pcmc->pci_enabled ? pcms->pcibus : NULL);
- 
--    assert(pcms->vmport != ON_OFF_AUTO__MAX);
--    if (pcms->vmport == ON_OFF_AUTO_AUTO) {
--        pcms->vmport = xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
--    }
--
-     /* init basic PC hardware */
-     pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
-                          !MACHINE_CLASS(pcmc)->no_floppy, 0x4);
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 9d108b194e..f2d8edfa84 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -276,11 +276,6 @@ static void pc_q35_init(MachineState *machine)
-         x86_register_ferr_irq(x86ms->gsi[13]);
-     }
- 
--    assert(pcms->vmport != ON_OFF_AUTO__MAX);
--    if (pcms->vmport == ON_OFF_AUTO_AUTO) {
--        pcms->vmport = ON_OFF_AUTO_ON;
--    }
--
-     /* init basic PC hardware */
-     pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc, !mc->no_floppy,
-                          0xff0104);
+ TRANS(STFA, 64, do_st_fpr, a, MO_32)
+ TRANS(STDFA, 64, do_st_fpr, a, MO_64)
 -- 
 2.45.2
 
