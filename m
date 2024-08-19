@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D28C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC5ADC52D6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg4zh-0003x9-9h; Mon, 19 Aug 2024 12:12:33 -0400
+	id 1sg50m-0001Iq-Rz; Mon, 19 Aug 2024 12:13:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sg4zg-0003rq-0M
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 12:12:32 -0400
-Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sg4za-0007aw-SH
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 12:12:31 -0400
-Received: by mail-oo1-xc35.google.com with SMTP id
- 006d021491bc7-5daa4f8f1c4so1798727eaf.2
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 09:12:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724083945; x=1724688745; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lmZQV+gQhNfX7Q3pNIqrG5VdJ+3DXbcpTYllJY08p/k=;
- b=ETyMwDjVXgwmQP31tDceZ4cObeyg1XzZbKSvBcH/MJbK6gGaXCGb4IwXmULQjrBx21
- OXIc2s5EGSPUXq0E9Ucb2H7U8PwoiMct/8uI7yPN3P7bvC66Ry+gAROnQczjyDJ+tzWl
- L3+SVv1jcyiENt9fJDIYtH0nfu8ZIL6CKBNSPT3RvLSIxLte+Au12kyCILPN4uYJbS54
- j5o1sCMjDndQTY2GJ8j0lYxpT9qD0pC+j/Wf+arIK9dz5NpJ5vT8RZU1WWpERmc4CSoZ
- yG5uCsDIwhqrXce6K9Aoa/MTz/revyaioxNrDgAauo06nIqEt8o3Pw9YFr4MJx/toCCg
- kDuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724083945; x=1724688745;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lmZQV+gQhNfX7Q3pNIqrG5VdJ+3DXbcpTYllJY08p/k=;
- b=ld8f5ZjR9W867Y/Ez6yyJfMW/ovu8xjMFMTpAeOw52UOy4GK3O5gjgejIXwiV9tIDA
- r4lEHwbh1U99L5AEKMQ5e0jDIBkAuWBp8y57wxRyNf4ANGgoUKytvg+J4kd/v+PbsCWR
- SRJUpmd/UdfCofSH19LcJivLYcZ+xTOmlNf2yEf224KtzYM59QKrmWWRSb50HyM/56UE
- 8KLYS2I+XW+V0LK0xCw7bmSLNmDyMJ/wgSNAaooSDxEUZv2QUTqCQZx/7CsYhsmbbsNJ
- XrJxw+uA4lRfT7A8dPmQ4IbjoqyevWwtP5ESXHj5j8/Qe7xr02ktofv0Vf0BZpDUqs6U
- kzFg==
-X-Gm-Message-State: AOJu0YxNZ/BHiGyEn06NdmQROQf04lYbjfjYbQruC3KOMbGA+ww+Hnsf
- SRI4E4grOzfVRKIee4Cm15w3lkwPgO/Xafwjx1dkSWLuOPxcJimNRAnpmoQijdxhdzZNlCAeyua
- j02+RVEb4U8phXxvz5u0VMZhr8/Q=
-X-Google-Smtp-Source: AGHT+IFWt902jNOTDHHOluMU2YEcA/BC8X18zUMuUscYEypwRLbPFDUAm2EHaow6sVeZZ8nEWrLE9L/nh+hFkws6NFo=
-X-Received: by 2002:a05:6359:5a92:b0:1aa:a01a:23dc with SMTP id
- e5c5f4694b2df-1b3931b8c6amr1645933655d.15.1724083945351; Mon, 19 Aug 2024
- 09:12:25 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
+ id 1sg50e-0000N1-Ns; Mon, 19 Aug 2024 12:13:33 -0400
+Received: from mx0b-001ae601.pphosted.com ([67.231.152.168])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
+ id 1sg50c-0007dY-St; Mon, 19 Aug 2024 12:13:32 -0400
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+ by mx0b-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JF6kmj012798;
+ Mon, 19 Aug 2024 11:11:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ PODMain02222019; bh=6kxBEvL1XX5A4t5MqUPj/4BY/7wipVF5zbUzogEKAoI=; b=
+ RV2zk1nFyLD5A4AbvDKpeC0IO2n+PScMrYK3LzxwIIlDD95khmp7NXVIlwozB966
+ nWZhnJcXItKZckcAZ8c5f+PyTs8rMXAqOrzi+xVhKrFE7+nPN/AS2I5PKMzhJDdK
+ V1aRaoGhWFFUfmCSQ+kFmwtvOltvlWCwJ7EUbPB4PKW00eRgRTh3xR2WtBztSS8w
+ YufyyNABosbCgXExarD0YB8u9wkPItetWlaq8zFA/UfvnZE6A5AaX9gP0t1EiQz/
+ jYd3LuxECvIdcpRspIU4sW7Tv1j5nwW4AjLoZkH54EA+u1hRU1i65xwCMc3cUem4
+ RNntNht9LcVDoIsIoz5VgQ==
+Received: from ausex01.ad.cirrus.com ([141.131.3.19])
+ by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 412r9hsxb0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 11:11:23 -0500 (CDT)
+Received: from ausex01.ad.cirrus.com (141.131.37.95) by ausex01.ad.cirrus.com
+ (141.131.37.95) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
+ 2024 11:11:22 -0500
+Received: from EDIN7BQBTG3.ad.cirrus.com (141.131.38.212) by
+ anon-ausex01.ad.cirrus.com (141.131.37.95) with Microsoft SMTP Server id
+ 15.2.1544.9 via Frontend Transport; Mon, 19 Aug 2024 11:11:20 -0500
+From: Ian Brockbank <Ian.Brockbank@cirrus.com>
+To: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
+CC: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
+ <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ian Brockbank
+ <ian.brockbank@cirrus.com>, LIU Zhiwei <zhiwei_liu@c-sky.com>
+Subject: [PATCH 05/11 v2] target/riscv: Update CSR xip in CLIC mode
+Date: Mon, 19 Aug 2024 17:02:16 +0100
+Message-ID: <20240819160742.27586-9-Ian.Brockbank@cirrus.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
+References: <https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00234.html>
+ <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
 MIME-Version: 1.0
-References: <20240818114257.21456-1-dorjoychy111@gmail.com>
- <20240818114257.21456-5-dorjoychy111@gmail.com>
- <bffedf65-6046-4264-a2fe-011ff8c58860@amazon.com>
- <CAFfO_h6eSmizJuSwRSQ1+gzeVBfmsmrLiN0mCXYuQFXGaJ4_Vw@mail.gmail.com>
- <5a7cd886-0694-45ed-a0fc-6bf69c5ed97f@amazon.com>
-In-Reply-To: <5a7cd886-0694-45ed-a0fc-6bf69c5ed97f@amazon.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Mon, 19 Aug 2024 22:12:18 +0600
-Message-ID: <CAFfO_h6fvuhCg4tOKS=nmAN5i+Pxa_1=LLdSbXTu67sU-g4iFg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] machine/nitro-enclave: Add built-in Nitro Secure
- Module device
-To: Alexander Graf <graf@amazon.com>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, stefanha@redhat.com, 
- pbonzini@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com, 
- berrange@redhat.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
- envelope-from=dorjoychy111@gmail.com; helo=mail-oo1-xc35.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Proofpoint-GUID: XvH52XeQnxR3M22WX1R8YTnj7J3ofbaC
+X-Proofpoint-ORIG-GUID: XvH52XeQnxR3M22WX1R8YTnj7J3ofbaC
+X-Proofpoint-Spam-Reason: orgsafe
+Received-SPF: pass client-ip=67.231.152.168;
+ envelope-from=prvs=5961d01319=ian.brockbank@cirrus.com;
+ helo=mx0b-001ae601.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,81 +89,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 19, 2024 at 9:58=E2=80=AFPM Alexander Graf <graf@amazon.com> wr=
-ote:
->
->
-> On 19.08.24 17:28, Dorjoy Chowdhury wrote:
-> > Hey Alex,
-> >
-> > On Mon, Aug 19, 2024 at 4:13=E2=80=AFPM Alexander Graf <graf@amazon.com=
-> wrote:
-> >> Hey Dorjoy,
-> >>
-> >> On 18.08.24 13:42, Dorjoy Chowdhury wrote:
-> >>> AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device whi=
-ch
-> >>> is used for stripped down TPM functionality like attestation. This co=
-mmit
-> >>> adds the built-in NSM device in the nitro-enclave machine type.
-> >>>
-> >>> In Nitro Enclaves, all the PCRs start in a known zero state and the f=
-irst
-> >>> 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and P=
-CR8
-> >>> contain the SHA384 hashes related to the EIF file used to boot the
-> >>> VM for validation.
-> >>>
-> >>> Some optional nitro-enclave machine options have been added:
-> >>>       - 'id': Enclave identifier, reflected in the module-id of the N=
-SM
-> >>> device. If not provided, a default id will be set.
-> >>>       - 'parent-role': Parent instance IAM role ARN, reflected in PCR=
-3
-> >>> of the NSM device.
-> >>>       - 'parent-id': Parent instance identifier, reflected in PCR4 of=
- the
-> >>> NSM device.
-> >>>
-> >>> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> >>> ---
-> >>>    crypto/meson.build              |   2 +-
-> >>>    crypto/x509-utils.c             |  73 +++++++++++
-> >>
-> >> Can you please put this new API into its own patch file?
-> >>
-> >>
-> >>>    hw/core/eif.c                   | 225 ++++++++++++++++++++++++++++=
-+---
-> >>>    hw/core/eif.h                   |   5 +-
-> >>
-> >> These changes to eif.c should ideally already be part of the patch tha=
-t
-> >> introduces eif.c (patch 1), no? In fact, do you think you can make the
-> >> whole eif logic its own patch file?
-> >>
-> > Good point. I guess it should be possible if I have the virtio-nsm
-> > device commit first and then add the machine/nitro-enclave commit with
-> > full support with the devices. That will of course make the
-> > machine/nitro-enclave commit larger. What do you think?
->
->
-> As long as nothing compiles the code, it can rely on not yet implemented
-> functions. So it's perfectly legit to add all your code in individual
-> commits and then at the end add the meson.build change that implements
-> the config option. How about the order below?
->
-> * Crypto patch for SHA384
-> * Crypto patch for x509 fingerprint
-> * NSM device emulation (including libcbor check, introduces
-> CONFIG_VIRTIO_NSM)
-> * EIF format parsing (not compiled yet)
-> * Nitro Enclaves machine (introduces CONFIG_NITRO_ENCLAVE)
-> * Nitro Enclaves docs
->
+From: Ian Brockbank <ian.brockbank@cirrus.com>
 
-Sounds good to me. Thanks Alex!
+The xip CSR appears hardwired to zero in CLIC mode, replaced by separate
+memory-mapped interrupt pendings (clicintip[i]). Writes to xip will be
+ignored and will not trap (i.e., no access faults).
 
-Regards,
-Dorjoy
+Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
+Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
+---
+ target/riscv/csr.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index a5978e0929..276ef7856e 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2743,6 +2743,12 @@ static RISCVException rmw_mip(CPURISCVState *env, in=
+t csrno,
+     uint64_t rval;
+     RISCVException ret;
+
++    /* The xip CSR appears hardwired to zero in CLIC mode. */
++    if (riscv_clic_is_clic_mode(env)) {
++        *ret_val =3D 0;
++        return RISCV_EXCP_NONE;
++    }
++
+     ret =3D rmw_mip64(env, csrno, &rval, new_val, wr_mask);
+     if (ret_val) {
+         *ret_val =3D rval;
+@@ -3294,6 +3300,12 @@ static RISCVException rmw_sip64(CPURISCVState *env, =
+int csrno,
+         }
+         ret =3D rmw_vsip64(env, CSR_VSIP, ret_val, new_val, wr_mask);
+     } else {
++        /* The xip CSR appears hardwired to zero in CLIC mode. */
++        if (riscv_clic_is_clic_mode(env)) {
++            *ret_val =3D 0;
++            return RISCV_EXCP_NONE;
++        }
++
+         ret =3D rmw_mvip64(env, csrno, ret_val, new_val, wr_mask & mask);
+     }
+
+--
+2.46.0.windows.1
+This message and any attachments may contain privileged and confidential in=
+formation that is intended solely for the person(s) to whom it is addressed=
+. If you are not an intended recipient you must not: read; copy; distribute=
+; discuss; take any action in or make any reliance upon the contents of thi=
+s message; nor open or read any attachment. If you have received this messa=
+ge in error, please notify us as soon as possible on the following telephon=
+e number and destroy this message including any attachments. Thank you. Cir=
+rus Logic International (UK) Ltd and Cirrus Logic International Semiconduct=
+or Ltd are companies registered in Scotland, with registered numbers SC0898=
+39 and SC495735 respectively. Our registered office is at 7B Nightingale Wa=
+y, Quartermile, Edinburgh, EH3 9EG, UK. Tel: +44 (0)131 272 7000. www.cirru=
+s.com
 
