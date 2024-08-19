@@ -4,91 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 206D1C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B29BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg2zQ-000453-8R; Mon, 19 Aug 2024 10:04:08 -0400
+	id 1sg320-0007mV-Pc; Mon, 19 Aug 2024 10:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sg2zO-0003yK-JM
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:04:06 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sg2zM-000731-1C
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:04:06 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2d3c05ec278so2940356a91.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:04:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724076242; x=1724681042;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EMvjgF3oAVY7GBl6lGcISH8txA+B5nR6CJ8hZiXV7Hg=;
- b=GxDoU92jXhK7O0wdxgxOOiM3o5uAmJW6zhbELQ+4WM8sQQeG1TK/zS99rUPBOROYMw
- YKKeTR3RZiC/8pnIuwNSEgEmcr8E7nJ3N/DWChlR/tZQiKMfQ2WfsYqJU2h9TEy6w4Cl
- thLnOAoqxMLUjTPN+Ztdy0/tufG2Zhyc03sD7F74Bn+9Qx6jEFkMKRiiRtDiKKkHUGd/
- /hNH8ArKiVUc/awSLeJo8EwxXwUDIASI+LTGz9Ghu3j2hD0X+9AzXafAJg1wCaE4nt1U
- 6/j6Za4aYbR85q3X4t8ClB0wUXyRZFbNazRgwdYF+36VOqCu/Bqct7qOvgQblQ1juPzu
- GkQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724076242; x=1724681042;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EMvjgF3oAVY7GBl6lGcISH8txA+B5nR6CJ8hZiXV7Hg=;
- b=xMZ6VVZZ7pstKUQ2FprJdLVwFC2oa/NzinocxfNN4DN8zf492wwgpm+m+FDR9zkisG
- BsipVRe2BLVdB+ZrVYhlIys0zkpAKEOuJbZ+z43DEcQuXF87qe3Uz9gg5g1S8fdQbW/Q
- KzsX/h87Qj+zfxwFaPql0RPsZ+PzCssyDmOST4UWIZuqn1D8lsQQuXHgAt3g6y80pN1j
- 7taS+Nx9vxWaeXGOqMUasiv07u6JUjysf8CblZTCkzjN3DNLw6rUompsDGE97SUTv1bo
- fMhlSJxwH2PJFgVAoVJgdO3XGHIJFVQy567M7qi3oFlcwfA8XDd3Q2eKhhbNikugYAyz
- I/8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUD7GrJAZoL7/XXvxANrxiCvfEKwcvTWQVSTYilfMJH2UZPlmxXTUVlL2kEBk+LH2MGMAloFfc1tiSBdTG8Q8qcHdT4NL4=
-X-Gm-Message-State: AOJu0YzH97zz58lAY4u7P+zdRMjMXaO1xpP3tvCW3Kwz8xZ2GMtNNi/s
- 91oy9tx0zLOUBanksHXtB2CgHRNI9SS/94KsTWypMRtJ2D/wvAO8hASy+V+2dRW+4C9J97HgKqV
- ZOWM=
-X-Google-Smtp-Source: AGHT+IHCVhBvw9tPBVtcjrlisdNgtbq0xGQlkfJNmOs+H2TegHqckkHKz0RToJ60Gl6QBJI2GN2SsQ==
-X-Received: by 2002:a17:90b:4004:b0:2d3:cd41:77a7 with SMTP id
- 98e67ed59e1d1-2d3dfc37cb0mr9980717a91.3.1724076242038; 
- Mon, 19 Aug 2024 07:04:02 -0700 (PDT)
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d3d0b3b6fcsm8341174a91.43.2024.08.19.07.04.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 07:04:01 -0700 (PDT)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: jag.raman@oracle.com,
-	qemu-devel@nongnu.org
-Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, john.levon@nutanix.com,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v11 2/2] vfio-user: Message-based DMA support
-Date: Mon, 19 Aug 2024 07:03:55 -0700
-Message-Id: <20240819140355.2958821-3-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240819140355.2958821-1-mnissler@rivosinc.com>
-References: <20240819140355.2958821-1-mnissler@rivosinc.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sg31z-0007gi-Ag; Mon, 19 Aug 2024 10:06:47 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sg31x-0007VI-Jg; Mon, 19 Aug 2024 10:06:47 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47J6T4Fg013820;
+ Mon, 19 Aug 2024 14:06:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=x
+ QNc4irgh/BAzXeN0jjzShJxuK6av+L1JG7jf6otzqw=; b=T6z4ujruCvoS5G8KV
+ my0LSwXaZ1lK7vELPus1yTp8lofOO2frbv/+gKb+8EFMEn9FIls7BqXfdRqkwzZF
+ l2zSHrfifINNf6na5C/Phk+yOI7esAxqdhC7jymvF7IkonaO8AnvhcpfIyhbohOX
+ KtWe1aIAxykMgLn3OpGEh1xdgNOukvVH7uLupgwYRsOapUc9aEmpSPb+W+loX60+
+ Aca9HavINFZSy7iEPaaexfl7b8SveDMyctexN/BrFseT8yTSycOZDo0UG9liPSvW
+ C4A0Qymw3GcpqGPcwoJNTXgAvdz+rQ5K6UYhOtXQLTOmS7ttmQG4+XDwWrnWYYUf
+ xslGQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 412mbfrmmd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 14:06:36 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47JE6aG4021426;
+ Mon, 19 Aug 2024 14:06:36 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 412mbfrmm9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 14:06:36 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47JBrGH5013110;
+ Mon, 19 Aug 2024 14:06:35 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 41366txmst-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 14:06:35 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 47JE6Tbj53805506
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Aug 2024 14:06:31 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B0CF22004D;
+ Mon, 19 Aug 2024 14:06:29 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1240320040;
+ Mon, 19 Aug 2024 14:06:27 +0000 (GMT)
+Received: from [9.195.36.7] (unknown [9.195.36.7])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 19 Aug 2024 14:06:26 +0000 (GMT)
+Message-ID: <142e8cde-ba89-46cd-80bd-525de88fd6cf@linux.ibm.com>
+Date: Mon, 19 Aug 2024 19:36:26 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=mnissler@rivosinc.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] hw/ppc: Implement -dtb support for PowerNV
+To: Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240813134536.1204513-1-adityag@linux.ibm.com>
+ <D3GB5QVADVQ1.XZM3FFV52LIW@gmail.com>
+ <6c0cdf26-9795-4998-9d80-1d0095700a59@kaod.org>
+ <D3GZ6RL9K9OQ.1A1YQ9YSZPH3E@gmail.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <D3GZ6RL9K9OQ.1A1YQ9YSZPH3E@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ygja7rZKIoe21X9BRi3ZfhAxG2E7J91E
+X-Proofpoint-ORIG-GUID: vvYDkIwUjOiY9OkKvGdng21uL9WVG8UW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_12,2024-08-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ priorityscore=1501 bulkscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
+ phishscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408190094
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,173 +123,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up support for DMA for the case where the vfio-user client does not
-provide mmap()-able file descriptors, but DMA requests must be performed
-via the VFIO-user protocol. This installs an indirect memory region,
-which already works for pci_dma_{read,write}, and pci_dma_map works
-thanks to the existing DMA bounce buffering support.
+Hello Nick,
 
-Note that while simple scenarios work with this patch, there's a known
-race condition in libvfio-user that will mess up the communication
-channel. See https://github.com/nutanix/libvfio-user/issues/279 for
-details as well as a proposed fix.
+On 16/08/24 07:50, Nicholas Piggin wrote:
+> <...snip...>
+>>> One little nit is MachineState.fdt vs PnvMachineState.fdt
+>>> which is now confusing. I would call the new PnvMachineState member
+>>> something like fdt_from_dtb, or fdt_override?
+>> I agree. this is confusing. machine->fdt could be used instead ?
+> Yeah that could be another option. Test pnv.dtb or add a new bool
+> to pnv if you need to check whether the fdt has been provided by
+> cmdline.
 
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
----
- hw/remote/trace-events    |   2 +
- hw/remote/vfio-user-obj.c | 100 ++++++++++++++++++++++++++++++++------
- 2 files changed, 87 insertions(+), 15 deletions(-)
+Sure, I will use machine->fdt. Testing pnv.dtb should be good enough to 
+check if -dtb was passed I think.
 
-diff --git a/hw/remote/trace-events b/hw/remote/trace-events
-index 0d1b7d56a5..358a68fb34 100644
---- a/hw/remote/trace-events
-+++ b/hw/remote/trace-events
-@@ -9,6 +9,8 @@ vfu_cfg_read(uint32_t offset, uint32_t val) "vfu: cfg: 0x%x -> 0x%x"
- vfu_cfg_write(uint32_t offset, uint32_t val) "vfu: cfg: 0x%x <- 0x%x"
- vfu_dma_register(uint64_t gpa, size_t len) "vfu: registering GPA 0x%"PRIx64", %zu bytes"
- vfu_dma_unregister(uint64_t gpa) "vfu: unregistering GPA 0x%"PRIx64""
-+vfu_dma_read(uint64_t gpa, size_t len) "vfu: DMA read 0x%"PRIx64", %zu bytes"
-+vfu_dma_write(uint64_t gpa, size_t len) "vfu: DMA write 0x%"PRIx64", %zu bytes"
- vfu_bar_register(int i, uint64_t addr, uint64_t size) "vfu: BAR %d: addr 0x%"PRIx64" size 0x%"PRIx64""
- vfu_bar_rw_enter(const char *op, uint64_t addr) "vfu: %s request for BAR address 0x%"PRIx64""
- vfu_bar_rw_exit(const char *op, uint64_t addr) "vfu: Finished %s of BAR address 0x%"PRIx64""
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index 8dbafafb9e..0e93d7a7b4 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -300,6 +300,63 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
-     return count;
- }
- 
-+static MemTxResult vfu_dma_read(void *opaque, hwaddr addr, uint64_t *val,
-+                                unsigned size, MemTxAttrs attrs)
-+{
-+    MemoryRegion *region = opaque;
-+    vfu_ctx_t *vfu_ctx = VFU_OBJECT(region->owner)->vfu_ctx;
-+    uint8_t buf[sizeof(uint64_t)];
-+
-+    trace_vfu_dma_read(region->addr + addr, size);
-+
-+    g_autofree dma_sg_t *sg = g_malloc0(dma_sg_size());
-+    vfu_dma_addr_t vfu_addr = (vfu_dma_addr_t)(region->addr + addr);
-+    if (vfu_addr_to_sgl(vfu_ctx, vfu_addr, size, sg, 1, PROT_READ) < 0 ||
-+        vfu_sgl_read(vfu_ctx, sg, 1, buf) != 0) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    *val = ldn_he_p(buf, size);
-+
-+    return MEMTX_OK;
-+}
-+
-+static MemTxResult vfu_dma_write(void *opaque, hwaddr addr, uint64_t val,
-+                                 unsigned size, MemTxAttrs attrs)
-+{
-+    MemoryRegion *region = opaque;
-+    vfu_ctx_t *vfu_ctx = VFU_OBJECT(region->owner)->vfu_ctx;
-+    uint8_t buf[sizeof(uint64_t)];
-+
-+    trace_vfu_dma_write(region->addr + addr, size);
-+
-+    stn_he_p(buf, size, val);
-+
-+    g_autofree dma_sg_t *sg = g_malloc0(dma_sg_size());
-+    vfu_dma_addr_t vfu_addr = (vfu_dma_addr_t)(region->addr + addr);
-+    if (vfu_addr_to_sgl(vfu_ctx, vfu_addr, size, sg, 1, PROT_WRITE) < 0 ||
-+        vfu_sgl_write(vfu_ctx, sg, 1, buf) != 0) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    return MEMTX_OK;
-+}
-+
-+static const MemoryRegionOps vfu_dma_ops = {
-+    .read_with_attrs = vfu_dma_read,
-+    .write_with_attrs = vfu_dma_write,
-+    .endianness = DEVICE_HOST_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+        .unaligned = true,
-+    },
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
- static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
- {
-     VfuObject *o = vfu_get_private(vfu_ctx);
-@@ -308,17 +365,30 @@ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
-     g_autofree char *name = NULL;
-     struct iovec *iov = &info->iova;
- 
--    if (!info->vaddr) {
--        return;
--    }
--
-     name = g_strdup_printf("mem-%s-%"PRIx64"", o->device,
--                           (uint64_t)info->vaddr);
-+                           (uint64_t)iov->iov_base);
- 
-     subregion = g_new0(MemoryRegion, 1);
- 
--    memory_region_init_ram_ptr(subregion, NULL, name,
--                               iov->iov_len, info->vaddr);
-+    if (info->vaddr) {
-+        memory_region_init_ram_ptr(subregion, OBJECT(o), name,
-+                                   iov->iov_len, info->vaddr);
-+    } else {
-+        /*
-+         * Note that I/O regions' MemoryRegionOps handle accesses of at most 8
-+         * bytes at a time, and larger accesses are broken down. However,
-+         * many/most DMA accesses are larger than 8 bytes and VFIO-user can
-+         * handle large DMA accesses just fine, thus this size restriction
-+         * unnecessarily hurts performance, in particular given that each
-+         * access causes a round trip on the VFIO-user socket.
-+         *
-+         * TODO: Investigate how to plumb larger accesses through memory
-+         * regions, possibly by amending MemoryRegionOps or by creating a new
-+         * memory region type.
-+         */
-+        memory_region_init_io(subregion, OBJECT(o), &vfu_dma_ops, subregion,
-+                              name, iov->iov_len);
-+    }
- 
-     dma_as = pci_device_iommu_address_space(o->pci_dev);
- 
-@@ -330,20 +400,20 @@ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
- static void dma_unregister(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
- {
-     VfuObject *o = vfu_get_private(vfu_ctx);
-+    MemoryRegionSection mr_section;
-     AddressSpace *dma_as = NULL;
--    MemoryRegion *mr = NULL;
--    ram_addr_t offset;
- 
--    mr = memory_region_from_host(info->vaddr, &offset);
--    if (!mr) {
-+    dma_as = pci_device_iommu_address_space(o->pci_dev);
-+
-+    mr_section =
-+        memory_region_find(dma_as->root, (hwaddr)info->iova.iov_base, 1);
-+    if (!mr_section.mr) {
-         return;
-     }
- 
--    dma_as = pci_device_iommu_address_space(o->pci_dev);
--
--    memory_region_del_subregion(dma_as->root, mr);
-+    memory_region_del_subregion(dma_as->root, mr_section.mr);
- 
--    object_unparent((OBJECT(mr)));
-+    object_unparent((OBJECT(mr_section.mr)));
- 
-     trace_vfu_dma_unregister((uint64_t)info->iova.iov_base);
- }
--- 
-2.34.1
 
+Regarding the conversation about CAS, I don't have idea on it, other 
+than the minimum basics. But thanks to you and Cedric, got to know 
+somethings.
+
+
+Thanks,
+
+Aditya Gupta
+
+>>> The other question... Some machines rebuild fdt at init, others at
+>>> reset time. As far as I understood, spapr has to rebuild on reset
+>>> because C-A-S call can update the fdt so you have to undo that on
+>>> reset.
+>> C-A-S is a guest OS hcall. reset is called before the guest OS
+>> is started.
+> Right, but when you reboot it needs to be reverted to initial
+> (pre-CAS) fdt.
+>
+>>> Did powernv just copy that without really needing it, I wonder?
+>>> Maybe that rearranged to just do it at init time (e.g., see
+>>> hw/riscv/virt.c which is simpler).
+>> The machine is aware of user created devices (on the command line)
+>> only at reset time.
+> Ah, I should have followed a bit closer. riscv, arm use a
+> machine_done notifier for that (and x86, loongarch for ACPI / BIOS
+> tables). So that avoids fdt rebuild after the first reset I think.
+>
+> Anyway I don't really mind then, following other archs would be okay,
+> but keeping similar with spapr and avoiding code change is also good.
+> Maybe add a small comment to we use reset rather than machine_done
+> notifier of other archs to be similar to spapr.
+>
+> Thanks,
+> Nick
 
