@@ -4,82 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EB1C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE2D5C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 23:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBGK-0000YN-BT; Mon, 19 Aug 2024 18:54:08 -0400
+	id 1sgBdr-0005g3-AL; Mon, 19 Aug 2024 19:18:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEk-0001XQ-7d
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:32 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEi-0000lF-8H
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:29 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-428178fc07eso36558065e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107944; x=1724712744; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zTcmfZovDL+2at9UVP/rP8+xQ32AOJCb5fxO6lUcn8c=;
- b=iVejb+2gPz99XEHK8h1RETbg9cK8rfLjdGDAfDjlbKl/32I00aV8+KcUvl4ZomZXyF
- L9bon/fVj17yjVEalWdDnm1MLktf+qLQXKjzFC5ZdXhuZ5FISlU5KgOd7LyKNMhy7nal
- 2aq8DB6igQ3RejcFyCuWDosllzm5m22CRM1bQhCefWTWLEFKlUCC1a9VPMkcADbTgWVV
- 7sKSOLwFC4j6GPc9wlbIDGSFr4OItbLVE/bjv+YN6thaQqKfg9Q2qh1Pd6VSGlpKPUt9
- ZRMg3Xb1KeFJ633QqwneG80tCayuFjOAiN9aHdQ46cunUUudd6sVcEa5CCC3rV4KD+sx
- irVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107944; x=1724712744;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zTcmfZovDL+2at9UVP/rP8+xQ32AOJCb5fxO6lUcn8c=;
- b=c0XvAoSYWvaMtnHqowkT9EH28YgLgezXG0dnXszz+leE/tpD9GNoXQOgCkSB2tD+3K
- K6ob8YIcqb0CHqwmIx9uj3hPq7/LCaoF6SAWr3A4EYBDZDkCHX1lhWC8iXCtvOOqr8Qg
- Q5hD2kNZDn72C7uWkT8+dkAJwoeKYv0zee+ZLSEaOUZ6R54MrCQYNYbf/9nKVNNGvFo6
- MeQhJAlqbZefa3V08aXq1cQ2JoysecuWr7I8gHVFxl9Goeiq6XN7n7oOJ0TQwo7Cd6OV
- UMHSwHZT3eeaNzz6s4/6PmKHDjxlZfJQP1mNZ+3nBFyJvJ/03wyGUIPvdrglI8vAHpbQ
- zmzA==
-X-Gm-Message-State: AOJu0YypHU9NZeKhTbaQ+8JqrqX6UTLsVTtE8cRS3R/Nq2Z5NC7B1nSR
- 6TdT9yAuuh88aXrrwrTWiTRhq+f+6k19rk0Lox6RzPeTlGuYUXONVLZRbgjDKogLgB30tDvEeDx
- nxaQ=
-X-Google-Smtp-Source: AGHT+IHudnoR6LWmE2RVxE9W9gG2+NwY6H/GTDeY9O1ynzVttZGeR3lWRbgHRUCneLg9BfNStPVTfg==
-X-Received: by 2002:a05:600c:4455:b0:427:d8f7:b718 with SMTP id
- 5b1f17b1804b1-429ed7e43d7mr87042175e9.24.1724107944227; 
- Mon, 19 Aug 2024 15:52:24 -0700 (PDT)
-Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
- [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718985a6ddsm11569150f8f.58.2024.08.19.15.52.23
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:52:23 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 14/20] tests/avocado: Mark ppc_hv_tests.py as non-flaky after
- fixed console interaction
-Date: Tue, 20 Aug 2024 00:51:10 +0200
-Message-ID: <20240819225116.17928-15-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
-References: <20240819225116.17928-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
+ id 1sgBdm-0005fP-Pf
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 19:18:23 -0400
+Received: from secure.fsr.com ([64.126.132.23])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
+ id 1sgBdk-0003ww-Py
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 19:18:22 -0400
+Received: from [192.168.254.26] (syn-098-146-201-045.res.spectrum.com
+ [98.146.201.45]) (Authenticated sender: chauser)
+ by secure.fsr.com (Postfix) with ESMTPSA id 8F9DE345EA;
+ Mon, 19 Aug 2024 16:18:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pullman.com;
+ s=mail1; t=1724109487;
+ bh=4nK1yXULlVUlPzlUmNI6v169jmuG0uyg1zsAs5CH1Xc=;
+ h=Date:From:Subject:To;
+ b=InTZUFT6XLCmoCzl8rV2oDI6X2TJB0Bk1i+LQpJJAB6ZOMmU+xr4XqlCEtp9bfdob
+ tnGaN9cs4qGLZoQlqDAOTdav0pSBi5wepmubR/YdLFTLLA+YHVFPK836ivVOKek6id
+ POtDCYD4DKsJinf1phg4Sa7Ug4t8Ac+jNoGDkKlc=
+Message-ID: <cb338cdc-d09d-4513-ba16-5ff3f792bbfe@pullman.com>
+Date: Mon, 19 Aug 2024 16:18:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+From: Carl Hauser <chauser@pullman.com>
+Subject: [PATCH] hw/char: suppress sunmouse events with no changes
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=64.126.132.23; envelope-from=chauser@pullman.com;
+ helo=secure.fsr.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,32 +65,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+ From f155cbd57b37fa600c580ed30d593f47383ecd38 Mon Sep 17 00:00:00 2001
+From: Carl Hauser <chauser@pullman.com>
+Date: Fri, 16 Aug 2024 09:20:36 -0700
+Subject: [PATCH] hw/char: suppress sunmouse events with no changes
 
-Now that exec_command doesn't incorrectly consume console output,
-and guest time is set correctly, ppc_hv_tests.py is working more
-reliably. Try marking it non-flaky.
+Sun optical mice circa 1993 were based on the Mouse Systems
+Corp. optical mice. The technical manual for those mice
+states that mice only send events when there is motion or the
+button state changes. The Solaris 2.5.6 mouse driver seems
+to be confused by updates that don't follow this specification.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20240805232814.267843-3-npiggin@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This patch adds a field to the ESCCChannelState to contain
+the button state sent in the last event and uses that in
+sunmouse_event to avoid sending unnecessary updates.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
+Signed-off-by: Carl Hauser <chauser@pullman.com>
 ---
- tests/avocado/ppc_hv_tests.py | 1 -
- 1 file changed, 1 deletion(-)
+  hw/char/escc.c         | 10 ++++++++++
+  include/hw/char/escc.h |  1 +
+  2 files changed, 11 insertions(+)
 
-diff --git a/tests/avocado/ppc_hv_tests.py b/tests/avocado/ppc_hv_tests.py
-index bf8822bb97..0e83bbac71 100644
---- a/tests/avocado/ppc_hv_tests.py
-+++ b/tests/avocado/ppc_hv_tests.py
-@@ -45,7 +45,6 @@ def missing_deps():
- # QEMU already installed and use that.
- # XXX: The order of these tests seems to matter, see git blame.
- @skipIf(missing_deps(), 'dependencies (%s) not installed' % ','.join(deps))
--@skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test sometimes gets stuck due to console handling problem')
- @skipUnless(os.getenv('AVOCADO_ALLOW_LARGE_STORAGE'), 'storage limited')
- @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
- class HypervisorTest(QemuSystemTest):
+diff --git a/hw/char/escc.c b/hw/char/escc.c
+index d450d70eda..7732141cf5 100644
+--- a/hw/char/escc.c
++++ b/hw/char/escc.c
+@@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
+      s->rxint = s->txint = 0;
+      s->rxint_under_svc = s->txint_under_svc = 0;
+      s->e0_mode = s->led_mode = s->caps_lock_mode = s->num_lock_mode = 0;
++    s->sunmouse_prev_state = 0;
+      clear_queue(s);
+  }
+
+@@ -959,6 +960,15 @@ static void sunmouse_event(void *opaque,
+      int ch;
+
+      trace_escc_sunmouse_event(dx, dy, buttons_state);
++
++    /* Don't send duplicate events without motion */
++    if (dx == 0 &&
++        dy == 0 &&
++        (s->sunmouse_prev_state ^ buttons_state) == 0) {
++        return;
++    }
++    s->sunmouse_prev_state = buttons_state;
++
+      ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
+
+      if (buttons_state & MOUSE_EVENT_LBUTTON) {
+diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
+index 5669a5b811..bc5ba4f564 100644
+--- a/include/hw/char/escc.h
++++ b/include/hw/char/escc.h
+@@ -46,6 +46,7 @@ typedef struct ESCCChannelState {
+      uint8_t rx, tx;
+      QemuInputHandlerState *hs;
+      char *sunkbd_layout;
++    int sunmouse_prev_state;
+  } ESCCChannelState;
+
+  struct ESCCState {
 -- 
-2.45.2
-
+2.34.1
 
