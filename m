@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEAB7C52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7D9C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBEa-0000oK-Ml; Mon, 19 Aug 2024 18:52:22 -0400
+	id 1sgBFP-0003g3-3t; Mon, 19 Aug 2024 18:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEB-0000Z8-3G
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:57 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEK-0000ko-F7
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:07 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBE9-0000hC-JH
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:54 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42803bbf842so53102355e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:51:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEI-0000jR-Sd
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:04 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42817bee9e8so37480285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107911; x=1724712711; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107920; x=1724712720; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fkmnMIiYe+27d0sNHWNILcAXDpFi/s5I0/diI446638=;
- b=sCYybkAExAFTgUSsJjYl8bw6c5CARMkMn45Lg5noMMOO0IkSraUe4WlM0qePXN2ZVt
- M8oIJvSP5eRo+9JdNnEWxKwGrMd/p0TcUtD65OaC/d15jhy+55QGoOp4SF/twNdS+Qq0
- c8OcHYdDOy0NvWKbo0jkPU80EXPKAU/jZWcX+FDzrEFM3/OtzY87T0Tx2AFPA0Qyf69e
- tRhaIEdsaWPAi379BwOkjreP1aj8Y2Qne7+34EiKw0xmzf6x1/oPHHQ8ha8qKCLQzldE
- jtfbHfU7SVN2yvOUk2pUAPtnEGxsy+nuGYy1U4jVCkRhBV9tIxPE16Him56jYhkfsOpb
- kyeg==
+ bh=/KeoVIja/7tKrspHJMKvsDmwZQwxRpxJr8dhRzojKqI=;
+ b=MfLifjU2i555wbFMdf1MFblMU9IH48g34wEGdX2EzVjPjKNXvApoufP7FDTOzfY/oN
+ TUeDK1Dm7IRQGh/OVMuyvbI0ITmABytCy4nCTTEZxE29H7pgN0aQFSmVJoivQQ1865MS
+ L9TmMK/t7I2zi4MUqDxSZb7Kja5eb/2xUVsl/anFijHBWDMvXnX4vS8nZ0u6o2XoM6SB
+ nzEk7Enr5vmnJ7sPPgXuDyBdSIg5JRARXv8B8HuLdKrxFHBDay8GXbN92kukyQxCXIWc
+ wh6euSks82YjLK7MiM0aiQfXaMlEE2BOjoFYhw+Vzmq88ZmWm7g9/SIVHy1nGfemAWXB
+ 5Adg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107911; x=1724712711;
+ d=1e100.net; s=20230601; t=1724107920; x=1724712720;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fkmnMIiYe+27d0sNHWNILcAXDpFi/s5I0/diI446638=;
- b=qNVh/9jMERrcqKz49REKGWWtVVNO6GgAkHIhFWyXEeTpYxeBKoTjB6rL1VLAns3dIY
- qTikD0LOzlM2hQ6LRGxOygoFlfXcj6vWLSRuorNTwDOh7vB5K0dpyQCfLtCQjbp8zwMZ
- KM1krWBzXTK8K+l00O0y0/WyrtLdlkDdaGJyDaqe39kWQhlNLkZNBrwaPhPAYwn8ELtr
- +WgFocNznxqo7MnFuFw2+/3WFFt2gWerbfxQ++Pku7KoVGV5rc3Me/09tChI3DLgYc4R
- YXCeM4QEAbM92uxceeeb6oFiFfoeQRdwRpHh4JHIxCVytsR7QFnZOr5EVOLv7XxEmPIK
- L6Xg==
-X-Gm-Message-State: AOJu0YxaBe0HQNjQtBlCpzSkyDOSACjt/M4XRP+dkVIPu3GPkyj9MyvV
- j1vi79V/1McA0pM8DbclMwrxI0CtHeA0P9DnwqKCdHjEpu36KmFEQgG/sq+GCp6xyVV9Y//MrcN
- CXhs=
-X-Google-Smtp-Source: AGHT+IEWFQ1diX4iQPNwxuhhSfv9gv4sajZEOm9lJhZtI7t6aIpOjbgDL2wey6AKmNBKpdKicHNeFA==
-X-Received: by 2002:a05:600c:1549:b0:429:d43e:dbc3 with SMTP id
- 5b1f17b1804b1-429ed7ee077mr103606855e9.34.1724107911263; 
- Mon, 19 Aug 2024 15:51:51 -0700 (PDT)
+ bh=/KeoVIja/7tKrspHJMKvsDmwZQwxRpxJr8dhRzojKqI=;
+ b=HgyPSqSRkCkjcXDMDrMkDraZxIofOEbXbZFWCBIXuNfTdl2pjKVDdzPK768CU/2MgZ
+ xgAqTUCQuWwFIbyH+iG4pv94nJWimgB+U3ttBx3abntB3wmVzCnqBQTTJ+thrf2GHbPv
+ EQy6CejQzV9Fob8zaDgNiD3S67F4qQy7isQ0fN9RMpa06lE8FTC1fCnqHr/wOaS5XTqB
+ sUNbul+twhU8xgqeKkyUBb45bRtscEgcMZt91sBpBffmHmX0pgs4wwt6uWwT31BxUO0g
+ iOqehSBHsZO/kksMhfNAUZjtzWzDBmtloe5YD80XcVg6f3g+Z28mVVbHvhR7HIYVubAN
+ 56rA==
+X-Gm-Message-State: AOJu0Yz+lDeTMPcgDuz/jWzFW5PIK8/8KYNfs/h7zn+H17Nb5yPd01CX
+ RZGRiKhrAzxoS3dXT7ZzfbloKQW/1NXOQyoSgm6uBDeR7wlk7LeH2ag6SqYUMSoY9m36v3529uA
+ GrqU=
+X-Google-Smtp-Source: AGHT+IEEN29pAplJanjaz4jgjl2pcEqL13XSEHtlqMX2TMaK/f/PAzUwEtRBCOeFQTe0VBrK2vzdLw==
+X-Received: by 2002:adf:f707:0:b0:368:4c38:a669 with SMTP id
+ ffacd0b85a97d-3719431e865mr7125144f8f.10.1724107920329; 
+ Mon, 19 Aug 2024 15:52:00 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718985d9d6sm11572563f8f.64.2024.08.19.15.51.50
+ ffacd0b85a97d-371898bb588sm11561680f8f.115.2024.08.19.15.51.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:51:50 -0700 (PDT)
+ Mon, 19 Aug 2024 15:51:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 07/20] hw/dma/xilinx_axidma: Use semicolon at end of statement,
- not comma
-Date: Tue, 20 Aug 2024 00:51:03 +0200
-Message-ID: <20240819225116.17928-8-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 09/20] linux-user/mips: Do not try to use removed R5900 CPU
+Date: Tue, 20 Aug 2024 00:51:05 +0200
+Message-ID: <20240819225116.17928-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,36 +94,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+R5900 emulation was removed in commit 823f2897bd.
+Remove it from ELF parsing in order to avoid:
 
-In axidma_class_init() we accidentally used a comma at the end of
-a statement rather than a semicolon. This has no ill effects, but
-it's obviously not intended and it means that Coccinelle scripts
-for instance will fail to match on the two statements. Use a
-semicolon instead.
+  $ qemu-mipsn32 ./test5900
+  qemu-mipsn32: unable to find CPU model 'R5900'
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240813165250.2717650-6-peter.maydell@linaro.org>
+This reverts commit 4d9e5a0eb7df6e98ac6cf5e16029f35dd05b9537.
+
+Fixes: 823f2897bd ("target/mips: Disable R5900 support")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240814133928.6746-2-philmd@linaro.org>
 ---
- hw/dma/xilinx_axidma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ linux-user/mips/target_elf.h   | 3 ---
+ linux-user/mips64/target_elf.h | 3 ---
+ 2 files changed, 6 deletions(-)
 
-diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-index c9cfc3169b..7707634253 100644
---- a/hw/dma/xilinx_axidma.c
-+++ b/hw/dma/xilinx_axidma.c
-@@ -626,7 +626,7 @@ static void axidma_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    dc->realize = xilinx_axidma_realize,
-+    dc->realize = xilinx_axidma_realize;
-     dc->reset = xilinx_axidma_reset;
-     device_class_set_props(dc, axidma_properties);
+diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
+index b965e86b2b..71a32315a8 100644
+--- a/linux-user/mips/target_elf.h
++++ b/linux-user/mips/target_elf.h
+@@ -12,9 +12,6 @@ static inline const char *cpu_get_model(uint32_t eflags)
+     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_32R6) {
+         return "mips32r6-generic";
+     }
+-    if ((eflags & EF_MIPS_MACH) == EF_MIPS_MACH_5900) {
+-        return "R5900";
+-    }
+     if (eflags & EF_MIPS_NAN2008) {
+         return "P5600";
+     }
+diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
+index 5f2f2df29f..ec55d8542a 100644
+--- a/linux-user/mips64/target_elf.h
++++ b/linux-user/mips64/target_elf.h
+@@ -12,9 +12,6 @@ static inline const char *cpu_get_model(uint32_t eflags)
+     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_64R6) {
+         return "I6400";
+     }
+-    if ((eflags & EF_MIPS_MACH) == EF_MIPS_MACH_5900) {
+-        return "R5900";
+-    }
+     return "5KEf";
  }
+ #endif
 -- 
 2.45.2
 
