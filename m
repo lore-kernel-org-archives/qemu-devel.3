@@ -4,80 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813B8C531DF
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 01:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFB0C531DF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 01:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfr3l-0006Bq-Sp; Sun, 18 Aug 2024 21:19:49 -0400
+	id 1sfrJ1-0008R8-RP; Sun, 18 Aug 2024 21:35:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sfr3k-00069P-BB; Sun, 18 Aug 2024 21:19:48 -0400
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sfr3i-0004fy-N1; Sun, 18 Aug 2024 21:19:48 -0400
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4f51981b1beso1268609e0c.2; 
- Sun, 18 Aug 2024 18:19:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sfrIz-0008Ov-9M; Sun, 18 Aug 2024 21:35:33 -0400
+Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sfrIw-000755-CX; Sun, 18 Aug 2024 21:35:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724030385; x=1724635185; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oUvlVOeAEry/s9UMgf+wh6xooEFlNwLz8N7xW8MIXlY=;
- b=FZ/qbW7rSLoOe2VUmURCnmuhpiyWWLsad8eeiR69bjuLsfKm9aFdVcDu7rSubr2uZa
- yQbaRzwU/T0JUMzgZ3rb5gWTcxF8T0W3aVJtpC1p3bvMcRS2O31WamtfY275TsLLID8w
- iSadJtz2fphhhN4NmSxWMI/fGMfDqV0J84YoKI2esDdf24Kdx2p+M42qyBkwe2Nf4Sbo
- zQaxYIIYvNQ7kkFe7K6oNTNlVXx7DiEWdOCdRr8ukvpijq64f8wtaZ2wuuvmgfevilOv
- AS8qTjU9vmRaJWz8l68M8BQ28CakXHcx07yBRK3ZbHb3yZchF6ULPpxyqVyZ2jbBDAEY
- QN/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724030385; x=1724635185;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oUvlVOeAEry/s9UMgf+wh6xooEFlNwLz8N7xW8MIXlY=;
- b=KHuW5iIEm5zNaQ9c1zq0cUGsUTmws0o+F1TlDwwz3rCauAtt0ALVZEOW7aUgWWxdzR
- OM3gwTVjmzFRLm4KJ9gk6gzOYIf2SCWW7wrnfwiUCI5hQNQKZuw3ARR4bDCLwX2DVqKw
- aot4K+N32ciD634hrHFqjXa1PEGBRmOTJmvhDNHbrbXdoiUbsv3fN3S9W0k26gAw/njU
- xr6dCXVPWOmXVixRk1NtmQFfBzu46IDJDIEFglCPeZVzkHc7zaj2ntkVzk/FBMaOi36I
- /lxj/wi/zgSrADwpiTdyjWnh4V+We1pqjyMCoQfa88xGZkSRLi3IlZoR+71PCm8ub/4v
- u2bA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6u4YlPUkdEloE5j5ycmg7kFi7aw8RIx2CsaBw7FWxdzS5AMIO9IyyoeLMQtAumHjQqT843y4FvhQggDLLF2VO5GxAs8s=
-X-Gm-Message-State: AOJu0YyJmymtNolySoDeHq7X0Laee8froJPtEUmvTnSaGha6tzZ4u67D
- HpNFy6NtV1BgeGig6nHq4MHhJLIDuU2cR8LiI+v8PnbbNbxXA6AheCbGIj1cEvMqzel6LOm35S1
- Gww/mAZs70YmJaqjg9L3Juyp5iCU=
-X-Google-Smtp-Source: AGHT+IGVix57xLbtQ+y1xl0m9glAeLWQdaPMDNpHM4e9guP1XDV6Cm5dA20A+1SmzPRYw/gj3J1am9KELQj1SzYCZPg=
-X-Received: by 2002:a05:6122:2a07:b0:4f6:a85d:38b3 with SMTP id
- 71dfb90a1353d-4fc6ca10d25mr11961948e0c.13.1724030384934; Sun, 18 Aug 2024
- 18:19:44 -0700 (PDT)
+ d=linux.alibaba.com; s=default;
+ t=1724031316; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=rlVtd01Dk/O8u8l1YEEnp6BXzz80++pnRhPNq3kXJSk=;
+ b=YandBGww3/YsUCYlfI1LnakvjpoLSkx9maQQp5CaCuBMNRvWGtvipKEtDQZn+ll4134OZjENQ5pD32R0b2Xip6n8sYG4fkj5GSvGMr5vXqj+TsEnMEuHFdl/vzbTsVVLv2kCPeYl2M6DCA78y5E3V8EN97ZR3IA+jRSVqryq5jU=
+Received: from 30.166.64.89(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WD4hXXK_1724031314) by smtp.aliyun-inc.com;
+ Mon, 19 Aug 2024 09:35:14 +0800
+Message-ID: <ac327ea2-2b22-40e2-8246-57e4be77d8d1@linux.alibaba.com>
+Date: Mon, 19 Aug 2024 09:34:46 +0800
 MIME-Version: 1.0
-References: <20240816160743.220374-4-ajones@ventanamicro.com>
- <20240816160743.220374-6-ajones@ventanamicro.com>
-In-Reply-To: <20240816160743.220374-6-ajones@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 19 Aug 2024 11:19:18 +1000
-Message-ID: <CAKmqyKOXS+Fmb1Jxzwh3fAkeKi5eXQZ+JKkc3H77XjKrrKXe-Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/riscv/virt: Introduce strict-dt
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com, 
- Anup Patel <apatel@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 05/15] tcg/riscv: Add riscv vset{i}vli support
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-6-zhiwei_liu@linux.alibaba.com>
+ <37e67a28-dd86-435d-a072-95f6a85cc2a7@linaro.org>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <37e67a28-dd86-435d-a072-95f6a85cc2a7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.100;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-100.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,49 +69,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 17, 2024 at 2:08=E2=80=AFAM Andrew Jones <ajones@ventanamicro.c=
-om> wrote:
->
-> Older firmwares and OS kernels which use deprecated device tree
-> properties or are missing support for new properties may not be
-> tolerant of fully compliant device trees. When divergence to the
-> bindings specifications is harmless for new firmwares and OS kernels
-> which are compliant, then it's probably better to also continue
-> supporting the old firmwares and OS kernels by generating
-> non-compliant device trees. The '#msi-cells=3D<0>' property of the
-> imsic is one such property. Generating that property doesn't provide
-> anything necessary (no '#msi-cells' property or an '#msi-cells'
-> property with a value of zero mean the same thing) but it does
-> cause PCI devices to fail to find the MSI controller on Linux and,
-> for that reason, riscv virt doesn't currently generate it despite
-> that putting the DT out of compliance. For users that want a
-> compliant DT and know their software supports it, introduce a machine
-> property 'strict-dt' to do so. We also drop the one redundant
-> property that uses a deprecated name when strict-dt is enabled.
->
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> ---
->  docs/system/riscv/virt.rst | 11 ++++++++++
->  hw/riscv/virt.c            | 43 ++++++++++++++++++++++++++++++--------
->  include/hw/riscv/virt.h    |  1 +
->  3 files changed, 46 insertions(+), 9 deletions(-)
->
-> diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-> index 9a06f95a3444..f08d0a053051 100644
-> --- a/docs/system/riscv/virt.rst
-> +++ b/docs/system/riscv/virt.rst
-> @@ -116,6 +116,17 @@ The following machine-specific options are supported=
-:
->    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not specifi=
-ed,
->    the default number of per-HART VS-level AIA IMSIC pages is 0.
->
-> +- strict-dt=3D[on|off]
 
-Hmm... I don't love the idea of having yet another command line option.
+On 2024/8/14 16:24, Richard Henderson wrote:
+> On 8/13/24 21:34, LIU Zhiwei wrote:
+>> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>>
+>> In RISC-V, vector operations require initial configuration using
+>> the vset{i}vl{i} instruction.
+>>
+>> This instruction:
+>>    1. Sets the vector length (vl) in bytes
+>>    2. Configures the vtype register, which includes:
+>>      SEW (Single Element Width)
+>>      LMUL (vector register group multiplier)
+>>      Other vector operation parameters
+>>
+>> This configuration is crucial for defining subsequent vector
+>> operation behavior. To optimize performance, the configuration
+>> process is managed dynamically:
+>>    1. Reconfiguration using vset{i}vl{i} is necessary when SEW
+>>       or vector register group width changes.
+>>    2. The vset instruction can be omitted when configuration
+>>       remains unchanged.
+>>
+>> This optimization is only effective within a single TB.
+>> Each TB requires reconfiguration at its start, as the current
+>> state cannot be obtained from hardware.
+>>
+>> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>> Signed-off-by: Weiwei Li <liwei1518@gmail.com>
+>> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+>> ---
+>>   tcg/riscv/tcg-target.c.inc | 121 +++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 121 insertions(+)
+>>
+>> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+>> index ca9bafcb3c..d17f523187 100644
+>> --- a/tcg/riscv/tcg-target.c.inc
+>> +++ b/tcg/riscv/tcg-target.c.inc
+>> @@ -167,6 +167,18 @@ static bool tcg_target_const_match(int64_t val, 
+>> int ct,
+>>    * RISC-V Base ISA opcodes (IM)
+>>    */
+>>   +#define V_OPIVV (0x0 << 12)
+>> +#define V_OPFVV (0x1 << 12)
+>> +#define V_OPMVV (0x2 << 12)
+>> +#define V_OPIVI (0x3 << 12)
+>> +#define V_OPIVX (0x4 << 12)
+>> +#define V_OPFVF (0x5 << 12)
+>> +#define V_OPMVX (0x6 << 12)
+>> +#define V_OPCFG (0x7 << 12)
+>> +
+>> +#define V_SUMOP (0x0 << 20)
+>> +#define V_LUMOP (0x0 << 20)
+>> +
+>>   typedef enum {
+>>       OPC_ADD = 0x33,
+>>       OPC_ADDI = 0x13,
+>> @@ -262,6 +274,11 @@ typedef enum {
+>>       /* Zicond: integer conditional operations */
+>>       OPC_CZERO_EQZ = 0x0e005033,
+>>       OPC_CZERO_NEZ = 0x0e007033,
+>> +
+>> +    /* V: Vector extension 1.0 */
+>> +    OPC_VSETVLI  = 0x57 | V_OPCFG,
+>> +    OPC_VSETIVLI = 0xc0000057 | V_OPCFG,
+>> +    OPC_VSETVL   = 0x80000057 | V_OPCFG,
+>>   } RISCVInsn;
+>>     /*
+>> @@ -354,6 +371,42 @@ static int32_t encode_uj(RISCVInsn opc, TCGReg 
+>> rd, uint32_t imm)
+>>       return opc | (rd & 0x1f) << 7 | encode_ujimm20(imm);
+>>   }
+>>   +typedef enum {
+>> +    VTA_TU = 0,
+>> +    VTA_TA,
+>> +} RISCVVta;
+>> +
+>> +typedef enum {
+>> +    VMA_MU = 0,
+>> +    VMA_MA,
+>> +} RISCVVma;
+>> +
+>> +typedef enum {
+>> +    VSEW_E8 = 0, /* EW=8b */
+>> +    VSEW_E16,    /* EW=16b */
+>> +    VSEW_E32,    /* EW=32b */
+>> +    VSEW_E64,    /* EW=64b */
+>> +} RISCVVsew;
+>
+> This exactly aligns with MemOp and vece.  Do we really need an enum 
+> for this?
+OK. We will use MemOp enum next version.
+>
+>> +
+>> +typedef enum {
+>> +    VLMUL_M1 = 0, /* LMUL=1 */
+>> +    VLMUL_M2,     /* LMUL=2 */
+>> +    VLMUL_M4,     /* LMUL=4 */
+>> +    VLMUL_M8,     /* LMUL=8 */
+>> +    VLMUL_RESERVED,
+>> +    VLMUL_MF8,    /* LMUL=1/8 */
+>> +    VLMUL_MF4,    /* LMUL=1/4 */
+>> +    VLMUL_MF2,    /* LMUL=1/2 */
+>> +} RISCVVlmul;
+>> +#define LMUL_MAX 8
+>> +
+>> +static int32_t encode_vtype(RISCVVta vta, RISCVVma vma,
+>> +                            RISCVVsew vsew, RISCVVlmul vlmul)
+>> +{
+>> +    return (vma & 0x1) << 7 | (vta & 0x1) << 6 | (vsew & 0x7) << 3 |
+>> +           (vlmul & 0x7);
+>> +}
+>
+>> +static void tcg_out_vsetvl(TCGContext *s, uint32_t avl, RISCVVta vta,
+>> +                           RISCVVma vma, RISCVVsew vsew,
+>> +                           RISCVVlmul vlmul)
+>> +{
+>> +    int32_t vtypei = encode_vtype(vta, vma, vsew, vlmul);
+>> +
+>> +    if (avl < 32) {
+>> +        tcg_out_opc_vconfig(s, OPC_VSETIVLI, TCG_REG_ZERO, avl, 
+>> vtypei);
+>> +    } else {
+>> +        tcg_out_opc_imm(s, OPC_ADDI, TCG_REG_TMP0, TCG_REG_ZERO, avl);
+>> +        tcg_out_opc_vconfig(s, OPC_VSETVLI, TCG_REG_ZERO, 
+>> TCG_REG_TMP0, vtypei);
+>> +    }
+>> +}
+>> +
+>> +/*
+>> + * TODO: If the vtype value is not supported by the implementation,
+>> + * then the vill bit is set in vtype, the remaining bits in
+>> + * vtype are set to zero, and the vl register is also set to zero
+>> + */
+>> +
+>> +static __thread unsigned prev_size;
+>> +static __thread unsigned prev_vece = MO_8;
+>> +static __thread bool vec_vtpye_init = true;
+>
+> Typo in vtpye.
+OK.
+>
+> That said, init should be redundant.  I think you only need one 
+> variable here:
+>
+>   static __thread int prev_vtype;
+Agree.
+>
+> Since any vtype < 0 is vill, the "uninitialized" value is easily -1.
+OK. We will set it to -1 in tcg_out_tb_start.
+>
+>> +static inline void tcg_target_set_vec_config(TCGContext *s, TCGType 
+>> type,
+>> +                                      unsigned vece)
+>> +{
+>> +    unsigned oprsz = get_vec_type_bytes(type);
+>> +
+>> +    if (!vec_vtpye_init && (prev_size == oprsz && prev_vece == vece)) {
+>> +        return ;
+>> +    }
+>
+>     int vtype = encode_vtype(...);
+>     if (vtype != prev_vtype) {
+>         prev_vtype = vtype;
+>         tcg_out_vsetvl(s, vtype);
+>     }
+>
+>> @@ -1914,6 +2029,11 @@ static void tcg_out_vec_op(TCGContext *s, 
+>> TCGOpcode opc,
+>>                              const TCGArg args[TCG_MAX_OP_ARGS],
+>>                              const int const_args[TCG_MAX_OP_ARGS])
+>>   {
+>> +    TCGType type = vecl + TCG_TYPE_V64;
+>> +
+>> +    if (vec_vtpye_init) {
+>> +        tcg_target_set_vec_config(s, type, vece);
+>> +    }
+>
+> Here is perhaps too early... see patch 8 re logicals.
 
-Does this really buy us a lot? Eventually we should deprecate the
-invalid DT bindings anyway
+I guess you mean we don't have implemented any vector op, so there is no 
+need to set vsetvl in this patch. We will postpone it do really ops need it.
 
-Alistair
+Thanks,
+Zhiwei
+
+>
+>
+> r~
 
