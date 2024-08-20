@@ -4,71 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9796EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 13:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68160C531DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 13:43:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgOe3-0007Rm-1H; Tue, 20 Aug 2024 09:11:31 -0400
+	id 1sgP82-0000lR-Sf; Tue, 20 Aug 2024 09:42:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sgOe1-0007OS-2K
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 09:11:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sgOdy-0005eg-Ps
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 09:11:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724159484;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/2wkUCHMj0/DcjKE45YY9tyb/3KmpGSqzxZpX55Ytmo=;
- b=DVtwu+TtEPOxEc7BaviV1mijsmLMXjf2wlqbtv+nlhNZRkctcpSU9FE0bP0gCDhCNkJtPb
- vwP0jrg3tdvs2ZLZE6tA68IsR6cm4Q5enfpFcSxpZLHA2KwivVUIvyygvImU7ou3NQBlCC
- UgQX10R8pefvv8F6+bqFGZclVfOYNTQ=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-9_8jm1OOPMaEKx83sKlczg-1; Tue,
- 20 Aug 2024 09:11:20 -0400
-X-MC-Unique: 9_8jm1OOPMaEKx83sKlczg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDD7C1955D54; Tue, 20 Aug 2024 13:11:18 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 797C01955F2D; Tue, 20 Aug 2024 13:11:15 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@daynix.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH] vnc: fix crash when no console attached
-Date: Tue, 20 Aug 2024 17:11:12 +0400
-Message-ID: <20240820131112.1267954-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sgP7t-0000hh-1P
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 09:42:22 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sgP7q-0001s1-Ad
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 09:42:20 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5becc379f3fso4240796a12.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 06:42:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724161336; x=1724766136; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x53UA5XZQzcHFqQczWRz/UkFLdL3wtbU8KgAdwqK0ww=;
+ b=dsnVNPCgjeth8gLJFkn0EdrkpTA0X8kjB+eGZ3JzuCF0VvZSjrT3VzDbtzv2bbxBCe
+ Whi0b/KW32d4k7/sZoErcaDs/tUmZVXrXqeW9XzxsbQadDAmdwk9izihCbtSdBPs5vq6
+ Am+vw/sHR+ixHvBPtfQROQiVmPN+JFBlmfjK73u8N062/rs+QcfdPcBBD799eZglWykq
+ MWvNG/tDe5RwRYwquJbYrdrMMaXyu7mN+pxrwb91DWb5yXkHsuZKffGElExsynSJ4+j4
+ zO7ypbGsboi99Qs4fjnVEcS1ula/drrzX0oenk6qnaA7J2d4PR8c3i3DgEAbS+clvYQB
+ 5Oow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724161336; x=1724766136;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=x53UA5XZQzcHFqQczWRz/UkFLdL3wtbU8KgAdwqK0ww=;
+ b=vbCOJDOERmgeBRO1NHz4G1XcwtJle6zaluwlC333lBIcZcH84d0yTSvl3zQ0g3r2Bt
+ X0NWekqrKlffd/Jf9hWWLqs6KAD/JXv5HVDnn3NsiRPK+FkXWN/csPfh+E+mLQsFOHQQ
+ E4VPljiBjisvHvDYeLZBSzstm4qdJOmlERLnLtwQ+KOTH1BOdbR419mDeedl2PSZlq7F
+ rQZXOYUf3fSC/dcz10Y9dhxbQCILpBJmKyVFPAnJF7/vs8fGkgpwNchjjNBpc82Vyi2X
+ ih+eZ4bNQkIuvGUeDPvs5QmNluF6DqGzwFykTcnR2VPyliPH9ZeXvFpbWl1XNQ9Eda3B
+ NP4Q==
+X-Gm-Message-State: AOJu0YxqGV/ZsoH37fQzy9xCpJrXC5FOqonaUdcY9eW8x70qVs2S+/iF
+ pq0TBCNrOeQlmlXQYqL34/WjPR/1efAbSfJU/qJkPw2AtpslZbBxKkLASlJ/UTLtXQdYQbzspAp
+ CCB0ZYZL/78X+WT8Ke2JP+Cx/NPheqILQ7paszg==
+X-Google-Smtp-Source: AGHT+IGGu0CztAOGO8/w0o3iwiwmWhaLRMM6N1luRxQuc2ZYBFsX9wd4uLBSEWixU/lVYE08Wy2dWapcI0SLbI+miQo=
+X-Received: by 2002:a05:6402:1d4b:b0:5be:f295:a181 with SMTP id
+ 4fb4d7f45d1cf-5bef295a2dfmr5104451a12.28.1724161335990; Tue, 20 Aug 2024
+ 06:42:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240718230031.69641-1-danny_canter@apple.com>
+ <CAFEAcA__WZ=uw0VLcP0fLbUTwmctsZ1y=FRf9bXMT9WJC2sRFA@mail.gmail.com>
+ <E03A8C36-4079-468F-9596-328D713C3611@apple.com>
+ <CAFEAcA9XXhsUeHNjsVkjhjO2_Njkk=L00BG+24xtXWWKgJayRw@mail.gmail.com>
+ <CA7E2403-A9F6-4B29-B640-13E41D530744@apple.com>
+In-Reply-To: <CA7E2403-A9F6-4B29-B640-13E41D530744@apple.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 20 Aug 2024 14:42:05 +0100
+Message-ID: <CAFEAcA948k3=ep0FhqPL929=vB38SR-5sBS4fETrv4HUMC+zug@mail.gmail.com>
+Subject: Re: [PATCH] hvf: arm: Allow creating VMs with > 63GB of RAM on macOS
+ 15+
+To: Danny Canter <danny_canter@apple.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Cameron Esfahani <dirty@apple.com>, rbolshakov@ddn.com, agraf@csgraf.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,45 +95,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Sat, 17 Aug 2024 at 01:37, Danny Canter <danny_canter@apple.com> wrote:
+>
+> Peter, thought I=E2=80=99d send this little snippet before getting the re=
+st of V2 done in case anyone hates this :). I tried to take a similar appro=
+ach to kvm_type,
+> but I=E2=80=99m not sure if this will be looked upon favorably so want an=
+ early opinion. The nice thing about kvm_type is at least it has differing =
+meaning per
+> platform so all the impls can do whatever they need, with the below it=E2=
+=80=99s really only needed on ARM (and obviously macOS specific) so it's a =
+bit odd,
+> but couldn=E2=80=99t think of how else to be able to be able to get what =
+we need out of the memmap during vm creation.
+>
+> How this would be used is almost exactly like how ARMs kvm_type is used. =
+We set up hvf_get_physical_address_range to freeze the memory
+> map and compute the highest gpa, then check if that exceeds our platforms=
+ largest IPA size and if so return a sane error message. If everything
+> checks out we=E2=80=99d just set the IPA size on the VM config object and=
+ then create the VM. The current patch should mostly stay the same after th=
+at bit
+> of plumbing I think besides removing the macOS 13 ifdef=E2=80=99s (and si=
+mplifying the copy and pasted loop you pointed out). x86=E2=80=99s
+> hvf_get_physical_address_range can be NULL.
+>
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -215,6 +215,10 @@ typedef struct {
+>   *    Return the type of KVM corresponding to the kvm-type string option=
+ or
+>   *    computed based on other criteria such as the host kernel capabilit=
+ies.
+>   *    kvm-type may be NULL if it is not needed.
+> + * @hvf_get_physical_address_range:
+> + *    Returns the physical address range in bits to use for the HVF virt=
+ual
+> + *    machine based on the current boards memory map. This may be NULL i=
+f it
+> + *    is not needed.
+>   * @numa_mem_supported:
+>   *    true if '--numa node.mem' option is supported and false otherwise
+>   * @hotplug_allowed:
+> @@ -253,6 +257,7 @@ struct MachineClass {
+>      void (*reset)(MachineState *state, ShutdownCause reason);
+>      void (*wakeup)(MachineState *state);
+>      int (*kvm_type)(MachineState *machine, const char *arg);
+> +    unsigned int (*hvf_get_physical_address_range)(MachineState *machine=
+);
 
-Since commit e99441a3793b5 ("ui/curses: Do not use console_select()")
-qemu_text_console_put_keysym() no longer checks for NULL console
-argument, which leads to a later crash:
+My gut feeling was that this felt very specific compared
+to the kvm_type method which lets different architectures
+use it for whatever they need. But on the other hand we
+have exactly one use for this for hvf right now and at
+least for the foreseeable future it's unlikely we're going
+to want to do more. And this API isn't a set-in-stone one,
+so we can come back and generalize it later if we ever need
+to do that. (Or, if we find we need this kind of hook for
+a third hypervisor type, maybe we try to make it hypervisor
+agnostic at that point.)
 
-Thread 1 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
-0x00005555559ee186 in qemu_text_console_handle_keysym (s=0x0, keysym=31) at ../ui/console-vc.c:332
-332	        } else if (s->echo && (keysym == '\r' || keysym == '\n')) {
-(gdb) bt
- #0  0x00005555559ee186 in qemu_text_console_handle_keysym (s=0x0, keysym=31) at ../ui/console-vc.c:332
- #1  0x00005555559e18e5 in qemu_text_console_put_keysym (s=<optimized out>, keysym=<optimized out>) at ../ui/console.c:303
- #2  0x00005555559f2e88 in do_key_event (vs=vs@entry=0x5555579045c0, down=down@entry=1, keycode=keycode@entry=60, sym=sym@entry=65471) at ../ui/vnc.c:2034
- #3  0x00005555559f845c in ext_key_event (vs=0x5555579045c0, down=1, sym=65471, keycode=<optimized out>) at ../ui/vnc.c:2070
- #4  protocol_client_msg (vs=0x5555579045c0, data=<optimized out>, len=<optimized out>) at ../ui/vnc.c:2514
- #5  0x00005555559f515c in vnc_client_read (vs=0x5555579045c0) at ../ui/vnc.c:1607
+So I'm OK with this.
 
-Fixes: e99441a3793b5 ("ui/curses: Do not use console_select()")
-Fixes: https://issues.redhat.com/browse/RHEL-50529
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- ui/vnc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ui/vnc.c b/ui/vnc.c
-index dae5d51210..5057ec8680 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -1935,7 +1935,7 @@ static void do_key_event(VncState *vs, int down, int keycode, int sym)
-     }
- 
-     qkbd_state_key_event(vs->vd->kbd, qcode, down);
--    if (!qemu_console_is_graphic(vs->vd->dcl.con)) {
-+    if (QEMU_IS_TEXT_CONSOLE(vs->vd->dcl.con)) {
-         QemuTextConsole *con = QEMU_TEXT_CONSOLE(vs->vd->dcl.con);
-         bool numlock = qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_NUMLOCK);
-         bool control = qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_CTRL);
--- 
-2.45.2.827.g557ae147e6
-
+thanks
+-- PMM
 
