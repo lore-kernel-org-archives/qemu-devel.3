@@ -4,91 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE17C531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 17:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63203C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 18:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgSO6-0008VC-5j; Tue, 20 Aug 2024 13:11:18 -0400
+	id 1sgToa-0007ov-GQ; Tue, 20 Aug 2024 14:42:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sgSNx-0007yh-Sa; Tue, 20 Aug 2024 13:11:09 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sgToY-0007oQ-Tz
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 14:42:42 -0400
+Received: from fhigh3-smtp.messagingengine.com ([103.168.172.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sgSNr-00080Y-QL; Tue, 20 Aug 2024 13:11:06 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WpGBC2Tslz6K9FP;
- Wed, 21 Aug 2024 01:08:03 +0800 (CST)
-Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
- by mail.maildlp.com (Postfix) with ESMTPS id D14CE1400C9;
- Wed, 21 Aug 2024 01:10:59 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 20 Aug 2024 18:10:59 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Tue, 20 Aug 2024 18:10:59 +0100
-To: Gavin Shan <gshan@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "mst@redhat.com" <mst@redhat.com>
-CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
- <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
- <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
- "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "npiggin@gmail.com"
- <npiggin@gmail.com>, "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
- <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
- <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
- <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>, "zhao1.liu@intel.com"
- <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>
-Subject: RE: [PATCH RFC V3 11/29] arm/virt: Create GED dev before *disabled*
- CPU Objs are destroyed
-Thread-Topic: [PATCH RFC V3 11/29] arm/virt: Create GED dev before *disabled*
- CPU Objs are destroyed
-Thread-Index: AQHavetL6ZWS3kCPn0Wbiq50SP2k0LIkrOeAgAo4YQCAALwQAIABKTWg
-Date: Tue, 20 Aug 2024 17:10:59 +0000
-Message-ID: <1b6f5681cd5b4d1c887c5423faf5875f@huawei.com>
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-12-salil.mehta@huawei.com>
- <143ad7d2-8f45-4428-bed3-891203a49029@redhat.com>
- <b6bdee28101741169048819c0d562bfc@huawei.com>
- <52ae18ca-0a5a-44d4-95f5-56cfc7a035a8@redhat.com>
-In-Reply-To: <52ae18ca-0a5a-44d4-95f5-56cfc7a035a8@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.151.47]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sgToX-0003T1-3o
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 14:42:42 -0400
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal
+ [10.202.2.44])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id B3500114EA9D;
+ Tue, 20 Aug 2024 14:42:37 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Tue, 20 Aug 2024 14:42:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm2; t=1724179357; x=1724265757; bh=gs
+ 8BALBeDHGgfJ4K2G0dvJYV2tKaeJvz92mj0hs27Qc=; b=RM7xMcS5ohP7u3dAE1
+ FTMhYj47m5/YeyHSAYHvnpDJ7xtU8lsWv/Al1DawuYpHkq6Ak9Se9Bwuqq0cctP3
+ SGUtDV963RqGk1nEXpIz81d9M5hilSqgEHUzhwoCIl9BYdBOXfzkW6neMVMgzZ6f
+ oLk2hO0EGSvajLJET8eEQPngQFrYlH76kjoMRYBPbZw5w2iAYkIIgkA2ICkiMbuc
+ HIezBn5aWLwqC6PgCPP+dwLTuKd/kgV3UL4BK3TeO0LRRQQLDp09wyzW2gqlzWvP
+ YGrv7B14m/5VceJ38L5EmLLjnGHp5kId62Hv1vCKOYZSU/FNXDcgMRmQHQbD2Cyx
+ U06w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1724179357; x=1724265757; bh=gs8BALBeDHGgf
+ J4K2G0dvJYV2tKaeJvz92mj0hs27Qc=; b=r7i/kOYPw59tBsrgpSVbUmx+3AeI3
+ lCTN01Xt8La3OQIJvZpZ6u6hmlNfQsLZmUodX308HPiwRHspQOuasuWxu3DcHPFB
+ PXvavP3LxessQdR+AqKxUNsPCEE4eNvGc9d3jYXUhivMvmtHtyHysSldE6svnxoD
+ hWzzORATd4EVgY9THrqHcwtX8qnFr0ttwF07GjzChHBoIuzGgpzIHqCWFc/NOr/Q
+ AMOLd/XQV3+JfidDFcEl2beMUFCV9DUpIWlaEAqYiNc+SNauthuGwQ1QeASivYE1
+ hauz8Aldg2dHJnBrdrqhmqvgWAV/N/JM+mQlx8c1qGK4jLd5E1LGF7dwQ==
+X-ME-Sender: <xms:nOPEZrnevx_8pR_TIWc8nllphLSddbeaiS8bsNugaCJgZdF5JqqQ1w>
+ <xme:nOPEZu0mTu8lwcSkXuc13EzDtSnbuBCd3pB5f0vTzK4HSep8nYojFT1JLTS-Fhn_Y
+ IQjmYZ_3dvPJxps7Pc>
+X-ME-Received: <xmr:nOPEZhrZG3u4Q13oyKySTRgZxG7igc7vPZpu_ppYio7ktrIuRzeCiRoMFpYJXVJ0PWw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedguddviecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+ hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkvfevofesthejredtredtjeen
+ ucfhrhhomheplfhirgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihgh
+ horghtrdgtohhmqeenucggtffrrghtthgvrhhnpeffteeugeektdfgjeevuedvgffhgedt
+ vdfghedugefhgeehteeuudehudevjeethfenucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgt
+ ohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+ hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepjhhirgiguhhn
+ rdihrghnghesfhhlhihgohgrthdrtghomhdprhgtphhtthhopehgrghoshhonhhgsehloh
+ honhhgshhonhdrtghnpdhrtghpthhtohepmhgrohgsihgsoheslhhoohhnghhsohhnrdgt
+ nh
+X-ME-Proxy: <xmx:nOPEZjk4xGSSXXXy-r4yUBpIYXJE9Hq0bPsfUsxQzxm9eJ7Xn1HUUA>
+ <xmx:nOPEZp3q3rCIkVon4qIHlLBzKf8Y8ykwmRPEFwBZZS6zQ0gG18_ENQ>
+ <xmx:nOPEZiuPVYU2kCRUphiv9X_F_x8iwgEcuT88U6yWK-0RJxVIzHSLkA>
+ <xmx:nOPEZtUoUFwri2vANBh1Nvdy81aLyhNpFJvt49HRhFqA_vUSjtrlBw>
+ <xmx:nePEZkQdbDZkjH6h3xVPHYzFMreYaweYpSUNxfDnkSNv94Z06EuLSinM>
+Feedback-ID: ifd894703:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Aug 2024 14:42:35 -0400 (EDT)
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date: Tue, 20 Aug 2024 19:42:33 +0100
+Subject: [PATCH for-9.1] hw/loongarch: Fix length for lowram in ACPI SRAT
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240820-fix-numa-range-v1-1-c5d6b889996f@flygoat.com>
+X-B4-Tracking: v=1; b=H4sIAJjjxGYC/x2MQQqAMAwEvyI5G0mrh+pXxINoqjlYJUURSv9u8
+ Tjs7CSIrMIRhiqB8iNRzlDA1BUs+xw2RlkLgyXbkbOEXl4M9zGj/qs3nlqybFq3QjldysX4gyP
+ 4U7FvDEw5fxj+wIVpAAAA
+To: qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1479;
+ i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
+ bh=DVSx+QjX9JZ5kGyd1+nSpGiO2tMFbQCOfmypGGgGvzs=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrQjj2cr+Pred7h58el/XrOk2Mwnp2X2Fp3PPFTBPu/Do
+ WMzG8/3dJSyMIhxMciKKbKECCj1bWi8uOD6g6w/MHNYmUCGMHBxCsBE1vgz/FOa+UTKf47gDs6P
+ 6wKO6xfcFJR1/XzAozHpnfg5Yf5URzZGhhVfz+d3HyhfctDd37T2yEFjBl8hDrcOXaEcZVuHnjN
+ PGAE=
+X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
+ fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
+Received-SPF: pass client-ip=103.168.172.154;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,89 +119,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgR2F2aW4sDQoNCj4gIEZyb206IEdhdmluIFNoYW4gPGdzaGFuQHJlZGhhdC5jb20+DQo+ICBT
-ZW50OiBUdWVzZGF5LCBBdWd1c3QgMjAsIDIwMjQgMToyMiBBTQ0KPiAgVG86IFNhbGlsIE1laHRh
-IDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnOw0KPiAgcWVt
-dS1hcm1Abm9uZ251Lm9yZzsgbXN0QHJlZGhhdC5jb20NCj4gIA0KPiAgSGkgU2FsaWwsDQo+ICAN
-Cj4gIE9uIDgvMTkvMjQgMTA6MTAgUE0sIFNhbGlsIE1laHRhIHdyb3RlOg0KPiAgPj4gICBGcm9t
-OiBHYXZpbiBTaGFuIDxnc2hhbkByZWRoYXQuY29tPg0KPiAgPj4gICBTZW50OiBUdWVzZGF5LCBB
-dWd1c3QgMTMsIDIwMjQgMjowNSBBTQ0KPiAgPj4gICBUbzogU2FsaWwgTWVodGEgPHNhbGlsLm1l
-aHRhQGh1YXdlaS5jb20+OyBxZW11LWRldmVsQG5vbmdudS5vcmc7DQo+ICA+PiAgIHFlbXUtYXJt
-QG5vbmdudS5vcmc7IG1zdEByZWRoYXQuY29tDQo+ICA+Pg0KPiAgPj4gICBPbiA2LzE0LzI0IDk6
-MzYgQU0sIFNhbGlsIE1laHRhIHdyb3RlOg0KPiAgPj4gICA+IEFDUEkgQ1BVIGhvdHBsdWcgc3Rh
-dGUgKGlzX3ByZXNlbnQ9X1NUQS5QUkVTRU5ULA0KPiAgPj4gICA+IGlzX2VuYWJsZWQ9X1NUQS5F
-TkFCTEVEKSBmb3IgYWxsIHRoZSBwb3NzaWJsZSB2Q1BVcyBNVVNUIGJlDQo+ICA+PiAgID4gaW5p
-dGlhbGl6ZWQgZHVyaW5nIG1hY2hpbmUgaW5pdC4gVGhpcyBpcyBkb25lIGR1cmluZyB0aGUgY3Jl
-YXRpb24gb2YNCj4gID4+ICAgPiB0aGUgR0VEIGRldmljZS4gVk1NL1FlbXUgTVVTVCBleHBvc2Uv
-ZmFrZSB0aGUgQUNQSSBzdGF0ZSBvZiB0aGUNCj4gID4+ICAgPiBkaXNhYmxlZCB2Q1BVcyB0byB0
-aGUgR3Vlc3Qga2VybmVsIGFzICdwcmVzZW50JyAoX1NUQS5QUkVTRU5UKSBhbHdheXMNCj4gID4+
-ICAgPiBpLmUuIEFDUEkgcGVyc2lzdGVudC4gaWYgdGhlICdkaXNhYmxlZCcgdkNQVSBvYmplY3Rl
-cyBhcmUgZGVzdHJveWVkDQo+ICA+PiAgID4gYmVmb3JlIHRoZSBHRUQgZGV2aWNlIGhhcyBiZWVu
-IGNyZWF0ZWQgdGhlbiB0aGVpciBBQ1BJIGhvdHBsdWcgc3RhdGUNCj4gID4+ICAgPiBtaWdodCBu
-b3QgZ2V0IGluaXRpYWxpemVkIGNvcnJlY3RseSBhcyBhY3BpX3BlcnNpc3RlbnQgZmxhZyBpcyBw
-YXJ0IG9mIHRoZQ0KPiAgPj4gICBDUFVTdGF0ZS4gVGhpcyB3aWxsIGV4cG9zZSB3cm9uZyBzdGF0
-dXMgb2YgdGhlIHVucGx1Z2dlZCB2Q1BVcyB0byB0aGUNCj4gID4+ICAgR3Vlc3Qga2VybmVsLg0K
-PiAgPj4gICA+DQo+ICA+PiAgID4gSGVuY2UsIG1vdmluZyB0aGUgR0VEIGRldmljZSBjcmVhdGlv
-biBiZWZvcmUgZGlzYWJsZWQgdkNQVSBvYmplY3RzIGdldA0KPiAgPj4gICA+IGRlc3Ryb3llZCBh
-cyBwYXJ0IG9mIHRoZSBwb3N0IENQVSBpbml0IHJvdXRpbmUuDQo+ICA+PiAgID4NCj4gID4+ICAg
-PiBTaWduZWQtb2ZmLWJ5OiBTYWxpbCBNZWh0YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT4NCj4g
-ID4+ICAgPiAtLS0NCj4gID4+ICAgPiAgIGh3L2FybS92aXJ0LmMgfCAxMCArKysrKysrLS0tDQo+
-ICA+PiAgID4gICAxIGZpbGUgY2hhbmdlZCwgNyBpbnNlcnRpb25zKCspLCAzIGRlbGV0aW9ucygt
-KQ0KPiAgPj4gICA+DQo+ICA+PiAgID4gZGlmZiAtLWdpdCBhL2h3L2FybS92aXJ0LmMgYi9ody9h
-cm0vdmlydC5jIGluZGV4DQo+ICA+PiAgID4gOTE4YmNiOWExYi4uNWY5ODE2MjU4NyAxMDA2NDQN
-Cj4gID4+ICAgPiAtLS0gYS9ody9hcm0vdmlydC5jDQo+ICA+PiAgID4gKysrIGIvaHcvYXJtL3Zp
-cnQuYw0KPiAgPj4gICA+IEBAIC0yNDY3LDYgKzI0NjcsMTIgQEAgc3RhdGljIHZvaWQgbWFjaHZp
-cnRfaW5pdChNYWNoaW5lU3RhdGUNCj4gID4+ICAgPiAqbWFjaGluZSkNCj4gID4+ICAgPg0KPiAg
-Pj4gICA+ICAgICAgIGNyZWF0ZV9naWModm1zLCBzeXNtZW0pOw0KPiAgPj4gICA+DQo+ICA+PiAg
-ID4gKyAgICBoYXNfZ2VkID0gaGFzX2dlZCAmJiBhYXJjaDY0ICYmIGZpcm13YXJlX2xvYWRlZCAm
-Jg0KPiAgPj4gICA+ICsgICAgICAgICAgICAgIHZpcnRfaXNfYWNwaV9lbmFibGVkKHZtcyk7DQo+
-ICA+PiAgID4gKyAgICBpZiAoaGFzX2dlZCkgew0KPiAgPj4gICA+ICsgICAgICAgIHZtcy0+YWNw
-aV9kZXYgPSBjcmVhdGVfYWNwaV9nZWQodm1zKTsNCj4gID4+ICAgPiArICAgIH0NCj4gID4+ICAg
-PiArDQo+ICA+PiAgID4gICAgICAgdmlydF9jcHVfcG9zdF9pbml0KHZtcywgc3lzbWVtKTsNCj4g
-ID4+ICAgPg0KPiAgPj4gICA+ICAgICAgIGZkdF9hZGRfcG11X25vZGVzKHZtcyk7DQo+ICA+PiAg
-ID4gQEAgLTI0ODksOSArMjQ5NSw3IEBAIHN0YXRpYyB2b2lkIG1hY2h2aXJ0X2luaXQoTWFjaGlu
-ZVN0YXRlDQo+ICA+PiAgICptYWNoaW5lKQ0KPiAgPj4gICA+DQo+ICA+PiAgID4gICAgICAgY3Jl
-YXRlX3BjaWUodm1zKTsNCj4gID4+ICAgPg0KPiAgPj4gICA+IC0gICAgaWYgKGhhc19nZWQgJiYg
-YWFyY2g2NCAmJiBmaXJtd2FyZV9sb2FkZWQgJiYNCj4gID4+ICAgdmlydF9pc19hY3BpX2VuYWJs
-ZWQodm1zKSkgew0KPiAgPj4gICA+IC0gICAgICAgIHZtcy0+YWNwaV9kZXYgPSBjcmVhdGVfYWNw
-aV9nZWQodm1zKTsNCj4gID4+ICAgPiAtICAgIH0gZWxzZSB7DQo+ICA+PiAgID4gKyAgICBpZiAo
-IWhhc19nZWQpIHsNCj4gID4+ICAgPiAgICAgICAgICAgY3JlYXRlX2dwaW9fZGV2aWNlcyh2bXMs
-IFZJUlRfR1BJTywgc3lzbWVtKTsNCj4gID4+ICAgPiAgICAgICB9DQo+ICA+PiAgID4NCj4gID4+
-DQo+ICA+PiAgIEl0J3MgbGlrZWx5IHRoZSBHUElPIGRldmljZSBjYW4gYmUgY3JlYXRlZCBiZWZv
-cmUgdGhvc2UgZGlzYWJsZWQgQ1BVIG9iamVjdHMNCj4gID4+ICAgYXJlIGRlc3Ryb3llZC4gSXQg
-bWVhbnMgdGhlIHdob2xlIGNodW5rIG9mIGNvZGUgY2FuIGJlIG1vdmVkIHRvZ2V0aGVyLCBJDQo+
-ICA+PiAgIHRoaW5rLg0KPiAgPg0KPiAgPiBJIHdhcyBub3QgdG90YWxseSBzdXJlIG9mIHRoaXMu
-IEhlbmNlLCBrZXB0IHRoZSBvcmRlciBvZiB0aGUgcmVzdCBsaWtlDQo+ICA+IHRoYXQuIEkgY2Fu
-IGRlZmluaXRlbHkgY2hlY2sgYWdhaW4gaWYgd2UgY2FuIGRvIHRoYXQgdG8gcmVkdWNlIHRoZSBj
-aGFuZ2UuDQo+ICA+DQo+ICANCj4gIEBoYXNfZ2VkIGlzIHRoZSBlcXVpdmFsZW50IHRvICchdm1j
-LT5ub19nZWQnIGluaXRpYWxseSBhbmQgdGhlbiBpdCdzDQo+ICBvdmVycmlkZWQgYnkgdGhlIGZv
-bGxvd2luZyBjaGFuZ2VzIGluIHRoaXMgcGF0Y2guIFRoZSBzeW50YXggb2YgQGhhc19nZWQNCj4g
-IGhhcyBiZWVuIGNoYW5nZWQgYW5kIGl0J3Mgbm90IHRoZSBiZXN0IG5hbWUgdG8gbWF0Y2ggdGhl
-IGNoYW5nZXMuIFRoZXJlDQo+ICBhcmUgdHdvIHNvbHV0aW9uczogKDEpIFJlbmFtZSBAaGFzX2dl
-ZCB0byBzb21ldGhpbmcgbWVhbmluZ2Z1bCBhbmQNCj4gIG1hdGNoaW5nIHdpdGggdGhlIGNoYW5n
-ZXM7ICgyKSBNb3ZlIHRoZSB3aG9sZSBjaHVuayBvZiBjb2Rlcywgd2hpY2ggSQ0KPiAgcHJlZmVy
-cmVkLiBUaGUgR1BJTyBkZXZpY2UgYW5kIEdFRCBkZXZpY2UgYXJlIHN1cHBsZW1lbnRpbmcgdG8g
-ZWFjaA0KPiAgb3RoZXIsIG1lYW5pbmcgR1BJTyBkZXZpY2Ugd2lsbCBiZSBjcmVhdGVkIHdoZW4g
-R0VEIGRldmljZSBoYXMgYmVlbg0KPiAgZGlzYWxsb3dlZC4NCj4gIA0KPiAgICAgICBoYXNfZ2Vk
-ID0gaGFzX2dlZCAmJiBhYXJjaDY0ICYmIGZpcm13YXJlX2xvYWRlZCAmJg0KPiAgdmlydF9pc19h
-Y3BpX2VuYWJsZWQodm1zKTsNCj4gIA0KPiAgVGhlIGNvZGUgdG8gYmUgbW92ZWQgdG9nZXRoZXIg
-aW4gdmlydC5jIHNpbmNlIHRoZXkncmUgY29ycmVsYXRlZDoNCj4gIA0KPiAgICAgICBpZiAoaGFz
-X2dlZCAmJiBhYXJjaDY0ICYmIGZpcm13YXJlX2xvYWRlZCAmJg0KPiAgdmlydF9pc19hY3BpX2Vu
-YWJsZWQodm1zKSkgew0KPiAgICAgICAgICAgdm1zLT5hY3BpX2RldiA9IGNyZWF0ZV9hY3BpX2dl
-ZCh2bXMpOw0KPiAgICAgICB9IGVsc2Ugew0KPiAgICAgICAgICAgY3JlYXRlX2dwaW9fZGV2aWNl
-cyh2bXMsIFZJUlRfR1BJTywgc3lzbWVtKTsNCj4gICAgICAgfQ0KPiAgDQo+ICAgICAgIGlmICh2
-bXMtPnNlY3VyZSAmJiAhdm1jLT5ub19zZWN1cmVfZ3Bpbykgew0KPiAgICAgICAgICAgY3JlYXRl
-X2dwaW9fZGV2aWNlcyh2bXMsIFZJUlRfU0VDVVJFX0dQSU8sIHNlY3VyZV9zeXNtZW0pOw0KPiAg
-ICAgICB9DQo+ICANCj4gICAgICAgIC8qIGNvbm5lY3QgcG93ZXJkb3duIHJlcXVlc3QgKi8NCj4g
-ICAgICAgIHZtcy0+cG93ZXJkb3duX25vdGlmaWVyLm5vdGlmeSA9IHZpcnRfcG93ZXJkb3duX3Jl
-cTsNCj4gICAgICAgIHFlbXVfcmVnaXN0ZXJfcG93ZXJkb3duX25vdGlmaWVyKCZ2bXMtPnBvd2Vy
-ZG93bl9ub3RpZmllcik7DQoNCg0KSWYgdGhlcmUgaXMgbm8gZGVwZW5kZW5jeSB0aGVuIHdlIGNh
-biBjb21wbGV0ZWx5IG1vdmUgYmVmb3JlICAgdmlydF9jcHVfcG9zdF9pbml0KCkuDQpJJ2xsIGdl
-dCBiYWNrIHRvIHlvdSBvbiB0aGlzLg0KDQpUaGFua3MNClNhbGlsLg0KDQo+ICANCj4gIFRoYW5r
-cywNCj4gIEdhdmluDQo+ICANCj4gIA0KPiAgDQo+ICANCg0K
+The size of lowram should be "gap" instead of the whole node.
+
+This is failing kernel's sanity check:
+
+[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0xffffffff]
+[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x80000000-0x16fffffff]
+[    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0x170000000-0x26fffffff]
+[    0.000000] Warning: node 0 [mem 0x00000000-0xffffffff] overlaps with itself [mem 0x80000000-0x16fffffff]
+
+Fixes: fc100011f38d ("hw/loongarch: Refine acpi srat table for numa memory")
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+---
+ hw/loongarch/acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+index 72bfc35ae6c2..2638f8743463 100644
+--- a/hw/loongarch/acpi-build.c
++++ b/hw/loongarch/acpi-build.c
+@@ -218,7 +218,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+          *   highram: [VIRT_HIGHMEM_BASE, +(len - gap))
+          */
+         if (len >= gap) {
+-            build_srat_memory(table_data, base, len, i, MEM_AFFINITY_ENABLED);
++            build_srat_memory(table_data, base, gap, i, MEM_AFFINITY_ENABLED);
+             len -= gap;
+             base = VIRT_HIGHMEM_BASE;
+             gap = machine->ram_size - VIRT_LOWMEM_SIZE;
+
+---
+base-commit: 075fd020afe3150a0e6c4b049705b358b597b65a
+change-id: 20240820-fix-numa-range-f1f0302e138d
+
+Best regards,
+-- 
+Jiaxun Yang <jiaxun.yang@flygoat.com>
+
 
