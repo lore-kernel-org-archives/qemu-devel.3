@@ -4,101 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB77C531DF
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 10:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44314C531DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 11:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgMZq-000107-RA; Tue, 20 Aug 2024 06:59:02 -0400
+	id 1sgMc7-0005UF-FP; Tue, 20 Aug 2024 07:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sgMZp-0000zU-4X
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:59:01 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sgMZn-0008PP-Fc
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:59:00 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5bec7ee6f44so4900155a12.0
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 03:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724151536; x=1724756336; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=brsCAxidmfhStUHuHeps+Vt90YiRUgWVn8ielNNUEkQ=;
- b=Z4UUTdJQn9itzOEv188P64EGbaf4s/eMpv+QnGVYrdxBQ3n9yPub1lnPYNAFM2hh9q
- KUr5aOPtK3PZS5C/HMwC+DcUBelyKhdRW7SlTgB4m5rbUyYN1m5A6S8zOtMldoxc5qat
- JQsUf5uUy4ZVcnHbI+yidxmFbeqTm2ZGLLDNsO+Zyant3dwaxHIwuF75qtbUnpYd0lX3
- 53YNQUlxOWI0vj2ziX45i0S1EitOglUCwBxqB36cxKU6HJ5EiDXBnBVwWipDgVq5eSv5
- I97ZwI22fUzbI4HHV2nxe1s+J0aPxejVAjXNwRkVQ1uCbKeWTwfHYb3ev8fXt300VcoT
- e/Ow==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMc2-0005Pe-EI
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:01:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMc0-0000Oc-Gn
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:01:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724151673;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JQ1d53v+93cxlbyGr/E9PZMQ1XfE3Z82Mwm/UxppW9k=;
+ b=N1OCFCxW7+ZrRLTvOaptE8CdVXMY8we22oZaRBEGoXhXxiB6auL0NrBiidegwRf5JLxBwU
+ EHUvw4quA6kFOP7oJlPRhIaMemPZ959bdD3MseU7rRpkops4PGOKRQyacrsRuUExeme4C+
+ adT+SIPPj4kTJzyC6JCYxyy05gDxJPg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-629-lMFrRI-RM1GiPcOgkfUHIg-1; Tue, 20 Aug 2024 07:01:08 -0400
+X-MC-Unique: lMFrRI-RM1GiPcOgkfUHIg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4280d8e685eso45742855e9.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 04:01:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724151536; x=1724756336;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=brsCAxidmfhStUHuHeps+Vt90YiRUgWVn8ielNNUEkQ=;
- b=tPzJVpXqbvwmw9bOHRiX42jbPiXPGHYTBNzJgASVOzTsFeZ/FvfPvXaCxgDEO4k2ao
- +Ulqrx/WuEZ8biBoB37ejg+T9OeDagixbaau//54KBCb7NqQHXYULfZnKMDcCePxvD3p
- IRQbj4oFy1lqQ2Qf7D57zC89OybCBC1DGjubXgJWyT9WprWMeQV3uEqwQGB3Tyg5goCH
- UeCSE2XH6w4a0dnE/3TRdUORFK/URHuPtQlQSSedYU8mKAtWIclLfM2TVTTHFq9NXzQZ
- AC4TnnC+bxA5s6NdqGIIGXJ6vNtb+rBJGpXcIxWNrKsnLQx1F02jeXRxMyUm1XYIhxeR
- 6iBw==
-X-Gm-Message-State: AOJu0YyY7yUoWS7y2eswVDSTlmevVQoEfU9TwPgXz8n0ctap1r8Vj/XA
- 0Ei7bEZuGJ/vnfcDquVRBN0WXZc9UDwWOagOYFVWVh+S3EDhZLlpfHZiBwbfPCo=
-X-Google-Smtp-Source: AGHT+IHhJXBshKR1Ly7iuspnq3aOEY1M40XMGno3jlGNJRDOsbQM0bd0rVg17NUB8fUBmzs69gmrvg==
-X-Received: by 2002:a05:6402:2792:b0:5be:db15:b3be with SMTP id
- 4fb4d7f45d1cf-5bedb15b604mr7594866a12.25.1724151535828; 
- Tue, 20 Aug 2024 03:58:55 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebbe7f17bsm6737345a12.59.2024.08.20.03.58.55
+ d=1e100.net; s=20230601; t=1724151667; x=1724756467;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JQ1d53v+93cxlbyGr/E9PZMQ1XfE3Z82Mwm/UxppW9k=;
+ b=jozpMOYjO5Oc4+NBSzxZaBuc/oSxdY1Qm9ME7TfrCUin2VCDBcuSpWv6PXkvSfk68A
+ tbO7MR+KTrozXQi03MsudIRW4x9ls7kPD87FPNg5taV4kuJpZGVicpzOae4Xr/ftjPCE
+ +5SR1RtCSyHB7INjaBz8mDPD2fCtf3g3dqG5fjH2f/uAeWilxOL2HpFbtYhqqtETMQTN
+ INvVnD+iBIaeJ0kcmHYu3AsPr5msaIiQ4fSMWOm8+6KXxmq4eOyVuSUk7hLF/Y6xpOWB
+ 2DhjHxXA6ZvO8GKmABuANmeWbzcDqoQxI92dsJwH+wKdFKItC1ub1tyHqlrzN3HEvX7x
+ b+sA==
+X-Gm-Message-State: AOJu0YynGLSvw4pXTcDOlSm5OEkG0qKRctJveomUJ0vwAMXKJAA82kQa
+ zT6vFMEZt2dWNfj9LYkz7pBGpSIFwKzSFqvqlpvYbLhK+1yNI8Z9IbftUiBs4u/Rwml5LQdFrsC
+ ebnVo+63ILnYi215NUOzAg065/CWoipxRg8SYhQRNzQ/bF2jhxgi2ko8XOYHNznE75ZE3r0l3aB
+ TMk15qdeIV8YMdmOFKZhU4pNEC/XohSQ==
+X-Received: by 2002:a05:600c:5029:b0:426:59fc:cdec with SMTP id
+ 5b1f17b1804b1-429ed7af8f1mr108859255e9.21.1724151667144; 
+ Tue, 20 Aug 2024 04:01:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzD560mfHyQWadZdFHzzUu5+22Wlnk/ccVVO/oTMpuY3sGiXuGHrPP6GcEJ1Xd6VyT9mPY8Q==
+X-Received: by 2002:a05:600c:5029:b0:426:59fc:cdec with SMTP id
+ 5b1f17b1804b1-429ed7af8f1mr108858915e9.21.1724151666359; 
+ Tue, 20 Aug 2024 04:01:06 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f4:a812:cb6d:d20c:bd3b:58cf])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429ed79da99sm137847255e9.46.2024.08.20.04.01.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Aug 2024 03:58:55 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 72B835F7A3;
- Tue, 20 Aug 2024 11:58:54 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
- Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
- <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- mimu@linux.vnet.ibm.com, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Richard Henderson <richard.henderson@linaro.org>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>, Bernhard
- Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas
- Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM Community Call (20/8/24) agenda items?
-Date: Tue, 20 Aug 2024 11:58:54 +0100
-Message-ID: <87jzgbmpe9.fsf@draig.linaro.org>
+ Tue, 20 Aug 2024 04:01:05 -0700 (PDT)
+Date: Tue, 20 Aug 2024 07:01:03 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 0/3] virtio: regression fixes
+Message-ID: <cover.1724151593.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,18 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit 76277cf82f0e1123bd69ec59d22014b8f78485ec:
 
-Hi,
+  Merge tag 'hw-misc-20240820' of https://github.com/philmd/qemu into staging (2024-08-20 09:17:41 +1000)
 
-The KVM/QEMU community call is at:
+are available in the Git repository at:
 
-https://meet.jit.si/kvmcallmeeting
-@
-20/08/2024 14:00 UTC
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
 
-Are there any agenda items for the sync-up?
+for you to fetch changes up to a8e63ff289d137197ad7a701a587cc432872d798:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+  virtio-pci: Fix the use of an uninitialized irqfd (2024-08-20 06:57:47 -0400)
+
+----------------------------------------------------------------
+virtio: regression fixes
+
+3 small patches to make sure we don't ship regressions.
+
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+----------------------------------------------------------------
+Akihiko Odaki (1):
+      vhost: Add VIRTIO_NET_F_RSC_EXT to vhost feature bits
+
+Cindy Lu (1):
+      virtio-pci: Fix the use of an uninitialized irqfd
+
+Volker Rümelin (1):
+      hw/audio/virtio-snd: fix invalid param check
+
+ hw/audio/virtio-snd.c  | 4 ++--
+ hw/net/vhost_net.c     | 2 ++
+ hw/virtio/virtio-pci.c | 3 +++
+ net/vhost-vdpa.c       | 1 +
+ 4 files changed, 8 insertions(+), 2 deletions(-)
+
 
