@@ -4,58 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55DF2C531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 16:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3444AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 17:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgSBs-0006wT-R3; Tue, 20 Aug 2024 12:58:40 -0400
+	id 1sgSFE-0007Si-TK; Tue, 20 Aug 2024 13:02:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
- id 1sgSBp-0006vN-Ep
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 12:58:37 -0400
-Received: from secure.fsr.com ([64.126.132.23])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sgSF3-0007Pv-NT
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 13:02:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
- id 1sgSBk-0006Cl-Fr
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 12:58:37 -0400
-Received: from [192.168.254.26] (syn-098-146-201-045.res.spectrum.com
- [98.146.201.45]) (Authenticated sender: chauser)
- by secure.fsr.com (Postfix) with ESMTPSA id CA2BBBD0C2;
- Tue, 20 Aug 2024 09:58:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pullman.com;
- s=mail1; t=1724173108;
- bh=iHDSJ15lM7vjupwwLeMXA20+bAvFY5dftE/2Nf4IbgI=;
- h=Date:Subject:To:From;
- b=HU/mfpwqX9kPgFtKELJMU+Md1xKeJDwefTVbaY7G0jF0jCUxERmJbXiurIGFtv1RV
- mA5B9R/bmlDOpQsjfA/YqkCK/HMC/Nxd8IKG5eGt8Jk5DdketDyZOIMmL5ZFtMzL97
- /pqvLf3caILmDQa+ZNgsExkl5RrAnacIoJp30cOo=
-Message-ID: <d3a12dd9-182d-4c97-955b-197f100b1feb@pullman.com>
-Date: Tue, 20 Aug 2024 09:58:26 -0700
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sgSF0-000708-TB
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 13:01:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724173312;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=cq463I5TyqkdBM1YHG6rncybz6uVDLWuHrPOT90Hrhg=;
+ b=EbEKDiBu26oD2QjL/MhSrKgDW3CMF4aN64//sa8NWxn2Fbqd0j+BqQD9q/mJnK+9ePrrro
+ wvH161BmuWOR1yTxzfLuyM7j44Mz0c0P4hUEQ9xAv4G942jhnRvSQ7a0fykP41WUFLH3Hk
+ n0A5xWqEzvt6xQkNftUDcvVpj1hn/qY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-oi8i-6wlN2qHPbYYxZRurw-1; Tue,
+ 20 Aug 2024 13:01:50 -0400
+X-MC-Unique: oi8i-6wlN2qHPbYYxZRurw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C6011955BFC; Tue, 20 Aug 2024 17:01:48 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.17])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CEC0119560AD; Tue, 20 Aug 2024 17:01:44 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2] .gitlab-ci.d/windows.yml: Disable the qtests in the MSYS2
+ job
+Date: Tue, 20 Aug 2024 19:01:42 +0200
+Message-ID: <20240820170142.55324-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char: suppress sunmouse events with no changes
-To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <cb338cdc-d09d-4513-ba16-5ff3f792bbfe@pullman.com>
- <d8bbf72d-29e5-465b-a8aa-508ed2960631@linaro.org>
-Content-Language: en-GB
-From: Carl Hauser <chauser@pullman.com>
-In-Reply-To: <d8bbf72d-29e5-465b-a8aa-508ed2960631@linaro.org>
-Content-Type: text/html; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=64.126.132.23; envelope-from=chauser@pullman.com;
- helo=secure.fsr.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- MIME_HTML_ONLY=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,94 +83,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Yes, just equality, no masking needed. Boneheaded.</p>
-    <p>I think I could figure out how to do the state migration if
-      that's the direction you want to go.</p>
-    <p>I don't think I could do the migration to
-      qemu_input_handler_register, especially as I would think that the
-      keyboard should be done at the same time.</p>
-    <p>I'll wait on a V2 patch with the equality fix for a decision
-      about migration/vs new style.<br>
-    </p>
-    <p>-- Carl<br>
-    </p>
-    <div class="moz-cite-prefix">On 8/20/24 00:34, Richard Henderson
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:d8bbf72d-29e5-465b-a8aa-508ed2960631@linaro.org">On
-      8/20/24 09:18, Carl Hauser wrote:
-      <br>
-      <blockquote type="cite">@@ -959,6 +960,15 @@ static void
-        sunmouse_event(void *opaque,
-        <br>
-              int ch;
-        <br>
-        <br>
-              trace_escc_sunmouse_event(dx, dy, buttons_state);
-        <br>
-        +
-        <br>
-        +    /* Don't send duplicate events without motion */
-        <br>
-        +    if (dx == 0 &amp;&amp;
-        <br>
-        +        dy == 0 &amp;&amp;
-        <br>
-        +        (s-&gt;sunmouse_prev_state ^ buttons_state) == 0) {
-        <br>
-      </blockquote>
-      <br>
-      Were you intending to mask vs MOUSE_EVENT_*BUTTON?
-      <br>
-      Otherwise this is just plain equality.
-      <br>
-      <br>
-      <blockquote type="cite">diff --git a/include/hw/char/escc.h
-        b/include/hw/char/escc.h
-        <br>
-        index 5669a5b811..bc5ba4f564 100644
-        <br>
-        --- a/include/hw/char/escc.h
-        <br>
-        +++ b/include/hw/char/escc.h
-        <br>
-        @@ -46,6 +46,7 @@ typedef struct ESCCChannelState {
-        <br>
-              uint8_t rx, tx;
-        <br>
-              QemuInputHandlerState *hs;
-        <br>
-              char *sunkbd_layout;
-        <br>
-        +    int sunmouse_prev_state;
-        <br>
-      </blockquote>
-      <br>
-      This adds new state that must be migrated.
-      <br>
-      <br>
-      While the patch is relatively simple, I do wonder if this code
-      could be improved by converting away from the legacy mouse
-      interface to qemu_input_handler_register. Especially if that might
-      help avoid needing to add migration state that isn't "really" part
-      of the device.
-      <br>
-      <br>
-      Mark?
-      <br>
-      <br>
-      <br>
-      r~
-      <br>
-      <br>
-    </blockquote>
-  </body>
-</html>
+The qtests are broken since a while in the MSYS2 job in the gitlab-CI,
+likely due to some changes in the MSYS2 environment. So far nobody has
+neither a clue what's going wrong here, nor an idea how to fix this
+(in fact most QEMU developers even don't have a Windows environment
+available for properly analyzing this problem), so we should disable the
+qtests here for the time being to get at least test coverage again
+for the remaining tests that are run here.
+
+Since we already get compile-test coverage for the system emulation
+in the cross-win64-system job, and since the MSYS2 job is one of the
+longest running jobs in our CI (it takes more than 1 hour to complete),
+let's seize the opportunity and also cut the run time by disabling
+the system emulation completely here, including the libraries that
+are only useful for system emulation. In case somebody ever figures
+out the failure of the qtests on MSYS2, we can revert this patch
+to get everything back.
+
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ This decreases the runtime of the job from ~ 70 minutes to
+ ~ 45 minutes for me.
+
+ .gitlab-ci.d/windows.yml | 26 ++------------------------
+ 1 file changed, 2 insertions(+), 24 deletions(-)
+
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index a83f23a786..759e9a76b5 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -17,12 +17,7 @@ msys2-64bit:
+     # This feature doesn't (currently) work with PowerShell, it stops
+     # the echo'ing of commands being run and doesn't show any timing
+     FF_SCRIPT_SECTIONS: 0
+-    # do not remove "--without-default-devices"!
+-    # commit 9f8e6cad65a6 ("gitlab-ci: Speed up the msys2-64bit job by using --without-default-devices"
+-    # changed to compile QEMU with the --without-default-devices switch
+-    # for this job, because otherwise the build could not complete within
+-    # the project timeout.
+-    CONFIGURE_ARGS:  --target-list=sparc-softmmu --without-default-devices -Ddebug=false -Doptimization=0
++    CONFIGURE_ARGS: --disable-system --enable-tools -Ddebug=false -Doptimization=0
+     # The Windows git is a bit older so override the default
+     GIT_FETCH_EXTRA_FLAGS: --no-tags --prune --quiet
+   artifacts:
+@@ -81,33 +76,16 @@ msys2-64bit:
+       bison diffutils flex
+       git grep make sed
+       mingw-w64-x86_64-binutils
+-      mingw-w64-x86_64-capstone
+       mingw-w64-x86_64-ccache
+       mingw-w64-x86_64-curl
+-      mingw-w64-x86_64-cyrus-sasl
+-      mingw-w64-x86_64-dtc
+       mingw-w64-x86_64-gcc
+       mingw-w64-x86_64-glib2
+-      mingw-w64-x86_64-gnutls
+-      mingw-w64-x86_64-gtk3
+-      mingw-w64-x86_64-libgcrypt
+-      mingw-w64-x86_64-libjpeg-turbo
+       mingw-w64-x86_64-libnfs
+-      mingw-w64-x86_64-libpng
+       mingw-w64-x86_64-libssh
+-      mingw-w64-x86_64-libtasn1
+-      mingw-w64-x86_64-libusb
+-      mingw-w64-x86_64-lzo2
+-      mingw-w64-x86_64-nettle
+       mingw-w64-x86_64-ninja
+       mingw-w64-x86_64-pixman
+       mingw-w64-x86_64-pkgconf
+       mingw-w64-x86_64-python
+-      mingw-w64-x86_64-SDL2
+-      mingw-w64-x86_64-SDL2_image
+-      mingw-w64-x86_64-snappy
+-      mingw-w64-x86_64-spice
+-      mingw-w64-x86_64-usbredir
+       mingw-w64-x86_64-zstd"
+   - Write-Output "Running build at $(Get-Date -Format u)"
+   - $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
+@@ -120,7 +98,7 @@ msys2-64bit:
+   - mkdir build
+   - cd build
+   - ..\msys64\usr\bin\bash -lc "ccache --zero-stats"
+-  - ..\msys64\usr\bin\bash -lc "../configure --enable-fdt=system $CONFIGURE_ARGS"
++  - ..\msys64\usr\bin\bash -lc "../configure $CONFIGURE_ARGS"
+   - ..\msys64\usr\bin\bash -lc "make"
+   - ..\msys64\usr\bin\bash -lc "make check MTESTARGS='$TEST_ARGS' || { cat meson-logs/testlog.txt; exit 1; } ;"
+   - ..\msys64\usr\bin\bash -lc "ccache --show-stats"
+-- 
+2.46.0
+
 
