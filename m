@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55DFEC531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 04:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A3D8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 04:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgGkS-0007lN-Qs; Tue, 20 Aug 2024 00:45:36 -0400
+	id 1sgGkU-0007rC-3x; Tue, 20 Aug 2024 00:45:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sgGk8-0007gI-Pp; Tue, 20 Aug 2024 00:45:31 -0400
+ id 1sgGkB-0007gT-A9; Tue, 20 Aug 2024 00:45:31 -0400
 Received: from fhigh2-smtp.messagingengine.com ([103.168.172.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sgGk4-0004Re-Uc; Tue, 20 Aug 2024 00:45:14 -0400
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal
- [10.202.2.46])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 769971151BB5;
- Tue, 20 Aug 2024 00:45:10 -0400 (EDT)
+ id 1sgGk6-0004Rz-IO; Tue, 20 Aug 2024 00:45:17 -0400
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal
+ [10.202.2.45])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id B62BE1151BB3;
+ Tue, 20 Aug 2024 00:45:12 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Tue, 20 Aug 2024 00:45:10 -0400
+ by phl-compute-05.internal (MEProxy); Tue, 20 Aug 2024 00:45:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:message-id:mime-version
- :reply-to:subject:subject:to:to; s=fm3; t=1724129110; x=
- 1724215510; bh=M8ZT15jnaJb2mMJvkrZSy/kRcoxy4wAAvpwrwVOZgjM=; b=M
- A/LlJPPX46wE0gFbVAkfL81KOugYLQb5nH/UCbtDtKidhFDhv3aH1ndzGNx9Zypg
- uWQox8YUCojrZ3ATPpXe1eZwffAvt7JeZrVJcTinii9YCXFx1OWRzwdQ6baLd7NE
- eFbx2Bes1ROXd7lL3SGYX8b/lbGJ6qda/bnLJfrVFJ7IcNaE2dzDcKnP4IZg7sEU
- qf3SzoE9Fxqjt2U26N/PvPXzVDcItP+JvrDJSN2/CT0oknNax77ZHsL11rcl2CJd
- 7uiXJfttFW+HeIeNiaGgMpaiHuhPiB+MbuD7cVp9seZgPDLf6cufFNM5KqUAarNQ
- OJSwxrxvdwxVknvCerCxg==
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1724129112; x=
+ 1724215512; bh=HVAtgXy50HM9RFO1/6tZGIwc/XjCv1WORDOYVlqO4CY=; b=D
+ lNC7UqXytsm9orx4QBKx5EBuKSlkF5KnqWPIH3FyGeKumC1xBCkT+c3kJ6JUVya9
+ z6oSj4lsHMsWFba0G7r1tFeKveOQhUyBrLDHFdhyh9jYkAJOnT0eaoBJeZ6k011t
+ qF66PkAwX4jnYO0Wca7IZ9q16g10Zbuf3U2EDanUEwmb4KPOpzZG3kE61RvCI+Io
+ UQVxWRjZxdMiQhpr3WDWO6NcSDTBxOyCU2JoY36Rdd8Letshkc5mwmW3aMzc9xP+
+ x0mkqwYrVRoBdTYO4BLZjXEnibRlJ68U11V1pWK0KAazR0+cY5qgL8GYNKpPjhHQ
+ QOuFkcsBIvq1GryKa9ePg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; t=1724129110; x=1724215510; bh=M8ZT15jnaJb2m
- MJvkrZSy/kRcoxy4wAAvpwrwVOZgjM=; b=YaGHDjlgAqcCA4+MgFBqJOuEplVPy
- NHYpcSdRTt+0v+9WTVvzsgc6j77b32pfD8IOF3nFpOzo7YtDaNeiuDFz0SdXoQn9
- XShP36fS/G+7v734/RdA7pH4eLOAPKLERU1l8I9Ns8LiUFv0oRZU6jdLY8qghTlw
- TPS093z5ypLQgSJptyPczcyGer6kSVzd0tr+KeikZYTx4dc17qVoPSsvjFkvdbo4
- v8VEJ1KwRM7B7z4NNBnWYuS7t0dXK3/R+q3FFQg5w8MmiA+KhBuoxCGO0FFkUa2x
- gxEvwSznSAXjAH2JzEDTcXeoE5YCKDXexGU82nZTdGYV6iyWbTfDN4LNg==
-X-ME-Sender: <xms:VR_EZsC2gPQgwaRAW9WIvsa06GQgtsY4MjYm95TjcjBvwFZHdTdrqA>
- <xme:VR_EZuhr9P_uIcHu_NnS0bH6lhVqKBGKztBDEMt-cnpHf81iSKWYIL76G6BD93-aD
- qy2zW40d2vjYIPA7Co>
-X-ME-Received: <xmr:VR_EZvm5RDUP97YCeIlcRBvBZ3Arn-uysNPjcgyyqZUGj8rlqK3u5kKe7wKu6Mhzje2fqFA2dX1OVsmiPbrVq6Ab9w2pdrkqPnJRPA>
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1724129112; x=
+ 1724215512; bh=HVAtgXy50HM9RFO1/6tZGIwc/XjCv1WORDOYVlqO4CY=; b=K
+ 3/mk2VDoX1/771DtnRlw6An6tnd5+SONOM4cI+vkan5dfrS0ukj+T7zQoz49y8md
+ +/qDHfYrRTJUO2CZhbYtzstyqzTxKoIEZwEi9kVKbqgs1a1sfAIb0jvtC0nN09cQ
+ 1mpjpHdMrRltv9sSj3LuifMvwiFEtvoiMWeeot9NF8oJeU0/OP5MfffBgkP7KoJD
+ D580wSoUk7C3Ooy391MoganVuRflGzfp82fugSA/AO6aION6quf1qdwaIuZv4ljE
+ EBcHMVMdusLpL6WdsyVF5WU8EHuCGLWyUhKjsi9CdjHz80VJvsOKFJQxPxHdyzgm
+ XggxyprPryOqnJRyeBfBA==
+X-ME-Sender: <xms:WB_EZtTBkfTvShFLpFYDEJJSxqbA8ML1H_eMYpgTJJ_kT-T1-Kvl2A>
+ <xme:WB_EZmwbmuXCKng8Bm6wRpCLh21GSJrGiQXm7uo2qQPFc4elKac0Nru3LV8IAJiff
+ I5f0k1JdgkGzR_frn0>
+X-ME-Received: <xmr:WB_EZi0NMR5RVV3sfvOLIQMYon-PV_YvxS4--m11AY3BuvwcQXzoIRe83ydNMmJN-EkrL-cuv2j9haklyra3yC7-QlG83eofNM-M2A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduhedgkeekucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
  rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhephffvvefufffkofgtggfgsehtkeertdertdejnecu
- hfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrug
- hkqeenucggtffrrghtthgvrhhnpeehheegffeufeehleeivdduffeivddvjeegudefffet
- hfehgeevgeetffeggffgffenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhgihhtlh
- grsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
- ohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeekpdhmoh
- guvgepshhmthhpohhuthdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhn
- rghrohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorh
- hgpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehq
- vghmuhdqshgvtghurhhithihsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuh
- dqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgr
- tghrohdrihhtpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtph
- htthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomh
-X-ME-Proxy: <xmx:VR_EZixRyBG7-bV3RmIMEC8D3G0f9E9YXK4syEp3l0fP8nMZ4-n0CA>
- <xmx:VR_EZhTcC8QrUTa4vETPmT-DQBM6DS906mHpbM1fhkD_3vYcW2hj5A>
- <xmx:VR_EZtZIHdyqxrTY9z7GVN5EpI3mMxzN0QMioNyXTVoC60fn3rFlWA>
- <xmx:VR_EZqTYzTPjXR9cowlk6roYdOp4rs6s3ySw9kl_QFd_18skTbhfMQ>
- <xmx:Vh_EZsESauyo4L6wuwLLDkLqCRCg8uqTa2M-dWXomOFkC6Nd4GFJEWnL>
+ htshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredttden
+ ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
+ gukheqnecuggftrfgrthhtvghrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfeh
+ fefgjeejhefffeegudejudegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
+ ohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghtvghrrdhmrgihug
+ gvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhho
+ nhhgnhhurdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprh
+ gtphhtthhopehqvghmuhdqshgvtghurhhithihsehnohhnghhnuhdrohhrghdprhgtphht
+ thhopehqvghmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepfhhosh
+ hsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhht
+ rdgukhdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtph
+ htthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:WB_EZlB2GF13GDK0JIsf83fzjZSj3tJQBJ97xfc041WE9tJ4ZaKbgw>
+ <xmx:WB_EZmgEuktSxJTV6Cf3t5Bwftzz3KdsuFfLRA87DUH3-cudnMt1YQ>
+ <xmx:WB_EZprs7x4BaXeeJ1ekC-jwFEoZPZ1RWkWrdH0M1RN0Osq8-OJcLw>
+ <xmx:WB_EZhirT9e0zsaRrKrSIRnuIwJNJqyPnah5-GV8K-WxPvbX0fOr5g>
+ <xmx:WB_EZraAyj3BMegTKFOei_jzKD0ijsXGCPoxAjBrlXeym7sCCK8tz0iV>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Aug 2024 00:45:08 -0400 (EDT)
+ 20 Aug 2024 00:45:10 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Keith Busch <kbusch@kernel.org>, qemu-security@nongnu.org,
  qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <its@irrelevant.dk>, Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL for-9.1 0/1] hw/nvme late fix
-Date: Tue, 20 Aug 2024 06:45:06 +0200
-Message-ID: <20240820044505.84005-3-its@irrelevant.dk>
+ Klaus Jensen <its@irrelevant.dk>, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org, Yutaro Shimizu <shimizu@cyberdefense.jp>
+Subject: [PULL for-9.1 1/1] hw/nvme: fix leak of uninitialized memory in
+ io_mgmt_recv
+Date: Tue, 20 Aug 2024 06:45:07 +0200
+Message-ID: <20240820044505.84005-4-its@irrelevant.dk>
 X-Mailer: git-send-email 2.45.2
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240820044505.84005-3-its@irrelevant.dk>
+References: <20240820044505.84005-3-its@irrelevant.dk>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1317; i=k.jensen@samsung.com;
- h=from:subject; bh=2D9T15+Iji6quYzx3R6hi4MU2SbpM9zAS0Mb0saOdYE=;
- b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGbEH1G34B2kUfJ0OYUcDyPzChm0wUy+yLcA2
- cC1jMIJxjEGqYkBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJmxB9RAAoJEE3hrzFt
- Tw3pVycH/Au56J9BYxIATtmq9bwxx6auo3vBFyslwB3iC8UqFbd4z2QqmcaPQMk2whKdf5/yDsw
- gVuQHRiKE98xD8gtggNYSCPmo36djsIhhlT99gjbxgU2ndbV36gttshlE9L954MSlKYaSqLSUjJ
- fuXPUKAeW+Iay7gjGqw1BHFPYqg4CdbbhOfXplGn+bVSqr9cZcbV7L1YW6W+lsBvpo20Alb7XsK
- LrbeQ+7viwa6n6sV9GDw1pWQsE7sQImOV49GsPS/VW937UDAZUasH4eQDPqvG0bWxQkEzU6qaAo
- TokYFUYCc78yteB94DckxWb/XVSnj3laztQjJ7ylAecOVMIfyIy/YaVc
+X-Developer-Signature: v=1; a=openpgp-sha256; l=880; i=k.jensen@samsung.com;
+ h=from:subject; bh=dmvovNmsI1IDFQuXVJiFls1WySo1nP5aa4y1cnkMalw=;
+ b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGbEH1HhSw7IDeD0skseRiuzJqX3JkHJ0ioN0
+ +KN5hl5WzPNbYkBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJmxB9RAAoJEE3hrzFt
+ Tw3pUHAIAK6JNXpTdFrxcQanezOo13p6TjFMmPDHa6AMbXoRuszBX1PBYxYkIq1EqjdriGXntoo
+ lWvmwzPhtDkOwavocTsY6PL+yaeqdcicVskNnql43Gzo8utpTzGWrByqc5Bf+iLrp+Et+plQ8g0
+ dSBKWfs9CaelvBLztqUtcBe41RCIj27JofvsTD40c5o9x1pf6K2UNRmC5tHNd+KkBhZ7yIbG0ML
+ aEYkECz4VQX85T8yQYDvEKO+YKO2pnsTV1rvgyrF7YNgp1Ie75sng8j/FZehl7lM/XwEs7b9QFf
+ NoRgax9b8d2/6iQToFHm6D0fKTuGUwAJAaH+SmdUyM5wpSgzfEAC9KQ+
 X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
  fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
 Content-Transfer-Encoding: 8bit
@@ -126,42 +130,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-Hi,
+Yutaro Shimizu from the Cyber Defense Institute discovered a bug in the
+NVMe emulation that leaks contents of an uninitialized heap buffer if
+subsystem and FDP emulation are enabled.
 
-The following changes since commit 48e4ba59a3756aad743982da16bf9b5120d91a0c:
-
-  Merge tag 'pull-riscv-to-apply-20240819-1' of https://github.com/alistair23/qemu into staging (2024-08-19 14:55:23 +1000)
-
-are available in the Git repository at:
-
-  https://gitlab.com/birkelund/qemu.git tags/nvme-next-pull-request
-
-for you to fetch changes up to 6a22121c4f25b181e99479f65958ecde65da1c92:
-
-  hw/nvme: fix leak of uninitialized memory in io_mgmt_recv (2024-08-20 06:16:48 +0200)
-
-----------------------------------------------------------------
-hw/nvme late fix
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmbEHsUACgkQTeGvMW1P
-DenlQgf/dzz4B5pzdD0HsjNVNulxygAJEnYitiF/50LRj564hQDoisNYPvHeKMA7
-wfk8jSSimTM6YkETksiR2DvnXlZ3wXn/HAhqE15GSW8vtRK2/RO9vNn51gyoFvl3
-z/Wm8ahoFaNpygQQkQMIJ9QHVD3GheZH4OxMhqI1523+s7dGcUNetoZiyoBAdJ6m
-7KOa/zUTPBmvpKMOEa25Ss+nZIPp9eFuCwQxhToV0gEuJFHolRZYv7GA4UjnodvJ
-HrBrbsB8W4vh65FmC7WLAG9XFvNMgC0h8qtzWyKhNcxf478E7FckLvnAzSZExitj
-fJzrSJV0bJHlQEM2q0yHYpL0urh5XA==
-=ZeRF
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-
-Klaus Jensen (1):
-  hw/nvme: fix leak of uninitialized memory in io_mgmt_recv
-
+Cc: qemu-stable@nongnu.org
+Reported-by: Yutaro Shimizu <shimizu@cyberdefense.jp>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
  hw/nvme/ctrl.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index c6d4f61a47f9..9f277b81d83c 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4474,7 +4474,7 @@ static uint16_t nvme_io_mgmt_recv_ruhs(NvmeCtrl *n, NvmeRequest *req,
+ 
+     nruhsd = ns->fdp.nphs * endgrp->fdp.nrg;
+     trans_len = sizeof(NvmeRuhStatus) + nruhsd * sizeof(NvmeRuhStatusDescr);
+-    buf = g_malloc(trans_len);
++    buf = g_malloc0(trans_len);
+ 
+     trans_len = MIN(trans_len, len);
+ 
 -- 
 2.45.2
 
