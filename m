@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A4E8C531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 05:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1B7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 05:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgHFT-0005Yz-Db; Tue, 20 Aug 2024 01:17:39 -0400
+	id 1sgHMI-0002Uw-9I; Tue, 20 Aug 2024 01:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgHFP-0005Wp-HZ
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:17:36 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ id 1sgHMH-0002Tz-5l
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:24:41 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgHFN-0000dP-9H
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:17:35 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-5d59e491fefso2626994eaf.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 22:17:32 -0700 (PDT)
+ id 1sgHMF-0001ij-Jv
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:24:40 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7b594936e9bso3457620a12.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 22:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724131051; x=1724735851; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724131478; x=1724736278; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ASsuCh4Z7nZeWtkEbIHz+hsb9X2Wxl+qjsL+S/a5ws0=;
- b=CJsl7ZWDiiviVGZkomf8u3PHeQfbDoWacZdynySkgM6r/EBKN4chBMlcRLc8iQqNiC
- w6n6IrUsgTl81Ou1TSJHYrzkQBIb2YRmDPkoiF+17DzXWVx0rcFambdbIZN3vJDHmsFv
- 7CDIC89N9Tt6KjTNrvZpQgCBDbJhKifkqqv9Tcj0VjE2OP2qeOuuLT5Ek8JFwRHrfuTB
- rOQ5JGtNGwMxDysxtxJYbbztHuNDwGRyF5LS05qYPTNW8I/lg3P3YdSNxsnskfksW+v2
- 42L5BJDqtQJPSyFnt7DQXgQqlRJ7XL7ICayWEP7+/MCpb96zbxpFpcQAMe/fAnedeM1T
- QNOA==
+ bh=1mY9qTfLp9/wOp1KnlR/kB6EryzMXxmldfetb9IU/Tg=;
+ b=yE0eNrBE+ta38YSQThpscn78H/VUyxBUV9I0ZMUighq+f0u8Dw71r+0REt4Kld48lv
+ /byQ9sCOyaTXTI7MYI3Khta8HFRmS1dnqYBRl+L2IdlXnIRHq3MTRFLR0mwUCh6pEtSU
+ 0FYuOyGBTrwhoE1QGDbEvq8ldzvxDfjqx8BkRFwk4dQK8ec4GUVKCjQA9VC4WneCtPEq
+ z2Cpz1THqZKFMuCyiAWpxELmuk2AhRQLkCtggsom43I3rwzIGDScnkBk4uIIIVx2NBE9
+ //12XZDjKjnwhmEpY7+hvamdloK60oOzVnvlpJUYH010uDWGY/HonMBbdBMT1ff6v+LS
+ dK/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724131051; x=1724735851;
+ d=1e100.net; s=20230601; t=1724131478; x=1724736278;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ASsuCh4Z7nZeWtkEbIHz+hsb9X2Wxl+qjsL+S/a5ws0=;
- b=hGteHH7mc26uFMd6h3YjhlKtaqlIveJWSsjSqt3QT4MIICRXnupCQgjFRMT5TEbDu9
- h4s7bssiKCd9n0HLcS1z3nJa4CFJG83+Bl/M3tJDqrt5wqw3MpO9GFieT+scyo2yVHst
- ytKJflMP++ZSaQ+awOFxwgDbvJy88xe+rzgw/S4Tc8bKv8s2veGj8doEDsWQPtYSK5sj
- MKOqD8TWOOPKl9cIpI7XrIlRrAr2Bj0NYe9zUd5+FMlkbvRVssjev5F190RP5lcF+Uvj
- XGbzYR2ZLP+aWMtv48Wn5RYEbAFFAr6udgm3fACwZ3uo0kRmdzQtmISMtrKi5E0E1oMq
- R5Nw==
+ bh=1mY9qTfLp9/wOp1KnlR/kB6EryzMXxmldfetb9IU/Tg=;
+ b=Hbw2mmT435cWc4b62EHLDw9EaQededR9D8tRKR/Enn4zVIdo4ovg7Kf+JPO4NlKCbU
+ 0ByNoFN5lWtXNDlZvEYJZC14hnq4bsGq8m2lmVMp4eby656iztQs4uBaygNJd9kiWzcs
+ ruVkUrChtz1nUSMAGyHbbW3VwN/oxq0MNwoUWKY3+m4n5rcH2TGbNZt/5rDLXyRResBc
+ 396rmphzibCtqicIk8dnBFfviFdAYxOOez8at+SidmmNRPHs4WODh4TbNBuJ8jbwZq76
+ fo1WY7USai6Ov4c6l55j5vOkADkplMbRtZYF15CaO8k6yoVmJGm8w3xChKXogRPV256J
+ Kkvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFeYfTVdG4C/h8FENvairVKyAqDZk9ZFqQuUxSHC2tuORSXKC5E9UYT9ryaKtIcr2A+CbCXMbMV1VOUVFB7ylmLyteGhs=
-X-Gm-Message-State: AOJu0YxPnTqcn29iYNPBssZNwUs1A7ut/l+CiYnvy91UvZpvy29YdGKk
- tzTNmlsotzOlgLwj0EiW2BiBCq6hyuphHKeV/+9dCzFiT4R8GA3+tK5A1QpyCH0=
-X-Google-Smtp-Source: AGHT+IGr7wUipPmUobgVk58sgFdGWD5Ptgjtd3DDrfhvsax0Y2kUwZ1YvKUL8qhxih3VQNvU9T2ywA==
-X-Received: by 2002:a05:6358:2923:b0:1a5:2f55:c46e with SMTP id
- e5c5f4694b2df-1b39318021dmr955027455d.9.1724131050881; 
- Mon, 19 Aug 2024 22:17:30 -0700 (PDT)
+ AJvYcCWnnh3xc/viTj2BIJYZiOg27JoITcotu6R/yCKhddIp9I03KmtInoEEVUITxxuKO3S0IcURSfXdT2Cb8FUQ7P8gsAJZ6QE=
+X-Gm-Message-State: AOJu0YzvXHCwGtqt3CAT8tsmnpzNWF5Pv8HILe9DGziDd1X2aBHQ9X07
+ XFYBMtZ9pIpAds/kpbbGs0MT/vf746z6u0s6sFVv7ytpO0njW2DlJVFUctCWxWA=
+X-Google-Smtp-Source: AGHT+IHVpiKQh/fsSi/DLTqWT+ct27mm8tLjCWslouxhbHk+rY3etHjmvCBwHlr+WGMBttYKEAzRGg==
+X-Received: by 2002:a17:90b:1b06:b0:2c4:ee14:94a2 with SMTP id
+ 98e67ed59e1d1-2d5c0ea73c9mr1351740a91.27.1724131477655; 
+ Mon, 19 Aug 2024 22:24:37 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.3.188])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127ae07e41sm7430193b3a.65.2024.08.19.22.17.25
+ 98e67ed59e1d1-2d3c3e5b9fdsm11043956a91.40.2024.08.19.22.24.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Aug 2024 22:17:30 -0700 (PDT)
-Message-ID: <e337d249-eeac-4e48-a4b2-1fa3d76117b3@linaro.org>
-Date: Tue, 20 Aug 2024 15:17:22 +1000
+ Mon, 19 Aug 2024 22:24:37 -0700 (PDT)
+Message-ID: <bb1f768e-fd10-4246-b60b-7912e33c7ee6@linaro.org>
+Date: Tue, 20 Aug 2024 15:24:27 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/15] target/riscv: Introduce elp state and enabling
- controls for zicfilp
+Subject: Re: [PATCH v5 05/15] target/riscv: tracking indirect branches (fcfi)
+ for zicfilp
 To: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
@@ -73,14 +73,14 @@ Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
  zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
  kito.cheng@sifive.com
 References: <20240820000129.3522346-1-debug@rivosinc.com>
- <20240820000129.3522346-3-debug@rivosinc.com>
+ <20240820000129.3522346-6-debug@rivosinc.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240820000129.3522346-3-debug@rivosinc.com>
+In-Reply-To: <20240820000129.3522346-6-debug@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,38 +104,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/20/24 10:01, Deepak Gupta wrote:
-> zicfilp introduces a new state elp ("expected landing pad") in cpu.
-> During normal execution, elp is idle (NO_LP_EXPECTED) i.e not expecting
-> landing pad. On an indirect call, elp moves LP_EXPECTED. When elp is
-> LP_EXPECTED, only a subsquent landing pad instruction can set state back
-> to NO_LP_EXPECTED. On reset, elp is set to NO_LP_EXPECTED.
+> zicfilp protects forward control flow (if enabled) by enforcing all
+> indirect call and jmp must land on a landing pad instruction `lpad`. If
+> target of an indirect call or jmp is not `lpad` then cpu/hart must raise
+> a sw check exception with tval = 2.
 > 
-> zicfilp is enabled via bit2 in *envcfg CSRs. Enabling control for M-mode
-> is in mseccfg CSR at bit position 10.
-> 
-> On trap, elp state is saved away in *status.
+> This patch implements the mechanism using TCG. Target architecture branch
+> instruction must define the end of a TB. Using this property, during
+> translation of branch instruction, TB flag = FCFI_LP_EXPECTED can be set.
+> Translation of target TB can check if FCFI_LP_EXPECTED flag is set and a
+> flag (fcfi_lp_expected) can be set in DisasContext. If `lpad` gets
+> translated, fcfi_lp_expected flag in DisasContext can be cleared. Else
+> it'll fault.
 > 
 > Signed-off-by: Deepak Gupta<debug@rivosinc.com>
 > Co-developed-by: Jim Shu<jim.shu@sifive.com>
 > Co-developed-by: Andy Chiu<andy.chiu@sifive.com>
-> Reviewed-by: Richard Henderson<richard.henderson@linaro.org>
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
 > ---
->   target/riscv/cpu.c      |  3 +++
->   target/riscv/cpu.h      |  2 ++
->   target/riscv/cpu_bits.h |  6 ++++++
->   target/riscv/csr.c      | 31 +++++++++++++++++++++++++++++++
->   target/riscv/pmp.c      |  5 +++++
->   target/riscv/pmp.h      |  3 ++-
->   6 files changed, 49 insertions(+), 1 deletion(-)
+>   target/riscv/cpu.h        |  3 +++
+>   target/riscv/cpu_bits.h   |  3 +++
+>   target/riscv/cpu_helper.c | 12 ++++++++++++
+>   target/riscv/translate.c  | 21 ++++++++++++++++++++-
+>   4 files changed, 38 insertions(+), 1 deletion(-)
 
-One thing missing here is to add
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +    /* elp state for zicfilp extension */
-> +    bool      elp;
 
-this to the migration state, as a subsection under vmstate_riscv_cpu.
+> @@ -1265,11 +1270,25 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+>      DisasContext *ctx = container_of(dcbase, DisasContext, base);
+>      CPURISCVState *env = cpu_env(cpu);
+>      uint16_t opcode16 = translator_lduw(env, &ctx->base, ctx->base.pc_next);
+> -
+>      ctx->ol = ctx->xl;
+>      decode_opc(env, ctx, opcode16);
+>      ctx->base.pc_next += ctx->cur_insn_len;
 
-Sorry I missed this before...
+Watch the unrelated whitespace changes.
 
 
 r~
