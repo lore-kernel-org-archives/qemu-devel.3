@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B37DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 10:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4E2C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 10:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgMLd-0000h3-46; Tue, 20 Aug 2024 06:44:21 -0400
+	id 1sgMWm-0004VJ-Mm; Tue, 20 Aug 2024 06:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sgMLb-0000fJ-PA
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:44:19 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sgMLa-0006JS-15
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:44:19 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5befd2f35bfso2296366a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 03:44:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724150656; x=1724755456; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EEzFRs2teKTCp80TPRn9qMI2bcuuxKjdKatKywvsk94=;
- b=M3vhxJVgR93uhee3f1+7TJlT3hN5Ky39D0d9HyqQfCR7tSkv/Q14h0PqH9pCg3YI4k
- 2eH6Jy2quq2qmv2RAUmCg6TzeIbynZvAJMIi/CYnOddQ4BL8u1g1ax0LsMqvVJ/uMHbU
- e31PByxoDu4SA6o1TyNQJtLRas7G3No6kMc76d7qL0XwNpiSGlrNPUiZAcDZzRUWiyay
- wJ6Qe9GT2DIf5IKllTdjkqyTEtJ9hMmjhni0aVJiERlO8zZA3MLvFriCh7HL6DIKMxqb
- sjhTRONCL8uqzBeFWhbVuNmF5+eGMTEU/3OtG4OGg1DHXttEAFBztrECZDCvvUdjD1wQ
- enLQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMWa-0004SQ-Rt
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:55:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMWZ-00088C-0j
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:55:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724151337;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=po7wPHbzpUWxc5y8yxarIOBDiNbyjnslu9VJaZDHJII=;
+ b=bXCELUBEJTpIQ/2aN2UyCD+ZJ+Y3iI1RuAxUf4Rs/oS1GHTlgFYWDdSHhP2CNF74Sr+36f
+ uQ4IjuRHrn97SfBV5E2k61dWt5RAqV7feHIOmkLp5I2YZsG35ZDJicN+1fbfkQbaVm3HUn
+ L3jgha+nu0/L+HWhqSwWh+WTSqJFnek=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-221-ZjHATTjYMUW9uTIuN5T8eg-1; Tue, 20 Aug 2024 06:55:35 -0400
+X-MC-Unique: ZjHATTjYMUW9uTIuN5T8eg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4280645e3e0so43856625e9.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 03:55:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724150656; x=1724755456;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EEzFRs2teKTCp80TPRn9qMI2bcuuxKjdKatKywvsk94=;
- b=R5hLCqEfNpIB5UF1adnoSnfX18G9qKXGX2CfhrIVIV9Pr/vxEL6p3m0rfUNhol66fF
- y6VbYjceQVOGbJCURn+7JG1muZZE4M+bnWMX56M3pmWNDaqv+/Zm5XNruqL41Kwjrlox
- gluAhVmJgJ2qkdAkkrR7SZEV/8lSj4klKa5fb3uiL2Pshe88vk8cN1wPxQuFFpzKyxCQ
- kjrz2xKC13dKR/y5K3gbNRpM8ZHXhTWWlObuMux2BNxjTvcJwHSujECtOPmq81cd6BDh
- +VJvvYIznIHZKj/CmK2mpUpzoCVRlNCzxaMStTDP+XoJ646c9ItuMsU3U0EwnAkDQHx5
- aQOA==
+ d=1e100.net; s=20230601; t=1724151334; x=1724756134;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=po7wPHbzpUWxc5y8yxarIOBDiNbyjnslu9VJaZDHJII=;
+ b=gYQgc7c9EN9gSkETOl0cz7ZJ3/OFfqQbPaU6nCO4x1g3v9ztalztqYr8lxWcBES0Qo
+ RC6+YcdgwSlBx2sK7uvlDcGqaJmS2Lh7uH/ta/CJNkk75DaxSFx9uOSr3RhX49w2uJgG
+ wxNd49GF83GA0lUuzNaf6T8aOgFWf2bZ5NGsKOOaQ9iZSsFN/I2awgh32MokZZrRzikT
+ VKrH/dJoSPF/XnkaZXyLgvMzAezxBaYpBWxuVwWwmy5OM/2Mpze4TPmwF9XAYUPU6HGK
+ 3v9+nyXZT8Nz+LKbj0egXBQKxiZUyAN3vfc1+ofvNVIotzDLU6no/Eq1bI7PufgWOtpz
+ tO/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJAXXRTOZQzoGZoKydTqlMWf+wZpPifPeO/NZ1ioLBQe7qzs7EZsA6mRSTkHTGB9BUjbrY6Ne6Rg3LKWogxBWqnpYYNjs=
-X-Gm-Message-State: AOJu0Yw3t0pjv3q7BYPpy4OFBtPYjV0qTpUM6JDacWMBGXXOkyqOk6pS
- NvUxGhb6S1Tp7JTnW3Jsafr19ne6atNM3eQZzB5XSRV1d11KdgbL6JriqeCnd5I=
-X-Google-Smtp-Source: AGHT+IE/dOyVeJ5OF8dtyBxNR2lIHENOJRP5XyCqiDtO+pnIQvQAvZRKBtNemYOvkTWn4LFEWp51kg==
-X-Received: by 2002:a05:6402:2745:b0:5a3:a4d7:caf5 with SMTP id
- 4fb4d7f45d1cf-5beca7b03d5mr9527617a12.36.1724150655692; 
- Tue, 20 Aug 2024 03:44:15 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebc08140csm6615972a12.83.2024.08.20.03.44.14
+ AJvYcCV2Duq8GUGttZuLs8OMwr3VlwIQshyWb4YNgqq3Kb+B15ZvKNMdVSw4mhO+hbLwASAtUp2cHuI2F+LMMveFk9xTFwuSYAA=
+X-Gm-Message-State: AOJu0YzlFDoBbWgbMxDSP1rvjnnQ51ei8OnHo+Lgp8mrOgQ1LtBdAV1h
+ Ak9wapHHkAXJZdkOf00cbgO5+xT+yM+/VGIJ6PESW35etHk8pn4DOUrIVj16SW29kr5V9ga1orP
+ fiNs/s8tm+qO1H6zoGnteLxVwPo9r82gXWUbRT9DVQZecNsVUfgEG
+X-Received: by 2002:a05:600c:1553:b0:428:e866:3933 with SMTP id
+ 5b1f17b1804b1-42ab692ab21mr13235095e9.22.1724151334368; 
+ Tue, 20 Aug 2024 03:55:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnk/R2oW8BBa6xiRCxq6lPPXv0rFy907EldKxPoyglaG2WWRZBKQuG4AQ0Uz2kPJLHci3o0g==
+X-Received: by 2002:a05:600c:1553:b0:428:e866:3933 with SMTP id
+ 5b1f17b1804b1-42ab692ab21mr13234805e9.22.1724151333425; 
+ Tue, 20 Aug 2024 03:55:33 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f4:a812:cb6d:d20c:bd3b:58cf])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429ded35991sm192547035e9.21.2024.08.20.03.55.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Aug 2024 03:44:15 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 183435F7A3;
- Tue, 20 Aug 2024 11:44:14 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
- Stabellini <sstabellini@kernel.org>,  Antonio Caggiano
- <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
- <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
- Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
- Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
- <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
-Subject: Re: [PATCH v16 00/13] Support blob memory and venus on qemu
-In-Reply-To: <20240623152343.328436-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Sun, 23 Jun 2024 18:23:30 +0300")
-References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
-Date: Tue, 20 Aug 2024 11:44:14 +0100
-Message-ID: <87o75nmq2p.fsf@draig.linaro.org>
+ Tue, 20 Aug 2024 03:55:32 -0700 (PDT)
+Date: Tue, 20 Aug 2024 06:55:29 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH v2] hw/virtio/vdpa-dev: Check returned value instead of
+ dereferencing @errp
+Message-ID: <20240820065310-mutt-send-email-mst@kernel.org>
+References: <20240716162615.271010-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240716162615.271010-1-zhao1.liu@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,84 +105,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+On Wed, Jul 17, 2024 at 12:26:15AM +0800, Zhao Liu wrote:
+> As the comment in qapi/error, dereferencing @errp requires
+> ERRP_GUARD():
+> 
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> * - It must not be dereferenced, because it may be null.
+> ...
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> *
+> * Using it when it's not needed is safe, but please avoid cluttering
+> * the source with useless code.
+> 
+> Though vhost_vdpa_device_realize() is called at DeviceClass.realize()
+> context and won't get NULL @errp, it's still better to follow the
+> requirement to add the ERRP_GUARD().
+> 
+> But qemu_open() and vhost_vdpa_device_get_u32()'s return values can
+> distinguish between successful and unsuccessful calls, so check the
+> return values directly without dereferencing @errp, which eliminates
+> the need of ERRP_GUARD().
+> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Jason Wang <jasowang@redhat.com>
+> Acked-by: Eugenio Pérez <eperezma@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> v2:
+>  * Added a/b from Eugenio.
+>  * Deleted unnecessary ERRP_GUARD(). (Eugenio)
+> ---
+>  hw/virtio/vdpa-dev.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> index 64b96b226c39..8a1e16fce3de 100644
+> --- a/hw/virtio/vdpa-dev.c
+> +++ b/hw/virtio/vdpa-dev.c
+> @@ -63,19 +63,19 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
+>      }
+>  
+>      v->vhostfd = qemu_open(v->vhostdev, O_RDWR, errp);
+> -    if (*errp) {
+> +    if (v->vhostfd < 0) {
+>          return;
+>      }
+>  
+>      v->vdev_id = vhost_vdpa_device_get_u32(v->vhostfd,
+>                                             VHOST_VDPA_GET_DEVICE_ID, errp);
+> -    if (*errp) {
+> +    if (v->vdev_id < 0) {
+>          goto out;
+>      }
 
-> Hello,
->
-> This series enables Vulkan Venus context support on virtio-gpu.
->
-> All virglrender and almost all Linux kernel prerequisite changes
-> needed by Venus are already in upstream. For kernel there is a pending
-> KVM patchset that fixes mapping of compound pages needed for DRM drivers
-> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
-> from Qemu.
->
-> [1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.=
-com/
->
-> You'll need to use recent Mesa version containing patch that removes
-> dependency on cross-device feature from Venus that isn't supported by
-> Qemu [2].
->
-> [2] https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e2698=
-7befae78b6ccbb7ae242b
->
-> Example Qemu cmdline that enables Venus:
->
->   qemu-system-x86_64 -device virtio-vga-gl,hostmem=3D4G,blob=3Dtrue,venus=
-=3Dtrue \
->       -machine q35,accel=3Dkvm,memory-backend=3Dmem1 \
->       -object memory-backend-memfd,id=3Dmem1,size=3D8G -m 8G
+vdev_id is unsigned, no idea how is this supposed to work.
 
-For the following profiles:
+>  
+>      max_queue_size = vhost_vdpa_device_get_u32(v->vhostfd,
+>                                                 VHOST_VDPA_GET_VRING_NUM, errp);
+> -    if (*errp) {
+> +    if (max_queue_size < 0) {
+>          goto out;
+>      }
+>  
+max_queue_size is unsigned, too.
 
-Host Setup:
+> @@ -89,7 +89,7 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
+>  
+>      v->num_queues = vhost_vdpa_device_get_u32(v->vhostfd,
+>                                                VHOST_VDPA_GET_VQS_COUNT, errp);
+> -    if (*errp) {
+> +    if (v->num_queues < 0) {
+>          goto out;
+>      }
+>  
 
-  x86 host
-  Intel Corporation Raptor Lake-S GT1 [UHD Graphics 770]
-  Debian Bookworm
-  Kernel 6.11.0-rc1-ajb-00146-gf690c27fbc92 (basically https://lore.kernel.=
-org/lkml/20240726235234.228822-1-seanjc@google.com/ + UDMABUF enabled)
-  Hand built Virglrenderer (main/4fc19d919f/v1.0.1)
-  Hand built Mesa with Venus support (mesa-23.3.6)
+num_queues is unsigned, too.
 
-x86 Guest Setup
+> @@ -127,7 +127,7 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
+>      v->config_size = vhost_vdpa_device_get_u32(v->vhostfd,
+>                                                 VHOST_VDPA_GET_CONFIG_SIZE,
+>                                                 errp);
+> -    if (*errp) {
+> +    if (v->config_size < 0) {
+>          goto vhost_cleanup;
+>      }
+>  
+> -- 
+> 2.34.1
 
-  Current Trixie guest (as off 19/8/24)
-  Kernel 6.11.0-rc1-ajb-00146-gf690c27fbc92
-  Distro installed:
-    weston
-    vkcube-wayland
-    vkmark
-
-  QEMU: KVM guest with -device virtio-vga-gl,hostmem=3D4G,blob=3Don,venus=
-=3Don
-
-Aarch64 Guest Setup
-
-  Current Trixie guest (as off 19/8/24)
-  Kernel 6.11.0-rc1-ajb-00146-gf690c27fbc92
-  Distro installed:
-    weston
-    vkcube-wayland
-    vkmark
-
-  + Hand built Mesa (012323a1d, enabled with meson devenv)
-
-  QEMU: TCG Guest with -device virtio-gpu-gl-pci,hostmem=3D4G,venus=3Don,bl=
-ob=3Don
-
-Have a:
-
-  Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-  Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-Next steps:
-
-  - test on Arm AVA (x86 and Arm guests)
-  - build some buildroot images with all the right deps for testing
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
