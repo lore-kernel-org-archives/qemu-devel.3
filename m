@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C156C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 08:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD7AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 08:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgKMc-0004Ud-Ae; Tue, 20 Aug 2024 04:37:14 -0400
+	id 1sgKQe-0000Xf-7v; Tue, 20 Aug 2024 04:41:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sgKMZ-0004U5-7f
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 04:37:12 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1sgKQc-0000X9-JO
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 04:41:23 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sgKMW-0005ZH-LD
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 04:37:10 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5becc379f3fso3902968a12.3
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 01:37:07 -0700 (PDT)
+ id 1sgKQa-00064v-MM
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 04:41:22 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2f3ce5bc6adso28840441fa.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 01:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724143026; x=1724747826; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vuLPoW6l8s29WziZnN+BpIXkTUKReSVF73v2af5K6IM=;
- b=dePXj+2lYQ58cVBMiJ/EA0tFxkf/jhwWXsyp85YfZ4Sd4f+YKcpoOPQeVXwFzGWWvN
- DxAH1pPNisQn3obaENzpB+eKNVv7JhJRDya6ESCkPCGH+XKajgQxCQOaKGkHJ+H0K/M7
- xwo8izNTT/u+thk0+hDb/eJFBl8MZnWQCjw6C9rr/jmGvTIKwgD+aSya/4Z72hbmgCV8
- JPIp/hEQC5TtV8DoA/MvoPZ78r0hxdlLgXBQxnHcdrgKh5El/QcYK1bliP5lqh7fx34E
- 8cnkRf7aEZYySR1WqSJTj15OukzIBzNM3v0jh/ow4dk3EV+EMI2Zviab1JsyiPRA0qca
- aAhg==
+ d=linaro.org; s=google; t=1724143278; x=1724748078; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YqZvv2kEqvcbRzWm1CZPTiidR8LzbsML7RFTqak7cY8=;
+ b=Q6nJEChqFHweZeNboRAFOks8GmFDbDEoGeg3T1grOoavQT5fveZsay9BCNZ5Z4clUt
+ P4+emaML7Ea/cvuYrNGVZpJ5g1WtX4N6YIRnf30nJI5TjlZazUzFUUA4/o+DS7F5IOnk
+ /mEVd4/LRkOKTsDPFg3iOjJAJkDlVdbV9R0d0/J2ip/0nlKYbtY4rbvRzxFdpHPaYYxn
+ rvUMrYFKyGBrjbsJ+WjiNIG15J6fyC1gx+WzWsXw6j+mm7BxD1DJ0ltQevoWTk6wg/jn
+ Z/EwcJacdw26OyjM5M7+NsCxGKBb1f0NUvBMNJiy6joD1rmgj+LCFEr4ATlWqzI0z2F2
+ tP0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724143026; x=1724747826;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vuLPoW6l8s29WziZnN+BpIXkTUKReSVF73v2af5K6IM=;
- b=nwaabx/AAP2HWDsYdYrzQEObA12Y7AiAgFVDc/Azd/2SR2MrVUZ0USItMKLIMaYDEP
- r/jvkOCFB6QyYl/WF5BOn1yJPYxw13ZdqAJS3HrCmlRhJq7wYRaYmHcePlsGE2N+Uy+d
- jY33vy1rfdAUAjWWS84F2y0VjI3xWP7dM4cSX0yR+T1D5LXX+4yrRB9YoeZ0OjIvI/9j
- 3w9U/U1zftdD6N9bfBQsHIGr9BfnX47fQWBTpd/sHJeKrXg2OKadx1J5Q7yDgHZ2OpzW
- x/WIxfYUtaC3IWVvzYyOH/hERdplOvHRUX/V8PPfCf0mfzKR8S1N85SSfZEFyTNZtVqL
- 0Rug==
-X-Gm-Message-State: AOJu0YzvwbSwmy6AULxflgludkADXjZadnRfhofFhwiiPw5N6BxXYzeQ
- RVuqDPipXYyAVrQ4O6MfdkSdWWHvbFeV2FuApAD8TzetYSfeUtePcGhY1FTtldp1M/9cDM1IUl9
- kpYSvY5lyt/hJzwSvhyEcC87yI0fdlF1U5QKMwxCbJBLEezhS
-X-Google-Smtp-Source: AGHT+IG85F/2KPIlDd+ID3YZfGZyD0OKcRFGl+l2nRZ/1Rzmyl4SG0tEAnUXyD2czFCMWStd+HZjsY6JAag8H+wZSfs=
-X-Received: by 2002:a05:6402:2350:b0:5be:ec7f:3bb2 with SMTP id
- 4fb4d7f45d1cf-5beec7f6708mr6583891a12.0.1724143026488; Tue, 20 Aug 2024
- 01:37:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724143278; x=1724748078;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YqZvv2kEqvcbRzWm1CZPTiidR8LzbsML7RFTqak7cY8=;
+ b=U5FH6GH4ONFDg9ti5hOnvA3PQxLEiAjEGJO6sLOAz++exffz/bbzTQe9t2+fQemX1g
+ Mb/FMjudH/tAKkTLvI8SkudqW2fBvg/iQNckreIIyvCY8wmJ9ycKzZdaV5B/50goJ508
+ 9kwpBsEf8K+DADjKNKJ4npVrVR/jWny1ugBo58I/Xoia6nRwLNDKJhpuZtGCrz2eRr4g
+ wQyhZNBwTD90USAm5rWH/7bdH/1OH6z0FygRUNj8ySjYSCbwOmn/zXQ7koympLxXwie/
+ y/8o8+m+ZnqLX2N5Z8/71N7Bnk/Ew2MFIVIKLLkMl3OqKv5tdlOhQjJTkbmikIj3QRf6
+ 1lHA==
+X-Gm-Message-State: AOJu0YyI3hfgoRHaqKT0KDOvlyVqgQW/EAFkskw6SfDerWaxvDkCknEv
+ RgSxp7bOyvnvq5iPhDPXJmpRJJLJVfPeReBA9aO6VGVBYD224u4ofl5PU2Y+toJ7rkVNuu6fHd4
+ yM6dm1NLU2WkAViheGixBj9POEvGuDdp+4jRxgg==
+X-Google-Smtp-Source: AGHT+IFgvdzbNE97plFlj04RE0kzwRuU1WDsy8aUqzfqTZa6lNLqi9reXz5ydYaWlPODsRBPlTTziIYomUNHIKBKyCs=
+X-Received: by 2002:a05:651c:1504:b0:2ef:2472:41c7 with SMTP id
+ 38308e7fff4ca-2f3be576689mr94444051fa.7.1724143278072; Tue, 20 Aug 2024
+ 01:41:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240819170700.61844-1-peter.maydell@linaro.org>
- <87sev0m9tm.fsf@draig.linaro.org>
-In-Reply-To: <87sev0m9tm.fsf@draig.linaro.org>
+References: <20240725055447.14512-1-yaoxt.fnst@fujitsu.com>
+In-Reply-To: <20240725055447.14512-1-yaoxt.fnst@fujitsu.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 Aug 2024 09:36:55 +0100
-Message-ID: <CAFEAcA_Gw45Ux+D4S6DF2Apc983-gWTHnzHAJqBDSkcmCYbZgQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] scripts/lsan-suppressions: Add a LeakSanitizer
- suppressions file
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Date: Tue, 20 Aug 2024 09:41:07 +0100
+Message-ID: <CAFEAcA_MDwXrgi3xALUZcRrNq_ds6LyL2HwvCS+Syv8vwDGW-Q@mail.gmail.com>
+Subject: Re: [PATCH] scripts/coccinelle: New range.cocci
+To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,45 +87,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Aug 2024 at 23:23, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Thu, 25 Jul 2024 at 06:55, Yao Xingtao via <qemu-devel@nongnu.org> wrote:
 >
-> Peter Maydell <peter.maydell@linaro.org> writes:
+> This is the semantic patch from commit 7b3e371526 "cxl/mailbox: make
+> range overlap check more readable"
 >
-> > Add a LeakSanitizer suppressions file that documents and suppresses
-> > known false-positive leaks in either QEMU or its dependencies.
-> > To use it you'll need to set
-> >   LSAN_OPTIONS=3D"suppressions=3D/path/to/scripts/lsan-suppressions.txt=
-"
-> > when running a QEMU built with the leak-sanitizer.
-> >
-> > The first and currently only entry is for a deliberate leak in glib's
-> > g_set_user_dirs() that otherwise causes false positive leak reports
-> > in the qga-ssh-test because of its use of G_TEST_OPTION_ISOLATE_DIRS:
+> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+> ---
+>  scripts/coccinelle/range.cocci | 49 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+>  create mode 100644 scripts/coccinelle/range.cocci
 >
-> Shame we can't share with scripts/oss-fuzz/lsan_supressions.tct:
->
-> # The tcmalloc on Fedora37 confuses things
-> leak:/lib64/libtcmalloc_minimal.so.4
->
-> # libxkbcommon also leaks in qemu-keymap
-> leak:/lib64/libxkbcommon.so.0
->
-> Or does fuzzing make some things easier to hit?
+> diff --git a/scripts/coccinelle/range.cocci b/scripts/coccinelle/range.cocci
+> new file mode 100644
+> index 000000000000..21b07945ccb2
+> --- /dev/null
+> +++ b/scripts/coccinelle/range.cocci
+> @@ -0,0 +1,49 @@
+> +/*
+> +  Usage:
+> +
+> +    spatch \
+> +           --macro-file scripts/cocci-macro-file.h \
+> +           --sp-file scripts/coccinelle/range.cocci \
+> +           --keep-comments \
+> +           --in-place \
+> +           --dir .
+> +
+> +  Description:
+> +    Find out the range overlap check and use ranges_overlap() instead.
+> +
+> +  Note:
+> +    This pattern cannot accurately match the region overlap check, and you
+> +    need to manually delete the use cases that do not meet the conditions.
+> +
+> +    In addition, the parameters of ranges_overlap() may be filled incorrectly,
+> +    and some use cases may be better to use range_overlaps_range().
 
-Ah, I hadn't realised we already had a suppression file.
-I think we've just encountered different things.
+I think these restrictions mean that we should do one
+of two things:
+ (1) rewrite this as a Coccinelle script that just prints
+     out the places where it found matches (i.e. a "grep"
+     type operation, not a search-and-replace), so the
+     user can then go and investigate them and do the
+     range_overlap they want to do
+ (2) fix the problems so that you really can apply it to
+     the source tree and get correct fixes
 
-Plus the fuzzing disables qga-ssh-test in
-qga/meson.build rather than suppressing the leak report.
-Maybe we could move that to the leak-suppression file,
-or maybe it causes some other problem in the fuzzing
-context rather than merely a false positive?
+The ideal would be (2) -- the ideal flow for coccinelle
+driven patches is that you can review the coccinelle
+script to check for things like off-by-one errors, and
+then can trust all the changes it makes. Otherwise
+reviewers need to carefully scrutinize each source
+change individually.
 
-(There are also a ton of reported leaks in the GUI libraries
-we link against if you run with the GTK GUI, but I haven't
-investigated those to see if they're real or something we
-should just suppress to reduce the noise.)
+It's the off-by-one issue that really makes me think
+that (2) would be preferable -- it would otherwise
+be I think quite easy to accidentally rewrite a correct
+range check into one that's off-by-one and not notice.
 
 thanks
 -- PMM
