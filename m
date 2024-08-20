@@ -4,73 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01BD3C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 00:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEABC52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 01:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgCfE-000757-G2; Mon, 19 Aug 2024 20:23:56 -0400
+	id 1sgE7D-00035v-Md; Mon, 19 Aug 2024 21:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sgCf4-0006CJ-Ng
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 20:23:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sgE7C-00034M-8Y; Mon, 19 Aug 2024 21:56:54 -0400
+Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sgCf2-0003ts-9b
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 20:23:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724113423;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3DRnrN6I6/B7gYk188UkJV+Z825z6apeSX/OAnvW++I=;
- b=DTl3J7Gn7fWO2a01AH9cFvRF7aXQJhY0QzKwpPLPeVhXCtOuchj9vYqdRQFCOL4gg3sj1n
- I94qA0Oq1F2Xf2Nntp3k1b12o6quLWEGFpDWE0fceP6DNQbjglTR22tfHSRw9S74RsLLyO
- H6ucEJkaAH6dWjwB7cgdpumbbCCaQow=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-HtTdzgVUMM-nzQUAOiZPsQ-1; Mon,
- 19 Aug 2024 20:23:41 -0400
-X-MC-Unique: HtTdzgVUMM-nzQUAOiZPsQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6397D1954B1F; Tue, 20 Aug 2024 00:23:40 +0000 (UTC)
-Received: from scv.localdomain (unknown [10.22.8.20])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1A95519560A3; Tue, 20 Aug 2024 00:23:37 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Beraldo Leal <bleal@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 7/8] python/qapi: move scripts/qapi to python/qemu/qapi
-Date: Mon, 19 Aug 2024 20:23:16 -0400
-Message-ID: <20240820002318.1380276-8-jsnow@redhat.com>
-In-Reply-To: <20240820002318.1380276-1-jsnow@redhat.com>
-References: <20240820002318.1380276-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sgE79-0006vC-JM; Mon, 19 Aug 2024 21:56:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1724118999; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=nA809LtVfKWVOwke62uMihCDUdWhyXWDWY+4FRYQ9ag=;
+ b=kq1fI1ykY0zgzVhsFh5sIWX/fUiHxq0T8T8lsjKjkixognPZpCfP8gxAkvyrY7+Pr+pEFR45j04JC5wsFRyQUYPfBlKgmk0MFgouxxr5TL4QoVliJ9wmX6lhGIv+v4gQB69rbUQRRSQxgz19D+afJDFsihA5ftmQAGK8juGsYzY=
+Received: from 30.166.65.10(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WDGbxRD_1724118996) by smtp.aliyun-inc.com;
+ Tue, 20 Aug 2024 09:56:37 +0800
+Message-ID: <8788fae2-14ca-4af2-a075-bf20a533f540@linux.alibaba.com>
+Date: Tue, 20 Aug 2024 09:56:07 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 08/15] tcg/riscv: Add support for basic vector opcodes
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-9-zhiwei_liu@linux.alibaba.com>
+ <ae44194c-776a-48aa-8567-c56b5e7c4167@linaro.org>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <ae44194c-776a-48aa-8567-c56b5e7c4167@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.118;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-118.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,282 +69,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is being done for the sake of unifying the linting and static type
-analysis configurations between scripts/qapi and python/qemu/*.
 
-With this change, the qapi module will now be checked by mypy, flake8,
-pylint, isort etc under all python versions from 3.8 through 3.13 under
-a variety of different dependency configurations in the GitLab testing
-pipelines.
+On 2024/8/14 17:13, Richard Henderson wrote:
+> On 8/13/24 21:34, LIU Zhiwei wrote:
+>> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>>
+>> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+>> ---
+>>   tcg/riscv/tcg-target-con-set.h |  1 +
+>>   tcg/riscv/tcg-target.c.inc     | 33 +++++++++++++++++++++++++++++++++
+>>   2 files changed, 34 insertions(+)
+>>
+>> diff --git a/tcg/riscv/tcg-target-con-set.h 
+>> b/tcg/riscv/tcg-target-con-set.h
+>> index d73a62b0f2..8a0de18257 100644
+>> --- a/tcg/riscv/tcg-target-con-set.h
+>> +++ b/tcg/riscv/tcg-target-con-set.h
+>> @@ -23,3 +23,4 @@ C_O1_I4(r, r, rI, rM, rM)
+>>   C_O2_I4(r, r, rZ, rZ, rM, rM)
+>>   C_O0_I2(v, r)
+>>   C_O1_I1(v, r)
+>> +C_O1_I2(v, v, v)
+>> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+>> index f60913e805..650b5eff1a 100644
+>> --- a/tcg/riscv/tcg-target.c.inc
+>> +++ b/tcg/riscv/tcg-target.c.inc
+>> @@ -289,6 +289,12 @@ typedef enum {
+>>       OPC_VSE32_V = 0x6027 | V_SUMOP,
+>>       OPC_VSE64_V = 0x7027 | V_SUMOP,
+>>   +    OPC_VADD_VV = 0x57 | V_OPIVV,
+>> +    OPC_VSUB_VV = 0x8000057 | V_OPIVV,
+>> +    OPC_VAND_VV = 0x24000057 | V_OPIVV,
+>> +    OPC_VOR_VV = 0x28000057 | V_OPIVV,
+>> +    OPC_VXOR_VV = 0x2c000057 | V_OPIVV,
+>> +
+>>       OPC_VMV_V_V = 0x5e000057 | V_OPIVV,
+>>       OPC_VMV_V_I = 0x5e000057 | V_OPIVI,
+>>       OPC_VMV_V_X = 0x5e000057 | V_OPIVX,
+>> @@ -2158,6 +2164,21 @@ static void tcg_out_vec_op(TCGContext *s, 
+>> TCGOpcode opc,
+>>       case INDEX_op_st_vec:
+>>           tcg_out_st(s, type, a0, a1, a2);
+>>           break;
+>> +    case INDEX_op_add_vec:
+>> +        tcg_out_opc_vv(s, OPC_VADD_VV, a0, a1, a2, true);
+>> +        break;
+>> +    case INDEX_op_sub_vec:
+>> +        tcg_out_opc_vv(s, OPC_VSUB_VV, a0, a1, a2, true);
+>> +        break;
+>> +    case INDEX_op_and_vec:
+>> +        tcg_out_opc_vv(s, OPC_VAND_VV, a0, a1, a2, true);
+>> +        break;
+>> +    case INDEX_op_or_vec:
+>> +        tcg_out_opc_vv(s, OPC_VOR_VV, a0, a1, a2, true);
+>> +        break;
+>> +    case INDEX_op_xor_vec:
+>> +        tcg_out_opc_vv(s, OPC_VXOR_VV, a0, a1, a2, true);
+>> +        break;
+>
+> As with load/store/move, and/or/xor can avoid changing element type.
+> Thus I think the vtype setup before the switch is premature.
 
-The tests can be run locally, as always:
+Agree. We have implemented this feature on the v2 patch set.
 
-> cd qemu.git/python
-> make check-minreqs
-> make check-tox
-> make check-dev
+Thanks,
+Zhiwei
 
-"check-minreqs" is the must-pass GitLab test.
-"check-tox" is the optional allowed-to-fail GitLab test.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- MAINTAINERS                                 |  2 +-
- docs/conf.py                                |  2 +-
- docs/sphinx/qapidoc.py                      |  6 ++---
- meson.build                                 | 28 ++++++++++-----------
- {scripts => python/qemu}/qapi/.flake8       |  0
- {scripts => python/qemu}/qapi/.isort.cfg    |  0
- {scripts => python/qemu}/qapi/__init__.py   |  0
- {scripts => python/qemu}/qapi/commands.py   |  0
- {scripts => python/qemu}/qapi/common.py     |  0
- {scripts => python/qemu}/qapi/error.py      |  0
- {scripts => python/qemu}/qapi/events.py     |  0
- {scripts => python/qemu}/qapi/expr.py       |  0
- {scripts => python/qemu}/qapi/gen.py        |  0
- {scripts => python/qemu}/qapi/introspect.py |  0
- {scripts => python/qemu}/qapi/main.py       |  0
- {scripts => python/qemu}/qapi/mypy.ini      |  0
- {scripts => python/qemu}/qapi/parser.py     |  0
- {scripts => python/qemu}/qapi/pylintrc      |  0
- {scripts => python/qemu}/qapi/schema.py     |  0
- {scripts => python/qemu}/qapi/source.py     |  0
- {scripts => python/qemu}/qapi/types.py      |  0
- {scripts => python/qemu}/qapi/visit.py      |  0
- python/setup.cfg                            |  1 +
- scripts/qapi-gen.py                         |  4 ++-
- tests/qapi-schema/meson.build               |  2 +-
- tests/qapi-schema/test-qapi.py              |  4 +--
- 26 files changed, 26 insertions(+), 23 deletions(-)
- rename {scripts => python/qemu}/qapi/.flake8 (100%)
- rename {scripts => python/qemu}/qapi/.isort.cfg (100%)
- rename {scripts => python/qemu}/qapi/__init__.py (100%)
- rename {scripts => python/qemu}/qapi/commands.py (100%)
- rename {scripts => python/qemu}/qapi/common.py (100%)
- rename {scripts => python/qemu}/qapi/error.py (100%)
- rename {scripts => python/qemu}/qapi/events.py (100%)
- rename {scripts => python/qemu}/qapi/expr.py (100%)
- rename {scripts => python/qemu}/qapi/gen.py (100%)
- rename {scripts => python/qemu}/qapi/introspect.py (100%)
- rename {scripts => python/qemu}/qapi/main.py (100%)
- rename {scripts => python/qemu}/qapi/mypy.ini (100%)
- rename {scripts => python/qemu}/qapi/parser.py (100%)
- rename {scripts => python/qemu}/qapi/pylintrc (100%)
- rename {scripts => python/qemu}/qapi/schema.py (100%)
- rename {scripts => python/qemu}/qapi/source.py (100%)
- rename {scripts => python/qemu}/qapi/types.py (100%)
- rename {scripts => python/qemu}/qapi/visit.py (100%)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3584d6a6c6d..1912940631d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3214,7 +3214,7 @@ F: tests/unit/test-qapi-*.c
- F: tests/unit/test-qmp-*.c
- F: tests/unit/test-visitor-serialization.c
- F: scripts/qapi-gen.py
--F: scripts/qapi/*
-+F: python/qemu/qapi/*
- F: docs/sphinx/qapidoc.py
- F: docs/devel/qapi*
- T: git https://repo.or.cz/qemu/armbru.git qapi-next
-diff --git a/docs/conf.py b/docs/conf.py
-index 876f6768815..6600db976b3 100644
---- a/docs/conf.py
-+++ b/docs/conf.py
-@@ -46,7 +46,7 @@
- # Our extensions are in docs/sphinx; the qapidoc extension requires
- # the QAPI modules from scripts/.
- sys.path.insert(0, os.path.join(qemu_docdir, "sphinx"))
--sys.path.insert(0, os.path.join(qemu_docdir, "../scripts"))
-+sys.path.insert(0, os.path.join(qemu_docdir, "../python"))
- 
- 
- # -- General configuration ------------------------------------------------
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 738b2450fb1..777fd1ac836 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -33,9 +33,9 @@
- from docutils import nodes
- from docutils.parsers.rst import Directive, directives
- from docutils.statemachine import ViewList
--from qapi.error import QAPIError, QAPISemError
--from qapi.gen import QAPISchemaVisitor
--from qapi.schema import QAPISchema
-+from qemu.qapi.error import QAPIError, QAPISemError
-+from qemu.qapi.gen import QAPISchemaVisitor
-+from qemu.qapi.schema import QAPISchema
- 
- from sphinx import addnodes
- from sphinx.directives.code import CodeBlock
-diff --git a/meson.build b/meson.build
-index fbda17c987e..f96c9bebe0c 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3274,20 +3274,20 @@ genh += configure_file(output: 'config-host.h', configuration: config_host_data)
- hxtool = find_program('scripts/hxtool')
- shaderinclude = find_program('scripts/shaderinclude.py')
- qapi_gen = find_program('scripts/qapi-gen.py')
--qapi_gen_depends = [ meson.current_source_dir() / 'scripts/qapi/__init__.py',
--                     meson.current_source_dir() / 'scripts/qapi/commands.py',
--                     meson.current_source_dir() / 'scripts/qapi/common.py',
--                     meson.current_source_dir() / 'scripts/qapi/error.py',
--                     meson.current_source_dir() / 'scripts/qapi/events.py',
--                     meson.current_source_dir() / 'scripts/qapi/expr.py',
--                     meson.current_source_dir() / 'scripts/qapi/gen.py',
--                     meson.current_source_dir() / 'scripts/qapi/introspect.py',
--                     meson.current_source_dir() / 'scripts/qapi/main.py',
--                     meson.current_source_dir() / 'scripts/qapi/parser.py',
--                     meson.current_source_dir() / 'scripts/qapi/schema.py',
--                     meson.current_source_dir() / 'scripts/qapi/source.py',
--                     meson.current_source_dir() / 'scripts/qapi/types.py',
--                     meson.current_source_dir() / 'scripts/qapi/visit.py',
-+qapi_gen_depends = [ meson.current_source_dir() / 'python/qemu/qapi/__init__.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/commands.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/common.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/error.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/events.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/expr.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/gen.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/introspect.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/main.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/parser.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/schema.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/source.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/types.py',
-+                     meson.current_source_dir() / 'python/qemu/qapi/visit.py',
-                      meson.current_source_dir() / 'scripts/qapi-gen.py'
- ]
- 
-diff --git a/scripts/qapi/.flake8 b/python/qemu/qapi/.flake8
-similarity index 100%
-rename from scripts/qapi/.flake8
-rename to python/qemu/qapi/.flake8
-diff --git a/scripts/qapi/.isort.cfg b/python/qemu/qapi/.isort.cfg
-similarity index 100%
-rename from scripts/qapi/.isort.cfg
-rename to python/qemu/qapi/.isort.cfg
-diff --git a/scripts/qapi/__init__.py b/python/qemu/qapi/__init__.py
-similarity index 100%
-rename from scripts/qapi/__init__.py
-rename to python/qemu/qapi/__init__.py
-diff --git a/scripts/qapi/commands.py b/python/qemu/qapi/commands.py
-similarity index 100%
-rename from scripts/qapi/commands.py
-rename to python/qemu/qapi/commands.py
-diff --git a/scripts/qapi/common.py b/python/qemu/qapi/common.py
-similarity index 100%
-rename from scripts/qapi/common.py
-rename to python/qemu/qapi/common.py
-diff --git a/scripts/qapi/error.py b/python/qemu/qapi/error.py
-similarity index 100%
-rename from scripts/qapi/error.py
-rename to python/qemu/qapi/error.py
-diff --git a/scripts/qapi/events.py b/python/qemu/qapi/events.py
-similarity index 100%
-rename from scripts/qapi/events.py
-rename to python/qemu/qapi/events.py
-diff --git a/scripts/qapi/expr.py b/python/qemu/qapi/expr.py
-similarity index 100%
-rename from scripts/qapi/expr.py
-rename to python/qemu/qapi/expr.py
-diff --git a/scripts/qapi/gen.py b/python/qemu/qapi/gen.py
-similarity index 100%
-rename from scripts/qapi/gen.py
-rename to python/qemu/qapi/gen.py
-diff --git a/scripts/qapi/introspect.py b/python/qemu/qapi/introspect.py
-similarity index 100%
-rename from scripts/qapi/introspect.py
-rename to python/qemu/qapi/introspect.py
-diff --git a/scripts/qapi/main.py b/python/qemu/qapi/main.py
-similarity index 100%
-rename from scripts/qapi/main.py
-rename to python/qemu/qapi/main.py
-diff --git a/scripts/qapi/mypy.ini b/python/qemu/qapi/mypy.ini
-similarity index 100%
-rename from scripts/qapi/mypy.ini
-rename to python/qemu/qapi/mypy.ini
-diff --git a/scripts/qapi/parser.py b/python/qemu/qapi/parser.py
-similarity index 100%
-rename from scripts/qapi/parser.py
-rename to python/qemu/qapi/parser.py
-diff --git a/scripts/qapi/pylintrc b/python/qemu/qapi/pylintrc
-similarity index 100%
-rename from scripts/qapi/pylintrc
-rename to python/qemu/qapi/pylintrc
-diff --git a/scripts/qapi/schema.py b/python/qemu/qapi/schema.py
-similarity index 100%
-rename from scripts/qapi/schema.py
-rename to python/qemu/qapi/schema.py
-diff --git a/scripts/qapi/source.py b/python/qemu/qapi/source.py
-similarity index 100%
-rename from scripts/qapi/source.py
-rename to python/qemu/qapi/source.py
-diff --git a/scripts/qapi/types.py b/python/qemu/qapi/types.py
-similarity index 100%
-rename from scripts/qapi/types.py
-rename to python/qemu/qapi/types.py
-diff --git a/scripts/qapi/visit.py b/python/qemu/qapi/visit.py
-similarity index 100%
-rename from scripts/qapi/visit.py
-rename to python/qemu/qapi/visit.py
-diff --git a/python/setup.cfg b/python/setup.cfg
-index 58dba90f815..d1582f74ddd 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -28,6 +28,7 @@ packages =
-     qemu.qmp
-     qemu.machine
-     qemu.utils
-+    qemu.qapi
- 
- [options.package_data]
- * = py.typed
-diff --git a/scripts/qapi-gen.py b/scripts/qapi-gen.py
-index f3518d29a54..42912c91716 100644
---- a/scripts/qapi-gen.py
-+++ b/scripts/qapi-gen.py
-@@ -11,9 +11,11 @@
- execution environment.
- """
- 
-+import os
- import sys
- 
--from qapi import main
-+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'python'))
-+from qemu.qapi import main
- 
- if __name__ == '__main__':
-     sys.exit(main.main())
-diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
-index 0f479d93170..080444d0cd4 100644
---- a/tests/qapi-schema/meson.build
-+++ b/tests/qapi-schema/meson.build
-@@ -1,5 +1,5 @@
- test_env = environment()
--test_env.set('PYTHONPATH', meson.project_source_root() / 'scripts')
-+test_env.set('PYTHONPATH', meson.project_source_root() / 'python')
- test_env.set('PYTHONIOENCODING', 'utf-8')
- 
- schemas = [
-diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
-index 7e3f9f4aa1f..dcc0d949971 100755
---- a/tests/qapi-schema/test-qapi.py
-+++ b/tests/qapi-schema/test-qapi.py
-@@ -18,8 +18,8 @@
- import sys
- from io import StringIO
- 
--from qapi.error import QAPIError
--from qapi.schema import QAPISchema, QAPISchemaVisitor
-+from qemu.qapi.error import QAPIError
-+from qemu.qapi.schema import QAPISchema, QAPISchemaVisitor
- 
- 
- class QAPISchemaTestVisitor(QAPISchemaVisitor):
--- 
-2.45.0
-
+>
+>
+> r~
 
