@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D8AC531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 14:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBD5C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 14:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgPt3-0002k1-EY; Tue, 20 Aug 2024 10:31:05 -0400
+	id 1sgPuD-0005Gd-QS; Tue, 20 Aug 2024 10:32:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sgPsB-0001ww-5c; Tue, 20 Aug 2024 10:30:20 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1sgPs5-0001ve-Eq; Tue, 20 Aug 2024 10:30:10 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sgPs6-0001qC-8r; Tue, 20 Aug 2024 10:30:09 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-533461323cdso283494e87.2; 
- Tue, 20 Aug 2024 07:30:05 -0700 (PDT)
+ id 1sgPrz-0001X8-W5; Tue, 20 Aug 2024 10:30:02 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52efa16aad9so6910456e87.0; 
+ Tue, 20 Aug 2024 07:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724164204; x=1724769004; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724164196; x=1724768996; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P0gf4AWHulAzAV2HaIyUy+fKTdCex9KA7D9+c05rick=;
- b=M7WowS3MnVBCfM6v6IWDdvCIIr6XyCSdy2O0oRGkh8tzqHwFkWNQVm0dJbCV0eo4HD
- SavMRGtguiNw/vL6HrepICG9UHj0fMcMr0lDX6/hoekc0pxtefigfikGobbjWvpai7jd
- fWhXnZ+mDH36Tw9drha2Z8amSvU3dwuTThPGzdG65Jl1q0cEVv78UBFSzDHKzAHHaFDQ
- +akjsZUSgEzD0N7HpUA4zFDtqo3Jae+hLA16cvkg/5Xjk2/mG4Ktya92kkIVEVUK5oAO
- vi8YAhtF9nDnLUq+7im0epqbmas8qGmTzdBt1aMcFpxOurQqPGbGyjSbYYXHL8/kDhsx
- qj4w==
+ bh=N6K1JnQDB3GxWbgLc2L3O0RRJjZo+EVTDK5d5nCO5jo=;
+ b=cmvN7qBaYXqERhqeCKewVAtXXP84WgIwc80yx/jb/ihfB3XsQZtDFH1jf/fGRO5kK0
+ +1tXLpTn7T2Il0+Xf5k/jLw0WkYFxKs2QR+zPRCAiWmm1QUU1hVw6EKw87a/KjvSIOg+
+ Ellh+z96mHlcE/UQsFHoOJ5pYvRhdi4AE7t8SBPiG5F30QB85p+c8wx0COOWrBVNz5a/
+ 9uaMcnkXe/KdwVnle9ggjbuY5up0g0UPtiiii2WUbgV5bg3iNN0z0S94MpbBmg2rqqj8
+ c9HjjulnWntmnVsAYnqnHczPaIpv3KIX2YnYZ5qLBSQFMuajLdyeu5H+l9ZcbPCkSpv+
+ 7flg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724164204; x=1724769004;
+ d=1e100.net; s=20230601; t=1724164196; x=1724768996;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=P0gf4AWHulAzAV2HaIyUy+fKTdCex9KA7D9+c05rick=;
- b=VTk8jJiYmD5p2LvVsOkDeBZuuyn5ENINsptrJ1872pTC3EsCbxYoC6l+H8W43ywCUi
- 3EyzaM7K2j5P47Hm1uS+1TWqa3Tr2Cey1IjCnuFk2d6jiWGsV/3ggUW1zsNBZ2jP8Vzm
- ljl671m/hxKG6mJS2/i78jq7ELTmQ+tsjwXE+zvk8qS3kKDt6aFHkMBpGMgziP8vx3Mq
- WvHC1wEps4DxKUY5CuupfmEf5wiwfHi3cxeHaw5RTw0wuCVZTbvAcxB0L6v9fcCOJXNc
- mbjYU0n1Xiv6shiLT21CKT4swBECmD1mcz1zo9qUp5ywV03qlqnKl8P8OwYZbRW8Oije
- qHvQ==
+ bh=N6K1JnQDB3GxWbgLc2L3O0RRJjZo+EVTDK5d5nCO5jo=;
+ b=ZV+618zq/yUx6bMyAIIsgYXavQxmBLrbby0U3aG1/hSNbFtI5L4sSRqXTftm8vU38u
+ YeH+3J90H4au7m7iaGDArYbvbO67kEmLGbxBpsNZfnQjmSTQ3shORW15+pEqnVpLGuxG
+ /eu5+oQ6b92XlxfNC3yF3eXZmZ+WqOBAKcRPSKHMKeB36ndE7KEX03qqYLWdSi0OEcbc
+ oCFx9ASgSKkTXbIJubrrmfJbgzvcLYIA3vVuBTcOaeB3QqGMyo7mzDFLgz4KQFhgi38t
+ eEVKTRO4Rz3cL5aCDB0Kb6cGb39Hu5pHUJhMeLLFwewSER8HtL9PNko9n9CpswqvcPD/
+ V4Yg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQVLj8CW3Bdu9SIXosXURImAoJfLV2/QlaBOnW4p5FB8HH6Hlk/rlgvqNzweYcvxjT+YNJUchenw==@nongnu.org
-X-Gm-Message-State: AOJu0Ywo73DRF2hEG+x6y8DS5b4f8xjmcFQ8hN4DAWZJWvRTx5NlMuQe
- IapgrIyQ0w5UripK3FDxj31iS5aZj0obc72bz6pj4ocRS9nAUnrVLewKIv2O
-X-Google-Smtp-Source: AGHT+IES1gNwxhhoBVLe4AixtVypdxMBk0O0dKwZ1tDvA9tVYLXBSnaAgHk6+BIt+ttxuzPWUzelPw==
-X-Received: by 2002:a05:6512:2c98:b0:533:4191:fa47 with SMTP id
- 2adb3069b0e04-5334191fc44mr1624238e87.47.1724164203068; 
- Tue, 20 Aug 2024 07:30:03 -0700 (PDT)
+ AJvYcCVX2hpyhThxBIMKI3YP5vfxLuMcRhoHFw1mwnuJYUg+0YwzM8WOlNOzTmaHHnhEmfRYVx0diLA4NJEoNJMPwXGd1viT
+X-Gm-Message-State: AOJu0Yze/Wplt1/CctIotoBwXAXvmEvYpLN3wa4Z6MlITQvlXALYsLfq
+ 11AcG34g0ItkvATOg4sYsyNWPt9yVDkExE3Jp8DFf7IEASF7QjASv+YAI8l/
+X-Google-Smtp-Source: AGHT+IERWznLEeJJPBmVGgbqZsGGHpjiqbNNsmHg/7CXZqA1iSzt7K9nFEzoO0ph3Q9aeI604W1JJQ==
+X-Received: by 2002:a05:6512:138b:b0:52c:e3bd:c70b with SMTP id
+ 2adb3069b0e04-5331c690c37mr9543219e87.1.1724164195374; 
+ Tue, 20 Aug 2024 07:29:55 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5330d424725sm1790433e87.249.2024.08.20.07.30.02
+ 2adb3069b0e04-53345d17c33sm53420e87.128.2024.08.20.07.29.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Aug 2024 07:30:02 -0700 (PDT)
+ Tue, 20 Aug 2024 07:29:54 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com,
  jason.andryuk@amd.com, edgar.iglesias@amd.com,
  xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: [PATCH v2 06/12] hw/arm: xenpvh: Move stubbed functions to xen-stubs.c
-Date: Tue, 20 Aug 2024 16:29:43 +0200
-Message-ID: <20240820142949.533381-7-edgar.iglesias@gmail.com>
+Subject: [PATCH v2 02/12] hw/arm: xenpvh: Update file header to use SPDX
+Date: Tue, 20 Aug 2024 16:29:39 +0200
+Message-ID: <20240820142949.533381-3-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240820142949.533381-1-edgar.iglesias@gmail.com>
 References: <20240820142949.533381-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,99 +98,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/arm/meson.build |  5 ++++-
- hw/arm/xen-stubs.c | 32 ++++++++++++++++++++++++++++++++
- hw/arm/xen_arm.c   | 20 --------------------
- 3 files changed, 36 insertions(+), 21 deletions(-)
- create mode 100644 hw/arm/xen-stubs.c
+Update file header to use SPDX and remove stray empty
+comment line.
 
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 0c07ab522f..074612b40c 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -59,7 +59,10 @@ arm_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.
- arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
- arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
- arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
--arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
-+arm_ss.add(when: 'CONFIG_XEN', if_true: files(
-+  'xen-stubs.c',
-+  'xen_arm.c',
-+))
- 
- system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
- system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
-diff --git a/hw/arm/xen-stubs.c b/hw/arm/xen-stubs.c
-new file mode 100644
-index 0000000000..4ac6a56a96
---- /dev/null
-+++ b/hw/arm/xen-stubs.c
-@@ -0,0 +1,32 @@
-+/*
-+ * Stubs for unimplemented Xen functions for ARM.
-+ *
-+ * SPDX-License-Identifier: MIT
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qapi/qapi-commands-migration.h"
-+#include "hw/boards.h"
-+#include "sysemu/sysemu.h"
-+#include "hw/xen/xen-hvm-common.h"
-+#include "hw/xen/arch_hvm.h"
-+
-+void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
-+{
-+    hw_error("Invalid ioreq type 0x%x\n", req->type);
-+    return;
-+}
-+
-+void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
-+                         bool add)
-+{
-+}
-+
-+void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
-+{
-+}
-+
-+void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
-+{
-+}
+No functional changes.
+
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Acked-by: Stefano Stabellini <sstabellini@kernel.org>
+---
+ hw/arm/xen_arm.c | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
+
 diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-index 16b3f00992..f0868e7be5 100644
+index 6fad829ede..766a194fa1 100644
 --- a/hw/arm/xen_arm.c
 +++ b/hw/arm/xen_arm.c
-@@ -115,26 +115,6 @@ static void xen_init_ram(MachineState *machine)
-     memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
- }
+@@ -1,24 +1,7 @@
+ /*
+  * QEMU ARM Xen PVH Machine
+  *
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
++ * SPDX-License-Identifier: MIT
+  */
  
--void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
--{
--    hw_error("Invalid ioreq type 0x%x\n", req->type);
--
--    return;
--}
--
--void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
--                         bool add)
--{
--}
--
--void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
--{
--}
--
--void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
--{
--}
--
- #ifdef CONFIG_TPM
- static void xen_enable_tpm(XenArmState *xam)
- {
+ #include "qemu/osdep.h"
 -- 
 2.43.0
 
