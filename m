@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF52C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 14:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E65FC531DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 14:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgQAi-0004sC-6Y; Tue, 20 Aug 2024 10:49:20 -0400
+	id 1sgQAn-0005F8-Ha; Tue, 20 Aug 2024 10:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sgQAg-0004qu-8z
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:18 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1sgQAl-00056l-D7
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:23 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sgQAe-0006Kt-JW
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:18 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42809d6e719so47468635e9.3
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 07:49:16 -0700 (PDT)
+ id 1sgQAj-0006M1-8P
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:23 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42812945633so49501165e9.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 07:49:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724165354; x=1724770154; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724165360; x=1724770160; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S5Xnpwm/2BcL3d4m231YwlBL4X22xMDqaWfh+yoj+U0=;
- b=slTLsnkTkCH0hIHiqg9xzNB2Oiq9Y4FmDW1LbZ7vnugW58LbnY0qOZBmKbgKUMFIb8
- fE6JT1Vme48Ko67zcoIVoosvY0l0Zwr/5yMjGhXQO1wkXvz5Cr5cHsaebB71femvVHoE
- DA0zxdKpshgb7PpYWOrVBO0nyIs4Jdi0qVTpRcDpB1FCChlv3Zw6/fMXDPLCXrDDE1La
- cY1tX5yewjQel6K/44b2OPP7Mgh5T2WKRhRFDYJwgG9MEpCBpdpiepxe4jVEQ7mBYWTE
- vaKlj6Iu1Z0MUHDLGc9OrEhJ5N4kNKoif+6XufRaqPLjFYiExI8deGLlot+UeSQZLxxU
- tbDg==
+ bh=cX04CHrSO6RPXxQ10TYYxqNDsV8QV6DrYzWSCmg9HZE=;
+ b=FzJ7wVj2E7IMABY3xTBwuf/0mhtu/9WQR3kAvHQAqoAuc5C5/33yWnDZH7/4e96JhP
+ 8R0FiCu3qfb23441dFbV72hQVjYuc8VZjY59eQkfKPEzmdS+q531tDUxmG2jUrMYxw34
+ /262iBVpE7CNgQvNfNpik8elsMKidFC/k/akMYYjCb+7xHYlxpxaQQH2/lq43UfLS1wh
+ rIuDDx40INCdfVNb9d3SMcoFuZj9lQhIE/vpz6xV/50oJWM84/+H7RTuE3/qrsF4u2/W
+ 8Ykw7AJayhYx3tjNY26kDLmZEqMmNYgxVlj2PL8BL61squOpjD6j50YG9Mg32DYrEtLI
+ 5tuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724165354; x=1724770154;
+ d=1e100.net; s=20230601; t=1724165360; x=1724770160;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S5Xnpwm/2BcL3d4m231YwlBL4X22xMDqaWfh+yoj+U0=;
- b=nTBepKbQ1AxjXPXnhINkQhZTxpsXDDY5Ry6q9SG5182P7qGCmnGLQYG8H41HSnylXQ
- uZ4cC8xVHxBCt8L4CITbECTERmYK1462LGERJE44japueSP1NJqCb6cAgAydSIayHjNQ
- HbeGudYMJ3DT+SYLstPp2qgAm3akwtfTOliGN6M0ep2/x2s6KubjqIYQQUVraRw0mOAO
- fNQzDOPpfPjBz6F32sxZPUQiq77cZ1p15aN9YoEHvTo8ELxIbaoAjNOsAJ/f0Iw+gcez
- ukgigt3QBIN6/lw3SWfZgSlrUMPxdT7NKEoZVQv4l50Rhb0eMIK81r37J0i8Ctrs4X8P
- bJ8g==
-X-Gm-Message-State: AOJu0Yz85c4EVCUQAVKExSaq6HtcK+5C6EUjzBnU7bVixq2d6I3G2BUH
- AQJVQMQ868oBWENd+cWJ0qyBIQLRq8R3k7zG+a6NAlOcI+sCIyDEW7duOtACgBfNSJl41PHfPs5
- Q
-X-Google-Smtp-Source: AGHT+IHkvYzRz0RzdI3KyfVGbO0HJTwceWyNwtenMvo+lUyHBppZj99TqUV0cFOZMxiHeaGUSvdIlw==
-X-Received: by 2002:a5d:608c:0:b0:371:7e1b:871b with SMTP id
- ffacd0b85a97d-371c5fd0571mr1356984f8f.29.1724165354491; 
- Tue, 20 Aug 2024 07:49:14 -0700 (PDT)
+ bh=cX04CHrSO6RPXxQ10TYYxqNDsV8QV6DrYzWSCmg9HZE=;
+ b=U+UJHY4iQGO3aP/6kWYpyE8Ol783xJ4h3FqvYyXieRiEl8t+edYHkxYenAQiAq7FPA
+ EgBuvMIs1+ldDZk3pm08FvdqmFSxa7GdfoOs2J2uWXKBvA32Yi6zuj+RxQ3I7diDa0SZ
+ +j641uxZxuOez95ewrkg4LeIPp2mhTKZHxgxMSObhoshwARPSZl4zRpRZBNCiiNXvnY0
+ Gfa37ANKJd87thVCinmZQknzVz5uUh4A/dRP2g3HpXtDn0haJwWexS/4/VrgdK0mOiVC
+ 380JAoJCNOsdZuBYuGke6a3eiicpvG/zG+6mBm2kePh4R1qut0QYInb7hhZRVBrU86Sh
+ Rc6g==
+X-Gm-Message-State: AOJu0YyKII19Gz/36l4iqRtoiCFQb3svpKohYyuy6UIOTkiFIwBUw65a
+ esxWC5jdy5BmYXZAnAZxXHw4iIIJwFKdOwCfeptTjvbGySknUdczDfblC68jF3IbTbDJDM99LGi
+ 8
+X-Google-Smtp-Source: AGHT+IHnDWcnCJrEnwVDXUDlG9y1adhxClOcx1t4xLNuadOY1NmlcCtCLEVXevJl97xfA6K11JTCHA==
+X-Received: by 2002:adf:ab18:0:b0:371:8ec6:f2f0 with SMTP id
+ ffacd0b85a97d-3719432dcc3mr8507017f8f.16.1724165359671; 
+ Tue, 20 Aug 2024 07:49:19 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718983a306sm13334672f8f.15.2024.08.20.07.49.14
+ ffacd0b85a97d-3718983a306sm13334672f8f.15.2024.08.20.07.49.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Aug 2024 07:49:14 -0700 (PDT)
+ Tue, 20 Aug 2024 07:49:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH for-9.2 1/9] tests/qtest/migration-test: Fix bootfile cleanup
- handling
-Date: Tue, 20 Aug 2024 15:49:04 +0100
-Message-Id: <20240820144912.320744-2-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 9/9] tests/qtest/migration-test: Don't leak QTestState
+ in test_multifd_tcp_cancel()
+Date: Tue, 20 Aug 2024 15:49:12 +0100
+Message-Id: <20240820144912.320744-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240820144912.320744-1-peter.maydell@linaro.org>
 References: <20240820144912.320744-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,81 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If you invoke the migration-test binary in such a way that it doesn't run
-any tests, then we never call bootfile_create(), and at the end of
-main() bootfile_delete() will try to unlink(NULL), which is not valid.
-This can happen if for instance you tell the test binary to run a
-subset of tests that turns out to be empty, like this:
+In test_multifd_tcp_cancel() we create three QEMU processes: 'from',
+'to' and 'to2'.  We clean up (via qtest_quit()) 'from' and 'to2' when
+we call test_migrate_end(), but never clean up 'to', which results in
+this leak:
 
- (cd build/asan && QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --tap -k -p bang)
- # random seed: R02S6501b289ff8ced4231ba452c3a87bc6f
- # Skipping test: userfaultfd not available
- 1..0
- ../../tests/qtest/migration-test.c:182:12: runtime error: null pointer passed as argument 1, which is declared to never be null
- /usr/include/unistd.h:858:48: note: nonnull attribute specified here
+Direct leak of 336 byte(s) in 1 object(s) allocated from:
+    #0 0x55e984fcd328 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/tests/qtest/migration-test+0x22f328) (BuildId: 710d409b68bb04427009e9ca6e1b63ff8af785d3)
+    #1 0x7f0878b39c50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
+    #2 0x55e98503a172 in qtest_spawn_qemu tests/qtest/libqtest.c:397:21
+    #3 0x55e98502bc4a in qtest_init_internal tests/qtest/libqtest.c:471:9
+    #4 0x55e98502c5b7 in qtest_init_with_env tests/qtest/libqtest.c:533:21
+    #5 0x55e9850eef0f in test_migrate_start tests/qtest/migration-test.c:857:11
+    #6 0x55e9850eb01d in test_multifd_tcp_cancel tests/qtest/migration-test.c:3297:9
+    #7 0x55e985103407 in migration_test_wrapper tests/qtest/migration-helpers.c:456:5
 
-Conversely, because we call bootfile_create() once per test
-but only call bootfile_delete() at the end of the whole test
-run, we will leak the memory we used for bootpath when we
-overwrite it.
-
-Handle these by:
- * making bootfile_delete() handle not needing to do anything
-   because bootfile_create() was never called
- * making bootfile_create() call bootfile_delete() first to
-   tidy up any previous bootfile before it creates a fresh one
+Call qtest_quit() on 'to' to clean it up once it has exited.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-I spotted this because I was trying to run a single subtest and
-messed up the test name so it didn't match anything :-)
-The second part was noticed by LeakSanitizer.
----
- tests/qtest/migration-test.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ tests/qtest/migration-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 70b606b8886..5cf238a4f05 100644
+index 04122120987..169ef0209c7 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -144,12 +144,23 @@ static char *bootpath;
- #include "tests/migration/ppc64/a-b-kernel.h"
- #include "tests/migration/s390x/a-b-bios.h"
+@@ -3322,6 +3322,7 @@ static void test_multifd_tcp_cancel(void)
+     /* Make sure QEMU process "to" exited */
+     qtest_set_expected_status(to, EXIT_FAILURE);
+     qtest_wait_qemu(to);
++    qtest_quit(to);
  
-+static void bootfile_delete(void)
-+{
-+    if (!bootpath) {
-+        return;
-+    }
-+    unlink(bootpath);
-+    g_free(bootpath);
-+    bootpath = NULL;
-+}
-+
- static void bootfile_create(char *dir, bool suspend_me)
- {
-     const char *arch = qtest_get_arch();
-     unsigned char *content;
-     size_t len;
- 
-+    bootfile_delete();
-     bootpath = g_strdup_printf("%s/bootsect", dir);
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-         /* the assembled x86 boot sector should be exactly one sector large */
-@@ -177,13 +188,6 @@ static void bootfile_create(char *dir, bool suspend_me)
-     fclose(bootfile);
- }
- 
--static void bootfile_delete(void)
--{
--    unlink(bootpath);
--    g_free(bootpath);
--    bootpath = NULL;
--}
--
- /*
-  * Wait for some output in the serial output file,
-  * we get an 'A' followed by an endless string of 'B's
+     args = (MigrateStart){
+         .only_target = true,
 -- 
 2.34.1
 
