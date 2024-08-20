@@ -4,149 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBAF3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 11:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB56EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 11:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgN4d-0005nA-8U; Tue, 20 Aug 2024 07:30:51 -0400
+	id 1sgNE8-0006GW-DX; Tue, 20 Aug 2024 07:40:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.lugou@provenrun.com>)
- id 1sgN4b-0005eu-1c; Tue, 20 Aug 2024 07:30:49 -0400
-Received: from mail-francesouthazlp170100000.outbound.protection.outlook.com
- ([2a01:111:f403:c207::] helo=MRZP264CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sgNE5-0006Fl-3L
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:40:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.lugou@provenrun.com>)
- id 1sgN4X-0005qa-Qz; Tue, 20 Aug 2024 07:30:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LjPyZK5tYwXdG/vd4QCJ2id19cEVzbZl+JIzY5FIf+e4DQXYP9mBR9IU08sCLvLNFIe0/pZmOuFQRzeq8wkkVf09DjDGJIzF/udBcuYHA0u6rq2gVo5ozDf9/xzf16scDXbfXNJFGJw1t/es254JMWly5EmaF3HqLESFCcx18VZbSzKE4E23VgOUSbL7gdAoZ0JrRJ/53aEUJyBYRcF2FWfRuHg83d4q3dgFltdyt9lZmRR1/8D4R85mkf5FAz9iIxoRE2gbq2ZyqoNhjRAEk9Mp9W5ip73iHj2JF1+I5G6vQcDrMyefLxglf4uL8njZWjtTAsCEZNRrGXRGjAJsEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4wx99bmApIioS3ef+SOqJzjdfZ3CmrM+miK6/pMPY60=;
- b=HTraw2YP88rKqwuh1nswn22NpGVo8gp5dtVo2hAvSayXoRBV7kRdhdy2ji6s+MwOpRdB/zbP5aRSZ4J0mPSlA8dwL9n7AVZDJd3kshHLfN5SFvGQJpBkzh5xWeYHB5w/FTzg7BlqEW9VJlsHIR8FnQJP0h9PyNV76IHl0VB23S8BU3jiUOg9Ky4tVptzTpuys23PXG+bh/MNnf9PzUI5gE79AZeadQTzRDxaWNUlW79v+mC0a2BzL2Iyw2Pf8NEB4PJAYX6K2q63PLpst6rWgBm9+WUmwZFXnUGxw6Jz1OiWqNuLUQcYbGxv2UgxQ+NazS3P4sZ8qv1QAV44wWJXZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=provenrun.com; dmarc=pass action=none
- header.from=provenrun.com; dkim=pass header.d=provenrun.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=provenrun.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4wx99bmApIioS3ef+SOqJzjdfZ3CmrM+miK6/pMPY60=;
- b=Wmf9lglxgKmOJDf0VG8vjZdF0LLQAi3Hgzaw3AFliFefLvfpdumalrOLKwAe0MctZNMECTfTkrwA+G+1mLfwWGBe2RRVJiCwsu/Hy1p3LJrQpeAyT98NedJyA5dpa+9tRzH1zaH4iu4Do/tfYN94gMssdFcr5Vc4NCwd9HJUazQIVPJdTPmh8ONg2vPuUahALirt8t9ucbHdcE6gDrfFBe3zVELyRobTR7pmEQ7BEZeNw7NhPgrkaiE3CsFkS9dAc7r5FFfHFRhGHTjcttIw3Qrfc4d2JuXU9jbnJ0duj4BtKaPckFi9c1AAtQOYyrII9b6sqNUa5uc61K93Yspf/g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=provenrun.com;
-Received: from PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:1f2::18)
- by PASP264MB4919.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:43d::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.16; Tue, 20 Aug
- 2024 11:30:39 +0000
-Received: from PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
- ([fe80::ef1:e8a1:244f:3ca7]) by PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
- ([fe80::ef1:e8a1:244f:3ca7%5]) with mapi id 15.20.7875.023; Tue, 20 Aug 2024
- 11:30:38 +0000
-Date: Tue, 20 Aug 2024 13:30:24 +0200
-From: Florian Lugou <florian.lugou@provenrun.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Subject: Re: [PATCH] target/arm/helper: Fix timer interrupt masking when
- HCR_EL2.E2H == 0
-Message-ID: <20240820113024.53tmzejw2omm6bbx@flugou-latitude5401>
-References: <20240615185423.49474-1-florian.lugou@provenrun.com>
- <CAFEAcA_+WrzM4fXQMUxMi3L5yiUWMrUGTSZH=NDdYDKUCP+8NQ@mail.gmail.com>
- <20240620135627.qxcrkdx5v7wdurx4@flugou-latitude5401>
- <CAFEAcA-ngrrEUDD7eA_sOLGF+_wRCuQVxTwuCA4pXjRcuJucmA@mail.gmail.com>
- <20240621140725.f4hsasmhrhh4joxm@flugou-latitude5401>
- <CAFEAcA9c9hbpsdyc7+=QEOZGrNY2m-urk6VrWdwCdfk9ipkwpw@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="oufd45th5meiczuh"
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9c9hbpsdyc7+=QEOZGrNY2m-urk6VrWdwCdfk9ipkwpw@mail.gmail.com>
-X-ClientProxiedBy: PAZP264CA0234.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:238::18) To PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:1f2::18)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sgNE2-0007bz-VB
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:40:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724154033;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AcLjtiEFiZZD29VtR4UP+ayckq7uzT8VVxtauP0/G+M=;
+ b=WcsuC5MmlJDrGF67nDEflk/7tpbqM8a0nxKlmEDIX7vNcQAFjJQMrmVecxT4rRmIeIN5jB
+ r1UPv1lQgqH4qngoxQy6t9Nc3gv8B1qqPyy7l98hL6R3/ydw9OAVhfhmL3xNf2xearwpnu
+ xw83DQpZVHs3VoSohd1AQfluE59TuFk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-518-HbOm2UQNP2-21UMzYMzccw-1; Tue, 20 Aug 2024 07:40:30 -0400
+X-MC-Unique: HbOm2UQNP2-21UMzYMzccw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42820c29a76so46984195e9.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 04:40:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724154029; x=1724758829;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=AcLjtiEFiZZD29VtR4UP+ayckq7uzT8VVxtauP0/G+M=;
+ b=wPlY+P/ouemSBhmyXiEOmeq0nz3QsW7QaR3TjJeIflUUV0hKRYaGFlvNRJavZMsYaN
+ JLvMQ4LIc7HfYFLgbDtmZREhriggkOJ5Uwbc0y9sfqd9QcVcMxhUYka9X4bW74Inavez
+ wflmaUZyNnQ1y3vQTI3LnQwur3M6Y9qPieZmWs6liVAp+2P7QldWJrm1GsElKaQj1pBL
+ qlqmWGWGsxaJYiARNO2DFwllzk/1SPufnV75UB0OU8uJEuYrs4pUq2hYAeIX0N+x/5Fh
+ Uk7/APvTblgnM3OApC/Wy0x+/q1kGH/Dvp7ngHAj99iqtH4pelCCeGLUxjXn4X+bE9uV
+ ADvQ==
+X-Gm-Message-State: AOJu0YwGj1Xxq/a1WCKzJEfYRtaBOGu78JnxWwPotGi2VAJCsF2/OT1m
+ PllJBiuxxRVaeq/7ww5ub9lOAgKfY/LBPSXVc184L8Z1fTG4BmwDSxNAcBrmKl0VW3YdboZG0YC
+ L9L7jticSCKpm4ndy/0ALDYx0l8fGbO7SX9G8uLo1pkFGmQGGrTU1
+X-Received: by 2002:a05:600c:474e:b0:427:fa39:b0a1 with SMTP id
+ 5b1f17b1804b1-429ed7d3578mr77161525e9.36.1724154029154; 
+ Tue, 20 Aug 2024 04:40:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH//b+WxtiXO5MekrSLCNukoqqm1QLfNeFC6BABEZIlxvJaxDzVcYkFMcbHakZpQkleHYffDA==
+X-Received: by 2002:a05:600c:474e:b0:427:fa39:b0a1 with SMTP id
+ 5b1f17b1804b1-429ed7d3578mr77161365e9.36.1724154028374; 
+ Tue, 20 Aug 2024 04:40:28 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c74b:e00:9c12:cdf2:bf1c:b8ed?
+ (p200300cbc74b0e009c12cdf2bf1cb8ed.dip0.t-ipconnect.de.
+ [2003:cb:c74b:e00:9c12:cdf2:bf1c:b8ed])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429ed650903sm140416355e9.18.2024.08.20.04.40.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Aug 2024 04:40:27 -0700 (PDT)
+Message-ID: <6ab58af7-3584-40b5-b56c-45544a06c7af@redhat.com>
+Date: Tue, 20 Aug 2024 13:40:26 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAZP264MB2990:EE_|PASP264MB4919:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0f026687-eac9-4cd2-ead1-08dcc10b8420
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?V/hwybigjVRPy3qX+QFrkDE1afh3AhLIscVUg9pNxcLnNhqqW/q9sBKQtSJv?=
- =?us-ascii?Q?u4MumFdFw5Y1TI25fN6m9F4l+EirVOfhOY3WjafYfiZSi67fDV7li/RO4YzL?=
- =?us-ascii?Q?yGjbdj9t/QY6utT85wL8ZgGAQbKtOemyqIQRmuJAC6qmngLkJ6wb51zg6xdi?=
- =?us-ascii?Q?NacMOsjIZEqXKRqQAnhbGoa3b0bIU6Xh6kAFWrt4qyjqvnT8tdoBTlRBXtnx?=
- =?us-ascii?Q?5Q3GEVMyUwaD8bslCjBQR1Bv8bHnAAHi1BxY+Y0lp20AD6DLInAFFulY2zMs?=
- =?us-ascii?Q?O/DTUjxr6hYXylNB9RxEb4GHVtnvsxMoyeSxG2Tr/vIVcTWHV1gcw6XelmCb?=
- =?us-ascii?Q?vqUDg7FuknkzwtTbZdGOuNKjIzIuzGFVu34EkKqbqAAB0Z3/4j6ZSpVQzcHh?=
- =?us-ascii?Q?galonKagFvybXw/4daozirt7DB1eUPaaCMb+85pCtG9Z6IihDO1CoqCHJYx8?=
- =?us-ascii?Q?NRlcIUzRSYUBV0fGmRoMCCLzd0dVQQenslH1jADRpG8RWu0gvSC7awnvaR7y?=
- =?us-ascii?Q?DneqmxACfsW/wgWeJ+p4Z5EKncFnGfQVylgtx6N91gaIZTZEEhnF9QAv1Y8V?=
- =?us-ascii?Q?5Oi/BDcJAjn0t86JTS7xVGfyIdZLiHbWL0+RhLNALsCEtNfhIR3Xv8fLkWvd?=
- =?us-ascii?Q?VG1HbOdzpRzfasLT82ZhG66TLe1EB31wJZkZrYjvbjhsqge1R9ilYa+axab7?=
- =?us-ascii?Q?/UfQtLjbQav2OVo72eDpVQUwTbPjPPC4vBFlNdjQY6dUBqUzuyOfJsKkFIAM?=
- =?us-ascii?Q?QtbE3Fgx8bMNRwHWV1UCb1v98uhZlCACA3vLQnAyU6dmR4YWwMxEwUUPUoa1?=
- =?us-ascii?Q?O0NEHjYL+dWhW10EVOhbX6um7DJygijxljzhcB5zMAKvn5FlwWSa8j5ZQAf4?=
- =?us-ascii?Q?1MFOvK4+rUuM6CSThQl9kaqFAnGuj7Mb80gR8XUbmcPPsEoIxUwjQF+DDwZK?=
- =?us-ascii?Q?EcAcwa6kxt8YFVFKoYS83Paw3szkOMRNS8vJkJJH9IYfOXtHM7ZIIJI8+Drd?=
- =?us-ascii?Q?dbp2RyD/xksFfQ3eiro83HaKBqe0nhb3rLcCE59bZ6J/u+NE26c88UP10M7x?=
- =?us-ascii?Q?3RKas9GfdNSxUNWGMl/lQ/CqSgv3XAIR6IsF7zykzV0yuNpxRRiIJR8wacLD?=
- =?us-ascii?Q?J3jYdZgFO4YlQqMlRY3id4QRLT2NhZrUo53XYAIpC0TvodUve0wrWLRgoEf9?=
- =?us-ascii?Q?jaBXJVb4JhPz25Ylj/6Ud5xFHk/NnJuYQ3xzCfNoN21Zb0H+5PQcSpe/GkZb?=
- =?us-ascii?Q?VhJfOdKKpQ/q5VtRw2TZ1jw6MmtFnAJEGaWfBz2EovyVWj/1qpZK3HJT7/px?=
- =?us-ascii?Q?88M1l1P92O784gewGYYgX9KLP0N3UEPL392X82ZhnakERg=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?BztGkUxWIfWsSeJ+8gz2ds2lSVRwZUx5sC2TN6qAfvouRqVBwW+lBdiZUXPL?=
- =?us-ascii?Q?ZWyGHWQ5aMYIFCFdCmnfYeMa6qUC4Ivwi6en6iGT7BxkQ4SNFodhX3j2sS9g?=
- =?us-ascii?Q?nQQ05pZIQDW4srMOVhokmxjxMQ69AzWlskjhqNMfMHFvmHYsLCdYJWZGbjOB?=
- =?us-ascii?Q?uMtuF73BvMUKLTtuf80DugCR761FUUfhtnBX+i/iWQzkkAukqa7zTEzYG1Of?=
- =?us-ascii?Q?bb6b+oA2eKDidsPsfQgA0pK2pehAd1Q8v6oNCAzN1SrZnvrBI60BdQwwuRxf?=
- =?us-ascii?Q?BVQG8ZdLBSA/QL0vkF+1Y/GLEbRQXe8E2i7jPSLqbFY6CrROuJHThbpEKLV8?=
- =?us-ascii?Q?ZOjekyG8iL1w/HjK8y8mx2gc1anxHZz20TGi7DQvL9cCC02hQwDTB7612/Q4?=
- =?us-ascii?Q?0FelHNnVay7DRXipWVs2GRblsBCgtNRLcSTaD9OIIrBCwM4sprX7ibh4SONX?=
- =?us-ascii?Q?6EukFW2QPGdQve8TZ6udFFhE3KaDWR5fIjJOLveHMKlIjoSYzoXfaW93kVz7?=
- =?us-ascii?Q?aLru97jPjCnvo9B4HwgdceFl99FsDQdPSodx4Bhqq23IoWowho+CQnkp1BeV?=
- =?us-ascii?Q?nC0C6JFYGcI2/yyexHLm4aYJzVfiDcuqaaOBCpAM/gtLpv9GziRw/QO0dL1W?=
- =?us-ascii?Q?YKNrIcYKN3j3Y01URqDecttbfvGgXTaXaAGSZvL3VcAMxicEKev2FcveT9Sy?=
- =?us-ascii?Q?zGW8n0StGA/B/jPwk3xTmFiQiLe6St+c+ngEixvVdbSg9Jw4IeqrvJx3TYek?=
- =?us-ascii?Q?2tSiSSOUFNpf4UG+ZM6hDaa6A1vVyFLjPNf5IMW/+gsBYmxf2g0lV+qEjfLm?=
- =?us-ascii?Q?/gyu1AOGbeJcNgjk1dXDHWhuPanftwfO8liBOtR2ANqlTfy/s6FCpkZrVUHJ?=
- =?us-ascii?Q?vvnDGJh+cTWxSTfMuJAY0av40ZFxtt22Wzzhv91L0tSVEqPn7sMFr/qlg7c9?=
- =?us-ascii?Q?9qhjgyLDw/pzDAIT3M+1edFycOYoHVD82h9tIcxL4q8bIOCAEsrLXTRMiu8i?=
- =?us-ascii?Q?Xm0NuHGKKA1tYBk6t4GZ/cTA4SYoIbUjL1s2dJT+cLrUuEASwmgbuTl2/wNz?=
- =?us-ascii?Q?RT2eeYWG72W7NwMdd+0hjXa8dx1LufPtui76goETsiEeVQgdUqD2ldAs/m1j?=
- =?us-ascii?Q?D7/JmTlIxA23b59JF9MC+xpdLyp1tDvbEuU7nrCGfR+LzxHOuVC1NqfYJSlY?=
- =?us-ascii?Q?vTBo5V0dKVqIimQxuAfiKJOf7ePWyfu47t+BVquyvragP3QShsiGtXT9+g9w?=
- =?us-ascii?Q?mgLW9Gjqq2TyWwdhPdQbFgVxyrHy4/34dNFfhg39J3h0JOU8ouN5ioy7b+g4?=
- =?us-ascii?Q?Iey3n2+x3YsqmWE+4/EtPlOw36+VjdCO13Fp4JTlsHk0p2EHWNke/O3Kyw/1?=
- =?us-ascii?Q?hqskMiZXbpDAxsjb1SQ78iJlI5iUof0GtLZ9vQ/dDIOjE+c7SJMkYM3qs7tO?=
- =?us-ascii?Q?aX8pn8G6rkB4M8KYc96wHXL7UsUypP5x+Ngs9qPUVSOwL7rhD/OP9t5BjfWY?=
- =?us-ascii?Q?ZediwuuL44tMRSAoJXLJSyjqhrj0f9eQSmjQ2XwDc9GweDtRUOTFD5tAwmx3?=
- =?us-ascii?Q?5Esq+m7ZhlEZQeHxarf8oOJrVA8fPjx57V2Zqct9uG9+m3A78uKo01+nL1vd?=
- =?us-ascii?Q?lDS9afSgp6c4URq6MRcswDbwgCg0eN3/zwBKtPlNgNPMu59cPyLnFA7m7SmR?=
- =?us-ascii?Q?4zqi1w=3D=3D?=
-X-OriginatorOrg: provenrun.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0f026687-eac9-4cd2-ead1-08dcc10b8420
-X-MS-Exchange-CrossTenant-AuthSource: PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2024 11:30:38.7209 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff654c30-3eb4-4445-b89f-a54a92b1f03d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BhWhikbGrkPo3+wLr57xDKtSqvwpJr4AsFWfTgd2G2dRmST3QLFIC6wIm70zcxnfc9sfhHBeIqQUJjOcYhs5mkzrsn1I/EIGfndytN+LRXc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PASP264MB4919
-Received-SPF: pass client-ip=2a01:111:f403:c207::;
- envelope-from=florian.lugou@provenrun.com;
- helo=MRZP264CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] reset: Add RESET_TYPE_WAKEUP
+To: Juraj Marcin <jmarcin@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240813153922.311788-1-jmarcin@redhat.com>
+ <20240813153922.311788-3-jmarcin@redhat.com>
+ <CAFEAcA9BWOkSmNh_b7HcNgfD429L1iLrjYTHWBJKDP2dJYCjCA@mail.gmail.com>
+ <CAC2qdxAfvKubvO7fs4KF8dy_+Ad5kbAaxyn2P0FCDL-zkhEiMw@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CAC2qdxAfvKubvO7fs4KF8dy_+Ad5kbAaxyn2P0FCDL-zkhEiMw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,72 +153,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---oufd45th5meiczuh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 14.08.24 14:32, Juraj Marcin wrote:
+> On Tue, Aug 13, 2024 at 6:37 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> On Tue, 13 Aug 2024 at 16:39, Juraj Marcin <jmarcin@redhat.com> wrote:
+>>>
+>>> Some devices need to distinguish cold start reset from waking up from a
+>>> suspended state. This patch adds new value to the enum, and updates the
+>>> i386 wakeup method to use this new reset type.
+>>>
+>>> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+>>> Reviewed-by: David Hildenbrand <david@redhat.com>
+>>> ---
+>>>   docs/devel/reset.rst    | 8 ++++++++
+>>>   hw/i386/pc.c            | 2 +-
+>>>   include/hw/resettable.h | 2 ++
+>>>   3 files changed, 11 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+>>> index 9746a4e8a0..a7c9467313 100644
+>>> --- a/docs/devel/reset.rst
+>>> +++ b/docs/devel/reset.rst
+>>> @@ -44,6 +44,14 @@ The Resettable interface handles reset types with an enum ``ResetType``:
+>>>     value on each cold reset, such as RNG seed information, and which they
+>>>     must not reinitialize on a snapshot-load reset.
+>>>
+>>> +``RESET_TYPE_WAKEUP``
+>>> +  This type is called for a reset when the system is being woken-up from a
+>>> +  suspended state using the ``qemu_system_wakeup()`` function. If the machine
+>>> +  needs to reset its devices in its ``MachineClass::wakeup()`` method, this
+>>> +  reset type should be used, so devices can differentiate system wake-up from
+>>> +  other reset types. For example, a virtio-mem device must not unplug its
+>>> +  memory during wake-up as that would clear the guest RAM.
+>>> +
+>>>   Devices which implement reset methods must treat any unknown ``ResetType``
+>>>   as equivalent to ``RESET_TYPE_COLD``; this will reduce the amount of
+>>>   existing code we need to change if we add more types in future.
+>>> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+>>> index ccb9731c91..49efd0a997 100644
+>>> --- a/hw/i386/pc.c
+>>> +++ b/hw/i386/pc.c
+>>> @@ -1716,7 +1716,7 @@ static void pc_machine_reset(MachineState *machine, ResetType type)
+>>>   static void pc_machine_wakeup(MachineState *machine)
+>>>   {
+>>>       cpu_synchronize_all_states();
+>>> -    pc_machine_reset(machine, RESET_TYPE_COLD);
+>>> +    pc_machine_reset(machine, RESET_TYPE_WAKEUP);
+>>>       cpu_synchronize_all_post_reset();
+>>>   }
+>>
+>> I'm happy (following discussion in the previous thread)
+>> that 'wakeup' is the right reset event to be using here.
+>> But looking at the existing code for qemu_system_wakeup()
+>> something seems odd here. qemu_system_wakeup() calls
+>> the MachineClass::wakeup method if it's set, and does
+>> nothing if it's not. The PC implementation of that calls
+>> pc_machine_reset(), which does a qemu_devices_reset(),
+>> which does a complete three-phase reset of the system.
+>> But if the machine doesn't implement wakeup then we
+>> never reset the system at all.
+>>
+>> Shouldn't qemu_system_wakeup() do a qemu_devices_reset()
+>> if there's no MachineClass::wakeup, in a similar way to
+>> how qemu_system_reset() does a qemu_devices_reset()
+>> if there's no MachineClass::reset method ? Having the
+>> wakeup event be "sometimes this will do a RESET_TYPE_WAKEUP
+>> but sometimes it won't" doesn't seem right to me...
 
-> > $ aarch64-none-elf-gcc -ffreestanding -nostdlib -T qemu/tests/tcg/aarch=
-64/system/kernel.ld -o test test.S
-> >
-> > $ qemu-system-aarch64 \
-> >         -machine virt,secure=3Don,gic-version=3D3 \
-> >         -cpu cortex-a57 \
-> >         -kernel test \
-> >         -display none \
-> >         -semihosting
-> >
-> > $ # Exits after ~1s
-> >
-> > $ qemu-system-aarch64 \
-> >         -machine virt,secure=3Don,gic-version=3D3 \
-> >         -cpu cortex-a57 \
-> >         -kernel test \
-> >         -display none \
-> >         -semihosting \
-> >         -icount shift=3D0,sleep=3Doff
-> >
-> > ... (hangs until QEMU is killed)
->=20
-> For me, with QEMU commit 9eb51530c12ae645b, this test case
-> exits (doesn't hang) with both these command lines. Do you
-> still see this bug? I guess it's possible we fixed it in
-> the last month or so, though I can't see anything obviously
-> relevant in the git logs.
+One thing one could consider would probably be to send a WARM reset to 
+all devices. The main issue here is that other devices will default to a 
+COLD device then, and that's precisely what the other machines that 
+implement suspend+resume do not want. And ...
 
-Thank you for taking the time to test it.
+> 
+>  From my understanding that I have gathered from the code (but please,
+> someone correct me if I am wrong), this is machine specific. Some
+> machine types might not support suspend+wake-up at all. The support
+> has to be explicitly advertised through qemu_register_wakeup_support()
+> (for example, aarch64 with a generic virt machine type does not
+> advertise support). Even if the machine type advertises
+> suspend+wake-up support, it might not need to do anything machine
+> specific. This is the case of pSeries PowerPC machine (sPAPR) that
+> advertises support, but does not implement MachineClass::wakeup()
+> method as nothing needs to change in the machine state. [1]
+> 
+> So, if a restart during wake-up happens, it can be differentiated with
+> the wake-up reset type, and if the machine type does not need to reset
+> its devices during wake-up, there is no reset that needs to be
+> differentiated.
 
-On my machine (Ubuntu 22.04), with QEMU configuration options
-"--target-list=3Daarch64-softmmu --enable-debug", running the provided test=
- case
-with "-icount shift=3D0,sleep=3Doff" still makes QEMU hang forever on commit
-9eb51530c12ae645b.
+... if the machine does not do any resets during suspend+wakeup, this 
+implies that there is not even a warm reset.
 
-The issue was initially reported by a colleague of mine so I was hoping it =
-would
-be somehow reliably reproducible. But apparently it is not.
+I guess we should make that clearer in the documentation: it's up to a 
+machine implementation whether it wants to trigger a WARM reset during 
+suspend+wakeup. If not, not resets will be performed at all.
 
-I will try to find some time to investigate a bit more.
+@Peter, does that sound reasonable?
 
-Thank you,
+-- 
+Cheers,
 
---=20
-Florian
+David / dhildenb
 
---oufd45th5meiczuh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCAAdFiEEi2flTDU77YujoiPS7SlcI6rHG90FAmbEflAACgkQ7SlcI6rH
-G92hawf/SFQq58n20DszwH/wl+jJRHNGICzaoToHNAjl8eB8ylU2p7S9+Y7Bfq+O
-ilI6inVk/Qjez0cXNrJKkPhYmoG9l8BFEmvSZusQKVB1Gbv22ijfRGFZcmv+M8Nx
-IB66nBFDOpA3VhehbYXKuCwGoCWzz9YNJuJnO0d56RiMCYjbH09zvGGC9rAL6/ZY
-OJVW5ytDOb67zGfFLx7/fhJbHc2CTwf31WItOvdTR7A04xU4tyYegBtvMLYdrIeo
-jK3wo70WmL7tFHYd/78Z7U9jDRSq3ObFITnr/yZIhPwQ7rnzQJXWL6NGw4qp5W3L
-a5lXnSb9m1fQePfpR20xDh9cDo9cmg==
-=Sxew
------END PGP SIGNATURE-----
-
---oufd45th5meiczuh--
 
