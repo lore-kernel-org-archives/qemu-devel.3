@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEABC52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 01:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21BEC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 01:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgE7D-00035v-Md; Mon, 19 Aug 2024 21:56:55 -0400
+	id 1sgE8N-0005nw-Fv; Mon, 19 Aug 2024 21:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sgE7C-00034M-8Y; Mon, 19 Aug 2024 21:56:54 -0400
-Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+ id 1sgE8L-0005c2-0D; Mon, 19 Aug 2024 21:58:06 -0400
+Received: from out30-113.freemail.mail.aliyun.com ([115.124.30.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sgE79-0006vC-JM; Mon, 19 Aug 2024 21:56:54 -0400
+ id 1sgE8J-0006zG-2x; Mon, 19 Aug 2024 21:58:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1724118999; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=nA809LtVfKWVOwke62uMihCDUdWhyXWDWY+4FRYQ9ag=;
- b=kq1fI1ykY0zgzVhsFh5sIWX/fUiHxq0T8T8lsjKjkixognPZpCfP8gxAkvyrY7+Pr+pEFR45j04JC5wsFRyQUYPfBlKgmk0MFgouxxr5TL4QoVliJ9wmX6lhGIv+v4gQB69rbUQRRSQxgz19D+afJDFsihA5ftmQAGK8juGsYzY=
+ t=1724119078; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=ZSrVJzfFcRCuX2Jrlj2tIUb/4h9oZBt6KlcD59mRzWs=;
+ b=YeUhBLlAorfLi5IhvDUtBYVs2VDbwcOex06ufpfH4lWw8mM+nkOVz48Ans1cYQWPoZUzn1gxg1+mqwJho5PnjVHDqrWg+bAFiy4e7eoBIGzxDkR6E/R6G4+z+dTgtnLar/mWk4U5MptVrbQ1puDa5NbgENBjJvV4Hb1l4v0wS1s=
 Received: from 30.166.65.10(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WDGbxRD_1724118996) by smtp.aliyun-inc.com;
- Tue, 20 Aug 2024 09:56:37 +0800
-Message-ID: <8788fae2-14ca-4af2-a075-bf20a533f540@linux.alibaba.com>
-Date: Tue, 20 Aug 2024 09:56:07 +0800
+ fp:SMTPD_---0WDGXBTz_1724119076) by smtp.aliyun-inc.com;
+ Tue, 20 Aug 2024 09:57:56 +0800
+Message-ID: <c3d0e2bf-9e5b-40ce-9acd-73f10f06913c@linux.alibaba.com>
+Date: Tue, 20 Aug 2024 09:57:27 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 08/15] tcg/riscv: Add support for basic vector opcodes
@@ -37,15 +37,15 @@ Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
  <20240813113436.831-9-zhiwei_liu@linux.alibaba.com>
- <ae44194c-776a-48aa-8567-c56b5e7c4167@linaro.org>
+ <b325f636-c337-4fbd-b5da-c08b8978da15@linaro.org>
 Content-Language: en-US
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <ae44194c-776a-48aa-8567-c56b5e7c4167@linaro.org>
+In-Reply-To: <b325f636-c337-4fbd-b5da-c08b8978da15@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.118;
+Received-SPF: pass client-ip=115.124.30.113;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
+ helo=out30-113.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,72 +70,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 2024/8/14 17:13, Richard Henderson wrote:
+On 2024/8/14 17:17, Richard Henderson wrote:
 > On 8/13/24 21:34, LIU Zhiwei wrote:
->> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->>
->> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
->> ---
->>   tcg/riscv/tcg-target-con-set.h |  1 +
->>   tcg/riscv/tcg-target.c.inc     | 33 +++++++++++++++++++++++++++++++++
->>   2 files changed, 34 insertions(+)
->>
->> diff --git a/tcg/riscv/tcg-target-con-set.h 
->> b/tcg/riscv/tcg-target-con-set.h
->> index d73a62b0f2..8a0de18257 100644
->> --- a/tcg/riscv/tcg-target-con-set.h
->> +++ b/tcg/riscv/tcg-target-con-set.h
->> @@ -23,3 +23,4 @@ C_O1_I4(r, r, rI, rM, rM)
->>   C_O2_I4(r, r, rZ, rZ, rM, rM)
->>   C_O0_I2(v, r)
->>   C_O1_I1(v, r)
->> +C_O1_I2(v, v, v)
->> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
->> index f60913e805..650b5eff1a 100644
->> --- a/tcg/riscv/tcg-target.c.inc
->> +++ b/tcg/riscv/tcg-target.c.inc
->> @@ -289,6 +289,12 @@ typedef enum {
->>       OPC_VSE32_V = 0x6027 | V_SUMOP,
->>       OPC_VSE64_V = 0x7027 | V_SUMOP,
->>   +    OPC_VADD_VV = 0x57 | V_OPIVV,
+>> +    OPC_VADD_VV = 0x57 | V_OPIVV,
 >> +    OPC_VSUB_VV = 0x8000057 | V_OPIVV,
 >> +    OPC_VAND_VV = 0x24000057 | V_OPIVV,
 >> +    OPC_VOR_VV = 0x28000057 | V_OPIVV,
 >> +    OPC_VXOR_VV = 0x2c000057 | V_OPIVV,
->> +
->>       OPC_VMV_V_V = 0x5e000057 | V_OPIVV,
->>       OPC_VMV_V_I = 0x5e000057 | V_OPIVI,
->>       OPC_VMV_V_X = 0x5e000057 | V_OPIVX,
->> @@ -2158,6 +2164,21 @@ static void tcg_out_vec_op(TCGContext *s, 
->> TCGOpcode opc,
->>       case INDEX_op_st_vec:
->>           tcg_out_st(s, type, a0, a1, a2);
->>           break;
->> +    case INDEX_op_add_vec:
->> +        tcg_out_opc_vv(s, OPC_VADD_VV, a0, a1, a2, true);
->> +        break;
->> +    case INDEX_op_sub_vec:
->> +        tcg_out_opc_vv(s, OPC_VSUB_VV, a0, a1, a2, true);
->> +        break;
->> +    case INDEX_op_and_vec:
->> +        tcg_out_opc_vv(s, OPC_VAND_VV, a0, a1, a2, true);
->> +        break;
->> +    case INDEX_op_or_vec:
->> +        tcg_out_opc_vv(s, OPC_VOR_VV, a0, a1, a2, true);
->> +        break;
->> +    case INDEX_op_xor_vec:
->> +        tcg_out_opc_vv(s, OPC_VXOR_VV, a0, a1, a2, true);
->> +        break;
 >
-> As with load/store/move, and/or/xor can avoid changing element type.
-> Thus I think the vtype setup before the switch is premature.
+> Immediate operand variants to be handled as a follow-up?
+Do you mean VXOR_VI? We use vxor.vi for not_vec already in patch 10.
 
-Agree. We have implemented this feature on the v2 patch set.
-
-Thanks,
 Zhiwei
-
 >
 >
 > r~
