@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB47C531DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 770A5C5320E
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 11:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgMcD-0005Zb-9z; Tue, 20 Aug 2024 07:01:29 -0400
+	id 1sgMcF-0005mD-Ry; Tue, 20 Aug 2024 07:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMc7-0005Ue-9A
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:01:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMcA-0005WS-Rg
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:01:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMc5-0000PO-OW
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:01:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sgMc9-0000Pr-1H
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 07:01:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724151681;
+ s=mimecast20190719; t=1724151683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qCcGW+ALijD/XxNzFrrw4isqUnFZstEHUc5PP/YQ7Rk=;
- b=eBptwR44CtBf3timWuVkgs94/gozkmlGXtSTsbZu+kZVmJBWNGQVpj3TVuXYuWyIveQ0Sy
- /LFkhRdh93GlhZAGsx9bfp1ub9uomUMk6NFkn2zRtUyfKJW1VTenFJFvOXcagJU1eilgtq
- cm014grNe+vfAPG9epzTg9IfcY0B5no=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aXVdVyAGLa6m6oolnKsdCGWtNqK/VAT91pUhfTnctK0=;
+ b=XI5v4r2eOE6ZCe0f10m1esTqBbpk+NIC+fb0TQgflC1W6XMGEc6AadHd/OnqiJbrzOqTZT
+ mlClrRItkUg09iUvuF53jVQPohgLzeASJly22VinRaHjyLSm4cns2Zupuw2VycPJ6XyJX8
+ hPES8+j+i+uW78H2md1t9Kbbj2Cnksc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-pNjWxlDUMRSePmyiIpSaAg-1; Tue, 20 Aug 2024 07:01:18 -0400
-X-MC-Unique: pNjWxlDUMRSePmyiIpSaAg-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-5334344ae21so514079e87.3
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 04:01:18 -0700 (PDT)
+ us-mta-80-9v1OeKdfP8eMTny2X06Rzg-1; Tue, 20 Aug 2024 07:01:20 -0400
+X-MC-Unique: 9v1OeKdfP8eMTny2X06Rzg-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42816096cb8so58647465e9.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 04:01:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724151676; x=1724756476;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qCcGW+ALijD/XxNzFrrw4isqUnFZstEHUc5PP/YQ7Rk=;
- b=hdp/dPWzMI/pAVwm6/cVpiLAaPIlls1BdYJ8pjC3r3vAfo8Mj0n5t8bHoLZMe1oR3g
- xR0ZZBGnqMJ/KM1+lHolL/8gl+eZNHwRQAmUBXmSEtzyRLaiEKlh0Iyy3PTJFFojNlq/
- ZQOYKD3Y9PWO/o3fZtt/eMJ3r9on9urHQiWRbIYWnQlrOOlf4o2eNVq92wn0P5jf8Evb
- OAXuv8UVaKYfSxpLHPNyFd4bf/AXGMBJr60fmHk5EFDpeSdOG/SSre94oL2zCcEGdRX7
- vzeh44ISBPhGReb49ysyf53bXyMKld/qGdX5dGkHlnYENSMbbvTXreLcNYgk8La1gu20
- YkjA==
-X-Gm-Message-State: AOJu0YzQq/+AbHrg3wX7pWKlFqQDIp5WdDB+TY3wFoAbYiwa6q5GdKXG
- 8ubtvs1//zXigKvUoXfde/OqEN586PpRHraBx1J3MGd39bPkJvyrUDxdnBHbgV01AFYXBB/1/h3
- rE3JEUi8+IrVTWhqhmMWvuKgWXwUAMdzegyrc9AS49zHY0bX2HTspx2Y3Mb2TQI3umaqwlvb05m
- SjAFvSXAhGylzPWI5zhkwq+VigZZaxUg==
-X-Received: by 2002:a05:6512:3082:b0:52f:cd03:a847 with SMTP id
- 2adb3069b0e04-5331c6f47f1mr6862069e87.61.1724151676157; 
- Tue, 20 Aug 2024 04:01:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEnaGbjhvECjZGX/+U/amy2wM1iWcIbENPbz5aJRC50d4M+yjDKtzZ8p2jqewILqSg1aFOhXg==
-X-Received: by 2002:a05:6512:3082:b0:52f:cd03:a847 with SMTP id
- 2adb3069b0e04-5331c6f47f1mr6861976e87.61.1724151674972; 
- Tue, 20 Aug 2024 04:01:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724151679; x=1724756479;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aXVdVyAGLa6m6oolnKsdCGWtNqK/VAT91pUhfTnctK0=;
+ b=VCQre+J+AaCuK01pcZe/eHNlm7a6qekn7ADeZUV9WInF1uYvNfzTL/PAH6/G1tw294
+ hHPDifV/MqmgVetuZvUz1J4y3tBw5UR+nmJkl580EgqeNByB4nRWuaJ2q0jbjynDh+hs
+ lllLY1Ii644jEtNzFMaEbJZ1tOHJiYmkppcDfgMG76bLrc7C845uDdH6l6eIgCI78I9l
+ gso8CPTcL2G4qyUhFQm570kFB5uxRsSXsybLE1eoIWh1hScLsYZaTK8peLxBYqUcqGhb
+ qiBt6HPiY32lg9PJUYpcW1qTmRqdhkvWsO6m//t3yRdH/fE2zKcIFnOCMkhCimwioSh+
+ K8SA==
+X-Gm-Message-State: AOJu0YxeRr38WAfG7ogCMRYYgDk3Ct0wwXPON8cDaDPI/J2Vt4yRB1jt
+ kqRce0w3CILW0mnRd084CQgGokmNX38Uc8k5VRupt6RU9uHeIipmmdFwnrQ47copaS/1wqKt52c
+ LhroRmKJTKtioNnvsSg+9P+2JcoOeTZZkA6dgCFR2NzLHVTFsIg9Ri7n6ZZEzWTaHpOwSbKRhFE
+ 3ps5P2TNPRylU0vLZEEAyB8kUGrolW9Q==
+X-Received: by 2002:a05:600c:3b26:b0:426:6f87:65fc with SMTP id
+ 5b1f17b1804b1-429ed7b6a3dmr112492855e9.17.1724151678758; 
+ Tue, 20 Aug 2024 04:01:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG/KtJuUwNEGgINW/7Jup2pqo+f2cuHHb3G2IuTpk3BqEtCYJkfav5HqvdgXLHBtY31zlXnDw==
+X-Received: by 2002:a05:600c:3b26:b0:426:6f87:65fc with SMTP id
+ 5b1f17b1804b1-429ed7b6a3dmr112492235e9.17.1724151677870; 
+ Tue, 20 Aug 2024 04:01:17 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f4:a812:cb6d:d20c:bd3b:58cf])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ed6586f7sm138714165e9.23.2024.08.20.04.01.12
+ ffacd0b85a97d-37189839f5csm12977995f8f.7.2024.08.20.04.01.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Aug 2024 04:01:14 -0700 (PDT)
-Date: Tue, 20 Aug 2024 07:01:10 -0400
+ Tue, 20 Aug 2024 04:01:17 -0700 (PDT)
+Date: Tue, 20 Aug 2024 07:01:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 2/3] hw/audio/virtio-snd: fix invalid param check
-Message-ID: <7d14471a121878602cb4e748c4707f9ab9a9e3e2.1724151593.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Cindy Lu <lulu@redhat.com>,
+ qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 3/3] virtio-pci: Fix the use of an uninitialized irqfd
+Message-ID: <a8e63ff289d137197ad7a701a587cc432872d798.1724151593.git.mst@redhat.com>
 References: <cover.1724151593.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1724151593.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -91,7 +87,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +103,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+From: Cindy Lu <lulu@redhat.com>
 
-Commit 9b6083465f ("virtio-snd: check for invalid param shift
-operands") tries to prevent invalid parameters specified by the
-guest. However, the code is not correct.
+The crash was reported in MAC OS and NixOS, here is the link for this bug
+https://gitlab.com/qemu-project/qemu/-/issues/2334
+https://gitlab.com/qemu-project/qemu/-/issues/2321
 
-Change the code so that the parameters format and rate, which are
-a bit numbers, are compared with the bit size of the data type.
+In this bug, they are using the virtio_input device. The guest notifier was
+not supported for this device, The function virtio_pci_set_guest_notifiers()
+was not called, and the vector_irqfd was not initialized.
 
-Fixes: 9b6083465f ("virtio-snd: check for invalid param shift operands")
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Message-Id: <20240802071805.7123-1-vr_qemu@t-online.de>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+So the fix is adding the check for vector_irqfd in virtio_pci_get_notifier()
+
+The function virtio_pci_get_notifier() can be used in various devices.
+It could also be called when VIRTIO_CONFIG_S_DRIVER_OK is not set. In this situation,
+the vector_irqfd being NULL is acceptable. We can allow the device continue to boot
+
+If the vector_irqfd still hasn't been initialized after VIRTIO_CONFIG_S_DRIVER_OK
+is set, it means that the function set_guest_notifiers was not called before the
+driver started. This indicates that the device is not using the notifier.
+At this point, we will let the check fail.
+
+This fix is verified in vyatta,MacOS,NixOS,fedora system.
+
+The bt tree for this bug is:
+Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
+817         if (irqfd->users == 0) {
+(gdb) thread apply all bt
+...
+Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
+0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
+1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
+2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497
+3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/system/memory.c:573
+4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528
+5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qemu-9.0.0/system/physmem.c:2713
+6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743
+7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
+8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/physmem.c:2894
+9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/physmem.c:2904
+10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
+11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
+12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-thread-posix.c:541
+13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
+14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
+
+Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+Message-Id: <20240806093715.65105-1-lulu@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/audio/virtio-snd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/virtio/virtio-pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index e5196aa4bb..d1cf5eb445 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -282,12 +282,12 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
-         error_report("Number of channels is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
--    if (BIT(params->format) > sizeof(supported_formats) ||
-+    if (params->format >= sizeof(supported_formats) * BITS_PER_BYTE ||
-         !(supported_formats & BIT(params->format))) {
-         error_report("Stream format is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
--    if (BIT(params->rate) > sizeof(supported_rates) ||
-+    if (params->rate >= sizeof(supported_rates) * BITS_PER_BYTE ||
-         !(supported_rates & BIT(params->rate))) {
-         error_report("Stream rate is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 9534730bba..524b63e5c7 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -866,6 +866,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+     VirtQueue *vq;
+ 
++    if (!proxy->vector_irqfd && vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)
++        return -1;
++
+     if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
+         *n = virtio_config_get_guest_notifier(vdev);
+         *vector = vdev->config_vector;
 -- 
 MST
 
