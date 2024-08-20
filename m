@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 512ADC531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 14:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9B9C531DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 14:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgQAm-0005AD-AN; Tue, 20 Aug 2024 10:49:24 -0400
+	id 1sgQAn-0005CQ-Bv; Tue, 20 Aug 2024 10:49:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sgQAi-0004wU-QS
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:21 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1sgQAk-00051c-36
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:22 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sgQAf-0006L4-LT
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:19 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-42808071810so45306025e9.1
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 07:49:17 -0700 (PDT)
+ id 1sgQAh-0006LF-JD
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 10:49:21 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42ab99fb45dso7511415e9.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 07:49:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724165355; x=1724770155; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724165357; x=1724770157; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i63bqDS44eEn4ijbQfvAhZ8JfystuRSkXcF0FbTNIZI=;
- b=XTY3PdeZq0fx1dR8IZwhhebK6GxrBiFeCzucKmt/6a6nedm3lAnnwTjUWOY8Ev1WQM
- tk4mY0oW6m+xQAeD8KU0ohDX0S/T13DtT0H3S7cQYqTNO7jQnYSBgB/ag0V6KVS+5Gql
- 3hJtH9T0K3SAhXwizfLElPKp72pSxwCdBA8sjB+h9Kj0Q9+LE+psoBWCrKkfQIR7+G++
- HruDiyAR2s/1bHISfRgqZRlCldnUoqH4b6SaFy4QtnyW+S/hSbYg2buO77r3L0sq97kf
- JvqQfmi4s/zVVDR0Z0JOrN3fkGzayU2T5mZL/QUSlWLuHLmg7Ui+RZrPWyXiPNHoSYaY
- am2A==
+ bh=O5i4Lh15VMGVUspG/5ti46lsCaIByKJK9Dj5Y6QJ2cU=;
+ b=gJ/SqTD/QMST3egftsV1OdXgaU75BnsWXNupZqAAt/WzgIWeyYIf8siEhguy84bIGQ
+ umdkgtBM0iBO1707OfECIK+0yVIMWS5mOvx4YFdcGiLCUfxOxr2voSqJKujPdSanGqxy
+ /Zqst5B/TM5zK0avzxrTKHWif9I9UQvVMO46lFgL6O8FVKjhNIHYAZSkt56nLqdlOTFr
+ xSVOPN+OfGHDbg/joQktnOXc9XLsKive1ihqD5e+lwlGwcR9DxIRW2D9pxtMQ8Fn8f4Z
+ Eh45Kqpnq49kwGCU/xJy7pluAtGm8h+Rr4IraSqoSmYRCwVTqOTrXb46TQcTVtJgusg0
+ 2Nsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724165355; x=1724770155;
+ d=1e100.net; s=20230601; t=1724165357; x=1724770157;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i63bqDS44eEn4ijbQfvAhZ8JfystuRSkXcF0FbTNIZI=;
- b=mFkejoehsEGDzGdcmJrfZhNID0DtYywCCMmofUmORaCLWFh9Qv6/vZMZrZ5wASIE9/
- tk+wUHdSycORHsD0txSHPZJfnyrVYZ7DbPlOcfuekv9TZTHyHWiayKB1XO3weK4E7xMJ
- h826kYrZIdKAd93eOVE7UjcTHV6C8A7UCDEDIMQqhHzsOyvKZfnYOqwHjnrgHdpjUHUG
- N4CpsWySTDyIdkwnve2hms2TwRgD0sHwe5biK2qdePowDuHrbPO1UHw5Eh5PyN3tWyLB
- x7xPIOMlzReDFCnGh5QZQiiUxjlv405ciUErrqP3tg/cyy0XqaKBAAEZURl5uey0r8tJ
- fw0Q==
-X-Gm-Message-State: AOJu0YxTIVjKf+t981Z2AkEmz3VfTUqQLr9624tcZrgNyuTVdMBKAWD/
- SD1XaFUOp7ybdLv7FRZEcFlylbknBm9jAfa1gvx37YIJBZfsQX7PpwK0fk7q+zncCmg8018BGxe
- /
-X-Google-Smtp-Source: AGHT+IFJ+ckHQ3+S9h9nSmLwb0iAz36+alydO17x4JsUJkFcGASkYrvrmp9827tz4G3cvAZ0dIgtjA==
-X-Received: by 2002:adf:fe0f:0:b0:371:6fb9:95a with SMTP id
- ffacd0b85a97d-371944534c0mr11032323f8f.34.1724165355021; 
- Tue, 20 Aug 2024 07:49:15 -0700 (PDT)
+ bh=O5i4Lh15VMGVUspG/5ti46lsCaIByKJK9Dj5Y6QJ2cU=;
+ b=aczExRZkrX1CZCaNj3eFox7hEOOE683MrY1sp4MYqHXAeV/cUCl1krUsoQpl3c1ZTI
+ 3mQ2bD6pdDHaRPNLeRwQoEdRzHBiq3ek5QD3vn/i+4SyUwuNNHmerKONJb/yqHNOITos
+ hDzGPfirtJYn612vRK09Oi5ZPdgvBpF16tA8L7afGt9A+NLqCvk//2GyyOhw4yDqhlnH
+ lFCOjSPZ8AH32utS7nQL9YHrMOUh8TBT8OVXa7mI/YxwKY4RzQVE1qCI79s/nk8/OpS9
+ /uPcctLHSY5BAfeBz+GlPdP9KBXs0EaS6YSxPRwaJkKR/tTczFDz1DyjeQeLlvu4noDe
+ Pqig==
+X-Gm-Message-State: AOJu0Ywb8H3uIPENUAZIUNRvFlC9lEXuuzgdi9v8tSsmkq8PfDVjZwS1
+ tfrp91gmeQ0v3E/OUJjvKgqXtCsCLHNey7PRag64GFvtH1LyMo3s4SKgCVJAz5U7rtHdwiwU3UG
+ G
+X-Google-Smtp-Source: AGHT+IEFiGJzLbHmY3enIPgbXkb2E3zZx3pqW3wM0BgJ71z2cXb5dFWeEPoAq6hapB+x5/c8oRQZlQ==
+X-Received: by 2002:adf:e907:0:b0:371:8e24:1191 with SMTP id
+ ffacd0b85a97d-371946a4455mr11251605f8f.53.1724165356986; 
+ Tue, 20 Aug 2024 07:49:16 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718983a306sm13334672f8f.15.2024.08.20.07.49.14
+ ffacd0b85a97d-3718983a306sm13334672f8f.15.2024.08.20.07.49.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Aug 2024 07:49:14 -0700 (PDT)
+ Tue, 20 Aug 2024 07:49:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH for-9.2 2/9] tests/qtest/migration-test: Don't leak resp in
- multifd_mapped_ram_fdset_end()
-Date: Tue, 20 Aug 2024 15:49:05 +0100
-Message-Id: <20240820144912.320744-3-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 6/9] tests/unit/crypto-tls-x509-helpers: deinit
+ privkey in test_tls_cleanup
+Date: Tue, 20 Aug 2024 15:49:09 +0100
+Message-Id: <20240820144912.320744-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240820144912.320744-1-peter.maydell@linaro.org>
 References: <20240820144912.320744-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,61 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In multifd_mapped_ram_fdset_end() we call qtest_qmp() but forgot
-to unref the response QDict we get back, which means it is leaked:
+We create a gnutls_x509_privkey_t in test_tls_init(), but forget
+to deinit it in test_tls_cleanup(), resulting in leaks
+reported in hte migration test such as:
 
-Indirect leak of 4120 byte(s) in 1 object(s) allocated from:
-    #0 0x55c0c095d318 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/tests/qtest/migration-test+0x22f318) (BuildI
-d: 07f667506452d6c467dbc06fd95191966d3e91b4)
-    #1 0x7f186f939c50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
-    #2 0x55c0c0ae9b01 in qdict_new qobject/qdict.c:30:13
-    #3 0x55c0c0afc16c in parse_object qobject/json-parser.c:317:12
-    #4 0x55c0c0afb90f in parse_value qobject/json-parser.c:545:16
-    #5 0x55c0c0afb579 in json_parser_parse qobject/json-parser.c:579:14
-    #6 0x55c0c0afa21d in json_message_process_token qobject/json-streamer.c:92:12
-    #7 0x55c0c0bca2e5 in json_lexer_feed_char qobject/json-lexer.c:313:13
-    #8 0x55c0c0bc97ce in json_lexer_feed qobject/json-lexer.c:350:9
-    #9 0x55c0c0afabbc in json_message_parser_feed qobject/json-streamer.c:121:5
-    #10 0x55c0c09cbd52 in qmp_fd_receive tests/qtest/libqmp.c:86:9
-    #11 0x55c0c09be69b in qtest_qmp_receive_dict tests/qtest/libqtest.c:760:12
-    #12 0x55c0c09bca77 in qtest_qmp_receive tests/qtest/libqtest.c:741:27
-    #13 0x55c0c09bee9d in qtest_vqmp tests/qtest/libqtest.c:812:12
-    #14 0x55c0c09bd257 in qtest_qmp tests/qtest/libqtest.c:835:16
-    #15 0x55c0c0a87747 in multifd_mapped_ram_fdset_end tests/qtest/migration-test.c:2393:12
-    #16 0x55c0c0a85eb3 in test_file_common tests/qtest/migration-test.c:1978:9
-    #17 0x55c0c0a746a3 in test_multifd_file_mapped_ram_fdset tests/qtest/migration-test.c:2437:5
-    #18 0x55c0c0a93237 in migration_test_wrapper tests/qtest/migration-helpers.c:458:5
-    #19 0x7f186f958aed in test_case_run debian/build/deb/../../../glib/gtestutils.c:2930:15
-    #20 0x7f186f958aed in g_test_run_suite_internal debian/build/deb/../../../glib/gtestutils.c:3018:16
-    #21 0x7f186f95880a in g_test_run_suite_internal debian/build/deb/../../../glib/gtestutils.c:3035:18
-    #22 0x7f186f95880a in g_test_run_suite_internal debian/build/deb/../../../glib/gtestutils.c:3035:18
-    #23 0x7f186f95880a in g_test_run_suite_internal debian/build/deb/../../../glib/gtestutils.c:3035:18
-    #24 0x7f186f95880a in g_test_run_suite_internal debian/build/deb/../../../glib/gtestutils.c:3035:18
-    #25 0x7f186f95880a in g_test_run_suite_internal debian/build/deb/../../../glib/gtestutils.c:3035:18
-    #26 0x7f186f958faa in g_test_run_suite debian/build/deb/../../../glib/gtestutils.c:3109:18
-    #27 0x7f186f959055 in g_test_run debian/build/deb/../../../glib/gtestutils.c:2231:7
-    #28 0x7f186f959055 in g_test_run debian/build/deb/../../../glib/gtestutils.c:2218:1
-    #29 0x55c0c0a6e427 in main tests/qtest/migration-test.c:4033:11
+Indirect leak of 8 byte(s) in 1 object(s) allocated from:
+    #0 0x55fa6d11c12e in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/tests/qtest/migration-test+0x22f12e) (BuildId: 852a267993587f557f50e5715f352f43720077ba)
+    #1 0x7f073982685d in __gmp_default_allocate (/lib/x86_64-linux-gnu/libgmp.so.10+0xa85d) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
+    #2 0x7f0739836193 in __gmpz_realloc (/lib/x86_64-linux-gnu/libgmp.so.10+0x1a193) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
+    #3 0x7f0739836594 in __gmpz_import (/lib/x86_64-linux-gnu/libgmp.so.10+0x1a594) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
+    #4 0x7f07398a91ed in nettle_mpz_set_str_256_u (/lib/x86_64-linux-gnu/libhogweed.so.6+0xb1ed) (BuildId: 3cc4a3474de72db89e9dcc93bfb95fe377f48c37)
+    #5 0x7f073a146a5a  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x131a5a) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #6 0x7f073a07192c  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x5c92c) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #7 0x7f073a078333  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x63333) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #8 0x7f073a0e8353  (/lib/x86_64-linux-gnu/libgnutls.so.30+0xd3353) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #9 0x7f073a0ef0ac in gnutls_x509_privkey_import (/lib/x86_64-linux-gnu/libgnutls.so.30+0xda0ac) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #10 0x55fa6d2547e3 in test_tls_load_key tests/unit/crypto-tls-x509-helpers.c:99:11
+    #11 0x55fa6d25460c in test_tls_init tests/unit/crypto-tls-x509-helpers.c:128:15
+    #12 0x55fa6d2495c4 in test_migrate_tls_x509_start_common tests/qtest/migration-test.c:1044:5
+    #13 0x55fa6d24c23a in test_migrate_tls_x509_start_reject_anon_client tests/qtest/migration-test.c:1216:12
+    #14 0x55fa6d23fb40 in test_precopy_common tests/qtest/migration-test.c:1789:21
+    #15 0x55fa6d236b7c in test_precopy_tcp_tls_x509_reject_anon_client tests/qtest/migration-test.c:2614:5
 
-Unref the object after we've confirmed that it is what we expect.
+(Oddly, there is no reported leak in the x509 unit tests, even though
+those also use test_tls_init() and test_tls_cleanup().)
+
+Deinit the privkey in test_tls_cleanup().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/migration-test.c | 1 +
+ tests/unit/crypto-tls-x509-helpers.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 5cf238a4f05..6aba527340b 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2395,6 +2395,7 @@ static void multifd_mapped_ram_fdset_end(QTestState *from, QTestState *to,
-     g_assert(qdict_haskey(resp, "return"));
-     fdsets = qdict_get_qlist(resp, "return");
-     g_assert(fdsets && qlist_empty(fdsets));
-+    qobject_unref(resp);
+diff --git a/tests/unit/crypto-tls-x509-helpers.c b/tests/unit/crypto-tls-x509-helpers.c
+index b316155d6a6..2daecc416c6 100644
+--- a/tests/unit/crypto-tls-x509-helpers.c
++++ b/tests/unit/crypto-tls-x509-helpers.c
+@@ -135,6 +135,7 @@ void test_tls_init(const char *keyfile)
+ void test_tls_cleanup(const char *keyfile)
+ {
+     asn1_delete_structure(&pkix_asn1);
++    gnutls_x509_privkey_deinit(privkey);
+     unlink(keyfile);
  }
  
- static void *multifd_mapped_ram_fdset_dio(QTestState *from, QTestState *to)
 -- 
 2.34.1
 
