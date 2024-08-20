@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B145C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 00:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB0B6C52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 00:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgCes-0005N9-HK; Mon, 19 Aug 2024 20:23:36 -0400
+	id 1sgCeu-0005OV-BT; Mon, 19 Aug 2024 20:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sgCeq-0005BZ-DL
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 20:23:32 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sgCep-00057C-8v
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 20:23:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sgCeo-0003ri-Rw
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 20:23:32 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sgCen-0003rZ-I8
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 20:23:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724113410;
+ s=mimecast20190719; t=1724113407;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uq0gvW6lhA9f5naE5+wCuwIJeRf8GGxda2e3fpP9QGY=;
- b=CRdIMNSaa+UucIzOgHsCb/LEBchLgrDsyLhRo+eIITAHVbrSOYuCTLhS2cAwiMOAa+P78v
- PzCzNZBkwTmxqmdaI6iBQgPMP2AT+GCeFK16aNO8Wllev8cN2qigi4V03IqGkwVFBQwLya
- 0BjUw6Mf3dURAkRfeho86zjrc3o4WyA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OuDJkMhHuCgcnHmNZFENryVqxcdAYdISC4v9oMZOSXw=;
+ b=jLgF7diWQZ9mH8OqjIGYc2smOBgXnAod01OD/c2WGugNP7dmoRHOMioqFVPWTmnb2ZoIfJ
+ UiiYT1WDIprU6DkqnKApJHfnStVGh3M5wypfeAiRGKdOCSPZQCQMn6HOkMqrq1uysmYiHh
+ Xjf8LwOTUfO8fvkVKoojZYepN29/itg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-k59HPmzPM6y6AViAG_Jc2w-1; Mon,
- 19 Aug 2024 20:23:27 -0400
-X-MC-Unique: k59HPmzPM6y6AViAG_Jc2w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-8mH3ukWgM2Wq6OAr-ifeOw-1; Mon,
+ 19 Aug 2024 20:23:23 -0400
+X-MC-Unique: 8mH3ukWgM2Wq6OAr-ifeOw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E58951955BFA; Tue, 20 Aug 2024 00:23:24 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 016A21955BEF; Tue, 20 Aug 2024 00:23:22 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.8.20])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D5BDE19560A3; Tue, 20 Aug 2024 00:23:21 +0000 (UTC)
+ id 2345A1956053; Tue, 20 Aug 2024 00:23:18 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
@@ -53,13 +52,12 @@ Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/8] python/qapi: correct re.Match type hints for 3.13
-Date: Mon, 19 Aug 2024 20:23:10 -0400
-Message-ID: <20240820002318.1380276-2-jsnow@redhat.com>
-In-Reply-To: <20240820002318.1380276-1-jsnow@redhat.com>
-References: <20240820002318.1380276-1-jsnow@redhat.com>
+Subject: [PATCH 0/8] move qapi under python/qemu/
+Date: Mon, 19 Aug 2024 20:23:09 -0400
+Message-ID: <20240820002318.1380276-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -86,69 +84,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-typing.Match was removed in Python 3.13, so we need to use re.Match
-instead. However, Python 3.8 doesn't support using re.Match as a type
-hint directly, so we need a conditional for now.
-
-The import is written oddly so that "Match" is explicitly re-exported
-for re-use by other modules. mypy will complain otherwise.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- scripts/qapi/common.py | 10 +++++++++-
- scripts/qapi/parser.py |  3 +--
- 2 files changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
-index 737b059e629..444b3acf53a 100644
---- a/scripts/qapi/common.py
-+++ b/scripts/qapi/common.py
-@@ -12,16 +12,24 @@
- # See the COPYING file in the top-level directory.
- 
- import re
-+import sys
- from typing import (
-     Any,
-     Dict,
--    Match,
-     Optional,
-     Sequence,
-     Union,
- )
- 
- 
-+if sys.version_info < (3, 9):
-+    # typing.Match was removed in 3.13,
-+    # but it's still a necessity in 3.8.
-+    from typing import \
-+        Match as Match  # pylint: disable=useless-import-alias
-+else:
-+    Match = re.Match
-+
- #: Magic string that gets removed along with all space to its right.
- EATSPACE = '\033EATSPACE.'
- POINTER_SUFFIX = ' *' + EATSPACE
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index adc85b5b394..9a42b119131 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -23,13 +23,12 @@
-     Dict,
-     List,
-     Mapping,
--    Match,
-     Optional,
-     Set,
-     Union,
- )
- 
--from .common import must_match
-+from .common import Match, must_match
- from .error import QAPISemError, QAPISourceError
- from .source import QAPISourceInfo
- 
--- 
-2.45.0
+Move the QAPI generator module to python/qemu/qapi so that it's checked=0D
+by the same standard linter/static analysis regime as the other python=0D
+code.=0D
+=0D
+This has the additional side-effect of marking me as a co-maintainer of=0D
+the QAPI generator.=0D
+=0D
+John Snow (8):=0D
+  python/qapi: correct re.Match type hints for 3.13=0D
+  python/qapi: change "FIXME" to "TODO"=0D
+  python/qapi: add pylint pragmas=0D
+  python/qapi: remove outdated pragmas=0D
+  python/qapi: ignore missing docstrings in pylint=0D
+  python: allow short names for variables on older pylint=0D
+  python/qapi: move scripts/qapi to python/qemu/qapi=0D
+  python/qapi: remove redundant linter configuration=0D
+=0D
+ MAINTAINERS                                 |  2 +-=0D
+ docs/conf.py                                |  2 +-=0D
+ docs/sphinx/qapidoc.py                      |  6 +-=0D
+ meson.build                                 | 28 +++++-----=0D
+ {scripts =3D> python/qemu}/qapi/__init__.py   |  0=0D
+ {scripts =3D> python/qemu}/qapi/commands.py   |  4 +-=0D
+ {scripts =3D> python/qemu}/qapi/common.py     | 12 +++-=0D
+ {scripts =3D> python/qemu}/qapi/error.py      |  0=0D
+ {scripts =3D> python/qemu}/qapi/events.py     |  4 +-=0D
+ {scripts =3D> python/qemu}/qapi/expr.py       |  3 +=0D
+ {scripts =3D> python/qemu}/qapi/gen.py        |  4 +-=0D
+ {scripts =3D> python/qemu}/qapi/introspect.py |  3 +=0D
+ {scripts =3D> python/qemu}/qapi/main.py       |  2 +=0D
+ {scripts =3D> python/qemu}/qapi/parser.py     |  9 ++-=0D
+ {scripts =3D> python/qemu}/qapi/schema.py     |  2 +-=0D
+ {scripts =3D> python/qemu}/qapi/source.py     |  2 +=0D
+ {scripts =3D> python/qemu}/qapi/types.py      |  2 +=0D
+ {scripts =3D> python/qemu}/qapi/visit.py      |  3 +=0D
+ python/setup.cfg                            | 22 ++++----=0D
+ scripts/qapi-gen.py                         |  4 +-=0D
+ scripts/qapi/.flake8                        |  3 -=0D
+ scripts/qapi/.isort.cfg                     |  7 ---=0D
+ scripts/qapi/mypy.ini                       |  4 --=0D
+ scripts/qapi/pylintrc                       | 61 ---------------------=0D
+ tests/qapi-schema/meson.build               |  2 +-=0D
+ tests/qapi-schema/test-qapi.py              |  4 +-=0D
+ 26 files changed, 78 insertions(+), 117 deletions(-)=0D
+ rename {scripts =3D> python/qemu}/qapi/__init__.py (100%)=0D
+ rename {scripts =3D> python/qemu}/qapi/commands.py (99%)=0D
+ rename {scripts =3D> python/qemu}/qapi/common.py (96%)=0D
+ rename {scripts =3D> python/qemu}/qapi/error.py (100%)=0D
+ rename {scripts =3D> python/qemu}/qapi/events.py (98%)=0D
+ rename {scripts =3D> python/qemu}/qapi/expr.py (99%)=0D
+ rename {scripts =3D> python/qemu}/qapi/gen.py (99%)=0D
+ rename {scripts =3D> python/qemu}/qapi/introspect.py (99%)=0D
+ rename {scripts =3D> python/qemu}/qapi/main.py (98%)=0D
+ rename {scripts =3D> python/qemu}/qapi/parser.py (99%)=0D
+ rename {scripts =3D> python/qemu}/qapi/schema.py (99%)=0D
+ rename {scripts =3D> python/qemu}/qapi/source.py (98%)=0D
+ rename {scripts =3D> python/qemu}/qapi/types.py (99%)=0D
+ rename {scripts =3D> python/qemu}/qapi/visit.py (99%)=0D
+ delete mode 100644 scripts/qapi/.flake8=0D
+ delete mode 100644 scripts/qapi/.isort.cfg=0D
+ delete mode 100644 scripts/qapi/mypy.ini=0D
+ delete mode 100644 scripts/qapi/pylintrc=0D
+=0D
+-- =0D
+2.45.0=0D
+=0D
 
 
