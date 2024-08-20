@@ -4,105 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F754C531DF
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 10:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B37DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 10:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgMLe-0000n3-Ga; Tue, 20 Aug 2024 06:44:22 -0400
+	id 1sgMLd-0000h3-46; Tue, 20 Aug 2024 06:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sgMLc-0000fm-Ie; Tue, 20 Aug 2024 06:44:20 -0400
-Received: from fhigh6-smtp.messagingengine.com ([103.168.172.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sgMLa-0006JQ-6p; Tue, 20 Aug 2024 06:44:20 -0400
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal
- [10.202.2.46])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 500031151C18;
- Tue, 20 Aug 2024 06:44:16 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Tue, 20 Aug 2024 06:44:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1724150656; x=
- 1724237056; bh=DTW8UrFp9WKlfbSbTQXXST2MEtJhSFn7Rwqi0gp4D2A=; b=c
- yHesu8N2kmR/em4Zc9djzEBIUtpwklfU9gySqjjZ1Ai6eeNWzpL3PXD4yfDAF7nX
- wFf4/cvm5wgG4rXsqrxE9zOm4YwzLJsQi4Oz6jhFDo+cwFLcnvbAt1Wb1f+Z3vEa
- I4r1EBT5EoDMGsPvaM6oYNKcTtTOxOPq54LDNL775bncYbxtZPdAFGB80z1oX39N
- eGqnMlvQZF/NXNVosSfxr6J0cveWDtfvDC1f/7cpGQ38rP+DzMw8kEDi7GTlKgF0
- No+v8e14EiPPIZaGCf2vPFsAhvT9itoUIJ1llxlqyiRy0Atpmw9MBfox1NU0gNr+
- htbm2RIHq4NGL40WuM+pQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1724150656; x=1724237056; bh=DTW8UrFp9WKlfbSbTQXXST2MEtJh
- SFn7Rwqi0gp4D2A=; b=VkG44jyKRlEokJxgpeb9Pm18jhmLbAaeZ62yHEN22KTE
- x04nXImrncO7P6wv6bOdqkAWyDSwkii7Uz5nyCKiNk0b9cHPAYiDC9M0J6cYqOx7
- LIjaRCGIEtHCQdI8OiGpTOuW3RG7WAxw2zzsw7PuvNBXnZEX7wfAiVi9I+pv1KCs
- FVrZcbZo2Z1L6RDKpTfBcBdfn+6pkoZC11ygGaKqdsIQqBxVhhlBRZBk6buMqyP+
- 57hsTZqkoLX31TKFGNrLyiHvWGNOCY3sOQIGhCTefAbCMCvHgddMfC8agCQTwHnD
- KciU0CUgbjXhs8+MAyUstLQGL3ovHyvMpsiEEig+5Q==
-X-ME-Sender: <xms:f3PEZqyKc7VqSJttQUL16UW4T_zZxMZ2kCvKu4JOobW6btA76f7-VQ>
- <xme:f3PEZmSvTldzehr720QZ4qr49zJrEgPoLZnKbxdIXQP6MvrEI0ne0qSyQQcjOPvgo
- zptrWUFFXXp7hBbCHg>
-X-ME-Received: <xmr:f3PEZsXdpD0bN9wEMIdM39xbT1aJOl4Crx1PcrQjhfzQl7CjyyZwkQiRAagI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgfedtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
- ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
- gukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveej
- vedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
- ohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhmugeslhhinh
- grrhhordhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhho
- rdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
- gtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepqhgvmhhu
- qdhsvggtuhhrihhthiesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslh
- hotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhho
- rdhithdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtph
- htthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:f3PEZgjX8OrcL4B7t1Cvltu9fvNeCIVjoop9U0ZB6Z-UprB_vOJciw>
- <xmx:f3PEZsCCYNGA5Y4lFFuqnA5Nj-eF5I3nID8-GXtKXBJk2l93_YUE6w>
- <xmx:f3PEZhLIdmU_2B2xfWpe2bgwZGAYHoYCRJ70dXKyAdEJB4wRVIczlQ>
- <xmx:f3PEZjDtiGo93UyLu2f9qib_5-lGR2kkUjMY6nk7Q8OHREu06LOZ_A>
- <xmx:gHPEZlIDd1doxiwaIjo405XKzfUilcXBzZ04TPcmPNUBff8mOxo5IeSN>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Aug 2024 06:44:14 -0400 (EDT)
-Date: Tue, 20 Aug 2024 12:44:09 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Keith Busch <kbusch@kernel.org>, qemu-security@nongnu.org,
- qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Yutaro Shimizu <shimizu@cyberdefense.jp>
-Subject: Re: [PULL for-9.1 1/1] hw/nvme: fix leak of uninitialized memory in
- io_mgmt_recv
-Message-ID: <ZsRzeRry-7-GrMxR@cormorant.local>
-References: <20240820044505.84005-3-its@irrelevant.dk>
- <20240820044505.84005-4-its@irrelevant.dk>
- <65bac872-f461-4e2b-b959-7bf020139fd5@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sgMLb-0000fJ-PA
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:44:19 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sgMLa-0006JS-15
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:44:19 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5befd2f35bfso2296366a12.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 03:44:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724150656; x=1724755456; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=EEzFRs2teKTCp80TPRn9qMI2bcuuxKjdKatKywvsk94=;
+ b=M3vhxJVgR93uhee3f1+7TJlT3hN5Ky39D0d9HyqQfCR7tSkv/Q14h0PqH9pCg3YI4k
+ 2eH6Jy2quq2qmv2RAUmCg6TzeIbynZvAJMIi/CYnOddQ4BL8u1g1ax0LsMqvVJ/uMHbU
+ e31PByxoDu4SA6o1TyNQJtLRas7G3No6kMc76d7qL0XwNpiSGlrNPUiZAcDZzRUWiyay
+ wJ6Qe9GT2DIf5IKllTdjkqyTEtJ9hMmjhni0aVJiERlO8zZA3MLvFriCh7HL6DIKMxqb
+ sjhTRONCL8uqzBeFWhbVuNmF5+eGMTEU/3OtG4OGg1DHXttEAFBztrECZDCvvUdjD1wQ
+ enLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724150656; x=1724755456;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EEzFRs2teKTCp80TPRn9qMI2bcuuxKjdKatKywvsk94=;
+ b=R5hLCqEfNpIB5UF1adnoSnfX18G9qKXGX2CfhrIVIV9Pr/vxEL6p3m0rfUNhol66fF
+ y6VbYjceQVOGbJCURn+7JG1muZZE4M+bnWMX56M3pmWNDaqv+/Zm5XNruqL41Kwjrlox
+ gluAhVmJgJ2qkdAkkrR7SZEV/8lSj4klKa5fb3uiL2Pshe88vk8cN1wPxQuFFpzKyxCQ
+ kjrz2xKC13dKR/y5K3gbNRpM8ZHXhTWWlObuMux2BNxjTvcJwHSujECtOPmq81cd6BDh
+ +VJvvYIznIHZKj/CmK2mpUpzoCVRlNCzxaMStTDP+XoJ646c9ItuMsU3U0EwnAkDQHx5
+ aQOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJAXXRTOZQzoGZoKydTqlMWf+wZpPifPeO/NZ1ioLBQe7qzs7EZsA6mRSTkHTGB9BUjbrY6Ne6Rg3LKWogxBWqnpYYNjs=
+X-Gm-Message-State: AOJu0Yw3t0pjv3q7BYPpy4OFBtPYjV0qTpUM6JDacWMBGXXOkyqOk6pS
+ NvUxGhb6S1Tp7JTnW3Jsafr19ne6atNM3eQZzB5XSRV1d11KdgbL6JriqeCnd5I=
+X-Google-Smtp-Source: AGHT+IE/dOyVeJ5OF8dtyBxNR2lIHENOJRP5XyCqiDtO+pnIQvQAvZRKBtNemYOvkTWn4LFEWp51kg==
+X-Received: by 2002:a05:6402:2745:b0:5a3:a4d7:caf5 with SMTP id
+ 4fb4d7f45d1cf-5beca7b03d5mr9527617a12.36.1724150655692; 
+ Tue, 20 Aug 2024 03:44:15 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5bebc08140csm6615972a12.83.2024.08.20.03.44.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Aug 2024 03:44:15 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 183435F7A3;
+ Tue, 20 Aug 2024 11:44:14 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
+ Stabellini <sstabellini@kernel.org>,  Antonio Caggiano
+ <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
+ <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
+ Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
+ Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
+ <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
+Subject: Re: [PATCH v16 00/13] Support blob memory and venus on qemu
+In-Reply-To: <20240623152343.328436-1-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Sun, 23 Jun 2024 18:23:30 +0300")
+References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
+Date: Tue, 20 Aug 2024 11:44:14 +0100
+Message-ID: <87o75nmq2p.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="M04zsA8dMw/sCa6m"
-Content-Disposition: inline
-In-Reply-To: <65bac872-f461-4e2b-b959-7bf020139fd5@linaro.org>
-Received-SPF: pass client-ip=103.168.172.157; envelope-from=its@irrelevant.dk;
- helo=fhigh6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,102 +114,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
---M04zsA8dMw/sCa6m
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hello,
+>
+> This series enables Vulkan Venus context support on virtio-gpu.
+>
+> All virglrender and almost all Linux kernel prerequisite changes
+> needed by Venus are already in upstream. For kernel there is a pending
+> KVM patchset that fixes mapping of compound pages needed for DRM drivers
+> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
+> from Qemu.
+>
+> [1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.=
+com/
+>
+> You'll need to use recent Mesa version containing patch that removes
+> dependency on cross-device feature from Venus that isn't supported by
+> Qemu [2].
+>
+> [2] https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e2698=
+7befae78b6ccbb7ae242b
+>
+> Example Qemu cmdline that enables Venus:
+>
+>   qemu-system-x86_64 -device virtio-vga-gl,hostmem=3D4G,blob=3Dtrue,venus=
+=3Dtrue \
+>       -machine q35,accel=3Dkvm,memory-backend=3Dmem1 \
+>       -object memory-backend-memfd,id=3Dmem1,size=3D8G -m 8G
 
-On Aug 20 12:30, Philippe Mathieu-Daud=C3=A9 wrote:
-> Hi Klaus,
->=20
-> On 20/8/24 06:45, Klaus Jensen wrote:
-> > From: Klaus Jensen <k.jensen@samsung.com>
-> >=20
-> > Yutaro Shimizu from the Cyber Defense Institute discovered a bug in the
-> > NVMe emulation that leaks contents of an uninitialized heap buffer if
-> > subsystem and FDP emulation are enabled.
->=20
-> Was this patch posted on the list for review?
->=20
+For the following profiles:
 
-I wanted to get this into -rc3, so I might have jumped the gun. Didn't
-add internal Reviewed-by (I should have done that). Jesper reviewed it.
+Host Setup:
 
-Reviewed-by: Jesper Devantier <j.devantier@samsung.com>
+  x86 host
+  Intel Corporation Raptor Lake-S GT1 [UHD Graphics 770]
+  Debian Bookworm
+  Kernel 6.11.0-rc1-ajb-00146-gf690c27fbc92 (basically https://lore.kernel.=
+org/lkml/20240726235234.228822-1-seanjc@google.com/ + UDMABUF enabled)
+  Hand built Virglrenderer (main/4fc19d919f/v1.0.1)
+  Hand built Mesa with Venus support (mesa-23.3.6)
 
-> Usually we log here backtrace, reproducers.
+x86 Guest Setup
 
-It doesn't crash anything, so no backtrace; but Yutaro did provide a poc
-to show the leak - those are on qemu-security and I did not request
-permission to make that public.
+  Current Trixie guest (as off 19/8/24)
+  Kernel 6.11.0-rc1-ajb-00146-gf690c27fbc92
+  Distro installed:
+    weston
+    vkcube-wayland
+    vkmark
 
-I realize that my commit message is too brief; I will add that and post
-as PATCH instead.
+  QEMU: KVM guest with -device virtio-vga-gl,hostmem=3D4G,blob=3Don,venus=
+=3Don
 
->=20
-> Which fields are leaked?
+Aarch64 Guest Setup
 
-Parts of the NvmeRuHandle descriptor are reserved - they are not set
-explicitly here, so they end up leaking heap content.
+  Current Trixie guest (as off 19/8/24)
+  Kernel 6.11.0-rc1-ajb-00146-gf690c27fbc92
+  Distro installed:
+    weston
+    vkcube-wayland
+    vkmark
 
->=20
-> Let's avoid the proven unsafe security by obscurity.
+  + Hand built Mesa (012323a1d, enabled with meson devenv)
 
-Apologies - that was not my intention!
+  QEMU: TCG Guest with -device virtio-gpu-gl-pci,hostmem=3D4G,venus=3Don,bl=
+ob=3Don
 
->=20
-> > Cc: qemu-stable@nongnu.org
-> > Reported-by: Yutaro Shimizu <shimizu@cyberdefense.jp>
-> > Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-> > ---
-> >   hw/nvme/ctrl.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> > index c6d4f61a47f9..9f277b81d83c 100644
-> > --- a/hw/nvme/ctrl.c
-> > +++ b/hw/nvme/ctrl.c
-> > @@ -4474,7 +4474,7 @@ static uint16_t nvme_io_mgmt_recv_ruhs(NvmeCtrl *=
-n, NvmeRequest *req,
-> >       nruhsd =3D ns->fdp.nphs * endgrp->fdp.nrg;
-> >       trans_len =3D sizeof(NvmeRuhStatus) + nruhsd * sizeof(NvmeRuhStat=
-usDescr);
-> > -    buf =3D g_malloc(trans_len);
-> > +    buf =3D g_malloc0(trans_len);
-> >       trans_len =3D MIN(trans_len, len);
->=20
-> The malloc could be done after finding the min length.
->=20
+Have a:
 
-Yes we could do that but it complicates building the data structure.
-Here, what we do is build the data structure to be returned in full, and
-then we transfer the minimum of what the host requested or the size of
-that data structure.
+  Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+  Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Regardless, zeroing the memory somehow is required. We could also set
-the reserved field to 0 explicitly, but g_malloc0 is more clear I think.
+Next steps:
 
-> Shouldn't we check len is big enough?
+  - test on Arm AVA (x86 and Arm guests)
+  - build some buildroot images with all the right deps for testing
 
-len is a host provided number of bytes. It does not have to be big
-enough to fit the data structure; we transfer the minimum of the data
-structure or what the host requested.=20
-
---M04zsA8dMw/sCa6m
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmbEc3gACgkQTeGvMW1P
-DelOoggAplfOrZpUxZVS1s7QRIOwjUNwueZAu7pcnVVodTk3IddrEHIHr1nPw34m
-F7HmM2ge6HAytyRaLUHJTPWUTXbrGxrczUQeYnzNFeHBnUvqDh09aDQR7HImRTtL
-U8p/v2LKJt6/U2v7ej+N2W+I9D45AfhFX/fw5F9z8IAoEdFN3NGDaf4UUIFN4Ezh
-Wp0j4c2jGWKETRgYDAvaszntFtyjul0oAc3fD9EuTlvMNyGep3dYlHNabgtebnXo
-6xizrR6lpwnmeZhBXgir1hQ15VwAHOVSfYFb9tWeOVP5jKKNH7CVUPZ2UWWUqBWb
-Wb4Fuku2tWW7hxf6QsMHmhAPIE+suw==
-=N39N
------END PGP SIGNATURE-----
-
---M04zsA8dMw/sCa6m--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
