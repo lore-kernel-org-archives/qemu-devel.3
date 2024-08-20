@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B22C5320E
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 22:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C90C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 22:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgXQJ-0006Ul-2E; Tue, 20 Aug 2024 18:33:55 -0400
+	id 1sgXbH-0003bQ-AE; Tue, 20 Aug 2024 18:45:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgXQB-0006Tj-Ci
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 18:33:48 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sgXbF-0003aj-SW
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 18:45:13 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgXQ5-0007Tp-KY
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 18:33:43 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71423273c62so179394b3a.0
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 15:33:40 -0700 (PDT)
+ id 1sgXbE-0000tt-9k
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 18:45:13 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5da686531d3so4101636eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 15:45:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724193219; x=1724798019; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724193910; x=1724798710; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=v0GvZX6BPCZYoUBN0LIhyJf0EJ18ewbTqRXITRJVhO4=;
- b=lO+ug/V0Q7LkA0B5Kv2q5AcIwteE0eQLvBIkf8sGEjoN4hvjzr6GT3cId80IaQCe/9
- TRaUOJbWK8KLeCFRhZxA+pNl4G2DtP8+xdW60vnbKDbAsas8c9ih+X8XwrYGsu/V37Ir
- PDVpzngLgctxLmq60JZJx4AyZuHDnqdEeY4HzX/aEAe+AVJ7rMii8/MqH7Y3N2S2xkip
- Zo/uZsHVxJ5zCdGKXIjBwDM/7bZSG2f/NDQFCgnFanjNz6gqRJXLLYHiWQKppzsexzhp
- ulSy9WRnjPja5dfvPIqtVlCdExkHOGMFvGWuOsm0r2wF8zLASYFFfyGtB/Q4YIF0vUUH
- cucQ==
+ bh=bFnPEBuHmqI0U+Esr+MzPVn0qUuhdui/U7szmn8UMwc=;
+ b=IAqFsFbBioPJ/t+DYe1bs7sO7u7B41H4nX2o4loDcL3gDSUFsp5+VYPN8W/1whSoA7
+ jE62Lw81UHjDCjHH6X3K/LAW5IyPtXphscsbutrShcno7rK73i21OP4GYNKg8e3EKZF1
+ MhA6cKdy+EebXHAAsiKefS3UDgBJVErLF6ZTPelwOEgePpQn8p/xD/lxXOMTX1RaRYMA
+ FZCKD3bMm1B6+Wd+8IkjsAIKucMfXZL7N2mhWY6Fgyv6EH8M0AGHH9boph/p/4vsuTgX
+ FbIPhY5z8g5wAVpdeKFkVVUkjQg1qVG6StQuepUnKEJyaFp/P2PLasTjSMs4aOKthizR
+ CFog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724193219; x=1724798019;
+ d=1e100.net; s=20230601; t=1724193910; x=1724798710;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v0GvZX6BPCZYoUBN0LIhyJf0EJ18ewbTqRXITRJVhO4=;
- b=MNJ9E6ZxYdITthT0mvIEo29+iScHOIWeV4gwd0Pc4gySDUHNg/uF358Jdzwq+4QP52
- Gftlv0a6sM/AfKKYfhc6YMHNi6P9huVptfsVQUwbJhbXiYhM2aJ4mSsIB4qoz15BjDKI
- J0xCHYET8WlIMBGpTIcCMfQfbK+qjRRwvXzLsL9rcPFQJLnuAZDzC4sRhNrQjKIu6A0C
- qLHZ9la6DMPb5MpJlNedS+YckrJGrO/g+gXjAZ9CLXea8NS90Ff6APxoWUSdD4dit1lH
- Gll+lMGauLYV++iWsG9o6mgIU/zDLF706bb0850/ni7337e24Gw2HafB4X4mHh1rFsQf
- yOaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUqAWDrr2DZ8AinNEDcMEsbvQKhM9RJUkC0ud9l8FGx+OqQ8yHlHgsTSt0RT1Ec9XnZRA0jX3HRGoyh@nongnu.org
-X-Gm-Message-State: AOJu0YzupHaXr3y4aH7smOQKRQKITgG0kCO9dxJUAkQZBZMjxEgyAMQX
- NbfbX17dkwkDTsnH5sFV03WzgPDZgsxK/PG4FrL9cZoC/VpCcngnmaJGvbVOOqM=
-X-Google-Smtp-Source: AGHT+IGOxl2NHjnbffxcEdvSdB6KhxB5t7Xi8KY9XOo78ST976TNva01CUCa2pvUWlXT6w/vDBsorw==
-X-Received: by 2002:a05:6a21:3983:b0:1c0:e1a5:9583 with SMTP id
- adf61e73a8af0-1cad810c8b2mr944495637.17.1724193218672; 
- Tue, 20 Aug 2024 15:33:38 -0700 (PDT)
+ bh=bFnPEBuHmqI0U+Esr+MzPVn0qUuhdui/U7szmn8UMwc=;
+ b=umv1vwIF5Hlko4btUbitv+7UV2trtAhEqfeng2FU+9PuxkB0N9tBBPFvBDrrmWN+Os
+ fLFv8y87ABNqoM/ev3XNrOzbMM2pfXq7aLHLoH0wEGdfputE6/rDZCSDaV2TzCAzyvAb
+ 9rBdOOBxWk/8wXByTxYuN35pgZHWi3vsKs6yRTJGn2jhArVnlyJ0PQqgk0EWbB1EY/2U
+ JXfz4OIkNj4rdDE9Rkw8kwh9vBFzP0WTGjmK5S3B4ouHVaaJvCQt2OEnXczxY04YSn2r
+ qoKOhVNGxLQPg8rFycZM/MRuadh5H08gKbXzn2CtJqhFY1MQGdzYzGSWv/2LGwxvGOpI
+ J+og==
+X-Gm-Message-State: AOJu0YzrW7LrbfutCBnY7hpTg865SrJ3IPC9ULRm61MC94SSEN3fGWQO
+ SvLszZSDnncEC+NfAr9UQ1m85bnf5WQ60FGerPtU+OAHurFx3m7Fdkz2rHhLvYY=
+X-Google-Smtp-Source: AGHT+IFm8SrgK/DeHG2rBT8YyTynWwMU/yto0vLIAGJtWHZCouX2a+6eK/HY2dOAV9R/cJsP9HjVGg==
+X-Received: by 2002:a05:6871:729:b0:268:2efa:2de0 with SMTP id
+ 586e51a60fabf-2737ef00186mr429178fac.13.1724193910069; 
+ Tue, 20 Aug 2024 15:45:10 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.3.188])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d5ebbd9d72sm130257a91.49.2024.08.20.15.33.33
+ d2e1a72fcca58-7127aefa2efsm8741289b3a.112.2024.08.20.15.45.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Aug 2024 15:33:38 -0700 (PDT)
-Message-ID: <9376bb6b-0d07-4f00-8004-6df1b0a8ef84@linaro.org>
-Date: Wed, 21 Aug 2024 08:33:31 +1000
+ Tue, 20 Aug 2024 15:45:09 -0700 (PDT)
+Message-ID: <4b8540be-bdb2-44c7-b50e-a87ac03ba1b3@linaro.org>
+Date: Wed, 21 Aug 2024 08:45:04 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/15] target/riscv: mmu changes for zicfiss shadow
- stack protection
-To: Deepak Gupta <debug@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
- Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com,
- andy.chiu@sifive.com, kito.cheng@sifive.com
-References: <20240820000129.3522346-1-debug@rivosinc.com>
- <20240820000129.3522346-12-debug@rivosinc.com>
- <ZsRHPDG/GkyhdrQi@debug.ba.rivosinc.com>
- <c0afdd87-71c1-4b02-a2fb-5c9349205d8f@linaro.org>
- <ZsTmibCvaZJpEAPO@debug.ba.rivosinc.com>
+Subject: Re: [PULL 18/20] hw/i386/pc: Unify vmport=auto handling
+To: =?UTF-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+References: <20240819225116.17928-1-philmd@linaro.org>
+ <20240819225116.17928-19-philmd@linaro.org>
+ <ee5b8c9e-09fe-4b28-86fb-c6859085f988@linaro.org>
+ <l60k6IPuP5TW4SNWI9iSNbMRiENiDl10oJROwImn9NsILTP6M-CVvIV42wUG8RYSdW_o6xdPhhr27Cqc0_2MgvZaBRn2B2poF6CYMGtn3Rc=@szczek.dev>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ZsTmibCvaZJpEAPO@debug.ba.rivosinc.com>
+In-Reply-To: <l60k6IPuP5TW4SNWI9iSNbMRiENiDl10oJROwImn9NsILTP6M-CVvIV42wUG8RYSdW_o6xdPhhr27Cqc0_2MgvZaBRn2B2poF6CYMGtn3Rc=@szczek.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,78 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/21/24 04:55, Deepak Gupta wrote:
-> Something on the below lines? I've one question as well for you in comment.
+On 8/21/24 06:32, Kamil Szczęk wrote:
+> Also, just as a test I added a single line of code before the assert:
 > 
-> """"
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index fee31b8037..b4e04fe849 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -46,8 +46,14 @@ typedef struct CPUArchState CPURISCVState;
->   /*
->    * RISC-V-specific extra insn start words:
->    * 1: Original instruction opcode
-> + * 2: more information about instruction
->    */
-> -#define TARGET_INSN_START_EXTRA_WORDS 1
-> +#define TARGET_INSN_START_EXTRA_WORDS 2
-> +
-> +/*
-> + * b0: Whether a shadow stack operation/instruction or not.
-> + */
-> +#define RISCV_INSN_START_WORD2_SS_OP 1
-
-Ah, here: not shadow-stack specific.  Set for any insn which should always generate 
-STORE_AMO, including the actual AMO instructions.  It's a current emulation error, IIRC.
-
-> @@ -226,6 +232,7 @@ struct CPUArchState {
->       bool      elp;
->       /* shadow stack register for zicfiss extension */
->       target_ulong ssp;
-> +    bool      ss_op;
-
-For generality, maybe just store the whole word as excp_uw2?
-
->       if (!async) {
-> +        /* shadow stack op, promote load page fault to store page fault */
-> +        if (env->ss_op && cause == RISCV_EXCP_LOAD_PAGE_FAULT) {
-> +            cause = RISCV_EXCP_STORE_PAGE_FAULT;
-> +        }
->           /* set tval to badaddr for traps with address information */
->           switch (cause) {
->           case RISCV_EXCP_SEMIHOST:
-
-     case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
-         if (env->excp_uw2 & RISCV_UW2_ALWAYS_STORE_AMO) {
-             cause = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-         }
-         goto load_store_fault;
-     case RISCV_EXCP_LOAD_ACCESS_FAULT:
-         ...
-     case RISCV_EXCP_LOAD_PAGE_FAULT:
-         ...
-     case RISCV_EXCP_STORE_PAGE_FAULT:
-     load_store_fault:
-
-> @@ -1301,6 +1301,14 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, 
-> CPUState *cpu)
->           ctx->base.is_jmp = DISAS_NORETURN;
->       }
+> pcms->vmport = -1;
 > 
-> +    /* shadow stack index means shadow stack instruction is translated */
-> +    if (ctx->mem_idx & MMU_IDX_SS_WRITE) {
-> +        /* Is this needed to set true? */
-> +        ctx->insn_start_updated = true;
-> +        tcg_set_insn_start_param(ctx->base.insn_start, 2,
-> +                                 RISCV_INSN_START_WORD2_SS_OP);
-> +    }
+> And, to my surprise, it compiled successfully without any warning and as expected, aborted on the assert:
+> 
+> qemu-system-x86_64: ../hw/i386/pc.c:1225: pc_basic_device_init: Assertion 'pcms->vmport >= 0 && pcms->vmport < ON_OFF_AUTO__MAX' failed.
+> 
+> Is this expected behavior?
 
-No, SS_WRITE is never part of mem_idx, and setting insn_start_updated here would break things.
+Yes.
 
-You'll want to change decode_save_opcode() to take the second parameter (or introduce a 
-new helper for the second parameter, leaving decode_save_opcode alone).  But you do have 
-to handle the update on a per-insn basis.
+The underlying integral type for enum in C is implementation defined.
+It can and does vary between compilers, leading to this sort of thing.
+
+The only reasonable fix is
+
+   (unsigned)foo < max
+
+But you could also question whether the assert is really useful.
 
 
 r~
