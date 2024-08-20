@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCB1C531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 05:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF2BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 06:52:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgHVn-0004CU-NL; Tue, 20 Aug 2024 01:34:32 -0400
+	id 1sgIiA-0002mZ-Vu; Tue, 20 Aug 2024 02:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgHVl-0004Bw-6S
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:34:29 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sgIhu-0002fd-7f
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 02:51:08 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgHVj-0002rw-H5
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:34:28 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2021c08b95cso18172145ad.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 22:34:26 -0700 (PDT)
+ id 1sgIhp-0006fE-CI
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 02:51:05 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fee6435a34so32222355ad.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 23:51:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724132066; x=1724736866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724136660; x=1724741460; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GXYSM9Zyra/rSqnGBi2z2UQWFSueUDyVdF7SYYWDy0I=;
- b=Y5f1Ge1BeIMjOaABhdQ7clnEz6muniwLPmfnnxrpHyW8/tlmbIPONhmZxzLGzUQAl5
- LOG0iWuMeJKqf0iCXx59aZHqq19G1vdWuWnnfxS2CFIBgWIt8nLdr3L1KqNHHpxFH0Ms
- K1x7KV+7PezSGyj4EWIF3nMj4xv20kU9A/dIHZ9lD26HLdXXQePKMeix1IUMHHOAqpN9
- 0rCXHR8Q4BvNt8wO/F2KzaPpjiCl2OCanbREgQQaAz1dmrNM4A2rMhxmCjKmLo5bQCQZ
- 8byDN+d7AA+ffe9gyoYauMuSwXDPZ2CI0CgS4JWOzYHv32CY+eShJR45xI1IxppyqT1s
- 7Lmg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AMWtBHbTEiJhChLHVM90ZBokvVdjr/pZ1q6Im26sCqE=;
+ b=r73DhN3SwA+yJ0x/pwsFSCaf/r/CV2yIvUZWbBsFOGpKZQ2lRztkiCMwzeffMT7YQi
+ blOunE2OulKCzNwF+PnSPYFtSQ80p5Y6WGRQk3yZWccW2/7EFmTWdBZtDNt18OtDzCTt
+ L7pqohnngFUZWs3VtOPz88Zpj8KDv5NpAS8+P/LiquaBh7NzzMiARi9KgsEU9oRskCf4
+ GAqtfgB8S3EcNE9IyEJ07wVcTkPwPmDjffwEw1YLdwCL6Zb4IJuJp1J1RSo4oN3giJSB
+ PiT/2Gyc89DCIAuoKifFAYTe2n1tydeRh4lwhKz12gBzGeygPVVJI+57j0Cyx48cqmMD
+ PkhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724132066; x=1724736866;
+ d=1e100.net; s=20230601; t=1724136660; x=1724741460;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GXYSM9Zyra/rSqnGBi2z2UQWFSueUDyVdF7SYYWDy0I=;
- b=jo39XTcCWkghClncnfGZr6KwjQJduO6YIWj3f5SnWzr7Ew8LnFxS8/LaYoJhkbXOEf
- oHbJRQ0fyoiHuf4ChcyyWE4K0KfDT4BWUsszT3tafqHe9GdPW5L1hz1TRUniBOTmRVPL
- pdxNoEjfcsvpyC0E2YpxSzogbo0qzbbDoLVA3aGWYIkkvCdXkZpm90MRVpKAOwa4tdXp
- Eq9hy6qjdx18V+/imf+hSlcqHz74dNLyvbAid9hFoW7sF76NhP0t5EC0Rv4XVPXE9ccW
- BSNczen24CSHoNNE9LHdYkEqZQhmti0W0xGMbgRigSNekEHLVcaNgJjRWMRVIUysmg+R
- vHtA==
+ bh=AMWtBHbTEiJhChLHVM90ZBokvVdjr/pZ1q6Im26sCqE=;
+ b=AFJ4ySrWF3pYxfO1yXj8BeaIFRB9B9TlHRLSlWMw4PH7R7ps2X/JtGxAUa/TtTwRfu
+ IOLzxDeqdI+yMF7nfvhLwCTapWTl82JdXHtleEX/Q7i9RTk7ymAfKnQuo3Hn5xp8XyPx
+ XgF8Ts5DNCrTNstP71w+m7rQZQeg8MDy0EAJ4+R3QJr5jQcxSNluuY20bZlgWWFEL/8z
+ pJpBYFoy29NKfyiwBD+3Nnx9AndO2Vo7yqYO567Axz/KcV9anNpW8a52mKuljmSz2bh1
+ sjTSFHP8tFMCxprBh3j157CERW9mxM+coIH7P6Js5b+7DxHApfN+z1InDwn7PalbZVE6
+ ilGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkwPI3wArZwY9Fp91cIhBhi8C3vxeiYMBoEpTQov/+P2asjJu/RLOalJ6+dB8HmhXpJmKQWAeyFu5Jv/Gzniwmt8IDfNU=
-X-Gm-Message-State: AOJu0YwNGmh0rmm7UwRVKPUPdFjZb6bWbKShiMUuB5VBqj5QGPoCjgD2
- AWxCRwppEc4Yc40EHkXRZkmopma2lQ5WxQvbCRNAoU6z5GzWj2VLVLuGSW3lLVA=
-X-Google-Smtp-Source: AGHT+IFRZPA7WOiQrHgCmKlqgGl49JEekNkGiynEbmVvoOzSeY2z2Uz3Gfin8gHu4lhuKKrrVDLdVA==
-X-Received: by 2002:a17:902:e54d:b0:1f4:a04e:8713 with SMTP id
- d9443c01a7336-2025f1bc0f2mr31035735ad.28.1724132065413; 
- Mon, 19 Aug 2024 22:34:25 -0700 (PDT)
+ AJvYcCXeaVNSBhiwbuI826JVeP0BLinDVgLX4+29M1Noy47HwUkb+Fja3YkT3CfxRDievRliMLjpA1QhzcCUwLJYQSltmqh5y6c=
+X-Gm-Message-State: AOJu0YyfZaLl8kuJDmJ+ueYPh1mnA8cdo+Y2tVRFzK4ITTLqJ2e8lNcS
+ lRWuEVHYl/vsrqwqVgw7/Y1r0bU53phe6LF2cweczjHZXWdIIJDYUmkATAXgnhY=
+X-Google-Smtp-Source: AGHT+IFpl8dMaZZNzXzM5Xtm/H938JKAToQuNKSXENsfzs12TC8jFx+ul3P/B7GKczNzi3gpR0YT3Q==
+X-Received: by 2002:a17:903:32c8:b0:201:f0c7:6a00 with SMTP id
+ d9443c01a7336-20203f4f410mr142456215ad.53.1724136659548; 
+ Mon, 19 Aug 2024 23:50:59 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.3.188])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f02faa2dsm70649945ad.36.2024.08.19.22.34.20
+ d9443c01a7336-201f038a3f1sm71385675ad.185.2024.08.19.23.50.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Aug 2024 22:34:25 -0700 (PDT)
-Message-ID: <4eb1f14c-bef8-4d99-a625-17d20a9a233b@linaro.org>
-Date: Tue, 20 Aug 2024 15:34:17 +1000
+ Mon, 19 Aug 2024 23:50:59 -0700 (PDT)
+Message-ID: <39d31ea6-9cae-43cc-8a34-2785961a3629@linaro.org>
+Date: Tue, 20 Aug 2024 16:50:49 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/15] target/riscv: introduce ssp and enabling
- controls for zicfiss
-To: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
+Subject: Re: [PULL 00/20] Misc fixes for 2024-08-20
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
- kito.cheng@sifive.com
-References: <20240820000129.3522346-1-debug@rivosinc.com>
- <20240820000129.3522346-10-debug@rivosinc.com>
+References: <20240819225116.17928-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240820000129.3522346-10-debug@rivosinc.com>
+In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,12 +97,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/24 10:01, Deepak Gupta wrote:
-> +    /* shadow stack register for zicfiss extension */
-> +    target_ulong ssp;
+On 8/20/24 08:50, Philippe Mathieu-Daudé wrote:
+> The following changes since commit ecdfa31beb1f7616091bedba79dfdf9ee525ed9d:
+> 
+>    Merge tag 'pull-request-2024-08-16' ofhttps://gitlab.com/thuth/qemu into staging (2024-08-16 18:18:27 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/philmd/qemu.git tags/hw-misc-20240820
+> 
+> for you to fetch changes up to 87e012f29f2e47dcd8c385ff8bb8188f9e06d4ea:
+> 
+>    crypto/tlscredspsk: Free username on finalize (2024-08-20 00:49:14 +0200)
+> 
+> Ignored checkpatch warning:
+> 
+>    WARNING: line over 80 characters
+>    #115: FILE: target/mips/tcg/sysemu/tlb_helper.c:713:
+>    +    MemOp native_op = (((env->CP0_PWSize >> CP0PS_PS) & 1) == 0) ? MO_32 : MO_64;
+> 
+> ----------------------------------------------------------------
+> Various fixes
+> 
+> - Null pointer dereference in IPI IOCSR (Jiaxun)
+> - Correct '-smbios type=4' in man page (Heinrich)
+> - Use correct MMU index in MIPS get_pte (Phil)
+> - Reset MPQEMU remote message using device_cold_reset (Peter)
+> - Update linux-user MIPS CPU list (Phil)
+> - Do not let exec_command read console if no pattern to wait for (Nick)
+> - Remove shadowed declaration warning (Pierrick)
+> - Restrict STQF opcode to SPARC V9 (Richard)
+> - Add missing Kconfig dependency for POWERNV ISA serial port (Bernhard)
+> - Do not allow vmport device without i8042 PS/2 controller (Kamil)
+> - Fix QCryptoTLSCredsPSK leak (Peter)
 
-This will also require migration.
 
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 r~
 
