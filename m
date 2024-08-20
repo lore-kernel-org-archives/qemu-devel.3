@@ -4,85 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F1FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 10:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F754C531DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 10:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgMHH-0004E1-DX; Tue, 20 Aug 2024 06:39:52 -0400
+	id 1sgMLe-0000n3-Ga; Tue, 20 Aug 2024 06:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgMH9-0004Cl-Ls
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:39:43 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgMH8-0005po-4M
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 06:39:43 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5bede548f7cso3452727a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 03:39:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724150381; x=1724755181; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JDvNnQTvDSh32A9jDGuqBTXfgR0G/e1o6MYBxxG1hBQ=;
- b=eQzTBgmYihC7AWVhh10WTyNQ0ZwuCOwdtXqPyMnlMw5YnXdjxdy9pGlqC+NVAf8nPN
- o9d2E6MwcMSuUnVJIglOXN8Xl6WCwVuaftUsR98pFmdx5p62FKamYCqOiZ4+5Y7Zb1Xd
- c4oDfteoqutd9upPy+r+vq2v2POjUpgtYRnal83odPIhdVDiZw1N8plhK/j4JCXm7Nvk
- 8yu7zg0ysutj5Nh6BeDPBk68wblQfOmiV4hvCONASEojjuo5Qdx20E/n6qqx3Ys/kMZo
- 0Zk/Q3Zpdvdn3NOA7Fh8Q4hFcrocTfULRNuAFpBOlpG30ZRCwbwOfoXoOo8HAaMizwWP
- nuPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724150381; x=1724755181;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JDvNnQTvDSh32A9jDGuqBTXfgR0G/e1o6MYBxxG1hBQ=;
- b=LFlpuHd/0cNmKnDIKR77wags/WGAPi3kH8LzPfpbPi6SNa1qYfuPU1byVcjy3JUbVb
- NnNuFiei6QkblsrswrfrBGVQ0X8Pq7nybGdkFADyyHSmxB99ZLgVmB2HpP5fVlqA2KZU
- NZ9sIUbCySxlTDHZR29IfVHsPCcuCSFn0XxXo7sReOse6HoMcSkxE/ehxPUiA8YGLRvX
- H7JMgFTxC0xHZMeO7yas6Fijiu1L9wrhTI5/ETxjnMMDztovVAmjHvpvgZDO6W8e3fZw
- zGYGj/hzmIbbGWjuhlVO4wnTaYYKLQmo0q+JOjK83nGscuvdDl/poT6of2HJIAT66XnY
- duYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYbwxNZFuITY1t8oY60Wdmz6+uFx1/ZiWHG8g4i4cEaAzxtKdYfQwVpKW7u/wPpgO3VcK6MP12sRrRSFPM6Jwov11Ka2A=
-X-Gm-Message-State: AOJu0YypniV+uHQZptX1wr9Yton0gdvIzT55I7snLQ331aT8jdUwX+fv
- 83Zk5TFydrcCeR66/EI2Hiz8pd2ljw2PezcbIwVJjDFa/0o51Nvt+oRDFCum7DqtNjBQa7g+E44
- n
-X-Google-Smtp-Source: AGHT+IHer8sYgaUfE/LrJgzwGzZfvpxnuwO0C3ralML75WvUgbtmk6bptLIFa8o/sgyGTgv1DyIRIQ==
-X-Received: by 2002:a05:6402:34ce:b0:5be:ee30:9948 with SMTP id
- 4fb4d7f45d1cf-5beee30a06amr4531652a12.8.1724150380558; 
- Tue, 20 Aug 2024 03:39:40 -0700 (PDT)
-Received: from [192.168.223.175] (84.21.205.77.rev.sfr.net. [77.205.21.84])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebc0832d2sm6565334a12.97.2024.08.20.03.39.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Aug 2024 03:39:40 -0700 (PDT)
-Message-ID: <eb9ecc66-288d-4fc4-bdfb-95594774bdf6@linaro.org>
-Date: Tue, 20 Aug 2024 12:39:38 +0200
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sgMLc-0000fm-Ie; Tue, 20 Aug 2024 06:44:20 -0400
+Received: from fhigh6-smtp.messagingengine.com ([103.168.172.157])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sgMLa-0006JQ-6p; Tue, 20 Aug 2024 06:44:20 -0400
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal
+ [10.202.2.46])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id 500031151C18;
+ Tue, 20 Aug 2024 06:44:16 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-06.internal (MEProxy); Tue, 20 Aug 2024 06:44:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1724150656; x=
+ 1724237056; bh=DTW8UrFp9WKlfbSbTQXXST2MEtJhSFn7Rwqi0gp4D2A=; b=c
+ yHesu8N2kmR/em4Zc9djzEBIUtpwklfU9gySqjjZ1Ai6eeNWzpL3PXD4yfDAF7nX
+ wFf4/cvm5wgG4rXsqrxE9zOm4YwzLJsQi4Oz6jhFDo+cwFLcnvbAt1Wb1f+Z3vEa
+ I4r1EBT5EoDMGsPvaM6oYNKcTtTOxOPq54LDNL775bncYbxtZPdAFGB80z1oX39N
+ eGqnMlvQZF/NXNVosSfxr6J0cveWDtfvDC1f/7cpGQ38rP+DzMw8kEDi7GTlKgF0
+ No+v8e14EiPPIZaGCf2vPFsAhvT9itoUIJ1llxlqyiRy0Atpmw9MBfox1NU0gNr+
+ htbm2RIHq4NGL40WuM+pQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1724150656; x=1724237056; bh=DTW8UrFp9WKlfbSbTQXXST2MEtJh
+ SFn7Rwqi0gp4D2A=; b=VkG44jyKRlEokJxgpeb9Pm18jhmLbAaeZ62yHEN22KTE
+ x04nXImrncO7P6wv6bOdqkAWyDSwkii7Uz5nyCKiNk0b9cHPAYiDC9M0J6cYqOx7
+ LIjaRCGIEtHCQdI8OiGpTOuW3RG7WAxw2zzsw7PuvNBXnZEX7wfAiVi9I+pv1KCs
+ FVrZcbZo2Z1L6RDKpTfBcBdfn+6pkoZC11ygGaKqdsIQqBxVhhlBRZBk6buMqyP+
+ 57hsTZqkoLX31TKFGNrLyiHvWGNOCY3sOQIGhCTefAbCMCvHgddMfC8agCQTwHnD
+ KciU0CUgbjXhs8+MAyUstLQGL3ovHyvMpsiEEig+5Q==
+X-ME-Sender: <xms:f3PEZqyKc7VqSJttQUL16UW4T_zZxMZ2kCvKu4JOobW6btA76f7-VQ>
+ <xme:f3PEZmSvTldzehr720QZ4qr49zJrEgPoLZnKbxdIXQP6MvrEI0ne0qSyQQcjOPvgo
+ zptrWUFFXXp7hBbCHg>
+X-ME-Received: <xmr:f3PEZsXdpD0bN9wEMIdM39xbT1aJOl4Crx1PcrQjhfzQl7CjyyZwkQiRAagI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgfedtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
+ ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
+ gukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveej
+ vedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
+ ohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhmugeslhhinh
+ grrhhordhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhho
+ rdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
+ gtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepqhgvmhhu
+ qdhsvggtuhhrihhthiesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslh
+ hotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhho
+ rdhithdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtph
+ htthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:f3PEZgjX8OrcL4B7t1Cvltu9fvNeCIVjoop9U0ZB6Z-UprB_vOJciw>
+ <xmx:f3PEZsCCYNGA5Y4lFFuqnA5Nj-eF5I3nID8-GXtKXBJk2l93_YUE6w>
+ <xmx:f3PEZhLIdmU_2B2xfWpe2bgwZGAYHoYCRJ70dXKyAdEJB4wRVIczlQ>
+ <xmx:f3PEZjDtiGo93UyLu2f9qib_5-lGR2kkUjMY6nk7Q8OHREu06LOZ_A>
+ <xmx:gHPEZlIDd1doxiwaIjo405XKzfUilcXBzZ04TPcmPNUBff8mOxo5IeSN>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Aug 2024 06:44:14 -0400 (EDT)
+Date: Tue, 20 Aug 2024 12:44:09 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Keith Busch <kbusch@kernel.org>, qemu-security@nongnu.org,
+ qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ Yutaro Shimizu <shimizu@cyberdefense.jp>
+Subject: Re: [PULL for-9.1 1/1] hw/nvme: fix leak of uninitialized memory in
+ io_mgmt_recv
+Message-ID: <ZsRzeRry-7-GrMxR@cormorant.local>
+References: <20240820044505.84005-3-its@irrelevant.dk>
+ <20240820044505.84005-4-its@irrelevant.dk>
+ <65bac872-f461-4e2b-b959-7bf020139fd5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v3 0/2] hw/i386/pc: Fix vmport option handling
-To: =?UTF-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, Joelle van Dyne <j@getutm.app>
-References: <IrhtgC0oPtusYG_0cOwVYOuOr0UpK0YLNYNtxDQ2_lqgtcVBzVr-gYNUzggvmO9tHdmf65aO8Zoab-ERkyQbtjx9u2VuHEYZ_3r0Wb25huw=@szczek.dev>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <IrhtgC0oPtusYG_0cOwVYOuOr0UpK0YLNYNtxDQ2_lqgtcVBzVr-gYNUzggvmO9tHdmf65aO8Zoab-ERkyQbtjx9u2VuHEYZ_3r0Wb25huw=@szczek.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="M04zsA8dMw/sCa6m"
+Content-Disposition: inline
+In-Reply-To: <65bac872-f461-4e2b-b959-7bf020139fd5@linaro.org>
+Received-SPF: pass client-ip=103.168.172.157; envelope-from=its@irrelevant.dk;
+ helo=fhigh6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,11 +119,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/8/24 17:24, Kamil Szczęk wrote:
 
-> Kamil Szczęk (2):
->    hw/i386/pc: Unify vmport=auto handling
->    hw/i386/pc: Ensure vmport prerequisites are fulfilled
+--M04zsA8dMw/sCa6m
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Series merged, thanks.
+On Aug 20 12:30, Philippe Mathieu-Daud=C3=A9 wrote:
+> Hi Klaus,
+>=20
+> On 20/8/24 06:45, Klaus Jensen wrote:
+> > From: Klaus Jensen <k.jensen@samsung.com>
+> >=20
+> > Yutaro Shimizu from the Cyber Defense Institute discovered a bug in the
+> > NVMe emulation that leaks contents of an uninitialized heap buffer if
+> > subsystem and FDP emulation are enabled.
+>=20
+> Was this patch posted on the list for review?
+>=20
+
+I wanted to get this into -rc3, so I might have jumped the gun. Didn't
+add internal Reviewed-by (I should have done that). Jesper reviewed it.
+
+Reviewed-by: Jesper Devantier <j.devantier@samsung.com>
+
+> Usually we log here backtrace, reproducers.
+
+It doesn't crash anything, so no backtrace; but Yutaro did provide a poc
+to show the leak - those are on qemu-security and I did not request
+permission to make that public.
+
+I realize that my commit message is too brief; I will add that and post
+as PATCH instead.
+
+>=20
+> Which fields are leaked?
+
+Parts of the NvmeRuHandle descriptor are reserved - they are not set
+explicitly here, so they end up leaking heap content.
+
+>=20
+> Let's avoid the proven unsafe security by obscurity.
+
+Apologies - that was not my intention!
+
+>=20
+> > Cc: qemu-stable@nongnu.org
+> > Reported-by: Yutaro Shimizu <shimizu@cyberdefense.jp>
+> > Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> > ---
+> >   hw/nvme/ctrl.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> > index c6d4f61a47f9..9f277b81d83c 100644
+> > --- a/hw/nvme/ctrl.c
+> > +++ b/hw/nvme/ctrl.c
+> > @@ -4474,7 +4474,7 @@ static uint16_t nvme_io_mgmt_recv_ruhs(NvmeCtrl *=
+n, NvmeRequest *req,
+> >       nruhsd =3D ns->fdp.nphs * endgrp->fdp.nrg;
+> >       trans_len =3D sizeof(NvmeRuhStatus) + nruhsd * sizeof(NvmeRuhStat=
+usDescr);
+> > -    buf =3D g_malloc(trans_len);
+> > +    buf =3D g_malloc0(trans_len);
+> >       trans_len =3D MIN(trans_len, len);
+>=20
+> The malloc could be done after finding the min length.
+>=20
+
+Yes we could do that but it complicates building the data structure.
+Here, what we do is build the data structure to be returned in full, and
+then we transfer the minimum of what the host requested or the size of
+that data structure.
+
+Regardless, zeroing the memory somehow is required. We could also set
+the reserved field to 0 explicitly, but g_malloc0 is more clear I think.
+
+> Shouldn't we check len is big enough?
+
+len is a host provided number of bytes. It does not have to be big
+enough to fit the data structure; we transfer the minimum of the data
+structure or what the host requested.=20
+
+--M04zsA8dMw/sCa6m
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmbEc3gACgkQTeGvMW1P
+DelOoggAplfOrZpUxZVS1s7QRIOwjUNwueZAu7pcnVVodTk3IddrEHIHr1nPw34m
+F7HmM2ge6HAytyRaLUHJTPWUTXbrGxrczUQeYnzNFeHBnUvqDh09aDQR7HImRTtL
+U8p/v2LKJt6/U2v7ej+N2W+I9D45AfhFX/fw5F9z8IAoEdFN3NGDaf4UUIFN4Ezh
+Wp0j4c2jGWKETRgYDAvaszntFtyjul0oAc3fD9EuTlvMNyGep3dYlHNabgtebnXo
+6xizrR6lpwnmeZhBXgir1hQ15VwAHOVSfYFb9tWeOVP5jKKNH7CVUPZ2UWWUqBWb
+Wb4Fuku2tWW7hxf6QsMHmhAPIE+suw==
+=N39N
+-----END PGP SIGNATURE-----
+
+--M04zsA8dMw/sCa6m--
 
