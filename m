@@ -4,57 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119F4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 20:33:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1053C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 22:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgVXD-0007Pb-Lh; Tue, 20 Aug 2024 16:32:55 -0400
+	id 1sgX9R-0000iy-5c; Tue, 20 Aug 2024 18:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sgVX9-0007Oy-Ou
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 16:32:52 -0400
-Received: from mail-4022.proton.ch ([185.70.40.22])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sgVX6-0000ya-BZ
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 16:32:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szczek.dev;
- s=protonmail; t=1724185962; x=1724445162;
- bh=2PvUiMANptUeXLHVWFHa/bLZk1w4sBCQ2a/9IREl7Kg=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=zTSR0kQrf4HawVYjOF7OidhlXevPdSfNGvFEqSlNySg9FvuAENo3FD0Dx5Pp/JV3+
- yzmkx8ZE9L8Qrn9zn61VqBhC8pNm6d38x7xdOcMURTgU9G3qvMxK8tb2NYxegkVPNO
- w7ZLPsHmFQ/5IP/20ioVXjiegbz/0c76BE4npkOhrqXcfyuZzqDYq/OiMjlQrpZq3y
- RozO/dvvGZLOVAQTNQb0/vg+Y18g2hL+MfwhDHCrm+jWR9esUEC2mu0Ym4NP71Braj
- ftcwuQJytMEiyZDPNrb+eyx7sqBhEjN21KIi/dvnOtmf1eIdtUk/Ixes404pL6g7T2
- rUVWiPiLgFtoQ==
-Date: Tue, 20 Aug 2024 20:32:37 +0000
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-From: =?utf-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>
-Cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
-Subject: Re: [PULL 18/20] hw/i386/pc: Unify vmport=auto handling
-Message-ID: <l60k6IPuP5TW4SNWI9iSNbMRiENiDl10oJROwImn9NsILTP6M-CVvIV42wUG8RYSdW_o6xdPhhr27Cqc0_2MgvZaBRn2B2poF6CYMGtn3Rc=@szczek.dev>
-In-Reply-To: <ee5b8c9e-09fe-4b28-86fb-c6859085f988@linaro.org>
-References: <20240819225116.17928-1-philmd@linaro.org>
- <20240819225116.17928-19-philmd@linaro.org>
- <ee5b8c9e-09fe-4b28-86fb-c6859085f988@linaro.org>
-Feedback-ID: 37679334:user:proton
-X-Pm-Message-ID: 903f74d87fe4db478837255d0d41178f1201b47b
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sgX9P-0000hd-Iu
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 18:16:27 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sgX9N-0005bU-P9
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 18:16:27 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7163489149eso4404840a12.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 15:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724192184; x=1724796984; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=U/Ds9ooX5nwVjJIgllYoSjkfS+kl4IWHxCDPe2z/HYQ=;
+ b=NLD/oFYgXJ57mAd0wq9Klg3qcvXrtUN6PvTFLzNfINviTN4gHe6ZLPyG80qaMkrNWB
+ oBue5Y+kupQzIjQh1MQSWY/JeLDouyMI/yWK3Nal1qJLHEf+qFkl12wJ1pL52ag+uQ7P
+ v8BDiV04b5GWg/FDL5mV1+gwc57EXJlexsH57SB2e4Jlb3A3zqnitE0fY6XvqVj9tppf
+ tOl2Dewbj8VvVcm4vKraqoMItY0jjxFS581asPOtODxM2HtsnjgCuk4SvLE/SJQoOPOv
+ LhfrrmhF6a17FEef1MGquDfju4uqhBcv8/W/WVG7j4owXC+OZE4g23I5NHyOyEKbIfWK
+ NBzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724192184; x=1724796984;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U/Ds9ooX5nwVjJIgllYoSjkfS+kl4IWHxCDPe2z/HYQ=;
+ b=VnmFk+UXJsvnapRQf1DecKmOt7UuAH8Ot+KCInAAwDJ2Rqpf8tPC4pQd4G5lZqwh4Q
+ ROSv0it2jOI9xA5JAmKmQWHj0YERF/xBywr4u5hQTGje9a7a9GV3l3E9ggM4ox/yxh5T
+ 7WitcJG7whu+OdmaJFjr2uod8/Ckzp71iVWBSvKwsVishCcl4YF0Z/a8ujP/elW7dzrY
+ L8xW+lJr58d9SvbOqLX4W1vqDBJ9/K7SYWjmbynvf7eSF0nMDnGWoFJnYFjMnozJaGhC
+ HqgpYF1JLdNCQuJdVCTlp/kTF9MVl7wr0bxMtHGLwVpgxO3hBRlWtt4DLz9Cjg32cMzn
+ G93A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVUOG231TCyFSbjZUH1+oWKQLULYC99WZ8Iz0GCpzg2KIO3kfg1+iK/tVrIm3cd8coWesWPxWj1HOv6@nongnu.org
+X-Gm-Message-State: AOJu0YyJW0a/A+6y+tQYtRfQDuLXAWJzP/C3976n3AjcM4YSKVa7qbyg
+ 3J4Mh0XC9p1oeKXspuTwgH96TMGkNDpeHFtucMKegZisiAqK1HkfmB120v1JiZw=
+X-Google-Smtp-Source: AGHT+IEETn/xQRSuEisr1BlJgOcWRzdj0lE1STFjPBbnO4od9be5imR36/yA1peyojWzfNtgm27tDA==
+X-Received: by 2002:a17:90a:c68c:b0:2c7:700e:e2b7 with SMTP id
+ 98e67ed59e1d1-2d5e9fc7db7mr432725a91.39.1724192183569; 
+ Tue, 20 Aug 2024 15:16:23 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.3.188])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d5ebba2552sm113539a91.52.2024.08.20.15.16.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Aug 2024 15:16:23 -0700 (PDT)
+Message-ID: <327a1abf-6ae0-4df4-b160-6435d3c62512@linaro.org>
+Date: Wed, 21 Aug 2024 08:16:16 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.40.22; envelope-from=kamil@szczek.dev;
- helo=mail-4022.proton.ch
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 v3 0/6] target/sparc: emulate floating point queue
+ when raising fp traps -- CORRECTION
+To: Carl Hauser <chauser@pullman.com>, qemu-devel@nongnu.org
+References: <20240816072311.353234-1-richard.henderson@linaro.org>
+ <501c22c3-d8e3-4439-a958-549e9a772ffd@pullman.com>
+ <2c1d0942-1428-47a7-bd37-29c16d596761@pullman.com>
+ <092fdfde-7305-467c-9131-6f5d2128c58f@linaro.org>
+ <aa172755-faf8-4587-a4e8-d1cbfdc139b1@pullman.com>
+ <e2aa8b92-4cb1-4fcf-92b7-eadb86893ccf@linaro.org>
+ <275021f0-887c-4de8-a86d-ad9abc83df95@pullman.com>
+ <6d973ff1-10af-4f1a-be07-501199216b50@linaro.org>
+ <24c5b02b-c401-4081-aa46-f745592002ca@pullman.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <24c5b02b-c401-4081-aa46-f745592002ca@pullman.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,144 +105,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, August 20th, 2024 at 21:48, Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org> wrote:
->=20
->=20
-> Hi Kamil,
->=20
-> On 20/8/24 00:51, Philippe Mathieu-Daud=C3=A9 wrote:
->=20
-> > From: Kamil Szcz=C4=99k kamil@szczek.dev
-> >=20
-> > The code which translates vmport=3Dauto to on/off is currently separate
-> > for each PC machine variant, while being functionally equivalent.
-> > This moves the translation into a shared initialization function, while
-> > also tightening the enum assertion.
-> >=20
-> > Signed-off-by: Kamil Szcz=C4=99k kamil@szczek.dev
-> > Reviewed-by: Bernhard Beschow shentey@gmail.com
-> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 philmd@linaro.org
-> > Message-ID: v8pz1uwgIYWkidgZK-o8H-qJvnSyl0641XVmNO43Qls307AA3QRPuad_py6=
-xGe0JAxB6yDEe76oZ8tau_n-2Y6sJBCKzCujNbEUUFhd-ahI=3D@szczek.dev
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 philmd@linaro.org
-> > ---
-> > hw/i386/pc.c | 5 +++++
-> > hw/i386/pc_piix.c | 5 -----
-> > hw/i386/pc_q35.c | 5 -----
-> > 3 files changed, 5 insertions(+), 10 deletions(-)
-> >=20
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index c74931d577..72229a24ff 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -1217,6 +1217,11 @@ void pc_basic_device_init(struct PCMachineState =
-*pcms,
-> > isa_realize_and_unref(pcms->pcspk, isa_bus, &error_fatal);
-> > }
-> >=20
-> > + assert(pcms->vmport >=3D 0 && pcms->vmport < ON_OFF_AUTO__MAX);
->=20
->=20
-> Coverity reported:
->=20
-> > CID 1559533: Integer handling issues (CONSTANT_EXPRESSION_RESULT)
-> > "pcms->vmport >=3D 0" is always true regardless of the values of
-> > its operands. This occurs as the logical first operand of "&&".
->=20
-> QAPI enums are unsigned because they start at 0, see:
-> https://www.qemu.org/docs/master/devel/qapi-code-gen.html#enumeration-typ=
-es
->=20
-> The generated C enumeration constants have values 0, 1, =E2=80=A6, N-1
-> (in QAPI schema order), where N is the number of values. There
-> is an additional enumeration constant PREFIX__MAX with value N.
+On 8/21/24 02:59, Carl Hauser wrote:
+> Do you want me to submit a patch set fixing this or will you?
 
-Oh, and here I thought I was being smart with modifying this assert :D
+I will.
 
->=20
-> Could you post a patch to address this issue?
->=20
 
-Will do shortly. Although, I've looked around the codebase and found a few =
-more instances of this pattern.
-
-"assert\(.*>=3D *0.*__MAX" yields the following results:
-
-job.c
-> assert(s1 >=3D 0 && s1 < JOB_STATUS__MAX);
-> assert(verb >=3D 0 && verb < JOB_VERB__MAX);
-
-blkdebug.c
-> assert((int)event >=3D 0 && event < BLKDBG__MAX);
-
-pc.c
-> assert(pcms->vmport >=3D 0 && pcms->vmport < ON_OFF_AUTO__MAX);
-
-options.c
-> assert(mode >=3D 0 && mode < MIG_MODE__MAX);
-
-savevm.c
-> assert(capability >=3D 0 && capability < MIGRATION_CAPABILITY__MAX);
-
-Does coverity also complain about those? If so, should I address all of the=
-m or keep it minimal?
-
-Also, just as a test I added a single line of code before the assert:
-
-pcms->vmport =3D -1;
-
-And, to my surprise, it compiled successfully without any warning and as ex=
-pected, aborted on the assert:
-
-qemu-system-x86_64: ../hw/i386/pc.c:1225: pc_basic_device_init: Assertion '=
-pcms->vmport >=3D 0 && pcms->vmport < ON_OFF_AUTO__MAX' failed.
-
-Is this expected behavior?
-
-> Thanks,
->=20
-> Phil.
->=20
-> > + if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
-> > + pcms->vmport =3D xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-> > + }
-> > +
-> > /* Super I/O */
-> > pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
-> > pcms->vmport !=3D ON_OFF_AUTO_ON);
-> > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> > index d9e69243b4..347afa4c37 100644
-> > --- a/hw/i386/pc_piix.c
-> > +++ b/hw/i386/pc_piix.c
-> > @@ -310,11 +310,6 @@ static void pc_init1(MachineState *machine, const =
-char *pci_type)
-> >=20
-> > pc_vga_init(isa_bus, pcmc->pci_enabled ? pcms->pcibus : NULL);
-> >=20
-> > - assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-> > - if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
-> > - pcms->vmport =3D xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-> > - }
-> > -
-> > /* init basic PC hardware */
-> > pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
-> > !MACHINE_CLASS(pcmc)->no_floppy, 0x4);
-> > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> > index 9d108b194e..f2d8edfa84 100644
-> > --- a/hw/i386/pc_q35.c
-> > +++ b/hw/i386/pc_q35.c
-> > @@ -276,11 +276,6 @@ static void pc_q35_init(MachineState *machine)
-> > x86_register_ferr_irq(x86ms->gsi[13]);
-> > }
-> >=20
-> > - assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-> > - if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
-> > - pcms->vmport =3D ON_OFF_AUTO_ON;
-> > - }
-> > -
-> > /* init basic PC hardware */
-> > pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc, !mc->no_flo=
-ppy,
-> > 0xff0104);
+r~
 
