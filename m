@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1B7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 05:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9783FC531DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 05:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgHMI-0002Uw-9I; Tue, 20 Aug 2024 01:24:42 -0400
+	id 1sgHRS-0008Cw-EC; Tue, 20 Aug 2024 01:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgHMH-0002Tz-5l
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:24:41 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1sgHRQ-0008C4-DE
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:30:00 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgHMF-0001ij-Jv
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:24:40 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7b594936e9bso3457620a12.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 22:24:39 -0700 (PDT)
+ id 1sgHRO-0002ND-Mf
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 01:30:00 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-201d5af11a4so47207255ad.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 22:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724131478; x=1724736278; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724131797; x=1724736597; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1mY9qTfLp9/wOp1KnlR/kB6EryzMXxmldfetb9IU/Tg=;
- b=yE0eNrBE+ta38YSQThpscn78H/VUyxBUV9I0ZMUighq+f0u8Dw71r+0REt4Kld48lv
- /byQ9sCOyaTXTI7MYI3Khta8HFRmS1dnqYBRl+L2IdlXnIRHq3MTRFLR0mwUCh6pEtSU
- 0FYuOyGBTrwhoE1QGDbEvq8ldzvxDfjqx8BkRFwk4dQK8ec4GUVKCjQA9VC4WneCtPEq
- z2Cpz1THqZKFMuCyiAWpxELmuk2AhRQLkCtggsom43I3rwzIGDScnkBk4uIIIVx2NBE9
- //12XZDjKjnwhmEpY7+hvamdloK60oOzVnvlpJUYH010uDWGY/HonMBbdBMT1ff6v+LS
- dK/g==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XFIfNKPX35OgTOVZZu6v49jKwMCLXmLQgIqUZjqSRbo=;
+ b=MbqsBkEW1kFACVcEnleiXthLEzihukgtv9m0CrMuzqrKfyplrsuqrptpNJXFeb0VFT
+ m2rtbSjVCjN4Pn6EPcGfhbJe7yg4J2w8YEZwFdaXiH2IvNxvH1CBim8jQnMoh/Yz6WD8
+ Y4Zf3HHzjIjKeVZGt6kaX6yoPjx9PHzxwlrCKaQi3Rwb95PYHWgxEt3qaJrdNx0mY0WW
+ URuGxATChpJWwJ81XkpulOsStW7QLelfNFzPrvlPjWCY+Yu+FnBV47B0NF/rKk9hq9hr
+ eBMJcg8YGjR5O6ytXshoR84DGFXV5AD9XFwWn6hI5fxEELySqTIZUfuWfzOpKhtaK3ip
+ yGyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724131478; x=1724736278;
+ d=1e100.net; s=20230601; t=1724131797; x=1724736597;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1mY9qTfLp9/wOp1KnlR/kB6EryzMXxmldfetb9IU/Tg=;
- b=Hbw2mmT435cWc4b62EHLDw9EaQededR9D8tRKR/Enn4zVIdo4ovg7Kf+JPO4NlKCbU
- 0ByNoFN5lWtXNDlZvEYJZC14hnq4bsGq8m2lmVMp4eby656iztQs4uBaygNJd9kiWzcs
- ruVkUrChtz1nUSMAGyHbbW3VwN/oxq0MNwoUWKY3+m4n5rcH2TGbNZt/5rDLXyRResBc
- 396rmphzibCtqicIk8dnBFfviFdAYxOOez8at+SidmmNRPHs4WODh4TbNBuJ8jbwZq76
- fo1WY7USai6Ov4c6l55j5vOkADkplMbRtZYF15CaO8k6yoVmJGm8w3xChKXogRPV256J
- Kkvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnnh3xc/viTj2BIJYZiOg27JoITcotu6R/yCKhddIp9I03KmtInoEEVUITxxuKO3S0IcURSfXdT2Cb8FUQ7P8gsAJZ6QE=
-X-Gm-Message-State: AOJu0YzvXHCwGtqt3CAT8tsmnpzNWF5Pv8HILe9DGziDd1X2aBHQ9X07
- XFYBMtZ9pIpAds/kpbbGs0MT/vf746z6u0s6sFVv7ytpO0njW2DlJVFUctCWxWA=
-X-Google-Smtp-Source: AGHT+IHVpiKQh/fsSi/DLTqWT+ct27mm8tLjCWslouxhbHk+rY3etHjmvCBwHlr+WGMBttYKEAzRGg==
-X-Received: by 2002:a17:90b:1b06:b0:2c4:ee14:94a2 with SMTP id
- 98e67ed59e1d1-2d5c0ea73c9mr1351740a91.27.1724131477655; 
- Mon, 19 Aug 2024 22:24:37 -0700 (PDT)
+ bh=XFIfNKPX35OgTOVZZu6v49jKwMCLXmLQgIqUZjqSRbo=;
+ b=ZLNJJTKCKhAnB1c0SVGRwNDmSP6GN+TNVYiclR+gxUsC9tgVDACDE6O1BJVbwir0Le
+ PlExzIhK3sWAM45D8bsL6MQ+ADxx3W6ovISAEYaA/DmQ4++UGbGmAPO/i7Y89EqwLtYH
+ 9ocXhVHXP+VVo2Hw50D1OQufyKPlcN/1xT659Efl6jJQx31emcAzjlD15Y5j9Uo2Giw4
+ vnFd0704iYDQ64BYpVlwx9MAbBPmgg3QI3okOPSUaaquxfSXClvvuN8E31aJofQSJGFH
+ d0uHDSQuhMub6hmZ2G5zKjZYGkIiEV+fRrSoAy8cgENBkyfe5+jfHUA9t0fza+E8o4ei
+ QLTQ==
+X-Gm-Message-State: AOJu0Ywr7ZpsVvfZ9h3dCpIwQAHxENqB5d8kNI5jdZJxy3bXnqPDc2W2
+ 8RH4+BuS6Xt0lT5Y7NqLU5TQB4s0cQt+yj7tEyt6jdR3ILy3GYlUTdecOnwpD7QN9PWONQePCbH
+ nuGA=
+X-Google-Smtp-Source: AGHT+IF66pfxSfv8F6EIToo7ykkH6dCL3NL1JanHTpgZVUexjWtwiZRkjf/pFFrrAmLxYKLRl0oPuw==
+X-Received: by 2002:a17:902:f550:b0:202:3469:2c78 with SMTP id
+ d9443c01a7336-2023469311cmr109563565ad.28.1724131796945; 
+ Mon, 19 Aug 2024 22:29:56 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.3.188])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d3c3e5b9fdsm11043956a91.40.2024.08.19.22.24.32
+ d9443c01a7336-201f039e084sm70875075ad.243.2024.08.19.22.29.55
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Aug 2024 22:24:37 -0700 (PDT)
-Message-ID: <bb1f768e-fd10-4246-b60b-7912e33c7ee6@linaro.org>
-Date: Tue, 20 Aug 2024 15:24:27 +1000
+ Mon, 19 Aug 2024 22:29:56 -0700 (PDT)
+Message-ID: <04082b27-3c3c-4a1c-9416-c8feb2319c6d@linaro.org>
+Date: Tue, 20 Aug 2024 15:29:52 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/15] target/riscv: tracking indirect branches (fcfi)
- for zicfilp
-To: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
- kito.cheng@sifive.com
+Subject: Re: [PATCH v5 06/15] target/riscv: zicfilp `lpad` impl and branch
+ tracking
+To: qemu-devel@nongnu.org
 References: <20240820000129.3522346-1-debug@rivosinc.com>
- <20240820000129.3522346-6-debug@rivosinc.com>
+ <20240820000129.3522346-7-debug@rivosinc.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240820000129.3522346-6-debug@rivosinc.com>
+In-Reply-To: <20240820000129.3522346-7-debug@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,43 +99,63 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/20/24 10:01, Deepak Gupta wrote:
-> zicfilp protects forward control flow (if enabled) by enforcing all
-> indirect call and jmp must land on a landing pad instruction `lpad`. If
-> target of an indirect call or jmp is not `lpad` then cpu/hart must raise
-> a sw check exception with tval = 2.
+> Implements setting lp expected when `jalr` is encountered and implements
+> `lpad` instruction of zicfilp. `lpad` instruction is taken out of
+> auipc x0, <imm_20>. This is an existing HINTNOP space. If `lpad` is
+> target of an indirect branch, cpu checks for 20 bit value in x7 upper
+> with 20 bit value embedded in `lpad`. If they don't match, cpu raises a
+> sw check exception with tval = 2.
 > 
-> This patch implements the mechanism using TCG. Target architecture branch
-> instruction must define the end of a TB. Using this property, during
-> translation of branch instruction, TB flag = FCFI_LP_EXPECTED can be set.
-> Translation of target TB can check if FCFI_LP_EXPECTED flag is set and a
-> flag (fcfi_lp_expected) can be set in DisasContext. If `lpad` gets
-> translated, fcfi_lp_expected flag in DisasContext can be cleared. Else
-> it'll fault.
-> 
-> Signed-off-by: Deepak Gupta<debug@rivosinc.com>
-> Co-developed-by: Jim Shu<jim.shu@sifive.com>
-> Co-developed-by: Andy Chiu<andy.chiu@sifive.com>
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> Co-developed-by: Jim Shu <jim.shu@sifive.com>
+> Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
 > ---
->   target/riscv/cpu.h        |  3 +++
->   target/riscv/cpu_bits.h   |  3 +++
->   target/riscv/cpu_helper.c | 12 ++++++++++++
->   target/riscv/translate.c  | 21 ++++++++++++++++++++-
->   4 files changed, 38 insertions(+), 1 deletion(-)
+>   target/riscv/cpu_user.h                 |  1 +
+>   target/riscv/insn32.decode              |  5 ++-
+>   target/riscv/insn_trans/trans_rvi.c.inc | 55 +++++++++++++++++++++++++
+>   3 files changed, 60 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/cpu_user.h b/target/riscv/cpu_user.h
+> index 02afad608b..e6927ff847 100644
+> --- a/target/riscv/cpu_user.h
+> +++ b/target/riscv/cpu_user.h
+> @@ -15,5 +15,6 @@
+>   #define xA6 16
+>   #define xA7 17  /* syscall number for RVI ABI */
+>   #define xT0 5   /* syscall number for RVE ABI */
+> +#define xT2 7
+>   
+>   #endif
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index c45b8fa1d8..6533cb0758 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -123,7 +123,10 @@ sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
+>   
+>   # *** RV32I Base Instruction Set ***
+>   lui      ....................       ..... 0110111 @u
+> -auipc    ....................       ..... 0010111 @u
+> +{
+> +  lpad     label:20                   00000 0010111
+> +  auipc    ....................       ..... 0010111 @u
+> +}
+>   jal      ....................       ..... 1101111 @j
 
+Again, best to line up the decode bits.
+
+While you are required to add two spaces within { },
+you can remove two spaces before the first '.':
+
+lui      ....................       ..... 0110111 @u
+{
+   lpad   label:20                   00000 0010111
+   auipc  ....................       ..... 0010111 @u
+}
+jal      ....................       ..... 1101111 @j
+
+
+Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-> @@ -1265,11 +1270,25 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
->      DisasContext *ctx = container_of(dcbase, DisasContext, base);
->      CPURISCVState *env = cpu_env(cpu);
->      uint16_t opcode16 = translator_lduw(env, &ctx->base, ctx->base.pc_next);
-> -
->      ctx->ol = ctx->xl;
->      decode_opc(env, ctx, opcode16);
->      ctx->base.pc_next += ctx->cur_insn_len;
-
-Watch the unrelated whitespace changes.
 
 
 r~
