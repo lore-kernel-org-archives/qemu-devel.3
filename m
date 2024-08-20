@@ -4,109 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63203C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 18:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDBFC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Aug 2024 18:56:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgToa-0007ov-GQ; Tue, 20 Aug 2024 14:42:44 -0400
+	id 1sgU0n-00057g-Ju; Tue, 20 Aug 2024 14:55:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sgToY-0007oQ-Tz
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 14:42:42 -0400
-Received: from fhigh3-smtp.messagingengine.com ([103.168.172.154])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sgToX-0003T1-3o
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 14:42:42 -0400
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal
- [10.202.2.44])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id B3500114EA9D;
- Tue, 20 Aug 2024 14:42:37 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Tue, 20 Aug 2024 14:42:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm2; t=1724179357; x=1724265757; bh=gs
- 8BALBeDHGgfJ4K2G0dvJYV2tKaeJvz92mj0hs27Qc=; b=RM7xMcS5ohP7u3dAE1
- FTMhYj47m5/YeyHSAYHvnpDJ7xtU8lsWv/Al1DawuYpHkq6Ak9Se9Bwuqq0cctP3
- SGUtDV963RqGk1nEXpIz81d9M5hilSqgEHUzhwoCIl9BYdBOXfzkW6neMVMgzZ6f
- oLk2hO0EGSvajLJET8eEQPngQFrYlH76kjoMRYBPbZw5w2iAYkIIgkA2ICkiMbuc
- HIezBn5aWLwqC6PgCPP+dwLTuKd/kgV3UL4BK3TeO0LRRQQLDp09wyzW2gqlzWvP
- YGrv7B14m/5VceJ38L5EmLLjnGHp5kId62Hv1vCKOYZSU/FNXDcgMRmQHQbD2Cyx
- U06w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; t=1724179357; x=1724265757; bh=gs8BALBeDHGgf
- J4K2G0dvJYV2tKaeJvz92mj0hs27Qc=; b=r7i/kOYPw59tBsrgpSVbUmx+3AeI3
- lCTN01Xt8La3OQIJvZpZ6u6hmlNfQsLZmUodX308HPiwRHspQOuasuWxu3DcHPFB
- PXvavP3LxessQdR+AqKxUNsPCEE4eNvGc9d3jYXUhivMvmtHtyHysSldE6svnxoD
- hWzzORATd4EVgY9THrqHcwtX8qnFr0ttwF07GjzChHBoIuzGgpzIHqCWFc/NOr/Q
- AMOLd/XQV3+JfidDFcEl2beMUFCV9DUpIWlaEAqYiNc+SNauthuGwQ1QeASivYE1
- hauz8Aldg2dHJnBrdrqhmqvgWAV/N/JM+mQlx8c1qGK4jLd5E1LGF7dwQ==
-X-ME-Sender: <xms:nOPEZrnevx_8pR_TIWc8nllphLSddbeaiS8bsNugaCJgZdF5JqqQ1w>
- <xme:nOPEZu0mTu8lwcSkXuc13EzDtSnbuBCd3pB5f0vTzK4HSep8nYojFT1JLTS-Fhn_Y
- IQjmYZ_3dvPJxps7Pc>
-X-ME-Received: <xmr:nOPEZhrZG3u4Q13oyKySTRgZxG7igc7vPZpu_ppYio7ktrIuRzeCiRoMFpYJXVJ0PWw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedguddviecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkvfevofesthejredtredtjeen
- ucfhrhhomheplfhirgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihgh
- horghtrdgtohhmqeenucggtffrrghtthgvrhhnpeffteeugeektdfgjeevuedvgffhgedt
- vdfghedugefhgeehteeuudehudevjeethfenucevlhhushhtvghrufhiiigvpedtnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgt
- ohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
- hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepjhhirgiguhhn
- rdihrghnghesfhhlhihgohgrthdrtghomhdprhgtphhtthhopehgrghoshhonhhgsehloh
- honhhgshhonhdrtghnpdhrtghpthhtohepmhgrohgsihgsoheslhhoohhnghhsohhnrdgt
- nh
-X-ME-Proxy: <xmx:nOPEZjk4xGSSXXXy-r4yUBpIYXJE9Hq0bPsfUsxQzxm9eJ7Xn1HUUA>
- <xmx:nOPEZp3q3rCIkVon4qIHlLBzKf8Y8ykwmRPEFwBZZS6zQ0gG18_ENQ>
- <xmx:nOPEZiuPVYU2kCRUphiv9X_F_x8iwgEcuT88U6yWK-0RJxVIzHSLkA>
- <xmx:nOPEZtUoUFwri2vANBh1Nvdy81aLyhNpFJvt49HRhFqA_vUSjtrlBw>
- <xmx:nePEZkQdbDZkjH6h3xVPHYzFMreYaweYpSUNxfDnkSNv94Z06EuLSinM>
-Feedback-ID: ifd894703:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Aug 2024 14:42:35 -0400 (EDT)
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Tue, 20 Aug 2024 19:42:33 +0100
-Subject: [PATCH for-9.1] hw/loongarch: Fix length for lowram in ACPI SRAT
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sgU0h-00056i-Un
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 14:55:15 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sgU0c-0005Bv-1C
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 14:55:14 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-20203988f37so41844795ad.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 11:55:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724180108; x=1724784908;
+ darn=nongnu.org; 
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=v3UL0/1VKL/SQRIm7NwGaxYLo6bV/O0OuQpiI+r2DsQ=;
+ b=USggBB7KGlXUwkDLXIHCFF15AXjh2Wh75v+bwEPgr0bg3kZTnmHcyzTXSJnlQvZKk6
+ +DkY9bNdbQaCNtU1utbdaZgcyHqlaFt4lsKr/sF9YenI30z+/VxAlU3ZLf/NyFn/V+fk
+ bcU1zP85QVdunQ832CklEtaTp/QY75C+afmAxbGlsyNDb1irxNgeJuucBprHP1ZX4MC3
+ J+ukA0210iY0qytBrsJ23+QmjLBpWMbZUQ3NeWB3AniVy94uudRb+lhIwEw2EPrQNnTh
+ T1HYjrI7l6L/ypALhyclFs0he9Er0+fVmArgfOFWRKryRsGKfh5vAjuRxEr5vDMLDdng
+ qoEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724180108; x=1724784908;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v3UL0/1VKL/SQRIm7NwGaxYLo6bV/O0OuQpiI+r2DsQ=;
+ b=XsbdZXBwB1a8t5hzcqJFvauzVi3L7PK/AzXjJTY0Xg5F1oPfEwJ9YqdtFfF9Jmzdox
+ RHs+ldNobX39IPt/xsvjtoD+7x0v7+7ht0gKnsUuG8CRoRoe40eQVlev4v2lVveoHH/5
+ bFevH66BvRe+I/Q+l10p8od99InVBFdPgPnhI7zDvi3/MSO/4y9k2HWnYqg29e8vUtVg
+ X01eleLD+vR+VBklIrCOY9whlnINgc6nokzTv8lkCD5DyCrJUcK6uYwZjpYiVv4EEJcQ
+ yAhWf+CJ5ZI9QjFR2ENWRpRzDWu7fSw/qobpzLBcDUb+9cWM6kTvuSs1njUGyjZ02LjN
+ b9ZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWEZjdDHSZBWIjxSagxBQ/06WnMmtW/OprnTWXaS86bxjuSp9q1i2DSvyFYwK7b3NDHXSWZ0ZvF/LZ@nongnu.org
+X-Gm-Message-State: AOJu0Yx0K7NK2jQdz3AQ5dXtqs56lhNPWB7VfWMlrFTUaPBZTH40e4gH
+ wawU+QPEkWWq5XqC//n8mmTboSjEnXXp6CHr7D9KsTBbJVAn9rqMe8VcrwX1hLk=
+X-Google-Smtp-Source: AGHT+IGj5KwHXVm4kpTRpBd6wDr3dMidftFH5xLTPnx0ihatX9uAEU71UsvzszrvXXSwvWnaFRw3pw==
+X-Received: by 2002:a17:902:ec89:b0:202:162c:1f29 with SMTP id
+ d9443c01a7336-202162c2262mr171287735ad.47.1724180107858; 
+ Tue, 20 Aug 2024 11:55:07 -0700 (PDT)
+Received: from debug.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201f03a3607sm81259905ad.250.2024.08.20.11.55.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Aug 2024 11:55:07 -0700 (PDT)
+Date: Tue, 20 Aug 2024 11:55:05 -0700
+From: Deepak Gupta <debug@rivosinc.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
+ Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ jim.shu@sifive.com, andy.chiu@sifive.com, kito.cheng@sifive.com
+Subject: Re: [PATCH v5 11/15] target/riscv: mmu changes for zicfiss shadow
+ stack protection
+Message-ID: <ZsTmibCvaZJpEAPO@debug.ba.rivosinc.com>
+References: <20240820000129.3522346-1-debug@rivosinc.com>
+ <20240820000129.3522346-12-debug@rivosinc.com>
+ <ZsRHPDG/GkyhdrQi@debug.ba.rivosinc.com>
+ <c0afdd87-71c1-4b02-a2fb-5c9349205d8f@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240820-fix-numa-range-v1-1-c5d6b889996f@flygoat.com>
-X-B4-Tracking: v=1; b=H4sIAJjjxGYC/x2MQQqAMAwEvyI5G0mrh+pXxINoqjlYJUURSv9u8
- Tjs7CSIrMIRhiqB8iNRzlDA1BUs+xw2RlkLgyXbkbOEXl4M9zGj/qs3nlqybFq3QjldysX4gyP
- 4U7FvDEw5fxj+wIVpAAAA
-To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1479;
- i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=DVSx+QjX9JZ5kGyd1+nSpGiO2tMFbQCOfmypGGgGvzs=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhrQjj2cr+Pred7h58el/XrOk2Mwnp2X2Fp3PPFTBPu/Do
- WMzG8/3dJSyMIhxMciKKbKECCj1bWi8uOD6g6w/MHNYmUCGMHBxCsBE1vgz/FOa+UTKf47gDs6P
- 6wKO6xfcFJR1/XzAozHpnfg5Yf5URzZGhhVfz+d3HyhfctDd37T2yEFjBl8hDrcOXaEcZVuHnjN
- PGAE=
-X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
- fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=103.168.172.154;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c0afdd87-71c1-4b02-a2fb-5c9349205d8f@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,41 +104,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The size of lowram should be "gap" instead of the whole node.
+On Tue, Aug 20, 2024 at 07:20:48PM +1000, Richard Henderson wrote:
+>On 8/20/24 17:35, Deepak Gupta wrote:
+>>>+    /* If shadow stack instruction initiated this access, treat it as store */
+>>>+    if (mmu_idx & MMU_IDX_SS_WRITE) {
+>>>+        access_type = MMU_DATA_STORE;
+>>>+    }
+>>>+
+>>
+>>I think I forgot to address this. Do you still want me to fix this up like you
+>>had suggested?
+>
+>Yes, this still needs fixing.
+>
+>
+>>IIRC, you mentioned to use TARGET_INSN_START_EXTRA_WORDS=2. Honestly I don't know
+>>what it means and how its used. Based on git grep and some readup, 
+>>are you expecting something
+>>along the below lines?
+>>
+>>
+>>"""
+>>
+>>diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>>index fee31b8037..dfd2efa941 100644
+>>--- a/target/riscv/cpu.h
+>>+++ b/target/riscv/cpu.h
+>>@@ -47,7 +47,7 @@ typedef struct CPUArchState CPURISCVState;
+>>   * RISC-V-specific extra insn start words:
+>>   * 1: Original instruction opcode
+>>   */
+>>-#define TARGET_INSN_START_EXTRA_WORDS 1
+>>+#define TARGET_INSN_START_EXTRA_WORDS 2
+>>
+>>  #define RV(x) ((target_ulong)1 << (x - 'A'))
+>>
+>>diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>index f74a1216b1..b266177e46 100644
+>>--- a/target/riscv/cpu_helper.c
+>>+++ b/target/riscv/cpu_helper.c
+>>@@ -1271,6 +1271,11 @@ static void raise_mmu_exception(CPURISCVState 
+>>*env, target_ulong address,
+>>  {
+>>      CPUState *cs = env_cpu(env);
+>>
+>>+     if (!pmp_violation &&
+>>+         tcg_ctx->gen_insn_data[TARGET_INSN_START_EXTRA_WORDS-1] & 1) {
+>>+         tcg_ctx->gen_insn_data[TARGET_INSN_START_EXTRA_WORDS-1] &= ~1;
+>>+         access_type = MMU_DATA_STORE;
+>>+     }
+>
+>The first thing to understand is that the unwind data is stored by the 
+>compiler and recovered by the unwinder.
+>
+>The unwind data is exposed to the target via one of two methods:
+>
+>(1) TCGCPUOps.restore_state_to_opc, i.e. riscv_restore_state_to_opc.
+>    The data[] argument contains the extra words.
+>
+>    With this method, the extra words are restored to env and are
+>    available in a later call to riscv_cpu_do_interrupt.
+>    Compare env->bins from the first extra word, which is used exactly so.
+>
+>    This is probably the easiest and best option.
+>    You'd promote LOAD* to STORE_AMO* while dispatching the interrupt.
+>
+>(2) cpu_unwind_state_data()
+>
+>    With this method, you have immediate access to the extra words,
+>    and don't need to store them anywhere else.
+>
+>    This is supposed to be used when we are *not* going to raise
+>    an exception, merely look something up and continue execution.
+>    Otherwise, we'd be performing the unwind operation twice,
+>    and it's not cheap.
+>
+>So, tcg_ctx->gen_insn_data[] is not something you'd ever touch,
+>and this is the wrong spot to do anything.
 
-This is failing kernel's sanity check:
+Thanks for more information and guiding me through this.
 
-[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0xffffffff]
-[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x80000000-0x16fffffff]
-[    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0x170000000-0x26fffffff]
-[    0.000000] Warning: node 0 [mem 0x00000000-0xffffffff] overlaps with itself [mem 0x80000000-0x16fffffff]
+Not going to say that I still understand everything. But I looked
+at one arm example. Before I do something more with it. I wanted to run
+it by you.
 
-Fixes: fc100011f38d ("hw/loongarch: Refine acpi srat table for numa memory")
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
----
- hw/loongarch/acpi-build.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Something on the below lines? I've one question as well for you in comment.
 
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index 72bfc35ae6c2..2638f8743463 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -218,7 +218,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-          *   highram: [VIRT_HIGHMEM_BASE, +(len - gap))
-          */
-         if (len >= gap) {
--            build_srat_memory(table_data, base, len, i, MEM_AFFINITY_ENABLED);
-+            build_srat_memory(table_data, base, gap, i, MEM_AFFINITY_ENABLED);
-             len -= gap;
-             base = VIRT_HIGHMEM_BASE;
-             gap = machine->ram_size - VIRT_LOWMEM_SIZE;
+""""
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index fee31b8037..b4e04fe849 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -46,8 +46,14 @@ typedef struct CPUArchState CPURISCVState;
+  /*
+   * RISC-V-specific extra insn start words:
+   * 1: Original instruction opcode
++ * 2: more information about instruction
+   */
+-#define TARGET_INSN_START_EXTRA_WORDS 1
++#define TARGET_INSN_START_EXTRA_WORDS 2
++
++/*
++ * b0: Whether a shadow stack operation/instruction or not.
++ */
++#define RISCV_INSN_START_WORD2_SS_OP 1
+  
+  #define RV(x) ((target_ulong)1 << (x - 'A'))
+  
+@@ -226,6 +232,7 @@ struct CPUArchState {
+      bool      elp;
+      /* shadow stack register for zicfiss extension */
+      target_ulong ssp;
++    bool      ss_op;
+      /* sw check code for sw check exception */
+      target_ulong sw_check_code;
+  #ifdef CONFIG_USER_ONLY
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index f74a1216b1..c28b13d42c 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1777,6 +1777,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+      target_ulong mtval2 = 0;
+  
+      if (!async) {
++        /* shadow stack op, promote load page fault to store page fault */
++        if (env->ss_op && cause == RISCV_EXCP_LOAD_PAGE_FAULT) {
++            cause = RISCV_EXCP_STORE_PAGE_FAULT;
++        }
+          /* set tval to badaddr for traps with address information */
+          switch (cause) {
+          case RISCV_EXCP_SEMIHOST:
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 4da26cb926..c0f21fe3db 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -129,6 +129,7 @@ static void riscv_restore_state_to_opc(CPUState *cs,
+          env->pc = pc;
+      }
+      env->bins = data[1];
++    env->ss_op = data[2] & RISCV_INSN_START_WORD2_SS_OP;
+  }
+  
+  static const TCGCPUOps riscv_tcg_ops = {
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 580aa23c5b..6f952db823 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1271,7 +1271,7 @@ static void riscv_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+          pc_next &= ~TARGET_PAGE_MASK;
+      }
+  
+-    tcg_gen_insn_start(pc_next, 0);
++    tcg_gen_insn_start(pc_next, 0, 0);
+      ctx->insn_start_updated = false;
+  }
+  
+@@ -1301,6 +1301,14 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+          ctx->base.is_jmp = DISAS_NORETURN;
+      }
+  
++    /* shadow stack index means shadow stack instruction is translated */
++    if (ctx->mem_idx & MMU_IDX_SS_WRITE) {
++        /* Is this needed to set true? */
++        ctx->insn_start_updated = true;
++        tcg_set_insn_start_param(ctx->base.insn_start, 2,
++                                 RISCV_INSN_START_WORD2_SS_OP);
++    }
++
+      /* Only the first insn within a TB is allowed to cross a page boundary. */
+      if (ctx->base.is_jmp == DISAS_NEXT) {
+          if (ctx->itrigger || !is_same_page(&ctx->base, ctx->base.pc_next)) {
 
----
-base-commit: 075fd020afe3150a0e6c4b049705b358b597b65a
-change-id: 20240820-fix-numa-range-f1f0302e138d
-
-Best regards,
--- 
-Jiaxun Yang <jiaxun.yang@flygoat.com>
-
+"""
+>
+>
+>r~
 
