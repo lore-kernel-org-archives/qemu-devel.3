@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C62C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 13:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D54CC52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 13:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sglAY-0000vS-7q; Wed, 21 Aug 2024 09:14:34 -0400
+	id 1sglAL-0000M8-NK; Wed, 21 Aug 2024 09:14:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yc01.jeong@samsung.com>)
- id 1sgbBk-0002NC-RF
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:35:09 -0400
-Received: from mailout3.samsung.com ([203.254.224.33])
+ id 1sgb4Y-0001OL-8J
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:27:42 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yc01.jeong@samsung.com>)
- id 1sgbBh-0007OL-Ny
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:35:08 -0400
-Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20240821023502epoutp03d6eb5ad5a0fdc3df4e2437d12f4c3f8d~tncUdZnef0325603256epoutp03A
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 02:35:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20240821023502epoutp03d6eb5ad5a0fdc3df4e2437d12f4c3f8d~tncUdZnef0325603256epoutp03A
+ id 1sgb4S-0006Yo-7j
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:27:41 -0400
+Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20240821022727epoutp012c82c5ed93187316cf6beb4dadf7983b~tnVs9_Bge1953819538epoutp01a
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 02:27:27 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20240821022727epoutp012c82c5ed93187316cf6beb4dadf7983b~tnVs9_Bge1953819538epoutp01a
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1724207702;
- bh=oK9TosyU+tU+v44bqNhWkIMGnuXQSQIIajL48CtDwaM=;
- h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
- b=UG6K/Jtv78FQXfYD+sfRBewf9rlk0aU8+a7GlkLCA68mF0wH7bld3sN1krV+cUKBo
- gvdxOCCN6wc6HhQtLf0Yj9EIMTnNtlpYXcfUkRmxqyiFZSMkqT0XFGmIJlkcWMYeek
- v+Rtj5prPJ/kJNLdQEUwle13b0yxUmOTfKW54bhw=
-Received: from epsmgec1p1.samsung.com (unknown [182.195.42.51]) by
- epcas1p1.samsung.com (KnoxPortal) with ESMTP id
- 20240821023501epcas1p1da5a0ee714be3a9042b128dd5513588a~tncUKRf-X0575805758epcas1p1k;
- Wed, 21 Aug 2024 02:35:01 +0000 (GMT)
-X-AuditID: b6c32a33-faa0ca8000002320-44-66c552551175
-Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
- epsmgec1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
- CE.94.08992.55255C66; Wed, 21 Aug 2024 11:35:01 +0900 (KST)
+ s=mail20170921; t=1724207247;
+ bh=6tiRZHwnZKExrFVNMQJZvItEGtEj3DhO89ay/P6KYDU=;
+ h=Subject:Reply-To:From:To:CC:Date:References:From;
+ b=KovFZ70vl7mT1EcuPtcYeiTa+oQgYn+6VjSFsOQvZyqAg1Yl8Ob05q1l6ZVugcQJo
+ rTNaxzYFpB66CixAKCb2Pb/eVSSL+QnNl6/qiAP3j+ZWCzSi1CyxwZaabrFQrqCQYy
+ v4ZoOnUhnhCDsYsMjfgUS8oB/jn1QG0Jf0OxIC2g=
+Received: from epsmges1p4.samsung.com (unknown [182.195.42.56]) by
+ epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+ 20240821022727epcas1p2b4f8230d9273311378c03f2cca39aea3~tnVseL-TC2587125871epcas1p2R;
+ Wed, 21 Aug 2024 02:27:27 +0000 (GMT)
+X-AuditID: b6c32a38-995ff70000002812-f0-66c5508e088c
+Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
+ epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+ A7.87.10258.E8055C66; Wed, 21 Aug 2024 11:27:26 +0900 (KST)
 Mime-Version: 1.0
-Subject: [PATCH 3/4] hw/ufs: ufs attribute read/write test implemented
+Subject: [PATCH 0/4] hw/ufs: ufs device testing function added and modified
 From: =?UTF-8?B?7KCV7Jyg7LCs?= <yc01.jeong@samsung.com>
 To: =?UTF-8?B?6rmA7KCc7Jqx?= <jeuk20.kim@samsung.com>
-CC: =?UTF-8?B?7KCV7Jyg7LCs?= <yc01.jeong@samsung.com>, "thuth@redhat.com"
- <thuth@redhat.com>, "lvivier@redhat.com" <lvivier@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "jeongyuchan0629@gmail.com"
+CC: "thuth@redhat.com" <thuth@redhat.com>, "lvivier@redhat.com"
+ <lvivier@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "jeongyuchan0629@gmail.com"
  <jeongyuchan0629@gmail.com>
 X-Priority: 3
 X-Content-Kind-Code: NORMAL
-In-Reply-To: <20240821023025epcms1p4de36db95f4d3a66727f128ef6be860e4@epcms1p4>
 X-Drm-Type: N,general
 X-Msg-Generator: Mail
 X-Msg-Type: PERSONAL
 X-Reply-Demand: N
-Message-ID: <20240821023501epcms1p1af3e6eb45517d1a1526b32f44c9bc355@epcms1p1>
-Date: Wed, 21 Aug 2024 11:35:01 +0900
-X-CMS-MailID: 20240821023501epcms1p1af3e6eb45517d1a1526b32f44c9bc355
+Message-ID: <20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p1>
+Date: Wed, 21 Aug 2024 11:27:26 +0900
+X-CMS-MailID: 20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10
 Content-Transfer-Encoding: 7bit
 Content-Type: text/plain; charset="utf-8"
 CMS-TYPE: 101P
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsWy7bCmnm5o0NE0g7aL+hY9r/axWdzfeo3R
- 4lODlMX+bf9YLY737mCxWHnMxmL32ZlsDuweO2fdZfd4cm0zk8f7fVfZPPq2rGIMYInisklJ
- zcksSy3St0vgyjj0ZSZrwZ6Qiqlvz7A1MH506mLk5JAQMJF4+PAqexcjF4eQwA5GiRcfLzJ1
- MXJw8AoISvzdIQxSIyzgJrFq83sWEFtIQEHix/KbbBBxS4nPT6aB2WwC5hLvJ11nBLFFBEwl
- /nxfxwIyk1lgGZPE45sTmCCW8UrMaH/KAmFLS2xfvhWsgVPAT2L252VQNaISN1e/ZYex3x+b
- zwhhi0i03jvLDGELSjz4uZsR5E4JAUmJ9a81IcL1EjeuPWaDsGskHrXdghqjL3GtYyMLxFu+
- Eis7WUHCLAKqEltbu6DKXSTOvb8ENp1ZQF5i+9s5zCDlzAKaEut36UOE+STefe1hhXlkx7wn
- UAerSCy6+B5qjJTE1xPrmCEO85DYf88ZEmhTGSW2fimcwCg/CxG0s5DsmoWwawEj8ypGsdSC
- 4tz01GTDAkO94sTc4tK8dL3k/NxNjOC0oWW8g/Hy/H96hxiZOBgPMUpwMCuJ8Ha/PJgmxJuS
- WFmVWpQfX1Sak1p8iFGag0VJnPfMlbJUIYH0xJLU7NTUgtQimCwTB6dUA9NyDjPLFfsOvnm6
- eHeGhDHvzUYvXiaRc5uv7fBc/H6VUUjXX/HFiWJ2mQlvg+pdM780eF//8FH2+vTGxm/qqzOW
- K23/IHHQReVr+5fTkx9arjYw01wgwHducviBaaul3yfcyLrNKP3kaL/4z6sqO/ce7/JIWtzz
- 1SP/rlqE8l33Z1oLWU/IXj9fUGC4asutyIcaE94fjN/xJIu1q79hzxuF7PK+tJC3bH5ZDbzK
- 1RlVm05x2p/cueiHzoVFt05dVvz2Rd5msrOPmtnD9LxbC0/+/FbFW5+9KC/Ht3HfhXNtXKcj
- mPzcAsUmiS4/vPH0gsgK740Rsxp8LzgKmwRN1nn947fHLOeFL8wDm89vURZTYinOSDTUYi4q
- TgQAtsCL1YoDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsWy7bCmrm5fwNE0gztTTCx6Xu1js7i/9Rqj
+ xacGKYv92/6xWhzv3cFisfKYjQObx85Zd9k9nlzbzOTxft9VNo++LasYA1iiuGxSUnMyy1KL
+ 9O0SuDI6pi9iK7jEXvFr3UemBsY5bF2MnBwSAiYSP54sYeli5OIQEtjBKPFkxiymLkYODl4B
+ QYm/O4RBaoQFvCWOX21gArGFBBQkfiy/yQYRt5T4/GQamM0mYC7xftJ1RhBbRMBU4s/3dSwg
+ NrPAR0aJaX8FIHbxSsxof8oCYUtLbF++lRHCFpW4ufotO4z9/th8qLiIROu9s8wQtqDEg5+7
+ GUFOkxCQlFj/WhMiXC9x49pjqFdqJB613YIaoy9xrWMj2CpeAV+JhcuPgtksAqoSzSfWQNW7
+ SBzvXMMMcaa8xPa3c5hBxjMLaEqs36UPEeaTePe1hxXm+h3znjBB2CoSiy6+hxojJfH1xDpm
+ iMs8JPbfc4YEVKBE+9e97BMY5WYhgnMWkl2zEHYtYGRexSiWWlCcm55abFhgolecmFtcmpeu
+ l5yfu4kRnBS0LHYwzn37Qe8QIxMH4yFGCQ5mJRHe7pcH04R4UxIrq1KL8uOLSnNSiw8xSnOw
+ KInznrlSliokkJ5YkpqdmlqQWgSTZeLglGpgCvZKP17YcTenN8On0/z5V+bpaa1i86qDDtzm
+ OxNw4dvKE5y7dKZXvLz/pTrBXq98oYfP0d76z394j3DtbPZwF5e48KkzWfzP79l/U7hTnwbJ
+ s9tzbRO1392w9GuDhM69+tuKrrZePROPpl+6lKLIqX5iO+c6QT7pk/PMXaOlnfW+p545t8b5
+ Bkdwa9G/BHnTW55KyqdtN6zbJPSVO3rb3jvm5/qEXgiWP1tzxT95yf23WSozO27efMV/QGli
+ 44v7UrfVD4e+4u2WPDtndnn/39pLPg0VU+48jorOl35mvdtS88tLGcXTEgaLO4yL3pS/0fgR
+ oPX6taLge7nIgCfvls5Skw0K3mw4sabIZrGeEktxRqKhFnNRcSIA5dZt/HkDAAA=
 X-CMS-RootMailID: 20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10
-References: <20240821023025epcms1p4de36db95f4d3a66727f128ef6be860e4@epcms1p4>
- <CGME20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p1>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=yc01.jeong@samsung.com; helo=mailout3.samsung.com
+References: <CGME20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p1>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=yc01.jeong@samsung.com; helo=mailout1.samsung.com
 X-Spam_score_int: -45
 X-Spam_score: -4.6
 X-Spam_bar: ----
@@ -94,7 +90,7 @@ X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 21 Aug 2024 09:14:17 -0400
+X-Mailman-Approved-At: Wed, 21 Aug 2024 09:14:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,207 +106,27 @@ Reply-To: yc01.jeong@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From 3341c347a70783c5e60a963501e63cb5da8f2e1f Mon Sep 17 00:00:00 2001
+From 936ef0a907bcf16809f9980c2d37e8fcb13697d2 Mon Sep 17 00:00:00 2001
 From: Yoochan Jeong <yc01.jeong@samsung.com>
-Date: Wed, 21 Aug 2024 09:09:32 +0900
-Subject: [PATCH 3/4] hw/ufs: ufs attribute read/write test implemented
+Date: Wed, 21 Aug 2024 10:45:28 +0900
+Subject: [PATCH 0/4] hw/ufs: ufs device testing function added and modified
 
-New test function "ufstest_attr_request" added, which can check one's
-virtual UFS device can properly read and write its attribute data.
-It tests if reading and writing attributes work properly. There are
-some testcases that are intended to make an error caused by writing an
-invalid value, allocating an invalid selector and permission issues.
+Previously, it was only able to test virtual UFS devices if they properly
+read and write storage data. In this patch, three test functions are added
+to test if virtual UFS devices properly read and write its metadata.
+Each functions test reading and writing flags, attributes and descriptors.
+Related minor bugs and errors are also fixed.
 
-Based on: 20240802051902epcms2p319bc095a15eaef8de4e6955f6718371d@epcms2p3
-Signed-off-by: Yoochan Jeong <yc01.jeong@samsung.com>
----
- tests/qtest/ufs-test.c | 166 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 166 insertions(+)
+Yoochan Jeong (4):
+  hw/ufs: minor bug fixes related to ufs-test
+  hw/ufs: ufs flag read/write test implemented
+  hw/ufs: ufs attribute read/write test implemented
+  hw/ufs: ufs descriptor read test implemented
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index f93de9f1f2..a8fd2f1acc 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -620,6 +620,171 @@ static void ufstest_flag_request(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
- 
-+static void ufstest_attr_request(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+
-+    UtpTransferReqDesc utrd;
-+    UtpUpiuRsp rsp_upiu;
-+    ufs_init(ufs, alloc);
-+
-+    /* Read Readable Attributes*/
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_BOOT_LU_EN, 0, 0, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.opcode, ==, UFS_UPIU_QUERY_OPCODE_READ_ATTR);
-+    g_assert_cmpuint(rsp_upiu.qr.idn, ==, UFS_QUERY_ATTR_IDN_BOOT_LU_EN);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_BKOPS_STATUS, 0, 0, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    /* Write Writable Attributes & Read Again */
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_ACTIVE_ICC_LVL, 0, 0, 0x03, &utrd,
-+                   &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x03));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_EE_CONTROL, 0, 0, 0x07, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x07));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_ACTIVE_ICC_LVL, 0, 0, 0, &utrd,
-+                   &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x03));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_EE_CONTROL, 0, 0, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x07));
-+
-+    /* Write Invalid Value (Intended Error) */
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_ACTIVE_ICC_LVL, 0, 0, 0x10, &utrd,
-+                   &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-+                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==,
-+                     UFS_QUERY_RESULT_INVALID_VALUE);
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_ACTIVE_ICC_LVL, 0, 0, 0, &utrd,
-+                   &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x03));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_CNTX_CONF, 0, 15, 0x10, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-+                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==,
-+                     UFS_QUERY_RESULT_INVALID_VALUE);
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_CNTX_CONF, 0, 15, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    /* Read Write-Only Attribute (Intended Error) */
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_SECONDS_PASSED, 0, 0, 0, &utrd,
-+                   &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-+                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==,
-+                     UFS_QUERY_RESULT_NOT_READABLE);
-+
-+    /* Write Read-Only Attribute (Intended Error) */
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_POWER_MODE, 0, 0, 0x01, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-+                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==,
-+                     UFS_QUERY_RESULT_NOT_WRITEABLE);
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_POWER_MODE, 0, 0, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    /* Invalid Selector (Intended Error)*/
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_CNTX_CONF, 0, 16, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-+                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==,
-+                     UFS_QUERY_RESULT_INVALID_SELECTOR);
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_CNTX_CONF, 0, 15, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    /* Reset Written Attributes */
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_ACTIVE_ICC_LVL, 0, 0, 0, &utrd,
-+                   &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                   UFS_QUERY_ATTR_IDN_EE_CONTROL, 0, 0, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_ACTIVE_ICC_LVL, 0, 0, 0, &utrd,
-+                   &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                   UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                   UFS_QUERY_ATTR_IDN_EE_CONTROL, 0, 0, 0, &utrd, &rsp_upiu);
-+    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void drive_destroy(void *path)
- {
-     unlink(path);
-@@ -688,6 +853,7 @@ static void ufs_register_nodes(void)
-     qos_add_test("init", "ufs", ufstest_init, NULL);
-     qos_add_test("read-write", "ufs", ufstest_read_write, &io_test_opts);
-     qos_add_test("flag read-write", "ufs", ufstest_flag_request, &io_test_opts);
-+    qos_add_test("attr read-write", "ufs", ufstest_attr_request, &io_test_opts);
- }
- 
- libqos_init(ufs_register_nodes);
+ hw/ufs/ufs.c           |  26 ++-
+ tests/qtest/ufs-test.c | 414 ++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 432 insertions(+), 8 deletions(-)
+
 -- 
 2.34.1
 
