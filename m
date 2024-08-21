@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1954BC531DF
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 02:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7EB5C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 02:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgb33-0000rT-Or; Tue, 20 Aug 2024 22:26:09 -0400
+	id 1sgb30-0000in-Sb; Tue, 20 Aug 2024 22:26:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgb2z-0000ZC-5J
+ id 1sgb2z-0000Yd-21
  for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:26:05 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgb2x-0006Dd-8N
+ id 1sgb2v-0006DX-WE
  for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:26:04 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7141feed424so596650b3a.2
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 19:26:02 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7c3ebba7fbbso4784544a12.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 19:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724207161; x=1724811961; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724207159; x=1724811959; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/AkyOxiQ4TXnW/njwRxZXuZWiuFAeAcYAa7CbQEQtFY=;
- b=klDUVP8eBfq9v2JfJGtK3FMah2hyg1jKq8VX2grggjbkX4/b1xZpBaxkFDqaRbpxSO
- GVcQeZHy8yTg5Q5Vpe7OTqeqpbCcNXUX+hOa1Io1NnDhG4SMVVMzn+Vt6t6tShyeUhE1
- j7Tbw+ZDnDY9XSvbAs4RvC5SY7gQyuhWp41cMCx3UE+AZ7HZS+E7Jixbp7XMJgDrpQ7a
- VIDqWoHx7sKop35HWeBq3eBqpQAfecF02BmXHvZkDv+DNYBflllP/KXTHNJn43RJ/SZ2
- FOxYKhEh1dsPsAWb2Mc0GOMpp75LnP/FQW9bHftDLBVWRZKToS/MDEx8/f+zm21TQ3xG
- sPaQ==
+ bh=DVcCgltg45eJ8LECAIKCmNL12zJBy0OXmSR3imxiWNo=;
+ b=evdP1HR6rlLBMhqk2yOACd+DmV4AsUz1kPdFQbvIglXi/LFRTSDaVY4bDI1I7cyf9k
+ W2eY97VhaEeims1gftMuYUYEO/pJ7q29Hv95OgyvPwlChFp14JOWOfImIqpqE//ymmfn
+ aZUvBPfHWonKPH1U99Pj1CQqpZogXhmYYf/BkEat/dvgQuH9LxN1/rkJlGZ9XfYq3AU+
+ VNd9y/JQAUXu/HSHCH2nI+kMPGbW32X7yJYFEhYdEbn/F9GI5SDA4EUlVcQsg7ZBD75b
+ eQoG1+i8qQWEroCEBzSnAzqMRljDTaA1+gZKzl6yBAvr7kp9i7RvE3JjtJIHweKSZFvg
+ hJsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724207161; x=1724811961;
+ d=1e100.net; s=20230601; t=1724207159; x=1724811959;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/AkyOxiQ4TXnW/njwRxZXuZWiuFAeAcYAa7CbQEQtFY=;
- b=iS3KOVkf7I/8qXi6N/1pYMVqBsZu99f+u2OYEi8O7LlHnILrYN+G/xx841KqD/C33m
- 3dYDZP/IMebWPSgYOnSoXP4B760ujfVYEZvMFaWDiCd1cT8KV1xbLx7ulpr4mYOH3nna
- /TM8q1FBP7Hu94nKWwqj9z9XYf8IdCERNMxf8VgcP7Al8qSx+DG/Lojgzl/ByAnWCXfm
- ugUlsXZeTvwHzypEQqKj6t+hvlqrVWcKAW2b/wftMHGA5ZKBrX8/zeLwxfGMEmH5YW2A
- VsAEcAzl3VcgF4yOm+HaAGZyXIb8xFnHoLhxcRDErPDzAwwWu7CY358zxp/sXwx65Dn5
- xa+A==
-X-Gm-Message-State: AOJu0YxyJPFLtKs8bu18sL1/AIF+tvXE9MiIhV7gehXXrMvp5wVdFph8
- LEVybabpDgjkOAfZlJxZQDH5pjXkVgBEB92TzxkyBRE5E5hqAyvHuf6zSVQJ/bOXjelAaEviBxO
- VYhY=
-X-Google-Smtp-Source: AGHT+IEqPvyaMfUMiUScTKLqmqWoTARQPmnfxf+B0WuQgPe4ut/Ps2au5QJuCba8i8KtJktXSunx6A==
-X-Received: by 2002:a05:6a00:10c4:b0:702:3e36:b7c4 with SMTP id
- d2e1a72fcca58-7142342f6c1mr1358111b3a.5.1724207161207; 
- Tue, 20 Aug 2024 19:26:01 -0700 (PDT)
+ bh=DVcCgltg45eJ8LECAIKCmNL12zJBy0OXmSR3imxiWNo=;
+ b=u3/TrkC+OPjojhKMDKhh/UUqiM3zZS61AlwMunDaJe/3sdnJBwc6gcdS6VZEbttM98
+ F5J+yaV4AwpahHD6+/lkYS77y0U1T7XzF+WrAajgwMZUCQYNhc+0/MvPdpOFH2mz9/UY
+ rLhyD7CQ1pNyDTwMdWVcCIoyhFYp5A8Rd6BT7UcY8osQXPROrOW0tDSfCkV+F6fhnESP
+ Vz+X8imNsYmSMPXuPfm9T0iJqAi+TWg1WlVbLYZui45/W2Jdf36kCaq7BqB+jo4SWuLr
+ 5PZwiWCEECqX5IxI6PkBMEMeWHudUX8v8vgWT73mhvWjcbrp+mTTduPDhOTPVveoh2LX
+ y/Zg==
+X-Gm-Message-State: AOJu0Yw88uC/s9F15hWCrsYDSQjn+gcsRqbWfofOW4y6zuI6hL3XdaeU
+ UWRF0h74OqMeiKNQPt8V4ebXttlXzGKZJVNEKBewtzdOFVSWvxH9eSTW+b/mjaHo2R6A+Ksxit2
+ 4XIc=
+X-Google-Smtp-Source: AGHT+IHvJWj7ZeU3TEX8jUo74HytAI/ZtpH/4KCUGpP9VgWJNcBS7Lj0OIScHIKn76qE5ClgqVXM9w==
+X-Received: by 2002:a05:6a21:920b:b0:1be:c5d9:5a19 with SMTP id
+ adf61e73a8af0-1cad7fb1d21mr1970420637.24.1724207158960; 
+ Tue, 20 Aug 2024 19:25:58 -0700 (PDT)
 Received: from stoup.. ([203.56.140.20]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127af1888esm9210774b3a.149.2024.08.20.19.25.59
+ d2e1a72fcca58-7127af1888esm9210774b3a.149.2024.08.20.19.25.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Aug 2024 19:26:00 -0700 (PDT)
+ Tue, 20 Aug 2024 19:25:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 3/5] target/i386: Split out gen_prepare_val_nz
-Date: Wed, 21 Aug 2024 12:25:46 +1000
-Message-ID: <20240821022548.421745-4-richard.henderson@linaro.org>
+Subject: [PULL 2/5] bsd-user: Handle short reads in mmap_h_gt_g
+Date: Wed, 21 Aug 2024 12:25:45 +1000
+Message-ID: <20240821022548.421745-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240821022548.421745-1-richard.henderson@linaro.org>
 References: <20240821022548.421745-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,64 +94,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out the TCG_COND_TSTEQ logic from gen_prepare_eflags_z,
-and use it for CC_OP_BMILG* as well.  Prepare for requiring
-both zero and non-zero senses.
+In particular, if an image has a large bss, we can hit EOF before reading
+all bytes of the mapping.  Mirror the similar change to linux-user.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240801075845.573075-2-richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240820050848.165253-3-richard.henderson@linaro.org>
 ---
- target/i386/tcg/translate.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ bsd-user/mmap.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index b72864bf01..4af282e626 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -865,6 +865,18 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp size)
-     }
+diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
+index f3a4f1712d..775e905960 100644
+--- a/bsd-user/mmap.c
++++ b/bsd-user/mmap.c
+@@ -128,6 +128,40 @@ error:
+     return ret;
  }
  
-+static CCPrepare gen_prepare_val_nz(TCGv src, MemOp size, bool eqz)
++/*
++ * Perform a pread on behalf of target_mmap.  We can reach EOF, we can be
++ * interrupted by signals, and in general there's no good error return path.
++ * If @zero, zero the rest of the block at EOF.
++ * Return true on success.
++ */
++static bool mmap_pread(int fd, void *p, size_t len, off_t offset, bool zero)
 +{
-+    if (size == MO_TL) {
-+        return (CCPrepare) { .cond = eqz ? TCG_COND_EQ : TCG_COND_NE,
-+                             .reg = src };
-+    } else {
-+        return (CCPrepare) { .cond = eqz ? TCG_COND_TSTEQ : TCG_COND_TSTNE,
-+                             .imm = MAKE_64BIT_MASK(0, 8 << size),
-+                             .reg = src };
++    while (1) {
++        ssize_t r = pread(fd, p, len, offset);
++
++        if (likely(r == len)) {
++            /* Complete */
++            return true;
++        }
++        if (r == 0) {
++            /* EOF */
++            if (zero) {
++                memset(p, 0, len);
++            }
++            return true;
++        }
++        if (r > 0) {
++            /* Short read */
++            p += r;
++            len -= r;
++            offset += r;
++        } else if (errno != EINTR) {
++            /* Error */
++            return false;
++        }
 +    }
 +}
 +
- /* compute eflags.C, trying to store it in reg if not NULL */
- static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
- {
-@@ -908,8 +920,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+ /*
+  * map an incomplete host page
+  *
+@@ -190,7 +224,7 @@ static int mmap_frag(abi_ulong real_start,
+             mprotect(host_start, qemu_host_page_size, prot1 | PROT_WRITE);
  
-     case CC_OP_BMILGB ... CC_OP_BMILGQ:
-         size = s->cc_op - CC_OP_BMILGB;
--        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
--        return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_src };
-+        return gen_prepare_val_nz(cpu_cc_src, size, true);
- 
-     case CC_OP_ADCX:
-     case CC_OP_ADCOX:
-@@ -1006,12 +1017,7 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
-     default:
-         {
-             MemOp size = (s->cc_op - CC_OP_ADDB) & 3;
--            if (size == MO_TL) {
--                return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_dst };
--            } else {
--                return (CCPrepare) { .cond = TCG_COND_TSTEQ, .reg = cpu_cc_dst,
--                                     .imm = (1ull << (8 << size)) - 1 };
--            }
-+            return gen_prepare_val_nz(cpu_cc_dst, size, true);
+         /* read the corresponding file data */
+-        if (pread(fd, g2h_untagged(start), end - start, offset) == -1) {
++        if (!mmap_pread(fd, g2h_untagged(start), end - start, offset, true)) {
+             return -1;
          }
-     }
- }
+ 
+@@ -565,7 +599,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
+                                   -1, 0);
+             if (retaddr == -1)
+                 goto fail;
+-            if (pread(fd, g2h_untagged(start), len, offset) == -1) {
++            if (!mmap_pread(fd, g2h_untagged(start), len, offset, false)) {
+                 goto fail;
+             }
+             if (!(prot & PROT_WRITE)) {
 -- 
 2.43.0
 
