@@ -4,68 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCCDDC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 02:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1965C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 02:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgapH-0007Mt-Ft; Tue, 20 Aug 2024 22:11:55 -0400
+	id 1sgb1c-00050o-Ul; Tue, 20 Aug 2024 22:24:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sgapE-0007Lb-6s
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:11:52 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sgapB-000416-Cp
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:11:51 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxuOnTTMVmucMaAA--.58371S3;
- Wed, 21 Aug 2024 10:11:32 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAx4+HRTMVm5ygcAA--.59923S3;
- Wed, 21 Aug 2024 10:11:31 +0800 (CST)
-Subject: Re: [PATCH for-9.1] hw/loongarch: Fix length for lowram in ACPI SRAT
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-References: <20240820-fix-numa-range-v1-1-c5d6b889996f@flygoat.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <88e7e62d-2b38-8b0b-0f5b-1b8115b920e4@loongson.cn>
-Date: Wed, 21 Aug 2024 10:11:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sgb1X-0004ww-Nk
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:24:38 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sgb1V-0005xA-My
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:24:35 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1fc47abc040so49453235ad.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 19:24:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724207069; x=1724811869; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OnEq06pl3BtFuL6wrZezgdiu8fb6CgrOsqDNulEkgO0=;
+ b=kKIvy+VcRP1455NXrtl9SLa48vMz+2aLoG0pD8Aapy5QzxEqEbU8mMrpzJBuzXiVJa
+ eq/sh9XtevBjTBoEzdc9Mil98ZV84AL1A8RXIEAOsGO2RbCvhZSdBwqHOfdiwebHZnb8
+ 5W0bXejvr6eEwh4nmiBnPQlGnb+rGWdcyefoQa+kkQSzXqvqMI6HG1XL7vfhwprBXFrR
+ Jj62aBHjdRC4GO/oADvHRbN/2qPTIYmpGhUDE3t9xqGozqzhv6mw58YUx65N180QGc3C
+ tpkrZGjAMs2qYpo42DGXkz1X68NPJp4D5Rp/igZTqOZxs1lGEnK87hlTfK9Xybl5FUXE
+ SjPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724207069; x=1724811869;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OnEq06pl3BtFuL6wrZezgdiu8fb6CgrOsqDNulEkgO0=;
+ b=uYYPyUVXwpTyWZMl94A705pvNs7HI8847jgw8EobCZIzFj2AOvXiYk+xBpUmIcvE7y
+ 4EFjWs3at0gT8rmTnGxS0xLcXU2NvhVDUZYmQDWUXaJlj8sUNuRJMqiTq/zrYl3YMJHI
+ yZSElviB2DekjAMLC+ooqhsfkYikb1BG6ANoLiYO4cfizj2bk/rCsT/3Odo+8R8uQvcT
+ ZRAEpsmQNvabJsUKP6vAorl52fovDo9j53l8l7bl2XXvj/+HbJTs31T+Zf3wnsOSFKxX
+ 87Xfrjl/wzE9r5pCci2hb3P2EAnCctMnMSGelDv4vGTiLFt40spHpVLTrD+VCZMaO1tZ
+ y8Ug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCXTDxXOulLsIj/ANi32+9Skhk3t/8Ry1302kfDEsLzJBV0RIAnPGNpY5I6hjOKLA6oE8sqyrNkNY2@nongnu.org
+X-Gm-Message-State: AOJu0Yya3zEDmvo/8qy040Pq0NmzqEi2BzjvTm2fef/KSf3/3HoySAqz
+ OtUhsBbaeqgiWPe+V+hoIp69L+K3djiED+jn8j2VFq5DD8sEdtQZ6Vfwv6KT1CM=
+X-Google-Smtp-Source: AGHT+IEuxkuXE9guHfqo+E/4J1RIV//8hIFjvgJ8TCTHnxLumX98acMEBGpmv+sqxCPQXGW+PxZhlg==
+X-Received: by 2002:a17:90a:cb82:b0:2ca:8a93:a40b with SMTP id
+ 98e67ed59e1d1-2d5e9ec9ad8mr972246a91.31.1724207068646; 
+ Tue, 20 Aug 2024 19:24:28 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.140.20])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d5ebb79a6dsm369032a91.46.2024.08.20.19.24.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Aug 2024 19:24:28 -0700 (PDT)
+Message-ID: <7746fd12-edaf-4c20-ba6c-2b390d8441b5@linaro.org>
+Date: Wed, 21 Aug 2024 12:24:21 +1000
 MIME-Version: 1.0
-In-Reply-To: <20240820-fix-numa-range-v1-1-c5d6b889996f@flygoat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/1] Migration patches for 2024-08-20
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20240820170741.27055-1-farosas@suse.de>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAx4+HRTMVm5ygcAA--.59923S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tF4fGw4DAF1rZr1fXryUXFc_yoW8Xw17pr
- 43Zr4v9r48JF17ZFW8Gr13GF1UXrWkCa17W3W7tryUJwnrKr1rXr4kG3sF9F9rZw18Jrsx
- ZFyDtrWj9FWUZwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240820170741.27055-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.03,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,46 +97,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/21/24 03:07, Fabiano Rosas wrote:
+> The following changes since commit 075fd020afe3150a0e6c4b049705b358b597b65a:
+> 
+>    Merge tag 'nvme-next-pull-request' ofhttps://gitlab.com/birkelund/qemu into staging (2024-08-20 16:51:15 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/farosas/qemu.git tags/migration-20240820-pull-request
+> 
+> for you to fetch changes up to 4c107870e8b2ba3951ee0c46123f1c3b5d3a19d3:
+> 
+>    migration/multifd: FreeMultiFDRecvParams::data (2024-08-20 12:44:13 -0300)
+> 
+> ----------------------------------------------------------------
+> Migration pull request
+> 
+> - Peter's fix for a leak in multifd recv side
 
 
-On 2024/8/21 上午2:42, Jiaxun Yang wrote:
-> The size of lowram should be "gap" instead of the whole node.
-> 
-> This is failing kernel's sanity check:
-> 
-> [    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0xffffffff]
-> [    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x80000000-0x16fffffff]
-> [    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0x170000000-0x26fffffff]
-> [    0.000000] Warning: node 0 [mem 0x00000000-0xffffffff] overlaps with itself [mem 0x80000000-0x16fffffff]
-> 
-> Fixes: fc100011f38d ("hw/loongarch: Refine acpi srat table for numa memory")
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
->   hw/loongarch/acpi-build.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-> index 72bfc35ae6c2..2638f8743463 100644
-> --- a/hw/loongarch/acpi-build.c
-> +++ b/hw/loongarch/acpi-build.c
-> @@ -218,7 +218,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
->            *   highram: [VIRT_HIGHMEM_BASE, +(len - gap))
->            */
->           if (len >= gap) {
-> -            build_srat_memory(table_data, base, len, i, MEM_AFFINITY_ENABLED);
-> +            build_srat_memory(table_data, base, gap, i, MEM_AFFINITY_ENABLED);
->               len -= gap;
->               base = VIRT_HIGHMEM_BASE;
->               gap = machine->ram_size - VIRT_LOWMEM_SIZE;
-> 
-> ---
-> base-commit: 075fd020afe3150a0e6c4b049705b358b597b65a
-> change-id: 20240820-fix-numa-range-f1f0302e138d
-> 
-> Best regards,
-> 
-Thanks for catching this.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-
+r~
 
