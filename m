@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95424C52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C20C52D6F
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 10:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgiQc-0002uc-Md; Wed, 21 Aug 2024 06:18:58 -0400
+	id 1sgiQ7-0002O3-Tc; Wed, 21 Aug 2024 06:18:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgiQa-0002rj-Fq
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 06:18:56 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
+ id 1sgiQ3-0002HY-QN; Wed, 21 Aug 2024 06:18:25 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgiQY-0004Mq-OA
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 06:18:56 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-428ec6c190eso54888045e9.1
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 03:18:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
+ id 1sgiQ1-0004KN-4z; Wed, 21 Aug 2024 06:18:23 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-714186ce2f2so1105316b3a.0; 
+ Wed, 21 Aug 2024 03:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724235532; x=1724840332; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724235498; x=1724840298; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8cJ8ZLRBQXJpfN0/YVV8zxPpEjdPLb4aPd4vjCY4qWo=;
- b=VAiNnifcDHdmBRjQ/TPDsnKLHDccFfERQxcr7NGeHh66YgS+mSgGaD+i5zkR479Uhw
- vtS3wBGVKeAh+m3Smzeh76fw/juMc1fkVXarkTmVV2Zn4uf1El5QZSnKl12GhOXLLcPP
- ptQLA2rmlt967skFBat2coo798FUORQC77zn+Rkb2iEbFQv+JXvAtQglhidHu8Q7C8dq
- 0LXjE8oVedl71iPjeImicw7SseSv42dQ1GmCjOZtoW76u+OaHr2s3QokcNMH2qiqHjM6
- JMToIwVYGuK2iWfdZjxtT3W7TX6u4rU9DMg7M7eqLuLScNMTrwF8x6v4ZlnXM0Y60mrq
- WFow==
+ bh=QXre87V6dW4MjCwTivGblqjyuvQjV8pjZqbL7toTXcg=;
+ b=VywEK1fuMUfZehJ48+kfyi79+EHMW+L5TeU5XD7/az2xXGej8wVsCtnSeSIuRF4Lg0
+ LMmW/6SZv62SdAVMVXiyyrHuD9F/68tuiK54mOHt6oRWjidYyAJInLxX+N2EIKaYTogB
+ hdrCAVUAeE6q5wuhjxf9fHBRA6It3gFkWrg9jFQ8+jFhbYPryhNsKJkjPVr5EmiTE9GE
+ S5WYltm6Sbcuhj/fox/OEf3RqM+56gmYFJXMUN7df87Pr9+3lV5mXbdTvf2irX1PukMg
+ ZFO9Go/ECXygmp8R4lc9P8OP++vaURbgDZMXmNnQjhFVeHDnS08If1xaWk6Cah7xcCvD
+ 1lIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724235532; x=1724840332;
+ d=1e100.net; s=20230601; t=1724235498; x=1724840298;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8cJ8ZLRBQXJpfN0/YVV8zxPpEjdPLb4aPd4vjCY4qWo=;
- b=knc6WEgM2yTuM+yBYUDjJ3h8LUjToKovCpjGHDiHODvJBqT3HZZO3mG5j1L9Jh6HKK
- HsZFsI1O18bRC4W3mPVKX+IYdanbFOr5hbS9KyKiooL0jpBBlasX4Vu9NFBTmax3oN9L
- c6Zu2FZzLHCjGExiNFc+0qNVjzybQ8LsdYmyTw5/C95VpINeyaXKZn+b9M3Jc2EkZM73
- Y9M+/zJ2oMrQ7V3aY4UfHkvP3HbTOMy4lM485OJbdSDjdy6IE1fQ4yt/B2VQDOS0VHCC
- UFIOOKCQIDLnPZWtriQSHuIH/fnOFGa1tEFfYmEFU9o7KCMYRScKH4sDIOUtVOMqSlxe
- Xreg==
+ bh=QXre87V6dW4MjCwTivGblqjyuvQjV8pjZqbL7toTXcg=;
+ b=kBw3WxgtaLui66m8Ca8gfaapLov+GC88z6z3O8wjZKVm8//2AdcoqrMJC8G/MzdkjB
+ 8n0Qhapvy5l2AbhAYVlHwh22yYZ1WSm5PE/XWjeBQim7i7qFKp2bIMxF+3BHHR/VZeeZ
+ f8EgL7coGzyqHSuORT9pgDa4UClH3iROayVscyGYj2cHR+mlhJjFAU+YI7fCthaLiRCV
+ IxFLXS2e8q0ThC4wYo7ml8HaY5pu8PU14SkRFR7K58y/OVQwpJeevpDfuNSgx8UGDBxw
+ AKMwou9TJf2TSMT1r2xbzRYNteRtbdrhmDa05Dux1IJulEOKOdKxXbiYDw8TXxfUX3PX
+ jdPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTCiX+FySzmrYKRYa2dUEiWXoxq0Fpjdj40YsO05htaBrqHApbAnfWuwvHksECrgVK0Tjf5q+KauJX@nongnu.org
-X-Gm-Message-State: AOJu0YwxWtYGXwhsCCH/lbYIiOrf+Zt6Gmq8/c3rRBJWhPhuqFGrwDkb
- RLImBf2ZwvAXNm41aGD5LbP2hCnL86cxk3QEqls5gdti2e/jT6s7glwGc8OA+4w=
-X-Google-Smtp-Source: AGHT+IEx/GaXauXCcpMnLVmbeOkmJKzJVIfHbZmVpe0BQzIb+cIiTM2JVyP4mrH4tJuFVcKRXmR67g==
-X-Received: by 2002:a05:600c:4f09:b0:427:b995:5bd0 with SMTP id
- 5b1f17b1804b1-42abd25ddf5mr13907405e9.23.1724235532117; 
- Wed, 21 Aug 2024 03:18:52 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.218.99])
+ AJvYcCUmRKe2Z8wpgmvWzOv9slvjvjvfRBz46wcon/9D5zcppEqLn8Gljqz2EyPvDKxwLractNBtuP1F273l@nongnu.org
+X-Gm-Message-State: AOJu0Yy7Tmk3sYIOzOo9DSWoFLb9HAe/HDYnhAbDnn1r8khDLYhCINvu
+ 9QJlXWc39dXm/F6qZk5WBsQgd147/O10EZpXn9SDAtU3iXbLoHUp
+X-Google-Smtp-Source: AGHT+IFdUQ7UEwIpoqc/2mGJ6n5/muQJCVcmJOxtidnTFLF7t97Tty6t6xXOG6Bb2J/VaLLulHr23Q==
+X-Received: by 2002:a05:6a21:1805:b0:1be:c3c1:7be8 with SMTP id
+ adf61e73a8af0-1cada091543mr1655530637.26.1724235498195; 
+ Wed, 21 Aug 2024 03:18:18 -0700 (PDT)
+Received: from [172.20.149.24] ([222.151.198.97])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42abed8bbebsm20287035e9.7.2024.08.21.03.18.50
+ 98e67ed59e1d1-2d5eb8d11desm1371743a91.12.2024.08.21.03.18.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Aug 2024 03:18:51 -0700 (PDT)
-Message-ID: <5ddfefcd-2c74-43b6-bb5f-9169facc6b88@linaro.org>
-Date: Wed, 21 Aug 2024 12:18:49 +0200
+ Wed, 21 Aug 2024 03:18:17 -0700 (PDT)
+Message-ID: <fb23e042-4daf-478f-afae-501b7b2aa3b6@gmail.com>
+Date: Wed, 21 Aug 2024 19:18:11 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/35] tests/avocado/avocado_qemu: Fix the "from"
- statements in linuxtest.py
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
- "Daniel P . Berrange" <berrange@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-References: <20240821082748.65853-1-thuth@redhat.com>
- <20240821082748.65853-6-thuth@redhat.com>
- <b5d2ffce-3f78-4e20-98b3-f5017f31e227@linaro.org>
- <ea5ff51b-c0e9-4e20-8100-540c6e711110@redhat.com>
+Subject: Re: [PATCH for-9.2 v7 0/9] virtio-net: add support for SR-IOV
+ emulation
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ea5ff51b-c0e9-4e20-8100-540c6e711110@redhat.com>
+From: Yui Washizu <yui.washidu@gmail.com>
+In-Reply-To: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=yui.washidu@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,52 +105,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/8/24 12:07, Thomas Huth wrote:
-> On 21/08/2024 11.31, Philippe Mathieu-Daudé wrote:
->> On 21/8/24 10:27, Thomas Huth wrote:
->>> Without this change, the new Avocado v103 fails to find the tests
->>> that are based on the LinuxTest class.
->>
->> Reorder before previous patch?
-> 
-> The funny thing is that Avocado v88 breaks the other way round if this 
-> patch gets applied first. So if you are worried about bisecting, we'd 
-> need to squash this into the patch that updates the version. OTOH, it's 
-> not a big breakage, just some tests are not run by the test runner, so I 
-> think it's ok to keep it separate.
 
-Argh OK, fine then!
+On 2024/08/13 15:36, Akihiko Odaki wrote:
+> Based-on: <20240802-reuse-v11-0-fb83bb8c19fb@daynix.com>
+> ("[PATCH for-9.2 v11 00/11] hw/pci: SR-IOV related fixes and improvements")
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I couldn't apply this patch series
+after applying "[PATCH for-9.2 v11 00/11] hw/pci: SR-IOV related fixes 
+and improvements".
 
-I'm not adding my R-b because I don't understand what is
-wrong in the current code and the commit description is
-a justification but not an explanation; but I don't mind.
 
-> 
->   Thomas
-> 
-> 
->>> Suggested-by: Cleber Rosa <crosa@redhat.com>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   tests/avocado/avocado_qemu/linuxtest.py | 4 ++--
->>>   1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/tests/avocado/avocado_qemu/linuxtest.py 
->>> b/tests/avocado/avocado_qemu/linuxtest.py
->>> index e1dc838b1c..66fb9f1507 100644
->>> --- a/tests/avocado/avocado_qemu/linuxtest.py
->>> +++ b/tests/avocado/avocado_qemu/linuxtest.py
->>> @@ -13,8 +13,8 @@
->>>   from avocado.utils import cloudinit, datadrainer, process, vmimage
->>> -from . import LinuxSSHMixIn
->>> -from . import QemuSystemTest
->>> +from avocado_qemu import LinuxSSHMixIn
->>> +from avocado_qemu import QemuSystemTest
->>>   if os.path.islink(os.path.dirname(os.path.dirname(__file__))):
->>>       # The link to the avocado tests dir in the source code directory
->>
-> 
+Regards,
 
+Yui Washizu
+
+
+>
+> Introduction
+> ------------
+>
+> This series is based on the RFC series submitted by Yui Washizu[1].
+> See also [2] for the context.
+>
+> This series enables SR-IOV emulation for virtio-net. It is useful
+> to test SR-IOV support on the guest, or to expose several vDPA devices
+> in a VM. vDPA devices can also provide L2 switching feature for
+> offloading though it is out of scope to allow the guest to configure
+> such a feature.
+>
+> The PF side code resides in virtio-pci. The VF side code resides in
+> the PCI common infrastructure, but it is restricted to work only for
+> virtio-net-pci because of lack of validation.
+>
+> User Interface
+> --------------
+>
+> A user can configure a SR-IOV capable virtio-net device by adding
+> virtio-net-pci functions to a bus. Below is a command line example:
+>    -netdev user,id=n -netdev user,id=o
+>    -netdev user,id=p -netdev user,id=q
+>    -device pcie-root-port,id=b
+>    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
+>
+> The VFs specify the paired PF with "sriov-pf" property. The PF must be
+> added after all VFs. It is user's responsibility to ensure that VFs have
+> function numbers larger than one of the PF, and the function numbers
+> have a consistent stride.
+>
+> Keeping VF instances
+> --------------------
+>
+> A problem with SR-IOV emulation is that it needs to hotplug the VFs as
+> the guest requests. Previously, this behavior was implemented by
+> realizing and unrealizing VFs at runtime. However, this strategy does
+> not work well for the proposed virtio-net emulation; in this proposal,
+> device options passed in the command line must be maintained as VFs
+> are hotplugged, but they are consumed when the machine starts and not
+> available after that, which makes realizing VFs at runtime impossible.
+>
+> As an strategy alternative to runtime realization/unrealization, this
+> series proposes to reuse the code to power down PCI Express devices.
+> When a PCI Express device is powered down, it will be hidden from the
+> guest but will be kept realized. This effectively implements the
+> behavior we need for the SR-IOV emulation.
+>
+> Summary
+> -------
+>
+> Patch 1 disables ROM BAR, which virtio-net-pci enables by default, for
+> VFs.
+> Patch 2 makes zero stride valid for 1 VF configuration.
+> Patch 3 and 4 adds validations.
+> Patch 5 adds user-created SR-IOV VF infrastructure.
+> Patch 6 makes virtio-pci work as SR-IOV PF for user-created VFs.
+> Patch 7 allows user to create SR-IOV VFs with virtio-net-pci.
+>
+> [1] https://patchew.org/QEMU/1689731808-3009-1-git-send-email-yui.washidu@gmail.com/
+> [2] https://lore.kernel.org/all/5d46f455-f530-4e5e-9ae7-13a2297d4bc5@daynix.com/
+>
+> Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Changes in v7:
+> - Removed #include <error-report.h>, which is no longer needed.
+> - Rebased.
+> - Link to v6: https://lore.kernel.org/r/20240802-sriov-v6-0-0c8ff49c4276@daynix.com
+>
+> Changes in v6:
+> - Added ARI extended capability.
+> - Rebased.
+> - Link to v5: https://lore.kernel.org/r/20240715-sriov-v5-0-3f5539093ffc@daynix.com
+>
+> Changes in v5:
+> - Dropped the RFC tag.
+> - Fixed device unrealization.
+> - Rebased.
+> - Link to v4: https://lore.kernel.org/r/20240428-sriov-v4-0-ac8ac6212982@daynix.com
+>
+> Changes in v4:
+> - Added patch "hw/pci: Fix SR-IOV VF number calculation" to fix division
+>    by zero reported by Yui Washizu.
+> - Rebased.
+> - Link to v3: https://lore.kernel.org/r/20240305-sriov-v3-0-abdb75770372@daynix.com
+>
+> Changes in v3:
+> - Rebased.
+> - Link to v2: https://lore.kernel.org/r/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com
+>
+> Changes in v2:
+> - Changed to keep VF instances.
+> - Link to v1: https://lore.kernel.org/r/20231202-sriov-v1-0-32b3570f7bd6@daynix.com
+>
+> ---
+> Akihiko Odaki (9):
+>        hw/pci: Do not add ROM BAR for SR-IOV VF
+>        hw/pci: Fix SR-IOV VF number calculation
+>        pcie_sriov: Ensure PF and VF are mutually exclusive
+>        pcie_sriov: Check PCI Express for SR-IOV PF
+>        pcie_sriov: Allow user to create SR-IOV device
+>        virtio-pci: Implement SR-IOV PF
+>        virtio-net: Implement SR-IOV VF
+>        docs: Document composable SR-IOV device
+>        pcie_sriov: Make a PCI device with user-created VF ARI-capable
+>
+>   MAINTAINERS                    |   1 +
+>   docs/system/index.rst          |   1 +
+>   docs/system/sriov.rst          |  37 ++++++
+>   include/hw/pci/pci_device.h    |   6 +-
+>   include/hw/pci/pcie_sriov.h    |  21 +++
+>   include/hw/virtio/virtio-pci.h |   1 +
+>   hw/pci/pci.c                   |  76 +++++++----
+>   hw/pci/pcie_sriov.c            | 295 +++++++++++++++++++++++++++++++++--------
+>   hw/virtio/virtio-net-pci.c     |   1 +
+>   hw/virtio/virtio-pci.c         |  24 +++-
+>   10 files changed, 378 insertions(+), 85 deletions(-)
+> ---
+> base-commit: f5cebc77fe020e6ca0c33d8e06cd36edf3ff1d4c
+> change-id: 20231202-sriov-9402fb262be8
+>
+> Best regards,
 
