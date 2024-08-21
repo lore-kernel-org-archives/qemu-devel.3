@@ -4,87 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E832BC52D7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 13:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73026C52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 13:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sglYU-0006yR-Og; Wed, 21 Aug 2024 09:39:18 -0400
+	id 1sglpQ-0006vJ-TQ; Wed, 21 Aug 2024 09:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sglYT-0006xu-Qh
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 09:39:18 -0400
-Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sglpO-0006su-Fw; Wed, 21 Aug 2024 09:56:47 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sglYS-0008FB-An
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 09:39:17 -0400
-Received: by mail-vs1-xe2f.google.com with SMTP id
- ada2fe7eead31-498d7ab8fefso269174137.1
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 06:39:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724247555; x=1724852355; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=O3dm7p2v7Jy6x5ueMRvAp6OK6Ue//DKjosRhS4/nHWk=;
- b=FXOy6oqg1w8I2W48Emix9uR/co5v1izoy139ZCRkhmc8NmQtUcUEeGGcMuzhD6/qL2
- h7xrixclxv3nVThq1wu0rpUnYPfSU+UMeyehtDgWxD/XEa6SmNwIEH3Eq5V0U6zXmx5b
- Vu+WP8+SabyBW8FY0GFLmC/qCLsK/g4W/3W1Xl3dG2pEK0rdli3Ssz46GDBl+Ra+K2X2
- dSDFy7V35v7EkRttQj+eqRgnDGWDBo5W1T3dZ9HuEdl5bkohaUVW0LvdXhoV7gqv2fKV
- dPFuebZfpsTJTqQVitDMFwSEvME7ajx9093P5gJ5lkbmcYSbD6NASDGn1WEByuxAa/MN
- iR0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724247555; x=1724852355;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=O3dm7p2v7Jy6x5ueMRvAp6OK6Ue//DKjosRhS4/nHWk=;
- b=kBcoBFyiOXIqmkHA5c/bzM7dAGX9MSpU/mQqm0nvdrnqQOjZRJYE0T+YH/UObkEdAM
- meYwyJq69QCt89k4+rjgJdIjIereMKNrjYUGAhQ16a35PDQmtyjifxXMxs/sXoi9tS2t
- gX/X9v37DfBR6zsFl9lnTh8RtzkxHjquqzyhVopXBRD7/dPP+xW+IHweR5lfnAKldF+G
- VT/Axc6oaxyfUz3c3BR0Z0BgDqM08XK7KFAQKFn2lMd4nKuQ1Ho8TJ+BbYDt0+KbMeRT
- ZI5RwrBuh6obrhI1aU1O6c13prLxaGYh6dptzbBeScksoyV34LvYU+mHqSTyT2m0IknB
- /ESw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeE8UpL1LBEzemCD9yGCt3lhoP4N4WMjZeBRC3dRCmxfkZdiPod2G+BijGNpc7OgeGt6L+1TMX3eoI@nongnu.org
-X-Gm-Message-State: AOJu0YwKVD137tGMNDHRhUCE4uVoJidVAooPTw61q1Y330h31XyMuWaR
- SIJgFcGLpK7M+8RZzAakhXXS860Fdi2+oS0u1pqFaBLRLk5nJ3xPyQZ9r6t3slqKGnETmBCILh6
- m2aXl3LrZZx+zcrJ6n5wwV5sUH8M=
-X-Google-Smtp-Source: AGHT+IEZcGejc2ShTBm0L+KzlMJAw1FcRM418JX5om+k1vhhnAWhTUYZTT1GYS2qaPTMGfLycxfjCnuhqA3gGvo+MC0=
-X-Received: by 2002:a05:6102:3909:b0:493:ce48:a2ed with SMTP id
- ada2fe7eead31-498d2fbff87mr2340476137.29.1724247554844; Wed, 21 Aug 2024
- 06:39:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sglpM-0007cB-PT; Wed, 21 Aug 2024 09:56:46 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6AFFA21C3F;
+ Wed, 21 Aug 2024 13:56:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724248601; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q2T37xBdSvZZLS6IFHbQ7iDsE0FClHX1T0uIHLjtLaw=;
+ b=ciFffWpc/x8VdCIUfZSYdWpW4Jq7KwhWShMo7iXa2LNoBj2kqJWldyaZrCzupriGW3TJtc
+ uqBVJWkTSbOdPW9BxqiUHRXeHQiNy45jinhWKRkyhbHJLqkkzd09c48yWDrvsX6XsOBMco
+ zLnvg7uJptiV1PQB/Rc0BbP7UiZHWtQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724248601;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q2T37xBdSvZZLS6IFHbQ7iDsE0FClHX1T0uIHLjtLaw=;
+ b=V6NKtYorBxqn0momJ0ZncjCZmZkPDKkvC9BtBd3BC/JFau65suLbH3DCFjbJnXfRZDHlHA
+ hKG7cvjR3d12x/Dw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ciFffWpc;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=V6NKtYor
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724248601; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q2T37xBdSvZZLS6IFHbQ7iDsE0FClHX1T0uIHLjtLaw=;
+ b=ciFffWpc/x8VdCIUfZSYdWpW4Jq7KwhWShMo7iXa2LNoBj2kqJWldyaZrCzupriGW3TJtc
+ uqBVJWkTSbOdPW9BxqiUHRXeHQiNy45jinhWKRkyhbHJLqkkzd09c48yWDrvsX6XsOBMco
+ zLnvg7uJptiV1PQB/Rc0BbP7UiZHWtQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724248601;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q2T37xBdSvZZLS6IFHbQ7iDsE0FClHX1T0uIHLjtLaw=;
+ b=V6NKtYorBxqn0momJ0ZncjCZmZkPDKkvC9BtBd3BC/JFau65suLbH3DCFjbJnXfRZDHlHA
+ hKG7cvjR3d12x/Dw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EABC6139C2;
+ Wed, 21 Aug 2024 13:56:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id tEGdKxjyxWYdKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 21 Aug 2024 13:56:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Arisetty, Chakri" <carisett@akamai.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-block@nongnu.org" <qemu-block@nongnu.org>
+Cc: "Peter Xu <peterx@redhat.com>"@imap1.dmz-prg2.suse.org,
+ "Kevin Wolf <kwolf@redhat.com>"@imap1.dmz-prg2.suse.org,
+ "Eric  Blake <eblake@redhat.com>"@imap1.dmz-prg2.suse.org
+Subject: Re: Issue with QEMU Live Migration
+In-Reply-To: <1ABDAA2B-8582-4B98-81D3-8F71DE62718C@akamai.com>
+References: <1ABDAA2B-8582-4B98-81D3-8F71DE62718C@akamai.com>
+Date: Wed, 21 Aug 2024 10:56:38 -0300
+Message-ID: <874j7e0yjt.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240818114257.21456-1-dorjoychy111@gmail.com>
- <20240818114257.21456-5-dorjoychy111@gmail.com>
- <bffedf65-6046-4264-a2fe-011ff8c58860@amazon.com>
- <CAFfO_h7+FEzp-FrYM68A104CyNKgUfEReB+o9gYg5i-f=5DsVg@mail.gmail.com>
- <ZsNqerjjLCJ2OICd@redhat.com>
- <CAFfO_h5uQWrEKVK+E_QW7x64kdPms4uFeP8TjDVq7JEWANKXPw@mail.gmail.com>
- <ZsNuf4jSSF4F37Pp@redhat.com>
- <CAFfO_h6V1o3jx4sJ55+Wn7FiXpCcLNrZQtMboR4t6FMQuzg80w@mail.gmail.com>
-In-Reply-To: <CAFfO_h6V1o3jx4sJ55+Wn7FiXpCcLNrZQtMboR4t6FMQuzg80w@mail.gmail.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Wed, 21 Aug 2024 19:39:08 +0600
-Message-ID: <CAFfO_h4gnhxKZFvcFNC0Uxd-rS+aK9Dyhr31ozB9EASM60E+Ng@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] machine/nitro-enclave: Add built-in Nitro Secure
- Module device
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org, agraf@csgraf.de, 
- stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
- marcel.apfelbaum@gmail.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
- envelope-from=dorjoychy111@gmail.com; helo=mail-vs1-xe2f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 6AFFA21C3F
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.58 / 50.00]; BAYES_HAM(-2.07)[95.48%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_EQ_ADDR_SOME(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,akamai.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,15 +132,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Daniel,
-The libvirt-ci repository has been updated with the libcbor
-dependency. Should I just update my submodule locally to point to the
-new master branch and then do a separate commit i.e., "Updated
-submodule..." and _then_ do this[1] as part of whatever commit
-introduces the libcbor dependency in QEMU?
+"Arisetty, Chakri" <carisett@akamai.com> writes:
 
-[1] https://www.qemu.org/docs/master/devel/testing.html#adding-new-build-pre-requisites
+> Hello,
+>
+> I=E2=80=99m having trouble with live migration and I=E2=80=99m using QEMU=
+ 7.2.0 on Debian 11.
+>
+> Migration state switches to pre-switchover state during the RAM migration.
+>
+> My assumption is that disks are already migrated and there are no further=
+ dirty pages to be transferred from source host to destination host. Theref=
+ore, NBD client on the source host closes the connection to the NBD server =
+on the destination host. But we observe that there are still some dirty pag=
+es being transferred.
+> Closing prematurely NBD connection results in BLOCK JOB error.
+> In the RAM migration code (migration/migration.c), I=E2=80=99d like to ch=
+eck for block mirror job=E2=80=99s status before RAM migration state is mov=
+ed to pre-switchover. I=E2=80=99m unable to find any block job related code=
+ in RAM migration code.
+>
+> Could someone help me figuring out what might be going wrong or suggest a=
+ny troubleshooting steps or advice to get around the issue?
+>
+> Thanks
+> Chakri
 
-Regards,
-Dorjoy
+Hi, I believe it was you who opened this bug as well?=20
+
+https://gitlab.com/qemu-project/qemu/-/issues/2482
+
+So the core of the issue here is that the block job is transitioning to
+ready while the migration is still ongoing so there's still dirtying
+happening.
+
+Have you looked at the documentation at
+docs/interop/live-block-operations.rst? Section "QMP invocation for live
+storage migration with ``drive-mirror`` + NBD", point 4 says that a
+block-job-cancel should be issues after BLOCK_JOB_READY is
+reached. Although there is mention of when the migration should be
+performed.
 
