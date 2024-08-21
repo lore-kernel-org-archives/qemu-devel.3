@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66759C52D7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 14:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66827C52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 14:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgmVx-0008Ov-PB; Wed, 21 Aug 2024 10:40:46 -0400
+	id 1sgmYb-0005jF-N8; Wed, 21 Aug 2024 10:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sgmVv-0008NB-EG; Wed, 21 Aug 2024 10:40:43 -0400
+ id 1sgmYZ-0005hS-9G; Wed, 21 Aug 2024 10:43:27 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sgmVi-0006UW-N3; Wed, 21 Aug 2024 10:40:43 -0400
+ id 1sgmYX-0006hn-Jv; Wed, 21 Aug 2024 10:43:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=bwsHAD0yGfpUtbHtpbE0bak+QsoyCzOaVlfL0UZSyDs=; b=JJ2kj9j6dT0rVM/1S5yBYWbTId
- k2ep6GXCAjJC4jvNOkD+TPfkPyz2nEwYQdmBdTuD4NuaYGKYPp4NAk8r9odgGzH1NuC2WwzxKr0Se
- fJbqufKJHOV2PtKppVefcWXAw0krUHll2ayftkwpjTXED0Q7FwrUQV7//V6SjBFKzn67Xeu8uYcwQ
- UxjTHXqmi3YmOYVJcEjCbkhP0ojsm7Oqdw9gb9/AVN+3Q6gVbPGWn0oIHWvTxUwiqQdPKiKjN4SH1
- X5a0nCEvzyIgRErLwbFKeLtt4jnqh8Uxx4+2uoSVVAJvvkA1U8xOgWcM0uwBuiDYu2UUikwO3k3i3
- qWWG9mvkAxSNbi4MjaaegsKDK1VYPfYFqWPxLHYWYEBeKoOnkrp5aQLL5PWCjfAd1KjrSSZG5sNfN
- KQe5Ed85X5jLCM9H9ax2r/7eF3hDKbzGzh/l9fi6eKkZJxAjJfyZvq8Tl4USuldckDeNE+P/NmD6W
- 254LGpLGeXyj/FuSq43kjfhOicd8+J1GWN2ap1FFXf933+6H6SILbDmBK6BJYJRVGOgf4Ze3CKSL0
- 8rpGFefHHwK8lfGtsE85uMODUZT4qyLIWqsqsEhWqBSfVigf5radFvk0USKLoG1v18ITr3lNy42VW
- fQraQo+KZYViLcMif1Wg+HFib0YQWfXq669p6TDzM=;
+ bh=oE0el3nOyexeQayR9MOJZz4Bmv9pn7dTyR6fop5vHaI=; b=WRFcXe9i9jiTPQp7Rijl2SdC6+
+ 7h12PdzVCXQMfzpzmhSvVEoSA+BZwvmYNvL7QLiOOyqgGkwlsmTF7aun2NKKyNKotMqZwTj7i0zTG
+ AkMiRdGlt2KTAK7Mq4fBgnUrqNCmqJgfwb4ENHz7cfT6/l9jIT3/J/vfeClZSfm/KMKsEjZEXsVLF
+ 2R+QZgTa4EY7HpbvBdbX7FORcka+wBplnNdTsAqfsXdPTG4sDrTI3dqe8AknfEkUE1BtOAAQcrEDA
+ DCVVsVC3y7LYspKQvbHifNDF93BXNme771W96v1Dp8FnXbdX0ORiLgLidDnUpFr54XkxE3kv/6xcO
+ 7OnRDq8lNogg4mx0T6ftxrxd3OPaVZjC8pEBj1u0aC5zeJD8CxN6omC0FUA4+CYY2BR9WEUI+l4Ly
+ eDtORjt4a3hzGZw/cX/UizE0rjeWd9akz6YvSJlIsxkBwgz9K9KpItvvLZwRBwwjnHS2wdwvx9Hmm
+ v9SCUhTiXHi+XxOj0VDOakutyW3dI2qFxm3kPZqzg/GG5jkDW4B73ImOIql+o0L6isw8u9a3egHKX
+ oLQahHnFLWJdpbgoFOgH800LZRLH+QCPXLz9aVts8wZ+vsffa9BvxegDXzNHEVxECYKWJO0TnWywD
+ KWwnYioW1sF2awBsB7YhMBQZfVg1xjXQpsyT9BWA4=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sgmUe-0001BX-DN; Wed, 21 Aug 2024 15:39:28 +0100
-Message-ID: <f98e6e97-40dd-4dc5-bdb9-c8129168e29d@ilande.co.uk>
-Date: Wed, 21 Aug 2024 15:39:31 +0100
+ id 1sgmXk-0001EV-G3; Wed, 21 Aug 2024 15:42:40 +0100
+Message-ID: <0fa1e7a5-cfa7-49e9-8bbd-5eac055e25cd@ilande.co.uk>
+Date: Wed, 21 Aug 2024 15:42:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
@@ -76,7 +76,7 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  qemu-riscv@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Song Gao <gaosong@loongson.cn>
 References: <20240814181534.218964-1-shentey@gmail.com>
- <20240814181534.218964-2-shentey@gmail.com>
+ <20240814181534.218964-4-shentey@gmail.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -103,12 +103,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240814181534.218964-2-shentey@gmail.com>
+In-Reply-To: <20240814181534.218964-4-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/5] hw: Remove unused inclusion of hw/char/serial.h
+Subject: Re: [PATCH 3/5] hw/ppc/Kconfig: Add missing SERIAL_ISA dependency to
+ POWERNV machine
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -136,64 +137,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 14/08/2024 19:15, Bernhard Beschow wrote:
 
+> The machine calls serial_hds_isa_init() which is provided by serial-isa.c,
+> guarded by SERIAL_ISA.
+> 
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   hw/char/riscv_htif.c | 1 -
->   hw/ppc/prep.c        | 1 -
->   hw/riscv/sifive_e.c  | 1 -
->   hw/riscv/sifive_u.c  | 1 -
->   4 files changed, 4 deletions(-)
+>   hw/ppc/Kconfig | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-> index 9bef60def1..54fd55c3e6 100644
-> --- a/hw/char/riscv_htif.c
-> +++ b/hw/char/riscv_htif.c
-> @@ -24,7 +24,6 @@
->   #include "qapi/error.h"
->   #include "qemu/log.h"
->   #include "hw/char/riscv_htif.h"
-> -#include "hw/char/serial.h"
->   #include "chardev/char.h"
->   #include "chardev/char-fe.h"
->   #include "qemu/timer.h"
-> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-> index 4eb5477069..fb58c312ac 100644
-> --- a/hw/ppc/prep.c
-> +++ b/hw/ppc/prep.c
-> @@ -25,7 +25,6 @@
->   
->   #include "qemu/osdep.h"
->   #include "hw/rtc/m48t59.h"
-> -#include "hw/char/serial.h"
->   #include "hw/block/fdc.h"
->   #include "net/net.h"
->   #include "hw/isa/isa.h"
-> diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
-> index 87d9602383..5a1959f2a9 100644
-> --- a/hw/riscv/sifive_e.c
-> +++ b/hw/riscv/sifive_e.c
-> @@ -35,7 +35,6 @@
->   #include "hw/boards.h"
->   #include "hw/loader.h"
->   #include "hw/sysbus.h"
-> -#include "hw/char/serial.h"
->   #include "hw/misc/unimp.h"
->   #include "target/riscv/cpu.h"
->   #include "hw/riscv/riscv_hart.h"
-> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index af5f923f54..efc8443c84 100644
-> --- a/hw/riscv/sifive_u.c
-> +++ b/hw/riscv/sifive_u.c
-> @@ -43,7 +43,6 @@
->   #include "hw/irq.h"
->   #include "hw/loader.h"
->   #include "hw/sysbus.h"
-> -#include "hw/char/serial.h"
->   #include "hw/cpu/cluster.h"
->   #include "hw/misc/unimp.h"
->   #include "hw/sd/sd.h"
-
-For the PReP machine:
+> diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+> index c235519881..5addad1124 100644
+> --- a/hw/ppc/Kconfig
+> +++ b/hw/ppc/Kconfig
+> @@ -39,6 +39,7 @@ config POWERNV
+>       select PCI_POWERNV
+>       select PCA9552
+>       select PCA9554
+> +    select SERIAL_ISA
+>       select SSI
+>       select SSI_M25P80
+>       select PNV_SPI
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
