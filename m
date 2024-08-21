@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D54CC52D7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 13:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E7BC52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 13:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sglAL-0000M8-NK; Wed, 21 Aug 2024 09:14:21 -0400
+	id 1sglLD-0002eJ-Hj; Wed, 21 Aug 2024 09:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yc01.jeong@samsung.com>)
- id 1sgb4Y-0001OL-8J
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:27:42 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sglLB-0002dX-Pu
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 09:25:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yc01.jeong@samsung.com>)
- id 1sgb4S-0006Yo-7j
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:27:41 -0400
-Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20240821022727epoutp012c82c5ed93187316cf6beb4dadf7983b~tnVs9_Bge1953819538epoutp01a
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 02:27:27 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20240821022727epoutp012c82c5ed93187316cf6beb4dadf7983b~tnVs9_Bge1953819538epoutp01a
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1724207247;
- bh=6tiRZHwnZKExrFVNMQJZvItEGtEj3DhO89ay/P6KYDU=;
- h=Subject:Reply-To:From:To:CC:Date:References:From;
- b=KovFZ70vl7mT1EcuPtcYeiTa+oQgYn+6VjSFsOQvZyqAg1Yl8Ob05q1l6ZVugcQJo
- rTNaxzYFpB66CixAKCb2Pb/eVSSL+QnNl6/qiAP3j+ZWCzSi1CyxwZaabrFQrqCQYy
- v4ZoOnUhnhCDsYsMjfgUS8oB/jn1QG0Jf0OxIC2g=
-Received: from epsmges1p4.samsung.com (unknown [182.195.42.56]) by
- epcas1p2.samsung.com (KnoxPortal) with ESMTP id
- 20240821022727epcas1p2b4f8230d9273311378c03f2cca39aea3~tnVseL-TC2587125871epcas1p2R;
- Wed, 21 Aug 2024 02:27:27 +0000 (GMT)
-X-AuditID: b6c32a38-995ff70000002812-f0-66c5508e088c
-Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
- epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
- A7.87.10258.E8055C66; Wed, 21 Aug 2024 11:27:26 +0900 (KST)
-Mime-Version: 1.0
-Subject: [PATCH 0/4] hw/ufs: ufs device testing function added and modified
-From: =?UTF-8?B?7KCV7Jyg7LCs?= <yc01.jeong@samsung.com>
-To: =?UTF-8?B?6rmA7KCc7Jqx?= <jeuk20.kim@samsung.com>
-CC: "thuth@redhat.com" <thuth@redhat.com>, "lvivier@redhat.com"
- <lvivier@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "jeongyuchan0629@gmail.com"
- <jeongyuchan0629@gmail.com>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p1>
-Date: Wed, 21 Aug 2024 11:27:26 +0900
-X-CMS-MailID: 20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sglL9-0002K4-1m
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 09:25:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724246728;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oGQFzdm8g/CqgNTekdlqFx3FsatVd0VO6mJuDVSqnws=;
+ b=KWwdZrE7vSS2s7TMVlQBobdCLOMDcd/J+7U08/yJw8KTXdzROaVGdPC4WxbavRN7ZeA6Rm
+ uNz7WeeGOBiIAU0yEYPTJOjTBzMh5DIydGjkfMF4uEPY4f3/Y3LaLDbyiSgzWEEaPDUaVA
+ 7Ktga9JbbGrLZU45pcg3ViBVu43iTcQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-567-aGspKrhRN825DcOrouCN_A-1; Wed, 21 Aug 2024 09:25:27 -0400
+X-MC-Unique: aGspKrhRN825DcOrouCN_A-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4280645e3e0so55109255e9.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 06:25:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724246721; x=1724851521;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oGQFzdm8g/CqgNTekdlqFx3FsatVd0VO6mJuDVSqnws=;
+ b=qHoVRteMgMLTe+t9eWghKBGEt7ZcHd+zq76B+ddRCEjhbrhC+fTON4mBa1vWnZlkQe
+ vsUxqerPdHxU1zBAwAuUeuZ0KnxlxRS6TI4+I9UiNF4wMbKS/sGE7BP6XfFpa/DBt0lB
+ DN8kn1tkj9Ulh/O/PtK9QBQi1WbF4PvNHbEBXkizuMPEY5wkSkgA1oZoGud6L+YfdzcB
+ etUbS/FdnLzVgJUM1PkID0OGlSrGdOuj3Tp4pAckMRamN+Cu17rsWeoIaiKjMpx9JCHE
+ 96S20eCo+yDjcgRigYCPtX5oZ9IZ0ZUXlgXvGYhZJ6EMoX06xxkmKrKqxFkvutgVG3/V
+ HX7A==
+X-Gm-Message-State: AOJu0YyF/mHbN8NnMMwS0G7e+htnm1sUUSMuy3uWlgp8Yz8Conk6j4ki
+ Ey1K/IcEymbzyglRaqrpEbWGLxBQSLu4DUD+ruV6QFFa2cM9Hz7ieUE7vsO6tvxw6t4vKx6uM+u
+ xKF62zXu11/BcBM/hRcXNhw9tG7bH9C1uXmpzcy5gO4cRf1APb5hbdlErt1JC
+X-Received: by 2002:a05:600c:4509:b0:426:58cb:8ca3 with SMTP id
+ 5b1f17b1804b1-42abd23c460mr17239285e9.21.1724246721308; 
+ Wed, 21 Aug 2024 06:25:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHsuNMT4DZmQIA4/NlAIN3DkZcd7C3ih6FiaI2ETkFrizx4NHwIvuV2hbOgzS/nXofu7AF2ng==
+X-Received: by 2002:a05:600c:4509:b0:426:58cb:8ca3 with SMTP id
+ 5b1f17b1804b1-42abd23c460mr17239025e9.21.1724246720703; 
+ Wed, 21 Aug 2024 06:25:20 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42abee86d2csm26025545e9.16.2024.08.21.06.25.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Aug 2024 06:25:20 -0700 (PDT)
+Date: Wed, 21 Aug 2024 15:25:18 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alexander Bulekov <alxndr@bu.edu>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, Philippe
+ =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Mauro Matteo Cascella
+ <mcascell@redhat.com>, Peter Xu <peterx@redhat.com>, Jason Wang
+ <jasowang@redhat.com>, David Hildenbrand <david@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Bandan Das <bsd@redhat.com>, "Edgar E . Iglesias"
+ <edgar.iglesias@gmail.com>, Darren Kenny <darren.kenny@oracle.com>, Bin
+ Meng <bin.meng@windriver.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Jon Maloy
+ <jmaloy@redhat.com>, Siqi Chen <coc.cyqh@gmail.com>, Michael Tokarev
+ <mjt@tls.msk.ru>
+Subject: Re: [PATCH v10 1/8] memory: prevent dma-reentracy issues
+Message-ID: <20240821152518.1a973a7b@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20230427211013.2994127-2-alxndr@bu.edu>
+References: <20230427211013.2994127-1-alxndr@bu.edu>
+ <20230427211013.2994127-2-alxndr@bu.edu>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 101P
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsWy7bCmrm5fwNE0gztTTCx6Xu1js7i/9Rqj
- xacGKYv92/6xWhzv3cFisfKYjQObx85Zd9k9nlzbzOTxft9VNo++LasYA1iiuGxSUnMyy1KL
- 9O0SuDI6pi9iK7jEXvFr3UemBsY5bF2MnBwSAiYSP54sYeli5OIQEtjBKPFkxiymLkYODl4B
- QYm/O4RBaoQFvCWOX21gArGFBBQkfiy/yQYRt5T4/GQamM0mYC7xftJ1RhBbRMBU4s/3dSwg
- NrPAR0aJaX8FIHbxSsxof8oCYUtLbF++lRHCFpW4ufotO4z9/th8qLiIROu9s8wQtqDEg5+7
- GUFOkxCQlFj/WhMiXC9x49pjqFdqJB613YIaoy9xrWMj2CpeAV+JhcuPgtksAqoSzSfWQNW7
- SBzvXMMMcaa8xPa3c5hBxjMLaEqs36UPEeaTePe1hxXm+h3znjBB2CoSiy6+hxojJfH1xDpm
- iMs8JPbfc4YEVKBE+9e97BMY5WYhgnMWkl2zEHYtYGRexSiWWlCcm55abFhgolecmFtcmpeu
- l5yfu4kRnBS0LHYwzn37Qe8QIxMH4yFGCQ5mJRHe7pcH04R4UxIrq1KL8uOLSnNSiw8xSnOw
- KInznrlSliokkJ5YkpqdmlqQWgSTZeLglGpgCvZKP17YcTenN8On0/z5V+bpaa1i86qDDtzm
- OxNw4dvKE5y7dKZXvLz/pTrBXq98oYfP0d76z394j3DtbPZwF5e48KkzWfzP79l/U7hTnwbJ
- s9tzbRO1392w9GuDhM69+tuKrrZePROPpl+6lKLIqX5iO+c6QT7pk/PMXaOlnfW+p545t8b5
- Bkdwa9G/BHnTW55KyqdtN6zbJPSVO3rb3jvm5/qEXgiWP1tzxT95yf23WSozO27efMV/QGli
- 44v7UrfVD4e+4u2WPDtndnn/39pLPg0VU+48jorOl35mvdtS88tLGcXTEgaLO4yL3pS/0fgR
- oPX6taLge7nIgCfvls5Skw0K3mw4sabIZrGeEktxRqKhFnNRcSIA5dZt/HkDAAA=
-X-CMS-RootMailID: 20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10
-References: <CGME20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p1>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=yc01.jeong@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 21 Aug 2024 09:14:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,32 +113,146 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: yc01.jeong@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From 936ef0a907bcf16809f9980c2d37e8fcb13697d2 Mon Sep 17 00:00:00 2001
-From: Yoochan Jeong <yc01.jeong@samsung.com>
-Date: Wed, 21 Aug 2024 10:45:28 +0900
-Subject: [PATCH 0/4] hw/ufs: ufs device testing function added and modified
+On Thu, 27 Apr 2023 17:10:06 -0400
+Alexander Bulekov <alxndr@bu.edu> wrote:
 
-Previously, it was only able to test virtual UFS devices if they properly
-read and write storage data. In this patch, three test functions are added
-to test if virtual UFS devices properly read and write its metadata.
-Each functions test reading and writing flags, attributes and descriptors.
-Related minor bugs and errors are also fixed.
+> Add a flag to the DeviceState, when a device is engaged in PIO/MMIO/DMA.
+> This flag is set/checked prior to calling a device's MemoryRegion
+> handlers, and set when device code initiates DMA.  The purpose of this
+> flag is to prevent two types of DMA-based reentrancy issues:
+> 
+> 1.) mmio -> dma -> mmio case
+> 2.) bh -> dma write -> mmio case
 
-Yoochan Jeong (4):
-  hw/ufs: minor bug fixes related to ufs-test
-  hw/ufs: ufs flag read/write test implemented
-  hw/ufs: ufs attribute read/write test implemented
-  hw/ufs: ufs descriptor read test implemented
+Alexander, with 9.0
+we are getting 
 
- hw/ufs/ufs.c           |  26 ++-
- tests/qtest/ufs-test.c | 414 ++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 432 insertions(+), 8 deletions(-)
+   warning: Blocked re-entrant IO on MemoryRegion: acpi-cpu-hotplug at addr: 0x0
 
--- 
-2.34.1
+during CPU hot-unplug, to my knowledge there shouldn't be any DMA involved
+there.
+The only access should be either from guest kernel or firmware(this one is under SMM mode)).
+
+Question is how this could happen on MMIO access which should be guarded by BQL?
+
+And where to start digging to find out if it's a genuine issue,
+or whether it's safe to use big hammer and disable reentrancy guard?
+
+
+> These issues have led to problems such as stack-exhaustion and
+> use-after-frees.
+> 
+> Summary of the problem from Peter Maydell:
+> https://lore.kernel.org/qemu-devel/CAFEAcA_23vc7hE3iaM-JVA6W38LK4hJoWae5KcknhPRD5fPBZA@mail.gmail.com
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/62
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/540
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/541
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/556
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/557
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/827
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1282
+> Resolves: CVE-2023-0330
+> 
+> Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  include/exec/memory.h  |  5 +++++
+>  include/hw/qdev-core.h |  7 +++++++
+>  softmmu/memory.c       | 16 ++++++++++++++++
+>  3 files changed, 28 insertions(+)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 15ade918ba..e45ce6061f 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -767,6 +767,8 @@ struct MemoryRegion {
+>      bool is_iommu;
+>      RAMBlock *ram_block;
+>      Object *owner;
+> +    /* owner as TYPE_DEVICE. Used for re-entrancy checks in MR access hotpath */
+> +    DeviceState *dev;
+>  
+>      const MemoryRegionOps *ops;
+>      void *opaque;
+> @@ -791,6 +793,9 @@ struct MemoryRegion {
+>      unsigned ioeventfd_nb;
+>      MemoryRegionIoeventfd *ioeventfds;
+>      RamDiscardManager *rdm; /* Only for RAM */
+> +
+> +    /* For devices designed to perform re-entrant IO into their own IO MRs */
+> +    bool disable_reentrancy_guard;
+>  };
+>  
+>  struct IOMMUMemoryRegion {
+> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+> index bd50ad5ee1..7623703943 100644
+> --- a/include/hw/qdev-core.h
+> +++ b/include/hw/qdev-core.h
+> @@ -162,6 +162,10 @@ struct NamedClockList {
+>      QLIST_ENTRY(NamedClockList) node;
+>  };
+>  
+> +typedef struct {
+> +    bool engaged_in_io;
+> +} MemReentrancyGuard;
+> +
+>  /**
+>   * DeviceState:
+>   * @realized: Indicates whether the device has been fully constructed.
+> @@ -194,6 +198,9 @@ struct DeviceState {
+>      int alias_required_for_version;
+>      ResettableState reset;
+>      GSList *unplug_blockers;
+> +
+> +    /* Is the device currently in mmio/pio/dma? Used to prevent re-entrancy */
+> +    MemReentrancyGuard mem_reentrancy_guard;
+>  };
+>  
+>  struct DeviceListener {
+> diff --git a/softmmu/memory.c b/softmmu/memory.c
+> index b1a6cae6f5..fe23f0e5ce 100644
+> --- a/softmmu/memory.c
+> +++ b/softmmu/memory.c
+> @@ -542,6 +542,18 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+>          access_size_max = 4;
+>      }
+>  
+> +    /* Do not allow more than one simultaneous access to a device's IO Regions */
+> +    if (mr->dev && !mr->disable_reentrancy_guard &&
+> +        !mr->ram_device && !mr->ram && !mr->rom_device && !mr->readonly) {
+> +        if (mr->dev->mem_reentrancy_guard.engaged_in_io) {
+> +            warn_report("Blocked re-entrant IO on "
+> +                    "MemoryRegion: %s at addr: 0x%" HWADDR_PRIX,
+> +                    memory_region_name(mr), addr);
+> +            return MEMTX_ACCESS_ERROR;
+> +        }
+> +        mr->dev->mem_reentrancy_guard.engaged_in_io = true;
+> +    }
+> +
+>      /* FIXME: support unaligned access? */
+>      access_size = MAX(MIN(size, access_size_max), access_size_min);
+>      access_mask = MAKE_64BIT_MASK(0, access_size * 8);
+> @@ -556,6 +568,9 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+>                          access_mask, attrs);
+>          }
+>      }
+> +    if (mr->dev) {
+> +        mr->dev->mem_reentrancy_guard.engaged_in_io = false;
+> +    }
+>      return r;
+>  }
+>  
+> @@ -1170,6 +1185,7 @@ static void memory_region_do_init(MemoryRegion *mr,
+>      }
+>      mr->name = g_strdup(name);
+>      mr->owner = owner;
+> +    mr->dev = (DeviceState *) object_dynamic_cast(mr->owner, TYPE_DEVICE);
+>      mr->ram_block = NULL;
+>  
+>      if (name) {
 
 
