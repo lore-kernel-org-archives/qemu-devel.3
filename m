@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C20C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 10:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1807AC52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 10:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgiQ7-0002O3-Tc; Wed, 21 Aug 2024 06:18:28 -0400
+	id 1sgiVP-0003iw-KR; Wed, 21 Aug 2024 06:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
- id 1sgiQ3-0002HY-QN; Wed, 21 Aug 2024 06:18:25 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
- id 1sgiQ1-0004KN-4z; Wed, 21 Aug 2024 06:18:23 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-714186ce2f2so1105316b3a.0; 
- Wed, 21 Aug 2024 03:18:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724235498; x=1724840298; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QXre87V6dW4MjCwTivGblqjyuvQjV8pjZqbL7toTXcg=;
- b=VywEK1fuMUfZehJ48+kfyi79+EHMW+L5TeU5XD7/az2xXGej8wVsCtnSeSIuRF4Lg0
- LMmW/6SZv62SdAVMVXiyyrHuD9F/68tuiK54mOHt6oRWjidYyAJInLxX+N2EIKaYTogB
- hdrCAVUAeE6q5wuhjxf9fHBRA6It3gFkWrg9jFQ8+jFhbYPryhNsKJkjPVr5EmiTE9GE
- S5WYltm6Sbcuhj/fox/OEf3RqM+56gmYFJXMUN7df87Pr9+3lV5mXbdTvf2irX1PukMg
- ZFO9Go/ECXygmp8R4lc9P8OP++vaURbgDZMXmNnQjhFVeHDnS08If1xaWk6Cah7xcCvD
- 1lIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724235498; x=1724840298;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QXre87V6dW4MjCwTivGblqjyuvQjV8pjZqbL7toTXcg=;
- b=kBw3WxgtaLui66m8Ca8gfaapLov+GC88z6z3O8wjZKVm8//2AdcoqrMJC8G/MzdkjB
- 8n0Qhapvy5l2AbhAYVlHwh22yYZ1WSm5PE/XWjeBQim7i7qFKp2bIMxF+3BHHR/VZeeZ
- f8EgL7coGzyqHSuORT9pgDa4UClH3iROayVscyGYj2cHR+mlhJjFAU+YI7fCthaLiRCV
- IxFLXS2e8q0ThC4wYo7ml8HaY5pu8PU14SkRFR7K58y/OVQwpJeevpDfuNSgx8UGDBxw
- AKMwou9TJf2TSMT1r2xbzRYNteRtbdrhmDa05Dux1IJulEOKOdKxXbiYDw8TXxfUX3PX
- jdPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmRKe2Z8wpgmvWzOv9slvjvjvfRBz46wcon/9D5zcppEqLn8Gljqz2EyPvDKxwLractNBtuP1F273l@nongnu.org
-X-Gm-Message-State: AOJu0Yy7Tmk3sYIOzOo9DSWoFLb9HAe/HDYnhAbDnn1r8khDLYhCINvu
- 9QJlXWc39dXm/F6qZk5WBsQgd147/O10EZpXn9SDAtU3iXbLoHUp
-X-Google-Smtp-Source: AGHT+IFdUQ7UEwIpoqc/2mGJ6n5/muQJCVcmJOxtidnTFLF7t97Tty6t6xXOG6Bb2J/VaLLulHr23Q==
-X-Received: by 2002:a05:6a21:1805:b0:1be:c3c1:7be8 with SMTP id
- adf61e73a8af0-1cada091543mr1655530637.26.1724235498195; 
- Wed, 21 Aug 2024 03:18:18 -0700 (PDT)
-Received: from [172.20.149.24] ([222.151.198.97])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d5eb8d11desm1371743a91.12.2024.08.21.03.18.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Aug 2024 03:18:17 -0700 (PDT)
-Message-ID: <fb23e042-4daf-478f-afae-501b7b2aa3b6@gmail.com>
-Date: Wed, 21 Aug 2024 19:18:11 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 v7 0/9] virtio-net: add support for SR-IOV
- emulation
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sgiVH-0003hF-H7; Wed, 21 Aug 2024 06:23:47 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sgiVA-0004vx-Tw; Wed, 21 Aug 2024 06:23:44 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wpj4s3WLlz6FH2w;
+ Wed, 21 Aug 2024 18:19:57 +0800 (CST)
+Received: from lhrpeml100004.china.huawei.com (unknown [7.191.162.219])
+ by mail.maildlp.com (Postfix) with ESMTPS id D58F51400DB;
+ Wed, 21 Aug 2024 18:23:35 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml100004.china.huawei.com (7.191.162.219) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 21 Aug 2024 11:23:35 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Wed, 21 Aug 2024 11:23:35 +0100
+To: Gavin Shan <gshan@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>
+CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
+ <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
+ <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
+ <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
+ "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "npiggin@gmail.com"
+ <npiggin@gmail.com>, "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
+ <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "shahuang@redhat.com" <shahuang@redhat.com>, "zhao1.liu@intel.com"
+ <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>
+Subject: RE: [PATCH RFC V3 17/29] arm/virt: Release objects for *disabled*
+ possible vCPUs after init
+Thread-Topic: [PATCH RFC V3 17/29] arm/virt: Release objects for *disabled*
+ possible vCPUs after init
+Thread-Index: AQHaveuckEaR/Tp4NUKcalC/yUyS9LIksGYAgAo1aXCAALcOgIABH0kAgADc+ICAAEc9cA==
+Date: Wed, 21 Aug 2024 10:23:35 +0000
+Message-ID: <1c31ab30bae6437fac7799227ca4bfd1@huawei.com>
+References: <20240613233639.202896-1-salil.mehta@huawei.com>
+ <20240613233639.202896-18-salil.mehta@huawei.com>
+ <51dc0813-7dc9-4927-a24b-bd718be54e46@redhat.com>
+ <6b435c1f2b934867b8d82850d6d866c6@huawei.com>
+ <9b7582f0-8149-4bf0-a1aa-4d4fe0d35e70@redhat.com>
+ <1252c2d35b3e40ed84d5d5ae454878a7@huawei.com>
+ <d2371011-e7a3-42fe-b1a3-a185fbf4a612@redhat.com>
+In-Reply-To: <d2371011-e7a3-42fe-b1a3-a185fbf4a612@redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: Yui Washizu <yui.washidu@gmail.com>
-In-Reply-To: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=yui.washidu@gmail.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.126.171.245]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,149 +104,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 2024/08/13 15:36, Akihiko Odaki wrote:
-> Based-on: <20240802-reuse-v11-0-fb83bb8c19fb@daynix.com>
-> ("[PATCH for-9.2 v11 00/11] hw/pci: SR-IOV related fixes and improvements")
-
-I couldn't apply this patch series
-after applying "[PATCH for-9.2 v11 00/11] hw/pci: SR-IOV related fixes 
-and improvements".
-
-
-Regards,
-
-Yui Washizu
-
-
->
-> Introduction
-> ------------
->
-> This series is based on the RFC series submitted by Yui Washizu[1].
-> See also [2] for the context.
->
-> This series enables SR-IOV emulation for virtio-net. It is useful
-> to test SR-IOV support on the guest, or to expose several vDPA devices
-> in a VM. vDPA devices can also provide L2 switching feature for
-> offloading though it is out of scope to allow the guest to configure
-> such a feature.
->
-> The PF side code resides in virtio-pci. The VF side code resides in
-> the PCI common infrastructure, but it is restricted to work only for
-> virtio-net-pci because of lack of validation.
->
-> User Interface
-> --------------
->
-> A user can configure a SR-IOV capable virtio-net device by adding
-> virtio-net-pci functions to a bus. Below is a command line example:
->    -netdev user,id=n -netdev user,id=o
->    -netdev user,id=p -netdev user,id=q
->    -device pcie-root-port,id=b
->    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
->    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
->    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
->    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
->
-> The VFs specify the paired PF with "sriov-pf" property. The PF must be
-> added after all VFs. It is user's responsibility to ensure that VFs have
-> function numbers larger than one of the PF, and the function numbers
-> have a consistent stride.
->
-> Keeping VF instances
-> --------------------
->
-> A problem with SR-IOV emulation is that it needs to hotplug the VFs as
-> the guest requests. Previously, this behavior was implemented by
-> realizing and unrealizing VFs at runtime. However, this strategy does
-> not work well for the proposed virtio-net emulation; in this proposal,
-> device options passed in the command line must be maintained as VFs
-> are hotplugged, but they are consumed when the machine starts and not
-> available after that, which makes realizing VFs at runtime impossible.
->
-> As an strategy alternative to runtime realization/unrealization, this
-> series proposes to reuse the code to power down PCI Express devices.
-> When a PCI Express device is powered down, it will be hidden from the
-> guest but will be kept realized. This effectively implements the
-> behavior we need for the SR-IOV emulation.
->
-> Summary
-> -------
->
-> Patch 1 disables ROM BAR, which virtio-net-pci enables by default, for
-> VFs.
-> Patch 2 makes zero stride valid for 1 VF configuration.
-> Patch 3 and 4 adds validations.
-> Patch 5 adds user-created SR-IOV VF infrastructure.
-> Patch 6 makes virtio-pci work as SR-IOV PF for user-created VFs.
-> Patch 7 allows user to create SR-IOV VFs with virtio-net-pci.
->
-> [1] https://patchew.org/QEMU/1689731808-3009-1-git-send-email-yui.washidu@gmail.com/
-> [2] https://lore.kernel.org/all/5d46f455-f530-4e5e-9ae7-13a2297d4bc5@daynix.com/
->
-> Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Changes in v7:
-> - Removed #include <error-report.h>, which is no longer needed.
-> - Rebased.
-> - Link to v6: https://lore.kernel.org/r/20240802-sriov-v6-0-0c8ff49c4276@daynix.com
->
-> Changes in v6:
-> - Added ARI extended capability.
-> - Rebased.
-> - Link to v5: https://lore.kernel.org/r/20240715-sriov-v5-0-3f5539093ffc@daynix.com
->
-> Changes in v5:
-> - Dropped the RFC tag.
-> - Fixed device unrealization.
-> - Rebased.
-> - Link to v4: https://lore.kernel.org/r/20240428-sriov-v4-0-ac8ac6212982@daynix.com
->
-> Changes in v4:
-> - Added patch "hw/pci: Fix SR-IOV VF number calculation" to fix division
->    by zero reported by Yui Washizu.
-> - Rebased.
-> - Link to v3: https://lore.kernel.org/r/20240305-sriov-v3-0-abdb75770372@daynix.com
->
-> Changes in v3:
-> - Rebased.
-> - Link to v2: https://lore.kernel.org/r/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com
->
-> Changes in v2:
-> - Changed to keep VF instances.
-> - Link to v1: https://lore.kernel.org/r/20231202-sriov-v1-0-32b3570f7bd6@daynix.com
->
-> ---
-> Akihiko Odaki (9):
->        hw/pci: Do not add ROM BAR for SR-IOV VF
->        hw/pci: Fix SR-IOV VF number calculation
->        pcie_sriov: Ensure PF and VF are mutually exclusive
->        pcie_sriov: Check PCI Express for SR-IOV PF
->        pcie_sriov: Allow user to create SR-IOV device
->        virtio-pci: Implement SR-IOV PF
->        virtio-net: Implement SR-IOV VF
->        docs: Document composable SR-IOV device
->        pcie_sriov: Make a PCI device with user-created VF ARI-capable
->
->   MAINTAINERS                    |   1 +
->   docs/system/index.rst          |   1 +
->   docs/system/sriov.rst          |  37 ++++++
->   include/hw/pci/pci_device.h    |   6 +-
->   include/hw/pci/pcie_sriov.h    |  21 +++
->   include/hw/virtio/virtio-pci.h |   1 +
->   hw/pci/pci.c                   |  76 +++++++----
->   hw/pci/pcie_sriov.c            | 295 +++++++++++++++++++++++++++++++++--------
->   hw/virtio/virtio-net-pci.c     |   1 +
->   hw/virtio/virtio-pci.c         |  24 +++-
->   10 files changed, 378 insertions(+), 85 deletions(-)
-> ---
-> base-commit: f5cebc77fe020e6ca0c33d8e06cd36edf3ff1d4c
-> change-id: 20231202-sriov-9402fb262be8
->
-> Best regards,
+SGkgR2F2aW4sDQoNCj4gIEZyb206IEdhdmluIFNoYW4gPGdzaGFuQHJlZGhhdC5jb20+DQo+ICBT
+ZW50OiBXZWRuZXNkYXksIEF1Z3VzdCAyMSwgMjAyNCA3OjI1IEFNDQo+ICBUbzogU2FsaWwgTWVo
+dGEgPHNhbGlsLm1laHRhQGh1YXdlaS5jb20+OyBxZW11LWRldmVsQG5vbmdudS5vcmc7DQo+ICBx
+ZW11LWFybUBub25nbnUub3JnOyBtc3RAcmVkaGF0LmNvbQ0KPiAgDQo+ICBIaSBTYWxpbCwNCj4g
+IA0KPiAgT24gOC8yMS8yNCAyOjQwIEFNLCBTYWxpbCBNZWh0YSB3cm90ZToNCj4gID4NCj4gID4g
+SSBkb27igJl0IHVuZGVyc3RhbmQgdGhpcyBjbGVhcmx5LiBBcmUgIHlvdSBzdWdnZXN0aW5nIHRv
+IHJldXNlIG9ubHkNCj4gID4gc2luZ2xlIHZDUFUgb2JqZWN0IHRvIGluaXRpYWxpemUgYWxsIEtW
+TSB2Q1BVcyBub3QgeWV0IHBsdWdnZWQ/IElmDQo+ICA+IHllcywgdGhlbiBJJ20gbm90IHN1cmUg
+d2hhdCBkbyB3ZSBnYWluIGhlcmUgYnkgYWRkaW5nIHRoaXMgY29tcGxleGl0eT8NCj4gID4gSXQg
+ZG9lcyBub3QgY29uc3VtZSB0aW1lIG9yIHJlc291cmNlcyBiZWNhdXNlIHdlIGFyZSBub3QgcmVh
+bGl6aW5nIGFueQ0KPiAgPiBvZiB0aGVzZSB2Q1BVIG9iamVjdCBpbiBhbnkgY2FzZS4NCj4gID4N
+Cj4gIA0KPiAgRmlyc3Qgb2YgYWxsLCBpdCBzZWVtcyB3ZSBoYXZlIGRpZmZlcmVudCBuYW1lcyBh
+bmQgdGVybXMgZm9yIHRob3NlIGNvbGQtDQo+ICBib290ZWQgdkNQVXMgYW5kIGhvdHBsdWdnYWJs
+ZSB2Q1BVcy4gRm9yIGV4YW1wbGUsIHZDUFUtMCBhbmQgdkNQVS0xDQo+ICBhcmUgY29sZC1ib290
+ZWQgdkNQVXMgd2hpbGUNCj4gIHZDUFUtMiBhbmQgdkNQVS0zIGFyZSBob3RwbHVnZ2FibGUgdkNQ
+VXMgd2hlbiB3ZSBoYXZlICctc21wDQo+ICBtYXhjcHVzPTQsY3B1cz0yJy4gTGV0cyBzdGljayB0
+byBjb252ZW50aW9uIGFuZCB0ZXJtcyBmb3IgZWFzaWVyIGRpc2N1c3Npb24uDQo+ICANCj4gIFRo
+ZSBpZGVhIGlzIGF2b2lkIGluc3RhbnRpYXRpbmcgaG90cGx1Z2dhYmxlIHZDUFVzIGluIHZpcnRt
+YWNoX2luaXQoKSBhbmQNCj4gIHJlbGVhc2VkIGluIHRoZSBzYW1lIGZ1bmN0aW9uIGZvciB0aG9z
+ZSBob3RwbHVnZ2FibGUgdkNQVXMuIEFzIEkgY2FuDQo+ICB1bmRlcnN0YW5kLCB0aG9zZSBob3Rw
+bHVnZ2FibGUgdkNQVSBpbnN0YW5jZXMgYXJlIHNlcnZpbmcgZm9yIHR3bw0KPiAgcHVycG9zZXM6
+ICgxKSBSZWxheCB0aGUgY29uc3RyYWludCB0aGF0IGFsbCB2Q1BVJ3MgKGt2bSkgZmlsZSBkZXNj
+cmlwdG9yIGhhdmUNCj4gIHRvIGJlIGNyZWF0ZWQgYW5kIHBvcHVsYXRlZDsgDQoNCg0KV2UgYXJl
+IGRldmlzaW5nICp3b3JrYXJvdW5kcyogaW4gUWVtdSBmb3IgdGhlIEFSTSBDUFUgYXJjaGl0ZWN0
+dXJhbCBjb25zdHJhaW50cw0KaW4gS1ZNIGFuZCBpbiBHdWVzdCBLZXJuZWwsICAqbm90IHJlbGF4
+aW5nKiB0aGVtLiBXZSBhcmUgbm90IGFsbG93ZWQgdG8gbWVkZGxlIHdpdGgNCnRoZSBjb25zdHJh
+aW50cy4gVGhhdCBpcyB0aGUgd2hvbGUgcG9pbnQuDQoNCk5vdCBoYXZpbmcgdG8gcmVzcGVjdCB0
+aG9zZSBjb25zdHJhaW50cyBsZWQgdG8gcmVqZWN0aW9uIG9mIHRoZSBlYXJsaWVyIGF0dGVtcHRz
+IHRvDQp1cHN0cmVhbSBWaXJ0dWFsIENQVSBIb3RwbHVnIGZvciBBUk0uDQoNCg0KKDIpIEhlbHAg
+dG8gaW5zdGFudGlhdGUgYW5kIHJlYWxpemUNCj4gIEdJQ3YzIG9iamVjdC4NCj4gIA0KPiAgRm9y
+ICgxKSwgSSBkb24ndCB0aGluayB3ZSBoYXZlIHRvIGluc3RhbnRpYXRlIHRob3NlIGhvdHBsdWdn
+YWJsZSB2Q1BVcyBhdCBhbGwuDQo+ICBJbiB0aGUgYWJvdmUgZXhhbXBsZSB3aGVyZSB3ZSBoYXZl
+IGNvbW1hbmQgbGluZSAnLXNtcA0KPiAgbWF4Y3B1cz00LGNwdXM9MicsIGl0J3MgdW5uZWNlc3Nh
+cnkgdG8gaW5zdGFudGlhdGUNCj4gIHZDUFUtMyBhbmQgdkNQVS00IHRvIGNyZWF0ZSBhbmQgcG9w
+dWxhdGUgdGhlaXIgS1ZNIGZpbGUgZGVzY3JpcHRvcnMuDQoNCg0KV2UgY2Fubm90IGRlZmVyIGNy
+ZWF0ZSB2Q1BVIGluIEtWTSBhZnRlciBHSUMgaGFzIGJlZW4gaW5pdGlhbGl6ZWQgaW4gS1ZNLg0K
+SXQgbmVlZHMgdG8ga25vdyBldmVyeSB2Q1BVIHRoYXQgd2lsbCBldmVyIGV4aXN0cyByaWdodCBh
+dCB0aGUgdGltZSBpdCBpcyBnZXR0aW5nDQpJbml0aWFsaXplZC4gVGhpcyBpcyBhbiBBUk0gQ1BV
+IEFyY2hpdGVjdHVyYWwgY29uc3RyYWludC4gDQoNCg0KIEENCj4gIHZDUFUncyBLVk0gZmlsZSBk
+ZXNjcmlwdG9yIGlzIGNyZWF0ZSBhbmQgcG9wdWxhdGVkIGJ5IHRoZSBmb2xsb3dpbmcgaW9jdGxz
+DQo+ICBhbmQgZnVuY3Rpb24gY2FsbHMuIFdoZW4gdGhlIGZpcnN0IHZDUFUgKHZDUFUtMCkgaXMg
+cmVhbGl6ZWQsIHRoZSBwcm9wZXJ0eQ0KPiAgY29ycmVzcG9uZGluZyB0byAiJmluaXQiIGlzIGZp
+eGVkIGZvciBhbGwgdkNQVXMuIEl0IG1lYW5zIGFsbCB2Q1BVcyBoYXZlIHNhbWUNCj4gIHByb3Bl
+cnRpZXMgZXhjZXB0IHRoZSAidmNwdV9pbmRleCIuDQo+ICANCj4gICAgIGlvY3RsKHZtLWZkLCAg
+IEtWTV9DUkVBVEVfVkNQVSwgICB2Y3B1X2luZGV4KTsNCj4gICAgIGlvY3RsKHZjcHUtZmQsIEtW
+TV9BUk1fVkNQVV9JTklULCAmaW5pdCk7DQo+ICAgICBrdm1fcGFya192Y3B1KGNzKTsNCj4gIA0K
+PiAgQSB2Q1BVJ3MgcHJvcGVydGllcyBhcmUgZGV0ZXJtaW5lZCBieSB0d28gc291cmNlcyBhbmQg
+Ym90aCBhcmUgZ2xvYmFsLiBJdA0KPiAgbWVhbnMgYWxsIHZDUFVzIHNob3VsZCBoYXZlIHNhbWUg
+cHJvcGVydGllczogKGEpIEZlYXR1cmUgcmVnaXN0ZXJzDQo+ICByZXR1cm5lZCBmcm9tIHRoZSBo
+b3N0LiBUaGUgZnVuY3Rpb24NCj4gIGt2bV9hcm1fZ2V0X2hvc3RfY3B1X2ZlYXR1cmVzKCkgaXMg
+Y2FsbGVkIGZvciBvbmNlLCBtZWFuaW5nIHRoaXMgc291cmNlDQo+ICBpcyBzYW1lIHRvIGFsbCB2
+Q1BVczsNCg0KDQpTdXJlLCBidXQgd2hhdCBhcmUgeW91IHRyeWluZyB0byBzYXZlIGhlcmU/DQoN
+Cg0KPiAgKGIpIFRoZSBwYXJhbWV0ZXJzIHByb3ZpZGVkIGJ5IHVzZXIgdGhyb3VnaCAnLWNwdSBo
+b3N0LHN2ZT1vZmYnIGFyZQ0KPiAgdHJhbnNsYXRlZCB0byBnbG9iYWwgcHJvcGVydGllcyBhbmQg
+YXBwbGllZCB0byBhbGwgdkNQVXMgd2hlbiB0aGV5J3JlDQo+ICBpbnN0YW50aWF0ZWQuDQoNCg0K
+U3VyZS4gU2FtZSBpcyB0aGUgY2FzZSB3aXRoIFBNVSBhbmQgb3RoZXIgcGVyLXZDUFUgcGFyYW1l
+dGVycy4NCldlIGRvIG5vdCBzdXBwb3J0IGhldGVyb2dlbm91cyBjb21wdXRpbmcgYW5kIHRoZXJl
+Zm9yZSB3ZSBkbyBub3QNCmhhdmUgcGVyLXZDUFUgY29udHJvbCBvZiB0aGVzZSBmZWF0dXJlcyBh
+cyBvZiBub3cuDQoNCg0KPiAgDQo+ICAgICAgICAgKGEpICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAoYikNCj4gIA0KPiAgICAgYWFyY2g2NF9ob3N0X2luaXRmbiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgcWVtdV9pbml0DQo+ICAgICBrdm1fYXJtX3NldF9jcHVf
+ZmVhdHVyZXNfZnJvbV9ob3N0ICAgICAgICAgICBwYXJzZV9jcHVfb3B0aW9uDQo+ICAgICAgIGt2
+bV9hcm1fZ2V0X2hvc3RfY3B1X2ZlYXR1cmVzICAgICAgICAgICAgICBjcHVfY29tbW9uX3BhcnNl
+X2ZlYXR1cmVzDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBxZGV2X3Byb3BfcmVnaXN0ZXJfZ2xvYmFsDQo+ICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDoNCj4gICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIGRldmljZV9wb3N0X2luaXQNCj4gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHFkZXZfcHJvcF9zZXRfZ2xvYmFs
+cw0KDQoNClN1cmUsIEkgdW5kZXJzdGFuZCB0aGUgY29kZSBmbG93IGJ1dCB3aGF0IGFyZSB5b3Ug
+dHJ5aW5nIHRvIHN1Z2dlc3QgaGVyZT8NCg0KDQo+ICBGb3IgKDIpLCBJJ20gc3RpbGwgbG9va2lu
+ZyBpbnRvIHRoZSBHSUN2MyBjb2RlIGZvciBiZXR0ZXIgdW5kZXJzdGFuZGluZy4gDQoNCg0KT2gs
+IEkgdGhvdWdodCB5b3Ugc2FpZCB5b3UndmUgZmluaXNoZWQgeW91ciByZXZpZXdzIPCfmIoNCg0K
+UGxlYXNlIHRha2UgeW91ciB0aW1lLiBGb3IgeW91ciByZWZlcmVuY2UsIHlvdSBtaWdodCB3YW50
+IHRvIGNoZWNrOg0KDQpLVk1Gb3J1bSAyMDIzOg0KaHR0cHM6Ly9rdm0tZm9ydW0ucWVtdS5vcmcv
+MjAyMy9DaGFsbGVuZ2VzX1JldmlzaXRlZF9pbl9TdXBwb3J0aW5nX1ZpcnRfQ1BVX0hvdHBsdWdf
+LV9faWkwaU5iMy5wZGYNCmh0dHBzOi8va3ZtLWZvcnVtLnFlbXUub3JnLzIwMjMvS1ZNLWZvcnVt
+LWNwdS1ob3RwbHVnXzdPSjFZeUoucGRmDQoNCktWTUZvcnVtIDIwMjA6DQpodHRwczovL2t2bS1m
+b3J1bS5xZW11Lm9yZy8yMDIwL09jdCUyMDI5X0NoYWxsZW5nZXMlMjBpbiUyMFN1cHBvcnRpbmcl
+MjBWaXJ0dWFsJTIwQ1BVJTIwSG90cGx1ZyUyMGluJTIwU29DJTIwQmFzZWQlMjBTeXN0ZW1zJTIw
+bGlrZSUyMEFSTTY0X1NhbGlsJTIwTWVodGEucGRmDQoNCg0KVW50aWwNCj4gIG5vdywgSSBkb24n
+dCBzZWUgd2UgbmVlZCB0aGUgaW5zdGFudGlhdGVkIGhvdHBsdWdnYWJsZSB2Q1BVcyBlaXRoZXIu
+DQoNCg0KSSB0aGluaywgSSd2ZSBhbHJlYWR5IGFuc3dlcmVkIHRoaXMgYWJvdmUgaXQgaXMgYmVj
+YXVzZSBvZiBBUk0gQXJjaGl0ZWN0dXJhbCBjb25zdHJhaW50Lg0KDQoNCiBGb3INCj4gIGV4YW1w
+bGUsIHRoZSByZWRpc3RyaWJ1dG9yIHJlZ2lvbnMgY2FuIGJlIGV4cG9zZWQgYmFzZWQgb24gJ21h
+eGNwdXMnDQo+ICBpbnN0ZWFkIG9mICdjcHVzJy4gDQoNCllvdSBtZWFuIGR1cmluZyB0aGUgcmV2
+aWV3IG9mIHRoZSBjb2RlIHlvdSBmb3VuZCB0aGF0IHdlIGFyZSBub3QgZG9pbmcgaXQ/DQoNCg0K
+VGhlIElSUSBjb25uZWN0aW9uIGFuZCB0ZWFyZG93biBjYW4gYmUgZHluYW1pY2FsbHkNCj4gIGRv
+bmUgYnkgY29ubmVjdGluZyB0aGUgYm9hcmQgd2l0aCBHSUN2MyB0aHJvdWdoIGNhbGxiYWNrcyBp
+bg0KPiAgQVJNR0lDdjNDb21tb25DbGFzcy4NCj4gIFRoZSBjb25uZWN0aW9uIGJldHdlZW4gR0lD
+djNDUFVTdGF0ZSBhbmQgQ1BVQVJNU3RhdGUgYWxzbyBjYW4gYmUNCj4gIGRvbmUgZHluYW1pY2Fs
+bHkuDQoNCkFyZSB5b3Ugc3VnZ2VzdGluZyB0aGlzIGFmdGVyIHJldmlld2luZyB0aGUgY29kZSBv
+ciB5b3UgaGF2ZSB0byByZXZpZXcgaXQgeWV0PyDwn5iJDQoNCg0KVGhhbmtzDQpTYWxpbC4NCg0K
+DQo+ICANCj4gIFRoYW5rcywNCj4gIEdhdmluDQo+ICANCg0K
 
