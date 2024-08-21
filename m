@@ -4,77 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2D1C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 14:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D4DC52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 14:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgm1H-0001zM-AS; Wed, 21 Aug 2024 10:09:03 -0400
+	id 1sgmAI-0000Gc-CD; Wed, 21 Aug 2024 10:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabiev.arman13@gmail.com>)
- id 1sgm1F-0001xl-KG; Wed, 21 Aug 2024 10:09:01 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabiev.arman13@gmail.com>)
- id 1sgm1D-0001Qm-LC; Wed, 21 Aug 2024 10:09:01 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5334b0e1a8eso556534e87.0; 
- Wed, 21 Aug 2024 07:08:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724249337; x=1724854137; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HPeH/DTwx6cdM/tyeKlg//aAx1mxPlCPo5ZJZWF1rJQ=;
- b=PNUu9CBjDlRFwlgDwP6E8T54mmlCMOo6TT/4DncVaqdoVe4JNi4lYXLGts/8xJunqo
- 7VX8pnujHx73AN/LKGelkLHsAElNN5vNFiTSC5SXeslwP+d5IPUTK/q0tPnjV4NzAPc8
- y/h5aXQCRz7Hz+2G9ikcqdC5VrwQ0TklgEl3ihfkT27cfIojMK9Hb+665r0RJhLkGxA5
- 1kJ+WLUBlhKxaMLvS7PNBxc2MkbjMD4SBlqlerzk57ipRBYFuFo3LpLwNYPveaeMs6b+
- Mb20rLK8t0ngPUberMBKj7YZ+IE2w1cKpPoZq9ygUn9IdHH/5n2AEgdzL9emfeLIjVdY
- uHYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724249337; x=1724854137;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HPeH/DTwx6cdM/tyeKlg//aAx1mxPlCPo5ZJZWF1rJQ=;
- b=Vtxvs2zXtm3QJJAByBhBHcnhZJSYuhcxI777KRFHy2K7dm1MWjJVVBSMB4OAL1JHWj
- iTglYdnxcueF7Xb0HpEccbicf4qm6YGIoBkxo1yJP6pKDbmYzB2+KBh38XPcOtfwOx16
- d0W3PT6Odvj+2UztE4v4Vk56t3PK1Er2sY6sXApf//wpcVeAsfljITC2srsEq2g3XsbQ
- l5F01zFIbt8t+uVBJTbELIzBcQlf+cuBNmS7KfmRj9ioKnUvk/3AL33q/g50xK5p5KVS
- u3D6ntEioxbOkyixHbAtMbZkm9LptC/dHvNktM8cUzwZJkiqmCS4c9R4Wq3KGWJFcP+e
- Dw3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7MsEhGJO4E1Ia8u3Jkq5Ebgjre8KeosSEpb5DqCBVkAAIsRYsGR6E4ijKSOVNn/0e7uggqntrkQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yy3fnU/pamm5BQd3V5WL7wec6a4JY7XisZ4TQRcbYFq7DKRR38d
- 0GNfheQbD0q+VPnmXMX2korCcpiDwFHQhH7Ci9aaHgmhfXZLKW/q9FP7Pqpre+Pa2MiVL4V9rxH
- AcrBSrLkj3y1402xsWMC4awmfZkY=
-X-Google-Smtp-Source: AGHT+IEX5WcPmUR2Sa5kyBd3E2GmWHptA7lTwUB67ynWYRh7ywAJT1DVQiZtDP6X5vAD3ORYqvt6OtycyL26I46elkw=
-X-Received: by 2002:a05:6512:114d:b0:52c:dac3:392b with SMTP id
- 2adb3069b0e04-53348564d0bmr1989619e87.33.1724249336445; Wed, 21 Aug 2024
- 07:08:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sgmAG-0000Fp-JG
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 10:18:21 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sgmAD-00038c-Kp
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 10:18:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=gjnVEMO/wBkblHaXstP9UZuItkqd/jedGDseBHtWJq8=; b=rQyJTK1dqSeby/O/Zy+NDe2MbV
+ lJ58QNYGRgrjzAzEUnx0ASTOoOHeUVfcRkbhdiVvRvAQ9z2Ojca03fTvxbbSy7lKoVUwYPi1F4Krm
+ SMJ3bo3eHllLy68GgO/8sBDoEzVd3u51uv1rYrkMVwqQAL9hO9SNJYM5NHmFl7xo7ECjhxm1ycaaS
+ oij2TE+wFSOx7ueGXTVVyLRFO2fXfS0NkaV3BDHZEvgiGI8wUXh7dYCDLIwcsm3/ROU1Xet5iI+7p
+ 6GBWu+HHp3YMfI1MsdtaRJqcEqjIXmCqvEpsADQDeb39K93nuX+7nZqxaebohhKtJzfFnxwOl/WWB
+ 4CAlBBEj/QzXMprce7mMFGBo5o5djbmi7+iRPf9dsqNer1LJKwQz4y2ESJ/y3cMehj+fNKYFOakvI
+ HqyNOfvcsbxDm7TVQNQNrPVqsNHa3IklMtO/X8i26jZ2oyC9kiFXIWgu+6saZJT0GIO9gRdyiBtVr
+ ggqo30rVqiNwbS/Tao4DE8uduVsj0o8YIfaNNnIqLaiDGIgjQ5VS8ETl7esBLjzNcA6ILr+qj5Kun
+ eYKdhDc1y/Lq0sAeyfS758AvNjKWwBwmQpMnbfoicnY9Hn61juz8VQlWx84yEb3RVJe77rBqiobDf
+ LT2Zwu8JA9PT9RsghqdqXJ4bI+eZqEi5U2N16wHGE=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sgm9p-000120-8h; Wed, 21 Aug 2024 15:17:57 +0100
+Message-ID: <c7116b2f-9afd-4aa1-b553-7574efedf7a4@ilande.co.uk>
+Date: Wed, 21 Aug 2024 15:18:00 +0100
 MIME-Version: 1.0
-References: <20240820145514.63046-1-nabiev.arman13@gmail.com>
- <CAFEAcA8WPfynQyjB1_S5z=OA6k-xhxr7DNOZBR0mC9gtD-mCnA@mail.gmail.com>
-In-Reply-To: <CAFEAcA8WPfynQyjB1_S5z=OA6k-xhxr7DNOZBR0mC9gtD-mCnA@mail.gmail.com>
-From: =?UTF-8?B?UGh5c2ljcyDQndCw0LHQuNC10LI=?= <nabiev.arman13@gmail.com>
-Date: Wed, 21 Aug 2024 17:08:44 +0300
-Message-ID: <CAGMt57c=Nv2Teu_=cqteCGs1yjPWQT7vfUs42hFL+MCZjbJEeQ@mail.gmail.com>
-Subject: Re: [PATCH] ppc: fixed incorrect name filed in vmstate_tlbemb_entry
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc <qemu-ppc@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000034021506203215a9"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=nabiev.arman13@gmail.com; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Carl Hauser <chauser@pullman.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <cb338cdc-d09d-4513-ba16-5ff3f792bbfe@pullman.com>
+ <d8bbf72d-29e5-465b-a8aa-508ed2960631@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <d8bbf72d-29e5-465b-a8aa-508ed2960631@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] hw/char: suppress sunmouse events with no changes
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,124 +106,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000034021506203215a9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 20/08/2024 08:34, Richard Henderson wrote:
 
-Sorry for not providing enough argumentation for my patch. I found a
-configuration where this error occurs. Please take a look at
-https://gitlab.com/qemu-project/qemu/-/issues/2522.
+> On 8/20/24 09:18, Carl Hauser wrote:
+>> @@ -959,6 +960,15 @@ static void sunmouse_event(void *opaque,
+>>       int ch;
+>>
+>>       trace_escc_sunmouse_event(dx, dy, buttons_state);
+>> +
+>> +    /* Don't send duplicate events without motion */
+>> +    if (dx == 0 &&
+>> +        dy == 0 &&
+>> +        (s->sunmouse_prev_state ^ buttons_state) == 0) {
+> 
+> Were you intending to mask vs MOUSE_EVENT_*BUTTON?
+> Otherwise this is just plain equality.
+> 
+>> diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
+>> index 5669a5b811..bc5ba4f564 100644
+>> --- a/include/hw/char/escc.h
+>> +++ b/include/hw/char/escc.h
+>> @@ -46,6 +46,7 @@ typedef struct ESCCChannelState {
+>>       uint8_t rx, tx;
+>>       QemuInputHandlerState *hs;
+>>       char *sunkbd_layout;
+>> +    int sunmouse_prev_state;
+> 
+> This adds new state that must be migrated.
+> 
+> While the patch is relatively simple, I do wonder if this code could be improved by 
+> converting away from the legacy mouse interface to qemu_input_handler_register. 
+> Especially if that might help avoid needing to add migration state that isn't 
+> "really" part of the device.
+> 
+> Mark?
 
-=D0=B2=D1=82, 20 =D0=B0=D0=B2=D0=B3. 2024=E2=80=AF=D0=B3. =D0=B2 19:20, Pet=
-er Maydell <peter.maydell@linaro.org>:
+Ooof I didn't even realise that qemu_add_mouse_event_handler() was legacy - is that 
+documented anywhere at all?
 
-> On Tue, 20 Aug 2024 at 17:03, <nabiev.arman13@gmail.com> wrote:
-> >
-> > From: armanincredible <nabiev.arman13@gmail.com>
-> >
-> > Signed-off-by: armanincredible <nabiev.arman13@gmail.com>
->
-> [cc'd the ppc maintainers and list]
->
->
->
-> > ---
-> >  target/ppc/machine.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-> > index 731dd8df35..d433fd45fc 100644
-> > --- a/target/ppc/machine.c
-> > +++ b/target/ppc/machine.c
-> > @@ -621,7 +621,7 @@ static bool tlbemb_needed(void *opaque)
-> >  }
-> >
-> >  static const VMStateDescription vmstate_tlbemb =3D {
-> > -    .name =3D "cpu/tlb6xx",
-> > +    .name =3D "cpu/tlbemb",
-> >      .version_id =3D 1,
-> >      .minimum_version_id =3D 1,
-> >      .needed =3D tlbemb_needed,
->
-> This does look clearly a mistake, but on the other hand the
-> name field in a VMStateDescription is part of the on-the-wire
-> format, so changing it breaks migration compatibility.
->
-> Before we make this change we need to confirm that it is
-> not used on any machine types where we care about cross
-> version migration compat.
->
-> Alternatively if we need to keep the compatibility across
-> versions we could leave it as is and add a comment about
-> why. (I don't think we'll have a problem with incorrectly
-> interpreting a tlbemb as a tlb6xx, it will mismatch for
-> other reasons.)
->
-> thanks
-> -- PMM
->
+At first glance (e.g. 
+https://gitlab.com/qemu-project/qemu/-/blob/master/hw/input/ps2.c?ref_type=heads#L789) 
+it appears that movement and button events are handled separately which I think would 
+solve the problem.
 
---00000000000034021506203215a9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I can try and put something together quickly for Carl to test and improve if that 
+helps, although I'm quite tied up with client work and life in general right now(!).
 
-<div dir=3D"ltr">Sorry for not providing enough argumentation for my patch.=
- I found a configuration where this error occurs. Please take a look at <a =
-href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2522">https://gitlab.=
-com/qemu-project/qemu/-/issues/2522</a>.<br></div><br><div class=3D"gmail_q=
-uote"><div dir=3D"ltr" class=3D"gmail_attr">=D0=B2=D1=82, 20 =D0=B0=D0=B2=
-=D0=B3. 2024=E2=80=AF=D0=B3. =D0=B2 19:20, Peter Maydell &lt;<a href=3D"mai=
-lto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt;:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">On Tue, 20 Aug 2024 at 17:0=
-3, &lt;<a href=3D"mailto:nabiev.arman13@gmail.com" target=3D"_blank">nabiev=
-.arman13@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; From: armanincredible &lt;<a href=3D"mailto:nabiev.arman13@gmail.com" =
-target=3D"_blank">nabiev.arman13@gmail.com</a>&gt;<br>
-&gt;<br>
-&gt; Signed-off-by: armanincredible &lt;<a href=3D"mailto:nabiev.arman13@gm=
-ail.com" target=3D"_blank">nabiev.arman13@gmail.com</a>&gt;<br>
-<br>
-[cc&#39;d the ppc maintainers and list]<br>
-<br>
-<br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 target/ppc/machine.c | 2 +-<br>
-&gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
-&gt;<br>
-&gt; diff --git a/target/ppc/machine.c b/target/ppc/machine.c<br>
-&gt; index 731dd8df35..d433fd45fc 100644<br>
-&gt; --- a/target/ppc/machine.c<br>
-&gt; +++ b/target/ppc/machine.c<br>
-&gt; @@ -621,7 +621,7 @@ static bool tlbemb_needed(void *opaque)<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt;=C2=A0 static const VMStateDescription vmstate_tlbemb =3D {<br>
-&gt; -=C2=A0 =C2=A0 .name =3D &quot;cpu/tlb6xx&quot;,<br>
-&gt; +=C2=A0 =C2=A0 .name =3D &quot;cpu/tlbemb&quot;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 .version_id =3D 1,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 .minimum_version_id =3D 1,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 .needed =3D tlbemb_needed,<br>
-<br>
-This does look clearly a mistake, but on the other hand the<br>
-name field in a VMStateDescription is part of the on-the-wire<br>
-format, so changing it breaks migration compatibility.<br>
-<br>
-Before we make this change we need to confirm that it is<br>
-not used on any machine types where we care about cross<br>
-version migration compat.<br>
-<br>
-Alternatively if we need to keep the compatibility across<br>
-versions we could leave it as is and add a comment about<br>
-why. (I don&#39;t think we&#39;ll have a problem with incorrectly<br>
-interpreting a tlbemb as a tlb6xx, it will mismatch for<br>
-other reasons.)<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
 
---00000000000034021506203215a9--
+ATB,
+
+Mark.
+
 
