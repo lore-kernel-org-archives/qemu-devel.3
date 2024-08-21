@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D1FFC52D7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 08:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 319B6C52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 08:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sggiB-0000SW-I4; Wed, 21 Aug 2024 04:28:59 -0400
+	id 1sggij-0003cN-IN; Wed, 21 Aug 2024 04:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sggiA-0000NZ-Gn
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 04:28:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sggig-0003EK-BB
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 04:29:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sggi8-0004O8-HD
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 04:28:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sggid-0004Wa-Lw
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 04:29:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724228934;
+ s=mimecast20190719; t=1724228967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RK9CJq9gV2ZUOdIBcrUiHjzEEyxgAv5eLeeU+ubqBmk=;
- b=Wt0FEeEatOCmYyFHnFJUSDN3Oe+nrFtmbJiRo6XQaj7fjkrRSm+/VkrZz/wvzI+bqbcRzc
- 1qTnCd0lJe5gO742OJsqjeHLn5jHJAJCPy1CtgtDmlcCK0JkD54SEn0hMddHFgaYcBfcfG
- J5A1qC7ADt+uJ46iwyLnRy9atFlpRaU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9eu1C/u+W3HkWhf/I4aCvKMOJAZU4pbQAdtzgnsPDb0=;
+ b=eweqt9d9YqDbZaBj5s2IQiNMzirNfIjhs9g9EF17MVJp3svvg2XzlklEIcGCQA4WWYR+Ki
+ V8TaekY+7LpXFNBzXyotgVtanIWO0URhTQBFG4k//aUssgywAfr/nv2Cj3cVhx1uHV33F1
+ 2VqIr5z2drzBQk5sQ7BBwXcamLtf/Y4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-NDyJ2VprNnazznO1ZrmpLQ-1; Wed,
- 21 Aug 2024 04:28:50 -0400
-X-MC-Unique: NDyJ2VprNnazznO1ZrmpLQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-d1gVDf-NM_eNM6tuxnIE9w-1; Wed,
+ 21 Aug 2024 04:29:22 -0400
+X-MC-Unique: d1gVDf-NM_eNM6tuxnIE9w-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CBCB1955F06; Wed, 21 Aug 2024 08:28:49 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C98E19137A4; Wed, 21 Aug 2024 08:29:14 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-191.str.redhat.com
  [10.33.192.191])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0178E1955DD6; Wed, 21 Aug 2024 08:28:45 +0000 (UTC)
+ id D26B91955F1B; Wed, 21 Aug 2024 08:29:09 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org,
@@ -54,24 +54,24 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v4 15/35] tests/functional: enable pre-emptive caching of
- assets
-Date: Wed, 21 Aug 2024 10:27:16 +0200
-Message-ID: <20240821082748.65853-16-thuth@redhat.com>
+Subject: [PATCH v4 22/35] tests/functional: Convert the riscv_opensbi avocado
+ test into a standalone test
+Date: Wed, 21 Aug 2024 10:27:23 +0200
+Message-ID: <20240821082748.65853-23-thuth@redhat.com>
 In-Reply-To: <20240821082748.65853-1-thuth@redhat.com>
 References: <20240821082748.65853-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
 X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
@@ -90,207 +90,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+The avocado test defined test functions for both, riscv32 and riscv64.
+Since we can run the whole file with multiple targets in the new
+framework, we can now consolidate the functions so we have to only
+define one function per machine now.
 
-Many tests need to access assets stored on remote sites. We don't want
-to download these during test execution when run by meson, since this
-risks hitting test timeouts when data transfers are slow.
-
-Add support for pre-emptive caching of assets by setting the env var
-QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
-instead of running the test, the assets will be downloaded and saved
-to the cache, then the timestamp file created.
-
-A meson custom target is created as a dependency of each test suite
-to trigger the pre-emptive caching logic before the test runs.
-
-When run in caching mode, it will locate assets by looking for class
-level variables with a name prefix "ASSET_", and type "Asset".
-
-At the ninja level
-
-   ninja test --suite functional
-
-will speculatively download any assets that are not already cached,
-so it is advisable to set a timeout multiplier.
-
-   QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
-
-will fail the test if a required asset is not already cached
-
-   ninja precache-functional
-
-will download and cache all assets required by the functional
-tests
-
-At the make level, precaching is always done by
-
-   make check-functional
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Richard Henderson <richard.henderson@linaro.org>
-[thuth: Remove the duplicated "path = os.path.basename(...)" line]
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/Makefile.include                 |  3 ++-
- tests/functional/meson.build           | 33 +++++++++++++++++++++++--
- tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
- tests/functional/qemu_test/testcase.py |  7 ++++++
- 4 files changed, 74 insertions(+), 3 deletions(-)
+ MAINTAINERS                            |  1 +
+ tests/avocado/riscv_opensbi.py         | 63 --------------------------
+ tests/functional/meson.build           |  8 ++++
+ tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
+ 4 files changed, 45 insertions(+), 63 deletions(-)
+ delete mode 100644 tests/avocado/riscv_opensbi.py
+ create mode 100755 tests/functional/test_riscv_opensbi.py
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 66c8cc3123..010369bd3a 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -161,7 +161,8 @@ $(FUNCTIONAL_TARGETS):
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 91f5a0545f..11cefa015e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -337,6 +337,7 @@ F: hw/intc/riscv*
+ F: include/hw/riscv/
+ F: linux-user/host/riscv32/
+ F: linux-user/host/riscv64/
++F: tests/functional/test_riscv*
+ F: tests/tcg/riscv64/
  
- .PHONY: check-functional
- check-functional:
--	@$(MAKE) SPEED=thorough check-func check-func-quick
-+	@$(NINJA) precache-functional
-+	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
- 
- # Consolidated targets
- 
+ RISC-V XThead* extensions
+diff --git a/tests/avocado/riscv_opensbi.py b/tests/avocado/riscv_opensbi.py
+deleted file mode 100644
+index bfff9cc3c3..0000000000
+--- a/tests/avocado/riscv_opensbi.py
++++ /dev/null
+@@ -1,63 +0,0 @@
+-# OpenSBI boot test for RISC-V machines
+-#
+-# Copyright (c) 2022, Ventana Micro
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-
+-class RiscvOpenSBI(QemuSystemTest):
+-    """
+-    :avocado: tags=accel:tcg
+-    """
+-    timeout = 5
+-
+-    def boot_opensbi(self):
+-        self.vm.set_console()
+-        self.vm.launch()
+-        wait_for_console_pattern(self, 'Platform Name')
+-        wait_for_console_pattern(self, 'Boot HART MEDELEG')
+-
+-    def test_riscv32_spike(self):
+-        """
+-        :avocado: tags=arch:riscv32
+-        :avocado: tags=machine:spike
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv64_spike(self):
+-        """
+-        :avocado: tags=arch:riscv64
+-        :avocado: tags=machine:spike
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv32_sifive_u(self):
+-        """
+-        :avocado: tags=arch:riscv32
+-        :avocado: tags=machine:sifive_u
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv64_sifive_u(self):
+-        """
+-        :avocado: tags=arch:riscv64
+-        :avocado: tags=machine:sifive_u
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv32_virt(self):
+-        """
+-        :avocado: tags=arch:riscv32
+-        :avocado: tags=machine:virt
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv64_virt(self):
+-        """
+-        :avocado: tags=arch:riscv64
+-        :avocado: tags=machine:virt
+-        """
+-        self.boot_opensbi()
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 8a8fa0ab99..cef74b82a9 100644
+index d6a1a3a116..55021c4e4d 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -33,6 +33,7 @@ tests_x86_64_quick = [
- tests_x86_64_thorough = [
+@@ -55,6 +55,14 @@ tests_ppc_thorough = [
+   'ppc_bamboo',
  ]
  
-+precache_all = []
- foreach speed : ['quick', 'thorough']
-   foreach dir : target_dirs
-     if not dir.endswith('-softmmu')
-@@ -63,11 +64,35 @@ foreach speed : ['quick', 'thorough']
-                                meson.current_source_dir())
- 
-     foreach test : target_tests
--      test('func-@0@/@1@'.format(target_base, test),
-+      testname = '@0@-@1@'.format(target_base, test)
-+      testfile = 'test_' + test + '.py'
-+      testpath = meson.current_source_dir() / testfile
-+      teststamp = testname + '.tstamp'
-+      test_precache_env = environment()
-+      test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
-+      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-+                                          meson.current_source_dir())
-+      precache = custom_target('func-precache-' + testname,
-+                               output: teststamp,
-+                               command: [python, testpath],
-+                               depend_files: files(testpath),
-+                               build_by_default: false,
-+                               env: test_precache_env)
-+      precache_all += precache
++tests_riscv32_quick = [
++  'riscv_opensbi',
++]
 +
-+      # Ideally we would add 'precache' to 'depends' here, such that
-+      # 'build_by_default: false' lets the pre-caching automatically
-+      # run immediately before the test runs. In practice this is
-+      # broken in meson, with it running the pre-caching in the normal
-+      # compile phase https://github.com/mesonbuild/meson/issues/2518
-+      # If the above bug ever gets fixed, when QEMU changes the min
-+      # meson version, add the 'depends' and remove the custom
-+      # 'run_target' logic below & in Makefile.include
-+      test('func-' + testname,
-            python,
-            depends: [test_deps, test_emulator, emulator_modules],
-            env: test_env,
--           args: [meson.current_source_dir() / 'test_' + test + '.py'],
-+           args: [testpath],
-            protocol: 'tap',
-            timeout: test_timeouts.get(test, 60),
-            priority: test_timeouts.get(test, 60),
-@@ -75,3 +100,7 @@ foreach speed : ['quick', 'thorough']
-     endforeach
-   endforeach
- endforeach
++tests_riscv64_quick = [
++  'riscv_opensbi',
++]
 +
-+run_target('precache-functional',
-+           depends: precache_all,
-+           command: ['true'])
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index cbeb6278af..9250ff2b06 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -9,6 +9,8 @@
- import logging
- import os
- import subprocess
-+import sys
-+import unittest
- import urllib.request
- from pathlib import Path
- from shutil import copyfileobj
-@@ -62,6 +64,9 @@ def fetch(self):
-                            self.cache_file, self.url)
-             return str(self.cache_file)
- 
-+        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
-+            raise Exception("Asset cache is invalid and downloads disabled")
+ tests_s390x_thorough = [
+   's390x_ccw_virtio',
+   's390x_topology',
+diff --git a/tests/functional/test_riscv_opensbi.py b/tests/functional/test_riscv_opensbi.py
+new file mode 100755
+index 0000000000..d077e40f42
+--- /dev/null
++++ b/tests/functional/test_riscv_opensbi.py
+@@ -0,0 +1,36 @@
++#!/usr/bin/env python3
++#
++# OpenSBI boot test for RISC-V machines
++#
++# Copyright (c) 2022, Ventana Micro
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
 +
-         self.log.info("Downloading %s to %s...", self.url, self.cache_file)
-         tmp_cache_file = self.cache_file.with_suffix(".download")
- 
-@@ -95,3 +100,32 @@ def fetch(self):
- 
-         self.log.info("Cached %s at %s" % (self.url, self.cache_file))
-         return str(self.cache_file)
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
 +
-+    def precache_test(test):
-+        log = logging.getLogger('qemu-test')
-+        log.setLevel(logging.DEBUG)
-+        handler = logging.StreamHandler(sys.stdout)
-+        handler.setLevel(logging.DEBUG)
-+        formatter = logging.Formatter(
-+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-+        handler.setFormatter(formatter)
-+        log.addHandler(handler)
-+        for name, asset in vars(test.__class__).items():
-+            if name.startswith("ASSET_") and type(asset) == Asset:
-+                log.info("Attempting to cache '%s'" % asset)
-+                asset.fetch()
-+        log.removeHandler(handler)
++class RiscvOpenSBI(QemuSystemTest):
 +
-+    def precache_suite(suite):
-+        for test in suite:
-+            if isinstance(test, unittest.TestSuite):
-+                Asset.precache_suite(test)
-+            elif isinstance(test, unittest.TestCase):
-+                Asset.precache_test(test)
++    timeout = 5
 +
-+    def precache_suites(path, cacheTstamp):
-+        loader = unittest.loader.defaultTestLoader
-+        tests = loader.loadTestsFromNames([path], None)
++    def boot_opensbi(self):
++        self.vm.set_console()
++        self.vm.launch()
++        wait_for_console_pattern(self, 'Platform Name')
++        wait_for_console_pattern(self, 'Boot HART MEDELEG')
 +
-+        with open(cacheTstamp, "w") as fh:
-+            Asset.precache_suite(tests)
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index b2dd863c6e..18314be9d1 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -21,6 +21,7 @@
- from qemu.machine import QEMUMachine
- from qemu.utils import kvm_available, tcg_available
- 
-+from .asset import Asset
- from .cmd import run_cmd
- from .config import BUILD_DIR
- 
-@@ -58,6 +59,12 @@ def tearDown(self):
- 
-     def main():
-         path = os.path.basename(sys.argv[0])[:-3]
++    def test_riscv_spike(self):
++        self.set_machine('spike')
++        self.boot_opensbi()
 +
-+        cache = os.environ.get("QEMU_TEST_PRECACHE", None)
-+        if cache is not None:
-+            Asset.precache_suites(path, cache)
-+            return
++    def test_riscv_sifive_u(self):
++        self.set_machine('sifive_u')
++        self.boot_opensbi()
 +
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-                                    test_output_log = pycotap.LogMode.LogToError)
-         unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
++    def test_riscv_virt(self):
++        self.set_machine('virt')
++        self.boot_opensbi()
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.46.0
 
