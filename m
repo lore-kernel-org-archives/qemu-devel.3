@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ABF7C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 21:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29521C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 21:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgsgr-0005ne-Lw; Wed, 21 Aug 2024 17:16:26 -0400
+	id 1sgss0-0002Qm-Cl; Wed, 21 Aug 2024 17:27:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgsgj-0005mr-TX
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:16:19 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgsry-0002PX-75
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:27:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgsgh-0003eG-PN
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:16:17 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgsrv-0004k3-Ub
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:27:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724274973;
+ s=mimecast20190719; t=1724275670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kCkvWfFxO6wV58nanmssoIuDF7+LHt028Lnj333n0U0=;
- b=PVtCiTaRPydPGGT5TxxaoNEkqfBWI/pUgIWorLDsZa7avC1MSKf2Cnu69QqP/MtkQ8mL/l
- ReSjqUEh1c4LO5ylGLBXBIsrmw1O2VKBAyBItt9Ywp9WdpTq+sP4YRCjmlk829ImHMXTVH
- EkEvlh3RPjPXsOLOuva3T6aJQvMziKk=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0XoidRhsi54jzQiDQqbh17TwInqjyPKu/oFfVEqgQJg=;
+ b=WbDG59hl9Byh89rPuMkWPb8hGLiUULrq60ComypkqVvg/g3nR3QAgg9VU+uFmkTS1YhxcF
+ fJo0YMSlC1mXVtIvDGY/WjdAKLto56PE0RrpF0qi8h+31BXn73x6M6Co0MXnrZsbjG15I5
+ sli9VJI8MrE6PPz+JJUzOZ3wO69yyck=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-9EhcusN1MumUuKFYOClElw-1; Wed, 21 Aug 2024 17:16:12 -0400
-X-MC-Unique: 9EhcusN1MumUuKFYOClElw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6bb84f0652eso852606d6.0
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 14:16:12 -0700 (PDT)
+ us-mta-696-2NYZaq_SN1ihD4CYwh9FjQ-1; Wed, 21 Aug 2024 17:27:48 -0400
+X-MC-Unique: 2NYZaq_SN1ihD4CYwh9FjQ-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-e166ac5178eso363953276.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 14:27:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724274972; x=1724879772;
+ d=1e100.net; s=20230601; t=1724275668; x=1724880468;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kCkvWfFxO6wV58nanmssoIuDF7+LHt028Lnj333n0U0=;
- b=lnmZ5Zf+APtHUzj+5EYTv4Xx1+SUJhHA2C2x3yTZDNizVw2oF7Z3r6X1qEbiZFPSKO
- 5T6LwdU0lbAA5EOAGQkP5aXll67P7cLRYjGLroWiYIrXwi301FZxYu6y+WDAjJ5j1osf
- TAACW7BwGjT5ociU+htEHgnFbJx19+MnaS9NAPMZ+X6ItbEFpeqtkbOJBuGb26ycxX9y
- DdaWdOi88J4aM8bFTY1PjCPa+kkr2a5da0i9E2wXYx1Jeo/VXwPFz6y8TC0tS4oYf/qj
- xmZQ4zAADm7BOsurbSAnellYl1F8Cr5HbqAJDlQ9xLbmCh7lRAyTWfu6JEoa72m8XbzP
- 4mug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDlATrZhU+sCLULzTqTNB7mIPYqoZlKgv+QUExXOcyvPVzuATXkFE9vNATLz+pB+cOPsmLUjyJ8J23@nongnu.org
-X-Gm-Message-State: AOJu0Yw1aEvGdvxOZF3jPDLGUbkZZnDFU+GU8Gc/4JjYSBp9DiC2/dnO
- jJupubRVP27o6lB+nUNHAlLVtOSJ7QH9PQF6EAXzSjRfg3TtIU3+xdHzHW9rbvFDRr44BxuaEW3
- MUbSABPJia5x10xRKruzlaIDLwXkGA4djTlR15Wb8qcMvjkRjYonM
-X-Received: by 2002:a05:6214:459d:b0:6b5:238:2e42 with SMTP id
- 6a1803df08f44-6c156843295mr48322116d6.40.1724274971769; 
- Wed, 21 Aug 2024 14:16:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyWVyyXE1Bm46+kXBbpKHsqlyejOMwx89qqHtYdsjJyVhMS5DclXlex1mcLKq0iimD3Il0yQ==
-X-Received: by 2002:a05:6214:459d:b0:6b5:238:2e42 with SMTP id
- 6a1803df08f44-6c156843295mr48321866d6.40.1724274971354; 
- Wed, 21 Aug 2024 14:16:11 -0700 (PDT)
+ bh=0XoidRhsi54jzQiDQqbh17TwInqjyPKu/oFfVEqgQJg=;
+ b=YoJb5fsvUfITQgiAt/HC81eLaBNjbJxc1NdcclGfYcYR0xQDdvPmeL+CguYqc+R4cB
+ 5jy6qzDY0TbpJ9SVk0GF6xNknnRl5kY8fs7I2I1HAnaviFaRyRXojaRzLK6j76Dlc2nM
+ CTXIS0zJGdypbROTB5ELOIDZP6CzayucB9CWytmGbYwhu0Y90iQA2yizL6b2TlT25c19
+ n5UEyQt6TsJZ41NReVj/NJfZ+yERRtGU/ti7LeJJO18276nfSYQN7BjdyyzQ/HnLG8kp
+ NdApyUUE78IODg9g+J4y1vrFuNLSArU4E5HEBrboIfIOusCGpAJficDplKTkfPGO0ku1
+ Uo5w==
+X-Gm-Message-State: AOJu0YwXYtu0A/8dSKCvKfFuRtm9XEIlHhUdZuC9O9WXNUl7lTYprm/W
+ elegPZNWFlXRxrr2lNoCP2/C0RYPkb4hMURF6ypOis4f6hZjdEkYQkqd7OauChqucQ+y0TEGm/H
+ EPEcknfs8SmySw/nY9uOOiT6d8d+3R0QBHfnXuykt6Ms80ig+5QWS
+X-Received: by 2002:a05:6902:2506:b0:e13:e8f9:1251 with SMTP id
+ 3f1490d57ef6-e16654956e6mr3990258276.30.1724275667958; 
+ Wed, 21 Aug 2024 14:27:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE4xqoeKhnynes/6sCDjLePJHDO0T40KmvZC4Ay37LafPx81uv+SpLdaHWVp0wOInerM3Twtw==
+X-Received: by 2002:a05:6902:2506:b0:e13:e8f9:1251 with SMTP id
+ 3f1490d57ef6-e16654956e6mr3990239276.30.1724275667545; 
+ Wed, 21 Aug 2024 14:27:47 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162de7b4bsm835956d6.136.2024.08.21.14.16.09
+ 6a1803df08f44-6c162d76850sm971116d6.72.2024.08.21.14.27.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Aug 2024 14:16:10 -0700 (PDT)
-Date: Wed, 21 Aug 2024 17:16:07 -0400
+ Wed, 21 Aug 2024 14:27:47 -0700 (PDT)
+Date: Wed, 21 Aug 2024 17:27:44 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: Yichen Wang <yichen.wang@bytedance.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [PATCH v5 11/13] migration/multifd: Add migration option set
- packet size.
-Message-ID: <ZsZZFwws5tlOMmZk@x1n>
-References: <20240711220451.19780-1-yichen.wang@bytedance.com>
- <20240711220451.19780-2-yichen.wang@bytedance.com>
- <87msmg2heh.fsf@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v3 07/14] migration/multifd: Replace p->pages with an
+ union pointer
+Message-ID: <ZsZb0JTNn8P-KQAu@x1n>
+References: <20240801123516.4498-1-farosas@suse.de>
+ <20240801123516.4498-8-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87msmg2heh.fsf@suse.de>
+In-Reply-To: <20240801123516.4498-8-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -115,32 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 17, 2024 at 11:59:50AM -0300, Fabiano Rosas wrote:
-> Yichen Wang <yichen.wang@bytedance.com> writes:
+On Thu, Aug 01, 2024 at 09:35:09AM -0300, Fabiano Rosas wrote:
+> We want multifd to be able to handle more types of data than just ram
+> pages. To start decoupling multifd from pages, replace p->pages
+> (MultiFDPages_t) with the new type MultiFDSendData that hides the
+> client payload inside an union.
 > 
-> > From: Hao Xiang <hao.xiang@linux.dev>
-> >
-> > During live migration, if the latency between sender and receiver is
-> > high and bandwidth is also high (a long and fat pipe), using a bigger
-> > packet size can help reduce migration total time. The current multifd
-> > packet size is 128 * 4kb. In addition, Intel DSA offloading performs
-> > better with a large batch task.
+> The general idea here is to isolate functions that *need* to handle
+> MultiFDPages_t and move them in the future to multifd-ram.c, while
+> multifd.c will stay with only the core functions that handle
+> MultiFDSendData/MultiFDRecvData.
 > 
-> Last time we measured, mapped-ram also performed slightly better with a
-> larger packet size:
-> 
->         2 MiB   1 MiB   512 KiB  256 KiB  128 KiB
-> AVG(10) 50814   50396     48732    46423    34574
-> DEV       736     552       619      473     1430
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-I wonder whether we could make the new parameter to be pages-per-packet,
-rather than in the form of packet-size, just to make our lifes easier for a
-possibly static offset[] buffer in the future for the MultiFDPages_t.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-With that, we throttle it with MAX_N_PAGES, we can have MultiFDPages_t
-statically allocated always with the max buffer. After all, it won't
-consume a lot of memory anyway; for MAX_N_PAGES=1K pages it's 8KB per
-channel.
+[...]
+
+> +static MultiFDSendData *multifd_send_data_alloc(void)
+> +{
+> +    size_t max_payload_size, size_minus_payload;
+> +
+> +    /*
+> +     * MultiFDPages_t has a flexible array at the end, account for it
+> +     * when allocating MultiFDSendData. Use max() in case other types
+> +     * added to the union in the future are larger than
+> +     * (MultiFDPages_t + flex array).
+> +     */
+> +    max_payload_size = MAX(multifd_ram_payload_size(), sizeof(MultiFDPayload));
+> +
+> +    /*
+> +     * Account for any holes the compiler might insert. We can't pack
+> +     * the structure because that misaligns the members and triggers
+> +     * Waddress-of-packed-member.
+> +     */
+> +    size_minus_payload = sizeof(MultiFDSendData) - sizeof(MultiFDPayload);
+> +
+> +    return g_malloc0(size_minus_payload + max_payload_size);
+> +}
+
+Hmm I didn't notice the hole issue for sure..
+
+For the mid term we really should remove this in one way or another.. what
+I was thinking is mentioned in the other thread:
+
+https://lore.kernel.org/qemu-devel/ZsZZFwws5tlOMmZk@x1n/
+
+I hope we can simply statically define offset[] to be the max.
+
+I don't think we must stick with size-per-packet, in this case IMHO we
+should choose whatever is easier for us, and I never worried on regression
+yet so far as long as the relevant n_pages is still relatively large. Not
+to mention AFAIU for production use, x86/s390 always uses 4K psize, while
+arm64 doesn't yet have a stable kvm-avail vcpu model, which might be a
+bigger issue as of now to solve..
+
+Let's see how it goes..
 
 -- 
 Peter Xu
