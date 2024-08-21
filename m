@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22728C52D7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 06:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98FA0C52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 06:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgf7H-0003lj-EB; Wed, 21 Aug 2024 02:46:47 -0400
+	id 1sgfHx-0002HE-QI; Wed, 21 Aug 2024 02:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgf7E-0003j8-Mv
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 02:46:44 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sgf7B-0006cD-U3
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 02:46:43 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-70cb1b959a6so2433685a34.3
- for <qemu-devel@nongnu.org>; Tue, 20 Aug 2024 23:46:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724222800; x=1724827600; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QZ2+aTPGA9FvmXmggQ83QpSrFjLEMPcmmXbYkXybUH8=;
- b=XKoR5OnwGPWOLij6qv8vItscjTOOtOe4Sj9g5EVWmtEOujmVJRRiGcdfd2qgVSdhO8
- gKhQlDAIPpIj5nxew9VydG4pHY1v0m2AUL8Rp9zA8I35s/kzELQVD4EhpD1gZKPGP6XA
- UlFr8LzylEF1IyXDMqf3Ns30IUiyLbgJqiublzTg5zU7YqSvbjEiBFLdi6QOAI/ZYArF
- KaQWa3rSjPNPCYRZhpcCtTlv01PO+hlcN02s0Hych0W3nCRlil6fy1zb+MNXllMIOpOr
- Aonvdb29u2/2lYfne4Z3+wAXTm1pa+gT7FSrqxF68asrZYrD5VSSYm5oB+XIwAbkffLG
- qL2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724222800; x=1724827600;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QZ2+aTPGA9FvmXmggQ83QpSrFjLEMPcmmXbYkXybUH8=;
- b=DV7/U77MOUPUs20+wzPSTXNQb1JaqkQDpYgTvfZLlpbksrrZA3xMEHMKmh3Vh8iL90
- uKYFLLmXVU+xRYc8gm3VDrcUDZVFmdFEFIYArtJnGtTEiYtrwUtAMUpqYCq5agjRh5OD
- SMbwFGgyCQTMMpJZdmiK5fDBbRwM1pQdVswkp64Piu2zXZ0jNsYb1p266SKsiahFvvf5
- LSCaJXvJI8zZzFGyYnW81S7WvZDnHdFUau+VuSsf4rkb5fAhRs5xDY87XIDyPYKDvwgr
- XNtyAY+C1Q/WxJxfHjXpo1Q868a/KcZe8QlukwfO6x64GByXFxxoqeNZR/pS+KPvt2DG
- FYLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0LkzlXFFddT2faDwgsA6wK6S/Iqi3NQQ2PVUwsgBaWUMyDVqWqFAbjapIIdkKwPLc/0ZrTMSVs3bm@nongnu.org
-X-Gm-Message-State: AOJu0YyKBhTJyAG6t+Ja1ZiJ9TI8Kfm4j+42oCoRN0FyHUFmdFMC89sR
- bQl8Xf4LpMN8gPxQpFeI+WOEjK2RT7F1C4u/1abJSNpmRPquOAyeW/rgjnd+pcDg8eNACTzJewl
- +luo=
-X-Google-Smtp-Source: AGHT+IGr4p24+WxQ1t8HovcBrhqGbf7L08G1skMcIMYne6DN3Kpmz6N9pHmVGi4l2aEjIthgshMG3Q==
-X-Received: by 2002:a05:6830:6b0b:b0:709:4e4f:931a with SMTP id
- 46e09a7af769-70df887c4ecmr1624424a34.22.1724222799793; 
- Tue, 20 Aug 2024 23:46:39 -0700 (PDT)
-Received: from ?IPV6:2403:580a:f89b:0:7fdc:73f7:8bc4:7fda?
- (2403-580a-f89b-0-7fdc-73f7-8bc4-7fda.ip6.aussiebb.net.
- [2403:580a:f89b:0:7fdc:73f7:8bc4:7fda])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71426fdfcbesm438801b3a.76.2024.08.20.23.46.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Aug 2024 23:46:39 -0700 (PDT)
-Message-ID: <fac0cc02-060b-47ff-86fb-56f8390b509d@linaro.org>
-Date: Wed, 21 Aug 2024 16:46:29 +1000
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sgfHf-0002F8-Cc
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 02:57:34 -0400
+Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sgfHa-00088M-KL
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 02:57:31 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id 30D772F5DD;
+ Wed, 21 Aug 2024 08:57:18 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id OqKYfB4CxjCR; Wed, 21 Aug 2024 08:57:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1724223436;
+ bh=V0ltFp3FBSi+7+/D+phmRT+tbhLTKZK1XGscOFiEzIE=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=DRg4H16tDTPWPVBSXWeNRuIRxQ1TMM4SAk7ko46lR/BiUspsQTjUlJD6R0Zyg0Am2
+ eovYgS3fKmtyPwBlt3+k6sB1U4GTQJfB76O2CNDJIusSXifjj717OLTTfoD3rXtq/7
+ saf4YYqSePiG3WHZC9C+XyJv5FxzliB9PABSOBaUFBHGlV5pXT8xft3PGu7rX53yde
+ WUBdwdtn+Nb6e90xQz24ekwuKBy8mohFEG26HMQL3tX8Zwui8+vYS2AhT3LjkavM5V
+ WDRUrJ8knjAU3g4N7OGa/7gGzLHmLSQ+Nfvrv5pvFlJG7M8lg1bNwP511FqHRpXAdT
+ vLKvLUwjnEWVA==
+Received: from baree.pikron.com (ip-78-102-109-231.bb.vodafone.cz
+ [78.102.109.231])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 2E30C2F987;
+ Wed, 21 Aug 2024 08:57:16 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Doug Brown <doug@schmorgal.com>
+Subject: Re: [PATCH 2/5] hw/net/can/xlnx-versal-canfd: Fix CAN FD flag check
+Date: Wed, 21 Aug 2024 08:57:20 +0200
+User-Agent: KMail/1.9.10
+Cc: Vikram Garhwal <vikram.garhwal@amd.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+References: <20240816163504.789393-1-doug@schmorgal.com>
+ <20240816163504.789393-3-doug@schmorgal.com>
+In-Reply-To: <20240816163504.789393-3-doug@schmorgal.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/1] LoongArch: Fix for 9.1
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-References: <20240821024739.3024705-1-gaosong@loongson.cn>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240821024739.3024705-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: Text/Plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Disposition: inline
+Message-Id: <202408210857.20254.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-1.03,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,21 +85,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/21/24 12:47, Song Gao wrote:
-> The following changes since commit 4220ebde107c44412755d593fb46e168eeaed936:
-> 
->    Merge tag 'migration-20240820-pull-request' ofhttps://gitlab.com/farosas/qemu into staging (2024-08-21 08:46:45 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240821
-> 
-> for you to fetch changes up to d4f5e5af86d2e28edb578e556b307e3ad01ebf08:
-> 
->    hw/loongarch: Fix length for lowram in ACPI SRAT (2024-08-21 11:01:09 +0800)
+Hello Doug Brown,
 
+On Friday 16 of August 2024 18:35:02 Doug Brown wrote:
+> When checking the QEMU_CAN_FRMF_TYPE_FD flag, we need to ignore other
+> potentially set flags. Before this change, received CAN FD frames from
+> SocketCAN weren't being recognized as CAN FD.
+>
+> Signed-off-by: Doug Brown <doug@schmorgal.com>
+> ---
+>  hw/net/can/xlnx-versal-canfd.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/net/can/xlnx-versal-canfd.c
+> b/hw/net/can/xlnx-versal-canfd.c index ad0c4da3c8..8968672b84 100644
+> --- a/hw/net/can/xlnx-versal-canfd.c
+> +++ b/hw/net/can/xlnx-versal-canfd.c
+> @@ -1003,7 +1003,7 @@ static void store_rx_sequential(XlnxVersalCANFDState
+> *s,
+>
+>          dlc = frame->can_dlc;
+>
+> -        if (frame->flags == QEMU_CAN_FRMF_TYPE_FD) {
+> +        if (frame->flags & QEMU_CAN_FRMF_TYPE_FD) {
+>              is_canfd_frame = true;
+>
+>              /* Store dlc value in Xilinx specific format. */
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Reviewed-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
 
-r~
+That is a great catch, I have overlooked this in previous
+review of the Xilinx code.
+
+When I look into hw/net/can/xlnx-versal-canfd.c functions
+regs2frame and store_rx_sequential then I see missing
+handling of flags QEMU_CAN_FRMF_ESI and QEMU_CAN_FRMF_BRS.
+
+In the function regs2frame is missing even initialization
+of frame->flags = 0 at the start, which I expect should be there.
+The
+  frame->flags = QEMU_CAN_FRMF_TYPE_FD;
+should be then
+  frame->flags |= QEMU_CAN_FRMF_TYPE_FD;
+
+You can see how it was intended to parse and fill flags in our
+CTU CAN FD interface code which matches our design of common
+QEMU CAN infrastructure and its extension for CAN FD.
+
+See the functions
+  ctucan_buff2frame()
+  ctucan_frame2buff()
+in
+  hw/net/can/ctucan_core.c
+
+QEMU_CAN_EFF_FLAG and QEMU_CAN_RTR_FLAG seems to be corrected
+in followup patch
+
+[PATCH 3/5] hw/net/can/xlnx-versal-canfd: Translate CAN ID registers
+
+As for the DLC conversion, there are functions
+
+  frame->can_dlc = can_dlc2len(xxxx)
+  XXX = can_len2dlc(frame->can_dlc);
+
+provided by net/can/can_core.c
+
+I am not sure how much competent I am for the rest of the patches,
+because I do not know XilinX IP core so well. Review by Vikram Garhwal
+or somebody else from AMD/XilinX is more valueable there.
+But I can add my ACK there based on rough overview.
+
+Best wishes,
+
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
