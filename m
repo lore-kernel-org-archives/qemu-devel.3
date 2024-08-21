@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9670C5321E
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 21:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D1EC52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 21:51:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgtDl-0004xy-SQ; Wed, 21 Aug 2024 17:50:25 -0400
+	id 1sgtDz-0005vq-S9; Wed, 21 Aug 2024 17:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sgtDk-0004u7-Fg
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:50:24 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sgtDx-0005nn-UT
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:50:37 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sgtDi-00084B-3D
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:50:24 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-201f7fb09f6so1374785ad.2
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 14:50:21 -0700 (PDT)
+ id 1sgtDw-00088c-1A
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 17:50:37 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1fc47abc040so1542825ad.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 14:50:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724277021; x=1724881821;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724277035; x=1724881835;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/xTvsa+ViAqHINj5oJb/iz6qO9j2BBr+FG4wAjwt7ac=;
- b=uTMd26s4aI8VeFm/z51vF2hzF2WlEoSb9RWypOl9XabwWGgBLBTjpE1XD9uGcU6Xk1
- m+L/1hnr46SQqcD0PLRH0ng5boDgY3GH/TZQTmAG715fsy/w893H1AJF3lVZwCJVQgek
- FlGXw58QPJucuP261NHeauD1f04VgMQee50u7BsawXbs0RwfOVEsFRui/OCmFkRZ4iWP
- 9EtR/JWtPVLuTgQxp6yEqGrX7DE2qOCiCQQgUokftVLLCj/ZgBwRHIVwT1vFz7jpWjDZ
- 1kohPQTp5str0+nus1/aBcV8FOEHBkx22orlaTyv9GMnnCdsBBFMzxxrzJIcXgvzH7uG
- 0auA==
+ bh=ps8c4B4fW4dnHyPlCmJ+Qc7poF2BXGJ7omJUUEMCpA4=;
+ b=g/nxe10Pxc9q09TeOYRW59425FpupOWXpks5siQXqs795vy+KmaD4oQSu4cEFlNQr+
+ hS7BBNEJly5sgh0OYIN7NP4fVGEuQctzYJ5ufz9YljR5es+ZdUpOAuHrN5fig65vPfOb
+ zf7hifMrkePQiNkAYYrxfc6t73+GyIADVBuWrVYTHFHAhconxUf5RtAUFS0RT8zgTSU2
+ /uZaPQXiOHAD7ENXzR9Xly/HwnEukKv2vYyMKjH7H+qbMJnhdwGm+BZNWhALMxx5KIqX
+ GALnNslD9J1NFl0dMEn5pu+h60gagNLv7qQvvbN1aor5XcuZZ/ikGXz8G5udmQ3kg3/1
+ nNEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724277021; x=1724881821;
+ d=1e100.net; s=20230601; t=1724277035; x=1724881835;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/xTvsa+ViAqHINj5oJb/iz6qO9j2BBr+FG4wAjwt7ac=;
- b=cFBgUPIStg8fW7v1h6kVj4IjSnD1ghSAP3B61rPbclyZ+kIOxWGLt1qgVogusc/xUj
- RvFS15Te780NmlpYeurG28CszVr2XSRKL5ydqGsfl2cHkU17+ZKCzxyYb39TEzeDT7J0
- 9SKnzOm1TG7Wkl9PRWVF+j5vUu7MFxr+p7yxiyJwJr4XgafS90Tv9BY1+epk1Phb6cOv
- 01dQuNVLf7O0kRYgQm3E/p1pxcNL0xUtOY29+F5uGOcZNFU69DYQ5C+f96HFH5sje1yk
- 0N5goDLDGb1P5WWLOWladt5kBzqmK2FAm3wwCDXgKkNwpj0D/SqtlbQfvITI/AqciqLk
- fT8A==
+ bh=ps8c4B4fW4dnHyPlCmJ+Qc7poF2BXGJ7omJUUEMCpA4=;
+ b=OfvGaekL/KvDZgre2iwYX2WOW5LNN709c6PbnGGeg08HYxapUFL3GmIb9jcDcmYuXX
+ UGkt9TzfYGp625uyGBi78OemFrHoDDDNTjAUS8CLvekzSrrH/R+EKo7Bxu4pcMZhL2oC
+ 8isJc4Syj6J5oBBUgQaDF8Nw9MoU0PIvt6KQKK8ss9bYCY0ycg5S5LnoWw59KK1j7R6N
+ pLXvij5fII6+9XFhmlx0st01/Nqfwrmhbk/Ma8+C3AwsYeBTz237dVDwB7euc1Td7dFw
+ Au3IsVyRO8ARyRUOGGT18CswBYsooGGT599eN3Pa4eAL26SLR3laTj+dKHWaeObcguKg
+ AHlw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUodS5L8KIzpTwGxZsD85ISiMF+Sdi8dokjiyvaGifzDb7lLgjRRmWFBFLshT8R1I5WAFK1yVytwML@nongnu.org
-X-Gm-Message-State: AOJu0YxH8ZJa01MhotDjMrAKfgXzuVDsvrX3oH0AlH4cYUFjNOV6f/K5
- ihmAddWZqhnGKaoGSHeLnJw7bd72ynxfAi7YGQVlBZwb862Yp9uLG1I0dWnv25Y=
-X-Google-Smtp-Source: AGHT+IEML9MaTFWrUM3EjnIybcEHbI7Q0eq3TlaIu7J5d2r3Fdt9FBj74Nxl7mE9v/Tr3ZI9OPni3w==
-X-Received: by 2002:a17:902:e88f:b0:1fb:7f82:515 with SMTP id
- d9443c01a7336-20367d0d2demr39175355ad.15.1724277020505; 
- Wed, 21 Aug 2024 14:50:20 -0700 (PDT)
+ AJvYcCVERFq6HuH/zmvXQyEtGJOLvSI796o341sLMEEY/h1gIrRcjU32z64GrGgkddlcb87FsiZclk30aMLI@nongnu.org
+X-Gm-Message-State: AOJu0Yy+QkA6ahYN/g3T54nOOCiMia/ane4NhbzB+dPg1GC0klTb6qBq
+ bI9DsnJhzisA1h6w5+c0rifAA9Ug15NHV2U+QkdCzFmd9W+E/CbB1kT8m9jyd64=
+X-Google-Smtp-Source: AGHT+IFzLEGEwsHWANnAJ/cIGYBBy6b35fr7aqBsbTFYswBSaDM/PC3g+AgDJCZu5oycAfcG2BmzOg==
+X-Received: by 2002:a17:903:2450:b0:1fd:b604:58a6 with SMTP id
+ d9443c01a7336-20367c089b2mr57818965ad.17.1724277034634; 
+ Wed, 21 Aug 2024 14:50:34 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-203859ef0fdsm586345ad.248.2024.08.21.14.50.19
+ d9443c01a7336-203859ef0fdsm586345ad.248.2024.08.21.14.50.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Aug 2024 14:50:20 -0700 (PDT)
+ Wed, 21 Aug 2024 14:50:34 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
  liwei1518@gmail.com, dbarboza@ventanamicro.com,
  zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
- kito.cheng@sifive.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v6 01/16] target/riscv: Add zicfilp extension
-Date: Wed, 21 Aug 2024 14:49:59 -0700
-Message-ID: <20240821215014.3859190-2-debug@rivosinc.com>
+ kito.cheng@sifive.com, Deepak Gupta <debug@rivosinc.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v6 12/16] target/riscv: AMO operations always raise store/AMO
+ fault
+Date: Wed, 21 Aug 2024 14:50:10 -0700
+Message-ID: <20240821215014.3859190-13-debug@rivosinc.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240821215014.3859190-1-debug@rivosinc.com>
 References: <20240821215014.3859190-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=debug@rivosinc.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,71 +101,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-zicfilp [1] riscv cpu extension enables forward control flow integrity.
-If enabled, all indirect calls must land on a landing pad instruction.
-
-This patch sets up space for zicfilp extension in cpuconfig. zicfilp
-is dependend on zicsr.
-
-[1] - https://github.com/riscv/riscv-cfi
+This patch adds one more word for tcg compile which can be obtained during
+unwind time to determine fault type for original operation (example AMO).
+Depending on that, fault can be promoted to store/AMO fault.
 
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Co-developed-by: Jim Shu <jim.shu@sifive.com>
-Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu.c         | 2 ++
- target/riscv/cpu_cfg.h     | 1 +
- target/riscv/tcg/tcg-cpu.c | 5 +++++
- 3 files changed, 8 insertions(+)
+ target/riscv/cpu.h         |  9 ++++++++-
+ target/riscv/cpu_helper.c  | 13 +++++++++++++
+ target/riscv/tcg/tcg-cpu.c |  1 +
+ target/riscv/translate.c   | 14 +++++++++++++-
+ 4 files changed, 35 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 33ef4eb795..5dfb3f39ab 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -106,6 +106,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
-+    ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
-     ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
-     ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
-     ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
-@@ -1472,6 +1473,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     /* Defaults for standard extensions */
-     MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
-     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
-+    MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
-     MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
-     MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-     MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 120905a254..88d5defbb5 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -67,6 +67,7 @@ struct RISCVCPUConfig {
-     bool ext_zicbom;
-     bool ext_zicbop;
-     bool ext_zicboz;
-+    bool ext_zicfilp;
-     bool ext_zicond;
-     bool ext_zihintntl;
-     bool ext_zihintpause;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index dcc3bc9d93..3143141863 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -46,8 +46,13 @@ typedef struct CPUArchState CPURISCVState;
+ /*
+  * RISC-V-specific extra insn start words:
+  * 1: Original instruction opcode
++ * 2: more information about instruction
+  */
+-#define TARGET_INSN_START_EXTRA_WORDS 1
++#define TARGET_INSN_START_EXTRA_WORDS 2
++/*
++ * b0: Whether a instruction always raise a store AMO or not.
++ */
++#define RISCV_UW2_ALWAYS_STORE_AMO 1
+ 
+ #define RV(x) ((target_ulong)1 << (x - 'A'))
+ 
+@@ -226,6 +231,8 @@ struct CPUArchState {
+     bool      elp;
+     /* shadow stack register for zicfiss extension */
+     target_ulong ssp;
++    /* env place holder for extra word 2 during unwind */
++    target_ulong excp_uw2;
+     /* sw check code for sw check exception */
+     target_ulong sw_check_code;
+ #ifdef CONFIG_USER_ONLY
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 36dd67befc..a0fc10ddb5 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1753,6 +1753,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+     bool write_gva = false;
++    bool always_storeamo = (env->excp_uw2 & RISCV_UW2_ALWAYS_STORE_AMO);
+     uint64_t s;
+ 
+     /*
+@@ -1779,13 +1780,25 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             env->pc += 4;
+             return;
+         case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
++            if (always_storeamo) {
++                cause = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
++            }
++            goto load_store_fault;
+         case RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT:
+         case RISCV_EXCP_LOAD_ADDR_MIS:
+         case RISCV_EXCP_STORE_AMO_ADDR_MIS:
+         case RISCV_EXCP_LOAD_ACCESS_FAULT:
++            if (always_storeamo) {
++                cause = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
++            }
++            goto load_store_fault;
+         case RISCV_EXCP_STORE_AMO_ACCESS_FAULT:
+         case RISCV_EXCP_LOAD_PAGE_FAULT:
+         case RISCV_EXCP_STORE_PAGE_FAULT:
++            if (always_storeamo) {
++                cause = RISCV_EXCP_STORE_PAGE_FAULT;
++            }
++        load_store_fault:
+             write_gva = env->two_stage_lookup;
+             tval = env->badaddr;
+             if (env->two_stage_indirect_lookup) {
 diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b8814ab753..ed19586c9d 100644
+index 4da26cb926..83771303a8 100644
 --- a/target/riscv/tcg/tcg-cpu.c
 +++ b/target/riscv/tcg/tcg-cpu.c
-@@ -623,6 +623,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         cpu->pmu_avail_ctrs = 0;
+@@ -129,6 +129,7 @@ static void riscv_restore_state_to_opc(CPUState *cs,
+         env->pc = pc;
+     }
+     env->bins = data[1];
++    env->excp_uw2 = data[2];
+ }
+ 
+ static const TCGCPUOps riscv_tcg_ops = {
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index d44103a273..8961dda244 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -121,6 +121,7 @@ typedef struct DisasContext {
+     bool fcfi_lp_expected;
+     /* zicfiss extension, if shadow stack was enabled during TB gen */
+     bool bcfi_enabled;
++    target_ulong excp_uw2;
+ } DisasContext;
+ 
+ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+@@ -144,6 +145,9 @@ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+ #define get_address_xl(ctx)    ((ctx)->address_xl)
+ #endif
+ 
++#define SET_INSTR_ALWAYS_STORE_AMO(ctx) \
++    (ctx->excp_uw2 |= RISCV_UW2_ALWAYS_STORE_AMO)
++
+ /* The word size for this machine mode. */
+ static inline int __attribute__((unused)) get_xlen(DisasContext *ctx)
+ {
+@@ -214,6 +218,12 @@ static void decode_save_opc(DisasContext *ctx)
+     assert(!ctx->insn_start_updated);
+     ctx->insn_start_updated = true;
+     tcg_set_insn_start_param(ctx->base.insn_start, 1, ctx->opcode);
++
++    if (ctx->excp_uw2) {
++        tcg_set_insn_start_param(ctx->base.insn_start, 2,
++                                 ctx->excp_uw2);
++        ctx->excp_uw2 = 0;
++    }
+ }
+ 
+ static void gen_pc_plus_diff(TCGv target, DisasContext *ctx,
+@@ -1096,6 +1106,7 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+         mop |= MO_ALIGN;
      }
  
-+    if (cpu->cfg.ext_zicfilp && !cpu->cfg.ext_zicsr) {
-+        error_setg(errp, "zicfilp extension requires zicsr extension");
-+        return;
-+    }
-+
-     /*
-      * Disable isa extensions based on priv spec after we
-      * validated and set everything we need.
++    SET_INSTR_ALWAYS_STORE_AMO(ctx);
+     decode_save_opc(ctx);
+     src1 = get_address(ctx, a->rs1, 0);
+     func(dest, src1, src2, ctx->mem_idx, mop);
+@@ -1250,6 +1261,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->zero = tcg_constant_tl(0);
+     ctx->virt_inst_excp = false;
+     ctx->decoders = cpu->decoders;
++    ctx->excp_uw2 = 0;
+ }
+ 
+ static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+@@ -1265,7 +1277,7 @@ static void riscv_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+         pc_next &= ~TARGET_PAGE_MASK;
+     }
+ 
+-    tcg_gen_insn_start(pc_next, 0);
++    tcg_gen_insn_start(pc_next, 0, 0);
+     ctx->insn_start_updated = false;
+ }
+ 
 -- 
 2.44.0
 
