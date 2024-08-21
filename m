@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226F9C531DF
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 03:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26BC3C5320E
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 03:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgbf4-00060x-2e; Tue, 20 Aug 2024 23:05:26 -0400
+	id 1sgbf3-00060y-Rc; Tue, 20 Aug 2024 23:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sgbf0-000601-0a
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 23:05:22 -0400
+ id 1sgbez-0005zg-Hc
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 23:05:21 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sgbex-00035A-2O
+ (envelope-from <gaosong@loongson.cn>) id 1sgbew-00035F-M2
  for qemu-devel@nongnu.org; Tue, 20 Aug 2024 23:05:21 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx35tiWcVmUMoaAA--.31573S3;
- Wed, 21 Aug 2024 11:05:06 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxvOpkWcVmVcoaAA--.58451S3;
+ Wed, 21 Aug 2024 11:05:08 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAxLGdhWcVm6jEcAA--.28456S2;
- Wed, 21 Aug 2024 11:05:05 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxLGdhWcVm6jEcAA--.28456S3;
+ Wed, 21 Aug 2024 11:05:08 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-Subject: [PULL 0/1] LoongArch: Fix for 9.1
-Date: Wed, 21 Aug 2024 10:47:38 +0800
-Message-Id: <20240821024739.3024705-1-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 1/1] hw/loongarch: Fix length for lowram in ACPI SRAT
+Date: Wed, 21 Aug 2024 10:47:39 +0800
+Message-Id: <20240821024739.3024705-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240821024739.3024705-1-gaosong@loongson.cn>
+References: <20240821024739.3024705-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxLGdhWcVm6jEcAA--.28456S2
+X-CM-TRANSID: qMiowMAxLGdhWcVm6jEcAA--.28456S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,26 +66,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4220ebde107c44412755d593fb46e168eeaed936:
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-  Merge tag 'migration-20240820-pull-request' of https://gitlab.com/farosas/qemu into staging (2024-08-21 08:46:45 +1000)
+The size of lowram should be "gap" instead of the whole node.
 
-are available in the Git repository at:
+This is failing kernel's sanity check:
 
-  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240821
+[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0xffffffff]
+[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x80000000-0x16fffffff]
+[    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0x170000000-0x26fffffff]
+[    0.000000] Warning: node 0 [mem 0x00000000-0xffffffff] overlaps with itself [mem 0x80000000-0x16fffffff]
 
-for you to fetch changes up to d4f5e5af86d2e28edb578e556b307e3ad01ebf08:
-
-  hw/loongarch: Fix length for lowram in ACPI SRAT (2024-08-21 11:01:09 +0800)
-
-----------------------------------------------------------------
-Fix for 9.1
-
-----------------------------------------------------------------
-Jiaxun Yang (1):
-      hw/loongarch: Fix length for lowram in ACPI SRAT
-
+Fixes: fc100011f38d ("hw/loongarch: Refine acpi srat table for numa memory")
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
  hw/loongarch/acpi-build.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+index 72bfc35ae6..2638f87434 100644
+--- a/hw/loongarch/acpi-build.c
++++ b/hw/loongarch/acpi-build.c
+@@ -218,7 +218,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+          *   highram: [VIRT_HIGHMEM_BASE, +(len - gap))
+          */
+         if (len >= gap) {
+-            build_srat_memory(table_data, base, len, i, MEM_AFFINITY_ENABLED);
++            build_srat_memory(table_data, base, gap, i, MEM_AFFINITY_ENABLED);
+             len -= gap;
+             base = VIRT_HIGHMEM_BASE;
+             gap = machine->ram_size - VIRT_LOWMEM_SIZE;
+-- 
+2.34.1
 
 
