@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC08C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 01:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCCDDC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 02:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sga47-0008EQ-Eb; Tue, 20 Aug 2024 21:23:11 -0400
+	id 1sgapH-0007Mt-Ft; Tue, 20 Aug 2024 22:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1sga45-0008Do-TR
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 21:23:09 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1sga43-0006Au-4N
- for qemu-devel@nongnu.org; Tue, 20 Aug 2024 21:23:09 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 012C3CE0CDF;
- Wed, 21 Aug 2024 01:23:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5637AC4AF0B;
- Wed, 21 Aug 2024 01:23:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1724203382;
- bh=PD+v8CbvewzPXcIply8oiPVykbg+nqf9Vz9nQhrUa0c=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=X5shaQ70F4qVY89XUtBQBxoCcc2kuEEqBZe3JM4mvEmEABU4dz+1Mj4Li3mqGSRpB
- w26GCJZ9GOET88VrPaoQCGMLjBHPnd2LAwFU2RU52EPXiXHU+imMhRIm7AEP+fWFlQ
- e0t+oK3hpmZ/iIHv0Ab3g2d03HAeyntuSpgiW3PnhV49FEbMnPCTlJIRzUmXWhmSSB
- /eks8ZbXcpSbIemQd2USXWf95Idp7wQOTdhaci5xlm+2Bqa3iXap28ch8eAXMpzThX
- jp+ateAJAJ12OHv6gO94mb1eRe+f3g1fuXg1N/4PhGiO3Mkxh4whfzhIapFzxL0FsX
- MSUvCQ2mHVO/A==
-Date: Tue, 20 Aug 2024 18:22:58 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
- paul@xen.org, peter.maydell@linaro.org, alex.bennee@linaro.org, 
- xenia.ragiadakou@amd.com, jason.andryuk@amd.com, edgar.iglesias@amd.com, 
- xen-devel@lists.xenproject.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 11/12] hw/i386/xen: Add a Xen PVH x86 machine
-In-Reply-To: <20240820142949.533381-12-edgar.iglesias@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2408201822530.298534@ubuntu-linux-20-04-desktop>
-References: <20240820142949.533381-1-edgar.iglesias@gmail.com>
- <20240820142949.533381-12-edgar.iglesias@gmail.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sgapE-0007Lb-6s
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:11:52 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sgapB-000416-Cp
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:11:51 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxuOnTTMVmucMaAA--.58371S3;
+ Wed, 21 Aug 2024 10:11:32 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAx4+HRTMVm5ygcAA--.59923S3;
+ Wed, 21 Aug 2024 10:11:31 +0800 (CST)
+Subject: Re: [PATCH for-9.1] hw/loongarch: Fix length for lowram in ACPI SRAT
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>
+References: <20240820-fix-numa-range-v1-1-c5d6b889996f@flygoat.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <88e7e62d-2b38-8b0b-0f5b-1b8115b920e4@loongson.cn>
+Date: Wed, 21 Aug 2024 10:11:26 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=sstabellini@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <20240820-fix-numa-range-v1-1-c5d6b889996f@flygoat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAx4+HRTMVm5ygcAA--.59923S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tF4fGw4DAF1rZr1fXryUXFc_yoW8Xw17pr
+ 43Zr4v9r48JF17ZFW8Gr13GF1UXrWkCa17W3W7tryUJwnrKr1rXr4kG3sF9F9rZw18Jrsx
+ ZFyDtrWj9FWUZwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.03,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,163 +82,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Aug 2024, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+
+
+On 2024/8/21 上午2:42, Jiaxun Yang wrote:
+> The size of lowram should be "gap" instead of the whole node.
 > 
-> Add a Xen PVH x86 machine based on the abstract PVH Machine.
+> This is failing kernel's sanity check:
 > 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
-
+> [    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0xffffffff]
+> [    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x80000000-0x16fffffff]
+> [    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0x170000000-0x26fffffff]
+> [    0.000000] Warning: node 0 [mem 0x00000000-0xffffffff] overlaps with itself [mem 0x80000000-0x16fffffff]
+> 
+> Fixes: fc100011f38d ("hw/loongarch: Refine acpi srat table for numa memory")
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 > ---
->  hw/i386/xen/meson.build |   1 +
->  hw/i386/xen/xen-pvh.c   | 121 ++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 122 insertions(+)
->  create mode 100644 hw/i386/xen/xen-pvh.c
+>   hw/loongarch/acpi-build.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/i386/xen/meson.build b/hw/i386/xen/meson.build
-> index 3f0df8bc07..c73c62b8e3 100644
-> --- a/hw/i386/xen/meson.build
-> +++ b/hw/i386/xen/meson.build
-> @@ -4,6 +4,7 @@ i386_ss.add(when: 'CONFIG_XEN', if_true: files(
->  ))
->  i386_ss.add(when: ['CONFIG_XEN', xen], if_true: files(
->    'xen-hvm.c',
-> +  'xen-pvh.c',
->  ))
->  
->  i386_ss.add(when: 'CONFIG_XEN_BUS', if_true: files(
-> diff --git a/hw/i386/xen/xen-pvh.c b/hw/i386/xen/xen-pvh.c
-> new file mode 100644
-> index 0000000000..45645667e9
-> --- /dev/null
-> +++ b/hw/i386/xen/xen-pvh.c
-> @@ -0,0 +1,121 @@
-> +/*
-> + * QEMU Xen PVH x86 Machine
-> + *
-> + * Copyright (c) 2024 Advanced Micro Devices, Inc.
-> + * Written by Edgar E. Iglesias <edgar.iglesias@amd.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "hw/boards.h"
-> +#include "sysemu/sysemu.h"
-> +#include "hw/xen/arch_hvm.h"
-> +#include <xen/hvm/hvm_info_table.h>
-> +#include "hw/xen/xen-pvh-common.h"
-> +
-> +#define TYPE_XEN_PVH_X86  MACHINE_TYPE_NAME("xenpvh")
-> +OBJECT_DECLARE_SIMPLE_TYPE(XenPVHx86State, XEN_PVH_X86)
-> +
-> +struct XenPVHx86State {
-> +    /*< private >*/
-> +    XenPVHMachineState parent;
-> +
-> +    DeviceState **cpu;
-> +};
-> +
-> +static DeviceState *xen_pvh_cpu_new(MachineState *ms,
-> +                                    int64_t apic_id)
-> +{
-> +    Object *cpu = object_new(ms->cpu_type);
-> +
-> +    object_property_add_child(OBJECT(ms), "cpu[*]", cpu);
-> +    object_property_set_uint(cpu, "apic-id", apic_id, &error_fatal);
-> +    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-> +    object_unref(cpu);
-> +
-> +    return DEVICE(cpu);
-> +}
-> +
-> +static void xen_pvh_init(MachineState *ms)
-> +{
-> +    XenPVHx86State *xp = XEN_PVH_X86(ms);
-> +    int i;
-> +
-> +    /* Create dummy cores. This will indirectly create the APIC MSI window.  */
-> +    xp->cpu = g_malloc(sizeof xp->cpu[0] * ms->smp.max_cpus);
-> +    for (i = 0; i < ms->smp.max_cpus; i++) {
-> +        xp->cpu[i] = xen_pvh_cpu_new(ms, i);
-> +    }
-> +}
-> +
-> +static void xen_pvh_instance_init(Object *obj)
-> +{
-> +    XenPVHMachineState *s = XEN_PVH_MACHINE(obj);
-> +
-> +    /* Default values.  */
-> +    s->cfg.ram_low = (MemMapEntry) { 0x0, 0x80000000U };
-> +    s->cfg.ram_high = (MemMapEntry) { 0xC000000000ULL, 0x4000000000ULL };
-> +    s->cfg.pci_intx_irq_base = 16;
-> +}
-> +
-> +/*
-> + * Deliver INTX interrupts to Xen guest.
-> + */
-> +static void xen_pvh_set_pci_intx_irq(void *opaque, int irq, int level)
-> +{
-> +    /*
-> +     * Since QEMU emulates all of the swizziling
-> +     * We don't want Xen to do any additional swizzling in
-> +     * xen_set_pci_intx_level() so we always set device to 0.
-> +     */
-> +    if (xen_set_pci_intx_level(xen_domid, 0, 0, 0, irq, level)) {
-> +        error_report("xendevicemodel_set_pci_intx_level failed");
-> +    }
-> +}
-> +
-> +static void xen_pvh_machine_class_init(ObjectClass *oc, void *data)
-> +{
-> +    XenPVHMachineClass *xpc = XEN_PVH_MACHINE_CLASS(oc);
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +
-> +    mc->desc = "Xen PVH x86 machine";
-> +    mc->default_cpu_type = TARGET_DEFAULT_CPU_TYPE;
-> +
-> +    /* mc->max_cpus holds the MAX value allowed in the -smp cmd-line opts. */
-> +    mc->max_cpus = HVM_MAX_VCPUS;
-> +
-> +    /* We have an implementation specific init to create CPU objects.  */
-> +    xpc->init = xen_pvh_init;
-> +
-> +    /*
-> +     * PCI INTX routing.
-> +     *
-> +     * We describe the mapping between the 4 INTX interrupt and GSIs
-> +     * using xen_set_pci_link_route(). xen_pvh_set_pci_intx_irq is
-> +     * used to deliver the interrupt.
-> +     */
-> +    xpc->set_pci_intx_irq = xen_pvh_set_pci_intx_irq;
-> +    xpc->set_pci_link_route = xen_set_pci_link_route;
-> +
-> +    /* List of supported features known to work on PVH x86.  */
-> +    xpc->has_pci = true;
-> +
-> +    xen_pvh_class_setup_common_props(xpc);
-> +}
-> +
-> +static const TypeInfo xen_pvh_x86_machine_type = {
-> +    .name = TYPE_XEN_PVH_X86,
-> +    .parent = TYPE_XEN_PVH_MACHINE,
-> +    .class_init = xen_pvh_machine_class_init,
-> +    .instance_init = xen_pvh_instance_init,
-> +    .instance_size = sizeof(XenPVHx86State),
-> +};
-> +
-> +static void xen_pvh_machine_register_types(void)
-> +{
-> +    type_register_static(&xen_pvh_x86_machine_type);
-> +}
-> +
-> +type_init(xen_pvh_machine_register_types)
-> -- 
-> 2.43.0
+> diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+> index 72bfc35ae6c2..2638f8743463 100644
+> --- a/hw/loongarch/acpi-build.c
+> +++ b/hw/loongarch/acpi-build.c
+> @@ -218,7 +218,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>            *   highram: [VIRT_HIGHMEM_BASE, +(len - gap))
+>            */
+>           if (len >= gap) {
+> -            build_srat_memory(table_data, base, len, i, MEM_AFFINITY_ENABLED);
+> +            build_srat_memory(table_data, base, gap, i, MEM_AFFINITY_ENABLED);
+>               len -= gap;
+>               base = VIRT_HIGHMEM_BASE;
+>               gap = machine->ram_size - VIRT_LOWMEM_SIZE;
 > 
+> ---
+> base-commit: 075fd020afe3150a0e6c4b049705b358b597b65a
+> change-id: 20240820-fix-numa-range-f1f0302e138d
+> 
+> Best regards,
+> 
+Thanks for catching this.
+
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+
 
