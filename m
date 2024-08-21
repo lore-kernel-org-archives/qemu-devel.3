@@ -4,106 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BCC8C52D7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 16:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31F7C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 16:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgoc2-0005JG-7M; Wed, 21 Aug 2024 12:55:10 -0400
+	id 1sgoeS-0001qR-VF; Wed, 21 Aug 2024 12:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <carisett@akamai.com>)
- id 1sgobz-0005IJ-VS; Wed, 21 Aug 2024 12:55:08 -0400
-Received: from mx0b-00190b01.pphosted.com ([2620:100:9005:57f::1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgoeR-0001pf-1J
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 12:57:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <carisett@akamai.com>)
- id 1sgobx-0000dv-8m; Wed, 21 Aug 2024 12:55:07 -0400
-Received: from pps.filterd (m0122331.ppops.net [127.0.0.1])
- by mx0b-00190b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47LDB9SI023374;
- Wed, 21 Aug 2024 17:55:02 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=jan2016.eng; bh=ETR7TXQf1nvMGtYkfFtEub
- IZTiXzdtsh6YuzsrL5PVU=; b=lEMHlwPjo2IOrwFU1BcyMYt3CuYIHHKCh1NT+b
- 4l2YGSiGaVz+Cf2OzcyKMqOEtiw65ecTDoN0Jd5pHB73W5L7iKJNArthM6x/potl
- zIIsLVC4FipfCy9rsP9swOjA+2QMioSPaNUJNe/+Z9LUmEbips1lbvecPupmkrUk
- 52IvKDZIhTQIPFHWHfzhYEz+0YMQ7P0aJN+T/BSPnY6ijaJUjfbp7W+s4enb8iuO
- p7I6Xzi1mDlNv+lTD5MIAhBsKYTh5UfH00OUTiCNgCd+2SQLLm3vNvUNbxBPxqXM
- 4a6MtZpXUi+6hkkNeBZDEySdE6L49u9FuqfzpN+8IDW1lz5w==
-Received: from prod-mail-ppoint3
- (a72-247-45-31.deploy.static.akamaitechnologies.com [72.247.45.31] (may be
- forged))
- by mx0b-00190b01.pphosted.com (PPS) with ESMTPS id 4149peyh3p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Aug 2024 17:55:02 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint3.akamai.com [127.0.0.1])
- by prod-mail-ppoint3.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 47LGgxmb014457; Wed, 21 Aug 2024 12:55:01 -0400
-Received: from email.msg.corp.akamai.com ([172.27.50.202])
- by prod-mail-ppoint3.akamai.com (PPS) with ESMTPS id 4138s02mjm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Aug 2024 12:55:01 -0400
-Received: from ustx2ex-dag4mb8.msg.corp.akamai.com (172.27.50.207) by
- ustx2ex-dag4mb3.msg.corp.akamai.com (172.27.50.202) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 21 Aug 2024 09:55:00 -0700
-Received: from ustx2ex-dag4mb8.msg.corp.akamai.com ([172.27.50.207]) by
- ustx2ex-dag4mb8.msg.corp.akamai.com ([172.27.50.207]) with mapi id
- 15.02.1544.011; Wed, 21 Aug 2024 09:55:00 -0700
-From: "Arisetty, Chakri" <carisett@akamai.com>
-To: Fabiano Rosas <farosas@suse.de>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-block@nongnu.org" <qemu-block@nongnu.org>
-CC: "\"Peter Xu <peterx@redhat.com>\"@imap1.dmz-prg2.suse.org"
- <"Peter Xu <peterx@redhat.com>"@imap1.dmz-prg2.suse.org>, "\"Kevin Wolf
- <kwolf@redhat.com>\"@imap1.dmz-prg2.suse.org"
- <"Kevin Wolf <kwolf@redhat.com>"@imap1.dmz-prg2.suse.org>, "\"Eric  Blake
- <eblake@redhat.com>\"@imap1.dmz-prg2.suse.org"
- <"Eric  Blake <eblake@redhat.com>"@imap1.dmz-prg2.suse.org>,
- "Blew III, Will" <wblewiii@akamai.com>,
- "Massry, Abraham" <amassry@akamai.com>, "Tottenham,
- Max" <mtottenh@akamai.com>, "Greve, Mark" <mgreve@akamai.com>
-Subject: Re: Issue with QEMU Live Migration
-Thread-Topic: Issue with QEMU Live Migration
-Thread-Index: AQHa886FsqX6lMAdoUyRdLRWIRR0PbIyMZ0A//+8fIA=
-Date: Wed, 21 Aug 2024 16:55:00 +0000
-Message-ID: <ACB0E3E9-BA69-4EC7-A4EB-3AF2F21D4C8A@akamai.com>
-References: <1ABDAA2B-8582-4B98-81D3-8F71DE62718C@akamai.com>
- <874j7e0yjt.fsf@suse.de>
-In-Reply-To: <874j7e0yjt.fsf@suse.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.27.118.139]
-Content-Type: multipart/mixed;
- boundary="_002_ACB0E3E9BA694EC7A4EB3AF2F21D4C8Aakamaicom_"
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgoeO-00016O-Fw
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 12:57:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724259454;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=72nVWtKKC2sfvJi0dQHZuwXl9Lj7ZDv0etuqaJN5224=;
+ b=Lgj90RSTEAy8di336b4XrPyelhI8iM/QCj7xKOqXoqUa3mB4kyJIPPd/Cdk2B62DmESp4Z
+ tnVz2rqzXZcT5Hdho6TqJFYsLMxzmo6bb3MBGqvkvrVyB9mrMKmFOvekaMkm4vnTezln4S
+ fR1CiFX2fXcS96UoO27viNmUZt+Rf3U=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-36-3wgfYhH6OjC6SSi2wCRLiA-1; Wed, 21 Aug 2024 12:57:33 -0400
+X-MC-Unique: 3wgfYhH6OjC6SSi2wCRLiA-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a1d4335cceso182713485a.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 09:57:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724259451; x=1724864251;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=72nVWtKKC2sfvJi0dQHZuwXl9Lj7ZDv0etuqaJN5224=;
+ b=GQjHoL5z1wsXR8iQjDYAWlXwDeH9GlZ5UQ2DwDe9LII2+91mW4xsu46+mrmIJyyn78
+ SiScGPsqL3IkM7+BkYGJIClF75rmTvpRGcxSuj2xfB7kubrIxPfO8JCZqP2DLCa40E3b
+ xLF+876zNQtGxVRA7Onqw1Vklt+YFJysSDVXBxR2WHU0hapF1qTOEFGCy0kNwJDdBgmO
+ oD1DeI65rFgM+O1nPMKa4t2+zcODAK/VWY3mJTAz0D+GnBhhTs8n/TqbpwBSCVSfjFSn
+ C92AlzzK61OPHJC5ykDU6WFwo7A72VA0okqgjFhnOLihIdXaX+0CYthRxA0MA+925vrA
+ zJDA==
+X-Gm-Message-State: AOJu0YxJhgojk1PtqHXE6p4+iP7hRAE0L3TZMDSPlu8LhQiru/QJj3ld
+ AKz0D4u9nJkOff2/5LdS8exHDybOxpvSKrPWt9vcuajXXdK2VyBfKn1fzaJwV+PzQ7kdEvi3bXz
+ WRxKqXbENqdsm4glqAO4BuSlzm0vdZts66dF4xRSD4UMkJGu/dIpD
+X-Received: by 2002:a05:620a:2802:b0:79f:17f4:7154 with SMTP id
+ af79cd13be357-7a67d3e2bd4mr43128385a.3.1724259451440; 
+ Wed, 21 Aug 2024 09:57:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEaPJP7V3tmnF9VdcWHFtYulr+E6l6Ls8mJnQ6SIrJwjmiv3rgdgdeMOSeovbfJ+METZll24A==
+X-Received: by 2002:a05:620a:2802:b0:79f:17f4:7154 with SMTP id
+ af79cd13be357-7a67d3e2bd4mr43123885a.3.1724259450961; 
+ Wed, 21 Aug 2024 09:57:30 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a4ff02505dsm644662285a.13.2024.08.21.09.57.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Aug 2024 09:57:30 -0700 (PDT)
+Date: Wed, 21 Aug 2024 12:57:27 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 06/11] migration: fix mismatched GPAs during cpr
+Message-ID: <ZsYcd7EJjtoLZx0V@x1n>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <1719776434-435013-7-git-send-email-steven.sistare@oracle.com>
+ <ZpqUGYclrONQEuc7@x1n>
+ <571a4f84-693c-43d4-a43a-52a53a1091e1@oracle.com>
+ <ZrvFXCRPczXvCu2n@x1n>
+ <5f763763-1479-4585-98ce-83fcec03b4db@oracle.com>
+ <Zr9li88goR-YKcng@x1n>
+ <aa789f70-145f-42a1-a0c1-175190867d85@oracle.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-21_11,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- spamscore=0
- adultscore=0 phishscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2407110000 definitions=main-2408210123
-X-Proofpoint-GUID: Yb2TZpY7SSwnyv_FslDRrunC2KiQ5-DS
-X-Proofpoint-ORIG-GUID: Yb2TZpY7SSwnyv_FslDRrunC2KiQ5-DS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-21_11,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- spamscore=0 adultscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1011 mlxscore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408210123
-Received-SPF: pass client-ip=2620:100:9005:57f::1;
- envelope-from=carisett@akamai.com; helo=mx0b-00190b01.pphosted.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aa789f70-145f-42a1-a0c1-175190867d85@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,130 +113,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_002_ACB0E3E9BA694EC7A4EB3AF2F21D4C8Aakamaicom_
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <7B4F3874F5573F47B967314F33FA7397@akamai.com>
-Content-Transfer-Encoding: base64
+On Fri, Aug 16, 2024 at 01:10:02PM -0400, Steven Sistare wrote:
+> On 8/16/2024 10:43 AM, Peter Xu wrote:
+> > On Thu, Aug 15, 2024 at 04:54:58PM -0400, Steven Sistare wrote:
+> > > On 8/13/2024 4:43 PM, Peter Xu wrote:
+> > > > On Wed, Aug 07, 2024 at 05:04:26PM -0400, Steven Sistare wrote:
+> > > > > On 7/19/2024 12:28 PM, Peter Xu wrote:
+> > > > > > On Sun, Jun 30, 2024 at 12:40:29PM -0700, Steve Sistare wrote:
+> > > > > > > For new cpr modes, ramblock_is_ignored will always be true, because the
+> > > > > > > memory is preserved in place rather than copied.  However, for an ignored
+> > > > > > > block, parse_ramblock currently requires that the received address of the
+> > > > > > > block must match the address of the statically initialized region on the
+> > > > > > > target.  This fails for a PCI rom block, because the memory region address
+> > > > > > > is set when the guest writes to a BAR on the source, which does not occur
+> > > > > > > on the target, causing a "Mismatched GPAs" error during cpr migration.
+> > > > > > 
+> > > > > > Is this a common fix with/without cpr mode?
+> > > > > > 
+> > > > > > It looks to me mr->addr (for these ROMs) should only be set in PCI config
+> > > > > > region updates as you mentioned.  But then I didn't figure out when they're
+> > > > > > updated on dest in live migration: the ramblock info was sent at the
+> > > > > > beginning of migration, so it doesn't even have PCI config space migrated;
+> > > > > > I thought the real mr->addr should be in there.
+> > > > > > 
+> > > > > > I also failed to understand yet on why the mr->addr check needs to be done
+> > > > > > by ignore-shared only.  Some explanation would be greatly helpful around
+> > > > > > this area..
+> > > > > 
+> > > > > The error_report does not bite for normal migration because migrate_ram_is_ignored()
+> > > > > is false for the problematic blocks, so the block->mr->addr check is not
+> > > > > performed.  However, mr->addr is never fixed up in this case, which is a
+> > > > > quiet potential bug, and this patch fixes that with the "has_addr" check.
+> > > > > 
+> > > > > For cpr-exec, migrate_ram_is_ignored() is true for all blocks,
+> > > > > because we do not copy the contents over the migration stream, we preserve the
+> > > > > memory in place.  So we fall into the block->mr->addr sanity check and fail
+> > > > > with the original code.
+> > > > 
+> > > > OK I get your point now.  However this doesn't look right, instead I start
+> > > > to question why we need to send mr->addr at all..
+> > > > 
+> > > > As I said previously, AFAIU mr->addr should only be updated when there's
+> > > > some PCI config space updates so that it moves the MR around in the address
+> > > > space based on how guest drivers / BIOS (?) set things up.  Now after these
+> > > > days not looking, and just started to look at this again, I think the only
+> > > > sane place to do this update is during a post_load().
+> > > > 
+> > > > And if we start to check some of the memory_region_set_address() users,
+> > > > that's exactly what happened..
+> > > > 
+> > > >     - ich9_pm_iospace_update(), update addr for ICH9LPCPMRegs.io, where
+> > > >       ich9_pm_post_load() also invokes it.
+> > > > 
+> > > >     - pm_io_space_update(), updates PIIX4PMState.io, where
+> > > >       vmstate_acpi_post_load() also invokes it.
+> > > > 
+> > > > I stopped here just looking at the initial two users, it looks all sane to
+> > > > me that it only got updated there, because the update requires pci config
+> > > > space being migrated first.
+> > > > 
+> > > > IOW, I don't think having mismatched mr->addr is wrong at this stage.
+> > > > Instead, I don't see why we should send mr->addr at all in this case during
+> > > > as early as SETUP, and I don't see anything justifies the mr->addr needs to
+> > > > be verified in parse_ramblock() since ignore-shared introduced by Yury in
+> > > > commit fbd162e629aaf8 in 2019.
+> > > > 
+> > > > We can't drop mr->addr now when it's on-wire, but I think we should drop
+> > > > the error report and addr check, instead of this patch.
+> > > 
+> > > As it turns out, my test case triggers this bug because it sets x-ignore-shared,
+> > > but x-ignore-shared is not needed for cpr-exec, because migrate_ram_is_ignored
+> > > is true for all blocks when mode==cpr-exec.  So, the best fix for the GPAs bug
+> > > for me is to stop setting x-ignore-shared.  I will drop this patch.
+> > > 
+> > > I agree that post_load is the right place to restore mr->addr, and I don't
+> > > understand why commit fbd162e629aaf8 added the error report, but I am going
+> > > to leave it as is.
+> > 
+> > Ah, I didn't notice that cpr special cased migrate_ram_is_ignored()..
+> > 
+> > Shall we stick with the old check, but always require cpr to rely on
+> > ignore-shared?
+> > 
+> > Then we replace this patch with removing the error_report, probably
+> > together with not caring about whatever is received at all.. would that be
+> > cleaner?
+> 
+> migrate_ram_is_ignored() is called in many places and must return true for
+> cpr-exec/cpr-transfer, independently of migrate_ignore_shared.  That logic
+> must remain as is.
 
-SGksDQoNClRoYW5rIHlvdSBmb3IgZ2V0dGluZyBiYWNrIHRvIG1lLg0KDQpZZXMsIEkgaGF2ZSBv
-cGVuZWQgdGhlIHRpY2tldCBodHRwczovL3VybGRlZmVuc2UuY29tL3YzL19faHR0cHM6Ly9naXRs
-YWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0vaXNzdWVzLzI0ODJfXzshIUdqdlR6X3ZrIVNDZy1h
-NUxpdUFHbFd5UTZPcGQ5dXJOQVc0X1otdFV0elBaQVJXQjFkM1VsZ193czg3eUwzaUpjeHVaUGt0
-TGVITk50UHp0SlRKWk5KZEUkIDxodHRwczovL3VybGRlZmVuc2UuY29tL3YzL19faHR0cHM6Ly9n
-aXRsYWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0vaXNzdWVzLzI0ODJfXzshIUdqdlR6X3ZrIVND
-Zy1hNUxpdUFHbFd5UTZPcGQ5dXJOQVc0X1otdFV0elBaQVJXQjFkM1VsZ193czg3eUwzaUpjeHVa
-UGt0TGVITk50UHp0SlRKWk5KZEUkPg0KDQo+IFNvIHRoZSBjb3JlIG9mIHRoZSBpc3N1ZSBoZXJl
-IGlzIHRoYXQgdGhlIGJsb2NrIGpvYiBpcyB0cmFuc2l0aW9uaW5nIHRvDQo+IHJlYWR5IHdoaWxl
-IHRoZSBtaWdyYXRpb24gaXMgc3RpbGwgb25nb2luZyBzbyB0aGVyZSdzIHN0aWxsIGRpcnR5aW5n
-DQo+IGhhcHBlbmluZy4NCg0KWWVzLCB0aGlzIGlzIHRoZSBwcm9ibGVtIEkgaGF2ZS4gUkFNIG1p
-Z3JhdGlvbiBzdGF0ZSBpcyBhbHJlYWR5IG1vdmVkIHRvIHByZS1zd2l0Y2hvdmVyIGFuZCBtaXJy
-b3IgYmxvY2sgam9iIGlzIG1vdmVkIHRvICJSRUFEWSIgc3RhdGUgYXNzdW1pbmcgdGhhdCB0aGVy
-ZSBhcmUgbm8gbW9yZSBkaXJ0eSBibG9ja3MuDQpCdXQgdGhlcmUgYXJlIHN0aWxsIGRpcnR5IGJs
-b2NrcyBhbmQgdGhlc2UgZGlydHkgYmxvY2sgYmxvY2tzIGFyZSBiZWluZyB0cmFuc2ZlcnJlZCB0
-byBkZXN0aW5hdGlvbiBob3N0Lg0KDQpJJ3ZlIGNyZWF0ZWQgYSBzbWFsbCBwYXRjaChhdHRhY2hl
-ZCkgaW4gbWlycm9yLmMgdG8gcHV0IHRoZSBtaXJyb3Igam9iIGJhY2sgaW50byB0aGUgIlJVTk5J
-TkciIHN0YXRlIGlmIHRoZXJlIGFyZSBhbnkgZGlydHkgcGFnZXMuDQpCdXQgSSBzdGlsbCB3b3Vs
-ZCBsaWtlIHRvIHByZXZlbnQgUkFNIG1pZ3JhdGlvbiBzdGF0ZSB0byBiZSBtb3ZlZCB0byBwcmUt
-c3dpdGNob3ZlciB3aGVuIHRoZXJlIGFyZSBkaXJ0eSBibG9ja3MuDQoNCj4gZG9jcy9pbnRlcm9w
-L2xpdmUtYmxvY2stb3BlcmF0aW9ucy5yc3Q/IFNlY3Rpb24gIlFNUCBpbnZvY2F0aW9uIGZvciBs
-aXZlDQo+IHN0b3JhZ2UgbWlncmF0aW9uIHdpdGggYGBkcml2ZS1taXJyb3JgYCArIE5CRCIsIHBv
-aW50IDQgc2F5cyB0aGF0IGENCj4gYmxvY2stam9iLWNhbmNlbCBzaG91bGQgYmUgaXNzdWVzIGFm
-dGVyIEJMT0NLX0pPQl9SRUFEWSBpcw0KPiByZWFjaGVkLiBBbHRob3VnaCB0aGVyZSBpcyBtZW50
-aW9uIG9mIHdoZW4gdGhlIG1pZ3JhdGlvbiBzaG91bGQgYmUNCj4gcGVyZm9ybWVkLg0KDQpUaGFu
-a3MgZm9yIHRoZSBwb2ludGVyLCBJJ3ZlIGxvb2tlZCBhdCB0aGlzIHBhcnQgKGJsb2NrLWpvYi1j
-YW5jZWwpLiBUaGUgcHJvYmxlbSBpcyB0aGF0IFFFTVUgb24gdGhlIHNvdXJjZSBob3N0IGlzIHN0
-aWxsIHRyYW5zZmVycmluZyB0aGUgZGlydHkgYmxvY2tzLg0KVGhhdCBpcyB0aGUgcmVhc29uIEkg
-YW0gdHJ5aW5nIHRvIGF2b2lkIG1vdmluZyBSQU0gbWlncmF0aW9uIHN0YXRlIHRvIHByZS1zd2l0
-Y2hvdmVyIHdoZW4gdGhlcmUgYXJlIGFueSBkaXJ0eSBwYWdlcy4NCg0KaXMgdGhlcmUgYSB3YXkg
-aW4gUUVNVSB0byBrbm93IGlmIHRoZSBkaXNrIHRyYW5zZmVyIGlzIGNvbXBsZXRlZCBhbmQgc3Rv
-cCBkaXJ0eSBwYWdlcyBiZWluZyB0cmFuc2ZlcnJlZD8NCg0KVGhhbmtzDQpDaGFrcmkNCg0KDQrv
-u79PbiA4LzIxLzI0LCA2OjU2IEFNLCAiRmFiaWFubyBSb3NhcyIgPGZhcm9zYXNAc3VzZS5kZSA8
-bWFpbHRvOmZhcm9zYXNAc3VzZS5kZT4+IHdyb3RlOg0KDQoNCiEtLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0KVGhpcyBN
-ZXNzYWdlIElzIEZyb20gYW4gRXh0ZXJuYWwgU2VuZGVyDQpUaGlzIG1lc3NhZ2UgY2FtZSBmcm9t
-IG91dHNpZGUgeW91ciBvcmdhbml6YXRpb24uDQp8LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSENCg0KDQoiQXJpc2V0dHks
-IENoYWtyaSIgPGNhcmlzZXR0QGFrYW1haS5jb20gPG1haWx0bzpjYXJpc2V0dEBha2FtYWkuY29t
-Pj4gd3JpdGVzOg0KDQoNCj4gSGVsbG8sDQo+DQo+IEnigJltIGhhdmluZyB0cm91YmxlIHdpdGgg
-bGl2ZSBtaWdyYXRpb24gYW5kIEnigJltIHVzaW5nIFFFTVUgNy4yLjAgb24gRGViaWFuIDExLg0K
-Pg0KPiBNaWdyYXRpb24gc3RhdGUgc3dpdGNoZXMgdG8gcHJlLXN3aXRjaG92ZXIgc3RhdGUgZHVy
-aW5nIHRoZSBSQU0gbWlncmF0aW9uLg0KPg0KPiBNeSBhc3N1bXB0aW9uIGlzIHRoYXQgZGlza3Mg
-YXJlIGFscmVhZHkgbWlncmF0ZWQgYW5kIHRoZXJlIGFyZSBubyBmdXJ0aGVyIGRpcnR5IHBhZ2Vz
-IHRvIGJlIHRyYW5zZmVycmVkIGZyb20gc291cmNlIGhvc3QgdG8gZGVzdGluYXRpb24gaG9zdC4g
-VGhlcmVmb3JlLCBOQkQgY2xpZW50IG9uIHRoZSBzb3VyY2UgaG9zdCBjbG9zZXMgdGhlIGNvbm5l
-Y3Rpb24gdG8gdGhlIE5CRCBzZXJ2ZXIgb24gdGhlIGRlc3RpbmF0aW9uIGhvc3QuIEJ1dCB3ZSBv
-YnNlcnZlIHRoYXQgdGhlcmUgYXJlIHN0aWxsIHNvbWUgZGlydHkgcGFnZXMgYmVpbmcgdHJhbnNm
-ZXJyZWQuDQo+IENsb3NpbmcgcHJlbWF0dXJlbHkgTkJEIGNvbm5lY3Rpb24gcmVzdWx0cyBpbiBC
-TE9DSyBKT0IgZXJyb3IuDQo+IEluIHRoZSBSQU0gbWlncmF0aW9uIGNvZGUgKG1pZ3JhdGlvbi9t
-aWdyYXRpb24uYyksIEnigJlkIGxpa2UgdG8gY2hlY2sgZm9yIGJsb2NrIG1pcnJvciBqb2LigJlz
-IHN0YXR1cyBiZWZvcmUgUkFNIG1pZ3JhdGlvbiBzdGF0ZSBpcyBtb3ZlZCB0byBwcmUtc3dpdGNo
-b3Zlci4gSeKAmW0gdW5hYmxlIHRvIGZpbmQgYW55IGJsb2NrIGpvYiByZWxhdGVkIGNvZGUgaW4g
-UkFNIG1pZ3JhdGlvbiBjb2RlLg0KPg0KPiBDb3VsZCBzb21lb25lIGhlbHAgbWUgZmlndXJpbmcg
-b3V0IHdoYXQgbWlnaHQgYmUgZ29pbmcgd3Jvbmcgb3Igc3VnZ2VzdCBhbnkgdHJvdWJsZXNob290
-aW5nIHN0ZXBzIG9yIGFkdmljZSB0byBnZXQgYXJvdW5kIHRoZSBpc3N1ZT8NCj4NCj4gVGhhbmtz
-DQo+IENoYWtyaQ0KDQoNCkhpLCBJIGJlbGlldmUgaXQgd2FzIHlvdSB3aG8gb3BlbmVkIHRoaXMg
-YnVnIGFzIHdlbGw/IA0KDQoNCmh0dHBzOi8vdXJsZGVmZW5zZS5jb20vdjMvX19odHRwczovL2dp
-dGxhYi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS9pc3N1ZXMvMjQ4Ml9fOyEhR2p2VHpfdmshU0Nn
-LWE1TGl1QUdsV3lRNk9wZDl1ck5BVzRfWi10VXR6UFpBUldCMWQzVWxnX3dzODd5TDNpSmN4dVpQ
-a3RMZUhOTnRQenRKVEpaTkpkRSQgPGh0dHBzOi8vdXJsZGVmZW5zZS5jb20vdjMvX19odHRwczov
-L2dpdGxhYi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS9pc3N1ZXMvMjQ4Ml9fOyEhR2p2VHpfdmsh
-U0NnLWE1TGl1QUdsV3lRNk9wZDl1ck5BVzRfWi10VXR6UFpBUldCMWQzVWxnX3dzODd5TDNpSmN4
-dVpQa3RMZUhOTnRQenRKVEpaTkpkRSQ+IA0KDQoNClNvIHRoZSBjb3JlIG9mIHRoZSBpc3N1ZSBo
-ZXJlIGlzIHRoYXQgdGhlIGJsb2NrIGpvYiBpcyB0cmFuc2l0aW9uaW5nIHRvDQpyZWFkeSB3aGls
-ZSB0aGUgbWlncmF0aW9uIGlzIHN0aWxsIG9uZ29pbmcgc28gdGhlcmUncyBzdGlsbCBkaXJ0eWlu
-Zw0KaGFwcGVuaW5nLg0KDQoNCkhhdmUgeW91IGxvb2tlZCBhdCB0aGUgZG9jdW1lbnRhdGlvbiBh
-dA0KZG9jcy9pbnRlcm9wL2xpdmUtYmxvY2stb3BlcmF0aW9ucy5yc3Q/IFNlY3Rpb24gIlFNUCBp
-bnZvY2F0aW9uIGZvciBsaXZlDQpzdG9yYWdlIG1pZ3JhdGlvbiB3aXRoIGBgZHJpdmUtbWlycm9y
-YGAgKyBOQkQiLCBwb2ludCA0IHNheXMgdGhhdCBhDQpibG9jay1qb2ItY2FuY2VsIHNob3VsZCBi
-ZSBpc3N1ZXMgYWZ0ZXIgQkxPQ0tfSk9CX1JFQURZIGlzDQpyZWFjaGVkLiBBbHRob3VnaCB0aGVy
-ZSBpcyBtZW50aW9uIG9mIHdoZW4gdGhlIG1pZ3JhdGlvbiBzaG91bGQgYmUNCnBlcmZvcm1lZC4N
-Cg0KDQoNCg==
+Is this because cpr can fail some ramblock in qemu_ram_is_named_file()?
 
---_002_ACB0E3E9BA694EC7A4EB3AF2F21D4C8Aakamaicom_
-Content-Type: application/octet-stream; name="qemu-block-job-running.patch"
-Content-Description: qemu-block-job-running.patch
-Content-Disposition: attachment; filename="qemu-block-job-running.patch";
-	size=2051; creation-date="Wed, 21 Aug 2024 16:55:00 GMT";
-	modification-date="Wed, 21 Aug 2024 16:55:00 GMT"
-Content-ID: <B0BC3DA0BE676A4692C28E9680818DE9@akamai.com>
-Content-Transfer-Encoding: base64
+It's not obvious in this case, maybe some re-strcture would be nice.  Would
+something like this look nicer and easier to understand?
 
-ZGlmZiAtLWdpdCBhL2Jsb2NrL21pcnJvci5jIGIvYmxvY2svbWlycm9yLmMKaW5kZXggMjUxYWRj
-NWFlLi4zNDU3YWZlMWQgMTAwNjQ0Ci0tLSBhL2Jsb2NrL21pcnJvci5jCisrKyBiL2Jsb2NrL21p
-cnJvci5jCkBAIC0xMDg5LDYgKzEwODksMTAgQEAgc3RhdGljIGludCBjb3JvdXRpbmVfZm4gbWly
-cm9yX3J1bihKb2IgKmpvYiwgRXJyb3IgKiplcnJwKQogICAgICAgICAgICAgYnJlYWs7CiAgICAg
-ICAgIH0KIAorCWlmIChjbnQgIT0gMCAmJiBqb2JfaXNfcmVhZHkoJnMtPmNvbW1vbi5qb2IpKSB7
-CisgICAgICAgICAgICBqb2JfdHJhbnNpdGlvbl90b19ydW5uaW5nKCZzLT5jb21tb24uam9iKTsK
-KyAgICAgICAgfQorCiAgICAgICAgIGlmIChqb2JfaXNfcmVhZHkoJnMtPmNvbW1vbi5qb2IpICYm
-ICFzaG91bGRfY29tcGxldGUpIHsKICAgICAgICAgICAgIGRlbGF5X25zID0gKHMtPmluX2ZsaWdo
-dCA9PSAwICYmCiAgICAgICAgICAgICAgICAgICAgICAgICBjbnQgPT0gMCA/IEJMT0NLX0pPQl9T
-TElDRV9USU1FIDogMCk7CmRpZmYgLS1naXQgYS9pbmNsdWRlL3FlbXUvam9iLmggYi9pbmNsdWRl
-L3FlbXUvam9iLmgKaW5kZXggZTUwMjc4N2RkLi44N2RiZWYwZDIgMTAwNjQ0Ci0tLSBhL2luY2x1
-ZGUvcWVtdS9qb2IuaAorKysgYi9pbmNsdWRlL3FlbXUvam9iLmgKQEAgLTY0MSw2ICs2NDEsMTIg
-QEAgaW50IGpvYl9hcHBseV92ZXJiX2xvY2tlZChKb2IgKmpvYiwgSm9iVmVyYiB2ZXJiLCBFcnJv
-ciAqKmVycnApOwogICovCiB2b2lkIGpvYl9lYXJseV9mYWlsKEpvYiAqam9iKTsKIAorLyoqCisg
-KiBNb3ZlcyB0aGUgQGpvYiBmcm9tIFJVTk5JTkcgdG8gUkVBRFkuCisgKiBDYWxsZWQgd2l0aCBq
-b2JfbXV0ZXggKm5vdCogaGVsZC4KKyAqLwordm9pZCBqb2JfdHJhbnNpdGlvbl90b19ydW5uaW5n
-KEpvYiAqam9iKTsKKwogLyoqCiAgKiBNb3ZlcyB0aGUgQGpvYiBmcm9tIFJVTk5JTkcgdG8gUkVB
-RFkuCiAgKiBDYWxsZWQgd2l0aCBqb2JfbXV0ZXggKm5vdCogaGVsZC4KZGlmZiAtLWdpdCBhL2pv
-Yi5jIGIvam9iLmMKaW5kZXggNzJkNTdmMDkzLi4yOThkOTA4MTcgMTAwNjQ0Ci0tLSBhL2pvYi5j
-CisrKyBiL2pvYi5jCkBAIC02Miw3ICs2Miw3IEBAIGJvb2wgSm9iU1RUW0pPQl9TVEFUVVNfX01B
-WF1bSk9CX1NUQVRVU19fTUFYXSA9IHsKICAgICAvKiBDOiAqLyBbSk9CX1NUQVRVU19DUkVBVEVE
-XSAgID0gezAsIDAsIDEsIDAsIDAsIDAsIDAsIDAsIDEsIDAsIDF9LAogICAgIC8qIFI6ICovIFtK
-T0JfU1RBVFVTX1JVTk5JTkddICAgPSB7MCwgMCwgMCwgMSwgMSwgMCwgMSwgMCwgMSwgMCwgMH0s
-CiAgICAgLyogUDogKi8gW0pPQl9TVEFUVVNfUEFVU0VEXSAgICA9IHswLCAwLCAxLCAwLCAwLCAw
-LCAwLCAwLCAwLCAwLCAwfSwKLSAgICAvKiBZOiAqLyBbSk9CX1NUQVRVU19SRUFEWV0gICAgID0g
-ezAsIDAsIDAsIDAsIDAsIDEsIDEsIDAsIDEsIDAsIDB9LAorICAgIC8qIFk6ICovIFtKT0JfU1RB
-VFVTX1JFQURZXSAgICAgPSB7MCwgMCwgMSwgMCwgMCwgMSwgMSwgMCwgMSwgMCwgMH0sCiAgICAg
-LyogUzogKi8gW0pPQl9TVEFUVVNfU1RBTkRCWV0gICA9IHswLCAwLCAwLCAwLCAxLCAwLCAwLCAw
-LCAwLCAwLCAwfSwKICAgICAvKiBXOiAqLyBbSk9CX1NUQVRVU19XQUlUSU5HXSAgID0gezAsIDAs
-IDAsIDAsIDAsIDAsIDAsIDEsIDEsIDAsIDB9LAogICAgIC8qIEQ6ICovIFtKT0JfU1RBVFVTX1BF
-TkRJTkddICAgPSB7MCwgMCwgMCwgMCwgMCwgMCwgMCwgMCwgMSwgMSwgMH0sCkBAIC0xMDM1LDYg
-KzEwMzUsMTIgQEAgc3RhdGljIGludCBqb2JfdHJhbnNpdGlvbl90b19wZW5kaW5nX2xvY2tlZChK
-b2IgKmpvYikKICAgICByZXR1cm4gMDsKIH0KIAordm9pZCBqb2JfdHJhbnNpdGlvbl90b19ydW5u
-aW5nKEpvYiAqam9iKQoreworICAgIEpPQl9MT0NLX0dVQVJEKCk7CisgICAgam9iX3N0YXRlX3Ry
-YW5zaXRpb25fbG9ja2VkKGpvYiwgSk9CX1NUQVRVU19SVU5OSU5HKTsKK30KKwogdm9pZCBqb2Jf
-dHJhbnNpdGlvbl90b19yZWFkeShKb2IgKmpvYikKIHsKICAgICBKT0JfTE9DS19HVUFSRCgpOwo=
+===8<===
+diff --git a/migration/ram.c b/migration/ram.c
+index 1e1e05e859..ace635b167 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -214,14 +214,29 @@ static bool postcopy_preempt_active(void)
+     return migrate_postcopy_preempt() && migration_in_postcopy();
+ }
+ 
+-bool migrate_ram_is_ignored(RAMBlock *block)
++/* Whether the destination QEMU can share the access on this ramblock? */
++bool migrate_ram_is_shared(RAMBlock *block)
+ {
+     MigMode mode = migrate_mode();
++
++    /* Private ram is never share-able */
++    if (!qemu_ram_is_shared(block)) {
++        return false;
++    }
++
++    /* Named file ram is always assumed to be share-able */
++    if (qemu_ram_is_named_file(block)) {
++        return true;
++    }
++
++    /* It's a private fd, only cpr mode can share it (by sharing fd) */
++    return (mode == MIG_MODE_CPR_EXEC) || (mode == MIG_MODE_CPR_TRANSFER);
++}
++
++bool migrate_ram_is_ignored(RAMBlock *block)
++{
+     return !qemu_ram_is_migratable(block) ||
+-           mode == MIG_MODE_CPR_EXEC ||
+-           mode == MIG_MODE_CPR_TRANSFER ||
+-           (migrate_ignore_shared() && qemu_ram_is_shared(block)
+-                                    && qemu_ram_is_named_file(block));
++           (migrate_ignore_shared() && migrate_ram_is_shared(block));
+ }
+===8<===
 
---_002_ACB0E3E9BA694EC7A4EB3AF2F21D4C8Aakamaicom_--
+Please feel free to squash this to your patch in whatever way if it looks
+reasonable to you.
+
+> 
+> The cleanest change is no change, just dropping this patch.  I was just confused
+> when I set x-ignore-shared for the test.
+> 
+> However, if an unsuspecting user sets x-ignore-shared, it will trigger this error,
+> so perhaps I should delete the error_report.
+
+Yes, feel free to send that as a separate patch if you want, since we
+digged it this far it'll be nice we fix it even if it's not relevant now.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
