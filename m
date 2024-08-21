@@ -4,141 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85407C52D6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99186C5320E
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 13:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sglAU-0000gU-IS; Wed, 21 Aug 2024 09:14:30 -0400
+	id 1sglAW-0000jn-VY; Wed, 21 Aug 2024 09:14:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sglAL-0000Nz-UC
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 09:14:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yc01.jeong@samsung.com>)
+ id 1sgb9a-0001sm-AT
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:32:54 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sglAG-0008MM-6I
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 09:14:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724246053;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EheRRG847oiyyKF0lDkTGHDNhR+DEnD14RF/UVKpCrI=;
- b=ZBA/A4Rc81MgrbsdAATgeBXwOBZ0E+CU++eYOoV/5OKO+csTchUSbUXkKuoDZkGDQ85ptw
- 25qLB5GnRgUpZfHDo5cepbVa2KLE7chQF219oQrYjOciCbHcUrBg+VArofl7vga73WZcTV
- G3k8YoQn5bZL3CHMXwlWPMnmKHE1SaU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-oYzRktOgPkCgc2aVUfIncw-1; Wed, 21 Aug 2024 09:14:11 -0400
-X-MC-Unique: oYzRktOgPkCgc2aVUfIncw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4280a434147so56392355e9.3
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 06:14:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724246050; x=1724850850;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EheRRG847oiyyKF0lDkTGHDNhR+DEnD14RF/UVKpCrI=;
- b=H2hAUz68IMip0QFyrVWPSxh5FgTT+4BjanSekaTbsPgpZQqSQgNva82qkxZbIFucTp
- 1blHKAh4cnKJrbTpZSrkc87gIVgqRclXucqNcCsxkKICFoiUSzNI2wjN9s90RliHmzug
- nfzmlLTiaZH/yqPAx8v323vgYh+OamAm33TXxZkXZJY6lIUj5z3alCBa54JadKhUGkGo
- fF9Fg1cxaac5BB8E62SHLGmJX8b8BIhNfPHh7GnGlsYF7nEgv+a9NmTE9S10CH9bhh0N
- m9/2F5M45FE41n+yLDQKuPVrY4fdwAkAXAfrY+O1s7ydn7lDoxVY85JfI7Htxt032Ihy
- k5MA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVEkY7gr42p/xtbOO6l8X1/50oMFfrA3R9W6PfGWe6q6b7syUbSp+q07/2U3bQo1rLFNQV3o/dQC8x/@nongnu.org
-X-Gm-Message-State: AOJu0YwSYSJxOxUbxm/00c4zHQJmKcM3TSNKu4dnXbyvLVf9nYM8Za6M
- 6gSefKzsIX7UkS/ttwmkQAJtBxMTOIUTqzwbkgmHQsFUnKNY1L9/Vo5eVloLDya9svwGfBJAh7f
- T3Y8yM6+qzy+9cAuHA7GbNiS307Y+d9vMKD/JGEuSnjUPw5+aeH97lyvD18vC
-X-Received: by 2002:a05:600c:5489:b0:426:6b92:387d with SMTP id
- 5b1f17b1804b1-42abf05d434mr14010765e9.21.1724246050109; 
- Wed, 21 Aug 2024 06:14:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXw+/Ct5jVX2A7MwuTC5ozSOFmXbgqqoO6lfIkTbdL5aRZSnibh3OkZvKe73InkhUxNygcmw==
-X-Received: by 2002:a05:600c:5489:b0:426:6b92:387d with SMTP id
- 5b1f17b1804b1-42abf05d434mr14010535e9.21.1724246049635; 
- Wed, 21 Aug 2024 06:14:09 -0700 (PDT)
-Received: from [10.33.192.191] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42abed8b86bsm25443145e9.4.2024.08.21.06.14.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Aug 2024 06:14:09 -0700 (PDT)
-Message-ID: <cba8d04b-f4af-4f3c-9f19-456180af84dc@redhat.com>
-Date: Wed, 21 Aug 2024 15:14:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/functional: Convert mips64el Malta I6400
- avocado tests
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Beraldo Leal <bleal@redhat.com>,
- Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240821125701.63042-1-philmd@linaro.org>
- <20240821125701.63042-2-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240821125701.63042-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
+ (Exim 4.90_1) (envelope-from <yc01.jeong@samsung.com>)
+ id 1sgb9W-00074T-L2
+ for qemu-devel@nongnu.org; Tue, 20 Aug 2024 22:32:54 -0400
+Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20240821023245epoutp01f83a0804d6fd04552f712065019e8968~tnaVPfXzC2284722847epoutp01I
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 02:32:45 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20240821023245epoutp01f83a0804d6fd04552f712065019e8968~tnaVPfXzC2284722847epoutp01I
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1724207565;
+ bh=N6uyiVAmxim8U0k7mpyvuJCgeFofxB0uCWjTNL6vsZY=;
+ h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+ b=cdqgwOGuqwe9Z4Rb129EnJ3LQDZaXiuPfvFP1Zf+t7sr/pxq0Lvcw15oT6sfDp0hj
+ 1AzlYKIYXgIwEZYh6TnlaK5RbpKpEldoBpvxcbk8Vhd3its1wV2SohkurUmoiekD7j
+ P/5Tt4AiZgtP3gYCqei8LeRda8jyOw5YnQ3IjckQ=
+Received: from epsmges1p4.samsung.com (unknown [182.195.42.56]) by
+ epcas1p1.samsung.com (KnoxPortal) with ESMTP id
+ 20240821023245epcas1p1cd8fa7dbae7f73653208bfb041b26786~tnaVAU8O31099710997epcas1p1Q;
+ Wed, 21 Aug 2024 02:32:45 +0000 (GMT)
+X-AuditID: b6c32a38-995ff70000002812-71-66c551cd5fbf
+Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
+ epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 92.E8.10258.DC155C66; Wed, 21 Aug 2024 11:32:45 +0900 (KST)
+Mime-Version: 1.0
+Subject: [PATCH 1/4] hw/ufs: minor bug fixes related to ufs-test
+From: =?UTF-8?B?7KCV7Jyg7LCs?= <yc01.jeong@samsung.com>
+To: =?UTF-8?B?6rmA7KCc7Jqx?= <jeuk20.kim@samsung.com>
+CC: =?UTF-8?B?7KCV7Jyg7LCs?= <yc01.jeong@samsung.com>, "thuth@redhat.com"
+ <thuth@redhat.com>, "lvivier@redhat.com" <lvivier@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "jeongyuchan0629@gmail.com"
+ <jeongyuchan0629@gmail.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <20240821023025epcms1p4de36db95f4d3a66727f128ef6be860e4@epcms1p4>
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20240821023245epcms1p31ada9c24041d9b34f7e9938abe93189b@epcms1p3>
+Date: Wed, 21 Aug 2024 11:32:45 +0900
+X-CMS-MailID: 20240821023245epcms1p31ada9c24041d9b34f7e9938abe93189b
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 101P
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrJIsWRmVeSWpSXmKPExsWy7bCmru7ZwKNpBo3NvBY9r/axWdzfeo3R
+ 4lODlMX+bf9YLY737mCxWHnMxmL32ZlsDuweO2fdZfd4cm0zk8f7fVfZPPq2rGIMYInisklJ
+ zcksSy3St0vgymju+c1a8Muw4tHdw+wNjB1qXYycHBICJhL/n3xm6WLk4hAS2MEoseziMyCH
+ g4NXQFDi7w5hkBphAQeJdR3H2UFsIQEFiR/Lb7JBxC0lPj+ZBmazCZhLvJ90nRHEFhEwlfjz
+ fR3YTGaBZUwSj29OYIJYxisxo/0pC4QtLbF9+VawBk4BP4nZn5dB1YhK3Fz9lh3Gfn9sPiOE
+ LSLReu8sM4QtKPHg525GkDslBCQl1r/WhAjXS9y49pgNwq6ReNR2C2qMvsS1jo1ga3kFfCUu
+ L94GVsMioCrxZSfMWheJy8/vgK1iFpCX2P52DjPIeGYBTYn1u/QhwnwS7772sMJ8smPeE6hW
+ FYlFF99DrZWS+HpiHTPEZR4S++85Q0J2KqPEie4ulgmM8rMQgTsLybJZCMsWMDKvYhRLLSjO
+ TU8tNiww0StOzC0uzUvXS87P3cQITh1aFjsY5779oHeIkYmD8RCjBAezkghv98uDaUK8KYmV
+ ValF+fFFpTmpxYcYpTlYlMR5z1wpSxUSSE8sSc1OTS1ILYLJMnFwSjUwtTQuOfLhjPo3topt
+ rHV3Ano0/goZmz07tezN2aC4yff2Z0mcULm9tfZMaoLa8VsnkzXlfj9vEFv0Qeb2H/VPH1dv
+ bW7Otpe2FLE2kvSWjcreFXAxX+Ttc4nZ0sq7djR/mzZn/6Wz6uGx1R671rKu//CxQUYvWDx5
+ 3lkWqdrdzCJZYckdTyeHNU2WVL/jmBjubZL7R+q4WYUZyzv5vTXL45vMJsl7sfLm8M6/dK5j
+ pmX3pdrlXDpKXJ1CTO1P9HuUimqSF6ysLOm5tnHG2n0TMnsmzHZWzC/e2GA5+ciz0/Nbn5+d
+ adbFumf1xjUZ2zMV3f/dZ3e4KsMgttdq4nJV0ScyqiJqTxR0eZZU/c5XYinOSDTUYi4qTgQA
+ 8jq6EIwDAAA=
+X-CMS-RootMailID: 20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10
+References: <20240821023025epcms1p4de36db95f4d3a66727f128ef6be860e4@epcms1p4>
+ <CGME20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p3>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=yc01.jeong@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 21 Aug 2024 09:14:17 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -150,175 +106,150 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: yc01.jeong@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/08/2024 14.57, Philippe Mathieu-Daudé wrote:
-> Straight forward conversion. Update the SHA1 hashes to SHA256
-> hashes since SHA1 should not be used anymore nowadays.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   MAINTAINERS                             |   1 +
->   tests/avocado/machine_mips_malta.py     | 108 -----------------------
->   tests/functional/meson.build            |   1 +
->   tests/functional/test_mips64el_malta.py | 111 ++++++++++++++++++++++++
->   4 files changed, 113 insertions(+), 108 deletions(-)
->   create mode 100755 tests/functional/test_mips64el_malta.py
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 77fbb5d42e..3a91017979 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1369,6 +1369,7 @@ F: hw/pci-host/gt64120.c
->   F: include/hw/southbridge/piix.h
->   F: tests/avocado/linux_ssh_mips_malta.py
->   F: tests/avocado/machine_mips_malta.py
-> +F: tests/functional/test_mips64el_malta.py
->   
->   Mipssim
->   R: Aleksandar Rikalo <arikalo@gmail.com>
-> diff --git a/tests/avocado/machine_mips_malta.py b/tests/avocado/machine_mips_malta.py
-> index 07a80633b5..05c64e18c4 100644
-> --- a/tests/avocado/machine_mips_malta.py
-> +++ b/tests/avocado/machine_mips_malta.py
-> @@ -8,121 +8,13 @@
->   # SPDX-License-Identifier: GPL-2.0-or-later
->   
->   import os
-> -import gzip
-> -import logging
->   
-> -from avocado import skipUnless
-> -from avocado import skipUnless
->   from avocado.utils import archive
->   from avocado_qemu import QemuSystemTest
-> -from avocado_qemu import exec_command_and_wait_for_pattern
->   from avocado_qemu import interrupt_interactive_console_until_pattern
->   from avocado_qemu import wait_for_console_pattern
->   
->   
-> -NUMPY_AVAILABLE = True
-> -try:
-> -    import numpy as np
-> -except ImportError:
-> -    NUMPY_AVAILABLE = False
-> -
-> -CV2_AVAILABLE = True
-> -try:
-> -    import cv2
-> -except ImportError:
-> -    CV2_AVAILABLE = False
-> -
-> -
-> -@skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
-> -@skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
-> -class MaltaMachineFramebuffer(QemuSystemTest):
-> -
-> -    timeout = 30
-> -
-> -    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-> -
-> -    def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
-> -        """
-> -        Boot Linux kernel and check Tux logo is displayed on the framebuffer.
-> -        """
-> -        screendump_path = os.path.join(self.workdir, 'screendump.pbm')
-> -
-> -        kernel_url = ('https://github.com/philmd/qemu-testing-blob/raw/'
-> -                      'a5966ca4b5/mips/malta/mips64el/'
-> -                      'vmlinux-4.7.0-rc1.I6400.gz')
-> -        kernel_hash = '096f50c377ec5072e6a366943324622c312045f6'
-> -        kernel_path_gz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-> -        kernel_path = self.workdir + "vmlinux"
-> -        archive.gzip_uncompress(kernel_path_gz, kernel_path)
-> -
-> -        tuxlogo_url = ('https://github.com/torvalds/linux/raw/v2.6.12/'
-> -                       'drivers/video/logo/logo_linux_vga16.ppm')
-> -        tuxlogo_hash = '3991c2ddbd1ddaecda7601f8aafbcf5b02dc86af'
-> -        tuxlogo_path = self.fetch_asset(tuxlogo_url, asset_hash=tuxlogo_hash)
-> -
-> -        self.vm.set_console()
-> -        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-> -                               'clocksource=GIC console=tty0 console=ttyS0')
-> -        self.vm.add_args('-kernel', kernel_path,
-> -                         '-smp', '%u' % cpu_cores_count,
-> -                         '-vga', 'std',
-> -                         '-append', kernel_command_line)
-> -        self.vm.launch()
-> -        framebuffer_ready = 'Console: switching to colour frame buffer device'
-> -        wait_for_console_pattern(self, framebuffer_ready,
-> -                                 failure_message='Kernel panic - not syncing')
-> -        self.vm.cmd('human-monitor-command', command_line='stop')
-> -        self.vm.cmd('human-monitor-command',
-> -                    command_line='screendump %s' % screendump_path)
-> -        logger = logging.getLogger('framebuffer')
-> -
-> -        match_threshold = 0.95
-> -        screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
-> -        tuxlogo_bgr = cv2.imread(tuxlogo_path, cv2.IMREAD_COLOR)
-> -        result = cv2.matchTemplate(screendump_bgr, tuxlogo_bgr,
-> -                                   cv2.TM_CCOEFF_NORMED)
-> -        loc = np.where(result >= match_threshold)
-> -        tuxlogo_count = 0
-> -        h, w = tuxlogo_bgr.shape[:2]
-> -        debug_png = os.getenv('AVOCADO_CV2_SCREENDUMP_PNG_PATH')
-> -        for tuxlogo_count, pt in enumerate(zip(*loc[::-1]), start=1):
-> -            logger.debug('found Tux at position (x, y) = %s', pt)
-> -            cv2.rectangle(screendump_bgr, pt,
-> -                          (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
-> -        if debug_png:
-> -            cv2.imwrite(debug_png, screendump_bgr)
-> -        self.assertGreaterEqual(tuxlogo_count, cpu_cores_count)
-> -
-> -    def test_mips_malta_i6400_framebuffer_logo_1core(self):
-> -        """
-> -        :avocado: tags=arch:mips64el
-> -        :avocado: tags=machine:malta
-> -        :avocado: tags=cpu:I6400
-> -        """
-> -        self.do_test_i6400_framebuffer_logo(1)
-> -
-> -    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-> -    def test_mips_malta_i6400_framebuffer_logo_7cores(self):
-> -        """
-> -        :avocado: tags=arch:mips64el
-> -        :avocado: tags=machine:malta
-> -        :avocado: tags=cpu:I6400
-> -        :avocado: tags=mips:smp
-> -        :avocado: tags=flaky
-> -        """
-> -        self.do_test_i6400_framebuffer_logo(7)
-> -
-> -    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-> -    def test_mips_malta_i6400_framebuffer_logo_8cores(self):
-> -        """
-> -        :avocado: tags=arch:mips64el
-> -        :avocado: tags=machine:malta
-> -        :avocado: tags=cpu:I6400
-> -        :avocado: tags=mips:smp
-> -        :avocado: tags=flaky
-> -        """
-> -        self.do_test_i6400_framebuffer_logo(8)
-> -
->   class MaltaMachine(QemuSystemTest):
->   
->       def do_test_yamon(self):
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 8d28313a65..1823f88897 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -56,6 +56,7 @@ tests_mips64el_quick = [
->   ]
->   
->   tests_mips64el_thorough = [
-> +  'mips64el_malta',
->     'mips64el_loongson3v',
->   ]
+From d0ae8e25aec4ae7d222a2ea667d5ddb61f14fe02 Mon Sep 17 00:00:00 2001
+From: Yoochan Jeong <yc01.jeong@samsung.com>
+Date: Wed, 21 Aug 2024 09:03:06 +0900
+Subject: [PATCH 1/4] hw/ufs: minor bug fixes related to ufs-test
 
-Maybe keep the list in alphabetical order?
+Minor bugs and errors related to ufs-test are resolved. Some
+permissions and code implementations that are not synchronized
+with the ufs spec are edited.
 
-Anyway:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Based on: 20240802051902epcms2p319bc095a15eaef8de4e6955f6718371d@epcms2p3
+Signed-off-by: Yoochan Jeong <yc01.jeong@samsung.com>
+---
+ hw/ufs/ufs.c           | 26 +++++++++++++++++++++-----
+ tests/qtest/ufs-test.c | 12 +++++++++---
+ 2 files changed, 30 insertions(+), 8 deletions(-)
+
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index ce2c96aeea..9472a3c14a 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -971,7 +971,7 @@ static const int attr_permission[UFS_QUERY_ATTR_IDN_COUNT] = {
+         UFS_QUERY_ATTR_READ | UFS_QUERY_ATTR_WRITE,
+     [UFS_QUERY_ATTR_IDN_EE_STATUS] = UFS_QUERY_ATTR_READ,
+     [UFS_QUERY_ATTR_IDN_SECONDS_PASSED] = UFS_QUERY_ATTR_WRITE,
+-    [UFS_QUERY_ATTR_IDN_CNTX_CONF] = UFS_QUERY_ATTR_READ,
++    [UFS_QUERY_ATTR_IDN_CNTX_CONF] = UFS_QUERY_ATTR_READ | UFS_QUERY_ATTR_WRITE,
+     [UFS_QUERY_ATTR_IDN_FFU_STATUS] = UFS_QUERY_ATTR_READ,
+     [UFS_QUERY_ATTR_IDN_PSA_STATE] = UFS_QUERY_ATTR_READ | UFS_QUERY_ATTR_WRITE,
+     [UFS_QUERY_ATTR_IDN_PSA_DATA_SIZE] =
+@@ -1038,7 +1038,7 @@ static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
+     }
+ 
+     *(((uint8_t *)&u->flags) + idn) = value;
+-    req->rsp_upiu.qr.value = cpu_to_be32(value);
++    req->rsp_upiu.qr.value = value;
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
+@@ -1148,8 +1148,11 @@ static QueryRespCode ufs_exec_query_attr(UfsRequest *req, int op)
+ {
+     UfsHc *u = req->hc;
+     uint8_t idn = req->req_upiu.qr.idn;
++    uint8_t selector = req->req_upiu.qr.selector;
+     uint32_t value;
+     QueryRespCode ret;
++    const uint8_t UFS_QUERY_ATTR_CNTX_CONF_SELECTOR = 15;
++    const uint32_t UFS_QUERY_ATTR_MAXVALUE = 0x0F;
+ 
+     ret = ufs_attr_check_idn_valid(idn, op);
+     if (ret) {
+@@ -1159,10 +1162,20 @@ static QueryRespCode ufs_exec_query_attr(UfsRequest *req, int op)
+     if (op == UFS_QUERY_ATTR_READ) {
+         value = ufs_read_attr_value(u, idn);
+     } else {
+-        value = be32_to_cpu(req->req_upiu.qr.value);
++        value = req->req_upiu.qr.value;
++        if (idn == UFS_QUERY_ATTR_IDN_ACTIVE_ICC_LVL &&
++            value > UFS_QUERY_ATTR_MAXVALUE) {
++            return UFS_QUERY_RESULT_INVALID_VALUE;
++        }
++        if (idn == UFS_QUERY_ATTR_IDN_CNTX_CONF) {
++            if (selector != UFS_QUERY_ATTR_CNTX_CONF_SELECTOR) {
++                return UFS_QUERY_RESULT_INVALID_SELECTOR;
++            } else if (value == 0x00 || value > UFS_QUERY_ATTR_MAXVALUE) {
++                return UFS_QUERY_RESULT_INVALID_VALUE;
++            }
++        }
+         ufs_write_attr_value(u, idn, value);
+     }
+-
+     req->rsp_upiu.qr.value = cpu_to_be32(value);
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+@@ -1287,9 +1300,12 @@ static QueryRespCode ufs_read_desc(UfsRequest *req)
+     UfsHc *u = req->hc;
+     QueryRespCode status;
+     uint8_t idn = req->req_upiu.qr.idn;
++    uint8_t selector = req->req_upiu.qr.selector;
+     uint16_t length = be16_to_cpu(req->req_upiu.qr.length);
+     InterconnectDescriptor desc;
+-
++    if (selector != 0) {
++        return UFS_QUERY_RESULT_INVALID_SELECTOR;
++    }
+     switch (idn) {
+     case UFS_QUERY_DESC_IDN_DEVICE:
+         memcpy(&req->rsp_upiu.qr.data, &u->device_desc, sizeof(u->device_desc));
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 82ec3f0671..d70c2ee4a3 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -119,8 +119,10 @@ static void ufs_send_nop_out(QUfs *ufs, uint8_t slot,
+ 
+ static void ufs_send_query(QUfs *ufs, uint8_t slot, uint8_t query_function,
+                            uint8_t query_opcode, uint8_t idn, uint8_t index,
++                           uint8_t selector, uint32_t attr_value,
+                            UtpTransferReqDesc *utrd_out, UtpUpiuRsp *rsp_out)
+ {
++    const uint16_t UFS_QUERY_DESC_MAXLENGTH = 0x62;
+     /* Build up utp transfer request descriptor */
+     UtpTransferReqDesc utrd = ufs_build_req_utrd(ufs->cmd_desc_addr, slot,
+                                                  UFS_UTP_NO_DATA_TRANSFER, 0);
+@@ -136,13 +138,16 @@ static void ufs_send_query(QUfs *ufs, uint8_t slot, uint8_t query_function,
+     req_upiu.header.query_func = query_function;
+     req_upiu.header.task_tag = slot;
+     /*
+-     * QEMU UFS does not currently support Write descriptor and Write attribute,
++     * QEMU UFS does not currently support Write descriptor,
+      * so the value of data_segment_length is always 0.
+      */
+     req_upiu.header.data_segment_length = 0;
+     req_upiu.qr.opcode = query_opcode;
+     req_upiu.qr.idn = idn;
+     req_upiu.qr.index = index;
++    req_upiu.qr.selector = selector;
++    req_upiu.qr.value = attr_value;
++    req_upiu.qr.length = UFS_QUERY_DESC_MAXLENGTH;
+     qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
+                    sizeof(req_upiu));
+ 
+@@ -344,7 +349,7 @@ static void ufs_init(QUfs *ufs, QGuestAllocator *alloc)
+     /* Set fDeviceInit flag via query request */
+     ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
+                    UFS_UPIU_QUERY_OPCODE_SET_FLAG,
+-                   UFS_QUERY_FLAG_IDN_FDEVICEINIT, 0, &utrd, &rsp_upiu);
++                   UFS_QUERY_FLAG_IDN_FDEVICEINIT, 0, 0, 0, &utrd, &rsp_upiu);
+     g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
+ 
+     /* Wait for device to reset */
+@@ -353,7 +358,8 @@ static void ufs_init(QUfs *ufs, QGuestAllocator *alloc)
+         qtest_clock_step(ufs->dev.bus->qts, 100);
+         ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
+                        UFS_UPIU_QUERY_OPCODE_READ_FLAG,
+-                       UFS_QUERY_FLAG_IDN_FDEVICEINIT, 0, &utrd, &rsp_upiu);
++                       UFS_QUERY_FLAG_IDN_FDEVICEINIT, 0, 0, 0, &utrd,
++                       &rsp_upiu);
+     } while (be32_to_cpu(rsp_upiu.qr.value) != 0 &&
+              g_get_monotonic_time() < end_time);
+     g_assert_cmpuint(be32_to_cpu(rsp_upiu.qr.value), ==, 0);
+-- 
+2.34.1
 
 
