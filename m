@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 325E2C52D7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 20:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209B9C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Aug 2024 20:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgs0K-00006N-J1; Wed, 21 Aug 2024 16:32:28 -0400
+	id 1sgs6K-00050J-6w; Wed, 21 Aug 2024 16:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgs0I-00005G-RK
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 16:32:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgs6I-0004zp-GT
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 16:38:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgs0H-0005Yz-2e
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 16:32:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sgs6G-0006Vz-KL
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 16:38:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724272343;
+ s=mimecast20190719; t=1724272714;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4VmwTkSSV5Lx7pSA222ZVQE3BrzzWAJtm8007cfu8yY=;
- b=Z9LGeb3msT2BhetkqEM5M6kYQNLSz74eamLh/5u6Jq/19mnOtS0gyEqDKnco+UWQ/Pwuij
- 22ZiHuFnJnwMql68j0IItpk8iq3gJX8yl4cjgY3tFlot7x01HdZ62QMM2/neemiZ7LTD9f
- Ien8iXqKAsVIrWv09Ewv+zVdbZRdtXQ=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4hvQg5GQ4SY+vSlBFOCFQH7UrqNtvEZ298pRAjGJuiY=;
+ b=JNj5hQxEE+DVNOM9e3WkmEhp+KLFQUUxoAqoaScWC3C2hYY84kByO5f7k3oz2H6x32SVB6
+ XN47hql2uZZ1+/DC9thC1u7nU3CjfwAZZYN5UXJ4dPwDt3W4w4Rf49sFbMOpRh2dGQnQEy
+ OJvioJ2MMbQ+2Noyw+5NrLOqVZeHbng=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-145-DkjQppJwOtyvgG6rEO_Xwg-1; Wed, 21 Aug 2024 16:32:17 -0400
-X-MC-Unique: DkjQppJwOtyvgG6rEO_Xwg-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-7092f2d50ceso117540a34.2
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 13:32:17 -0700 (PDT)
+ us-mta-649-EJPegfxiNJueeqJ8592_AA-1; Wed, 21 Aug 2024 16:38:31 -0400
+X-MC-Unique: EJPegfxiNJueeqJ8592_AA-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7a1dbbe6d6fso14617785a.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 13:38:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724272337; x=1724877137;
+ d=1e100.net; s=20230601; t=1724272710; x=1724877510;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4VmwTkSSV5Lx7pSA222ZVQE3BrzzWAJtm8007cfu8yY=;
- b=Tbjn9qdW1IMWgTFaGvoyPgFiawxXS9NMH3MgCSRatDLDY03qixC0CrqwmkrIO7Q4Cy
- VH2Lxz0+iUAdYyYe4pNbnPDzh32U03zHMA1DSSG5p2fuNKDgBxI1QXbpxxpwdkx1knph
- ubH3xmXlEyACJs7yWL+UpASO5/q+ybnjRPbtA0xSfwbkwhwIPGW4LYOys6t1sEzRzxVt
- ZufMYw0NR8WtzlLQyoh++xLTpkeMfG88HUn/Ciy46BWH/tjQkRYkwJNIYbNnmbB+Ieur
- 7i46yMLM9clSo+bPg89Fz6brIkjrzx44DfVpbxV5X4DDJSFfd4vfnMKYpU11Ul+Itsee
- 0I2A==
-X-Gm-Message-State: AOJu0YybF1JPBtc9Pf5iKR6lM7wWFWZLUjUUVm+GCNFNQdxCCj+SBv/+
- eKsVXX3AJ+v697llEUxypZySOrsE3OHq3WnlctVNVGIanmyz7aTSWNdfzgZP4mDX6Gum/pVzM76
- IrzGJ3EFrXWzKRW7QNOLVmE30+BGXlyIqlw0+6BlkUC3uvcutaH4L
-X-Received: by 2002:a05:6830:6a9b:b0:704:7b8c:ba0c with SMTP id
- 46e09a7af769-70df888d456mr3869406a34.30.1724272337042; 
- Wed, 21 Aug 2024 13:32:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERTJYU7rPXW2sT2cWo7nKu2E5qsGaiOm6XOLyLOw2A04HK2Hi/d362M3RzN3pvv4M7iMe1ww==
-X-Received: by 2002:a05:6830:6a9b:b0:704:7b8c:ba0c with SMTP id
- 46e09a7af769-70df888d456mr3869396a34.30.1724272336762; 
- Wed, 21 Aug 2024 13:32:16 -0700 (PDT)
+ bh=4hvQg5GQ4SY+vSlBFOCFQH7UrqNtvEZ298pRAjGJuiY=;
+ b=nTy5gm+hqEFlgbqo9WR0S1iTcpLVJeWXRlSA/ThDemM19C+P4K0IRrbfXDwaU8HWXK
+ kxmTFvdYIitB6eVzbUbD3NBUMsybHrwZY/RhRiGFuAB2BCFYPjDWxn/sbGnk4ssiJJWK
+ f+M3igZlTgxsErlOyVBnyD0k8qYSEhF2OSXphujypDFZoZJ7KbGlcnqfKPYEExxDTpqh
+ h1EJeRiAhlf/NyYmT1ZVBAJfOCFnK/b9BRTHG6iuIVjOWrCPB/aBOc3TVRHVHuUIj1xx
+ KTtExe5SCL/N3ADzTCrnu9yUlenrtCxKl17Upwpta/pyV6cht2Kc+OwsXjafBG+YTqx3
+ CrMg==
+X-Gm-Message-State: AOJu0Yy5Fuvf/AAkhoTGL8w70tZ2Pp3f1LcH6HVP1I/++kTm2neJ6/R3
+ ixH0xyYBIgrc4r15yeiXLWe9PswX3TJNRGJfafCCSNeBScrxguUoE6OD7UKzTbR1Bkk5LcVgDAh
+ tlqy+ohcEQPsVgUft23nV5cqGX6WvZ5ymSUFoKw/NufiEXAi3mFXOFjbTByOT
+X-Received: by 2002:a05:6214:4301:b0:6bf:86d7:3a2d with SMTP id
+ 6a1803df08f44-6c155d6753emr47685666d6.20.1724272710346; 
+ Wed, 21 Aug 2024 13:38:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGc3H4O707r9KM2uBqrDdPUC2xVPQF4KCn1TafEKgZCZedWkcxnRuNwAKTNcOF99UZebjk8kg==
+X-Received: by 2002:a05:6214:4301:b0:6bf:86d7:3a2d with SMTP id
+ 6a1803df08f44-6c155d6753emr47685416d6.20.1724272709905; 
+ Wed, 21 Aug 2024 13:38:29 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162de8d39sm485276d6.146.2024.08.21.13.32.15
+ 6a1803df08f44-6c162d61f0bsm604746d6.57.2024.08.21.13.38.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Aug 2024 13:32:16 -0700 (PDT)
-Date: Wed, 21 Aug 2024 16:32:14 -0400
+ Wed, 21 Aug 2024 13:38:28 -0700 (PDT)
+Date: Wed, 21 Aug 2024 16:38:26 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v3 03/14] migration/multifd: Remove pages->allocated
-Message-ID: <ZsZNaAokUw0cOjao@x1n>
+Subject: Re: [PATCH v3 06/14] migration/multifd: Make MultiFDPages_t:offset a
+ flexible array member
+Message-ID: <ZsZQQjeiBzxmX88z@x1n>
 References: <20240801123516.4498-1-farosas@suse.de>
- <20240801123516.4498-4-farosas@suse.de>
+ <20240801123516.4498-7-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240801123516.4498-4-farosas@suse.de>
+In-Reply-To: <20240801123516.4498-7-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -100,14 +101,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 01, 2024 at 09:35:05AM -0300, Fabiano Rosas wrote:
-> This value never changes and is always the same as page_count. We
-> don't need a copy of it per-channel plus one in the extra slot. Remove
-> it.
+On Thu, Aug 01, 2024 at 09:35:08AM -0300, Fabiano Rosas wrote:
+> We're about to use MultiFDPages_t from inside the MultiFDSendData
+> payload union, which means we cannot have pointers to allocated data
+> inside the pages structure, otherwise we'd lose the reference to that
+> memory once another payload type touches the union. Move the offset
+> array into the end of the structure and turn it into a flexible array
+> member, so it is allocated along with the rest of MultiFDSendData in
+> the next patches.
+> 
+> Note that other pointers, such as the ramblock pointer are still fine
+> as long as the storage for them is not owned by the migration code and
+> can be correctly released at some point.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
+
+Two nits below..
+
+> ---
+>  migration/multifd.c | 18 ++++++++++++------
+>  migration/multifd.h |  4 ++--
+>  2 files changed, 14 insertions(+), 8 deletions(-)
+> 
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 44d4c3ca11..64503604cf 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -98,6 +98,17 @@ struct {
+>      MultiFDMethods *ops;
+>  } *multifd_recv_state;
+>  
+> +static size_t multifd_ram_payload_size(void)
+> +{
+> +    uint32_t n = multifd_ram_page_count();
+> +
+> +    /*
+> +     * We keep an array of page offsets at the end of MultiFDPages_t,
+> +     * add space for it in the allocation.
+> +     */
+> +    return sizeof(MultiFDPages_t) + n * sizeof(ram_addr_t);
+> +}
+> +
+>  static bool multifd_use_packets(void)
+>  {
+>      return !migrate_mapped_ram();
+> @@ -394,9 +405,7 @@ static int multifd_recv_initial_packet(QIOChannel *c, Error **errp)
+>  
+>  static MultiFDPages_t *multifd_pages_init(uint32_t n)
+>  {
+> -    MultiFDPages_t *pages = g_new0(MultiFDPages_t, 1);
+> -
+> -    pages->offset = g_new0(ram_addr_t, n);
+> +    MultiFDPages_t *pages = g_malloc0(multifd_ram_payload_size());
+>  
+>      return pages;
+
+Can drop the temp var now.
+
+>  }
+> @@ -404,8 +413,6 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
+>  static void multifd_pages_clear(MultiFDPages_t *pages)
+>  {
+>      multifd_pages_reset(pages);
+> -    g_free(pages->offset);
+> -    pages->offset = NULL;
+>      g_free(pages);
+>  }
+>  
+> @@ -1185,7 +1192,6 @@ bool multifd_send_setup(void)
+>          qemu_sem_init(&p->sem_sync, 0);
+>          p->id = i;
+>          p->pages = multifd_pages_init(page_count);
+> -
+
+Unneeded removal.
+
+>          if (use_packets) {
+>              p->packet_len = sizeof(MultiFDPacket_t)
+>                            + sizeof(uint64_t) * page_count;
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index 7bb4a2cbc4..a7fdd97f70 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -77,9 +77,9 @@ typedef struct {
+>      uint32_t num;
+>      /* number of normal pages */
+>      uint32_t normal_num;
+> +    RAMBlock *block;
+>      /* offset of each page */
+> -    ram_addr_t *offset;
+> -    RAMBlock *block;
+> +    ram_addr_t offset[];
+>  } MultiFDPages_t;
+>  
+>  struct MultiFDRecvData {
+> -- 
+> 2.35.3
+> 
 
 -- 
 Peter Xu
