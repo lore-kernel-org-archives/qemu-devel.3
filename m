@@ -4,162 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C5DC5321D
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 10:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE0CC52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 11:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh5W2-00085U-QB; Thu, 22 Aug 2024 06:58:06 -0400
+	id 1sh5an-0002ZV-JH; Thu, 22 Aug 2024 07:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1sh5Vz-00084J-U2; Thu, 22 Aug 2024 06:58:04 -0400
-Received: from mail-db8eur05on20706.outbound.protection.outlook.com
- ([2a01:111:f400:7e1a::706]
- helo=EUR05-DB8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1sh5Vv-0003EG-Fi; Thu, 22 Aug 2024 06:58:03 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GhIwyVnbyIVVklaM2LJAOJ/hKdqIo+13NW9mDFumuULZEzCjOvrxLmopNsFrAcMfYixopCDP1XcNnwe6Geyo0g4OvrKZsYlf5lrXLfNd2/2653bFR7pPbCpZP9N6liOhLdhTU5RsWmjaUtSqQmfoXkg6sgeNRWo2/IouxWj7zCWrBHUrXPVf7WNOkkGUazV+ZlnB5wPLofpQIJoCFI51Dq6e2+yogBoQqpEdvNqGrOHe7tWi98lBMVbwOeUO6Sn23PcXLsJrvdScCUGP4MLgaqqqmACVlihNLUnOz/susuFHtT451LEyjrExsM9peisPDfcN6CqkgWDZR5b3ooOeVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fTygBMJl5Lls9Vg52jGXOE537r5fwQTQ0v541wLc0Lg=;
- b=MEe6JD7gO+ohDfFs+PD/RexUy/BOuIUKVFg7uhL9HglhLCxZLzw1CsU9dPxh2J86zcp6ln73W14agpkDRXSwe6oMRk9ddAIRR5OHvnAxudaS7Ood+NNFCmCs4xv9qBeJBvm7KQ0X2cMh1/aKOOnHIY+IUI0ZabAymPemOtu0/h/qA1IBFr752T82n+zIjy9pf94SoLlfXdt42+LmNu/Fznj4txPpJx4H+O4rxdG2qVozBriw8oCVZBFNB3l5mQxmY5GnCb1sxl9xbOA2NbBhm7al4gU1JtHqLVTQP0CtMnB8sR3PZL1C/xpjMCDphXad615M5QxY13tmfv12IVGLPg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fTygBMJl5Lls9Vg52jGXOE537r5fwQTQ0v541wLc0Lg=;
- b=Hp3LyLm/VqTNasz5eZn2ZjIPoyjWVGV988B33Abhnxex/J+BxLJNcV3HrT62UqNUEalhQbe+e8tFs+/tSYGnpo4YLAMsM2Ns7joeDuTOUAoTTA02Q0Bcg7N+VOJ2qFh+7ANTBPZZbPOdhOmBOznwqIykQKt7Du+nzU512mT482gVg4JQebx2CeC8sTxZzJ8xuc5QllxXnWVl4UH8Q56ky8pJuPDwAWxBZM36DGIDIURmKpqgCcz12NvGiwMfLobU3MCGDUVBokJBUHQwN/45OYwHhBtZRjHNVuG4xaBadWAdLyAjzhunGQEoc2G8iu1bVJEVKBn3LkY910i0bcj+3A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com (2603:10a6:102:1db::9)
- by PA4PR08MB6269.eurprd08.prod.outlook.com (2603:10a6:102:ed::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.18; Thu, 22 Aug
- 2024 10:57:52 +0000
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1]) by PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1%4]) with mapi id 15.20.7897.014; Thu, 22 Aug 2024
- 10:57:52 +0000
-Message-ID: <da45bab5-510c-436b-a971-8946f3049a4d@virtuozzo.com>
-Date: Thu, 22 Aug 2024 12:57:49 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v4 0/7] CVE-2024-7409
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com,
- qemu-block@nongnu.org, andrey.drobyshev@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru
-References: <20240807174943.771624-9-eblake@redhat.com>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20240807174943.771624-9-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR09CA0127.eurprd09.prod.outlook.com
- (2603:10a6:803:12c::11) To PAXPR08MB6956.eurprd08.prod.outlook.com
- (2603:10a6:102:1db::9)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh5ae-0002YI-GE
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:02:54 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh5aY-0004Bo-Sl
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:02:51 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4280bca3960so4427705e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 04:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724324564; x=1724929364; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ekVmEMWWyS4pVL0hWTOxtB5Sws3gNTkEYcun8LN2+58=;
+ b=lWXjb+WmCSkSwnVUPmgA7563N0oT69vmN76+j6iKqvbIDnB+KXbKy31d6OKOizrB2Y
+ 9cAr8lY0ASy1HaW/YbzkTyvSskOx3HXKUmmQhQq/kGcAr4qZKbNAPsvWq57aY+jy4S6G
+ RnBLARdl1A8Mm+G8FzQxx0ZHHt5MYsolDEOF4Lj8+4rm2dp/rqR7lEcSnzZ3f48ZvgYo
+ QiS3r6CU5I2R8lUZjhD2D+v9K33jYMbSPieHyYgmYfh7HMm+u/uBWyDb+TSEFjMy467P
+ qCZv+K7hwGxmJjmyToi1QN+horwhQG9jiTr2/vco8hM747A+9yLUtF7tXVZfLvHF53Xf
+ /kEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724324564; x=1724929364;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ekVmEMWWyS4pVL0hWTOxtB5Sws3gNTkEYcun8LN2+58=;
+ b=rs3x+Hq9LscrU2n+HwabvSb71Ew/sA3TGOSxDM/JdJLR77HayxpvAQwgCr5h8Grie3
+ g4ry/Pm1Oe5BnwYKLie3GhT/n2ZM+Q012z6RPgpLX0KxmRP95JKXZFxubBrmyJ+2vR01
+ FnmftccYtpluiYWduoOkNhTb0VDWwFqw+A+5a0UtrPOFcX80ryDnY9g0yq7gbMQN7XSq
+ KZrT9t08FVkgc1cb10Dc+Ad43Y6LvCVc0dSWAAsdXf3RBxfeK4epePyJfBY3FtTsQ4RB
+ A14y9clVESRRFQ0G3T9O3QeNE0LeRkYhD4OI/wwqtIv2oNmhZjtakEhNh26Akc3MDt4F
+ JkOA==
+X-Gm-Message-State: AOJu0YwTjAT1y1/XHcIMOraiBvaBr2IIx73d68n66MOxMrGgnYCTUVGb
+ rqSji9Q3hmuWu5oDMTRWdalZ4XcMS3ZV1ynyU5ZZMorH5N6Vxh5l/cnPIJX9TmOp3GMWq9PSupP
+ l
+X-Google-Smtp-Source: AGHT+IF6k8D38esvOi2JNdmmiR6o+AB36khJhrhvO+huKR1SxID1OIZ7yY9NrnOhT5ocpOxXY6BPbw==
+X-Received: by 2002:a05:600c:314f:b0:426:5471:156a with SMTP id
+ 5b1f17b1804b1-42abf050d6fmr32182945e9.13.1724324563620; 
+ Thu, 22 Aug 2024 04:02:43 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.206.153])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3730826b4b5sm1377786f8f.115.2024.08.22.04.02.41
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 22 Aug 2024 04:02:43 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] tests/functional: Convert ARM Integrator/CP avocado tests
+Date: Thu, 22 Aug 2024 13:02:38 +0200
+Message-ID: <20240822110238.82312-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR08MB6956:EE_|PA4PR08MB6269:EE_
-X-MS-Office365-Filtering-Correlation-Id: 43be1997-6c28-4622-b73d-08dcc29944ae
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OE9mT1ZORU9jdnlmNGRTNEFYQ2FncU1DTENHeTFvVmdTSndTUVBXTmFNVkxX?=
- =?utf-8?B?VzQxeGd3bit0dVRFdGdkTXQzblY0djliNFVVWlNOSlJVQk5tN2x2YkVLUHIr?=
- =?utf-8?B?NXNEQVhGK0xrdkNCK2hVelJPeXJBcXlUZncvZzFyV2NuUS9mczkrRnRST2dk?=
- =?utf-8?B?T0ZNdGNzeS9md3d1YWZ1R3ZDVFk0Y0xZZTNlSDJSZmNzMVNla3JZWE85bm1h?=
- =?utf-8?B?N3RscDlSSUQzRzZvL2h6bVE5djVnakdrcm5qd2c2UjR1WFEzcHZDeTRnZzNz?=
- =?utf-8?B?V3RMVHN2R2MrUlVqdVdiK3I4dzRHZjRMdjY5bUdWZld2WVVaNTdrMTNkU3o1?=
- =?utf-8?B?SXVnOHUzRlZpMlMrZ1I0ek5lOGNxaHEvMk1IR3JaUWpkbjJhdSs5V3d6b3RT?=
- =?utf-8?B?ZmZnMGcwYTVBMWpUVXhHUDRCT1UvSWo3QmppN3hFOHVjeklCN2dNNlU4QWxw?=
- =?utf-8?B?aDJHRmxhcWw5ZEY3U3dCZDlKcTg5dHNNV2JISmVHNldNdGRiV29sUGlGNEJp?=
- =?utf-8?B?Und1M01pWTFWMDQ5RjF2WlRqakEwNnN2bTYrcHV4WDFxcGxhaHFzbUNYL1Zn?=
- =?utf-8?B?ai9JK3NyRklHa2JQMjZnczQxRkdURkFmT0E2aHpXM29ZbmxwM09NOVB5U0VR?=
- =?utf-8?B?YUoxRGRibTdPUEs1dXZRMzZqRVdQMFhHSVhucyt0ZFA1TWdrdHBncTZ4eExs?=
- =?utf-8?B?SG56eVQwVDMrRVluUWMzVk1JQU9jc1RBMXN1bHRqNlN0TEwza3FWWG13dE45?=
- =?utf-8?B?SSt4REN5N0pzQ0l5NWcvTzJlSGpmbXhZUXJoSGQ4UW1uQk1KdVo5WGt3VUY5?=
- =?utf-8?B?Q3pDZWdrc0N5SkRvK3EwSVNhTnBlT2hWNk8raG9qTk1RdGlRbE1tY2l2SlJG?=
- =?utf-8?B?ekVHdG10dHVEaW9YWlN4dTF0NldUWHAxM0h2YWdLQUdjUGJJZGJjQ1pHRVFk?=
- =?utf-8?B?RFhxWDlrdUZFZ2YvU3JGSjBOZUtFQkV5ZENHR0R5c016QkdZRDZHa0NyZ1Fi?=
- =?utf-8?B?WjdnZjE3RUgvMTF3Y2VpU0FueVdkUXliaWlDL2dMOWRKaXVHVTdaTWtlTjJW?=
- =?utf-8?B?MHVIbmtlTkpObEh0Z0NOczdmNnN0cTNrS005bVg3MFZpalpSWjlHSHlrLzQx?=
- =?utf-8?B?TllkaHVwcEtmcGp3b1ljSVBCVTdSK1JZS0habGcwZlhYanVndldjNitJNVNo?=
- =?utf-8?B?VTFNREUzOWtNeVROU082Y1Byd2QrQWxPUnRKWTQzRExVQzBWMmgvOXZ0eEcv?=
- =?utf-8?B?Z09OejZacXMwbDQycVJTUHV1NlI3Q2MxTUVlYzY4ZGp2UVIxdGVJd3JtZ3p2?=
- =?utf-8?B?UlBKL3hiUCtGalJ3TFdEbkVuckJFc2xxWlAva3BNNWt0bjJRaDZjRXc2N1NH?=
- =?utf-8?B?UWs1UC81WXA1bEttV1BCejM3UWF1MmVGVWN0U0l3b3RSYlBUM3RyZlJRVGJu?=
- =?utf-8?B?eFI3NDk2VkhXbXp4K3R4TnhoS0FKdUpKUW9FaExzSTNFYW00YWhSMy81UDNI?=
- =?utf-8?B?b3NFMGxFWWFDc2h4T0ZVWTg5NUp3b1pVdGZudDBHVUlwU1dxeGZBMGh0TEEy?=
- =?utf-8?B?K0lUcXVScWJGMUpjREFOQ1VNVU5ydnhaNXpyZG1NRUlLYTExZ1o3WUtRWUVx?=
- =?utf-8?B?dlV4Q1NjYjdsR2Y0ZnBtZmpXYUJQTHZ4bmJGMzNpdERvUG9EcGhVWmFSUWVW?=
- =?utf-8?B?Tk81SkFaSnJ5ZHo5VU1reks1WkYramdHcnlhTzZiR0Y0ODVQRzJ0WXJKSFJN?=
- =?utf-8?Q?9LSTZTYVReRNRO2YxE=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PAXPR08MB6956.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dHVLcVpyalBkV29ENmdzMmIwWnhoNUEySWFjdVJyalNNRy9neldMZVAwNURl?=
- =?utf-8?B?QmZ4R0lVU3drbndMdGNZcVVHMWNCZER5MmlaQmhSZy91YjdsanRicmxycm5z?=
- =?utf-8?B?M29rRVZGRnlkMloxUW9ZYVVMcWhxUjMwUkZOOFliZ3hQV25HdzBqZFlKOEYx?=
- =?utf-8?B?WllFN01sUzlDaUxNQllnZ3RUS09PV2wyWERJb1F3L0F6TGlmUUVqc01JS1Jw?=
- =?utf-8?B?SmNlVHJyMmhYUjZXWDVLVldGY1o5THR2SFh3cldQekNQU1lHTGpmVjFTL2JB?=
- =?utf-8?B?ZEdoZ0l6bjFSNS9Ha1R2Z0pWbGRlNzYzYXcxOFliRFhOWlQxZHllOWVUd0ts?=
- =?utf-8?B?L0JreG1BTkg2N1c3S2o3aTE0dFp3K2xod01ncFV2RmRTZ2NhbVgydE1hR0RR?=
- =?utf-8?B?SkRQQWlDKzZISFZSSnRNNVJJUXMwbTF4RDdmMU9BaDlOb3JhcTVKLzZqYkdN?=
- =?utf-8?B?RHpvU2VmS3J3OXdUOXdmYVF5R2paWnU4ZGVjT3ZjZmxiYnBidUUydEpjNXZF?=
- =?utf-8?B?NXlnb04wSVZPVU1OdjJhYjhJS3hNK0k4OVhkSnc4RnNnaVB1aVJQYzRsTlVr?=
- =?utf-8?B?WTVSMktBWFdGMG0wOUtMdmd1MVQ4RUFNcWEwTVg1SHRMNWpQcytJNVN5T1Br?=
- =?utf-8?B?TDVyWDAySHk4ZDkwM2g4eFVvRjdXZjI0ZDlSQ0xKUXFtaHRDQ0VoWml5V29Z?=
- =?utf-8?B?K2VEenhnbVNpSGNRWWRMV0lPMmNWT3pRRU14OUFicGpsTWdBbVBFV3NsQ0Z4?=
- =?utf-8?B?YTRlUTlZUnlIUVU0Zmpzb1l4Qmk4cjdRbk9raUxEaGtVU1JONEdPYldVZjAw?=
- =?utf-8?B?VjB1UjdHc29melBDNTNuZWhRemtDSEZpNXhRSUhOc1I4MnJEb1hDMDJORVFk?=
- =?utf-8?B?RDFzOExNa09jMFdGUk5GMkVmM0xUYXo1MjRKejFhZW4xTHpxYklYR2Y1Yjgz?=
- =?utf-8?B?aEoxbnpuYWloMjBvODhXS2pZRU10R29MSUExaEdaWGI3ZFUvUXo1QTJiMVI4?=
- =?utf-8?B?c0tFcWhUd3I4c1dOaHVvRDk4NHlBVjRldTMyN3hleld2Ny80bFdXcnN6KzJ3?=
- =?utf-8?B?S3lCdEJUTXFVMVJVWDBNVDBYc05scnNaeDFsK2haSDlzbG1OdWgwd1FDaXZu?=
- =?utf-8?B?Q2dtcjVwN1JBUFVUQTRmcmRMeWl2MzkrOTlRQXJMeGhsWmRHWmNUUmt6R2hJ?=
- =?utf-8?B?bWgwSlU4MnkvbUkvT2RlYXJyZWlwK3N3Uy91MXFGd1Zza0Z5azRldlNvYjlL?=
- =?utf-8?B?ZUhJV2JFU3FOSm9SQnRJU3JzeUUyb2xsQ3RYTXdQSGZPU3dtcGg4ZlgxT1c2?=
- =?utf-8?B?OS8vU0d1UndaMUxqb054cnJqVlljZ05uQ0FCVEE5UTFMZGVPbjJ6UTFoaFVi?=
- =?utf-8?B?ZEE1YjFybmF0K21jY3p6eWM5WTFYdWxFT3dlZ0t4ejNpdW1naHU1ZWZzU0gw?=
- =?utf-8?B?S2tNQXlpUjJrN1VHWGU5UzBacS9wWmtWRTdFWHNrZEh1U2tOZDRkQm5tcWFz?=
- =?utf-8?B?Sk5xR0pDeE5ZRkJLdXpnWGgzaGxlU2JtYit5US9qajdQRWZUWGVlbXRCMEV4?=
- =?utf-8?B?TjViOEVNUHU2ZGFELzd2REVCd3hqS2t5aGdpR3R3dnEwbjdqM0g1ZkZhNHdz?=
- =?utf-8?B?b2Y5cDQwTEhjRWpPbVNxdFkvK0EvNXB5UEJLYTlqNkVaUDdUWjFmWHp3aVN3?=
- =?utf-8?B?aHVsSjJtSEU0SFBTK0M1VXUwZW9wdVJYaW1SQjJHZ1RqTGJFTktrNGcvamRx?=
- =?utf-8?B?Z2lIN2hNeHRZN1phRllJQzJQZlpFVnJJV1VTVUV1bEsycmNhelZGYkdIdmVY?=
- =?utf-8?B?TkcybklMZkUvYVduditTR01FTDIzS2JaNUhScS94TWVzREE5a3h5NHdpczhV?=
- =?utf-8?B?a0VGeEV1UGdWWnN1NUVaNFBqd3FNSFdtcDlrSTNHejNPbkNzL2ZvQ1FBMXY3?=
- =?utf-8?B?QWtucE5WdnVwemNXTUdUd00xQVhPNUM1UDh6MDU4NWV3MXFVWm1MUURTb3cr?=
- =?utf-8?B?M2E0ZDQrOGJVWGMxek4zTmhvaEVWaldlWm5WSXlsMVdrRHI0bStPcmdQbFJK?=
- =?utf-8?B?NnZVTElEY1pZbXZleU5FZm03OG4ybWhYbHJNZ2NpVVFlQkhudlZMQ3pxK3Bo?=
- =?utf-8?Q?pjpczNsmZ83yHnLzDAXfDYq9V?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43be1997-6c28-4622-b73d-08dcc29944ae
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR08MB6956.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2024 10:57:51.9539 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /9Fh7pnnNhKSHhQa8XblMv2iKiFCn2bVAq1+lUrjaeDnLBZZlNA7wWIdmARIdupsV0Vf1LusCtp8VY+vhkhgkw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR08MB6269
-Received-SPF: pass client-ip=2a01:111:f400:7e1a::706;
- envelope-from=den@virtuozzo.com;
- helo=EUR05-DB8-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,45 +92,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/24 19:43, Eric Blake wrote:
-> v3 was here:
-> https://lists.gnu.org/archive/html/qemu-devel/2024-08/msg00818.html
->
-> since then:
->   - re-add a minor patch from v2 (now patch 1)
->   - refactor how the client opaque pointer is handled (patch 2)
->   - add two new patches to prevent malicious clients from consuming
->     inordinate resources: change the default max-connections from
->     unlimited to capped at 100 (patch 3), and add code to kill any
->     client that takes longer than 10 seconds after connect to reach
->     NBD_OPT_GO (patch 4) [Dan]
->   - squash the connection list handling into a single patch (5) [Dan]
->   - two new additional patches for reverting back to 9.0 behavior for
->     integration testing purposes; I'm okay if these last two miss 9.1
->
-> Eric Blake (7):
->    nbd: Minor style fixes
->    nbd/server: Plumb in new args to nbd_client_add()
->    nbd/server: CVE-2024-7409: Change default max-connections to 100
->    nbd/server: CVE-2024-7409: Drop non-negotiating clients
->    nbd/server: CVE-2024-7409: Close stray client sockets at shutdown
->    qemu-nbd: Allow users to adjust handshake limit
->    nbd/server: Allow users to adjust handshake limit in QMP
->
->   docs/tools/qemu-nbd.rst        |  5 +++
->   qapi/block-export.json         | 18 +++++++---
->   include/block/nbd.h            | 20 +++++++++--
->   block/monitor/block-hmp-cmds.c |  3 +-
->   blockdev-nbd.c                 | 62 +++++++++++++++++++++++++++++++---
->   nbd/server.c                   | 51 +++++++++++++++++++++++++---
->   qemu-nbd.c                     | 44 ++++++++++++++++--------
->   nbd/trace-events               |  1 +
->   8 files changed, 173 insertions(+), 31 deletions(-)
->
-should this go to stable too? 7.5 score is high enough.
-We have had CVE-2024-4467 
-<https://security-tracker.debian.org/tracker/CVE-2024-4467> with 7.8 
-merged to stables too.
+Straight forward conversion. Update the SHA1 hashes to SHA256
+hashes since SHA1 should not be used anymore nowadays.
 
-Den
+  $ QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 make check-functional-arm
+  ...
+  6/6 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_integratorcp   OK   3.90s   2 subtests passed
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20240821082748.65853-1-thuth@redhat.com>
+---
+ MAINTAINERS                                   |  2 +-
+ tests/functional/meson.build                  |  1 +
+ .../test_arm_integratorcp.py}                 | 56 ++++++++++---------
+ 3 files changed, 33 insertions(+), 26 deletions(-)
+ rename tests/{avocado/machine_arm_integratorcp.py => functional/test_arm_integratorcp.py} (63%)
+ mode change 100644 => 100755
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4b480135f6..91e5b061bf 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -785,7 +785,7 @@ S: Maintained
+ F: hw/arm/integratorcp.c
+ F: hw/misc/arm_integrator_debug.c
+ F: include/hw/misc/arm_integrator_debug.h
+-F: tests/avocado/machine_arm_integratorcp.py
++F: tests/functional/test_arm_integratorcp.py
+ F: docs/system/arm/integratorcp.rst
+ 
+ MCIMX6UL EVK / i.MX6ul
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index f8e482a87c..f1fce045fc 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -28,6 +28,7 @@ tests_generic = [
+ 
+ tests_arm_thorough = [
+   'arm_canona1100',
++  'arm_integratorcp',
+   'arm_n8x0',
+ ]
+ 
+diff --git a/tests/avocado/machine_arm_integratorcp.py b/tests/functional/test_arm_integratorcp.py
+old mode 100644
+new mode 100755
+similarity index 63%
+rename from tests/avocado/machine_arm_integratorcp.py
+rename to tests/functional/test_arm_integratorcp.py
+index 87f5cf3953..0fe083f661
+--- a/tests/avocado/machine_arm_integratorcp.py
++++ b/tests/functional/test_arm_integratorcp.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional test that boots a Linux kernel and checks the console
+ #
+ # Copyright (c) 2020 Red Hat, Inc.
+@@ -7,13 +9,15 @@
+ #
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ import os
+ import logging
+ 
+-from avocado import skipUnless
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from unittest import skipUnless
+ 
+ 
+ NUMPY_AVAILABLE = True
+@@ -33,50 +37,49 @@ class IntegratorMachine(QemuSystemTest):
+ 
+     timeout = 90
+ 
++    ASSET_KERNEL = Asset(
++        ('https://github.com/zayac/qemu-arm/raw/master/'
++         'arm-test/kernel/zImage.integrator'),
++        '26e7c7e8f943de785d95bd3c74d66451604a9b6a7a3d25dceb279e7548fd8e78')
++
++    ASSET_INITRD = Asset(
++        ('https://github.com/zayac/qemu-arm/raw/master/'
++         'arm-test/kernel/arm_root.img'),
++        'e187c27fb342ad148c7f33475fbed124933e0b3f4be8c74bc4f3426a4793373a')
++
++    ASSET_TUXLOGO = Asset(
++        ('https://github.com/torvalds/linux/raw/v2.6.12/'
++         'drivers/video/logo/logo_linux_vga16.ppm'),
++        'b762f0d91ec018887ad1b334543c2fdf9be9fdfc87672b409211efaa3ea0ef79')
++
+     def boot_integratorcp(self):
+-        kernel_url = ('https://github.com/zayac/qemu-arm/raw/master/'
+-                      'arm-test/kernel/zImage.integrator')
+-        kernel_hash = '0d7adba893c503267c946a3cbdc63b4b54f25468'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-
+-        initrd_url = ('https://github.com/zayac/qemu-arm/raw/master/'
+-                      'arm-test/kernel/arm_root.img')
+-        initrd_hash = 'b51e4154285bf784e017a37586428332d8c7bd8b'
+-        initrd_path = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
+ 
++        self.set_machine('integratorcp')
+         self.vm.set_console()
+         self.vm.add_args('-kernel', kernel_path,
+                          '-initrd', initrd_path,
+                          '-append', 'printk.time=0 console=ttyAMA0')
+         self.vm.launch()
+ 
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     def test_integratorcp_console(self):
+         """
+         Boots the Linux kernel and checks that the console is operational
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:integratorcp
+-        :avocado: tags=device:pl011
+         """
+         self.boot_integratorcp()
+         wait_for_console_pattern(self, 'Log in as root')
+ 
+     @skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
+     @skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     def test_framebuffer_tux_logo(self):
+         """
+         Boot Linux and verify the Tux logo is displayed on the framebuffer.
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:integratorcp
+-        :avocado: tags=device:pl110
+-        :avocado: tags=device:framebuffer
+         """
+         screendump_path = os.path.join(self.workdir, "screendump.pbm")
+-        tuxlogo_url = ('https://github.com/torvalds/linux/raw/v2.6.12/'
+-                       'drivers/video/logo/logo_linux_vga16.ppm')
+-        tuxlogo_hash = '3991c2ddbd1ddaecda7601f8aafbcf5b02dc86af'
+-        tuxlogo_path = self.fetch_asset(tuxlogo_url, asset_hash=tuxlogo_hash)
++        tuxlogo_path = self.ASSET_TUXLOGO.fetch()
+ 
+         self.boot_integratorcp()
+         framebuffer_ready = 'Console: switching to colour frame buffer device'
+@@ -97,3 +100,6 @@ def test_framebuffer_tux_logo(self):
+         for tux_count, pt in enumerate(zip(*loc[::-1]), start=1):
+             logger.debug('found Tux at position [x, y] = %s', pt)
+         self.assertGreaterEqual(tux_count, cpu_count)
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.45.2
+
 
