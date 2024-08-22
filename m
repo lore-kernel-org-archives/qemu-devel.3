@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C481EC531DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 05:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64738C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 05:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh0ZH-00052Z-Qe; Thu, 22 Aug 2024 01:41:08 -0400
+	id 1sh0cq-0001IC-5q; Thu, 22 Aug 2024 01:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sh0Z0-00051J-Gq
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 01:40:52 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ (Exim 4.90_1) (envelope-from <doug@schmorgal.com>)
+ id 1sgvGK-00004r-4p
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 20:01:13 -0400
+Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sh0Yv-0005Eo-Gj
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 01:40:47 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3db13410adfso260357b6e.2
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 22:40:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <doug@schmorgal.com>)
+ id 1sgvGD-0007eH-PK
+ for qemu-devel@nongnu.org; Wed, 21 Aug 2024 20:01:11 -0400
+Received: by mail-il1-x131.google.com with SMTP id
+ e9e14a558f8ab-39d3872e542so1095685ab.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 17:01:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724305235; x=1724910035; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=schmorgal.com; s=google; t=1724284864; x=1724889664; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WBF7JycDkh5LPh3xYeS1xPEqDIa22Mgy6xyF04wQHFY=;
- b=cckZXr0asYq/oyBO2hugz85RQkncAok6+QfvI3nZ8FlUQtnYBV1Tw2/vVn/jF5zjvG
- pIpk9B1Mr9zSo8YiI/fv2vm36+7AIeKgt4c7ffatUpM+tn03t1MSINsrLR6y7cl4n8vs
- kOI5UpUiXM3r9NMt8a9r+cVnNJQh84qY49czZOFsXwlBaL2C7+J+M6FYqK8cl/BFX1N0
- 292Wv9VI+JpYVVTSCtnWW4phYyFPOLzgw2OFHmH63/UxhsSGOZj/bpbOJFZRuO2MbgJ+
- lGgUFAvPqpBi8nlk6s7YaIDbuPY7DRooJWX6G9LZbgp6ukEbSitCXXvb3qffrB4zOCee
- AuDg==
+ bh=rniunWcptbIXXKNuJm7p8500w/SrEx/HWbj0BosbAcs=;
+ b=f0isbYF/k1yZndhnqcZRiNWewafNhmC9A2t5KVaXAgZafd51yfBKr3yPILoWka6zzD
+ hIDiaa+wJzPpIZzEORZ5ftl8t7Euj7BuU6zZ+pb54ZRzmU10rNniNiCpe+30he12cRF2
+ BOYJ9LiOiJZms4up2SuEhurT9KC/4Qkg1Lp/8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724305235; x=1724910035;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1724284864; x=1724889664;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WBF7JycDkh5LPh3xYeS1xPEqDIa22Mgy6xyF04wQHFY=;
- b=OE930JJr/X7HlI41aVXeHwfYA6m9YZHAy9Wz1Vpi1PJm5wGS4ZZujxvqnFrdTGTDIz
- fjqyZw5p1snktvkD1S/w0jbiMVt9BlP6C4B6nFVe7CQef88G+souophXLWAg5Cl0WrzF
- AXIGyj2aOsEvoyKKpfXNV71O7Tfhvr2UscEW58jQ7h7Ky0UPnWF3PuhlQM8fTYrMugMf
- 9Rvzdbxffz4F+xLQWLnIq3o+uvliWb2sv5iCVANXhPJI/tXFyQ8pqA52woVK9iHwla4w
- 5ULmsaOO75JJM8e6BPIMRgwq+gdlqwHD3n/uP5h9Z7DzH0LDW5BhhGkRnfYwex+e1ERf
- AvAA==
+ bh=rniunWcptbIXXKNuJm7p8500w/SrEx/HWbj0BosbAcs=;
+ b=toW5HsqRjShY6roLLDi0IgnUeFc94WbiVOsqeUYpJ9rNQ2tWYy9U/YtPYRGhPo+qsA
+ /cbxAeRCdXPIdbCMx5JcrGi0EJwg1465spUW9JMwT2d9z/MDuj9sDIsw/MYd6gDO8SJE
+ hPIVkRmD533wLOt3jkqjl7R361/9Sk/v7aDTL8kzTIU3xSiMtsvSuiGkwXxIMqnwtoq2
+ QiuyK7afN0I0JYLt55yikXUGPSruKKk+c6NMMmt1ANpqum6szxKREKLKltH0G1qf/gqo
+ HKh/TAJLqp7p5QKzc3uzosvh/j4mwQk8+hTVirDAaJxaKyy7aB3bnU7rUb61oTQ3nH4S
+ ogRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHlAufg3BaW9qaHJ7oXSIeOGxurM4nOIAWMUkEs15Bqv0n3l3uNHfs9YZ9asGHhwlNegmozgUmVa+J@nongnu.org
-X-Gm-Message-State: AOJu0YzoIdsErFOvWj8x549Vgxm0gIAIYxJMgYZDK81Ku8KTC4wqNHOo
- HoxWdpWzzSvJpbiCyyDTyy/2CmaG7+UDbxl4LkogQWsvKvYik/Oj
-X-Google-Smtp-Source: AGHT+IEi0yh75aVovWTh6Oaz9KWnOjbm3rxiWKUc7fSPqnUnvB/z1CX8o6xYG5HY+Mg0pwi+W6cNDA==
-X-Received: by 2002:a05:6808:e8a:b0:3da:a6b7:4803 with SMTP id
- 5614622812f47-3de195176b4mr5812862b6e.2.1724305235291; 
- Wed, 21 Aug 2024 22:40:35 -0700 (PDT)
-Received: from [192.168.0.22] ([210.223.46.112])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7cd9ad56c5esm534166a12.75.2024.08.21.22.40.33
+ AJvYcCWIfJ3A+dSJ2NUp7YirqtxGCKXct1TxHMbXyHRfjfXEUP6BkzbV7qWXD+rYk6Ds0B5IG2L6Jj08K5Bg@nongnu.org
+X-Gm-Message-State: AOJu0YwuUtFZo6A5jLXOvpJy8anKUvaH5UGe4ncgoRHgq9io8SDazQls
+ RU7jiw/RLwtvAvjGZDAT0cBmv+kN9j8YJbiKzmfVzdaMQ5F42ufIk29NQydAFD4=
+X-Google-Smtp-Source: AGHT+IG/kLRWv3KV7VTc4yGrqCaDbrIx4SE7Rw+CThIVIJh/V6LmyQnIpjSHVU8pDwOLI9S5XY7rFw==
+X-Received: by 2002:a05:6e02:1807:b0:39d:2ced:e3ee with SMTP id
+ e9e14a558f8ab-39d6c378e0emr52754365ab.8.1724284862979; 
+ Wed, 21 Aug 2024 17:01:02 -0700 (PDT)
+Received: from [192.168.1.33] ([50.37.200.153])
+ by smtp.googlemail.com with ESMTPSA id
+ 41be03b00d2f7-7cd9ad6e8e9sm143665a12.86.2024.08.21.17.01.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Aug 2024 22:40:34 -0700 (PDT)
-Message-ID: <0c0e649a-f31a-4051-a976-97943f85b951@gmail.com>
-Date: Thu, 22 Aug 2024 14:40:31 +0900
+ Wed, 21 Aug 2024 17:01:02 -0700 (PDT)
+Message-ID: <fdce5258-59f7-486c-bfd1-a4befdf72e3e@schmorgal.com>
+Date: Wed, 21 Aug 2024 17:01:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/ufs: ufs descriptor read test implemented
-Content-Language: ko
-To: yc01.jeong@samsung.com, Jeuk Kim <jeuk20.kim@samsung.com>
-Cc: "thuth@redhat.com" <thuth@redhat.com>,
- "lvivier@redhat.com" <lvivier@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jeongyuchan0629@gmail.com" <jeongyuchan0629@gmail.com>
-References: <20240821023025epcms1p4de36db95f4d3a66727f128ef6be860e4@epcms1p4>
- <CGME20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p1>
- <20240822013925epcms1p112662453b1f4dcef8bc1e2f101bb6e6a@epcms1p1>
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-In-Reply-To: <20240822013925epcms1p112662453b1f4dcef8bc1e2f101bb6e6a@epcms1p1>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 2/5] hw/net/can/xlnx-versal-canfd: Fix CAN FD flag check
+To: Pavel Pisa <pisa@fel.cvut.cz>
+Cc: Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+References: <20240816163504.789393-1-doug@schmorgal.com>
+ <20240816163504.789393-3-doug@schmorgal.com>
+ <202408210857.20254.pisa@fel.cvut.cz>
+Content-Language: en-US
+From: Doug Brown <doug@schmorgal.com>
+In-Reply-To: <202408210857.20254.pisa@fel.cvut.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-oi1-x236.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
+ envelope-from=doug@schmorgal.com; helo=mail-il1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 22 Aug 2024 01:44:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,217 +98,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Pavel,
 
-On 8/22/2024 10:39 AM, Yoochan Jeong wrote:
->  From 936ef0a907bcf16809f9980c2d37e8fcb13697d2 Mon Sep 17 00:00:00 2001
-> From: Yoochan Jeong <yc01.jeong@samsung.com>
-> Date: Wed, 21 Aug 2024 09:09:54 +0900
-> Subject: [PATCH 4/4] hw/ufs: ufs descriptor read test implemented
+(Dropping Vikram from the email chain; I received "recipient not found"
+errors from AMD's mail servers in response to all of my patches)
 
-Remove it.
+On 8/20/2024 11:57 PM, Pavel Pisa wrote:
+> Hello Doug Brown,
+> 
+> On Friday 16 of August 2024 18:35:02 Doug Brown wrote:
+>> -        if (frame->flags == QEMU_CAN_FRMF_TYPE_FD) {
+>> +        if (frame->flags & QEMU_CAN_FRMF_TYPE_FD) {
+> 
+> Reviewed-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+> 
+> That is a great catch, I have overlooked this in previous
+> review of the Xilinx code.
 
+Thank you for reviewing!
 
->
-> New test function "ufstest_desc_request" added, which can check one's
-> virtual UFS device can properly read and its descriptor data.
-> (Writing descriptors are not implemented yet.)
-> The testcases attempt to read all kinds of descriptors at least once,
-> except for configuration descriptors (which are not implemented yet.)
-> There are some testcases that are intended to make an error caused by
-> an invalid index value or an invalid selector value.
->
-> Based on: 20240802051902epcms2p319bc095a15eaef8de4e6955f6718371d@epcms2p3
-> Signed-off-by: Yoochan Jeong <yc01.jeong@samsung.com>
-> ---
->   tests/qtest/ufs-test.c | 155 +++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 155 insertions(+)
->
-> diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-> index a8fd2f1acc..f96061f922 100644
-> --- a/tests/qtest/ufs-test.c
-> +++ b/tests/qtest/ufs-test.c
-> @@ -785,6 +785,160 @@ static void ufstest_attr_request(void *obj, void *data, QGuestAllocator *alloc)
->       ufs_exit(ufs, alloc);
->   }
->   
-> +static void ufstest_desc_request(void *obj, void *data, QGuestAllocator *alloc)
-> +{
-> +    QUfs *ufs = obj;
-> +
-> +    UtpTransferReqDesc utrd;
-> +    UtpUpiuRsp rsp_upiu;
-> +    ufs_init(ufs, alloc);
-> +
-> +    /* Write Descriptor is not supported yet */
-> +
-> +    /* Read Device Descriptor */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_DEVICE,
-> +                   0, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.opcode, ==, UFS_UPIU_QUERY_OPCODE_READ_DESC);
-> +    g_assert_cmpuint(rsp_upiu.qr.idn, ==, UFS_QUERY_DESC_IDN_DEVICE);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(DeviceDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_DEVICE);
-> +
-> +    /* Read Configuration Descriptor is not supported yet*/
-> +
-> +    /* Read Unit Descriptor */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_UNIT, 0,
-> +                   0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(UnitDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_UNIT);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[2], ==, 0);
-> +
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_UNIT, 1,
-> +                   0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(UnitDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_UNIT);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[2], ==, 1);
-> +
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_UNIT,
-> +                   UFS_UPIU_RPMB_WLUN, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(RpmbUnitDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_UNIT);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[2], ==, UFS_UPIU_RPMB_WLUN);
-> +
-> +    /* Read Interconnect Descriptor */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC,
-> +                   UFS_QUERY_DESC_IDN_INTERCONNECT, 0, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(InterconnectDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_INTERCONNECT);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[2], ==, 0x01);
+> When I look into hw/net/can/xlnx-versal-canfd.c functions
+> regs2frame and store_rx_sequential then I see missing
+> handling of flags QEMU_CAN_FRMF_ESI and QEMU_CAN_FRMF_BRS.
 
-Depending on the ufs version, the unipro version can vary.
+Nice find. It looks like it would be pretty straightforward to add
+support for those flags. As far as I can tell they map directly to
+register bits.
 
-Although they are currently 0x180 & 0x410, they should be 0x200 & 0x500 
-in ufs v4.0
+> In the function regs2frame is missing even initialization
+> of frame->flags = 0 at the start, which I expect should be there.
+> The
+>   frame->flags = QEMU_CAN_FRMF_TYPE_FD;
+> should be then
+>   frame->flags |= QEMU_CAN_FRMF_TYPE_FD;
 
-So I don't think it's a good idea to test these with fixed values. 
-Please remove it.
+You're absolutely right. It looks like frame->flags isn't being
+initialized at all when it's a non-FD frame. I can also take care of
+this. I'll wait and see how the review goes for the other patches, and I
+can add another patch to fix these flag issues in the next version of
+the series.
 
-> +    g_assert_cmpuint(rsp_upiu.qr.data[3], ==, 0x80);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[4], ==, 0x04);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[5], ==, 0x10);
-> +
-> +    /* Read String Descriptor */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_STRING,
-> +                   0, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, 0x12);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_STRING);
-> +
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_STRING,
-> +                   1, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, 0x22);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_STRING);
-> +
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_STRING,
-> +                   4, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, 0x0a);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_STRING);
-> +
-> +    /* Read Geometry Descriptor */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_GEOMETRY,
-> +                   0, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(GeometryDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_GEOMETRY);
-> +
-> +    /* Read Power Descriptor */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_POWER, 0,
-> +                   0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==,
-> +                     sizeof(PowerParametersDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_POWER);
-> +
-> +    /* Read Health Descriptor */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_HEALTH,
-> +                   0, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==, UFS_OCS_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-> +    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(DeviceHealthDescriptor));
-> +    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_HEALTH);
-> +
-> +    /* Invalid Index (Intended Failure) */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_UNIT, 4,
-> +                   0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-> +                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==,
-> +                     UFS_QUERY_RESULT_INVALID_INDEX);
-> +
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_STRING,
-> +                   5, 0, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-> +                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==,
-> +                     UFS_QUERY_RESULT_INVALID_INDEX);
-> +
-> +    /* Invalid Selector (Intended Failure) */
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_DEVICE,
-> +                   0, 1, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-> +                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==,
-> +                     UFS_QUERY_RESULT_INVALID_SELECTOR);
-> +
-> +    ufs_send_query(ufs, 0, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-> +                   UFS_UPIU_QUERY_OPCODE_READ_DESC, UFS_QUERY_DESC_IDN_STRING,
-> +                   0, 1, 0, &utrd, &rsp_upiu);
-> +    g_assert_cmpuint(le32_to_cpu(utrd.header.dword_2), ==,
-> +                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-> +    g_assert_cmpuint(rsp_upiu.header.response, ==,
-> +                     UFS_QUERY_RESULT_INVALID_SELECTOR);
-> +
-> +    ufs_exit(ufs, alloc);
-> +}
-> +
->   static void drive_destroy(void *path)
->   {
->       unlink(path);
-> @@ -854,6 +1008,7 @@ static void ufs_register_nodes(void)
->       qos_add_test("read-write", "ufs", ufstest_read_write, &io_test_opts);
->       qos_add_test("flag read-write", "ufs", ufstest_flag_request, &io_test_opts);
->       qos_add_test("attr read-write", "ufs", ufstest_attr_request, &io_test_opts);
-> +    qos_add_test("desc read-write", "ufs", ufstest_desc_request, &io_test_opts);
+> As for the DLC conversion, there are functions
+> 
+>   frame->can_dlc = can_dlc2len(xxxx)
+>   XXX = can_len2dlc(frame->can_dlc);
+> 
+> provided by net/can/can_core.c
 
-Why don't we use `ufstest_query_flag_request` & 
-`ufstest_query_attr_request` & `ufstest_query_desc_request`?
+Nice! It seems like using these functions could simplify this code quite
+a bit, by eliminating the need for canfd_dlc_array. I can add this as
+another patch for the next version.
 
-It looks more clear to me.
+> I am not sure how much competent I am for the rest of the patches,
+> because I do not know XilinX IP core so well. Review by Vikram Garhwal
+> or somebody else from AMD/XilinX is more valueable there.
+> But I can add my ACK there based on rough overview.
+Thanks! I also see that Francisco reviewed a couple of the patches --
+thanks Francisco! I will wait and see how review goes on the others.
 
->   }
->   
->   libqos_init(ufs_register_nodes);
+For what it's worth, I was stress testing this in QEMU today and found
+another issue with the FIFO read_index and store_index calculations and
+the logic that wraps them around to 0. I will submit the fix for this
+problem as another patch in the next version of the series (or a new
+series if that's more convenient).
+
+Doug
 
