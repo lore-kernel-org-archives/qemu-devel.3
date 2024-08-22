@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E24C5320E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 21:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 652C7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 21:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shEw9-0004sF-Qv; Thu, 22 Aug 2024 17:01:41 -0400
+	id 1shFgD-0005yS-IP; Thu, 22 Aug 2024 17:49:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shEw7-0004rc-Ob
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 17:01:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shEw4-0005kt-As
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 17:01:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724360494;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=efde3LWqOyjCFrc7ZHmggar11xXbbjmDsLhIopFuTUs=;
- b=N//lTHdZWikTmKNGk1KpdoEvSPuegbxyWiHb1sXxq9jHGDF5L0S7NZBezM+MMfWaIB4NOh
- MsIpnGqOLnc2LvSiikqxCIEc0z+5Pe1OgVNctSqLiyrQCQsr1Qa4Kvpu924By2ROg86212
- WRf/pFOLafogJXzKLPjEC+JYhzElI6o=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-eILpo0ajM2qU2VJ1dQXD6A-1; Thu, 22 Aug 2024 17:01:33 -0400
-X-MC-Unique: eILpo0ajM2qU2VJ1dQXD6A-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5c2021e8656so1447788eaf.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 14:01:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shFg2-0005uK-6B
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 17:49:08 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shFg0-00050f-B4
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 17:49:05 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-202376301e6so10999075ad.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 14:49:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1724363342; x=1724968142; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FtsUucNCHDglRhSefy2tbAtsd+nDXJw6T4rDMkxM0V8=;
+ b=dKey7dyxKxNThb3VvZJeFoxINb9YJbhAA/G/S9G+UVlzMiXVSIH8miIWc8nP8nYCHs
+ TRbUPmEBcBcxVaASz5CfA02RIYeKcAI1kAUAOXsVH+rNmB8RzzalIE9SYFNl54fooHSD
+ 1/vI2Snje7QKINpHUD1hK4udBHGk7zznfJR7U2upxKj7Xt7qytiy+dp+Ubbv9d65cTG8
+ ZCkWltzUcm9h8lGQzok4OoLH849gfKGjkuwtVB4wuJYB2rl/SBns8Td2G2KDgb1K9bvN
+ LWIKbRuG1C/qKF3dzh6KLIxQPYcuyj46e1gmPp8r8i6bVCDAlUy/+hMYyNDMnmH1nePG
+ ZQXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724360492; x=1724965292;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=efde3LWqOyjCFrc7ZHmggar11xXbbjmDsLhIopFuTUs=;
- b=uAkFK8/JcBYaWwJdMA0ctL/p2WPUFI3bIXLiHAliXfUFDSCQMM4ZW6aLHUdkndX2yN
- HEDiRjQZ0V1NaJ0RSg104/qtnzoDuMneJksjM1I3OTe6o+3v8fr0Oo231GSGA/jcFPsT
- 7R9pEduiUOlZL6aVNw4OK2u6YhGn/F/jP231EQV+4hsCiWdf3bC5U4MAS562OcMGOXf/
- vcQADQm99vyZ28jRUcsLbSNoH1OOFbXYFq9NnTte+zLUhGv8BX7pwF1kNKe1rqrDB+Sh
- K2rWcxK3TTnscyOqWGReXSmRdYYy3AuqMqf89iUuUPo6ktOpTgstaMRRwQBsjV0cnN0N
- 4/Ag==
+ d=1e100.net; s=20230601; t=1724363342; x=1724968142;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FtsUucNCHDglRhSefy2tbAtsd+nDXJw6T4rDMkxM0V8=;
+ b=Z6mgh9ytDrJvBu4UhFHkTLNpNRvkkgQ9KFb3Ie4qqaC+HWAWccHVjg0cifqdDRhEoj
+ 2HL4S+a5BV4eRw3P92g5NiJlmT9gLzLURp0sRUk/kmQDzmzT4XwhNX8E26kt1KLX06Kx
+ FgJH6AxTRH2vqMoVQHRz+zysm9YF5aNue3cgPVDp3aOY/xKiWCqX11vq4LpUCvhOQXFj
+ +M6l3mANf/4cPJCinbmnfVmxg673QxBTojZTL6B1kdf2x6+OuNVP5Gxr7mfN080sMsVm
+ wtpIQDqwMVIJCnTJtqrknOZYs6CEcsAeMMfu5NuWe/CA7NuORmSjbraftLtqW8Jk5VoM
+ WBlw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHRj72hAbfA3DNS2qHwVzTn7K/dJltXVXzinjG5DqXBaOxGRSTlTt/1peT6T2ogiL7cIvKNIyJfI9v@nongnu.org
-X-Gm-Message-State: AOJu0YxGJHNITlscNwKqNFTRdRQzFAJafA2UUpUk2hjskzcvaRTutBsA
- nOo0R8MoxvCOsAb1rAo83fUdulZ/wsPOy7BCG+G5GUHgli3wn6RlZgTrP69fpr2lVwZ3R+JXtYm
- cljeZiwaHZ6JyZ7DPBGQ6W1HdnDBaFniLgMR8MvjB/c5SI/p+qRvE
-X-Received: by 2002:a05:6870:158c:b0:259:88b4:976 with SMTP id
- 586e51a60fabf-273cffcaa26mr3759272fac.43.1724360492233; 
- Thu, 22 Aug 2024 14:01:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtFhc7Mg/Z7Te446IWtU7SO/7j9UcaqP3Lsau2yhVkMUJ/qIZiDIqRenc0/TJYgWZm+Z8knA==
-X-Received: by 2002:a05:6870:158c:b0:259:88b4:976 with SMTP id
- 586e51a60fabf-273cffcaa26mr3759235fac.43.1724360491772; 
- Thu, 22 Aug 2024 14:01:31 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a67f362282sm109993785a.71.2024.08.22.14.01.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 14:01:31 -0700 (PDT)
-Date: Thu, 22 Aug 2024 17:01:30 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 09/15] memory: Do not create circular reference with
- subregion
-Message-ID: <ZsenKpu1czQGYz7m@x1n>
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-9-750bb0946dbd@daynix.com>
- <CAFEAcA9KTSjwF1rABpM5nv9UFuKqZZk6+Qo4PEF4+rTirNi5fQ@mail.gmail.com>
+ AJvYcCVYsylzjpAosZ9UpPNyhs7Z4Lkm8DqzS4B3ffypEb0VIQdUUm+BdujP81kfzHIGOUdZXxUX2dX4xxR1@nongnu.org
+X-Gm-Message-State: AOJu0YwKerQ8CNvwiDu6JnyyMDsIp4HnlhxtERtULPak+ybpbsd4w2rH
+ ZE/pbM07d8rPS3mWGk0S/rdR67vwfu67NYf/K9J1ukXVI7IvTSaa9QuY0c3OHqs=
+X-Google-Smtp-Source: AGHT+IESs0CFct9quSVI0Gy2B22nFpxPkVtwp8bJ3qEMdaRTEw9YuWpXXgLtuKpsnGU4qo7hVtYwIw==
+X-Received: by 2002:a17:902:ced0:b0:202:1aee:e414 with SMTP id
+ d9443c01a7336-2039e50d1fbmr1212415ad.41.1724363341498; 
+ Thu, 22 Aug 2024 14:49:01 -0700 (PDT)
+Received: from [192.168.68.110] ([179.133.97.250])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2038548c707sm17200475ad.0.2024.08.22.14.48.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Aug 2024 14:49:01 -0700 (PDT)
+Message-ID: <7b23efde-3af7-4f18-8386-af5e29590d1a@ventanamicro.com>
+Date: Thu, 22 Aug 2024 18:48:58 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9KTSjwF1rABpM5nv9UFuKqZZk6+Qo4PEF4+rTirNi5fQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/1] Add support for generating OpenSBI domains in the
+ device tree
+To: Gregor Haas <gregorhaas1997@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, atishp@rivosinc.com, alistair.francis@wdc.com
+References: <20240805210444.497723-1-gregorhaas1997@gmail.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240805210444.497723-1-gregorhaas1997@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,156 +98,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 22, 2024 at 06:10:43PM +0100, Peter Maydell wrote:
-> On Thu, 27 Jun 2024 at 14:40, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
-> >
-> > A memory region does not use their own reference counters, but instead
-> > piggybacks on another QOM object, "owner" (unless the owner is not the
-> > memory region itself). When creating a subregion, a new reference to the
-> > owner of the container must be created. However, if the subregion is
-> > owned by the same QOM object, this result in a self-reference, and make
-> > the owner immortal. Avoid such a self-reference.
-> >
-> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > ---
-> >  system/memory.c | 11 +++++++++--
-> >  1 file changed, 9 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/system/memory.c b/system/memory.c
-> > index 74cd73ebc78b..949f5016a68d 100644
-> > --- a/system/memory.c
-> > +++ b/system/memory.c
-> > @@ -2638,7 +2638,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
-> >
-> >      memory_region_transaction_begin();
-> >
-> > -    memory_region_ref(subregion);
-> > +    if (mr->owner != subregion->owner) {
-> > +        memory_region_ref(subregion);
-> > +    }
-> > +
-> >      QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
-> >          if (subregion->priority >= other->priority) {
-> >              QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-> > @@ -2696,7 +2699,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
-> >          assert(alias->mapped_via_alias >= 0);
-> >      }
-> >      QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
-> > -    memory_region_unref(subregion);
-> > +
-> > +    if (mr->owner != subregion->owner) {
-> > +        memory_region_unref(subregion);
-> > +    }
-> > +
-> >      memory_region_update_pending |= mr->enabled && subregion->enabled;
-> >      memory_region_transaction_commit();
-> >  }
+
+
+On 8/5/24 6:04 PM, Gregor Haas wrote:
+> This patch series adds support for specifying OpenSBI domains on the QEMU
+> command line. A simple example of what this looks like is below, including
+> mapping the board's UART into the secondary domain:
 > 
-> I was having another look at leaks this week, and I tried
-> this patch to see how many of the leaks I was seeing it
-> fixed. I found however that for arm it results in an
-> assertion when the device-introspection-test exercises
-> the "imx7.analog" device. By-hand repro:
+> qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -m 4G -nographic \
+>          -device opensbi-memregion,id=mem,base=0xBC000000,order=26,mmio=false \
+>          -device opensbi-memregion,id=uart,base=0x10000000,order=12,mmio=true,device0="/soc/serial@10000000" \
+>          -device opensbi-domain,id=domain,possible-harts=0-1,boot-hart=0x0,next-addr=0xBC000000,next-mode=1,region0=mem,perms0=0x3f,region1=uart,perms1=0x3f
 > 
-> $ ./build/asan/qemu-system-aarch64 -display none -machine none -accel
-> qtest -monitor stdio
-> ==712838==WARNING: ASan doesn't fully support makecontext/swapcontext
-> functions and may produce false positives in some cases!
-> QEMU 9.0.92 monitor - type 'help' for more information
-> (qemu) device_add imx7.analog,help
-> qemu-system-aarch64: ../../system/memory.c:1777: void
-> memory_region_finalize(Object *): Assertion `!mr->container' failed.
-> Aborted (core dumped)
+> As a result of the above configuration, QEMU will add the following subnodes to
+> the device tree:
 > 
-> It may be well be that this is a preexisting bug that's only
-> exposed by this refcount change causing us to actually try
-> to dispose of the memory regions.
+> chosen {
+>          opensbi-domains {
+>                  compatible = "opensbi,domain,config";
 > 
-> I think that what's happening here is that the device
-> object has multiple MemoryRegions, each of which is a child
-> QOM property. One of these MRs is a "container MR", and the
-> other three are actual-content MRs which the device put into
-> the container when it created them. When we deref the device,
-> we go through all the child QOM properties unparenting and
-> unreffing them. However, there's no particular ordering
-> here, and it happens that we try to unref one of the
-> actual-content MRs first. That MR is still inside the
-> container MR, so we hit the assert. If we had happened to
-> unref the container MR first then memory_region_finalize()
-> would have removed all the subregions from it, avoiding
-> the problem.
+>                  domain {
+>                          next-mode = <0x01>;
+>                          next-addr = <0x00 0xbc000000>;
+>                          boot-hart = <0x03>;
+>                          regions = <0x8000 0x3f 0x8002 0x3f>;
+>                          possible-harts = <0x03 0x01>;
+>                          phandle = <0x8003>;
+>                          compatible = "opensbi,domain,instance";
+>                  };
 > 
-> I'm not sure what the best fix would be here -- that assert
-> is there as a guard that the region isn't visible in
-> any address space, so maybe it needs to be made a bit
-> cleverer about the condition it checks? e.g. in this
-> example although mr->container is not NULL,
-> mr->container->container is NULL.
+>                  uart {
+>                          phandle = <0x8002>;
+>                          devices = <0x1800000>;
+>                          mmio;
+>                          order = <0x0c>;
+>                          base = <0x00 0x10000000>;
+>                          compatible = "opensbi,domain,memregion";
+>                  };
+> 
+>                  mem {
+>                          phandle = <0x8000>;
+>                          order = <0x1a>;
+>                          base = <0x00 0xbc000000>;
+>                          compatible = "opensbi,domain,memregion";
+>                  };
+>          };
+> };
+> 
+> This results in OpenSBI output as below, where regions 01-03 are inherited from
+> the root domain and regions 00 and 04 correspond to the user specified ones:
+> 
+> Domain1 Name              : domain
+> Domain1 Boot HART         : 0
+> Domain1 HARTs             : 0,1
+> Domain1 Region00          : 0x0000000010000000-0x0000000010000fff M: (I,R,W,X) S/U: (R,W,X)
+> Domain1 Region01          : 0x0000000002000000-0x000000000200ffff M: (I,R,W) S/U: ()
+> Domain1 Region02          : 0x0000000080080000-0x000000008009ffff M: (R,W) S/U: ()
+> Domain1 Region03          : 0x0000000080000000-0x000000008007ffff M: (R,X) S/U: ()
+> Domain1 Region04          : 0x00000000bc000000-0x00000000bfffffff M: (R,W,X) S/U: (R,W,X)
+> Domain1 Next Address      : 0x00000000bc000000
+> Domain1 Next Arg1         : 0x0000000000000000
+> Domain1 Next Mode         : S-mode
+> Domain1 SysReset          : no
+> Domain1 SysSuspend        : no
 
-If we keep looking at ->container we'll always see NULL, IIUC, because
-either it's removed from its parent MR so it's NULL already, or at some
-point it can start to point to a root mr of an address space, where should
-also be NULL, afaiu.
+I believe we need OpenSBI patches for this output, don't we? If I try this example using stock
+OpenSBI 1.5.1 from QEMU this happens:
 
-> Or we could check whether the mr->container->owner is the same as the
-> mr->owner and allow a non-NULL mr->container in that case.  I don't know
-> this subsystem well enough so I'm just making random stabs here, though.
 
-If with the assumption of this patch applied, then looks like it's pretty
-legal a container MR and the child MRs be finalized in any order when the
-owner device is being destroyed.
+OpenSBI v1.5.1
+    ____                    _____ ____ _____
+   / __ \                  / ____|  _ \_   _|
+  | |  | |_ __   ___ _ __ | (___ | |_) || |
+  | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+  | |__| | |_) |  __/ | | |____) | |_) || |_
+   \____/| .__/ \___|_| |_|_____/|____/_____|
+         | |
+         |_|
 
-IIUC the MR should be destined to be invisible until this point, with or
-without the fact that mr->container is NULL.  It's because anyone who
-references the MR should do memory_region_ref() first, which takes the
-owner's refcount.  Here if MR finalize() is reached I think it means the
-owner refcount must be zero.  So it looks to me the only possible case when
-mr->container is non-NULL is it's used internally like this.  Then it's
-invisible and also safe to be detached even if container != NULL.
+sbi_domain_finalize: platform domains_init() failed (error -3)
+init_coldboot: domain finalize failed (error -3)
+(--- hangs ---)
 
-So.. I wonder whether below would make sense, on top of this existing
-patch.
+It's not a big deal or a blocker to have this merged in QEMU regardless, but it would be nice
+to have this documented somewhere (perhaps a new doc file). This would prevent users from trying
+to use the device without the proper support.
 
-===8<===
-diff --git a/system/memory.c b/system/memory.c
-index 1c00df8305..54a9d9e5f9 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1771,16 +1771,23 @@ static void memory_region_finalize(Object *obj)
- {
-     MemoryRegion *mr = MEMORY_REGION(obj);
- 
--    assert(!mr->container);
--
--    /* We know the region is not visible in any address space (it
--     * does not have a container and cannot be a root either because
--     * it has no references, so we can blindly clear mr->enabled.
--     * memory_region_set_enabled instead could trigger a transaction
--     * and cause an infinite loop.
-+    /*
-+     * We know the region is not visible in any address space, because
-+     * normally MR's finalize() should be invoked by finalize() of the
-+     * owner, which will remove all the properties including the MRs, and
-+     * that can only happen when prior memory_region_ref() of the MR (which
-+     * will ultimately take the owner's refcount) from elsewhere got
-+     * properly released.
-+     *
-+     * So we can blindly clear mr->enabled, unlink both the upper container
-+     * or all subregions.  memory_region_set_enabled() won't work instead,
-+     * as it could trigger a transaction and cause an infinite loop.
-      */
-     mr->enabled = false;
-     memory_region_transaction_begin();
-+    if (mr->container) {
-+        memory_region_del_subregion(mr->container, mr);
-+    }
-     while (!QTAILQ_EMPTY(&mr->subregions)) {
-         MemoryRegion *subregion = QTAILQ_FIRST(&mr->subregions);
-===8<===
+This can be done after this patch is queued though. Thanks,
 
-Thanks,
 
--- 
-Peter Xu
+Daniel
 
+
+> 
+> v3:
+> - Addressed review comments from v2 by adding default values to new properties.
+>    This results in concrete errors at QEMU configuration time if a mandatory
+>    property (as mandated by the OpenSBI spec) is not provided.
+> - Changed command line encoding for the possible-harts field from a CPU bitmask
+>    (e.g. where bit X is set if CPU X is a possible hart) to a range format (e.g.
+>    the possible harts should be CPUs X-Y, where Y >= X). This does constrain the
+>    hart assignment to consecutive ranges of harts, but this constraint is also
+>    present for other QEMU subsystems (such as NUMA).
+> - Added create_fdt_one_device(), which is invoked when scanning the device tree
+>    for a memregion's devices. This function allocates a phandle for a region's
+>    device if one does not yet exist.
+> 
+> v2:
+> - Addressed review comments from v1. Specifically, renamed domain.{c,h} ->
+>    opensbi_domain.{c,h} to increase clarity of what these files do. Also, more
+>    consistently use g_autofree for dynamically allocated variables
+> - Added an "assign" flag to OpenSBIDomainState, which indicates whether to
+>    assign the domain's boot hart to it at domain parsing time.
+> 
+> Gregor Haas (1):
+>    Add support for generating OpenSBI domains in the device tree
+> 
+>   MAINTAINERS                       |   7 +
+>   hw/riscv/Kconfig                  |   4 +
+>   hw/riscv/meson.build              |   1 +
+>   hw/riscv/opensbi_domain.c         | 542 ++++++++++++++++++++++++++++++
+>   hw/riscv/virt.c                   |   3 +
+>   include/hw/riscv/opensbi_domain.h |  50 +++
+>   6 files changed, 607 insertions(+)
+>   create mode 100644 hw/riscv/opensbi_domain.c
+>   create mode 100644 include/hw/riscv/opensbi_domain.h
+> 
 
