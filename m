@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C958C52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 15:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F31C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 15:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh9Ry-0000uv-5A; Thu, 22 Aug 2024 11:10:10 -0400
+	id 1sh9WQ-0005gb-53; Thu, 22 Aug 2024 11:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sh9Rv-0000ao-Hf
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:10:07 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sh9WO-0005bF-Q9
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:14:44 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sh9Rs-0005D6-IY
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:10:06 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-71439adca73so593553b3a.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 08:10:04 -0700 (PDT)
+ id 1sh9WG-0005vJ-2R
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:14:44 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7094641d4e6so430948a34.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 08:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724339403; x=1724944203; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1724339675; x=1724944475; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C+tKt5A2xkc4zSdNubRVhA8MqjwLBWMFSUXPn4nm9SI=;
- b=NUwDqWKaZ96Lyz6Zw1rIPOuy8gjGH6prDaChBI3bI48AVqIVUenvMva/nOX98aJmBt
- obt8SeSpO7EyBKO53a9sEEHvC3MgsjKH4RglTS4+3YN7luj3BQ97QQiBMP2Ae401Ei8k
- bxss2xrZ4HhWtISm/fIHyJjRO7imIyNErlOg/LlMxHj9A2NrAMRkn0qh4Zk8E2/gAG5p
- LoBqVIV1WEHEUZPS57CTD6S4JeLKZhRT8Zsrgz10uN6E8jz85LBVCtkZzOn4+cUe+SAA
- CXrgclJBlC4h0Ikr1sDZV6+WXa7zB1grkb5V0lw5i0nAY8JunW7uUGGlcjJJwqFNkecv
- RyJw==
+ bh=iueKEjXC5Bp4smvKO7YnoKOVUPr0nu7vvInic9j2cnQ=;
+ b=BrHne6I5wAkkX4+vy1jFv1qJf1JRZKT40x7fGYM/7aCMXS/uVajsfaWPJeMvEJ8tDd
+ vji4PSWp7vpx6npVoMowfyo0nGOpJ/lxcomqwMsX4hodX37irh7dMAf2/sTugXo8pWtq
+ 2FT2XyHXLyiMvRebiFtRC5pVLlegiLghlGR1qx5Z/Jke1GzLqWGt4kdfZ3ULg81x38xT
+ WhadZPykjfUGLZap3W+RLjy9J6SM2am1RaZeQRJbNT7pLO5b85aKUcTGGbGaY9xL9eMJ
+ fDzOcL3pH1Bw0LYXgky520lAXGP1SN8QIGm+DZYmrGicIarrmybniRqjtNdVxlbwxEFw
+ omCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724339403; x=1724944203;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1724339675; x=1724944475;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C+tKt5A2xkc4zSdNubRVhA8MqjwLBWMFSUXPn4nm9SI=;
- b=O0dVyOvgfu5M5cKPI7GR6ohM4CCDW8MERT7o7kmf1Jr7OsqCjC9Yqw20UjeJ0Ek2HB
- sy9pPrJTRkNflFhdn+/lBYEslGFmQIujGwgy8mLCT+Jaas5K5i5tUuuCj0eGBilZKoBf
- nA/csgtzQnLszgAaGp8cjuH2MxlMG6VOFhVrA1xdUQEdHli+KdMb2PamnjUNnLhZNe0Q
- mQsEZsizKNNBpv+9W5/3TKvmaJz7GRcNXKmTqEorRwLaFPPhMJNxdFbCMHv1xDBfpH4f
- XKo3z7RcDnJRTUO+yERM6omKFaHlvk2YFc1ayBJGaMGDJsvETwzWTJypho7ClzMM6BAG
- ouIQ==
-X-Gm-Message-State: AOJu0Ywx7irOQZxRzKqTh4k5qj0wZy2jxxqOMcaSC9LLTlXXpezzDprU
- j4zdaDyJQaZ6ZuwoAm3jvZCHcczSmKDKjN4loJPq4s0Q0AFF5H7D/c0JAQ==
-X-Google-Smtp-Source: AGHT+IHG44E7WUwshdv0brLX+eGXs6E91pzQe8j/zIkhF/rOrnFHHqxWmNgFsQKCXCnqPyJ9tq/CmA==
-X-Received: by 2002:a17:90a:ce14:b0:2cf:c9ab:e727 with SMTP id
- 98e67ed59e1d1-2d5e9ec96b5mr6515368a91.31.1724339402624; 
- Thu, 22 Aug 2024 08:10:02 -0700 (PDT)
-Received: from localhost.localdomain ([103.103.35.175])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d613919fd2sm1991567a91.13.2024.08.22.08.09.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 08:10:02 -0700 (PDT)
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
- slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
- philmd@linaro.org
-Subject: [PATCH v5 8/8] docs/nitro-enclave: Documentation for nitro-enclave
- machine type
-Date: Thu, 22 Aug 2024 21:08:49 +0600
-Message-Id: <20240822150849.21759-9-dorjoychy111@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240822150849.21759-1-dorjoychy111@gmail.com>
-References: <20240822150849.21759-1-dorjoychy111@gmail.com>
+ bh=iueKEjXC5Bp4smvKO7YnoKOVUPr0nu7vvInic9j2cnQ=;
+ b=rMLK+ayQp8W/UJ/Vix4X30PJ5p7sbrDyEwmII6V49UEeksynJADEmfKJq71/4vpQ0Z
+ RyzgpBa4yCGAwrBtLwTkJOcMGMFOcsn9r68XPgay0qkKI3Q0AO4T4k5E9hpk9JIB18uC
+ 8CzA2FPk1/6Y+8ytZZjRWTbKb/f1S7TItHQfdwDh/PvTGZumRX0NQJf7jeXStL9OprJ+
+ VqAbpW7SGZh5P6AFZcBsHzOaFhQ3n96NRuFMXdhtx49+K4Ao951w7r6Fwb0U4xvqpDTc
+ ymqqVrKTWwJ8P2qJjf569b0rLvGWa5OVj9K3vETtXF7J2o7ZDHqY0Sp7n3N9ioOCgAgr
+ ZQqA==
+X-Gm-Message-State: AOJu0YySJnD03qhvQVJurR9TIh+bMGpwVid5o2QkT5KKdm+831RBhWp1
+ ZHgAvXqhzkl/IdSh260D5yljz4eLv43R36DsJCCo6/LbhkKo9iIGDzDYPTgPsA2ldz0DID+x4WD
+ zYImBq3HGWBuUxzM6jH1gsaBpS1o=
+X-Google-Smtp-Source: AGHT+IH5L50SxSe7x3u7OhwW1QbX2J0aE6Rxts21MmrANXPat/olhMSJptg+J3Kzn9ZbrVIPyoemMIwP4D6rCALyErM=
+X-Received: by 2002:a05:6808:2218:b0:3dc:39b7:fa with SMTP id
+ 5614622812f47-3de2334ea3fmr1980204b6e.50.1724339674664; Thu, 22 Aug 2024
+ 08:14:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240818114257.21456-1-dorjoychy111@gmail.com>
+ <20240818114257.21456-5-dorjoychy111@gmail.com> <ZsMgcUtCvXqbYigI@redhat.com>
+In-Reply-To: <ZsMgcUtCvXqbYigI@redhat.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Thu, 22 Aug 2024 21:14:28 +0600
+Message-ID: <CAFfO_h6KZ65e3AVE7+giTVhxOWcOnAgLMgp54LsJjjvSnutpew@mail.gmail.com>
+Subject: Re: [PATCH v4 4/6] machine/nitro-enclave: Add built-in Nitro Secure
+ Module device
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de, 
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-ot1-x32f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,104 +94,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
----
- docs/system/i386/nitro-enclave.rst | 85 ++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
- create mode 100644 docs/system/i386/nitro-enclave.rst
+Hi Daniel,
 
-diff --git a/docs/system/i386/nitro-enclave.rst b/docs/system/i386/nitro-enclave.rst
-new file mode 100644
-index 0000000000..966691c396
---- /dev/null
-+++ b/docs/system/i386/nitro-enclave.rst
-@@ -0,0 +1,85 @@
-+'nitro-enclave' virtual machine (``nitro-enclave``)
-+===================================================
-+
-+``nitro-enclave`` is a machine type which emulates an ``AWS nitro enclave``
-+virtual machine. `AWS nitro enclaves`_ is an `Amazon EC2`_ feature that allows
-+creating isolated execution environments, called enclaves, from Amazon EC2
-+instances which are used for processing highly sensitive data. Enclaves have
-+no persistent storage and no external networking. The enclave VMs are based
-+on Firecracker microvm with a vhost-vsock device for communication with the
-+parent EC2 instance that spawned it and a Nitro Secure Module (NSM) device
-+for cryptographic attestation. The parent instance VM always has CID 3 while
-+the enclave VM gets a dynamic CID. Enclaves use an EIF (`Enclave Image Format`_)
-+file which contains the necessary kernel, cmdline and ramdisk(s) to boot.
-+
-+In QEMU, ``nitro-enclave`` is a machine type based on ``microvm`` similar to how
-+``AWS nitro enclaves`` are based on ``Firecracker`` microvm. This is useful for
-+local testing of EIF files using QEMU instead of running real AWS Nitro Enclaves
-+which can be difficult for debugging due to its roots in security. The vsock
-+device emulation is done using vhost-user-vsock which means another process that
-+can do the userspace emulation, like `vhost-device-vsock`_ from rust-vmm crate,
-+must be run alongside nitro-enclave for the vsock communication to work.
-+
-+``libcbor`` and ``gnutls`` are required dependencies for nitro-enclave machine
-+support to be added when building QEMU from source.
-+
-+.. _AWS nitro enlaves: https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-+.. _Amazon EC2: https://aws.amazon.com/ec2/
-+.. _Enclave Image Format: https://github.com/aws/aws-nitro-enclaves-image-format
-+.. _vhost-device-vsock: https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
-+
-+Using the nitro-enclave machine type
-+------------------------------
-+
-+Machine-specific options
-+~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+It supports the following machine-specific options:
-+
-+- nitro-enclave.vsock=string (required) (Id of the chardev from '-chardev' option that vhost-user-vsock device will use)
-+- nitro-enclave.id=string (optional) (Set enclave identifier)
-+- nitro-enclave.parent-role=string (optional) (Set parent instance IAM role ARN)
-+- nitro-enclave.parent-id=string (optional) (Set parent instance identifier)
-+
-+
-+Running a nitro-enclave VM
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+First, run vhost-device-vsock (or a similar tool that supports vhost-user-vsock)
-+
-+  $ vhost-device-vsock \
-+     --vm guest-cid=4,uds-path=/tmp/vm4.vsock,socket=/tmp/vhost4.socket \
-+     --vm guest-cid=3,uds-path=/tmp/vm3.vsock,socket=/tmp/vhost3.socket
-+
-+Then, run the parent VM that has the necessary vsock communication support.
-+
-+  $ qemu-system-x86_64 -machine q35,memory-backend=mem0 -enable-kvm -m 8G \
-+     -nic user,model=virtio -drive file=test_vm.qcow2,media=disk,if=virtio \
-+     --display sdl -object memory-backend-memfd,id=mem0,size=8G \
-+     -chardev socket,id=char0,reconnect=0,path=/tmp/vhost3.socket \
-+     -device vhost-user-vsock-pci,chardev=char0
-+
-+Inside this VM the necessary applications should be run so that the nitro-enclave
-+VM applications' vsock communication works. For example, the nitro-enclave VM's
-+init process connects to CID 3 and sends a single byte hello heartbeat (0xB7) to
-+let the parent VM know that it booted expecting a heartbeat (0xB7) response.
-+
-+Now run the nitro-enclave VM using the following command where ``hello.eif`` is
-+an EIF file you would use to spawn a real AWS nitro enclave virtual machine:
-+
-+  $ qemu-system-x86_64 -M nitro-enclave,vsock=c,id=hello-world \
-+     -kernel hello-world.eif -nographic -m 4G --enable-kvm -cpu host \
-+     -chardev socket,id=c,path=/tmp/vhost4.socket
-+
-+In this example, the nitro-enclave VM has CID 4.
-+
-+
-+Limitations
-+-----------
-+
-+AWS nitro enclave emulation support in QEMU requires users to run vhost-device-vsock
-+or similar tool for vhost-user-vsock support and another VM with CID 3 with necessary
-+vsock communication support. Requirement of running another VM and necessary applications
-+inside it can be lifted if some proxying support is added to vhost-device-vsock to
-+forward all packets to the host machine, in which case, users can run the necessary
-+applications in the host machine instead of the parent VM with CID 3.
--- 
-2.39.2
+On Mon, Aug 19, 2024 at 4:37=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Sun, Aug 18, 2024 at 05:42:55PM +0600, Dorjoy Chowdhury wrote:
+> > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device which
+> > is used for stripped down TPM functionality like attestation. This comm=
+it
+> > adds the built-in NSM device in the nitro-enclave machine type.
+> >
+> > In Nitro Enclaves, all the PCRs start in a known zero state and the fir=
+st
+> > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and PCR=
+8
+> > contain the SHA384 hashes related to the EIF file used to boot the
+> > VM for validation.
+> >
+> > Some optional nitro-enclave machine options have been added:
+> >     - 'id': Enclave identifier, reflected in the module-id of the NSM
+> > device. If not provided, a default id will be set.
+> >     - 'parent-role': Parent instance IAM role ARN, reflected in PCR3
+> > of the NSM device.
+> >     - 'parent-id': Parent instance identifier, reflected in PCR4 of the
+> > NSM device.
+> >
+> > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > ---
+> >  crypto/meson.build              |   2 +-
+> >  crypto/x509-utils.c             |  73 +++++++++++
+> >  include/crypto/x509-utils.h     |  22 ++++
+>
+> Preferrably add these 3 in a standlone commit, since its is good practice
+> to separate commits adding infra, from commits adding usage of infra.
+>
+> >  hw/core/eif.c                   | 225 +++++++++++++++++++++++++++++---
+> >  hw/core/eif.h                   |   5 +-
+> >  hw/core/meson.build             |   4 +-
+> >  hw/i386/Kconfig                 |   1 +
+> >  hw/i386/nitro_enclave.c         | 141 +++++++++++++++++++-
+> >  include/hw/i386/nitro_enclave.h |  26 ++++
+> >  9 files changed, 479 insertions(+), 20 deletions(-)
+> >  create mode 100644 crypto/x509-utils.c
+> >  create mode 100644 include/crypto/x509-utils.h
+> >
 
+[...]
+
+> > +
+> > +    /* First 16 PCRs are locked from boot and reserved for nitro encla=
+ve */
+> > +    for (int i =3D 0; i < 16; ++i) {
+> > +        ne_state->vnsm->lock_pcr(ne_state->vnsm, i);
+> > +    }
+>
+> Worth  NITRO_PCR_MAX constant ?
+>
+
+I kept the 16 for now.
+
+> >  static void nitro_enclave_machine_initfn(Object *obj)
+> >  {
+> >      MicrovmMachineState *mms =3D MICROVM_MACHINE(obj);
+> >      X86MachineState *x86ms =3D X86_MACHINE(obj);
+> > +    NitroEnclaveMachineState *nems =3D NITRO_ENCLAVE_MACHINE(obj);
+> > +
+> > +    nems->id =3D g_strdup("i-234-enc5678");
+>
+> Is this some magic string that the Nitro spec requires ? If so, probably
+> worth a #define constant for it with a comment about rationale.
+>
+
+It's just some default we provide, not related to Nitro spec. So kept
+it as is for now.
+
+Regards,
+Dorjoy
 
