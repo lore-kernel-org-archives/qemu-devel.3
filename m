@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B9BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 08:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCC7C5320E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 08:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh38P-0005kZ-2X; Thu, 22 Aug 2024 04:25:33 -0400
+	id 1sh38I-0005Ie-Nv; Thu, 22 Aug 2024 04:25:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sh38M-0005Wb-0e
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 04:25:30 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sh38D-00056J-Fc
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 04:25:21 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sh387-0005y6-G5
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 04:25:29 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-201df0b2df4so4082685ad.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 01:25:15 -0700 (PDT)
+ id 1sh384-0005w8-39
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 04:25:21 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-202508cb8ebso3724525ad.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 01:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724315114; x=1724919914;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724315111; x=1724919911;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nxyYMlb3x6bp85BnzPPZWZ8Bp+UukqIv0ly48+tdD3U=;
- b=ovAiVfKNEPS8ZQMaw2aHlHMt0BPjoHkvcNm4R89pizkNkhPz2lCjlecCcGtWnBMNIN
- Yb7EB7/w53MY6k5jqN9nmY+C3k3UwLtlDyG3jNw8TPm64ZMl2ZuqQxbDThW4S4NLjzSd
- fBFBoCz6sdPlO334Dk3rJNOKn5a+DxZcoysAdpYoI2mVoOId99GE8XuZcF78S/G9zi7c
- TuPLRkL8TFc0mFWRYi1kExHheFHxqpPBY2Gj1fXztLkOITFgierL3QPyZ1SVzNbyjD2I
- R3OjxVErtMxi+qUW6LetC3rFUR6QlPbU2Gab73yxM1c5yfpwgSTulgg5LyY6Bv660I3I
- +Ymg==
+ bh=5JtrgC4+fHlAa4XAwLJHyCFy+eiQX4gwNZ2q8o9OZBM=;
+ b=2oDUT2KqrAatJx/IgYfVZZSL8HR1+0Vi3bXouTawZC3S2y9x7+yOM+//WqK741bc+J
+ oGs+em/p3ktsBArHoG9JOHA4KuMf+bFLVFtpJY/ukJ1RpMyL3ATSLkLpYCzFvnRsJP96
+ QPrxaYBnJXPWuWSbOGC2UiVdbRHxZu93DAh9kcQ8Xl7PXmsQNOSt8rWeYumd5ameNFbi
+ duLuy7vjfSEoX8O4LGfmA85o7gRgu8BA/UwbZyLW8iyUB5XOJLyD6hAFDmDxTYu/MX1V
+ txsqQZtmvdQ4bkNi4QeDkrq+lcFMKzdgE4qg5mN74BPPDk1stzKxbr21ghWfByIDEjXy
+ /p0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724315114; x=1724919914;
+ d=1e100.net; s=20230601; t=1724315111; x=1724919911;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nxyYMlb3x6bp85BnzPPZWZ8Bp+UukqIv0ly48+tdD3U=;
- b=ZlwPskKzHxsb09HfYicIfezYOSa+7JLL6O3RbH5xNGsBylNLtnvZrILgNr1judoryD
- 0aqoZvLb7v2xpnUKPpPeGp3l+4g8/Fq7YOfz/ITZpGdFH4PV9P896X9ezdkFWxJSp31H
- 6IYQEk5ahX7JStelKDUHPy0td8YhQ7qIEOC4Tm6m8MrqDcc5lxgCEzpd9HbnL9OBtw74
- qiWr0XgZRzXo6uXXFM4c1T4GaHv17xfuVvjNKqpnlKZH4wTkmJomIcXFoOPFy2X6znti
- uDpGJDIvAwI34KUg4ArbvaPep6fSk0LlxVZyCOa2c9wfpmETEjIE3BkptHpErGDeuXAE
- JFSQ==
+ bh=5JtrgC4+fHlAa4XAwLJHyCFy+eiQX4gwNZ2q8o9OZBM=;
+ b=RWnirOVEq/2UvnCrUqj7VNsF0k0skal59JO6Rlspi/eCbjewLFr6XBdmKK4+qk7eXG
+ dEzucDnaToQUwMrxzX/c158DSGG9upT07TDLAE7fil7lk8dI5omHwkA2V22RUsSz//70
+ 3hkNMTeammxUSR7daVycB/Nb4tE6O1kPgJoQ3giKXOyaWFAgEMaLEFWSMq2GpgCvbKOH
+ 9+/1qxJi+fIPwBZ7hfAM1STugPrEMZQFalKzXhjdc6jGtm4Tg6yFGhzqYnv0DEdiWhKe
+ s60/ciqti4ya4GCDazDHE/w+NUHKUCfbfypET/4bpi9xeUmPBvifBGkCD0K14JvWfJJG
+ 06Lg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/AYfcfPcst1upkyzpDy61P00oKB8Yby3MOWGJ/gOtYup5kvUywh8u0+9H7TGu89hXkquuJMxRu2aL@nongnu.org
-X-Gm-Message-State: AOJu0YzxpsKFgg+Mrz9USr1rrrwAWR7s/CUI3x8fyWWlsIAh5+1OBBJt
- fAyxw4424e4Bn2rYFH1TFHRAG/zoDMk8BlvMnMhjZZwPttIzUxpVRiXFiAwSqr0=
-X-Google-Smtp-Source: AGHT+IG9WCuVdCthVkqycqEJKGYOFdUwUf5cvTmoDJWR4fl4W2WAX8ZnqYGDDw9HyYnhyCV+Cw98Yw==
-X-Received: by 2002:a17:902:fa46:b0:1fb:4fa4:d24 with SMTP id
- d9443c01a7336-203681d1950mr42431995ad.50.1724315114037; 
- Thu, 22 Aug 2024 01:25:14 -0700 (PDT)
+ AJvYcCVMAne4XByA/4Ev2KbejyVzLI6U5GEbhp3KsboF5sbjLaDtsY1nVwCHumkl+NQeb9CVaDnJ7dTWJgJ6@nongnu.org
+X-Gm-Message-State: AOJu0Yxye2IcJ13hwrKCdBGzv4YYYQPViBuYO1sJ5JFL5mx8HT9PFVg8
+ ESN5BMD5TF7Z2JxcNiot7KHXUeIOIY95OpUzqFwbQrpBCxxCkAMv1eLyLouvW+o=
+X-Google-Smtp-Source: AGHT+IHyoU+iJvqtm5V8LHN+R3A+o+vnI9kZeiNCzOrVk/44HciXlSWDGfCi5IHEwvfmM3ZY5ytU6w==
+X-Received: by 2002:a17:903:1d1:b0:201:cd78:c445 with SMTP id
+ d9443c01a7336-203681a086emr52417585ad.53.1724315110469; 
+ Thu, 22 Aug 2024 01:25:10 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20385589225sm7641295ad.115.2024.08.22.01.25.13
+ d9443c01a7336-20385589225sm7641295ad.115.2024.08.22.01.25.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 01:25:13 -0700 (PDT)
+ Thu, 22 Aug 2024 01:25:10 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -69,22 +69,23 @@ Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
  zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
  kito.cheng@sifive.com, Deepak Gupta <debug@rivosinc.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v7 06/17] target/riscv: zicfilp `lpad` impl and branch tracking
-Date: Thu, 22 Aug 2024 01:24:52 -0700
-Message-ID: <20240822082504.3979610-7-debug@rivosinc.com>
+Subject: [PATCH v7 03/17] target/riscv: save and restore elp state on priv
+ transitions
+Date: Thu, 22 Aug 2024 01:24:49 -0700
+Message-ID: <20240822082504.3979610-4-debug@rivosinc.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240822082504.3979610-1-debug@rivosinc.com>
 References: <20240822082504.3979610-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=debug@rivosinc.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,123 +101,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implements setting lp expected when `jalr` is encountered and implements
-`lpad` instruction of zicfilp. `lpad` instruction is taken out of
-auipc x0, <imm_20>. This is an existing HINTNOP space. If `lpad` is
-target of an indirect branch, cpu checks for 20 bit value in x7 upper
-with 20 bit value embedded in `lpad`. If they don't match, cpu raises a
-sw check exception with tval = 2.
+elp state is recorded in *status on trap entry (less privilege to higher
+privilege) and restored in elp from *status on trap exit (higher to less
+privilege).
+
+Additionally this patch introduces a forward cfi helper function to
+determine if current privilege has forward cfi is enabled or not based on
+*envcfg (for U, VU, S, VU, HS) or mseccfg csr (for M). For qemu-user, a
+new field `ufcfien` is introduced which is by default set to false and
+helper function returns value deposited in `ufcfien` for qemu-user.
 
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
 Co-developed-by: Jim Shu <jim.shu@sifive.com>
 Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu_user.h                 |  1 +
- target/riscv/insn32.decode              |  5 ++-
- target/riscv/insn_trans/trans_rvi.c.inc | 55 +++++++++++++++++++++++++
- 3 files changed, 60 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c        |  5 ++++
+ target/riscv/cpu.h        |  2 ++
+ target/riscv/cpu_helper.c | 55 +++++++++++++++++++++++++++++++++++++++
+ target/riscv/op_helper.c  | 18 +++++++++++++
+ 4 files changed, 80 insertions(+)
 
-diff --git a/target/riscv/cpu_user.h b/target/riscv/cpu_user.h
-index 02afad608b..e6927ff847 100644
---- a/target/riscv/cpu_user.h
-+++ b/target/riscv/cpu_user.h
-@@ -15,5 +15,6 @@
- #define xA6 16
- #define xA7 17  /* syscall number for RVI ABI */
- #define xT0 5   /* syscall number for RVE ABI */
-+#define xT2 7
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 8e1f05e5b1..083d405516 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1022,6 +1022,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     env->load_res = -1;
+     set_default_nan_mode(1, &env->fp_status);
  
++#ifdef CONFIG_USER_ONLY
++    /* qemu-user for riscv, fcfi is off by default */
++    env->ufcfien = false;
++#endif
++
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->cfg.debug) {
+         riscv_trigger_reset_hold(env);
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index f966c36a31..7be0fa30f7 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -226,6 +226,7 @@ struct CPUArchState {
+     bool      elp;
+ #ifdef CONFIG_USER_ONLY
+     uint32_t elf_flags;
++    bool ufcfien;
  #endif
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index c45b8fa1d8..27108b992b 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -123,7 +123,10 @@ sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
  
- # *** RV32I Base Instruction Set ***
- lui      ....................       ..... 0110111 @u
--auipc    ....................       ..... 0010111 @u
-+{
-+  lpad   label:20                   00000 0010111
-+  auipc  ....................       ..... 0010111 @u
-+}
- jal      ....................       ..... 1101111 @j
- jalr     ............     ..... 000 ..... 1100111 @i
- beq      ....... .....    ..... 000 ..... 1100011 @b
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 98e3806d5e..b427f3a939 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -36,6 +36,49 @@ static bool trans_lui(DisasContext *ctx, arg_lui *a)
-     return true;
+ #ifndef CONFIG_USER_ONLY
+@@ -530,6 +531,7 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
+ bool riscv_cpu_vector_enabled(CPURISCVState *env);
+ void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
++bool cpu_get_fcfien(CPURISCVState *env);
+ G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+                                                MMUAccessType access_type,
+                                                int mmu_idx, uintptr_t retaddr);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 6709622dd3..12484ca7d2 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -33,6 +33,7 @@
+ #include "cpu_bits.h"
+ #include "debug.h"
+ #include "tcg/oversized-guest.h"
++#include "pmp.h"
+ 
+ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+ {
+@@ -63,6 +64,34 @@ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+ #endif
  }
  
-+static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
++bool cpu_get_fcfien(CPURISCVState *env)
 +{
-+    /*
-+     * fcfi_lp_expected can set only if fcfi was eanbled.
-+     * translate further only if fcfi_lp_expected set.
-+     * lpad comes from NOP space anyways, so return true if
-+     * fcfi_lp_expected is false.
-+     */
-+    if (!ctx->fcfi_lp_expected) {
-+        return true;
++    /* no cfi extension, return false */
++    if (!env_archcpu(env)->cfg.ext_zicfilp) {
++        return false;
 +    }
-+
-+    ctx->fcfi_lp_expected = false;
-+    if ((ctx->base.pc_next) & 0x3) {
-+        /*
-+         * misaligned, according to spec we should raise sw check exception
-+         */
-+        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        gen_helper_raise_exception(tcg_env,
-+                      tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-+        return true;
++#ifdef CONFIG_USER_ONLY
++    return env->ufcfien;
++#else
++    switch (env->priv) {
++    case PRV_U:
++        if (riscv_has_ext(env, RVS)) {
++            return env->senvcfg & MENVCFG_LPE;
++        }
++        return env->menvcfg & MENVCFG_LPE;
++    case PRV_S:
++        if (env->virt_enabled) {
++            return env->henvcfg & HENVCFG_LPE;
++        }
++        return env->menvcfg & MENVCFG_LPE;
++    case PRV_M:
++        return env->mseccfg & MSECCFG_MLPE;
++    default:
++        g_assert_not_reached();
 +    }
-+
-+    /* per spec, label check performed only when embedded label non-zero */
-+    if (a->label != 0) {
-+        TCGLabel *skip = gen_new_label();
-+        TCGv tmp = tcg_temp_new();
-+        tcg_gen_extract_tl(tmp, get_gpr(ctx, xT2, EXT_NONE), 12, 20);
-+        tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->label, skip);
-+        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        gen_helper_raise_exception(tcg_env,
-+                      tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-+        gen_set_label(skip);
-+    }
-+
-+    tcg_gen_st8_tl(tcg_constant_tl(0), tcg_env,
-+                  offsetof(CPURISCVState, elp));
-+
-+    return true;
++#endif
 +}
 +
- static bool trans_auipc(DisasContext *ctx, arg_auipc *a)
+ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+                           uint64_t *cs_base, uint32_t *pflags)
  {
-     TCGv target_pc = dest_gpr(ctx, a->rd);
-@@ -75,6 +118,18 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a)
-     gen_set_gpr(ctx, a->rd, succ_pc);
+@@ -546,6 +575,15 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+     }
+     bool current_virt = env->virt_enabled;
  
-     tcg_gen_mov_tl(cpu_pc, target_pc);
-+    if (ctx->fcfi_enabled) {
-+        /*
-+         * return from functions (i.e. rs1 == xRA || rs1 == xT0) are not
-+         * tracked. zicfilp introduces sw guarded branch as well. sw guarded
-+         * branch are not tracked. rs1 == xT2 is a sw guarded branch.
-+         */
-+        if (a->rs1 != xRA && a->rs1 != xT0 && a->rs1 != xT2) {
-+            tcg_gen_st8_tl(tcg_constant_tl(1),
-+                          tcg_env, offsetof(CPURISCVState, elp));
-+        }
++    /*
++     * If zicfilp extension available and henvcfg.LPE = 1,
++     * then apply SPELP mask on mstatus
++     */
++    if (env_archcpu(env)->cfg.ext_zicfilp &&
++        get_field(env->henvcfg, HENVCFG_LPE)) {
++        mstatus_mask |= SSTATUS_SPELP;
 +    }
 +
-     lookup_and_goto_ptr(ctx);
+     g_assert(riscv_has_ext(env, RVH));
  
-     if (misaligned) {
+     if (current_virt) {
+@@ -1754,6 +1792,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     if (env->priv <= PRV_S && cause < 64 &&
+         (((deleg >> cause) & 1) || s_injected || vs_injected)) {
+         /* handle the trap in S-mode */
++        /* save elp status */
++        if (cpu_get_fcfien(env)) {
++            env->mstatus = set_field(env->mstatus, MSTATUS_SPELP, env->elp);
++        }
++
+         if (riscv_has_ext(env, RVH)) {
+             uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
+ 
+@@ -1802,6 +1845,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         riscv_cpu_set_mode(env, PRV_S);
+     } else {
+         /* handle the trap in M-mode */
++        /* save elp status */
++        if (cpu_get_fcfien(env)) {
++            env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, env->elp);
++        }
++
+         if (riscv_has_ext(env, RVH)) {
+             if (env->virt_enabled) {
+                 riscv_cpu_swap_hypervisor_regs(env);
+@@ -1833,6 +1881,13 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         riscv_cpu_set_mode(env, PRV_M);
+     }
+ 
++    /*
++     * Interrupt/exception/trap delivery is asynchronous event and as per
++     * zicfilp spec CPU should clear up the ELP state. No harm in clearing
++     * unconditionally.
++     */
++    env->elp = false;
++
+     /*
+      * NOTE: it is not necessary to yield load reservations here. It is only
+      * necessary for an SC from "another hart" to cause a load reservation
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 2baf5bc3ca..5848aaf437 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -313,6 +313,15 @@ target_ulong helper_sret(CPURISCVState *env)
+ 
+     riscv_cpu_set_mode(env, prev_priv);
+ 
++    /*
++     * If forward cfi enabled for new priv, restore elp status
++     * and clear spelp in mstatus
++     */
++    if (cpu_get_fcfien(env)) {
++        env->elp = get_field(env->mstatus, MSTATUS_SPELP);
++    }
++    env->mstatus = set_field(env->mstatus, MSTATUS_SPELP, 0);
++
+     return retpc;
+ }
+ 
+@@ -357,6 +366,15 @@ target_ulong helper_mret(CPURISCVState *env)
+         riscv_cpu_set_virt_enabled(env, prev_virt);
+     }
+ 
++    /*
++     * If forward cfi enabled for new priv, restore elp status
++     * and clear mpelp in mstatus
++     */
++    if (cpu_get_fcfien(env)) {
++        env->elp = get_field(env->mstatus, MSTATUS_MPELP);
++    }
++    env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, 0);
++
+     return retpc;
+ }
+ 
 -- 
 2.44.0
 
