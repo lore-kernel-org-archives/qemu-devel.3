@@ -4,91 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53CD2C531DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 06:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A08C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 06:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh10D-00022L-PI; Thu, 22 Aug 2024 02:08:57 -0400
+	id 1sh1gr-0005sq-8t; Thu, 22 Aug 2024 02:53:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sh10C-00021o-3V
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 02:08:56 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sh10A-0000JG-LV
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 02:08:55 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-202146e93f6so4190015ad.3
- for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 23:08:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724306933; x=1724911733; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=c8iPMI1tkY3tcOeUctDuuwfMnlNMD4znxR6JX9DLeMY=;
- b=Di0e7t6PajNuHYwxbFrVL2GQV8EKyY3xdQQuW5udcjGqhCTe8MG7hWm5Dswh6jGNLb
- AGAuLFivyOxpFPVFiQ4E/wEz7uV2sIcVAEg51fL8Zr2s/nErX4W8XKXD9UdDj2sGg7yR
- qI1iusYCo5aqhifukmeDo4xD1084x/VGVY5Hvx6YuePJyZq2oc/LkuC4fdBafdp3EGco
- eZxbQ502+sxdWy7bM2+WFFzP3uXU7MuspRKzV9yQNjvDTsM2Y/7ehnh8lrbtbvu0S1G7
- tC71gx48P4PdrTPTlV+2UpkSk88q/Gzb50OE3szoBlpNaiNoI7Lbd4biC8EaRwakePHq
- gpvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724306933; x=1724911733;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c8iPMI1tkY3tcOeUctDuuwfMnlNMD4znxR6JX9DLeMY=;
- b=Qx7/+TX7skQ3a7PB8pGmVD1/eGR1Vtf2cFsWg64FM8QJUpMy/o30KwvA1g7+rqUIcv
- K854Y20Aw/ZQrLqph4y2GO4wbSu102aaw/Lj35S9S5nBza6we3GquXfTf8tWHfIyHfC5
- DH0YjrpmvkRVRxDgsG7bXTSixpTtLYR3lBvjsN2PPBR1lBgY/TclWlVv/LPHBf1eD2v4
- pGQtffDNudPLKLwqeAW6p47qTIsC+yYtK9Ku5nhMXorj6/PgVDxHxlyp+5Gh2Iw0bKU8
- XtfRB1gaZ/2uPnr87m9eh+Dhun5kAAvOd3kDOwLgnaIdHcp8z7omSSWuPciza5GeONnh
- GDmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXEMCFBQzK6Vl8h33qhUZfDgwvH/ez1ejpZnTE9/P8qL0X3ZeDdn9QkU6Pog0Z00xHt7mK5Lf9SHMl@nongnu.org
-X-Gm-Message-State: AOJu0YwdD79f5zUGQsjXcvXc+xLJdKQIV7q9KBZ3BIvbq3w+ZrVuR6oN
- KkK8mBkG3F0JfEhjfotmmG3gFqR/klZ6E+FoiIYZmHzkkDik/Uyv
-X-Google-Smtp-Source: AGHT+IEbzUgS+FDKTWKqUKeN7BWxWzqJey3UtJ86WOjjt2x2j0EJ8FLcZ2ArwxfcKIyYfwQe+XpfsA==
-X-Received: by 2002:a17:902:c40e:b0:202:28b1:9f34 with SMTP id
- d9443c01a7336-203682026c0mr60607015ad.56.1724306932975; 
- Wed, 21 Aug 2024 23:08:52 -0700 (PDT)
-Received: from [192.168.0.22] ([210.223.46.112])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2038558081bsm5356565ad.104.2024.08.21.23.08.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Aug 2024 23:08:51 -0700 (PDT)
-Message-ID: <b4dc0999-3826-4b3c-8864-4904dafff2ec@gmail.com>
-Date: Thu, 22 Aug 2024 15:08:48 +0900
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sh1go-0005sM-4m
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 02:52:58 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sh1gk-00067P-Mr
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 02:52:57 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8AxHutA4MZmMO4bAA--.60311S3;
+ Thu, 22 Aug 2024 14:52:48 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMDxnWc+4MZmapMdAA--.36056S2;
+ Thu, 22 Aug 2024 14:52:46 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] target/loongarch: Support QMP dump-guest-memory
+Date: Thu, 22 Aug 2024 14:52:45 +0800
+Message-Id: <20240822065245.2286214-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/ufs: minor bug fixes related to ufs-test
-Content-Language: ko
-To: yc01.jeong@samsung.com, Jeuk Kim <jeuk20.kim@samsung.com>
-Cc: "thuth@redhat.com" <thuth@redhat.com>,
- "lvivier@redhat.com" <lvivier@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jeongyuchan0629@gmail.com" <jeongyuchan0629@gmail.com>
-References: <c92844fd-8c4a-4ab6-b778-f8d8e86741eb@gmail.com>
- <20240821023025epcms1p4de36db95f4d3a66727f128ef6be860e4@epcms1p4>
- <20240821023245epcms1p31ada9c24041d9b34f7e9938abe93189b@epcms1p3>
- <CGME20240821022726epcms1p127d8cd71ca3e1354592de8a4a5c97a10@epcms1p6>
- <20240822060010epcms1p6b10addc94bc16411c3a32d1f404c5978@epcms1p6>
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-In-Reply-To: <20240822060010epcms1p6b10addc94bc16411c3a32d1f404c5978@epcms1p6>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-CM-TRANSID: qMiowMDxnWc+4MZmapMdAA--.36056S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,40 +63,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add the support needed for creating prstatus elf notes. This allows
+us to use QMP dump-guest-memory.
 
-On 8/22/2024 3:00 PM, Yoochan Jeong wrote:
-> On 8/22/2024, Jeuk Kim wrote:
->> On 8/21/2024 11:32 AM, 정유찬 wrote:
->>>    static void ufs_send_query(QUfs *ufs, uint8_t slot, uint8_t query_function,
->>>                                uint8_t query_opcode, uint8_t idn, uint8_t index,
->>> +                          uint8_t selector, uint32_t attr_value,
->> We use ufs_send_query() not only for attributes, but also descriptors
->> and flags.
->>
->> Please rename `attr_value` to `value`.
->>
->>
->   
-> I think this parameter name is okay, because this "value" in UPIU is
-> only used when writing attributes. Writing flags do not require an
-> actual value, and descriptor data will be stored in data segmentation
-> area.
+Now ELF notes of LoongArch only supports general elf notes, LSX and
+LASX is not supported, since it is mainly used to dump guest memory.
 
-Okay. That's reasonable.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/arch_dump.c | 167 +++++++++++++++++++++++++++++++++++
+ target/loongarch/cpu.c       |   1 +
+ target/loongarch/internals.h |   2 +
+ target/loongarch/meson.build |   1 +
+ 4 files changed, 171 insertions(+)
+ create mode 100644 target/loongarch/arch_dump.c
 
-
->   
->>>                            
->> We might need to check condition here that `query_opcode !=
->> UFS_UPIU_QUERY_OPCODE_WRITE_DESC`, since
->>
->> it is not implemented yet.
->>
-> in ufs_exec_query_write function in ufs.c, it already checks
-> if it is trying to write a descriptor. Is there any particular
-> reason that we should check it here in advance?
-
-You're right. We don't need to check it here.
-
+diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
+new file mode 100644
+index 0000000000..4986db970e
+--- /dev/null
++++ b/target/loongarch/arch_dump.c
+@@ -0,0 +1,167 @@
++/*
++ * Support for writing ELF notes for LoongArch architectures
++ *
++ * Copyright (c) 2023 Loongarch Technology
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "elf.h"
++#include "sysemu/dump.h"
++#include "internals.h"
++
++/* struct user_pt_regs from arch/loongarch/include/uapi/asm/ptrace.h */
++struct loongarch_user_regs {
++    uint64_t gpr[32];
++    uint64_t pad1[1];
++    /* Special CSR registers. */
++    uint64_t csr_era;
++    uint64_t csr_badv;
++    uint64_t pad2[10];
++} QEMU_PACKED;
++
++QEMU_BUILD_BUG_ON(sizeof(struct loongarch_user_regs) != 360);
++
++/* struct elf_prstatus from include/uapi/linux/elfcore.h */
++struct loongarch_elf_prstatus {
++    char pad1[32]; /* 32 == offsetof(struct elf_prstatus, pr_pid) */
++    uint32_t pr_pid;
++    /*
++     * 76 == offsetof(struct elf_prstatus, pr_reg) -
++     * offsetof(struct elf_prstatus, pr_ppid)
++     */
++    char pad2[76];
++    struct loongarch_user_regs pr_reg;
++    uint32_t pr_fpvalid;
++    char pad3[4];
++} QEMU_PACKED;
++
++QEMU_BUILD_BUG_ON(sizeof(struct loongarch_elf_prstatus) != 480);
++
++/* struct user_fp_state from arch/loongarch/include/uapi/asm/ptrace.h */
++struct loongarch_fpu_struct {
++    uint64_t fpr[32];
++    uint64_t fcc;
++    unsigned int fcsr;
++} QEMU_PACKED;
++
++QEMU_BUILD_BUG_ON(sizeof(struct loongarch_fpu_struct) != 268);
++
++struct loongarch_note {
++    Elf64_Nhdr hdr;
++    char name[8]; /* align_up(sizeof("CORE"), 4) */
++    union {
++        struct loongarch_elf_prstatus prstatus;
++        struct loongarch_fpu_struct fpu;
++    };
++} QEMU_PACKED;
++
++#define LOONGARCH_NOTE_HEADER_SIZE offsetof(struct loongarch_note, prstatus)
++#define LOONGARCH_PRSTATUS_NOTE_SIZE                                          \
++    (LOONGARCH_NOTE_HEADER_SIZE + sizeof(struct loongarch_elf_prstatus))
++#define LOONGARCH_PRFPREG_NOTE_SIZE                                           \
++    (LOONGARCH_NOTE_HEADER_SIZE + sizeof(struct loongarch_fpu_struct))
++
++static void loongarch_note_init(struct loongarch_note *note, DumpState *s,
++                                const char *name, Elf64_Word namesz,
++                                Elf64_Word type, Elf64_Word descsz)
++{
++    memset(note, 0, sizeof(*note));
++
++    note->hdr.n_namesz = cpu_to_dump32(s, namesz);
++    note->hdr.n_descsz = cpu_to_dump32(s, descsz);
++    note->hdr.n_type = cpu_to_dump32(s, type);
++
++    memcpy(note->name, name, namesz);
++}
++
++static int loongarch_write_elf64_fprpreg(WriteCoreDumpFunction f,
++                                         CPULoongArchState *env, int cpuid,
++                                         DumpState *s)
++{
++    struct loongarch_note note;
++    int ret, i;
++
++    loongarch_note_init(&note, s, "CORE", 5, NT_PRFPREG, sizeof(note.fpu));
++    note.fpu.fcsr = cpu_to_dump64(s, env->fcsr0);
++
++    for (i = 0; i < 8; i++) {
++        note.fpu.fcc |= env->cf[i] << (8 * i);
++    }
++    note.fpu.fcc = cpu_to_dump64(s, note.fpu.fcc);
++
++    for (i = 0; i < 32; ++i) {
++        note.fpu.fpr[i] = cpu_to_dump64(s, env->fpr[i].vreg.UD[0]);
++    }
++
++    ret = f(&note, LOONGARCH_PRFPREG_NOTE_SIZE, s);
++    if (ret < 0) {
++        return -1;
++    }
++
++    return 0;
++}
++
++int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
++                                   int cpuid, DumpState *s)
++{
++    struct loongarch_note note;
++    CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
++    int ret, i;
++
++    loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
++                        sizeof(note.prstatus));
++    note.prstatus.pr_pid = cpu_to_dump32(s, cpuid);
++    note.prstatus.pr_fpvalid = cpu_to_dump32(s, 1);
++
++    for (i = 0; i < 32; ++i) {
++        note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
++    }
++    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, env->CSR_ERA);
++    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, env->CSR_BADV);
++    ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
++    if (ret < 0) {
++        return -1;
++    }
++
++    ret = loongarch_write_elf64_fprpreg(f, env, cpuid, s);
++    if (ret < 0) {
++        return -1;
++    }
++
++    return ret;
++}
++
++int cpu_get_dump_info(ArchDumpInfo *info,
++                      const GuestPhysBlockList *guest_phys_blocks)
++{
++    info->d_machine = EM_LOONGARCH;
++    info->d_endian = ELFDATA2LSB;
++    info->d_class = ELFCLASS64;
++
++    return 0;
++}
++
++ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
++{
++    size_t note_size = 0;
++
++    if (class == ELFCLASS64) {
++        note_size = LOONGARCH_PRSTATUS_NOTE_SIZE + LOONGARCH_PRFPREG_NOTE_SIZE;
++    }
++
++    return note_size * nr_cpus;
++}
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 5e85b9dbef..63da4a8e64 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -754,6 +754,7 @@ static const TCGCPUOps loongarch_tcg_ops = {
+ #include "hw/core/sysemu-cpu-ops.h"
+ 
+ static const struct SysemuCPUOps loongarch_sysemu_ops = {
++    .write_elf64_note = loongarch_cpu_write_elf64_note,
+     .get_phys_page_debug = loongarch_cpu_get_phys_page_debug,
+ };
+ 
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 944153b180..1a02427627 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -72,5 +72,7 @@ void write_fcc(CPULoongArchState *env, uint64_t val);
+ int loongarch_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n);
+ int loongarch_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n);
+ void loongarch_cpu_register_gdb_regs_for_features(CPUState *cs);
++int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cpu,
++                                   int cpuid, DumpState *s);
+ 
+ #endif
+diff --git a/target/loongarch/meson.build b/target/loongarch/meson.build
+index e002e9aaf6..7817318287 100644
+--- a/target/loongarch/meson.build
++++ b/target/loongarch/meson.build
+@@ -8,6 +8,7 @@ loongarch_ss.add(files(
+ 
+ loongarch_system_ss = ss.source_set()
+ loongarch_system_ss.add(files(
++  'arch_dump.c',
+   'cpu_helper.c',
+   'loongarch-qmp-cmds.c',
+   'machine.c',
+-- 
+2.39.3
 
 
