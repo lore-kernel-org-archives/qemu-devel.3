@@ -4,88 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D264C5320E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 13:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA337C5320E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 13:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh8Bc-0004sR-Om; Thu, 22 Aug 2024 09:49:12 -0400
+	id 1sh8HF-00026w-UY; Thu, 22 Aug 2024 09:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sh8Bb-0004rx-L7
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:49:11 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1sh8HE-00020T-Cj
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:55:00 -0400
+Received: from netsrv01.beckhoff.com ([62.159.14.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sh8BZ-0001mq-Mn
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:49:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1724334534; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=XJZAHExSBvvCOOix1sBuWxeX8cu6OHt6CelFV2Lmyt0jZSD8PHTiZHTTKze42ST0uUdVnFdQM+uIKacTzFbwblukbsvjuO5d7A4PXC6HL62D3MigwgLCBrEaZZxFpvEf9p4pcXg7XTKsQMtPbJLBdN9Wy5pzhIVKYlMJCyLDYYk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1724334534;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=gy9bGPEjA67FUqqzV44hjj1gxDeO+ryLgD6smAXgUdE=; 
- b=eEvg7VsXJ+QyULEEYI3GzeLrEqMErXTMJ2EnL/11rD87noP/Q7ZdrlKQFvev6P9WWjdaw3sT+GqpqHdhlKxNMfKibfPF/QXthLGp0RY8szeB7FL6Grm5fWRsQIffVYg/dOvGE2CBFvVrz9Bm1nna+h+u/az45YGEHCT+Fbmuvtw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1724334534; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=gy9bGPEjA67FUqqzV44hjj1gxDeO+ryLgD6smAXgUdE=;
- b=hn1vUHJfdU3cNGAunzoAKYREMh+4+aJFu3QISbfozV11xSJao5Yj/DjPgbneT5J7
- PzCB5teVTq7HwquvaAgXgvhf6+uDyZ1NXSjSHjUFhIhCi/kkbaRh+NcRfvDfojUKmv6
- 2kzcoYZQv7epcytlehlAMuhAzemkmYPNEGQ7T+wk=
-Received: by mx.zohomail.com with SMTPS id 1724334531773413.2433113737983;
- Thu, 22 Aug 2024 06:48:51 -0700 (PDT)
-Message-ID: <6bc52976-ac1b-4c42-8fb3-d55166d21c83@collabora.com>
-Date: Thu, 22 Aug 2024 16:48:44 +0300
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1sh8H8-0002au-Nh
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:55:00 -0400
+Received: from 172.17.5.170 by netsrv01.beckhoff.com (Tls12, Aes256, Sha384,
+ DiffieHellmanEllipticKey384); Thu, 22 Aug 2024 13:54:53 GMT
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
+ t=1724334893; bh=d/oIKbgF+x1vzJ0O29d6n+1kiRF+USqgvvZ8Zv6x47M=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=ed25519-sha256; b=
+ xc1CJLE5vOWYcqapPneyywVp7LYbWlzH9PT0qGJR7xow1zauX0sJ0EqbZTCbJJgKHKqsTM1Mx/o1ehixzVe3DA==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
+ t=1724334893; bh=d/oIKbgF+x1vzJ0O29d6n+1kiRF+USqgvvZ8Zv6x47M=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=rsa-sha256; b=
+ WxfFUSi9TEcqaIIw/4qnuQ6LBj5GGKFHC5WtYo39J7WtKFrVWFBtXZTY2Ki8qJvwN6fJNAsgHq3Vq+PEFFMt1udXcEsWKkzTeS+GC0jZYkQtW+iadba5BbXO3PRZezFlHbKK7DpgcRNkk29FdP/+4T1mwGDoskRfAw6muZ4xx5qI8KervgpgPSauII+fB7xJfwzUoBgDwShjlu0yzxAvNJUMKpo6acRrD1qwgR7BhfaKXI4zK6yCxL3YGtXC20iN2+7Sv+Z5rubOgnzociD7gK/2BktIYMt5TDJnaJMUILXhQ2NXsHKiVBXkUbAmCmnVQrzAwdHmrtK3DKPxhRuVUg==
+Received: from corvink-nb.c.koehne.headscale.beckhoff.dev (172.17.61.20) by
+ ex04.beckhoff.com (172.17.5.170) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 22 Aug
+ 2024 15:54:50 +0200
+From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
+To: <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 7/7] vfio/igd: correctly calculate stolen memory size for gen
+ 9 and later
+Date: Thu, 22 Aug 2024 15:54:16 +0200
+Message-ID: <20240822135420.58849-7-c.koehne@beckhoff.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240822111819.34306-1-c.koehne@beckhoff.com>
+References: <20240822111819.34306-1-c.koehne@beckhoff.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 00/13] Support blob memory and venus on qemu
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, ernunes@redhat.com,
- Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Roger_Pau_Monn=C3=A9?=
- <roger.pau@citrix.com>, Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240701164449-mutt-send-email-mst@kernel.org>
- <877cc8n1ix.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <877cc8n1ix.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [172.17.61.20]
+X-ClientProxiedBy: ex04.beckhoff.com (172.17.5.170) To ex04.beckhoff.com
+ (172.17.5.170)
+X-OLX-Disclaimer: EX04.BECKHOFF.COM
+Received-SPF: pass client-ip=62.159.14.10; envelope-from=C.Koehne@beckhoff.com;
+ helo=netsrv01.beckhoff.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,38 +80,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/22/24 16:13, Alex Bennée wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
->> On Sun, Jun 23, 2024 at 06:23:30PM +0300, Dmitry Osipenko wrote:
->>> Hello,
->>>
->>> This series enables Vulkan Venus context support on virtio-gpu.
->>>
->>> All virglrender and almost all Linux kernel prerequisite changes
->>> needed by Venus are already in upstream. For kernel there is a pending
->>> KVM patchset that fixes mapping of compound pages needed for DRM drivers
->>> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
->>> from Qemu.
->>
->>
->> I'd like to see a Tested-by from Alex Bennée for this -
->> he's been testing v14 last as far as I could see.
-> 
-> I've posted it on the top. Broadly x86 and Arm work on my x86 host. So
-> far my Arm host only runs the x86 image with the AMD card OK.
-> 
-> I've updated my test images so you can try them:
-> 
->   https://fileserver.linaro.org/s/ce5jXBFinPxtEdx
-> 
-> See the notes on the readme on how to run.
+=EF=BB=BFWe have to update the calculation of the stolen memory size becaus=
+e
+we've seen devices using values of 0xf0 and above for the graphics mode
+select field. The new calculation was taken from the linux kernel [1].
 
-Thanks, Alex! I'll re-post v17 with all new acks/r-b's soon, will also
-link your images in the cover letter.
+[1] https://github.com/torvalds/linux/blob/7c626ce4bae1ac14f60076d00eafe71a=
+f30450ba/arch/x86/kernel/early-quirks.c#L455-L460
 
--- 
-Best regards,
-Dmitry
+Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+---
+ hw/vfio/igd.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 122432e6a6..70c60fe7bc 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -487,11 +487,18 @@ static int igd_get_stolen_mb(int gen, uint32_t gmch)
+         gms =3D (gmch >> 8) & 0xff;
+     }
+=20
+-    if (gms > 0x10) {
+-        error_report("Unsupported IGD GMS value 0x%x", gms);
+-        return 0;
++    if (gen < 9) {
++        if (gms > 0x10) {
++            error_report("Unsupported IGD GMS value 0x%x", gms);
++            return 0;
++        }
++        return gms * 32;
++    } else {
++        if (gms < 0xf0)
++            return gms * 32;
++        else
++            return gms * 4 + 4;
+     }
+-    return gms * 32;
+ }
+=20
+ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+--=20
+2.46.0
+
+This email contains confidential information. If you have received it in er=
+ror, you must not read, use, copy or pass on this e-mail or its attachments=
+. If you have received the e-mail in error, please inform me immediately by=
+ reply e-mail and then delete this e-mail from your system. Thank you
+=20
+Diese E-Mail enth=C3=A4lt vertrauliche Informationen. Sollten Sie sie irrt=
+=C3=BCmlich erhalten haben, d=C3=BCrfen Sie diese E-Mail oder ihre Anh=C3=
+=A4nge nicht lesen, verwenden, kopieren oder weitergeben. Sollten Sie die M=
+ail versehentlich erhalten haben, teilen Sie mir dies bitte umgehend per An=
+twort-E-Mail mit und l=C3=B6schen Sie diese E-Mail dann aus Ihrem System. V=
+ielen Dank
+
+Beckhoff Automation GmbH & Co. KG | Managing Director: Dipl. Phys. Hans Bec=
+khoff
+Registered office: Verl, Germany | Register court: Guetersloh HRA 7075
+
+
 
 
