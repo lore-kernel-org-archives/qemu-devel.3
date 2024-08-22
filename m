@@ -4,139 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34E3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7331C5320E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh3g7-00005G-Pg; Thu, 22 Aug 2024 05:00:23 -0400
+	id 1sh408-0006sS-2s; Thu, 22 Aug 2024 05:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh3g0-0008Vz-PI
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:00:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh3fs-0003cE-7P
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:00:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724317204;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UzTUMLDxS1yZpFMfVMkTgmhCYUnd9PjpGV935hTAnLE=;
- b=iXfYJi+wUodvkErdAPlqlURHLtGBqijYop9m5s2abfB4j2CEh5GI3Za3M8wUVSlqN4u7Tk
- JkCMkwRj1SSUwJkMMSEgcE5VWEQSiDOWK//hQOL5wl0IpQQQWx1nbmLwGOKMIJEDsJZy1K
- J1jn0xGQUppMunEFny/bSfuWFhGyOHk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-EQ2249TSN4O8pvrmnYk_xA-1; Thu, 22 Aug 2024 05:00:03 -0400
-X-MC-Unique: EQ2249TSN4O8pvrmnYk_xA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-428ea5b1479so3779815e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:00:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh406-0006rx-Ui
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:21:02 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh405-0006Ye-1o
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:21:02 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-427fc97a88cso3795385e9.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724318457; x=1724923257; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FZfdiXhvcwlzdSTHp01PJ2kMFQ3CJnhSYaycbwm8VDo=;
+ b=yoiSXwqje2HV9TKHaLPToH1pgxuRlVX4AMbqVudCtD/lfppgqbrBr3FG7UsHH31Y/E
+ UoL5wg9Tc5YGQGPF1g4lnNjNzQYS9M89mHH5ypagKOal555ZBIN6gz6UcSqcCa8iorwi
+ Zctu6n2l/Bv5m013tpyivYDoBSd9kwlDjkCyzbKtivUphBcQ2EPAHgAUxPCv7JRyaxjB
+ vz+GKjU21ZOHshJntaN7DhQcvsxenB5R7Nk6vmcJsmJst7eAiHSQjV30n4f/UjrgPzD6
+ 7rGnwUQIfg6exc342HdrcSCCKx20RtzjAJjv0Dp2WEkcwH6s/uNlOiLTYZWTMdvUcXsG
+ fWOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724317202; x=1724922002;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UzTUMLDxS1yZpFMfVMkTgmhCYUnd9PjpGV935hTAnLE=;
- b=O5eJx1x25CQWE+LyURzHFyZobtsw/xumefvP1DKO1w7ybOpefDM3B5g/vjK7L2I30G
- X86JhJoNSqnC6/yPV9n/rzjmnhsWwLpF+vdRix4qHhSV2q/+VLN1xKUaS9kh9vtzeMiT
- SZXcje0CaosyuYY00UWjMxzB9OH8bV8tDj4eA1b+0LO+ET5HuYPh3n4e0jF2DqZG/A1P
- NwGT9Vv4PgnJ/dI3idkhE32Z2Cv65muLe7S1GpBWJA3rwbBbUf+AXhKTiAAFOX/Wc9V1
- wrV2K9pCKSClQ/6rxvydW7PAsgicO5vbSakz+c4nZ4/FIYlFBhnycLnozXC04nWRzQMq
- U5zA==
+ d=1e100.net; s=20230601; t=1724318457; x=1724923257;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FZfdiXhvcwlzdSTHp01PJ2kMFQ3CJnhSYaycbwm8VDo=;
+ b=X/GAIoTUEn+B7b8KtwCf2HhbdCEA8UchfcaplQySCDSFMkQ/Gf0d3QPHiOQoTTF8+e
+ 1/3O4Gz9D/cl5s9P/KAUDg49Yh3TyOWgamRzIQf5fVDibUcF/3Pre5LvZzGevT70FYHv
+ taF+iQ/jFcuB2hqAMGx562eUr7/aeCb/Em7qZawEfjgmVkTYRjKh3fEk6g0Yy5Z707El
+ ozVgfVRpAJdwFeXqvuoR50vXmzNdR1gnLZYCsfK+GwOm6n61Z7VvhsC/LV5sPhQjQeIn
+ Uxnxspdf1kuvhIzfB+5hGWSle3LPs9YMUOdM5LOMXKvZqHqskNRGi4++v9nWxlN2xU9K
+ 93iA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXxx+Y9wBvbBF6aVU05D9elfTfJsx3aPoVL9DjumURdoCQjgB44SrjOFEbBF6YAIff1wzfKNQ3AfCuT@nongnu.org
-X-Gm-Message-State: AOJu0Yy1ZX+BXVVLvNTWHbyI1tn1k52XAclaWQ5LwENmwUAomNo7yTA/
- i9WAOe54cZuS2hmV461SIRZXYlzczIYSwQBT90uYWalS3igs2wYsxMT6vIHnoGiHL/A9W3/10fP
- 7v01KZCM4qyCYpM60njvCQzMMYZCpHHKnulhgDwroUgkZO6H4S1G0
-X-Received: by 2002:a05:600c:45c3:b0:428:e820:37ae with SMTP id
- 5b1f17b1804b1-42ac55bbee7mr7777955e9.1.1724317201780; 
- Thu, 22 Aug 2024 02:00:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmM54MPy9OOwHe0s2eH/eo3RdaKOsz8DAv9l31g8rGVHR8EsLJvPBtKln9n1jOXcucNPsaRQ==
-X-Received: by 2002:a05:600c:45c3:b0:428:e820:37ae with SMTP id
- 5b1f17b1804b1-42ac55bbee7mr7777755e9.1.1724317201326; 
- Thu, 22 Aug 2024 02:00:01 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-177-41.web.vodafone.de.
- [109.43.177.41]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ab87ef024sm63980895e9.1.2024.08.22.02.00.00
+ AJvYcCUnNukU9y+Df/aC3nZHXzEAMlcLHa02gzFoeZE3+7xnVVV6vqNV/lGUYMpO4M+LCNHI1I+vSOhD9rlE@nongnu.org
+X-Gm-Message-State: AOJu0Ywu8e1122B0laZBHmUm1TQd710I+cALm3e9gbhlxZkA3eG+0VDM
+ lfMMZ5nSvwlcN3Ij3VHyQwfKlwikR6aR0VKPScn0tpPxu903DwohfOn8FCdOZHw=
+X-Google-Smtp-Source: AGHT+IECG1uJWnD8nJeXumiQxL3QwvzBOn9Rw2G6pIvSmHBleSvFA3cB1qUFjNDaa6NJrSgIaZHeTg==
+X-Received: by 2002:a05:600c:45cb:b0:428:6f4:57ff with SMTP id
+ 5b1f17b1804b1-42abd26477bmr30268295e9.35.1724318457015; 
+ Thu, 22 Aug 2024 02:20:57 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.206.153])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ac517f9basm17485765e9.39.2024.08.22.02.20.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 02:00:00 -0700 (PDT)
-Message-ID: <b9ad2876-6e6a-4f96-9953-134c6769b5e9@redhat.com>
-Date: Thu, 22 Aug 2024 10:59:59 +0200
+ Thu, 22 Aug 2024 02:20:56 -0700 (PDT)
+Message-ID: <078e3e35-fbef-43aa-b80c-448140a5a0bc@linaro.org>
+Date: Thu, 22 Aug 2024 11:20:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] tests/functional: Convert mipsel Malta YAMON
- avocado test
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno
- <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Beraldo Leal <bleal@redhat.com>
-References: <20240821133353.65903-1-philmd@linaro.org>
- <20240821133353.65903-4-philmd@linaro.org>
+Subject: Re: [PATCH] tests/avocado: Allow running user-mode tests
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>
+References: <20240821153836.67987-1-philmd@linaro.org>
+ <0e7e30cf-bd67-4d21-9ee9-b6ab77b8e35f@redhat.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240821133353.65903-4-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0e7e30cf-bd67-4d21-9ee9-b6ab77b8e35f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,22 +97,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/08/2024 15.33, Philippe Mathieu-Daudé wrote:
-> Straight forward conversion using the Python standard zipfile
-> module instead of avocado.utils package. Update the SHA1 hashes
-> to SHA256 hashes since SHA1 should not be used anymore nowadays.
+On 22/8/24 09:21, Thomas Huth wrote:
+> On 21/08/2024 17.38, Philippe Mathieu-Daudé wrote:
+>> Commit 816d4201ea ("tests/avocado: Move LinuxTest related
+>> code into a separate file") removed the Avocado 'process'
+>> import which is used by the QemuUserTest class, restore it.
+>>
+>> Fixes: 816d4201ea ("tests/avocado: Move LinuxTest ...")
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> Unfortunately the single linux-user test is not run on CI,
+>> and I haven't ran it manually since too long...:
+>> https://gitlab.com/qemu-project/qemu/-/issues/2525
+>> ---
+>>   tests/avocado/avocado_qemu/__init__.py | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/tests/avocado/avocado_qemu/__init__.py 
+>> b/tests/avocado/avocado_qemu/__init__.py
+>> index ef935614cf..0d57addfea 100644
+>> --- a/tests/avocado/avocado_qemu/__init__.py
+>> +++ b/tests/avocado/avocado_qemu/__init__.py
+>> @@ -17,7 +17,7 @@
+>>   import uuid
+>>   import avocado
+>> -from avocado.utils import ssh
+>> +from avocado.utils import process, ssh
+>>   from avocado.utils.path import find_command
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   MAINTAINERS                             |  2 +-
->   tests/avocado/machine_mips_malta.py     | 54 -------------------------
->   tests/functional/meson.build            |  4 ++
->   tests/functional/test_mips64el_malta.py |  3 ++
->   tests/functional/test_mipsel_malta.py   | 46 +++++++++++++++++++++
->   5 files changed, 54 insertions(+), 55 deletions(-)
->   delete mode 100644 tests/avocado/machine_mips_malta.py
->   create mode 100755 tests/functional/test_mipsel_malta.py
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+> ... but is the test itself still working for you? When I run it, I get:
+> 
+>   ...
+>   (074/281) 
+> tests/avocado/linux_ssh_mips_malta.py:LinuxSSH.test_mips_malta64eb_kernel3_2_0: SKIP: Test might timeout
+>   (075/281) 
+> tests/avocado/linux_ssh_mips_malta.py:LinuxSSH.test_mips_malta64el_kernel3_2_0: SKIP: Test might timeout
+>   (076/281) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: ERROR: 
+> Command './qemu-arm  /bin/busybox ' failed.\nstdout: b''\nstderr: 
+> b''\nadditional_info: None (0.06 s)
+> Interrupting job (failfast).
+> 
+> Seem like self.workdir is not set here??
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+No clue why... This used to work.
 
+Why self.workdir is indeed not set, this kludge makes it work:
+
+---
+diff --git a/tests/avocado/load_bflt.py b/tests/avocado/load_bflt.py
+index bb50cec1ee..264489ee25 100644
+--- a/tests/avocado/load_bflt.py
++++ b/tests/avocado/load_bflt.py
+@@ -41,7 +41,7 @@ def test_stm32(self):
+                        'Stm32_mini_rootfs.cpio.bz2')
+          rootfs_hash = '9f065e6ba40cce7411ba757f924f30fcc57951e6'
+          rootfs_path_bz2 = self.fetch_asset(rootfs_url, 
+asset_hash=rootfs_hash)
+-        busybox_path = os.path.join(self.workdir, "/bin/busybox")
++        busybox_path = os.path.join(self.workdir, "bin/busybox")
+
+          self.extract_cpio(rootfs_path_bz2)
+
+---
+
+Fetching asset from tests/avocado/load_bflt.py:LoadBFLT.test_stm32
+JOB ID     : 020d317281b042f46ad99013530d29df0f1d7eb7
+JOB LOG    : tests/results/job-2024-08-22T10.17-020d317/job.log
+  (1/1) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: PASS (0.09 s)
+RESULTS    : PASS 1 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | 
+CANCEL 0
+JOB TIME   : 0.62 s
+
+So I'll add that and call it a day.
+
+Thanks!
 
