@@ -4,105 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDA3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 14:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662E5C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 14:32:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh8ZO-0000hp-Ho; Thu, 22 Aug 2024 10:13:46 -0400
+	id 1sh8qA-00070f-FZ; Thu, 22 Aug 2024 10:31:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sh8ZL-0000h5-Gh
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:13:44 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sh8ZJ-0005lX-T6
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:13:43 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8BF33224EA;
- Thu, 22 Aug 2024 14:13:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724336019; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sh8q1-000702-V6
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:30:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sh8pz-00082W-9C
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:30:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724337047;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EX6kwZrdehSDdbgo+cmLIAYAkADpQrV6RnSsMfiZyHE=;
- b=eNnXqZ8LB642bnvldU3x+cWMe3zS9zaFmy7Uwoqns5sWYHAKT92Bz6VQ0pjeZpXQGusMgN
- qiTMtYur2nhIcRsEJrvHN2CUfLaDRPcHQOmlesuwPgQBNNf2g7EAhgBaTodTJQ4ijVrG+q
- M/fhsXIX/AjWI4ms1VRe8No2EYEEsYU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724336019;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EX6kwZrdehSDdbgo+cmLIAYAkADpQrV6RnSsMfiZyHE=;
- b=KFUOAi9L2Q8rJRe8VpYwv4ExiD8Jr5RADZ9/3f+1nJ6j8Mxn4kaUyoXJDhCjEuYCN34aQ9
- /w5cnXxoPfr7HGCw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=eNnXqZ8L;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=KFUOAi9L
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724336019; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EX6kwZrdehSDdbgo+cmLIAYAkADpQrV6RnSsMfiZyHE=;
- b=eNnXqZ8LB642bnvldU3x+cWMe3zS9zaFmy7Uwoqns5sWYHAKT92Bz6VQ0pjeZpXQGusMgN
- qiTMtYur2nhIcRsEJrvHN2CUfLaDRPcHQOmlesuwPgQBNNf2g7EAhgBaTodTJQ4ijVrG+q
- M/fhsXIX/AjWI4ms1VRe8No2EYEEsYU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724336019;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EX6kwZrdehSDdbgo+cmLIAYAkADpQrV6RnSsMfiZyHE=;
- b=KFUOAi9L2Q8rJRe8VpYwv4ExiD8Jr5RADZ9/3f+1nJ6j8Mxn4kaUyoXJDhCjEuYCN34aQ9
- /w5cnXxoPfr7HGCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D776D139D3;
- Thu, 22 Aug 2024 14:13:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uidKJpJHx2ZMXAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 22 Aug 2024 14:13:38 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
+ bh=3Lbp0jQmm3CAYmGiQxNSrLcHoz+nbe6jE8W9k1lLcUo=;
+ b=BfXODju46JGSZ1ZNQrRUnWm7qh8WwOLA2SwJs/rXmCc+OwfdKJUlc2xiikDMn3+3npwUHA
+ mMg86SynvD1dsTlxIqIdvFUCkfDj8UkxsGpq2JDYDl6CINsAbz4VY+HQnj9dLtR66yyBt1
+ FdE2NtWQCUiLViLJgyMjfW6k+Ym/F4c=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-257-NiICZizLMdiAZE52oI9uCw-1; Thu, 22 Aug 2024 10:30:45 -0400
+X-MC-Unique: NiICZizLMdiAZE52oI9uCw-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6bf6c0f0634so10925846d6.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 07:30:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724337045; x=1724941845;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3Lbp0jQmm3CAYmGiQxNSrLcHoz+nbe6jE8W9k1lLcUo=;
+ b=tVJXKmnKmeGZQtgChSCKJhiSi3LRQ5EWBJNBg3g3HYNoicDwdX/z5LshXkicKNxOUY
+ OyqgU6GJIL3X0R6JcxGReqtakrcEf47jewJOX7LeZJa1PSFyBCvlBKg0XghFlfCiw/+s
+ zuO6RIhWeCo19DlUiGydRPwFopRSPMdXcT6DMiWgMPTf3TddMz1+8KVC/btUu3Qlyz/+
+ Hq6JqKC5PhBdRfEXfT/QG0XeNyIQtLU8dWmJoYMA/ZWt72WA+ZqoxRNWnOcSrOrYlkI8
+ gIi2xYWo6DhpBfE5XcJWWMdW+uUH/3x94qy+So+HGeTHRL9ZGv3Xg6xvZrOpxP8SzVlX
+ cYow==
+X-Gm-Message-State: AOJu0YzHaYwUYQt4jKsYy96c5DaQijKGVxiIXfldEW7zDhiADdax3sZT
+ REEo/9BXQFSASl187CdNAUid0xz9GCnDpbFjjElerzGHWkQUii6HdKxZODOZvIbnYkNV3eS1J+p
+ iTJTgG+KCsPJ3vhVt6PtwPKHhOh5mqBJICkbDj2usWFOHq+W90hYs
+X-Received: by 2002:a05:6214:3286:b0:6bf:8339:95a0 with SMTP id
+ 6a1803df08f44-6c164704cf2mr24109266d6.9.1724337045312; 
+ Thu, 22 Aug 2024 07:30:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1O8KBBtrQuVaH7A275DyrQYbTCDRcR8mT8Su36Qn2J+S0F/qWY1WkLjFD79H1n2qAJZswGQ==
+X-Received: by 2002:a05:6214:3286:b0:6bf:8339:95a0 with SMTP id
+ 6a1803df08f44-6c164704cf2mr24108866d6.9.1724337044822; 
+ Thu, 22 Aug 2024 07:30:44 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c162d796d9sm8057676d6.71.2024.08.22.07.30.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Aug 2024 07:30:43 -0700 (PDT)
+Date: Thu, 22 Aug 2024 10:30:41 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
 Subject: Re: [PATCH v3 09/14] migration/multifd: Isolate ram pages packet data
-In-Reply-To: <ZsZeUpuZuhbD60YZ@x1n>
+Message-ID: <ZsdLkYeoWO1p6YNy@x1n>
 References: <20240801123516.4498-1-farosas@suse.de>
  <20240801123516.4498-10-farosas@suse.de> <ZsZeUpuZuhbD60YZ@x1n>
-Date: Thu, 22 Aug 2024 11:13:36 -0300
-Message-ID: <87zfp4y7an.fsf@suse.de>
+ <87zfp4y7an.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 8BF33224EA
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.47 / 50.00]; BAYES_HAM(-1.96)[94.79%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87zfp4y7an.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,22 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Thu, Aug 22, 2024 at 11:13:36AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Thu, Aug 01, 2024 at 09:35:11AM -0300, Fabiano Rosas wrote:
+> >> @@ -1554,7 +1577,6 @@ static void *multifd_recv_thread(void *opaque)
+> >>                  qemu_sem_wait(&p->sem_sync);
+> >>              }
+> >>          } else {
+> >> -            p->total_normal_pages += p->data->size / qemu_target_page_size();
+> >
+> > Is this line dropped by accident?
+> >
+> 
+> No, this was just used in the tracepoint below. I stopped including this
+> information there.
 
-> On Thu, Aug 01, 2024 at 09:35:11AM -0300, Fabiano Rosas wrote:
->> @@ -1554,7 +1577,6 @@ static void *multifd_recv_thread(void *opaque)
->>                  qemu_sem_wait(&p->sem_sync);
->>              }
->>          } else {
->> -            p->total_normal_pages += p->data->size / qemu_target_page_size();
->
-> Is this line dropped by accident?
->
+But this will cause socket / file paths not doing the same thing, since
+this counter should still be increamented in socket path (and this is the
+file path).
 
-No, this was just used in the tracepoint below. I stopped including this
-information there.
+Either we keep it the same as before, or.. if we want to drop it, shouldn't
+we remove all instead (along with the two variables "total_normal_pages /
+total_zero_pages")?
 
->>              p->data->size = 0;
->>              /*
->>               * Order data->size update before clearing
+-- 
+Peter Xu
+
 
