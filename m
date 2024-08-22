@@ -4,80 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFEEC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 17:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 650A7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 17:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shBKu-00032b-OW; Thu, 22 Aug 2024 13:11:00 -0400
+	id 1shBTw-0007yY-45; Thu, 22 Aug 2024 13:20:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1shBKt-000328-Ln
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:10:59 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1shBTn-0007xx-Ge
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:20:11 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1shBKr-0006KE-Ih
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:10:59 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2f43de7ad5eso7741881fa.1
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 10:10:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724346655; x=1724951455; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=On2YjpSl/H1q54htE/odhCA+fOeFKi5Q6vphWYDgBg0=;
- b=x7QeXBZeOlhJ/8KtEI3+w/k1cbYCU7LwgaaPeVrBbD7hTai+Glt6rFlPP0yIOBqTmc
- FFRKK/2mKDe5tApN4caTMvPAVzjTsskxYp0uZsFYVrQaB9tbqaQgp2puKgQMo7AAofBf
- JNIMpbHwJToLniyN1iftHD7kdQWHpupGYYDq7a4AeR1ea62P/10cEalsdoszmt6e0wA3
- mkxSqyjbrZ9WeQNiK+g6vqmMd/o+cUJlhDTLChp99GYHLLOBOUvn+aSjB48L8DSt0Y7p
- bI71QzCOK62sQ/25VYkflIswkLxdrO+aTrXrnTnGt43M6WaykHHzzjHsvLmdAiY9nr6d
- 2rUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724346655; x=1724951455;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=On2YjpSl/H1q54htE/odhCA+fOeFKi5Q6vphWYDgBg0=;
- b=vRxnYGDXge+PFH21L6MtdNgO5aZDQB6v//g7MRGSV9K1JVReI8V5aSnzHPs4nucem+
- WCIWoVnV0wWAE7G7TOY7N2+D5znc5QPmOUggoQDP1M4D+qrs162T2G35jug5oEWZNAa5
- P6JCAeUcLzLi3HY+KGoLvAGRTqzF+EMILjKQN/K3JtHJ+7JbD0+bVah5mK6Cx+06Awzi
- nPPbZDei4I8gzXJTopt0hAgffHl9ypoAEYqZJBw/LESFN7m/2MFiBocBajyAyI0x7mvD
- Onhxr2CzDLOzWFWJoZl7ZNG0+QTLjOqx65mKQUV0/29Q0SfvdgxLzqH4P+tlBy5vehyD
- QfDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXE3iHS4vg8o4Rs733ThDn7yFakVPE5tja2YCOSXSTe1ngCGI6wqQV+mFY1ZucPeIx2TK2l0nkNhjxJ@nongnu.org
-X-Gm-Message-State: AOJu0YwCIK+V84BDet6XcDgES2Riahz7j7+mzqTNlkdUkjPwJRGXeK3E
- +uyHKWwLHRmrxOSyRvoJsig49x+gFOHxe1kJY1SmF7B8ypCy3Xb0PpKew62IfheSyF77PQOQ5Wb
- miV77UqkmVNSd8g735EjW/BTiJckqVIX6Cdw+Zg==
-X-Google-Smtp-Source: AGHT+IE2kzeoTEvBkQ6UzOb0QloZVDgiZrLG1JxPLxajkqbi1vXloK+4EJ3jsChA+gPxQyERJ99dIp54RCDjkUoRSJ4=
-X-Received: by 2002:a05:651c:1506:b0:2ef:251f:785 with SMTP id
- 38308e7fff4ca-2f3f883012amr48440531fa.1.1724346654991; Thu, 22 Aug 2024
- 10:10:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1shBTk-0007ep-T7
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:20:10 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 156E52246A;
+ Thu, 22 Aug 2024 17:20:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724347206; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dQXm1YQOgyv0ukmt3znAIr40rK8eJAnz9sCtW9dbgPc=;
+ b=JDTR8D3ZfFV54QkQ3pfY03VrFn3XT0sG8Z9Z1l7Pyz6EHOxrqWgxxuUT0qTlrf4OIpLV87
+ uGWME0XtqUFxwRiCUFWLTp5HuCQHgmhV/F8p+SXp9ewxWi03fwgYJFnpoLFnLROByDOo5f
+ blgTXa/DnzXyNOpU4bXp1t7iJ4k4M+s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724347206;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dQXm1YQOgyv0ukmt3znAIr40rK8eJAnz9sCtW9dbgPc=;
+ b=RPk2uUobYqZ6b7CQb3gcq+EOmjXaz7fwEl0/OUkp3Gb6QR5/eV4BpCAfhOjD411G/tExQ8
+ DPh2neykq5k0rrAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JDTR8D3Z;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=RPk2uUob
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724347206; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dQXm1YQOgyv0ukmt3znAIr40rK8eJAnz9sCtW9dbgPc=;
+ b=JDTR8D3ZfFV54QkQ3pfY03VrFn3XT0sG8Z9Z1l7Pyz6EHOxrqWgxxuUT0qTlrf4OIpLV87
+ uGWME0XtqUFxwRiCUFWLTp5HuCQHgmhV/F8p+SXp9ewxWi03fwgYJFnpoLFnLROByDOo5f
+ blgTXa/DnzXyNOpU4bXp1t7iJ4k4M+s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724347206;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dQXm1YQOgyv0ukmt3znAIr40rK8eJAnz9sCtW9dbgPc=;
+ b=RPk2uUobYqZ6b7CQb3gcq+EOmjXaz7fwEl0/OUkp3Gb6QR5/eV4BpCAfhOjD411G/tExQ8
+ DPh2neykq5k0rrAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9517713297;
+ Thu, 22 Aug 2024 17:20:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id IKwKF0Vzx2aEFgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 22 Aug 2024 17:20:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v3 13/14] migration/multifd: Register nocomp ops
+ dynamically
+In-Reply-To: <Zsdl_ADh-VTKV-wT@x1n>
+References: <20240801123516.4498-1-farosas@suse.de>
+ <20240801123516.4498-14-farosas@suse.de> <Zsdl_ADh-VTKV-wT@x1n>
+Date: Thu, 22 Aug 2024 14:20:03 -0300
+Message-ID: <87r0agxynw.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-9-750bb0946dbd@daynix.com>
-In-Reply-To: <20240627-san-v2-9-750bb0946dbd@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Aug 2024 18:10:43 +0100
-Message-ID: <CAFEAcA9KTSjwF1rABpM5nv9UFuKqZZk6+Qo4PEF4+rTirNi5fQ@mail.gmail.com>
-Subject: Re: [PATCH v2 09/15] memory: Do not create circular reference with
- subregion
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 156E52246A
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,95 +127,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Jun 2024 at 14:40, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+Peter Xu <peterx@redhat.com> writes:
+
+> On Thu, Aug 01, 2024 at 09:35:15AM -0300, Fabiano Rosas wrote:
+>> Prior to moving the ram code into multifd-ram.c, change the code to
+>> register the nocomp ops dynamically so we don't need to have the ops
+>> structure defined in multifd.c.
+>> 
+>> While here, rename s/nocomp/ram/ and remove the docstrings which are
+>> mostly useless (if anything, it's the function pointers in multifd.h
+>> that should be documented like that).
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/multifd.c | 101 ++++++++++++--------------------------------
+>>  1 file changed, 28 insertions(+), 73 deletions(-)
+>> 
+>> diff --git a/migration/multifd.c b/migration/multifd.c
+>> index c25ab4924c..d5be784b6f 100644
+>> --- a/migration/multifd.c
+>> +++ b/migration/multifd.c
+>> @@ -167,15 +167,7 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
+>>      }
+>>  }
+>>  
+>> -/* Multifd without compression */
+>> -
+>> -/**
+>> - * nocomp_send_setup: setup send side
+>> - *
+>> - * @p: Params for the channel that we are using
+>> - * @errp: pointer to an error
+>> - */
+>> -static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+>> +static int ram_send_setup(MultiFDSendParams *p, Error **errp)
 >
-> A memory region does not use their own reference counters, but instead
-> piggybacks on another QOM object, "owner" (unless the owner is not the
-> memory region itself). When creating a subregion, a new reference to the
-> owner of the container must be created. However, if the subregion is
-> owned by the same QOM object, this result in a self-reference, and make
-> the owner immortal. Avoid such a self-reference.
+> "ram" as a prefix sounds inaccurate to me.  Personally I even preferred the
+> old name "nocomp" because it says there's no compression.
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  system/memory.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
+> Here "ram_send_setup" is at the same level against e.g. "zlib_send_setup".
+> It sounds like zlib isn't for ram, but it is..
 >
-> diff --git a/system/memory.c b/system/memory.c
-> index 74cd73ebc78b..949f5016a68d 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -2638,7 +2638,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+> Do you perhaps dislike the "nocomp" term?  How about:
+
+I don't mind. I almost left nocomp intact, but thought it would be
+better to match the new file name (multifd-ram.c).
+
 >
->      memory_region_transaction_begin();
+>   multifd_plain_send_setup()
 >
-> -    memory_region_ref(subregion);
-> +    if (mr->owner != subregion->owner) {
-> +        memory_region_ref(subregion);
-> +    }
-> +
->      QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
->          if (subregion->priority >= other->priority) {
->              QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-> @@ -2696,7 +2699,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
->          assert(alias->mapped_via_alias >= 0);
->      }
->      QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
-> -    memory_region_unref(subregion);
-> +
-> +    if (mr->owner != subregion->owner) {
-> +        memory_region_unref(subregion);
-> +    }
-> +
->      memory_region_update_pending |= mr->enabled && subregion->enabled;
->      memory_region_transaction_commit();
->  }
+> Just to do s/nocomp/plain/?  Or "raw"?
+>
+> We do have two flavours here at least:
+>
+> *** migration/multifd-qpl.c:
+> <global>[755]                  .send_setup = multifd_qpl_send_setup,
+>
+> *** migration/multifd-ram.c:
+> <global>[387]                  .send_setup = ram_send_setup,
+>
+> *** migration/multifd-uadk.c:
+> <global>[364]                  .send_setup = multifd_uadk_send_setup,
+>
+> *** migration/multifd-zlib.c:
+> <global>[338]                  .send_setup = zlib_send_setup,
+>
+> *** migration/multifd-zstd.c:
+> <global>[326]                  .send_setup = zstd_send_setup,
+>
+> It might makes sense to all prefix them with "multifd_", just to follow
+> gpl/uadk?
 
-I was having another look at leaks this week, and I tried
-this patch to see how many of the leaks I was seeing it
-fixed. I found however that for arm it results in an
-assertion when the device-introspection-test exercises
-the "imx7.analog" device. By-hand repro:
+Yep.
 
-$ ./build/asan/qemu-system-aarch64 -display none -machine none -accel
-qtest -monitor stdio
-==712838==WARNING: ASan doesn't fully support makecontext/swapcontext
-functions and may produce false positives in some cases!
-QEMU 9.0.92 monitor - type 'help' for more information
-(qemu) device_add imx7.analog,help
-qemu-system-aarch64: ../../system/memory.c:1777: void
-memory_region_finalize(Object *): Assertion `!mr->container' failed.
-Aborted (core dumped)
+>
+>>  {
+>>      uint32_t page_count = multifd_ram_page_count();
+>>  
+>> @@ -193,15 +185,7 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+>>      return 0;
+>>  }
+>>  
+>> -/**
+>> - * nocomp_send_cleanup: cleanup send side
+>> - *
+>> - * For no compression this function does nothing.
+>> - *
+>> - * @p: Params for the channel that we are using
+>> - * @errp: pointer to an error
+>> - */
+>> -static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
+>> +static void ram_send_cleanup(MultiFDSendParams *p, Error **errp)
+>>  {
+>>      g_free(p->iov);
+>>      p->iov = NULL;
+>> @@ -222,18 +206,7 @@ static void multifd_send_prepare_iovs(MultiFDSendParams *p)
+>>      p->next_packet_size = pages->normal_num * page_size;
+>>  }
+>>  
+>> -/**
+>> - * nocomp_send_prepare: prepare date to be able to send
+>> - *
+>> - * For no compression we just have to calculate the size of the
+>> - * packet.
+>> - *
+>> - * Returns 0 for success or -1 for error
+>> - *
+>> - * @p: Params for the channel that we are using
+>> - * @errp: pointer to an error
+>> - */
+>> -static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+>> +static int ram_send_prepare(MultiFDSendParams *p, Error **errp)
+>>  {
+>>      bool use_zero_copy_send = migrate_zero_copy_send();
+>>      int ret;
+>> @@ -272,46 +245,19 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+>>      return 0;
+>>  }
+>>  
+>> -/**
+>> - * nocomp_recv_setup: setup receive side
+>> - *
+>> - * For no compression this function does nothing.
+>> - *
+>> - * Returns 0 for success or -1 for error
+>> - *
+>> - * @p: Params for the channel that we are using
+>> - * @errp: pointer to an error
+>> - */
+>> -static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
+>> +static int ram_recv_setup(MultiFDRecvParams *p, Error **errp)
+>>  {
+>>      p->iov = g_new0(struct iovec, multifd_ram_page_count());
+>>      return 0;
+>>  }
+>>  
+>> -/**
+>> - * nocomp_recv_cleanup: setup receive side
+>> - *
+>> - * For no compression this function does nothing.
+>> - *
+>> - * @p: Params for the channel that we are using
+>> - */
+>> -static void nocomp_recv_cleanup(MultiFDRecvParams *p)
+>> +static void ram_recv_cleanup(MultiFDRecvParams *p)
+>>  {
+>>      g_free(p->iov);
+>>      p->iov = NULL;
+>>  }
+>>  
+>> -/**
+>> - * nocomp_recv: read the data from the channel
+>> - *
+>> - * For no compression we just need to read things into the correct place.
+>> - *
+>> - * Returns 0 for success or -1 for error
+>> - *
+>> - * @p: Params for the channel that we are using
+>> - * @errp: pointer to an error
+>> - */
+>> -static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
+>> +static int ram_recv(MultiFDRecvParams *p, Error **errp)
+>>  {
+>>      uint32_t flags;
+>>  
+>> @@ -341,22 +287,15 @@ static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
+>>      return qio_channel_readv_all(p->c, p->iov, p->normal_num, errp);
+>>  }
+>>  
+>> -static MultiFDMethods multifd_nocomp_ops = {
+>> -    .send_setup = nocomp_send_setup,
+>> -    .send_cleanup = nocomp_send_cleanup,
+>> -    .send_prepare = nocomp_send_prepare,
+>> -    .recv_setup = nocomp_recv_setup,
+>> -    .recv_cleanup = nocomp_recv_cleanup,
+>> -    .recv = nocomp_recv
+>> -};
+>> -
+>> -static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {
+>> -    [MULTIFD_COMPRESSION_NONE] = &multifd_nocomp_ops,
+>> -};
+>> +static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {};
+>>  
+>>  void multifd_register_ops(int method, MultiFDMethods *ops)
+>>  {
+>> -    assert(0 < method && method < MULTIFD_COMPRESSION__MAX);
+>> +    if (method == MULTIFD_COMPRESSION_NONE) {
+>> +        assert(!multifd_ops[method]);
+>> +    } else {
+>> +        assert(0 < method && method < MULTIFD_COMPRESSION__MAX);
+>> +    }
+>>      multifd_ops[method] = ops;
+>>  }
+>
+> The new assertion is a bit paranoid to me.. while checking duplicated
+> assignment should at least apply to all if to add.  So.. how about:
+>
+>   assert(method < MULTIFD_COMPRESSION__MAX);
+>   assert(!multifd_ops[method]);
+>   multifd_ops[method] = ops;
+>
+> ?
 
-It may be well be that this is a preexisting bug that's only
-exposed by this refcount change causing us to actually try
-to dispose of the memory regions.
+ok
 
-I think that what's happening here is that the device
-object has multiple MemoryRegions, each of which is a child
-QOM property. One of these MRs is a "container MR", and the
-other three are actual-content MRs which the device put into
-the container when it created them. When we deref the device,
-we go through all the child QOM properties unparenting and
-unreffing them. However, there's no particular ordering
-here, and it happens that we try to unref one of the
-actual-content MRs first. That MR is still inside the
-container MR, so we hit the assert. If we had happened to
-unref the container MR first then memory_region_finalize()
-would have removed all the subregions from it, avoiding
-the problem.
-
-I'm not sure what the best fix would be here -- that assert
-is there as a guard that the region isn't visible in
-any address space, so maybe it needs to be made a bit
-cleverer about the condition it checks? e.g. in this
-example although mr->container is not NULL,
-mr->container->container is NULL. Or we could check
-whether the mr->container->owner is the same as the
-mr->owner and allow a non-NULL mr->container in that case.
-I don't know this subsystem well enough so I'm just
-making random stabs here, though.
-
-thanks
--- PMM
+>
+>>  
+>> @@ -1755,3 +1694,19 @@ bool multifd_send_prepare_common(MultiFDSendParams *p)
+>>  
+>>      return true;
+>>  }
+>> +
+>> +static MultiFDMethods multifd_ram_ops = {
+>> +    .send_setup = ram_send_setup,
+>> +    .send_cleanup = ram_send_cleanup,
+>> +    .send_prepare = ram_send_prepare,
+>> +    .recv_setup = ram_recv_setup,
+>> +    .recv_cleanup = ram_recv_cleanup,
+>> +    .recv = ram_recv
+>> +};
+>> +
+>> +static void multifd_ram_register(void)
+>> +{
+>> +    multifd_register_ops(MULTIFD_COMPRESSION_NONE, &multifd_ram_ops);
+>> +}
+>> +
+>> +migration_init(multifd_ram_register);
+>> -- 
+>> 2.35.3
+>> 
 
