@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E15C52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 15:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1FFC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 16:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shA5I-00046A-QW; Thu, 22 Aug 2024 11:50:49 -0400
+	id 1shADg-0000x6-Kk; Thu, 22 Aug 2024 11:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shA5E-00044Q-5h
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:50:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shADf-0000wZ-5i
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:59:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shA5B-0002Uv-Re
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:50:43 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shADa-0003g5-PQ
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:59:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724341840;
+ s=mimecast20190719; t=1724342361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pUDfxI1yA73uywHxKdLRwgYfR/mo3Nvoc8DDpoo2L14=;
- b=Bkkd6uC7iEprzvGN6+q7cde7Weer5BpSxFgHHx7kNHxIF9w6WWBugk1Ax0TucG7mgHsD75
- I3Ut7oHt3bjuwFEabaUwa1dngdS0qKEatHEkl5D6y1F8isKeMHydlsoSBWovvtiNLynf/t
- g9+Zxwy4185TAcSHvsKLtEYu4n8HMpQ=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iFA2z9JfXFjnL2SG3Gn7KjisECx4I6Cx2N/LvXW1y1s=;
+ b=L/5jGrRiM4p+q60O9+4o+KCc1KGx0bjAgZR6gLzS7M8+EyFUkErvQa0eRSFmyMNf0lLKrt
+ r00KQ0I0EMoCb71rG/3bw3X9LLhnutZEimWMKvLnF97tioZr6/L2jTLN6jNrq1cdPxZN/q
+ GG/dOhyPY8cJSGZMLgc2bA3RAPpAT90=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-4VLeF_peN2aL_WNYkcun7g-1; Thu, 22 Aug 2024 11:50:38 -0400
-X-MC-Unique: 4VLeF_peN2aL_WNYkcun7g-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4500d2fe009so16984751cf.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 08:50:37 -0700 (PDT)
+ us-mta-671-DWqnjnLkOECsCWZcpFyFBw-1; Thu, 22 Aug 2024 11:59:17 -0400
+X-MC-Unique: DWqnjnLkOECsCWZcpFyFBw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6bf7a4ff102so16618846d6.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 08:59:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724341837; x=1724946637;
+ d=1e100.net; s=20230601; t=1724342357; x=1724947157;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pUDfxI1yA73uywHxKdLRwgYfR/mo3Nvoc8DDpoo2L14=;
- b=CgQ3dVTQuJdV1A/OPO2Jj4GwcFsI15mnRMbkunI1RM6DQ912dJtkog+iQkkRvj2pBv
- GCSHHSJhIX/0RkUOk1DAHxP/3MTJc1hRhzsb0xNG0eG0yxxcq0zESK+/ozxUXkIsnZ8x
- GylYumNHYhwYo2oQCF4FuK/vW/CxclNYBapjcPKTPb3UHpjHUP6s6rMDP2zfILf2WNGd
- L6en2raRLEVq+32eT21KWqb6AETW4XS1ajbMLEU1LDsM+NXyfjsMH7KXC2SDQPpz5YlF
- u+HfhDaodZMQ0ygEL4CeM3t2syneYvuVg3jRnkvSpUN4mPYqePCiMeTEKJTv0qgnp225
- AMmg==
-X-Gm-Message-State: AOJu0Yxs1AwzjMP0i02Cvcq7hCC4R4vHkES2q4kDo/jW/lAFNwcieCYh
- B8EhR/KgjM/X55ifyi3SdY53p4+RwbmY0tbnuBvXJwKU890QguTMdmS2x9r/H+jDN7IWkttt5Uj
- Dzk/0Jiu652NY4W033R0M9qwz2bxl/ipTj6z1UBwYYkHaGUdMBur+
-X-Received: by 2002:a05:622a:1115:b0:447:f8b1:aeb9 with SMTP id
- d75a77b69052e-454fae6d551mr60594201cf.16.1724341837363; 
- Thu, 22 Aug 2024 08:50:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQnXCf1geMeBiPpy0CYrSizPMAnkDsHAaRxajA6HQOJxmd7yZYqnOykzwrryf3o6/l4gPdDg==
-X-Received: by 2002:a05:622a:1115:b0:447:f8b1:aeb9 with SMTP id
- d75a77b69052e-454fae6d551mr60593931cf.16.1724341836907; 
- Thu, 22 Aug 2024 08:50:36 -0700 (PDT)
+ bh=iFA2z9JfXFjnL2SG3Gn7KjisECx4I6Cx2N/LvXW1y1s=;
+ b=dsu34nVkvQSOIzV2GNU4XZCsz5Hf/x168ZUTClYPqpTqSlcUXuHvdVfme9M3Klw2RH
+ FTlipalPOYwimmuAPBDSMa9xQFbE7sWAIAN+EX/3VTjYO3qe2tvqopNpQHim80GPjpXa
+ ugsQq+/O1JLxqSatr6Kj1Dg1HHzKeIckew0CrmtWB55azcQFXVBzIucAIs0mJDaW9aMn
+ HnSKPhdZow7vsffwBAK2nr56B/dcX9gpflfyTvYAcJSutZjeid4lkBz4ZlqVKn2XreYR
+ 8LD4idIPuzLQeMYgLm/zNlbu/a4mx1pjw30TUZX1s+bwc4+KY8g5I3Y82ACmHNK4ao95
+ hmNQ==
+X-Gm-Message-State: AOJu0YymJLYCT41BeXxugDiSxDXcetqYc8g6xXibrmF4wWrA7Z4d3ewx
+ HJw0XBJbzwgQ9gicAtfSj+6cMM+1xgxAuIAZOWDOGrftHgUO1uOIaBeZShL4dqbSHI0p3C5sbHl
+ MU2hKVPxMaYgymoXgz0taej3eIu62uMu3ZoH3GocKzRdVdu3PaQbI
+X-Received: by 2002:a05:6214:224a:b0:6b5:101c:6473 with SMTP id
+ 6a1803df08f44-6c160c410d0mr59741286d6.2.1724342357046; 
+ Thu, 22 Aug 2024 08:59:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtkQGXWdUmwIVh4L4B2a4OkhwQ94JLy86HxRDSNu/lRbzzXFJU5c0VaZklvDRnQszy/hGbGg==
+X-Received: by 2002:a05:6214:224a:b0:6b5:101c:6473 with SMTP id
+ 6a1803df08f44-6c160c410d0mr59741046d6.2.1724342356680; 
+ Thu, 22 Aug 2024 08:59:16 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-454fe1c9c9asm7852271cf.89.2024.08.22.08.50.35
+ 6a1803df08f44-6c162d4a29bsm8868916d6.40.2024.08.22.08.59.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 08:50:36 -0700 (PDT)
-Date: Thu, 22 Aug 2024 11:50:32 -0400
+ Thu, 22 Aug 2024 08:59:16 -0700 (PDT)
+Date: Thu, 22 Aug 2024 11:59:14 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v3 10/14] migration/multifd: Don't send ram data during
- SYNC
-Message-ID: <ZsdeSP4eyimnlMyS@x1n>
+Subject: Re: [PATCH v3 11/14] migration/multifd: Replace
+ multifd_send_state->pages with client data
+Message-ID: <ZsdgUn6oPJVFpKfU@x1n>
 References: <20240801123516.4498-1-farosas@suse.de>
- <20240801123516.4498-11-farosas@suse.de>
+ <20240801123516.4498-12-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240801123516.4498-11-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240801123516.4498-12-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -101,21 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 01, 2024 at 09:35:12AM -0300, Fabiano Rosas wrote:
-> Skip saving and loading any ram data in the packet in the case of a
-> SYNC. This fixes a shortcoming of the current code which requires a
-> reset of the MultiFDPages_t fields right after the previous
-> pending_job finishes, otherwise the very next job might be a SYNC and
-> multifd_send_fill_packet() will put the stale values in the packet.
+On Thu, Aug 01, 2024 at 09:35:13AM -0300, Fabiano Rosas wrote:
+> Multifd currently has a simple scheduling mechanism that distributes
+> work to the various channels by keeping storage space within each
+> channel and an extra space that is given to the client. Each time the
+> client fills the space with data and calls into multifd, that space is
+> given to the next idle channel and a free storage space is taken from
+> the channel and given to client for the next iteration.
 > 
-> By not calling multifd_ram_fill_packet(), we can stop resetting
-> MultiFDPages_t in the multifd core and leave that to the client code.
+> This means we always need (#multifd_channels + 1) memory slots to
+> operate multifd.
 > 
-> Actually moving the reset function is not yet done because
-> pages->num==0 is used by the client code to determine whether the
-> MultiFDPages_t needs to be flushed. The subsequent patches will
-> replace that with a generic flag that is not dependent on
-> MultiFDPages_t.
+> This is fine, except that the presence of this one extra memory slot
+> doesn't allow different types of payloads to be processed at the same
+> time in different channels, i.e. the data type of
+> multifd_send_state->pages needs to be the same as p->pages.
+> 
+> For each new data type different from MultiFDPage_t that is to be
+> handled, this logic would need to be duplicated by adding new fields
+> to multifd_send_state, to the channels and to multifd_send_pages().
+> 
+> Fix this situation by moving the extra slot into the client and using
+> only the generic type MultiFDSendData in the multifd core.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
