@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF794C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 20:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F942C5320E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 20:34:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shEQz-0008KV-0w; Thu, 22 Aug 2024 16:29:29 -0400
+	id 1shEUx-00050E-BU; Thu, 22 Aug 2024 16:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1shEQv-0008JV-NE
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 16:29:25 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1shEUs-0004zg-6F
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 16:33:30 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1shEQs-0001OD-IK
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 16:29:25 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-71433cba1b7so1080921b3a.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 13:29:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1shEUp-0001nE-DH
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 16:33:29 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2021537a8e6so11758145ad.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 13:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1724358561; x=1724963361; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1724358805; x=1724963605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1bZNp8aIgYT8p1KCbUzK8c7m4JbJyyn7EKuHWb1abT0=;
- b=MuhoEpXMFqyPUepG6PO79gpYCvyCabvgDXCAEJJhpJrAXsrjUMdkBNKA2B6tSgxlfM
- si/9Jk93isI88CmlVGxu9OlopHr78VLWhbWaSzN0iEo1jKxKC3jyEaT88S4W6t29vapw
- KcPbpa6YSq1V5DC8PO3Zl6/sqQsop36jsAgUWLM1gbqF6WC51BFIOa8PnWg+Jx4deYTa
- EqClBHbsCMpyQd3HCqVlrtvaAT0HymCbyrQcQiRNxmrWD58LVstrufjTLgsnbxduVLqa
- bUZqa8PrvhW31lD1WtbcKTlT+2nXCqxFQVw93qmZ0pzw5+pFg2KLtvIHKd7SdIrrEfUQ
- 5SYA==
+ bh=F/Y9UJez5Sdh+DpJLXtESStWqGu84u4tSgjv1tBBda0=;
+ b=krRtR9droeDl60hW7I4n3ZAKu8m0hlWPWl4VR+G92q+FSQ0/e0sRvNItJNoy9BDsiE
+ Lq1tcl5zi9yPxZHquygnFGLocy9/bquy3hjUyLB5Ry3TJ8iaLWCgPpGt4OEDQELiQsEr
+ 71uZQrMBmiOFckxynfuiBKBZyT/ityMBXDxap2TBvErMC8UNZxS28VEP06owr99IiC9x
+ iYgFmNtZ3AkkbL+KVgmrRA/tYY7Cu1K4LuQxS8o7YKORtWEbyupEUixB3JxHlrEqYf0Q
+ e73e1GQWjHd2qqeEO/1knHd5gKP7m4guRfjFzpFsfktRUEJz7PGIueRQlu0a4LyMA4X0
+ l3mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724358561; x=1724963361;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1724358805; x=1724963605;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1bZNp8aIgYT8p1KCbUzK8c7m4JbJyyn7EKuHWb1abT0=;
- b=QQvv27tDCZe7nNMIV/837X1UEKXwEZdCgMDX/AHz8fCP19dD7i7Pgilqzayn8eTH+N
- 3i438DS023j6v3XwpFAnrCMsp5T/0I5XQAk7lDxhiQPgiGzBYcMXkZvQGFU+iqydfgwy
- 229Y18dxPSMPTif0/DDYzIhqbf8SXDOsExEH4S2Jexl/RFRIIf4W9TftXH5zYKLIPyTw
- PBkKDr9JK2OkAdqByu0NlT/dOUwajUkcTCSO9ugvWjwpmpWLRTLeny8JV+HEY84wyM2t
- wgFl8LSl8z8Z/3ntQ+x0OurM+l4JQkcczpIRrDMqtl5ZXCagOout+SqdsSM2T4OGsxDR
- LC9Q==
+ bh=F/Y9UJez5Sdh+DpJLXtESStWqGu84u4tSgjv1tBBda0=;
+ b=riiaF9kJcW5kgKS987uqCa+A4NAdL4W5a/0x8iTODCGrEj5Mxd0t3ki4Uiq6cW9qia
+ k9h5B55K2RUMsVKogI4Rw0F++7NUlwlndPhSZYdzt4Vr1dthSsFltn29zM8KvNe1T4yE
+ Gwa5uitYb0ZiLqvUfAeSg5KpaIGt1W6gRJCzxSn5xA01RQKGCuvyGfXwxN3GqxtU8+Ye
+ VtUF3PwUdR8wXhgFpCbQwp0g+UPu+9Wr0yWPRGRtfg16xltMpiSqLHQM0sJ5CYCRH6jl
+ sxXXwjTVk3Cgm6ASXMbCIP7sZtkIGlY2POVQM1F6c4Ym/ds95R2yWuIOtJmKfgvgIkY7
+ u8wg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHffx/7kAGOpdjLOI5HMrdRVWoWO+bP2v+Ohf+Pk83NKfFcekY/Ah5xIm67TaLLmmgTs6vsI6u8EOQ@nongnu.org
-X-Gm-Message-State: AOJu0YzxqhavxUqW23l733EJXGXUKl5F9vqM5HrbhnO9g0iMoO6/K2Gm
- 2t0rySgWXd4vTcLr4PuM/c9dqdtRYJMTBE6jyiKSIE7ESiSPN0zrcvkt00ejoyw=
-X-Google-Smtp-Source: AGHT+IGT5zPk2OOtVlcujrG+8wjTBonRcPbRSaYkz69ZukwVxDiTM1jFGR2CVVmmOtdTZrMeIvnOhQ==
-X-Received: by 2002:a05:6a00:460e:b0:710:9d5e:555c with SMTP id
- d2e1a72fcca58-714458939d7mr205588b3a.23.1724358560848; 
- Thu, 22 Aug 2024 13:29:20 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bdcd:fb00:6501:2693:db52:c621?
- ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
+ AJvYcCXkyVIRzhLu/Nn29C/R1H1FBPPD07APA1zA8keaVM/JDBgp33yhiBWYFBhA2m3KXnHc9PmDYkB4O6ah@nongnu.org
+X-Gm-Message-State: AOJu0Yw0V8JSa5GY+I6BqNnAgdDmJ+6eq9gVEbsMpZsrMTIaCXDiQykD
+ /dpZqvDsV5Y6gn8NDaJzstjSFGDnkJA/iq3lo7QjE41MsQjBhdnHWQWflZVyZNg=
+X-Google-Smtp-Source: AGHT+IHP5oZD9CeWgBiJWrUBAj+1QfVkkctRNJrqSV2yu9Rj75Yx/JnYJ0gFHrp4oiavqVF2BwQk8Q==
+X-Received: by 2002:a17:903:2442:b0:202:562c:f3c7 with SMTP id
+ d9443c01a7336-20367d329b2mr94162275ad.10.1724358804803; 
+ Thu, 22 Aug 2024 13:33:24 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::27bd? ([2604:3d08:9384:1d00::27bd])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7cd9abfd5b1sm1785158a12.0.2024.08.22.13.29.18
+ d9443c01a7336-20385608eb5sm16507215ad.188.2024.08.22.13.33.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 13:29:20 -0700 (PDT)
-Message-ID: <dbdeebc5-fe10-4f0f-b816-a112afd9f626@ventanamicro.com>
-Date: Thu, 22 Aug 2024 17:29:16 -0300
+ Thu, 22 Aug 2024 13:33:24 -0700 (PDT)
+Message-ID: <d134a954-0380-41dc-9e3b-75e1dc2e2bbf@linaro.org>
+Date: Thu, 22 Aug 2024 13:33:23 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] Add support for generating OpenSBI domains in the
- device tree
-To: Gregor Haas <gregorhaas1997@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, atishp@rivosinc.com, alistair.francis@wdc.com
-References: <20240805210444.497723-1-gregorhaas1997@gmail.com>
- <20240805210444.497723-2-gregorhaas1997@gmail.com>
+Subject: Re: [PATCH] plugins: add plugin API to read guest memory
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240805210444.497723-2-gregorhaas1997@gmail.com>
+To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240821235607.208622-1-rowanbhart@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240821235607.208622-1-rowanbhart@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,712 +98,416 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Rowan, thanks for your contribution.
 
+To give some context on the answer, we are currently working to add a 
+similar "read_memory" API, but associated to memory callbacks for 
+plugins 
+(https://lore.kernel.org/qemu-devel/20240724194708.1843704-1-pierrick.bouvier@linaro.org/T/#t).
 
-On 8/5/24 6:04 PM, Gregor Haas wrote:
-> OpenSBI has support for domains, which are partitions of CPUs and memory into
-> isolated compartments. Domains can be specified in the device tree according to
-> a standardized format [1], which OpenSBI parses at boot time to initialize all
-> system domains. This patch enables simply specifying domains (and their
-> associated memory regions) on the QEMU command line, from which these are then
-> rendered into the machine's device tree.
-> 
-> At machine initialization time, a new create_fdt_opensbi_domains() function
-> walks the peripherals/peripherals-anon containers, identifies all domains and
-> memregions, and parses them into the relevant device tree structures.
-> 
-> [1] https://github.com/riscv-software-src/opensbi/blob/master/docs/domain_support.md
-> 
-> Signed-off-by: Gregor Haas <gregorhaas1997@gmail.com>
+A key aspect of what you propose here, is that the memory may have 
+changed during the write time, and when you read it, while what we 
+propose guarantees to track every change correctly.
+
+It's not a bad thing, and both API are definitely complementary. When 
+talking to Alex, he was keen to add a global read_memory API (like you 
+propose), after we merge the first one.
+
+@Alex: any thought on this?
+
+Regarding your patch, it would be much easier if you could split that in 
+different commits. Adding API first, then modify each plugin in a 
+different commit. This way, it would be easier to review. I'll make my 
+comments in this patch, but for v2, please split those individual 
+commits, and a cover letter, describing your changes 
+(https://github.com/stefanha/git-publish is a great tool if you want to 
+easily push series).
+
+On 8/21/24 16:56, Rowan Hart wrote:
+> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
 > ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   MAINTAINERS                       |   7 +
->   hw/riscv/Kconfig                  |   4 +
->   hw/riscv/meson.build              |   1 +
->   hw/riscv/opensbi_domain.c         | 542 ++++++++++++++++++++++++++++++
->   hw/riscv/virt.c                   |   3 +
->   include/hw/riscv/opensbi_domain.h |  50 +++
->   6 files changed, 607 insertions(+)
->   create mode 100644 hw/riscv/opensbi_domain.c
->   create mode 100644 include/hw/riscv/opensbi_domain.h
+>   docs/about/emulation.rst     |  16 ++++-
+>   include/qemu/qemu-plugin.h   |  24 +++++++-
+>   plugins/api.c                |  21 +++++++
+>   plugins/qemu-plugins.symbols |   1 +
+>   tests/tcg/plugins/mem.c      |  37 +++++++++++-
+>   tests/tcg/plugins/syscall.c  | 113 +++++++++++++++++++++++++++++++++++
+>   6 files changed, 208 insertions(+), 4 deletions(-)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 98eddf7ae1..796c023a7b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -355,6 +355,13 @@ F: target/riscv/XVentanaCondOps.decode
->   F: target/riscv/insn_trans/trans_xventanacondops.c.inc
->   F: disas/riscv-xventana*
+> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+> index eea1261baa..9c68e37887 100644
+> --- a/docs/about/emulation.rst
+> +++ b/docs/about/emulation.rst
+> @@ -354,6 +354,8 @@ Behaviour can be tweaked with the following arguments:
+>       - Use callbacks on each memory instrumentation.
+>     * - hwaddr=true|false
+>       - Count IO accesses (only for system emulation)
+> +  * - read=true|false
+> +    - Read the memory content of each access and display it
 >   
-> +RISC-V OpenSBI domain support
-> +M: Gregor Haas <gregorhaas1997@gmail.com>
-> +L: qemu-riscv@nongnu.org
-> +S: Maintained
-> +F: hw/riscv/opensbi_domain.c
-> +F: include/hw/riscv/opensbi_domain.h
-> +
->   RENESAS RX CPUs
->   R: Yoshinori Sato <ysato@users.sourceforge.jp>
->   S: Orphan
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index a2030e3a6f..db3a4d77ad 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -1,6 +1,9 @@
->   config RISCV_NUMA
->       bool
+>   System Calls
+>   ............
+> @@ -388,6 +390,19 @@ run::
+>     160          1      0
+>     135          1      0
 >   
-> +config RISCV_OPENSBI_DOMAIN
-> +    bool
+> +Behaviour can be tweaked with the following arguments:
 > +
->   config IBEX
->       bool
+> +.. list-table:: Syscall plugin arguments
+> +  :widths: 20 80
+> +  :header-rows: 1
+> +
+> +  * - Option
+> +    - Description
+> +  * - print=true|false
+> +    - Print the number of times each syscall is called
+> +  * - log_writes=true|false
+> +    - Log the buffer of each write syscall in hexdump format
+> +
+>   Test inline operations
+>   ......................
 >   
-> @@ -40,6 +43,7 @@ config RISCV_VIRT
->       imply TPM_TIS_SYSBUS
->       select DEVICE_TREE
->       select RISCV_NUMA
-> +    select RISCV_OPENSBI_DOMAIN
->       select GOLDFISH_RTC
->       select PCI
->       select PCI_EXPRESS_GENERIC_BRIDGE
-> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-> index f872674093..f47626c164 100644
-> --- a/hw/riscv/meson.build
-> +++ b/hw/riscv/meson.build
-> @@ -1,6 +1,7 @@
->   riscv_ss = ss.source_set()
->   riscv_ss.add(files('boot.c'))
->   riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
-> +riscv_ss.add(when: 'CONFIG_RISCV_OPENSBI_DOMAIN', if_true: files('opensbi_domain.c'))
->   riscv_ss.add(files('riscv_hart.c'))
->   riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
->   riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
-> diff --git a/hw/riscv/opensbi_domain.c b/hw/riscv/opensbi_domain.c
-> new file mode 100644
-> index 0000000000..67a6bab538
-> --- /dev/null
-> +++ b/hw/riscv/opensbi_domain.c
-> @@ -0,0 +1,542 @@
-> +#include "qemu/osdep.h"
-> +#include "hw/riscv/opensbi_domain.h"
-> +#include "hw/boards.h"
-> +#include "hw/riscv/virt.h"
-> +#include "qapi/error.h"
-> +#include "qemu/cutils.h"
-> +#include "qemu/error-report.h"
-> +#include "sysemu/device_tree.h"
-> +
-> +#include <libfdt.h>
-> +
-> +static void create_fdt_domain_possible_harts(MachineState *ms,
-> +                                             OpenSBIDomainState *s,
-> +                                             char *path) {
-> +    unsigned long i, cpu;
-> +    unsigned long num_cpus;
-> +
-> +    num_cpus = s->last_possible_hart - s->first_possible_hart + 1;
-> +    if (num_cpus) {
-> +        g_autofree uint32_t *phandles = g_malloc0_n(num_cpus, sizeof(uint32_t));
-> +
-> +        for (i = 0, cpu = s->first_possible_hart; i < num_cpus; i++, cpu++) {
-> +            g_autofree char *cpu_name = g_strdup_printf("/cpus/cpu@%li", cpu);
-> +            phandles[i] = cpu_to_fdt32(qemu_fdt_get_phandle(
-> +                    ms->fdt, cpu_name));
-> +        }
-> +
-> +        qemu_fdt_setprop(ms->fdt, path, "possible-harts",
-> +                         phandles, num_cpus * 4);
-> +    }
-> +}
-> +
-> +static void create_fdt_domain_regions(MachineState *ms,
-> +                                      OpenSBIDomainState *s,
-> +                                      char *path) {
-> +    unsigned long i;
-> +    int num_regions = 0;
-> +    DeviceState *ds;
-> +
-> +    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
-> +        if (s->regions[i]) {
-> +            num_regions++;
-> +        }
-> +    }
-> +
-> +    if (num_regions) {
-> +        g_autofree uint32_t *regions =
-> +                 g_malloc0_n(num_regions, 2 * sizeof(uint32_t));
-> +        for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
-> +            if (s->regions[i]) {
-> +                ds = DEVICE(s->regions[i]);
-> +                g_autofree char *region_name = g_strdup_printf(
-> +                       "/chosen/opensbi-domains/%s", ds->id);
-> +                regions[2 * i] = cpu_to_fdt32(qemu_fdt_get_phandle
-> +                        (ms->fdt, region_name));
-> +                regions[2 * i + 1] = cpu_to_fdt32(s->region_perms[i]);
-> +            }
-> +        }
-> +
-> +        qemu_fdt_setprop(ms->fdt, path, "regions",
-> +                         regions, num_regions * 8);
-> +    }
-> +}
-> +
-> +struct DomainFDTState {
-> +    MachineState *ms;
-> +    bool regions;
-> +};
-> +
-> +static void create_fdt_one_domain(MachineState *ms, OpenSBIDomainState *s)
-> +{
-> +    DeviceState *ds = DEVICE(s);
-> +    g_autofree char *path, *cpu_name;
-> +
-> +    if (ds->id) {
-> +        path = g_strdup_printf("/chosen/opensbi-domains/%s",
-> +                               ds->id);
-> +    } else {
-> +        path = g_strdup_printf("/chosen/opensbi-domains/domain@%lx",
-> +                               s->next_addr);
-> +    }
-> +
-> +    qemu_fdt_add_subnode(ms->fdt, path);
-> +    qemu_fdt_setprop_string(ms->fdt, path, "compatible",
-> +                            "opensbi,domain,instance");
-> +    qemu_fdt_setprop_cells(ms->fdt, path, "phandle",
-> +                           qemu_fdt_alloc_phandle(ms->fdt));
-> +
-> +    create_fdt_domain_possible_harts(ms, s, path);
-> +    create_fdt_domain_regions(ms, s, path);
-> +
-> +    /* Assign boot hart to this domain */
-> +    if (s->boot_hart != -1) {
-> +        cpu_name = g_strdup_printf("/cpus/cpu@%i", s->boot_hart);
-> +        qemu_fdt_setprop_cell(ms->fdt, path, "boot-hart",
-> +                              qemu_fdt_get_phandle(ms->fdt, cpu_name));
-> +        if (s->assign) {
-> +            qemu_fdt_setprop_cell(ms->fdt, cpu_name, "opensbi-domain",
-> +                                    qemu_fdt_get_phandle(ms->fdt, path));
-> +        }
-> +    }
-> +
-> +    if (s->next_arg1 != -1) {
-> +        qemu_fdt_setprop_cells(ms->fdt, path, "next-arg1",
-> +                             (uint64_t) s->next_arg1 >> 32, s->next_arg1);
-> +    }
-> +
-> +    if (s->next_addr != -1) {
-> +        qemu_fdt_setprop_cells(ms->fdt, path, "next-addr",
-> +                             (uint64_t) s->next_addr >> 32, s->next_addr);
-> +    }
-> +
-> +    if (s->next_mode != -1) {
-> +        qemu_fdt_setprop_cell(ms->fdt, path, "next-mode",
-> +                            s->next_mode);
-> +    }
-> +
-> +    if (s->system_reset_allowed) {
-> +        qemu_fdt_setprop(ms->fdt, path, "system-reset-allowed", NULL, 0);
-> +    }
-> +
-> +    if (s->system_suspend_allowed) {
-> +        qemu_fdt_setprop(ms->fdt, path, "system-suspend-allowed", NULL, 0);
-> +    }
-> +}
-> +
-> +static uint32_t create_fdt_one_device(MachineState *ms, char *device)
-> +{
-> +    uint32_t phandle;
-> +    int offs = fdt_path_offset(ms->fdt, device);
-> +
-> +    if (offs < 0) {
-> +        error_report("%s: Could not find device %s: %s", __func__,
-> +                     device, fdt_strerror(offs));
-> +        exit(1);
-> +    }
-> +
-> +    phandle = fdt_get_phandle(ms->fdt, offs);
-> +    if (!phandle) {
-> +        phandle = qemu_fdt_alloc_phandle(ms->fdt);
-> +        qemu_fdt_setprop_cell(ms->fdt, device, "phandle", phandle);
-> +    }
-> +
-> +    return phandle;
-> +}
-> +
-> +static void create_fdt_one_memregion(MachineState *ms,
-> +                                     OpenSBIMemregionState *s)
-> +{
-> +    g_autofree char *path;
-> +    int i, dev, num_devices;
-> +    DeviceState *ds = DEVICE(s);
-> +
-> +    path = g_strdup_printf("/chosen/opensbi-domains/%s", ds->id);
-> +    qemu_fdt_add_subnode(ms->fdt, path);
-> +    qemu_fdt_setprop_string(ms->fdt, path, "compatible",
-> +                            "opensbi,domain,memregion");
-> +    qemu_fdt_setprop_cells(ms->fdt, path, "base",
-> +                           (uint64_t) s->base >> 32, s->base);
-> +
-> +    qemu_fdt_setprop_cell(ms->fdt, path, "order",
-> +                          (uint32_t) s->order);
-> +
-> +    if (s->mmio) {
-> +        qemu_fdt_setprop(ms->fdt, path, "mmio", NULL, 0);
-> +
-> +        /* Get all phandles for related devices */
-> +        num_devices = 0;
-> +        for (i = 0; i < OPENSBI_MEMREGION_DEVICES_MAX; i++) {
-> +            if (s->devices[i]) {
-> +                num_devices++;
-> +            }
-> +        }
-> +
-> +        if (num_devices) {
-> +            g_autofree uint32_t *devices =
-> +                g_malloc0_n(num_devices, sizeof(uint32_t));
-> +            for (i = 0, dev = 0; i < OPENSBI_MEMREGION_DEVICES_MAX &&
-> +                                 dev < num_devices; i++) {
-> +                if (s->devices[i]) {
-> +                    devices[dev++] = create_fdt_one_device(ms,
-> +                                                         s->devices[i]);
-> +                }
-> +            }
-> +
-> +            qemu_fdt_setprop(ms->fdt, path, "devices", devices,
-> +                             num_devices * 4);
-> +        }
-> +    }
-> +
-> +    qemu_fdt_setprop_cells(ms->fdt, path, "phandle",
-> +                           qemu_fdt_alloc_phandle(ms->fdt));
-> +}
-> +
-> +static int create_fdt_domains(Object *obj, void *opaque)
-> +{
-> +    struct DomainFDTState *dfs = opaque;
-> +    OpenSBIDomainState *osds;
-> +    OpenSBIMemregionState *osms;
-> +
-> +    osds = (OpenSBIDomainState *)
-> +            object_dynamic_cast(obj, TYPE_OPENSBI_DOMAIN);
-> +    osms = (OpenSBIMemregionState *)
-> +            object_dynamic_cast(obj, TYPE_OPENSBI_MEMREGION);
-> +
-> +    if (dfs->regions) {
-> +        if (osms) {
-> +            create_fdt_one_memregion(dfs->ms, osms);
-> +        }
-> +    } else {
-> +        if (osds) {
-> +            create_fdt_one_domain(dfs->ms, osds);
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static const char *containers[] = {
-> +        "/peripheral", "/peripheral-anon"
-> +};
-> +
-> +void create_fdt_opensbi_domains(MachineState *s)
-> +{
-> +    int i;
-> +    MachineState *ms = MACHINE(s);
-> +    Object *container;
-> +
-> +    struct DomainFDTState check = {
-> +            .ms = ms,
-> +            .regions = true
-> +    };
-> +
-> +    /* Make sure that top-level node exists */
-> +    qemu_fdt_add_subnode(ms->fdt, "/chosen/opensbi-domains");
-> +    qemu_fdt_setprop_string(ms->fdt, "/chosen/opensbi-domains",
-> +                            "compatible", "opensbi,domain,config");
-> +
-> +    /* Do a scan through regions first */
-> +    for (i = 0; i < ARRAY_SIZE(containers); i++) {
-> +        container = container_get(OBJECT(s), containers[i]);
-> +        object_child_foreach(container, create_fdt_domains, &check);
-> +    }
-> +
-> +    /* Then scan through domains */
-> +    check.regions = false;
-> +    for (i = 0; i < ARRAY_SIZE(containers); i++) {
-> +        container = container_get(OBJECT(s), containers[i]);
-> +        object_child_foreach(container, create_fdt_domains, &check);
-> +    }
-> +}
-> +
-> +/* OpenSBI Memregions */
-> +
-> +static void set_mmio(Object *obj, bool val, Error **err)
-> +{
-> +    OpenSBIMemregionState *s = OPENSBI_MEMREGION(obj);
-> +    s->mmio = val;
-> +}
-> +
-> +static void set_device(Object *obj, const char *val, Error **err)
-> +{
-> +    int i;
-> +    OpenSBIMemregionState *s = OPENSBI_MEMREGION(obj);
-> +
-> +    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
-> +        if (!s->devices[i]) {
-> +            s->devices[i] = g_strdup(val);
-> +            break;
-> +        }
-> +    }
-> +}
-> +
-> +static void opensbi_memregion_instance_init(Object *obj)
-> +{
-> +    int i;
-> +    OpenSBIMemregionState *s = OPENSBI_MEMREGION(obj);
-> +
-> +    s->base = -1;
-> +    object_property_add_uint64_ptr(obj, "base", &s->base,
-> +                                   OBJ_PROP_FLAG_WRITE);
-> +    object_property_set_description(obj, "base",
-> +                                    "The base address of the domain memory region. If \"order\" is also specified, "
-> +                                    "this property should be a 2 ^ order aligned 64 bit address");
-> +
-> +    s->order = -1;
-> +    object_property_add_uint32_ptr(obj, "order", &s->order,
-> +                                   OBJ_PROP_FLAG_WRITE);
-> +    object_property_set_description(obj, "order",
-> +                                    "The order of the domain memory region. This property should have a 32 bit value "
-> +                                    "(i.e. one DT cell) in the range 3 <= order <= __riscv_xlen.");
-> +
-> +    s->mmio = false;
-> +    object_property_add_bool(obj, "mmio", NULL, set_mmio);
-> +    object_property_set_description(obj, "mmio",
-> +                                    "A boolean flag representing whether the domain memory region is a "
-> +                                    "memory-mapped I/O (MMIO) region.");
-> +
-> +    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
-> +        g_autofree char *propname = g_strdup_printf("device%i", i);
-> +        object_property_add_str(obj, propname, NULL, set_device);
-> +
-> +        g_autofree char *description = g_strdup_printf(
-> +                "Device %i (out of %i) for this memregion. This property should be a device tree path to the device.",
-> +                i, OPENSBI_DOMAIN_MEMREGIONS_MAX);
-> +        object_property_set_description(obj, propname, description);
-> +    }
-> +}
-> +
-> +static void opensbi_memregion_realize(DeviceState *ds, Error **errp)
-> +{
-> +    #if defined(TARGET_RISCV32)
-> +    int xlen = 32;
-> +    #elif defined(TARGET_RISCV64)
-> +    int xlen = 64;
-> +    #endif
-> +
-> +    OpenSBIMemregionState *s = OPENSBI_MEMREGION(ds);
-> +
-> +    if (s->base == -1) {
-> +        error_setg(errp, "must specify base");
-> +        return;
-> +    }
-> +
-> +    if (s->order == -1) {
-> +        error_setg(errp, "must specify order");
-> +        return;
-> +    }
-> +
-> +    /* Check order bounds */
-> +    if (s->order < 3 || s->order > xlen) {
-> +        error_setg(errp, "order must be between 3 and %d", xlen);
-> +        return;
-> +    }
-> +
-> +    /* Check base alignment */
-> +    if (s->order < xlen && (s->base & (BIT(s->order) - 1))) {
-> +        error_setg(errp, "base not aligned to order");
-> +        return;
-> +    }
-> +}
-> +
-> +static void opensbi_memregion_class_init(ObjectClass *oc, void *opaque)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(oc);
-> +    dc->realize = opensbi_memregion_realize;
-> +}
-> +
-> +static const TypeInfo opensbi_memregion_info = {
-> +        .name = TYPE_OPENSBI_MEMREGION,
-> +        .parent = TYPE_DEVICE,
-> +        .instance_init = opensbi_memregion_instance_init,
-> +        .instance_size = sizeof(OpenSBIDomainState),
-> +        .class_init = opensbi_memregion_class_init
-> +};
-> +
-> +/* OpenSBI Domains */
-> +
-> +static void set_sysreset_allowed(Object *obj, bool val, Error **err)
-> +{
-> +    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
-> +    s->system_reset_allowed = val;
-> +}
-> +
-> +static void set_suspend_allowed(Object *obj, bool val, Error **err)
-> +{
-> +    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
-> +    s->system_suspend_allowed = val;
-> +}
-> +
-> +static void set_assign(Object *obj, bool val, Error **err)
-> +{
-> +    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
-> +    s->assign = val;
-> +}
-> +
-> +static void set_possible_harts(Object *obj, const char *str, Error **err)
-> +{
-> +    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
-> +    const char *firstcpu,  *firstcpu_end, *lastcpu;
-> +
-> +    firstcpu = str;
-> +    if (qemu_strtoul(firstcpu, &firstcpu_end, 0,
-> +                     &s->first_possible_hart) < 0) {
-> +        error_setg(err, "could not convert firstcpu");
-> +        return;
-> +    }
-> +
-> +    lastcpu = qemu_strchrnul(str, '-');
-> +    if (*lastcpu) {
-> +        if (lastcpu != firstcpu_end) {
-> +            error_setg(err, "could not separate firstcpu and lastcpu");
-> +            return;
-> +        }
-> +
-> +        lastcpu++;
-> +        if (qemu_strtoul(lastcpu, NULL, 0,
-> +                         &s->last_possible_hart) < 0) {
-> +            error_setg(err, "could not convert lastcpu");
-> +            return;
-> +        }
-> +    } else {
-> +        s->last_possible_hart = s->first_possible_hart;
-> +    }
-> +}
-> +
-> +static void opensbi_domain_instance_init(Object *obj)
-> +{
-> +    int i;
-> +    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
-> +
-> +    s->boot_hart = VIRT_CPUS_MAX;
-> +    object_property_add_uint32_ptr(obj, "boot-hart", &s->boot_hart,
-> +                                   OBJ_PROP_FLAG_WRITE);
-> +    object_property_set_description(obj, "boot-hart",
-> +                                    "The HART booting the domain instance.");
-> +
-> +    s->first_possible_hart = -1;
-> +    s->last_possible_hart = -1;
-> +    object_property_add_str(obj, "possible-harts", NULL, set_possible_harts);
-> +    object_property_set_description(obj, "possible-harts",
-> +                                    "The contiguous list of CPUs for the domain instance, specified as firstcpu[-lastcpu]");
-> +
-> +    s->next_arg1 = -1;
-> +    object_property_add_uint64_ptr(obj, "next-arg1", &s->next_arg1,
-> +                                   OBJ_PROP_FLAG_WRITE);
-> +    object_property_set_description(obj, "next-arg1",
-> +                                    "The 64 bit next booting stage arg1 for the domain instance.");
-> +
-> +    s->next_addr = -1;
-> +    object_property_add_uint64_ptr(obj, "next-addr", &s->next_addr,
-> +                                   OBJ_PROP_FLAG_WRITE);
-> +    object_property_set_description(obj, "next-addr",
-> +                                    "The 64 bit next booting stage address for the domain instance.");
-> +
-> +    s->next_mode = -1;
-> +    object_property_add_uint32_ptr(obj, "next-mode", &s->next_mode,
-> +                                   OBJ_PROP_FLAG_WRITE);
-> +    object_property_set_description(obj, "next-mode",
-> +                                    "The 32 bit next booting stage mode for the domain instance.");
-> +
-> +    s->system_reset_allowed = false;
-> +    object_property_add_bool(obj, "system-reset-allowed", NULL,
-> +                             set_sysreset_allowed);
-> +    object_property_set_description(obj, "system-reset-allowed",
-> +                                    "Whether the domain instance is allowed to do system reset.");
-> +
-> +    s->system_suspend_allowed = false;
-> +    object_property_add_bool(obj, "system-suspend-allowed", NULL,
-> +                             set_suspend_allowed);
-> +    object_property_set_description(obj, "system-suspend-allowed",
-> +                                    "Whether the domain instance is allowed to do system suspend.");
-> +
-> +    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
-> +        s->regions[i] = NULL;
-> +        g_autofree char *reg_propname = g_strdup_printf("region%i", i);
-> +        object_property_add_link(obj, reg_propname, TYPE_OPENSBI_MEMREGION,
-> +                                 (Object **) &s->regions[i],
-> +                                 qdev_prop_allow_set_link_before_realize, 0);
-> +
-> +        g_autofree char *reg_description = g_strdup_printf(
-> +                "Region %i (out of %i) for this domain.",
-> +                i, OPENSBI_DOMAIN_MEMREGIONS_MAX);
-> +        object_property_set_description(obj, reg_propname, reg_description);
-> +
-> +        s->region_perms[i] = 0;
-> +        g_autofree char *perm_propname = g_strdup_printf("perms%i", i);
-> +        object_property_add_uint32_ptr(obj, perm_propname, &s->region_perms[i],
-> +                                       OBJ_PROP_FLAG_WRITE);
-> +
-> +        g_autofree char *perm_description = g_strdup_printf(
-> +                "Permissions for region %i for this domain.", i);
-> +        object_property_set_description(obj, perm_propname, perm_description);
-> +    }
-> +
-> +    object_property_add_bool(obj, "assign", NULL, set_assign);
-> +    object_property_set_description(obj, "assign",
-> +                                    "Whether to assign this domain to its boot hart.");
-> +}
-> +
-> +static void opensbi_domain_realize(DeviceState *ds, Error **errp)
-> +{
-> +    OpenSBIDomainState *s = OPENSBI_DOMAIN(ds);
-> +
-> +    if (s->boot_hart >= VIRT_CPUS_MAX) {
-> +        error_setg(errp, "boot hart larger than maximum number of CPUs (%d)",
-> +                 VIRT_CPUS_MAX);
-> +        return;
-> +    }
-> +
-> +    if (s->first_possible_hart == -1) {
-> +        if (s->last_possible_hart != -1) {
-> +            error_setg(errp,
-> +                     "last possible hart set when first possible hart unset");
-> +            return;
-> +        }
-> +    } else {
-> +        if (s->first_possible_hart >= VIRT_CPUS_MAX) {
-> +            error_setg(errp,
-> +                     "first possible hart larger than maximum number of CPUs (%d)",
-> +                     VIRT_CPUS_MAX);
-> +            return;
-> +        }
-> +
-> +        if (s->last_possible_hart != -1) {
-> +            if (s->last_possible_hart < s->first_possible_hart) {
-> +                error_setg(errp,
-> +                         "last possible hart larger than first possible hart");
-> +                return;
-> +            }
-> +
-> +            if (s->last_possible_hart >= VIRT_CPUS_MAX) {
-> +                error_setg(errp,
-> +                         "last possible hart larger than maximum number of CPUS (%d)",
-> +                         VIRT_CPUS_MAX);
-> +                return;
-> +            }
-> +        }
-> +    }
-> +}
-> +
-> +static void opensbi_domain_class_init(ObjectClass *oc, void *opaque)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(oc);
-> +    dc->realize = opensbi_domain_realize;
-> +}
-> +
-> +static const TypeInfo opensbi_domain_info = {
-> +        .name = TYPE_OPENSBI_DOMAIN,
-> +        .parent = TYPE_DEVICE,
-> +        .instance_init = opensbi_domain_instance_init,
-> +        .instance_size = sizeof(OpenSBIDomainState),
-> +        .class_init = opensbi_domain_class_init
-> +};
-> +
-> +static void opensbi_register_types(void)
-> +{
-> +    type_register_static(&opensbi_domain_info);
-> +    type_register_static(&opensbi_memregion_info);
-> +}
-> +
-> +type_init(opensbi_register_types)
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 9981e0f6c9..bb4bf3ce5b 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -55,6 +55,7 @@
->   #include "hw/acpi/aml-build.h"
->   #include "qapi/qapi-visit-common.h"
->   #include "hw/virtio/virtio-iommu.h"
-> +#include "hw/riscv/opensbi_domain.h"
+> @@ -777,4 +792,3 @@ Other emulation features
+>   When running system emulation you can also enable deterministic
+>   execution which allows for repeatable record/replay debugging. See
+>   :ref:`Record/Replay<replay>` for more details.
+> -
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index c71c705b69..d4ec73574b 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -57,11 +57,19 @@ typedef uint64_t qemu_plugin_id_t;
+>    * - Remove qemu_plugin_register_vcpu_{tb, insn, mem}_exec_inline.
+>    *   Those functions are replaced by *_per_vcpu variants, which guarantee
+>    *   thread-safety for operations.
+> + *
+> + * version 3:
+> + * - modified arguments and return value of qemu_plugin_insn_data to copy
+> + *   the data into a user-provided buffer instead of returning a pointer
+> + *   to the data.
+> + *
+
+Is it a change left on your side, or a bad diff?
+
+> + * version 4:
+> + * - added qemu_plugin_read_memory_vaddr
+>    */
 >   
->   /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
->   static bool virt_use_kvm_aia(RISCVVirtState *s)
-> @@ -1051,6 +1052,8 @@ static void finalize_fdt(RISCVVirtState *s)
->       create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
+>   extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
 >   
->       create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
+> -#define QEMU_PLUGIN_VERSION 3
+> +#define QEMU_PLUGIN_VERSION 4
+>   
+>   /**
+>    * struct qemu_info_t - system information for plugins
+> @@ -852,6 +860,20 @@ typedef struct {
+>   QEMU_PLUGIN_API
+>   GArray *qemu_plugin_get_registers(void);
+>   
+> +/**
+> + * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
+> + *
+> + * @addr: A virtual address to read from
+> + * @len: The number of bytes to read, starting from @addr
+> + *
+> + * Returns a GByteArray with the read memory. Ownership of the GByteArray is
+> + * transferred to the caller, which is responsible for deallocating it after
+> + * use. On failure returns NULL.
+> + */
+> +QEMU_PLUGIN_API
+> +GByteArray *qemu_plugin_read_memory_vaddr(uint64_t addr,
+> +                                          size_t len);
 > +
-> +    create_fdt_opensbi_domains(MACHINE(s));
+
+IMHO, it would be better to pass the buffer as a parameter, instead of 
+allocating a new one everytime.
+
+bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *buf, 
+size_t len).
+
+>   /**
+>    * qemu_plugin_read_register() - read register for current vCPU
+>    *
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 2ff13d09de..f210ca166a 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -527,6 +527,27 @@ GArray *qemu_plugin_get_registers(void)
+>       return create_register_handles(regs);
 >   }
 >   
->   static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
-> diff --git a/include/hw/riscv/opensbi_domain.h b/include/hw/riscv/opensbi_domain.h
-> new file mode 100644
-> index 0000000000..bcce16a609
-> --- /dev/null
-> +++ b/include/hw/riscv/opensbi_domain.h
-> @@ -0,0 +1,50 @@
+> +GByteArray *qemu_plugin_read_memory_vaddr(vaddr addr, size_t len)
+> +{
+> +    g_assert(current_cpu);
 > +
-> +#ifndef RISCV_DOMAIN_H
-> +#define RISCV_DOMAIN_H
+> +    if (len == 0) {
+> +        return NULL;
+> +    }
 > +
-> +#include "hw/sysbus.h"
-> +#include "qom/object.h"
-> +#include "cpu.h"
+> +    GByteArray *buf = g_byte_array_sized_new(len);
+> +    g_byte_array_set_size(buf, len);
 > +
-> +#define TYPE_OPENSBI_MEMREGION "opensbi-memregion"
-> +OBJECT_DECLARE_SIMPLE_TYPE(OpenSBIMemregionState, OPENSBI_MEMREGION)
+> +    int result = cpu_memory_rw_debug(current_cpu, addr, buf->data, buf->len, 0);
 > +
-> +#define OPENSBI_MEMREGION_DEVICES_MAX   16
+> +    if (result < 0) {
+> +        g_byte_array_unref(buf);
+> +        return NULL;
+> +    }
 > +
-> +struct OpenSBIMemregionState {
-> +    /* public */
-> +    DeviceState parent_obj;
+> +    return buf;
+> +}
 > +
-> +    /* private */
-> +    uint64_t base;
-> +    uint32_t order;
-> +    bool mmio;
-> +    char *devices[OPENSBI_MEMREGION_DEVICES_MAX];
+>   int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+>   {
+>       g_assert(current_cpu);
+> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+> index ca773d8d9f..3ad479a924 100644
+> --- a/plugins/qemu-plugins.symbols
+> +++ b/plugins/qemu-plugins.symbols
+> @@ -20,6 +20,7 @@
+>     qemu_plugin_num_vcpus;
+>     qemu_plugin_outs;
+>     qemu_plugin_path_to_binary;
+> +  qemu_plugin_read_memory_vaddr;
+>     qemu_plugin_read_register;
+>     qemu_plugin_register_atexit_cb;
+>     qemu_plugin_register_flush_cb;
+> diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+> index b650dddcce..c65d48680b 100644
+> --- a/tests/tcg/plugins/mem.c
+> +++ b/tests/tcg/plugins/mem.c
+> @@ -24,7 +24,7 @@ typedef struct {
+>   static struct qemu_plugin_scoreboard *counts;
+>   static qemu_plugin_u64 mem_count;
+>   static qemu_plugin_u64 io_count;
+> -static bool do_inline, do_callback;
+> +static bool do_inline, do_callback, do_read;
+>   static bool do_haddr;
+>   static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
+>   
+> @@ -58,6 +58,30 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+>       } else {
+>           qemu_plugin_u64_add(mem_count, cpu_index, 1);
+>       }
+> +
+> +    if (do_read) {
+> +        size_t size = qemu_plugin_mem_size_shift(meminfo);
+> +        GByteArray *data = qemu_plugin_read_memory_vaddr(vaddr, size);
+> +
+> +        if (data) {
+> +            g_autoptr(GString) out = g_string_new("");
+> +
+> +            if (qemu_plugin_mem_is_store(meminfo)) {
+> +                g_string_append(out, "store: ");
+> +            } else {
+> +                g_string_append(out, "load: ");
+> +            }
+> +
+> +            g_string_append_printf(out, "vaddr: 0x%" PRIx64 " data: 0x",
+> +                                   vaddr);
+> +            for (size_t i = 0; i < data->len; i++) {
+> +                g_string_append_printf(out, "%02x", data->data[i]);
+> +            }
+> +            g_string_append(out, "\n");
+> +            qemu_plugin_outs(out->str);
+> +            g_byte_array_free(data, TRUE);
+> +        }
+> +    }
+
+See other series, merging an API for getting values read on a memory 
+access. It's a better fit to implement this. So I think it's better to 
+drop this plugin modification.
+
+>   }
+>   
+>   static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> @@ -86,7 +110,6 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>                                              const qemu_info_t *info,
+>                                              int argc, char **argv)
+>   {
+> -
+>       for (int i = 0; i < argc; i++) {
+>           char *opt = argv[i];
+>           g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> @@ -117,6 +140,11 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>                   fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+>                   return -1;
+>               }
+> +        } else if (g_strcmp0(tokens[0], "read") == 0) {
+> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &do_read)) {
+> +                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+> +                return -1;
+> +            }
+>           } else {
+>               fprintf(stderr, "option parsing failed: %s\n", opt);
+>               return -1;
+> @@ -129,6 +157,11 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>           return -1;
+>       }
+>   
+> +    if (do_read && !do_callback) {
+> +        fprintf(stderr, "can't enable memory reading without callback\n");
+> +        return -1;
+> +    }
+> +
+>       counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
+>       mem_count = qemu_plugin_scoreboard_u64_in_struct(
+>           counts, CPUCount, mem_count);
+> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+> index 72e1a5bf90..67c7c404c4 100644
+> --- a/tests/tcg/plugins/syscall.c
+> +++ b/tests/tcg/plugins/syscall.c
+> @@ -22,8 +22,56 @@ typedef struct {
+>       int64_t errors;
+>   } SyscallStats;
+>   
+> +struct SyscallInfo {
+> +    const char *name;
+> +    int64_t write_sysno;
 > +};
 > +
-> +#define TYPE_OPENSBI_DOMAIN "opensbi-domain"
-> +OBJECT_DECLARE_SIMPLE_TYPE(OpenSBIDomainState, OPENSBI_DOMAIN)
-> +
-> +#define OPENSBI_DOMAIN_MEMREGIONS_MAX   16
-> +
-> +struct OpenSBIDomainState {
-> +    /* public */
-> +    DeviceState parent_obj;
-> +
-> +    /* private */
-> +    OpenSBIMemregionState *regions[OPENSBI_DOMAIN_MEMREGIONS_MAX];
-> +    unsigned int region_perms[OPENSBI_DOMAIN_MEMREGIONS_MAX];
-> +    unsigned long first_possible_hart, last_possible_hart;
-> +    unsigned int boot_hart;
-> +    uint64_t next_arg1;
-> +    uint64_t next_addr;
-> +    uint32_t next_mode;
-> +    bool system_reset_allowed;
-> +    bool system_suspend_allowed;
-> +
-> +    bool assign;
+> +const struct SyscallInfo arch_syscall_info[] = {
+> +    { "aarch64", 64 },
+> +    { "aarch64_be", 64 },
+> +    { "alpha", 4 },
+> +    { "arm", 4 },
+> +    { "armeb", 4 },
+> +    { "avr", -1 },
+> +    { "cris", -1 },
+> +    { "hexagon", 64 },
+> +    { "hppa", -1 },
+> +    { "i386", 4 },
+> +    { "loongarch64", -1 },
+> +    { "m68k", 4 },
+> +    { "microblaze", 4 },
+> +    { "microblazeel", 4 },
+> +    { "mips", 1 },
+> +    { "mips64", 1 },
+> +    { "mips64el", 1 },
+> +    { "mipsel", 1 },
+> +    { "mipsn32", 1 },
+> +    { "mipsn32el", 1 },
+> +    { "or1k", -1 },
+> +    { "ppc", 4 },
+> +    { "ppc64", 4 },
+> +    { "ppc64le", 4 },
+> +    { "riscv32", 64 },
+> +    { "riscv64", 64 },
+> +    { "rx", -1 },
+> +    { "s390x", -1 },
+> +    { "sh4", -1 },
+> +    { "sh4eb", -1 },
+> +    { "sparc", 4 },
+> +    { "sparc32plus", 4 },
+> +    { "sparc64", 4 },
+> +    { "tricore", -1 },
+> +    { "x86_64", 1 },
+> +    { "xtensa", 13 },
+> +    { "xtensaeb", 13 },
+> +    { NULL, -1 },
 > +};
 > +
-> +void create_fdt_opensbi_domains(MachineState *s);
+>   static GMutex lock;
+>   static GHashTable *statistics;
+> +static bool do_log_writes;
+> +static int64_t write_sysno = -1;
+>   
+>   static SyscallStats *get_or_create_entry(int64_t num)
+>   {
+> @@ -54,6 +102,51 @@ static void vcpu_syscall(qemu_plugin_id_t id, unsigned int vcpu_index,
+>           g_autofree gchar *out = g_strdup_printf("syscall #%" PRIi64 "\n", num);
+>           qemu_plugin_outs(out);
+>       }
 > +
-> +#endif /* RISCV_DOMAIN_H */
+> +    if (do_log_writes && num == write_sysno) {
+> +        GByteArray *data = qemu_plugin_read_memory_vaddr(a2, a3);
+> +
+> +        g_autoptr(GString) out = g_string_new("");
+> +
+> +        size_t rows = (data->len % 16 == 0)
+> +            ? (data->len / 16)
+> +            : ((data->len / 16) + 1);
+> +        for (size_t row = 0; row < rows; row++) {
+> +            size_t len = (rows != data->len / 16 && row == rows - 1)
+> +                ? (data->len % 16)
+> +                : 16;
+> +            for (size_t i = 0; i < len; i++) {
+> +                g_string_append_printf(out, "%02x ",
+> +                    data->data[(row * 16) + i]);
+> +                if (i != 0 && i % 4 == 0) {
+> +                    g_string_append(out, " ");
+> +                }
+> +            }
+> +            for (size_t i = len; i < 16; i++) {
+> +                g_string_append(out, "   ");
+> +                if (i != 0 && i % 4 == 0) {
+> +                    g_string_append(out, " ");
+> +                }
+> +            }
+> +            g_string_append(out, " | ");
+> +            for (size_t i = 0; i < len; i++) {
+> +                g_string_append_printf(out,
+> +                    (data->data[(row * 16) + i] >= 0x21
+> +                        && data->data[(row * 16) + i] <= 0x7e)
+> +                    ? "%c"
+> +                    : ".", data->data[(row * 16) + i]);
+> +                if (i != 0 && i % 4 == 0) {
+> +                    g_string_append(out, " ");
+> +                }
+> +            }
+> +            g_string_append(out, "\n");
+> +        }
+
+Could you add a comment to show what is expected format? From the code, 
+with all these loops and ternary expressions, it's not easy to follow.
+
+> +
+> +
+> +        qemu_plugin_outs(out->str);
+> +
+> +        g_byte_array_free(data, TRUE);
+> +    }
+>   }
+>   
+>   static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
+> @@ -127,6 +220,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>               if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &do_print)) {
+>                   fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+>               }
+> +        } else if (g_strcmp0(tokens[0], "log_writes") == 0) {
+> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &do_log_writes)) {
+> +                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+> +            }
+>           } else {
+>               fprintf(stderr, "unsupported argument: %s\n", argv[i]);
+>               return -1;
+> @@ -137,6 +234,22 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>           statistics = g_hash_table_new_full(NULL, g_direct_equal, NULL, g_free);
+>       }
+>   
+> +    if (do_log_writes) {
+> +        for (const struct SyscallInfo *syscall_info = arch_syscall_info;
+> +            syscall_info->name != NULL; syscall_info++) {
+> +
+> +            if (g_strcmp0(syscall_info->name, info->target_name) == 0) {
+> +                write_sysno = syscall_info->write_sysno;
+> +                break;
+> +            }
+> +        }
+> +
+> +        if (write_sysno == -1) {
+> +            fprintf(stderr, "write syscall number not found\n");
+> +            return -1;
+> +        }
+> +    }
+> +
+
+It's good! I appreciate to see this feature.
+
+>       qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
+>       qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
+>       qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+
+Thanks,
+Pierrick
 
