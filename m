@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7600AC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 17:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFEEC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 17:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shBFp-0006QN-OR; Thu, 22 Aug 2024 13:05:46 -0400
+	id 1shBKu-00032b-OW; Thu, 22 Aug 2024 13:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1shBFj-0006PU-Oq
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:05:39 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1shBKt-000328-Ln
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:10:59 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1shBFh-0005nY-Ry
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:05:39 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9CCC422204;
- Thu, 22 Aug 2024 17:05:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724346333; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uFC49L6zrnxKrBgflvgL15AtogFtnue/06o9VrlfVjs=;
- b=nNgcC7fmmugEeaBrFRK0NLK5ALM5aGrNmUEaIQMm199xfy18Av7k4TZN1zlEEz4oSAsgVV
- G/+3ktVEkR94k+E2RvS2nBS52wxspupqnrVVOq45rfV8HXwwnSH3jgYeyfxf2YocbJll49
- oLHO9VpZsumrUrgV0zEUK+jzqay3Ve4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724346333;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uFC49L6zrnxKrBgflvgL15AtogFtnue/06o9VrlfVjs=;
- b=AWiBEdOoy+47yzUeUkT63Z8CRxOV8FumP4qnwS4R8QSiTimGigSod1/N4j/YVmd5mhznGI
- UgjCM64fl4lDk3Cg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724346333; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uFC49L6zrnxKrBgflvgL15AtogFtnue/06o9VrlfVjs=;
- b=nNgcC7fmmugEeaBrFRK0NLK5ALM5aGrNmUEaIQMm199xfy18Av7k4TZN1zlEEz4oSAsgVV
- G/+3ktVEkR94k+E2RvS2nBS52wxspupqnrVVOq45rfV8HXwwnSH3jgYeyfxf2YocbJll49
- oLHO9VpZsumrUrgV0zEUK+jzqay3Ve4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724346333;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uFC49L6zrnxKrBgflvgL15AtogFtnue/06o9VrlfVjs=;
- b=AWiBEdOoy+47yzUeUkT63Z8CRxOV8FumP4qnwS4R8QSiTimGigSod1/N4j/YVmd5mhznGI
- UgjCM64fl4lDk3Cg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 284F2139D3;
- Thu, 22 Aug 2024 17:05:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id oUuDN9xvx2ZoEgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 22 Aug 2024 17:05:32 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v3 12/14] migration/multifd: Allow multifd sync without
- flush
-In-Reply-To: <Zsdi432b2dobNhMj@x1n>
-References: <20240801123516.4498-1-farosas@suse.de>
- <20240801123516.4498-13-farosas@suse.de> <ZsdhY2ijx9nhSdLz@x1n>
- <Zsdi432b2dobNhMj@x1n>
-Date: Thu, 22 Aug 2024 14:05:30 -0300
-Message-ID: <87ttfcxzc5.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1shBKr-0006KE-Ih
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 13:10:59 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2f43de7ad5eso7741881fa.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 10:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724346655; x=1724951455; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=On2YjpSl/H1q54htE/odhCA+fOeFKi5Q6vphWYDgBg0=;
+ b=x7QeXBZeOlhJ/8KtEI3+w/k1cbYCU7LwgaaPeVrBbD7hTai+Glt6rFlPP0yIOBqTmc
+ FFRKK/2mKDe5tApN4caTMvPAVzjTsskxYp0uZsFYVrQaB9tbqaQgp2puKgQMo7AAofBf
+ JNIMpbHwJToLniyN1iftHD7kdQWHpupGYYDq7a4AeR1ea62P/10cEalsdoszmt6e0wA3
+ mkxSqyjbrZ9WeQNiK+g6vqmMd/o+cUJlhDTLChp99GYHLLOBOUvn+aSjB48L8DSt0Y7p
+ bI71QzCOK62sQ/25VYkflIswkLxdrO+aTrXrnTnGt43M6WaykHHzzjHsvLmdAiY9nr6d
+ 2rUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724346655; x=1724951455;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=On2YjpSl/H1q54htE/odhCA+fOeFKi5Q6vphWYDgBg0=;
+ b=vRxnYGDXge+PFH21L6MtdNgO5aZDQB6v//g7MRGSV9K1JVReI8V5aSnzHPs4nucem+
+ WCIWoVnV0wWAE7G7TOY7N2+D5znc5QPmOUggoQDP1M4D+qrs162T2G35jug5oEWZNAa5
+ P6JCAeUcLzLi3HY+KGoLvAGRTqzF+EMILjKQN/K3JtHJ+7JbD0+bVah5mK6Cx+06Awzi
+ nPPbZDei4I8gzXJTopt0hAgffHl9ypoAEYqZJBw/LESFN7m/2MFiBocBajyAyI0x7mvD
+ Onhxr2CzDLOzWFWJoZl7ZNG0+QTLjOqx65mKQUV0/29Q0SfvdgxLzqH4P+tlBy5vehyD
+ QfDQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXE3iHS4vg8o4Rs733ThDn7yFakVPE5tja2YCOSXSTe1ngCGI6wqQV+mFY1ZucPeIx2TK2l0nkNhjxJ@nongnu.org
+X-Gm-Message-State: AOJu0YwCIK+V84BDet6XcDgES2Riahz7j7+mzqTNlkdUkjPwJRGXeK3E
+ +uyHKWwLHRmrxOSyRvoJsig49x+gFOHxe1kJY1SmF7B8ypCy3Xb0PpKew62IfheSyF77PQOQ5Wb
+ miV77UqkmVNSd8g735EjW/BTiJckqVIX6Cdw+Zg==
+X-Google-Smtp-Source: AGHT+IE2kzeoTEvBkQ6UzOb0QloZVDgiZrLG1JxPLxajkqbi1vXloK+4EJ3jsChA+gPxQyERJ99dIp54RCDjkUoRSJ4=
+X-Received: by 2002:a05:651c:1506:b0:2ef:251f:785 with SMTP id
+ 38308e7fff4ca-2f3f883012amr48440531fa.1.1724346654991; Thu, 22 Aug 2024
+ 10:10:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.25 / 50.00]; BAYES_HAM(-3.00)[99.98%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.16)[-0.787]; MIME_GOOD(-0.10)[text/plain];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; MISSING_XM_UA(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+ <20240627-san-v2-9-750bb0946dbd@daynix.com>
+In-Reply-To: <20240627-san-v2-9-750bb0946dbd@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Aug 2024 18:10:43 +0100
+Message-ID: <CAFEAcA9KTSjwF1rABpM5nv9UFuKqZZk6+Qo4PEF4+rTirNi5fQ@mail.gmail.com>
+Subject: Re: [PATCH v2 09/15] memory: Do not create circular reference with
+ subregion
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,65 +93,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Thu, Aug 22, 2024 at 12:03:47PM -0400, Peter Xu wrote:
->> On Thu, Aug 01, 2024 at 09:35:14AM -0300, Fabiano Rosas wrote:
->> > Separate the multifd sync from flushing the client data to the
->> > channels. These two operations are closely related but not strictly
->> > necessary to be executed together.
->> > 
->> > The multifd sync is intrinsic to how multifd works. The multiple
->> > channels operate independently and may finish IO out of order in
->> > relation to each other. This applies also between the source and
->> > destination QEMU.
->> > 
->> > Flushing the data that is left in the client-owned data structures
->> > (e.g. MultiFDPages_t) prior to sync is usually the right thing to do,
->> > but that is particular to how the ram migration is implemented with
->> > several passes over dirty data.
->> > 
->> > Make these two routines separate, allowing future code to call the
->> > sync by itself if needed. This also allows the usage of
->> > multifd_ram_send to be isolated to ram code.
->> 
->> What's the usage of sync but not flush here?
+On Thu, 27 Jun 2024 at 14:40, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> Oh I think I see your point.. I think flush+sync is always needed, it's
-> just that RAM may not always be the one to flush, but something else.
-> Makes sense then.
+> A memory region does not use their own reference counters, but instead
+> piggybacks on another QOM object, "owner" (unless the owner is not the
+> memory region itself). When creating a subregion, a new reference to the
+> owner of the container must be created. However, if the subregion is
+> owned by the same QOM object, this result in a self-reference, and make
+> the owner immortal. Avoid such a self-reference.
 >
-
-I'm thinking of "flush" here as a last multifd_send() before sync. We
-need multiple multifd_send() along the migration to send the data, but
-we might not need this extra flush. It could be that there's nothing to
-flush and the code guarantees it:
-
- <populate MultiFDSendData>
- multifd_send()
- sync
-
-Where RAM currently does:
-
- multifd_queue_page()
- multifd_queue_page()
- multifd_queue_page()
- ...
- multifd_queue_page()
- multifd_send()
- sync
-
-Today there is a multifd_send() inside multifd_queue_page() and the
-amount sent depends on the ram.c code. At the time sync gets called,
-there could be data queued but not yet sent. Another client (not ram)
-could just produce data in a deterministic manner and match that with
-calls to multifd_send().
-
-> If you want, you may touch up the commit message to clarify that.  E.g. I
-> still don't see any use case that we want to sync without a flush, that
-> part might be a bit ambiguous.
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  system/memory.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
 >
-> If my understanding is correct, take this:
+> diff --git a/system/memory.c b/system/memory.c
+> index 74cd73ebc78b..949f5016a68d 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2638,7 +2638,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
 >
-> Reviewed-by: Peter Xu <peterx@redhat.com>
+>      memory_region_transaction_begin();
+>
+> -    memory_region_ref(subregion);
+> +    if (mr->owner != subregion->owner) {
+> +        memory_region_ref(subregion);
+> +    }
+> +
+>      QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+>          if (subregion->priority >= other->priority) {
+>              QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+> @@ -2696,7 +2699,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
+>          assert(alias->mapped_via_alias >= 0);
+>      }
+>      QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+> -    memory_region_unref(subregion);
+> +
+> +    if (mr->owner != subregion->owner) {
+> +        memory_region_unref(subregion);
+> +    }
+> +
+>      memory_region_update_pending |= mr->enabled && subregion->enabled;
+>      memory_region_transaction_commit();
+>  }
+
+I was having another look at leaks this week, and I tried
+this patch to see how many of the leaks I was seeing it
+fixed. I found however that for arm it results in an
+assertion when the device-introspection-test exercises
+the "imx7.analog" device. By-hand repro:
+
+$ ./build/asan/qemu-system-aarch64 -display none -machine none -accel
+qtest -monitor stdio
+==712838==WARNING: ASan doesn't fully support makecontext/swapcontext
+functions and may produce false positives in some cases!
+QEMU 9.0.92 monitor - type 'help' for more information
+(qemu) device_add imx7.analog,help
+qemu-system-aarch64: ../../system/memory.c:1777: void
+memory_region_finalize(Object *): Assertion `!mr->container' failed.
+Aborted (core dumped)
+
+It may be well be that this is a preexisting bug that's only
+exposed by this refcount change causing us to actually try
+to dispose of the memory regions.
+
+I think that what's happening here is that the device
+object has multiple MemoryRegions, each of which is a child
+QOM property. One of these MRs is a "container MR", and the
+other three are actual-content MRs which the device put into
+the container when it created them. When we deref the device,
+we go through all the child QOM properties unparenting and
+unreffing them. However, there's no particular ordering
+here, and it happens that we try to unref one of the
+actual-content MRs first. That MR is still inside the
+container MR, so we hit the assert. If we had happened to
+unref the container MR first then memory_region_finalize()
+would have removed all the subregions from it, avoiding
+the problem.
+
+I'm not sure what the best fix would be here -- that assert
+is there as a guard that the region isn't visible in
+any address space, so maybe it needs to be made a bit
+cleverer about the condition it checks? e.g. in this
+example although mr->container is not NULL,
+mr->container->container is NULL. Or we could check
+whether the mr->container->owner is the same as the
+mr->owner and allow a non-NULL mr->container in that case.
+I don't know this subsystem well enough so I'm just
+making random stabs here, though.
+
+thanks
+-- PMM
 
