@@ -4,75 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2E5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 22:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC6A0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 23:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shFvP-0004WT-Ti; Thu, 22 Aug 2024 18:04:59 -0400
+	id 1shHGw-000151-UG; Thu, 22 Aug 2024 19:31:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
- id 1shFvN-0004S2-VK
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 18:04:57 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
- id 1shFvK-0007rh-AQ
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 18:04:57 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2021aeee5e4so9873235ad.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 15:04:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724364289; x=1724969089; darn=nongnu.org;
- h=cc:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=k2aym3OJq4lBg0ic6V8Bq4xa4m5/4p43oSzuxUUnw30=;
- b=HHKj3XYu+OoQJ1dOCNfw5VmJM5DpvJ1L5Ka8xBRU3UaAo+/OH5e1vw659FipXqw1+q
- LhKiF9UD8dB5P2bnlMjNm/GDaJ8gfaj4Af2bmJ9xp+8qKWNxDNcXlfveOHydCEOwEJ3A
- 6cjCslbXrC4l9lA4t2vjsMctHkzPidJLyav0GX0TnmUbneI1Iib0R3Y5WkzKgK9KTNfv
- EPPZNpYD4Gn2kRfbMoi68bcISvayqxoaOCf9cYu94GOaRcl2Ldz3u1fxg3vYIw8k4YJy
- QloritRSaTe7VG/58VKq6pHN5McEVyPzSzy63buk2qkytXAjIydk/LviedFDvRCdDbMP
- HOyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724364289; x=1724969089;
- h=cc:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=k2aym3OJq4lBg0ic6V8Bq4xa4m5/4p43oSzuxUUnw30=;
- b=MJnNa91MkMMP6eMzQF0pDJHifnnnb4nOepC+j1vWbcieDWKXPQu89QW+8i4ESSwRix
- BUzujDlnmxiDhdWQh/woglDuoEiSN/Fqa/RecBDMgeVqy+pLZbHJu7WHqC9LdXIA7jlb
- 7xpm5skCjGCO8NH53XH8D3Y62xXIpYd0La/qxw8G6LVDdIORnERbFPaAsSYsEtQJbDf6
- x3IJPtTUc84lMA808UWfEw9yvqkqDBxGLQpYa87J5XeIkehpRgsH/e+IBmMeZSGoeo23
- FoJiSZig7CzOMFr8JZmkx6u9pBo4mcv6REmbb2jeQ5HJiRykGkwYPgqVcbewCNB5jt9j
- J4Dw==
-X-Gm-Message-State: AOJu0YxtfXyV+O8ez4+jUh0Nsbtz3MQ1/K/eK35LpGoC9GFK47bNw6dJ
- ob0XxCIgtyr89JxqgEvBfgd1tUw4o3V8cDbnHRZzDx4SEaO3wXzt3lUL4DKV3hm4Z59u1NP7mSE
- kvXKjoCmd3gr6HJp11peMBMEm1i/z1Yox
-X-Received: by 2002:a17:902:c406:b0:203:74fe:4ee0 with SMTP id
- d9443c01a7336-2039e5127a6mt1707575ad.53.1724364289163; Thu, 22 Aug 2024
- 15:04:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1shHGt-00014N-KC
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 19:31:17 -0400
+Received: from mail-bn8nam11on2070.outbound.protection.outlook.com
+ ([40.107.236.70] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1shHGq-0004qO-Aq
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 19:31:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LbltK35bJd6Bl9CKIfCcddnpRrYSGI1FLAlcMVTRE8FgXEQVoGkHPxcyHLe+HFo4owP+8bupergeWXZarUfpYM31So3nrvaeKwh+1Fodb5gLziMgLSA5i14xoQFBvcWO6kJ5XlBjoWy1wO0vO0orwcQhb7YUT0W4FA8iQoUxc6LoNlMW7aA41QZmczl7/+Hp9B3h2l5mLvW8bBzK0cUHtonepiOmu0KhIOd4Z4gUbS2PP8UGTj43/TdHF1Tzs7vE/UGxOp5TgEW4xeJbKJRqXwZh6Z2+iK3+RfUOwtZdQuDT5uVu5wGHk7xW1VbcdbTJwijsROY+CkxaXu3h4rHc+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4eeGEiaMrYvZiZmw4hJFmtzVER7+NchtBkiCyXNwprs=;
+ b=AkYzBj3HZb+gKakHlA7IfRHOm9Ah/J7v63zb2KuzqkAdbbpwcBsx5j5IoQ95Q3SPDzyVszSfMK33KjiD3v7/1o6X7q45ffkCuIMAKd5aFx4tyoA9fxD29Rjbv7wpr/I74pkdlrimH5G0V2aBRC9PPgQTmmihbvidZDlwFS296E9q6C3o0L63sDPk1cLo/U26TxWVC7uNJ/4b2A3vTW+GZBSr9DGh7uCq4OLikn5aDOPDcENy/Nh36CPuxngnuN1kbGXugQGdAnVFKLT1vofK+xQ8hkBSAiCeqtc8XOaj3xk4CHJbYCiOGdsTOgvN3RZ9RErxr4ULNv1D5vHTx3A9yw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4eeGEiaMrYvZiZmw4hJFmtzVER7+NchtBkiCyXNwprs=;
+ b=EpydAcgywAIlpJIxwBIzkqYmo6Uvsm1AybA21lbYTs+wsHS1oMkggldih3+mfLF4Id2TE1Xw0mKoVFZ3LPW3YWz8/zgcFmcZwsqaKTA1tpMiup2DMDf5TaWtJozCZlU1uytxjHgWfAbvUPKKyHW2Y+ybmOkDz8q/KeTiAhLVq5A=
+Received: from PH7P220CA0003.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:326::25)
+ by MN2PR12MB4080.namprd12.prod.outlook.com (2603:10b6:208:1d9::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.29; Thu, 22 Aug
+ 2024 23:25:58 +0000
+Received: from CY4PEPF0000EDD5.namprd03.prod.outlook.com
+ (2603:10b6:510:326:cafe::77) by PH7P220CA0003.outlook.office365.com
+ (2603:10b6:510:326::25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.19 via Frontend
+ Transport; Thu, 22 Aug 2024 23:25:57 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CY4PEPF0000EDD5.mail.protection.outlook.com (10.167.241.201) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7897.11 via Frontend Transport; Thu, 22 Aug 2024 23:25:57 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 22 Aug
+ 2024 18:25:56 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20240805210444.497723-1-gregorhaas1997@gmail.com>
- <7b23efde-3af7-4f18-8386-af5e29590d1a@ventanamicro.com>
-In-Reply-To: <7b23efde-3af7-4f18-8386-af5e29590d1a@ventanamicro.com>
-From: Gregor Haas <gregorhaas1997@gmail.com>
-Date: Thu, 22 Aug 2024 15:04:12 -0700
-Message-ID: <CAMqWt3o_TQVFiJF8H_=BS84O4hmnS_XEY1RBhYQ3bKQvta6bQw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/1] Add support for generating OpenSBI domains in the
- device tree
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, atishp@rivosinc.com, 
- alistair.francis@wdc.com
-Content-Type: multipart/alternative; boundary="000000000000ec491c06204cd8ad"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=gregorhaas1997@gmail.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: 23
-X-Spam_score: 2.3
-X-Spam_bar: ++
-X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, MALFORMED_FREEMAIL=3.099,
- MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 9.1.0-rc3 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Richard Henderson <richard.henderson@linaro.org>
+Date: Thu, 22 Aug 2024 18:25:39 -0500
+Message-ID: <172436913916.2566042.12317315060973305874@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD5:EE_|MN2PR12MB4080:EE_
+X-MS-Office365-Filtering-Correlation-Id: dd60eb7f-ecab-4f78-b750-08dcc301c6b1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|1800799024|36860700013|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OWRhU1UzUGFWdnVxYkJSR0lRM290b05mQ3c0bCtoQi9ObGVRaThsV1VWa2xp?=
+ =?utf-8?B?K3F2bDloUUR6emdrcWxlMEZsR3BtUXpjN3pMc0dlZDR0QnJEOGw2WjU2ZDhB?=
+ =?utf-8?B?WHFScUtLOXJwTENVVzNuVTZxQWhTOGFYc0hpb2lGUW1TaVFsc0lYYVpsQU8y?=
+ =?utf-8?B?cTdaSjZDdmErTkVybmNzTTR5c1JhSFVXSWo2ZkNtWlpHTGpoRSs5bHM4VGdL?=
+ =?utf-8?B?WUdlSGcwS2VqVENEQTFmbVdhc1lOZUVLQnZwWW9kVy9nazc3TWUvY2JxV0pT?=
+ =?utf-8?B?TUFZUDJUalZtK3pncExqeHRNYVlnbTE4clRsYlJJV2NtUW92SEczZWhiWWZV?=
+ =?utf-8?B?MmdVeWlZUkVRWlViN2IyMGRrRXhqM0tHVC9LalV1SXhRZkNBV2hQdTQvVWJa?=
+ =?utf-8?B?MitYdGtyQ0k4WnFQNjZDZEU1WGh4cjJtbllTVnFUY3Q3MHM4UVA4cUVxcmpy?=
+ =?utf-8?B?Vyt2T3FRWER1R0tGL1ZhaWsybkF0VUY3aVVLWElzYzI3UDZreHFnR1dKZWVF?=
+ =?utf-8?B?eXlRNm9zRXFsM1BUc3BrbnIyb2s3RVgvUVpBYWFWTFVncDlJQ3JLamdTb3pn?=
+ =?utf-8?B?NkZqNXhiODJad2ZlREg1ckJ0WUx3RFlqZzlWdHc1akswdURQSG5VZzNyL2gy?=
+ =?utf-8?B?NEF6dDB4VGxNaFBlR2hWVXFUa1VWdHZ3T01aS1lwTXZXSEM4c1VyV1lNa3Bj?=
+ =?utf-8?B?bnNUMnVrVms3YVJGYjF5RDV4bnUvdy83aS90NFdyM3E0UVRwc3lmNVFrbzZo?=
+ =?utf-8?B?Umx2R01aYnhsSkxLU1hlejVvWTRHeWlWMUhEYWVwK00raERzMFJ3Z01NeGpG?=
+ =?utf-8?B?WklhZndreG9KMXgvWDlmcWtVVlZ0M0NiV1YvZHRwQjRsL0dyN3I2dHZRUkRp?=
+ =?utf-8?B?MWtwaDN6dWhZcWcxNkdCV29nSzFoSlRwRnlmYk0yTVc5clNGYURLRGR3RUNO?=
+ =?utf-8?B?RVRVV2cxQjRNYitFZ0RZVFA2eHJIc2hTRjY0K1ZIbjhGSDlLL0hXa0xJUjR0?=
+ =?utf-8?B?amVFaEFzK01ZS3J1VzVBQWlMOGJIdmx1c3lvemNoc1ExdnlqWjJzVzRjVmUz?=
+ =?utf-8?B?OFU5cmdTelRPWWV4RVp1K2ZLVWJYUGQ1NWRPbS82djVzM3Nyd3FiVEc0NmdI?=
+ =?utf-8?B?NU0wTFZocytVeHJvTEFGVlROb3grakp1THRwb051SXdGVmVsZFN4UUNjYUUy?=
+ =?utf-8?B?b2N2N2pUSFZqRFQ5OENmRFZSMmZoNStwb21LcjJmUklnSURWRDlCWlN1Z1pE?=
+ =?utf-8?B?WWNzNVVBSkkrNzkrWmpWNzBvbUNXLzN3N1RadFlxdG9mUHZZc3hhVThWeXZq?=
+ =?utf-8?B?Z0M5ekN5UnFJME5YbkpXcUo5ZHBkTHR3dGQySFljNk05ZjBzOTlvMkIvcnBh?=
+ =?utf-8?B?YXZjbkZZeVBPdVE5K3NZVVh4Q2ZyY0RESjNySy9FcEswbkJKZmVjMVpCbENH?=
+ =?utf-8?B?cmdWRndjOHhaeGo4bTdUMlFwMnRLNXNrV3lLK1J1TlFvc3pRanNuZEtmZmIx?=
+ =?utf-8?B?dlUzNUljc2JNaTk0TnMzNGRpTFN1YU9ibXJXemxEZlBFRm8yWUF5bmJrMGJq?=
+ =?utf-8?B?ZUJuVUlMZ3l4dTZVNkZKOFJCcHVnNTBKVk1nSVN4OGMzRzFzOVphRFZTekVp?=
+ =?utf-8?B?dXJJMWs4ZEhzOGVKYWd5Z0FhRFphMUVJQkVYaHdFemo2MU5ZdGg2dUw5cXpZ?=
+ =?utf-8?B?SzBGQ0lZZXlwVmFoQmpPK3doVTkzc0NUeUF4SWFhQll2WXk4aUQ0eHdoSE4r?=
+ =?utf-8?B?YzdsOUkya2lsZWVNckl6TzNFdjdycUIxMnRmeFh3Qm9zZGhkUEVRRGJmeUJF?=
+ =?utf-8?B?em5JczViekpYZFp3VjlQb3paLzdCeGNNOHlhTzVNSU1RTmdWMVZzRXFLMWFq?=
+ =?utf-8?Q?6kQU7NtAA8Hlw?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2024 23:25:57.4436 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dd60eb7f-ecab-4f78-b750-08dcc301c6b1
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD5.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4080
+Received-SPF: permerror client-ip=40.107.236.70;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,393 +154,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ec491c06204cd8ad
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
-Hi Daniel,
+On behalf of the QEMU Team, I'd like to announce the availability of the
+fourth release candidate for the QEMU 9.1 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-That's correct -- I believe this [1] patch on the OpenSBI mailing list
-addresses
-this issue. I am currently waiting for it to be reviewed.
+  http://download.qemu.org/qemu-9.1.0-rc3.tar.xz
+  http://download.qemu.org/qemu-9.1.0-rc3.tar.xz.sig
 
-Thanks,
-Gregor
+You can help improve the quality of the QEMU 9.1 release by testing this
+release and reporting bugs using our GitLab issue tracker:
 
-[1] http://lists.infradead.org/pipermail/opensbi/2024-August/007240.html
+  https://gitlab.com/qemu-project/qemu/-/milestones/13
 
-On Thu, Aug 22, 2024 at 2:49=E2=80=AFPM Daniel Henrique Barboza <
-dbarboza@ventanamicro.com> wrote:
+The release plan, as well a documented known issues for release
+candidates, are available at:
 
->
->
-> On 8/5/24 6:04 PM, Gregor Haas wrote:
-> > This patch series adds support for specifying OpenSBI domains on the QE=
-MU
-> > command line. A simple example of what this looks like is below,
-> including
-> > mapping the board's UART into the secondary domain:
-> >
-> > qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -m
-> 4G -nographic \
-> >          -device
-> opensbi-memregion,id=3Dmem,base=3D0xBC000000,order=3D26,mmio=3Dfalse \
-> >          -device
-> opensbi-memregion,id=3Duart,base=3D0x10000000,order=3D12,mmio=3Dtrue,devi=
-ce0=3D"/soc/serial@10000000"
-> \
-> >          -device
-> opensbi-domain,id=3Ddomain,possible-harts=3D0-1,boot-hart=3D0x0,next-addr=
-=3D0xBC000000,next-mode=3D1,region0=3Dmem,perms0=3D0x3f,region1=3Duart,perm=
-s1=3D0x3f
-> >
-> > As a result of the above configuration, QEMU will add the following
-> subnodes to
-> > the device tree:
-> >
-> > chosen {
-> >          opensbi-domains {
-> >                  compatible =3D "opensbi,domain,config";
-> >
-> >                  domain {
-> >                          next-mode =3D <0x01>;
-> >                          next-addr =3D <0x00 0xbc000000>;
-> >                          boot-hart =3D <0x03>;
-> >                          regions =3D <0x8000 0x3f 0x8002 0x3f>;
-> >                          possible-harts =3D <0x03 0x01>;
-> >                          phandle =3D <0x8003>;
-> >                          compatible =3D "opensbi,domain,instance";
-> >                  };
-> >
-> >                  uart {
-> >                          phandle =3D <0x8002>;
-> >                          devices =3D <0x1800000>;
-> >                          mmio;
-> >                          order =3D <0x0c>;
-> >                          base =3D <0x00 0x10000000>;
-> >                          compatible =3D "opensbi,domain,memregion";
-> >                  };
-> >
-> >                  mem {
-> >                          phandle =3D <0x8000>;
-> >                          order =3D <0x1a>;
-> >                          base =3D <0x00 0xbc000000>;
-> >                          compatible =3D "opensbi,domain,memregion";
-> >                  };
-> >          };
-> > };
-> >
-> > This results in OpenSBI output as below, where regions 01-03 are
-> inherited from
-> > the root domain and regions 00 and 04 correspond to the user specified
-> ones:
-> >
-> > Domain1 Name              : domain
-> > Domain1 Boot HART         : 0
-> > Domain1 HARTs             : 0,1
-> > Domain1 Region00          : 0x0000000010000000-0x0000000010000fff M:
-> (I,R,W,X) S/U: (R,W,X)
-> > Domain1 Region01          : 0x0000000002000000-0x000000000200ffff M:
-> (I,R,W) S/U: ()
-> > Domain1 Region02          : 0x0000000080080000-0x000000008009ffff M:
-> (R,W) S/U: ()
-> > Domain1 Region03          : 0x0000000080000000-0x000000008007ffff M:
-> (R,X) S/U: ()
-> > Domain1 Region04          : 0x00000000bc000000-0x00000000bfffffff M:
-> (R,W,X) S/U: (R,W,X)
-> > Domain1 Next Address      : 0x00000000bc000000
-> > Domain1 Next Arg1         : 0x0000000000000000
-> > Domain1 Next Mode         : S-mode
-> > Domain1 SysReset          : no
-> > Domain1 SysSuspend        : no
->
-> I believe we need OpenSBI patches for this output, don't we? If I try thi=
-s
-> example using stock
-> OpenSBI 1.5.1 from QEMU this happens:
->
->
-> OpenSBI v1.5.1
->     ____                    _____ ____ _____
->    / __ \                  / ____|  _ \_   _|
->   | |  | |_ __   ___ _ __ | (___ | |_) || |
->   | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
->   | |__| | |_) |  __/ | | |____) | |_) || |_
->    \____/| .__/ \___|_| |_|_____/|____/_____|
->          | |
->          |_|
->
-> sbi_domain_finalize: platform domains_init() failed (error -3)
-> init_coldboot: domain finalize failed (error -3)
-> (--- hangs ---)
->
-> It's not a big deal or a blocker to have this merged in QEMU regardless,
-> but it would be nice
-> to have this documented somewhere (perhaps a new doc file). This would
-> prevent users from trying
-> to use the device without the proper support.
->
-> This can be done after this patch is queued though. Thanks,
->
->
-> Daniel
->
->
-> >
-> > v3:
-> > - Addressed review comments from v2 by adding default values to new
-> properties.
-> >    This results in concrete errors at QEMU configuration time if a
-> mandatory
-> >    property (as mandated by the OpenSBI spec) is not provided.
-> > - Changed command line encoding for the possible-harts field from a CPU
-> bitmask
-> >    (e.g. where bit X is set if CPU X is a possible hart) to a range
-> format (e.g.
-> >    the possible harts should be CPUs X-Y, where Y >=3D X). This does
-> constrain the
-> >    hart assignment to consecutive ranges of harts, but this constraint
-> is also
-> >    present for other QEMU subsystems (such as NUMA).
-> > - Added create_fdt_one_device(), which is invoked when scanning the
-> device tree
-> >    for a memregion's devices. This function allocates a phandle for a
-> region's
-> >    device if one does not yet exist.
-> >
-> > v2:
-> > - Addressed review comments from v1. Specifically, renamed domain.{c,h}
-> ->
-> >    opensbi_domain.{c,h} to increase clarity of what these files do.
-> Also, more
-> >    consistently use g_autofree for dynamically allocated variables
-> > - Added an "assign" flag to OpenSBIDomainState, which indicates whether
-> to
-> >    assign the domain's boot hart to it at domain parsing time.
-> >
-> > Gregor Haas (1):
-> >    Add support for generating OpenSBI domains in the device tree
-> >
-> >   MAINTAINERS                       |   7 +
-> >   hw/riscv/Kconfig                  |   4 +
-> >   hw/riscv/meson.build              |   1 +
-> >   hw/riscv/opensbi_domain.c         | 542 +++++++++++++++++++++++++++++=
-+
-> >   hw/riscv/virt.c                   |   3 +
-> >   include/hw/riscv/opensbi_domain.h |  50 +++
-> >   6 files changed, 607 insertions(+)
-> >   create mode 100644 hw/riscv/opensbi_domain.c
-> >   create mode 100644 include/hw/riscv/opensbi_domain.h
-> >
->
+  http://wiki.qemu.org/Planning/9.1
 
---000000000000ec491c06204cd8ad
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Please add entries to the ChangeLog for the 9.1 release below:
 
-<div dir=3D"ltr">Hi Daniel,<br><br>That&#39;s correct -- I believe this [1]=
- patch on the OpenSBI mailing list addresses<br>this issue. I am currently =
-waiting for it to be reviewed.<br><br>Thanks,<br>Gregor<br><br>[1] <a href=
-=3D"http://lists.infradead.org/pipermail/opensbi/2024-August/007240.html">h=
-ttp://lists.infradead.org/pipermail/opensbi/2024-August/007240.html</a></di=
-v><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On T=
-hu, Aug 22, 2024 at 2:49=E2=80=AFPM Daniel Henrique Barboza &lt;<a href=3D"=
-mailto:dbarboza@ventanamicro.com">dbarboza@ventanamicro.com</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-<br>
-On 8/5/24 6:04 PM, Gregor Haas wrote:<br>
-&gt; This patch series adds support for specifying OpenSBI domains on the Q=
-EMU<br>
-&gt; command line. A simple example of what this looks like is below, inclu=
-ding<br>
-&gt; mapping the board&#39;s UART into the secondary domain:<br>
-&gt; <br>
-&gt; qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -m=
- 4G -nographic \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -device opensbi-memregion,id=3Dmem,b=
-ase=3D0xBC000000,order=3D26,mmio=3Dfalse \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -device opensbi-memregion,id=3Duart,=
-base=3D0x10000000,order=3D12,mmio=3Dtrue,device0=3D&quot;/soc/serial@100000=
-00&quot; \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -device opensbi-domain,id=3Ddomain,p=
-ossible-harts=3D0-1,boot-hart=3D0x0,next-addr=3D0xBC000000,next-mode=3D1,re=
-gion0=3Dmem,perms0=3D0x3f,region1=3Duart,perms1=3D0x3f<br>
-&gt; <br>
-&gt; As a result of the above configuration, QEMU will add the following su=
-bnodes to<br>
-&gt; the device tree:<br>
-&gt; <br>
-&gt; chosen {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 opensbi-domains {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 compatib=
-le =3D &quot;opensbi,domain,config&quot;;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 domain {=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 next-mode =3D &lt;0x01&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 next-addr =3D &lt;0x00 0xbc000000&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 boot-hart =3D &lt;0x03&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 regions =3D &lt;0x8000 0x3f 0x8002 0x3f&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 possible-harts =3D &lt;0x03 0x01&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 phandle =3D &lt;0x8003&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 compatible =3D &quot;opensbi,domain,instance&quot;;<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 };<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uart {<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 phandle =3D &lt;0x8002&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 devices =3D &lt;0x1800000&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 mmio;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 order =3D &lt;0x0c&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 base =3D &lt;0x00 0x10000000&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 compatible =3D &quot;opensbi,domain,memregion&quot;;<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 };<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem {<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 phandle =3D &lt;0x8000&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 order =3D &lt;0x1a&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 base =3D &lt;0x00 0xbc000000&gt;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 compatible =3D &quot;opensbi,domain,memregion&quot;;<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 };<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 };<br>
-&gt; };<br>
-&gt; <br>
-&gt; This results in OpenSBI output as below, where regions 01-03 are inher=
-ited from<br>
-&gt; the root domain and regions 00 and 04 correspond to the user specified=
- ones:<br>
-&gt; <br>
-&gt; Domain1 Name=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : domain<=
-br>
-&gt; Domain1 Boot HART=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: 0<br>
-&gt; Domain1 HARTs=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: 0,1<br>
-&gt; Domain1 Region00=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : 0x000000001000000=
-0-0x0000000010000fff M: (I,R,W,X) S/U: (R,W,X)<br>
-&gt; Domain1 Region01=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : 0x000000000200000=
-0-0x000000000200ffff M: (I,R,W) S/U: ()<br>
-&gt; Domain1 Region02=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : 0x000000008008000=
-0-0x000000008009ffff M: (R,W) S/U: ()<br>
-&gt; Domain1 Region03=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : 0x000000008000000=
-0-0x000000008007ffff M: (R,X) S/U: ()<br>
-&gt; Domain1 Region04=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : 0x00000000bc00000=
-0-0x00000000bfffffff M: (R,W,X) S/U: (R,W,X)<br>
-&gt; Domain1 Next Address=C2=A0 =C2=A0 =C2=A0 : 0x00000000bc000000<br>
-&gt; Domain1 Next Arg1=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: 0x000000000000000=
-0<br>
-&gt; Domain1 Next Mode=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: S-mode<br>
-&gt; Domain1 SysReset=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : no<br>
-&gt; Domain1 SysSuspend=C2=A0 =C2=A0 =C2=A0 =C2=A0 : no<br>
-<br>
-I believe we need OpenSBI patches for this output, don&#39;t we? If I try t=
-his example using stock<br>
-OpenSBI 1.5.1 from QEMU this happens:<br>
-<br>
-<br>
-OpenSBI v1.5.1<br>
-=C2=A0 =C2=A0 ____=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 _____ ____ _____<br>
-=C2=A0 =C2=A0/ __ \=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 / ____|=C2=A0 _ \_=C2=A0 =C2=A0_|<br>
-=C2=A0 | |=C2=A0 | |_ __=C2=A0 =C2=A0___ _ __ | (___ | |_) || |<br>
-=C2=A0 | |=C2=A0 | | &#39;_ \ / _ \ &#39;_ \ \___ \|=C2=A0 _ &lt; | |<br>
-=C2=A0 | |__| | |_) |=C2=A0 __/ | | |____) | |_) || |_<br>
-=C2=A0 =C2=A0\____/| .__/ \___|_| |_|_____/|____/_____|<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| |<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|_|<br>
-<br>
-sbi_domain_finalize: platform domains_init() failed (error -3)<br>
-init_coldboot: domain finalize failed (error -3)<br>
-(--- hangs ---)<br>
-<br>
-It&#39;s not a big deal or a blocker to have this merged in QEMU regardless=
-, but it would be nice<br>
-to have this documented somewhere (perhaps a new doc file). This would prev=
-ent users from trying<br>
-to use the device without the proper support.<br>
-<br>
-This can be done after this patch is queued though. Thanks,<br>
-<br>
-<br>
-Daniel<br>
-<br>
-<br>
-&gt; <br>
-&gt; v3:<br>
-&gt; - Addressed review comments from v2 by adding default values to new pr=
-operties.<br>
-&gt;=C2=A0 =C2=A0 This results in concrete errors at QEMU configuration tim=
-e if a mandatory<br>
-&gt;=C2=A0 =C2=A0 property (as mandated by the OpenSBI spec) is not provide=
-d.<br>
-&gt; - Changed command line encoding for the possible-harts field from a CP=
-U bitmask<br>
-&gt;=C2=A0 =C2=A0 (e.g. where bit X is set if CPU X is a possible hart) to =
-a range format (e.g.<br>
-&gt;=C2=A0 =C2=A0 the possible harts should be CPUs X-Y, where Y &gt;=3D X)=
-. This does constrain the<br>
-&gt;=C2=A0 =C2=A0 hart assignment to consecutive ranges of harts, but this =
-constraint is also<br>
-&gt;=C2=A0 =C2=A0 present for other QEMU subsystems (such as NUMA).<br>
-&gt; - Added create_fdt_one_device(), which is invoked when scanning the de=
-vice tree<br>
-&gt;=C2=A0 =C2=A0 for a memregion&#39;s devices. This function allocates a =
-phandle for a region&#39;s<br>
-&gt;=C2=A0 =C2=A0 device if one does not yet exist.<br>
-&gt; <br>
-&gt; v2:<br>
-&gt; - Addressed review comments from v1. Specifically, renamed domain.{c,h=
-} -&gt;<br>
-&gt;=C2=A0 =C2=A0 opensbi_domain.{c,h} to increase clarity of what these fi=
-les do. Also, more<br>
-&gt;=C2=A0 =C2=A0 consistently use g_autofree for dynamically allocated var=
-iables<br>
-&gt; - Added an &quot;assign&quot; flag to OpenSBIDomainState, which indica=
-tes whether to<br>
-&gt;=C2=A0 =C2=A0 assign the domain&#39;s boot hart to it at domain parsing=
- time.<br>
-&gt; <br>
-&gt; Gregor Haas (1):<br>
-&gt;=C2=A0 =C2=A0 Add support for generating OpenSBI domains in the device =
-tree<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A07 +<br>
-&gt;=C2=A0 =C2=A0hw/riscv/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A04 +<br>
-&gt;=C2=A0 =C2=A0hw/riscv/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 |=C2=A0 =C2=A01 +<br>
-&gt;=C2=A0 =C2=A0hw/riscv/opensbi_domain.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0| 542 ++++++++++++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A0hw/riscv/virt.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A03 +<br>
-&gt;=C2=A0 =C2=A0include/hw/riscv/opensbi_domain.h |=C2=A0 50 +++<br>
-&gt;=C2=A0 =C2=A06 files changed, 607 insertions(+)<br>
-&gt;=C2=A0 =C2=A0create mode 100644 hw/riscv/opensbi_domain.c<br>
-&gt;=C2=A0 =C2=A0create mode 100644 include/hw/riscv/opensbi_domain.h<br>
-&gt; <br>
-</blockquote></div>
+  http://wiki.qemu.org/ChangeLog/9.1
 
---000000000000ec491c06204cd8ad--
+Thank you to everyone involved!
+
+Changes since rc2:
+
+407f9a4b12: Update version for v9.1.0-rc3 release (Richard Henderson)
+d4f5e5af86: hw/loongarch: Fix length for lowram in ACPI SRAT (Jiaxun Yang)
+ded1db48c9: target/i386: Fix tss access size in switch_tss_ra (Richard Hend=
+erson)
+83a3a20e59: target/i386: Fix carry flag for BLSI (Richard Henderson)
+266d6dddbd: target/i386: Split out gen_prepare_val_nz (Richard Henderson)
+5b73b248a1: bsd-user: Handle short reads in mmap_h_gt_g (Richard Henderson)
+a4ad4a9d98: linux-user: Handle short reads in mmap_h_gt_g (Richard Henderso=
+n)
+4c107870e8: migration/multifd: Free MultiFDRecvParams::data (Peter Maydell)
+a8e63ff289: virtio-pci: Fix the use of an uninitialized irqfd (Cindy Lu)
+7d14471a12: hw/audio/virtio-snd: fix invalid param check (Volker R=C3=BCmel=
+in)
+f8e09b973a: vhost: Add VIRTIO_NET_F_RSC_EXT to vhost feature bits (Akihiko =
+Odaki)
+6a22121c4f: hw/nvme: fix leak of uninitialized memory in io_mgmt_recv (Klau=
+s Jensen)
+87e012f29f: crypto/tlscredspsk: Free username on finalize (Peter Maydell)
+702cbdc46b: hw/i386/pc: Ensure vmport prerequisites are fulfilled (Kamil Sz=
+cz=C4=99k)
+c911f875f8: hw/i386/pc: Unify vmport=3Dauto handling (Kamil Szcz=C4=99k)
+6373fc0323: hw/ppc/Kconfig: Add missing SERIAL_ISA dependency to POWERNV ma=
+chine (Bernhard Beschow)
+12d36294a2: target/sparc: Restrict STQF to sparcv9 (Richard Henderson)
+47f06fb4c8: contrib/plugins/execlog: Fix shadowed declaration warning (Pier=
+rick Bouvier)
+8e540bbe45: tests/avocado: Mark ppc_hv_tests.py as non-flaky after fixed co=
+nsole interaction (Nicholas Piggin)
+4a85f23157: tests/avocado: exec_command should not consume console output (=
+Nicholas Piggin)
+e922abf5c0: linux-user/mips: Select Loongson CPU for Loongson binaries (Phi=
+lippe Mathieu-Daud=C3=A9)
+309ce6af94: linux-user/mips: Select MIPS64R2-generic for Rel2 binaries (Phi=
+lippe Mathieu-Daud=C3=A9)
+1e5a7c57a5: linux-user/mips: Select Octeon68XX CPU for Octeon binaries (Phi=
+lippe Mathieu-Daud=C3=A9)
+f7e3d7521b: linux-user/mips: Do not try to use removed R5900 CPU (Philippe =
+Mathieu-Daud=C3=A9)
+7d3a421fea: hw/remote/message.c: Don't directly invoke DeviceClass:reset (P=
+eter Maydell)
+dfad8421af: hw/dma/xilinx_axidma: Use semicolon at end of statement, not co=
+mma (Peter Maydell)
+44017c6655: target/mips: Load PTE as DATA (Philippe Mathieu-Daud=C3=A9)
+7ce9760d64: target/mips: Use correct MMU index in get_pte() (Philippe Mathi=
+eu-Daud=C3=A9)
+453ba4f675: target/mips: Pass page table entry size as MemOp to get_pte() (=
+Philippe Mathieu-Daud=C3=A9)
+68baeaafa5: qemu-options.hx: correct formatting -smbios type=3D4 (Heinrich =
+Schuchardt)
+ec276edb38: hw/mips/loongson3_virt: Fix condition of IPI IOCSR connection (=
+Jiaxun Yang)
+d762016d51: hw/mips/loongson3_virt: Store core_iocsr into LoongsonMachineSt=
+ate (Jiaxun Yang)
+6df664f87c: Revert "hw/riscv/virt.c: imsics DT: add '#msi-cells'" (Andrew J=
+ones)
+278035fc81: plugins: fix race condition with scoreboards (Pierrick Bouvier)
+3f9f9a37ae: docs/devel: update tcg-plugins page (Pierrick Bouvier)
+24c32ed374: docs: Fix some typos (found by typos) and grammar issues (Stefa=
+n Weil)
+97d2b66dcd: savevm: Fix load_snapshot error path crash (Nicholas Piggin)
+44bc14fa1e: virtio-net: Use virtual time for RSC timers (Nicholas Piggin)
+a0bf401b8e: virtio-net: Use replay_schedule_bh_event for bhs that affect ma=
+chine state (Nicholas Piggin)
+4c193bb129: chardev: set record/replay on the base device of a muxed device=
+ (Nicholas Piggin)
+253ec604a8: tests/avocado: replay_kernel.py add x86-64 q35 machine test (Ni=
+cholas Piggin)
+94962ff00d: Revert "replay: stop us hanging in rr_wait_io_event" (Nicholas =
+Piggin)
+9dbab31d9e: replay: allow runstate shutdown->running when replaying trace (=
+Nicholas Piggin)
+4926b6e644: tests/avocado: excercise scripts/replay-dump.py in replay tests=
+ (Nicholas Piggin)
+01a385fb49: scripts/replay-dump.py: rejig decoders in event number order (N=
+icholas Piggin)
+00140e79bb: scripts/replay-dump.py: Update to current rr record format (Nic=
+holas Piggin)
+20fdd01e51: buildsys: Fix building without plugins on Darwin (Philippe Math=
+ieu-Daud=C3=A9)
+cf584a908a: target/i386: allow access_ptr to force slow path on failed prob=
+e (Alex Benn=C3=A9e)
+503eb470e0: scripts/checkpatch: more checks on files imported from Linux (S=
+tefano Garzarella)
+5f9ad35e04: configure: Fix GDB version detection for GDB_HAS_MTE (Gustavo R=
+omero)
+34a4ef1c5c: configure: Avoid use of param. expansion when using gdb_version=
+ (Gustavo Romero)
+819039a5ad: configure: Fix arch detection for GDB_HAS_MTE (Gustavo Romero)
+6fe12bc659: Makefile: trigger re-configure on updated pythondeps (Alex Benn=
+=C3=A9e)
+8a69613e9c: tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot (Philip=
+pe Mathieu-Daud=C3=A9)
+b4be15a9f9: ci: refresh package lists with lcitool (Daniel P. Berrang=C3=A9)
+6d67a65f10: ci: add gtk-vnc to the deps (Daniel P. Berrang=C3=A9)
+3185e5a6f7: tests/avocado: apply proper skipUnless decorator (Cleber Rosa)
+e25264fe7b: meson.build: Check for the availability of __attribute__((gcc_s=
+truct)) on MSYS2 (Thomas Huth)
+e4a4edc10a: target/s390x: fix build warning (gcc-12 -fsanitize=3Dthread) (P=
+ierrick Bouvier)
 
