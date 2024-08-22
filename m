@@ -4,79 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE0CC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 11:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEBEDC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 11:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh5an-0002ZV-JH; Thu, 22 Aug 2024 07:03:04 -0400
+	id 1sh5e9-0000Xa-Dp; Thu, 22 Aug 2024 07:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh5ae-0002YI-GE
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:02:54 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh5aY-0004Bo-Sl
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:02:51 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4280bca3960so4427705e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 04:02:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724324564; x=1724929364; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ekVmEMWWyS4pVL0hWTOxtB5Sws3gNTkEYcun8LN2+58=;
- b=lWXjb+WmCSkSwnVUPmgA7563N0oT69vmN76+j6iKqvbIDnB+KXbKy31d6OKOizrB2Y
- 9cAr8lY0ASy1HaW/YbzkTyvSskOx3HXKUmmQhQq/kGcAr4qZKbNAPsvWq57aY+jy4S6G
- RnBLARdl1A8Mm+G8FzQxx0ZHHt5MYsolDEOF4Lj8+4rm2dp/rqR7lEcSnzZ3f48ZvgYo
- QiS3r6CU5I2R8lUZjhD2D+v9K33jYMbSPieHyYgmYfh7HMm+u/uBWyDb+TSEFjMy467P
- qCZv+K7hwGxmJjmyToi1QN+horwhQG9jiTr2/vco8hM747A+9yLUtF7tXVZfLvHF53Xf
- /kEw==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sh5e6-0000TD-0l
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:06:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sh5e3-0005jv-KS
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:06:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724324781;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cVs0nvpbM1qtEFRuYob12A7bImstyQw6UapXCvl7s1E=;
+ b=X9Br2x8mXsIMBFGw5aGj0gpR13geIotNjfC/Vyllynd7qQyEHKn5+6QvCrYNeEAmBa6t/k
+ QvJ2KAjkX4JSZmXfJ483OiESB9B+uE39DM92XANW9WOK6A1Roi5iOUw8KUEx5lCdm3arlG
+ /gjieDV1PB5inzwrJCdN2COm8DPHc+8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-540-eH-StdgRNTyUKALLTZudbg-1; Thu, 22 Aug 2024 07:06:20 -0400
+X-MC-Unique: eH-StdgRNTyUKALLTZudbg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3719ee7c72eso323814f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 04:06:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724324564; x=1724929364;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1724324779; x=1724929579;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ekVmEMWWyS4pVL0hWTOxtB5Sws3gNTkEYcun8LN2+58=;
- b=rs3x+Hq9LscrU2n+HwabvSb71Ew/sA3TGOSxDM/JdJLR77HayxpvAQwgCr5h8Grie3
- g4ry/Pm1Oe5BnwYKLie3GhT/n2ZM+Q012z6RPgpLX0KxmRP95JKXZFxubBrmyJ+2vR01
- FnmftccYtpluiYWduoOkNhTb0VDWwFqw+A+5a0UtrPOFcX80ryDnY9g0yq7gbMQN7XSq
- KZrT9t08FVkgc1cb10Dc+Ad43Y6LvCVc0dSWAAsdXf3RBxfeK4epePyJfBY3FtTsQ4RB
- A14y9clVESRRFQ0G3T9O3QeNE0LeRkYhD4OI/wwqtIv2oNmhZjtakEhNh26Akc3MDt4F
- JkOA==
-X-Gm-Message-State: AOJu0YwTjAT1y1/XHcIMOraiBvaBr2IIx73d68n66MOxMrGgnYCTUVGb
- rqSji9Q3hmuWu5oDMTRWdalZ4XcMS3ZV1ynyU5ZZMorH5N6Vxh5l/cnPIJX9TmOp3GMWq9PSupP
- l
-X-Google-Smtp-Source: AGHT+IF6k8D38esvOi2JNdmmiR6o+AB36khJhrhvO+huKR1SxID1OIZ7yY9NrnOhT5ocpOxXY6BPbw==
-X-Received: by 2002:a05:600c:314f:b0:426:5471:156a with SMTP id
- 5b1f17b1804b1-42abf050d6fmr32182945e9.13.1724324563620; 
- Thu, 22 Aug 2024 04:02:43 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.206.153])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3730826b4b5sm1377786f8f.115.2024.08.22.04.02.41
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Aug 2024 04:02:43 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/functional: Convert ARM Integrator/CP avocado tests
-Date: Thu, 22 Aug 2024 13:02:38 +0200
-Message-ID: <20240822110238.82312-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ bh=cVs0nvpbM1qtEFRuYob12A7bImstyQw6UapXCvl7s1E=;
+ b=XFmRJNf4hKpmMfBq/TjrD8XREBEsFWLRbWSqP7PdEO0PmYnxw9t9/0Pq79CIMSUXFQ
+ Vcv1fxhffAkiudbKR8eleEV8c6l/2xiiJ/fpESNH+d7RIx4GoTrWYjyXhQk/sJf4wJF3
+ m0msSY55Oq1nZ8aATBqRwfVymnEZ2k+eRJ1Qt5BghxcOifj9cin95CCJ2C+63uYMVCzo
+ JK9J6/hmjNjH+w2AAqGmZGlMY4WGe+R8lL1qRdp2OrZCemYx25VhrU+iJNbEqq27gE/x
+ mDxLc6AoD8c4JK5y4YP5tJcD3MZ1uLmIwTXWAg9cYzKjI0TDt8q0QxSo5SDPiMIJebm7
+ dNiA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNHI8m1pdn+tn+OM9gD+/5/mlqdxTZUoWjtcCwCbw/Gq7VYTX1M1FGOVqBbElbS/N/Hq8EpBI1tk6X@nongnu.org
+X-Gm-Message-State: AOJu0Yxa7sTmOeXY3tGBztqcItPp+ZYIny0Gb7FQrFA6Z/7NW+EiTGfE
+ OA+HtH342RL+iTuyRfNl6KvRZAhwkze5RL+LZD+Jus6Z0+BraxAkKCU/hWyTdjXdV9UiPeGQv14
+ PAGgwCZs1pqD0KeuapX9qqhz3il+1srp9nS030f90Jx+85293xzCvL3cUgxyJKQZO9A39AHQj6v
+ ZoPmvZpE8Cer8qTpfSyptr7Ea7e8g=
+X-Received: by 2002:adf:fdcc:0:b0:367:8c65:3c9 with SMTP id
+ ffacd0b85a97d-37308c0924dmr1004115f8f.2.1724324778904; 
+ Thu, 22 Aug 2024 04:06:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHs/jrI6v8vswOjlZ52eCpsV9abaKdPT1T3BZ1BA0ndzsqpRTtGnOzwjiCm0KAPCpvUlLSXIzNcFfCE3GhLfQE=
+X-Received: by 2002:adf:fdcc:0:b0:367:8c65:3c9 with SMTP id
+ ffacd0b85a97d-37308c0924dmr1004082f8f.2.1724324778342; Thu, 22 Aug 2024
+ 04:06:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240820170907.6788-1-yichen.wang@bytedance.com>
+ <20240820170907.6788-5-yichen.wang@bytedance.com>
+In-Reply-To: <20240820170907.6788-5-yichen.wang@bytedance.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Thu, 22 Aug 2024 16:36:01 +0530
+Message-ID: <CAE8KmOzK=Qe3nJ_ReRmQr5hkUgoZe9nOBi5G0hByvG3oVuzG+g@mail.gmail.com>
+Subject: Re: [PATCH v8 4/5] migration: Introduce 'qatzip' compression method
+To: Yichen Wang <yichen.wang@bytedance.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org, 
+ Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>, 
+ "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>, 
+ Xiaoning Ding <xiaoning.ding@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,163 +112,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Straight forward conversion. Update the SHA1 hashes to SHA256
-hashes since SHA1 should not be used anymore nowadays.
+Hello,
 
-  $ QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 make check-functional-arm
-  ...
-  6/6 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_integratorcp   OK   3.90s   2 subtests passed
+On Tue, 20 Aug 2024 at 22:40, Yichen Wang <yichen.wang@bytedance.com> wrote:
+> +static int qatzip_send_setup(MultiFDSendParams *p, Error **errp)
+> +{
+> +    QatzipData *q;
+> +    QzSessionParamsDeflate_T params;
+> +    const char *err_msg;
+> +    int ret;
+> +
+> +    q = g_new0(QatzipData, 1);
+> +    p->compress_data = q;
+> +    /* We need one extra place for the packet header */
+> +    p->iov = g_new0(struct iovec, 2);
+> +
+> +    /*
+> +     * Initialize QAT device with software fallback by default. This allows
+> +     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
+> +     */
+> +    ret = qzInit(&q->sess, true);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzInit failed";
+> +        goto err;
+> +    }
+> +
+> +    ret = qzGetDefaultsDeflate(&params);
+> +    if (ret != QZ_OK) {
+> +        err_msg = "qzGetDefaultsDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    /* Make sure to use configured QATzip compression level. */
+> +    params.common_params.comp_lvl = migrate_multifd_qatzip_level();
+> +    ret = qzSetupSessionDeflate(&q->sess, &params);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzSetupSessionDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    if (MULTIFD_PACKET_SIZE > UINT32_MAX) {
+> +        err_msg = "packet size too large for QAT";
+> +        goto err;
+> +    }
+> +
+> +    q->in_len = MULTIFD_PACKET_SIZE;
+> +    /*
+> +     * PINNED_MEM is an enum from qatzip headers, which means to use
+> +     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
+> +     * is not available or software fallback is used, the malloc flag needs to
+> +     * be set as COMMON_MEM.
+> +     */
+> +    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
+> +    if (!q->in_buf) {
+> +        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
+> +        if (!q->in_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    q->out_len = qzMaxCompressedLength(MULTIFD_PACKET_SIZE, &q->sess);
+> +    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
+> +    if (!q->out_buf) {
+> +        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
+> +        if (!q->out_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +
+> +err:
+> +    error_setg(errp, "multifd %u: [sender] %s", p->id, err_msg);
+> +    return -1;
+> +}
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+* Need to release (g_free OR qatzip_send_cleanup) allocated memory in
+the error (err:) path.
+
+
+> +static int qatzip_recv_setup(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    QatzipData *q;
+> +    QzSessionParamsDeflate_T params;
+> +    const char *err_msg;
+> +    int ret;
+> +
+> +    q = g_new0(QatzipData, 1);
+> +    p->compress_data = q;
+> +
+> +    /*
+> +     * Initialize QAT device with software fallback by default. This allows
+> +     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
+> +     */
+> +    ret = qzInit(&q->sess, true);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzInit failed";
+> +        goto err;
+> +    }
+> +
+> +    ret = qzGetDefaultsDeflate(&params);
+> +    if (ret != QZ_OK) {
+> +        err_msg = "qzGetDefaultsDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    ret = qzSetupSessionDeflate(&q->sess, &params);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzSetupSessionDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    /*
+> +     * Reserve extra spaces for the incoming packets. Current implementation
+> +     * doesn't send uncompressed pages in case the compression gets too big.
+> +     */
+> +    q->in_len = MULTIFD_PACKET_SIZE * 2;
+> +    /*
+> +     * PINNED_MEM is an enum from qatzip headers, which means to use
+> +     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
+> +     * is not available or software fallback is used, the malloc flag needs to
+> +     * be set as COMMON_MEM.
+> +     */
+> +    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
+> +    if (!q->in_buf) {
+> +        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
+> +        if (!q->in_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    q->out_len = MULTIFD_PACKET_SIZE;
+> +    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
+> +    if (!q->out_buf) {
+> +        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
+> +        if (!q->out_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +
+> +err:
+> +    error_setg(errp, "multifd %u: [receiver] %s", p->id, err_msg);
+> +    return -1;
+> +}
+
+* Need to release (g_free OR qatzip_recv_cleanup) allocated memory in
+the error (err:) path.
+
+Thank you.
 ---
-Based-on: <20240821082748.65853-1-thuth@redhat.com>
----
- MAINTAINERS                                   |  2 +-
- tests/functional/meson.build                  |  1 +
- .../test_arm_integratorcp.py}                 | 56 ++++++++++---------
- 3 files changed, 33 insertions(+), 26 deletions(-)
- rename tests/{avocado/machine_arm_integratorcp.py => functional/test_arm_integratorcp.py} (63%)
- mode change 100644 => 100755
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4b480135f6..91e5b061bf 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -785,7 +785,7 @@ S: Maintained
- F: hw/arm/integratorcp.c
- F: hw/misc/arm_integrator_debug.c
- F: include/hw/misc/arm_integrator_debug.h
--F: tests/avocado/machine_arm_integratorcp.py
-+F: tests/functional/test_arm_integratorcp.py
- F: docs/system/arm/integratorcp.rst
- 
- MCIMX6UL EVK / i.MX6ul
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index f8e482a87c..f1fce045fc 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -28,6 +28,7 @@ tests_generic = [
- 
- tests_arm_thorough = [
-   'arm_canona1100',
-+  'arm_integratorcp',
-   'arm_n8x0',
- ]
- 
-diff --git a/tests/avocado/machine_arm_integratorcp.py b/tests/functional/test_arm_integratorcp.py
-old mode 100644
-new mode 100755
-similarity index 63%
-rename from tests/avocado/machine_arm_integratorcp.py
-rename to tests/functional/test_arm_integratorcp.py
-index 87f5cf3953..0fe083f661
---- a/tests/avocado/machine_arm_integratorcp.py
-+++ b/tests/functional/test_arm_integratorcp.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Functional test that boots a Linux kernel and checks the console
- #
- # Copyright (c) 2020 Red Hat, Inc.
-@@ -7,13 +9,15 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
- 
- import os
- import logging
- 
--from avocado import skipUnless
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from unittest import skipUnless
- 
- 
- NUMPY_AVAILABLE = True
-@@ -33,50 +37,49 @@ class IntegratorMachine(QemuSystemTest):
- 
-     timeout = 90
- 
-+    ASSET_KERNEL = Asset(
-+        ('https://github.com/zayac/qemu-arm/raw/master/'
-+         'arm-test/kernel/zImage.integrator'),
-+        '26e7c7e8f943de785d95bd3c74d66451604a9b6a7a3d25dceb279e7548fd8e78')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://github.com/zayac/qemu-arm/raw/master/'
-+         'arm-test/kernel/arm_root.img'),
-+        'e187c27fb342ad148c7f33475fbed124933e0b3f4be8c74bc4f3426a4793373a')
-+
-+    ASSET_TUXLOGO = Asset(
-+        ('https://github.com/torvalds/linux/raw/v2.6.12/'
-+         'drivers/video/logo/logo_linux_vga16.ppm'),
-+        'b762f0d91ec018887ad1b334543c2fdf9be9fdfc87672b409211efaa3ea0ef79')
-+
-     def boot_integratorcp(self):
--        kernel_url = ('https://github.com/zayac/qemu-arm/raw/master/'
--                      'arm-test/kernel/zImage.integrator')
--        kernel_hash = '0d7adba893c503267c946a3cbdc63b4b54f25468'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--
--        initrd_url = ('https://github.com/zayac/qemu-arm/raw/master/'
--                      'arm-test/kernel/arm_root.img')
--        initrd_hash = 'b51e4154285bf784e017a37586428332d8c7bd8b'
--        initrd_path = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
- 
-+        self.set_machine('integratorcp')
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_path,
-                          '-initrd', initrd_path,
-                          '-append', 'printk.time=0 console=ttyAMA0')
-         self.vm.launch()
- 
--    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-+    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-     def test_integratorcp_console(self):
-         """
-         Boots the Linux kernel and checks that the console is operational
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:integratorcp
--        :avocado: tags=device:pl011
-         """
-         self.boot_integratorcp()
-         wait_for_console_pattern(self, 'Log in as root')
- 
-     @skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
-     @skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
--    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-+    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-     def test_framebuffer_tux_logo(self):
-         """
-         Boot Linux and verify the Tux logo is displayed on the framebuffer.
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:integratorcp
--        :avocado: tags=device:pl110
--        :avocado: tags=device:framebuffer
-         """
-         screendump_path = os.path.join(self.workdir, "screendump.pbm")
--        tuxlogo_url = ('https://github.com/torvalds/linux/raw/v2.6.12/'
--                       'drivers/video/logo/logo_linux_vga16.ppm')
--        tuxlogo_hash = '3991c2ddbd1ddaecda7601f8aafbcf5b02dc86af'
--        tuxlogo_path = self.fetch_asset(tuxlogo_url, asset_hash=tuxlogo_hash)
-+        tuxlogo_path = self.ASSET_TUXLOGO.fetch()
- 
-         self.boot_integratorcp()
-         framebuffer_ready = 'Console: switching to colour frame buffer device'
-@@ -97,3 +100,6 @@ def test_framebuffer_tux_logo(self):
-         for tux_count, pt in enumerate(zip(*loc[::-1]), start=1):
-             logger.debug('found Tux at position [x, y] = %s', pt)
-         self.assertGreaterEqual(tux_count, cpu_count)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.45.2
+  - Prasad
 
 
