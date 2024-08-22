@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6FA2C52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 16:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07ECC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 16:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shAZK-0005Z9-RO; Thu, 22 Aug 2024 12:21:50 -0400
+	id 1shAbV-0007r8-Cr; Thu, 22 Aug 2024 12:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1shAZD-000578-Fk
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:21:43 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1shAZ3-0007K3-UV
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:21:38 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-429e29933aaso7303215e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 09:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724343690; x=1724948490; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WaN7NC9uHrEwXd29tH1+I6/CGeGFysWI1W1y0Mcbdjo=;
- b=ycL3p/CxwDjA9aCs4o2zK6NceNnnCy9CzXj5b2NG5XH0J+MAwa+WbGXseG6OIkHobU
- Xvtkc7vugvzTXfKUSZZ8rcSkE3E3BKYVwICNrrX57pxYwksF3PpTwLKmEPITvTnot6oR
- hIz0qVyXhYmC8k6OIwo1Ynn3LAkO7U+opNeGp6fUF8uWcvjIGOv7TooPzuAIszMPk4uX
- MMBbAnQzUcPFb1GqsqKaCujKMvgKuNlg2Myy1LaDyfROqZ4FmjEB6xAxsVpQRuVXH2rn
- nQkgJjxx4iDZleYOToRZpxTL4GABP3FWuj7egMSsxortyXe7InhG3pj0HrM3yJhsEXRR
- M2kQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shAb5-0006fj-Tt
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:23:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shAb2-0007W9-2B
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:23:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724343810;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=En6cDJcQXq6a6TBoYjcaNO4etnd4XW7tDBZMwmzLBUI=;
+ b=E/VJHzSNl2LKkNCx76iTNmGlCZKWVyrqfcdCHJU/rNmnT9qw/ng9B15BjdF0woLDoZX8yX
+ rfkqbhV9o3H5abXAu/0utqygzU0O49eKdWuDoyDzWLrAmRSsGstV17S/Hw7BTf9yl7feFk
+ Mm8JeuhPnipeVdFXD52CtsdXI2Expo0=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-600-SptprSiIOxe8rrUV5s4PZA-1; Thu, 22 Aug 2024 12:23:28 -0400
+X-MC-Unique: SptprSiIOxe8rrUV5s4PZA-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a66b52c944so107430585a.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 09:23:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724343690; x=1724948490;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WaN7NC9uHrEwXd29tH1+I6/CGeGFysWI1W1y0Mcbdjo=;
- b=udq4o3PuCMJ03ZAM077evkoeY5O7Sl3mo2pevVfPJuzCM4hnJ1fcYX2v18okJY7fjK
- +FmIrtsVfRUnOK/rJDUGjl3IuNSgX+YU8L73TbatPuAepaPISalpzffG/gIaQvQe1EAL
- +gww/xd+iB1hzhlbhjEgHG2emlVkV/MAcFEG35INriX9fOICVSet0ZJC+0rNnA/Fu0K5
- nrWYfaqEPfWZxRe31lHWDM1g4q/eOHt82Y34tVDX6dRO/IDlsOdo7fC4p2skSF/RpbE5
- BUmTNAq/OQG214+rp4er+Yhu8dYTrmJDBnaz73+icmzSUZ+XqfDRduGgX5bYc28lE5or
- Dg9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcLYKpjCMgu6q49y7GNGXLQFQe0FLJwBHow1TPrCHDX4rZmTGzzGbnwO0bnGowQJ5LEANSyB2W4Uz9@nongnu.org
-X-Gm-Message-State: AOJu0YwGhgtu95vrE0jw1zkU6BCCPhHW6YoURFyH4UmZegAFm6eHuL3b
- KvwfFMGaAgr71s8nhHul0H3FmoAhrJ6nIlZui8dDrV2ZSODAxLZCoUfBviicyZ0=
-X-Google-Smtp-Source: AGHT+IENxlBGHBvDRNLD0rjunbRN5atbKzjlhwrM+3UuZkymQF555M2bBpAw5KyhCroF/tu0/IpaSQ==
-X-Received: by 2002:a05:6000:1087:b0:368:5a8c:580b with SMTP id
- ffacd0b85a97d-37308c1809emr1629814f8f.19.1724343689838; 
- Thu, 22 Aug 2024 09:21:29 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ac5162347sm28928485e9.23.2024.08.22.09.21.29
+ d=1e100.net; s=20230601; t=1724343807; x=1724948607;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=En6cDJcQXq6a6TBoYjcaNO4etnd4XW7tDBZMwmzLBUI=;
+ b=OkIHnT+B27mH/JQgm+3MyeqEZtLrYYCH+713EUoZ5s4cplrR0sJf6qfkcepmrJdpc6
+ NSs3UmoctPzOYgaoFhg8YIal2hIddVNYZAcHRx9BSMglh8G7XuwD58x1e0Mm+UV44oAW
+ 9BlfNLJalcVQKCJkATw8WSJP0v5We5lx5IrKrHPoTVVq2w7sjzGXovIoHQhxkKp2AHAi
+ 72soyUMST0JeXVuiRpvBRp+JqMHShbYghi7rzZk2V1aW6ssExIZPLBQxtMIZQx14JUMn
+ SxG+ufI8KLM3p4sXLM06SkJ2z14coehIRhzh/Jbe8SqJcsvggWq7EyPZ3zT5h0/CJZcl
+ 4VCw==
+X-Gm-Message-State: AOJu0YzSMOvbzbT1mLO6aP8jOWGdWlDbHr/NzB4ISSPh+MuANFLaQE+J
+ Iy28/otbQtv43UXfGMlwOGxzm9x3CDb3Z3dzM8W0DWmfsQ5XYkyWsFBru0Wtk43OHMCbv1LzZNm
+ iOx74HeZbdE9bNcpOglIkrm8unBXhdsGilW/ujeqsA6wxcIWgT8vO
+X-Received: by 2002:a05:620a:4507:b0:7a6:6b98:8e2d with SMTP id
+ af79cd13be357-7a6740ebdbdmr734674085a.67.1724343807411; 
+ Thu, 22 Aug 2024 09:23:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBtCBe1j1TvAj7jMuN3/0cFVPxzWqksJb/HKEIy1U2bklQG0ika2e6hm2s5xjpi+Ss6AsXBQ==
+X-Received: by 2002:a05:620a:4507:b0:7a6:6b98:8e2d with SMTP id
+ af79cd13be357-7a6740ebdbdmr734669985a.67.1724343806817; 
+ Thu, 22 Aug 2024 09:23:26 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a67f35cda8sm84835385a.58.2024.08.22.09.23.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 09:21:29 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>
-Subject: [PATCH for-9.2 1/6] hw/misc/xlnx-versal-cfu: destroy fifo in finalize
-Date: Thu, 22 Aug 2024 17:21:22 +0100
-Message-Id: <20240822162127.705879-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240822162127.705879-1-peter.maydell@linaro.org>
-References: <20240822162127.705879-1-peter.maydell@linaro.org>
+ Thu, 22 Aug 2024 09:23:26 -0700 (PDT)
+Date: Thu, 22 Aug 2024 12:23:24 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v3 13/14] migration/multifd: Register nocomp ops
+ dynamically
+Message-ID: <Zsdl_ADh-VTKV-wT@x1n>
+References: <20240801123516.4498-1-farosas@suse.de>
+ <20240801123516.4498-14-farosas@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240801123516.4498-14-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,55 +101,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the TYPE_XNLX_VERSAL_CFU_FDRO device creates a FIFO in its
-instance_init method, we must destroy the FIFO in instance_finalize
-to avoid a memory leak for the QOM introspection
-"instantiate-examine-finalize" cycle:
+On Thu, Aug 01, 2024 at 09:35:15AM -0300, Fabiano Rosas wrote:
+> Prior to moving the ram code into multifd-ram.c, change the code to
+> register the nocomp ops dynamically so we don't need to have the ops
+> structure defined in multifd.c.
+> 
+> While here, rename s/nocomp/ram/ and remove the docstrings which are
+> mostly useless (if anything, it's the function pointers in multifd.h
+> that should be documented like that).
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/multifd.c | 101 ++++++++++++--------------------------------
+>  1 file changed, 28 insertions(+), 73 deletions(-)
+> 
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index c25ab4924c..d5be784b6f 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -167,15 +167,7 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
+>      }
+>  }
+>  
+> -/* Multifd without compression */
+> -
+> -/**
+> - * nocomp_send_setup: setup send side
+> - *
+> - * @p: Params for the channel that we are using
+> - * @errp: pointer to an error
+> - */
+> -static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+> +static int ram_send_setup(MultiFDSendParams *p, Error **errp)
 
-Direct leak of 8192 byte(s) in 1 object(s) allocated from:
-    #0 0x55ec89eae7ee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-aarch64+0x294d7ee) (BuildId: 6d508874816cc47d17c8dd775e8f809ae520e8cb)
-    #1 0x7f697018f738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
-    #2 0x55ec8d98d98d in fifo8_create util/fifo8.c:27:18
-    #3 0x55ec8aa2a624 in fifo32_create /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/fifo32.h:35:5
-    #4 0x55ec8aa2a33c in cfu_fdro_init hw/misc/xlnx-versal-cfu.c:397:5
-    #5 0x55ec8ce75da1 in object_init_with_type qom/object.c:420:9
-    #6 0x55ec8ce5d07b in object_initialize_with_type qom/object.c:562:5
-    #7 0x55ec8ce5e91d in object_new_with_type qom/object.c:782:5
-    #8 0x55ec8ce5e9f1 in object_new qom/object.c:797:12
-    #9 0x55ec8d65c81d in qmp_device_list_properties qom/qom-qmp-cmds.c:144:11
+"ram" as a prefix sounds inaccurate to me.  Personally I even preferred the
+old name "nocomp" because it says there's no compression.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/misc/xlnx-versal-cfu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Here "ram_send_setup" is at the same level against e.g. "zlib_send_setup".
+It sounds like zlib isn't for ram, but it is..
 
-diff --git a/hw/misc/xlnx-versal-cfu.c b/hw/misc/xlnx-versal-cfu.c
-index 6bb82e51c15..2284b407eab 100644
---- a/hw/misc/xlnx-versal-cfu.c
-+++ b/hw/misc/xlnx-versal-cfu.c
-@@ -397,6 +397,13 @@ static void cfu_fdro_init(Object *obj)
-     fifo32_create(&s->fdro_data, 8 * KiB / sizeof(uint32_t));
- }
- 
-+static void cfu_fdro_finalize(Object *obj)
-+{
-+    XlnxVersalCFUFDRO *s = XLNX_VERSAL_CFU_FDRO(obj);
-+
-+    fifo32_destroy(&s->fdro_data);
-+}
-+
- static void cfu_fdro_reset_enter(Object *obj, ResetType type)
- {
-     XlnxVersalCFUFDRO *s = XLNX_VERSAL_CFU_FDRO(obj);
-@@ -539,6 +546,7 @@ static const TypeInfo cfu_fdro_info = {
-     .instance_size = sizeof(XlnxVersalCFUFDRO),
-     .class_init    = cfu_fdro_class_init,
-     .instance_init = cfu_fdro_init,
-+    .instance_finalize = cfu_fdro_finalize,
-     .interfaces = (InterfaceInfo[]) {
-         { TYPE_XLNX_CFI_IF },
-         { }
+Do you perhaps dislike the "nocomp" term?  How about:
+
+  multifd_plain_send_setup()
+
+Just to do s/nocomp/plain/?  Or "raw"?
+
+We do have two flavours here at least:
+
+*** migration/multifd-qpl.c:
+<global>[755]                  .send_setup = multifd_qpl_send_setup,
+
+*** migration/multifd-ram.c:
+<global>[387]                  .send_setup = ram_send_setup,
+
+*** migration/multifd-uadk.c:
+<global>[364]                  .send_setup = multifd_uadk_send_setup,
+
+*** migration/multifd-zlib.c:
+<global>[338]                  .send_setup = zlib_send_setup,
+
+*** migration/multifd-zstd.c:
+<global>[326]                  .send_setup = zstd_send_setup,
+
+It might makes sense to all prefix them with "multifd_", just to follow
+gpl/uadk?
+
+>  {
+>      uint32_t page_count = multifd_ram_page_count();
+>  
+> @@ -193,15 +185,7 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+>      return 0;
+>  }
+>  
+> -/**
+> - * nocomp_send_cleanup: cleanup send side
+> - *
+> - * For no compression this function does nothing.
+> - *
+> - * @p: Params for the channel that we are using
+> - * @errp: pointer to an error
+> - */
+> -static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
+> +static void ram_send_cleanup(MultiFDSendParams *p, Error **errp)
+>  {
+>      g_free(p->iov);
+>      p->iov = NULL;
+> @@ -222,18 +206,7 @@ static void multifd_send_prepare_iovs(MultiFDSendParams *p)
+>      p->next_packet_size = pages->normal_num * page_size;
+>  }
+>  
+> -/**
+> - * nocomp_send_prepare: prepare date to be able to send
+> - *
+> - * For no compression we just have to calculate the size of the
+> - * packet.
+> - *
+> - * Returns 0 for success or -1 for error
+> - *
+> - * @p: Params for the channel that we are using
+> - * @errp: pointer to an error
+> - */
+> -static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+> +static int ram_send_prepare(MultiFDSendParams *p, Error **errp)
+>  {
+>      bool use_zero_copy_send = migrate_zero_copy_send();
+>      int ret;
+> @@ -272,46 +245,19 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+>      return 0;
+>  }
+>  
+> -/**
+> - * nocomp_recv_setup: setup receive side
+> - *
+> - * For no compression this function does nothing.
+> - *
+> - * Returns 0 for success or -1 for error
+> - *
+> - * @p: Params for the channel that we are using
+> - * @errp: pointer to an error
+> - */
+> -static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
+> +static int ram_recv_setup(MultiFDRecvParams *p, Error **errp)
+>  {
+>      p->iov = g_new0(struct iovec, multifd_ram_page_count());
+>      return 0;
+>  }
+>  
+> -/**
+> - * nocomp_recv_cleanup: setup receive side
+> - *
+> - * For no compression this function does nothing.
+> - *
+> - * @p: Params for the channel that we are using
+> - */
+> -static void nocomp_recv_cleanup(MultiFDRecvParams *p)
+> +static void ram_recv_cleanup(MultiFDRecvParams *p)
+>  {
+>      g_free(p->iov);
+>      p->iov = NULL;
+>  }
+>  
+> -/**
+> - * nocomp_recv: read the data from the channel
+> - *
+> - * For no compression we just need to read things into the correct place.
+> - *
+> - * Returns 0 for success or -1 for error
+> - *
+> - * @p: Params for the channel that we are using
+> - * @errp: pointer to an error
+> - */
+> -static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
+> +static int ram_recv(MultiFDRecvParams *p, Error **errp)
+>  {
+>      uint32_t flags;
+>  
+> @@ -341,22 +287,15 @@ static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
+>      return qio_channel_readv_all(p->c, p->iov, p->normal_num, errp);
+>  }
+>  
+> -static MultiFDMethods multifd_nocomp_ops = {
+> -    .send_setup = nocomp_send_setup,
+> -    .send_cleanup = nocomp_send_cleanup,
+> -    .send_prepare = nocomp_send_prepare,
+> -    .recv_setup = nocomp_recv_setup,
+> -    .recv_cleanup = nocomp_recv_cleanup,
+> -    .recv = nocomp_recv
+> -};
+> -
+> -static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {
+> -    [MULTIFD_COMPRESSION_NONE] = &multifd_nocomp_ops,
+> -};
+> +static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {};
+>  
+>  void multifd_register_ops(int method, MultiFDMethods *ops)
+>  {
+> -    assert(0 < method && method < MULTIFD_COMPRESSION__MAX);
+> +    if (method == MULTIFD_COMPRESSION_NONE) {
+> +        assert(!multifd_ops[method]);
+> +    } else {
+> +        assert(0 < method && method < MULTIFD_COMPRESSION__MAX);
+> +    }
+>      multifd_ops[method] = ops;
+>  }
+
+The new assertion is a bit paranoid to me.. while checking duplicated
+assignment should at least apply to all if to add.  So.. how about:
+
+  assert(method < MULTIFD_COMPRESSION__MAX);
+  assert(!multifd_ops[method]);
+  multifd_ops[method] = ops;
+
+?
+
+>  
+> @@ -1755,3 +1694,19 @@ bool multifd_send_prepare_common(MultiFDSendParams *p)
+>  
+>      return true;
+>  }
+> +
+> +static MultiFDMethods multifd_ram_ops = {
+> +    .send_setup = ram_send_setup,
+> +    .send_cleanup = ram_send_cleanup,
+> +    .send_prepare = ram_send_prepare,
+> +    .recv_setup = ram_recv_setup,
+> +    .recv_cleanup = ram_recv_cleanup,
+> +    .recv = ram_recv
+> +};
+> +
+> +static void multifd_ram_register(void)
+> +{
+> +    multifd_register_ops(MULTIFD_COMPRESSION_NONE, &multifd_ram_ops);
+> +}
+> +
+> +migration_init(multifd_ram_register);
+> -- 
+> 2.35.3
+> 
+
 -- 
-2.34.1
+Peter Xu
 
 
