@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF0CC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 18:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE534C52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 18:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shCxJ-00043f-HW; Thu, 22 Aug 2024 14:54:45 -0400
+	id 1shCws-0000mj-5e; Thu, 22 Aug 2024 14:54:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1shCxH-0003oR-DD
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:54:43 -0400
+ id 1shCwq-0000Vt-TJ
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:54:16 -0400
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1shCxF-0004C3-LY
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:54:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1724352868; cv=none; 
+ id 1shCwp-00049E-2w
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:54:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1724352840; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=fxZCouzkNSroQi+lLqeBbPzVyXTiQEu+UBb903QYVY/q19tyteZh6NcGbrmqmv2ckF0QTHLFGo+FJYThKJ9IryXlLRgzw0sfeZkoV/baasdwur6H0FcoXfN2cZa3oLb70Atu8iy4D8bZSHTjTE/1Kwn2SkVWnU7MOQMhUVtYlpI=
+ b=ZUOB1T3gCbhg+duf9CudkjxgkFopsMn8Z7Ew8AaUUGxeSD1gIDDebqMpdFrUjxOSznjXG5r4tlVtLXRFf8OOvmxVSebSh2hv17XblDYKrVk+5MbLxw7b+8umn+TxLU3qoRNJuogVFo9zkcgJ+zKbhdZnv8FF1qMeAr336gqclSQ=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1724352868;
+ s=zohoarc; t=1724352840;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=COIn76HsZaZ5VrWao8Aq6w2THInXwXLeYdKisdpu/uc=; 
- b=Ui/ySm1TBPXKr7hIwatTZvB5SFxoKUgBGw18RoNYUkgZ18tFHrI4CcOGZACflrj18qPhq2tzXY8IITKSLHwVIHUjdzYL4craXCBYM6TA8Xb+yePZGMSOEbx/cH4QBEaVm3De9ljoTBX+SX/CgxDVgoDtlJz1TjfzJANk+mKpts4=
+ bh=ap8P/zbrScy+lnoMzkTzbFmuJHrSIe0PxDMWd9b5lXg=; 
+ b=SYjG7vVGyGgeYf0c9EkvEOTHszUdkWSSWwzxxpV+MdDXuHXxahkIVxMLl1w1qcanEzE3hWig5nsXcRXOE2Lh/hvi9PHsyAIyxmqYgfSBjNxZ+9dTMtBm62pmNuGEZ+QXSWAXHxmddvvbOsouBNc01tTywy1izNC2MS0qniKDQYI=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1724352868; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1724352840; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=COIn76HsZaZ5VrWao8Aq6w2THInXwXLeYdKisdpu/uc=;
- b=LJ237XiU8zL5akZxilqdG4oF0Hpo6nGOKA1O/ZKTFuNlzFGkVlq7EbHynHtAKojW
- rVK8E8LqEwec6e4lm7a6CiYXKc1KwVlLydECEd9CykoZgXc2jKiTYceVB6bannsjU2J
- KatLOCpTXEgcx9xwRBIp59hiQVtgyzD3pGXVWFZw=
-Received: by mx.zohomail.com with SMTPS id 1724352866402375.69506749886364;
- Thu, 22 Aug 2024 11:54:26 -0700 (PDT)
+ bh=ap8P/zbrScy+lnoMzkTzbFmuJHrSIe0PxDMWd9b5lXg=;
+ b=HBvCUV2WdAKcesBAbLGYlt/FKajxAfUiqirfj0jPhSWeiBOnaTU+VhjP/fVWwR6u
+ UGm5NjN+bqxGGHftjOR9FAMVHtG+HsSCUDdKxKk9dEIuwCNEIt5PrmXW+lBG+JtBIl8
+ uMujzfnqRy4XONS3RisQIU/MMNculNnzuICqVaTQ=
+Received: by mx.zohomail.com with SMTPS id 1724352837858643.7842343988855;
+ Thu, 22 Aug 2024 11:53:57 -0700 (PDT)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -62,9 +62,10 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v17 12/13] virtio-gpu: Register capsets dynamically
-Date: Thu, 22 Aug 2024 21:51:08 +0300
-Message-ID: <20240822185110.1757429-13-dmitry.osipenko@collabora.com>
+Subject: [PATCH v17 08/13] virtio-gpu: Don't require udmabuf when blobs and
+ virgl are enabled
+Date: Thu, 22 Aug 2024 21:51:04 +0300
+Message-ID: <20240822185110.1757429-9-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240822185110.1757429-1-dmitry.osipenko@collabora.com>
 References: <20240822185110.1757429-1-dmitry.osipenko@collabora.com>
@@ -98,128 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+The udmabuf usage is mandatory when virgl is disabled and blobs feature
+enabled in the Qemu machine configuration. If virgl and blobs are enabled,
+then udmabuf requirement is optional. Since udmabuf isn't widely supported
+by a popular Linux distros today, let's relax the udmabuf requirement for
+blobs=on,virgl=on. Now, a full-featured virtio-gpu acceleration is
+available to Qemu users without a need to have udmabuf available in the
+system.
 
-virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
-assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
-like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-gl.c     |  6 ++++--
- hw/display/virtio-gpu-virgl.c  | 33 +++++++++++++++++++++------------
- include/hw/virtio/virtio-gpu.h |  4 +++-
- 3 files changed, 28 insertions(+), 15 deletions(-)
+ hw/display/virtio-gpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index f2555673a18e..e859c0dff055 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -144,8 +144,8 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-     }
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 60dfed87765b..24608338d7ea 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1484,6 +1484,7 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
  
-     g->parent_obj.conf.flags |= (1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED);
--    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
--        virtio_gpu_virgl_get_num_capsets(g);
-+    g->capset_ids = virtio_gpu_virgl_get_capsets(g);
-+    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets = g->capset_ids->len;
- 
- #if VIRGL_VERSION_MAJOR >= 1
-     g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
-@@ -177,6 +177,8 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-     }
- 
-     gl->renderer_state = RS_START;
-+
-+    g_array_unref(g->capset_ids);
- }
- 
- static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index b2f4e215a7ad..5a881c58a11d 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -622,19 +622,13 @@ static void virgl_cmd_get_capset_info(VirtIOGPU *g,
-     VIRTIO_GPU_FILL_CMD(info);
- 
-     memset(&resp, 0, sizeof(resp));
--    if (info.capset_index == 0) {
--        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL;
--        virgl_renderer_get_cap_set(resp.capset_id,
--                                   &resp.capset_max_version,
--                                   &resp.capset_max_size);
--    } else if (info.capset_index == 1) {
--        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL2;
-+
-+    if (info.capset_index < g->capset_ids->len) {
-+        resp.capset_id = g_array_index(g->capset_ids, uint32_t,
-+                                       info.capset_index);
-         virgl_renderer_get_cap_set(resp.capset_id,
-                                    &resp.capset_max_version,
-                                    &resp.capset_max_size);
--    } else {
--        resp.capset_max_version = 0;
--        resp.capset_max_size = 0;
-     }
-     resp.hdr.type = VIRTIO_GPU_RESP_OK_CAPSET_INFO;
-     virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
-@@ -1160,12 +1154,27 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     return 0;
- }
- 
--int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
-+static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
-+{
-+    g_array_append_val(capset_ids, capset_id);
-+}
-+
-+GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
- {
-     uint32_t capset2_max_ver, capset2_max_size;
-+    GArray *capset_ids;
-+
-+    capset_ids = g_array_new(false, false, sizeof(uint32_t));
-+
-+    /* VIRGL is always supported. */
-+    virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
-+
-     virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
-                               &capset2_max_ver,
-                               &capset2_max_size);
-+    if (capset2_max_ver) {
-+        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
-+    }
- 
--    return capset2_max_ver ? 2 : 1;
-+    return capset_ids;
- }
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 775005abb337..83232f4b4bfa 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -209,6 +209,8 @@ struct VirtIOGPU {
-         QTAILQ_HEAD(, VGPUDMABuf) bufs;
-         VGPUDMABuf *primary[VIRTIO_GPU_MAX_SCANOUTS];
-     } dmabuf;
-+
-+    GArray *capset_ids;
- };
- 
- struct VirtIOGPUClass {
-@@ -354,6 +356,6 @@ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
- void virtio_gpu_virgl_reset(VirtIOGPU *g);
- int virtio_gpu_virgl_init(VirtIOGPU *g);
--int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g);
-+GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
- 
- #endif
+     if (virtio_gpu_blob_enabled(g->parent_obj.conf)) {
+         if (!virtio_gpu_rutabaga_enabled(g->parent_obj.conf) &&
++            !virtio_gpu_virgl_enabled(g->parent_obj.conf) &&
+             !virtio_gpu_have_udmabuf()) {
+             error_setg(errp, "need rutabaga or udmabuf for blob resources");
+             return;
 -- 
 2.45.2
 
