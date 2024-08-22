@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C92DDC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 12:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E62EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 12:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh6hN-0001WU-3i; Thu, 22 Aug 2024 08:13:53 -0400
+	id 1sh6qV-0007wT-CR; Thu, 22 Aug 2024 08:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sh6hJ-0001TR-PF
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:13:49 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ id 1sh6qT-0007qM-Rs
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:23:18 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sh6hG-00039k-TO
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:13:49 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-5334c018913so704702e87.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 05:13:45 -0700 (PDT)
+ id 1sh6qQ-0004cn-RJ
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:23:17 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-428e3129851so5436865e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 05:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724328824; x=1724933624; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A17X2vXtF3o1S3f4F9GKbovVAlswD6myVLbV8lTu3xA=;
- b=n8+TYbBSAgulwhHuVD3Ps7sA/HThuEOFtALUAd6JTgIiqtCLoNGg0WtWDuMdDzPmk9
- 03S4IaYXMnzrbqclg+TBq+t/46B4dippTbXlHPb0g5nOhzaeA2jxhAfho7kZ0hk5mAXp
- W2eaz3xftnWLe9TTDc3va+NAorydrYmLg042NXAc/Q7aerlUIzzqnFSBPlXcj83/n9QH
- lZ2becyI5bWSZr2G1QSRw3JEoNguSgOAD6p1XJCXhOWksOjZrrI/i+WWHrvUuTmIsC7f
- lABUZTNHc2ZdFlts2O53pj0QKhCeBBf/RePE2KxGud3JO1KE5j70APEdNWbT378gNP2Z
- AXWQ==
+ d=linaro.org; s=google; t=1724329392; x=1724934192; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fuk1+Jjiy0dwyOWZxHuc1mCwVnRsvW+sH5qBxImq/Bk=;
+ b=cBEndfJ0bifdcYbK1LlNLyt5LmLcx3DKPmReAe8kmaWSdZjBvpyWhuZLbcGjVgZlun
+ qY5jRsSCk9cd/vInABAhLUVyj7M8N5Qmh93b5eBJpapvCRDT3EB32jbhwrIAtP2zss9v
+ e0NHELBfkaF5hpcKaa7cDcuLf25nnQhNwoGB/b5wPh1fhnC+TvkHwaf9g6bP+pxvSG+y
+ SNzXi8r7loHyYEyEa6dchnnlkh3HNsEF6KV5JYkpNDxtyO7h8cWrC6nDedftjyshJPio
+ OAEGMYrAb7vXwNkWcSShWdp1nk4N5nQYkNPK/BDgRYWzQxEzSQI3szF2NeKpjnRk9stR
+ t7sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724328824; x=1724933624;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=A17X2vXtF3o1S3f4F9GKbovVAlswD6myVLbV8lTu3xA=;
- b=hnI37s4V7jXfd6qVocYLsGqBRHD4ScQzVdTxAmZ5P43EI/OInPCgYDKvnp9zZzhsJ3
- Z0DLuO2rgWjkRkkkf30MeYJwXZ7PB5b3BQUJ8k+0iECf86HCA7aFj/zy/EsPJLcaTyPH
- 19mwchidSMP2Kr15LCsEmSI2fIEjWLIA44yS0vkj4KsxzaZzbG1CV4odOtnucP3xFReB
- VFMuA60woKl+eEoMNf9kEvapixj9qJDwiTDlaaklMU9bKGQe69UyuVpa3SKRs0j7481Q
- R2MVfrXi2MIDx6pD1Z0p9qnSsjENycvFsYO/orXomnplHqvyPEkdKYp+CaT8NmdYYYrd
- D9Ag==
-X-Gm-Message-State: AOJu0YxRRauUSswLsHJsEiHmUMk5e+iWoMK4xv08PJR9eDuio1mDvdix
- sghDB6rAVQJM3rJ/FKDCNr9nC9pw/KaayANZuow5dgvsqgw8aW6sw3W+xnGxe4xF43DMmcZ5OMR
- 0qL6A+jBGr09M7z6LEfOhNLJihlLtRzVsSkH4DA==
-X-Google-Smtp-Source: AGHT+IE1Q++zyAWTNS1+K308AAPTiPcpw+1GIfknE9e0yVp5fYiWiGyFhE/ZKUpRW8UVumWU0fm/4TytveRXJND+aZA=
-X-Received: by 2002:a2e:be0e:0:b0:2ef:26f2:d3e2 with SMTP id
- 38308e7fff4ca-2f405c7c311mr13821701fa.2.1724328823414; Thu, 22 Aug 2024
- 05:13:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240630165327.38153-1-mjt@tls.msk.ru>
- <20240630165327.38153-16-mjt@tls.msk.ru>
-In-Reply-To: <20240630165327.38153-16-mjt@tls.msk.ru>
+ d=1e100.net; s=20230601; t=1724329392; x=1724934192;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fuk1+Jjiy0dwyOWZxHuc1mCwVnRsvW+sH5qBxImq/Bk=;
+ b=aHASQPdAi/pywbJOmWsAbvpT22XZDQWHyeRngq31MsnHc+0EJy+0ZYcbHblLvQwtU3
+ IT4iaxQFDVgANoh31dXBWUUkSpWdkegKezA6YeyK4ZXlY11i2ZMowVj960muD3rA6Q+e
+ sJJXAYwFCm+qZI1ueHJfRZbqUVCL4ag/pqQmgBBqc/qH0vWONcuwAO2Fosnh1SJyH5rM
+ tPfjZW1oHQfE6sENZzmi5F92ind4QNwApQrEeV/F3cF6H3jM29uQG+8/8enlgmURYwFG
+ MKYzJ36PRL6PVtnBW9mdiVIL4GZJpj3GtZqvX5uM4nKiXCo62d+vMLPJMI2OLB++Mq52
+ Z9yQ==
+X-Gm-Message-State: AOJu0Ywy4QIV4uu+yfRENk3PgIewtftt1Jxq+b1KY+h1zngQdYrpC5Gr
+ mTx0JXNMEFHlK7qUSF0yCmaa9koAp4VP7scjVMJylgzagnDy3rEx5YFlk0PO+Pxq8gcItVhFXsa
+ E
+X-Google-Smtp-Source: AGHT+IF6YS2mGnPXckMTmnpj4hu8n5cKjYW9vki6Bj5woscz29+mODcOuEvbvubjOv8XGqytI1Fc1g==
+X-Received: by 2002:a05:600c:4584:b0:426:6551:3174 with SMTP id
+ 5b1f17b1804b1-42abd2458fcmr45245605e9.29.1724329391592; 
+ Thu, 22 Aug 2024 05:23:11 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ac517a65dsm22757685e9.34.2024.08.22.05.23.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Aug 2024 05:23:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Aug 2024 13:13:32 +0100
-Message-ID: <CAFEAcA9KpXLmaUQC6_FiJFX9RkkDSO0a0m7syhHbSokPojv78w@mail.gmail.com>
-Subject: Re: [PULL 15/16] vl.c: select_machine(): add selected machine type to
- error message
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, 
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x135.google.com
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-stable@nongnu.org
+Subject: [PATCH for-9.1?] system/vl.c: Print machine name, not "(null)",
+ for unknown machine types
+Date: Thu, 22 Aug 2024 13:23:10 +0100
+Message-Id: <20240822122310.561885-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,47 +95,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 30 Jun 2024 at 17:57, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  system/vl.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/system/vl.c b/system/vl.c
-> index 92fc29c193..bdd2f6ecf6 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1674,7 +1674,7 @@ static MachineClass *select_machine(QDict *qdict, E=
-rror **errp)
->          machine_class =3D find_machine(machine_type, machines);
->          qdict_del(qdict, "type");
->          if (!machine_class) {
-> -            error_setg(errp, "unsupported machine type");
-> +            error_setg(errp, "unsupported machine type: \"%s\"", optarg)=
-;
->          }
->      } else {
->          machine_class =3D find_default_machine(machines);
-
-Hi. This patch doesn't do the right thing:
+In commit 412d294ffdc we tried to improve the error message printed when
+the machine type is unknown, but we used the wrong variable, resulting in:
 
 $ ./build/x86/qemu-system-aarch64 -M bang
 qemu-system-aarch64: unsupported machine type: "(null)"
 Use -machine help to list supported machines
 
-"optarg" is a global, and at the point where we call
-select_machine() it isn't valid (we've finished parsing
-the options entirely). The thing the error message should
-be printing is the local variable "machine_type".
+Use the right variable, so we produce more helpful output:
 
-I'll send a patch in a moment.
+$ ./build/x86/qemu-system-aarch64 -M bang
+qemu-system-aarch64: unsupported machine type: "bang"
+Use -machine help to list supported machines
 
-thanks
--- PMM
+Note that we must move the qdict_del() to below the error_setg(),
+because machine_type points into the value of that qdict entry,
+and deleting it will make the pointer invalid.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 412d294ffdc ("vl.c: select_machine(): add selected machine type to error message")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Tagged as for-9.1 because this is a sort-of regression since 9.0
+(in 9.0 we didn't try to print the machine type name at all in
+this error). But it's also very close to release and this is only
+cosmetics in an error message. The cc-stable is for the case where
+we don't put it into 9.1 and then backport it to the 9.1 stable
+branch after release.
+
+ system/vl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/system/vl.c b/system/vl.c
+index 41d53d2456a..01b8b8e77ad 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1679,10 +1679,10 @@ static MachineClass *select_machine(QDict *qdict, Error **errp)
+ 
+     if (machine_type) {
+         machine_class = find_machine(machine_type, machines);
+-        qdict_del(qdict, "type");
+         if (!machine_class) {
+-            error_setg(errp, "unsupported machine type: \"%s\"", optarg);
++            error_setg(errp, "unsupported machine type: \"%s\"", machine_type);
+         }
++        qdict_del(qdict, "type");
+     } else {
+         machine_class = find_default_machine(machines);
+         if (!machine_class) {
+-- 
+2.34.1
+
 
