@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F970C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 15:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E15C52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 15:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh9mo-0005lz-Aq; Thu, 22 Aug 2024 11:31:42 -0400
+	id 1shA5I-00046A-QW; Thu, 22 Aug 2024 11:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sh9mk-0005kB-Dn
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:31:38 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sh9mi-0007zF-D7
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:31:38 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a7ab63a388bso71368766b.1
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 08:31:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724340694; x=1724945494; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1hFgkaIH/nKBYZoZWeM2HW9A3rrz8SZz74mXBRb0p8o=;
- b=QAzaJCEStZx7+0BjvZ6aEgaJIYT2PB++ItuuHx86ANG+gAIRB00vve1yOjyoICB7MT
- OZlyGd93/kFw38LmjbQG29d1qApjwP/6gJdG4F0w1CLIar+GqTIK4+7WkjZcghwVR1NI
- JBgm/u1oi3b3kFQzFIIuFOBa9SEpJfBOdoj1jtqLqBYfRBRNFYhsuiPqVtNrED025QaA
- 4uvxFFKAoJ+IBfDy1xorTXYVy4944qTZHSPSMlBpm3qIZM0MND2jbAbj3MFZyCiT8Q+k
- rD9bNKOGLTjn8untu+0uqTYCt9LIQb8HUpAhjsw50yp984b/PDNMBlIH52Ttmuyw0psS
- /tmw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shA5E-00044Q-5h
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:50:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shA5B-0002Uv-Re
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 11:50:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724341840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pUDfxI1yA73uywHxKdLRwgYfR/mo3Nvoc8DDpoo2L14=;
+ b=Bkkd6uC7iEprzvGN6+q7cde7Weer5BpSxFgHHx7kNHxIF9w6WWBugk1Ax0TucG7mgHsD75
+ I3Ut7oHt3bjuwFEabaUwa1dngdS0qKEatHEkl5D6y1F8isKeMHydlsoSBWovvtiNLynf/t
+ g9+Zxwy4185TAcSHvsKLtEYu4n8HMpQ=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-4VLeF_peN2aL_WNYkcun7g-1; Thu, 22 Aug 2024 11:50:38 -0400
+X-MC-Unique: 4VLeF_peN2aL_WNYkcun7g-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4500d2fe009so16984751cf.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 08:50:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724340694; x=1724945494;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1hFgkaIH/nKBYZoZWeM2HW9A3rrz8SZz74mXBRb0p8o=;
- b=WB1MUTBzUkRYECNRpe9NpAa1P9EwfOU3bXW0oIfBmkQxLncIQL7swAFIxVKw+3I4OT
- bVcwGyOUt92fJVQV+oHzgIdm3dlS207VUGgBDpe6rH1ZM3dGH+b8FYnTNxG4kgCMOOKG
- MBxf7YHByqaWafT6+Ib1QNawOvpB88t5HcLysL8B0wvuwN/R+tMVNHsTadyhHeItdcmS
- ATU1tQZE+LuF5OUexL+0YG/5OHWzWJFHVlmqwGXbepqnNGFNwFzzHsxNytz9qFwF8uPa
- KBBmWUZrvlZCKQJBYXNN7sGlLDaOLsGKaby9RedaATSUVcGbBEVdJ4mj+/1CHQz4PSfe
- wWQw==
-X-Gm-Message-State: AOJu0Yw+q2Ow6NeU9t6CTEZudsPc7ReEbvnpPYZHOE19jojtMdpEfZZ9
- h4BMHkoUaxO9Sgc7DCxMS9usunBNl3RZVgknmxWUjU6VgRd2cap56MKEBTnASCxk5tdIGmdfNsQ
- bZ+tV1FmORunj/Q1hcB0OJ0AgfTuwWafE1IrY6A==
-X-Google-Smtp-Source: AGHT+IGpvyvVFUCQh9zrtAt02nBb7G61Ja2mxiREHeGS33DZpbodsKaIDrc/dP6QvdkZmDDYnPLd2/FtvK5NB8b38po=
-X-Received: by 2002:a05:6402:530d:b0:5be:cdda:1c6b with SMTP id
- 4fb4d7f45d1cf-5c0792b5a3cmr2137792a12.31.1724340693984; Thu, 22 Aug 2024
- 08:31:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724341837; x=1724946637;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pUDfxI1yA73uywHxKdLRwgYfR/mo3Nvoc8DDpoo2L14=;
+ b=CgQ3dVTQuJdV1A/OPO2Jj4GwcFsI15mnRMbkunI1RM6DQ912dJtkog+iQkkRvj2pBv
+ GCSHHSJhIX/0RkUOk1DAHxP/3MTJc1hRhzsb0xNG0eG0yxxcq0zESK+/ozxUXkIsnZ8x
+ GylYumNHYhwYo2oQCF4FuK/vW/CxclNYBapjcPKTPb3UHpjHUP6s6rMDP2zfILf2WNGd
+ L6en2raRLEVq+32eT21KWqb6AETW4XS1ajbMLEU1LDsM+NXyfjsMH7KXC2SDQPpz5YlF
+ u+HfhDaodZMQ0ygEL4CeM3t2syneYvuVg3jRnkvSpUN4mPYqePCiMeTEKJTv0qgnp225
+ AMmg==
+X-Gm-Message-State: AOJu0Yxs1AwzjMP0i02Cvcq7hCC4R4vHkES2q4kDo/jW/lAFNwcieCYh
+ B8EhR/KgjM/X55ifyi3SdY53p4+RwbmY0tbnuBvXJwKU890QguTMdmS2x9r/H+jDN7IWkttt5Uj
+ Dzk/0Jiu652NY4W033R0M9qwz2bxl/ipTj6z1UBwYYkHaGUdMBur+
+X-Received: by 2002:a05:622a:1115:b0:447:f8b1:aeb9 with SMTP id
+ d75a77b69052e-454fae6d551mr60594201cf.16.1724341837363; 
+ Thu, 22 Aug 2024 08:50:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQnXCf1geMeBiPpy0CYrSizPMAnkDsHAaRxajA6HQOJxmd7yZYqnOykzwrryf3o6/l4gPdDg==
+X-Received: by 2002:a05:622a:1115:b0:447:f8b1:aeb9 with SMTP id
+ d75a77b69052e-454fae6d551mr60593931cf.16.1724341836907; 
+ Thu, 22 Aug 2024 08:50:36 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-454fe1c9c9asm7852271cf.89.2024.08.22.08.50.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Aug 2024 08:50:36 -0700 (PDT)
+Date: Thu, 22 Aug 2024 11:50:32 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v3 10/14] migration/multifd: Don't send ram data during
+ SYNC
+Message-ID: <ZsdeSP4eyimnlMyS@x1n>
+References: <20240801123516.4498-1-farosas@suse.de>
+ <20240801123516.4498-11-farosas@suse.de>
 MIME-Version: 1.0
-References: <20240725055447.14512-1-yaoxt.fnst@fujitsu.com>
- <CAFEAcA_MDwXrgi3xALUZcRrNq_ds6LyL2HwvCS+Syv8vwDGW-Q@mail.gmail.com>
- <OSZPR01MB645376D56BA4BE4B5C4B9FF78D8E2@OSZPR01MB6453.jpnprd01.prod.outlook.com>
-In-Reply-To: <OSZPR01MB645376D56BA4BE4B5C4B9FF78D8E2@OSZPR01MB6453.jpnprd01.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Aug 2024 16:31:22 +0100
-Message-ID: <CAFEAcA9kbWEvCPYCKkvpYQP_W6ASwtkMH7gsehM+qDS5DTRWVg@mail.gmail.com>
-Subject: Re: [PATCH] scripts/coccinelle: New range.cocci
-To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240801123516.4498-11-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,174 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Aug 2024 at 01:21, Xingtao Yao (Fujitsu)
-<yaoxt.fnst@fujitsu.com> wrote:
->
->
->
-> > -----Original Message-----
-> > From: Peter Maydell <peter.maydell@linaro.org>
-> > Sent: Tuesday, August 20, 2024 4:41 PM
-> > To: Yao, Xingtao/=E5=A7=9A =E5=B9=B8=E6=B6=9B <yaoxt.fnst@fujitsu.com>
-> > Cc: qemu-devel@nongnu.org
-> > Subject: Re: [PATCH] scripts/coccinelle: New range.cocci
-> >
-> > On Thu, 25 Jul 2024 at 06:55, Yao Xingtao via <qemu-devel@nongnu.org> w=
-rote:
-> > >
-> > > This is the semantic patch from commit 7b3e371526 "cxl/mailbox: make
-> > > range overlap check more readable"
-> > >
-> > > Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-> > > ---
-> > >  scripts/coccinelle/range.cocci | 49
-> > ++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 49 insertions(+)
-> > >  create mode 100644 scripts/coccinelle/range.cocci
-> > >
-> > > diff --git a/scripts/coccinelle/range.cocci b/scripts/coccinelle/rang=
-e.cocci
-> > > new file mode 100644
-> > > index 000000000000..21b07945ccb2
-> > > --- /dev/null
-> > > +++ b/scripts/coccinelle/range.cocci
-> > > @@ -0,0 +1,49 @@
-> > > +/*
-> > > +  Usage:
-> > > +
-> > > +    spatch \
-> > > +           --macro-file scripts/cocci-macro-file.h \
-> > > +           --sp-file scripts/coccinelle/range.cocci \
-> > > +           --keep-comments \
-> > > +           --in-place \
-> > > +           --dir .
-> > > +
-> > > +  Description:
-> > > +    Find out the range overlap check and use ranges_overlap() instea=
-d.
-> > > +
-> > > +  Note:
-> > > +    This pattern cannot accurately match the region overlap check, a=
-nd you
-> > > +    need to manually delete the use cases that do not meet the condi=
-tions.
-> > > +
-> > > +    In addition, the parameters of ranges_overlap() may be filled in=
-correctly,
-> > > +    and some use cases may be better to use range_overlaps_range().
-> >
-> > I think these restrictions mean that we should do one
-> > of two things:
-> >  (1) rewrite this as a Coccinelle script that just prints
-> >      out the places where it found matches (i.e. a "grep"
-> >      type operation, not a search-and-replace), so the
-> >      user can then go and investigate them and do the
-> >      range_overlap they want to do
-> >  (2) fix the problems so that you really can apply it to
-> >      the source tree and get correct fixes
-> >
-> > The ideal would be (2) -- the ideal flow for coccinelle
-> > driven patches is that you can review the coccinelle
-> > script to check for things like off-by-one errors, and
-> > then can trust all the changes it makes. Otherwise
-> > reviewers need to carefully scrutinize each source
-> > change individually.
-> >
-> > It's the off-by-one issue that really makes me think
-> > that (2) would be preferable -- it would otherwise
-> > be I think quite easy to accidentally rewrite a correct
-> > range check into one that's off-by-one and not notice.
-> thanks for your reply!
-> I tried my best to match all the patterns of the region overlap check,
-> but it is difficult, I am not good at cocci, could you give me some advic=
-e?
+On Thu, Aug 01, 2024 at 09:35:12AM -0300, Fabiano Rosas wrote:
+> Skip saving and loading any ram data in the packet in the case of a
+> SYNC. This fixes a shortcoming of the current code which requires a
+> reset of the MultiFDPages_t fields right after the previous
+> pending_job finishes, otherwise the very next job might be a SYNC and
+> multifd_send_fill_packet() will put the stale values in the packet.
+> 
+> By not calling multifd_ram_fill_packet(), we can stop resetting
+> MultiFDPages_t in the multifd core and leave that to the client code.
+> 
+> Actually moving the reset function is not yet done because
+> pages->num==0 is used by the client code to determine whether the
+> MultiFDPages_t needs to be flushed. The subsequent patches will
+> replace that with a generic flag that is not dependent on
+> MultiFDPages_t.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Something like this seems to me to work and mostly makes the
-same substitutions as your series suggests:
+-- 
+Peter Xu
 
-=3D=3D=3Dbegin=3D=3D=3D
-//  Usage:
-//    spatch \
-//          --macro-file scripts/cocci-macro-file.h \
-//           --sp-file scripts/coccinelle/range.cocci \
-//           --keep-comments \
-//           --in-place \
-//           --dir .
-//
-//  Description:
-//   Find out the range overlap check and use ranges_overlap() instead.
-//
-// Usage notes:
-// * Any change made here shouldn't be a behaviour change, but you'll
-//   need to check that the suggested changes really are range checks
-//   semantically, and not something else that happened to match the patter=
-n.
-//   In particular the patterns for (start1, end1) vs (start2, end2)
-//   can match very widely.
-// * This won't detect cases where somebody intended to write a range overl=
-ap
-//   but made an off-by-one error in the bounds checks.
-// * You may need to add a #include "qemu/range.h" to the file.
-//
-// The arguments to ranges_overlap() are start1, len1, start2, len2.
-// This means that the last value included in each range is (start + len - =
-1).
-//
-// Note that Coccinelle is smart enough to match unbracketed
-// versions of expressions if we provide it with patterns with brackets,
-// but not vice-versa, so our match expressions are generous with bracketin=
-g.
-
-@@
-// Where the code expresses things in terms of start and length:
-expression S1, L1, S2, L2;
-@@
-(
-- (((S1 + L1) <=3D S2) || ((S2 + L2) <=3D S1))
-+ !ranges_overlap(S1, L1, S2, L2)
-|
-- ((S1 < (S2 + L2)) && (S2 < (S1 + L1)))
-+ ranges_overlap(S1, L1, S2, L2)
-)
-@@
-// Where the code expresses things with (start, length) and (start, end)
-// with the 'end' byte not being inside the second range.
-expression S1, E1, S2, L2;
-@@
-(
-- ((S1 >=3D (S2 + L2)) || (E1 <=3D S2))
-+ !ranges_overlap(S1, E1 - S1, S2, L2)
-|
-- ((S1 < (S2 + L2)) && (E1 > S2))
-+ ranges_overlap(S1, E1 - S1, S2, L2)
-)
-@@
-// Where the code expresses things with (start, end), (start, end)
-// with the 'end' bytes not being inside the second range.
-expression S1, E1, S2, E2;
-@@
-(
-- ((S1 >=3D E2) || (E1 <=3D S2))
-+ !ranges_overlap(S1, E1 - S1, S2, E2 - S2)
-|
-- ((S1 < E2) && (E1 > S2))
-+ ranges_overlap(S1, E1 - S1, S2, E2 - S2)
-)
-=3D=3D=3Dendit=3D=3D=3D
-
-The awkward part here is that (as the notes suggest) those last
-two patterns will match an awful lot of things that aren't
-ranges. (I think we could in theory improve on that a bit by
-for instance insisting that none of S1 S2 E1 E2 were constants,
-but that seems tricky at minimum in Coccinelle.) But at least
-the substitution they suggest will be an arithmetically correct one.
-
-A couple of other review notes:
- * our Coccinelle comment format style is '//', not C-style comments
- * all new files in the tree need the usual copyright-and-license
-   information at the top
-
-thanks
--- PMM
 
