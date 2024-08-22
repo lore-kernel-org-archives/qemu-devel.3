@@ -4,50 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 670B3C52D6F
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 02:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF383C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 04:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgxZ6-0008HS-2q; Wed, 21 Aug 2024 22:28:44 -0400
+	id 1sgzEg-0000ZB-Cp; Thu, 22 Aug 2024 00:15:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sgxZ3-0008Gy-RU
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 22:28:41 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sgxZ0-0004qJ-0M
- for qemu-devel@nongnu.org; Wed, 21 Aug 2024 22:28:41 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxuOlMosZmV8IbAA--.59915S3;
- Thu, 22 Aug 2024 10:28:28 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDx0uFLosZmhlcdAA--.63891S2;
- Thu, 22 Aug 2024 10:28:27 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] target/loongarch/kvm: Add vCPU reset function
-Date: Thu, 22 Aug 2024 10:28:27 +0800
-Message-Id: <20240822022827.2273534-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sgzEe-0000XP-Ko
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 00:15:44 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sgzEc-0001K4-KZ
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 00:15:44 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-7c3d9a5e050so267512a12.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Aug 2024 21:15:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724300140; x=1724904940;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cLPIMAtNJsErtAYDPZGhNQ9X5w0MHlA6ecqtaKbpwPE=;
+ b=XIjt1ixVZ6Cz/8InxVNJqbim2A9LBtZx8t5XuBRAZqgfDghrhCFOcb4TbPrgW6jmiz
+ 6gaGPmQG55FFqmYJ31BPyQtZvWWEc/2xxvEPQ6tq5X7keAimgQAsbQbIzV8BUhfcjftO
+ RNORiQvenKIXOx957G4DyukUEG1C/HpMXQ4AVLGtk3EWj0VPRMkDGolFiGNmyCeah40B
+ sdmLJ0GHB7wR+FhGvfqmrfkTJkR6Gl5180wafvQ4f+TlshdZhGEpcByaADMBj1X+xgN0
+ O/RzjDJDCQ3+4u24EL7xqmksIOxeb2LFZTDYE6QYTYbxtAjyywU4klO50jO0h9p28Hp2
+ U9uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724300140; x=1724904940;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cLPIMAtNJsErtAYDPZGhNQ9X5w0MHlA6ecqtaKbpwPE=;
+ b=dtA1fv1M+sknRLyZTveNmbq+VDG3XkJBZ9hODiB6018Wen7z46nkLpBMsibcGmFF1a
+ ffAJ6IqzeP330lBoaPzUs3+OfIqiJTT5lxtQVsGEKBJmsIW6ACPYGnWO9WBWzkD80aou
+ IEkVuWxHVyNolUDMWnbhitV8nMetcZRK+5g/vU+vnkh6FkrL9VS3yP/zYXQh9hEEf9dN
+ ZqK7YQMW5vSstBmPnakT438qMyAX2Nqe443ft2UN+1WnSLV9STUMDvITryk+0BMpu3YI
+ UAdUePxkQLPynwiCvi0N02bq4bbHAxyrGN/uEAzSNOztJPpa3T4v23zHOv8IYaBlWYbf
+ 0nww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEbCaWVzq9qR5QHLMRaeDNVOOw4GneQZAwniGL7Mhw0WmUGhkhWMAkDsCcw92ucEVPfZ23OKypksH0@nongnu.org
+X-Gm-Message-State: AOJu0YxTMZT6EwMal/io4DOwvpNlfAxpC78An3An6Q1TEDmwIDqHk9j4
+ HbBOSLHpuuZ/fV/lOZfHW5shgEPQmv72UpLwENAmMnuyslHk58llimDL54l8VXc=
+X-Google-Smtp-Source: AGHT+IEihNqr99kHAmEgEhP/qpzrsvPNyY6COlMxUqti3kvEvASZ1oGXhPqTBJ4MiAuycQ1XFf9GHg==
+X-Received: by 2002:a05:6a21:e96:b0:1c4:c337:e24e with SMTP id
+ adf61e73a8af0-1cada063fecmr4641970637.17.1724300139897; 
+ Wed, 21 Aug 2024 21:15:39 -0700 (PDT)
+Received: from [133.11.54.73] (shio03.csg.ci.i.u-tokyo.ac.jp. [133.11.54.73])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d5c0f78e51sm3491637a91.0.2024.08.21.21.15.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Aug 2024 21:15:39 -0700 (PDT)
+Message-ID: <0b5b1773-f090-4733-96d2-f23ac101498e@daynix.com>
+Date: Thu, 22 Aug 2024 13:15:36 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vnc: fix crash when no console attached
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20240820131112.1267954-1-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240820131112.1267954-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDx0uFLosZmhlcdAA--.63891S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
+Received-SPF: none client-ip=2607:f8b0:4864:20::533;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,61 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM provides interface KVM_REG_LOONGARCH_VCPU_RESET to reset vCPU,
-it can be used to clear internal state about kvm kernel. vCPU reset
-function is added here for kvm mode.
+On 2024/08/20 22:11, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Since commit e99441a3793b5 ("ui/curses: Do not use console_select()")
+> qemu_text_console_put_keysym() no longer checks for NULL console
+> argument, which leads to a later crash:
+> 
+> Thread 1 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> 0x00005555559ee186 in qemu_text_console_handle_keysym (s=0x0, keysym=31) at ../ui/console-vc.c:332
+> 332	        } else if (s->echo && (keysym == '\r' || keysym == '\n')) {
+> (gdb) bt
+>   #0  0x00005555559ee186 in qemu_text_console_handle_keysym (s=0x0, keysym=31) at ../ui/console-vc.c:332
+>   #1  0x00005555559e18e5 in qemu_text_console_put_keysym (s=<optimized out>, keysym=<optimized out>) at ../ui/console.c:303
+>   #2  0x00005555559f2e88 in do_key_event (vs=vs@entry=0x5555579045c0, down=down@entry=1, keycode=keycode@entry=60, sym=sym@entry=65471) at ../ui/vnc.c:2034
+>   #3  0x00005555559f845c in ext_key_event (vs=0x5555579045c0, down=1, sym=65471, keycode=<optimized out>) at ../ui/vnc.c:2070
+>   #4  protocol_client_msg (vs=0x5555579045c0, data=<optimized out>, len=<optimized out>) at ../ui/vnc.c:2514
+>   #5  0x00005555559f515c in vnc_client_read (vs=0x5555579045c0) at ../ui/vnc.c:1607
+> 
+> Fixes: e99441a3793b5 ("ui/curses: Do not use console_select()")
+> Fixes: https://issues.redhat.com/browse/RHEL-50529
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu.c               | 2 +-
- target/loongarch/kvm/kvm.c           | 5 ++++-
- target/loongarch/kvm/kvm_loongarch.h | 2 +-
- 3 files changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 5e85b9dbef..6a5f856bd6 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -563,7 +563,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
-     memset(env->tlb, 0, sizeof(env->tlb));
- #endif
-     if (kvm_enabled()) {
--        kvm_arch_reset_vcpu(env);
-+        kvm_arch_reset_vcpu(cs);
-     }
- #endif
- 
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index e1be6a6959..4786cd5efa 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -476,9 +476,12 @@ static int kvm_loongarch_put_regs_fp(CPUState *cs)
-     return ret;
- }
- 
--void kvm_arch_reset_vcpu(CPULoongArchState *env)
-+void kvm_arch_reset_vcpu(CPUState *cs)
- {
-+    CPULoongArchState *env = cpu_env(cs);
-+
-     env->mp_state = KVM_MP_STATE_RUNNABLE;
-+    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
- }
- 
- static int kvm_loongarch_get_mpstate(CPUState *cs)
-diff --git a/target/loongarch/kvm/kvm_loongarch.h b/target/loongarch/kvm/kvm_loongarch.h
-index d945b6bb82..1051a341ec 100644
---- a/target/loongarch/kvm/kvm_loongarch.h
-+++ b/target/loongarch/kvm/kvm_loongarch.h
-@@ -11,6 +11,6 @@
- #define QEMU_KVM_LOONGARCH_H
- 
- int  kvm_loongarch_set_interrupt(LoongArchCPU *cpu, int irq, int level);
--void kvm_arch_reset_vcpu(CPULoongArchState *env);
-+void kvm_arch_reset_vcpu(CPUState *cs);
- 
- #endif
--- 
-2.41.0
-
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
