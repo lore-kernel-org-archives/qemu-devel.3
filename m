@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FA8C3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFBBC5321E
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh4TC-0007K2-Hv; Thu, 22 Aug 2024 05:51:06 -0400
+	id 1sh4T8-0007Ao-TQ; Thu, 22 Aug 2024 05:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TA-0007D3-BA
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:04 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4T4-000787-Vf
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:50:58 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4T8-0001xz-LM
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:04 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42812945633so3987225e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:51:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4T2-0001uE-LB
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:50:57 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42817f1eb1fso4187365e9.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724320260; x=1724925060; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724320254; x=1724925054; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jQnk0OGW+ME2/AwCx9SVTlqQyyVvO6CjKhuRITvFw3A=;
- b=qZKgagxgYPqCoM3S436bR5J/XBuvvazpWJDY9WJvXAtafmvUE5voSDcRSO5SzneC7J
- LThl3RwcoyW7owTyVrCWPTyRMnmA29B+jTu6nEN+lJU+pROfwNsxQ+PxVYpQDugLPB5X
- /b4KkE7V8ZxamfVuW7KYpb/ts0mOEX/hIOpRq/B4O2P4DbJl8phVdOAsPr4g3dq4aFeJ
- zO1HpbsKSOGzJpOAz2rXO5PJ6miQ4QwkZIptktsMl3BXLrYrsuanIGY9vjdhdvdeHWAv
- FnNpnepQcSU7Ns/idGLDmIrb6yglrqO4QZRh/XP9uVwIpazxetLisg0x/bmSSD7j4YyO
- jB3Q==
+ bh=T0epmm+nCBqYd7cRlgUuUReUBppCgZRIHvF/VeKi9rI=;
+ b=Zw+lXwTtHz+4x3h419f8WmyVJxIb3CI4dXEBqxVtWLvw+5WghrbqXxLX+wYj3Iw3p2
+ JisetiM9cnq9K3bjpsJFeWGOpNstjv35fySZo6yrncQUuS7+WTNNqydVQt1pPSoh6SoT
+ 9GPsmKgSC9AR6p2uuIMVjZUy234OPf35G6SC6As3F5EvU4lqPTV+PH8t4Q9+9Y5b9iXr
+ p9/2q08eAjU353c1NL7LRW2PgDrWB92aNDYUMQPXli8YkjJAkYnj/utVZ+Ct+vaJrKsT
+ LsiEu63BnwNq7DTMppirGoRGs3EVDZHubLhIU2wbcHYtThFzOJcPnJEWE9i9xnVGr+B6
+ qFdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724320260; x=1724925060;
+ d=1e100.net; s=20230601; t=1724320254; x=1724925054;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jQnk0OGW+ME2/AwCx9SVTlqQyyVvO6CjKhuRITvFw3A=;
- b=VWj9WhzBYHkKoUrf3ZrDKNBmyohssywUlvzW1KC4GS0aRx3UxJfa6XH0CfsiQMWlJX
- QclxueZLwiNprCk3szDjQSXKBWQ3UnM/m0iX/FlO3+6oZpW+NhGbZ6FSNpyK4caBvpzy
- N3cld5iLz8Wa3bP1AG2963Di867wWuzgyuu5CaZRYoGqFQfmYLB9vB9Wut0K8swppyTO
- aWOWMPNplVlfKAUickRMm4TNEvifI659RUWS3OOkBnqaJbuQoXWJ/l7VjX2SKeJx/HDx
- /We+3Fw7ZnZayYL2noGoVv5Li8P4uTIM1+HTv7RI6lPr97oWmTZY/NS3YnlujGaPSgfX
- xKFg==
-X-Gm-Message-State: AOJu0YzyLQyURM1LD/wx8/oRVTEClK0VY+QKjSJkzfUPo5dJl43uBIui
- i2I1mSJbyB4xtyRxkIcdkLQDMChBHruZRqbP2EqlegOD/uUWXx+z1Cte9r4mF8/ks4mzqr8MM9L
- u
-X-Google-Smtp-Source: AGHT+IEh05fT8MycNuua9GWWULedky34BTNZSkPh2E/Bn7KKuN0IKFSssZ/GFSrUh0tw4FKgcCD1Cw==
-X-Received: by 2002:a5d:650b:0:b0:371:9362:c286 with SMTP id
- ffacd0b85a97d-372fd577056mr2924619f8f.4.1724320260355; 
- Thu, 22 Aug 2024 02:51:00 -0700 (PDT)
+ bh=T0epmm+nCBqYd7cRlgUuUReUBppCgZRIHvF/VeKi9rI=;
+ b=MuC0oqL/R5pTCFPFCO4KwjnrgagGW7qR13V+uRHviYK4RlpOae1jMoohM96bJnae4I
+ PkXmPxmzniqkjOEL/6JUuFiL659JrSU31bbfeQcYZi/Z7S8uzsFIACaIf8qS+EtrMP4R
+ laFGtdlu/ldzR4Qqz5G5jii/k7aXS7g3YJWk671Csh8Gapvx6OrnTpFhXFS3JMw+bQYn
+ Fih7junszFoK/dCXtxbbyYC2kSxzHqH67jF2wh/xU7SagUFrP5YP+ennOzdAh1QD54ho
+ 6iu9SY1mE9XfhQVtVCI2ELdZHCBT2SywPxyQ8Za/8zLHOM4baX6hL77n26S56WRHC2En
+ Pg8g==
+X-Gm-Message-State: AOJu0Yz3B70YzUCSfyM4j5kfQtm63DB3skHlM9exfTxYp4UMotbkgzf4
+ g0zmHj94PUhs6WF5fKzh1RcP74Ey5c3nBonXaun6HD8pFISpe9l1Cc5Sl2CbZHp/y12w9iscW4Y
+ M
+X-Google-Smtp-Source: AGHT+IEwmJ3lCCJr+zNgxahyMqJWUnAt1uYr5KiJRxXNaMGJYmLZz5nw55V3NlI+Z29FsLbSTKw3tA==
+X-Received: by 2002:a05:600c:1911:b0:426:59fc:cdec with SMTP id
+ 5b1f17b1804b1-42abf065a48mr34862985e9.21.1724320254450; 
+ Thu, 22 Aug 2024 02:50:54 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3730821a92csm1232696f8f.93.2024.08.22.02.50.58
+ ffacd0b85a97d-373081ff526sm1229242f8f.68.2024.08.22.02.50.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Aug 2024 02:50:59 -0700 (PDT)
+ Thu, 22 Aug 2024 02:50:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Beraldo Leal <bleal@redhat.com>,
@@ -65,18 +65,17 @@ Cc: Beraldo Leal <bleal@redhat.com>,
  Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH v2 2/4] linux-user/flatload: Take mmap_lock in
- load_flt_binary()
-Date: Thu, 22 Aug 2024 11:50:43 +0200
-Message-ID: <20240822095045.72643-3-philmd@linaro.org>
+Subject: [PATCH v2 1/4] accel/tcg: Make page_set_flags() documentation public
+Date: Thu, 22 Aug 2024 11:50:42 +0200
+Message-ID: <20240822095045.72643-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240822095045.72643-1-philmd@linaro.org>
 References: <20240822095045.72643-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,40 +98,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-load_flt_binary() calls load_flat_file() -> page_set_flags().
+Commit e505a063ba ("translate-all: Add assert_(memory|tb)_lock
+annotations") states page_set_flags() is "public APIs and [is]
+documented as needing them held for linux-user mode".
+Document the prototype.
 
-page_set_flags() must be called with the mmap_lock held,
-otherwise it aborts:
-
-  $ qemu-arm -L stm32/lib/ stm32/bin/busybox
-  qemu-arm: ../accel/tcg/user-exec.c:505: page_set_flags: Assertion `have_mmap_lock()' failed.
-  Aborted (core dumped)
-
-Fix by taking the lock in load_flt_binary().
-
-Fixes: fbd3c4cff6 ("linux-user/arm: Mark the commpage executable")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2525
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- linux-user/flatload.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/exec/cpu-all.h | 13 +++++++++++++
+ accel/tcg/user-exec.c  |  5 -----
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/linux-user/flatload.c b/linux-user/flatload.c
-index 04d8138d12..0e4be5bf44 100644
---- a/linux-user/flatload.c
-+++ b/linux-user/flatload.c
-@@ -487,7 +487,10 @@ int load_flt_binary(struct linux_binprm *bprm, struct image_info *info)
-     stack_len += (bprm->envc + 1) * 4; /* the envp array */
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 6f09b86e7f..45e6676938 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -166,7 +166,20 @@ typedef int (*walk_memory_regions_fn)(void *, target_ulong,
+ int walk_memory_regions(void *, walk_memory_regions_fn);
  
- 
-+    mmap_lock();
-     res = load_flat_file(bprm, libinfo, 0, &stack_len);
-+    mmap_unlock();
+ int page_get_flags(target_ulong address);
 +
-     if (is_error(res)) {
-             return res;
-     }
++/**
++ * page_set_flags:
++ * @start: first byte of range
++ * @last: last byte of range
++ * @flags: flags to set
++ * Context: holding mmap lock
++ *
++ * Modify the flags of a page and invalidate the code if necessary.
++ * The flag PAGE_WRITE_ORG is positioned automatically depending
++ * on PAGE_WRITE.  The mmap_lock should already be held.
++ */
+ void page_set_flags(target_ulong start, target_ulong last, int flags);
++
+ void page_reset_target_data(target_ulong start, target_ulong last);
+ 
+ /**
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 7ddc47b0ba..11b6d45e90 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -485,11 +485,6 @@ static bool pageflags_set_clear(target_ulong start, target_ulong last,
+     return inval_tb;
+ }
+ 
+-/*
+- * Modify the flags of a page and invalidate the code if necessary.
+- * The flag PAGE_WRITE_ORG is positioned automatically depending
+- * on PAGE_WRITE.  The mmap_lock should already be held.
+- */
+ void page_set_flags(target_ulong start, target_ulong last, int flags)
+ {
+     bool reset = false;
 -- 
 2.45.2
 
