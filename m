@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DACDC5320E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 11:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB1AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 11:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh5gA-0004xM-E0; Thu, 22 Aug 2024 07:08:34 -0400
+	id 1sh5lb-0001CD-Py; Thu, 22 Aug 2024 07:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh5g5-0004wh-FW
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:08:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh5lY-00019w-87
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:14:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh5g3-0006Qa-QR
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:08:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh5lW-0000Fp-3A
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:14:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724324906;
+ s=mimecast20190719; t=1724325244;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IICIjjQA6OMO8Ul+H/YDHnCV6+TYMxO63vqq/RldlYc=;
- b=Bsxo1cTGP92Vcu+sGOPRWtiBFmSvNEI9awzFApL+3154bsO9WuiOLNbnWdqYpefQM8AP6p
- MtjtCOfGX5HOGC8YfyNcn82eU1MLX7N5CGDuAM4h24kurqYUYYsN3d985CwgWSnIUKiWR2
- RoktS3vrh/xntiw2B17VFX3Ma3e+tig=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MoN4D9jCk7hGAVT3ex/lfXJ9CiJxvSpgAs5H2oc8Cos=;
+ b=S4PjhYCqzyWTna68DbONWPuDlTQMs6LZrqANEUFBEsjLSZAXvdlFqcp0NfFYLXtYJj/24Q
+ TDAZq73bGSuZ8Wa77zsTd2pHqjuyPIDStynG/S4BCJKE8RgCSk3nN0uUc/Z9C4O5iKBbSY
+ oCDui3f7pH4KUK9oJBCJFMmqTIWnWYs=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-198-VnNTzzJXNB2m6ummno2UIw-1; Thu, 22 Aug 2024 07:08:24 -0400
-X-MC-Unique: VnNTzzJXNB2m6ummno2UIw-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-70ca9b6629cso808016a34.1
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 04:08:24 -0700 (PDT)
+ us-mta-137-QtYk9nVvO7u3JhfVzsg2yg-1; Thu, 22 Aug 2024 07:14:03 -0400
+X-MC-Unique: QtYk9nVvO7u3JhfVzsg2yg-1
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-70947f2854dso918831a34.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 04:14:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724324903; x=1724929703;
+ d=1e100.net; s=20230601; t=1724325242; x=1724930042;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IICIjjQA6OMO8Ul+H/YDHnCV6+TYMxO63vqq/RldlYc=;
- b=kTWpamErHUypW0lRgMdVBmCKEffVWLFoixowH9Ff7dN/YiLM0EIqXGR8GqiZB015U0
- 4aCjxHuDj9l8Kwy6vDCPEkx2ZykxQKMy64jjZPKYLKbXJrLkx3ggwJiRZFEpr1M5u3Q7
- 7BkoIWNSxdsiGq51x4UfrSlMu5KRYl8OVNHgtC4aZg2bjFrrmlitNqEsJxT7PCRpPHF+
- 8n13qxAyvqZvoiqb3pH374wQgpwyr+DNB7/HQ56VXU082LSFz1ULh9BJBf9b9nrYqj2I
- qJ+NvICHFJ03P4l3WFIr3+rSjmeZweH9ro4o0i3DyHS9UAWWC/AZV8CoJgRnsaS8+AQq
- ey/Q==
+ bh=MoN4D9jCk7hGAVT3ex/lfXJ9CiJxvSpgAs5H2oc8Cos=;
+ b=XiZLgRGHrYFm7+b6pSkNXlRlSFrnAs9KK6x0r/i5YYfAUL6FhvaqfgqRGo7O9zFY4W
+ wG3tqJ0CWOZBNh5GDSlZ1X7ZSyCGi9RRAl4XZW2Hbbqe1xfvE7gXbeWXVGXDBwZ27D5L
+ NdvxSbUhyYfAuKV8WIXf0oETi4ywgGSZip3sq+HUb6zbF/KCs6Ow7yhyiDa4h9IF7WX4
+ 9PCPmJFXb+MzANrbdwTA2FndwHrYmgPsX3SnliANfc6iSxoNrbPCFrn1zMSmnleaopHq
+ OTsNmvoUIygrz4wuKc9oazPxmwGLH5m4s3pWkvibS6QkobnEg2BlqIN/gAn5vmid5M12
+ dGiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRWfX7ISziFPzORxMa3pBC7XnrNI3yfAmSkjEeR64cSsvXGs9yTl/MvL8inkhSlW26fUecPTP0nlzt@nongnu.org
-X-Gm-Message-State: AOJu0YxE9CZ/sVyKB/3ZUSj0/7H/SWE9B8zrF5iyBQZfdCmYDCl/n6Xl
- GPRR3WLkRMmOmFXEhs19XSOJvuHI7kv2t+8SoaUWWjV8lIsA+ncgWd7+4xINpsykyxdMkBLAJw0
- YgxU2oCmVF7KJigCCA8LcvNZnNCUafxUtkpEvlvCQ4ZIE1TCvMPGC
-X-Received: by 2002:a05:6808:3388:b0:3da:a032:24c5 with SMTP id
- 5614622812f47-3de195114b0mr4774215b6e.22.1724324903748; 
- Thu, 22 Aug 2024 04:08:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEhKCdbFoGpAzamv7PiYMy8EklOVL74sQYXF2o2otdpdCPxbzlQKcMMx2TGCQt+JPxsWUY7Q==
-X-Received: by 2002:a05:6808:3388:b0:3da:a032:24c5 with SMTP id
- 5614622812f47-3de195114b0mr4774191b6e.22.1724324903297; 
- Thu, 22 Aug 2024 04:08:23 -0700 (PDT)
+ AJvYcCWw1h5PZwkVnE+R/H/uikfiNXhOo2X6Z0cAfds11CAY2uvlLeaCnLEeO/qvJKP4VUB6RHVDv1Jrl841@nongnu.org
+X-Gm-Message-State: AOJu0YxdFEJHQmGUdOwaXw6NVNXKCtbcwUDzHcgl5KgjaIM93hDb3lfd
+ 1zz3CLnz+3xYg6zO5HeqQKTkGMDNsVoCZTZj2ktiqSwfxJefuuWP2UhHVeBawjgX5sovfmKpXNP
+ NKLfeVwjAr4XaZdanFfUZB0Km4Yc6ytUNY05L9K9vvSIlxUS/8pIN
+X-Received: by 2002:a05:6830:71a6:b0:709:41c2:5104 with SMTP id
+ 46e09a7af769-70e046b9964mr1542662a34.8.1724325242441; 
+ Thu, 22 Aug 2024 04:14:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8XFRBKYowJMPbIlqka6MrG9U4+XXr+XU5a4Qp7zOnmyezYh5tddkFrUEVRDma5sUSZz5Xjg==
+X-Received: by 2002:a05:6830:71a6:b0:709:41c2:5104 with SMTP id
+ 46e09a7af769-70e046b9964mr1542648a34.8.1724325242143; 
+ Thu, 22 Aug 2024 04:14:02 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-177-41.web.vodafone.de.
  [109.43.177.41]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-454fe0f04fcsm5531571cf.46.2024.08.22.04.08.20
+ d75a77b69052e-454fdfc16e0sm5604191cf.7.2024.08.22.04.14.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 04:08:22 -0700 (PDT)
-Message-ID: <aa8055c5-6fca-4199-8a58-b2a1a1167011@redhat.com>
-Date: Thu, 22 Aug 2024 13:08:18 +0200
+ Thu, 22 Aug 2024 04:14:01 -0700 (PDT)
+Message-ID: <3435b5e3-c469-4f6a-a535-e7ef1909a5c9@redhat.com>
+Date: Thu, 22 Aug 2024 13:13:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] tests/avocado: Run STM32 bFLT busybox binary in
- current directory
+Subject: Re: [PATCH] tests/functional: Convert ARM Integrator/CP avocado tests
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240822095045.72643-1-philmd@linaro.org>
- <20240822095045.72643-5-philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20240822110238.82312-1-philmd@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -125,17 +119,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240822095045.72643-5-philmd@linaro.org>
+In-Reply-To: <20240822110238.82312-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -154,39 +148,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/08/2024 11.50, Philippe Mathieu-Daudé wrote:
-> When this test was added in commit 8011837a01, self.workdir was
-> set to the test directory. As of this commit, it is not set
-> anymore. Rather than using a full path to the busybox binary,
-> we can run it in the current directory, effectively kludging
-> the fact that self.workdir is not set. Good enough to run the
-> test:
+On 22/08/2024 13.02, Philippe Mathieu-Daudé wrote:
+> Straight forward conversion. Update the SHA1 hashes to SHA256
+> hashes since SHA1 should not be used anymore nowadays.
 > 
->    Fetching asset from tests/avocado/load_bflt.py:LoadBFLT.test_stm32
->    JOB ID     : 020d317281b042f46ad99013530d29df0f1d7eb7
->    JOB LOG    : tests/results/job-2024-08-22T10.17-020d317/job.log
->     (1/1) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: PASS (0.09 s)
->    RESULTS    : PASS 1 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | CANCEL 0
->    JOB TIME   : 0.62 s
+>    $ QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 make check-functional-arm
+>    ...
+>    6/6 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_integratorcp   OK   3.90s   2 subtests passed
 > 
-> Reported-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tests/avocado/load_bflt.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/avocado/load_bflt.py b/tests/avocado/load_bflt.py
-> index bb50cec1ee..264489ee25 100644
-> --- a/tests/avocado/load_bflt.py
-> +++ b/tests/avocado/load_bflt.py
-> @@ -41,7 +41,7 @@ def test_stm32(self):
->                         'Stm32_mini_rootfs.cpio.bz2')
->           rootfs_hash = '9f065e6ba40cce7411ba757f924f30fcc57951e6'
->           rootfs_path_bz2 = self.fetch_asset(rootfs_url, asset_hash=rootfs_hash)
-> -        busybox_path = os.path.join(self.workdir, "/bin/busybox")
-> +        busybox_path = os.path.join(self.workdir, "bin/busybox")
-
-Good enough for now, indeed.
+> Based-on: <20240821082748.65853-1-thuth@redhat.com>
+> ---
+>   MAINTAINERS                                   |  2 +-
+>   tests/functional/meson.build                  |  1 +
+>   .../test_arm_integratorcp.py}                 | 56 ++++++++++---------
+>   3 files changed, 33 insertions(+), 26 deletions(-)
+>   rename tests/{avocado/machine_arm_integratorcp.py => functional/test_arm_integratorcp.py} (63%)
+>   mode change 100644 => 100755
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
