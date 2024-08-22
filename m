@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662E5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 14:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03DA8C52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 14:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh8qA-00070f-FZ; Thu, 22 Aug 2024 10:31:06 -0400
+	id 1sh8vT-0003bO-Dp; Thu, 22 Aug 2024 10:36:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sh8q1-000702-V6
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:30:58 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sh8vR-0003ZC-KU
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:36:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sh8pz-00082W-9C
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:30:57 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sh8vQ-0000Jn-3x
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 10:36:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724337047;
+ s=mimecast20190719; t=1724337391;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3Lbp0jQmm3CAYmGiQxNSrLcHoz+nbe6jE8W9k1lLcUo=;
- b=BfXODju46JGSZ1ZNQrRUnWm7qh8WwOLA2SwJs/rXmCc+OwfdKJUlc2xiikDMn3+3npwUHA
- mMg86SynvD1dsTlxIqIdvFUCkfDj8UkxsGpq2JDYDl6CINsAbz4VY+HQnj9dLtR66yyBt1
- FdE2NtWQCUiLViLJgyMjfW6k+Ym/F4c=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-NiICZizLMdiAZE52oI9uCw-1; Thu, 22 Aug 2024 10:30:45 -0400
-X-MC-Unique: NiICZizLMdiAZE52oI9uCw-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6bf6c0f0634so10925846d6.3
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 07:30:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724337045; x=1724941845;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3Lbp0jQmm3CAYmGiQxNSrLcHoz+nbe6jE8W9k1lLcUo=;
- b=tVJXKmnKmeGZQtgChSCKJhiSi3LRQ5EWBJNBg3g3HYNoicDwdX/z5LshXkicKNxOUY
- OyqgU6GJIL3X0R6JcxGReqtakrcEf47jewJOX7LeZJa1PSFyBCvlBKg0XghFlfCiw/+s
- zuO6RIhWeCo19DlUiGydRPwFopRSPMdXcT6DMiWgMPTf3TddMz1+8KVC/btUu3Qlyz/+
- Hq6JqKC5PhBdRfEXfT/QG0XeNyIQtLU8dWmJoYMA/ZWt72WA+ZqoxRNWnOcSrOrYlkI8
- gIi2xYWo6DhpBfE5XcJWWMdW+uUH/3x94qy+So+HGeTHRL9ZGv3Xg6xvZrOpxP8SzVlX
- cYow==
-X-Gm-Message-State: AOJu0YzHaYwUYQt4jKsYy96c5DaQijKGVxiIXfldEW7zDhiADdax3sZT
- REEo/9BXQFSASl187CdNAUid0xz9GCnDpbFjjElerzGHWkQUii6HdKxZODOZvIbnYkNV3eS1J+p
- iTJTgG+KCsPJ3vhVt6PtwPKHhOh5mqBJICkbDj2usWFOHq+W90hYs
-X-Received: by 2002:a05:6214:3286:b0:6bf:8339:95a0 with SMTP id
- 6a1803df08f44-6c164704cf2mr24109266d6.9.1724337045312; 
- Thu, 22 Aug 2024 07:30:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1O8KBBtrQuVaH7A275DyrQYbTCDRcR8mT8Su36Qn2J+S0F/qWY1WkLjFD79H1n2qAJZswGQ==
-X-Received: by 2002:a05:6214:3286:b0:6bf:8339:95a0 with SMTP id
- 6a1803df08f44-6c164704cf2mr24108866d6.9.1724337044822; 
- Thu, 22 Aug 2024 07:30:44 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162d796d9sm8057676d6.71.2024.08.22.07.30.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 07:30:43 -0700 (PDT)
-Date: Thu, 22 Aug 2024 10:30:41 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v3 09/14] migration/multifd: Isolate ram pages packet data
-Message-ID: <ZsdLkYeoWO1p6YNy@x1n>
-References: <20240801123516.4498-1-farosas@suse.de>
- <20240801123516.4498-10-farosas@suse.de> <ZsZeUpuZuhbD60YZ@x1n>
- <87zfp4y7an.fsf@suse.de>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=FixiWQ3cwOxFgkWOuuQBMcavXNUKMBjsxQygjgu1SbY=;
+ b=Vm8kddtvy+M+oWPRhc0PZY3yN73wu2UM4v9bBFEj2rxdl44qBaqPSUzcjpl/aWjJEoFGG4
+ AQupSX2y/2XEc5EzyAVuftX1pml6187U7i8u+4D+msofDuuQnpge+Q/xZR5JDgEhT7brMF
+ JmPaSd7Q1lejwz2cf8MyAO5YZNX+RUA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-itsr66tRPYqkE0OEe0fdnA-1; Thu,
+ 22 Aug 2024 10:36:25 -0400
+X-MC-Unique: itsr66tRPYqkE0OEe0fdnA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC1451955BEF; Thu, 22 Aug 2024 14:36:23 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.74])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4109719560A3; Thu, 22 Aug 2024 14:36:19 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, berrange@redhat.com, andrey.drobyshev@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ vsementsov@yandex-team.ru
+Subject: [PATCH for-9.1] nbd/server: CVE-2024-7409: Avoid use-after-free when
+ closing server
+Date: Thu, 22 Aug 2024 09:35:29 -0500
+Message-ID: <20240822143617.800419-2-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87zfp4y7an.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,31 +83,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 22, 2024 at 11:13:36AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Thu, Aug 01, 2024 at 09:35:11AM -0300, Fabiano Rosas wrote:
-> >> @@ -1554,7 +1577,6 @@ static void *multifd_recv_thread(void *opaque)
-> >>                  qemu_sem_wait(&p->sem_sync);
-> >>              }
-> >>          } else {
-> >> -            p->total_normal_pages += p->data->size / qemu_target_page_size();
-> >
-> > Is this line dropped by accident?
-> >
-> 
-> No, this was just used in the tracepoint below. I stopped including this
-> information there.
+Commit 3e7ef738 plugged the use-after-free of the global nbd_server
+object, but overlooked a use-after-free of nbd_server->listener.
+Although this race is harder to hit, notice that our shutdown path
+first drops the reference count of nbd_server->listener, then triggers
+actions that can result in a pending client reaching the
+nbd_blockdev_client_closed() callback, which in turn calls
+qio_net_listener_set_client_func on a potentially stale object.
 
-But this will cause socket / file paths not doing the same thing, since
-this counter should still be increamented in socket path (and this is the
-file path).
+If we know we don't want any more clients to connect, and have already
+told the listener socket to shut down, then we should not be trying to
+update the listener socket's associated function.
 
-Either we keep it the same as before, or.. if we want to drop it, shouldn't
-we remove all instead (along with the two variables "total_normal_pages /
-total_zero_pages")?
+Reproducer:
 
+> #!/usr/bin/python3
+>
+> import os
+> from threading import Thread
+>
+> def start_stop():
+>     while 1:
+>         os.system('virsh qemu-monitor-command VM \'{"execute": "nbd-server-start",
++"arguments":{"addr":{"type":"unix","data":{"path":"/tmp/nbd-sock"}}}}\'')
+>         os.system('virsh qemu-monitor-command VM \'{"execute": "nbd-server-stop"}\'')
+>
+> def nbd_list():
+>     while 1:
+>         os.system('/path/to/build/qemu-nbd -L -k /tmp/nbd-sock')
+>
+> def test():
+>     sst = Thread(target=start_stop)
+>     sst.start()
+>     nlt = Thread(target=nbd_list)
+>     nlt.start()
+>
+>     sst.join()
+>     nlt.join()
+>
+> test()
+
+Fixes: CVE-2024-7409
+Fixes: 3e7ef738c8 ("nbd/server: CVE-2024-7409: Close stray clients at server-stop")
+CC: qemu-stable@nongnu.org
+Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ blockdev-nbd.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/blockdev-nbd.c b/blockdev-nbd.c
+index f73409ae494..b36f41b7c5a 100644
+--- a/blockdev-nbd.c
++++ b/blockdev-nbd.c
+@@ -92,10 +92,13 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+
+ static void nbd_update_server_watch(NBDServerData *s)
+ {
+-    if (!s->max_connections || s->connections < s->max_connections) {
+-        qio_net_listener_set_client_func(s->listener, nbd_accept, NULL, NULL);
+-    } else {
+-        qio_net_listener_set_client_func(s->listener, NULL, NULL, NULL);
++    if (s->listener) {
++        if (!s->max_connections || s->connections < s->max_connections) {
++            qio_net_listener_set_client_func(s->listener, nbd_accept, NULL,
++                                             NULL);
++        } else {
++            qio_net_listener_set_client_func(s->listener, NULL, NULL, NULL);
++        }
+     }
+ }
+
+@@ -113,6 +116,7 @@ static void nbd_server_free(NBDServerData *server)
+      */
+     qio_net_listener_disconnect(server->listener);
+     object_unref(OBJECT(server->listener));
++    server->listener = NULL;
+     QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
+         qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
+                              NULL);
 -- 
-Peter Xu
+2.46.0
 
 
