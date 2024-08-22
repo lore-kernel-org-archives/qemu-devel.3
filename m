@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7331C5320E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FA8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh408-0006sS-2s; Thu, 22 Aug 2024 05:21:05 -0400
+	id 1sh4TC-0007K2-Hv; Thu, 22 Aug 2024 05:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh406-0006rx-Ui
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:21:02 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TA-0007D3-BA
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:04 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh405-0006Ye-1o
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:21:02 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-427fc97a88cso3795385e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:20:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4T8-0001xz-LM
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:04 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42812945633so3987225e9.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724318457; x=1724923257; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FZfdiXhvcwlzdSTHp01PJ2kMFQ3CJnhSYaycbwm8VDo=;
- b=yoiSXwqje2HV9TKHaLPToH1pgxuRlVX4AMbqVudCtD/lfppgqbrBr3FG7UsHH31Y/E
- UoL5wg9Tc5YGQGPF1g4lnNjNzQYS9M89mHH5ypagKOal555ZBIN6gz6UcSqcCa8iorwi
- Zctu6n2l/Bv5m013tpyivYDoBSd9kwlDjkCyzbKtivUphBcQ2EPAHgAUxPCv7JRyaxjB
- vz+GKjU21ZOHshJntaN7DhQcvsxenB5R7Nk6vmcJsmJst7eAiHSQjV30n4f/UjrgPzD6
- 7rGnwUQIfg6exc342HdrcSCCKx20RtzjAJjv0Dp2WEkcwH6s/uNlOiLTYZWTMdvUcXsG
- fWOw==
+ d=linaro.org; s=google; t=1724320260; x=1724925060; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jQnk0OGW+ME2/AwCx9SVTlqQyyVvO6CjKhuRITvFw3A=;
+ b=qZKgagxgYPqCoM3S436bR5J/XBuvvazpWJDY9WJvXAtafmvUE5voSDcRSO5SzneC7J
+ LThl3RwcoyW7owTyVrCWPTyRMnmA29B+jTu6nEN+lJU+pROfwNsxQ+PxVYpQDugLPB5X
+ /b4KkE7V8ZxamfVuW7KYpb/ts0mOEX/hIOpRq/B4O2P4DbJl8phVdOAsPr4g3dq4aFeJ
+ zO1HpbsKSOGzJpOAz2rXO5PJ6miQ4QwkZIptktsMl3BXLrYrsuanIGY9vjdhdvdeHWAv
+ FnNpnepQcSU7Ns/idGLDmIrb6yglrqO4QZRh/XP9uVwIpazxetLisg0x/bmSSD7j4YyO
+ jB3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724318457; x=1724923257;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FZfdiXhvcwlzdSTHp01PJ2kMFQ3CJnhSYaycbwm8VDo=;
- b=X/GAIoTUEn+B7b8KtwCf2HhbdCEA8UchfcaplQySCDSFMkQ/Gf0d3QPHiOQoTTF8+e
- 1/3O4Gz9D/cl5s9P/KAUDg49Yh3TyOWgamRzIQf5fVDibUcF/3Pre5LvZzGevT70FYHv
- taF+iQ/jFcuB2hqAMGx562eUr7/aeCb/Em7qZawEfjgmVkTYRjKh3fEk6g0Yy5Z707El
- ozVgfVRpAJdwFeXqvuoR50vXmzNdR1gnLZYCsfK+GwOm6n61Z7VvhsC/LV5sPhQjQeIn
- Uxnxspdf1kuvhIzfB+5hGWSle3LPs9YMUOdM5LOMXKvZqHqskNRGi4++v9nWxlN2xU9K
- 93iA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUnNukU9y+Df/aC3nZHXzEAMlcLHa02gzFoeZE3+7xnVVV6vqNV/lGUYMpO4M+LCNHI1I+vSOhD9rlE@nongnu.org
-X-Gm-Message-State: AOJu0Ywu8e1122B0laZBHmUm1TQd710I+cALm3e9gbhlxZkA3eG+0VDM
- lfMMZ5nSvwlcN3Ij3VHyQwfKlwikR6aR0VKPScn0tpPxu903DwohfOn8FCdOZHw=
-X-Google-Smtp-Source: AGHT+IECG1uJWnD8nJeXumiQxL3QwvzBOn9Rw2G6pIvSmHBleSvFA3cB1qUFjNDaa6NJrSgIaZHeTg==
-X-Received: by 2002:a05:600c:45cb:b0:428:6f4:57ff with SMTP id
- 5b1f17b1804b1-42abd26477bmr30268295e9.35.1724318457015; 
- Thu, 22 Aug 2024 02:20:57 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.206.153])
+ d=1e100.net; s=20230601; t=1724320260; x=1724925060;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jQnk0OGW+ME2/AwCx9SVTlqQyyVvO6CjKhuRITvFw3A=;
+ b=VWj9WhzBYHkKoUrf3ZrDKNBmyohssywUlvzW1KC4GS0aRx3UxJfa6XH0CfsiQMWlJX
+ QclxueZLwiNprCk3szDjQSXKBWQ3UnM/m0iX/FlO3+6oZpW+NhGbZ6FSNpyK4caBvpzy
+ N3cld5iLz8Wa3bP1AG2963Di867wWuzgyuu5CaZRYoGqFQfmYLB9vB9Wut0K8swppyTO
+ aWOWMPNplVlfKAUickRMm4TNEvifI659RUWS3OOkBnqaJbuQoXWJ/l7VjX2SKeJx/HDx
+ /We+3Fw7ZnZayYL2noGoVv5Li8P4uTIM1+HTv7RI6lPr97oWmTZY/NS3YnlujGaPSgfX
+ xKFg==
+X-Gm-Message-State: AOJu0YzyLQyURM1LD/wx8/oRVTEClK0VY+QKjSJkzfUPo5dJl43uBIui
+ i2I1mSJbyB4xtyRxkIcdkLQDMChBHruZRqbP2EqlegOD/uUWXx+z1Cte9r4mF8/ks4mzqr8MM9L
+ u
+X-Google-Smtp-Source: AGHT+IEh05fT8MycNuua9GWWULedky34BTNZSkPh2E/Bn7KKuN0IKFSssZ/GFSrUh0tw4FKgcCD1Cw==
+X-Received: by 2002:a5d:650b:0:b0:371:9362:c286 with SMTP id
+ ffacd0b85a97d-372fd577056mr2924619f8f.4.1724320260355; 
+ Thu, 22 Aug 2024 02:51:00 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.206.153])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ac517f9basm17485765e9.39.2024.08.22.02.20.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 02:20:56 -0700 (PDT)
-Message-ID: <078e3e35-fbef-43aa-b80c-448140a5a0bc@linaro.org>
-Date: Thu, 22 Aug 2024 11:20:53 +0200
+ ffacd0b85a97d-3730821a92csm1232696f8f.93.2024.08.22.02.50.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 22 Aug 2024 02:50:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Beraldo Leal <bleal@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH v2 2/4] linux-user/flatload: Take mmap_lock in
+ load_flt_binary()
+Date: Thu, 22 Aug 2024 11:50:43 +0200
+Message-ID: <20240822095045.72643-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240822095045.72643-1-philmd@linaro.org>
+References: <20240822095045.72643-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/avocado: Allow running user-mode tests
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>
-References: <20240821153836.67987-1-philmd@linaro.org>
- <0e7e30cf-bd67-4d21-9ee9-b6ab77b8e35f@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0e7e30cf-bd67-4d21-9ee9-b6ab77b8e35f@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,80 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/24 09:21, Thomas Huth wrote:
-> On 21/08/2024 17.38, Philippe Mathieu-Daudé wrote:
->> Commit 816d4201ea ("tests/avocado: Move LinuxTest related
->> code into a separate file") removed the Avocado 'process'
->> import which is used by the QemuUserTest class, restore it.
->>
->> Fixes: 816d4201ea ("tests/avocado: Move LinuxTest ...")
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> Unfortunately the single linux-user test is not run on CI,
->> and I haven't ran it manually since too long...:
->> https://gitlab.com/qemu-project/qemu/-/issues/2525
->> ---
->>   tests/avocado/avocado_qemu/__init__.py | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/tests/avocado/avocado_qemu/__init__.py 
->> b/tests/avocado/avocado_qemu/__init__.py
->> index ef935614cf..0d57addfea 100644
->> --- a/tests/avocado/avocado_qemu/__init__.py
->> +++ b/tests/avocado/avocado_qemu/__init__.py
->> @@ -17,7 +17,7 @@
->>   import uuid
->>   import avocado
->> -from avocado.utils import ssh
->> +from avocado.utils import process, ssh
->>   from avocado.utils.path import find_command
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> 
-> ... but is the test itself still working for you? When I run it, I get:
-> 
->   ...
->   (074/281) 
-> tests/avocado/linux_ssh_mips_malta.py:LinuxSSH.test_mips_malta64eb_kernel3_2_0: SKIP: Test might timeout
->   (075/281) 
-> tests/avocado/linux_ssh_mips_malta.py:LinuxSSH.test_mips_malta64el_kernel3_2_0: SKIP: Test might timeout
->   (076/281) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: ERROR: 
-> Command './qemu-arm  /bin/busybox ' failed.\nstdout: b''\nstderr: 
-> b''\nadditional_info: None (0.06 s)
-> Interrupting job (failfast).
-> 
-> Seem like self.workdir is not set here??
+load_flt_binary() calls load_flat_file() -> page_set_flags().
 
-No clue why... This used to work.
+page_set_flags() must be called with the mmap_lock held,
+otherwise it aborts:
 
-Why self.workdir is indeed not set, this kludge makes it work:
+  $ qemu-arm -L stm32/lib/ stm32/bin/busybox
+  qemu-arm: ../accel/tcg/user-exec.c:505: page_set_flags: Assertion `have_mmap_lock()' failed.
+  Aborted (core dumped)
 
+Fix by taking the lock in load_flt_binary().
+
+Fixes: fbd3c4cff6 ("linux-user/arm: Mark the commpage executable")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2525
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-diff --git a/tests/avocado/load_bflt.py b/tests/avocado/load_bflt.py
-index bb50cec1ee..264489ee25 100644
---- a/tests/avocado/load_bflt.py
-+++ b/tests/avocado/load_bflt.py
-@@ -41,7 +41,7 @@ def test_stm32(self):
-                        'Stm32_mini_rootfs.cpio.bz2')
-          rootfs_hash = '9f065e6ba40cce7411ba757f924f30fcc57951e6'
-          rootfs_path_bz2 = self.fetch_asset(rootfs_url, 
-asset_hash=rootfs_hash)
--        busybox_path = os.path.join(self.workdir, "/bin/busybox")
-+        busybox_path = os.path.join(self.workdir, "bin/busybox")
+ linux-user/flatload.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-          self.extract_cpio(rootfs_path_bz2)
+diff --git a/linux-user/flatload.c b/linux-user/flatload.c
+index 04d8138d12..0e4be5bf44 100644
+--- a/linux-user/flatload.c
++++ b/linux-user/flatload.c
+@@ -487,7 +487,10 @@ int load_flt_binary(struct linux_binprm *bprm, struct image_info *info)
+     stack_len += (bprm->envc + 1) * 4; /* the envp array */
+ 
+ 
++    mmap_lock();
+     res = load_flat_file(bprm, libinfo, 0, &stack_len);
++    mmap_unlock();
++
+     if (is_error(res)) {
+             return res;
+     }
+-- 
+2.45.2
 
----
-
-Fetching asset from tests/avocado/load_bflt.py:LoadBFLT.test_stm32
-JOB ID     : 020d317281b042f46ad99013530d29df0f1d7eb7
-JOB LOG    : tests/results/job-2024-08-22T10.17-020d317/job.log
-  (1/1) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: PASS (0.09 s)
-RESULTS    : PASS 1 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | 
-CANCEL 0
-JOB TIME   : 0.62 s
-
-So I'll add that and call it a day.
-
-Thanks!
 
