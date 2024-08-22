@@ -4,85 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E41A6C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 13:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E40C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 13:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh8Gu-0001cA-EN; Thu, 22 Aug 2024 09:54:41 -0400
+	id 1sh8HH-0002DX-CK; Thu, 22 Aug 2024 09:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh8Gb-0001Tj-Ev
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:54:22 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh8GZ-0002Wo-1L
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:54:21 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-37182eee02dso476236f8f.1
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 06:54:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724334855; x=1724939655; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1TQSLIq57iobIWGDTSxG+4h2QSqHXqmmDiJaZypcQHU=;
- b=HSN3FulF/8rVDFiloShiidKfblBKgjSnVF3r9roNJRZvI1Ga+QhjsRFIpZlmGZrC60
- /bapOk4VRaCnf79V1QG9fGQSkZ2dX9Qd9MhaOM75n0AyysjiPaarOUtnzuqhBfkbJMF2
- XA6UX3EH+GYwfKvMNl+Ktqz+r5cy0dq10URUpUYoMzDP1IVf/CqOPQ8Af60jMnV6qVMv
- iTOy5c8up5HUKBSGKxIVCUoNJlVua3wqGVFrCHVcjS72XJdyrUU2RHKUjSKQzDq5Y89C
- YJrhRjxEdycn8z0lxhcJczs8RXfc3pLWBu6NZ9pTipcANxiWSgMOkil3cDKPyWyOxh3f
- c93g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724334855; x=1724939655;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1TQSLIq57iobIWGDTSxG+4h2QSqHXqmmDiJaZypcQHU=;
- b=oDpv1Zf46tUX5Z41JssBQpeLonIIcUrMQtOHn9x0JagAErgHuBePwhpSVvd/OnjSmq
- J2PndQLai38mEREwGx0ZIE+RTHORtSKdvPXrPewqCdGPawiMWQtTAZQj7hJybQ5mwpNK
- C0yfdZw9jydf370Wv5wT2ijrVp3uw7/n8KaM8MhiZ5A+iOps/mULcWpRbSPCiBbckTjH
- z/8K3bbvnumJUFtOTzOsDF2rJzX0RStZsXeAZUmLZLmdKGeKe/N9+X9d8Pq7SpVPsgKa
- BmAAO3NnXb7QktwUQdcyFMRX7RVgRNNWVMt5GEFYTrk9mCRn00fra4oBZQCHhAdhd+7H
- mDWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/7ZWqIyqPTKC7adClGcGJ585RQwdUWHye2FTzAdeL+jkz4lezwy/J5O3NFoRG9M4eM1hkfnU6DBPh@nongnu.org
-X-Gm-Message-State: AOJu0Yx5LD8YWHOkobEe/4KBu0EvK6AdN1XTH9dQGMxTXtURcEvQTf86
- eMf5ccks9pqNmkl+2Q5n+dbGz3UpN+R89cMunBkpZmM+Z6aMqaXRsSNvJaEFdIA=
-X-Google-Smtp-Source: AGHT+IE0wvkxem0zPetzhTO42yQ2Ur3FmE6bfFu1Fufyg5xYw4UdIsR+FDGExEMBwIpdrfOU3JEl4w==
-X-Received: by 2002:adf:edd2:0:b0:371:8685:84c with SMTP id
- ffacd0b85a97d-3730526a2f0mr1832546f8f.15.1724334855462; 
- Thu, 22 Aug 2024 06:54:15 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.206.153])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-373081ff5acsm1744656f8f.69.2024.08.22.06.54.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 06:54:14 -0700 (PDT)
-Message-ID: <6850ee92-e4ce-42eb-b816-d86574abbae3@linaro.org>
-Date: Thu, 22 Aug 2024 15:54:12 +0200
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1sh8HF-00025S-I5
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:55:01 -0400
+Received: from netsrv01.beckhoff.com ([62.159.14.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1sh8H8-0002ap-OI
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:55:01 -0400
+Received: from 172.17.5.170 by netsrv01.beckhoff.com (Tls12, Aes256, Sha384,
+ DiffieHellmanEllipticKey384); Thu, 22 Aug 2024 13:54:52 GMT
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
+ t=1724334892; bh=ObKhh5ctOrQTCNzAWvBPR008LcANC1kNYVDOEchZxFY=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=ed25519-sha256; b=
+ J6kz2J7HZkLZofhLCF6cc1w95UwHRpSFjk7zXSdXOftTJROUdQC+/gg4wTCeEaG9BErXLKQ++tVROI6oXb8ICg==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
+ t=1724334892; bh=ObKhh5ctOrQTCNzAWvBPR008LcANC1kNYVDOEchZxFY=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=rsa-sha256; b=
+ OaABsvv+duGFbQyGkISYsSIDiYrX54nIt9nC5NridEctBeoHVBLVRgiLHkvShwhAUOGHmyb2KUn8x6la4/jtPlvyQZ76rRiIDGq5Zeyl9HVj0gkt27Z7O6t+RgtQQhZ/xQYFLvU+jE/kbE2hZ6RwYMInLAY1s3cK6HX0VwtnW7/ZNWaJjac6h/mjQLTDw7Z/M8UpBdmo2QVEPeOZxGXjfow4CSfB7RuJhDqR8P87/Es6r2h+uSTrl86AadTJd8EEq0RcwqS2Op5f8ixB6J707GqMJsHBjlzedj1kDgZmTHus0Wy7Su5serQdZDeS8nLqrVVeI9b19vBXnJtcYL+hBA==
+Received: from corvink-nb.c.koehne.headscale.beckhoff.dev (172.17.61.20) by
+ ex04.beckhoff.com (172.17.5.170) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 22 Aug
+ 2024 15:54:50 +0200
+From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
+To: <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 5/7] vfio/igd: add ID's for ElkhartLake and TigerLake
+Date: Thu, 22 Aug 2024 15:54:14 +0200
+Message-ID: <20240822135420.58849-5-c.koehne@beckhoff.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240822111819.34306-1-c.koehne@beckhoff.com>
+References: <20240822111819.34306-1-c.koehne@beckhoff.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1?] system/vl.c: Print machine name, not "(null)",
- for unknown machine types
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Tokarev <mjt@tls.msk.ru>, qemu-stable@nongnu.org
-References: <20240822122310.561885-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240822122310.561885-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [172.17.61.20]
+X-ClientProxiedBy: ex04.beckhoff.com (172.17.5.170) To ex04.beckhoff.com
+ (172.17.5.170)
+X-OLX-Disclaimer: EX04.BECKHOFF.COM
+Received-SPF: pass client-ip=62.159.14.10; envelope-from=C.Koehne@beckhoff.com;
+ helo=netsrv01.beckhoff.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +78,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/24 14:23, Peter Maydell wrote:
-> In commit 412d294ffdc we tried to improve the error message printed when
-> the machine type is unknown, but we used the wrong variable, resulting in:
-> 
-> $ ./build/x86/qemu-system-aarch64 -M bang
-> qemu-system-aarch64: unsupported machine type: "(null)"
-> Use -machine help to list supported machines
-> 
-> Use the right variable, so we produce more helpful output:
-> 
-> $ ./build/x86/qemu-system-aarch64 -M bang
-> qemu-system-aarch64: unsupported machine type: "bang"
-> Use -machine help to list supported machines
-> 
-> Note that we must move the qdict_del() to below the error_setg(),
-> because machine_type points into the value of that qdict entry,
-> and deleting it will make the pointer invalid.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 412d294ffdc ("vl.c: select_machine(): add selected machine type to error message")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Tagged as for-9.1 because this is a sort-of regression since 9.0
-> (in 9.0 we didn't try to print the machine type name at all in
-> this error). But it's also very close to release and this is only
-> cosmetics in an error message. The cc-stable is for the case where
-> we don't put it into 9.1 and then backport it to the 9.1 stable
-> branch after release.
-> 
->   system/vl.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+=EF=BB=BFElkhartLake and TigerLake devices were tested in legacy mode with =
+Linux
+and Windows VMs. Both are working properly. It's likely that other Intel
+GPUs of gen 11 and 12 like IceLake device are working too. However,
+we're only adding known good devices for now.
 
-Oops, thanks!
+Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+---
+ hw/vfio/igd.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 863b58565e..84b0ec3139 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -88,6 +88,12 @@ static int igd_gen(VFIOPCIDevice *vdev)
+     case 0x2200:
+     case 0x5900:
+         return 8;
++    /* ElkhartLake */
++    case 0x4500:
++        return 11;
++    /* TigerLake */
++    case 0x9A00:
++        return 12;
+     }
+=20
+     /*
+--=20
+2.46.0
+
+This email contains confidential information. If you have received it in er=
+ror, you must not read, use, copy or pass on this e-mail or its attachments=
+. If you have received the e-mail in error, please inform me immediately by=
+ reply e-mail and then delete this e-mail from your system. Thank you
+=20
+Diese E-Mail enth=C3=A4lt vertrauliche Informationen. Sollten Sie sie irrt=
+=C3=BCmlich erhalten haben, d=C3=BCrfen Sie diese E-Mail oder ihre Anh=C3=
+=A4nge nicht lesen, verwenden, kopieren oder weitergeben. Sollten Sie die M=
+ail versehentlich erhalten haben, teilen Sie mir dies bitte umgehend per An=
+twort-E-Mail mit und l=C3=B6schen Sie diese E-Mail dann aus Ihrem System. V=
+ielen Dank
+
+Beckhoff Automation GmbH & Co. KG | Managing Director: Dipl. Phys. Hans Bec=
+khoff
+Registered office: Verl, Germany | Register court: Guetersloh HRA 7075
+
+
 
 
