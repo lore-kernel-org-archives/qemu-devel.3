@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ACBCC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 19:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60C9C52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 19:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shDE6-0002Nv-5r; Thu, 22 Aug 2024 15:12:06 -0400
+	id 1shDdM-00035B-SK; Thu, 22 Aug 2024 15:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shDE1-0002NG-H7
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 15:12:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
+ id 1shApo-00024r-AM
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:38:52 -0400
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1shDDy-0006YD-F2
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 15:12:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724353916;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kjn0FXapyM+mTZ3w5mFzCqjM7SK8gs7n4qXDiKMCaqk=;
- b=SxZTs6AOQ905we9pzUDpgw2+ISTLOInDprsbbnEmDl3Yix94w/8g25blV4nfyfvGHeC8Y3
- 7O3HlCAKTWvyMqXUmgxk4Pp+2ErOyT9ccSMDx3AIwVejqlxZ6p815WSpZbavlxcRWc1ZSN
- vZ+OfVfzyQ0pIYq17nFeaFRN9+wdSVo=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-yts0eaTOPXm3f2U9LIHXtw-1; Thu, 22 Aug 2024 15:11:54 -0400
-X-MC-Unique: yts0eaTOPXm3f2U9LIHXtw-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6bf6bcee8ccso13668386d6.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 12:11:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724353914; x=1724958714;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kjn0FXapyM+mTZ3w5mFzCqjM7SK8gs7n4qXDiKMCaqk=;
- b=svQldu+6rYPE9AVKGLVWBb8HMrh4M2pLf51+7Jbjgt9zxGGvMekVbOTMQLa50qgXai
- wdX9lrn603egZo1nHTZC0qS0w09ZjlVcl+wY0IuqfvZMlDR0e6UHULGW4dHswPAu/mAx
- dnlyWv+VIG5ClSgrQHsSYJXqojT1tW6qedRqCYexXZ/QRJ8ps5LRKQleUkDErnWLbfVv
- oOHU2BWiJjIHQtx20k2EkgNB+mjd8ksDXMby10qgZrksgBzQEpmnuOMXHAAj8HU7U6jM
- 1PWR3DX60FWGH85EcXoRJ6Q+UcC7yX0SukMSzqUkF4U/38jwmuCY89/RLBiXBaV1KDat
- gfsg==
-X-Gm-Message-State: AOJu0YxY8o+mFwBR2qf53lBi/7CqWUpj3K8M+/BUvb10pdDpi3sKk9K+
- WWwMKjSQ89Esyz3Udd4YYjBuloStRcsgnNXSQwOQLG51A3Il/w7ETNMEsMD8Leqg7UIaq6bK9Sa
- McxnJYdi/Zq3yxTBIzfqvb3UQWPx3bbQS77/2n0BMsVB+3vY3y8wL
-X-Received: by 2002:a05:6214:2e4a:b0:6bf:6e0f:1a18 with SMTP id
- 6a1803df08f44-6c155d5b688mr66681106d6.8.1724353914277; 
- Thu, 22 Aug 2024 12:11:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYqLLEr4vAxYr7TyRkckC3rk6/FO+UY+NzljT8oN+SwryhzkVtBGRTaLrdaIHyyTwuCMj9bw==
-X-Received: by 2002:a05:6214:2e4a:b0:6bf:6e0f:1a18 with SMTP id
- 6a1803df08f44-6c155d5b688mr66680916d6.8.1724353913915; 
- Thu, 22 Aug 2024 12:11:53 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162dcd10esm10446046d6.105.2024.08.22.12.11.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 12:11:53 -0700 (PDT)
-Date: Thu, 22 Aug 2024 15:11:51 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v3 12/14] migration/multifd: Allow multifd sync without
- flush
-Message-ID: <ZseNd77DUXe62mL0@x1n>
-References: <20240801123516.4498-1-farosas@suse.de>
- <20240801123516.4498-13-farosas@suse.de> <ZsdhY2ijx9nhSdLz@x1n>
- <Zsdi432b2dobNhMj@x1n> <87ttfcxzc5.fsf@suse.de>
- <Zsd3O_OCbpyctm-K@x1n> <87le0oxwg4.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
+ id 1shApl-00015z-4V
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:38:52 -0400
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+ by metis.whiteo.stw.pengutronix.de with esmtps
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <a.fatoum@pengutronix.de>)
+ id 1shApe-0001vr-9l; Thu, 22 Aug 2024 18:38:42 +0200
+Received: from [2a0a:edc0:0:1101:1d::54] (helo=dude05.red.stw.pengutronix.de)
+ by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <a.fatoum@pengutronix.de>)
+ id 1shApd-002I7V-NU; Thu, 22 Aug 2024 18:38:41 +0200
+Received: from localhost ([::1] helo=dude05.red.stw.pengutronix.de)
+ by dude05.red.stw.pengutronix.de with esmtp (Exim 4.96)
+ (envelope-from <a.fatoum@pengutronix.de>) id 1shApd-00FcSr-22;
+ Thu, 22 Aug 2024 18:38:41 +0200
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+To: qemu-devel@nongnu.org,
+	Stafford Horne <shorne@gmail.com>
+Cc: openrisc@lists.librecores.org,
+	"Jason A . Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH RESEND] hw/openrisc/openrisc_sim: keep serial@90000000 as
+ default
+Date: Thu, 22 Aug 2024 18:38:38 +0200
+Message-Id: <20240822163838.3722764-1-a.fatoum@pengutronix.de>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87le0oxwg4.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=a.fatoum@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 22 Aug 2024 15:38:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,108 +75,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 22, 2024 at 03:07:55PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Thu, Aug 22, 2024 at 02:05:30PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Thu, Aug 22, 2024 at 12:03:47PM -0400, Peter Xu wrote:
-> >> >> On Thu, Aug 01, 2024 at 09:35:14AM -0300, Fabiano Rosas wrote:
-> >> >> > Separate the multifd sync from flushing the client data to the
-> >> >> > channels. These two operations are closely related but not strictly
-> >> >> > necessary to be executed together.
-> >> >> > 
-> >> >> > The multifd sync is intrinsic to how multifd works. The multiple
-> >> >> > channels operate independently and may finish IO out of order in
-> >> >> > relation to each other. This applies also between the source and
-> >> >> > destination QEMU.
-> >> >> > 
-> >> >> > Flushing the data that is left in the client-owned data structures
-> >> >> > (e.g. MultiFDPages_t) prior to sync is usually the right thing to do,
-> >> >> > but that is particular to how the ram migration is implemented with
-> >> >> > several passes over dirty data.
-> >> >> > 
-> >> >> > Make these two routines separate, allowing future code to call the
-> >> >> > sync by itself if needed. This also allows the usage of
-> >> >> > multifd_ram_send to be isolated to ram code.
-> >> >> 
-> >> >> What's the usage of sync but not flush here?
-> >> >
-> >> > Oh I think I see your point.. I think flush+sync is always needed, it's
-> >> > just that RAM may not always be the one to flush, but something else.
-> >> > Makes sense then.
-> >> >
-> >> 
-> >> I'm thinking of "flush" here as a last multifd_send() before sync. We
-> >> need multiple multifd_send() along the migration to send the data, but
-> >> we might not need this extra flush. It could be that there's nothing to
-> >> flush and the code guarantees it:
-> >> 
-> >>  <populate MultiFDSendData>
-> >>  multifd_send()
-> >>  sync
-> >> 
-> >> Where RAM currently does:
-> >> 
-> >>  multifd_queue_page()
-> >>  multifd_queue_page()
-> >>  multifd_queue_page()
-> >>  ...
-> >>  multifd_queue_page()
-> >>  multifd_send()
-> >>  sync
-> >> 
-> >> Today there is a multifd_send() inside multifd_queue_page() and the
-> >> amount sent depends on the ram.c code. At the time sync gets called,
-> >> there could be data queued but not yet sent. Another client (not ram)
-> >> could just produce data in a deterministic manner and match that with
-> >> calls to multifd_send().
-> >
-> > I hope I read it alright.. I suppose you meant we have chance to do:
-> >
-> >   ram_send()
-> >   vfio_send()
-> >   flush()
-> >
-> > Instead of:
-> >
-> >   ram_send()
-> >   flush()
-> >   vfio_send()
-> >   flush()
-> >
-> > Am I right?
-> 
-> Not really. I'm saying that RAM doesn't always send the data, that's why
-> it needs a final flush before sync:
-> 
-> multifd_queue_page()
->     if (multifd_queue_empty(pages)) {
->         multifd_enqueue(pages, offset);
->     }
->     
->     if (multifd_queue_full(pages)) {
->         multifd_send_pages()   <-- this might not happen
->     }
->     multifd_enqueue()
-> 
-> multifd_send_sync_main()
->     if (pages->num) { <-- data left unsent
->        multifd_send() <-- flush
->     }
->     <sync routine>
+We used to only have a single UART on the platform and it was located at
+address 0x90000000. When the number of UARTs was increased to 4, the
+first UART remained at its location, but instead of being the first one
+to be registered, it became the last.
 
-I see now.
+This caused QEMU to pick 0x90000300 as the default UART, which broke
+software that hardcoded the address of 0x90000000 and expected its
+output to be visible when the user configured only a single console.
 
-At least for now I'd expect VFIO doesn't need to use sync at all, not
-before the kernel ABI changes. It's just that when that comes we may need
-to move that final sync() out of ram code then, but before a migration
-completes, to cover both.
+This caused regressions[1] in the barebox test suite when updating to a
+newer QEMU. As there seems to be no good reason to register the UARTs in
+inverse order, let's register them by ascending address, so existing
+software can remain oblivious to the additional UART ports.
 
-It's ok then, my R-b holds.
+[1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
+---
+v1 -> RESEND:
+  - expand addressees beyond apparently defunct openrisc@lists.librecores.org
 
+NOTE: I am not familiar with QEMU internals, so please let me know
+if registration in inverse order served a particular purpose.
+---
+ hw/openrisc/openrisc_sim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+index bffd6f721f7b..d147b00e4817 100644
+--- a/hw/openrisc/openrisc_sim.c
++++ b/hw/openrisc/openrisc_sim.c
+@@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+         serial_irq = get_cpu_irq(cpus, 0, irq_pin);
+     }
+     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
+-                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
++                   serial_hd(uart_idx),
+                    DEVICE_NATIVE_ENDIAN);
+ 
+     /* Add device tree node for serial. */
 -- 
-Peter Xu
+2.39.2
 
 
