@@ -4,89 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEBEDC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 11:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DACDC5320E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 11:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh5e9-0000Xa-Dp; Thu, 22 Aug 2024 07:06:29 -0400
+	id 1sh5gA-0004xM-E0; Thu, 22 Aug 2024 07:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sh5e6-0000TD-0l
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:06:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh5g5-0004wh-FW
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:08:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sh5e3-0005jv-KS
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:06:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh5g3-0006Qa-QR
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 07:08:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724324781;
+ s=mimecast20190719; t=1724324906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cVs0nvpbM1qtEFRuYob12A7bImstyQw6UapXCvl7s1E=;
- b=X9Br2x8mXsIMBFGw5aGj0gpR13geIotNjfC/Vyllynd7qQyEHKn5+6QvCrYNeEAmBa6t/k
- QvJ2KAjkX4JSZmXfJ483OiESB9B+uE39DM92XANW9WOK6A1Roi5iOUw8KUEx5lCdm3arlG
- /gjieDV1PB5inzwrJCdN2COm8DPHc+8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=IICIjjQA6OMO8Ul+H/YDHnCV6+TYMxO63vqq/RldlYc=;
+ b=Bsxo1cTGP92Vcu+sGOPRWtiBFmSvNEI9awzFApL+3154bsO9WuiOLNbnWdqYpefQM8AP6p
+ MtjtCOfGX5HOGC8YfyNcn82eU1MLX7N5CGDuAM4h24kurqYUYYsN3d985CwgWSnIUKiWR2
+ RoktS3vrh/xntiw2B17VFX3Ma3e+tig=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-eH-StdgRNTyUKALLTZudbg-1; Thu, 22 Aug 2024 07:06:20 -0400
-X-MC-Unique: eH-StdgRNTyUKALLTZudbg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3719ee7c72eso323814f8f.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 04:06:20 -0700 (PDT)
+ us-mta-198-VnNTzzJXNB2m6ummno2UIw-1; Thu, 22 Aug 2024 07:08:24 -0400
+X-MC-Unique: VnNTzzJXNB2m6ummno2UIw-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-70ca9b6629cso808016a34.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 04:08:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724324779; x=1724929579;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cVs0nvpbM1qtEFRuYob12A7bImstyQw6UapXCvl7s1E=;
- b=XFmRJNf4hKpmMfBq/TjrD8XREBEsFWLRbWSqP7PdEO0PmYnxw9t9/0Pq79CIMSUXFQ
- Vcv1fxhffAkiudbKR8eleEV8c6l/2xiiJ/fpESNH+d7RIx4GoTrWYjyXhQk/sJf4wJF3
- m0msSY55Oq1nZ8aATBqRwfVymnEZ2k+eRJ1Qt5BghxcOifj9cin95CCJ2C+63uYMVCzo
- JK9J6/hmjNjH+w2AAqGmZGlMY4WGe+R8lL1qRdp2OrZCemYx25VhrU+iJNbEqq27gE/x
- mDxLc6AoD8c4JK5y4YP5tJcD3MZ1uLmIwTXWAg9cYzKjI0TDt8q0QxSo5SDPiMIJebm7
- dNiA==
+ d=1e100.net; s=20230601; t=1724324903; x=1724929703;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IICIjjQA6OMO8Ul+H/YDHnCV6+TYMxO63vqq/RldlYc=;
+ b=kTWpamErHUypW0lRgMdVBmCKEffVWLFoixowH9Ff7dN/YiLM0EIqXGR8GqiZB015U0
+ 4aCjxHuDj9l8Kwy6vDCPEkx2ZykxQKMy64jjZPKYLKbXJrLkx3ggwJiRZFEpr1M5u3Q7
+ 7BkoIWNSxdsiGq51x4UfrSlMu5KRYl8OVNHgtC4aZg2bjFrrmlitNqEsJxT7PCRpPHF+
+ 8n13qxAyvqZvoiqb3pH374wQgpwyr+DNB7/HQ56VXU082LSFz1ULh9BJBf9b9nrYqj2I
+ qJ+NvICHFJ03P4l3WFIr3+rSjmeZweH9ro4o0i3DyHS9UAWWC/AZV8CoJgRnsaS8+AQq
+ ey/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNHI8m1pdn+tn+OM9gD+/5/mlqdxTZUoWjtcCwCbw/Gq7VYTX1M1FGOVqBbElbS/N/Hq8EpBI1tk6X@nongnu.org
-X-Gm-Message-State: AOJu0Yxa7sTmOeXY3tGBztqcItPp+ZYIny0Gb7FQrFA6Z/7NW+EiTGfE
- OA+HtH342RL+iTuyRfNl6KvRZAhwkze5RL+LZD+Jus6Z0+BraxAkKCU/hWyTdjXdV9UiPeGQv14
- PAGgwCZs1pqD0KeuapX9qqhz3il+1srp9nS030f90Jx+85293xzCvL3cUgxyJKQZO9A39AHQj6v
- ZoPmvZpE8Cer8qTpfSyptr7Ea7e8g=
-X-Received: by 2002:adf:fdcc:0:b0:367:8c65:3c9 with SMTP id
- ffacd0b85a97d-37308c0924dmr1004115f8f.2.1724324778904; 
- Thu, 22 Aug 2024 04:06:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHs/jrI6v8vswOjlZ52eCpsV9abaKdPT1T3BZ1BA0ndzsqpRTtGnOzwjiCm0KAPCpvUlLSXIzNcFfCE3GhLfQE=
-X-Received: by 2002:adf:fdcc:0:b0:367:8c65:3c9 with SMTP id
- ffacd0b85a97d-37308c0924dmr1004082f8f.2.1724324778342; Thu, 22 Aug 2024
- 04:06:18 -0700 (PDT)
+ AJvYcCVRWfX7ISziFPzORxMa3pBC7XnrNI3yfAmSkjEeR64cSsvXGs9yTl/MvL8inkhSlW26fUecPTP0nlzt@nongnu.org
+X-Gm-Message-State: AOJu0YxE9CZ/sVyKB/3ZUSj0/7H/SWE9B8zrF5iyBQZfdCmYDCl/n6Xl
+ GPRR3WLkRMmOmFXEhs19XSOJvuHI7kv2t+8SoaUWWjV8lIsA+ncgWd7+4xINpsykyxdMkBLAJw0
+ YgxU2oCmVF7KJigCCA8LcvNZnNCUafxUtkpEvlvCQ4ZIE1TCvMPGC
+X-Received: by 2002:a05:6808:3388:b0:3da:a032:24c5 with SMTP id
+ 5614622812f47-3de195114b0mr4774215b6e.22.1724324903748; 
+ Thu, 22 Aug 2024 04:08:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHEhKCdbFoGpAzamv7PiYMy8EklOVL74sQYXF2o2otdpdCPxbzlQKcMMx2TGCQt+JPxsWUY7Q==
+X-Received: by 2002:a05:6808:3388:b0:3da:a032:24c5 with SMTP id
+ 5614622812f47-3de195114b0mr4774191b6e.22.1724324903297; 
+ Thu, 22 Aug 2024 04:08:23 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-177-41.web.vodafone.de.
+ [109.43.177.41]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-454fe0f04fcsm5531571cf.46.2024.08.22.04.08.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Aug 2024 04:08:22 -0700 (PDT)
+Message-ID: <aa8055c5-6fca-4199-8a58-b2a1a1167011@redhat.com>
+Date: Thu, 22 Aug 2024 13:08:18 +0200
 MIME-Version: 1.0
-References: <20240820170907.6788-1-yichen.wang@bytedance.com>
- <20240820170907.6788-5-yichen.wang@bytedance.com>
-In-Reply-To: <20240820170907.6788-5-yichen.wang@bytedance.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 22 Aug 2024 16:36:01 +0530
-Message-ID: <CAE8KmOzK=Qe3nJ_ReRmQr5hkUgoZe9nOBi5G0hByvG3oVuzG+g@mail.gmail.com>
-Subject: Re: [PATCH v8 4/5] migration: Introduce 'qatzip' compression method
-To: Yichen Wang <yichen.wang@bytedance.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, 
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>, 
- "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>, 
- Xiaoning Ding <xiaoning.ding@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] tests/avocado: Run STM32 bFLT busybox binary in
+ current directory
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Beraldo Leal <bleal@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20240822095045.72643-1-philmd@linaro.org>
+ <20240822095045.72643-5-philmd@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240822095045.72643-5-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -112,161 +154,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 22/08/2024 11.50, Philippe Mathieu-Daudé wrote:
+> When this test was added in commit 8011837a01, self.workdir was
+> set to the test directory. As of this commit, it is not set
+> anymore. Rather than using a full path to the busybox binary,
+> we can run it in the current directory, effectively kludging
+> the fact that self.workdir is not set. Good enough to run the
+> test:
+> 
+>    Fetching asset from tests/avocado/load_bflt.py:LoadBFLT.test_stm32
+>    JOB ID     : 020d317281b042f46ad99013530d29df0f1d7eb7
+>    JOB LOG    : tests/results/job-2024-08-22T10.17-020d317/job.log
+>     (1/1) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: PASS (0.09 s)
+>    RESULTS    : PASS 1 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | CANCEL 0
+>    JOB TIME   : 0.62 s
+> 
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tests/avocado/load_bflt.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/avocado/load_bflt.py b/tests/avocado/load_bflt.py
+> index bb50cec1ee..264489ee25 100644
+> --- a/tests/avocado/load_bflt.py
+> +++ b/tests/avocado/load_bflt.py
+> @@ -41,7 +41,7 @@ def test_stm32(self):
+>                         'Stm32_mini_rootfs.cpio.bz2')
+>           rootfs_hash = '9f065e6ba40cce7411ba757f924f30fcc57951e6'
+>           rootfs_path_bz2 = self.fetch_asset(rootfs_url, asset_hash=rootfs_hash)
+> -        busybox_path = os.path.join(self.workdir, "/bin/busybox")
+> +        busybox_path = os.path.join(self.workdir, "bin/busybox")
 
-On Tue, 20 Aug 2024 at 22:40, Yichen Wang <yichen.wang@bytedance.com> wrote:
-> +static int qatzip_send_setup(MultiFDSendParams *p, Error **errp)
-> +{
-> +    QatzipData *q;
-> +    QzSessionParamsDeflate_T params;
-> +    const char *err_msg;
-> +    int ret;
-> +
-> +    q = g_new0(QatzipData, 1);
-> +    p->compress_data = q;
-> +    /* We need one extra place for the packet header */
-> +    p->iov = g_new0(struct iovec, 2);
-> +
-> +    /*
-> +     * Initialize QAT device with software fallback by default. This allows
-> +     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
-> +     */
-> +    ret = qzInit(&q->sess, true);
-> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
-> +        err_msg = "qzInit failed";
-> +        goto err;
-> +    }
-> +
-> +    ret = qzGetDefaultsDeflate(&params);
-> +    if (ret != QZ_OK) {
-> +        err_msg = "qzGetDefaultsDeflate failed";
-> +        goto err;
-> +    }
-> +
-> +    /* Make sure to use configured QATzip compression level. */
-> +    params.common_params.comp_lvl = migrate_multifd_qatzip_level();
-> +    ret = qzSetupSessionDeflate(&q->sess, &params);
-> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
-> +        err_msg = "qzSetupSessionDeflate failed";
-> +        goto err;
-> +    }
-> +
-> +    if (MULTIFD_PACKET_SIZE > UINT32_MAX) {
-> +        err_msg = "packet size too large for QAT";
-> +        goto err;
-> +    }
-> +
-> +    q->in_len = MULTIFD_PACKET_SIZE;
-> +    /*
-> +     * PINNED_MEM is an enum from qatzip headers, which means to use
-> +     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
-> +     * is not available or software fallback is used, the malloc flag needs to
-> +     * be set as COMMON_MEM.
-> +     */
-> +    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
-> +    if (!q->in_buf) {
-> +        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
-> +        if (!q->in_buf) {
-> +            err_msg = "qzMalloc failed";
-> +            goto err;
-> +        }
-> +    }
-> +
-> +    q->out_len = qzMaxCompressedLength(MULTIFD_PACKET_SIZE, &q->sess);
-> +    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
-> +    if (!q->out_buf) {
-> +        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
-> +        if (!q->out_buf) {
-> +            err_msg = "qzMalloc failed";
-> +            goto err;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +
-> +err:
-> +    error_setg(errp, "multifd %u: [sender] %s", p->id, err_msg);
-> +    return -1;
-> +}
+Good enough for now, indeed.
 
-* Need to release (g_free OR qatzip_send_cleanup) allocated memory in
-the error (err:) path.
-
-
-> +static int qatzip_recv_setup(MultiFDRecvParams *p, Error **errp)
-> +{
-> +    QatzipData *q;
-> +    QzSessionParamsDeflate_T params;
-> +    const char *err_msg;
-> +    int ret;
-> +
-> +    q = g_new0(QatzipData, 1);
-> +    p->compress_data = q;
-> +
-> +    /*
-> +     * Initialize QAT device with software fallback by default. This allows
-> +     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
-> +     */
-> +    ret = qzInit(&q->sess, true);
-> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
-> +        err_msg = "qzInit failed";
-> +        goto err;
-> +    }
-> +
-> +    ret = qzGetDefaultsDeflate(&params);
-> +    if (ret != QZ_OK) {
-> +        err_msg = "qzGetDefaultsDeflate failed";
-> +        goto err;
-> +    }
-> +
-> +    ret = qzSetupSessionDeflate(&q->sess, &params);
-> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
-> +        err_msg = "qzSetupSessionDeflate failed";
-> +        goto err;
-> +    }
-> +
-> +    /*
-> +     * Reserve extra spaces for the incoming packets. Current implementation
-> +     * doesn't send uncompressed pages in case the compression gets too big.
-> +     */
-> +    q->in_len = MULTIFD_PACKET_SIZE * 2;
-> +    /*
-> +     * PINNED_MEM is an enum from qatzip headers, which means to use
-> +     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
-> +     * is not available or software fallback is used, the malloc flag needs to
-> +     * be set as COMMON_MEM.
-> +     */
-> +    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
-> +    if (!q->in_buf) {
-> +        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
-> +        if (!q->in_buf) {
-> +            err_msg = "qzMalloc failed";
-> +            goto err;
-> +        }
-> +    }
-> +
-> +    q->out_len = MULTIFD_PACKET_SIZE;
-> +    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
-> +    if (!q->out_buf) {
-> +        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
-> +        if (!q->out_buf) {
-> +            err_msg = "qzMalloc failed";
-> +            goto err;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +
-> +err:
-> +    error_setg(errp, "multifd %u: [receiver] %s", p->id, err_msg);
-> +    return -1;
-> +}
-
-* Need to release (g_free OR qatzip_recv_cleanup) allocated memory in
-the error (err:) path.
-
-Thank you.
----
-  - Prasad
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
