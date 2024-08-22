@@ -4,63 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60C9C52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 19:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE0DC52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 20:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shDdM-00035B-SK; Thu, 22 Aug 2024 15:38:14 -0400
+	id 1shE4D-0003JM-KG; Thu, 22 Aug 2024 16:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
- id 1shApo-00024r-AM
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:38:52 -0400
-Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
- id 1shApl-00015z-4V
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 12:38:52 -0400
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
- by metis.whiteo.stw.pengutronix.de with esmtps
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <a.fatoum@pengutronix.de>)
- id 1shApe-0001vr-9l; Thu, 22 Aug 2024 18:38:42 +0200
-Received: from [2a0a:edc0:0:1101:1d::54] (helo=dude05.red.stw.pengutronix.de)
- by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <a.fatoum@pengutronix.de>)
- id 1shApd-002I7V-NU; Thu, 22 Aug 2024 18:38:41 +0200
-Received: from localhost ([::1] helo=dude05.red.stw.pengutronix.de)
- by dude05.red.stw.pengutronix.de with esmtp (Exim 4.96)
- (envelope-from <a.fatoum@pengutronix.de>) id 1shApd-00FcSr-22;
- Thu, 22 Aug 2024 18:38:41 +0200
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
-To: qemu-devel@nongnu.org,
-	Stafford Horne <shorne@gmail.com>
-Cc: openrisc@lists.librecores.org,
-	"Jason A . Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH RESEND] hw/openrisc/openrisc_sim: keep serial@90000000 as
- default
-Date: Thu, 22 Aug 2024 18:38:38 +0200
-Message-Id: <20240822163838.3722764-1-a.fatoum@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1shE48-0003Gw-Kd
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 16:05:52 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1shE45-0006fx-2n
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 16:05:51 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5bebb241fddso839a12.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 13:05:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1724357145; x=1724961945; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LHjw9TuxbXlkebqSQdiQuYwr40RhVog8KVJbsePag34=;
+ b=cWQcN3NuOslqR9465K1AKXioANTfkqSYQjz5KHkveJYPTgyb7ri7N3dfLmXhZuEgWD
+ VqSuXaKAc0vQc8tAlWRdFPKJp2sfhD2b9ZvIh6Zmi7lAN0GKRK2D+Wht2petH/XpKAPc
+ HnltRS0rVFKZ8EEfyctreKOnNGsDZ2kWeN06DXirmP2DYZC/MOc29OWgYm8R3K3TCqj0
+ zdLT47PNjJ+QNmbwuHjlvMfdOEUQKXpmVEntmWN4PkpZEE8Xf9Sq71agLIQ83WT1kGkr
+ 03xjIGNAisiinw/zeNpA4H3UlRXCgn9v+uC9nqFoUvRvXkdnwC89fbYTEobuxklZEDxg
+ lDLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724357145; x=1724961945;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LHjw9TuxbXlkebqSQdiQuYwr40RhVog8KVJbsePag34=;
+ b=WgdYIjPOKPEz/nxjDL5oLhfFxzZXbSxMxxR67tOmNbStu6SGMOB+RtMIjhak6u/L5N
+ pN68nJb1m/7ShKskBhbxsR+hhGR73o4Fcfkfk1HpIMWIkPZWOwI3icN3u5g07OW6zNcx
+ JYtgoyyz9h0LqkAxRah3h34IgLH7zo9/cjpokAzkX16ORvOmIhyi2HdeyuQ898bWJ0R/
+ mV3klxj6IA1ReOFFBW6diDORpygavqIakGnnqzw3YH0uXNDl4REHQNwDAWY+wSlHTzhJ
+ i6mvFiX/IvD8reg9y9xESIX4FZ0e4k5nr6lStXnPouIcFol/09SAn7lVLjdaj4w7x+2z
+ MmRw==
+X-Gm-Message-State: AOJu0YxS6+dw5MiN2jFptsUqywbbF76Y7ORkbDdvvWILs4i0b/iUoAd7
+ MQUeDq0ZOwsTzUja9UXqsCOzbQ5bkxzypI/XtmeMoDLf02xI1wwSK4u0lVuo22Nk9tGh190DOG+
+ QAnRnqpsvBaZJFAJwGQa68adQIYlMPxTT6d1s
+X-Google-Smtp-Source: AGHT+IEFu3g6h5KWslR3XSlVIC6zId0q/ccWNf4NqAl/DrltZTyO0uqtblzVh9B9bzmk8JmaaqP3wB7BvcixI6+6szo=
+X-Received: by 2002:a05:6402:40c5:b0:5be:ce7d:ad0d with SMTP id
+ 4fb4d7f45d1cf-5c086ad8aa2mr51956a12.0.1724357144242; Thu, 22 Aug 2024
+ 13:05:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
- envelope-from=a.fatoum@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240817102606.3996242-1-tavip@google.com>
+ <CAFEAcA8gg1u4_HwG9QOHj4RqfHgNLkT5nHLTFNrcaHdgL+zEPQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA8gg1u4_HwG9QOHj4RqfHgNLkT5nHLTFNrcaHdgL+zEPQ@mail.gmail.com>
+From: Octavian Purdila <tavip@google.com>
+Date: Thu, 22 Aug 2024 13:05:33 -0700
+Message-ID: <CAGWr4cQ7rWaCo3q71+EaTQMXf1p-pdxL88s5tg_kzeLNo7DTRA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 00/23] NXP i.MX RT595, ARM SVD and device model
+ unit tests
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, thuth@redhat.com, marcandre.lureau@redhat.com, 
+ alistair@alistair23.me, berrange@redhat.com, philmd@linaro.org, 
+ jsnow@redhat.com, crosa@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=tavip@google.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 22 Aug 2024 15:38:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,45 +93,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We used to only have a single UART on the platform and it was located at
-address 0x90000000. When the number of UARTs was increased to 4, the
-first UART remained at its location, but instead of being the first one
-to be registered, it became the last.
+On Thu, Aug 22, 2024 at 6:28=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Sat, 17 Aug 2024 at 11:26, Octavian Purdila <tavip@google.com> wrote:
+> >
+> > This patch set adds support for NXP's RT500 MCU [1] and the RT595
+> > EVK[2]. More RT500 device models will be submitted in future patch sets=
+.
+> >
+> > The goal of this first patch set is to provide a minimal set that
+> > allows running the NXP MCU SDK hello world example[4].
+> >
+> > The patch set introduces a (python) tool that generates C header files
+> > from ARM SVD files[3]. This significantly reduces the effort to write
+> > a new device model by automatically generating: register definitions
+> > and layout (including bit fields), register names for easier debugging
+> > and tracing, reset register values, register write masks, etc.
+> >
+> > The generated files are commited and not generated at compile
+> > time. Build targets are created so that they can be easily regenerated
+> > if needed.
+> >
+> > It also introduces unit tests for device models. To allow accessing
+> > registers from unit tests a system bus mock is created.
+> >
+> > This can potentially introduce maintainance issues, due to mocks or
+> > unit tests getting outdated when code is refactored. However, I think
+> > this is not an issue in this case because the APIs we mocked (system
+> > bus MMIO access) or directly used (irq APIs, chardev APIs, clock tree
+> > APIs) to interact with device models are stable at this
+> > point. Anecdotally, our experience seems to confirm this: we only run
+> > into one (trivially fixed) breaking upstream change (gpio getting
+> > removed from hwcore) in the last three years.
+>
+> My main issue with the mocking is that it introduces a
+> completely different way of testing devices that is
+> not the same as what we use for any existing device.
+> QEMU already has too many places where there are multiple
+> different ways or styles of doing something, so adding a
+> new one should be a high bar (e.g. "this lets us test XYZ
+> that would be impossible in the old way") and preferably
+> also have a transition plan for how we would be
+> deprecating and dropping the old way of doing things.
+>
+> So my inclination here is to say "you said that you could
+> do the testing of this device with qtest, so use qtest".
 
-This caused QEMU to pick 0x90000300 as the default UART, which broke
-software that hardcoded the address of 0x90000000 and expected its
-output to be visible when the user configured only a single console.
+Looks like I missed some things when I looked at it, probably minor or
+a matter of preference in the great scheme of things. It might still
+be worth mentioning them here.
 
-This caused regressions[1] in the barebox test suite when updating to a
-newer QEMU. As there seems to be no good reason to register the UARTs in
-inverse order, let's register them by ascending address, so existing
-software can remain oblivious to the additional UART ports.
+In patch 19 we are testing exposed clocks and AFAICS there are no
+qtest APIs for that. We can probably add a qest API for that though.
 
-[1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
----
-v1 -> RESEND:
-  - expand addressees beyond apparently defunct openrisc@lists.librecores.org
+In patch 9 we are using internal APIs exposed by the generic flexcom
+device to check that device selection works as expected. I don't see
+how we can reimplement that with qtest, this is a classic example of
+what unit tests can enable vs functional testing.
 
-NOTE: I am not familiar with QEMU internals, so please let me know
-if registration in inverse order served a particular purpose.
----
- hw/openrisc/openrisc_sim.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+There are also a few things that are a bit cumbersome to do with
+qtest. In patch 13 and 16 we introduce i2c and spi echo test devices
+to test i2c/spi transactions. I've noticed that device qtests use an
+existing i2c peripheral for tests. We could add the i2c and spi test
+devices to qemu and have them enabled by default. Or continue using
+existing spi/i2c peripherals for testing spi/i2c controllers for
+qtests which I personally don't like because it requires knowledge of
+specific peripherals.
 
-diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-index bffd6f721f7b..d147b00e4817 100644
---- a/hw/openrisc/openrisc_sim.c
-+++ b/hw/openrisc/openrisc_sim.c
-@@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-         serial_irq = get_cpu_irq(cpus, 0, irq_pin);
-     }
-     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
--                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
-+                   serial_hd(uart_idx),
-                    DEVICE_NATIVE_ENDIAN);
- 
-     /* Add device tree node for serial. */
--- 
-2.39.2
+That being said, I'll go ahead and switch to qtests, if only to better
+understand advantages / disadvantages and separate this patch from the
+bigger device unit tests discussion.
 
+> If we were designing a "test devices" framework from
+> scratch, using mocks would probably be a strong candidate
+> for that design, but we aren't starting from scratch.
+
+I still think that writing device tests as unit tests is better:
+ - devices can be tested independently
+ - we can test more, including internal behaviour and APIs, error paths, et=
+c.
+ - enable sanitizers by default for device tests*
+
+I wonder what people think and what would be a path to enable device
+unit tests. What would we need to prove, besides converting existing
+device qtests to unit tests, which I can certainly help with.
+
+*I was surprised to see that sanitizers are not enabled by default on
+unit tests when host dependencies are available, what is preventing
+that?
 
