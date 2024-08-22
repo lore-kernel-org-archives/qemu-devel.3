@@ -4,86 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF32C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4333C5320E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 10:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh4Ta-0007ea-QB; Thu, 22 Aug 2024 05:51:30 -0400
+	id 1sh4yZ-0000OB-UX; Thu, 22 Aug 2024 06:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TQ-0007ZU-1K
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:23 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TM-00023f-Ul
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:18 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42819654737so3935745e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724320273; x=1724925073; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mEt78BY1+b0Q2uRxu35ufp1qJ07/oJ8ixAjUQfbY+Bw=;
- b=Hyy9QXi0iVU86XpcnrEe+BPaTcMTodHfHG83N5djaETRPOFkTJ52neE27+f8gf6zJi
- jOr1SHt20IQM0i1ey3dqvbqE862AF2d6RZrJxEmoEYXWv1iaj+VFQkZ1Bbta+sgBRMPQ
- YcDrsDAUJvvGZxXwl9Xm1QLlPjs4OdbnT3q24QtEVIRWUoq0Lc7Ag+JOWxeaIJdVNGD+
- BDml5ryiMd2EUor9irQa3wX1A2M7qXBCsf5NeHtMhBZFw4XmLubhHtPllaYo1YMJPmNi
- QJLuGXIP4tOITYTdlbPfzUqygECs8qgFmwGyNvGak+agQf+lYOlFsP4YIV4xOLSENQMO
- XUmg==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sh4yX-0000NX-TO
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 06:23:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sh4yV-0006DA-0b
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 06:23:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724322203;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=p8TCXvCWgxtXFMUStr3F9V8j9njXv3aRj6bHOWUs+fc=;
+ b=HzuWmG0bWhC7YSAApKP4IyplY9oW/emtARkpV7Cdh+TGMHZw5rT/q84/W0Yx4HFEzXBH9h
+ kBTxHZJ0gXzLnLGmNPhM2VuLcPhRPCXm54kDBKM+NqkvI6COfiRFe8MPzDuuQLbzL436rs
+ woa3XDbD8KFzznmMbULxwUbtFJdotXE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-472-0w4bbpnwMr2xzf1mefiQlg-1; Thu, 22 Aug 2024 06:23:22 -0400
+X-MC-Unique: 0w4bbpnwMr2xzf1mefiQlg-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4281f8994adso5128345e9.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 03:23:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724320273; x=1724925073;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mEt78BY1+b0Q2uRxu35ufp1qJ07/oJ8ixAjUQfbY+Bw=;
- b=VIMNf0GGD4bcO2LFiEwOynBBPwg9JhUsHJ/UYqm/DJq0L/Hc4uSUXnQ9mzwuoajsGB
- 3QaS4mX1EmyNhGDZ/qRIySLnhmvgAbOv3PhqX62epfQyin3A7unVQjqBeH3oBAWkF4SC
- NnlKDsU03ZFP6aIbU81Jh07Hxhc1HK7IiCbycO8S0TNvxbOiHzZ2uTchzr6G9ZWdNHdj
- 55wbc9LWRkxOIFJNY6EYhe1Kb1fR60s1aHAtFysfbfZPZ4DbW8AbTpTf1/yeqivlJ0M3
- IIGWrJ21O+qp6kLCvHE0tr0DkgkNnPjmbkLxG3iw5a2DNI1Ukyis1CYGosuFkN+0lsE0
- LmzQ==
-X-Gm-Message-State: AOJu0Yx4PYEehCfLC8VZXKSS6Tz/or6LeyeAer4Xr0F3AJiiZN3t4gWk
- InUly1CR0muL1z7KXqmSSIXsNJx2QTIqXerZwwI8LapgaA+5P91mk22qnbom39mSK7dVSZw7rbE
- c
-X-Google-Smtp-Source: AGHT+IFxK8AYj+Zk4/YUdnzh2zR3OLsV+j2TX+Bndt7NHEOVwGLvECZth9RmePCmgxDcK2OY3YAutw==
-X-Received: by 2002:a05:600c:5114:b0:426:5269:9827 with SMTP id
- 5b1f17b1804b1-42ac5529b3dmr9941935e9.0.1724320272818; 
- Thu, 22 Aug 2024 02:51:12 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.206.153])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ac5180339sm18190535e9.43.2024.08.22.02.51.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Aug 2024 02:51:12 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 4/4] tests/avocado: Run STM32 bFLT busybox binary in
- current directory
-Date: Thu, 22 Aug 2024 11:50:45 +0200
-Message-ID: <20240822095045.72643-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240822095045.72643-1-philmd@linaro.org>
-References: <20240822095045.72643-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1724322201; x=1724927001;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p8TCXvCWgxtXFMUStr3F9V8j9njXv3aRj6bHOWUs+fc=;
+ b=abvXXEARrKxkD6E3aiyPopIxr00Kgs/Rapo4qeESZw/KmuNi2OQPqFE5yAHTwvTCxe
+ NW/xJMMgcgIEPAebHkszEup6LGowfP0Eb4SMGWfVVtsLO7nf/axEiQkuvUbOjgE+bKVU
+ tsuyLBHUEC4wbH3hWfkV5buuhlNjrWfVCEJc8f95YpwtffRc6tweJjdv8EQBfRVsVaoK
+ YMQ1qKjsVb+SytXKppHQehVt2MaKNpztKCcNgTPdNDv7gKP0CkSamFJu0/8vNQzcWHDE
+ 3rI/uj7xkpTcsaWXoqgE6jRJEuN5XOVYB0FrXee6ipby/K2Q4u1ByPnivFw+UjB7wCrA
+ PHsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdt1qNeNOOIV/Y96B4p9UUUF/kFBtwhilxNUTBbVXfxSERBv84WGWaVzk5SrPUleYReXKpn0XO0/We@nongnu.org
+X-Gm-Message-State: AOJu0YyeKbHq03KA9OitEZ17PHi1+l7M0EJgoTYS7VOz2oDIGLxxHTJZ
+ 5CRysaIlgENqv3vaPVQkDkKnuOrA/9BlCbXsAmJrVxoaoWiwNpr9Pu8IVPf6XQ3LVCw85rk9bc5
+ I9Vbli3P5elAbBXlfLMV40UirmexmzolSLjlSk3myjHxSTiSVccwnCwcZqaaXMJbQWbHCAJjZOb
+ 6XB6c/KMGF4CCovE25307S7Bw3mFc=
+X-Received: by 2002:a05:600c:4584:b0:426:6551:3174 with SMTP id
+ 5b1f17b1804b1-42abd2458fcmr42636865e9.29.1724322200824; 
+ Thu, 22 Aug 2024 03:23:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFV5CGf4hAPeLtQLb570tt+Azfx9vTgsPMTCiKoPdhCG3jw4N6VWBsB/81EWXXdA3P/rXivc1FFQRSMBJdbPcc=
+X-Received: by 2002:a05:600c:4584:b0:426:6551:3174 with SMTP id
+ 5b1f17b1804b1-42abd2458fcmr42636675e9.29.1724322200253; Thu, 22 Aug 2024
+ 03:23:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240820170907.6788-1-yichen.wang@bytedance.com>
+ <20240820170907.6788-4-yichen.wang@bytedance.com>
+ <CAE8KmOypgmrWR6dxAz7iQ=3k+fTXSMKs6kUTUdRisGcq22p8Pw@mail.gmail.com>
+ <CAHObMVZh_Y5g8LZbt1r__RX_BXzg3jqm+HFmC3_s3JAj-3YWDg@mail.gmail.com>
+In-Reply-To: <CAHObMVZh_Y5g8LZbt1r__RX_BXzg3jqm+HFmC3_s3JAj-3YWDg@mail.gmail.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Thu, 22 Aug 2024 15:53:03 +0530
+Message-ID: <CAE8KmOzz3vPViCMT09GOhmMdL9EgLEtXopOQkc_MdNXBXL4NbA@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v8 3/5] migration: Add migration parameters
+ for QATzip
+To: Yichen Wang <yichen.wang@bytedance.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org, 
+ Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>, 
+ "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>, 
+ Xiaoning Ding <xiaoning.ding@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,40 +115,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When this test was added in commit 8011837a01, self.workdir was
-set to the test directory. As of this commit, it is not set
-anymore. Rather than using a full path to the busybox binary,
-we can run it in the current directory, effectively kludging
-the fact that self.workdir is not set. Good enough to run the
-test:
+Hi,
 
-  Fetching asset from tests/avocado/load_bflt.py:LoadBFLT.test_stm32
-  JOB ID     : 020d317281b042f46ad99013530d29df0f1d7eb7
-  JOB LOG    : tests/results/job-2024-08-22T10.17-020d317/job.log
-   (1/1) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: PASS (0.09 s)
-  RESULTS    : PASS 1 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | CANCEL 0
-  JOB TIME   : 0.62 s
+On Thu, 22 Aug 2024 at 02:13, Yichen Wang <yichen.wang@bytedance.com> wrote:
+> After discussing with Intel folks, I decided to align to the existing
+> QPL behavior. In QPL, the code path of compression will always go
+> through regardless. When acceleration hardware is initialized
+> properly, use it. If failed, fallback to software path automatically.
+> So in this QAT case, I do the same. The line of "ret =
+> qzInit(&q->sess, true);" will do the auto software fallback.
 
-Reported-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+* I see.
+
+> Oh, this line is purely for breaking the big patch into two commits.
+> This one plus the following commit [4/5] together implements the full
+> feature. I can remove this from the commit message if you prefer.
+
+* Yes, that'll be nice.
+
+Thank you.
 ---
- tests/avocado/load_bflt.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tests/avocado/load_bflt.py b/tests/avocado/load_bflt.py
-index bb50cec1ee..264489ee25 100644
---- a/tests/avocado/load_bflt.py
-+++ b/tests/avocado/load_bflt.py
-@@ -41,7 +41,7 @@ def test_stm32(self):
-                       'Stm32_mini_rootfs.cpio.bz2')
-         rootfs_hash = '9f065e6ba40cce7411ba757f924f30fcc57951e6'
-         rootfs_path_bz2 = self.fetch_asset(rootfs_url, asset_hash=rootfs_hash)
--        busybox_path = os.path.join(self.workdir, "/bin/busybox")
-+        busybox_path = os.path.join(self.workdir, "bin/busybox")
- 
-         self.extract_cpio(rootfs_path_bz2)
- 
--- 
-2.45.2
+  - Prasad
 
 
