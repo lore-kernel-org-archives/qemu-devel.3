@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2602DC5320E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF32C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 09:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh4TV-0007Zj-7H; Thu, 22 Aug 2024 05:51:27 -0400
+	id 1sh4Ta-0007ea-QB; Thu, 22 Aug 2024 05:51:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TH-0007Vt-CW
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:11 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TQ-0007ZU-1K
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:23 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TE-0001zY-Sf
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:10 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-428119da952so4245425e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:51:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh4TM-00023f-Ul
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 05:51:18 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-42819654737so3935745e9.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 02:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724320267; x=1724925067; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724320273; x=1724925073; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1Y695RxzqZMUrq71VyB6/VGmqxSsE/5rqhX6uBUfH0k=;
- b=UjCuO5OqlRk6YUeKRZ6KgZAu11zSKY7quLIKiLf4rPToNvNBMOkup3SoJ+QmR9NUOI
- ZAYA8NvYqGn2d6P2L+cuMzhU0wTs4EV+3RG1TFbFBmA5Jfto8+zMo70OqbzncOWOL0Xd
- HH+eUWHWdpDw42uRxGXM8VLbNZMwlG1ksq9dbBiCjKmIfC5xwFnhsskesTmZck42Cgmn
- 2YIN6d41xIcvm4U/3otXDXuXiYYbmWGjYbnnWfoFF4C7jaGkQfxFqAyoP3q0wuoLepWR
- QMfAzExxOefZlC/oUOYNsJX6YatoRufULJYULmzsrJmj0dEXg/UHAR+/vKbTYn99IOAk
- Lvgg==
+ bh=mEt78BY1+b0Q2uRxu35ufp1qJ07/oJ8ixAjUQfbY+Bw=;
+ b=Hyy9QXi0iVU86XpcnrEe+BPaTcMTodHfHG83N5djaETRPOFkTJ52neE27+f8gf6zJi
+ jOr1SHt20IQM0i1ey3dqvbqE862AF2d6RZrJxEmoEYXWv1iaj+VFQkZ1Bbta+sgBRMPQ
+ YcDrsDAUJvvGZxXwl9Xm1QLlPjs4OdbnT3q24QtEVIRWUoq0Lc7Ag+JOWxeaIJdVNGD+
+ BDml5ryiMd2EUor9irQa3wX1A2M7qXBCsf5NeHtMhBZFw4XmLubhHtPllaYo1YMJPmNi
+ QJLuGXIP4tOITYTdlbPfzUqygECs8qgFmwGyNvGak+agQf+lYOlFsP4YIV4xOLSENQMO
+ XUmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724320267; x=1724925067;
+ d=1e100.net; s=20230601; t=1724320273; x=1724925073;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1Y695RxzqZMUrq71VyB6/VGmqxSsE/5rqhX6uBUfH0k=;
- b=IsAnJBwciGfvMeypBmVVK3c0Qn5i6QnD+YBAu4YplI1S4eFUbZe5hG2JR2vdZ1V5oy
- zk6Lh+Ois9EOQ6fH6ITHz/5Z7hA6WNVmhHhACsymkd2aooucdW6FfVAlvMKvS4ihr65K
- aYj2NtfPk8RfiMJiYn6/6tpmWSUrsOEOrXUQWYZPtDyUq3b1nhcXu/iwR4XRLhksZpit
- HYWbJ+CaVg81MDJW/9BOwMbR5ehvunkIQErGhKKKxHN+yhMNDv+uxN9idWk9s6g7vCHM
- EmJEAQZ5BUHzJyTLdHv5uM2mjET71I5/Fz9d3tkr5W001hrj0QJGaQWGwt21vu9JCVAV
- u/LA==
-X-Gm-Message-State: AOJu0YxvnhCfh24d1Wtil6xyq//Mrlui3EUGWvqY6gnFP/xhdmX+ygb1
- P3cQbjW55+RPRUtkUILxson3MZDwVgcQW82fdkjZeh3rXP6bJCzBUWlLCcxh+Jk7B24EobGoIdB
- C
-X-Google-Smtp-Source: AGHT+IG67ATmzsQrkaCNRJ5gb1BJ7J5T+3zS6KBrv8I0DTin7d/POJGU5degOlaTtnyWIszA8lFgwA==
-X-Received: by 2002:adf:f6c3:0:b0:368:5858:826e with SMTP id
- ffacd0b85a97d-372fd72c65dmr3222880f8f.59.1724320266636; 
- Thu, 22 Aug 2024 02:51:06 -0700 (PDT)
+ bh=mEt78BY1+b0Q2uRxu35ufp1qJ07/oJ8ixAjUQfbY+Bw=;
+ b=VIMNf0GGD4bcO2LFiEwOynBBPwg9JhUsHJ/UYqm/DJq0L/Hc4uSUXnQ9mzwuoajsGB
+ 3QaS4mX1EmyNhGDZ/qRIySLnhmvgAbOv3PhqX62epfQyin3A7unVQjqBeH3oBAWkF4SC
+ NnlKDsU03ZFP6aIbU81Jh07Hxhc1HK7IiCbycO8S0TNvxbOiHzZ2uTchzr6G9ZWdNHdj
+ 55wbc9LWRkxOIFJNY6EYhe1Kb1fR60s1aHAtFysfbfZPZ4DbW8AbTpTf1/yeqivlJ0M3
+ IIGWrJ21O+qp6kLCvHE0tr0DkgkNnPjmbkLxG3iw5a2DNI1Ukyis1CYGosuFkN+0lsE0
+ LmzQ==
+X-Gm-Message-State: AOJu0Yx4PYEehCfLC8VZXKSS6Tz/or6LeyeAer4Xr0F3AJiiZN3t4gWk
+ InUly1CR0muL1z7KXqmSSIXsNJx2QTIqXerZwwI8LapgaA+5P91mk22qnbom39mSK7dVSZw7rbE
+ c
+X-Google-Smtp-Source: AGHT+IFxK8AYj+Zk4/YUdnzh2zR3OLsV+j2TX+Bndt7NHEOVwGLvECZth9RmePCmgxDcK2OY3YAutw==
+X-Received: by 2002:a05:600c:5114:b0:426:5269:9827 with SMTP id
+ 5b1f17b1804b1-42ac5529b3dmr9941935e9.0.1724320272818; 
+ Thu, 22 Aug 2024 02:51:12 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37308110035sm1251615f8f.16.2024.08.22.02.51.04
+ 5b1f17b1804b1-42ac5180339sm18190535e9.43.2024.08.22.02.51.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Aug 2024 02:51:05 -0700 (PDT)
+ Thu, 22 Aug 2024 02:51:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Beraldo Leal <bleal@redhat.com>,
@@ -66,17 +66,18 @@ Cc: Beraldo Leal <bleal@redhat.com>,
  Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 3/4] tests/avocado: Allow running user-mode tests
-Date: Thu, 22 Aug 2024 11:50:44 +0200
-Message-ID: <20240822095045.72643-4-philmd@linaro.org>
+Subject: [PATCH v2 4/4] tests/avocado: Run STM32 bFLT busybox binary in
+ current directory
+Date: Thu, 22 Aug 2024 11:50:45 +0200
+Message-ID: <20240822095045.72643-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240822095045.72643-1-philmd@linaro.org>
 References: <20240822095045.72643-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 816d4201ea ("tests/avocado: Move LinuxTest related
-code into a separate file") removed the Avocado 'process'
-import which is used by the QemuUserTest class, restore it.
+When this test was added in commit 8011837a01, self.workdir was
+set to the test directory. As of this commit, it is not set
+anymore. Rather than using a full path to the busybox binary,
+we can run it in the current directory, effectively kludging
+the fact that self.workdir is not set. Good enough to run the
+test:
 
-Fixes: 816d4201ea ("tests/avocado: Move LinuxTest ...")
+  Fetching asset from tests/avocado/load_bflt.py:LoadBFLT.test_stm32
+  JOB ID     : 020d317281b042f46ad99013530d29df0f1d7eb7
+  JOB LOG    : tests/results/job-2024-08-22T10.17-020d317/job.log
+   (1/1) tests/avocado/load_bflt.py:LoadBFLT.test_stm32: PASS (0.09 s)
+  RESULTS    : PASS 1 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | CANCEL 0
+  JOB TIME   : 0.62 s
+
+Reported-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/avocado_qemu/__init__.py | 2 +-
+ tests/avocado/load_bflt.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
-index ef935614cf..0d57addfea 100644
---- a/tests/avocado/avocado_qemu/__init__.py
-+++ b/tests/avocado/avocado_qemu/__init__.py
-@@ -17,7 +17,7 @@
- import uuid
+diff --git a/tests/avocado/load_bflt.py b/tests/avocado/load_bflt.py
+index bb50cec1ee..264489ee25 100644
+--- a/tests/avocado/load_bflt.py
++++ b/tests/avocado/load_bflt.py
+@@ -41,7 +41,7 @@ def test_stm32(self):
+                       'Stm32_mini_rootfs.cpio.bz2')
+         rootfs_hash = '9f065e6ba40cce7411ba757f924f30fcc57951e6'
+         rootfs_path_bz2 = self.fetch_asset(rootfs_url, asset_hash=rootfs_hash)
+-        busybox_path = os.path.join(self.workdir, "/bin/busybox")
++        busybox_path = os.path.join(self.workdir, "bin/busybox")
  
- import avocado
--from avocado.utils import ssh
-+from avocado.utils import process, ssh
- from avocado.utils.path import find_command
+         self.extract_cpio(rootfs_path_bz2)
  
- from qemu.machine import QEMUMachine
 -- 
 2.45.2
 
