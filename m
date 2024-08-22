@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4973C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 18:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D53C52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 18:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shCwq-0000R5-Kg; Thu, 22 Aug 2024 14:54:16 -0400
+	id 1shD07-0003Aj-Ko; Thu, 22 Aug 2024 14:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1shCwh-00081L-BN
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:54:07 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1shCwf-00048t-Kq
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:54:07 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1724352831; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=WXwjbwMcfdq5ffcF3cwt+zaCKLsq6+IGcdf8bzzqF8UQzWzx/FSa4GFvH48oscxahF688KG/dTroaiIiNtxZOeF1WRGtv+nggz2H6A0k5AcBFGkh54L5+HzqdFnAvRDl35/+ZDyKoEiAlhH9dcHl1CUGzHWpDARQxyTL8Qx54Bg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1724352831;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=frnqjafg5IubhILQVfLqgoboDzq9pwuDpaRE2L+cPu4=; 
- b=lt7bkLYkuvxx80CMkxQdP7feQ2vm4HWfXXjkPhFjYV6sugD2H6tNHB6/l29CeK5JRR7SFKWAXg+pl0KYVYy6Lu/VoNIpqXFdzeoxFkvX54tI/ZD1uiXxWATIXHz52hgdYAbpjhE1HIfCRXZQkWubR7m5vrnlEz89LBiVP7nMX5g=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1724352831; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=frnqjafg5IubhILQVfLqgoboDzq9pwuDpaRE2L+cPu4=;
- b=IDDOGf4b2z5G/T6F5aLlPNLsJfthU65MGnHrXuV/8pjgTYaNNCGqTHps6ZC43OeL
- dBoqFfjA/INk/XO4oq6ESQsSnXAdQ0/Y7CyqAKDwxgey+nXmz3EHeKsowgAa40fT+TV
- mTC5XLPKdfXbkasJerrumZiSuYDJjPIa+tJ8HHKE=
-Received: by mx.zohomail.com with SMTPS id 1724352830482540.1515550962702;
- Thu, 22 Aug 2024 11:53:50 -0700 (PDT)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v17 07/13] virtio-gpu: Support context-init feature with
- virglrenderer
-Date: Thu, 22 Aug 2024 21:51:03 +0300
-Message-ID: <20240822185110.1757429-8-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240822185110.1757429-1-dmitry.osipenko@collabora.com>
-References: <20240822185110.1757429-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1shD05-00033U-QD
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:57:37 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1shD02-0004ZH-8N
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 14:57:37 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52efdf02d13so1656445e87.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 11:57:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724353052; x=1724957852; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=EwqKo5OF7mFrEAuAgBAi12JIIbjG/XKy+C2LYbS52nc=;
+ b=aLvVEUDlChCFCAlnC5TESgXxdZMAdsBxEgejLs5L3CNZ1KSeq9msOVPVYr00aH+OXT
+ v6SmC1I6r90rFvws76FihYvvY/e72CUTXby5lLjmGNe+7Z4/+l2+7d9RLGKD6iAhbXEv
+ lUBnXPynITimHc24Ns9QD/qBELWk4Qre25MNmqwuo+31F374/zDtIfZZQwDglj6lcxiE
+ KhFnTScXX3mMFWU/nPzXpWwdjbGYlgRtWb1VntyjXQVb/gosFZOR5Abj6+BWTMmksbRS
+ b2l97OdD+/gJ2A/YuMQ9IVrHOTCrUKDbcv45x1F/OkwOYqYhNo6eGtv0ofMuqF246hIf
+ pEiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724353052; x=1724957852;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EwqKo5OF7mFrEAuAgBAi12JIIbjG/XKy+C2LYbS52nc=;
+ b=L+dLPegfgBVTAFu+CIWBG7X9vMGBPwZ514nWssucmM7VhZYE534DoLUHJgmpHMY4Ao
+ 63DKu/A1pojBmr7s08LcBe06Ff7lNdpmWoQqGzfKHbEk0gz3B8s944xIhQgGRl8JvL+t
+ rfpRtflzJ7KCzpzvcOlp2qPFV7gGtR1SZgOPRohddR3JSXXnDJa2A9giwhLGjpYaQPb4
+ DsO7YkYP9qfUoicFQiBN0XJxRlC+LaSWRjo7S18QyxV6QbMV66af7IK9xaI6sacrbBot
+ fM7aBl+jSjXxnbuXHldUJkhYp6TuLtwqri44zKbqh0yWMC8A1Ov2uJZODecZxfiZ20lp
+ f5GQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVm2AAhQxYLHEaVKw70HWL7KXF+uGHZjVFL8vvjpMc/mQCiqV1s0v+y3p3nvRK2H9aS1EpgMglz59Ap@nongnu.org
+X-Gm-Message-State: AOJu0Yx+dVDGGGoxkWcCKq7GPxFy48QdbWTDXLsF9a0FqPFecYNHCIxt
+ tg+LQngb84rkESl0bd8MtTTEici+F+Z9L6ZDUJQI6d5FbQqrg1tMUw8mlp9WYOU=
+X-Google-Smtp-Source: AGHT+IEkjNA5bVOF6ZQownTyztsxwEfmWsFYTucF71xT/+1oQ7HYd3layJhMmiLw1DBpOg4oU4BQUA==
+X-Received: by 2002:a05:6512:281c:b0:52c:c9e4:3291 with SMTP id
+ 2adb3069b0e04-5334fd64f4dmr2031935e87.60.1724353051625; 
+ Thu, 22 Aug 2024 11:57:31 -0700 (PDT)
+Received: from [192.168.200.25] (83.25.211.12.ipv4.supernova.orange.pl.
+ [83.25.211.12]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a868f2a1df5sm151883766b.68.2024.08.22.11.57.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Aug 2024 11:57:31 -0700 (PDT)
+Message-ID: <02034817-3f31-42ca-ba5f-0333e7bd344f@linaro.org>
+Date: Thu, 22 Aug 2024 20:57:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/functional: Convert Aarch64 SBSA-Ref avocado
+ tests
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240822114146.86838-1-philmd@linaro.org>
+ <d8c744cf-0da1-42fc-92cc-f8bec8ca00e1@linaro.org>
+ <b3d054b9-4ede-489c-bca5-b61b046dea50@linaro.org>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB
+Organization: Linaro
+In-Reply-To: <b3d054b9-4ede-489c-bca5-b61b046dea50@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,72 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Huang Rui <ray.huang@amd.com>
+On 22.08.2024 16:39, Philippe Mathieu-Daudé wrote:
+> On 22/8/24 16:06, Marcin Juszkiewicz wrote:
 
-Patch "virtio-gpu: CONTEXT_INIT feature" has added the context_init
-feature flags. Expose this feature and support creating virglrenderer
-context with flags using context_id if libvirglrenderer is new enough.
+>> Maybe for QEMU project this is a progress. For me it is moving tests 
+>> from working ones to "sorry, timeout, find out why" ones.
 
-Originally-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-Signed-off-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- hw/display/virtio-gpu-gl.c    |  4 ++++
- hw/display/virtio-gpu-virgl.c | 20 ++++++++++++++++++--
- 2 files changed, 22 insertions(+), 2 deletions(-)
+OK, problem was found (check my previous mail). Tests took 222s on
+Macbook with M1 Pro. Not looked yet how to enable skipped ones.
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 753b35ed69fd..bf87ba423283 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -147,6 +147,10 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-     VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
-         virtio_gpu_virgl_get_num_capsets(g);
- 
-+#if VIRGL_VERSION_MAJOR >= 1
-+    g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
-+#endif
-+
-     virtio_gpu_device_realize(qdev, errp);
- }
- 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index ca6f4d6cbb58..b3aa444bcfa5 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -106,8 +106,24 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
-     trace_virtio_gpu_cmd_ctx_create(cc.hdr.ctx_id,
-                                     cc.debug_name);
- 
--    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen,
--                                  cc.debug_name);
-+    if (cc.context_init) {
-+        if (!virtio_gpu_context_init_enabled(g->parent_obj.conf)) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: context_init disabled",
-+                          __func__);
-+            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-+            return;
-+        }
-+
-+#if VIRGL_VERSION_MAJOR >= 1
-+        virgl_renderer_context_create_with_flags(cc.hdr.ctx_id,
-+                                                 cc.context_init,
-+                                                 cc.nlen,
-+                                                 cc.debug_name);
-+        return;
-+#endif
-+    }
-+
-+    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen, cc.debug_name);
- }
- 
- static void virgl_cmd_context_destroy(VirtIOGPU *g,
--- 
-2.45.2
 
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_cortex_a57       OK
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max              SKIP
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef OK
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_off    OK
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_neoverse_n1      OK
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_edk2_firmware                 OK
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_cortex_a57          OK
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max                 SKIP
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_impdef    SKIP
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_off       OK
+▶ 1/4 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_neoverse_n1         OK
+1/4 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_sbsaref        OK                 222.88s   8 subtests passed
+
+> Sorry for the annoyance of switching from one framework to another
+> one :/ 
+
+Project wants to change framework so I am not against it. Just asking
+questions.
+
+> Are you using Linux on your Macbook with M1 Pro? I'm using
+> macOS and these tests currently don't work, so for me this is a
+> huge win.
+
+I am using Fedora Asahi Remix on this Macbook for over a year. Total use
+of MacOS was probably a few hours total (including waiting for MacOS
+updates to fetch).
 
