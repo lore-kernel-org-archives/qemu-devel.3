@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6222FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 12:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 155B0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 12:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh71K-00032C-HO; Thu, 22 Aug 2024 08:34:30 -0400
+	id 1sh78C-0000gr-6E; Thu, 22 Aug 2024 08:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh71J-00030C-00
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:34:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh789-0000fv-9N
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:41:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh71H-0006Qy-MM
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:34:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh785-0007tK-85
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 08:41:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724330066;
+ s=mimecast20190719; t=1724330486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7f/QnDxUSjTgLu0p4pm7YaTL2f0niU/QqaZO0NXXYq4=;
- b=ALnTlwIq+oHZUkTDy6BcENETfH+HlU0Cvxc3XBE5de+hh960XwKIst1XEt2D6TpCSf12Zd
- YuVzQGZs0YUNV27ZNbIXRhA0G4yhVCU4hVbD1mwwzfXIOtfywokMOUE7eXTmQTeZ09EN3B
- +cQIigHrB3zoK2LiwRHBizusyrBKnFg=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SQd8bcW6Xj53g0tkc08NUr+GZ0pADukDfDeSEsCT5+M=;
+ b=bJi4ikL2wk0XE1tcrcwr2aInyVp0Vipi3pTphpqrTjd0C0bzwPUAXJLGIsn9+/jLVA7dYK
+ C6DIKjgVFxvbwj+FYGmikIufpE+a8/g9waPKtqmCQTl6ObpqXas51id1IbRwHkt9jK3AQb
+ mTnvk932F8I3l9YH5XHLw9lH6lBnasU=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-37-Q-vSqTEYMDi6PPb2_O2XIw-1; Thu, 22 Aug 2024 08:34:24 -0400
-X-MC-Unique: Q-vSqTEYMDi6PPb2_O2XIw-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6bf6a974541so7899926d6.2
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 05:34:24 -0700 (PDT)
+ us-mta-593-0K4lmHqLM6aHTyrICWdMEg-1; Thu, 22 Aug 2024 08:41:25 -0400
+X-MC-Unique: 0K4lmHqLM6aHTyrICWdMEg-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-70e01dd364cso865886a34.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 05:41:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724330063; x=1724934863;
+ d=1e100.net; s=20230601; t=1724330484; x=1724935284;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7f/QnDxUSjTgLu0p4pm7YaTL2f0niU/QqaZO0NXXYq4=;
- b=S0AAOmQJ7HrdqomttYh46kVUZA0F7k/RmyaZNO3A6F87pAjH0WJUd2NCaI3iaJZrJE
- scoVJ641e6cE4uPsEXWZq+6UX7OUDH8E1Utgaz8lA738BVKtOfMQAzy/yOXbaT+bKJ2+
- drDOx94jEQCjksXvIC+Ti7raYhowHVVjZUBSHYcfsPm83V3n3s29KY4CZy8p2MLl/gFO
- aH4gcu8WFNdy/FfwMCRPh/JrDx4DCZV8eJZ/bXTlHwzT4zEGb1aX+XwKQVsr7fseasOG
- BZoCx/e9vFZadQbw3Wx2aE3Q76k9nhQNoPJkrepyR2G1GVwdTc+qDYLkpOYQ+N704O9l
- EDKQ==
+ bh=SQd8bcW6Xj53g0tkc08NUr+GZ0pADukDfDeSEsCT5+M=;
+ b=jdZP6qaZ9+yVjTE8V7MQFnhRs6h3h/Roby+BfIj38Au2y9cxlxHS7aFGLtrW58wx6k
+ i9rUZUIXT44fBJLbxW79BwMmdrNUNYQbQ0769cILh0hy/z05HmYxQDMzQP7DXYhTeDkU
+ F+9hfM/G/Dt2TMgEqG+iDCkJBaLAUr/pGOtMOoVaz/SV34Vfa4iVOv5eH5Il6tdMklfm
+ GI1hu5+kv8SHerwa2NVEqXv3VmdMuBspmTTHkHTcnf77YuKqJzLdQwnIcz3z9RF21yGo
+ p+PAUdsOj6dQURZAiNfexyoZvaVPzFp9CgUNu9zMx5nWFOpDzzBAhsM5Ys4Vmzssbqqm
+ 5z1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWMGAfG8pNT5pLBNswZw0dGf79lMoLZsNgR5dQ/ENSPbJSmix4tjaTC1P1kHTY6HVSs7P3S/w90xlAZ@nongnu.org
-X-Gm-Message-State: AOJu0Yxme/Z3ELGoHz8sHQUWQzDBBMK5meWolQ58hmRCFqvKtlLcy0vx
- JGsDjhCou56lbR7XsgFFA8YtMhX0FIto6ffGkGNzi0CKyxj8iqaiiJoCxIfiQP1dqapOnpBednF
- xQQtXuWifbXdZxVSbalfCbfIPUW66Mk7hb4x+a8Mn7TsycT1Lhfa5
-X-Received: by 2002:a05:6214:3d02:b0:6bf:93cf:f80c with SMTP id
- 6a1803df08f44-6c164759f74mr21403796d6.49.1724330063587; 
- Thu, 22 Aug 2024 05:34:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYGBO6NkBpfmRIjoj7fkbp70FGuRB8W0wOaY+BRBQTWX3LU3NHxVeos6gMUifHz3YJyTiuAg==
-X-Received: by 2002:a05:6214:3d02:b0:6bf:93cf:f80c with SMTP id
- 6a1803df08f44-6c164759f74mr21403466d6.49.1724330063137; 
- Thu, 22 Aug 2024 05:34:23 -0700 (PDT)
+ AJvYcCWJcwHPCV87Bwh+qfXCGwlMJrwZ8yxcug3jUdct/Fde39yS5Eie4ENFXIZCosFlG65w2bvADdjL9plc@nongnu.org
+X-Gm-Message-State: AOJu0Yw1No3SsOQZ46v2vUFnJPj2jb9Mr7Cqp6EJYRtmFx0v5V23mvSv
+ 5JPTYlWN2Ok/i+aoc7zAUe2Mh4QUanesh/qFY7wGYbJ+bPB62UlHTFcVJN2hqCTVc7V2HDUmY1S
+ D57trQuXCs1qi+mOYi1bbHFqX2cUZ58B0avJRacIQSh0+tZw5PANg
+X-Received: by 2002:a05:6808:2f12:b0:3da:b335:538e with SMTP id
+ 5614622812f47-3de19c75c90mr6730700b6e.8.1724330484486; 
+ Thu, 22 Aug 2024 05:41:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGNzIxn/FRyx9SIXsOQ6WPcGppH582P8P4rmp+WDW4VkqGLu9vf7oCwuVkdfLtQHPC7ZEDtA==
+X-Received: by 2002:a05:6808:2f12:b0:3da:b335:538e with SMTP id
+ 5614622812f47-3de19c75c90mr6730680b6e.8.1724330484141; 
+ Thu, 22 Aug 2024 05:41:24 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-177-41.web.vodafone.de.
  [109.43.177.41]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162db0af5sm7016886d6.84.2024.08.22.05.34.21
+ d75a77b69052e-454fe0d91b1sm6297361cf.21.2024.08.22.05.41.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 05:34:22 -0700 (PDT)
-Message-ID: <588e9b78-8442-4543-876d-81a45b894cbe@redhat.com>
-Date: Thu, 22 Aug 2024 14:34:18 +0200
+ Thu, 22 Aug 2024 05:41:23 -0700 (PDT)
+Message-ID: <23566834-d8e5-4a54-8f3e-cc68e6b7d951@redhat.com>
+Date: Thu, 22 Aug 2024 14:41:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: Convert Aarch64 SBSA-Ref avocado
+Subject: Re: [PATCH] tests/functional: Convert Aarch64 Virt machine avocado
  tests
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-References: <20240822114146.86838-1-philmd@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20240822120750.89065-1-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -123,7 +121,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240822114146.86838-1-philmd@linaro.org>
+In-Reply-To: <20240822120750.89065-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -136,7 +134,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,23 +150,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/08/2024 13.41, Philippe Mathieu-Daudé wrote:
-> Straight forward conversion. Since SBSA_FLASH files are not
-> tarballs, use lzma_uncompress() method.
+On 22/08/2024 14.07, Philippe Mathieu-Daudé wrote:
+> Straight forward conversion. Update the SHA1 hash to
+> SHA256 since SHA1 should not be used anymore nowadays.
+> Use has_cmd() and run_cmd() methods from qemu_test.
+> 
+>    $ make check-functional-aarch64 V=1
+>    ...
+>    ▶ 1/4 test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv2                 OK
+>    ▶ 1/4 test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv3                 OK
+>    ▶ 1/4 test_aarch64_virt.Aarch64VirtMachine.test_alpine_virt_tcg_gic_max            OK
+>    1/4 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_virt  OK   30.44s  3 subtests passed
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Based-on: <20240821082748.65853-1-thuth@redhat.com>
+> Based-on: <20240822114146.86838-1-philmd@linaro.org>
 > ---
->   MAINTAINERS                                   |   2 +-
->   tests/functional/meson.build                  |   5 +
->   .../test_aarch64_sbsaref.py}                  | 144 ++++++------------
->   3 files changed, 55 insertions(+), 96 deletions(-)
->   rename tests/{avocado/machine_aarch64_sbsaref.py => functional/test_aarch64_sbsaref.py} (56%)
->   mode change 100644 => 100755
+...
+> @@ -100,12 +98,11 @@ def common_aarch64_virt(self, machine):
+>           image_path = os.path.join(self.workdir, 'scratch.qcow2')
+>           qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
+>           if not os.path.exists(qemu_img):
+> -            qemu_img = find_command('qemu-img', False)
+> +            qemu_img = has_cmd('qemu-img')
 
-Thanks for your help with the conversions!
+As far as I can see, has_cmd() returns either True or False ...
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+>           if qemu_img is False:
+>               self.cancel('Could not find "qemu-img", which is required to '
+>                           'create the temporary qcow2 image')
+> -        cmd = '%s create -f qcow2 %s 8M' % (qemu_img, image_path)
+> -        process.run(cmd)
+> +        run_cmd([qemu_img, 'create', '-f', 'qcow2', image_path, '8M'])
+
+... so this seems wrong to me?
+
+tests/avocado/avocado_qemu/__init__.py used to have a get_qemu_img() 
+function, maybe you could port that one over?
+
+  Thomas
 
 
