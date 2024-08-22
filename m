@@ -4,137 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E3CC52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E41A6C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Aug 2024 13:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sh8HH-0002Fk-UJ; Thu, 22 Aug 2024 09:55:03 -0400
+	id 1sh8Gu-0001cA-EN; Thu, 22 Aug 2024 09:54:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh8HF-00026C-MC
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:55:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sh8HC-0002b3-U5
- for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:55:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724334895;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TO2JazLLWoX6m/4FGezM0A2aGW0qnFa6KLYqFxLkDqM=;
- b=eO0dcV0+pirbWRLn43QDCotaeM4xeC6lnvMnx6UiSlilFXdfntNyMT0tu3rSvS04goV6W4
- kK/5nI88PeiEZPJJtzimkoEz1hr95rgWGipht5yZ4uD5E1D+OMCCH/VroFgqCGGgiEqlQo
- w21ge+pyuZxYnGL465qlxHSQlxttPCs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-292-aC5yhMP2PoaD7m-trLzTug-1; Thu, 22 Aug 2024 09:54:53 -0400
-X-MC-Unique: aC5yhMP2PoaD7m-trLzTug-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-428040f49f9so7919095e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 06:54:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh8Gb-0001Tj-Ev
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:54:22 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sh8GZ-0002Wo-1L
+ for qemu-devel@nongnu.org; Thu, 22 Aug 2024 09:54:21 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-37182eee02dso476236f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 06:54:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724334855; x=1724939655; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1TQSLIq57iobIWGDTSxG+4h2QSqHXqmmDiJaZypcQHU=;
+ b=HSN3FulF/8rVDFiloShiidKfblBKgjSnVF3r9roNJRZvI1Ga+QhjsRFIpZlmGZrC60
+ /bapOk4VRaCnf79V1QG9fGQSkZ2dX9Qd9MhaOM75n0AyysjiPaarOUtnzuqhBfkbJMF2
+ XA6UX3EH+GYwfKvMNl+Ktqz+r5cy0dq10URUpUYoMzDP1IVf/CqOPQ8Af60jMnV6qVMv
+ iTOy5c8up5HUKBSGKxIVCUoNJlVua3wqGVFrCHVcjS72XJdyrUU2RHKUjSKQzDq5Y89C
+ YJrhRjxEdycn8z0lxhcJczs8RXfc3pLWBu6NZ9pTipcANxiWSgMOkil3cDKPyWyOxh3f
+ c93g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724334892; x=1724939692;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TO2JazLLWoX6m/4FGezM0A2aGW0qnFa6KLYqFxLkDqM=;
- b=FODYTgT7T2TdPw7QyL/L+jj9YUU6TWok+gyV7TcslDP77dCKxZ3OTZUjOw9zMJakBH
- 9f3gJ06jS23JZCxpn5x+CyajzjPTdXCdLMB89v2shcm2wimglvAqPIL5HTJAm/jPUHW3
- kPPyu2BUP6l56z6LkIVQtY9Unw+CgN7VBngMeepwq9UelDMZx6KyyqtkjC/JgfaMOmdy
- 5+RokbQ5xvXvEf3US1vZSp7aD0pF/odVO2QvFKCM8JSnsviZO9A29ATq1X+dyazmoUTj
- HPnfHBBjTlf2WDmUa9iogBWKUhdjVhPRaBYcdlq5UGkCoYgZuH2ekSAlgG3jJGhfxyML
- eyNg==
+ d=1e100.net; s=20230601; t=1724334855; x=1724939655;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1TQSLIq57iobIWGDTSxG+4h2QSqHXqmmDiJaZypcQHU=;
+ b=oDpv1Zf46tUX5Z41JssBQpeLonIIcUrMQtOHn9x0JagAErgHuBePwhpSVvd/OnjSmq
+ J2PndQLai38mEREwGx0ZIE+RTHORtSKdvPXrPewqCdGPawiMWQtTAZQj7hJybQ5mwpNK
+ C0yfdZw9jydf370Wv5wT2ijrVp3uw7/n8KaM8MhiZ5A+iOps/mULcWpRbSPCiBbckTjH
+ z/8K3bbvnumJUFtOTzOsDF2rJzX0RStZsXeAZUmLZLmdKGeKe/N9+X9d8Pq7SpVPsgKa
+ BmAAO3NnXb7QktwUQdcyFMRX7RVgRNNWVMt5GEFYTrk9mCRn00fra4oBZQCHhAdhd+7H
+ mDWQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlX68iDTh+yACYJHZI70oCLHzFRwamdk+/YQHjlETCNS0Wk5/UCKmYrwtdnQM9UjPPvz+u/gmZbPwl@nongnu.org
-X-Gm-Message-State: AOJu0YySV7SysaavbnVn6m/VuU5MXqRoUjaSuSQ5RJhcyDD6zVok0kNH
- yuHMb1Jwj19xz/szSlEDk17ktLdgpHtuQ48GyG0sNiqalNdpe95hZcqLE2lhPdJQIeIIyivmQYb
- TIthkBbLfNdO/bAXKrrBa2VjFiN3ip27woA6hHFoIgrF6t03Zin/d
-X-Received: by 2002:a05:600c:1e1d:b0:426:614b:1a72 with SMTP id
- 5b1f17b1804b1-42abd21f4fcmr43392885e9.17.1724334892481; 
- Thu, 22 Aug 2024 06:54:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyV3WF+XLsX8nXhjL9FNgJTtqWt2ibCyhhxBVR1PfM1ZxHOoAjTwIE5ftKe2Yj6tP72I3Gsg==
-X-Received: by 2002:a05:600c:1e1d:b0:426:614b:1a72 with SMTP id
- 5b1f17b1804b1-42abd21f4fcmr43392675e9.17.1724334892050; 
- Thu, 22 Aug 2024 06:54:52 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-177-41.web.vodafone.de.
- [109.43.177.41]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ac518013asm25201355e9.42.2024.08.22.06.54.51
+ AJvYcCV/7ZWqIyqPTKC7adClGcGJ585RQwdUWHye2FTzAdeL+jkz4lezwy/J5O3NFoRG9M4eM1hkfnU6DBPh@nongnu.org
+X-Gm-Message-State: AOJu0Yx5LD8YWHOkobEe/4KBu0EvK6AdN1XTH9dQGMxTXtURcEvQTf86
+ eMf5ccks9pqNmkl+2Q5n+dbGz3UpN+R89cMunBkpZmM+Z6aMqaXRsSNvJaEFdIA=
+X-Google-Smtp-Source: AGHT+IE0wvkxem0zPetzhTO42yQ2Ur3FmE6bfFu1Fufyg5xYw4UdIsR+FDGExEMBwIpdrfOU3JEl4w==
+X-Received: by 2002:adf:edd2:0:b0:371:8685:84c with SMTP id
+ ffacd0b85a97d-3730526a2f0mr1832546f8f.15.1724334855462; 
+ Thu, 22 Aug 2024 06:54:15 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.206.153])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-373081ff5acsm1744656f8f.69.2024.08.22.06.54.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 06:54:51 -0700 (PDT)
-Message-ID: <6bc29bc8-83e5-4edd-8ed2-0369aa67f0d1@redhat.com>
-Date: Thu, 22 Aug 2024 15:54:50 +0200
+ Thu, 22 Aug 2024 06:54:14 -0700 (PDT)
+Message-ID: <6850ee92-e4ce-42eb-b816-d86574abbae3@linaro.org>
+Date: Thu, 22 Aug 2024 15:54:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] tests/functional: Add QemuUserTest class
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Beraldo Leal <bleal@redhat.com>
-References: <20240822104238.75045-1-philmd@linaro.org>
- <20240822104238.75045-2-philmd@linaro.org>
+Subject: Re: [PATCH for-9.1?] system/vl.c: Print machine name, not "(null)",
+ for unknown machine types
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-stable@nongnu.org
+References: <20240822122310.561885-1-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240822104238.75045-2-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240822122310.561885-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,21 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/08/2024 12.42, Philippe Mathieu-Daudé wrote:
-> Per commit 5334df4822 ("tests/avocado: Introduce
-> QemuUserTest base class"):
+On 22/8/24 14:23, Peter Maydell wrote:
+> In commit 412d294ffdc we tried to improve the error message printed when
+> the machine type is unknown, but we used the wrong variable, resulting in:
 > 
->    Similarly to the 'System' Test base class with methods
->    for testing system emulation, the QemuUserTest class
->    contains methods useful to test user-mode emulation.
+> $ ./build/x86/qemu-system-aarch64 -M bang
+> qemu-system-aarch64: unsupported machine type: "(null)"
+> Use -machine help to list supported machines
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Use the right variable, so we produce more helpful output:
+> 
+> $ ./build/x86/qemu-system-aarch64 -M bang
+> qemu-system-aarch64: unsupported machine type: "bang"
+> Use -machine help to list supported machines
+> 
+> Note that we must move the qdict_del() to below the error_setg(),
+> because machine_type points into the value of that qdict entry,
+> and deleting it will make the pointer invalid.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 412d294ffdc ("vl.c: select_machine(): add selected machine type to error message")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tests/functional/qemu_test/__init__.py |  2 +-
->   tests/functional/qemu_test/testcase.py | 17 +++++++++++++++++
->   2 files changed, 18 insertions(+), 1 deletion(-)
+> Tagged as for-9.1 because this is a sort-of regression since 9.0
+> (in 9.0 we didn't try to print the machine type name at all in
+> this error). But it's also very close to release and this is only
+> cosmetics in an error message. The cc-stable is for the case where
+> we don't put it into 9.1 and then backport it to the 9.1 stable
+> branch after release.
+> 
+>   system/vl.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Oops, thanks!
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
