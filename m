@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D88C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 13:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25031C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 13:15:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shU5x-00039P-P2; Fri, 23 Aug 2024 09:12:49 -0400
+	id 1shU87-0002qN-LV; Fri, 23 Aug 2024 09:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shU5k-0002r8-AR
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:12:39 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1shU85-0002oK-S8
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:15:01 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shU5g-0008LF-6B
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:12:34 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-367990aaef3so889600f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 06:12:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1shU83-0000Fv-QD
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:15:01 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-428163f7635so14982625e9.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 06:14:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724418750; x=1725023550; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kZm4PfibtpRGpn3IqWPXC9c8VGc1XvHxPnunSXDU2ZY=;
- b=lgsIobfLfCKC6gwbDGRdofLlj2VSBw6qvMoRgd2SbtC2e2u7QrF6s7w+snxRoJD1H5
- E/YJocLji+azrjAzwpM6+d9aHTAUwfi2KFpfUUOQl/kk4W4trUOPeW5QHznnuufUfJlS
- Dm+UqkI0izhpfmZSzglpG3v1SNTnzz+hWWudau+W+dx98HNP0GJZ0WGA4lFry7yPfMTP
- E5N00P6aXp0yGXcPKA6AfhAsPouehoQsMEMzQw/IrgJOskU1+OmnyKPfbyfUKXwSNxos
- o3CkaPUr+H7e5h/PmVcXNj/ULO2j5V2SchLe2vPNgGYge7tBXAyn/51TY9zhrpvX7Ksq
- nk0Q==
+ d=ventanamicro.com; s=google; t=1724418898; x=1725023698; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=qYx02xrmRLGWpG1GZCOhwzNloqICSEynNtzbCrSKGgk=;
+ b=EHz6aGaiAHmtKg/VRBKZQsKj41SnzmfjTXHMUkKzLqFCKt24ZhdispCu1KKXw1hcz0
+ ppJvOAlj20cukkLlE5eHEDgUXYtRur3FCrfvmyc8UyP1DyDK8H08xSbrE0ULwHzRG+mO
+ XzA46ZtXgFQrqOa4hEfoBbQkO/L+NkZfAZoo4d7JTRU7VXwxNdYVzGUE5s3M3SKdh2IB
+ 8vRF9FDIjBwkj+ymoGkrcyYL+39fNoRFLskZ875j5ExhTBQYhtfXcCwFzjUlqadI0s7t
+ oApnHut3w1uOIcv5ZW1CYiKRDy1+yaEGivIosReICgHSJfjs+1Hpq2p31ASstjvZPE+8
+ lgJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724418750; x=1725023550;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kZm4PfibtpRGpn3IqWPXC9c8VGc1XvHxPnunSXDU2ZY=;
- b=HCOrN81qXrL1+Nl5pzT5k/F16+S12g46njG+7l8YUzM5nSzqgasfRMxhN3S8wrrDWw
- 3VmXTTtvwNdjYxxoxauxt9kUv/VEL0QZKnoRXItX26dDzfLxHs6/OUxzcDGplBTamKsm
- fEO5nifOypFq5TidgzGQ5Abmy8QKqISkG7bMR5j4NBgNv7EySlz5GXx2DDKHBSVkB1XU
- oKvLYm0qJ+kaV7eX05RyyaGGHoMJNVzzFYXixsw7YOeCJwFogvs3QLGugCA7GrkY5XnW
- eYH3ZDE/LdeaazJ85JV8FdC8jCwZyuJkroiskWxPGkysNVBrAIJp/Fp+NQbKB8NRHHxu
- jLaw==
+ d=1e100.net; s=20230601; t=1724418898; x=1725023698;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qYx02xrmRLGWpG1GZCOhwzNloqICSEynNtzbCrSKGgk=;
+ b=mm8Hrkx7zwRbi4yW5kzG5qlRPX2vTTWv14oZgNWRkpDN6V9V5javOopvd0OktsQz5C
+ C0SExHacmQM69akKw+cN/owEPDkp4CNNeVGBhyYfIARr+kn9Yg7uBUORrQHXzd28LGnX
+ RylwiQV4+qBI+wFap/YxZgZzSpObZnJA0SCY3ar7+Y/kZGX6eKnTRzlU1KSFpIUQjBVc
+ Fkz0bB01I85T4YRnUYyghiGkchsbYtY+/dKjpGeCE01bkHn7xzIh0Ds8Fu+H6nzWMJ0N
+ BGCQGxNtKrvBXxAIbqgeEKMIx6cZlan6lvskOpHbkJgEF2akMYyrbTVsu1jLfgjCEIX5
+ XSHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXTGYP9WMjBU9Jp67TDHpSNcpCzjkMnSbIxjfs1uF4n/3BUX6BkNsjWFe4fvLL39M43KJwfpl3Mtoh@nongnu.org
-X-Gm-Message-State: AOJu0Yw3R4kkLQS9EfnC8b+ccylAIVmD1O3xRbXuYp4fQQ6b8/YRlk+y
- sw9/nvCZtF/wosiWrYZNzTvVgOVJBjag5JJTG5Fh7NA30c3/1RaKPDE4LCcjrh4=
-X-Google-Smtp-Source: AGHT+IGFZiS3VdT6X3XPJSuDOeopJTX1xfG1IFNtSaJnSaFflgTw7YDE0Hc16p4rnPejEqd/LD68/Q==
-X-Received: by 2002:adf:e50c:0:b0:368:6598:131e with SMTP id
- ffacd0b85a97d-373118d228amr1447664f8f.38.1724418750287; 
- Fri, 23 Aug 2024 06:12:30 -0700 (PDT)
-Received: from [192.168.69.100] (plb95-h02-176-184-14-228.dsl.sta.abo.bbox.fr.
- [176.184.14.228]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3730810fb76sm4181812f8f.8.2024.08.23.06.12.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Aug 2024 06:12:29 -0700 (PDT)
-Message-ID: <51146942-7414-42a6-95cd-2b9a9e197bd0@linaro.org>
-Date: Fri, 23 Aug 2024 15:12:28 +0200
+ AJvYcCWN42kDYJxPaBnd9TOFpU9wcIZfrxOOPgLy6sghDVbYuUTCQ9+JI/s+W7NsSDwfZMkiNi1lm6UBkcO4@nongnu.org
+X-Gm-Message-State: AOJu0YwtJAgPy/akqmLDbNB6suaLE0m83OXFhqjD7uvcK2niupgdnIdM
+ jPH9y/UXgKH3uqaY8GLpeep1EIJ3WrYJj3PkkFmPmI+vGZ20+Np/dLVBd3RTZjQ=
+X-Google-Smtp-Source: AGHT+IHkaw6bFZiDiAEOIwb13QmJ36GlvyhQMc57PWhWE0GtdJzTIwbd89hOHKxcadeB43v9pjH8GA==
+X-Received: by 2002:a05:600c:35c6:b0:426:6667:5c42 with SMTP id
+ 5b1f17b1804b1-42acc8d494fmr16871005e9.4.1724418897675; 
+ Fri, 23 Aug 2024 06:14:57 -0700 (PDT)
+Received: from sunil-laptop ([106.51.198.16]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ac5158f14sm60273915e9.16.2024.08.23.06.14.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Aug 2024 06:14:57 -0700 (PDT)
+Date: Fri, 23 Aug 2024 18:44:45 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com,
+ bin.meng@windriver.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH RESEND v4 2/3] hw/acpi: Upgrade ACPI SPCR table to
+ support SPCR table revision 4 format
+Message-ID: <ZsiLRdozsvdCLgqg@sunil-laptop>
+References: <20240823113142.161727-1-jeeheng.sia@starfivetech.com>
+ <20240823113142.161727-3-jeeheng.sia@starfivetech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: Convert Aarch64 SBSA-Ref avocado
- tests
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>,
- qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240822114146.86838-1-philmd@linaro.org>
- <d8c744cf-0da1-42fc-92cc-f8bec8ca00e1@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d8c744cf-0da1-42fc-92cc-f8bec8ca00e1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240823113142.161727-3-jeeheng.sia@starfivetech.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,69 +100,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/24 16:06, Marcin Juszkiewicz wrote:
-> On 22.08.2024 13:41, Philippe Mathieu-Daudé wrote:
->>   # Timeouts for individual tests that can be slow e.g. with debugging 
->> enabled
->>   test_timeouts = {
->> +  'aarch64_sbsaref' : 180,
+On Fri, Aug 23, 2024 at 04:31:41AM -0700, Sia Jee Heng wrote:
+> Update the SPCR table to accommodate the SPCR Table revision 4 [1].
+> The SPCR table has been modified to adhere to the revision 4 format [2].
 > 
-> What kind of machine is able to run those tests in 180s? I bumped them 
-> to 2400s and got timeout (Macbook with M1 Pro).
-
-Indeed with Avocado this timeout was per test function, now it is
-per test class. Having 11 test functions, for a 1-1 change we'd
-need 180 * 11 = 1980 seconds.
-
-I made a comment on Thomas/Daniel's series this patch is based on:
-https://lore.kernel.org/qemu-devel/4b4018c6-4a2b-4250-bb53-be9cc5df7cb4@linaro.org/
-
-I could run all the tests in <300sec but for safety, should I keep
-Avocado equivalent and use 2000s?
-
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max 
-              OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef 
-OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_off 
-    OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_neoverse_n1 
-      OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_edk2_firmware 
-              OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_cortex_a57 
-          OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max 
-              OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_impdef 
-    OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_off 
-       OK
-▶ 1/5 
-test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_neoverse_n1 
-         OK
-1/5 qemu:func-thorough+func-aarch64-thorough+thorough / 
-func-aarch64-aarch64_sbsaref        OK             241.79s   11 subtests 
-passed
-
-> "make check-avocado" (with some AVOCADO_* vars to limit list of tests) 
-> shown me which test is run and pass/fail for each.
+> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
+> [2]: https://github.com/acpica/acpica/pull/931
 > 
-> "make check-functional-aarch64 V=1" shows me "1/4 
-> qemu:func-thorough+func-aarch64-thorough+thorough / 
-> func-aarch64-aarch64_sbsaref" and timeouts without information which 
-> tests pass, which fail.
+> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>  hw/acpi/aml-build.c         | 20 ++++++++++++++++----
+>  hw/arm/virt-acpi-build.c    | 10 +++++++---
+>  hw/riscv/virt-acpi-build.c  | 12 +++++++++---
+>  include/hw/acpi/acpi-defs.h |  7 +++++--
+>  include/hw/acpi/aml-build.h |  2 +-
+>  5 files changed, 38 insertions(+), 13 deletions(-)
 > 
-> Maybe for QEMU project this is a progress. For me it is moving tests 
-> from working ones to "sorry, timeout, find out why" ones.
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 6d4517cfbe..ad0a306db1 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -1996,7 +1996,7 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
+>  
+>  void build_spcr(GArray *table_data, BIOSLinker *linker,
+>                  const AcpiSpcrData *f, const uint8_t rev,
+> -                const char *oem_id, const char *oem_table_id)
+> +                const char *oem_id, const char *oem_table_id, const char *name)
+>  {
+>      AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
+>                          .oem_table_id = oem_table_id };
+> @@ -2042,9 +2042,21 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+>      build_append_int_noprefix(table_data, f->pci_flags, 4);
+>      /* PCI Segment */
+>      build_append_int_noprefix(table_data, f->pci_segment, 1);
+> -    /* Reserved */
+> -    build_append_int_noprefix(table_data, 0, 4);
+> -
+> +    if (rev < 4) {
+> +        /* Reserved */
+> +        build_append_int_noprefix(table_data, 0, 4);
+> +    } else {
+> +        /* UartClkFreq */
+> +        build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
+> +        /* PreciseBaudrate */
+> +        build_append_int_noprefix(table_data, f->precise_baudrate, 4);
+> +        /* NameSpaceStringLength */
+> +        build_append_int_noprefix(table_data, f->namespace_string_length, 2);
+> +        /* NameSpaceStringOffset */
+> +        build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
+> +        /* NamespaceString[] */
+> +        g_array_append_vals(table_data, name, f->namespace_string_length);
+> +    }
+>      acpi_table_end(linker, &table);
+>  }
+>  /*
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index f76fb117ad..cc27ba7daf 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -435,7 +435,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>  
+>  /*
+>   * Serial Port Console Redirection Table (SPCR)
+> - * Rev: 1.07
+> + * Rev: 1.10
+Why should this comment be updated? Since revision 2 of SPCR table ARM
+uses corresponds to only 1.07 right?
 
+>   */
+>  static void
+>  spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> @@ -464,8 +464,12 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>          .pci_flags = 0,
+>          .pci_segment = 0,
+>      };
+> -
+> -    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id);
+> +    /*
+> +     * Passing NULL as the SPCR Table for Revision 2 doesn't support
+> +     * NameSpaceString.
+> +     */
+> +    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id,
+> +               NULL);
+>  }
+>  
+>  /*
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index 36d6a3a412..68ef15acac 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -200,14 +200,15 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+>  
+>  /*
+>   * Serial Port Console Redirection Table (SPCR)
+> - * Rev: 1.07
+> + * Rev: 1.10
+>   */
+>  
+>  static void
+>  spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
+>  {
+> +    const char name[] = ".";
+>      AcpiSpcrData serial = {
+> -        .interface_type = 0,       /* 16550 compatible */
+> +        .interface_type = 0x12,       /* 16550 compatible */
+>          .base_addr.id = AML_AS_SYSTEM_MEMORY,
+>          .base_addr.width = 32,
+>          .base_addr.offset = 0,
+> @@ -229,9 +230,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
+>          .pci_function = 0,
+>          .pci_flags = 0,
+>          .pci_segment = 0,
+> +        .uart_clk_freq = 0,
+> +        .precise_baudrate = 0,
+> +        .namespace_string_length = sizeof(name),
+> +        .namespace_string_offset = 88,
+>      };
+>  
+> -    build_spcr(table_data, linker, &serial, 2, s->oem_id, s->oem_table_id);
+> +    build_spcr(table_data, linker, &serial, 4, s->oem_id, s->oem_table_id,
+> +               name);
+>  }
+>  
+>  /* RHCT Node[N] starts at offset 56 */
+> diff --git a/include/hw/acpi/acpi-defs.h b/include/hw/acpi/acpi-defs.h
+> index 0e6e82b339..2e6e341998 100644
+> --- a/include/hw/acpi/acpi-defs.h
+> +++ b/include/hw/acpi/acpi-defs.h
+> @@ -112,7 +112,6 @@ typedef struct AcpiSpcrData {
+>      uint8_t flow_control;
+>      uint8_t terminal_type;
+>      uint8_t language;
+> -    uint8_t reserved1;
+>      uint16_t pci_device_id;    /* Must be 0xffff if not PCI device */
+>      uint16_t pci_vendor_id;    /* Must be 0xffff if not PCI device */
+>      uint8_t pci_bus;
+> @@ -120,7 +119,11 @@ typedef struct AcpiSpcrData {
+>      uint8_t pci_function;
+>      uint32_t pci_flags;
+>      uint8_t pci_segment;
+> -    uint32_t reserved2;
+> +    uint32_t uart_clk_freq;
+> +    uint32_t precise_baudrate;
+> +    uint32_t namespace_string_length;
+> +    uint32_t namespace_string_offset;
+> +    char namespace_string[];
+>  } AcpiSpcrData;
+>  
+>  #define ACPI_FADT_ARM_PSCI_COMPLIANT  (1 << 0)
+> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+> index a3784155cb..68c0f2dbee 100644
+> --- a/include/hw/acpi/aml-build.h
+> +++ b/include/hw/acpi/aml-build.h
+> @@ -500,5 +500,5 @@ void build_tpm2(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
+>  
+>  void build_spcr(GArray *table_data, BIOSLinker *linker,
+>                  const AcpiSpcrData *f, const uint8_t rev,
+> -                const char *oem_id, const char *oem_table_id);
+> +                const char *oem_id, const char *oem_table_id, const char *name);
+>  #endif
+
+Otherwise, LGTM.
+
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
 
