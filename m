@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E46C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D6BC52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shNYZ-0002Up-R5; Fri, 23 Aug 2024 02:13:55 -0400
+	id 1shNYd-0002nI-Rx; Fri, 23 Aug 2024 02:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYU-0002O0-E0
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:52 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1shNYc-0002eV-0w
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:58 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYH-000378-9c
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:50 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-712603f7ba5so1403527b3a.3
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:13:36 -0700 (PDT)
+ id 1shNYV-00038n-LZ
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:57 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2d3d58d6e08so1217728a91.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393616; x=1724998416;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393628; x=1724998428;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=b4fRw6ya5cnFbQAZ70Uw8BnHXsKEEdwvnI09RO2JZjU=;
- b=dlHtcE0VED/esk8e+YdidFgXWkO4W7WWNGo4SmgANOd/pxSB2zR4j/L+gvnchExWZU
- YdCSJu0cIwBZv2FCyc2XjeogVZSG4P9eNO4DeXee0ywbumuuGwZdfQQnPeo9CRnWu1ZS
- 7eSCXHbhXIpTI5JppcTLORuOkPkKDqv+V5fE6k2iMShhyu50+kJ5DwaTKhr6hOWNhCVp
- BLvm0LRxaGW09H5DMg6P2Dlhk0w8iWuJuVABvd9eIKEGRO2e/7Qlf3AhJJdeDHq6PvUH
- DCbQ/IfdPoAJ0hPdYK7ak/M6W5XrcfSqXPHjR4nAaVGxQlP/9YwXaUY+2yE1Vr+YTP8z
- wQcA==
+ :reply-to; bh=YdHplAffMcXcyi9egxfeqIrbdnUVPw/pDkvqxXIV6Fk=;
+ b=LaS6mr/2/L0gqc4ZRA57xV55f1UmRP6c6jbfJrKzTDCN2dM3B335HRL7OVN0aX0Qtw
+ 02Gggpk/mHEU3+7rHeSHSeXW6qDX6084O/Ekce7kr9eBvOVhoC2chGaNIDKtZbveC8/m
+ gMgzrCAzqzwX1bqqowkcdDg0mYs20zka/lxo4C+1yFNbRWRJ5yEMWBpKvz7rooDmTTVY
+ yC//gPqh1olto06HGuaKyjtdLPOdQmwi97FI4VYwYbyqp4rxM3cTfz5R2ZL4csNYoh1b
+ B7m2ow13hCCT2UyZ3zNCTbPe3JprtbeR9lNS4KHuOrChehOgN6MEZxxUxwmNdEkmLQ2W
+ HHtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724393616; x=1724998416;
+ d=1e100.net; s=20230601; t=1724393628; x=1724998428;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b4fRw6ya5cnFbQAZ70Uw8BnHXsKEEdwvnI09RO2JZjU=;
- b=u+QcwN2ptKnHESGovoO2wmLstbgDLfeuyiXJuneG3MrO0zAXY4UK5qL0WAFPOH8AgN
- 4MGdIIMNCf77XklGlhfDaxqir4ncZBduA8xXwMgPDzsinFqiCDpvkiioPUEoB6pqnsng
- XeeUhg9dw5ur38CqpJ2GdigUYk8ncpZRVaJzSwtUyjE0faguLnO0x87InK1jwRB+2qlI
- CyVp7SnSBaZeBNTpSX4YOVXwcqUPH2rZqTfoAt25IBTwK9y5wNsEeC8SyM839tHri5xx
- biecnc1ZO/v3bGQImgIxZNYrkyK7ilWmyeRvBkRnpfF3Mqo1Pwiy0KQquqGzRfMcIo0/
- qJwA==
-X-Gm-Message-State: AOJu0Yw8zFsLgjyyy+SoYKAIp0VYbIOta0hpq/o+J8AS5AL48q0vpPLh
- wu2GebC7RNqtirKusA25EctfMPCmgk/oe3dPquGwG0laF1M+kmJncPCiXAC5Nhg=
-X-Google-Smtp-Source: AGHT+IEqho7w76m6+nPWwV3j9fAGvJFVqKDMS/DQRiOrn+gYlgjQbuDe7q2Ae/okScjoRm2rK6bGHA==
-X-Received: by 2002:a05:6a21:478b:b0:1ca:da51:6635 with SMTP id
- adf61e73a8af0-1cc89d29da2mr1717102637.1.1724393615889; 
- Thu, 22 Aug 2024 23:13:35 -0700 (PDT)
+ bh=YdHplAffMcXcyi9egxfeqIrbdnUVPw/pDkvqxXIV6Fk=;
+ b=P2Vw6/GKwYVkMQTSfDl5twEWlrm1kF30Ns9QlyRGw148dqmJm1K/2N7uvVS9YNbfnN
+ hkgVFDL4lPabjnzFIe/978ASKjXfo5v8fZqdwXFNRlWjdna2yqRt9uPFvx2wCig2ZQWb
+ xCic/8ykIQL5Ji9/3qXj/7W0mMPf44Asgxyi25smIgkWFl9IukS0ZodoMBGXs2p8yF5q
+ dnUqJT3xXl0pPll3Ci2ti/2LH9PY/VnRy1Da5R0ay46mtJielY8USMU1rKdJiDpaoHqf
+ zSfe1OwrIjndra79XD6bHSuojPOe+lgyRC3qHnGL4sn+7ccfkWfVI8a9p0mAA1/eb25K
+ wtXg==
+X-Gm-Message-State: AOJu0Yxme3Q7MTvy6rHQlqNMCU4oZVhx/Xt6zhogJbE9DqkkUgJkcaua
+ wkSXAlDCiaZFBqFOoqDpwHbB+G9lxj0ru2yh85+7O7JAz7kIbMXV+ydSnKgpifA=
+X-Google-Smtp-Source: AGHT+IFzJ10oTRUyLJrWB5ipu7tvGZB9L6IX1t4YpN1zznxvJDoxVqCckhwL5Q+Xwak+DQuAoYo6Pg==
+X-Received: by 2002:a17:90a:c002:b0:2cb:e429:f525 with SMTP id
+ 98e67ed59e1d1-2d646d2bbdfmr1123154a91.33.1724393628209; 
+ Thu, 22 Aug 2024 23:13:48 -0700 (PDT)
 Received: from localhost ([157.82.207.23]) by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2d5eba26377sm5363854a91.32.2024.08.22.23.13.31
+ 98e67ed59e1d1-2d61393fbcbsm3057579a91.22.2024.08.22.23.13.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 23:13:35 -0700 (PDT)
+ Thu, 22 Aug 2024 23:13:48 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 23 Aug 2024 15:13:07 +0900
-Subject: [PATCH v4 2/7] memory: Do not refer to "memory region's reference
- count"
+Date: Fri, 23 Aug 2024 15:13:09 +0900
+Subject: [PATCH v4 4/7] memory: Clarify that owner may be missing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240823-san-v4-2-a24c6dfa4ceb@daynix.com>
+Message-Id: <20240823-san-v4-4-a24c6dfa4ceb@daynix.com>
 References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
 In-Reply-To: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -85,14 +84,15 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,40 +108,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now MemoryRegions do have their own reference counts, but they will not
-be used when their owners are not themselves. However, the documentation
-of memory_region_ref() says it adds "1 to a memory region's reference
-count", which is confusing. Avoid referring to "memory region's
-reference count" and just say: "Add a reference to a memory region".
-Make a similar change to memory_region_unref() too.
+A memory region may not have an owner, and memory_region_ref() and
+memory_region_unref() do nothing for such.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/exec/memory.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/exec/memory.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 02f7528ec060..b9f0ad09bfad 100644
+index 461e42d03491..d79415a3b159 100644
 --- a/include/exec/memory.h
 +++ b/include/exec/memory.h
-@@ -1217,7 +1217,7 @@ void memory_region_init(MemoryRegion *mr,
-                         uint64_t size);
- 
+@@ -1219,7 +1219,7 @@ void memory_region_init(MemoryRegion *mr,
  /**
-- * memory_region_ref: Add 1 to a memory region's reference count
-+ * memory_region_ref: Add a reference to a memory region
+  * memory_region_ref: Add a reference to a memory region
   *
-  * Whenever memory regions are accessed outside the BQL, they need to be
-  * preserved against hot-unplug.  MemoryRegions actually do not have their
-@@ -1234,7 +1234,7 @@ void memory_region_init(MemoryRegion *mr,
- void memory_region_ref(MemoryRegion *mr);
- 
+- * This function adds a reference to the owner.
++ * This function adds a reference to the owner if present.
+  * See docs/devel/memory.rst to know about owner.
+  *
+  * @mr: the #MemoryRegion
+@@ -1229,8 +1229,8 @@ void memory_region_ref(MemoryRegion *mr);
  /**
-- * memory_region_unref: Remove 1 to a memory region's reference count
-+ * memory_region_unref: Remove a reference to a memory region
+  * memory_region_unref: Remove a reference to a memory region
   *
-  * Whenever memory regions are accessed outside the BQL, they need to be
-  * preserved against hot-unplug.  MemoryRegions actually do not have their
+- * This function removes a reference to the owner and possibly destroys it.
+- * See docs/devel/memory.rst to know about owner.
++ * This function removes a reference to the owner and possibly destroys it if
++ * present. See docs/devel/memory.rst to know about owner.
+  *
+  * @mr: the #MemoryRegion
+  */
 
 -- 
 2.46.0
