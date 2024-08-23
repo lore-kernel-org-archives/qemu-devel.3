@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03534C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85A8C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shNYk-0003J5-SR; Fri, 23 Aug 2024 02:14:06 -0400
+	id 1shNYf-0002wI-TS; Fri, 23 Aug 2024 02:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYj-0003BR-0s
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:14:05 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ id 1shNYc-0002hI-H9
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:58 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYg-0003Bq-Fd
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:14:04 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-273cf9bbb3eso977683fac.1
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:14:02 -0700 (PDT)
+ id 1shNYZ-0003A9-MJ
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:58 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-6b47ff8a59aso13788887b3.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393641; x=1724998441;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393634; x=1724998434;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TqGUJw12uTAbvh8M71+t9HGKJ1QBUKeYyyQ+O3KoOC0=;
- b=iq4lraWW0+JKVzVOGOjeFPScRb2883/QCyZJvhlo5c+6q+wDiJueZWzoKkgT2fklXG
- Z+3gQTUSnd6Hyqf5l+vWNWCX82rHDpjnperHnLnTsqpTS6/R8wH3p9UB+NOmk6QU6vXz
- JzDteJJ0ajK56vbR+gENxcxlG4P7xFWq9AHKFCHd17jaUXn7+ejRv8SUh4ScwfpYsO4B
- cBcBOvfUgHh0PN52R0v2uTHKayPWhUyCEZYSeO5nC0gfx2gh556F2Arx/c9+XVdhhzWo
- Z22OLiTLLlDRGbCQqwakXVgEDL7EP5Mk1X6qqYiFc0Y9VNcK3537dFFGtfN2WKRHk6x2
- PHiQ==
+ :reply-to; bh=ZgDoeEKExDSUUkKhA562XJclNi5ZhOHvZQVGrzBwI+A=;
+ b=0CjR7ZFUMrdwM+EQfvY1BmqX2JlVw3e6JNbgP6/gMuwvRsYzHEZgUYJMyxslQ+JlQ7
+ FV0WcoqX7cyHQzVCFSiUDywnAU+hV7ozmsBTB6ET/ZgR+AOcpHowW1YzD6/pUIJBQJYT
+ CO3n2m3/N0gokYF4HyTFex1erXhvmKQ/DQq3ASIMyvw2BJLxYYp7CApj5kWih/jVCZeg
+ vV0+Bpq2KHBRm1I/2q0aI5l4e1D1V/2mvr/0Zj7Zu5P8iY9FRlBF1TQl3BzZWREoOWHp
+ WT4s+2uWZzfUCkDDeoGQa36xIjcpQfXziwk0f33sEHZcShkWeqtczxHVhAK2dT1iSeuj
+ MhAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724393641; x=1724998441;
+ d=1e100.net; s=20230601; t=1724393634; x=1724998434;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TqGUJw12uTAbvh8M71+t9HGKJ1QBUKeYyyQ+O3KoOC0=;
- b=A4E5/VlNTA8ZTubCbTTpWteSu7cpdwen0ZewwCJlp5Wn5x5BsiyrV5yf2AH3kELa2U
- emUXDGNX5GL+FKuUR7eWegrhnEIUKtLdmp+rUkJ0bUmQOGsL1tEpGKCiriINbDFpCT3z
- 0R/vDrocHqeqe9YcwYXt9DqUTwoCNWlBEQB1vKmiNlJL8SB7hhLxBcCRaU4OtNBmisc0
- p+iFBvWLJ4wbxA2rsfWEMfv8O1OaliOBVwTDprXCxYLDbgtQSrOU540nnhNY9p/DW6wM
- F7m6aRaj+4y8XY5kD5BWEmFLy/RYE7SDGmzGDp7LAeIPiB2E502GEplUvvrokFfxPTvQ
- wpng==
-X-Gm-Message-State: AOJu0YwZNnyxmfsQgTGJmad1vyDW34+aXqOEHP5vzQ8o/sH/XjvUbajs
- b9Eeywo42KCS11x0GkJKEUmtaO5XIaiRWSKrAZJ4rdJu6c+NsYcuWsHYxfmV89c=
-X-Google-Smtp-Source: AGHT+IHAfk6dVYsonq3Hlwrg808+TTvRceTk+pc5LzEGFXYQT7ovRTiKEte4g/HUA21ToYZjiMQeOQ==
-X-Received: by 2002:a05:6870:5587:b0:270:129f:8e65 with SMTP id
- 586e51a60fabf-273e66589c9mr1134333fac.34.1724393641047; 
- Thu, 22 Aug 2024 23:14:01 -0700 (PDT)
+ bh=ZgDoeEKExDSUUkKhA562XJclNi5ZhOHvZQVGrzBwI+A=;
+ b=TTj5u9m3dsUDp8+IDlCu3Nj19sh5atrMmWeo9leOD9CYJ35BxUQTot8CLxE8msmc91
+ WvwkvRO0jNMDjFdHLL/hnzrwfVeOK1RrIaX4+l+f6V1eBdyeFZHb+W28KyJ/ocIrgy3F
+ g5YSALct36tZc9GLWPLhM6IHohURisVMUlVkVX1VfBIAC/ZasM+kjFKG5pWriCvz36Qn
+ mlFrfFyvXjb8qd1tecNlQYH4dT9/znC095Dd1FpeMx1t7Tjbs7FTOxSEofkuxohCqQeM
+ BxuoxMiO0iKPrp+Mgkoy87z/wF0a0sxlyZzgI8GeqvnBpSN1HX+0h+2tzZYZZ23iAtDQ
+ vTEw==
+X-Gm-Message-State: AOJu0YwnWgnC703KuXDJGabT7Xlp7k2+ucOItJXgWlM7tSU5T6Nj0IGQ
+ 2DGMz/45pqObLegSgfdR2VF9uvs+0gK/j9SyLVYl0vu/7jgO3Up6q+mdKxmPusY=
+X-Google-Smtp-Source: AGHT+IGuj1gFQTuDEsrNan7a7imNn/Sl/n8Bp2+X8RKJ6f6S0gWckt8yw2CT52Rt7ce2oK1y4+9S6Q==
+X-Received: by 2002:a05:690c:18:b0:64a:d5fd:f19f with SMTP id
+ 00721157ae682-6c625a4ca3bmr14298007b3.18.1724393634631; 
+ Thu, 22 Aug 2024 23:13:54 -0700 (PDT)
 Received: from localhost ([157.82.207.23]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-71434335fe1sm2302862b3a.200.2024.08.22.23.13.56
+ d2e1a72fcca58-714342316e8sm2406058b3a.16.2024.08.22.23.13.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 23:14:00 -0700 (PDT)
+ Thu, 22 Aug 2024 23:13:54 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 23 Aug 2024 15:13:11 +0900
-Subject: [PATCH v4 6/7] memory: Do not create circular reference with subregion
+Date: Fri, 23 Aug 2024 15:13:10 +0900
+Subject: [PATCH v4 5/7] memory: Clarify owner must not call memory_region_ref()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240823-san-v4-6-a24c6dfa4ceb@daynix.com>
+Message-Id: <20240823-san-v4-5-a24c6dfa4ceb@daynix.com>
 References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
 In-Reply-To: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -84,8 +84,8 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2001:4860:4864:20::33;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x33.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,50 +108,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-memory_region_update_container_subregions() used to call
-memory_region_ref(), which creates a reference to the owner of the
-subregion, on behalf of the owner of the container. This results in a
-circular reference if the subregion and container have the same owner.
-
-memory_region_ref() creates a reference to the owner instead of the
-memory region to match the lifetime of the owner and memory region. We
-do not need such a hack if the subregion and container have the same
-owner because the owner will be alive as long as the container is.
-Therefore, create a reference to the subregion itself instead ot its
-owner in such a case; the reference to the subregion is still necessary
-to ensure that the subregion gets finalized after the container.
-
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- system/memory.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/exec/memory.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/system/memory.c b/system/memory.c
-index 5e6eb459d5de..e4d3e9d1f427 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2612,7 +2612,9 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
- 
-     memory_region_transaction_begin();
- 
--    memory_region_ref(subregion);
-+    object_ref(mr->owner == subregion->owner ?
-+               OBJECT(subregion) : subregion->owner);
-+
-     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
-         if (subregion->priority >= other->priority) {
-             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-@@ -2670,7 +2672,9 @@ void memory_region_del_subregion(MemoryRegion *mr,
-         assert(alias->mapped_via_alias >= 0);
-     }
-     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
--    memory_region_unref(subregion);
-+    object_unref(mr->owner == subregion->owner ?
-+                 OBJECT(subregion) : subregion->owner);
-+
-     memory_region_update_pending |= mr->enabled && subregion->enabled;
-     memory_region_transaction_commit();
- }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index d79415a3b159..6698e9d05eab 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -1220,6 +1220,7 @@ void memory_region_init(MemoryRegion *mr,
+  * memory_region_ref: Add a reference to a memory region
+  *
+  * This function adds a reference to the owner if present.
++ * The owner must not call this function as it results in a circular reference.
+  * See docs/devel/memory.rst to know about owner.
+  *
+  * @mr: the #MemoryRegion
 
 -- 
 2.46.0
