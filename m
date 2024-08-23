@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E524BC5321D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 20:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D1CEC5321D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 21:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shaxc-0007RG-3b; Fri, 23 Aug 2024 16:32:40 -0400
+	id 1shbS2-0006Fa-AI; Fri, 23 Aug 2024 17:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1shaxa-0007OH-2X
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 16:32:38 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shbRz-0006Di-Bs
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 17:04:04 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1shaxX-0002sh-49
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 16:32:37 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2ef2c56da6cso21333411fa.1
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 13:32:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shbRx-0000R7-Nn
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 17:04:03 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-70940c9657dso1825670a34.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 14:04:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724445148; x=1725049948; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jJODn5eNQp27xQPSz5iTWPWuIV0svdrjaxsWjEA5l7w=;
- b=SfJsDiAPn9I1pfiQuz6fk7yioIW5PyPS7HqGcsWjDjaF20DOwvdP/0/k8R1Rwrfb0Z
- 1X5Mi5pjWFnmCXZyyWyqijObWkg/k0IGn6mqCuqa4jryWJgW0P3NvQ6lRrnCMlQkwCoH
- sRwKX6OpQV6zrCq2iCg2ifiFOOs8UUXMV7db7CL/e5fTjmJe68TSmJVT+lj0NbaAfUr8
- Nwx6qCOrjwd9EW/q+p1pvkVE7kaZtPtahThE6ZLCgYJXPzjzuLSq0HJuXI6r8sKNDfoO
- OU1SMybDYjOz/niF2YhX+sEVMWzUIL+6bi8oqPG1iWkoOgRZzEpRo0SU3WWHyhIuZfnp
- h7mQ==
+ d=ventanamicro.com; s=google; t=1724447040; x=1725051840; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=k/mm/P4s0xYR+ROsyOm3GDJZTsd70mJXbCa5JrDAc2E=;
+ b=NZ/ZvzN659Hn/u+2rbHlx7bBstZHBqol3as9sH3FLo6E+Ay/K6J752MDrjmyrh/M00
+ NHZ0ZK5C7FJV/BsJtu+pe+AD7ghMD2MEy0YKjw2/PuoZHjChxQKhDAulqYfj9RoSjXyF
+ CzXS3prO4kFPcYOicThdtMoGvhfsnv/Xsa55w7HsM1I3pahyfVmD7vD/lalC9GrOzl3g
+ Dlp/TEjgz0/siuQB9UrTMZmaIdx0zrs6VkvYNR2gfBaYjIaZ18GPyxNQFztSyBxk1cu3
+ fWEL7kCFG87ZWH5swWHRfq8N0n6VskoQCCqGDj1N5DI2mL06Yz6ZyBxRUzjzfCgS70CQ
+ 7K6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724445148; x=1725049948;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jJODn5eNQp27xQPSz5iTWPWuIV0svdrjaxsWjEA5l7w=;
- b=wZPyynZZIvn5ccHJgWo1sd3saLZKI2tt281a4/Zx9ZDxQdeSh7g+Ojn1JS+OfZbAPt
- anXSF5PzFTALpn66u9q4YqTWmAsPP9K+qtABPaPjwUOjZNu2e4FfTViCUb7ofXgzwoZ9
- TPG3mQF9q+yjm3V7pCedcAdK+LZWBvh2waol1RFheGU6zMSknZS8pKYUAc8aetI74CiZ
- ZwDT8+GEAuuWdCsQIDE5Kk7Xu5s6hoA8hNYY9TyoNERFmrvE9kNx80/NG5tHvTlTNjfZ
- +yu22Be6v0+pu8MYxEN9o+p48w9RX+M8+8QzW+mbE+5SyjWLmkaXzoTXSO0BXVPTdFlE
- l+VA==
-X-Gm-Message-State: AOJu0Yw8zFtWrEyouwtGJPnzk5vvN754m5jAoBJtQ6SVMzRn7z9pyjwQ
- k0mGEE97lUwbr/0aW30RuJG3Fl0wSC/0zEvF8gzGcm7a9WlDSdxpKBsm1ujxB3TsV+7/gBa3scZ
- T65lznupjxVyvJbQldB/mMTUmyaNnqsAWKkGsLA==
-X-Google-Smtp-Source: AGHT+IEi8X5y2KtAUGTECBYn7csf5ybSxnOlz2PxF3xhXw0hRhkTXQW/mScF8TEv5H5ayoh+bSZstmCJ9x4S+knZjxA=
-X-Received: by 2002:a2e:e0a:0:b0:2f1:a5bb:b5ae with SMTP id
- 38308e7fff4ca-2f4f49049bamr20311061fa.15.1724445147026; Fri, 23 Aug 2024
- 13:32:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724447040; x=1725051840;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=k/mm/P4s0xYR+ROsyOm3GDJZTsd70mJXbCa5JrDAc2E=;
+ b=RDSTU+uZk83u0XsTW24R5czWcXXPY9RS5NdnIvJOejTnHvXJ6XnC/zEr3rCy3Q4gmB
+ ycgiqabo4AUTSDJiBb6NJ9RlGBu1z25T+xN+3RNuzA2NL+S6Opv3V6PDmQn8oc9jMLoS
+ plYG/tH+GNnEm6jaex7jygaa54BgEMLFvX/2kadrkNJxY+G62674lqLlKUhZ1SR3F5Xz
+ cAYBePpod1g/z7BJpZq5zxL/4guqFJoyYX7J/dqXEv5/dnOYbd9k7JivtPDuzNYP8ziJ
+ hZOwk7b5Gt5xNEpHVlN0f3syDdzrXAl4QIncUqmQKyQtv6w+jp2IL7G6zuzmEe33Q4Au
+ XwVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvEDP8BHuzanealKePjJgta7yj5JcAh9W4oUi40iWH6yfk0xJps1MKGhHbSv9GpeI+RFA7krVYw5b2@nongnu.org
+X-Gm-Message-State: AOJu0YyL1QO27YlL8P1dpTQok4y0Ox2wIGv1WaWOjEifvzUHGZ0cYiTk
+ hf+PDuLYrViQr7sRpxnGfSk3oKhi9XLuBGIuCDC6NInaoTaMut+akhNNrOZPlcM=
+X-Google-Smtp-Source: AGHT+IHFV97kqwkmT3ffsS+/hNmLGfVFX10RiBtJ9p8SefNDThH3ifTeSQScrWrZvcGDogov44wEWw==
+X-Received: by 2002:a05:6808:1922:b0:3dc:16ca:d9d9 with SMTP id
+ 5614622812f47-3de2a90b1f9mr3684845b6e.46.1724447039912; 
+ Fri, 23 Aug 2024 14:03:59 -0700 (PDT)
+Received: from [192.168.68.110] ([179.133.97.250])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7cd9ad7db5fsm3131695a12.92.2024.08.23.14.03.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Aug 2024 14:03:59 -0700 (PDT)
+Message-ID: <64fc8ef5-93f9-4d88-a552-4ca30dcfed77@ventanamicro.com>
+Date: Fri, 23 Aug 2024 18:03:55 -0300
 MIME-Version: 1.0
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <20240813165250.2717650-3-peter.maydell@linaro.org>
- <a2fcc299abf9cd81a3554244f1574cb9c7f63d70.camel@linux.ibm.com>
-In-Reply-To: <a2fcc299abf9cd81a3554244f1574cb9c7f63d70.camel@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Aug 2024 21:32:16 +0100
-Message-ID: <CAFEAcA_0M+F5OJi8QrD-F+_62ppGjct7xfgs7puZXF4cFTBQ=g@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 02/10] target/s390: Convert CPU to Resettable
- interface
-To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, 
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target: riscv: Enable Bit Manip for OpenTitan Ibex CPU
+To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
+Cc: liwei1518@gmail.com, atishp@rivosinc.com, bmeng.cn@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20240823003231.3522113-1-alistair.francis@wdc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240823003231.3522113-1-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,68 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Aug 2024 at 18:45, Nina Schoetterl-Glausch <nsg@linux.ibm.com> wrote:
->
-> On Tue, 2024-08-13 at 17:52 +0100, Peter Maydell wrote:
-> > Convert the s390 CPU to the Resettable interface.  This is slightly
-> > more involved than the other CPU types were (see commits
-> > 9130cade5fc22..d66e64dd006df) because S390 has its own set of
-> > different kinds of reset with different behaviours that it needs to
-> > trigger.
-> >
-> > We handle this by adding these reset types to the Resettable
-> > ResetType enum.  Now instead of having an underlying implementation
-> > of reset that is s390-specific and which might be called either
-> > directly or via the DeviceClass::reset method, we can implement only
-> > the Resettable hold phase method, and have the places that need to
-> > trigger an s390-specific reset type do so by calling
-> > resettable_reset().
-> >
-> > The other option would have been to smuggle in the s390 reset
-> > type via, for instance, a field in the CPU state that we set
-> > in s390_do_cpu_initial_reset() etc and then examined in the
-> > reset method, but doing it this way seems cleaner.
-> >
-> > The motivation for this change is that this is the last caller
-> > of the legacy device_class_set_parent_reset() function, and
-> > removing that will let us clean up some glue code that we added
-> > for the transition to three-phase reset.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > Tested with 'make check' and 'make check-avocado' only. The
-> > descriptions of the reset types are borrowed from the commit
-> > message of f5ae2a4fd8d573cfeba; please check them as I haven't
-> > got a clue what s390 does ;-)
-> > ---
->
-> With the already mentioned fix:
-> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
-Thanks for the review.
 
-> >      switch (type) {
-> > -    case S390_CPU_RESET_CLEAR:
-> > +    default:
-> > +        /* RESET_TYPE_COLD: power on or "clear" reset */
->
-> I'd prefer
->         case RESET_TYPE_COLD:
->         case RESET_TYPE_SNAPSHOT_LOAD:
->
-> and keeping the default unreachable assert.
+On 8/22/24 9:32 PM, Alistair Francis wrote:
+> The OpenTitan Ibex CPU now supports the the Zba, Zbb, Zbc
+> and Zbs bit-manipulation sub-extensions ratified in
+> v.1.0.0 of the RISC-V Bit- Manipulation ISA Extension, so let's enable
+> them in QEMU as well.
+> 
+> 1: https://github.com/lowRISC/opentitan/pull/9748
+> 
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
 
-The reset API (docs/devel/reset.rst) says:
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-# Devices which implement reset methods must treat any unknown ``ResetType``
-# as equivalent to ``RESET_TYPE_COLD``; this will reduce the amount of
-# existing code we need to change if we add more types in future.
-
-So making an unknown reset type behave like "cold" reset is deliberate.
-Otherwise every time we added a new reset type to the system we'd
-need to go through every device that had a switch on the reset type
-to add a new case for it.
-
-thanks
--- PMM
+>   target/riscv/cpu.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index a90808a3ba..7e13fb2c0f 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -701,6 +701,11 @@ static void rv32_ibex_cpu_init(Object *obj)
+>       cpu->cfg.ext_zicsr = true;
+>       cpu->cfg.pmp = true;
+>       cpu->cfg.ext_smepmp = true;
+> +
+> +    cpu->cfg.ext_zba = true;
+> +    cpu->cfg.ext_zbb = true;
+> +    cpu->cfg.ext_zbc = true;
+> +    cpu->cfg.ext_zbs = true;
+>   }
+>   
+>   static void rv32_imafcu_nommu_cpu_init(Object *obj)
 
