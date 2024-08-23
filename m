@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BB2C5320E
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 00:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85960C5321E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 05:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shIEO-0003JG-N6; Thu, 22 Aug 2024 20:32:44 -0400
+	id 1shMQ9-0005kq-Ro; Fri, 23 Aug 2024 01:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1shIEN-0003II-PN; Thu, 22 Aug 2024 20:32:43 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1shMPw-0005a4-QZ
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 01:00:59 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1shIEM-0006GV-67; Thu, 22 Aug 2024 20:32:43 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-202508cb8ebso10451925ad.3; 
- Thu, 22 Aug 2024 17:32:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1shMPv-0008MV-CZ
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 01:00:56 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-6c5bcb8e8edso1173206a12.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 22:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724373159; x=1724977959; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eVzlHo28SvcRqidT+WXmfYjstBlQbtXfW2i88eMT/lE=;
- b=kUdHEWgCOCu5wajsVD2ZD+DoQzIeazZ+TxqO0YLyNDlZmr0wWQvyNKzA79ObdIuwg9
- +3XS1uapdKvBMlp51vI/n2MS+chxryXbWq4lQkXMNGPzDJK2Cm0xea0yOTDYTTh6+YJd
- DAZex25+Hbt/Euq03VOmrHWEXfHPyl6H08cctKtHkcpMV1Fm0/4KHqwEDLHL7aLhckSS
- Hm5LvdzlW7qTseFeDFHAaiAuq4bFg6/ASncrHUt0dj2x/aDgZ8hv9i40Waq8cxyI4y/L
- 20aS9B0xABv9gye313znM5vVeb6H2XEGpkkRGq+MTHaRcvTiyE+AGm6KAHH7E1sKHD1P
- fORw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724389254; x=1724994054;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=hZYRJCaOR7D2p7YWgr7dJo7l/TPHeAaK6dBF5pYEnfc=;
+ b=rM2HNMlhS5dgC68FevbyIp6f6TctdQB5j3rLhYgpWDHzp57Mu+hNm9JhZrV1ll9Gq3
+ ZDj6eDnZQIXkQygBUGrlihqmHZ0CxNAwpLKQNFEkIZ9O0UlycE6CdzYDXa2kDrPM4oRU
+ Wn5NqrM5QfvnbofPyrQ6zbZRNe9KXaIL67G0p3E0hiWUibAkvPI8vVVzvQZ/DnUHWvDn
+ RCvkp647DzD5WH6erWwzjtJdQvrbcuie8rTS3lJBvmsAQ8p+TbvVtOZk+cuscRV13Q5d
+ I6UtpGMi764n5aF4gNJnYtD4jq2e22zqyeWYpfLwKhnnLwzRxCfiJSIxOBxSzKtAaujX
+ fEsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724373159; x=1724977959;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eVzlHo28SvcRqidT+WXmfYjstBlQbtXfW2i88eMT/lE=;
- b=bT9fdPcRnAgZRx4EcY13clg9bMjUkq1jbv0ov9KSCjmNuYoKU6+hGmYcXOMX8zcTTe
- 3jHQtHK25JqiRpfSSe8HRmQYbkRXZs169N+MuI8YaQWKdDBsidAtu/t+beISbIGrSI5H
- Csh/Q3nyN/xyqM2CnX1OJujD6KJHwsQhNNaXqAow0HQllmv2GYduT6s1TThDtABJU7rE
- kjqpjrsgjt2gXCqyRRTqRYJbSoLF9uhWspOdRUwpFlsQmCi7bAxd0ZgvJGOZaQdv2DOb
- uoz1nWBcxBKAd38qRRzZarO0SVbga4jY4wBqjjNX++qkeFseuW0hhQjwjL6ALPVbT06t
- 9KUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuTS6XtXMsJI4c0wdXIXl6S9sEywAIeA0dro0dbL1sEDSgjYIhSHvWDxo1m7edvUXhUqIkb7YnzWTi@nongnu.org
-X-Gm-Message-State: AOJu0Yz/2ll3u/opgqhtElhXlw3PfOFsEyBV5/u6LIgIkSGHEIt1QIpH
- 2bKtaZvua/ubIe2Qh+2U5c7TGTIO6sCu262J16DXpuRBEMMyvxWmwba26A==
-X-Google-Smtp-Source: AGHT+IFkZEQEIW1nN0sUbbsJzOQ06hVkebtK++gQt+Zog4ix6gLv+mRWGyfCNcgXWOcPWskT58w4ZA==
-X-Received: by 2002:a17:902:fa0f:b0:202:244e:a0cc with SMTP id
- d9443c01a7336-2039e5595eamr5576355ad.45.1724373159327; 
- Thu, 22 Aug 2024 17:32:39 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-203855665d4sm18175755ad.22.2024.08.22.17.32.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 17:32:38 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: liwei1518@gmail.com, atishp@rivosinc.com, bmeng.cn@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org,
- dbarboza@ventanamicro.com, Alistair Francis <alistair.francis@wdc.com>,
- alistair23@gmail.com, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH] target: riscv: Enable Bit Manip for OpenTitan Ibex CPU
-Date: Fri, 23 Aug 2024 10:32:31 +1000
-Message-ID: <20240823003231.3522113-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.46.0
+ d=1e100.net; s=20230601; t=1724389254; x=1724994054;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hZYRJCaOR7D2p7YWgr7dJo7l/TPHeAaK6dBF5pYEnfc=;
+ b=RJnoZEjNFMrnnzvFJgUvmETeiLi+ofWfcj45HXXFDrOxQy0kXron93yWpKS+erKl5n
+ FoC026w60MXnDgMd0TDxGDJmeqzkH8QHoZ8z34zGqkoSk4i46/hVZfyVZkOjPlMspMj+
+ IzlLlfDPII95K5UOlTQnUPZRLpQKCojkwCIsz1VBkEJeiKe8u/7NuldfLKzpX0Ut63Ih
+ xj2hCKn2n2C12jsjCeXg/8RYeXvl6vw4w5LDJUJkvGnD4bZ2hRhKqV48sAeTSkoJE59/
+ aiMCSmi7ZKA5iT/Z1kuD4MA2C8wPsEegyPLJv9LnSMY0NJ0+tWb3fmgc1J3x+P1khDlx
+ uPZw==
+X-Gm-Message-State: AOJu0Yxjt2Ru2UPrqT1rtUJQus1SMb08ADty0c8POBhsFOJywy84hEAJ
+ ebj+CIXcPPjAiI8Dy1xqOMB3C4s1/rXHTrXaMPxADFkL2YZlB+cGV2B9Dvj75C0=
+X-Google-Smtp-Source: AGHT+IH8Yz4yWjEqTpVL6zWi0jD9tMZ8GgNCi2TmTecjzXNRyxGEUbyuEW9X7PlH0P0RlEuBQhAlpQ==
+X-Received: by 2002:a05:6a20:e609:b0:1c6:fa4b:3648 with SMTP id
+ adf61e73a8af0-1cc8b4bd034mr1139845637.22.1724389253768; 
+ Thu, 22 Aug 2024 22:00:53 -0700 (PDT)
+Received: from localhost ([157.82.207.23]) by smtp.gmail.com with UTF8SMTPSA id
+ 98e67ed59e1d1-2d6136fce0asm2877886a91.11.2024.08.22.22.00.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Aug 2024 22:00:53 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Fri, 23 Aug 2024 14:00:39 +0900
+Subject: [PATCH for-9.2 v15 02/11] hw/ppc/spapr_pci: Do not create DT for
+ disabled PCI device
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240823-reuse-v15-2-eddcb960e289@daynix.com>
+References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+In-Reply-To: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::534;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,34 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The OpenTitan Ibex CPU now supports the the Zba, Zbb, Zbc
-and Zbs bit-manipulation sub-extensions ratified in
-v.1.0.0 of the RISC-V Bit- Manipulation ISA Extension, so let's enable
-them in QEMU as well.
+Disabled means it is a disabled SR-IOV VF or it is powered off, and
+hidden from the guest.
 
-1: https://github.com/lowRISC/opentitan/pull/9748
-
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- target/riscv/cpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/ppc/spapr_pci.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a90808a3ba..7e13fb2c0f 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -701,6 +701,11 @@ static void rv32_ibex_cpu_init(Object *obj)
-     cpu->cfg.ext_zicsr = true;
-     cpu->cfg.pmp = true;
-     cpu->cfg.ext_smepmp = true;
-+
-+    cpu->cfg.ext_zba = true;
-+    cpu->cfg.ext_zbb = true;
-+    cpu->cfg.ext_zbc = true;
-+    cpu->cfg.ext_zbs = true;
- }
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index 7cf9904c3546..f63182a03c41 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
+         return;
+     }
  
- static void rv32_imafcu_nommu_cpu_init(Object *obj)
++    if (!pdev->enabled) {
++        return;
++    }
++
+     err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
+     if (err < 0) {
+         p->err = err;
+
 -- 
 2.46.0
 
