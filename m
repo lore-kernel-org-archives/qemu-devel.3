@@ -4,56 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3886DC52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 07:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A57AC531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 07:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shOdy-0002Hy-5v; Fri, 23 Aug 2024 03:23:34 -0400
+	id 1shOj1-0007ZP-8A; Fri, 23 Aug 2024 03:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
- id 1shOdw-0002HV-8u
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 03:23:32 -0400
-Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
- id 1shOdu-0005z5-2l
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 03:23:32 -0400
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77]
- helo=[127.0.0.1])
- by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
- (envelope-from <a.fatoum@pengutronix.de>)
- id 1shOdp-0003RF-5o; Fri, 23 Aug 2024 09:23:25 +0200
-Message-ID: <a90fe9aa-5835-4045-b719-8764cdb037cc@pengutronix.de>
-Date: Fri, 23 Aug 2024 09:23:23 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shOiz-0007WU-P3
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 03:28:45 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shOiw-0006wa-Oh
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 03:28:45 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a8692bbec79so216735266b.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 00:28:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724398120; x=1725002920; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qMepRNlbuz78tpQIMpc/NUskqbfYCNeOpL4CdkOujx4=;
+ b=RFywgthJYTNuWPtjeK0wJaqLLKiZLPg7gxRmjZNhruUwY19gLshocNWyxQmFQWR8Cv
+ PEydekfqg+dVrZWSEZfDV+ZvTQ5iXu/yAObYxqF8a9O0+3TshzQXOvK4Tyj9WnClKIBq
+ IizJ0xbYy875ZLfLH4mx38FpjekvfyGsCMIIBHXWLqnLf2wi2J7xQr2mZkNajGGEHRDO
+ 37B80PUivpHNQP30WdcWYRSi1v+kyrHTnCduyxmEpEtYWgpbL1bnb+6n6YTC8Z1kiQ6y
+ ZPdLebOQcmYw1kNf9hkHPO7F3YySx0EvB2svJmt/INlmA/QhOqKfXQWt3qpS1ze7xWjX
+ eZyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724398120; x=1725002920;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qMepRNlbuz78tpQIMpc/NUskqbfYCNeOpL4CdkOujx4=;
+ b=TU0gV7yLQvCef/ctIH/iwhKrLhPSzfUmMX1dgj6foEQrNiX9UU7jajGMZV4Xo22s7z
+ Unr9L20nMLAaMFxX3uFBxa5Ox7Ac7wJcBZGsuiKwjkbEY75c1B288dvXfVHKCUD9xKgk
+ lJ3KF+gvJYN4574EcO+URcw0H+fYwo1SgkHr0CpV5Pn12/YP0NwfzfXd7rbA+QTQe7++
+ bv0kursgeFaCvCYWe8KLFhG0b8YjusE57B9nVJ87xmp5hSP58m1UrwZWyDR+Gl7O1XG1
+ 2wEUqoh9wIJjh+1ClCDmmdegM5aIW9PakVzCknLgCv8j7sAxTx9PLdlHBI0ZNL26K8iq
+ cJCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUW2Mn7zpbJxxxN9D1oLunTvhppBokWql742kfmXtFSXKtFLIEdbNeaTYOWmf8SNfDLO5BlgNw8/UTO@nongnu.org
+X-Gm-Message-State: AOJu0YwEQRQDySl+4fbGhxuz6vYvYLkcMEkl+FW++FuWZcu3CL/4MBGo
+ Egr9Y90ksJAHtfdp1aI2FCtGOT9xNriKYOcWo833W0IOGve7B6fID5FT2nQODd8=
+X-Google-Smtp-Source: AGHT+IEf/UdFpwV4ukntnUK4N7dkyJlp8tXnMu2sgb0W+pEEOhxpfjrsukehAog7fOfxwM0dR/L2cw==
+X-Received: by 2002:a17:907:e688:b0:a86:99e9:ffa5 with SMTP id
+ a640c23a62f3a-a86a52c4565mr89442566b.34.1724398119978; 
+ Fri, 23 Aug 2024 00:28:39 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.206.153])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a868f437930sm220133066b.107.2024.08.23.00.28.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Aug 2024 00:28:39 -0700 (PDT)
+Message-ID: <3a435391-f485-4223-93aa-b937a141db16@linaro.org>
+Date: Fri, 23 Aug 2024 09:28:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND] hw/openrisc/openrisc_sim: keep serial@90000000 as
- default
-To: Stafford Horne <shorne@gmail.com>
-Cc: qemu-devel@nongnu.org, "Jason A . Donenfeld" <Jason@zx2c4.com>,
- linux-openrisc@vger.kernel.org
-References: <20240822163838.3722764-1-a.fatoum@pengutronix.de>
- <ZsgsG_WL7TNcM1_l@antec>
+Subject: Re: [PATCH v4 15/35] tests/functional: enable pre-emptive caching of
+ assets
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
+ "Daniel P . Berrange" <berrange@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>
+References: <20240821082748.65853-1-thuth@redhat.com>
+ <20240821082748.65853-16-thuth@redhat.com>
 Content-Language: en-US
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
-In-Reply-To: <ZsgsG_WL7TNcM1_l@antec>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
-X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
- envelope-from=a.fatoum@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240821082748.65853-16-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,94 +102,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Stafford,
+Hi,
 
-On 23.08.24 08:28, Stafford Horne wrote:
-> Note the distribution list you use here: openrisc@lists.librecores.org
-> Is old and we should use linux-openrisc@vger.kernel.org.  I will get the qemu
-> maintainer file updated.
-
-So this list is appropriate for all openrisc-related development and not only
-for the kernel?
-
-> On Thu, Aug 22, 2024 at 06:38:38PM +0200, Ahmad Fatoum wrote:
->> We used to only have a single UART on the platform and it was located at
->> address 0x90000000. When the number of UARTs was increased to 4, the
->> first UART remained at its location, but instead of being the first one
->> to be registered, it became the last.
->>
->> This caused QEMU to pick 0x90000300 as the default UART, which broke
->> software that hardcoded the address of 0x90000000 and expected its
->> output to be visible when the user configured only a single console.
+On 21/8/24 10:27, Thomas Huth wrote:
+> From: Daniel P. Berrangé <berrange@redhat.com>
 > 
-> This makes sense but what do you mean here by DEFAULT uart?  I guess you mean
-> the one connected to qemu's stdout by default?
-
-Yes. I am not keen on the QEMU terminology, but the first registered UART seems
-to have a special place. Besides being connected to QEMU's stdio by default,
-it's also used to populate /chosen/stdout-path as can be seen when dumping the dtb:
-
-  qemu-system-or1k -kernel /dev/null -machine or1k-sim,dumpdtb=qemu.dtb -nographic
-
-
->> This caused regressions[1] in the barebox test suite when updating to a
->> newer QEMU. As there seems to be no good reason to register the UARTs in
->> inverse order, let's register them by ascending address, so existing
->> software can remain oblivious to the additional UART ports.
+> Many tests need to access assets stored on remote sites. We don't want
+> to download these during test execution when run by meson, since this
+> risks hitting test timeouts when data transfers are slow.
 > 
-> This sounds good to me.  I will test this out and queue to qemu after the small
-> clarification above.
+> Add support for pre-emptive caching of assets by setting the env var
+> QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
+> instead of running the test, the assets will be downloaded and saved
+> to the cache, then the timestamp file created.
 > 
-> Also, I will wait to see if Jason has anything to say.
-
-Sure.
-
-By the way, I botched the RESEND and forgot following two lines:
-
-  Fixes: 777784bda468 ("hw/openrisc: support 4 serial ports in or1ksim")
-  Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-
-Let me know if I should resend (provided there's no code changes warranting a v2).
-
-Thanks,
-Ahmad
-
+> A meson custom target is created as a dependency of each test suite
+> to trigger the pre-emptive caching logic before the test runs.
 > 
-> -Stafford
+> When run in caching mode, it will locate assets by looking for class
+> level variables with a name prefix "ASSET_", and type "Asset".
 > 
->> [1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
->> ---
->> v1 -> RESEND:
->>   - expand addressees beyond apparently defunct openrisc@lists.librecores.org
->>
->> NOTE: I am not familiar with QEMU internals, so please let me know
->> if registration in inverse order served a particular purpose.
->> ---
->>  hw/openrisc/openrisc_sim.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
->> index bffd6f721f7b..d147b00e4817 100644
->> --- a/hw/openrisc/openrisc_sim.c
->> +++ b/hw/openrisc/openrisc_sim.c
->> @@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
->>          serial_irq = get_cpu_irq(cpus, 0, irq_pin);
->>      }
->>      serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
->> -                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
->> +                   serial_hd(uart_idx),
->>                     DEVICE_NATIVE_ENDIAN);
->>  
->>      /* Add device tree node for serial. */
->> -- 
->> 2.39.2
->>
+> At the ninja level
 > 
+>     ninja test --suite functional
+> 
+> will speculatively download any assets that are not already cached,
+> so it is advisable to set a timeout multiplier.
+> 
+>     QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
+> 
+> will fail the test if a required asset is not already cached
+> 
+>     ninja precache-functional
+> 
+> will download and cache all assets required by the functional
+> tests
+> 
+> At the make level, precaching is always done by
+> 
+>     make check-functional
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Tested-by: Richard Henderson <richard.henderson@linaro.org>
+> [thuth: Remove the duplicated "path = os.path.basename(...)" line]
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/Makefile.include                 |  3 ++-
+>   tests/functional/meson.build           | 33 +++++++++++++++++++++++--
+>   tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
+>   tests/functional/qemu_test/testcase.py |  7 ++++++
+>   4 files changed, 74 insertions(+), 3 deletions(-)
+> 
+> diff --git a/tests/Makefile.include b/tests/Makefile.include
+> index 66c8cc3123..010369bd3a 100644
+> --- a/tests/Makefile.include
+> +++ b/tests/Makefile.include
+> @@ -161,7 +161,8 @@ $(FUNCTIONAL_TARGETS):
+>   
+>   .PHONY: check-functional
+>   check-functional:
+> -	@$(MAKE) SPEED=thorough check-func check-func-quick
+> +	@$(NINJA) precache-functional
+> +	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
+>   
+>   # Consolidated targets
+>   
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 8a8fa0ab99..cef74b82a9 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -33,6 +33,7 @@ tests_x86_64_quick = [
+>   tests_x86_64_thorough = [
+>   ]
+>   
+> +precache_all = []
+>   foreach speed : ['quick', 'thorough']
+>     foreach dir : target_dirs
+>       if not dir.endswith('-softmmu')
+> @@ -63,11 +64,35 @@ foreach speed : ['quick', 'thorough']
+>                                  meson.current_source_dir())
+>   
+>       foreach test : target_tests
+> -      test('func-@0@/@1@'.format(target_base, test),
+> +      testname = '@0@-@1@'.format(target_base, test)
+> +      testfile = 'test_' + test + '.py'
+> +      testpath = meson.current_source_dir() / testfile
+> +      teststamp = testname + '.tstamp'
+> +      test_precache_env = environment()
+> +      test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
+> +      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
+> +                                          meson.current_source_dir())
+> +      precache = custom_target('func-precache-' + testname,
+> +                               output: teststamp,
+> +                               command: [python, testpath],
+> +                               depend_files: files(testpath),
+> +                               build_by_default: false,
+> +                               env: test_precache_env)
+> +      precache_all += precache
+> +
+> +      # Ideally we would add 'precache' to 'depends' here, such that
+> +      # 'build_by_default: false' lets the pre-caching automatically
+> +      # run immediately before the test runs. In practice this is
+> +      # broken in meson, with it running the pre-caching in the normal
+> +      # compile phase https://github.com/mesonbuild/meson/issues/2518
+> +      # If the above bug ever gets fixed, when QEMU changes the min
+> +      # meson version, add the 'depends' and remove the custom
+> +      # 'run_target' logic below & in Makefile.include
+> +      test('func-' + testname,
+>              python,
+>              depends: [test_deps, test_emulator, emulator_modules],
+>              env: test_env,
+> -           args: [meson.current_source_dir() / 'test_' + test + '.py'],
+> +           args: [testpath],
+>              protocol: 'tap',
+>              timeout: test_timeouts.get(test, 60),
+>              priority: test_timeouts.get(test, 60),
+> @@ -75,3 +100,7 @@ foreach speed : ['quick', 'thorough']
+>       endforeach
+>     endforeach
+>   endforeach
+> +
+> +run_target('precache-functional',
+> +           depends: precache_all,
+> +           command: ['true'])
+> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> index cbeb6278af..9250ff2b06 100644
+> --- a/tests/functional/qemu_test/asset.py
+> +++ b/tests/functional/qemu_test/asset.py
+> @@ -9,6 +9,8 @@
+>   import logging
+>   import os
+>   import subprocess
+> +import sys
+> +import unittest
+>   import urllib.request
+>   from pathlib import Path
+>   from shutil import copyfileobj
+> @@ -62,6 +64,9 @@ def fetch(self):
+>                              self.cache_file, self.url)
+>               return str(self.cache_file)
+>   
+> +        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
+> +            raise Exception("Asset cache is invalid and downloads disabled")
+> +
+>           self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+>           tmp_cache_file = self.cache_file.with_suffix(".download")
+>   
+> @@ -95,3 +100,32 @@ def fetch(self):
+>   
+>           self.log.info("Cached %s at %s" % (self.url, self.cache_file))
+>           return str(self.cache_file)
+> +
+> +    def precache_test(test):
+> +        log = logging.getLogger('qemu-test')
+> +        log.setLevel(logging.DEBUG)
+> +        handler = logging.StreamHandler(sys.stdout)
+> +        handler.setLevel(logging.DEBUG)
+> +        formatter = logging.Formatter(
+> +            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+> +        handler.setFormatter(formatter)
+> +        log.addHandler(handler)
+> +        for name, asset in vars(test.__class__).items():
+> +            if name.startswith("ASSET_") and type(asset) == Asset:
+> +                log.info("Attempting to cache '%s'" % asset)
+> +                asset.fetch()
+> +        log.removeHandler(handler)
+> +
+> +    def precache_suite(suite):
+> +        for test in suite:
+> +            if isinstance(test, unittest.TestSuite):
+> +                Asset.precache_suite(test)
+> +            elif isinstance(test, unittest.TestCase):
+> +                Asset.precache_test(test)
+> +
+> +    def precache_suites(path, cacheTstamp):
+> +        loader = unittest.loader.defaultTestLoader
+> +        tests = loader.loadTestsFromNames([path], None)
+> +
+> +        with open(cacheTstamp, "w") as fh:
+> +            Asset.precache_suite(tests)
 
 
--- 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+When using multiple jobs (-jN) I'm observing some hangs,
+apparently multiple threads trying to download the same file.
+The files are eventually downloaded successfully but it takes
+longer. Should we acquire some exclusive lock somewhere?
+
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+> index b2dd863c6e..18314be9d1 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -21,6 +21,7 @@
+>   from qemu.machine import QEMUMachine
+>   from qemu.utils import kvm_available, tcg_available
+>   
+> +from .asset import Asset
+>   from .cmd import run_cmd
+>   from .config import BUILD_DIR
+>   
+> @@ -58,6 +59,12 @@ def tearDown(self):
+>   
+>       def main():
+>           path = os.path.basename(sys.argv[0])[:-3]
+> +
+> +        cache = os.environ.get("QEMU_TEST_PRECACHE", None)
+> +        if cache is not None:
+> +            Asset.precache_suites(path, cache)
+> +            return
+> +
+>           tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+>                                      test_output_log = pycotap.LogMode.LogToError)
+>           unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
+
 
