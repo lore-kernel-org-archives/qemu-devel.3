@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25031C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 13:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83FB4C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 13:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shU87-0002qN-LV; Fri, 23 Aug 2024 09:15:03 -0400
+	id 1shU9m-0007vC-AR; Fri, 23 Aug 2024 09:16:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1shU85-0002oK-S8
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:15:01 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shU9Q-0006p0-Ix
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:16:33 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1shU83-0000Fv-QD
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:15:01 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-428163f7635so14982625e9.2
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 06:14:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shU9M-0000hl-Um
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 09:16:23 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42817f1eb1fso15786145e9.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 06:16:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1724418898; x=1725023698; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=qYx02xrmRLGWpG1GZCOhwzNloqICSEynNtzbCrSKGgk=;
- b=EHz6aGaiAHmtKg/VRBKZQsKj41SnzmfjTXHMUkKzLqFCKt24ZhdispCu1KKXw1hcz0
- ppJvOAlj20cukkLlE5eHEDgUXYtRur3FCrfvmyc8UyP1DyDK8H08xSbrE0ULwHzRG+mO
- XzA46ZtXgFQrqOa4hEfoBbQkO/L+NkZfAZoo4d7JTRU7VXwxNdYVzGUE5s3M3SKdh2IB
- 8vRF9FDIjBwkj+ymoGkrcyYL+39fNoRFLskZ875j5ExhTBQYhtfXcCwFzjUlqadI0s7t
- oApnHut3w1uOIcv5ZW1CYiKRDy1+yaEGivIosReICgHSJfjs+1Hpq2p31ASstjvZPE+8
- lgJA==
+ d=linaro.org; s=google; t=1724418977; x=1725023777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MyYScXBPTwEKXiL7DmwNjldnYCv0nswuTZFtBhKeVlA=;
+ b=hcEZEkpHIY4/KxneHyKGU5306HHnAAuszCOhMZ3PBJJSfA/88L85cWl3BnNCa2ahRg
+ bc9cn4aVZ6B7aItVZVOBjXL61CxLouppvcU+pwITF0rkwS3AYeHkzMyDxKlQLar0iFaB
+ y8Uj52wKOoRTw2Fpmq8IsNn7n6wUC1f5wM3ig15JsRI5LDDGb90QLvzepX5VQgzIHs9K
+ biy6mjXzV05pJeBxlVmJOufJcltm4aAHRQdkelmXUrHn7qLQpn7yO09krw78rYsvjcM+
+ oFLdC4DRzzGt0Ky7z5+jSZLtgu6PYgoPGrsvCsvcH+fIH96aYJuRsMqS3BQoWsTj/Neo
+ VHAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724418898; x=1725023698;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qYx02xrmRLGWpG1GZCOhwzNloqICSEynNtzbCrSKGgk=;
- b=mm8Hrkx7zwRbi4yW5kzG5qlRPX2vTTWv14oZgNWRkpDN6V9V5javOopvd0OktsQz5C
- C0SExHacmQM69akKw+cN/owEPDkp4CNNeVGBhyYfIARr+kn9Yg7uBUORrQHXzd28LGnX
- RylwiQV4+qBI+wFap/YxZgZzSpObZnJA0SCY3ar7+Y/kZGX6eKnTRzlU1KSFpIUQjBVc
- Fkz0bB01I85T4YRnUYyghiGkchsbYtY+/dKjpGeCE01bkHn7xzIh0Ds8Fu+H6nzWMJ0N
- BGCQGxNtKrvBXxAIbqgeEKMIx6cZlan6lvskOpHbkJgEF2akMYyrbTVsu1jLfgjCEIX5
- XSHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWN42kDYJxPaBnd9TOFpU9wcIZfrxOOPgLy6sghDVbYuUTCQ9+JI/s+W7NsSDwfZMkiNi1lm6UBkcO4@nongnu.org
-X-Gm-Message-State: AOJu0YwtJAgPy/akqmLDbNB6suaLE0m83OXFhqjD7uvcK2niupgdnIdM
- jPH9y/UXgKH3uqaY8GLpeep1EIJ3WrYJj3PkkFmPmI+vGZ20+Np/dLVBd3RTZjQ=
-X-Google-Smtp-Source: AGHT+IHkaw6bFZiDiAEOIwb13QmJ36GlvyhQMc57PWhWE0GtdJzTIwbd89hOHKxcadeB43v9pjH8GA==
-X-Received: by 2002:a05:600c:35c6:b0:426:6667:5c42 with SMTP id
- 5b1f17b1804b1-42acc8d494fmr16871005e9.4.1724418897675; 
- Fri, 23 Aug 2024 06:14:57 -0700 (PDT)
-Received: from sunil-laptop ([106.51.198.16]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ac5158f14sm60273915e9.16.2024.08.23.06.14.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Aug 2024 06:14:57 -0700 (PDT)
-Date: Fri, 23 Aug 2024 18:44:45 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
- palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH RESEND v4 2/3] hw/acpi: Upgrade ACPI SPCR table to
- support SPCR table revision 4 format
-Message-ID: <ZsiLRdozsvdCLgqg@sunil-laptop>
-References: <20240823113142.161727-1-jeeheng.sia@starfivetech.com>
- <20240823113142.161727-3-jeeheng.sia@starfivetech.com>
+ d=1e100.net; s=20230601; t=1724418977; x=1725023777;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MyYScXBPTwEKXiL7DmwNjldnYCv0nswuTZFtBhKeVlA=;
+ b=qtk4NixSEg73muFqmOw6bQH7lVhB81Kg9WJqezqZeaiRhNeUck2QD/DLQJIueQzkye
+ tvxnCduwBt+iP6Eb72nd20wkq/mBoYlnmok9k5ADsMEqR4H9xgtxI8hmcAo6BA5y9541
+ IwkgyGnNgFLgfKAsced2g/gm2oPL2W8rtCAaDRBmeRLp9SDm7xCeFbhZoQkZMOCdvlXh
+ cv01G1CebEpBIiRsPr/KllFiCedK3VbXpn/wbGpGuhTJSizqB1vdRf65nRks9oSw6XpY
+ epDbil4iL9kY93rqxbfdTJeAmtKtm8z3hdRo2cJ+Upf8MwItW89oel9eEcQqqhVPrfER
+ 33NQ==
+X-Gm-Message-State: AOJu0Yx3T3UXuuLXSfJFAAZtTE6umEC8QxXE2Uk7e0h45lh6wPAtgMR+
+ UFMwD63VY5Qup12jBtKk41tL9IvGlkl0drk7tNQBXLBOjXIHhkbKKCALJI/cZvJNYG21cYFYQ0y
+ Q
+X-Google-Smtp-Source: AGHT+IEyLbsVx0ywDyHfHWC9MTQTAQwBS6AxC8n9/yJ9MnKCdtkRMUnmfZx19ZFCVbX8f+T9AjtAwQ==
+X-Received: by 2002:a05:600c:3d0e:b0:426:63b8:2cce with SMTP id
+ 5b1f17b1804b1-42acc8d52b6mr15103225e9.7.1724418976854; 
+ Fri, 23 Aug 2024 06:16:16 -0700 (PDT)
+Received: from m1x-phil.lan (plb95-h02-176-184-14-228.dsl.sta.abo.bbox.fr.
+ [176.184.14.228]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ac514e04dsm59830155e9.6.2024.08.23.06.16.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 23 Aug 2024 06:16:16 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3] tests/functional: Convert Aarch64 SBSA-Ref avocado tests
+Date: Fri, 23 Aug 2024 15:16:14 +0200
+Message-ID: <20240823131614.10269-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240823113142.161727-3-jeeheng.sia@starfivetech.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-wm1-x330.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,168 +94,337 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 23, 2024 at 04:31:41AM -0700, Sia Jee Heng wrote:
-> Update the SPCR table to accommodate the SPCR Table revision 4 [1].
-> The SPCR table has been modified to adhere to the revision 4 format [2].
-> 
-> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
-> [2]: https://github.com/acpica/acpica/pull/931
-> 
-> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  hw/acpi/aml-build.c         | 20 ++++++++++++++++----
->  hw/arm/virt-acpi-build.c    | 10 +++++++---
->  hw/riscv/virt-acpi-build.c  | 12 +++++++++---
->  include/hw/acpi/acpi-defs.h |  7 +++++--
->  include/hw/acpi/aml-build.h |  2 +-
->  5 files changed, 38 insertions(+), 13 deletions(-)
-> 
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index 6d4517cfbe..ad0a306db1 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -1996,7 +1996,7 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
->  
->  void build_spcr(GArray *table_data, BIOSLinker *linker,
->                  const AcpiSpcrData *f, const uint8_t rev,
-> -                const char *oem_id, const char *oem_table_id)
-> +                const char *oem_id, const char *oem_table_id, const char *name)
->  {
->      AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
->                          .oem_table_id = oem_table_id };
-> @@ -2042,9 +2042,21 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
->      build_append_int_noprefix(table_data, f->pci_flags, 4);
->      /* PCI Segment */
->      build_append_int_noprefix(table_data, f->pci_segment, 1);
-> -    /* Reserved */
-> -    build_append_int_noprefix(table_data, 0, 4);
-> -
-> +    if (rev < 4) {
-> +        /* Reserved */
-> +        build_append_int_noprefix(table_data, 0, 4);
-> +    } else {
-> +        /* UartClkFreq */
-> +        build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
-> +        /* PreciseBaudrate */
-> +        build_append_int_noprefix(table_data, f->precise_baudrate, 4);
-> +        /* NameSpaceStringLength */
-> +        build_append_int_noprefix(table_data, f->namespace_string_length, 2);
-> +        /* NameSpaceStringOffset */
-> +        build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
-> +        /* NamespaceString[] */
-> +        g_array_append_vals(table_data, name, f->namespace_string_length);
-> +    }
->      acpi_table_end(linker, &table);
->  }
->  /*
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index f76fb117ad..cc27ba7daf 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -435,7 +435,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->  
->  /*
->   * Serial Port Console Redirection Table (SPCR)
-> - * Rev: 1.07
-> + * Rev: 1.10
-Why should this comment be updated? Since revision 2 of SPCR table ARM
-uses corresponds to only 1.07 right?
+Straight forward conversion. Since SBSA_FLASH files are not
+tarballs, use lzma_uncompress() method.
 
->   */
->  static void
->  spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-> @@ -464,8 +464,12 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          .pci_flags = 0,
->          .pci_segment = 0,
->      };
-> -
-> -    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id);
-> +    /*
-> +     * Passing NULL as the SPCR Table for Revision 2 doesn't support
-> +     * NameSpaceString.
-> +     */
-> +    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id,
-> +               NULL);
->  }
->  
->  /*
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 36d6a3a412..68ef15acac 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -200,14 +200,15 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
->  
->  /*
->   * Serial Port Console Redirection Table (SPCR)
-> - * Rev: 1.07
-> + * Rev: 1.10
->   */
->  
->  static void
->  spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
->  {
-> +    const char name[] = ".";
->      AcpiSpcrData serial = {
-> -        .interface_type = 0,       /* 16550 compatible */
-> +        .interface_type = 0x12,       /* 16550 compatible */
->          .base_addr.id = AML_AS_SYSTEM_MEMORY,
->          .base_addr.width = 32,
->          .base_addr.offset = 0,
-> @@ -229,9 +230,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
->          .pci_function = 0,
->          .pci_flags = 0,
->          .pci_segment = 0,
-> +        .uart_clk_freq = 0,
-> +        .precise_baudrate = 0,
-> +        .namespace_string_length = sizeof(name),
-> +        .namespace_string_offset = 88,
->      };
->  
-> -    build_spcr(table_data, linker, &serial, 2, s->oem_id, s->oem_table_id);
-> +    build_spcr(table_data, linker, &serial, 4, s->oem_id, s->oem_table_id,
-> +               name);
->  }
->  
->  /* RHCT Node[N] starts at offset 56 */
-> diff --git a/include/hw/acpi/acpi-defs.h b/include/hw/acpi/acpi-defs.h
-> index 0e6e82b339..2e6e341998 100644
-> --- a/include/hw/acpi/acpi-defs.h
-> +++ b/include/hw/acpi/acpi-defs.h
-> @@ -112,7 +112,6 @@ typedef struct AcpiSpcrData {
->      uint8_t flow_control;
->      uint8_t terminal_type;
->      uint8_t language;
-> -    uint8_t reserved1;
->      uint16_t pci_device_id;    /* Must be 0xffff if not PCI device */
->      uint16_t pci_vendor_id;    /* Must be 0xffff if not PCI device */
->      uint8_t pci_bus;
-> @@ -120,7 +119,11 @@ typedef struct AcpiSpcrData {
->      uint8_t pci_function;
->      uint32_t pci_flags;
->      uint8_t pci_segment;
-> -    uint32_t reserved2;
-> +    uint32_t uart_clk_freq;
-> +    uint32_t precise_baudrate;
-> +    uint32_t namespace_string_length;
-> +    uint32_t namespace_string_offset;
-> +    char namespace_string[];
->  } AcpiSpcrData;
->  
->  #define ACPI_FADT_ARM_PSCI_COMPLIANT  (1 << 0)
-> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-> index a3784155cb..68c0f2dbee 100644
-> --- a/include/hw/acpi/aml-build.h
-> +++ b/include/hw/acpi/aml-build.h
-> @@ -500,5 +500,5 @@ void build_tpm2(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
->  
->  void build_spcr(GArray *table_data, BIOSLinker *linker,
->                  const AcpiSpcrData *f, const uint8_t rev,
-> -                const char *oem_id, const char *oem_table_id);
-> +                const char *oem_id, const char *oem_table_id, const char *name);
->  #endif
+Avocado used to set a timeout of 11 tests * 180s = 1980s.
+Hopefully 600s should be sufficient.
 
-Otherwise, LGTM.
+Running on macOS Sonoma / Apple silicon M1:
 
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+  $ QEMU_TEST_TIMEOUT_EXPECTED=1 make check-functional-aarch64 V=1
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max              OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_off    OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_neoverse_n1      OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_edk2_firmware                 OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_cortex_a57          OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max                 OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_impdef    OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_off       OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_neoverse_n1         OK
+  1/5 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_sbsaref        OK   241.79s  11 subtests passed
+  ...
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20240821082748.65853-1-thuth@redhat.com>
+
+v3:
+- Fix ASSET_FLASH1 typo (Marcin)
+- Tune timeout (Marcin)
+---
+ MAINTAINERS                                   |   2 +-
+ tests/functional/meson.build                  |   5 +
+ .../test_aarch64_sbsaref.py}                  | 144 ++++++------------
+ 3 files changed, 55 insertions(+), 96 deletions(-)
+ rename tests/{avocado/machine_aarch64_sbsaref.py => functional/test_aarch64_sbsaref.py} (56%)
+ mode change 100644 => 100755
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 91e5b061bf..c720c02800 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -971,7 +971,7 @@ F: hw/misc/sbsa_ec.c
+ F: hw/watchdog/sbsa_gwdt.c
+ F: include/hw/watchdog/sbsa_gwdt.h
+ F: docs/system/arm/sbsa.rst
+-F: tests/avocado/machine_aarch64_sbsaref.py
++F: tests/functional/test_aarch64_sbsaref.py
+ 
+ Sharp SL-5500 (Collie) PDA
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index f1fce045fc..3ab29c0f35 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -11,6 +11,7 @@ endif
+ 
+ # Timeouts for individual tests that can be slow e.g. with debugging enabled
+ test_timeouts = {
++  'aarch64_sbsaref' : 600,
+   'acpi_bits' : 240,
+   'netdev_ethtool' : 180,
+   'ppc_40p' : 240,
+@@ -26,6 +27,10 @@ tests_generic = [
+   'version',
+ ]
+ 
++tests_aarch64_thorough = [
++  'aarch64_sbsaref',
++]
++
+ tests_arm_thorough = [
+   'arm_canona1100',
+   'arm_integratorcp',
+diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
+old mode 100644
+new mode 100755
+similarity index 56%
+rename from tests/avocado/machine_aarch64_sbsaref.py
+rename to tests/functional/test_aarch64_sbsaref.py
+index f8bf40c192..e90566cdb8
+--- a/tests/avocado/machine_aarch64_sbsaref.py
++++ b/tests/functional/test_aarch64_sbsaref.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional test that boots a Linux kernel and checks the console
+ #
+ # SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
+@@ -8,12 +10,11 @@
+ 
+ import os
+ 
+-from avocado import skipUnless
+-from avocado.utils import archive
+-
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado_qemu import interrupt_interactive_console_until_pattern
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test import interrupt_interactive_console_until_pattern
++from qemu_test.utils import lzma_uncompress
++from unittest import skipUnless
+ 
+ 
+ class Aarch64SbsarefMachine(QemuSystemTest):
+@@ -28,6 +29,16 @@ class Aarch64SbsarefMachine(QemuSystemTest):
+ 
+     timeout = 180
+ 
++    ASSET_FLASH0 = Asset(
++        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
++         '20240619-148232/edk2/SBSA_FLASH0.fd.xz'),
++        '0c954842a590988f526984de22e21ae0ab9cb351a0c99a8a58e928f0c7359cf7')
++
++    ASSET_FLASH1 = Asset(
++        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
++         '20240619-148232/edk2/SBSA_FLASH1.fd.xz'),
++        'c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee')
++
+     def fetch_firmware(self):
+         """
+         Flash volumes generated using:
+@@ -44,47 +55,31 @@ def fetch_firmware(self):
+         """
+ 
+         # Secure BootRom (TF-A code)
+-        fs0_xz_url = (
+-            "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
+-            "20240619-148232/edk2/SBSA_FLASH0.fd.xz"
+-        )
+-        fs0_xz_hash = "0c954842a590988f526984de22e21ae0ab9cb351a0c99a8a58e928f0c7359cf7"
+-        tar_xz_path = self.fetch_asset(fs0_xz_url, asset_hash=fs0_xz_hash,
+-                                      algorithm='sha256')
+-        archive.extract(tar_xz_path, self.workdir)
++        fs0_xz_path = self.ASSET_FLASH0.fetch()
+         fs0_path = os.path.join(self.workdir, "SBSA_FLASH0.fd")
++        lzma_uncompress(fs0_xz_path, fs0_path)
+ 
+         # Non-secure rom (UEFI and EFI variables)
+-        fs1_xz_url = (
+-            "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
+-            "20240619-148232/edk2/SBSA_FLASH1.fd.xz"
+-        )
+-        fs1_xz_hash = "c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee"
+-        tar_xz_path = self.fetch_asset(fs1_xz_url, asset_hash=fs1_xz_hash,
+-                                      algorithm='sha256')
+-        archive.extract(tar_xz_path, self.workdir)
++        fs1_xz_path = self.ASSET_FLASH1.fetch()
+         fs1_path = os.path.join(self.workdir, "SBSA_FLASH1.fd")
++        lzma_uncompress(fs1_xz_path, fs1_path)
+ 
+         for path in [fs0_path, fs1_path]:
+             with open(path, "ab+") as fd:
+                 fd.truncate(256 << 20)  # Expand volumes to 256MiB
+ 
++        self.set_machine('sbsa-ref')
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-drive",
+-            f"if=pflash,file={fs0_path},format=raw",
+-            "-drive",
+-            f"if=pflash,file={fs1_path},format=raw",
+-            "-machine",
+-            "sbsa-ref",
++            "-drive", f"if=pflash,file={fs0_path},format=raw",
++            "-drive", f"if=pflash,file={fs1_path},format=raw",
+         )
+ 
+     def test_sbsaref_edk2_firmware(self):
+-        """
+-        :avocado: tags=cpu:cortex-a57
+-        """
+ 
+         self.fetch_firmware()
++
++        self.vm.add_args('-cpu', 'cortex-a57')
+         self.vm.launch()
+ 
+         # TF-A boot sequence:
+@@ -110,87 +105,62 @@ def test_sbsaref_edk2_firmware(self):
+         wait_for_console_pattern(self, "UEFI firmware (version 1.0")
+         interrupt_interactive_console_until_pattern(self, "QEMU SBSA-REF Machine")
+ 
++
++    ASSET_ALPINE_ISO = Asset(
++        ('https://dl-cdn.alpinelinux.org/'
++         'alpine/v3.17/releases/aarch64/alpine-standard-3.17.2-aarch64.iso'),
++        '5a36304ecf039292082d92b48152a9ec21009d3a62f459de623e19c4bd9dc027')
++
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+     # Other test profiles should use more minimal boots
+     def boot_alpine_linux(self, cpu):
+         self.fetch_firmware()
+ 
+-        iso_url = (
+-            "https://dl-cdn.alpinelinux.org/"
+-            "alpine/v3.17/releases/aarch64/alpine-standard-3.17.2-aarch64.iso"
+-        )
+-
+-        iso_hash = "5a36304ecf039292082d92b48152a9ec21009d3a62f459de623e19c4bd9dc027"
+-        iso_path = self.fetch_asset(iso_url, algorithm="sha256", asset_hash=iso_hash)
++        iso_path = self.ASSET_ALPINE_ISO.fetch()
+ 
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-cpu",
+-            cpu,
+-            "-drive",
+-            f"file={iso_path},media=cdrom,format=raw",
++            "-cpu", cpu,
++            "-drive", f"file={iso_path},media=cdrom,format=raw",
+         )
+ 
+         self.vm.launch()
+         wait_for_console_pattern(self, "Welcome to Alpine Linux 3.17")
+ 
+     def test_sbsaref_alpine_linux_cortex_a57(self):
+-        """
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("cortex-a57")
+ 
+     def test_sbsaref_alpine_linux_neoverse_n1(self):
+-        """
+-        :avocado: tags=cpu:neoverse-n1
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("neoverse-n1")
+ 
+     def test_sbsaref_alpine_linux_max_pauth_off(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("max,pauth=off")
+ 
+     def test_sbsaref_alpine_linux_max_pauth_impdef(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("max,pauth-impdef=on")
+ 
+-    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+     def test_sbsaref_alpine_linux_max(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("max")
+ 
+ 
++    ASSET_OPENBSD_ISO = Asset(
++        ('https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img'),
++        '7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5')
++
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+     # Other test profiles should use more minimal boots
+     def boot_openbsd73(self, cpu):
+         self.fetch_firmware()
+ 
+-        img_url = (
+-            "https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img"
+-        )
+-
+-        img_hash = "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5"
+-        img_path = self.fetch_asset(img_url, algorithm="sha256", asset_hash=img_hash)
++        img_path = self.ASSET_OPENBSD_ISO.fetch()
+ 
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-cpu",
+-            cpu,
+-            "-drive",
+-            f"file={img_path},format=raw,snapshot=on",
++            "-cpu", cpu,
++            "-drive", f"file={img_path},format=raw,snapshot=on",
+         )
+ 
+         self.vm.launch()
+@@ -199,38 +169,22 @@ def boot_openbsd73(self, cpu):
+                                  " 7.3 installation program.")
+ 
+     def test_sbsaref_openbsd73_cortex_a57(self):
+-        """
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("cortex-a57")
+ 
+     def test_sbsaref_openbsd73_neoverse_n1(self):
+-        """
+-        :avocado: tags=cpu:neoverse-n1
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("neoverse-n1")
+ 
+     def test_sbsaref_openbsd73_max_pauth_off(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("max,pauth=off")
+ 
+-    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+     def test_sbsaref_openbsd73_max_pauth_impdef(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("max,pauth-impdef=on")
+ 
+-    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+     def test_sbsaref_openbsd73_max(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("max")
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.45.2
+
 
