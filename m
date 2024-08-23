@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F215C52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 17:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A359C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 17:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shXrr-0007oW-N5; Fri, 23 Aug 2024 13:14:31 -0400
+	id 1shXvv-0003rk-C0; Fri, 23 Aug 2024 13:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tiago.pasqualini@canonical.com>)
- id 1shXro-0007ns-Pv
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 13:14:29 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tiago.pasqualini@canonical.com>)
- id 1shXrZ-0004pq-1Z
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 13:14:28 -0400
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
- [209.85.160.69])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id BF78D3F283
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 17:14:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1724433249;
- bh=6gRVofmJfaQ5jUH8YTLDpeoluzuFXNjMkrjbxoeuleM=;
- h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
- To:Cc:Content-Type;
- b=DzzEiHFvXfyJTMhBEdUNCvzVa8owddhIR9Cx7nJuJbwn5rZS+WtRU1uXTFy34vggZ
- YQeWFs/uNWBqInyFmSHrxG76k8//WtNMh8PVkAWzdwLwAy5/viOyonCM37QtK+Ewf3
- eHESLqttrdnYKYYYmfg5Q+XfnFLbJUEZjQctZe1DZy1SJ74/I4xot03IbnoACbF89g
- OX79CfdMxA51zSN0WWeOu9j24EbrQjypWGCcHuUO43YnnWayY/4kAYxy8UKWkiV8ws
- 6lcTiNrUI3lON+zX8tRBGNa4t5n8ZS7j1s/u3bY0TGUx2K6TpbK3+UJtEIlcBOFAm+
- JZ0ZXgtAbjwTA==
-Received: by mail-oa1-f69.google.com with SMTP id
- 586e51a60fabf-2701eeb69f4so2286038fac.3
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 10:14:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shXvr-0003pl-Gz
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 13:18:40 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shXvn-0005LM-UI
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 13:18:39 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2021aeee5e4so16143915ad.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 10:18:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1724433514; x=1725038314; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nLMdd+23C9KENkluRTrTYpsyIfiz3OtH86VbY6V4CTY=;
+ b=hDoBtzP3VvA0rCNAQRqi7PyTs9mAR+K+SyFRfE8HzyK3RUBrTND4DHRDm6ECFomcwI
+ jAdcJpNu48I1HambcXVMnML8H2YtqME20Mmz5+jdCPs22aj+fSZ9X1eg57D0cB9fi/Pl
+ QykTntjfqyDc0l7EMeVCAqwGZ4pmxjAQ46E2dL6MAsBIPJtq7uJ1Y+h/AEJSh3WjUjKK
+ Ye7f8dNHxn6FLQO9Ej6GXjpjGU/kGsNl50vL+0311KEbm5oL3ibNZM8DmLJ7we41oFuQ
+ 8x6rQMcMZMagEvQgDYw5Jq4tvcjEmbARtviF3o2kGuSTaPhh5O+3KEVb/j0SyMhVX42V
+ D+KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724433248; x=1725038048;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6gRVofmJfaQ5jUH8YTLDpeoluzuFXNjMkrjbxoeuleM=;
- b=dHQ8G39gVQKcIa24rums6fN9pP7witEKwP8EBdxH2XppxaLVAw6lr9/iE29NkWdM1H
- nnMWmcodMf3XHnG9NBL8BSzZeQwedvnccdL9fHLd0BSVtEY3gCnn42OXCwqlh+yCTD6o
- zjKZ29zHUdUE79TkslzXJVoKWGBTAjJaGXX+80hTaFaJFqmL+r3HyEH2xP7GNbRDFX4y
- x/BgdZ6ZZpUlAVdbROeb0IoyfsAKdZrO6pHuLLKnaJmHxH4QGA1ja2cD6MJ1fBIEEvZa
- rcgKw7mzdQqvFVzdgltKuNTniqbeb1BKyKHI3Nyl890r5COQbNgwJF1ZJZgDf91PqQOv
- lAOw==
-X-Gm-Message-State: AOJu0Yw5ecbTI9BOzQsnjr+43je6MPLhzajmsJw0zjf1oJRvXCDFXuAc
- /kHu+LX77fKU6+6iTiMyEhIEl2ZLvFZo2muczTcCw/L6EjA24aumG23SuyWBvHwWGoB6aXsFnhk
- M3VXqE7kliTKzgfU6jo1R/DW3EJWJUGIHhxqj3kbEDrlBFhWpjzohoJ1MaO7VCUeuBWgoFiR6Js
- 8N2v/vRk+iCGkykB+FxNtuuZ+JttgzvM9vAaFFPKFAmzbufrbrH8gY9g==
-X-Received: by 2002:a05:6870:d154:b0:270:1d05:1add with SMTP id
- 586e51a60fabf-273e648bc72mr3276393fac.16.1724433248535; 
- Fri, 23 Aug 2024 10:14:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZIsxw8Ue8Tpa0X9wiK7+ck4SSlyrSc3npouJZEY0dD2fBUqO+rj4/EvCG2+J83Q/p11qHdcr2Jdbp2mqJv/Q=
-X-Received: by 2002:a05:6870:d154:b0:270:1d05:1add with SMTP id
- 586e51a60fabf-273e648bc72mr3276368fac.16.1724433248145; Fri, 23 Aug 2024
- 10:14:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724433514; x=1725038314;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nLMdd+23C9KENkluRTrTYpsyIfiz3OtH86VbY6V4CTY=;
+ b=sWu6Jnz6zVYpZYdYeKKd6DFmEAywtW5ePMOp/uoa/Byk/cOMDVS9TLw5+aN/CqseXO
+ t8DtwoIigdSkEpffA6Acqh6Xf7AOGTEgBD6g8/C7TN4K1X7TbO+AulBikSsiXZt4OhPo
+ cf3oH/PSkfMaP6nLwU9r5vq3LJ2JFPDzP9/cSjV6kwsuUgfhgwcgJx/RoyrH8Ao+aaa8
+ TzcTDRUftqqy0T3YmuJDXrxAfFMfIHCzJWXv2bZvUTuLJYbVEHdvrkzlpn2bT9hHVQab
+ FXWj0QqxERvqttzXs3Pgeug7iSdKhm1BZtTp6B0d1jBUYhU6+aXjOjRYJvxtFIXlKfSh
+ fIiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUE1530ZYGZh/0eI1aMOWO24/DC2/p4aSsRRVLCxDUFDGeCpJv8UEAsTBuDpgSaM1HNRSsKuv0v0Qhy@nongnu.org
+X-Gm-Message-State: AOJu0YzolEEq3RiVrGKR7n6gYTDSBUfqcKbdSTJENqGkOrJdcRw+EGjD
+ NRb0f13iV/XCOiBbzgOwWpTIVMm8zy6hJXYTXARt/sFaxjiFuuQbrDL48ZSateg=
+X-Google-Smtp-Source: AGHT+IE7/YGjnyLY68keKJegkz0pFByp0DBO6q9QuYbSkScN+SUzbXuiW6JyaKCFmXrI3Va91qaX2g==
+X-Received: by 2002:a17:902:dad0:b0:1fd:6426:4362 with SMTP id
+ d9443c01a7336-2039e47a4f1mr29650595ad.21.1724433513356; 
+ Fri, 23 Aug 2024 10:18:33 -0700 (PDT)
+Received: from [192.168.68.110] ([179.133.97.250])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20385609099sm30537825ad.192.2024.08.23.10.18.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Aug 2024 10:18:32 -0700 (PDT)
+Message-ID: <c2af15b8-fc22-4154-97e6-6f38b33796b7@ventanamicro.com>
+Date: Fri, 23 Aug 2024 14:18:28 -0300
 MIME-Version: 1.0
-References: <20240813131928.842265-1-tiago.pasqualini@canonical.com>
-In-Reply-To: <20240813131928.842265-1-tiago.pasqualini@canonical.com>
-From: Tiago Pasqualini <tiago.pasqualini@canonical.com>
-Date: Fri, 23 Aug 2024 14:13:57 -0300
-Message-ID: <CABCXeQ1q5GR8rz2vh7ci3GSzU9UGnRzk3o0qk3fO7LUKVFmUfA@mail.gmail.com>
-Subject: Re: [PATCH] crypto: run qcrypto_pbkdf2_count_iters in a new thread
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=tiago.pasqualini@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 v6 08/12] hw/riscv/riscv-iommu: add Address
+ Translation Cache (IOATC)
+To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ frank.chang@sifive.com, ajones@ventanamicro.com,
+ Tomasz Jeznach <tjeznach@rivosinc.com>
+References: <20240801154334.1009852-1-dbarboza@ventanamicro.com>
+ <20240801154334.1009852-9-dbarboza@ventanamicro.com>
+ <922b33c4-d01a-44d1-a2b8-ef7cb1b1d30a@sifive.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <922b33c4-d01a-44d1-a2b8-ef7cb1b1d30a@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,141 +103,316 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi folks,
 
-Sorry for the ping, but any thoughts on this? I mainly implemented
-what was discussed in the upstream bug[0].
 
-Let me know what you think or any suggestions for this.
+On 8/20/24 12:27 PM, Jason Chien wrote:
+> Hi Daniel,
+> 
+> On 2024/8/1 下午 11:43, Daniel Henrique Barboza wrote:
+>> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+>>
+>> The RISC-V IOMMU spec predicts that the IOMMU can use translation caches
+>> to hold entries from the DDT. This includes implementation for all cache
+>> commands that are marked as 'not implemented'.
+>>
+>> There are some artifacts included in the cache that predicts s-stage and
+>> g-stage elements, although we don't support it yet. We'll introduce them
+>> next.
+>>
+>> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+>> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+>> ---
+>>   hw/riscv/riscv-iommu.c | 199 ++++++++++++++++++++++++++++++++++++++++-
+>>   hw/riscv/riscv-iommu.h |   3 +
+>>   2 files changed, 198 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+>> index ebe3a53a04..3816e6a493 100644
+>> --- a/hw/riscv/riscv-iommu.c
+>> +++ b/hw/riscv/riscv-iommu.c
+>> @@ -65,6 +65,16 @@ struct RISCVIOMMUContext {
+>>       uint64_t msiptp;            /* MSI redirection page table pointer */
+>>   };
+>> +/* Address translation cache entry */
+>> +struct RISCVIOMMUEntry {
+>> +    uint64_t iova:44;           /* IOVA Page Number */
+>> +    uint64_t pscid:20;          /* Process Soft-Context identifier */
+>> +    uint64_t phys:44;           /* Physical Page Number */
+>> +    uint64_t gscid:16;          /* Guest Soft-Context identifier */
+>> +    uint64_t perm:2;            /* IOMMU_RW flags */
+>> +    uint64_t __rfu:2;
+>> +};
+>> +
+>>   /* IOMMU index for transactions without process_id specified. */
+>>   #define RISCV_IOMMU_NOPROCID 0
+>> @@ -1138,13 +1148,130 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+>>       return &as->iova_as;
+>>   }
+>> +/* Translation Object cache support */
+>> +static gboolean __iot_equal(gconstpointer v1, gconstpointer v2)
+>> +{
+>> +    RISCVIOMMUEntry *t1 = (RISCVIOMMUEntry *) v1;
+>> +    RISCVIOMMUEntry *t2 = (RISCVIOMMUEntry *) v2;
+>> +    return t1->gscid == t2->gscid && t1->pscid == t2->pscid &&
+>> +           t1->iova == t2->iova;
+>> +}
+>> +
+>> +static guint __iot_hash(gconstpointer v)
+>> +{
+>> +    RISCVIOMMUEntry *t = (RISCVIOMMUEntry *) v;
+>> +    return (guint)t->iova;
+>> +}
+>> +
+>> +/* GV: 1 PSCV: 1 AV: 1 */
+>> +static void __iot_inval_pscid_iova(gpointer key, gpointer value, gpointer data)
+>> +{
+>> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+>> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+>> +    if (iot->gscid == arg->gscid &&
+>> +        iot->pscid == arg->pscid &&
+>> +        iot->iova == arg->iova) {
+>> +        iot->perm = IOMMU_NONE;
+>> +    }
+>> +}
+>> +
+>> +/* GV: 1 PSCV: 1 AV: 0 */
+>> +static void __iot_inval_pscid(gpointer key, gpointer value, gpointer data)
+>> +{
+>> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+>> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+>> +    if (iot->gscid == arg->gscid &&
+>> +        iot->pscid == arg->pscid) {
+>> +        iot->perm = IOMMU_NONE;
+>> +    }
+>> +}
+>> +
+>> +/* GV: 1 GVMA: 1 */
+>> +static void __iot_inval_gscid_gpa(gpointer key, gpointer value, gpointer data)
+>> +{
+>> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+>> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+>> +    if (iot->gscid == arg->gscid) {
+>> +        /* simplified cache, no GPA matching */
+>> +        iot->perm = IOMMU_NONE;
+>> +    }
+>> +}
+>> +
+>> +/* GV: 1 GVMA: 0 */
+>> +static void __iot_inval_gscid(gpointer key, gpointer value, gpointer data)
+>> +{
+>> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+>> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+>> +    if (iot->gscid == arg->gscid) {
+>> +        iot->perm = IOMMU_NONE;
+>> +    }
+>> +}
+>> +
+>> +/* GV: 0 */
+>> +static void __iot_inval_all(gpointer key, gpointer value, gpointer data)
+>> +{
+>> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+>> +    iot->perm = IOMMU_NONE;
+>> +}
+>> +
+>> +/* caller should keep ref-count for iot_cache object */
+>> +static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
+>> +    GHashTable *iot_cache, hwaddr iova)
+>> +{
+>> +    RISCVIOMMUEntry key = {
+>> +        .gscid = get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID),
+>> +        .pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID),
+>> +        .iova  = PPN_DOWN(iova),
+>> +    };
+>> +    return g_hash_table_lookup(iot_cache, &key);
+>> +}
+>> +
+>> +/* caller should keep ref-count for iot_cache object */
+>> +static void riscv_iommu_iot_update(RISCVIOMMUState *s,
+>> +    GHashTable *iot_cache, RISCVIOMMUEntry *iot)
+>> +{
+>> +    if (!s->iot_limit) {
+>> +        return;
+>> +    }
+>> +
+>> +    qemu_mutex_lock(&s->iot_lock);
+>> +    if (g_hash_table_size(s->iot_cache) >= s->iot_limit) {
+>> +        iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
+>> +                                          g_free, NULL);
+>> +        g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
+>> +    }
+>> +    g_hash_table_add(iot_cache, iot);
+>> +    qemu_mutex_unlock(&s->iot_lock);
+>> +}
+>> +
+>> +static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
+>> +    uint32_t gscid, uint32_t pscid, hwaddr iova)
+>> +{
+>> +    GHashTable *iot_cache;
+>> +    RISCVIOMMUEntry key = {
+>> +        .gscid = gscid,
+>> +        .pscid = pscid,
+>> +        .iova  = PPN_DOWN(iova),
+>> +    };
+>> +
+>> +    iot_cache = g_hash_table_ref(s->iot_cache);
+>> +    qemu_mutex_lock(&s->iot_lock);
+>> +    g_hash_table_foreach(iot_cache, func, &key);
+>> +    qemu_mutex_unlock(&s->iot_lock);
+>> +    g_hash_table_unref(iot_cache);
+>> +}
+>> +
+>>   static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>> -    IOMMUTLBEntry *iotlb)
+>> +    IOMMUTLBEntry *iotlb, bool enable_cache)
+>>   {
+>> +    RISCVIOMMUEntry *iot;
+>> +    IOMMUAccessFlags perm;
+>>       bool enable_pid;
+>>       bool enable_pri;
+>> +    GHashTable *iot_cache;
+>>       int fault;
+>> +    iot_cache = g_hash_table_ref(s->iot_cache);
+>>       /*
+>>        * TC[32] is reserved for custom extensions, used here to temporarily
+>>        * enable automatic page-request generation for ATS queries.
+>> @@ -1152,9 +1279,39 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>>       enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
+>>       enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+>> +    qemu_mutex_lock(&s->iot_lock);
+>> +    iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
+>> +    qemu_mutex_unlock(&s->iot_lock);
+>> +    perm = iot ? iot->perm : IOMMU_NONE;
+>> +    if (perm != IOMMU_NONE) {
+>> +        iotlb->translated_addr = PPN_PHYS(iot->phys);
+>> +        iotlb->addr_mask = ~TARGET_PAGE_MASK;
+>> +        iotlb->perm = perm;
+>> +        fault = 0;
+>> +        goto done;
+>> +    }
+>> +
+>>       /* Translate using device directory / page table information. */
+>>       fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
+>> +    if (!fault && iotlb->target_as == &s->trap_as) {
+>> +        /* Do not cache trapped MSI translations */
+>> +        goto done;
+>> +    }
+>> +
+>> +    if (!fault && iotlb->translated_addr != iotlb->iova && enable_cache) {
+> Shouldn't addresses which don't need to be translated also be cached?
 
-Thank you,
-Tiago
+I think it doesn't hurt to cache these addresses too. Just updated the check to:
 
-[0] https://gitlab.com/qemu-project/qemu/-/issues/2398
+     if (!fault && enable_cache) {
 
-On Tue, Aug 13, 2024 at 10:19=E2=80=AFAM Tiago Pasqualini
-<tiago.pasqualini@canonical.com> wrote:
->
-> CPU time accounting in the kernel has been demonstrated to have a
-> sawtooth pattern[1][2]. This can cause the getrusage system call to
-> not be as accurate as we are expecting, which can cause this calculation
-> to stall.
->
-> The kernel discussions shows that this inaccuracy happens when CPU time
-> gets big enough, so this patch changes qcrypto_pbkdf2_count_iters to run
-> in a fresh thread to avoid this inaccuracy. It also adds a sanity check
-> to fail the process if CPU time is not accounted.
->
-> [1] https://lore.kernel.org/lkml/159231011694.16989.16351419333851309713.=
-tip-bot2@tip-bot2/
-> [2] https://lore.kernel.org/lkml/20221226031010.4079885-1-maxing.lan@byte=
-dance.com/t/#m1c7f2fdc0ea742776a70fd1aa2a2e414c437f534
->
-> Resolves: #2398
-> Signed-off-by: Tiago Pasqualini <tiago.pasqualini@canonical.com>
-> ---
->  crypto/pbkdf.c         | 42 +++++++++++++++++++++++++++++++++++-------
->  include/crypto/pbkdf.h | 10 ++++++++++
->  2 files changed, 45 insertions(+), 7 deletions(-)
->
-> diff --git a/crypto/pbkdf.c b/crypto/pbkdf.c
-> index 8d198c152c..4c4e1e3cd3 100644
-> --- a/crypto/pbkdf.c
-> +++ b/crypto/pbkdf.c
-> @@ -19,6 +19,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/thread.h"
->  #include "qapi/error.h"
->  #include "crypto/pbkdf.h"
->  #ifndef _WIN32
-> @@ -85,12 +86,17 @@ static int qcrypto_pbkdf2_get_thread_cpu(unsigned lon=
-g long *val_ms,
->  #endif
->  }
->
-> -uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
-> -                                    const uint8_t *key, size_t nkey,
-> -                                    const uint8_t *salt, size_t nsalt,
-> -                                    size_t nout,
-> -                                    Error **errp)
-> +static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
->  {
-> +    CountItersData *iters_data =3D (CountItersData *) data;
-> +    QCryptoHashAlgorithm hash =3D iters_data->hash;
-> +    const uint8_t *key =3D iters_data->key;
-> +    size_t nkey =3D iters_data->nkey;
-> +    const uint8_t *salt =3D iters_data->salt;
-> +    size_t nsalt =3D iters_data->nsalt;
-> +    size_t nout =3D iters_data->nout;
-> +    Error **errp =3D iters_data->errp;
-> +
->      uint64_t ret =3D -1;
->      g_autofree uint8_t *out =3D g_new(uint8_t, nout);
->      uint64_t iterations =3D (1 << 15);
-> @@ -114,7 +120,10 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgor=
-ithm hash,
->
->          delta_ms =3D end_ms - start_ms;
->
-> -        if (delta_ms > 500) {
-> +        if (delta_ms =3D=3D 0) { /* sanity check */
-> +            error_setg(errp, "Unable to get accurate CPU usage");
-> +            goto cleanup;
-> +        } else if (delta_ms > 500) {
->              break;
->          } else if (delta_ms < 100) {
->              iterations =3D iterations * 10;
-> @@ -129,5 +138,24 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgor=
-ithm hash,
->
->   cleanup:
->      memset(out, 0, nout);
-> -    return ret;
-> +    iters_data->iterations =3D ret;
-> +    return NULL;
-> +}
-> +
-> +uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
-> +                                    const uint8_t *key, size_t nkey,
-> +                                    const uint8_t *salt, size_t nsalt,
-> +                                    size_t nout,
-> +                                    Error **errp)
-> +{
-> +    CountItersData data =3D {
-> +        hash, key, nkey, salt, nsalt, nout, errp
-> +    };
-> +    QemuThread thread;
-> +
-> +    qemu_thread_create(&thread, "pbkdf2", threaded_qcrypto_pbkdf2_count_=
-iters,
-> +                       &data, QEMU_THREAD_JOINABLE);
-> +    qemu_thread_join(&thread);
-> +
-> +    return data.iterations;
->  }
-> diff --git a/include/crypto/pbkdf.h b/include/crypto/pbkdf.h
-> index 2c31a44a27..b3757003e4 100644
-> --- a/include/crypto/pbkdf.h
-> +++ b/include/crypto/pbkdf.h
-> @@ -153,4 +153,14 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgor=
-ithm hash,
->                                      size_t nout,
->                                      Error **errp);
->
-> +typedef struct CountItersData {
-> +    QCryptoHashAlgorithm hash;
-> +    const uint8_t *key;
-> +    size_t nkey;
-> +    const uint8_t *salt;
-> +    size_t nsalt;
-> +    size_t nout;
-> +    Error **errp;
-> +    uint64_t iterations;
-> +} CountItersData;
->  #endif /* QCRYPTO_PBKDF_H */
-> --
-> 2.43.0
->
+
+
+Thanks,
+
+Daniel
+
+
+>> +        iot = g_new0(RISCVIOMMUEntry, 1);
+>> +        iot->iova = PPN_DOWN(iotlb->iova);
+>> +        iot->phys = PPN_DOWN(iotlb->translated_addr);
+>> +        iot->gscid = get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID);
+>> +        iot->pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
+>> +        iot->perm = iotlb->perm;
+>> +        riscv_iommu_iot_update(s, iot_cache, iot);
+>> +    }
+>> +
+>> +done:
+>> +    g_hash_table_unref(iot_cache);
+>> +
+>>       if (enable_pri && fault) {
+>>           struct riscv_iommu_pq_record pr = {0};
+>>           if (enable_pid) {
+>> @@ -1294,13 +1451,40 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+>>               if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
+>>                   /* illegal command arguments IOTINVAL.GVMA & PSCV == 1 */
+>>                   goto cmd_ill;
+>> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
+>> +                /* invalidate all cache mappings */
+>> +                func = __iot_inval_all;
+>> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
+>> +                /* invalidate cache matching GSCID */
+>> +                func = __iot_inval_gscid;
+>> +            } else {
+>> +                /* invalidate cache matching GSCID and ADDR (GPA) */
+>> +                func = __iot_inval_gscid_gpa;
+>>               }
+>> -            /* translation cache not implemented yet */
+>> +            riscv_iommu_iot_inval(s, func,
+>> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID), 0,
+>> +                cmd.dword1 & TARGET_PAGE_MASK);
+>>               break;
+>>           case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
+>>                                RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
+>> -            /* translation cache not implemented yet */
+>> +            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
+>> +                /* invalidate all cache mappings, simplified model */
+>> +                func = __iot_inval_all;
+>> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)) {
+>> +                /* invalidate cache matching GSCID, simplified model */
+>> +                func = __iot_inval_gscid;
+>> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
+>> +                /* invalidate cache matching GSCID and PSCID */
+>> +                func = __iot_inval_pscid;
+>> +            } else {
+>> +                /* invalidate cache matching GSCID and PSCID and ADDR (IOVA) */
+>> +                func = __iot_inval_pscid_iova;
+>> +            }
+>> +            riscv_iommu_iot_inval(s, func,
+>> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID),
+>> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_PSCID),
+>> +                cmd.dword1 & TARGET_PAGE_MASK);
+>>               break;
+>>           case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
+>> @@ -1824,6 +2008,10 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+>>                                            g_free, NULL);
+>>       qemu_mutex_init(&s->ctx_lock);
+>> +    s->iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
+>> +                                         g_free, NULL);
+>> +    qemu_mutex_init(&s->iot_lock);
+>> +
+>>       s->iommus.le_next = NULL;
+>>       s->iommus.le_prev = NULL;
+>>       QLIST_INIT(&s->spaces);
+>> @@ -1836,6 +2024,7 @@ static void riscv_iommu_unrealize(DeviceState *dev)
+>>       RISCVIOMMUState *s = RISCV_IOMMU(dev);
+>>       qemu_mutex_destroy(&s->core_lock);
+>> +    g_hash_table_unref(s->iot_cache);
+>>       g_hash_table_unref(s->ctx_cache);
+>>   }
+>> @@ -1843,6 +2032,8 @@ static Property riscv_iommu_properties[] = {
+>>       DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
+>>           RISCV_IOMMU_SPEC_DOT_VER),
+>>       DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
+>> +    DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
+>> +        LIMIT_CACHE_IOT),
+>>       DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
+>>       DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
+>>       DEFINE_PROP_BOOL("s-stage", RISCVIOMMUState, enable_s_stage, TRUE),
+>> @@ -1897,7 +2088,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+>>           /* Translation disabled or invalid. */
+>>           iotlb.addr_mask = 0;
+>>           iotlb.perm = IOMMU_NONE;
+>> -    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb)) {
+>> +    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb, true)) {
+>>           /* Translation disabled or fault reported. */
+>>           iotlb.addr_mask = 0;
+>>           iotlb.perm = IOMMU_NONE;
+>> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+>> index 6d76cb9b1a..c917b6219a 100644
+>> --- a/hw/riscv/riscv-iommu.h
+>> +++ b/hw/riscv/riscv-iommu.h
+>> @@ -75,6 +75,9 @@ struct RISCVIOMMUState {
+>>       GHashTable *ctx_cache;          /* Device translation Context Cache */
+>>       QemuMutex ctx_lock;      /* Device translation Cache update lock */
+>> +    GHashTable *iot_cache;          /* IO Translated Address Cache */
+>> +    QemuMutex iot_lock;      /* IO TLB Cache update lock */
+>> +    unsigned iot_limit;             /* IO Translation Cache size limit */
+>>       /* MMIO Hardware Interface */
+>>       MemoryRegion regs_mr;
 
