@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA9D2C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F648C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shNfT-00025i-J3; Fri, 23 Aug 2024 02:21:03 -0400
+	id 1shNjE-0000YD-6k; Fri, 23 Aug 2024 02:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shNfP-0001ol-Az
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:20:59 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shNjB-0000Mq-7W
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:24:53 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shNfN-0004MB-8R
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:20:59 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-7a1da7cafccso93590185a.3
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:20:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shNj8-0004p4-CA
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:24:52 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a86933829dcso188770066b.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724394055; x=1724998855; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724394289; x=1724999089; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lHhF/F/swQaONpwD+nKZPTJF1ZZpGwL3r/Flj4EEU9E=;
- b=Zzbj0jHfnx9v4v04dhauXw6NK5fq7T7dDD9/VYV38vmFFWEEycpjl38d4qKzGr0/FN
- bFmnesXfk+HxFZ5BwES+/HAPcX9UjwBpRSuFtcadm+6M8SegTZNSWCzdeg08OMBemJIt
- fWgnwxbJP+exKPTtewrKcF8X8y/GpoTmljFBL2mzB0/h2pFP5CrZEoF6oBQmI53S0Na/
- 7T3zR3Y4I1rh3DTw3tmJtMSipE7dMjYlfmSVdI4edgzo0ILG8C+lJGVhZkXSENubculz
- S+pfesfIsjEZ8xJ5wWm48eJRI5OP8BFYo9/04rUHhaqut6IR0N38IWvl9M+Iebbgd8od
- Mieg==
+ bh=PZOOgz7uQIr0f5rSfdodIpxzU4J+C234VWKIA2Uc9Bs=;
+ b=Bx08tJiEJuABclIVDUqCannv5X2OTwE5JsNoNdwYL3K89TYtmbivP34HEqRj0cwgeQ
+ 12smzDcemGeCGCNbIZ3Et2bXmiz9ZpWfgQ9563CgMslncrGy/aUDEUlzMZxYSo5EfgK+
+ lbnOjAFcE4X7GWYgKeMhioCCREzUym7r2Myz2Wj9B5gcBEFYufuc7eRfsQVVWpQHME9D
+ qDROUupd30KM/6215VAEPxEleZdFuy94RyxVAM58keeCk1v/c56xWSaCU+rGqXE8F7fw
+ 0pFctWeaeDoshz4OSyx9qpJiFO9o+DBnI6E8SDHAS+q+9TkO0VKlruPGhsQkdLKu/HyH
+ jTOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724394055; x=1724998855;
+ d=1e100.net; s=20230601; t=1724394289; x=1724999089;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lHhF/F/swQaONpwD+nKZPTJF1ZZpGwL3r/Flj4EEU9E=;
- b=RaiqlKIIFfNQhXN09jVXmuP7W1iPBFRg3tMRL8014IhAlrbv9xub6ZQqsy6/EQkQH+
- K+IVXx4l1Sbc+ztKdaiQwuRCdodHhmcILmU1zKTR2CzewRbmjlQN6mClirCyIRAHF0tM
- SX/rzdz4OtEBT1E3E3KdK0+c5WiDdSrO1Cn8Tjgz17dgjHNAXdjLNOcXRmRub1eCZ360
- KzHiDcnvr3exIOoDGyxxpsgbfoFobFMf1mMsAvno78F0oPzpnedm+qAWCXGVcizxsggQ
- XfCt/ifWWbLfAtphjtm3tJT8Naxy3FEbCN+JNeshGdCo04avyLcpTneDTg+MhKNbSneL
- 5tOg==
+ bh=PZOOgz7uQIr0f5rSfdodIpxzU4J+C234VWKIA2Uc9Bs=;
+ b=VWPWmu15i9H3YpCqGhXHd0lzZbKEpyNqq+ZKDWauXeMwEXkE2OVrcENlfZWOUx87DI
+ TgMulia4NAT57mnDKApSrqsGOo3M0vN4s3tarPYtVcPJXFPzTxSJWmLmLVbd03I1ys2H
+ irJPz44e4CJSR+j2WuEUr4WW1qMRFmT0wXHlwsrhJm1G5YwEo6TYaAOJqHE8a6XLNuLM
+ Vs0ZoOqqkHPoZV112OXL9NdblSUIUTdQF8U9M2F1vyL8W8zjojM0sPj7WC0hfilnLT8W
+ igCaNzlq13Alv3yt/jO4PLsRwjXWOsvi5GaY1/gNU5OuujVQLvmZfBhxQFs+2SWMGxMt
+ X4ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURegmcuJf2o3EPlV7MLGcpaqKjR+MGE8cXaKjdaNxSXP89LXwLSdETIL+hBvw/gvDRB1h5Tv2zt8mW@nongnu.org
-X-Gm-Message-State: AOJu0YyIgaLyUXMmNCnem/8OImWMgVMw46+1UjhX0WeRQu/RBuWRZUqq
- zRirJrcIHk0auVBCczwbICnDl9Z+J/wx6glamnDO1SwQQ16MEisZDT4Ej5zwkJQ=
-X-Google-Smtp-Source: AGHT+IEPuJ8UiFbl5RUJgZ2zOCHnyMuIRvioNWh+4HWnn2QD0L/GeYWDRT4w0h/8yMXLq8Ip94lYaA==
-X-Received: by 2002:a05:620a:170b:b0:7a1:df6f:4374 with SMTP id
- af79cd13be357-7a689700b3fmr125664085a.16.1724394055249; 
- Thu, 22 Aug 2024 23:20:55 -0700 (PDT)
+ AJvYcCWuecZ9NdoIkRzT/YEMVV8FnNNqdpNykJAqxpb/mEPqFFpLf61rH7PvTct9WF2fTMzV03yyqjZaPQfq@nongnu.org
+X-Gm-Message-State: AOJu0Yzry+6Ny6zpBdD7V7GOM8v8CHh0xZfD42ZZIG9WqdwHzi11X6QM
+ e/8YZ0LGKU6yvTmnye5rqwang0zEbCi5WXY67DRmtJCHeaivWgvfB+tcL2Tvmqw=
+X-Google-Smtp-Source: AGHT+IF2q9DqIRDUFo0VyvAkVXfxk5oxetbS8ePk6aQHHAOAsemVZSzdQ2vLQU9ggR7p1x1GSRMrvg==
+X-Received: by 2002:a17:907:e606:b0:a86:96d1:d1f with SMTP id
+ a640c23a62f3a-a86a52ba52emr83485866b.26.1724394288458; 
+ Thu, 22 Aug 2024 23:24:48 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.206.153])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a67f3fc6b9sm145482785a.115.2024.08.22.23.20.52
+ a640c23a62f3a-a868f47d31fsm212546266b.151.2024.08.22.23.24.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 23:20:54 -0700 (PDT)
-Message-ID: <60ae5753-548f-429d-89b5-f9f3721741f3@linaro.org>
-Date: Fri, 23 Aug 2024 08:20:51 +0200
+ Thu, 22 Aug 2024 23:24:47 -0700 (PDT)
+Message-ID: <776a3b71-2495-40dd-a813-55000f997c2f@linaro.org>
+Date: Fri, 23 Aug 2024 08:24:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: Convert Aarch64 SBSA-Ref avocado
- tests
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>,
- qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240822114146.86838-1-philmd@linaro.org>
- <17ba91fd-b876-4169-8b72-3fddf966e1a3@linaro.org>
+Subject: Re: [PATCH v4 14/35] tests/functional: add a module for handling
+ asset download & caching
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
+ "Daniel P . Berrange" <berrange@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>
+References: <20240821082748.65853-1-thuth@redhat.com>
+ <20240821082748.65853-15-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <17ba91fd-b876-4169-8b72-3fddf966e1a3@linaro.org>
+In-Reply-To: <20240821082748.65853-15-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=philmd@linaro.org; helo=mail-qk1-x734.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,66 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/24 20:48, Marcin Juszkiewicz wrote:
-> On 22.08.2024 13:41, Philippe Mathieu-Daudé wrote:
->> Straight forward conversion. Since SBSA_FLASH files are not
->> tarballs, use lzma_uncompress() method.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> Based-on: <20240821082748.65853-1-thuth@redhat.com>
->> ---
-> 
->> diff --git a/tests/avocado/machine_aarch64_sbsaref.py 
->> b/tests/functional/test_aarch64_sbsaref.py
->> old mode 100644
->> new mode 100755
->> similarity index 56%
->> rename from tests/avocado/machine_aarch64_sbsaref.py
->> rename to tests/functional/test_aarch64_sbsaref.py
->> index f8bf40c192..6728e5f92a
->> --- a/tests/avocado/machine_aarch64_sbsaref.py
->> +++ b/tests/functional/test_aarch64_sbsaref.py
-> 
->> @@ -44,47 +55,31 @@ def fetch_firmware(self):
->>           """
->>           # Secure BootRom (TF-A code)
->> -        fs0_xz_url = (
->> -            
->> "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
->> -            "20240619-148232/edk2/SBSA_FLASH0.fd.xz"
->> -        )
->> -        fs0_xz_hash = 
->> "0c954842a590988f526984de22e21ae0ab9cb351a0c99a8a58e928f0c7359cf7"
->> -        tar_xz_path = self.fetch_asset(fs0_xz_url, 
->> asset_hash=fs0_xz_hash,
->> -                                      algorithm='sha256')
->> -        archive.extract(tar_xz_path, self.workdir)
->> +        fs0_xz_path = self.ASSET_FLASH0.fetch()
->>           fs0_path = os.path.join(self.workdir, "SBSA_FLASH0.fd")
->> +        lzma_uncompress(fs0_xz_path, fs0_path)
->>           # Non-secure rom (UEFI and EFI variables)
->> -        fs1_xz_url = (
->> -            
->> "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
->> -            "20240619-148232/edk2/SBSA_FLASH1.fd.xz"
->> -        )
->> -        fs1_xz_hash = 
->> "c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee"
->> -        tar_xz_path = self.fetch_asset(fs1_xz_url, 
->> asset_hash=fs1_xz_hash,
->> -                                      algorithm='sha256')
->> -        archive.extract(tar_xz_path, self.workdir)
->> +        fs1_xz_path = self.ASSET_FLASH0.fetch()
-> 
-> Here you want ASSET_FLASH1 not ASSET_FLASH0. That's why it timed out - 
-> system was hanging on exit from TF-A to EDK2.
+Hi,
 
-Oops... Thanks you for debugging / noticing this!
+On 21/8/24 10:27, Thomas Huth wrote:
+> From: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> The 'Asset' class is a simple module that declares a downloadable
+> asset that can be cached locally. Downloads are stored in the user's
+> home dir at ~/.cache/qemu/download, using a sha256 sum of the URL.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> [thuth: Drop sha1 support, use hash on file content for naming instead of URL,
+>          add the possibility to specify the cache dir via environment variable]
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/functional/qemu_test/__init__.py |  1 +
+>   tests/functional/qemu_test/asset.py    | 97 ++++++++++++++++++++++++++
+>   2 files changed, 98 insertions(+)
+>   create mode 100644 tests/functional/qemu_test/asset.py
 
-> 
->>           fs1_path = os.path.join(self.workdir, "SBSA_FLASH1.fd")
->> +        lzma_uncompress(fs1_xz_path, fs1_path)
-> 
+
+> +    def fetch(self):
+> +        if not self.cache_dir.exists():
+> +            self.cache_dir.mkdir(parents=True, exist_ok=True)
+> +
+> +        if self.valid():
+> +            self.log.debug("Using cached asset %s for %s",
+> +                           self.cache_file, self.url)
+> +            return str(self.cache_file)
+> +
+> +        self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+> +        tmp_cache_file = self.cache_file.with_suffix(".download")
+> +
+> +        try:
+> +            resp = urllib.request.urlopen(self.url)
+> +        except Exception as e:
+> +            self.log.error("Unable to download %s: %s", self.url, e)
+> +            raise
+> +
+> +        try:
+> +            with tmp_cache_file.open("wb+") as dst:
+> +                copyfileobj(resp, dst)
+> +        except:
+> +            tmp_cache_file.unlink()
+> +            raise
+> +        try:
+> +            # Set these just for informational purposes
+> +            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+> +                        self.url.encode('utf8'))
+> +            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
+> +                        self.hash.encode('utf8'))
+> +        except Exception as e:
+> +            self.log.info("Unable to set xattr on %s: %s", tmp_cache_file, e)
+
+This line is annoying on macOS as it is logged for each file downloaded.
+Is it really useful? Can we demote to DEBUG level or log it just once,
+given all tmp_cache_files will always be on the same cache_dir thus
+filesystem?
+
+> +            pass
 
 
