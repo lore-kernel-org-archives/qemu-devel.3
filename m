@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D6BC52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9AFBC531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shNYd-0002nI-Rx; Fri, 23 Aug 2024 02:13:59 -0400
+	id 1shNcQ-0005Tu-FA; Fri, 23 Aug 2024 02:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYc-0002eV-0w
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:58 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1shNcO-0005MI-DX
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:17:52 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYV-00038n-LZ
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:13:57 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2d3d58d6e08so1217728a91.3
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:13:49 -0700 (PDT)
+ id 1shNcL-0003sx-Fz
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:17:52 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-201fba05363so13295535ad.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:17:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393628; x=1724998428;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393868; x=1724998668;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YdHplAffMcXcyi9egxfeqIrbdnUVPw/pDkvqxXIV6Fk=;
- b=LaS6mr/2/L0gqc4ZRA57xV55f1UmRP6c6jbfJrKzTDCN2dM3B335HRL7OVN0aX0Qtw
- 02Gggpk/mHEU3+7rHeSHSeXW6qDX6084O/Ekce7kr9eBvOVhoC2chGaNIDKtZbveC8/m
- gMgzrCAzqzwX1bqqowkcdDg0mYs20zka/lxo4C+1yFNbRWRJ5yEMWBpKvz7rooDmTTVY
- yC//gPqh1olto06HGuaKyjtdLPOdQmwi97FI4VYwYbyqp4rxM3cTfz5R2ZL4csNYoh1b
- B7m2ow13hCCT2UyZ3zNCTbPe3JprtbeR9lNS4KHuOrChehOgN6MEZxxUxwmNdEkmLQ2W
- HHtw==
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bEhTIxiMdcSFu/oeJwhqekqf80o8895SfqhEvxUoXLw=;
+ b=oiHeMAINyXIcE5RWeVChkdvLgArpmsSHmQ9UcIc7ivEDsoDnxi62LtiAgwmqF6rCQm
+ wgX+PPGmcj5/rsRelSPXQ5GKcUnl4RWrHe9cA4W3E0xA+FPQlwkQ3x1cWH57oroOvyS3
+ 6NDF++34Ii9QkmpmeYMuiYmYsmY0dYZTL9uOfxwRmmrpt8Q2YiBHplPmVRz/pGmdJkkv
+ fU2in2zrw+Umr8R8anWdP7cYykvwP8Frcsfuoo8YVG8w+DODIUfEktZkNxP5zN9dSIST
+ XxpfZVQFHLNg47hkWya2iaMoPqL+IaWv7pFGmHOYmlq0Kq0Pc1vB2lS6XAaG795hf5XK
+ IW8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724393628; x=1724998428;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YdHplAffMcXcyi9egxfeqIrbdnUVPw/pDkvqxXIV6Fk=;
- b=P2Vw6/GKwYVkMQTSfDl5twEWlrm1kF30Ns9QlyRGw148dqmJm1K/2N7uvVS9YNbfnN
- hkgVFDL4lPabjnzFIe/978ASKjXfo5v8fZqdwXFNRlWjdna2yqRt9uPFvx2wCig2ZQWb
- xCic/8ykIQL5Ji9/3qXj/7W0mMPf44Asgxyi25smIgkWFl9IukS0ZodoMBGXs2p8yF5q
- dnUqJT3xXl0pPll3Ci2ti/2LH9PY/VnRy1Da5R0ay46mtJielY8USMU1rKdJiDpaoHqf
- zSfe1OwrIjndra79XD6bHSuojPOe+lgyRC3qHnGL4sn+7ccfkWfVI8a9p0mAA1/eb25K
- wtXg==
-X-Gm-Message-State: AOJu0Yxme3Q7MTvy6rHQlqNMCU4oZVhx/Xt6zhogJbE9DqkkUgJkcaua
- wkSXAlDCiaZFBqFOoqDpwHbB+G9lxj0ru2yh85+7O7JAz7kIbMXV+ydSnKgpifA=
-X-Google-Smtp-Source: AGHT+IFzJ10oTRUyLJrWB5ipu7tvGZB9L6IX1t4YpN1zznxvJDoxVqCckhwL5Q+Xwak+DQuAoYo6Pg==
-X-Received: by 2002:a17:90a:c002:b0:2cb:e429:f525 with SMTP id
- 98e67ed59e1d1-2d646d2bbdfmr1123154a91.33.1724393628209; 
- Thu, 22 Aug 2024 23:13:48 -0700 (PDT)
-Received: from localhost ([157.82.207.23]) by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2d61393fbcbsm3057579a91.22.2024.08.22.23.13.43
+ d=1e100.net; s=20230601; t=1724393868; x=1724998668;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bEhTIxiMdcSFu/oeJwhqekqf80o8895SfqhEvxUoXLw=;
+ b=D4wTzIYeeIG9YZ9U1AMu0teMcGQR3ojQ8rUQYTOzKQoQa7lC217ff98mTqThp0wIzE
+ 58s7YKeH/CpBgbwYLRxHQG6xUzwvYsKW2hVzceaeN/qdRjP0Q2DS4vEtjliEXV/p+xv/
+ xZNp35S4Wf2/IyueC2FHApvX8LbnX5AipE+7Dw93Ydqt7WrKMc7I/Ppk1SgPNJLuu9vs
+ YMSzAwwlmmtdqYrzRReOp1uNtqlOXAfdHCFibC74i+Y2tpudoSHgNadmIOd6MvSagQXj
+ 3RiLU7O65jtSKAX7pQ6NLzAmkGpziMxSGZIe8s9nfRAq/+P62rQFD3YXt2VUzT5MYR6o
+ bc3w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8qI/yb4v5uEMHXQeyPem14NoJXMWSRDT/JNNiMqwNMEaspoVIYAjT7SsjkBP6o06GKDmKRNrJc1zH@nongnu.org
+X-Gm-Message-State: AOJu0YzhowIxGoo0BwLV7/+P8fkLvzgqbk+N/kMG19j+dyGLPkHYQOIG
+ YlZAeEDNnyv17kLtkpc9IRuRJnzNQ9ICuGHDufdM9DrDECZJRi64CcBfx3ustfY=
+X-Google-Smtp-Source: AGHT+IGirgNR8Ji38Pw7rZNWp/qdycpbe6l3foimze7j5FIrQwHvcNGWj+4ED4siWrZXBRKy1DeWrA==
+X-Received: by 2002:a17:902:c411:b0:203:a046:c676 with SMTP id
+ d9443c01a7336-203a046c87cmr9151025ad.0.1724393868031; 
+ Thu, 22 Aug 2024 23:17:48 -0700 (PDT)
+Received: from [157.82.207.23] ([157.82.207.23])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20385567d66sm21717935ad.53.2024.08.22.23.17.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 23:13:48 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 23 Aug 2024 15:13:09 +0900
-Subject: [PATCH v4 4/7] memory: Clarify that owner may be missing
+ Thu, 22 Aug 2024 23:17:47 -0700 (PDT)
+Message-ID: <067b17a4-cdfc-4f7e-b7e4-28c38e1c10f0@daynix.com>
+Date: Fri, 23 Aug 2024 15:17:45 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/15] memory: Do not create circular reference with
+ subregion
+To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+ <20240627-san-v2-9-750bb0946dbd@daynix.com>
+ <CAFEAcA9KTSjwF1rABpM5nv9UFuKqZZk6+Qo4PEF4+rTirNi5fQ@mail.gmail.com>
+ <ZsenKpu1czQGYz7m@x1n>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <ZsenKpu1czQGYz7m@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240823-san-v4-4-a24c6dfa4ceb@daynix.com>
-References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
-In-Reply-To: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
-To: Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1034.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,40 +103,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A memory region may not have an owner, and memory_region_ref() and
-memory_region_unref() do nothing for such.
+On 2024/08/23 6:01, Peter Xu wrote:
+> On Thu, Aug 22, 2024 at 06:10:43PM +0100, Peter Maydell wrote:
+>> On Thu, 27 Jun 2024 at 14:40, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>>
+>>> A memory region does not use their own reference counters, but instead
+>>> piggybacks on another QOM object, "owner" (unless the owner is not the
+>>> memory region itself). When creating a subregion, a new reference to the
+>>> owner of the container must be created. However, if the subregion is
+>>> owned by the same QOM object, this result in a self-reference, and make
+>>> the owner immortal. Avoid such a self-reference.
+>>>
+>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>> ---
+>>>   system/memory.c | 11 +++++++++--
+>>>   1 file changed, 9 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/system/memory.c b/system/memory.c
+>>> index 74cd73ebc78b..949f5016a68d 100644
+>>> --- a/system/memory.c
+>>> +++ b/system/memory.c
+>>> @@ -2638,7 +2638,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+>>>
+>>>       memory_region_transaction_begin();
+>>>
+>>> -    memory_region_ref(subregion);
+>>> +    if (mr->owner != subregion->owner) {
+>>> +        memory_region_ref(subregion);
+>>> +    }
+>>> +
+>>>       QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+>>>           if (subregion->priority >= other->priority) {
+>>>               QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+>>> @@ -2696,7 +2699,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
+>>>           assert(alias->mapped_via_alias >= 0);
+>>>       }
+>>>       QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+>>> -    memory_region_unref(subregion);
+>>> +
+>>> +    if (mr->owner != subregion->owner) {
+>>> +        memory_region_unref(subregion);
+>>> +    }
+>>> +
+>>>       memory_region_update_pending |= mr->enabled && subregion->enabled;
+>>>       memory_region_transaction_commit();
+>>>   }
+>>
+>> I was having another look at leaks this week, and I tried
+>> this patch to see how many of the leaks I was seeing it
+>> fixed. I found however that for arm it results in an
+>> assertion when the device-introspection-test exercises
+>> the "imx7.analog" device. By-hand repro:
+>>
+>> $ ./build/asan/qemu-system-aarch64 -display none -machine none -accel
+>> qtest -monitor stdio
+>> ==712838==WARNING: ASan doesn't fully support makecontext/swapcontext
+>> functions and may produce false positives in some cases!
+>> QEMU 9.0.92 monitor - type 'help' for more information
+>> (qemu) device_add imx7.analog,help
+>> qemu-system-aarch64: ../../system/memory.c:1777: void
+>> memory_region_finalize(Object *): Assertion `!mr->container' failed.
+>> Aborted (core dumped)
+>>
+>> It may be well be that this is a preexisting bug that's only
+>> exposed by this refcount change causing us to actually try
+>> to dispose of the memory regions.
+>>
+>> I think that what's happening here is that the device
+>> object has multiple MemoryRegions, each of which is a child
+>> QOM property. One of these MRs is a "container MR", and the
+>> other three are actual-content MRs which the device put into
+>> the container when it created them. When we deref the device,
+>> we go through all the child QOM properties unparenting and
+>> unreffing them. However, there's no particular ordering
+>> here, and it happens that we try to unref one of the
+>> actual-content MRs first. That MR is still inside the
+>> container MR, so we hit the assert. If we had happened to
+>> unref the container MR first then memory_region_finalize()
+>> would have removed all the subregions from it, avoiding
+>> the problem.
+>>
+>> I'm not sure what the best fix would be here -- that assert
+>> is there as a guard that the region isn't visible in
+>> any address space, so maybe it needs to be made a bit
+>> cleverer about the condition it checks? e.g. in this
+>> example although mr->container is not NULL,
+>> mr->container->container is NULL.
+> 
+> If we keep looking at ->container we'll always see NULL, IIUC, because
+> either it's removed from its parent MR so it's NULL already, or at some
+> point it can start to point to a root mr of an address space, where should
+> also be NULL, afaiu.
+> 
+>> Or we could check whether the mr->container->owner is the same as the
+>> mr->owner and allow a non-NULL mr->container in that case.  I don't know
+>> this subsystem well enough so I'm just making random stabs here, though.
+> 
+> If with the assumption of this patch applied, then looks like it's pretty
+> legal a container MR and the child MRs be finalized in any order when the
+> owner device is being destroyed.
+> 
+> IIUC the MR should be destined to be invisible until this point, with or
+> without the fact that mr->container is NULL.  It's because anyone who
+> references the MR should do memory_region_ref() first, which takes the
+> owner's refcount.  Here if MR finalize() is reached I think it means the
+> owner refcount must be zero.  So it looks to me the only possible case when
+> mr->container is non-NULL is it's used internally like this.  Then it's
+> invisible and also safe to be detached even if container != NULL.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- include/exec/memory.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+It is still nice if we can protect internal uses; it is theoretically 
+possible for the owner to remove the subregion at runtime, and we want 
+to ensure the subregion will be kept alive while its container is even 
+in such a case. We can do so by creating a reference to the subregion 
+itself instead of its owner. I sent v4 for this change.
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 461e42d03491..d79415a3b159 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1219,7 +1219,7 @@ void memory_region_init(MemoryRegion *mr,
- /**
-  * memory_region_ref: Add a reference to a memory region
-  *
-- * This function adds a reference to the owner.
-+ * This function adds a reference to the owner if present.
-  * See docs/devel/memory.rst to know about owner.
-  *
-  * @mr: the #MemoryRegion
-@@ -1229,8 +1229,8 @@ void memory_region_ref(MemoryRegion *mr);
- /**
-  * memory_region_unref: Remove a reference to a memory region
-  *
-- * This function removes a reference to the owner and possibly destroys it.
-- * See docs/devel/memory.rst to know about owner.
-+ * This function removes a reference to the owner and possibly destroys it if
-+ * present. See docs/devel/memory.rst to know about owner.
-  *
-  * @mr: the #MemoryRegion
-  */
-
--- 
-2.46.0
-
+Regards,
+Akihiko Odaki
 
