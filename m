@@ -4,155 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F66C5321D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 16:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA84C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 16:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shX55-0004es-Us; Fri, 23 Aug 2024 12:24:07 -0400
+	id 1shX5q-00080b-Jv; Fri, 23 Aug 2024 12:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1shX54-0004dY-S2; Fri, 23 Aug 2024 12:24:06 -0400
-Received: from mail-bn7nam10on20625.outbound.protection.outlook.com
- ([2a01:111:f403:2009::625]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ id 1shX5o-0007qU-Cv; Fri, 23 Aug 2024 12:24:52 -0400
+Received: from mail-mw2nam12on20602.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::602]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1shX52-0005k5-W2; Fri, 23 Aug 2024 12:24:06 -0400
+ id 1shX5m-00060y-Cb; Fri, 23 Aug 2024 12:24:52 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=X5ZpK6eAF/8+c7qzwQiETptotg248UmoxSBV20Js1YNW1+g4QKnmv8cgARUxf8m7cYK5NcCdfv/InJXrqwO0XHM+cdCGMH8XBI2qjEHr8EVUv+Rj9djoXkTF0GoD3W2xBRT2uDzOU8Yh99tsz3cYv4DvSFV2H0MqZF3mQDayjbJToalsx0dzhZvSbVEbWxVIyqn5MFm3zln44WFSameDNoH+9imq56LtHS8OhJDXBU1anKiFkB004+xl3cekYmewTUfqZt2iMn/j8xmkKlhTjcPXViYsDp/0ySfv96/Pqk63pMCKFEqyMezvjCrnpI6041MgeT0qCWfR60KR67L0cw==
+ b=EqSviI+iPW7Spp6KBqZLd3gq03zL1wMsWmWFVaiC1HyA64WAhfs5EfDnaNFruhivs/L6sNCCpIp2RRpzEhwwODj9EGnUAYZXCE00UFNqiZauh6A/9TJ9CnlervG+fjxtoiHUUmP8zsumw6CCHW25H9S6F/4uS4FXC/aUlAnOIlaf62oWEHHkGvyncxzPkE7ODqhh6UbDG9BL3Ixi7Y1UZig5jqz9DixsA/4BX6pQEQxrq7ol034s28iUDhiwN9QTxCWZJD9YQ5V5jKidJp1H+cWiMdfJNlk99BnlqPVIhDzWewWbuOSi+JHYDQ5a4ZI59NYZVsILhrXyTYQ0tILw0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VF5ORAR7+8oXjWLQXhu9Xv8bqfNMUBVVIy1ks5OB4QI=;
- b=ydXSwXmQBCTLzWYNyVHLe6s0is5YMeSGhw3JQ5h8IkfD3Y5hi0jpqeInj5LSEqKJiJowX96jde/xL4hAKEnyvuSBzYLF6EfwSKZEvID8Hl58cmCZd8Cvjkls+nK80qEyJoDVaAwdcecPXPNVtVRz6UdwZLy06d4DqQ4ltz9t+/RVMv1QVRMLhOwloUHlKEX4eer38Lpll8IBe69AXrwSczbnzeLHWcSnCauQ3h7PFn9WDAQqREdTzQPeUGaW9pca3bisEK4q9BBhih2fW55jQZCn5FUp9TOWtcUf9Ac4zKIMjDLWINZiBSPIdC6zpToR3EW1o8Le7UFju1lQF5LdYw==
+ bh=j6n6xI7D7UctGVsEMgKr1S7iWJMSLF0IJdTRjUy59GY=;
+ b=oPWqguKSPYyv5ybsloqdvkhcnJKpQnaTM1dTENG4NsP6rQ/eah2xBYihbBmTXI0/xmo88jy2G6okEyKPPH+zZroDGAzY9Ffwv8tj6XnfIOHqQ2Tb0a8cGN2e2ZpUhl80F4q6ucxNXQw/ICax6KX2foSChZoOD37YKvlzHQb/yyPQJTitIgk6p+/7t6IN88LcHzWImjOWN3tzzL1ZoXm6SHDEE1vRgzbf2z/uZSoCvsHEjGomuvM3O9JZylvZBXFWPoYuwwVImECEi+c/Og5zHIlWE8QcaCzcGG+mHhcweNf8cKuhXn25bySmftACLeiy9e87TJ2IchkX7nQHROmc5A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VF5ORAR7+8oXjWLQXhu9Xv8bqfNMUBVVIy1ks5OB4QI=;
- b=VEvVse7bPxcdX/IRR0vd10BKO/RqN0W5Rwkxa5nFaGAiwrNaupdLXYgrv95boZvx69IUT6W6F7dBxeiqXdpRkJuHADqgugKg80suVSIk+1Py/9P3U5BwuaKBJGFkE8Qk6QKSpQtfYmZuYjEwiGQgy60a8jO4z/9RI7KWx6/4Q0E=
+ bh=j6n6xI7D7UctGVsEMgKr1S7iWJMSLF0IJdTRjUy59GY=;
+ b=zJ7hQsbvTjF0UWCv/4U9n0te9POjsCF9IgtgSrfLnaMpGjVt//wMcHpRSXwhXSXOYQARPz6TWleYJEscgRmZQkVHZVLCQS8i8nh2sLpkHFxekc3pmZRPQuxsZetQ9qgoeRwxfV5rWDw6DBlKTjCNrvhZ35GN5GqrVFvQNmwkTf8=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by IA1PR12MB6436.namprd12.prod.outlook.com (2603:10b6:208:3ac::12)
+ by IA1PR12MB9031.namprd12.prod.outlook.com (2603:10b6:208:3f9::19)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.19; Fri, 23 Aug
- 2024 16:24:00 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.21; Fri, 23 Aug
+ 2024 16:24:44 +0000
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b%6]) with mapi id 15.20.7897.014; Fri, 23 Aug 2024
- 16:24:00 +0000
-Date: Fri, 23 Aug 2024 18:23:53 +0200
+ 16:24:44 +0000
+Date: Fri, 23 Aug 2024 18:24:37 +0200
 From: Francisco Iglesias <francisco.iglesias@amd.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH for-9.2 4/6] hw/nvram/xlnx-zynqmp-efuse: Call
+Subject: Re: [PATCH for-9.2 5/6] hw/misc/xlnx-versal-trng: Call
  register_finalize_block
-Message-ID: <Zsi3mUs1XI4bgI95@xse-figlesia-l2.amd.com>
+Message-ID: <Zsi3xZ5oibns6MXN@xse-figlesia-l2.amd.com>
 References: <20240822162127.705879-1-peter.maydell@linaro.org>
- <20240822162127.705879-5-peter.maydell@linaro.org>
+ <20240822162127.705879-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240822162127.705879-5-peter.maydell@linaro.org>
-X-ClientProxiedBy: FR2P281CA0144.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:98::18) To SJ2PR12MB8739.namprd12.prod.outlook.com
+In-Reply-To: <20240822162127.705879-6-peter.maydell@linaro.org>
+X-ClientProxiedBy: FR2P281CA0149.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:98::10) To SJ2PR12MB8739.namprd12.prod.outlook.com
  (2603:10b6:a03:549::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|IA1PR12MB6436:EE_
-X-MS-Office365-Filtering-Correlation-Id: d838dfca-8b17-4657-38a9-08dcc38ffe9b
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|IA1PR12MB9031:EE_
+X-MS-Office365-Filtering-Correlation-Id: d622d938-dea5-4ce5-1d04-08dcc39018da
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NGVOVUZ6cERyMzFvWEwrOHZlMUlsaFBqQ3hhK3B6c0tTVkZJU0o2eUtBaW42?=
- =?utf-8?B?M2FMOXk5S0toRXlRL3E0ZDNOdVpCQVQyNFdNV3VsbStiTW9xQlNybTY0cFRS?=
- =?utf-8?B?R1JOWFhrZzFaRW9mOGJIcUpxa1FsYXZ2eWM5U3Niem1kS29TTEFaQ0RTVHRt?=
- =?utf-8?B?UUdYUDJGOU1IaEZwMktFN0wvQkdKVjBxY3FwUndRdzlWK0dlUUxKRVUyMHZX?=
- =?utf-8?B?WW12Y2hoRHRtcmZKUkFNT0NMZHNzQ0xmbStPdlpYTkZPNHluR2FIZGRnVGdt?=
- =?utf-8?B?Mmh0dDFVSVVDR2c4MTBXR0pBQUVNblEvSXVKV2FQVW96cHQyYkJxbUQ4T0Vq?=
- =?utf-8?B?LzBQQjk1emRDQ2hXRDREcEFOYlpIOEM1R1Jvb0ZWUWZBekdMYjY1UURPNjJ0?=
- =?utf-8?B?WVd2RnJVWW9NT0NkVHBFa0xlUUxzVTVkc3dkNVlVZ0VrSkhSdTZuVEoyVGM4?=
- =?utf-8?B?Y2tzbTJuRDhJb2wweURXb2FpeFdQZ3lIV3ZtRWFVa2RWWC96clM3UnhWYjY5?=
- =?utf-8?B?N3dhRUtRWStha21PaWF0eTU2R3ZzY2U3TCs4azVCUmYwbXFtM25ITWJFNzU0?=
- =?utf-8?B?ZkFZNVpycUNneG5YWGlpN3d6ZVRlMUYwdmdkTnVsdVZSTy9mNDl2YmIzYWJQ?=
- =?utf-8?B?aUU5UkFabjB3Vlo1bWR3QnduMklkNUt1SXZHZG1xTnpaSy9Hb2Q4dTFUZXRS?=
- =?utf-8?B?TGRxek5WRmpJT08wT3c5Vk1ITTNtZHZiNWw5bWY4R2FLMnBNZ2lOaWR1alpO?=
- =?utf-8?B?OWp6bnZPQXA4WTduZWFXS3dXeERHZTNYRlkrQkladmc0aXRxUU8va3haVWd3?=
- =?utf-8?B?OFZnSEloaVpQUVZjSHBHUDc4K1gydTNBVm9Gc2hES3MrditIY3hxY0t6dlZy?=
- =?utf-8?B?VjhMRlJKMityV3RNL01MVFZpZnh2Zy9oalpDdlV0cDhjNGxPZ3IvbTI0eGgr?=
- =?utf-8?B?LzdpRnd0dGlmRFdwZWRVUzFpeUNoTnMyUUVhMlVoTkhTNGpqVjNxMDJiMGFn?=
- =?utf-8?B?TEpaekV1MG5BRk11M0xxbGpzUWE1ckwzZnRMcC8wa0I0aEwydE1uWUNzbHdN?=
- =?utf-8?B?WG1PdFExMzBqL0I4YjVZcHVTN2lET0NkaU5XRVN5ejkxKytxQ1hrYmNFZjZt?=
- =?utf-8?B?ZkJ1RWxoSS9qL2pVd1duWnZFdlJ2VXRRUTkzaVBEOEx6TFpWMEgwWDZPdGVl?=
- =?utf-8?B?MEI4MjZoUHg5T3Rwb0lFSWJQL1BlR0Z3dUg0aWw1QVJJc3FTdVFMSGNSREV2?=
- =?utf-8?B?ckMvOFFqellBQ2JPVVBkVU55c0k3UjA4TTBZcGdzRzBCV2NucjJhV3FSNGx1?=
- =?utf-8?B?MHJsMUI3VGl5WDlYSFc4UXB3Z1R4Q3hQTlVPUlJrb2xPVVdML0svL3cyNjF0?=
- =?utf-8?B?dFZJVE1Ja2QxQ1owQWl4a3o0Znk1ZGdVdXRqS2syREtZcmxhemNEL01SMEl0?=
- =?utf-8?B?S2h5eVN6ODAva0hLVm1MdkEwZlBUUm1EOHRkRnlycEtZVHFDNEdpd2dlZG93?=
- =?utf-8?B?aWdsalpxVnRjcWtHNllRUDJaSE1IbjlWV3hZQUxYOTJscDdGeE1KSjJoa1RW?=
- =?utf-8?B?K051N2hNVHBNUFEzOGJaOWhydDJYT2RRbHhpVnQyQ21Lai94Tk81cXEwSlBh?=
- =?utf-8?B?aHR5d0ZXNm1yUExkUGhYdTFIZmlqdVhTWk03dGRTWVU4c3R5VCsyN0QyTS9r?=
- =?utf-8?B?UW1UK3VTOHVRTyt0NVZCMm9DWTVtOHZJT0E3Q291cDFQRTNrMk80WVFvL1Ri?=
- =?utf-8?B?T0VIMkc3S3BJK0Vudk55elNtcTJOL2RoamNjeS9MMS8yTk5NRGg0NGNFWCt5?=
- =?utf-8?B?RjducGo1UTZXMldTaG5XZz09?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SUJDMlpTcmdiazQ4Yy85V08wV0NWRjdxMi93cm1qa1hJZGRRSmJBSnpoc0dp?=
+ =?utf-8?B?aklPNFJKbTY1VUlyQ0VVck14ZGp0MjB2bGtrc3o0aUVYZ054dlQ2ZjJhZ0FK?=
+ =?utf-8?B?KzlTa3NFdWlJNXlqRWhlOWZycis1N0ROeDUvblI0ckpRYmtMd0pBelpuV2hU?=
+ =?utf-8?B?RUkwUGtKNUJmZkpCZG9oMzJ6aFZyRWg5VnROSVRHaVNvRUtBU2xyWnJGaDM4?=
+ =?utf-8?B?TTU0Vyt6UlJQTVRnVmZremJqK3NyYm1iQnBmYmQ5MGFuMEpoZjhEcVNsU0NI?=
+ =?utf-8?B?azdJcDRCeDExcENrTjZjM3M2Szd5bFFwZ0NnSWcyTUlJa2NoNnVJYW01blJQ?=
+ =?utf-8?B?bXAxTUxHV3pXQ002MVFMN1laWm9TekNRekpob3BFTS9FeG90eElNbEsyZ3BZ?=
+ =?utf-8?B?ZEhCd2ZtNDA4dVN5T0hrWWo5WEUrZmh5dnZWZy9IYVpEOVQrYmdVelBKUksy?=
+ =?utf-8?B?dEpWTDkzaFZYcUZYdXZCSlRmdU5OdEZVRW84TU8xb2xIMGhxZFpINU1zczFr?=
+ =?utf-8?B?QnpvazErY011VU11TjNYcGszcmRkd2ZOOERIb1k4WEpQcCsydEpYN1dISlg0?=
+ =?utf-8?B?ZEoydldJakRhMkZmUFBmV1NWOFcwSlVPSHc2VDcrSjRmWUFIMUZPMnVOT3BS?=
+ =?utf-8?B?V05QMmhmM1pZR2wzUk1ubnU2SWtTOFEzMjgzWkp0K1BSRjlkeW1UYXRSRjdw?=
+ =?utf-8?B?UE5Zcm45UzNXOE0yYk01SjZwTGhYcGtmb09KUStLazEwK01sM0VIMWNBY25N?=
+ =?utf-8?B?ckM3YVZuZVNuSDF6R05lVUROd2tkSWhxMDVVeE02RU0yWjMxZm00RW82T3Zz?=
+ =?utf-8?B?a0F2QUVBMFFHR091Nnphd1ViK1E0bkpwUTBUWmU5Q2ZYSXN6ME4yNVNUTTB1?=
+ =?utf-8?B?RmIvMituNmN4b1ZtK0IwdldZSUVCTkZFcmFWbTlSNW1OVFBqSnRjQnFScGdo?=
+ =?utf-8?B?YzFLaWthK012MHAyVEo1RXVIb0FHb08wRk12enlYc1NNMnpjWDdFRCs2VXlB?=
+ =?utf-8?B?MEpUeFdmK282VmlMenEzd0pubTFwN3BKN0gzMDQwNU9kVEV5Uk1Da0N6ZjNE?=
+ =?utf-8?B?QTJEVUpBZHpiUnR6UTJpQWhzTjJrU3ZZYzc2Tk5lR1J4dXdibUNzWWplR2VL?=
+ =?utf-8?B?M1JKcFdzaTZCZkM1WU9hbFJyZnVvM1VaaER1VTVMaFk4NTg1K1VCUTZZTWlk?=
+ =?utf-8?B?M2RTWHdNRmt5TzBQa0ErbXRxNGw2T0lPcEo1UFdSa2lPcnFiczBuc0pheFhV?=
+ =?utf-8?B?aDhqU280TFBXY1NSeVZVT0g4aERaZ1hKQWI3cE1FVzVjVXpuSlMyMWlsT1E2?=
+ =?utf-8?B?MTN3QjJLZStBSitjRHRHakhXOXVGZVRNblB6by92YXBCZyt3c1ZsUTVZL2Nl?=
+ =?utf-8?B?V2dZZXFyRGtzVFhiUjROUnRGajJ4WFBaeUw2YUxHN3JnRDJOc0cvMkpEQmRl?=
+ =?utf-8?B?cWZJaTFCZlNJL2hlK1ZWUkpXQ0FyTmJ5a3RMcVNQVEhLdkJnVnFTcUFPQVcw?=
+ =?utf-8?B?aHcxdWtNMFgrdVlVaVlKTmgzVHVBY3RBMTNBa2xWR05GZGFQTk5aa3dERkhq?=
+ =?utf-8?B?eGFKZmdnbGRFVXFFa1ovTGsrT1Q0djU3RFF5TDBpcjcyeHY2OUJkaklPL3VH?=
+ =?utf-8?B?a044ckdDNUkxTHNxRnZqR09OWVFQTVZrTStXOFFHRGwzZjRkQ09nS2RIYXNu?=
+ =?utf-8?B?VHRkNVJKeVFnemphMjJlTjlOREhYMVM0WEZjdWlPZlNTUVUvTnpCZllqUWdr?=
+ =?utf-8?B?UitlUnc5bHVMLzlhelRGNjJaelBiTXFCakMvV3E2ZW5majB2ckVVdjNYYUVu?=
+ =?utf-8?B?cTV6N29aZ1c0enkwRzh2dz09?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WGxTenRhL3lNUmxjTGF3cGppc1Y4Tkx6VWIrQ1VPblBJK2lpVzlNeXJQczNI?=
- =?utf-8?B?cFd4ajhWUkd4SmpIYlE0eFE0L0puSWc5WEF6akJDR0hrMG5QWkphSWNjazYw?=
- =?utf-8?B?cnBDYk1iWmhpQkhYcjh5Rm9YL3JHa1p5aUZ0dWNQai9LRUlaTVRZZXlFbFZ1?=
- =?utf-8?B?YjZJMXZoY3EyczdBYkFSbmdtelV5aU4vNDl2cUY1STlDSFFQdG5UMmdqWm1N?=
- =?utf-8?B?eVE5eVk1OVVmaC9oZWMyNHM5eFBFd2NSVmx0ZnhiUkhLcytFVjVqdGt3NUVl?=
- =?utf-8?B?SFVuUFNqYU5iOEVsV2o4aytyM2hVSzF4SmtnK0kwbFpQelpNcWlTM2s3MkZr?=
- =?utf-8?B?dFQrVW1iT210dE1MRUZvYTJZR2t2UE9yS0ExVXFwNEt2Um5qQU5TTWdLdTh3?=
- =?utf-8?B?RWtJcnliaDJSbU5lTEduYmRTcFgza1RBT041WjgwUGNFeThYRTMrY01WcXFv?=
- =?utf-8?B?OVcvSk5OUUk2elBPc2RxQkhJdysxcDZUNnhzSjExaStFUlp0NVJka1h0eGk5?=
- =?utf-8?B?S21DS3JrdVEvRDVOMGJEVEcrM2h1dlV3Y2d4czZ0RFZ4NXdQRnNjaTRTcndG?=
- =?utf-8?B?SnFOZktQRGE3aVJmYWxQcDg1bTM3Rm5wVUV6L20xMUJuMjUxSFFmL0w4VGY0?=
- =?utf-8?B?eWtIRkVreTB4OW9memhySWJaeTNmNFVmZGs2UnBmZ1ZQOXM5L1VodjY4N2Fx?=
- =?utf-8?B?RktJcGZSUXpqRzhnb3NiZ0NQZ3ZKM0ZpbHJrNW5iTEdqNDZaWHBIUVFsM0xl?=
- =?utf-8?B?L0dqbmJkQzVYVHZWOUJBeU90Qi9OZjhONU16VFRzN05ZRGJHaWJIZ1JmM1RO?=
- =?utf-8?B?NDQrUWROMUNUa21hcnZOY0ZobmF5SDl2d2lkMExUS3piWnVGUXkwd2RGeVE3?=
- =?utf-8?B?cGJNdDFVWlJkMEF5QkY2emtTRjdMTzVBRGlaOWt6Ulp4VWx1eTVBOXRhdXlO?=
- =?utf-8?B?WlpuZWhINjRiTnBmNFMydlBWd2RrTmxJbWZ0VitBMUlCc3Vxd0ZBcVVTMUc1?=
- =?utf-8?B?VjI0aVFMK2ZRVnBWWGxlcXkxd3BBMUMyQm9nTStXTEd5Y3E5VTh5YXRjeDVv?=
- =?utf-8?B?WU9hWjlRWXhOMERRZzQzd1p6c3Z3QkhCZ0pMWTBCSm5zbnhCV21WRXRHajkw?=
- =?utf-8?B?ZTlieUs4aHdVVkpKQ29GaVpudGJhTnA4YkV1UlJDaTVJK3dRRjNoRGRMUnY3?=
- =?utf-8?B?ZzlIa0ZVQXlsLzltL0xRV29HSkpqRFFmajJwTkIwalY3b0MzOUJqS1RCM3ho?=
- =?utf-8?B?VTd4aUhSOU96L1dFNFdQWHc4N3I2dFovQm1sa0tITmtmQzd5YXRxWU1LeHpy?=
- =?utf-8?B?SVNSbGFqbXZhNFVQeG03SStUVXpjVEJWeVF5aExDQjZvTXlnWllzZkU1VHhk?=
- =?utf-8?B?dUFLQml0dkh1UlJoQlhjN3NVczNkTXNuVVYyaDdqWnR0ZlVCTnVnVFV0c3h4?=
- =?utf-8?B?N2JNRUJFRGtHOXNJT1pORGl0cXdoRW1qeGVqWW90RlZhSHRyencrMjNsaFFO?=
- =?utf-8?B?S0hkQ00vNXN2bTJVcTVPL2svMDF3OTJwVmNIdjFNQnhUS282ZytESDhsdnJ3?=
- =?utf-8?B?VVRBSmJtbzJwbXppMEg4SFZuN1hBUXZneFJSUHBqZ0dvdXN5T1p5WTAzSm4z?=
- =?utf-8?B?czVTeEdVWENhNGpPR0ZTOGlZMk03SnZiRVpjZVhxOXN5bUlldnFxbFFnS0xo?=
- =?utf-8?B?V1BzNTcyZThBZFFjMzRPanRFSkVZT0daZjRVd05tbDZHRzNzOHFDUU9aa1c3?=
- =?utf-8?B?STJtQ2loTkFlYmoxb0xiVWZUL2xrRVNkS1hFczBoR2RkNldHRmZQYzM3eTQ5?=
- =?utf-8?B?dHVURlVQcGF1eUR3SU9ZdFhpN3lOTXBpMUZiZ3pBVkx3RUwwcnRielZ1WmtC?=
- =?utf-8?B?UURMQzk0SGJZdVN1MGxJdW5tV1JIUDBvQ1pZdXE0eS9zU252ellVUFEzRHRk?=
- =?utf-8?B?WnVieWZsamdreldxdkxucDJWQWczT1pTV3poWEIyaGFDb1JSaHRwUHRwdjFH?=
- =?utf-8?B?TUJJMnpNRjk1VWFBYzk1VFlPTzBDMk9LQmxpVHJyZ1h3YlB4T1Fhd3Y1cXh5?=
- =?utf-8?B?TlFid21KaUNFZWhaai9lQzErN1hCSXZQcEc2V0ZTd2thYmVGdzZUS3RpbGRw?=
- =?utf-8?Q?PguKp7zPSD5aDjFC132d0qr2h?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?STQyVEovYXFQeXZJaGhDUzh3aVYyWG55ZklSMHdYSnRyUTIvRkhCYVBCRmFk?=
+ =?utf-8?B?b1pyQ1o3aVJZdEtZVEl2T2VLd2xSK3JDOHExL2s4NU5UUTdQNEFKWXZPcmJv?=
+ =?utf-8?B?T0J2MWJwc3l5ajdwUENsMjlpT0VUclZnV0xQNVVqNVorM2Yyb3BxajZsVkEv?=
+ =?utf-8?B?UXB4MnZFUTVseU5vckp1QmFEREVVRklmRDZIVjBZQ0VZZjZFdFYyWFUwbFBS?=
+ =?utf-8?B?RlR4c1NoZHB6RFJzTGRFRnJWNVZpK1pMM2xoZjBkYnE4Q09BajhsMmpvYlpj?=
+ =?utf-8?B?blJnSDV1bTdwZFlCcGNCdFA1WUZScmp2WC9QWjBVWC9zUS9GcFpycE9EMy9l?=
+ =?utf-8?B?Yll4Yy9rTCtRYXlBUEZCN1hVNmx1cjcvODdzVTNjdmdEU1BzWktKNnFHUnF5?=
+ =?utf-8?B?MU9OSmxwLzJXOGNDZUJCTjFYTEhBbW9RdmNMZm1hVk5Md1o4WjVYYnd1SDBJ?=
+ =?utf-8?B?MTI1cnVTOXNidjZJWDhkOGs5T0ZvL0paOVpCd3MxYWVtdUhiSlIwb0pVdTZp?=
+ =?utf-8?B?T2RIVWxwVGJFdG1YdkRHT3EzMlpTaXEzOEJYY09VN0pCVEVpVzhUa1BRRUVq?=
+ =?utf-8?B?QU13TThNUDQ5WlFFMUQzS0hOb3FFS01KeWtoNENqL2RiZ20xZlp0MEdBbCtK?=
+ =?utf-8?B?MnR1SGYvZS9nZWZoRS93c09NSGNjT0FmQXJTREVaVEVWNnE1NWIvakRtZGxF?=
+ =?utf-8?B?NW1Rc0hnY3FWZFBFWkpCY0J0R3F0VWlaTnlTUUZHSGl2MlpvZnRpR2hlWDVM?=
+ =?utf-8?B?QXdjK0xZNG5lajMzMk1IK3g0V0dXNERLVW0zUGZRWlA1UDRmcUpMcWc0RnB0?=
+ =?utf-8?B?SHV2RkMrV05GdC9uTjNBcGVKYndnUjdtK1F2eGZHY1BnOGJIZWI3dGRXU3Vu?=
+ =?utf-8?B?ZXEyYm5OUjI1eVFEdFBOaVJhampWVmV5a29tSk9wWFZSMTVXdy9vZjFRaHN2?=
+ =?utf-8?B?clRoaFlZNjZIVnZ0elVpblROVEU0N3ZBWEwxNW9IZi9mOW5xeDFLZld2OVpO?=
+ =?utf-8?B?Z0VDK2xiMTVhdXZ5dkIxdEpDdFlkNHVlWjhXMVo3L09tQnMzVnlrK3dtSkxF?=
+ =?utf-8?B?UFJHYis0Nlp3bmpmSnA5YmhVOUEyYVhJZm9WQ2FNeE1IeFd4dXBiQWE3L0w4?=
+ =?utf-8?B?bVJGVXNqRkwzRHVxZ3pGM29FTlFzaEVvZElXRk5QcnMxM1NjNG5KQTZjT0dK?=
+ =?utf-8?B?bWsvRjd6M0REY2FSVFU0a3J1Z0x0WDlkNUhHendsRXJxT1phSEZzWE9abUNy?=
+ =?utf-8?B?Ti8wUkFmbUlhNkhMZHdHNENRUHUzSmxIZTcxdng4TWNtWG5XdmpGWDh3bnhT?=
+ =?utf-8?B?U0JxV2RMdVZ5MmNiRE9xcVZUNTkvNCtNNEJEOUE5eTRGM1IzeE1lbVVzT0Vi?=
+ =?utf-8?B?UEpXS0VXdyt3bVZVMG11RUdibmVoVU1NRDNYdk5ndUEzU0YvT3pFT1JtSm1G?=
+ =?utf-8?B?UWEzb0YwZFhQaG50VjVsTHAvSWFkekpGeXN6Uy9TSXp3ZHQ1eHVLekp5VWFJ?=
+ =?utf-8?B?TFVtRGJ6OUxnWFh5RVkwaDNDL294VGYrVklXQnFURk00cFhFMjQ3NEJQdnVv?=
+ =?utf-8?B?Y2I5dGxiKzBiRlFPa1Y0cStuSE9xekZROWdTOTNLak0zekdBbVppdnZBRnFS?=
+ =?utf-8?B?Mm1Zc2JYcFZjL01BbC9menJES0t0T094RGZldHgxZ3lEd05PbkZVbGc4SC9I?=
+ =?utf-8?B?cUFZV0E4VHJ0WE5wajZSbDNFNnllOVppOERUbllDMHNXT3drYjd0ckp6cXpm?=
+ =?utf-8?B?bVRQczRyTnRENHRNS21RZ3FkYzBuMlZSa2RBejFraWtwTCt3OVBtcmV0N1Vw?=
+ =?utf-8?B?dVVUWE1FMjl3aW5WTUhVRlBTQmNpazJERTBXTDIySW5ZUWZNTngyMFdoR293?=
+ =?utf-8?B?cWZDQXpyWDN2cGRxc0RJVnZMUW1zNEl1bXBFK3N6UVM4Ym4yZzZoSjdoZ1c0?=
+ =?utf-8?B?RzVBdlNrL1g0NU9sYVdRcVd0aFc3UkgzbThLUHgyYzFNNk1BczRSWjd1aDNX?=
+ =?utf-8?B?UFZnaDFHNVg5YWYvRkk3ZWNZbWhITGhMdVIyd0lwNzZ1d1ZNSWpIWUNHZWFi?=
+ =?utf-8?B?T0Izb0cyUklhSzFkaks3M0RldThDRmY3Q1ZOMm9VZW9KNE1ZQTlmWTBqQnZa?=
+ =?utf-8?Q?bP3RYmYUugLlRokG8oQOCRLJT?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d838dfca-8b17-4657-38a9-08dcc38ffe9b
+X-MS-Exchange-CrossTenant-Network-Message-Id: d622d938-dea5-4ce5-1d04-08dcc39018da
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Aug 2024 16:24:00.1386 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Aug 2024 16:24:44.1682 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yhAlYTNTDfmbikxN+POtOGIY2tWkO59SFhzzESDCS6th/rF58HC0Vm4jlyZjKIuN4p10E9VTJ7vvVrK+VSwW2A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6436
-Received-SPF: permerror client-ip=2a01:111:f403:2009::625;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4glxoYnTnPZkR5o0sVLoy1RmYSwTp+JTOeHEH4LrBYEngLkdjQwE2ThAL9buDQKAa33L4XpPbqUXbERsTuKx2g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB9031
+Received-SPF: permerror client-ip=2a01:111:f403:200a::602;
  envelope-from=francisco.iglesias@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -175,23 +175,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 22, 2024 at 05:21:25PM +0100, Peter Maydell wrote:
-> The TYPE_XLNX_ZYNQMP_EFUSE device creates a register block with
+On Thu, Aug 22, 2024 at 05:21:26PM +0100, Peter Maydell wrote:
+> The TYPE_XLNX_VERSAL_TRNG device creates a register block with
 > register_init_block32() in its instance_init method; we must
 > therefore destroy it in our instance_finalize method to avoid a leak
 > in the QOM introspection "init-inspect-finalize" lifecycle:
 > 
 > Direct leak of 304 byte(s) in 1 object(s) allocated from:
->     #0 0x55f3ff5839d8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-aarch64+0x294d9d8) (BuildId: 23cf931c66865a71b6cc4da95156d03bc106fa72)
->     #1 0x7f3f31c6bc50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
->     #2 0x55f3ff9b8c5d in register_init_block hw/core/register.c:248:34
->     #3 0x55f3ff9b96be in register_init_block32 hw/core/register.c:299:12
->     #4 0x55f4005e5b25 in efuse_ctrl_init hw/nvram/xlnx-versal-efuse-ctrl.c:718:9
->     #5 0x55f40254afb1 in object_init_with_type qom/object.c:420:9
->     #6 0x55f40253228b in object_initialize_with_type qom/object.c:562:5
->     #7 0x55f402533b2d in object_new_with_type qom/object.c:782:5
->     #8 0x55f402533c01 in object_new qom/object.c:797:12
->     #9 0x55f402d31a2d in qmp_device_list_properties qom/qom-qmp-cmds.c:144:11
+>     #0 0x55842ec799d8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-aarch64+0x294e9d8) (BuildId: 47496e53f3e779f1c7e9b82cbea07407152b498b)
+>     #1 0x7fe793c75c50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
+>     #2 0x55842f0aec5d in register_init_block hw/core/register.c:248:34
+>     #3 0x55842f0af6be in register_init_block32 hw/core/register.c:299:12
+>     #4 0x55842f801588 in trng_init hw/misc/xlnx-versal-trng.c:614:9
+>     #5 0x558431c411a1 in object_init_with_type qom/object.c:420:9
+>     #6 0x558431c2847b in object_initialize_with_type qom/object.c:562:5
+>     #7 0x558431c29d1d in object_new_with_type qom/object.c:782:5
+>     #8 0x558431c29df1 in object_new qom/object.c:797:12
+>     #9 0x558432427c1d in qmp_device_list_properties qom/qom-qmp-cmds.c:144:11
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
@@ -199,64 +199,54 @@ Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
 
 > ---
->  include/hw/nvram/xlnx-zynqmp-efuse.h |  1 +
->  hw/nvram/xlnx-zynqmp-efuse.c         | 13 ++++++++++---
->  2 files changed, 11 insertions(+), 3 deletions(-)
+>  include/hw/misc/xlnx-versal-trng.h | 1 +
+>  hw/misc/xlnx-versal-trng.c         | 6 +++---
+>  2 files changed, 4 insertions(+), 3 deletions(-)
 > 
-> diff --git a/include/hw/nvram/xlnx-zynqmp-efuse.h b/include/hw/nvram/xlnx-zynqmp-efuse.h
-> index f5beacc2e6a..7fb12df3fbb 100644
-> --- a/include/hw/nvram/xlnx-zynqmp-efuse.h
-> +++ b/include/hw/nvram/xlnx-zynqmp-efuse.h
-> @@ -37,6 +37,7 @@ struct XlnxZynqMPEFuse {
->      qemu_irq irq;
+> diff --git a/include/hw/misc/xlnx-versal-trng.h b/include/hw/misc/xlnx-versal-trng.h
+> index 0bcef8a6132..d96f8f9eff3 100644
+> --- a/include/hw/misc/xlnx-versal-trng.h
+> +++ b/include/hw/misc/xlnx-versal-trng.h
+> @@ -50,6 +50,7 @@ typedef struct XlnxVersalTRng {
+>      uint64_t forced_prng_count;
+>      uint64_t tst_seed[2];
 >  
->      XlnxEFuse *efuse;
 > +    RegisterInfoArray *reg_array;
->      uint32_t regs[XLNX_ZYNQMP_EFUSE_R_MAX];
->      RegisterInfo regs_info[XLNX_ZYNQMP_EFUSE_R_MAX];
->  };
-> diff --git a/hw/nvram/xlnx-zynqmp-efuse.c b/hw/nvram/xlnx-zynqmp-efuse.c
-> index 2d465f0fc6a..4e2d1b9d1e7 100644
-> --- a/hw/nvram/xlnx-zynqmp-efuse.c
-> +++ b/hw/nvram/xlnx-zynqmp-efuse.c
-> @@ -803,9 +803,8 @@ static void zynqmp_efuse_init(Object *obj)
+>      uint32_t regs[RMAX_XLNX_VERSAL_TRNG];
+>      RegisterInfo regs_info[RMAX_XLNX_VERSAL_TRNG];
+>  } XlnxVersalTRng;
+> diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+> index c0d1dde8708..86905479b8f 100644
+> --- a/hw/misc/xlnx-versal-trng.c
+> +++ b/hw/misc/xlnx-versal-trng.c
+> @@ -608,9 +608,8 @@ static void trng_init(Object *obj)
 >  {
->      XlnxZynqMPEFuse *s = XLNX_ZYNQMP_EFUSE(obj);
+>      XlnxVersalTRng *s = XLNX_VERSAL_TRNG(obj);
 >      SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
 > -    RegisterInfoArray *reg_array;
 >  
 > -    reg_array =
 > +    s->reg_array =
->          register_init_block32(DEVICE(obj), zynqmp_efuse_regs_info,
->                                ARRAY_SIZE(zynqmp_efuse_regs_info),
+>          register_init_block32(DEVICE(obj), trng_regs_info,
+>                                ARRAY_SIZE(trng_regs_info),
 >                                s->regs_info, s->regs,
-> @@ -813,10 +812,17 @@ static void zynqmp_efuse_init(Object *obj)
->                                ZYNQMP_EFUSE_ERR_DEBUG,
+> @@ -618,7 +617,7 @@ static void trng_init(Object *obj)
+>                                XLNX_VERSAL_TRNG_ERR_DEBUG,
 >                                R_MAX * 4);
 >  
 > -    sysbus_init_mmio(sbd, &reg_array->mem);
 > +    sysbus_init_mmio(sbd, &s->reg_array->mem);
 >      sysbus_init_irq(sbd, &s->irq);
->  }
 >  
-> +static void zynqmp_efuse_finalize(Object *obj)
-> +{
-> +    XlnxZynqMPEFuse *s = XLNX_ZYNQMP_EFUSE(obj);
-> +
+>      s->prng = g_rand_new();
+> @@ -628,6 +627,7 @@ static void trng_finalize(Object *obj)
+>  {
+>      XlnxVersalTRng *s = XLNX_VERSAL_TRNG(obj);
+>  
 > +    register_finalize_block(s->reg_array);
-> +}
-> +
->  static const VMStateDescription vmstate_efuse = {
->      .name = TYPE_XLNX_ZYNQMP_EFUSE,
->      .version_id = 1,
-> @@ -853,6 +859,7 @@ static const TypeInfo efuse_info = {
->      .instance_size = sizeof(XlnxZynqMPEFuse),
->      .class_init    = zynqmp_efuse_class_init,
->      .instance_init = zynqmp_efuse_init,
-> +    .instance_finalize = zynqmp_efuse_finalize,
->  };
->  
->  static void efuse_register_types(void)
+>      g_rand_free(s->prng);
+>      s->prng = NULL;
+>  }
 > -- 
 > 2.34.1
 > 
