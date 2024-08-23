@@ -4,88 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A36C531DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04518C52D7C
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 12:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shToT-0006Im-9f; Fri, 23 Aug 2024 08:54:45 -0400
+	id 1shTpF-0007Bx-RF; Fri, 23 Aug 2024 08:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shToP-0006Hf-OE
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 08:54:42 -0400
-Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shToO-0004sJ-4k
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 08:54:41 -0400
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-6bf7658f4aaso9313996d6.0
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 05:54:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724417678; x=1725022478; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Wbys7aSbUEeoFbo2CczsEvIqae23lK3FB+T/gbx3lhg=;
- b=YIa8U5Y1NC+3wkYE8rCSRGLKRImMzASu+lVNs09QWfbyhd7BR6832PFEN5efd7v7EE
- Zgqc75iFNXrFCRBnJcNh+yleBg5ltL4nRJXkI9AurA1tGiLPRdUWEg9XCCJzbqDeI2+t
- 4//3qLGbPHuFyhkEOKVrBswXg3XW4im5p6OStZOAHysGRnYx8AEpbD9Q+Mx528RYG5i5
- vXNalnhw8oxDWNSLxzZ9kDPLqYZG/JsZvHNkMMr9VjnkrR5HRNqtGXHqXuuMCvieAAAG
- C1V13DKhefRrs54jIlu6vq8e8QKlOnY7vn4jR0Boy1yhI1LnYfGedPT0sLE70jJXlJ1c
- yMvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724417678; x=1725022478;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Wbys7aSbUEeoFbo2CczsEvIqae23lK3FB+T/gbx3lhg=;
- b=G9NKIYEQZqOb43eyZgH6LaUjK4i6NDO2YeBrS+8WtS/0sNlcOAJDUIjTkTdJvg/vPu
- VoznmHg9J+vldyaAGQsdNeT/dJlv2XFaBVy7R4CDotsyL6g80onnVCA1ndBOtmsJof94
- v/X20HlDYpaaKCkyxiTHGw/7e0gcCyhfVHQmYvRNXCBPIRxg/bMKY0ll64lC256wTW7P
- IqGrMBNTYXNCgPiPDf8MF1SFPbVgrbKb8uOwcP/4WWy/eVvdZdS/XVGbOvwDRzTd1GPb
- 8vQuS1siMrobOmRW1xuIXV/aEtXbvwwQn5RGkBpE6x8/zjWFE41jOT7udk8LOuLrcNK8
- WzZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgzFagcs/wfizC0DZK0sNKnYo6kYIdI0OvaJVHmYEoVr4HP397ciOq6ppCGwd8rMnBr0fqZrXSoLEi@nongnu.org
-X-Gm-Message-State: AOJu0YwX1iH53HT4Xm982Y67G7/qxY3fCL2CgwFUGc2CYu8ROqh+XDP4
- 5iGWtmBrfTpeXd8JfTKq9mO6RtdiTmctqZNIMHA0+dcVXLe328WVJ1mHKg04Giw=
-X-Google-Smtp-Source: AGHT+IHF1wQgCsJOMhvB3lyaRLeHRnz7bvbKPrCmwArZGmFYl6pDL8a5xnujPMBBd61yD+7XR2b7fg==
-X-Received: by 2002:a05:6214:3281:b0:6b8:1936:9061 with SMTP id
- 6a1803df08f44-6c16decbf60mr23795516d6.52.1724417678328; 
- Fri, 23 Aug 2024 05:54:38 -0700 (PDT)
-Received: from [192.168.69.100] (plb95-h02-176-184-14-228.dsl.sta.abo.bbox.fr.
- [176.184.14.228]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162d1d25bsm18319296d6.3.2024.08.23.05.54.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Aug 2024 05:54:37 -0700 (PDT)
-Message-ID: <4b4018c6-4a2b-4250-bb53-be9cc5df7cb4@linaro.org>
-Date: Fri, 23 Aug 2024 14:54:34 +0200
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1shTpD-0007AH-Ab; Fri, 23 Aug 2024 08:55:31 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1shTpB-0005Aj-Ov; Fri, 23 Aug 2024 08:55:31 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wr0Mf5PQlz6K918;
+ Fri, 23 Aug 2024 20:52:14 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
+ by mail.maildlp.com (Postfix) with ESMTPS id 9E73A140B2A;
+ Fri, 23 Aug 2024 20:55:23 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.47.79.211) by
+ lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 23 Aug 2024 13:55:22 +0100
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
+ <dapeng1.mi@linux.intel.com>, <yongwei.ma@intel.com>, <armbru@redhat.com>,
+ <farman@linux.ibm.com>, <peter.maydell@linaro.org>, <mst@redhat.com>,
+ <anisinha@redhat.com>, <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>,
+ <mtosatti@redhat.com>, <berrange@redhat.com>, <richard.henderson@linaro.org>, 
+ <linuxarm@huwei.com>, <shameerali.kolothum.thodi@huawei.com>,
+ <Jonathan.Cameron@Huawei.com>, <jiangkunkun@huawei.com>
+Subject: [PATCH 1/2] target/arm/tcg: increase cache level for cpu=max
+Date: Fri, 23 Aug 2024 13:54:45 +0100
+Message-ID: <20240823125446.721-2-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240823125446.721-1-alireza.sanaee@huawei.com>
+References: <20240823125446.721-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/35] tests/functional: Prepare the meson build system
- for the functional tests
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
- "Daniel P . Berrange" <berrange@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-References: <20240821082748.65853-1-thuth@redhat.com>
- <20240821082748.65853-12-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240821082748.65853-12-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
- envelope-from=philmd@linaro.org; helo=mail-qv1-xf2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.47.79.211]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500006.china.huawei.com (7.191.161.198)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,62 +69,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/8/24 10:27, Thomas Huth wrote:
-> Provide a meson.build file for the upcoming python-based functional
-> tests, and add some wrapper glue targets to the tests/Makefile.include
-> file. We are going to use two "speed" modes for the functional tests:
-> The "quick" tests can be run at any time (i.e. also during "make check"),
-> while the "thorough" tests should only be run when running a
-> "make check-functional" test run (since these tests might download
-> additional assets from the internet).
-> 
-> The changes to the meson.build files are partly based on an earlier
-> patch by Ani Sinha.
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/Makefile.include       | 11 ++++++
->   tests/functional/meson.build | 66 ++++++++++++++++++++++++++++++++++++
->   tests/meson.build            |  1 +
->   3 files changed, 78 insertions(+)
->   create mode 100644 tests/functional/meson.build
+This patch addresses cache description in the `aarch64_max_tcg_initfn`
+function. It introduces three layers of caches and modifies the cache
+description registers accordingly. Additionally, a new function is added
+to handle cache description when CCIDX is disabled. The CCIDX remains
+disabled for cpu=max configuration.
 
+TODO: I am planning to send a separate patch using this cache
+description function for the rest of the CPU types. This is a
+starting point to test L3 caches for cpu=max.
 
-> +# Timeouts for individual tests that can be slow e.g. with debugging enabled
-> +test_timeouts = {
-> +}
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+---
+ target/arm/tcg/cpu64.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-
-> +    foreach test : target_tests
-> +      test('func-@0@/@1@'.format(target_base, test),
-> +           python,
-> +           depends: [test_deps, test_emulator, emulator_modules],
-> +           env: test_env,
-> +           args: [meson.current_source_dir() / 'test_' + test + '.py'],
-> +           protocol: 'tap',
-> +           timeout: test_timeouts.get(test, 60),
-> +           priority: test_timeouts.get(test, 60),
-
-IIUC with Avocado the timeout was for each test_func in a TestClass.
-Now this is only per TestClass. Hopefully I'm wrong...
-
-> +           suite: suites)
-> +    endforeach
-> +  endforeach
-> +endforeach
-> diff --git a/tests/meson.build b/tests/meson.build
-> index 80dd3029cf..907a4c1c98 100644
-> --- a/tests/meson.build
-> +++ b/tests/meson.build
-> @@ -85,3 +85,4 @@ subdir('unit')
->   subdir('qapi-schema')
->   subdir('qtest')
->   subdir('migration')
-> +subdir('functional')
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index fe232eb306..f2b6fb6d84 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -55,6 +55,32 @@ static uint64_t make_ccsidr64(unsigned assoc, unsigned linesize,
+          | (lg_linesize - 4);
+ }
+ 
++static uint64_t make_ccsidr32(unsigned assoc, unsigned linesize,
++                              unsigned cachesize)
++{
++    unsigned lg_linesize = ctz32(linesize);
++    unsigned sets;
++
++    /*
++     * The 32-bit CCSIDR_EL1 format is:
++     *   [27:13] number of sets - 1
++     *   [12:3]  associativity - 1
++     *   [2:0]   log2(linesize) - 4
++     *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
++     */
++    assert(assoc != 0);
++    assert(is_power_of_2(linesize));
++    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
++
++    /* sets * associativity * linesize == cachesize. */
++    sets = cachesize / (assoc * linesize);
++    assert(cachesize % (assoc * linesize) == 0);
++
++    return ((uint64_t)(sets - 1) << 13)
++         | ((assoc - 1) << 3)
++         | (lg_linesize - 4);
++}
++
+ static void aarch64_a35_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -1086,6 +1112,15 @@ void aarch64_max_tcg_initfn(Object *obj)
+     uint64_t t;
+     uint32_t u;
+ 
++    /*
++     * Expanded cache set
++     */
++    cpu->clidr = 0x8200123; /* 4 4 3 in 3 bit fields */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 64 * KiB); /* 64KB L1 dcache */
++    cpu->ccsidr[1] = cpu->ccsidr[0];                 /* 64KB L1 icache */
++    cpu->ccsidr[2] = make_ccsidr32(8, 64, 1 * MiB);  /* 1MB L2 unified cache */
++    cpu->ccsidr[4] = make_ccsidr32(8, 64, 2 * MiB);  /* 2MB L3 unified cache */
++
+     /*
+      * Unset ARM_FEATURE_BACKCOMPAT_CNTFRQ, which we would otherwise default
+      * to because we started with aarch64_a57_initfn(). A 'max' CPU might
+-- 
+2.34.1
 
 
