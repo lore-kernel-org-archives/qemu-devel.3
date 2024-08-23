@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04518C52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 12:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21933C5321E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 12:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shTpF-0007Bx-RF; Fri, 23 Aug 2024 08:55:33 -0400
+	id 1shTor-0006ax-VS; Fri, 23 Aug 2024 08:55:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1shTpD-0007AH-Ab; Fri, 23 Aug 2024 08:55:31 -0400
+ id 1shTop-0006ZM-V0; Fri, 23 Aug 2024 08:55:07 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1shTpB-0005Aj-Ov; Fri, 23 Aug 2024 08:55:31 -0400
+ id 1shTom-0004uA-W6; Fri, 23 Aug 2024 08:55:07 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wr0Mf5PQlz6K918;
- Fri, 23 Aug 2024 20:52:14 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wr0M13ycsz6K91r;
+ Fri, 23 Aug 2024 20:51:41 +0800 (CST)
 Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
- by mail.maildlp.com (Postfix) with ESMTPS id 9E73A140B2A;
- Fri, 23 Aug 2024 20:55:23 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 6BBAC140594;
+ Fri, 23 Aug 2024 20:54:50 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.47.79.211) by
  lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 23 Aug 2024 13:55:22 +0100
+ 15.1.2507.39; Fri, 23 Aug 2024 13:54:49 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <dapeng1.mi@linux.intel.com>, <yongwei.ma@intel.com>, <armbru@redhat.com>,
@@ -36,12 +36,10 @@ CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <mtosatti@redhat.com>, <berrange@redhat.com>, <richard.henderson@linaro.org>, 
  <linuxarm@huwei.com>, <shameerali.kolothum.thodi@huawei.com>,
  <Jonathan.Cameron@Huawei.com>, <jiangkunkun@huawei.com>
-Subject: [PATCH 1/2] target/arm/tcg: increase cache level for cpu=max
-Date: Fri, 23 Aug 2024 13:54:45 +0100
-Message-ID: <20240823125446.721-2-alireza.sanaee@huawei.com>
+Subject: [RFC PATCH 0/2] Specifying cache topology on ARM
+Date: Fri, 23 Aug 2024 13:54:44 +0100
+Message-ID: <20240823125446.721-1-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240823125446.721-1-alireza.sanaee@huawei.com>
-References: <20240823125446.721-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -74,74 +72,95 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch addresses cache description in the `aarch64_max_tcg_initfn`
-function. It introduces three layers of caches and modifies the cache
-description registers accordingly. Additionally, a new function is added
-to handle cache description when CCIDX is disabled. The CCIDX remains
-disabled for cpu=max configuration.
+Specifying the cache layout in virtual machines is useful for
+applications and operating systems to fetch accurate information about
+the cache structure and make appropriate adjustments. Enforcing correct
+sharing information can lead to better optimizations. This patch enables
+the specification of cache layout through a command line parameter,
+building on a patch set by Intel [1]. It uses this set as a foundation.
+The ACPI/PPTT table is populated based on user-provided information and
+CPU topology.
 
-TODO: I am planning to send a separate patch using this cache
-description function for the rest of the CPU types. This is a
-starting point to test L3 caches for cpu=max.
+Example:
 
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
----
- target/arm/tcg/cpu64.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index fe232eb306..f2b6fb6d84 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -55,6 +55,32 @@ static uint64_t make_ccsidr64(unsigned assoc, unsigned linesize,
-          | (lg_linesize - 4);
- }
- 
-+static uint64_t make_ccsidr32(unsigned assoc, unsigned linesize,
-+                              unsigned cachesize)
-+{
-+    unsigned lg_linesize = ctz32(linesize);
-+    unsigned sets;
-+
-+    /*
-+     * The 32-bit CCSIDR_EL1 format is:
-+     *   [27:13] number of sets - 1
-+     *   [12:3]  associativity - 1
-+     *   [2:0]   log2(linesize) - 4
-+     *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
-+     */
-+    assert(assoc != 0);
-+    assert(is_power_of_2(linesize));
-+    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
-+
-+    /* sets * associativity * linesize == cachesize. */
-+    sets = cachesize / (assoc * linesize);
-+    assert(cachesize % (assoc * linesize) == 0);
-+
-+    return ((uint64_t)(sets - 1) << 13)
-+         | ((assoc - 1) << 3)
-+         | (lg_linesize - 4);
-+}
-+
- static void aarch64_a35_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-@@ -1086,6 +1112,15 @@ void aarch64_max_tcg_initfn(Object *obj)
-     uint64_t t;
-     uint32_t u;
- 
-+    /*
-+     * Expanded cache set
-+     */
-+    cpu->clidr = 0x8200123; /* 4 4 3 in 3 bit fields */
-+    cpu->ccsidr[0] = make_ccsidr32(4, 64, 64 * KiB); /* 64KB L1 dcache */
-+    cpu->ccsidr[1] = cpu->ccsidr[0];                 /* 64KB L1 icache */
-+    cpu->ccsidr[2] = make_ccsidr32(8, 64, 1 * MiB);  /* 1MB L2 unified cache */
-+    cpu->ccsidr[4] = make_ccsidr32(8, 64, 2 * MiB);  /* 2MB L3 unified cache */
-+
-     /*
-      * Unset ARM_FEATURE_BACKCOMPAT_CNTFRQ, which we would otherwise default
-      * to because we started with aarch64_a57_initfn(). A 'max' CPU might
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +--------+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
++--------+              +--------+              +--------+          +--------+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
++--------+              +--------+              +--------+          +--------+
+
+
+The following command will represent the system.
+
+./qemu-system-aarch64 \
+ -machine virt,**smp-cache=cache0** \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+ -initrd rootfs.cpio.gz \
+ -bios ./edk2-aarch64-code.fd \
+ **-object '{"qom-type":"smp-cache","id":"cache0","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"},{"name":"l2","topo":"cluster"},{"name":"l3","topo":"socket"}]}'** \
+ -nographic
+
+Failure cases:
+    1) there are cases where QEMU might not have any clusters selected in the
+    -smp option, while user specifies caches to be shared at cluster level. In
+    this situations, qemu returns error.
+
+    2) There are other scenarios where caches exist in systems' registers but
+    not left unspecified by users. In this case qemu returns failure.
+
+Currently only three levels of caches are supported to be specified from
+the command line. However, increasing the value does not require
+significant changes. Further, this patch assumes l2 and l3 unified
+caches and does not allow l(2/3)(i/d). The level terminology is
+thread/core/cluster/socket right now.
+
+Here is the hierarchy assumed in this patch:
+Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+
+[1] https://lore.kernel.org/qemu-devel/20240704031603.1744546-1-zhao1.liu@intel.com/#r
+
+TODO:
+1) Making the code to work with arbitrary levels
+2) Separated data and instruction cache at L2 and L3.
+3) Allow for different Data or Instruction only at a particular level.
+4) Additional cache controls.  e.g. size of L3 may not want to just
+match the underlying system, because only some of the associated host
+CPUs may be bound to this VM.
+5) Add device tree related code to generate info related to caches.
+
+Alireza Sanaee (2):
+  target/arm/tcg: increase cache level for cpu=max
+  hw/acpi: add cache hierarchy node to pptt table
+
+ hw/acpi/aml-build.c         | 307 +++++++++++++++++++++++++++++++++++-
+ hw/arm/virt-acpi-build.c    | 137 +++++++++++++++-
+ hw/arm/virt.c               |   5 +
+ hw/core/machine-smp.c       |   6 +-
+ hw/loongarch/acpi-build.c   |   3 +-
+ include/hw/acpi/aml-build.h |  20 ++-
+ target/arm/tcg/cpu64.c      |  35 ++++
+ 7 files changed, 503 insertions(+), 10 deletions(-)
+
 -- 
 2.34.1
 
