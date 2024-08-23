@@ -4,79 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC31C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785B3C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shNnT-0002lL-0Q; Fri, 23 Aug 2024 02:29:19 -0400
+	id 1shNwX-0001mg-FJ; Fri, 23 Aug 2024 02:38:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1shNnD-000253-Qr
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:29:05 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1shNn0-0005go-Qm
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:29:03 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a83562f9be9so190077966b.0
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:28:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724394526; x=1724999326; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IGoeM6bFZOwQWvE0nWqJSXjAwDrYs9h2+xwWYWt7zAw=;
- b=iZgc2gwijbcGMjKgYrSY6gjdItq3Om6OGJ27OPm/2Sv77tAyT6RusDWtbjS+WZbvoS
- iD010MHMmVLhDBwWM2TbtRisuyyWg2XCHktfAryBfutA+uztDx6Bb3a+bNBVzujX6Mzy
- pwbBKm5r2jRB5FMaKdODgbU2REjX4eZX72NEzlrX/WWsn5lRdsQ3Mb8YSRX2tBtl/N2G
- vLZwv6N+drV33UZ7puJndLUZ4uwP9ojRErkRetP9RpZaTsy6IJEJzbXn52/9fFA459Ba
- 1EaiAjM/33AAYySoYsP77rsKQhIp7TNUzcVycq5BPqCuw7AM5lvdHefVToTZqB8WvVyX
- cjqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724394526; x=1724999326;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IGoeM6bFZOwQWvE0nWqJSXjAwDrYs9h2+xwWYWt7zAw=;
- b=I+iZhzl8DXcfEVZQlhod1TKzCvZggHdjF1PXx8IfeKdybwe/bBQp1ax93rHhUsbMUW
- UhcIuWrTXW14vl5azCiZPFtpiTwVGdZZJtKOY/RGdUKu9q0p2D7qcJ8yiy3BID0+9ceL
- zXisMDOE3/WO/Vbw01Gvp6iVkqhea7KW3WBKCNehm8bydQvbGY0vFfL/WUNwWEDwSYB2
- /NSWSs7VrjqTJXw1zn8bxPSuPxzVYsWGwcZKp+dAAYuGMnC6l0QyoYHEVDAJpiuRBEt8
- Gkubh0xtHWeM6Dt9EXWqAnng3vb+rlg6mQqPFJWWRE0yjkQ5fO+MFSxt967+JHksNOxL
- hJDA==
-X-Gm-Message-State: AOJu0YyEN7sauS2e4uw2qTHS2QwdlG/scVTf+P0s2wafxtNw18foBkzd
- D1qRF14X1t9mZF9j25+RPdgpAo4bzWyIVEHoZfJHU332ICg40OhS
-X-Google-Smtp-Source: AGHT+IGJYfdFSmlKYcuDhz/zfyU1+eRqYiyM7q7MJWege7aG4ST2YwwUgAKTzNRKjDlKCskWEOSrTA==
-X-Received: by 2002:a17:907:e92:b0:a86:8917:fcd6 with SMTP id
- a640c23a62f3a-a86a54cf719mr68122066b.60.1724394525334; 
- Thu, 22 Aug 2024 23:28:45 -0700 (PDT)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a868f4f4aa0sm212083266b.213.2024.08.22.23.28.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Aug 2024 23:28:44 -0700 (PDT)
-Date: Fri, 23 Aug 2024 07:28:43 +0100
-From: Stafford Horne <shorne@gmail.com>
-To: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Cc: qemu-devel@nongnu.org, openrisc@lists.librecores.org,
- "Jason A . Donenfeld" <Jason@zx2c4.com>
-Subject: Re: [PATCH RESEND] hw/openrisc/openrisc_sim: keep serial@90000000 as
- default
-Message-ID: <ZsgsG_WL7TNcM1_l@antec>
-References: <20240822163838.3722764-1-a.fatoum@pengutronix.de>
+ (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
+ id 1shNwT-0001lb-BW; Fri, 23 Aug 2024 02:38:37 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
+ id 1shNwQ-0007K8-Fz; Fri, 23 Aug 2024 02:38:36 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 5C8B6C0004
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1724395107;
+ bh=c62We7L953Ej4LOAyqiC5U72CjEbzq0XBNJOrjd0lzE=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=zr9lxo4ix5zWQSW3Zinh1r5qLAJr9FABTWawLsB5gqMuZBfGqolJt5yQyrqzXBXYY
+ H6iih68yrK7IE7We0rX3+0fNJ3rT68Dh9W6rVbXaCrl9vAzJaOjQdT40X9kwrNiGrZ
+ wO9zwiW3m6xtZlUUCQM/WleN+uDgz0K0lwoqIeE4LtbeI7+CWqMso4k/WGJ6f7widp
+ j4D4q1k/nsearzV3C8xys88vu8EkS2T2b8Vfa/QczzZ/8gfq8dUiaJ26XiTknn5kFw
+ THT7gTD5uCoJrcuN4tS7jO5Tz793pgAfLVlqfGeTqeO0f5J/2k0roiXofNKuctO5YG
+ Ts06g3j5HxwOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1724395107;
+ bh=c62We7L953Ej4LOAyqiC5U72CjEbzq0XBNJOrjd0lzE=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=IkPZZdtMW1HnSkcrQeira/ln3pFE5xzkQbgWpDM0kMloxt7IwLFNjAGxrMYaj9QPx
+ Ts41kfnBUCvR19bSzaMA0hhDRW9b8waaTsJeKxJuV7VGNVGxnvZ1SLnZ2bRwzE0XPI
+ DpN07WusenbGUIGmtstYD5gxLgsuk7GBXJJhPBHIZISO52w0tQKfEsXPLcQwkyJ8c+
+ P3849oqJE89o1OojiWm3sRWoPg1V63Uoe/pWAK0xEvgOiQfA0MIivwC1u2zaPS8obC
+ /9mszgF66Be67mOol0p8sXxEQaD6Gz0Jxv4pyt5vOd32+ap+cu4z5Xm//I9xLI5Wo5
+ lltQ0WIJPZX0g==
+From: Vladimir Isaev <vladimir.isaev@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <zhiwei_liu@linux.alibaba.com>,
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, <bin.meng@windriver.com>, 
+ <alistair.francis@wdc.com>, <palmer@dabbelt.com>, Vladimir Isaev
+ <vladimir.isaev@syntacore.com>
+Subject: [PATCH] target/riscv: fix za64rs enabling
+Date: Fri, 23 Aug 2024 09:34:31 +0300
+Message-ID: <20240823063431.17474-1-vladimir.isaev@syntacore.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240822163838.3722764-1-a.fatoum@pengutronix.de>
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=shorne@gmail.com; helo=mail-ej1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-07.corp.yadro.com (172.17.11.57) To
+ S-Exch-01.corp.yadro.com (10.78.5.241)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=vladimir.isaev@syntacore.com; helo=mta-04.yadro.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,60 +79,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Note the distribution list you use here: openrisc@lists.librecores.org
-Is old and we should use linux-openrisc@vger.kernel.org.  I will get the qemu
-maintainer file updated.
+za64rs requires priv 1.12 when enabled by priv 1.11.
 
-On Thu, Aug 22, 2024 at 06:38:38PM +0200, Ahmad Fatoum wrote:
-> We used to only have a single UART on the platform and it was located at
-> address 0x90000000. When the number of UARTs was increased to 4, the
-> first UART remained at its location, but instead of being the first one
-> to be registered, it became the last.
-> 
-> This caused QEMU to pick 0x90000300 as the default UART, which broke
-> software that hardcoded the address of 0x90000000 and expected its
-> output to be visible when the user configured only a single console.
+This fixes annoying warning:
+warning: disabling za64rs extension for hart 0x00000000 because privilege spec version does not match
 
-This makes sense but what do you mean here by DEFAULT uart?  I guess you mean
-the one connected to qemu's stdout by default?
+on priv 1.11 CPUs.
 
-> This caused regressions[1] in the barebox test suite when updating to a
-> newer QEMU. As there seems to be no good reason to register the UARTs in
-> inverse order, let's register them by ascending address, so existing
-> software can remain oblivious to the additional UART ports.
+Fixes: 68c9e54beae8 ("target/riscv: do not enable all named features by default")
+Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+---
+ target/riscv/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This sounds good to me.  I will test this out and queue to qemu after the small
-clarification above.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a90808a3bace..07a7af59b6d9 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -115,7 +115,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+     ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
+     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+-    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_11),
++    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
+     ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+-- 
+2.45.2
 
-Also, I will wait to see if Jason has anything to say.
-
--Stafford
-
-> [1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
-> ---
-> v1 -> RESEND:
->   - expand addressees beyond apparently defunct openrisc@lists.librecores.org
-> 
-> NOTE: I am not familiar with QEMU internals, so please let me know
-> if registration in inverse order served a particular purpose.
-> ---
->  hw/openrisc/openrisc_sim.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-> index bffd6f721f7b..d147b00e4817 100644
-> --- a/hw/openrisc/openrisc_sim.c
-> +++ b/hw/openrisc/openrisc_sim.c
-> @@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
->          serial_irq = get_cpu_irq(cpus, 0, irq_pin);
->      }
->      serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
-> -                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
-> +                   serial_hd(uart_idx),
->                     DEVICE_NATIVE_ENDIAN);
->  
->      /* Add device tree node for serial. */
-> -- 
-> 2.39.2
-> 
 
