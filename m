@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F06C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 05:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F78C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 05:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shMQP-0006oQ-SD; Fri, 23 Aug 2024 01:01:25 -0400
+	id 1shMQ2-0005aG-Sv; Fri, 23 Aug 2024 01:01:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shMQN-0006i6-P5
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 01:01:23 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1shMPq-0005Z2-Fk
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 01:00:51 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shMQK-0008SP-Sx
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 01:01:23 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7142014d8dfso1301797b3a.3
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 22:01:20 -0700 (PDT)
+ id 1shMPl-0008Kk-KZ
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 01:00:49 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-70968db52d0so1611025a34.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 22:00:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724389279; x=1724994079;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724389244; x=1724994044;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5CGZuhv54KbzzZfkN6AoDeKXUOhgbsQVkrQ/COnk478=;
- b=WFFaD3fKJk9rocYIMYoeDJHBaQOKllJxHOwNZZlIUn3GIp+SqLvZjhtlhk5Xsr5657
- 13PbUgCyOsarHqkp7adhAIGaT5FswyAnjMtViHg/Oi3ZZ61+lAMsXEIowsRnMwYm2HPA
- KK/E0pD3+NorC4ZNQgHlRUavqcS8lB2fOtGGJPXRxHhO9SZKX1C3Y8vBCvX2dLR784/k
- x1NxYUaa6eWBh8a6/8kkuPRCnLv2RO5ZpDkKLZu+g1u1fmo1xbmmzGzUPAl0L4OxNThb
- FllxfO67Jj/Hja10LuY5nahL1DCxbkauozyI+AawWMQO7VSJ9mrSsEdJDuceINAwB6XD
- VQIw==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6pcXQgTg84ogHkdq4WiIe5jDIP8iy4ZZMz6o2N58b4A=;
+ b=kH4gR/bWUcQS4fHBCjZiOeWEYW9arDrwEjlruKfKRR/XCElK+/VDhvMDt3f3FAKfxk
+ BdeG3imEJnp4+JuPrr1lpzu6cRRaVIWVPo3KY9pMtKTyueu8LV+kbosc7YnYec21geSU
+ 02kPjn4QfQcVoQnmB8QW8ody9BVWWVLERYdG9NKYGdJ8AgLONFp5ko3t5DfM+MTl10aR
+ l+LWsUSrAwzaMY/VZe5jiTKzWI+oqINT6r/PLBFCfomZj15WDLJxB2xp2XN3hVPE4hw/
+ p66W2o4IjHrJgw/zX2um3HuXwIBi8hFGetEqyG3fazbHEvcMbWj/4G/atyAEsDL8Mqg/
+ RZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724389279; x=1724994079;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5CGZuhv54KbzzZfkN6AoDeKXUOhgbsQVkrQ/COnk478=;
- b=dWewzzWD8MVodZ8RfZAPhvk1yyGUkDQQiVgx7S7gANZXcWp+aE2Y9mA9Db3E+2RjlQ
- jb1iDgpEV23aSVbhXcihFZXtm2gXOX43BCAFbM2t4lXhn6J6nqO5L7GhVnfBAFd+UOIh
- QKv9bak3dFmdr/IiXF68g88SQgEBAriiQb0Q5RSZO9MN+4HlYVwGVLiB8sKzh9KDjIsO
- YW4iv8iB6Q2faqGBUtrNbRGXF/Igc2m2CpNZQxvoxzwhNGPl1UyDNY56p0ptmsDgR1ez
- b8wdYEKK1uzao5pbiaN8ySlj8bGWG0w7Aaor+aE6SwlKcC+258fxf7ZHBoL4BQ06LTuF
- eWBQ==
-X-Gm-Message-State: AOJu0YxeD9wJpLncMvVwnE6vPUOqT/vapQ5YHmYmkCQKHKDx/xCjph11
- XbIBavSztB8Zp6Y0cfYP5UJryxcihe/BUYH4JoZGLQcjZ4ezdu8CQhv/k2CfVeI=
-X-Google-Smtp-Source: AGHT+IHaSIlmjSouYnYSZ5QD6oEIMDboa6ojwS1ygG4HobIHc1tCF9yYWt4dXLm9ssqm+qu8VDXMwQ==
-X-Received: by 2002:a05:6a00:2789:b0:704:2b6e:f10b with SMTP id
- d2e1a72fcca58-71445d5b19fmr1110462b3a.15.1724389279317; 
- Thu, 22 Aug 2024 22:01:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724389244; x=1724994044;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6pcXQgTg84ogHkdq4WiIe5jDIP8iy4ZZMz6o2N58b4A=;
+ b=VDMr7STWpb9KfWKlZ/zln5ZA6Xc201lqVaxpfmC8e9G9Gjs989XgLY9zUocvXcSEWI
+ +5sr67ET+K5M1iWFZSIiBLJSWhm44cWdbl0x0ESoiLyugl/UzdCanrpPhZsENxFQFpAn
+ qVYyZMzxs35PvPIhT6j90DGrVM4hoaFAnD7utr9MG9dqWUPCm2CpgaynWvatMdlzeRDJ
+ 8HdIvkhbV3J2xqAroZd7I8TbsSiBD5TEbX3l5yaaVAwsyi8nnEGla76RfJKADx7MLBmd
+ il8NRcgdBFdGA5zabcGooAk0hVi33tKnCY3wYceAA0OWc6+/r1GuKwNx4pwhmAiBaQET
+ 04Dg==
+X-Gm-Message-State: AOJu0YylnzRL3TUGqSIYvYiIPnDJyUEzb+Hx6U4hJc7LAoXBFH8Ae+KQ
+ 5ITopGsKs7Ai5qgwAj/Sswm3SE6OojJAjo7OQ3gZgykGw/P7jqakdcQuSVysFis=
+X-Google-Smtp-Source: AGHT+IFRlR0Dfc+YUJ0coks1nOxiM46no4E2KL/1h2GRgVjjk6XQwvHGjNn+l5tNIKlirDI5VQG9lA==
+X-Received: by 2002:a05:6830:620e:b0:703:6578:8e2b with SMTP id
+ 46e09a7af769-70e0ebf8711mr1188998a34.23.1724389244073; 
+ Thu, 22 Aug 2024 22:00:44 -0700 (PDT)
 Received: from localhost ([157.82.207.23]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-714342e09d5sm2186029b3a.123.2024.08.22.22.01.16
+ d2e1a72fcca58-714342e02basm2183663b3a.125.2024.08.22.22.00.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 22:01:19 -0700 (PDT)
+ Thu, 22 Aug 2024 22:00:43 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 23 Aug 2024 14:00:44 +0900
-Subject: [PATCH for-9.2 v15 07/11] pcie_sriov: Release VFs failed to
- realize
+Subject: [PATCH for-9.2 v15 00/11] hw/pci: SR-IOV related fixes and
+ improvements
+Date: Fri, 23 Aug 2024 14:00:37 +0900
+Message-Id: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240823-reuse-v15-7-eddcb960e289@daynix.com>
-References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
-In-Reply-To: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAHUXyGYC/23SzU7DMAwH8FeZeqaT7Xxz4j0Qh3w4rAc21MK0a
+ dq7k1a0CwrHNv25sf2/dROPA0/d8+7WjXwepuF0LA+onnZdPPjjO/dDKi86ApKA5PqRvyfus/d
+ MFBCdkF359nPkPFyWQq9dPo2921P3Vg4Ow/R1Gq/LD864HC+lCMRvqTP20KvANqrIWgj7kvz1O
+ Fz28fSxlDhTxRBWRoWRDJ68AtKOGiZqRisThVlAE7R1kU1umKyZXJmcmfMJnPBgsmyYqpldmSq
+ MZY4Y0QXlXcN0xWjrTc+9sSRPNkDMbW+mZtslzcxcRBlicIq4YbZm2yXtzCxpDWSRNTTMPZhAt
+ TJXmDbea+ezTEo0DOHhNJlt31CgiR6C5SSSa1eAVVAsbKvDOSk5WBGCLfPMoYVUw20uOGclCSc
+ gSkQM7TxR1HBrEee0lKh7L5NJOf0Dq7hYfGR6zouMqELUzMD6D7zf7z/zPoUhegMAAA==
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  "Michael S. Tsirkin" <mst@redhat.com>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
@@ -81,14 +86,15 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,29 +110,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Release VFs failed to realize just as we do in unregister_vfs().
+Supersedes: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
 
-Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+I submitted a RFC series[1] to add support for SR-IOV emulation to
+virtio-net-pci. During the development of the series, I fixed some
+trivial bugs and made improvements that I think are independently
+useful. This series extracts those fixes and improvements from the RFC
+series.
+
+[1]: https://patchew.org/QEMU/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com/
+
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/pci/pcie_sriov.c | 2 ++
- 1 file changed, 2 insertions(+)
+Changes in v15:
+- Fixed variable shadowing in patch
+  "pcie_sriov: Remove num_vfs from PCIESriovPF"
+- Link to v14: https://lore.kernel.org/r/20240813-reuse-v14-0-4c15bc6ee0e6@daynix.com
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 4bffe6c97f66..ac8c4013bc88 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -87,6 +87,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-         vf->exp.sriov_vf.vf_number = i;
- 
-         if (!qdev_realize(&vf->qdev, bus, errp)) {
-+            object_unparent(OBJECT(vf));
-+            object_unref(vf);
-             unparent_vfs(dev, i);
-             return false;
-         }
+Changes in v14:
+- Dropped patch "pcie_sriov: Ensure VF function number does not
+  overflow" as I found the restriction it imposes is unnecessary.
+- Link to v13: https://lore.kernel.org/r/20240805-reuse-v13-0-aaeaa4d7dfd2@daynix.com
 
+Changes in v13:
+- Added patch "s390x/pci: Check for multifunction after device
+  realization". I found SR-IOV devices, which are multifunction devices,
+  are not supposed to work at all with s390x on QEMU.
+- Link to v12: https://lore.kernel.org/r/20240804-reuse-v12-0-d3930c4111b2@daynix.com
+
+Changes in v12:
+- Changed to ignore invalid PCI_SRIOV_NUM_VF writes as done for
+  PCI_SRIOV_CTRL_VFE.
+- Updated the message for patch "hw/pci: Use -1 as the default value for
+  rombar". (Markus Armbruster)
+- Link to v11: https://lore.kernel.org/r/20240802-reuse-v11-0-fb83bb8c19fb@daynix.com
+
+Changes in v11:
+- Rebased.
+- Dropped patch "hw/pci: Convert rom_bar into OnOffAuto".
+- Added patch "hw/pci: Use -1 as the default value for rombar".
+- Added for-9.2 to give a testing period for possible breakage with
+  libvirt/s390x.
+- Link to v10: https://lore.kernel.org/r/20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com
+
+Changes in v10:
+- Added patch "hw/ppc/spapr_pci: Do not reject VFs created after a PF".
+- Added patch "hw/ppc/spapr_pci: Do not create DT for disabled PCI device".
+- Added patch "hw/pci: Convert rom_bar into OnOffAuto".
+- Dropped patch "hw/pci: Determine if rombar is explicitly enabled".
+- Dropped patch "hw/qdev: Remove opts member".
+- Link to v9: https://lore.kernel.org/r/20240315-reuse-v9-0-67aa69af4d53@daynix.com
+
+Changes in v9:
+- Rebased.
+- Restored '#include "qapi/error.h"' (Michael S. Tsirkin)
+- Added patch "pcie_sriov: Ensure VF function number does not overflow"
+  to fix abortion with wrong PF addr.
+- Link to v8: https://lore.kernel.org/r/20240228-reuse-v8-0-282660281e60@daynix.com
+
+Changes in v8:
+- Clarified that "hw/pci: Replace -1 with UINT32_MAX for romsize" is
+  not a bug fix. (Markus Armbruster)
+- Squashed patch "vfio: Avoid inspecting option QDict for rombar" into
+  "hw/pci: Determine if rombar is explicitly enabled".
+  (Markus Armbruster)
+- Noted the minor semantics change for patch "hw/pci: Determine if
+  rombar is explicitly enabled". (Markus Armbruster)
+- Link to v7: https://lore.kernel.org/r/20240224-reuse-v7-0-29c14bcb952e@daynix.com
+
+Changes in v7:
+- Replaced -1 with UINT32_MAX when expressing uint32_t.
+  (Markus Armbruster)
+- Added patch "hw/pci: Replace -1 with UINT32_MAX for romsize".
+- Link to v6: https://lore.kernel.org/r/20240220-reuse-v6-0-2e42a28b0cf2@daynix.com
+
+Changes in v6:
+- Fixed migration.
+- Added patch "pcie_sriov: Do not manually unrealize".
+- Restored patch "pcie_sriov: Release VFs failed to realize" that was
+  missed in v5.
+- Link to v5: https://lore.kernel.org/r/20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com
+
+Changes in v5:
+- Added patch "hw/pci: Always call pcie_sriov_pf_reset()".
+- Added patch "pcie_sriov: Reset SR-IOV extended capability".
+- Removed a reference to PCI_SRIOV_CTRL_VFE in hw/nvme.
+  (Michael S. Tsirkin)
+- Noted the impact on the guest of patch "pcie_sriov: Do not reset
+  NumVFs after unregistering VFs". (Michael S. Tsirkin)
+- Changed to use pcie_sriov_num_vfs().
+- Restored pci_set_power() and changed it to call pci_set_enabled() only
+  for PFs with an expalanation. (Michael S. Tsirkin)
+- Reordered patches.
+- Link to v4: https://lore.kernel.org/r/20240214-reuse-v4-0-89ad093a07f4@daynix.com
+
+Changes in v4:
+- Reverted the change to pci_rom_bar_explicitly_enabled().
+  (Michael S. Tsirkin)
+- Added patch "pcie_sriov: Do not reset NumVFs after unregistering VFs".
+- Added patch "hw/nvme: Refer to dev->exp.sriov_pf.num_vfs".
+- Link to v3: https://lore.kernel.org/r/20240212-reuse-v3-0-8017b689ce7f@daynix.com
+
+Changes in v3:
+- Extracted patch "hw/pci: Use -1 as a default value for rombar" from
+  patch "hw/pci: Determine if rombar is explicitly enabled"
+  (Philippe Mathieu-Daudé)
+- Added an audit result of PCIDevice::rom_bar to the message of patch
+  "hw/pci: Use -1 as a default value for rombar"
+  (Philippe Mathieu-Daudé)
+- Link to v2: https://lore.kernel.org/r/20240210-reuse-v2-0-24ba2a502692@daynix.com
+
+Changes in v2:
+- Reset after enabling a function so that NVMe VF state gets updated.
+- Link to v1: https://lore.kernel.org/r/20240203-reuse-v1-0-5be8c5ce6338@daynix.com
+
+---
+Akihiko Odaki (11):
+      hw/pci: Rename has_power to enabled
+      hw/ppc/spapr_pci: Do not create DT for disabled PCI device
+      hw/ppc/spapr_pci: Do not reject VFs created after a PF
+      s390x/pci: Check for multifunction after device realization
+      pcie_sriov: Do not manually unrealize
+      pcie_sriov: Reuse SR-IOV VF device instances
+      pcie_sriov: Release VFs failed to realize
+      pcie_sriov: Remove num_vfs from PCIESriovPF
+      pcie_sriov: Register VFs after migration
+      hw/pci: Use -1 as the default value for rombar
+      hw/qdev: Remove opts member
+
+ docs/pcie_sriov.txt         |   8 ++-
+ include/hw/pci/pci.h        |   2 +-
+ include/hw/pci/pci_device.h |  19 +++++-
+ include/hw/pci/pcie_sriov.h |   9 +--
+ include/hw/qdev-core.h      |   4 --
+ hw/core/qdev.c              |   1 -
+ hw/net/igb.c                |  13 +++-
+ hw/nvme/ctrl.c              |  24 ++++---
+ hw/pci/pci.c                |  23 ++++---
+ hw/pci/pci_host.c           |   4 +-
+ hw/pci/pcie_sriov.c         | 153 +++++++++++++++++++++++---------------------
+ hw/ppc/spapr_pci.c          |   8 ++-
+ hw/s390x/s390-pci-bus.c     |  14 ++--
+ hw/vfio/pci.c               |   5 +-
+ system/qdev-monitor.c       |  12 ++--
+ hw/pci/trace-events         |   2 +-
+ 16 files changed, 175 insertions(+), 126 deletions(-)
+---
+base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+change-id: 20240129-reuse-faae22b11934
+
+Best regards,
 -- 
-2.46.0
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
