@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F1AC52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 08:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4212C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 08:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shPPD-0004L8-Ug; Fri, 23 Aug 2024 04:12:24 -0400
+	id 1shPPA-00046g-JK; Fri, 23 Aug 2024 04:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1shPPB-00049Z-7F
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 04:12:22 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1shPP9-00043W-HM
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 04:12:19 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1shPP9-0004oU-2U
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 04:12:20 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a86883231b4so226488066b.3
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 01:12:18 -0700 (PDT)
+ id 1shPP7-0004nB-HR
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 04:12:19 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-533496017f8so2256439e87.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 01:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724400737; x=1725005537; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724400735; x=1725005535; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=OBCPMa6ua93lVX7G+DgkIWdqT327/XeExtyzrU5tOUM=;
- b=f0E/CmMgY2/PgV0ko9UJpD5Oa4nq1/FuHcHm5NDAhhEyLcsiKpfR4GYuoTh04Aw/qy
- C5wjGb4W/DitOy5uC8p6seXs7lvfiLDKFCz2ZJUul6fq+oM0eqd0VQ2S2LVw0/y96zDo
- gLinPNkkNdSlbLnTJjT0+eo9meLNikycEKFP5aIVvDrHDSLtaLXzlhgEUIWRm2TRHL26
- 5K3Wrv1tU4EVjGNv6siHlLduAtAXpswTKvzg+z9w3rHMcpkYDah68nPWsUju/vjT1kEo
- X2V9deQUOKnYf9a1y3w29NBNDmEWCpbP4lf9cUToB5dZoP7FqodwBt5v8JWCKIEB2aZX
- vy/g==
+ :reply-to; bh=NLQUtwlH5ru+31+0LhHDTaTOLuXgK1ZwJpwr1P2FRCY=;
+ b=WemfZ0rcQDVdfols90XYd4LgPQIiMrYCrjCnIw4rbGBm6bIUdk59K/4Nt+JyjS7w3H
+ vhqzVjJ8MxANtgnXFoybBXaZtMtD7SAR8iZ8bsCpGDWOXDTKMDJUKBZZtUZBOaQn+Wnm
+ sJPextugZ6gHuu8NioDHSPXBKbvsrfnhyFvdhUo2XIc6PTYvQU1WUOVnZ5ErRTfc6LCq
+ VYJl51YWcSk1jD+5L4qZjgH25ZqI5SREGHu4eDGHls1Q+4xhfaTkcOMUdIseGgx73jsW
+ JoG/1SIznawF5K7vz+7C3LIicvC9mRLm4cBPYbHSspIt9A/G+RXZcu2per1QTV3jdyyI
+ AWpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724400737; x=1725005537;
+ d=1e100.net; s=20230601; t=1724400735; x=1725005535;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OBCPMa6ua93lVX7G+DgkIWdqT327/XeExtyzrU5tOUM=;
- b=IF1MKTBLK7FshkUWl5qYnUFtLO7iq9srlPfnp9u/tjoHSN0+HRRwm6btYPSuOXnjvN
- 17fIl5dQ/FRVEPQakAIj3n8cg+/0vKqrnyVNT0Fil4Ua98WxmDop3MlmqJNKS+7Sa6ZT
- FXGYIGOyzAQp1Et6kx1QSEitFX51JVQpL+xhp8MhgLbZJBkIYjiIXq6ON2SitKnBVTCq
- 9/SMCVADEM3nyLykjmqLkkwIv4Wt3q+4euIsVn2XM6UYDWbitbYJ2By/oAmOqIgCFnEJ
- ouExZ9KQoXN8a4MoubGgw68izBwOr7F3I2BUpVdJ6WTHUsOTg/68w3hfddAEqKOG58E5
- OKWA==
-X-Gm-Message-State: AOJu0Yw1vtPYsVi/+EO2pbpjuCYOj4riq0451sNYnsC48dYpWpS6kZdx
- c0m7IU/eYLNrOyejIbwA+SFa2qAcL5gYllhierYmCMpCMHX/BPu+LR0CJzXGZ94=
-X-Google-Smtp-Source: AGHT+IFS9w6gVzJgtGoz2XQl0umhwyzLyv9a9fvju3FKcvqtsqVGxp8peLeJT/z+E2K4zR+bynd+jg==
-X-Received: by 2002:a17:907:f7a8:b0:a86:8953:e1fe with SMTP id
- a640c23a62f3a-a86a54d2d4bmr110318666b.47.1724400736975; 
- Fri, 23 Aug 2024 01:12:16 -0700 (PDT)
+ bh=NLQUtwlH5ru+31+0LhHDTaTOLuXgK1ZwJpwr1P2FRCY=;
+ b=OHUBGiuqefU9SH7bIaRyC+5eNI4RMG5Gd4AWRM2ogs7c5l/DpUqCStt4nUivVIFtl8
+ VGP4eX0v8ix89GdrA6EQE12PxRUgx+ecgHxuoCOMuvwQ/uEBdrQWnMc2U50eEij+ohsr
+ HWEYfIa3GH/1dPtEp799ez8AlAcOzK3lluz47BftmoT0va1o29smaorT7oQtL1uF3gv1
+ ZO9MuLWUJfLPA5EHjn5/fU9wnfManudoE4t6iSCoLXZu+GuTlTdeHuDWOgZnob1uBQIz
+ tPR1ynpVK4FVKaw0pmr89H2ZECVvnYqhy+DDaeO4JLmsyvOTcHqANpDqkiM1Svt4qRVi
+ Ldrg==
+X-Gm-Message-State: AOJu0YxMSEyLsvG5510aE56VcfAz4oK5TibO2gPzQugMjgRQJgDgQhsx
+ JAjsp1tPq8UeUgNT6MnkmeGMg9jvqOZV9SxBWwg3h0CO+2hWf6hY7TtV5F4e81I=
+X-Google-Smtp-Source: AGHT+IGPHeNt9ddYvMchQyOdWMGPxMylDuleRd7rVRQ/6iS/CO9JP5JA67bU3W/bo6LpBpyI49kZmQ==
+X-Received: by 2002:a05:6512:3c85:b0:533:966:72cb with SMTP id
+ 2adb3069b0e04-5343885f659mr928395e87.48.1724400734817; 
+ Fri, 23 Aug 2024 01:12:14 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-26.37.6.162.tellas.gr. [37.6.162.26])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a868ee6b390sm223620066b.0.2024.08.23.01.12.15
+ a640c23a62f3a-a868ee6b390sm223620066b.0.2024.08.23.01.12.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Aug 2024 01:12:16 -0700 (PDT)
+ Fri, 23 Aug 2024 01:12:14 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 23 Aug 2024 11:11:51 +0300
-Subject: [PATCH v8 3/8] configure, meson: detect Rust toolchain
+Date: Fri, 23 Aug 2024 11:11:50 +0300
+Subject: [PATCH v8 2/8] build-sys: Add rust feature option
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240823-rust-pl011-v8-3-b9f5746bdaf3@linaro.org>
+Message-Id: <20240823-rust-pl011-v8-2-b9f5746bdaf3@linaro.org>
 References: <20240823-rust-pl011-v8-0-b9f5746bdaf3@linaro.org>
 In-Reply-To: <20240823-rust-pl011-v8-0-b9f5746bdaf3@linaro.org>
 To: qemu-devel@nongnu.org
@@ -79,30 +79,30 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Junjie Mao <junjie.mao@intel.com>, 
  Zhao Liu <zhao1.liu@intel.com>
 X-Mailer: b4 0.15-dev-b8758
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6784;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5382;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=byrrNLUPrf2hGX1UUEPx3AUY6uJHKDQhCEIJCILIBSw=;
+ bh=BxaqJcEWLkToyju8S1kw437QUrcpEwLDC4lAb4m/ZVA=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm15RVJZSHJkeUpIQ3BOS2N6akxQd0JoSC9qQUVNCmtLVFhWbER5eFc1VENHVTlL
- VUdKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnNoRVdBQUt
- DUkIzS2Nkd2YzNEowSFJLRUFDVFVQSktJZG9qSU5EdzVQSUR2M09mRDdPR2RnWFVMSy9HZmVOYQ
- orcDRiMTlHdjA5elNKMUZvRnE0WXNyVldTRlJoUXFTSTVPVDBFYURHeVpPOWZ2NlQweEI3SWZ4V
- W1Qd2REdXFzCk1iUXY5UFNFcmZPYmtnaHZSL0dEU0J6TE13Zy9BMHI5dHVHV0FoU3NZMkhQNjYy
- VDFSMVFFdkRhblJ6WDNhM2kKUDJrTW1OaGVBdHk0VmNDUy8xKzdxcDc5bTVXVTdXTXFib2FEeG1
- 2VmJTcWlLd1ZScDBYZDUxM3hIYmorNUFNNApsL0pCQmtaaEJOM29WNWk2OW1lNHNCeGZvanZuQj
- A1eGViRU5jV3dBZVRkY000eWk4bVBVUXZ6R3NuOTNMQm1ZCkVZaFliM1lxek1nVitQejhaT2xuK
- 3BRcGFIeXY2NC8vU2U5MWpDcjZTK3FCcndMbFo1YnpmTlhuSXNyeE5kbFMKaEc0TGh2aVlXcXgr
- TkorUml2Ujl3eTZKblRsR2tMT25aSE42Zzg0L09Ub1ZaUGNiVFlmdnpQSnpLOTVEUHA5eQphUmx
- nMmxtUkFiYlRjU1FqSFdXeFI3RnIrZGZzcXVwdzNoK2UraWxiSm5lYTRPa2NCUG52UWpTdTN6T1
- VwT2ptCnNiRjNQMmFRVXNPeTRSblBQZkJpcmx4TExMamtKeG1VVzc2RGRKVEFmeTlMODYvc0JRU
- 2ZPTmlBQ0x4amtlcTUKL1I2ZDR5alE3NVdxNks5cnVBdkEva2NUb2tURk43TDZxRnNqZC82NHoy
- SnZBY0dRRzJlMTBCVno5eGdLNlNtRwpobXpQYVhQVFh0RjRUK2JNOEFXMjFOK3NaUTg4ejdsVEN
- uWEd6Q3RWZHVYOUNBbDBzSVhZV2VldndVTjJYRGxvCmJoSmpBdz09Cj1rWEs5Ci0tLS0tRU5EIF
+ 25RQWNzbVlnQm15RVJZOGJOV2lVaFc5YjNINVczY0FtVzRaUnRnCksxQlRTbVEwb0NOVzNLWXIw
+ R3lKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnNoRVdBQUt
+ DUkIzS2Nkd2YzNEowRjA4RC85ajFoc09VVXBqS3U5WkFCcldqRnh4WEpjdC81YWpXYkxUOGEvdA
+ p0WlRtVkw5TlVLaWFyZUZ3SDlwc2o4NWtYNlV3ZmQrVVNZRGFHREhjVHNqSDFMK3p5T3BWSHJ6b
+ 1Q3USt4b0ZZCnJhQTAvNDh3SmtFQXl6MnVDUFZ4KzJiTERlS1dkTEJaMy9NQkVxeGRMSWIxYjU4
+ MWJLSnB0ZjhJbFZFT2dZcEUKNnI4RTQyY1prZ0NnWkNDOWM0ZTJQUkJidHNhQU0zZzlyRFNjNFV
+ SMllueG1MQmY1QjBjK0pmcXY5eGRraG1MaQoxU1RDWmRIcUppWkQ2VnVMNDlyenRhcXdEdVRXNW
+ FmQmhDZTlNb3R4UUpTdjdOYUVwaHUySVBjazdQMHppWHl4ClB0YXh5RFF3YXNDVVNaK09ZMXhFV
+ zhiQWF1ZVQ4T2FzVFd5R2kzMVNwUDJ6MWI4WmlMMlJjYzVxTlh5YndlaTcKaFc3NG5pUmJlclJO
+ Q0w5UG9wb3JJQjlSeVBkQTFMS3NrbFc5Q1N4QkJZeHQ0N2o5aWNxSTVlV3JTdTU1K2VyMQpNYXV
+ XZTNxd2Zqa2VMS3RhbnhBVjZiMWIwL09TQXRaWVVkM1E1VFZGM21QYytKNGhsNDJKNzgzeTNBQX
+ d5NVRPCnhEcVE4TVYvUzlDa2VPUVNBQktvekUvWkFmVlpPWGd6d3B0alNWbzRCVUZlSzVVQU9Wc
+ GRtOEtVWUxCaVVXYk4KeGszZWtjVjhPV3FQTkt4WHJQb0Rqa0JhWnYwbkhDK09jZHdKQ1cxZ0Iy
+ dlJZMnVaWnV1ZTRSdzhkMXplbHFBSQpqM1VxVi9mRitzRnc0M0pzYTBMemVaZ0JraVE5YlUwbGZ
+ BdzNoQkFlaWlHV2MwdGgvbGx5YVE5Nm0xb2VwbDZECjMvNlJHdz09Cj1CWXRsCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,184 +125,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+Add rust feature in meson.build, configure, to prepare for adding Rust
+code in the followup commits.
 
-Include the correct path and arguments to rustc in the native
-and cross files (native compilation is needed for procedural
-macros).
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- configure   | 50 ++++++++++++++++++++++++++++++++++++++++++++++++--
- meson.build |  8 +++-----
- 2 files changed, 51 insertions(+), 7 deletions(-)
+ MAINTAINERS                   |  5 +++++
+ meson.build                   | 25 ++++++++++++++++++++++++-
+ Kconfig                       |  1 +
+ Kconfig.host                  |  3 +++
+ meson_options.txt             |  3 +++
+ rust/Kconfig                  |  0
+ scripts/meson-buildoptions.sh |  3 +++
+ 7 files changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/configure b/configure
-index 019fcbd0ef..9ef6005c55 100755
---- a/configure
-+++ b/configure
-@@ -207,6 +207,8 @@ for opt do
-   ;;
-   --objcc=*) objcc="$optarg"
-   ;;
-+  --rustc=*) RUSTC="$optarg"
-+  ;;
-   --cpu=*) cpu="$optarg"
-   ;;
-   --extra-cflags=*)
-@@ -252,6 +254,9 @@ python=
- download="enabled"
- skip_meson=no
- use_containers="yes"
-+# do not enable by default because cross compilation requires --rust-target-triple
-+rust="disabled"
-+rust_target_triple=""
- gdb_bin=$(command -v "gdb-multiarch" || command -v "gdb")
- gdb_arches=""
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3584d6a6c6..0bc8e515da 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4243,6 +4243,11 @@ F: docs/sphinx/
+ F: docs/_templates/
+ F: docs/devel/docs.rst
  
-@@ -317,6 +322,8 @@ windmc="${WINDMC-${cross_prefix}windmc}"
- pkg_config="${PKG_CONFIG-${cross_prefix}pkg-config}"
- sdl2_config="${SDL2_CONFIG-${cross_prefix}sdl2-config}"
- 
-+rustc="${RUSTC-rustc}"
++Rust build system integration
++M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++S: Maintained
++F: rust/Kconfig
 +
- check_define() {
- cat > $TMPC <<EOF
- #if !defined($1)
-@@ -636,6 +643,8 @@ for opt do
-   ;;
-   --objcc=*)
-   ;;
-+  --rustc=*)
-+  ;;
-   --make=*)
-   ;;
-   --install=*)
-@@ -755,8 +764,14 @@ for opt do
-   ;;
-   --container-engine=*) container_engine="$optarg"
-   ;;
-+  --rust-target-triple=*) rust_target_triple="$optarg"
-+  ;;
-   --gdb=*) gdb_bin="$optarg"
-   ;;
-+  --enable-rust) rust=enabled
-+  ;;
-+  --disable-rust) rust=disabled
-+  ;;
-   # everything else has the same name in configure and meson
-   --*) meson_option_parse "$opt" "$optarg"
-   ;;
-@@ -859,6 +874,7 @@ Advanced options (experts only):
-                            at build time [$host_cc]
-   --cxx=CXX                use C++ compiler CXX [$cxx]
-   --objcc=OBJCC            use Objective-C compiler OBJCC [$objcc]
-+  --rustc=RUSTC            use Rust compiler RUSTC [$rustc]
-   --extra-cflags=CFLAGS    append extra C compiler flags CFLAGS
-   --extra-cxxflags=CXXFLAGS append extra C++ compiler flags CXXFLAGS
-   --extra-objcflags=OBJCFLAGS append extra Objective C compiler flags OBJCFLAGS
-@@ -869,8 +885,9 @@ Advanced options (experts only):
-   --python=PYTHON          use specified python [$python]
-   --ninja=NINJA            use specified ninja [$ninja]
-   --static                 enable static build [$static]
--  --without-default-features default all --enable-* options to "disabled"
--  --without-default-devices  do not include any device that is not needed to
-+  --rust-target-triple=TRIPLE  target for Rust cross compilation
-+  --without-default-features   default all --enable-* options to "disabled"
-+  --without-default-devices    do not include any device that is not needed to
-                            start the emulator (only use if you are including
-                            desired devices in configs/devices/)
-   --with-devices-ARCH=NAME override default configs/devices
-@@ -1139,6 +1156,21 @@ EOF
- fi
- 
- ##########################################
-+# detect rust triple
-+
-+if test "$rust" != disabled && has "$rustc" && $rustc -vV > "${TMPDIR1}/${TMPB}.out"; then
-+  rust_host_triple=$(sed -n 's/^host: //p' "${TMPDIR1}/${TMPB}.out")
-+else
-+  if test "$rust" = enabled; then
-+    error_exit "could not execute rustc binary \"$rustc\""
-+  fi
-+  rust=disabled
-+fi
-+if test "$rust" != disabled && test -z "$rust_target_triple"; then
-+  rust_target_triple=$rust_host_triple
-+fi
-+
-+##########################################
- # functions to probe cross compilers
- 
- container="no"
-@@ -1604,6 +1636,9 @@ if test "$container" != no; then
-     echo "RUNC=$runc" >> $config_host_mak
- fi
- echo "SUBDIRS=$subdirs" >> $config_host_mak
-+if test "$rust" != disabled; then
-+  echo "RUST_TARGET_TRIPLE=$rust_target_triple" >> $config_host_mak
-+fi
- echo "PYTHON=$python" >> $config_host_mak
- echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
- echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
-@@ -1735,6 +1770,13 @@ if test "$skip_meson" = no; then
-   echo "c = [$(meson_quote $cc $CPU_CFLAGS)]" >> $cross
-   test -n "$cxx" && echo "cpp = [$(meson_quote $cxx $CPU_CFLAGS)]" >> $cross
-   test -n "$objcc" && echo "objc = [$(meson_quote $objcc $CPU_CFLAGS)]" >> $cross
-+  if test "$rust" != disabled; then
-+    if test "$rust_host_triple" != "$rust_target_triple"; then
-+      echo "rust = [$(meson_quote $rustc --target "$rust_target_triple")]" >> $cross
-+    else
-+      echo "rust = [$(meson_quote $rustc)]" >> $cross
-+    fi
-+  fi
-   echo "ar = [$(meson_quote $ar)]" >> $cross
-   echo "dlltool = [$(meson_quote $dlltool)]" >> $cross
-   echo "nm = [$(meson_quote $nm)]" >> $cross
-@@ -1770,6 +1812,9 @@ if test "$skip_meson" = no; then
-     echo "# Automatically generated by configure - do not modify" > $native
-     echo "[binaries]" >> $native
-     echo "c = [$(meson_quote $host_cc)]" >> $native
-+    if test "$rust" != disabled; then
-+      echo "rust = [$(meson_quote $rustc)]" >> $cross
-+    fi
-     mv $native config-meson.native
-     meson_option_add --native-file
-     meson_option_add config-meson.native
-@@ -1788,6 +1833,7 @@ if test "$skip_meson" = no; then
-   test "$pie" = no && meson_option_add -Db_pie=false
- 
-   # QEMU options
-+  test "$rust" != "auto" && meson_option_add "-Drust=$rust"
-   test "$cfi" != false && meson_option_add "-Dcfi=$cfi" "-Db_lto=$cfi"
-   test "$docs" != auto && meson_option_add "-Ddocs=$docs"
-   test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_engine=$LIB_FUZZING_ENGINE"
+ Miscellaneous
+ -------------
+ Performance Tools and Tests
 diff --git a/meson.build b/meson.build
-index 67eb4eda64..065739ccb7 100644
+index 7eb4b8a41c..67eb4eda64 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -70,9 +70,6 @@ if host_os == 'darwin' and \
+@@ -70,6 +70,22 @@ if host_os == 'darwin' and \
    all_languages += ['objc']
    objc = meson.get_compiler('objc')
  endif
--if get_option('rust').enabled() and meson.version().version_compare('<1.0.0')
--  error('Rust support requires Meson version >=1.0.0')
--endif
- have_rust = false
- if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false)
-   rustc = meson.get_compiler('rust')
-@@ -4307,8 +4304,9 @@ else
++if get_option('rust').enabled() and meson.version().version_compare('<1.0.0')
++  error('Rust support requires Meson version >=1.0.0')
++endif
++have_rust = false
++if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false)
++  rustc = meson.get_compiler('rust')
++  have_rust = true
++  if rustc.version().version_compare('<1.80.0')
++    if get_option('rust').enabled()
++      error('rustc version ' + rustc.version() + ' is unsupported: Please upgrade to at least 1.80.0')
++    else
++      warning('rustc version ' + rustc.version() + ' is unsupported: Disabling Rust compilation. Please upgrade to at least 1.80.0 to use Rust.')
++      have_rust = false
++    endif
++  endif
++endif
+ 
+ dtrace = not_found
+ stap = not_found
+@@ -2131,6 +2147,7 @@ endif
+ 
+ config_host_data = configuration_data()
+ 
++config_host_data.set('CONFIG_HAVE_RUST', have_rust)
+ audio_drivers_selected = []
+ if have_system
+   audio_drivers_available = {
+@@ -3076,7 +3093,8 @@ host_kconfig = \
+   (host_os == 'linux' ? ['CONFIG_LINUX=y'] : []) + \
+   (multiprocess_allowed ? ['CONFIG_MULTIPROCESS_ALLOWED=y'] : []) + \
+   (vfio_user_server_allowed ? ['CONFIG_VFIO_USER_SERVER_ALLOWED=y'] : []) + \
+-  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : [])
++  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : []) + \
++  (have_rust ? ['CONFIG_HAVE_RUST=y'] : [])
+ 
+ ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
+ 
+@@ -4287,6 +4305,11 @@ if 'objc' in all_languages
+ else
+   summary_info += {'Objective-C compiler': false}
  endif
- summary_info += {'Rust support':      have_rust}
- if have_rust
--  summary_info += {'rustc version':      rustc.version()}
--  summary_info += {'rustc':      ' '.join(rustc.cmd_array())}
-+  summary_info += {'rustc version':   rustc.version()}
-+  summary_info += {'rustc':           ' '.join(rustc.cmd_array())}
-+  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
- endif
++summary_info += {'Rust support':      have_rust}
++if have_rust
++  summary_info += {'rustc version':      rustc.version()}
++  summary_info += {'rustc':      ' '.join(rustc.cmd_array())}
++endif
  option_cflags = (get_option('debug') ? ['-g'] : [])
  if get_option('optimization') != 'plain'
+   option_cflags += ['-O' + get_option('optimization')]
+diff --git a/Kconfig b/Kconfig
+index fb6a24a2de..63ca7f46df 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -4,3 +4,4 @@ source accel/Kconfig
+ source target/Kconfig
+ source hw/Kconfig
+ source semihosting/Kconfig
++source rust/Kconfig
+diff --git a/Kconfig.host b/Kconfig.host
+index 17f405004b..4ade7899d6 100644
+--- a/Kconfig.host
++++ b/Kconfig.host
+@@ -52,3 +52,6 @@ config VFIO_USER_SERVER_ALLOWED
+ 
+ config HV_BALLOON_POSSIBLE
+     bool
++
++config HAVE_RUST
++    bool
+diff --git a/meson_options.txt b/meson_options.txt
+index 0269fa0f16..fa94a5ce97 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -371,3 +371,6 @@ option('hexagon_idef_parser', type : 'boolean', value : true,
+ 
+ option('x86_version', type : 'combo', choices : ['0', '1', '2', '3', '4'], value: '1',
+        description: 'tweak required x86_64 architecture version beyond compiler default')
++
++option('rust', type: 'feature', value: 'auto',
++       description: 'Rust support')
+diff --git a/rust/Kconfig b/rust/Kconfig
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c97079a38c..5e8a225a6b 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -170,6 +170,7 @@ meson_options_help() {
+   printf "%s\n" '  rbd             Ceph block device driver'
+   printf "%s\n" '  rdma            Enable RDMA-based migration'
+   printf "%s\n" '  replication     replication support'
++  printf "%s\n" '  rust            Rust support'
+   printf "%s\n" '  rutabaga-gfx    rutabaga_gfx support'
+   printf "%s\n" '  sdl             SDL user interface'
+   printf "%s\n" '  sdl-image       SDL Image support for icons'
+@@ -452,6 +453,8 @@ _meson_option_parse() {
+     --disable-replication) printf "%s" -Dreplication=disabled ;;
+     --enable-rng-none) printf "%s" -Drng_none=true ;;
+     --disable-rng-none) printf "%s" -Drng_none=false ;;
++    --enable-rust) printf "%s" -Drust=enabled ;;
++    --disable-rust) printf "%s" -Drust=disabled ;;
+     --enable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=enabled ;;
+     --disable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=disabled ;;
+     --enable-safe-stack) printf "%s" -Dsafe_stack=true ;;
 
 -- 
 2.44.0
