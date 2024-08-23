@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B7DC52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 19:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E524BC5321D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 20:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shZYN-0005Ta-Lv; Fri, 23 Aug 2024 15:02:31 -0400
+	id 1shaxc-0007RG-3b; Fri, 23 Aug 2024 16:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1shZYC-0004g1-G9
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 15:02:21 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1shaxa-0007OH-2X
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 16:32:38 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1shZY9-0004QV-7z
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 15:02:20 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-201f2b7fe0dso22556275ad.1
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 12:02:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1shaxX-0002sh-49
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 16:32:37 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2ef2c56da6cso21333411fa.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 13:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724439727; x=1725044527;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ak9PVtm0xOUDnaFvLdvWza9j+CseOeqPaayHYoeyFwg=;
- b=e+gfKmD24fpKuieV/yEv+UcayMq3EFZwC3T5D/OIvLIgl7t0egZ1vJHcAh/kP5SGXU
- xSdkKWZ1Hvdfg6IN4SkHOpnEL8o/NY+t0Jc45YPB3UkhS/Kfe/FfDt3M2g6boBqGFaDm
- 6MSQOPPTAOn0N5ryUFxsEUfZwHGa60gVfRtZBYrZWiOhthtDmmHvBk4B5cyxgaBhWFUl
- o7pwGvsotL7rGJuaJnrSKPAfUgJ8l/M2tG6F9pkwxpX1+9Xwdcr+4SojaC3lM86+jaIX
- rR0h6pRu5r8NDXGUn+MmKClfTjIeJOPipcTzfOrcpg/Kn4teFJvPyAQeL7F2RftBXoNY
- CGsg==
+ d=linaro.org; s=google; t=1724445148; x=1725049948; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jJODn5eNQp27xQPSz5iTWPWuIV0svdrjaxsWjEA5l7w=;
+ b=SfJsDiAPn9I1pfiQuz6fk7yioIW5PyPS7HqGcsWjDjaF20DOwvdP/0/k8R1Rwrfb0Z
+ 1X5Mi5pjWFnmCXZyyWyqijObWkg/k0IGn6mqCuqa4jryWJgW0P3NvQ6lRrnCMlQkwCoH
+ sRwKX6OpQV6zrCq2iCg2ifiFOOs8UUXMV7db7CL/e5fTjmJe68TSmJVT+lj0NbaAfUr8
+ Nwx6qCOrjwd9EW/q+p1pvkVE7kaZtPtahThE6ZLCgYJXPzjzuLSq0HJuXI6r8sKNDfoO
+ OU1SMybDYjOz/niF2YhX+sEVMWzUIL+6bi8oqPG1iWkoOgRZzEpRo0SU3WWHyhIuZfnp
+ h7mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724439727; x=1725044527;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ak9PVtm0xOUDnaFvLdvWza9j+CseOeqPaayHYoeyFwg=;
- b=XKMUwG6i7sbfhBKgHFRsBuolMHXVrRIHkBEYaowA5Bgxu+6jrzuQfZ4NM+/kQUuEOi
- Vap1i2KojOD/6pW9eQBNRrw6KTz7qFU+H+Njvhgpqt6lVwg3cVXLE7H28kGiTf0lUkVM
- zaA+BpVYoItmtRO2mu+4OKgi9lyRcy+KhJzNSKNufNv723o+Ia4tuOCZUF0uqbKzPwQN
- JDwjX5ekUJ2SJ39f18HzohmbrFhFcAtiRP65bNc7N/gK9JKg4tsIWrHIMoA8kl866EpD
- xjNLiuhR8Nq4Qfxj+tTtyz23ctOcLlXOZnroG8DTU8nMjri0yQvFj56104DdHFjQ86kj
- 7D+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWeOTmCJYRD6OydE5YPXaR5fZiqTyDg5dNJEvQVexK3uDc1e5cdYkli0bFB/8R5r/dKIy6uS28FxucG@nongnu.org
-X-Gm-Message-State: AOJu0Yw/P50zd5PBVpbid2Wgvz6vWPiH0VLnArCB4V0FlHlnv09HPLN/
- GqynnFBVWZ1/LF1FmDJG57sm5qkaivZV09Fgn/zATz5Ra4NeGR4mBstYM/E3yb0=
-X-Google-Smtp-Source: AGHT+IGkjxIEGlwJse67a1A++PvHa+Oan/F7yaWbOiNL57NhO6/w0w2BrcH1Ip/NG7PdPty+GB4F+Q==
-X-Received: by 2002:a17:903:2348:b0:200:869c:95e3 with SMTP id
- d9443c01a7336-2039e44c12dmr38242285ad.4.1724439726965; 
- Fri, 23 Aug 2024 12:02:06 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-203b0c37768sm1749885ad.230.2024.08.23.12.02.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Aug 2024 12:02:06 -0700 (PDT)
-From: Deepak Gupta <debug@rivosinc.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
- richard.henderson@linaro.org, kito.cheng@sifive.com,
- Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v8 17/17] disas/riscv: enable disassembly for compressed
- sspush/sspopchk
-Date: Fri, 23 Aug 2024 12:01:39 -0700
-Message-ID: <20240823190140.4156920-18-debug@rivosinc.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240823190140.4156920-1-debug@rivosinc.com>
-References: <20240823190140.4156920-1-debug@rivosinc.com>
+ d=1e100.net; s=20230601; t=1724445148; x=1725049948;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jJODn5eNQp27xQPSz5iTWPWuIV0svdrjaxsWjEA5l7w=;
+ b=wZPyynZZIvn5ccHJgWo1sd3saLZKI2tt281a4/Zx9ZDxQdeSh7g+Ojn1JS+OfZbAPt
+ anXSF5PzFTALpn66u9q4YqTWmAsPP9K+qtABPaPjwUOjZNu2e4FfTViCUb7ofXgzwoZ9
+ TPG3mQF9q+yjm3V7pCedcAdK+LZWBvh2waol1RFheGU6zMSknZS8pKYUAc8aetI74CiZ
+ ZwDT8+GEAuuWdCsQIDE5Kk7Xu5s6hoA8hNYY9TyoNERFmrvE9kNx80/NG5tHvTlTNjfZ
+ +yu22Be6v0+pu8MYxEN9o+p48w9RX+M8+8QzW+mbE+5SyjWLmkaXzoTXSO0BXVPTdFlE
+ l+VA==
+X-Gm-Message-State: AOJu0Yw8zFtWrEyouwtGJPnzk5vvN754m5jAoBJtQ6SVMzRn7z9pyjwQ
+ k0mGEE97lUwbr/0aW30RuJG3Fl0wSC/0zEvF8gzGcm7a9WlDSdxpKBsm1ujxB3TsV+7/gBa3scZ
+ T65lznupjxVyvJbQldB/mMTUmyaNnqsAWKkGsLA==
+X-Google-Smtp-Source: AGHT+IEi8X5y2KtAUGTECBYn7csf5ybSxnOlz2PxF3xhXw0hRhkTXQW/mScF8TEv5H5ayoh+bSZstmCJ9x4S+knZjxA=
+X-Received: by 2002:a2e:e0a:0:b0:2f1:a5bb:b5ae with SMTP id
+ 38308e7fff4ca-2f4f49049bamr20311061fa.15.1724445147026; Fri, 23 Aug 2024
+ 13:32:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=debug@rivosinc.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <20240813165250.2717650-3-peter.maydell@linaro.org>
+ <a2fcc299abf9cd81a3554244f1574cb9c7f63d70.camel@linux.ibm.com>
+In-Reply-To: <a2fcc299abf9cd81a3554244f1574cb9c7f63d70.camel@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Aug 2024 21:32:16 +0100
+Message-ID: <CAFEAcA_0M+F5OJi8QrD-F+_62ppGjct7xfgs7puZXF4cFTBQ=g@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 02/10] target/s390: Convert CPU to Resettable
+ interface
+To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,80 +96,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sspush and sspopchk have equivalent compressed encoding taken from zcmop.
-cmop.1 is sspush x1 while cmop.5 is sspopchk x5. Due to unusual encoding
-for both rs1 and rs2 from space bitfield, this required a new codec.
+On Fri, 23 Aug 2024 at 18:45, Nina Schoetterl-Glausch <nsg@linux.ibm.com> wrote:
+>
+> On Tue, 2024-08-13 at 17:52 +0100, Peter Maydell wrote:
+> > Convert the s390 CPU to the Resettable interface.  This is slightly
+> > more involved than the other CPU types were (see commits
+> > 9130cade5fc22..d66e64dd006df) because S390 has its own set of
+> > different kinds of reset with different behaviours that it needs to
+> > trigger.
+> >
+> > We handle this by adding these reset types to the Resettable
+> > ResetType enum.  Now instead of having an underlying implementation
+> > of reset that is s390-specific and which might be called either
+> > directly or via the DeviceClass::reset method, we can implement only
+> > the Resettable hold phase method, and have the places that need to
+> > trigger an s390-specific reset type do so by calling
+> > resettable_reset().
+> >
+> > The other option would have been to smuggle in the s390 reset
+> > type via, for instance, a field in the CPU state that we set
+> > in s390_do_cpu_initial_reset() etc and then examined in the
+> > reset method, but doing it this way seems cleaner.
+> >
+> > The motivation for this change is that this is the last caller
+> > of the legacy device_class_set_parent_reset() function, and
+> > removing that will let us clean up some glue code that we added
+> > for the transition to three-phase reset.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > Tested with 'make check' and 'make check-avocado' only. The
+> > descriptions of the reset types are borrowed from the commit
+> > message of f5ae2a4fd8d573cfeba; please check them as I haven't
+> > got a clue what s390 does ;-)
+> > ---
+>
+> With the already mentioned fix:
+> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
----
- disas/riscv.c | 19 ++++++++++++++++++-
- disas/riscv.h |  1 +
- 2 files changed, 19 insertions(+), 1 deletion(-)
+Thanks for the review.
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index f1f4ffc50a..8eeaa9f843 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -980,6 +980,8 @@ typedef enum {
-     rv_op_ssrdp = 949,
-     rv_op_ssamoswap_w = 950,
-     rv_op_ssamoswap_d = 951,
-+    rv_op_c_sspush = 952,
-+    rv_op_c_sspopchk = 953,
- } rv_op;
- 
- /* register names */
-@@ -2244,6 +2246,10 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "ssrdp", rv_codec_r, rv_fmt_rd, NULL, 0, 0, 0 },
-     { "ssamoswap.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-     { "ssamoswap.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-+    { "c.sspush", rv_codec_cmop_ss, rv_fmt_rs2, NULL, rv_op_sspush,
-+      rv_op_sspush, 0 },
-+    { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
-+      rv_op_sspopchk, 0 },
- };
- 
- /* CSR names */
-@@ -2604,7 +2610,13 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             if (dec->cfg->ext_zcmop) {
-                 if ((((inst >> 2) & 0b111111) == 0b100000) &&
-                     (((inst >> 11) & 0b11) == 0b0)) {
--                    op = rv_c_mop_1 + ((inst >> 8) & 0b111);
-+                    unsigned int cmop_code = 0;
-+                    cmop_code = ((inst >> 8) & 0b111);
-+                    op = rv_c_mop_1 + cmop_code;
-+                    if (dec->cfg->ext_zicfiss) {
-+                        op = (cmop_code == 0) ? rv_op_c_sspush : op;
-+                        op = (cmop_code == 2) ? rv_op_c_sspopchk : op;
-+                    }
-                     break;
-                 }
-             }
-@@ -4923,6 +4935,11 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
-     case rv_codec_lp:
-         dec->imm = operand_lpl(inst);
-         break;
-+    case rv_codec_cmop_ss:
-+        dec->rd = rv_ireg_zero;
-+        dec->rs1 = dec->rs2 = operand_crs1(inst);
-+        dec->imm = 0;
-+        break;
-     };
- }
- 
-diff --git a/disas/riscv.h b/disas/riscv.h
-index 4895c5a301..6a3b371cd3 100644
---- a/disas/riscv.h
-+++ b/disas/riscv.h
-@@ -167,6 +167,7 @@ typedef enum {
-     rv_codec_r2_imm2_imm5,
-     rv_codec_fli,
-     rv_codec_lp,
-+    rv_codec_cmop_ss,
- } rv_codec;
- 
- /* structures */
--- 
-2.44.0
+> >      switch (type) {
+> > -    case S390_CPU_RESET_CLEAR:
+> > +    default:
+> > +        /* RESET_TYPE_COLD: power on or "clear" reset */
+>
+> I'd prefer
+>         case RESET_TYPE_COLD:
+>         case RESET_TYPE_SNAPSHOT_LOAD:
+>
+> and keeping the default unreachable assert.
 
+The reset API (docs/devel/reset.rst) says:
+
+# Devices which implement reset methods must treat any unknown ``ResetType``
+# as equivalent to ``RESET_TYPE_COLD``; this will reduce the amount of
+# existing code we need to change if we add more types in future.
+
+So making an unknown reset type behave like "cold" reset is deliberate.
+Otherwise every time we added a new reset type to the system we'd
+need to go through every device that had a switch on the reset type
+to add a new case for it.
+
+thanks
+-- PMM
 
