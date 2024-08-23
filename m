@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6D8C52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03534C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 06:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shNYq-0003dR-V7; Fri, 23 Aug 2024 02:14:12 -0400
+	id 1shNYk-0003J5-SR; Fri, 23 Aug 2024 02:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYo-0003Yt-QU
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:14:10 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1shNYj-0003BR-0s
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:14:05 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1shNYn-0003DT-60
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:14:10 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7141b04e7a3so1343288b3a.3
- for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:14:08 -0700 (PDT)
+ id 1shNYg-0003Bq-Fd
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 02:14:04 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-273cf9bbb3eso977683fac.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Aug 2024 23:14:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393647; x=1724998447;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724393641; x=1724998441;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TCWqBNLN76lvDt02Z9O72XGpvlEOCWgTyfhqZXKjDaw=;
- b=tkEQIl/8nJAQAZb9O3Q84H+Ds+tyJ4rlz4/GAyLSCeA8o8SpeL66vShDQzudPIPXSi
- zBFHxXHzSjuhhwTzQBQqSJ4Q6JZ8xQKpGWGEZYz5hixUWETWfgPm9BFUejQ0M6LsRtuH
- tH35Dmm58QdQayVCTV3WDZfMR7DDcRbSG4Ws3mhqE6ZnOQ+sFFLs1r2VWIPNGOrFBkcQ
- 4jkTmicKJPD0xjVcN9aVfP5A4oghLqm7tXoFxuIrv1WcZXT/S8I5m3BmErNIL9lDULwv
- xe0RkHVVatItEO7PtuKqfKjyYU/Uv6s1z7wnQN5JgS999bSBvwOcxQ6OeZR5QYbO31LJ
- fnsA==
+ :reply-to; bh=TqGUJw12uTAbvh8M71+t9HGKJ1QBUKeYyyQ+O3KoOC0=;
+ b=iq4lraWW0+JKVzVOGOjeFPScRb2883/QCyZJvhlo5c+6q+wDiJueZWzoKkgT2fklXG
+ Z+3gQTUSnd6Hyqf5l+vWNWCX82rHDpjnperHnLnTsqpTS6/R8wH3p9UB+NOmk6QU6vXz
+ JzDteJJ0ajK56vbR+gENxcxlG4P7xFWq9AHKFCHd17jaUXn7+ejRv8SUh4ScwfpYsO4B
+ cBcBOvfUgHh0PN52R0v2uTHKayPWhUyCEZYSeO5nC0gfx2gh556F2Arx/c9+XVdhhzWo
+ Z22OLiTLLlDRGbCQqwakXVgEDL7EP5Mk1X6qqYiFc0Y9VNcK3537dFFGtfN2WKRHk6x2
+ PHiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724393647; x=1724998447;
+ d=1e100.net; s=20230601; t=1724393641; x=1724998441;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TCWqBNLN76lvDt02Z9O72XGpvlEOCWgTyfhqZXKjDaw=;
- b=i4ZL2FxpUrzDlKKHVEVmOk+5GbFS8ftnPPr20hHUtBrxlstmJvU5RxktY6b1Vcx0fV
- DhyQn+/sydjKHdw6zu+GnNNmUtXYLHJxb5kXjbpWmBHjgw6fHVsAD629H0Iyl2agllRX
- FwViusBEaWnvifhniUPZYCmteyT7R8MDh/InjBMprfDtNDW3j3i8I3h0YoDVshfh+pui
- OEmv9ZS6tJ/ZW06lub5dxJIeL2b2O7aK/Z6BKoara0FZWza6rcuZzT9Kixo+rtwmpw8E
- uusyRUY4M8ZIXkbN/GVdA8Qb1dxCVIBzwurL3PxscnaTJq/lHRLcdwQv3nnFMAptVkVG
- WIWw==
-X-Gm-Message-State: AOJu0YwVtGuOBCWLz3nZ4bFmzpMndRtqlmamrlvOrxcem9FIJ+4zJH5c
- KKQyZbVpeyRubeUxi0N0mQLQmax0jC31pyZSyKMHQana+js/MZUhgYRQs8ArAJM=
-X-Google-Smtp-Source: AGHT+IHQAQTjyHnSxviZgtgI0vIuOZfZH2ixcOe5Tj2LMg+WQaj65xPn4VkB/GO1BZ89fiRkpEeF7A==
-X-Received: by 2002:a05:6a00:1a8e:b0:710:4d08:e094 with SMTP id
- d2e1a72fcca58-7144573cd07mr1253784b3a.2.1724393647393; 
- Thu, 22 Aug 2024 23:14:07 -0700 (PDT)
+ bh=TqGUJw12uTAbvh8M71+t9HGKJ1QBUKeYyyQ+O3KoOC0=;
+ b=A4E5/VlNTA8ZTubCbTTpWteSu7cpdwen0ZewwCJlp5Wn5x5BsiyrV5yf2AH3kELa2U
+ emUXDGNX5GL+FKuUR7eWegrhnEIUKtLdmp+rUkJ0bUmQOGsL1tEpGKCiriINbDFpCT3z
+ 0R/vDrocHqeqe9YcwYXt9DqUTwoCNWlBEQB1vKmiNlJL8SB7hhLxBcCRaU4OtNBmisc0
+ p+iFBvWLJ4wbxA2rsfWEMfv8O1OaliOBVwTDprXCxYLDbgtQSrOU540nnhNY9p/DW6wM
+ F7m6aRaj+4y8XY5kD5BWEmFLy/RYE7SDGmzGDp7LAeIPiB2E502GEplUvvrokFfxPTvQ
+ wpng==
+X-Gm-Message-State: AOJu0YwZNnyxmfsQgTGJmad1vyDW34+aXqOEHP5vzQ8o/sH/XjvUbajs
+ b9Eeywo42KCS11x0GkJKEUmtaO5XIaiRWSKrAZJ4rdJu6c+NsYcuWsHYxfmV89c=
+X-Google-Smtp-Source: AGHT+IHAfk6dVYsonq3Hlwrg808+TTvRceTk+pc5LzEGFXYQT7ovRTiKEte4g/HUA21ToYZjiMQeOQ==
+X-Received: by 2002:a05:6870:5587:b0:270:129f:8e65 with SMTP id
+ 586e51a60fabf-273e66589c9mr1134333fac.34.1724393641047; 
+ Thu, 22 Aug 2024 23:14:01 -0700 (PDT)
 Received: from localhost ([157.82.207.23]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-7143431052bsm2316219b3a.181.2024.08.22.23.14.02
+ d2e1a72fcca58-71434335fe1sm2302862b3a.200.2024.08.22.23.13.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Aug 2024 23:14:07 -0700 (PDT)
+ Thu, 22 Aug 2024 23:14:00 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 23 Aug 2024 15:13:12 +0900
-Subject: [PATCH v4 7/7] tests/qtest: Delete previous boot file
+Date: Fri, 23 Aug 2024 15:13:11 +0900
+Subject: [PATCH v4 6/7] memory: Do not create circular reference with subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240823-san-v4-7-a24c6dfa4ceb@daynix.com>
+Message-Id: <20240823-san-v4-6-a24c6dfa4ceb@daynix.com>
 References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
 In-Reply-To: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -84,14 +84,15 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42b.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::33;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,58 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A test run may create boot files several times. Delete the previous boot
-file before creating a new one.
+memory_region_update_container_subregions() used to call
+memory_region_ref(), which creates a reference to the owner of the
+subregion, on behalf of the owner of the container. This results in a
+circular reference if the subregion and container have the same owner.
+
+memory_region_ref() creates a reference to the owner instead of the
+memory region to match the lifetime of the owner and memory region. We
+do not need such a hack if the subregion and container have the same
+owner because the owner will be alive as long as the container is.
+Therefore, create a reference to the subregion itself instead ot its
+owner in such a case; the reference to the subregion is still necessary
+to ensure that the subregion gets finalized after the container.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/migration-test.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ system/memory.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 70b606b88864..6c06100d91e2 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -144,12 +144,23 @@ static char *bootpath;
- #include "tests/migration/ppc64/a-b-kernel.h"
- #include "tests/migration/s390x/a-b-bios.h"
+diff --git a/system/memory.c b/system/memory.c
+index 5e6eb459d5de..e4d3e9d1f427 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2612,7 +2612,9 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
  
-+static void bootfile_delete(void)
-+{
-+    unlink(bootpath);
-+    g_free(bootpath);
-+    bootpath = NULL;
-+}
-+
- static void bootfile_create(char *dir, bool suspend_me)
- {
-     const char *arch = qtest_get_arch();
-     unsigned char *content;
-     size_t len;
+     memory_region_transaction_begin();
  
-+    if (bootpath) {
-+        bootfile_delete();
-+    }
+-    memory_region_ref(subregion);
++    object_ref(mr->owner == subregion->owner ?
++               OBJECT(subregion) : subregion->owner);
 +
-     bootpath = g_strdup_printf("%s/bootsect", dir);
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-         /* the assembled x86 boot sector should be exactly one sector large */
-@@ -177,13 +188,6 @@ static void bootfile_create(char *dir, bool suspend_me)
-     fclose(bootfile);
+     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+         if (subregion->priority >= other->priority) {
+             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+@@ -2670,7 +2672,9 @@ void memory_region_del_subregion(MemoryRegion *mr,
+         assert(alias->mapped_via_alias >= 0);
+     }
+     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+-    memory_region_unref(subregion);
++    object_unref(mr->owner == subregion->owner ?
++                 OBJECT(subregion) : subregion->owner);
++
+     memory_region_update_pending |= mr->enabled && subregion->enabled;
+     memory_region_transaction_commit();
  }
- 
--static void bootfile_delete(void)
--{
--    unlink(bootpath);
--    g_free(bootpath);
--    bootpath = NULL;
--}
--
- /*
-  * Wait for some output in the serial output file,
-  * we get an 'A' followed by an endless string of 'B's
 
 -- 
 2.46.0
