@@ -4,108 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F220C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 17:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059B4C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 17:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shYLj-00044R-BP; Fri, 23 Aug 2024 13:45:23 -0400
+	id 1shYTT-0002hS-RF; Fri, 23 Aug 2024 13:53:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1shYLc-0003x3-FQ; Fri, 23 Aug 2024 13:45:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1shYTR-0002Zj-NI
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 13:53:21 -0400
+Received: from mail-dm6nam11on20625.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::625]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1shYLa-0001Dn-6v; Fri, 23 Aug 2024 13:45:16 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47NF20SJ015768;
- Fri, 23 Aug 2024 17:45:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- 1hfGFDSz3nGvlajlYzwrX4NweoxkxBfXKQQC6SwbneE=; b=UpWp+rNL5wNMMhbv
- dpufg8nDYTd8xewP3Ha1YOg9pjMz0G90YVUqSCQwkWJI7vvRC4inSs9QqjuVKXfH
- VrIdPUQ7dwk2V2/2vHjrBBzuus0+ujSc/hXFZdA9nhZqG+GrkRjwMgHfhl+bA0Ad
- 0rl+Abb8p94cfc1UIBOl1zYL5ciVLOuD39li+El2uRcmITz8N/8caWAEN6sWUFC+
- /P/bwT7xZbK0fozbWpiy5+WYRU+RTqPiW3P78zqEzh3zpbjQnPQeS27kRvKUDfZK
- CkDFjBxi18QxpGgZ0IRFKjKv3M/gMebxWe2YmWZnHGXmlXqx5/OnFuXtyCdZrYM7
- 4EewuQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 416vq30p2f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 Aug 2024 17:45:08 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47NHj8pm021953;
- Fri, 23 Aug 2024 17:45:08 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 416vq30p2c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 Aug 2024 17:45:08 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47NF1dgD002201;
- Fri, 23 Aug 2024 17:45:07 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4136k1353e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 Aug 2024 17:45:06 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 47NHj06Q21758550
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 23 Aug 2024 17:45:02 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9FA052004B;
- Fri, 23 Aug 2024 17:45:00 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5E9020040;
- Fri, 23 Aug 2024 17:44:59 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.179.15.174]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 23 Aug 2024 17:44:59 +0000 (GMT)
-Message-ID: <a2fcc299abf9cd81a3554244f1574cb9c7f63d70.camel@linux.ibm.com>
-Subject: Re: [PATCH for-9.2 02/10] target/s390: Convert CPU to Resettable
- interface
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Richard Henderson
- <richard.henderson@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, David Hildenbrand <david@redhat.com>, Ilya Leoshkevich
- <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Christian
- Borntraeger <borntraeger@linux.ibm.com>
-Date: Fri, 23 Aug 2024 19:44:59 +0200
-In-Reply-To: <20240813165250.2717650-3-peter.maydell@linaro.org>
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <20240813165250.2717650-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1shYTD-0002XZ-3p
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 13:53:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dZjD0qWQ4SAWcRbEu45DVDfbXjy7l4CMkgkLzzGZU9OGd5wCTWzo390WoAObyqwlmz37miKiB8vA8B+V2RW36aJOAsMdF5Hmq+ngLVcOqdOZzYGtoPcEiXh/n2r+08F5936sQi8FBV1sVrXXLNsam7+/KFKW4cDb+i6a4JTt2e6855epwSHDZZv7lnFxQ5ZUM/gGdJPYFCLX37Tmfeun/CL5ypaJDLv8SBpPEFUXwC25rFKpZubWYK0kzkTovHz7iawk4KJYloLTV4VOC3n4H/u8QPZ0M2DDkuHFJN+lIZoyunwn5WdRIhAsObVoBeTbaHP8gwP1wz6X5OmLjAMB/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=U/GlPiU/QtSW0sEqOig3CIQntRFjHPJpg+dKtgxrj9s=;
+ b=guEfMwOEK4KlMxovSygSe07jDCR4MHyuIJPUAtC5gFmFCCs5zwRSzw1U8cuShREfFeKphYrHHAQ2rMIrMpug7T1B6dVMqB2Mb55b8INTlKVuzzsMnw/4gN5UzsZE6dsdDRfXV4X9gIlkJUWwgiAKGqiSCG0Rd+lrOD4mKFmaoxfUlowkUQzNEobZGciiwd6++dW10lQBqh9iZIqHdKPwTzUqNKmOY706oETO/bpHyHgFd6BugaB/ouELIvFP+LAwch6iXG6uP833/FVB+lnq16YfPmdi5kj4OcpFfsDvoX+jEbWr/TBLwqpVrTD3qU2Da8J38hrVRdq6Vakdf7F4ZA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=U/GlPiU/QtSW0sEqOig3CIQntRFjHPJpg+dKtgxrj9s=;
+ b=SgXOAF+v8RwnONgBO7Lbs1zkmE4DQxcJCpegXmom87dIVaUynEZm7d2VAe8/4fJQOdYx/sEAMqA8YppMYmETKOFF6bfDDsmadtkzodCodFTBb3+p+d7bmsc/CBzWF8R57z1xRKlweUboHTddZhNSvc8fSgYupXlwL8n3fFnVeQk=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
+ by DS7PR12MB5911.namprd12.prod.outlook.com (2603:10b6:8:7c::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.18; Fri, 23 Aug
+ 2024 17:53:01 +0000
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b%6]) with mapi id 15.20.7897.014; Fri, 23 Aug 2024
+ 17:52:59 +0000
+Date: Fri, 23 Aug 2024 19:52:47 +0200
+From: Francisco Iglesias <francisco.iglesias@amd.com>
+To: Doug Brown <doug@schmorgal.com>
+Cc: Vikram Garhwal <vikram.garhwal@amd.com>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 4/5] hw/net/can/xlnx-versal-canfd: Fix byte ordering
+Message-ID: <ZsjMbwu4TDNrzWJc@xse-figlesia-l2.amd.com>
+References: <20240816163504.789393-1-doug@schmorgal.com>
+ <20240816163504.789393-5-doug@schmorgal.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240816163504.789393-5-doug@schmorgal.com>
+X-ClientProxiedBy: FR4P281CA0360.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:f4::13) To SJ2PR12MB8739.namprd12.prod.outlook.com
+ (2603:10b6:a03:549::10)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: LVIIVO2z6VImmPm4SvTSM7qYMDxsb56U
-X-Proofpoint-GUID: jXtqrz_velvp3NVzgUXRg3QtADKXqOSq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-23_14,2024-08-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408230130
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|DS7PR12MB5911:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8cd3db3f-8a3b-4af4-eaa4-08dcc39c6d57
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eFI3WEpXdk5sbHUzbWtVNllPK1FCMHNtVDRVRmVqTVZXZnIwRmpOUlhRRExQ?=
+ =?utf-8?B?TWJ4aDh5SkJrc3hLaDRISHRKUk5OeFhYMnRHS0x0c1NvUnQ5aGN6QlVlLzQ1?=
+ =?utf-8?B?MU9aMkpmYnpYV3A1UnR3djRLcTBUTm1Ga1Y1ZmhwUWVLSEVMZzVZY2I4Y2ZV?=
+ =?utf-8?B?bmhNVU0xS01RSGJhWnE0Uzk0ZWNxSnVHRkZQcFBXaXY0eDNvNldHaG41am9U?=
+ =?utf-8?B?ZC9UWTRWRFFuV1IzeTdVRVRYUmo3MWs4WjdQWmNuL1JrcTlTUjdQTHgwZmg2?=
+ =?utf-8?B?Z25Waytmd2x2dUdVR3c5V0FnQ3Q0Vk9zOU50dTl6eStRODdIQWR4UjNPVWNE?=
+ =?utf-8?B?SXRDMHNMTUdkQXZsdFhZNENBd1RlT3RPMlhLMlp2K1hCaDV5M0tRVHRicWZ6?=
+ =?utf-8?B?M1RXQUZVMWx5Y095L052YTRsaVgxQ29KcXRiU3I3bG1YYXJiaUlBTUZPZ2Fy?=
+ =?utf-8?B?dFlZSkptUDRrRzlicVQxY0lPYlhXNXkxNlBXZ3UzSUduTVVFRHIyQS9GRUFs?=
+ =?utf-8?B?WWFFUkxKZTE1ODlVZzFRa3dzMTI2eXFXRDk4Q1NTU09tblFPUGFuTzYzOU5o?=
+ =?utf-8?B?TEdWVmJEeVpiTnNVUG9OaVY2WndLWlk1dE5JK1lqelZWbCtXU2k3dGFKenpZ?=
+ =?utf-8?B?aHZHMTdiRHhDM0RGTTB4UTNzN3dYb0NqYThoekJ1K1g4c2lKSGFsNkg5VnR0?=
+ =?utf-8?B?UmF6WHdsY3c1WTVaNDNmbkFPdTNqNlJheWladHovTzBFK0h6UE9BZUUvelJH?=
+ =?utf-8?B?SHdsTDZ3WU9Mb3ZzdkE3dzNYbFhJK3VIamdMRDc5a2d0ekozTlNXRXczSDN5?=
+ =?utf-8?B?L3lDOC9UelJTQnVlUWYzUzlvNDBpcW4xbmMrUU1NRmo5M0ZXT053OGsvTnNn?=
+ =?utf-8?B?d1AxNXl1RzlKd0FqaG41cEtqRzVtMm54cnZmVDF6bHZ4OUhtWExDc3JOMDd0?=
+ =?utf-8?B?bHdTZEYwTTZiaDJmSnNzdjZxNDNrV0JJNDFmbE5xYmFUNmxaanBGTWxwUHNs?=
+ =?utf-8?B?MmJJUGdBS25qSzFjcmNpZVBwU2pDR1VncWIrSkhkeXV0TFdaRjZNS1dsS1FD?=
+ =?utf-8?B?SmlYZGxDeEJRTkZRU29lTjhqREJPYklhQk85em10OHM1bzRnWVREVExxWm52?=
+ =?utf-8?B?eThCRmJrcjFDL09FL3NwVWIwSU9EMlUvUWx2Y3pvcFN3T1RqQlNCUFd4Mkdq?=
+ =?utf-8?B?ZloxaEc0eW5EOVdPazNZM0R6RnJncDg0bTVkZGFyRytzVEhwSXdSQ09TaXBS?=
+ =?utf-8?B?emVHckVaUVBGdkxyTnRkckx5Tmh4MFcvckJnV2VEcUZMVHAwd09KRG1VZnlU?=
+ =?utf-8?B?MXNxUHJIUEEwekZQZG4wYzRxOTY0OUdwdVloRmJXNGJlZVVVdEVUaG5QR0JG?=
+ =?utf-8?B?R1ZPSWtSQzJ0M0pLeGRWaDBUK3lxS2JnV1VsaituM09HUHFWNHQ4MU1wRi9h?=
+ =?utf-8?B?cnVtNzRFRmJENnFMK0o4ajA1QmxBUFFtRitxdk5DdXArbng3NnVhajRLZzNW?=
+ =?utf-8?B?ZTA4SVFGWEFJOVAybGZ4eG1VaXI0VDVFMjlaOVl2VnBIQWo4Y2R1V3kxTWt5?=
+ =?utf-8?B?OVF6djJaQm9ydTR6UllIVmp2UlVTbFFVTmpCQUNsajQ4UkdHZ3FEYlVnZHA4?=
+ =?utf-8?B?SUhQdHNIZ3d0K0NkUnU3NGErVFEzMHlFZytlVmh6MUNadE1sL1RsYWFFZXpM?=
+ =?utf-8?B?WFFEZFYvQXlDZnNLeWZucXZ1ZTF1dlRDTThlSjZvYkFLbFowZXM0UUhwblB2?=
+ =?utf-8?B?cWs2N2FpbVdtSW1PdVRJVVlaSXRRVGV2a1ZJcDRWczZtem5mN3J6TDhUUjRZ?=
+ =?utf-8?B?bktHM2gxMldzYURHNVE2Zz09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UkNHMnRwaE9KY2srQVBKNi9wOVdJZUJVU2ZTVHQrN3NxT2NHLzFNY3l2Qm15?=
+ =?utf-8?B?Sk9vUTNQOXR4WHlCL3hud3ZQd1gxaGhYa0IxQzNxSjNaeitYQXlaUG8yZnRx?=
+ =?utf-8?B?dDJ0ejVodU9IZ0JUcE5sZDhtNDMyYWpMYis0R3Y0cEppTDVTNnhKanI3OW92?=
+ =?utf-8?B?MkxobTdLRCs1NG1kZ2RoNkJDWWNaZ3JWa2lVSDZ4ZlpJenVqamZrRnd2aGtq?=
+ =?utf-8?B?TDA1QlVOVWVuRXhjSkZ3ckZxOW1YTmRoeDN6MEtJOWR1d3cydG9Ic2NlN1pi?=
+ =?utf-8?B?OGdnUmFoY29LakdmZE9jaWtFM0RZT1A4blc2eEpISk45MFJSME55MU10bmhB?=
+ =?utf-8?B?SEJJS0t5RzNRQ3R5YnhudUpjWTRid0ZLdkZYK09mb1Y0K3I3L1BYYjNTWnd3?=
+ =?utf-8?B?VWJwWTk1LzhVRzUxaGlFQzdPSGszOEZDMFQ4Q0dNSGR6RUVveHRrNDlubldV?=
+ =?utf-8?B?c1BKdU9vV0Vmc2I1L09uMHJhaXNEVnZpNHBNdHgyUkJHT2lHYTNEL3BVWjNi?=
+ =?utf-8?B?TlMyS0ptYzdzTXYzUmFnN0lLdzJ0OGhnMU02MlVoN3ZBMklrblBvd0V5Y3RI?=
+ =?utf-8?B?NHMxczV5eDl2eFVwZzRRdm41a01lR1F3MWxHNUJORlVKNXIzcXVURzZwYkhU?=
+ =?utf-8?B?Lzh4OEx0bzNjZUd0a3VKMHBOTGJ5S2FvNEo2QkNNUVNuK0lNMTd2WkJkTEov?=
+ =?utf-8?B?blRQWDBzMFVUSk1pNG5HVXhTLzhXVmJFdG1obWYrdENSYU1LK25yNjQvMjNY?=
+ =?utf-8?B?MklORTRxUDEvMEhoaDZFWWFsYmxReWRkMzR1OTR4dFlNRkdpUVNWNzNYLzRY?=
+ =?utf-8?B?U0RYdCtsam1nMFFUUDZxYVdnQlZEU1VuS1VCOTlwSkZaYzJHTHhvTjFSdmRs?=
+ =?utf-8?B?OE5jTUxjZm0rbUsvRnBDSmVDME51RzdpUzg2SlVidkptK0hJTTNueUlCcnM1?=
+ =?utf-8?B?OHpPMElFZ0w0Y3NhRnJPZTdna0hvWGlmbldsTHZjS2hwL3NhYlNoWWxQdVBQ?=
+ =?utf-8?B?ODk0NWgydURWSnZzUzNwWjU2YTQ0a05MRXRpZnJHOFdZK24xU00rZm85M3Bn?=
+ =?utf-8?B?MXlkWWxDU2h1VHRaQlZhNEw5Wm01cGx4a1hjRmlIeDI3aHNXcytlTmdvajNE?=
+ =?utf-8?B?V0xoTjlwL1BhKzU2bDVSa2grM1B4RFpsYktOd0pkK1gzajZwNUhUdGRXU2FF?=
+ =?utf-8?B?NlJ6Y3J1NjFIQ1ZWdlBNSW1jNVRxQWU4WDdWblN3Q3ZiU3U4aEU1bEdXYjlX?=
+ =?utf-8?B?OHIzWkhUZEtOWG1YQlBBNjR1WFozaVJlcW1BSm9OWXdSNWQ1QmJ0eVVXMTZl?=
+ =?utf-8?B?dzJxSlMrMnhxbUlzZmppV2crWUFsN2FVNWRpNTJ6OGYvOXEvY2RDcWFHdXhY?=
+ =?utf-8?B?VUp2d01JQ21wN25xY3crNUQzQmEvTm5OaUF5R3JjMjdGOVFueitVRUt2ZDI1?=
+ =?utf-8?B?RGczRWJaemZkZXpIL3RQZklFUis3OTJXWGFKRjRuSXZOdFNnQjVkNElTSG5H?=
+ =?utf-8?B?Q0J4K0pOM255NDVRTmRDb2Rha3ducjB6eHBmYW9ad0ZCdHdaUjFpQkJYMEo2?=
+ =?utf-8?B?Q3d3RU9xNHRPVTkrSklsb1M1VmVoQnJnMW5ZSXllRHhxYVRSbGxPWlVtUEFU?=
+ =?utf-8?B?RmxjYlpPa3ZmK2U1K2srQ1FPMS9lQ25nT3Y2Tms1eVRDbEVCa1hKZGkvZGxa?=
+ =?utf-8?B?eTNWNmNZelg4Wll1bmhCNitxYmZMNWFtWW4rWHlUcHJrRG90azhRSDVVSlNu?=
+ =?utf-8?B?a2oyZCsrOUxsdGoyOWsyN3pBS1hYamlCZ1NLdFoyNkI1aW5vMzZKcWczMkFM?=
+ =?utf-8?B?UksvekdmaHAvNkFXaGY4S200QTE2cXhTR2xHNkNWT0tMSFM5U1FHTXYwN2J0?=
+ =?utf-8?B?OThnTkVCdUFNVmZZcjAyWkM1Nzd4VGlrenRXZ2tDMjhWWUNTT0VaaCtTUkRX?=
+ =?utf-8?B?RjVVekE2czdyYk15TWpaNTNWNE5DZU1paTVTejZacjVGTlNlMG12NzdaRlFr?=
+ =?utf-8?B?UDU1anBZOFdacG1UazZsYkhyRkdHREJwRHBya29mZ3U4UWlPRDltNXRtRXV5?=
+ =?utf-8?B?WklzRGRmVVBYeU91L0gydWJrMmJYelVSZmJoTzlrR0wxYVJBZEFYTkpVblN1?=
+ =?utf-8?Q?fFFH6vB8bzT0PCt3RgzW+Sz5d?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8cd3db3f-8a3b-4af4-eaa4-08dcc39c6d57
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Aug 2024 17:52:59.8802 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8BkJuZY6qnQWd6bwGFh2gE2/zNcyZsNdlRk304xIJDRiTmLKbJDHbk5Ji7AdItlEql4IP4qtuQf/Ebcb3gNEIg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5911
+Received-SPF: permerror client-ip=2a01:111:f403:2415::625;
+ envelope-from=francisco.iglesias@amd.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,119 +176,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-08-13 at 17:52 +0100, Peter Maydell wrote:
-> Convert the s390 CPU to the Resettable interface.  This is slightly
-> more involved than the other CPU types were (see commits
-> 9130cade5fc22..d66e64dd006df) because S390 has its own set of
-> different kinds of reset with different behaviours that it needs to
-> trigger.
->=20
-> We handle this by adding these reset types to the Resettable
-> ResetType enum.  Now instead of having an underlying implementation
-> of reset that is s390-specific and which might be called either
-> directly or via the DeviceClass::reset method, we can implement only
-> the Resettable hold phase method, and have the places that need to
-> trigger an s390-specific reset type do so by calling
-> resettable_reset().
->=20
-> The other option would have been to smuggle in the s390 reset
-> type via, for instance, a field in the CPU state that we set
-> in s390_do_cpu_initial_reset() etc and then examined in the
-> reset method, but doing it this way seems cleaner.
->=20
-> The motivation for this change is that this is the last caller
-> of the legacy device_class_set_parent_reset() function, and
-> removing that will let us clean up some glue code that we added
-> for the transition to three-phase reset.
->=20
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+On Fri, Aug 16, 2024 at 09:35:04AM -0700, Doug Brown wrote:
+> The endianness of the CAN data was backwards in each group of 4 bytes.
+> For example, the following data:
+> 
+> 00 11 22 33 44 55 66 77
+> 
+> was showing up like this:
+> 
+> 33 22 11 00 77 66 55 44
+> 
+> Fix both the TX and RX code to put the data in the correct order.
+> 
+> Signed-off-by: Doug Brown <doug@schmorgal.com>
+
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+
+
 > ---
-> Tested with 'make check' and 'make check-avocado' only. The
-> descriptions of the reset types are borrowed from the commit
-> message of f5ae2a4fd8d573cfeba; please check them as I haven't
-> got a clue what s390 does ;-)
-> ---
-
-With the already mentioned fix:
-Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-
-> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-> index 0fbfcd35d83..4e41a3dff59 100644
-> --- a/target/s390x/cpu.c
-> +++ b/target/s390x/cpu.c
->=20
-[...]
-
-> -/* S390CPUClass::reset() */
-> -static void s390_cpu_reset(CPUState *s, cpu_reset_type type)
-> +/* S390CPUClass Resettable reset_hold phase method */
-> +static void s390_cpu_reset_hold(Object *obj, ResetType type)
->  {
-
-[...]
-> =20
->      switch (type) {
-> -    case S390_CPU_RESET_CLEAR:
-> +    default:
-> +        /* RESET_TYPE_COLD: power on or "clear" reset */
-
-I'd prefer
-	case RESET_TYPE_COLD:
-	case RESET_TYPE_SNAPSHOT_LOAD:
-
-and keeping the default unreachable assert.
-
->          memset(env, 0, offsetof(CPUS390XState, start_initial_reset_field=
-s));
->          /* fall through */
-> -    case S390_CPU_RESET_INITIAL:
-> +    case RESET_TYPE_S390_CPU_INITIAL:
->          /* initial reset does not clear everything! */
->          memset(&env->start_initial_reset_fields, 0,
->                 offsetof(CPUS390XState, start_normal_reset_fields) -
-> @@ -203,7 +206,7 @@ static void s390_cpu_reset(CPUState *s, cpu_reset_typ=
-e type)
->          set_float_detect_tininess(float_tininess_before_rounding,
->                                    &env->fpu_status);
->         /* fall through */
-> -    case S390_CPU_RESET_NORMAL:
-> +    case RESET_TYPE_S390_CPU_NORMAL:
->          env->psw.mask &=3D ~PSW_MASK_RI;
->          memset(&env->start_normal_reset_fields, 0,
->                 offsetof(CPUS390XState, end_reset_fields) -
-> @@ -212,20 +215,18 @@ static void s390_cpu_reset(CPUState *s, cpu_reset_t=
-ype type)
->          env->pfault_token =3D -1UL;
->          env->bpbc =3D false;
->          break;
-> -    default:
-> -        g_assert_not_reached();
+>  hw/net/can/xlnx-versal-canfd.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+> index 1704b558d0..fda1e7016a 100644
+> --- a/hw/net/can/xlnx-versal-canfd.c
+> +++ b/hw/net/can/xlnx-versal-canfd.c
+> @@ -945,7 +945,7 @@ static void regs2frame(XlnxVersalCANFDState *s, qemu_can_frame *frame,
 >      }
-> =20
->      /* Reset state inside the kernel that we cannot access yet from QEMU=
-. */
->      if (kvm_enabled()) {
->          switch (type) {
-> -        case S390_CPU_RESET_CLEAR:
-> +        default:
-
-And the same here.
-
->              kvm_s390_reset_vcpu_clear(cpu);
->              break;
-> -        case S390_CPU_RESET_INITIAL:
-> +        case RESET_TYPE_S390_CPU_INITIAL:
->              kvm_s390_reset_vcpu_initial(cpu);
->              break;
-> -        case S390_CPU_RESET_NORMAL:
-> +        case RESET_TYPE_S390_CPU_NORMAL:
->              kvm_s390_reset_vcpu_normal(cpu);
->              break;
->          }
-> @@ -315,12 +316,6 @@ static Property s390x_cpu_properties[] =3D {
->      DEFINE_PROP_END_OF_LIST()
->  };
-
-[...]
-
+>  
+>      for (j = 0; j < frame->can_dlc; j++) {
+> -        val = 8 * i;
+> +        val = 8 * (3 - i);
+>  
+>          frame->data[j] = extract32(s->regs[reg_num + 2 + (j / 4)], val, 8);
+>          i++;
+> @@ -1080,19 +1080,19 @@ static void store_rx_sequential(XlnxVersalCANFDState *s,
+>              case 0:
+>                  rx_reg_num = i / 4;
+>  
+> -                data_reg_val = FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES3,
+> +                data_reg_val = FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES0,
+>                                            frame->data[i]);
+>                  break;
+>              case 1:
+> -                data_reg_val |= FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES2,
+> +                data_reg_val |= FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES1,
+>                                             frame->data[i]);
+>                  break;
+>              case 2:
+> -                data_reg_val |= FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES1,
+> +                data_reg_val |= FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES2,
+>                                             frame->data[i]);
+>                  break;
+>              case 3:
+> -                data_reg_val |= FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES0,
+> +                data_reg_val |= FIELD_DP32(0, RB_DW0_REGISTER, DATA_BYTES3,
+>                                             frame->data[i]);
+>                  /*
+>                   * Last Bytes data which means we have all 4 bytes ready to
+> -- 
+> 2.34.1
+> 
 
