@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CB6C5321D
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 02:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72332C52D6F
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 04:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shgu1-00058F-Gu; Fri, 23 Aug 2024 22:53:21 -0400
+	id 1shipf-0006Hz-Sq; Sat, 24 Aug 2024 00:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1shgu0-00057l-B0
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 22:53:20 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1shipe-0006BY-9h
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 00:56:58 -0400
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1shgty-0003qW-G4
- for qemu-devel@nongnu.org; Fri, 23 Aug 2024 22:53:20 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2d439583573so1903704a91.3
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 19:53:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1shipc-0002Er-Re
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 00:56:58 -0400
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5d5bb03fe42so1901848eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 21:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1724467996; x=1725072796;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=x8wiF9/m0Wx4dwiAPVIyAvbM7sfZYX3AslMzV/OlkTs=;
- b=iP8KJ021GqxAn7nHAuErRpcYpV+z5+pEn9Fgb4GFLRxZSXOLMH9aMzd7oZbF/2ihR6
- jSf+xcvfS1FDD/oANYlyA+v/aoDkxOZ70ByFYYZL84xZGeaMyuN04BDVc2b1AQPZY+Q4
- DbmMY5SOIqTfj7aK6mhq4kTRAa9EQ9F8uae2l1ea240y/iiSFWmdxJbHhsnhCPAO1fzG
- sOGiKbDDT3+iDViA1CqDEOA45gVO+w9adrYJAVv2DfCYGPLOH+qb7G6UhntLw1nl9TcX
- bwxkC4TcU3nRxkyqhh1xgFmtSjS9bPVFRkL7VLnJ2hzUI9wAo3FzyYj0rcKvbv7jbjCU
- lfrQ==
+ d=gmail.com; s=20230601; t=1724475415; x=1725080215; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rHt6pbRW07xJLDMoO5UcezJiyi3YHPjGjTmMqWnnjc8=;
+ b=TYKjv787HMBohoFXQIvSH3e7vWsSYiZb39lfob0KDWvAecIWXKCRl4sjFzXpJAfGuf
+ Bep55a3yWnZumxKmZ4THhVydxHCi9jf0cQlAQBYDKuHcD6GB7tp1+7YJf747+cpdu6Fl
+ f6ewSxUvzvdTEJZowAq+wxZsCK266qePeIlfAcXhS47nCEKi3NILBYLL5rMmGgaD3/8/
+ GBqX3vVdnz8RySLokLDyKIzZBYvnZ7lh2z7IhGvq2LS9jucind9Bxt7AX8+NvN+XV0X5
+ KrCXMaKh+iCa2L4mOy4wK1ToGsSCN+hU9pIcTOHumWQsV4Ew5CChLAM6fj1xGmIdeIYf
+ lrSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724467996; x=1725072796;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x8wiF9/m0Wx4dwiAPVIyAvbM7sfZYX3AslMzV/OlkTs=;
- b=RDjRtVu9NQdPVvgT2dBl8GYJkl64Pz+fTA5XoqJqpfwx9+C7f1Wxb10e9TyrfidbVX
- xAJXysMg6FviN/Ff+k6B/6LQX2gAb+Bw556n/Cfd/fFfQSt3vgYf98LUxjHcNBVWxGAF
- X+LUpAaNXjYX0s676KqPI+rYvySjE7YOBFRF3fGIv3avavs4BzhF7uZpGPkG2+jz6r/9
- X3P+w+ployrLIdK0Z+Rp+u4pnCMA0q3FHOwGgAW5Fd91+s+r5qixC4ZxIGQQWM3METzF
- MZDZ8V4oViM1P02e29dyDsH+G2ZtD063vA9thgK7PUS4yVoZD1m3bwvTDC7LYkzBMEjk
- VsqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxI/Gx4jXIAQnL0GsbOgn1832jLsEG4xrR3s2bdcQhFT1hmr//bi7IM8pP++BG/XtMgirCcslHsXQ6@nongnu.org
-X-Gm-Message-State: AOJu0YzW+EB6qMFA1ZCsC+6+howxJdeFugi6C9ytsmNfFsliP9K8Q27K
- 7xv//FP4DrHNcZNwNYl3rGE6XzcScLRZG/NGme9qMh0CGk6QmFsgvkaORrEeEhtSzNfrKj7M7Nc
- 1pTAuwbqA1UwozI63lE6fFIlxobIMOzZBT9S62w==
-X-Google-Smtp-Source: AGHT+IHwBXzzlWXxZo2/DoZyRr3c8uCjoYR1OqQ/wKD+GufdCcAHe0aQI1bTKK8bgwtOHh3KZQuHreQpeS2u1QZkeHo=
-X-Received: by 2002:a17:90a:70c3:b0:2cd:b938:770b with SMTP id
- 98e67ed59e1d1-2d646b8bf2cmr4178515a91.5.1724467996195; Fri, 23 Aug 2024
- 19:53:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724475415; x=1725080215;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rHt6pbRW07xJLDMoO5UcezJiyi3YHPjGjTmMqWnnjc8=;
+ b=qTmtggyrT7cjlCQ5RyM9bQXZgsTb+b7k/eoT0HKMbfcL6Ei9eUFhTwdPBU98bVPAT8
+ In+FrowO7WKO5kvlhhN6ISl4feMsBJTqWpXlPa6Vm7wUxWydkDCZoyJ22lUyi4UWfFNA
+ 8Ql1Is6tsVXN4LbriHL0DrIT8XfQHhpnnu70dNmo/Jjb5CGel/+rvoTKSS6iYEnl98Hy
+ G7jALSPo5o+SPQh6WQjRQco9RYcmFG7qdLe3GB3V4g5ZZUWmVCPrMlqwLvDQxkwRDny5
+ V64PVmobjYH+asa/RVakimebmyoJnb+QwiRlHZPkzIOE3t2RtipiuQmtL16bdD2Stn0Z
+ B7vA==
+X-Gm-Message-State: AOJu0YzsrZa1pJEKRF7F7+ngFUSZZgHlCHljuTg47/nvN9ZpvBrnJtMG
+ Il+nii9aILru3DFC66l3W1VY22d5jmgYh6Weji/2vuRRjWG2DaYdb0b3bd1eRvQ=
+X-Google-Smtp-Source: AGHT+IEMPz2UEANsPdLwkbUgr0pLrGSu8dDju7pQJF68wDnwnXAjK6WmM7RnfvAa7/QiT/PXZv+hhQ==
+X-Received: by 2002:a05:6870:ac11:b0:270:68e:34c with SMTP id
+ 586e51a60fabf-273e6552b54mr4849141fac.26.1724475415458; 
+ Fri, 23 Aug 2024 21:56:55 -0700 (PDT)
+Received: from localhost.localdomain ([220.253.126.131])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7143422ecedsm3805934b3a.25.2024.08.23.21.56.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Aug 2024 21:56:54 -0700 (PDT)
+From: Ajeet Singh <itachis6234@gmail.com>
+X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
+To: qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v3 03/17] bsd-user: Implement RISC-V CPU register cloning and
+ reset functions
+Date: Sat, 24 Aug 2024 14:56:21 +1000
+Message-Id: <20240824045635.8978-4-itachis@FreeBSD.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240824045635.8978-1-itachis@FreeBSD.org>
+References: <20240824045635.8978-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
-References: <20240820050848.165253-1-richard.henderson@linaro.org>
- <55f5a246-b16f-4cd3-b503-b9b37e7f835d@linaro.org>
-In-Reply-To: <55f5a246-b16f-4cd3-b503-b9b37e7f835d@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 23 Aug 2024 20:53:05 -0600
-Message-ID: <CANCZdfpf_-RrpsENp8xZ3xGEXzUvtf480264esEWkH76NSD6Kw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] *-user: Handle short reads in mmap_h_gt_g
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- gaosong@loongson.cn
-Content-Type: multipart/alternative; boundary="000000000000571acc062064feab"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102f;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=itachis6234@gmail.com; helo=mail-oo1-xc36.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,49 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000571acc062064feab
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Mark Corbin <mark@dibsco.co.uk>
 
-On Tue, Aug 20, 2024 at 4:34=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
+Added functions for cloning CPU registers and resetting the CPU state
+for RISC-V architecture.
 
-> On 20/8/24 07:08, Richard Henderson wrote:
->
-> > Richard Henderson (2):
-> >    linux-user: Handle short reads in mmap_h_gt_g
-> >    bsd-user: Handle short reads in mmap_h_gt_g
->
-> Series:
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ bsd-user/riscv/target_arch_cpu.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-Series:
+diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
+index eb37b062a3..522cfc099b 100644
+--- a/bsd-user/riscv/target_arch_cpu.h
++++ b/bsd-user/riscv/target_arch_cpu.h
+@@ -130,4 +130,18 @@ static inline void target_cpu_loop(CPURISCVState *env)
+     }
+ }
+ 
++static inline void target_cpu_clone_regs(CPURISCVState *env, target_ulong newsp)
++{
++    if (newsp) {
++        env->gpr[xSP] = newsp;
++    }
++
++    env->gpr[xA0] = 0; /* a0 */
++    env->gpr[xT0] = 0; /* t0 */
++}
++
++static inline void target_cpu_reset(CPUArchState *env)
++{
++}
++
+ #endif /* TARGET_ARCH_CPU_H */
+-- 
+2.34.1
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-
---000000000000571acc062064feab
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 20, 2024 at 4:34=E2=80=AF=
-AM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">phi=
-lmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">On 20/8/24 07:08, Richard Henderson wrote:<br>
-<br>
-&gt; Richard Henderson (2):<br>
-&gt;=C2=A0 =C2=A0 linux-user: Handle short reads in mmap_h_gt_g<br>
-&gt;=C2=A0 =C2=A0 bsd-user: Handle short reads in mmap_h_gt_g<br>
-<br>
-Series:<br>
-Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
-o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br></blockquote><div><br=
-></div><div>Series:</div><div><br></div><div>Reviewed-by: Warner Losh &lt;<=
-a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div>=C2=A0</d=
-iv></div></div>
-
---000000000000571acc062064feab--
 
