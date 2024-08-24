@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D85AC52D6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F704C5472C
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 16:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shtJf-0005Oa-Cl; Sat, 24 Aug 2024 12:08:39 -0400
+	id 1shtJl-0005Yu-WE; Sat, 24 Aug 2024 12:08:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJd-0005Nv-Hn
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:37 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJj-0005YB-K8
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:43 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJb-0005ws-Kz
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:37 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5bed0a2ae0fso3660079a12.1
- for <qemu-devel@nongnu.org>; Sat, 24 Aug 2024 09:08:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJh-0005xJ-Lf
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:43 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5bf068aebe5so4054069a12.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Aug 2024 09:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724515713; x=1725120513; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0RKtHsllaFBWhpgp+Yh12CocZ/lit3Jpzg1mIlpvzK8=;
- b=rygkJFdrF5sURHZwxAjWfMY4GpOprdtFC49lfDXlm7BZ2iJ/rts4uNKW0HQm+KqGJJ
- 60+gRoYpKgcDB0jaGE2isUBRAxWB09qGK5SEd1LO/4L0mEcQNCyr7C9P9qp3BzQ57IOl
- amiqpGPN+v6R1246dMTww8fWWxCwnfDIsRunvJQNxwpH5PyE7KDFkHwOY7qNz2wa8zVU
- TJRcik/OmA05VRkq6i3sT6WVzUDCTqHl5WCSgU77v4cqwgiflQM0DfMvhMLXM/fxEj3k
- VOdZxyunmrOuagVI7I/MKdeehLNYIjm5eYsTI+pbipAerqbeKfWB9x36zFVH71xKQFaE
- uFhw==
+ d=linaro.org; s=google; t=1724515720; x=1725120520; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tmalEfqj8Hxf9x996+sxVbVEP2kWpMFWfstUyKQdEg4=;
+ b=vcSJJs8H1u/B0vuxW77pUJo7I9ZFI7c5Mr2LbP1fUqdnjXFlVfT6ZAl11VDYet9R8d
+ lRb6XxA/oTUTtL482Wv/XrySS82uKKnyCeUi5NTkfR3QeuXIxGnXFv3hrXnEJP6dtANl
+ QmBEiaTrFsqmXZz0W9/S04E5zksxKsl3uzhiuqe+4oKn/1kdyD3mh7Oj9RyNETqkd6KY
+ M6VVsWT3N9KWypAV5UPg49E6EgXdvx5Yt9BW/gti1oy+vTxAT1zmKzkFhDp1EePuf52v
+ TpWukUdRYtvxTCG/fRNchg3uFScdeUEndhQPoqQ5aAW3tgwbR53RNkc9AAXW5Aw9fnR0
+ bbbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724515713; x=1725120513;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0RKtHsllaFBWhpgp+Yh12CocZ/lit3Jpzg1mIlpvzK8=;
- b=oL31qGIM5Ke5NPXePWJwRv5bqvjQ6HwUR5fRBAbyy+9kRq8kfn7h/rPh5aYe9CXTS2
- QRDdY2LyY57+eLq7Y+hn7BLm2sVQbjPoRiCGY6cjhhlz3ntB7VZLTMa5EDqQ6ITFZCxO
- ZRUyr/Ga8Tti8Wh5B0PYJAHqfEhJYrdWsZwuOG1jtOdexqHLw1R69cEcFWSvMDT1i84T
- q3p5USyYWvLBotXQXh5FYtJtncBAp4u7mwG1ebzs9+3szGYewkCfeHxld4p773FkuX9u
- UAvP8CWvCOv7ENz+H/o0hUcI2fVO+XnsZvrWBBt9ajk/6WZzkebzhB4Nx6IQYDU6m9aQ
- rszA==
-X-Gm-Message-State: AOJu0YzR1VKB8QPVAtAs+BDHbwoR4gFYd3YZOTto7PIkOWGprGEbZRpk
- Q6aAAD4gTPWHX5LWf2Awv6/rN2fMv9V83Fjk+wmTbV4XWMu9rsKjRIyrFpWVAplWt3aDdz7qGhw
- F
-X-Google-Smtp-Source: AGHT+IFNpHJkSv4BTfct8HJ79b9nkV6srMEEkmtpafDR0yOJC1Z03JTLwJih8YXXXysV6gLAYyWpMg==
-X-Received: by 2002:a17:906:f5a9:b0:a86:963f:ea8d with SMTP id
- a640c23a62f3a-a86a54df8demr390723166b.64.1724515713100; 
- Sat, 24 Aug 2024 09:08:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724515720; x=1725120520;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tmalEfqj8Hxf9x996+sxVbVEP2kWpMFWfstUyKQdEg4=;
+ b=qrhAm6yCOdHUScZSRHG733MCKYxJbmqZXgXn19+qfXj729yOUBlHg9cYpK2/PrepxF
+ Ha0XvoY1C5kjcCKGRGrzXtu9nm2PYEHifC23DglqLyVkK37Cjm309aj3jGUKXDgmC7bj
+ NLGeDEE9taEbQlSIp53AcjEUiWj7usVsk5zB9wBBCWHm0F94Y/wtrdytj9uvlCdYPvkL
+ cUm3tvvIXrj+E6SijKCV7MQCpvbBG/mvwecxWzDEhDdmC0Am/meWZ0QONAkC3dBwgx/E
+ Al8i88H48xB7JEnDHkPLgdpmKMkJMJM0jDINEGCaHaRXIDHANd/IK1kkih8iFUeiN/AU
+ PKEA==
+X-Gm-Message-State: AOJu0Yw0TDVB+GH7ZJ7S5YV2OFWnZsimyyNTT+N8qJyeTUpW0IbcebUK
+ 9cwXbc8uF47lFc2zh785ke0/MSzup0aE67OapAyztlPMEkiTB1foS8Uf/CF1AS5AzPQddRapoIG
+ j
+X-Google-Smtp-Source: AGHT+IGHqoHantofAxdYwwBaKt+zwGkswuJzdtJ6tX8q5Dameb1tE3HNgi6N4uNrk3il3XoxLPLpTA==
+X-Received: by 2002:a17:907:f18e:b0:a86:851e:3a23 with SMTP id
+ a640c23a62f3a-a86a51af30emr424065566b.27.1724515719493; 
+ Sat, 24 Aug 2024 09:08:39 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.198.30])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a868f29d749sm415682566b.66.2024.08.24.09.08.31
+ a640c23a62f3a-a868f2adc55sm416588166b.71.2024.08.24.09.08.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 24 Aug 2024 09:08:32 -0700 (PDT)
+ Sat, 24 Aug 2024 09:08:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
@@ -63,15 +64,18 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Beraldo Leal <bleal@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 0/7] tests/functional: Convert few MIPS avocado tests
-Date: Sat, 24 Aug 2024 18:08:21 +0200
-Message-ID: <20240824160829.27655-1-philmd@linaro.org>
+Subject: [PATCH v3 1/7] tests/functional: Convert mips64el Fuloong2e avocado
+ test (1/2)
+Date: Sat, 24 Aug 2024 18:08:22 +0200
+Message-ID: <20240824160829.27655-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240824160829.27655-1-philmd@linaro.org>
+References: <20240824160829.27655-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,92 +98,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-$ RESCUE_YL_PATH=/path/to/fuloong2e/rescue-yl \
-  QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 \
-  QEMU_TEST_FLAKY_TESTS=1 \
-  QEMU_TEST_TIMEOUT_EXPECTED=1 \
-    make check-functional V=1
-▶  2/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
- 2/17 qemu:func-quick+func-mips64el / func-mips64el-empty_cpu_model                                  OK  0.14s   1 subtests passed
-▶  8/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
- 8/17 qemu:func-quick+func-mips / func-mips-empty_cpu_model                                          OK  0.13s   1 subtests passed
-▶  4/17 test_version.Version.test_qmp_human_info_version                                             OK
-▶  5/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
-▶  7/17 test_version.Version.test_qmp_human_info_version                                             OK
- 4/17 qemu:func-quick+func-mips64el / func-mips64el-version                                          OK  0.17s   1 subtests passed
- 5/17 qemu:func-quick+func-mipsel / func-mipsel-empty_cpu_model                                      OK  0.17s   1 subtests passed
- 7/17 qemu:func-quick+func-mipsel / func-mipsel-version                                              OK  0.18s   1 subtests passed
-▶ 10/17 test_version.Version.test_qmp_human_info_version                                             OK
-10/17 qemu:func-quick+func-mips / func-mips-version                                                  OK  0.21s   1 subtests passed
-▶  1/17 test_mips64el_fuloong2e.MipsFuloong2e.test_linux_kernel_2_6_27_isa_serial                    OK
-▶  3/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
-▶ 11/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
- 3/17 qemu:func-quick+func-mips64el / func-mips64el-info_usernet                                     OK  0.29s   1 subtests passed
-▶  6/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
-11/17 qemu:func-quick+func-mips64 / func-mips64-empty_cpu_model                                      OK  0.16s   1 subtests passed
- 6/17 qemu:func-quick+func-mipsel / func-mipsel-info_usernet                                         OK  0.30s   1 subtests passed
-▶  9/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
- 9/17 qemu:func-quick+func-mips / func-mips-info_usernet                                             OK  0.30s   1 subtests passed
-▶ 13/17 test_version.Version.test_qmp_human_info_version                                             OK
-13/17 qemu:func-quick+func-mips64 / func-mips64-version                                              OK  0.19s   1 subtests passed
-▶ 12/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
-12/17 qemu:func-quick+func-mips64 / func-mips64-info_usernet                                         OK  0.24s   1 subtests passed
-▶ 17/17 test_mips_malta.MaltaMachineConsole.test_mips_malta                                          OK
-▶ 16/17 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_16k_up                    OK
-▶  1/17 test_mips64el_fuloong2e.MipsFuloong2e.test_linux_kernel_3_16                                 OK
- 1/17 qemu:func-quick+func-mips64el / func-mips64el-mips64el_fuloong2e                               OK  3.10s   2 subtests passed
-▶ 16/17 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_4k                        OK
-▶ 14/17 test_mips64el_loongson3v.MipsLoongson3v.test_pmon_serial_console                             OK
-14/17 qemu:func-thorough+func-mips64el-thorough+thorough / func-mips64el-mips64el_loongson3v         OK  4.71s   1 subtests passed
-▶ 16/17 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_64k_dbg                   OK
-▶ 16/17 test_mipsel_malta.MaltaMachineYAMON.test_mipsel_malta_yamon                                  OK
-16/17 qemu:func-thorough+func-mipsel-thorough+thorough / func-mipsel-mipsel_malta                    OK  8.64s   4 subtests passed
-▶ 15/17 test_mips64el_malta.MaltaMachineConsole.test_mips64el_malta                                  OK
-▶ 17/17 test_mips_malta.MaltaMachineConsole.test_mips_malta_cpio                                     OK
-17/17 qemu:func-thorough+func-mips-thorough+thorough / func-mips-mips_malta                          OK  14.06s   2 subtests passed
-▶ 15/17 test_mips64el_malta.MaltaMachineConsole.test_mips64el_malta_5KEc_cpio                        OK
-▶ 15/17 test_mips64el_malta.MaltaMachineFramebuffer.test_mips_malta_i6400_framebuffer_logo_1core     OK
-▶ 15/17 test_mips64el_malta.MaltaMachineFramebuffer.test_mips_malta_i6400_framebuffer_logo_7cores    OK
-▶ 15/17 test_mips64el_malta.MaltaMachineFramebuffer.test_mips_malta_i6400_framebuffer_logo_8cores    OK
-▶ 15/17 test_mipsel_malta.MaltaMachineYAMON.test_mipsel_malta_yamon                                  OK
-15/17 qemu:func-thorough+func-mips64el-thorough+thorough / func-mips64el-mips64el_malta              OK  56.88s   6 subtests passed
+Straight forward conversion. Update the SHA1 hashes to
+SHA256 hashes since SHA1 should not be used anymore nowadays.
 
-Ok:                 17
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            0
-Timeout:            0
+Since the asset is expected locally and the test is guarded
+with QEMU_TEST_ALLOW_UNTRUSTED_CODE, keep it under the 'quick'
+category.
 
-Based-on: <20240821082748.65853-1-thuth@redhat.com>
+  $ RESCUE_YL_PATH=/path/to/rescue-yl QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 \
+    make check-functional-mips64el
+  1/4 qemu:func-quick+func-mips64el / func-mips64el-empty_cpu_model      OK   0.12s   1 subtests passed
+  2/4 qemu:func-quick+func-mips64el / func-mips64el-version              OK   0.13s   1 subtests passed
+  3/4 qemu:func-quick+func-mips64el / func-mips64el-info_usernet         OK   0.15s   1 subtests passed
+  4/4 qemu:func-quick+func-mips64el / func-mips64el-mips64el_fuloong2e   OK   0.19s   1 subtests passed
 
-Philippe Mathieu-Daudé (7):
-  tests/functional: Convert mips64el Fuloong2e avocado test (1/2)
-  tests/functional: Convert mips64el Fuloong2e avocado test (2/2)
-  tests/functional: Convert mips64el I6400 Malta avocado tests
-  tests/functional: Convert mips64el 5KEc Malta avocado tests
-  tests/functional: Convert mips32el Malta YAMON avocado test
-  tests/functional: Convert nanomips Malta avocado tests
-  tests/functional: Convert mips32eb 4Kc Malta avocado tests
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ MAINTAINERS                                   |  2 +-
+ tests/functional/meson.build                  |  4 +++
+ .../test_mips64el_fuloong2e.py}               | 33 ++++++++++---------
+ 3 files changed, 23 insertions(+), 16 deletions(-)
+ rename tests/{avocado/machine_mips_fuloong2e.py => functional/test_mips64el_fuloong2e.py} (58%)
+ mode change 100644 => 100755
 
- MAINTAINERS                                 |   6 +-
- tests/avocado/boot_linux_console.py         | 217 --------------------
- tests/avocado/machine_mips_fuloong2e.py     |  42 ----
- tests/avocado/machine_mips_malta.py         | 162 ---------------
- tests/functional/meson.build                |  13 ++
- tests/functional/qemu_test/utils.py         |  20 ++
- tests/functional/test_mips64el_fuloong2e.py |  67 ++++++
- tests/functional/test_mips64el_malta.py     | 193 +++++++++++++++++
- tests/functional/test_mips_malta.py         |  84 ++++++++
- tests/functional/test_mipsel_malta.py       |  98 +++++++++
- 10 files changed, 479 insertions(+), 423 deletions(-)
- delete mode 100644 tests/avocado/machine_mips_fuloong2e.py
- delete mode 100644 tests/avocado/machine_mips_malta.py
- create mode 100755 tests/functional/test_mips64el_fuloong2e.py
- create mode 100755 tests/functional/test_mips64el_malta.py
- create mode 100755 tests/functional/test_mips_malta.py
- create mode 100755 tests/functional/test_mipsel_malta.py
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 25e71ac14c..77fbb5d42e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1384,7 +1384,7 @@ S: Odd Fixes
+ F: hw/mips/fuloong2e.c
+ F: hw/pci-host/bonito.c
+ F: include/hw/pci-host/bonito.h
+-F: tests/avocado/machine_mips_fuloong2e.py
++F: tests/functional/test_mips64el_fuloong2e.py
+ 
+ Loongson-3 virtual platforms
+ M: Huacai Chen <chenhuacai@kernel.org>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 12e08e365b..8d28313a65 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -51,6 +51,10 @@ tests_microblazeel_thorough = [
+   'microblazeel_s3adsp1800'
+ ]
+ 
++tests_mips64el_quick = [
++  'mips64el_fuloong2e',
++]
++
+ tests_mips64el_thorough = [
+   'mips64el_loongson3v',
+ ]
+diff --git a/tests/avocado/machine_mips_fuloong2e.py b/tests/functional/test_mips64el_fuloong2e.py
+old mode 100644
+new mode 100755
+similarity index 58%
+rename from tests/avocado/machine_mips_fuloong2e.py
+rename to tests/functional/test_mips64el_fuloong2e.py
+index 89291f47b2..7688a32713
+--- a/tests/avocado/machine_mips_fuloong2e.py
++++ b/tests/functional/test_mips64el_fuloong2e.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional tests for the Lemote Fuloong-2E machine.
+ #
+ # Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
+@@ -8,35 +10,36 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ import os
++import subprocess
+ 
+-from avocado import skipUnless
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++from unittest import skipUnless
+ 
+ class MipsFuloong2e(QemuSystemTest):
+ 
+     timeout = 60
+ 
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     @skipUnless(os.getenv('RESCUE_YL_PATH'), 'RESCUE_YL_PATH not available')
+-    def test_linux_kernel_isa_serial(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:fuloong2e
+-        :avocado: tags=endian:little
+-        :avocado: tags=device:bonito64
+-        :avocado: tags=device:via686b
+-        """
++    def test_linux_kernel_2_6_27_isa_serial(self):
+         # Recovery system for the Yeeloong laptop
+         # (enough to test the fuloong2e southbridge, accessing its ISA bus)
+         # http://dev.lemote.com/files/resource/download/rescue/rescue-yl
+-        kernel_hash = 'ec4d1bd89a8439c41033ca63db60160cc6d6f09a'
+-        kernel_path = self.fetch_asset('file://' + os.getenv('RESCUE_YL_PATH'),
+-                                       asset_hash=kernel_hash)
++        sha = 'ab588d3316777c62cc81baa20ac92e98b01955c244dff3794b711bc34e26e51d'
++        kernel_path = os.getenv('RESCUE_YL_PATH')
++        output = subprocess.check_output(['sha256sum', kernel_path])
++        checksum = output.split()[0]
++        assert checksum.decode("utf-8") == sha
+ 
++        self.set_machine('fuloong2e')
+         self.vm.set_console()
+         self.vm.add_args('-kernel', kernel_path)
+         self.vm.launch()
+         wait_for_console_pattern(self, 'Linux version 2.6.27.7lemote')
+         cpu_revision = 'CPU revision is: 00006302 (ICT Loongson-2)'
+         wait_for_console_pattern(self, cpu_revision)
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.45.2
 
