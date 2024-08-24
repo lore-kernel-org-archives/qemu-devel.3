@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FED1C52D6F
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 16:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27913C5472D
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 17:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shtKa-000720-Is; Sat, 24 Aug 2024 12:09:36 -0400
+	id 1shue5-0007CN-7U; Sat, 24 Aug 2024 13:33:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtKM-0006QC-5F
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:09:24 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shue3-00076q-Ra
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 13:33:47 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtKI-0005yn-Sw
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:09:20 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a83562f9be9so291246366b.0
- for <qemu-devel@nongnu.org>; Sat, 24 Aug 2024 09:09:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1shue1-0002IF-Sd
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 13:33:47 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-70941cb73e9so2058002a34.2
+ for <qemu-devel@nongnu.org>; Sat, 24 Aug 2024 10:33:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724515757; x=1725120557; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ArPQRo3JWTXoZ9aDQjC++E+MK4nlwcv8B+/ljFpf3L0=;
- b=s9wuRvNwuieL0iLNSqsTwWpWum0uZtGBjpRzaXoq0nP1KjwfNWpzUM59KH7v1JwEOZ
- eP+PJBGgziFCXqx3edosmXKIuRTNosNssPFY2iPWmfXTi2DoLrXljSA/8L+Rv3QwvscE
- MytdNz5LcAeg9shS+ek+crtRa9Ce7WFqqgmlhEdsqTfLdy5hO6VHqn6dn0SnDZz13CqZ
- CdUoD9eN8qHEJVEAAfH3y+8nQ9h+HJAMkCMoO6nmCaZoXZGYXkzEtL70XWdUi10XdDL3
- qppfe/uM5+GfUCf8ZFtJX6o2fj6RX3LE6tvvWlegPOAwjNj9CtfSP3KayFTrMfbFNdvY
- WhsA==
+ d=ventanamicro.com; s=google; t=1724520824; x=1725125624; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LZhaJMQ6PkwdKPVl/65Ojkpw76G0zD1CDyA0x7yQobg=;
+ b=REQL++YpecTQffeED/jnP5WNBGSkb6gvygCQe5kz/x37rEoIDod+ww1hUxlNi6gXZ/
+ qxpdzG1mz1q482tpgimyTssel6AaKdYAZ5sBz811R9v/Ib+T/3FpgsiSQTDAHqkpaYTU
+ RZX/74Y7n929QdZcUzE8AvATQ9sRHBUEwBIyKH9SVj2qY5vCW3n9svg8Xa2Q2De/lBo8
+ VzzokQMDddDiywwQfNnimQ6yOYvmyGgg1kMqY7ywPqo5egnaVipj2Qf72SfxgaNpkOcJ
+ BiKClONidEIQISWa0dvYFpL8m4urqJe57EmvZHoej348G7vKtiFxjbuNn+7utkJ4iK/7
+ KtFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724515757; x=1725120557;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ArPQRo3JWTXoZ9aDQjC++E+MK4nlwcv8B+/ljFpf3L0=;
- b=NmL29O1IpcKslRGvTpooI3gbbJLJLeKgZLfGuQmtPw4mJTgKPCePViZofwM3065wGI
- HYXWhRSlif4GXWFEy+LAwVIV2Bb382jHqPgbV3EsM/OSs3VkB3NdcizENwVOfrdPInX9
- YdZRWdqlyOlajDsav8PK0HD6caIOMTDUvoqznjoscyK3p0NLinIGrte17S7lFrq34DFh
- JTZye2BCIVNpaIrfv+YxHbMEffkS0wYen56DO6GCMeopbCQijhYHtmkUoj7W/yNxtoGp
- 2Cko3D9PsXBlJXf5mGyxRxOLNR4n5ETFkmlBzX8/ZzwCyg0jQLWp/QKCaDk8v5LoJrTZ
- 5KtA==
-X-Gm-Message-State: AOJu0YxUHKL1UWQihJxAvg64REld7OPpy9mdNMzGSUZ5r1RbNP01JSb1
- eoakzxiz4wvHJeYhPfgbgMLULfdDivQWXz3E6fUL9S9yzfg21ZsSck74qd6sVWUBP6yTp7KRysu
- k
-X-Google-Smtp-Source: AGHT+IE0kUGFXc3dCBoS+Nd2KwctWKWbaM1hRAF1GYPDqonTdPU1mls0LOzsKun7rcCfmUdKUKlLYg==
-X-Received: by 2002:a17:907:2d94:b0:a86:9602:f4b with SMTP id
- a640c23a62f3a-a86a54cf91fmr346665166b.63.1724515757003; 
- Sat, 24 Aug 2024 09:09:17 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.198.30])
+ d=1e100.net; s=20230601; t=1724520824; x=1725125624;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LZhaJMQ6PkwdKPVl/65Ojkpw76G0zD1CDyA0x7yQobg=;
+ b=dvZWowDPQ+yJpCImZ+gM+eQOIEFvxsaxqcZMZwCMGCktttVq8oiEo+VxtLvAeeVSIQ
+ qeHdeeL0QVZPodLirJsS61gA49rPeWg7JlAMeEwnuRHNAxl3xjuZYwAdZYcN+4SZ7M90
+ 750q9xG0IjUeTmnAA/qgvnWhpNmUs94aphb1V+ApuFI9z8Mggyt8VllnomEORM8vC47r
+ qPq+EleUYcSESLGiZhKdoP+jslks2ohM1gYAJwUjJgSJTvzioOtBSxkAdm7IMcmwHtLH
+ w/vHbUEMkO45I8ACp0xtmhOg1BHSKf19Z7ktIfJs9AsQ1csMuj5cy50MffpTpnDEj3iI
+ Cj2Q==
+X-Gm-Message-State: AOJu0Yw8ACfODfJJxjtBidkDPOhUNfYDYGlCrFRwF+rMp3pCY/3lVlo7
+ Z9hvEi7xQquQ7f1VgJJei/AjHPEIBToUK5EtgmswkhE2v22if2G9IaqO53oUOp3dvYWEPdos3lZ
+ h
+X-Google-Smtp-Source: AGHT+IEZNZgy9Fp0Q3mSH+xfS87GBXUxYkFXMONBV654VuaVa6Q7qXcwdCIgt2CNLRBozifHkslOgw==
+X-Received: by 2002:a05:6808:211f:b0:3da:a48b:d1ec with SMTP id
+ 5614622812f47-3de2a89b188mr7278549b6e.29.1724520824195; 
+ Sat, 24 Aug 2024 10:33:44 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([179.133.97.250])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a868f4f41edsm418951366b.199.2024.08.24.09.09.15
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 24 Aug 2024 09:09:16 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ d2e1a72fcca58-7143433ac53sm4724904b3a.212.2024.08.24.10.33.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 24 Aug 2024 10:33:43 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Beraldo Leal <bleal@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 6/7] tests/functional: Convert nanomips Malta avocado tests
-Date: Sat, 24 Aug 2024 18:08:27 +0200
-Message-ID: <20240824160829.27655-7-philmd@linaro.org>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH] target/riscv/tcg/tcg-cpu.c: consider MISA bit choice in
+ implied rule
+Date: Sat, 24 Aug 2024 14:33:38 -0300
+Message-ID: <20240824173338.316666-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240824160829.27655-1-philmd@linaro.org>
-References: <20240824160829.27655-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,159 +95,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Straight forward conversion. Update the SHA1 hashes to
-SHA256 hashes since SHA1 should not be used anymore nowadays.
+Gitlab issue [1] reports a misleading error when trying to run a 'rv64'
+cpu with 'zfinx' and without 'f':
 
-  $ QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 \
-        make check-functional-mipsel
-  ...
-  ▶ 4/4 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_16k_up   OK
-  ▶ 4/4 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_4k       OK
-  ▶ 4/4 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_64k_dbg  OK
-  ▶ 4/4 test_mipsel_malta.MaltaMachineYAMON.test_mipsel_malta_yamon                 OK
-  4/4 qemu:func-thorough+func-mipsel-thorough+thorough / func-mipsel-mipsel_malta   OK   9.95s   4 subtests passed
+$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false
+qemu-system-riscv64: Zfinx cannot be supported together with F extension
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The user explicitly disabled F and the error message mentions a conflict
+with Zfinx and F.
+
+The problem isn't the error reporting, but the logic used when applying
+the implied ZFA rule that enables RVF unconditionally, without honoring
+user choice (i.e. keep F disabled).
+
+Change cpu_enable_implied_rule() to check if the user deliberately
+disabled a MISA bit. In this case we shouldn't either re-enable the bit
+nor apply any implied rules related to it.
+
+After this change the error message now shows:
+
+$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false
+qemu-system-riscv64: Zfa extension requires F extension
+
+Disabling 'zfa':
+
+$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false,zfa=false
+qemu-system-riscv64: D extension requires F extension
+
+And finally after disabling 'd':
+
+$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false,zfa=false,d=false
+(OpenSBI boots ...)
+
+[1] https://gitlab.com/qemu-project/qemu/-/issues/2486
+
+Cc: Frank Chang <frank.chang@sifive.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2486
+Fixes: 047da861f9 ("target/riscv: Introduce extension implied rule helpers")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- tests/avocado/boot_linux_console.py   | 59 ---------------------------
- tests/functional/test_mipsel_malta.py | 51 +++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 59 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 10457743d1..0756e49ded 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -179,65 +179,6 @@ def test_mips_malta_cpio(self):
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index b8814ab753..dea8ab7a43 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -778,11 +778,18 @@ static void cpu_enable_implied_rule(RISCVCPU *cpu,
+     if (!enabled) {
+         /* Enable the implied MISAs. */
+         if (rule->implied_misa_exts) {
+-            riscv_cpu_set_misa_ext(env,
+-                                   env->misa_ext | rule->implied_misa_exts);
+-
+             for (i = 0; misa_bits[i] != 0; i++) {
+                 if (rule->implied_misa_exts & misa_bits[i]) {
++                    /*
++                     * If the user disabled the misa_bit do not re-enable it
++                     * and do not apply any implied rules related to it.
++                     */
++                    if (cpu_misa_ext_is_user_set(misa_bits[i]) &&
++                        !(env->misa_ext & misa_bits[i])) {
++                        continue;
++                    }
++
++                    riscv_cpu_set_misa_ext(env, env->misa_ext | misa_bits[i]);
+                     ir = g_hash_table_lookup(misa_ext_implied_rules,
+                                              GUINT_TO_POINTER(misa_bits[i]));
  
--    def do_test_mips_malta32el_nanomips(self, kernel_path_xz):
--        kernel_path = self.workdir + "kernel"
--        with lzma.open(kernel_path_xz, 'rb') as f_in:
--            with open(kernel_path, 'wb') as f_out:
--                shutil.copyfileobj(f_in, f_out)
--
--        self.vm.set_console()
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
--                               + 'mem=256m@@0x0 '
--                               + 'console=ttyS0')
--        self.vm.add_args('-no-reboot',
--                         '-kernel', kernel_path,
--                         '-append', kernel_command_line)
--        self.vm.launch()
--        console_pattern = 'Kernel command line: %s' % kernel_command_line
--        self.wait_for_console_pattern(console_pattern)
--
--    def test_mips_malta32el_nanomips_4k(self):
--        """
--        :avocado: tags=arch:mipsel
--        :avocado: tags=machine:malta
--        :avocado: tags=endian:little
--        :avocado: tags=cpu:I7200
--        """
--        kernel_url = ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
--                      'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
--                      'generic_nano32r6el_page4k.xz')
--        kernel_hash = '477456aafd2a0f1ddc9482727f20fe9575565dd6'
--        kernel_path_xz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
--
--    def test_mips_malta32el_nanomips_16k_up(self):
--        """
--        :avocado: tags=arch:mipsel
--        :avocado: tags=machine:malta
--        :avocado: tags=endian:little
--        :avocado: tags=cpu:I7200
--        """
--        kernel_url = ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
--                      'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
--                      'generic_nano32r6el_page16k_up.xz')
--        kernel_hash = 'e882868f944c71c816e832e2303b7874d044a7bc'
--        kernel_path_xz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
--
--    def test_mips_malta32el_nanomips_64k_dbg(self):
--        """
--        :avocado: tags=arch:mipsel
--        :avocado: tags=machine:malta
--        :avocado: tags=endian:little
--        :avocado: tags=cpu:I7200
--        """
--        kernel_url = ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
--                      'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
--                      'generic_nano32r6el_page64k_dbg.xz')
--        kernel_hash = '18d1c68f2e23429e266ca39ba5349ccd0aeb7180'
--        kernel_path_xz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
--
-     def test_aarch64_xlnx_versal_virt(self):
-         """
-         :avocado: tags=arch:aarch64
-diff --git a/tests/functional/test_mipsel_malta.py b/tests/functional/test_mipsel_malta.py
-index f31f96b012..c283653eae 100755
---- a/tests/functional/test_mipsel_malta.py
-+++ b/tests/functional/test_mipsel_malta.py
-@@ -14,9 +14,60 @@
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import interrupt_interactive_console_until_pattern
- from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import lzma_uncompress
- from zipfile import ZipFile
- 
- 
-+class MaltaMachineConsole(QemuSystemTest):
-+
-+    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-+
-+    ASSET_KERNEL_4K = Asset(
-+        ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
-+         'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
-+         'generic_nano32r6el_page4k.xz'),
-+        '019e034094ac6cf3aa77df5e130fb023ce4dbc804b04bfcc560c6403e1ae6bdb')
-+    ASSET_KERNEL_16K = Asset(
-+        ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
-+         'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
-+         'generic_nano32r6el_page16k_up.xz'),
-+        '3a54a10b3108c16a448dca9ea3db378733a27423befc2a45a5bdf990bd85e12c')
-+    ASSET_KERNEL_64K = Asset(
-+        ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
-+         'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
-+         'generic_nano32r6el_page64k_dbg.xz'),
-+        'ce21ff4b07a981ecb8a39db2876616f5a2473eb2ab459c6f67465b9914b0c6b6')
-+
-+    def do_test_mips_malta32el_nanomips(self, kernel_path_xz):
-+        kernel_path = os.path.join(self.workdir, 'kernel')
-+        lzma_uncompress(kernel_path_xz, kernel_path)
-+
-+        self.set_machine('malta')
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
-+                               + 'mem=256m@@0x0 '
-+                               + 'console=ttyS0')
-+        self.vm.add_args('-cpu', 'I7200',
-+                         '-no-reboot',
-+                         '-kernel', kernel_path,
-+                         '-append', kernel_command_line)
-+        self.vm.launch()
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        wait_for_console_pattern(self, console_pattern)
-+
-+    def test_mips_malta32el_nanomips_4k(self):
-+        kernel_path_xz = self.ASSET_KERNEL_4K.fetch()
-+        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
-+
-+    def test_mips_malta32el_nanomips_16k_up(self):
-+        kernel_path_xz = self.ASSET_KERNEL_16K.fetch()
-+        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
-+
-+    def test_mips_malta32el_nanomips_64k_dbg(self):
-+        kernel_path_xz = self.ASSET_KERNEL_16K.fetch()
-+        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
-+
-+
- class MaltaMachineYAMON(QemuSystemTest):
- 
-     ASSET_YAMON_ROM = Asset(
 -- 
 2.45.2
 
