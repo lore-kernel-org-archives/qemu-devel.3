@@ -4,138 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A0BAC52D6F
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 10:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 986C2C52D6F
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 10:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shnch-0000yf-WA; Sat, 24 Aug 2024 06:03:56 -0400
+	id 1shnmM-0007Pz-16; Sat, 24 Aug 2024 06:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1shncg-0000ur-5I
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 06:03:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1shnce-00034Z-9p
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 06:03:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724493829;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ffUXUtZG5YUtp0+O/N6DeNhpe+KKK5tZSkLiAxwnExI=;
- b=F3l0DXY5eYmPHrNNkEFeO1BQ5mdb4xhG6yNtZJyICBfxG11qxvJHrXbd5lT0f5mGWhOcDr
- pxTQqksjcJS2ldxAhPpKJFoXtEG0sU4W24d93CS4+VthvvylxBIDXy88Zs5TeIh10UEk64
- Ig7ZXuBCtxr1pBPvhnz36KS1hT2jcDU=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-522-mj9GXjsKOxmswqzw5O2YpQ-1; Sat, 24 Aug 2024 06:03:45 -0400
-X-MC-Unique: mj9GXjsKOxmswqzw5O2YpQ-1
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-7141f62ac14so3055934b3a.0
- for <qemu-devel@nongnu.org>; Sat, 24 Aug 2024 03:03:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <danielhb413@gmail.com>)
+ id 1shnmK-0007Oq-El; Sat, 24 Aug 2024 06:13:52 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danielhb413@gmail.com>)
+ id 1shnmI-0004In-9U; Sat, 24 Aug 2024 06:13:52 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2020ac89cabso26097605ad.1; 
+ Sat, 24 Aug 2024 03:13:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1724494428; x=1725099228; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tbwLlvdFVrVPHckzpaVTLqt6lCd91kBl0kzzb7DRC9A=;
+ b=G+o7fZytUzOpSMj/YdByHJa7BGdd86dsvcguRrel8QL7LFand/z1VuQU5qfExQuVYm
+ iBKsnHbVGEc8DH82kDAI9XIkyKY8m7F4PFYx3Gojwe5HpB+6RIRhvCc8lnDziXe9IbeR
+ vPgvRUSHuDk4kry8ZSUBr3BdgveJ52DPCMQA5hUoxQ896Biwf8DLr6D8iSeoEj8yfvhZ
+ AAa1D+5KcXEsdhvsVlvwKJkYSKBEUNNZbtUvIDlxjbd8AELDmkmutvUEHLJLdjgA/Bqq
+ J0XVG2G7O2mI3Iq1EG4GQ9GQ5FzKYSqIdFP3oS4cc5Vu2RyR+q/1tygUqY0sW809AuNG
+ EqIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724493824; x=1725098624;
+ d=1e100.net; s=20230601; t=1724494428; x=1725099228;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ffUXUtZG5YUtp0+O/N6DeNhpe+KKK5tZSkLiAxwnExI=;
- b=j6i4/YC8+aVOxJ91AYXtU/u62eXiYykQ6T65FZDJWHclyS59N+9fB/u/3/YG9zotVg
- oazNoqOtabYJ+sCq0ClltX7vqrfiLdJxvDYgjg6qQxIOze91PQ6uTE1keUP4+8p+d8Us
- 50c4KmDV7sEQM4IW4Bq1B/ZXReblSq+XDJnYgR3ZxWPnffu3lYxGB1j/SM9OGOruOD2m
- dvVToWTdL/p+bIFO7Lekz1N1jc/JFK6VN0PDyDy1y2QQiTpQ6LXUi7YvaELtoVjKwLfN
- r4veEZaS5LjU/ularQrLRMkSibbSapG0giwdw20xwFyYPhPcGs+02wafiWZC8/4rpGK7
- 22EA==
+ bh=tbwLlvdFVrVPHckzpaVTLqt6lCd91kBl0kzzb7DRC9A=;
+ b=ZxQNAf9kkX/ff8zSiaUMVooavZTZYhQ8BGZyCE74n4DPy6Jv/tDYcKYntO4vN2gGHL
+ FR3t31p2m+KxssYN8+7H+Gz2pc5VvChj1rgD+qIg3JMJPmJ3yU3EFvf4zHVcEqcLj2bg
+ qqq0jXKntBBflloPb0i1z3bOz5XMXu8NXzkZC8e6sYudB0aSvXkEPR6xg051v6scHtHO
+ q9F1vYPRMPcyyaeG5vWAmqMhLNmBIzF2JIAmYokWZUmV11G7ZDNCfM16VeXtxHMZ8W/p
+ RXaVLGdhrIK2qG9zk+GOshAXFl+f9e5Xgq2gC9oGqGYFzFL3JKB37+Q94/BF7+uWGahs
+ vbWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXzn2uf62F/8eO9x7+4qA7z2CSZfyiPR4jTjYbnZWwQgMJgkE18RFIlX9ehfvo6luPhC6Srv4c0Ub3@nongnu.org
-X-Gm-Message-State: AOJu0YxuDSrvr0zg1KU5T3QWmUcrFjnlUm8EUdlk4Y2/JJJG69S107rw
- IqQi049gExwA8Boig3Klvl/JUrRMtQ+Us06lhF6xFagb6cTjq/PvpI1OvanqCXcnQtyyUnzy6cf
- 8pRcdezACz6XU8Ae+Mn9KWHJ7ecfOdJvm6QUJsGuQJKyU6AnD0/04
-X-Received: by 2002:a05:6a20:d818:b0:1ca:9ca3:2e6e with SMTP id
- adf61e73a8af0-1cc89d6ba5emr9010001637.8.1724493824178; 
- Sat, 24 Aug 2024 03:03:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEp8gYYi9kjSRMw91hd+CXq2nlnFSOoBowYiH5Ki/iSBxyfF7Vxq/8AhImPkcUfxnbIKnm1g==
-X-Received: by 2002:a05:6a20:d818:b0:1ca:9ca3:2e6e with SMTP id
- adf61e73a8af0-1cc89d6ba5emr9009915637.8.1724493823404; 
- Sat, 24 Aug 2024 03:03:43 -0700 (PDT)
-Received: from [192.168.68.54] ([43.252.113.54])
+ AJvYcCUIwVbaZoe+601uBwdbtRDbmHedujG8joeHXaQSsuH4PdUngjLvjCYw3xnBtLUqe3iwA5D0zKJNylOn@nongnu.org,
+ AJvYcCWIsG7R8/iRAREadhg0X+u7lNIxkcFkb9/d2JYKRhgbBDdn/r5ohqpuz/xD7G0zZjYDVZ0P9aAWNeM=@nongnu.org
+X-Gm-Message-State: AOJu0YzgVHxuDlXabAgoxcYkf7mh2KbCS0XTsFLTyiVHmvcASFxIt/XG
+ V1go2gijMbqt/LQ6bsBfi9ZB4SKy0zrHx6WX4+/HYVHkVZREvlpk
+X-Google-Smtp-Source: AGHT+IEYXTaKXjLdUuGbAzUjauEyThishQtQ+70r+0Jf/A9lE53PMNhwvL4XS8EwPvJj30jUZUX+kg==
+X-Received: by 2002:a17:903:188:b0:202:c33:b7a5 with SMTP id
+ d9443c01a7336-2039e469d36mr59184505ad.14.1724494427828; 
+ Sat, 24 Aug 2024 03:13:47 -0700 (PDT)
+Received: from [192.168.68.110] ([179.133.97.250])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7143430020fsm4395915b3a.146.2024.08.24.03.03.30
+ d9443c01a7336-203855dbcf2sm40196265ad.146.2024.08.24.03.13.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Aug 2024 03:03:42 -0700 (PDT)
-Message-ID: <82deccdf-ad02-4c7f-bcb6-20cfd2723c17@redhat.com>
-Date: Sat, 24 Aug 2024 20:03:27 +1000
+ Sat, 24 Aug 2024 03:13:47 -0700 (PDT)
+Message-ID: <7a4cc8d1-b2ab-4b06-b1cd-b39bbe8b499f@gmail.com>
+Date: Sat, 24 Aug 2024 07:13:44 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC V3 17/29] arm/virt: Release objects for *disabled*
- possible vCPUs after init
-To: Salil Mehta <salil.mehta@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>
-Cc: "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
- "david@redhat.com" <david@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "will@kernel.org" <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "rafael@kernel.org" <rafael@kernel.org>,
- "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "npiggin@gmail.com" <npiggin@gmail.com>,
- "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
- "miguel.luis@oracle.com" <miguel.luis@oracle.com>,
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>,
- "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
- "maobibo@loongson.cn" <maobibo@loongson.cn>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>,
- "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-18-salil.mehta@huawei.com>
- <51dc0813-7dc9-4927-a24b-bd718be54e46@redhat.com>
- <6b435c1f2b934867b8d82850d6d866c6@huawei.com>
- <9b7582f0-8149-4bf0-a1aa-4d4fe0d35e70@redhat.com>
- <1252c2d35b3e40ed84d5d5ae454878a7@huawei.com>
- <d2371011-e7a3-42fe-b1a3-a185fbf4a612@redhat.com>
- <1c31ab30bae6437fac7799227ca4bfd1@huawei.com>
- <62227c7a-6c0e-403a-8d6a-9647c6e006e6@redhat.com>
- <754a693989cf426bb07e40c43b80bce2@huawei.com>
- <13ab0fda-fea3-47a6-8c17-006e6bd4430a@redhat.com>
- <aa6bf3294acb4b3f9819c77c94af67c9@huawei.com>
+Subject: Re: [PATCH for-9.2] docs/devel: Remove nested-papr.txt
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+References: <20240816133318.3603114-1-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <aa6bf3294acb4b3f9819c77c94af67c9@huawei.com>
+From: Daniel Henrique Barboza <danielhb413@gmail.com>
+In-Reply-To: <20240816133318.3603114-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=danielhb413@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,170 +99,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Salil,
 
-On 8/23/24 11:17 PM, Salil Mehta wrote:
->>   On 8/22/24 8:58 PM, Salil Mehta wrote:
->>   >>   On 8/21/24 8:23 PM, Salil Mehta wrote:
->>   >>   >>
->>   >>   >>   On 8/21/24 2:40 AM, Salil Mehta wrote:
->>   >>   >>   >
->>   >>   >>   > I don’t understand this clearly. Are  you suggesting to reuse only
->>   >>   >>   > single vCPU object to initialize all KVM vCPUs not yet plugged? If
->>   >>   >>   > yes, then I'm not sure what do we gain here by adding this complexity?
->>   >>   >>   > It does not consume time or resources because we are not realizing any
->>   >>   >>   > of these vCPU object in any case.
->>   >>   >>   >
->>   >>   >>
->>   >>   >>   First of all, it seems we have different names and terms for those cold-
->>   >>   >>   booted vCPUs and hotpluggable vCPUs. For example, vCPU-0 and vCPU-1
->>   >>   >>   are cold-booted vCPUs while
->>   >>   >>   vCPU-2 and vCPU-3 are hotpluggable vCPUs when we have '-smp
->>   >>   >>   maxcpus=4,cpus=2'. Lets stick to convention and terms for easier discussion.
->>   >>   >>
->>   >>   >>   The idea is avoid instantiating hotpluggable vCPUs in virtmach_init() and
->>   >>   >>   released in the same function for those hotpluggable vCPUs. As I can
->>   >>   >>   understand, those hotpluggable vCPU instances are serving for two
->>   >>   >>   purposes: (1) Relax the constraint that all vCPU's (kvm) file descriptor have
->>   >>   >>   to be created and populated;
->>   >>   >
->>   >>   >
->>   >>   > We are devising *workarounds* in Qemu for the ARM CPU architectural
->>   >>   > constraints in KVM and in Guest Kernel,  *not relaxing* them. We are
->>   >>   > not allowed to meddle with the constraints. That is the whole point.
->>   >>   >
->>   >>   > Not having to respect those constraints led to rejection of the
->>   >>   > earlier attempts to upstream Virtual CPU Hotplug for ARM.
->>   >>   >
->>   >>
->>   >>   I meant to 'overcome' the constraints by 'relax'. My apologies if there're any
->>   >>   caused confusions.
->>   >
->>   >
->>   > Ok. No issues. It was important for me to clarify though.
->>   >
->>   >
->>   >   Previously, you had attempt to create all vCPU objects
->>   >>   and reuse them when vCPU hot added.
->>   >
->>   > Yes, at QOM level. But that approach did not realize the
->>   > unplugged/yet-to-be-plugged vCPUs. We were just using QOM vCPU objects
->>   > as the place holders
->>   >
->>   
->>   Right, my point was actually vCPU objects are too heavy as the place
->>   holders. It was reason why I had the concern: why those hotpluggable vCPU
->>   objects can't be avoided during the bootup time.
+
+On 8/16/24 10:33 AM, Peter Maydell wrote:
+> docs/devel/nested-papr.txt is entirely (apart from the initial
+> paragraph) a partial copy of the kernel documentation
+> https://docs.kernel.org/arch/powerpc/kvm-nested.html
 > 
+> There's no benefit to the QEMU docs to converting this to rST,
+> so instead delete it. Anybody needing to know the API and
+> protocol for the guest to communicate with the hypervisor
+> to created nested VMs should refer to the authoratitative
+> documentation in the kernel docs.
 > 
-> Sure, to list down again. For the reasons I've already explained :
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+
+Reviewed-by: Daniel Henrique Barboza <danielhb413@gmail.com>
+
+> I'm going through converting .txt documents (which end users
+> will basically never see) to rST format (which appears in our
+> HTML manuals). For this file, though, since almost all the
+> contents are just a copy of an authoritative source that
+> lives elsewhere, it didn't seem to me worth keeping it.
 > 
-> 1. KVM MUST have details about all the vCPUs and its features finalized before the VGIC
->      initialization. This is ARM CPU Architecture constraint. This is immutable requirement!
-> 2. QOM vCPUs has got representational changes of the KVM vCPU like vcpu-id, features
->      list etc. These MUST be finalized even before QOM begins its own GICv3 initialization
->      which will end up in initialization of KVM VGIC. QOM vCPUs MUST be handed over to
->      the GICV3 QOM in fully initialized state. The same reason applies here as well.
->      Till this point we are architecture compliant. The only place where we are not ARM
->      Architecture compliant is where in QOM, we dissociate the vCPU state with GICV3
->      CPU State during unplug action or for the yet-to-be-plugged vCPUs. Later are
->      released as part of virt_cpu_post_init() in our current design.
+> Perhaps the cap-nested-papr machine property should be
+> documented in docs/system/ppc/pseries.rst, but that is
+> a pre-existing omission: would somebody who knows more
+> about the pseries machine than I do like to propose a
+> docs tweak there?
+> ---
+>   docs/devel/nested-papr.txt | 119 -------------------------------------
+>   1 file changed, 119 deletions(-)
+>   delete mode 100644 docs/devel/nested-papr.txt
 > 
-
-Thanks for your time to evaluate and reply. Sorry that I'm not convinced. You're explaining
-what we already have in current design and implementation. It doesn't mean the current design
-and implementation is 100% perfect and flawless.
-
-In current design and implementation, all (QOM) vCPU objects have to be instantiated, even
-though those hotpluggable (QOM) vCPU objects aren't realized at bootup time. After that, those
-(QOM) hotpluggable vCPU objects are finalized and destroyed so that they can be hot added
-afterwards. This sounds like we create (QOM) vCPU objects, remove those (QOM) vCPU objects
-at booting time so that they can be hot-added at running time. The duplicate work is obvious
-there. This scheme and design looks just-for-working, not in an optimized way to me.
-
-I'm giving up the efforts to convince you. Lets see if other reviewers will have same concern
-or not. Another possibility would be to have current implementation (with all fixes) merged
-upstream firstly, and then seek optimizations after that. That time, the suggestion can be
-re-evaluated.
-
-> 
->>   >   In current implementation, the
->>   >>   hotpluggable vCPUs are instantiated and released pretty soon. I was
->>   >>   bringing the third possibility, to avoid instantiating those hotpluggable vCPU
->>   >>   objects, for discussion.
->>   >
->>   >
->>   > Are you suggesting not calling KVM_ARM_VCPU_INIT IOCTL as all for the
->>   > vCPUs which are part of possible list but not yet plugged?
->>   >
->>   > If yes, we cannot do that as KVM vCPUs should be fully initialized
->>   > even before VGIC is initialized inside the KVM. This is a constraint.
->>   > I've explained this in detail in the cover letter of this patch-set
->>   > and in the slides I have shared earlier.
->>   >
->>   
->>   No, it's not what I was suggesting. What I suggested is to avoid creating
->>   those hotpluggable vCPU objects (place holders) during the bootup time.
->>   However, all vCPU file descriptors (KVM
->>   objects) still need to be created and initialized before GICv3 is initialized. It's
->>   one of the constrains. So we need to create and populate all vCPU file
->>   descriptors through ioctl(vm_fd, CREATE_VCPU) and ioctl(vcpu_fd,
->>   INIT_VCPU) before GICv3 object is created and realized. As I explained in
->>   the previous reply, the hotpluggable vCPU objects (place holders) haven't
->>   to be created in order to initialize and populate the vCPU file descriptors for
->>   those hotpluggable vCPUs. I think the parameters used to create and
->>   initialize vCPU-0's file descriptor can be reused by all other vCPUs, because
->>   we don't support heterogeneous vCPUs.
->>   What I suggested is something like below: the point is to avoid instantiating
->>   those hotpluggable vCPUs, but their vCPU file descriptor (KVM object) are
->>   still created and initialized.
->>   
->>        static void machvirt_init(MachineState *machine)
->>        {
->>   
->>            /*
->>             * Instantiate and realize vCPU-0, record the parameter passed to
->>             * ioctl(vcpu-fd, VCPU_INIT, &init), or a better place to remember the
->>   parameter.
->>             * The point is the parameter can be shared by all vCPUs.
->>             */
->>   
->>            /*
->>             * Create vCPU descriptors for all other vCPUs (including hotpluggable
->>   vCPUs).
->>             * The remembered parameter is reused and passed to ioctl(vcpu-fd,
->>   VCPU_INIT, &init).
->>             */
->>   
->>            /* Instanaite and realize other cold-booted vCPUs */
->>   
->>            /* Instantiate and realize GICv3 */
->>   
->>        }
-> 
-> 
-> No. For the reasons I've mentioned above, we MUST provide fully initialize the QOM
-> vCPU objects before initialization of QOM GICV3 kicks in. This ensures that nothing
-> breaks during initialization process of the QOM GICV3.  Therefore, the optimization
-> steps mentioned above are unnecessary and could cause problems in future.
-> Additionally, the evolution of the GICV3 QOM can be independent of the ARM Virt
-> Machine as it can be used with other Machines as well so we MUST treat it as a black
-> box which needs QOM vCPU objects as inputs during its initialization.
-> 
-
-Your explanation is not completely correct to me. It's what we had in current design. It
-doesn't means the design should have to be like this. The (KVM) vCPU file descriptor must
-be in place before QOM GICv3 object is instantiated and realized, but the (QOM) vCPU objects
-don't have to exist before that. However, we may need a lot of code changes to tame GICv3Common
-and GICv3KVM so that they can be vCPU hot-add/remove friendly and then to avoid the pre-created
-(QOM) vCPU objects.
-
-It can be something to be re-evaluated in the future, as I said above. Frankly, It's pointless
-to take our time on the discussions without reaching to any conclusions. From my side, I've tried
-my best to provide my comments and explain my thoughts. Appreciated for your patience, time on
-evaluation, and replies :)
-
-Thanks,
-Gavin
-
+> diff --git a/docs/devel/nested-papr.txt b/docs/devel/nested-papr.txt
+> deleted file mode 100644
+> index 90943650db9..00000000000
+> --- a/docs/devel/nested-papr.txt
+> +++ /dev/null
+> @@ -1,119 +0,0 @@
+> -Nested PAPR API (aka KVM on PowerVM)
+> -====================================
+> -
+> -This API aims at providing support to enable nested virtualization with
+> -KVM on PowerVM. While the existing support for nested KVM on PowerNV was
+> -introduced with cap-nested-hv option, however, with a slight design change,
+> -to enable this on papr/pseries, a new cap-nested-papr option is added. eg:
+> -
+> -  qemu-system-ppc64 -cpu POWER10 -machine pseries,cap-nested-papr=true ...
+> -
+> -Work by:
+> -    Michael Neuling <mikey@neuling.org>
+> -    Vaibhav Jain <vaibhav@linux.ibm.com>
+> -    Jordan Niethe <jniethe5@gmail.com>
+> -    Harsh Prateek Bora <harshpb@linux.ibm.com>
+> -    Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> -    Kautuk Consul <kconsul@linux.vnet.ibm.com>
+> -
+> -Below taken from the kernel documentation:
+> -
+> -Introduction
+> -============
+> -
+> -This document explains how a guest operating system can act as a
+> -hypervisor and run nested guests through the use of hypercalls, if the
+> -hypervisor has implemented them. The terms L0, L1, and L2 are used to
+> -refer to different software entities. L0 is the hypervisor mode entity
+> -that would normally be called the "host" or "hypervisor". L1 is a
+> -guest virtual machine that is directly run under L0 and is initiated
+> -and controlled by L0. L2 is a guest virtual machine that is initiated
+> -and controlled by L1 acting as a hypervisor. A significant design change
+> -wrt existing API is that now the entire L2 state is maintained within L0.
+> -
+> -Existing Nested-HV API
+> -======================
+> -
+> -Linux/KVM has had support for Nesting as an L0 or L1 since 2018
+> -
+> -The L0 code was added::
+> -
+> -   commit 8e3f5fc1045dc49fd175b978c5457f5f51e7a2ce
+> -   Author: Paul Mackerras <paulus@ozlabs.org>
+> -   Date:   Mon Oct 8 16:31:03 2018 +1100
+> -   KVM: PPC: Book3S HV: Framework and hcall stubs for nested virtualization
+> -
+> -The L1 code was added::
+> -
+> -   commit 360cae313702cdd0b90f82c261a8302fecef030a
+> -   Author: Paul Mackerras <paulus@ozlabs.org>
+> -   Date:   Mon Oct 8 16:31:04 2018 +1100
+> -   KVM: PPC: Book3S HV: Nested guest entry via hypercall
+> -
+> -This API works primarily using a signal hcall h_enter_nested(). This
+> -call made by the L1 to tell the L0 to start an L2 vCPU with the given
+> -state. The L0 then starts this L2 and runs until an L2 exit condition
+> -is reached. Once the L2 exits, the state of the L2 is given back to
+> -the L1 by the L0. The full L2 vCPU state is always transferred from
+> -and to L1 when the L2 is run. The L0 doesn't keep any state on the L2
+> -vCPU (except in the short sequence in the L0 on L1 -> L2 entry and L2
+> --> L1 exit).
+> -
+> -The only state kept by the L0 is the partition table. The L1 registers
+> -it's partition table using the h_set_partition_table() hcall. All
+> -other state held by the L0 about the L2s is cached state (such as
+> -shadow page tables).
+> -
+> -The L1 may run any L2 or vCPU without first informing the L0. It
+> -simply starts the vCPU using h_enter_nested(). The creation of L2s and
+> -vCPUs is done implicitly whenever h_enter_nested() is called.
+> -
+> -In this document, we call this existing API the v1 API.
+> -
+> -New PAPR API
+> -===============
+> -
+> -The new PAPR API changes from the v1 API such that the creating L2 and
+> -associated vCPUs is explicit. In this document, we call this the v2
+> -API.
+> -
+> -h_enter_nested() is replaced with H_GUEST_VCPU_RUN().  Before this can
+> -be called the L1 must explicitly create the L2 using h_guest_create()
+> -and any associated vCPUs() created with h_guest_create_vCPU(). Getting
+> -and setting vCPU state can also be performed using h_guest_{g|s}et
+> -hcall.
+> -
+> -The basic execution flow is for an L1 to create an L2, run it, and
+> -delete it is:
+> -
+> -- L1 and L0 negotiate capabilities with H_GUEST_{G,S}ET_CAPABILITIES()
+> -  (normally at L1 boot time).
+> -
+> -- L1 requests the L0 to create an L2 with H_GUEST_CREATE() and receives a token
+> -
+> -- L1 requests the L0 to create an L2 vCPU with H_GUEST_CREATE_VCPU()
+> -
+> -- L1 and L0 communicate the vCPU state using the H_GUEST_{G,S}ET() hcall
+> -
+> -- L1 requests the L0 to run the vCPU using H_GUEST_RUN_VCPU() hcall
+> -
+> -- L1 deletes L2 with H_GUEST_DELETE()
+> -
+> -For more details, please refer:
+> -
+> -[1] Linux Kernel documentation (upstream documentation commit):
+> -
+> -commit 476652297f94a2e5e5ef29e734b0da37ade94110
+> -Author: Michael Neuling <mikey@neuling.org>
+> -Date:   Thu Sep 14 13:06:00 2023 +1000
+> -
+> -    docs: powerpc: Document nested KVM on POWER
+> -
+> -    Document support for nested KVM on POWER using the existing API as well
+> -    as the new PAPR API. This includes the new HCALL interface and how it
+> -    used by KVM.
+> -
+> -    Signed-off-by: Michael Neuling <mikey@neuling.org>
+> -    Signed-off-by: Jordan Niethe <jniethe5@gmail.com>
+> -    Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+> -    Link: https://msgid.link/20230914030600.16993-12-jniethe5@gmail.com
 
