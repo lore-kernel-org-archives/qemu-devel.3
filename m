@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F704C5472C
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 16:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CCA1C52D6F
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 16:09:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shtJl-0005Yu-WE; Sat, 24 Aug 2024 12:08:46 -0400
+	id 1shtJz-0005vl-7Y; Sat, 24 Aug 2024 12:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJj-0005YB-K8
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:43 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJx-0005vB-O1
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:57 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJh-0005xJ-Lf
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:43 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5bf068aebe5so4054069a12.0
- for <qemu-devel@nongnu.org>; Sat, 24 Aug 2024 09:08:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1shtJv-0005xw-H8
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 12:08:57 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a868831216cso356140866b.3
+ for <qemu-devel@nongnu.org>; Sat, 24 Aug 2024 09:08:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724515720; x=1725120520; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724515733; x=1725120533; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tmalEfqj8Hxf9x996+sxVbVEP2kWpMFWfstUyKQdEg4=;
- b=vcSJJs8H1u/B0vuxW77pUJo7I9ZFI7c5Mr2LbP1fUqdnjXFlVfT6ZAl11VDYet9R8d
- lRb6XxA/oTUTtL482Wv/XrySS82uKKnyCeUi5NTkfR3QeuXIxGnXFv3hrXnEJP6dtANl
- QmBEiaTrFsqmXZz0W9/S04E5zksxKsl3uzhiuqe+4oKn/1kdyD3mh7Oj9RyNETqkd6KY
- M6VVsWT3N9KWypAV5UPg49E6EgXdvx5Yt9BW/gti1oy+vTxAT1zmKzkFhDp1EePuf52v
- TpWukUdRYtvxTCG/fRNchg3uFScdeUEndhQPoqQ5aAW3tgwbR53RNkc9AAXW5Aw9fnR0
- bbbQ==
+ bh=+gyeL4Noz1S6Nzn/kzysYX1DwYpPC641nZsNzotGcBU=;
+ b=HbZ70IEbKI0Sy9aguDdHdHeLckQbX0hen+MTyXxWMoNeJ9dvIeH52xAQY4IQJvGbcc
+ PWDqgBFgGm60f99cynOAo5WcMFGSJQhd/Rz9UqUZB2oFXX0aFYhCeDD5BP5ilThRpHxm
+ IPGGFGKJgDDCHw2auTv3QH3uui7Dl+Be1dPkzmShRMDP3hBCqRVXDl+D64TxYwU2WFPb
+ ILuQ3050e9g7i1PBlacKdVlMaCYi30u0/mL7E8eRakVB/QoEKi+q8sGWtafELSYlTfly
+ V2fWr2vwrQ6D4tFnz6zhNa7Qsl50kvVaxj2APbJF4eGE/nOXd/EqEACsxWHACZ2P1ia/
+ L0dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724515720; x=1725120520;
+ d=1e100.net; s=20230601; t=1724515733; x=1725120533;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tmalEfqj8Hxf9x996+sxVbVEP2kWpMFWfstUyKQdEg4=;
- b=qrhAm6yCOdHUScZSRHG733MCKYxJbmqZXgXn19+qfXj729yOUBlHg9cYpK2/PrepxF
- Ha0XvoY1C5kjcCKGRGrzXtu9nm2PYEHifC23DglqLyVkK37Cjm309aj3jGUKXDgmC7bj
- NLGeDEE9taEbQlSIp53AcjEUiWj7usVsk5zB9wBBCWHm0F94Y/wtrdytj9uvlCdYPvkL
- cUm3tvvIXrj+E6SijKCV7MQCpvbBG/mvwecxWzDEhDdmC0Am/meWZ0QONAkC3dBwgx/E
- Al8i88H48xB7JEnDHkPLgdpmKMkJMJM0jDINEGCaHaRXIDHANd/IK1kkih8iFUeiN/AU
- PKEA==
-X-Gm-Message-State: AOJu0Yw0TDVB+GH7ZJ7S5YV2OFWnZsimyyNTT+N8qJyeTUpW0IbcebUK
- 9cwXbc8uF47lFc2zh785ke0/MSzup0aE67OapAyztlPMEkiTB1foS8Uf/CF1AS5AzPQddRapoIG
- j
-X-Google-Smtp-Source: AGHT+IGHqoHantofAxdYwwBaKt+zwGkswuJzdtJ6tX8q5Dameb1tE3HNgi6N4uNrk3il3XoxLPLpTA==
-X-Received: by 2002:a17:907:f18e:b0:a86:851e:3a23 with SMTP id
- a640c23a62f3a-a86a51af30emr424065566b.27.1724515719493; 
- Sat, 24 Aug 2024 09:08:39 -0700 (PDT)
+ bh=+gyeL4Noz1S6Nzn/kzysYX1DwYpPC641nZsNzotGcBU=;
+ b=J9ga0A7wmwduI1+R3WcrUq2zTHbZoQR54Mry0H7u3JTVAkmKWaKD04CSezEq8p1H2i
+ DjN8/UOXHXq7Cpv78DZt4spByu1zht2M6SLwYhzYlhv8vr/Rb+IW6/70bpiM1v4gZgu2
+ NUlgOyLmVSzAuCcTSn+uJO4bVpDAUb2Es35s9byUeCrK2UpLbUjbH70tBJ6TcKS2NDNz
+ E3AYr5Pb0tsLaofSMaIXh58GMoqWPA/OWim6IMh8CIWzUzCewLoTLqjVmTCfPBb40eR8
+ waru37LxB3Zrvt1LBKufqpQXW0xcQh1Q/dSDydJUWiWAYgBTTCW8xJGe7pN6TL+R9PSk
+ diDQ==
+X-Gm-Message-State: AOJu0Yyakckv+L9TdLyqh3TkuiaJO1O//54ZKY+OJRbkwWYx9tOPWzP8
+ 24VuDt0vfsuQ41fle/5ymQY/Fy1EoB+y0T5itg3Wylt+N+u3xu4CApl+E1RySoRlE4NFNRkkFxS
+ S
+X-Google-Smtp-Source: AGHT+IHpQ0M+Wjfj47TFcBs1ygoRxOiYCbyyyoojzLZHosqAHBCHL8UMcHPtkFf+v5Sm7FkrrnTwVA==
+X-Received: by 2002:a17:907:7214:b0:a86:798e:b8db with SMTP id
+ a640c23a62f3a-a86a54b0e27mr293643766b.55.1724515733000; 
+ Sat, 24 Aug 2024 09:08:53 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.198.30])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a868f2adc55sm416588166b.71.2024.08.24.09.08.37
+ a640c23a62f3a-a868f2b1563sm416140366b.85.2024.08.24.09.08.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 24 Aug 2024 09:08:39 -0700 (PDT)
+ Sat, 24 Aug 2024 09:08:52 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
@@ -64,18 +64,18 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Beraldo Leal <bleal@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 1/7] tests/functional: Convert mips64el Fuloong2e avocado
- test (1/2)
-Date: Sat, 24 Aug 2024 18:08:22 +0200
-Message-ID: <20240824160829.27655-2-philmd@linaro.org>
+Subject: [PATCH v3 3/7] tests/functional: Convert mips64el I6400 Malta avocado
+ tests
+Date: Sat, 24 Aug 2024 18:08:24 +0200
+Message-ID: <20240824160829.27655-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240824160829.27655-1-philmd@linaro.org>
 References: <20240824160829.27655-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,120 +98,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Straight forward conversion. Update the SHA1 hashes to
-SHA256 hashes since SHA1 should not be used anymore nowadays.
+Straight forward conversion. Update the SHA1 hashes to SHA256
+hashes since SHA1 should not be used anymore nowadays.
 
-Since the asset is expected locally and the test is guarded
-with QEMU_TEST_ALLOW_UNTRUSTED_CODE, keep it under the 'quick'
-category.
-
-  $ RESCUE_YL_PATH=/path/to/rescue-yl QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 \
-    make check-functional-mips64el
-  1/4 qemu:func-quick+func-mips64el / func-mips64el-empty_cpu_model      OK   0.12s   1 subtests passed
-  2/4 qemu:func-quick+func-mips64el / func-mips64el-version              OK   0.13s   1 subtests passed
-  3/4 qemu:func-quick+func-mips64el / func-mips64el-info_usernet         OK   0.15s   1 subtests passed
-  4/4 qemu:func-quick+func-mips64el / func-mips64el-mips64el_fuloong2e   OK   0.19s   1 subtests passed
-
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                                   |  2 +-
- tests/functional/meson.build                  |  4 +++
- .../test_mips64el_fuloong2e.py}               | 33 ++++++++++---------
- 3 files changed, 23 insertions(+), 16 deletions(-)
- rename tests/{avocado/machine_mips_fuloong2e.py => functional/test_mips64el_fuloong2e.py} (58%)
- mode change 100644 => 100755
+ MAINTAINERS                             |   1 +
+ tests/avocado/machine_mips_malta.py     | 108 -----------------------
+ tests/functional/meson.build            |   1 +
+ tests/functional/test_mips64el_malta.py | 111 ++++++++++++++++++++++++
+ 4 files changed, 113 insertions(+), 108 deletions(-)
+ create mode 100755 tests/functional/test_mips64el_malta.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 25e71ac14c..77fbb5d42e 100644
+index 77fbb5d42e..3a91017979 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1384,7 +1384,7 @@ S: Odd Fixes
- F: hw/mips/fuloong2e.c
- F: hw/pci-host/bonito.c
- F: include/hw/pci-host/bonito.h
--F: tests/avocado/machine_mips_fuloong2e.py
-+F: tests/functional/test_mips64el_fuloong2e.py
+@@ -1369,6 +1369,7 @@ F: hw/pci-host/gt64120.c
+ F: include/hw/southbridge/piix.h
+ F: tests/avocado/linux_ssh_mips_malta.py
+ F: tests/avocado/machine_mips_malta.py
++F: tests/functional/test_mips64el_malta.py
  
- Loongson-3 virtual platforms
- M: Huacai Chen <chenhuacai@kernel.org>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 12e08e365b..8d28313a65 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -51,6 +51,10 @@ tests_microblazeel_thorough = [
-   'microblazeel_s3adsp1800'
- ]
- 
-+tests_mips64el_quick = [
-+  'mips64el_fuloong2e',
-+]
-+
- tests_mips64el_thorough = [
-   'mips64el_loongson3v',
- ]
-diff --git a/tests/avocado/machine_mips_fuloong2e.py b/tests/functional/test_mips64el_fuloong2e.py
-old mode 100644
-new mode 100755
-similarity index 58%
-rename from tests/avocado/machine_mips_fuloong2e.py
-rename to tests/functional/test_mips64el_fuloong2e.py
-index 89291f47b2..7688a32713
---- a/tests/avocado/machine_mips_fuloong2e.py
-+++ b/tests/functional/test_mips64el_fuloong2e.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Functional tests for the Lemote Fuloong-2E machine.
- #
- # Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-@@ -8,35 +10,36 @@
+ Mipssim
+ R: Aleksandar Rikalo <arikalo@gmail.com>
+diff --git a/tests/avocado/machine_mips_malta.py b/tests/avocado/machine_mips_malta.py
+index 07a80633b5..05c64e18c4 100644
+--- a/tests/avocado/machine_mips_malta.py
++++ b/tests/avocado/machine_mips_malta.py
+@@ -8,121 +8,13 @@
  # SPDX-License-Identifier: GPL-2.0-or-later
  
  import os
-+import subprocess
+-import gzip
+-import logging
  
 -from avocado import skipUnless
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
-+from qemu_test import QemuSystemTest
-+from qemu_test import wait_for_console_pattern
-+from unittest import skipUnless
+-from avocado import skipUnless
+ from avocado.utils import archive
+ from avocado_qemu import QemuSystemTest
+-from avocado_qemu import exec_command_and_wait_for_pattern
+ from avocado_qemu import interrupt_interactive_console_until_pattern
+ from avocado_qemu import wait_for_console_pattern
  
- class MipsFuloong2e(QemuSystemTest):
  
-     timeout = 60
- 
--    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-+    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-     @skipUnless(os.getenv('RESCUE_YL_PATH'), 'RESCUE_YL_PATH not available')
--    def test_linux_kernel_isa_serial(self):
+-NUMPY_AVAILABLE = True
+-try:
+-    import numpy as np
+-except ImportError:
+-    NUMPY_AVAILABLE = False
+-
+-CV2_AVAILABLE = True
+-try:
+-    import cv2
+-except ImportError:
+-    CV2_AVAILABLE = False
+-
+-
+-@skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
+-@skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
+-class MaltaMachineFramebuffer(QemuSystemTest):
+-
+-    timeout = 30
+-
+-    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+-
+-    def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+-        """
+-        Boot Linux kernel and check Tux logo is displayed on the framebuffer.
+-        """
+-        screendump_path = os.path.join(self.workdir, 'screendump.pbm')
+-
+-        kernel_url = ('https://github.com/philmd/qemu-testing-blob/raw/'
+-                      'a5966ca4b5/mips/malta/mips64el/'
+-                      'vmlinux-4.7.0-rc1.I6400.gz')
+-        kernel_hash = '096f50c377ec5072e6a366943324622c312045f6'
+-        kernel_path_gz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-        kernel_path = self.workdir + "vmlinux"
+-        archive.gzip_uncompress(kernel_path_gz, kernel_path)
+-
+-        tuxlogo_url = ('https://github.com/torvalds/linux/raw/v2.6.12/'
+-                       'drivers/video/logo/logo_linux_vga16.ppm')
+-        tuxlogo_hash = '3991c2ddbd1ddaecda7601f8aafbcf5b02dc86af'
+-        tuxlogo_path = self.fetch_asset(tuxlogo_url, asset_hash=tuxlogo_hash)
+-
+-        self.vm.set_console()
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+-                               'clocksource=GIC console=tty0 console=ttyS0')
+-        self.vm.add_args('-kernel', kernel_path,
+-                         '-smp', '%u' % cpu_cores_count,
+-                         '-vga', 'std',
+-                         '-append', kernel_command_line)
+-        self.vm.launch()
+-        framebuffer_ready = 'Console: switching to colour frame buffer device'
+-        wait_for_console_pattern(self, framebuffer_ready,
+-                                 failure_message='Kernel panic - not syncing')
+-        self.vm.cmd('human-monitor-command', command_line='stop')
+-        self.vm.cmd('human-monitor-command',
+-                    command_line='screendump %s' % screendump_path)
+-        logger = logging.getLogger('framebuffer')
+-
+-        match_threshold = 0.95
+-        screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
+-        tuxlogo_bgr = cv2.imread(tuxlogo_path, cv2.IMREAD_COLOR)
+-        result = cv2.matchTemplate(screendump_bgr, tuxlogo_bgr,
+-                                   cv2.TM_CCOEFF_NORMED)
+-        loc = np.where(result >= match_threshold)
+-        tuxlogo_count = 0
+-        h, w = tuxlogo_bgr.shape[:2]
+-        debug_png = os.getenv('AVOCADO_CV2_SCREENDUMP_PNG_PATH')
+-        for tuxlogo_count, pt in enumerate(zip(*loc[::-1]), start=1):
+-            logger.debug('found Tux at position (x, y) = %s', pt)
+-            cv2.rectangle(screendump_bgr, pt,
+-                          (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
+-        if debug_png:
+-            cv2.imwrite(debug_png, screendump_bgr)
+-        self.assertGreaterEqual(tuxlogo_count, cpu_cores_count)
+-
+-    def test_mips_malta_i6400_framebuffer_logo_1core(self):
 -        """
 -        :avocado: tags=arch:mips64el
--        :avocado: tags=machine:fuloong2e
--        :avocado: tags=endian:little
--        :avocado: tags=device:bonito64
--        :avocado: tags=device:via686b
+-        :avocado: tags=machine:malta
+-        :avocado: tags=cpu:I6400
 -        """
-+    def test_linux_kernel_2_6_27_isa_serial(self):
-         # Recovery system for the Yeeloong laptop
-         # (enough to test the fuloong2e southbridge, accessing its ISA bus)
-         # http://dev.lemote.com/files/resource/download/rescue/rescue-yl
--        kernel_hash = 'ec4d1bd89a8439c41033ca63db60160cc6d6f09a'
--        kernel_path = self.fetch_asset('file://' + os.getenv('RESCUE_YL_PATH'),
--                                       asset_hash=kernel_hash)
-+        sha = 'ab588d3316777c62cc81baa20ac92e98b01955c244dff3794b711bc34e26e51d'
-+        kernel_path = os.getenv('RESCUE_YL_PATH')
-+        output = subprocess.check_output(['sha256sum', kernel_path])
-+        checksum = output.split()[0]
-+        assert checksum.decode("utf-8") == sha
+-        self.do_test_i6400_framebuffer_logo(1)
+-
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-    def test_mips_malta_i6400_framebuffer_logo_7cores(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        :avocado: tags=cpu:I6400
+-        :avocado: tags=mips:smp
+-        :avocado: tags=flaky
+-        """
+-        self.do_test_i6400_framebuffer_logo(7)
+-
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-    def test_mips_malta_i6400_framebuffer_logo_8cores(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        :avocado: tags=cpu:I6400
+-        :avocado: tags=mips:smp
+-        :avocado: tags=flaky
+-        """
+-        self.do_test_i6400_framebuffer_logo(8)
+-
+ class MaltaMachine(QemuSystemTest):
  
-+        self.set_machine('fuloong2e')
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_path)
-         self.vm.launch()
-         wait_for_console_pattern(self, 'Linux version 2.6.27.7lemote')
-         cpu_revision = 'CPU revision is: 00006302 (ICT Loongson-2)'
-         wait_for_console_pattern(self, cpu_revision)
+     def do_test_yamon(self):
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 8d28313a65..a82dbd43bb 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -57,6 +57,7 @@ tests_mips64el_quick = [
+ 
+ tests_mips64el_thorough = [
+   'mips64el_loongson3v',
++  'mips64el_malta',
+ ]
+ 
+ tests_ppc_quick = [
+diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+new file mode 100755
+index 0000000000..0c05ebcb2f
+--- /dev/null
++++ b/tests/functional/test_mips64el_malta.py
+@@ -0,0 +1,111 @@
++#!/usr/bin/env python3
++#
++# Functional tests for the little-endian 64-bit MIPS Malta board
++#
++# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or later.
++# See the COPYING file in the top-level directory.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++import logging
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test.utils import gzip_uncompress
++from unittest import skipUnless
++
++NUMPY_AVAILABLE = True
++try:
++    import numpy as np
++except ImportError:
++    NUMPY_AVAILABLE = False
++
++CV2_AVAILABLE = True
++try:
++    import cv2
++except ImportError:
++    CV2_AVAILABLE = False
++
++
++@skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
++@skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
++class MaltaMachineFramebuffer(QemuSystemTest):
++
++    timeout = 30
++
++    ASSET_KERNEL_4_7_0 = Asset(
++        ('https://github.com/philmd/qemu-testing-blob/raw/a5966ca4b5/'
++         'mips/malta/mips64el/vmlinux-4.7.0-rc1.I6400.gz'),
++        '1f64efc59968a3c328672e6b10213fe574bb2308d9d2ed44e75e40be59e9fbc2')
++
++    ASSET_TUXLOGO = Asset(
++        ('https://github.com/torvalds/linux/raw/v2.6.12/'
++         'drivers/video/logo/logo_linux_vga16.ppm'),
++        'b762f0d91ec018887ad1b334543c2fdf9be9fdfc87672b409211efaa3ea0ef79')
++
++    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
++
++    def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
++        """
++        Boot Linux kernel and check Tux logo is displayed on the framebuffer.
++        """
++        screendump_path = os.path.join(self.workdir, 'screendump.pbm')
++
++        kernel_path_gz = self.ASSET_KERNEL_4_7_0.fetch()
++        kernel_path = self.workdir + "vmlinux"
++        gzip_uncompress(kernel_path_gz, kernel_path)
++
++        tuxlogo_path = self.ASSET_TUXLOGO.fetch()
++
++        self.set_machine('malta')
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'clocksource=GIC console=tty0 console=ttyS0')
++        self.vm.add_args('-kernel', kernel_path,
++                         '-cpu', 'I6400',
++                         '-smp', '%u' % cpu_cores_count,
++                         '-vga', 'std',
++                         '-append', kernel_command_line)
++        self.vm.launch()
++        framebuffer_ready = 'Console: switching to colour frame buffer device'
++        wait_for_console_pattern(self, framebuffer_ready,
++                                 failure_message='Kernel panic - not syncing')
++        self.vm.cmd('human-monitor-command', command_line='stop')
++        self.vm.cmd('human-monitor-command',
++                    command_line='screendump %s' % screendump_path)
++        logger = logging.getLogger('framebuffer')
++
++        match_threshold = 0.95
++        screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
++        tuxlogo_bgr = cv2.imread(tuxlogo_path, cv2.IMREAD_COLOR)
++        result = cv2.matchTemplate(screendump_bgr, tuxlogo_bgr,
++                                   cv2.TM_CCOEFF_NORMED)
++        loc = np.where(result >= match_threshold)
++        tuxlogo_count = 0
++        h, w = tuxlogo_bgr.shape[:2]
++        debug_png = os.getenv('AVOCADO_CV2_SCREENDUMP_PNG_PATH')
++        for tuxlogo_count, pt in enumerate(zip(*loc[::-1]), start=1):
++            logger.debug('found Tux at position (x, y) = %s', pt)
++            cv2.rectangle(screendump_bgr, pt,
++                          (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
++        if debug_png:
++            cv2.imwrite(debug_png, screendump_bgr)
++        self.assertGreaterEqual(tuxlogo_count, cpu_cores_count)
++
++    def test_mips_malta_i6400_framebuffer_logo_1core(self):
++        self.do_test_i6400_framebuffer_logo(1)
++
++    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
++    def test_mips_malta_i6400_framebuffer_logo_7cores(self):
++        self.do_test_i6400_framebuffer_logo(7)
++
++    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
++    def test_mips_malta_i6400_framebuffer_logo_8cores(self):
++        self.do_test_i6400_framebuffer_logo(8)
 +
 +
 +if __name__ == '__main__':
