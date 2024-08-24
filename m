@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93595C5472C
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 04:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BDCC5472C
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 04:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shipq-0006oO-5Y; Sat, 24 Aug 2024 00:57:10 -0400
+	id 1shiqI-00009T-Qb; Sat, 24 Aug 2024 00:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1shipn-0006lg-Rs
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 00:57:07 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1shiqH-0008Vp-VJ
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 00:57:38 -0400
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1shipm-0002Fq-3l
- for qemu-devel@nongnu.org; Sat, 24 Aug 2024 00:57:07 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-7142a30e3bdso2670208b3a.0
- for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 21:57:05 -0700 (PDT)
+ id 1shiqG-0002KP-FU
+ for qemu-devel@nongnu.org; Sat, 24 Aug 2024 00:57:37 -0400
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-5d5e97b8adbso2179331eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 21:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724475424; x=1725080224; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724475454; x=1725080254; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a+NCEiOZJzboz9w1INUibK6hoUbq+IVFPstbDaWXows=;
- b=delHw3fAlpp2BkL4WFwr3t9OnDndCEoPtu3e9N4+vv0yuWPxDAyFQVAuABk165gGGl
- CjMHm4HCcTWFuo8fR+LnI5IAHxWokRAjj1Zs9i1R7YpSlbyI9VnOOjRzzTjS9BhiAVwd
- apcJbYaUuW553rRFxqERkwzyoYBf26GI9xz6pbinzMG4FbVTetVgpzAxPpQzoRo/VRjh
- mWpiIDkTJh3qJl5cnvE6XozHz3PNixzD5+rcysUTI47D032xyGBlOHxTSPwvx1GSWAhj
- IcmP/392karpJbAu/IRQ/0IBLQ0KWiHl9Zck9ccZ3uJbkkdEspo6YaAco09xtp1oD+gf
- hwIw==
+ bh=yaqkhcr8XXVjz3AUT5s3kLltD+ErMtVDTb6FVMqoohs=;
+ b=JZypJInpXhZXa2ZQBbBl960duu6640MH3fEtRa6uf5dOLGNf/713oTmjiiPWjQYVaY
+ R6IPWsq367KINwXpSR5A1gbOxZu0kpvufuyksP/DacgCQfGxBBrIBXYCvZEoYuIVL9K3
+ A4Ba6qkrryZnrrBYfE1x73KRqasAWff7ucDKJqhLziQnTTyLNhOuztyVkstWNYyVv6hz
+ 9QI9Qt3ZWPYcGghfo5DGJagj0Os9TK5uukK9sQQg/oTHRVRhcmRBoxDJ9bt3SMN0w9bC
+ SrN3gKyyCyM6FzYdDQyneOoGrHfFZm7coAPitMwYS0XpbqQf6FZkAsbtMnktu4Tv1Vq0
+ RLUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724475424; x=1725080224;
+ d=1e100.net; s=20230601; t=1724475454; x=1725080254;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a+NCEiOZJzboz9w1INUibK6hoUbq+IVFPstbDaWXows=;
- b=NbDX9YiCt03N1gI4gJ5wuC9MYb84jXCB+FlbzUo1kGPav5uEW+gufzlkSQBQVDMXjd
- But3s+NUycSeAgtbsiaDIbdLWDCzmBEifYDJZWKMkjOfGuSpiHqWtaE61CPHS09TBC4F
- WzO0fbIKClpMrGCYPM5TPx86Unf9phTw+ojIjsOUIRv9YyQWd9xavbAbXVcjjZP9MsDV
- OOnw4Jh+qAx6hXYzJBO17nWAqGliOr0cEIr/Y6z8s8eC2HOA7F9A4ZGu6lZYSlnemDGE
- 0B+SCVpAv37Z02A3yi31G17dRTV7ji2UbczhdA5DJgj35SzhZXPIB1hTNF+i2BsPchBk
- 5llg==
-X-Gm-Message-State: AOJu0YxR5VKpr/WqcN8drCpVePlXfdWsvfCrATezEo4Z94PTxKYlhmqI
- 4GvmuSXftOpuexQ4a3TzDJy6y6rAL4H7UzX5EwthDL8TEzlYmp+SZ4CH4sJNIoc=
-X-Google-Smtp-Source: AGHT+IEV1x+3FxHtELDFDb+R93sm3yvxKWcAWHwrbgS+KZy6gHi4y+eFOG/jxfOfknD8UvmOIqWn/A==
-X-Received: by 2002:aa7:8244:0:b0:710:d294:a2b with SMTP id
- d2e1a72fcca58-7143176773amr13918589b3a.8.1724475424246; 
- Fri, 23 Aug 2024 21:57:04 -0700 (PDT)
+ bh=yaqkhcr8XXVjz3AUT5s3kLltD+ErMtVDTb6FVMqoohs=;
+ b=Hq83ViyC2aaTGzSsz+XiMqPTV5RH48Xwi7d3Vb1WHc+L9FwRg2wMkB3s108LWmhY8E
+ FBmQ1/L1mFkTb+9HkRixRPu9YK+CK5Y9UQ+ejypTqtxFsNt69+Xw1FJcMk4oVroSC/7Z
+ xVs8Id408nUgcxOoHFl7a+/hr3fgq25k7cRejrRaIuto5YAfYl/edOqShQIo514opnxg
+ ntHZgqjUz0B/Xf06zdhaJz3uyMNuUHOGM644G7TZg5Q24EyJLPTfLAqR+OGWYXOWZA03
+ RWRFZ1apIWxmxL/S6zREKkDRC8OTs5MfO79WsW/+bagm8eFWyaMe4kWEnw8zp+3b/Han
+ ct1w==
+X-Gm-Message-State: AOJu0Yz/Hj6ReePBcXXlbycH37nw+wBIXLSGgAV/s5Q21osU0XW0B1YH
+ orjyMIfrN7bXgQiX6Eob+12uIZRllgcT957LE7EYyjV1XyD5vyjYpNEXOr0djLA=
+X-Google-Smtp-Source: AGHT+IE+35AgkpQlQG3YkgB02rLXb0ZrTFB62eAO5VINgkswUXRn08sERGZyVIXapb5b9ZyQlL40YQ==
+X-Received: by 2002:a05:6870:330d:b0:261:9fc:16b9 with SMTP id
+ 586e51a60fabf-273e6620ea8mr5520395fac.33.1724475454028; 
+ Fri, 23 Aug 2024 21:57:34 -0700 (PDT)
 Received: from localhost.localdomain ([220.253.126.131])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7143422ecedsm3805934b3a.25.2024.08.23.21.57.01
+ d2e1a72fcca58-7143422ecedsm3805934b3a.25.2024.08.23.21.57.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Aug 2024 21:57:03 -0700 (PDT)
+ Fri, 23 Aug 2024 21:57:33 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark@dibsco.co.uk>,
  Ajeet Singh <itachis@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 06/17] bsd-user: Define RISC-V register structures and
- register copying
-Date: Sat, 24 Aug 2024 14:56:24 +1000
-Message-Id: <20240824045635.8978-7-itachis@FreeBSD.org>
+Subject: [PATCH v3 17/17] bsd-user: Add RISC-V 64-bit Target Configuration and
+ Debug XML Files
+Date: Sat, 24 Aug 2024 14:56:35 +1000
+Message-Id: <20240824045635.8978-18-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240824045635.8978-1-itachis@FreeBSD.org>
 References: <20240824045635.8978-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=itachis6234@gmail.com; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,116 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+From: Warner Losh <imp@bsdimp.com>
 
-Added definitions for RISC-V register structures, including
-general-purpose registers and floating-point registers, in
-'target_arch_reg.h'. Implemented the 'target_copy_regs' function to
-copy register values from the CPU state to the target register
-structure, ensuring proper endianness handling using 'tswapreg'.
+Added configuration for RISC-V 64-bit target to the build system.
 
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- bsd-user/riscv/target_arch_reg.h | 88 ++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_reg.h
+ configs/targets/riscv64-bsd-user.mak | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 configs/targets/riscv64-bsd-user.mak
 
-diff --git a/bsd-user/riscv/target_arch_reg.h b/bsd-user/riscv/target_arch_reg.h
+diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
 new file mode 100644
-index 0000000000..12b1c96b61
+index 0000000000..191c2c483f
 --- /dev/null
-+++ b/bsd-user/riscv/target_arch_reg.h
-@@ -0,0 +1,88 @@
-+/*
-+ *  RISC-V register structures
-+ *
-+ *  Copyright (c) 2019 Mark Corbin
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef TARGET_ARCH_REG_H
-+#define TARGET_ARCH_REG_H
-+
-+/* Compare with riscv/include/reg.h */
-+typedef struct target_reg {
-+    uint64_t ra;            /* return address */
-+    uint64_t sp;            /* stack pointer */
-+    uint64_t gp;            /* global pointer */
-+    uint64_t tp;            /* thread pointer */
-+    uint64_t t[7];          /* temporaries */
-+    uint64_t s[12];         /* saved registers */
-+    uint64_t a[8];          /* function arguments */
-+    uint64_t sepc;          /* exception program counter */
-+    uint64_t sstatus;       /* status register */
-+} target_reg_t;
-+
-+typedef struct target_fpreg {
-+    uint64_t        fp_x[32][2];    /* Floating point registers */
-+    uint64_t        fp_fcsr;        /* Floating point control reg */
-+} target_fpreg_t;
-+
-+#define tswapreg(ptr)   tswapal(ptr)
-+
-+/* Compare with struct trapframe in riscv/include/frame.h */
-+static inline void target_copy_regs(target_reg_t *regs,
-+                                    const CPURISCVState *env)
-+{
-+
-+    regs->ra = tswapreg(env->gpr[1]);
-+    regs->sp = tswapreg(env->gpr[2]);
-+    regs->gp = tswapreg(env->gpr[3]);
-+    regs->tp = tswapreg(env->gpr[4]);
-+
-+    regs->t[0] = tswapreg(env->gpr[5]);
-+    regs->t[1] = tswapreg(env->gpr[6]);
-+    regs->t[2] = tswapreg(env->gpr[7]);
-+    regs->t[3] = tswapreg(env->gpr[28]);
-+    regs->t[4] = tswapreg(env->gpr[29]);
-+    regs->t[5] = tswapreg(env->gpr[30]);
-+    regs->t[6] = tswapreg(env->gpr[31]);
-+
-+    regs->s[0] = tswapreg(env->gpr[8]);
-+    regs->s[1] = tswapreg(env->gpr[9]);
-+    regs->s[2] = tswapreg(env->gpr[18]);
-+    regs->s[3] = tswapreg(env->gpr[19]);
-+    regs->s[4] = tswapreg(env->gpr[20]);
-+    regs->s[5] = tswapreg(env->gpr[21]);
-+    regs->s[6] = tswapreg(env->gpr[22]);
-+    regs->s[7] = tswapreg(env->gpr[23]);
-+    regs->s[8] = tswapreg(env->gpr[24]);
-+    regs->s[9] = tswapreg(env->gpr[25]);
-+    regs->s[10] = tswapreg(env->gpr[26]);
-+    regs->s[11] = tswapreg(env->gpr[27]);
-+
-+    regs->a[0] = tswapreg(env->gpr[10]);
-+    regs->a[1] = tswapreg(env->gpr[11]);
-+    regs->a[2] = tswapreg(env->gpr[12]);
-+    regs->a[3] = tswapreg(env->gpr[13]);
-+    regs->a[4] = tswapreg(env->gpr[14]);
-+    regs->a[5] = tswapreg(env->gpr[15]);
-+    regs->a[6] = tswapreg(env->gpr[16]);
-+    regs->a[7] = tswapreg(env->gpr[17]);
-+
-+    regs->sepc = tswapreg(env->pc);
-+}
-+
-+#undef tswapreg
-+
-+#endif /* TARGET_ARCH_REG_H */
++++ b/configs/targets/riscv64-bsd-user.mak
+@@ -0,0 +1,4 @@
++TARGET_ARCH=riscv64
++TARGET_BASE_ARCH=riscv
++TARGET_ABI_DIR=riscv
++TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
 -- 
 2.34.1
 
