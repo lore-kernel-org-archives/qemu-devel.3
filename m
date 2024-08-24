@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE04C5321D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Aug 2024 23:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22234C5321D
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 00:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1shdht-0002Sc-Ud; Fri, 23 Aug 2024 19:28:37 -0400
+	id 1sheRh-00040Z-Aq; Fri, 23 Aug 2024 20:15:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1shdhs-0002Rk-PW; Fri, 23 Aug 2024 19:28:36 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ id 1sheRU-0003vd-8d; Fri, 23 Aug 2024 20:15:45 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1shdhq-0002IQ-JV; Fri, 23 Aug 2024 19:28:36 -0400
+ id 1sheRK-0000PL-UL; Fri, 23 Aug 2024 20:15:40 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id B2025CE1277;
- Fri, 23 Aug 2024 23:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57787C32786;
- Fri, 23 Aug 2024 23:28:16 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id D2AEF60E03;
+ Sat, 24 Aug 2024 00:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129B6C32786;
+ Sat, 24 Aug 2024 00:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1724455701;
- bh=qUWlsVBaCvs/ScOoZEuc4eDAUzoBoNdCnkHyMXoBP0Y=;
+ s=k20201202; t=1724458525;
+ bh=0ysFmC192SkHIJjk2TNUy2pwoFkiA9pwOdZMjj9oUrY=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=vORTuiKbLxZNPOEQ0PzthnF0YH6X3D3t02uOkqzxXEq3ydhuflVlK3Waov1PUgvD3
- 7cF8XEuVzOfd9feh4tnCeA5ZFXAep0b31PKMPFr1s0danzrge9wOW0+haFLp1CCj/S
- lQOizMv3uah49tKyOFUH8fpRFmgXA9loFR6Pa+w8xkdzzHG6hqcj9josDJwMI6JLjy
- JZk0F/3AUmy4xUbjEERKYoPRKj8ckzWxQfe1WsNR+bzzR9u3BObxclWpPquTBY5tns
- MNvjEK8mV5/IxshEJXM62Wjf9e9cUjTXPuZtMJkwbgdpizZSn0w1f6hMAPFWAv6x0R
- IOMmxMh68Yg1g==
-Date: Sat, 24 Aug 2024 01:28:06 +0200
+ b=aWlxwaOME97BZ7btvmNBWtUyk3CEr9u8KT3Ml7LMJ6P/cA1capcVbLfqsw9erL53L
+ SD2Vs3UJBPymNQlGA4e2tkzM3jToh3+kEO3kOzjgYp4W/xf3jo0cx6/Pj8Rf9PLkRw
+ XEhTaL0GQR+mflI9GquNE411QyvboNeFGTPjEDgk+9qFR1X1K+k16MIrFp/Gv05Ej/
+ t3/Q5Vtr17qMri7H9Ez7DGp+xkUGf8AtejD5pO5FZITKD/1cFLBNkGjSLzc2BhZDTd
+ mCjqKd9LVOLO4mEO5ogj7j5uq7rPGj8lyp52rClVj7PO0RM0gnDUjrxGLv820JHYlh
+ qhmcLxkIpF4mg==
+Date: Sat, 24 Aug 2024 02:15:10 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
  <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
  <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
  linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v8 03/13] acpi/ghes: Add support for GED error device
-Message-ID: <20240824012806.6189d0a4@sal.lan>
-In-Reply-To: <20240819134304.68c54eae@imammedo.users.ipa.redhat.com>
+Subject: Re: [PATCH v8 13/13] acpi/ghes: check if the BIOS pointers for HEST
+ are correct
+Message-ID: <20240824021510.71451b57@sal.lan>
+In-Reply-To: <20240819160733.464ccebf@imammedo.users.ipa.redhat.com>
 References: <cover.1723793768.git.mchehab+huawei@kernel.org>
- <ba1864f1aa7073abe090eec0c31915f187967140.1723793768.git.mchehab+huawei@kernel.org>
- <20240819134304.68c54eae@imammedo.users.ipa.redhat.com>
+ <52e6058feba318d01f54da6dca427b40ea5c9435.1723793768.git.mchehab+huawei@kernel.org>
+ <20240819160733.464ccebf@imammedo.users.ipa.redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,142 +76,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Mon, 19 Aug 2024 13:43:04 +0200
+Em Mon, 19 Aug 2024 16:07:33 +0200
 Igor Mammedov <imammedo@redhat.com> escreveu:
 
-> On Fri, 16 Aug 2024 09:37:35 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > +    err_source_struct = le64_to_cpu(ags->hest_addr_le) +
+> > +                        source * HEST_GHES_V2_TABLE_SIZE;  
 > 
-> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > 
-> > As a GED error device is now defined, add another type
-> > of notification.
-> > 
-> > Add error notification to GHES v2 using
-> >a GED error device GED triggered via interrupt.  
->  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> This is hard to parse, perhaps update so it would be
-> more clear what does what
+> there is no guaranties that HEST table will contain only GHESv2 sources,
+> and once such is added this place becomes broken.
 > 
-> > 
-> > [mchehab: do some cleanups at ACPI_HEST_SRC_ID_* checks and
-> >  rename HEST event to better identify GED interrupt OSPM]
-> > 
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> > ---  
+> we need to iterate over HEST taking that into account
+> and find only ghesv2 structure with source id of interest.
 > 
-> in addition to change log in cover letter,
-> I'd suggest to keep per patch change log as well (after ---),
-> it helps reviewer to notice intended changes.
+> This function (and acpi_ghes_record_errors() as well) taking source_id
+> as input should be able to lookup pointers from HEST in guest RAM,
+> very crude idea could look something like this:
 > 
+> typedef struct hest_source_type2len{
+>    uint16_t type
+>    int len
+> } hest_structure_type2len
 > 
-> [...]
-> > +    case ACPI_HEST_SRC_ID_GED:
-> > +        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_GPIO);  
-> While GPIO works for arm, it's not the case for other machines.
-> I recall a suggestion to use ACPI_GHES_NOTIFY_EXTERNAL instead of GPIO one,
-> but that got lost somewhere...
+> hest_structure_type2len supported_hest_sources[] = {
+>     /* Table 18-344 Generic Hardware Error Source version 2 (GHESv2) Structure */
+>     {.type = 10, .len = 92},
+> }
 
-True, but the same also applies to SEA, which is ARMv8+. After having
-everything in place, I confined the source ID into this code inside
-ghes.c:
+Sounds interesting, but IMO it should be done only when other types besides
+ghes would be added, as:
 
-	enum AcpiHestSourceId {
-	    ACPI_HEST_SRC_ID_SEA,
-	    ACPI_HEST_SRC_ID_GED,
+1. Right now, the file is acpi/ghes.c. Adding non-type 10 HEST structures
+   there would be a little weird. It should likely be renamed to acpi/hest.c
+   when such time comes.
 
-	    /* Shall be the last one */
-	    ACPI_HEST_SRC_ID_COUNT
-	} AcpiHestSourceId;
+2. ACPI 6.5 has made clear that the above will only work up to type 11,
+   as, from type 12 and above, the length will be added to the error
+   struct, according with:
 
-	static bool ghes_notify_to_source_id(enum AcpiGhesNotifyType notify,
-	                                     enum AcpiHestSourceId *source_id)
-	{
-	    switch (notify) {
-	    case ACPI_GHES_NOTIFY_SEA:             /* ARMv8 */
-	        *source_id = ACPI_HEST_SRC_ID_SEA;
-	        return false;
-	    case ACPI_GHES_NOTIFY_GPIO:
-	        *source_id = ACPI_HEST_SRC_ID_GED;
-	        return false;
-	    default:
-	        /* Unsupported notification types */
-	        return true;
-	    }
+   https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#error-source-structure-header-type-12-onward
+
+3. some types have variable size. Starting from the beginning, type 0, as
+   defined at:
+   https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#hardware-errors-and-error-sources
+
+   has:
+
+   size = 40 + 24 * Number of Hardware banks
+
+   So, a simple table like the above with fixed sizes won't work.
+
+   The code would need instead a switch if types are <= 11.
+
+   Adding proper support for all already defined 12 types sounds lots of 
+   work, as the code would need to calculate the size depending on the
+   size, and we don't really initialize the HEST table with other types
+   but GHES.
+
+Ok, we could still do something like this pseudo-code to get the
+error source offset:
+
+	#define ACPI_HEST_TYPE_GHESV2	11
+
+	err_struct_offset = 0;
+	for (i = 0; i < source_id_count; i++) {
+		/* NOTE: Other types may have different sizes */
+		assert(ghes[i].type == ACPI_HEST_TYPE_GHESV2);
+		if (ghes[i].source_id == source_id)
+			break;
+		err_struct_offset += HEST_GHES_V2_TABLE_SIZE;
 	}
+	assert (i < source_id_count);
 
-The only place where the source ID number is used is at
-ghes_notify_to_source_id() - still we use ACPI_HEST_SRC_ID_COUNT on other
-places to initialize and fill in the HEST table and its error source 
-structures.
+---
 
-On other words, the source ID field is filled from the notification types as
-defined at include/hw/acpi/ghes.h:
+That's said, maybe this will just add unwanted complexity, as QEMU
+is already setting those offsets via bios_linker_loader_add_pointer().
 
-    ACPI_GHES_NOTIFY_POLLED = 0,
-    ACPI_GHES_NOTIFY_EXTERNAL = 1,
-    ACPI_GHES_NOTIFY_LOCAL = 2,
-    ACPI_GHES_NOTIFY_SCI = 3,
-    ACPI_GHES_NOTIFY_NMI = 4,
-    ACPI_GHES_NOTIFY_CMCI = 5,
-    ACPI_GHES_NOTIFY_MCE = 6,
-    ACPI_GHES_NOTIFY_GPIO = 7,
-    ACPI_GHES_NOTIFY_SEA = 8,
-    ACPI_GHES_NOTIFY_SEI = 9,
-    ACPI_GHES_NOTIFY_GSIV = 10,
-    ACPI_GHES_NOTIFY_SDEI = 11,
+So, an alternative for that is to merge the code on patch 13 with the one
+on patch 5, dropping the math calcus there and relying that QEMU will
+always handle properly bios links.
 
-(please notice that ACPI already defines "EXTERNAL" as being something 
-else)
+See, the logic which constructs GHESv2 source IDs do this to create
+the links between HEST ACPI table and etc/hardware_errors:
 
-Now, if we want to add support for x86, we could either add some ifdefs
-inside ghes.c, e. g. something like:
+with:
 
-	enum AcpiHestSourceId {
-	#ifdef TARGET_ARM
-	    ACPI_HEST_SRC_ID_SEA,
-	    ACPI_HEST_SRC_ID_GED,
-	#endif
-	#ifdef TARGET_I386
-	   ACPI_HEST_SRC_ID_MCE,
-        #endif
+Per-source ID logic at build_ghes_v2():
 
-	    /* Shall be the last one */
-	    ACPI_HEST_SRC_ID_COUNT
-	} AcpiHestSourceId;
+    address_offset = table_data->len;
+    /* Error Status Address */
+    build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
+                     4 /* QWord access */, 0);
+    bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
+                                   address_offset + GAS_ADDR_OFFSET,
+                                   sizeof(uint64_t),
+                                   ACPI_HW_ERROR_FW_CFG_FILE,
+                                   source_id * sizeof(uint64_t));
+...
+    /*
+     * Read Ack Register
+     * ACPI 6.1: 18.3.2.8 Generic Hardware Error Source
+     * version 2 (GHESv2 - Type 10)
+     */
+    address_offset = table_data->len;
+    build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
+                     4 /* QWord access */, 0);
+    bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
+                                   address_offset + GAS_ADDR_OFFSET,
+                                   sizeof(uint64_t),
+                                   ACPI_HW_ERROR_FW_CFG_FILE,
+                                   (ACPI_HEST_SRC_ID_COUNT + source_id) *
+                                   sizeof(uint64_t));
 
-and something similar at ghes_notify_to_source_id():
-	static bool ghes_notify_to_source_id(enum AcpiGhesNotifyType notify,
-	                                     enum AcpiHestSourceId *source_id)
-	{
-	    switch (notify) {
-	#ifdef TARGET_ARM
-	    case ACPI_GHES_NOTIFY_SEA:             /* ARMv8 */
-	        *source_id = ACPI_HEST_SRC_ID_SEA;
-	        return false;
-	    case ACPI_GHES_NOTIFY_GPIO:
-	        *source_id = ACPI_HEST_SRC_ID_GED;
-	        return false;
-	#endif
-	#ifdef TARGET_I386
-	    case ACPI_GHES_NOTIFY_MCE:
-	        *source_id = ACPI_HEST_SRC_ID_MCE;
-	        return false;
-	#endif
-	    default:
-	        /* Unsupported notification types */
-	        return true;
-	    }
-	}
+HEST table creation logic inside build_ghes_error_table():
 
-An alternative would be to move source id/notification code out, placing
-them at hw/arm, hw/i386, but a more complex binding logic will be needed.
+    for (i = 0; i < ACPI_HEST_SRC_ID_COUNT; i++) {
+        /*
+         * Tell firmware to patch error_block_address entries to point to
+         * corresponding "Generic Error Status Block"
+         */
+        bios_linker_loader_add_pointer(linker,
+            ACPI_HW_ERROR_FW_CFG_FILE, sizeof(uint64_t) * i,
+            sizeof(uint64_t), ACPI_HW_ERROR_FW_CFG_FILE,
+            error_status_block_offset + i * ACPI_GHES_MAX_RAW_DATA_LENGTH);
+    }
 
-If we're willing to do something like that, I would prefer to not do such
-redesign now. Better to do such change when we'll be ready to add some 
-notification support that works on x86 (MCE? SCI? NMI?).
+Using those, the location of the CPER and ack addresses is easy and won't
+require any math:
+
+	/* GHESv2 CPER offset */
+	cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
+                                 sizeof(error_block_addr));
+	cpu_physical_memory_read(error_block_addr, &cper_addr,
+                                 sizeof(error_block_addr));
+
+	/* GHESv2 ack offset */
+	cpu_physical_memory_read(hest_read_ack_start_addr, &read_ack_start_addr,
+			         sizeof(read_ack_start_addr));
+
 
 Regards,
 Mauro
