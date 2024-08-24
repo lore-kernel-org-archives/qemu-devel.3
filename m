@@ -4,62 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22234C5321D
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 00:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCDA3C5321E
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Aug 2024 01:55:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sheRh-00040Z-Aq; Fri, 23 Aug 2024 20:15:57 -0400
+	id 1shfyi-0004Hd-Mq; Fri, 23 Aug 2024 21:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sheRU-0003vd-8d; Fri, 23 Aug 2024 20:15:45 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sheRK-0000PL-UL; Fri, 23 Aug 2024 20:15:40 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id D2AEF60E03;
- Sat, 24 Aug 2024 00:15:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129B6C32786;
- Sat, 24 Aug 2024 00:15:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1724458525;
- bh=0ysFmC192SkHIJjk2TNUy2pwoFkiA9pwOdZMjj9oUrY=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=aWlxwaOME97BZ7btvmNBWtUyk3CEr9u8KT3Ml7LMJ6P/cA1capcVbLfqsw9erL53L
- SD2Vs3UJBPymNQlGA4e2tkzM3jToh3+kEO3kOzjgYp4W/xf3jo0cx6/Pj8Rf9PLkRw
- XEhTaL0GQR+mflI9GquNE411QyvboNeFGTPjEDgk+9qFR1X1K+k16MIrFp/Gv05Ej/
- t3/Q5Vtr17qMri7H9Ez7DGp+xkUGf8AtejD5pO5FZITKD/1cFLBNkGjSLzc2BhZDTd
- mCjqKd9LVOLO4mEO5ogj7j5uq7rPGj8lyp52rClVj7PO0RM0gnDUjrxGLv820JHYlh
- qhmcLxkIpF4mg==
-Date: Sat, 24 Aug 2024 02:15:10 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v8 13/13] acpi/ghes: check if the BIOS pointers for HEST
- are correct
-Message-ID: <20240824021510.71451b57@sal.lan>
-In-Reply-To: <20240819160733.464ccebf@imammedo.users.ipa.redhat.com>
-References: <cover.1723793768.git.mchehab+huawei@kernel.org>
- <52e6058feba318d01f54da6dca427b40ea5c9435.1723793768.git.mchehab+huawei@kernel.org>
- <20240819160733.464ccebf@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <doug@schmorgal.com>)
+ id 1shfyh-0004H8-BO
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 21:54:07 -0400
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <doug@schmorgal.com>)
+ id 1shfyf-0005Di-Gp
+ for qemu-devel@nongnu.org; Fri, 23 Aug 2024 21:54:07 -0400
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-7094468d392so2019758a34.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Aug 2024 18:54:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=schmorgal.com; s=google; t=1724464444; x=1725069244; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vtsxOuCEIOBtg37eB2MYHjiIDZeU7tY4zt5r3GPCBT8=;
+ b=Y73cMFGuQIXwtC1N6LtnYzcFyXTbzB+vvRorV+K4bgTvpub2zG/imHRdql08LvmdxM
+ 3HNrBEUiYoIyKRc0GoPps+PGbtf+LQTBmReJySqAE9rJclWe1B7UdJv6vw/Z2SIT/Is+
+ bsa8jLr6FwDrbvM2APozpEjIAw3ZmuTtjK5cQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724464444; x=1725069244;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vtsxOuCEIOBtg37eB2MYHjiIDZeU7tY4zt5r3GPCBT8=;
+ b=mDQFigrqXcpa+3rCuf/AX6QkYTya4WoaCIj6Ml5csK0OOU1PYhUY5dS20CKBDD0iWG
+ gIwseBWTKG/cyXkuTyknkFnlPKb+ZbPtP2klwH8e5mYLZsBlitzcO/J4G3AUQ3j3YMG1
+ iHDWnu2p3/h5U5ZEzKesI4dfhQrfWnyzYGAc0N5A8XuRapCvpuRKGqaU08KfAwJ5isPc
+ TfGD+tDQ9dQqnjwexGTKvcHtlHDYRqTxksoxZJRm3RhG5KZH0S6sCrQzpoy2+dX2lulO
+ KFGvYXkjG7yIYhkAe8kVN+t0TNaIh0R3lu2eATVNyMtm4NuGVt74qOjatH4eMJ24IViP
+ puxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwtN1torgFCCo8UmvBzCZWO2E92LfIHT40v8Iu6O6I0i9oVIqXR0fcyfdxBZWo+bnbbAn2yHIdzKrd@nongnu.org
+X-Gm-Message-State: AOJu0YwwfWp0a1x5X3T56tkywzMC35sGhRX14yar3gUWAqzKZpiSgSE3
+ d5+SoYaqbyqyqlBAkKg2dyszWQY40j9jamRIcBO4puHWuyy4SZ2LJk/rU7ERE9I=
+X-Google-Smtp-Source: AGHT+IGcmgdfMx2ZCEbrlv2LcedlJSh5ttdSfKqzjcICbuqU5xNaW8HiFRgxHGUZdN5HaJRVIKVktw==
+X-Received: by 2002:a05:6830:7307:b0:709:3c5b:effb with SMTP id
+ 46e09a7af769-70e0ec01a92mr4954303a34.23.1724464443647; 
+ Fri, 23 Aug 2024 18:54:03 -0700 (PDT)
+Received: from [192.168.1.33] ([50.37.200.153])
+ by smtp.googlemail.com with ESMTPSA id
+ 98e67ed59e1d1-2d613941e79sm4892550a91.25.2024.08.23.18.54.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Aug 2024 18:54:03 -0700 (PDT)
+Message-ID: <5aef262f-b1a7-4317-802e-8681451ac54f@schmorgal.com>
+Date: Fri, 23 Aug 2024 18:54:00 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] hw/net/can/xlnx-versal-canfd: Fix CAN FD flag check
+To: Pavel Pisa <pisa@fel.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+References: <20240816163504.789393-1-doug@schmorgal.com>
+ <202408210857.20254.pisa@fel.cvut.cz>
+ <fdce5258-59f7-486c-bfd1-a4befdf72e3e@schmorgal.com>
+ <202408220311.01551.pisa@fel.cvut.cz>
+Content-Language: en-US
+From: Doug Brown <doug@schmorgal.com>
+In-Reply-To: <202408220311.01551.pisa@fel.cvut.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=doug@schmorgal.com; helo=mail-ot1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,145 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Mon, 19 Aug 2024 16:07:33 +0200
-Igor Mammedov <imammedo@redhat.com> escreveu:
+Hello Pavel and Francisco,
 
-> > +    err_source_struct = le64_to_cpu(ags->hest_addr_le) +
-> > +                        source * HEST_GHES_V2_TABLE_SIZE;  
+On 8/21/2024 6:11 PM, Pavel Pisa wrote:
+> Vikram Garhwal is listed even as whole CAN subsystem comaintainer
 > 
-> there is no guaranties that HEST table will contain only GHESv2 sources,
-> and once such is added this place becomes broken.
-> 
-> we need to iterate over HEST taking that into account
-> and find only ghesv2 structure with source id of interest.
-> 
-> This function (and acpi_ghes_record_errors() as well) taking source_id
-> as input should be able to lookup pointers from HEST in guest RAM,
-> very crude idea could look something like this:
-> 
-> typedef struct hest_source_type2len{
->    uint16_t type
->    int len
-> } hest_structure_type2len
-> 
-> hest_structure_type2len supported_hest_sources[] = {
->     /* Table 18-344 Generic Hardware Error Source version 2 (GHESv2) Structure */
->     {.type = 10, .len = 92},
-> }
+>   https://gitlab.com/qemu-project/qemu/-/blob/3472f54522a928f0020d6928d54c007f862c5478/MAINTAINERS#L2690
 
-Sounds interesting, but IMO it should be done only when other types besides
-ghes would be added, as:
+Unfortunately I am totally new to submitting patches for QEMU and have
+no connection with AMD so I can't speak about Vikram's situation. I
+agree though, at the very least something needs to change in the
+MAINTAINERS file. Maybe Francisco knows more?
 
-1. Right now, the file is acpi/ghes.c. Adding non-type 10 HEST structures
-   there would be a little weird. It should likely be renamed to acpi/hest.c
-   when such time comes.
+> But I would be more comfortable if there is somebody else
+> who is willing to be at least my backup when I am on some
+> trip without Internet (hiking etc.). I am quite loaded by
+> teaching etc. and all these my CAN and in the fact all my
+> open-source and other development projects are mostly out
+> of any interrest of the university department where I serve.
+> They would care a little if/when I bring paid contract from
+> some company, as we have from Volkswagen and its subsidiaries.
+> But it is long time ago at university and even longer
+> at my company.
 
-2. ACPI 6.5 has made clear that the above will only work up to type 11,
-   as, from type 12 and above, the length will be added to the error
-   struct, according with:
+I'm very, very new to QEMU development so I think I would be a poor fit
+as a maintainer, at least right now. I'm also not affiliated with any
+big money companies. I can completely understand that the subsystem
+needs an additional maintainer though. That's a lot on one person's
+shoulders!
 
-   https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#error-source-structure-header-type-12-onward
+Thank you for reviewing all of my patches, Francisco.
 
-3. some types have variable size. Starting from the beginning, type 0, as
-   defined at:
-   https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#hardware-errors-and-error-sources
+Now, all of these patches are reviewed but there are a few other issues
+we talked about here (dlc2len/len2dlc and issues with the flags), and I
+also found a FIFO issue. Would it make the most sense for me to submit a
+V2 of this series with a few extra patches tacked on the end, or should
+I wait for this series to be applied first? I can do it either way, I
+just wasn't sure what would be preferred.
 
-   has:
-
-   size = 40 + 24 * Number of Hardware banks
-
-   So, a simple table like the above with fixed sizes won't work.
-
-   The code would need instead a switch if types are <= 11.
-
-   Adding proper support for all already defined 12 types sounds lots of 
-   work, as the code would need to calculate the size depending on the
-   size, and we don't really initialize the HEST table with other types
-   but GHES.
-
-Ok, we could still do something like this pseudo-code to get the
-error source offset:
-
-	#define ACPI_HEST_TYPE_GHESV2	11
-
-	err_struct_offset = 0;
-	for (i = 0; i < source_id_count; i++) {
-		/* NOTE: Other types may have different sizes */
-		assert(ghes[i].type == ACPI_HEST_TYPE_GHESV2);
-		if (ghes[i].source_id == source_id)
-			break;
-		err_struct_offset += HEST_GHES_V2_TABLE_SIZE;
-	}
-	assert (i < source_id_count);
-
----
-
-That's said, maybe this will just add unwanted complexity, as QEMU
-is already setting those offsets via bios_linker_loader_add_pointer().
-
-So, an alternative for that is to merge the code on patch 13 with the one
-on patch 5, dropping the math calcus there and relying that QEMU will
-always handle properly bios links.
-
-See, the logic which constructs GHESv2 source IDs do this to create
-the links between HEST ACPI table and etc/hardware_errors:
-
-with:
-
-Per-source ID logic at build_ghes_v2():
-
-    address_offset = table_data->len;
-    /* Error Status Address */
-    build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
-                     4 /* QWord access */, 0);
-    bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
-                                   address_offset + GAS_ADDR_OFFSET,
-                                   sizeof(uint64_t),
-                                   ACPI_HW_ERROR_FW_CFG_FILE,
-                                   source_id * sizeof(uint64_t));
-...
-    /*
-     * Read Ack Register
-     * ACPI 6.1: 18.3.2.8 Generic Hardware Error Source
-     * version 2 (GHESv2 - Type 10)
-     */
-    address_offset = table_data->len;
-    build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
-                     4 /* QWord access */, 0);
-    bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
-                                   address_offset + GAS_ADDR_OFFSET,
-                                   sizeof(uint64_t),
-                                   ACPI_HW_ERROR_FW_CFG_FILE,
-                                   (ACPI_HEST_SRC_ID_COUNT + source_id) *
-                                   sizeof(uint64_t));
-
-HEST table creation logic inside build_ghes_error_table():
-
-    for (i = 0; i < ACPI_HEST_SRC_ID_COUNT; i++) {
-        /*
-         * Tell firmware to patch error_block_address entries to point to
-         * corresponding "Generic Error Status Block"
-         */
-        bios_linker_loader_add_pointer(linker,
-            ACPI_HW_ERROR_FW_CFG_FILE, sizeof(uint64_t) * i,
-            sizeof(uint64_t), ACPI_HW_ERROR_FW_CFG_FILE,
-            error_status_block_offset + i * ACPI_GHES_MAX_RAW_DATA_LENGTH);
-    }
-
-Using those, the location of the CPER and ack addresses is easy and won't
-require any math:
-
-	/* GHESv2 CPER offset */
-	cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
-                                 sizeof(error_block_addr));
-	cpu_physical_memory_read(error_block_addr, &cper_addr,
-                                 sizeof(error_block_addr));
-
-	/* GHESv2 ack offset */
-	cpu_physical_memory_read(hest_read_ack_start_addr, &read_ack_start_addr,
-			         sizeof(read_ack_start_addr));
-
-
-Regards,
-Mauro
+Thanks,
+Doug
 
