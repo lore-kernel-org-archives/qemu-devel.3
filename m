@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430B9C5321E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453DCC5472E
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 14:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siEbx-0002gY-Tg; Sun, 25 Aug 2024 10:52:57 -0400
+	id 1siEc0-0002rV-NY; Sun, 25 Aug 2024 10:53:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1siEbv-0002Z4-V2
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 10:52:56 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1siEby-0002j8-He
+ for qemu-devel@nongnu.org; Sun, 25 Aug 2024 10:52:58 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1siEbu-0005vM-C8
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 10:52:55 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-6e7b121be30so2212597a12.1
- for <qemu-devel@nongnu.org>; Sun, 25 Aug 2024 07:52:53 -0700 (PDT)
+ id 1siEbw-0005vb-Su
+ for qemu-devel@nongnu.org; Sun, 25 Aug 2024 10:52:58 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7141feed424so2908058b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 25 Aug 2024 07:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724597572; x=1725202372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724597575; x=1725202375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LA4jeEZSXIyNF/wBhldtI2p7w4RNntmuoAerN03i6Nk=;
- b=toJfdckTZl6sGd76DeZygEuSvr8KO0NtJ0JNwlmSVhKBXYmlYdmj9BEy4bifimtET4
- 4X+RRSuz+/spgQ/w7g9si7bC/Xn5d9vE3k2/Otr+cFhGvSqertZofw9EF4KwUIy2AZbv
- nqUuOd/ebaTO3enOPXHPtqI34LPcp199VHrodGVWgIO2W9DCnplLPxgNjVWbLKXXmhUM
- zLLbALOi0vkdYyEfzA5Vu22pifnEwNhm+cYVLM8YJ0iZLltF5+gI2Uze3PmeuLDv6Bvg
- 4F+nt6a6MntxovGGoep7pNiwsefVCMI9ejs0zZ+v11GkOBgOKeCfi1OoMWqSCH980zpE
- +Hag==
+ bh=NQhqFC3YWlPkCJwXValvIiJxyZnEMyHcDzM+YKLmAFI=;
+ b=qOAVfv0GtWTKRl/q0MSkhCdxJSuAGef44rQOrCYoTj7mRyPUp7JU9G5KX6msxVsACx
+ r1pJdSCjoViSkv+xoHvi3bfZqTn5F/rFyhsFUxhB4fDqbTISQB2X4hxPc3czbPo9rrPq
+ sNDCBh6F+jo2CB8BVG6smYCdQ4k8/ZZ4L5PdAu3JtO0t3HmCW5AXYpH67Aj0NCrTHCiv
+ Tet1hT4xWSGwM5zn72QgSfGC3Tw8T3vCucoKZPnJyICQzzWZMIQxHRr67kwcZKOijDCv
+ eIHdraalqvfGBQVgm0+ahtmBOTTQfpZJ2TXRWYsjy6EwfGT/h7XdrlBmkuRaIjAdRC0Q
+ l/Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724597572; x=1725202372;
+ d=1e100.net; s=20230601; t=1724597575; x=1725202375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LA4jeEZSXIyNF/wBhldtI2p7w4RNntmuoAerN03i6Nk=;
- b=GOiYK9OEKu9c6JT3o4ojEDIWi3Doqpyj7kJMPlpI3ezAxBO4/KsLhwf4xbmHujBGNG
- DzBm2nciAgvUM+2DC5cGm9gwgTaWepD/1sBzqq+Qh84YJ0gbbs8OzfHAUg+uG2JwElP6
- 9xo1usA4fANRRjJeNkE7J9vupG2IE5T8OEV8GS8s7iswLxp76NUTec3n9e4t/H/689xv
- 1NwDeuz2Ym5ds8y9nKAoSP1TASW0LC4IuUmdfzlq9AAfM2zyP9Bs0uFwi7YKoF6r7hOx
- yT9BRaxnP1riQhn/iZTHJs+0k4O9rgfJDLd2A1Eq+beI98Go0nDJADJsbKljbNJAaQAf
- juyA==
-X-Gm-Message-State: AOJu0YyaVNLWnEx9vRTGlxdVHl+pD/SqiHvulzi0oMvIW59SqZwaUVto
- t+G7PHcdl6Zsani/7kRD9cVqX/gT4xh56JP+1scXlta1y+m724Mi39HygkX+/oPBlO7bOMbttkN
- /ZMk=
-X-Google-Smtp-Source: AGHT+IG+DCM1p1l82i/3HzP6uSb9V7wCCmTY5X2EQSEGpi8enkSF8+Jg251Ij6nWN3zC+/fzbQVbOQ==
-X-Received: by 2002:a17:903:22cd:b0:202:d86:f7e6 with SMTP id
- d9443c01a7336-2039e53a078mr92747995ad.54.1724597572165; 
- Sun, 25 Aug 2024 07:52:52 -0700 (PDT)
+ bh=NQhqFC3YWlPkCJwXValvIiJxyZnEMyHcDzM+YKLmAFI=;
+ b=UQ89UvVVAfpE1j/7fce+sMqNAEECKbQRDMyODb7OiMYMkhuehJKvvl20so5gsRiwXw
+ 6bH7gcYaSNjfgrQjeqXkjcRmn75A4X5BOP2tCWl23TfC2bA+vhzvC33rCascBcMB1C06
+ diADCejmJ2O53RLLAJgFoqpWJpsT3owlLW+FyUf/sTa6YtbwzU/CpaERXuzAM68ydPr0
+ Dxkt0XcUmdfkEsf8g0BXvYvndSlBYC3AnRXzCmzNZj01+zswTwz67s+FqPBqb3fGnr/O
+ k0Wzc73svdWguWmo6A4U9FKaF6PKWIrvJ3LW3Pen0tSeaY2F0qyxMH0YII5R9PL9DtXg
+ Z/yg==
+X-Gm-Message-State: AOJu0Yzw2Ys2V1Ez1XTg/mN1MvzG4P5JuyOVX3Y3bmO4MqT4/FF+VnQ/
+ jJC7e+PoWnEZABt7UyZruYjFnUyckyYjE4vsik5xsCCNTumEbmyGivCq63tHilGJQx6TdTCkjIr
+ 2WkU=
+X-Google-Smtp-Source: AGHT+IECMTUaaknWOmEEWOrt7TYoeRCwK11Q6dW1fcb1jIZj7TrdlwLNSOpj3fm48ummFgtRNQ3+SA==
+X-Received: by 2002:a05:6a21:3a46:b0:1c6:b0cc:c50f with SMTP id
+ adf61e73a8af0-1cc8b49ba5dmr7208201637.25.1724597574608; 
+ Sun, 25 Aug 2024 07:52:54 -0700 (PDT)
 Received: from amd.. ([2804:7f0:b400:bb79:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-203b0e164b8sm24698805ad.236.2024.08.25.07.52.50
+ d9443c01a7336-203b0e164b8sm24698805ad.236.2024.08.25.07.52.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Aug 2024 07:52:51 -0700 (PDT)
+ Sun, 25 Aug 2024 07:52:54 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, alex.bennee@linaro.org, richard.henderson@linaro.org
 Cc: philmd@linaro.org,
 	peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v3 2/4] gdbstub: Add support for MTE in system mode
-Date: Sun, 25 Aug 2024 14:52:06 +0000
-Message-Id: <20240825145208.46774-3-gustavo.romero@linaro.org>
+Subject: [PATCH v3 3/4] tests/guest-debug: Support passing arguments to the
+ GDB test script
+Date: Sun, 25 Aug 2024 14:52:07 +0000
+Message-Id: <20240825145208.46774-4-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240825145208.46774-1-gustavo.romero@linaro.org>
 References: <20240825145208.46774-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,48 +97,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit makes handle_q_memtag, handle_q_isaddresstagged, and
-handle_Q_memtag stubs build for system mode, allowing all GDB
-'memory-tag' subcommands to work with QEMU gdbstub on aarch64 system
-mode.
+This commit adds support for passing arguments to the GDB test scripts
+so it's possible to parse the args in an "argparse way" in the test
+scripts launched by the runner. The arguments should be preceded by --
+when passed to the runner. For example, passing "--help" arg to the
+GDB_TEST_SCRIPT:
+
+run-test.py [...] --test <GDB_TEST_SCRIPT> -- --help
+
+The test script should not use the argparse module directly but import
+arg_parser from test_gdbstub module. arg_parser then can be used just
+like the argparse.ArgumentParser class:
+
+from test_gdbstub import arg_parser
+
+p = arg_parser(prog="test-mytest.py", description="My test.")
+p.add_argument("--vowel", help="Select vowel",
+               required=True, choices=['a','e','i','o','u'])
+[...]
+
+The arg_parser allows a smooth and informative exit if, for instance,
+the caller of the runner script passes an invalid argument or misses a
+required argument by the test script.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/gdbstub64.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tests/guest-debug/run-test.py     | 6 ++++++
+ tests/guest-debug/test_gdbstub.py | 5 +++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index 85a19c14c7..9462d3f560 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -430,6 +430,7 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
-     return 0;
- #endif
- }
-+#endif /* CONFIG_USER_ONLY */
+diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+index 368ff8a890..5a091db8be 100755
+--- a/tests/guest-debug/run-test.py
++++ b/tests/guest-debug/run-test.py
+@@ -27,6 +27,10 @@ def get_args():
+     parser.add_argument("--binary", help="Binary to debug",
+                         required=True)
+     parser.add_argument("--test", help="GDB test script")
++    parser.add_argument('test_args', nargs='*',
++                        help="Additional args for GDB test script. "
++                        "The args should be preceded by -- to avoid confusion "
++                        "with flags for runner script")
+     parser.add_argument("--gdb", help="The gdb binary to use",
+                         default=None)
+     parser.add_argument("--gdb-args", help="Additional gdb arguments")
+@@ -91,6 +95,8 @@ def log(output, msg):
+     gdb_cmd += " -ex 'target remote %s'" % (socket_name)
+     # finally the test script itself
+     if args.test:
++        if args.test_args:
++            gdb_cmd += f" -ex \"py sys.argv={args.test_args}\""
+         gdb_cmd += " -x %s" % (args.test)
  
- static void handle_q_memtag(GArray *params, void *user_ctx)
- {
-@@ -600,12 +601,10 @@ static const GdbCmdParseEntry cmd_handler_table[NUM_CMDS] = {
-         .need_cpu_context = true
-     },
- };
--#endif /* CONFIG_USER_ONLY */
  
- void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
-                                        GPtrArray *qtable, GPtrArray *stable)
- {
--#ifdef CONFIG_USER_ONLY
-     /* MTE */
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         g_string_append(qsupported, ";memory-tagging+");
-@@ -614,5 +613,4 @@ void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
-         g_ptr_array_add(qtable, (gpointer) &cmd_handler_table[qIsAddressTagged]);
-         g_ptr_array_add(stable, (gpointer) &cmd_handler_table[QMemTags]);
-     }
--#endif
- }
+diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_gdbstub.py
+index 46fbf98f0c..a715c0e3f5 100644
+--- a/tests/guest-debug/test_gdbstub.py
++++ b/tests/guest-debug/test_gdbstub.py
+@@ -2,6 +2,7 @@
+ 
+ """
+ from __future__ import print_function
++import argparse
+ import gdb
+ import os
+ import sys
+@@ -9,6 +10,10 @@
+ 
+ fail_count = 0
+ 
++class arg_parser(argparse.ArgumentParser):
++    def exit(self, status=None, message=""):
++        print("Wrong GDB script test argument! " + message)
++        gdb.execute("exit 1")
+ 
+ def report(cond, msg):
+     """Report success/fail of a test"""
 -- 
 2.34.1
 
