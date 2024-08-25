@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918E9C5320E
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 11:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67173C5320E
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 12:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siBWG-0001Ls-0P; Sun, 25 Aug 2024 07:34:52 -0400
+	id 1siC8G-0004gj-Pi; Sun, 25 Aug 2024 08:14:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=pupq=PY=zx2c4.com=Jason@kernel.org>)
- id 1siBW8-0001As-BP
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 07:34:48 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=pupq=PY=zx2c4.com=Jason@kernel.org>)
- id 1siBW4-0006wP-Ea
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 07:34:42 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 131F3CE093A;
- Sun, 25 Aug 2024 11:34:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05DAC32782;
- Sun, 25 Aug 2024 11:34:29 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="BspQ7zA5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1724585668;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KFLgD/pMGkXY8t/WJxrIEO2AHf+T5Ke8CpL5kW4cNfg=;
- b=BspQ7zA5u4Mnd1FNeZwddaQzMdi0IQJMVxIRYk5YP40GTf95dIc89F1B2KS6/ejPW1CDCt
- XRQfsMDxm7fW1ESFxGithnpQ8C6xiI9VMYqmtCdsWxENeJTB3MKdl672j1xvywfnzf8ZQr
- s4Gn2R8ctgh1AuVJ5JQdWx+j4MtTYVc=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bf08fb83
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Sun, 25 Aug 2024 11:34:27 +0000 (UTC)
-Date: Sun, 25 Aug 2024 13:34:17 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Stafford Horne <shorne@gmail.com>
-Cc: Ahmad Fatoum <a.fatoum@pengutronix.de>, qemu-devel@nongnu.org,
- openrisc@lists.librecores.org
-Subject: Re: [PATCH RESEND] hw/openrisc/openrisc_sim: keep serial@90000000 as
- default
-Message-ID: <ZssWudpcVotQWr45@zx2c4.com>
-References: <20240822163838.3722764-1-a.fatoum@pengutronix.de>
- <ZsgsG_WL7TNcM1_l@antec>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1siC8F-0004fl-9O
+ for qemu-devel@nongnu.org; Sun, 25 Aug 2024 08:14:07 -0400
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1siC8D-0003Sb-KQ
+ for qemu-devel@nongnu.org; Sun, 25 Aug 2024 08:14:06 -0400
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-81f94ce22f2so131825339f.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Aug 2024 05:14:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724588044; x=1725192844; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sbToXCrbajlrJ7hi8Rhhm4AB0nfPJ7yL41Ygg1MUy2w=;
+ b=IugYCywWW8DxPgzB1ApxQWB6wcNAEJmagN6dMr+keeGm4jtaUs6nsnK3YYAJsa7n4V
+ BFg3j4mJW6oUYK774SIwLc4xQQA3dJW6w5eimfqAUVfdQPrug6z7ErGZLmwbn0gJXFY2
+ BvZaFZH5nTI1pG+0J7u73fjZIoW8CQpVN6xGLBdnU/dIKPxsyWN9UpS2MdLkGhlLoJO6
+ BzG3yyp1mJHXS3dofv02iSquaGRtZ3Q11i4UhbPlbobJzfucXTyUXCETApns9LKfHUYd
+ BjlqNc4bTYaZNJHmm5YZqZ35rL9QnO7BycP7+U9rABJBehU90Ujwjrbb9fuo9U24M2hC
+ vMKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724588044; x=1725192844;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sbToXCrbajlrJ7hi8Rhhm4AB0nfPJ7yL41Ygg1MUy2w=;
+ b=unBLu6v2eg0E/LMvGI7bIHF3LZI7wUS2uWYQS3XDtKjFsPf1aey6aOZzRjICyPn+mV
+ E78PhdMCM45m/Vmo8yOCBqQQbXdWExoFL8CMwasmz1buFkAOJ4u0x6GYkGFHbNWIRDAV
+ cUmYZAYHz+kK6N2qrN1vvDCGmq4xl7exhkpLJLa5gCddCw+tSvd7MT8wMphj0JDdIFYj
+ kX4QmTKnb7y5s9tpvkk1xB0CV7bRV4Cct0aBdVjzsmZ84Zf/il9T++M3IMIYiq4fBf+o
+ IlyoJRmziCAqOBn4Lxf7NtuZ/weajXnl6unYtwsMCSo0piM/ESrNr+h+RilICa2CEViA
+ O6Wg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVlPkxZ/mio2KmRXc2Pb0jTdSN2BZxP5O30TDZE0JxNz/4sVfUduofMiKRLr5VtsQWVUm8u9O/rU1o4@nongnu.org
+X-Gm-Message-State: AOJu0YytbcaZh5AZEslx0m9jjoES69+hktGyNut1e5mIFDYvrftMaoI3
+ QpASYd4Hx3xMwqZ54xy1JUBhwWMIrm+Yyzg+9BADVa0LLG2kDs5dxxJLSmFL+NQ=
+X-Google-Smtp-Source: AGHT+IH+fX3KCEYRtkdDcBZhmz4dWnAZyRsqTrMIqur+e6AqKwY9Y7Bqo9uY8OVibJh3+ho4JxjrBw==
+X-Received: by 2002:a05:6602:6185:b0:824:d4da:3c3d with SMTP id
+ ca18e2360f4ac-82787360804mr902086739f.12.1724588043594; 
+ Sun, 25 Aug 2024 05:14:03 -0700 (PDT)
+Received: from [192.168.98.227] ([172.58.160.182])
+ by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4ce70f5bd94sm1750062173.42.2024.08.25.05.13.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 25 Aug 2024 05:14:03 -0700 (PDT)
+Message-ID: <f9bfe251-fc5c-4ffc-9842-a13d6fbe8b66@linaro.org>
+Date: Sun, 25 Aug 2024 22:13:52 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZsgsG_WL7TNcM1_l@antec>
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=SRS0=pupq=PY=zx2c4.com=Jason@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2] hw/arm/sbsa-ref: Don't leak string in
+ sbsa_fdt_add_gic_node()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+References: <20240822162323.706382-1-peter.maydell@linaro.org>
+ <795d0c95-9bbe-43f5-bcd4-edcbe00cddc9@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <795d0c95-9bbe-43f5-bcd4-edcbe00cddc9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-io1-xd2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,12 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 23, 2024 at 07:28:43AM +0100, Stafford Horne wrote:
-> Also, I will wait to see if Jason has anything to say.
+On 8/23/24 16:42, Philippe Mathieu-Daudé wrote:
+>>   static void sbsa_fdt_add_gic_node(SBSAMachineState *sms)
+>>   {
+>> -    char *nodename;
+>> +    const char *intc_nodename = "/intc";
+>> +    const char *its_nodename = "/intc/its";
+> 
+> Should we use static qualifiers?'
 
-So long as this doesn't change the assignment of the serial ports to
-device nodes in Linux, I don't think this should interfere with much.
-You might want to try it, though.
+No.  The real object is the string literal.  The local variable simply allows multiple 
+references within the function.
 
-Jason
+
+r~
 
