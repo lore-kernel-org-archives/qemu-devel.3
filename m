@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3DAC54731
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D346C5472F
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 03:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1si4Df-0004Zc-Uo; Sat, 24 Aug 2024 23:47:11 -0400
+	id 1si4Du-0005Qo-S4; Sat, 24 Aug 2024 23:47:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1si4De-0004UC-GT; Sat, 24 Aug 2024 23:47:10 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ id 1si4Dr-0005Jc-IO; Sat, 24 Aug 2024 23:47:23 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1si4Dc-0004TE-MQ; Sat, 24 Aug 2024 23:47:10 -0400
+ id 1si4Dp-0004XU-RO; Sat, 24 Aug 2024 23:47:23 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 26A17CE0AC4;
- Sun, 25 Aug 2024 03:47:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3253EC4AF10;
- Sun, 25 Aug 2024 03:47:05 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id BC6F160B50;
+ Sun, 25 Aug 2024 03:47:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AC9C32782;
+ Sun, 25 Aug 2024 03:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1724557625;
- bh=LhonfX5szAcii0iSJEisUGaz09LnvbNzPlyCpn2Dcys=;
+ s=k20201202; t=1724557640;
+ bh=lvDSsNqUtQQvopqQkh5pV2gPEmOPZKjex7TqFGENmKM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NKA339dSbfHfp4KedP6XRTu5n4x8t8OWeAgFehrjvdevOjYtWatBM66bLhpfWK8VS
- 26NjfamCm5pNwlFDlkY4yW0yov0zKMMQD5+tcagu3pU73DO3355PozV1o+uQRe8wfK
- AYg31DiPdS41cTwvp8Q/I3juQwNHJDuSJlk08cmNIP7KOXuFPUBxfVaZQbVRlZvieg
- XfjaXaFcd9dLqewcY/gXajuXZ0W+LdWv0X+fVCNT2Lb4lTXi5r7RpY1rJqW012/9aD
- Fw6sZijMrn59c7Guz0sOfoFYP+Ep8N/IOyadPhjH4aWOGPJOlA8J8cJ8txhOJ4aE9Y
- MHk0TnMKmbfOA==
+ b=RBbLTPSrrjCJ/ijsVLLoEjz7uWsxO97viqL3e2POmTTrBetZT3S9ONKLweRrHh4zh
+ 8SgMzAlGpCfuZcoEszdLBdosePC7SBI8zp+aJA8CXhoK3B5HGfZGYMxjI62jYvU3h2
+ M0mSqSM50ZXXwQiaCqIIuaPemAOkgKhmOzRWisxoSHU1qwYn7KBAGyXeCAkyJ/en5q
+ se1WPLOel2VgFwOzbV81xILoSP/bLIzyw3VGNfVxKaazU6HfzpipC7TEsFVXWKmDSH
+ g6z6Dbhs3suTjYx935PkEBJ18PfSERH+9JQIuFaJVbe0nD/tW1fdCEJ3E/a9Yngmzh
+ +xIgBP50RPKgg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1si4Ch-00000001RMv-2rOU;
+ (envelope-from <mchehab@kernel.org>) id 1si4Ch-00000001RMg-2Qod;
  Sun, 25 Aug 2024 05:46:11 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PATCH v9 09/12] docs: acpi_hest_ghes: fix documentation for CPER size
-Date: Sun, 25 Aug 2024 05:46:04 +0200
-Message-ID: <e81a142a8de9e5b8e1c108a4bd089e4825a17132.1724556967.git.mchehab+huawei@kernel.org>
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v9 04/12] acpi/ghes: better name GHES memory error function
+Date: Sun, 25 Aug 2024 05:45:59 +0200
+Message-ID: <ceb8b8f3537cf9f125fbdc86659bae25fdb34e3b.1724556967.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <cover.1724556967.git.mchehab+huawei@kernel.org>
 References: <cover.1724556967.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=mchehab@kernel.org; helo=sin.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -45
 X-Spam_score: -4.6
 X-Spam_bar: ----
@@ -74,34 +76,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the spec defines a CPER size of 4KiB for each record,
-currently it is set to 1KiB. Fix the documentation and add
-a pointer to the macro name there, as this may help to keep
-it updated.
+The current function used to generate GHES data is specific for
+memory errors. Give a better name for it, as we now have a generic
+function as well.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
 ---
- docs/specs/acpi_hest_ghes.rst | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/acpi/ghes-stub.c    | 2 +-
+ hw/acpi/ghes.c         | 2 +-
+ include/hw/acpi/ghes.h | 4 ++--
+ target/arm/kvm.c       | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
-index 68f1fbe0a4af..c3e9f8d9a702 100644
---- a/docs/specs/acpi_hest_ghes.rst
-+++ b/docs/specs/acpi_hest_ghes.rst
-@@ -67,8 +67,10 @@ Design Details
- (3) The address registers table contains N Error Block Address entries
-     and N Read Ack Register entries. The size for each entry is 8-byte.
-     The Error Status Data Block table contains N Error Status Data Block
--    entries. The size for each entry is 4096(0x1000) bytes. The total size
--    for the "etc/hardware_errors" fw_cfg blob is (N * 8 * 2 + N * 4096) bytes.
-+    entries. The size for each entry is defined at the source code as
-+    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 1024 bytes). The total size
-+    for the "etc/hardware_errors" fw_cfg blob is
-+    (N * 8 * 2 + N * ACPI_GHES_MAX_RAW_DATA_LENGTH) bytes.
-     N is the number of the kinds of hardware error sources.
+diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
+index c315de1802d6..dd41b3fd91df 100644
+--- a/hw/acpi/ghes-stub.c
++++ b/hw/acpi/ghes-stub.c
+@@ -11,7 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/acpi/ghes.h"
  
- (4) QEMU generates the ACPI linker/loader script for the firmware. The
+-int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(uint8_t source_id, uint64_t physical_address)
+ {
+     return -1;
+ }
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 3190eb954de4..10ed9c0614ff 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -494,7 +494,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     cpu_physical_memory_write(cper_addr, cper, len);
+ }
+ 
+-int acpi_ghes_record_errors(int source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(int source_id, uint64_t physical_address)
+ {
+     /* Memory Error Section Type */
+     const uint8_t guid[] =
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 4b5af86ec077..be53b7c53c91 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -70,7 +70,7 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+                      const char *oem_id, const char *oem_table_id);
+ void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+                           GArray *hardware_errors);
+-int acpi_ghes_record_errors(int source_id,
++int acpi_ghes_memory_errors(int source_id,
+                             uint64_t error_physical_addr);
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp);
+@@ -79,7 +79,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+  * acpi_ghes_present: Report whether ACPI GHES table is present
+  *
+  * Returns: true if the system has an ACPI GHES table and it is
+- * safe to call acpi_ghes_record_errors() to record a memory error.
++ * safe to call acpi_ghes_memory_errors() to record a memory error.
+  */
+ bool acpi_ghes_present(void);
+ #endif
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 8c4c8263b85a..8e63e9a59a5e 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2373,7 +2373,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+              */
+             if (code == BUS_MCEERR_AR) {
+                 kvm_cpu_synchronize_state(c);
+-                if (!acpi_ghes_record_errors(ARM_ACPI_HEST_SRC_ID_SEA,
++                if (!acpi_ghes_memory_errors(ARM_ACPI_HEST_SRC_ID_SEA,
+                                              paddr)) {
+                     kvm_inject_arm_sea(c);
+                 } else {
 -- 
 2.46.0
 
