@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BE6C5320E
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 14:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2A3C5320E
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 16:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siEbu-0002SH-4e; Sun, 25 Aug 2024 10:52:54 -0400
+	id 1siGRs-0000A7-Ca; Sun, 25 Aug 2024 12:50:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1siEbs-0002Re-ES
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 10:52:52 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1siEbp-0005v0-NF
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 10:52:51 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-202089e57d8so22147785ad.0
- for <qemu-devel@nongnu.org>; Sun, 25 Aug 2024 07:52:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724597567; x=1725202367; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wUFMsUC88AV4RiT6qrMrOJRw58r01m7e9EfSewF/uRg=;
- b=G5AqYQmDkNWqP37PFOMT5Wl4RMeTT+GQjp55w6JlqMyNFtSf9jom9qZVbpqXlyaefn
- AogCCX2tqTV9Wkfo2Db50fO2Mtf7XwqaZBPE/3T3eT+buUN8ghQhIYEEsLZPEMGd9weT
- rW1K/nSuKoIHK86/ufpA8sJHvM9zceExJLKLM3byu+ojSqhbaVPybocLj32vinQLxPOL
- 3QT8/Kd6roCmCjmUtaJ8ZUPkeVL0R/4rBZe8vZIArIwGVOl7DwJL3EOTHAFFYBBFQiKk
- cNyHqxDFiP+PhNQUeuHByfw9ERsVwX6E907gS+EfJZMrx3ayWuhtXfSjK7+dU0vPWv16
- M/zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724597567; x=1725202367;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wUFMsUC88AV4RiT6qrMrOJRw58r01m7e9EfSewF/uRg=;
- b=BWvdXEzTmlmVwI7NkWzwzxN0ioA/jcrDEJCbBYkHNQkYB32UHYBcciJXChC6WerfWH
- E7vrPEe2GjSykB/1n82gFSU3MtsmZqlYB0VTo9OqDdVybsXFjz71rg+QQF0l+4P5d30Q
- tdpNnB/o1KbN5Ixq9N5RZNXxSE6DNdA9AqAwzS4jnZzMVlbBym3jrXGbNVBsNRUnkRmT
- NYXeq7u+uLPH7fQtNOwYa1XXV5Fltm6fGA5abya3D9U9r9GT1qPlvk0BRi27ph6COcEz
- /wzcgY5z+VwrqSKttgk21WKPXJRYqTsLIhh+MhtV0k5wQCgv7qXEOJxmVs2nglEjYxH5
- wkTA==
-X-Gm-Message-State: AOJu0YwXosARXCVRfFc1M6D6ccDQrmm88OoCjx0T4ES3j+MFaYpWF2YG
- Pnbb3INw2oTkaAiLdfs20mNAW7b6CBkP0TzIL23skH6ZsDa9HD1LMcbUgh7i5Vkyy0h4jraHFRq
- JprE=
-X-Google-Smtp-Source: AGHT+IEKTP3VIHyhfCm2C6Kk05Vv5fCGJ7ITVHvQhUHxynqFdmubKlIeEOu1tjE0Cq+kHEs16GA0mQ==
-X-Received: by 2002:a17:902:d488:b0:200:79c1:a69f with SMTP id
- d9443c01a7336-2037fe15a46mr207305695ad.20.1724597567130; 
- Sun, 25 Aug 2024 07:52:47 -0700 (PDT)
-Received: from amd.. ([2804:7f0:b400:bb79:3e7c:3fff:fe7a:e83b])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-203b0e164b8sm24698805ad.236.2024.08.25.07.52.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Aug 2024 07:52:46 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: philmd@linaro.org,
-	peter.maydell@linaro.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH v3 0/4] gdbstub: Add support for MTE in system mode
-Date: Sun, 25 Aug 2024 14:52:04 +0000
-Message-Id: <20240825145208.46774-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1siGRq-00009J-Uw
+ for qemu-devel@nongnu.org; Sun, 25 Aug 2024 12:50:38 -0400
+Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1siGRo-0002k0-Kz
+ for qemu-devel@nongnu.org; Sun, 25 Aug 2024 12:50:38 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id 5FBC616AA;
+ Sun, 25 Aug 2024 18:50:30 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id 3Bofv_-79F4y; Sun, 25 Aug 2024 18:50:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1724604628;
+ bh=Zp34jMY+SyJILqUa9TFUng5CqUfknUbO1fh4qPymEUc=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=kA4xpFBgVGR+4e7vKHxuIAwzScT000PBBTZW2j1lN8pYIxjoey5o51t8UCOAVL48b
+ CtPiH/nDJ4MxUrUPat0pFsrIbCtfHCN0Zljt85sxY7IVgeL0R3Lh9zqrtBZAMiDwA0
+ F7TxQMEbmud1ptFHhpZaaBwNeVW+oXa7gS6iYwv0af/Vuc9hiXe678SMveC5DazzrF
+ QzxJzII3cVuQ4Gu6YllQ4wMKkJvP5aywGKGT3gTZ2Mv/wqQFUpTPjG9Uv7lOZKq5/a
+ QalgBIQsJz6EWJPOWKs6hEHloT2jbMv7G1PlaZfwWLxtetgvvIWeCFfqajfLgPTggo
+ uoCcN0rQDwzvQ==
+Received: from baree.pikron.com (ip-78-102-109-231.bb.vodafone.cz
+ [78.102.109.231])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 8B3C916A9;
+ Sun, 25 Aug 2024 18:50:28 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Doug Brown <doug@schmorgal.com>
+Subject: Re: [PATCH 2/5] hw/net/can/xlnx-versal-canfd: Fix CAN FD flag check
+Date: Sun, 25 Aug 2024 18:50:34 +0200
+User-Agent: KMail/1.9.10
+Cc: Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <bonzini@gnu.org>
+References: <20240816163504.789393-1-doug@schmorgal.com>
+ <202408220311.01551.pisa@fel.cvut.cz>
+ <5aef262f-b1a7-4317-802e-8681451ac54f@schmorgal.com>
+In-Reply-To: <5aef262f-b1a7-4317-802e-8681451ac54f@schmorgal.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Message-Id: <202408251850.34384.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -75
+X-Spam_score: -7.6
+X-Spam_bar: -------
+X-Spam_report: (-7.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-3.322,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,74 +85,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset makes handle_q_memtag, handle_q_isaddresstagged, and
-handle_Q_memtag stubs build for system mode, allowing all GDB
-'memory-tag' subcommands to work with QEMU gdbstub on aarch64 system
-mode.
+Hello Doug
 
-It also extends the MTE gdbstub tests to run in system mode, sharing the
-tests between QEMU user mode and system mode.
+On Saturday 24 of August 2024 03:54:00 Doug Brown wrote:
+> Thank you for reviewing all of my patches, Francisco.
+>
+> Now, all of these patches are reviewed but there are a few other issues
+> we talked about here (dlc2len/len2dlc and issues with the flags), and I
+> also found a FIFO issue. Would it make the most sense for me to submit a
+> V2 of this series with a few extra patches tacked on the end, or should
+> I wait for this series to be applied first? I can do it either way, I
+> just wasn't sure what would be preferred.
 
-For running the tests, a GDB that supports MTE for baremetal targets is
-necessary. This support has just landed GDB's master branch.
+I agree with both ways,
 
-GDB can be built and installed into a /tmp directory in a simple way:
-after cloning GDB's master branch, inside a build directory, configure
-GDB and build it:
+1) merging actual versing and then providing followup
+   patches
 
- $ git clone --depth 1 https://sourceware.org/git/binutils-gdb.git --branch master gdb_master && cd gdb_master
- $ mkdir build && cd build
- $ ../configure --disable-binutils --disable-ld --disable-gold --disable-gas --disable-sim --disable-gprof --disable-gprofng --with-python=python3 --enable-libctf --enable-unit-tests --prefix=/tmp/gdb --with-additional-debug-dirs=/usr/lib/debug --enable-targets=all
- $ make -j 32
- $ make install
+2) updating and extending the series
 
-Configure QEMU, specifying where GDB is installed. For example:
+I have little inclination to the second choice (2), because
+you have already patch where you touch dlc2len/len2dlc issue
+and making it without middle step would be more straightforward
+and readable to me.
 
- $ cd build
- $ ../configure --target-list=aarch64-linux-user,aarch64-softmmu --disable-docs --gdb=/tmp/gdb/bin/gdb
- $ make -j 32
- $ cd..
+Anyway, I am the initiator of QEMU CAN subsystem as GSoC and studnets
+mentor and coauthor but I have no commit right to the QEMU mainline.
+So actual merge has to be realized by people with commit right.
+Paolo Bonzini has provided help with CAN subsystem integration
+and the committing.
 
-And finally run the MTE gdbstub tests for QEMU system mode:
+Best wishes,
 
- $ make -C build -j 32 run-tcg-tests-aarch64-softmmu
-
-v2:
- - Use of cpu_mmu_index() instead of arm_mmu_idx() (Richard's review)
- - Converted mte.c test to mte.S
- - Set tcr_el1, mair_el1, and sctlr_el1 in mte.S instead of in boot.S (Richard's review) 
- - Allowed use of argparse in test scripts to get passed arguments from run-test.py (Alex's review)
- - Fixed test output to be stored in run-gdbstub-mte.out instead of printed to stdout
- - Added detection of GDB supporting MTE in baremetal
- 
-v3:
- - No need of ARM_MMU_IDX_COREIDX_MASK with cpu_mmu_index() (Richard's review)
- - Define a symbol for mte_page instead of a whole section (Richard's review)
-
-
-Cheers,
-Gustavo
-
-Gustavo Romero (4):
-  gdbstub: Use specific MMU index when probing MTE addresses
-  gdbstub: Add support for MTE in system mode
-  tests/guest-debug: Support passing arguments to the GDB test script
-  tests/tcg/aarch64: Extend MTE gdbstub tests to system mode
-
- configure                                 |   5 +
- target/arm/gdbstub64.c                    |  21 +++--
- tests/guest-debug/run-test.py             |   6 ++
- tests/guest-debug/test_gdbstub.py         |   5 +
- tests/tcg/aarch64/Makefile.softmmu-target |  49 +++++++++-
- tests/tcg/aarch64/Makefile.target         |   3 +-
- tests/tcg/aarch64/gdbstub/test-mte.py     |  71 +++++++++-----
- tests/tcg/aarch64/system/boot.S           |  11 +++
- tests/tcg/aarch64/system/kernel.ld        |   7 ++
- tests/tcg/aarch64/system/mte.S            | 109 ++++++++++++++++++++++
- 10 files changed, 252 insertions(+), 35 deletions(-)
- create mode 100644 tests/tcg/aarch64/system/mte.S
-
+                Pavel
 -- 
-2.34.1
-
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
