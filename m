@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0723BC5321E
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 03:48:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3DAC54731
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Aug 2024 03:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1si4Dc-0004Lu-Bw; Sat, 24 Aug 2024 23:47:08 -0400
+	id 1si4Df-0004Zc-Uo; Sat, 24 Aug 2024 23:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1si4Da-0004Hm-34; Sat, 24 Aug 2024 23:47:06 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ id 1si4De-0004UC-GT; Sat, 24 Aug 2024 23:47:10 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1si4DY-0004SE-JP; Sat, 24 Aug 2024 23:47:05 -0400
+ id 1si4Dc-0004TE-MQ; Sat, 24 Aug 2024 23:47:10 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 7187860BD4;
- Sun, 25 Aug 2024 03:47:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F46C32782;
- Sun, 25 Aug 2024 03:47:03 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 26A17CE0AC4;
+ Sun, 25 Aug 2024 03:47:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3253EC4AF10;
+ Sun, 25 Aug 2024 03:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1724557623;
- bh=5AZ7gcx7Epfz/DsbRMWAPh0EKquiqLdFovJJ8Emue9o=;
+ s=k20201202; t=1724557625;
+ bh=LhonfX5szAcii0iSJEisUGaz09LnvbNzPlyCpn2Dcys=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IDuQ68HGu9TVTaDbCf9ZxmlkulgF/+YTcCsgPXvTghLswq365IGw5Ug8svwVGJnhm
- i0PXMeiRfGn586PLzisvk9pVM6LnLaL9tYyIVX0FYR4ggyb2vhfEF/7yfP5XEEj7kY
- LB2+dT4l9jXtBHgqBecib5p7uob4DpvmDzASJmmIFhOjdweKNx4fnFCuAd5E7qOOci
- F6HrB33qsZOGyvjR27VWujJhuhrnHOuUZH8quldDvUoPwBwjCasvTDt3gZeJLHUiM1
- wI5PLvDQSZ0Hi+U1hdfDh3iq35Xl4O3tlttK5jrKb4rEjHYCtvntP+uQvBdouxqKDC
- wQofiTVB+Wjog==
+ b=NKA339dSbfHfp4KedP6XRTu5n4x8t8OWeAgFehrjvdevOjYtWatBM66bLhpfWK8VS
+ 26NjfamCm5pNwlFDlkY4yW0yov0zKMMQD5+tcagu3pU73DO3355PozV1o+uQRe8wfK
+ AYg31DiPdS41cTwvp8Q/I3juQwNHJDuSJlk08cmNIP7KOXuFPUBxfVaZQbVRlZvieg
+ XfjaXaFcd9dLqewcY/gXajuXZ0W+LdWv0X+fVCNT2Lb4lTXi5r7RpY1rJqW012/9aD
+ Fw6sZijMrn59c7Guz0sOfoFYP+Ep8N/IOyadPhjH4aWOGPJOlA8J8cJ8txhOJ4aE9Y
+ MHk0TnMKmbfOA==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1si4Ch-00000001RMj-2VWA;
+ (envelope-from <mchehab@kernel.org>) id 1si4Ch-00000001RMv-2rOU;
  Sun, 25 Aug 2024 05:46:11 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v9 05/12] acpi/ghes: add a notifier to notify when error data
- is ready
-Date: Sun, 25 Aug 2024 05:46:00 +0200
-Message-ID: <de2b61eee8b76f6d696f2de986176cfd02e23fe2.1724556967.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>
+Subject: [PATCH v9 09/12] docs: acpi_hest_ghes: fix documentation for CPER size
+Date: Sun, 25 Aug 2024 05:46:04 +0200
+Message-ID: <e81a142a8de9e5b8e1c108a4bd089e4825a17132.1724556967.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <cover.1724556967.git.mchehab+huawei@kernel.org>
 References: <cover.1724556967.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=mchehab@kernel.org; helo=sin.source.kernel.org
 X-Spam_score_int: -45
 X-Spam_score: -4.6
 X-Spam_bar: ----
@@ -75,53 +74,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some error injection notify methods are async, like GPIO
-notify. Add a notifier to be used when the error record is
-ready to be sent to the guest OS.
+While the spec defines a CPER size of 4KiB for each record,
+currently it is set to 1KiB. Fix the documentation and add
+a pointer to the macro name there, as this may help to keep
+it updated.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes.c         | 5 +++++
- include/hw/acpi/ghes.h | 3 +++
- 2 files changed, 8 insertions(+)
+ docs/specs/acpi_hest_ghes.rst | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 10ed9c0614ff..2b7103a678a1 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -402,6 +402,9 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     ags->present = true;
- }
+diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+index 68f1fbe0a4af..c3e9f8d9a702 100644
+--- a/docs/specs/acpi_hest_ghes.rst
++++ b/docs/specs/acpi_hest_ghes.rst
+@@ -67,8 +67,10 @@ Design Details
+ (3) The address registers table contains N Error Block Address entries
+     and N Read Ack Register entries. The size for each entry is 8-byte.
+     The Error Status Data Block table contains N Error Status Data Block
+-    entries. The size for each entry is 4096(0x1000) bytes. The total size
+-    for the "etc/hardware_errors" fw_cfg blob is (N * 8 * 2 + N * 4096) bytes.
++    entries. The size for each entry is defined at the source code as
++    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 1024 bytes). The total size
++    for the "etc/hardware_errors" fw_cfg blob is
++    (N * 8 * 2 + N * ACPI_GHES_MAX_RAW_DATA_LENGTH) bytes.
+     N is the number of the kinds of hardware error sources.
  
-+NotifierList acpi_generic_error_notifiers =
-+    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
-+
- void ghes_record_cper_errors(const void *cper, size_t len,
-                              uint16_t source_id, Error **errp)
- {
-@@ -492,6 +495,8 @@ void ghes_record_cper_errors(const void *cper, size_t len,
- 
-     /* Write the generic error data entry into guest memory */
-     cpu_physical_memory_write(cper_addr, cper, len);
-+
-+    notifier_list_notify(&acpi_generic_error_notifiers, NULL);
- }
- 
- int acpi_ghes_memory_errors(int source_id, uint64_t physical_address)
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index be53b7c53c91..b1ec9795270f 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -24,6 +24,9 @@
- 
- #include "hw/acpi/bios-linker-loader.h"
- #include "qapi/error.h"
-+#include "qemu/notify.h"
-+
-+extern NotifierList acpi_generic_error_notifiers;
- 
- /*
-  * Values for Hardware Error Notification Type field
+ (4) QEMU generates the ACPI linker/loader script for the firmware. The
 -- 
 2.46.0
 
