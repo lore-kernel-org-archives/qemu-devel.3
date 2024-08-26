@@ -4,63 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1566EC5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 11:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C9EC5472C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 12:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siYDD-0006UE-IM; Mon, 26 Aug 2024 07:48:43 -0400
+	id 1siYTO-00050C-Og; Mon, 26 Aug 2024 08:05:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
- id 1siYD9-0006Pp-2Z; Mon, 26 Aug 2024 07:48:39 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1siYTB-0004yX-Qo
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 08:05:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
- id 1siYD1-0007Pb-CY; Mon, 26 Aug 2024 07:48:38 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Wsppg6DmLz4x3J;
- Mon, 26 Aug 2024 21:48:27 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Wsppb4Hfzz4wnt;
- Mon, 26 Aug 2024 21:48:23 +1000 (AEST)
-Message-ID: <62fad646-c132-4de3-8e57-aaa5cb23cc2f@kaod.org>
-Date: Mon, 26 Aug 2024 13:48:20 +0200
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1siYT9-0001sR-PB
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 08:05:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724673909;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hqPMXleWAws97ZnyeA/9QK7rJcg8vV6V4F4Kr5KgBeM=;
+ b=B0yO39MU21FM7GkVkDbpnoPvKRJEjnbXOfg8E0ifjaJ/CG8Nxn2Uug8IAJzcq5jZKXxlsq
+ lax1nFF/7UTSsxEospERebf1C/rJBpXtp48nuoStucXMZ7JxR0ORU06tJ0gM3USK9Y+6ko
+ NxbTV8iDhKYipS3ctygDNq3eGko1tXM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-433-Cy-wjy6gNYmuCW1c6Wapxw-1; Mon, 26 Aug 2024 08:05:08 -0400
+X-MC-Unique: Cy-wjy6gNYmuCW1c6Wapxw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-428fb72245bso22356165e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 05:05:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724673907; x=1725278707;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hqPMXleWAws97ZnyeA/9QK7rJcg8vV6V4F4Kr5KgBeM=;
+ b=Syj38E7PYItCTtCnyjyrUW870ZFPBJh4VVsD7ucedKVl6yeUXcfvObGOifLI0qVh3n
+ mpNUQ6otNefohtV6ugrz+3MDIqyDLAzXGIRnI/TpCbqyVbjYxxGPZYBdfYvctN3ySSlR
+ 7ceggUC2XL61GzDdABDbaJtc7EjO0y8jo9C8PuZewIv7dcIjQVfusCSIiFQ7nz6SHtLh
+ epzRRnG5w0eJP0PwbwsdnWeU47+GAvPcqHso2T8BtC87FQVaWQEeh7EyD5lEr06hWqlR
+ 2daS0H1QQgywkQWOfS8QciV7iBCGXJbcJYKAQL4Eu4lbCYLKERXYA+zDO6QdR3A0rLXk
+ Ws4w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSjf0VqXW98lGqju0u7Ju0cdy9aF5Mx9d2eLA3SO6F1aONyoZprzgJNoydYxV8mAP0OGxCodgzxlUY@nongnu.org
+X-Gm-Message-State: AOJu0Yy0ESfUB1sRBKRlJcTSg+UmPvUPKERk17yr6s36fuv8GdPbTQ1z
+ fXiQJVauEtoFprEAqypO/3DwKhLhwGK53CnKCI3aMo/zA7jXPfjTinYuvJ2+0SLP5l0/ilEqKJD
+ 08rnGAlZKv8jiP64lFkM8mU/GtpK3rGxQgb77kHL50DIaVmAOAGwYMCGD3Vy5hublIQPDDJn4/M
+ TlskEk2VkiuKAfeP6TSis4iOKwt88=
+X-Received: by 2002:a05:600c:4f03:b0:428:9a1:f226 with SMTP id
+ 5b1f17b1804b1-42ac388e6d5mr73619495e9.1.1724673907054; 
+ Mon, 26 Aug 2024 05:05:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJWp0C3OvKIEZddwYqMK7s47Q06KLB4eolWAyTjGJKHlVrskwjxr6QoLJ8bpr0PIhKr81vySgbWf71hE+C9ZY=
+X-Received: by 2002:a05:600c:4f03:b0:428:9a1:f226 with SMTP id
+ 5b1f17b1804b1-42ac388e6d5mr73619125e9.1.1724673906620; Mon, 26 Aug 2024
+ 05:05:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register
- memory region of I2C bus
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <20240718064925.1846074-5-jamin_lin@aspeedtech.com>
- <de851b5c-5983-44f6-955a-6ba71f966c71@kaod.org>
- <SI2PR06MB5041E3D271FB5839B12E76D4FCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <c7d00701-cada-4ed8-856b-85249aa1ac0b@kaod.org>
- <SI2PR06MB5041D50CAC61711661F4B56FFCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <SI2PR06MB5041D50CAC61711661F4B56FFCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+References: <1ABDAA2B-8582-4B98-81D3-8F71DE62718C@akamai.com>
+ <874j7e0yjt.fsf@suse.de> <ACB0E3E9-BA69-4EC7-A4EB-3AF2F21D4C8A@akamai.com>
+ <874j7czn33.fsf@suse.de> <3587C969-9BDB-4BBD-8A79-3679C3F3801A@akamai.com>
+ <A658D108-2EC3-4BA1-900C-4FE9FB498B03@akamai.com> <87ed6fxpv0.fsf@suse.de>
+ <5DBD942C-E192-46F8-9E73-20DD0A5D6983@akamai.com>
+In-Reply-To: <5DBD942C-E192-46F8-9E73-20DD0A5D6983@akamai.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 26 Aug 2024 17:34:49 +0530
+Message-ID: <CAE8KmOzMFtw0oMQP2=EeiVic5TaK6dc2Fvy2=kcfp_nRg1bn9w@mail.gmail.com>
+Subject: Re: Issue with QEMU Live Migration
+To: "Arisetty, Chakri" <carisett@akamai.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>, Peter Xu <peterx@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, "Blew III, Will" <wblewiii@akamai.com>, 
+ "Massry, Abraham" <amassry@akamai.com>, "Tottenham, Max" <mtottenh@akamai.com>,
+ "Greve, Mark" <mgreve@akamai.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,112 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
+On Sun, 25 Aug 2024 at 22:40, Arisetty, Chakri <carisett@akamai.com> wrote:
+> > - start the mirror job
+> > - qmp_migrate
+> > - once PRE_SWITCHOVER is reached, issue block-job-cancel
+> > - qmp_migrate_continue
+>
+> We use exact same steps to do live migration. I repeated the test now
+>
+> Sure, as you suggested to rule out any incorrect usage, I repeated the test with above steps.
+> once RAM migration state moved to pre-switchover, issued block-job-cancel. There are no more dirty blocks.
+> But all the disk writes from 'pre-switchover' state to 'complete' state are lost.
+> Thus, it is creating loss of customer data.
+>
 
-On 7/26/24 08:00, Jamin Lin wrote:
-> Hi Cedric,
+* How is 'issue block-job-cancel' command issued exactly at the
+PRE_SWITCHOVER stage? virsh blockjob --abort?
 
-I will looked at v2. Sorry for the late reply, I was on PTO.
+* Recently a postcopy issue, wherein the migrated guest on the
+destination machine hangs sometimes with migrate-postcopy but not with
+virsh ---postcopy-after-precopy. It seems virsh(1) handles the switch
+better. Wondering if it's similar with 'block-job-cancel'.
 
-Thanks,
-
-C.
-
-  
-
-
->> Subject: Re: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register
->> memory region of I2C bus
->>
->> On 7/18/24 11:44, Jamin Lin wrote:
->>> Hi Cedric,
->>>
->>>> Subject: Re: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous
->>>> register memory region of I2C bus
->>>>
->>>> On 7/18/24 08:49, Jamin Lin wrote:
->>>>> It only support continuous register memory region for all I2C bus.
->>>>> However, the register address of all I2c bus are discontinuous for
->>>>> AST2700.
->>>>>
->>>>> Ex: the register address of I2C bus for ast2700 as following.
->>>>> 0x100 - 0x17F: Device 0
->>>>> 0x200 - 0x27F: Device 1
->>>>> 0x300 - 0x37F: Device 2
->>>>> 0x400 - 0x47F: Device 3
->>>>> 0x500 - 0x57F: Device 4
->>>>> 0x600 - 0x67F: Device 5
->>>>> 0x700 - 0x77F: Device 6
->>>>> 0x800 - 0x87F: Device 7
->>>>> 0x900 - 0x97F: Device 8
->>>>> 0xA00 - 0xA7F: Device 9
->>>>> 0xB00 - 0xB7F: Device 10
->>>>> 0xC00 - 0xC7F: Device 11
->>>>> 0xD00 - 0xD7F: Device 12
->>>>> 0xE00 - 0xE7F: Device 13
->>>>> 0xF00 – 0xF7F: Device 14
->>>>> 0x1000 – 0x107F: Device 15
->>>>>
->>>>> Introduce a new class attribute to make user set each I2C bus gap size.
->>>>> Update formula to create all I2C bus register memory regions.
->>>>
->>>> I don't think this is necessary to model. Could we simply increase
->>>> tge register MMIO size for the AST2700 bus model and rely on the
->>>> memops to catch invalid register offsets ?
->>>>
->>> Thanks for your review and suggestion.
->>>
->>> Sorry, I am not very clearly understand your comments.
->>> Could you please describe it more detail?
->>> Thanks-Jamin
->>
->> I don't think you need to introduce a gap size class attribute.
->>
->> Setting :
->>
->>       aic->reg_size = 0x100; /* size + gap */
->>
->> in aspeed_2700_i2c_class_init() should be enough.
->>
-> Sorry reply you late.
-> 
-> The address space of I2C bus and pool buffer are as following
-> 0x100 - 0x17F: device1_reg  0x1a0 - 0x1bf: device1_buf
-> 0x200 - 0x27F: device2_reg  0x2a0 - 0x2bf:device2_buf
-> 0x300 - 0x37F: device3_reg  0x3a0 -0x3bf: device3_buf
-> 
-> I tried to set the aic->reg_size 0x100 and aic->pool_size 0x100.
-> And the memory regions of I2c bus became as following.
-> 
-> 0x100-0x1ff aspeed.i2c.bus.0  0x1a0-0x29f aspeed.i2c.bus.0.pool
-> 0x200-0x2ff aspeed.i2c.bus.1  0x2a0-0x39f aspeed.i2c.bus.1.pool
-> 0x300-0x3ff aspeed.i2c.bus.2  0x3a0-0x49f aspeed.i2c.bus.2.pool
-> 
-> 0000000014c0f000-0000000014c10fff (prio 0, i/o): aspeed.i2c
->      0000000014c0f100-0000000014c0f1ff (prio 0, i/o): aspeed.i2c.bus.0
->      0000000014c0f1a0-0000000014c0f29f (prio 0, i/o): aspeed.i2c.bus.0.pool
->      0000000014c0f200-0000000014c0f2ff (prio 0, i/o): aspeed.i2c.bus.1
->      0000000014c0f2a0-0000000014c0f39f (prio 0, i/o): aspeed.i2c.bus.1.pool
->      0000000014c0f300-0000000014c0f3ff (prio 0, i/o): aspeed.i2c.bus.2
->      0000000014c0f3a0-0000000014c0f49f (prio 0, i/o): aspeed.i2c.bus.2.pool
-> 
-> The memory region of aspeed.i2c.bus.0 (0x100-0x1ff) occupied aspeed.i2c.bus.0.pool address space(0x1a0-0x1bf).
-> And the memory region of aspeed.i2c.bus.0.pool (0x1a0-0x29f) occupied aspeed.i2c.bus.1 address space(0x200-0x27F)
-> That was why I created reg_gap_size and pool_gap_size to fix this issue.
-> Do you have any suggestion?
-> 
-> Thanks-Jamin
-> 
->> Thanks,
->>
->> C.
->>
-> 
-> ************* Email Confidentiality Notice ********************
-> 免責聲明:
-> 本信件(或其附件)可能包含機密資訊，並受法律保護。如 台端非指定之收件者，請以電子郵件通知本電子郵件之發送者, 並請立即刪除本電子郵件及其附件和銷毀所有複印件。謝謝您的合作!
-> 
-> DISCLAIMER:
-> This message (and any attachments) may contain legally privileged and/or other confidential information. If you have received it in error, please notify the sender by reply e-mail and immediately delete the e-mail and any attachments without copying or disclosing the contents. Thank you.
+Thank you.
+---
+  - Prasad
 
 
