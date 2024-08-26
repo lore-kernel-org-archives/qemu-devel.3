@@ -4,88 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F34CC5321E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 10:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD17C5472E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 10:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siWX8-0001NY-GL; Mon, 26 Aug 2024 06:01:10 -0400
+	id 1siWe0-0006Rj-NI; Mon, 26 Aug 2024 06:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1siWX7-0001N4-8l
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:01:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
+ id 1siWdz-0006Qc-9S
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:15 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1siWX5-00013N-Pu
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:01:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724666467;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EOWjkF7trN+Rh2/dfokXqnBfOqCkBra5qd8n1cjeZk4=;
- b=XobpoE7iYkdk76s7WgRV8M4TqspXcrhul1mEIxRVlIjnWXvNgvsgOS/sBHavCp1DqG5tp3
- TKOKyWJtF0xlGHUN6i5OKNrHhLqupm2aeEM4LFvCEkSiwWJxBSj1dkHZbey7pe4yPoj+nB
- rEU4xYcXYQnvQdjBCIOhJ7SJu01PDhU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-BepfEe7NOXSOXbJSy-zOZg-1; Mon, 26 Aug 2024 06:01:06 -0400
-X-MC-Unique: BepfEe7NOXSOXbJSy-zOZg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42816aacabcso37534325e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 03:01:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724666464; x=1725271264;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EOWjkF7trN+Rh2/dfokXqnBfOqCkBra5qd8n1cjeZk4=;
- b=M6pjy3YXb2gXWAFdbs/v+k54MuY1gsjx16voFoa3/hVzQOL7XYagSkhWviSvTNLoSQ
- G5/q9tyNy2c9VFrh7W7zmh2UvQgoYi28Ie52eMHhVFQC0uTx41Zwpaw8H0uWjQq8kKhG
- A+gcIjHw1t/xlCQ7Fox4IEn0jAZf7h+yTaJDhvr83O0X7T9pYRjn7QNW1tv9aQT8xABM
- IWQR//L7f9D+nhQN6z6Oa7pGSXj2wNiPJ/A5WLkUmngMK+tlDxoaO3WMS5TAaweX1gAN
- QwXpVtykt+nG7zLoUtjbp+5Llf/pRe5ZJb6b47MitEWO/oEoYmoTBWwHxygkaxzQjozE
- 1iFQ==
-X-Gm-Message-State: AOJu0YxwGBmvXnZ0HEVvU5XY9yG5qAQIwbcp434SC7h3SwbFKhuATREk
- EkuEpen7Af27JYEo4Qjg5dDfP5v01jygW978mn6zAvkkoL6Bo09kR1woDuhM56Dm8sam6C6CRv6
- uqFSF5j1DXT584KsxqqrN1tSX75bcaP1NkLDaA8/DP1eMWhAJgJ5CcOPSad5+
-X-Received: by 2002:a05:600c:4fc8:b0:428:151b:e8e with SMTP id
- 5b1f17b1804b1-42acc8dd28dmr73019205e9.10.1724666464142; 
- Mon, 26 Aug 2024 03:01:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJTO9Xgp804JmuAPu6bxs3u7ik2mpjC5bkFHvKh2R4wpMGOH/BN0tnID5TZoDAjlhoToFQ4A==
-X-Received: by 2002:a05:600c:4fc8:b0:428:151b:e8e with SMTP id
- 5b1f17b1804b1-42acc8dd28dmr73018965e9.10.1724666463632; 
- Mon, 26 Aug 2024 03:01:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-373082697f8sm10302571f8f.110.2024.08.26.03.01.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 03:01:03 -0700 (PDT)
-Message-ID: <4afd07f6-f59e-4f3e-bea1-85ed7ab5a0ea@redhat.com>
-Date: Mon, 26 Aug 2024 12:01:02 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
+ id 1siWdx-00029j-Fb
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:15 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WsmZl2zdlz4x42
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 20:07:59 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WsmZk5Nynz4x2M
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 20:07:58 +1000 (AEST)
+Message-ID: <cabfffe6-76a5-4c9a-a2a5-577e163ca961@kaod.org>
+Date: Mon, 26 Aug 2024 12:07:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/pnv: ADU fix possible buffer overrun with invalid size
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20240806151322.284431-1-npiggin@gmail.com>
+Subject: Re: [PATCH 1/7] ppc/pnv: Fix LPC serirq routing calculation
+To: qemu-devel@nongnu.org
+References: <20240806131318.275109-1-npiggin@gmail.com>
+ <20240806131318.275109-2-npiggin@gmail.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240806151322.284431-1-npiggin@gmail.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240806131318.275109-2-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,15 +66,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/24 17:13, Nicholas Piggin wrote:
-> The ADU LPC transfer-size field is 7 bits, but the supported sizes for
-> LPC access via ADU appear to be 1, 2, 4, 8. The data buffer could
-> overrun if firmware set an invalid size field, so add checks to reject
-> them with a message.
+On 8/6/24 15:13, Nicholas Piggin wrote:
+> The serirq routing table is split over two registers, the calculation
+> for the high irqs in the second register did not subtract the irq
+> offset. This was spotted by Coverity as a shift-by-negative. Fix this
+> and change the open-coded shifting and masking to use extract32()
+> function so it's less error-prone.
+> 
+> This went unnoticed because irqs >= 14 are not used in a standard
+> QEMU/OPAL boot, changing the first QEMU serial-isa irq to 14 to test
+> does demonstrate serial irqs aren't received, and that this change
+> fixes that.
 > 
 > Reported-by: Cédric Le Goater <clg@redhat.com>
-> Resolves: Coverity CID 1558830
-> Fixes: 24bd283bccb33 ("ppc/pnv: Implement ADU access to LPC space")
+> Resolves: Coverity CID 1558829 (partially)
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
 
@@ -122,38 +91,47 @@ C.
 
 
 > ---
->   hw/ppc/pnv_adu.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+>   target/ppc/cpu.h |  1 +
+>   hw/ppc/pnv_lpc.c | 10 ++++++++--
+>   2 files changed, 9 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/ppc/pnv_adu.c b/hw/ppc/pnv_adu.c
-> index 81b7d6e526..f636dedf79 100644
-> --- a/hw/ppc/pnv_adu.c
-> +++ b/hw/ppc/pnv_adu.c
-> @@ -116,6 +116,12 @@ static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
->               uint32_t lpc_size = lpc_cmd_size(adu);
->               uint64_t data = 0;
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index 321ed2da75..bd32a1a5f8 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -40,6 +40,7 @@
 >   
-> +            if (!is_power_of_2(lpc_size) || lpc_size > sizeof(data)) {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "ADU: Unsupported LPC access "
-> +                                               "size:%" PRId32 "\n", lpc_size);
-> +                break;
-> +            }
-> +
->               pnv_lpc_opb_read(adu->lpc, lpc_addr, (void *)&data, lpc_size);
+>   #define PPC_BIT_NR(bit)         (63 - (bit))
+>   #define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
+> +#define PPC_BIT32_NR(bit)       (31 - (bit))
+>   #define PPC_BIT32(bit)          (0x80000000 >> (bit))
+>   #define PPC_BIT8(bit)           (0x80 >> (bit))
+>   #define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
+> diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+> index f8aad955b5..80b79dfbbc 100644
+> --- a/hw/ppc/pnv_lpc.c
+> +++ b/hw/ppc/pnv_lpc.c
+> @@ -435,13 +435,19 @@ static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
+>           return;
+>       }
 >   
->               /*
-> @@ -135,6 +141,12 @@ static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
->               uint32_t lpc_size = lpc_cmd_size(adu);
->               uint64_t data;
+> +    /*
+> +     * Each of the ISA irqs is routed to one of the 4 SERIRQ irqs with 2
+> +     * bits, split across 2 OPB registers.
+> +     */
+>       for (irq = 0; irq <= 13; irq++) {
+> -        int serirq = (lpc->opb_irq_route1 >> (31 - 5 - (irq * 2))) & 0x3;
+> +        int serirq = extract32(lpc->opb_irq_route1,
+> +                                    PPC_BIT32_NR(5 + irq * 2), 2);
+>           lpc->irq_to_serirq_route[irq] = serirq;
+>       }
 >   
-> +            if (!is_power_of_2(lpc_size) || lpc_size > sizeof(data)) {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "ADU: Unsupported LPC access "
-> +                                               "size:%" PRId32 "\n", lpc_size);
-> +                break;
-> +            }
-> +
->               data = cpu_to_be64(val) >> ((lpc_addr & 7) * 8); /* See above */
->               pnv_lpc_opb_write(adu->lpc, lpc_addr, (void *)&data, lpc_size);
->           }
+>       for (irq = 14; irq < ISA_NUM_IRQS; irq++) {
+> -        int serirq = (lpc->opb_irq_route0 >> (31 - 9 - (irq * 2))) & 0x3;
+> +        int serirq = extract32(lpc->opb_irq_route0,
+> +                               PPC_BIT32_NR(9 + (irq - 14) * 2), 2);
+>           lpc->irq_to_serirq_route[irq] = serirq;
+>       }
+>   }
 
 
