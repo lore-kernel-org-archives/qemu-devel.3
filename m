@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFB7C5321E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 08:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D82C5321E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 08:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siUpl-0003fA-8Z; Mon, 26 Aug 2024 04:12:17 -0400
+	id 1siUwG-0000HF-3e; Mon, 26 Aug 2024 04:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siUpi-0003bG-9O
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:12:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siUwC-0000FK-SQ
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:18:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siUpg-0003MW-AF
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:12:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siUwA-0003pp-7X
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:18:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724659930;
+ s=mimecast20190719; t=1724660331;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2NcUYBy7IWNYMsjCHUlBoaXZNOyg/KJNepog9xMLd0I=;
- b=CkGB+LfBm7btJNkhHsouTuD0MHcbKHeouGANs/K4YI0H4JS/CF/VuqcCYB+AqqTKGj4XJH
- OGO4dyYhbTqH4QIrQJ7906bMdCrxltnaR6aKcpAhh0nhy14l5jIC8EZ4ShVY0IYsMband7
- 2VMJrgTu6X/y2GxHps5f8zpnQRzl5DM=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VL9iwBunfbUdjp7rBq57qadG7ag2mHVt2wNeas22a/4=;
+ b=NSlTIKGkbfcaIqkcqnNnyx7RD5mZxqWyrpj75BJxvuheuWPeGYjW1byRsxU9AuGFAzF6N2
+ GHxYUynCy4POficdYRpkYUfU2VC431B7T19wNUU8tk+PUqEAHBCkc92uQOPLdq9DVr0Yzj
+ 5+GWgInQyPI/X2Ui/NI7Lk0r0YgFTPg=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-247-SpXEP8WKOZarQurmXbCFNw-1; Mon, 26 Aug 2024 04:12:07 -0400
-X-MC-Unique: SpXEP8WKOZarQurmXbCFNw-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-44febfb1ae4so63509141cf.2
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 01:12:07 -0700 (PDT)
+ us-mta-316-NDXnROhPPKutkAem5_R9jw-1; Mon, 26 Aug 2024 04:18:49 -0400
+X-MC-Unique: NDXnROhPPKutkAem5_R9jw-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6bf7cd59d92so51037086d6.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 01:18:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724659927; x=1725264727;
+ d=1e100.net; s=20230601; t=1724660329; x=1725265129;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2NcUYBy7IWNYMsjCHUlBoaXZNOyg/KJNepog9xMLd0I=;
- b=C0WrBfHXmIGaPUWw6pj1uXY67vXArLMwH0J9eB5w8XCvwUN2YdtuiiDv01g4jK20Mi
- hcKxMYCOwVXOeVnT2tWPu6yJWuiHq6fUQ0aNcfEhMyVWshFnC4VNsjIeEh6Hl/Qxc/lt
- C2CEvSDnfRpvCRS0mfdqA44qZkfSnivAK4RzUEolXLG9w98gefITluo/KUVQqMUYUA0T
- 4/Tyw6cwJQT/zfNI75N6ItrjUiQ4i4C3cJ/0j5ZwNpY2w0LxYwvOSfSyOq1FLsjR0IBj
- MdXcInL471Ly9I9BdJYqyt+9J2/iRdJs3Ovk24tUFXG4mByVyTPqFgVAo3TBhzGVign8
- URLQ==
+ bh=VL9iwBunfbUdjp7rBq57qadG7ag2mHVt2wNeas22a/4=;
+ b=wG63ep5vWBEdsD/5dN0IbREwhsLN1Vj8pDiFbM9ysGW3rl/+sFxbmpl1KehMCZ+WHY
+ 2yEHv1sn3zO/9+YMNSIKJnve1LuwnMdwNBZw+ie+rH04Y8PJqnsTwhpR+YiOpGmxif7k
+ oNCmC3Q8WYrmXdW6nSDN8g+GEkQVg6d7AQxTIQ6epAUcLbQZZAc2u3XEjvUReZ2QlKUJ
+ g7AH3gme+nbqFu30DKAbIFLoXo6QBe3NJEnT9y0CKkz+5tFJgHHDKJO1KsLoa3mn/IBu
+ yHifEUGdKRVGqyi6RJlMI8innJlKr3ZBFrQ1M1/g70pmX9hGFMpSEVICqPtmXlEcBPrT
+ OBmQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUp9bYtUoZpNq4qKLI46JTRoHSPuzSOr3W5NqzydXCa3dVs67xLHcbx3TyDqTdZ+J96R0UmGT7vBE/C@nongnu.org
-X-Gm-Message-State: AOJu0Yw/bMFFTlJ1M+U9AEFcqrAdScqK5cBsWZnohFEIzZ5V5u5qQWgk
- pFP7mrGBKXi0Z/kLdrm99790SGHI7UIU1sZehpEME5r9NIYH6MXS8X/tqg42cDMwRhplgfAzcXh
- 13zeHCgwDQm9RhCDYCez0+bmFwy83/GO3rzwDGZkpqjndX/d5mfHe
-X-Received: by 2002:a05:622a:1143:b0:454:f62b:837b with SMTP id
- d75a77b69052e-455095a6aadmr119661051cf.13.1724659927109; 
- Mon, 26 Aug 2024 01:12:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEeTUkM+3acoBrdPNBsR8OBHK2kC7fUQrGDcrNom6dok7Yrn3S1MHM/fstrsoCgNxd9F7Z+LQ==
-X-Received: by 2002:a05:622a:1143:b0:454:f62b:837b with SMTP id
- d75a77b69052e-455095a6aadmr119660871cf.13.1724659926708; 
- Mon, 26 Aug 2024 01:12:06 -0700 (PDT)
+ AJvYcCXHswH2FueOLmMhP4C1rS/8WEJGkx97YEufFhKAKoIT3TvpjwhbcHwvpg6Xekz4+cjuGy5/ex//yNxg@nongnu.org
+X-Gm-Message-State: AOJu0Yx/OoQIHymbCeuOuxKbf/XogixNZvJqqpTd0lqC+M1g47ETMAPg
+ 4eEdIwONswvSo0DDWmBp60W6ON06HkhszZGVxnkj19GZb7brAI9MDpiIRtCgGAZjI700oLheS6v
+ PIgpejwVpfAXVlXbQMIMuQtDefa9M7oAmV1GcDkdtqLmdlOfjpjD9
+X-Received: by 2002:a05:6214:5d0a:b0:6b7:a4dc:e24a with SMTP id
+ 6a1803df08f44-6c16deef452mr93854496d6.54.1724660329108; 
+ Mon, 26 Aug 2024 01:18:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHa1aGJ29CE8huitJieUB1nsHEnjMXllwi02RxOFTAewMeo599JC/Vo44RD0zJROUz8DMr+kw==
+X-Received: by 2002:a05:6214:5d0a:b0:6b7:a4dc:e24a with SMTP id
+ 6a1803df08f44-6c16deef452mr93854246d6.54.1724660328637; 
+ Mon, 26 Aug 2024 01:18:48 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-177-41.web.vodafone.de.
  [109.43.177.41]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-454fe0d8f85sm41093131cf.24.2024.08.26.01.12.05
+ 6a1803df08f44-6c162d4960bsm44440946d6.30.2024.08.26.01.18.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 01:12:06 -0700 (PDT)
-Message-ID: <f50da65a-b5e7-4fb3-a99f-e8fcecb9fe1f@redhat.com>
-Date: Mon, 26 Aug 2024 10:12:03 +0200
+ Mon, 26 Aug 2024 01:18:48 -0700 (PDT)
+Message-ID: <b60d967a-6d87-4dfa-9ed5-da547be453a4@redhat.com>
+Date: Mon, 26 Aug 2024 10:18:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: Convert Aarch64 Virt machine avocado
- tests
+Subject: Re: [PATCH v4 11/35] tests/functional: Prepare the meson build system
+ for the functional tests
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20240823082423.6349-1-philmd@linaro.org>
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>
+References: <20240821082748.65853-1-thuth@redhat.com>
+ <20240821082748.65853-12-thuth@redhat.com>
+ <4b4018c6-4a2b-4250-bb53-be9cc5df7cb4@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -120,19 +126,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240823082423.6349-1-philmd@linaro.org>
+In-Reply-To: <4b4018c6-4a2b-4250-bb53-be9cc5df7cb4@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,56 +154,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/08/2024 10.24, Philippe Mathieu-Daudé wrote:
-> Straight forward conversion. Update the SHA1 hash to
-> SHA256 since SHA1 should not be used anymore nowadays.
+On 23/08/2024 14.54, Philippe Mathieu-Daudé wrote:
+> On 21/8/24 10:27, Thomas Huth wrote:
+>> Provide a meson.build file for the upcoming python-based functional
+>> tests, and add some wrapper glue targets to the tests/Makefile.include
+>> file. We are going to use two "speed" modes for the functional tests:
+>> The "quick" tests can be run at any time (i.e. also during "make check"),
+>> while the "thorough" tests should only be run when running a
+>> "make check-functional" test run (since these tests might download
+>> additional assets from the internet).
+>>
+>> The changes to the meson.build files are partly based on an earlier
+>> patch by Ani Sinha.
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   tests/Makefile.include       | 11 ++++++
+>>   tests/functional/meson.build | 66 ++++++++++++++++++++++++++++++++++++
+>>   tests/meson.build            |  1 +
+>>   3 files changed, 78 insertions(+)
+>>   create mode 100644 tests/functional/meson.build
 > 
-> Provide get_qemu_img() helper in qemu_test.
 > 
->    $ make check-functional-aarch64 V=1
->    ...
->    ▶ 1/4 test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv2                 OK
->    ▶ 1/4 test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv3                 OK
->    ▶ 1/4 test_aarch64_virt.Aarch64VirtMachine.test_alpine_virt_tcg_gic_max            OK
->    1/4 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_virt  OK   30.44s  3 subtests passed
+>> +# Timeouts for individual tests that can be slow e.g. with debugging enabled
+>> +test_timeouts = {
+>> +}
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20240822114146.86838-1-philmd@linaro.org>
-> ---
->   MAINTAINERS                                   |  2 +-
->   tests/functional/meson.build                  |  2 +
->   tests/functional/qemu_test/__init__.py        |  2 +-
->   tests/functional/qemu_test/cmd.py             | 15 ++++
->   .../test_aarch64_virt.py}                     | 69 ++++++++-----------
->   5 files changed, 46 insertions(+), 44 deletions(-)
->   rename tests/{avocado/machine_aarch64_virt.py => functional/test_aarch64_virt.py} (69%)
->   mode change 100644 => 100755
-...
-> @@ -176,3 +178,16 @@ def exec_command_and_wait_for_pattern(test, command,
->       :param failure_message: if this message appears, test fails
->       """
->       _console_interaction(test, success_message, failure_message, command + '\r')
-> +
-> +def get_qemu_img(test):
-> +    test.log.debug('Looking for and selecting a qemu-img binary')
-> +
-> +    # If qemu-img has been built, use it, otherwise the system wide one
-> +    # will be used.
-> +    qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
-> +    if os.path.exists(qemu_img):
-> +        return qemu_img
-> +    if has_cmd('qemu-img'):
-> +        return 'qemu-img'
-> +    test.cancel('Could not find "qemu-img", which is required to '
-> +                'create temporary images')
+> 
+>> +    foreach test : target_tests
+>> +      test('func-@0@/@1@'.format(target_base, test),
+>> +           python,
+>> +           depends: [test_deps, test_emulator, emulator_modules],
+>> +           env: test_env,
+>> +           args: [meson.current_source_dir() / 'test_' + test + '.py'],
+>> +           protocol: 'tap',
+>> +           timeout: test_timeouts.get(test, 60),
+>> +           priority: test_timeouts.get(test, 60),
+> 
+> IIUC with Avocado the timeout was for each test_func in a TestClass.
+> Now this is only per TestClass. Hopefully I'm wrong...
 
-Please use self.skipTest() instead ... cancel() was something from the 
-Avocado framework only.
-
-Apart from that the patch looks fine to me now, thanks!
+I think you're right ... we might need to adjust the meson timeouts here and 
+there in case they are causing problems, but that's just business as usual 
+(we had to do the same when enabling the meson timeouts for the qtests for 
+example).
 
   Thomas
-
 
 
