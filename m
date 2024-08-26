@@ -4,89 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB571C5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 10:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88EB8C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 10:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siWeF-0006bs-DQ; Mon, 26 Aug 2024 06:08:31 -0400
+	id 1siWjs-0006vD-QT; Mon, 26 Aug 2024 06:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1siWeD-0006at-N0
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
+ id 1siWjr-0006u0-Di; Mon, 26 Aug 2024 06:14:19 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1siWeC-0002BG-7G
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724666906;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r3tRrq2SAP870ylPxKYD6FqgVcg+euXApnt4b0jM/9g=;
- b=EQo/8ek580zjD2H09jjyEGxOSPNAdfCFXC5Q0TmaVwFiRKuxTx6empS9blvBVFMsH48LzN
- 1bP1Bkx6/bwlApUHVnN5kct1njlUmgLYi2KPsTnMKWN7BllcEej/O1snolBjPEpMB33P0h
- 0kadzmS6+fyUWUUMHgeDhncNNgLJ8p0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-ve82VjBbOFuAuK1eg0tGOA-1; Mon, 26 Aug 2024 06:08:24 -0400
-X-MC-Unique: ve82VjBbOFuAuK1eg0tGOA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3719ee7c72eso2505375f8f.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 03:08:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724666903; x=1725271703;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r3tRrq2SAP870ylPxKYD6FqgVcg+euXApnt4b0jM/9g=;
- b=mhRTwMsbessZmwljxseNCVaJ1vGW+dx/oDfnNHkd5srv72dztYrotzyBcAnIx6AbdK
- C3tMT2QBsRndnL/e2zzMd+0pqk5Jxm8C1F2BDXbIr7kcxb87u/NcmKNyKebsV2K3zXL1
- yITwXKCqRTvN1FMfcZAuPDS5RVpmk1avzs6nX+JBAm9WyG6+snbGHNB/QtftdtTtYU5m
- /C8m3aLgZ7l4NedQScRc+WIjV6jeEG7kS6AExnwphgUCNAXgOGrn/b8y9tA3Y+V7IVDk
- CuqdFsaMD31ISJ6jD3F1VQCxamwX7wxhiE3Vw3TBn1ILbqa7QlZ7t6TuQNVWr8Gly7ru
- 35Uw==
-X-Gm-Message-State: AOJu0YzV3fSR40wyptsYCJM/B7r0JcKhi9lW8sJVzi34Mrt6oxGeeQ8Z
- Mm539c3Vncc3H3movWr91JiRiDxP0ZZAAVLDVQSw7kJGl/vDytYL5cyQiHZQF+D346B8Vm3CnQR
- mCl+Gdg02C6LjC1yymi+mEwaVcJI0TfVAW8Yr0zKpvh0cyCdZd8cYo8GzpRgy
-X-Received: by 2002:adf:f7d2:0:b0:368:77f9:fb34 with SMTP id
- ffacd0b85a97d-37311857bf9mr5441652f8f.15.1724666903300; 
- Mon, 26 Aug 2024 03:08:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9p1UmBJIDqohznYCq4mCaADnzUxD2GX+PtzdxTJfaYyD1xRwRjFrPJfxZ4CmkTWqoW8jYdA==
-X-Received: by 2002:adf:f7d2:0:b0:368:77f9:fb34 with SMTP id
- ffacd0b85a97d-37311857bf9mr5441635f8f.15.1724666902839; 
- Mon, 26 Aug 2024 03:08:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3730815c0f0sm10392219f8f.51.2024.08.26.03.08.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 03:08:22 -0700 (PDT)
-Message-ID: <8bacf253-216b-4354-88ba-30a9e8f88110@redhat.com>
-Date: Mon, 26 Aug 2024 12:08:21 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
+ id 1siWjh-0002qx-UT; Mon, 26 Aug 2024 06:14:19 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Wsmjp2cXvz4x8B;
+ Mon, 26 Aug 2024 20:14:06 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Wsmjm0RsQz4x5J;
+ Mon, 26 Aug 2024 20:14:03 +1000 (AEST)
+Message-ID: <9314a4fd-368a-4d1a-954e-ddb85d709243@kaod.org>
+Date: Mon, 26 Aug 2024 12:14:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] ppc/pnv: Fix LPC POWER8 register sanity check
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20240806131318.275109-1-npiggin@gmail.com>
- <20240806131318.275109-3-npiggin@gmail.com>
+Subject: Re: [PATCH 01/13] pnv/xive: TIMA patch sets pre-req alignment and
+ formatting changes
+To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240801203008.11224-1-kowal@linux.ibm.com>
+ <20240801203008.11224-2-kowal@linux.ibm.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240806131318.275109-3-npiggin@gmail.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240801203008.11224-2-kowal@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,19 +67,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/24 15:13, Nicholas Piggin wrote:
-> POWER8 does not have the ISA IRQ -> SERIRQ routing system of later
-> CPUs, instead all ISA IRQs are sent to the CPU via a single PSI
-> interrupt. There is a sanity check in the POWER8 case to ensure the
-> routing bits have not been set, because that would indicate a
-> programming error.
+On 8/1/24 22:29, Michael Kowal wrote:
+> From: Michael Kowal <kowal@linux.vnet.ibm.com>
 > 
-> Those bits were incorrectly specified because of ppc bit numbering
-> fun. Coverity detected this as an always-zero expression.
+> Making some pre-requisite alignment changes ahead of the following patch
+> sets.  Making these changes now will ease the review of the patch sets.
 > 
-> Reported-by: Cédric Le Goater <clg@redhat.com>
-> Resolves: Coverity CID 1558829 (partially)
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Checkpatch wants the closing comment '*/' on a separate line, unless it is
+> on the same line as the starting comment '/*'.
+> 
+> There are also changes to prevent lines from spanning 80 columns.
+> 
+> Changed block of defines from:
+>     #define A 1  /* original define comment is not
+>                   * preferred, but not flagged... */
+>     #define B 2  /* Newly added define comment
+>                   * is flagged with a warning */
+> To:
+>     #define A 1  /* original define comment is */
+>                  /* now fine, no warning...    */
+>     #define B 2  /* Newly added define comment */
+>                  /* is fine...                 */
+> 
+> Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -126,23 +100,147 @@ C.
 
 
 > ---
->   hw/ppc/pnv_lpc.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   include/hw/ppc/xive_regs.h | 32 ++++++++---------
+>   hw/intc/xive.c             | 72 +++++++++++++++++++++++++-------------
+>   2 files changed, 64 insertions(+), 40 deletions(-)
 > 
-> diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-> index 80b79dfbbc..8c203d2059 100644
-> --- a/hw/ppc/pnv_lpc.c
-> +++ b/hw/ppc/pnv_lpc.c
-> @@ -427,8 +427,8 @@ static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
->       int irq;
+> diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
+> index b9db7abc2e..9d52d464d9 100644
+> --- a/include/hw/ppc/xive_regs.h
+> +++ b/include/hw/ppc/xive_regs.h
+> @@ -114,23 +114,23 @@
+>    * Then we have all these "special" CI ops at these offset that trigger
+>    * all sorts of side effects:
+>    */
+> -#define TM_SPC_ACK_EBB          0x800   /* Load8 ack EBB to reg*/
+> -#define TM_SPC_ACK_OS_REG       0x810   /* Load16 ack OS irq to reg */
+> +#define TM_SPC_ACK_EBB          0x800   /* Load8 ack EBB to reg               */
+> +#define TM_SPC_ACK_OS_REG       0x810   /* Load16 ack OS irq to reg           */
+>   #define TM_SPC_PUSH_USR_CTX     0x808   /* Store32 Push/Validate user context */
+> -#define TM_SPC_PULL_USR_CTX     0x808   /* Load32 Pull/Invalidate user
+> -                                         * context */
+> -#define TM_SPC_SET_OS_PENDING   0x812   /* Store8 Set OS irq pending bit */
+> -#define TM_SPC_PULL_OS_CTX      0x818   /* Load32/Load64 Pull/Invalidate OS
+> -                                         * context to reg */
+> -#define TM_SPC_PULL_POOL_CTX    0x828   /* Load32/Load64 Pull/Invalidate Pool
+> -                                         * context to reg*/
+> -#define TM_SPC_ACK_HV_REG       0x830   /* Load16 ack HV irq to reg */
+> -#define TM_SPC_PULL_USR_CTX_OL  0xc08   /* Store8 Pull/Inval usr ctx to odd
+> -                                         * line */
+> -#define TM_SPC_ACK_OS_EL        0xc10   /* Store8 ack OS irq to even line */
+> -#define TM_SPC_ACK_HV_POOL_EL   0xc20   /* Store8 ack HV evt pool to even
+> -                                         * line */
+> -#define TM_SPC_ACK_HV_EL        0xc30   /* Store8 ack HV irq to even line */
+> +#define TM_SPC_PULL_USR_CTX     0x808   /* Load32 Pull/Invalidate user        */
+> +                                        /* context                            */
+> +#define TM_SPC_SET_OS_PENDING   0x812   /* Store8 Set OS irq pending bit      */
+> +#define TM_SPC_PULL_OS_CTX      0x818   /* Load32/Load64 Pull/Invalidate OS   */
+> +                                        /* context to reg                     */
+> +#define TM_SPC_PULL_POOL_CTX    0x828   /* Load32/Load64 Pull/Invalidate Pool */
+> +                                        /* context to reg                     */
+> +#define TM_SPC_ACK_HV_REG       0x830   /* Load16 ack HV irq to reg           */
+> +#define TM_SPC_PULL_USR_CTX_OL  0xc08   /* Store8 Pull/Inval usr ctx to odd   */
+> +                                        /* line                               */
+> +#define TM_SPC_ACK_OS_EL        0xc10   /* Store8 ack OS irq to even line     */
+> +#define TM_SPC_ACK_HV_POOL_EL   0xc20   /* Store8 ack HV evt pool to even     */
+> +                                        /* line                               */
+> +#define TM_SPC_ACK_HV_EL        0xc30   /* Store8 ack HV irq to even line     */
+>   /* XXX more... */
 >   
->       if (!lpc->psi_has_serirq) {
-> -        if ((lpc->opb_irq_route0 & PPC_BITMASK(8, 13)) ||
-> -            (lpc->opb_irq_route1 & PPC_BITMASK(4, 31))) {
-> +        if ((lpc->opb_irq_route0 & PPC_BITMASK32(8, 13)) ||
-> +            (lpc->opb_irq_route1 & PPC_BITMASK32(4, 31))) {
->               qemu_log_mask(LOG_GUEST_ERROR,
->                   "OPB: setting serirq routing on POWER8 system, ignoring.\n");
->           }
+>   /* NSR fields for the various QW ack types */
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index 5a02dd8e02..2fb38e2102 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -488,20 +488,32 @@ static const XiveTmOp xive_tm_operations[] = {
+>        * MMIOs below 2K : raw values and special operations without side
+>        * effects
+>        */
+> -    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,   1, xive_tm_set_os_cppr, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,     4, xive_tm_push_os_ctx, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR, 1, xive_tm_set_hv_cppr, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL, xive_tm_vt_poll },
+> +    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive_tm_set_os_cppr,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive_tm_push_os_ctx,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL,
+> +                                                     xive_tm_vt_poll },
+>   
+>       /* MMIOs above 2K : special operations with side effects */
+> -    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,     2, NULL, xive_tm_ack_os_reg },
+> -    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING, 1, xive_tm_set_os_pending, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    4, NULL, xive_tm_pull_os_ctx },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    8, NULL, xive_tm_pull_os_ctx },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,     2, NULL, xive_tm_ack_hv_reg },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  4, NULL, xive_tm_pull_pool_ctx },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  8, NULL, xive_tm_pull_pool_ctx },
+> +    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, NULL,
+> +                                                     xive_tm_ack_os_reg },
+> +    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, xive_tm_set_os_pending,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, NULL,
+> +                                                     xive_tm_pull_os_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, NULL,
+> +                                                     xive_tm_pull_os_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, NULL,
+> +                                                     xive_tm_ack_hv_reg },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, NULL,
+> +                                                     xive_tm_pull_pool_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
+> +                                                     xive_tm_pull_pool_ctx },
+>   };
+>   
+>   static const XiveTmOp xive2_tm_operations[] = {
+> @@ -509,20 +521,32 @@ static const XiveTmOp xive2_tm_operations[] = {
+>        * MMIOs below 2K : raw values and special operations without side
+>        * effects
+>        */
+> -    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,   1, xive_tm_set_os_cppr, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,  4, xive2_tm_push_os_ctx, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR, 1, xive_tm_set_hv_cppr, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL, xive_tm_vt_poll },
+> +    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive_tm_set_os_cppr,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL,
+> +                                                     xive_tm_vt_poll },
+>   
+>       /* MMIOs above 2K : special operations with side effects */
+> -    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,     2, NULL, xive_tm_ack_os_reg },
+> -    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING, 1, xive_tm_set_os_pending, NULL },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    4, NULL, xive2_tm_pull_os_ctx },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    8, NULL, xive2_tm_pull_os_ctx },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,     2, NULL, xive_tm_ack_hv_reg },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  4, NULL, xive_tm_pull_pool_ctx },
+> -    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  8, NULL, xive_tm_pull_pool_ctx },
+> +    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, NULL,
+> +                                                     xive_tm_ack_os_reg },
+> +    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, xive_tm_set_os_pending,
+> +                                                     NULL },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, NULL,
+> +                                                     xive2_tm_pull_os_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, NULL,
+> +                                                     xive2_tm_pull_os_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, NULL,
+> +                                                     xive_tm_ack_hv_reg },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, NULL,
+> +                                                     xive_tm_pull_pool_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
+> +                                                     xive_tm_pull_pool_ctx },
+>   };
+>   
+>   static const XiveTmOp *xive_tm_find_op(XivePresenter *xptr, hwaddr offset,
 
 
