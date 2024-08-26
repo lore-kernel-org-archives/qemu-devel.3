@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E203C5472C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D790C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sigoX-0007be-KV; Mon, 26 Aug 2024 16:59:49 -0400
+	id 1sigq7-0002Av-Fb; Mon, 26 Aug 2024 17:01:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sigoU-0007b2-DF
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:59:47 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from
+ <3u-nMZggKCv4lgtpgyutmuumrk.iuswks0-jk1krtutmt0.uxm@flex--fanjason.bounces.google.com>)
+ id 1sigc4-0001aP-DR
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:56 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sigoS-0002qp-RR
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:59:46 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4281c164408so40803305e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 13:59:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3u-nMZggKCv4lgtpgyutmuumrk.iuswks0-jk1krtutmt0.uxm@flex--fanjason.bounces.google.com>)
+ id 1sigc2-0001qg-GF
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:56 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-6b43e6b9c82so112958577b3.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 13:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724705983; x=1725310783; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ANwho6ZYa5O68joBUb6dvP3VDXY3hF1s9SnSMskP6oE=;
- b=aStlCvUZQ097sfLLQnGd/hNyMEaOTuqwLtt8oFtM28RJc4ZSuZaMCXy6MozUf63gDX
- RARKuLAZR4omH00unjHousMSYz+5nuEX1Znfm1R1CYTB3JpbAp/xXhFntWmBL2WA78EJ
- 3vp311i5BUTpp3eZ54YBpgLa9PDuHG99xMO639aFAxwMWznVS2juBcG22ieIsy2DgzPi
- hKLWvne/s91bEfX9S1D6rah2zbpKIe2VbAUswuc6FYr81XOOTjlgcEbIepZRrCIQT/gX
- R5B+J5Fppbv3dmd8N0+FMTrS+bsi+AOKHuhfAi3el8VD1chtTfCUKOsxlwJ7ue1WeS6f
- HQwA==
+ d=google.com; s=20230601; t=1724705211; x=1725310011; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=l8WpacnFuwn17dhgS1WlyNZRw1pDH2hsyX31j01v1gQ=;
+ b=hEQugQzv12k1eny1Aa5h/5gS28etTJDdYzhlheT0m2bH2rRQw+hZNXBxsmb121xzUM
+ 1DqhnQCkR5Ua2UA9+U1ZZNQtjBGVCo+DAm2Mil05rUFxYCNKDSmF6QIQAT6Irwdf4a9p
+ 9k6Z1Hh1JO3izzNjgrtDTgXrhVGGU+lItRh57JPaKBvjj+g5/qebzgWGYc15w6u4Wo5A
+ dQDxd86fowVo6fpWJP060kP0Q5Ne/UuytULKr6dRiDm/aWsZTVjB3uNvF9dLWn5ProtS
+ pzAIY2YUMgIWWWvJBVesivzXjbG/o/aAhbUqaePIVidaMj4UrNIDUnBRocFYT+8UiFZ/
+ J/Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724705983; x=1725310783;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ANwho6ZYa5O68joBUb6dvP3VDXY3hF1s9SnSMskP6oE=;
- b=dd2I1dPEFrZSJ0/aN08oqDOATjFgRM76Su2jmm95Iri3BxXRA3cupN+1WZ1ttu3z5z
- 4xMatmH5nmVmxLbgzewh/VKyEF0UqJVzr9azt8y4qTI/gkn1sZuDLffJH7UjCqLGhGRH
- im8nhp42Pg1lOkAbxIDmJRIvSnhOJLb8f8kqwlYGyUOszk5C6NKkSFllHwFTbUKiiGaS
- sH/ppH3Hq5QEVfZ/Rb5TCGFbB6GChKMv6xaw8SChOIC6ynw8H+9Cj3Zvof0kfXRCLQys
- LXaq+JyFr2t3hb0ZmhhNz7yJNv9DfKJBtGbmTqe78d/v+Fo/dj63Qij6BLh+UpAUSdVb
- RXYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCuJ8j+r9oNGN3rxNXjUzpb1cDr3IR3QVYhxO2zx/tD9W1WHLDHrDK/+toRlL1uq1RaTrpvmitMjLS@nongnu.org
-X-Gm-Message-State: AOJu0Ywo1koW4LTZBrEs4zMDZdU0h6KQotm2e7FwvgizzKRiEl6mfXlE
- sEIkcnFEbTElXGxaDVHWeGlUgv5rlXJrmNQXxBe6CpQ0wrrC6HQe73p8YY3k8Uo=
-X-Google-Smtp-Source: AGHT+IFj7PFv3Kt9D00bnXPVFYZGV2nloOQmE9SE2vz9tUX9Y97/YI7QBH3FboPCpaJHaGCpQ4NI5g==
-X-Received: by 2002:a05:600c:3ac5:b0:428:18d9:9963 with SMTP id
- 5b1f17b1804b1-42b9ade4d5cmr4419915e9.22.1724705982691; 
- Mon, 26 Aug 2024 13:59:42 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.216.241])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ac514e07csm165871085e9.10.2024.08.26.13.59.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 13:59:42 -0700 (PDT)
-Message-ID: <2f484cff-e227-47e3-b570-40e1945cee63@linaro.org>
-Date: Mon, 26 Aug 2024 22:59:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] tests/functional: Convert mips64el Fuloong2e
- avocado test (2/2)
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Huacai Chen <chenhuacai@kernel.org>,
- Beraldo Leal <bleal@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240824160829.27655-1-philmd@linaro.org>
- <20240824160829.27655-3-philmd@linaro.org>
- <e840b528-c48b-4b5e-9b2b-c7c0a0473ce7@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <e840b528-c48b-4b5e-9b2b-c7c0a0473ce7@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ d=1e100.net; s=20230601; t=1724705211; x=1725310011;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l8WpacnFuwn17dhgS1WlyNZRw1pDH2hsyX31j01v1gQ=;
+ b=H/a58RIHOkv0HejLPFnp+YafHErMlriIWoDFfqg6lR5s4Xk33SZoZ5scOKXwR/GGfj
+ Njfr+CjDCuGepVtcpP3wCpC3eUZYzPU0Pzy5nJ/7d7smhQO/UO77OJ5eHumXpoTwJoDd
+ /cEKrNTmuzOZao4MqlgA0lF99UTuCTqFEfZLFzNMypvNrj94sDmqk8zCgY5qeLYyuQ9k
+ BNabZSexm5wNFXWlfsVR22VTfgYRqenVcUDnVdRKvb74eKOSATSWsoen5LWg2rsIVpf5
+ Df3PAHPMUJuLviUJrGH0C6uM9PbVssWYJZn309qCv4AKgKa9UwIs/MDWePb9Esz5n8Gg
+ U2oA==
+X-Gm-Message-State: AOJu0YxyY2tG1AScs5bZW66x+3LRMcpcnUANIHwP77lgyaXbzbYFPOuz
+ xRgXerBxegf6BbVBQCWKIMkAkZxIB9XYRve70OqXikIbkFBmuZUNMRsJLVtHtIIOMKo0WGchH8f
+ 1Z7FGD/vE4g==
+X-Google-Smtp-Source: AGHT+IEIRFTNPb4u70wTtBzfKWDMBeLFvwYO2qhhkI5GvYuc4T3bhMj7XKxNBzyCqeRopeTV+B/E0atEqM3oaw==
+X-Received: from fanjason3.c.googlers.com
+ ([fda3:e722:ac3:cc00:20:ed76:c0a8:2730])
+ (user=fanjason job=sendgmr) by 2002:a81:e404:0:b0:6be:9d4a:f097 with SMTP id
+ 00721157ae682-6c6288afc7dmr2146477b3.7.1724705211237; Mon, 26 Aug 2024
+ 13:46:51 -0700 (PDT)
+Date: Mon, 26 Aug 2024 20:46:28 +0000
+In-Reply-To: <20240826204628.3541850-1-fanjason@google.com>
+Mime-Version: 1.0
+References: <20240826204628.3541850-1-fanjason@google.com>
+X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
+Message-ID: <20240826204628.3541850-2-fanjason@google.com>
+Subject: [PATCH 1/1] include/qemu/bitops.h: Add deposit8 for uint8_t bit
+ operation
+From: Jason Fan <fanjason@google.com>
+To: philmd@redhat.com, richard.henderson@linaro.org
+Cc: qemu-devel@nongnu.org, Jason Fan <fanjason@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3u-nMZggKCv4lgtpgyutmuumrk.iuswks0-jk1krtutmt0.uxm@flex--fanjason.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 26 Aug 2024 17:01:24 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,22 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/8/24 11:10, Thomas Huth wrote:
-> On 24/08/2024 18.08, Philippe Mathieu-Daudé wrote:
->> Straight forward conversion. Update the SHA1 hashes to
->> SHA256 hashes since SHA1 should not be used anymore nowadays.
->>
->> Add extract_from_deb() method in qemu_test.utils package.
-> 
-> Should we maybe rather copy the whole LinuxKernelTest class into a new 
-> file in the qemu_tests folder, so that all the related tests can simply 
-> inherit from that class? That way we would also get the 
-> KERNEL_COMMON_COMMAND_LINE handling for free in all the tests that we 
-> convert. What do you think?
+Signed-off-by: Jason Fan <fanjason@google.com>
+---
+ include/qemu/bitops.h | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-Except that variable, I'm not sure what can be reused. Most tests
-are trivial. Maybe I'll realize after converting a few more :)
+diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
+index 2c0a2fe751..d01c4b42f2 100644
+--- a/include/qemu/bitops.h
++++ b/include/qemu/bitops.h
+@@ -459,6 +459,32 @@ static inline int64_t sextract64(uint64_t value, int start, int length)
+     return ((int64_t)(value << (64 - length - start))) >> (64 - length);
+ }
+ 
++/**
++ * deposit8:
++ * @value: initial value to insert bit field into
++ * @start: the lowest bit in the bit field (numbered from 0)
++ * @length: the length of the bit field
++ * @fieldval: the value to insert into the bit field
++ *
++ * Deposit @fieldval into the 8 bit @value at the bit field specified
++ * by the @start and @length parameters, and return the modified
++ * @value. Bits of @value outside the bit field are not modified.
++ * Bits of @fieldval above the least significant @length bits are
++ * ignored. The bit field must lie entirely within the 8 bit word.
++ * It is valid to request that all 8 bits are modified (ie @length
++ * 8 and @start 0).
++ *
++ * Returns: the modified @value.
++ */
++static inline uint8_t deposit8(uint8_t value, int start, int length,
++                               uint8_t fieldval)
++{
++    uint8_t mask = 0xFF;
++    assert(start >= 0 && length > 0 && length <= 8 - start);
++    mask = (mask >> (8 - length)) << start;
++    return (value & ~mask) | ((fieldval << start) & mask);
++}
++
+ /**
+  * deposit32:
+  * @value: initial value to insert bit field into
+-- 
+2.46.0.295.g3b9ea8a38a-goog
 
-We could however have a LinuxKernelConstants class with 
-KERNEL_COMMON_COMMAND_LINE if you rather.
 
