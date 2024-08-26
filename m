@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB2DC5321E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 16:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BE4C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 16:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sicJj-0005Pp-AB; Mon, 26 Aug 2024 12:11:43 -0400
+	id 1sicMn-0001oF-FL; Mon, 26 Aug 2024 12:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sicJh-0005Or-OH
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:11:41 -0400
-Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sicJg-0000JS-0e
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:11:41 -0400
-Received: by mail-qv1-xf2a.google.com with SMTP id
- 6a1803df08f44-6bf747371ecso21201506d6.3
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 09:11:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724688699; x=1725293499; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ll0Bv0e9ifVMdX16PbaLptHbvOdXV+Mp0DUceSHpQ4g=;
- b=VZlTE24xT5Io81ZMOtRJZbZTWG5QD/5ECXyKd9CwzWwEVzdVZfJz9AyuOVzsPfTqoH
- eJg0xFE93yXbCi+VmqZ8jKZ83TqNXpa7kozVVEeFs1jWMBbjrlgBSQ1imVnNjlIMO1VZ
- 1a7XppoLUYTetsLf2buyPT1zLpQdUds1r2jng4YK5LEnsZtwWu2yvMrQ/5swMATKD6/+
- 6s1jPPS3Sb539q/fFYai4aLJ+2W1v7jOz3fgheP7Nx7jdas9dCyvkYK6w87tFltYAWHe
- vXn8ZJClA6S3ZBChfyFikBsqUkEEH7QW9gSuvT78Skyrz/R3RZBNTAsbX4dcUq7vFafH
- Z1MQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sicMl-0001nm-PK
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:14:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sicMj-0000yl-Un
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:14:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724688888;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZpRLCKM3Btjdkv+aOdUFm74OdlhvLcl+QvzTmUo4ZgY=;
+ b=HP3WSj0BucwPIKnR0tv7ScCyCpR0ec7MNV866Sm5hc8+C9JHTmCr38Z6EdJirW3gzIx3gb
+ GdLHjt/YdFJxEPulxk7ZekmBaAmOOvuBtLRXxpABixbtQ6TKdU2RxeNpcukRTux/aJKt6l
+ 48sb90LXUqmgV9U5tyAcvl46RBKsa74=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-228-FbHfDJIFMxy2vewh5_JbhA-1; Mon, 26 Aug 2024 12:14:46 -0400
+X-MC-Unique: FbHfDJIFMxy2vewh5_JbhA-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7a1de7141f1so583205985a.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 09:14:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724688699; x=1725293499;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ll0Bv0e9ifVMdX16PbaLptHbvOdXV+Mp0DUceSHpQ4g=;
- b=gkwb0UrZfElFv185BkHzOZUgm60t4HNtpTAfOFMbraIXU3klwAL+L7p5gctNtUQRQP
- aonT9ctsH3L9eG9M/DjPzxAVokjpJs2aAT2dXUjbTwf66ObjHIpoGZMm1cFrmr2DO5Kl
- ziZsOt0FrsW5Q4vPNGtoERjIsNOgH/5PpseavRzx3fkUT8jm7ATZb4YiGCiFZAnrXCrQ
- fFtV5zQA/ajg0qtfOxI/FLuqhHkG06cWDlg/psqe3/m5fC3qHmHJcK/NWfIezBjS97sJ
- feBaFIkADWBjfN1rvkyzPYOM5jGgOzYE4HY59pb5HmnKKyhVAWL4Wsd+p8D2W7AUBC+X
- JRdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVaGF0VWNrcyspopiZ2jKt8je8GlcYl5YBOeTjJ4Xk6YKPCQuree7fFsUg+phb3/wvQ3XHMAdv00WpC@nongnu.org
-X-Gm-Message-State: AOJu0YzW3o8EW2donQrikgla2opn8JVnMObLj7lUaDPRTt12BL2oBi7l
- gQSpOSJRUSnFEXqjNYsnkla3hmwaG4hzhSJf+ra9iBSpUv4ITYeOP7xE25UwDmA=
-X-Google-Smtp-Source: AGHT+IGh+MKFANzWS+UmRT0dxTQ83tyjCfFxiujn7fNXy4lBleNxM6VndR6m8ygWyWE+Px7oOJ5REA==
-X-Received: by 2002:a05:6214:318d:b0:6c1:6ad1:faee with SMTP id
- 6a1803df08f44-6c16dc2180fmr129043186d6.3.1724688698735; 
- Mon, 26 Aug 2024 09:11:38 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.216.241])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162d6e750sm47559096d6.67.2024.08.26.09.11.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 09:11:38 -0700 (PDT)
-Message-ID: <3f305742-def7-48b7-bdf9-42bd33dc9d34@linaro.org>
-Date: Mon, 26 Aug 2024 18:11:31 +0200
+ d=1e100.net; s=20230601; t=1724688886; x=1725293686;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZpRLCKM3Btjdkv+aOdUFm74OdlhvLcl+QvzTmUo4ZgY=;
+ b=oXQec8N9FoR6q2dHLnubX81wk9wKHOBzTB9OMV1pAGhclNKhQkn/FKkL7hIC9WWdgT
+ TZNeNx5iLU9PY7hnLccACXtWEmcXqBeGN7uukjbsYayYqdA43dOYYNXYzDxME6ueTFLH
+ BTuF5csWQNTH/qZNqrfIwxnBzANPoqHJ6d9bF44eU371oXMmOZgbbmVkhHGfXwldolKY
+ tCN/Z0czZ5pk1l04hPh6M4uCTaVZmRrBhFiMofrTifqyNN8E3ydqp18Feazet5CS3Bia
+ H4Zw3s+v/YcL84L6s1V6p4LSrMRUZA5p29PA2+zydimP8u+4/hg74oGlwtaYM4tHyoqx
+ Da4g==
+X-Gm-Message-State: AOJu0Yyx/hchFWbvX/JnRypb+SSvP/PZm7QeFNAYQykDuP/sKaqnA13L
+ AeKUr2pIVnhK5armXIxiQf6IU5tapoLKlIItQANMaYjXmeakKhm2xsX6EHHxxRcvqAAOozPss72
+ /dF73mXCvMGBqQNjWXIbM2wbWVaRHSmpjGVHqIg7YJUOen/VbGG7g
+X-Received: by 2002:a05:620a:2988:b0:7a3:5004:43dc with SMTP id
+ af79cd13be357-7a68971ed3amr1290975985a.40.1724688886279; 
+ Mon, 26 Aug 2024 09:14:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJo1qfSNPgWYfWIfsg7VP0sl/3lkp/+55Y9ezQ5Jp2yclu8Zja6efssD+iMVkWxyAWbz4Y2w==
+X-Received: by 2002:a05:620a:2988:b0:7a3:5004:43dc with SMTP id
+ af79cd13be357-7a68971ed3amr1290973385a.40.1724688885879; 
+ Mon, 26 Aug 2024 09:14:45 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a67f3645efsm469895785a.69.2024.08.26.09.14.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Aug 2024 09:14:45 -0700 (PDT)
+Date: Mon, 26 Aug 2024 12:14:43 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v4 14/16] migration/multifd: Standardize on multifd ops
+ names
+Message-ID: <Zsyp8_pvhlLoWeqS@x1n>
+References: <20240823173911.6712-1-farosas@suse.de>
+ <20240823173911.6712-15-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/avocado: Move LinuxTest related code into a
- separate file
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- qemu-arm@nongnu.org
-References: <20240719095031.32814-1-thuth@redhat.com>
- <3e530db3-99e2-4878-a927-e6eebc0f92fe@linaro.org>
- <16c8e2b1-e9ae-44fe-ac97-adcce3a2900d@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <16c8e2b1-e9ae-44fe-ac97-adcce3a2900d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
- envelope-from=philmd@linaro.org; helo=mail-qv1-xf2a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240823173911.6712-15-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,51 +100,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/8/24 17:14, Thomas Huth wrote:
-> On 21/08/2024 17.11, Philippe Mathieu-Daudé wrote:
->> On 19/7/24 11:50, Thomas Huth wrote:
->>> Only some few tests are using the LinuxTest class. Move the related
->>> code into a separate file so that this does not pollute the main
->>> namespace.
->>>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   tests/avocado/avocado_qemu/__init__.py  | 239 +---------------------
->>>   tests/avocado/avocado_qemu/linuxtest.py | 253 ++++++++++++++++++++++++
->>>   tests/avocado/boot_linux.py             |   3 +-
->>>   tests/avocado/hotplug_blk.py            |   2 +-
->>>   tests/avocado/hotplug_cpu.py            |   2 +-
->>>   tests/avocado/intel_iommu.py            |   2 +-
->>>   tests/avocado/replay_linux.py           |   2 +-
->>>   tests/avocado/smmu.py                   |   3 +-
->>>   8 files changed, 262 insertions(+), 244 deletions(-)
->>>   create mode 100644 tests/avocado/avocado_qemu/linuxtest.py
->>>
->>> diff --git a/tests/avocado/avocado_qemu/__init__.py 
->>> b/tests/avocado/avocado_qemu/__init__.py
->>> index 304c428168..a3da2a96bb 100644
->>> --- a/tests/avocado/avocado_qemu/__init__.py
->>> +++ b/tests/avocado/avocado_qemu/__init__.py
->>> @@ -10,7 +10,6 @@
->>>   import logging
->>>   import os
->>> -import shutil
->>>   import subprocess
->>>   import sys
->>>   import tempfile
->>> @@ -18,7 +17,7 @@
->>>   import uuid
->>>   import avocado
->>> -from avocado.utils import cloudinit, datadrainer, process, ssh, vmimage
->>> +from avocado.utils import ssh
->>
->> Unfortunately we don't run the user mode tests on CI and missed
->> 'process' is used by the QemuUserTest class.
+On Fri, Aug 23, 2024 at 02:39:09PM -0300, Fabiano Rosas wrote:
+> Add the multifd_ prefix to all functions and remove the useless
+> docstrings.
 > 
-> Oh, sorry ... apparently I'm not running these locally on my machine 
-> either ... could you send a patch to fix it, or want me to do it?
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Updating this thread, the patch is here:
-https://lore.kernel.org/qemu-devel/20240822095045.72643-4-philmd@linaro.org/
+Some of the comment might still be helpful, but yeah the dups aren't that
+helpful at least.  Maybe a generic doc update on top of this one to
+MultiFDMethods for each method would be nice, but that can be for later..
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
 
 
