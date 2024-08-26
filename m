@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE15C5472E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E2CC5320E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siNZ5-0007nS-58; Sun, 25 Aug 2024 20:26:35 -0400
+	id 1siNZt-0001LZ-AL; Sun, 25 Aug 2024 20:27:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1siNZ3-0007mB-9t; Sun, 25 Aug 2024 20:26:33 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1siNZk-0000pr-MD; Sun, 25 Aug 2024 20:27:17 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1siNZ1-00036Y-Eq; Sun, 25 Aug 2024 20:26:33 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5bed72ff2f2so4546910a12.2; 
- Sun, 25 Aug 2024 17:26:30 -0700 (PDT)
+ id 1siNZi-0003Fr-Da; Sun, 25 Aug 2024 20:27:16 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5beb6ea9ed6so4134905a12.1; 
+ Sun, 25 Aug 2024 17:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724631989; x=1725236789; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724632032; x=1725236832; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GTzhCpatVJbAE/6SXW93RHxtBZQx6PUSgPWDb03816U=;
- b=a+yjcAV3dPbRobkGpOk8QpXFG4gzABX0iBRvY1+HzhjjwZoe/+P24BMiqAoAfaWnaD
- 6TsCCZDIw2bC5UKxI8h1rWOuUnAUMnJ9QOYgVIhPyKZuSuLd38LqawGAv1SX9QyOL5fZ
- CZbPtCZQaZcB3zdQkYql52P8HC5dxX7j5tLp98ofcSv1d/397Ru+mhkk04k2mjONfsjo
- n5RoN8gQDX4PJKmo3krqZ3lOh51PsnMkMSGHguKhEhB58yqAsVs4MDoUFC6aDjOnrk+S
- gIUWMVSm3aBiqhzjnNRwb8/dS8G9WqtVocjXGtVA6d//wmVCA4Cqccxn9NUYusum3Kqb
- O77Q==
+ bh=E/gbMb2SsyU6QT9E3rH6hADA1c5E+mlqPQb0z4Adc2Q=;
+ b=e7Pp1gvkpB8dZyBf7BSG2dzlOVp/wHHAHFXX7L9fKW4XyoBAmhre0X943ZhI4/1gbc
+ kWBXmzTvTv1EQKTyNt3Xhx5y4VccDbsJJGG49WncXh9GpcB6SAN+dMow49K6R+ipt4RP
+ raCxe1BMbc8paIOw+rw+KALqf3e6NzRZVKFUStJ5XqhXmR+1CiIVuP0a4sKWhNr6IeuF
+ hBUkf7VmvqCcp7hgUXGz4TVGaN+WfiNifCG07J/xvV1G59ydjstfmJWhcDwbKbcIPdOL
+ trU0FDIG76+1oQ14MeOpVOfgBSyWWGh0SnpCrxUg5IFLtk+Gpc+xXtC04J/36005NEKQ
+ VFRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724631989; x=1725236789;
+ d=1e100.net; s=20230601; t=1724632032; x=1725236832;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GTzhCpatVJbAE/6SXW93RHxtBZQx6PUSgPWDb03816U=;
- b=Hub7tTSvxetHOsFpKOFTPGOExcV51gRqEINfKz85fMJ7KKe3uZwk8/0ROh+bwzXPPF
- +xuk8J3l19OHDtDbzV/tt6YbAuCb1bcmysEcloI+61kbshE6qWekQkNGat2rCAIi3q+p
- kV57ChY0oMscDpJ+eWmAKSThuV9NKCTvnyWbwX3GuObJ0Zq4O5ehH2JnbSckZc+MxHs1
- sFTI6nDSjklCzCsxMym+ZCiQDthJg1LXo0E5izvxnMWgD+0OkYNHSdvxLmCr8JmAG79m
- eSkpL23MoZFGCVcnPLU1ZYIGSmmpjSQMdA9XQ50NsRf5gOCqWRL9bI/13RFCa4cx6u21
- QYyQ==
+ bh=E/gbMb2SsyU6QT9E3rH6hADA1c5E+mlqPQb0z4Adc2Q=;
+ b=nEOW/whCWeU0jIxAokcyjwHl5FZQfkc3Vi2LXrlqtOmrZIm2DnsNlW0MZs/RNW5M36
+ i4lJ7aHhnytzeJ19roHPaNtqR3sQONEZBiA/51Bs0kR6Iu8bch8tziGHGMdz0OcaaqS2
+ uysNg0ebi08QJunflDxz6Dac3w9dSp0yqLYZTR93xzgJOzqYxSCJtjRUzLzs+3U83kVp
+ tQOxH0PQtARPSEI4NCD9WEKLpsT2QLSGSzxFPKPGgTzTxZlBrAtQPyiMS/kmUhohUzof
+ xlDvCHgOJUHuV8c8wHI8RUMAHAPJvFjZnXpgu/rTD9wEhNAZh0vRhWOXb641KPXGFkLU
+ qdIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEL5C34lg7Iw/UMMcATVqAMLu2yTXRBffq5TIGl5edCjrXtQdPdNkqWC9JmoSqcMDRFbmBm6fs0gJg@nongnu.org
-X-Gm-Message-State: AOJu0YxJnjT7kX4Kyj7z3bYCHCn8o45840RsQvLC5BVk70gtolCNr9+3
- juU3030Pc4v6YeMT6L7qNzhioNP8Axl6TlOKJ+8+IpNSTMnINGrjhfYBk3uqtjYAbbf8b0FVN5u
- bZDRJRUyrg3tBjV6Vt0SyQDCuIjk=
-X-Google-Smtp-Source: AGHT+IEH6VXgJVIg6nLgtHVElbkuk/CHY+uxYFs98nyDe8Oxjkh91QHpLGshZxLWY+iN/b+iiaj6u6qOa59QSKJjHyU=
-X-Received: by 2002:a05:6402:2745:b0:5be:f295:a181 with SMTP id
- 4fb4d7f45d1cf-5c0891a23f4mr5513117a12.28.1724631988919; Sun, 25 Aug 2024
- 17:26:28 -0700 (PDT)
+ AJvYcCUuDNj5ohDm6XDunfkh8GRlku/F+7iWXxxYC7YXIGYR0BX8OcDj3JMk5sRww6VCRL2Q9GVnjSOOYB9JtQ==@nongnu.org,
+ AJvYcCVE/nssRH1TeIrt9+iXrqsNv+5FYjnPJkjS/jM0/QUHXxnrT0GnHujm3uCU0EhT702FwscVPcUFtXQZ@nongnu.org
+X-Gm-Message-State: AOJu0YxG/I1wm7aiTbwCk1xb70tErEzAmSMoi7JGiJjwibPueqvOsK4B
+ fmi6XEj3stfcu9F7hCrSmU6MaJmIGc9jJBTxWezDrHgDkG645066yJi1aQxTv1K7sJEvpG4235O
+ KoMRsimdnb5WL3jIArXFXByRi9NQ=
+X-Google-Smtp-Source: AGHT+IEMzTkpCXwGqG20fnSe3rtViCNfhSS+QvsgjFaUcHkwEf4fTwnl+55+khbjR8XBXZkNHD0usDGrXWmAWvXoI/I=
+X-Received: by 2002:a05:6402:4404:b0:5be:ee3c:54b7 with SMTP id
+ 4fb4d7f45d1cf-5c08919f049mr5645419a12.30.1724632031249; Sun, 25 Aug 2024
+ 17:27:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240721072422.1377506-1-alvinga@andestech.com>
- <20240721072422.1377506-3-alvinga@andestech.com>
- <SEYPR03MB67002DA61D8E15CD006817B1A88D2@SEYPR03MB6700.apcprd03.prod.outlook.com>
-In-Reply-To: <SEYPR03MB67002DA61D8E15CD006817B1A88D2@SEYPR03MB6700.apcprd03.prod.outlook.com>
+References: <20240823113142.161727-1-jeeheng.sia@starfivetech.com>
+ <20240823113142.161727-2-jeeheng.sia@starfivetech.com>
+In-Reply-To: <20240823113142.161727-2-jeeheng.sia@starfivetech.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 26 Aug 2024 10:26:01 +1000
-Message-ID: <CAKmqyKN2rBBhO3BWs5kNUWKqPcH0dZS7ETPp-gHpe1AnDd=MiA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] target/riscv: Add textra matching condition for
- the triggers
-To: =?UTF-8?B?QWx2aW4gQ2hlLUNoaWEgQ2hhbmco5by15ZOy5ZiJKQ==?=
- <alvinga@andestech.com>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "alistair.francis@wdc.com" <alistair.francis@wdc.com>, 
- "bin.meng@windriver.com" <bin.meng@windriver.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>, 
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, 
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+Date: Mon, 26 Aug 2024 10:26:43 +1000
+Message-ID: <CAKmqyKNWeRZrzutpc5Lhq2EUiwfa07vyFzBnoNRFNAfVWkw2Hw@mail.gmail.com>
+Subject: Re: [PATCH RESEND v4 1/3] qtest: allow SPCR acpi table changes
+To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,188 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 20, 2024 at 2:00=E2=80=AFPM Alvin Che-Chia Chang(=E5=BC=B5=E5=
-=93=B2=E5=98=89)
-<alvinga@andestech.com> wrote:
+On Fri, Aug 23, 2024 at 9:33=E2=80=AFPM Sia Jee Heng
+<jeeheng.sia@starfivetech.com> wrote:
 >
-> Hi Alistair,
->
-> > -----Original Message-----
-> > From: Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=E5=98=89) <alvinga@andest=
-ech.com>
-> > Sent: Sunday, July 21, 2024 3:24 PM
-> > To: qemu-riscv@nongnu.org; qemu-devel@nongnu.org
-> > Cc: alistair.francis@wdc.com; bin.meng@windriver.com;
-> > liwei1518@gmail.com; dbarboza@ventanamicro.com;
-> > zhiwei_liu@linux.alibaba.com; Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=
-=E5=98=89)
-> > <alvinga@andestech.com>
-> > Subject: [PATCH v3 2/2] target/riscv: Add textra matching condition for=
- the
-> > triggers
-> >
-> > According to RISC-V Debug specification, the optional textra32 and
-> > textra64 trigger CSRs can be used to configure additional matching cond=
-itions
-> > for the triggers. For example, if the textra.MHSELECT field is set to 4
-> > (mcontext), this trigger will only match or fire if the low bits of
-> > mcontext/hcontext equal textra.MHVALUE field.
-> >
-> > This commit adds the aforementioned matching condition as common trigge=
-r
-> > matching conditions. Currently, the only legal values of textra.MHSELEC=
-T are 0
-> > (ignore) and 4 (mcontext). When textra.MHSELECT is 0, we pass the check=
-ing.
-> > When textra.MHSELECT is 4, we compare textra.MHVALUE with mcontext CSR.
-> > The remaining fields, such as textra.SBYTEMASK, textra.SVALUE, and
-> > textra.SSELECT, are hardwired to zero for now. Thus, we skip checking t=
-hem
-> > here.
-> >
-> > Signed-off-by: Alvin Chang <alvinga@andestech.com>
-> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > ---
-> >  target/riscv/debug.c | 63
-> > +++++++++++++++++++++++++++++++++++++++++++-
-> >  target/riscv/debug.h |  3 +++
-> >  2 files changed, 65 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/target/riscv/debug.c b/target/riscv/debug.c index
-> > d6b4a06144..62bb758860 100644
-> > --- a/target/riscv/debug.c
-> > +++ b/target/riscv/debug.c
-> > @@ -364,11 +364,72 @@ static bool trigger_priv_match(CPURISCVState *env=
-,
-> > trigger_type_t type,
-> >      return false;
-> >  }
-> >
-> > +static bool trigger_textra_match(CPURISCVState *env, trigger_type_t ty=
-pe,
-> > +                                 int trigger_index) {
-> > +    target_ulong textra =3D env->tdata3[trigger_index];
-> > +    target_ulong mhvalue, mhselect;
-> > +
-> > +    if (type < TRIGGER_TYPE_AD_MATCH || type >
-> > TRIGGER_TYPE_AD_MATCH6) {
-> > +        /* textra checking is only applicable when type is 2, 3, 4, 5,=
- or 6 */
-> > +        return true;
-> > +    }
-> > +
-> > +    switch (riscv_cpu_mxl(env)) {
-> > +    case MXL_RV32:
-> > +        mhvalue  =3D get_field(textra, TEXTRA32_MHVALUE);
-> > +        mhselect =3D get_field(textra, TEXTRA32_MHSELECT);
-> > +        break;
-> > +    case MXL_RV64:
-> > +    case MXL_RV128:
-> > +        mhvalue  =3D get_field(textra, TEXTRA64_MHVALUE);
-> > +        mhselect =3D get_field(textra, TEXTRA64_MHSELECT);
-> > +        break;
-> > +    default:
-> > +        g_assert_not_reached();
-> > +    }
-> > +
-> > +    /* Check mhvalue and mhselect. */
-> > +    switch (mhselect) {
-> > +    case MHSELECT_IGNORE:
-> > +        break;
-> > +    case MHSELECT_MCONTEXT:
-> > +        /* Match or fire if the low bits of mcontext/hcontext equal mh=
-value.
-> > */
-> > +        if (riscv_has_ext(env, RVH)) {
-> > +            if (mhvalue !=3D env->mcontext) {
-> > +                return false;
-> > +            }
-> > +        } else {
-> > +            switch (riscv_cpu_mxl(env)) {
-> > +            case MXL_RV32:
-> > +                if (mhvalue !=3D (env->mcontext & MCONTEXT32)) {
-> > +                    return false;
-> > +                }
-> > +                break;
-> > +            case MXL_RV64:
-> > +            case MXL_RV128:
-> > +                if (mhvalue !=3D (env->mcontext & MCONTEXT64)) {
-> > +                    return false;
-> > +                }
-> > +                break;
-> > +            default:
-> > +                g_assert_not_reached();
-> > +            }
-> > +        }
->
-> I have some new ideas on this part.
-> Should we replace this whole if-else with just the following simple code =
-?
->
->     case MHSELECT_MCONTEXT:
->         /* Match if the low bits of mcontext/hcontext equal mhvalue. */
->         if (mhvalue !=3D env->mcontext) {
->             return false;
->         }
->         break;
->
-> Those masks on mcontext have been applied in write_mcontext().
-> I think we can skip the masks here.
-> What do you think ?
+> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 
-Yep, that would be much better
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bi=
+os-tables-test-allowed-diff.h
+> index dfb8523c8b..aae973048a 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,2 @@
+>  /* List of comma-separated changed AML files to ignore */
+> +"tests/data/acpi/riscv64/virt/SPCR",
+> --
+> 2.34.1
 >
 >
-> Regards,
-> Alvin Chang
->
-> > +        break;
-> > +    default:
-> > +        break;
-> > +    }
-> > +
-> > +    return true;
-> > +}
-> > +
-> >  /* Common matching conditions for all types of the triggers. */  stati=
-c bool
-> > trigger_common_match(CPURISCVState *env, trigger_type_t type,
-> >                                   int trigger_index)  {
-> > -    return trigger_priv_match(env, type, trigger_index);
-> > +    return trigger_priv_match(env, type, trigger_index) &&
-> > +           trigger_textra_match(env, type, trigger_index);
-> >  }
-> >
-> >  /* type 2 trigger */
-> > diff --git a/target/riscv/debug.h b/target/riscv/debug.h index
-> > c347863578..f76b8f944a 100644
-> > --- a/target/riscv/debug.h
-> > +++ b/target/riscv/debug.h
-> > @@ -131,6 +131,9 @@ enum {
-> >  #define ITRIGGER_VU           BIT(25)
-> >  #define ITRIGGER_VS           BIT(26)
-> >
-> > +#define MHSELECT_IGNORE       0
-> > +#define MHSELECT_MCONTEXT     4
-> > +
-> >  bool tdata_available(CPURISCVState *env, int tdata_index);
-> >
-> >  target_ulong tselect_csr_read(CPURISCVState *env);
-> > --
-> > 2.34.1
->
-> CONFIDENTIALITY NOTICE:
->
-> This e-mail (and its attachments) may contain confidential and legally pr=
-ivileged information or information protected from disclosure. If you are n=
-ot the intended recipient, you are hereby notified that any disclosure, cop=
-ying, distribution, or use of the information contained herein is strictly =
-prohibited. In this case, please immediately notify the sender by return e-=
-mail, delete the message (and any accompanying documents) and destroy all p=
-rinted hard copies. Thank you for your cooperation.
->
-> Copyright ANDES TECHNOLOGY CORPORATION - All Rights Reserved.
 
