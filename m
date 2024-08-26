@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C96AC5321E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 16:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6FE3C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 16:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sicNW-0003dM-Ha; Mon, 26 Aug 2024 12:15:38 -0400
+	id 1sicOK-0007LX-1V; Mon, 26 Aug 2024 12:16:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sicNV-0003Vz-9k
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:15:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sicOH-0007Cd-NT
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:16:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sicNT-0001AW-Pw
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:15:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sicOG-0001Cb-84
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 12:16:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724688935;
+ s=mimecast20190719; t=1724688982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ie1Cuh2j23l+0Cb9Tbm50zEd9YdplBvTHuIyNJ5JIs4=;
- b=fwfDI7gBHaetlJbRIIuoG+eYC38+Rh/jJEXTJQ6mh6Zq2LhqAurJpEAOb+IzWN8F0CPOAV
- 0JSZYiTq8LE09aPSm1EKdF+si9S26gjJSvt6rZesXFiDv1fec1UNlkaUfM7r6q6PwseNkI
- i1vxvraLTdHPzLivlSijA47Kl7PIVBc=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sW4bDUqC9cgVpxYWlRq8VvtZsFETjITTTcd2iuJa0Tk=;
+ b=BYNZiCVua4eLxADjwMIQHhfcJG2RS/oV3tgaKMdF0s51WapQZoZJ/4Q2nVWqOwcbzhFnMf
+ Cb0LJokSzAH/3v/mYb+ryn8O4iEH4SGBDxrh61L40hmeo01gxfN2/Y+iZWUsapxXtTtTDG
+ 9PTaXCScAUE6P6hTBLaF0AgBcWZ5AXg=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-J8hGM6ucOrqF2Jvoc7sumQ-1; Mon, 26 Aug 2024 12:15:33 -0400
-X-MC-Unique: J8hGM6ucOrqF2Jvoc7sumQ-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-44ff196bbfaso59783141cf.3
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 09:15:33 -0700 (PDT)
+ us-mta-155-4kQIffuKOvu62P_BL4AXbg-1; Mon, 26 Aug 2024 12:16:20 -0400
+X-MC-Unique: 4kQIffuKOvu62P_BL4AXbg-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7a1d108d705so525736585a.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 09:16:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724688933; x=1725293733;
+ d=1e100.net; s=20230601; t=1724688980; x=1725293780;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ie1Cuh2j23l+0Cb9Tbm50zEd9YdplBvTHuIyNJ5JIs4=;
- b=mmGCkRxN80Ao5QxYGVg7JN9LplhfJXSyS8g5kEA2KtJXpdFrBvikXmrKCrfvcjnCAk
- 7GHPUTS2Ec8tiF61DJ2C4hH6RThPo0EmjiKYxX/NXQdK7rMDWayVVTOm4mWXKtJuxsB1
- t0pW21yqEjZV/NUf8pOca8yeOh/euqpc1mWseFmYCaluaTCzNrxkd9hMA86+wzIKPvUb
- ddC1n3IsoAjjKI/Bcn9n7zlryVj10BRGWYgaCoAzbU3zNKotSxcAyCmKE8/Sm0keJuTl
- dUDEprVPayAa+u+n2FSrcrB6HEhm2iBoznUW+O40DH0peBu0HtkL8n7vBwoAPKDlsIBw
- Ub+g==
-X-Gm-Message-State: AOJu0Yw4kZuXGbtsDyiCxy41AVZTHIPURlvj+axDTBHzl9inS74M5T3f
- QAqw3bo5bBNHCxcb+g9xkqPU4QiVhsZIK9ruIOwDHbkOWOxosGoCjFgbSnGJ25lKCxn1FHlFhSx
- CrS6cUjdg5MzUMh+57eOqWViYAMpfdCQeKKPJvaW2oAmO/xPGVzOD
-X-Received: by 2002:a05:622a:6104:b0:455:1f:c876 with SMTP id
- d75a77b69052e-45509c53221mr111414561cf.13.1724688932973; 
- Mon, 26 Aug 2024 09:15:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHquTh8GTWLGN/NIGQQ9vkUBN2L1UToa2Kz3mEOkANnSd9qv0ypuNK2S4NO9YdBN3rLdJyGaw==
-X-Received: by 2002:a05:622a:6104:b0:455:1f:c876 with SMTP id
- d75a77b69052e-45509c53221mr111414231cf.13.1724688932529; 
- Mon, 26 Aug 2024 09:15:32 -0700 (PDT)
+ bh=sW4bDUqC9cgVpxYWlRq8VvtZsFETjITTTcd2iuJa0Tk=;
+ b=YSzJCni53JSKfi2ttWFLifgvZ3PxInUj4SNZrsNrdVvfwie13tegDfWAoEczbR33ig
+ ALiDd0pj2d/QP0LfMQd1Yl6meitVb/nDttrn09o6fAFlfbnR9jXZhL4yfyw1tg0CfyTH
+ QVzpNTagZlOhrMKBGCe5d80nnKRdpqLLl3d5J5IkJlTRKmz//2WJz0iSR5tr5hI8Bkyr
+ u61F645wd8/CWXo9oTGtg5TcZD41uvPPR+8oYQ0mUz/2qFPhxI45iS3F7G/LU499rZnh
+ c4AMy72Y0G8ccfmgXGNAIMDyYVLF8rElZn3zfoBMsWwcpKQSb1NnGb4JWIt3l4zjYahF
+ 4mOQ==
+X-Gm-Message-State: AOJu0YylN3Zbe6Rf3yRYocWRhd6aN2idzXAa1NycfsCb12Y4yOf/RXWR
+ qPUn+IRDRYEHNzWr+CSZLN7CZ+Mf1USTQpOeP8kybvzLE9oAOLK3IDHigcepnsU9QOyGjXPbFvE
+ 3nBqIBWC+Zw8V8LRLgZTiy6f3NMCodgVpqSr9o1/pl4c/qYznuAcg
+X-Received: by 2002:a05:620a:4002:b0:7a3:49dc:f084 with SMTP id
+ af79cd13be357-7a68970d4a1mr1374882985a.35.1724688979981; 
+ Mon, 26 Aug 2024 09:16:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQF6KAyLeHiivpKtdI5r6ToTnPu9LdRSiEOP+87FMQndEeBsv0OFzjzleH6wA7cheA9KdElg==
+X-Received: by 2002:a05:620a:4002:b0:7a3:49dc:f084 with SMTP id
+ af79cd13be357-7a68970d4a1mr1374879885a.35.1724688979641; 
+ Mon, 26 Aug 2024 09:16:19 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-454fe1c9bedsm44085851cf.95.2024.08.26.09.15.31
+ af79cd13be357-7a67f418814sm467790885a.127.2024.08.26.09.16.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Aug 2024 09:15:32 -0700 (PDT)
-Date: Mon, 26 Aug 2024 12:15:30 -0400
+ Mon, 26 Aug 2024 09:16:19 -0700 (PDT)
+Date: Mon, 26 Aug 2024 12:16:17 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v4 15/16] migration/multifd: Register nocomp ops
- dynamically
-Message-ID: <ZsyqItHv9eq_KMQn@x1n>
+Subject: Re: [PATCH v4 16/16] migration/multifd: Move nocomp code into
+ multifd-nocomp.c
+Message-ID: <ZsyqUbAlipIr0Apd@x1n>
 References: <20240823173911.6712-1-farosas@suse.de>
- <20240823173911.6712-16-farosas@suse.de>
+ <20240823173911.6712-17-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240823173911.6712-16-farosas@suse.de>
+In-Reply-To: <20240823173911.6712-17-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -100,13 +100,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 23, 2024 at 02:39:10PM -0300, Fabiano Rosas wrote:
-> Prior to moving the ram code into multifd-nocomp.c, change the code to
-> register the nocomp ops dynamically so we don't need to have the ops
-> structure defined in multifd.c.
+On Fri, Aug 23, 2024 at 02:39:11PM -0300, Fabiano Rosas wrote:
+> In preparation for adding new payload types to multifd, move most of
+> the no-compression code into multifd-nocomp.c. Let's try to keep a
+> semblance of layering by not mixing general multifd control flow with
+> the details of transmitting pages of ram.
 > 
-> While here, move the ops struct initialization to the end of the file
-> to make the next diff cleaner.
+> There are still some pieces leftover, namely the p->normal, p->zero,
+> etc variables that we use for zero page tracking and the packet
+> allocation which is heavily dependent on the ram code.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
