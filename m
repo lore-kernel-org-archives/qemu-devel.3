@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 235B0C5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBC9C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sigq5-00023A-Cd; Mon, 26 Aug 2024 17:01:25 -0400
+	id 1siguz-000461-Nj; Mon, 26 Aug 2024 17:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3p-nMZggKCuoRMZVMeaZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--fanjason.bounces.google.com>)
- id 1sigbi-0001XL-HU
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:34 -0400
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1siguv-00044v-Mj
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:06:25 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3p-nMZggKCuoRMZVMeaZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--fanjason.bounces.google.com>)
- id 1sigbh-0001q4-3E
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:34 -0400
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-6b052c5939cso51632367b3.1
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 13:46:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sigut-0003eN-VY
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:06:25 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-71433096e89so4056989b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 14:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1724705191; x=1725309991; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=NzW5yYGsX4g1anKAwi4rxXT7kcbTpIvjzQhT7ZrBho4=;
- b=EemGI1mtT2WwgwNLb+8Rivr7PyrP4/dmygDl+8HlsGTZ5D81nuIjfBxN0hA4nTwGYh
- NJoFaAHH0PgtHcIVwYb8x53Xtx3URIcm0Y1MLa+z24enTJzx3BdlXQAvgVO1K3dY+pwt
- Q5hEOTwJX37soyyXCd59VB98aE7UMit4+02ofxe56etRmcEZlndhnxCSDCaYo9nsO54g
- XNW2ggAPwlyWEsKczA2fY0F0N+AQFoYMecSuOGQINFhkuLimnxkV8lo7LT7OUlv6zddu
- Awz2vkWER0TeP3d8C57ramt6YpVHn4AhI6HtReBl6KAXhXhuRRcQj2dM8b/DjG4rTVZb
- NdOQ==
+ d=linaro.org; s=google; t=1724706382; x=1725311182; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7Zm2+q44/Px+3oIsNsyINxSDAfUi1A0GOLi55frXrmM=;
+ b=jVTuAl0TvjAajskBJ/7qL/f60T4Wk86bVqMQ06ahU5JzdrRqM6i9iTYW4Sqn1KJb5H
+ QkoptMY8ZwYva284GuOmVbijG/ogMD6wXOgVsDLxZguG7sxoOAiYIWSeptb+eHaYFCGz
+ fgvhNI+WRhlaCcuTC/v0VwjmMYReEAEgi6BNOVJcBM4OX+SelBprV5dvPgvva7PIqEoq
+ 3nGMyXEsS+AghC8OrT1Nf22VubcTc0eGzcZCD6brfLidHpc4JZn+Wm4VtzMzBs0LvvS6
+ I/rUPwkr80ipsUqhVsEVaDF5BlzBVmCsnORfNoGueG+5hwGEZW9LRTGUxaACekkYtTPg
+ rDgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724705191; x=1725309991;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NzW5yYGsX4g1anKAwi4rxXT7kcbTpIvjzQhT7ZrBho4=;
- b=hVf6TqD79bYtueIAV4r8jpxpR9nVbjKQo6UK6T+YD9tq1RYXDO5siurB78qFR7oG4n
- cfYEtb1Im6brh8c+JRXN+e8wIb7+qif5QVJyHHNmO4uEat1qwkzg+A5EhvZiewIeKBP1
- 8AsxPx/7RA+AD5+ATsNLOuHafKuZw1VbfepPaA3sOLRtQfBe8g5gqunpXDb+Jtri5B0c
- QkPeamxgjJE9Dx830yIs1kRc2SKCjg52nHPMY+mKIwYhe13zWwN0ADHU4SQuNyDoluQe
- gArLmwYaZsKc95AO8/uLQQj7WD2cjsG86qfmwbHv5i+Buu2mh4swh4MGXZDPXfYhOoMv
- e2tA==
-X-Gm-Message-State: AOJu0YyT2MyuI7sF0ZMfZcI0hdno6Ie/tAH7rtB+FhbhJtORXennl9Mb
- forxJbzkQqqoyg4rQUtJ4Ux1eUtorcDVufhJOA/lA0t1tPCeDJhjch3/tCXNUCZCOSyBZ74Z1jc
- +jW+2Up7PtQ==
-X-Google-Smtp-Source: AGHT+IGh4NmiTv54sA7NpELVgkb8TdvABNKdaOE/UAVC+LvvBPxuRtwRl6VyzLNLk52gHZoB2GkL4lB6Tsm2Jw==
-X-Received: from fanjason3.c.googlers.com
- ([fda3:e722:ac3:cc00:20:ed76:c0a8:2730])
- (user=fanjason job=sendgmr) by 2002:a81:f802:0:b0:6be:523:af53 with SMTP id
- 00721157ae682-6cfb48d2acemr334907b3.3.1724705191624; Mon, 26 Aug 2024
- 13:46:31 -0700 (PDT)
-Date: Mon, 26 Aug 2024 20:46:27 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-Message-ID: <20240826204628.3541850-1-fanjason@google.com>
-Subject: [PATCH 0/1] Subject: Support deposit8 in include/qemu/bitops.h
-From: Jason Fan <fanjason@google.com>
-To: philmd@redhat.com, richard.henderson@linaro.org
-Cc: qemu-devel@nongnu.org, Jason Fan <fanjason@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=3p-nMZggKCuoRMZVMeaZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--fanjason.bounces.google.com;
- helo=mail-yw1-x1149.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ d=1e100.net; s=20230601; t=1724706382; x=1725311182;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Zm2+q44/Px+3oIsNsyINxSDAfUi1A0GOLi55frXrmM=;
+ b=qzDrktMNvJ9/unMcuA5paVRp6F6vcNNgSu5dO2ZSrHvgroeJt/p3waEN2wKEj2ajwW
+ VKaZyfdqt322BZAdA4p4Ep5+DnWiLniuj43jKY5QxPhnUQT4eLyP7jA+tkHEOJ9f116k
+ +mY6xfKNE/pPhyU7hrwBOklX1iAfPMQPE06IeA92MMv81H5IsdEBRHzkh1Zwsac3pf/0
+ Im1NAuQSj5zjIvy9aglsj9e12VkuTksaaTwhsDxudE7GHBiG+LKS03z0RAM3DFCSjs/F
+ VOyv6pNpkPCrMXQaxx7AOxdQ+72/drWGhhcLHlrvjNgxcXozesvdT2WN451ZfMk7O57G
+ FjBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgxaxJL8RRlC5bb2UiLleZq7cDEY7Sq65kL6AwjWQWEk1Y3951gMluLaSNDhIy6dPtIYKeXdG5qJyu@nongnu.org
+X-Gm-Message-State: AOJu0YyC7f8PYFea8yFJ4ZGF716yvc2sFKncpGUxtlz+fbKSP+1OYkMa
+ qxtJvNjIiBCeE9sLycpXKBosJxm/i25qDMMlukqg3qs+bBuwqyNHHts6dGq8RN8=
+X-Google-Smtp-Source: AGHT+IF4+IBEiro8oXohhNbApOI+LiJfljc/YPQwAzeAcq41zM+arSs56qd5Z1G+b9WpTbNoDUNO/Q==
+X-Received: by 2002:a05:6a20:9488:b0:1cc:c202:b289 with SMTP id
+ adf61e73a8af0-1ccc202b35fmr708105637.0.1724706381454; 
+ Mon, 26 Aug 2024 14:06:21 -0700 (PDT)
+Received: from [192.168.98.227] ([1.145.75.248])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d613a420cdsm10339930a91.28.2024.08.26.14.06.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Aug 2024 14:06:21 -0700 (PDT)
+Message-ID: <beddf021-3731-4a2b-aa35-a08e717ea7b4@linaro.org>
+Date: Tue, 27 Aug 2024 07:06:11 +1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/3] Optional fixes for 9.1.0-rc4
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20240826094330.276592-1-thuth@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240826094330.276592-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 26 Aug 2024 17:01:24 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,14 +96,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/26/24 19:43, Thomas Huth wrote:
+>   Hi Richard,
+> 
+> since it seems like we're going to have RC4, here are some minor
+> fixes that could still be included.
+> 
+> The following changes since commit f259e4cb8a8b4ef5463326fc214a7d8d7703d5de:
+> 
+>    Merge tag 'pull-trivial-patches' ofhttps://gitlab.com/mjt0k/qemu into staging (2024-08-24 08:09:27 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-08-26
+> 
+> for you to fetch changes up to aee07f2563d27167935ae3557a9f435937eb3f9f:
+> 
+>    tests/qtest: Delete previous boot file (2024-08-26 10:58:11 +0200)
+> 
+> ----------------------------------------------------------------
+> * Disable the broken qtests in the MSYS2 CI job
+> * Replace deprecated keyword in the Cirrus-CI scripts
+> * Fix a simple leak in the migration-test qtest
 
-Jason Fan (1):
-  include/qemu/bitops.h: Add deposit8 for uint8_t bit operation
 
- include/qemu/bitops.h | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
--- 
-2.46.0.295.g3b9ea8a38a-goog
-
+r~
 
