@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D790C5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 235B0C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sigq7-0002Av-Fb; Mon, 26 Aug 2024 17:01:27 -0400
+	id 1sigq5-00023A-Cd; Mon, 26 Aug 2024 17:01:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3u-nMZggKCv4lgtpgyutmuumrk.iuswks0-jk1krtutmt0.uxm@flex--fanjason.bounces.google.com>)
- id 1sigc4-0001aP-DR
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:56 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ <3p-nMZggKCuoRMZVMeaZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--fanjason.bounces.google.com>)
+ id 1sigbi-0001XL-HU
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:34 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3u-nMZggKCv4lgtpgyutmuumrk.iuswks0-jk1krtutmt0.uxm@flex--fanjason.bounces.google.com>)
- id 1sigc2-0001qg-GF
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:56 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-6b43e6b9c82so112958577b3.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 13:46:51 -0700 (PDT)
+ <3p-nMZggKCuoRMZVMeaZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--fanjason.bounces.google.com>)
+ id 1sigbh-0001q4-3E
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:46:34 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-6b052c5939cso51632367b3.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 13:46:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1724705211; x=1725310011; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=l8WpacnFuwn17dhgS1WlyNZRw1pDH2hsyX31j01v1gQ=;
- b=hEQugQzv12k1eny1Aa5h/5gS28etTJDdYzhlheT0m2bH2rRQw+hZNXBxsmb121xzUM
- 1DqhnQCkR5Ua2UA9+U1ZZNQtjBGVCo+DAm2Mil05rUFxYCNKDSmF6QIQAT6Irwdf4a9p
- 9k6Z1Hh1JO3izzNjgrtDTgXrhVGGU+lItRh57JPaKBvjj+g5/qebzgWGYc15w6u4Wo5A
- dQDxd86fowVo6fpWJP060kP0Q5Ne/UuytULKr6dRiDm/aWsZTVjB3uNvF9dLWn5ProtS
- pzAIY2YUMgIWWWvJBVesivzXjbG/o/aAhbUqaePIVidaMj4UrNIDUnBRocFYT+8UiFZ/
- J/Cw==
+ d=google.com; s=20230601; t=1724705191; x=1725309991; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=NzW5yYGsX4g1anKAwi4rxXT7kcbTpIvjzQhT7ZrBho4=;
+ b=EemGI1mtT2WwgwNLb+8Rivr7PyrP4/dmygDl+8HlsGTZ5D81nuIjfBxN0hA4nTwGYh
+ NJoFaAHH0PgtHcIVwYb8x53Xtx3URIcm0Y1MLa+z24enTJzx3BdlXQAvgVO1K3dY+pwt
+ Q5hEOTwJX37soyyXCd59VB98aE7UMit4+02ofxe56etRmcEZlndhnxCSDCaYo9nsO54g
+ XNW2ggAPwlyWEsKczA2fY0F0N+AQFoYMecSuOGQINFhkuLimnxkV8lo7LT7OUlv6zddu
+ Awz2vkWER0TeP3d8C57ramt6YpVHn4AhI6HtReBl6KAXhXhuRRcQj2dM8b/DjG4rTVZb
+ NdOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724705211; x=1725310011;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l8WpacnFuwn17dhgS1WlyNZRw1pDH2hsyX31j01v1gQ=;
- b=H/a58RIHOkv0HejLPFnp+YafHErMlriIWoDFfqg6lR5s4Xk33SZoZ5scOKXwR/GGfj
- Njfr+CjDCuGepVtcpP3wCpC3eUZYzPU0Pzy5nJ/7d7smhQO/UO77OJ5eHumXpoTwJoDd
- /cEKrNTmuzOZao4MqlgA0lF99UTuCTqFEfZLFzNMypvNrj94sDmqk8zCgY5qeLYyuQ9k
- BNabZSexm5wNFXWlfsVR22VTfgYRqenVcUDnVdRKvb74eKOSATSWsoen5LWg2rsIVpf5
- Df3PAHPMUJuLviUJrGH0C6uM9PbVssWYJZn309qCv4AKgKa9UwIs/MDWePb9Esz5n8Gg
- U2oA==
-X-Gm-Message-State: AOJu0YxyY2tG1AScs5bZW66x+3LRMcpcnUANIHwP77lgyaXbzbYFPOuz
- xRgXerBxegf6BbVBQCWKIMkAkZxIB9XYRve70OqXikIbkFBmuZUNMRsJLVtHtIIOMKo0WGchH8f
- 1Z7FGD/vE4g==
-X-Google-Smtp-Source: AGHT+IEIRFTNPb4u70wTtBzfKWDMBeLFvwYO2qhhkI5GvYuc4T3bhMj7XKxNBzyCqeRopeTV+B/E0atEqM3oaw==
+ d=1e100.net; s=20230601; t=1724705191; x=1725309991;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NzW5yYGsX4g1anKAwi4rxXT7kcbTpIvjzQhT7ZrBho4=;
+ b=hVf6TqD79bYtueIAV4r8jpxpR9nVbjKQo6UK6T+YD9tq1RYXDO5siurB78qFR7oG4n
+ cfYEtb1Im6brh8c+JRXN+e8wIb7+qif5QVJyHHNmO4uEat1qwkzg+A5EhvZiewIeKBP1
+ 8AsxPx/7RA+AD5+ATsNLOuHafKuZw1VbfepPaA3sOLRtQfBe8g5gqunpXDb+Jtri5B0c
+ QkPeamxgjJE9Dx830yIs1kRc2SKCjg52nHPMY+mKIwYhe13zWwN0ADHU4SQuNyDoluQe
+ gArLmwYaZsKc95AO8/uLQQj7WD2cjsG86qfmwbHv5i+Buu2mh4swh4MGXZDPXfYhOoMv
+ e2tA==
+X-Gm-Message-State: AOJu0YyT2MyuI7sF0ZMfZcI0hdno6Ie/tAH7rtB+FhbhJtORXennl9Mb
+ forxJbzkQqqoyg4rQUtJ4Ux1eUtorcDVufhJOA/lA0t1tPCeDJhjch3/tCXNUCZCOSyBZ74Z1jc
+ +jW+2Up7PtQ==
+X-Google-Smtp-Source: AGHT+IGh4NmiTv54sA7NpELVgkb8TdvABNKdaOE/UAVC+LvvBPxuRtwRl6VyzLNLk52gHZoB2GkL4lB6Tsm2Jw==
 X-Received: from fanjason3.c.googlers.com
  ([fda3:e722:ac3:cc00:20:ed76:c0a8:2730])
- (user=fanjason job=sendgmr) by 2002:a81:e404:0:b0:6be:9d4a:f097 with SMTP id
- 00721157ae682-6c6288afc7dmr2146477b3.7.1724705211237; Mon, 26 Aug 2024
- 13:46:51 -0700 (PDT)
-Date: Mon, 26 Aug 2024 20:46:28 +0000
-In-Reply-To: <20240826204628.3541850-1-fanjason@google.com>
+ (user=fanjason job=sendgmr) by 2002:a81:f802:0:b0:6be:523:af53 with SMTP id
+ 00721157ae682-6cfb48d2acemr334907b3.3.1724705191624; Mon, 26 Aug 2024
+ 13:46:31 -0700 (PDT)
+Date: Mon, 26 Aug 2024 20:46:27 +0000
 Mime-Version: 1.0
-References: <20240826204628.3541850-1-fanjason@google.com>
 X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-Message-ID: <20240826204628.3541850-2-fanjason@google.com>
-Subject: [PATCH 1/1] include/qemu/bitops.h: Add deposit8 for uint8_t bit
- operation
+Message-ID: <20240826204628.3541850-1-fanjason@google.com>
+Subject: [PATCH 0/1] Subject: Support deposit8 in include/qemu/bitops.h
 From: Jason Fan <fanjason@google.com>
 To: philmd@redhat.com, richard.henderson@linaro.org
 Cc: qemu-devel@nongnu.org, Jason Fan <fanjason@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3u-nMZggKCv4lgtpgyutmuumrk.iuswks0-jk1krtutmt0.uxm@flex--fanjason.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3p-nMZggKCuoRMZVMeaZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--fanjason.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -95,48 +92,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jason Fan <fanjason@google.com>
----
+
+Jason Fan (1):
+  include/qemu/bitops.h: Add deposit8 for uint8_t bit operation
+
  include/qemu/bitops.h | 26 ++++++++++++++++++++++++++
  1 file changed, 26 insertions(+)
 
-diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
-index 2c0a2fe751..d01c4b42f2 100644
---- a/include/qemu/bitops.h
-+++ b/include/qemu/bitops.h
-@@ -459,6 +459,32 @@ static inline int64_t sextract64(uint64_t value, int start, int length)
-     return ((int64_t)(value << (64 - length - start))) >> (64 - length);
- }
- 
-+/**
-+ * deposit8:
-+ * @value: initial value to insert bit field into
-+ * @start: the lowest bit in the bit field (numbered from 0)
-+ * @length: the length of the bit field
-+ * @fieldval: the value to insert into the bit field
-+ *
-+ * Deposit @fieldval into the 8 bit @value at the bit field specified
-+ * by the @start and @length parameters, and return the modified
-+ * @value. Bits of @value outside the bit field are not modified.
-+ * Bits of @fieldval above the least significant @length bits are
-+ * ignored. The bit field must lie entirely within the 8 bit word.
-+ * It is valid to request that all 8 bits are modified (ie @length
-+ * 8 and @start 0).
-+ *
-+ * Returns: the modified @value.
-+ */
-+static inline uint8_t deposit8(uint8_t value, int start, int length,
-+                               uint8_t fieldval)
-+{
-+    uint8_t mask = 0xFF;
-+    assert(start >= 0 && length > 0 && length <= 8 - start);
-+    mask = (mask >> (8 - length)) << start;
-+    return (value & ~mask) | ((fieldval << start) & mask);
-+}
-+
- /**
-  * deposit32:
-  * @value: initial value to insert bit field into
 -- 
 2.46.0.295.g3b9ea8a38a-goog
 
