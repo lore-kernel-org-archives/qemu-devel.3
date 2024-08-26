@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7593C5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 15:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4528C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 15:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sibXp-0005k3-Nn; Mon, 26 Aug 2024 11:22:13 -0400
+	id 1sibcS-0002qi-7i; Mon, 26 Aug 2024 11:27:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sibXn-0005gx-8y
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 11:22:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sibcL-0002Zq-Sc
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 11:26:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sibXl-0002P5-1y
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 11:22:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sibcJ-0003Ex-BK
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 11:26:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724685727;
+ s=mimecast20190719; t=1724686010;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=rpDUIj+/s2O8U0ZT07mIxbDe+cs2MYIuzBPPtLuP76k=;
- b=D8mT9gRRzDesCCQ1QGsTJL1Bc0+bPOZp7+lMyxzN6vUQE3zgpU9As+WSwRIn7V3HKNfQei
- 53VdGg71GYq6mNRJs22f4JlzQ2I/duY8LZiHdyFHguHbhdSkO7wceQQp6vG10A9d3IA2sQ
- qlOqL2SsJooqFSTKQ9rXBtMuUcq+T+w=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nt+JH/c8RtA/YdR7bd688QxFsy6ppQfInZ3vgxnRoyw=;
+ b=ggkiTelPv/R2gMVz4GICuI3fTcgsdK8K3UpBm8QwzSxPW+CxUd4NgWe5kbUkZnMKrD4xZQ
+ 8EF0Ckj4df9tQsbwpEOX/Gjug/xzyMVnj73MLx/vGNQ5IYmMLTZ4eP2qYQUdVc8hvH6aKF
+ BbFyRwT9+tQFNu6oPBNZcrdMp+o/Rcg=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-437-NVuLTDoMNtyjXIGB7JFDAw-1; Mon, 26 Aug 2024 11:22:03 -0400
-X-MC-Unique: NVuLTDoMNtyjXIGB7JFDAw-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-44febfb1ae4so69328701cf.2
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 08:22:03 -0700 (PDT)
+ us-mta-435-36sboKaeP9m5pugS8f6-5g-1; Mon, 26 Aug 2024 11:26:44 -0400
+X-MC-Unique: 36sboKaeP9m5pugS8f6-5g-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6bf788e4692so53081606d6.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 08:26:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724685723; x=1725290523;
+ d=1e100.net; s=20230601; t=1724686004; x=1725290804;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rpDUIj+/s2O8U0ZT07mIxbDe+cs2MYIuzBPPtLuP76k=;
- b=B8Vx6g9EWy1tTNHwAbOjVKssjcYxlwaqbk5LaN1bmk/nvnYYDamjIMJzs1mNVt4QYT
- 6CZR1Z04aYbQZI7f3BWjQNGGSj3WL6ry4Xb2z5BchMqkysRn4rqjR1LnoxNWn/O16KKJ
- NN2x6tUjZ0mARHSCZLBNuBGAj1luDudVPsVP0T868vw2fhGaLbHXVZBoIIB7MB13S+XX
- SGUAaxoveFBUnrWRf/W/HBrSJVP4a3WEN3fAZC6MQDoqklpruLAAJf9npGDgWU27TQSW
- FZE6dBtA6CfPDzls6phTjf6OND/wcCuHkjc6n4z8zgXeHdbDH7elHMV67SCh7f9+lhfw
- fjFg==
+ bh=nt+JH/c8RtA/YdR7bd688QxFsy6ppQfInZ3vgxnRoyw=;
+ b=tCBN7vIAJk8Oc+DxgAQxq2h8lpOazgCDkTX7BB198BlGNFsnr+ggr5o4JVwVZkhW9M
+ QDrYP5uU7tWg/mFbdsBV+22ntISrxlYfihtETaVobIhEhSkocb4WOMC5e+zjTAexF44a
+ rVmixvKFNqB+0SQd60FUrg+ShQytijajMrtNwWvj1auHHyeHp9qLLei+4VtL4CTwKgOr
+ nxgdghliibKtL6jbDRAWdKp3WMiQXHmxXYwjKu+2cFkaZavQi5gMc/M2vjNRyjc05aB7
+ BPcsFY419Owu5t/OAF07n2SjrhfctY22yQXj3UK3YRbJRModjgla7I/BOfIDUQKFd1aD
+ cI/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX89N+zr8BVUkMzca9geoF4+godP7Q5FyITvS9gpVztp0e3BpXecHSP0IJa7jF9mTi56dyMMFjlhSZn@nongnu.org
-X-Gm-Message-State: AOJu0YzNnXtxrkf2VuXHtIoiA36+i4+EkpVhrBpF7rfnFpaQBjG9Wry7
- QtTuc1IUVHLNpUEPfOIyJ/QjgygvJ01Ri5ztJZSdWOmeILdSbYfRAbjMxI/VySUh3c7MGyxqfG0
- 5VKGbtaWBCxmWZelvvssIZr22Ni7JG88cWrks5S2/EaRKrnJAn0cj
-X-Received: by 2002:a05:622a:551b:b0:447:eb43:5d0c with SMTP id
- d75a77b69052e-4550979d7b7mr155932761cf.59.1724685722963; 
- Mon, 26 Aug 2024 08:22:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqPkRki0Rb4jc+M5wsGa9U2kD3icuGlbDJWO2kBPg94ddCP4gNxvaaPd4tbXf6hw5dgitB/g==
-X-Received: by 2002:a05:622a:551b:b0:447:eb43:5d0c with SMTP id
- d75a77b69052e-4550979d7b7mr155932171cf.59.1724685722561; 
- Mon, 26 Aug 2024 08:22:02 -0700 (PDT)
+ AJvYcCUh+FeVcfDc1dsyAkD4v2t9vhsOjKiL43hI0DVD3arSgdRyPsj4gKmCM14WN7JtYoP9+CVSgRutemyb@nongnu.org
+X-Gm-Message-State: AOJu0Yzitt1NKhfajptoW4ZZMmi9DPNqM0Jb8dvbNDoPvwPPxrsdu03i
+ MwVIzBbkYrlXs9ZKsnyTcNYobPITSmdrj+SU1b4JcdlV6Dci84Ih9Dik/HjhoOz/aBa7Ke8UmW0
+ ucM3x7mMEqU935PXMDG21Q60/PmZY2V3wadeCO6avrROqdL2/VBhT
+X-Received: by 2002:a05:6214:54c6:b0:6c1:6f9b:619a with SMTP id
+ 6a1803df08f44-6c16f9b63admr126396796d6.30.1724686004477; 
+ Mon, 26 Aug 2024 08:26:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFA0749l/+hX4usq9XMmatXxPrWAF9HzAoLVW180ET+FDQ3QSJdRSCWR4B4zV7KT+rL/ZOpQ==
+X-Received: by 2002:a05:6214:54c6:b0:6c1:6f9b:619a with SMTP id
+ 6a1803df08f44-6c16f9b63admr126396516d6.30.1724686004112; 
+ Mon, 26 Aug 2024 08:26:44 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-454fe0d913dsm44541741cf.32.2024.08.26.08.22.00
+ 6a1803df08f44-6c162db0acdsm47673136d6.85.2024.08.26.08.26.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Aug 2024 08:22:01 -0700 (PDT)
-Date: Mon, 26 Aug 2024 11:21:58 -0400
+ Mon, 26 Aug 2024 08:26:43 -0700 (PDT)
+Date: Mon, 26 Aug 2024 11:26:41 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -84,15 +84,14 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
  qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v4 6/7] memory: Do not create circular reference with
- subregion
-Message-ID: <Zsydli9ME1u79A9X@x1n>
+Subject: Re: [PATCH v4 7/7] tests/qtest: Delete previous boot file
+Message-ID: <Zsyesfaf02ktFU1A@x1n>
 References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
- <20240823-san-v4-6-a24c6dfa4ceb@daynix.com>
+ <20240823-san-v4-7-a24c6dfa4ceb@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240823-san-v4-6-a24c6dfa4ceb@daynix.com>
+In-Reply-To: <20240823-san-v4-7-a24c6dfa4ceb@daynix.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -118,78 +117,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 23, 2024 at 03:13:11PM +0900, Akihiko Odaki wrote:
-> memory_region_update_container_subregions() used to call
-> memory_region_ref(), which creates a reference to the owner of the
-> subregion, on behalf of the owner of the container. This results in a
-> circular reference if the subregion and container have the same owner.
-> 
-> memory_region_ref() creates a reference to the owner instead of the
-> memory region to match the lifetime of the owner and memory region. We
-> do not need such a hack if the subregion and container have the same
-> owner because the owner will be alive as long as the container is.
-> Therefore, create a reference to the subregion itself instead ot its
-> owner in such a case; the reference to the subregion is still necessary
-> to ensure that the subregion gets finalized after the container.
+On Fri, Aug 23, 2024 at 03:13:12PM +0900, Akihiko Odaki wrote:
+> A test run may create boot files several times. Delete the previous boot
+> file before creating a new one.
 > 
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  system/memory.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/system/memory.c b/system/memory.c
-> index 5e6eb459d5de..e4d3e9d1f427 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -2612,7 +2612,9 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
->  
->      memory_region_transaction_begin();
->  
-> -    memory_region_ref(subregion);
-> +    object_ref(mr->owner == subregion->owner ?
-> +               OBJECT(subregion) : subregion->owner);
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Acked-by: Thomas Huth <thuth@redhat.com>
 
-The only place that mr->refcount is used so far is the owner with the
-object property attached to the mr, am I right (ignoring name-less MRs)?
+I didn't track which came early, but I think Fabiano has queued the other
+one here:
 
-I worry this will further complicate refcounting, now we're actively using
-two refcounts for MRs..
+https://lore.kernel.org/r/20240820144912.320744-2-peter.maydell@linaro.org
+https://gitlab.com/farosas/qemu/-/commits/migration-staging/
 
-Continue discussion there:
-
-https://lore.kernel.org/r/067b17a4-cdfc-4f7e-b7e4-28c38e1c10f0@daynix.com
-
-What I don't see is how mr->subregions differs from mr->container, so we
-allow subregions to be attached but not the container when finalize()
-(which is, afaict, the other way round).
-
-It seems easier to me that we allow both container and subregions to exist
-as long as within the owner itself, rather than start heavier use of
-mr->refcount.
-
-I tend to agree with you in another thread, where you mentioned it's better
-we get rid of one of the refcounts. If not trivial to get, we should still
-try to stick with one refcount to make it less chaos.
-
-> +
->      QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
->          if (subregion->priority >= other->priority) {
->              QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-> @@ -2670,7 +2672,9 @@ void memory_region_del_subregion(MemoryRegion *mr,
->          assert(alias->mapped_via_alias >= 0);
->      }
->      QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
-> -    memory_region_unref(subregion);
-> +    object_unref(mr->owner == subregion->owner ?
-> +                 OBJECT(subregion) : subregion->owner);
-> +
->      memory_region_update_pending |= mr->enabled && subregion->enabled;
->      memory_region_transaction_commit();
->  }
-> 
-> -- 
-> 2.46.0
-> 
+So we should be good.
 
 -- 
 Peter Xu
