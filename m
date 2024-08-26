@@ -4,52 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD17C5472E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 10:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB571C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 10:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siWe0-0006Rj-NI; Mon, 26 Aug 2024 06:08:16 -0400
+	id 1siWeF-0006bs-DQ; Mon, 26 Aug 2024 06:08:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
- id 1siWdz-0006Qc-9S
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:15 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1siWeD-0006at-N0
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
- id 1siWdx-00029j-Fb
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:15 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WsmZl2zdlz4x42
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 20:07:59 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WsmZk5Nynz4x2M
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 20:07:58 +1000 (AEST)
-Message-ID: <cabfffe6-76a5-4c9a-a2a5-577e163ca961@kaod.org>
-Date: Mon, 26 Aug 2024 12:07:54 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1siWeC-0002BG-7G
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 06:08:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724666906;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=r3tRrq2SAP870ylPxKYD6FqgVcg+euXApnt4b0jM/9g=;
+ b=EQo/8ek580zjD2H09jjyEGxOSPNAdfCFXC5Q0TmaVwFiRKuxTx6empS9blvBVFMsH48LzN
+ 1bP1Bkx6/bwlApUHVnN5kct1njlUmgLYi2KPsTnMKWN7BllcEej/O1snolBjPEpMB33P0h
+ 0kadzmS6+fyUWUUMHgeDhncNNgLJ8p0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-13-ve82VjBbOFuAuK1eg0tGOA-1; Mon, 26 Aug 2024 06:08:24 -0400
+X-MC-Unique: ve82VjBbOFuAuK1eg0tGOA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3719ee7c72eso2505375f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 03:08:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724666903; x=1725271703;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r3tRrq2SAP870ylPxKYD6FqgVcg+euXApnt4b0jM/9g=;
+ b=mhRTwMsbessZmwljxseNCVaJ1vGW+dx/oDfnNHkd5srv72dztYrotzyBcAnIx6AbdK
+ C3tMT2QBsRndnL/e2zzMd+0pqk5Jxm8C1F2BDXbIr7kcxb87u/NcmKNyKebsV2K3zXL1
+ yITwXKCqRTvN1FMfcZAuPDS5RVpmk1avzs6nX+JBAm9WyG6+snbGHNB/QtftdtTtYU5m
+ /C8m3aLgZ7l4NedQScRc+WIjV6jeEG7kS6AExnwphgUCNAXgOGrn/b8y9tA3Y+V7IVDk
+ CuqdFsaMD31ISJ6jD3F1VQCxamwX7wxhiE3Vw3TBn1ILbqa7QlZ7t6TuQNVWr8Gly7ru
+ 35Uw==
+X-Gm-Message-State: AOJu0YzV3fSR40wyptsYCJM/B7r0JcKhi9lW8sJVzi34Mrt6oxGeeQ8Z
+ Mm539c3Vncc3H3movWr91JiRiDxP0ZZAAVLDVQSw7kJGl/vDytYL5cyQiHZQF+D346B8Vm3CnQR
+ mCl+Gdg02C6LjC1yymi+mEwaVcJI0TfVAW8Yr0zKpvh0cyCdZd8cYo8GzpRgy
+X-Received: by 2002:adf:f7d2:0:b0:368:77f9:fb34 with SMTP id
+ ffacd0b85a97d-37311857bf9mr5441652f8f.15.1724666903300; 
+ Mon, 26 Aug 2024 03:08:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9p1UmBJIDqohznYCq4mCaADnzUxD2GX+PtzdxTJfaYyD1xRwRjFrPJfxZ4CmkTWqoW8jYdA==
+X-Received: by 2002:adf:f7d2:0:b0:368:77f9:fb34 with SMTP id
+ ffacd0b85a97d-37311857bf9mr5441635f8f.15.1724666902839; 
+ Mon, 26 Aug 2024 03:08:22 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3730815c0f0sm10392219f8f.51.2024.08.26.03.08.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Aug 2024 03:08:22 -0700 (PDT)
+Message-ID: <8bacf253-216b-4354-88ba-30a9e8f88110@redhat.com>
+Date: Mon, 26 Aug 2024 12:08:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] ppc/pnv: Fix LPC serirq routing calculation
-To: qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/7] ppc/pnv: Fix LPC POWER8 register sanity check
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org
 References: <20240806131318.275109-1-npiggin@gmail.com>
- <20240806131318.275109-2-npiggin@gmail.com>
+ <20240806131318.275109-3-npiggin@gmail.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240806131318.275109-2-npiggin@gmail.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240806131318.275109-3-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,16 +104,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/6/24 15:13, Nicholas Piggin wrote:
-> The serirq routing table is split over two registers, the calculation
-> for the high irqs in the second register did not subtract the irq
-> offset. This was spotted by Coverity as a shift-by-negative. Fix this
-> and change the open-coded shifting and masking to use extract32()
-> function so it's less error-prone.
+> POWER8 does not have the ISA IRQ -> SERIRQ routing system of later
+> CPUs, instead all ISA IRQs are sent to the CPU via a single PSI
+> interrupt. There is a sanity check in the POWER8 case to ensure the
+> routing bits have not been set, because that would indicate a
+> programming error.
 > 
-> This went unnoticed because irqs >= 14 are not used in a standard
-> QEMU/OPAL boot, changing the first QEMU serial-isa irq to 14 to test
-> does demonstrate serial irqs aren't received, and that this change
-> fixes that.
+> Those bits were incorrectly specified because of ppc bit numbering
+> fun. Coverity detected this as an always-zero expression.
 > 
 > Reported-by: Cédric Le Goater <clg@redhat.com>
 > Resolves: Coverity CID 1558829 (partially)
@@ -91,47 +126,23 @@ C.
 
 
 > ---
->   target/ppc/cpu.h |  1 +
->   hw/ppc/pnv_lpc.c | 10 ++++++++--
->   2 files changed, 9 insertions(+), 2 deletions(-)
+>   hw/ppc/pnv_lpc.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 321ed2da75..bd32a1a5f8 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -40,6 +40,7 @@
->   
->   #define PPC_BIT_NR(bit)         (63 - (bit))
->   #define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-> +#define PPC_BIT32_NR(bit)       (31 - (bit))
->   #define PPC_BIT32(bit)          (0x80000000 >> (bit))
->   #define PPC_BIT8(bit)           (0x80 >> (bit))
->   #define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
 > diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-> index f8aad955b5..80b79dfbbc 100644
+> index 80b79dfbbc..8c203d2059 100644
 > --- a/hw/ppc/pnv_lpc.c
 > +++ b/hw/ppc/pnv_lpc.c
-> @@ -435,13 +435,19 @@ static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
->           return;
->       }
+> @@ -427,8 +427,8 @@ static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
+>       int irq;
 >   
-> +    /*
-> +     * Each of the ISA irqs is routed to one of the 4 SERIRQ irqs with 2
-> +     * bits, split across 2 OPB registers.
-> +     */
->       for (irq = 0; irq <= 13; irq++) {
-> -        int serirq = (lpc->opb_irq_route1 >> (31 - 5 - (irq * 2))) & 0x3;
-> +        int serirq = extract32(lpc->opb_irq_route1,
-> +                                    PPC_BIT32_NR(5 + irq * 2), 2);
->           lpc->irq_to_serirq_route[irq] = serirq;
->       }
->   
->       for (irq = 14; irq < ISA_NUM_IRQS; irq++) {
-> -        int serirq = (lpc->opb_irq_route0 >> (31 - 9 - (irq * 2))) & 0x3;
-> +        int serirq = extract32(lpc->opb_irq_route0,
-> +                               PPC_BIT32_NR(9 + (irq - 14) * 2), 2);
->           lpc->irq_to_serirq_route[irq] = serirq;
->       }
->   }
+>       if (!lpc->psi_has_serirq) {
+> -        if ((lpc->opb_irq_route0 & PPC_BITMASK(8, 13)) ||
+> -            (lpc->opb_irq_route1 & PPC_BITMASK(4, 31))) {
+> +        if ((lpc->opb_irq_route0 & PPC_BITMASK32(8, 13)) ||
+> +            (lpc->opb_irq_route1 & PPC_BITMASK32(4, 31))) {
+>               qemu_log_mask(LOG_GUEST_ERROR,
+>                   "OPB: setting serirq routing on POWER8 system, ignoring.\n");
+>           }
 
 
