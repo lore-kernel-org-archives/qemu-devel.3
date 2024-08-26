@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6003AC5320E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3D5C5321E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siN9l-0003eW-74; Sun, 25 Aug 2024 20:00:25 -0400
+	id 1siNDp-0000Mj-AA; Sun, 25 Aug 2024 20:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1siN9c-0003cl-T0
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 20:00:17 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1siNDn-0000Hz-9U; Sun, 25 Aug 2024 20:04:35 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1siN9Y-0000E2-VO
- for qemu-devel@nongnu.org; Sun, 25 Aug 2024 20:00:16 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2d3b595c18dso3372623a91.0
- for <qemu-devel@nongnu.org>; Sun, 25 Aug 2024 17:00:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1siNDl-0000dy-BC; Sun, 25 Aug 2024 20:04:35 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2f43de7ad5eso44872841fa.1; 
+ Sun, 25 Aug 2024 17:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724630406; x=1725235206; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FDr9gSVjVQU1bimm6GY+JLZZEUF+PQ7rjmE1idPWavw=;
- b=clNj3hVi/6vQtRwnlhL88dstVdC+6Cohlj9wqlRKHNc5OsEbwHBXNtHUIrCWB8TtRE
- FBKlX9OBE5cOWZbxPayBgF5sOaQABKkf9PuSBtlP6QX5WlMsHds/sIRdxxdZ1AYfj1fk
- CSWK1I/9p52Jb3NWlfIhJwfYoxLkCro6W0oi9Z+ooAXoNZwwza/1OenYLA6xbUuGneXw
- cyFzCZvi1oviZM+aasoZj/XRZt1OD7U3YGGhXsp8wgBHtCWMftlVFdGhRyjvxCZ+aN7+
- H8EhIepHBPSu4pY1Nrz7HQ2XjLQOD/w4+IjVWMZSkW7Yk5ZXsL5F93inx3oHfvVUvU/V
- iMvA==
+ d=gmail.com; s=20230601; t=1724630669; x=1725235469; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gkMhbC19yCOFNZeuNX3ed8+D7YUplpgQhn1n0ajPVj8=;
+ b=RxtMgesMpIxZO5sG+t6YpJlxIylSh50SNdi19x+IBRWqKWXG5QCdkOF9P7blzi2lN2
+ 96KBoAjwr5DQimSopUeBM5d9zmmQUkv5DeCbtCuV6vuiRlwDxgB7anmveEaeZo7Hs5Pk
+ qJjhZ29Im2DxUP45SSZVXNwNz6SGAJ9oEJ6wh6l1aaJRkGZtnXB62lT9hBm7jzRCSAJZ
+ RkZ1JDa6Q+okza5QgMi86nQfOKH6qXBP3rNfnjxeeZk02ZufqwB6hNkhua9vPw/CZxEr
+ FVxa93FDuzyoQTZcn8/sTgUwS7ab0DnPtYRJ1DXTiOga4Q0aLV4EqIgRsxcNOkfdHyyM
+ hthw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724630406; x=1725235206;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FDr9gSVjVQU1bimm6GY+JLZZEUF+PQ7rjmE1idPWavw=;
- b=R4YZEwGrMwhRz8A1Ya9PWzpkPGsPIo/Vyu9cZwr1JW8BhIhs3AjagBHX+TJllbo4du
- ul/xaR6W7bEzei5fqQtWbh3sPTefPQX4VmA4VzjwLDDX+OKGRnu5+GarIOiaxBBBPmTH
- EIUtPWRiUeUK3lvhTtWbNpm52Q9IQJFf//2fWUIZ7vc4EOstIcZwfJZ29zxyNarkyS0W
- OGxIE6dBu89hLBmG4LKU4sq/kWpKYYv508WKZzWLoFc7C4o1AYkUqrdafQt595/3dvBj
- IYGypUgwD5NucjNg8CacXXwgDWXDfsYYtw4fzVeBcVFrdHbB9fxerTeWXBTyZtPKELzc
- mDTQ==
+ d=1e100.net; s=20230601; t=1724630669; x=1725235469;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gkMhbC19yCOFNZeuNX3ed8+D7YUplpgQhn1n0ajPVj8=;
+ b=mxMw8lgzBppHgNzo5H8yEBaoy+uruPqhxNlylytw5Jr1AvBJUKDCfyZ5nGNb9Vx0M6
+ 3N55bwPTSYXNkK0BodjdhaST9UjtRNEPIzk9AcP6Ai5DrlkEtjrMS6ch8YwrpX+hjxds
+ SawJkWoefw2gq8zfKLuTgf7JQ8Rbe0DIZVrvO3/BQH3nEt48RktImrBOsbKko4cyW0oQ
+ 86oJDI/cA03mbd6TRWpgzs9jLI8HQLzlq4Nq74sTKHUewOY0+nUrjhcJbmxgmbSgJv6d
+ 6PII5YPpRAaQ/84jIgpflfhicFnY80IaIPmMGWxMs1m98XjfQg5Rfv/bynWw0LAkWtRu
+ WjqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7vrBT9wmevz772zyVM3jXgopT4PzmDyDMvus1mzby4f3BxDouExSa8VQ74zCcIN8BmV2l18N3f3eE@nongnu.org
-X-Gm-Message-State: AOJu0YxtL4UHt3gvKaP7yJg6n6fV2kdK/EgtWNT1HSX9m+l0XB+kxT6H
- 6OhYJpzxLxPyWP63BHeC1/7AaPO5AIDq8++e6PfCZlTvLVWEkaLvc4K2U9UwgxM=
-X-Google-Smtp-Source: AGHT+IEjhjaY+puL0bFy+rQGub475+DH0n/JGbDEqi4Y9TvdLaG/RzLNzTW4q4dwR9rpSUCvNWTX4g==
-X-Received: by 2002:a17:90b:4ac5:b0:2c2:4109:9466 with SMTP id
- 98e67ed59e1d1-2d60a90006amr19158272a91.8.1724630405913; 
- Sun, 25 Aug 2024 17:00:05 -0700 (PDT)
-Received: from [172.16.0.208] (180-150-104-113.b49668.bne.static.aussiebb.net.
- [180.150.104.113]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d5ebbd9d72sm10675958a91.49.2024.08.25.17.00.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Aug 2024 17:00:05 -0700 (PDT)
-Message-ID: <10bf932c-ec07-4f2d-ae11-93fdd2bf84ee@linaro.org>
-Date: Mon, 26 Aug 2024 09:59:55 +1000
+ AJvYcCVMfIGeouLobccjYhWXFKA7M9obHM/emimuxCib5a6S6T6PTITPXfXKpSxkStwIfddy7tC/hIgKnErV@nongnu.org
+X-Gm-Message-State: AOJu0Yy+URuhIJ8BaXZTorUwdBMmBm2OSrRjBTQLMvwRg0gDl+3fnLPD
+ GkcgQYkOAax4SM2lSgcuOis3DwwmbDh6+s0IlldpPiv7dA4KFwCNwWi7UCW21PoGZfBZ5BfUngL
+ kC35p/4GTSK4ambI3OduDECAcy2o=
+X-Google-Smtp-Source: AGHT+IEwFge68kI7u3TmbKcNHBD8zyuaTTEk+KopeSG/nv62FDC48cSZdb90q2l53sHUExmAHfjy5s9jhLKe9MCLbM4=
+X-Received: by 2002:a05:651c:b1f:b0:2ef:2b53:c77e with SMTP id
+ 38308e7fff4ca-2f4f48d605dmr58267671fa.7.1724630668136; Sun, 25 Aug 2024
+ 17:04:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 04/17] target/riscv: additional code information for sw
- check
-To: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
- kito.cheng@sifive.com
-References: <20240823190140.4156920-1-debug@rivosinc.com>
- <20240823190140.4156920-5-debug@rivosinc.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240823190140.4156920-5-debug@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240822162127.705879-1-peter.maydell@linaro.org>
+ <20240822162127.705879-2-peter.maydell@linaro.org>
+In-Reply-To: <20240822162127.705879-2-peter.maydell@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 26 Aug 2024 10:04:00 +1000
+Message-ID: <CAKmqyKMheHovDg34ffejkC3BzL1cVLMvtDHufSuLc_AvFVhrnw@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 1/6] hw/misc/xlnx-versal-cfu: destroy fifo in
+ finalize
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=alistair23@gmail.com; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,23 +95,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/24/24 05:01, Deepak Gupta wrote:
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 12484ca7d2..9f08a67a9e 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1761,6 +1761,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->                   cs->watchpoint_hit = NULL;
->               }
->               break;
-> +        case RISCV_EXCP_SW_CHECK:
-> +            tval = env->sw_check_code;
->           default:
+On Fri, Aug 23, 2024 at 2:22=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> Since the TYPE_XNLX_VERSAL_CFU_FDRO device creates a FIFO in its
+> instance_init method, we must destroy the FIFO in instance_finalize
+> to avoid a memory leak for the QOM introspection
+> "instantiate-examine-finalize" cycle:
+>
+> Direct leak of 8192 byte(s) in 1 object(s) allocated from:
+>     #0 0x55ec89eae7ee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qe=
+mu/build/asan/qemu-system-aarch64+0x294d7ee) (BuildId: 6d508874816cc47d17c8=
+dd775e8f809ae520e8cb)
+>     #1 0x7f697018f738 in g_malloc debian/build/deb/../../../glib/gmem.c:1=
+28:13
+>     #2 0x55ec8d98d98d in fifo8_create util/fifo8.c:27:18
+>     #3 0x55ec8aa2a624 in fifo32_create /mnt/nvmedisk/linaro/qemu-from-lap=
+top/qemu/include/qemu/fifo32.h:35:5
+>     #4 0x55ec8aa2a33c in cfu_fdro_init hw/misc/xlnx-versal-cfu.c:397:5
+>     #5 0x55ec8ce75da1 in object_init_with_type qom/object.c:420:9
+>     #6 0x55ec8ce5d07b in object_initialize_with_type qom/object.c:562:5
+>     #7 0x55ec8ce5e91d in object_new_with_type qom/object.c:782:5
+>     #8 0x55ec8ce5e9f1 in object_new qom/object.c:797:12
+>     #9 0x55ec8d65c81d in qmp_device_list_properties qom/qom-qmp-cmds.c:14=
+4:11
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Missing break.
-This should have warned about fall through...
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
+Alistair
 
-
-r~
+> ---
+>  hw/misc/xlnx-versal-cfu.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/hw/misc/xlnx-versal-cfu.c b/hw/misc/xlnx-versal-cfu.c
+> index 6bb82e51c15..2284b407eab 100644
+> --- a/hw/misc/xlnx-versal-cfu.c
+> +++ b/hw/misc/xlnx-versal-cfu.c
+> @@ -397,6 +397,13 @@ static void cfu_fdro_init(Object *obj)
+>      fifo32_create(&s->fdro_data, 8 * KiB / sizeof(uint32_t));
+>  }
+>
+> +static void cfu_fdro_finalize(Object *obj)
+> +{
+> +    XlnxVersalCFUFDRO *s =3D XLNX_VERSAL_CFU_FDRO(obj);
+> +
+> +    fifo32_destroy(&s->fdro_data);
+> +}
+> +
+>  static void cfu_fdro_reset_enter(Object *obj, ResetType type)
+>  {
+>      XlnxVersalCFUFDRO *s =3D XLNX_VERSAL_CFU_FDRO(obj);
+> @@ -539,6 +546,7 @@ static const TypeInfo cfu_fdro_info =3D {
+>      .instance_size =3D sizeof(XlnxVersalCFUFDRO),
+>      .class_init    =3D cfu_fdro_class_init,
+>      .instance_init =3D cfu_fdro_init,
+> +    .instance_finalize =3D cfu_fdro_finalize,
+>      .interfaces =3D (InterfaceInfo[]) {
+>          { TYPE_XLNX_CFI_IF },
+>          { }
+> --
+> 2.34.1
+>
+>
 
