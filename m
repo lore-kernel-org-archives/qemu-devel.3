@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62104C5472C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 20:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E203C5472C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:00:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sigcV-0001eS-Ne; Mon, 26 Aug 2024 16:47:24 -0400
+	id 1sigoX-0007be-KV; Mon, 26 Aug 2024 16:59:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sigcR-0001dk-5r
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:47:19 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sigoU-0007b2-DF
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:59:47 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sigcO-0001rx-OI
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:47:18 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a868b739cd9so575195666b.2
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 13:47:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sigoS-0002qp-RR
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 16:59:46 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4281c164408so40803305e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 13:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724705233; x=1725310033; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724705983; x=1725310783; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EmNUbWN3L7bNAjIpWx76uXYrmDJBWu5r+10QBHC/Dxo=;
- b=IYc66RIUbhqT1K3NqOwuaeeXfPlPPUoLcOkT+yBBtYmgNE6M/jDqS8Duchy6VTD/xf
- MAsxwCS3sqjfcX7fG6lzUbw94vhHr+p0QpscV/O6gP6jqYvpkpU0Z9N+hL2HMLtnQehc
- qBvkUty1egKmktmoAk4C8W5tnbBBb2Sg+fbvROLUti4ZzO+iUL3Wdd1TL7zA2gzU6r/a
- 1a+gRJVNU9uI5WX9BCc6oweVxk17P9GdII0I6aj2TLEo3JG6KbXr2ChlMmQIn4KCEPrh
- qB9ncHvw/FtBlFRu7rO0KinvDo7Vag4wjc6FNgmXR112FpBicpi+h4IU5YNkSCD+Jvqn
- Cb1w==
+ bh=ANwho6ZYa5O68joBUb6dvP3VDXY3hF1s9SnSMskP6oE=;
+ b=aStlCvUZQ097sfLLQnGd/hNyMEaOTuqwLtt8oFtM28RJc4ZSuZaMCXy6MozUf63gDX
+ RARKuLAZR4omH00unjHousMSYz+5nuEX1Znfm1R1CYTB3JpbAp/xXhFntWmBL2WA78EJ
+ 3vp311i5BUTpp3eZ54YBpgLa9PDuHG99xMO639aFAxwMWznVS2juBcG22ieIsy2DgzPi
+ hKLWvne/s91bEfX9S1D6rah2zbpKIe2VbAUswuc6FYr81XOOTjlgcEbIepZRrCIQT/gX
+ R5B+J5Fppbv3dmd8N0+FMTrS+bsi+AOKHuhfAi3el8VD1chtTfCUKOsxlwJ7ue1WeS6f
+ HQwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724705233; x=1725310033;
+ d=1e100.net; s=20230601; t=1724705983; x=1725310783;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EmNUbWN3L7bNAjIpWx76uXYrmDJBWu5r+10QBHC/Dxo=;
- b=gbZWRqxCbUU7Mcn2ZlMPWxP7b6eak3wmZGv1Go6oM4YvkXwOC/maqkbUec8BnfeGbV
- TJYt2MkIVPUlHBGm22ZgYHmztJtEmYFYuJ4VYjp/bWzS1rzK/bPx/vxAzoiKP8KCD3MJ
- 9Hq06fU0MWu75I+FTtSnhA8iEtN/pdTq20/MYEVU8tWGjz14cVpFMz9tRns+2j2N2368
- YDC2vC9Ek1J2eqQz7jcHsi3oJnJK0s5WwTv5pMBUaHihsY7WGbSyZLE1XdGxKpDgHJkn
- WWmEsVVH4QONa1rkgosLIG3R8bssb3bZdt4C+ZqhPGym84G3JfX2QMSEeyEQxCyReVM+
- MU+g==
-X-Gm-Message-State: AOJu0YxIaHetHYmSKVKPjvfTheW0py+12fH2uSjXb25dRwXJnVQONhbp
- erJXcCLdITDvvR9vh/IPLq/Y1txLWCLtzrD8kMIkR1lIh6OnTAvJ+iKYQZhV2v4=
-X-Google-Smtp-Source: AGHT+IHMG72KEAHzwWr8MrL24exoQRM/F3UdYQpEnb/oaG/xMDtidxsTT1w2Orx9oF1wZZZa7fRaWw==
-X-Received: by 2002:a17:907:2cc6:b0:a86:7021:1368 with SMTP id
- a640c23a62f3a-a86e39dc9b2mr51400666b.21.1724705232762; 
- Mon, 26 Aug 2024 13:47:12 -0700 (PDT)
+ bh=ANwho6ZYa5O68joBUb6dvP3VDXY3hF1s9SnSMskP6oE=;
+ b=dd2I1dPEFrZSJ0/aN08oqDOATjFgRM76Su2jmm95Iri3BxXRA3cupN+1WZ1ttu3z5z
+ 4xMatmH5nmVmxLbgzewh/VKyEF0UqJVzr9azt8y4qTI/gkn1sZuDLffJH7UjCqLGhGRH
+ im8nhp42Pg1lOkAbxIDmJRIvSnhOJLb8f8kqwlYGyUOszk5C6NKkSFllHwFTbUKiiGaS
+ sH/ppH3Hq5QEVfZ/Rb5TCGFbB6GChKMv6xaw8SChOIC6ynw8H+9Cj3Zvof0kfXRCLQys
+ LXaq+JyFr2t3hb0ZmhhNz7yJNv9DfKJBtGbmTqe78d/v+Fo/dj63Qij6BLh+UpAUSdVb
+ RXYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCuJ8j+r9oNGN3rxNXjUzpb1cDr3IR3QVYhxO2zx/tD9W1WHLDHrDK/+toRlL1uq1RaTrpvmitMjLS@nongnu.org
+X-Gm-Message-State: AOJu0Ywo1koW4LTZBrEs4zMDZdU0h6KQotm2e7FwvgizzKRiEl6mfXlE
+ sEIkcnFEbTElXGxaDVHWeGlUgv5rlXJrmNQXxBe6CpQ0wrrC6HQe73p8YY3k8Uo=
+X-Google-Smtp-Source: AGHT+IFj7PFv3Kt9D00bnXPVFYZGV2nloOQmE9SE2vz9tUX9Y97/YI7QBH3FboPCpaJHaGCpQ4NI5g==
+X-Received: by 2002:a05:600c:3ac5:b0:428:18d9:9963 with SMTP id
+ 5b1f17b1804b1-42b9ade4d5cmr4419915e9.22.1724705982691; 
+ Mon, 26 Aug 2024 13:59:42 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.216.241])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c0bb471d7bsm172231a12.59.2024.08.26.13.47.11
+ 5b1f17b1804b1-42ac514e07csm165871085e9.10.2024.08.26.13.59.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 13:47:12 -0700 (PDT)
-Message-ID: <ee8d01b4-50e3-42c6-aa86-233021ea3423@linaro.org>
-Date: Mon, 26 Aug 2024 22:47:09 +0200
+ Mon, 26 Aug 2024 13:59:42 -0700 (PDT)
+Message-ID: <2f484cff-e227-47e3-b570-40e1945cee63@linaro.org>
+Date: Mon, 26 Aug 2024 22:59:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 18/18] migration/multifd: Stop changing the packet on
- recv side
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-References: <20240826195322.16532-1-farosas@suse.de>
- <20240826195322.16532-19-farosas@suse.de> <ZszhkJ6Ydqr6JY98@x1n>
+Subject: Re: [PATCH v3 2/7] tests/functional: Convert mips64el Fuloong2e
+ avocado test (2/2)
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Huacai Chen <chenhuacai@kernel.org>,
+ Beraldo Leal <bleal@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20240824160829.27655-1-philmd@linaro.org>
+ <20240824160829.27655-3-philmd@linaro.org>
+ <e840b528-c48b-4b5e-9b2b-c7c0a0473ce7@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZszhkJ6Ydqr6JY98@x1n>
+In-Reply-To: <e840b528-c48b-4b5e-9b2b-c7c0a0473ce7@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,177 +101,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/8/24 22:12, Peter Xu wrote:
-> On Mon, Aug 26, 2024 at 04:53:22PM -0300, Fabiano Rosas wrote:
->> As observed by Philippe, the multifd_ram_unfill_packet() function
->> currently leaves the MultiFDPacket structure with mixed
->> endianness. This is harmless, but ultimately not very clean. Aside
->> from that, the packet is also written to on the recv side to ensure
->> the ramblock name is null-terminated.
+On 26/8/24 11:10, Thomas Huth wrote:
+> On 24/08/2024 18.08, Philippe Mathieu-Daudé wrote:
+>> Straight forward conversion. Update the SHA1 hashes to
+>> SHA256 hashes since SHA1 should not be used anymore nowadays.
 >>
->> Stop touching the received packet and do the necessary work using
->> stack variables instead.
->>
->> While here tweak the error strings and fix the space before
->> semicolons. Also remove the "100 times bigger" comment because it's
->> just one possible explanation for a size mismatch and it doesn't even
->> match the code.
->>
->> CC: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>   migration/multifd-nocomp.c | 38 ++++++++++++++++----------------------
->>   migration/multifd.c        | 18 ++++++++----------
->>   2 files changed, 24 insertions(+), 32 deletions(-)
->>
->> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
->> index f294d1b0b2..0cbf1b88e1 100644
->> --- a/migration/multifd-nocomp.c
->> +++ b/migration/multifd-nocomp.c
->> @@ -220,33 +220,29 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
->>       MultiFDPacket_t *packet = p->packet;
->>       uint32_t page_count = multifd_ram_page_count();
->>       uint32_t page_size = multifd_ram_page_size();
->> +    uint32_t pages_per_packet = be32_to_cpu(packet->pages_alloc);
->> +    const char *ramblock_name;
->>       int i;
->>   
->> -    packet->pages_alloc = be32_to_cpu(packet->pages_alloc);
->> -    /*
->> -     * If we received a packet that is 100 times bigger than expected
->> -     * just stop migration.  It is a magic number.
->> -     */
->> -    if (packet->pages_alloc > page_count) {
->> -        error_setg(errp, "multifd: received packet "
->> -                   "with size %u and expected a size of %u",
->> -                   packet->pages_alloc, page_count) ;
->> +    if (pages_per_packet > page_count) {
->> +        error_setg(errp, "multifd: received packet with %u pages, expected %u",
->> +                   pages_per_packet, page_count);
->>           return -1;
->>       }
->>   
->>       p->normal_num = be32_to_cpu(packet->normal_pages);
->> -    if (p->normal_num > packet->pages_alloc) {
->> -        error_setg(errp, "multifd: received packet "
->> -                   "with %u normal pages and expected maximum pages are %u",
->> -                   p->normal_num, packet->pages_alloc) ;
->> +    if (p->normal_num > pages_per_packet) {
->> +        error_setg(errp, "multifd: received packet with %u non-zero pages, "
->> +                   "which exceeds maximum expected pages %u",
->> +                   p->normal_num, pages_per_packet);
->>           return -1;
->>       }
->>   
->>       p->zero_num = be32_to_cpu(packet->zero_pages);
->> -    if (p->zero_num > packet->pages_alloc - p->normal_num) {
->> -        error_setg(errp, "multifd: received packet "
->> -                   "with %u zero pages and expected maximum zero pages are %u",
->> -                   p->zero_num, packet->pages_alloc - p->normal_num) ;
->> +    if (p->zero_num > pages_per_packet - p->normal_num) {
->> +        error_setg(errp,
->> +                   "multifd: received packet with %u zero pages, expected maximum %u",
->> +                   p->zero_num, pages_per_packet - p->normal_num);
->>           return -1;
->>       }
->>   
->> @@ -254,12 +250,10 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
->>           return 0;
->>       }
->>   
->> -    /* make sure that ramblock is 0 terminated */
->> -    packet->ramblock[255] = 0;
->> -    p->block = qemu_ram_block_by_name(packet->ramblock);
->> +    ramblock_name = g_strndup(packet->ramblock, 255);
+>> Add extract_from_deb() method in qemu_test.utils package.
 > 
-> This one is leaked?
-> 
-> IMHO the "temp var for endianess" is better justified than this specific
-> one, where I think always null-terminating the packet->ramblock[] doesn't
-> sound too bad - it makes sure all future ref to packet->ramblock is safe.
+> Should we maybe rather copy the whole LinuxKernelTest class into a new 
+> file in the qemu_tests folder, so that all the related tests can simply 
+> inherit from that class? That way we would also get the 
+> KERNEL_COMMON_COMMAND_LINE handling for free in all the tests that we 
+> convert. What do you think?
 
-OTOH we can make MultiFDPacket_t const to be sure we don't alter it:
+Except that variable, I'm not sure what can be reused. Most tests
+are trivial. Maybe I'll realize after converting a few more :)
 
--- >8 --
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 0cbf1b88e1..a759470c9c 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -217,11 +217,11 @@ void multifd_ram_fill_packet(MultiFDSendParams *p)
-
-  int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
-  {
--    MultiFDPacket_t *packet = p->packet;
-+    const MultiFDPacket_t *packet = p->packet;
-      uint32_t page_count = multifd_ram_page_count();
-      uint32_t page_size = multifd_ram_page_size();
-      uint32_t pages_per_packet = be32_to_cpu(packet->pages_alloc);
--    const char *ramblock_name;
-+    g_autofree const char *ramblock_name = NULL;
-      int i;
-
-      if (pages_per_packet > page_count) {
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 256ecdea56..2a8cd9174c 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -230,7 +230,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-
-  static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-  {
--    MultiFDPacket_t *packet = p->packet;
-+    const MultiFDPacket_t *packet = p->packet;
-      uint32_t magic = be32_to_cpu(packet->magic);
-      uint32_t version = be32_to_cpu(packet->version);
-      int ret = 0;
----
-
-> 
->> +    p->block = qemu_ram_block_by_name(ramblock_name);
->>       if (!p->block) {
->> -        error_setg(errp, "multifd: unknown ram block %s",
->> -                   packet->ramblock);
->> +        error_setg(errp, "multifd: unknown ram block %s", ramblock_name);
->>           return -1;
->>       }
->>   
->> diff --git a/migration/multifd.c b/migration/multifd.c
->> index b89715fdc2..256ecdea56 100644
->> --- a/migration/multifd.c
->> +++ b/migration/multifd.c
->> @@ -231,21 +231,19 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
->>   static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->>   {
->>       MultiFDPacket_t *packet = p->packet;
->> +    uint32_t magic = be32_to_cpu(packet->magic);
->> +    uint32_t version = be32_to_cpu(packet->version);
->>       int ret = 0;
->>   
->> -    packet->magic = be32_to_cpu(packet->magic);
->> -    if (packet->magic != MULTIFD_MAGIC) {
->> -        error_setg(errp, "multifd: received packet "
->> -                   "magic %x and expected magic %x",
->> -                   packet->magic, MULTIFD_MAGIC);
->> +    if (magic != MULTIFD_MAGIC) {
->> +        error_setg(errp, "multifd: received packet magic %x, expected %x",
->> +                   magic, MULTIFD_MAGIC);
->>           return -1;
->>       }
->>   
->> -    packet->version = be32_to_cpu(packet->version);
->> -    if (packet->version != MULTIFD_VERSION) {
->> -        error_setg(errp, "multifd: received packet "
->> -                   "version %u and expected version %u",
->> -                   packet->version, MULTIFD_VERSION);
->> +    if (version != MULTIFD_VERSION) {
->> +        error_setg(errp, "multifd: received packet version %u, expected %u",
->> +                   version, MULTIFD_VERSION);
->>           return -1;
->>       }
->>   
->> -- 
->> 2.35.3
->>
-> 
-
+We could however have a LinuxKernelConstants class with 
+KERNEL_COMMON_COMMAND_LINE if you rather.
 
