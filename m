@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE1EC5472D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 06:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19557C5321E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 06:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siSwE-0001Jt-Fd; Mon, 26 Aug 2024 02:10:50 -0400
+	id 1siSzz-0001sY-CB; Mon, 26 Aug 2024 02:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1siSwC-0001JA-G5
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 02:10:48 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1siSwA-0005KF-BK
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 02:10:47 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a869332c2c2so574170566b.0
- for <qemu-devel@nongnu.org>; Sun, 25 Aug 2024 23:10:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724652644; x=1725257444; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pS8kEzdqXfV62t1UVzdfNSkHWSAZrnHabTcndmWkSBo=;
- b=sVn12oBQqJ+H8dsgsZyoP8XlsO3UoK4c/G71AK3uZZxhrk6r2Rcq3krRrL1qGZ6dww
- jhFi16avPTeHvOQm8bhD3qLgnjdSsbDmIYStDzmJ5BbTeg74VTed/7CSS/EOe31EgyD3
- x8ITfBKGAEZe5t3OZz6zgO44RemZCLrvygYVF5N0EsCTVQPCsXlY2ou78kmHCuKxfag3
- VXrX3f47OZeLHfrwn5S56eK5gPgKaGoDEFCT1NyZy31W3HEZbxdMN9R0rvKemfR2Jxup
- d3Sy64rMOsGo2nEk15+IDgpwmPq6tqQYl0K657sZKTM4RnYxIl8PWM/RkcL9bAEz2jzr
- meng==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1siSzx-0001r6-NJ
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 02:14:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1siSzw-0005sl-2b
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 02:14:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724652877;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6H0SPr8vVIFVRa7Rw7vVIhnIZlr+17GMQA+h1/POUwI=;
+ b=C7lrAS7u4Iq0djahffDDW2qB21iiIchumq1s4YkofojnKwv9Lvumx5DPS+ES4wdDGV1wYN
+ 4EfOXFfxrzLKjT+1KS7/8Vi0hvrZtHhVRyjQ6pn8PflMjuPNWiOCAAcO+kRcccuzwxsxYj
+ YZjNXhjN37VB3d8zYsT7LFX5RRSDElg=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-580-1xGU0oncPfqnneQZ17xhDw-1; Mon, 26 Aug 2024 02:14:35 -0400
+X-MC-Unique: 1xGU0oncPfqnneQZ17xhDw-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2d3c9a5c673so3645010a91.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Aug 2024 23:14:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724652644; x=1725257444;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pS8kEzdqXfV62t1UVzdfNSkHWSAZrnHabTcndmWkSBo=;
- b=qOW+MUSCjLzFuJ8kjt6JBwGErezbjsYNC7az1hSQSsN2Fn23NWbw0tOQav/kFoe2zW
- TMcqLcF7877mdAZl6XnVoamx6CPUZ2B7sZvVDCD3FmiMPV/GTCuSeBSCcIf9kG11iyup
- 6FW/0fkWapkF5WKn7M3+Wln6l8q83hRXMoZ2Rg5gMnRpccoj6NTuPMLy9rFOrJbDNOFK
- 0FX01UfeWxGb8di3EI5uiPgkbdfmlSUFRFHDkSLrze+irYxOzpcv/f94WE9X7rk1g/2d
- lYcOasFOf/orUfCevR9yJbCor9MP/3Iz70Mb+w0nW8GNAwkrqXOYOQgKwX3L9SHJ4IZ6
- pSZw==
+ d=1e100.net; s=20230601; t=1724652874; x=1725257674;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6H0SPr8vVIFVRa7Rw7vVIhnIZlr+17GMQA+h1/POUwI=;
+ b=MQ8gAyWwEinao8obp33PtfDBI04GG6kxgiFS1z7uyS6Wikq2x2gm0JK0EeQHwP3C43
+ G/fFtfR8NT03wsaLYU3DOXOx3ljLTaVbvFPfoudkfyCqedHGrDRV7ECAOVOlUPWY1JGF
+ qTCooYxcTA4/3YLpy4Yp58u7LTOeKxWNSNOzaUTEXmqm+xjSTTT10TD4FS1hH9YKIUPM
+ wLnhXruQHbW/YayPMb+MB5TceS4FqRMRZTgdDRk3Zh/at3ncdHyhpWj8QnBgTGaTOl6y
+ 5Lz2eElkgVzNw0NXr+GL/j3fyEbTEUCTnen88xhZIybQUOD1WIKECIlc38Bd3bZ3r3q9
+ vBdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXJwyqghmLCO55VoWd08Tmmr5jvPagWTTzRHeRFOpYNpz0U9oh/WUNmkPs/Z9QQzxJCoUNNtPwY0Uw@nongnu.org
-X-Gm-Message-State: AOJu0Ywkxuy1bwjhLu8LYomQ/8Llm7KtWNiLCIyFlcPyke8ay3gOPAxV
- jGzp2YJYScXEvPCjNNkH7eLSl/RnlD/XP3Lie3eKLYGvW4SmWaCjLK/pEjb42Z8=
-X-Google-Smtp-Source: AGHT+IFRB5jQXMkGLO58XK7nHtAiayr+QdGJOeQguWeRu+jMVcEwsZoW2qhCWqWzFnxElEXYFcIwYA==
-X-Received: by 2002:a17:907:3e04:b0:a80:f616:5cf9 with SMTP id
- a640c23a62f3a-a868a0b0ed0mr1372394066b.0.1724652643591; 
- Sun, 25 Aug 2024 23:10:43 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.216.241])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a868f29a568sm619435566b.53.2024.08.25.23.10.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Aug 2024 23:10:43 -0700 (PDT)
-Message-ID: <64200fe4-b824-4903-b5f5-fc48c9e00945@linaro.org>
-Date: Mon, 26 Aug 2024 08:10:40 +0200
+ AJvYcCV5OaYfYGSwyU330zXemaKUojKlSZPX/FWnU5OWennHdZsjw8YxsT0EUYedtxJg15iDWZICyXAmNZo/@nongnu.org
+X-Gm-Message-State: AOJu0YyiWaHKIEm6LeJBh4sFSpz9ndegsTlztH1OmvmZ9UCkvCpDj14U
+ izjf8KaoW0hv/STAyQZaD42dvOAdHIH3k3+4J+WOdtDgQzSeiIBpZpcEG/vGhsUEo9Z/nhGyT0D
+ lNYN0B11My8XotLXIibL0i3XsrE8gc1ScYMURhFeBbloPFC1wNmxWKZ34ABs26OHVXUIgXuL9pp
+ aWGWzU3iBqI7DIS5+gLrAyPPQdwEE=
+X-Received: by 2002:a17:90a:3484:b0:2d3:cd5c:15bb with SMTP id
+ 98e67ed59e1d1-2d646c04128mr8396618a91.25.1724652874585; 
+ Sun, 25 Aug 2024 23:14:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCtZb4YaSypXxczl5NQRddCEcMVvrOORBx5qFdBvBWlA99jGqiHYft2aaiT/Z2aCBBWhBPH3If2Tp6tsmeCMM=
+X-Received: by 2002:a17:90a:3484:b0:2d3:cd5c:15bb with SMTP id
+ 98e67ed59e1d1-2d646c04128mr8396598a91.25.1724652874056; Sun, 25 Aug 2024
+ 23:14:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] tests/tcg/aarch64: Extend MTE gdbstub tests to
- system mode
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: peter.maydell@linaro.org
-References: <20240825145208.46774-1-gustavo.romero@linaro.org>
- <20240825145208.46774-5-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240825145208.46774-5-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+References: <20240820095112.61510-1-clement.mathieu--drif@eviden.com>
+ <68598e12-f2d6-40ee-8da4-fa906f9fd0a7@linaro.org>
+In-Reply-To: <68598e12-f2d6-40ee-8da4-fa906f9fd0a7@linaro.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 26 Aug 2024 14:14:22 +0800
+Message-ID: <CACGkMEt=swrrM+Akk3Weh9xjV+mgHjsyA9UO65ZzMJUk=Gn6SA@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer of VT-d
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,57 +102,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gustavo,
+On Tue, Aug 20, 2024 at 6:36=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 20/8/24 11:51, CLEMENT MATHIEU--DRIF wrote:
+> > Signed-off-by: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden=
+.com>
+> > ---
+> >   MAINTAINERS | 1 +
+> >   1 file changed, 1 insertion(+)
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-On 25/8/24 16:52, Gustavo Romero wrote:
-> Extend MTE gdbstub tests to also run in system mode (share tests between
-> user mode and system mode). The tests will only run if a version of GDB
-> that supports MTE on baremetal is available in the test environment and
-> if available compiler supports the 'memtag' flag
-> (-march=armv8.5-a+memtag).
-> 
-> For the tests running in system mode, a page that supports MTE ops. is
-> necessary. Therefore, an MTE-enabled page is made available (mapped) in
-> the third 2 MB chunk of the second 1 GB space in the flat mapping set in
-> boot.S. A new binary, mte.S, is also introduced for the tests. It links
-> against boot.S and is executed by QEMU in system mode.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   configure                                 |   5 +
->   tests/tcg/aarch64/Makefile.softmmu-target |  49 +++++++++-
->   tests/tcg/aarch64/Makefile.target         |   3 +-
->   tests/tcg/aarch64/gdbstub/test-mte.py     |  71 +++++++++-----
->   tests/tcg/aarch64/system/boot.S           |  11 +++
->   tests/tcg/aarch64/system/kernel.ld        |   7 ++
->   tests/tcg/aarch64/system/mte.S            | 109 ++++++++++++++++++++++
->   7 files changed, 227 insertions(+), 28 deletions(-)
->   create mode 100644 tests/tcg/aarch64/system/mte.S
+Acked-by: Jason Wang <jasowang@redhat.com>
 
+Thanks
 
-> diff --git a/tests/tcg/aarch64/system/kernel.ld b/tests/tcg/aarch64/system/kernel.ld
-> index 7b3a76dcbf..46f1092522 100644
-> --- a/tests/tcg/aarch64/system/kernel.ld
-> +++ b/tests/tcg/aarch64/system/kernel.ld
-> @@ -18,6 +18,13 @@ SECTIONS
->       .bss : {
->           *(.bss)
->       }
-> +    /*
-> +     * Align the MTE page to the next 2mb boundary (i.e., the third 2mb chunk
-> +     * starting from 1gb) by setting the address for symbol 'mte_page', which is
-> +     * used in boot.S to setup the PTE and in the mte.S test as the address that
-> +     * the MTE instructions operate on.
-> +     */
-> +    mte_page = ALIGN(1 << 22);
-
-Comment says 2MiB but you use 4MiB.
-Matter of taste, 2MiB is easier to review as:
-
-       mte_page = ALIGN(2 << 20);
-
->       /DISCARD/ : {
->           *(.ARM.attributes)
->       }
+>
+>
 
 
