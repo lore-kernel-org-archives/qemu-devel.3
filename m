@@ -4,100 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CA7C5321E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E76F8C5472D
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 07:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siTvq-0003ei-OR; Mon, 26 Aug 2024 03:14:30 -0400
+	id 1siTvS-00035g-ID; Mon, 26 Aug 2024 03:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1siTvo-0003UD-Co
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 03:14:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1siTvm-0004ug-NO
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 03:14:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724656464;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nqKtN73SsVBHh7kwtTbGaclxlu2vd3kW/lJhF5p9x7U=;
- b=L5j+HAAorDksXeNn7A24HT5S5Dh9edVgPNl8U2sWLCqC4LIPOFTGzw8Ffu4tTz+AB8MgPf
- AwPGzzHR6dS8+hyxveSLFFRvQHHVmQ+bMzrIlmEvYrC+pcUh8wYWtiAv0y2/sR487baAKe
- SuFPNobJoPPu01k4UfjDtheGF/Gnhws=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-272-JXdrV75wMe6juUoa07sYhQ-1; Mon, 26 Aug 2024 03:14:22 -0400
-X-MC-Unique: JXdrV75wMe6juUoa07sYhQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42808efc688so36448765e9.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 00:14:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1siTvQ-00033P-Gg
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 03:14:04 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1siTvO-0004s2-Of
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 03:14:04 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42819654737so34131895e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 00:14:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1724656441; x=1725261241; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=qORsi9Nht/pObnlnY1pqrTC+d0QjjOs3FipKFGQYNWM=;
+ b=AlZMagYhvyUsNZfNPy81+SsE1FPnbwR1Hl9YXPggdxhkyx1G4plp+wZcWaOtJdgv2y
+ QaPl7KBKabart4wPGESHDIZB8WMO3i/q8C1nCdE8mq9tvrMEax/MTRDIxKAwXhaAPCOf
+ 6nCWXiY1aWo4s8LZ1Za0nrT40N7tl5rk5tNb3Dk6LMhipgkGdnWKUS05MxaSE2sooUUR
+ 9MIOusG4St6WPpxNzMERsjRf5HzOrYWQaNF6QzbItrAfexhaXT9P7WtYI3aMRcicjB2+
+ 8MI7c11GQVEuqHxX9MZemNJ9UGfaB9Ni3o+BpGrsVm08jzh/wg1ljzBNeO8uIKt0OMS1
+ Rf0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724656461; x=1725261261;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nqKtN73SsVBHh7kwtTbGaclxlu2vd3kW/lJhF5p9x7U=;
- b=LNmFeNthnx3QL4wUfUtCnMrqxIqG/SZ0ZJFBYfwauaxPRdbNbrHOy6OToNAxjTATcj
- 4HNglt5T8DUlVVHN3M8tqeqNLjrBWzDMBzwrQw67qaMv75CtD0SBUdX8rH2x3xUFKMxh
- F5u0rh78wnL/vFmyUsomT4n8MB4azqW6A/lP5d1FSp2Kyywf/gfcJE09L9OBvGI/FTe3
- 9Zq1dd0vMkGvLR5ighwDvFrlPeG3oI8aeqToKR4eRILm7UKQN8Sa0OYRCdeB5IhFf2Om
- 65g+wX9co4P6hophZchfiHyL+SAAaOWH5sjh4R2GDQD/Tb3ZYjMWSfHtDCKD0el9th6t
- BR8A==
+ d=1e100.net; s=20230601; t=1724656441; x=1725261241;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qORsi9Nht/pObnlnY1pqrTC+d0QjjOs3FipKFGQYNWM=;
+ b=t0GcIY2KY7PnmalcDTVXGS5IPJVWEYiJlLPwD7LrVlqvtiuJg4IhRIz0UrpfPyzIMu
+ 7Or4hZlix4hYhfCpPu3fpgGNWo12Qo3tB0zmmflxijSx5v/+23o1zgQ41a72NBWQBmtt
+ gMS1apD8KKAOxaUfQ8XFNFY/XmZa8cwP7rQSrrRWHzQPTf0EX5qI70r09xwg60zJLLoi
+ Q9FXzcX/GErS5voM/xzZsQd+uIcq2fow6Wlhza/PBxmxL5iD4pIwVnxxen7mQLz1ZzoL
+ +BzZLdo41VD49WC+B8+oAZm8FsVGn/t1foe2Vr6PS505O62hJ+Lx5rAGHAIUX5bVVJDK
+ jPFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUg8WoySjOm3Lh5HpEpFmL1//MOTG0+sS9OT57oqyx0FJM0cRWcpfPlL6oJrmxvxNWgDYYX8RtnaUCy@nongnu.org
-X-Gm-Message-State: AOJu0YxoClNgTIPbHzxqRWdTfoYe47DSzVXaKVpNIOJwEQPObJKVGKSY
- QVwWtrJkGBsCvNVNFc4xijZs+8w+YrEDJ/YT5vgtqIyl4wOKQwRbb6zyVxoLkEnjS+YtgrQ/Ovi
- OBsKVaIk9lROGMpcZcFp+WiPYgqn8OVfsRcTz4TLmMzBgNec1ESTDff/RKz4Om2nnOet13hBLce
- etyY1GsTSJlX+dfv7++TlzRXI574A=
-X-Received: by 2002:a05:600c:35c6:b0:426:6667:5c42 with SMTP id
- 5b1f17b1804b1-42acc8d494fmr64777615e9.4.1724656460792; 
- Mon, 26 Aug 2024 00:14:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETGlfbeo83Kbyr9+xMsGSurSdeFU0/mvPqfbYymt9QgUp0os9UyF1GnDXlTAZL+aAFoSXOqsklLnmFTrS2+7E=
-X-Received: by 2002:a05:600c:35c6:b0:426:6667:5c42 with SMTP id
- 5b1f17b1804b1-42acc8d494fmr64777365e9.4.1724656460332; Mon, 26 Aug 2024
- 00:14:20 -0700 (PDT)
+ AJvYcCXaNMyzysJ2N6vWBbyXjiZkhGYZralIm1/NRkSClYyPi3yi+wFMFCb7+Dn39km+s38/7QdvEOd5NE3Q@nongnu.org
+X-Gm-Message-State: AOJu0Yye3gfI0MqccorQVhW9Zay7tlNrYMYJpPcrV6+Fdn4aIMtTXbkY
+ m6fEF2gb8EGNLcKhuwH1iZdSPLxLAJ2fv+BkwD/9Sz6dXhedcQFajYlcyES/aOPX4Ko1RqKfXx4
+ ePII=
+X-Google-Smtp-Source: AGHT+IFd13ExWH45lqvLabZOG173IJQpJY59+JvyssqddAtm7n5vCl1ojmbrWLXVM5B1aaYRzXSP5w==
+X-Received: by 2002:a05:600c:4e94:b0:429:c771:f32f with SMTP id
+ 5b1f17b1804b1-42acd5e41d9mr48346415e9.36.1724656440438; 
+ Mon, 26 Aug 2024 00:14:00 -0700 (PDT)
+Received: from sunil-laptop ([106.51.198.16]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42abed8b6a8sm183192545e9.2.2024.08.26.00.13.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Aug 2024 00:14:00 -0700 (PDT)
+Date: Mon, 26 Aug 2024 12:43:48 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: JeeHeng Sia <jeeheng.sia@starfivetech.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "anisinha@redhat.com" <anisinha@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
+ "bin.meng@windriver.com" <bin.meng@windriver.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH RESEND v4 0/3] Upgrade ACPI SPCR table to support SPCR
+ table revision 4 format
+Message-ID: <ZswrLDbIFpPpZDAW@sunil-laptop>
+References: <20240823113142.161727-1-jeeheng.sia@starfivetech.com>
+ <ZsicubCBw2YAjq9c@sunil-laptop>
+ <NT0PR01MB1278D6E5A7CD617D9783C7259C8B2@NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn>
 MIME-Version: 1.0
-References: <20240820170907.6788-1-yichen.wang@bytedance.com>
- <20240820170907.6788-5-yichen.wang@bytedance.com>
- <CAE8KmOzK=Qe3nJ_ReRmQr5hkUgoZe9nOBi5G0hByvG3oVuzG+g@mail.gmail.com>
- <CAHObMVZFb+7d8W90TEEzwf=X_RJb238RQG0CEcD_UqboYdhVnA@mail.gmail.com>
-In-Reply-To: <CAHObMVZFb+7d8W90TEEzwf=X_RJb238RQG0CEcD_UqboYdhVnA@mail.gmail.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 26 Aug 2024 12:44:03 +0530
-Message-ID: <CAE8KmOytSMPh2M9Vm+Z3v80u6MB=Vm0PDjjAzLZAvwJeJP644Q@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v8 4/5] migration: Introduce 'qatzip'
- compression method
-To: Yichen Wang <yichen.wang@bytedance.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, 
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>, 
- "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>, 
- Xiaoning Ding <xiaoning.ding@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <NT0PR01MB1278D6E5A7CD617D9783C7259C8B2@NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,20 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 24 Aug 2024 at 04:22, Yichen Wang <yichen.wang@bytedance.com> wrote:
-> The patch was originally written exactly like what you suggest,
-> cleanup in the error path of the same function. However, later I
-> realized in gdb that I was wrong. The qatzip_send_cleanup() function
-> will be called later in another thread in both normal and error paths.
-> So I revised the patch to this behavior, otherwise I will run into
-> double free in the error path.
->
+Hi Jee Heng,
 
-* I see, okay, in that case:
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+On Mon, Aug 26, 2024 at 07:04:11AM +0000, JeeHeng Sia wrote:
+> 
+> 
+> > -----Original Message-----
+> > From: Sunil V L <sunilvl@ventanamicro.com>
+> > Sent: Friday, August 23, 2024 10:29 PM
+> > To: JeeHeng Sia <jeeheng.sia@starfivetech.com>
+> > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org; qemu-riscv@nongnu.org; mst@redhat.com; imammedo@redhat.com;
+> > anisinha@redhat.com; peter.maydell@linaro.org; shannon.zhaosl@gmail.com; palmer@dabbelt.com; alistair.francis@wdc.com;
+> > bin.meng@windriver.com; liwei1518@gmail.com; dbarboza@ventanamicro.com; zhiwei_liu@linux.alibaba.com
+> > Subject: Re: [PATCH RESEND v4 0/3] Upgrade ACPI SPCR table to support SPCR table revision 4 format
+> > 
+> > Hi Jee Heng,
+> > On Fri, Aug 23, 2024 at 04:31:39AM -0700, Sia Jee Heng wrote:
+> > > Update the SPCR table to accommodate the SPCR Table revision 4 [1].
+> > > The SPCR table has been modified to adhere to the revision 4 format [2].
+> > >
+> > > Meanwhile, the virt SPCR golden reference file for RISC-V have been updated to
+> > > accommodate the SPCR Table revision 4.
+> > >
+> > > [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
+> > > [2]: https://github.com/acpica/acpica/pull/931
+> > >
+> > Just curious - whether this needs changes in linux side as well? Does
+> > current linux code work fine with version 4 of SPCR table on RISC-V?
+> The current Linux ACPI Table has not yet been updated to support SPCR v4.
+> However, Linux RISC-V will be able to use the information in the QEMU's
+> SPCR table to boot with behaviour similar to ARM. 
+> > 
+So, it means even if qemu risc-v SPCR is upgraded to version 4,
+current linux continues to work. It may be just able to decode SPCR v2
+fields only until enhanced to understand v4 but but doesn't break
+anything or crash. Is that correct?
 
-Thank you.
----
-  - Prasad
+Just wanted to confirm qemu changes can get merged without any
+dependency.
+
+Thanks!
+Sunil
 
 
