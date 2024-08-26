@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD69C5321E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49169C5320E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siNFq-0008QH-PG; Sun, 25 Aug 2024 20:06:42 -0400
+	id 1siNGH-0001uR-Fc; Sun, 25 Aug 2024 20:07:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1siNFo-0008J4-UI; Sun, 25 Aug 2024 20:06:40 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1siNGF-0001lj-Cl; Sun, 25 Aug 2024 20:07:07 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1siNFn-00011v-82; Sun, 25 Aug 2024 20:06:40 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2f3f25a1713so42864411fa.2; 
- Sun, 25 Aug 2024 17:06:38 -0700 (PDT)
+ id 1siNGD-00014E-M4; Sun, 25 Aug 2024 20:07:07 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2f3e9fb6ee9so44814711fa.3; 
+ Sun, 25 Aug 2024 17:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724630797; x=1725235597; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724630823; x=1725235623; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=c8KpSH2/8UXSgFzTZXJ5Acjckq9KLqp6+mKVmD/Y0+c=;
- b=Bxim3B3INC6ibFiZ3G4rB1RLyCm4GgJMf6rtW97g53gZU+7yM1b7DNfr0mBWn/THqn
- nFtRf3iy1qiOCcs6Cpvckh6iz3h3ty/H4D+vbbHQBLx70RTFVldNhuuOOnwJ0CB/dVB1
- fjOBh6PQ7YKi6wtlG8SkPIWZRltNdqNUG6Q2C4veCeB1uI8AcZzC7bnzoB4nTmQ1Pnk2
- ut9IJY6yiIS4Y5fCKK+ZD5C58kkrCvCN/wU4nLwMfPUgFqPvAHuYfMRrosRBuQ4VMf6C
- K7yW26YaI/q08Ku3Wuh5I3u9PEm407odMe7hCjbktEFnsbSHebFUnBdj2/a+dwzSR4rp
- 6KQg==
+ bh=hp0W6J3P4vcUTlf8QDvwq0u7ou0EA/al6NCWg9HBzjg=;
+ b=E/FDrpiL04KhhgLiSu5waCam9ZgYwBoZu/Js6PfyA22wf+CFEpVWkNRbJMhm7WPpZi
+ WUM9hHkSAv/OGe67axz/yZtStWs5IvK+G1rSSNq9J9BYHUeNdDomwqvoL7ZBs/qAI2H+
+ zMTNoDtahbuewhuRLfWUDe1iLPTBMjJ6RLhQqFvyEHLugBUaAKRuYmlDSX6J8gLNTuEq
+ NoUStZqwGLNXAcZmpMUof1J0vKwNBjqEFsWRd7GhDYaxq37rlgIkRPNl2Cwqu82DDZD7
+ DP7oblb5C8CidX74K9AX9Gl0DGsV4cxpzr1eztzIj7CoaVzAT0dzCjVtylx5Vz1+Gjnf
+ viuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724630797; x=1725235597;
+ d=1e100.net; s=20230601; t=1724630823; x=1725235623;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=c8KpSH2/8UXSgFzTZXJ5Acjckq9KLqp6+mKVmD/Y0+c=;
- b=ON5KQj0+5nTM05SVpL4y7kcjVd7Nxu0u72bvdN2qupdzLZSthJ+Fxxv/JG657Qai7F
- zAbG4cOOxBdtqjlIoi8eDfDRHFOjAHNlKOqVsF0gHQQ/MP/lzfIpxWol1OZ6I5mZbDfb
- GGMH8gI6oIr6tSRYaBn/tDFc0/jh2cB21P2Vv/zHzYzm2YbztCPfNqdIg+GfbvT8TDLr
- UFuqpnqwPuXLzYP1mC7LcyXn6kPUmVQjQGSDABs8xDWE6hOE85j5beGMVZeClYFWJjYc
- PlrtvUIav1gmety8GnisiA09NzD50pYY7xbwRTMRVmvm2LXaM+AdUFpKsy6eXAcUPZAb
- XCgw==
+ bh=hp0W6J3P4vcUTlf8QDvwq0u7ou0EA/al6NCWg9HBzjg=;
+ b=UY27xsXJCRMBxZ6jMDaq+v3mbnxA57tAx2b+QqeUUOygncLX2EWy5JkPud6Xvq5CXA
+ G+/XvmYR9rJC6A0meTqimVmWw/x/QwPSlSH93K4zRefK5TLvvUxMlRJDNyhlKTvuiAWn
+ WykybhAGQLMG+h3mKMdMalv70cZPdb2JFY6pAHa1ppvZKnefGgwc53SL5Z7klQ7O5EB3
+ djl3B49wF0VWppl6dx9nFwSXVfEGR3PA1B7EVAwoLsuwwGRQUAAkOWZyqkzIiYniM7Km
+ sXEHaWe4YfyQMjPMJBdlDatNXnivHbfdaCdGVJhhYtsAqLwScpzqc9tvIzqbePRcPN4S
+ MU0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiH/BjgVrL4/tClkpj4dzLA2VUHyQSE6MXAi8FMUVQxoSmc6PebkbbazwbUDLzoCI1jLmdHGBwjpjv@nongnu.org
-X-Gm-Message-State: AOJu0YzGoP+nfCL+gxKQ5E6xYD3AHPNzhM4DK+DFAV43Tendo4bfRzja
- nzBk1uhw7yUT+l2nE5OjYMtoD0Rbe79qtnUN77NvVAqR8EdFkR1f1QIMeMXc0F0JX9rBN2fmDrM
- BlvlMOXqd3dqhLKig/MfusUCFiGQ=
-X-Google-Smtp-Source: AGHT+IGDv7iuZxQJVzQqsCfjv3ZhI1Q4ZkECL4AOOzYS7UU6JUGkWOasMbHxYads5YbIZOQdgsNuWEQsnPUqLLi7Ocs=
-X-Received: by 2002:a2e:be8a:0:b0:2ef:251f:785 with SMTP id
- 38308e7fff4ca-2f4f48d62a9mr59780031fa.1.1724630796177; Sun, 25 Aug 2024
- 17:06:36 -0700 (PDT)
+ AJvYcCVNe3OMqm3LEGVYMCzSP0/6tYu7kfOmrNx8ATJIpYvsg4t3TJb5yQYXPPy3yGG1ZBtWlbg3jOc5Uy15@nongnu.org
+X-Gm-Message-State: AOJu0YxY0ipPl9Y6YISg/SnvEwQtqHhWonXXJGdAzFI09URMeMOyOxK+
+ XrIEjuzE3kFQIHI+siGBkJSAEMAVlYCk4F0dcl7203DBe0Mn4som9q9ybk22Hql8AmUTc5zXKww
+ lKcUscfNYCXxz6HIlIzJpKcnlo3SzjyHL23M=
+X-Google-Smtp-Source: AGHT+IEn8OFgLanoJslzfjvPVoLvYJ3Unge/GjeNPvuF2hAYux7uJBkXkqkgDaQ1wOQrJ36fAlsMe/HSWQcX6v1v8WE=
+X-Received: by 2002:a05:651c:2204:b0:2f3:e2f0:af18 with SMTP id
+ 38308e7fff4ca-2f4f4937862mr57516111fa.35.1724630822962; Sun, 25 Aug 2024
+ 17:07:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240822162127.705879-1-peter.maydell@linaro.org>
- <20240822162127.705879-4-peter.maydell@linaro.org>
-In-Reply-To: <20240822162127.705879-4-peter.maydell@linaro.org>
+ <20240822162127.705879-5-peter.maydell@linaro.org>
+In-Reply-To: <20240822162127.705879-5-peter.maydell@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 26 Aug 2024 10:06:08 +1000
-Message-ID: <CAKmqyKPj6fBcUG0wpzBVx4U+mYJufFm=W0t_Cy3pKQ5kj69W4w@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 3/6] hw/nvram/xlnx-bbram: Call
+Date: Mon, 26 Aug 2024 10:06:35 +1000
+Message-ID: <CAKmqyKMn10QDSsEkDAZHTJbiML_HjQLFU8PnkZjQ1RxVvpdtrA@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 4/6] hw/nvram/xlnx-zynqmp-efuse: Call
  register_finalize_block
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
@@ -70,8 +70,8 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
  Francisco Iglesias <francisco.iglesias@amd.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=alistair23@gmail.com; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=alistair23@gmail.com; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,28 +95,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 23, 2024 at 2:22=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+On Fri, Aug 23, 2024 at 2:23=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
 .org> wrote:
 >
-> The TYPE_XLNX_BBRAM device creates a register block with
+> The TYPE_XLNX_ZYNQMP_EFUSE device creates a register block with
 > register_init_block32() in its instance_init method; we must
 > therefore destroy it in our instance_finalize method to avoid a leak
 > in the QOM introspection "init-inspect-finalize" lifecycle:
 >
 > Direct leak of 304 byte(s) in 1 object(s) allocated from:
->     #0 0x5641518ca9d8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-=
-from-laptop/qemu/build/asan/qemu-system-aarch64+0x294d9d8) (BuildId: 4a6
-> 18cb63d57d5a19ed45cfc262b08da47eaafe5)
->     #1 0x7ff1aab31c50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:=
+>     #0 0x55f3ff5839d8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-=
+from-laptop/qemu/build/asan/qemu-system-aarch64+0x294d9d8) (BuildId: 23cf93=
+1c66865a71b6cc4da95156d03bc106fa72)
+>     #1 0x7f3f31c6bc50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:=
 161:13
->     #2 0x564151cffc5d in register_init_block hw/core/register.c:248:34
->     #3 0x564151d006be in register_init_block32 hw/core/register.c:299:12
->     #4 0x56415293df75 in bbram_ctrl_init hw/nvram/xlnx-bbram.c:462:9
->     #5 0x564154891dc1 in object_init_with_type qom/object.c:420:9
->     #6 0x56415487909b in object_initialize_with_type qom/object.c:562:5
->     #7 0x56415487a93d in object_new_with_type qom/object.c:782:5
->     #8 0x56415487aa11 in object_new qom/object.c:797:12
->     #9 0x56415507883d in qmp_device_list_properties qom/qom-qmp-cmds.c:14=
+>     #2 0x55f3ff9b8c5d in register_init_block hw/core/register.c:248:34
+>     #3 0x55f3ff9b96be in register_init_block32 hw/core/register.c:299:12
+>     #4 0x55f4005e5b25 in efuse_ctrl_init hw/nvram/xlnx-versal-efuse-ctrl.=
+c:718:9
+>     #5 0x55f40254afb1 in object_init_with_type qom/object.c:420:9
+>     #6 0x55f40253228b in object_initialize_with_type qom/object.c:562:5
+>     #7 0x55f402533b2d in object_new_with_type qom/object.c:782:5
+>     #8 0x55f402533c01 in object_new qom/object.c:797:12
+>     #9 0x55f402d31a2d in qmp_device_list_properties qom/qom-qmp-cmds.c:14=
 4:11
 >
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
@@ -126,66 +127,65 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  include/hw/nvram/xlnx-bbram.h |  1 +
->  hw/nvram/xlnx-bbram.c         | 13 ++++++++++---
+>  include/hw/nvram/xlnx-zynqmp-efuse.h |  1 +
+>  hw/nvram/xlnx-zynqmp-efuse.c         | 13 ++++++++++---
 >  2 files changed, 11 insertions(+), 3 deletions(-)
 >
-> diff --git a/include/hw/nvram/xlnx-bbram.h b/include/hw/nvram/xlnx-bbram.=
-h
-> index 6fc13f8cc17..bce8e89d905 100644
-> --- a/include/hw/nvram/xlnx-bbram.h
-> +++ b/include/hw/nvram/xlnx-bbram.h
-> @@ -47,6 +47,7 @@ struct XlnxBBRam {
->      bool bbram8_wo;
->      bool blk_ro;
+> diff --git a/include/hw/nvram/xlnx-zynqmp-efuse.h b/include/hw/nvram/xlnx=
+-zynqmp-efuse.h
+> index f5beacc2e6a..7fb12df3fbb 100644
+> --- a/include/hw/nvram/xlnx-zynqmp-efuse.h
+> +++ b/include/hw/nvram/xlnx-zynqmp-efuse.h
+> @@ -37,6 +37,7 @@ struct XlnxZynqMPEFuse {
+>      qemu_irq irq;
 >
+>      XlnxEFuse *efuse;
 > +    RegisterInfoArray *reg_array;
->      uint32_t regs[RMAX_XLNX_BBRAM];
->      RegisterInfo regs_info[RMAX_XLNX_BBRAM];
+>      uint32_t regs[XLNX_ZYNQMP_EFUSE_R_MAX];
+>      RegisterInfo regs_info[XLNX_ZYNQMP_EFUSE_R_MAX];
 >  };
-> diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
-> index 09575a77d77..1bc58e90ad0 100644
-> --- a/hw/nvram/xlnx-bbram.c
-> +++ b/hw/nvram/xlnx-bbram.c
-> @@ -456,9 +456,8 @@ static void bbram_ctrl_init(Object *obj)
+> diff --git a/hw/nvram/xlnx-zynqmp-efuse.c b/hw/nvram/xlnx-zynqmp-efuse.c
+> index 2d465f0fc6a..4e2d1b9d1e7 100644
+> --- a/hw/nvram/xlnx-zynqmp-efuse.c
+> +++ b/hw/nvram/xlnx-zynqmp-efuse.c
+> @@ -803,9 +803,8 @@ static void zynqmp_efuse_init(Object *obj)
 >  {
->      XlnxBBRam *s =3D XLNX_BBRAM(obj);
+>      XlnxZynqMPEFuse *s =3D XLNX_ZYNQMP_EFUSE(obj);
 >      SysBusDevice *sbd =3D SYS_BUS_DEVICE(obj);
 > -    RegisterInfoArray *reg_array;
 >
 > -    reg_array =3D
 > +    s->reg_array =3D
->          register_init_block32(DEVICE(obj), bbram_ctrl_regs_info,
->                                ARRAY_SIZE(bbram_ctrl_regs_info),
+>          register_init_block32(DEVICE(obj), zynqmp_efuse_regs_info,
+>                                ARRAY_SIZE(zynqmp_efuse_regs_info),
 >                                s->regs_info, s->regs,
-> @@ -466,10 +465,17 @@ static void bbram_ctrl_init(Object *obj)
->                                XLNX_BBRAM_ERR_DEBUG,
+> @@ -813,10 +812,17 @@ static void zynqmp_efuse_init(Object *obj)
+>                                ZYNQMP_EFUSE_ERR_DEBUG,
 >                                R_MAX * 4);
 >
 > -    sysbus_init_mmio(sbd, &reg_array->mem);
 > +    sysbus_init_mmio(sbd, &s->reg_array->mem);
->      sysbus_init_irq(sbd, &s->irq_bbram);
+>      sysbus_init_irq(sbd, &s->irq);
 >  }
 >
-> +static void bbram_ctrl_finalize(Object *obj)
+> +static void zynqmp_efuse_finalize(Object *obj)
 > +{
-> +    XlnxBBRam *s =3D XLNX_BBRAM(obj);
+> +    XlnxZynqMPEFuse *s =3D XLNX_ZYNQMP_EFUSE(obj);
 > +
 > +    register_finalize_block(s->reg_array);
 > +}
 > +
->  static void bbram_prop_set_drive(Object *obj, Visitor *v, const char *na=
-me,
->                                   void *opaque, Error **errp)
->  {
-> @@ -537,6 +543,7 @@ static const TypeInfo bbram_ctrl_info =3D {
->      .instance_size =3D sizeof(XlnxBBRam),
->      .class_init    =3D bbram_ctrl_class_init,
->      .instance_init =3D bbram_ctrl_init,
-> +    .instance_finalize =3D bbram_ctrl_finalize,
+>  static const VMStateDescription vmstate_efuse =3D {
+>      .name =3D TYPE_XLNX_ZYNQMP_EFUSE,
+>      .version_id =3D 1,
+> @@ -853,6 +859,7 @@ static const TypeInfo efuse_info =3D {
+>      .instance_size =3D sizeof(XlnxZynqMPEFuse),
+>      .class_init    =3D zynqmp_efuse_class_init,
+>      .instance_init =3D zynqmp_efuse_init,
+> +    .instance_finalize =3D zynqmp_efuse_finalize,
 >  };
 >
->  static void bbram_ctrl_register_types(void)
+>  static void efuse_register_types(void)
 > --
 > 2.34.1
 >
