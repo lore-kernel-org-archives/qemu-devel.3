@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D040C5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 22:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9353AC5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 22:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sihvf-0000dl-Jk; Mon, 26 Aug 2024 18:11:15 -0400
+	id 1sihvl-0000r2-Ty; Mon, 26 Aug 2024 18:11:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sihvY-0000cG-8A
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 18:11:09 -0400
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sihvh-0000gf-Hy
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 18:11:18 -0400
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sihvU-0000mL-IU
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 18:11:06 -0400
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-4fd136aac40so1268000e0c.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 15:11:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sihvc-0000mg-0n
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 18:11:14 -0400
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-7a35eff1d06so325269185a.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 15:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724710263; x=1725315063; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=33v1eQT9GnPGoXvY61UfarMCNAR9O1t+ASdJzKFEsFA=;
- b=bIcSHJlzjjsheFnk47han/DkTA/pgvap6uAZt2UAnhcFKh0OYCEdmq550GfhLNSdv6
- pwQiU4MigXSOPuh5XOjRXzXrv3gBY3wlIkY3IFWWZxorTEZIQjE+TQ+bFjAjjR5jUsuo
- k9/N7MqNkFHWhe6rmptteNBXwyx4GerP4JjBh1Oi5oQdn+7hIC0OW7c6IDZAllNr2ZQR
- 2TH4+ExW0m6ZLtOf+Iw1oI/MlDv+Vohk62p5uFC5vROqNZRofIaCq2rqH9q297k2hx0I
- Q5XqUmxQUw8hoEMvzZHGVBUMi3R6iPEfbBwaSo/9i5EQB+oVNNHMfD+g1YkLl6gzgz+H
- 8X1w==
+ d=linaro.org; s=google; t=1724710271; x=1725315071; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kTnjesUH2NNf1bjjgBGv8s5R89ah5gTEHGN2lVVE7a4=;
+ b=pHNvbcY4Evsp+IVznnhyI2YFEUz6Vp4U6AEwwiKK8CqvjWMo3PSKgCWWSs0rb4Ugs5
+ oVFQ89wO/RohvKWHmQbDNQiohxakj2P1BgQI4HWJk+1bdY5mMeFMY+6NXr/ZGSiB8ix5
+ J4OnkFgMh52ckqMYY1nM/ZQSUWvdB2s1uOUpVVhk2ON68d1499YMmky2RM8rSiA+gmOq
+ S1Mbuo8cpLND8tN+DZN2tyE2hly02baYe5IDfsS7F6jTUCyzdtTCrif59NoLaQlraa5I
+ +37d+db0drOcHZwHnY1C5RYh2FiL4ayqC4JsMstzs2QJE2yQekcTmWZvUehKjj3kiRhv
+ 4wfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724710263; x=1725315063;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=33v1eQT9GnPGoXvY61UfarMCNAR9O1t+ASdJzKFEsFA=;
- b=AIFJrpKdlbBUR8LDC9B/W0gerQ6x4nRxvL3yZE6QsGIJR9/3PTAO+tNgOCnc54YgPU
- sR+YhB19g2c6s/oVmuIfTO8FMfv3y6Om/wthnJlQR6mUStHdzK8/gDOP3tM/hLS1kexg
- 4TSZgyDhzireZHsW1t/fKytQJ2UKGm8Aa8e2Y2m5LS1iUYpxh/YuCrQGy6vEmB2zv17t
- t5tO2I2Gt50V26R2chdK51BdL41zCq0R0EvE0ly974AqorgIbalaQrfzfiM6M9s2k/y/
- HDp9IGGw5NkyGPoDRka76+iB+96Uo+tdIGu6wWiDqM9j6az9cI6vgmfSvVMLRWGddAHP
- SVmw==
-X-Gm-Message-State: AOJu0YwRoLHcAkn1mUqTHXPwYsdUTxmnM57r/RF7/xZdSVyFPB3GCx83
- O/266XdHvoW4JWVSzuftSwbDqVse0DYscDGXmNdi4OrySwzgkj+IO9yM8IKEm6gQOL9pBFnqELp
- /
-X-Google-Smtp-Source: AGHT+IET1ipGr6ibjleQLfCnDO8u1tzJX4sFPse00M8sTMcDxNAbPlQrTYtn/KYrYBrGAlNoZGavYg==
-X-Received: by 2002:a05:6122:1d51:b0:4fc:f1e3:d238 with SMTP id
- 71dfb90a1353d-4fed5d63593mr1391597e0c.1.1724710263059; 
- Mon, 26 Aug 2024 15:11:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724710271; x=1725315071;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kTnjesUH2NNf1bjjgBGv8s5R89ah5gTEHGN2lVVE7a4=;
+ b=kvU8CrkRt75lwHSD3dLHtPOZhXjtLtS1pXikFeUB9cSCqJl0rZM3FdADPnfG18OeVt
+ 3dNj0oSE3uUvCjhNctA01nupVeylXFO5Os2RpNeJn7f7l9JMM8fRD+eDOP8Og7rWsdc4
+ q07E821UtcN0uPIBBQ6ZpNZpEDbw0tjbc62QPcsH1MBCpjEaJ9Ol7SPEQGtl+Pqh/wb0
+ 6NlSSdPwUA3ZBP4XZITM2Fm43oH6ILpZ8olw92DWqMBiZ7fS5JnmVgLibSt5c0ZNNldd
+ D1z3Ynp1kPSgsFIS5SP9WFTGgVDHqsWU4oFJlf4sXuh+dtpZU64WNMDXIAoiPSpeQhjf
+ FrCA==
+X-Gm-Message-State: AOJu0Yx5Dl/2tMdgXmmD3EPOQdY/NH68DSrqDtJnT/LQ4WgoTRdugcTe
+ pmTv4VCiyiPlCvslb13tg/t9EXxEET9w/v2hzHRQfFRgcpNGGSobgv32J1dNznDVDmgRSkUFl6f
+ S
+X-Google-Smtp-Source: AGHT+IGxyN0ScRvf8Afqwc/IGRknGR8/FbHVeE4F7/oUu2U17kpLLQExi0ONjRrLSpRsZO5+fo9o3w==
+X-Received: by 2002:a05:620a:40d5:b0:79f:87c:a540 with SMTP id
+ af79cd13be357-7a6897a8b02mr1492498685a.58.1724710270701; 
+ Mon, 26 Aug 2024 15:11:10 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.216.241])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-454fe0f04adsm47913111cf.43.2024.08.26.15.11.00
+ af79cd13be357-7a67f3fbf22sm495614385a.103.2024.08.26.15.11.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Aug 2024 15:11:02 -0700 (PDT)
+ Mon, 26 Aug 2024 15:11:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
@@ -63,15 +64,18 @@ Cc: Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/4] tests/functional: Convert Raspberry Pi avocado tests
-Date: Tue, 27 Aug 2024 00:10:54 +0200
-Message-ID: <20240826221058.75126-1-philmd@linaro.org>
+Subject: [PATCH 1/4] tests/functional: Add a class containing Linux kernel
+ helpers
+Date: Tue, 27 Aug 2024 00:10:55 +0200
+Message-ID: <20240826221058.75126-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240826221058.75126-1-philmd@linaro.org>
+References: <20240826221058.75126-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=philmd@linaro.org; helo=mail-vk1-xa2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=philmd@linaro.org; helo=mail-qk1-x732.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,35 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-▶ 4/5 test_aarch64_raspi3.Aarch64Raspi3Machine.test_aarch64_raspi3_atf                OK
-4/5 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_raspi3   OK   1.96s   1 subtests passed
-▶ 5/5 test_aarch64_raspi4.Aarch64Raspi4Machine.test_arm_raspi4                        OK
-5/5 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_raspi4   OK   5.19s   1 subtests passed
-▶ 6/6 test_arm_raspi2.ArmRaspi2Machine.test_arm_raspi2_initrd                         OK
-▶ 6/6 test_arm_raspi2.ArmRaspi2Machine.test_arm_raspi2_uart0                          OK
-6/6 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_raspi2               OK   15.31s   2 subtests passed
+Use the 'linux_kernel' namespace to provide common helpers
+to functional tests booting a Linux kernel.
 
-Based-on: <20240821082748.65853-1-thuth@redhat.com>
-
-Philippe Mathieu-Daudé (4):
-  tests/functional: Add a class containing Linux kernel helpers
-  tests/functional: Convert ARM Raspi2 avocado tests
-  tests/functional: Convert Aarch64 Raspi3 avocado tests
-  tests/functional: Convert Aarch64 Raspi4 avocado tests
-
- MAINTAINERS                                |   3 +
- tests/avocado/boot_linux_console.py        | 205 ---------------------
- tests/functional/meson.build               |   6 +
- tests/functional/qemu_test/linux_kernel.py |  19 ++
- tests/functional/test_aarch64_raspi3.py    |  42 +++++
- tests/functional/test_aarch64_raspi4.py    | 106 +++++++++++
- tests/functional/test_arm_raspi2.py        | 103 +++++++++++
- 7 files changed, 279 insertions(+), 205 deletions(-)
+Suggested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/functional/qemu_test/linux_kernel.py | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
  create mode 100644 tests/functional/qemu_test/linux_kernel.py
- create mode 100755 tests/functional/test_aarch64_raspi3.py
- create mode 100755 tests/functional/test_aarch64_raspi4.py
- create mode 100755 tests/functional/test_arm_raspi2.py
 
+diff --git a/tests/functional/qemu_test/linux_kernel.py b/tests/functional/qemu_test/linux_kernel.py
+new file mode 100644
+index 0000000000..917beb7fb6
+--- /dev/null
++++ b/tests/functional/qemu_test/linux_kernel.py
+@@ -0,0 +1,19 @@
++# Linux kernel functional test helpers
++#
++# Copyright (c) 2024 Linaro Ltd.
++#
++# Author:
++#  Philippe Mathieu-Daudé <philmd@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from . import wait_for_console_pattern
++
++KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
++
++KERNEL_PANIC_MESSAGE = 'Kernel panic - not syncing'
++
++def linux_kernel_wait_for_pattern(test, success_message):
++    wait_for_console_pattern(test,
++                             success_message=success_message,
++                             failure_message=KERNEL_PANIC_MESSAGE)
 -- 
 2.45.2
 
