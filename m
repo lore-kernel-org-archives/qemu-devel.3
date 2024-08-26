@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE659C5472E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D040C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 22:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sihHx-0004jU-UL; Mon, 26 Aug 2024 17:30:14 -0400
+	id 1sihvf-0000dl-Jk; Mon, 26 Aug 2024 18:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sihHw-0004Zr-1H
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:30:12 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sihvY-0000cG-8A
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 18:11:09 -0400
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sihHu-0005Zr-EG
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:30:11 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7142a30e3bdso4322769b3a.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 14:30:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sihvU-0000mL-IU
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 18:11:06 -0400
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-4fd136aac40so1268000e0c.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 15:11:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724707809; x=1725312609; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ET58ZsFht/AM1e8o3WIpvgr3yTX7mvXQ5zS8Bvlr03Y=;
- b=X/yi9Gbv972zuRtbDDeF4RR2xhCd3X4QoKIwlc3T6TQ93KluC58B7NHuFUH4L87rT7
- /4t61xmgi9tHWPOPXWGiGC2SEWfEOsAbPQe4PnPJdzlyYBTB5t4wT4seTU5iE17FMwQ9
- MFrN+E1wj3WF1inf2/g8jjTvBicFChXFgabutRxwpgoDp8HILirwXx/+3pvXpkdeBxQl
- pC2byBEtF0ebHwARi0WjOiBvv26IR855VN2sGM9O5XYQRcJWMBsA4t6JGkYPFs+dh5cT
- Jt4a1Bzy9n+g8I9Lju2hP7PneTxLfNkMfDJhTE55mgVYYfRVbg2ocXq3+EPneKTfIb2y
- xqZg==
+ d=linaro.org; s=google; t=1724710263; x=1725315063; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=33v1eQT9GnPGoXvY61UfarMCNAR9O1t+ASdJzKFEsFA=;
+ b=bIcSHJlzjjsheFnk47han/DkTA/pgvap6uAZt2UAnhcFKh0OYCEdmq550GfhLNSdv6
+ pwQiU4MigXSOPuh5XOjRXzXrv3gBY3wlIkY3IFWWZxorTEZIQjE+TQ+bFjAjjR5jUsuo
+ k9/N7MqNkFHWhe6rmptteNBXwyx4GerP4JjBh1Oi5oQdn+7hIC0OW7c6IDZAllNr2ZQR
+ 2TH4+ExW0m6ZLtOf+Iw1oI/MlDv+Vohk62p5uFC5vROqNZRofIaCq2rqH9q297k2hx0I
+ Q5XqUmxQUw8hoEMvzZHGVBUMi3R6iPEfbBwaSo/9i5EQB+oVNNHMfD+g1YkLl6gzgz+H
+ 8X1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724707809; x=1725312609;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ET58ZsFht/AM1e8o3WIpvgr3yTX7mvXQ5zS8Bvlr03Y=;
- b=vLJRNNpsI728BgQvM45/URhljl0HgOOOcvXIyavaHH+xMB09oKw/W6qYXAMMfdLEnP
- j5IRB7S60EE1UMZxOjX5xkezTAMDzQpAnggPSw4kA0e+aqG0HyQLqJ/CAr2szGF2oMPO
- N5tydNpa1UQ6CNyzZYH4RRLYeJ1ie9JItbPaMJLoxbcB13/z1c07ALC6V7tiOzTTr7lX
- TXPRwxsIo/DmoNsoJHHLMMkiA0lq5RyWN9FRb2EXBd8zKh6txmCBg9F/R8773jAqrUrt
- 3VNvv0Rf5IjZ+fKDibzZKBugETG/o+hHtqof61oqTzhrl2AqBwesCdm3W50N4WN+T64z
- sbrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpnKm5ApDFhaev5gIY/C0Lj3hjN/5rvqPLbJ3I+iuVmYtYAC7FoVRwMY5+rNoiQQoqUWP2itnVItlR@nongnu.org
-X-Gm-Message-State: AOJu0Yw4cXNXrlygaHz9DoFMEblCfmHYx5Kbp+D0fxqaxadfcCnZRqjN
- RJT1QoQ2UT+Z0nK03w/D/jtI/i0lT5K9VKAy3/MMGuuEs8D7ym9PdJ6nh16pVZ0=
-X-Google-Smtp-Source: AGHT+IHCK4Qmmj46WFnHuBaX2Lbiwn/lEnh1Mq/sIjNX0tCHkFuE5Vd6YqiC3ajGv8HYyLKqUyQ7+Q==
-X-Received: by 2002:a05:6a20:a106:b0:1c4:942f:1ac7 with SMTP id
- adf61e73a8af0-1ccbffbf46fmr1447479637.0.1724707808753; 
- Mon, 26 Aug 2024 14:30:08 -0700 (PDT)
-Received: from [192.168.98.227] ([1.145.75.248])
+ d=1e100.net; s=20230601; t=1724710263; x=1725315063;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=33v1eQT9GnPGoXvY61UfarMCNAR9O1t+ASdJzKFEsFA=;
+ b=AIFJrpKdlbBUR8LDC9B/W0gerQ6x4nRxvL3yZE6QsGIJR9/3PTAO+tNgOCnc54YgPU
+ sR+YhB19g2c6s/oVmuIfTO8FMfv3y6Om/wthnJlQR6mUStHdzK8/gDOP3tM/hLS1kexg
+ 4TSZgyDhzireZHsW1t/fKytQJ2UKGm8Aa8e2Y2m5LS1iUYpxh/YuCrQGy6vEmB2zv17t
+ t5tO2I2Gt50V26R2chdK51BdL41zCq0R0EvE0ly974AqorgIbalaQrfzfiM6M9s2k/y/
+ HDp9IGGw5NkyGPoDRka76+iB+96Uo+tdIGu6wWiDqM9j6az9cI6vgmfSvVMLRWGddAHP
+ SVmw==
+X-Gm-Message-State: AOJu0YwRoLHcAkn1mUqTHXPwYsdUTxmnM57r/RF7/xZdSVyFPB3GCx83
+ O/266XdHvoW4JWVSzuftSwbDqVse0DYscDGXmNdi4OrySwzgkj+IO9yM8IKEm6gQOL9pBFnqELp
+ /
+X-Google-Smtp-Source: AGHT+IET1ipGr6ibjleQLfCnDO8u1tzJX4sFPse00M8sTMcDxNAbPlQrTYtn/KYrYBrGAlNoZGavYg==
+X-Received: by 2002:a05:6122:1d51:b0:4fc:f1e3:d238 with SMTP id
+ 71dfb90a1353d-4fed5d63593mr1391597e0c.1.1724710263059; 
+ Mon, 26 Aug 2024 15:11:03 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.216.241])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7cd9acbfc09sm8107886a12.37.2024.08.26.14.30.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 14:30:08 -0700 (PDT)
-Message-ID: <a10c10b2-498e-4572-9718-df384b3c022f@linaro.org>
-Date: Tue, 27 Aug 2024 07:30:02 +1000
+ d75a77b69052e-454fe0f04adsm47913111cf.43.2024.08.26.15.11.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 26 Aug 2024 15:11:02 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sergey Kambalin <sergey.kambalin@auriga.com>, qemu-arm@nongnu.org,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/4] tests/functional: Convert Raspberry Pi avocado tests
+Date: Tue, 27 Aug 2024 00:10:54 +0200
+Message-ID: <20240826221058.75126-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/17] bsd-user: Implement RISC-V CPU register cloning
- and reset functions
-To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>
-References: <20240824045635.8978-1-itachis@FreeBSD.org>
- <20240824045635.8978-4-itachis@FreeBSD.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240824045635.8978-4-itachis@FreeBSD.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=philmd@linaro.org; helo=mail-vk1-xa2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,38 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/24/24 14:56, Ajeet Singh wrote:
-> From: Mark Corbin <mark@dibsco.co.uk>
-> 
-> Added functions for cloning CPU registers and resetting the CPU state
-> for RISC-V architecture.
-> 
-> Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
-> Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   bsd-user/riscv/target_arch_cpu.h | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
-> 
-> diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
-> index eb37b062a3..522cfc099b 100644
-> --- a/bsd-user/riscv/target_arch_cpu.h
-> +++ b/bsd-user/riscv/target_arch_cpu.h
-> @@ -130,4 +130,18 @@ static inline void target_cpu_loop(CPURISCVState *env)
->       }
->   }
->   
-> +static inline void target_cpu_clone_regs(CPURISCVState *env, target_ulong newsp)
-> +{
-> +    if (newsp) {
-> +        env->gpr[xSP] = newsp;
-> +    }
-> +
-> +    env->gpr[xA0] = 0; /* a0 */
-> +    env->gpr[xT0] = 0; /* t0 */
+▶ 4/5 test_aarch64_raspi3.Aarch64Raspi3Machine.test_aarch64_raspi3_atf                OK
+4/5 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_raspi3   OK   1.96s   1 subtests passed
+▶ 5/5 test_aarch64_raspi4.Aarch64Raspi4Machine.test_arm_raspi4                        OK
+5/5 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_raspi4   OK   5.19s   1 subtests passed
+▶ 6/6 test_arm_raspi2.ArmRaspi2Machine.test_arm_raspi2_initrd                         OK
+▶ 6/6 test_arm_raspi2.ArmRaspi2Machine.test_arm_raspi2_uart0                          OK
+6/6 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_raspi2               OK   15.31s   2 subtests passed
 
-Now that you're using proper symbolic constants, the comments don't add anything.
+Based-on: <20240821082748.65853-1-thuth@redhat.com>
 
+Philippe Mathieu-Daudé (4):
+  tests/functional: Add a class containing Linux kernel helpers
+  tests/functional: Convert ARM Raspi2 avocado tests
+  tests/functional: Convert Aarch64 Raspi3 avocado tests
+  tests/functional: Convert Aarch64 Raspi4 avocado tests
 
-r~
+ MAINTAINERS                                |   3 +
+ tests/avocado/boot_linux_console.py        | 205 ---------------------
+ tests/functional/meson.build               |   6 +
+ tests/functional/qemu_test/linux_kernel.py |  19 ++
+ tests/functional/test_aarch64_raspi3.py    |  42 +++++
+ tests/functional/test_aarch64_raspi4.py    | 106 +++++++++++
+ tests/functional/test_arm_raspi2.py        | 103 +++++++++++
+ 7 files changed, 279 insertions(+), 205 deletions(-)
+ create mode 100644 tests/functional/qemu_test/linux_kernel.py
+ create mode 100755 tests/functional/test_aarch64_raspi3.py
+ create mode 100755 tests/functional/test_aarch64_raspi4.py
+ create mode 100755 tests/functional/test_arm_raspi2.py
+
+-- 
+2.45.2
+
 
