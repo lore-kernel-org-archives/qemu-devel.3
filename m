@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E2CC5320E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EB4C5320E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 00:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siNZt-0001LZ-AL; Sun, 25 Aug 2024 20:27:25 -0400
+	id 1siNbV-0000AF-5S; Sun, 25 Aug 2024 20:29:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1siNZk-0000pr-MD; Sun, 25 Aug 2024 20:27:17 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1siNbT-0008VR-MW; Sun, 25 Aug 2024 20:29:03 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1siNZi-0003Fr-Da; Sun, 25 Aug 2024 20:27:16 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5beb6ea9ed6so4134905a12.1; 
- Sun, 25 Aug 2024 17:27:12 -0700 (PDT)
+ id 1siNbS-0003Nx-3x; Sun, 25 Aug 2024 20:29:03 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a869332c2c2so550458166b.0; 
+ Sun, 25 Aug 2024 17:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724632032; x=1725236832; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724632140; x=1725236940; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E/gbMb2SsyU6QT9E3rH6hADA1c5E+mlqPQb0z4Adc2Q=;
- b=e7Pp1gvkpB8dZyBf7BSG2dzlOVp/wHHAHFXX7L9fKW4XyoBAmhre0X943ZhI4/1gbc
- kWBXmzTvTv1EQKTyNt3Xhx5y4VccDbsJJGG49WncXh9GpcB6SAN+dMow49K6R+ipt4RP
- raCxe1BMbc8paIOw+rw+KALqf3e6NzRZVKFUStJ5XqhXmR+1CiIVuP0a4sKWhNr6IeuF
- hBUkf7VmvqCcp7hgUXGz4TVGaN+WfiNifCG07J/xvV1G59ydjstfmJWhcDwbKbcIPdOL
- trU0FDIG76+1oQ14MeOpVOfgBSyWWGh0SnpCrxUg5IFLtk+Gpc+xXtC04J/36005NEKQ
- VFRA==
+ bh=1MX4Lr0OEKs9MXTNGgEzVKP1paPH1geOSzlrntY7HGY=;
+ b=PzGVoAyhG5upHq7jJy0WqUzsrLeDxFHcky6zjdK8uuwVBsW1KoEYMpSpeC9Xl0RHn6
+ f2XsgjaYECw1eZQxzRmNYCLloIGsw5Q88LhEjJ9d5ziBt1X8K8FFlE8vEFr9QZLKzmtD
+ +o6wkZR9aIVOK5w0Rv9vpeedZP17yjzvukCAx579lI85ZDsHZIlB8ZyRPQCK2f2dxZ5c
+ 6j1LDxKhNbzItG6OXO5RTtLixnTb3gmWw3j4F6D/7y2K7YgBMrwh69pGCs6t+hli5eXB
+ xvUj1h0Tz6bM6eOyozknV/oD3Wu4avCQSr4MeydLG8jycB9rnEHqd1IgeWsilSeoLRQf
+ E43w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724632032; x=1725236832;
+ d=1e100.net; s=20230601; t=1724632140; x=1725236940;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E/gbMb2SsyU6QT9E3rH6hADA1c5E+mlqPQb0z4Adc2Q=;
- b=nEOW/whCWeU0jIxAokcyjwHl5FZQfkc3Vi2LXrlqtOmrZIm2DnsNlW0MZs/RNW5M36
- i4lJ7aHhnytzeJ19roHPaNtqR3sQONEZBiA/51Bs0kR6Iu8bch8tziGHGMdz0OcaaqS2
- uysNg0ebi08QJunflDxz6Dac3w9dSp0yqLYZTR93xzgJOzqYxSCJtjRUzLzs+3U83kVp
- tQOxH0PQtARPSEI4NCD9WEKLpsT2QLSGSzxFPKPGgTzTxZlBrAtQPyiMS/kmUhohUzof
- xlDvCHgOJUHuV8c8wHI8RUMAHAPJvFjZnXpgu/rTD9wEhNAZh0vRhWOXb641KPXGFkLU
- qdIA==
+ bh=1MX4Lr0OEKs9MXTNGgEzVKP1paPH1geOSzlrntY7HGY=;
+ b=F2sD7IzZaOwq2i9T3QpzW4tuokQMvt4I+l+3pTCN3ztynUbq3RHWNbtebXvFhX15jb
+ 4MtFT9Feg73EUIN2mJ/FuL98yQfu3Z3XEUsXllOIlCzAXVV1CSCN+C8BA4KfXtIMecCD
+ duXEtXfTC26EqCMOlO0zSu6Mz1OnSKJeshLycV+16FODjuD5SBNU3fjgHJyWfhjF4eVx
+ QK2Yv2tJFZ088pUYyCRONo4rVrR3/jqZq248T3KYFzDpvjgFcGd2AycHRVEhgb8af7LN
+ GuBJOm8YCcNt45Lz1rqV8Qm3nOSUdosDzP+zDVocYQTgcx07pz5L/RyIWCC6J5x2p1dV
+ 19tQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuDNj5ohDm6XDunfkh8GRlku/F+7iWXxxYC7YXIGYR0BX8OcDj3JMk5sRww6VCRL2Q9GVnjSOOYB9JtQ==@nongnu.org,
- AJvYcCVE/nssRH1TeIrt9+iXrqsNv+5FYjnPJkjS/jM0/QUHXxnrT0GnHujm3uCU0EhT702FwscVPcUFtXQZ@nongnu.org
-X-Gm-Message-State: AOJu0YxG/I1wm7aiTbwCk1xb70tErEzAmSMoi7JGiJjwibPueqvOsK4B
- fmi6XEj3stfcu9F7hCrSmU6MaJmIGc9jJBTxWezDrHgDkG645066yJi1aQxTv1K7sJEvpG4235O
- KoMRsimdnb5WL3jIArXFXByRi9NQ=
-X-Google-Smtp-Source: AGHT+IEMzTkpCXwGqG20fnSe3rtViCNfhSS+QvsgjFaUcHkwEf4fTwnl+55+khbjR8XBXZkNHD0usDGrXWmAWvXoI/I=
-X-Received: by 2002:a05:6402:4404:b0:5be:ee3c:54b7 with SMTP id
- 4fb4d7f45d1cf-5c08919f049mr5645419a12.30.1724632031249; Sun, 25 Aug 2024
- 17:27:11 -0700 (PDT)
+ AJvYcCVtEZu5pimWBQ16IFfhdslDxHJNBxzb1H9hf+L6v2I+n05NHK2pZhGevDZDCDagF0043m0YBl0s7TmN@nongnu.org
+X-Gm-Message-State: AOJu0Yz1hH9WVQjxh3vTLyNw73mcr4RFq+a13ZqMdy+vlwprwom8o/zm
+ 1MBOZK7YE8rzcKcjrvtNzlKJuJEAV8vfgSRV76FuawZqaVwxHFWnIuN/niVvSCdpaOPXcJT49bW
+ IaL14BSei5gpOlfZGEDsoR8Dfq7c=
+X-Google-Smtp-Source: AGHT+IFVHi+fISY8iDHwjIlfLz/nKiUCwegoZb7OXaEckTeRKX6/Wsk7TzkjSVPQpTEpkBKyJ6q629vDE6Dbdv7AN5w=
+X-Received: by 2002:a17:907:2dac:b0:a7a:8dcd:ffb4 with SMTP id
+ a640c23a62f3a-a868a69568cmr1164795166b.17.1724632139453; Sun, 25 Aug 2024
+ 17:28:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240823113142.161727-1-jeeheng.sia@starfivetech.com>
- <20240823113142.161727-2-jeeheng.sia@starfivetech.com>
-In-Reply-To: <20240823113142.161727-2-jeeheng.sia@starfivetech.com>
+References: <20240821075040.498945-2-ajones@ventanamicro.com>
+In-Reply-To: <20240821075040.498945-2-ajones@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 26 Aug 2024 10:26:43 +1000
-Message-ID: <CAKmqyKNWeRZrzutpc5Lhq2EUiwfa07vyFzBnoNRFNAfVWkw2Hw@mail.gmail.com>
-Subject: Re: [PATCH RESEND v4 1/3] qtest: allow SPCR acpi table changes
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Date: Mon, 26 Aug 2024 10:28:32 +1000
+Message-ID: <CAKmqyKNM7_ux4o+=yVkW9xzfzwZRbu_YYy9aO3bQD6ZMuOe0nQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv/kvm: Fix the group bit setting of AIA
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, yongxuan.wang@sifive.com, 
+ dbarboza@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,29 +92,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 23, 2024 at 9:33=E2=80=AFPM Sia Jee Heng
-<jeeheng.sia@starfivetech.com> wrote:
+On Wed, Aug 21, 2024 at 5:51=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
+om> wrote:
 >
-> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+> Just as the hart bit setting of the AIA should be calculated as
+> ceil(log2(max_hart_id + 1)) the group bit setting should be
+> calculated as ceil(log2(max_group_id + 1)). The hart bits are
+> implemented by passing max_hart_id to find_last_bit() and adding
+> one to the result. Do the same for the group bit setting.
+>
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
->  tests/qtest/bios-tables-test-allowed-diff.h | 1 +
->  1 file changed, 1 insertion(+)
+>  target/riscv/kvm/kvm-cpu.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bi=
-os-tables-test-allowed-diff.h
-> index dfb8523c8b..aae973048a 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,2 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/riscv64/virt/SPCR",
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index f6e3156b8d2f..341af901c5b0 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1695,6 +1695,7 @@ void kvm_riscv_aia_create(MachineState *machine, ui=
+nt64_t group_shift,
+>      uint64_t max_hart_per_socket =3D 0;
+>      uint64_t socket, base_hart, hart_count, socket_imsic_base, imsic_add=
+r;
+>      uint64_t socket_bits, hart_bits, guest_bits;
+> +    uint64_t max_group_id;
+>
+>      aia_fd =3D kvm_create_device(kvm_state, KVM_DEV_TYPE_RISCV_AIA, fals=
+e);
+>
+> @@ -1742,7 +1743,8 @@ void kvm_riscv_aia_create(MachineState *machine, ui=
+nt64_t group_shift,
+>
+>
+>      if (socket_count > 1) {
+> -        socket_bits =3D find_last_bit(&socket_count, BITS_PER_LONG) + 1;
+> +        max_group_id =3D socket_count - 1;
+> +        socket_bits =3D find_last_bit(&max_group_id, BITS_PER_LONG) + 1;
+>          ret =3D kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+>                                  KVM_DEV_RISCV_AIA_CONFIG_GROUP_BITS,
+>                                  &socket_bits, true, NULL);
 > --
-> 2.34.1
+> 2.45.2
 >
 >
 
