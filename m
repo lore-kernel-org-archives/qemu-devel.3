@@ -4,84 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C119C5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 11:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E6ACC5321E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 11:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siXkG-0000QW-97; Mon, 26 Aug 2024 07:18:48 -0400
+	id 1siXvb-00074d-Lj; Mon, 26 Aug 2024 07:30:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1siXkF-0000Q0-4s
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 07:18:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
+ id 1siXva-00073d-1v; Mon, 26 Aug 2024 07:30:30 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1siXkC-0003WG-DW
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 07:18:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724671123;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VjXWNlognirEp1Z6ho26/xSVDfYIZzIShcgtjl5pBUI=;
- b=B2ofvVMRkWg1IbJanygWr49E/W2k5w3Rp6hgJj0qMNUgRjTz/6MlXkmcJlgGuqOUu/Z5EO
- hpFZFwdEO3f9FiF4GVhATtbW/H3Qw7oioNOLU7oaNPhdlgp1/Hze7Hx0YEKXYGNMASmmgR
- Ic/vs6XjP0qSPWnEAf/JxLZP5VE6eCk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-4akYpkl9OzuEh0cg7bFbLw-1; Mon, 26 Aug 2024 07:18:41 -0400
-X-MC-Unique: 4akYpkl9OzuEh0cg7bFbLw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42808685ef0so40313775e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 04:18:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724671120; x=1725275920;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VjXWNlognirEp1Z6ho26/xSVDfYIZzIShcgtjl5pBUI=;
- b=S5p8yERugZ0tkCzIxHoa15L2L7znd18ZBKoLT28LZRNJZyWF0hvasa2yBGyz5F9xAd
- vTkZL5H/ePQW4mTMpQPl5LsTHPRYDsxH0BSKvvWC+TUynlZ3SdLB9ZH5D6l/Gr4ieIM0
- L59xrDO+A5lyvJHmQU9X9mcBZZJTi9oO7b1+q27fSiyaA+VPN61tXoGh05O+8XxLYbmb
- KgjOv53ZzV4WK/zG19H5zx2kbFJ+PqcoXSv+7Tf4QhLUR6GLRWpsBHOlC1G72aqJnYZ7
- EqRKKbDeyFfms0YCaEagi0ONHZYGy9DzU5spXGlVT4qaK0uqsk+ZYHnEZwEqYGzezirE
- QnWQ==
-X-Gm-Message-State: AOJu0Yzw49vhI67aSR6+Ed+SKu9WuaaI1q4hkfBtiVFxbfLZIY8jsQst
- 5BiXcgaVjBbYdbv9zr2NHC6zPXpjKJdJWKfTuQ03Spm8OYO/fOVZL/597LYaj4/PcuyJDbjReMM
- DmYnGwBXurkjO/j2HLlUpwDbDyXpnLkPSW0UKHgu6NaiVfQvpuSo4Ir7icSWrK9kZD2HzcA3qED
- 0CajFmqOYDFlpw/yha30NHdCdsIKg=
-X-Received: by 2002:a05:600c:310e:b0:426:5fbe:bf75 with SMTP id
- 5b1f17b1804b1-42acc9fdcf4mr71450245e9.23.1724671120588; 
- Mon, 26 Aug 2024 04:18:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgZiEBUbrGNPjLzqSpuDLwPPm0eYe2BHMZmfBMnxPZc+oKEFY05GRAehq+fN8DRfBEsU/fiNDT8SXxAWoOZB8=
-X-Received: by 2002:a05:600c:310e:b0:426:5fbe:bf75 with SMTP id
- 5b1f17b1804b1-42acc9fdcf4mr71450045e9.23.1724671120079; Mon, 26 Aug 2024
- 04:18:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org>)
+ id 1siXvX-0004ye-TT; Mon, 26 Aug 2024 07:30:29 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WspPm4QVdz4x11;
+ Mon, 26 Aug 2024 21:30:20 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WspPj6vXJz4wj3;
+ Mon, 26 Aug 2024 21:30:17 +1000 (AEST)
+Message-ID: <bb4a6c6c-42f7-4295-adb1-f05482bf893e@kaod.org>
+Date: Mon, 26 Aug 2024 13:30:12 +0200
 MIME-Version: 1.0
-References: <20240823173911.6712-1-farosas@suse.de>
- <20240823173911.6712-16-farosas@suse.de>
-In-Reply-To: <20240823173911.6712-16-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 26 Aug 2024 16:48:22 +0530
-Message-ID: <CAE8KmOwNRMJktPadF1r86U0tRTF_ZsJ14CSjVJMcrKyFW-8isg@mail.gmail.com>
-Subject: Re: [PATCH v4 15/16] migration/multifd: Register nocomp ops
- dynamically
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/13] pnv/xive2: Support for "OS LGS Push" TIMA operation
+To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240801203008.11224-1-kowal@linux.ibm.com>
+ <20240801203008.11224-5-kowal@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240801203008.11224-5-kowal@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=7wMH=PZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,75 +66,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Aug 2024 at 23:12, Fabiano Rosas <farosas@suse.de> wrote:
-> Prior to moving the ram code into multifd-nocomp.c, change the code to
-> register the nocomp ops dynamically so we don't need to have the ops
-> structure defined in multifd.c.
->
-> While here, move the ops struct initialization to the end of the file
-> to make the next diff cleaner.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On 8/1/24 22:29, Michael Kowal wrote:
+> From: Glenn Miles <milesg@linux.vnet.ibm.com>
+> 
+> Adds support for single byte writes to offset 0x15 of the TIMA address
+> space.  This offset holds the Logical Server Group Size (LGS) field.
+> The field is used to evenly distribute the interrupt load among the
+> members of a group, but is unused in the current implementation so we
+> just support the writing of the value for now.
+> 
+> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->  migration/multifd.c | 32 +++++++++++++++++++-------------
->  1 file changed, 19 insertions(+), 13 deletions(-)
->
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 9f40bb2f16..e100836cbe 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -287,22 +287,12 @@ static int multifd_nocomp_recv(MultiFDRecvParams *p, Error **errp)
->      return qio_channel_readv_all(p->c, p->iov, p->normal_num, errp);
->  }
->
-> -static MultiFDMethods multifd_nocomp_ops = {
-> -    .send_setup = multifd_nocomp_send_setup,
-> -    .send_cleanup = multifd_nocomp_send_cleanup,
-> -    .send_prepare = multifd_nocomp_send_prepare,
-> -    .recv_setup = multifd_nocomp_recv_setup,
-> -    .recv_cleanup = multifd_nocomp_recv_cleanup,
-> -    .recv = multifd_nocomp_recv
-> -};
-> -
-> -static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {
-> -    [MULTIFD_COMPRESSION_NONE] = &multifd_nocomp_ops,
-> -};
-> +static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {};
->
->  void multifd_register_ops(int method, MultiFDMethods *ops)
->  {
-> -    assert(0 < method && method < MULTIFD_COMPRESSION__MAX);
-> +    assert(0 <= method && method < MULTIFD_COMPRESSION__MAX);
-> +    assert(!multifd_ops[method]);
->      multifd_ops[method] = ops;
->  }
->
-> @@ -1701,3 +1691,19 @@ bool multifd_send_prepare_common(MultiFDSendParams *p)
->
->      return true;
->  }
-> +
-> +static MultiFDMethods multifd_nocomp_ops = {
-> +    .send_setup = multifd_nocomp_send_setup,
-> +    .send_cleanup = multifd_nocomp_send_cleanup,
-> +    .send_prepare = multifd_nocomp_send_prepare,
-> +    .recv_setup = multifd_nocomp_recv_setup,
-> +    .recv_cleanup = multifd_nocomp_recv_cleanup,
-> +    .recv = multifd_nocomp_recv
-> +};
-> +
-> +static void multifd_nocomp_register(void)
+>   hw/intc/xive.c | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
+> 
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index 8e62c7e75f..8605dd618f 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -341,6 +341,19 @@ static void xive_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+>       xive_tctx_set_cppr(tctx, TM_QW1_OS, value & 0xff);
+>   }
+>   
+> +static void xive_tctx_set_lgs(XiveTCTX *tctx, uint8_t ring, uint8_t lgs)
 > +{
-> +    multifd_register_ops(MULTIFD_COMPRESSION_NONE, &multifd_nocomp_ops);
+> +    uint8_t *regs = &tctx->regs[ring];
+> +
+> +    regs[TM_LGS] = lgs;
 > +}
 > +
-> +migration_init(multifd_nocomp_register);
-
-Looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-
-Thank you.
----
-  - Prasad
+> +static void xive_tm_set_os_lgs(XivePresenter *xptr, XiveTCTX *tctx,
+> +                          hwaddr offset, uint64_t value, unsigned size)
+> +{
+> +    xive_tctx_set_lgs(tctx, TM_QW1_OS, value & 0xff);
+> +}
+> +
+>   /*
+>    * Adjust the IPB to allow a CPU to process event queues of other
+>    * priorities during one physical interrupt cycle.
+> @@ -525,6 +538,8 @@ static const XiveTmOp xive2_tm_operations[] = {
+>                                                        NULL },
+>       { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
+>                                                        NULL },
+> +    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_LGS,        1, xive_tm_set_os_lgs,
+> +                                                     NULL },
+>       { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
+>                                                        NULL },
+>       { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
 
 
