@@ -4,101 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02400C5472F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 19:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE885C54731
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 19:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sifmf-0007OR-RN; Mon, 26 Aug 2024 15:53:49 -0400
+	id 1sifmj-0007dp-Mx; Mon, 26 Aug 2024 15:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sifme-0007Il-Hd
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 15:53:48 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sifmi-0007Y0-6P
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 15:53:52 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sifmc-0002EO-Go
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 15:53:48 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sifmg-0002En-6A
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 15:53:51 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2D48821A9C;
- Mon, 26 Aug 2024 19:53:45 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E43D31F8B2;
+ Mon, 26 Aug 2024 19:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724702025; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1724702029; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8ukWOmEgHLqBfOxNv4qwgTd9uIIxaNm442ZeTMbCSNY=;
- b=Q9xQBBVGNbChj4z7pwiPY2lClHgdWRqInjzZ8h0zC7st++B/q/wq8zHjDoV1YEQhwa62Kv
- Zk+ereitIEPj/gD5M84HXPbkE1wM7WLbPPk0NTU6UMNr4YsmbZb64vYU0GfgYepDcLHNyI
- 3j7Oqsbw3Q3SZmosoxiTD6GAGRVUBcw=
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=ZoOWavL+z0uyWj6TX7vSPEqd77r4xNQPy0hdJnuZs74nFVGJmuXZyCq17UrdZAdzFS8Nyc
+ TIDvSCXVWhn9ZXzZiPQGqUj8lvkBZGn8o8fa2kfg21RWFp0C5u24sNi0Fk6L44KkEz2mtp
+ rpm3UUls15zIb3CAWVc7DJk5K5kdyfY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724702025;
+ s=susede2_ed25519; t=1724702029;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8ukWOmEgHLqBfOxNv4qwgTd9uIIxaNm442ZeTMbCSNY=;
- b=Kt0Y5FIeYeTwhJNwxNU6bpy+Gb/Iz5jy5Ejno4yad9EcQzORHTREvAvYE7Ef1dcPVvzCGN
- xEwxMm82J/vDBZDg==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=AwhkdBmZyowG60TYN0lU9Hx41VFXslRh6+9Qdw7DjaV89jDhE5b1ktFCVyxqx49OPUnAEQ
+ l/Geb1KL7IjRlaDQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=LMK0SF3I;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="xUX/sCJg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724702025; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1724702028; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8ukWOmEgHLqBfOxNv4qwgTd9uIIxaNm442ZeTMbCSNY=;
- b=Q9xQBBVGNbChj4z7pwiPY2lClHgdWRqInjzZ8h0zC7st++B/q/wq8zHjDoV1YEQhwa62Kv
- Zk+ereitIEPj/gD5M84HXPbkE1wM7WLbPPk0NTU6UMNr4YsmbZb64vYU0GfgYepDcLHNyI
- 3j7Oqsbw3Q3SZmosoxiTD6GAGRVUBcw=
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=LMK0SF3IVhaF/lJPElccb99mmzXbQRWqKjxLyLbOZ5PmQvh/PXFZzbkFhd9P9cHAMhjl7U
+ yc8WMEG1pBaKKOOHh9BqUBNyOMGG5f0ott2II07Np6y6c3COzudE15ROxthQm8fuoDH5RY
+ EIveb07oCGX/IxL1Qzo+e0mUp7NbQHY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724702025;
+ s=susede2_ed25519; t=1724702028;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8ukWOmEgHLqBfOxNv4qwgTd9uIIxaNm442ZeTMbCSNY=;
- b=Kt0Y5FIeYeTwhJNwxNU6bpy+Gb/Iz5jy5Ejno4yad9EcQzORHTREvAvYE7Ef1dcPVvzCGN
- xEwxMm82J/vDBZDg==
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=xUX/sCJgC/ebrKZkZiQ9HbYuEnrU8t7Mn43pooVmo818MtPP7hbSsWwUPD7I/Wyi5XYjRP
+ 1rFl0+CzHWsObnAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BF2041398D;
- Mon, 26 Aug 2024 19:53:43 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 83E7C1398D;
+ Mon, 26 Aug 2024 19:53:47 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UJb9IEfdzGY5PQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 26 Aug 2024 19:53:43 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qH6eEkvdzGY5PQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 26 Aug 2024 19:53:47 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 10/18] migration/multifd: Isolate ram pages packet data
-Date: Mon, 26 Aug 2024 16:53:14 -0300
-Message-Id: <20240826195322.16532-11-farosas@suse.de>
+Subject: [PATCH v5 12/18] migration/multifd: Replace multifd_send_state->pages
+ with client data
+Date: Mon, 26 Aug 2024 16:53:16 -0300
+Message-Id: <20240826195322.16532-13-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240826195322.16532-1-farosas@suse.de>
 References: <20240826195322.16532-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[4];
- FROM_HAS_DN(0.00)[];
+X-Rspamd-Queue-Id: E43D31F8B2
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -121,201 +129,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we cannot yet disentangle the multifd packet from page data, we
-can make the code a bit cleaner by setting the page-related fields in
-a separate function.
+Multifd currently has a simple scheduling mechanism that distributes
+work to the various channels by keeping storage space within each
+channel and an extra space that is given to the client. Each time the
+client fills the space with data and calls into multifd, that space is
+given to the next idle channel and a free storage space is taken from
+the channel and given to client for the next iteration.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This means we always need (#multifd_channels + 1) memory slots to
+operate multifd.
+
+This is fine, except that the presence of this one extra memory slot
+doesn't allow different types of payloads to be processed at the same
+time in different channels, i.e. the data type of
+multifd_send_state->pages needs to be the same as p->pages.
+
+For each new data type different from MultiFDPage_t that is to be
+handled, this logic would need to be duplicated by adding new fields
+to multifd_send_state, to the channels and to multifd_send_pages().
+
+Fix this situation by moving the extra slot into the client and using
+only the generic type MultiFDSendData in the multifd core.
+
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c    | 99 +++++++++++++++++++++++++-----------------
- migration/trace-events |  5 ++-
- 2 files changed, 63 insertions(+), 41 deletions(-)
+ migration/multifd.c | 79 ++++++++++++++++++++++++++-------------------
+ migration/multifd.h |  3 ++
+ migration/ram.c     |  2 ++
+ 3 files changed, 50 insertions(+), 34 deletions(-)
 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index df8dfcc98f..d64fcdf4ac 100644
+index 3a164c124d..cb7a121eb0 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -424,65 +424,61 @@ static int multifd_recv_initial_packet(QIOChannel *c, Error **errp)
-     return msg.id;
+@@ -49,7 +49,6 @@ typedef struct {
+ 
+ struct {
+     MultiFDSendParams *params;
+-    MultiFDSendData *data;
+     /*
+      * Global number of generated multifd packets.
+      *
+@@ -97,6 +96,8 @@ struct {
+     MultiFDMethods *ops;
+ } *multifd_recv_state;
+ 
++static MultiFDSendData *multifd_ram_send;
++
+ static size_t multifd_ram_payload_size(void)
+ {
+     uint32_t n = multifd_ram_page_count();
+@@ -130,6 +131,17 @@ static MultiFDSendData *multifd_send_data_alloc(void)
+     return g_malloc0(size_minus_payload + max_payload_size);
  }
  
--void multifd_send_fill_packet(MultiFDSendParams *p)
-+static void multifd_ram_fill_packet(MultiFDSendParams *p)
- {
-     MultiFDPacket_t *packet = p->packet;
-     MultiFDPages_t *pages = &p->data->u.ram;
--    uint64_t packet_num;
-     uint32_t zero_num = pages->num - pages->normal_num;
--    int i;
- 
--    packet->flags = cpu_to_be32(p->flags);
-     packet->pages_alloc = cpu_to_be32(multifd_ram_page_count());
-     packet->normal_pages = cpu_to_be32(pages->normal_num);
-     packet->zero_pages = cpu_to_be32(zero_num);
--    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
--
--    packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
--    packet->packet_num = cpu_to_be64(packet_num);
- 
-     if (pages->block) {
-         strncpy(packet->ramblock, pages->block->idstr, 256);
-     }
- 
--    for (i = 0; i < pages->num; i++) {
-+    for (int i = 0; i < pages->num; i++) {
-         /* there are architectures where ram_addr_t is 32 bit */
-         uint64_t temp = pages->offset[i];
- 
-         packet->offset[i] = cpu_to_be64(temp);
-     }
- 
-+    trace_multifd_send_ram_fill(p->id, pages->normal_num, zero_num);
++void multifd_ram_save_setup(void)
++{
++    multifd_ram_send = multifd_send_data_alloc();
 +}
 +
-+void multifd_send_fill_packet(MultiFDSendParams *p)
++void multifd_ram_save_cleanup(void)
 +{
-+    MultiFDPacket_t *packet = p->packet;
-+    uint64_t packet_num;
++    g_free(multifd_ram_send);
++    multifd_ram_send = NULL;
++}
 +
-+    memset(packet, 0, p->packet_len);
-+
-+    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
-+    packet->version = cpu_to_be32(MULTIFD_VERSION);
-+
-+    packet->flags = cpu_to_be32(p->flags);
-+    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-+
-+    packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
-+    packet->packet_num = cpu_to_be64(packet_num);
-+
-     p->packets_sent++;
- 
--    trace_multifd_send(p->id, packet_num, pages->normal_num, zero_num,
--                       p->flags, p->next_packet_size);
-+    multifd_ram_fill_packet(p);
-+
-+    trace_multifd_send_fill(p->id, packet_num,
-+                            p->flags, p->next_packet_size);
+ static bool multifd_use_packets(void)
+ {
+     return !migrate_mapped_ram();
+@@ -610,25 +622,20 @@ static void multifd_send_kick_main(MultiFDSendParams *p)
  }
  
--static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+static int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
+ /*
+- * How we use multifd_send_state->pages and channel->pages?
++ * multifd_send() works by exchanging the MultiFDSendData object
++ * provided by the caller with an unused MultiFDSendData object from
++ * the next channel that is found to be idle.
+  *
+- * We create a pages for each channel, and a main one.  Each time that
+- * we need to send a batch of pages we interchange the ones between
+- * multifd_send_state and the channel that is sending it.  There are
+- * two reasons for that:
+- *    - to not have to do so many mallocs during migration
+- *    - to make easier to know what to free at the end of migration
++ * The channel owns the data until it finishes transmitting and the
++ * caller owns the empty object until it fills it with data and calls
++ * this function again. No locking necessary.
+  *
+- * This way we always know who is the owner of each "pages" struct,
+- * and we don't need any locking.  It belongs to the migration thread
+- * or to the channel thread.  Switching is safe because the migration
+- * thread is using the channel mutex when changing it, and the channel
+- * have to had finish with its own, otherwise pending_job can't be
+- * false.
++ * Switching is safe because both the migration thread and the channel
++ * thread have barriers in place to serialize access.
+  *
+  * Returns true if succeed, false otherwise.
+  */
+-static bool multifd_send_pages(void)
++static bool multifd_send(MultiFDSendData **send_data)
  {
-     MultiFDPacket_t *packet = p->packet;
-     uint32_t page_count = multifd_ram_page_count();
-     uint32_t page_size = multifd_ram_page_size();
      int i;
+     static int next_channel;
+@@ -669,11 +676,16 @@ static bool multifd_send_pages(void)
+      */
+     smp_mb_acquire();
  
--    packet->magic = be32_to_cpu(packet->magic);
--    if (packet->magic != MULTIFD_MAGIC) {
--        error_setg(errp, "multifd: received packet "
--                   "magic %x and expected magic %x",
--                   packet->magic, MULTIFD_MAGIC);
--        return -1;
--    }
--
--    packet->version = be32_to_cpu(packet->version);
--    if (packet->version != MULTIFD_VERSION) {
--        error_setg(errp, "multifd: received packet "
--                   "version %u and expected version %u",
--                   packet->version, MULTIFD_VERSION);
--        return -1;
--    }
--
--    p->flags = be32_to_cpu(packet->flags);
--
-     packet->pages_alloc = be32_to_cpu(packet->pages_alloc);
+-    assert(!p->data->u.ram.num);
++    assert(multifd_payload_empty(p->data));
+ 
+-    tmp = multifd_send_state->data;
+-    multifd_send_state->data = p->data;
++    /*
++     * Swap the pointers. The channel gets the client data for
++     * transferring and the client gets back an unused data slot.
++     */
++    tmp = *send_data;
++    *send_data = p->data;
+     p->data = tmp;
++
      /*
-      * If we received a packet that is 100 times bigger than expected
-@@ -511,13 +507,6 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-         return -1;
-     }
+      * Making sure p->data is setup before marking pending_job=true. Pairs
+      * with the qatomic_load_acquire() in multifd_send_thread().
+@@ -705,7 +717,12 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
+     MultiFDPages_t *pages;
  
--    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
--    p->packet_num = be64_to_cpu(packet->packet_num);
--    p->packets_recved++;
--
--    trace_multifd_recv(p->id, p->packet_num, p->normal_num, p->zero_num,
--                       p->flags, p->next_packet_size);
--
-     if (p->normal_num == 0 && p->zero_num == 0) {
+ retry:
+-    pages = &multifd_send_state->data->u.ram;
++    pages = &multifd_ram_send->u.ram;
++
++    if (multifd_payload_empty(multifd_ram_send)) {
++        multifd_pages_reset(pages);
++        multifd_set_payload_type(multifd_ram_send, MULTIFD_PAYLOAD_RAM);
++    }
+ 
+     /* If the queue is empty, we can already enqueue now */
+     if (multifd_queue_empty(pages)) {
+@@ -723,7 +740,7 @@ retry:
+      * After flush, always retry.
+      */
+     if (pages->block != block || multifd_queue_full(pages)) {
+-        if (!multifd_send_pages()) {
++        if (!multifd_send(&multifd_ram_send)) {
+             return false;
+         }
+         goto retry;
+@@ -853,8 +870,6 @@ static void multifd_send_cleanup_state(void)
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
+     g_free(multifd_send_state->params);
+     multifd_send_state->params = NULL;
+-    g_free(multifd_send_state->data);
+-    multifd_send_state->data = NULL;
+     g_free(multifd_send_state);
+     multifd_send_state = NULL;
+ }
+@@ -903,15 +918,14 @@ int multifd_send_sync_main(void)
+ {
+     int i;
+     bool flush_zero_copy;
+-    MultiFDPages_t *pages;
+ 
+     if (!migrate_multifd()) {
          return 0;
      }
-@@ -559,6 +548,40 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-     return 0;
- }
- 
-+static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+{
-+    MultiFDPacket_t *packet = p->packet;
-+    int ret = 0;
+-    pages = &multifd_send_state->data->u.ram;
+-    if (pages->num) {
+-        if (!multifd_send_pages()) {
+-            error_report("%s: multifd_send_pages fail", __func__);
 +
-+    packet->magic = be32_to_cpu(packet->magic);
-+    if (packet->magic != MULTIFD_MAGIC) {
-+        error_setg(errp, "multifd: received packet "
-+                   "magic %x and expected magic %x",
-+                   packet->magic, MULTIFD_MAGIC);
-+        return -1;
-+    }
-+
-+    packet->version = be32_to_cpu(packet->version);
-+    if (packet->version != MULTIFD_VERSION) {
-+        error_setg(errp, "multifd: received packet "
-+                   "version %u and expected version %u",
-+                   packet->version, MULTIFD_VERSION);
-+        return -1;
-+    }
-+
-+    p->flags = be32_to_cpu(packet->flags);
-+    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-+    p->packet_num = be64_to_cpu(packet->packet_num);
-+    p->packets_recved++;
-+
-+    ret = multifd_ram_unfill_packet(p, errp);
-+
-+    trace_multifd_recv_unfill(p->id, p->packet_num, p->flags,
-+                              p->next_packet_size);
-+
-+    return ret;
-+}
-+
- static bool multifd_send_should_exit(void)
- {
-     return qatomic_read(&multifd_send_state->exiting);
-@@ -1203,8 +1226,6 @@ bool multifd_send_setup(void)
-             p->packet_len = sizeof(MultiFDPacket_t)
-                           + sizeof(uint64_t) * page_count;
-             p->packet = g_malloc0(p->packet_len);
--            p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
--            p->packet->version = cpu_to_be32(MULTIFD_VERSION);
++    if (!multifd_payload_empty(multifd_ram_send)) {
++        if (!multifd_send(&multifd_ram_send)) {
++            error_report("%s: multifd_send fail", __func__);
+             return -1;
          }
-         p->name = g_strdup_printf("mig/src/send_%d", i);
-         p->write_flags = 0;
-diff --git a/migration/trace-events b/migration/trace-events
-index 0887cef912..c65902f042 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -128,7 +128,7 @@ postcopy_preempt_reset_channel(void) ""
- # multifd.c
- multifd_new_send_channel_async(uint8_t id) "channel %u"
- multifd_new_send_channel_async_error(uint8_t id, void *err) "channel=%u err=%p"
--multifd_recv(uint8_t id, uint64_t packet_num, uint32_t normal, uint32_t zero, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " normal pages %u zero pages %u flags 0x%x next packet size %u"
-+multifd_recv_unfill(uint8_t id, uint64_t packet_num, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " flags 0x%x next packet size %u"
- multifd_recv_new_channel(uint8_t id) "channel %u"
- multifd_recv_sync_main(long packet_num) "packet num %ld"
- multifd_recv_sync_main_signal(uint8_t id) "channel %u"
-@@ -136,7 +136,8 @@ multifd_recv_sync_main_wait(uint8_t id) "iter %u"
- multifd_recv_terminate_threads(bool error) "error %d"
- multifd_recv_thread_end(uint8_t id, uint64_t packets) "channel %u packets %" PRIu64
- multifd_recv_thread_start(uint8_t id) "%u"
--multifd_send(uint8_t id, uint64_t packet_num, uint32_t normal_pages, uint32_t zero_pages, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " normal pages %u zero pages %u flags 0x%x next packet size %u"
-+multifd_send_fill(uint8_t id, uint64_t packet_num, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " flags 0x%x next packet size %u"
-+multifd_send_ram_fill(uint8_t id, uint32_t normal, uint32_t zero) "channel %u normal pages %u zero pages %u"
- multifd_send_error(uint8_t id) "channel %u"
- multifd_send_sync_main(long packet_num) "packet num %ld"
- multifd_send_sync_main_signal(uint8_t id) "channel %u"
+     }
+@@ -985,13 +999,11 @@ static void *multifd_send_thread(void *opaque)
+ 
+         /*
+          * Read pending_job flag before p->data.  Pairs with the
+-         * qatomic_store_release() in multifd_send_pages().
++         * qatomic_store_release() in multifd_send().
+          */
+         if (qatomic_load_acquire(&p->pending_job)) {
+-            MultiFDPages_t *pages = &p->data->u.ram;
+-
+             p->iovs_num = 0;
+-            assert(pages->num);
++            assert(!multifd_payload_empty(p->data));
+ 
+             ret = multifd_send_state->ops->send_prepare(p, &local_err);
+             if (ret != 0) {
+@@ -1014,13 +1026,13 @@ static void *multifd_send_thread(void *opaque)
+             stat64_add(&mig_stats.multifd_bytes,
+                        p->next_packet_size + p->packet_len);
+ 
+-            multifd_pages_reset(pages);
+             p->next_packet_size = 0;
++            multifd_set_payload_type(p->data, MULTIFD_PAYLOAD_NONE);
+ 
+             /*
+              * Making sure p->data is published before saying "we're
+              * free".  Pairs with the smp_mb_acquire() in
+-             * multifd_send_pages().
++             * multifd_send().
+              */
+             qatomic_store_release(&p->pending_job, false);
+         } else {
+@@ -1212,7 +1224,6 @@ bool multifd_send_setup(void)
+     thread_count = migrate_multifd_channels();
+     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
+     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
+-    multifd_send_state->data = multifd_send_data_alloc();
+     qemu_sem_init(&multifd_send_state->channels_created, 0);
+     qemu_sem_init(&multifd_send_state->channels_ready, 0);
+     qatomic_set(&multifd_send_state->exiting, 0);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 9175104aea..5fa384d9af 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -267,4 +267,7 @@ static inline uint32_t multifd_ram_page_count(void)
+ {
+     return MULTIFD_PACKET_SIZE / qemu_target_page_size();
+ }
++
++void multifd_ram_save_setup(void);
++void multifd_ram_save_cleanup(void);
+ #endif
+diff --git a/migration/ram.c b/migration/ram.c
+index edec1a2d07..1815b2557b 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2387,6 +2387,7 @@ static void ram_save_cleanup(void *opaque)
+     ram_bitmaps_destroy();
+ 
+     xbzrle_cleanup();
++    multifd_ram_save_cleanup();
+     ram_state_cleanup(rsp);
+     g_free(migration_ops);
+     migration_ops = NULL;
+@@ -3058,6 +3059,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+     migration_ops = g_malloc0(sizeof(MigrationOps));
+ 
+     if (migrate_multifd()) {
++        multifd_ram_save_setup();
+         migration_ops->ram_save_target_page = ram_save_target_page_multifd;
+     } else {
+         migration_ops->ram_save_target_page = ram_save_target_page_legacy;
 -- 
 2.35.3
 
