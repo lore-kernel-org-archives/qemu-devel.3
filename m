@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D82C5321E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 08:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B7FC5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 08:25:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siUwG-0000HF-3e; Mon, 26 Aug 2024 04:19:00 -0400
+	id 1siV20-0005Az-Oz; Mon, 26 Aug 2024 04:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siUwC-0000FK-SQ
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:18:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siV1z-00059w-QN
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:24:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siUwA-0003pp-7X
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:18:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siV1q-0004Vf-QA
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 04:24:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724660331;
+ s=mimecast20190719; t=1724660686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VL9iwBunfbUdjp7rBq57qadG7ag2mHVt2wNeas22a/4=;
- b=NSlTIKGkbfcaIqkcqnNnyx7RD5mZxqWyrpj75BJxvuheuWPeGYjW1byRsxU9AuGFAzF6N2
- GHxYUynCy4POficdYRpkYUfU2VC431B7T19wNUU8tk+PUqEAHBCkc92uQOPLdq9DVr0Yzj
- 5+GWgInQyPI/X2Ui/NI7Lk0r0YgFTPg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=o+w+b2d9CA/vhwYML+RLtQHAREc1vKYbCym3rMOA0Rk=;
+ b=GQRV6whhh0wEX7ZUivA3AcjjWP7itt6ioFB1VpkHfzLhkRZFfOTs6s5oWaDm3ppvwDnOys
+ TYfKlkuLBNfSD3VZhEc3Gyew6YWdA7oQyAw9ztANdkzMLrI6mhwctvtpxjNXwzavEDP8Zr
+ kmP2HyR0qqGgbfzaTw5QRYYtTiOwHpk=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-NDXnROhPPKutkAem5_R9jw-1; Mon, 26 Aug 2024 04:18:49 -0400
-X-MC-Unique: NDXnROhPPKutkAem5_R9jw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6bf7cd59d92so51037086d6.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 01:18:49 -0700 (PDT)
+ us-mta-638-7IcHXqIiMvSKMb6zGRPvEA-1; Mon, 26 Aug 2024 04:24:44 -0400
+X-MC-Unique: 7IcHXqIiMvSKMb6zGRPvEA-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-e0353b731b8so6800740276.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 01:24:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724660329; x=1725265129;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VL9iwBunfbUdjp7rBq57qadG7ag2mHVt2wNeas22a/4=;
- b=wG63ep5vWBEdsD/5dN0IbREwhsLN1Vj8pDiFbM9ysGW3rl/+sFxbmpl1KehMCZ+WHY
- 2yEHv1sn3zO/9+YMNSIKJnve1LuwnMdwNBZw+ie+rH04Y8PJqnsTwhpR+YiOpGmxif7k
- oNCmC3Q8WYrmXdW6nSDN8g+GEkQVg6d7AQxTIQ6epAUcLbQZZAc2u3XEjvUReZ2QlKUJ
- g7AH3gme+nbqFu30DKAbIFLoXo6QBe3NJEnT9y0CKkz+5tFJgHHDKJO1KsLoa3mn/IBu
- yHifEUGdKRVGqyi6RJlMI8innJlKr3ZBFrQ1M1/g70pmX9hGFMpSEVICqPtmXlEcBPrT
- OBmQ==
+ d=1e100.net; s=20230601; t=1724660684; x=1725265484;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o+w+b2d9CA/vhwYML+RLtQHAREc1vKYbCym3rMOA0Rk=;
+ b=wflvYRgYM45KbNyP7Os42MZpxa4XqAA+Grny60IWWBGIzIrd6uFe/KU6zCMhM7lnyE
+ iQmbxFDAytMdSrE8ip3SllgOK3EeynmigxQt9F/vg716pfw7T1XYydsgb5GUSg4P+K+n
+ QuSEQXa7nmXfw4kgOx9FOiqVnPTPZxt72hiUQwuCY08hZLL8Cx1nYv92Cm4EUGpdUL1C
+ eKmrOtGfG8oz4sCXcRe4b1k0JeLuHT0heK/BmKhgTeu1IOs1rabzt5uw88PmLB0gsBoU
+ zqyUvUJNRYOpRNp695f9AplBaaMbtt4HvTqynU3awbk7xJ1nbyWERiJXO5ABFzfZwW6P
+ n9Xg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHswH2FueOLmMhP4C1rS/8WEJGkx97YEufFhKAKoIT3TvpjwhbcHwvpg6Xekz4+cjuGy5/ex//yNxg@nongnu.org
-X-Gm-Message-State: AOJu0Yx/OoQIHymbCeuOuxKbf/XogixNZvJqqpTd0lqC+M1g47ETMAPg
- 4eEdIwONswvSo0DDWmBp60W6ON06HkhszZGVxnkj19GZb7brAI9MDpiIRtCgGAZjI700oLheS6v
- PIgpejwVpfAXVlXbQMIMuQtDefa9M7oAmV1GcDkdtqLmdlOfjpjD9
-X-Received: by 2002:a05:6214:5d0a:b0:6b7:a4dc:e24a with SMTP id
- 6a1803df08f44-6c16deef452mr93854496d6.54.1724660329108; 
- Mon, 26 Aug 2024 01:18:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHa1aGJ29CE8huitJieUB1nsHEnjMXllwi02RxOFTAewMeo599JC/Vo44RD0zJROUz8DMr+kw==
-X-Received: by 2002:a05:6214:5d0a:b0:6b7:a4dc:e24a with SMTP id
- 6a1803df08f44-6c16deef452mr93854246d6.54.1724660328637; 
- Mon, 26 Aug 2024 01:18:48 -0700 (PDT)
+ AJvYcCV5kbgkrulyedXAYozduVj7fsVY0S5WD0NFK0/rhDtik3ACZI0WHo8QegdIoXPtBWEJC7piE2MMDuN2@nongnu.org
+X-Gm-Message-State: AOJu0YwWmtAM5q+hkyyZW8MouMshgKwjDUqtrNWjLlvVpDCUDz0taEwB
+ 6KIfHsQkpfPzsVc6mSUisLlxeGiYdi+ydSlXzLnjAt4COVIgJyX+ODXDlop7tTuOlVHrRVRyhqc
+ nEuSrWpaZoxAIYK6U9K+6UzuSRumbCF8Uc1XJ3PFNwZMPtO/7PEH0
+X-Received: by 2002:a05:6902:2191:b0:e0b:a4b6:670f with SMTP id
+ 3f1490d57ef6-e17a86804a4mr9181316276.51.1724660683903; 
+ Mon, 26 Aug 2024 01:24:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHIXtzvIiEHz9KxeSGxWn5El7K9t6O11XbNCzNoKWbZz9cU7ZrErUvu8mjumTcgfDR5Qqk6yA==
+X-Received: by 2002:a05:6902:2191:b0:e0b:a4b6:670f with SMTP id
+ 3f1490d57ef6-e17a86804a4mr9181294276.51.1724660683472; 
+ Mon, 26 Aug 2024 01:24:43 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-177-41.web.vodafone.de.
  [109.43.177.41]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c162d4960bsm44440946d6.30.2024.08.26.01.18.46
+ d75a77b69052e-454fe0f04fcsm41498351cf.46.2024.08.26.01.24.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 01:18:48 -0700 (PDT)
-Message-ID: <b60d967a-6d87-4dfa-9ed5-da547be453a4@redhat.com>
-Date: Mon, 26 Aug 2024 10:18:44 +0200
+ Mon, 26 Aug 2024 01:24:43 -0700 (PDT)
+Message-ID: <c6c08785-3bd6-42a0-9fe8-ecd52974ecde@redhat.com>
+Date: Mon, 26 Aug 2024 10:24:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/35] tests/functional: Prepare the meson build system
- for the functional tests
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>,
+Subject: Re: [PATCH v8 6/8] rust: add crate to expose bindings and interfaces
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@intel.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr_=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-References: <20240821082748.65853-1-thuth@redhat.com>
- <20240821082748.65853-12-thuth@redhat.com>
- <4b4018c6-4a2b-4250-bb53-be9cc5df7cb4@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
+References: <20240823-rust-pl011-v8-0-b9f5746bdaf3@linaro.org>
+ <20240823-rust-pl011-v8-6-b9f5746bdaf3@linaro.org>
+ <841befb6-5ce1-44e5-890c-4e60fcbd4fa6@intel.com>
+ <itc2k.22cnsecjnvt9@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <4b4018c6-4a2b-4250-bb53-be9cc5df7cb4@linaro.org>
+In-Reply-To: <itc2k.22cnsecjnvt9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -136,8 +140,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,53 +157,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/08/2024 14.54, Philippe Mathieu-Daudé wrote:
-> On 21/8/24 10:27, Thomas Huth wrote:
->> Provide a meson.build file for the upcoming python-based functional
->> tests, and add some wrapper glue targets to the tests/Makefile.include
->> file. We are going to use two "speed" modes for the functional tests:
->> The "quick" tests can be run at any time (i.e. also during "make check"),
->> while the "thorough" tests should only be run when running a
->> "make check-functional" test run (since these tests might download
->> additional assets from the internet).
+On 26/08/2024 08.41, Manos Pitsidianakis wrote:
+> On Mon, 26 Aug 2024 08:31, Junjie Mao <junjie.mao@intel.com> wrote:
+>>> +unsafe impl GlobalAlloc for QemuAllocator {
+>>> +    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+>>> +        if layout.align() == 0 {
+>>> +            g_malloc0(layout.size().try_into().unwrap()).cast::<u8>()
+>>> +        } else {
+>>> +            g_aligned_alloc0(
 >>
->> The changes to the meson.build files are partly based on an earlier
->> patch by Ani Sinha.
+>> One more thing: g_aligned_alloc0() was introduced in glib 2.72 [1] but the 
+>> current glib version check in meson is >= 2.66.0.
 >>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   tests/Makefile.include       | 11 ++++++
->>   tests/functional/meson.build | 66 ++++++++++++++++++++++++++++++++++++
->>   tests/meson.build            |  1 +
->>   3 files changed, 78 insertions(+)
->>   create mode 100644 tests/functional/meson.build
+>> Glib 2.72 still supports Win 7+, so no increase to _WIN32_WINNT is needed 
+>> for this version bumping.
+>>
+>> [1] https://docs.gtk.org/glib/func.aligned_alloc0.html
+>> [2] 
+>> https://gitlab.gnome.org/GNOME/glib/-/blob/2.72.0/meson.build?ref_type=tags#L509
 > 
-> 
->> +# Timeouts for individual tests that can be slow e.g. with debugging enabled
->> +test_timeouts = {
->> +}
-> 
-> 
->> +    foreach test : target_tests
->> +      test('func-@0@/@1@'.format(target_base, test),
->> +           python,
->> +           depends: [test_deps, test_emulator, emulator_modules],
->> +           env: test_env,
->> +           args: [meson.current_source_dir() / 'test_' + test + '.py'],
->> +           protocol: 'tap',
->> +           timeout: test_timeouts.get(test, 60),
->> +           priority: test_timeouts.get(test, 60),
-> 
-> IIUC with Avocado the timeout was for each test_func in a TestClass.
-> Now this is only per TestClass. Hopefully I'm wrong...
+> Hm. Was there no way to have aligned allocations before 2.72? We can emit a 
+> cfg from meson if glib is <2.72 and handle it differently.
 
-I think you're right ... we might need to adjust the meson timeouts here and 
-there in case they are causing problems, but that's just business as usual 
-(we had to do the same when enabling the meson timeouts for the qtests for 
-example).
+Can't you simply use our qemu_memalign() function instead?
 
   Thomas
+
 
 
