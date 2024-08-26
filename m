@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBC9C5321D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A53C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 21:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siguz-000461-Nj; Mon, 26 Aug 2024 17:06:29 -0400
+	id 1sihGs-0002oK-0q; Mon, 26 Aug 2024 17:29:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1siguv-00044v-Mj
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:06:25 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1sihGq-0002nO-Bl
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:29:04 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sigut-0003eN-VY
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:06:25 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71433096e89so4056989b3a.3
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 14:06:22 -0700 (PDT)
+ id 1sihGo-0005Lf-TO
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 17:29:04 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-20230059241so38709825ad.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 14:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724706382; x=1725311182; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724707740; x=1725312540; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7Zm2+q44/Px+3oIsNsyINxSDAfUi1A0GOLi55frXrmM=;
- b=jVTuAl0TvjAajskBJ/7qL/f60T4Wk86bVqMQ06ahU5JzdrRqM6i9iTYW4Sqn1KJb5H
- QkoptMY8ZwYva284GuOmVbijG/ogMD6wXOgVsDLxZguG7sxoOAiYIWSeptb+eHaYFCGz
- fgvhNI+WRhlaCcuTC/v0VwjmMYReEAEgi6BNOVJcBM4OX+SelBprV5dvPgvva7PIqEoq
- 3nGMyXEsS+AghC8OrT1Nf22VubcTc0eGzcZCD6brfLidHpc4JZn+Wm4VtzMzBs0LvvS6
- I/rUPwkr80ipsUqhVsEVaDF5BlzBVmCsnORfNoGueG+5hwGEZW9LRTGUxaACekkYtTPg
- rDgw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UZgaGrtWdYG9hqPTnzYp4dteoFkvJ92Yn68iMQAe2Q0=;
+ b=RyctlTKvyj4oyVTuLdapxOhAA2yMkLhWj3PnZY8ZaKcx2VSucq5Y/PkEuDBhl/PJlq
+ kmty5lLmFQhXID2va+KnKdCKuG4kPIW4v/Glsd/Wv/SCmw5r+C1DbfFkRtKz6hadDEf1
+ UW/OIpPZS7cTba2UAKY5rcadvx8luCy2x0D4Ohr7O67/NVRiO/uvgbSy12FyWniN80mF
+ iYUjMCax/7Wwnohb/vSvnh+f9gxSU9yx6okF1JcjrE4LNZImtFB+txvJcuI7eKZK2Oog
+ vjqPl7jW+ZcP+EE4xMebkJfMQx0+szkPbkWkOAeglwFvLWn/caKy23EraSlz/Qol5Ly4
+ 7XUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724706382; x=1725311182;
+ d=1e100.net; s=20230601; t=1724707740; x=1725312540;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7Zm2+q44/Px+3oIsNsyINxSDAfUi1A0GOLi55frXrmM=;
- b=qzDrktMNvJ9/unMcuA5paVRp6F6vcNNgSu5dO2ZSrHvgroeJt/p3waEN2wKEj2ajwW
- VKaZyfdqt322BZAdA4p4Ep5+DnWiLniuj43jKY5QxPhnUQT4eLyP7jA+tkHEOJ9f116k
- +mY6xfKNE/pPhyU7hrwBOklX1iAfPMQPE06IeA92MMv81H5IsdEBRHzkh1Zwsac3pf/0
- Im1NAuQSj5zjIvy9aglsj9e12VkuTksaaTwhsDxudE7GHBiG+LKS03z0RAM3DFCSjs/F
- VOyv6pNpkPCrMXQaxx7AOxdQ+72/drWGhhcLHlrvjNgxcXozesvdT2WN451ZfMk7O57G
- FjBA==
+ bh=UZgaGrtWdYG9hqPTnzYp4dteoFkvJ92Yn68iMQAe2Q0=;
+ b=INIK8mpsOEgwaW/NREHlwrGELEDCkxb7FU4uUjkTnejbBrYxtMYkNObcop9PBvr8Fm
+ dZmWNMR7IZq9t+IKqire4GbufqG3sm1eAwAzg/6IMZeavxrgiW/i/aCX4b3SE7rkZ58K
+ C3qgZdg3U2TljULJMKLum8unOR7b0YvP/KECUTfMBB4+iAIvWjIHo40tpi3rkn+pg+Yd
+ ORsao3XZOnIV/LEn/cJLdPwR5CAAEDq4BSIDvx6YIVVbw12bsazzIsX6Cr6Pbh0D2qwk
+ Us8xxvQ48+bd0hJogohX9JpHlLqboSbb+bsohG2LnIsmR+V0s0+CrsyTtE7T5xBPALBH
+ gsrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgxaxJL8RRlC5bb2UiLleZq7cDEY7Sq65kL6AwjWQWEk1Y3951gMluLaSNDhIy6dPtIYKeXdG5qJyu@nongnu.org
-X-Gm-Message-State: AOJu0YyC7f8PYFea8yFJ4ZGF716yvc2sFKncpGUxtlz+fbKSP+1OYkMa
- qxtJvNjIiBCeE9sLycpXKBosJxm/i25qDMMlukqg3qs+bBuwqyNHHts6dGq8RN8=
-X-Google-Smtp-Source: AGHT+IF4+IBEiro8oXohhNbApOI+LiJfljc/YPQwAzeAcq41zM+arSs56qd5Z1G+b9WpTbNoDUNO/Q==
-X-Received: by 2002:a05:6a20:9488:b0:1cc:c202:b289 with SMTP id
- adf61e73a8af0-1ccc202b35fmr708105637.0.1724706381454; 
- Mon, 26 Aug 2024 14:06:21 -0700 (PDT)
+ AJvYcCUttjT9vqKVyQrhNlD8D60TM5SEggHePKAfQ+BllP9vFWJqwP0AxvPrpYqctP52ZOqYDClBRlc6rEFI@nongnu.org
+X-Gm-Message-State: AOJu0YwVQ8+IgoFGW3zlOOiWl765hhqCuyXdHQpdeOdfcHSGdIzDCey0
+ Ls3HX10lsO1BshZRBAGEAqUKTT66w5YISeSRtOLSN7blmXEDtLMyp2F420wP3VM=
+X-Google-Smtp-Source: AGHT+IFpbPIN2srbbwUAOIceB59Faa43hQ+hODthIGHAi699s/JOaCXq7kzLzcFRWk0ugs0Y9/t3rg==
+X-Received: by 2002:a17:902:e546:b0:1fc:6b8b:4918 with SMTP id
+ d9443c01a7336-2039e4ef0ccmr97668985ad.41.1724707740370; 
+ Mon, 26 Aug 2024 14:29:00 -0700 (PDT)
 Received: from [192.168.98.227] ([1.145.75.248])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d613a420cdsm10339930a91.28.2024.08.26.14.06.18
+ d9443c01a7336-2038557f0aasm71516445ad.80.2024.08.26.14.28.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 14:06:21 -0700 (PDT)
-Message-ID: <beddf021-3731-4a2b-aa35-a08e717ea7b4@linaro.org>
-Date: Tue, 27 Aug 2024 07:06:11 +1000
+ Mon, 26 Aug 2024 14:28:59 -0700 (PDT)
+Message-ID: <ced03178-38a4-4f72-8418-e4a4bcfa21f0@linaro.org>
+Date: Tue, 27 Aug 2024 07:28:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/3] Optional fixes for 9.1.0-rc4
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20240826094330.276592-1-thuth@redhat.com>
+Subject: Re: [PATCH v3 01/17] bsd-user: Implement RISC-V CPU initialization
+ and main loop
+To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>
+References: <20240824045635.8978-1-itachis@FreeBSD.org>
+ <20240824045635.8978-2-itachis@FreeBSD.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240826094330.276592-1-thuth@redhat.com>
+In-Reply-To: <20240824045635.8978-2-itachis@FreeBSD.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,31 +100,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/24 19:43, Thomas Huth wrote:
->   Hi Richard,
+On 8/24/24 14:56, Ajeet Singh wrote:
+> From: Mark Corbin<mark@dibsco.co.uk>
 > 
-> since it seems like we're going to have RC4, here are some minor
-> fixes that could still be included.
+> Added the initial implementation for RISC-V CPU initialization and main
+> loop. This includes setting up the general-purpose registers and
+> program counter based on the provided target architecture definitions.
 > 
-> The following changes since commit f259e4cb8a8b4ef5463326fc214a7d8d7703d5de:
-> 
->    Merge tag 'pull-trivial-patches' ofhttps://gitlab.com/mjt0k/qemu into staging (2024-08-24 08:09:27 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-08-26
-> 
-> for you to fetch changes up to aee07f2563d27167935ae3557a9f435937eb3f9f:
-> 
->    tests/qtest: Delete previous boot file (2024-08-26 10:58:11 +0200)
-> 
-> ----------------------------------------------------------------
-> * Disable the broken qtests in the MSYS2 CI job
-> * Replace deprecated keyword in the Cirrus-CI scripts
-> * Fix a simple leak in the migration-test qtest
+> Signed-off-by: Mark Corbin<mark@dibsco.co.uk>
+> Signed-off-by: Ajeet Singh<itachis@FreeBSD.org>
+> Co-authored-by: Jessica Clarke<jrtc27@jrtc27.com>
+> ---
+>   bsd-user/riscv/target_arch_cpu.h | 39 ++++++++++++++++++++++++++++++++
+>   1 file changed, 39 insertions(+)
+>   create mode 100644 bsd-user/riscv/target_arch_cpu.h
 
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
