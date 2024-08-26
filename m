@@ -4,94 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C9EC5472C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 12:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781D9C5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Aug 2024 12:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siYTO-00050C-Og; Mon, 26 Aug 2024 08:05:28 -0400
+	id 1siYWO-0001Qn-G1; Mon, 26 Aug 2024 08:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1siYTB-0004yX-Qo
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 08:05:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
+ id 1siYWN-0001Pl-Es; Mon, 26 Aug 2024 08:08:31 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1siYT9-0001sR-PB
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 08:05:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724673909;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hqPMXleWAws97ZnyeA/9QK7rJcg8vV6V4F4Kr5KgBeM=;
- b=B0yO39MU21FM7GkVkDbpnoPvKRJEjnbXOfg8E0ifjaJ/CG8Nxn2Uug8IAJzcq5jZKXxlsq
- lax1nFF/7UTSsxEospERebf1C/rJBpXtp48nuoStucXMZ7JxR0ORU06tJ0gM3USK9Y+6ko
- NxbTV8iDhKYipS3ctygDNq3eGko1tXM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-Cy-wjy6gNYmuCW1c6Wapxw-1; Mon, 26 Aug 2024 08:05:08 -0400
-X-MC-Unique: Cy-wjy6gNYmuCW1c6Wapxw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-428fb72245bso22356165e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 05:05:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724673907; x=1725278707;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hqPMXleWAws97ZnyeA/9QK7rJcg8vV6V4F4Kr5KgBeM=;
- b=Syj38E7PYItCTtCnyjyrUW870ZFPBJh4VVsD7ucedKVl6yeUXcfvObGOifLI0qVh3n
- mpNUQ6otNefohtV6ugrz+3MDIqyDLAzXGIRnI/TpCbqyVbjYxxGPZYBdfYvctN3ySSlR
- 7ceggUC2XL61GzDdABDbaJtc7EjO0y8jo9C8PuZewIv7dcIjQVfusCSIiFQ7nz6SHtLh
- epzRRnG5w0eJP0PwbwsdnWeU47+GAvPcqHso2T8BtC87FQVaWQEeh7EyD5lEr06hWqlR
- 2daS0H1QQgywkQWOfS8QciV7iBCGXJbcJYKAQL4Eu4lbCYLKERXYA+zDO6QdR3A0rLXk
- Ws4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSjf0VqXW98lGqju0u7Ju0cdy9aF5Mx9d2eLA3SO6F1aONyoZprzgJNoydYxV8mAP0OGxCodgzxlUY@nongnu.org
-X-Gm-Message-State: AOJu0Yy0ESfUB1sRBKRlJcTSg+UmPvUPKERk17yr6s36fuv8GdPbTQ1z
- fXiQJVauEtoFprEAqypO/3DwKhLhwGK53CnKCI3aMo/zA7jXPfjTinYuvJ2+0SLP5l0/ilEqKJD
- 08rnGAlZKv8jiP64lFkM8mU/GtpK3rGxQgb77kHL50DIaVmAOAGwYMCGD3Vy5hublIQPDDJn4/M
- TlskEk2VkiuKAfeP6TSis4iOKwt88=
-X-Received: by 2002:a05:600c:4f03:b0:428:9a1:f226 with SMTP id
- 5b1f17b1804b1-42ac388e6d5mr73619495e9.1.1724673907054; 
- Mon, 26 Aug 2024 05:05:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJWp0C3OvKIEZddwYqMK7s47Q06KLB4eolWAyTjGJKHlVrskwjxr6QoLJ8bpr0PIhKr81vySgbWf71hE+C9ZY=
-X-Received: by 2002:a05:600c:4f03:b0:428:9a1:f226 with SMTP id
- 5b1f17b1804b1-42ac388e6d5mr73619125e9.1.1724673906620; Mon, 26 Aug 2024
- 05:05:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
+ id 1siYWL-00025q-Gi; Mon, 26 Aug 2024 08:08:31 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47PKZmbd024540;
+ Mon, 26 Aug 2024 12:08:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-type:mime-version:content-transfer-encoding:in-reply-to
+ :references:subject:from:cc:to:date:message-id; s=pp1; bh=hfMl3T
+ 7exh+7WFAVLgwYloAmZHwWBDIs1CdGYXTkY1M=; b=bsgTpsi8XnVGkg+K14q2V+
+ 6y6Ju0iMYCH7n7QSMOh29QxCyt5+B8Ez2gdYii67dDnZrJC1nCW7d2Brc64jdmKi
+ uEQqK08Nkc1kpd15ulG35lp+hXS+wBn/QA6hS72RVIUZb+zXgIddmbG9o8phCeXz
+ MhoAf8GVuzCkxPZvIMdVu7k1fCX5uWTazWC2gxB7j1+7IjmSlY96Er1M4pSDcVi5
+ XuhFCNUG74/9c00xXzOlkI1BxebKQjCEQQU00bMsEx+opXGL3n0p5F3vAt2FEWqI
+ UwxEibMXyH9nBLDdBdFgTyCyRmy1XSyKmtNB/uEPeK8hLKEYAbnAz8IzPcGv8hZw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 417ged6ejs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Aug 2024 12:08:26 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47QC8PPD022711;
+ Mon, 26 Aug 2024 12:08:25 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 417ged6ejq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Aug 2024 12:08:25 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47QC0Ll8021741;
+ Mon, 26 Aug 2024 12:08:24 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 417suu65fe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Aug 2024 12:08:24 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 47QC8L1r52953430
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Aug 2024 12:08:21 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 23A8520043;
+ Mon, 26 Aug 2024 12:08:21 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 024A720040;
+ Mon, 26 Aug 2024 12:08:21 +0000 (GMT)
+Received: from t14-nrb (unknown [9.171.73.145])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 26 Aug 2024 12:08:20 +0000 (GMT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <1ABDAA2B-8582-4B98-81D3-8F71DE62718C@akamai.com>
- <874j7e0yjt.fsf@suse.de> <ACB0E3E9-BA69-4EC7-A4EB-3AF2F21D4C8A@akamai.com>
- <874j7czn33.fsf@suse.de> <3587C969-9BDB-4BBD-8A79-3679C3F3801A@akamai.com>
- <A658D108-2EC3-4BA1-900C-4FE9FB498B03@akamai.com> <87ed6fxpv0.fsf@suse.de>
- <5DBD942C-E192-46F8-9E73-20DD0A5D6983@akamai.com>
-In-Reply-To: <5DBD942C-E192-46F8-9E73-20DD0A5D6983@akamai.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 26 Aug 2024 17:34:49 +0530
-Message-ID: <CAE8KmOzMFtw0oMQP2=EeiVic5TaK6dc2Fvy2=kcfp_nRg1bn9w@mail.gmail.com>
-Subject: Re: Issue with QEMU Live Migration
-To: "Arisetty, Chakri" <carisett@akamai.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>, Peter Xu <peterx@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Eric Blake <eblake@redhat.com>, "Blew III, Will" <wblewiii@akamai.com>, 
- "Massry, Abraham" <amassry@akamai.com>, "Tottenham, Max" <mtottenh@akamai.com>,
- "Greve, Mark" <mgreve@akamai.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
+ <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
+ <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
+Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw,
+ cpu to three-phase reset, and followup cleanup
+From: Nico Boehr <nrb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 26 Aug 2024 14:08:20 +0200
+Message-ID: <172467410002.31767.12365606864399178508@t14-nrb.local>
+User-Agent: alot/0.10
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: R2-BdSQwMaSk8VJJRzmYWYstYeGrAxdi
+X-Proofpoint-GUID: TM_R5baHdPL-aDwlujlszB3zBbIsrPst
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-26_08,2024-08-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=918
+ priorityscore=1501 phishscore=0 mlxscore=0 clxscore=1011 impostorscore=0
+ spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408260094
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=nrb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,30 +124,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 25 Aug 2024 at 22:40, Arisetty, Chakri <carisett@akamai.com> wrote:
-> > - start the mirror job
-> > - qmp_migrate
-> > - once PRE_SWITCHOVER is reached, issue block-job-cancel
-> > - qmp_migrate_continue
->
-> We use exact same steps to do live migration. I repeated the test now
->
-> Sure, as you suggested to rule out any incorrect usage, I repeated the test with above steps.
-> once RAM migration state moved to pre-switchover, issued block-job-cancel. There are no more dirty blocks.
-> But all the disk writes from 'pre-switchover' state to 'complete' state are lost.
-> Thus, it is creating loss of customer data.
->
+Quoting Nina Schoetterl-Glausch (2024-08-22 12:34:14)
+> I'll run it through our CI and see if anything pops up.
 
-* How is 'issue block-job-cancel' command issued exactly at the
-PRE_SWITCHOVER stage? virsh blockjob --abort?
+Nina is on holiday, she asked me to quickly report back.
 
-* Recently a postcopy issue, wherein the migrated guest on the
-destination machine hangs sometimes with migrate-postcopy but not with
-virsh ---postcopy-after-precopy. It seems virsh(1) handles the switch
-better. Wondering if it's similar with 'block-job-cancel'.
-
-Thank you.
----
-  - Prasad
-
+There was a little hickup without the fixup to patch 2, but after Nina
+pushed the fixup, we did not observe any failures related to your
+changes in our CI. Thanks!
 
