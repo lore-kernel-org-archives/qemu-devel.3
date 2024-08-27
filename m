@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF2CBC5320E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3ABDC5472C
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 09:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sisp9-00014e-HA; Tue, 27 Aug 2024 05:49:15 -0400
+	id 1sispX-0001jc-4F; Tue, 27 Aug 2024 05:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisp7-00013v-Rd
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:49:13 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sispW-0001hL-Fy
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:49:38 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisp5-00087G-Ne
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:49:13 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a8683dc3b17so338076466b.3
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:49:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sispU-0008AF-E5
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:49:38 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5becfd14353so5804797a12.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724752150; x=1725356950; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dvCJaXQ9bwpeXIjHD3IyOmSWxfRDpEZEg9BfTaOZjso=;
- b=v6t3PKxn9vlK5f8K76JDp6fo/zrZvaDykfNmwkD00Uwl4oOzP1gElcNytk6+rgyxD2
- rKcUHolmgpJ5NyQWvwg+hVIPZ9m9ghvgzXRXbQBNWLD+rDkIIqNw6lXnq5S8P9nYji2T
- bu2PyOADotqLLNlQNTk9quw3p50mUzIEcJGy7N6rEVVWK+2rZcUrfgp1tSOvHF6MTMaa
- m0swOx9b743cVCXpRPFbwgrcdQLH9XLKwwd2JaVckoKM1bxYPJ5Szn8Hqltu51qGmUNr
- 2q5wtJo/mnxNvJ4ICBIQLRBcNYEbGb5xR4khJcq/WJXTqZ9J2q7CgtHE8gi9Agtt0jje
- TXoA==
+ d=linaro.org; s=google; t=1724752175; x=1725356975; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VRGHvqpcK+QeXaBj9ekCJV8Z1lhQaz2hnnSe4o3mJWI=;
+ b=WSXkiN19o+hws1KAQOKcdg7QNq7WYbvzR7F8N3MvUQ3kjsrjU8bZjU7uwcSW6q7M4k
+ lTtNbtAFeBMgPuUunfq/RJOxvol0xzrWdi9GaO2nMXcmPiw63foKHQaNqNqhw1FGYWL0
+ K9UDUWvnBqX7LIqPEM3mS6OJMTLHdcgBkmWaK15Ljzd+W+Ytf7RrcQl8HDmATP42PH2b
+ sB1lyNyx/UX534XH4dqEh8SNN9JpmicBVuZLf5nRDkGKUch9Bk59Ho0DdnbIhwv1AAbF
+ mFLtsjdIzt4k0ct//of5U5jN5YduDzQpfyZHxXJ/73gGOLK49joztIHdt8eWQdCYR++C
+ 5OUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724752150; x=1725356950;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dvCJaXQ9bwpeXIjHD3IyOmSWxfRDpEZEg9BfTaOZjso=;
- b=FUrQFL6pU+aV0xKLvszwDltGbxtlXcHd51LCxEG+11hT5lZGSYB7mY6o/+zfZcNG79
- DBg5bPSQIYGKL4H6BLJZC9aZTHoVXq8kcub0Xv/cWwdNWTD2AR8CmBkICao9wLFD/7N7
- 58LbZ/23ehBJOrJeI3kgUZx9xnW+dQusUdsrb82LaGEaBi0q6O3PNmvpzJXaY9X0qDTa
- RdYarHft1/Z0OH0gJO0l6r+1tHzvQ/AHDjoP5zpTBFCStzpjDuWSMAyZmbr60dDXAg/f
- F2zdS8UzxEHKVNT3RYj7L2uazulIhqP0AlUKecFaMrCvojgxqHFDyvb+83dIjMeZQwUG
- 6pCA==
-X-Gm-Message-State: AOJu0YyEuXxRsckXX7xVEeJ/PwJeWfuIiDMjEEdA4sWD4UfYnG/v4BTu
- 9QY1rbqI800uSD+Os37SnNTcuUt7wxSa+laC7A10HQ6FMr2JesPi43fOVYBwaWQcjG1HpeoqJLD
- i
-X-Google-Smtp-Source: AGHT+IEgaq3TR4RJEc4EaAVd6+r58wici1GYcmn/IOisF1X2r3dT2DImnJ1oONt1TSqm7p+gISKQoQ==
-X-Received: by 2002:a05:6402:50d2:b0:5bf:b29:6eb9 with SMTP id
- 4fb4d7f45d1cf-5c0891a823dmr12360081a12.23.1724752149471; 
- Tue, 27 Aug 2024 02:49:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724752175; x=1725356975;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VRGHvqpcK+QeXaBj9ekCJV8Z1lhQaz2hnnSe4o3mJWI=;
+ b=n8dU3vLtcTnIrVY1HIZV/y60k55iQYtU/9YrDQJbeRjYioXT1TX+j1UM5rqUo5mU6d
+ CJMpyv6ZdUx0PftxDngu169rTuNBVKh9QQ7rVn3PHCAQTDvjuGYdOXj61EgrujDXndyn
+ eM2ej4VMvmdkOJpxJ3JDqN8ihTYRCdpm8si4EAh4KntE8vY3qLj29oOuNULPDSUxIviS
+ KCP72sW0Wmjt0ZVuw6kMeLsE9mHwg6j1WL1JwLccbfUtqtqx6YgdUvuBx38VK6sEPxBU
+ o/hQmMYc7zedcgjTsJtPNe43MAFwKGaFTCr1NnLDnHnrPDE29gPsoVjuHhQDRu5ZdRb+
+ kKwQ==
+X-Gm-Message-State: AOJu0Yx4XALW0VYP8BCizgNLu/2OrHshqqGo/bqAISJd4svsP6XI3/Qz
+ YuA/yMMDPF615gHV16qxR2686/lV7RvMV9zQ182WslVCEeEbbL580F+pt9YTYhKrCTzZRf3J3dC
+ o
+X-Google-Smtp-Source: AGHT+IGL1xoDCBi7MCK86DaiOaQzYEjsaYfqP0R5275QUcwXYN0nL0IEusIyHIDMqiGsZlWLRf+U0Q==
+X-Received: by 2002:a17:907:e2a0:b0:a86:82e2:8c64 with SMTP id
+ a640c23a62f3a-a86a52de303mr887757666b.35.1724752174516; 
+ Tue, 27 Aug 2024 02:49:34 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.45])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c0bb20fc99sm805206a12.47.2024.08.27.02.49.07
+ a640c23a62f3a-a86e588b034sm87480366b.185.2024.08.27.02.49.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Aug 2024 02:49:09 -0700 (PDT)
+ Tue, 27 Aug 2024 02:49:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>, Beraldo Leal <bleal@redhat.com>,
@@ -64,22 +65,25 @@ Cc: Huacai Chen <chenhuacai@kernel.org>, Beraldo Leal <bleal@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v4 0/7] tests/functional: Convert few MIPS avocado tests
-Date: Tue, 27 Aug 2024 11:48:58 +0200
-Message-ID: <20240827094905.80648-1-philmd@linaro.org>
+Subject: [PATCH v4 4/7] tests/functional: Convert mips64el 5KEc Malta avocado
+ tests
+Date: Tue, 27 Aug 2024 11:49:02 +0200
+Message-ID: <20240827094905.80648-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240827094905.80648-1-philmd@linaro.org>
+References: <20240827094905.80648-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, PDS_BTC_ID=0.5,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,95 +99,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v3:
-- Use linux_kernel_wait_for_pattern (Thomas)
+Straight forward conversion. Update the SHA1 hashes to
+SHA256 hashes since SHA1 should not be used anymore nowadays.
 
-$ RESCUE_YL_PATH=/path/to/fuloong2e/rescue-yl \
-  QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 \
-  QEMU_TEST_FLAKY_TESTS=1 \
-  QEMU_TEST_TIMEOUT_EXPECTED=1 \
-    make check-functional V=1
-▶  2/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
- 2/17 qemu:func-quick+func-mips64el / func-mips64el-empty_cpu_model                                  OK  0.14s   1 subtests passed
-▶  8/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
- 8/17 qemu:func-quick+func-mips / func-mips-empty_cpu_model                                          OK  0.13s   1 subtests passed
-▶  4/17 test_version.Version.test_qmp_human_info_version                                             OK
-▶  5/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
-▶  7/17 test_version.Version.test_qmp_human_info_version                                             OK
- 4/17 qemu:func-quick+func-mips64el / func-mips64el-version                                          OK  0.17s   1 subtests passed
- 5/17 qemu:func-quick+func-mipsel / func-mipsel-empty_cpu_model                                      OK  0.17s   1 subtests passed
- 7/17 qemu:func-quick+func-mipsel / func-mipsel-version                                              OK  0.18s   1 subtests passed
-▶ 10/17 test_version.Version.test_qmp_human_info_version                                             OK
-10/17 qemu:func-quick+func-mips / func-mips-version                                                  OK  0.21s   1 subtests passed
-▶  1/17 test_mips64el_fuloong2e.MipsFuloong2e.test_linux_kernel_2_6_27_isa_serial                    OK
-▶  3/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
-▶ 11/17 test_empty_cpu_model.EmptyCPUModel.test                                                      OK
- 3/17 qemu:func-quick+func-mips64el / func-mips64el-info_usernet                                     OK  0.29s   1 subtests passed
-▶  6/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
-11/17 qemu:func-quick+func-mips64 / func-mips64-empty_cpu_model                                      OK  0.16s   1 subtests passed
- 6/17 qemu:func-quick+func-mipsel / func-mipsel-info_usernet                                         OK  0.30s   1 subtests passed
-▶  9/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
- 9/17 qemu:func-quick+func-mips / func-mips-info_usernet                                             OK  0.30s   1 subtests passed
-▶ 13/17 test_version.Version.test_qmp_human_info_version                                             OK
-13/17 qemu:func-quick+func-mips64 / func-mips64-version                                              OK  0.19s   1 subtests passed
-▶ 12/17 test_info_usernet.InfoUsernet.test_hostfwd                                                   OK
-12/17 qemu:func-quick+func-mips64 / func-mips64-info_usernet                                         OK  0.24s   1 subtests passed
-▶ 17/17 test_mips_malta.MaltaMachineConsole.test_mips_malta                                          OK
-▶ 16/17 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_16k_up                    OK
-▶  1/17 test_mips64el_fuloong2e.MipsFuloong2e.test_linux_kernel_3_16                                 OK
- 1/17 qemu:func-quick+func-mips64el / func-mips64el-mips64el_fuloong2e                               OK  3.10s   2 subtests passed
-▶ 16/17 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_4k                        OK
-▶ 14/17 test_mips64el_loongson3v.MipsLoongson3v.test_pmon_serial_console                             OK
-14/17 qemu:func-thorough+func-mips64el-thorough+thorough / func-mips64el-mips64el_loongson3v         OK  4.71s   1 subtests passed
-▶ 16/17 test_mipsel_malta.MaltaMachineConsole.test_mips_malta32el_nanomips_64k_dbg                   OK
-▶ 16/17 test_mipsel_malta.MaltaMachineYAMON.test_mipsel_malta_yamon                                  OK
-16/17 qemu:func-thorough+func-mipsel-thorough+thorough / func-mipsel-mipsel_malta                    OK  8.64s   4 subtests passed
-▶ 15/17 test_mips64el_malta.MaltaMachineConsole.test_mips64el_malta                                  OK
-▶ 17/17 test_mips_malta.MaltaMachineConsole.test_mips_malta_cpio                                     OK
-17/17 qemu:func-thorough+func-mips-thorough+thorough / func-mips-mips_malta                          OK  14.06s   2 subtests passed
-▶ 15/17 test_mips64el_malta.MaltaMachineConsole.test_mips64el_malta_5KEc_cpio                        OK
-▶ 15/17 test_mips64el_malta.MaltaMachineFramebuffer.test_mips_malta_i6400_framebuffer_logo_1core     OK
-▶ 15/17 test_mips64el_malta.MaltaMachineFramebuffer.test_mips_malta_i6400_framebuffer_logo_7cores    OK
-▶ 15/17 test_mips64el_malta.MaltaMachineFramebuffer.test_mips_malta_i6400_framebuffer_logo_8cores    OK
-▶ 15/17 test_mipsel_malta.MaltaMachineYAMON.test_mipsel_malta_yamon                                  OK
-15/17 qemu:func-thorough+func-mips64el-thorough+thorough / func-mips64el-mips64el_malta              OK  56.88s   6 subtests passed
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/avocado/boot_linux_console.py     | 74 ------------------------
+ tests/functional/test_mips64el_malta.py | 77 +++++++++++++++++++++++++
+ 2 files changed, 77 insertions(+), 74 deletions(-)
 
-Ok:                 17
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            0
-Timeout:            0
-
-Based-on: <20240826221058.75126-2-philmd@linaro.org>
-
-Philippe Mathieu-Daudé (7):
-  tests/functional: Convert mips64el Fuloong2e avocado test (1/2)
-  tests/functional: Convert mips64el Fuloong2e avocado test (2/2)
-  tests/functional: Convert mips64el I6400 Malta avocado tests
-  tests/functional: Convert mips64el 5KEc Malta avocado tests
-  tests/functional: Convert mips32el Malta YAMON avocado test
-  tests/functional: Convert nanomips Malta avocado tests
-  tests/functional: Convert mips32eb 4Kc Malta avocado tests
-
- MAINTAINERS                                 |   6 +-
- tests/avocado/boot_linux_console.py         | 217 --------------------
- tests/avocado/machine_mips_fuloong2e.py     |  42 ----
- tests/avocado/machine_mips_malta.py         | 162 ---------------
- tests/functional/meson.build                |  13 ++
- tests/functional/qemu_test/utils.py         |  20 ++
- tests/functional/test_mips64el_fuloong2e.py |  67 ++++++
- tests/functional/test_mips64el_malta.py     | 190 +++++++++++++++++
- tests/functional/test_mips_malta.py         |  84 ++++++++
- tests/functional/test_mipsel_malta.py       |  98 +++++++++
- 10 files changed, 476 insertions(+), 423 deletions(-)
- delete mode 100644 tests/avocado/machine_mips_fuloong2e.py
- delete mode 100644 tests/avocado/machine_mips_malta.py
- create mode 100755 tests/functional/test_mips64el_fuloong2e.py
- create mode 100755 tests/functional/test_mips64el_malta.py
- create mode 100755 tests/functional/test_mips_malta.py
- create mode 100755 tests/functional/test_mipsel_malta.py
-
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index 01fd126c53..10457743d1 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -138,38 +138,6 @@ def test_mips_malta(self):
+         console_pattern = 'Kernel command line: %s' % kernel_command_line
+         self.wait_for_console_pattern(console_pattern)
+ 
+-    def test_mips64el_malta(self):
+-        """
+-        This test requires the ar tool to extract "data.tar.gz" from
+-        the Debian package.
+-
+-        The kernel can be rebuilt using this Debian kernel source [1] and
+-        following the instructions on [2].
+-
+-        [1] http://snapshot.debian.org/package/linux-2.6/2.6.32-48/
+-            #linux-source-2.6.32_2.6.32-48
+-        [2] https://kernel-team.pages.debian.net/kernel-handbook/
+-            ch-common-tasks.html#s-common-official
+-
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        """
+-        deb_url = ('http://snapshot.debian.org/archive/debian/'
+-                   '20130217T032700Z/pool/main/l/linux-2.6/'
+-                   'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb')
+-        deb_hash = '1aaec92083bf22fda31e0d27fa8d9a388e5fc3d5'
+-        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
+-        kernel_path = self.extract_from_deb(deb_path,
+-                                            '/boot/vmlinux-2.6.32-5-5kc-malta')
+-
+-        self.vm.set_console()
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        self.vm.add_args('-kernel', kernel_path,
+-                         '-append', kernel_command_line)
+-        self.vm.launch()
+-        console_pattern = 'Kernel command line: %s' % kernel_command_line
+-        self.wait_for_console_pattern(console_pattern)
+-
+     def test_mips_malta_cpio(self):
+         """
+         :avocado: tags=arch:mips
+@@ -211,48 +179,6 @@ def test_mips_malta_cpio(self):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
+ 
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+-    def test_mips64el_malta_5KEc_cpio(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        :avocado: tags=endian:little
+-        :avocado: tags=cpu:5KEc
+-        """
+-        kernel_url = ('https://github.com/philmd/qemu-testing-blob/'
+-                      'raw/9ad2df38/mips/malta/mips64el/'
+-                      'vmlinux-3.19.3.mtoman.20150408')
+-        kernel_hash = '00d1d268fb9f7d8beda1de6bebcc46e884d71754'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-        initrd_url = ('https://github.com/groeck/linux-build-test/'
+-                      'raw/8584a59e/rootfs/'
+-                      'mipsel64/rootfs.mipsel64r1.cpio.gz')
+-        initrd_hash = '1dbb8a396e916847325284dbe2151167'
+-        initrd_path_gz = self.fetch_asset(initrd_url, algorithm='md5',
+-                                          asset_hash=initrd_hash)
+-        initrd_path = self.workdir + "rootfs.cpio"
+-        archive.gzip_uncompress(initrd_path_gz, initrd_path)
+-
+-        self.vm.set_console()
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
+-                               + 'console=ttyS0 console=tty '
+-                               + 'rdinit=/sbin/init noreboot')
+-        self.vm.add_args('-kernel', kernel_path,
+-                         '-initrd', initrd_path,
+-                         '-append', kernel_command_line,
+-                         '-no-reboot')
+-        self.vm.launch()
+-        wait_for_console_pattern(self, 'Boot successful.')
+-
+-        exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
+-                                                'MIPS 5KE')
+-        exec_command_and_wait_for_pattern(self, 'uname -a',
+-                                                '3.19.3.mtoman.20150408')
+-        exec_command_and_wait_for_pattern(self, 'reboot',
+-                                                'reboot: Restarting system')
+-        # Wait for VM to shut down gracefully
+-        self.vm.wait()
+-
+     def do_test_mips_malta32el_nanomips(self, kernel_path_xz):
+         kernel_path = self.workdir + "kernel"
+         with lzma.open(kernel_path_xz, 'rb') as f_in:
+diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+index 9c1da8f401..9f33146c89 100755
+--- a/tests/functional/test_mips64el_malta.py
++++ b/tests/functional/test_mips64el_malta.py
+@@ -16,6 +16,7 @@
+ from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test.linux_kernel import linux_kernel_wait_for_pattern
+ from qemu_test.linux_kernel import KERNEL_COMMON_COMMAND_LINE
++from qemu_test.utils import extract_from_deb
+ from qemu_test.utils import gzip_uncompress
+ from unittest import skipUnless
+ 
+@@ -32,6 +33,82 @@
+     CV2_AVAILABLE = False
+ 
+ 
++class MaltaMachineConsole(QemuSystemTest):
++
++    ASSET_KERNEL_2_63_2 = Asset(
++        ('http://snapshot.debian.org/archive/debian/'
++         '20130217T032700Z/pool/main/l/linux-2.6/'
++         'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb'),
++        '35eb476f03be589824b0310358f1c447d85e645b88cbcd2ac02b97ef560f9f8d')
++
++    def test_mips64el_malta(self):
++        """
++        This test requires the ar tool to extract "data.tar.gz" from
++        the Debian package.
++
++        The kernel can be rebuilt using this Debian kernel source [1] and
++        following the instructions on [2].
++
++        [1] http://snapshot.debian.org/package/linux-2.6/2.6.32-48/
++            #linux-source-2.6.32_2.6.32-48
++        [2] https://kernel-team.pages.debian.net/kernel-handbook/
++            ch-common-tasks.html#s-common-official
++        """
++        deb_path = self.ASSET_KERNEL_2_63_2.fetch()
++        kernel_path = extract_from_deb(deb_path, self.workdir,
++                                       '/boot/vmlinux-2.6.32-5-5kc-malta')
++
++        self.set_machine('malta')
++        self.vm.set_console()
++        kernel_command_line = KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_command_line)
++        self.vm.launch()
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        linux_kernel_wait_for_pattern(self, console_pattern)
++
++    ASSET_KERNEL_3_19_3 = Asset(
++        ('https://github.com/philmd/qemu-testing-blob/'
++         'raw/9ad2df38/mips/malta/mips64el/'
++         'vmlinux-3.19.3.mtoman.20150408'),
++        '8d3beb003bc66051ead98e7172139017fcf9ce2172576541c57e86418dfa5ab8')
++
++    ASSET_CPIO_R1 = Asset(
++        ('https://github.com/groeck/linux-build-test/'
++         'raw/8584a59e/rootfs/mipsel64/'
++         'rootfs.mipsel64r1.cpio.gz'),
++        '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
++
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    def test_mips64el_malta_5KEc_cpio(self):
++        kernel_path = self.ASSET_KERNEL_3_19_3.fetch()
++        initrd_path_gz = self.ASSET_CPIO_R1.fetch()
++        initrd_path = os.path.join(self.workdir, 'rootfs.cpio')
++        gzip_uncompress(initrd_path_gz, initrd_path)
++
++        self.set_machine('malta')
++        self.vm.set_console()
++        kernel_command_line = (KERNEL_COMMON_COMMAND_LINE
++                               + 'console=ttyS0 console=tty '
++                               + 'rdinit=/sbin/init noreboot')
++        self.vm.add_args('-cpu', '5KEc',
++                         '-kernel', kernel_path,
++                         '-initrd', initrd_path,
++                         '-append', kernel_command_line,
++                         '-no-reboot')
++        self.vm.launch()
++        linux_kernel_wait_for_pattern(self, 'Boot successful.')
++
++        exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
++                                                'MIPS 5KE')
++        exec_command_and_wait_for_pattern(self, 'uname -a',
++                                                '3.19.3.mtoman.20150408')
++        exec_command_and_wait_for_pattern(self, 'reboot',
++                                                'reboot: Restarting system')
++        # Wait for VM to shut down gracefully
++        self.vm.wait()
++
++
+ @skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
+ @skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
+ class MaltaMachineFramebuffer(QemuSystemTest):
 -- 
 2.45.2
 
