@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C066BC54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 19:49:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36748C54736
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 20:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj2By-0002cW-LG; Tue, 27 Aug 2024 15:49:26 -0400
+	id 1sj2bk-0001O6-8T; Tue, 27 Aug 2024 16:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj2Bx-0002c1-Jy
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:49:25 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj2bi-0001Mm-MM
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 16:16:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj2Bw-0005Ba-2S
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:49:25 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj2bX-0007cL-Sn
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 16:15:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724788163;
+ s=mimecast20190719; t=1724789749;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XV+GcZ/qrcH3I6y+iyaicPoLwbSGxXPAdFYFRSeT7NE=;
- b=TtSaHes0bXSh8gO6IN0mdMyhx7ne8cxXS5KhlwJ9VcD2D82GafpqaWlDEQIwhu8PpVTpyp
- q4vTXCP9GEq8+KEa+oKSekNGXc31OLpjtsj22iAAMirYXlbe/AGvpkKDRd792QizvrHVSF
- 2pwdswE0by0Bvw//hcQ6TxrnyI4zjr0=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tkTEnSk5gZsoaeIIhhfIjqpUQpx+Ss4nHPGthUsVQ2s=;
+ b=fLzb12JQQxW74Pq9oj63QOQWALnKvkL5/9UPU8EpnFXP6HxpWxabEVuPD+aV5al68BUoBs
+ dNGZBWAjq1ePNdRbBluLnJ1SttZmWXv2d6b/GfVqy2cIvMXxCHXWFxFOHyvVL8ddtPm9vI
+ uzaJaV/sghk5nHHHY06SAejiQ1akuHw=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-CD-wQ27bPxG4CDWqbyXvxw-1; Tue, 27 Aug 2024 15:49:21 -0400
-X-MC-Unique: CD-wQ27bPxG4CDWqbyXvxw-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7a1d0b29198so699846085a.2
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 12:49:21 -0700 (PDT)
+ us-mta-564-Glbs2oRBPyyUl6gImKOd9w-1; Tue, 27 Aug 2024 16:15:47 -0400
+X-MC-Unique: Glbs2oRBPyyUl6gImKOd9w-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6c17f1a7011so37850936d6.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 13:15:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724788160; x=1725392960;
+ d=1e100.net; s=20230601; t=1724789746; x=1725394546;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XV+GcZ/qrcH3I6y+iyaicPoLwbSGxXPAdFYFRSeT7NE=;
- b=PVcwnOr8yokt9zZp49H4TljfHnDThnuD/opk9Fv/VAY4Yu3Pm9VgVd6Z7CpoRLm9OL
- kZedcJsgm9MWF/+r0Fm8Qpi3FFZ02eWQOGJdoX0ExSzWDb1h6jIoCA6tBmAljxQ4fYzO
- 0PaO4Pxp/sIzyOl4UwWc9Svabz5OKjYZZhjZaU6xfxO98bTcIGS0EhNMvloTjVhTb+vA
- eBv1PmHH6+W6MizXyWK6bI4JC49/WYJ72oPPArcD9Zc6sHNnjQqidCLoaM6kj1Vw6xhy
- 3rR0DAJwtUhIlqxyXCK1vlmw3oBloTGYkN4ip17B06oboEFC1aryj/Vr5EOx03Qdpuqs
- VIEA==
-X-Gm-Message-State: AOJu0YzVpKb78Z6a/jhBuA86N1J/hNuJKtyG0ubVQn5KIPLLeIRmSTt5
- ax1WXKQvUFuU6opTe913KmOb4mvZU9GNnJ6+XOyMf8az2zObe9HRW/TQbqdecAGaOFe47tymm0K
- ovv+O3e3QbcsGFmKG4mtPPopCTwXCtOgWdy50LjJSpQFqJ/Uakh2G
-X-Received: by 2002:a05:620a:28c8:b0:7a1:62ad:9d89 with SMTP id
- af79cd13be357-7a7e4e6d3c1mr441335785a.64.1724788160391; 
- Tue, 27 Aug 2024 12:49:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IECGTTNRd7H0QJp76Ut4PBQnqdWnu6Bzcf2XJuK5TEkgz88WC3+kglIREPSQMji+uWKxa/PvA==
-X-Received: by 2002:a05:620a:28c8:b0:7a1:62ad:9d89 with SMTP id
- af79cd13be357-7a7e4e6d3c1mr441334385a.64.1724788160086; 
- Tue, 27 Aug 2024 12:49:20 -0700 (PDT)
+ bh=tkTEnSk5gZsoaeIIhhfIjqpUQpx+Ss4nHPGthUsVQ2s=;
+ b=InkzKyED2qlnu3VkHc9OYMiTjAt9Jp64+iqBVHAgzBikzOfUM/gHSw9AugQr72g8zT
+ DciKFJuxcpZfBXjcZIFRlDIzh/pHb5mcBoZ76cB6aSzEkoM6XRXzgnCCsI1OFJ9wwvO1
+ dLZZ72JX+7in9GK8o4y+sNqcfvhQHLffYO4r3n6+YVjT52gotu7msR1SFmQTnSadqqk/
+ +gzeOYNuxvO/1PK99fj6nDiDDB1hRxGKRGINkEqlesdtT/xL6HGsScSIT2HLIgju1afB
+ DCQtkhR/1BbbUlizRJ2Hq/iDhI7IbdXgrSBCbDEQpApL8WvrFrLE1QWuh156xubLu8m5
+ CsuQ==
+X-Gm-Message-State: AOJu0YzNeZS8Yhnsw/TLOzv8ixrc0RZFaUuAQ06TFpZA7NMEw2AlXKGw
+ ih21Ft1k09WVTqGnwb+OZRMS6DAGBKmubWFaJpIBTZx0ph21mxlgBauskyT3Qb91SkClfgTC/+P
+ YNuEE/Ko7MrG6NCjcFXLtC+CaG0osJICQ7XbVX82o/A1G/j3HshVM
+X-Received: by 2002:a05:6214:43c2:b0:6bf:888f:847 with SMTP id
+ 6a1803df08f44-6c32b9295b3mr33720896d6.56.1724789746587; 
+ Tue, 27 Aug 2024 13:15:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG8DZYWJvJrfdcJOorv+lq6yqV0CgJjtznYB7d4lBivv9t/a/sX/1JskI5MVpECD5nZlh4FXQ==
+X-Received: by 2002:a05:6214:43c2:b0:6bf:888f:847 with SMTP id
+ 6a1803df08f44-6c32b9295b3mr33720516d6.56.1724789746130; 
+ Tue, 27 Aug 2024 13:15:46 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a67f3cf6cbsm577384185a.83.2024.08.27.12.49.19
+ 6a1803df08f44-6c162dcddadsm59545846d6.121.2024.08.27.13.15.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 12:49:19 -0700 (PDT)
-Date: Tue, 27 Aug 2024 15:49:17 -0400
+ Tue, 27 Aug 2024 13:15:45 -0700 (PDT)
+Date: Tue, 27 Aug 2024 16:15:42 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v6 18/19] migration/multifd: Stop changing the packet on
- recv side
-Message-ID: <Zs4tvVbGvHgESZca@x1n>
-References: <20240827174606.10352-1-farosas@suse.de>
- <20240827174606.10352-19-farosas@suse.de> <Zs4V8HajCAzNS3ZZ@x1n>
- <87plptx0so.fsf@suse.de> <Zs4jeFpSgp1osMn3@x1n>
- <87h6b5wytt.fsf@suse.de>
+To: Gonglei <arei.gonglei@huawei.com>
+Cc: qemu-devel@nongnu.org, yu.zhang@ionos.com, mgalaxy@akamai.com,
+ elmar.gerdes@ionos.com, zhengchuan@huawei.com, berrange@redhat.com,
+ armbru@redhat.com, lizhijian@fujitsu.com, pbonzini@redhat.com,
+ mst@redhat.com, xiexiangyou@huawei.com, linux-rdma@vger.kernel.org,
+ lixiao91@huawei.com, jinpu.wang@ionos.com,
+ Jialin Wang <wangjialin23@huawei.com>
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Message-ID: <Zs4z7tKWif6K4EbT@x1n>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87h6b5wytt.fsf@suse.de>
+In-Reply-To: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -104,56 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 27, 2024 at 04:27:42PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On Tue, Jun 04, 2024 at 08:14:06PM +0800, Gonglei wrote:
+> From: Jialin Wang <wangjialin23@huawei.com>
 > 
-> > On Tue, Aug 27, 2024 at 03:45:11PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Tue, Aug 27, 2024 at 02:46:05PM -0300, Fabiano Rosas wrote:
-> >> >> @@ -254,12 +250,10 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
-> >> >>          return 0;
-> >> >>      }
-> >> >>  
-> >> >> -    /* make sure that ramblock is 0 terminated */
-> >> >> -    packet->ramblock[255] = 0;
-> >> >> -    p->block = qemu_ram_block_by_name(packet->ramblock);
-> >> >> +    ramblock_name = g_strndup(packet->ramblock, 255);
-> >> >
-> >> > I understand we want to move to a const*, however this introduces a 256B
-> >> > allocation per multifd packet, which we definitely want to avoid.. I wonder
-> >> > whether that's worthwhile just to make it const. :-(
-> >> >
-> >> > I don't worry too much on the const* and vars pointed being abused /
-> >> > updated when without it - the packet struct is pretty much limited only to
-> >> > be referenced in this unfill function, and then we will do the load based
-> >> > on MultiFDRecvParams* later anyway.  So personally I'd rather lose the
-> >> > const* v.s. one allocation.
-> >> >
-> >> > Or we could also sanity check byte 255 to be '\0' (which, AFAIU, should
-> >> > always be the case..), then we can get both benefits.
-> >> 
-> >> We can't because it breaks compat. Previous QEMUs didn't zero the
-> >> packet.
-> >
-> > Ouch!
-> >
-> > Then.. shall we still try to avoid the allocation?
+> Hi,
 > 
-> Can I strcpy it to the stack?
+> This patch series attempts to refactor RDMA live migration by
+> introducing a new QIOChannelRDMA class based on the rsocket API.
 > 
-> char idstr[256];
+> The /usr/include/rdma/rsocket.h provides a higher level rsocket API
+> that is a 1-1 match of the normal kernel 'sockets' API, which hides the
+> detail of rdma protocol into rsocket and allows us to add support for
+> some modern features like multifd more easily.
 > 
-> strncpy(&idstr, packet->ramblock, 256);
-> idstr[255] = 0;
+> Here is the previous discussion on refactoring RDMA live migration using
+> the rsocket API:
+> 
+> https://lore.kernel.org/qemu-devel/20240328130255.52257-1-philmd@linaro.org/
+> 
+> We have encountered some bugs when using rsocket and plan to submit them to
+> the rdma-core community.
+> 
+> In addition, the use of rsocket makes our programming more convenient,
+> but it must be noted that this method introduces multiple memory copies,
+> which can be imagined that there will be a certain performance degradation,
+> hoping that friends with RDMA network cards can help verify, thank you!
+> 
+> Jialin Wang (6):
+>   migration: remove RDMA live migration temporarily
+>   io: add QIOChannelRDMA class
+>   io/channel-rdma: support working in coroutine
+>   tests/unit: add test-io-channel-rdma.c
+>   migration: introduce new RDMA live migration
+>   migration/rdma: support multifd for RDMA migration
 
-Should be much better than an allocation, yes.  However personally I'd
-still try to avoid that.
+This series has been idle for a while; we still need to know how to move
+forward.  I guess I lost the latest status quo..
 
-Multifd is a performance feature, after all, so we care about perf here
-more than elsewhere.  Meanwhile this is exactly the hot path on recv
-side.. so it might still be wise we leave all non-trivial cosmetic changes
-for later when it's against it.
+Any update (from anyone..) on what stage are we in?
+
+Thanks,
 
 -- 
 Peter Xu
