@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E14C54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 20:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D49BC54736
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 20:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj39o-0005gF-P6; Tue, 27 Aug 2024 16:51:17 -0400
+	id 1sj3E7-0002yH-EI; Tue, 27 Aug 2024 16:55:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sj39m-0005aa-EJ; Tue, 27 Aug 2024 16:51:14 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sj3E5-0002wy-Cy
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 16:55:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sj39k-0002zr-D0; Tue, 27 Aug 2024 16:51:14 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D30028931B;
- Tue, 27 Aug 2024 23:50:02 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1062312DC23;
- Tue, 27 Aug 2024 23:51:06 +0300 (MSK)
-Message-ID: <7cec2926-ed35-43a0-8963-986860a90c24@tls.msk.ru>
-Date: Tue, 27 Aug 2024 23:51:05 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sj3E3-0003VM-Ng
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 16:55:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724792137;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IQ9DTc8Zj5L93/tzQbCYNIQkmETuh0e9n6H2ngdt6nA=;
+ b=LzvrKyoZ00K7Ashz3yZC/oJbQBMrNNf8e9O5RDj+ulQIreGVMdAk/NNKEpoNhFC4bHz8LZ
+ ulUOmP2Ck9ey27fAgPgHEHPCPk3eMRk8WmoZq4NIHDtWYq1X9kEca28XXSKLe/NdIA1zRI
+ I3IwF4QA8sKPwadI2ocKuFgomqj2V10=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-157--bpEGolDMGWNo9DNfVZJ0A-1; Tue, 27 Aug 2024 16:55:35 -0400
+X-MC-Unique: -bpEGolDMGWNo9DNfVZJ0A-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a80ebde3f94so495151166b.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 13:55:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724792134; x=1725396934;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IQ9DTc8Zj5L93/tzQbCYNIQkmETuh0e9n6H2ngdt6nA=;
+ b=ZIUflb/ZdxUmmLfqIhDLM4/tmGgsFNc9BwGzkVbQlUgtmLO/CNOCuigRq7eG1yk9re
+ 4VTUL8S/1W1Mqqy/8+7eb2SHHedbiIOGJh52dLRTRFK1YCGE/M113UuOyGbWmq9UNTGi
+ rkXfcVr+wmG/sVJIxAnoSBY0M2ENPdb0sqOmGcWGsSHVCcZtUw/KAh5iXmsEXRJmy26L
+ /SKNjvuZkmUPdg6qFvd1uQTSNtFLDrlSeF1qSII+Ig+McFXpEl4HfK0Dwit4syXy58HQ
+ WVoqb6XQxg2DHr0fpOsYw5Qbkg3I95p4lr9tc3oTZ8chPUAjxOkagW0hCGSwF2LLF1On
+ r44w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjQnB2eUk8lDeHcVJrMlIW/CLxkOaR6oOxRGsS3O0rIIcVE0fLnRkyrCT3rLmUa4JRMz8dyUb6zZjn@nongnu.org
+X-Gm-Message-State: AOJu0YzdcBwrR54R7FL5L3XZhl47lEGfyJyUidBCJJxrrHThoqGQkvMD
+ UnHSbVdCYT2WEMiL6hLmPg6Y3eNST22ilC51NGQ5Nvf8emYDPPKI0B8MbkG2EalmkeMUtX8JTY3
+ I5ou1XAyynv0Vc5BLFmGoz5oqZ7cqPyzTwTzQxXCLVM+S+beFJ9qZ
+X-Received: by 2002:a17:907:1c1f:b0:a7a:a960:99ee with SMTP id
+ a640c23a62f3a-a86a52c11cfmr938469566b.32.1724792133920; 
+ Tue, 27 Aug 2024 13:55:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHY3OCdb5G7p0KMorpKvXXc9UhB0DGo//+Yh614VXYPlDmq/vKvwJrpmgYTvoK1V53WFNJs2w==
+X-Received: by 2002:a17:907:1c1f:b0:a7a:a960:99ee with SMTP id
+ a640c23a62f3a-a86a52c11cfmr938466866b.32.1724792133153; 
+ Tue, 27 Aug 2024 13:55:33 -0700 (PDT)
+Received: from redhat.com ([2.55.185.222]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a86e590a6f2sm151681966b.188.2024.08.27.13.55.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 13:55:32 -0700 (PDT)
+Date: Tue, 27 Aug 2024 16:55:28 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: BillXiang <xiangwencheng@dayudpu.com>
+Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] vhost-user: Do not wait for reply for not sent
+ VHOST_USER_SET_LOG_BASE
+Message-ID: <20240827142324-mutt-send-email-mst@kernel.org>
+References: <20240801124540.38774-1-xiangwencheng@dayudpu.com>
+ <20240801101210-mutt-send-email-mst@kernel.org>
+ <fba0cfc406f202976ef5ac5d129e08524ce06bbf.d4485eba.82f2.4fda.af98.6cd4ae867655@feishu.cn>
+ <CAE8KmOxPS2QsWOesKg7h_euSV7r-z4NPZ9vMvTLY6tOudqJjuA@mail.gmail.com>
+ <fba0cfc406f202976ef5ac5d129e08524ce06bbf.aef11064.252c.4e66.b54f.0729a2c3aa1c@feishu.cn>
+ <CAE8KmOz1QH_gT=nOvovqTj+th=uMxEvacGxN4ndTYwz=dPxrHg@mail.gmail.com>
+ <fba0cfc406f202976ef5ac5d129e08524ce06bbf.a3d7ed0c.8388.4f30.8938.ed24afc64c52@feishu.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/96] spapr: Migrate ail-mode-3 spapr cap
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240725235410.451624-1-npiggin@gmail.com>
- <20240725235410.451624-3-npiggin@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240725235410.451624-3-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+In-Reply-To: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.a3d7ed0c.8388.4f30.8938.ed24afc64c52@feishu.cn>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -88,63 +109,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.07.2024 02:52, Nicholas Piggin –ø–∏—à–µ—Ç:
-> This cap did not add the migration code when it was introduced. This
-> results in migration failure when changing the default using the
-> command line.
+On Tue, Aug 27, 2024 at 09:00:35PM +0800, BillXiang wrote:
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: ccc5a4c5e10 ("spapr: Add SPAPR_CAP_AIL_MODE_3 for AIL mode 3 support for H_SET_MODE hcall")
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Reviewed-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   hw/ppc/spapr.c         | 1 +
->   hw/ppc/spapr_caps.c    | 1 +
->   include/hw/ppc/spapr.h | 1 +
->   3 files changed, 3 insertions(+)
+> > From: "Prasad Pandit"<ppandit@redhat.com>
+> > Date:† Tue, Aug 27, 2024, 20:37
+> > Subject:† Re: [PATCH v3] vhost-user: Do not wait for reply for not sent VHOST_USER_SET_LOG_BASE
+> > To: "BillXiang"<xiangwencheng@dayudpu.com>
+> > Cc: "Michael S. Tsirkin"<mst@redhat.com>, <qemu-devel@nongnu.org>
+> > On Tue, 27 Aug 2024 at 16:50, BillXiang <xiangwencheng@dayudpu.com> wrote:
+> > > it's better to be consistent to use vhost_user_per_device_request for those per-device messages, right?
+> >†
+> > * ...consistent to use? Could you please elaborate a little?
+> >†
+> > Thank you.
+> > ---
+> > † - Prasad
 > 
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 98fa3aa6a8..370d7c35d3 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -2195,6 +2195,7 @@ static const VMStateDescription vmstate_spapr = {
->           &vmstate_spapr_cap_fwnmi,
->           &vmstate_spapr_fwnmi,
->           &vmstate_spapr_cap_rpt_invalidate,
-> +        &vmstate_spapr_cap_ail_mode_3,
->           &vmstate_spapr_cap_nested_papr,
->           NULL
->       }
+> That was elaborated in commit b931bfbf0429 (" vhost-user: add multiple queue support ").†
+> We have added vhost_user_one_time_request() to send those per-device messages only once†
+> for multi-queue device. Which was then changed to vhost_user_per_device_request() in†
+> commit 0dcb4172f2ce ("vhost-user: Change one_time to per_device request").
+> And VHOST_USER_SET_LOG_BASE should be one of those per-device messages that only
+> be sent once for multi-queue device.
 
-Hi!
+Bill,
+it's important to make it clear, in the commit message, what is the
+current behaviour and what is the effect of the patch.
+For example: currently qemu hangs waiting for ...., to fix,
+.... so we never wait for .... .
+At the moment, I'm not really sure if this is a bugfix, or
+a cleanup, or what.
 
-I've another question about this patch.
-
-It's marked for-stable, and it applies cleanly for 9.0
-(but eg in 8.2, cap_nested_papr subsection isn't here
-yet).
-
-Will a 9.0 qemu with this patch be incompatible with 9.0
-qemu without this patch wrt migration?
-
-How about 8.2 (if I fix up the context, so cap_ail_mode_3
-is at the same index but at the end)?
-
-How about migrating between 8.2 without this patch and 9.0
-with this patch?
-
-Does this change break migration, ever?  (Yes, I'm not sure
-I understand even this level of migration code).
-
-Thanks,
-
-/mjt
 
 -- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+MST
 
 
