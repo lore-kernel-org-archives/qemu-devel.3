@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76957C5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 19:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9654C5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 19:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj1Vj-00059Z-QV; Tue, 27 Aug 2024 15:05:48 -0400
+	id 1sj1ZW-00010x-I2; Tue, 27 Aug 2024 15:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj1Va-00057x-Rv
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:05:41 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj1ZT-00010N-GA
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:09:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj1VX-00014y-5X
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:05:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj1ZR-0001HY-Fz
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:09:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724785533;
+ s=mimecast20190719; t=1724785776;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=GrjW9Q8Fhiki6dxLjlLiKQPNBBS0rn1XQvPKMlvqMU8=;
- b=FzCrLedrmzfDG8WfmQR2heW6MceumhKmFdJZnXLd/SrQndnLdm7u6akEALkaomW3ODRxt9
- nV+Py2624hbtxC+TRe1YB1zE+ZPFnnjT2Iz7FUNtgEajrmF9GVTizqxvg7jAWMK+46FMGF
- EMdGkw+aOomEDBG+7aMs2PJIa+RraGw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=x/1E8+rBKwc/2VH5T6HtQYLSgh6yFiIlVDmVwD9tg2Y=;
+ b=Bac4U7PhWLH3houkP/Wl4dFAIufGRxAXtZsnhmbuz5+W49GPvo93Fiwlt3ukbOotZoHFps
+ LI1yaEQv7Z6X2N3Gn8pUOfNjP5CWMPpwT1WOzUdmnm0pQOP8yiQ3ECdcTis7wLjNdez0uV
+ BL7eyE7pr/71bMjcUkTh9g9JD8uZSNA=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-tVc-IQ0ZMzu1YL0Jreckpw-1; Tue, 27 Aug 2024 15:05:32 -0400
-X-MC-Unique: tVc-IQ0ZMzu1YL0Jreckpw-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4501f17051eso88331961cf.0
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 12:05:32 -0700 (PDT)
+ us-mta-540-Tiasb79tP_mXewhSO8yocg-1; Tue, 27 Aug 2024 15:09:35 -0400
+X-MC-Unique: Tiasb79tP_mXewhSO8yocg-1
+Received: by mail-ot1-f70.google.com with SMTP id
+ 46e09a7af769-70b3bf367f4so6648263a34.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 12:09:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724785531; x=1725390331;
+ d=1e100.net; s=20230601; t=1724785774; x=1725390574;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GrjW9Q8Fhiki6dxLjlLiKQPNBBS0rn1XQvPKMlvqMU8=;
- b=Vyl1/lc2NmGmOlq0Qku61L84igQ7Sb6fnUfMgO35y53sRDGiok122FuCTq0U28F45k
- bunv/RNdY+b39UFExnjdAz0q9sFBlmywKuKXkA7rVO6n/hT/82ihhUW4IrPvXPW5w4KT
- d40OQ5LdPzmri/3LXqgIpTCZhYSSRf4vEEWYFkm7bZpRCdnEczhLb4yhvMN9zCAgLpfi
- d4mMIfdNPJY//E8R/EoAVvjNzwTA65hYX7e0y9cTkbSFl8iSn5gALx/4buKzmycjfUcb
- 0f47yTU+1MBaykfBrmLdhKbKX9vhjuYgqXF2jdS2mmJIU87JolEPlG5lxhOslYpyXZkl
- SITQ==
-X-Gm-Message-State: AOJu0Yy23jckPZpDdjqFz031upI8Eft+ddp+JoDMAMrBnk06I+LyxBGW
- /HdfKRv+fJQmVlvBX42pxaxXPLov3TX9oFp/BwxGW3Y0MbERw03zk5YX16nzI60AV2bP9iT6TkD
- fA0l5jFw2aVJ56VvQlVeBFYzLsf8uZ3uAYXUjfHiXOf3/OVPhIXFl
-X-Received: by 2002:a05:622a:618c:b0:453:7533:1962 with SMTP id
- d75a77b69052e-45509c5352amr137274921cf.9.1724785531608; 
- Tue, 27 Aug 2024 12:05:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdglS2KebsTj995bf1yy28c+FrfbixAYMgoMgdaQndHE7Kw9C/VSTkCshR1Hl+1BwsbHXDqQ==
-X-Received: by 2002:a05:622a:618c:b0:453:7533:1962 with SMTP id
- d75a77b69052e-45509c5352amr137274731cf.9.1724785531218; 
- Tue, 27 Aug 2024 12:05:31 -0700 (PDT)
+ bh=x/1E8+rBKwc/2VH5T6HtQYLSgh6yFiIlVDmVwD9tg2Y=;
+ b=sve3UaHgX2X4SfOBEJG5S/QXjnFUGFZKKXklwMS5KIrJO6F1yanP1z0Fuf48m4ddeB
+ e/NDR85wKQXBYr2xP3RgWJ+OCYYgXTje4NVk8PhkuOz7JIixWcKpm+nWzlJDbuUug7NK
+ HSlo6vl0H4vtIfauuyYW1JS7hpHDzoN1lie/R7x3AHYFINNL6h/CFwAhAGOR2FDjgqpF
+ m0CM7Dd4WejNBAhJSAoWhYMTmKXDRGoBtiMrcd+zJ/i0MH63X1mRDu7C2eHwTVQyz5MB
+ xZDhS6sIsaG9R/Pt35IsSd4wSfdJKIbvfjDnTB3KZWNMsdkMlauqIWM1xILI1PA2kT2z
+ TGNw==
+X-Gm-Message-State: AOJu0YxVBLloCAJ9tcNi4NekJtpoWouub5MRZZMCZC/m4QWfpTvTrI/G
+ FgY0WJNfLftUCDlmpRQyRYlbiOvBkUS7bVpDFHm2edu02GSeN48PT85Yqf+DuSXjxOvML2fNmxi
+ JtI2kRBXR+FOqp2sbmLlniV3XG5zN0WhfIZRPK7U9bFtPA1ct5cMI
+X-Received: by 2002:a05:6830:418c:b0:700:d3b7:4ede with SMTP id
+ 46e09a7af769-70f4847650cmr4251144a34.27.1724785774246; 
+ Tue, 27 Aug 2024 12:09:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAXxtoGlayMb2jzSqnaVHiKlt/lM39MCujAdrnM7uhKRXp0C9bq4FAkljSvwOMRN6z59784Q==
+X-Received: by 2002:a05:6830:418c:b0:700:d3b7:4ede with SMTP id
+ 46e09a7af769-70f4847650cmr4251126a34.27.1724785773892; 
+ Tue, 27 Aug 2024 12:09:33 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-454fe196845sm55506671cf.72.2024.08.27.12.05.30
+ d75a77b69052e-454fe1b7d2asm54444531cf.93.2024.08.27.12.09.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 12:05:30 -0700 (PDT)
-Date: Tue, 27 Aug 2024 15:05:28 -0400
+ Tue, 27 Aug 2024 12:09:33 -0700 (PDT)
+Date: Tue, 27 Aug 2024 15:09:31 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v6 18/19] migration/multifd: Stop changing the packet on
- recv side
-Message-ID: <Zs4jeFpSgp1osMn3@x1n>
+Subject: Re: [PATCH v6 19/19] migration/multifd: Add documentation for
+ multifd methods
+Message-ID: <Zs4ka2-q6JJbL1KA@x1n>
 References: <20240827174606.10352-1-farosas@suse.de>
- <20240827174606.10352-19-farosas@suse.de> <Zs4V8HajCAzNS3ZZ@x1n>
- <87plptx0so.fsf@suse.de>
+ <20240827174606.10352-20-farosas@suse.de> <Zs4bL_lRURD7cV_N@x1n>
+ <87mskxx0ck.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87plptx0so.fsf@suse.de>
+In-Reply-To: <87mskxx0ck.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -103,38 +103,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 27, 2024 at 03:45:11PM -0300, Fabiano Rosas wrote:
+On Tue, Aug 27, 2024 at 03:54:51PM -0300, Fabiano Rosas wrote:
 > Peter Xu <peterx@redhat.com> writes:
 > 
-> > On Tue, Aug 27, 2024 at 02:46:05PM -0300, Fabiano Rosas wrote:
-> >> @@ -254,12 +250,10 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
-> >>          return 0;
-> >>      }
+> > On Tue, Aug 27, 2024 at 02:46:06PM -0300, Fabiano Rosas wrote:
+> >> Add documentation clarifying the usage of the multifd methods. The
+> >> general idea is that the client code calls into multifd to trigger
+> >> send/recv of data and multifd then calls these hooks back from the
+> >> worker threads at opportune moments so the client can process a
+> >> portion of the data.
+> >> 
+> >> Suggested-by: Peter Xu <peterx@redhat.com>
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >> Note that the doc is not symmetrical among send/recv because the recv
+> >> side is still wonky. It doesn't give the packet to the hooks, which
+> >> forces the p->normal, p->zero, etc. to be processed at the top level
+> >> of the threads, where no client-specific information should be.
+> >> ---
+> >>  migration/multifd.h | 76 +++++++++++++++++++++++++++++++++++++++++----
+> >>  1 file changed, 70 insertions(+), 6 deletions(-)
+> >> 
+> >> diff --git a/migration/multifd.h b/migration/multifd.h
+> >> index 13e7a88c01..ebb17bdbcf 100644
+> >> --- a/migration/multifd.h
+> >> +++ b/migration/multifd.h
+> >> @@ -229,17 +229,81 @@ typedef struct {
+> >>  } MultiFDRecvParams;
 > >>  
-> >> -    /* make sure that ramblock is 0 terminated */
-> >> -    packet->ramblock[255] = 0;
-> >> -    p->block = qemu_ram_block_by_name(packet->ramblock);
-> >> +    ramblock_name = g_strndup(packet->ramblock, 255);
+> >>  typedef struct {
+> >> -    /* Setup for sending side */
+> >> +    /*
+> >> +     * The send_setup, send_cleanup, send_prepare are only called on
+> >> +     * the QEMU instance at the migration source.
+> >> +     */
+> >> +
+> >> +    /*
+> >> +     * Setup for sending side. Called once per channel during channel
+> >> +     * setup phase.
+> >> +     *
+> >> +     * Must allocate p->iov. If packets are in use (default), one
 > >
-> > I understand we want to move to a const*, however this introduces a 256B
-> > allocation per multifd packet, which we definitely want to avoid.. I wonder
-> > whether that's worthwhile just to make it const. :-(
-> >
-> > I don't worry too much on the const* and vars pointed being abused /
-> > updated when without it - the packet struct is pretty much limited only to
-> > be referenced in this unfill function, and then we will do the load based
-> > on MultiFDRecvParams* later anyway.  So personally I'd rather lose the
-> > const* v.s. one allocation.
-> >
-> > Or we could also sanity check byte 255 to be '\0' (which, AFAIU, should
-> > always be the case..), then we can get both benefits.
+> > Pure thoughts: wonder whether we can assert(p->iov) that after the hook
+> > returns in code to match this line.
 > 
-> We can't because it breaks compat. Previous QEMUs didn't zero the
-> packet.
+> Not worth the extra instructions in my opinion. It would crash
+> immediately once the thread touches p->iov anyway.
 
-Ouch!
+It might still be good IMHO to have that assert(), not only to abort
+earlier, but also as a code-styled comment.  Your call when resend.
 
-Then.. shall we still try to avoid the allocation?
+PS: feel free to queue existing patches into your own tree without
+resending the whole series!
+
+> 
+> >
+> >> +     * extra iovec must be allocated for the packet header. Any memory
+> >> +     * allocated in this hook must be released at send_cleanup.
+> >> +     *
+> >> +     * p->write_flags may be used for passing flags to the QIOChannel.
+> >> +     *
+> >> +     * p->compression_data may be used by compression methods to store
+> >> +     * compression data.
+> >> +     */
+> >>      int (*send_setup)(MultiFDSendParams *p, Error **errp);
+> >> -    /* Cleanup for sending side */
+> >> +
+> >> +    /*
+> >> +     * Cleanup for sending side. Called once per channel during
+> >> +     * channel cleanup phase. May be empty.
+> >
+> > Hmm, if we require p->iov allocation per-ops, then they must free it here?
+> > I wonder whether we leaked it in most compressors.
+> 
+> Sorry, this one shouldn't have that text.
+
+I still want to double check with you: we leaked iov[] in most compressors
+here, or did I overlook something?
+
+That's definitely more important than the doc update itself..
+
+> 
+> >
+> > With that, I wonder whether we should also assert(p->iov == NULL) after
+> > this one returns (squash in this same patch).
+> >
+> >> +     */
+> >>      void (*send_cleanup)(MultiFDSendParams *p, Error **errp);
+> >> -    /* Prepare the send packet */
+> >> +
+> >> +    /*
+> >> +     * Prepare the send packet. Called from multifd_send(), with p
+> >
+> > multifd_send_thread()?
+> 
+> No, I meant called as a result of multifd_send(), which is the function
+> the client uses to trigger a send on the thread.
+
+OK, but it's confusing.  Some rewords you mentioned below could work.
+
+> 
+> >
+> >> +     * pointing to the MultiFDSendParams of a channel that is
+> >> +     * currently idle.
+> >> +     *
+> >> +     * Must populate p->iov with the data to be sent, increment
+> >> +     * p->iovs_num to match the amount of iovecs used and set
+> >> +     * p->next_packet_size with the amount of data currently present
+> >> +     * in p->iov.
+> >> +     *
+> >> +     * Must indicate whether this is a compression packet by setting
+> >> +     * p->flags.
+> >
+> > Sigh.. I wonder whether we could avoid mentioning this, and also we avoid
+> > adding new flags for new compressors, relying on libvirt guarding things.
+> > Then when we have the handshakes that's something we verify there.
+> >
+> 
+> I understand that part is not in the best shape, but we must document
+> the current state. There's no problem changing this later.
+> 
+> Besides, there's the whole "the migration stream should be considered
+> hostile" which might mean we should really be keeping these sanity check
+> flags around in case something really weird happens so we don't carry on
+> with a bad stream.
+
+Yep, it's OK.
+
+> 
+> >> +     *
+> >> +     * As a last step, if packets are in use (default), must prepare
+> >> +     * the packet by calling multifd_send_fill_packet().
+> >> +     */
+> >>      int (*send_prepare)(MultiFDSendParams *p, Error **errp);
+> >> -    /* Setup for receiving side */
+> >> +
+> >> +    /*
+> >> +     * The recv_setup, recv_cleanup, recv are only called on the QEMU
+> >> +     * instance at the migration destination.
+> >> +     */
+> >> +
+> >> +    /*
+> >> +     * Setup for receiving side. Called once per channel during
+> >> +     * channel setup phase. May be empty.
+> >> +     *
+> >> +     * May allocate data structures for the receiving of data. May use
+> >> +     * p->iov. Compression methods may use p->compress_data.
+> >> +     */
+> >>      int (*recv_setup)(MultiFDRecvParams *p, Error **errp);
+> >> -    /* Cleanup for receiving side */
+> >> +
+> >> +    /*
+> >> +     * Cleanup for receiving side. Called once per channel during
+> >> +     * channel cleanup phase. May be empty.
+> >> +     */
+> >>      void (*recv_cleanup)(MultiFDRecvParams *p);
+> >> -    /* Read all data */
+> >> +
+> >> +    /*
+> >> +     * Data receive method. Called from multifd_recv(), with p
+> >
+> > multifd_recv_thread()?
+> 
+> Same as before. I'll reword this somehow.
+> 
+> >
+> >> +     * pointing to the MultiFDRecvParams of a channel that is
+> >> +     * currently idle. Only called if there is data available to
+> >> +     * receive.
+> >> +     *
+> >> +     * Must validate p->flags according to what was set at
+> >> +     * send_prepare.
+> >> +     *
+> >> +     * Must read the data from the QIOChannel p->c.
+> >> +     */
+> >>      int (*recv)(MultiFDRecvParams *p, Error **errp);
+> >>  } MultiFDMethods;
+> >>  
+> >> -- 
+> >> 2.35.3
+> >> 
+> 
 
 -- 
 Peter Xu
