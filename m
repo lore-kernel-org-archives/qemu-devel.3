@@ -4,91 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0187C5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 13:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A62C5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 13:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siwSE-0006c0-5l; Tue, 27 Aug 2024 09:41:50 -0400
+	id 1siwdl-0003m5-Ti; Tue, 27 Aug 2024 09:53:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1siwS3-0006as-EA
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:41:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=GG8b=P2=kaod.org=clg@ozlabs.org>)
+ id 1siwdj-0003ho-Re; Tue, 27 Aug 2024 09:53:43 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1siwS0-0007sb-Qm
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:41:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724766095;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=D8ucD9Np+fs68lD48TK9xsO6XjNMEO+/tHvmCl6YssM=;
- b=JHq7g6prczBv9pZ6mo3J3+ncSToJDhaRmVXPhkcoZmWVCtw8zuuCZK/nsMstzuvFXVa0Ba
- MB9WP5Z8Sttatkzq8UNjspP/G/+GZbwNxPJf9Zs6vZGuMZaddaa4JUVmEu6KG8YwIpetDO
- S7RrBOWExk5C4eEh/ye8qNsCflx6CkU=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-29-n4P_COPNPr6EGUnHYAPjTQ-1; Tue, 27 Aug 2024 09:41:33 -0400
-X-MC-Unique: n4P_COPNPr6EGUnHYAPjTQ-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7a1df704ef8so691296085a.2
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 06:41:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724766093; x=1725370893;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D8ucD9Np+fs68lD48TK9xsO6XjNMEO+/tHvmCl6YssM=;
- b=pgW94xkdDEQQXRJkS2GwNb6FiFMejI1cgEgi/BOxuGqiU/tBojNbxJU2pwpcvKi+Hb
- 0qe2Cok9aodrYjOSI2iMDAXkYMYUmw5NnDg5y/MdZmGgxdxVzTzSVmL2d5DMjZMaqGD6
- os4MCnFlF0wdGgE70FU9PVmGvZMuP9VZX7DyQ08S3DLZsq5v1RkyuBH3Rw6Yiav0F86T
- KfosanDC8Y7Fe0SlrmpdaXiZLF5V/DLUx7r9pTUBBx/2jyI0ty3bzYGE+nf80Rwew48D
- znby8r8dRKKl1ZQI+ETpuokhOPYzix8quW4Sj8WSUWR2PfSFHn4u6IcKQRfEjbwdh0gt
- v9CQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/uJbvZj+dmrwLw38b1/uo9wMUUSTZWf3NMPTTLgm/sOSdaye1nW5YFLxQgSDcyR9yV1buvigSRCGm@nongnu.org
-X-Gm-Message-State: AOJu0YzFYlmsT9+yJj/A8w8YApDZ8ASNGAIrfaWcvntcs4+p68rInc0j
- q5witKh141reyit4hD/Lk2m2uoYurC/30h85ssy6SQnIJK5VOhTRufMomxV7keYLp/YopZsEDbc
- 0aDIupn4e3q5mpbdy7LP6kE+ubTdeuLgAk73WPz36nyywi8dSRqVf
-X-Received: by 2002:a05:620a:1989:b0:79f:af4:66f1 with SMTP id
- af79cd13be357-7a6897a2cf8mr1524271885a.50.1724766093208; 
- Tue, 27 Aug 2024 06:41:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJNcipyktfXFq+FmmRJMcJ9UH3akgetAr8yqObogGxUvBVxytvZMeh1wSsj/rYbWnTd2AWgw==
-X-Received: by 2002:a05:620a:1989:b0:79f:af4:66f1 with SMTP id
- af79cd13be357-7a6897a2cf8mr1524269385a.50.1724766092717; 
- Tue, 27 Aug 2024 06:41:32 -0700 (PDT)
-Received: from sgarzare-redhat ([5.179.135.14])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a67f318e37sm552522485a.22.2024.08.27.06.41.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 06:41:32 -0700 (PDT)
-Date: Tue, 27 Aug 2024 15:41:24 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Gao Shiyuan <gaoshiyuan@baidu.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, zuoboqun@baidu.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH V2 1/1] virtio-pci: Add lookup subregion of
- VirtIOPCIRegion MR
-Message-ID: <qrb7lbdypu2ctim57dxn7copcbmclpxnb4k2uadnm5v6ehawwc@xzhkhvs46xhw>
-References: <20240820115631.52522-1-gaoshiyuan@baidu.com>
+ (Exim 4.90_1) (envelope-from <SRS0=GG8b=P2=kaod.org=clg@ozlabs.org>)
+ id 1siwdh-0000YC-9D; Tue, 27 Aug 2024 09:53:43 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WtTXY3PJpz4x8S;
+ Tue, 27 Aug 2024 23:53:33 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WtTXV3hB8z4x2g;
+ Tue, 27 Aug 2024 23:53:30 +1000 (AEST)
+Message-ID: <a825a8f1-e077-43c9-8614-3e027ca00a8b@kaod.org>
+Date: Tue, 27 Aug 2024 15:53:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20240820115631.52522-1-gaoshiyuan@baidu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 15/15] hw/misc/aspeed_hace: Fix SG Accumulative hashing
+To: Alejandro Zeise <alejandro.zeise@seagate.com>, qemu-arm@nongnu.org
+Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com,
+ evan.burgess@seagate.com, peter.maydell@linaro.org, berrange@redhat.com,
+ qemu-devel@nongnu.org
+References: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
+ <20240807195122.2827364-16-alejandro.zeise@seagate.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240807195122.2827364-16-alejandro.zeise@seagate.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=GG8b=P2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,92 +67,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 20, 2024 at 07:56:31PM GMT, Gao Shiyuan wrote:
->When VHOST_USER_PROTOCOL_F_HOST_NOTIFIER feature negotiated and
->virtio_queue_set_host_notifier_mr success on system blk
->device's queue, the VM can't load MBR if the notify region's
->address above 4GB.
->
->Assign the address of notify region in the modern bar above 4G, the vp_notify
->in SeaBIOS will use PCI Cfg Capability to write notify region. This will trap
->into QEMU and be handled by the host bridge when we don't enable mmconfig.
->QEMU will call virtio_write_config and since it writes to the BAR region
->through the PCI Cfg Capability, it will call virtio_address_space_write.
->
->virtio_queue_set_host_notifier_mr add host notifier subregion of notify region
->MR, QEMU need write the mmap address instead of eventfd notify the hardware
->accelerator at the vhost-user backend. So virtio_address_space_lookup in
->virtio_address_space_write need return a host-notifier subregion of notify MR
->instead of notify MR.
->
->Add lookup subregion of VirtIOPCIRegion MR instead of only lookup container MR.
->
->Fixes: a93c8d8 ("virtio-pci: Replace modern_as with direct access to modern_bar")
->
->Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
->Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
->Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
->---
-> hw/virtio/virtio-pci.c | 14 ++++++++++++--
-> 1 file changed, 12 insertions(+), 2 deletions(-)
->
->---
->v1 -> v2:
->* modify commit message
->* replace direct iteration over subregions with memory_region_find.
->
->diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
->index 9534730bba..5d2d27a6a3 100644
->--- a/hw/virtio/virtio-pci.c
->+++ b/hw/virtio/virtio-pci.c
->@@ -610,19 +610,29 @@ static MemoryRegion *virtio_address_space_lookup(VirtIOPCIProxy *proxy,
-> {
->     int i;
->     VirtIOPCIRegion *reg;
->+    MemoryRegion *mr = NULL;
+On 8/7/24 21:51, Alejandro Zeise wrote:
+> Make the Aspeed HACE module use the new qcrypto accumulative hashing functions
+> when in scatter-gather accumulative mode. A hash context will maintain a
+> "running-hash" as each scatter-gather chunk is received.
+> 
+> Previously each scatter-gather "chunk" was cached
+> so the hash could be computed once the final chunk was received.
+> However, the cache was a shallow copy, so once the guest overwrote the
+> memory provided to HACE the final hash would not be correct.
+> 
+> Possibly related to: https://gitlab.com/qemu-project/qemu/-/issues/1121
+> Buglink: https://github.com/openbmc/qemu/issues/36
+> 
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> ---
+>   hw/misc/aspeed_hace.c         | 94 +++++++++++++++++++----------------
+>   include/hw/misc/aspeed_hace.h |  4 ++
+>   2 files changed, 54 insertions(+), 44 deletions(-)
+> 
+> diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+> index c06c04ddc6..4247403d45 100644
+> --- a/hw/misc/aspeed_hace.c
+> +++ b/hw/misc/aspeed_hace.c
+> @@ -1,6 +1,7 @@
+>   /*
+>    * ASPEED Hash and Crypto Engine
+>    *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>    * Copyright (C) 2021 IBM Corp.
+>    *
+>    * Joel Stanley <joel@jms.id.au>
+> @@ -151,50 +152,28 @@ static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
+>       return iov_count;
+>   }
+>   
+> -/**
+> - * Generate iov for accumulative mode.
+> - *
+> - * @param s             aspeed hace state object
+> - * @param iov           iov of the current request
+> - * @param id            index of the current iov
+> - * @param req_len       length of the current request
+> - *
+> - * @return count of iov
+> - */
+> -static int gen_acc_mode_iov(AspeedHACEState *s, struct iovec *iov, int id,
+> -                            hwaddr *req_len)
+> -{
+> -    uint32_t pad_offset;
+> -    uint32_t total_msg_len;
+> -    s->total_req_len += *req_len;
+> -
+> -    if (has_padding(s, &iov[id], *req_len, &total_msg_len, &pad_offset)) {
+> -        if (s->iov_count) {
+> -            return reconstruct_iov(s, iov, id, &pad_offset);
+> -        }
+> -
+> -        *req_len -= s->total_req_len - total_msg_len;
+> -        s->total_req_len = 0;
+> -        iov[id].iov_len = *req_len;
+> -    } else {
+> -        s->iov_cache[s->iov_count].iov_base = iov->iov_base;
+> -        s->iov_cache[s->iov_count].iov_len = *req_len;
+> -        ++s->iov_count;
+> -    }
+> -
+> -    return id + 1;
+> -}
+> -
+>   static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>                                 bool acc_mode)
+>   {
+>       struct iovec iov[ASPEED_HACE_MAX_SG];
+> +    uint32_t total_msg_len;
+> +    uint32_t pad_offset;
+>       g_autofree uint8_t *digest_buf = NULL;
+>       size_t digest_len = 0;
+> -    int niov = 0;
+> +    bool sg_acc_mode_final_request = false;
+>       int i;
+>       void *haddr;
+>   
+> +    if (acc_mode && s->hash_ctx == NULL) {
+> +        s->hash_ctx = qcrypto_hash_new(algo, NULL);
 
-`mr` looks unused.
+I wonder if we shouldn't use an 'Error *' argument instead and output
+the literal error with error_get_pretty() in qemu_log_mask() ?
 
->+    MemoryRegionSection mrs;
+> +        if (s->hash_ctx == NULL) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: qcrypto failed to create hash context\n",
+> +                          __func__);
+> +            return;
+> +        }
+> +    }
+> +
+>       if (sg_mode) {
+>           uint32_t len = 0;
+>   
+> @@ -226,8 +205,15 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>               }
+>               iov[i].iov_base = haddr;
+>               if (acc_mode) {
+> -                niov = gen_acc_mode_iov(s, iov, i, &plen);
+> -
+> +                s->total_req_len += plen;
+> +
+> +                if (has_padding(s, &iov[i], plen, &total_msg_len, &pad_offset)) {
+> +                    /* Padding being present indicates the final request */
+> +                    sg_acc_mode_final_request = true;
+> +                    iov[i].iov_len = pad_offset;
+> +                } else {
+> +                    iov[i].iov_len = plen;
+> +                }
+>               } else {
+>                   iov[i].iov_len = plen;
+>               }
+> @@ -252,20 +238,35 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>                * required to check whether cache is empty. If no, we should
+>                * combine cached iov and the current iov.
+>                */
+> -            uint32_t total_msg_len;
+> -            uint32_t pad_offset;
+>               s->total_req_len += len;
+>               if (has_padding(s, iov, len, &total_msg_len, &pad_offset)) {
+> -                niov = reconstruct_iov(s, iov, 0, &pad_offset);
+> +                i = reconstruct_iov(s, iov, 0, &pad_offset);
+>               }
+>           }
+>       }
+>   
+> -    if (niov) {
+> -        i = niov;
+> -    }
+> +    if (acc_mode) {
+> +        if (qcrypto_hash_updatev(s->hash_ctx, iov, i, NULL) < 0) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: qcrypto hash update failed\n", __func__);
+> +            return;
 
-Please, can you move this declaration in the inner block where it's 
-used?
+This will drop the ending sequence: address_space_unmap() and
+setting of the IRQ status register. I guess adding an 'exit'
+goto label is preferable.
 
->
->     for (i = 0; i < ARRAY_SIZE(proxy->regs); ++i) {
->         reg = &proxy->regs[i];
->         if (*off >= reg->offset &&
->             *off + len <= reg->offset + reg->size) {
->-            *off -= reg->offset;
->-            return &reg->mr;
->+            mrs = memory_region_find(&reg->mr, *off - reg->offset, 
->len);
->+            if (!mrs.mr) {
->+                error_report("Failed to find memory region for address"
->+                             "0x%" PRIx64 "", *off);
->+                return NULL;
->+            }
->+            *off = mrs.offset_within_region;
->+            memory_region_unref(mrs.mr);
->+            return mrs.mr;
->         }
->     }
->
->     return NULL;
-> }
->
->+
+> +        }
+> +
+> +        if (sg_acc_mode_final_request) {
+> +            if (qcrypto_hash_finalize_bytes(s->hash_ctx, &digest_buf,
+> +                                            &digest_len, NULL)) {
+> +                qemu_log_mask(LOG_GUEST_ERROR,
+> +                              "%s: qcrypto failed to finalize hash\n", __func__);
+> +            }
+>   
+> -    if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf, &digest_len, NULL) < 0) {
+> +            qcrypto_hash_free(s->hash_ctx);
+> +
+> +            s->hash_ctx = NULL;
+> +            s->iov_count = 0;
+> +            s->total_req_len = 0;
+> +        }
+> +    } else if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf,
+> +                                   &digest_len, NULL) < 0) {
+>           qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto failed\n", __func__);
 
-Unrelated change.
+Same issue here with the ending sequence. This should be fixed in
+a separate patch.
+
 
 Thanks,
-Stefano
 
-> /* Below are generic functions to do memcpy from/to an address space,
->  * without byteswaps, with input validation.
->  *
->-- 
->2.39.3 (Apple Git-146)
->
+C.
+
+
+
+>           return;
+>       }
+> @@ -397,6 +398,11 @@ static void aspeed_hace_reset(DeviceState *dev)
+>   {
+>       struct AspeedHACEState *s = ASPEED_HACE(dev);
+>   
+> +    if (s->hash_ctx != NULL) {
+> +        qcrypto_hash_free(s->hash_ctx);
+> +        s->hash_ctx = NULL;
+> +    }
+> +
+>       memset(s->regs, 0, sizeof(s->regs));
+>       s->iov_count = 0;
+>       s->total_req_len = 0;
+> diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
+> index ecb1b67de8..4af9919195 100644
+> --- a/include/hw/misc/aspeed_hace.h
+> +++ b/include/hw/misc/aspeed_hace.h
+> @@ -1,6 +1,7 @@
+>   /*
+>    * ASPEED Hash and Crypto Engine
+>    *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>    * Copyright (C) 2021 IBM Corp.
+>    *
+>    * SPDX-License-Identifier: GPL-2.0-or-later
+> @@ -10,6 +11,7 @@
+>   #define ASPEED_HACE_H
+>   
+>   #include "hw/sysbus.h"
+> +#include "crypto/hash.h"
+>   
+>   #define TYPE_ASPEED_HACE "aspeed.hace"
+>   #define TYPE_ASPEED_AST2400_HACE TYPE_ASPEED_HACE "-ast2400"
+> @@ -35,6 +37,8 @@ struct AspeedHACEState {
+>   
+>       MemoryRegion *dram_mr;
+>       AddressSpace dram_as;
+> +
+> +    QCryptoHash *hash_ctx;
+>   };
+>   
+>   
 
 
