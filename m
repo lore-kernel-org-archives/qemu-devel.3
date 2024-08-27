@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57145C5472D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 01:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C12C5321D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 01:46:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1silGC-0004XY-Vp; Mon, 26 Aug 2024 21:44:41 -0400
+	id 1silHR-0007bL-LV; Mon, 26 Aug 2024 21:45:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1silGB-0004WR-Nk
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 21:44:39 -0400
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
+ id 1silHQ-0007Vb-5M
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 21:45:56 -0400
+Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1silGA-0000gr-Bk
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 21:44:39 -0400
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-39d2256ee11so19622515ab.1
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 18:44:37 -0700 (PDT)
+ id 1silHO-0000uj-Ku
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 21:45:55 -0400
+Received: by mail-io1-xd29.google.com with SMTP id
+ ca18e2360f4ac-81fd520fee5so192729839f.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 18:45:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724723075; x=1725327875; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724723153; x=1725327953; darn=nongnu.org;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Q90d7/IBHmwLtf046uvYtnaU1ForFQMFhOFZnHzTaqI=;
- b=MRypYVfdONKU0sxX0YBHcObRwb62+wDawDpmaAKuAeaoApmk8xpokFZYqegwdk+0BE
- cI1ggSqhHpR+bLr4jlNsJC/UtGmlcexINjKNpCDRrCTcjHPfEazEyDjR1LY785kPHoXE
- u1t+sxwscLaE6McVoPxmzPyrKrp15fnCNHe7ye53eFIVCANKt7a6BmGTLzHaxLm64m7U
- dn2pZaYNB5qFxYFdlu4RREegYacxPOhLmBZs8OUQSDCn8BM+2dB/vewlDYVRtLP8pZWy
- e2jgXdU59koNF8/p3umWnpGCnhVZSTNn8Cu+f96pUMdh3M4nvXQGowQEDYBIde7Q2HmT
- a41A==
+ bh=gnBypZwThmW7BXWbqp19p+1I3KKoGFTUWZoM+iQsd6M=;
+ b=iepQ/+lEjFVOCjNq/gjfV8P1L8Eg/LHkDD9DWDCm5QKjF9KlzYsQRQ+XUFm7OWvkFN
+ dGcLXUjO3pGUuGZAvMEkvDtUHj6VhqJWsikckipDLIeceJQWLhylhzN/tnXugKNMqg3Y
+ YpXPpydw8J7jvUpnjlODqrMC6LhlUh3WcaXOGPSyH6R4aiqY2iSv5UAROTEKpQBKluOM
+ AIuT49LoBcAyKPDhuUlUbgiCRBy7JnzvPF0cKkCyVnsikeekwwFYuSsZhpMQgc6LgApY
+ ezEABf7C5Lzjm+jCmpgHfDKwUnruPVmV128patuvT7w9jrifUlSug7W5KUDewJxUocdz
+ jPhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724723075; x=1725327875;
+ d=1e100.net; s=20230601; t=1724723153; x=1725327953;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q90d7/IBHmwLtf046uvYtnaU1ForFQMFhOFZnHzTaqI=;
- b=GmFWJmRtDWBRO+E4ysjDTUTZWOdt0YgRBJhaW4DTXcihjn+N/DCBtV1GV0EfWT9ija
- 8GVjqhBcGp0y7XNw5z+cKtJo65t2vWYjvOn/f4H+sIkiilfBDuN984JrthEboafnmE16
- mpt/MfvHt6ep5z18//odm8GVIHlK0OFB5US4mjRJjacPK/etVmgi5fZ5tGzuUd32SKs7
- gvNRtqNHNhCGkYPCyNVvhDExgppcbJ5zTV+CaqLaIjohypZANCaO2kbRoxcxBLrgHyfj
- 0HznJB0ag1ka406QajoO/8a9sogUMDAqFkF2TBR+RW+5oJxty78Hz6zGObeA0UaL3k1j
- CSYg==
+ bh=gnBypZwThmW7BXWbqp19p+1I3KKoGFTUWZoM+iQsd6M=;
+ b=Nl8nLQRMhKw9yaf0sxAE5xR8dKhuuOFUs/L1JPPAEnkDUYuBbqEpT6VO5Ur45uVuyh
+ Xbm8W8d+nLhY+VPRqlRb8nJj5LIapk0I0VP9nGQA9fvjQJPZXorMZXHhsKhdA04xltB7
+ YUddI0FmvKOzfN9DBRYkQXziR5Jj+iHr2U9/ZAkYtRVZ3xFTnnm6waQi+Y/+xTItDtTj
+ G80ryPYyV7gMfCH5mkFDUMTjNRrZcrFy6RT0cPKqGsMmX0FRpdz3jBL5mClH3kpQcTKP
+ FJhqDD5zsE4CGeP2Vp9t357Uu6kH3vl7rFG30lNKRuBz7LtCXJfZAdWUh1h9EwIaipAT
+ DjZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgaaX85nXxeq5xtbtSvKoNt6T05sRdFwnkx3ZIH55rHF3Djemr8tg/PDGXCxPfH1Fqy6x5AEADnG4l@nongnu.org
-X-Gm-Message-State: AOJu0Ywe5LYL5ZxvZnfHrRMl1s8Nb//NPbr8Hrn13slZKg+PBXi4DOui
- aqrtoqnlYeYWHigSgLCyZ4rTPIjUzAj1oPJxI2iQSPjHHjmiChAn
-X-Google-Smtp-Source: AGHT+IEOG3sVSJshgR6LWg9PFE2aclWMXnGh3lMByRfqxe4lnhNwBUceQ5smT72wilHtnv7ZZZVvpw==
-X-Received: by 2002:a05:6e02:164f:b0:39a:e9e5:62b with SMTP id
- e9e14a558f8ab-39e3c97532amr146115135ab.3.1724723075086; 
- Mon, 26 Aug 2024 18:44:35 -0700 (PDT)
+ AJvYcCVJhEjQokI+cBIYDNJLQQcFaJuuv5k6/uRGcSTbjNgwoehjtZPqhddcwjcsrzVbukE1DkH/V8EBnEHm@nongnu.org
+X-Gm-Message-State: AOJu0YyiGx6vWZ6xsGMm4PgCe6kXErv/+P6lKj8E2MRK7IxRSKZMZqY5
+ toBltgPxo3U9m9yh/9lCiSFzLnmj2Y2kmO7ES+bKEppOXYMxLGdx
+X-Google-Smtp-Source: AGHT+IGskpIhkmcHz2E6ANUEgQ6308gnb7Y3+vagfBV0cMg2wvJKEtxUuu2tSxi0ryyEflmD+ixUZA==
+X-Received: by 2002:a05:6602:641f:b0:824:d658:39a with SMTP id
+ ca18e2360f4ac-829f1220fa5mr202780239f.3.1724723153124; 
+ Mon, 26 Aug 2024 18:45:53 -0700 (PDT)
 Received: from DESKTOPUU50BPD ([2601:284:8201:81c0:d990:ff71:59bf:a3e])
  by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-39d73e68e4asm36405065ab.10.2024.08.26.18.44.33
+ 8926c6da1cb9f-4ce70f5c92bsm2465897173.61.2024.08.26.18.45.52
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 26 Aug 2024 18:44:34 -0700 (PDT)
+ Mon, 26 Aug 2024 18:45:52 -0700 (PDT)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <bcain@quicinc.com>,
 	<qemu-devel@nongnu.org>
 Cc: <quic_mathbern@quicinc.com>, <sidneym@quicinc.com>,
- <quic_mliebel@quicinc.com>, "'Laurent Vivier'" <laurent@vivier.eu>
+ <quic_mliebel@quicinc.com>
 References: <20240827002631.3492200-1-bcain@quicinc.com>
- <20240827002631.3492200-2-bcain@quicinc.com>
-In-Reply-To: <20240827002631.3492200-2-bcain@quicinc.com>
-Subject: RE: [PATCH v2 1/2] target/hexagon: rename HEX_EXCP_*=>HEX_CAUSE_*
-Date: Mon, 26 Aug 2024 19:44:33 -0600
-Message-ID: <000001daf822$ab12bf40$01383dc0$@gmail.com>
+ <20240827002631.3492200-3-bcain@quicinc.com>
+In-Reply-To: <20240827002631.3492200-3-bcain@quicinc.com>
+Subject: RE: [PATCH v2 2/2] target/hexagon: add enums for event, cause
+Date: Mon, 26 Aug 2024 19:45:51 -0600
+Message-ID: <000101daf822$d9a97970$8cfc6c50$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLd+W9ohof6Agj59aNvpT7d/saPhAJaSiC3sCF//nA=
+Thread-Index: AQLd+W9ohof6Agj59aNvpT7d/saPhAGpLMQ7sCcJLyA=
 Content-Language: en-us
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,23 +110,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > To: qemu-devel@nongnu.org
 > Cc: bcain@quicinc.com; quic_mathbern@quicinc.com;
 > sidneym@quicinc.com; quic_mliebel@quicinc.com;
-> ltaylorsimpson@gmail.com; Laurent Vivier <laurent@vivier.eu>
-> Subject: [PATCH v2 1/2] target/hexagon: rename
-> HEX_EXCP_*=>HEX_CAUSE_*
-> 
-> The values previously used for "HEX_EXCP_*" were the cause code
-> definitions and not the event numbers.  So in this commit, we update the
-> names to reflect the cause codes. In HEX_EVENT_TRAP0's case, we add a
-> new "HEX_EVENT_*" with the correct event number.
+> ltaylorsimpson@gmail.com
+> Subject: [PATCH v2 2/2] target/hexagon: add enums for event, cause
 > 
 > Signed-off-by: Brian Cain <bcain@quicinc.com>
 > ---
->  linux-user/hexagon/cpu_loop.c |  4 ++--
->  target/hexagon/cpu.h          |  2 +-
->  target/hexagon/cpu_bits.h     | 15 ++++++++-------
->  target/hexagon/gen_tcg.h      |  2 +-
->  target/hexagon/translate.c    |  6 +++---
->  5 files changed, 15 insertions(+), 14 deletions(-)
+>  target/hexagon/cpu_bits.h | 22 ++++++++++++++--------
+>  1 file changed, 14 insertions(+), 8 deletions(-)
 
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
