@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF5CC54735
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 21:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751B3C54742
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 23:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj488-0002ry-GR; Tue, 27 Aug 2024 17:53:36 -0400
+	id 1sj5Gc-0005TE-Eq; Tue, 27 Aug 2024 19:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1sj486-0002qS-Gr
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 17:53:34 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sj5Gb-0005Sd-4P
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 19:06:25 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1sj485-0000uS-0E
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 17:53:34 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7cd76b56e59so2101813a12.2
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 14:53:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sj5GZ-00080X-9A
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 19:06:24 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-714287e4083so5434291b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 16:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724795611; x=1725400411; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VyksA4hwbgCNHrndNdLtbY6rlOpmDyueTnwvm2JzCLI=;
- b=DyD+G0pBwl+AwMdZbR4QNZLd7LmkeOOJtBOV2fKuMTPcKBQKnESA/q+ABg+RPon87z
- qJcQIrcQ5GnUhzcDalNc45E9ZNgWvl95DZhSqMIe22MJsqXRiTu44jDc5j9GEJjquGnV
- EWD66LtWg976RMm1c/jL77lK3JRtXpozP7fmeth4cpUVttTX7twHx1zBj1tts65AiOxP
- heNiDjurAROA2bkXIr0K92PINu4C91pFRFuSnzyPxwGAmUPM5HbmF3ltLIm0NON4qTpa
- M49AX5Sn0R6Su2ywoQEmpAyqe8BdIPhU0ZDXXIEVPW47kES3l4lOYAm/RpAQg8vdXS7o
- QVAA==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724799981; x=1725404781;
+ darn=nongnu.org; 
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=KNvkt4n/+2yRALA7QxJ9ImAlFQ5JbuehZ8EoLiYSyLQ=;
+ b=l+9zYAIQm1lo4/2zWIeHdT5B0eHoYPFV+A5AR64yLym5i47hhhoVTMlpnQ4bH6AzdN
+ ZN27aHNTqhk45wzdmpYZO2g5L/O3UrcXrPt0T/8mg3vsB7uWiek7m/By8AVUwwKbJM/c
+ AyRz+vwjM8KvxRLyzN+1KA6XK1mP+VxsR56APDa1Y5VTimgdMhYelhrlT4lMiO/EkIlL
+ RvQ6mPDLiYT9CGgXOuYguUpKhhn26YEvUaipt75Xz/JzqZpCSEJsR6AvVgqROL7UeyKV
+ RxpY5t04wMJh1CZo0nKc3cb3ETnL2U6lEEiQdujsshZ+HOS55zKFq8VjqGU0MfU9v6X4
+ bLuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724795611; x=1725400411;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VyksA4hwbgCNHrndNdLtbY6rlOpmDyueTnwvm2JzCLI=;
- b=pTQJxhtu7Wdpd8dV2E9A8LqlMbVbsFmZjp70GfvM+uydusXH7cqJgOroQVVe2y3N0p
- f4EiKkFT7qbOdNmUi37CCX/ljpAJTs+Uga4ZpqfGFmosq5nrtzh/QsQQFkLXijhRrMN+
- u36VJRYFccd53BeBMpeSFtLyODR51ENIy0uitKS6yUi3wk135wVlaKbTn6RYJvHxM5ds
- HFadxzhza1coRk8m+NSIKBrZ0WrMaLI+qYRfGq+cSoCZPeNzY60jqj5Sciq0k9g561Vq
- zHgfqEySmKfMqps60yIJ4RM8z2orGJ9e6Qu8VqvZJwydpbehQXIHG8YpY730PiGSZ36v
- M84g==
-X-Gm-Message-State: AOJu0YzSBOAmBz+CWYOJ01HdOzWXtys8qJpmdPhDsk2UBohc4yru9WY6
- HrJ89/FOI9km7aASAj5YENV9Zck3h5TJsbnV6LxtESwkDExOXS67msqL6YZprPoAGg==
-X-Google-Smtp-Source: AGHT+IFxsnMYFs3eCpuVzeOQE2K9vtcBZCwRQeKl1hdGgZF2W7BSCxe5L8bPMiOl5jomARskl3LNZQ==
-X-Received: by 2002:a17:90b:3144:b0:2d3:dca0:89b7 with SMTP id
- 98e67ed59e1d1-2d646bd1a32mr18213803a91.3.1724795610910; 
- Tue, 27 Aug 2024 14:53:30 -0700 (PDT)
-Received: from chaos.lan ([50.46.173.74]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d613b1f0d5sm12671445a91.55.2024.08.27.14.53.30
+ d=1e100.net; s=20230601; t=1724799981; x=1725404781;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KNvkt4n/+2yRALA7QxJ9ImAlFQ5JbuehZ8EoLiYSyLQ=;
+ b=PVwZiyQCnoxpzrPVCiablPhl+88ZwWkAvHYA/XRHvN8XibdSlY64cBnAm28f7c9rQD
+ UldLWwmXJtlUCUm+p0JuBwE1sp5DlXVqbMugbt6y2cuFyULzDPC/c9C14sLsh/88lpsA
+ Ncwwu9nlWT8wMRmI45gNB6YHOB2xZTFbBn3cxlkw+rbXIphgAAJoPX7RMeRs++CmKm7/
+ 5a8q9gyhTHQ037wr1P7rbYjLzpapgycY5w98BiiQQd4enASfoTGxXcOk46PHTRF/nsrK
+ MUFKmAe2vNwMyoo7EJ8Lj48DUzhH5/7AVKfOAwMJPJcAN1V95INX7wWLizC0AU4+gs/g
+ 0C/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPAlq9QVAZNH0i6niRmMtlPOnHhlnkuReqG+rYdrvwFjB9KItHmUMqo4OZ9nxstGsb9Z/sisXvnyCo@nongnu.org
+X-Gm-Message-State: AOJu0YzWP/zd5B7/bpZm9L6sy0ZysjdW4k/Z+fedGMQmLchVAOiQN6Zv
+ XtAPEYe5FC7CnIu1ZWQY/9phLViR+Hbnq7Qmy2Ya3vDcNTfhft1U8gE56U/esRs=
+X-Google-Smtp-Source: AGHT+IHwdnJKpPt8O1usG25Lg/pEcjqPSMTrzrZ9MIpIsrAdksIyC8Q1kd+vqN+2r5ZpVpuK65fhsQ==
+X-Received: by 2002:a05:6a00:1953:b0:705:951e:ed84 with SMTP id
+ d2e1a72fcca58-71445d4d2e8mr17435241b3a.15.1724799981130; 
+ Tue, 27 Aug 2024 16:06:21 -0700 (PDT)
+Received: from debug.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7143422ec2esm9051766b3a.27.2024.08.27.16.06.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 14:53:30 -0700 (PDT)
-From: Rowan Hart <rowanbhart@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Rowan Hart <rowanbhart@gmail.com>
-Subject: [PATCH v3 0/2] plugins: add plugin API to read guest memory
-Date: Tue, 27 Aug 2024 14:53:27 -0700
-Message-ID: <20240827215329.248434-1-rowanbhart@gmail.com>
-X-Mailer: git-send-email 2.46.0
-Content-Type: text/plain; charset="utf-8"
+ Tue, 27 Aug 2024 16:06:20 -0700 (PDT)
+Date: Tue, 27 Aug 2024 16:06:18 -0700
+From: Deepak Gupta <debug@rivosinc.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
+ Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ jim.shu@sifive.com, andy.chiu@sifive.com,
+ richard.henderson@linaro.org, kito.cheng@sifive.com
+Subject: Re: [PATCH v9 11/17] target/riscv: mmu changes for zicfiss shadow
+ stack protection
+Message-ID: <Zs5b6mXdYLMzoW0f@debug.ba.rivosinc.com>
+References: <20240826152949.294506-1-debug@rivosinc.com>
+ <20240826152949.294506-12-debug@rivosinc.com>
+ <CAKmqyKOQcUBjz0PsaYFWnir=FCNA_+7CkrN=5PLH+ayxU+zLkg@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <CAKmqyKOQcUBjz0PsaYFWnir=FCNA_+7CkrN=5PLH+ayxU+zLkg@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=debug@rivosinc.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,36 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds one API function to the QEMU plugin API
+On Tue, Aug 27, 2024 at 03:59:08PM +1000, Alistair Francis wrote:
+>On Tue, Aug 27, 2024 at 1:31 AM Deepak Gupta <debug@rivosinc.com> wrote:
+>>
+>> zicfiss protects shadow stack using new page table encodings PTE.W=0,
+>> PTE.R=0 and PTE.X=0. This encoding is reserved if zicfiss is not
+>
+>Shouldn't this be R=0, W=1, and X=0 ?
 
-bool qemu_plugin_read_memory_vaddr(vaddr, GByteArray *, size_t);
+Yes. A typo. Will fix.
 
-The API allows reading memory from an arbitrary guest virtual
-address, which is useful for many things but the motivating examples
-are:
-
-* Virtual Machine Introspection (VMI)
-* Accurate and easier execution trace extraction
-* Debugging and logging tools
-
-An example of its use is added to the existing syscalls plugin,
-which now has an option to hexdump the buf argument to any write(2)
-syscalls which occur.
-
-For v3, fixed a missing '*' in a comment which caused a doc build issue.
-
-Rowan Hart (2):
-  plugins: add plugin API to read guest memory
-  plugins: add option to dump write argument to syscall plugin
-
- docs/about/emulation.rst     |  14 ++++-
- include/qemu/qemu-plugin.h   |  32 +++++++++-
- plugins/api.c                |  20 ++++++
- plugins/qemu-plugins.symbols |   1 +
- tests/tcg/plugins/syscall.c  | 117 +++++++++++++++++++++++++++++++++++
- 5 files changed, 182 insertions(+), 2 deletions(-)
-
--- 
-2.46.0
-
+>
+>Alistair
+>
+>> implemented or if shadow stack are not enabled.
+>> Loads on shadow stack memory are allowed while stores to shadow stack
 
