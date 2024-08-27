@@ -4,82 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25562C5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC8FC5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sizzQ-0007AP-6m; Tue, 27 Aug 2024 13:28:20 -0400
+	id 1sj0Bg-0004kT-4e; Tue, 27 Aug 2024 13:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sizzO-00078T-51; Tue, 27 Aug 2024 13:28:18 -0400
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sizzM-0007Hk-Ff; Tue, 27 Aug 2024 13:28:17 -0400
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-2701a521f63so4546610fac.0; 
- Tue, 27 Aug 2024 10:28:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724779694; x=1725384494; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ouAcN6pOEyahhQlHIVjQ7tRoM8V3SBXJcnWNXvoXdnQ=;
- b=GeIL5Nau0alhQf3OurGhrd4HsIt++TOjM6PhDrMWy7KKjwEqNI59P799u01h8qyFOn
- XaqDRiGDUKWIJUytRaGaF9YZbU0ecsOxzLAMx2SCAuoppBk29zscJiZEm8TxrauPR65f
- Vpo2XIU4Jg3ZGI1PxsC6VvxS8Rn9u1VUaM7OCkmNKsquhYg0vOrPbWVZjkrayAR675Bc
- gAcAFD25cS0F0k0hoMG9JxArtjC2qNmQK0vIhDs0uNTzwSOf4FMxPEOdanyU7iqIVv7d
- P/qYFqQoPl28oTEfXzMNjPuUcnYmwsjnaa9HstSaobA84vmX9+DeCbTBLe1FeTeKn40Z
- Ei5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724779694; x=1725384494;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ouAcN6pOEyahhQlHIVjQ7tRoM8V3SBXJcnWNXvoXdnQ=;
- b=v9XYXYRBHjSCN1RY/N+mLyjJ949rC2x4SltuhkBpERTHyQhYUuRiPQqXjuraN+JOpC
- hmYWHj1ltoq6rhlwLOC/rcJLAzw+XPpw+yYtVIqMe5l8n0WiEAb0rpKyKy+1YOCB+6gx
- Bbu4HZYPEaBcxn+9l/uP5n8zYFVOdZh+u2qtClbBToZmN997BsONEusNfscVh/1Ta++T
- EZPQEGm3/A9nPlibJ9fVOgUzRosF+tLqEpiOLH3+ZUqLxU/gKOQ3PHhQDTw+5TVHpE2R
- WvQypMi4K1YqiCaSn2sy7gYbk5ZWpJ/7HyKBfNF81awb/7J7HMQoi+hO9HcqQEEJ9GZV
- bqmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCITWiYYCMhFIGsbRlFnJZBh1+qLT/fHRenQG/ONOthpTBWxEnVlILHaog4cSi8gmn6KYrbyQX8YLGFA==@nongnu.org
-X-Gm-Message-State: AOJu0Yw0db4qDcye+AUnU1kh0nmnlqmQQQxbxru0TexZT2dib8VOSnCE
- kxGm6V+e0pwFX1Zs35d8FfEWwON9rYifdG/1780K2EhzaFfp8JOnIz3Mq3zcXye3kcoowiWfNaL
- 63CXLD+Pp4vqZkSdU2TrSvmyDCxA=
-X-Google-Smtp-Source: AGHT+IEg6H9Ee9lTMwB5mCK2Pk1iaWi+9MJGhRzl1/cUTy/v/na7Fz5OFVBR8THOOZia/8QZF1Yw5wTLnHa0nNC/iLI=
-X-Received: by 2002:a05:6871:5827:b0:260:ee93:f388 with SMTP id
- 586e51a60fabf-2775a035ae7mr4080994fac.32.1724779694468; Tue, 27 Aug 2024
- 10:28:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=GG8b=P2=kaod.org=clg@ozlabs.org>)
+ id 1sj0Be-0004jy-Tm
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:40:59 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=GG8b=P2=kaod.org=clg@ozlabs.org>)
+ id 1sj0Bb-0008V7-Rx
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:40:58 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WtZZp51SVz4x8C;
+ Wed, 28 Aug 2024 03:40:50 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WtZZn1nvtz4wcl;
+ Wed, 28 Aug 2024 03:40:48 +1000 (AEST)
+Message-ID: <42fe0e65-e1c1-47be-9ba1-9a43e4a05192@kaod.org>
+Date: Tue, 27 Aug 2024 19:40:44 +0200
 MIME-Version: 1.0
-References: <20240827083715.257768-1-david@redhat.com>
- <CAJSP0QX+NiO7An468cKMFja3TGmgGzyNcPZjEtpPrfi3Q_1xgw@mail.gmail.com>
- <36402f8f-dc97-4eaf-8197-1df2bc01720b@redhat.com>
-In-Reply-To: <36402f8f-dc97-4eaf-8197-1df2bc01720b@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 27 Aug 2024 13:28:02 -0400
-Message-ID: <CAJSP0QWed1ZjRZ2pkUgx0j+9bepKg1hfaWXQLzP613xsiHtwyw@mail.gmail.com>
-Subject: Re: [PATCH v1] softmmu/physmem: fix memory leak in
- dirty_memory_extend()
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=stefanha@gmail.com; helo=mail-oa1-x2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/ppc: fix decrementer with BookE timers
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com
+References: <20240715084639.983127-1-chigot@adacore.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240715084639.983127-1-chigot@adacore.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=GG8b=P2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,68 +66,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Aug 2024 at 13:24, David Hildenbrand <david@redhat.com> wrote:
->
-> On 27.08.24 18:52, Stefan Hajnoczi wrote:
-> > On Tue, 27 Aug 2024 at 04:38, David Hildenbrand <david@redhat.com> wrot=
-e:
-> >>
-> >> As reported by Peter, we might be leaking memory when removing the
-> >> highest RAMBlock (in the weird ram_addr_t space), and adding a new one=
-.
-> >>
-> >> We will fail to realize that we already allocated bitmaps for more
-> >> dirty memory blocks, and effectively discard the pointers to them.
-> >>
-> >> Fix it by getting rid of last_ram_page() and simply storing the number
-> >> of dirty memory blocks that have been allocated. We'll store the numbe=
-r
-> >> of blocks along with the actual pointer to keep it simple.
-> >>
-> >> Looks like this leak was introduced as we switched from using a single
-> >> bitmap_zero_extend() to allocating multiple bitmaps:
-> >> bitmap_zero_extend() relies on g_renew() which should have taken care =
-of
-> >> this.
-> >>
-> >> Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=3DAf=
-X6A4kScq=3DVSSK0peqPg@mail.gmail.com
-> >> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> >> Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM=
- hotplug")
-> >> Cc: qemu-stable@nongnu.org
-> >> Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> >> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> >> Cc: Peter Xu <peterx@redhat.com>
-> >> Cc: "Philippe Mathieu-Daud=C3=A9" <philmd@linaro.org>
-> >> Signed-off-by: David Hildenbrand <david@redhat.com>
-> >> ---
-> >>   include/exec/ramlist.h |  1 +
-> >>   system/physmem.c       | 44 ++++++++++++++--------------------------=
---
-> >>   2 files changed, 16 insertions(+), 29 deletions(-)
-> >>
-> >> diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
-> >> index 2ad2a81acc..f2a965f293 100644
-> >> --- a/include/exec/ramlist.h
-> >> +++ b/include/exec/ramlist.h
-> >> @@ -41,6 +41,7 @@ typedef struct RAMBlockNotifier RAMBlockNotifier;
-> >>   #define DIRTY_MEMORY_BLOCK_SIZE ((ram_addr_t)256 * 1024 * 8)
-> >>   typedef struct {
-> >>       struct rcu_head rcu;
-> >> +    unsigned int num_blocks;
-> >
-> > The maximum amount of memory supported by unsigned int is:
-> > (2 ^ 32 - 1) * 4KB * DIRTY_MEMORY_BLOCK_SIZE
-> > =3D ~32 exabytes
-> >
->
-> True, should we simply use ram_addr_t ?
+Hello Clément,
 
-Sounds good to me. In practice scalability bottlenecks are likely with
-those memory sizes and it will be necessary to change how guest memory
-is organized anyway. But it doesn't hurt to make this counter
-future-proof.
+On 7/15/24 10:46, Clément Chigot wrote:
+> The BookE decrementer stops at 0, meaning that it won't decremented
+> towards "negative" values.
+> However, the current logic is inverted: decr is updated solely when
+> the resulting value would be negative.
 
-Stefan
+How did you hit the issue ? which machine ? I didn't see any error
+when booting Linux 6.6.3 on mpc8544ds, e500mc, e5500 and e6500.
+
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
+> Fixed: 8e0a5ac87800 ("hw/ppc: Avoid decrementer rounding errors")
+
+LGTM,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+We have some automated tests with the ppce500 machine which it would be
+interesting  to extend to have a better coverage of booke.
+
+Thanks,
+
+C.
+
+
+
+> ---
+>   hw/ppc/ppc.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> index e6fa5580c0..9fc85c7de0 100644
+> --- a/hw/ppc/ppc.c
+> +++ b/hw/ppc/ppc.c
+> @@ -729,7 +729,9 @@ static inline int64_t __cpu_ppc_load_decr(CPUPPCState *env, int64_t now,
+>       int64_t decr;
+>   
+>       n = ns_to_tb(tb_env->decr_freq, now);
+> -    if (next > n && tb_env->flags & PPC_TIMER_BOOKE) {
+> +
+> +    /* BookE timers stop when reaching 0.  */
+> +    if (next < n && tb_env->flags & PPC_TIMER_BOOKE) {
+>           decr = 0;
+>       } else {
+>           decr = next - n;
+
+
 
