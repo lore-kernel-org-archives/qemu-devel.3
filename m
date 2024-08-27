@@ -4,139 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4371C5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 18:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60417C54731
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 18:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj0Uk-0000VY-2V; Tue, 27 Aug 2024 14:00:44 -0400
+	id 1sj0Vc-0004xx-EH; Tue, 27 Aug 2024 14:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sj0UW-00009Y-VQ
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 14:00:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sj0UR-0002AP-NR
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 14:00:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724781621;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VRc9uwrxGd0KJhMPcb0QsbrEXXMWBmTmV8xqtOe/ZzQ=;
- b=ihUOAn7OVI2WD/0W4P+3VqD2y6DU/1XjkI4+N6kxhUZW/ihRXXDUwyIYO2DL/HrszxGO+2
- cdG943tpyMHRFaY7Q66ol7H1X7Uom0kqjWizUbnNjqcdF2saPiRbr+TZlqggaJFXRoGOe0
- dpEnZgEePPtb3wwhBZtlxR5RT9Diaek=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-lbHlN0tUPTeEaNvZkp6-fA-1; Tue, 27 Aug 2024 14:00:19 -0400
-X-MC-Unique: lbHlN0tUPTeEaNvZkp6-fA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4280b119a74so48777045e9.3
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 11:00:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sj0Vb-0004tU-Dy
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 14:01:35 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sj0VZ-0002Fj-2a
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 14:01:35 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2023dd9b86aso46235935ad.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 11:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724781691; x=1725386491; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CozyPju00hQ9Ty40RisdR+WDP+BWU9DlcOR/i1kAFAU=;
+ b=AuX9E9XDgEkXTNI7mz8tBrYgCOWa5J/bWWbfhy68ZAOI6SsNRT/ha7EjqvuC6kPEJh
+ eXJlKqCwCfC8gWJ2DD9DJ00/EI9Ez/kHXnIUYFe+IpSGXf3yg5dJk6RWjvjGmRQluOAI
+ EgZBYSccYMtm2IPZUdO0IaSsrcdzKH9ijcL1yLp4OvXlMCcA8A+9WhQB6qoGl8zIXWyH
+ gP5daXIgR5uAFVEOOGdIHeN6CfpGcxVoEgtu6eHMICuEqYIPESlan1kb6fBNY4Rckh+s
+ 7rXC4W3g6dhxJMG7RMQzr8xFdHx663GEUWaDTMwhD5CHe46JglzBpHEeruypoeohu13m
+ PqDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724781618; x=1725386418;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=VRc9uwrxGd0KJhMPcb0QsbrEXXMWBmTmV8xqtOe/ZzQ=;
- b=X294BWekCGaup4wTQzllVlhnz66EQ8q8pCs62Q7O9OgCgMavZoQjUPT0n1rs6SLBSd
- 4Rsc8ka7kAXRIYTzKxPnmTPNcSDB6Tb8zdpOCP2cgmvXkVNt1aaCzlZvoFVZFq3zTx3U
- GF9D6ssUir2tXbLL+YFE3c/kSh/e+4/6CZdR9VZ18rN9/lTU1LcrawjbGJ7j2SIETwjv
- Qr4WP2C/GrzMfF4lwqcQdmQMIsh5avFOwbuvE6oXEYAtLpRByoqW8Yk0yJdQ8ZGlFdiI
- nuzzhWOTSmFrwcqqhXneUQ/pgUGCbzwQ6Aii7CCdgIQzO4lR1j09faxz+JgRRr1w8ffu
- wBbA==
-X-Gm-Message-State: AOJu0YyHh9RTgQ+QAusBHWfdP3+KZDEYG262dBZlmlnLEYmtnT34APw6
- 2mLSsn1qtb6nawjSZRk3Vdw99gl12su5/YmS5ZDl/WUEJqbV71rEMAhLgkieTWDijHGZkZC8bmC
- L3VrS8eFi7ubCLIrVjae2F6j6NEg7nuELawsChhqOlyw+Sn2xGmVl
-X-Received: by 2002:adf:fe50:0:b0:371:8c7c:860d with SMTP id
- ffacd0b85a97d-3731185855amr8924099f8f.18.1724781617910; 
- Tue, 27 Aug 2024 11:00:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2T3RDbfc6puGoLG+C9KdDZN9Zl2ob6emnY/aT8n2If9zXOyek2gynnHgnxoWpiDYJAYEiWg==
-X-Received: by 2002:adf:fe50:0:b0:371:8c7c:860d with SMTP id
- ffacd0b85a97d-3731185855amr8924072f8f.18.1724781617056; 
- Tue, 27 Aug 2024 11:00:17 -0700 (PDT)
-Received: from [192.168.3.141] (p5b0c62c8.dip0.t-ipconnect.de. [91.12.98.200])
+ d=1e100.net; s=20230601; t=1724781691; x=1725386491;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:references:cc:to:from:subject
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CozyPju00hQ9Ty40RisdR+WDP+BWU9DlcOR/i1kAFAU=;
+ b=f1iKW4mXVbbRHFIu2hIiQjyUSKRQd2zu6NkrCpdO+kSL3bmcAdwHTPhBYR9v+dB2/1
+ RbPC9dCXfFN5PwL0J+Rum4TT5mcGjEiNOovbdPNfH+qMdMAiNHcRjjchQewawNjEZWf6
+ gDVNsXP30VWtcVBJR3iqO0GQtSaaFqDtj3J7svQazw0DwzP6+fCGjGDTPQhYXOPkM0TK
+ jPmmEpQIbx5NQEyFwy6E0GL6aWWmnEkhm34TnLGW27IlDLRVqW4CubVzjtflh2OFol7j
+ c8tnuKjfKCC4/vYIAAJEDl7/7wFdYJkeSqZxjwaOdNlYfq+st9eGaei4vIBn9Do+ZMnL
+ XJyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9ML0lg0x79k83+IU04b3DXaJJl7rnR9V2rqdZyhWpCFHf5x+tBTWgd3/27hnfL08lzmg9a8//Qw+z@nongnu.org
+X-Gm-Message-State: AOJu0Yx6HE80otOxf3w5EMkUuc0K0jlosjTW0LzZ3f6CKTEPOChrp0IM
+ DekIWotWzxvrwRSF3JF8vZXlT055Wt/+jTCURM+FG8yIaNFPTo//Ni+iIfe9L+0=
+X-Google-Smtp-Source: AGHT+IGtCBAlgk3PwtcZ3umarbjOYxnjqxLOgkXMh9dMRQybGweELdaJ5KoEai8Mdca7W7CGSOzLuQ==
+X-Received: by 2002:a17:902:f68f:b0:202:47d3:c46d with SMTP id
+ d9443c01a7336-2039e538450mr143778565ad.52.1724781690976; 
+ Tue, 27 Aug 2024 11:01:30 -0700 (PDT)
+Received: from ?IPv6:2804:7f0:b400:bb79:4bdf:de43:1f6c:1151?
+ ([2804:7f0:b400:bb79:4bdf:de43:1f6c:1151])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37308157c55sm13668200f8f.46.2024.08.27.11.00.16
+ d9443c01a7336-203855dbf13sm86602565ad.163.2024.08.27.11.01.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 11:00:16 -0700 (PDT)
-Message-ID: <03dfba8f-19b3-4ff4-9de7-9211c2a26f56@redhat.com>
-Date: Tue, 27 Aug 2024 20:00:07 +0200
+ Tue, 27 Aug 2024 11:01:30 -0700 (PDT)
+Subject: Re: [PATCH v3 4/4] tests/tcg/aarch64: Extend MTE gdbstub tests to
+ system mode
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, alex.bennee@linaro.org, richard.henderson@linaro.org
+Cc: peter.maydell@linaro.org
+References: <20240825145208.46774-1-gustavo.romero@linaro.org>
+ <20240825145208.46774-5-gustavo.romero@linaro.org>
+ <64200fe4-b824-4903-b5f5-fc48c9e00945@linaro.org>
+ <69229d7b-15d5-feda-ee4b-1c48992297f3@linaro.org>
+Message-ID: <2c2813aa-5671-7705-7170-d3e8e25d2f7b@linaro.org>
+Date: Tue, 27 Aug 2024 15:01:27 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] softmmu/physmem: fix memory leak in
- dirty_memory_extend()
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240827083715.257768-1-david@redhat.com> <Zs4TcHvfwhBFSWvQ@x1n>
-From: David Hildenbrand <david@redhat.com>
+In-Reply-To: <69229d7b-15d5-feda-ee4b-1c48992297f3@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <Zs4TcHvfwhBFSWvQ@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.192,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,37 +104,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.08.24 19:57, Peter Xu wrote:
-> On Tue, Aug 27, 2024 at 10:37:15AM +0200, David Hildenbrand wrote:
->>   /* Called with ram_list.mutex held */
->> -static void dirty_memory_extend(ram_addr_t old_ram_size,
->> -                                ram_addr_t new_ram_size)
->> +static void dirty_memory_extend(ram_addr_t new_ram_size)
->>   {
->> -    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
->> -                                             DIRTY_MEMORY_BLOCK_SIZE);
->>       ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
->>                                                DIRTY_MEMORY_BLOCK_SIZE);
->>       int i;
->>   
->> -    /* Only need to extend if block count increased */
->> -    if (new_num_blocks <= old_num_blocks) {
->> -        return;
->> -    }
+Hi Phil,
+
+On 8/27/24 9:42 AM, Gustavo Romero wrote:
+> Hi Phil!
 > 
-> One nitpick here: IMHO we could move the n_blocks cache in ram_list
-> instead, then we keep the check here and avoid caching it three times with
-> the same value.
+> On 8/26/24 3:10 AM, Philippe Mathieu-Daudé wrote:
+>> Hi Gustavo,
+>>
+>> On 25/8/24 16:52, Gustavo Romero wrote:
+>>> Extend MTE gdbstub tests to also run in system mode (share tests between
+>>> user mode and system mode). The tests will only run if a version of GDB
+>>> that supports MTE on baremetal is available in the test environment and
+>>> if available compiler supports the 'memtag' flag
+>>> (-march=armv8.5-a+memtag).
+>>>
+>>> For the tests running in system mode, a page that supports MTE ops. is
+>>> necessary. Therefore, an MTE-enabled page is made available (mapped) in
+>>> the third 2 MB chunk of the second 1 GB space in the flat mapping set in
+>>> boot.S. A new binary, mte.S, is also introduced for the tests. It links
+>>> against boot.S and is executed by QEMU in system mode.
+>>>
+>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>> ---
+>>>   configure                                 |   5 +
+>>>   tests/tcg/aarch64/Makefile.softmmu-target |  49 +++++++++-
+>>>   tests/tcg/aarch64/Makefile.target         |   3 +-
+>>>   tests/tcg/aarch64/gdbstub/test-mte.py     |  71 +++++++++-----
+>>>   tests/tcg/aarch64/system/boot.S           |  11 +++
+>>>   tests/tcg/aarch64/system/kernel.ld        |   7 ++
+>>>   tests/tcg/aarch64/system/mte.S            | 109 ++++++++++++++++++++++
+>>>   7 files changed, 227 insertions(+), 28 deletions(-)
+>>>   create mode 100644 tests/tcg/aarch64/system/mte.S
+>>
+>>
+>>> diff --git a/tests/tcg/aarch64/system/kernel.ld b/tests/tcg/aarch64/system/kernel.ld
+>>> index 7b3a76dcbf..46f1092522 100644
+>>> --- a/tests/tcg/aarch64/system/kernel.ld
+>>> +++ b/tests/tcg/aarch64/system/kernel.ld
+>>> @@ -18,6 +18,13 @@ SECTIONS
+>>>       .bss : {
+>>>           *(.bss)
+>>>       }
+>>> +    /*
+>>> +     * Align the MTE page to the next 2mb boundary (i.e., the third 2mb chunk
+>>> +     * starting from 1gb) by setting the address for symbol 'mte_page', which is
+>>> +     * used in boot.S to setup the PTE and in the mte.S test as the address that
+>>> +     * the MTE instructions operate on.
+>>> +     */
+>>> +    mte_page = ALIGN(1 << 22);
+>>
+>> Comment says 2MiB but you use 4MiB.
+>> Matter of taste, 2MiB is easier to review as:
+>>
+>>        mte_page = ALIGN(2 << 20);
+>>
+> 
+> This is incorrect. Aligning here at 2MiB will clash with r/w data section. I tried to
+> clarify it when I wrote "[...] third 2mb chunk starting from 1gb". The memory layout
+> so is:
+> 
+> 0         ---- 1GiB range: avoid/skipped
+> 1GiB      ---- 1GiB+2MiB (1st 2MiB chunk): text
+> 1GiB+2MiB ---- 1GiB+4MiB (2nd 2MiB chunk): data
+> 1GiB+4MIB ---- 1GiB+8MiB (3rd 2MiB chunk): MTE-enabled page
+> 
+> ALIGN implicitly uses "." (current position), so we're defining consecutive sections
+> here starting from 1GiB.
+> 
+> All the other parts of the code uses the 1 << n form, which I prefer, specially when
+> reading asm code, so I prefer 1 << 22 instead of 4 << 20.
+Alex suggested using the M suffix to make it more clear, so how about:
 
-yes, as written in the patch description: "We'll store the number of 
-blocks along with the actual pointer to keep it simple."
+diff --git a/tests/tcg/aarch64/system/kernel.ld b/tests/tcg/aarch64/system/kernel.ld
+index 46f1092522..3a28412b2f 100644
+--- a/tests/tcg/aarch64/system/kernel.ld
++++ b/tests/tcg/aarch64/system/kernel.ld
+@@ -2,16 +2,18 @@ ENTRY(__start)
+  
+  SECTIONS
+  {
+-    /* virt machine, RAM starts at 1gb */
++    /* Skip first 1 GiB on virt machine: RAM starts at 1 GiB. */
+      . = (1 << 30);
++    /* Align text to first 2 MiB. */
++    . = ALIGN(0 * 2M);
+      .text : {
+          *(.text)
+      }
+      .rodata : {
+          *(.rodata)
+      }
+-    /* align r/w section to next 2mb */
+-    . = ALIGN(1 << 21);
++    /* Align r/w section to next 2 MiB. */
++    . = ALIGN(1 * 2M);
+      .data : {
+          *(.data)
+      }
+@@ -19,12 +21,12 @@ SECTIONS
+          *(.bss)
+      }
+      /*
+-     * Align the MTE page to the next 2mb boundary (i.e., the third 2mb chunk
+-     * starting from 1gb) by setting the address for symbol 'mte_page', which is
+-     * used in boot.S to setup the PTE and in the mte.S test as the address that
+-     * the MTE instructions operate on.
++     * Align the MTE page to the next 2 MiB boundary (i.e., the third 2 MiB
++     * chunk starting from 1 GiB) by setting the address for symbol 'mte_page',
++     * which is used in boot.S to setup the PTE and in the mte.S test as the
++     * address that the MTE instructions operate on.
+       */
+-    mte_page = ALIGN(1 << 22);
++    mte_page = ALIGN(2 * 2M);
+      /DISCARD/ : {
+          *(.ARM.attributes)
+      }
 
-It's cleaner to me to store it along the RCU-freed data structure that 
-has this size.
 
--- 
 Cheers,
+Gustavo
 
-David / dhildenb
-
+> But apparently my comment failed miserable to explain the situation here, so I'm
+> happy to change the wording to make it clearer if you have any suggestion.
+> 
+> 
+> Cheers,
+> Gustavo
+> 
+>>>       /DISCARD/ : {
+>>>           *(.ARM.attributes)
+>>>       }
+>>
 
