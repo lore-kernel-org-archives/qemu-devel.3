@@ -4,118 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA7CC54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61603C54739
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj0Gt-0000t9-HQ; Tue, 27 Aug 2024 13:46:23 -0400
+	id 1sj0H6-0001iT-Rx; Tue, 27 Aug 2024 13:46:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0Gq-0000pv-N1
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:20 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0H2-0001TA-5O
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:32 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0Gn-0000Ua-P6
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:20 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0Gz-0000Vq-VP
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:31 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5D40F21B20;
- Tue, 27 Aug 2024 17:46:16 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9F41221B1C;
+ Tue, 27 Aug 2024 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724780776; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1724780787; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=Ow5kmJae5dc2oLzoehT11nab0TzfZVp6plBP1n6hJUvKgcwL+qMTjeZX+x6N9MTjac8yxp
- 2Iy4bJKIkjgsOtvNEa6t9MmEWeJftAghdO1ABk/GHrXASiMxYWhCtCQSVfX1qQCPrdLKHF
- yC1D3f0JWRJ845eljb7nEGW9npW8ZzU=
+ bh=41Iha+9TwuH9aA17NRpJF0mKGVR2kS9cNIKotE3QSTI=;
+ b=VrVoGTrg5DANPDTisVgIq9ltXW6XuMeuwdQVrm5aCAobEGCeIKox6yLfd5C5y0eQ7E1FWB
+ yPBWZ5gUf8U2ceR26LeUV5LlamMFm8Ef9+4FMjGNoZNvdBG+VDlORJgQpwNbngkJqAu4xq
+ GqtoF3pbc/OIRK76exnpIUx4UFE2kbU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724780776;
+ s=susede2_ed25519; t=1724780787;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=YRLMfoJhPbIWsX5TzLIBYqGH41B9z0M1ERy2Hpn/r7o9J5Y0RK89v79m/XR3o5uECBCXYa
- 4BWOIDW0jMCtakCQ==
+ bh=41Iha+9TwuH9aA17NRpJF0mKGVR2kS9cNIKotE3QSTI=;
+ b=RDM47BqtPgqDD9dkK4X6ChYV1hF2z0uUajRc4O787d72AwlkrszbqnxkUxu6KmFp7kOYJo
+ aFDMIAqlLU9N1TAQ==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Ow5kmJae;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=YRLMfoJh
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=VrVoGTrg;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=RDM47Bqt
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724780776; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1724780787; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=Ow5kmJae5dc2oLzoehT11nab0TzfZVp6plBP1n6hJUvKgcwL+qMTjeZX+x6N9MTjac8yxp
- 2Iy4bJKIkjgsOtvNEa6t9MmEWeJftAghdO1ABk/GHrXASiMxYWhCtCQSVfX1qQCPrdLKHF
- yC1D3f0JWRJ845eljb7nEGW9npW8ZzU=
+ bh=41Iha+9TwuH9aA17NRpJF0mKGVR2kS9cNIKotE3QSTI=;
+ b=VrVoGTrg5DANPDTisVgIq9ltXW6XuMeuwdQVrm5aCAobEGCeIKox6yLfd5C5y0eQ7E1FWB
+ yPBWZ5gUf8U2ceR26LeUV5LlamMFm8Ef9+4FMjGNoZNvdBG+VDlORJgQpwNbngkJqAu4xq
+ GqtoF3pbc/OIRK76exnpIUx4UFE2kbU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724780776;
+ s=susede2_ed25519; t=1724780787;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=YRLMfoJhPbIWsX5TzLIBYqGH41B9z0M1ERy2Hpn/r7o9J5Y0RK89v79m/XR3o5uECBCXYa
- 4BWOIDW0jMCtakCQ==
+ bh=41Iha+9TwuH9aA17NRpJF0mKGVR2kS9cNIKotE3QSTI=;
+ b=RDM47BqtPgqDD9dkK4X6ChYV1hF2z0uUajRc4O787d72AwlkrszbqnxkUxu6KmFp7kOYJo
+ aFDMIAqlLU9N1TAQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F1B9313A20;
- Tue, 27 Aug 2024 17:46:14 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3D7AE13A20;
+ Tue, 27 Aug 2024 17:46:26 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WGRILeYQzma+UAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 27 Aug 2024 17:46:14 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +JxkAfIQzma+UAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 27 Aug 2024 17:46:26 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 03/19] migration/multifd: Remove pages->allocated
-Date: Tue, 27 Aug 2024 14:45:50 -0300
-Message-Id: <20240827174606.10352-4-farosas@suse.de>
+Subject: [PATCH v6 09/19] migration/multifd: Remove total pages tracing
+Date: Tue, 27 Aug 2024 14:45:56 -0300
+Message-Id: <20240827174606.10352-10-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240827174606.10352-1-farosas@suse.de>
 References: <20240827174606.10352-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 5D40F21B20
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: 9F41221B1C
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.00 / 50.00]; BAYES_HAM(-2.99)[99.97%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:email, suse.de:dkim, suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,68 +130,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This value never changes and is always the same as page_count. We
-don't need a copy of it per-channel plus one in the extra slot. Remove
-it.
+The total_normal_pages and total_zero_pages elements are used only for
+the end tracepoints of the multifd threads. These are not super useful
+since they record per-channel numbers and are just the sum of all the
+pages that are transmitted per-packet, for which we already have
+tracepoints. Remove the totals from the tracing.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c | 6 ++----
- migration/multifd.h | 2 --
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ migration/multifd.c    | 12 ++----------
+ migration/multifd.h    |  8 --------
+ migration/trace-events |  4 ++--
+ 3 files changed, 4 insertions(+), 20 deletions(-)
 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 3dfed8a005..30e5c687d3 100644
+index 410b7e12cc..df8dfcc98f 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -396,7 +396,6 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
- {
-     MultiFDPages_t *pages = g_new0(MultiFDPages_t, 1);
+@@ -453,8 +453,6 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+     }
  
--    pages->allocated = n;
-     pages->offset = g_new0(ram_addr_t, n);
+     p->packets_sent++;
+-    p->total_normal_pages += pages->normal_num;
+-    p->total_zero_pages += zero_num;
  
-     return pages;
-@@ -405,7 +404,6 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
- static void multifd_pages_clear(MultiFDPages_t *pages)
- {
-     multifd_pages_reset(pages);
--    pages->allocated = 0;
-     g_free(pages->offset);
-     pages->offset = NULL;
-     g_free(pages);
-@@ -420,7 +418,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-     int i;
+     trace_multifd_send(p->id, packet_num, pages->normal_num, zero_num,
+                        p->flags, p->next_packet_size);
+@@ -516,8 +514,6 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+     p->packet_num = be64_to_cpu(packet->packet_num);
+     p->packets_recved++;
+-    p->total_normal_pages += p->normal_num;
+-    p->total_zero_pages += p->zero_num;
  
-     packet->flags = cpu_to_be32(p->flags);
--    packet->pages_alloc = cpu_to_be32(pages->allocated);
-+    packet->pages_alloc = cpu_to_be32(multifd_ram_page_count());
-     packet->normal_pages = cpu_to_be32(pages->normal_num);
-     packet->zero_pages = cpu_to_be32(zero_num);
-     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-@@ -651,7 +649,7 @@ static inline bool multifd_queue_empty(MultiFDPages_t *pages)
+     trace_multifd_recv(p->id, p->packet_num, p->normal_num, p->zero_num,
+                        p->flags, p->next_packet_size);
+@@ -1036,8 +1032,7 @@ out:
  
- static inline bool multifd_queue_full(MultiFDPages_t *pages)
- {
--    return pages->num == pages->allocated;
-+    return pages->num == multifd_ram_page_count();
+     rcu_unregister_thread();
+     migration_threads_remove(thread);
+-    trace_multifd_send_thread_end(p->id, p->packets_sent, p->total_normal_pages,
+-                                  p->total_zero_pages);
++    trace_multifd_send_thread_end(p->id, p->packets_sent);
+ 
+     return NULL;
  }
+@@ -1561,7 +1556,6 @@ static void *multifd_recv_thread(void *opaque)
+                 qemu_sem_wait(&p->sem_sync);
+             }
+         } else {
+-            p->total_normal_pages += p->data->size / qemu_target_page_size();
+             p->data->size = 0;
+             /*
+              * Order data->size update before clearing
+@@ -1578,9 +1572,7 @@ static void *multifd_recv_thread(void *opaque)
+     }
  
- static inline void multifd_enqueue(MultiFDPages_t *pages, ram_addr_t offset)
+     rcu_unregister_thread();
+-    trace_multifd_recv_thread_end(p->id, p->packets_recved,
+-                                  p->total_normal_pages,
+-                                  p->total_zero_pages);
++    trace_multifd_recv_thread_end(p->id, p->packets_recved);
+ 
+     return NULL;
+ }
 diff --git a/migration/multifd.h b/migration/multifd.h
-index a2bba23af9..660a9882c2 100644
+index c2ba4cad13..9175104aea 100644
 --- a/migration/multifd.h
 +++ b/migration/multifd.h
-@@ -76,8 +76,6 @@ typedef struct {
-     uint32_t num;
-     /* number of normal pages */
-     uint32_t normal_num;
--    /* number of allocated pages */
--    uint32_t allocated;
-     /* offset of each page */
-     ram_addr_t *offset;
+@@ -162,10 +162,6 @@ typedef struct {
+     uint32_t next_packet_size;
+     /* packets sent through this channel */
+     uint64_t packets_sent;
+-    /* non zero pages sent through this channel */
+-    uint64_t total_normal_pages;
+-    /* zero pages sent through this channel */
+-    uint64_t total_zero_pages;
+     /* buffers to send */
+     struct iovec *iov;
+     /* number of iovs used */
+@@ -218,10 +214,6 @@ typedef struct {
      RAMBlock *block;
+     /* ramblock host address */
+     uint8_t *host;
+-    /* non zero pages recv through this channel */
+-    uint64_t total_normal_pages;
+-    /* zero pages recv through this channel */
+-    uint64_t total_zero_pages;
+     /* buffers to recv */
+     struct iovec *iov;
+     /* Pages that are not zero */
+diff --git a/migration/trace-events b/migration/trace-events
+index 0b7c3324fb..0887cef912 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -134,7 +134,7 @@ multifd_recv_sync_main(long packet_num) "packet num %ld"
+ multifd_recv_sync_main_signal(uint8_t id) "channel %u"
+ multifd_recv_sync_main_wait(uint8_t id) "iter %u"
+ multifd_recv_terminate_threads(bool error) "error %d"
+-multifd_recv_thread_end(uint8_t id, uint64_t packets, uint64_t normal_pages, uint64_t zero_pages) "channel %u packets %" PRIu64 " normal pages %" PRIu64 " zero pages %" PRIu64
++multifd_recv_thread_end(uint8_t id, uint64_t packets) "channel %u packets %" PRIu64
+ multifd_recv_thread_start(uint8_t id) "%u"
+ multifd_send(uint8_t id, uint64_t packet_num, uint32_t normal_pages, uint32_t zero_pages, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " normal pages %u zero pages %u flags 0x%x next packet size %u"
+ multifd_send_error(uint8_t id) "channel %u"
+@@ -142,7 +142,7 @@ multifd_send_sync_main(long packet_num) "packet num %ld"
+ multifd_send_sync_main_signal(uint8_t id) "channel %u"
+ multifd_send_sync_main_wait(uint8_t id) "channel %u"
+ multifd_send_terminate_threads(void) ""
+-multifd_send_thread_end(uint8_t id, uint64_t packets, uint64_t normal_pages, uint64_t zero_pages) "channel %u packets %" PRIu64 " normal pages %"  PRIu64 " zero pages %"  PRIu64
++multifd_send_thread_end(uint8_t id, uint64_t packets) "channel %u packets %" PRIu64
+ multifd_send_thread_start(uint8_t id) "%u"
+ multifd_tls_outgoing_handshake_start(void *ioc, void *tioc, const char *hostname) "ioc=%p tioc=%p hostname=%s"
+ multifd_tls_outgoing_handshake_error(void *ioc, const char *err) "ioc=%p err=%s"
 -- 
 2.35.3
 
