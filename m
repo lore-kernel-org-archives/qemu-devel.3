@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E910DC5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 13:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5932BC54734
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 13:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siw4B-0006zT-MV; Tue, 27 Aug 2024 09:17:00 -0400
+	id 1siw7b-0003QR-WD; Tue, 27 Aug 2024 09:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siw45-0006xt-6v
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:16:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siw7Z-0003OW-V8
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:20:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siw3z-0004nA-C9
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:16:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siw7Y-0005Fv-C2
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:20:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724764605;
+ s=mimecast20190719; t=1724764827;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=P5KVTZ1jxiwZqh2PE73iRM0Q0qMR1o/pn2rFFXYcHZo=;
- b=UIbYFL4+MQSGxE1pLLRaahkwwwRuoOwZtKs5cFexL5MuvhDYGzzLmhCwr6Wfo/lngL2AGH
- 5fe/194oPx7xX1T5Gol9Vl2fVoADQVD32wSvfcfOWu2TFLBOPBZ2zmpVqJLCyPni6djhYo
- 2c5x9Ne2+V9g2NVn84DDXTQgcJbPLMY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SVlICdkMRFvZN53UINQ4tmIjlFq7tfi3pJ+k8VU0KmQ=;
+ b=VsEsVl3mlbKEFNTIRmMUWX62WPE29s29e2rZqmSdImZRwO0g4XL13m+NBFT9kTKDZ/gnut
+ fP9UtRZXb017AwiXJcG1GX+yVTsyEn0EztTlXkKN5oOsLvHFfF9VR97iKDjP0KFiMwo+xX
+ +cqzA2YDgJUXBHxCMdeyVD1kLaciZao=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-jtjdco2-MjeYS41NmxjLpw-1; Tue, 27 Aug 2024 09:16:44 -0400
-X-MC-Unique: jtjdco2-MjeYS41NmxjLpw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3717cc80ce1so3675634f8f.0
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 06:16:44 -0700 (PDT)
+ us-mta-84-UVR47y4SOq-wMW3MxxIIIA-1; Tue, 27 Aug 2024 09:20:26 -0400
+X-MC-Unique: UVR47y4SOq-wMW3MxxIIIA-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5daa4d71e88so5689248eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 06:20:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724764603; x=1725369403;
+ d=1e100.net; s=20230601; t=1724764826; x=1725369626;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=P5KVTZ1jxiwZqh2PE73iRM0Q0qMR1o/pn2rFFXYcHZo=;
- b=E7yioQCXLybm93axpjcMIeEar+BLKFoikgUS7iWTm2IqJ+D/9IyxJ/zOO1TmAw6aF4
- L9gmrPJeh5JtNAbgS9V0x1lrMR//ttF077Vth2Ilc9T99VkvcgOxfgiLygL52RjfUqoo
- xW20YiXz0ggtchcfTHoRVci/xVkQOGlJqwkd2/Eqe5sYVYi/7gyoi6xQIYPZFhEB+uY5
- Z9sez3t+BgCVz+vGRycfODNSctm2eH7Orci05Ac1mtRWhFJQGbhVPVqKQImrSPmp8Yz0
- CpqAnEkjvtucH1QNyVNQz9qqvM8GECNCw4Gox12k4IJggpLxO89RGCHy2evmuXuIugK5
- RYmQ==
+ bh=SVlICdkMRFvZN53UINQ4tmIjlFq7tfi3pJ+k8VU0KmQ=;
+ b=WtpoRO1Yz4CiBSFi6RlxXh0758iO1KzdThU84+OhgPlsN1ZWAgRn5gCyZJ+NTt1aNU
+ 49rTN6ZIlO/cOllheLJvI4vSBkc6GFBwuzXtVxP2mvWyYdWqrYfMiRR2CqaVxuIJqq+P
+ K+UL+c9NPEjNcsYz7Uc00XqNWBYJYLo+pHzoOPIMvbpYJGf99PeHmKIL63EDZ/Lctjrs
+ iRFh4XJusF8NQkgPkQOoSAK3+TJYDD8UpczSUI7/JYMRxqSv6srekCpuJD3PvQtqifXv
+ /Irwsy0U9ZqG+TdDGiWRyWhG/C6XX6Mq+rhzqn0qiqR3EaTI3igLo+rBonbO8AQSB1qL
+ JHyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRYgz5SyaCDeLvMPqZmXl42T8LzX2uv0hpuOf53PlgbpOByWn6z0J9kFAukmVnSuMP0WdiP+FNuOBn@nongnu.org
-X-Gm-Message-State: AOJu0YzQTylHZP2Yw/eHxWW6wiXqfgpfqdGJbBwbUlE4+Yj25UpIGKbr
- isAMyNbp0MpRsxk0yDFCRivMLee0xxuwEsNmcyV3Q+rBynA1s0OSGYlxb/fttPUbCmlKWiLXHsN
- IXHUgmfDQRzobbcS4yO+fLsJ9104BFhQ7OgpaO+Kf3iIhaXDMrtcp
-X-Received: by 2002:adf:a341:0:b0:368:3b21:6643 with SMTP id
- ffacd0b85a97d-373119092f1mr8967147f8f.48.1724764602992; 
- Tue, 27 Aug 2024 06:16:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtTGfanVtACY9Dg/t7I1zduuSwJzFj/NjHYDX3588i0LrllFGniCDHrkGCKBdqSR6KYoyXTg==
-X-Received: by 2002:adf:a341:0:b0:368:3b21:6643 with SMTP id
- ffacd0b85a97d-373119092f1mr8967115f8f.48.1724764602320; 
- Tue, 27 Aug 2024 06:16:42 -0700 (PDT)
+ AJvYcCVY6eaEQOyJ0j6nU9Gk3c4Efm3ZwJrkV6wT81K9pisCFFCAcsH6IrELwBNky8fJmv0s9rFLXKFZ4kGp@nongnu.org
+X-Gm-Message-State: AOJu0Ywp6H/lTpURg3l3Tx1tPYMeaAwEnX4/62r0/VnydedeFYmvwCFU
+ 94MWDVfJxh1I+c8ehEJhpBZwiuFz2Xb2zZCelOFGPI8SXCcI/UPmxCF6nCpWffajFzV0ZEEjpwW
+ +JUOznPv7jEZVGvd1a/AVLKzM1XQuZGnHXolZV/XwWL3w3dSOsVEG
+X-Received: by 2002:a05:6870:1588:b0:26c:5312:a13b with SMTP id
+ 586e51a60fabf-273e65a83c3mr13833734fac.30.1724764825679; 
+ Tue, 27 Aug 2024 06:20:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+SJAtUlQU/EBn2BdsAXDFx6SOy4fz46XKdXIILq6irfOsND56KrmVtvMF1l6/NrItaZTY2w==
+X-Received: by 2002:a05:6870:1588:b0:26c:5312:a13b with SMTP id
+ 586e51a60fabf-273e65a83c3mr13833706fac.30.1724764825329; 
+ Tue, 27 Aug 2024 06:20:25 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-179-35.web.vodafone.de.
  [109.43.179.35]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42abefff552sm219251505e9.46.2024.08.27.06.16.41
+ af79cd13be357-7a67f41e276sm544167985a.136.2024.08.27.06.20.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 06:16:41 -0700 (PDT)
-Message-ID: <2e2c6480-8a43-4606-b500-2e60bf583d00@redhat.com>
-Date: Tue, 27 Aug 2024 15:16:40 +0200
+ Tue, 27 Aug 2024 06:20:25 -0700 (PDT)
+Message-ID: <86d9b2b7-505d-4223-bcd0-4e4a7847ec56@redhat.com>
+Date: Tue, 27 Aug 2024 15:20:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 15/35] tests/functional: enable pre-emptive caching of
- assets
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH v4 7/7] tests/qtest: Delete previous boot file
+To: Peter Xu <peterx@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-References: <20240821082748.65853-1-thuth@redhat.com>
- <20240821082748.65853-16-thuth@redhat.com>
- <3a435391-f485-4223-93aa-b937a141db16@linaro.org>
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
+ <20240823-san-v4-7-a24c6dfa4ceb@daynix.com> <Zsyesfaf02ktFU1A@x1n>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,9 +133,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <3a435391-f485-4223-93aa-b937a141db16@linaro.org>
+In-Reply-To: <Zsyesfaf02ktFU1A@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -155,193 +162,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/08/2024 09.28, Philippe Mathieu-Daudé wrote:
-> Hi,
+On 26/08/2024 17.26, Peter Xu wrote:
+> On Fri, Aug 23, 2024 at 03:13:12PM +0900, Akihiko Odaki wrote:
+>> A test run may create boot files several times. Delete the previous boot
+>> file before creating a new one.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>> Acked-by: Thomas Huth <thuth@redhat.com>
 > 
-> On 21/8/24 10:27, Thomas Huth wrote:
->> From: Daniel P. Berrangé <berrange@redhat.com>
->>
->> Many tests need to access assets stored on remote sites. We don't want
->> to download these during test execution when run by meson, since this
->> risks hitting test timeouts when data transfers are slow.
->>
->> Add support for pre-emptive caching of assets by setting the env var
->> QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
->> instead of running the test, the assets will be downloaded and saved
->> to the cache, then the timestamp file created.
->>
->> A meson custom target is created as a dependency of each test suite
->> to trigger the pre-emptive caching logic before the test runs.
->>
->> When run in caching mode, it will locate assets by looking for class
->> level variables with a name prefix "ASSET_", and type "Asset".
->>
->> At the ninja level
->>
->>     ninja test --suite functional
->>
->> will speculatively download any assets that are not already cached,
->> so it is advisable to set a timeout multiplier.
->>
->>     QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
->>
->> will fail the test if a required asset is not already cached
->>
->>     ninja precache-functional
->>
->> will download and cache all assets required by the functional
->> tests
->>
->> At the make level, precaching is always done by
->>
->>     make check-functional
->>
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->> Tested-by: Richard Henderson <richard.henderson@linaro.org>
->> [thuth: Remove the duplicated "path = os.path.basename(...)" line]
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   tests/Makefile.include                 |  3 ++-
->>   tests/functional/meson.build           | 33 +++++++++++++++++++++++--
->>   tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
->>   tests/functional/qemu_test/testcase.py |  7 ++++++
->>   4 files changed, 74 insertions(+), 3 deletions(-)
->>
->> diff --git a/tests/Makefile.include b/tests/Makefile.include
->> index 66c8cc3123..010369bd3a 100644
->> --- a/tests/Makefile.include
->> +++ b/tests/Makefile.include
->> @@ -161,7 +161,8 @@ $(FUNCTIONAL_TARGETS):
->>   .PHONY: check-functional
->>   check-functional:
->> -    @$(MAKE) SPEED=thorough check-func check-func-quick
->> +    @$(NINJA) precache-functional
->> +    @QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func 
->> check-func-quick
->>   # Consolidated targets
->> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->> index 8a8fa0ab99..cef74b82a9 100644
->> --- a/tests/functional/meson.build
->> +++ b/tests/functional/meson.build
->> @@ -33,6 +33,7 @@ tests_x86_64_quick = [
->>   tests_x86_64_thorough = [
->>   ]
->> +precache_all = []
->>   foreach speed : ['quick', 'thorough']
->>     foreach dir : target_dirs
->>       if not dir.endswith('-softmmu')
->> @@ -63,11 +64,35 @@ foreach speed : ['quick', 'thorough']
->>                                  meson.current_source_dir())
->>       foreach test : target_tests
->> -      test('func-@0@/@1@'.format(target_base, test),
->> +      testname = '@0@-@1@'.format(target_base, test)
->> +      testfile = 'test_' + test + '.py'
->> +      testpath = meson.current_source_dir() / testfile
->> +      teststamp = testname + '.tstamp'
->> +      test_precache_env = environment()
->> +      test_precache_env.set('QEMU_TEST_PRECACHE', 
->> meson.current_build_dir() / teststamp)
->> +      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 
->> 'python:' +
->> +                                          meson.current_source_dir())
->> +      precache = custom_target('func-precache-' + testname,
->> +                               output: teststamp,
->> +                               command: [python, testpath],
->> +                               depend_files: files(testpath),
->> +                               build_by_default: false,
->> +                               env: test_precache_env)
->> +      precache_all += precache
->> +
->> +      # Ideally we would add 'precache' to 'depends' here, such that
->> +      # 'build_by_default: false' lets the pre-caching automatically
->> +      # run immediately before the test runs. In practice this is
->> +      # broken in meson, with it running the pre-caching in the normal
->> +      # compile phase https://github.com/mesonbuild/meson/issues/2518
->> +      # If the above bug ever gets fixed, when QEMU changes the min
->> +      # meson version, add the 'depends' and remove the custom
->> +      # 'run_target' logic below & in Makefile.include
->> +      test('func-' + testname,
->>              python,
->>              depends: [test_deps, test_emulator, emulator_modules],
->>              env: test_env,
->> -           args: [meson.current_source_dir() / 'test_' + test + '.py'],
->> +           args: [testpath],
->>              protocol: 'tap',
->>              timeout: test_timeouts.get(test, 60),
->>              priority: test_timeouts.get(test, 60),
->> @@ -75,3 +100,7 @@ foreach speed : ['quick', 'thorough']
->>       endforeach
->>     endforeach
->>   endforeach
->> +
->> +run_target('precache-functional',
->> +           depends: precache_all,
->> +           command: ['true'])
->> diff --git a/tests/functional/qemu_test/asset.py 
->> b/tests/functional/qemu_test/asset.py
->> index cbeb6278af..9250ff2b06 100644
->> --- a/tests/functional/qemu_test/asset.py
->> +++ b/tests/functional/qemu_test/asset.py
->> @@ -9,6 +9,8 @@
->>   import logging
->>   import os
->>   import subprocess
->> +import sys
->> +import unittest
->>   import urllib.request
->>   from pathlib import Path
->>   from shutil import copyfileobj
->> @@ -62,6 +64,9 @@ def fetch(self):
->>                              self.cache_file, self.url)
->>               return str(self.cache_file)
->> +        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
->> +            raise Exception("Asset cache is invalid and downloads disabled")
->> +
->>           self.log.info("Downloading %s to %s...", self.url, self.cache_file)
->>           tmp_cache_file = self.cache_file.with_suffix(".download")
->> @@ -95,3 +100,32 @@ def fetch(self):
->>           self.log.info("Cached %s at %s" % (self.url, self.cache_file))
->>           return str(self.cache_file)
->> +
->> +    def precache_test(test):
->> +        log = logging.getLogger('qemu-test')
->> +        log.setLevel(logging.DEBUG)
->> +        handler = logging.StreamHandler(sys.stdout)
->> +        handler.setLevel(logging.DEBUG)
->> +        formatter = logging.Formatter(
->> +            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
->> +        handler.setFormatter(formatter)
->> +        log.addHandler(handler)
->> +        for name, asset in vars(test.__class__).items():
->> +            if name.startswith("ASSET_") and type(asset) == Asset:
->> +                log.info("Attempting to cache '%s'" % asset)
->> +                asset.fetch()
->> +        log.removeHandler(handler)
->> +
->> +    def precache_suite(suite):
->> +        for test in suite:
->> +            if isinstance(test, unittest.TestSuite):
->> +                Asset.precache_suite(test)
->> +            elif isinstance(test, unittest.TestCase):
->> +                Asset.precache_test(test)
->> +
->> +    def precache_suites(path, cacheTstamp):
->> +        loader = unittest.loader.defaultTestLoader
->> +        tests = loader.loadTestsFromNames([path], None)
->> +
->> +        with open(cacheTstamp, "w") as fh:
->> +            Asset.precache_suite(tests)
+> I didn't track which came early, but I think Fabiano has queued the other
+> one here:
 > 
+> https://lore.kernel.org/r/20240820144912.320744-2-peter.maydell@linaro.org
+> https://gitlab.com/farosas/qemu/-/commits/migration-staging/
 > 
-> When using multiple jobs (-jN) I'm observing some hangs,
-> apparently multiple threads trying to download the same file.
-> The files are eventually downloaded successfully but it takes
-> longer. Should we acquire some exclusive lock somewhere?
+> So we should be good.
 
-I haven't seen that yet ... what did you exactly run? "make check-functional 
--jN" ? Or "make check-functional-<target> -jN" ?
+Ooops, sorry, I think I might have jumped the gun and put this patch here in 
+my final PR for 9.1 ... I hope it's ok to do modifications on top of that 
+later if it is still necessary.
 
   Thomas
-
 
 
