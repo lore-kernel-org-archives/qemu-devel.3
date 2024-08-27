@@ -4,82 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F91C54734
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65137C5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sizlr-0004jz-Lm; Tue, 27 Aug 2024 13:14:20 -0400
+	id 1sizvK-0001lU-Uk; Tue, 27 Aug 2024 13:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sizll-0004jH-GE
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:14:13 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sizlj-0005nj-72
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:14:13 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42ab880b73eso51936505e9.0
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 10:14:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724778849; x=1725383649; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yoHCEMXlglC4Ojb1w/+bBKoFgpKQuU/89HLCYKjclFg=;
- b=QHdjRXSsTkV2VtaHBmL+qggl7QuoOvnDwcvqirvRHkLkA+MUhSnhxyzBEsuQU7hAHr
- 7tsomohqfiyHU/U0lDRxW3gA7M24b+9BxVPZ5QVrJ1hTDUqNTmyGWrzb890jKOXj0nt2
- cvWeiaEgEWUG7urHiWpL7KYtvoUwcZPj50sLHal8ZM7JBaWZ/RNarhdJfU6P8RZp83Cp
- 5jZGH/vr9H91iDt/yd9BxY0joVimUGxtVdtnxmwwNIKF+zQ8WkGwgXkkivwQTAVN4AtQ
- a11mkP2tXVCjtJlnSUq3yiuPr+AHWsxr4S7yR3WywzhvCIyd0OPbbMoxCJyfTuUG0BsK
- aojg==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sizvJ-0001k5-TO
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:24:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sizvH-0006dk-MJ
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:24:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724779442;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3LG6aeFsC2ZsvoatmYeQPUakVFj2+pPTuVzOrCtbcZ4=;
+ b=c5tQDCmBRDtL566paUaMXirBOO3/nXjYPw0U2GJtMv3DYyGjD7QcpjE1af0xHSR6n8sjx7
+ MiD34fxFYrREPQejklHFEMXJCl0A0qheE1MYapf3/9Wx3/4Q9X2231gYtxV+CcabN1SI1S
+ r+0fDxaBF5Ht3Orxx53MLCCHW8UNr6c=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-235-05jon8r4NfSwgE6VeHsrng-1; Tue, 27 Aug 2024 13:23:58 -0400
+X-MC-Unique: 05jon8r4NfSwgE6VeHsrng-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4280a434147so50595245e9.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 10:23:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724778849; x=1725383649;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yoHCEMXlglC4Ojb1w/+bBKoFgpKQuU/89HLCYKjclFg=;
- b=sQjsvLnMZAie+a+AMju3hSCiBVrN9Edk5Fs5dVvDqUgBz4qkW7QUG0ndz5/whUuFIk
- +GYdrySDrXVvSEz3dZxhYsMlQAclLNB0qSQva1NZbOMQMnikjNvjj1o6grFZk0avlc+x
- v7SiJ45AltjKZZoRU1tMEf2QXgHYUUj/6p1usk5gmbqOZdP3oV/Uc6wH/eRnHoLcgJN9
- sg8xwtSwMSYczPLLdqQVWHSR89Ef1/kGAoxk6hwAEYUJQX1nukynIf4Pc1ezidZz8WwC
- TSVlp2NxgvIkBECb6JpWaLe5KEGrBNzzCvOY+qP5oyrxuTDQ2J8/vQ2V067Jt0qgnQM7
- xfig==
-X-Gm-Message-State: AOJu0YyRq9vr4bqM+dx9QkXMh1XtEjcux0YeVu11tKiQ78Ye0NY1tq0a
- X77RT+EGzudPQUNR2mYn1L08sysQKFEYIfFfyDTaBd21xVDZjarFRCpXKCb+Drc=
-X-Google-Smtp-Source: AGHT+IFxizz0saXILDaIKyLH5Z06lkidisve1/PoUjRC5n1J9Wc1D01JVmyGheY7kT4KfBABB9Q1Fw==
-X-Received: by 2002:a05:600c:4fc5:b0:427:ffa4:32d0 with SMTP id
- 5b1f17b1804b1-42b9ae2422emr24985255e9.28.1724778848348; 
- Tue, 27 Aug 2024 10:14:08 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ac514e093sm192481855e9.7.2024.08.27.10.14.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 10:14:07 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 075635F9E6;
- Tue, 27 Aug 2024 18:14:07 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Haixu Cui <quic_haixcui@quicinc.com>
-Cc: <qemu-devel@nongnu.org>,  <viresh.kumar@linaro.org>,
- <quic_ztu@quicinc.com>,  <quic_tsoni@quicinc.com>
-Subject: Re: [PATCH] Add vhost-user-spi and vhost-user-spi-pci devices
-In-Reply-To: <20240712034246.2553812-1-quic_haixcui@quicinc.com> (Haixu Cui's
- message of "Fri, 12 Jul 2024 11:42:46 +0800")
-References: <20240712034246.2553812-1-quic_haixcui@quicinc.com>
-Date: Tue, 27 Aug 2024 18:14:06 +0100
-Message-ID: <8734mp6g81.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1724779437; x=1725384237;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3LG6aeFsC2ZsvoatmYeQPUakVFj2+pPTuVzOrCtbcZ4=;
+ b=H4mZycPku6qOpuSpTD+AR1IMyqSyToGJRiGLIoWN3j5ld15uDAPxhg4VMUtMOGVA2H
+ u06p+oKA6RpVj6WmJ2z67s2RunG9gNF5NuqcfdalMAUA1bumf64BexgCUaSVOEAp/b59
+ b/U/d/vhCCZKGjRG4OTbMpk8x0T2izRbhR2ni2rpGat00VmOzTtFS4W74fG1NxcvZiDZ
+ 66ziGMq4vZbzl8kafkskTqxWK7DxszeCwUm3RvnS+cglHvL8MG4hGju3DxnXMbXAWliX
+ SWC48ahdn/goz0xoIAx+nz6lgp7wN2p1eek3IpwV+Xf57k4VfOxihw7D4HwzchNmzyXN
+ UDTA==
+X-Gm-Message-State: AOJu0Yy1shg/OKxUX9FV1tkjDRwkmuGypSP7/x5MG1GBhBmpDBNye6NX
+ IfmLq2x1eOudmMXjyejVNaBEWrU8hL5iWXSzf9e/cOeL4Rk9ZaHOseA9CaYsqvoIU1laJM12/fg
+ 5M55WgDT6me4etjVZRIaLdU3tR4k2xmV+6MHkOOZNIwusXVYTqUx0X8o/cj8EAmo=
+X-Received: by 2002:a05:600c:354b:b0:426:61f6:2e38 with SMTP id
+ 5b1f17b1804b1-42acca022eamr85132005e9.35.1724779437168; 
+ Tue, 27 Aug 2024 10:23:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEE7ozqcbGOfJBxnTXZt+NUCJDOcsvXK1wKObnewvpyB+x4nfWV8XZIbjsg2eOaZGik4opPLQ==
+X-Received: by 2002:a05:600c:354b:b0:426:61f6:2e38 with SMTP id
+ 5b1f17b1804b1-42acca022eamr85131675e9.35.1724779436074; 
+ Tue, 27 Aug 2024 10:23:56 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c742:a100:9dd2:c523:f5fd:da19?
+ (p200300cbc742a1009dd2c523f5fdda19.dip0.t-ipconnect.de.
+ [2003:cb:c742:a100:9dd2:c523:f5fd:da19])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42abee86d1fsm225794185e9.12.2024.08.27.10.23.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Aug 2024 10:23:55 -0700 (PDT)
+Message-ID: <36402f8f-dc97-4eaf-8197-1df2bc01720b@redhat.com>
+Date: Tue, 27 Aug 2024 19:23:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] softmmu/physmem: fix memory leak in
+ dirty_memory_extend()
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240827083715.257768-1-david@redhat.com>
+ <CAJSP0QX+NiO7An468cKMFja3TGmgGzyNcPZjEtpPrfi3Q_1xgw@mail.gmail.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CAJSP0QX+NiO7An468cKMFja3TGmgGzyNcPZjEtpPrfi3Q_1xgw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,283 +155,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Haixu Cui <quic_haixcui@quicinc.com> writes:
+On 27.08.24 18:52, Stefan Hajnoczi wrote:
+> On Tue, 27 Aug 2024 at 04:38, David Hildenbrand <david@redhat.com> wrote:
+>>
+>> As reported by Peter, we might be leaking memory when removing the
+>> highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
+>>
+>> We will fail to realize that we already allocated bitmaps for more
+>> dirty memory blocks, and effectively discard the pointers to them.
+>>
+>> Fix it by getting rid of last_ram_page() and simply storing the number
+>> of dirty memory blocks that have been allocated. We'll store the number
+>> of blocks along with the actual pointer to keep it simple.
+>>
+>> Looks like this leak was introduced as we switched from using a single
+>> bitmap_zero_extend() to allocating multiple bitmaps:
+>> bitmap_zero_extend() relies on g_renew() which should have taken care of
+>> this.
+>>
+>> Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
+>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>> Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
+>> Cc: qemu-stable@nongnu.org
+>> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+>> Cc: Paolo Bonzini <pbonzini@redhat.com>
+>> Cc: Peter Xu <peterx@redhat.com>
+>> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>> ---
+>>   include/exec/ramlist.h |  1 +
+>>   system/physmem.c       | 44 ++++++++++++++----------------------------
+>>   2 files changed, 16 insertions(+), 29 deletions(-)
+>>
+>> diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
+>> index 2ad2a81acc..f2a965f293 100644
+>> --- a/include/exec/ramlist.h
+>> +++ b/include/exec/ramlist.h
+>> @@ -41,6 +41,7 @@ typedef struct RAMBlockNotifier RAMBlockNotifier;
+>>   #define DIRTY_MEMORY_BLOCK_SIZE ((ram_addr_t)256 * 1024 * 8)
+>>   typedef struct {
+>>       struct rcu_head rcu;
+>> +    unsigned int num_blocks;
+> 
+> The maximum amount of memory supported by unsigned int is:
+> (2 ^ 32 - 1) * 4KB * DIRTY_MEMORY_BLOCK_SIZE
+> = ~32 exabytes
+> 
 
+True, should we simply use ram_addr_t ?
 
-Apologies for the delay in getting to this.=20
+> This should be fine. The maximum guest RAM sizes are in the TBs range
+> (source: https://access.redhat.com/articles/rhel-kvm-limits).
+> 
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-> This work is based on the virtio-spi spec, virtio-spi driver introduced by
-> the following patch series:
-> - https://github.com/oasis-tcs/virtio-spec/tree/virtio-1.4/device-types/s=
-pi
-> - https://lwn.net/Articles/966715/
->
-> To test with rust-vmm vhost-user-spi daemon, start the vhost-daemon first=
-ly:
->     vhost-device-spi --socket-path=3Dvspi.sock --socket-count=3D1 --devic=
-e "/dev/spidev0.0"
+Thanks
 
-I'm struggling to test this on my main dev box. Are there any dummy SPI
-modules for the kernel for testing? Otherwise we could consider
-implementing something similar to "mock_gpio" for the rust-vmm
-vhost-user-spi backend?
+-- 
+Cheers,
 
+David / dhildenb
 
-> Then invoke qemu with the following parameters:
->     qemu-system-aarch64 -m 1G \
->         -chardev socket,path=3D/home/root/vspi.sock0,id=3Dvspi \
->         -device vhost-user-spi-pci,chardev=3Dvspi,id=3Dspi \
->         -object memory-backend-file,id=3Dmem,size=3D1G,mem-path=3D/dev/sh=
-m,share=3Don \
->         -numa node,memdev=3Dmem
->         ...
-
->
-> Signed-off-by: Haixu Cui <quic_haixcui@quicinc.com>
-> ---
->  hw/virtio/Kconfig                           |   5 +
->  hw/virtio/meson.build                       |   3 +
->  hw/virtio/vhost-user-spi-pci.c              |  69 ++++++++
->  hw/virtio/vhost-user-spi.c                  |  66 +++++++
->  hw/virtio/virtio.c                          |   4 +-
->  include/hw/virtio/vhost-user-spi.h          |  25 +++
->  include/standard-headers/linux/virtio_ids.h |   1 +
->  include/standard-headers/linux/virtio_spi.h | 186 ++++++++++++++++++++
->  8 files changed, 358 insertions(+), 1 deletion(-)
->  create mode 100644 hw/virtio/vhost-user-spi-pci.c
->  create mode 100644 hw/virtio/vhost-user-spi.c
->  create mode 100644 include/hw/virtio/vhost-user-spi.h
->  create mode 100644 include/standard-headers/linux/virtio_spi.h
-
-Generally we want separate headers patches for the importing of headers.
-Doubly so in this case because I can't see the SPI definitions in the
-current Linux master. So:
-
-  - 1/2 - Import headers for SPI (!merge until upstream)
-  - 2/2 - Implement vhost-user stub for virtio-spi
-
-
-
->
-> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-> index aa63ff7fd4..d5857651e5 100644
-> --- a/hw/virtio/Kconfig
-> +++ b/hw/virtio/Kconfig
-> @@ -110,3 +110,8 @@ config VHOST_USER_SCMI
->      bool
->      default y
->      depends on VIRTIO && VHOST_USER
-> +
-> +config VHOST_USER_SPI
-> +    bool
-> +    default y
-> +    depends on VIRTIO && VHOST_USER
-> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-> index 621fc65454..42296219e5 100644
-> --- a/hw/virtio/meson.build
-> +++ b/hw/virtio/meson.build
-> @@ -26,6 +26,7 @@ if have_vhost
->      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('=
-vhost-user-rng.c'))
->      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files('=
-vhost-user-snd.c'))
->      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files=
-('vhost-user-input.c'))
-> +    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SPI', if_true: files('=
-vhost-user-spi.c'))
->=20=20
->      # PCI Stubs
->      system_virtio_ss.add(when: 'CONFIG_VIRTIO_PCI', if_true: files('vhos=
-t-user-device-pci.c'))
-> @@ -39,6 +40,8 @@ if have_vhost
->                           if_true: files('vhost-user-snd-pci.c'))
->      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
-INPUT'],
->                           if_true: files('vhost-user-input-pci.c'))
-> +    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
-SPI'],
-> +                         if_true: files('vhost-user-spi-pci.c'))
->    endif
->    if have_vhost_vdpa
->      system_virtio_ss.add(files('vhost-vdpa.c'))
-> diff --git a/hw/virtio/vhost-user-spi-pci.c b/hw/virtio/vhost-user-spi-pc=
-i.c
-> new file mode 100644
-> index 0000000000..3565d526af
-> --- /dev/null
-> +++ b/hw/virtio/vhost-user-spi-pci.c
-> @@ -0,0 +1,69 @@
-> +/*
-> + * Vhost-user spi virtio device PCI glue
-> + *
-> + * Copyright(c) 2024 Qualcomm Innovation Center, Inc. All Rights Reserve=
-d.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/virtio/vhost-user-spi.h"
-> +#include "hw/virtio/virtio-pci.h"
-> +
-> +struct VHostUserSPIPCI {
-> +    VirtIOPCIProxy parent_obj;
-> +    VHostUserSPI vdev;
-> +};
-> +
-> +typedef struct VHostUserSPIPCI VHostUserSPIPCI;
-> +
-> +#define TYPE_VHOST_USER_SPI_PCI "vhost-user-spi-pci-base"
-> +
-> +DECLARE_INSTANCE_CHECKER(VHostUserSPIPCI, VHOST_USER_SPI_PCI,
-> +                         TYPE_VHOST_USER_SPI_PCI)
-> +
-> +static void vhost_user_spi_pci_realize(VirtIOPCIProxy *vpci_dev, Error *=
-*errp)
-> +{
-> +    VHostUserSPIPCI *dev =3D VHOST_USER_SPI_PCI(vpci_dev);
-> +    DeviceState *vdev =3D DEVICE(&dev->vdev);
-> +
-> +    vpci_dev->nvectors =3D 1;
-> +    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-> +}
-> +
-> +static void vhost_user_spi_pci_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +    VirtioPCIClass *k =3D VIRTIO_PCI_CLASS(klass);
-> +    PCIDeviceClass *pcidev_k =3D PCI_DEVICE_CLASS(klass);
-> +    k->realize =3D vhost_user_spi_pci_realize;
-> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-> +    pcidev_k->vendor_id =3D PCI_VENDOR_ID_REDHAT_QUMRANET;
-> +    pcidev_k->device_id =3D 0; /* Set by virtio-pci based on virtio id */
-> +    pcidev_k->revision =3D 0x00;
-> +    pcidev_k->class_id =3D PCI_CLASS_COMMUNICATION_OTHER;
-> +}
-> +
-> +static void vhost_user_spi_pci_instance_init(Object *obj)
-> +{
-> +    VHostUserSPIPCI *dev =3D VHOST_USER_SPI_PCI(obj);
-> +
-> +    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
-> +                                TYPE_VHOST_USER_SPI);
-> +}
-> +
-> +static const VirtioPCIDeviceTypeInfo vhost_user_spi_pci_info =3D {
-> +    .base_name =3D TYPE_VHOST_USER_SPI_PCI,
-> +    .non_transitional_name =3D "vhost-user-spi-pci",
-> +    .instance_size =3D sizeof(VHostUserSPIPCI),
-> +    .instance_init =3D vhost_user_spi_pci_instance_init,
-> +    .class_init =3D vhost_user_spi_pci_class_init,
-> +};
-> +
-> +static void vhost_user_spi_pci_register(void)
-> +{
-> +    virtio_pci_types_register(&vhost_user_spi_pci_info);
-> +}
-> +
-> +type_init(vhost_user_spi_pci_register);
-> diff --git a/hw/virtio/vhost-user-spi.c b/hw/virtio/vhost-user-spi.c
-> new file mode 100644
-> index 0000000000..e138b8b53b
-> --- /dev/null
-> +++ b/hw/virtio/vhost-user-spi.c
-> @@ -0,0 +1,66 @@
-> +/*
-> + * Vhost-user spi virtio device
-> + *
-> + * Copyright(c) 2024 Qualcomm Innovation Center, Inc. All Rights Reserve=
-d.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/virtio/virtio-bus.h"
-> +#include "hw/virtio/vhost-user-spi.h"
-> +#include "qemu/error-report.h"
-> +#include "standard-headers/linux/virtio_ids.h"
-> +#include "standard-headers/linux/virtio_spi.h"
-> +
-> +static Property vspi_properties[] =3D {
-> +    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-> +    DEFINE_PROP_END_OF_LIST(),
-> +};
-> +
-> +static void vspi_realize(DeviceState *dev, Error **errp)
-> +{
-> +    VHostUserBase *vub =3D VHOST_USER_BASE(dev);
-> +    VHostUserBaseClass *vubc =3D VHOST_USER_BASE_GET_CLASS(dev);
-> +
-> +    /* Fixed for SPI */
-> +    vub->virtio_id =3D VIRTIO_ID_SPI;
-> +    vub->num_vqs =3D 1;
-> +    vub->vq_size =3D 4;
-> +    vub->config_size =3D sizeof(struct virtio_spi_config);
-> +
-> +    vubc->parent_realize(dev, errp);
-> +}
-> +
-> +static const VMStateDescription vu_spi_vmstate =3D {
-> +    .name =3D "vhost-user-spi",
-> +    .unmigratable =3D 1,
-> +};
-> +
-> +static void vu_spi_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +    VHostUserBaseClass *vubc =3D VHOST_USER_BASE_CLASS(klass);
-> +
-> +    dc->vmsd =3D &vu_spi_vmstate;
-> +    device_class_set_props(dc, vspi_properties);
-> +    device_class_set_parent_realize(dc, vspi_realize,
-> +                                    &vubc->parent_realize);
-> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-> +}
-> +
-> +static const TypeInfo vu_spi_info =3D {
-> +    .name =3D TYPE_VHOST_USER_SPI,
-> +    .parent =3D TYPE_VHOST_USER_BASE,
-> +    .instance_size =3D sizeof(VHostUserSPI),
-> +    .class_init =3D vu_spi_class_init,
-> +};
-> +
-> +static void vu_spi_register_types(void)
-> +{
-> +    type_register_static(&vu_spi_info);
-> +}
-> +
-> +type_init(vu_spi_register_types)
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 583a224163..689e2e21e7 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -46,6 +46,7 @@
->  #include "standard-headers/linux/virtio_iommu.h"
->  #include "standard-headers/linux/virtio_mem.h"
->  #include "standard-headers/linux/virtio_vsock.h"
-> +#include "standard-headers/linux/virtio_spi.h"
->=20=20
->  /*
->   * Maximum size of virtio device config space
-> @@ -194,7 +195,8 @@ const char *virtio_device_names[] =3D {
->      [VIRTIO_ID_PARAM_SERV] =3D "virtio-param-serv",
->      [VIRTIO_ID_AUDIO_POLICY] =3D "virtio-audio-pol",
->      [VIRTIO_ID_BT] =3D "virtio-bluetooth",
-> -    [VIRTIO_ID_GPIO] =3D "virtio-gpio"
-> +    [VIRTIO_ID_GPIO] =3D "virtio-gpio",
-> +    [VIRTIO_ID_SPI] =3D "virtio-spi"
->  };
-
-
-For the vhost-user-stub bits when split from the headers:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
