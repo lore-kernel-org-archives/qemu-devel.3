@@ -4,90 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21851C54734
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 12:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31260C54734
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 12:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sivWf-000364-8p; Tue, 27 Aug 2024 08:42:21 -0400
+	id 1sivYO-0008Ei-NY; Tue, 27 Aug 2024 08:44:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sivWa-00035R-Sb
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 08:42:16 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sivWV-0000ZS-1C
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 08:42:14 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7143ae1b48fso3123736b3a.1
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 05:42:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724762526; x=1725367326; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+RCOx7NhJxT+21DYhDzE/U/IJYE0PUzrNMq1dTUiz4U=;
- b=OYQI3gUoQs874xuD/Km+4ilxPr+h7uheMusHb1cOuyyeoRVQjoB85ras5wd0MmvKci
- CQDaW/sISu5x2l+L+cQ2+h7yCTCqqNBIXo0qBJOv94fe6rxU69AEeuEexLyDDw4TObzg
- ss6E4eCZzIJCJjSTwEeNT/djVZWbYCpFGNxjzrW75l0U6UY/Qn0mD/iFXDI3WyvyuZUd
- 3kCRFeZeq7MQotPaA7kizWZ369q0PHXMGDMoVx7LjrmKM/p+exLuAPKylw06F5xrsDZL
- ALi5Z6FpJcKdclfTHNkzH851s+nOMAYv+/XqXUxnnUHcUZRUT0pX/LinGTzAYn4OSq/n
- Alxw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sivYL-000885-BH
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 08:44:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sivYJ-0000cX-Jm
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 08:44:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724762635;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=yoGLNZiM9A0mn4v4zsD8Kbq8BtIHH9mN4K7zVch9vYM=;
+ b=hf6ka+YIPG0BetL4wSDYpsQM9TfR3gn5WaSPB90jKLbOx+7CgGzmP5J4JvqPiYOzWSId9H
+ Sx3Y7ghGKWp1DkqYJEe4aDNzlL3lwMzwdRjrl75vam45LS8akvICBlRdaYQJ86zrjqyQxZ
+ kxhlB9RaLQzq9hFl/n/hnvEMfbkRdV4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-622-u2-wBwyCN22oq7fkOeW5Zw-1; Tue, 27 Aug 2024 08:43:53 -0400
+X-MC-Unique: u2-wBwyCN22oq7fkOeW5Zw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3718eb22836so3506358f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 05:43:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724762526; x=1725367326;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+RCOx7NhJxT+21DYhDzE/U/IJYE0PUzrNMq1dTUiz4U=;
- b=d3T5Hb9HEI4gCNZbpFRZqbLhtL3NeaqhvgL7JgW0XLG+3USIfQwP6OVV8MJAjqwys2
- 6L85jZG6YaFx8cehjcisk0tHTHPPmQLK8KNKbJarnfiE48IpzGTj3e+aVtlvcaBaSiRS
- Kowm9jTma5vmnf4ZSuNtEClAeg42UZzuLIzPFGFE48SVK46aPgV3HtFQpWhoOoOG3Wus
- GO5RIOg3xM2x3ueCOo0WrpYNijXRfSWke7iVZfEZJXRH6j0Vbjh9fA4L6XZLvWuQbVKU
- 8wwEpw8hOshfGv2EIxGJwx/lTAWhSsokL5Zi6oFaC6CyBqsL83l8wr9HUqULUOPJnk+Q
- CmVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUI/wDfWMRUS/UJewqnJB9NtIrp+uju6megSKHAgqQztWWqib5b0OVwHYtb1Zi75E9uP6DvAMyJPy53@nongnu.org
-X-Gm-Message-State: AOJu0Yxk3rFDs1/tAd5YyMrDlwulgm1ZZIFxwVVBHh85dPpQaR5CkYkk
- WWnvNdIbORMARg2Oil8+yKoAsy59D82xRu5RY3lz9j3SzqfjyCX0r3LELx4pQPZn4FM914rm3Tb
- u
-X-Google-Smtp-Source: AGHT+IEyB586Fgg9HwguT0VKSlQXVIfpVsvWMB3tVWju8+yKf1a8ivTVs49w3uvBSRgI2PQql9Pt8w==
-X-Received: by 2002:a05:6a00:2395:b0:714:37ca:ed72 with SMTP id
- d2e1a72fcca58-71445d32c5amr13004277b3a.10.1724762526160; 
- Tue, 27 Aug 2024 05:42:06 -0700 (PDT)
-Received: from ?IPv6:2804:7f0:b400:bb79:4bdf:de43:1f6c:1151?
- ([2804:7f0:b400:bb79:4bdf:de43:1f6c:1151])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-714342732b5sm8727852b3a.92.2024.08.27.05.42.04
+ d=1e100.net; s=20230601; t=1724762632; x=1725367432;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yoGLNZiM9A0mn4v4zsD8Kbq8BtIHH9mN4K7zVch9vYM=;
+ b=WYIdx5aCYELn0MS6AORVhTdo0gGAAwkFerCOoH/o5jBp0B4R0XajanslG2b5/NKiyg
+ 3AypURb1SEXsfcRIDYcVdPtyUKu604g+vtaWPjp2+VW7c25lDd9RQshcreFYq1KjgPGo
+ Ha8bRUloVSJ5DQQeplNGWH2W6vk8gekFOd1/gyC5Znx2wtH3p5+DJ24L+Jvn1wN1C2VO
+ w+7xwEfXFyTbi/ejTpF0VL3d5pNz0qF5xmXkW8bZAf5QWYghRaniobotxBrKQ9YQImwM
+ QcKHGGhZpljHO0OFwbyY/PgCmpBQSIG4e0VZlJqjuI6v85KOXs/e+4SrZKK0QrS3T/uY
+ +Cxw==
+X-Gm-Message-State: AOJu0YxCtgUryVLRnZZALJiIyr9bku9C2S3MnLBR3NsVG/+LewScomYv
+ bbCyIGyGnWDOLDj876NFlwUT5xri91Df/tInpTwWmo3KTxqqk8GbBa64yyUmnu0+mA0J8bDYw0g
+ R+b/AC9gu/nQ12krjtCpwuoejjmnd90ooL0G9S+hRCZbhOrdb8bT1
+X-Received: by 2002:adf:f547:0:b0:35f:d70:6193 with SMTP id
+ ffacd0b85a97d-373118c79d8mr7432319f8f.41.1724762632552; 
+ Tue, 27 Aug 2024 05:43:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8YP9rzvdiYjQgBvrDaxEXBWsTFyoz1EZ4dqbgiNx5PD9X5KB4Kt3MOPig6EBdjDGvxrZSiw==
+X-Received: by 2002:adf:f547:0:b0:35f:d70:6193 with SMTP id
+ ffacd0b85a97d-373118c79d8mr7432306f8f.41.1724762632054; 
+ Tue, 27 Aug 2024 05:43:52 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-179-35.web.vodafone.de.
+ [109.43.179.35]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3730813c536sm13200541f8f.36.2024.08.27.05.43.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 05:42:05 -0700 (PDT)
-Subject: Re: [PATCH v3 4/4] tests/tcg/aarch64: Extend MTE gdbstub tests to
- system mode
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: peter.maydell@linaro.org
-References: <20240825145208.46774-1-gustavo.romero@linaro.org>
- <20240825145208.46774-5-gustavo.romero@linaro.org>
- <64200fe4-b824-4903-b5f5-fc48c9e00945@linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <69229d7b-15d5-feda-ee4b-1c48992297f3@linaro.org>
-Date: Tue, 27 Aug 2024 09:42:02 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ Tue, 27 Aug 2024 05:43:51 -0700 (PDT)
+Message-ID: <831d48a9-46f6-4504-a65a-ea54bfcd593b@redhat.com>
+Date: Tue, 27 Aug 2024 14:43:50 +0200
 MIME-Version: 1.0
-In-Reply-To: <64200fe4-b824-4903-b5f5-fc48c9e00945@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] pc-bios/s390-ccw: Merge the netboot loader into
+ s390-ccw.img
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20240621082422.136217-1-thuth@redhat.com>
+ <fbe8a4cb-e33a-4aac-aa00-1ccbd1eb7326@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.192,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <fbe8a4cb-e33a-4aac-aa00-1ccbd1eb7326@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,83 +147,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil!
-
-On 8/26/24 3:10 AM, Philippe Mathieu-Daudé wrote:
-> Hi Gustavo,
+On 26/08/2024 19.07, Jared Rossi wrote:
+> Hi Thomas,
 > 
-> On 25/8/24 16:52, Gustavo Romero wrote:
->> Extend MTE gdbstub tests to also run in system mode (share tests between
->> user mode and system mode). The tests will only run if a version of GDB
->> that supports MTE on baremetal is available in the test environment and
->> if available compiler supports the 'memtag' flag
->> (-march=armv8.5-a+memtag).
->>
->> For the tests running in system mode, a page that supports MTE ops. is
->> necessary. Therefore, an MTE-enabled page is made available (mapped) in
->> the third 2 MB chunk of the second 1 GB space in the flat mapping set in
->> boot.S. A new binary, mte.S, is also introduced for the tests. It links
->> against boot.S and is executed by QEMU in system mode.
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   configure                                 |   5 +
->>   tests/tcg/aarch64/Makefile.softmmu-target |  49 +++++++++-
->>   tests/tcg/aarch64/Makefile.target         |   3 +-
->>   tests/tcg/aarch64/gdbstub/test-mte.py     |  71 +++++++++-----
->>   tests/tcg/aarch64/system/boot.S           |  11 +++
->>   tests/tcg/aarch64/system/kernel.ld        |   7 ++
->>   tests/tcg/aarch64/system/mte.S            | 109 ++++++++++++++++++++++
->>   7 files changed, 227 insertions(+), 28 deletions(-)
->>   create mode 100644 tests/tcg/aarch64/system/mte.S
+> I just wanted to get your thoughts on the status of the netboot loader merge.
+> I see that the first patch from this series was merged, but not the others. Is
+> there any issue with the rest of the changes?
+
+  Hi Jared,
+
+there's no issue with that patch series - it's just that QEMU is in freeze 
+now and only accepts bug fixes. See https://wiki.qemu.org/Planning/9.1
+
+> I would like to put together a comprehensive rework for all device types that
+> replaces the IPL panics with returns, but as we discussed this is best applied
+> after the netboot loader has been unified with the main s390-ccw.img file.
 > 
-> 
->> diff --git a/tests/tcg/aarch64/system/kernel.ld b/tests/tcg/aarch64/system/kernel.ld
->> index 7b3a76dcbf..46f1092522 100644
->> --- a/tests/tcg/aarch64/system/kernel.ld
->> +++ b/tests/tcg/aarch64/system/kernel.ld
->> @@ -18,6 +18,13 @@ SECTIONS
->>       .bss : {
->>           *(.bss)
->>       }
->> +    /*
->> +     * Align the MTE page to the next 2mb boundary (i.e., the third 2mb chunk
->> +     * starting from 1gb) by setting the address for symbol 'mte_page', which is
->> +     * used in boot.S to setup the PTE and in the mte.S test as the address that
->> +     * the MTE instructions operate on.
->> +     */
->> +    mte_page = ALIGN(1 << 22);
-> 
-> Comment says 2MiB but you use 4MiB.
-> Matter of taste, 2MiB is easier to review as:
-> 
->        mte_page = ALIGN(2 << 20);
->
+> I can base my patches on either current master (with a special case for 
+> netboot)
+> or the combined bootloader, depending on how you would like to proceed. Let me
+> know if there is anything I can do to help with test/review of the changes from
+> your side.
 
-This is incorrect. Aligning here at 2MiB will clash with r/w data section. I tried to
-clarify it when I wrote "[...] third 2mb chunk starting from 1gb". The memory layout
-so is:
+I think it's maybe best if you'd include my patches at the top of your patch 
+series, so you could also rework them in case you need something to be 
+changed there. That way, we also do not have to rebuild the binaries in the 
+git repo multiple times and just have to update them one time once your 
+series is ready to go.
 
-0         ---- 1GiB range: avoid/skipped
-1GiB      ---- 1GiB+2MiB (1st 2MiB chunk): text
-1GiB+2MiB ---- 1GiB+4MiB (2nd 2MiB chunk): data
-1GiB+4MIB ---- 1GiB+8MiB (3rd 2MiB chunk): MTE-enabled page
+Alternatively, if you don't want to juggle with my patches, I can also try 
+to get them merged as soon as QEMU 9.1 has been released. Just let me know 
+if you prefer that.
 
-ALIGN implicitly uses "." (current position), so we're defining consecutive sections
-here starting from 1GiB.
+  Thomas
 
-All the other parts of the code uses the 1 << n form, which I prefer, specially when
-reading asm code, so I prefer 1 << 22 instead of 4 << 20.
-
-But apparently my comment failed miserable to explain the situation here, so I'm
-happy to change the wording to make it clearer if you have any suggestion.
-
-
-Cheers,
-Gustavo
-
->>       /DISCARD/ : {
->>           *(.ARM.attributes)
->>       }
-> 
 
