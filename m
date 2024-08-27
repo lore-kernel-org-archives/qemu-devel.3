@@ -4,49 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C13D5C54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9142AC54734
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj0Q5-0005ns-EN; Tue, 27 Aug 2024 13:55:53 -0400
+	id 1sj0RV-0004fP-7y; Tue, 27 Aug 2024 13:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sj0Px-0005FF-20
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:55:45 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj0RO-0003xi-6r
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:57:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sj0Pl-0001Zc-3H
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:55:44 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1sj0PX-0002MW-Nt; Tue, 27 Aug 2024 19:55:19 +0200
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Peter Xu <peterx@redhat.com>,
-	Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 05/17] thread-pool: Implement non-AIO (generic) pool support
-Date: Tue, 27 Aug 2024 19:54:24 +0200
-Message-ID: <54947c3a1df713f5b69d8296938f3da41116ffe0.1724701542.git.maciej.szmigiero@oracle.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <cover.1724701542.git.maciej.szmigiero@oracle.com>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj0RL-0001gr-94
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:57:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724781430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w0Xkki3rEimb5GJg6vpPo8ZJMo7SCoI3424WNvjsAUE=;
+ b=YIhVmnkZK9GZPPNGOng3Mdia6KNWia1Itoxu98WeQRB6wfrE8G1cuuPWNv00N7ia30IqqC
+ r4l/7i/4ApwS1OY7E+s8zr9GTajoFGaLa6fcjyXAUQBDQqx9ma+I2bjhPdHU1TGx2KFb3Q
+ bOHtRpcAX/HbJWoD7JOesFSJWqTp2J4=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-237-J22USouJNB6qVARQqETWzQ-1; Tue, 27 Aug 2024 13:57:08 -0400
+X-MC-Unique: J22USouJNB6qVARQqETWzQ-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3d228774f59so541945b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 10:57:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724781427; x=1725386227;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w0Xkki3rEimb5GJg6vpPo8ZJMo7SCoI3424WNvjsAUE=;
+ b=sXV4irmccLidSL9sZRFcrB/io3h9BmeQ3eSYv4tsnIuHZ1nTyBisf9xc5mxfFCrg+J
+ 5jdMs6dSSsc48xRY8gXT98dPraTUmQWwoorvoy2Xtfo8yoI1QaiKqGf628q6KsGNy569
+ BdX1+jjhMszU03RnvrI5WExhZgRkAB5NxmoY9PIALT2sM+hFXJAZnHPmVyBJU0O+UK/n
+ +W7PQzodFd/c9D6noIMycA1pFSqgAmMNurb+OgvIc1binwa5ZrszWXe6RYlj0nKstanS
+ GFPJ302Z5ekemfzLtEDnFD6K8aJH4XKPHgLyaCAuH3UXgBR2CAlCoo4ce2hdnq9e7xND
+ WOnw==
+X-Gm-Message-State: AOJu0YxNLUgRF6YOFxPCKnK+ep4bPa3Hgekub9P/mvNOLkRlca1Ed3Dz
+ T5/N00TQN9OtG20dB3G2dvx+kTeFk7Fva2endbkgyiKlKcxpjIyE5OfuDSkAnue32RxNOwKDl5L
+ 9+h8Y3ufZ6cH9s8BV7vzpe88Zy2hsUUOJDsodeLTqAgNK4PD6gvw0
+X-Received: by 2002:a05:6808:2384:b0:3d9:3b45:f56b with SMTP id
+ 5614622812f47-3defed136a9mr5695b6e.12.1724781427417; 
+ Tue, 27 Aug 2024 10:57:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQSFwXsE92DlcXXEr39CnSUVD7IaFUIYaJ3IgXIhq4VaIZCGOC06qrb5KmobtpFbcYQMLIPg==
+X-Received: by 2002:a05:6808:2384:b0:3d9:3b45:f56b with SMTP id
+ 5614622812f47-3defed136a9mr5690b6e.12.1724781427112; 
+ Tue, 27 Aug 2024 10:57:07 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3de225c532fsm2602497b6e.43.2024.08.27.10.57.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 10:57:06 -0700 (PDT)
+Date: Tue, 27 Aug 2024 13:57:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v1] softmmu/physmem: fix memory leak in
+ dirty_memory_extend()
+Message-ID: <Zs4TcHvfwhBFSWvQ@x1n>
+References: <20240827083715.257768-1-david@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240827083715.257768-1-david@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -65,229 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On Tue, Aug 27, 2024 at 10:37:15AM +0200, David Hildenbrand wrote:
+>  /* Called with ram_list.mutex held */
+> -static void dirty_memory_extend(ram_addr_t old_ram_size,
+> -                                ram_addr_t new_ram_size)
+> +static void dirty_memory_extend(ram_addr_t new_ram_size)
+>  {
+> -    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
+> -                                             DIRTY_MEMORY_BLOCK_SIZE);
+>      ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
+>                                               DIRTY_MEMORY_BLOCK_SIZE);
+>      int i;
+>  
+> -    /* Only need to extend if block count increased */
+> -    if (new_num_blocks <= old_num_blocks) {
+> -        return;
+> -    }
 
-Migration code wants to manage device data sending threads in one place.
+One nitpick here: IMHO we could move the n_blocks cache in ram_list
+instead, then we keep the check here and avoid caching it three times with
+the same value.
 
-QEMU has an existing thread pool implementation, however it was limited
-to queuing AIO operations only and essentially had a 1:1 mapping between
-the current AioContext and the ThreadPool in use.
+> -
+>      for (i = 0; i < DIRTY_MEMORY_NUM; i++) {
+>          DirtyMemoryBlocks *old_blocks;
+>          DirtyMemoryBlocks *new_blocks;
+> +        ram_addr_t old_num_blocks = 0;
+>          int j;
+>  
+>          old_blocks = qatomic_rcu_read(&ram_list.dirty_memory[i]);
+> +        if (old_blocks) {
+> +            old_num_blocks = old_blocks->num_blocks;
+> +
+> +            /* Only need to extend if block count increased */
+> +            if (new_num_blocks <= old_num_blocks) {
+> +                return;
+> +            }
+> +        }
 
-Implement what is necessary to queue generic (non-AIO) work on a ThreadPool
-too.
+-- 
+Peter Xu
 
-This brings a few new operations on a pool:
-* thread_pool_set_minmax_threads() explicitly sets the minimum and maximum
-thread count in the pool.
-
-* thread_pool_join() operation waits until all the submitted work requests
-have finished.
-
-* thread_pool_poll() lets the new thread and / or thread completion bottom
-halves run (if they are indeed scheduled to be run).
-It is useful for thread pool users that need to launch or terminate new
-threads without returning to the QEMU main loop.
-
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
- include/block/thread-pool.h   | 10 ++++-
- tests/unit/test-thread-pool.c |  2 +-
- util/thread-pool.c            | 77 ++++++++++++++++++++++++++++++-----
- 3 files changed, 76 insertions(+), 13 deletions(-)
-
-diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
-index b484c4780ea6..1769496056cd 100644
---- a/include/block/thread-pool.h
-+++ b/include/block/thread-pool.h
-@@ -37,9 +37,15 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
-                                    void *arg, GDestroyNotify arg_destroy,
-                                    BlockCompletionFunc *cb, void *opaque);
- int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
--void thread_pool_submit(ThreadPoolFunc *func,
--                        void *arg, GDestroyNotify arg_destroy);
-+BlockAIOCB *thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
-+                               void *arg, GDestroyNotify arg_destroy,
-+                               BlockCompletionFunc *cb, void *opaque);
- 
-+void thread_pool_join(ThreadPool *pool);
-+void thread_pool_poll(ThreadPool *pool);
-+
-+void thread_pool_set_minmax_threads(ThreadPool *pool,
-+                                    int min_threads, int max_threads);
- void thread_pool_update_params(ThreadPool *pool, struct AioContext *ctx);
- 
- #endif
-diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
-index e4afb9e36292..469c0f7057b6 100644
---- a/tests/unit/test-thread-pool.c
-+++ b/tests/unit/test-thread-pool.c
-@@ -46,7 +46,7 @@ static void done_cb(void *opaque, int ret)
- static void test_submit(void)
- {
-     WorkerTestData data = { .n = 0 };
--    thread_pool_submit(worker_cb, &data, NULL);
-+    thread_pool_submit(NULL, worker_cb, &data, NULL, NULL, NULL);
-     while (data.n == 0) {
-         aio_poll(ctx, true);
-     }
-diff --git a/util/thread-pool.c b/util/thread-pool.c
-index 69a87ee79252..2bf3be875a51 100644
---- a/util/thread-pool.c
-+++ b/util/thread-pool.c
-@@ -60,6 +60,7 @@ struct ThreadPool {
-     QemuMutex lock;
-     QemuCond worker_stopped;
-     QemuCond request_cond;
-+    QemuCond no_requests_cond;
-     QEMUBH *new_thread_bh;
- 
-     /* The following variables are only accessed from one AioContext. */
-@@ -73,6 +74,7 @@ struct ThreadPool {
-     int pending_threads; /* threads created but not running yet */
-     int min_threads;
-     int max_threads;
-+    size_t requests_executing;
- };
- 
- static void *worker_thread(void *opaque)
-@@ -107,6 +109,10 @@ static void *worker_thread(void *opaque)
-         req = QTAILQ_FIRST(&pool->request_list);
-         QTAILQ_REMOVE(&pool->request_list, req, reqs);
-         req->state = THREAD_ACTIVE;
-+
-+        assert(pool->requests_executing < SIZE_MAX);
-+        pool->requests_executing++;
-+
-         qemu_mutex_unlock(&pool->lock);
- 
-         ret = req->func(req->arg);
-@@ -118,6 +124,14 @@ static void *worker_thread(void *opaque)
- 
-         qemu_bh_schedule(pool->completion_bh);
-         qemu_mutex_lock(&pool->lock);
-+
-+        assert(pool->requests_executing > 0);
-+        pool->requests_executing--;
-+
-+        if (pool->requests_executing == 0 &&
-+            QTAILQ_EMPTY(&pool->request_list)) {
-+            qemu_cond_signal(&pool->no_requests_cond);
-+        }
-     }
- 
-     pool->cur_threads--;
-@@ -243,13 +257,16 @@ static const AIOCBInfo thread_pool_aiocb_info = {
-     .cancel_async       = thread_pool_cancel,
- };
- 
--BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
--                                   void *arg, GDestroyNotify arg_destroy,
--                                   BlockCompletionFunc *cb, void *opaque)
-+BlockAIOCB *thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
-+                               void *arg, GDestroyNotify arg_destroy,
-+                               BlockCompletionFunc *cb, void *opaque)
- {
-     ThreadPoolElement *req;
-     AioContext *ctx = qemu_get_current_aio_context();
--    ThreadPool *pool = aio_get_thread_pool(ctx);
-+
-+    if (!pool) {
-+        pool = aio_get_thread_pool(ctx);
-+    }
- 
-     /* Assert that the thread submitting work is the same running the pool */
-     assert(pool->ctx == qemu_get_current_aio_context());
-@@ -275,6 +292,18 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
-     return &req->common;
- }
- 
-+BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
-+                                   void *arg, GDestroyNotify arg_destroy,
-+                                   BlockCompletionFunc *cb, void *opaque)
-+{
-+    return thread_pool_submit(NULL, func, arg, arg_destroy, cb, opaque);
-+}
-+
-+void thread_pool_poll(ThreadPool *pool)
-+{
-+    aio_bh_poll(pool->ctx);
-+}
-+
- typedef struct ThreadPoolCo {
-     Coroutine *co;
-     int ret;
-@@ -297,18 +326,38 @@ int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg)
-     return tpc.ret;
- }
- 
--void thread_pool_submit(ThreadPoolFunc *func,
--                        void *arg, GDestroyNotify arg_destroy)
-+void thread_pool_join(ThreadPool *pool)
- {
--    thread_pool_submit_aio(func, arg, arg_destroy, NULL, NULL);
-+    /* Assert that the thread waiting is the same running the pool */
-+    assert(pool->ctx == qemu_get_current_aio_context());
-+
-+    qemu_mutex_lock(&pool->lock);
-+
-+    if (pool->requests_executing > 0 ||
-+        !QTAILQ_EMPTY(&pool->request_list)) {
-+        qemu_cond_wait(&pool->no_requests_cond, &pool->lock);
-+    }
-+    assert(pool->requests_executing == 0 &&
-+           QTAILQ_EMPTY(&pool->request_list));
-+
-+    qemu_mutex_unlock(&pool->lock);
-+
-+    aio_bh_poll(pool->ctx);
-+
-+    assert(QLIST_EMPTY(&pool->head));
- }
- 
--void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
-+void thread_pool_set_minmax_threads(ThreadPool *pool,
-+                                    int min_threads, int max_threads)
- {
-+    assert(min_threads >= 0);
-+    assert(max_threads > 0);
-+    assert(max_threads >= min_threads);
-+
-     qemu_mutex_lock(&pool->lock);
- 
--    pool->min_threads = ctx->thread_pool_min;
--    pool->max_threads = ctx->thread_pool_max;
-+    pool->min_threads = min_threads;
-+    pool->max_threads = max_threads;
- 
-     /*
-      * We either have to:
-@@ -330,6 +379,12 @@ void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
-     qemu_mutex_unlock(&pool->lock);
- }
- 
-+void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
-+{
-+    thread_pool_set_minmax_threads(pool,
-+                                   ctx->thread_pool_min, ctx->thread_pool_max);
-+}
-+
- static void thread_pool_init_one(ThreadPool *pool, AioContext *ctx)
- {
-     if (!ctx) {
-@@ -342,6 +397,7 @@ static void thread_pool_init_one(ThreadPool *pool, AioContext *ctx)
-     qemu_mutex_init(&pool->lock);
-     qemu_cond_init(&pool->worker_stopped);
-     qemu_cond_init(&pool->request_cond);
-+    qemu_cond_init(&pool->no_requests_cond);
-     pool->new_thread_bh = aio_bh_new(ctx, spawn_thread_bh_fn, pool);
- 
-     QLIST_INIT(&pool->head);
-@@ -382,6 +438,7 @@ void thread_pool_free(ThreadPool *pool)
-     qemu_mutex_unlock(&pool->lock);
- 
-     qemu_bh_delete(pool->completion_bh);
-+    qemu_cond_destroy(&pool->no_requests_cond);
-     qemu_cond_destroy(&pool->request_cond);
-     qemu_cond_destroy(&pool->worker_stopped);
-     qemu_mutex_destroy(&pool->lock);
 
