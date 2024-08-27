@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402C2C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 07:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33692C52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 07:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sir3h-0005t6-FY; Tue, 27 Aug 2024 03:56:11 -0400
+	id 1sir5K-00023c-Ur; Tue, 27 Aug 2024 03:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sir3d-0005rU-06; Tue, 27 Aug 2024 03:56:05 -0400
-Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
+ id 1sir5J-00022e-1e; Tue, 27 Aug 2024 03:57:49 -0400
+Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sir3a-0005Rd-HU; Tue, 27 Aug 2024 03:56:04 -0400
+ id 1sir5G-0005Wp-Gl; Tue, 27 Aug 2024 03:57:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1724745357; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=kOM2kfPVHlwMt/Z8RmOKJiT0RFoXXKwkLYjz65ONw+c=;
- b=WKHDZ19Ca1T7cyyAJdC2i97hVMCjVyNPwD7joFXRvLkqrAKQcd+G0pDeHC2zJHtJKsAuICjahq1Nrxcs1TMa8T/kIkHDGDOGUpnbSbnpc21FMj4IpyZbCdZFkWBR2yflZ4VjnqDkDOgrLW/16cILpVEhgrFlCasXplW9vyfKx/M=
+ t=1724745459; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=3Lsy9lUZAaIeOCpH0jqeh+jHQekCe5pYrM8s1Z3Zrko=;
+ b=wfVftSzlmwy4ZkJ5hLhnieSQtsSNd4Bamtm4536jP3mfIfj1/lcuek6U7rV6/l9jGVeJ1NOVG1c5GB5wi4r25Bly6G70OpbpuyZKWcGu7np3r+ptPLEoSiT6Rd/iNnFw6jash0C2SWsXbtNhmjBb7a1R+Ej40G8AxepVAncNoMI=
 Received: from 30.166.64.124(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WDlplsP_1724745355) by smtp.aliyun-inc.com;
- Tue, 27 Aug 2024 15:55:56 +0800
-Message-ID: <c7279e9e-c535-4860-a44d-b2a73a186e29@linux.alibaba.com>
-Date: Tue, 27 Aug 2024 15:55:21 +0800
+ fp:SMTPD_---0WDlsNbO_1724745457) by smtp.aliyun-inc.com;
+ Tue, 27 Aug 2024 15:57:38 +0800
+Message-ID: <efadadba-c3b6-4159-80f9-4094b875c671@linux.alibaba.com>
+Date: Tue, 27 Aug 2024 15:57:03 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 10/15] tcg/riscv: Implement vector not/neg ops
+Subject: Re: [PATCH v1 14/15] tcg/riscv: Implement vector roti/v/x shi ops
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
- <20240813113436.831-11-zhiwei_liu@linux.alibaba.com>
- <2c3fe80e-fe1c-49a3-aa4a-03749801e4ee@linaro.org>
+ <20240813113436.831-15-zhiwei_liu@linux.alibaba.com>
+ <d9a6dcfc-7ab0-4be7-b22d-21bb54710004@linaro.org>
 Content-Language: en-US
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <2c3fe80e-fe1c-49a3-aa4a-03749801e4ee@linaro.org>
+In-Reply-To: <d9a6dcfc-7ab0-4be7-b22d-21bb54710004@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.119;
+Received-SPF: pass client-ip=115.124.30.131;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-119.freemail.mail.aliyun.com
+ helo=out30-131.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,30 +70,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 2024/8/14 17:45, Richard Henderson wrote:
+On 2024/8/14 17:55, Richard Henderson wrote:
 > On 8/13/24 21:34, LIU Zhiwei wrote:
->> @@ -2312,6 +2314,12 @@ static void tcg_out_vec_op(TCGContext *s, 
->> TCGOpcode opc,
->>       case INDEX_op_xor_vec:
->>           tcg_out_opc_vv(s, OPC_VXOR_VV, a0, a1, a2, true);
->>           break;
->> +    case INDEX_op_not_vec:
->> +        tcg_out_opc_vi(s, OPC_VXOR_VI, a0, a1, -1, true);
->> +        break;
->> +    case INDEX_op_neg_vec:
->> +        tcg_out_opc_vx(s, OPC_VRSUB_VX, a0, a1, TCG_REG_ZERO, true);
->> +        break;
+>> +    case INDEX_op_shli_vec:
+>> +        if (a2 > 31) {
+>> +            t2 = tcg_temp_new_i32();
+>> +            tcg_gen_movi_i32(t2, (int32_t)a2);
+>> +            tcg_gen_shls_vec(vece, v0, v1, t2);
 >
-> Any reason not to use vrsub.vi?  Not wrong, just surprising.
-We will use vrsub.vi.
->
-> Obviously, NOT does not require SEW change.
-
+> Drop the movi, just pass tcg_constant_i32(a2) as the second source.
 OK.
-
+>
+>> +    case INDEX_op_rotls_vec:
+>> +        t1 = tcg_temp_new_vec(type);
+>> +        t2 = tcg_temp_new_i32();
+>> +        tcg_gen_sub_i32(t2, tcg_constant_i32(8 << vece),
+>> +                        temp_tcgv_i32(arg_temp(a2)));
+>> +        tcg_gen_shrs_vec(vece, v0, v1, t2);
+>
+> Only the low lg2(SEW) bits are used; you can just tcg_gen_neg_i32.
+Good idea.
+>
+>> +    case INDEX_op_rotlv_vec:
+>> +        v2 = temp_tcgv_vec(arg_temp(a2));
+>> +        t1 = tcg_temp_new_vec(type);
+>> +        c1 = tcg_constant_vec(type, vece, 8 << vece);
+>> +        tcg_gen_sub_vec(vece, t1, c1, v2);
+>
+> Likewise tcg_gen_neg_vec.
+>
+>> +    case INDEX_op_rotrv_vec:
+>> +        v2 = temp_tcgv_vec(arg_temp(a2));
+>> +        t1 = tcg_temp_new_vec(type);
+>> +        c1 = tcg_constant_vec(type, vece, 8 << vece);
+>> +        tcg_gen_sub_vec(vece, t1, c1, v2);
+>
+> Likewise.
 Thanks,
 Zhiwei
-
+>
 >
 > r~
 
