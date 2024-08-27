@@ -4,112 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E65C54734
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE19C54731
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj0HA-0001xU-08; Tue, 27 Aug 2024 13:46:40 -0400
+	id 1sj0HA-0001zG-Hf; Tue, 27 Aug 2024 13:46:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0H5-0001fN-7k
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:35 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0H8-0001qw-1y
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:38 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0H3-0000W7-3m
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:34 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0H6-0000Wd-Fp
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:37 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5C48121B1B;
- Tue, 27 Aug 2024 17:46:31 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 22B2C1FB7F;
+ Tue, 27 Aug 2024 17:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724780791; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1724780795; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ZzH6tbwU1tnRJepeYyskBXA12nUW4vAOqU+UVM33TM=;
- b=m5pD+mKOGBONnRfOE2TrOjN1qic6tIovLNlzrAxJ5G2VXzU2bzh49SLrFo4geHvQIkfrYp
- VaS13/t+NHcsgTQn2YXvZ5VNGRcolRM/GGW2goNe3pVqfXaKqPtPsb1+ixlfI5Ac5Zn61+
- HG3tuXoT7MS+zMVd4pSYCq/vBr87KYU=
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=LKMlzwDyuvnS9XcNPENJF+haNAA1AFJfnofOd2vKg5NBcmGlGSA6wWf/+ClMDkrKCSxUkV
+ ZlG7UzMax0APKpaY2JTyx8Kt+0eEzkt6FIM6/rWaSF0gnoIarn6LbkZYqI/NHXamKZxZkZ
+ I/x1tQkSlFO+XkW03k4PZo47OKa1XtU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724780791;
+ s=susede2_ed25519; t=1724780795;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ZzH6tbwU1tnRJepeYyskBXA12nUW4vAOqU+UVM33TM=;
- b=8SufnbwHkQfRyR/mEO5TYBnqDqnFs4nMddd1SIoEw4IOeh0DF2NLkQcKIvdSrEKU5v87Y7
- jgmlr2W/onNSUoDg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=m5pD+mKO;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8SufnbwH
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=sLxyCEvzYMPuYyUqkASbhKaE0x2nLT71bnM099BOmziE1auTRR5xQ93BXXi3rq0u3GZGcn
+ meHkAqw8g1YqDNBg==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724780791; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1724780795; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ZzH6tbwU1tnRJepeYyskBXA12nUW4vAOqU+UVM33TM=;
- b=m5pD+mKOGBONnRfOE2TrOjN1qic6tIovLNlzrAxJ5G2VXzU2bzh49SLrFo4geHvQIkfrYp
- VaS13/t+NHcsgTQn2YXvZ5VNGRcolRM/GGW2goNe3pVqfXaKqPtPsb1+ixlfI5Ac5Zn61+
- HG3tuXoT7MS+zMVd4pSYCq/vBr87KYU=
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=LKMlzwDyuvnS9XcNPENJF+haNAA1AFJfnofOd2vKg5NBcmGlGSA6wWf/+ClMDkrKCSxUkV
+ ZlG7UzMax0APKpaY2JTyx8Kt+0eEzkt6FIM6/rWaSF0gnoIarn6LbkZYqI/NHXamKZxZkZ
+ I/x1tQkSlFO+XkW03k4PZo47OKa1XtU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724780791;
+ s=susede2_ed25519; t=1724780795;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ZzH6tbwU1tnRJepeYyskBXA12nUW4vAOqU+UVM33TM=;
- b=8SufnbwHkQfRyR/mEO5TYBnqDqnFs4nMddd1SIoEw4IOeh0DF2NLkQcKIvdSrEKU5v87Y7
- jgmlr2W/onNSUoDg==
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=sLxyCEvzYMPuYyUqkASbhKaE0x2nLT71bnM099BOmziE1auTRR5xQ93BXXi3rq0u3GZGcn
+ meHkAqw8g1YqDNBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F0DBB13A20;
- Tue, 27 Aug 2024 17:46:29 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B6BBA13A29;
+ Tue, 27 Aug 2024 17:46:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mP9dLfUQzma+UAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 27 Aug 2024 17:46:29 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cAcZH/kQzma+UAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 27 Aug 2024 17:46:33 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 11/19] migration/multifd: Don't send ram data during SYNC
-Date: Tue, 27 Aug 2024 14:45:58 -0300
-Message-Id: <20240827174606.10352-12-farosas@suse.de>
+Subject: [PATCH v6 13/19] migration/multifd: Allow multifd sync without flush
+Date: Tue, 27 Aug 2024 14:46:00 -0300
+Message-Id: <20240827174606.10352-14-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240827174606.10352-1-farosas@suse.de>
 References: <20240827174606.10352-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 5C48121B1B
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -133,72 +120,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Skip saving and loading any ram data in the packet in the case of a
-SYNC. This fixes a shortcoming of the current code which requires a
-reset of the MultiFDPages_t fields right after the previous
-pending_job finishes, otherwise the very next job might be a SYNC and
-multifd_send_fill_packet() will put the stale values in the packet.
+Separate the multifd sync from flushing the client data to the
+channels. These two operations are closely related but not strictly
+necessary to be executed together.
 
-By not calling multifd_ram_fill_packet(), we can stop resetting
-MultiFDPages_t in the multifd core and leave that to the client code.
+The multifd sync is intrinsic to how multifd works. The multiple
+channels operate independently and may finish IO out of order in
+relation to each other. This applies also between the source and
+destination QEMU.
 
-Actually moving the reset function is not yet done because
-pages->num==0 is used by the client code to determine whether the
-MultiFDPages_t needs to be flushed. The subsequent patches will
-replace that with a generic flag that is not dependent on
-MultiFDPages_t.
+Flushing the data that is left in the client-owned data structures
+(e.g. MultiFDPages_t) prior to sync is usually the right thing to do,
+but that is particular to how the ram migration is implemented with
+several passes over dirty data.
+
+Make these two routines separate, allowing future code to call the
+sync by itself if needed. This also allows the usage of
+multifd_ram_send to be isolated to ram code.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ migration/multifd.c | 13 +++++++++----
+ migration/multifd.h |  1 +
+ migration/ram.c     |  8 ++++----
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index d64fcdf4ac..3a164c124d 100644
+index cb7a121eb0..ce08257706 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -452,6 +452,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+@@ -914,11 +914,8 @@ static int multifd_zero_copy_flush(QIOChannel *c)
+     return ret;
+ }
+ 
+-int multifd_send_sync_main(void)
++int multifd_ram_flush_and_sync(void)
  {
-     MultiFDPacket_t *packet = p->packet;
-     uint64_t packet_num;
-+    bool sync_packet = p->flags & MULTIFD_FLAG_SYNC;
+-    int i;
+-    bool flush_zero_copy;
+-
+     if (!migrate_multifd()) {
+         return 0;
+     }
+@@ -930,6 +927,14 @@ int multifd_send_sync_main(void)
+         }
+     }
  
-     memset(packet, 0, p->packet_len);
++    return multifd_send_sync_main();
++}
++
++int multifd_send_sync_main(void)
++{
++    int i;
++    bool flush_zero_copy;
++
+     flush_zero_copy = migrate_zero_copy_send();
  
-@@ -466,7 +467,9 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 5fa384d9af..00c872dfda 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -270,4 +270,5 @@ static inline uint32_t multifd_ram_page_count(void)
  
-     p->packets_sent++;
+ void multifd_ram_save_setup(void);
+ void multifd_ram_save_cleanup(void);
++int multifd_ram_flush_and_sync(void);
+ #endif
+diff --git a/migration/ram.c b/migration/ram.c
+index 1815b2557b..67ca3d5d51 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1326,7 +1326,7 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
+                 (!migrate_multifd_flush_after_each_section() ||
+                  migrate_mapped_ram())) {
+                 QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
+-                int ret = multifd_send_sync_main();
++                int ret = multifd_ram_flush_and_sync();
+                 if (ret < 0) {
+                     return ret;
+                 }
+@@ -3066,7 +3066,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+     }
  
--    multifd_ram_fill_packet(p);
-+    if (!sync_packet) {
-+        multifd_ram_fill_packet(p);
-+    }
+     bql_unlock();
+-    ret = multifd_send_sync_main();
++    ret = multifd_ram_flush_and_sync();
+     bql_lock();
+     if (ret < 0) {
+         error_setg(errp, "%s: multifd synchronization failed", __func__);
+@@ -3213,7 +3213,7 @@ out:
+         && migration_is_setup_or_active()) {
+         if (migrate_multifd() && migrate_multifd_flush_after_each_section() &&
+             !migrate_mapped_ram()) {
+-            ret = multifd_send_sync_main();
++            ret = multifd_ram_flush_and_sync();
+             if (ret < 0) {
+                 return ret;
+             }
+@@ -3285,7 +3285,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+         }
+     }
  
-     trace_multifd_send_fill(p->id, packet_num,
-                             p->flags, p->next_packet_size);
-@@ -574,7 +577,9 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-     p->packet_num = be64_to_cpu(packet->packet_num);
-     p->packets_recved++;
- 
--    ret = multifd_ram_unfill_packet(p, errp);
-+    if (!(p->flags & MULTIFD_FLAG_SYNC)) {
-+        ret = multifd_ram_unfill_packet(p, errp);
-+    }
- 
-     trace_multifd_recv_unfill(p->id, p->packet_num, p->flags,
-                               p->next_packet_size);
-@@ -1536,7 +1541,9 @@ static void *multifd_recv_thread(void *opaque)
-             flags = p->flags;
-             /* recv methods don't know how to handle the SYNC flag */
-             p->flags &= ~MULTIFD_FLAG_SYNC;
--            has_data = p->normal_num || p->zero_num;
-+            if (!(flags & MULTIFD_FLAG_SYNC)) {
-+                has_data = p->normal_num || p->zero_num;
-+            }
-             qemu_mutex_unlock(&p->mutex);
-         } else {
-             /*
+-    ret = multifd_send_sync_main();
++    ret = multifd_ram_flush_and_sync();
+     if (ret < 0) {
+         return ret;
+     }
 -- 
 2.35.3
 
