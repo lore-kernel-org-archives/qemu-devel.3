@@ -4,103 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 499CDC52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 04:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FA5C52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 04:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sinbj-0002Ar-Gv; Tue, 27 Aug 2024 00:15:03 -0400
+	id 1sincN-0004MB-DK; Tue, 27 Aug 2024 00:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sinbi-00028W-8G
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:15:02 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sincK-00048N-Vd; Tue, 27 Aug 2024 00:15:41 -0400
+Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sinbf-0007YK-Py
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:15:01 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-715c160e231so424056b3a.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 21:14:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sincI-0007qU-Bq; Tue, 27 Aug 2024 00:15:40 -0400
+Received: by mail-vs1-xe33.google.com with SMTP id
+ ada2fe7eead31-498debdf653so1735984137.1; 
+ Mon, 26 Aug 2024 21:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724732098; x=1725336898;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gqHqJgbZo0KivzNdU2q5jwvgD2jxYYEOXuDIiJYz5Ow=;
- b=iig2qPxJYPYm8MPoMMl8LQMXG4KWRLeZ4oYfTu3NI6rYr5CCtHNj3qjGqCcH6XnJro
- KXeFk6eZQ+sq+bXbhxtf+1GWyPY8gu+iXInTDKsayb5/HVhI2Zb+C7hGNAJmA+/db/34
- Htwr5JXZtHUCMFZPxIydYwDJJ6IBFn5lkFUYkruWZ0HHIKlPoHvzGMvRORSkpOpQqL9L
- 7ci4hYtYMhP038xjBQ1i0Id9MZacULV2V7vk95aDP20BTYm1T4KbXBlDcLZ34WXA2RMZ
- yHPqjSBiNG9FZZCHpRzx+wvXezFx8N86lhVBGKuDoaQtaKLPYQs1uhDxFB6yzb1JjJ/h
- ehRw==
+ d=gmail.com; s=20230601; t=1724732136; x=1725336936; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sjvSzCBL+Kn+8YKPSPu9q9Hzr6T578Nltsb5vjwLkLw=;
+ b=G6aI7MRO2CII0WWvoLM4/ZQ8Q6fpCw2XHRiDNBrOF6OXDfg07fkPLQt+iBmE3BK8RF
+ S4wB2HoO9/MvG3iTKZYxaanTl9on4TBFdFmxKmSj45wr1x7JTvzksVd2JVEKPzoX9q68
+ i8e/V5oV2FHz94h+FZvb1OWT5jHRAoUOK0FlU0C4QwTK9lC6XvwL4SNGZDlpB3LtKz9u
+ AhVEWlHyN8mS6x74yggTk/LaCla3GQuEb5zSwbFLZ2RfF39KF+TwFNmARBgLmbS5IhSv
+ 4RUmQg6xijFtfDkdw6H+/FF/PvEBDraGzY7GKhwWQPBLUeonxkHaNt9eT2cnRF27yhzz
+ yx1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724732098; x=1725336898;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gqHqJgbZo0KivzNdU2q5jwvgD2jxYYEOXuDIiJYz5Ow=;
- b=hLVKJCdbYFrGEHbhAyK92SdIbmt5uxYaSpNKWtIBuXfH0J1qS2Kp4F97/94XCuoQXk
- hkccBWfgt4hPN+fFV/PlcFM+Vk6bjhCRaB/DYe8WW99hMXE0s6PGgh786rywZnZyJWu6
- SYKhH7EDMXkeqxy9DS4Z/vLrfkWoO80y+ltsh6YuAdUudgNDA6IuG/ClngaiIi5kfGwx
- LXz424QOobEH7rA32kG+DcCgmd075IYWwZ5jGdkqu4rfaXij9+hqjTD8rg3m75Eayq/P
- EYNOq7uxmQcsYevBuGYxk2H5c1GQOWO+x6e5l5UsvMTT8vh4WsuxsTLLpkt4+suMvlfH
- vR1g==
+ d=1e100.net; s=20230601; t=1724732136; x=1725336936;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sjvSzCBL+Kn+8YKPSPu9q9Hzr6T578Nltsb5vjwLkLw=;
+ b=eP/QoKtr/1iuP6aBG3Y0FYjYD5wV+tzINuNhLAwTSOo5kjyr7JU3BluAUPvy8lQm/m
+ Wttcre8OS0r2fNnKZU1uk7Ymem7s8MGMQKSO+gsTLz4IWq/j1417sw9xAXSucnWlMk6r
+ lfXNAprze4xAsIAB6Fq2trxX+GZ1ivwtiZcT0zmWxMi7UNAx/78a8LDj7PmxxeHXvpSV
+ f6bc5SocoPm25iZeJZOPwn+z0jUs0TMQXO7p9Mg6RnITjABN/zC0KGjmlGd0b8bW8hwc
+ R17cmZ1FaKCCAf+EnJF1LRxGsObb6I3Ct6XYVDJRYWPq2hqykbIhCqPlrs5uXKmnZjxT
+ n0qw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3uju8DLa+cVBrQwA8EaOfF5v61Bu3rW3O+TcPNRF/H5AC266SweGzUi7NpVSHZh0c3Yoy1wZcbccd@nongnu.org
-X-Gm-Message-State: AOJu0Yxqq8vZEBH2SmpaPoyazJ7noyon4D46oKWuspbPEl6ib/uIrQy2
- ECsGlZj793FY2E2QhUxn+0DlPS6oYSus4SbN6RrYn6DPSeyM/2j8sD8UPQP4i8vBZK2tusB2ajj
- I+kg=
-X-Google-Smtp-Source: AGHT+IEX+vktriqedvW77C7o2NsHfmlTbtnnhXhPVKaFNYcPaGe6FADrQc8GrAK/fmY7ZTpbq+TtWg==
-X-Received: by 2002:a05:6a00:3cd1:b0:714:2533:1b82 with SMTP id
- d2e1a72fcca58-714458667a7mr13972730b3a.23.1724732097878; 
- Mon, 26 Aug 2024 21:14:57 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71434231362sm8025850b3a.11.2024.08.26.21.14.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 21:14:57 -0700 (PDT)
-Message-ID: <161cb8ff-1479-4fc4-8803-d665e757007a@daynix.com>
-Date: Tue, 27 Aug 2024 13:14:51 +0900
+ AJvYcCUOsiJrLOMAXk355USG65L72o3wdfdW1Kf9gntM4cazrNzwykKbZgXuqP0TKi7PlARD7JcbTFnfJyJe@nongnu.org
+X-Gm-Message-State: AOJu0Yx3fXgMTTMx2N0nIRzmvXE0zCxmfEs4et7LA4YUjodwH10N8rl0
+ vcgxWh8nD+akrKHD7kJIgnC2xDQKHmqhVHuqA5M7oGFbjm8qxttK4tnBnqQIeus/T6LpZwhVUKH
+ BLzLzKJFeXuOVlxAO9V2ekyqL8HN6rQy70gU=
+X-Google-Smtp-Source: AGHT+IFzuSEMcRr6qMFOadVdQABSQswD5esy/OtiE0xwg3XbdHGiGFXVtcZLM7GRNqsDn7rAobc8ZGpSZ34B6LxBceE=
+X-Received: by 2002:a05:6102:3583:b0:48f:3df9:ff9 with SMTP id
+ ada2fe7eead31-498f454d6e6mr15758622137.8.1724732136490; Mon, 26 Aug 2024
+ 21:15:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/7] memory: Do not create circular reference with
- subregion
-To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
- <20240823-san-v4-6-a24c6dfa4ceb@daynix.com> <Zsydli9ME1u79A9X@x1n>
- <CAFEAcA_uT3Db22V=Anqci_k6zOaAV7Qua2S1OVFxW_DQyh3bAA@mail.gmail.com>
- <Zszain3SH5cl9ohH@x1n>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <Zszain3SH5cl9ohH@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::434;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x434.google.com
+References: <20240826152949.294506-1-debug@rivosinc.com>
+ <20240826152949.294506-8-debug@rivosinc.com>
+In-Reply-To: <20240826152949.294506-8-debug@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 27 Aug 2024 14:15:10 +1000
+Message-ID: <CAKmqyKN=JVVEDHbN+4Dw-O1KK--mMA4x46QDOK2jXS1P8eM+bw@mail.gmail.com>
+Subject: Re: [PATCH v9 07/17] disas/riscv: enable `lpad` disassembly
+To: Deepak Gupta <debug@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, 
+ andy.chiu@sifive.com, richard.henderson@linaro.org, kito.cheng@sifive.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe33.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,118 +94,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/27 4:42, Peter Xu wrote:
-> On Mon, Aug 26, 2024 at 06:10:25PM +0100, Peter Maydell wrote:
->> On Mon, 26 Aug 2024 at 16:22, Peter Xu <peterx@redhat.com> wrote:
->>>
->>> On Fri, Aug 23, 2024 at 03:13:11PM +0900, Akihiko Odaki wrote:
->>>> memory_region_update_container_subregions() used to call
->>>> memory_region_ref(), which creates a reference to the owner of the
->>>> subregion, on behalf of the owner of the container. This results in a
->>>> circular reference if the subregion and container have the same owner.
->>>>
->>>> memory_region_ref() creates a reference to the owner instead of the
->>>> memory region to match the lifetime of the owner and memory region. We
->>>> do not need such a hack if the subregion and container have the same
->>>> owner because the owner will be alive as long as the container is.
->>>> Therefore, create a reference to the subregion itself instead ot its
->>>> owner in such a case; the reference to the subregion is still necessary
->>>> to ensure that the subregion gets finalized after the container.
->>>>
->>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>> ---
->>>>   system/memory.c | 8 ++++++--
->>>>   1 file changed, 6 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/system/memory.c b/system/memory.c
->>>> index 5e6eb459d5de..e4d3e9d1f427 100644
->>>> --- a/system/memory.c
->>>> +++ b/system/memory.c
->>>> @@ -2612,7 +2612,9 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
->>>>
->>>>       memory_region_transaction_begin();
->>>>
->>>> -    memory_region_ref(subregion);
->>>> +    object_ref(mr->owner == subregion->owner ?
->>>> +               OBJECT(subregion) : subregion->owner);
->>>
->>> The only place that mr->refcount is used so far is the owner with the
->>> object property attached to the mr, am I right (ignoring name-less MRs)?
->>>
->>> I worry this will further complicate refcounting, now we're actively using
->>> two refcounts for MRs..
+On Tue, Aug 27, 2024 at 1:32=E2=80=AFAM Deepak Gupta <debug@rivosinc.com> w=
+rote:
+>
+> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> Co-developed-by: Jim Shu <jim.shu@sifive.com>
+> Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-The actor of object_ref() is the owner of the memory region also in this 
-case. We are calling object_ref() on behalf of mr->owner so we use 
-mr->refcount iff mr->owner == subregion->owner. In this sense there is 
-only one user of mr->refcount even after this change.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
->>>
->>> Continue discussion there:
->>>
->>> https://lore.kernel.org/r/067b17a4-cdfc-4f7e-b7e4-28c38e1c10f0@daynix.com
->>>
->>> What I don't see is how mr->subregions differs from mr->container, so we
->>> allow subregions to be attached but not the container when finalize()
->>> (which is, afaict, the other way round).
->>>
->>> It seems easier to me that we allow both container and subregions to exist
->>> as long as within the owner itself, rather than start heavier use of
->>> mr->refcount.
->>
->> I don't think just "same owner" necessarily will be workable --
->> you can have a setup like:
->>    * device A has a container C_A
->>    * device A has a child-device B
->>    * device B has a memory region R_B
->>    * device A's realize method puts R_B into C_A
->>
->> R_B's owner is B, and the container's owner is A,
->> but we still want to be able to get rid of A (in the process
->> getting rid of B because it gets unparented and unreffed,
->> and R_B and C_A also).
-> 
-> For cross-device references, should we rely on an explicit call to
-> memory_region_del_subregion(), so as to detach the link between C_A and
-> R_B?
+Alistair
 
-Yes, I agree.
-
-> 
-> My understanding so far: logically when MR finalize() it should guarantee
-> both (1) mr->container==NULL, and (2) mr->subregions empty.  That's before
-> commit 2e2b8eb70fdb7dfb and could be the ideal world (though at the very
-> beginning we don't assert on ->container==NULL yet).  It requires all
-> device emulations to do proper unrealize() to unlink all the MRs.
-> 
-> However what I'm guessing is QEMU probably used to have lots of devices
-> that are not following the rules and leaking these links.  Hence we have
-> had 2e2b8eb70fdb7dfb, allowing that to happen as long as it's safe, and
-> it's justified by comment in 2e2b8eb70fdb7dfb on why it's safe.
-> 
-> What I was thinking is this comment seems to apply too to mr->container, so
-> that it should be safe too to unlink ->container the same way as its own
-> subregions. >
-> IIUC that means for device-internal MR links we should be fine leaving
-> whatever link between MRs owned by such device; the device->refcount
-> guarantees none of them will be visible in any AS.  But then we need to
-> always properly unlink the MRs when the link is across >1 device owners,
-> otherwise it's prone to leak.
-
-There is one principle we must satisfy in general: keep a reference to a 
-memory region if it is visible to the guest.
-
-It is safe to call memory_region_del_subregion() and to trigger the 
-finalization of subregions when the container is not referenced because 
-they are no longer visible. This is not true for the other way around; 
-even when subregions are not referenced by anyone else, they are still 
-visible to the guest as long as the container is visible to the guest. 
-It is not safe to unref and finalize them in such a case.
-
-A memory region and its owner will leak if a memory region kept visible 
-for a too long period whether the chain of reference contains a 
-container/subregion relationship or not.
-
-Regards,
-Akihiko Odaki
+> ---
+>  disas/riscv.c | 18 +++++++++++++++++-
+>  disas/riscv.h |  2 ++
+>  2 files changed, 19 insertions(+), 1 deletion(-)
+>
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index c8364c2b07..c7c92acef7 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -974,6 +974,7 @@ typedef enum {
+>      rv_op_amomaxu_h =3D 943,
+>      rv_op_amocas_b  =3D 944,
+>      rv_op_amocas_h  =3D 945,
+> +    rv_op_lpad =3D 946,
+>  } rv_op;
+>
+>  /* register names */
+> @@ -2232,6 +2233,7 @@ const rv_opcode_data rvi_opcode_data[] =3D {
+>      { "amomaxu.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 }=
+,
+>      { "amocas.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+>      { "amocas.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+> +    { "lpad", rv_codec_lp, rv_fmt_imm, NULL, 0, 0, 0 },
+>  };
+>
+>  /* CSR names */
+> @@ -2925,7 +2927,13 @@ static void decode_inst_opcode(rv_decode *dec, rv_=
+isa isa)
+>              case 7: op =3D rv_op_andi; break;
+>              }
+>              break;
+> -        case 5: op =3D rv_op_auipc; break;
+> +        case 5:
+> +            op =3D rv_op_auipc;
+> +            if (dec->cfg->ext_zicfilp &&
+> +                (((inst >> 7) & 0b11111) =3D=3D 0b00000)) {
+> +                op =3D rv_op_lpad;
+> +            }
+> +            break;
+>          case 6:
+>              switch ((inst >> 12) & 0b111) {
+>              case 0: op =3D rv_op_addiw; break;
+> @@ -4482,6 +4490,11 @@ static uint32_t operand_tbl_index(rv_inst inst)
+>      return ((inst << 54) >> 56);
+>  }
+>
+> +static uint32_t operand_lpl(rv_inst inst)
+> +{
+> +    return inst >> 12;
+> +}
+> +
+>  /* decode operands */
+>
+>  static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+> @@ -4869,6 +4882,9 @@ static void decode_inst_operands(rv_decode *dec, rv=
+_isa isa)
+>          dec->imm =3D sextract32(operand_rs2(inst), 0, 5);
+>          dec->imm1 =3D operand_imm2(inst);
+>          break;
+> +    case rv_codec_lp:
+> +        dec->imm =3D operand_lpl(inst);
+> +        break;
+>      };
+>  }
+>
+> diff --git a/disas/riscv.h b/disas/riscv.h
+> index 16a08e4895..1182457aff 100644
+> --- a/disas/riscv.h
+> +++ b/disas/riscv.h
+> @@ -166,6 +166,7 @@ typedef enum {
+>      rv_codec_r2_immhl,
+>      rv_codec_r2_imm2_imm5,
+>      rv_codec_fli,
+> +    rv_codec_lp,
+>  } rv_codec;
+>
+>  /* structures */
+> @@ -228,6 +229,7 @@ enum {
+>  #define rv_fmt_rs1_rs2                "O\t1,2"
+>  #define rv_fmt_rd_imm                 "O\t0,i"
+>  #define rv_fmt_rd_uimm                "O\t0,Ui"
+> +#define rv_fmt_imm                    "O\ti"
+>  #define rv_fmt_rd_offset              "O\t0,o"
+>  #define rv_fmt_rd_uoffset             "O\t0,Uo"
+>  #define rv_fmt_rd_rs1_rs2             "O\t0,1,2"
+> --
+> 2.44.0
+>
+>
 
