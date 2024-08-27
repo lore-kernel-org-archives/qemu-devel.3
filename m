@@ -4,100 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB4D4C5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 15:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8359FC5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 15:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siyFq-0005b6-Qj; Tue, 27 Aug 2024 11:37:10 -0400
+	id 1siyRc-0003Ev-HY; Tue, 27 Aug 2024 11:49:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1siyFp-0005Uq-7w
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 11:37:09 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1siyFn-0003Zy-H0
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 11:37:08 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a86e5e9ff05so125846966b.1
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 08:37:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724773025; x=1725377825; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1vLiCNkcYxf10pE4q0NfWDH5BRMCn9pXqogkpfPhenQ=;
- b=TNicsdBFMBfcJjGd3QCzVIuobbfUT3wpUUr9gboS5/H1VqLq25sK37dJ9Lz5roOvH3
- hT6ocipnwpGAj1rCT/cNIagqjSJ137WD2nq+E2udz85zh5Q2cnJX568sZh1zDq/hibpb
- b2nhf1siabV76IheWHjksmiJGRgfwKfcT+C5exrtlKNswLJNzGzs/xF5fJCtouFkVaOl
- QPBY8OMEyOxjbNtVlSWPHJgrlljNUm9jmYs/vma4TB9uCGMHGleiw+eJPTXdZa+o2cSB
- 9/6Bkl029fRkTDz0JDtZIsyQlGPQXO1/04DB+9VTcq0gi0Aq6MBJFXYdFnb/ZPU5jWwF
- SXww==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1siyRb-0003ER-J1
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 11:49:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1siyRY-0004lU-Pi
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 11:49:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724773755;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7uZLS+nHyEu0AR/ByQ+KyOzaFTvMKJxe82qSdsi30T8=;
+ b=cDbqsJwq1JBAarUWLRVhsvUGwKHb7SnDEPdg1RF7monI4Hce7ra/6XR8CcLkQCLCF3VqcZ
+ srmLWOsVB5U2WVhUofEmXII/K9kM1tbMmYwfvrVGd9HkrZ4QZ7vBnEfcIvZ84EIAuHAA0Z
+ gAcYf5Ez+gpDAr5axE8jZ7Kw/sut7oM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-kcYMUDexM6uvKJEuRLO9rw-1; Tue, 27 Aug 2024 11:49:13 -0400
+X-MC-Unique: kcYMUDexM6uvKJEuRLO9rw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42820af1106so47845175e9.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 08:49:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724773025; x=1725377825;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1vLiCNkcYxf10pE4q0NfWDH5BRMCn9pXqogkpfPhenQ=;
- b=DeU09GY4dwhmuvIPCLQQW0RcAAbud0lD6luxCF2YaQ+i2vsVM2QjwT3gjaJePnkqKK
- jgXqsbNB+R3hBQ/8N2W60iAAMsMMdNn54xEACOxVLm66zUzCbUK4VreOHM+tGbncEz/L
- 6MAnS7lDwrlBnHRLPQM0J3SNAv8IadbvnxAHK6aSyXwGoHU7Kx3X1bP6/QksIf7WxjXE
- vgtU+KX8q2VPB/CNMf9RbwH0OutAwaHaHOvrXt09R2XVi8JV0gXKlYtApx4O+Yuy/U+5
- bm0LnrKo0l02AXLK0/mM11QtDHsm2xWyVvlKV2WLA2YRaEU/g1g1pD5sKD/Oerx3uuAq
- wDGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRazM9cHNgYjiaMaIfK1gy4vDFihqJw7peK70cO9JCVq3eegRvVIEKCxFJoHa8ddGC7tO9Sv1LO051@nongnu.org
-X-Gm-Message-State: AOJu0YzOvoURnkg/2DQvKAshoQ/mYVWxVQqIIMW4JRMDKGshPZ2OBS6C
- vMotF299TzA7JjuRnj6BCuGLssqHbbjZYXsIGQRD3xOhTDPXeyY5Da51OJYzxGfiBMjeCww4PG7
- F
-X-Google-Smtp-Source: AGHT+IHIpbTQU1BG/fp8QrawR8H2lbIYTNyDC+ybFLPFTuF2y5y5cmCrQKhRD1VM93kwFiftA9pj3A==
-X-Received: by 2002:a17:907:7255:b0:a7a:a5ed:43d0 with SMTP id
- a640c23a62f3a-a86e3bdbadfmr262134766b.47.1724773025289; 
- Tue, 27 Aug 2024 08:37:05 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.206.45])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e582de1asm122614866b.118.2024.08.27.08.37.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 08:37:04 -0700 (PDT)
-Message-ID: <a1e21e7c-a2a7-4eac-8a5d-e3cd57dc6894@linaro.org>
-Date: Tue, 27 Aug 2024 17:37:00 +0200
+ d=1e100.net; s=20230601; t=1724773748; x=1725378548;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7uZLS+nHyEu0AR/ByQ+KyOzaFTvMKJxe82qSdsi30T8=;
+ b=mpURZueQDtqLTZfEGE3cQJheexNI3Pwc0LXzY2nglHB1Z8yYCeR4gV5OMgeM/MHzOb
+ mPKGdpIIWlmovCmCKWGjujLxezJob2thYMjuNMc+tozkrsjFqlTg10/QmnhvAoczmabe
+ 4F05fnUHPBvnisYGJS9IoqjQhZZKguXvEwUiM5N2+hwbPaL/PtjXSghWsdEq3dh15ruD
+ ipsJGRwrVp6hWq48ssxUnXpoXXnYL2V425XA7keXoxy53VCKPaSGZTrlzOM3QdXZjucQ
+ GOHZ35SABMuE/CFovCeucQQNuekxlgi9UebKjqPmpmBjcYD2v158eEp4ChIuVyK+qGVQ
+ 4yiw==
+X-Gm-Message-State: AOJu0YxDTqGjF6SVzb47eNONC9lYp2/abA2tHSYQCTgoXJgm6TGbL1EQ
+ OiCAyqavkTm514cJUj1LFxA5yRmQHhSBqrIH/TXAfviIJsfbABemgdHWiIOawpg2mOi3ugC5Aum
+ fqyBsMke5sxwZZjU0gGa3NrlB3sslqhs3ErTzkV8aUn2H+xE5A2ka
+X-Received: by 2002:a05:600c:3b0e:b0:426:62c5:4741 with SMTP id
+ 5b1f17b1804b1-42acd5403a2mr87240875e9.2.1724773747549; 
+ Tue, 27 Aug 2024 08:49:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkwbrhItRqvLk3mLRmRM9xOEl0/DOsSED50yfmoA4hI2nBxfOSe1Xm/NelowP92d932HrGtg==
+X-Received: by 2002:a05:600c:3b0e:b0:426:62c5:4741 with SMTP id
+ 5b1f17b1804b1-42acd5403a2mr87240495e9.2.1724773746885; 
+ Tue, 27 Aug 2024 08:49:06 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37308160586sm13493794f8f.58.2024.08.27.08.49.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 08:49:06 -0700 (PDT)
+Date: Tue, 27 Aug 2024 17:49:04 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alexander Bulekov <alxndr@bu.edu>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, Philippe
+ =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Mauro Matteo Cascella
+ <mcascell@redhat.com>, Peter Xu <peterx@redhat.com>, Jason Wang
+ <jasowang@redhat.com>, David Hildenbrand <david@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Bandan Das <bsd@redhat.com>, "Edgar E . Iglesias"
+ <edgar.iglesias@gmail.com>, Darren Kenny <darren.kenny@oracle.com>, Bin
+ Meng <bin.meng@windriver.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Jon Maloy
+ <jmaloy@redhat.com>, Siqi Chen <coc.cyqh@gmail.com>, Michael Tokarev
+ <mjt@tls.msk.ru>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH v10 1/8] memory: prevent dma-reentracy issues
+Message-ID: <20240827174904.28215e26@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240821152518.1a973a7b@imammedo.users.ipa.redhat.com>
+References: <20230427211013.2994127-1-alxndr@bu.edu>
+ <20230427211013.2994127-2-alxndr@bu.edu>
+ <20240821152518.1a973a7b@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 19/34] modules: check arch on qom lookup
-To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Samuel Thibault <samuel.thibault@ens-lyon.org>, qemu-block@nongnu.org,
- David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, Peter Lieven <pl@kamp.de>,
- Greg Kurz <groug@kaod.org>, "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- qemu-s390x@nongnu.org, Ronnie Sahlberg <ronniesahlberg@gmail.com>,
- Cleber Rosa <crosa@redhat.com>, David Gibson <david@gibson.dropbear.id.au>,
- Kevin Wolf <kwolf@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Max Reitz <mreitz@redhat.com>, qemu-ppc@nongnu.org,
- Anton Johansson <anjo@rev.ng>
-References: <20210624103836.2382472-1-kraxel@redhat.com>
- <20210624103836.2382472-20-kraxel@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20210624103836.2382472-20-kraxel@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,50 +117,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Wed, 21 Aug 2024 15:25:18 +0200
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-(old patch)
-
-On 24/6/21 12:38, Gerd Hoffmann wrote:
-> With target-specific modules we can have multiple modules implementing
-> the same object.  Therefore we have to check the target arch on lookup
-> to find the correct module.
-
-"multiple modules implementing the same object." seems a design
-mistake to me.
-
-Assuming we clean the tree of target-specific modules "implementing
-the same object" -- due to heterogeneous emulation --, is there
-another use case for this check?
-
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->   util/module.c | 6 ++++++
->   1 file changed, 6 insertions(+)
+> On Thu, 27 Apr 2023 17:10:06 -0400
+> Alexander Bulekov <alxndr@bu.edu> wrote:
 > 
-> diff --git a/util/module.c b/util/module.c
-> index 065aed09ffef..6bb4ad915a1c 100644
-> --- a/util/module.c
-> +++ b/util/module.c
-> @@ -329,6 +329,9 @@ void module_load_qom_one(const char *type)
->           if (!modinfo->objs) {
->               continue;
->           }
-> +        if (!module_check_arch(modinfo)) {
-> +            continue;
-> +        }
->           for (sl = modinfo->objs; *sl != NULL; sl++) {
->               if (strcmp(type, *sl) == 0) {
->                   module_load_one("", modinfo->name, false);
-> @@ -349,6 +352,9 @@ void module_load_qom_all(void)
->           if (!modinfo->objs) {
->               continue;
->           }
-> +        if (!module_check_arch(modinfo)) {
-> +            continue;
-> +        }
->           module_load_one("", modinfo->name, false);
->       }
->       module_loaded_qom_all = true;
+> > Add a flag to the DeviceState, when a device is engaged in PIO/MMIO/DMA.
+> > This flag is set/checked prior to calling a device's MemoryRegion
+> > handlers, and set when device code initiates DMA.  The purpose of this
+> > flag is to prevent two types of DMA-based reentrancy issues:
+> > 
+> > 1.) mmio -> dma -> mmio case
+> > 2.) bh -> dma write -> mmio case  
+> 
+> Alexander, with 9.0
+> we are getting 
+> 
+>    warning: Blocked re-entrant IO on MemoryRegion: acpi-cpu-hotplug at addr: 0x0
+> 
+> during CPU hot-unplug, to my knowledge there shouldn't be any DMA involved
+> there.
+> The only access should be either from guest kernel or firmware(this one is under SMM mode)).
+> 
+> Question is how this could happen on MMIO access which should be guarded by BQL?
+
+For prosperity, reproducer (RHEL9.4 Haswell host + upstream QEMU/edk https://issues.redhat.com/browse/RHEL-56154):
+
+./qemu-system-x86_64 --enable-kvm -smp 2,maxcpus=24,cores=12,threads=1,dies=1,sockets=2 \
+    -cpu host \
+    -blockdev '{"node-name": "file_ovmf_code", "driver": "file", "filename": "/tmp/qemu_build/pc-bios/edk2-x86_64-secure-code.fd", "auto-read-only": true, "discard": "unmap"}' \
+    -blockdev '{"node-name": "drive_ovmf_code", "driver": "raw", "read-only": true, "file": "file_ovmf_code"}'  \
+    -blockdev '{"node-name": "file_ovmf_vars", "driver": "file", "filename": "/tmp/edk_VARS.raw", "auto-read-only": true, "discard": "unmap"}'   \
+    -blockdev '{"node-name": "drive_ovmf_vars", "driver": "raw", "read-only": false, "file": "file_ovmf_vars"}'  \
+    -M q35,pflash0=drive_ovmf_code,pflash1=drive_ovmf_vars \
+    -m 4G \
+    -monitor stdio \
+    rhel9.5.raw
+
+once booted 
+
+(qemu) device_add host-x86_64-cpu,id=vcpu1,socket-id=1,core-id=10,die-id=0,thread-id=0
+(qemu) device_add host-x86_64-cpu,id=vcpu2,socket-id=1,core-id=11,die-id=0,thread-id=0
+(qemu) device_del vcpu1
+(qemu) qemu-system-x86_64: warning: Blocked re-entrant IO on MemoryRegion: acpi-cpu-hotplug at addr: 0x0
+ 
+> And where to start digging to find out if it's a genuine issue,
+> or whether it's safe to use big hammer and disable reentrancy guard?
+I'm hesitant to use hammer so far (though it would make problem nop).
+What happens is that cpu_remove_sync() temporarily releases BQL
+which lets conflicting access to happen.
+
+But I think unexpected access shouldn't be there in the 1st place,
+so guard looks pretty legit at this point.
+Lets see what Gerd finds out from edk2 point of view.
+
+> 
+> 
+> > These issues have led to problems such as stack-exhaustion and
+> > use-after-frees.
+> > 
+> > Summary of the problem from Peter Maydell:
+> > https://lore.kernel.org/qemu-devel/CAFEAcA_23vc7hE3iaM-JVA6W38LK4hJoWae5KcknhPRD5fPBZA@mail.gmail.com
+> > 
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/62
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/540
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/541
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/556
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/557
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/827
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1282
+> > Resolves: CVE-2023-0330
+> > 
+> > Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+> > Reviewed-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >  include/exec/memory.h  |  5 +++++
+> >  include/hw/qdev-core.h |  7 +++++++
+> >  softmmu/memory.c       | 16 ++++++++++++++++
+> >  3 files changed, 28 insertions(+)
+> > 
+> > diff --git a/include/exec/memory.h b/include/exec/memory.h
+> > index 15ade918ba..e45ce6061f 100644
+> > --- a/include/exec/memory.h
+> > +++ b/include/exec/memory.h
+> > @@ -767,6 +767,8 @@ struct MemoryRegion {
+> >      bool is_iommu;
+> >      RAMBlock *ram_block;
+> >      Object *owner;
+> > +    /* owner as TYPE_DEVICE. Used for re-entrancy checks in MR access hotpath */
+> > +    DeviceState *dev;
+> >  
+> >      const MemoryRegionOps *ops;
+> >      void *opaque;
+> > @@ -791,6 +793,9 @@ struct MemoryRegion {
+> >      unsigned ioeventfd_nb;
+> >      MemoryRegionIoeventfd *ioeventfds;
+> >      RamDiscardManager *rdm; /* Only for RAM */
+> > +
+> > +    /* For devices designed to perform re-entrant IO into their own IO MRs */
+> > +    bool disable_reentrancy_guard;
+> >  };
+> >  
+> >  struct IOMMUMemoryRegion {
+> > diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+> > index bd50ad5ee1..7623703943 100644
+> > --- a/include/hw/qdev-core.h
+> > +++ b/include/hw/qdev-core.h
+> > @@ -162,6 +162,10 @@ struct NamedClockList {
+> >      QLIST_ENTRY(NamedClockList) node;
+> >  };
+> >  
+> > +typedef struct {
+> > +    bool engaged_in_io;
+> > +} MemReentrancyGuard;
+> > +
+> >  /**
+> >   * DeviceState:
+> >   * @realized: Indicates whether the device has been fully constructed.
+> > @@ -194,6 +198,9 @@ struct DeviceState {
+> >      int alias_required_for_version;
+> >      ResettableState reset;
+> >      GSList *unplug_blockers;
+> > +
+> > +    /* Is the device currently in mmio/pio/dma? Used to prevent re-entrancy */
+> > +    MemReentrancyGuard mem_reentrancy_guard;
+> >  };
+> >  
+> >  struct DeviceListener {
+> > diff --git a/softmmu/memory.c b/softmmu/memory.c
+> > index b1a6cae6f5..fe23f0e5ce 100644
+> > --- a/softmmu/memory.c
+> > +++ b/softmmu/memory.c
+> > @@ -542,6 +542,18 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+> >          access_size_max = 4;
+> >      }
+> >  
+> > +    /* Do not allow more than one simultaneous access to a device's IO Regions */
+> > +    if (mr->dev && !mr->disable_reentrancy_guard &&
+> > +        !mr->ram_device && !mr->ram && !mr->rom_device && !mr->readonly) {
+> > +        if (mr->dev->mem_reentrancy_guard.engaged_in_io) {
+> > +            warn_report("Blocked re-entrant IO on "
+> > +                    "MemoryRegion: %s at addr: 0x%" HWADDR_PRIX,
+> > +                    memory_region_name(mr), addr);
+> > +            return MEMTX_ACCESS_ERROR;
+> > +        }
+> > +        mr->dev->mem_reentrancy_guard.engaged_in_io = true;
+> > +    }
+> > +
+> >      /* FIXME: support unaligned access? */
+> >      access_size = MAX(MIN(size, access_size_max), access_size_min);
+> >      access_mask = MAKE_64BIT_MASK(0, access_size * 8);
+> > @@ -556,6 +568,9 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+> >                          access_mask, attrs);
+> >          }
+> >      }
+> > +    if (mr->dev) {
+> > +        mr->dev->mem_reentrancy_guard.engaged_in_io = false;
+> > +    }
+> >      return r;
+> >  }
+> >  
+> > @@ -1170,6 +1185,7 @@ static void memory_region_do_init(MemoryRegion *mr,
+> >      }
+> >      mr->name = g_strdup(name);
+> >      mr->owner = owner;
+> > +    mr->dev = (DeviceState *) object_dynamic_cast(mr->owner, TYPE_DEVICE);
+> >      mr->ram_block = NULL;
+> >  
+> >      if (name) {  
+> 
 
 
