@@ -4,139 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5932BC54734
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 13:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB44C54734
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 13:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siw7b-0003QR-WD; Tue, 27 Aug 2024 09:20:32 -0400
+	id 1siwGC-0000d8-0Q; Tue, 27 Aug 2024 09:29:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siw7Z-0003OW-V8
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:20:30 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1siwGB-0000cc-5N
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:29:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1siw7Y-0005Fv-C2
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:20:29 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1siwG9-0006LD-CZ
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 09:29:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724764827;
+ s=mimecast20190719; t=1724765359;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SVlICdkMRFvZN53UINQ4tmIjlFq7tfi3pJ+k8VU0KmQ=;
- b=VsEsVl3mlbKEFNTIRmMUWX62WPE29s29e2rZqmSdImZRwO0g4XL13m+NBFT9kTKDZ/gnut
- fP9UtRZXb017AwiXJcG1GX+yVTsyEn0EztTlXkKN5oOsLvHFfF9VR97iKDjP0KFiMwo+xX
- +cqzA2YDgJUXBHxCMdeyVD1kLaciZao=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=z4/jH/gxr9Ya+hjplG+gIBh26lq6GNFYWERIT17JaaI=;
+ b=PggjjQK4Peiknb3LqN3WxObxRv5a75+KS1rxSFmUVSSx7MT6Jg+1i4zmSZCdcUg69FYRjH
+ p5k1AhoVP47SzELWcMzrSgdPGQnUYuY1hx86GWW0mO+SCEreZut9pzeN/Xv5AEe4kQUvl4
+ 3QF4F/6hBjktq8ZjIYI7bh8Hlod+Vek=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-UVR47y4SOq-wMW3MxxIIIA-1; Tue, 27 Aug 2024 09:20:26 -0400
-X-MC-Unique: UVR47y4SOq-wMW3MxxIIIA-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5daa4d71e88so5689248eaf.0
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 06:20:26 -0700 (PDT)
+ us-mta-354-YV7p-4V9PWqbYnlJfW-2Ug-1; Tue, 27 Aug 2024 09:29:17 -0400
+X-MC-Unique: YV7p-4V9PWqbYnlJfW-2Ug-1
+Received: by mail-ot1-f70.google.com with SMTP id
+ 46e09a7af769-7094641d4c7so6312385a34.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 06:29:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724764826; x=1725369626;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SVlICdkMRFvZN53UINQ4tmIjlFq7tfi3pJ+k8VU0KmQ=;
- b=WtpoRO1Yz4CiBSFi6RlxXh0758iO1KzdThU84+OhgPlsN1ZWAgRn5gCyZJ+NTt1aNU
- 49rTN6ZIlO/cOllheLJvI4vSBkc6GFBwuzXtVxP2mvWyYdWqrYfMiRR2CqaVxuIJqq+P
- K+UL+c9NPEjNcsYz7Uc00XqNWBYJYLo+pHzoOPIMvbpYJGf99PeHmKIL63EDZ/Lctjrs
- iRFh4XJusF8NQkgPkQOoSAK3+TJYDD8UpczSUI7/JYMRxqSv6srekCpuJD3PvQtqifXv
- /Irwsy0U9ZqG+TdDGiWRyWhG/C6XX6Mq+rhzqn0qiqR3EaTI3igLo+rBonbO8AQSB1qL
- JHyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVY6eaEQOyJ0j6nU9Gk3c4Efm3ZwJrkV6wT81K9pisCFFCAcsH6IrELwBNky8fJmv0s9rFLXKFZ4kGp@nongnu.org
-X-Gm-Message-State: AOJu0Ywp6H/lTpURg3l3Tx1tPYMeaAwEnX4/62r0/VnydedeFYmvwCFU
- 94MWDVfJxh1I+c8ehEJhpBZwiuFz2Xb2zZCelOFGPI8SXCcI/UPmxCF6nCpWffajFzV0ZEEjpwW
- +JUOznPv7jEZVGvd1a/AVLKzM1XQuZGnHXolZV/XwWL3w3dSOsVEG
-X-Received: by 2002:a05:6870:1588:b0:26c:5312:a13b with SMTP id
- 586e51a60fabf-273e65a83c3mr13833734fac.30.1724764825679; 
- Tue, 27 Aug 2024 06:20:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+SJAtUlQU/EBn2BdsAXDFx6SOy4fz46XKdXIILq6irfOsND56KrmVtvMF1l6/NrItaZTY2w==
-X-Received: by 2002:a05:6870:1588:b0:26c:5312:a13b with SMTP id
- 586e51a60fabf-273e65a83c3mr13833706fac.30.1724764825329; 
- Tue, 27 Aug 2024 06:20:25 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-179-35.web.vodafone.de.
- [109.43.179.35]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a67f41e276sm544167985a.136.2024.08.27.06.20.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 06:20:25 -0700 (PDT)
-Message-ID: <86d9b2b7-505d-4223-bcd0-4e4a7847ec56@redhat.com>
-Date: Tue, 27 Aug 2024 15:20:17 +0200
+ d=1e100.net; s=20230601; t=1724765356; x=1725370156;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z4/jH/gxr9Ya+hjplG+gIBh26lq6GNFYWERIT17JaaI=;
+ b=NGp88F1v/QUo0zadwOkEVnJPDZLq1A4p6X+dS0ZUpVg+Dk02DJgozCEXyaETz1HwGX
+ I8KJItjMIBUE2/WA0Iv0THm33kzVPlYaNrmt0XjxB/PnyLGeCUzQKkvIyG0Nhahmq8uI
+ 1xJ3kYn5FadldwdNVcbDnSY4JBZ2Th9t4Zr/MIgIK06h4QIDRQcOTZMTDQ/F2mO3rm3v
+ RLSsDhKEUR2FW7/BgpTtHECVLy+T5/d30SFBxM1YwF81bLmgNM7YXiZd3jOhzeB5XX8p
+ pcigg98TXJlUytdVpw4C98zslRGuKND7+589chagaaE9ewMczVpAMqcFXScm4WigXtuJ
+ f8gg==
+X-Gm-Message-State: AOJu0YxR8w0kaQSRSzAy9ca7z/oSXKt4o5TAayuVRi4/bCHAWvuG4fk2
+ 1IbuBUPe+z0UGzAlgNf1Qoas7DiO6CBvzr/zhWsBy0D4a+DSTJhqPD3Ga14dYal1BOhHA3M7trS
+ cK2CK/0vq5aUiaCsHxhnRWL88GsNtw8dq+Leg9+mvs+2IE0q5m0u7J6hzBjL1
+X-Received: by 2002:a05:6830:3c86:b0:703:68d0:a266 with SMTP id
+ 46e09a7af769-70f47a7098dmr1152454a34.4.1724765356041; 
+ Tue, 27 Aug 2024 06:29:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXxs9eRvVOzwjdc8GZTo+NNELYopmdtGM2o+Qs0Dgm3Rbz1jMkii58stngV6mnluN9mGXoXw==
+X-Received: by 2002:a05:6830:3c86:b0:703:68d0:a266 with SMTP id
+ 46e09a7af769-70f47a7098dmr1152448a34.4.1724765355594; 
+ Tue, 27 Aug 2024 06:29:15 -0700 (PDT)
+Received: from sgarzare-redhat ([5.179.170.38])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-70e03b6024esm2334632a34.63.2024.08.27.06.29.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 06:29:15 -0700 (PDT)
+Date: Tue, 27 Aug 2024 15:29:09 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: =?utf-8?B?6ZmG55+l6KGM?= <luzhixing12345@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] vhost-user: add NEED_REPLY flag
+Message-ID: <gtpj4yn3kkvawrjlcdq7zrg7bsfe2wlt2x5eh3pfmiygzkoxtc@pyak5vt5ap3a>
+References: <20240804154859.28342-1-luzhixing12345@gmail.com>
+ <CAKQy51AyXGb+8Qi6J-6r4gj-USWeAm1qwzurqq0vkFFB8EuLhA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] tests/qtest: Delete previous boot file
-To: Peter Xu <peterx@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
- <20240823-san-v4-7-a24c6dfa4ceb@daynix.com> <Zsyesfaf02ktFU1A@x1n>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <Zsyesfaf02ktFU1A@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKQy51AyXGb+8Qi6J-6r4gj-USWeAm1qwzurqq0vkFFB8EuLhA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -162,27 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/08/2024 17.26, Peter Xu wrote:
-> On Fri, Aug 23, 2024 at 03:13:12PM +0900, Akihiko Odaki wrote:
->> A test run may create boot files several times. Delete the previous boot
->> file before creating a new one.
+On Mon, Aug 12, 2024 at 12:53:19PM GMT, 陆知行 wrote:
+>Hi, can someone review this patch?
+>I find requests which call  vhost_user_get_u64 does not set NEED_REPLY flag
+
+Can you provide an example to trigger this issue?
+
+Also, with this change all calls to vhost_user_get_u64() will set that 
+flag, is that following the vhost-user user specification?
+
+Please use `scripts/checkpatch.pl` before sending patches, this one for 
+example is missing SoB.
+
+Thanks,
+Stefano
+
+>
+>luzhixing12345 <luzhixing12345@gmail.com> 于2024年8月4日周日 23:50写道：
+>
+>> Front-end message requests which need reply should set NEED_REPLY_MASK
+>> in flag, and response from slave need clear NEED_REPLY_MASK flag.
 >>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->> Acked-by: Thomas Huth <thuth@redhat.com>
-> 
-> I didn't track which came early, but I think Fabiano has queued the other
-> one here:
-> 
-> https://lore.kernel.org/r/20240820144912.320744-2-peter.maydell@linaro.org
-> https://gitlab.com/farosas/qemu/-/commits/migration-staging/
-> 
-> So we should be good.
-
-Ooops, sorry, I think I might have jumped the gun and put this patch here in 
-my final PR for 9.1 ... I hope it's ok to do modifications on top of that 
-later if it is still necessary.
-
-  Thomas
+>> ---
+>>  hw/virtio/vhost-user.c                    | 2 +-
+>>  subprojects/libvhost-user/libvhost-user.c | 1 +
+>>  2 files changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>> index 00561daa06..edf2271e0a 100644
+>> --- a/hw/virtio/vhost-user.c
+>> +++ b/hw/virtio/vhost-user.c
+>> @@ -1082,7 +1082,7 @@ static int vhost_user_get_u64(struct vhost_dev *dev,
+>> int request, uint64_t *u64)
+>>      int ret;
+>>      VhostUserMsg msg = {
+>>          .hdr.request = request,
+>> -        .hdr.flags = VHOST_USER_VERSION,
+>> +        .hdr.flags = VHOST_USER_VERSION | VHOST_USER_NEED_REPLY_MASK,
+>>      };
+>>
+>>      if (vhost_user_per_device_request(request) && dev->vq_index != 0) {
+>> diff --git a/subprojects/libvhost-user/libvhost-user.c
+>> b/subprojects/libvhost-user/libvhost-user.c
+>> index 9c630c2170..40f665bd7f 100644
+>> --- a/subprojects/libvhost-user/libvhost-user.c
+>> +++ b/subprojects/libvhost-user/libvhost-user.c
+>> @@ -667,6 +667,7 @@ vu_send_reply(VuDev *dev, int conn_fd, VhostUserMsg
+>> *vmsg)
+>>  {
+>>      /* Set the version in the flags when sending the reply */
+>>      vmsg->flags &= ~VHOST_USER_VERSION_MASK;
+>> +    vmsg->flags &= ~VHOST_USER_NEED_REPLY_MASK;
+>>      vmsg->flags |= VHOST_USER_VERSION;
+>>      vmsg->flags |= VHOST_USER_REPLY_MASK;
+>>
+>> --
+>> 2.34.1
+>>
+>>
 
 
