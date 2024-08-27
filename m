@@ -4,118 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B3AC5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBA5C54731
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj0Gu-0000wt-D0; Tue, 27 Aug 2024 13:46:24 -0400
+	id 1sj0La-0003af-1o; Tue, 27 Aug 2024 13:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0Gr-0000qp-Bf
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:21 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sj0Gn-0000UE-Dh
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:46:20 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9CCCA21B1C;
- Tue, 27 Aug 2024 17:46:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724780772; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj0LX-0003Qi-Ie
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:51:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sj0LV-0001AS-8v
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:51:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724781066;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZoUl0udIRRV4d9HW5hBW3oAtA8isHXavDrhrtHZ82rM=;
- b=thcwTVFMMGwfVbjyU1gYrrGqYXRcESc4dptkdAqILs3l4tcJL/0eGh1E5/nMn5FjZf9nQ2
- WfU7NPRrYMWZGyt3qEERqrW2rNvHnBmN3/MymQmYE1zl6kF00/uoorJCsvHADiPI5cJDOi
- G13azvaX+OFD8DXLgFNViTGJwdUpxJQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724780772;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZoUl0udIRRV4d9HW5hBW3oAtA8isHXavDrhrtHZ82rM=;
- b=zp9ncV84nwaNil9lwaqIH96WwaquffcIs31Kfq4LkfzQQyUkoyqVqJ6BNlS5URlE3GTUYD
- FYQC4lHFeYTolOCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=thcwTVFM;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=zp9ncV84
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1724780772; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZoUl0udIRRV4d9HW5hBW3oAtA8isHXavDrhrtHZ82rM=;
- b=thcwTVFMMGwfVbjyU1gYrrGqYXRcESc4dptkdAqILs3l4tcJL/0eGh1E5/nMn5FjZf9nQ2
- WfU7NPRrYMWZGyt3qEERqrW2rNvHnBmN3/MymQmYE1zl6kF00/uoorJCsvHADiPI5cJDOi
- G13azvaX+OFD8DXLgFNViTGJwdUpxJQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1724780772;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZoUl0udIRRV4d9HW5hBW3oAtA8isHXavDrhrtHZ82rM=;
- b=zp9ncV84nwaNil9lwaqIH96WwaquffcIs31Kfq4LkfzQQyUkoyqVqJ6BNlS5URlE3GTUYD
- FYQC4lHFeYTolOCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 30BA213A29;
- Tue, 27 Aug 2024 17:46:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id EH3jOeIQzma+UAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 27 Aug 2024 17:46:10 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 01/19] migration/multifd: Reduce access to p->pages
-Date: Tue, 27 Aug 2024 14:45:48 -0300
-Message-Id: <20240827174606.10352-2-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240827174606.10352-1-farosas@suse.de>
-References: <20240827174606.10352-1-farosas@suse.de>
+ bh=8BsITNDDJpI985fMszxgjGuKQ1g7I20LfcexypZNUBo=;
+ b=bmlricQP4T7GUcmPLhpB96myy8EAdcK1MyZxvs00sOh+i75yIGuXiueDc1lzLhZyUjzK3d
+ 7Pj1R/gXe0gYnOhu/38i3xD9HDO1EekTaqkDzZC/EiwYe1gYHdZmMfhgwQnbdpkbyJlFHn
+ v5QVns4ezrf8l7eWoR//fm1xe/Ac+g0=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-403-CpmH-10mOtqSPOxAzQQGcQ-1; Tue, 27 Aug 2024 13:51:03 -0400
+X-MC-Unique: CpmH-10mOtqSPOxAzQQGcQ-1
+Received: by mail-ot1-f70.google.com with SMTP id
+ 46e09a7af769-709664a6285so7702666a34.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 10:51:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724781063; x=1725385863;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8BsITNDDJpI985fMszxgjGuKQ1g7I20LfcexypZNUBo=;
+ b=NDMsnAuJbi2fXZZ6GUdbNMgFyL1Cdy7S6I1GbePrNyomWUIXe97Dc01lUF9voAuqA1
+ KaLDi3IO1UASVtQefN5RZDaIJ4p1JIgTtroEGEnSQB9PfUcvNHKdomrIqEA2LCWpsYuR
+ LXuFvg8F4aPBbI0R3BzMV4Fa/19yCSGcuq6ma7gkI7LlcMeoSQSryx/xm56WSig0Qmhv
+ EhtO6SYrZsaUKOK1DYoHNbtXzsXecS9lfyyo0fsWN+Tj3NiHDkssBLym9yj8V6jTC3D7
+ Z35uwQAMPtMEwRxINyVj3lptX2jCODtpKPQ9s2JFSWuezVzPrao2rA5RjEDKA5lf9Jlb
+ qwWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbGcyH4lz1P6stpKbCsUEANHiObSolZxSuuHv03/0np0mJhj1utzhG8sPRxW4lWrPW7q/AaBdVClSt@nongnu.org
+X-Gm-Message-State: AOJu0YzAEgo7V4jb+vd17p8kGG4rhfusgqnr8YyOGnl8Q+a1yyqVBIqi
+ Fc9BafBupf99oeNQaPM8jQBaFFDmXwp+IPbU2zIgrLHN5tdiXzvKZELfJqArhYHp054B/u/3yMd
+ DuYYkj1+caUqfQuhquK4aL7hKhCMOvFOZlk7VB3gnWMOzacfFZyEom8O8sRwj9KI=
+X-Received: by 2002:a05:6830:44a1:b0:703:6883:30be with SMTP id
+ 46e09a7af769-70f482e8fbamr3351306a34.11.1724781062726; 
+ Tue, 27 Aug 2024 10:51:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKKJziV2W81mehtP66qlS4CpSxcbTZpc3DqMFTDZf1wO2K0KLFDBbcfqGCthlLQPQfVMEnmQ==
+X-Received: by 2002:a05:6830:44a1:b0:703:6883:30be with SMTP id
+ 46e09a7af769-70f482e8fbamr3351284a34.11.1724781062390; 
+ Tue, 27 Aug 2024 10:51:02 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-70e03b8a41dsm2417598a34.77.2024.08.27.10.51.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 10:51:01 -0700 (PDT)
+Date: Tue, 27 Aug 2024 13:50:59 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v1] softmmu/physmem: fix memory leak in
+ dirty_memory_extend()
+Message-ID: <Zs4SA8CYxK15CG_5@x1n>
+References: <20240827083715.257768-1-david@redhat.com>
+ <CAJSP0QX+NiO7An468cKMFja3TGmgGzyNcPZjEtpPrfi3Q_1xgw@mail.gmail.com>
+ <36402f8f-dc97-4eaf-8197-1df2bc01720b@redhat.com>
+ <CAJSP0QWed1ZjRZ2pkUgx0j+9bepKg1hfaWXQLzP613xsiHtwyw@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 9CCCA21B1C
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:email, suse.de:dkim, suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+In-Reply-To: <CAJSP0QWed1ZjRZ2pkUgx0j+9bepKg1hfaWXQLzP613xsiHtwyw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,179 +110,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm about to replace the p->pages pointer with an opaque pointer, so
-do a cleanup now to reduce direct accesses to p->page, which makes the
-next diffs cleaner.
+On Tue, Aug 27, 2024 at 01:28:02PM -0400, Stefan Hajnoczi wrote:
+> On Tue, 27 Aug 2024 at 13:24, David Hildenbrand <david@redhat.com> wrote:
+> >
+> > On 27.08.24 18:52, Stefan Hajnoczi wrote:
+> > > On Tue, 27 Aug 2024 at 04:38, David Hildenbrand <david@redhat.com> wrote:
+> > >>
+> > >> As reported by Peter, we might be leaking memory when removing the
+> > >> highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
+> > >>
+> > >> We will fail to realize that we already allocated bitmaps for more
+> > >> dirty memory blocks, and effectively discard the pointers to them.
+> > >>
+> > >> Fix it by getting rid of last_ram_page() and simply storing the number
+> > >> of dirty memory blocks that have been allocated. We'll store the number
+> > >> of blocks along with the actual pointer to keep it simple.
+> > >>
+> > >> Looks like this leak was introduced as we switched from using a single
+> > >> bitmap_zero_extend() to allocating multiple bitmaps:
+> > >> bitmap_zero_extend() relies on g_renew() which should have taken care of
+> > >> this.
+> > >>
+> > >> Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
+> > >> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> > >> Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
+> > >> Cc: qemu-stable@nongnu.org
+> > >> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> > >> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> > >> Cc: Peter Xu <peterx@redhat.com>
+> > >> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+> > >> Signed-off-by: David Hildenbrand <david@redhat.com>
+> > >> ---
+> > >>   include/exec/ramlist.h |  1 +
+> > >>   system/physmem.c       | 44 ++++++++++++++----------------------------
+> > >>   2 files changed, 16 insertions(+), 29 deletions(-)
+> > >>
+> > >> diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
+> > >> index 2ad2a81acc..f2a965f293 100644
+> > >> --- a/include/exec/ramlist.h
+> > >> +++ b/include/exec/ramlist.h
+> > >> @@ -41,6 +41,7 @@ typedef struct RAMBlockNotifier RAMBlockNotifier;
+> > >>   #define DIRTY_MEMORY_BLOCK_SIZE ((ram_addr_t)256 * 1024 * 8)
+> > >>   typedef struct {
+> > >>       struct rcu_head rcu;
+> > >> +    unsigned int num_blocks;
+> > >
+> > > The maximum amount of memory supported by unsigned int is:
+> > > (2 ^ 32 - 1) * 4KB * DIRTY_MEMORY_BLOCK_SIZE
+> > > = ~32 exabytes
+> > >
+> >
+> > True, should we simply use ram_addr_t ?
+> 
+> Sounds good to me. In practice scalability bottlenecks are likely with
+> those memory sizes and it will be necessary to change how guest memory
+> is organized anyway. But it doesn't hurt to make this counter
+> future-proof.
+
+IMHO it'll be nice to only use ram_addr_t when a variable is describing the
+ramblock address space (with an offset, or a length there).  In this case
+it is a pure counter for how many bitmap chunks we allocated, so maybe
+"unsigned long" or "uint64_t" would suite more?
+
+Though I'd think "unsigned int" is good enough per the calculation Stefan
+provided.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/multifd-qpl.c  |  8 +++++---
- migration/multifd-uadk.c |  9 +++++----
- migration/multifd-zlib.c |  2 +-
- migration/multifd-zstd.c |  2 +-
- migration/multifd.c      | 13 +++++++------
- 5 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 9265098ee7..f8c84c52cf 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -404,13 +404,14 @@ retry:
- static void multifd_qpl_compress_pages_slow_path(MultiFDSendParams *p)
- {
-     QplData *qpl = p->compress_data;
-+    MultiFDPages_t *pages = p->pages;
-     uint32_t size = p->page_size;
-     qpl_job *job = qpl->sw_job;
-     uint8_t *zbuf = qpl->zbuf;
-     uint8_t *buf;
- 
--    for (int i = 0; i < p->pages->normal_num; i++) {
--        buf = p->pages->block->host + p->pages->offset[i];
-+    for (int i = 0; i < pages->normal_num; i++) {
-+        buf = pages->block->host + pages->offset[i];
-         multifd_qpl_prepare_comp_job(job, buf, zbuf, size);
-         if (qpl_execute_job(job) == QPL_STS_OK) {
-             multifd_qpl_fill_packet(i, p, zbuf, job->total_out);
-@@ -498,6 +499,7 @@ static void multifd_qpl_compress_pages(MultiFDSendParams *p)
- static int multifd_qpl_send_prepare(MultiFDSendParams *p, Error **errp)
- {
-     QplData *qpl = p->compress_data;
-+    MultiFDPages_t *pages = p->pages;
-     uint32_t len = 0;
- 
-     if (!multifd_send_prepare_common(p)) {
-@@ -505,7 +507,7 @@ static int multifd_qpl_send_prepare(MultiFDSendParams *p, Error **errp)
-     }
- 
-     /* The first IOV is used to store the compressed page lengths */
--    len = p->pages->normal_num * sizeof(uint32_t);
-+    len = pages->normal_num * sizeof(uint32_t);
-     multifd_qpl_fill_iov(p, (uint8_t *) qpl->zlen, len);
-     if (qpl->hw_avail) {
-         multifd_qpl_compress_pages(p);
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index d12353fb21..b8ba3cd9c1 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -174,19 +174,20 @@ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
-     uint32_t hdr_size;
-     uint8_t *buf = uadk_data->buf;
-     int ret = 0;
-+    MultiFDPages_t *pages = p->pages;
- 
-     if (!multifd_send_prepare_common(p)) {
-         goto out;
-     }
- 
--    hdr_size = p->pages->normal_num * sizeof(uint32_t);
-+    hdr_size = pages->normal_num * sizeof(uint32_t);
-     /* prepare the header that stores the lengths of all compressed data */
-     prepare_next_iov(p, uadk_data->buf_hdr, hdr_size);
- 
--    for (int i = 0; i < p->pages->normal_num; i++) {
-+    for (int i = 0; i < pages->normal_num; i++) {
-         struct wd_comp_req creq = {
-             .op_type = WD_DIR_COMPRESS,
--            .src     = p->pages->block->host + p->pages->offset[i],
-+            .src     = pages->block->host + pages->offset[i],
-             .src_len = p->page_size,
-             .dst     = buf,
-             /* Set dst_len to double the src in case compressed out >= page_size */
-@@ -214,7 +215,7 @@ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
-          */
-         if (!uadk_data->handle || creq.dst_len >= p->page_size) {
-             uadk_data->buf_hdr[i] = cpu_to_be32(p->page_size);
--            prepare_next_iov(p, p->pages->block->host + p->pages->offset[i],
-+            prepare_next_iov(p, pages->block->host + pages->offset[i],
-                              p->page_size);
-             buf += p->page_size;
-         }
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 2ced69487e..65f8aba5c8 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -147,7 +147,7 @@ static int zlib_send_prepare(MultiFDSendParams *p, Error **errp)
-          * with compression. zlib does not guarantee that this is safe,
-          * therefore copy the page before calling deflate().
-          */
--        memcpy(z->buf, p->pages->block->host + pages->offset[i], p->page_size);
-+        memcpy(z->buf, pages->block->host + pages->offset[i], p->page_size);
-         zs->avail_in = p->page_size;
-         zs->next_in = z->buf;
- 
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index ca17b7e310..cb6075a9a5 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -138,7 +138,7 @@ static int zstd_send_prepare(MultiFDSendParams *p, Error **errp)
-         if (i == pages->normal_num - 1) {
-             flush = ZSTD_e_flush;
-         }
--        z->in.src = p->pages->block->host + pages->offset[i];
-+        z->in.src = pages->block->host + pages->offset[i];
-         z->in.size = p->page_size;
-         z->in.pos = 0;
- 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index a6db05502a..0bd9c2253e 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -114,11 +114,11 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
- 
-     assert(pages->block);
- 
--    for (int i = 0; i < p->pages->normal_num; i++) {
-+    for (int i = 0; i < pages->normal_num; i++) {
-         ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], true);
-     }
- 
--    for (int i = p->pages->normal_num; i < p->pages->num; i++) {
-+    for (int i = pages->normal_num; i < pages->num; i++) {
-         ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], false);
-     }
- }
-@@ -417,7 +417,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-     int i;
- 
-     packet->flags = cpu_to_be32(p->flags);
--    packet->pages_alloc = cpu_to_be32(p->pages->allocated);
-+    packet->pages_alloc = cpu_to_be32(pages->allocated);
-     packet->normal_pages = cpu_to_be32(pages->normal_num);
-     packet->zero_pages = cpu_to_be32(zero_num);
-     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-@@ -953,7 +953,7 @@ static void *multifd_send_thread(void *opaque)
- 
-             if (migrate_mapped_ram()) {
-                 ret = file_write_ramblock_iov(p->c, p->iov, p->iovs_num,
--                                              p->pages->block, &local_err);
-+                                              pages->block, &local_err);
-             } else {
-                 ret = qio_channel_writev_full_all(p->c, p->iov, p->iovs_num,
-                                                   NULL, 0, p->write_flags,
-@@ -969,7 +969,7 @@ static void *multifd_send_thread(void *opaque)
-             stat64_add(&mig_stats.normal_pages, pages->normal_num);
-             stat64_add(&mig_stats.zero_pages, pages->num - pages->normal_num);
- 
--            multifd_pages_reset(p->pages);
-+            multifd_pages_reset(pages);
-             p->next_packet_size = 0;
- 
-             /*
-@@ -1690,9 +1690,10 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
- 
- bool multifd_send_prepare_common(MultiFDSendParams *p)
- {
-+    MultiFDPages_t *pages = p->pages;
-     multifd_send_zero_page_detect(p);
- 
--    if (!p->pages->normal_num) {
-+    if (!pages->normal_num) {
-         p->next_packet_size = 0;
-         return false;
-     }
+Thanks,
+
 -- 
-2.35.3
+Peter Xu
 
 
