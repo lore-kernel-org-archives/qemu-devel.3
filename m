@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69726C5320E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 06:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93212C52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 06:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sipyZ-0005cg-Ss; Tue, 27 Aug 2024 02:46:47 -0400
+	id 1sipyR-0004zQ-Co; Tue, 27 Aug 2024 02:46:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3LXbNZgUKCow9qBy5w44w1u.s426u2A-tuBu1343w3A.47w@flex--tavip.bounces.google.com>)
- id 1sipyO-0004mk-PG
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:36 -0400
+ <3JXbNZgUKCoQ1i3qxowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--tavip.bounces.google.com>)
+ id 1sipyG-00048j-P8
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:31 -0400
 Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3LXbNZgUKCow9qBy5w44w1u.s426u2A-tuBu1343w3A.47w@flex--tavip.bounces.google.com>)
- id 1sipyJ-0006B0-Ax
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:36 -0400
+ <3JXbNZgUKCoQ1i3qxowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--tavip.bounces.google.com>)
+ id 1sipy8-00069A-8T
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:24 -0400
 Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-20383bf72easo51894735ad.3
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 23:46:06 -0700 (PDT)
+ d9443c01a7336-201f45e20b1so56789215ad.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 23:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1724741165; x=1725345965; darn=nongnu.org;
+ d=google.com; s=20230601; t=1724741157; x=1725345957; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=bhR+L35SiqjkW6TlKGX3ijIk2Na9K+5U5H9NOs890v8=;
- b=Yn+xAIDwOrl3tvheW3eGtHUJu1ohEunRchqqROdFugle3FumG/58K9oaLjacawnUka
- mdS6apX5VjEDRAdSkhaXGbYsn2qMn1+CbB0wTsYZU/lqWYH46BXnCmUg+XGPp0mduPb2
- hkkrT+PSsrKQds1zz50BYYgTqYJcQHFqnwdNMRrblH6K3z+FkV/s0OCZD4RCiEIYpobZ
- Gr5+qJvkf7DjGBpCfeSYxhr5dhWfUXIjyI2AJC046ZHFt7IMF6r5wCJ9O/C19Cnvfr9n
- bel9ze/edUiMpEgfDfJZLPT3I2tFNz/5ZhasldLtZfcl6rHIbjOznRN1uPAkuKKRBL2k
- 33Iw==
+ bh=QAb7sPO/VgRC8CdmRh6+IgA62zqKsaHlo0fRBlzqmbo=;
+ b=mXEiDGiCmMUPWgan5Tq+yp6CEk6FNy03Wb6/T3NG3R37+7T2tSVUNAgeRxpZUilQDl
+ uRzXpBgriJQYBkgq8+RSpOUfo2cMgCnP2HkHVWwbq4qtsF791CfSf7O7NjLiiT2JA0/p
+ ATtiblQ878KrjAu84kjrjd3gh9O1aGt3+Cg0piVLUipnDVGNZ+n9NSpudoJvMheHaUQ/
+ Ceqb4btT5pXzdeXFmh6NDqpEpVZoMkoM26Gb1gTC9UoTkW7Uyymz7Pj3CCw1uDFoOu+G
+ Y7g2SKilieAuQXCn3BWZEd5VlzCknRkzstFLsUfNlbJu30Ppqa0+1I8LMVXuYi364OOJ
+ cJbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724741165; x=1725345965;
+ d=1e100.net; s=20230601; t=1724741157; x=1725345957;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bhR+L35SiqjkW6TlKGX3ijIk2Na9K+5U5H9NOs890v8=;
- b=aymDMAdA0SeX2FI/hwDPTnALcj5dj12BkIWpwZ85RGBouXNQDJNrqTay0qOvbGeOGz
- wwZXfqMKo8KEH0xv85J1Hh+M1Q2k95TDWxjFonrT6yTZVoe7MCREn4ZR6gSdBF8rKanM
- 8X4Ep9USWbirg5Dfax3YPTtjPNMSLXVzhFFOdr8HGAVhZv5EQ5/mjN9qu/TNUNejwQXp
- nO0ao3IsFpQkTRZ9Vp7gTCvYOdVEyQI8joko+fAPywseal/jpmhrDHUKo45dC/4yUhv/
- ZfzTwCPQ2sE3UmpAhkFBNqK+Tk2culrDslmjrO6PUF58y+/aIi3LJ4MHBYkISgaFi+Of
- 116Q==
-X-Gm-Message-State: AOJu0YwqZnseV9aIbfTm1eu6L9XLNVtqeV7g2uZfK8FjfeygVk3BZq7C
- 7GW7Ljprwo4iKO8/U23p7Uvi0IlA+6A+sZDTq/kOBHbePZsbtb7DzkQRhCji4M5mSsgLoJEhS67
- 5zsu2Lmdpdd5/qrr5UEwvHYhHeuNg5LTtlHk44PmcsjPSlQR0zXniBQlaoeuNJ1A8bOCYWsFlOt
- t0o6cKOU0rukxpNYEeQjVuXgdypg==
-X-Google-Smtp-Source: AGHT+IGqy0szNwUEWB4CrLtwthcLQXp7LfACKMjKDAVMpxrgI3D9EIZmWZoqGANHXI4KSsSZfOVRsqcCQw==
+ bh=QAb7sPO/VgRC8CdmRh6+IgA62zqKsaHlo0fRBlzqmbo=;
+ b=sHZ86mdE3PEgq7kzcFdpatYrRg5FEszTHH3efZ0UVCQyDcBoqN43yIs0lB0rrrnNPK
+ Pc+raU1qFXbrMWkBmBQ1HEFvGtxsiikniJqzv1/KKIiq8ihZUkiU2mjOMoW1ZvVi65zS
+ kMNbZ/6+2Krkx+0gbUHbP+aW/iTr0mBGsNOSt5+Y2DszKWnlOIGDwONC6WEIWuxJYJ1N
+ vrv/j0JOGLhuBjoOvuJqXXCjFsc3oS5uYoYsyejzhHoj7kQmC85bNPYEKacorwyOTAqp
+ xUw7qmhMk+LsCjCK+pmh9v/hJ4AIguPONu6PoIfVpTKW0Mx95Z7lts5cOTmbnCLqBsqG
+ Lbzw==
+X-Gm-Message-State: AOJu0YxfDH1+2RcWnb58Nnk9u5+Gm1YlmWzU2SJyCdGrGzyqeGoptRIB
+ 9Hl5VsHDolkWbqixjXnwiJ1bdgXQYIBruArkLbfML/RgDlfUXUmqgkAWfL3+8t2xDVbvNEw5fxU
+ WCiLpPn69nazqquGW8tjsoUykBKKno/gtS0VeDogngOgpSr8lbzU+86jbY/rIyWkDSMSW+gAv+f
+ B2+lMai2/MAM8JsFpMnF9IKFP+sA==
+X-Google-Smtp-Source: AGHT+IGGDHDaHIOyerwmDa1pORPASHNqhtE5CtalgNsFYqYIDRdbHccitQGm3u0FBIuFfW8Izaow1dOAOw==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a17:902:d50d:b0:203:616a:8673
+ (user=tavip job=sendgmr) by 2002:a17:903:1210:b0:1fc:369b:c1b5
  with SMTP id
- d9443c01a7336-2039e4d5cdfmr12236925ad.5.1724741165045; Mon, 26 Aug 2024
- 23:46:05 -0700 (PDT)
-Date: Mon, 26 Aug 2024 23:45:22 -0700
+ d9443c01a7336-204df43252emr843855ad.5.1724741157078; Mon, 26 Aug 2024
+ 23:45:57 -0700 (PDT)
+Date: Mon, 26 Aug 2024 23:45:18 -0700
 In-Reply-To: <20240827064529.1246786-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240827064529.1246786-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-Message-ID: <20240827064529.1246786-19-tavip@google.com>
-Subject: [RFC PATCH v3 18/24] hw/misc: add i2c-tester
+Message-ID: <20240827064529.1246786-15-tavip@google.com>
+Subject: [RFC PATCH v3 14/24] tests/qtest: add register access macros and
+ functions
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -73,7 +74,7 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3LXbNZgUKCow9qBy5w44w1u.s426u2A-tuBu1343w3A.47w@flex--tavip.bounces.google.com;
+ envelope-from=3JXbNZgUKCoQ1i3qxowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--tavip.bounces.google.com;
  helo=mail-pl1-x64a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
@@ -98,185 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a simple i2c peripheral to be used for testing I2C device
-models. The peripheral has a fixed number of registers that can be
-read and written.
+Add utility macros for accessing register or register bit fields in
+tests, e.g.:
+
+  REG32_WRITE(FLEXCOMM, PSELID, persel);
+  g_assert(REG32_READ_FIELD(FLEXCOMM, PSELID, PERSEL) == persel);
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- include/hw/misc/i2c_tester.h | 30 ++++++++++++
- hw/misc/i2c_tester.c         | 94 ++++++++++++++++++++++++++++++++++++
- hw/misc/Kconfig              |  5 ++
- hw/misc/meson.build          |  2 +
- 4 files changed, 131 insertions(+)
- create mode 100644 include/hw/misc/i2c_tester.h
- create mode 100644 hw/misc/i2c_tester.c
+ tests/qtest/reg-utils.h | 70 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
+ create mode 100644 tests/qtest/reg-utils.h
 
-diff --git a/include/hw/misc/i2c_tester.h b/include/hw/misc/i2c_tester.h
+diff --git a/tests/qtest/reg-utils.h b/tests/qtest/reg-utils.h
 new file mode 100644
-index 0000000000..f6b6491008
+index 0000000000..e09aaf3333
 --- /dev/null
-+++ b/include/hw/misc/i2c_tester.h
-@@ -0,0 +1,30 @@
++++ b/tests/qtest/reg-utils.h
+@@ -0,0 +1,70 @@
 +/*
++ * Register access utilities for device tests.
 + *
-+ * Copyright (c) 2024 Google LLC
++ * Copyright (C) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
 + * This work is licensed under the terms of the GNU GPL, version 2 or later.
 + * See the COPYING file in the top-level directory.
 + */
++#ifndef _REG_UTILS_H
++#define _REG_UTILS_H
 +
-+#ifndef HW_I2C_TESTER_H
-+#define HW_I2C_TESTER_H
++#include "libqtest-single.h"
++#include "hw/registerfields.h"
 +
-+#include "qemu/osdep.h"
-+#include "hw/i2c/i2c.h"
-+#include "hw/irq.h"
++#ifdef DEBUG_REG
++#define debug(fmt, args...) fprintf(stderr, fmt, ## args)
++#else
++#define debug(fmt, args...)
++#endif
 +
-+#define I2C_TESTER_NUM_REGS    0x31
++#define _REG_OFF(mod, reg) (A_##mod##_##reg)
 +
-+#define TYPE_I2C_TESTER "i2c-tester"
-+#define I2C_TESTER(obj) OBJECT_CHECK(I2cTesterState, (obj), TYPE_I2C_TESTER)
++#define REG32_READ(mod, reg)                                            \
++    ({                                                                  \
++        uint32_t value;                                                 \
++        value = readl(mod##_BASE + _REG_OFF(mod, reg));                 \
++        debug("[%s] -> %08x\n", #reg, value);                           \
++        value;                                                          \
++    })
 +
-+typedef struct {
-+    I2CSlave i2c;
-+    bool set_reg_idx;
-+    uint8_t reg_idx;
-+    uint8_t regs[I2C_TESTER_NUM_REGS];
-+} I2cTesterState;
++#define REG32_WRITE(mod, reg, value)                                    \
++    do {                                                                \
++        debug("[%s] <- %08x\n", #reg, value);                           \
++        writel(mod##_BASE + _REG_OFF(mod, reg), value);                 \
++    } while (0)
 +
-+#endif /* HW_I2C_TESTER_H */
-diff --git a/hw/misc/i2c_tester.c b/hw/misc/i2c_tester.c
-new file mode 100644
-index 0000000000..3d7986a954
---- /dev/null
-+++ b/hw/misc/i2c_tester.c
-@@ -0,0 +1,94 @@
-+/*
-+ * Simple I2C peripheral for testing I2C device models.
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
++#define REG_FIELD_VAL(v, mod, reg, field)                               \
++    FIELD_EX32(v, mod##_##reg, field)                                   \
 +
-+#include "hw/misc/i2c_tester.h"
++#define REG32_READ_FIELD(mod, reg, field)                   \
++    REG_FIELD_VAL(REG32_READ(mod, reg), mod, reg, field)
 +
-+#include "qemu/log.h"
-+#include "qemu/module.h"
++#define REG32_WRITE_FIELD(mod, reg, field, val)                         \
++    do {                                                                \
++        uint32_t _tmp = REG32_READ(mod, reg);                           \
++        _tmp = FIELD_DP32(_tmp, mod##_##reg, field, val);               \
++        REG32_WRITE(mod, reg, _tmp);                                    \
++    } while (0)
 +
-+static void i2c_tester_reset(DeviceState *ds)
-+{
-+    I2cTesterState *s = I2C_TESTER(ds);
++#define REG32_WRITE_FIELD_NOUPDATE(mod, reg, field, val)                \
++    do {                                                                \
++        uint32_t _tmp = FIELD_DP32(0, mod##_##reg, field, val);         \
++        REG32_WRITE(mod, reg, _tmp);                                    \
++    } while (0)
 +
-+    s->set_reg_idx = false;
-+    s->reg_idx     = 0;
-+    memset(s->regs, 0, I2C_TESTER_NUM_REGS);
-+}
++#define WAIT_REG32_FIELD(ns, mod, reg, field, val)                      \
++    do {                                                                \
++        clock_step(ns);                                                 \
++        g_assert_cmpuint(REG32_READ_FIELD(mod, reg, field), ==, val);   \
++    } while (0)
 +
-+static int i2c_tester_event(I2CSlave *i2c, enum i2c_event event)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
++#define REG32_READ_FAIL(mod, reg) \
++    readl_fail(mod##_BASE + _REG_OFF(mod, reg))
 +
-+    if (event == I2C_START_SEND) {
-+        s->set_reg_idx = true;
-+    }
++#define REG32_WRITE_FAIL(mod, reg, value) \
++    writel_fail(mod##_BASE + _REG_OFF(mod, reg), value)
 +
-+    return 0;
-+}
-+
-+static uint8_t i2c_tester_rx(I2CSlave *i2c)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    return s->regs[s->reg_idx];
-+}
-+
-+static int i2c_tester_tx(I2CSlave *i2c, uint8_t data)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->set_reg_idx) {
-+        /* Setting the register in which the operation will be done. */
-+        s->reg_idx = data;
-+        s->set_reg_idx = false;
-+        return 0;
-+    }
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    /* Write reg data. */
-+    s->regs[s->reg_idx] = data;
-+
-+    return 0;
-+}
-+
-+static void i2c_tester_class_init(ObjectClass *oc, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    I2CSlaveClass *isc = I2C_SLAVE_CLASS(oc);
-+
-+    dc->reset = i2c_tester_reset;
-+
-+    isc->event = i2c_tester_event;
-+    isc->recv = i2c_tester_rx;
-+    isc->send = i2c_tester_tx;
-+}
-+
-+static const TypeInfo i2c_tester_types[] = {
-+    {
-+        .name = TYPE_I2C_TESTER,
-+        .parent = TYPE_I2C_SLAVE,
-+        .instance_size = sizeof(I2cTesterState),
-+        .class_init = i2c_tester_class_init
-+    },
-+};
-+
-+DEFINE_TYPES(i2c_tester_types);
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 4b688aead2..3e93c12c8e 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -213,6 +213,11 @@ config IOSB
- config XLNX_VERSAL_TRNG
-     bool
- 
-+config I2C_TESTER
-+    bool
-+    default y if TEST_DEVICES
-+    depends on I2C
-+
- config FLEXCOMM
-     bool
-     select I2C
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index df36b45d9f..a0f7a52a23 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -157,6 +157,8 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- # HPPA devices
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
- 
-+system_ss.add(when: 'CONFIG_I2C_TESTER', if_true: files('i2c_tester.c'))
-+
- system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
- system_ss.add(when: 'CONFIG_RT500_CLKCTL', if_true: files('rt500_clkctl0.c', 'rt500_clkctl1.c'))
- system_ss.add(when: 'CONFIG_RT500_RSTCTL', if_true: files('rt500_rstctl.c'))
++#endif /* _REG_UTILS_H */
 -- 
 2.46.0.295.g3b9ea8a38a-goog
 
