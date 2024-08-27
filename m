@@ -4,82 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C94C5320E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 04:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 499CDC52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 04:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sinbM-0001Z2-3s; Tue, 27 Aug 2024 00:14:40 -0400
+	id 1sinbj-0002Ar-Gv; Tue, 27 Aug 2024 00:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sinbK-0001XC-85; Tue, 27 Aug 2024 00:14:38 -0400
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sinbi-00028W-8G
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:15:02 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sinbH-0007T4-FY; Tue, 27 Aug 2024 00:14:37 -0400
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-844f07f6205so699517241.0; 
- Mon, 26 Aug 2024 21:14:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sinbf-0007YK-Py
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:15:01 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-715c160e231so424056b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 21:14:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724732073; x=1725336873; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IRThoTPXKqJ5/2Omh96xk9S4odwj/TtWtCREJ+qbYWE=;
- b=P2pHs9ybmmagChCGyj09xPMNRNuuNdz077szco8+e6Bd2rn623POrfWJ4dD1IEHJhQ
- JUT/cGdcTRs6r0M3rYsO/2ncXlnD6qGKAG4daPHsm5M6XuH5J0AD2yJCYR55YH7cXrWM
- +8L0TNoR0j6drOuZhiFclGJbCUxLLkwDnuLlYrB+ScvvxCe7w3JYMjEkgRv/64makELT
- etq5ELdsr2KDzdF8HpyNkmaB3mvey8A1rEALkvpPt+jgDY+U9u/y6uAHYvjEvGLpd5ga
- Om7OBFPpukcqvXc3jFEtHEuSii4lvJoXEyyTiarUevQSYBHXtjJTESgoKuayD3VlQ0I2
- hwww==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724732098; x=1725336898;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gqHqJgbZo0KivzNdU2q5jwvgD2jxYYEOXuDIiJYz5Ow=;
+ b=iig2qPxJYPYm8MPoMMl8LQMXG4KWRLeZ4oYfTu3NI6rYr5CCtHNj3qjGqCcH6XnJro
+ KXeFk6eZQ+sq+bXbhxtf+1GWyPY8gu+iXInTDKsayb5/HVhI2Zb+C7hGNAJmA+/db/34
+ Htwr5JXZtHUCMFZPxIydYwDJJ6IBFn5lkFUYkruWZ0HHIKlPoHvzGMvRORSkpOpQqL9L
+ 7ci4hYtYMhP038xjBQ1i0Id9MZacULV2V7vk95aDP20BTYm1T4KbXBlDcLZ34WXA2RMZ
+ yHPqjSBiNG9FZZCHpRzx+wvXezFx8N86lhVBGKuDoaQtaKLPYQs1uhDxFB6yzb1JjJ/h
+ ehRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724732073; x=1725336873;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IRThoTPXKqJ5/2Omh96xk9S4odwj/TtWtCREJ+qbYWE=;
- b=aUh7JDwks1TZIOKCSMHDWuPhKdqQfDJjv++uXhtM7sv87+flRP67u1FrDSFrJ6cA0j
- nKuH01bK9a7Z4tbvW6+SGY/1AdO5rSjsi2w6ZLrosovXnQDAKKg9lDpF7YZKkggWHedB
- ZJdROAB/Shpbev4jh6rosm3zzlyRI2zjMYgxa3Mu2/p/S7WHBRlkvuSNN2XEFPgHB20J
- dy/f44RCV7QIk7G6sYMiQaFpyz9B2Oz9LmESowxSgpbvVmZskGUfJTM3uhpGxXaYBUzj
- U2KBB7IGn/E3M+VijWRgj3AS470BR5zQrcFiuvmegc6b3jLyFNYhdsSMLh7sbziLAiEs
- 7+bg==
+ d=1e100.net; s=20230601; t=1724732098; x=1725336898;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gqHqJgbZo0KivzNdU2q5jwvgD2jxYYEOXuDIiJYz5Ow=;
+ b=hLVKJCdbYFrGEHbhAyK92SdIbmt5uxYaSpNKWtIBuXfH0J1qS2Kp4F97/94XCuoQXk
+ hkccBWfgt4hPN+fFV/PlcFM+Vk6bjhCRaB/DYe8WW99hMXE0s6PGgh786rywZnZyJWu6
+ SYKhH7EDMXkeqxy9DS4Z/vLrfkWoO80y+ltsh6YuAdUudgNDA6IuG/ClngaiIi5kfGwx
+ LXz424QOobEH7rA32kG+DcCgmd075IYWwZ5jGdkqu4rfaXij9+hqjTD8rg3m75Eayq/P
+ EYNOq7uxmQcsYevBuGYxk2H5c1GQOWO+x6e5l5UsvMTT8vh4WsuxsTLLpkt4+suMvlfH
+ vR1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXxYNmo51gzIaSF27ts2s95lq5oTViteOW2aR8kpFMrshYRlqFn3WF1WBcaZCo1vclEHhjAUQQgZd+@nongnu.org
-X-Gm-Message-State: AOJu0YxlLgw5wLw2pKtxDyQaIPZRdUGGGpEZVLkbtC+zGgi1WYW3+bRm
- Z0VGXiDktxZIsS3MuYyfNYVZCV+gZzObQHDvgqj7zcDgM+HrqSPBXPLFdlVWJGtpVSi9/b5gHmc
- E1MOLCZdCBKL0Ef/3sH64eRGHs+iBb50p0d8=
-X-Google-Smtp-Source: AGHT+IEikwlD3dny/prLmH2z+r3gibWfWwpwGXfk1H6O/9zfw0dNe7WPVPxvLrzTWA5VCBVqajh09d1SFA6bNESa68U=
-X-Received: by 2002:a05:6102:955:b0:493:e66f:6bac with SMTP id
- ada2fe7eead31-498f457e7c6mr14610606137.11.1724732073376; Mon, 26 Aug 2024
- 21:14:33 -0700 (PDT)
+ AJvYcCX3uju8DLa+cVBrQwA8EaOfF5v61Bu3rW3O+TcPNRF/H5AC266SweGzUi7NpVSHZh0c3Yoy1wZcbccd@nongnu.org
+X-Gm-Message-State: AOJu0Yxqq8vZEBH2SmpaPoyazJ7noyon4D46oKWuspbPEl6ib/uIrQy2
+ ECsGlZj793FY2E2QhUxn+0DlPS6oYSus4SbN6RrYn6DPSeyM/2j8sD8UPQP4i8vBZK2tusB2ajj
+ I+kg=
+X-Google-Smtp-Source: AGHT+IEX+vktriqedvW77C7o2NsHfmlTbtnnhXhPVKaFNYcPaGe6FADrQc8GrAK/fmY7ZTpbq+TtWg==
+X-Received: by 2002:a05:6a00:3cd1:b0:714:2533:1b82 with SMTP id
+ d2e1a72fcca58-714458667a7mr13972730b3a.23.1724732097878; 
+ Mon, 26 Aug 2024 21:14:57 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71434231362sm8025850b3a.11.2024.08.26.21.14.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Aug 2024 21:14:57 -0700 (PDT)
+Message-ID: <161cb8ff-1479-4fc4-8803-d665e757007a@daynix.com>
+Date: Tue, 27 Aug 2024 13:14:51 +0900
 MIME-Version: 1.0
-References: <20240826152949.294506-1-debug@rivosinc.com>
- <20240826152949.294506-7-debug@rivosinc.com>
-In-Reply-To: <20240826152949.294506-7-debug@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 27 Aug 2024 14:14:07 +1000
-Message-ID: <CAKmqyKOXL85J9kM10cuh-JeVjU6ovy8vkMbkAj=ReE9E+xrL0A@mail.gmail.com>
-Subject: Re: [PATCH v9 06/17] target/riscv: zicfilp `lpad` impl and branch
- tracking
-To: Deepak Gupta <debug@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, 
- andy.chiu@sifive.com, richard.henderson@linaro.org, kito.cheng@sifive.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/7] memory: Do not create circular reference with
+ subregion
+To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
+ <20240823-san-v4-6-a24c6dfa4ceb@daynix.com> <Zsydli9ME1u79A9X@x1n>
+ <CAFEAcA_uT3Db22V=Anqci_k6zOaAV7Qua2S1OVFxW_DQyh3bAA@mail.gmail.com>
+ <Zszain3SH5cl9ohH@x1n>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <Zszain3SH5cl9ohH@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::434;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,141 +116,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 27, 2024 at 1:33=E2=80=AFAM Deepak Gupta <debug@rivosinc.com> w=
-rote:
->
-> Implements setting lp expected when `jalr` is encountered and implements
-> `lpad` instruction of zicfilp. `lpad` instruction is taken out of
-> auipc x0, <imm_20>. This is an existing HINTNOP space. If `lpad` is
-> target of an indirect branch, cpu checks for 20 bit value in x7 upper
-> with 20 bit value embedded in `lpad`. If they don't match, cpu raises a
-> sw check exception with tval =3D 2.
->
-> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-> Co-developed-by: Jim Shu <jim.shu@sifive.com>
-> Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On 2024/08/27 4:42, Peter Xu wrote:
+> On Mon, Aug 26, 2024 at 06:10:25PM +0100, Peter Maydell wrote:
+>> On Mon, 26 Aug 2024 at 16:22, Peter Xu <peterx@redhat.com> wrote:
+>>>
+>>> On Fri, Aug 23, 2024 at 03:13:11PM +0900, Akihiko Odaki wrote:
+>>>> memory_region_update_container_subregions() used to call
+>>>> memory_region_ref(), which creates a reference to the owner of the
+>>>> subregion, on behalf of the owner of the container. This results in a
+>>>> circular reference if the subregion and container have the same owner.
+>>>>
+>>>> memory_region_ref() creates a reference to the owner instead of the
+>>>> memory region to match the lifetime of the owner and memory region. We
+>>>> do not need such a hack if the subregion and container have the same
+>>>> owner because the owner will be alive as long as the container is.
+>>>> Therefore, create a reference to the subregion itself instead ot its
+>>>> owner in such a case; the reference to the subregion is still necessary
+>>>> to ensure that the subregion gets finalized after the container.
+>>>>
+>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>> ---
+>>>>   system/memory.c | 8 ++++++--
+>>>>   1 file changed, 6 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/system/memory.c b/system/memory.c
+>>>> index 5e6eb459d5de..e4d3e9d1f427 100644
+>>>> --- a/system/memory.c
+>>>> +++ b/system/memory.c
+>>>> @@ -2612,7 +2612,9 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+>>>>
+>>>>       memory_region_transaction_begin();
+>>>>
+>>>> -    memory_region_ref(subregion);
+>>>> +    object_ref(mr->owner == subregion->owner ?
+>>>> +               OBJECT(subregion) : subregion->owner);
+>>>
+>>> The only place that mr->refcount is used so far is the owner with the
+>>> object property attached to the mr, am I right (ignoring name-less MRs)?
+>>>
+>>> I worry this will further complicate refcounting, now we're actively using
+>>> two refcounts for MRs..
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+The actor of object_ref() is the owner of the memory region also in this 
+case. We are calling object_ref() on behalf of mr->owner so we use 
+mr->refcount iff mr->owner == subregion->owner. In this sense there is 
+only one user of mr->refcount even after this change.
 
-Alistair
+>>>
+>>> Continue discussion there:
+>>>
+>>> https://lore.kernel.org/r/067b17a4-cdfc-4f7e-b7e4-28c38e1c10f0@daynix.com
+>>>
+>>> What I don't see is how mr->subregions differs from mr->container, so we
+>>> allow subregions to be attached but not the container when finalize()
+>>> (which is, afaict, the other way round).
+>>>
+>>> It seems easier to me that we allow both container and subregions to exist
+>>> as long as within the owner itself, rather than start heavier use of
+>>> mr->refcount.
+>>
+>> I don't think just "same owner" necessarily will be workable --
+>> you can have a setup like:
+>>    * device A has a container C_A
+>>    * device A has a child-device B
+>>    * device B has a memory region R_B
+>>    * device A's realize method puts R_B into C_A
+>>
+>> R_B's owner is B, and the container's owner is A,
+>> but we still want to be able to get rid of A (in the process
+>> getting rid of B because it gets unparented and unreffed,
+>> and R_B and C_A also).
+> 
+> For cross-device references, should we rely on an explicit call to
+> memory_region_del_subregion(), so as to detach the link between C_A and
+> R_B?
 
-> ---
->  target/riscv/cpu_user.h                 |  1 +
->  target/riscv/insn32.decode              |  5 ++-
->  target/riscv/insn_trans/trans_rvi.c.inc | 55 +++++++++++++++++++++++++
->  3 files changed, 60 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/cpu_user.h b/target/riscv/cpu_user.h
-> index 02afad608b..e6927ff847 100644
-> --- a/target/riscv/cpu_user.h
-> +++ b/target/riscv/cpu_user.h
-> @@ -15,5 +15,6 @@
->  #define xA6 16
->  #define xA7 17  /* syscall number for RVI ABI */
->  #define xT0 5   /* syscall number for RVE ABI */
-> +#define xT2 7
->
->  #endif
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index c45b8fa1d8..27108b992b 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -123,7 +123,10 @@ sfence_vm   0001000    00100 ..... 000 00000 1110011=
- @sfence_vm
->
->  # *** RV32I Base Instruction Set ***
->  lui      ....................       ..... 0110111 @u
-> -auipc    ....................       ..... 0010111 @u
-> +{
-> +  lpad   label:20                   00000 0010111
-> +  auipc  ....................       ..... 0010111 @u
-> +}
->  jal      ....................       ..... 1101111 @j
->  jalr     ............     ..... 000 ..... 1100111 @i
->  beq      ....... .....    ..... 000 ..... 1100011 @b
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
-trans/trans_rvi.c.inc
-> index 98e3806d5e..b427f3a939 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -36,6 +36,49 @@ static bool trans_lui(DisasContext *ctx, arg_lui *a)
->      return true;
->  }
->
-> +static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-> +{
-> +    /*
-> +     * fcfi_lp_expected can set only if fcfi was eanbled.
-> +     * translate further only if fcfi_lp_expected set.
-> +     * lpad comes from NOP space anyways, so return true if
-> +     * fcfi_lp_expected is false.
-> +     */
-> +    if (!ctx->fcfi_lp_expected) {
-> +        return true;
-> +    }
-> +
-> +    ctx->fcfi_lp_expected =3D false;
-> +    if ((ctx->base.pc_next) & 0x3) {
-> +        /*
-> +         * misaligned, according to spec we should raise sw check except=
-ion
-> +         */
-> +        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> +                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-> +        gen_helper_raise_exception(tcg_env,
-> +                      tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-> +        return true;
-> +    }
-> +
-> +    /* per spec, label check performed only when embedded label non-zero=
- */
-> +    if (a->label !=3D 0) {
-> +        TCGLabel *skip =3D gen_new_label();
-> +        TCGv tmp =3D tcg_temp_new();
-> +        tcg_gen_extract_tl(tmp, get_gpr(ctx, xT2, EXT_NONE), 12, 20);
-> +        tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->label, skip);
-> +        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> +                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-> +        gen_helper_raise_exception(tcg_env,
-> +                      tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-> +        gen_set_label(skip);
-> +    }
-> +
-> +    tcg_gen_st8_tl(tcg_constant_tl(0), tcg_env,
-> +                  offsetof(CPURISCVState, elp));
-> +
-> +    return true;
-> +}
-> +
->  static bool trans_auipc(DisasContext *ctx, arg_auipc *a)
->  {
->      TCGv target_pc =3D dest_gpr(ctx, a->rd);
-> @@ -75,6 +118,18 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a=
-)
->      gen_set_gpr(ctx, a->rd, succ_pc);
->
->      tcg_gen_mov_tl(cpu_pc, target_pc);
-> +    if (ctx->fcfi_enabled) {
-> +        /*
-> +         * return from functions (i.e. rs1 =3D=3D xRA || rs1 =3D=3D xT0)=
- are not
-> +         * tracked. zicfilp introduces sw guarded branch as well. sw gua=
-rded
-> +         * branch are not tracked. rs1 =3D=3D xT2 is a sw guarded branch=
-.
-> +         */
-> +        if (a->rs1 !=3D xRA && a->rs1 !=3D xT0 && a->rs1 !=3D xT2) {
-> +            tcg_gen_st8_tl(tcg_constant_tl(1),
-> +                          tcg_env, offsetof(CPURISCVState, elp));
-> +        }
-> +    }
-> +
->      lookup_and_goto_ptr(ctx);
->
->      if (misaligned) {
-> --
-> 2.44.0
->
->
+Yes, I agree.
+
+> 
+> My understanding so far: logically when MR finalize() it should guarantee
+> both (1) mr->container==NULL, and (2) mr->subregions empty.  That's before
+> commit 2e2b8eb70fdb7dfb and could be the ideal world (though at the very
+> beginning we don't assert on ->container==NULL yet).  It requires all
+> device emulations to do proper unrealize() to unlink all the MRs.
+> 
+> However what I'm guessing is QEMU probably used to have lots of devices
+> that are not following the rules and leaking these links.  Hence we have
+> had 2e2b8eb70fdb7dfb, allowing that to happen as long as it's safe, and
+> it's justified by comment in 2e2b8eb70fdb7dfb on why it's safe.
+> 
+> What I was thinking is this comment seems to apply too to mr->container, so
+> that it should be safe too to unlink ->container the same way as its own
+> subregions. >
+> IIUC that means for device-internal MR links we should be fine leaving
+> whatever link between MRs owned by such device; the device->refcount
+> guarantees none of them will be visible in any AS.  But then we need to
+> always properly unlink the MRs when the link is across >1 device owners,
+> otherwise it's prone to leak.
+
+There is one principle we must satisfy in general: keep a reference to a 
+memory region if it is visible to the guest.
+
+It is safe to call memory_region_del_subregion() and to trigger the 
+finalization of subregions when the container is not referenced because 
+they are no longer visible. This is not true for the other way around; 
+even when subregions are not referenced by anyone else, they are still 
+visible to the guest as long as the container is visible to the guest. 
+It is not safe to unref and finalize them in such a case.
+
+A memory region and its owner will leak if a memory region kept visible 
+for a too long period whether the chain of reference contains a 
+container/subregion relationship or not.
+
+Regards,
+Akihiko Odaki
 
