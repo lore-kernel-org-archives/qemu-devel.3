@@ -4,71 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EA6C54734
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 11:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB37C54735
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 11:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siuIa-0002Hg-TO; Tue, 27 Aug 2024 07:23:44 -0400
+	id 1siuIl-0002gl-GP; Tue, 27 Aug 2024 07:23:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1siuIY-0002Dt-OX
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:42 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1siuId-0002UC-Rp
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:48 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1siuIU-0000hZ-Kv
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:42 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5334adf7249so6327762e87.3
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 04:23:37 -0700 (PDT)
+ id 1siuIb-0000iS-PX
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:47 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-53349d3071eso6501600e87.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 04:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724757816; x=1725362616; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oMVm/v+jQDrT8BtxJWUOTVTd+QdK/nIZHjMLBY365fs=;
- b=qAQYaRCez/GHhqdoXdaHNHdlLIuZgw3BbNOnQKqIheyxiNdQ6YNzQKTQ3TwfQlmvsu
- NAAN8T/WoNefvh5+Fl8iaB4Lf/pLa0IOe/5QS8870KCbcOX4mZPwA/mbX3p3ttxz3qgY
- psaveACyjwUVy9a4j33az9/ImVSk+2iXj2ozBdl0BTbXWIy+Dy5YXnAr6yRUIcUfelo1
- ey+eBGRD4ytOZYPEQp2eB3BuL33PAwfBnY9xpcXPAHTBqBsF6pqlg1uHctOsFwDop3Sa
- z/4gDO99ax/3oVYHZsrD3xNL5XWWINANwOuD7T2p5RvS2mmfOtH4vXtcHusIkEABPHTW
- 3Mbg==
+ d=linaro.org; s=google; t=1724757824; x=1725362624; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ejIq34eU8g4lAxI8GBYvWXzFq8igCRIQX1rzGEt4Sjo=;
+ b=r9Bvuy3Q3XViU+oVIOMVrSp9oz5w9UTeg/TIGI7mYS1Zlyy9bEUClV5tf4e1y4hugz
+ mCkSVfhjlxEyNzuIwHVuQtkTfXkVP4InkXkxwiFyd3Ukp11HEq/giT/IHiULQd9zmqyH
+ utfirihQNPX2caGiWOT112YsNQeTc4KZejTMTyfkmGVZfMzPHNQTqrSa2sarb07OnL8t
+ OAsbr3RukweYmfXfvx0mwLeeuAVfahT7UgoQEGIPkQHyZuHLR3u5/f17ankJBXr5jGxM
+ ocRvN2yHed3EE4LNVGsUh0Fb3MOO/F4cZruyEJ5/EW5q3Ljo4sNekUs+jGYiNSvPwXb6
+ U/CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724757816; x=1725362616;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oMVm/v+jQDrT8BtxJWUOTVTd+QdK/nIZHjMLBY365fs=;
- b=AM1jswJx5OoayPHVGMgVGqYZygdq8E+tmdxW2f39JaWjV2yrJSq7QfmI1o5GpQHQMg
- JJCDp02TvZxckTrccIaHuGGUu2MBAnQ6fSCnSwE6ZzzCUjUdpOVu/eaovnKBV8+OmJEm
- E4UNwfdAVA387a43m1ZnUPrfPXRYVCOLlsYuVQ2zebttGRFEUSKqOO3wNnx/ABjn3nDE
- X98dCpHGX6BrFKgLXltFrXEWTvEGRJmicxgb6cHLmBM+TZv/lun8vTRgNBZ/YNzbeq87
- C+CTPMmrdvhV7aQeMyrktnHIJXgfNmxx6RWFm80CSFJHqsufAoehmNnfAbBrP7F7E6SU
- 3yFg==
-X-Gm-Message-State: AOJu0YxD3WZBbO0GefePCJ3oMH08JxL/NsaDf1BawmE0LBvqSeBvzeK9
- i25R9I73kcN7XDx4oZ7kjqH454jhm9Vt9i1B/r7CD6sacvG1EA7kyFPzIy1iUdO9UZnJPStdwZt
- gY+E=
-X-Google-Smtp-Source: AGHT+IFW7Upuwihz6szOKb2lIHRqKHodQ4VKVmG8/GYpjfYUbOJcaeekB8KMb1tsiLqmJPWWqX+q/A==
-X-Received: by 2002:a05:6512:e9a:b0:530:c212:4a5a with SMTP id
- 2adb3069b0e04-5344e3c9983mr1664718e87.22.1724757815721; 
- Tue, 27 Aug 2024 04:23:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724757824; x=1725362624;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ejIq34eU8g4lAxI8GBYvWXzFq8igCRIQX1rzGEt4Sjo=;
+ b=Bow9Abim0H+uq30CxQsd752hJVB00mPjKBbKplWy8SVy9GDBJXL2moaarAJ+8NdKKz
+ HNosWqJsVoiiXj3nHR8HZ13sKakomuBFuuJYXgkIIgFT6qtQHnmKGSKlm6KUqoRxYOxj
+ GfVfy0qZahLyVS6v3ZSx9sewR5KFNy28QFx4eX/LhitDELYWGbeEYaxG/LP268psutK4
+ 2ShXnVxCYOMvN51R6lRQ2aU2F+uwd53+V03Pa4UnBCpf6yRqGGDL+uIxKfH5UAa5vFBI
+ sgz5vHL+gVj+3jRcEX1iBUrFZwK6QiIJ16vMALsDdLMdyQMANFlFe8DhSuSuhXiNs1XK
+ 1OqQ==
+X-Gm-Message-State: AOJu0YyXt+82abnDTv0LveWNl/keOYbWyFfzI1hfri3aOc5ToZcSpnHe
+ kG2+khRV3wB2+MrVOzFzWyzn1umDfABHRUYRUX7JCGlMe7a1wdki2cqxhJMX3cE=
+X-Google-Smtp-Source: AGHT+IEz2XOWXqggUQvLXvHScLYqUR+hu8JPTfEfnUWUPcooRe7/SnTURBfzu785qEjpCIqOW1ds0g==
+X-Received: by 2002:a05:6512:b1c:b0:52e:74f5:d13 with SMTP id
+ 2adb3069b0e04-5343878504emr9343459e87.30.1724757823741; 
+ Tue, 27 Aug 2024 04:23:43 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-242.37.6.163.tellas.gr. [37.6.163.242])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e594fa62sm96280066b.198.2024.08.27.04.23.33
+ a640c23a62f3a-a86e594fa62sm96280066b.198.2024.08.27.04.23.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 04:23:35 -0700 (PDT)
+ Tue, 27 Aug 2024 04:23:43 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v9 0/9] Add Rust build support, ARM PL011 device impl
-Date: Tue, 27 Aug 2024 14:23:09 +0300
-Message-Id: <20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org>
+Date: Tue, 27 Aug 2024 14:23:12 +0300
+Subject: [PATCH v9 3/9] configure, meson: detect Rust toolchain
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAB23zWYC/1WMywqDMBBFf0Vm3ZQ8TE1c9T9KF1qjDoiRiZUW8
- d87FQp1eS73nBVSIAwJymwFCgsmjCODP2Xw6KuxCwIbZtBS59KpXNAzzWIapFJiKYBvE4UWX3v
- idmfuMc2R3nuRH7z+ZHuUhRS+sMrY4J0z6jrgWFE8R+rg21ncn6vNwXXs1r61RX6pm6o1B3fbt
- g9ZjDza1wAAAA==
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240827-rust-pl011-v9-3-e90b9c28f861@linaro.org>
+References: <20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org>
+In-Reply-To: <20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
@@ -83,30 +80,30 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.15-dev-b8758
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7838;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6784;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=kul2ENg99DUpnaWYBxvyPVd7Ry/m5MSOf9TcYNEzaHY=;
+ bh=pJ5CgorGDzauB+8u0nygLE2C+mcB16PY5jVjS+FWntY=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm16YmN6MVdVYmtTSEtsM1A3OHVzK0JjSE9QY3QzClM5WU5BdXdpZ1VidnpqTEJ5
- dWlKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnMyM013QUt
- DUkIzS2Nkd2YzNEowRUlXRC85eHVZYlBpT1ROcjdzYUxYemRrb1VHZUhyWU5XQzUyR0dod04vcQ
- prcFVrOW8yeVRLWExyc1A3RWEreW1EbW5jZXlZZlU5Znd4NlpCbFhJVFBDM21mUTkzVnhnWHVEV
- ExGUEoySUVXCkNMdUVUQ0Vqb2kvU00vVVQyZFh2R1VscHBkbGpvazdWNmxBU1N6NDFkN0VYTzRH
- aE80KzBVR282d1BvaStzUTUKSXNLdXpVNzY3Snp5Q0dQQmJ2Q21RVTZBL2ZUUXFzM0dzMUpUUkp
- 0a256bVV4NlVmWGZpNnJGU2JaSVhSTklwUgpvVzFJQTJHaE52YmZvNWRESXhYbFlFQVpUaTZHOT
- JmSXNtNS9FZDNwWFBUUFJLZDRYTjB3WU02Uzh1dVErZVNNCmltYU45a01YbjBrVnlKcG10VENzS
- HlyOHpiM0xyMEkrQmx6RlFvN3ZHelVMY3JKTExjdmZBeVhqM1d4d0hJUVIKLzB3U3pvNlNuejlt
- QXZhNE9IMW5MSzZBVTNSSEhqSGU0ajZyaDR4S2xDZG9BSWNqSHZGZktsa1lqR2UzY25mUQo3RHV
- NK3NhaW5GYTZNL2NXcW5haWZxcnFRUkM0dUNidWpBUkdva2dxQktxNy9JN2pVRDZ2cm5Id0NLWW
- 9IV1NqCm84b3pONlJSUjFWRDRCamoyRHA5Wm9mbWZCZWloY0JXMFhFdGlBSEFQWWJmdSs2WnRaM
- nNDSXRVNXFBYk40ajcKSXpPb2pGN2ZCL2pQWnY1bk1heXFhUDB1UnJXZVZlQTN3TnBaRUZlYndt
- MGdlY0xBQ0cyR1dlNWFkc2l5YmtLZQpQY3dSblRKa1ZYcm5KNzNqaWRsVy9DNXVOSlBacTY5Zk9
- ldkNjNkpoQmdENzZPZEZ3ZXU2MXkyWFA4OWpvL1dWCkU2b0ZtQT09Cj1aVTYxCi0tLS0tRU5EIF
+ 25RQWNzbVlnQm16YmMweDcyd3VlVTB1K3BSbGZ4SjJYbnJ3WkQ0CmE2NXVtcDFlZzF3dDNkcVpr
+ Q0NKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnMyM05BQUt
+ DUkIzS2Nkd2YzNEowT1h3RC80aEJkWTI3RGQ2YkRRQURxdEdCQjFQS2g3U3FEWXRqV3NUQTYrcg
+ pScGJxeVJHM1RhczcvRGM5TGFGMXVQQ2RkQjl3UzhOQXcxQnJJSFloanoxREZOaGU0ajFhNmdJL
+ 0tCNmZJeXhjCmlEeDUxSllVZHBuVWJ0bkZQNDhmUHNwdDRFNFZlZUdkVGRONHhaZ3JQZmZ3WE91
+ VDNqUTRCcDJJNDZ5Tm5qK1QKL1Q4c1JzKzJXQnBHblpYTlBsWlRJVVJQanF6VkNuakJKbStCWGN
+ kMnRjbHZFeFdjM3ZidnJTcWNEN2hjTWl4bApwRWIxK1JZYThXY2JIOUxRTS8wZ2hDWTY3OHFzWT
+ lnTWUwL01jN0lCZitpVXJCNEluaGNCbjJXMW5tSVUxamVYCmQxSjlMNFRIYkJJRTI1NGZqN3BXV
+ DdqQmlzZzVsbTdTMjdiVERkMk1FMkw5RUtXMUh3cEFxV0tUQjkzQXg1Z2YKbE1QeHEzQ2tBclRk
+ QVZ5MGdTRW9pMzdBdzNrYVdHN1FsUzRZdytGT0ExSjQrSitJRWd2UCs0Zm0ydERJaFdwNwpGZjB
+ XRE1PeGoyVTNjcHAzS3pYaUpCS083cU1jOHNGSzdmTExrMUk5Z1VCQmtSQVhaek9ZZXc2U2o2bj
+ ZyWEVLCnF1TzFTSUE5TldIVndIVGQyUEpGdzBoZW90UHdIZ0dCeHpXTnRweFh3TFVTaTZFVERDT
+ 1U3WUhXN1R1bXJjVWUKaG1DOFgvSTROaFVMM3VUZVVJcmFXNEYwaVg4R2R6S3Y3amFKMUNtMWp3
+ YlpUeldkRFczWldEdE1LTk9rRGx2ZApSTmNuK1Bya3dwZXkwYXBKMTQ0WDk1SGJSU01zREZzN2Q
+ 4cUFlSGF1RTIwTTg3V1ViaHQrMGliT0txOFdoSUpOClQxWlRXQT09Cj1DS0pGCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,155 +126,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello everyone,
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-This series adds:
+Include the correct path and arguments to rustc in the native
+and cross files (native compilation is needed for procedural
+macros).
 
-- build system support for the Rust compiler
-- a small Rust library, qemu-api, which includes bindings to QEMU's C
-  interface generated with bindgen, and qemu-api-macros, a procedural
-  macro library.
-- a proof of concept ARM PL011 device implementation in Rust, chosen for
-  its low complexity. The device is used in the arm virt machine if qemu
-  is compiled with rust enabled (./configure --enable-rust [...])
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
-Changes in v9:
-- Addressed v8 review comment: removed rustfmt.toml symlink (Junjie Mao)
-- Addressed v8 review comment: removed unused cstr files (Junjie Mao)
-- Addressed v8 review comment: added HAVE_GLIB_WITH_ALIGNED_ALLOC config
-  host def to check whether glib's aligned alloc functions are available (Junjie Mao)
-- qemu_api: Changed default alignment condition in allocator (alignment
-  is always nonzero)
-- qemu_api: Enabled allocator by default in builds
-- pl011: fixed invalid cast of byte buffer to u32 in pl011_receive()
-  leading to misaligned read
+ configure   | 50 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ meson.build |  8 +++-----
+ 2 files changed, 51 insertions(+), 7 deletions(-)
 
-- Link to v8: https://lore.kernel.org/r/20240823-rust-pl011-v8-0-b9f5746bdaf3@linaro.org
+diff --git a/configure b/configure
+index 019fcbd0ef..9ef6005c55 100755
+--- a/configure
++++ b/configure
+@@ -207,6 +207,8 @@ for opt do
+   ;;
+   --objcc=*) objcc="$optarg"
+   ;;
++  --rustc=*) RUSTC="$optarg"
++  ;;
+   --cpu=*) cpu="$optarg"
+   ;;
+   --extra-cflags=*)
+@@ -252,6 +254,9 @@ python=
+ download="enabled"
+ skip_meson=no
+ use_containers="yes"
++# do not enable by default because cross compilation requires --rust-target-triple
++rust="disabled"
++rust_target_triple=""
+ gdb_bin=$(command -v "gdb-multiarch" || command -v "gdb")
+ gdb_arches=""
+ 
+@@ -317,6 +322,8 @@ windmc="${WINDMC-${cross_prefix}windmc}"
+ pkg_config="${PKG_CONFIG-${cross_prefix}pkg-config}"
+ sdl2_config="${SDL2_CONFIG-${cross_prefix}sdl2-config}"
+ 
++rustc="${RUSTC-rustc}"
++
+ check_define() {
+ cat > $TMPC <<EOF
+ #if !defined($1)
+@@ -636,6 +643,8 @@ for opt do
+   ;;
+   --objcc=*)
+   ;;
++  --rustc=*)
++  ;;
+   --make=*)
+   ;;
+   --install=*)
+@@ -755,8 +764,14 @@ for opt do
+   ;;
+   --container-engine=*) container_engine="$optarg"
+   ;;
++  --rust-target-triple=*) rust_target_triple="$optarg"
++  ;;
+   --gdb=*) gdb_bin="$optarg"
+   ;;
++  --enable-rust) rust=enabled
++  ;;
++  --disable-rust) rust=disabled
++  ;;
+   # everything else has the same name in configure and meson
+   --*) meson_option_parse "$opt" "$optarg"
+   ;;
+@@ -859,6 +874,7 @@ Advanced options (experts only):
+                            at build time [$host_cc]
+   --cxx=CXX                use C++ compiler CXX [$cxx]
+   --objcc=OBJCC            use Objective-C compiler OBJCC [$objcc]
++  --rustc=RUSTC            use Rust compiler RUSTC [$rustc]
+   --extra-cflags=CFLAGS    append extra C compiler flags CFLAGS
+   --extra-cxxflags=CXXFLAGS append extra C++ compiler flags CXXFLAGS
+   --extra-objcflags=OBJCFLAGS append extra Objective C compiler flags OBJCFLAGS
+@@ -869,8 +885,9 @@ Advanced options (experts only):
+   --python=PYTHON          use specified python [$python]
+   --ninja=NINJA            use specified ninja [$ninja]
+   --static                 enable static build [$static]
+-  --without-default-features default all --enable-* options to "disabled"
+-  --without-default-devices  do not include any device that is not needed to
++  --rust-target-triple=TRIPLE  target for Rust cross compilation
++  --without-default-features   default all --enable-* options to "disabled"
++  --without-default-devices    do not include any device that is not needed to
+                            start the emulator (only use if you are including
+                            desired devices in configs/devices/)
+   --with-devices-ARCH=NAME override default configs/devices
+@@ -1139,6 +1156,21 @@ EOF
+ fi
+ 
+ ##########################################
++# detect rust triple
++
++if test "$rust" != disabled && has "$rustc" && $rustc -vV > "${TMPDIR1}/${TMPB}.out"; then
++  rust_host_triple=$(sed -n 's/^host: //p' "${TMPDIR1}/${TMPB}.out")
++else
++  if test "$rust" = enabled; then
++    error_exit "could not execute rustc binary \"$rustc\""
++  fi
++  rust=disabled
++fi
++if test "$rust" != disabled && test -z "$rust_target_triple"; then
++  rust_target_triple=$rust_host_triple
++fi
++
++##########################################
+ # functions to probe cross compilers
+ 
+ container="no"
+@@ -1604,6 +1636,9 @@ if test "$container" != no; then
+     echo "RUNC=$runc" >> $config_host_mak
+ fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
++if test "$rust" != disabled; then
++  echo "RUST_TARGET_TRIPLE=$rust_target_triple" >> $config_host_mak
++fi
+ echo "PYTHON=$python" >> $config_host_mak
+ echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
+ echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
+@@ -1735,6 +1770,13 @@ if test "$skip_meson" = no; then
+   echo "c = [$(meson_quote $cc $CPU_CFLAGS)]" >> $cross
+   test -n "$cxx" && echo "cpp = [$(meson_quote $cxx $CPU_CFLAGS)]" >> $cross
+   test -n "$objcc" && echo "objc = [$(meson_quote $objcc $CPU_CFLAGS)]" >> $cross
++  if test "$rust" != disabled; then
++    if test "$rust_host_triple" != "$rust_target_triple"; then
++      echo "rust = [$(meson_quote $rustc --target "$rust_target_triple")]" >> $cross
++    else
++      echo "rust = [$(meson_quote $rustc)]" >> $cross
++    fi
++  fi
+   echo "ar = [$(meson_quote $ar)]" >> $cross
+   echo "dlltool = [$(meson_quote $dlltool)]" >> $cross
+   echo "nm = [$(meson_quote $nm)]" >> $cross
+@@ -1770,6 +1812,9 @@ if test "$skip_meson" = no; then
+     echo "# Automatically generated by configure - do not modify" > $native
+     echo "[binaries]" >> $native
+     echo "c = [$(meson_quote $host_cc)]" >> $native
++    if test "$rust" != disabled; then
++      echo "rust = [$(meson_quote $rustc)]" >> $cross
++    fi
+     mv $native config-meson.native
+     meson_option_add --native-file
+     meson_option_add config-meson.native
+@@ -1788,6 +1833,7 @@ if test "$skip_meson" = no; then
+   test "$pie" = no && meson_option_add -Db_pie=false
+ 
+   # QEMU options
++  test "$rust" != "auto" && meson_option_add "-Drust=$rust"
+   test "$cfi" != false && meson_option_add "-Dcfi=$cfi" "-Db_lto=$cfi"
+   test "$docs" != auto && meson_option_add "-Ddocs=$docs"
+   test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_engine=$LIB_FUZZING_ENGINE"
+diff --git a/meson.build b/meson.build
+index 67eb4eda64..065739ccb7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -70,9 +70,6 @@ if host_os == 'darwin' and \
+   all_languages += ['objc']
+   objc = meson.get_compiler('objc')
+ endif
+-if get_option('rust').enabled() and meson.version().version_compare('<1.0.0')
+-  error('Rust support requires Meson version >=1.0.0')
+-endif
+ have_rust = false
+ if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false)
+   rustc = meson.get_compiler('rust')
+@@ -4307,8 +4304,9 @@ else
+ endif
+ summary_info += {'Rust support':      have_rust}
+ if have_rust
+-  summary_info += {'rustc version':      rustc.version()}
+-  summary_info += {'rustc':      ' '.join(rustc.cmd_array())}
++  summary_info += {'rustc version':   rustc.version()}
++  summary_info += {'rustc':           ' '.join(rustc.cmd_array())}
++  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
+ endif
+ option_cflags = (get_option('debug') ? ['-g'] : [])
+ if get_option('optimization') != 'plain'
 
-Changes in v8:
-- Allow for compilation of more than one Rust-based component in Meson
-  by compiling all Rust static libraries into one "root" library before
-  linking it to each target emulation executable.
-- Added a qemu_api_macros procedural macro library.
-- (minor) Moved generated bindings.rs to qemu_api crate using meson's
-  structured_source() instead of compiling it as a standalone crate
-  which was unnecessary.
-- (minor) Removed unnecessary rustc optimization/debug flags (should be handled
-  by meson instead).
-- (minor) Moved build scripts under scripts/rust/
-- (minor) Fixed license issues
-
-Previous version was: <20240815-rust-pl011-v7-0-975135e98831@linaro.org>
-
-https://lore.kernel.org/qemu-devel/20240815-rust-pl011-v7-0-975135e98831@linaro.org/
-
-Outstanding issues that are not blocking for merge are:
-
-- Cross-compilation for aarch64 is not possible out-of-the-box because of this bug:
-  <https://github.com/rust-lang/rust/issues/125619> in llvm which when
-  fixed, must be ported to upstream rust's llvm fork. Since the problem
-  is an extraneous symbol we could strip it with objcopy -N|--strip-symbol
-  Update since last version: Fix is in upstream llvm, we're awaiting for
-  rust upstream to pick it up.
-
----
-Manos Pitsidianakis (7):
-      build-sys: Add rust feature option
-      rust: add bindgen step as a meson dependency
-      .gitattributes: add Rust diff and merge attributes
-      meson.build: add HAVE_GLIB_WITH_ALIGNED_ALLOC flag
-      rust: add crate to expose bindings and interfaces
-      rust: add utility procedural macro crate
-      rust: add PL011 device model
-
-Paolo Bonzini (2):
-      Require meson version 1.5.0
-      configure, meson: detect Rust toolchain
-
- MAINTAINERS                                        |  21 +
- configure                                          |  50 +-
- meson.build                                        |  87 ++-
- rust/wrapper.h                                     |  39 ++
- .gitattributes                                     |   3 +
- Kconfig                                            |   1 +
- Kconfig.host                                       |   3 +
- hw/arm/Kconfig                                     |  33 +-
- meson_options.txt                                  |   3 +
- python/scripts/vendor.py                           |   4 +-
- python/wheels/meson-1.2.3-py3-none-any.whl         | Bin 964928 -> 0 bytes
- python/wheels/meson-1.5.0-py3-none-any.whl         | Bin 0 -> 959846 bytes
- pythondeps.toml                                    |   2 +-
- rust/.gitignore                                    |   3 +
- rust/Kconfig                                       |   1 +
- rust/hw/Kconfig                                    |   2 +
- rust/hw/char/Kconfig                               |   3 +
- rust/hw/char/meson.build                           |   1 +
- rust/hw/char/pl011/.gitignore                      |   2 +
- rust/hw/char/pl011/Cargo.lock                      | 134 +++++
- rust/hw/char/pl011/Cargo.toml                      |  26 +
- rust/hw/char/pl011/README.md                       |  31 ++
- rust/hw/char/pl011/meson.build                     |  26 +
- rust/hw/char/pl011/src/definitions.rs              |  20 +
- rust/hw/char/pl011/src/device.rs                   | 594 +++++++++++++++++++++
- rust/hw/char/pl011/src/device_class.rs             |  59 ++
- rust/hw/char/pl011/src/lib.rs                      | 585 ++++++++++++++++++++
- rust/hw/char/pl011/src/memory_ops.rs               |  57 ++
- rust/hw/meson.build                                |   1 +
- rust/meson.build                                   |   4 +
- rust/qemu-api-macros/Cargo.lock                    |  47 ++
- rust/qemu-api-macros/Cargo.toml                    |  25 +
- rust/qemu-api-macros/README.md                     |   1 +
- rust/qemu-api-macros/meson.build                   |  25 +
- rust/qemu-api-macros/src/lib.rs                    |  43 ++
- rust/qemu-api/.gitignore                           |   2 +
- rust/qemu-api/Cargo.lock                           |   7 +
- rust/qemu-api/Cargo.toml                           |  26 +
- rust/qemu-api/README.md                            |  17 +
- rust/qemu-api/build.rs                             |  14 +
- rust/qemu-api/meson.build                          |  24 +
- rust/qemu-api/src/definitions.rs                   | 109 ++++
- rust/qemu-api/src/device_class.rs                  | 128 +++++
- rust/qemu-api/src/lib.rs                           | 154 ++++++
- rust/qemu-api/src/tests.rs                         |  49 ++
- rust/rustfmt.toml                                  |   7 +
- scripts/archive-source.sh                          |   5 +-
- scripts/make-release                               |   5 +-
- scripts/meson-buildoptions.sh                      |   3 +
- scripts/rust/rust_root_crate.sh                    |  13 +
- scripts/rust/rustc_args.py                         |  84 +++
- subprojects/.gitignore                             |  11 +
- subprojects/arbitrary-int-1-rs.wrap                |   7 +
- subprojects/bilge-0.2-rs.wrap                      |   7 +
- subprojects/bilge-impl-0.2-rs.wrap                 |   7 +
- subprojects/either-1-rs.wrap                       |   7 +
- subprojects/itertools-0.11-rs.wrap                 |   7 +
- .../packagefiles/arbitrary-int-1-rs/meson.build    |  19 +
- subprojects/packagefiles/bilge-0.2-rs/meson.build  |  29 +
- .../packagefiles/bilge-impl-0.2-rs/meson.build     |  45 ++
- subprojects/packagefiles/either-1-rs/meson.build   |  24 +
- .../packagefiles/itertools-0.11-rs/meson.build     |  30 ++
- .../packagefiles/proc-macro-error-1-rs/meson.build |  40 ++
- .../proc-macro-error-attr-1-rs/meson.build         |  32 ++
- .../packagefiles/proc-macro2-1-rs/meson.build      |  31 ++
- subprojects/packagefiles/quote-1-rs/meson.build    |  29 +
- subprojects/packagefiles/syn-2-rs/meson.build      |  40 ++
- .../packagefiles/unicode-ident-1-rs/meson.build    |  20 +
- subprojects/proc-macro-error-1-rs.wrap             |   7 +
- subprojects/proc-macro-error-attr-1-rs.wrap        |   7 +
- subprojects/proc-macro2-1-rs.wrap                  |   7 +
- subprojects/quote-1-rs.wrap                        |   7 +
- subprojects/syn-2-rs.wrap                          |   7 +
- subprojects/unicode-ident-1-rs.wrap                |   7 +
- tests/lcitool/mappings.yml                         |   2 +-
- 75 files changed, 2991 insertions(+), 21 deletions(-)
----
-base-commit: a733f37aef3b7d1d33bfe2716af88cdfd67ba64e
-change-id: 20240814-rust-pl011-v7
-
-Best regards,
 -- 
-γαῖα πυρί μιχθήτω
+2.45.2
 
 
