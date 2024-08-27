@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578C2C54734
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 11:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66AC1C54735
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 11:25:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siuIm-0002jE-4P; Tue, 27 Aug 2024 07:23:56 -0400
+	id 1siuIt-0003Dv-Nk; Tue, 27 Aug 2024 07:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1siuIg-0002ai-GJ
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:51 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1siuIr-00035z-OI
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:24:01 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1siuIe-0000in-3t
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:49 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a868b739cd9so645880366b.2
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 04:23:47 -0700 (PDT)
+ id 1siuIp-0000m8-Ht
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:24:01 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-5334b0e1a8eso7050819e87.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 04:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724757826; x=1725362626; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724757838; x=1725362638; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YuZYhrBMyPn1QnAcNZ8ioMi7TsZgPuclJ/HC7vtKHiU=;
- b=mzg8fl47/HmKVAucVB5rGEXYDreIkgrg7T8jBHJOPyLWSt4X8yFt5J+9/jXusuE0u5
- PEdUgSjLaaI080z3HMSDDoTow0yRYc9jkNWP37ksvzQ6E3Z8dayrxOjEhKTgEviASzyB
- BwSeW4ir5ZEkRwFFRBsQN380TpBRQ4DZao/4CgzsFfuZGtTVQwgDXr9KW4dq20aprIUk
- 6Cgpv2Pb37Onn/jRkB+ABLgJ52w8VlLzgZXK+rZHyMc0zqCEXvefbzBAEDnLw5aYWR5G
- kXtrl+yhUSCqeOBYS43MAGvk+Uu+Ce3bMHevA5aL6cer/hfW2iY0m9Vzvdt1h5mJB1c8
- 6vaQ==
+ :reply-to; bh=i3+mtYYzHBBtikw1zXv7DKh3kbgt/BPOlVSFhrrwD3U=;
+ b=ZhJA0H+SvtZoocw+RXVT2O/bMhDBpSrxzXzHMxv/aj6nPYPfr047WGP2sSj48KhPfb
+ W919ymkRhxt9tsQF6P79gsVjcUfNUvX56bVzE/OVPeb4pP/C5Qpa4vRfF0ZnvMfR+uqQ
+ XCSZOONKGgFgZwnLrzSTZt/w3wmXXehdYDYCJfTVj4oaK1gJdKvKUu6q7bA6NhYdLnsb
+ AA5fbgVvG9G1Bg0ARrvwFoxyccXhJrdJ5dg9UHYhYM1gb/fUg37mcsQXJLw9CHfPT8vQ
+ HKNFzy8Egxg+o5yEicNs2kfZZvj+epyO36RuTQTCJp92bWv8VWAS89oUQHo0ClHIli6H
+ 4KOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724757826; x=1725362626;
+ d=1e100.net; s=20230601; t=1724757838; x=1725362638;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YuZYhrBMyPn1QnAcNZ8ioMi7TsZgPuclJ/HC7vtKHiU=;
- b=LWsnoQFocPTAUKvMHVl0C2DGkaXh9ZCAEjvmWsp1SO9iky8eXBMJ7Bzy/uaMS5REWO
- kARnHhHjpExGaZsIVJDHnw4hLZz+HiR/aFyZje5NjTFiq5ydqJVl9j85zqGD5MM5e3wX
- 5PzcXWPjQL4s+n39/5w5mnBDUg9uS531BJJ85KRxU8iH7dlcBXjfXRVecrMzH/IJcYKm
- xDHpaOhoKS8p3wfiXvcl4XVDJ/YvQ6V9uK32OYtdRLQdHn3deYYeiKc9iStsw04yXXYQ
- /nVfpX1Iz+6wBAFQ2/w6Y4M1btGPLK/HajI2BK39/PXM9bc5jDOBo+uTkfQu/3UaQMCD
- L85w==
-X-Gm-Message-State: AOJu0Yxdfw5S11CQV9HBsZ419401+016C6Kp5KxBgettONerz6H3JNxq
- HtVSdGboZyMia/7f/o/KkjtmkyvgJ7/O+DP+konT3cGkziqhTQ2PK1zIrBJIw2U=
-X-Google-Smtp-Source: AGHT+IGkudXbnCSwuAn2ZYw8+Jr0buLhD69X2UCgta/Q/fCvn4TSm7HS0XKzCo7QpOTsxvKx+wwfTQ==
-X-Received: by 2002:a17:907:8688:b0:a86:a9a4:69fa with SMTP id
- a640c23a62f3a-a86e3be5bf8mr169098766b.43.1724757826021; 
- Tue, 27 Aug 2024 04:23:46 -0700 (PDT)
+ bh=i3+mtYYzHBBtikw1zXv7DKh3kbgt/BPOlVSFhrrwD3U=;
+ b=nMDFC9Cw4aYD7xTsLVqDjz9ggdmybyg9dBqbK3xNXCDCjKPFtxa4oM7Ri29vAlpLy9
+ XUpdFx1ijk3M85mfln3xOIYyVQMcMDnbOduntxsn5gGPR7bDovDufgT3EK9fVTBrgzIy
+ 8YmDZHqXK1+uYkhhfjFhcHPPxA5lcmTBturd9Ob+Zdr4UjJKwRVkGwahfHdLqRZLsFae
+ BYnBnVklDFkv3vPISY9Wu/3vvIQtXbX6lAYt0cQUzGsY5XM3BxLrADFRloii1S7dzSu4
+ OXCPVPIGnLTU1ve/fUj9oowcrX+OxAK1r8kl9nzCaohJ0/2XWCoTffuyxnHlb2UwKkeu
+ f5JA==
+X-Gm-Message-State: AOJu0Yx0SpLhO/ANUbrLQCnJccTtFnX+UIgP0slsDsbRjlUpwFSa4YRY
+ 20cUDXLJPUV5vhsv7ImFTOBf3PwuVAzmP+nR9978dhTMZBz12OlCRu5ycYryK/8=
+X-Google-Smtp-Source: AGHT+IEgcwR6GVifVq0roSHsxuggrkgrC43Ux+87MXb3CEuQN73rQHe4B6TVeJRIJmXN8w3SeconZA==
+X-Received: by 2002:a05:6512:3b26:b0:52c:e084:bb1e with SMTP id
+ 2adb3069b0e04-534387783d0mr8983460e87.13.1724757837136; 
+ Tue, 27 Aug 2024 04:23:57 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-242.37.6.163.tellas.gr. [37.6.163.242])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e594fa62sm96280066b.198.2024.08.27.04.23.43
+ a640c23a62f3a-a86e594fa62sm96280066b.198.2024.08.27.04.23.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 04:23:45 -0700 (PDT)
+ Tue, 27 Aug 2024 04:23:56 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 27 Aug 2024 14:23:13 +0300
-Subject: [PATCH v9 4/9] rust: add bindgen step as a meson dependency
+Date: Tue, 27 Aug 2024 14:23:17 +0300
+Subject: [PATCH v9 8/9] rust: add utility procedural macro crate
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240827-rust-pl011-v9-4-e90b9c28f861@linaro.org>
+Message-Id: <20240827-rust-pl011-v9-8-e90b9c28f861@linaro.org>
 References: <20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org>
 In-Reply-To: <20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,30 +80,30 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.15-dev-b8758
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7725;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7063;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=QShEL48bEPUFi3KY8OJXU63M+qSX9k/RO314TD1AkSo=;
+ bh=WqLWGjMMrP33Qrl9SCmBKmJw/e75wdTkZmQfueIPGPk=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm16YmMwdHFkaE15ZTY2cnpFY211SzhwcTZpOEorCjViVkl6eitOcWFOUnUraXor
- b0NKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnMyM05BQUt
- DUkIzS2Nkd2YzNEowTlFIRC85RVFreE90NU5SWFcyU290U2thbkhFSlRYNFZvQVV3ZWZKZHhoZw
- owR0JqRGtQTFViWXhlcDlmZk40ZTdIYjF4RkU3RFFlQzAyYTE1S0tWTUxFY2t3TkJ5bnYyWFVJM
- FRtNXYrTHdoCmJSK3c2Sk4xME1teXB1ejEvdkQ2eW5BQzNDS0ZpWFNTWnQwWHNLNGpyZzljcEFh
- b2s5UUZ6VUpTMGJzcEJXSEoKOGIyL0N1SE1scVl2dGFJQTBIK09iTWNTbE92bGVGZEVEb25CaDB
- rN09KYndmcDI3ajJSaVRFY0FNekFsNUdSUgpwemVKaEI3UDRRVm8rTHh6eVBIeHZWRFVFZklGYl
- VxdytsUkpaKzRMTHhrY1o2V3U0VUppckovcEFBdDRCamd1CmxkZER0dm4rcTZtMWdxTVNSY0lEN
- 3ByeE1SaGxzcmQyRllmQlFmQXpRTzhJMitZWkh5SWdWbnB0ZW1veEQvL3EKNlFhUWFRVFNwNUsv
- d1VhQnV5NWV1bEQrUzI5L05GeHF3UFpiOHlHUU90cnhrMllxTXhEZEE0NUdHckRtNVJjZwpWcEV
- XcUNWbGpiTFVWS0NKbkU3U1krMDNzazI3cTZXL2F2clIxUC9YNFdFc25SRmc3REdiTVpNb3FUK2
- dKZHVaCng0dVg3bHVWREdlRmZsVXJhVUhjNWhpZ01ZVWxyUkgxcWNlS2xpVzZXVkl6a2dGQkpES
- W1yckZXMTQyZ095RlcKdkVNeTk1UnBpdWh3TWRGdm1aYnZ5NEtzcUt0YVJ6ZUZ3UFFoeWtzMC9J
- MDhSYmxEMjhEUWl4ZVNMRHpJRElVVwpWZ1pMRmNoSFkvUGlVMnZkVXBHVlBUc1F1UHp4TGY2Kzd
- xbkJMUGg0NWMrOUYzb3djcTFhcy8zR1ZrdCtDVVFrClNaMWhVZz09Cj00SGIvCi0tLS0tRU5EIF
+ 25RQWNzbVlnQm16YmMxakoya0lvM2gxZy83c0FMQ0V3KzNqcEtSCjBNeTdOMWNudmE0VTU4eG9t
+ bjJKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnMyM05RQUt
+ DUkIzS2Nkd2YzNEowTER1RC80dk44NVhjY0R4dkVrNEpTcnBPU1kyMnY2a08xeWpUelREeWpKKw
+ pEK3ZLZjdGRVNuMjE3WXAwN2tjNDJEbW9yOUtwelloZE8vZ29JdlBLWnFqTFlkeXlGR2xoV09Pc
+ 2hvSkdpemZpCjJNOE5zYmEzUFZkOHRlYkhraHExM3RnQjZlUGNHNUxvM1RydW43ZWNIUXJYT3BE
+ OFhJZ3VPOHk0L0dFZmVnQnoKbnJscFU2dDRzZnhQaHAvVTRLVW5jUUtkcHp6bWlmVDlEMElUOGx
+ yb3FoSVc5Vys3VHRVa3RxU2kxdHVHbzVhMQp5bnRpanhtUGtOalB4cXpPWW1GVlJFcTZCZmxHaz
+ V6YkdCM1NlYXBOQnYvY1pPV0NQSWh3L09CYlZ0dVJLWmh3Ck1pMXBkSEc5MFZmNTgrMkZIS1FrT
+ jlPSHg5U0E5d1F0SXBTUXM0K3VjL2JEbTg3eVh6UlRUdm81bk1tWXNYMG0KcUYyZ3pzZUF6RWxH
+ L2ZuWjhHb2pyLzVXZ2NmeTI3MUtoTEc5Y1FWUXFzS2w0T0tOK1VQL3h3a1NCZGlBLzFCNgpRWVl
+ Lc3RqNFl6R2NFNDh1azJrTFIzUjZQSURjSEE1ZzQxM3QyOVo1bU5LS1NqckFoYlk4WTNWNVRoYX
+ YwNmwyCllpY3pvVFA1T3VoUU9wRmxTbzJBMndBdzBoQUM0SlpVWDZESi9XYjN5Zm9vd0V1U2Ivd
+ zhRZUVjbnhBSTNFYlYKbjhKT1NvclBjTjcwaFptQjhDLzZJRk5HUHB3YVdlR2xISWo0U0FBemdu
+ eWlsWVFzNGtsRXJ2Q1YxQ1dVRW5BYwpuVzI0Sms0aXhMZHVrVWJ4aXFKR1JGVHBhZXE5WWVzNll
+ Qb2R2NFF2S2JwNkR2alkvOVhZRXJjclFYT2xMMDVLCkJHbXlJZz09Cj11ZU5NCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,236 +126,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add bindings_rs target for generating rust bindings to target-independent
-qemu C APIs.
+This commit adds a helper crate library, qemu-api-macros for derive (and
+other procedural) macros to be used along qemu-api.
 
-The bindings need be created before any rust crate that uses them is
-compiled.
+It needs to be a separate library because in Rust, procedural macros, or
+macros that can generate arbitrary code, need to be special separate
+compilation units.
 
-The bindings.rs file will end up in BUILDDIR/bindings.rs and have the
-same name as a target:
+Only one macro is introduced in this patch, #[derive(Object)]. It
+generates a constructor to register a QOM TypeInfo on init and it must
+be used on types that implement qemu_api::definitions::ObjectImpl trait.
 
-  ninja bindings.rs
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- MAINTAINERS                |  4 +++
- meson.build                | 34 +++++++++++++++++++
- rust/wrapper.h             | 39 +++++++++++++++++++++
- rust/.gitignore            |  3 ++
- rust/meson.build           |  0
- scripts/rust/rustc_args.py | 84 ++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 164 insertions(+)
+ MAINTAINERS                      |  1 +
+ rust/meson.build                 |  1 +
+ rust/qemu-api-macros/Cargo.lock  | 47 ++++++++++++++++++++++++++++++++++++++++
+ rust/qemu-api-macros/Cargo.toml  | 25 +++++++++++++++++++++
+ rust/qemu-api-macros/README.md   |  1 +
+ rust/qemu-api-macros/meson.build | 25 +++++++++++++++++++++
+ rust/qemu-api-macros/src/lib.rs  | 43 ++++++++++++++++++++++++++++++++++++
+ rust/qemu-api/meson.build        |  3 +++
+ 8 files changed, 146 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 0bc8e515da..642c07a9ff 100644
+index d35e9f6b20..727f3a7a2c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4246,7 +4246,11 @@ F: docs/devel/docs.rst
- Rust build system integration
+@@ -3352,6 +3352,7 @@ Rust
  M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
  S: Maintained
-+F: scripts/rust/
-+F: rust/.gitignore
- F: rust/Kconfig
-+F: rust/meson.build
-+F: rust/wrapper.h
+ F: rust/qemu-api
++F: rust/qemu-api-macros
+ F: rust/rustfmt.toml
  
- Miscellaneous
- -------------
-diff --git a/meson.build b/meson.build
-index 065739ccb7..05446acbc6 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3871,6 +3871,40 @@ common_all = static_library('common',
-                             implicit_include_directories: false,
-                             dependencies: common_ss.all_dependencies())
- 
-+if have_rust and have_system
-+  rustc_config_args = run_command(
-+    find_program('scripts/rust/rustc_args.py'),
-+    '--config-headers', meson.project_build_root() / 'config-host.h',
-+    capture : true,
-+    check: true).stdout().strip().split()
-+
-+  bindings_rs = import('rust').bindgen(
-+    input: 'rust/wrapper.h',
-+    dependencies: common_ss.all_dependencies(),
-+    output: 'bindings.rs',
-+    include_directories: include_directories('.', 'include'),
-+    bindgen_version: ['>=0.69.4'],
-+    args: [
-+      '--disable-header-comment',
-+      '--raw-line', '// @generated',
-+      '--ctypes-prefix', 'core::ffi',
-+      '--formatter', 'rustfmt',
-+      '--generate-block',
-+      '--generate-cstr',
-+      '--impl-debug',
-+      '--merge-extern-blocks',
-+      '--no-doc-comments',
-+      '--use-core',
-+      '--with-derive-default',
-+      '--allowlist-file', meson.project_source_root() + '/include/.*',
-+      '--allowlist-file', meson.project_source_root() + '/.*',
-+      '--allowlist-file', meson.project_build_root() + '/.*'
-+      ],
-+    )
-+  subdir('rust')
-+endif
-+
-+
- feature_to_c = find_program('scripts/feature_to_c.py')
- 
- if host_os == 'darwin'
-diff --git a/rust/wrapper.h b/rust/wrapper.h
-new file mode 100644
-index 0000000000..51985f0ef1
---- /dev/null
-+++ b/rust/wrapper.h
-@@ -0,0 +1,39 @@
-+/*
-+ * QEMU System Emulator
-+ *
-+ * Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "qemu-io.h"
-+#include "sysemu/sysemu.h"
-+#include "hw/sysbus.h"
-+#include "exec/memory.h"
-+#include "chardev/char-fe.h"
-+#include "hw/clock.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "hw/irq.h"
-+#include "qapi/error.h"
-+#include "migration/vmstate.h"
-+#include "chardev/char-serial.h"
-diff --git a/rust/.gitignore b/rust/.gitignore
-new file mode 100644
-index 0000000000..1bf71b1f68
---- /dev/null
-+++ b/rust/.gitignore
-@@ -0,0 +1,3 @@
-+# Ignore any cargo development build artifacts; for qemu-wide builds, all build
-+# artifacts will go to the meson build directory.
-+target
+ SLIRP
 diff --git a/rust/meson.build b/rust/meson.build
+index 4a58d106b1..7a32b1b195 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -1 +1,2 @@
++subdir('qemu-api-macros')
+ subdir('qemu-api')
+diff --git a/rust/qemu-api-macros/Cargo.lock b/rust/qemu-api-macros/Cargo.lock
 new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-new file mode 100644
-index 0000000000..e4cc9720e1
+index 0000000000..fdc0fce116
 --- /dev/null
-+++ b/scripts/rust/rustc_args.py
-@@ -0,0 +1,84 @@
-+#!/usr/bin/env python3
++++ b/rust/qemu-api-macros/Cargo.lock
+@@ -0,0 +1,47 @@
++# This file is automatically @generated by Cargo.
++# It is not intended for manual editing.
++version = 3
 +
-+"""Generate rustc arguments for meson rust builds.
++[[package]]
++name = "proc-macro2"
++version = "1.0.86"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "5e719e8df665df0d1c8fbfd238015744736151d4445ec0836b8e628aae103b77"
++dependencies = [
++ "unicode-ident",
++]
 +
-+This program generates --cfg compile flags for the configuration headers passed
-+as arguments.
++[[package]]
++name = "qemu_api_macros"
++version = "0.1.0"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "syn",
++]
 +
-+Copyright (c) 2024 Linaro Ltd.
++[[package]]
++name = "quote"
++version = "1.0.36"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7"
++dependencies = [
++ "proc-macro2",
++]
 +
-+Authors:
-+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++[[package]]
++name = "syn"
++version = "2.0.72"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "dc4b9b9bf2add8093d3f2c0204471e951b2285580335de42f9d2534f3ae7a8af"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "unicode-ident",
++]
 +
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License as published by
-+the Free Software Foundation; either version 2 of the License, or
-+(at your option) any later version.
++[[package]]
++name = "unicode-ident"
++version = "1.0.12"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
+diff --git a/rust/qemu-api-macros/Cargo.toml b/rust/qemu-api-macros/Cargo.toml
+new file mode 100644
+index 0000000000..144cc3650f
+--- /dev/null
++++ b/rust/qemu-api-macros/Cargo.toml
+@@ -0,0 +1,25 @@
++[package]
++name = "qemu_api_macros"
++version = "0.1.0"
++edition = "2021"
++authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
++license = "GPL-2.0-or-later"
++readme = "README.md"
++homepage = "https://www.qemu.org"
++description = "Rust bindings for QEMU - Utility macros"
++repository = "https://gitlab.com/qemu-project/qemu/"
++resolver = "2"
++publish = false
++keywords = []
++categories = []
 +
-+This program is distributed in the hope that it will be useful,
-+but WITHOUT ANY WARRANTY; without even the implied warranty of
-+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+GNU General Public License for more details.
++[lib]
++proc-macro = true
 +
-+You should have received a copy of the GNU General Public License
-+along with this program.  If not, see <http://www.gnu.org/licenses/>.
-+"""
++[dependencies]
++proc-macro2 = "1"
++quote = "1"
++syn = "2"
 +
-+import argparse
-+import logging
++# Do not include in any global workspace
++[workspace]
+diff --git a/rust/qemu-api-macros/README.md b/rust/qemu-api-macros/README.md
+new file mode 100644
+index 0000000000..f60f54ac4b
+--- /dev/null
++++ b/rust/qemu-api-macros/README.md
+@@ -0,0 +1 @@
++# `qemu-api-macros` - Utility macros for defining QEMU devices
+diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-api-macros/meson.build
+new file mode 100644
+index 0000000000..48af91ed38
+--- /dev/null
++++ b/rust/qemu-api-macros/meson.build
+@@ -0,0 +1,25 @@
++add_languages('rust', required: true, native: true)
 +
-+from typing import List
++quote_dep = dependency('quote-1-rs', native: true)
++syn_dep = dependency('syn-2-rs', native: true)
++proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
 +
++_qemu_api_macros_rs = import('rust').proc_macro(
++  'qemu_api_macros',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_args: [
++    '--cfg', 'use_fallback',
++    '--cfg', 'feature="syn-error"',
++    '--cfg', 'feature="proc-macro"',
++  ],
++  dependencies: [
++    proc_macro2_dep,
++    quote_dep,
++    syn_dep,
++  ],
++)
 +
-+def generate_cfg_flags(header: str) -> List[str]:
-+    """Converts defines from config[..].h headers to rustc --cfg flags."""
++qemu_api_macros = declare_dependency(
++  link_with: _qemu_api_macros_rs,
++)
+diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
+new file mode 100644
+index 0000000000..331bc9e215
+--- /dev/null
++++ b/rust/qemu-api-macros/src/lib.rs
+@@ -0,0 +1,43 @@
++// Copyright 2024, Linaro Limited
++// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0-or-later
 +
-+    def cfg_name(name: str) -> str:
-+        """Filter function for C #defines"""
-+        if (
-+            name.startswith("CONFIG_")
-+            or name.startswith("TARGET_")
-+            or name.startswith("HAVE_")
-+        ):
-+            return name
-+        return ""
++use proc_macro::TokenStream;
++use quote::{format_ident, quote};
++use syn::{parse_macro_input, DeriveInput};
 +
-+    with open(header, encoding="utf-8") as cfg:
-+        config = [l.split()[1:] for l in cfg if l.startswith("#define")]
++#[proc_macro_derive(Object)]
++pub fn derive_object(input: TokenStream) -> TokenStream {
++    let input = parse_macro_input!(input as DeriveInput);
 +
-+    cfg_list = []
-+    for cfg in config:
-+        name = cfg_name(cfg[0])
-+        if not name:
-+            continue
-+        if len(cfg) >= 2 and cfg[1] != "1":
-+            continue
-+        cfg_list.append("--cfg")
-+        cfg_list.append(name)
-+    return cfg_list
++    let name = input.ident;
++    let module_static = format_ident!("__{}_LOAD_MODULE", name);
 +
++    let expanded = quote! {
++        #[allow(non_upper_case_globals)]
++        #[used]
++        #[cfg_attr(target_os = "linux", link_section = ".ctors")]
++        #[cfg_attr(target_os = "macos", link_section = "__DATA,__mod_init_func")]
++        #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
++        pub static #module_static: extern "C" fn() = {
++            extern "C" fn __register() {
++                unsafe {
++                    ::qemu_api::bindings::type_register_static(&<#name as ::qemu_api::definitions::ObjectImpl>::TYPE_INFO);
++                }
++            }
 +
-+def main() -> None:
-+    # pylint: disable=missing-function-docstring
-+    parser = argparse.ArgumentParser()
-+    parser.add_argument("-v", "--verbose", action="store_true")
-+    parser.add_argument(
-+        "--config-headers",
-+        metavar="CONFIG_HEADER",
-+        action="append",
-+        dest="config_headers",
-+        help="paths to any configuration C headers (*.h files), if any",
-+        required=False,
-+        default=[],
-+    )
-+    args = parser.parse_args()
-+    if args.verbose:
-+        logging.basicConfig(level=logging.DEBUG)
-+    logging.debug("args: %s", args)
-+    for header in args.config_headers:
-+        for tok in generate_cfg_flags(header):
-+            print(tok)
++            extern "C" fn __load() {
++                unsafe {
++                    ::qemu_api::bindings::register_module_init(
++                        Some(__register),
++                        ::qemu_api::bindings::module_init_type_MODULE_INIT_QOM
++                    );
++                }
++            }
 +
++            __load
++        };
++    };
 +
-+if __name__ == "__main__":
-+    main()
++    TokenStream::from(expanded)
++}
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index cf2b465e9f..2030c24ed9 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -14,6 +14,9 @@ _qemu_api_rs = static_library(
+     '--cfg', 'MESON',
+     '--cfg', 'feature="allocator"',
+   ],
++  dependencies: [
++    qemu_api_macros,
++  ],
+ )
+ 
+ qemu_api = declare_dependency(
 
 -- 
 2.45.2
