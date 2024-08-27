@@ -4,79 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB721C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 09:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82B2C5320E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 09:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sispT-0001TY-2u; Tue, 27 Aug 2024 05:49:35 -0400
+	id 1sisww-0000Vu-JF; Tue, 27 Aug 2024 05:57:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sispQ-0001SY-Q4
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:49:32 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1siswu-0000P8-NI
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:57:16 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sispO-00089m-DK
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:49:32 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a86a37208b2so466434266b.0
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:49:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sisws-0000XP-Sh
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:57:16 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2f40a1a2c1aso46394631fa.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:57:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724752168; x=1725356968; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ld9LWP58d7ahMlzIkedRlsqTQK3wS2q25nmh4L82PQg=;
- b=UuyQCY0RCZCCKh9CBjTE7D8xYxllp1bbiJf7zDMK39/xct646EReT/Ui7kSExgzdFv
- QmqG7o2lo/TuqtSEJ733voPJJiImon3YaohGiPzrB+6eujTVR8UtknuEuUiQRvkTQs0n
- W3TC90dFk+vgzJHTGSMOSBx6HXBQDyBBNd7ZhOdLO8ZaVoh9hjuLUArz3kJNGWqVes7Q
- LjhAOmtKoxE4yaYH4G6iA7ujqxM6yah0R0qvvzcjhGJlT+jBF6Rqxuw8uvebImqJ8rwX
- TizZhCV7rR525I9WYJnupWlSHDhxK0i8l9fAK5IX5l+J77fdSR4MN2hiNzyysUBkJHyk
- GulQ==
+ d=linaro.org; s=google; t=1724752632; x=1725357432; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Zmlv+/H2H4IOeK3iYOIt02YrzQd95rRGq2IRetE8nzU=;
+ b=Kj6ULqAwn/DDJsGIUfaHKjy/vu1gLCu917Z9YVcRMNgQKD4dnEoQ/LHv95b5B2snjm
+ Lt96ICooydvY65NIduvSZQf0KcN0UnBKW/Jb0G5UcTv3EFDlh5eaJR5DBQHTJztGvkZ9
+ h0V0ejA8cBo3xuq8Sv/gMDJIzDTVCRF+9MK5/6M8t5x2Ok950PoFJGuHINxwSzeZ9P1u
+ G9XQ5qJRBwBfD90CZlzEcQiCSC5gWf9z8niInI3HFaE9quEAqOe7h+6fvIiwaVtg6PUh
+ VZiJfEXEpUEdmJb/5+yOhB5mMYthx8aQUXIGsYl4BRvrz78QSjNG0O62PsNS6JwXlNvd
+ 95UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724752168; x=1725356968;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1724752632; x=1725357432;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ld9LWP58d7ahMlzIkedRlsqTQK3wS2q25nmh4L82PQg=;
- b=ZBfzuFTWZclc0aMg+NKyGtGtZnoFVTXayHFxBKFftwjLw3znv8FbAkifxElhB7IgF1
- or96pFMelYyJMFV6PcnuEBe2GFkExuczJeKXvDmnS0ACtpHEFO9egpbXaMawUEs0RnU3
- dEZt0aFc58TnWSzlAtNEa6fsz2V07q459qL/xrqO6+xlSalRQsJ9R3+CqyGOtSzUgSOE
- 5wMPqAnZ2jT/yVhhpHHejPLazzVBrrx0qUsU8nPUo8rwqNj1g38SQQU4QwIu+VbvtMd3
- 9bosp/WYfOGvPJuFpXHJQfzEephrcYvVCk/oCVOjUGGHnqkeYdWiKS5Z2ddfLkc2z+HT
- 6tOw==
-X-Gm-Message-State: AOJu0YwX5rJVyPLwpfsun0lvWC/h6qA5LicUF1HQiCfVAHYL+bo/Ua78
- KJ++KueRu0fbZUJ10vLyagz8gkKyaiOKQUUAdWo5LBjHmyz0GRliBIVO7WLoGqK53791AIslBGE
- K
-X-Google-Smtp-Source: AGHT+IE0FWaf04ZzyH3i6VB7YXnIakHC0nPHDyZeSY9jcZS7mL5CE35bCuYcYJh78iH5BMGjiuhDkQ==
-X-Received: by 2002:a17:907:1c0a:b0:a86:a90f:3025 with SMTP id
- a640c23a62f3a-a86a90f3de8mr951840766b.59.1724752168260; 
- Tue, 27 Aug 2024 02:49:28 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.206.45])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e582d43dsm87574266b.115.2024.08.27.02.49.26
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Aug 2024 02:49:27 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, Beraldo Leal <bleal@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v4 3/7] tests/functional: Convert mips64el I6400 Malta avocado
- tests
-Date: Tue, 27 Aug 2024 11:49:01 +0200
-Message-ID: <20240827094905.80648-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240827094905.80648-1-philmd@linaro.org>
-References: <20240827094905.80648-1-philmd@linaro.org>
+ bh=Zmlv+/H2H4IOeK3iYOIt02YrzQd95rRGq2IRetE8nzU=;
+ b=JRi5fubdfXfr29npKS4skbC8aXe05Y02dWFA4ao93LvAfBU4AUsxgYJmClYwsBvPFV
+ n5QCHgRIK7rlxhOm3hniB3V9bhIKCLweSMMtsGrBfG6VQpXUXcvPXOkdXVLA53cm3/M/
+ LcmFcRsalj95WqdWV/E37bfA3uJ7KQC3UeSx9cQb07ASWdYpHZD6m5d4zH8UozrnAO9Y
+ eulUmIP5+hXK7n0zbV6gZsByLlyJoSreF+pC+gjVmgUzrCf2NbCvF9kZiTnmVj4j/1Mf
+ ymGCR0u+pOxUr33df+HveF7NeMpuEuVS3xznm8y90bg+xDwwBLudgqWGMrU9N6KpkGks
+ UOpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVt2M+Q+ms4YP/qMe191MOdbNBtMMKi36Zfv5hN/CwTenfPZg9I9ksa1jxkHqwlSUQhRxH44sd0gOPB@nongnu.org
+X-Gm-Message-State: AOJu0YzN4KUSY+EEVRcypNJ9oY2CnbkfMpQO747Z0+x+4lDDjCzUPzAP
+ PryYcRwwurYvfpwerrP9M163IAaSc7bC1YOY7G66XIbXO0DuJh/DhcOL6KVE8OQ=
+X-Google-Smtp-Source: AGHT+IE6rJ6z4ZKN7IlxKrB3NUJJq0jF7qZlDlbPZ9SoaFBM1BOmxcW6W33btaeszVTTjpvM9BBPyA==
+X-Received: by 2002:a05:651c:504:b0:2f5:abe:b6c3 with SMTP id
+ 38308e7fff4ca-2f50abeb7b6mr48488541fa.33.1724752631406; 
+ Tue, 27 Aug 2024 02:57:11 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c0bb20e99asm858583a12.46.2024.08.27.02.57.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 02:57:10 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F30745F7A2;
+ Tue, 27 Aug 2024 10:57:09 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
+ Stabellini <sstabellini@kernel.org>,  Antonio Caggiano
+ <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
+ <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
+ Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
+ Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
+ <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
+Subject: Re: [PATCH v17 00/13] Support blob memory and venus on qemu
+In-Reply-To: <20240822185110.1757429-1-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Thu, 22 Aug 2024 21:50:56 +0300")
+References: <20240822185110.1757429-1-dmitry.osipenko@collabora.com>
+Date: Tue, 27 Aug 2024 10:57:09 +0100
+Message-ID: <87ttf6cmq2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,286 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Straight forward conversion. Update the SHA1 hashes to SHA256
-hashes since SHA1 should not be used anymore nowadays.
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS                             |   1 +
- tests/avocado/machine_mips_malta.py     | 108 -----------------------
- tests/functional/meson.build            |   1 +
- tests/functional/test_mips64el_malta.py | 110 ++++++++++++++++++++++++
- 4 files changed, 112 insertions(+), 108 deletions(-)
- create mode 100755 tests/functional/test_mips64el_malta.py
+> Hello,
+>
+> This series enables Vulkan Venus context support on virtio-gpu.
+>
+> All virglrender and almost all Linux kernel prerequisite changes
+> needed by Venus are already in upstream. For kernel there is a pending
+> KVM patchset that fixes mapping of compound pages needed for DRM drivers
+> using TTM or huge pages [1], othewrwise hostmem blob mapping will fail
+> with a KVM error from Qemu.
+>
+> [1] https://lore.kernel.org/all/20240726235234.228822-1-seanjc@google.com/
+>
+> On guest you'll need to use recent Mesa 24.2+ version containing patch
+> that removes dependency on cross-device feature from Venus that isn't
+> supported by Qemu [2].
+>
+> [2]
+> https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e26987bef=
+ae78b6ccbb7ae242b
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 77fbb5d42e..3a91017979 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1369,6 +1369,7 @@ F: hw/pci-host/gt64120.c
- F: include/hw/southbridge/piix.h
- F: tests/avocado/linux_ssh_mips_malta.py
- F: tests/avocado/machine_mips_malta.py
-+F: tests/functional/test_mips64el_malta.py
- 
- Mipssim
- R: Aleksandar Rikalo <arikalo@gmail.com>
-diff --git a/tests/avocado/machine_mips_malta.py b/tests/avocado/machine_mips_malta.py
-index 07a80633b5..05c64e18c4 100644
---- a/tests/avocado/machine_mips_malta.py
-+++ b/tests/avocado/machine_mips_malta.py
-@@ -8,121 +8,13 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- import os
--import gzip
--import logging
- 
--from avocado import skipUnless
--from avocado import skipUnless
- from avocado.utils import archive
- from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command_and_wait_for_pattern
- from avocado_qemu import interrupt_interactive_console_until_pattern
- from avocado_qemu import wait_for_console_pattern
- 
- 
--NUMPY_AVAILABLE = True
--try:
--    import numpy as np
--except ImportError:
--    NUMPY_AVAILABLE = False
--
--CV2_AVAILABLE = True
--try:
--    import cv2
--except ImportError:
--    CV2_AVAILABLE = False
--
--
--@skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
--@skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
--class MaltaMachineFramebuffer(QemuSystemTest):
--
--    timeout = 30
--
--    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
--
--    def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
--        """
--        Boot Linux kernel and check Tux logo is displayed on the framebuffer.
--        """
--        screendump_path = os.path.join(self.workdir, 'screendump.pbm')
--
--        kernel_url = ('https://github.com/philmd/qemu-testing-blob/raw/'
--                      'a5966ca4b5/mips/malta/mips64el/'
--                      'vmlinux-4.7.0-rc1.I6400.gz')
--        kernel_hash = '096f50c377ec5072e6a366943324622c312045f6'
--        kernel_path_gz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--        kernel_path = self.workdir + "vmlinux"
--        archive.gzip_uncompress(kernel_path_gz, kernel_path)
--
--        tuxlogo_url = ('https://github.com/torvalds/linux/raw/v2.6.12/'
--                       'drivers/video/logo/logo_linux_vga16.ppm')
--        tuxlogo_hash = '3991c2ddbd1ddaecda7601f8aafbcf5b02dc86af'
--        tuxlogo_path = self.fetch_asset(tuxlogo_url, asset_hash=tuxlogo_hash)
--
--        self.vm.set_console()
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'clocksource=GIC console=tty0 console=ttyS0')
--        self.vm.add_args('-kernel', kernel_path,
--                         '-smp', '%u' % cpu_cores_count,
--                         '-vga', 'std',
--                         '-append', kernel_command_line)
--        self.vm.launch()
--        framebuffer_ready = 'Console: switching to colour frame buffer device'
--        wait_for_console_pattern(self, framebuffer_ready,
--                                 failure_message='Kernel panic - not syncing')
--        self.vm.cmd('human-monitor-command', command_line='stop')
--        self.vm.cmd('human-monitor-command',
--                    command_line='screendump %s' % screendump_path)
--        logger = logging.getLogger('framebuffer')
--
--        match_threshold = 0.95
--        screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
--        tuxlogo_bgr = cv2.imread(tuxlogo_path, cv2.IMREAD_COLOR)
--        result = cv2.matchTemplate(screendump_bgr, tuxlogo_bgr,
--                                   cv2.TM_CCOEFF_NORMED)
--        loc = np.where(result >= match_threshold)
--        tuxlogo_count = 0
--        h, w = tuxlogo_bgr.shape[:2]
--        debug_png = os.getenv('AVOCADO_CV2_SCREENDUMP_PNG_PATH')
--        for tuxlogo_count, pt in enumerate(zip(*loc[::-1]), start=1):
--            logger.debug('found Tux at position (x, y) = %s', pt)
--            cv2.rectangle(screendump_bgr, pt,
--                          (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
--        if debug_png:
--            cv2.imwrite(debug_png, screendump_bgr)
--        self.assertGreaterEqual(tuxlogo_count, cpu_cores_count)
--
--    def test_mips_malta_i6400_framebuffer_logo_1core(self):
--        """
--        :avocado: tags=arch:mips64el
--        :avocado: tags=machine:malta
--        :avocado: tags=cpu:I6400
--        """
--        self.do_test_i6400_framebuffer_logo(1)
--
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--    def test_mips_malta_i6400_framebuffer_logo_7cores(self):
--        """
--        :avocado: tags=arch:mips64el
--        :avocado: tags=machine:malta
--        :avocado: tags=cpu:I6400
--        :avocado: tags=mips:smp
--        :avocado: tags=flaky
--        """
--        self.do_test_i6400_framebuffer_logo(7)
--
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--    def test_mips_malta_i6400_framebuffer_logo_8cores(self):
--        """
--        :avocado: tags=arch:mips64el
--        :avocado: tags=machine:malta
--        :avocado: tags=cpu:I6400
--        :avocado: tags=mips:smp
--        :avocado: tags=flaky
--        """
--        self.do_test_i6400_framebuffer_logo(8)
--
- class MaltaMachine(QemuSystemTest):
- 
-     def do_test_yamon(self):
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 8d28313a65..a82dbd43bb 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -57,6 +57,7 @@ tests_mips64el_quick = [
- 
- tests_mips64el_thorough = [
-   'mips64el_loongson3v',
-+  'mips64el_malta',
- ]
- 
- tests_ppc_quick = [
-diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
-new file mode 100755
-index 0000000000..9c1da8f401
---- /dev/null
-+++ b/tests/functional/test_mips64el_malta.py
-@@ -0,0 +1,110 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests for the little-endian 64-bit MIPS Malta board
-+#
-+# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or later.
-+# See the COPYING file in the top-level directory.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import logging
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test.linux_kernel import linux_kernel_wait_for_pattern
-+from qemu_test.linux_kernel import KERNEL_COMMON_COMMAND_LINE
-+from qemu_test.utils import gzip_uncompress
-+from unittest import skipUnless
-+
-+NUMPY_AVAILABLE = True
-+try:
-+    import numpy as np
-+except ImportError:
-+    NUMPY_AVAILABLE = False
-+
-+CV2_AVAILABLE = True
-+try:
-+    import cv2
-+except ImportError:
-+    CV2_AVAILABLE = False
-+
-+
-+@skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
-+@skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
-+class MaltaMachineFramebuffer(QemuSystemTest):
-+
-+    timeout = 30
-+
-+    ASSET_KERNEL_4_7_0 = Asset(
-+        ('https://github.com/philmd/qemu-testing-blob/raw/a5966ca4b5/'
-+         'mips/malta/mips64el/vmlinux-4.7.0-rc1.I6400.gz'),
-+        '1f64efc59968a3c328672e6b10213fe574bb2308d9d2ed44e75e40be59e9fbc2')
-+
-+    ASSET_TUXLOGO = Asset(
-+        ('https://github.com/torvalds/linux/raw/v2.6.12/'
-+         'drivers/video/logo/logo_linux_vga16.ppm'),
-+        'b762f0d91ec018887ad1b334543c2fdf9be9fdfc87672b409211efaa3ea0ef79')
-+
-+    def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
-+        """
-+        Boot Linux kernel and check Tux logo is displayed on the framebuffer.
-+        """
-+        screendump_path = os.path.join(self.workdir, 'screendump.pbm')
-+
-+        kernel_path_gz = self.ASSET_KERNEL_4_7_0.fetch()
-+        kernel_path = self.workdir + "vmlinux"
-+        gzip_uncompress(kernel_path_gz, kernel_path)
-+
-+        tuxlogo_path = self.ASSET_TUXLOGO.fetch()
-+
-+        self.set_machine('malta')
-+        self.vm.set_console()
-+        kernel_command_line = (KERNEL_COMMON_COMMAND_LINE +
-+                               'clocksource=GIC console=tty0 console=ttyS0')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-cpu', 'I6400',
-+                         '-smp', '%u' % cpu_cores_count,
-+                         '-vga', 'std',
-+                         '-append', kernel_command_line)
-+        self.vm.launch()
-+        framebuffer_ready = 'Console: switching to colour frame buffer device'
-+        linux_kernel_wait_for_pattern(self, framebuffer_ready)
-+        self.vm.cmd('human-monitor-command', command_line='stop')
-+        self.vm.cmd('human-monitor-command',
-+                    command_line='screendump %s' % screendump_path)
-+        logger = logging.getLogger('framebuffer')
-+
-+        match_threshold = 0.95
-+        screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
-+        tuxlogo_bgr = cv2.imread(tuxlogo_path, cv2.IMREAD_COLOR)
-+        result = cv2.matchTemplate(screendump_bgr, tuxlogo_bgr,
-+                                   cv2.TM_CCOEFF_NORMED)
-+        loc = np.where(result >= match_threshold)
-+        tuxlogo_count = 0
-+        h, w = tuxlogo_bgr.shape[:2]
-+        debug_png = os.getenv('AVOCADO_CV2_SCREENDUMP_PNG_PATH')
-+        for tuxlogo_count, pt in enumerate(zip(*loc[::-1]), start=1):
-+            logger.debug('found Tux at position (x, y) = %s', pt)
-+            cv2.rectangle(screendump_bgr, pt,
-+                          (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
-+        if debug_png:
-+            cv2.imwrite(debug_png, screendump_bgr)
-+        self.assertGreaterEqual(tuxlogo_count, cpu_cores_count)
-+
-+    def test_mips_malta_i6400_framebuffer_logo_1core(self):
-+        self.do_test_i6400_framebuffer_logo(1)
-+
-+    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-+    def test_mips_malta_i6400_framebuffer_logo_7cores(self):
-+        self.do_test_i6400_framebuffer_logo(7)
-+
-+    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-+    def test_mips_malta_i6400_framebuffer_logo_8cores(self):
-+        self.do_test_i6400_framebuffer_logo(8)
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.45.2
+I've expanded the set of working tests so:
 
+x86 host, Intel GPU
+
+ x86/kvm Trixie guest + latest mesa - works
+ aarch64/tcg buildroot guest - works
+
+Aarch64 host, AMD GPU
+
+ x86/tcg Trixies guest + latest mesa - works
+ aarch64/kvm buildroot guest - works
+
+As the Aarch64 HW I'm testing on (AVA Devbox) needs additional patches
+on top of Sean's series to deal with the busted Altra PCI which I
+provide here:
+
+ https://git.linaro.org/people/alex.bennee/linux.git/log/?h=3Dreview/pfn-re=
+ferences-v12-with-altra-tweaks
+
+Anyway I'll re-state:
+
+  Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+And I think this series is ready to merge once the tree re-opens.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
