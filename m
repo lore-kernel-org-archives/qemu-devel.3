@@ -4,79 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85539C5472F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 19:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 743FCC5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 19:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj1k9-0001py-QG; Tue, 27 Aug 2024 15:20:41 -0400
+	id 1sj1q8-0006VJ-V4; Tue, 27 Aug 2024 15:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sj1k7-0001oi-NW
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:20:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sergio.durigan@canonical.com>)
+ id 1sj1F6-0000sn-HJ
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 14:48:37 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sj1k4-0002Wi-H7
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 15:20:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724786434;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YQovZ2FvGToAlKG75tverA4PubUQXFXHEniq77HGqAM=;
- b=UBi/U9ulH3UqYzPVWTjsKRVQFgTBc+WHca90hBKN5ro//N0jcSpek90ugJKT9DKMMeYNMr
- cavxcdQJctyLWZ4B5gPqWlM3vi8rnfy3lGbMNBnkKUL16DTGvK+UD0+waO09Dlc2AQf8GA
- fRPJNC+AOxKJuSY75ey8FzT814wRSwc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-JPusnosgPLWZgi6LSIOI4Q-1; Tue,
- 27 Aug 2024 15:20:27 -0400
-X-MC-Unique: JPusnosgPLWZgi6LSIOI4Q-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <sergio.durigan@canonical.com>)
+ id 1sj1F4-0007Vm-H9
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 14:48:36 -0400
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7C2A19560AB; Tue, 27 Aug 2024 19:20:25 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.119])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E2FC19560AA; Tue, 27 Aug 2024 19:20:24 +0000 (UTC)
-Date: Tue, 27 Aug 2024 15:20:23 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: paul@xen.org
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, pkrempa@redhat.com,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Anthony PERARD <anthony@xenproject.org>
-Subject: Re: [PATCH v2 0/2] qdev-monitor: avoid QemuOpts in QMP device_add
-Message-ID: <20240827192023.GA937897@fedora.redhat.com>
-References: <20240801140552.1021693-1-stefanha@redhat.com>
- <87wmkz5oqk.fsf@pond.sub.org>
- <20240812181534.GC69160@fedora.redhat.com>
- <3a9f0e9a-3873-4cd0-8773-c2ed6230da81@xen.org>
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 88ABF3F2F2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 18:48:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1724784511;
+ bh=7aVRiNgtIQrpl+6j9IJwv+ByTfx7MOBn6Z2ESed44D0=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+ MIME-Version:Content-Type;
+ b=HOnNU5ivLUKwy/kb/K9VF2a+QMYMI6ITccs6arP4WXopXqeii0o8/c6IAJOg61eo4
+ juq2ZhRuVhWEcB653DFeGHFYUwjn3kXHqwyqROeQhasfxITl4+Vh3CAettK0+2WJ2H
+ OkUr0qOMisS0HaE+lRTBnijccHJRAHMflUGpoDjq7gYm4nkjmx9RUPzrTBkll1Jmig
+ rnQhXBmfRsJH0iW2wpNQSRYO+oNeRLbYndKTlb3scxeQ2kik1VA8cnbnKbXa17Gygc
+ 5GWvFZPBL8uw04lSgeuZUUWyGUi8A0ElUl31OEtB5qfXFPajLoMS1i8mJAPdYK1jP5
+ WxDpXN0e5pzBg==
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a1d4335cceso1086318285a.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 11:48:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724784510; x=1725389310;
+ h=mime-version:user-agent:message-id:date:references:in-reply-to
+ :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7aVRiNgtIQrpl+6j9IJwv+ByTfx7MOBn6Z2ESed44D0=;
+ b=DTJVJ73Vansa2jwBidN4cUH1rcPsiK6CONHRgLTv0IhRO7V1gQZ/ytoTM3oVtTeS28
+ 9vBAR1pQkjUIgBYOS6MUq+kCH2v7i4Xy3k9caNQzi2Dk9WiogrJoqe9QKD6sfo041uAY
+ akwNERdZbms81hZg9TMgq1+YhJ6NqfK9kksSHq1igVelCid1rLMdB3vkJCpkWvaNArnO
+ B3gFDoup4lUUOflwYClND3Fzatt3ReduQNM4+uEsUSFPvEwYgPqhaeCgUKwOhPRLx/l7
+ w2vSD5GLbGEkSEOHbEmMxhHcTf2RfF0ezPBaDOwUnim6Wlo+THn/4ltcw6/K5ebtkXjR
+ qR/A==
+X-Gm-Message-State: AOJu0YzQNAeK4ZgVgmaQmR7PdW0r+LokSyvpAT/8TxoweWb1Fd7QE+/T
+ ARN3OdkcQL7fQUu3NrSES0fCZg1lyo/YSjwnrPWVtpe629l/qpGARBExWYLYtbUey3uZS4KjY61
+ NV/X2B5qr9i8aT2lU9LmqdLZrZ1RAcwmmgxyrhkSWGz1ez8Z4gJ92khDKAWu55Li6zeoL4dbjUz
+ WR
+X-Received: by 2002:a05:620a:2556:b0:7a6:50a4:291c with SMTP id
+ af79cd13be357-7a7f328d0f8mr17966185a.14.1724784510261; 
+ Tue, 27 Aug 2024 11:48:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELnda12+fZMDF2xeThd9uQ53RZYgjeQxXiDZ8OelBbXcL12QOgmf60chtbvB/BOX9P+qWRCw==
+X-Received: by 2002:a05:620a:2556:b0:7a6:50a4:291c with SMTP id
+ af79cd13be357-7a7f328d0f8mr17963485a.14.1724784509972; 
+ Tue, 27 Aug 2024 11:48:29 -0700 (PDT)
+Received: from localhost ([2607:f2c0:edc2:500:d40d:699e:db17:1848])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a67f347b15sm575442685a.44.2024.08.27.11.48.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 11:48:29 -0700 (PDT)
+From: Sergio Durigan Junior <sergio.durigan@canonical.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org
+Subject: Re: [ANNOUNCE] QEMU 8.2.6 Stable released
+In-Reply-To: <1721203806.547734.831464.nullmailer@tls.msk.ru> (Michael
+ Tokarev's message of "Wed, 17 Jul 2024 11:10:06 +0300")
+References: <1721203806.547734.831464.nullmailer@tls.msk.ru>
+X-URL: http://blog.sergiodj.net
+Date: Tue, 27 Aug 2024 14:48:29 -0400
+Message-ID: <87ikvlrede.fsf@canonical.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="N0tVOeh+JhGgb5uc"
-Content-Disposition: inline
-In-Reply-To: <3a9f0e9a-3873-4cd0-8773-c2ed6230da81@xen.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=sergio.durigan@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 27 Aug 2024 15:26:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,66 +109,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wednesday, July 17 2024, Michael Tokarev wrote:
 
---N0tVOeh+JhGgb5uc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hi everyone,
 
-On Tue, Aug 13, 2024 at 09:18:46AM +0100, Paul Durrant wrote:
-> On 12/08/2024 19:15, Stefan Hajnoczi wrote:
-> > On Fri, Aug 02, 2024 at 10:10:43AM +0200, Markus Armbruster wrote:
-> > > Can we additionally cut out the QemuOpts middleman in
-> > > usbback_portid_add()?
-> > >=20
-> > >      qdict =3D qdict_new();
-> > >      qdict_put_str(qdict, "driver", "usb-host");
-> > >      tmp =3D g_strdup_printf("%s.0", usbif->xendev.qdev.id);
-> > >      qdict_put_str(qdict, "bus", tmp);
-> > >      g_free(tmp);
-> > >      tmp =3D g_strdup_printf("%s-%u", usbif->xendev.qdev.id, port);
-> > >      qdict_put_str(qdict, "id", tmp);
-> > >      g_free(tmp);
-> > >      qdict_put_int(qdict, "port", port);
-> > >      qdict_put_int(qdict, "hostbus", atoi(busid));
-> > >      qdict_put_str(qdict, "hostport", portname);
-> > >      opts =3D qemu_opts_from_qdict(qemu_find_opts("device"), qdict,
-> > >                                  &error_abort);
-> > >      usbif->ports[port - 1].dev =3D USB_DEVICE(qdev_device_add(opts, =
-&local_err));
-> > >=20
-> > > Trying this is up to you!
-> >=20
-> > Paul or Anthony: Do you know how to run usbback_portid_add() for
-> > testing? I would like to make sure that suggested the code change works
-> > and don't have experience running the Xen code in QEMU.
->=20
-> Sorry, PV USB is not something I'm familiar with.
-> https://wiki.xenproject.org/wiki/Xen_USB_Passthrough suggests that `xl
-> usbdev-attach` might be the way to test... but you'd need a system with X=
-en
-> installed and suitably configured guest, so not trivial to set up.
+Hey Michael,
 
-Thanks for the pointer! I will leave the usbback_portid_add()
-refactoring because I don't have a setup for testing it.
+> The QEMU v8.2.6 stable release is now available.
+>
+> You can grab the tarball from our download page here:
+>
+>   https://www.qemu.org/download/#source
+>
+>   https://download.qemu.org/qemu-8.2.6.tar.xz
+>   https://download.qemu.org/qemu-8.2.6.tar.xz.sig (signature)
+>
+> v8.2.6 is now tagged in the official qemu.git repository, and the
+> stable-8.2 branch has been updated accordingly:
+>
+>   https://gitlab.com/qemu-project/qemu/-/commits/stable-8.2
+>
+> There are 23 changes since the previous v8.2.5 release, including
+> a fix for CVE-2024-4467 (qemu-img info command lack of input validation).
+> This is supposed to be the last release in 8.2.x series.
+>
+> Thank you everyone who has been involved and helped with the stable series!
 
-Stefan
+We talked on IRC but I thought I'd drop this email and make it official.
+Ubuntu 24.04 Noble ships QEMU 8.2.x and it would be great if the
+stable-8.2 series were to be maintained for a longer period of time.  I
+can try helping with review/backporting as time permits.
 
---N0tVOeh+JhGgb5uc
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks for working on this.
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmbOJvcACgkQnKSrs4Gr
-c8gk3AgArfAGsYRTFQVSE8rN5VSpkSj/iinU8wj5PPe0r0hnnQSuGdLpc60t1n2o
-6UL195FNtS86INESz33H6aPBCr4bJiaQC/TA4kvzohDHsAjTJT8ccMgqxLh/y6FB
-b4OL1BoS9Jkk42csPGnAFLxwEdP2UwG+h3wSJigOnzqZYGEBkgQQD3YZtejk7UG7
-TRHS7ME8Eq+zgbVOZrrIBErrprU2lDUz+wf6ZRdRKYJXKnXXJhsfVpc0ZpJegXNL
-u6ygatRIkjY1pl86uJZh1ozphNepdsTg7WOFvkwmom/VOLvHAIunYsgc/QhlKGuc
-KlBdjNtbCPGRue/wEwhCEmYZqkmX4A==
-=kImC
------END PGP SIGNATURE-----
-
---N0tVOeh+JhGgb5uc--
-
+-- 
+Sergio
+GPG key ID: E92F D0B3 6B14 F1F4 D8E0  EB2F 106D A1C8 C3CB BF14
 
