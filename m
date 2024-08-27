@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFDAC5320E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 09:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A15C52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 09:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sisJu-0005WU-Uk; Tue, 27 Aug 2024 05:16:59 -0400
+	id 1sisO8-0001Tt-3O; Tue, 27 Aug 2024 05:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisJn-0005Vo-TL
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:16:53 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisO6-0001SV-OZ
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:21:18 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisJm-0004po-15
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:16:51 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5c09fd20eddso2324182a12.3
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:16:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisO4-0005Dx-SI
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:21:18 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a867a564911so624113966b.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724750207; x=1725355007; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724750475; x=1725355275; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zHXQkUqodP/eNyr8h+Sf/+cLn8al6/gYDTwtdfsLbAQ=;
- b=hjvzxmL0Ncb6KbxUv5PNmBaas/ZUAGzZH/lc8U7nxuFSrTRm3X8whuYnfmS9ItoCBU
- sxparzVjHbe71SheyIJktlilhX8ONE8ta0DAZsHncwHNATfVfsY+NuoTyNw8L05w2+zE
- WJRRKpMLTUHyBs/HI+o2JvqMjTaIid3LmF4VxLf3kIFblqNHOJfIQ1E/cBbQmE4w5wNP
- uqWUNUluO3pYOhtSzaARsDEFF7MSI2Ype4WYZ+FsxoXBmTY6K5hOoviX4C4b/tWajUHI
- ZsHRtJwHYjhW+zMeISYWBlBBkq6wyCKhxnQqYM+J5dlcXEY4HdRzD3Wb++vn5JrLtJmN
- GXwA==
+ bh=OXN8mHBDtwIEaJNeTegVPbNznzAEmH+ycUuUvBNkqso=;
+ b=EpMKrvvgzquLfdEJXECLIaHkmx+GcZ4pAUiQ1gjrnDvj3ktactQ6pyCYtjvFwWPmzb
+ 5XfNgiFi4qLOOV5yk5p4GPMb1lFcCHZX2+5y6XwdQ9CAgL+pZJULG9fTvKu4xAcmfN7i
+ ywDsqRQDIhJzef+49xC+poCGRKNYvh+uk73aNlMHL1Y0LSON2FNWBfHYnXW06bzO/V/u
+ zSmWjO01upQgvmI1PfJ5J89QdCWGbGXJG/bNzi3zMWSHYrpgQ2YR1xh78INKGyQAyFo9
+ 8T5+OebL6/Hvk6woekLru/fXt+D+bjP/x09RIYenVrNBVoxTnVP2jpR83Gu0nXG7LA4+
+ 7shQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724750207; x=1725355007;
+ d=1e100.net; s=20230601; t=1724750475; x=1725355275;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zHXQkUqodP/eNyr8h+Sf/+cLn8al6/gYDTwtdfsLbAQ=;
- b=CbMhwx9UquPm/U7kRCh+V2qWRPz4NfxLYmW/Xmg5WBeYiZxnpd0ddKGv7wIIJV23OY
- b48eBW+BxBwp7mpcrl0tKzNw0hRr78jwePKkw4TJP3b61G2oGd7NG4MxmZOR8U6pwO05
- EWzrELjbCfldjnnk3WvfGmqNomTyAwgMbH5tM1r3pZcpxGuhZrg4ROQnJPHzRqy4uHX+
- zMbVoxwOnPQDBoensPmXksG3Zan2cuhPgivIG8lg3fu53i2Eol+hcz7gm7+m9JPnv4ea
- saXYjcsxsCLshFZrmRm8ExMq4Oj45vCrvIyh4r0J6vCI89jWZllNheH6Y68PHYc5QknG
- HPZA==
+ bh=OXN8mHBDtwIEaJNeTegVPbNznzAEmH+ycUuUvBNkqso=;
+ b=CIJCTX5TN3dHdlXQfxxEGvAMgYO3WhtPA1N38CpOZEru8sZ2UsS/jd8fzw35hjlnSf
+ Jz5N76LppG9Ow9ZJ8X9RPJAGngQ+AwzS+XTLMsIWlqLHB42mCIiZ9I9VItPoCf39Ylsn
+ 3VuUsAGZDOm9CpaVPgDl0aJOT5ip856mvJIHiu+RBxdSCktcOGOksU1ZvBPBzI1ILgtW
+ AoYZgGRwNe4FepDL3oh3799VMMZTNbaU7rLI6+FirHTXaVHCzt3FuCq4gAeKtIXljvi8
+ xrG6NEzxrzBQ9s3jWo1x12Xq7bzbcid+Cg/9vJT1KpywUfe+ChvibcbFoWhJmCjxmY0O
+ n2jQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXezJEAhcMRyvPclYi04/llhG8HTKqf9tXijZ4tGh7UBeb1gzgFgTeZGwHNxpoMXC9AHruyFs9L/0J5@nongnu.org
-X-Gm-Message-State: AOJu0Yy3SGZVUmNbgDDGfpYDqCqJ7MSU7dj0TEr6VzE4mEfeoojqBbUI
- 5/FbKRam6zoZ1ZstUA9/9EtavhK582sXdLBvMrZ4Ud1G8ysBuJNF/cWqYF5WIDg=
-X-Google-Smtp-Source: AGHT+IGtYaJxIwp4OIvaJyqVSvBWjduR2J3A5dqnbpweHz5AFYALx7jf3C/yCyPV9OJlqFvCiU9xiA==
-X-Received: by 2002:a17:906:f5a9:b0:a86:79a2:ab12 with SMTP id
- a640c23a62f3a-a86e3a4b27emr181947966b.38.1724750207431; 
- Tue, 27 Aug 2024 02:16:47 -0700 (PDT)
+ AJvYcCX+IulHOP5ZWrRTk0Ymmtf6ksWTytcOM8ClVI6aCtmI18ucMJ1dkOBeUok8DYYrNmaAgPRTORIdmq/L@nongnu.org
+X-Gm-Message-State: AOJu0YzLZJbdPRuUXmBxjwI7TcTnrZAd9aax095hpoWmTVFcUvUoSzzZ
+ LfpU0+U3GgaU0HzoG2xd/52lbNom4RptqQLLizFXpaXUvOtHn9VedFDYW0+cnAA=
+X-Google-Smtp-Source: AGHT+IEDnPVV6IRkqwEKR0YOLxr+MGkX+QJAi6FMbwjygGYXWIAvoXFONi+0JTC0LtBRkr5VgUi1ug==
+X-Received: by 2002:a17:906:bc24:b0:a7d:a080:bb7 with SMTP id
+ a640c23a62f3a-a86a52c3981mr904945466b.36.1724750474834; 
+ Tue, 27 Aug 2024 02:21:14 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.206.45])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e592dadasm82976766b.200.2024.08.27.02.16.45
+ a640c23a62f3a-a86e5878597sm85727066b.175.2024.08.27.02.21.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 02:16:47 -0700 (PDT)
-Message-ID: <9910ebc8-b7c4-4505-a987-3a5e308fb3d1@linaro.org>
-Date: Tue, 27 Aug 2024 11:16:44 +0200
+ Tue, 27 Aug 2024 02:21:14 -0700 (PDT)
+Message-ID: <aeb7bd72-095f-43cf-8216-18c341310915@linaro.org>
+Date: Tue, 27 Aug 2024 11:21:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] tests/functional: Convert mips64el Fuloong2e
- avocado test (2/2)
+Subject: Re: [PATCH 1/4] tests/functional: Add a class containing Linux kernel
+ helpers
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Huacai Chen <chenhuacai@kernel.org>,
- Beraldo Leal <bleal@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240824160829.27655-1-philmd@linaro.org>
- <20240824160829.27655-3-philmd@linaro.org>
- <e840b528-c48b-4b5e-9b2b-c7c0a0473ce7@redhat.com>
- <2f484cff-e227-47e3-b570-40e1945cee63@linaro.org>
- <2f741de8-84b5-4bdf-98a6-568139dfbfb9@redhat.com>
+Cc: Cleber Rosa <crosa@redhat.com>,
+ Sergey Kambalin <sergey.kambalin@auriga.com>, qemu-arm@nongnu.org,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+References: <20240826221058.75126-1-philmd@linaro.org>
+ <20240826221058.75126-2-philmd@linaro.org>
+ <e66847a0-7390-42d9-a51d-190e0734d25e@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2f741de8-84b5-4bdf-98a6-568139dfbfb9@redhat.com>
+In-Reply-To: <e66847a0-7390-42d9-a51d-190e0734d25e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,46 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/8/24 07:27, Thomas Huth wrote:
-> On 26/08/2024 22.59, Philippe Mathieu-Daudé wrote:
->> On 26/8/24 11:10, Thomas Huth wrote:
->>> On 24/08/2024 18.08, Philippe Mathieu-Daudé wrote:
->>>> Straight forward conversion. Update the SHA1 hashes to
->>>> SHA256 hashes since SHA1 should not be used anymore nowadays.
->>>>
->>>> Add extract_from_deb() method in qemu_test.utils package.
->>>
->>> Should we maybe rather copy the whole LinuxKernelTest class into a 
->>> new file in the qemu_tests folder, so that all the related tests can 
->>> simply inherit from that class? That way we would also get the 
->>> KERNEL_COMMON_COMMAND_LINE handling for free in all the tests that we 
->>> convert. What do you think?
+Hi Thomas,
+
+On 27/8/24 07:34, Thomas Huth wrote:
+> On 27/08/2024 00.10, Philippe Mathieu-Daudé wrote:
+>> Use the 'linux_kernel' namespace to provide common helpers
+>> to functional tests booting a Linux kernel.
 >>
->> Except that variable, I'm not sure what can be reused. Most tests
->> are trivial. Maybe I'll realize after converting a few more :)
+>> Suggested-by: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   tests/functional/qemu_test/linux_kernel.py | 19 +++++++++++++++++++
+>>   1 file changed, 19 insertions(+)
+>>   create mode 100644 tests/functional/qemu_test/linux_kernel.py
+>>
+>> diff --git a/tests/functional/qemu_test/linux_kernel.py 
+>> b/tests/functional/qemu_test/linux_kernel.py
+>> new file mode 100644
+>> index 0000000000..917beb7fb6
+>> --- /dev/null
+>> +++ b/tests/functional/qemu_test/linux_kernel.py
+>> @@ -0,0 +1,19 @@
+>> +# Linux kernel functional test helpers
+>> +#
+>> +# Copyright (c) 2024 Linaro Ltd.
+>> +#
+>> +# Author:
+>> +#  Philippe Mathieu-Daudé <philmd@linaro.org>
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +from . import wait_for_console_pattern
+>> +
+>> +KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+>> +
+>> +KERNEL_PANIC_MESSAGE = 'Kernel panic - not syncing'
+>> +
+>> +def linux_kernel_wait_for_pattern(test, success_message):
+>> +    wait_for_console_pattern(test,
+>> +                             success_message=success_message,
+>> +                             failure_message=KERNEL_PANIC_MESSAGE)
 > 
-> Apart from that variable and the extract_from_* functions, that class is
+> I'd prefer to have the whole LinuxKernelTest class here (without the 
+> BootLinuxConsole class of course), that way the modifications that we 
+> have to do to the converted tests are definitely smaller when we don't 
+> have to change the "wait_for_console_pattern" lines everywhere. And it's 
+> also nicer if the variables are properly wrapped in a class.
 
-I don't see extract_from_deb() and extract_from_rpm() being specific
-to a LinuxKernelTest class, IMO they belong to .utils with other
-helpers such archive_extract().
+I'm a bit confused by your comment. I exposed my view on LinuxKernelTest
+methods (which I don't see specific to this class) here:
+https://lore.kernel.org/qemu-devel/9910ebc8-b7c4-4505-a987-3a5e308fb3d1@linaro.org/
 
-I haven't added extract_from_rpm() there since I'd need to convert
-a test using it to be able to test it, but it is planned.
+Could your request be implemented on top on this patch, as we go (as it
+is already helpful in its current state)? Otherwise I'll ask you to
+share a snippet of what you mean, or even better to post a v2 :)
 
-Similarly image_pow2ceil_expand(), pow2ceil() and file_truncate()
-are generic, not restricted to Linux console tests.
+Regards,
 
-> also redefining wait_for_console_pattern():
-> 
->      def wait_for_console_pattern(self, success_message, vm=None):
->          wait_for_console_pattern(self, success_message,
->                               failure_message='Kernel panic - not syncing',
->                               vm=vm)
-> 
-> So that failure_message handling is now missing in your converted test. 
-> I think I'd feel better if we keep that, or do you think it is ok to 
-> drop it?
-
-Doh, I missed that.
+Phil.
 
