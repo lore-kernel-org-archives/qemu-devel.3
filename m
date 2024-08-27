@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5016C54735
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 11:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F13C54736
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 11:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siuIo-0002to-Op; Tue, 27 Aug 2024 07:23:58 -0400
+	id 1siuIn-0002pg-MJ; Tue, 27 Aug 2024 07:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1siuIj-0002dI-I4
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:54 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1siuIl-0002i9-QV
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:55 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1siuIh-0000js-Qz
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:53 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2f3edb2d908so56098221fa.2
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 04:23:51 -0700 (PDT)
+ id 1siuIj-0000k0-Qm
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:23:55 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a8682bb5e79so710612066b.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 04:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724757830; x=1725362630; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724757832; x=1725362632; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9YXcnKmZZZbUSRgrSbJVZ31pesRUIn2Cw54Q9JgSGWk=;
- b=EJRWp+l6HaaEgg7AyrhtG5ufbxjIxClJj6y/6rD5gfe+0XKT7x5ilvb0kiZYPVx2+r
- iDYhX8YjLjxLGjx6s7eBMSOzay3oZqo2cAXRuSEeulcpGq90H+ubQg/XuyBkLyhwI9tu
- yufWntfzlwbi49Z9wO6088ovBDv2x1EwpiQCZjZhS6JWdFwHveLl1NxhVLB7xpFcl3uG
- I+6Pwge/kKsFiFslavXkPntwYjhDC7+wzb36IlI2WtpPLBUExLmerDtgXWibFqJZ5VVa
- ljSRQFWB+8vPGkl1pApXLpwSUMFAbMmjpxMKNykyzbHHRInfaD0ufMRIVhP/48enEeTk
- aZ8w==
+ :reply-to; bh=6023lRD220fUKA6bf48jqfG/QjqXt5noiDcRHVXsjQg=;
+ b=OtaTYarLKejGprqzKHe5CrLzYGEMa2aIZhjM0+FuHSga1I3Lqt9E0RTbQkuYRjzowl
+ w8RzKMCSCZ/CHe/Rsn21Ghp79M4zKZQhyFpAq6sBrIQGCQPAwFP38OXLN1C6K+oUkTsL
+ HHe5dvXQ5a267d1J0Q70NYB8/jNFvKZY4rA0s1t17453XSyBtNRwryPTM7z6Mv5OUtqc
+ V0KwMGxZ7EnFMWgySNDvjjD770EHXSAid1f+cCssnKPO9BOcKvbcri2QVUxKFdzB87pu
+ xcx3oInvhMaeACem/+DOYVO/rBeBiOHnKdchkm3iWKiLmtmx+ldhLJ+ptyYXvNPWpAZY
+ XewA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724757830; x=1725362630;
+ d=1e100.net; s=20230601; t=1724757832; x=1725362632;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9YXcnKmZZZbUSRgrSbJVZ31pesRUIn2Cw54Q9JgSGWk=;
- b=OVv0qk7JLE+yph3jKh547cuR5lW8UEUOiTLPJjPtwooGIfgSvASc+sneyo2ARLP7U2
- glGBB/S4nMgxJ3ooi4gj+hSCcd3zAkFZYEHb/7vJzVmJAJIA4F3JuPfzdnhOG7mjNx7b
- OYSJ+4kUuVSi04rNstUuD9eBNzyDk2v2P/X/FvVw7OrJpGek+R84NVvOjj8LzBiX9sFV
- k5p0s9TexUVCLog7bL9iX/ILtP3Xm5TG5Gwf1LBcPKaKmLgqCEKfvThOnTCGXIgcuyWe
- XIXtrW0Ynu2gDjjkdLlUxt7BS9EL/FY0GYgQ3NxVU8GuZzDedWFFPQc6JV29axOxpL3u
- LEfg==
-X-Gm-Message-State: AOJu0YxYDjVr95mW1vs9UJOY6CUgunoara+CwXfeDWwXlW9GOOjAvO5j
- u8lzPQ6Q6gahfvRR1s604udP5Cj5dJSoXIr/otCdYMTFHRA8BzQ2SF8kQJMOn0k=
-X-Google-Smtp-Source: AGHT+IGEh5TBKm82DVZd0yzPMTCsZS/oeKsOdFkmdioj8U9ubSLNJCuSoUqJVgbHM52Lo7Iq7SFnIw==
-X-Received: by 2002:a05:6512:238b:b0:533:6f3:9844 with SMTP id
- 2adb3069b0e04-5343875fdb6mr9127861e87.11.1724757829676; 
- Tue, 27 Aug 2024 04:23:49 -0700 (PDT)
+ bh=6023lRD220fUKA6bf48jqfG/QjqXt5noiDcRHVXsjQg=;
+ b=f8F2p2Z1xTTeBfVuWM/aENWdECdg1uPCMiq5tIIIFzgqJ7KiqsFGq+SnUTRyaNAeoG
+ ZhdQlt8LimvG9QPgcMiHB+KMOhqfvqn0brBBEBKPfh2+E+JDCSNd+RIWATjX5XqoCXv8
+ 2C1oTtJDJB1xlkUZtiae/eczEsVmszhAfPpep22EHZaHwnCJoGBPaFCML+6vdjUrliy3
+ 3Q9C+VHs+xhwrMmW4wExyTz1HlHRNR0OiQEUiCPjSyBkByP6blvYP6bQQCiu2WWtusIA
+ +eeSxtM2eprjHUWXKs+AI2s+kEl6chKwLxjIMR6IYHII9uk6vk2gOx3GrdfSuK017bdx
+ x4HQ==
+X-Gm-Message-State: AOJu0YxnNFmd1jF80pVLvIUOCL3Hie6m4frVkMedTfNJ9F8AA0uHWyjY
+ eKFG4qq2EXgT/0YzOxVndpa/8fQKLn017KGwgFafPeHiyc/HxR5JCsj8i+4cRpg=
+X-Google-Smtp-Source: AGHT+IEaXlbsewDN3gBqdWwnjzEcwhaVvmrvDDcVMFjl2LpNb0VNaqI6jlIaAvrZa0PdDEczhAwBGQ==
+X-Received: by 2002:a17:907:e646:b0:a86:89ea:ee6c with SMTP id
+ a640c23a62f3a-a86a52de5d5mr1012626066b.30.1724757831988; 
+ Tue, 27 Aug 2024 04:23:51 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-242.37.6.163.tellas.gr. [37.6.163.242])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e594fa62sm96280066b.198.2024.08.27.04.23.46
+ a640c23a62f3a-a86e594fa62sm96280066b.198.2024.08.27.04.23.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 04:23:49 -0700 (PDT)
+ Tue, 27 Aug 2024 04:23:51 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 27 Aug 2024 14:23:14 +0300
-Subject: [PATCH v9 5/9] .gitattributes: add Rust diff and merge attributes
+Date: Tue, 27 Aug 2024 14:23:15 +0300
+Subject: [PATCH v9 6/9] meson.build: add HAVE_GLIB_WITH_ALIGNED_ALLOC flag
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240827-rust-pl011-v9-5-e90b9c28f861@linaro.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240827-rust-pl011-v9-6-e90b9c28f861@linaro.org>
 References: <20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org>
 In-Reply-To: <20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,30 +80,30 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.15-dev-b8758
-X-Developer-Signature: v=1; a=openpgp-sha256; l=737;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1723;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=yNbUsDh4+C8FtuJmA0XrJ1SGNb062y+eEXSraBcKoO8=;
+ bh=BHZl+cDvjx6vCSPrL4UwCDjF/NsyQKlyuKtsv2MOHNE=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm16YmMwbGJPT3FvelNhSHQrMkhxWXZETGowVXZFCjlIQkRkVklTcmhmdm1jcHlp
- S2lKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnMyM05BQUt
- DUkIzS2Nkd2YzNEowS1RFRUFDWEJXSTNZckZEdFZtcWcyaWdQQ3JtUlUyWHFEY1B0TDkvbkZLVg
- pFTG5OcUFwQUtQS0hjdGtjRjhqUm50S1dBRmhsQllURFZtNWV2Zlhhc0Z0ZnJIbU5oM2tMMzNyO
- WxNY0N4TTJIClNmZGJwUHN3ZjdmUDNPeml4TDFpL1VURUNmL0JSOTNCdWpiNHZGREVpb2lHOUlm
- OVp4R2xSeElTU1VMYXFkTnYKOU0wZ1Z3cm8wZ3Faa2tOc0xGSCtRb2pqZ0hrcGpkWFIxTEx0UFc
- 5aXc2bDltQ3BQL0NKVU4zSUVhdjVRWGlHNgpaRUpxTnBVQlRnWDBCVGdpTzZiWFUvOFNXNXNib2
- 5VcERnNXpaVkhGa1JBV1R1Uk9pOTZManY5cXF1Z1Q3VXZvCm92Skdabk9TMlFJUjdjbCtuaGxtM
- mQ1MzA1bTE0QmJzNVg4NHd6NlBMK09hcmJwU3VCRm5FbzVYVlhTSmNpcWkKWHZGVWJtSmtFMjRy
- NCsxZVdlWjNYTXprM09CSFNiN0psMUNsN0ZGOUxDck5WSHlRRmhFbkNldmNSR1JGVlJDMQpuaFM
- vUnovVElwY0dvbnAwRUpSa0N1eGpQV2lvdEIyQjRxb2cwWkRvVUFrQVhnczlTL2dxVjdCTTRLOT
- haVUk1CkROYXl5QllsRWpwdGFOZTB2Z1ZHeDluSVBZN0JkYjNwQjlhU1pYcmxOb25nMnNqeEV6Q
- UtHa3IwMUgxYk1yc1UKaVdSQm90TXdhc1B4L0xtblJ0RDhWREN3Q3VQZ0dOQVI1WXdiWHppZ1kx
- SWZmVkFoZGVLU2E3Z3huWFZjWjBMYgo5N0NCdkJwZmU2YnlUWWx4d29NWlp4bWNCOHl1L3Q1Tlc
- 4amhvQ0FNQkx5b0FJU21xUTNJRDhsOFdaSVBsOTBFCmNRZzBwdz09Cj1SQXpICi0tLS0tRU5EIF
+ 25RQWNzbVlnQm16YmMwRXJUWFVrOGg3allLZ3lici9qYlZ2MHdNClVxTXpOM2drYnM3R2Q0bDNE
+ bkNKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnMyM05BQUt
+ DUkIzS2Nkd2YzNEowTk5aRUFDSVFUN2hka0w5UlpzcGZPYUlFVXlvQ21oUmF5aWZhUWpXSmV4aQ
+ pzOFhzUmFCazhiTnhQazZuVzMwcXd3d2pPcFRPUDlqMUlhaTZiMjBXRkdIQXBHMVN4ZGo4dDR4S
+ i9LNWUwV0Z6Ck16eG5BWlZvSklGMTljMmZmOUcrald3dWJ4NHlFZ2JaUkJubUR0SmRYUFdOUlg0
+ VGd6SFlvd0prNVZPNUN2cnoKSjBmNDVFcDJNUTdCcGpRYklyMTg5RGlYVGxPUHlpbXFuOTVlTzh
+ rdE5ZOTlna3lTZkVaRzQ3dmpVdFBPTTc0Zgp2WUVGOUJMQlhkSmNoSlZwcWtNeGRsL1JrNVlybn
+ NVRXNHNWp4anowQnlxS3pmeHQxTzBDRFhzMzh1dTZYb3hkCkJ3L3ZHenVBeXZnN3dNdVUvcENoR
+ GlTa1FtYTN0ZDYyc1lHV3dxQ1ZUS1JocFhTR1krM2E5aWJpQXlWRTliWlUKbDh1alpTWUNtM1dT
+ Uy9qSUtqZE5zTkQ1T2ltQnVtVzlPNzdWUVVBQ3RIVXI2MnBrL1krZ3JMWGMyMnFWUStVcwo5MEJ
+ uQlg3Ly9VWmtZWUJzVGtaeEdreWZBUll4cEJYRzFOWUtUSU5oaTdEMmZ2dklrdFZmSVFQTTI3WX
+ R0S0N3CmVHZlEzbGd6ZHVsQUNhYmVWQmhScC9aMHNSNWxNQVRTNzd6c29xMmNXT1p6ZUhWcmxWL
+ zduWm5McUtjemMramEKRjYyeTJ5SlcrSkU4OUtPMnJKTEpHY2tsSkhvQ0x2b1ZiKzR4SGs0dis1
+ M2g2S3F1SHp2Q2pHbDlaMDlmc0ZvTgp6dktUOE42SGdFbzByV28yLzZaWXNqWUIzV2pLN1RBcEN
+ FUjFSdWg5ck1LL0ZNYWNqNTJLL3RoRG45MTNYQmM4CldYTDhYUT09Cj0wb3JuCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,28 +126,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set rust source code to diff=rust (built-in with new git versions)
-and merge=binary for Cargo.lock files (they should not be merged but
-auto-generated by cargo)
+Rust crates, introduced from the next commit onwards, use the glib
+allocator API and need to know whether g_aligned_alloc etc are
+available.
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+This commit adds a define in config_host_data that depends on glib
+version >= 2.72.
+
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- .gitattributes | 3 +++
- 1 file changed, 3 insertions(+)
+ meson.build | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/.gitattributes b/.gitattributes
-index a217cb7bfe..6dc6383d3d 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -2,3 +2,6 @@
- *.h.inc         diff=c
- *.m             diff=objc
- *.py            diff=python
-+*.rs            diff=rust
-+*.rs.inc        diff=rust
-+Cargo.lock      diff=toml merge=binary
+diff --git a/meson.build b/meson.build
+index 05446acbc6..7f05466d12 100644
+--- a/meson.build
++++ b/meson.build
+@@ -979,6 +979,9 @@ glib = declare_dependency(dependencies: [glib_pc, gmodule],
+ # TODO: remove this check and the corresponding workaround (qtree) when
+ # the minimum supported glib is >= 2.75.3
+ glib_has_gslice = glib.version().version_compare('<2.75.3')
++# Check whether glib has the aligned_alloc family of functions.
++# <https://docs.gtk.org/glib/func.aligned_alloc.html>
++glib_has_aligned_alloc = glib.version().version_compare('>=2.72.0')
+ 
+ # override glib dep to include the above refinements
+ meson.override_dependency('glib-2.0', glib)
+@@ -2508,6 +2511,7 @@ config_host_data.set('CONFIG_TIMERFD', cc.has_function('timerfd_create'))
+ config_host_data.set('HAVE_COPY_FILE_RANGE', cc.has_function('copy_file_range'))
+ config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
+ config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
++config_host_data.set('HAVE_GLIB_WITH_ALIGNED_ALLOC', glib_has_aligned_alloc)
+ config_host_data.set('HAVE_OPENPTY', cc.has_function('openpty', dependencies: util))
+ config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul'))
+ config_host_data.set('HAVE_SYSTEM_FUNCTION', cc.has_function('system', prefix: '#include <stdlib.h>'))
 
 -- 
 2.45.2
