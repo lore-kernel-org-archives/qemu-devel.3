@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C91C54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 16:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67174C54731
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 16:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sizI9-000238-LY; Tue, 27 Aug 2024 12:43:37 -0400
+	id 1sizI8-00020N-W4; Tue, 27 Aug 2024 12:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1sizI7-0001zX-PB
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 12:43:35 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1sizI6-0001z0-5n
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 12:43:34 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1sizI4-0002at-OC
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 12:43:34 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-6b44dd520ceso55375377b3.0
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 09:43:31 -0700 (PDT)
+ id 1sizI4-0002bA-Ob
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 12:43:33 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-69483a97848so55295467b3.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 09:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724777010; x=1725381810; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kxqi/l8fPRJoKAG073gIxokKIwiWiOGzRM8T33WeNR0=;
- b=lqD2AhWiWO7665QPfVWWiM69kME6omQsuGF52TT6alK1ryRVFoBrq1FRXEvRcr/qLB
- p0arg9q4W4YQqg9LvD4twpVmE1yEDTxUHJNaaXOiOK5a4f+UbosK/563IP0eSiLN6Zsh
- lFuVBvZsEpV8o2Y86vEtDXca6jCvO8Ito7m9gz8GYjgYruiMSBpuMvwY6fbTsBAxTM80
- TkyccrO+9ARH6MDGdqJLWZ7tNZTw3Irv/EWSUJCPIsYckFXNLbEwBWxGz0AVpIoZVvJg
- OEmwwORaGbZGzxHYl8MQcSQkawSMFaWFL9oIzwMTL77gDO8NSoRUW6oBGsfYCSiVKKxN
- H37Q==
+ d=gmail.com; s=20230601; t=1724777011; x=1725381811; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SwvM3S9SiHQZGwR6Xphu333GyFIzsUCvHKvo/gM3elM=;
+ b=D+r6bASty3JSqkizulYox+0NlZKXkWWnW+N953amK8DjoOyLrcI2/gP+8nL32uKTRf
+ dEumlN5wPtcJGr1K6x3rxCih4b9SxuJUhyCBZteCFCVLL4iVKCPpmTzUbM9TySSvMh9W
+ Q6WZ9cyLF4bk4D1ikiOtK5fE8ZZC9EmtbtuxdkZBvc7gBFQCS5bEnTa5P5ot3DcUfGtF
+ C+pBkz7wVcCSWvmiVWtmY6UR1lk4BmftpKVCUwW38RJzsUmDyUlBuhuzOOBs2+wS0dHn
+ NnmY+YuIo6CdhhcuCrtDrppZGpHuM9vHiy8X+FUM76CBSOkZ50EU5Ak/yGuC4c9fW5ns
+ 9krA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724777010; x=1725381810;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kxqi/l8fPRJoKAG073gIxokKIwiWiOGzRM8T33WeNR0=;
- b=GQMVzs+PCZmEUbIEKL9GUlM1jQpj3wEbtiE6v9qh5d0kUrAzZdOBV2INrveiJS83Jt
- AROA59SdC43jXwW5ECH1SO2gsB7RxenmkMQOyeLMozD9BBslr/n/MD/qEmcC+IYjRdAe
- MCZs+EK7TauVUL9l2VI7AunJXRrnkRGXTULurKBqVLumVH1oo7ZujjxyETZALGcecKOk
- VFWuR+3bpeMSIDpldJGFrA1B1Ns59B81MDOorfuTYO6TD9wA0oZ6uyLAoV6H/Bj5r2Ei
- k/vcrZIPdNK7Nj19wJZkseMO86yjAL7yXy5rqvPbJiiBg55fmJAdSe784HmA/esBY1xl
- WRkA==
-X-Gm-Message-State: AOJu0YyVe8mqov8qcQzp4LavttOPbnjl6ahDQYsu9HtZiG4bfj00P59V
- bg4ErIPMYcTTk0c7jPWCQmpuIDkjWFel/aHEnLm03EEdUwuxthoQqZr8wg==
-X-Google-Smtp-Source: AGHT+IFrBZvOTLy+1smD6rrcRDOnoxH91v5RK+fw5BtrUMc4IcPi7J75Z8NviyEaiWMDP6tH7FwXow==
-X-Received: by 2002:a05:690c:6603:b0:6ac:f8ac:7296 with SMTP id
- 00721157ae682-6c6242297f7mr166529817b3.1.1724777010433; 
- Tue, 27 Aug 2024 09:43:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724777011; x=1725381811;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SwvM3S9SiHQZGwR6Xphu333GyFIzsUCvHKvo/gM3elM=;
+ b=hig581t2UfHsk0OQPKGANW1ElCz6jD6qXxrBUz3+jVZROiA2KSqeNnluykJfHXRxpq
+ 4whVwvlwb2xVxugh6lC8AupFkUlE5zCRm7UlfdOQBPRHH9ueEES5B6qNspnawIlwXC3X
+ rs8V0bdEDHv4xaY0bF322ALaVVF+7vyrShbZlYLnPQu2QDgpSyf0e8QqSj2FQuL2yjEd
+ ihgXowPJV4V+LxuXy9s97BqGcsodxrQZrMgREAG8duFbnAj1McFabxcBYWxQ0mS5inWM
+ MsNfE9hSP3/k2temEAqcxoowlNFc6UcdFEmEfxx4f5+yi/n0bX2WwmLRn2sqjPpi8Uq4
+ 8CfA==
+X-Gm-Message-State: AOJu0YwbF/vbr91hTAbgNHxI8CSa3y0P2D7UF6IMh8v1yFF16fy/YYpM
+ PDAa85tTNuaGoUBoDjm3j46OdGvtFAl8oPNfeoe+CjDQbVpx9XzY4e5I8g==
+X-Google-Smtp-Source: AGHT+IEQC25v7IZbO2OCFRpYtIyH6n2S/Ki0r5sn8cq1TjaJ4jl9KoxzebkxMgz4IGMf6hByZNYfxg==
+X-Received: by 2002:a05:690c:38b:b0:6c7:a120:e10f with SMTP id
+ 00721157ae682-6cfbbbd4c68mr36358247b3.29.1724777011572; 
+ Tue, 27 Aug 2024 09:43:31 -0700 (PDT)
 Received: from fan.. ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-6c39a753427sm19658677b3.53.2024.08.27.09.43.29
+ 00721157ae682-6c39a753427sm19658677b3.53.2024.08.27.09.43.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 09:43:30 -0700 (PDT)
+ Tue, 27 Aug 2024 09:43:31 -0700 (PDT)
 From: nifan.cxl@gmail.com
 To: qemu-devel@nongnu.org
 Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
  ira.weiny@intel.com, dan.j.williams@intel.com, a.manzanares@samsung.com,
  dave@stgolabs.net, nmtadam.samsung@gmail.com, nifan.cxl@gmail.com,
  Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH 0/2] QEMU DCD emulation support fix
-Date: Tue, 27 Aug 2024 09:40:03 -0700
-Message-ID: <20240827164304.88876-1-nifan.cxl@gmail.com>
+Subject: [PATCH 1/2] hw/mem/cxl_type3: Fix More flag setting for dynamic
+ capacity event records
+Date: Tue, 27 Aug 2024 09:40:04 -0700
+Message-ID: <20240827164304.88876-2-nifan.cxl@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240827164304.88876-1-nifan.cxl@gmail.com>
+References: <20240827164304.88876-1-nifan.cxl@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,34 +98,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fan Ni <fan.ni@samsung.com>
 
-In Ira's latest DCD kernel patchset[1], the More flag support has been
-added. While testing it with mainstream Qemu, I identified two issues
-with Qemu.
+Per cxl spec r3.1, for multiple dynamic capacity event records grouped via
+the More flag, the last record in the sequence should clear the More flag.
 
-1. For a DC extent add request with more than one extents, the More flag
-for the last one is not correctly set.
-2. The function cxl_event_insert should only return true for the last event
-record in a sequence grouped via More flag so interrupt will only be
-triggered once for the sequence not every record.
+Before the change, the More flag of the event record is cleared before
+the loop of inserting records into the event log, which will leave the flag
+always set once it is set in the loop.
 
-After the fix of the first issue, the More flag works as expected.
-While the test can pass without the second patch which fixes the second issue,
-but I think we make sense to notify the OS only when all the records
-are put in the event log.
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+---
+ hw/mem/cxl_type3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1] Last DCD kernel patchset: https://lore.kernel.org/linux-cxl/20240816-dcd-type2-upstream-v3-0-7c9b96cba6d7@intel.com/T/#t
-
-Fan Ni (2):
-  hw/mem/cxl_type3: Fix More flag setting for dynamic capacity event
-    records
-  hw/cxl/cxl_event: Fix interrupt triggering for dynamic capacity events
-    grouped via More flag
-
- hw/cxl/cxl-events.c         | 8 ++++++++
- hw/mem/cxl_type3.c          | 2 +-
- include/hw/cxl/cxl_events.h | 1 +
- 3 files changed, 10 insertions(+), 1 deletion(-)
-
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index d648192ab9..e616801c81 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -2060,11 +2060,11 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
+     stw_le_p(&dCap.host_id, hid);
+     /* only valid for DC_REGION_CONFIG_UPDATED event */
+     dCap.updated_region_id = 0;
+-    dCap.flags = 0;
+     for (i = 0; i < num_extents; i++) {
+         memcpy(&dCap.dynamic_capacity_extent, &extents[i],
+                sizeof(CXLDCExtentRaw));
+ 
++        dCap.flags = 0;
+         if (i < num_extents - 1) {
+             /* Set "More" flag */
+             dCap.flags |= BIT(0);
 -- 
 2.43.0
 
