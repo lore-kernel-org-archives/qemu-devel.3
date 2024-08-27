@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C12C5321D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 01:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F3CC5321D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 02:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1silHR-0007bL-LV; Mon, 26 Aug 2024 21:45:57 -0400
+	id 1sillP-0007Jl-2D; Mon, 26 Aug 2024 22:16:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1silHQ-0007Vb-5M
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 21:45:56 -0400
-Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sillJ-0007Gm-PU; Mon, 26 Aug 2024 22:16:49 -0400
+Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1silHO-0000uj-Ku
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 21:45:55 -0400
-Received: by mail-io1-xd29.google.com with SMTP id
- ca18e2360f4ac-81fd520fee5so192729839f.2
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 18:45:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sillH-0003vp-D4; Mon, 26 Aug 2024 22:16:49 -0400
+Received: by mail-vk1-xa2c.google.com with SMTP id
+ 71dfb90a1353d-4fce352bd28so1431812e0c.2; 
+ Mon, 26 Aug 2024 19:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724723153; x=1725327953; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=gnBypZwThmW7BXWbqp19p+1I3KKoGFTUWZoM+iQsd6M=;
- b=iepQ/+lEjFVOCjNq/gjfV8P1L8Eg/LHkDD9DWDCm5QKjF9KlzYsQRQ+XUFm7OWvkFN
- dGcLXUjO3pGUuGZAvMEkvDtUHj6VhqJWsikckipDLIeceJQWLhylhzN/tnXugKNMqg3Y
- YpXPpydw8J7jvUpnjlODqrMC6LhlUh3WcaXOGPSyH6R4aiqY2iSv5UAROTEKpQBKluOM
- AIuT49LoBcAyKPDhuUlUbgiCRBy7JnzvPF0cKkCyVnsikeekwwFYuSsZhpMQgc6LgApY
- ezEABf7C5Lzjm+jCmpgHfDKwUnruPVmV128patuvT7w9jrifUlSug7W5KUDewJxUocdz
- jPhQ==
+ d=gmail.com; s=20230601; t=1724725004; x=1725329804; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pjiQE/q9NtlThII72ksJOufgoPWNDFXj/yZYoBjS+HU=;
+ b=fjx+aFp0A02ej3OAicr0vbpalW2F8ch4Z3KEXHM2V/l7nMSWNvjNe0zxy8kPFmJ2Om
+ u/1pxwEEzuYYWzAs27qGEHk+lfbsOz3x2VW/v7rZkwZA7o8HYOzRTvbYFuam2G43e2gu
+ J4Vna38qwf5H5gvcVP8s0BnMxFJyxuVMaQhmExBqIybayenpa0/izYmCForfRFRGyhFU
+ GyGy5EX2PZjr7YUSh2EOOXfj6OlOrNMksDEQ7WzXeTOoy3c86vpdrbzqRqlC6TkxMImh
+ 23dBRFM2+cBcQARrJ3SDikaJNdHhxowoOCeJJ7yilx07hQUld5yPjsJlUfHHX6nAF+hN
+ Clfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724723153; x=1725327953;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gnBypZwThmW7BXWbqp19p+1I3KKoGFTUWZoM+iQsd6M=;
- b=Nl8nLQRMhKw9yaf0sxAE5xR8dKhuuOFUs/L1JPPAEnkDUYuBbqEpT6VO5Ur45uVuyh
- Xbm8W8d+nLhY+VPRqlRb8nJj5LIapk0I0VP9nGQA9fvjQJPZXorMZXHhsKhdA04xltB7
- YUddI0FmvKOzfN9DBRYkQXziR5Jj+iHr2U9/ZAkYtRVZ3xFTnnm6waQi+Y/+xTItDtTj
- G80ryPYyV7gMfCH5mkFDUMTjNRrZcrFy6RT0cPKqGsMmX0FRpdz3jBL5mClH3kpQcTKP
- FJhqDD5zsE4CGeP2Vp9t357Uu6kH3vl7rFG30lNKRuBz7LtCXJfZAdWUh1h9EwIaipAT
- DjZw==
+ d=1e100.net; s=20230601; t=1724725004; x=1725329804;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pjiQE/q9NtlThII72ksJOufgoPWNDFXj/yZYoBjS+HU=;
+ b=dAeOFve9VRD4IwBoGh+hRy0+LLXeud+blqH16AifImIWHh4tIMBsHabOaR2PX3+eFs
+ GfxLlH3namrLsvGZsiW08tfkB75jf4RCSIHVZhy2a8F71/PGnu2qZ+jOXpCscTXx1xsN
+ EwXBen8Q1xnmvkOKDVYFQfB3Wrc1aYThPShsoRI1/voIvpV5s14Gfva3lqew0+DLmKET
+ x1l2oK4MFBAM9fYqmHZfRJ5MNcjwLP8HzAX4A+5zgqoT4xjw9nLLqg507GlcRIJjHWht
+ JmiK5Ekb/YpjF7OZEDsxWEEjERCfjoiRfbapsAC4qH/yzThirzpCwrWRVLV57hJ3aPqY
+ G2ow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJhEjQokI+cBIYDNJLQQcFaJuuv5k6/uRGcSTbjNgwoehjtZPqhddcwjcsrzVbukE1DkH/V8EBnEHm@nongnu.org
-X-Gm-Message-State: AOJu0YyiGx6vWZ6xsGMm4PgCe6kXErv/+P6lKj8E2MRK7IxRSKZMZqY5
- toBltgPxo3U9m9yh/9lCiSFzLnmj2Y2kmO7ES+bKEppOXYMxLGdx
-X-Google-Smtp-Source: AGHT+IGskpIhkmcHz2E6ANUEgQ6308gnb7Y3+vagfBV0cMg2wvJKEtxUuu2tSxi0ryyEflmD+ixUZA==
-X-Received: by 2002:a05:6602:641f:b0:824:d658:39a with SMTP id
- ca18e2360f4ac-829f1220fa5mr202780239f.3.1724723153124; 
- Mon, 26 Aug 2024 18:45:53 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2601:284:8201:81c0:d990:ff71:59bf:a3e])
- by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4ce70f5c92bsm2465897173.61.2024.08.26.18.45.52
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 26 Aug 2024 18:45:52 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <bcain@quicinc.com>,
-	<qemu-devel@nongnu.org>
-Cc: <quic_mathbern@quicinc.com>, <sidneym@quicinc.com>,
- <quic_mliebel@quicinc.com>
-References: <20240827002631.3492200-1-bcain@quicinc.com>
- <20240827002631.3492200-3-bcain@quicinc.com>
-In-Reply-To: <20240827002631.3492200-3-bcain@quicinc.com>
-Subject: RE: [PATCH v2 2/2] target/hexagon: add enums for event, cause
-Date: Mon, 26 Aug 2024 19:45:51 -0600
-Message-ID: <000101daf822$d9a97970$8cfc6c50$@gmail.com>
+ AJvYcCVgaSOVS7B8plU+SwSW7VjEk5qQwyqYH4/SWI12J4FUpOqwFZrIZv51NQ1UowKnw2HPSEi6pVOCX0kq@nongnu.org
+X-Gm-Message-State: AOJu0YwcjPavbLVae2nSBZs+/dJTYhYnxCakq8PvldnGGN6oGALHxr/s
+ QU3lM6NHk9UBAN/rmix5XfSgDvaFK4ySZA2BjT6RUF3CNjSPAGXyT9sJ6Dtb2/VRS6+V0OjBBrn
+ yKQLUQqBNYfgfV4+olFR4qVimdcQ=
+X-Google-Smtp-Source: AGHT+IGxkGl7XkY4nJ088Fnz5Ipv4rdL1UmJEyVTZkUtjzszn7Zu55F0MWJ3SZR4cGQs8h1uv8O+JHrDb1irmNoJags=
+X-Received: by 2002:a05:6122:179f:b0:4f5:cd00:e492 with SMTP id
+ 71dfb90a1353d-4fd1ac47ea3mr13454216e0c.7.1724725003716; Mon, 26 Aug 2024
+ 19:16:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLd+W9ohof6Agj59aNvpT7d/saPhAGpLMQ7sCcJLyA=
-Content-Language: en-us
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20240826152949.294506-1-debug@rivosinc.com>
+ <20240826152949.294506-2-debug@rivosinc.com>
+In-Reply-To: <20240826152949.294506-2-debug@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 27 Aug 2024 12:16:17 +1000
+Message-ID: <CAKmqyKNz=GL6YD_CK1Z7eeL38rnJC29pWKK+3jK=0s_7W3J84w@mail.gmail.com>
+Subject: Re: [PATCH v9 01/17] target/riscv: Add zicfilp extension
+To: Deepak Gupta <debug@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, 
+ andy.chiu@sifive.com, richard.henderson@linaro.org, kito.cheng@sifive.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,23 +94,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> -----Original Message-----
-> From: Brian Cain <bcain@quicinc.com>
-> Sent: Monday, August 26, 2024 6:27 PM
-> To: qemu-devel@nongnu.org
-> Cc: bcain@quicinc.com; quic_mathbern@quicinc.com;
-> sidneym@quicinc.com; quic_mliebel@quicinc.com;
-> ltaylorsimpson@gmail.com
-> Subject: [PATCH v2 2/2] target/hexagon: add enums for event, cause
-> 
-> Signed-off-by: Brian Cain <bcain@quicinc.com>
+On Tue, Aug 27, 2024 at 1:30=E2=80=AFAM Deepak Gupta <debug@rivosinc.com> w=
+rote:
+>
+> zicfilp [1] riscv cpu extension enables forward control flow integrity.
+> If enabled, all indirect calls must land on a landing pad instruction.
+>
+> This patch sets up space for zicfilp extension in cpuconfig. zicfilp
+> is dependend on zicsr.
+>
+> [1] - https://github.com/riscv/riscv-cfi
+>
+> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> Co-developed-by: Jim Shu <jim.shu@sifive.com>
+> Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
 > ---
->  target/hexagon/cpu_bits.h | 22 ++++++++++++++--------
->  1 file changed, 14 insertions(+), 8 deletions(-)
+>  target/riscv/cpu.c         | 2 ++
+>  target/riscv/cpu_cfg.h     | 1 +
+>  target/riscv/tcg/tcg-cpu.c | 5 +++++
+>  3 files changed, 8 insertions(+)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 33ef4eb795..5dfb3f39ab 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -106,6 +106,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
+>      ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
+>      ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
+> +    ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
+>      ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
+>      ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
+>      ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
+> @@ -1472,6 +1473,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
+ =3D {
+>      /* Defaults for standard extensions */
+>      MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
+>      MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+> +    MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+This should be added in the very last patch (as its own patch) as it
+exposes the feature to users. The idea is to add the feature then
+allow users to enable it
 
+Alistair
 
+>      MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+>      MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+>      MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index 120905a254..88d5defbb5 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -67,6 +67,7 @@ struct RISCVCPUConfig {
+>      bool ext_zicbom;
+>      bool ext_zicbop;
+>      bool ext_zicboz;
+> +    bool ext_zicfilp;
+>      bool ext_zicond;
+>      bool ext_zihintntl;
+>      bool ext_zihintpause;
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index b8814ab753..ed19586c9d 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -623,6 +623,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu=
+, Error **errp)
+>          cpu->pmu_avail_ctrs =3D 0;
+>      }
+>
+> +    if (cpu->cfg.ext_zicfilp && !cpu->cfg.ext_zicsr) {
+> +        error_setg(errp, "zicfilp extension requires zicsr extension");
+> +        return;
+> +    }
+> +
+>      /*
+>       * Disable isa extensions based on priv spec after we
+>       * validated and set everything we need.
+> --
+> 2.44.0
+>
+>
 
