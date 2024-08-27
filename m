@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F2BEC5320E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 06:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B276C5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 06:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sipyP-0004py-Gf; Tue, 27 Aug 2024 02:46:37 -0400
+	id 1sipyQ-0004tn-27; Tue, 27 Aug 2024 02:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3I3bNZgUKCoIzg1ovmuumrk.iuswks0-jk1krtutmt0.uxm@flex--tavip.bounces.google.com>)
- id 1sipy7-000414-9L
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:31 -0400
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ <3N3bNZgUKCpYJ0L8F6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--tavip.bounces.google.com>)
+ id 1sipyN-0004aK-0z
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:35 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3I3bNZgUKCoIzg1ovmuumrk.iuswks0-jk1krtutmt0.uxm@flex--tavip.bounces.google.com>)
- id 1sipxn-00068l-Eb
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:14 -0400
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-201e7b422ffso42193475ad.2
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 23:45:57 -0700 (PDT)
+ <3N3bNZgUKCpYJ0L8F6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--tavip.bounces.google.com>)
+ id 1sipyH-0006CZ-BU
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:46:34 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-7cd8d992cb1so5179984a12.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 23:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1724741156; x=1725345956; darn=nongnu.org;
+ d=google.com; s=20230601; t=1724741176; x=1725345976; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=efCj4SZYZQjVy7GZDlQqFsRl+pAlPbvM0jF/f1JaCII=;
- b=KnszVv0BTLPjpzQVzP2BktZxXQRMmw41CxLjyPNhp7nVI6+9MkpVXhNfteTlnPNO9s
- WEEhFTDYS2A3Ec1ALI8MNQt7QkE1kCs6BXCXeaMvsxLxp5OxmHrHXybHzL++C1l+i6Rh
- qeMSXheWtgVj9adeWmrG5WI9CCiTR4MJyYgoTNPwYmVn3/T42lurJOJv0XsJRvTYKU93
- vt7TCepw/LohvG3ddmm4IAv64bMxEimhrlmfKmlkZ9bknH+SJ0xDmm60lJh7Bs+ens3K
- lyKevADNaSDvjbHRqEB1PSkk1xbaBlOYevT3Ys5gj+rJmNYAQF6jkfSZ0BH08TPtuJTM
- aWAA==
+ bh=6qO6zLPohZodNb04jrZ6wG/pA69IrS5+a5uspGY/fKg=;
+ b=Mf2OFqhYO3K8LJOP3tE6RLKBYWROh1orhn5XF7Gd/7KHRU0YqBFQv8gvtiTRn2yD6L
+ zGxrJpxmDCRbTv1JScSFF00cyNHni55FpTlEivWYJzrvU+SYxhnDeg3Qhw3D5kblHREv
+ zVqU83c4I9y2WjbAjBp+th4/WQP9Og5Zm0UGD+dwFwOAkX7aHjHqi/ROnOS83Gir6NIP
+ STU7+TwVLY5W9bAoDQx+7Ydrhs6znGxveK3zOMCq34xmb5Eu8jrIC52xAcdqFItpy3nK
+ 7AQVmMwyTp7R/HEWjjW4vHP1nHrxzihPSa0FI1ojvW3znSzZTKVSEl8EHUF9tHwpVR5k
+ XY5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724741156; x=1725345956;
+ d=1e100.net; s=20230601; t=1724741176; x=1725345976;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=efCj4SZYZQjVy7GZDlQqFsRl+pAlPbvM0jF/f1JaCII=;
- b=Pb/CnmrEnBSCGEjLVOdKOLgo4/LX5bU3KON9H7AATXez/McckkptH4aCOZeGgKpsuV
- vuHPNXSBNX4IZUvCwtjpCC4jEvx+vf6L6aQNO8kHEZRIDAThRDB4yeJF66+RXVu/QU3v
- xa52rbzjP2jXhblw2cTpCkxbhlWiannXMcFDIdUdaWwF8jWdaPGdDUTSi3CfljXxez/w
- fex2HpL/fsCSxWJoI5LrkWbAAGP1/XwKmL6HOEb7dEfqbCEF54k7F8Km4wfm8fjZP5Y2
- hrf1htpmIVwOnyp6N6fmJi7ehDqQWNMWpKLnzzVjMrwWFoft7M7rK/9xPG2hW/Vtg/Vj
- LIag==
-X-Gm-Message-State: AOJu0YyTrKB6daWoKxRSXHMILP1pBkVGyRAqRSDtq243xcBurqc6uk8K
- 6GT7hXxsCNRs1Tt227+K86111Q7CVXITXUbkm+Ye6i6fny+K1keHNkH/lrd0UjYR8iapIWbvSQe
- J0IMbhqzxse9T1qjTf7TQfDLMjRs52iAW6m0QbZJ3Wz9G5rAzB2KJDmAXnd4mSTTc16iKgzjH31
- 0US6WkC8/ppRzqbD0Y3PGeDXN2Hw==
-X-Google-Smtp-Source: AGHT+IFghvOfCg97TPD1583ilJmlcPwlDM/JXHGtC+PC8CXxWaevbWPD64g0B4nY9juG2DCtPbuhHU24HQ==
+ bh=6qO6zLPohZodNb04jrZ6wG/pA69IrS5+a5uspGY/fKg=;
+ b=qFpGWMIUVySpag5h+XTSKEHfLWxPJVu2qHCQzJss4wb8TMhF71nCqvljkIBpSZ68ES
+ T9ystuhtDskIMhewburhBezuE7FmtppLsRqj42mZy2uKxrCC5MRtpQwVRZjZsvbaCZ4V
+ 0K2dx3WrNV8GzEMTMNbWjxJwSyAun5A4a3fo8CZWRLEYema75bxP8lN41BCc59f6W0LW
+ S/6nWFw5u6K+iu0aAsxHAgS8SXRaI9vZffBbPBg9amBSsxDF2bcTcRXcwIFPZMuBirQn
+ q2aAj+8lP6fIPv1Gt8PMHvpRUhPeHJlMZXZrMCbFXWbj44gdB8AipSFjBGLFtG7G+tzv
+ cOJg==
+X-Gm-Message-State: AOJu0YwAHGs7CCmIc2wjVwfxzuHPHY8hsYiEffpnevWs+Ly0/lUBqAI2
+ obzj52YC2dT4EQdG7wuNpzeAhPWPSbTVUkwaWEy1h+elOqS2IdhwaTR6qIzlUVfk5S6b/bRj14x
+ c5y1cha3j+pfThDhbUAmuDqaZKlPzOybLVxgmVfu0KK3S9uxq/QxnaEMMxSjc72LTUYw16XHHND
+ K6BY8wUyqKpNEQCRuRF792cdkubA==
+X-Google-Smtp-Source: AGHT+IGXQ5dW+AGcOMArQSYTQCbRROrUBugi/uKnMj/7sMBRUixjAU8Nv+iaIwXtp6/6VeTu08HuWC5GJg==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a17:902:d50d:b0:203:616a:8673
+ (user=tavip job=sendgmr) by 2002:a17:90b:4f45:b0:2d3:da96:755f
  with SMTP id
- d9443c01a7336-2039e4d5cdfmr12236635ad.5.1724741155346; Mon, 26 Aug 2024
- 23:45:55 -0700 (PDT)
-Date: Mon, 26 Aug 2024 23:45:17 -0700
+ 98e67ed59e1d1-2d646cd8d12mr85493a91.3.1724741175753; Mon, 26 Aug 2024
+ 23:46:15 -0700 (PDT)
+Date: Mon, 26 Aug 2024 23:45:28 -0700
 In-Reply-To: <20240827064529.1246786-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240827064529.1246786-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-Message-ID: <20240827064529.1246786-14-tavip@google.com>
-Subject: [RFC PATCH v3 13/24] hw/arm: add RT595-EVK board
+Message-ID: <20240827064529.1246786-25-tavip@google.com>
+Subject: [RFC PATCH v3 24/24] test/unit: add unit tests for RT500's clock
+ controller
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -72,9 +73,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3I3bNZgUKCoIzg1ovmuumrk.iuswks0-jk1krtutmt0.uxm@flex--tavip.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3N3bNZgUKCpYJ0L8F6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--tavip.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,26 +99,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add basic support for the RT595-EVK board, enough to be able to run
-the NXP's microXpresso SDK hello world example.
+Add test to exercise clocks set and clear, system PLL initialization,
+audio PLL initialization, systick and ostimer clock source selection.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- hw/arm/rt595-evk.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++
- hw/arm/Kconfig     |  5 ++++
- hw/arm/meson.build |  1 +
- 3 files changed, 70 insertions(+)
- create mode 100644 hw/arm/rt595-evk.c
+ tests/qtest/rt500-clkctl-test.c | 195 ++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build         |   1 +
+ 2 files changed, 196 insertions(+)
+ create mode 100644 tests/qtest/rt500-clkctl-test.c
 
-diff --git a/hw/arm/rt595-evk.c b/hw/arm/rt595-evk.c
+diff --git a/tests/qtest/rt500-clkctl-test.c b/tests/qtest/rt500-clkctl-test.c
 new file mode 100644
-index 0000000000..e5daecc8b8
+index 0000000000..d5b83d81da
 --- /dev/null
-+++ b/hw/arm/rt595-evk.c
-@@ -0,0 +1,64 @@
++++ b/tests/qtest/rt500-clkctl-test.c
+@@ -0,0 +1,195 @@
 +/*
-+ * i.MX RT595 EVK
-+ *
 + * Copyright (c) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
@@ -127,83 +125,203 @@ index 0000000000..e5daecc8b8
 + */
 +
 +#include "qemu/osdep.h"
-+#include "elf.h"
-+#include "exec/address-spaces.h"
-+#include "hw/loader.h"
-+#include "hw/sysbus.h"
-+#include "hw/boards.h"
 +#include "qemu/log.h"
-+#include "hw/arm/armv7m.h"
-+#include "hw/arm/boot.h"
-+#include "qapi/error.h"
-+#include "hw/arm/rt500.h"
++#include "qemu/module.h"
++#include "qemu/main-loop.h"
++#include "exec/memory.h"
++#include "hw/clock.h"
++#include "hw/irq.h"
 +#include "hw/qdev-clock.h"
-+#include "sysemu/reset.h"
++#include "hw/qdev-properties.h"
 +
-+static void rt595_evk_reset(MachineState *ms, ShutdownCause reason)
++#include "hw/misc/rt500_clkctl0.h"
++#include "hw/misc/rt500_clkctl1.h"
++#include "hw/misc/rt500_clk_freqs.h"
++#include "hw/arm/svd/rt500.h"
++#include "reg-utils.h"
++
++#define SYSCLK_HZ 200000000
++#define CLKCTL0_NAME "/machine/soc/clkctl0"
++#define CLKCTL1_NAME "/machine/soc/clkctl1"
++
++static void pscctl_test(gconstpointer user_data)
 +{
-+    /*
-+     * CPU reset is not done by default, we need to do it manually when the
-+     * machine is reset.
-+     */
-+    cpu_reset(first_cpu);
++    /* rom controller clock should be enabled at reset */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, ROM_CTRLR_CLK) == 1);
 +
-+    qemu_devices_reset(reason);
++    /* DSP clk is disabled at reset */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
++
++    /* check PSCTL_SET functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL0, PSCCTL0_SET, DSP_CLK, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 1);
++
++    /* check PSCTL_CLR functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL0, PSCCTL0_CLR, DSP_CLK, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
++
++    /* FLEXIO clk is disabled at reset */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
++
++    /* check PSCTL_SET functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL1, PSCCTL0_SET, FlexIO, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 1);
++
++    /* check PSCTL_CLR functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL1, PSCCTL0_CLR, FlexIO, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
 +}
 +
-+static void rt595_evk_init(MachineState *ms)
++static void audiopll0pfd_test(gconstpointer user_data)
 +{
-+    RT500State *s;
-+    Clock *sysclk;
++    /*  audio plls are gated at boot */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKGATE) == 1);
 +
-+    sysclk = clock_new(OBJECT(ms), "SYSCLK");
-+    clock_set_hz(sysclk, 200000000);
++    /*  ,,, and clocks are not ready */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY) == 0);
 +
-+    s = RT500(object_new(TYPE_RT500));
-+    qdev_connect_clock_in(DEVICE(s), "sysclk", sysclk);
-+    object_property_add_child(OBJECT(ms), "soc", OBJECT(s));
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
++    /* ungate all plls and check that clocks are ready */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKGATE, 0);
 +
-+    if (ms->kernel_filename) {
-+        armv7m_load_kernel(ARM_CPU(first_cpu), ms->kernel_filename, 0, 0);
-+    }
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY) == 1);
 +}
 +
-+static void rt595_evk_machine_init(MachineClass *mc)
++static void syspll0pfd_test(gconstpointer user_data)
 +{
-+    mc->desc  = "RT595 EVK Machine (ARM Cortex-M33)";
-+    mc->init  = rt595_evk_init;
-+    mc->reset = rt595_evk_reset;
++    /*  system plls are gated at boot */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE) == 1);
 +
-+    mc->ignore_memory_transaction_failures = true;
++    /*  ,,, and clocks are not ready */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY) == 0);
++
++    /* ungate all plls and check that clocks are ready */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE, 0);
++
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY) == 1);
 +}
 +
-+DEFINE_MACHINE("rt595-evk", rt595_evk_machine_init);
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index d1443e8f89..6720a41f65 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -719,3 +719,8 @@ config RT500
-     select RT500_CLKCTL
-     select FLEXSPI
-     select RT500_RSTCTL
++static void systick_clk_test(gconstpointer user_data)
++{
++    /* systick is not running at reset */
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"), ==, 0);
 +
-+config RT595_EVK
-+    bool
-+    default y
-+    select RT500
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 7d827d512c..9792c93142 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-e
- arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
- arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
- arm_ss.add(when: 'CONFIG_RT500', if_true: files('rt500.c'))
-+arm_ss.add(when: 'CONFIG_RT595_EVK', if_true: files('rt595-evk.c'))
++    /* select divout no divisor */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_DIVOUT);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, SYSCLK_HZ);
++
++    /* change divisor to 2 */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKDIV, DIV, 1);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, SYSCLK_HZ / 2);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_LPOSC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, LPOSC_CLK_HZ);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_32KHZRTC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, RTC32KHZ_CLK_HZ);
++
++    /* disable clock */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_NONE);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, 0);
++}
++
++static void ostimer_clk_test(gconstpointer user_data)
++{
++    /* systick is not running at reset */
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==, 0);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_LPOSC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
++                     LPOSC_CLK_HZ);
++
++    /* select 32khz RTC */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_32KHZRTC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
++                     RTC32KHZ_CLK_HZ);
++
++    /* select hclk */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_HCLK);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
++                     SYSCLK_HZ);
++
++    /* disable clock */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_NONE);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==, 0);
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_data_func("/rt500-clkctl/pscctl-test", NULL, pscctl_test);
++    qtest_add_data_func("/rt500-clkctl/syspll0pfd-test", NULL,
++                        syspll0pfd_test);
++    qtest_add_data_func("/rt500-clkctl/audiopll0pfd-test", NULL,
++                        audiopll0pfd_test);
++    g_test_add_data_func("/rt500-clkctl/systick-test", NULL,
++                         systick_clk_test);
++    g_test_add_data_func("/rt500-clkctl/ostimer-clk-test", NULL,
++                         ostimer_clk_test);
++
++    qtest_start("-M rt595-evk");
++    ret = g_test_run();
++    qtest_end();
++
++    return ret;
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 7df88edeab..fa463251d6 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -230,6 +230,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_FLEXCOMM') ? ['flexcomm-test', 'flexcomm-usart-test', 'flexcomm-i2c-test', 'flexcomm-spi-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_RT500_CLKCTL') ? ['rt500-clkctl-test'] : []) + \
+   ['arm-cpu-features',
+    'boot-serial-test']
  
- system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
- system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
 -- 
 2.46.0.295.g3b9ea8a38a-goog
 
