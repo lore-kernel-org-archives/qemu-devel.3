@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92194C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 05:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08AADC52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 06:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sip8Z-0000QZ-OK; Tue, 27 Aug 2024 01:53:03 -0400
+	id 1sipEx-0000sh-9o; Tue, 27 Aug 2024 01:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tommy.wu@sifive.com>)
- id 1sip8U-0000BR-Kz
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 01:52:58 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sipEv-0000ql-RB; Tue, 27 Aug 2024 01:59:37 -0400
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tommy.wu@sifive.com>)
- id 1sip8S-0000hc-KD
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 01:52:58 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4280c55e488so27203135e9.0
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 22:52:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sipEu-0001Cd-5D; Tue, 27 Aug 2024 01:59:37 -0400
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-4fd0d7fe6f6so1717879e0c.2; 
+ Mon, 26 Aug 2024 22:59:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1724737974; x=1725342774; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724738375; x=1725343175; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8m4XPACd5yESkcXA5ORMBxozyFS8iSsnsNCvxpLOWCs=;
- b=ZwxThNMCeApRTklwPtz3RZJjbJcadpMNKVZVqfxpu/MeXcb0nQAC7S2mY9RcP6W6b/
- Nglq/AAQHmlf2rJgjRgaY99/pY8Ds5yayB8D2Weeq3LDPuIBhVRy+E4y5Thou83/XhNd
- 0v9v0TA/4ey5ajuAG+QRxpyARHB7ts3fbGCOYaD8hW5W3JGcs380qfO4deiwUuxQF/GP
- rXKHLQv1v0uAPLuQP2FR/fLFV9FTVtF2v58gQDsXz5otk+0FIbhmrQKPgDz95slBuH3l
- P0lJ4elKtCh3x7ePX0uylF6vDc0HRFJTjbZpr/ULKtQn03UoaJK9jg6ZCGNBYl+cLfxF
- Q45g==
+ bh=ZXCkxLr9/9NnUcoiWzoqm0HizMtuIeDZE5+QzeDQZPk=;
+ b=atGpFKOo1sDMMe2BtFq84S7dU6TgDg1fyBOWCdW4MnHaDFrgIYzLfw7SVtWz0DkYWK
+ /8+ykNIJC5RU2E4N818bdQkc+zYQqA20i/GhF322JXhcQ3rlguYRu3897UxNsb+0vOWz
+ vFgDWG59Tv86FhFEjBrq+10G/eAxflGxZQYxTQMXN1BUIZA4XyN1ulbPBwKyce/7G5Vt
+ gcUDwK/qTcnmV1FVwVl0oEBrAzSjkonyKQs127W+QxTN7dof7mRIBCy1K35jd1tZfikJ
+ KCwPKL6THga/fgEzu+bIUBLuCardhyKU/ycYK/K8XJGvd/rCO79uhU4YUdvn+5kU0atZ
+ Nkmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724737974; x=1725342774;
+ d=1e100.net; s=20230601; t=1724738375; x=1725343175;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8m4XPACd5yESkcXA5ORMBxozyFS8iSsnsNCvxpLOWCs=;
- b=pS8DtoWgkc41KiSj1moru6fvwdzcfy6HR45sq3gG66uQ4wYEz0QoamIl5AKNmV51Ah
- c/JeDB0vBtQgdjudJIvP8XXnRv6RMng/KudxGDFaMM7znu076MnFsfI9rmCwbnqxHD07
- On4m/YMEhaWwlUeW4XytrTeSgwWfjW6h0wtiPiBcHLFSkVpVhoI66gF5qYSf6nvvUYR0
- sG/e4HRQ0Pdg9fJ6C3wFoE+AShlw7E5opIBBXIL5Fau9ED5yUZp/KQdKL8dCHbpTI5ep
- QLS/dZ89Elph+zIV9G56Wf/axGm6bPSy467xkhMquhvJL3GKJt7+iuNDjEQgfRRLmd3q
- I1HQ==
+ bh=ZXCkxLr9/9NnUcoiWzoqm0HizMtuIeDZE5+QzeDQZPk=;
+ b=jfqYfwm5Dusa9ZjG2kHk20jGdX2rLXJw7zshGC+S8X6b+PdjR5TAYm0EehojUP56X+
+ DDen3WScbpaVlE8jDxqU1fZF9m1JwLX+wzVZc1toeP9t9B6cND3VuC31zplatxSZfrwA
+ /flPurvMQw7Be5PY467dKVaMoiBOtQxptBT1G6G7EcVDIXRHe9x6cvjtoeh5ePMSgK5X
+ N6Zm338TqF+F5Feq9Ii6bHc636m3bf9qA1PBQ1N5s52QiK6uMsTXI4p1VgQ458pcBOM0
+ bcToMNRd/Qin0ee40q2ZMxnhDDivRJNy37WKkWNF4RJ4syv2Z4bBQJ/HbyhWQdSaNVWF
+ FY1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVx+GBa3u8TIxynQFSyvrsNparpYYnwww8UAXxDLIZSSmWz9OGJcIHJsVt7tKlXpMAT8eN1cqavfFd8@nongnu.org
-X-Gm-Message-State: AOJu0Yz+MNiio2ezw9D1CokWz1chYxCdUWeUnVvXxgS4CLC5rRtm/VsD
- Xw7au8Mngh2+HabN/3z+6mCAFpgx45agiAvjhw+rTnfgvwQItOC+l5mfB68Ez9HpmzwDG0MU0w7
- wPqB1Umj8Z/SqTM6oetyrkKmXLs/FMs+nThcUcw==
-X-Google-Smtp-Source: AGHT+IHNwrA6iJE1X+7AXS9BuOS9l/ndB8i/PtQVJLWIDfJds/C2cFxdRSMC7ipG1IP1annmgmNIhabxgWAXIAIDp+E=
-X-Received: by 2002:a7b:c8cc:0:b0:426:5c36:f57a with SMTP id
- 5b1f17b1804b1-42b9a6674a7mr9035395e9.14.1724737973652; Mon, 26 Aug 2024
- 22:52:53 -0700 (PDT)
+ AJvYcCXhZ+Xmlv6Ox6S18F/pZLFoVJE0YvsTiHh2dHZCcDGdgsH7cvptIRgsypDdU76mDqL53QhcVH57xZLS@nongnu.org
+X-Gm-Message-State: AOJu0YxniWuslPMcMQ9mKugHoNdejFt2ipQ8xTliSuVp0zRE4A3u1kb2
+ qpGE86z7uhP0PROnqytkAodjM/9Hqx5ZAFowH+xAotknSN2BrqbAKv70g4k/HAda3+0vz6aBDQi
+ Mr97dhL3JxqTIQ9wXRjY/GvOIkhU=
+X-Google-Smtp-Source: AGHT+IGt5CcIaJSEDN9HIZIyaSEi4+E2MHiT9DXz3FvagA2KqguuA4m2id4VydxyGaz2t75iPUsKU7mIHwUrR4++UmA=
+X-Received: by 2002:a05:6122:3c4e:b0:4f5:254e:e111 with SMTP id
+ 71dfb90a1353d-4fed5d57e6amr2664756e0c.7.1724738374559; Mon, 26 Aug 2024
+ 22:59:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240418133916.1442471-1-cleger@rivosinc.com>
- <20240418133916.1442471-4-cleger@rivosinc.com>
-In-Reply-To: <20240418133916.1442471-4-cleger@rivosinc.com>
-From: Tommy Wu <tommy.wu@sifive.com>
-Date: Tue, 27 Aug 2024 13:52:42 +0800
-Message-ID: <CANj3q_kOENmzbpJU_ycPmaWf_mRWz9MThaJVMj-9K=O4cZPcSA@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/3] target/riscv: add Smdbltrp extension support
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
- Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
+References: <20240826152949.294506-1-debug@rivosinc.com>
+ <20240826152949.294506-12-debug@rivosinc.com>
+In-Reply-To: <20240826152949.294506-12-debug@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 27 Aug 2024 15:59:08 +1000
+Message-ID: <CAKmqyKOQcUBjz0PsaYFWnir=FCNA_+7CkrN=5PLH+ayxU+zLkg@mail.gmail.com>
+Subject: Re: [PATCH v9 11/17] target/riscv: mmu changes for zicfiss shadow
+ stack protection
+To: Deepak Gupta <debug@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, 
+ andy.chiu@sifive.com, richard.henderson@linaro.org, kito.cheng@sifive.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=tommy.wu@sifive.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,164 +95,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024 at 9:40=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@riv=
-osinc.com> wrote:
+On Tue, Aug 27, 2024 at 1:31=E2=80=AFAM Deepak Gupta <debug@rivosinc.com> w=
+rote:
 >
-> The Smdbltrp extension allows to generate M-mode targeted double trap
-> exceptions [1]. Such exceptions are generated if a trap is taken while
-> mstatus.sdt is set to 1. The specification states that if the Smnrmi
-> extension is implemented, then the hart enters a critical-error state
-> and generate a critical-error signal. Since there is no Smrnmi support,
-> the implementation generates a cpu abort.
+> zicfiss protects shadow stack using new page table encodings PTE.W=3D0,
+> PTE.R=3D0 and PTE.X=3D0. This encoding is reserved if zicfiss is not
+
+Shouldn't this be R=3D0, W=3D1, and X=3D0 ?
+
+Alistair
+
+> implemented or if shadow stack are not enabled.
+> Loads on shadow stack memory are allowed while stores to shadow stack
+> memory leads to access faults. Shadow stack accesses to RO memory
+> leads to store page fault.
 >
-> Link: https://github.com/riscv/riscv-double-trap/releases/download/v0.56/=
-riscv-double-trap.pdf [1]
-> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
+> To implement special nature of shadow stack memory where only selected
+> stores (shadow stack stores from sspush) have to be allowed while rest
+> of regular stores disallowed, new MMU TLB index is created for shadow
+> stack.
+>
+> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/riscv/cpu.c        |  5 +++++
->  target/riscv/cpu_bits.h   |  1 +
->  target/riscv/cpu_cfg.h    |  1 +
->  target/riscv/cpu_helper.c |  6 ++++++
->  target/riscv/csr.c        | 12 ++++++++++++
->  target/riscv/op_helper.c  |  3 +++
->  6 files changed, 28 insertions(+)
+>  target/riscv/cpu_helper.c | 37 +++++++++++++++++++++++++++++++------
+>  target/riscv/internals.h  |  3 +++
+>  2 files changed, 34 insertions(+), 6 deletions(-)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index d159b0c6b6..98f04ecb8c 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -176,6 +176,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
->      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
-> +    ISA_EXT_DATA_ENTRY(smdbltrp, PRIV_VERSION_1_12_0, ext_smdbltrp),
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-> @@ -954,6 +955,9 @@ static void riscv_cpu_reset_hold(Object *obj)
->              env->mstatus_hs =3D set_field(env->mstatus_hs,
->                                          MSTATUS64_UXL, env->misa_mxl);
->          }
-> +        if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-> +            env->mstatus =3D set_field(env->mstatus, MSTATUS_MDT, 1);
-> +        }
->      }
->      env->mcause =3D 0;
->      env->miclaim =3D MIP_SGEIP;
-> @@ -1574,6 +1578,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[=
-] =3D {
->  /* These are experimental so mark with 'x-' */
->  const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] =3D {
->      MULTI_EXT_CFG_BOOL("x-ssdbltrp", ext_ssdbltrp, false),
-> +    MULTI_EXT_CFG_BOOL("x-smdbltrp", ext_smdbltrp, false),
->      DEFINE_PROP_END_OF_LIST(),
->  };
->
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 494a036f6e..660f2eed5b 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -545,6 +545,7 @@
->  #define MSTATUS_SDT         0x01000000 /* Ssdbltrp extension */
->  #define MSTATUS_GVA         0x4000000000ULL
->  #define MSTATUS_MPV         0x8000000000ULL
-> +#define MSTATUS_MDT         0x200000000000ULL /* Smdbltrp extension */
-
-The M-mode-disable-trap (MDT) bit is at bit 42.
-
-Regards,
-Tommy Wu
-
->
->  #define MSTATUS64_UXL       0x0000000300000000ULL
->  #define MSTATUS64_SXL       0x0000000C00000000ULL
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index a149c08167..cf6a802502 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -75,6 +75,7 @@ struct RISCVCPUConfig {
->      bool ext_smstateen;
->      bool ext_sstc;
->      bool ext_ssdbltrp;
-> +    bool ext_smdbltrp;
->      bool ext_svadu;
->      bool ext_svinval;
->      bool ext_svnapot;
 > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 3d747e5bfc..5ce0982f2f 100644
+> index ca6d8f1f39..b10c3a35c4 100644
 > --- a/target/riscv/cpu_helper.c
 > +++ b/target/riscv/cpu_helper.c
-> @@ -1862,6 +1862,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->          s =3D set_field(s, MSTATUS_MPIE, get_field(s, MSTATUS_MIE));
->          s =3D set_field(s, MSTATUS_MPP, env->priv);
->          s =3D set_field(s, MSTATUS_MIE, 0);
-> +        if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-> +            if (env->mstatus & MSTATUS_MDT)
-> +                cpu_abort(CPU(cpu), "M-mode double trap\n");
-> +
-> +            s =3D set_field(s, MSTATUS_MDT, 1);
+> @@ -892,6 +892,8 @@ static int get_physical_address(CPURISCVState *env, h=
+waddr *physical,
+>      hwaddr ppn;
+>      int napot_bits =3D 0;
+>      target_ulong napot_mask;
+> +    bool is_sstack_idx =3D ((mmu_idx & MMU_IDX_SS_WRITE) =3D=3D MMU_IDX_=
+SS_WRITE);
+> +    bool sstack_page =3D false;
+>
+>      /*
+>       * Check if we should use the background registers for the two
+> @@ -1100,21 +1102,36 @@ restart:
+>          return TRANSLATE_FAIL;
+>      }
+>
+> +    target_ulong rwx =3D pte & (PTE_R | PTE_W | PTE_X);
+>      /* Check for reserved combinations of RWX flags. */
+> -    switch (pte & (PTE_R | PTE_W | PTE_X)) {
+> -    case PTE_W:
+> +    switch (rwx) {
+>      case PTE_W | PTE_X:
+>          return TRANSLATE_FAIL;
+> +    case PTE_W:
+> +        /* if bcfi enabled, PTE_W is not reserved and shadow stack page =
+*/
+> +        if (cpu_get_bcfien(env) && first_stage) {
+> +            sstack_page =3D true;
+> +            /* if ss index, read and write allowed. else only read allow=
+ed */
+> +            rwx =3D is_sstack_idx ? PTE_R | PTE_W : PTE_R;
+> +            break;
 > +        }
->          env->mstatus =3D s;
->          env->mcause =3D cause | ~(((target_ulong)-1) >> async);
->          if (smode_double_trap) {
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 1a2e739947..200b06e320 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -1363,6 +1363,7 @@ static target_ulong legalize_mpp(CPURISCVState *env=
-, target_ulong old_mpp,
->  static RISCVException write_mstatus(CPURISCVState *env, int csrno,
->                                      target_ulong val)
+> +        return TRANSLATE_FAIL;
+> +    case PTE_R:
+> +        /* shadow stack writes to readonly memory are page faults */
+> +        if (is_sstack_idx && access_type =3D=3D MMU_DATA_STORE) {
+> +            return TRANSLATE_FAIL;
+> +        }
+> +        break;
+>      }
+>
+>      int prot =3D 0;
+> -    if (pte & PTE_R) {
+> +    if (rwx & PTE_R) {
+>          prot |=3D PAGE_READ;
+>      }
+> -    if (pte & PTE_W) {
+> +    if (rwx & PTE_W) {
+>          prot |=3D PAGE_WRITE;
+>      }
+> -    if (pte & PTE_X) {
+> +    if (rwx & PTE_X) {
+>          bool mxr =3D false;
+>
+>          /*
+> @@ -1159,7 +1176,7 @@ restart:
+>
+>      if (!((prot >> access_type) & 1)) {
+>          /* Access check failed */
+> -        return TRANSLATE_FAIL;
+> +        return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
+>      }
+>
+>      target_ulong updated_pte =3D pte;
+> @@ -1346,9 +1363,17 @@ void riscv_cpu_do_unaligned_access(CPUState *cs, v=
+addr addr,
+>          break;
+>      case MMU_DATA_LOAD:
+>          cs->exception_index =3D RISCV_EXCP_LOAD_ADDR_MIS;
+> +        /* shadow stack mis aligned accesses are access faults */
+> +        if (mmu_idx & MMU_IDX_SS_WRITE) {
+> +            cs->exception_index =3D RISCV_EXCP_LOAD_ACCESS_FAULT;
+> +        }
+>          break;
+>      case MMU_DATA_STORE:
+>          cs->exception_index =3D RISCV_EXCP_STORE_AMO_ADDR_MIS;
+> +        /* shadow stack mis aligned accesses are access faults */
+> +        if (mmu_idx & MMU_IDX_SS_WRITE) {
+> +            cs->exception_index =3D RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
+> +        }
+>          break;
+>      default:
+>          g_assert_not_reached();
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index 0ac17bc5ad..ddbdee885b 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -30,12 +30,15 @@
+>   *  - U+2STAGE          0b100
+>   *  - S+2STAGE          0b101
+>   *  - S+SUM+2STAGE      0b110
+> + *  - Shadow stack+U   0b1000
+> + *  - Shadow stack+S   0b1001
+>   */
+>  #define MMUIdx_U            0
+>  #define MMUIdx_S            1
+>  #define MMUIdx_S_SUM        2
+>  #define MMUIdx_M            3
+>  #define MMU_2STAGE_BIT      (1 << 2)
+> +#define MMU_IDX_SS_WRITE    (1 << 3)
+>
+>  static inline int mmuidx_priv(int mmu_idx)
 >  {
-> +    const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
->      uint64_t mstatus =3D env->mstatus;
->      uint64_t mask =3D 0;
->      RISCVMXL xl =3D riscv_cpu_mxl(env);
-> @@ -1396,6 +1397,12 @@ static RISCVException write_mstatus(CPURISCVState =
-*env, int csrno,
->          }
->      }
->
-> +    if (cfg->ext_smdbltrp) {
-> +        mask |=3D MSTATUS_MDT;
-> +        if ((val & MSTATUS_MDT) !=3D 0)
-> +            mask &=3D ~MSTATUS_MIE;
-> +    }
-> +
->      if (xl !=3D MXL_RV32 || env->debugger) {
->          if (riscv_has_ext(env, RVH)) {
->              mask |=3D MSTATUS_MPV | MSTATUS_GVA;
-> @@ -1434,6 +1441,11 @@ static RISCVException write_mstatush(CPURISCVState=
- *env, int csrno,
->      uint64_t valh =3D (uint64_t)val << 32;
->      uint64_t mask =3D riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GV=
-A : 0;
->
-> +    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-> +        mask |=3D MSTATUS_MDT;
-> +        if ((val & MSTATUS_MDT) !=3D 0)
-> +            mask |=3D MSTATUS_MIE;
-> +    }
->      env->mstatus =3D (env->mstatus & ~mask) | (valh & mask);
->
->      return RISCV_EXCP_NONE;
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index 468ee58a00..d289d14237 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -354,6 +354,9 @@ target_ulong helper_mret(CPURISCVState *env)
->      mstatus =3D set_field(mstatus, MSTATUS_MPP,
->                          riscv_has_ext(env, RVU) ? PRV_U : PRV_M);
->      mstatus =3D set_field(mstatus, MSTATUS_MPV, 0);
-> +    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-> +        mstatus =3D set_field(mstatus, MSTATUS_MDT, 0);
-> +    }
->      if ((env->priv_ver >=3D PRIV_VERSION_1_12_0) && (prev_priv !=3D PRV_=
-M)) {
->          mstatus =3D set_field(mstatus, MSTATUS_MPRV, 0);
->      }
 > --
-> 2.43.0
+> 2.44.0
 >
 >
 
