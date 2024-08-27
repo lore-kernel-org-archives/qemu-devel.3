@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 750D6C54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B47C5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 17:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sj0Q3-0005hK-QQ; Tue, 27 Aug 2024 13:55:51 -0400
+	id 1sj0Qi-00088F-C3; Tue, 27 Aug 2024 13:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sj0Px-0005FK-2c
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:55:45 -0400
+ id 1sj0QS-0007Rc-CT
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:56:18 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sj0Pv-0001Zz-IJ
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:55:44 -0400
+ id 1sj0QH-0001cY-AE
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 13:56:16 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1sj0Pi-0002N6-7C; Tue, 27 Aug 2024 19:55:30 +0200
+ id 1sj0Q3-0002OX-3d; Tue, 27 Aug 2024 19:55:51 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 07/17] migration: Add qemu_loadvm_load_state_buffer() and
- its handler
-Date: Tue, 27 Aug 2024 19:54:26 +0200
-Message-ID: <fe14c841e40e294c05f8dae966e94cc12b3e5473.1724701542.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v2 11/17] migration/multifd: Add an explicit MultiFDSendData
+ destructor
+Date: Tue, 27 Aug 2024 19:54:30 +0200
+Message-ID: <59483d382d5453e69c6c762eb0a006a1f7ac228f.1724701542.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1724701542.git.maciej.szmigiero@oracle.com>
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
@@ -48,8 +48,7 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,89 +67,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-qemu_loadvm_load_state_buffer() and its load_state_buffer
-SaveVMHandler allow providing device state buffer to explicitly
-specified device via its idstr and instance id.
+This way if there are fields there that needs explicit disposal (like, for
+example, some attached buffers) they will be handled appropriately.
+
+Add a related assert to multifd_set_payload_type() in order to make sure
+that this function is only used to fill a previously empty MultiFDSendData
+with some payload, not the other way around.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/migration/register.h | 15 +++++++++++++++
- migration/savevm.c           | 25 +++++++++++++++++++++++++
- migration/savevm.h           |  3 +++
- 3 files changed, 43 insertions(+)
+ migration/multifd-nocomp.c |  3 +--
+ migration/multifd.c        | 31 ++++++++++++++++++++++++++++---
+ migration/multifd.h        |  5 +++++
+ 3 files changed, 34 insertions(+), 5 deletions(-)
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index 9de123252edf..4a578f140713 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -263,6 +263,21 @@ typedef struct SaveVMHandlers {
-      */
-     int (*load_state)(QEMUFile *f, void *opaque, int version_id);
+diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+index 53ea9f9c8371..39eb77c9b3b7 100644
+--- a/migration/multifd-nocomp.c
++++ b/migration/multifd-nocomp.c
+@@ -40,8 +40,7 @@ void multifd_ram_save_setup(void)
  
-+    /**
-+     * @load_state_buffer
-+     *
-+     * Load device state buffer provided to qemu_loadvm_load_state_buffer().
-+     *
-+     * @opaque: data pointer passed to register_savevm_live()
-+     * @data: the data buffer to load
-+     * @data_size: the data length in buffer
-+     * @errp: pointer to Error*, to store an error if it happens.
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-+    int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
-+                             Error **errp);
-+
-     /**
-      * @load_setup
-      *
-diff --git a/migration/savevm.c b/migration/savevm.c
-index d43acbbf20cf..3fde5ca8c26b 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3101,6 +3101,31 @@ int qemu_loadvm_approve_switchover(void)
-     return migrate_send_rp_switchover_ack(mis);
+ void multifd_ram_save_cleanup(void)
+ {
+-    g_free(multifd_ram_send);
+-    multifd_ram_send = NULL;
++    g_clear_pointer(&multifd_ram_send, multifd_send_data_free);
  }
  
-+int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-+                                  char *buf, size_t len, Error **errp)
+ static void multifd_set_file_bitmap(MultiFDSendParams *p)
+diff --git a/migration/multifd.c b/migration/multifd.c
+index b25789dde0b3..a74e8a5cc891 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -119,6 +119,32 @@ MultiFDSendData *multifd_send_data_alloc(void)
+     return g_malloc0(size_minus_payload + max_payload_size);
+ }
+ 
++void multifd_send_data_clear(MultiFDSendData *data)
 +{
-+    SaveStateEntry *se;
-+
-+    se = find_se(idstr, instance_id);
-+    if (!se) {
-+        error_setg(errp, "Unknown idstr %s or instance id %u for load state buffer",
-+                   idstr, instance_id);
-+        return -1;
++    if (multifd_payload_empty(data)) {
++        return;
 +    }
 +
-+    if (!se->ops || !se->ops->load_state_buffer) {
-+        error_setg(errp, "idstr %s / instance %u has no load state buffer operation",
-+                   idstr, instance_id);
-+        return -1;
++    switch (data->type) {
++    default:
++        /* Nothing to do */
++        break;
 +    }
 +
-+    if (se->ops->load_state_buffer(se->opaque, buf, len, errp) != 0) {
-+        return -1;
-+    }
-+
-+    return 0;
++    data->type = MULTIFD_PAYLOAD_NONE;
 +}
 +
- bool save_snapshot(const char *name, bool overwrite, const char *vmstate,
-                   bool has_devices, strList *devices, Error **errp)
- {
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 9ec96a995c93..d388f1bfca98 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -70,4 +70,7 @@ int qemu_loadvm_approve_switchover(void);
- int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-         bool in_postcopy, bool inactivate_disks);
- 
-+int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-+                                  char *buf, size_t len, Error **errp);
++void multifd_send_data_free(MultiFDSendData *data)
++{
++    if (!data) {
++        return;
++    }
 +
- #endif
++    multifd_send_data_clear(data);
++
++    g_free(data);
++}
++
+ static bool multifd_use_packets(void)
+ {
+     return !migrate_mapped_ram();
+@@ -506,8 +532,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+     qemu_sem_destroy(&p->sem_sync);
+     g_free(p->name);
+     p->name = NULL;
+-    g_free(p->data);
+-    p->data = NULL;
++    g_clear_pointer(&p->data, multifd_send_data_free);
+     p->packet_len = 0;
+     g_free(p->packet);
+     p->packet = NULL;
+@@ -671,7 +696,7 @@ static void *multifd_send_thread(void *opaque)
+                        p->next_packet_size + p->packet_len);
+ 
+             p->next_packet_size = 0;
+-            multifd_set_payload_type(p->data, MULTIFD_PAYLOAD_NONE);
++            multifd_send_data_clear(p->data);
+ 
+             /*
+              * Making sure p->data is published before saying "we're
+diff --git a/migration/multifd.h b/migration/multifd.h
+index a8f3e4838c01..a0853622153e 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -139,6 +139,9 @@ static inline bool multifd_payload_empty(MultiFDSendData *data)
+ static inline void multifd_set_payload_type(MultiFDSendData *data,
+                                             MultiFDPayloadType type)
+ {
++    assert(multifd_payload_empty(data));
++    assert(type != MULTIFD_PAYLOAD_NONE);
++
+     data->type = type;
+ }
+ 
+@@ -288,6 +291,8 @@ static inline void multifd_send_prepare_header(MultiFDSendParams *p)
+ void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc);
+ bool multifd_send(MultiFDSendData **send_data);
+ MultiFDSendData *multifd_send_data_alloc(void);
++void multifd_send_data_clear(MultiFDSendData *data);
++void multifd_send_data_free(MultiFDSendData *data);
+ 
+ static inline uint32_t multifd_ram_page_size(void)
+ {
 
