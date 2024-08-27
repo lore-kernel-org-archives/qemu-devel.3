@@ -4,100 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82B2C5320E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 09:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D8E8C52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 10:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sisww-0000Vu-JF; Tue, 27 Aug 2024 05:57:18 -0400
+	id 1sit1u-0006Rs-5r; Tue, 27 Aug 2024 06:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1siswu-0000P8-NI
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:57:16 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sisws-0000XP-Sh
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:57:16 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2f40a1a2c1aso46394631fa.3
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:57:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724752632; x=1725357432; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Zmlv+/H2H4IOeK3iYOIt02YrzQd95rRGq2IRetE8nzU=;
- b=Kj6ULqAwn/DDJsGIUfaHKjy/vu1gLCu917Z9YVcRMNgQKD4dnEoQ/LHv95b5B2snjm
- Lt96ICooydvY65NIduvSZQf0KcN0UnBKW/Jb0G5UcTv3EFDlh5eaJR5DBQHTJztGvkZ9
- h0V0ejA8cBo3xuq8Sv/gMDJIzDTVCRF+9MK5/6M8t5x2Ok950PoFJGuHINxwSzeZ9P1u
- G9XQ5qJRBwBfD90CZlzEcQiCSC5gWf9z8niInI3HFaE9quEAqOe7h+6fvIiwaVtg6PUh
- VZiJfEXEpUEdmJb/5+yOhB5mMYthx8aQUXIGsYl4BRvrz78QSjNG0O62PsNS6JwXlNvd
- 95UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724752632; x=1725357432;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Zmlv+/H2H4IOeK3iYOIt02YrzQd95rRGq2IRetE8nzU=;
- b=JRi5fubdfXfr29npKS4skbC8aXe05Y02dWFA4ao93LvAfBU4AUsxgYJmClYwsBvPFV
- n5QCHgRIK7rlxhOm3hniB3V9bhIKCLweSMMtsGrBfG6VQpXUXcvPXOkdXVLA53cm3/M/
- LcmFcRsalj95WqdWV/E37bfA3uJ7KQC3UeSx9cQb07ASWdYpHZD6m5d4zH8UozrnAO9Y
- eulUmIP5+hXK7n0zbV6gZsByLlyJoSreF+pC+gjVmgUzrCf2NbCvF9kZiTnmVj4j/1Mf
- ymGCR0u+pOxUr33df+HveF7NeMpuEuVS3xznm8y90bg+xDwwBLudgqWGMrU9N6KpkGks
- UOpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVt2M+Q+ms4YP/qMe191MOdbNBtMMKi36Zfv5hN/CwTenfPZg9I9ksa1jxkHqwlSUQhRxH44sd0gOPB@nongnu.org
-X-Gm-Message-State: AOJu0YzN4KUSY+EEVRcypNJ9oY2CnbkfMpQO747Z0+x+4lDDjCzUPzAP
- PryYcRwwurYvfpwerrP9M163IAaSc7bC1YOY7G66XIbXO0DuJh/DhcOL6KVE8OQ=
-X-Google-Smtp-Source: AGHT+IE6rJ6z4ZKN7IlxKrB3NUJJq0jF7qZlDlbPZ9SoaFBM1BOmxcW6W33btaeszVTTjpvM9BBPyA==
-X-Received: by 2002:a05:651c:504:b0:2f5:abe:b6c3 with SMTP id
- 38308e7fff4ca-2f50abeb7b6mr48488541fa.33.1724752631406; 
- Tue, 27 Aug 2024 02:57:11 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c0bb20e99asm858583a12.46.2024.08.27.02.57.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Aug 2024 02:57:10 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F30745F7A2;
- Tue, 27 Aug 2024 10:57:09 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
- Stabellini <sstabellini@kernel.org>,  Antonio Caggiano
- <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
- <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
- Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
- Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
- <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
-Subject: Re: [PATCH v17 00/13] Support blob memory and venus on qemu
-In-Reply-To: <20240822185110.1757429-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Thu, 22 Aug 2024 21:50:56 +0300")
-References: <20240822185110.1757429-1-dmitry.osipenko@collabora.com>
-Date: Tue, 27 Aug 2024 10:57:09 +0100
-Message-ID: <87ttf6cmq2.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sit1q-0006Ql-8Z; Tue, 27 Aug 2024 06:02:23 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sit1m-00010C-Iq; Tue, 27 Aug 2024 06:02:20 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1109788F9C;
+ Tue, 27 Aug 2024 13:01:06 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 8EBD712D85A;
+ Tue, 27 Aug 2024 13:02:08 +0300 (MSK)
+Received: (nullmailer pid 3502779 invoked by uid 1000);
+ Tue, 27 Aug 2024 10:02:08 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH] mark <zlib.h> with for-crc32 in a consistent manner
+Date: Tue, 27 Aug 2024 13:02:07 +0300
+Message-Id: <20240827100207.3502764-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,54 +58,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+in many cases, <zlib.h> is only included for crc32 function,
+and in some of them, there's a comment saying that, but in
+a different way.  In one place (hw/net/rtl8139.c), there was
+another #include added between the comment and <zlib.h> include.
 
-> Hello,
->
-> This series enables Vulkan Venus context support on virtio-gpu.
->
-> All virglrender and almost all Linux kernel prerequisite changes
-> needed by Venus are already in upstream. For kernel there is a pending
-> KVM patchset that fixes mapping of compound pages needed for DRM drivers
-> using TTM or huge pages [1], othewrwise hostmem blob mapping will fail
-> with a KVM error from Qemu.
->
-> [1] https://lore.kernel.org/all/20240726235234.228822-1-seanjc@google.com/
->
-> On guest you'll need to use recent Mesa 24.2+ version containing patch
-> that removes dependency on cross-device feature from Venus that isn't
-> supported by Qemu [2].
->
-> [2]
-> https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e26987bef=
-ae78b6ccbb7ae242b
+Make all such comments to be on the same line as #include, make
+it consistent, and also add a few missing comments, including
+hw/nvram/mac_nvram.c which uses adler32 instead.
 
-I've expanded the set of working tests so:
+There's no code changes.
 
-x86 host, Intel GPU
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ hw/net/cadence_gem.c             | 2 +-
+ hw/net/dp8393x.c                 | 2 +-
+ hw/net/ftgmac100.c               | 3 +--
+ hw/net/i82596.c                  | 2 +-
+ hw/net/imx_fec.c                 | 3 +--
+ hw/net/lan9118.c                 | 3 +--
+ hw/net/mcf_fec.c                 | 3 +--
+ hw/net/npcm7xx_emc.c             | 3 +--
+ hw/net/rtl8139.c                 | 4 +---
+ hw/net/smc91c111.c               | 3 +--
+ hw/net/stellaris_enet.c          | 2 +-
+ hw/nvram/mac_nvram.c             | 2 +-
+ target/arm/helper.c              | 2 +-
+ target/arm/tcg/helper-a64.c      | 2 +-
+ target/loongarch/tcg/op_helper.c | 2 +-
+ 15 files changed, 15 insertions(+), 23 deletions(-)
 
- x86/kvm Trixie guest + latest mesa - works
- aarch64/tcg buildroot guest - works
+diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+index ec7bf562e5..12857d9d7d 100644
+--- a/hw/net/cadence_gem.c
++++ b/hw/net/cadence_gem.c
+@@ -23,7 +23,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include <zlib.h> /* For crc32 */
++#include <zlib.h> /* for crc32 */
+ 
+ #include "hw/irq.h"
+ #include "hw/net/cadence_gem.h"
+diff --git a/hw/net/dp8393x.c b/hw/net/dp8393x.c
+index bf0652da1b..6d143bac5c 100644
+--- a/hw/net/dp8393x.c
++++ b/hw/net/dp8393x.c
+@@ -27,7 +27,7 @@
+ #include "qapi/error.h"
+ #include "qemu/module.h"
+ #include "qemu/timer.h"
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ #include "qom/object.h"
+ #include "trace.h"
+ 
+diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+index 80f9cd56d5..c68db4e15f 100644
+--- a/hw/net/ftgmac100.c
++++ b/hw/net/ftgmac100.c
+@@ -24,8 +24,7 @@
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ 
+-/* For crc32 */
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ 
+ /*
+  * FTGMAC100 registers
+diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+index 6cc8292a65..d786086a51 100644
+--- a/hw/net/i82596.c
++++ b/hw/net/i82596.c
+@@ -19,7 +19,7 @@
+ #include "qemu/module.h"
+ #include "trace.h"
+ #include "i82596.h"
+-#include <zlib.h>       /* For crc32 */
++#include <zlib.h> /* for crc32 */
+ 
+ #if defined(ENABLE_DEBUG)
+ #define DBG(x)          x
+diff --git a/hw/net/imx_fec.c b/hw/net/imx_fec.c
+index 8c91d20d44..dfc3fb0d9a 100644
+--- a/hw/net/imx_fec.c
++++ b/hw/net/imx_fec.c
+@@ -33,8 +33,7 @@
+ #include "net/eth.h"
+ #include "trace.h"
+ 
+-/* For crc32 */
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ 
+ #define IMX_MAX_DESC    1024
+ 
+diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+index 91d81b410b..c38ea40ada 100644
+--- a/hw/net/lan9118.c
++++ b/hw/net/lan9118.c
+@@ -22,8 +22,7 @@
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+-/* For crc32 */
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ #include "qom/object.h"
+ 
+ //#define DEBUG_LAN9118
+diff --git a/hw/net/mcf_fec.c b/hw/net/mcf_fec.c
+index e6902716bd..9db64f08c5 100644
+--- a/hw/net/mcf_fec.c
++++ b/hw/net/mcf_fec.c
+@@ -16,8 +16,7 @@
+ #include "hw/net/mii.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/sysbus.h"
+-/* For crc32 */
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ 
+ //#define DEBUG_FEC 1
+ 
+diff --git a/hw/net/npcm7xx_emc.c b/hw/net/npcm7xx_emc.c
+index d1583b6f9b..7f25bca448 100644
+--- a/hw/net/npcm7xx_emc.c
++++ b/hw/net/npcm7xx_emc.c
+@@ -29,8 +29,7 @@
+ 
+ #include "qemu/osdep.h"
+ 
+-/* For crc32 */
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ 
+ #include "hw/irq.h"
+ #include "hw/qdev-clock.h"
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 03a204ef8a..69a78ad677 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -48,10 +48,8 @@
+  *  2011-Mar-22  Benjamin Poirier:  Implemented VLAN offloading
+  */
+ 
+-/* For crc32 */
+-
+ #include "qemu/osdep.h"
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ 
+ #include "hw/pci/pci_device.h"
+ #include "hw/qdev-properties.h"
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 702d0e8e83..a00a76009e 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -17,8 +17,7 @@
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+-/* For crc32 */
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ #include "qom/object.h"
+ 
+ /* Number of 2k memory pages available.  */
+diff --git a/hw/net/stellaris_enet.c b/hw/net/stellaris_enet.c
+index db95766e29..8e2ce3bf29 100644
+--- a/hw/net/stellaris_enet.c
++++ b/hw/net/stellaris_enet.c
+@@ -15,7 +15,7 @@
+ #include "net/net.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ #include "qom/object.h"
+ 
+ //#define DEBUG_STELLARIS_ENET 1
+diff --git a/hw/nvram/mac_nvram.c b/hw/nvram/mac_nvram.c
+index fe9df9fa35..83c6724c0a 100644
+--- a/hw/nvram/mac_nvram.c
++++ b/hw/nvram/mac_nvram.c
+@@ -35,7 +35,7 @@
+ #include "qemu/module.h"
+ #include "qemu/error-report.h"
+ #include "trace.h"
+-#include <zlib.h>
++#include <zlib.h> /* for adler32 */
+ 
+ #define DEF_SYSTEM_SIZE 0xc10
+ 
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0a582c1cd3..3f77b40734 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -19,7 +19,7 @@
+ #include "qemu/crc32c.h"
+ #include "qemu/qemu-print.h"
+ #include "exec/exec-all.h"
+-#include <zlib.h> /* For crc32 */
++#include <zlib.h> /* for crc32 */
+ #include "hw/irq.h"
+ #include "sysemu/cpu-timers.h"
+ #include "sysemu/kvm.h"
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 21a9abd90a..56b431faf5 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -33,7 +33,7 @@
+ #include "qemu/int128.h"
+ #include "qemu/atomic128.h"
+ #include "fpu/softfloat.h"
+-#include <zlib.h> /* For crc32 */
++#include <zlib.h> /* for crc32 */
+ 
+ /* C2.4.7 Multiply and divide */
+ /* special cases for 0 and LLONG_MIN are mandated by the standard */
+diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+index fe79c62fa4..b17208e5b9 100644
+--- a/target/loongarch/tcg/op_helper.c
++++ b/target/loongarch/tcg/op_helper.c
+@@ -14,7 +14,7 @@
+ #include "exec/cpu_ldst.h"
+ #include "internals.h"
+ #include "qemu/crc32c.h"
+-#include <zlib.h>
++#include <zlib.h> /* for crc32 */
+ #include "cpu-csr.h"
+ 
+ /* Exceptions helpers */
+-- 
+2.39.2
 
-Aarch64 host, AMD GPU
-
- x86/tcg Trixies guest + latest mesa - works
- aarch64/kvm buildroot guest - works
-
-As the Aarch64 HW I'm testing on (AVA Devbox) needs additional patches
-on top of Sean's series to deal with the busted Altra PCI which I
-provide here:
-
- https://git.linaro.org/people/alex.bennee/linux.git/log/?h=3Dreview/pfn-re=
-ferences-v12-with-altra-tweaks
-
-Anyway I'll re-state:
-
-  Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-And I think this series is ready to merge once the tree re-opens.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
