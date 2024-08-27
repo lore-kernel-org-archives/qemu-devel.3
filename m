@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8805BC54735
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 12:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F53C54734
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 12:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siurc-0004Yk-SG; Tue, 27 Aug 2024 07:59:56 -0400
+	id 1siv12-0001bD-NJ; Tue, 27 Aug 2024 08:09:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1siurb-0004Y9-Vp
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:59:56 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1siurZ-0004Dm-Rw
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 07:59:55 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7141b04e7a3so4370173b3a.3
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 04:59:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724759992; x=1725364792; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BKCYfz9tkaVNH6fB9Nh8SltfRjyIfEg/Set3q/m2Rbw=;
- b=YxhtSQ/CgMVOjEvI3vzK1pq+1F0lz3zYvXqmGJJ6hGgx1PcSJX/0xF3sh3/1sURV7U
- Gig9GA9WXZcpLMGF7IsYP7GMSxcP3apnMiuPnS8Gs+hYYE1VI9xgYza25frjNGriklXk
- c4XV5KQdkQ9/t2talUbTtBY1J+QbHY5gM0JwchEs5IqZrCugJqY3+aT9pofcIvRV0oHD
- FxOdeuHiakgMYAJOR4LJqtHaCDSZXsgFnezDHeEpOmwIsRCXKHy+rTbKlYb6babItQJg
- fBUQivbIutKu6PWv3uDfUgnpe0ptm0I2C06QFsEmFojCxMXurFlp9Ws6vjBbpDO6Uz3D
- MobQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724759992; x=1725364792;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BKCYfz9tkaVNH6fB9Nh8SltfRjyIfEg/Set3q/m2Rbw=;
- b=bRBAM/g+mkNqhH56ANQACxZH0kxkQVujzIVr0oIALHqM6DXEWgEEDteyoYNj8OOOeH
- Aa0uIIvMCrs6MOozF+HFVlIXr4Q1XTTZQkaRdxlCx46RVJwBPFZ0pspKiIYh08mwNrzt
- Sh+8PToY129Hkl7rHEKlpxrC3JPSabTT3YgE0rbo35SVO4ghD8/WssxtkUAuArz7det3
- AWHFmQzWPKXvSmWYeO8sKuML5dR+NOahr5Glh8Zo/O+uEh8/dj8eLyg4dULc6m/vFTYF
- 8sIY9ik33IGnVi/m4DevVhcZ7WsJWYaJ9KJRPFs5R9PDaPPyUc+Cvi4C2PFFAf10GJRM
- +1xA==
-X-Gm-Message-State: AOJu0YxQreTU2MfnjfloWrtscaT8XkWMV0189b2zXBA8+rg/u4vKSVk/
- bk7VuyjARzoSlInMGOexLfLlhjfLXfryI+kJXcS2PkMhyc++OJtHOULLEKmykRst6VBUl0sxT/8
- cruhfaLX1JPzzTsu/8PjveWhxa/g=
-X-Google-Smtp-Source: AGHT+IGeLBL7ILcm4Y8v2uFTEZrHxaXh2Kxh0Zrca8yEx+Z0QIfIMrY4iTK876ncMHdU8RB0Yl1LfC1BDJm9vN5s55w=
-X-Received: by 2002:a05:6a21:1584:b0:1c3:b47d:d53f with SMTP id
- adf61e73a8af0-1cc89d7e3b8mr15371097637.25.1724759991356; Tue, 27 Aug 2024
- 04:59:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1siv11-0001aF-N7; Tue, 27 Aug 2024 08:09:39 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1siv0z-0005Px-03; Tue, 27 Aug 2024 08:09:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=NZ2EACNXRvSWtuvIlSmReKDhxL1kEjovg+5s6j3m6IA=; b=U0/ZHl2g+ViFWjTmH1JlBxX8OH
+ UxeBh2NvivEqbPF9paW9fe89TPucIWuYH6dAEHF43r8mR/tLtccQyeaQ6tHgLj0PXYvARvrPJ+air
+ llmK+3oxaZc2gZIn8vUT3wkjK+BWZR6aJDWCJUpEy8EMnHemGAf/7lYK4FOJZbwqeqpcqkSTN9eee
+ qOdHyXJ3VMH02AcjW+79rA5CxeDfAXJIdTe1Z2sdL8LT0ZBDKfPgUga6TNqulQW5GsYRJpverwV5c
+ KhcjvV0zCW+VJxp85TPUW9s4xpR7UeSxyM1IMFCOF/ppQGhv6y9+pkN2S0iCvPsAuCQZpyoBB726T
+ pNYuWHGNAOdH8wNjp6tGPg5qXL7WhqkGQaGYbGunC22m8JwDK0ESNGIfJo9qRh0dcLqyMFzQ7Cx05
+ 9hzYt65Q33HDtA46Qv6AiWzsZabWPmXpSABnCw8YOHM6QlhbIQM/2HRGQ2+LzWPMsJOYs9CpYGvFj
+ u+b+GVIh5geet/mcW4rL4/0/9MLOPVcHVCTRew/f+doGcQKTIFPPydulvCtpeudrKk60lk2l+yHLw
+ wAkNS0lb0SHW0JmyJKzT2S/93LPHA/heDB+uBwMoPmzVQbRFPxQxTqk5KlaOobFS1vsSd8iBO0dI5
+ mNxB2DRxqhS2CP2JThr+u1R8GWp7amv5oIVtZjPZQ=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1siv0e-000174-Qy; Tue, 27 Aug 2024 13:09:21 +0100
+Message-ID: <0a691100-7c80-40bc-b02b-dccdad510e1c@ilande.co.uk>
+Date: Tue, 27 Aug 2024 13:09:26 +0100
 MIME-Version: 1.0
-References: <20240816162044.5764-1-just4now666666@gmail.com>
- <871q2ae24s.fsf@draig.linaro.org>
-In-Reply-To: <871q2ae24s.fsf@draig.linaro.org>
-From: Elisha Hollander <just4now666666@gmail.com>
-Date: Tue, 27 Aug 2024 14:59:38 +0300
-Message-ID: <CACkyd_anZKrjNUKE+nwzSvJGQwxQ2zq2J8sGawq3pKYLVT9vXQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] allow using a higher icount
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000009b93660620a8fa85"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=just4now666666@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20240827100207.3502764-1-mjt@tls.msk.ru>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240827100207.3502764-1-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] mark <zlib.h> with for-crc32 in a consistent manner
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,183 +101,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009b93660620a8fa85
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 27/08/2024 11:02, Michael Tokarev wrote:
 
-Oh nice, I didn't know that
+> in many cases, <zlib.h> is only included for crc32 function,
+> and in some of them, there's a comment saying that, but in
+> a different way.  In one place (hw/net/rtl8139.c), there was
+> another #include added between the comment and <zlib.h> include.
+> 
+> Make all such comments to be on the same line as #include, make
+> it consistent, and also add a few missing comments, including
+> hw/nvram/mac_nvram.c which uses adler32 instead.
+> 
+> There's no code changes.
+> 
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>   hw/net/cadence_gem.c             | 2 +-
+>   hw/net/dp8393x.c                 | 2 +-
+>   hw/net/ftgmac100.c               | 3 +--
+>   hw/net/i82596.c                  | 2 +-
+>   hw/net/imx_fec.c                 | 3 +--
+>   hw/net/lan9118.c                 | 3 +--
+>   hw/net/mcf_fec.c                 | 3 +--
+>   hw/net/npcm7xx_emc.c             | 3 +--
+>   hw/net/rtl8139.c                 | 4 +---
+>   hw/net/smc91c111.c               | 3 +--
+>   hw/net/stellaris_enet.c          | 2 +-
+>   hw/nvram/mac_nvram.c             | 2 +-
+>   target/arm/helper.c              | 2 +-
+>   target/arm/tcg/helper-a64.c      | 2 +-
+>   target/loongarch/tcg/op_helper.c | 2 +-
+>   15 files changed, 15 insertions(+), 23 deletions(-)
+> 
+> diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+> index ec7bf562e5..12857d9d7d 100644
+> --- a/hw/net/cadence_gem.c
+> +++ b/hw/net/cadence_gem.c
+> @@ -23,7 +23,7 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> -#include <zlib.h> /* For crc32 */
+> +#include <zlib.h> /* for crc32 */
+>   
+>   #include "hw/irq.h"
+>   #include "hw/net/cadence_gem.h"
+> diff --git a/hw/net/dp8393x.c b/hw/net/dp8393x.c
+> index bf0652da1b..6d143bac5c 100644
+> --- a/hw/net/dp8393x.c
+> +++ b/hw/net/dp8393x.c
+> @@ -27,7 +27,7 @@
+>   #include "qapi/error.h"
+>   #include "qemu/module.h"
+>   #include "qemu/timer.h"
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   #include "qom/object.h"
+>   #include "trace.h"
+>   
+> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+> index 80f9cd56d5..c68db4e15f 100644
+> --- a/hw/net/ftgmac100.c
+> +++ b/hw/net/ftgmac100.c
+> @@ -24,8 +24,7 @@
+>   #include "hw/qdev-properties.h"
+>   #include "migration/vmstate.h"
+>   
+> -/* For crc32 */
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   
+>   /*
+>    * FTGMAC100 registers
+> diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+> index 6cc8292a65..d786086a51 100644
+> --- a/hw/net/i82596.c
+> +++ b/hw/net/i82596.c
+> @@ -19,7 +19,7 @@
+>   #include "qemu/module.h"
+>   #include "trace.h"
+>   #include "i82596.h"
+> -#include <zlib.h>       /* For crc32 */
+> +#include <zlib.h> /* for crc32 */
+>   
+>   #if defined(ENABLE_DEBUG)
+>   #define DBG(x)          x
+> diff --git a/hw/net/imx_fec.c b/hw/net/imx_fec.c
+> index 8c91d20d44..dfc3fb0d9a 100644
+> --- a/hw/net/imx_fec.c
+> +++ b/hw/net/imx_fec.c
+> @@ -33,8 +33,7 @@
+>   #include "net/eth.h"
+>   #include "trace.h"
+>   
+> -/* For crc32 */
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   
+>   #define IMX_MAX_DESC    1024
+>   
+> diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+> index 91d81b410b..c38ea40ada 100644
+> --- a/hw/net/lan9118.c
+> +++ b/hw/net/lan9118.c
+> @@ -22,8 +22,7 @@
+>   #include "qapi/error.h"
+>   #include "qemu/log.h"
+>   #include "qemu/module.h"
+> -/* For crc32 */
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   #include "qom/object.h"
+>   
+>   //#define DEBUG_LAN9118
+> diff --git a/hw/net/mcf_fec.c b/hw/net/mcf_fec.c
+> index e6902716bd..9db64f08c5 100644
+> --- a/hw/net/mcf_fec.c
+> +++ b/hw/net/mcf_fec.c
+> @@ -16,8 +16,7 @@
+>   #include "hw/net/mii.h"
+>   #include "hw/qdev-properties.h"
+>   #include "hw/sysbus.h"
+> -/* For crc32 */
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   
+>   //#define DEBUG_FEC 1
+>   
+> diff --git a/hw/net/npcm7xx_emc.c b/hw/net/npcm7xx_emc.c
+> index d1583b6f9b..7f25bca448 100644
+> --- a/hw/net/npcm7xx_emc.c
+> +++ b/hw/net/npcm7xx_emc.c
+> @@ -29,8 +29,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   
+> -/* For crc32 */
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   
+>   #include "hw/irq.h"
+>   #include "hw/qdev-clock.h"
+> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+> index 03a204ef8a..69a78ad677 100644
+> --- a/hw/net/rtl8139.c
+> +++ b/hw/net/rtl8139.c
+> @@ -48,10 +48,8 @@
+>    *  2011-Mar-22  Benjamin Poirier:  Implemented VLAN offloading
+>    */
+>   
+> -/* For crc32 */
+> -
+>   #include "qemu/osdep.h"
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   
+>   #include "hw/pci/pci_device.h"
+>   #include "hw/qdev-properties.h"
+> diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+> index 702d0e8e83..a00a76009e 100644
+> --- a/hw/net/smc91c111.c
+> +++ b/hw/net/smc91c111.c
+> @@ -17,8 +17,7 @@
+>   #include "qapi/error.h"
+>   #include "qemu/log.h"
+>   #include "qemu/module.h"
+> -/* For crc32 */
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   #include "qom/object.h"
+>   
+>   /* Number of 2k memory pages available.  */
+> diff --git a/hw/net/stellaris_enet.c b/hw/net/stellaris_enet.c
+> index db95766e29..8e2ce3bf29 100644
+> --- a/hw/net/stellaris_enet.c
+> +++ b/hw/net/stellaris_enet.c
+> @@ -15,7 +15,7 @@
+>   #include "net/net.h"
+>   #include "qemu/log.h"
+>   #include "qemu/module.h"
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   #include "qom/object.h"
+>   
+>   //#define DEBUG_STELLARIS_ENET 1
 
-On Tue, Aug 27, 2024, 12:39 Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote=
-:
+For the hw/net devices there are separate net_crc32() and net_crc32_le() functions 
+from net/net.c which are intended for (most) network devices where the "standard" 
+polynomials are used.
 
-> Elisha Hollander <just4now666666@gmail.com> writes:
->
-> > Signed-off-by: Elisha Hollander <just4now666666@gmail.com>
->
-> What is the use-case for this patch?
->
-> If you are simply looking to slow the emulated system down please have a
-> look at:
->
->
-> https://qemu.readthedocs.io/en/master/about/emulation.html#limit-instruct=
-ions-per-second
->
-> which uses the plugin system to limit the run rate and sleep if its
-> running too fast. The longer term goal is to deprecate the icount clock
-> alignment feature from the core code and leave icount to just provide
-> the deterministic execution needed for record/replay and reverse
-> debugging.
->
->
-> > ---
-> >  accel/tcg/cpu-exec.c      | 4 +---
-> >  accel/tcg/icount-common.c | 4 ++--
-> >  2 files changed, 3 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> > index 8163295f34..4c2baf8ed4 100644
-> > --- a/accel/tcg/cpu-exec.c
-> > +++ b/accel/tcg/cpu-exec.c
-> > @@ -95,11 +95,10 @@ static void align_clocks(SyncClocks *sc, CPUState
-> *cpu)
-> >  static void print_delay(const SyncClocks *sc)
-> >  {
-> >      static float threshold_delay;
-> > -    static int64_t last_realtime_clock;
-> >      static int nb_prints;
-> >
-> >      if (icount_align_option &&
-> > -        sc->realtime_clock - last_realtime_clock >=3D
-> MAX_DELAY_PRINT_RATE &&
-> > +        sc->diff_clk >=3D MAX_DELAY_PRINT_RATE &&
-> >          nb_prints < MAX_NB_PRINTS) {
-> >          if ((-sc->diff_clk / (float)1000000000LL > threshold_delay) ||
-> >              (-sc->diff_clk / (float)1000000000LL <
-> > @@ -109,7 +108,6 @@ static void print_delay(const SyncClocks *sc)
-> >                          threshold_delay - 1,
-> >                          threshold_delay);
-> >              nb_prints++;
-> > -            last_realtime_clock =3D sc->realtime_clock;
-> >          }
-> >      }
-> >  }
-> > diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
-> > index 8d3d3a7e9d..f07f8baf4d 100644
-> > --- a/accel/tcg/icount-common.c
-> > +++ b/accel/tcg/icount-common.c
-> > @@ -46,8 +46,8 @@
-> >   * is TCG-specific, and does not need to be built for other accels.
-> >   */
-> >  static bool icount_sleep =3D true;
-> > -/* Arbitrarily pick 1MIPS as the minimum allowable speed.  */
-> > -#define MAX_ICOUNT_SHIFT 10
-> > +/* Arbitrarily pick the minimum allowable speed.  */
-> > +#define MAX_ICOUNT_SHIFT 30
-> >
-> >  /* Do not count executed instructions */
-> >  ICountMode use_icount =3D ICOUNT_DISABLED;
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
+I did start a series years ago that replaced all the hw/net instances with these 
+functions with the aim being to isolate the single zlib dependency to net/net.c, but 
+it's still languishing on the TODO pile...
 
---0000000000009b93660620a8fa85
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/hw/nvram/mac_nvram.c b/hw/nvram/mac_nvram.c
+> index fe9df9fa35..83c6724c0a 100644
+> --- a/hw/nvram/mac_nvram.c
+> +++ b/hw/nvram/mac_nvram.c
+> @@ -35,7 +35,7 @@
+>   #include "qemu/module.h"
+>   #include "qemu/error-report.h"
+>   #include "trace.h"
+> -#include <zlib.h>
+> +#include <zlib.h> /* for adler32 */
+>   
+>   #define DEF_SYSTEM_SIZE 0xc10
+>   
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 0a582c1cd3..3f77b40734 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -19,7 +19,7 @@
+>   #include "qemu/crc32c.h"
+>   #include "qemu/qemu-print.h"
+>   #include "exec/exec-all.h"
+> -#include <zlib.h> /* For crc32 */
+> +#include <zlib.h> /* for crc32 */
+>   #include "hw/irq.h"
+>   #include "sysemu/cpu-timers.h"
+>   #include "sysemu/kvm.h"
+> diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+> index 21a9abd90a..56b431faf5 100644
+> --- a/target/arm/tcg/helper-a64.c
+> +++ b/target/arm/tcg/helper-a64.c
+> @@ -33,7 +33,7 @@
+>   #include "qemu/int128.h"
+>   #include "qemu/atomic128.h"
+>   #include "fpu/softfloat.h"
+> -#include <zlib.h> /* For crc32 */
+> +#include <zlib.h> /* for crc32 */
+>   
+>   /* C2.4.7 Multiply and divide */
+>   /* special cases for 0 and LLONG_MIN are mandated by the standard */
+> diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+> index fe79c62fa4..b17208e5b9 100644
+> --- a/target/loongarch/tcg/op_helper.c
+> +++ b/target/loongarch/tcg/op_helper.c
+> @@ -14,7 +14,7 @@
+>   #include "exec/cpu_ldst.h"
+>   #include "internals.h"
+>   #include "qemu/crc32c.h"
+> -#include <zlib.h>
+> +#include <zlib.h> /* for crc32 */
+>   #include "cpu-csr.h"
+>   
+>   /* Exceptions helpers */
 
-<p dir=3D"ltr">Oh nice, I didn&#39;t know that</p>
-<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue=
-, Aug 27, 2024, 12:39 Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@li=
-naro.org">alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
-ing-left:1ex">Elisha Hollander &lt;<a href=3D"mailto:just4now666666@gmail.c=
-om" target=3D"_blank" rel=3D"noreferrer">just4now666666@gmail.com</a>&gt; w=
-rites:<br>
-<br>
-&gt; Signed-off-by: Elisha Hollander &lt;<a href=3D"mailto:just4now666666@g=
-mail.com" target=3D"_blank" rel=3D"noreferrer">just4now666666@gmail.com</a>=
-&gt;<br>
-<br>
-What is the use-case for this patch?<br>
-<br>
-If you are simply looking to slow the emulated system down please have a<br=
->
-look at:<br>
-<br>
-=C2=A0 <a href=3D"https://qemu.readthedocs.io/en/master/about/emulation.htm=
-l#limit-instructions-per-second" rel=3D"noreferrer noreferrer" target=3D"_b=
-lank">https://qemu.readthedocs.io/en/master/about/emulation.html#limit-inst=
-ructions-per-second</a><br>
-<br>
-which uses the plugin system to limit the run rate and sleep if its<br>
-running too fast. The longer term goal is to deprecate the icount clock<br>
-alignment feature from the core code and leave icount to just provide<br>
-the deterministic execution needed for record/replay and reverse<br>
-debugging.<br>
-<br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 accel/tcg/cpu-exec.c=C2=A0 =C2=A0 =C2=A0 | 4 +---<br>
-&gt;=C2=A0 accel/tcg/icount-common.c | 4 ++--<br>
-&gt;=C2=A0 2 files changed, 3 insertions(+), 5 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c<br>
-&gt; index 8163295f34..4c2baf8ed4 100644<br>
-&gt; --- a/accel/tcg/cpu-exec.c<br>
-&gt; +++ b/accel/tcg/cpu-exec.c<br>
-&gt; @@ -95,11 +95,10 @@ static void align_clocks(SyncClocks *sc, CPUState =
-*cpu)<br>
-&gt;=C2=A0 static void print_delay(const SyncClocks *sc)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 static float threshold_delay;<br>
-&gt; -=C2=A0 =C2=A0 static int64_t last_realtime_clock;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 static int nb_prints;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (icount_align_option &amp;&amp;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 sc-&gt;realtime_clock - last_realtime_clo=
-ck &gt;=3D MAX_DELAY_PRINT_RATE &amp;&amp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 sc-&gt;diff_clk &gt;=3D MAX_DELAY_PRINT_R=
-ATE &amp;&amp;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 nb_prints &lt; MAX_NB_PRINTS) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((-sc-&gt;diff_clk / (float)10000=
-00000LL &gt; threshold_delay) ||<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (-sc-&gt;diff_clk / (f=
-loat)1000000000LL &lt;<br>
-&gt; @@ -109,7 +108,6 @@ static void print_delay(const SyncClocks *sc)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 threshold_delay - 1,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 threshold_delay);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 nb_prints++;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 last_realtime_clock =3D sc-=
-&gt;realtime_clock;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 }<br>
-&gt; diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c<br>
-&gt; index 8d3d3a7e9d..f07f8baf4d 100644<br>
-&gt; --- a/accel/tcg/icount-common.c<br>
-&gt; +++ b/accel/tcg/icount-common.c<br>
-&gt; @@ -46,8 +46,8 @@<br>
-&gt;=C2=A0 =C2=A0* is TCG-specific, and does not need to be built for other=
- accels.<br>
-&gt;=C2=A0 =C2=A0*/<br>
-&gt;=C2=A0 static bool icount_sleep =3D true;<br>
-&gt; -/* Arbitrarily pick 1MIPS as the minimum allowable speed.=C2=A0 */<br=
->
-&gt; -#define MAX_ICOUNT_SHIFT 10<br>
-&gt; +/* Arbitrarily pick the minimum allowable speed.=C2=A0 */<br>
-&gt; +#define MAX_ICOUNT_SHIFT 30<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 /* Do not count executed instructions */<br>
-&gt;=C2=A0 ICountMode use_icount =3D ICOUNT_DISABLED;<br>
-<br>
--- <br>
-Alex Benn=C3=A9e<br>
-Virtualisation Tech Lead @ Linaro<br>
-</blockquote></div>
 
---0000000000009b93660620a8fa85--
+ATB,
+
+Mark.
+
 
