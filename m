@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B184C54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 00:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C8CC5321D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 00:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sik37-0005Rx-0T; Mon, 26 Aug 2024 20:27:05 -0400
+	id 1sik9L-00020U-64; Mon, 26 Aug 2024 20:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1sik32-0005Fk-1k
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 20:27:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1sik2y-0007Lw-St
- for qemu-devel@nongnu.org; Mon, 26 Aug 2024 20:26:58 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47QJGvqL028312;
- Tue, 27 Aug 2024 00:26:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- EoRrBs91NHzmdqGoEluM0xCsTAV5X2R/4j3BqrgYVzc=; b=H1Qglk2ZETaDjGGM
- DPcO3g9rbeQ+JExlV2zgLlLctBNo2CQNwKQ65A2ItmgQLfmoEhrmWNjAtskbuC01
- 7ArbS9h6e4SHzDf1RC4dsjtVgX5U7y0NSZNHhljAVCRW07lAT6nxANqfDKBkUrkO
- cx3ITXQuURdFVPGcSMVSrXWEqEFWOaRBoCeWnKuu+/wEnlzQ5AAuFvn3j0VtYLZQ
- mbQ6c3rT9HemLxXmM1xIsYVaAmPdTeOHYiYoqmvzHe8fg1MmRLx93YG4PVJ+H4ho
- OzUIzs4m4DkIZp7W7oZfcj+uGujxE3OQuw0E+euhmb38MdOvAfaMe27pwplMx9ku
- bsJI9w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 417973n8sa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Aug 2024 00:26:52 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47R0QpkN026032
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Aug 2024 00:26:51 GMT
-Received: from hu-bcain-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 26 Aug 2024 17:26:51 -0700
-From: Brian Cain <bcain@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <bcain@quicinc.com>, <quic_mathbern@quicinc.com>, <sidneym@quicinc.com>,
- <quic_mliebel@quicinc.com>, <ltaylorsimpson@gmail.com>, Laurent Vivier
- <laurent@vivier.eu>
-Subject: [PATCH v2 1/2] target/hexagon: rename HEX_EXCP_*=>HEX_CAUSE_*
-Date: Mon, 26 Aug 2024 17:26:30 -0700
-Message-ID: <20240827002631.3492200-2-bcain@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240827002631.3492200-1-bcain@quicinc.com>
-References: <20240827002631.3492200-1-bcain@quicinc.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sik97-0001uy-Cl
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 20:33:19 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sik95-0008PM-Jr
+ for qemu-devel@nongnu.org; Mon, 26 Aug 2024 20:33:17 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-201d5af11a4so43222465ad.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 17:33:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724718794; x=1725323594; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qac4b5Kv4OBKie+42FUj0CLupwsvaZhDDZPlSur5ZcY=;
+ b=BGo0hS7dX2+C7LJx0YnCeP81Y6tPAd1UXCAPLwRAk9JHNhuQLIm1qqLLKJlPLhG5t2
+ qyfD/DO/X5uau0gw4s6bin/6e5XMV0ha5athMqpDz8DVAycxAfF/qyDgqIEnaiTKi58O
+ bHJZ1MHvLYK7KrvxuwNLVV9ue0vcwW2qRbuRRH2tMvTXG3CkJ87hIKb1enZUEhRAeqhS
+ T5bEYnX4EcQzYRpE4NYhnBULpHf7irjW7jBoTgKbVy99jPC7a3HQdoKtzyzmXSChFGzI
+ CjamvOaX9HBJ/8QBza3Lf4fHvnBmxjAAHTK2gyAzimZidJFqf7vQYRb2QZmTGUBB5aa+
+ 3LMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724718794; x=1725323594;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qac4b5Kv4OBKie+42FUj0CLupwsvaZhDDZPlSur5ZcY=;
+ b=E8CTFnOlVFRagkGcFShcxaoP8yWdWzB+5CyrSzo3rmrJaY2FwZND9f5UEZtDVnIe9+
+ EUih9+LB14QyIUq+zl4TyuLNRH/oVU+qEXg+Er9VA/+WWqZ2OszmgV6nHjPZzCJmoRlV
+ ws8iHBO9YiCqqfCql/Ly23bKPXDxpNI8NLj5KiDaQJ/lYS2G5Pe4zZihyxDGV84tLfEV
+ Z0pUxA695KpszJ4AyLAExrVzPXN6zFhi86zwFLGp+4Lk+RX8PQU72PPtykUZh96JwMQe
+ yvZssEeV0afkEkHhnFYcpxDuaXloI0N4uwEfujQrV1FN8RnU85+4taUO69kxX8FbvYdE
+ aG6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBhchaopvLg0dzMC9G8XfnDNUVNeE2wjkP5p9+M+8zuh1sUzcEu9pQRVdXkQB8D9snF8VXS9n4lbak@nongnu.org
+X-Gm-Message-State: AOJu0YxF+6c3oYBfbzjvq6zxq2UfLbfXx0xbz5it+j25vYTQFgkS7xxC
+ g3IEj5aoZdfvYwjLH55A9QQqCPsvVSabWRkaYIbhyuvWVZzvr/JR/jRnrsHP01s=
+X-Google-Smtp-Source: AGHT+IEiFMeOa5itLVT1pveIa5hvjUJaxiIiTo7vpT8tElTp2PhjmmE6+0T6pu4DhnBWAnk+UTMYow==
+X-Received: by 2002:a17:902:cf4f:b0:202:1db8:d9b0 with SMTP id
+ d9443c01a7336-204df4803e0mr11745535ad.34.1724718793777; 
+ Mon, 26 Aug 2024 17:33:13 -0700 (PDT)
+Received: from ?IPV6:2001:8004:5110:2082:f68a:6871:1edc:69fe?
+ ([2001:8004:5110:2082:f68a:6871:1edc:69fe])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2038556659dsm72705355ad.59.2024.08.26.17.33.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Aug 2024 17:33:13 -0700 (PDT)
+Message-ID: <da021104-6836-4e5b-a8a4-991f975c553c@linaro.org>
+Date: Tue, 27 Aug 2024 10:33:04 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: hl9PNtia7g1Eud1ep8vmi4oPtlJnIzTr
-X-Proofpoint-GUID: hl9PNtia7g1Eud1ep8vmi4oPtlJnIzTr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-26_17,2024-08-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0
- impostorscore=0 mlxlogscore=563 adultscore=0 lowpriorityscore=0 mlxscore=0
- phishscore=0 malwarescore=0 bulkscore=0 spamscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408270002
-Received-SPF: pass client-ip=205.220.180.131; envelope-from=bcain@quicinc.com;
- helo=mx0b-0031df01.pphosted.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 03/17] target/riscv: save and restore elp state on priv
+ transitions
+To: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
+ kito.cheng@sifive.com
+References: <20240826152949.294506-1-debug@rivosinc.com>
+ <20240826152949.294506-4-debug@rivosinc.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240826152949.294506-4-debug@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,82 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGhlIHZhbHVlcyBwcmV2aW91c2x5IHVzZWQgZm9yICJIRVhfRVhDUF8qIiB3ZXJlIHRoZSBjYXVz
-ZSBjb2RlCmRlZmluaXRpb25zIGFuZCBub3QgdGhlIGV2ZW50IG51bWJlcnMuICBTbyBpbiB0aGlz
-IGNvbW1pdCwgd2UgdXBkYXRlCnRoZSBuYW1lcyB0byByZWZsZWN0IHRoZSBjYXVzZSBjb2Rlcy4g
-SW4gSEVYX0VWRU5UX1RSQVAwJ3MgY2FzZSwgd2UgYWRkCmEgbmV3ICJIRVhfRVZFTlRfKiIgd2l0
-aCB0aGUgY29ycmVjdCBldmVudCBudW1iZXIuCgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBDYWluIDxi
-Y2FpbkBxdWljaW5jLmNvbT4KLS0tCiBsaW51eC11c2VyL2hleGFnb24vY3B1X2xvb3AuYyB8ICA0
-ICsrLS0KIHRhcmdldC9oZXhhZ29uL2NwdS5oICAgICAgICAgIHwgIDIgKy0KIHRhcmdldC9oZXhh
-Z29uL2NwdV9iaXRzLmggICAgIHwgMTUgKysrKysrKystLS0tLS0tCiB0YXJnZXQvaGV4YWdvbi9n
-ZW5fdGNnLmggICAgICB8ICAyICstCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuYyAgICB8ICA2
-ICsrKy0tLQogNSBmaWxlcyBjaGFuZ2VkLCAxNSBpbnNlcnRpb25zKCspLCAxNCBkZWxldGlvbnMo
-LSkKCmRpZmYgLS1naXQgYS9saW51eC11c2VyL2hleGFnb24vY3B1X2xvb3AuYyBiL2xpbnV4LXVz
-ZXIvaGV4YWdvbi9jcHVfbG9vcC5jCmluZGV4IGQ0MTE1OWU1MmEuLjQwZGI1OTYzMDEgMTAwNjQ0
-Ci0tLSBhL2xpbnV4LXVzZXIvaGV4YWdvbi9jcHVfbG9vcC5jCisrKyBiL2xpbnV4LXVzZXIvaGV4
-YWdvbi9jcHVfbG9vcC5jCkBAIC00Miw3ICs0Miw3IEBAIHZvaWQgY3B1X2xvb3AoQ1BVSGV4YWdv
-blN0YXRlICplbnYpCiAgICAgICAgIGNhc2UgRVhDUF9JTlRFUlJVUFQ6CiAgICAgICAgICAgICAv
-KiBqdXN0IGluZGljYXRlIHRoYXQgc2lnbmFscyBzaG91bGQgYmUgaGFuZGxlZCBhc2FwICovCiAg
-ICAgICAgICAgICBicmVhazsKLSAgICAgICAgY2FzZSBIRVhfRVhDUF9UUkFQMDoKKyAgICAgICAg
-Y2FzZSBIRVhfRVZFTlRfVFJBUDA6CiAgICAgICAgICAgICBzeXNjYWxsbnVtID0gZW52LT5ncHJb
-Nl07CiAgICAgICAgICAgICBlbnYtPmdwcltIRVhfUkVHX1BDXSArPSA0OwogICAgICAgICAgICAg
-cmV0ID0gZG9fc3lzY2FsbChlbnYsCkBAIC02MCw3ICs2MCw3IEBAIHZvaWQgY3B1X2xvb3AoQ1BV
-SGV4YWdvblN0YXRlICplbnYpCiAgICAgICAgICAgICAgICAgZW52LT5ncHJbMF0gPSByZXQ7CiAg
-ICAgICAgICAgICB9CiAgICAgICAgICAgICBicmVhazsKLSAgICAgICAgY2FzZSBIRVhfRVhDUF9Q
-Q19OT1RfQUxJR05FRDoKKyAgICAgICAgY2FzZSBIRVhfQ0FVU0VfUENfTk9UX0FMSUdORUQ6CiAg
-ICAgICAgICAgICBmb3JjZV9zaWdfZmF1bHQoVEFSR0VUX1NJR0JVUywgVEFSR0VUX0JVU19BRFJB
-TE4sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZW52LT5ncHJbSEVYX1JFR19SMzFdKTsK
-ICAgICAgICAgICAgIGJyZWFrOwpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vY3B1LmggYi90
-YXJnZXQvaGV4YWdvbi9jcHUuaAppbmRleCA3NjRmM2MzOGNjLi5jYjgwMzhkN2E4IDEwMDY0NAot
-LS0gYS90YXJnZXQvaGV4YWdvbi9jcHUuaAorKysgYi90YXJnZXQvaGV4YWdvbi9jcHUuaApAQCAt
-MTQ5LDcgKzE0OSw3IEBAIHN0YXRpYyBpbmxpbmUgdm9pZCBjcHVfZ2V0X3RiX2NwdV9zdGF0ZShD
-UFVIZXhhZ29uU3RhdGUgKmVudiwgdmFkZHIgKnBjLAogICAgIH0KICAgICAqZmxhZ3MgPSBoZXhf
-ZmxhZ3M7CiAgICAgaWYgKCpwYyAmIFBDQUxJR05fTUFTSykgewotICAgICAgICBoZXhhZ29uX3Jh
-aXNlX2V4Y2VwdGlvbl9lcnIoZW52LCBIRVhfRVhDUF9QQ19OT1RfQUxJR05FRCwgMCk7CisgICAg
-ICAgIGhleGFnb25fcmFpc2VfZXhjZXB0aW9uX2VycihlbnYsIEhFWF9DQVVTRV9QQ19OT1RfQUxJ
-R05FRCwgMCk7CiAgICAgfQogfQogCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9jcHVfYml0
-cy5oIGIvdGFyZ2V0L2hleGFnb24vY3B1X2JpdHMuaAppbmRleCA0Mjc5MjgxYTcxLi4yZTYwYzBm
-YWZlIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9jcHVfYml0cy5oCisrKyBiL3RhcmdldC9o
-ZXhhZ29uL2NwdV9iaXRzLmgKQEAgLTIzLDE0ICsyMywxNSBAQAogI2RlZmluZSBQQ0FMSUdOIDQK
-ICNkZWZpbmUgUENBTElHTl9NQVNLIChQQ0FMSUdOIC0gMSkKIAotI2RlZmluZSBIRVhfRVhDUF9G
-RVRDSF9OT19VUEFHRSAgMHgwMTIKLSNkZWZpbmUgSEVYX0VYQ1BfSU5WQUxJRF9QQUNLRVQgIDB4
-MDE1Ci0jZGVmaW5lIEhFWF9FWENQX0lOVkFMSURfT1BDT0RFICAweDAxNQotI2RlZmluZSBIRVhf
-RVhDUF9QQ19OT1RfQUxJR05FRCAgMHgwMWUKLSNkZWZpbmUgSEVYX0VYQ1BfUFJJVl9OT19VUkVB
-RCAgIDB4MDI0Ci0jZGVmaW5lIEhFWF9FWENQX1BSSVZfTk9fVVdSSVRFICAweDAyNQorI2RlZmlu
-ZSBIRVhfRVZFTlRfVFJBUDAgICAgICAgICAgIDB4MDA4CiAKLSNkZWZpbmUgSEVYX0VYQ1BfVFJB
-UDAgICAgICAgICAgIDB4MTcyCisjZGVmaW5lIEhFWF9DQVVTRV9UUkFQMCAgICAgICAgICAgMHgx
-NzIKKyNkZWZpbmUgSEVYX0NBVVNFX0ZFVENIX05PX1VQQUdFICAweDAxMgorI2RlZmluZSBIRVhf
-Q0FVU0VfSU5WQUxJRF9QQUNLRVQgIDB4MDE1CisjZGVmaW5lIEhFWF9DQVVTRV9JTlZBTElEX09Q
-Q09ERSAgMHgwMTUKKyNkZWZpbmUgSEVYX0NBVVNFX1BDX05PVF9BTElHTkVEICAweDAxZQorI2Rl
-ZmluZSBIRVhfQ0FVU0VfUFJJVl9OT19VUkVBRCAgIDB4MDI0CisjZGVmaW5lIEhFWF9DQVVTRV9Q
-UklWX05PX1VXUklURSAgMHgwMjUKIAogI2RlZmluZSBQQUNLRVRfV09SRFNfTUFYICAgICAgICAg
-NAogCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9nZW5fdGNnLmggYi90YXJnZXQvaGV4YWdv
-bi9nZW5fdGNnLmgKaW5kZXggM2ZjMWY0ZTI4MS4uOGEzYjgwMTI4NyAxMDA2NDQKLS0tIGEvdGFy
-Z2V0L2hleGFnb24vZ2VuX3RjZy5oCisrKyBiL3RhcmdldC9oZXhhZ29uL2dlbl90Y2cuaApAQCAt
-MTM2NSw3ICsxMzY1LDcgQEAKICAgICBkbyB7IFwKICAgICAgICAgdWlWID0gdWlWOyBcCiAgICAg
-ICAgIHRjZ19nZW5fbW92aV90bChoZXhfZ3ByW0hFWF9SRUdfUENdLCBjdHgtPnBrdC0+cGMpOyBc
-Ci0gICAgICAgIFRDR3YgZXhjcCA9IHRjZ19jb25zdGFudF90bChIRVhfRVhDUF9UUkFQMCk7IFwK
-KyAgICAgICAgVENHdiBleGNwID0gdGNnX2NvbnN0YW50X3RsKEhFWF9FVkVOVF9UUkFQMCk7IFwK
-ICAgICAgICAgZ2VuX2hlbHBlcl9yYWlzZV9leGNlcHRpb24odGNnX2VudiwgZXhjcCk7IFwKICAg
-ICB9IHdoaWxlICgwKQogI2VuZGlmCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi90cmFuc2xh
-dGUuYyBiL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5jCmluZGV4IDRiMWJlZTNjNmQuLjRkMDNj
-Y2JlZDEgMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5jCisrKyBiL3Rhcmdl
-dC9oZXhhZ29uL3RyYW5zbGF0ZS5jCkBAIC01OTEsNyArNTkxLDcgQEAgc3RhdGljIHZvaWQgZ2Vu
-X2luc24oRGlzYXNDb250ZXh0ICpjdHgpCiAgICAgICAgIGN0eC0+aW5zbi0+Z2VuZXJhdGUoY3R4
-KTsKICAgICAgICAgbWFya19zdG9yZV93aWR0aChjdHgpOwogICAgIH0gZWxzZSB7Ci0gICAgICAg
-IGdlbl9leGNlcHRpb25fZW5kX3RiKGN0eCwgSEVYX0VYQ1BfSU5WQUxJRF9PUENPREUpOworICAg
-ICAgICBnZW5fZXhjZXB0aW9uX2VuZF90YihjdHgsIEhFWF9DQVVTRV9JTlZBTElEX09QQ09ERSk7
-CiAgICAgfQogfQogCkBAIC05NjgsNyArOTY4LDcgQEAgc3RhdGljIHZvaWQgZGVjb2RlX2FuZF90
-cmFuc2xhdGVfcGFja2V0KENQVUhleGFnb25TdGF0ZSAqZW52LCBEaXNhc0NvbnRleHQgKmN0eCkK
-IAogICAgIG53b3JkcyA9IHJlYWRfcGFja2V0X3dvcmRzKGVudiwgY3R4LCB3b3Jkcyk7CiAgICAg
-aWYgKCFud29yZHMpIHsKLSAgICAgICAgZ2VuX2V4Y2VwdGlvbl9lbmRfdGIoY3R4LCBIRVhfRVhD
-UF9JTlZBTElEX1BBQ0tFVCk7CisgICAgICAgIGdlbl9leGNlcHRpb25fZW5kX3RiKGN0eCwgSEVY
-X0NBVVNFX0lOVkFMSURfUEFDS0VUKTsKICAgICAgICAgcmV0dXJuOwogICAgIH0KIApAQCAtOTg0
-LDcgKzk4NCw3IEBAIHN0YXRpYyB2b2lkIGRlY29kZV9hbmRfdHJhbnNsYXRlX3BhY2tldChDUFVI
-ZXhhZ29uU3RhdGUgKmVudiwgRGlzYXNDb250ZXh0ICpjdHgpCiAgICAgICAgIGdlbl9jb21taXRf
-cGFja2V0KGN0eCk7CiAgICAgICAgIGN0eC0+YmFzZS5wY19uZXh0ICs9IHBrdC5lbmNvZF9wa3Rf
-c2l6ZV9pbl9ieXRlczsKICAgICB9IGVsc2UgewotICAgICAgICBnZW5fZXhjZXB0aW9uX2VuZF90
-YihjdHgsIEhFWF9FWENQX0lOVkFMSURfUEFDS0VUKTsKKyAgICAgICAgZ2VuX2V4Y2VwdGlvbl9l
-bmRfdGIoY3R4LCBIRVhfQ0FVU0VfSU5WQUxJRF9QQUNLRVQpOwogICAgIH0KIH0KIAotLSAKMi4z
-NC4xCgo=
+On 8/27/24 01:29, Deepak Gupta wrote:
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 8e1f05e5b1..083d405516 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1022,6 +1022,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>       env->load_res = -1;
+>       set_default_nan_mode(1, &env->fp_status);
+>   
+> +#ifdef CONFIG_USER_ONLY
+> +    /* qemu-user for riscv, fcfi is off by default */
+> +    env->ufcfien = false;
+> +#endif
+...
+> @@ -226,6 +226,7 @@ struct CPUArchState {
+>       bool      elp;
+>   #ifdef CONFIG_USER_ONLY
+>       uint32_t elf_flags;
+> +    bool ufcfien;
+>   #endif
+
+Thinking about this more, I think adding separate controls for user-only is a bad 
+precedent to set.  You said you are adding these because senvcfg/menvcfg are ifdefed: 
+well, that should be the thing that we fix.
+
+The only real user of *envcfg that I see so far is check_zicbo_envcfg, which does not use 
+the same switch statement as this:
+
+> +    switch (env->priv) {
+> +    case PRV_U:
+> +        if (riscv_has_ext(env, RVS)) {
+> +            return env->senvcfg & MENVCFG_LPE;
+> +        }
+> +        return env->menvcfg & MENVCFG_LPE;
+> +    case PRV_S:
+> +        if (env->virt_enabled) {
+> +            return env->henvcfg & HENVCFG_LPE;
+> +        }
+> +        return env->menvcfg & MENVCFG_LPE;
+> +    case PRV_M:
+> +        return env->mseccfg & MSECCFG_MLPE;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+
+I think your function should look more like check_zicbo_envcfg: (1) PRV_U may be either U 
+or VU, and different tests apply; (2) M-mode disable means that no lower level may be enabled.
+
+It would be nice if you could generalize check_zicbo_envcfg to apply to your new use as 
+well.  Perhaps some tri-state function to say "enabled", "disabled", "virtual disabled".
+
+
+r~
 
