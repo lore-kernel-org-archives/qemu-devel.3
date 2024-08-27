@@ -4,62 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B37C54734
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 10:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D274C54734
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 10:36:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sitYC-000504-93; Tue, 27 Aug 2024 06:35:48 -0400
+	id 1sitYF-00059N-9n; Tue, 27 Aug 2024 06:35:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sitY7-0004ym-VT
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 06:35:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sitY8-0004yq-T0
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 06:35:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sitY6-0004Yf-0I
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 06:35:43 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sitY7-0004Yo-6Q
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 06:35:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724754939;
+ s=mimecast20190719; t=1724754942;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=i4Q8o0IG0jTVd7vOErL8HdXdFcv0ZdMf445XvAP4iWo=;
- b=hbB2ipLbu+OuahLTUEcjiaIAbVsflFhjBKr+D0LaxUvT6u3phDtNKs/TtYmpTn4BJFgsi/
- RVKuiHTCfr9g7b12tcPBMsdCDIuUiG/A1RUrZwtCmkxDXvobXaFGIcEEX6AKB5lpxjqdxV
- nh0ykMB6kkNA3p7ZjhrrfeBkVHH+sJ0=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=P0+/Wqdzz+qE+8BCY5yvExQ+s+0h5/YE/eZxJawqeSM=;
+ b=XgLKWnIRIMr8quz2eThFZ4vPQ3fE1O0ct+rKtKQ2vjS9kK/CYXQbR+ISYk3X2cQeDXYo4N
+ RM5I2qcmukcySrZr0f95HSX9iEMgbl/Gu9fkgU22i2GPDZSTmiop/McHEOJQcSpy3rU5tn
+ 5tHhuGtcYDJnBfUejKnTptFuknhgaE8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-45-Kfx7Fj9xP72fnVeaz1iwQg-1; Tue,
- 27 Aug 2024 06:35:36 -0400
-X-MC-Unique: Kfx7Fj9xP72fnVeaz1iwQg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-d58ONpxvN3CUEclOsH18Mg-1; Tue,
+ 27 Aug 2024 06:35:37 -0400
+X-MC-Unique: d58ONpxvN3CUEclOsH18Mg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCE731955D42; Tue, 27 Aug 2024 10:35:35 +0000 (UTC)
+ id 4C77019560B1; Tue, 27 Aug 2024 10:35:36 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 287021954B04; Tue, 27 Aug 2024 10:35:35 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0BAFF1956056; Tue, 27 Aug 2024 10:35:35 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C639A21E691E; Tue, 27 Aug 2024 12:35:32 +0200 (CEST)
+ id C486F21E6A28; Tue, 27 Aug 2024 12:35:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 1/1] docs/sphinx: fix extra stuff in TOC after freeform QMP
- sections
-Date: Tue, 27 Aug 2024 12:35:32 +0200
-Message-ID: <20240827103532.799039-2-armbru@redhat.com>
-In-Reply-To: <20240827103532.799039-1-armbru@redhat.com>
-References: <20240827103532.799039-1-armbru@redhat.com>
+Cc: richard.henderson@linaro.org
+Subject: [PULL 0/1] QAPI patches patches for 2024-08-27
+Date: Tue, 27 Aug 2024 12:35:31 +0200
+Message-ID: <20240827103532.799039-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -85,63 +80,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+I'm nominating this fix for v9.1 because it can only affect generated
+documentation, and CI should protect us from surprise build breaks.
+Feel free to delay it to v9.2 if you think even that is too much risk
+or simply too much trouble to be worthwhile.
 
-Freeform sections with titles are currently generating a TOC entry for
-the first paragraph in the section after the header, which is not what
-we want.
+The following changes since commit afaee42f777bc359db95f692804f7fc7e12c0c02:
 
-(Easiest to observe directly in the QMP reference manual's
-"Introduction" section.)
+  Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging (2024-08-27 07:06:42 +1000)
 
-When freeform sections are parsed, we create both a section header *and*
-an empty, title-less section. This causes some problems with sphinx's
-post-parse tree transforms, see also 2664f317 - this is a similar issue:
-Sphinx doesn't like section-less titles and it also doesn't like
-title-less sections.
+are available in the Git repository at:
 
-Modify qapidoc.py to parse text directly into the preceding section
-title as child nodes, eliminating the section duplication. This removes
-the extra text from the TOC.
+  https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-08-27
 
-Only very, very lightly tested: "it looks right at a glance" :tm:. I am
-still in the process of rewriting qapidoc, so I didn't give it much
-deeper thought.
+for you to fetch changes up to 43e0d14ee09a0565adcf4ce5f35be79695958fb0:
 
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20240822204803.1649762-1-jsnow@redhat.com>
----
+  docs/sphinx: fix extra stuff in TOC after freeform QMP sections (2024-08-27 11:10:58 +0200)
+
+----------------------------------------------------------------
+QAPI patches patches for 2024-08-27
+
+----------------------------------------------------------------
+John Snow (1):
+      docs/sphinx: fix extra stuff in TOC after freeform QMP sections
+
  docs/sphinx/qapidoc.py | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 738b2450fb..5f96b46270 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -388,6 +388,7 @@ def _start_new_heading(self, heading, level):
-         self._active_headings[level - 1] += snode
-         self._active_headings = self._active_headings[:level]
-         self._active_headings.append(snode)
-+        return snode
- 
-     def _add_node_to_current_heading(self, node):
-         """Add the node to whatever the current active heading is"""
-@@ -417,13 +418,11 @@ def freeform(self, doc):
-             # the first line of the block)
-             (heading, _, text) = text.partition('\n')
-             (leader, _, heading) = heading.partition(' ')
--            self._start_new_heading(heading, len(leader))
-+            node = self._start_new_heading(heading, len(leader))
-             if text == '':
-                 return
- 
--        node = self._make_section(None)
-         self._parse_text_into_node(text, node)
--        self._add_node_to_current_heading(node)
-         self._cur_doc = None
- 
-     def _parse_text_into_node(self, doctext, node):
 -- 
 2.46.0
 
