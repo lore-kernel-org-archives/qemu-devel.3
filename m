@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69510C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 06:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2CAC5472F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 06:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sipj9-0004b3-I6; Tue, 27 Aug 2024 02:30:51 -0400
+	id 1sipxW-0002Uv-4k; Tue, 27 Aug 2024 02:45:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sipj8-0004ZW-H8
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:30:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sipj6-0004ed-Sx
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:30:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724740246;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J7ee2KV+Lqz+23D3Fwl+N0nP1Ygl2fAs/LiLzNVq+xI=;
- b=Lbt37owv9AwuXgK60q0Br6JyEDgouS10nP/IKFWutMdDYnF6z0NHse7DmqOZ0G6l2P0NpX
- eagiAEbOSEkDNEFyZ6HqpKb8iueCd9QxC262qFVyjVarVkgCP11hZtR/jlYzYFmM8WCkbh
- nN2ceNq6E4NijaT2RW68eDh/jET4usE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-I6ZRyGUsMTyzN4TmTB0tUw-1; Tue,
- 27 Aug 2024 02:30:41 -0400
-X-MC-Unique: I6ZRyGUsMTyzN4TmTB0tUw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89AF11955BF6; Tue, 27 Aug 2024 06:30:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC1141956054; Tue, 27 Aug 2024 06:30:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9EA7421E6A28; Tue, 27 Aug 2024 08:30:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- qemu-trivial@nongnu.org,  zhao1.liu@intel.com,  kvm@vger.kernel.org,
- qemu-devel@nongnu.org,  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v3] kvm: replace fprintf with error_report/printf() in
- kvm_init()
-In-Reply-To: <8913b8c7-4103-4f69-8567-afdc29f8d0d3@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 9 Aug 2024 10:35:57
- +0200")
-References: <20240809064940.1788169-1-anisinha@redhat.com>
- <8913b8c7-4103-4f69-8567-afdc29f8d0d3@linaro.org>
-Date: Tue, 27 Aug 2024 08:30:36 +0200
-Message-ID: <87v7zmmq9f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ (Exim 4.90_1) (envelope-from
+ <3DHbNZgUKCmscJeRYPXXPUN.LXVZNVd-MNeNUWXWPWd.XaP@flex--tavip.bounces.google.com>)
+ id 1sipxU-0002TB-Ov
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:45:40 -0400
+Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3DHbNZgUKCmscJeRYPXXPUN.LXVZNVd-MNeNUWXWPWd.XaP@flex--tavip.bounces.google.com>)
+ id 1sipxT-00063i-4L
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 02:45:40 -0400
+Received: by mail-pf1-x44a.google.com with SMTP id
+ d2e1a72fcca58-71431f47164so5369660b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 23:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1724741133; x=1725345933; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=v9oflfpPfEUdfMbwTLTWxbGbyPrsj6gup4qbjEdCGHw=;
+ b=n6mVlQr7eNzXsh5GZ0yrEKErqBremYzO3KiHb2eOEpoct0aKp9MKNdWXBIzsMT74ah
+ fjiB9y4U2lyEmg4sGzpSRad/v0G4GL2NsSxFUnRL8tpCYwEZfz0+8NLV3n/mKhmnLm10
+ OK28Z9YDWLmJ0CaZO67cR15eLWieW95bYEEG9x00yLGVxWaT6zVxYL5CH9Y75bhYxdjT
+ vP5CbSLa6SpxbDqF802+JSiDRD8P34Y0ziq+2rbP1jzE+F93RHU0QS3E8Pqsbx0R/nKS
+ fFerAQruI1nGdSL/8z4wewnxkAOPHF8RjkxHRUOlD8PwXvQ+zYuAddaevl0urZ79XEho
+ BRXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724741133; x=1725345933;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v9oflfpPfEUdfMbwTLTWxbGbyPrsj6gup4qbjEdCGHw=;
+ b=Apb4xrje+GNO7WeyOUf7FV+41bBBfzCIDvsDkPcvgxpc6aHhghhhfOoGD97vhP68xo
+ t+JSneSzLnfMve8ZZJtY54ltg0mgdYiVKyYAPkW+FqadGnqIqMkK/EMOjnKYEWXJuWU2
+ XV9t+pZGTt9zgDy/ea6G59u/KL0Nka1NtFCGr2HbJ1NueHDh3VPtEnjIpCYBx8KQeXV/
+ FcvA+lQgeSQ+hjCRRSrKgY2JS+YPPVl6Q2hSfzMs1LVoM4fYzTvHnjM/6B9UWv3NnTGr
+ oCDYqAfqdkgRIx/M2147pHolKX8aAlw3C64nNoJFjMhYYdckJUadD+mWGm6YfwLWbs6u
+ HyMQ==
+X-Gm-Message-State: AOJu0YzphTG3mawDefgeZJ2SzGfIR8MDl1fei3UM/OTqvjMmoa6RUthI
+ EKs4MF0SBnSwhRfwDWvtOllICW62rJS6EF/uycwE3XgeFfm0SHA2q6RACGWA0xgNZmR7aQ3u2xi
+ OZ0ZuJccLhJiV/tgKrOEym5oLcbHwuS7hymdxwvCp5jG4GXpaZpBDFIaW7k8ZrxJtxowBMZReIv
+ CcrHJc+Lcp2W6GzMADHW0o+SATFw==
+X-Google-Smtp-Source: AGHT+IG07jwi+5XRAcMKfnQCOpZTVqRKZaSEOptZ7zn9AQZS1cDKhVEQlNeMI0+AMBhsBiv8NGIkPzweMg==
+X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
+ (user=tavip job=sendgmr) by 2002:a05:6a00:1d93:b0:714:202d:df20
+ with SMTP id
+ d2e1a72fcca58-714453f3033mr45518b3a.0.1724741132269; Mon, 26 Aug 2024
+ 23:45:32 -0700 (PDT)
+Date: Mon, 26 Aug 2024 23:45:05 -0700
+In-Reply-To: <20240827064529.1246786-1-tavip@google.com>
+Mime-Version: 1.0
+References: <20240827064529.1246786-1-tavip@google.com>
+X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
+Message-ID: <20240827064529.1246786-2-tavip@google.com>
+Subject: [RFC PATCH v3 01/24] fifo32: add peek function
+From: Octavian Purdila <tavip@google.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
+ peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
+ alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
+ crosa@redhat.com, lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
+ envelope-from=3DHbNZgUKCmscJeRYPXXPUN.LXVZNVd-MNeNUWXWPWd.XaP@flex--tavip.bounces.google.com;
+ helo=mail-pf1-x44a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,103 +98,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Add fifo32_peek() that returns the first element from the queue
+without popping it.
 
-> Hi Ani,
->
-> On 9/8/24 08:49, Ani Sinha wrote:
->> error_report() is more appropriate for error situations. Replace fprintf=
- with
->> error_report. Cosmetic. No functional change.
->> CC: qemu-trivial@nongnu.org
->> CC: zhao1.liu@intel.com
->
-> (Pointless to carry Cc line when patch is already reviewed next line)
->
->> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> ---
->>   accel/kvm/kvm-all.c | 40 ++++++++++++++++++----------------------
->>   1 file changed, 18 insertions(+), 22 deletions(-)
->> changelog:
->> v2: fix a bug.
->> v3: replace one instance of error_report() with error_printf(). added ta=
-gs.
->> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->> index 75d11a07b2..5bc9d35b61 100644
->> --- a/accel/kvm/kvm-all.c
->> +++ b/accel/kvm/kvm-all.c
->> @@ -2427,7 +2427,7 @@ static int kvm_init(MachineState *ms)
->>       QLIST_INIT(&s->kvm_parked_vcpus);
->>       s->fd =3D qemu_open_old(s->device ?: "/dev/kvm", O_RDWR);
->>       if (s->fd =3D=3D -1) {
->> -        fprintf(stderr, "Could not access KVM kernel module: %m\n");
->> +        error_report("Could not access KVM kernel module: %m");
->>           ret =3D -errno;
->>           goto err;
->>       }
->> @@ -2437,13 +2437,13 @@ static int kvm_init(MachineState *ms)
->>           if (ret >=3D 0) {
->>               ret =3D -EINVAL;
->>           }
->> -        fprintf(stderr, "kvm version too old\n");
->> +        error_report("kvm version too old");
->>           goto err;
->>       }
->>         if (ret > KVM_API_VERSION) {
->>           ret =3D -EINVAL;
->> -        fprintf(stderr, "kvm version not supported\n");
->> +        error_report("kvm version not supported");
->>           goto err;
->>       }
->>   @@ -2488,26 +2488,22 @@ static int kvm_init(MachineState *ms)
->>       } while (ret =3D=3D -EINTR);
->>         if (ret < 0) {
->> -        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
->> -                strerror(-ret));
->> +        error_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
->> +                    strerror(-ret));
->>     #ifdef TARGET_S390X
->>           if (ret =3D=3D -EINVAL) {
->> -            fprintf(stderr,
->> -                    "Host kernel setup problem detected. Please verify:=
-\n");
->> -            fprintf(stderr, "- for kernels supporting the switch_amode =
-or"
->> -                    " user_mode parameters, whether\n");
->> -            fprintf(stderr,
->> -                    "  user space is running in primary address space\n=
-");
->> -            fprintf(stderr,
->> -                    "- for kernels supporting the vm.allocate_pgste sys=
-ctl, "
->> -                    "whether it is enabled\n");
->> +            error_report("Host kernel setup problem detected.
->
-> \n"
->
-> Should we use error_printf_unless_qmp() for the following?
->
-> " Please verify:");
->> +            error_report("- for kernels supporting the switch_amode or"
->> +                        " user_mode parameters, whether");
->> +            error_report("  user space is running in primary address sp=
-ace");
->> +            error_report("- for kernels supporting the vm.allocate_pgst=
-e "
->> +                        "sysctl, whether it is enabled");
+Signed-off-by: Octavian Purdila <tavip@google.com>
+---
+ include/qemu/fifo32.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-Do not put newlines into error messages.  error_report()'s function
-comment demands "The resulting message should be a single phrase, with
-no newline or trailing punctuation."
-
-You can do this:
-
-    error_report(... the actual error message ...);
-    error_printf(... hints on what to do about it ...);
-
-Questions?
-
-[...]
+diff --git a/include/qemu/fifo32.h b/include/qemu/fifo32.h
+index 4e9fd1b5ef..77aab488ae 100644
+--- a/include/qemu/fifo32.h
++++ b/include/qemu/fifo32.h
+@@ -140,6 +140,34 @@ static inline uint32_t fifo32_pop(Fifo32 *fifo)
+     return ret;
+ }
+ 
++/**
++ * fifo32_peek:
++ * @fifo: fifo to peek at
++ *
++ * Returns the value from the FIFO's head without poping it. Behaviour
++ * is undefined if the FIFO is empty. Clients are responsible for
++ * checking for emptiness using fifo32_is_empty().
++ *
++ * Returns: the value from the FIFO's head
++ */
++
++static inline uint32_t fifo32_peek(Fifo32 *fifo)
++{
++    uint32_t ret = 0, num;
++    const uint8_t *buf;
++
++    buf = fifo8_peek_buf(&fifo->fifo, 4, &num);
++    if (num != 4) {
++        return ret;
++    }
++
++    for (int i = 0; i < sizeof(uint32_t); i++) {
++        ret |= buf[i] << (i * 8);
++    }
++
++    return ret;
++}
++
+ /**
+  * There is no fifo32_pop_buf() because the data is not stored in the buffer
+  * as a set of native-order words.
+-- 
+2.46.0.295.g3b9ea8a38a-goog
 
 
