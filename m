@@ -4,57 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD9BC52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 08:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A8CAC52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 08:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sirci-00089b-2I; Tue, 27 Aug 2024 04:32:20 -0400
+	id 1sirhn-0004XG-K3; Tue, 27 Aug 2024 04:37:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sircd-00088J-M8; Tue, 27 Aug 2024 04:32:15 -0400
-Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sirhl-0004VW-OK
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 04:37:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sirca-0000AR-Ik; Tue, 27 Aug 2024 04:32:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1724747524; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
- bh=pCWuAwlFoyd645PxAiTTMVlXstyaGWjfK1Ao7FI2DCE=;
- b=NfLCgMqJcDubeB5JAePsd0ciSOd3mg4uYYNwzDgT/Zu/AvBhARAIyZLE11BxfCXRHPo8kzwaam88HfGzPxDpdFuVGbCi8jFqj2En9uePR74MrRBtpKAI2CVMMRw5Z1lEXkPERLLmLVZqhlEI28It4YBWpLshYCrXDwedcwzc7ME=
-Received: from 30.166.64.124(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WDlr5NZ_1724747521) by smtp.aliyun-inc.com;
- Tue, 27 Aug 2024 16:32:02 +0800
-Content-Type: multipart/alternative;
- boundary="------------Hdf91lLmLe4ymD0LAoBnHpGU"
-Message-ID: <8883511a-fa31-4703-9302-5a7d511d2067@linux.alibaba.com>
-Date: Tue, 27 Aug 2024 16:31:27 +0800
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sirhj-0000VH-VX
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 04:37:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724747847;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lNGyJd6a1fHUkeHTa+agjaUASrR9gJyGuVVoRtAw3mc=;
+ b=L6xPwo5vOIWqz7a4oVEq2B47ukRyg5qNidSlcUi3V/HjrCw54vUF1WXX82G/CfyEh3za00
+ iSjhxbzne15dbt8cPWi3gibkY0UhnecGwV203i5JLzmf6Ky213WJW6lKSrSxE/oy5GzDUk
+ uyeneLL7MSRBaZXlmulejdKXhSO4hOE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-wwRfa919NS-gnOKExh7y9Q-1; Tue,
+ 27 Aug 2024 04:37:23 -0400
+X-MC-Unique: wwRfa919NS-gnOKExh7y9Q-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 130F21955F2F; Tue, 27 Aug 2024 08:37:22 +0000 (UTC)
+Received: from t14s.fritz.box (unknown [10.39.194.114])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 45DAC1956054; Tue, 27 Aug 2024 08:37:16 +0000 (UTC)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v1] softmmu/physmem: fix memory leak in dirty_memory_extend()
+Date: Tue, 27 Aug 2024 10:37:15 +0200
+Message-ID: <20240827083715.257768-1-david@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 15/15] tcg/riscv: Enable vector TCG host-native
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
- <20240813113436.831-16-zhiwei_liu@linux.alibaba.com>
- <7eabd980-ec6c-4748-8ada-f9d6228ee2ef@linaro.org>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <7eabd980-ec6c-4748-8ada-f9d6228ee2ef@linaro.org>
-Received-SPF: pass client-ip=115.124.30.98;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-98.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001,
- USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,223 +82,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------Hdf91lLmLe4ymD0LAoBnHpGU
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+As reported by Peter, we might be leaking memory when removing the
+highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
 
+We will fail to realize that we already allocated bitmaps for more
+dirty memory blocks, and effectively discard the pointers to them.
 
-On 2024/8/14 18:15, Richard Henderson wrote:
-> On 8/13/24 21:34, LIU Zhiwei wrote:
->> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->>
->> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
->> ---
->>   tcg/riscv/tcg-target.h | 10 +++++++---
->>   1 file changed, 7 insertions(+), 3 deletions(-)
->>
->> diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
->> index eb5129a976..fe6c50e49e 100644
->> --- a/tcg/riscv/tcg-target.h
->> +++ b/tcg/riscv/tcg-target.h
->> @@ -143,9 +143,13 @@ typedef enum {
->>   #define TCG_TARGET_HAS_tst              0
->>     /* vector instructions */
->> -#define TCG_TARGET_HAS_v64              0
->> -#define TCG_TARGET_HAS_v128             0
->> -#define TCG_TARGET_HAS_v256             0
->> +extern int riscv_vlen;
->> +#define have_rvv    ((cpuinfo & CPUINFO_ZVE64X) && \
->> +                     (riscv_vlen >= 64))
->> +
->> +#define TCG_TARGET_HAS_v64              have_rvv
->> +#define TCG_TARGET_HAS_v128             have_rvv
->> +#define TCG_TARGET_HAS_v256             have_rvv
->
-> Can ELEN ever be less than 64 for riscv64?
+Fix it by getting rid of last_ram_page() and simply storing the number
+of dirty memory blocks that have been allocated. We'll store the number
+of blocks along with the actual pointer to keep it simple.
 
-I think so.  At least the specification allow this case. According to 
-the specification,
+Looks like this leak was introduced as we switched from using a single
+bitmap_zero_extend() to allocating multiple bitmaps:
+bitmap_zero_extend() relies on g_renew() which should have taken care of
+this.
 
-"Any of these extensions can be added to base ISAs with XLEN=32 or XLEN=64."
+Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
+Cc: qemu-stable@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ include/exec/ramlist.h |  1 +
+ system/physmem.c       | 44 ++++++++++++++----------------------------
+ 2 files changed, 16 insertions(+), 29 deletions(-)
 
-includes zve32x, where ELEN is 32 and XLEN is 64.
+diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
+index 2ad2a81acc..f2a965f293 100644
+--- a/include/exec/ramlist.h
++++ b/include/exec/ramlist.h
+@@ -41,6 +41,7 @@ typedef struct RAMBlockNotifier RAMBlockNotifier;
+ #define DIRTY_MEMORY_BLOCK_SIZE ((ram_addr_t)256 * 1024 * 8)
+ typedef struct {
+     struct rcu_head rcu;
++    unsigned int num_blocks;
+     unsigned long *blocks[];
+ } DirtyMemoryBlocks;
+ 
+diff --git a/system/physmem.c b/system/physmem.c
+index 94600a33ec..fa48ff8333 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1534,18 +1534,6 @@ static ram_addr_t find_ram_offset(ram_addr_t size)
+     return offset;
+ }
+ 
+-static unsigned long last_ram_page(void)
+-{
+-    RAMBlock *block;
+-    ram_addr_t last = 0;
+-
+-    RCU_READ_LOCK_GUARD();
+-    RAMBLOCK_FOREACH(block) {
+-        last = MAX(last, block->offset + block->max_length);
+-    }
+-    return last >> TARGET_PAGE_BITS;
+-}
+-
+ static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
+ {
+     int ret;
+@@ -1799,28 +1787,31 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
+ }
+ 
+ /* Called with ram_list.mutex held */
+-static void dirty_memory_extend(ram_addr_t old_ram_size,
+-                                ram_addr_t new_ram_size)
++static void dirty_memory_extend(ram_addr_t new_ram_size)
+ {
+-    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
+-                                             DIRTY_MEMORY_BLOCK_SIZE);
+     ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
+                                              DIRTY_MEMORY_BLOCK_SIZE);
+     int i;
+ 
+-    /* Only need to extend if block count increased */
+-    if (new_num_blocks <= old_num_blocks) {
+-        return;
+-    }
+-
+     for (i = 0; i < DIRTY_MEMORY_NUM; i++) {
+         DirtyMemoryBlocks *old_blocks;
+         DirtyMemoryBlocks *new_blocks;
++        ram_addr_t old_num_blocks = 0;
+         int j;
+ 
+         old_blocks = qatomic_rcu_read(&ram_list.dirty_memory[i]);
++        if (old_blocks) {
++            old_num_blocks = old_blocks->num_blocks;
++
++            /* Only need to extend if block count increased */
++            if (new_num_blocks <= old_num_blocks) {
++                return;
++            }
++        }
++
+         new_blocks = g_malloc(sizeof(*new_blocks) +
+                               sizeof(new_blocks->blocks[0]) * new_num_blocks);
++        new_blocks->num_blocks = new_num_blocks;
+ 
+         if (old_num_blocks) {
+             memcpy(new_blocks->blocks, old_blocks->blocks,
+@@ -1846,11 +1837,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     RAMBlock *block;
+     RAMBlock *last_block = NULL;
+     bool free_on_error = false;
+-    ram_addr_t old_ram_size, new_ram_size;
++    ram_addr_t ram_size;
+     Error *err = NULL;
+ 
+-    old_ram_size = last_ram_page();
+-
+     qemu_mutex_lock_ramlist();
+     new_block->offset = find_ram_offset(new_block->max_length);
+ 
+@@ -1901,11 +1890,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+         }
+     }
+ 
+-    new_ram_size = MAX(old_ram_size,
+-              (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
+-    if (new_ram_size > old_ram_size) {
+-        dirty_memory_extend(old_ram_size, new_ram_size);
+-    }
++    ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
++    dirty_memory_extend(ram_size);
+     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
+      * QLIST (which has an RCU-friendly variant) does not have insertion at
+      * tail, so save the last element in last_block.
+-- 
+2.46.0
 
-> I thought ELEN had to be at least XLEN.
-> Anyway, if ELEN >= 64, then VLEN must also be >= 64.
-YES.
->
-> In any case, I think we should not set CPUINFO_ZVE64X if the vlen is 
-> too small. 
-Agree.
-> We can initialize both values in util/cpuinfo-riscv.c, rather than 
-> initializing vlen in tcg.
->
->> +static void riscv_get_vlenb(void){
->> +    /* Get vlenb for Vector: csrrs %0, vlenb, zero. */
->> +    asm volatile("csrrs %0, 0xc22, x0" : "=r"(riscv_vlen));
->> +    riscv_vlen *= 8;
->> +}
->
-> While this is an interesting and required datum, if ELEN < XLEN is 
-> possible, then perhaps
->
->     asm("vsetvli %0, r0, e64" : "=r"(vl));
->
-> is a better probe, verifying that vl != 0, i.e. e64 is supported, and 
-> recording vlen as vl * 64, i.e. VLMAX.
-
-We will use this one. But probe the vlen in util/cpuinfo-riscv.c has no 
-meaning as we sometimes use the compiler settings or hw_probe API. In 
-these cases, the vlen detected in util/cpuinfo-riscv.c is zero.
-
-Thanks,
-Zhiwei
-
->
->
-> r~
---------------Hdf91lLmLe4ymD0LAoBnHpGU
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 2024/8/14 18:15, Richard Henderson
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:7eabd980-ec6c-4748-8ada-f9d6228ee2ef@linaro.org">On
-      8/13/24 21:34, LIU Zhiwei wrote:
-      <br>
-      <blockquote type="cite">From: TANG Tiancheng
-        <a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a>
-        <br>
-        <br>
-        Signed-off-by: TANG Tiancheng
-        <a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a>
-        <br>
-        Reviewed-by: Liu Zhiwei <a class="moz-txt-link-rfc2396E" href="mailto:zhiwei_liu@linux.alibaba.com">&lt;zhiwei_liu@linux.alibaba.com&gt;</a>
-        <br>
-        ---
-        <br>
-          tcg/riscv/tcg-target.h | 10 +++++++---
-        <br>
-          1 file changed, 7 insertions(+), 3 deletions(-)
-        <br>
-        <br>
-        diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
-        <br>
-        index eb5129a976..fe6c50e49e 100644
-        <br>
-        --- a/tcg/riscv/tcg-target.h
-        <br>
-        +++ b/tcg/riscv/tcg-target.h
-        <br>
-        @@ -143,9 +143,13 @@ typedef enum {
-        <br>
-          #define TCG_TARGET_HAS_tst              0
-        <br>
-            /* vector instructions */
-        <br>
-        -#define TCG_TARGET_HAS_v64              0
-        <br>
-        -#define TCG_TARGET_HAS_v128             0
-        <br>
-        -#define TCG_TARGET_HAS_v256             0
-        <br>
-        +extern int riscv_vlen;
-        <br>
-        +#define have_rvv    ((cpuinfo &amp; CPUINFO_ZVE64X) &amp;&amp;
-        \
-        <br>
-        +                     (riscv_vlen &gt;= 64))
-        <br>
-        +
-        <br>
-        +#define TCG_TARGET_HAS_v64              have_rvv
-        <br>
-        +#define TCG_TARGET_HAS_v128             have_rvv
-        <br>
-        +#define TCG_TARGET_HAS_v256             have_rvv
-        <br>
-      </blockquote>
-      <br>
-      Can ELEN ever be less than 64 for riscv64?
-      <br>
-    </blockquote>
-    <p>I think so.  At least the specification allow this case.
-      According to the specification,<br>
-    </p>
-    <pre>"Any of these extensions can be added to base ISAs with XLEN=32 or XLEN=64."</pre>
-    <p>includes zve32x, where ELEN is 32 and XLEN is 64.<br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:7eabd980-ec6c-4748-8ada-f9d6228ee2ef@linaro.org">I
-      thought ELEN had to be at least XLEN.
-      <br>
-      Anyway, if ELEN &gt;= 64, then VLEN must also be &gt;= 64.
-      <br>
-    </blockquote>
-    YES.<br>
-    <blockquote type="cite"
-      cite="mid:7eabd980-ec6c-4748-8ada-f9d6228ee2ef@linaro.org">
-      <br>
-      In any case, I think we should not set CPUINFO_ZVE64X if the vlen
-      is too small.  </blockquote>
-    Agree.<br>
-    <blockquote type="cite"
-      cite="mid:7eabd980-ec6c-4748-8ada-f9d6228ee2ef@linaro.org">We can
-      initialize both values in util/cpuinfo-riscv.c, rather than
-      initializing vlen in tcg.
-      <br>
-      <br>
-      <blockquote type="cite">+static void riscv_get_vlenb(void){
-        <br>
-        +    /* Get vlenb for Vector: csrrs %0, vlenb, zero. */
-        <br>
-        +    asm volatile("csrrs %0, 0xc22, x0" : "=r"(riscv_vlen));
-        <br>
-        +    riscv_vlen *= 8;
-        <br>
-        +}
-        <br>
-      </blockquote>
-      <br>
-      While this is an interesting and required datum, if ELEN &lt; XLEN
-      is possible, then perhaps
-      <br>
-      <br>
-          asm("vsetvli %0, r0, e64" : "=r"(vl));
-      <br>
-      <br>
-      is a better probe, verifying that vl != 0, i.e. e64 is supported,
-      and recording vlen as vl * 64, i.e. VLMAX.
-      <br>
-    </blockquote>
-    <p>We will use this one. But probe the vlen in util/cpuinfo-riscv.c
-      has no meaning as we sometimes use the compiler settings or
-      hw_probe API. In these cases, the vlen detected in
-      util/cpuinfo-riscv.c is zero.</p>
-    <p>Thanks,<br>
-      Zhiwei<br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:7eabd980-ec6c-4748-8ada-f9d6228ee2ef@linaro.org">
-      <br>
-      <br>
-      r~
-      <br>
-    </blockquote>
-  </body>
-</html>
-
---------------Hdf91lLmLe4ymD0LAoBnHpGU--
 
