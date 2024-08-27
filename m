@@ -4,85 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC466C54731
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 15:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DADC54731
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 15:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1siyTb-0000fd-6k; Tue, 27 Aug 2024 11:51:23 -0400
+	id 1siyWY-00053h-O0; Tue, 27 Aug 2024 11:54:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1siyTY-0000Ry-BF
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 11:51:20 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1siyWX-0004y9-7w; Tue, 27 Aug 2024 11:54:25 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1siyTV-00058E-Fa
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 11:51:20 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2f43de7ad5eso72916361fa.1
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 08:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724773873; x=1725378673; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zHE92zBIX+0D6N7NheH9EaVSZNf7+Gk5JQmWmIhX+D8=;
- b=w0aQ8czMmhYuATz2DvIL0MlkDxrtjHKc7UJoQEC0f55HwrSNn2j2MY1C9VMzPRc9k8
- 3OB7UPuldeMtQhM8jLMc/ALcVW+lxSo+6DcR1xznH9aKJPi0BYHE35A1hAzHAGULopsM
- j13s5MNmtH0xpFwRLLodKg3775867HpCrxgG2qHcw/sRA2nKmUblUF0D2x96S3qCBkxn
- xpSsA0fbmu+WX1VrGsCImSru4gNsELqv6VL1zpKfQVMfpcJWS6DbSQQYFkEGHFVvvFy5
- 6RIuWePMPol1ghmLP0KhPo98vxxBoWNytmr8QxnuC196jf4tbEAOU8J+u0MaNhg0AXKi
- piMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724773873; x=1725378673;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zHE92zBIX+0D6N7NheH9EaVSZNf7+Gk5JQmWmIhX+D8=;
- b=O9O5vg5ifgwtkTfd1GadFr177Pqdc6TQiEE7Bjvw4WySn/fKWebJmLEpNq69pAU3Vs
- a8NPQBoLmgTc37+DOp5UJJy7GY4S+nM35MzhwApxEseZ1z4FzDcIXgEdXGMS1C7bV27j
- UNSyM0Y/HXzEsRogj8ulO0Sc9FINbN9VAIy1+04K1U+1GvRkXek0LYJbp+FhUI3OqtdN
- q6lQDZzoHyRJk+l9+PEo4zX7yylHIzmsvFEAmF/3YYY0yh4uBjyQiCJGluU6yoXAQIK0
- unzwoko9PyRQDg3fFcgAUC7ck+NJtHE1lQnNHH+2tXubgx6SyENFC0e84dW4w8eLuVv3
- nOpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVD7jC6O3APLtl+MUM0SGHmCPc3GR/VTw5qOOli79tu44njTafHedsaZur0aSSsuZCgBHOIlLtK4MYS@nongnu.org
-X-Gm-Message-State: AOJu0Yy0iyOG2pCx8KRvGbPiLedyl9Zg1sW0QgIZvY/v7LMjVY7NRzGg
- GoCT9YxNHBKh36r7/+ofya+cT74vOMhfqrdkoaRsVfgA0ztMJ0p4IRE28niVr+w=
-X-Google-Smtp-Source: AGHT+IF4GUdaPViHZ3ADimfTBiE5aSLDpKRURt2AV65N4vrVSW52LncA9AeI9P92ECTRolq8WJHuaw==
-X-Received: by 2002:a2e:811:0:b0:2f3:ed84:9e66 with SMTP id
- 38308e7fff4ca-2f4f48eeebemr81128081fa.13.1724773873253; 
- Tue, 27 Aug 2024 08:51:13 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.206.45])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c0bb471e0csm1132497a12.78.2024.08.27.08.51.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 08:51:12 -0700 (PDT)
-Message-ID: <1db29701-e4f3-4376-b79d-cb7ea303a129@linaro.org>
-Date: Tue, 27 Aug 2024 17:51:10 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1siyWV-0005R2-EF; Tue, 27 Aug 2024 11:54:24 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 928BA1F396;
+ Tue, 27 Aug 2024 15:54:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724774059; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JGORP7BlR6yIF8ZJXGP10BXTbEiHNjU+Nut5MLGYa34=;
+ b=GOhbkWqYvMo+gLyfUrbLRoHdok9z6WL/jv1g4WaQEyEeA8752Ch9MjbKGaSky5/BKmbLnY
+ NGTOvcDDswzIJ/Dhn9uZDQ1zVSdC+4uRSqc6LuHeWR+Cb0uBxUfZjFFw0eQ3LYbBFeCWQ8
+ W8cn0GD0Bs1L6r6W7u33wUxGWtKNk5c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724774059;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JGORP7BlR6yIF8ZJXGP10BXTbEiHNjU+Nut5MLGYa34=;
+ b=/UBujZoJUZj2E09Dq1S18nFHT62RSH2ktxopdxHkPSB6chFGgQSzDMgW6iZUlhkUzHBHVd
+ XpJ2rek2NKLoUlDw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724774059; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JGORP7BlR6yIF8ZJXGP10BXTbEiHNjU+Nut5MLGYa34=;
+ b=GOhbkWqYvMo+gLyfUrbLRoHdok9z6WL/jv1g4WaQEyEeA8752Ch9MjbKGaSky5/BKmbLnY
+ NGTOvcDDswzIJ/Dhn9uZDQ1zVSdC+4uRSqc6LuHeWR+Cb0uBxUfZjFFw0eQ3LYbBFeCWQ8
+ W8cn0GD0Bs1L6r6W7u33wUxGWtKNk5c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724774059;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JGORP7BlR6yIF8ZJXGP10BXTbEiHNjU+Nut5MLGYa34=;
+ b=/UBujZoJUZj2E09Dq1S18nFHT62RSH2ktxopdxHkPSB6chFGgQSzDMgW6iZUlhkUzHBHVd
+ XpJ2rek2NKLoUlDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 137B813A44;
+ Tue, 27 Aug 2024 15:54:18 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id rDHFMqr2zWaxLQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 27 Aug 2024 15:54:18 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>, Akihiko
+ Odaki <akihiko.odaki@daynix.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe =?utf-8?Q?Mathieu?=
+ =?utf-8?Q?-Daud=C3=A9?=
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, John Snow
+ <jsnow@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>, Daniel
+ Henrique Barboza <danielhb413@gmail.com>, David Gibson
+ <david@gibson.dropbear.id.au>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini
+ <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, Laurent
+ Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH v4 7/7] tests/qtest: Delete previous boot file
+In-Reply-To: <CAFEAcA-8peUP-TJW8X3JJQg1p7MKvo2vTZ4HcgrTh+d9T1smRA@mail.gmail.com>
+References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
+ <20240823-san-v4-7-a24c6dfa4ceb@daynix.com> <Zsyesfaf02ktFU1A@x1n>
+ <86d9b2b7-505d-4223-bcd0-4e4a7847ec56@redhat.com> <87zfoyvzaa.fsf@suse.de>
+ <CAFEAcA-8peUP-TJW8X3JJQg1p7MKvo2vTZ4HcgrTh+d9T1smRA@mail.gmail.com>
+Date: Tue, 27 Aug 2024 12:54:16 -0300
+Message-ID: <87wmk2vu53.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ppc: fix decrementer with BookE timers
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, Daniel Henrique Barboza <danielhb413@gmail.com>,
- qemu-ppc@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240715084639.983127-1-chigot@adacore.com>
- <CAJ307EhvEYa6owtcXmjnBp_9k3HQXbbpbQck9pgS5d9wXgxfGw@mail.gmail.com>
- <CAJ307Eh8aKvdi7kifGO0RoEpmyEXt9b7oYmYvFtw7KjgyepGxg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ307Eh8aKvdi7kifGO0RoEpmyEXt9b7oYmYvFtw7KjgyepGxg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TAGGED_RCPT(0.00)[]; RCPT_COUNT_TWELVE(0.00)[24];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,daynix.com,habkost.net,gmail.com,linaro.org,huawei.com,eik.bme.hu,flygoat.com,gibson.dropbear.id.au,linux.ibm.com,ozlabs.ru,nongnu.org];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,linaro.org:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +131,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding Cédric
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-On 27/8/24 13:49, Clément Chigot wrote:
-> Hey,
-> 
-> Gentle ping
-> 
-> Thanks Clément
-> 
-> On Mon, Jul 29, 2024 at 10:33 AM Clément Chigot <chigot@adacore.com> wrote:
+> On Tue, 27 Aug 2024 at 15:03, Fabiano Rosas <farosas@suse.de> wrote:
 >>
->> Hi,
+>> Thomas Huth <thuth@redhat.com> writes:
 >>
->> Gentle ping + CC missing maintainers.
+>> > On 26/08/2024 17.26, Peter Xu wrote:
+>> >> On Fri, Aug 23, 2024 at 03:13:12PM +0900, Akihiko Odaki wrote:
+>> >>> A test run may create boot files several times. Delete the previous boot
+>> >>> file before creating a new one.
+>> >>>
+>> >>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> >>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>> >>> Acked-by: Thomas Huth <thuth@redhat.com>
+>> >>
+>> >> I didn't track which came early, but I think Fabiano has queued the other
+>> >> one here:
+>> >>
+>> >> https://lore.kernel.org/r/20240820144912.320744-2-peter.maydell@linaro.org
+>> >> https://gitlab.com/farosas/qemu/-/commits/migration-staging/
+>> >>
+>> >> So we should be good.
+>> >
+>> > Ooops, sorry, I think I might have jumped the gun and put this patch here in
+>> > my final PR for 9.1 ... I hope it's ok to do modifications on top of that
+>> > later if it is still necessary.
 >>
->> Thanks Clément
->>
->> On Mon, Jul 15, 2024 at 10:46 AM Clément Chigot <chigot@adacore.com> wrote:
->>>
->>> The BookE decrementer stops at 0, meaning that it won't decremented
->>> towards "negative" values.
->>> However, the current logic is inverted: decr is updated solely when
->>> the resulting value would be negative.
->>>
->>> Signed-off-by: Clément Chigot <chigot@adacore.com>
->>> Fixed: 8e0a5ac87800 ("hw/ppc: Avoid decrementer rounding errors")
->>> ---
->>>   hw/ppc/ppc.c | 4 +++-
->>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
->>> index e6fa5580c0..9fc85c7de0 100644
->>> --- a/hw/ppc/ppc.c
->>> +++ b/hw/ppc/ppc.c
->>> @@ -729,7 +729,9 @@ static inline int64_t __cpu_ppc_load_decr(CPUPPCState *env, int64_t now,
->>>       int64_t decr;
->>>
->>>       n = ns_to_tb(tb_env->decr_freq, now);
->>> -    if (next > n && tb_env->flags & PPC_TIMER_BOOKE) {
->>> +
->>> +    /* BookE timers stop when reaching 0.  */
->>> +    if (next < n && tb_env->flags & PPC_TIMER_BOOKE) {
->>>           decr = 0;
->>>       } else {
->>>           decr = next - n;
->>> --
->>> 2.25.1
->>>
-> 
+>> It's fine, don't worry. I'll just drop the other one, they're basically
+>> the same.
+>
+> They're not quite the same -- my one also fixes the bug
+> where if we run no tests we call bootfile_delete()
+> without ever having called bootfile_create() and as
+> a result try to unlink(NULL). So if we take Akihiko's
+> patch I'll respin my patch to be just that fix.
 
+Ah right, there's the other call at the end of main(). I can touch that
+up in migration-staging if it comes to it.
+
+>
+> thanks
+> -- PMM
 
