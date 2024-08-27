@@ -4,68 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A8CAC52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 08:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFDAC5320E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 09:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sirhn-0004XG-K3; Tue, 27 Aug 2024 04:37:35 -0400
+	id 1sisJu-0005WU-Uk; Tue, 27 Aug 2024 05:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sirhl-0004VW-OK
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 04:37:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sirhj-0000VH-VX
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 04:37:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724747847;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=lNGyJd6a1fHUkeHTa+agjaUASrR9gJyGuVVoRtAw3mc=;
- b=L6xPwo5vOIWqz7a4oVEq2B47ukRyg5qNidSlcUi3V/HjrCw54vUF1WXX82G/CfyEh3za00
- iSjhxbzne15dbt8cPWi3gibkY0UhnecGwV203i5JLzmf6Ky213WJW6lKSrSxE/oy5GzDUk
- uyeneLL7MSRBaZXlmulejdKXhSO4hOE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-wwRfa919NS-gnOKExh7y9Q-1; Tue,
- 27 Aug 2024 04:37:23 -0400
-X-MC-Unique: wwRfa919NS-gnOKExh7y9Q-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 130F21955F2F; Tue, 27 Aug 2024 08:37:22 +0000 (UTC)
-Received: from t14s.fritz.box (unknown [10.39.194.114])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45DAC1956054; Tue, 27 Aug 2024 08:37:16 +0000 (UTC)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v1] softmmu/physmem: fix memory leak in dirty_memory_extend()
-Date: Tue, 27 Aug 2024 10:37:15 +0200
-Message-ID: <20240827083715.257768-1-david@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisJn-0005Vo-TL
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:16:53 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sisJm-0004po-15
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 05:16:51 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5c09fd20eddso2324182a12.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 02:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724750207; x=1725355007; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zHXQkUqodP/eNyr8h+Sf/+cLn8al6/gYDTwtdfsLbAQ=;
+ b=hjvzxmL0Ncb6KbxUv5PNmBaas/ZUAGzZH/lc8U7nxuFSrTRm3X8whuYnfmS9ItoCBU
+ sxparzVjHbe71SheyIJktlilhX8ONE8ta0DAZsHncwHNATfVfsY+NuoTyNw8L05w2+zE
+ WJRRKpMLTUHyBs/HI+o2JvqMjTaIid3LmF4VxLf3kIFblqNHOJfIQ1E/cBbQmE4w5wNP
+ uqWUNUluO3pYOhtSzaARsDEFF7MSI2Ype4WYZ+FsxoXBmTY6K5hOoviX4C4b/tWajUHI
+ ZsHRtJwHYjhW+zMeISYWBlBBkq6wyCKhxnQqYM+J5dlcXEY4HdRzD3Wb++vn5JrLtJmN
+ GXwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724750207; x=1725355007;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zHXQkUqodP/eNyr8h+Sf/+cLn8al6/gYDTwtdfsLbAQ=;
+ b=CbMhwx9UquPm/U7kRCh+V2qWRPz4NfxLYmW/Xmg5WBeYiZxnpd0ddKGv7wIIJV23OY
+ b48eBW+BxBwp7mpcrl0tKzNw0hRr78jwePKkw4TJP3b61G2oGd7NG4MxmZOR8U6pwO05
+ EWzrELjbCfldjnnk3WvfGmqNomTyAwgMbH5tM1r3pZcpxGuhZrg4ROQnJPHzRqy4uHX+
+ zMbVoxwOnPQDBoensPmXksG3Zan2cuhPgivIG8lg3fu53i2Eol+hcz7gm7+m9JPnv4ea
+ saXYjcsxsCLshFZrmRm8ExMq4Oj45vCrvIyh4r0J6vCI89jWZllNheH6Y68PHYc5QknG
+ HPZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXezJEAhcMRyvPclYi04/llhG8HTKqf9tXijZ4tGh7UBeb1gzgFgTeZGwHNxpoMXC9AHruyFs9L/0J5@nongnu.org
+X-Gm-Message-State: AOJu0Yy3SGZVUmNbgDDGfpYDqCqJ7MSU7dj0TEr6VzE4mEfeoojqBbUI
+ 5/FbKRam6zoZ1ZstUA9/9EtavhK582sXdLBvMrZ4Ud1G8ysBuJNF/cWqYF5WIDg=
+X-Google-Smtp-Source: AGHT+IGtYaJxIwp4OIvaJyqVSvBWjduR2J3A5dqnbpweHz5AFYALx7jf3C/yCyPV9OJlqFvCiU9xiA==
+X-Received: by 2002:a17:906:f5a9:b0:a86:79a2:ab12 with SMTP id
+ a640c23a62f3a-a86e3a4b27emr181947966b.38.1724750207431; 
+ Tue, 27 Aug 2024 02:16:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.206.45])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a86e592dadasm82976766b.200.2024.08.27.02.16.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Aug 2024 02:16:47 -0700 (PDT)
+Message-ID: <9910ebc8-b7c4-4505-a987-3a5e308fb3d1@linaro.org>
+Date: Tue, 27 Aug 2024 11:16:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/7] tests/functional: Convert mips64el Fuloong2e
+ avocado test (2/2)
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Cleber Rosa <crosa@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Huacai Chen <chenhuacai@kernel.org>,
+ Beraldo Leal <bleal@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20240824160829.27655-1-philmd@linaro.org>
+ <20240824160829.27655-3-philmd@linaro.org>
+ <e840b528-c48b-4b5e-9b2b-c7c0a0473ce7@redhat.com>
+ <2f484cff-e227-47e3-b570-40e1945cee63@linaro.org>
+ <2f741de8-84b5-4bdf-98a6-568139dfbfb9@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2f741de8-84b5-4bdf-98a6-568139dfbfb9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,139 +103,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As reported by Peter, we might be leaking memory when removing the
-highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
+On 27/8/24 07:27, Thomas Huth wrote:
+> On 26/08/2024 22.59, Philippe Mathieu-Daudé wrote:
+>> On 26/8/24 11:10, Thomas Huth wrote:
+>>> On 24/08/2024 18.08, Philippe Mathieu-Daudé wrote:
+>>>> Straight forward conversion. Update the SHA1 hashes to
+>>>> SHA256 hashes since SHA1 should not be used anymore nowadays.
+>>>>
+>>>> Add extract_from_deb() method in qemu_test.utils package.
+>>>
+>>> Should we maybe rather copy the whole LinuxKernelTest class into a 
+>>> new file in the qemu_tests folder, so that all the related tests can 
+>>> simply inherit from that class? That way we would also get the 
+>>> KERNEL_COMMON_COMMAND_LINE handling for free in all the tests that we 
+>>> convert. What do you think?
+>>
+>> Except that variable, I'm not sure what can be reused. Most tests
+>> are trivial. Maybe I'll realize after converting a few more :)
+> 
+> Apart from that variable and the extract_from_* functions, that class is
 
-We will fail to realize that we already allocated bitmaps for more
-dirty memory blocks, and effectively discard the pointers to them.
+I don't see extract_from_deb() and extract_from_rpm() being specific
+to a LinuxKernelTest class, IMO they belong to .utils with other
+helpers such archive_extract().
 
-Fix it by getting rid of last_ram_page() and simply storing the number
-of dirty memory blocks that have been allocated. We'll store the number
-of blocks along with the actual pointer to keep it simple.
+I haven't added extract_from_rpm() there since I'd need to convert
+a test using it to be able to test it, but it is planned.
 
-Looks like this leak was introduced as we switched from using a single
-bitmap_zero_extend() to allocating multiple bitmaps:
-bitmap_zero_extend() relies on g_renew() which should have taken care of
-this.
+Similarly image_pow2ceil_expand(), pow2ceil() and file_truncate()
+are generic, not restricted to Linux console tests.
 
-Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
-Cc: qemu-stable@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- include/exec/ramlist.h |  1 +
- system/physmem.c       | 44 ++++++++++++++----------------------------
- 2 files changed, 16 insertions(+), 29 deletions(-)
+> also redefining wait_for_console_pattern():
+> 
+>      def wait_for_console_pattern(self, success_message, vm=None):
+>          wait_for_console_pattern(self, success_message,
+>                               failure_message='Kernel panic - not syncing',
+>                               vm=vm)
+> 
+> So that failure_message handling is now missing in your converted test. 
+> I think I'd feel better if we keep that, or do you think it is ok to 
+> drop it?
 
-diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
-index 2ad2a81acc..f2a965f293 100644
---- a/include/exec/ramlist.h
-+++ b/include/exec/ramlist.h
-@@ -41,6 +41,7 @@ typedef struct RAMBlockNotifier RAMBlockNotifier;
- #define DIRTY_MEMORY_BLOCK_SIZE ((ram_addr_t)256 * 1024 * 8)
- typedef struct {
-     struct rcu_head rcu;
-+    unsigned int num_blocks;
-     unsigned long *blocks[];
- } DirtyMemoryBlocks;
- 
-diff --git a/system/physmem.c b/system/physmem.c
-index 94600a33ec..fa48ff8333 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1534,18 +1534,6 @@ static ram_addr_t find_ram_offset(ram_addr_t size)
-     return offset;
- }
- 
--static unsigned long last_ram_page(void)
--{
--    RAMBlock *block;
--    ram_addr_t last = 0;
--
--    RCU_READ_LOCK_GUARD();
--    RAMBLOCK_FOREACH(block) {
--        last = MAX(last, block->offset + block->max_length);
--    }
--    return last >> TARGET_PAGE_BITS;
--}
--
- static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
- {
-     int ret;
-@@ -1799,28 +1787,31 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
- }
- 
- /* Called with ram_list.mutex held */
--static void dirty_memory_extend(ram_addr_t old_ram_size,
--                                ram_addr_t new_ram_size)
-+static void dirty_memory_extend(ram_addr_t new_ram_size)
- {
--    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
--                                             DIRTY_MEMORY_BLOCK_SIZE);
-     ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
-                                              DIRTY_MEMORY_BLOCK_SIZE);
-     int i;
- 
--    /* Only need to extend if block count increased */
--    if (new_num_blocks <= old_num_blocks) {
--        return;
--    }
--
-     for (i = 0; i < DIRTY_MEMORY_NUM; i++) {
-         DirtyMemoryBlocks *old_blocks;
-         DirtyMemoryBlocks *new_blocks;
-+        ram_addr_t old_num_blocks = 0;
-         int j;
- 
-         old_blocks = qatomic_rcu_read(&ram_list.dirty_memory[i]);
-+        if (old_blocks) {
-+            old_num_blocks = old_blocks->num_blocks;
-+
-+            /* Only need to extend if block count increased */
-+            if (new_num_blocks <= old_num_blocks) {
-+                return;
-+            }
-+        }
-+
-         new_blocks = g_malloc(sizeof(*new_blocks) +
-                               sizeof(new_blocks->blocks[0]) * new_num_blocks);
-+        new_blocks->num_blocks = new_num_blocks;
- 
-         if (old_num_blocks) {
-             memcpy(new_blocks->blocks, old_blocks->blocks,
-@@ -1846,11 +1837,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     RAMBlock *block;
-     RAMBlock *last_block = NULL;
-     bool free_on_error = false;
--    ram_addr_t old_ram_size, new_ram_size;
-+    ram_addr_t ram_size;
-     Error *err = NULL;
- 
--    old_ram_size = last_ram_page();
--
-     qemu_mutex_lock_ramlist();
-     new_block->offset = find_ram_offset(new_block->max_length);
- 
-@@ -1901,11 +1890,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         }
-     }
- 
--    new_ram_size = MAX(old_ram_size,
--              (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
--    if (new_ram_size > old_ram_size) {
--        dirty_memory_extend(old_ram_size, new_ram_size);
--    }
-+    ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-+    dirty_memory_extend(ram_size);
-     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
-      * QLIST (which has an RCU-friendly variant) does not have insertion at
-      * tail, so save the last element in last_block.
--- 
-2.46.0
-
+Doh, I missed that.
 
