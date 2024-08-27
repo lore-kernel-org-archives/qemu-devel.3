@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DF7C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 04:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C382C5320E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Aug 2024 04:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sinpe-0005I1-Ak; Tue, 27 Aug 2024 00:29:26 -0400
+	id 1sinyI-00028A-PZ; Tue, 27 Aug 2024 00:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sinpa-0005En-Lx
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:29:22 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sinpZ-0000kn-2p
- for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:29:22 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2021537a8e6so45296365ad.2
- for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 21:29:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724732959; x=1725337759; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EdzeHx07n6SnQJINJeTOXUBRenILNVfPrSq35tVcFiE=;
- b=KPsHGD29nA1hEkVjm1fq2Fq+dBgcdUPDWYpDf4dTtqj5JKAfTwg+2PI/eJv5DARiFA
- 6+yAANp/XRFYuOjH7GKuNbr5frUrWD4ZQHm0AlbwGIR/Q+4NEBheJRQxbmuwf0cXL82x
- WhW8n/pWreQHYV8+lbaWtvWyOF6JtbhgxV1TtiIfC6GpsEAHHlS9AxXed7mjzpEFo/8M
- dzNvXGwhgx3uMZ/XivRkQ2+N+WgQSPsV0And2dLGokhwK5x5pQgl/ed2vWkqP0mkKMVN
- F9CFukIqzvoUsq8CoD2dT3uJnRznvfdQU6hoIU323s5u1C5kvUylpFQhmkEEQ02zmKti
- i42Q==
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sinyE-00027I-2r
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:38:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sinyC-0001ej-OD
+ for qemu-devel@nongnu.org; Tue, 27 Aug 2024 00:38:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724733493;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=O9GXP6ZIrTW+mg9m1XoxzotibyWT2OTZBzzWlw/rHko=;
+ b=dIMZx/eyI7jP+SD0cAXFFFnK9xcBBvopZk91BF7LChpl17E/mY8QVomv/Z9I/Nvg9PsAZ2
+ px7zfovb+DqibbH6cdn5BVSWCRDe8oLKOPr/pDMwOnbGqWz1kRdgcMSTMX6QdrD1pqwp/K
+ qkw6fyptdymfX86/MZC2Fm3AwUmMD68=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-21-i9WpUsRYNsS3UZjMoD5tGQ-1; Tue, 27 Aug 2024 00:38:11 -0400
+X-MC-Unique: i9WpUsRYNsS3UZjMoD5tGQ-1
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-27026b76562so7760723fac.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Aug 2024 21:38:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724732959; x=1725337759;
+ d=1e100.net; s=20230601; t=1724733490; x=1725338290;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EdzeHx07n6SnQJINJeTOXUBRenILNVfPrSq35tVcFiE=;
- b=AqEUxLb2lWoWZP7zr0cGlVB7s41Ne6IWGb2eVOPoO6jCv/6oLN/+d1PkW6YcuALZB2
- cdu6DDdgKcFn4r7KiWL9f+8zS1yPhRQOkO+XW1ujTu55Yu4NBm8NAkjhXG+CgGWo8Rx5
- dVpUKs6xfkuJXR+SZeJQi7W/GrwV9no6wy+yk6cZjv1vmpdk2ngeU0gq9Bbwkkp0kzzy
- YLbfjlLs/UCFWdm5Mw2AWN1pyxwjmk2prGq87P7z3uSWEr0/lG5MhlXC3De3mP4ZVDP0
- UtJA4iVVaJIR6k3H7iJLW2lrKXpYS+rkr3kHENeR8pjo0geT67EBFLshczcPMUjy+xYq
- HDsg==
+ bh=O9GXP6ZIrTW+mg9m1XoxzotibyWT2OTZBzzWlw/rHko=;
+ b=T36vzLm1bzmNAr+b1TzFk23LSXWSR/1Yl/9CXfoLxYJssUhltPfflUmoIVMa59pVBO
+ Sxl0OPQZVMUV/sz/nZxLUhXDcndpYI9MH9hUZkogxNwSmIvy6ILZigh4qlc6oARsV1Sf
+ gchddpg9xde07spdWI8KoLF6kd33OpmPHKEW7+KX8ZHt4wBmM1lqBexHIN3FXlrdKBjW
+ cB6XXoLZbD9pBylLxbBMuH4Se83Iv29WDi2i8t8QevWDidakEbgfa+Vq5L2q0LsESsWE
+ dAq6C75+lUAcMEyOq2M8s76vt3ukd+ybt9qaq9yeGj5G6kxXOGRxJqRLGaRXFtr4bkM3
+ QAtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW12PjtWd36f5yX3GkqK9eFvpCJja/+W6dxzSgTg44nSoEcKhz4rDWhCOhUEQ/lFfUFK0Z9NLJgs86N@nongnu.org
-X-Gm-Message-State: AOJu0YwS+fgB/OgezCJuC9nUKTKDXBN8yJKUbnYPISUb5DdhQcEut8Hk
- rgUMIdhDasu9/CUpOxtDq/PCNSFApsJJAlaBzaPbcaD9OBKyhW0V5HcDmu+DbrY=
-X-Google-Smtp-Source: AGHT+IGUoJ1uFHqVbKvI25Lq+3/hSf21GuU8u3JUFgI3MjDyY5TkV+mt8QgyR58YZ7xvX7mDTurOjA==
-X-Received: by 2002:a17:902:c94b:b0:202:708:3443 with SMTP id
- d9443c01a7336-2039e49d24cmr132243915ad.27.1724732959054; 
- Mon, 26 Aug 2024 21:29:19 -0700 (PDT)
-Received: from ?IPV6:2001:8004:5110:2082:f68a:6871:1edc:69fe?
- ([2001:8004:5110:2082:f68a:6871:1edc:69fe])
+ AJvYcCUBC73nBvG/ZqmWyRDZD1TdMmO2rVKfVDYHgXO83hbD53pNzqJfSF53zwiCOY4SnPcTfA3XaY1ZEqm5@nongnu.org
+X-Gm-Message-State: AOJu0Yy65C5XNuoHCycQhVpJ8DshxT5qL5ZtZa5WFL30B2CL1RUT58Vo
+ amsnrH5Wg/MKyg7WoeRIwXYPMb1oxEMTXaQ/zcXMKkPknOeGFUwh/aPcHtqeTWkjfB+T4x63CBQ
+ 58yOxwyf594xzhvVa4IeDanOk+xjUP6m1jnuLDC0prdCrDdMLjf5d
+X-Received: by 2002:a05:6870:470f:b0:270:5f17:b34 with SMTP id
+ 586e51a60fabf-273e64aa1e6mr14115125fac.11.1724733490534; 
+ Mon, 26 Aug 2024 21:38:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG/d2k4EXJJ9bRsj/6vvJtbIxqJIBnZxSSAKybHJLzNtPWJIFnoPaMkbPykNyYnoFTBxb2NhQ==
+X-Received: by 2002:a05:6870:470f:b0:270:5f17:b34 with SMTP id
+ 586e51a60fabf-273e64aa1e6mr14115109fac.11.1724733490076; 
+ Mon, 26 Aug 2024 21:38:10 -0700 (PDT)
+Received: from [192.168.68.54] ([43.252.113.54])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-203855dd985sm75366245ad.164.2024.08.26.21.29.13
+ d2e1a72fcca58-714400a5111sm6454436b3a.45.2024.08.26.21.38.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Aug 2024 21:29:18 -0700 (PDT)
-Message-ID: <20467a9c-e12d-4d36-9439-4ae27045077e@linaro.org>
-Date: Tue, 27 Aug 2024 14:29:10 +1000
+ Mon, 26 Aug 2024 21:38:09 -0700 (PDT)
+Message-ID: <4e2a2553-9214-457e-9624-a5110217b38a@redhat.com>
+Date: Tue, 27 Aug 2024 14:38:03 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 03/17] target/riscv: save and restore elp state on priv
- transitions
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
- kito.cheng@sifive.com
-References: <20240826152949.294506-1-debug@rivosinc.com>
- <20240826152949.294506-4-debug@rivosinc.com>
- <da021104-6836-4e5b-a8a4-991f975c553c@linaro.org>
- <Zs0jURx7jbgd64jV@debug.ba.rivosinc.com>
- <056740af-1b61-426a-940d-3ca118ebd081@linaro.org>
- <CAKmqyKOni_x8bw_3TfdV=xGg0MX-NPnPgo84dsKojdRqO_j36g@mail.gmail.com>
- <db8fa0c7-5c8b-45ca-a0e2-e660ffe7cd42@linaro.org>
- <CAKmqyKNN28WeR=UsPjnhFZi+W9imeE6v3tHsX5bj_OwdP7XyiA@mail.gmail.com>
+Subject: Re: [PATCH for-9.2] hw/arm/sbsa-ref: Don't leak string in
+ sbsa_fdt_add_gic_node()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+References: <20240822162323.706382-1-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAKmqyKNN28WeR=UsPjnhFZi+W9imeE6v3tHsX5bj_OwdP7XyiA@mail.gmail.com>
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20240822162323.706382-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,37 +107,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/24 14:03, Alistair Francis wrote:
-> On Tue, Aug 27, 2024 at 1:58 PM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 8/27/24 13:53, Alistair Francis wrote:
->>> Exposing the *envcfg CSRs to userspace seems tricky as everything is
->>> currently built with the S/M CSRs removed from user builds.
->>
->> It is as simple as moving them out of ifdefs, then initializing them as needed in reset
->> for CONFIG_USER_ONLY.  That's what we do for Arm.
+On 8/23/24 2:23 AM, Peter Maydell wrote:
+> In sbsa_fdt_add_gic_node() we g_strdup_printf() two nodename
+> strings, but only free one.
 > 
-> Is that really better though?
+> Since the string is actually entirely constant and we don't
+> make any use of printf's format-string operations, we can
+> drop the g_strdup_printf() use entirely.
 > 
-> Then we have these CSRs that are included in the build, so people can
-> write code that checks the CSRs, but they are never actually changed.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> A small once-only leak, so this is 9.2 material. Spotted
+> with clang leak-sanitizer.
 > 
-> I guess it simplified the CONFIG_USER_ONLY checks, which is handy and
-> your original point. But it seems like it is clunky that we have these
-> CSRs that are kind of fake
+>   hw/arm/sbsa-ref.c | 15 ++++++---------
+>   1 file changed, 6 insertions(+), 9 deletions(-)
+> 
 
-They're not fake.  They're a reflection of how the system-mode kernel configures the 
-system-mode user environment.
+Reviewed-by: Gavin Shan <gshan@redhat.com>
 
-The u[bf]cfien variables introduced in this patch set are an indication of this.  Within 
-this patch set they're always false.  But the intent is to implement the (proposed) prctl 
-syscalls that will set them to true (on hold waiting for kernel abi to land upstream, but 
-were present in an earlier patch set revision.)
-
-The correct implementation of those syscalls, in my opinion, is to set the corresponding 
-[ms]envcfg bits.  Just as linux-user/aarch64/target_prctl.h does for SVE et al.
-
-
-r~
 
