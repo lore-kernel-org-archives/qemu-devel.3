@@ -4,73 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FF3C5472D
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 07:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A31C5472D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 07:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjD1F-00078l-Gy; Wed, 28 Aug 2024 03:23:05 -0400
+	id 1sjD64-0008UB-2w; Wed, 28 Aug 2024 03:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjD1D-00074K-SO
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 03:23:03 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sjD62-0008Sy-FY; Wed, 28 Aug 2024 03:28:02 -0400
+Received: from fout8-smtp.messagingengine.com ([103.168.172.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjD1A-0002cX-VT
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 03:23:03 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8318889527;
- Wed, 28 Aug 2024 10:21:53 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6AEDA12E48E;
- Wed, 28 Aug 2024 10:22:57 +0300 (MSK)
-Message-ID: <241ba192-359c-483c-aeea-1023a47c4e74@tls.msk.ru>
-Date: Wed, 28 Aug 2024 10:22:57 +0300
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sjD60-0003A5-81; Wed, 28 Aug 2024 03:28:02 -0400
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal
+ [10.202.2.45])
+ by mailfout.nyi.internal (Postfix) with ESMTP id E112C13900B6;
+ Wed, 28 Aug 2024 03:27:58 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Wed, 28 Aug 2024 03:27:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1724830078; x=
+ 1724916478; bh=+EHeWOHZT5Yu13qDrsGulqzLWgptwcPZGD66kBuXGvU=; b=Z
+ J1m8PWDc/oJ25ZzSlqRc1rsJYJXhyWrhISt7fvF/ofA7TItJhiI93TUxFKh2yEpx
+ wjq2FC1YS3ZeUNPstaljivv/QNBGKT0PqQWv+HQQGCGyrUCOrulDQavMd7QcmdHG
+ X7SkYyHQPZO0jjVcj6+Nt8OnfTOV6+7abMolJm8lFWbYDLq7F1ci/L8T5AGCnNOx
+ cl11e0WUJBG8ffJ9FeWleHkQnE5uoB0+bX+mVoB3wWNJv9Z0gaNwN+fhYzNyWz/A
+ ifugeA1l/YO/R8A2R4nYiaBzTpOJiuA2/jelmjH+K78c/Tz8qVTb577SUngJtYQG
+ Y+nxJnsBNhXyR3KC2ZpeA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1724830078; x=1724916478; bh=+EHeWOHZT5Yu13qDrsGulqzLWgpt
+ wcPZGD66kBuXGvU=; b=Qf+xxc1e3IBxtZAfVxrKj3S+eiqs1CVLsXj85s0eQGSm
+ MT/1DhlT7c/Q255enxj65xV2cwP7cSWPGMKQKrBipwgBwvCHdq9efphSwxs0W4cP
+ ZHm9zCa9QxzAFJEiBYWTt/N/JgSDyvF0TVgSdQe+BYe4Z/xEhuQxYs0dRWaYXwmM
+ ZF94XUEFRZq5vYKxpAKtW2W2bqsC6Nz9cLy7s0b6zf2ZlMmPZ1MSzLUxtKkoScVN
+ 1op3aRe8yBDCC6hZxJOWWQNzI6bFVNbXUbk9gf2vCUjn6IsMBRwRGwvWl3QWsDgt
+ bQRDArZWyURhPFhZag2mRyK4dvzwCItH4iQkHhv8IA==
+X-ME-Sender: <xms:ftHOZjcoXf1kTtL96FquddvRYiGkEGKhoNStDHx6r9no-lZIfuHbLg>
+ <xme:ftHOZpOldZ9ql6GuqLYcAzm4PqTZWe2zWRey8htPglKaOmY1Y-ZD37QGsbOVVum92
+ ZRlSLfz9Cdp6ZY-7fY>
+X-ME-Received: <xmr:ftHOZsjpvayEYZmPvl0JEIB3jYuPRVOkNf9ySmB5SKc7LNU0WWD41yjcGdvXdA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefuddguddvvdcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+ evuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghn
+ uceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnhepjefgje
+ efffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlh
+ gvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdp
+ rhgtphhtthhopehluhgthhgrnhhgqhhirdduvdefsegshihtvggurghntggvrdgtohhmpd
+ hrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthho
+ pehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhifohhlfh
+ esrhgvughhrghtrdgtohhmpdhrtghpthhtohephhhrvghithiisehrvgguhhgrthdrtgho
+ mhdprhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthhtoh
+ epfhgrmhesvghuphhhohhnrdhnvghtpdhrtghpthhtoheprhhonhhnihgvshgrhhhlsggv
+ rhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgsohhniihinhhisehrvgguhhgrth
+ drtghomh
+X-ME-Proxy: <xmx:ftHOZk-mKWYMNlWzfwgn2_eWoRRagVEkwmzAaGqqMxYZ4YYG5CJHgQ>
+ <xmx:ftHOZvuNPvoVjAdx-bIQ96TpgSEv1jNgUike-U_6KSgHg8vVtwB0Gw>
+ <xmx:ftHOZjGSfM5eYWHEZo-Rley8YzcOo5Mw1SIKvSrhN9B44jMXMCvIpQ>
+ <xmx:ftHOZmPWK4xL9T7mAYardTj-TPIF9GMHJqJYMjqlD6nuIYu3aow-HA>
+ <xmx:ftHOZo94yXTGpi4fseSVFSaGM4X2IySxk2NB-WWJqJ3nwzui4Xt4nGb3>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Aug 2024 03:27:57 -0400 (EDT)
+Date: Wed, 28 Aug 2024 09:27:53 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: =?utf-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
+ kbusch@kernel.org, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com, Klaus Jensen <k.jensen@samsung.com>
+Subject: Re: [External] Re: [PATCH v9 09/10] hw/nvme: add reservation
+ protocal command
+Message-ID: <Zs7RecGJzBD1yTMA@cormorant.local>
+References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
+ <20240712023650.45626-10-luchangqi.123@bytedance.com>
+ <Zs7I3AAzsO2Xe5iG@cormorant.local>
+ <CAO5cSZCkHCM0nrgQO4ykJ808UCxF-TEy7_0zkA3LDaZ0S8zyCg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 17/20] target/arm: Do memory type alignment check when
- translation disabled
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240305135237.3111642-1-peter.maydell@linaro.org>
- <20240305135237.3111642-18-peter.maydell@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240305135237.3111642-18-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="6LlipYTCtAli3XuJ"
+Content-Disposition: inline
+In-Reply-To: <CAO5cSZCkHCM0nrgQO4ykJ808UCxF-TEy7_0zkA3LDaZ0S8zyCg@mail.gmail.com>
+Received-SPF: pass client-ip=103.168.172.151; envelope-from=its@irrelevant.dk;
+ helo=fout8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,108 +120,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-05.03.2024 16:52, Peter Maydell wrote:
-> From: Richard Henderson <richard.henderson@linaro.org>
-> 
-> If translation is disabled, the default memory type is Device, which
-> requires alignment checking.  This is more optimally done early via
-> the MemOp given to the TCG memory operation.
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reported-by: Idan Horowitz <idan.horowitz@gmail.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-id: 20240301204110.656742-6-richard.henderson@linaro.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1204
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Hi!
+--6LlipYTCtAli3XuJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Apparently this change also breaks picolibc testsuite (between
-8.2 and 9.0, bisect points to this commit).
+On Aug 28 00:20, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+> Hi,
+>=20
+> I want to know if I understand it correctly.
+>=20
+> ```
+> static void nvme_aio_err(NvmeRequest *req, int ret)
+> {
+> uint16_t status =3D NVME_SUCCESS;
+> Error *local_err =3D NULL;
+>=20
+> switch (req->cmd.opcode) {
+> case NVME_CMD_READ:
+> case NVME_CMD_RESV_REPORT:
+> status =3D NVME_UNRECOVERED_READ;
+> break;
+> case NVME_CMD_FLUSH:
+> case NVME_CMD_WRITE:
+> case NVME_CMD_WRITE_ZEROES:
+> case NVME_CMD_ZONE_APPEND:
+> case NVME_CMD_COPY:
+> case NVME_CMD_RESV_REGISTER:
+> case NVME_CMD_RESV_ACQUIRE:
+> case NVME_CMD_RESV_RELEASE:
+> status =3D NVME_WRITE_FAULT;
+> break;
+> default:
+> status =3D NVME_INTERNAL_DEV_ERROR;
+> break;
+> }
+>=20
+> trace_pci_nvme_err_aio(nvme_cid(req), strerror(-ret), status);
+>=20
+> error_setg_errno(&local_err, -ret, "aio failed");
+> error_report_err(local_err);
+>=20
+> /*
+> * Set the command status code to the first encountered error but
+> allow a
+> * subsequent Internal Device Error to trump it.
+> */
+> if (req->status && status !=3D NVME_INTERNAL_DEV_ERROR) {
+> return;
+> }
+>=20
+> req->status =3D status;
+> }
+> ```
+> In the above use case, if it is a pr-related command and the error code
+> is not supported, the invalid error code should be returned instead of
+> the Fault error code.
+>=20
 
-For example:
+Yes, as far as I can tell from the spec, if a Reservations related
+command is issued on a controller/namespace that does not BOTH support
+Reservations (i.e., in ONCS and RESCAP), then return Invalid Command
+Opcode.
 
-./qemu-system-arm \
-   -m 1G \
-   -chardev stdio,mux=on,id=stdio0 \
-   -semihosting-config enable=on,chardev=stdio0,arg=program-name \
-   -monitor none \
-   -serial none \
-   -machine none,accel=tcg \
-   -cpu cortex-a8 \
-   -device loader,file=/tmp/picolibc-1.8.6/arm-none-eabi/test/printf_scanf_thumb_v7_fp_softfp,cpu-num=0 \
-   -nographic
+--6LlipYTCtAli3XuJ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-(yes, this testsuite uses qemu-system as a substitute of
-qemu-user, sort of, (ab)using -device loader)
+-----BEGIN PGP SIGNATURE-----
 
-Before this change:
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmbO0XgACgkQTeGvMW1P
+Delr1wf/eTrHuX6h22UhUW5flw2cxGUxCTqiQpkxv+szqXXhVh3dbbgS5h9Yrv9l
+N+NbDQ3ImkH657v/S+uzibKH4bZzZzPS7WtZjuePWWZlAPcf73UAjKoJTHL/K0zG
+mErE9hwI9V66QfYpqv/qZA1wGGmGUyS2vWaY1+202Rn2w8nCVYmxktm59xTwQsWM
+L4hfsQP2Bbz0/1Olk/ynX6ioAfofpN7fd1WbrShXonKw6qI5i0j21sJg/fttYT1X
+dUFo5Ywn6xC/xo8kIwiBYTqwi8TGSrSZ5CkF/ad0Lnx67VO8EcequOuhnTnia2gP
++ST7lnk1cbMdqN4jBiCbbGvmkFcE8w==
+=X2hS
+-----END PGP SIGNATURE-----
 
-hello world 1
-checking floating point
-checking pos args
-checking long long
-checking c99 formats
-
-(exit code = 0)
-
-After this change:
-
-hello world 1
-checking floating point
-checking pos args
-ARM fault: undef
-	R0:   0x00000002
-	R1:   0x00005c90
-	R2:   0x201ffeac
-	R3:   0x20200000
-	R4:   0x00000000
-	R5:   0x20000004
-	R6:   0x201ffec4
-	PC:   0x00000364
-
-
-
-Another test from the same picolibc:
-
-timeout 1s ./qemu-system-arm \
-   -m 1G \
-   -chardev stdio,mux=on,id=stdio0 \
-   -semihosting-config enable=on,chardev=stdio0,arg=program-name \
-   -monitor none \
-   -serial none \
-   -machine none,accel=tcg \
-   -cpu cortex-a7 \
-   -device loader,file=/tmp/picolibc-1.8.6/arm-none-eabi/newlib/testsuite/newlib.string/tstring_thumb_v7_nofp,cpu-num=0 \
-   -nographic
-
-This one succeeds immediately before this change, and
-just times out (qemu is basically doing nothing, according to
-strace) after this commit.
-
-
-
-Exactly the same happens up to current qemu master (ie, 9.1-tobe).
-So is not https://gitlab.com/qemu-project/qemu/-/issues/2326
-and is not fixed by 4c2c0474693229c1f533239bb983495c5427784d
-"target/arm: Fix usage of MMU indexes when EL3 is AArch32".
-
-
-
-picolibc is built this way:
-
-picolibc-1.8.6$ meson setup . arm-none-eabi \
-   --prefix=/usr \
-   -Dc_args='-Wdate-time' \
-   -Dtests=true \
-   --cross-file scripts/cross-arm-none-eabi.txt \
-   -Dspecsdir=/usr/lib/picolibc/arm-none-eabi \
-   -Dincludedir=lib/picolibc/arm-none-eabi/include \
-   -Dlibdir=lib/picolibc/arm-none-eabi/lib
-
-
-Thanks,
-
-/mjt
+--6LlipYTCtAli3XuJ--
 
