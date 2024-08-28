@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 638F0C54FA7
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31134C54F32
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjHuC-0005M0-IN; Wed, 28 Aug 2024 08:36:08 -0400
+	id 1sjHuQ-0006QW-Ix; Wed, 28 Aug 2024 08:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1sjHu7-00059c-0i
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:36:03 -0400
+ id 1sjHu9-0005Jc-ME
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:36:07 -0400
 Received: from internet2.beckhoff.com ([194.25.186.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1sjHu4-0003Af-Qn
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:36:02 -0400
+ id 1sjHu4-0003A4-OI
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:36:04 -0400
 Received: from 172.17.5.170 by INTERNET2.beckhoff.com (Tls12, Aes256, Sha384, 
  DiffieHellmanEllipticKey384); Wed, 28 Aug 2024 12:35:57 GMT
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
- t=1724848557; bh=AWbZyhEyhRSnXlYcrTmec6OE0eilRfZnjfvknaWGikc=; h=
+ t=1724848557; bh=Zc20bNnH6fxi+zm1bGTgtARrzIvCIziEw3eZSEmzxEc=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=ed25519-sha256; b=
- S/kAuLA/a0MR1U7EZo/bEENTMUn47zBCwcZKcWLCQIU9yNVZkSj/4DJCZiL2vXf6ulQTo4wtdQaUq5jrr6JhDg==
+ tSdq34iYmj2+DZ9vFLP8MgHjt/a4D0CFRvawasucRMN62+iW8TYZNLtzU69LwXkzuO1yjeINXbFtB0UAPxzEAA==
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
- t=1724848557; bh=AWbZyhEyhRSnXlYcrTmec6OE0eilRfZnjfvknaWGikc=; h=
+ t=1724848557; bh=Zc20bNnH6fxi+zm1bGTgtARrzIvCIziEw3eZSEmzxEc=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=rsa-sha256; b=
- vqq5rM1bfJCkWRpkMGeP0jkoILDqeF7WGJyuZSpvxGvG2weuvWtHMwE6dUNZy8cVwErtQZvxD4S4By/OlfYN6NUux7s1yePsJN7gyXXhK8y3xoVJDl1GOMeMsCjr4xchFQ9QmEGt/OH5/ojpNHIAXGELnVGGict7BCvqZdjiBjycfGk1skfX3LLnmKB11phHp9JH/M9vBhdPj0ss7ihN7N2WeYBh5n+krDS9A8pvA12VEcSh1hEkHKMXdAaatECh3Ja502s8KDFU/AXLuLC980HkTPtFukjRv5tGtcQzz2tEzTgUQhBYBXkwZXNh/8i85g29wkJuqdnIGp7KYnzM0A==
+ BtbzthWh1rHMoIzjaAD79c7Nz7Nk6DHIt/UF4+A0i6S/IXrzuC5zuJcksMlQqf0+r5O075x2luS2XispuoQiYYM8Z+8l6iATde2u3ZTFQ4LkEuCCvLoAvhzVRMO+NrI5nLkIhLj0n7Hl91RSlFI6JfDNa0udNTWhkZDkB/P1UYBBVf5oIkT+d2YkeVId9O6E2ZCIzEqD4GBOEexxRhYPtfQ/uFefyUkCoJ/X2Fh1IMRix20m14ytxzaHa9u4yviMV5+pc04k706Bi6N6CIzFUqXf3Qqi1X6L4fpLUs9lkMTdITeU73OEXDvvB70peE1H9QfsR2z0fCa1dIKLZeumcA==
 Received: from corvink-nb.beckhoff.com (172.17.128.201) by ex04.beckhoff.com
  (172.17.5.170) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 28 Aug
- 2024 14:35:55 +0200
+ 2024 14:35:54 +0200
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
 To: <qemu-devel@nongnu.org>, <c.koehne@beckhoff.com>
 CC: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Alex Williamson
  <alex.williamson@redhat.com>
-Subject: [PATCH v2 2/7] vfio/igd: support legacy mode for all known generations
-Date: Wed, 28 Aug 2024 14:35:44 +0200
-Message-ID: <20240828123549.83293-3-c.koehne@beckhoff.com>
+Subject: [PATCH v2 0/7] vfio/igd: add passthrough support for IGDs of gen 11
+ and later
+Date: Wed, 28 Aug 2024 14:35:42 +0200
+Message-ID: <20240828123549.83293-1-c.koehne@beckhoff.com>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240828123549.83293-1-c.koehne@beckhoff.com>
-References: <20240828123549.83293-1-c.koehne@beckhoff.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 X-Originating-IP: [172.17.128.201]
 X-ClientProxiedBy: ex03.beckhoff.com (172.17.2.169) To ex04.beckhoff.com
@@ -78,35 +77,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=EF=BB=BFWe're soon going to add support for legacy mode to ElkhartLake and
-TigerLake devices. Those are gen 11 and 12 devices. At the moment, all
-devices identified by our igd_gen function do support legacy mode. This
-won't change when adding our new devices of gen 11 and 12. Therefore, it
-makes more sense to accept legacy mode for all known devices instead of
-maintaining a long list of known good generations. If we add a new
-generation to igd_gen which doesn't support legacy mode for some reason,
-it'll be easy to advance the check to reject legacy mode for this
-specific generation.
+=EF=BB=BFHi,
 
-Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
----
- hw/vfio/igd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Qemu has experimental support for GPU passthrough of Intels integrated grap=
+hic
+devices. Unfortunately, Intel has changed some bits for their gen 11 device=
+s
+and later. To support these devices, we have to account for those changes. =
+This
+patch series adds the missing bits on the Qemu side.
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 650a323dda..d5e57656a8 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -416,7 +416,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int=
- nr)
-      * devices maintain compatibility with generation 8.
-      */
-     gen =3D igd_gen(vdev);
--    if (gen !=3D 6 && gen !=3D 8) {
-+    if (gen =3D=3D -1) {
-         error_report("IGD device %s is unsupported in legacy mode, "
-                      "try SandyBridge or newer", vdev->vbasedev.name);
-         return;
+I've tested the patch series on an ElkhartLake and TigerLake device. On the
+guest side, I've tested an EFI environment (GOP driver), a Linux guest and =
+a
+Windows VM. The driver of all guests are able to use the GPU and produce an
+output on the connected display.
+
+Corvin K=C3=B6hne (7):
+  vfio/igd: return an invalid generation for unknown devices
+  vfio/igd: support legacy mode for all known generations
+  vfio/igd: use new BDSM register location and size for gen 11 and later
+  vfio/igd: add new bar0 quirk to emulate BDSM mirror
+  vfio/igd: add ID's for ElkhartLake and TigerLake
+  vfio/igd: don't set stolen memory size to zero
+  vfio/igd: correctly calculate stolen memory size for gen 9 and later
+
+ hw/vfio/igd.c        | 185 +++++++++++++++++++++++++++++++++++++------
+ hw/vfio/pci-quirks.c |   1 +
+ hw/vfio/pci.h        |   1 +
+ 3 files changed, 161 insertions(+), 26 deletions(-)
+
 --=20
 2.46.0
 
