@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D321C54FA6
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B61C54F32
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjHuF-0005lq-U5; Wed, 28 Aug 2024 08:36:11 -0400
+	id 1sjHuI-0005nv-Dt; Wed, 28 Aug 2024 08:36:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1sjHu9-0005Jb-Lp
+ id 1sjHu9-0005JX-LZ
  for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:36:07 -0400
 Received: from internet2.beckhoff.com ([194.25.186.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1sjHu5-0003AE-4q
+ id 1sjHu5-0003Am-4w
  for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:36:04 -0400
 Received: from 172.17.5.170 by INTERNET2.beckhoff.com (Tls12, Aes256, Sha384, 
- DiffieHellmanEllipticKey384); Wed, 28 Aug 2024 12:35:57 GMT
+ DiffieHellmanEllipticKey384); Wed, 28 Aug 2024 12:35:58 GMT
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
- t=1724848557; bh=dw5PZHWoP2rzADIQR+kXL/3fIW9nweVv3qfNfRdXkvc=; h=
+ t=1724848558; bh=7yYl05lZacMAh3tZlu2XKHEwlxzsHcRZiBDxfb3o9dE=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=ed25519-sha256; b=
- aulXHQteHcrI1BCGTPLKbUBPk2jciTXXqbuWVEaitvf8zBwHpD+AO7Oxy/c9qb1eJbNvpyl6ATzdSAtfiIChCA==
+ 7Bk8C68lQX9prUO0DvK7XadMlpW/cMQhnMh9+XgGQkY0Cw99Gs0tsJyse4zKZK8j1oUpsj6q2tc9noFRh0RSAg==
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
- t=1724848557; bh=dw5PZHWoP2rzADIQR+kXL/3fIW9nweVv3qfNfRdXkvc=; h=
+ t=1724848558; bh=7yYl05lZacMAh3tZlu2XKHEwlxzsHcRZiBDxfb3o9dE=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=rsa-sha256; b=
- hWkMCfUKZVlC5WP/zF1rKcv3IKZaEF7Z3Xr2tla2SVCkAoP/M4WwqqrF6fiyGJwWR09/IuBZPpL7NOFh95MMvlkGlcXKKbKiicERMNDTrNEXeHrrMSTL2fe1xG13WP3TDiHHxsGpBkOOAPziUViPOGEShuK7x7ZuAewWHu7kLzCthgTCeY5/ooYAXVMYQW0+pZ8rV34w3cfbaezFaiL2AVMsnoi2zsipZVDhzHrTIunja/lxD2Hcibw264Ugl2abOl3MTBwZ5ZZ8Ami8Q8gC5Aupo/vz6/7QQVky29+DsnirSuWS0sVUI/yCRJgBh6iE9NTMBqkmtvknhRzErUZAcA==
+ klOvL6o9qQ3vRCRK4bI7+XcMk6+xay1b2pApH80RBjTWbthDfRGkMcJWMfhDyS1BDkaEpqQPMKezpXnyjFAWFput4XzpvCvwgxwERzV6+LHfnnjgbD+jI4XejDf0Hx+uxF3riPiakCY7FnyzEgmcDXtiR9hA2dWLBdwzrKA5Rp48P31e8OFkYLAaOGTh2JuTaRz4IVZk9Ale1pil0g4HKs1JWtjUrB0/eqvOkxXhwNpaXCzws33nB8pe+SKYofTZCJOMxo6rkTEN8j7TG4DuCjBT5uU61g9nhrsBp5yopvx9/uPDie3UKLn5lefQ/5L4MLZVW8ymVEw8X9JaOCTaIw==
 Received: from corvink-nb.beckhoff.com (172.17.128.201) by ex04.beckhoff.com
  (172.17.5.170) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 28 Aug
@@ -40,10 +40,10 @@ From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
 To: <qemu-devel@nongnu.org>, <c.koehne@beckhoff.com>
 CC: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Alex Williamson
  <alex.williamson@redhat.com>
-Subject: [PATCH v2 1/7] vfio/igd: return an invalid generation for unknown
- devices
-Date: Wed, 28 Aug 2024 14:35:43 +0200
-Message-ID: <20240828123549.83293-2-c.koehne@beckhoff.com>
+Subject: [PATCH v2 3/7] vfio/igd: use new BDSM register location and size for
+ gen 11 and later
+Date: Wed, 28 Aug 2024 14:35:45 +0200
+Message-ID: <20240828123549.83293-4-c.koehne@beckhoff.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240828123549.83293-1-c.koehne@beckhoff.com>
 References: <20240828123549.83293-1-c.koehne@beckhoff.com>
@@ -79,38 +79,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=EF=BB=BFIntel changes it's specification quite often e.g. the location and=
- size
-of the BDSM register has change for gen 11 devices and later. This
-causes our emulation to fail on those devices. So, it's impossible for
-us to use a suitable default value for unknown devices. Instead of
-returning a random generation value and hoping that everthing works
-fine, we should verify that different devices are working and add them
-to our list of known devices.
+=EF=BB=BFIntel changed the location and size of the BDSM register for gen 1=
+1
+devices and later. We have to adjust our emulation for these devices to
+properly support them.
 
 Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 ---
- hw/vfio/igd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ hw/vfio/igd.c | 31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index d320d032a7..650a323dda 100644
+index d5e57656a8..0b6533bbf7 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -90,7 +90,11 @@ static int igd_gen(VFIOPCIDevice *vdev)
-         return 8;
-     }
-=20
--    return 8; /* Assume newer is compatible */
-+    /*
-+     * Unfortunately, Intel changes it's specification quite often. This m=
-akes
-+     * it impossible to use a suitable default value for unknown devices.
-+     */
-+    return -1;
- }
-=20
+@@ -100,11 +100,12 @@ static int igd_gen(VFIOPCIDevice *vdev)
  typedef struct VFIOIGDQuirk {
+     struct VFIOPCIDevice *vdev;
+     uint32_t index;
+-    uint32_t bdsm;
++    uint64_t bdsm;
+ } VFIOIGDQuirk;
+=20
+ #define IGD_GMCH 0x50 /* Graphics Control Register */
+ #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
++#define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and la=
+ter */
+=20
+=20
+ /*
+@@ -313,9 +314,13 @@ static void vfio_igd_quirk_data_write(void *opaque, hw=
+addr addr,
+      */
+     if ((igd->index % 4 =3D=3D 1) && igd->index < vfio_igd_gtt_max(vdev)) =
+{
+         if (gen < 8 || (igd->index % 8 =3D=3D 1)) {
+-            uint32_t base;
++            uint64_t base;
+=20
+-            base =3D pci_get_long(vdev->pdev.config + IGD_BDSM);
++            if (gen < 11) {
++                base =3D pci_get_long(vdev->pdev.config + IGD_BDSM);
++            } else {
++                base =3D pci_get_quad(vdev->pdev.config + IGD_BDSM_GEN11);
++            }
+             if (!base) {
+                 hw_error("vfio-igd: Guest attempted to program IGD GTT bef=
+ore "
+                          "BIOS reserved stolen memory.  Unsupported BIOS?"=
+);
+@@ -519,7 +524,13 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, in=
+t nr)
+     igd =3D quirk->data =3D g_malloc0(sizeof(*igd));
+     igd->vdev =3D vdev;
+     igd->index =3D ~0;
+-    igd->bdsm =3D vfio_pci_read_config(&vdev->pdev, IGD_BDSM, 4);
++    if (gen < 11) {
++        igd->bdsm =3D vfio_pci_read_config(&vdev->pdev, IGD_BDSM, 4);
++    } else {
++        igd->bdsm =3D vfio_pci_read_config(&vdev->pdev, IGD_BDSM_GEN11, 4)=
+;
++        igd->bdsm |=3D
++            (uint64_t)vfio_pci_read_config(&vdev->pdev, IGD_BDSM_GEN11 + 4=
+, 4) << 32;
++    }
+     igd->bdsm &=3D ~((1 * MiB) - 1); /* 1MB aligned */
+=20
+     memory_region_init_io(&quirk->mem[0], OBJECT(vdev), &vfio_igd_index_qu=
+irk,
+@@ -577,9 +588,15 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, in=
+t nr)
+     pci_set_long(vdev->emulated_config_bits + IGD_GMCH, ~0);
+=20
+     /* BDSM is read-write, emulated.  The BIOS needs to be able to write i=
+t */
+-    pci_set_long(vdev->pdev.config + IGD_BDSM, 0);
+-    pci_set_long(vdev->pdev.wmask + IGD_BDSM, ~0);
+-    pci_set_long(vdev->emulated_config_bits + IGD_BDSM, ~0);
++    if (gen < 11) {
++        pci_set_long(vdev->pdev.config + IGD_BDSM, 0);
++        pci_set_long(vdev->pdev.wmask + IGD_BDSM, ~0);
++        pci_set_long(vdev->emulated_config_bits + IGD_BDSM, ~0);
++    } else {
++        pci_set_quad(vdev->pdev.config + IGD_BDSM_GEN11, 0);
++        pci_set_quad(vdev->pdev.wmask + IGD_BDSM_GEN11, ~0);
++        pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
++    }
+=20
+     /*
+      * This IOBAR gives us access to GTTADR, which allows us to write to
 --=20
 2.46.0
 
