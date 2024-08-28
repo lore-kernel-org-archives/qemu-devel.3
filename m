@@ -4,65 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E3AC54FA6
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0776AC54FA6
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:29:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjHiL-0007n8-VK; Wed, 28 Aug 2024 08:23:53 -0400
+	id 1sjHnF-0004x8-If; Wed, 28 Aug 2024 08:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sjHiJ-0007iH-9t
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:23:51 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sjHnD-0004qu-Tv
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:28:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sjHiH-0001Da-CM
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:23:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=yqZV3N3qjRopbwCand9K9Y8Kskn89ms5iiMIBgf6KxM=; b=P3eK36dYFvJBh/5LIi0wV2Ep/B
- o67g5AWhbBVTguWJHRela/K1Nw1DcfGTHFmx0GjitWOD/Ej7icfcjApXclrUvDqCc0hoyKWTcXSNS
- GU9pwl7/EA4i0dMmqUnTeE7+H1zK8V5UHJD1lvqwoXfs3/0cgAqrojE3UAujXgV5EAT5cPo/AHQTE
- h0hz1FIYBeLQIdKn+0MFi8WMXyL7YDM6WynC+4eIOkmSSlVTv0S04O2264ZbZMPsqfHiIfscKLUJv
- V6Nog9HitmTApykIm17zj+lG99VwSezFFppyVyOGT9LdYZw3gKOQIaXAvpSqUplC1+bH86W81odml
- nUhJLYihiDXDRbI45QsjyMzAHqy1jvYLPGcKeik4nzvw18KLXCL5u1qnWQLg528r+AtNBBzQMbjDY
- x4nnjChi2VihK33AJrMIW7ol7GXs+6g630MnteoP62Q+CuEqWSyj0Fvs2Rhjq15Y72Nkovrj7dJaJ
- bjFlWTURoEiJ+/XmilKLtjochwg+wI/xn+zZKRsKA4hokd3aQfIBffVGeLne/RQTh1qmYxwpMccTy
- ukN3nfv2H9wmH7J9qsw8tQ0DlTF4byP5WM/zLnJyCxYHOdd3f3GxlA5MzqTsdgN1Mw3nKX15sAOpe
- 31ArbmVfyFhFim5oBCkGLIu/AadhXvqHJxwuXdDaQ=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- (helo=cheesecake.fritz.box)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sjHhz-000B8d-6b; Wed, 28 Aug 2024 13:23:35 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: philmd@linaro.org, Alistair.Francis@wdc.com, tavip@google.com,
- qemu-devel@nongnu.org
-Date: Wed, 28 Aug 2024 13:22:58 +0100
-Message-Id: <20240828122258.928947-10-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
-References: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sjHn9-00027Z-JB
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:28:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724848128;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Zt5r48uIqzU9wc3SieuVmVxlkzgDymlhYNyKIxhJfcg=;
+ b=LShf0aWLUIYkxviGZjxalJcAlVFT7fqj5sUesVzRGfBs8QYI7rNu47kgnCL/Fd5heYBkH4
+ 9P/MLGz+ILSppPq8uOO7yMOid6NUAQQ7tAvQFRG+F3Se7yQR5XxGDwFo0YNubQRhcKpLzL
+ zU0ji8LxI0Pq5Fda6dllw5MvddZvXJc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-60-PI9G6oJ7OPCfgmYGyw2xYg-1; Wed,
+ 28 Aug 2024 08:28:42 -0400
+X-MC-Unique: PI9G6oJ7OPCfgmYGyw2xYg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1437B195420D; Wed, 28 Aug 2024 12:28:40 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.92])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8372719560A3; Wed, 28 Aug 2024 12:28:34 +0000 (UTC)
+Date: Wed, 28 Aug 2024 13:28:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Junjie Mao <junjie.mao@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH RESEND v9 3/9] configure, meson: detect Rust toolchain
+Message-ID: <Zs8X7dV4XczEM5YU@redhat.com>
+References: <20240828-rust-pl011-v9-0-35579191f17c@linaro.org>
+ <20240828-rust-pl011-v9-3-35579191f17c@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 9/9] tests/unit: add test-fifo unit test
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240828-rust-pl011-v9-3-35579191f17c@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,294 +91,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This tests the Fifo8 implementation for basic operations as well as testing for
-the correct *_bufptr() including handling wraparound of the internal FIFO buffer.
+On Wed, Aug 28, 2024 at 07:11:44AM +0300, Manos Pitsidianakis wrote:
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> 
+> Include the correct path and arguments to rustc in the native
+> and cross files (native compilation is needed for procedural
+> macros).
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  configure   | 50 ++++++++++++++++++++++++++++++++++++++++++++++++--
+>  meson.build |  8 +++-----
+>  2 files changed, 51 insertions(+), 7 deletions(-)
+> 
+> diff --git a/configure b/configure
+> index 019fcbd0ef7b07e7b0280b358099cae72c73aa98..9ef6005c557fc627c7c6c732b4c92ed1b934f474 100755
+> --- a/configure
+> +++ b/configure
+> @@ -207,6 +207,8 @@ for opt do
+>    ;;
+>    --objcc=*) objcc="$optarg"
+>    ;;
+> +  --rustc=*) RUSTC="$optarg"
+> +  ;;
+>    --cpu=*) cpu="$optarg"
+>    ;;
+>    --extra-cflags=*)
+> @@ -252,6 +254,9 @@ python=
+>  download="enabled"
+>  skip_meson=no
+>  use_containers="yes"
+> +# do not enable by default because cross compilation requires --rust-target-triple
+> +rust="disabled"
+> +rust_target_triple=""
+>  gdb_bin=$(command -v "gdb-multiarch" || command -v "gdb")
+>  gdb_arches=""
+>  
+> @@ -317,6 +322,8 @@ windmc="${WINDMC-${cross_prefix}windmc}"
+>  pkg_config="${PKG_CONFIG-${cross_prefix}pkg-config}"
+>  sdl2_config="${SDL2_CONFIG-${cross_prefix}sdl2-config}"
+>  
+> +rustc="${RUSTC-rustc}"
+> +
+>  check_define() {
+>  cat > $TMPC <<EOF
+>  #if !defined($1)
+> @@ -636,6 +643,8 @@ for opt do
+>    ;;
+>    --objcc=*)
+>    ;;
+> +  --rustc=*)
+> +  ;;
+>    --make=*)
+>    ;;
+>    --install=*)
+> @@ -755,8 +764,14 @@ for opt do
+>    ;;
+>    --container-engine=*) container_engine="$optarg"
+>    ;;
+> +  --rust-target-triple=*) rust_target_triple="$optarg"
+> +  ;;
+>    --gdb=*) gdb_bin="$optarg"
+>    ;;
+> +  --enable-rust) rust=enabled
+> +  ;;
+> +  --disable-rust) rust=disabled
+> +  ;;
+>    # everything else has the same name in configure and meson
+>    --*) meson_option_parse "$opt" "$optarg"
+>    ;;
+> @@ -859,6 +874,7 @@ Advanced options (experts only):
+>                             at build time [$host_cc]
+>    --cxx=CXX                use C++ compiler CXX [$cxx]
+>    --objcc=OBJCC            use Objective-C compiler OBJCC [$objcc]
+> +  --rustc=RUSTC            use Rust compiler RUSTC [$rustc]
+>    --extra-cflags=CFLAGS    append extra C compiler flags CFLAGS
+>    --extra-cxxflags=CXXFLAGS append extra C++ compiler flags CXXFLAGS
+>    --extra-objcflags=OBJCFLAGS append extra Objective C compiler flags OBJCFLAGS
+> @@ -869,8 +885,9 @@ Advanced options (experts only):
+>    --python=PYTHON          use specified python [$python]
+>    --ninja=NINJA            use specified ninja [$ninja]
+>    --static                 enable static build [$static]
+> -  --without-default-features default all --enable-* options to "disabled"
+> -  --without-default-devices  do not include any device that is not needed to
+> +  --rust-target-triple=TRIPLE  target for Rust cross compilation
+> +  --without-default-features   default all --enable-* options to "disabled"
+> +  --without-default-devices    do not include any device that is not needed to
+>                             start the emulator (only use if you are including
+>                             desired devices in configs/devices/)
+>    --with-devices-ARCH=NAME override default configs/devices
+> @@ -1139,6 +1156,21 @@ EOF
+>  fi
+>  
+>  ##########################################
+> +# detect rust triple
+> +
+> +if test "$rust" != disabled && has "$rustc" && $rustc -vV > "${TMPDIR1}/${TMPB}.out"; then
+> +  rust_host_triple=$(sed -n 's/^host: //p' "${TMPDIR1}/${TMPB}.out")
+> +else
+> +  if test "$rust" = enabled; then
+> +    error_exit "could not execute rustc binary \"$rustc\""
+> +  fi
+> +  rust=disabled
+> +fi
+> +if test "$rust" != disabled && test -z "$rust_target_triple"; then
+> +  rust_target_triple=$rust_host_triple
+> +fi
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- tests/unit/meson.build |   1 +
- tests/unit/test-fifo.c | 256 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 257 insertions(+)
- create mode 100644 tests/unit/test-fifo.c
+Defaulting to the $rust_host_triple is incorrect when QEMU has been
+told to build for a non-host target.
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 490ab8182d..89f9633cd6 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -47,6 +47,7 @@ tests = {
-   'test-logging': [],
-   'test-qapi-util': [],
-   'test-interval-tree': [],
-+  'test-fifo': [],
- }
- 
- if have_system or have_tools
-diff --git a/tests/unit/test-fifo.c b/tests/unit/test-fifo.c
-new file mode 100644
-index 0000000000..1e54cde871
---- /dev/null
-+++ b/tests/unit/test-fifo.c
-@@ -0,0 +1,256 @@
-+/*
-+ * Fifo8 tests
-+ *
-+ * Copyright 2024 Mark Cave-Ayland
-+ *
-+ * Authors:
-+ *  Mark Cave-Ayland    <mark.cave-ayland@ilande.co.uk>
-+ *
-+ * This work is licensed under the terms of the GNU LGPL, version 2 or later.
-+ * See the COPYING.LIB file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "migration/vmstate.h"
-+#include "qemu/fifo8.h"
-+
-+const VMStateInfo vmstate_info_uint32;
-+const VMStateInfo vmstate_info_buffer;
-+
-+
-+static void test_fifo8_pop_bufptr_wrap(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
-+    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2 };
-+    const uint8_t *buf;
-+    uint32_t count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
-+    buf = fifo8_pop_bufptr(&fifo, 2, &count);
-+    g_assert(count == 2);
-+    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
-+
-+    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
-+    buf = fifo8_pop_bufptr(&fifo, 8, &count);
-+    g_assert(count == 6);
-+    g_assert(buf[0] == 0x3 && buf[1] == 0x4 && buf[2] == 0x5 &&
-+             buf[3] == 0x6 && buf[4] == 0x7 && buf[5] == 0x8);
-+
-+    g_assert(fifo8_num_used(&fifo) == 2);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_pop_bufptr(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4 };
-+    const uint8_t *buf;
-+    uint32_t count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in, sizeof(data_in));
-+    buf = fifo8_pop_bufptr(&fifo, 2, &count);
-+    g_assert(count == 2);
-+    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
-+
-+    g_assert(fifo8_num_used(&fifo) == 2);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_peek_bufptr_wrap(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
-+    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2 };
-+    const uint8_t *buf;
-+    uint32_t count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
-+    buf = fifo8_peek_bufptr(&fifo, 2, &count);
-+    g_assert(count == 2);
-+    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
-+
-+    buf = fifo8_pop_bufptr(&fifo, 2, &count);
-+    g_assert(count == 2);
-+    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
-+    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
-+
-+    buf = fifo8_peek_bufptr(&fifo, 8, &count);
-+    g_assert(count == 6);
-+    g_assert(buf[0] == 0x3 && buf[1] == 0x4 && buf[2] == 0x5 &&
-+             buf[3] == 0x6 && buf[4] == 0x7 && buf[5] == 0x8);
-+
-+    g_assert(fifo8_num_used(&fifo) == 8);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_peek_bufptr(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4 };
-+    const uint8_t *buf;
-+    uint32_t count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in, sizeof(data_in));
-+    buf = fifo8_peek_bufptr(&fifo, 2, &count);
-+    g_assert(count == 2);
-+    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
-+
-+    g_assert(fifo8_num_used(&fifo) == 4);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_pop_buf_wrap(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
-+    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2, 0x3, 0x4 };
-+    uint8_t data_out[4];
-+    int count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
-+    fifo8_pop_buf(&fifo, NULL, 4);
-+
-+    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
-+    count = fifo8_pop_buf(&fifo, NULL, 4);
-+    g_assert(count == 4);
-+    count = fifo8_pop_buf(&fifo, data_out, 4);
-+    g_assert(count == 4);
-+    g_assert(data_out[0] == 0x1 && data_out[1] == 0x2 &&
-+             data_out[2] == 0x3 && data_out[3] == 0x4);
-+
-+    g_assert(fifo8_num_used(&fifo) == 0);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_pop_buf(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8 };
-+    uint8_t data_out[] = { 0xff, 0xff, 0xff, 0xff };
-+    int count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in, sizeof(data_in));
-+    count = fifo8_pop_buf(&fifo, NULL, 4);
-+    g_assert(count == 4);
-+    count = fifo8_pop_buf(&fifo, data_out, 4);
-+    g_assert(data_out[0] == 0x5 && data_out[1] == 0x6 &&
-+             data_out[2] == 0x7 && data_out[3] == 0x8);
-+
-+    g_assert(fifo8_num_used(&fifo) == 0);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_peek_buf_wrap(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
-+    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2, 0x3, 0x4 };
-+    uint8_t data_out[4];
-+    int count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
-+    fifo8_pop_buf(&fifo, NULL, 4);
-+
-+    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
-+    count = fifo8_peek_buf(&fifo, NULL, 4);
-+    g_assert(count == 4);
-+    count = fifo8_peek_buf(&fifo, data_out, 4);
-+    g_assert(count == 4);
-+    g_assert(data_out[0] == 0x5 && data_out[1] == 0x6 &&
-+             data_out[2] == 0x7 && data_out[3] == 0x8);
-+
-+    g_assert(fifo8_num_used(&fifo) == 8);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_peek_buf(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4 };
-+    uint8_t data_out[] = { 0xff, 0xff, 0xff, 0xff };
-+    int count;
-+
-+    fifo8_create(&fifo, 8);
-+
-+    fifo8_push_all(&fifo, data_in, sizeof(data_in));
-+    count = fifo8_peek_buf(&fifo, NULL, 4);
-+    g_assert(count == 4);
-+    g_assert(data_out[0] == 0xff && data_out[1] == 0xff &&
-+             data_out[2] == 0xff && data_out[3] == 0xff);
-+
-+    count = fifo8_peek_buf(&fifo, data_out, 4);
-+    g_assert(count == 4);
-+    g_assert(data_out[0] == 0x1 && data_out[1] == 0x2 &&
-+             data_out[2] == 0x3 && data_out[3] == 0x4);
-+
-+    g_assert(fifo8_num_used(&fifo) == 4);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_peek(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t c;
-+
-+    fifo8_create(&fifo, 8);
-+    fifo8_push(&fifo, 0x1);
-+    fifo8_push(&fifo, 0x2);
-+
-+    c = fifo8_peek(&fifo);
-+    g_assert(c == 0x1);
-+    fifo8_pop(&fifo);
-+    c = fifo8_peek(&fifo);
-+    g_assert(c == 0x2);
-+
-+    g_assert(fifo8_num_used(&fifo) == 1);
-+    fifo8_destroy(&fifo);
-+}
-+
-+static void test_fifo8_pushpop(void)
-+{
-+    Fifo8 fifo;
-+    uint8_t c;
-+
-+    fifo8_create(&fifo, 8);
-+    fifo8_push(&fifo, 0x1);
-+    fifo8_push(&fifo, 0x2);
-+
-+    c = fifo8_pop(&fifo);
-+    g_assert(c == 0x1);
-+    c = fifo8_pop(&fifo);
-+    g_assert(c == 0x2);
-+
-+    g_assert(fifo8_num_used(&fifo) == 0);
-+    fifo8_destroy(&fifo);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_add_func("/fifo8/pushpop", test_fifo8_pushpop);
-+    g_test_add_func("/fifo8/peek", test_fifo8_peek);
-+    g_test_add_func("/fifo8/peek_buf", test_fifo8_peek_buf);
-+    g_test_add_func("/fifo8/peek_buf_wrap", test_fifo8_peek_buf_wrap);
-+    g_test_add_func("/fifo8/pop_buf", test_fifo8_pop_buf);
-+    g_test_add_func("/fifo8/pop_buf_wrap", test_fifo8_pop_buf_wrap);
-+    g_test_add_func("/fifo8/peek_bufptr", test_fifo8_peek_bufptr);
-+    g_test_add_func("/fifo8/peek_bufptr_wrap", test_fifo8_peek_bufptr_wrap);
-+    g_test_add_func("/fifo8/pop_bufptr", test_fifo8_pop_bufptr);
-+    g_test_add_func("/fifo8/pop_bufptr_wrap", test_fifo8_pop_bufptr_wrap);
-+    return g_test_run();
-+}
+Either we need todo the right thing and auto-set rust target based
+on QEMU target (preferred), or we need to make it a fatal error
+when rust target is omitted & QEMU is building a non-host target.
+
+
+With regards,
+Daniel
 -- 
-2.39.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
