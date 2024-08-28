@@ -4,88 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09A3C636E5
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 17:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCF0AC636E5
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 17:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjM4t-0001IO-1r; Wed, 28 Aug 2024 13:03:27 -0400
+	id 1sjMEM-0005o2-In; Wed, 28 Aug 2024 13:13:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.66cf54ce.v1-e832e1df9d694d8dac74261a755d2d7c@bounce.vates.tech>)
- id 1sjM4q-0001HF-NS
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 13:03:24 -0400
-Received: from mail187-32.suw11.mandrillapp.com ([198.2.187.32])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sjMEK-0005mh-OP
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 13:13:12 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.66cf54ce.v1-e832e1df9d694d8dac74261a755d2d7c@bounce.vates.tech>)
- id 1sjM4n-0008HI-Nw
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 13:03:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
- s=mte1; t=1724863694; x=1725124194;
- bh=8NvK91ipe60HCoJYurXZDNDoH6ucf6ji/cyjBADJiGw=;
- h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=qylCvrzJLY0ccwpvzEV0owT4LCWYcvLo7Z/pGojFryzVVjmwiKkAfUfIezwV5an/e
- DhSkQ0T3guKUJwJb9cacSQEMtDTWYPBKlNhdLR6jXzUg85kZOokG77V+/Oblmt3o+C
- LcvGib4CYw1kD2vT+Zh9RCvdm7Em+qCzwEoEC+yBbDXK7LDMrCwP1+d74XMxU5zhGA
- eCfMpmnHp1arBe/hoSEJOJgD1YvBWyGE97gyu9sO7Gq3MEfJdHc7MqKKVhhoIB3CqE
- 6zwEd+DiKF0MrgsFmWl8baVLezVc+L4dy0IPIxoq0QpTO2dMWC4IN7DhryBIGWzF29
- x6I0yFx0l2CXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
- t=1724863694; x=1725124194; i=anthony.perard@vates.tech;
- bh=8NvK91ipe60HCoJYurXZDNDoH6ucf6ji/cyjBADJiGw=;
- h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=bTYaD2hnMc+BbPzw3L5NyKUg16FRWTeVRoejFBUdz+ouasejtQwSKMpxHEKEwK3Jo
- ww/trbe3j/07ehlpdigWRLRXM0bEjOaQclumiJNM5a3saF/fu17fUduJPaz+GikWhi
- o3vD3xKt7IhvPkeIe28fzt4wg+IYYRt3Mdwm3KnvPZKx6gerXOoYfesPEmn0ZJ/AFL
- gw6HXYpEFF76BHGQhf0WFOwJ78htw8tbuPp7wQEW1ViuKQ6yYiyD1A1AqJ5S2gicFS
- UrdI6fQk3tSJp2Puu76mC+ipJ3DW4JP6/oKAqKpK+Lffezji4sP2bpLauMYoBrvhtP
- lm9ZWywd/+6Hg==
-Received: from pmta09.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
- by mail187-32.suw11.mandrillapp.com (Mailchimp) with ESMTP id
- 4Wv9Mf3dhCzQXgCsr
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 16:48:14 +0000 (GMT)
-From: Anthony PERARD <anthony.perard@vates.tech>
-Subject: =?utf-8?Q?Re:=20[PATCH=20v3=203/3]=20Do=20not=20access=20/dev/mem=20in=20MSI-X=20PCI=20passthrough=20on=20Xen?=
-Received: from [37.26.189.201] by mandrillapp.com id
- e832e1df9d694d8dac74261a755d2d7c; Wed, 28 Aug 2024 16:48:14 +0000
-X-Bm-Disclaimer: Yes
-X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1724863693032
-To: =?utf-8?Q?Marek=20Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Paul Durrant <paul@xen.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Message-Id: <Zs9UzJVsjKU0/frk@l14>
-References: <cover.f5d45e3c2fb87552abfaf80982b0b724fca2134c.1714955598.git-series.marmarek@invisiblethingslab.com>
- <ebeb8c419feedad9fe0e9f39d3ed3a9ff0f4c49b.1714955598.git-series.marmarek@invisiblethingslab.com>
-In-Reply-To: <ebeb8c419feedad9fe0e9f39d3ed3a9ff0f4c49b.1714955598.git-series.marmarek@invisiblethingslab.com>
-X-Native-Encoded: 1
-X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
- =20including=20all=20headers,
- =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.e832e1df9d694d8dac74261a755d2d7c?=
-X-Mandrill-User: md_30504962
-Feedback-ID: 30504962:30504962.20240828:md
-Date: Wed, 28 Aug 2024 16:48:14 +0000
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sjMEJ-0000se-0C
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 13:13:12 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 219A8A40885;
+ Wed, 28 Aug 2024 17:12:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69F6C4CEC0;
+ Wed, 28 Aug 2024 17:13:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1724865182;
+ bh=tDtYbwB/YhvyKuU+oVhSe84C7DG/yQsQ73QFdvJXmLk=;
+ h=Date:From:To:Subject:From;
+ b=XpoYtJG9Lgv8VgRTtlw34mJFzufjAJ24j/Ju28eyQeKbYse8onVdcm1UuXPtx6mNK
+ R6s9e5NY7uOWnNiDHCuTKDK4shj/YP4MfjC2btatmt1aq6r5jtQ90NeP6B9PYMAgmE
+ J9price2mVCEXlEvHT/41Ku2DbYWvsDVtV5bJ6KUQgPlq+YJ/kevpywEW6jEbs+VWa
+ jB5Ep3sfqmJWi2T9Mqv0zgU63ezEK/ISkdiq7HhKlT3M1w9oVavQcGwA4PcRGS7/7w
+ /6clqbmXbHe2K5usafUea2m2uqYQtsyNmxhnTfhEZmmiD8m0s8ChgXmZxEJVW8lmrw
+ +zE238Px09A9A==
+Date: Wed, 28 Aug 2024 19:12:59 +0200
+From: Helge Deller <deller@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: qemu-hppa-user: crashes immediately in hppa chroot
+Message-ID: <Zs9am5fIuo3eXoKF@p100>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=198.2.187.32;
- envelope-from=bounce-md_30504962.66cf54ce.v1-e832e1df9d694d8dac74261a755d2d7c@bounce.vates.tech;
- helo=mail187-32.suw11.mandrillapp.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=deller@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,52 +65,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 06, 2024 at 02:33:22AM +0200, Marek Marczykowski-G=C3=B3recki w=
-rote:
-> diff --git a/hw/xen/xen_pt_msi.c b/hw/xen/xen_pt_msi.c
-> index 09cca4e..836cc9c 100644
-> --- a/hw/xen/xen_pt_msi.c
-> +++ b/hw/xen/xen_pt_msi.c
-> @@ -493,7 +501,12 @@ static uint64_t pci_msix_read(void *opaque, hwaddr a=
-ddr,
->          return get_entry_value(&msix->msix_entry[entry_nr], offset);
->      } else {
->          /* Pending Bit Array (PBA) */
-> -        return *(uint32_t *)(msix->phys_iomem_base + addr);
-> +        if (s->msix->phys_iomem_base) {
-> +            return *(uint32_t *)(msix->phys_iomem_base + addr);
-> +        }
-> +        XEN_PT_LOG(&s->dev, "reading PBA, addr 0x%lx, offset 0x%lx\n",
-> +                   addr, addr - msix->total_entries * PCI_MSIX_ENTRY_SIZ=
-E);
-> +        return 0xFFFFFFFF;
+Hi Richard,
 
-If Xen advertise XENFEAT_dm_msix_all_writes, we are not expecting QEMU
-to reach this code, right? A comment might be useful.
+I tested qemu-user from v9.1-rc4 for hppa and noticed that it crashes
+immediately when starting a hppa chroot.
 
->      }
->  }
->  
-> @@ -576,33 +593,40 @@ int xen_pt_msix_init(XenPCIPassthroughState *s, uin=
-t32_t base)
->      msix->table_base =3D s->real_device.io_regions[bar_index].base_addr;
->      XEN_PT_LOG(d, "get MSI-X table BAR base 0x%"PRIx64"\n", msix->table_=
-base);
->  
-> +    /* Accessing /dev/mem is needed only on older Xen. */
-> +    if (!(xc_version_info.submap & (1U << XENFEAT_dm_msix_all_writes))) =
-{
+I was able to bisect the segfault back to
+commit 081a0ed188d8d9d9038f00337d331d185a7ae331
+Author: Richard Henderson <richard.henderson@linaro.org>
+Date:   Wed Mar 27 13:04:00 2024 -1000
+    target/hppa: Do not mask in copy_iaoq_entry
 
-Would it be ok to use test_bit() instead?
+This commit does not apply to git head any longer, but when I instead
+apply this (modified) patch the segfault vanishes:
 
-Thanks,
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -664,6 +664,11 @@ static void copy_iaoq_entry(DisasContext *ctx, TCGv_i64 dest,
+                             const DisasIAQE *src)
+ {
+     tcg_gen_addi_i64(dest, src->base ? : cpu_iaoq_f, src->disp);
++
++#if CONFIG_USER_ONLY
++    uint64_t mask = gva_offset_mask(ctx->tb_flags);
++    tcg_gen_andi_i64(dest, dest, mask);
++#endif
+ }
+ 
+Any idea or suggestion to fix it?
 
--- 
-
-Anthony Perard | Vates XCP-ng Developer
-
-XCP-ng & Xen Orchestra - Vates solutions
-
-web: https://vates.tech
-
+Helge
 
