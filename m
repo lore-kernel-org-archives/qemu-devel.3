@@ -4,78 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B0DC5AE5A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 14:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E544C5B557
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 14:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjJtB-0002JG-0F; Wed, 28 Aug 2024 10:43:13 -0400
+	id 1sjK6Z-0002U9-7o; Wed, 28 Aug 2024 10:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sjJt9-0002A9-GJ
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 10:43:11 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sjK6V-0002ND-Rv
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 10:56:59 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sjJt7-0000dU-5U
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 10:43:11 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a7a843bef98so659602966b.2
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 07:43:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724856187; x=1725460987; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hpVn81vMDt7oTw6ywsivWZmGXqKq2KnSx//V2GcwNPE=;
- b=mi+UCsGr6kJ89p67MdPSo1R3pIPA8m+58XR7MCNAn9Sfs9WqNPvW79+l4IJV0U0c62
- uovHxQsNGayoNQ228lB1e8vwHzD2I9OD3J8SEnlR7IchIpwrga8n7BVKrp5RX/SHnUbi
- q2KEonuKTadBcGPTRmnCAgDvXV1uvgMR7X78z19BEfO03xpxumPs1rCebG9/eQ6JyWxg
- 6wTZFwIVqgTk5LhfHM3O13xUeW0JjR1bq7Tb+DdFGp2O9s7iJ5RE5Dvo084O8wkqwK1o
- ImzHIsPoH7X9X8z9sua8sd6mNL2VeMz1lnjzOZfD1bNqPLRTKWQyJLwbxc9R8YAbNm1q
- jNtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724856187; x=1725460987;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hpVn81vMDt7oTw6ywsivWZmGXqKq2KnSx//V2GcwNPE=;
- b=XNVB0q3rZ6fJuUH3aC61jHjJDVtop8pp72c8H5vpJDdM3sgmR+xuk6tjrytLEaPyE1
- nnpot7IuhdfcuDmuyn+13T0ov/1Uy/MKf4zsKErqmc1WbVGelRi/oCkErwqq2f/zTT+c
- RCMBnm0AlFrxw734uQYpy0R2O3oaBJKb9RIOo35+ZLSq9fiERKPSqmlw4zA78cUqd293
- 4H/pnRf3HI8Nfbu/Ip0n2wBKDr+x7sDG5hPLO/MadWLlm0R4nL1BsvmfmetW5TEY5ewH
- Ak2dO29LuiC2sHYCQaBIYs7T9jQ9cSWddr2556ARBc3w28WhzfiV3OlUuKQptZUT/+fw
- 5OPQ==
-X-Gm-Message-State: AOJu0YxgWgE+W1sUKbKERBAm/ptyqxK3QVvR9W84VcX2gku8xGv9jH3g
- LwWGE/uSH0LPfrvWcVDirOhf4thJxTzGKfhkupLOyWJ3/AAkP+6VDstw2RY8
-X-Google-Smtp-Source: AGHT+IHrAYQHjSYlXUDX+ubTdzqvMQcN7UY1cXgE3SFMxxqqRxL8Mnks8gvnxDnfKCWatyxrJQKjxg==
-X-Received: by 2002:a17:907:7214:b0:a7a:9f0f:ab26 with SMTP id
- a640c23a62f3a-a86a52b36b2mr1204181166b.23.1724856185930; 
- Wed, 28 Aug 2024 07:43:05 -0700 (PDT)
-Received: from top.fritz.box (p4fd6b0d7.dip0.t-ipconnect.de. [79.214.176.215])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e54852e9sm252483866b.37.2024.08.28.07.43.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Aug 2024 07:43:05 -0700 (PDT)
-From: Michael Vogt <michael.vogt@gmail.com>
-X-Google-Original-From: Michael Vogt <mvogt@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sjK6U-00027h-6M
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 10:56:59 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 2510F1FC31;
+ Wed, 28 Aug 2024 14:56:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724857016; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UP+7srMjrosEIrUzHZWN1svuA5ODS+yKmeGwisfan0k=;
+ b=BgEeMkYdU30qvRx84SJdLd/RJwW4AEFgG5xTHQIeT4LDXBhvcSC+t/dztJ74tb2FA8igOO
+ 3TMmXih+5TV+coiTQh4icL+K+yzUg6b6k/96LQwb0b3ia7IogyiNCXsCLZUjFYSW7x0kUq
+ WMKoF0BLEinQAQ92LhsZ9dxze2dsETk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724857016;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UP+7srMjrosEIrUzHZWN1svuA5ODS+yKmeGwisfan0k=;
+ b=Sx0DOL9TrBgxHOqJjBoLdbbvTBTFZppUnq+Q4zXhXYZlBxHEU8C5sIOhL604Y2o9AVCrqX
+ DaVyeA/CcYl+vSCQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=BgEeMkYd;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Sx0DOL9T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724857016; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UP+7srMjrosEIrUzHZWN1svuA5ODS+yKmeGwisfan0k=;
+ b=BgEeMkYdU30qvRx84SJdLd/RJwW4AEFgG5xTHQIeT4LDXBhvcSC+t/dztJ74tb2FA8igOO
+ 3TMmXih+5TV+coiTQh4icL+K+yzUg6b6k/96LQwb0b3ia7IogyiNCXsCLZUjFYSW7x0kUq
+ WMKoF0BLEinQAQ92LhsZ9dxze2dsETk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724857016;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UP+7srMjrosEIrUzHZWN1svuA5ODS+yKmeGwisfan0k=;
+ b=Sx0DOL9TrBgxHOqJjBoLdbbvTBTFZppUnq+Q4zXhXYZlBxHEU8C5sIOhL604Y2o9AVCrqX
+ DaVyeA/CcYl+vSCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F1BAE1398F;
+ Wed, 28 Aug 2024 14:56:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4J6ALbY6z2YnRgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 28 Aug 2024 14:56:54 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
-	Michael Vogt <mvogt@redhat.com>
-Subject: [PATCH] linux-user: add openat2 support in linux-user
-Date: Wed, 28 Aug 2024 16:42:28 +0200
-Message-ID: <20240828144227.32977-2-mvogt@redhat.com>
-X-Mailer: git-send-email 2.45.2
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v7 1/4] migration/multifd: Stop changing the packet on recv
+ side
+Date: Wed, 28 Aug 2024 11:56:47 -0300
+Message-Id: <20240828145650.15879-2-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240828145650.15879-1-farosas@suse.de>
+References: <20240828145650.15879-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=michael.vogt@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Rspamd-Queue-Id: 2510F1FC31
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-5.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,198 +133,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds support for the `openat2()` syscall in the
-`linux-user` userspace emulator.
+As observed by Philippe, the multifd_ram_unfill_packet() function
+currently leaves the MultiFDPacket structure with mixed
+endianness. This is harmless, but ultimately not very clean.
 
-It is implemented by extracting a new helper `maybe_do_fake_open()`
-out of the exiting `do_guest_openat()` and share that with the
-new `do_guest_openat2()`. Unfortunatly we cannot just make
-do_guest_openat2() a superset of do_guest_openat() because the
-openat2() syscall is stricter with the argument checking and
-will return an error for invalid flags or mode combinations (which
-open()/openat() will ignore).
+Stop touching the received packet and do the necessary work using
+stack variables instead.
 
-Note that in this commit using openat2() for a "faked" file in
-/proc will ignore the "resolve" flags. This is not great but it
-seems similar to the exiting behavior when openat() is called
-with a dirfd to "/proc". Here too the fake file lookup may
-not catch the special file because "realpath()" is used to
-determine if the path is in /proc. Alternatively to ignoring
-we could simply fail with `-TARGET_ENOSYS` (or similar) if
-`resolve` flags are passed and we found something that looks
-like a file in /proc that needs faking.
+While here tweak the error strings and fix the space before
+semicolons. Also remove the "100 times bigger" comment because it's
+just one possible explanation for a size mismatch and it doesn't even
+match the code.
 
-Signed-off-by: Michael Vogt <mvogt@redhat.com>
-
-Buglink: https://github.com/osbuild/bootc-image-builder/issues/619
+CC: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- linux-user/qemu.h         |  4 +++
- linux-user/syscall.c      | 73 ++++++++++++++++++++++++++++++++++++---
- linux-user/syscall_defs.h |  7 ++++
- meson.build               |  1 +
- 4 files changed, 81 insertions(+), 4 deletions(-)
+ migration/multifd-nocomp.c | 29 ++++++++++++-----------------
+ migration/multifd.c        | 20 +++++++++-----------
+ 2 files changed, 21 insertions(+), 28 deletions(-)
 
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 2e90a97175..47b6d7da88 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -164,6 +164,10 @@ struct TaskState {
- abi_long do_brk(abi_ulong new_brk);
- int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *pathname,
-                     int flags, mode_t mode, bool safe);
-+#ifdef HAVE_OPENAT2_H
-+int do_guest_openat2(CPUArchState *cpu_env, int dirfd, const char *pathname,
-+                     struct target_open_how *how, bool safe);
-+#endif
- ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz);
+diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+index f294d1b0b2..07c63f4a72 100644
+--- a/migration/multifd-nocomp.c
++++ b/migration/multifd-nocomp.c
+@@ -220,33 +220,28 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
+     MultiFDPacket_t *packet = p->packet;
+     uint32_t page_count = multifd_ram_page_count();
+     uint32_t page_size = multifd_ram_page_size();
++    uint32_t pages_per_packet = be32_to_cpu(packet->pages_alloc);
+     int i;
  
- /* user access */
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 9d5415674d..f3a47bbfc0 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -85,6 +85,12 @@
- #include <sys/kcov.h>
- #endif
- 
-+#ifdef HAVE_OPENAT2_H
-+#include <linux/openat2.h>
-+/* glibc has no header for SYS_openat2 so we need to get it via syscall.h */
-+#include <sys/syscall.h>
-+#endif
-+
- #define termios host_termios
- #define winsize host_winsize
- #define termio host_termio
-@@ -653,6 +659,10 @@ safe_syscall3(ssize_t, read, int, fd, void *, buff, size_t, count)
- safe_syscall3(ssize_t, write, int, fd, const void *, buff, size_t, count)
- safe_syscall4(int, openat, int, dirfd, const char *, pathname, \
-               int, flags, mode_t, mode)
-+#ifdef HAVE_OPENAT2_H
-+safe_syscall4(int, openat2, int, dirfd, const char *, pathname, \
-+              const struct open_how *, how, size_t, size);
-+#endif
- #if defined(TARGET_NR_wait4) || defined(TARGET_NR_waitpid)
- safe_syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, \
-               struct rusage *, rusage)
-@@ -8334,8 +8344,9 @@ static int open_net_route(CPUArchState *cpu_env, int fd)
- }
- #endif
- 
--int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
--                    int flags, mode_t mode, bool safe)
-+static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
-+                              const char *fname, int flags, mode_t mode,
-+                              bool safe)
- {
-     g_autofree char *proc_name = NULL;
-     const char *pathname;
-@@ -8418,13 +8429,48 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
-         return fd;
+-    packet->pages_alloc = be32_to_cpu(packet->pages_alloc);
+-    /*
+-     * If we received a packet that is 100 times bigger than expected
+-     * just stop migration.  It is a magic number.
+-     */
+-    if (packet->pages_alloc > page_count) {
+-        error_setg(errp, "multifd: received packet "
+-                   "with size %u and expected a size of %u",
+-                   packet->pages_alloc, page_count) ;
++    if (pages_per_packet > page_count) {
++        error_setg(errp, "multifd: received packet with %u pages, expected %u",
++                   pages_per_packet, page_count);
+         return -1;
      }
  
-+    return -1;
-+}
-+
-+int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
-+                    int flags, mode_t mode, bool safe)
-+{
-+    int fd = maybe_do_fake_open(cpu_env, dirfd, fname, flags, mode, safe);
-+    if (fd >= 0)
-+        return fd;
-+
-     if (safe) {
--        return safe_openat(dirfd, path(pathname), flags, mode);
-+        return safe_openat(dirfd, path(fname), flags, mode);
-     } else {
--        return openat(dirfd, path(pathname), flags, mode);
-+        return openat(dirfd, path(fname), flags, mode);
+     p->normal_num = be32_to_cpu(packet->normal_pages);
+-    if (p->normal_num > packet->pages_alloc) {
+-        error_setg(errp, "multifd: received packet "
+-                   "with %u normal pages and expected maximum pages are %u",
+-                   p->normal_num, packet->pages_alloc) ;
++    if (p->normal_num > pages_per_packet) {
++        error_setg(errp, "multifd: received packet with %u non-zero pages, "
++                   "which exceeds maximum expected pages %u",
++                   p->normal_num, pages_per_packet);
+         return -1;
      }
- }
  
-+#ifdef HAVE_OPENAT2_H
-+int do_guest_openat2(CPUArchState *cpu_env, int dirfd, const char *fname,
-+                     struct target_open_how *how, bool safe)
-+{
-+    /*
-+     * Ideally we would pass "how->resolve" flags into this helper too but
-+     * the lookup for files that need faking is based on "realpath()" so
-+     * neither a dirfd for "proc" nor restrictions via "resolve" flags can
-+     * be honored right now.
-+     */
-+    int fd = maybe_do_fake_open(cpu_env, dirfd, fname, how->flags, how->mode,
-+                                safe);
-+    if (fd >= 0)
-+        return fd;
-+
-+    if (safe) {
-+        return safe_openat2(dirfd, fname, (struct open_how *)how,
-+                            sizeof(struct target_open_how));
-+    } else {
-+        return syscall(SYS_openat2, dirfd, fname, (struct open_hosw *)how,
-+                       sizeof(struct target_open_how));
-+    }
-+}
-+#endif
-+
- ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
+     p->zero_num = be32_to_cpu(packet->zero_pages);
+-    if (p->zero_num > packet->pages_alloc - p->normal_num) {
+-        error_setg(errp, "multifd: received packet "
+-                   "with %u zero pages and expected maximum zero pages are %u",
+-                   p->zero_num, packet->pages_alloc - p->normal_num) ;
++    if (p->zero_num > pages_per_packet - p->normal_num) {
++        error_setg(errp,
++                   "multifd: received packet with %u zero pages, expected maximum %u",
++                   p->zero_num, pages_per_packet - p->normal_num);
+         return -1;
+     }
+ 
+diff --git a/migration/multifd.c b/migration/multifd.c
+index b89715fdc2..2a8cd9174c 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -230,22 +230,20 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+ 
+ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
  {
-     ssize_t ret;
-@@ -9197,6 +9243,25 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         fd_trans_unregister(ret);
-         unlock_user(p, arg2, 0);
-         return ret;
-+#if defined(TARGET_NR_openat2) && defined(HAVE_OPENAT2_H)
-+    case TARGET_NR_openat2:
-+        {
-+            struct target_open_how how, *target_how;
-+            if (!(p = lock_user_string(arg2)))
-+                return -TARGET_EFAULT;
-+            if (!(lock_user_struct(VERIFY_READ, target_how, arg3, 1)))
-+                return -TARGET_EFAULT;
-+            how.flags = target_to_host_bitmask(target_how->flags,
-+                                               fcntl_flags_tbl);
-+            how.mode = tswap64(target_how->mode);
-+            how.resolve = tswap64(target_how->resolve);
-+            ret = get_errno(do_guest_openat2(cpu_env, arg1, p, &how, true));
-+            fd_trans_unregister(ret);
-+            unlock_user_struct(target_how, arg3, 0);
-+            unlock_user(p, arg2, 0);
-+            return ret;
-+        }
-+#endif
- #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
-     case TARGET_NR_name_to_handle_at:
-         ret = do_name_to_handle_at(arg1, arg2, arg3, arg4, arg5);
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index a00b617cae..2ae694261c 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2754,4 +2754,11 @@ struct target_sched_param {
-     abi_int sched_priority;
- };
+-    MultiFDPacket_t *packet = p->packet;
++    const MultiFDPacket_t *packet = p->packet;
++    uint32_t magic = be32_to_cpu(packet->magic);
++    uint32_t version = be32_to_cpu(packet->version);
+     int ret = 0;
  
-+/* from kernel's include/uapi/linux/openat2.h */
-+struct target_open_how {
-+    __u64 flags;
-+    __u64 mode;
-+    __u64 resolve;
-+};
-+
- #endif
-diff --git a/meson.build b/meson.build
-index fbda17c987..220ccbcbe6 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2465,6 +2465,7 @@ config_host_data.set('CONFIG_LINUX_MAGIC_H', cc.has_header('linux/magic.h'))
- config_host_data.set('CONFIG_VALGRIND_H', cc.has_header('valgrind/valgrind.h'))
- config_host_data.set('HAVE_BTRFS_H', cc.has_header('linux/btrfs.h'))
- config_host_data.set('HAVE_DRM_H', cc.has_header('libdrm/drm.h'))
-+config_host_data.set('HAVE_OPENAT2_H', cc.has_header('linux/openat2.h'))
- config_host_data.set('HAVE_PTY_H', cc.has_header('pty.h'))
- config_host_data.set('HAVE_SYS_DISK_H', cc.has_header('sys/disk.h'))
- config_host_data.set('HAVE_SYS_IOCCOM_H', cc.has_header('sys/ioccom.h'))
+-    packet->magic = be32_to_cpu(packet->magic);
+-    if (packet->magic != MULTIFD_MAGIC) {
+-        error_setg(errp, "multifd: received packet "
+-                   "magic %x and expected magic %x",
+-                   packet->magic, MULTIFD_MAGIC);
++    if (magic != MULTIFD_MAGIC) {
++        error_setg(errp, "multifd: received packet magic %x, expected %x",
++                   magic, MULTIFD_MAGIC);
+         return -1;
+     }
+ 
+-    packet->version = be32_to_cpu(packet->version);
+-    if (packet->version != MULTIFD_VERSION) {
+-        error_setg(errp, "multifd: received packet "
+-                   "version %u and expected version %u",
+-                   packet->version, MULTIFD_VERSION);
++    if (version != MULTIFD_VERSION) {
++        error_setg(errp, "multifd: received packet version %u, expected %u",
++                   version, MULTIFD_VERSION);
+         return -1;
+     }
+ 
 -- 
-2.45.2
+2.35.3
 
 
