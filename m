@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56816C5472D
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 06:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4589AC5472D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 06:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjC9n-0000wf-Mv; Wed, 28 Aug 2024 02:27:51 -0400
+	id 1sjCEX-0005XF-Iz; Wed, 28 Aug 2024 02:32:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sjC9m-0000vg-8K
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 02:27:50 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1sjCEV-0005WC-12
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 02:32:44 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sjC9j-0005H0-NJ
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 02:27:50 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2ef27bfd15bso63520051fa.2
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 23:27:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1sjCES-0005nH-5D
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 02:32:41 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-7c1324be8easo203838a12.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 23:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1724826460; x=1725431260; darn=nongnu.org;
- h=cc:to:subject:message-id:date:mime-version:user-agent:from
- :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=I83Qgu4ZdxpCcgkLl6EHwlxD/sGZbyf4u5rvmEQW3Ck=;
- b=kFzlBtcOGO/WGfzuC4KX0HOtuzTKOqg1i6i9pD9zRniNskVXoXgl0dS+7H9bI3xC8l
- Qlj/qLUr2RD9pCQakTkyowR4Nd/3oh5vNmUbRyS5EFf1NU3emQopqwtmml0vzzlGkFSp
- TNYfedZo/anTTPyAlsbanTVKMhapk2JS4wBN0HXv97IaT08KwBauAQs9WMsnr4Y4fNM4
- ou3rBNeGo/0zHh3B9zj61ejinGOTdFi7uVGYsur3f4gk9q3o+2M2G5CtCF6AvmxmjFWZ
- 9XQ3R5CauSv0Ejp0bW9Ab50MnG06K2+I88XKVrTPsCeTD2SuJT0U66AcyDpikdcnaXyr
- 0LcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724826460; x=1725431260;
- h=cc:to:subject:message-id:date:mime-version:user-agent:from
- :references:in-reply-to:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1724826748; x=1725431548; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I83Qgu4ZdxpCcgkLl6EHwlxD/sGZbyf4u5rvmEQW3Ck=;
- b=ls7TQaNHHnCpArxIiNHSbs7/PJmhUNouvlKh5i4hZqW0EoCQ0A62sVi9M3ePNy5ael
- z+y2qLkdiRHatLmDfGWe9NU8YA2YyB1YZyKfaMjdU1XEXM7OWni6WbBnVwDS+0md5ReS
- XlToIezCU7ahUccJswswrVYyb8GKQw+4R8YInhoJ+sLju6JJg3JNaytH7WS2eeJ+2ClU
- jPR3woqqb0oXfeFjUWl02yNE98We9H91yApsUKDvpO3gjblh6whNh9MUbwu9MfvBQ89D
- p4tmSyZ4KBcD+z01qqrDD/4/18JpzHhP6r8USNr1ArWSlU7DO6Qe2KVPiZiitH/jtYmC
- Uazw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtJOc4YbZdgk9V1bLGhhA9Gmp54IpZ15zLf/lABGB9iLupC3O3BBU45luNAk1uF9LciWD2U5LdIRfT@nongnu.org
-X-Gm-Message-State: AOJu0YyCd3N+QR0V6BFMLk07aoItqnEAAkSyovXOnTI8jBfoAJhQ3Spd
- fvThmxcB6OCrJ3PCcDOIxEaoMe6geiVly0B89nwjlahIu1xLG7xxYK+xkNho5frTMzW5lz2zMeT
- 5b1pnfRLXQSbRn7X4DpXcPq0D5DN9tUMVkSn3iw==
-X-Google-Smtp-Source: AGHT+IH5OTeZxw91OUrp3E1kTtisorz8hLNo86TETIOcSbFHWEZgM9p8VLJzmKUhp5mmHfpJprWl5KAc+Qrwl625I3o=
-X-Received: by 2002:a2e:f11:0:b0:2ef:2cbc:9072 with SMTP id
- 38308e7fff4ca-2f561845cbemr4886111fa.49.1724826459736; Tue, 27 Aug 2024
- 23:27:39 -0700 (PDT)
-Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
- Wed, 28 Aug 2024 06:27:39 +0000
-In-Reply-To: <Zs6_YDFJOmEvPTAT@cormorant.local>
-References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
- <20240712023650.45626-10-luchangqi.123@bytedance.com>
- <Zs6_YDFJOmEvPTAT@cormorant.local>
-From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
-User-Agent: Mozilla Thunderbird
-X-Original-From: =?UTF-8?B?5Y2i6ZW/5aWHIDxsdWNoYW5ncWkuMTIzQGJ5dGVkYW5jZS5jb20+?=
-Mime-Version: 1.0
-Date: Wed, 28 Aug 2024 06:27:39 +0000
-Message-ID: <CAO5cSZCzBFeNq7_=a+6A5rcrKE1gNm+QSDtXBAu37ZYE1KLPWA@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v9 09/10] hw/nvme: add reservation protocal
- command
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com, 
- hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
- kbusch@kernel.org, foss@defmacro.it, philmd@linaro.org, 
- pizhenwei@bytedance.com, Klaus Jensen <k.jensen@samsung.com>
-Content-Type: multipart/alternative; boundary="0000000000006ef99a0620b87482"
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-lj1-x236.google.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ bh=l6+Q831oNhFbMnhUfiTPapCUmkbhTxTMQ5+H4SSjAN8=;
+ b=iPG1Sz5PzdahPQ/M+EpkoY5KC5DJv/NZxs9n6KwMWomn7xrb2cTgpx4ULwH7SqZuyc
+ 02kkE3UbyByPqRhEmgNhBC+F4WYvGIwyqb1+gG6mmoKE8MZnZ5ni9XDPoOMKkuFenvyZ
+ zUNvWvchRe55e1WqKN3GYtgmtvWBV+fJwBAQJ8uN98i+jGOo/Yt5NJnVMg8fWNOu/IrH
+ THqtfbjrI6cSmvLGdw0MIOKy6Y2x4+CamP0I0HbraaovXrNcI2u9ej48JsR1VT1uyJY+
+ hDK9zR+5eOTrKpOdf6Mi6+FoEMLU+sOnFh9Y+Aquw62YHfXUFsFqVWiSiJwrTB+pFa3y
+ j4IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724826748; x=1725431548;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=l6+Q831oNhFbMnhUfiTPapCUmkbhTxTMQ5+H4SSjAN8=;
+ b=tZB5noJ2iwhzW8ARqYgNqJFDC58EPDHtpcHbdbVhJiAtkrWBe6CwaS2CBvBQTlKfVo
+ pmC/CnEMJaPAfbJXslZOEVGUDUWGsYmxAuMRIoIbz39JDrIkWkYESxCSxXOdasyU/QJo
+ TogDsvBsKO3X8Avrx+7QJ34hpmUVXgirMI1Rop5QU0yDwYxFSkoYVY5Vdzgk6DpJ9hHQ
+ yRBJ46OaFlGxHYXWuo6uLTAVY705+9HVG9OujXYPqmfNq8A6NRiYo7cyAQiIyf/LMa6O
+ SE0QziuvaNOh/J419qzMO41iNMUf8NWwgEkBK/l6JaAw7S+2JiTBxJayXTP4Ybbu5+PU
+ Lg0g==
+X-Gm-Message-State: AOJu0YzVDR8UU9aU/JlNNt9uZLGb0R7zcZwY4cpHu0JvXyKEi/yndjmj
+ NCw8W43ZMQatrFOTzp7B20mtWiJqXZHIePH7i034eYIoNbIRMFR1s1HzYXqC7z7UBA==
+X-Google-Smtp-Source: AGHT+IGZ07wT7LRkYiYslVSvbipP8hYPJNnHRYUQ3Yez+UFFUs6YS199vFYYSqeLphs/u0tXmC7KzQ==
+X-Received: by 2002:a17:90a:644c:b0:2c9:90fa:b9f8 with SMTP id
+ 98e67ed59e1d1-2d843d6f66dmr1803111a91.10.1724826747178; 
+ Tue, 27 Aug 2024 23:32:27 -0700 (PDT)
+Received: from chaos.lan ([50.46.173.74]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d84461411asm763970a91.24.2024.08.27.23.32.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Aug 2024 23:32:26 -0700 (PDT)
+From: Rowan Hart <rowanbhart@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Rowan Hart <rowanbhart@gmail.com>
+Subject: [PATCH 1/1] plugins: add API to read guest CPU memory from hwaddr
+Date: Tue, 27 Aug 2024 23:32:24 -0700
+Message-ID: <20240828063224.291503-2-rowanbhart@gmail.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240828063224.291503-1-rowanbhart@gmail.com>
+References: <20240828063224.291503-1-rowanbhart@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,217 +95,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006ef99a0620b87482
-Content-Type: text/plain; charset="UTF-8"
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+---
+ include/qemu/qemu-plugin.h   | 22 ++++++++++++++++++++++
+ plugins/api.c                | 17 +++++++++++++++++
+ plugins/qemu-plugins.symbols |  2 ++
+ 3 files changed, 41 insertions(+)
 
-Hi,
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index c71c705b69..25f39c0960 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -868,6 +868,28 @@ QEMU_PLUGIN_API
+ int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+                               GByteArray *buf);
+ 
++/**
++ * qemu_plugin_read_cpu_memory_hwaddr() - read CPU memory from hwaddr
++ *
++ * @addr: A virtual address to read from
++ * @data: A byte array to store data into
++ * @len: The number of bytes to read, starting from @addr
++ *
++ * @len bytes of data is read starting at @addr and stored into @data. If @data
++ * is not large enough to hold @len bytes, it will be expanded to the necessary
++ * size, reallocating if necessary. @len must be greater than 0.
++ *
++ * This function does not ensure writes are flushed prior to reading, so
++ * callers should take care when calling this function in plugin callbacks to
++ * avoid attempting to read data which may not yet be written and should use
++ * the memory callback API instead.
++ *
++ * Returns true on success and false on failure.
++ */
++QEMU_PLUGIN_API
++bool qemu_plugin_read_cpu_memory_hwaddr(uint64_t addr,
++                                          GByteArray *data, size_t len);
++
+ /**
+  * qemu_plugin_scoreboard_new() - alloc a new scoreboard
+  *
+diff --git a/plugins/api.c b/plugins/api.c
+index 2ff13d09de..c87bed6641 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -527,6 +527,22 @@ GArray *qemu_plugin_get_registers(void)
+     return create_register_handles(regs);
+ }
+ 
++bool qemu_plugin_read_cpu_memory_hwaddr(uint64_t addr,
++                                        GByteArray *data, uint64_t len)
++{
++#ifndef CONFIG_USER_ONLY
++    if (len == 0) {
++        return false;
++    }
++
++    g_byte_array_set_size(data, len);
++    cpu_physical_memory_rw(addr, (void *)data->data, len, 0);
++    return true;
++#else
++    return false;
++#endif
++}
++
+ int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+ {
+     g_assert(current_cpu);
+@@ -534,6 +550,7 @@ int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+     return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
+ }
+ 
++
+ struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
+ {
+     return plugin_scoreboard_new(element_size);
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index ca773d8d9f..5d9cfd71bb 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -20,6 +20,8 @@
+   qemu_plugin_num_vcpus;
+   qemu_plugin_outs;
+   qemu_plugin_path_to_binary;
++  qemu_plugin_read_cpu_memory_hwaddr;
++  qemu_plugin_read_io_memory_hwaddr;
+   qemu_plugin_read_register;
+   qemu_plugin_register_atexit_cb;
+   qemu_plugin_register_flush_cb;
+-- 
+2.46.0
 
-Thanks for your advice.
-Previously, g_malloc0 was used, but a segmentation
-fault occurred during testing. Later, debugging
-revealed that a field in struct NvmeReservationStatusExt,
-struct NvmeRegisteredCtrlExt regctl_eds[], was a
-variable-length array. Therefore, g_malloc was used
-to apply after the array length was determined.
-Therefore, g_malloc0 was not used here.
-
-On 2024/8/28 14:10, Klaus Jensen wrote:
-> On Jul 12 10:36, Changqi Lu wrote:
->> Add reservation acquire, reservation register,
->> reservation release and reservation report commands
->> in the nvme device layer.
->>
->> By introducing these commands, this enables the nvme
->> device to perform reservation-related tasks, including
->> querying keys, querying reservation status, registering
->> reservation keys, initiating and releasing reservations,
->> as well as clearing and preempting reservations held by
->> other keys.
->>
->> These commands are crucial for management and control of
->> shared storage resources in a persistent manner.
->> Signed-off-by: Changqi Lu
->> Signed-off-by: zhenwei pi
->> Acked-by: Klaus Jensen
->> ---
->> hw/nvme/ctrl.c | 318 +++++++++++++++++++++++++++++++++++++++++++
->> hw/nvme/nvme.h | 4 +
->> include/block/nvme.h | 37 +++++
->> 3 files changed, 359 insertions(+)
->>
->
->> +static int nvme_read_reservation_cb(NvmeReadReservation *reservation)
->> +{
->> + int rc;
->> + NvmeReservationStatus *nvme_status;
->> + NvmeRequest *req = reservation->req;
->> + NvmeCtrl *n = req->sq->ctrl;
->> + NvmeResvKeys *keys_info = reservation->keys_info;
->> + int len = sizeof(NvmeReservationStatusHeader) +
->> + sizeof(NvmeRegisteredCtrl) * keys_info->num_keys;
->> +
->> + nvme_status = g_malloc(len);
->> + nvme_status->header.gen = reservation->generation;
->> + nvme_status->header.rtype = block_pr_type_to_nvme(reservation->type);
->> + nvme_status->header.regctl = keys_info->num_keys;
->> + for (int i = 0; i < keys_info->num_keys; i++) {
->> + nvme_status->regctl_ds[i].cntlid = nvme_ctrl(req)->cntlid;
->> + nvme_status->regctl_ds[i].rkey = keys_info->keys[i];
->> + nvme_status->regctl_ds[i].rcsts = keys_info->keys[i] ==
->> + reservation->key ? 1 : 0;
->> + /* hostid is not supported currently */
->> + memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
->> + }
->> +
->> + rc = nvme_c2h(n, (uint8_t *)nvme_status, len, req);
->> + g_free(nvme_status);
->> + return rc;
->> +}
->> +
->> +static int nvme_read_reservation_ext_cb(NvmeReadReservation
-*reservation)
->> +{
->> + int rc;
->> + NvmeReservationStatusExt *nvme_status_ext;
->> + NvmeRequest *req = reservation->req;
->> + NvmeCtrl *n = req->sq->ctrl;
->> + NvmeResvKeys *keys_info = reservation->keys_info;
->> + int len = sizeof(NvmeReservationStatusHeader) +
->> + sizeof(uint8_t) * 40 +
->> + sizeof(NvmeRegisteredCtrlExt) * keys_info->num_keys;
->> +
->> + nvme_status_ext = g_malloc(len);
->
-> This leaks heap memory due to uninitialized reserved fields in
-> NvmeReservationStatusExt. Prefer g_malloc0.
->
-> The one above in nvme_read_reservation_cb looks safe, but prefer
-> g_malloc0 there anyway.
->
->> + nvme_status_ext->header.gen = cpu_to_be32(reservation->generation);
->> + nvme_status_ext->header.rtype =
-block_pr_type_to_nvme(reservation->type);
->> + nvme_status_ext->header.regctl = cpu_to_be16(keys_info->num_keys);
->> +
->> + for (int i = 0; i < keys_info->num_keys; i++) {
->> + uint16_t ctnlid = nvme_ctrl(req)->cntlid;
->> + nvme_status_ext->regctl_eds[i].cntlid = cpu_to_be16(ctnlid);
->> + nvme_status_ext->regctl_eds[i].rkey = cpu_to_be64(keys_info->keys[i]);
->> + nvme_status_ext->regctl_eds[i].rcsts = keys_info->keys[i] ==
->> + reservation->key ? 1 : 0;
->> + /* hostid is not supported currently */
->> + memset(&nvme_status_ext->regctl_eds[i].hostid, 0, 16);
->> + }
->> +
->> + rc = nvme_c2h(n, (uint8_t *)nvme_status_ext, len, req);
->> + g_free(nvme_status_ext);
->> + return rc;
->> +}
-
---0000000000006ef99a0620b87482
-Content-Type: text/html; charset="UTF-8"
-
-<p>Hi,
-<br>
-<br>Thanks for your advice.
-<br>Previously, g_malloc0 was used, but a segmentation
-<br>fault occurred during testing. Later, debugging
-<br>revealed that a field in struct NvmeReservationStatusExt,
-<br>struct NvmeRegisteredCtrlExt regctl_eds[], was a
-<br>variable-length array. Therefore, g_malloc was used
-<br>to apply after the array length was determined.
-<br>Therefore, g_malloc0 was not used here.
-<br>
-<br>On 2024/8/28 14:10, Klaus Jensen wrote:
-<br>&gt; On Jul 12 10:36, Changqi Lu wrote:
-<br>&gt;&gt; Add reservation acquire, reservation register,
-<br>&gt;&gt; reservation release and reservation report commands
-<br>&gt;&gt; in the nvme device layer.
-<br>&gt;&gt;
-<br>&gt;&gt; By introducing these commands, this enables the nvme
-<br>&gt;&gt; device to perform reservation-related tasks, including
-<br>&gt;&gt; querying keys, querying reservation status, registering
-<br>&gt;&gt; reservation keys, initiating and releasing reservations,
-<br>&gt;&gt; as well as clearing and preempting reservations held by
-<br>&gt;&gt; other keys.
-<br>&gt;&gt;
-<br>&gt;&gt; These commands are crucial for management and control of
-<br>&gt;&gt; shared storage resources in a persistent manner.
-<br>&gt;&gt; Signed-off-by: Changqi Lu 
-<br>&gt;&gt; Signed-off-by: zhenwei pi 
-<br>&gt;&gt; Acked-by: Klaus Jensen 
-<br>&gt;&gt; ---
-<br>&gt;&gt;  hw/nvme/ctrl.c       | 318 +++++++++++++++++++++++++++++++++++++++++++
-<br>&gt;&gt;  hw/nvme/nvme.h       |   4 +
-<br>&gt;&gt;  include/block/nvme.h |  37 +++++
-<br>&gt;&gt;  3 files changed, 359 insertions(+)
-<br>&gt;&gt;
-<br>&gt; 
-<br>&gt;&gt; +static int nvme_read_reservation_cb(NvmeReadReservation *reservation)
-<br>&gt;&gt; +{
-<br>&gt;&gt; +    int rc;
-<br>&gt;&gt; +    NvmeReservationStatus *nvme_status;
-<br>&gt;&gt; +    NvmeRequest *req = reservation-&gt;req;
-<br>&gt;&gt; +    NvmeCtrl *n = req-&gt;sq-&gt;ctrl;
-<br>&gt;&gt; +    NvmeResvKeys *keys_info = reservation-&gt;keys_info;
-<br>&gt;&gt; +    int len = sizeof(NvmeReservationStatusHeader) +
-<br>&gt;&gt; +              sizeof(NvmeRegisteredCtrl) * keys_info-&gt;num_keys;
-<br>&gt;&gt; +
-<br>&gt;&gt; +    nvme_status = g_malloc(len);
-<br>&gt;&gt; +    nvme_status-&gt;header.gen = reservation-&gt;generation;
-<br>&gt;&gt; +    nvme_status-&gt;header.rtype = block_pr_type_to_nvme(reservation-&gt;type);
-<br>&gt;&gt; +    nvme_status-&gt;header.regctl = keys_info-&gt;num_keys;
-<br>&gt;&gt; +    for (int i = 0; i &lt; keys_info-&gt;num_keys; i++) {
-<br>&gt;&gt; +        nvme_status-&gt;regctl_ds[i].cntlid = nvme_ctrl(req)-&gt;cntlid;
-<br>&gt;&gt; +        nvme_status-&gt;regctl_ds[i].rkey = keys_info-&gt;keys[i];
-<br>&gt;&gt; +        nvme_status-&gt;regctl_ds[i].rcsts = keys_info-&gt;keys[i] ==
-<br>&gt;&gt; +                                          reservation-&gt;key ? 1 : 0;
-<br>&gt;&gt; +        /* hostid is not supported currently */
-<br>&gt;&gt; +        memset(&amp;nvme_status-&gt;regctl_ds[i].hostid, 0, 8);
-<br>&gt;&gt; +    }
-<br>&gt;&gt; +
-<br>&gt;&gt; +    rc = nvme_c2h(n, (uint8_t *)nvme_status, len, req);
-<br>&gt;&gt; +    g_free(nvme_status);
-<br>&gt;&gt; +    return rc;
-<br>&gt;&gt; +}
-<br>&gt;&gt; +
-<br>&gt;&gt; +static int nvme_read_reservation_ext_cb(NvmeReadReservation *reservation)
-<br>&gt;&gt; +{
-<br>&gt;&gt; +    int rc;
-<br>&gt;&gt; +    NvmeReservationStatusExt *nvme_status_ext;
-<br>&gt;&gt; +    NvmeRequest *req = reservation-&gt;req;
-<br>&gt;&gt; +    NvmeCtrl *n = req-&gt;sq-&gt;ctrl;
-<br>&gt;&gt; +    NvmeResvKeys *keys_info = reservation-&gt;keys_info;
-<br>&gt;&gt; +    int len = sizeof(NvmeReservationStatusHeader) +
-<br>&gt;&gt; +              sizeof(uint8_t) * 40 +
-<br>&gt;&gt; +              sizeof(NvmeRegisteredCtrlExt) * keys_info-&gt;num_keys;
-<br>&gt;&gt; +
-<br>&gt;&gt; +    nvme_status_ext = g_malloc(len);
-<br>&gt; 
-<br>&gt; This leaks heap memory due to uninitialized reserved fields in
-<br>&gt; NvmeReservationStatusExt. Prefer g_malloc0.
-<br>&gt; 
-<br>&gt; The one above in nvme_read_reservation_cb looks safe, but prefer
-<br>&gt; g_malloc0 there anyway.
-<br>&gt; 
-<br>&gt;&gt; +    nvme_status_ext-&gt;header.gen = cpu_to_be32(reservation-&gt;generation);
-<br>&gt;&gt; +    nvme_status_ext-&gt;header.rtype = block_pr_type_to_nvme(reservation-&gt;type);
-<br>&gt;&gt; +    nvme_status_ext-&gt;header.regctl = cpu_to_be16(keys_info-&gt;num_keys);
-<br>&gt;&gt; +
-<br>&gt;&gt; +    for (int i = 0; i &lt; keys_info-&gt;num_keys; i++) {
-<br>&gt;&gt; +        uint16_t ctnlid = nvme_ctrl(req)-&gt;cntlid;
-<br>&gt;&gt; +        nvme_status_ext-&gt;regctl_eds[i].cntlid = cpu_to_be16(ctnlid);
-<br>&gt;&gt; +        nvme_status_ext-&gt;regctl_eds[i].rkey = cpu_to_be64(keys_info-&gt;keys[i]);
-<br>&gt;&gt; +        nvme_status_ext-&gt;regctl_eds[i].rcsts = keys_info-&gt;keys[i] ==
-<br>&gt;&gt; +                                               reservation-&gt;key ? 1 : 0;
-<br>&gt;&gt; +        /* hostid is not supported currently */
-<br>&gt;&gt; +        memset(&amp;nvme_status_ext-&gt;regctl_eds[i].hostid, 0, 16);
-<br>&gt;&gt; +    }
-<br>&gt;&gt; +
-<br>&gt;&gt; +    rc = nvme_c2h(n, (uint8_t *)nvme_status_ext, len, req);
-<br>&gt;&gt; +    g_free(nvme_status_ext);
-<br>&gt;&gt; +    return rc;
-<br>&gt;&gt; +}</p>
-
---0000000000006ef99a0620b87482--
 
