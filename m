@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9D9C5479A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 09:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA460C54E62
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 09:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjFMk-00031B-0L; Wed, 28 Aug 2024 05:53:26 -0400
+	id 1sjFN1-00047j-B2; Wed, 28 Aug 2024 05:53:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sjFMi-0002vB-Hp
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:53:24 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sjFMz-000416-LH
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:53:41 -0400
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sjFMg-0001pq-OW
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:53:24 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7141feed424so5323179b3a.2
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 02:53:22 -0700 (PDT)
+ id 1sjFMy-0001r7-4s
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:53:41 -0400
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-5daa93677e1so4726124eaf.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 02:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724838801; x=1725443601; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724838819; x=1725443619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BISuETtEj/uI6CddQsRG+h5xaQo8IxKpbRWv0bTNq7U=;
- b=d5TRUFbK+IU+gqx8cVYTHPOY/XI3eIzSs72IOcV2qv9vz2ywiL9VwltHaDOeTgmfbJ
- Wb9ilrtJudhA4I0H3HgDSzInwbpNGj70AyadD0ybWOVDxQ+VzFSy5frxXUV8R+eBo7tY
- Vm3yNsKdOOwxxLaB3jIRSg+9/3RN3ByrJdtrEymcQ2by3KsPaJxyGWFihbqi0sqWD3YF
- t4MUMqmkZxC/P28rcZNKHLKLuWgpfOn7T0TzGic5NP0MPSo6dGJMlUpYT++16Gg6Cp1A
- YtSp+zlDLz8KiGllfDePZCbpD7/1NJwy/H7yjyetKTVb9MYFSo2F9aEiwzpozwRYIObb
- z3lg==
+ bh=yaqkhcr8XXVjz3AUT5s3kLltD+ErMtVDTb6FVMqoohs=;
+ b=hi4EzJsZw/s03MO3qXHrRi/0YPt5wcRuPRpuYCZO1iS2sDmbKB+oAKkFlZgdVCml/g
+ ls78gCFX89ltPNPHKf++Q/d3iAc4RuZ7sdqZfbblI54EaVP9PFFaQQ+c4ZfjdvjNd3kX
+ 9Jtp9ayo09rV6+7F+de2Wj+x2INRrwgh8xtyA4zAt0MY6MdC1gT5ZAk2Ot+LPRfgL/J1
+ DTf5dEUnjsaeBx+LMvx4EqofmAVGwnC36EdG93uNtAViCTXWN1lNELaBVVRZdVqGoGMn
+ OugfRquj3GHzW/kani9OYXf8FzsZ77EC2e04M6ucBaXE9rgik8ksy6IC8K5wefoA+NY5
+ nqZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724838801; x=1725443601;
+ d=1e100.net; s=20230601; t=1724838819; x=1725443619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BISuETtEj/uI6CddQsRG+h5xaQo8IxKpbRWv0bTNq7U=;
- b=ktysV9iGby3LMY6cIAH6dQhPbONmMuiCVAjLOkg0VNp3CvmHwOr+c1WDXvM9JWQgoe
- lfQ7HCTY+zh1lXRvWZYHUGbWDid3MEVNqGehtdjTO4+ewsMG0vIGx9QXKOAE8ioJ3zZZ
- tS+hq+OBkCjDtHf7Th4QA/rjoCxkkyhnq+dg5OxVHZAShrHG+1AF/qanUHXexjztfB9s
- 23JydTwlR4jkfEWyOA11rFYiBG1XS/+r31cmU6ouMRrBIhuQjXESH6LVzgYDyW0Tvi8C
- s9/h3v5lio0BCjrg0em77dzLxdt3uVhLTaqXLRNGE56up310CNQ9kXLYujQbZol47Hft
- phuA==
-X-Gm-Message-State: AOJu0YztQKnPMs8kL87s/TljY+fMGEx0/44Va+B6tvqmXpBi6kqVUHg5
- m/1PAdqNCuNbXOzxyTXGlh4iHVqNk+7X2Qn0EZRX4uuAFWMir2cJJbxsn84U
-X-Google-Smtp-Source: AGHT+IG4Kclq6hG4tVOJZn+Cct1B5OYHSFdWtbKuKX1RGO9T1luIHpIZMa02UA770z6vG5L372nAgg==
-X-Received: by 2002:a05:6a00:3ccc:b0:714:1bd8:35f7 with SMTP id
- d2e1a72fcca58-71445d5a9a7mr15839261b3a.15.1724838801016; 
- Wed, 28 Aug 2024 02:53:21 -0700 (PDT)
+ bh=yaqkhcr8XXVjz3AUT5s3kLltD+ErMtVDTb6FVMqoohs=;
+ b=OXSp56yCHDo9vSBMK88I89lJVDfxuA4P3LHPXBBo0uDkKV3fR2dSW8Lji/TDOGUeuc
+ 9hSy/2LVCPTyqikJvMYJ3qzgJtvk72RjKRQq2jNeAHAdt3bG1iDFYjI9yPIozzicGEAn
+ 6QsSE6SnlkFgjf/350v0dvecCjCVcxZsCxInhR7qcDEgPoFGlaxT5xaXWMa+1bMpTOae
+ kZDKxymw171H1fttl82/YAAVdMwxtyeb7d2vVVyUqJFnwy9AxMTpxbM28X/bTUOrNzCG
+ 2/m5RRcd2KrP9ti0NnbsVznoS3oKNugef3HaIRZ2M3L/IjYblawaa8FjbD1g4DgzcAJb
+ OBNw==
+X-Gm-Message-State: AOJu0Yz+CBX9HHFeIkHKbKvo1IlTTkBtORyvAtnjZR9McWdZ/edxg++j
+ nZivPiMeeoTk/AfqHaYSf/goGEvAbSgvWmZIxV8sOMJ6GkbJePRau66wdQ==
+X-Google-Smtp-Source: AGHT+IE2kyDCluBzV5FEkWR+vOYxoovDU8ixp0X+bmEQJ0Y5BhDSyhG0ObxU7J6jDGMRG9ZLjPM2mw==
+X-Received: by 2002:a05:6358:3413:b0:1b3:9f0b:89c3 with SMTP id
+ e5c5f4694b2df-1b5fac8cc4dmr166192455d.1.1724838818636; 
+ Wed, 28 Aug 2024 02:53:38 -0700 (PDT)
 Received: from localhost.localdomain ([220.253.126.131])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7143430f6e7sm9787508b3a.160.2024.08.28.02.53.18
+ d2e1a72fcca58-7143430f6e7sm9787508b3a.160.2024.08.28.02.53.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Aug 2024 02:53:20 -0700 (PDT)
+ Wed, 28 Aug 2024 02:53:38 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Corbin <mark@dibsco.co.uk>, Warner Losh <imp@bsdimp.com>,
  Ajeet Singh <itachis@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 10/17] bsd-user: Define RISC-V VM parameters and helper
- functions
-Date: Wed, 28 Aug 2024 19:52:36 +1000
-Message-Id: <20240828095243.90491-11-itachis@FreeBSD.org>
+Subject: [PATCH v4 17/17] bsd-user: Add RISC-V 64-bit Target Configuration and
+ Debug XML Files
+Date: Wed, 28 Aug 2024 19:52:43 +1000
+Message-Id: <20240828095243.90491-18-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240828095243.90491-1-itachis@FreeBSD.org>
 References: <20240828095243.90491-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=itachis6234@gmail.com; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,81 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+From: Warner Losh <imp@bsdimp.com>
 
-Added definitions for RISC-V VM parameters, including maximum and
-default sizes for text, data, and stack, as well as address space
-limits.
-Implemented helper functions for retrieving and setting specific
-values in the CPU state, such as stack pointer and return values.
+Added configuration for RISC-V 64-bit target to the build system.
 
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- bsd-user/riscv/target_arch_vmparam.h | 53 ++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_vmparam.h
+ configs/targets/riscv64-bsd-user.mak | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 configs/targets/riscv64-bsd-user.mak
 
-diff --git a/bsd-user/riscv/target_arch_vmparam.h b/bsd-user/riscv/target_arch_vmparam.h
+diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
 new file mode 100644
-index 0000000000..0f2486def1
+index 0000000000..191c2c483f
 --- /dev/null
-+++ b/bsd-user/riscv/target_arch_vmparam.h
-@@ -0,0 +1,53 @@
-+/*
-+ *  RISC-V VM parameters definitions
-+ *
-+ *  Copyright (c) 2019 Mark Corbin
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef TARGET_ARCH_VMPARAM_H
-+#define TARGET_ARCH_VMPARAM_H
-+
-+#include "cpu.h"
-+
-+/* Compare with riscv/include/vmparam.h */
-+#define TARGET_MAXTSIZ      (1 * GiB)           /* max text size */
-+#define TARGET_DFLDSIZ      (128 * MiB)         /* initial data size limit */
-+#define TARGET_MAXDSIZ      (1 * GiB)           /* max data size */
-+#define TARGET_DFLSSIZ      (128 * MiB)         /* initial stack size limit */
-+#define TARGET_MAXSSIZ      (1 * GiB)           /* max stack size */
-+#define TARGET_SGROWSIZ     (128 * KiB)         /* amount to grow stack */
-+
-+#define TARGET_VM_MINUSER_ADDRESS   (0x0000000000000000UL)
-+#define TARGET_VM_MAXUSER_ADDRESS   (0x0000004000000000UL)
-+
-+#define TARGET_USRSTACK (TARGET_VM_MAXUSER_ADDRESS - TARGET_PAGE_SIZE)
-+
-+static inline abi_ulong get_sp_from_cpustate(CPURISCVState *state)
-+{
-+    return state->gpr[xSP];
-+}
-+
-+static inline void set_second_rval(CPURISCVState *state, abi_ulong retval2)
-+{
-+    state->gpr[xA1] = retval2;
-+}
-+
-+static inline abi_ulong get_second_rval(CPURISCVState *state)
-+{
-+    return state->gpr[xA1];
-+}
-+
-+#endif /* TARGET_ARCH_VMPARAM_H */
++++ b/configs/targets/riscv64-bsd-user.mak
+@@ -0,0 +1,4 @@
++TARGET_ARCH=riscv64
++TARGET_BASE_ARCH=riscv
++TARGET_ABI_DIR=riscv
++TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
 -- 
 2.34.1
 
