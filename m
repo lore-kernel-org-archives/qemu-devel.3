@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34FC8C7113C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 21:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA014C7114C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 22:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjQgw-0000SE-42; Wed, 28 Aug 2024 17:59:02 -0400
+	id 1sjRBx-00074H-VJ; Wed, 28 Aug 2024 18:31:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sjQgu-0000RO-KE
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 17:59:00 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sjQgs-00084E-Lp
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 17:59:00 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1sjQgi-0001iq-5C; Wed, 28 Aug 2024 23:58:48 +0200
-Message-ID: <8665d854-129d-4a5e-be1d-ec448704de62@maciej.szmigiero.name>
-Date: Wed, 28 Aug 2024 23:58:42 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sjRBv-00073l-TX
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 18:31:04 -0400
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sjRBr-0003CU-HO
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 18:31:03 -0400
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5d5f24d9df8so17114eaf.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 15:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724884256; x=1725489056; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xADMDLdOGAqMKlMRybIHzX/D9tLGG+KAZj1ApVp9YMw=;
+ b=rOLMkV5qU7Mr2vc0ojxiAq4EuTc1bv4wisSWm/ZzOnIJM9KtIPFq0/PtfuIkSIkV7S
+ Njp0aGz44EqOD+7lGduyu1Fmc6YhNEK5Gbr9BGS8PiRL2Itlk2gfJSftM1sVEh0XguGx
+ jah0akz9sM2XDxy6mgPybQAvg6O7N45N9+fTofTGUfqRl4hsfRp0X2o14HCm3hqygLUu
+ SBkGnI4ndyLaeEhonn6PLOiSzh2yBc7flyIeLVOWTZWqxiu1jd209wPU3tFJ2YhEmZ8Z
+ PY/BSSbZhvdW+UiB9syPXEdZtaf0VlHH4bEiSxWgcZAzqOiktCAGih297MlaEzJrlVxp
+ AIJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724884256; x=1725489056;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xADMDLdOGAqMKlMRybIHzX/D9tLGG+KAZj1ApVp9YMw=;
+ b=c9OvsXI4kIPXVL/a+SAbvY+fFlOL1MbuRmpsq26O2OHAeXZp5FFoSL2LUIjWBP9Iyi
+ 5XWkiXYSfeoCdITR6kUfywOrjEpGyYX+LV2N9XYcvfswaaAX4NrVUsYoCCCLnFe4vEOU
+ P1qDzR7511MNyAi5viXj/2mDDCkyjKDvk0w77rIsp6HHNg193QGv2nEJ5IF1K9MpHjaB
+ sBA/CgHPWeCA7fcxsI9a5CuIf1vAoy9xMtagDUaz8JrAh6lZWuarJCu1yNgGY+RCXA8S
+ 6Hlv8tUD2sBbkN7sJw5rmjEiMtYrH2VIATMtjMyesPWlpOowKgtiqpZcV6VDtCAGrFzn
+ a+9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWrXJf+tsukH3Xdv3MIBrf+ho/eEkBSDZxvwyvCFPHN+g4zSjtOCBRf8Tc7mbbHdapD5V9WuZvV35/@nongnu.org
+X-Gm-Message-State: AOJu0YxO54YkaD2m9gIsKFu86jTOdcND/4xxekEp7jAu2uHCHTe9osEF
+ TmTtRetSntdF4l7z7qWooA4jY05rsAO4a24NEOKkesZORImcHw/GIWhcJGnGv08=
+X-Google-Smtp-Source: AGHT+IEAozg9MXQ4PH8UTSZUIgC+kY74ox51SoS6IvWxhRMibH8NpLHr1YqQYL67nLh4bT2NLK4nKA==
+X-Received: by 2002:a05:6870:240d:b0:24f:d178:d48d with SMTP id
+ 586e51a60fabf-277902654f8mr1139102fac.31.1724884256419; 
+ Wed, 28 Aug 2024 15:30:56 -0700 (PDT)
+Received: from [192.168.98.227] ([172.58.111.246])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-273ce9e3ec0sm4045245fac.18.2024.08.28.15.30.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Aug 2024 15:30:56 -0700 (PDT)
+Message-ID: <02ff2d1e-d5f7-4e98-9758-aa39f58bae6b@linaro.org>
+Date: Thu, 29 Aug 2024 08:30:47 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v2_00/17=5D_Multifd_=F0=9F=94=80_device_st?=
- =?UTF-8?Q?ate_transfer_support_with_VFIO_consumer?=
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <87jzg0nzo7.fsf@suse.de>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <87jzg0nzo7.fsf@suse.de>
+Subject: Re: [PULL 0/1] QAPI patches patches for 2024-08-27
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20240827103532.799039-1-armbru@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240827103532.799039-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,68 +96,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.08.2024 22:46, Fabiano Rosas wrote:
-> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+On 8/27/24 20:35, Markus Armbruster wrote:
+> I'm nominating this fix for v9.1 because it can only affect generated
+> documentation, and CI should protect us from surprise build breaks.
+> Feel free to delay it to v9.2 if you think even that is too much risk
+> or simply too much trouble to be worthwhile.
 > 
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> This is an updated v2 patch series of the v1 series located here:
->> https://lore.kernel.org/qemu-devel/cover.1718717584.git.maciej.szmigiero@oracle.com/
->>
->> Changes from v1:
->> * Extended the QEMU thread-pool with non-AIO (generic) pool support,
->> implemented automatic memory management support for its work element
->> function argument.
->>
->> * Introduced a multifd device state save thread pool, ported the VFIO
->> multifd device state save implementation to use this thread pool instead
->> of VFIO internally managed individual threads.
->>
->> * Re-implemented on top of Fabiano's v4 multifd sender refactor patch set from
->> https://lore.kernel.org/qemu-devel/20240823173911.6712-1-farosas@suse.de/
->>
->> * Moved device state related multifd code to new multifd-device-state.c
->> file where it made sense.
->>
->> * Implemented a max in-flight VFIO device state buffer count limit to
->> allow capping the maximum recipient memory usage.
->>
->> * Removed unnecessary explicit memory barriers from multifd_send().
->>
->> * A few small changes like updated comments, code formatting,
->> fixed zero-copy RAM multifd bytes transferred counter under-counting, etc.
->>
->>
->> For convenience, this patch set is also available as a git tree:
->> https://github.com/maciejsszmigiero/qemu/tree/multifd-device-state-transfer-vfio
+> The following changes since commit afaee42f777bc359db95f692804f7fc7e12c0c02:
 > 
-> With this branch I'm getting:
+>    Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging (2024-08-27 07:06:42 +1000)
 > 
-> $ QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test -p /x86_64/migration/multifd/tcp/uri/plain/none
-> ...
-> qemu-system-x86_64: ../util/thread-pool.c:354: thread_pool_set_minmax_threads: Assertion `max_threads > 0' failed.
-> Broken pipe
+> are available in the Git repository at:
+> 
+>    https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-08-27
+> 
+> for you to fetch changes up to 43e0d14ee09a0565adcf4ce5f35be79695958fb0:
+> 
+>    docs/sphinx: fix extra stuff in TOC after freeform QMP sections (2024-08-27 11:10:58 +0200)
+> 
+> ----------------------------------------------------------------
+> QAPI patches patches for 2024-08-27
+> 
+> ----------------------------------------------------------------
+> John Snow (1):
+>        docs/sphinx: fix extra stuff in TOC after freeform QMP sections
+> 
+>   docs/sphinx/qapidoc.py | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 > 
 
-Oops, I should have tested this patch set in setups without any VFIO devices too.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Fixed this now (together with that RAM tracepoint thing) and updated the GitHub tree -
-the above test now passes.
-
-Tomorrow I will test the whole multifd VFIO migration once again to be sure.
-
-> $ ./tests/qemu-iotests/check -p -qcow2 068
-> ...
-> +qemu-system-x86_64: ../util/qemu-thread-posix.c:92: qemu_mutex_lock_impl: Assertion `mutex->initialized' failed.
-> 
-
-I'm not sure how this can happen - it looks like qemu_loadvm_state() might be called
-somehow after migration_incoming_state_destroy() already destroyed the migration state?
-Will investigate this in detail tomorrow.
-
-By the way, this test seems to not be run by the default "make check".
-
-Thanks,
-Maciej
-
+r~
 
