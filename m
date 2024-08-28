@@ -4,76 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0253AC54FA6
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42F0C54FAD
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 13:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjI6n-0008E9-4L; Wed, 28 Aug 2024 08:49:09 -0400
+	id 1sjIM5-0005uz-Gj; Wed, 28 Aug 2024 09:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjI6l-0008Cw-Bp
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:49:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjI6j-0004m0-AZ
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:49:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724849344;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RXr66m8jBNsSGXQJKi0J1t9v2nb3kkzqh4XO2iHMzcs=;
- b=Jf+KPBEfLUypTHMlapWFRvadLlU+C2rOx1y/DcHmpdeZ2qujCPktMMrRV4Xrm1N0WQYXv/
- BlodaxqjgnlaxLh4vuC39zW4M0x95g9yjcNkCzvF5fiTcoz0mlO5iUfUxhUMe6VkRp5HRk
- vyyekNHIbi7bDZE1XO/6cgPHR7iH2rI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-a0HQOUxHMBSI9nPLX9ohLA-1; Wed,
- 28 Aug 2024 08:49:02 -0400
-X-MC-Unique: a0HQOUxHMBSI9nPLX9ohLA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sjIM4-0005u1-PO
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 09:04:56 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sjIM1-0006ZC-3B
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 09:04:56 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C38251918164; Wed, 28 Aug 2024 12:49:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.92])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B452619560AA; Wed, 28 Aug 2024 12:48:58 +0000 (UTC)
-Date: Wed, 28 Aug 2024 13:48:55 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Subject: Re: [PULL 3/6] qemu/osdep: Split qemu_close_all_open_fd() and add
- fallback
-Message-ID: <Zs8ctyVxQz3iLDmM@redhat.com>
-References: <20240805003130.1421051-1-richard.henderson@linaro.org>
- <20240805003130.1421051-5-richard.henderson@linaro.org>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F1C8C21B6C;
+ Wed, 28 Aug 2024 13:04:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724850291; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uVzEXbwSELz5xdfduq1kH97SG0HM2AGjrcE5MOHazKM=;
+ b=amK5cTPx82ChQ47YwmkJXNV8h2aJHS2tpJhLp6IPH6vWkA2+irxDJitWaSVzbtxo4auySC
+ Gq6lIPGWSfS+KzlsuuxPHcF5AIFQ00bssuz7y0/3otUFK5YN2piRBUaQGuz+2y3uVjkeiu
+ ACXpLEExD2e9AL6UQEmhUmOlNuHynxY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724850291;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uVzEXbwSELz5xdfduq1kH97SG0HM2AGjrcE5MOHazKM=;
+ b=XQHIdmcNm00Dt6kbJQfjZS7BnV9uQ5i/OacpnGx7CR6N/WiKD08a8/KwYQHunr/f0w3yEE
+ AkHwZcRU5PgOE0Cw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1724850290; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uVzEXbwSELz5xdfduq1kH97SG0HM2AGjrcE5MOHazKM=;
+ b=K++agt+MfFLhmhZbFcaRgMs78IM1uK/WAy7hHlR69VXiSL3K4tFvjb3YxH/iQqJw2kbC+T
+ f9hvq1rdUdO1m5DRDckY7hSSfjsNR0WPaH/RG3h32yR0RlKzYVdMXc8KSgrBMWRkFbaD8h
+ CEwuZf3982uDVu5hAfXqjF4yLZxQWBo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1724850290;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uVzEXbwSELz5xdfduq1kH97SG0HM2AGjrcE5MOHazKM=;
+ b=fUJMX3xCW6kZ0VsnWcJaK1xy1y4n2DzGMEZMmEPVEDhAmG5LaWa5spapm29d3daNElmqJU
+ U+0ukNNcSs75gKDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7B0C8138D2;
+ Wed, 28 Aug 2024 13:04:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Ym2DEHIgz2ZwHwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 28 Aug 2024 13:04:50 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH v6 19/19] migration/multifd: Add documentation for
+ multifd methods
+In-Reply-To: <Zs5H3TtkFfLFDrTw@x1n>
+References: <20240827174606.10352-1-farosas@suse.de>
+ <20240827174606.10352-20-farosas@suse.de> <Zs4bL_lRURD7cV_N@x1n>
+ <87mskxx0ck.fsf@suse.de> <Zs4ka2-q6JJbL1KA@x1n> <87jzg1wza0.fsf@suse.de>
+ <Zs4spTkGlJJuB7LT@x1n> <87zfoxogvr.fsf@suse.de> <Zs5H3TtkFfLFDrTw@x1n>
+Date: Wed, 28 Aug 2024 10:04:47 -0300
+Message-ID: <87wmk0ol1s.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240805003130.1421051-5-richard.henderson@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; MISSING_XM_UA(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,131 +118,146 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is already merged, but I have two comments - one improvement
-and one bug which we should probably fix before release.
+Peter Xu <peterx@redhat.com> writes:
 
-On Mon, Aug 05, 2024 at 10:31:26AM +1000, Richard Henderson wrote:
-> From: Clément Léger <cleger@rivosinc.com>
-> 
-> In order to make it cleaner, split qemu_close_all_open_fd() logic into
-> multiple subfunctions (close with close_range(), with /proc/self/fd and
-> fallback).
-> 
-> Signed-off-by: Clément Léger <cleger@rivosinc.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20240802145423.3232974-3-cleger@rivosinc.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  util/oslib-posix.c | 50 ++++++++++++++++++++++++++++++++++------------
->  1 file changed, 37 insertions(+), 13 deletions(-)
-> 
-> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> index 1e867efa47..9b79fc7cff 100644
-> --- a/util/oslib-posix.c
-> +++ b/util/oslib-posix.c
-> @@ -808,27 +808,16 @@ int qemu_msync(void *addr, size_t length, int fd)
->      return msync(addr, length, MS_SYNC);
->  }
->  
-> -/*
-> - * Close all open file descriptors.
-> - */
-> -void qemu_close_all_open_fd(void)
-> +static bool qemu_close_all_open_fd_proc(void)
->  {
->      struct dirent *de;
->      int fd, dfd;
->      DIR *dir;
->  
-> -#ifdef CONFIG_CLOSE_RANGE
-> -    int r = close_range(0, ~0U, 0);
-> -    if (!r) {
-> -        /* Success, no need to try other ways. */
-> -        return;
-> -    }
-> -#endif
-> -
->      dir = opendir("/proc/self/fd");
+> On Tue, Aug 27, 2024 at 05:22:32PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Tue, Aug 27, 2024 at 04:17:59PM -0300, Fabiano Rosas wrote:
+>> >> Peter Xu <peterx@redhat.com> writes:
+>> >> 
+>> >> > On Tue, Aug 27, 2024 at 03:54:51PM -0300, Fabiano Rosas wrote:
+>> >> >> Peter Xu <peterx@redhat.com> writes:
+>> >> >> 
+>> >> >> > On Tue, Aug 27, 2024 at 02:46:06PM -0300, Fabiano Rosas wrote:
+>> >> >> >> Add documentation clarifying the usage of the multifd methods. The
+>> >> >> >> general idea is that the client code calls into multifd to trigger
+>> >> >> >> send/recv of data and multifd then calls these hooks back from the
+>> >> >> >> worker threads at opportune moments so the client can process a
+>> >> >> >> portion of the data.
+>> >> >> >> 
+>> >> >> >> Suggested-by: Peter Xu <peterx@redhat.com>
+>> >> >> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> >> >> >> ---
+>> >> >> >> Note that the doc is not symmetrical among send/recv because the recv
+>> >> >> >> side is still wonky. It doesn't give the packet to the hooks, which
+>> >> >> >> forces the p->normal, p->zero, etc. to be processed at the top level
+>> >> >> >> of the threads, where no client-specific information should be.
+>> >> >> >> ---
+>> >> >> >>  migration/multifd.h | 76 +++++++++++++++++++++++++++++++++++++++++----
+>> >> >> >>  1 file changed, 70 insertions(+), 6 deletions(-)
+>> >> >> >> 
+>> >> >> >> diff --git a/migration/multifd.h b/migration/multifd.h
+>> >> >> >> index 13e7a88c01..ebb17bdbcf 100644
+>> >> >> >> --- a/migration/multifd.h
+>> >> >> >> +++ b/migration/multifd.h
+>> >> >> >> @@ -229,17 +229,81 @@ typedef struct {
+>> >> >> >>  } MultiFDRecvParams;
+>> >> >> >>  
+>> >> >> >>  typedef struct {
+>> >> >> >> -    /* Setup for sending side */
+>> >> >> >> +    /*
+>> >> >> >> +     * The send_setup, send_cleanup, send_prepare are only called on
+>> >> >> >> +     * the QEMU instance at the migration source.
+>> >> >> >> +     */
+>> >> >> >> +
+>> >> >> >> +    /*
+>> >> >> >> +     * Setup for sending side. Called once per channel during channel
+>> >> >> >> +     * setup phase.
+>> >> >> >> +     *
+>> >> >> >> +     * Must allocate p->iov. If packets are in use (default), one
+>> >> >> >
+>> >> >> > Pure thoughts: wonder whether we can assert(p->iov) that after the hook
+>> >> >> > returns in code to match this line.
+>> >> >> 
+>> >> >> Not worth the extra instructions in my opinion. It would crash
+>> >> >> immediately once the thread touches p->iov anyway.
+>> >> >
+>> >> > It might still be good IMHO to have that assert(), not only to abort
+>> >> > earlier, but also as a code-styled comment.  Your call when resend.
+>> >> >
+>> >> > PS: feel free to queue existing patches into your own tree without
+>> >> > resending the whole series!
+>> >> >
+>> >> >> 
+>> >> >> >
+>> >> >> >> +     * extra iovec must be allocated for the packet header. Any memory
+>> >> >> >> +     * allocated in this hook must be released at send_cleanup.
+>> >> >> >> +     *
+>> >> >> >> +     * p->write_flags may be used for passing flags to the QIOChannel.
+>> >> >> >> +     *
+>> >> >> >> +     * p->compression_data may be used by compression methods to store
+>> >> >> >> +     * compression data.
+>> >> >> >> +     */
+>> >> >> >>      int (*send_setup)(MultiFDSendParams *p, Error **errp);
+>> >> >> >> -    /* Cleanup for sending side */
+>> >> >> >> +
+>> >> >> >> +    /*
+>> >> >> >> +     * Cleanup for sending side. Called once per channel during
+>> >> >> >> +     * channel cleanup phase. May be empty.
+>> >> >> >
+>> >> >> > Hmm, if we require p->iov allocation per-ops, then they must free it here?
+>> >> >> > I wonder whether we leaked it in most compressors.
+>> >> >> 
+>> >> >> Sorry, this one shouldn't have that text.
+>> >> >
+>> >> > I still want to double check with you: we leaked iov[] in most compressors
+>> >> > here, or did I overlook something?
+>> >> 
+>> >> They have their own send_cleanup function where p->iov is freed.
+>> >
+>> > Oh, so I guess I just accidentally stumbled upon
+>> > multifd_uadk_send_cleanup() when looking..
+>> 
+>> Yeah, this is a bit worrying. The reason this has not shown on valgrind
+>> or the asan that Peter ran recently is that uadk, qpl and soon qat are
+>> never enabled in a regular build. I have myself introduced compilation
+>> errors in those files that I only caught by accident at a later point
+>> (before sending to the ml).
+>
+> I tried to manually install qpl and uadk just now but neither of them is
+> trivial to compile and install..  I hit random errors here and there in my
+> first shot.
+>
+> OTOH, qatzip packages are around at least in Fedora repositories, so that
+> might be the easiest to reach.  Not sure how's that when with OpenSUSE.
+>
+> Shall we perhaps draft an email and check with them? E.g., would that be
+> better if there's plan they would at some point provide RPMs for libraries
+> at some point so that we could somehow integrate that into CI routines?
 
-IIUC from previous threads this is valid on Linux and on Solaris.
+We merged most of these things already. Now even if rpms show up at some
+point we still have to deal with not being able to build that code until
+then. Perhaps we could have a container that has all of these
+pre-installed just to exercize the code a bit. But it still wouldn't
+catch some issues becase we cannot run the code due to the lack of
+hardware.
 
-On FreeBSD & macOS, you need /dev/fd though.
+>
+>> 
+>> >
+>> > I thought I looked a few more but now when I check most of them are indeed
+>> > there but looks like uadk is missing that.
+>> >
+>> > I think it might still be a good idea to assert(iov==NULL) after the
+>> > cleanup..
+>> 
+>> Should we maybe just free p->iov at the top level then?
+>
+> We could, but if so it might be good to also allocate at the top level so
+> the hooks are paired up on these allocations/frees.
+>
+> IMHO we could already always allocate iov[] to page_count+2 which is the
+> maximum of all compressors - currently we've got 128 pages per packet by
+> default, which is 128*16=2KB iov[] per channel.  Not so bad when only used
+> during migrations.
+>
+> Or we can perhaps do send_setup(..., &iovs_needed), returns how many iovs
+> are needed, then multifd allocates them.
 
->      if (!dir) {
->          /* If /proc is not mounted, there is nothing that can be done. */
-> -        return;
-> +        return false;
->      }
->      /* Avoid closing the directory. */
->      dfd = dirfd(dir);
-> @@ -840,4 +829,39 @@ void qemu_close_all_open_fd(void)
->          }
->      }
->      closedir(dir);
-> +
-> +    return true;
-> +}
-> +
-> +static bool qemu_close_all_open_fd_close_range(void)
-> +{
-> +#ifdef CONFIG_CLOSE_RANGE
-> +    int r = close_range(0, ~0U, 0);
-> +    if (!r) {
-> +        /* Success, no need to try other ways. */
-> +        return true;
-> +    }
-> +#endif
-> +    return false;
-> +}
-> +
-> +static void qemu_close_all_open_fd_fallback(void)
-> +{
-> +    int open_max = sysconf(_SC_OPEN_MAX), i;
-> +
-> +    /* Fallback */
-> +    for (i = 0; i < open_max; i++) {
-> +        close(i);
-> +    }
-
-I'm told that sysconf(_SC_OPEN_MAX) returns -1 on some versions of
-macOS. "Luckily" since we assigned to 'int' rather than 'unsigned int'
-this will result in us not closing any FDs in this fallback path,
-rather than trying to close several billion FDs (an effective hang).
-
-If _SC_OPEN_MAX returns -1, we should fallback to the OPEN_MAX
-constant on macOS (see commit de448e0f26e710e9d2b7fc91393c40ac24b75847
-which tackled a similar issue wrt getrlimit), and fallback to perhaps
-a hardcoded 1024 on non-macOS.
-
-
-> +}
-> +
-> +/*
-> + * Close all open file descriptors.
-> + */
-> +void qemu_close_all_open_fd(void)
-> +{
-> +    if (!qemu_close_all_open_fd_close_range() &&
-> +        !qemu_close_all_open_fd_proc()) {
-> +        qemu_close_all_open_fd_fallback();
-> +    }
->  }
-> -- 
-> 2.43.0
-> 
-> 
-
-With regards,
-Daniel
-
-[1] https://github.com/open-mpi/ompi/issues/10358
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Let me play around with these a bit. I might just fix uadk and leave
+everything else as it is for now.
 
