@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E90C63685
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 15:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 305E5C61DB8
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 15:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjKsu-0005PC-MC; Wed, 28 Aug 2024 11:47:01 -0400
+	id 1sjKwO-0001fT-HL; Wed, 28 Aug 2024 11:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjKsr-0005Fl-W0
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 11:46:58 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sjKwN-0001eL-9w
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 11:50:35 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjKsp-0007rU-Nf
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 11:46:57 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2f4f2868621so67827801fa.0
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 08:46:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sjKwK-0008Ko-SQ
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 11:50:34 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-84310fb76f1so1784229241.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 08:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724860013; x=1725464813; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qB2tNlA469fN+yySD6uB/Djd8BhieUFfb8UEhL4V4SA=;
- b=A+57MIQq9gv+jPOTDdwru23f02bKHTEVc3FzPJMOdqYshFCBqSxmG+ungk7W9NvNNK
- QcxEQU/VIna7ovQ7gdd2hrJ03OiY2SMcNCvvLFTQNol2HbqtWDWUqNzXa3OEizwHpJwM
- VMJtMoOrOapVnqvopOoqV8Y37DQ+ykay6s2XklC6kx2gjcyGo2fmFXRbFNy7S3yMbldv
- 11yKL/u9RPT8Sk2okCPCB31n7oM+/60RPVvEppgqvY7KXoQ4CyHZokf+hMZQ2sQsG7UA
- vWHEiUwzh4l/bQiFL4Sxmt+AHcPROotv/cJSc8X8tj4O3lmIbgsk5v7z6s+T8Sq0mojV
- yabA==
+ d=gmail.com; s=20230601; t=1724860231; x=1725465031; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2NMJgy8mcpFd2zlX0DGVPCHhFNZOnfvcl/62TzroCq4=;
+ b=kfhRJoqaK8caMPVNXnF05S4GKRCQXQi2xgpwXMWSWfhTj12g7MGVPf86xCkmRCm9Y4
+ +H1OCUlxUDXAsh2u7DONsQs3lgSniuqcA7llMsYgz1JcGJwq5zY+QvmtVirr3NXtGrle
+ vAuKWIUKpseWvlSx69Kqvcm2BG6zO3wfwYEQ7Rk0YykilT9ErHcVobzGpVFE1jCkNIP3
+ Q2tUkiGkJ311SteEtDgHyR5aqtd0xt9i6L0WowXvA7dG5hfuLTbHhgoXTjRARuc48S2p
+ bN9leeADgyxNk+Ljat2Gea94gq+oy9UWYqstYRzAJOeDckuYTXUVZvQkNLWIdSKWDfhV
+ JvIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724860013; x=1725464813;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qB2tNlA469fN+yySD6uB/Djd8BhieUFfb8UEhL4V4SA=;
- b=m7OuaHy1a8+doo49Yh1b6yvbHzdj/x7Vwj8ZlKK5bVfHOebAFrtzSG9AVZtYr+YnoW
- ADXwqIrfTdsjDT9tIXn3KPU87YdhUyWcyKh9ERVE6KwNamgY+pDjcyX2itqlYsCsMi5z
- mvEUORW1YvABDH92abuqRhtXXEYiTFMmrB5ORu06bwrbXTTLp8Ojzy68Oai6KGY2Mu9u
- D1pTMvY5z1jAlWKxr8DSVqBBdbIdtqLRng12ardWfOtgFAIvH/KmxKh5VRGZA9uSVykd
- Zkv+b2A8mMPxSeUjvMWieff9+nIra8Q79K2YwEdj1rJTFMShXZ+qelyaaGNSkpnKH1r5
- AsuA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXU0U/Wl9irzJwyY9MgLdXtd6AfmBvZ/r25wXEYNh/nkuCE1oVF4KbnbhHM/I47exhLCV3cdZO5RHw6@nongnu.org
-X-Gm-Message-State: AOJu0YyiIzfFsdETjhE+ueaeWqSvw3sQYi/y86dQztGUrOaLM7UugQQ7
- Gjs3vSexUfBZaMRv61Jzc6POwC2HgCDtkLzgMue6weWdGs6orvurLQ4qjh/1qzYFhTIciWR5rFz
- W5qe0FiVY30wuBkB0ryjVoFODs0I47jmSz1rmwA==
-X-Google-Smtp-Source: AGHT+IEkbQHReR/F77zXRRaa/3d/90C3/LR16Zjk81Qg4liNxL5HBYfijhyrnh/L9HeSLhGugEfTWgSqCYmHafATuug=
-X-Received: by 2002:a05:651c:2105:b0:2f3:f170:8ec3 with SMTP id
- 38308e7fff4ca-2f6103e3093mr1220191fa.21.1724860013281; Wed, 28 Aug 2024
- 08:46:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724860231; x=1725465031;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2NMJgy8mcpFd2zlX0DGVPCHhFNZOnfvcl/62TzroCq4=;
+ b=MXHXHhl2cSyuTVttqG7faGuRCFVlIJ1Pqxzi2r8Hg5tZwnHSyWjrLdiOcHNNlrvLjE
+ dGkiHTQSiMXgV4rQQFnsSnTUN9nnWc2hgp5Eqop1Fg4g2eQ6LHgMiYw7VwgSxyv5HX53
+ 5dR3d5dnElgljRYGqGVwaSTUy/sDKQqH31GIldL+lFIR0iHIeM/GqIWF8Pt3a0eeVZia
+ vjLS822Ja0gxjqzS3lyLjyb5S1u5SlOy3jHdxfWPmN9N6nsTSL4KQBBIeAzPu6qZM4P8
+ pBuivtIIbzk5rYc1oU0GaBHZF0ERBSztVdTDa/GLhDn9bKv771xp2FNXkL+nf4jv063c
+ gA4Q==
+X-Gm-Message-State: AOJu0Yw7yXAbfOscJ9HLOxikma4pCqbpLiT0Iil1d035rmGq8NpVHy+E
+ F8Sjl1wfUSWocqGQbO48fkB3NN9YpMS2bgw0tfRDxYMrFmQ00pnfN+mzoJKLYPM5/a2l+C4dF3v
+ gFxQtCpEXRPLtpKDfdFqcnNyda8c=
+X-Google-Smtp-Source: AGHT+IGMN11u9eUcUeyaM+kvtBPWlTnXstWSfAtkQdWw4eeHzh8Sja+JStafVbqaJOIL6jMM+wFmMuqhEl1/xR+1bLI=
+X-Received: by 2002:a05:6102:26d4:b0:498:d51a:989 with SMTP id
+ ada2fe7eead31-49a5b108b50mr136461137.9.1724860231252; Wed, 28 Aug 2024
+ 08:50:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
- <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
- <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
- <172467410002.31767.12365606864399178508@t14-nrb.local>
- <172483282308.162301.11735420619446380771@t14-nrb.local>
-In-Reply-To: <172483282308.162301.11735420619446380771@t14-nrb.local>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 28 Aug 2024 16:46:42 +0100
-Message-ID: <CAFEAcA-wVqbuW1aG2fd6O9BwMKrFXTLzcvuF4xd6j_4x5WUQ+Q@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw, cpu to
- three-phase reset, and followup cleanup
-To: Nico Boehr <nrb@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, 
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Michael Mueller <mimu@linux.ibm.com>
+References: <20240822150849.21759-1-dorjoychy111@gmail.com>
+ <20240822150849.21759-8-dorjoychy111@gmail.com> <Zs9EpTY9N6kl1VNJ@redhat.com>
+In-Reply-To: <Zs9EpTY9N6kl1VNJ@redhat.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Wed, 28 Aug 2024 21:50:25 +0600
+Message-ID: <CAFfO_h4vqP-c4gqGJeZRbBEyqaLjO30PgbbvvEi9XVWmyzEtcg@mail.gmail.com>
+Subject: Re: [PATCH v5 7/8] machine/nitro-enclave: New machine type for AWS
+ Nitro Enclaves
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de, 
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x935.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,53 +95,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Aug 2024 at 09:13, Nico Boehr <nrb@linux.ibm.com> wrote:
->
-> Quoting Nico Boehr (2024-08-26 14:08:20)
-> > There was a little hickup without the fixup to patch 2, but after Nina
-> > pushed the fixup, we did not observe any failures related to your
-> > changes in our CI. Thanks!
->
-> Peter, after a few CI runs, we unfortunately did find some issues with your
-> patch :-(
->
-> Rebooting a guest in a loop sometimes fails. Michael was able to bisect it
-> to your series.
->
-> The problem is intermittent. The guest is unable to load its initramfs:
->
->   [    0.560674] rootfs image is not initramfs (no cpio magic); looks like an initrd
->   [    0.588605] Freeing initrd memory: 95680K
->   [    0.593143] md: Waiting for all devices to be available before autodetect
->   [    0.593144] md: If you don't use raid, use raid=noautodetect
->   [    0.593145] md: Autodetecting RAID arrays.
->   [    0.593146] md: autorun ...
->   [    0.593147] md: ... autorun DONE.
->   [    0.593156] RAMDISK: gzip image found at block 0
->   [    0.609110] RAMDISK: incomplete write (29120 != 32768)
->   [    0.609113] write error
->
-> ...and then a panic because the kernel doesn't find a rootfs.
->
-> It seems like the compressed initramfs is corrupted somehow, since "rootfs
-> image is not initramfs" doesn't appear on a successful boot.
->
-> initramfs and kernel are loaded via direct kernel boot. Running under KVM.
->
-> Some vhost error messages do appear before the guest panics, but it is not
-> entirely clear to me whether they are related:
->
->   [...]
->   2024-08-28T06:56:29.765324Z qemu-system-s390x: vhost vring error in virtqueue 0: Invalid argument (22)
->   2024-08-28T06:56:32.210982Z qemu-system-s390x: vhost vring error in virtqueue 0: Invalid argument (22)
->   2024-08-28 06:56:35.430+0000: panic s390: core='0' psw-mask='0x0002000180000000' psw-addr='0x00000387b028c67e' reason='disabled-wait'
->
-> Any idea?
+Hi Daniel,
 
-Well, the series is *supposed* to be just a refactoring, not a change of
-behaviour, so I'm not sure. I don't suppose you have a reproduce case
-that I can run? (I do have access to an s390 machine if that helps.)
+On Wed, Aug 28, 2024 at 9:39=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Thu, Aug 22, 2024 at 09:08:48PM +0600, Dorjoy Chowdhury wrote:
+> > AWS nitro enclaves[1] is an Amazon EC2[2] feature that allows creating
+> > isolated execution environments, called enclaves, from Amazon EC2
+> > instances which are used for processing highly sensitive data. Enclaves
+> > have no persistent storage and no external networking. The enclave VMs
+> > are based on the Firecracker microvm with a vhost-vsock device for
+> > communication with the parent EC2 instance that spawned it and a Nitro
+> > Secure Module (NSM) device for cryptographic attestation. The parent
+> > instance VM always has CID 3 while the enclave VM gets a dynamic CID.
+> >
+> > An EIF (Enclave Image Format)[3] file is used to boot an AWS nitro encl=
+ave
+> > virtual machine. This commit adds support for AWS nitro enclave emulati=
+on
+> > using a new machine type option '-M nitro-enclave'. This new machine ty=
+pe
+> > is based on the 'microvm' machine type, similar to how real nitro encla=
+ve
+> > VMs are based on Firecracker microvm. For nitro-enclave to boot from an
+> > EIF file, the kernel and ramdisk(s) are extracted into a temporary kern=
+el
+> > and a temporary initrd file which are then hooked into the regular x86
+> > boot mechanism along with the extracted cmdline. The EIF file path shou=
+ld
+> > be provided using the '-kernel' QEMU option.
+> >
+> > In QEMU, the vsock emulation for nitro enclave is added using vhost-use=
+r-
+> > vsock as opposed to vhost-vsock. vhost-vsock doesn't support sibling VM
+> > communication which is needed for nitro enclaves. So for the vsock
+> > communication to CID 3 to work, another process that does the vsock
+> > emulation in  userspace must be run, for example, vhost-device-vsock[4]
+> > from rust-vmm, with necessary vsock communication support in another
+> > guest VM with CID 3. Using vhost-user-vsock also enables the possibilit=
+y
+> > to implement some proxying support in the vhost-user-vsock daemon that
+> > will forward all the packets to the host machine instead of CID 3 so
+> > that users of nitro-enclave can run the necessary applications in their
+> > host machine instead of running another whole VM with CID 3. The follow=
+ing
+> > mandatory nitro-enclave machine option has been added related to the
+> > vhost-user-vsock device.
+> >   - 'vsock': The chardev id from the '-chardev' option for the
+> > vhost-user-vsock device.
+> >
+> > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device which
+> > has been added using the virtio-nsm device added in a previous commit.
+> > In Nitro Enclaves, all the PCRs start in a known zero state and the fir=
+st
+> > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and PCR=
+8
+> > contain the SHA384 hashes related to the EIF file used to boot the VM
+> > for validation. The following optional nitro-enclave machine options
+> > have been added related to the NSM device.
+> >   - 'id': Enclave identifier, reflected in the module-id of the NSM
+> > device. If not provided, a default id will be set.
+> >   - 'parent-role': Parent instance IAM role ARN, reflected in PCR3
+> > of the NSM device.
+> >   - 'parent-id': Parent instance identifier, reflected in PCR4 of the
+> > NSM device.
+> >
+> > [1] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
+> > [2] https://aws.amazon.com/ec2/
+> > [3] https://github.com/aws/aws-nitro-enclaves-image-format
+> > [4] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vso=
+ck
+> >
+> > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > ---
+> >  MAINTAINERS                              |   9 +
+> >  backends/hostmem-memfd.c                 |   2 -
+> >  configs/devices/i386-softmmu/default.mak |   1 +
+> >  hw/core/machine.c                        |  71 ++---
+> >  hw/core/meson.build                      |   3 +
+> >  hw/i386/Kconfig                          |   6 +
+> >  hw/i386/meson.build                      |   3 +
+> >  hw/i386/microvm.c                        |   6 +-
+> >  hw/i386/nitro_enclave.c                  | 355 +++++++++++++++++++++++
+> >  include/hw/boards.h                      |   2 +
+> >  include/hw/i386/microvm.h                |   2 +
+> >  include/hw/i386/nitro_enclave.h          |  62 ++++
+> >  include/sysemu/hostmem.h                 |   2 +
+> >  13 files changed, 488 insertions(+), 36 deletions(-)
+> >  create mode 100644 hw/i386/nitro_enclave.c
+> >  create mode 100644 include/hw/i386/nitro_enclave.h
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index da4f698137..aa7846107e 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1877,6 +1877,15 @@ F: hw/i386/microvm.c
+> >  F: include/hw/i386/microvm.h
+> >  F: pc-bios/bios-microvm.bin
+> >
+> > +nitro-enclave
+> > +M: Alexander Graf <graf@amazon.com>
+> > +M: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > +S: Maintained
+> > +F: hw/core/eif.c
+> > +F: hw/core/eif.h
+>
+> The eif.c/h files were added in the prevuous patch, so upto this line
+> should be added in the previous patch.
+>
 
-thanks
--- PMM
+Yeah, it makes sense to include it in the previous patch. Thanks!
+
+> > +F: hw/i386/nitro_enclave.c
+> > +F: include/hw/i386/nitro_enclave.h
+>
+> These two lines can remain in this patch
+>
+> >  Machine core
+> >  M: Eduardo Habkost <eduardo@habkost.net>
+> >  M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+>
+>
+> > diff --git a/hw/core/meson.build b/hw/core/meson.build
+> > index a3d9bab9f4..5437a94490 100644
+> > --- a/hw/core/meson.build
+> > +++ b/hw/core/meson.build
+> > @@ -24,6 +24,9 @@ system_ss.add(when: 'CONFIG_REGISTER', if_true: files=
+('register.c'))
+> >  system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+> >  system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+> >  system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.=
+c'))
+> > +if libcbor.found() and gnutls.found()
+> > +  system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c')=
+, zlib, libcbor, gnutls])
+> > +endif
+> >
+> >  system_ss.add(files(
+> >    'cpu-sysemu.c',
+>
+>
+> This change to meson.build should be in the previous patch, since
+> that's the one that introduces eif.c.
+>
+
+'CONFIG_NITRO_ENCLAVE' is introduced in this patch, so the
+meson.change above should stay in this patch, right?
+
+Regards,
+Dorjoy
 
