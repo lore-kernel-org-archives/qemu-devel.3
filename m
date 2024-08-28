@@ -4,70 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A54C54754
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 09:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF38C54755
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 09:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjEek-00040d-F0; Wed, 28 Aug 2024 05:07:58 -0400
+	id 1sjEgt-0001tr-35; Wed, 28 Aug 2024 05:10:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sjEei-0003yx-SE
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:07:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
+ id 1sjEgq-0001tJ-SB
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:10:08 -0400
+Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sjEeg-0005Q6-FP
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:07:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724836072;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=9T+0QtxB3eu7eINqZW6LGDDPvuzvafyjXFudzQSxM10=;
- b=DbcF6/GzCOpEcVwo1VG2FI7cIWz7nEXKhqkO72oqr3sPTBNMWg2HmcWYh7+/8iOichq5V/
- 0ym7ANPe5Ka4fUNZJ+DPWDc2QCsr94+SSw9HmGXzoPl/WYO1LEuqh2GqDelf2hCnBTuNts
- sOsfY5aSWGLSMuUDTUR+q7LBsKbvn5Y=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-uclzDBkIOEOQKhUSclGn9A-1; Wed,
- 28 Aug 2024 05:07:50 -0400
-X-MC-Unique: uclzDBkIOEOQKhUSclGn9A-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6DCF1955D4A; Wed, 28 Aug 2024 09:07:49 +0000 (UTC)
-Received: from t14s.redhat.com (unknown [10.39.193.37])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF2A51956048; Wed, 28 Aug 2024 09:07:44 +0000 (UTC)
-From: David Hildenbrand <david@redhat.com>
+ (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
+ id 1sjEgo-0005YS-QA
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 05:10:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
+ MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=p7u2uRITG+M6vwnJhPLEMQxr82PXj4I8DVtvucqxucY=; b=htoWf53SxyEF1UEnQnypjyhbJQ
+ I/KhBsWysSselk1tjx50WbUKKl7RkG6vjlyx7KhSSFr63CQbJzm9q8wOipFfYzS5ilQe348z1KOVS
+ UDPWF7ParqUQ3Zr3ulF6mvqipMXNWWATw593PyVRFAWVkJ3x+PXirKqGJ40ipi07Ho2/dyZEouqq9
+ 1/q6LcFolk2E5AxhyMXGA6CnlTvZgzw6L1xJvL94dG2fzVJyopeqqODzoS65UUJcYUjiWQ7Gfrlj8
+ TZdyEO8vXnCow22XybiT1/o8UDdC46ln3K0GVQO97uKABH5btZK0D64fikqkrReYvTBGkxXO7ZSKR
+ nI/6nItQ==;
+Received: from [63.135.74.212] (helo=rainbowdash)
+ by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
+ id 1sjE8P-002sJG-VY; Wed, 28 Aug 2024 09:34:33 +0100
+Received: from ben by rainbowdash with local (Exim 4.98)
+ (envelope-from <ben@rainbowdash>) id 1sjE8P-000000006Aa-1SA6;
+ Wed, 28 Aug 2024 09:34:33 +0100
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>,
- qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] softmmu/physmem: fix memory leak in dirty_memory_extend()
-Date: Wed, 28 Aug 2024 11:07:43 +0200
-Message-ID: <20240828090743.128647-1-david@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Ben Dooks <ben.dooks@codethink.co.uk>
+Subject: [PATCH] qemu-timer: check for timerlist being initialised
+Date: Wed, 28 Aug 2024 09:34:32 +0100
+Message-Id: <20240828083432.23707-1-ben.dooks@codethink.co.uk>
+X-Mailer: git-send-email 2.37.2.352.g3c44437643
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=78.40.148.171;
+ envelope-from=srv_ts003@codethink.com; helo=imap5.colo.codethink.co.uk
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,137 +72,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As reported by Peter, we might be leaking memory when removing the
-highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
+If you create a new timer before the timer lists have been
+initialised then you will end up with an abort due to trying
+to access an illegal timer list struct. Add an assert() for
+the timer list being NON-null.
 
-We will fail to realize that we already allocated bitmaps for more
-dirty memory blocks, and effectively discard the pointers to them.
-
-Fix it by getting rid of last_ram_page() and by remembering the number
-of dirty memory blocks that have been allocated already.
-
-While at it, let's use "unsigned int" for the number of blocks, which
-should be sufficient until we reach ~32 exabytes.
-
-Looks like this leak was introduced as we switched from using a single
-bitmap_zero_extend() to allocating multiple bitmaps:
-bitmap_zero_extend() relies on g_renew() which should have taken care of
-this.
-
-Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-stable@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
 ---
+ util/qemu-timer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-v1 -> v2:
-* Move the counter to RAMList
-* Use "unsigned int" instead of "ram_addr_t" as type for the number of
-  blocks
-
----
- include/exec/ramlist.h |  1 +
- system/physmem.c       | 35 +++++++++--------------------------
- 2 files changed, 10 insertions(+), 26 deletions(-)
-
-diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
-index 2ad2a81acc..d9cfe530be 100644
---- a/include/exec/ramlist.h
-+++ b/include/exec/ramlist.h
-@@ -50,6 +50,7 @@ typedef struct RAMList {
-     /* RCU-enabled, writes protected by the ramlist lock. */
-     QLIST_HEAD(, RAMBlock) blocks;
-     DirtyMemoryBlocks *dirty_memory[DIRTY_MEMORY_NUM];
-+    unsigned int num_dirty_blocks;
-     uint32_t version;
-     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
- } RAMList;
-diff --git a/system/physmem.c b/system/physmem.c
-index 94600a33ec..5e7f066762 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1534,18 +1534,6 @@ static ram_addr_t find_ram_offset(ram_addr_t size)
-     return offset;
- }
- 
--static unsigned long last_ram_page(void)
--{
--    RAMBlock *block;
--    ram_addr_t last = 0;
--
--    RCU_READ_LOCK_GUARD();
--    RAMBLOCK_FOREACH(block) {
--        last = MAX(last, block->offset + block->max_length);
--    }
--    return last >> TARGET_PAGE_BITS;
--}
--
- static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
- {
-     int ret;
-@@ -1799,13 +1787,11 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
- }
- 
- /* Called with ram_list.mutex held */
--static void dirty_memory_extend(ram_addr_t old_ram_size,
--                                ram_addr_t new_ram_size)
-+static void dirty_memory_extend(ram_addr_t new_ram_size)
- {
--    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
--                                             DIRTY_MEMORY_BLOCK_SIZE);
--    ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
--                                             DIRTY_MEMORY_BLOCK_SIZE);
-+    unsigned int old_num_blocks = ram_list.num_dirty_blocks;
-+    unsigned int new_num_blocks = DIV_ROUND_UP(new_ram_size,
-+                                               DIRTY_MEMORY_BLOCK_SIZE);
-     int i;
- 
-     /* Only need to extend if block count increased */
-@@ -1837,6 +1823,8 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
-             g_free_rcu(old_blocks, rcu);
-         }
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 213114be68..5c0c6be56b 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -365,6 +365,7 @@ void timer_init_full(QEMUTimer *ts,
+         timer_list_group = &main_loop_tlg;
      }
-+
-+    ram_list.num_dirty_blocks = new_num_blocks;
- }
- 
- static void ram_block_add(RAMBlock *new_block, Error **errp)
-@@ -1846,11 +1834,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     RAMBlock *block;
-     RAMBlock *last_block = NULL;
-     bool free_on_error = false;
--    ram_addr_t old_ram_size, new_ram_size;
-+    ram_addr_t ram_size;
-     Error *err = NULL;
- 
--    old_ram_size = last_ram_page();
--
-     qemu_mutex_lock_ramlist();
-     new_block->offset = find_ram_offset(new_block->max_length);
- 
-@@ -1901,11 +1887,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         }
-     }
- 
--    new_ram_size = MAX(old_ram_size,
--              (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
--    if (new_ram_size > old_ram_size) {
--        dirty_memory_extend(old_ram_size, new_ram_size);
--    }
-+    ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-+    dirty_memory_extend(ram_size);
-     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
-      * QLIST (which has an RCU-friendly variant) does not have insertion at
-      * tail, so save the last element in last_block.
+     ts->timer_list = timer_list_group->tl[type];
++    assert(ts->timer_list != NULL);
+     ts->cb = cb;
+     ts->opaque = opaque;
+     ts->scale = scale;
 -- 
-2.46.0
+2.37.2.352.g3c44437643
 
 
