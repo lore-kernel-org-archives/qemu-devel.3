@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA014C7114C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 22:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3321C7114C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 22:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjRBx-00074H-VJ; Wed, 28 Aug 2024 18:31:05 -0400
+	id 1sjRS3-0004Ny-LO; Wed, 28 Aug 2024 18:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sjRBv-00073l-TX
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 18:31:04 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ id 1sjRS1-0004Mm-MP
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 18:47:41 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sjRBr-0003CU-HO
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 18:31:03 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-5d5f24d9df8so17114eaf.2
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 15:30:57 -0700 (PDT)
+ id 1sjRRy-0004qu-PW
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 18:47:40 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-70e07c1ab31so64064a34.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 15:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724884256; x=1725489056; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724885257; x=1725490057; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xADMDLdOGAqMKlMRybIHzX/D9tLGG+KAZj1ApVp9YMw=;
- b=rOLMkV5qU7Mr2vc0ojxiAq4EuTc1bv4wisSWm/ZzOnIJM9KtIPFq0/PtfuIkSIkV7S
- Njp0aGz44EqOD+7lGduyu1Fmc6YhNEK5Gbr9BGS8PiRL2Itlk2gfJSftM1sVEh0XguGx
- jah0akz9sM2XDxy6mgPybQAvg6O7N45N9+fTofTGUfqRl4hsfRp0X2o14HCm3hqygLUu
- SBkGnI4ndyLaeEhonn6PLOiSzh2yBc7flyIeLVOWTZWqxiu1jd209wPU3tFJ2YhEmZ8Z
- PY/BSSbZhvdW+UiB9syPXEdZtaf0VlHH4bEiSxWgcZAzqOiktCAGih297MlaEzJrlVxp
- AIJg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9f/avNeT6ewmpbIH3/c/pcZubZHUKmOt5F9wE2Uxa7g=;
+ b=e3M8cDzzFC/ecA3imJn2BePU+buFcvPjA0nEo9LY5ilnbip/mgDL2ty9/DSYWASy5e
+ zX16/YwCZFWOrY7W0En0NRAkL1KlkdOR9HiMANlqeQA6YSyMcMAzvsdLBBWeXWkM2k/O
+ EovbwI9Jrm5VVRn+toxi6XWnvQWs3pOl2mdiGVDVkIbcZj2Lh7G7naKn9OSAlbeK0cM9
+ POurhhhKKIrtt5nr3LojGJ6WXKY0+r33OPltJceu/PSuVTh9U++uAuGffgwYLeFWVrmv
+ H40qLZ/BYyzIUH+IndN3r5yFD/rTRQG1bik7qx2IDtcCgLBAfurapERYfvWmFOQwyOvp
+ eGCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724884256; x=1725489056;
+ d=1e100.net; s=20230601; t=1724885257; x=1725490057;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xADMDLdOGAqMKlMRybIHzX/D9tLGG+KAZj1ApVp9YMw=;
- b=c9OvsXI4kIPXVL/a+SAbvY+fFlOL1MbuRmpsq26O2OHAeXZp5FFoSL2LUIjWBP9Iyi
- 5XWkiXYSfeoCdITR6kUfywOrjEpGyYX+LV2N9XYcvfswaaAX4NrVUsYoCCCLnFe4vEOU
- P1qDzR7511MNyAi5viXj/2mDDCkyjKDvk0w77rIsp6HHNg193QGv2nEJ5IF1K9MpHjaB
- sBA/CgHPWeCA7fcxsI9a5CuIf1vAoy9xMtagDUaz8JrAh6lZWuarJCu1yNgGY+RCXA8S
- 6Hlv8tUD2sBbkN7sJw5rmjEiMtYrH2VIATMtjMyesPWlpOowKgtiqpZcV6VDtCAGrFzn
- a+9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWrXJf+tsukH3Xdv3MIBrf+ho/eEkBSDZxvwyvCFPHN+g4zSjtOCBRf8Tc7mbbHdapD5V9WuZvV35/@nongnu.org
-X-Gm-Message-State: AOJu0YxO54YkaD2m9gIsKFu86jTOdcND/4xxekEp7jAu2uHCHTe9osEF
- TmTtRetSntdF4l7z7qWooA4jY05rsAO4a24NEOKkesZORImcHw/GIWhcJGnGv08=
-X-Google-Smtp-Source: AGHT+IEAozg9MXQ4PH8UTSZUIgC+kY74ox51SoS6IvWxhRMibH8NpLHr1YqQYL67nLh4bT2NLK4nKA==
-X-Received: by 2002:a05:6870:240d:b0:24f:d178:d48d with SMTP id
- 586e51a60fabf-277902654f8mr1139102fac.31.1724884256419; 
- Wed, 28 Aug 2024 15:30:56 -0700 (PDT)
+ bh=9f/avNeT6ewmpbIH3/c/pcZubZHUKmOt5F9wE2Uxa7g=;
+ b=pyUYS2S/+9yvHalMfZB0WKPeT1bFy+TPki5qOOX0/CYC8dNIkWqhHSVtMtpYS0edGr
+ vlnNEvClMDZn533q/o3x0sHDL+3wk/w/2Dxmpyhzy+8yV4IqFWJhiKw/YR/tNTHVTuw6
+ 8vyM1OWQpflQpVxnFo8Y7ujZxNt9x2Ph61C23hIRPNE7EAuFsRwZHZaygxIEzdtycFOW
+ L/saCP8vazxVtgVpZE1q2cc8jfUBgCpr89nk3Qqkm15UUYcf3u6ENPRxhcfMXl+uudNB
+ muk1cQ1pEeaBVvI56g0MvtGDTx0xrxFbYnBHMFvbNGAMwSfIW5nlFQqXR6aIj4SKaj2I
+ XcSA==
+X-Gm-Message-State: AOJu0YzDakmauysxyrKdAmhL0C16ys+e9u0VB2kMmWwBgu1/dyuTAb4v
+ 5hTdqnzCIsA6nQN1RMvSiszo5d2oyO8NItIRvqF3WcyYpRu5wn+LSMEEshIjIsg=
+X-Google-Smtp-Source: AGHT+IGeyjiKx86jJ7md7NCwzbs71lHmLlPyfNlQJk3+YV/OUGQ1Z2iiopiQQp/0u2qpgov4QBF45g==
+X-Received: by 2002:a05:6830:6d86:b0:709:48f1:bc7c with SMTP id
+ 46e09a7af769-70f5c343bdemr1534370a34.5.1724885257142; 
+ Wed, 28 Aug 2024 15:47:37 -0700 (PDT)
 Received: from [192.168.98.227] ([172.58.111.246])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-273ce9e3ec0sm4045245fac.18.2024.08.28.15.30.53
+ 46e09a7af769-70e03a84460sm3167527a34.21.2024.08.28.15.47.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Aug 2024 15:30:56 -0700 (PDT)
-Message-ID: <02ff2d1e-d5f7-4e98-9758-aa39f58bae6b@linaro.org>
-Date: Thu, 29 Aug 2024 08:30:47 +1000
+ Wed, 28 Aug 2024 15:47:36 -0700 (PDT)
+Message-ID: <bea888ca-9221-4c51-bcd1-c869d73094ae@linaro.org>
+Date: Thu, 29 Aug 2024 08:47:27 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/1] QAPI patches patches for 2024-08-27
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-References: <20240827103532.799039-1-armbru@redhat.com>
+Subject: Re: [PULL 3/6] qemu/osdep: Split qemu_close_all_open_fd() and add
+ fallback
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?=
+ <cleger@rivosinc.com>
+References: <20240805003130.1421051-1-richard.henderson@linaro.org>
+ <20240805003130.1421051-5-richard.henderson@linaro.org>
+ <Zs8ctyVxQz3iLDmM@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240827103532.799039-1-armbru@redhat.com>
+In-Reply-To: <Zs8ctyVxQz3iLDmM@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,36 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/24 20:35, Markus Armbruster wrote:
-> I'm nominating this fix for v9.1 because it can only affect generated
-> documentation, and CI should protect us from surprise build breaks.
-> Feel free to delay it to v9.2 if you think even that is too much risk
-> or simply too much trouble to be worthwhile.
+On 8/28/24 22:48, Daniel P. Berrangé wrote:
+>>       dir = opendir("/proc/self/fd");
 > 
-> The following changes since commit afaee42f777bc359db95f692804f7fc7e12c0c02:
+> IIUC from previous threads this is valid on Linux and on Solaris.
 > 
->    Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging (2024-08-27 07:06:42 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-08-27
-> 
-> for you to fetch changes up to 43e0d14ee09a0565adcf4ce5f35be79695958fb0:
-> 
->    docs/sphinx: fix extra stuff in TOC after freeform QMP sections (2024-08-27 11:10:58 +0200)
-> 
-> ----------------------------------------------------------------
-> QAPI patches patches for 2024-08-27
-> 
-> ----------------------------------------------------------------
-> John Snow (1):
->        docs/sphinx: fix extra stuff in TOC after freeform QMP sections
-> 
->   docs/sphinx/qapidoc.py | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
+> On FreeBSD & macOS, you need /dev/fd though.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Fair, but importantly, it doesn't do anything *incorrect* those systems: it merely skips 
+this method with ENOENT.
+
+>> +    int open_max = sysconf(_SC_OPEN_MAX), i;
+>> +
+>> +    /* Fallback */
+>> +    for (i = 0; i < open_max; i++) {
+>> +        close(i);
+>> +    }
+> 
+> I'm told that sysconf(_SC_OPEN_MAX) returns -1 on some versions of
+> macOS. "Luckily" since we assigned to 'int' rather than 'unsigned int'
+> this will result in us not closing any FDs in this fallback path,
+> rather than trying to close several billion FDs (an effective hang).
+
+Ouch.
+
+> 
+> If _SC_OPEN_MAX returns -1, we should fallback to the OPEN_MAX
+> constant on macOS (see commit de448e0f26e710e9d2b7fc91393c40ac24b75847
+> which tackled a similar issue wrt getrlimit), and fallback to perhaps
+> a hardcoded 1024 on non-macOS.
+
+I wish the timing on this had been better -- 25 minutes earlier and I would have delayed rc4.
+
+Since macOS simply doesn't close fds, I'm of a mind to release 9.1.0 without this, and fix 
+it for 9.1.1.  Thoughts?
+
 
 r~
 
