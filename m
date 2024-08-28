@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BAC8C54FA6
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E3AC54FA6
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 12:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjHiL-0007j8-0l; Wed, 28 Aug 2024 08:23:53 -0400
+	id 1sjHiL-0007n8-VK; Wed, 28 Aug 2024 08:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sjHiH-0007f3-Ph
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:23:49 -0400
+ id 1sjHiJ-0007iH-9t
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:23:51 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sjHiG-0001DO-BC
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:23:49 -0400
+ id 1sjHiH-0001Da-CM
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:23:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=8A2FICmUmjowEj9RLWXSg7/Kx8EQAw4oc04eFwo72Js=; b=rSZEKM8DBeC5Slg1ILZ2eBVoNg
- p6jsOBm6e4VQe3tAlI7sC75ihGSkJ3ncO/BIiYCaYDd9jwHpCwok+lstzaPJhSZ9C7bNwP3upJSSS
- XIOpXJ/NVYwxvmrlBDDdUcVlG9HrbzFAap34aE/r2LLXTet8ePJZhhoxQKG2w4sztJDbcDK43+q2y
- 9EeaKWfnun8B/6eefn2A/hlcyv8PbZgZ1Joow7onAdTp0xyjo4hewSyQIVruM12/TMcCmNNpMPvLq
- 8apwfXUffFCTuHtqQo8xppbDbyjAW+vz7D49r7IPJLklttxo7//XBum973i7vrrlwLyVp6veYOxVF
- sQ7f9DKXMZ/5GO83PTLCwJGZzTZ7Fc26DjjB60T4FshrtrwInMOy8NS0srznWu30i8lsJ0KPETDWH
- cGCGeYgn64J1nkSkQs3yY1a6ai4x0R9pjurVO9F6KiQniJWPVvoPXta8mf3tmQqSeD0nW3HmEZV+M
- oG0hX0QmOP1BcLYEeNdLRL2JAlMYkyyj2vR6Fi2qv6HLc0A8Udx4LlVTYhTak3I23nsmIMJWit6HJ
- 8/PFUZCs/1XMNfyqGfoC4UrZyDYcDFtKfJyyXPHM0ibK4VgMy58YQVp51Uv+DxXKnq2o7657xCECO
- 554uBduUFf8S9g8EBRFeuke7HTFyNvWPBLd52T394=;
+ bh=yqZV3N3qjRopbwCand9K9Y8Kskn89ms5iiMIBgf6KxM=; b=P3eK36dYFvJBh/5LIi0wV2Ep/B
+ o67g5AWhbBVTguWJHRela/K1Nw1DcfGTHFmx0GjitWOD/Ej7icfcjApXclrUvDqCc0hoyKWTcXSNS
+ GU9pwl7/EA4i0dMmqUnTeE7+H1zK8V5UHJD1lvqwoXfs3/0cgAqrojE3UAujXgV5EAT5cPo/AHQTE
+ h0hz1FIYBeLQIdKn+0MFi8WMXyL7YDM6WynC+4eIOkmSSlVTv0S04O2264ZbZMPsqfHiIfscKLUJv
+ V6Nog9HitmTApykIm17zj+lG99VwSezFFppyVyOGT9LdYZw3gKOQIaXAvpSqUplC1+bH86W81odml
+ nUhJLYihiDXDRbI45QsjyMzAHqy1jvYLPGcKeik4nzvw18KLXCL5u1qnWQLg528r+AtNBBzQMbjDY
+ x4nnjChi2VihK33AJrMIW7ol7GXs+6g630MnteoP62Q+CuEqWSyj0Fvs2Rhjq15Y72Nkovrj7dJaJ
+ bjFlWTURoEiJ+/XmilKLtjochwg+wI/xn+zZKRsKA4hokd3aQfIBffVGeLne/RQTh1qmYxwpMccTy
+ ukN3nfv2H9wmH7J9qsw8tQ0DlTF4byP5WM/zLnJyCxYHOdd3f3GxlA5MzqTsdgN1Mw3nKX15sAOpe
+ 31ArbmVfyFhFim5oBCkGLIu/AadhXvqHJxwuXdDaQ=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sjHhv-000B8d-1O; Wed, 28 Aug 2024 13:23:31 +0100
+ id 1sjHhz-000B8d-6b; Wed, 28 Aug 2024 13:23:35 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: philmd@linaro.org, Alistair.Francis@wdc.com, tavip@google.com,
  qemu-devel@nongnu.org
-Date: Wed, 28 Aug 2024 13:22:57 +0100
-Message-Id: <20240828122258.928947-9-mark.cave-ayland@ilande.co.uk>
+Date: Wed, 28 Aug 2024 13:22:58 +0100
+Message-Id: <20240828122258.928947-10-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
 References: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
@@ -52,7 +52,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 8/9] fifo8: introduce fifo8_peek() function
+Subject: [PATCH 9/9] tests/unit: add test-fifo unit test
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,53 +78,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows uses to peek the byte at the current head of the FIFO.
+This tests the Fifo8 implementation for basic operations as well as testing for
+the correct *_bufptr() including handling wraparound of the internal FIFO buffer.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- include/qemu/fifo8.h | 11 +++++++++++
- util/fifo8.c         |  6 ++++++
- 2 files changed, 17 insertions(+)
+ tests/unit/meson.build |   1 +
+ tests/unit/test-fifo.c | 256 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 257 insertions(+)
+ create mode 100644 tests/unit/test-fifo.c
 
-diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
-index d09984b146..4f768d4ee3 100644
---- a/include/qemu/fifo8.h
-+++ b/include/qemu/fifo8.h
-@@ -62,6 +62,17 @@ void fifo8_push_all(Fifo8 *fifo, const uint8_t *data, uint32_t num);
-  */
- uint8_t fifo8_pop(Fifo8 *fifo);
- 
-+/**
-+ * fifo8_peek:
-+ * @fifo: fifo to peek from
-+ *
-+ * Peek the data byte at the current head of the FIFO. Clients are responsible
-+ * for checking for emptyness using fifo8_is_empty().
-+ *
-+ * Returns: The peeked data byte.
-+ */
-+uint8_t fifo8_peek(Fifo8 *fifo);
-+
- /**
-  * fifo8_pop_buf:
-  * @fifo: FIFO to pop from
-diff --git a/util/fifo8.c b/util/fifo8.c
-index a8f5cea158..a26da66ad2 100644
---- a/util/fifo8.c
-+++ b/util/fifo8.c
-@@ -71,6 +71,12 @@ uint8_t fifo8_pop(Fifo8 *fifo)
-     return ret;
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 490ab8182d..89f9633cd6 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -47,6 +47,7 @@ tests = {
+   'test-logging': [],
+   'test-qapi-util': [],
+   'test-interval-tree': [],
++  'test-fifo': [],
  }
  
-+uint8_t fifo8_peek(Fifo8 *fifo)
+ if have_system or have_tools
+diff --git a/tests/unit/test-fifo.c b/tests/unit/test-fifo.c
+new file mode 100644
+index 0000000000..1e54cde871
+--- /dev/null
++++ b/tests/unit/test-fifo.c
+@@ -0,0 +1,256 @@
++/*
++ * Fifo8 tests
++ *
++ * Copyright 2024 Mark Cave-Ayland
++ *
++ * Authors:
++ *  Mark Cave-Ayland    <mark.cave-ayland@ilande.co.uk>
++ *
++ * This work is licensed under the terms of the GNU LGPL, version 2 or later.
++ * See the COPYING.LIB file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "migration/vmstate.h"
++#include "qemu/fifo8.h"
++
++const VMStateInfo vmstate_info_uint32;
++const VMStateInfo vmstate_info_buffer;
++
++
++static void test_fifo8_pop_bufptr_wrap(void)
 +{
-+    assert(fifo->num > 0);
-+    return fifo->data[fifo->head];
++    Fifo8 fifo;
++    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
++    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2 };
++    const uint8_t *buf;
++    uint32_t count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    buf = fifo8_pop_bufptr(&fifo, 2, &count);
++    g_assert(count == 2);
++    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
++
++    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++    buf = fifo8_pop_bufptr(&fifo, 8, &count);
++    g_assert(count == 6);
++    g_assert(buf[0] == 0x3 && buf[1] == 0x4 && buf[2] == 0x5 &&
++             buf[3] == 0x6 && buf[4] == 0x7 && buf[5] == 0x8);
++
++    g_assert(fifo8_num_used(&fifo) == 2);
++    fifo8_destroy(&fifo);
 +}
 +
- static const uint8_t *fifo8_peekpop_bufptr(Fifo8 *fifo, uint32_t max,
-                                            uint32_t skip, uint32_t *numptr,
-                                            bool do_pop)
++static void test_fifo8_pop_bufptr(void)
++{
++    Fifo8 fifo;
++    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4 };
++    const uint8_t *buf;
++    uint32_t count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    buf = fifo8_pop_bufptr(&fifo, 2, &count);
++    g_assert(count == 2);
++    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
++
++    g_assert(fifo8_num_used(&fifo) == 2);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_peek_bufptr_wrap(void)
++{
++    Fifo8 fifo;
++    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
++    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2 };
++    const uint8_t *buf;
++    uint32_t count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    buf = fifo8_peek_bufptr(&fifo, 2, &count);
++    g_assert(count == 2);
++    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
++
++    buf = fifo8_pop_bufptr(&fifo, 2, &count);
++    g_assert(count == 2);
++    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
++    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++
++    buf = fifo8_peek_bufptr(&fifo, 8, &count);
++    g_assert(count == 6);
++    g_assert(buf[0] == 0x3 && buf[1] == 0x4 && buf[2] == 0x5 &&
++             buf[3] == 0x6 && buf[4] == 0x7 && buf[5] == 0x8);
++
++    g_assert(fifo8_num_used(&fifo) == 8);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_peek_bufptr(void)
++{
++    Fifo8 fifo;
++    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4 };
++    const uint8_t *buf;
++    uint32_t count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    buf = fifo8_peek_bufptr(&fifo, 2, &count);
++    g_assert(count == 2);
++    g_assert(buf[0] == 0x1 && buf[1] == 0x2);
++
++    g_assert(fifo8_num_used(&fifo) == 4);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_pop_buf_wrap(void)
++{
++    Fifo8 fifo;
++    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
++    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2, 0x3, 0x4 };
++    uint8_t data_out[4];
++    int count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    fifo8_pop_buf(&fifo, NULL, 4);
++
++    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++    count = fifo8_pop_buf(&fifo, NULL, 4);
++    g_assert(count == 4);
++    count = fifo8_pop_buf(&fifo, data_out, 4);
++    g_assert(count == 4);
++    g_assert(data_out[0] == 0x1 && data_out[1] == 0x2 &&
++             data_out[2] == 0x3 && data_out[3] == 0x4);
++
++    g_assert(fifo8_num_used(&fifo) == 0);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_pop_buf(void)
++{
++    Fifo8 fifo;
++    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8 };
++    uint8_t data_out[] = { 0xff, 0xff, 0xff, 0xff };
++    int count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    count = fifo8_pop_buf(&fifo, NULL, 4);
++    g_assert(count == 4);
++    count = fifo8_pop_buf(&fifo, data_out, 4);
++    g_assert(data_out[0] == 0x5 && data_out[1] == 0x6 &&
++             data_out[2] == 0x7 && data_out[3] == 0x8);
++
++    g_assert(fifo8_num_used(&fifo) == 0);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_peek_buf_wrap(void)
++{
++    Fifo8 fifo;
++    uint8_t data_in1[] = { 0x1, 0x2, 0x3, 0x4 };
++    uint8_t data_in2[] = { 0x5, 0x6, 0x7, 0x8, 0x1, 0x2, 0x3, 0x4 };
++    uint8_t data_out[4];
++    int count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    fifo8_pop_buf(&fifo, NULL, 4);
++
++    fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++    count = fifo8_peek_buf(&fifo, NULL, 4);
++    g_assert(count == 4);
++    count = fifo8_peek_buf(&fifo, data_out, 4);
++    g_assert(count == 4);
++    g_assert(data_out[0] == 0x5 && data_out[1] == 0x6 &&
++             data_out[2] == 0x7 && data_out[3] == 0x8);
++
++    g_assert(fifo8_num_used(&fifo) == 8);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_peek_buf(void)
++{
++    Fifo8 fifo;
++    uint8_t data_in[] = { 0x1, 0x2, 0x3, 0x4 };
++    uint8_t data_out[] = { 0xff, 0xff, 0xff, 0xff };
++    int count;
++
++    fifo8_create(&fifo, 8);
++
++    fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    count = fifo8_peek_buf(&fifo, NULL, 4);
++    g_assert(count == 4);
++    g_assert(data_out[0] == 0xff && data_out[1] == 0xff &&
++             data_out[2] == 0xff && data_out[3] == 0xff);
++
++    count = fifo8_peek_buf(&fifo, data_out, 4);
++    g_assert(count == 4);
++    g_assert(data_out[0] == 0x1 && data_out[1] == 0x2 &&
++             data_out[2] == 0x3 && data_out[3] == 0x4);
++
++    g_assert(fifo8_num_used(&fifo) == 4);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_peek(void)
++{
++    Fifo8 fifo;
++    uint8_t c;
++
++    fifo8_create(&fifo, 8);
++    fifo8_push(&fifo, 0x1);
++    fifo8_push(&fifo, 0x2);
++
++    c = fifo8_peek(&fifo);
++    g_assert(c == 0x1);
++    fifo8_pop(&fifo);
++    c = fifo8_peek(&fifo);
++    g_assert(c == 0x2);
++
++    g_assert(fifo8_num_used(&fifo) == 1);
++    fifo8_destroy(&fifo);
++}
++
++static void test_fifo8_pushpop(void)
++{
++    Fifo8 fifo;
++    uint8_t c;
++
++    fifo8_create(&fifo, 8);
++    fifo8_push(&fifo, 0x1);
++    fifo8_push(&fifo, 0x2);
++
++    c = fifo8_pop(&fifo);
++    g_assert(c == 0x1);
++    c = fifo8_pop(&fifo);
++    g_assert(c == 0x2);
++
++    g_assert(fifo8_num_used(&fifo) == 0);
++    fifo8_destroy(&fifo);
++}
++
++int main(int argc, char *argv[])
++{
++    g_test_init(&argc, &argv, NULL);
++    g_test_add_func("/fifo8/pushpop", test_fifo8_pushpop);
++    g_test_add_func("/fifo8/peek", test_fifo8_peek);
++    g_test_add_func("/fifo8/peek_buf", test_fifo8_peek_buf);
++    g_test_add_func("/fifo8/peek_buf_wrap", test_fifo8_peek_buf_wrap);
++    g_test_add_func("/fifo8/pop_buf", test_fifo8_pop_buf);
++    g_test_add_func("/fifo8/pop_buf_wrap", test_fifo8_pop_buf_wrap);
++    g_test_add_func("/fifo8/peek_bufptr", test_fifo8_peek_bufptr);
++    g_test_add_func("/fifo8/peek_bufptr_wrap", test_fifo8_peek_bufptr_wrap);
++    g_test_add_func("/fifo8/pop_bufptr", test_fifo8_pop_bufptr);
++    g_test_add_func("/fifo8/pop_bufptr_wrap", test_fifo8_pop_bufptr_wrap);
++    return g_test_run();
++}
 -- 
 2.39.2
 
