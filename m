@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41C9C54FB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC40DC54FC6
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 13:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjIhA-0005ez-5t; Wed, 28 Aug 2024 09:26:44 -0400
+	id 1sjIhB-0005gh-Gp; Wed, 28 Aug 2024 09:26:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1sjI85-0003wC-T8
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:50:29 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1sjG6a-0003QM-R2
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 06:40:48 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1sjI84-00052H-73
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 08:50:29 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a86acbaddb4so618629866b.1
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 05:50:27 -0700 (PDT)
+ id 1sjG6X-0006to-Fl
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 06:40:48 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5becfd14353so7108736a12.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 03:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724849426; x=1725454226; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=02ptqi7SUr5ZLauUSAynEV+niDo0wYMb2imjWzIfsos=;
- b=cqKK4bqsykxOzaj6MfaZcs4c+nPGDdJ8TMUeLJbpqIQ8NOnQ4G0fDGg8oN0sNrqWSC
- BuKLhJYP8Vx4yvne9n5dnWLaia5g9E8QjgYFV2C/KM/vWT4C4fHA3ec07AFht26OFe/8
- S2opUKBGWhs011cBl3B37hFR4DsW9vYiUoXWqD3V67tk/pQoVXHMEnqJzE+S7EZM0MxL
- bj/VWis4XSv4NsXHN8nDZX9b4AgwYK15X13kjbKijQWIg61C4DWL9rCEMMn0GgvY1P1k
- 2MdpwH1KgXW7JqFgv1m8iJnQK+dsQDwX9rQU3tjcH9wJl7WBiRvPPkqSq8Lo4tmwZxQo
- +5OQ==
+ d=gmail.com; s=20230601; t=1724841638; x=1725446438; darn=nongnu.org;
+ h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+ :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=jtZk81QzXpKxhj7DNWTSfcJvXx1ZjjA/Vl+OopJm0EI=;
+ b=g9ETw7+9JE5GZUS6Pm7nunJKB+h36kVU/77Jg7mAIerpaJ0lBPut3D/g94UvwF0E3q
+ uh7huNYBpFE2NUFGFy/lMbR/0qIoIUFH+gB8po4oac/aScffamisgSaHgwJPrnS+ZM7A
+ vZWfu3C1aGmBWbZsLNYkXVgLLhWyhJgdKYvrwpFpYfZYRQ/dxKCi/YrEMVkbmKtcMHV8
+ YsDKeA1WjWqIKguUToL76f9ulWjQ3F9mQVcwGLoy4TMs1WOajPFfMIZrzbtAZpjwD9Y9
+ SydVH8Itzj2mNSJrQiwQUZm4qZeish3BflwMUwKwhhUGHf5Ogv8tAtQEeSWBRuxO0cuF
+ JVzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724849426; x=1725454226;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=02ptqi7SUr5ZLauUSAynEV+niDo0wYMb2imjWzIfsos=;
- b=F7QPXLkMv1HCc2BVhyYyVkxu5hahTevL7O0HiBXPelYmdCDcy7G5n22a+UhBl90DTZ
- IExlFMBTB6a3Mi5ZmH4NcS3xrhA1daqxI411dFBp/jmbr90lvVsjGxPrX5LQD7zU29zo
- 5vTa6o9CZa6Md9/AwRSv0XO62cHOp30z+OLuiOnf3ucT3kDYvgGVvD8Cc7QzC9fOZZZK
- BwU1s/k6e5R7LFRRzoeKBrdkY61xWuOM7ryqsxKrfLGhgFSDdeBzkvsjiDg6FSoQDfbj
- WSh2nxT4A2HIJTDmckBNqDmRfhfzn+aze54Xn5D64+e8rdXOSkh9O903CBJaL1X4AJYx
- cthA==
-X-Gm-Message-State: AOJu0YyxR4JK0uVgjC9HVB9Wa5vVY4Ph9Zu681oAe+UL2928TXd5uTQs
- gnlTbKI10deqaZiV/Ve0u8CR/qxEI35WUTE545AxkEXghAFeJhAD8xVIyA==
-X-Google-Smtp-Source: AGHT+IE29WBq7kuECyXBSnYy5BOdM5UYyHmOqSLSaXwoEhv5nCtwXNbP/Z67Hh34aQ5rzIHHSkE9DA==
-X-Received: by 2002:a17:906:f59a:b0:a86:9880:183 with SMTP id
- a640c23a62f3a-a870a94fe3amr152284566b.10.1724849425906; 
- Wed, 28 Aug 2024 05:50:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724841638; x=1725446438;
+ h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+ :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jtZk81QzXpKxhj7DNWTSfcJvXx1ZjjA/Vl+OopJm0EI=;
+ b=GSdtOAGyJXKDHuGauh6MJFkIeiArEag+GmZ8cbGm95EtTBG/46jcwNaTJuV0P4dzWD
+ HE0GHCKSjVV8oCmUukSsm9ME7HCnk92hAG0e/0uduNWyBctosD8tNoDDPWGyWVZSbXO0
+ uhXqp1qW6G88d2iDeoo6Dj7sbDtfCrCVAPgdl60yll2euImVZxPp0eHVru1XCGaWTqg3
+ VZxgDVVSXT6OfIiO4Z99B2pln1rOHIpr3OCSi7cob/xRM2LzEle2grgQD+wf70n/k/fT
+ LmNTPLNhz0VIeO6NTVVoHMNwqAHQRI6Itwt/utNT+8Ci9pVWpAZR2PtZT5yfLxSWWAke
+ nRRg==
+X-Gm-Message-State: AOJu0YyowBmsc/irH/aCpVcf1il9SWrI0Faoeua3dALY22hIGRICJ3cG
+ jIHu4ZSk95hSDDMUtK3WJMoFg7fxZBw9OTTGb2tmejx6dG3lQpnKe4vBbg==
+X-Google-Smtp-Source: AGHT+IEJ5LYNjU4GwgFMYOfMnR9Aag++7eiZuDWrgvWkzp7Lih/I6SbjEOZHGWXIhGGVLwsc8oBanw==
+X-Received: by 2002:a05:6402:27ca:b0:5c0:a8ba:3c41 with SMTP id
+ 4fb4d7f45d1cf-5c0a8ba3c76mr6512725a12.8.1724841637924; 
+ Wed, 28 Aug 2024 03:40:37 -0700 (PDT)
 Received: from [172.21.179.178] ([195.226.174.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a86e5878a4asm243765266b.177.2024.08.28.05.50.25
+ 4fb4d7f45d1cf-5c0bb20b35asm2078329a12.45.2024.08.28.03.40.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Aug 2024 05:50:25 -0700 (PDT)
-Message-ID: <d9a3044bf7d9c059fd7cbdb4e12400c11003ae28.camel@gmail.com>
+ Wed, 28 Aug 2024 03:40:37 -0700 (PDT)
+Message-ID: <216d3028301937887bc684ac905c7088272930ab.camel@gmail.com>
 Subject: Re: [PATCH 4/7] vfio/igd: add new bar0 quirk to emulate BDSM mirror
 From: Corvin =?ISO-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>
 Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Date: Wed, 28 Aug 2024 14:50:24 +0200
-In-Reply-To: <216d3028301937887bc684ac905c7088272930ab.camel@gmail.com>
+Date: Wed, 28 Aug 2024 12:40:36 +0200
+In-Reply-To: <20240826103513.082360bd.alex.williamson@redhat.com>
 References: <20240822111819.34306-1-c.koehne@beckhoff.com>
  <20240822111819.34306-5-c.koehne@beckhoff.com>
  <20240826103513.082360bd.alex.williamson@redhat.com>
- <216d3028301937887bc684ac905c7088272930ab.camel@gmail.com>
 Autocrypt: addr=corvin.koehne@gmail.com; prefer-encrypt=mutual;
  keydata=mQINBGNjZaIBEADDTrDNf+0pwiuRPBdClcnZW83dH1UhuOi0u+A1J2SatEBbNaFVtXXAa
  vewCTuyV/ZbNidjlhq3R/pWyiKjFKvs5dj7PMCw+3z2D5OWpMdHg7TrB+fbdFPOEsu0zQVKNaO+pS
@@ -113,12 +111,12 @@ Autocrypt: addr=corvin.koehne@gmail.com; prefer-encrypt=mutual;
  duT6JvgW92xjWegMsamtkDZH8Ik/cmYhH0K/qEc6OZVNea/4PTEZe0uxODJ6pbMd80AJyGqDPPVeA
  gWJtEIG4k6IS8XyD5v1QJtlpDVpPwP/bbFnVc3h3Oatfn8Etm1KAqYvNwyO+om2PkF1p732uapDZd
  LwksVmgc9s79+9pSpeP5DbIeMzhrIK
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg="pgp-sha256";
+ protocol="application/pgp-signature"; boundary="=-QgRas4Q8LHuay5lnfNuH"
 User-Agent: Evolution 3.52.4 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,24 +140,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-08-28 at 12:40 +0200, Corvin K=C3=B6hne wrote:
-> On Mon, 2024-08-26 at 10:35 -0600, Alex Williamson wrote:
-> >=20
-> > PS - please drop the confidential email warning signature when
-> > posting
-> > to public lists.
-> >=20
->=20
-> Sry for the noise. I can't drop it, so I'm going to use another mail
-> address to post my patches.
->=20
-> >=20
 
-Argh, forgot updating my send-email config when resending the patch
-series. Should I resend it again?
+--=-QgRas4Q8LHuay5lnfNuH
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, 2024-08-26 at 10:35 -0600, Alex Williamson wrote:
+> CAUTION: External Email!!
+> On Thu, 22 Aug 2024 13:08:29 +0200
+> Corvin K=C3=B6hne <c.koehne@beckhoff.com> wrote:
+>=20
+> > =EF=BB=BFThe BDSM register is mirrored into MMIO space at least for gen=
+ 11
+> > and
+> > later devices. Unfortunately, the Windows driver reads the register
+> > value from MMIO space instead of PCI config space for those devices
+> > [1].
+> > Therefore, we either have to keep a 1:1 mapping for the host and
+> > guest
+> > address or we have to emulate the MMIO register too. Using the igd
+> > in
+> > legacy mode is already hard due to it's many constraints. Keeping a
+> > 1:1
+> > mapping may not work in all cases and makes it even harder to use.
+> > An
+> > MMIO emulation has to trap the whole MMIO page. This makes accesses
+> > to
+> > this page slower compared to using second level address
+> > translation.
+> > Nevertheless, it doesn't have any constraints and I haven't noticed
+> > any
+> > performance degradation yet making it a better solution.
+> >=20
+> > [1]
+> > https://github.com/projectacrn/acrn-hypervisor/blob/5c351bee0f6ae46250e=
+efc07f44b4a31e770f3cf/devicemodel/hw/pci/passthrough.c#L650-L653
+> >=20
+> > Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+> > ---
+> > =C2=A0hw/vfio/igd.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 97
+> > ++++++++++++++++++++++++++++++++++++++++++++
+> > =C2=A0hw/vfio/pci-quirks.c |=C2=A0 1 +
+> > =C2=A0hw/vfio/pci.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1=
+ +
+> > =C2=A03 files changed, 99 insertions(+)
+> >=20
+> > diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> > index 0b6533bbf7..863b58565e 100644
+> > --- a/hw/vfio/igd.c
+> > +++ b/hw/vfio/igd.c
+> > @@ -374,6 +374,103 @@ static const MemoryRegionOps
+> > vfio_igd_index_quirk =3D {
+> > =C2=A0=C2=A0=C2=A0=C2=A0 .endianness =3D DEVICE_LITTLE_ENDIAN,
+> > =C2=A0};
+> > =C2=A0
+> > +#define IGD_BDSM_MMIO_OFFSET 0x1080C0
+> > +
+> > +static uint64_t vfio_igd_quirk_bdsm_read(void *opaque,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 hwaddr addr, unsigned
+> > size)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 VFIOPCIDevice *vdev =3D opaque;
+> > +=C2=A0=C2=A0=C2=A0 uint64_t offset;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 offset =3D IGD_BDSM_GEN11 + addr;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 switch (size) {
+> > +=C2=A0=C2=A0=C2=A0 case 1:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return pci_get_byte(vdev->p=
+dev.config + offset);
+> > +=C2=A0=C2=A0=C2=A0 case 2:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return le16_to_cpu(pci_get_=
+word(vdev->pdev.config +
+> > offset));
+> > +=C2=A0=C2=A0=C2=A0 case 4:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return le32_to_cpu(pci_get_=
+long(vdev->pdev.config +
+> > offset));
+> > +=C2=A0=C2=A0=C2=A0 case 8:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return le64_to_cpu(pci_get_=
+quad(vdev->pdev.config +
+> > offset));
+> > +=C2=A0=C2=A0=C2=A0 default:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw_error("igd: unsupported =
+read size, %u bytes", size);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0 return 0;
+> > +}
+> > +
+> > +static void vfio_igd_quirk_bdsm_write(void *opaque, hwaddr addr,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 uint64_t data, unsigned
+> > size)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 VFIOPCIDevice *vdev =3D opaque;
+> > +=C2=A0=C2=A0=C2=A0 uint64_t offset;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 offset =3D IGD_BDSM_GEN11 + addr;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 switch (size) {
+> > +=C2=A0=C2=A0=C2=A0 case 1:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pci_set_byte(vdev->pdev.con=
+fig + offset, data);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> > +=C2=A0=C2=A0=C2=A0 case 2:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pci_set_word(vdev->pdev.con=
+fig + offset, data);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> > +=C2=A0=C2=A0=C2=A0 case 4:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pci_set_long(vdev->pdev.con=
+fig + offset, data);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> > +=C2=A0=C2=A0=C2=A0 case 8:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pci_set_quad(vdev->pdev.con=
+fig + offset, data);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> > +=C2=A0=C2=A0=C2=A0 default:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw_error("igd: unsupported =
+read size, %u bytes", size);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +}
+>=20
+> If we have the leXX_to_cpu() in the read path, don't we need
+> cpu_to_leXX() in the write path?=C2=A0 Maybe we should in fact just get
+> rid
+> of all of them since we're quirking a device that's specific to a
+> little endian architecture and we're defining the memory region as
+> little endian, but minimally we should be consistent.
+>=20
+
+Will drop leXX_to_cpu in the read path.
+
+> > +
+> > +static const MemoryRegionOps vfio_igd_bdsm_quirk =3D {
+> > +=C2=A0=C2=A0=C2=A0 .read =3D vfio_igd_quirk_bdsm_read,
+> > +=C2=A0=C2=A0=C2=A0 .write =3D vfio_igd_quirk_bdsm_write,
+> > +=C2=A0=C2=A0=C2=A0 .endianness =3D DEVICE_LITTLE_ENDIAN,
+> > +};
+> > +
+> > +void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 VFIOQuirk *quirk;
+> > +=C2=A0=C2=A0=C2=A0 int gen;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * This must be an Intel VGA device at address=
+ 00:02.0 for us
+> > to even
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * consider enabling legacy mode. Some driver =
+have
+> > dependencies on the PCI
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * bus address.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY=
+_ID) ||
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !vfio_is_vga(vdev) || nr !=
+=3D 0 ||
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &vdev->pdev !=3D pci_find_d=
+evice(pci_device_root_bus(&vdev-
+> > >pdev),
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 0, PCI_DEVFN(0x2, 0))) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Only on IGD devices of gen 11 and above, th=
+e BDSM register
+> > is mirrored
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * into MMIO space and read from MMIO space by=
+ the Windows
+> > driver.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 gen =3D igd_gen(vdev);
+> > +=C2=A0=C2=A0=C2=A0 if (gen < 11) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0 quirk =3D vfio_quirk_alloc(1);
+> > +=C2=A0=C2=A0=C2=A0 quirk->data =3D vdev;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 memory_region_init_io(&quirk->mem[0], OBJECT(vdev),
+> > &vfio_igd_bdsm_quirk,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 vdev, "vfio-igd-bdsm-quirk", 8);
+> > +=C2=A0=C2=A0=C2=A0 memory_region_add_subregion_overlap(vdev->bars[0].r=
+egion.mem,
+> > 0x1080C0,
+>=20
+> Use your macro here, IGD_BDSM_MMIO_OFFSET.=C2=A0 Thanks,
+>=20
+
+Thanks for catching.
+
+> Alex
+>=20
+> PS - please drop the confidential email warning signature when
+> posting
+> to public lists.
+>=20
+
+Sry for the noise. I can't drop it, so I'm going to use another mail
+address to post my patches.
+
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 &quirk->mem[0], 1);
+> > +
+> > +=C2=A0=C2=A0=C2=A0 QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, ne=
+xt);
+> > +}
+> > +
+> > =C2=A0void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+> > =C2=A0{
+> > =C2=A0=C2=A0=C2=A0=C2=A0 g_autofree struct vfio_region_info *rom =3D NU=
+LL;
+> > diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+> > index 39dae72497..d37f722cce 100644
+> > --- a/hw/vfio/pci-quirks.c
+> > +++ b/hw/vfio/pci-quirks.c
+> > @@ -1259,6 +1259,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice
+> > *vdev, int nr)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 vfio_probe_nvidia_bar0_quirk(vdev, nr);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 vfio_probe_rtl8168_bar2_quirk(vdev, nr);
+> > =C2=A0#ifdef CONFIG_VFIO_IGD
+> > +=C2=A0=C2=A0=C2=A0 vfio_probe_igd_bar0_quirk(vdev, nr);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 vfio_probe_igd_bar4_quirk(vdev, nr);
+> > =C2=A0#endif
+> > =C2=A0}
+> > diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> > index bf67df2fbc..5ad090a229 100644
+> > --- a/hw/vfio/pci.h
+> > +++ b/hw/vfio/pci.h
+> > @@ -215,6 +215,7 @@ void vfio_setup_resetfn_quirk(VFIOPCIDevice
+> > *vdev);
+> > =C2=A0bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
+> > =C2=A0void vfio_quirk_reset(VFIOPCIDevice *vdev);
+> > =C2=A0VFIOQuirk *vfio_quirk_alloc(int nr_mem);
+> > +void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr);
+> > =C2=A0void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr);
+> > =C2=A0
+> > =C2=A0extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
+>=20
+>=20
 
 --=20
-Kind regards,
+Thanks,
 Corvin
+
+--=-QgRas4Q8LHuay5lnfNuH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJMBAABCAA2FiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmbO/qQYHGNvcnZpbi5r
+b2VobmVAZ21haWwuY29tAAoJENhU2lYxXgJq6aIP/A1CQbn9Q3rCKaJ53lMcpKYY
+ff/Dw22Lp8VqJmqMLb3Hbl86X8AYCI6TM15UVnD+qOR3HPqgvtaEoTeIW5LVk3db
+ebTKTd0nniff8tlPpSFXxpH4TO3NwAdW0OC1Pr244Y9vAMej9bU5DoKr+eO9r7zb
+GZtwZh8DMhQIjH9uTCxMm4rPbf+vXMVzd2r+Qc7jgm99++dZ6AjVUKW9liMR9hnS
+IvXD+LmbEinpHJiRkRnTT8+VlmQzR0hFaUEdXndVyJBB5r6PALOcUkzH4MjJgav5
+FhvqJqWI4yf0icTN2BSQIojmfWnBoOT/zNNv/logAsE5f5MMLn2sUPcWbkOgA5cq
+veffDg6LyYgGaLD87PN487veS44sGH6zMr0wOK4zwQRmZDdhevgIfCNZXki0DvwY
+bhrzakild4+Ohz7ciuZiRiEGBHbA/F3+lV61f/5QtEDLGXT98OPx/YEOhHGvFozQ
+GZQO3KcQzUQOgEap0d7IsGWxoMAwMPMuLjwqNKoFjk+SHQPBqdm3gfYdaKJ6K4/t
+qFMN6mJHNH53mOHLdF9o/PKP5OBZrA9vbw2S1CTCjTwcHpvrqQnxjx1tM0tC3ubz
+SJxWpFKFNTi50+OLbnGhfM2RBjBviwR61cmxfkPEJ91XzPyRbWxBOI8KgNGz+M7N
+Ff0X1xkagTFUNmFaHeDo
+=zaHB
+-----END PGP SIGNATURE-----
+
+--=-QgRas4Q8LHuay5lnfNuH--
 
