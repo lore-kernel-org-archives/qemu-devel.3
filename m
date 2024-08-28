@@ -4,54 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2972EC54E93
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2076AC54E71
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 10:10:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjFcN-0004y6-VX; Wed, 28 Aug 2024 06:09:36 -0400
+	id 1sjFcQ-00058I-Qp; Wed, 28 Aug 2024 06:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sjFcM-0004sb-GY
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 06:09:34 -0400
+ id 1sjFcO-00051f-Pv
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 06:09:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sjFcJ-0003Ud-6I
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 06:09:34 -0400
+ id 1sjFcN-0003V7-3q
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 06:09:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724839769;
+ s=mimecast20190719; t=1724839774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=iVCiW6Inyr5fASxyaJc5B66b8YxNEOjxQl3QaxrMEWw=;
- b=gFLUj65DjCg3pbOsYixhHlliYeY6M0nXOoadosn/AMoaZg6PkDuTTcGWToQbjLlD80vfk6
- orZZPLr05bSmtYUwzA/KqqErNhzNRmAaB2gNdtjQANlL1X6PXpa6t4t544cAbuk2A/jdC7
- EAywjmHVutnWdXPnekYXJIRf31hyrfI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t6u976r1UbeXOX7Y6RAdw8ezHrTuTKZo87ydEZqwOg4=;
+ b=jHOXeqWL48QkedFi4g22cEBCOGct0jX0Q6QnG+8YUFCyKowROpv0kM4H4izdt6bpI28Vo5
+ D/iAo4xmYQ9LQnMHW0gboHO8E4OlkI3u+JciAf9TjLlHldK0B0qePgKALH9AFNZaGHhld6
+ HVGRu9YgPUxlPXPk0RVehvC4qqH4xfg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-LDK4lNOKPtiYdWRcVANqdg-1; Wed,
- 28 Aug 2024 06:09:26 -0400
-X-MC-Unique: LDK4lNOKPtiYdWRcVANqdg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-YCjo7GvHP3Co0OdbdqhbkA-1; Wed,
+ 28 Aug 2024 06:09:30 -0400
+X-MC-Unique: YCjo7GvHP3Co0OdbdqhbkA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E21C1954B31; Wed, 28 Aug 2024 10:09:25 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E41F01955D55; Wed, 28 Aug 2024 10:09:29 +0000 (UTC)
 Received: from kaapi.redhat.com (unknown [10.39.192.70])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 197DB1955F1B; Wed, 28 Aug 2024 10:09:20 +0000 (UTC)
+ id 3B8711955F1B; Wed, 28 Aug 2024 10:09:25 +0000 (UTC)
 From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, farosas@suse.de, jasowang@redhat.com, mcoqueli@redhat.com,
  peterx@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v2 0/2] Postcopy migration and vhost-user errors
-Date: Wed, 28 Aug 2024 15:39:12 +0530
-Message-ID: <20240828100914.105728-1-ppandit@redhat.com>
+Subject: [PATCH v2 1/2] vhost: fail device start if iotlb update fails
+Date: Wed, 28 Aug 2024 15:39:13 +0530
+Message-ID: <20240828100914.105728-2-ppandit@redhat.com>
+In-Reply-To: <20240828100914.105728-1-ppandit@redhat.com>
+References: <20240828100914.105728-1-ppandit@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
@@ -83,71 +86,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Prasad Pandit <pjp@fedoraproject.org>
 
-Hello,
+While starting a vhost device, updating iotlb entries
+via 'vhost_device_iotlb_miss' may return an error.
 
-* virsh(1) offers multiple options to initiate Postcopy migration:
+  qemu-kvm: vhost_device_iotlb_miss:
+    700871,700871: Fail to update device iotlb
 
-    1) virsh migrate --postcopy --postcopy-after-precopy
-    2) virsh migrate --postcopy + virsh migrate-postcopy
-    3) virsh migrate --postcopy --timeout <N> --timeout-postcopy
+Fail device start when such an error occurs.
 
-When Postcopy migration is invoked via method (2) or (3) above,
-the migrated guest on the destination host hangs sometimes.
-
-* During Postcopy migration, multiple threads are spawned on the destination
-host to start the guest and setup devices. One such thread starts vhost
-device via vhost_dev_start() function and another called fault_thread handles
-page faults in user space using kernel's userfaultfd(2) system.
-
-* When fault_thread exits upon completion of Postcopy migration, it sends a
-'postcopy_end' message to the vhost-user device. But sometimes 'postcopy_end'
-message is sent while vhost device is being setup via vhost_dev_start().
-
-     Thread-1                                  Thread-2
-
-vhost_dev_start                        postcopy_ram_incoming_cleanup
- vhost_device_iotlb_miss                postcopy_notify
-  vhost_backend_update_device_iotlb      vhost_user_postcopy_notifier
-   vhost_user_send_device_iotlb_msg       vhost_user_postcopy_end
-    process_message_reply                  process_message_reply
-     vhost_user_read                        vhost_user_read
-      vhost_user_read_header                 vhost_user_read_header
-       "Fail to update device iotlb"          "Failed to receive reply to postcopy_end"
-
-This creates confusion when vhost device receives 'postcopy_end' message while
-it is still trying to update IOTLB entries.
-
-This seems to leave the guest in a stranded/hung state because fault_thread
-has exited saying Postcopy migration has ended, but vhost-device is probably
-still expecting updates. QEMU logs following errors on the destination host
-===
-...
-qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-qemu-kvm: vhost_user_postcopy_end: 700871,700900: Failed to receive reply to postcopy_end
-qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x8 instead of 0x5.
-qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x16 instead of 0x5.
-qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-===
-
-* Couple of patches here help to fix/handle these errors.
-
-Thank you.
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
-Prasad Pandit (2):
-  vhost: fail device start if iotlb update fails
-  vhost-user: add a request-reply lock
+ hw/virtio/vhost.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
- hw/virtio/vhost-user.c         | 74 ++++++++++++++++++++++++++++++++++
- hw/virtio/vhost.c              |  6 ++-
- include/hw/virtio/vhost-user.h |  3 ++
- 3 files changed, 82 insertions(+), 1 deletion(-)
+v2:
+ - Needs review/ack
 
+v1:
+ - https://lore.kernel.org/qemu-devel/20240808095147.291626-2-ppandit@redhat.com/
+
+v0:
+ - https://lore.kernel.org/all/20240711131424.181615-3-ppandit@redhat.com/
+
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 06fc71746e..a70b7422b5 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -2151,7 +2151,11 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+          * vhost-kernel code requires for this.*/
+         for (i = 0; i < hdev->nvqs; ++i) {
+             struct vhost_virtqueue *vq = hdev->vqs + i;
+-            vhost_device_iotlb_miss(hdev, vq->used_phys, true);
++            r = vhost_device_iotlb_miss(hdev, vq->used_phys, true);
++            if (r) {
++                VHOST_OPS_DEBUG(r, "vhost_device_iotlb_miss failed");
++                goto fail_start;
++            }
+         }
+     }
+     vhost_start_config_intr(hdev);
 --
 2.46.0
 
