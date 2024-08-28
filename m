@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83526C54FB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 13:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C799C54FAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 13:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjIxT-0004Hc-Hf; Wed, 28 Aug 2024 09:43:35 -0400
+	id 1sjIxj-0005HF-5n; Wed, 28 Aug 2024 09:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1sjIxR-0004GY-Mr
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 09:43:33 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1sjIxh-00059W-4U
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 09:43:49 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1sjIxQ-0002KZ-1t
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 09:43:33 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4281d812d3eso74553845e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 06:43:31 -0700 (PDT)
+ id 1sjIxS-0002Kf-0H
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 09:43:48 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a8696e9bd24so730146666b.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 06:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724852610; x=1725457410; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=cnpFdezWBkNzeCUXHokhn/eMQxpgjho0h8lR/o8L3Rk=;
- b=TGBU/Yy6kJM58emu0pSmIUCEONjv5NY97CIVMbpWdB8C72SDLoL0gpHqWePcdePhpY
- ZMyXpZ52WsDttUG6iUH/l5aJiOI9A13nT+pKYTvZe2oqqFqJLNr586OQble0WSZEJb6w
- 6RYKArOQjCG4VHQJ5vu19ScwG5VbTvLJY3junt37VqYJuR0DOHiCw+uGU7wvHloJhl+M
- 7q56p4IuTdiCtIDyBVv/mMrJbgHrgCwGEZ8V21b+GE8pTCsOr2GBxmTKu+XnuerZ/t84
- j5XI22LuEh7QuptHYQI7N2Vma3a0V4oMfyI5pD/fnTTwz3bjo+WA75ycsCPFrEuqtYyR
- dJjQ==
+ d=gmail.com; s=20230601; t=1724852612; x=1725457412; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mC/R0iUzS3U5dDJtHLFRDcpd8CGk4MJdW7/QshJswmQ=;
+ b=Q/yYljDuIrM8CNfSdyGDq+BBqmNI2ZuyhEnOrWekekncpr2TTL2TUYiPoeEs4UJFYp
+ gh4BDIF6UGmvgXPwE8iN3YvopvqyhHSiTkaR6bsPXB6ySocq2GQjAD3DvJvGObClgXfa
+ 3oB8vcVY/zvkkocZglt9DFQEUbIRcCe1vZFWtannsd1q6oAVCEwEMCecNlgjDlx7zHYz
+ hG9N2JRznz1xWDN2zyNwU/Av7soPBp4V+JjpPaycVgBBrQMJmiRE8EcaaCpSItOZRn2h
+ YoCTrdSslT5fIZm0GdXWjdZHnLaTuQ06s1ShH0y2EtMRt4TSkQR1yxm6rL7G8d+uMF3E
+ qz8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724852610; x=1725457410;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cnpFdezWBkNzeCUXHokhn/eMQxpgjho0h8lR/o8L3Rk=;
- b=CYK4nJm4E6NEQFMuaduFVQAkXq0/haSS9DOQcthWTQQRJp4cHuH65es9FFiQS8rg+K
- j5QirxRbshIy3SLsihEDVou1VUY7dXEfgpLQrRMixOQcWErPTf04VdNY/WIyqkvn1RRd
- y93mHFEYGe8LBJ7gOlAUe+fqjYqIQCqwVhbSTgfxFelID9Tnc2mdXIEsNsOENnXVeSgL
- 3RTcwwlvqvj3WVD9q8Fjzy/trxLR/D9ohV7lM4BadasX4UoUlQwTMYwe3ci2+fiQfkRR
- Bh+60JKpjtEeQOWR5dQdSYjrdcXB+A6rjIPPJ2+XjRXhC0JMvtWa1dmDV7GcXOUbo8dU
- +L3g==
-X-Gm-Message-State: AOJu0Yy8OR2pqCf4YANko3hgFEZIBch/YS+bpRND38igPJvLoRTsBBZn
- JD/SOsQm39nwCLypN3bJnQPW1E4aDoFU1I34JwX72Po1mDHNO3DlgaPouw==
-X-Google-Smtp-Source: AGHT+IGvzbCjFRhJ8g9uyDVNE4EwX6DEwKB+VjNVPuRTrtmGVFyj/j0ulILummyKsy2tN3xKQWWfiQ==
-X-Received: by 2002:a05:6000:1081:b0:368:4e35:76f9 with SMTP id
- ffacd0b85a97d-37311864df1mr13011911f8f.37.1724852609971; 
- Wed, 28 Aug 2024 06:43:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724852612; x=1725457412;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mC/R0iUzS3U5dDJtHLFRDcpd8CGk4MJdW7/QshJswmQ=;
+ b=pBkJA3TNucLaaESmw5qksgue8nCe2x741Y8oOYeLi4luxUh0eEZpM94US+EYAKryUk
+ kU2rd9Cp44NDrX+IdoG8Nr50w7U+IVZgbZkOwL/e9aMdGuXGA1hIjt3q69lt0YM1XbGe
+ meTdWoCwE8DVL6aeqdYqruVHPC5ZWh+G8H8EvxXQrNLr0wL2T/doYe8JcG5KAxPiNPCj
+ pp4prdJ9Up0RS/C8V+4GuktAFeH/iyfkMn1YaBp1ESEYLZ5vsfjwuizm+6/GHTj20Mnr
+ qRUIbwWyE/lbhkUpMxKydbqZTyzmjggNBKNkpP7Z07DTo0xntzAXFSFyZCxc6SUn8IAY
+ tpVQ==
+X-Gm-Message-State: AOJu0Yya92smulEuuBXh6uLBG1VdouJLLeLZYmeJBzfNxQjJpxrRh0XL
+ 3BueKkpf55/OxkFYZpjQxbYExr01dCr4dYfcLacNJ0UMYJNvGAiXkPZJ3A==
+X-Google-Smtp-Source: AGHT+IFl5ufe5lc5+AxSZc8renlRAcaLlu3Iy1RYSE9OjabX+cYGde14Gw07caU9xhilCcw7teCDOQ==
+X-Received: by 2002:a17:907:6d25:b0:a80:7ce0:8b2a with SMTP id
+ a640c23a62f3a-a870a9b9a42mr154156666b.19.1724852612007; 
+ Wed, 28 Aug 2024 06:43:32 -0700 (PDT)
 Received: from corvink-nb.beckhoff.com ([195.226.174.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a88a48d4a39sm32606766b.12.2024.08.28.06.43.29
+ a640c23a62f3a-a88a48d4a39sm32606766b.12.2024.08.28.06.43.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Aug 2024 06:43:29 -0700 (PDT)
+ Wed, 28 Aug 2024 06:43:31 -0700 (PDT)
 From: "=?UTF-8?q?Corvin=20K=C3=B6hne?=" <corvin.koehne@gmail.com>
 X-Google-Original-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
 To: qemu-devel@nongnu.org,
 	c.koehne@beckhoff.com
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>
-Subject: [PATCH v3 0/7] vfio/igd: add passthrough support for IGDs of gen 11
- and later
-Date: Wed, 28 Aug 2024 15:43:21 +0200
-Message-ID: <20240828134328.94528-1-c.koehne@beckhoff.com>
+Subject: [PATCH v3 2/7] vfio/igd: support legacy mode for all known generations
+Date: Wed, 28 Aug 2024 15:43:23 +0200
+Message-ID: <20240828134328.94528-3-c.koehne@beckhoff.com>
 X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240828134328.94528-1-c.koehne@beckhoff.com>
+References: <20240828134328.94528-1-c.koehne@beckhoff.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,32 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+We're soon going to add support for legacy mode to ElkhartLake and
+TigerLake devices. Those are gen 11 and 12 devices. At the moment, all
+devices identified by our igd_gen function do support legacy mode. This
+won't change when adding our new devices of gen 11 and 12. Therefore, it
+makes more sense to accept legacy mode for all known devices instead of
+maintaining a long list of known good generations. If we add a new
+generation to igd_gen which doesn't support legacy mode for some reason,
+it'll be easy to advance the check to reject legacy mode for this
+specific generation.
 
-Qemu has experimental support for GPU passthrough of Intels integrated graphic
-devices. Unfortunately, Intel has changed some bits for their gen 11 devices
-and later. To support these devices, we have to account for those changes. This
-patch series adds the missing bits on the Qemu side.
+Signed-off-by: Corvin Köhne <c.koehne@beckhoff.com>
+---
+ hw/vfio/igd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I've tested the patch series on an ElkhartLake and TigerLake device. On the
-guest side, I've tested an EFI environment (GOP driver), a Linux guest and a
-Windows VM. The driver of all guests are able to use the GPU and produce an
-output on the connected display.
-
-Corvin Köhne (7):
-  vfio/igd: return an invalid generation for unknown devices
-  vfio/igd: support legacy mode for all known generations
-  vfio/igd: use new BDSM register location and size for gen 11 and later
-  vfio/igd: add new bar0 quirk to emulate BDSM mirror
-  vfio/igd: add ID's for ElkhartLake and TigerLake
-  vfio/igd: don't set stolen memory size to zero
-  vfio/igd: correctly calculate stolen memory size for gen 9 and later
-
- hw/vfio/igd.c        | 185 +++++++++++++++++++++++++++++++++++++------
- hw/vfio/pci-quirks.c |   1 +
- hw/vfio/pci.h        |   1 +
- 3 files changed, 161 insertions(+), 26 deletions(-)
-
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 650a323dda..d5e57656a8 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -416,7 +416,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+      * devices maintain compatibility with generation 8.
+      */
+     gen = igd_gen(vdev);
+-    if (gen != 6 && gen != 8) {
++    if (gen == -1) {
+         error_report("IGD device %s is unsupported in legacy mode, "
+                      "try SandyBridge or newer", vdev->vbasedev.name);
+         return;
 -- 
 2.46.0
 
