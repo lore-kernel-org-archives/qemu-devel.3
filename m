@@ -4,105 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D87B1C5472D
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 05:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AFFC5472D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 06:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjBJs-0000tj-7b; Wed, 28 Aug 2024 01:34:12 -0400
+	id 1sjBoN-0004eS-KY; Wed, 28 Aug 2024 02:05:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sjBJr-0000rf-5V
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 01:34:11 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sjBJn-0000AF-S9
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 01:34:10 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7143185edf2so5281087b3a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Aug 2024 22:34:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724823246; x=1725428046;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KscLZGotgFRXYEyth9nlXUR4sdQ+1+Vg2HD1atMXvS0=;
- b=Kc9EUK8bPRDd15cVFikfW3pnDoW47j52ocleBXpwujuW6ANgDEdCNTcvWn2PVgqCBY
- QlEuYPirmrYhLo+mUd/pxFSysnrSQ/U4c1DeUiDGHvg36v6Ey4/O+02AkKuKgZBrZfl0
- 6fi07gBTwRHy2blkAnKrpAmXUnzWNgvvZJq1Wx2XTUFQA8Z+ym600QwGEbQy8r0dL/W7
- RiBBcxhaLb8fdIOuYNOJ0OHFB2nk7ZWKW0pOqyR/FyRBa0pYg/iPtwPVL8b/KGLnxM4d
- TO63vlH5Gl0cS2FmmPrX3NZmThEe6wr7aYHrNJ+2agdvC1h46gOK2kqmQFKsFBEuGZ3o
- 85XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724823246; x=1725428046;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KscLZGotgFRXYEyth9nlXUR4sdQ+1+Vg2HD1atMXvS0=;
- b=ngrW4cLlJU1jfT7fsAo+ES956vezwNbN4uQFhDX+XYRTRWThslSsQJ/8lDc+5vr8Ua
- vgV2QedaO2hg/kJLeLkVM3mKpHUDmMRvJPwRvi6dKGs0audGSv/er7ontcb7Fols5hZl
- jHkGqLjZqYutI4FnmQRCo9AI5WG3R2oTm5QwqRjfocdW4udMluKBAMcl4Umj6ZLoRprB
- Wc0j7+BeDtp2DuW9AzYc1x1LjUL7YcHNoEHOsQl5z4jSWq2xj1I7LcAmRQsqozMgDOu2
- IQHOhvaH+hgxUHzKPzGCsolI04V6jJMZEPcMllRXlbBEj2m3u5NouAK4CMniaMGzXVBL
- Rsjw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpkyN2eX+Yn4uxexEMcYEMcQ8C6SQCOw3m1Et/0sEvZ60xGm+9fOPr4i7AhgoEbjHnKcTMzWk2R6rp@nongnu.org
-X-Gm-Message-State: AOJu0Yy/9MZJCWwYh3KBgMhIawYES8hXeroMg97QXzNhlg3ywfWpJAjA
- YAvtfPgTHORXKXFg5YdX/j5+PE6v+Krn3cmhcBUyOgC3I9BV6MT1AqOGRgz7IBc=
-X-Google-Smtp-Source: AGHT+IEoxpK/iP2X4GGfpQ9p9nnLJJSS7oCsA6SCtcrjQ/8ch2OgIXx1WQGEIH1omVBddDhyPmpGtA==
-X-Received: by 2002:a05:6a21:58b:b0:1b6:d9fa:8be with SMTP id
- adf61e73a8af0-1cc8b5d8812mr17736512637.40.1724823245903; 
- Tue, 27 Aug 2024 22:34:05 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2038560e046sm91299595ad.199.2024.08.27.22.34.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Aug 2024 22:34:05 -0700 (PDT)
-Message-ID: <de2229bc-876e-47b2-8a59-18fe7ffe3936@daynix.com>
-Date: Wed, 28 Aug 2024 14:33:59 +0900
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sjBoL-0004bn-AJ; Wed, 28 Aug 2024 02:05:41 -0400
+Received: from fout7-smtp.messagingengine.com ([103.168.172.150])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sjBoI-0003Md-2c; Wed, 28 Aug 2024 02:05:40 -0400
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal
+ [10.202.2.44])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 5A586139009A;
+ Wed, 28 Aug 2024 02:05:32 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Wed, 28 Aug 2024 02:05:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1724825132; x=
+ 1724911532; bh=/uyUog+gzcS9a7GYlPoT3D4Zd958ufTmMTJSw2ZlVeY=; b=c
+ vMctoyDxDJ3sTuMnsr7JVhSVpqaOA2/6JlizSrVGWdKuCsoOA6qvn/7S9NV9tB7x
+ 7UQuGDF5yCGkb7DWSXQELcprxYZgvG7uMB6tI5ynWpKSU8W7NkU6CCoG38ukI2Ws
+ 1zsXe63aIY2JTxI87asjlRZqRLZMNerALi3Cwag+zAariEjrWnfxGFikTz4EEvt6
+ 5QGtohYCNRJOAG6rY2t6dQhZNEV9XWL4hH3YfEFuzonOTEq8w/+zVRFbXrWnmbF3
+ a1/63tS5fa47CoDUOA2rekh9Ih1BhzmPk2DidhdWjNwgP3XmWlFIFO4calv750Px
+ /l0HhTs3zs8WnodY+KnUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1724825132; x=1724911532; bh=/uyUog+gzcS9a7GYlPoT3D4Zd958
+ ufTmMTJSw2ZlVeY=; b=rrQYZ/EFuRALaiSaw5XoX29+AF/sLs57fIcGAWHyAUNy
+ yWn25oCRzq0skguJHPm5R/JpyhUl9FdKyFhg1vbU7sYnquGaUPbEyKpYZMfGJdqc
+ dxu7L+BCtH+JXiBynY4gOde1Arq0iH+LeAlzFYri+VGlXjhCzYgOkiJY7PCPa6Mt
+ HvTDFfs9tSIWfq0G7eRrL/gwYWOBgPgRE44ocZb0IHaL+mC/tYWcKX4thL79XM2s
+ zdYocFfbLrOZCmdZiY4YK6PQxYiqRSaq0jyYHY0ac1zrqVXaMcUT/vG8TKix/TKV
+ CcM/gPtaJYJ+sPBqV7ENH0km3hmsiZeiY4uzmK+7oA==
+X-ME-Sender: <xms:Kr7OZr5hCfwJ_NISmdGyVGOIoboPLe6iBCb5ykanwBlUKt9GHdOT9w>
+ <xme:Kr7OZg5u7eSZb4mzt7lHcog6cPZWnG8p1EcUxBarJtl70ViyGsDI9ZJveHPbhtBFr
+ veO0nI93z1xD97UfOE>
+X-ME-Received: <xmr:Kr7OZifIQFqHgY97iDVv8dqnQGoEVBDpXl-ay1N4cz06LHEAO-d4qZ6BLMxi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefuddguddthecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+ evuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghn
+ uceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnhepjefgje
+ efffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlh
+ gvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdp
+ rhgtphhtthhopehluhgthhgrnhhgqhhirdduvdefsegshihtvggurghntggvrdgtohhmpd
+ hrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohep
+ qhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqug
+ gvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhifohhlfhesrhgvughhrght
+ rdgtohhmpdhrtghpthhtohephhhrvghithiisehrvgguhhgrthdrtghomhdprhgtphhtth
+ hopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrmhesvghu
+ phhhohhnrdhnvghtpdhrtghpthhtoheprhhonhhnihgvshgrhhhlsggvrhhgsehgmhgrih
+ hlrdgtohhm
+X-ME-Proxy: <xmx:Kr7OZsKuPzw6vxZT1SzpPgWAss9SER2StL_TJzi2KvQwjZLMfnFkFw>
+ <xmx:Kr7OZvJ4O3EyjOlb1TKYAA9Jj08Q0AeDkGRWH9MNzdhQyY3HSNApAg>
+ <xmx:Kr7OZlyH-oCVoruId5PokTs2-7ERprU_hGNQ4xCZmpWaD3KM9aZDMA>
+ <xmx:Kr7OZrLbtQM61KD7UgTMzx0i_drGoSdG9QO5MyvoY9zwYacXMPNkCw>
+ <xmx:LL7OZo5xDZM6QCpNBABxRReeZBgNegjat5zhJeVCALCrnlxcelT8w81M>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Aug 2024 02:05:29 -0400 (EDT)
+Date: Wed, 28 Aug 2024 08:05:25 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: =?utf-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ stefanha@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
+ pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
+ foss@defmacro.it, philmd@linaro.org, pizhenwei@bytedance.com
+Subject: Re: [External] Re: [PATCH v9 09/10] hw/nvme: add reservation
+ protocal command
+Message-ID: <Zs6-JTAIaWILMOYM@cormorant.local>
+References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
+ <20240712023650.45626-10-luchangqi.123@bytedance.com>
+ <ZpT1ZnOjx48_6q0j@cormorant.local>
+ <58383d65-83df-4527-81e4-b4d12c409b22@bytedance.com>
+ <CAO5cSZDc9_o4=VZRDFA-CXAkF12r=v95zhNQ0gBM0NHExgkbMw@mail.gmail.com>
+ <ZqNBSGmVTg-xkTs3@cormorant.local>
+ <CAO5cSZD8Vk-=z-REXjusrXXemN4T4=-kA=_aXiPsiR4MsjL10Q@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/7] memory: Do not create circular reference with
- subregion
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240823-san-v4-0-a24c6dfa4ceb@daynix.com>
- <20240823-san-v4-6-a24c6dfa4ceb@daynix.com> <Zsydli9ME1u79A9X@x1n>
- <CAFEAcA_uT3Db22V=Anqci_k6zOaAV7Qua2S1OVFxW_DQyh3bAA@mail.gmail.com>
- <Zszain3SH5cl9ohH@x1n> <161cb8ff-1479-4fc4-8803-d665e757007a@daynix.com>
- <Zs36od036pyxvQlZ@x1n>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <Zs36od036pyxvQlZ@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::436;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="tuzDTpDvhvpsrRW0"
+Content-Disposition: inline
+In-Reply-To: <CAO5cSZD8Vk-=z-REXjusrXXemN4T4=-kA=_aXiPsiR4MsjL10Q@mail.gmail.com>
+Received-SPF: pass client-ip=103.168.172.150; envelope-from=its@irrelevant.dk;
+ helo=fout7-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,156 +124,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/28 1:11, Peter Xu wrote:
-> On Tue, Aug 27, 2024 at 01:14:51PM +0900, Akihiko Odaki wrote:
->> On 2024/08/27 4:42, Peter Xu wrote:
->>> On Mon, Aug 26, 2024 at 06:10:25PM +0100, Peter Maydell wrote:
->>>> On Mon, 26 Aug 2024 at 16:22, Peter Xu <peterx@redhat.com> wrote:
->>>>>
->>>>> On Fri, Aug 23, 2024 at 03:13:11PM +0900, Akihiko Odaki wrote:
->>>>>> memory_region_update_container_subregions() used to call
->>>>>> memory_region_ref(), which creates a reference to the owner of the
->>>>>> subregion, on behalf of the owner of the container. This results in a
->>>>>> circular reference if the subregion and container have the same owner.
->>>>>>
->>>>>> memory_region_ref() creates a reference to the owner instead of the
->>>>>> memory region to match the lifetime of the owner and memory region. We
->>>>>> do not need such a hack if the subregion and container have the same
->>>>>> owner because the owner will be alive as long as the container is.
->>>>>> Therefore, create a reference to the subregion itself instead ot its
->>>>>> owner in such a case; the reference to the subregion is still necessary
->>>>>> to ensure that the subregion gets finalized after the container.
->>>>>>
->>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>> ---
->>>>>>    system/memory.c | 8 ++++++--
->>>>>>    1 file changed, 6 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/system/memory.c b/system/memory.c
->>>>>> index 5e6eb459d5de..e4d3e9d1f427 100644
->>>>>> --- a/system/memory.c
->>>>>> +++ b/system/memory.c
->>>>>> @@ -2612,7 +2612,9 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
->>>>>>
->>>>>>        memory_region_transaction_begin();
->>>>>>
->>>>>> -    memory_region_ref(subregion);
->>>>>> +    object_ref(mr->owner == subregion->owner ?
->>>>>> +               OBJECT(subregion) : subregion->owner);
->>>>>
->>>>> The only place that mr->refcount is used so far is the owner with the
->>>>> object property attached to the mr, am I right (ignoring name-less MRs)?
->>>>>
->>>>> I worry this will further complicate refcounting, now we're actively using
->>>>> two refcounts for MRs..
->>
->> The actor of object_ref() is the owner of the memory region also in this
->> case. We are calling object_ref() on behalf of mr->owner so we use
->> mr->refcount iff mr->owner == subregion->owner. In this sense there is only
->> one user of mr->refcount even after this change.
-> 
-> Yes it's still one user, but it's not that straightforward to see, also
-> it's still an extension to how we use mr->refcount right now.  Currently
-> it's about "true / false" just to describe, now it's a real counter.
-> 
-> I wished that counter doesn't even exist if we'd like to stick with device
-> / owner's counter.  Adding this can definitely also make further effort
-> harder if we want to remove mr->refcount.
 
-I don't think it will make removing mr->refcount harder. With this 
-change, mr->refcount will count the parent and container. If we remove 
-mr->refcount, we need to trigger object_finalize() in a way other than 
-checking mr->refcount, which can be achieved by simply evaluating 
-OBJECT(mr)->parent && mr->container.
+--tuzDTpDvhvpsrRW0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
->>
->>>>>
->>>>> Continue discussion there:
->>>>>
->>>>> https://lore.kernel.org/r/067b17a4-cdfc-4f7e-b7e4-28c38e1c10f0@daynix.com
->>>>>
->>>>> What I don't see is how mr->subregions differs from mr->container, so we
->>>>> allow subregions to be attached but not the container when finalize()
->>>>> (which is, afaict, the other way round).
->>>>>
->>>>> It seems easier to me that we allow both container and subregions to exist
->>>>> as long as within the owner itself, rather than start heavier use of
->>>>> mr->refcount.
->>>>
->>>> I don't think just "same owner" necessarily will be workable --
->>>> you can have a setup like:
->>>>     * device A has a container C_A
->>>>     * device A has a child-device B
->>>>     * device B has a memory region R_B
->>>>     * device A's realize method puts R_B into C_A
->>>>
->>>> R_B's owner is B, and the container's owner is A,
->>>> but we still want to be able to get rid of A (in the process
->>>> getting rid of B because it gets unparented and unreffed,
->>>> and R_B and C_A also).
->>>
->>> For cross-device references, should we rely on an explicit call to
->>> memory_region_del_subregion(), so as to detach the link between C_A and
->>> R_B?
->>
->> Yes, I agree.
->>
->>>
->>> My understanding so far: logically when MR finalize() it should guarantee
->>> both (1) mr->container==NULL, and (2) mr->subregions empty.  That's before
->>> commit 2e2b8eb70fdb7dfb and could be the ideal world (though at the very
->>> beginning we don't assert on ->container==NULL yet).  It requires all
->>> device emulations to do proper unrealize() to unlink all the MRs.
->>>
->>> However what I'm guessing is QEMU probably used to have lots of devices
->>> that are not following the rules and leaking these links.  Hence we have
->>> had 2e2b8eb70fdb7dfb, allowing that to happen as long as it's safe, and
->>> it's justified by comment in 2e2b8eb70fdb7dfb on why it's safe.
->>>
->>> What I was thinking is this comment seems to apply too to mr->container, so
->>> that it should be safe too to unlink ->container the same way as its own
->>> subregions. >
->>> IIUC that means for device-internal MR links we should be fine leaving
->>> whatever link between MRs owned by such device; the device->refcount
->>> guarantees none of them will be visible in any AS.  But then we need to
->>> always properly unlink the MRs when the link is across >1 device owners,
->>> otherwise it's prone to leak.
->>
->> There is one principle we must satisfy in general: keep a reference to a
->> memory region if it is visible to the guest.
->>
->> It is safe to call memory_region_del_subregion() and to trigger the
->> finalization of subregions when the container is not referenced because they
->> are no longer visible. This is not true for the other way around; even when
->> subregions are not referenced by anyone else, they are still visible to the
->> guest as long as the container is visible to the guest. It is not safe to
->> unref and finalize them in such a case.
->>
->> A memory region and its owner will leak if a memory region kept visible for
->> a too long period whether the chain of reference contains a
->> container/subregion relationship or not.
-> 
-> Could you elaborate why it's still visible to the guest if
-> owner->refcount==0 && mr->container!=NULL?
-> 
-> Firstly, mr->container != NULL means the MR has an user indeed.  It's the
-> matter of who's using it.  If that came from outside this device, it should
-> require memory_region_ref(mr) before hand when adding the subregion, and
-> that will hold one reference on the owner->refcount.
-> 
-> Here owner->refcount==0 means there's no such reference, so it seems to me
-> it's guaranteed to not be visible to anything outside of this device / owner.
-> Then from that POV it's safe to unlink when the owner is finalizing just
-> like what we do with mr->subregions, no?
+On Jul 26 05:54, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+> Hi;
+>=20
+> You can test it in spdk.
+> First start spdk and execute the following command.
+>=20
+> ```
+> dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
+> RPC=3D/root/source/spdk/spdk/scripts/rpc.py
+> FILE=3D/root/test.img
+>=20
+> $RPC bdev_aio_create $FILE aio0 512
+> $RPC iscsi_create_portal_group 1 127.0.0.1:3260
+> $RPC iscsi_create_initiator_group 2 ANY ANY
+> $RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 -d
+> ```
+>=20
+> Then start qemu and mount an nvme disk.
 
-An object is alive during instance_finalize even though its refcount == 
-0. We can't assume all memory regions are dead even if owner->refcount 
-== 0 because of that. In particular, docs/devel/memory.rst says you can 
-call object_unparent() in the instance_finalize of the owner. This 
-assumes a memory region will not vanish during the execution of the 
-function unless object_unparent() is already called for the memory region.
+Forgive my ignorance when it comes to iSCSI, but can you enlighten me as
+to what the name of the target is? I tried a bunch of combinations.
 
-Regards,
-Akihiko Odaki
+I configured QEMU with
+
+  -drive id=3Dtarget0,file=3Discsi://127.0.0.1/target0/0
+  -device nvme,serial=3Ddeadbeef,drive=3Dtarget0
+
+But on the spdk side (iscsi_tgt) I'm getting "target0 not found".
+
+> Execute the following test command.
+> ```
+> #reporter
+> nvme resv-report /dev/nvme0n1
+> #register
+> nvme resv-register /dev/nvme0n1 --nrkey 3 --rrega 0
+> #unregister
+> nvme resv-register /dev/nvme0n1 --crkey 3 --rrega 1
+> # register replace
+> nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
+> #release
+> nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
+> #clear
+> nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
+> #reserve
+> nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
+> #premmpt
+> nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --racqa 1
+> ```
+>=20
+>=20
+>=20
+> On 2024/7/26 14:25, Klaus Jensen wrote:
+> > On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+> >> Hi,
+> >>
+> >> ```
+> >> 2685 nvme_status->regctl_ds[i].cntlid =3D nvme_ctrl(req)->cntlid;
+> >> 2686 nvme_status->regctl_ds[i].rkey =3D keys_info->keys[i];
+> >> 2687 nvme_status->regctl_ds[i].rcsts =3D keys_info->keys[i] =3D=3D
+> >> 2688 reservation->key ? 1 : 0;
+> >> 2689 /* hostid is not supported currently */
+> >> 2670 memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
+> >> ```
+> >>
+> >> Klaus, I think hostid(2685) is stored locally like cntlid, i
+> >> can get cntlid by nvme_ctrl(req)->cntlid, but I can't
+> >> find a good way to get the host ID(2670). So I add a comment
+> >> "/* hostid is not supported currently */". Could you give me
+> >> some advices?
+> >>
+> >
+> > The Host Identifier is just a 64 or 128 bit value that the host can set
+> > with Set Feature. So, it is fine (and normal) that the value is
+> > initially zero, but the host should be able to set it on controllers
+> > with Set Feature to indicate if a controller belongs to the same host or
+> > not.
+> >
+> >> And using spdk as target will not fail, but it will show 0 at hostid
+> >> at present.
+> >
+> > Host Identifier 0 is a valid value when used with reservations; 0
+> > indicates that the host associated with the controller is not associated
+> > with any other controllers in the subsystem. So if two controllers have
+> > Host Identifier set to 0, that implicitly mean they are associated with
+> > two different hosts.
+> >
+> >> The relevant tests in qemu are as follows=EF=BC=8C
+> >>
+> >> ```
+> >> root@node1:~# nvme resv-report /dev/nvme0n1
+> >> NVME Reservation Report success
+> >>
+> >> NVME Reservation status:
+> >>
+> >> gen : 1
+> >> regctl : 1
+> >> rtype : 0
+> >> ptpls : 0
+> >> regctl[0] :
+> >> cntlid : 0
+> >> rcsts : 0
+> >> hostid : 0
+> >> rkey : 6
+> >> ```
+> >
+> > I was hoping for an example on how to setup some simple iscsi stuff so I
+> > could test the feature.
+
+--=20
+One of us - No more doubt, silence or taboo about mental illness.
+
+--tuzDTpDvhvpsrRW0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmbOviQACgkQTeGvMW1P
+DembMgf+NsLOJtUfcS8cagljIF180/8v+dR9VSwD0TNcCYT8i6kWm+2XvFeTZYd3
+YROoXRMwi6PmQVVcBjp6QrCSU5mb+0dWhCgL0zDCe0eQ0JYwvRZWeQy7el4rWSGN
+ap0vE/V+seRxMoht8aUeESSZO6e4DLl++FWXf7wo6K+dWJfErt/SHLALJ0eM6c+a
+WwRAVOqnMsjeJKQZetUnUPaHyZZYF/IVb5xOkAuGiZkdb3Y4wsFdAWT+/ob9zaIN
+wPDuoWG8GUie0W76mMir9g9VgqGmCnFnr9fb1ehSXxO+w/XZem6r9PINjZi/kU3p
+Eb9I4NJbGjLThmGs5NMpG3XvIkTTeA==
+=F46I
+-----END PGP SIGNATURE-----
+
+--tuzDTpDvhvpsrRW0--
 
