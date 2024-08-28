@@ -4,74 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3017C54ED1
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 11:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E37C54EDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 11:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjGlk-0006bk-TC; Wed, 28 Aug 2024 07:23:20 -0400
+	id 1sjGpP-00034W-A5; Wed, 28 Aug 2024 07:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sjGlj-0006YL-Ai
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 07:23:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sjGlh-0002dT-Nf
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 07:23:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724844197;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sjPscny8RpBp/Hq/MF0Txq0RsmBmvhMA9j1IvksC6Zg=;
- b=DYBwdJZik06WcAWULhLhPjdfZG835oO/PYABzPkV19pDnYQqWSs3//6zshfIffymHKO4ql
- faciYn7b382XH5GVULILzzHcM9oOB+KcsVzHpZo0cWRNLKRCa+i6XOCShJHH8lFjsdGoB6
- RVRKTib7ljhPbVxieKV+D1Wqy647at0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-VVMG9EtQNq6uKZ4tlwC9Sw-1; Wed,
- 28 Aug 2024 07:23:13 -0400
-X-MC-Unique: VVMG9EtQNq6uKZ4tlwC9Sw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0AB3F1955F4A; Wed, 28 Aug 2024 11:23:12 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 151FE19560A3; Wed, 28 Aug 2024 11:23:11 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E498221E6A28; Wed, 28 Aug 2024 13:23:08 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-trivial@nongnu.org,
- zhao1.liu@intel.com,  kvm@vger.kernel.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 1/2] kvm: replace fprintf with
- error_report()/printf() in kvm_init()
-In-Reply-To: <20240828075630.7754-2-anisinha@redhat.com> (Ani Sinha's message
- of "Wed, 28 Aug 2024 13:26:28 +0530")
-References: <20240828075630.7754-1-anisinha@redhat.com>
- <20240828075630.7754-2-anisinha@redhat.com>
-Date: Wed, 28 Aug 2024 13:23:08 +0200
-Message-ID: <87ikvkriw3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sjGp1-00032h-R3
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 07:26:47 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sjGou-000384-IC
+ for qemu-devel@nongnu.org; Wed, 28 Aug 2024 07:26:40 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-42808071810so56803775e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 04:26:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724844394; x=1725449194; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=jOQk+8SSsuBYmnmG5dfE6F/6VoLWWurVrBqPcOqTt0Q=;
+ b=Mtk8oZXcVaI6HFQbEOXFayCLp+lnJiOtUsEm0l3ocmySr6ETeNJ0PmfZQkZZ6FhUam
+ VZXjWB/8HvNw86wBsrNvCeOY2F32pw13fdRnktdO8ZqxgIPZAWyr4trmkQGSaxhgZ39E
+ /uHDkQzCtnhQ7qHbE2/ttr5NSzD0Z3hcJ8093Xp0H5RvkzaKFr42yxaYgOjBCVnxs/Jv
+ +TF3fnpZHPXUDvRtTlQDcw6U2BqOIVbGnalzn7MzlMiiaUnVLmQfqrXRsacF4FZyCiYK
+ kafm+EZ3oXA60343Lgy97tytrmpwXAiZG+YqFwN78k6H3rHh79NOdaoF1qu3MTaO+fEZ
+ Oxcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724844394; x=1725449194;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jOQk+8SSsuBYmnmG5dfE6F/6VoLWWurVrBqPcOqTt0Q=;
+ b=c8tpu9ASPNm2WgI6Yw3vGAfLyQvXaJIur5vDtdR1MnEO4qBH6NQ2HcaDGTlHAKRmyC
+ aiBG097E3O/0+CzQI48LMFOZrPxxQBOZVN7oQwp7MyUTFX9nEimruwsan3A9U5j3xRka
+ AzggFdJBhRPEzwXu7kAQFCPvQrxrOa06IMi9d8PoOqpAo97mLfHm4dJKV0K3in3+o/Rj
+ wpuyUMSq10TfIA/E05lIBx109/pfp0OBnjMvJHqHUvU4OVEJhmVP7rRwEYeW8+p8mUJ4
+ 4UdM/a9StELD6RoZmlgLS8PxosjNeWDqHHFgAT5jAeIsCyP7bMvdSm4oS0say3V2cyWk
+ E6hw==
+X-Gm-Message-State: AOJu0YwTYykPJF+oNe1TsRe4sft8/NKyVVhWDkTGnUuwmC0eZBYqEMfR
+ eFU9t8jyF4M8g6cT8yiHkOSecZlfJCtfUvTE/H7yDHz8jVHHqlXajiH1/9luW78=
+X-Google-Smtp-Source: AGHT+IFngLS1HNgKu2IleTUD+951Qm+PdDQulwAgAETYM9jW2iPcY8UNGoyaduXcqtZhswCgyJvbfQ==
+X-Received: by 2002:a05:600c:4f44:b0:426:66e9:b844 with SMTP id
+ 5b1f17b1804b1-42ba66929dbmr13133165e9.8.1724844393645; 
+ Wed, 28 Aug 2024 04:26:33 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ba639d51dsm18417585e9.12.2024.08.28.04.26.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Aug 2024 04:26:33 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 61B915F796;
+ Wed, 28 Aug 2024 12:26:32 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Gustavo Romero
+ <gustavo.romero@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,
+ Junjie Mao <junjie.mao@intel.com>,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH RESEND v9 2/9] build-sys: Add rust feature option
+In-Reply-To: <20240828-rust-pl011-v9-2-35579191f17c@linaro.org> (Manos
+ Pitsidianakis's message of "Wed, 28 Aug 2024 07:11:43 +0300")
+References: <20240828-rust-pl011-v9-0-35579191f17c@linaro.org>
+ <20240828-rust-pl011-v9-2-35579191f17c@linaro.org>
+Date: Wed, 28 Aug 2024 12:26:32 +0100
+Message-ID: <87cyls51nb.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,150 +104,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ani Sinha <anisinha@redhat.com> writes:
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
-> error_report() is more appropriate for error situations. Replace fprintf with
-> error_report() and error_printf() as appropriate. Cosmetic. No functional
-> change.
-
-Uh, I missed this last time around: the change is more than just
-cosmetics!  The error messages change, e.g. from
-
-    $ qemu-system-x86_64 -nodefaults -S -display none --accel kvm
-    qemu-system-x86_64: --accel kvm: Could not access KVM kernel module: Permission denied
-    qemu-system-x86_64: --accel kvm: failed to initialize kvm: Permission denied
-
-to
-
-    $ qemu-system-x86_64 -nodefaults -S -display none --accel kvm
-    Could not access KVM kernel module: Permission denied
-    qemu-system-x86_64: --accel kvm: failed to initialize kvm: Permission denied
-
-Note: the second message is from kvm_init()'s caller.  Reporting the
-same error twice is wrong, but not this patch's problem.
-
-Moreover, the patch tweaks an error message at [*].
-
-Suggest something like
-
-  Replace fprintf() with error_report() and error_printf() where
-  appropriate.  Error messages improve, e.g. from
-
-      Could not access KVM kernel module: Permission denied
-
-  to
-
-      qemu-system-x86_64: --accel kvm: Could not access KVM kernel module: Permission denied
-
-> CC: qemu-trivial@nongnu.org
-> CC: zhao1.liu@intel.com
-> CC: armbru@redhat.com
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Add rust feature in meson.build, configure, to prepare for adding Rust
+> code in the followup commits.
+>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > ---
->  accel/kvm/kvm-all.c | 40 ++++++++++++++++++----------------------
->  1 file changed, 18 insertions(+), 22 deletions(-)
+>  MAINTAINERS                   |  5 +++++
+>  meson.build                   | 25 ++++++++++++++++++++++++-
+>  Kconfig                       |  1 +
+>  Kconfig.host                  |  3 +++
+>  meson_options.txt             |  3 +++
+>  rust/Kconfig                  |  0
+>  scripts/meson-buildoptions.sh |  3 +++
+>  7 files changed, 39 insertions(+), 1 deletion(-)
 >
-> changelog:
-> v2: fix a bug.
-> v3: replace one instance of error_report() with error_printf(). added tags.
-> v4: changes suggested by Markus.
-> v5: more changes from Markus's comments on v4.
->
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 75d11a07b2..fcc157f0e6 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2427,7 +2427,7 @@ static int kvm_init(MachineState *ms)
->      QLIST_INIT(&s->kvm_parked_vcpus);
->      s->fd = qemu_open_old(s->device ?: "/dev/kvm", O_RDWR);
->      if (s->fd == -1) {
-> -        fprintf(stderr, "Could not access KVM kernel module: %m\n");
-> +        error_report("Could not access KVM kernel module: %m");
->          ret = -errno;
->          goto err;
->      }
-> @@ -2437,13 +2437,13 @@ static int kvm_init(MachineState *ms)
->          if (ret >= 0) {
->              ret = -EINVAL;
->          }
-> -        fprintf(stderr, "kvm version too old\n");
-> +        error_report("kvm version too old");
->          goto err;
->      }
->  
->      if (ret > KVM_API_VERSION) {
->          ret = -EINVAL;
-> -        fprintf(stderr, "kvm version not supported\n");
-> +        error_report("kvm version not supported");
->          goto err;
->      }
->  
-> @@ -2488,26 +2488,22 @@ static int kvm_init(MachineState *ms)
->      } while (ret == -EINTR);
->  
->      if (ret < 0) {
-> -        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
-> -                strerror(-ret));
-> +        error_report("ioctl(KVM_CREATE_VM) failed: %s", strerror(-ret));
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 3584d6a6c6da9a3210150534d640d29ddf329dce..0bc8e515daf7e63320620b52b=
+42a799b99dbe035 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4243,6 +4243,11 @@ F: docs/sphinx/
+>  F: docs/_templates/
+>  F: docs/devel/docs.rst
+>=20=20
+> +Rust build system integration
+> +M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> +S: Maintained
+> +F: rust/Kconfig
+> +
+>  Miscellaneous
+>  -------------
+>  Performance Tools and Tests
+> diff --git a/meson.build b/meson.build
+> index 7eb4b8a41c0a667cacf693cfa2764f326ba72b1f..67eb4eda649d5f0566de2b754=
+66b5a9d9ca87ab4 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -70,6 +70,22 @@ if host_os =3D=3D 'darwin' and \
+>    all_languages +=3D ['objc']
+>    objc =3D meson.get_compiler('objc')
+>  endif
+> +if get_option('rust').enabled() and meson.version().version_compare('<1.=
+0.0')
+> +  error('Rust support requires Meson version >=3D1.0.0')
+> +endif
 
-[*] This is where you change an error message.
+Isn't this test obsolete as patch 1 ensures we have at least 1.50 anyway?=20
 
->  
->  #ifdef TARGET_S390X
->          if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "Host kernel setup problem detected. Please verify:\n");
-> -            fprintf(stderr, "- for kernels supporting the switch_amode or"
-> -                    " user_mode parameters, whether\n");
-> -            fprintf(stderr,
-> -                    "  user space is running in primary address space\n");
-> -            fprintf(stderr,
-> -                    "- for kernels supporting the vm.allocate_pgste sysctl, "
-> -                    "whether it is enabled\n");
-> +            error_printf("Host kernel setup problem detected."
-> +                         " Please verify:\n");
-> +            error_printf("- for kernels supporting the"
-> +                        " switch_amode or user_mode parameters, whether");
-> +            error_printf(" user space is running in primary address space\n");
-> +            error_printf("- for kernels supporting the vm.allocate_pgste"
-> +                         " sysctl, whether it is enabled\n");
->          }
->  #elif defined(TARGET_PPC)
->          if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
-> -                    (type == 2) ? "pr" : "hv");
-> +            error_printf("PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
-> +                         (type == 2) ? "pr" : "hv");
->          }
->  #endif
->          goto err;
-> @@ -2526,9 +2522,9 @@ static int kvm_init(MachineState *ms)
->                          nc->name, nc->num, soft_vcpus_limit);
->  
->              if (nc->num > hard_vcpus_limit) {
-> -                fprintf(stderr, "Number of %s cpus requested (%d) exceeds "
-> -                        "the maximum cpus supported by KVM (%d)\n",
-> -                        nc->name, nc->num, hard_vcpus_limit);
-> +                error_report("Number of %s cpus requested (%d) exceeds "
-> +                             "the maximum cpus supported by KVM (%d)",
-> +                             nc->name, nc->num, hard_vcpus_limit);
->                  exit(1);
->              }
->          }
-> @@ -2542,8 +2538,8 @@ static int kvm_init(MachineState *ms)
->      }
->      if (missing_cap) {
->          ret = -EINVAL;
-> -        fprintf(stderr, "kvm does not support %s\n%s",
-> -                missing_cap->name, upgrade_note);
-> +        error_report("kvm does not support %s", missing_cap->name);
-> +        error_printf("%s", upgrade_note);
->          goto err;
->      }
+> +have_rust =3D false
+> +if not get_option('rust').disabled() and add_languages('rust', required:=
+ get_option('rust'), native: false)
+> +  rustc =3D meson.get_compiler('rust')
+> +  have_rust =3D true
+> +  if rustc.version().version_compare('<1.80.0')
+> +    if get_option('rust').enabled()
+> +      error('rustc version ' + rustc.version() + ' is unsupported: Pleas=
+e upgrade to at least 1.80.0')
+> +    else
+> +      warning('rustc version ' + rustc.version() + ' is unsupported: Dis=
+abling Rust compilation. Please upgrade to at least 1.80.0 to use Rust.')
+> +      have_rust =3D false
+> +    endif
+> +  endif
+> +endif
+>=20=20
+>  dtrace =3D not_found
+>  stap =3D not_found
+> @@ -2131,6 +2147,7 @@ endif
+>=20=20
+>  config_host_data =3D configuration_data()
+>=20=20
+> +config_host_data.set('CONFIG_HAVE_RUST', have_rust)
+>  audio_drivers_selected =3D []
+>  if have_system
+>    audio_drivers_available =3D {
+> @@ -3076,7 +3093,8 @@ host_kconfig =3D \
+>    (host_os =3D=3D 'linux' ? ['CONFIG_LINUX=3Dy'] : []) + \
+>    (multiprocess_allowed ? ['CONFIG_MULTIPROCESS_ALLOWED=3Dy'] : []) + \
+>    (vfio_user_server_allowed ? ['CONFIG_VFIO_USER_SERVER_ALLOWED=3Dy'] : =
+[]) + \
+> -  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=3Dy'] : [])
+> +  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=3Dy'] : []) + \
+> +  (have_rust ? ['CONFIG_HAVE_RUST=3Dy'] : [])
+>=20=20
+>  ignored =3D [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
+>=20=20
+> @@ -4287,6 +4305,11 @@ if 'objc' in all_languages
+>  else
+>    summary_info +=3D {'Objective-C compiler': false}
+>  endif
+> +summary_info +=3D {'Rust support':      have_rust}
+> +if have_rust
+> +  summary_info +=3D {'rustc version':      rustc.version()}
+> +  summary_info +=3D {'rustc':      ' '.join(rustc.cmd_array())}
+> +endif
+>  option_cflags =3D (get_option('debug') ? ['-g'] : [])
+>  if get_option('optimization') !=3D 'plain'
+>    option_cflags +=3D ['-O' + get_option('optimization')]
+> diff --git a/Kconfig b/Kconfig
+> index fb6a24a2de8c3ff11d4ee432d65ad000ba9d6c4d..63ca7f46df788144864b26ef5=
+a64b29ad6547435 100644
+> --- a/Kconfig
+> +++ b/Kconfig
+> @@ -4,3 +4,4 @@ source accel/Kconfig
+>  source target/Kconfig
+>  source hw/Kconfig
+>  source semihosting/Kconfig
+> +source rust/Kconfig
 
-With the commit message corrected:
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+I was wondering if we should call out the directory structure in
+docs/devel but we don't currently. docs/devel/build-system.rst is
+probably the wrong place for it so maybe we need a new section for code
+layout. Anyway not a problem for this patch.
 
+> diff --git a/Kconfig.host b/Kconfig.host
+> index 17f405004b3bc765890688304322a1937ca8c01c..4ade7899d67a5ed91928f8ee1=
+e287f5ba3331949 100644
+> --- a/Kconfig.host
+> +++ b/Kconfig.host
+> @@ -52,3 +52,6 @@ config VFIO_USER_SERVER_ALLOWED
+>=20=20
+>  config HV_BALLOON_POSSIBLE
+>      bool
+> +
+> +config HAVE_RUST
+> +    bool
+
+Not this patches fault but the top of this Kconfig states:
+
+  # These are "proxy" symbols used to pass config-host.mak values
+  # down to Kconfig.  See also kconfig_external_symbols in
+  # meson.build: these two need to be kept in sync.
+
+but that was updated in 0a18911074 (meson: cleanup Kconfig.host
+handling) and I can see host_kconfig has been updated. It would be nice
+to put a patch in before just cleaning up that comment.
+
+
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 0269fa0f16ed6b6f734fcefa2cfa94aa029fa837..fa94a5ce97bb14ab108e21ccc=
+b651923ac6a58f8 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -371,3 +371,6 @@ option('hexagon_idef_parser', type : 'boolean', value=
+ : true,
+>=20=20
+>  option('x86_version', type : 'combo', choices : ['0', '1', '2', '3', '4'=
+], value: '1',
+>         description: 'tweak required x86_64 architecture version beyond c=
+ompiler default')
+> +
+> +option('rust', type: 'feature', value: 'auto',
+> +       description: 'Rust support')
+> diff --git a/rust/Kconfig b/rust/Kconfig
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae7=
+75ad8c2e48c5391
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+> index c97079a38c9e4ed24a0fe9b44e492b7108481048..5e8a225a6b343cf506950a314=
+6af718d52a6c1a0 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -170,6 +170,7 @@ meson_options_help() {
+>    printf "%s\n" '  rbd             Ceph block device driver'
+>    printf "%s\n" '  rdma            Enable RDMA-based migration'
+>    printf "%s\n" '  replication     replication support'
+> +  printf "%s\n" '  rust            Rust support'
+>    printf "%s\n" '  rutabaga-gfx    rutabaga_gfx support'
+>    printf "%s\n" '  sdl             SDL user interface'
+>    printf "%s\n" '  sdl-image       SDL Image support for icons'
+> @@ -452,6 +453,8 @@ _meson_option_parse() {
+>      --disable-replication) printf "%s" -Dreplication=3Ddisabled ;;
+>      --enable-rng-none) printf "%s" -Drng_none=3Dtrue ;;
+>      --disable-rng-none) printf "%s" -Drng_none=3Dfalse ;;
+> +    --enable-rust) printf "%s" -Drust=3Denabled ;;
+> +    --disable-rust) printf "%s" -Drust=3Ddisabled ;;
+>      --enable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=3Denabled ;;
+>      --disable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=3Ddisabled ;;
+>      --enable-safe-stack) printf "%s" -Dsafe_stack=3Dtrue ;;
+
+Without the unneeded version check:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
