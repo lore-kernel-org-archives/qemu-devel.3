@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05948C71135
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 09:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15148C83010
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 09:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjbGR-0002Sd-Uz; Thu, 29 Aug 2024 05:16:23 -0400
+	id 1sjbLw-0002Ox-09; Thu, 29 Aug 2024 05:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sjbGG-00029w-9n
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:16:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sjbLu-0002Nh-4m
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:22:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sjbGC-0003rf-3m
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:16:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sjbLs-0004NB-5o
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:22:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724922965;
+ s=mimecast20190719; t=1724923318;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=clyJnJCA/lG7gEklT/7SzAO8bDjGV6RgvPz4cu1Fcgc=;
- b=aMKGsH1JxsKSY/VSRQjmh+JUJBQr98TfOAauuQLEnObpO4GGuJQdwSTIMU8NJwyOnWvSEh
- ibq1kN2w5lZG+bgoz/Opa3/V5Wzdb+aSWYQ1bQyPdSOFHB7wolyS9KiWUQAsVLHEyYUVvI
- NqJU13mFGe8qg0HoF5xCEejk68naEM8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dlDaLxL3spAJXJV83CSuYRZr8pDkR3tZ7RP54APTJVU=;
+ b=ipiGCHNG5FcHNupZdVPJCGpw2QN41PWoVN7H3EVfoKgx+atmY8Te312pIdfQwwbY6eFyr/
+ SWntDs+FGa4kvaaaJqiO4PoKNG3M97YkvfwcRfrk3u/h9/TyooNBgtcchyq6JaGptQ+7PB
+ coTeqnr5N9aOUMbMKVRtdUtN2Lg9TWk=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-MFJXTJABNWeTUvslT-kBVA-1; Thu, 29 Aug 2024 05:16:03 -0400
-X-MC-Unique: MFJXTJABNWeTUvslT-kBVA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4282164fcbcso4561395e9.2
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 02:16:03 -0700 (PDT)
+ us-mta-636-S7Mh5a8tMPWo763qmEEL7Q-1; Thu, 29 Aug 2024 05:21:55 -0400
+X-MC-Unique: S7Mh5a8tMPWo763qmEEL7Q-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-5334c7d759dso410646e87.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 02:21:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724922962; x=1725527762;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=clyJnJCA/lG7gEklT/7SzAO8bDjGV6RgvPz4cu1Fcgc=;
- b=xFjmfffDknn8KEeADuHMf7GM81zATOL6F5b2JnCMUbTx4Ju/Z7GX3Gk9+HR/pJZIg5
- g216KdH7vHS+qlRICTkYgGg1sXPTcQqV7i9ZRwimNirlArxhxpru83NZImNrm3yswFX6
- Tdu4W2tA7CTe1omrx1nEARt7L1oSp/hnv9M2jxlIgmCLCQhItiWnJpQ0E4Jog0YMXdds
- q+yVf+G93nt5mnGgT1wLxjN+unfQeC44t4eDYO3s4W4CvstRiuzelR2jd7OGUx7LSX/W
- lWlszH7rGm47DYPhPUGUZUfNAxymGz94DhVVadGrqfq6y/dQJWXms2gFhCiTjSfIAziH
- CELA==
-X-Gm-Message-State: AOJu0YwPcZ8/fQnOorSKhydUajTfkh3lTTLhUC11LGy+6NUE3Bk41AHp
- 3Z1PPEr8wWIyvoi4yw5A76Jei5pvl9iwdWzVxJWwF1cN2E1CIuffGp+j5+3LyaYi/NraXgbicmW
- prBigbjBmSczLhIB0vM+L3l+clGkdH+e2S84o9r3sXorYVkbB3YGDAZh6fAl7QB2o0nJ2WNBYfT
- HZTYItkFsEKSV3IlF0mQdHdwlmmXc=
-X-Received: by 2002:a05:600c:470f:b0:426:6c70:dd9c with SMTP id
- 5b1f17b1804b1-42bb01f242bmr18246455e9.31.1724922962415; 
- Thu, 29 Aug 2024 02:16:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqdsz1Aw9qPxz9gvs4PHkce3o5HX9m+OwVbMsGcMU+eeYZGz969WERF13XVCkXUHnZUt7fvPAvbI3/TP8SUbs=
-X-Received: by 2002:a05:600c:470f:b0:426:6c70:dd9c with SMTP id
- 5b1f17b1804b1-42bb01f242bmr18246185e9.31.1724922961857; Thu, 29 Aug 2024
- 02:16:01 -0700 (PDT)
-MIME-Version: 1.0
+ d=1e100.net; s=20230601; t=1724923314; x=1725528114;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dlDaLxL3spAJXJV83CSuYRZr8pDkR3tZ7RP54APTJVU=;
+ b=NaWE3LxJvK0CYJRlQ1GnMBLeaBgq/HkMqk8nKPRLzna49WjMwNQUbBqP8AHow9LfRS
+ +RMvoP00trQF/BSrVtq0PfsjEFaMbg/77+0EkYJYD5yUqsUQ8KF92u/uB6hUcqYttquH
+ Nd1QfqnE6z7n0UtJ/agv1Z1OAxo+EPqRXlbdWFdwFg0trUXYoJpHUCRRchDBVLu6nWhm
+ FyUqCe4/d4/JZX2iZvYrfFaY+HtNLDJR3yrPTKQVPstqgs5O4/7Gyk4n5bClR/ElJKU+
+ Kesa4laMpXR0C2LHYfSa97YV5PzYGrY+ae4M+gV+IkI3xO5NsOFweFWUDUUP6S0g8tFR
+ ip1A==
+X-Gm-Message-State: AOJu0YwPfsB8p6iiE5iqIicT8SeHb5qMmekOlQdne8H0ihsP2VymvFBv
+ OZPze/54tj/lUYqCwAXAn7eGsSTCDTgVo9zQC/sW/ab7xzGAcN1stdFuu8/3+fxHMnyGTCBA2gp
+ fyKEca9/BHsaBv1wfYAJZRDUCOMkkbsu7UwZ0pHRKQQg4fdprN++Y
+X-Received: by 2002:a05:6512:238e:b0:52c:812b:6e72 with SMTP id
+ 2adb3069b0e04-5353e546392mr1371276e87.1.1724923314325; 
+ Thu, 29 Aug 2024 02:21:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyWvzGwwhVbAJBwsJf2IC1QgMj0oWS5zpD/Z1rRHTqJYjq8bs/5ibXlNin9aAozu0K7cxxjg==
+X-Received: by 2002:a05:6512:238e:b0:52c:812b:6e72 with SMTP id
+ 2adb3069b0e04-5353e546392mr1371224e87.1.1724923313289; 
+ Thu, 29 Aug 2024 02:21:53 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1ed:a269:8195:851e:f4b1:ff5d])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a898900f26asm54001866b.58.2024.08.29.02.21.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Aug 2024 02:21:52 -0700 (PDT)
+Date: Thu, 29 Aug 2024 05:21:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, jasowang@redhat.com,
+ mcoqueli@redhat.com, peterx@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>,
+ "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v2 2/2] vhost-user: add a request-reply lock
+Message-ID: <20240829052033-mutt-send-email-mst@kernel.org>
 References: <20240828100914.105728-1-ppandit@redhat.com>
  <20240828100914.105728-3-ppandit@redhat.com>
  <20240829033717-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240829033717-mutt-send-email-mst@kernel.org>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 29 Aug 2024 14:45:45 +0530
-Message-ID: <CAE8KmOzC__Z6wgSv9sGcAPrbbZBOQg7tD=6An-=XZVouPCA2Bg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] vhost-user: add a request-reply lock
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, jasowang@redhat.com, 
- mcoqueli@redhat.com, peterx@redhat.com, Prasad Pandit <pjp@fedoraproject.org>, 
- "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ <CAE8KmOzC__Z6wgSv9sGcAPrbbZBOQg7tD=6An-=XZVouPCA2Bg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOzC__Z6wgSv9sGcAPrbbZBOQg7tD=6An-=XZVouPCA2Bg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,39 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Michael,
+On Thu, Aug 29, 2024 at 02:45:45PM +0530, Prasad Pandit wrote:
+> Hello Michael,
+> 
+> On Thu, 29 Aug 2024 at 13:12, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > Weird.  Seems to indicate some kind of deadlock?
+> 
+> * Such a deadlock should occur across all environments I guess, not
+> sure why it happens selectively. It is strange.
 
-On Thu, 29 Aug 2024 at 13:12, Michael S. Tsirkin <mst@redhat.com> wrote:
-> Weird.  Seems to indicate some kind of deadlock?
+Some kind of race?
 
-* Such a deadlock should occur across all environments I guess, not
-sure why it happens selectively. It is strange.
+> > So maybe vhost_user_postcopy_end should take the BQL?
+> ===
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index e7c1215671..31acda3818 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2050,7 +2050,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>           */
+>          qemu_event_wait(&mis->main_thread_load_event);
+>      }
+> +    bql_lock();
+>      postcopy_ram_incoming_cleanup(mis);
+> +    bql_unlock();
+> 
+>      if (load_res < 0) {
+>          /*
+> ===
+> 
+> * Actually a BQL patch above was tested and it worked fine. But not
+> sure if it is an acceptable solution. Another contention was taking
+> BQL could make things more complicated, so a local vhost-user specific
+> lock should be better.
+> 
+> ...wdyt?
+> ---
+>   - Prasad
 
-> So maybe vhost_user_postcopy_end should take the BQL?
-===
-diff --git a/migration/savevm.c b/migration/savevm.c
-index e7c1215671..31acda3818 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2050,7 +2050,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
-          */
-         qemu_event_wait(&mis->main_thread_load_event);
-     }
-+    bql_lock();
-     postcopy_ram_incoming_cleanup(mis);
-+    bql_unlock();
+Keep it simple, is my advice. Not causing regressions is good.
 
-     if (load_res < 0) {
-         /*
-===
-
-* Actually a BQL patch above was tested and it worked fine. But not
-sure if it is an acceptable solution. Another contention was taking
-BQL could make things more complicated, so a local vhost-user specific
-lock should be better.
-
-...wdyt?
----
-  - Prasad
+-- 
+MST
 
 
