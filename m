@@ -4,80 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 961F9C6FD35
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 08:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85AA3C7EE3A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 08:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjaJD-00065s-Hh; Thu, 29 Aug 2024 04:15:11 -0400
+	id 1sjabr-0003Pv-92; Thu, 29 Aug 2024 04:34:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjaJB-00065M-IY
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:15:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
+ id 1sjabp-0003Ou-U1; Thu, 29 Aug 2024 04:34:25 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjaJ9-0005qs-30
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:15:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724919305;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qUtV1kI8tOHAxxg1w7E5A/fVPUdWOcBMDtJXXVzCLn4=;
- b=HLBKYz39g1dmDpR15sMqgcMb1VxMn21tcyLpGk8ryEwTnJE9sigo0J5AxB8L7tG+FB0dHL
- B32BEcJExCPndcojPGIAaD7ZzIAEXpXJJVo2355CfejExwG8Dy+PKSCeV6t2pPxGtljy4q
- agkmgLceUzagkzsDSFjDFRhPqsKevis=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-wTr_hSt5N2CucU2BAh2qQQ-1; Thu,
- 29 Aug 2024 04:15:01 -0400
-X-MC-Unique: wTr_hSt5N2CucU2BAh2qQQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
+ id 1sjabm-0007YC-FV; Thu, 29 Aug 2024 04:34:25 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WvZM922pBz4x2J;
+ Thu, 29 Aug 2024 18:34:13 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 067701955BEE; Thu, 29 Aug 2024 08:14:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.64])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0B2E11954B0D; Thu, 29 Aug 2024 08:14:52 +0000 (UTC)
-Date: Thu, 29 Aug 2024 09:14:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de,
- stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
- marcel.apfelbaum@gmail.com, philmd@linaro.org
-Subject: Re: [PATCH v5 7/8] machine/nitro-enclave: New machine type for AWS
- Nitro Enclaves
-Message-ID: <ZtAt-UyWFoSNmDwT@redhat.com>
-References: <20240822150849.21759-1-dorjoychy111@gmail.com>
- <20240822150849.21759-8-dorjoychy111@gmail.com>
- <Zs9EpTY9N6kl1VNJ@redhat.com>
- <CAFfO_h4vqP-c4gqGJeZRbBEyqaLjO30PgbbvvEi9XVWmyzEtcg@mail.gmail.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WvZM656KFz4wd0;
+ Thu, 29 Aug 2024 18:34:10 +1000 (AEST)
+Message-ID: <cd107bc4-38d8-4f68-9f3d-e935b9e09028@kaod.org>
+Date: Thu, 29 Aug 2024 10:34:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFfO_h4vqP-c4gqGJeZRbBEyqaLjO30PgbbvvEi9XVWmyzEtcg@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/13] ppc/xive2: Support TIMA "Pull OS Context to Odd
+ Thread Reporting Line"
+To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240801203008.11224-1-kowal@linux.ibm.com>
+ <20240801203008.11224-4-kowal@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240801203008.11224-4-kowal@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=t/gt=P4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,154 +65,276 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 28, 2024 at 09:50:25PM +0600, Dorjoy Chowdhury wrote:
-> Hi Daniel,
+On 8/1/24 22:29, Michael Kowal wrote:
+> From: Frederic Barrat <fbarrat@linux.ibm.com>
 > 
-> On Wed, Aug 28, 2024 at 9:39 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Thu, Aug 22, 2024 at 09:08:48PM +0600, Dorjoy Chowdhury wrote:
-> > > AWS nitro enclaves[1] is an Amazon EC2[2] feature that allows creating
-> > > isolated execution environments, called enclaves, from Amazon EC2
-> > > instances which are used for processing highly sensitive data. Enclaves
-> > > have no persistent storage and no external networking. The enclave VMs
-> > > are based on the Firecracker microvm with a vhost-vsock device for
-> > > communication with the parent EC2 instance that spawned it and a Nitro
-> > > Secure Module (NSM) device for cryptographic attestation. The parent
-> > > instance VM always has CID 3 while the enclave VM gets a dynamic CID.
-> > >
-> > > An EIF (Enclave Image Format)[3] file is used to boot an AWS nitro enclave
-> > > virtual machine. This commit adds support for AWS nitro enclave emulation
-> > > using a new machine type option '-M nitro-enclave'. This new machine type
-> > > is based on the 'microvm' machine type, similar to how real nitro enclave
-> > > VMs are based on Firecracker microvm. For nitro-enclave to boot from an
-> > > EIF file, the kernel and ramdisk(s) are extracted into a temporary kernel
-> > > and a temporary initrd file which are then hooked into the regular x86
-> > > boot mechanism along with the extracted cmdline. The EIF file path should
-> > > be provided using the '-kernel' QEMU option.
-> > >
-> > > In QEMU, the vsock emulation for nitro enclave is added using vhost-user-
-> > > vsock as opposed to vhost-vsock. vhost-vsock doesn't support sibling VM
-> > > communication which is needed for nitro enclaves. So for the vsock
-> > > communication to CID 3 to work, another process that does the vsock
-> > > emulation in  userspace must be run, for example, vhost-device-vsock[4]
-> > > from rust-vmm, with necessary vsock communication support in another
-> > > guest VM with CID 3. Using vhost-user-vsock also enables the possibility
-> > > to implement some proxying support in the vhost-user-vsock daemon that
-> > > will forward all the packets to the host machine instead of CID 3 so
-> > > that users of nitro-enclave can run the necessary applications in their
-> > > host machine instead of running another whole VM with CID 3. The following
-> > > mandatory nitro-enclave machine option has been added related to the
-> > > vhost-user-vsock device.
-> > >   - 'vsock': The chardev id from the '-chardev' option for the
-> > > vhost-user-vsock device.
-> > >
-> > > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device which
-> > > has been added using the virtio-nsm device added in a previous commit.
-> > > In Nitro Enclaves, all the PCRs start in a known zero state and the first
-> > > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and PCR8
-> > > contain the SHA384 hashes related to the EIF file used to boot the VM
-> > > for validation. The following optional nitro-enclave machine options
-> > > have been added related to the NSM device.
-> > >   - 'id': Enclave identifier, reflected in the module-id of the NSM
-> > > device. If not provided, a default id will be set.
-> > >   - 'parent-role': Parent instance IAM role ARN, reflected in PCR3
-> > > of the NSM device.
-> > >   - 'parent-id': Parent instance identifier, reflected in PCR4 of the
-> > > NSM device.
-> > >
-> > > [1] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-> > > [2] https://aws.amazon.com/ec2/
-> > > [3] https://github.com/aws/aws-nitro-enclaves-image-format
-> > > [4] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
-> > >
-> > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > > ---
-> > >  MAINTAINERS                              |   9 +
-> > >  backends/hostmem-memfd.c                 |   2 -
-> > >  configs/devices/i386-softmmu/default.mak |   1 +
-> > >  hw/core/machine.c                        |  71 ++---
-> > >  hw/core/meson.build                      |   3 +
-> > >  hw/i386/Kconfig                          |   6 +
-> > >  hw/i386/meson.build                      |   3 +
-> > >  hw/i386/microvm.c                        |   6 +-
-> > >  hw/i386/nitro_enclave.c                  | 355 +++++++++++++++++++++++
-> > >  include/hw/boards.h                      |   2 +
-> > >  include/hw/i386/microvm.h                |   2 +
-> > >  include/hw/i386/nitro_enclave.h          |  62 ++++
-> > >  include/sysemu/hostmem.h                 |   2 +
-> > >  13 files changed, 488 insertions(+), 36 deletions(-)
-> > >  create mode 100644 hw/i386/nitro_enclave.c
-> > >  create mode 100644 include/hw/i386/nitro_enclave.h
-> > >
-> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > index da4f698137..aa7846107e 100644
-> > > --- a/MAINTAINERS
-> > > +++ b/MAINTAINERS
-> > > @@ -1877,6 +1877,15 @@ F: hw/i386/microvm.c
-> > >  F: include/hw/i386/microvm.h
-> > >  F: pc-bios/bios-microvm.bin
-> > >
-> > > +nitro-enclave
-> > > +M: Alexander Graf <graf@amazon.com>
-> > > +M: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > > +S: Maintained
-> > > +F: hw/core/eif.c
-> > > +F: hw/core/eif.h
-> >
-> > The eif.c/h files were added in the prevuous patch, so upto this line
-> > should be added in the previous patch.
-> >
+> Adds support for single byte writes to offset 0xC18 of the TIMA address
+> space.  When this offset is written to, the hardware disables the OS
+> context and copies the current state information to the odd cache line
+> of the pair specified by the NVT structure indexed by the OS CAM entry.
 > 
-> Yeah, it makes sense to include it in the previous patch. Thanks!
+> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
+> ---
+>   include/hw/ppc/xive2.h      |   2 +
+>   include/hw/ppc/xive2_regs.h |   2 +
+>   include/hw/ppc/xive_regs.h  |   3 +
+>   hw/intc/xive.c              |   2 +
+>   hw/intc/xive2.c             | 150 +++++++++++++++++++++++++++++-------
+>   5 files changed, 132 insertions(+), 27 deletions(-)
 > 
-> > > +F: hw/i386/nitro_enclave.c
-> > > +F: include/hw/i386/nitro_enclave.h
-> >
-> > These two lines can remain in this patch
-> >
-> > >  Machine core
-> > >  M: Eduardo Habkost <eduardo@habkost.net>
-> > >  M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> >
-> >
-> > > diff --git a/hw/core/meson.build b/hw/core/meson.build
-> > > index a3d9bab9f4..5437a94490 100644
-> > > --- a/hw/core/meson.build
-> > > +++ b/hw/core/meson.build
-> > > @@ -24,6 +24,9 @@ system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
-> > >  system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
-> > >  system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
-> > >  system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
-> > > +if libcbor.found() and gnutls.found()
-> > > +  system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c'), zlib, libcbor, gnutls])
-> > > +endif
-> > >
-> > >  system_ss.add(files(
-> > >    'cpu-sysemu.c',
-> >
-> >
-> > This change to meson.build should be in the previous patch, since
-> > that's the one that introduces eif.c.
-> >
-> 
-> 'CONFIG_NITRO_ENCLAVE' is introduced in this patch, so the
-> meson.change above should stay in this patch, right?
+> diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+> index ab68f8d157..654f485e9b 100644
+> --- a/include/hw/ppc/xive2.h
+> +++ b/include/hw/ppc/xive2.h
+> @@ -107,5 +107,7 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+>                              uint64_t value, unsigned size);
+>   uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>                                  hwaddr offset, unsigned size);
+> +void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> +                             hwaddr offset, uint64_t value, unsigned size);
+>   
+>   #endif /* PPC_XIVE2_H */
+> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
+> index 4349d009d0..7acf7dccf3 100644
+> --- a/include/hw/ppc/xive2_regs.h
+> +++ b/include/hw/ppc/xive2_regs.h
+> @@ -171,7 +171,9 @@ typedef struct Xive2Nvp {
+>   #define NVP2_W5_VP_END_BLOCK       PPC_BITMASK32(4, 7)
+>   #define NVP2_W5_VP_END_INDEX       PPC_BITMASK32(8, 31)
+>           uint32_t       w6;
+> +#define NVP2_W6_REPORTING_LINE     PPC_BITMASK32(4, 31)
+>           uint32_t       w7;
+> +#define NVP2_W7_REPORTING_LINE     PPC_BITMASK32(0, 23)
+>   } Xive2Nvp;
+>   
+>   #define xive2_nvp_is_valid(nvp)    (be32_to_cpu((nvp)->w0) & NVP2_W0_VALID)
+> diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
+> index 9062c6abf6..27a744d50d 100644
+> --- a/include/hw/ppc/xive_regs.h
+> +++ b/include/hw/ppc/xive_regs.h
+> @@ -77,6 +77,7 @@
+>   #define TM_LSMFB                0x3  /*  -   +   +   +  */
+>   #define TM_ACK_CNT              0x4  /*  -   +   -   -  */
+>   #define TM_INC                  0x5  /*  -   +   -   +  */
+> +#define TM_LGS                  0x5  /*  +   +   +   +  */ /* Rename P10 */
+>   #define TM_AGE                  0x6  /*  -   +   -   +  */
+>   #define TM_PIPR                 0x7  /*  -   +   -   +  */
+>   #define TM_OGEN                 0xF  /*  -   +   -   -  */ /* P10 only */
+> @@ -129,6 +130,8 @@
+>   #define TM_SPC_PULL_USR_CTX_OL  0xc08   /* Store8 Pull/Inval usr ctx to odd   */
+>                                           /* line                               */
+>   #define TM_SPC_ACK_OS_EL        0xc10   /* Store8 ack OS irq to even line     */
+> +#define TM_SPC_PULL_OS_CTX_OL   0xc18   /* Pull/Invalidate OS context to      */
+> +                                        /* odd Thread reporting line          */
+>   #define TM_SPC_ACK_HV_POOL_EL   0xc20   /* Store8 ack HV evt pool to even     */
+>                                           /* line                               */
+>   #define TM_SPC_ACK_HV_EL        0xc30   /* Store8 ack HV irq to even line     */
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index 136d82338a..8e62c7e75f 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -547,6 +547,8 @@ static const XiveTmOp xive2_tm_operations[] = {
+>                                                        xive_tm_pull_pool_ctx },
+>       { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
+>                                                        xive_tm_pull_pool_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX_OL,     1, xive2_tm_pull_os_ctx_ol,
+> +                                                     NULL },
+>   };
+>   
+>   static const XiveTmOp *xive_tm_find_op(XivePresenter *xptr, hwaddr offset,
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index 1f150685bf..dd3ae102fb 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -26,6 +26,23 @@ uint32_t xive2_router_get_config(Xive2Router *xrtr)
+>       return xrc->get_config(xrtr);
+>   }
+>   
+> +static int xive2_router_get_block_id(Xive2Router *xrtr)
+> +{
+> +   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
+> +
+> +   return xrc->get_block_id(xrtr);
+> +}
+> +
+> +static uint64_t xive2_nvp_reporting_addr(Xive2Nvp *nvp)
+> +{
+> +    uint64_t cache_addr;
+> +
+> +    cache_addr = xive_get_field32(NVP2_W6_REPORTING_LINE, nvp->w6) << 24 |
+> +        xive_get_field32(NVP2_W7_REPORTING_LINE, nvp->w7);
+> +    cache_addr <<= 8; /* aligned on a cache line pair */
+> +    return cache_addr;
+> +}
+> +
+>   void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf)
+>   {
+>       if (!xive2_eas_is_valid(eas)) {
+> @@ -270,6 +287,27 @@ static void xive2_os_cam_decode(uint32_t cam, uint8_t *nvp_blk,
+>       *ho = !!(cam & TM2_QW1W2_HO);
+>   }
+>   
+> +
+> +/*
+> + * Encode the HW CAM line with 7bit or 8bit thread id. The thread id
+> + * width and block id width is configurable at the IC level.
+> + *
+> + *    chipid << 24 | 0000 0000 0000 0000 1 threadid (7Bit)
+> + *    chipid << 24 | 0000 0000 0000 0001 threadid   (8Bit)
+> + */
+> +static uint32_t xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
+> +{
+> +    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+> +    CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+> +    uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+> +    uint8_t blk = xive2_router_get_block_id(xrtr);
+> +    uint8_t tid_shift =
+> +        xive2_router_get_config(xrtr) & XIVE2_THREADID_8BITS ? 8 : 7;
+> +    uint8_t tid_mask = (1 << tid_shift) - 1;
+> +
+> +    return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
+> +}
+> +
+>   uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>                                 hwaddr offset, unsigned size)
+>   {
+> @@ -301,6 +339,91 @@ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>       return qw1w2;
+>   }
+>   
+> +#define REPORT_LINE_GEN1_SIZE       16
+> +
+> +static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
+> +                                      uint8_t size)
+> +{
+> +    uint8_t *regs = tctx->regs;
+> +
+> +    g_assert(size == REPORT_LINE_GEN1_SIZE);
+> +    memset(data, 0, size);
+> +    /*
+> +     * See xive architecture for description of what is saved. It is
+> +     * hand-picked information to fit in 16 bytes.
+> +     */
+> +    data[0x0] = regs[TM_QW3_HV_PHYS + TM_NSR];
+> +    data[0x1] = regs[TM_QW3_HV_PHYS + TM_CPPR];
+> +    data[0x2] = regs[TM_QW3_HV_PHYS + TM_IPB];
+> +    data[0x3] = regs[TM_QW2_HV_POOL + TM_IPB];
+> +    data[0x4] = regs[TM_QW1_OS + TM_ACK_CNT];
+> +    data[0x5] = regs[TM_QW3_HV_PHYS + TM_LGS];
+> +    data[0x6] = 0xFF;
+> +    data[0x7] = regs[TM_QW3_HV_PHYS + TM_WORD2] & 0x80;
+> +    data[0x7] |= (regs[TM_QW2_HV_POOL + TM_WORD2] & 0x80) >> 1;
+> +    data[0x7] |= (regs[TM_QW1_OS + TM_WORD2] & 0x80) >> 2;
+> +    data[0x7] |= (regs[TM_QW3_HV_PHYS + TM_WORD2] & 0x3);
+> +    data[0x8] = regs[TM_QW1_OS + TM_NSR];
+> +    data[0x9] = regs[TM_QW1_OS + TM_CPPR];
+> +    data[0xA] = regs[TM_QW1_OS + TM_IPB];
+> +    data[0xB] = regs[TM_QW1_OS + TM_LGS];
+> +    if (regs[TM_QW0_USER + TM_WORD2] & 0x80) {
+> +        /*
+> +         * Logical server extension, except VU bit replaced by EB bit
+> +         * from NSR
+> +         */
+> +        data[0xC] = regs[TM_QW0_USER + TM_WORD2];
+> +        data[0xC] &= ~0x80;
+> +        data[0xC] |= regs[TM_QW0_USER + TM_NSR] & 0x80;
+> +        data[0xD] = regs[TM_QW0_USER + TM_WORD2 + 1];
+> +        data[0xE] = regs[TM_QW0_USER + TM_WORD2 + 2];
+> +        data[0xF] = regs[TM_QW0_USER + TM_WORD2 + 3];
+> +    }
+> +}
+> +
+> +void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> +                             hwaddr offset, uint64_t value, unsigned size)
+> +{
+> +    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+> +    uint32_t hw_cam, nvp_idx, xive2_cfg, reserved;
+> +    uint8_t nvp_blk;
+> +    Xive2Nvp nvp;
+> +    uint64_t phys_addr;
+> +
+> +    hw_cam = xive2_tctx_hw_cam_line(xptr, tctx);
+> +    nvp_blk = xive2_nvp_blk(hw_cam);
+> +    nvp_idx = xive2_nvp_idx(hw_cam);
+> +
+> +    if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
+> +                      nvp_blk, nvp_idx);
+> +        return;
+> +    }
+> +
+> +    if (!xive2_nvp_is_valid(&nvp)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid NVP %x/%x\n",
+> +                      nvp_blk, nvp_idx);
+> +        return;
+> +    }
+> +
+> +    xive2_cfg = xive2_router_get_config(xrtr);
+> +
+> +    phys_addr = xive2_nvp_reporting_addr(&nvp) + 0x80; /* odd line */
+> +    if (xive2_cfg & XIVE2_GEN1_TIMA_OS) {
+> +        uint8_t pull_ctxt[REPORT_LINE_GEN1_SIZE];
+> +
+> +        xive2_tm_report_line_gen1(tctx, pull_ctxt, REPORT_LINE_GEN1_SIZE);
+> +        cpu_physical_memory_write(phys_addr, pull_ctxt, REPORT_LINE_GEN1_SIZE);
+> +    } else {
+> +        cpu_physical_memory_write(phys_addr, &tctx->regs, 64);
+> +        reserved = 0xFFFFFFFF;
+> +        cpu_physical_memory_write(phys_addr + 12, &reserved, 4);
 
-Or we just move the changes to
-configs/devices/i386-softmmu/default.mak & hw/i386/Kconfig
-into the prevous patch too so CONFIG_NITRO_ENCLAVE is
-available
+Could you please use dma_memory_write() instead of cpu_physical_memory_write() ?
+
+Thanks,
+
+C.
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> +    }
+> +
+> +    /* the rest is similar to pull OS context to registers */
+> +    xive2_tm_pull_os_ctx(xptr, tctx, offset, size);
+> +}
+> +
+>   static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+>                                           uint8_t nvp_blk, uint32_t nvp_idx,
+>                                           Xive2Nvp *nvp)
+> @@ -471,33 +594,6 @@ int xive2_router_write_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
+>      return xrc->write_nvp(xrtr, nvp_blk, nvp_idx, nvp, word_number);
+>   }
+>   
+> -static int xive2_router_get_block_id(Xive2Router *xrtr)
+> -{
+> -   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
+> -
+> -   return xrc->get_block_id(xrtr);
+> -}
+> -
+> -/*
+> - * Encode the HW CAM line with 7bit or 8bit thread id. The thread id
+> - * width and block id width is configurable at the IC level.
+> - *
+> - *    chipid << 24 | 0000 0000 0000 0000 1 threadid (7Bit)
+> - *    chipid << 24 | 0000 0000 0000 0001 threadid   (8Bit)
+> - */
+> -static uint32_t xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
+> -{
+> -    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+> -    CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+> -    uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+> -    uint8_t blk = xive2_router_get_block_id(xrtr);
+> -    uint8_t tid_shift =
+> -        xive2_router_get_config(xrtr) & XIVE2_THREADID_8BITS ? 8 : 7;
+> -    uint8_t tid_mask = (1 << tid_shift) - 1;
+> -
+> -    return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
+> -}
+> -
+>   /*
+>    * The thread context register words are in big-endian format.
+>    */
 
 
