@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4227CA0EC8
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3FBC87FCB
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjoqs-0006BX-32; Thu, 29 Aug 2024 19:46:54 -0400
+	id 1sjorp-0001wk-GD; Thu, 29 Aug 2024 19:47:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sjoqq-000645-1Q; Thu, 29 Aug 2024 19:46:52 -0400
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
+ id 1sjorn-0001of-M5
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:47:51 -0400
+Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sjoqo-0004eT-FQ; Thu, 29 Aug 2024 19:46:51 -0400
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-8430670f247so350958241.0; 
- Thu, 29 Aug 2024 16:46:49 -0700 (PDT)
+ id 1sjorm-0004hG-0S
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:47:51 -0400
+Received: by mail-ua1-x92a.google.com with SMTP id
+ a1e0cc1a2514c-846bdc20098so7496241.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 16:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724975209; x=1725580009; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724975266; x=1725580066; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/YzhvPajGjsKerUyziCDusDULFqTyAakcHBnOHoj3dI=;
- b=FIGhweSVb6pfVstQjJ+ND2bxchUVZiOAUkPqzmvmIAnI9Orys1qVtWl43dU7G1qG2r
- 9cjFB+Xs35C/ErwCscnOcQyy0clVZkYtUn2OKo2Kg6SOiJPPv7dW9cfueCBFUVNkg+xY
- V/Fwu/XSblQYhgn9eRi1UavreFcH9kJlYLLDxPRYpnsUB4Bm+WSExcvu/Sj+E8PQVC/w
- XAWseDK7U9/jV5oBwtAD9LKRXJQYjqp6/Uc/cZCRSzKOcENLQhqlrzggjQBnYUD5kvUd
- dRtBqWdQqVFMiP1w7lTbLXwHp7q4YWQRWYtQTPV0hQjJC4bETIw4DJ3L1loOrGmhOX6a
- 4eOQ==
+ bh=a6xFt0V//u3BPnOQ9ZFSxYl6jkcPRCehUOAYOMbVY0o=;
+ b=Q58l+BoziKeRg+YiLgnnDjKKH4ZMCAhGAqZcfEUZfOEKa1liFSw/2yms92uJtJejSs
+ 2EGrmeAg2MGaM/e8kXEf87MWeaT4L1uRqPr3fWmAokbyJcPn7R0245n7b5k4w9GreLCf
+ Pxl3fx7O3VnKWp689ULGuYN23WgK8R/XPACgENViKX3jW6IwLr3S7UQH24+DJDOO0Wum
+ jvVgueN2oWOSasTFrTQki3j8BRbZid9kDy5aWdx5B8KoT73DXGnamIHOe2RxZjinoJKG
+ LDS0fTOQiZE2o6blz0PQRv4zt+8/eUWz+HbwFUbz5tsupc+829mL6pT6w06IWVZXoSMK
+ 9RPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724975209; x=1725580009;
+ d=1e100.net; s=20230601; t=1724975266; x=1725580066;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/YzhvPajGjsKerUyziCDusDULFqTyAakcHBnOHoj3dI=;
- b=ZS2Okrls+YlQZWcJL12bEtA/KM59k2FfjlzFu7Jy7DXW8DYcmb7CHYxH+b0DNaqzEm
- Q0WOZAtGriSdROxPSSaVxlcVdGB/3pVe/rOIP1+3GuivupNLMaCE+klGZ18XEichLXgD
- uponwSBs2ThgF5QfJ8zYka8ySQlnNIxTq7x7OPn9wxuAsTvJyKgGPXoan0qPL+ILW1zR
- zZ6qq01AGQZMDVDThEYC7wGvqbbs16Tg/lbVLIbCinbIPwF29s4kWhAzFQgZt/czQIWr
- XkxDl93p5exebGebLyWt3cs2aMRXyUE/4Od6aJc5tzctw46xbe470aOnV6LxSXnx++UP
- RFQQ==
+ bh=a6xFt0V//u3BPnOQ9ZFSxYl6jkcPRCehUOAYOMbVY0o=;
+ b=T3rtOI7Epqod/N9VlHqwMoI32LF2OIg2+nZ83jEFSqCjHwFDRlIONhR2PWiuogq0pQ
+ jvG7XG3ETmMrov4tVSKMnbWhlzSH+Shwz9cCSu2vYhLYuHYQqaro+vP6QqYpV5Lo5EwX
+ S4Qj7WZlg5HUGQd+MjPHKmyN1rXxFS2/H14L+N9QnKk7Pe6MtT8mfxYv1KnzuoN7KMtf
+ P1IwlSAg/H4Odi2VI6jh4oFSLK9kJFrZNd5Oz2Qy+vpDEw7L1ubnMoaafp3WQakmQn3c
+ sXahJhC4ZUMk7QMs1jX9GDZNglylE0hwCa3AYryvvIE0yDiAgC3D0UdtqCYT0fueke7q
+ OMdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXtOnQJ/Gsp6dUUE0zH25X1xlMsvI5hj3KQM25pfG9S6SSZ1Flf85KRExbiQ5J7vBfs+EU3SYwMJfhU@nongnu.org
-X-Gm-Message-State: AOJu0YwVVdEcZ2vdqkvlb0h4Z7/1TbWEBAfzYoEjXEOSuyB4iCUvurSH
- CIysP3K41fzJjYGPS8PVXkzvaKUSWE8FMIuQKTEcDbxLieCZbQrHIgzBV9JVD5eCAvvKM/O7K6N
- P/bxdGvIQmXOaCJjSR837upixJxM=
-X-Google-Smtp-Source: AGHT+IG+2iEotchdvSQmQMiFs6RRS+s5o/yhiiSgnLZPBRDPmfm3sFg+0XBTSE9OQpPF79PoQrLi6AgYLf6M660QSuA=
-X-Received: by 2002:a05:6102:5492:b0:493:c95b:4c15 with SMTP id
- ada2fe7eead31-49a5afcd492mr5913635137.0.1724975208890; Thu, 29 Aug 2024
- 16:46:48 -0700 (PDT)
+ AJvYcCVRTW5iBTKJvhEPzkXwiKkooj917KKmFuYsvkeSALm8kWbR+GTjXFuKEdFDyMQli21Q7KO8RDbVpdj7@nongnu.org
+X-Gm-Message-State: AOJu0Yyb+Bakgcp0qG75MqzSPO61SYE1Cs5Ry+EF53FiCSttOKHWJzHF
+ lHxleS1gsuU4HYiex/4RSfMg2f0VRPcVDEuQwolkvAhDATJ0IVOhf57Pn2c6uFfg5Z+sZisQV+3
+ YuxIcO67CMKIM4ei4AbolsaIpIew=
+X-Google-Smtp-Source: AGHT+IEYNYzKc7EKKkEqYp1Bf5rx/5GthTNUaHh3vMfFJjgcFm3nWtCFK5n0EXQQhfLLp3bOxC0RIlU7wOUu2JzKQE0=
+X-Received: by 2002:a05:6122:3190:b0:4f5:23e4:b7c with SMTP id
+ 71dfb90a1353d-4ffdc04f272mr4769108e0c.0.1724975266204; Thu, 29 Aug 2024
+ 16:47:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240829084002.1805006-2-ajones@ventanamicro.com>
-In-Reply-To: <20240829084002.1805006-2-ajones@ventanamicro.com>
+References: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
+ <20240828122258.928947-2-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20240828122258.928947-2-mark.cave-ayland@ilande.co.uk>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 30 Aug 2024 09:46:22 +1000
-Message-ID: <CAKmqyKNb4T1NFv1NxQgHoeT0Ou=cwXU2guKaH0W3MhQH1z0DYg@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Stop timer with infinite timecmp
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Anup Patel <apatel@ventanamicro.com>, palmer@dabbelt.com,
- alistair.francis@wdc.com, 
- bmeng.cn@gmail.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, atishp@rivosinc.com
+Date: Fri, 30 Aug 2024 09:47:20 +1000
+Message-ID: <CAKmqyKPg7JaFaNyZtaAcdQHYy-JqdO+QBF5ragY6kC7WdkCU4Q@mail.gmail.com>
+Subject: Re: [PATCH 1/9] fifo8: rename fifo8_peekpop_buf() to
+ fifo8_peekpop_bufptr()
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: philmd@linaro.org, Alistair.Francis@wdc.com, tavip@google.com, 
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,49 +95,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 29, 2024 at 6:40=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
-om> wrote:
+On Wed, Aug 28, 2024 at 10:25=E2=80=AFPM Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
 >
-> While the spec doesn't state it, setting timecmp to UINT64_MAX is
-> another way to stop a timer, as it's considered setting the next
-> timer event to occur at infinity. And, even if the time CSR does
-> eventually reach UINT64_MAX, the very next tick will bring it back to
-> zero, once again less than timecmp. For this reason
-> riscv_timer_write_timecmp() special cases UINT64_MAX. However, if a
-> previously set timecmp has not yet expired, then setting timecmp to
-> UINT64_MAX to disable / stop it would not work, as the special case
-> left the previous QEMU timer active, which would then still deliver
-> an interrupt at that previous timecmp time. Ensure the stopped timer
-> will not still deliver an interrupt by also deleting the QEMU timer
-> in the UINT64_MAX special case.
+> This is to emphasise that the function returns a pointer to the internal =
+FIFO
+> buffer.
 >
-> Fixes: ae0edf2188b3 ("target/riscv: No need to re-start QEMU timer when t=
-imecmp =3D=3D UINT64_MAX")
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/time_helper.c | 1 +
->  1 file changed, 1 insertion(+)
+>  util/fifo8.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 >
-> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-> index 8d245bed3ae3..bc0d9a0c4c35 100644
-> --- a/target/riscv/time_helper.c
-> +++ b/target/riscv/time_helper.c
-> @@ -92,6 +92,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMU=
-Timer *timer,
->       * equals UINT64_MAX.
->       */
->      if (timecmp =3D=3D UINT64_MAX) {
-> +        timer_del(timer);
->          return;
->      }
+> diff --git a/util/fifo8.c b/util/fifo8.c
+> index 1ffa19d900..61bce9d9a0 100644
+> --- a/util/fifo8.c
+> +++ b/util/fifo8.c
+> @@ -71,8 +71,8 @@ uint8_t fifo8_pop(Fifo8 *fifo)
+>      return ret;
+>  }
 >
+> -static const uint8_t *fifo8_peekpop_buf(Fifo8 *fifo, uint32_t max,
+> -                                        uint32_t *numptr, bool do_pop)
+> +static const uint8_t *fifo8_peekpop_bufptr(Fifo8 *fifo, uint32_t max,
+> +                                           uint32_t *numptr, bool do_pop=
+)
+>  {
+>      uint8_t *ret;
+>      uint32_t num;
+> @@ -94,12 +94,12 @@ static const uint8_t *fifo8_peekpop_buf(Fifo8 *fifo, =
+uint32_t max,
+>
+>  const uint8_t *fifo8_peek_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *nu=
+mptr)
+>  {
+> -    return fifo8_peekpop_buf(fifo, max, numptr, false);
+> +    return fifo8_peekpop_bufptr(fifo, max, numptr, false);
+>  }
+>
+>  const uint8_t *fifo8_pop_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *num=
+ptr)
+>  {
+> -    return fifo8_peekpop_buf(fifo, max, numptr, true);
+> +    return fifo8_peekpop_bufptr(fifo, max, numptr, true);
+>  }
+>
+>  uint32_t fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen)
 > --
-> 2.45.2
+> 2.39.2
 >
 >
 
