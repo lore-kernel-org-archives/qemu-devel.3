@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 776E2CA0EC8
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624A3C87FCB
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjofQ-0004Pv-3x; Thu, 29 Aug 2024 19:35:04 -0400
+	id 1sjofI-0003xZ-77; Thu, 29 Aug 2024 19:34:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sjofM-0004ER-KR
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:35:00 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1sjofF-0003nS-5g
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:34:53 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sjofJ-0003E4-5Q
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:35:00 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2d41b082ab8so923345a91.3
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 16:34:56 -0700 (PDT)
+ id 1sjof4-0003AN-Sn
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:34:52 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2d3b595c18dso1633415a91.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 16:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724974496; x=1725579296;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724974481; x=1725579281;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6cUqXMdRltulPpZ8kSqOomp97N4/g9EkAE49D3ogDzs=;
- b=rohHYY4q/PMg3sSOmylLy+68xg9ZLOPaEbO8ZDF38l59DehWzK0fgaOApOHra7GUiK
- NHnLfRSrMfAkddZToX+3716HxUkcXgDIayr8rdzHruqQwk2glk7KJq1TaUc9unPUmn/3
- u/3bRsryLy9dYUkHAqHfPZ4SRBEBozPvpSNvK/5aoBgBmMDyYSkEfAJSd/qJGZ2izCpb
- YLKRth8b6k4nmq6wbbA+X/M8MyO9OH8ZhVTgUA0thoFY4ct9+H0E5l6OnzLgMEfDo9l3
- 43G8m8rXhGNzkaeKZHZT6I6O2/Y0VVGmo8jGdgzxZB/iZSusSnYpsQq7KuZ8kh+O3VUU
- mDUA==
+ bh=tVrxnpz839aLLYnBnHuqeTltn+xpAuxyl7GsFPJsO10=;
+ b=KVB/XD2kt6m0QP6VtLzKJdt/AKEG0/Mv5GVk+OklQg5d5LcP/F7iBMqxhD77kheGHC
+ CYxrJukDgg0CbsEpnx+VkJhm3un6U9iYfRhZnlWRaQdDLqySOC44vTLx1ab/OduPjzWD
+ ddWM9SfbpHetyOYU2YpEDB2ycPEUb/awj5NxVPOLicS3QSoK2t5p7R7qVGMA0BkNIe1S
+ OByk1FWa4UNfoxQ+bKxLXah1Mh5NXYJPTCUwPWO29B+rjMzCli8XEQOcVW4YOXIqTg0U
+ CzUKDMZRxSxrIbWzLgKAtFYVFaad2ZIrvlhult373auGLE1l6rTOODnH93lanjzbMzYn
+ Wmmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724974496; x=1725579296;
+ d=1e100.net; s=20230601; t=1724974481; x=1725579281;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6cUqXMdRltulPpZ8kSqOomp97N4/g9EkAE49D3ogDzs=;
- b=oczUKY9tFtkp3RzuwsxQAlwZMgQyraTFpM5IkLjcSOEOymIyneVdw1nBNbjNtGoOyl
- hBQ3d6P/qK4P17NgAiGLYYB0G47f3b4S+U+jQwLwp49raBoSU3H8AYf4/6ZeI2KOPrad
- Na6tV6JNCevpxzA6GqZPoPmcCjiXGmohDcKAAEDE1E4pB1VDfm9mlvE9Jsh+SQA3N64Y
- KEMZjCbdLh51l/vrUhW2Bt5pNm7mJUwRoXuwMCvx22PRCkT5kcXG8WV4nzEC8Mb/yWY3
- sjcHbjaaarUhHbMar5b1B/hAZnEsMwUgHSAaKL7DGmlK4cUF/3Ft+goYX0yJ/dPKm7uL
- 0z0g==
+ bh=tVrxnpz839aLLYnBnHuqeTltn+xpAuxyl7GsFPJsO10=;
+ b=Q7Vr01l0QxHEY7otMk/VzmDtJb9m1T+gm0ntgPqfXFRuT9wJdgI2cJacsv8yqjmINa
+ Rie0C2dgZjhX2TUsCL/dNZgNA55fRGmLT2ss4uaPzHF2LdplJZkJjRCPeEdkuVIqHor+
+ JdPbbVN1Y90r4tQNvjZiAqQgxCFfiFHYoM+Ranai8FQ3A96AFw40bn1I5oZMpEzW9dah
+ 7WpFTzSJf8fO+TYezKu2DcmtNqc8sDH+bDq/uCmrAPWqWtdKbsXvJ16GdTohiQ7jSBbw
+ tHK3HC/fVA9rhOFHbQhLxpo4DaCS4po4XPe9ewZT82hQeXxUQsc7Xsa6VkZc2QIRluEJ
+ nJDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfiFUmo1l232z/rvphpjVpLVBmjm9K5LZc1KqthMKaaQaZstm1XOHvh8rsR67DR9c2TL7uCHKeGYCE@nongnu.org
-X-Gm-Message-State: AOJu0YwnaEfiLFjBopmTS3Lc1VrZxBPGG3Hh0TC4q+o1mIVKUaFjN+mX
- DJNZW7Vn2W8FdJ5gcyJTrfGb6ybe8TMTUft6cIpAGuWQbwCz1SOcRI+xd4hjENE=
-X-Google-Smtp-Source: AGHT+IG/81XX7KdKF0rgAA74hg6IEqxeMr5FgDelm+F7lPrwoka2wnH9B8cgB/WmiGKG1d5nm5Bn0Q==
-X-Received: by 2002:a17:90b:1e4d:b0:2d3:da82:28e0 with SMTP id
- 98e67ed59e1d1-2d85617e3fbmr4497947a91.9.1724974495593; 
- Thu, 29 Aug 2024 16:34:55 -0700 (PDT)
+ AJvYcCWa8z1Fa2I6ufhp5LZXf4oxGlCZ4kyegxd1gRbXFOvV2pCXmz1H5bOaOGFWOf+25G4xjM8SMWBxrv4h@nongnu.org
+X-Gm-Message-State: AOJu0YxywzvtLeITgnYNv7zqeO2ROX/yfhpZKwaApPFMzlJUjB4ZI7ID
+ aMvYt8OZ2tV+aLkxLJQKUFo4FtWFnNhovQoN/MZ+3Z1FmyoYeniVdczZcWvb29Q=
+X-Google-Smtp-Source: AGHT+IHOzePZe/EpnOnHVaSSN8/mia56d+9nDGEozYX0PGWueybh60OW0A+m7g3zI8UqiFCq0J2Q8w==
+X-Received: by 2002:a17:90b:1c03:b0:2ab:8324:1b47 with SMTP id
+ 98e67ed59e1d1-2d86b00d063mr717737a91.15.1724974481406; 
+ Thu, 29 Aug 2024 16:34:41 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d85b13df55sm2331074a91.27.2024.08.29.16.34.54
+ 98e67ed59e1d1-2d85b13df55sm2331074a91.27.2024.08.29.16.34.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Aug 2024 16:34:55 -0700 (PDT)
+ Thu, 29 Aug 2024 16:34:40 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -69,17 +69,17 @@ Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
  zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
  kito.cheng@sifive.com, Deepak Gupta <debug@rivosinc.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v12 20/20] target/riscv: Expose zicfiss extension as a cpu
+Subject: [PATCH v12 09/20] target/riscv: Expose zicfilp extension as a cpu
  property
-Date: Thu, 29 Aug 2024 16:34:24 -0700
-Message-ID: <20240829233425.1005029-21-debug@rivosinc.com>
+Date: Thu, 29 Aug 2024 16:34:13 -0700
+Message-ID: <20240829233425.1005029-10-debug@rivosinc.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240829233425.1005029-1-debug@rivosinc.com>
 References: <20240829233425.1005029-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=debug@rivosinc.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=debug@rivosinc.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,14 +108,14 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c5ebcefeb5..2592465e24 100644
+index 55754cb374..c9aeffee4e 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -1485,6 +1485,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+@@ -1481,6 +1481,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     /* Defaults for standard extensions */
      MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
      MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
-     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
-+    MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
++    MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
      MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
      MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
      MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
