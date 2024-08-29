@@ -4,86 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B5DC71151
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 05:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A11B2C7115D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 05:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjXtD-0000Uw-ER; Thu, 29 Aug 2024 01:40:11 -0400
+	id 1sjXzy-000588-SA; Thu, 29 Aug 2024 01:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sjXtB-0000U8-T4
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 01:40:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sjXt9-0006HJ-Sl
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 01:40:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724910005;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=egbMFc3XGtWxfPSy30sQ2UCmCGy+Sptw3QR5D0ZjpDs=;
- b=CFxHO1Am0QmXvvB8IqdC8x8aDwA1QAeEWnQ/B0NyJUZGjWi7w7BpoolKJn9RcM5yMHqaQT
- y0voP1dFOHrq+A7kO2rrRSZSDgrgeCwQlZvkVzvTHcSTffr+gzGqJl0tUUwG+LA2saUzsZ
- XG5rTl/cLWwT4HLbD4q9qW8zmVsqjGY=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-Zyh_pIv-PAKjL2byZk2nsw-1; Thu, 29 Aug 2024 01:40:03 -0400
-X-MC-Unique: Zyh_pIv-PAKjL2byZk2nsw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42bb5950d1aso2987345e9.2
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 22:40:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sjXzt-00056b-BD
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 01:47:05 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sjXzp-0006hl-Hu
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 01:47:04 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2d3b5f2f621so189347a91.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 22:47:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1724910419; x=1725515219;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=u3FSzHTIyXcfHIxGCRaEHpptSHk8E5Ni4Ck22whaWa8=;
+ b=p3YSiEiUjeSUwtb00fJ2D33ogT/gEiwHwk1eddwaP4o6S4hQcJETW4HasDINTtzOt0
+ +o4saMYM9Y4FjK6XlB3ug7PnKWyueYNeCeImUYxf6iqM4moEkRafeRBY5MNP7Iu6Gj/z
+ zkcq8pcQdoM1pN2TRrX/+e09jWMJd1xeSL4vk6DrzTI44TFqo5uHi/bMBCLWJxM6LIQf
+ 9evf4OSBExPcdaiHKad3XXc+MPqY8W42IaUZpz9yXocO40s5rS4iJ39k/SWcKmD5Af2H
+ WVQ0kBlSwpVfYDMGq7R3TFPW45F0OYLGdfCWdt7tPaSa7RCw2m1Z+BasDvYOBEuao+EF
+ uptg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724910002; x=1725514802;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1724910419; x=1725515219;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=egbMFc3XGtWxfPSy30sQ2UCmCGy+Sptw3QR5D0ZjpDs=;
- b=u1IM00ZpjyXyy5ots6TDyYpCn2JRZuORA80eysKXezBDZhpQnQa8RecpE5UrKsZ59t
- BhTrS3QMCbKCne5h7sJ1Ll5y+0NDt6REoUL156SIgjQa/hfMv5otewrN2aQ6LLElQ47g
- wOavRIuOghpW0QcicpglETCv6BhOm3ejxeqrTB5uS9iQJbBeiy0+wGHE4b3KcNJx4xLq
- P3rqTRrAL2bT6EVW/oDQ/UDQnpRi/Aa/ABEScCcDype44FYfWCvBhjXSm+K/OdUs9PyY
- L99XN16IsySHd61L445h+0FtTWwG8txw5Dez4prE0fMmcW1aP9L0IQcoDKhKYFIeK4pC
- 5q6A==
-X-Gm-Message-State: AOJu0YyyBy98TW3i8FvkyhaZOhKhM/C7t8yLnx1yfHmIBG8y3PYPs7K8
- 3vPlCGkl0j5QkO8t+AbtRL1OlO4Pezt06ulZqwrUuBqhvTuRhOWaoWAvx3j6usEKU5VHxX++ro2
- jy64E75jaxZc0rSBChW18kKj7IwMtW/Eddjs8DqcDahhwjYb65wiuXs5h0BtDfFRzrZwdkZNnp0
- wdU/t5DxhHf4AvMREq4n2yvVOWo9E=
-X-Received: by 2002:a05:600c:1d9d:b0:429:d43e:dbc3 with SMTP id
- 5b1f17b1804b1-42bb020b7efmr16591325e9.34.1724910002281; 
- Wed, 28 Aug 2024 22:40:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlat3RbD8smJi4abv8XIBG6rDGkS/xvM2Etlzuw36D9KDtKjQFALY+2Ab7JIkQAPHAT3glWvJzJBG4rdMq6hg=
-X-Received: by 2002:a05:600c:1d9d:b0:429:d43e:dbc3 with SMTP id
- 5b1f17b1804b1-42bb020b7efmr16591125e9.34.1724910001809; Wed, 28 Aug 2024
- 22:40:01 -0700 (PDT)
+ bh=u3FSzHTIyXcfHIxGCRaEHpptSHk8E5Ni4Ck22whaWa8=;
+ b=uLmYrSnte149YBR1jmhTkocd5xDH/VAJIzhgdUKRXl5OPp0s6DPwdOzuxa7ENSa8XE
+ v39NX/xfxezuOF2tK+bsduYmKgon9LM21AIADjWFVuZGKIidmGz4wuraAAs7gGBQX/mL
+ 882klxoXMmwTsNUhgeHWDVGeV8Uw7WZZt8SHRjceZ9ume++reoyx7MaePvT6URrq/0Zu
+ j3lURM5sHQn8eGnUy69XBdR2PPNVdjOM3DjJl7bbVNsnC7VLILnPgANLj4GVvdwwv6Lv
+ 1Z0caByEf8Ih/FKiOl5MFNqJv/3wke5v0gSFgGOi8jlBVAjdsOHQCrs63X3V98CjcuwN
+ OqbA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXR6jbGmPVWWwNQkFqEmDsqHZyrG9bkQxMzkpzYDPB7DgzSXXyn17Xl68OaVrJqdHZxLcGPfD02Ysye@nongnu.org
+X-Gm-Message-State: AOJu0YxgTNWMt8GHS820wOjq269GMHcrI4W15ke4IjZ8cI9Not1Vmu8Z
+ T7KspAYvj/vW7sWV1VvecZPjxlmMgZmCGHubiMI/vDXeK/RhHGFDyk8lc18cmqQ=
+X-Google-Smtp-Source: AGHT+IGVpmY4OdK34c6uPFSPLSDrHHXmZuvci/qD+Anv933tFTIOOerTzezM8zKAhaUsI5SmqgQ1mg==
+X-Received: by 2002:a17:90b:1c05:b0:2d4:924:8891 with SMTP id
+ 98e67ed59e1d1-2d8564a502bmr1672252a91.38.1724910418634; 
+ Wed, 28 Aug 2024 22:46:58 -0700 (PDT)
+Received: from localhost ([157.82.202.230])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 98e67ed59e1d1-2d85b39ced8sm497434a91.46.2024.08.28.22.46.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Aug 2024 22:46:58 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Thu, 29 Aug 2024 14:46:48 +0900
+Subject: [PATCH] docs/devel: Prohibit calling object_unparent() for memory
+ region
 MIME-Version: 1.0
-References: <20240828100914.105728-1-ppandit@redhat.com>
- <20240828100914.105728-3-ppandit@redhat.com>
- <20240828071343-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240828071343-mutt-send-email-mst@kernel.org>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 29 Aug 2024 11:09:44 +0530
-Message-ID: <CAE8KmOyyUBSebh62_zdMyXWEZK+uUyx28Pe-aU-0E9d-upOWTg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] vhost-user: add a request-reply lock
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, jasowang@redhat.com, 
- mcoqueli@redhat.com, peterx@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAEcL0GYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDCyNL3dzU3PyiSt3ktBTj1FSDxDQTkxQloOKCotS0zAqwQdGxtbUAkeZ
+ CH1gAAAA=
+To: Peter Maydell <peter.maydell@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,26 +112,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Aug 2024 at 16:45, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >  - Place QEMU_LOCK_GUARD near the vhost_user_write() calls, holding
-> >    the lock for longer fails some tests during rpmbuild(8).
->
-> what do you mean fails rpmbuild? that qemu with this patch can not be compiled?
+Previously it was allowed to call object_unparent() for a memory region
+in instance_finalize() of its parent. However, such a call typically
+has no effect because child objects get unparented before
+instance_finalize().
 
-* In V1 of this patch, QEMU_LOCK_GUARD was placed near beginning of
-the function. But that caused some unit tests to fail reporting
-TIMEOUT errors. In this V2, QEMU_LOCK_GUARD is placed near
-vhost_user_write() calls, to reduce the time that lock is held.
+Worse, memory regions typically gets finalized when they get unparented
+before instance_finalize(). This means calling object_unparent() for
+them in instance_finalize() is to call the function for an object
+already finalized, which should be avoided.
 
-* Both (V1 & V2) compile well, but fail at '%check' stage while
-running unit tests (on some machines), ie. rpm package is not built.
-rpmbuild(8) on F40 machine failed, but koji scratch build with the
-same SRPM worked fine. Those scratch builds are shared above. RHEL-9
-SRPM built well on RHEL-9 host, but failed to build on F40 machine
-reporting failure at '%check' stage of rpmbuild(8).
-
-Thank you.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-  - Prasad
+ docs/devel/memory.rst | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 69c5e3f914ac..83760279e3db 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -168,11 +168,10 @@ and VFIOQuirk in hw/vfio/pci.c.
+ 
+ You must not destroy a memory region as long as it may be in use by a
+ device or CPU.  In order to do this, as a general rule do not create or
+-destroy memory regions dynamically during a device's lifetime, and only
+-call object_unparent() in the memory region owner's instance_finalize
+-callback.  The dynamically allocated data structure that contains the
+-memory region then should obviously be freed in the instance_finalize
+-callback as well.
++destroy memory regions dynamically during a device's lifetime, and do not
++call object_unparent().  The dynamically allocated data structure that contains
++the memory region then should be freed in the instance_finalize callback, which
++is called after it gets unparented.
+ 
+ If you break this rule, the following situation can happen:
+ 
+@@ -199,8 +198,9 @@ but nevertheless it is used in a few places.
+ 
+ For regions that "have no owner" (NULL is passed at creation time), the
+ machine object is actually used as the owner.  Since instance_finalize is
+-never called for the machine object, you must never call object_unparent
+-on regions that have no owner, unless they are aliases or containers.
++never called for the machine object, you must never free regions that have no
++owner, unless they are aliases or containers, which you can manually call
++object_unparent() for.
+ 
+ 
+ Overlapping regions and priority
+
+---
+base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+change-id: 20240829-memory-cfd3ee0af44d
+
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
