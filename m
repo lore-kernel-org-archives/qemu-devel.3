@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9629CC83F14
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73EE4C83F15
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:51:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjeTe-0003oF-08; Thu, 29 Aug 2024 08:42:14 -0400
+	id 1sjebS-0008OE-QI; Thu, 29 Aug 2024 08:50:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1sjeTc-0003mx-EZ
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:42:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1sjeTa-0002Jn-9U
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:42:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724935327;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KinHDoTY8381XuZJbNAoUrDrAhM14Dx8wVvPEn3gxXc=;
- b=J3QSgkP+LZ4Leqrxq19qmownjo50IeqDho2W7RfPUXkU8rSa0QvUFOy+ifFLIlOqGzfH0P
- l8CyQHZsWCMCNVuLnUW5u0/fwAxkzJSvglglKabXPuiI12pcNu4AfuTvJO/rvl0mLcfdrl
- pCbR7VY0eZ9QYcSCRUJJf3x9LPVfgO8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-0bvsNz-UMhOf3XFYu0dF1g-1; Thu,
- 29 Aug 2024 08:42:02 -0400
-X-MC-Unique: 0bvsNz-UMhOf3XFYu0dF1g-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE19D1955BEE; Thu, 29 Aug 2024 12:42:01 +0000 (UTC)
-Received: from angien.pipo.sk (unknown [10.45.242.24])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DECF19560AA; Thu, 29 Aug 2024 12:41:58 +0000 (UTC)
-Date: Thu, 29 Aug 2024 14:41:54 +0200
-From: Peter Krempa <pkrempa@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-devel@nongnu.org, devel@lists.libvirt.org,
- Michal Privoznik <mprivozn@redhat.com>
-Subject: Re: [PATCH] chardev: allow specifying finer-grained reconnect timeouts
-Message-ID: <ZtBsktBwDRgGj6lD@angien.pipo.sk>
-References: <20240816100723.2815-1-d-tatianin@yandex-team.ru>
- <87v7zjleys.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjebR-0008NH-GM
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:50:17 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjebP-0003OV-KT
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:50:17 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a866cea40c4so69090066b.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 05:50:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724935813; x=1725540613; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2wRSRQffSI3jvGx4sR+FNXzobzhljUOnvnpFox4nMKE=;
+ b=RwtSw+I1ZuCa3XwzZBIdEMDDwFwcmwYgmTr3UP/LWxcrbi2M4Ro1IuhaU1lLXNDtCz
+ qp7vgOwTOukPjTIHdaBGMLjRnp91n2ZeJlczpS3a8nLiWP/W8jRu5CJSCxjw4F30legr
+ QRI0TT52UHFtyAvog+ODrlfeZNBSXtcDxELCAKGeoijwfKQUk2ESqlxfMKjrou/uQ+uq
+ HHaHJVQim/poyCLXrbviccJ9hQzOJ4+5/VaKHQ+cUj0yprRq2CA6E+WCmcgLmfeY8b/s
+ RqD9cA6VGm4SiznQ3PlhOeb06M9kfme37jQHdQZF77RCzWTk07eJxC6S6gXzNHMCgBkW
+ 3/Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724935813; x=1725540613;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2wRSRQffSI3jvGx4sR+FNXzobzhljUOnvnpFox4nMKE=;
+ b=sqOeaV3Sl39QsZQh2bsX9aHIZhl8JhIzQxQ8+ca0NWJl+08o+Y8KpvepwjeUuvG2eS
+ 2ikiyHE9vA+tyvMUIlo7O71nZKTO6rhGbYZI15Ha+6yaTK1YMlM8k+1CWu4LwkxmBWAC
+ oKj+KaYD6RK0GfU/hRLtgdCQbIvn3BgTOe6LPZwuTtBbM2ejIFpuGR6LvWBSXVbPFx2i
+ nZdmTKtYjDxz5GwKJb1CQ9fYLx14xvB1/X+1Bdi7O0RM/bJS3XZObFy0ZMpF2TDE6M6u
+ JY+Ddk3rAQRdJkOLTmxU8j20qsYJFdrzNuNDF6Pkkb1duvWTk7whNqM2XnFBTkxuLmxT
+ 1Cig==
+X-Gm-Message-State: AOJu0Yyvou1LD31OnblMT1TO+Vt4XX0sI2LfHveV//DEO8EooNgxldhD
+ fJpE2VQK6k1MP/HpesXVcmXPnUwy6mJrvRYLqq/r6d4OqV5Sazkd6O4oloZK9gxyRjfY7vVw3dm
+ r6PsZoKjcYM/YFh6XBw0w+c+V6mY8HMHY2bTTbw==
+X-Google-Smtp-Source: AGHT+IEsvJzLk6edFPQgUf+ojCTi7/5sj2WOgy5fdEQI6A0SdJv3GO12cTLoUXUSnczWoG++kPwdFK9IX/kAKi7q7Hw=
+X-Received: by 2002:a17:907:d8c:b0:a86:a30f:4b0d with SMTP id
+ a640c23a62f3a-a897f930927mr259336266b.38.1724935813430; Thu, 29 Aug 2024
+ 05:50:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <87v7zjleys.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240828005019.57705-1-sebastian.huber@embedded-brains.de>
+In-Reply-To: <20240828005019.57705-1-sebastian.huber@embedded-brains.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 29 Aug 2024 13:50:02 +0100
+Message-ID: <CAFEAcA-p+CBeKTgH-YXzrATKDpwG5iY+A3WGaVkbEeHCXxTzug@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/xilinx_zynq: Enable Security Extensions
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,84 +89,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 29, 2024 at 13:56:43 +0200, Markus Armbruster wrote:
-> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+On Wed, 28 Aug 2024 at 01:51, Sebastian Huber
+<sebastian.huber@embedded-brains.de> wrote:
+>
+> The system supports the Security Extensions (core and GIC).  This change is
+> necessary to run tests which pass on the real hardware.
+>
+> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
 
-[...]
+(Added the maintainers to cc.)
 
-So firstly, libvirt models the timeout in the XML in seconds for now so
-making use of this will require some XML design plumbing making use of
-it if there'll be any users wanting it.
+Does the system have any secure-only devices, RAM, etc?
 
-When libvirt would want to make use of this the amount of work for any
-of the options below is almost the same (capability detection, adding
-of the new plumbing, etc). The only difference is what to
-do if nobody shows interest in exposing the sub-second intervals in
-libvirt.
+How much testing have you done with this change? (The main
+reason we disabled has-el3 on this board back in 2014 was
+as a backwards-compatibility thing when we added EL3 support
+to the CPU model -- we didn't have a ton of images for the
+board so we erred on the safe side of not changing the
+behaviour to avoid potentially breaking existing guest code.)
 
-> > @@ -287,7 +292,8 @@
-> >              '*telnet': 'bool',
-> >              '*tn3270': 'bool',
-> >              '*websocket': 'bool',
-> > -            '*reconnect': 'int' },
-> > +            '*reconnect': 'int',
-> > +            '*reconnect-is-ms': 'bool' },
-> >    'base': 'ChardevCommon' }
-> > =20
-> >  ##
->=20
-> I don't like this interface.
->=20
->    PRO: compatible extension; no management application updates needed
->    unless they want to support sub-second delays.
->=20
->    CON: specifying a sub-second delay takes two parameters, which is
->    awkward.
->=20
->    CON: trap in combination with -set.  Before the patch, something like
->    -set chardev.ID.reconnect=3DN means N seconds no matter what.
->    Afterwards, it depends on the value of reconnect-is-ms, which may be
->    set far away.  Mitigating factor: -set is obscure.
+> ---
+>  hw/arm/xilinx_zynq.c | 8 --------
+>  1 file changed, 8 deletions(-)
+>
+> diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+> index 3c56b9abe1..37c234f5ab 100644
+> --- a/hw/arm/xilinx_zynq.c
+> +++ b/hw/arm/xilinx_zynq.c
+> @@ -219,14 +219,6 @@ static void zynq_init(MachineState *machine)
+>      for (n = 0; n < smp_cpus; n++) {
+>          Object *cpuobj = object_new(machine->cpu_type);
+>
+> -        /*
+> -         * By default A9 CPUs have EL3 enabled.  This board does not currently
+> -         * support EL3 so the CPU EL3 property is disabled before realization.
+> -         */
+> -        if (object_property_find(cpuobj, "has_el3")) {
+> -            object_property_set_bool(cpuobj, "has_el3", false, &error_fatal);
+> -        }
+> -
+>          object_property_set_int(cpuobj, "midr", ZYNQ_BOARD_MIDR,
+>                                  &error_fatal);
+>          object_property_set_int(cpuobj, "reset-cbar", MPCORE_PERIPHBASE,
 
-Here we'd have to do nothing.
-
-> Alternatives:
->=20
-> 1. Change @reconnect to 'number', specify sub-second delays as
->    fractions.
->=20
->    PRO: compatible extension; no management application updates needed
->    unless they want to support sub-second delays.
->=20
->    CON: first use of floating-point for time in seconds in QAPI, as far
->    as I can see.
->=20
->    CON: QemuOpts can't do floating-point.
-
-Same here.
-
->=20
-> 2. Deprecate @reconnect in favour of a new member with a more suitable
->    unit.  Error if both are present.
->=20
->    PRO: after @reconnect is gone, the interface is what it arguably
->    should've been from the start.
->=20
->    CON: incompatible change.  Management application updates needed
->    within the deprecation grace period.
-
-This one will require change to libvirt including a capability addition
-even when libvirt might not want to use the new field. (Add capability
-detection, switch to new interface if present. Libvirt doesn't want to
-use deprecated interfaces to avoid future breakage.)
-
-But we've done this multiple times so it's not a big deal.
-
-> Let's get additional input from management application developers.  I
-> cc'ed some.
-
-=46rom libvirt's point of view I'd say either option is viable. We're okay
-with deprecating the old interface libvirt is used to do that.
-I'd personally prefer if floating point numbers were avoided.
-
+thanks
+-- PMM
 
