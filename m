@@ -4,78 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E617C83F22
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19953C83F27
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 14:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjfKY-0002Jz-DZ; Thu, 29 Aug 2024 09:36:54 -0400
+	id 1sjfpc-0003fJ-HS; Thu, 29 Aug 2024 10:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1sjfKU-0002Bv-IT
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:36:50 -0400
-Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1sjfKS-0005yU-Dr
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:36:50 -0400
-Received: by mail-qk1-x72b.google.com with SMTP id
- af79cd13be357-7a7ff6c4fd0so41796085a.1
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 06:36:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1724938607; x=1725543407; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HsizXNqDD8qnmQZG2I43zdIYqv66eVGNpf0Lo0aMnRI=;
- b=C/WEW/l8xRtyG4g4phEFLv/5+M3+oGHMuo3l0pbn6owaI66AICz0qEDcp5Rc0dXYiz
- /79SCSNWdv71E2tuywJ3XmGXFGgdnEIGXOYhrsVLwMRfOZtk7AzMDiQJ08jKEuMLBpQB
- uXrfy310mombDd/UfUe00SSDcttOhHYdQCtWT3bSNrLhvd4DqzZZArDxdXX+5TM0Sqy4
- I2pRpnRKo5ILWiLWST1r2by6Wh9j8iHtlhcHQzkyJ/LQQ25OFgjgxMWLRdQRKZX42+DC
- gE2VEDCViFb6Pl04LxrZ3LnsOEroqxoa9avgMziNbfpIIYAMBOrkkQexSLGEy68PKF6x
- MT/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724938607; x=1725543407;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HsizXNqDD8qnmQZG2I43zdIYqv66eVGNpf0Lo0aMnRI=;
- b=nCR9YoZ8QbYX1Nq1D8j9IHWc38NfghhwIkK7ZhU2Y+s0DrPb9IZA3MPBYFNeBUSRlC
- I3Wgq8fe2Bk1Z5zW6nm3KFBuxsAkUk2EHSkbaDA5+rX3pcBQDfl89VRP1ew35Fk3nEOL
- pvgaJuXs0LQh5oSEATSliAHu/bmEWXYqYZ7wsLk12sl2uGCmv+wIiHvLKZuyhw2XH5MO
- cH34NPBhJk246Gm9O/AdCLLaev2fG34+cRuHu7HgmMFCCuuo/T3iP939UI3MmwAlXaNA
- QATpHsW17JfpnzQGGYZFNGhycFJMx5vo+pO5nB06A9CKjiEzu6TcCkjmExWNt0VXUKGV
- NTlg==
-X-Gm-Message-State: AOJu0YzCkH73a/Keb4/oYLIscmFMT+wTm2TKMPKyanWJTvM+P2HKTr6V
- uYJOeDRQlbHCME6HWlscPTV5V3m3TuRjTR2rJ/Kk7H7PExGRALMWXnZspFVPqLtUxRE+tggwew7
- +VkLcW/8mww8MaU/61bK4XGwsaloSSBr7deSvV4GvMqBeLGa+HA==
-X-Google-Smtp-Source: AGHT+IGVFT8AB1vL7n5VsdK/YLHUjq1tAQbjy6r6WnsjUhkSg8slmlIdw2+jo6pJEhDsxYEkGW02lTgpuPm092H8oy8=
-X-Received: by 2002:a05:6a00:2ea8:b0:70d:350c:757e with SMTP id
- d2e1a72fcca58-715dfb2db37mr3647845b3a.10.1724938595838; Thu, 29 Aug 2024
- 06:36:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1sjfpb-0003ep-HK
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 10:08:59 -0400
+Received: from mout.gmx.net ([212.227.17.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1sjfpZ-00067c-KB
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 10:08:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1724940530; x=1725545330; i=deller@gmx.de;
+ bh=po+BeAvk1qWDXDStescWLJtEyehZ1Bbho9bMkDl3DbE=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=kQC2XX/Fpn+vPYdv0KGyruCeVVoTdFprDbagNSRf9VBtgxNxltNiCBoorFfuUg/W
+ YpFO0KLKuL0Zd/sgtrfm119Va2+5zTgT8xqXfBTB4cqYSQUIayWDTAmvML0UupZwT
+ FjD7hFDp4txKqNZkRu5hjbCEqJp1j5f7TO/Com2aBDAMY5jdFPOvzEMIQuO/8WVPl
+ bSwex6b0xDmMnUp4BO/kEPzFKZ6+SdscbTFDKP7ONM6VJ/m3RYQHO+6vXFRiqByGF
+ KJevkMtaLg60Cxp7D8Tl34I89YHuUb1J+eTJ+R1pusd/uSrZvpMSFk0HzwQJPtAwr
+ 6ZJFDoN8Ac72p3i1MA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([109.250.63.126]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlw7f-1sK02r0gCJ-00kdIa; Thu, 29
+ Aug 2024 16:08:50 +0200
+Message-ID: <d61755ff-0d63-4865-8050-7fe441798bcf@gmx.de>
+Date: Thu, 29 Aug 2024 16:08:47 +0200
 MIME-Version: 1.0
-References: <20240715084639.983127-1-chigot@adacore.com>
- <42fe0e65-e1c1-47be-9ba1-9a43e4a05192@kaod.org>
- <CAJ307Eg_w1K63Q7YmsAw6mSnwgPrC9R2UOvi+fUDjam4n0mvDg@mail.gmail.com>
- <a0665964-ba34-4144-82fd-184f864d844c@kaod.org>
-In-Reply-To: <a0665964-ba34-4144-82fd-184f864d844c@kaod.org>
-From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Date: Thu, 29 Aug 2024 15:36:24 +0200
-Message-ID: <CAJ307Ei9fbWmhpDcqy1eukC4WSAhTgHLt+AKOb9V24j2kG9RbA@mail.gmail.com>
-Subject: Re: [PATCH] hw/ppc: fix decrementer with BookE timers
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: qemu-hppa-user: crashes immediately in hppa chroot
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+References: <Zs9am5fIuo3eXoKF@p100>
+ <b8fe65c4-c7ee-4f01-98df-65ff304a3eb2@linaro.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <b8fe65c4-c7ee-4f01-98df-65ff304a3eb2@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
- envelope-from=chigot@adacore.com; helo=mail-qk1-x72b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Provags-ID: V03:K1:UwXJyCYTGwJvRKeDwtTT8hl6+LNqgQZNYKQjAzefDiRSdl/HGft
+ mtSg9pLPyqt1QMD0/O35uY3Fgku9mxh9SUMsir80JCwiOeeIf3wkFTxzJpGbDNYXlkZfIW0
+ iRRdJpfaT76oi40xLWkt5AkGqeqOM15zS1UOq/Z/9do25C55AWm8GmGCBiN5khmUxyiEaiH
+ 9WMCo2sE5nPIlavmabrAw==
+UI-OutboundReport: notjunk:1;M01:P0:3L1juzigfaU=;haDSVZiiP0oss0kiqqr0A6dLxhc
+ vk1J9bXmai+NGdtV/c+0t6EU4nuXslxQmT8iiZ0wvgDlN1kqNCsGHsV0r4PRJqK0I2yCo/01M
+ b300m1VUFjVZ8JdLdArgJ9Y9C7+ob2W/Q5tSavO7DUB5ftNqNUz5uOFwykgD9570l2pWLETsB
+ Bx4e4b/Cu0RFiE5AhahRAPSV5AMx29UhfTBh42XaiSHJgYvjb9FLEgGXuFnROemFvatZOikv/
+ +klW4hUHSCtPe1kArIKEzWtXRa8RaGGxuojbEs+ZhWfE41MYqyj4Hclqb2YKcVAaFwV2OZAr5
+ CWDNmXxPNxJszVXMZvYQc2bVvrcVTx8nRoU2vMVYMkws9OlQrPDAfR574nHuX68SvNVP6QrHv
+ nsGaRYscnokBp+//oLaoChBtm73X3qoHqobuut7n2ywtFDFEgtQ8yqL9DKPOg7NZO2b6D5CQw
+ LHeIncbNFEg3a/u6ilMt8KZQibT2qs9gP/ucPqfeSfoqXZrxDV1/q1k18BEbZc76WDCtHQwRT
+ Xb119rsSWGtXKK1r8gar++cgvkbRZrjubd+mCtcG1/+7FLZJBxFPj3yWa8qN8K1f6NE8w/7yv
+ Sd1VENI27yNAGofq/KOHJR5fPG3/EwuAQbMvRY/N8Q2nsTlfiT3WfpbcHaUrA95vWU5hG02K8
+ jGtQvGok0vjmOIe8+L4LivMXuJGB8i63A2nDtP+p+YDGliVn+FKNTycj9OZyh2f94qXXkmq3q
+ /cs6SaVAVAsPHTnUYWtfZDq1WScVI2GD4HaE0Mkz/TxK1Nco3PR6C2rU8LfVcnFjUaqn0xbUV
+ HyIsiPZ71o9t2OPsaj9iiWcA==
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,67 +136,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 29, 2024 at 2:33=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod.org=
-> wrote:
+On 8/29/24 04:38, Richard Henderson wrote:
+> On 8/29/24 03:12, Helge Deller wrote:
+>> Hi Richard,
+>>
+>> I tested qemu-user from v9.1-rc4 for hppa and noticed that it crashes
+>> immediately when starting a hppa chroot.
+>>
+>> I was able to bisect the segfault back to
+>> commit 081a0ed188d8d9d9038f00337d331d185a7ae331
+>> Author: Richard Henderson <richard.henderson@linaro.org>
+>> Date:=C2=A0=C2=A0 Wed Mar 27 13:04:00 2024 -1000
+>> =C2=A0=C2=A0=C2=A0=C2=A0 target/hppa: Do not mask in copy_iaoq_entry
+>>
+>> This commit does not apply to git head any longer, but when I instead
+>> apply this (modified) patch the segfault vanishes:
+>>
+>> --- a/target/hppa/translate.c
+>> +++ b/target/hppa/translate.c
+>> @@ -664,6 +664,11 @@ static void copy_iaoq_entry(DisasContext *ctx, TCG=
+v_i64 dest,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const DisasIAQE *src)
+>> =C2=A0 {
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_addi_i64(dest, src->base ? : cpu=
+_iaoq_f, src->disp);
+>> +
+>> +#if CONFIG_USER_ONLY
+>> +=C2=A0=C2=A0=C2=A0 uint64_t mask =3D gva_offset_mask(ctx->tb_flags);
+>> +=C2=A0=C2=A0=C2=A0 tcg_gen_andi_i64(dest, dest, mask);
+>> +#endif
+>> =C2=A0 }
+>> Any idea or suggestion to fix it?
 >
-> On 8/28/24 09:21, Cl=C3=A9ment Chigot wrote:
-> > On Tue, Aug 27, 2024 at 7:40=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod=
-.org> wrote:
-> >>
-> >> Hello Cl=C3=A9ment,
-> >>
-> >> On 7/15/24 10:46, Cl=C3=A9ment Chigot wrote:
-> >>> The BookE decrementer stops at 0, meaning that it won't decremented
-> >>> towards "negative" values.
-> >>> However, the current logic is inverted: decr is updated solely when
-> >>> the resulting value would be negative.
-> >>
-> >> How did you hit the issue ? which machine ? I didn't see any error
-> >> when booting Linux 6.6.3 on mpc8544ds, e500mc, e5500 and e6500.
-> >
-> > I hit this issue while running some version of VxWorks on a custom
-> > machine: p3041ds (description [1] and our local implementation [2]).
-> > So, I'm not that surprised you were not able to reproduce.
-> >
-> >>> Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
-> >>> Fixed: 8e0a5ac87800 ("hw/ppc: Avoid decrementer rounding errors")
-> >>
-> >> LGTM,
-> >>
-> >> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> >>
-> >> We have some automated tests with the ppce500 machine which it would b=
-e
-> >> interesting  to extend to have a better coverage of booke.
-> >
-> > Thanks for the pointer, I'll see if I can extend them.
-> >
-> >> Thanks,
-> >>
-> >> C.
-> >>
-> >
-> > [1] https://www.nxp.com/design/design-center/software/qoriq-developer-r=
-esources/p3041-qoriq-development-system:P3041DS
-> > [2] https://github.com/AdaCore/qemu/blob/qemu-stable-9.0.0/hw/ppc/p3041=
-ds.c
+> More specifics are required.
 >
-> Nice. Do you have any plans to upstream the machine ?
+> root@stoup:/opt/chroot/hppa/sid# ./qemu-hppa -L . ./bin/echo foo
+> foo
 
-That was the plan. However, we are using that emulation in order to
-test VxWorks on PPC.  Recent versions have now officially provided a
-BSP for QEmu using ppce500 board. We are planning to transition to it,
-mainly to avoid having to maintain that P3041DS home-made
-implementation. Thus, I'm not sure we'll spend time on upstreaming it
-:(
-That being said, if you heard people being interested in that board,
-please do warn me.
+You need to build a static binary of qemu-hppa and register it with binfmt=
+.
 
-Thanks,
-Cl=C3=A9ment
+On x86 debian machine I do (as root user):
 
-> Thanks,
->
-> C.
->
+modprobe binfmt_misc
+echo -1 > /proc/sys/fs/binfmt_misc/qemu-hppa  # temporarily unregister hpp=
+a binfmt
+mv -f /usr/bin/qemu-hppa-static /usr/bin/qemu-hppa-static.old # save away =
+old to be able to copy new
+cp build/qemu-hppa     /usr/bin/qemu-hppa-static  # COPY NEW STATIC BINARY=
+ IN PLACE (you need to copy yours!)
+# register at binfmt:
+echo ':qemu-hppa:M::'\
+'\x7f\x45\x4c\x46\x01\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\=
+x00\x0f:'\
+'\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\=
+xff\xff:'\
+'/usr/bin/qemu-hppa-static:POCF' > /proc/sys/fs/binfmt_misc/register
+
+
+Then you should be able to chroot into your sid chroot and you should get =
+a shell prompt:
+chroot /opt/chroot/hppa/sid
+
+With git head this segfaults for me.
+
+Helge
 
