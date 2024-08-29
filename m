@@ -4,103 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2560C87FDA
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 20:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3336CA0EC0
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 21:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjlrp-0007gG-HI; Thu, 29 Aug 2024 16:35:41 -0400
+	id 1sjmGH-0005Jv-D4; Thu, 29 Aug 2024 17:00:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sjlrl-0007dm-Tq; Thu, 29 Aug 2024 16:35:37 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sjmGF-0005Iw-ES
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 17:00:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sjlrj-00083P-Mf; Thu, 29 Aug 2024 16:35:37 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47THePQo021195;
- Thu, 29 Aug 2024 20:35:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=N
- WZFRyYMhecImfWify7gj2O51ky/s8GmbQDoNEMcW5k=; b=Waz2vfGozxXLW5x3v
- B8IxPLlyyiihuaa/MexZjuZ0Ud5pHv7jsXd9CbJAkJyhtCykNZARTZbrWQBUp4Fz
- LZCCKXRiSEWlKvc3/0yxl96nkHBBDLjyPc++piATSn3G+Ee/X8d2LbGb62QGRYBC
- vZUsyBq8DQ/bwoS8ALO7TAAwijMOPWBEjBpQlFzjHg+M7BG53sxl9I6E/pc/xyZO
- lc8O6Pq0A0EgFbt9L+aM8h3Ss2XyATerhx2Hj9ZXldjyq0/8wioedoxk8w6PQywh
- 0WFfTp/rdmy71ZrnPTIL1CNNJsvVwWQqYYq9bgW8aIbuSu4k4E/Lbx6y68IVOB8q
- vzNeQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8p2dbm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Aug 2024 20:35:30 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47TKZUsH023699;
- Thu, 29 Aug 2024 20:35:30 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8p2dbk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Aug 2024 20:35:30 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47TJSlLg024622;
- Thu, 29 Aug 2024 20:35:29 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 417vj3pd21-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Aug 2024 20:35:29 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 47TKZS6J23069272
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 Aug 2024 20:35:28 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EAD8258059;
- Thu, 29 Aug 2024 20:35:27 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 819515805B;
- Thu, 29 Aug 2024 20:35:27 +0000 (GMT)
-Received: from [9.10.80.165] (unknown [9.10.80.165])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 29 Aug 2024 20:35:27 +0000 (GMT)
-Message-ID: <16bbfc74-e7c0-41b6-a91f-c2d121296986@linux.ibm.com>
-Date: Thu, 29 Aug 2024 15:35:26 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sjmGD-0002S7-OC
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 17:00:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724965251;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sfAFnlNc+GOS50bW+TfgK898NTsdmVrMOL0sDp/ItAQ=;
+ b=DWiSuv4LMfNKPccEp/+dHSApgLgtffpsWVOPQU6l3mLgpEibMDkaqUm/DVd8cpijq4byd7
+ Bv9el8MhsckwmoBsCK9WohsxWo0dBJUf9+B1qtfTbjb1ePwfOc/uWsQGz7j+4GCKZZTE40
+ 3CeWviKuUx5XxXB4DKVPnpCcmetJkp4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-iNDWMMx8OOmy0O69TbBrVg-1; Thu,
+ 29 Aug 2024 17:00:50 -0400
+X-MC-Unique: iNDWMMx8OOmy0O69TbBrVg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4CB281954B05; Thu, 29 Aug 2024 21:00:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.15])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD26A1954B01; Thu, 29 Aug 2024 21:00:45 +0000 (UTC)
+Date: Thu, 29 Aug 2024 22:00:42 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, afrosi@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] raw-format: Fix error message for invalid offset/size
+Message-ID: <ZtDha6yd9WQS6-lR@redhat.com>
+References: <20240829185527.47152-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/13] pnv/xive: Update PIPR when updating CPPR
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240801203008.11224-1-kowal@linux.ibm.com>
- <20240801203008.11224-12-kowal@linux.ibm.com>
- <5dad962a-0815-40b8-b62a-d0c67612fa5f@kaod.org>
-Content-Language: en-US
-From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <5dad962a-0815-40b8-b62a-d0c67612fa5f@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ZSxLouGNB5m6k7mD-Z_2haE8nEyEEuxY
-X-Proofpoint-ORIG-GUID: WxKxIaCw2vc6EZF4qG1AFA4sRsjEjOqv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-29_06,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 impostorscore=0 phishscore=0 suspectscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408290145
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+In-Reply-To: <20240829185527.47152-1-kwolf@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -116,108 +85,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Aug 29, 2024 at 08:55:27PM +0200, Kevin Wolf wrote:
+> s->offset and s->size are only set at the end of the function and still
+> contain the old values when formatting the error message. Print the
+> parameters with the new values that we actually checked instead.
+> 
+> Fixes: 500e2434207d ('raw-format: Split raw_read_options()')
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  block/raw-format.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 8/29/2024 7:29 AM, Cédric Le Goater wrote:
-> On 8/1/24 22:30, Michael Kowal wrote:
->> From: Glenn Miles <milesg@linux.vnet.ibm.com>
->>
->> Current code was updating the PIPR inside the xive_tctx_accept() 
->> function
->> instead of the xive_tctx_set_cppr function, which is where the HW would
->> have it updated.
->
-> Did you confirm with the HW designer ?
->
-> AFAIR, the PIPR is constructed from the IPB and the later is it updated
-> the better. However, if now, both PIPR (HW and Pool) are required to
-> identify the ctx to notify, I agree set_cppr() needs a change but what
-> about xive_tctx_ipb_update() which is called when an interrupt
-> needs a resend ?
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-This was fix to a bug and matches what  is specified in the XIVE2 
-architecture document CPPR flows (MMIO CPPR xxx processing).
-
-
->
->
-> Thanks,
->
-> C.
->
->
->
->> Moved the update to the xive_tctx_set_cppr function which required
->> additional support for pool interrupts.
->>
->> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
->> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
->> ---
->>   hw/intc/xive.c | 34 ++++++++++++++++++++++++++++++++--
->>   1 file changed, 32 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
->> index 5c4ca7f6e0..d951aac3a0 100644
->> --- a/hw/intc/xive.c
->> +++ b/hw/intc/xive.c
->> @@ -89,7 +89,6 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, 
->> uint8_t ring)
->>             /* Reset the pending buffer bit */
->>           aregs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
->> -        regs[TM_PIPR] = ipb_to_pipr(aregs[TM_IPB]);
->>             /* Drop Exception bit */
->>           regs[TM_NSR] &= ~mask;
->> @@ -143,6 +142,8 @@ void xive_tctx_reset_signal(XiveTCTX *tctx, 
->> uint8_t ring)
->>   static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, 
->> uint8_t cppr)
->>   {
->>       uint8_t *regs = &tctx->regs[ring];
->> +    uint8_t pipr_min;
->> +    uint8_t ring_min;
->>         trace_xive_tctx_set_cppr(tctx->cs->cpu_index, ring,
->>                                regs[TM_IPB], regs[TM_PIPR],
->> @@ -154,8 +155,37 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, 
->> uint8_t ring, uint8_t cppr)
->>         tctx->regs[ring + TM_CPPR] = cppr;
->>   +    /*
->> +     * Recompute the PIPR based on local pending interrupts. The PHYS
->> +     * ring must take the minimum of both the PHYS and POOL PIPR 
->> values.
->> +     */
->> +    pipr_min = ipb_to_pipr(regs[TM_IPB]);
->> +    ring_min = ring;
->> +
->> +    /* PHYS updates also depend on POOL values */
->> +    if (ring == TM_QW3_HV_PHYS) {
->> +        uint8_t *pregs = &tctx->regs[TM_QW2_HV_POOL];
->> +
->> +        /* POOL values only matter if POOL ctx is valid */
->> +        if (pregs[TM_WORD2] & 0x80) {
->> +
->> +            uint8_t pool_pipr = ipb_to_pipr(pregs[TM_IPB]);
->> +
->> +            /*
->> +             * Determine highest priority interrupt and
->> +             * remember which ring has it.
->> +             */
->> +            if (pool_pipr < pipr_min) {
->> +                pipr_min = pool_pipr;
->> +                ring_min = TM_QW2_HV_POOL;
->> +            }
->> +        }
->> +    }
->> +
->> +    regs[TM_PIPR] = pipr_min;
->> +
->>       /* CPPR has changed, check if we need to raise a pending 
->> exception */
->> -    xive_tctx_notify(tctx, ring);
->> +    xive_tctx_notify(tctx, ring_min);
->>   }
->>     void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb)
->
 
