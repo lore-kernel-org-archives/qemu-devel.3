@@ -4,133 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13B16C83F0A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AC21C83F0A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjdqQ-0006Xq-2u; Thu, 29 Aug 2024 08:01:42 -0400
+	id 1sjdwr-0004xA-Or; Thu, 29 Aug 2024 08:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
- id 1sjdqJ-0006S5-Sg; Thu, 29 Aug 2024 08:01:37 -0400
-Received: from mail-mw2nam04on20606.outbound.protection.outlook.com
- ([2a01:111:f403:240a::606]
- helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
+ id 1sjdwp-0004ux-Sw; Thu, 29 Aug 2024 08:08:19 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
- id 1sjdqH-0006CG-C5; Thu, 29 Aug 2024 08:01:35 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xx1CohYIaBuHtJMceGRpTCdO2HIQyEMJ1uh2KEhy4hq1L6jljpRCbwA+KHOLKfuSnmSJe8Ix411iF53i6ts2XlybYIQCsbYjiQb6+FzoeR9ZwT4qJ0fkBwILHWEVoLxBFA6N8Q0IQOVAw0obzBsvzkWmwT7MFJGvs9XeOL6Ex+F+9kf7E5g8UD+VkyeTtzTMnObyqhLSn7O1b4qdvf0Pqn5aGn8l37ilQTgbqUVrewK7TZNWc5l9K0YMP6/gki4knSqmItdPEv32oGGJB99BPBweoPN7oUOTcx03/N2z8m3Yh2f2Su0N9iomNCFlMeai8ZGIXQA3Z1MvnMT1snvIKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6kwF/pkN0a8cQQryH0EdP9DOGD4KCzd2fsf7JiMDMtc=;
- b=GP1dPF1hVKx0q/HDyY9Um6enC1DDP+ydg0wdXKRrAyhq4SktPXsSBmkj2B1lHzZmwwXluyQZOPDO7twRFZoYSd4rxtOg6eenWYGoUh6ntdjOgrEBJcZ86sWiTjaVElOau+JTFpQz5HcW72ZkblF+EBiivofGUkw1r3+iq+dvkKqC0L3CdghW41gRH9LHFZunASoZdeDRZbP9/1rogY/1vp/q6QBMvclsniAmV4Jl9DdmeF50oolD/w212nblta5e0H/tNpiq1t60Wc/EZiin/UcQtHFFu/2RWGmyUOzL02qmj2Vy7MONJsCihNoPdFdwO3AuGKfCWNJqYoil9DSLGA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6kwF/pkN0a8cQQryH0EdP9DOGD4KCzd2fsf7JiMDMtc=;
- b=JdHKWBsK6bg7yT1e8SbymPIg2sMpo750zqiyY8L99UlYged3u5Pd9x04BNaIXd39bFpJ6FtlQALNCFspZ8Yngi2YWi0mGIFmwBX3Llj8am5WjnF/l+PDN9RMADG0OB42cmxZ8VSr2zX7FB2nHzkn+7rQci9XHXoy3USVO1j2qpc=
-Received: from CH2PR18CA0057.namprd18.prod.outlook.com (2603:10b6:610:55::37)
- by DM4PR12MB6326.namprd12.prod.outlook.com (2603:10b6:8:a3::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.20; Thu, 29 Aug
- 2024 12:01:25 +0000
-Received: from CH2PEPF0000009B.namprd02.prod.outlook.com
- (2603:10b6:610:55:cafe::7c) by CH2PR18CA0057.outlook.office365.com
- (2603:10b6:610:55::37) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.27 via Frontend
- Transport; Thu, 29 Aug 2024 12:01:25 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- CH2PEPF0000009B.mail.protection.outlook.com (10.167.244.23) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7918.13 via Frontend Transport; Thu, 29 Aug 2024 12:01:25 +0000
-Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 29 Aug
- 2024 07:01:24 -0500
-Received: from xhdsaipava41.xilinx.com (10.180.168.240) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.39 via
- Frontend Transport; Thu, 29 Aug 2024 07:01:22 -0500
-From: Shiva sagar Myana <Shivasagar.Myana@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <qemu-block@nongnu.org>, <alistair@alistair23.me>,
- <francisco.iglesias@amd.com>, <peter.maydell@linaro.org>,
- <sai.pavan.boddu@amd.com>
-Subject: [PATCH v2 1/1] m25p80: Add SFDP table for mt35xu01g flash
-Date: Thu, 29 Aug 2024 17:31:17 +0530
-Message-ID: <20240829120117.616861-1-Shivasagar.Myana@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
+ id 1sjdwl-0006yZ-IY; Thu, 29 Aug 2024 08:08:18 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Wvg5z2nRpz4wnw;
+ Thu, 29 Aug 2024 22:08:07 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Wvg5w3nhqz4wb5;
+ Thu, 29 Aug 2024 22:08:04 +1000 (AEST)
+Message-ID: <54851b16-0396-4953-bc7b-426643853988@kaod.org>
+Date: Thu, 29 Aug 2024 14:08:00 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: None (SATLEXMB03.amd.com: Shivasagar.Myana@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000009B:EE_|DM4PR12MB6326:EE_
-X-MS-Office365-Filtering-Correlation-Id: d78bcc63-f2a2-4057-a9ef-08dcc8224ec7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?QQuqEqxkJQZ1A8UnKxLQcgccznAy5sFXPeoJQHUNFftTvQs0MK8/zvYVFMcx?=
- =?us-ascii?Q?kl1gl/MnZc+exY0gBwmXwAvXRppMpfEZ4UV+6efZnsOeuZGXSuvo2BoZPNG5?=
- =?us-ascii?Q?bWnW+w1r76k/n86lKtzJwLTLI6kHjlq3m6EBP2F7ijgBvEPuuOUu7N2idpg1?=
- =?us-ascii?Q?54sLXSq6zg5TBj60vN99Qr/5kJAlByzMsy1TBaGkBwPesPSUt5rGOCbxDhhN?=
- =?us-ascii?Q?VJ+dgIxX39xgG/FsOGhIV2Bk3Qco/06ba3eMoiynAANcIYVkKcio6lcjFfbx?=
- =?us-ascii?Q?/WqWLiRpRMXnPyT8o3t4EthnYQp39nag8qONtGGkCRTXN3baDlfoN4Z4J4dN?=
- =?us-ascii?Q?6hvl/hw2QtO2YjX8A4LuzDgcCWolzhGMKLlSEfrsxwSdYkwKJR8x2w9QpIhu?=
- =?us-ascii?Q?MGgmxZkeo57caHQ5zr5XxIjL4iTGy89r87r5VBe43ie6OPp7Q+0FGKn8/ug6?=
- =?us-ascii?Q?niRLFnOiiC30J41jTyP5nBJzm+rIWbAzb7WJpewBIzzyDLyVRkJH/5Q3C6y7?=
- =?us-ascii?Q?TSKbDxwFp7A1MbGRAWTd7R3Ha6/YwLH/rf0DYQNkNruomLLNvwjkOIBqXs4M?=
- =?us-ascii?Q?UfjGwa1qZjegPg8S+CP+dHvviS7PyaJnBH03LimPSFBqwkJ5uCenko9+t88v?=
- =?us-ascii?Q?YH2OkQW3mcTvzjpVjcOFSzyQeTDtoarDRpKqjd5QunrlKCpLCI4zt8s8yMqy?=
- =?us-ascii?Q?0vuv/85PY4UariPVKb0cqdZdAXfhmoD+P0zhw4+oilLHkHrUbTTbkwm7MLR7?=
- =?us-ascii?Q?y3A1/iKuXLY9rUORRDaDoH2YVs5EJLzFXXEwY/2Vc7qdcIY1S0u5sy4mFDzD?=
- =?us-ascii?Q?w0nnLVqfHLtIST/HjBotuRoCyos2nkByGOUyDCYN5SATf3msKQdaaSNO4zgW?=
- =?us-ascii?Q?ACRPB9PbQfFCCswxwo2MzUVznOrobBqE2mbxURmkPb1tDaV4fSg49u+Y0XPc?=
- =?us-ascii?Q?Ai/UurxZ0tdkPjs7DJr3ZUhi+c0JZmpFojv6TbNnAy9O7236816lQFq/hvNg?=
- =?us-ascii?Q?oh1cFlv7CTyeYXVnYhbtIWp4z6H/q0WS/tJn8zig/9WVjSE1DfK0TyMH9C62?=
- =?us-ascii?Q?6LCD+9vmBFecLm8T1+jSB9m7exl9VJffbhzKUpK00PqxEkeOEvweyDkZ2kN0?=
- =?us-ascii?Q?oEUuTB+82V/sJrql9Q9w1R0rJKadem3DhcAuZ+zwXeMvpdI7O/m+Gk6/csp0?=
- =?us-ascii?Q?l21++SUuQRsBpipFL5W2c5OT6zI7FfOGvcVfdXfymVhRL92+VbfXcwWA57AE?=
- =?us-ascii?Q?RgtC6xzqMwq8Ka5q0dnQE4vaFc2m3I6CccGjDOXCxyHMXuIKyhzPl4baCapM?=
- =?us-ascii?Q?Vyt9Jj9r5ehNQbC9nkZlwypvv4MtSQFx7R/j9V7j38mdRzgyhT4hiNd9AYSt?=
- =?us-ascii?Q?jAiyNnjlxl8ULjIoK2rr/tlkq4NaM6AsWvHtoVPtgZDJCB1rlPCJDpZquG62?=
- =?us-ascii?Q?x1Q5P5PFyqYPd3YaL2WcmPx34BoYFD7F?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2024 12:01:25.3262 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d78bcc63-f2a2-4057-a9ef-08dcc8224ec7
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009B.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6326
-Received-SPF: permerror client-ip=2a01:111:f403:240a::606;
- envelope-from=Shivasagar.Myana@amd.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/13] ppc/xive2: Support "Pull Thread Context to Odd
+ Thread Reporting Line"
+To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240801203008.11224-1-kowal@linux.ibm.com>
+ <20240801203008.11224-10-kowal@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240801203008.11224-10-kowal@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=t/gt=P4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -148,92 +67,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the SFDP table for the Micron Xccela mt35xu01g flash.
+On 8/1/24 22:30, Michael Kowal wrote:
+> From: Glenn Miles <milesg@linux.vnet.ibm.com>
+> 
+> Adds support for single byte writes to offset 0xC38 of the TIMA address
+> space.  When this offset is written to, the hardware disables the thread
+> context and copies the current state information to the odd cache line of
+> the pair specified by the NVT structure indexed by the THREAD CAM entry.
+> 
+> Note that this operation is almost identical to what we are already doing
+> for the "Pull OS Context to Odd Thread Reporting Line" operation except
+> that it also invalidates the Pool and Thread Contexts.  In order to reuse
+> this code, this commit also changes those existing functions to be able
+> to handle any context/ring (OS, Pool, or Thread) that is passed in.
+> 
+> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+> ---
+>   include/hw/ppc/xive.h      |  2 +-
+>   include/hw/ppc/xive2.h     |  2 +
+>   include/hw/ppc/xive_regs.h |  1 +
+>   hw/intc/xive.c             | 15 +++----
+>   hw/intc/xive2.c            | 83 ++++++++++++++++++++++++++------------
+>   5 files changed, 69 insertions(+), 34 deletions(-)
+> 
+> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+> index 28c181faa2..31242f0406 100644
+> --- a/include/hw/ppc/xive.h
+> +++ b/include/hw/ppc/xive.h
+> @@ -533,7 +533,7 @@ Object *xive_tctx_create(Object *cpu, XivePresenter *xptr, Error **errp);
+>   void xive_tctx_reset(XiveTCTX *tctx);
+>   void xive_tctx_destroy(XiveTCTX *tctx);
+>   void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb);
+> -void xive_tctx_reset_os_signal(XiveTCTX *tctx);
+> +void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
 
-Signed-off-by: Shiva sagar Myana <Shivasagar.Myana@amd.com>
----
-V1->V2: Change subject and commit message
+Could you please extract in a separate patch all the changes adding a
+"uint8_t ring" parameter ?
 
- hw/block/m25p80.c      |  3 ++-
- hw/block/m25p80_sfdp.c | 37 +++++++++++++++++++++++++++++++++++++
- hw/block/m25p80_sfdp.h |  1 +
- 3 files changed, 40 insertions(+), 1 deletion(-)
+>   
+>   /*
+>    * KVM XIVE device helpers
+> diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+> index 36bd0e747f..5bccf41159 100644
+> --- a/include/hw/ppc/xive2.h
+> +++ b/include/hw/ppc/xive2.h
+> @@ -123,5 +123,7 @@ void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+>                                hwaddr offset, uint64_t value, unsigned size);
+>   void xive2_tm_set_hv_target(XivePresenter *xptr, XiveTCTX *tctx,
+>                               hwaddr offset, uint64_t value, unsigned size);
+> +void xive2_tm_pull_phys_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> +                               hwaddr offset, uint64_t value, unsigned size);
+>   
+>   #endif /* PPC_XIVE2_H */
+> diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
+> index 558a5ae742..5b11463777 100644
+> --- a/include/hw/ppc/xive_regs.h
+> +++ b/include/hw/ppc/xive_regs.h
+> @@ -138,6 +138,7 @@
+>   #define TM_SPC_ACK_HV_POOL_EL   0xc20   /* Store8 ack HV evt pool to even     */
+>                                           /* line                               */
+>   #define TM_SPC_ACK_HV_EL        0xc30   /* Store8 ack HV irq to even line     */
+> +#define TM_SPC_PULL_PHYS_CTX_OL 0xc38   /* Pull phys ctx to odd cache line    */
+>   /* XXX more... */
+>   
+>   /* NSR fields for the various QW ack types */
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index 5b66a3aec5..9d85da0999 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -114,15 +114,14 @@ static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
+>       }
+>   }
+>   
+> -void xive_tctx_reset_os_signal(XiveTCTX *tctx)
+> +void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
+>   {
+>       /*
+> -     * Lower the External interrupt. Used when pulling an OS
+> -     * context. It is necessary to avoid catching it in the hypervisor
+> -     * context. It should be raised again when re-pushing the OS
+> -     * context.
+> +     * Lower the External interrupt. Used when pulling a context. It is
+> +     * necessary to avoid catching it in the higher privilege context. It
+> +     * should be raised again when re-pushing the lower privilege context.
+>        */
+> -    qemu_irq_lower(xive_tctx_output(tctx, TM_QW1_OS));
+> +    qemu_irq_lower(xive_tctx_output(tctx, ring));
+>   }
+>   
+>   static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+> @@ -424,7 +423,7 @@ static uint64_t xive_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>       qw1w2_new = xive_set_field32(TM_QW1W2_VO, qw1w2, 0);
+>       xive_tctx_set_os_cam(tctx, qw1w2_new);
+>   
+> -    xive_tctx_reset_os_signal(tctx);
+> +    xive_tctx_reset_signal(tctx, TM_QW1_OS);
+>       return qw1w2;
+>   }
+>   
+> @@ -581,6 +580,8 @@ static const XiveTmOp xive2_tm_operations[] = {
+>                                                        NULL },
+>       { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX,      1, NULL,
+>                                                        xive_tm_pull_phys_ctx },
+> +    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX_OL,   1, xive2_tm_pull_phys_ctx_ol,
+> +                                                     NULL },
+>   };
+>   
+>   static const XiveTmOp *xive_tm_find_op(XivePresenter *xptr, hwaddr offset,
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index eed0cc9c3c..af9699ec88 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -295,13 +295,14 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
+>    *     the NVP by changing the H bit while the context is enabled
+>    */
+>   
+> -static void xive2_tctx_save_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+> -                                   uint8_t nvp_blk, uint32_t nvp_idx)
+> +static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+> +                                uint8_t nvp_blk, uint32_t nvp_idx,
+> +                                uint8_t ring)
+>   {
+>       CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+>       uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+>       Xive2Nvp nvp;
+> -    uint8_t *regs = &tctx->regs[TM_QW1_OS];
+> +    uint8_t *regs = &tctx->regs[ring];
+>   
+>       if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
+>           qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
+> @@ -346,13 +347,13 @@ static void xive2_tctx_save_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+>       xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 1);
+>   }
+>   
+> -static void xive2_os_cam_decode(uint32_t cam, uint8_t *nvp_blk,
+> -                                uint32_t *nvp_idx, bool *vo, bool *ho)
+> +static void xive2_cam_decode(uint32_t cam, uint8_t *nvp_blk,
+> +                             uint32_t *nvp_idx, bool *valid, bool *hw)
+>   {
+>       *nvp_blk = xive2_nvp_blk(cam);
+>       *nvp_idx = xive2_nvp_idx(cam);
+> -    *vo = !!(cam & TM2_QW1W2_VO);
+> -    *ho = !!(cam & TM2_QW1W2_HO);
+> +    *valid = !!(cam & TM2_QW1W2_VO);
+> +    *hw = !!(cam & TM2_QW1W2_HO);
+>   }
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index 0b94af3653..23290edfe4 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -266,7 +266,8 @@ static const FlashPartInfo known_devices[] = {
-     { INFO("n25q512ax3",  0x20ba20,  0x1000,  64 << 10, 1024, ER_4K) },
-     { INFO("mt25ql512ab", 0x20ba20, 0x1044, 64 << 10, 1024, ER_4K | ER_32K) },
-     { INFO_STACKED("mt35xu01g", 0x2c5b1b, 0x104100, 128 << 10, 1024,
--                   ER_4K | ER_32K, 2) },
-+                   ER_4K | ER_32K, 2),
-+                   .sfdp_read = m25p80_sfdp_mt35xu01g },
-     { INFO_STACKED("mt35xu02gbba", 0x2c5b1c, 0x104100, 128 << 10, 2048,
-                    ER_4K | ER_32K, 4),
-                    .sfdp_read = m25p80_sfdp_mt35xu02g },
-diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
-index 6ee2cfaf11..82d84cc21f 100644
---- a/hw/block/m25p80_sfdp.c
-+++ b/hw/block/m25p80_sfdp.c
-@@ -57,6 +57,43 @@ static const uint8_t sfdp_n25q256a[] = {
- };
- define_sfdp_read(n25q256a);
- 
-+static const uint8_t sfdp_mt35xu01g[] = {
-+    0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
-+    0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
-+    0x84, 0x00, 0x01, 0x02, 0x80, 0x00, 0x00, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xe5, 0x20, 0x8a, 0xff, 0xff, 0xff, 0xff, 0x3f,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
-+    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x11, 0xd8,
-+    0x0f, 0x52, 0x00, 0x00, 0x24, 0x5a, 0x99, 0x00,
-+    0x8b, 0x8e, 0x03, 0xe1, 0xac, 0x01, 0x27, 0x38,
-+    0x7a, 0x75, 0x7a, 0x75, 0xfb, 0xbd, 0xd5, 0x5c,
-+    0x00, 0x00, 0x70, 0xff, 0x81, 0xb0, 0x38, 0x36,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0x43, 0x0e, 0xff, 0xff, 0x21, 0xdc, 0x5c, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+};
-+
-+define_sfdp_read(mt35xu01g);
-+
- static const uint8_t sfdp_mt35xu02g[] = {
-     0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
-     0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
-diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
-index 1733b56950..89c2d8f72d 100644
---- a/hw/block/m25p80_sfdp.h
-+++ b/hw/block/m25p80_sfdp.h
-@@ -16,6 +16,7 @@
- #define M25P80_SFDP_MAX_SIZE  (1 << 24)
- 
- uint8_t m25p80_sfdp_n25q256a(uint32_t addr);
-+uint8_t m25p80_sfdp_mt35xu01g(uint32_t addr);
- uint8_t m25p80_sfdp_mt35xu02g(uint32_t addr);
- 
- uint8_t m25p80_sfdp_mx25l25635e(uint32_t addr);
--- 
-2.34.1
+
+This doesn't seem like a useful change.
+
+
+Thanks,
+
+C.
+
+
+>   
+> @@ -376,35 +377,52 @@ static uint32_t xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
+>       return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
+>   }
+>   
+> -uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+> -                              hwaddr offset, unsigned size)
+> +static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+> +                           hwaddr offset, unsigned size, uint8_t ring)
+>   {
+>       Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+> -    uint32_t qw1w2 = xive_tctx_word2(&tctx->regs[TM_QW1_OS]);
+> -    uint32_t qw1w2_new;
+> -    uint32_t cam = be32_to_cpu(qw1w2);
+> +    uint32_t target_ringw2 = xive_tctx_word2(&tctx->regs[ring]);
+> +    uint32_t cam = be32_to_cpu(target_ringw2);
+>       uint8_t nvp_blk;
+>       uint32_t nvp_idx;
+> -    bool vo;
+> +    uint8_t cur_ring;
+> +    bool valid;
+>       bool do_save;
+>   
+> -    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_save);
+> +    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &valid, &do_save);
+>   
+> -    if (!vo) {
+> +    if (!valid) {
+>           qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid NVP %x/%x !?\n",
+>                         nvp_blk, nvp_idx);
+>       }
+>   
+> -    /* Invalidate CAM line */
+> -    qw1w2_new = xive_set_field32(TM2_QW1W2_VO, qw1w2, 0);
+> -    memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2_new, 4);
+> +    /* Invalidate CAM line of requested ring and all lower rings */
+> +    for (cur_ring = TM_QW0_USER; cur_ring <= ring;
+> +         cur_ring += XIVE_TM_RING_SIZE) {
+> +        uint32_t ringw2 = xive_tctx_word2(&tctx->regs[cur_ring]);
+> +        uint32_t ringw2_new = xive_set_field32(TM2_QW1W2_VO, ringw2, 0);
+> +        memcpy(&tctx->regs[cur_ring + TM_WORD2], &ringw2_new, 4);
+> +    }
+>   
+>       if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
+> -        xive2_tctx_save_os_ctx(xrtr, tctx, nvp_blk, nvp_idx);
+> +        xive2_tctx_save_ctx(xrtr, tctx, nvp_blk, nvp_idx, ring);
+>       }
+>   
+> -    xive_tctx_reset_os_signal(tctx);
+> -    return qw1w2;
+> +    /*
+> +     * Lower external interrupt line of requested ring and below except for
+> +     * USER, which doesn't exist.
+> +     */
+> +    for (cur_ring = TM_QW1_OS; cur_ring <= ring;
+> +         cur_ring += XIVE_TM_RING_SIZE) {
+> +        xive_tctx_reset_signal(tctx, cur_ring);
+> +    }
+> +    return target_ringw2;
+> +}
+> +
+> +uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+> +                              hwaddr offset, unsigned size)
+> +{
+> +    return xive2_tm_pull_ctx(xptr, tctx, offset, size, TM_QW1_OS);
+>   }
+>   
+>   #define REPORT_LINE_GEN1_SIZE       16
+> @@ -449,8 +467,9 @@ static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
+>       }
+>   }
+>   
+> -void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> -                             hwaddr offset, uint64_t value, unsigned size)
+> +static void xive2_tm_pull_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> +                          hwaddr offset, uint64_t value,
+> +                          unsigned size, uint8_t ring)
+>   {
+>       Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+>       uint32_t hw_cam, nvp_idx, xive2_cfg, reserved;
+> @@ -488,8 +507,20 @@ void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+>           cpu_physical_memory_write(phys_addr + 12, &reserved, 4);
+>       }
+>   
+> -    /* the rest is similar to pull OS context to registers */
+> -    xive2_tm_pull_os_ctx(xptr, tctx, offset, size);
+> +    /* the rest is similar to pull context to registers */
+> +    xive2_tm_pull_ctx(xptr, tctx, offset, size, ring);
+> +}
+> +
+> +void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> +                             hwaddr offset, uint64_t value, unsigned size)
+> +{
+> +    xive2_tm_pull_ctx_ol(xptr, tctx, offset, value, size, TM_QW1_OS);
+> +}
+> +
+> +void xive2_tm_pull_phys_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> +                               hwaddr offset, uint64_t value, unsigned size)
+> +{
+> +    xive2_tm_pull_ctx_ol(xptr, tctx, offset, value, size, TM_QW3_HV_PHYS);
+>   }
+>   
+>   static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+> @@ -588,7 +619,7 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>       bool vo;
+>       bool do_restore;
+>   
+> -    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
+> +    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
+>   
+>       /* First update the thead context */
+>       memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2, 4);
 
 
