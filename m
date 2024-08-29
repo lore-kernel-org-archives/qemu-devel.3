@@ -4,53 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43920C8300F
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 08:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6341DC71135
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 09:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjavk-00064G-8r; Thu, 29 Aug 2024 04:55:00 -0400
+	id 1sjb4G-0004NY-LW; Thu, 29 Aug 2024 05:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
- id 1sjavi-00061l-DR; Thu, 29 Aug 2024 04:54:58 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
- id 1sjavf-0001Mr-Lh; Thu, 29 Aug 2024 04:54:58 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WvZpy29vLz4x7F;
- Thu, 29 Aug 2024 18:54:50 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WvZpw02XCz4x21;
- Thu, 29 Aug 2024 18:54:47 +1000 (AEST)
-Message-ID: <230d7652-4ef1-4376-93a9-4eb2db5cd9ab@kaod.org>
-Date: Thu, 29 Aug 2024 10:54:45 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sjb4F-0004N1-Ek
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:03:47 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sjb4D-0002Im-B3
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:03:47 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-371a13c7c80so975413f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 02:03:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724922223; x=1725527023; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=qY9rHgFADcSekzG8gGozAr5nUqGJWu1D+egkBm03DQ4=;
+ b=ps0qedHaUohugOhRiOf/XmdqMFnPTtNmma3nBIn52x3rIMOjPQXxQMhCzBl8NjijCV
+ J9lyqhljhpcHISge1veIRU5begYbiOyiHRps3u6NN7i/yL+Ogan5KRc8riAf7RJDb1Ql
+ np65IcB58u37w+bmKafoy3THt7pa0L9hG1wC7f+Nl0qexfOJHN3P3xHfC432R5taxrmZ
+ //4FZwjY7eYU4D9ZuywpasCLBptHWmaDnq9qglcHfSbmFJSCwp6V5m2GWvOCSbUc+mcf
+ 4dmrL1rZ6XrUPkoNw5gxUWhoaIoik5kLrINNcNm0nyUYPNnIkOmhRl2RsrArBWana6lm
+ ezyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724922223; x=1725527023;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qY9rHgFADcSekzG8gGozAr5nUqGJWu1D+egkBm03DQ4=;
+ b=rErMBBwOHIiiNAiIz16C96UrQz/zuvQTQgIG0W/3t2wKGKeRkTlKfVJJkY3o0tDLXO
+ HmcmHPk2frKC5kJPY7UUSJg+O62xLXxNLQQVrGFxOcvmycdO/KPDQIa+bFC0gP9zlJZQ
+ v8bwKVkes6DP4zWtEefZ8HyMnX8q9x86xx7hWcyD7o559adxAppCkMZLeafvUihjP04E
+ JdeiiOo2zgvZlRySqfDSt9P2Izz4rcrYhtDSWIh/ZiFGNHjzidp8cPA/QQeMsKWt7UYx
+ 88EMbn63pXcj5Uoe0/tjl0NHk967lGSdkTHhPp8h71dpf+0yqBuCtaPs5mSEzex6Ysju
+ siWQ==
+X-Gm-Message-State: AOJu0Yy3iaPvaY4PlFuKN0mhsBTiwLaOEv0xUVp3aJsEPw+Fi+MGnsq8
+ T27XdhCZ/+mzH2hcBLYrVvKE9zECcgx19U/460W0+tlSrRkVaIJka8ktRBx19E8=
+X-Google-Smtp-Source: AGHT+IHpwANBFx4p/AyTMd5IYZUe6OWAEsZiqszokZ9Xx/vJsmk6Ko0JdPIJrzrFmqQ+17qKhCuHyQ==
+X-Received: by 2002:adf:a458:0:b0:368:377a:e8bb with SMTP id
+ ffacd0b85a97d-3749c24fee5mr929041f8f.28.1724922222137; 
+ Thu, 29 Aug 2024 02:03:42 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ba639d633sm43987255e9.19.2024.08.29.02.03.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Aug 2024 02:03:41 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5E5E75F790;
+ Thu, 29 Aug 2024 10:03:40 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Yanan
+ Wang <wangyanan55@huawei.com>,  Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Xingtao Yao
+ <yaoxt.fnst@fujitsu.com>
+Subject: Re: [PATCH v7 6/6] tests/tcg/multiarch: add test for plugin memory
+ access
+In-Reply-To: <20240724194708.1843704-7-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Wed, 24 Jul 2024 12:47:08 -0700")
+References: <20240724194708.1843704-1-pierrick.bouvier@linaro.org>
+ <20240724194708.1843704-7-pierrick.bouvier@linaro.org>
+Date: Thu, 29 Aug 2024 10:03:40 +0100
+Message-ID: <87jzfz3dlf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/13] ppc/xive2: Dump the VP-group and crowd tables with
- 'info pic'
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240801203008.11224-1-kowal@linux.ibm.com>
- <20240801203008.11224-7-kowal@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240801203008.11224-7-kowal@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=t/gt=P4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,289 +104,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/24 22:30, Michael Kowal wrote:
-> From: Frederic Barrat <fbarrat@linux.ibm.com>
-> 
-> The 'info pic' HMP command dumps the state of the interrupt controller.
-> Add the dump of the NVG and NVC tables to its output to ease debug.
-> 
-> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> Add an explicit test to check expected memory values are read/written.
+> 8,16,32 load/store are tested for all arch.
+> 64,128 load/store are tested for aarch64/x64.
+> atomic operations (8,16,32,64) are tested for x64 only.
+>
+> By default, atomic accesses are non atomic if a single cpu is running,
+> so we force creation of a second one by creating a new thread first.
+>
+> load/store helpers code path can't be triggered easily in user mode (no
+> softmmu), so we can't test it here.
+>
+> Output of test-plugin-mem-access.c is the list of expected patterns in
+> plugin output. By reading stdout, we can compare to plugins output and
+> have a multiarch test.
+>
+> Can be run with:
+> make -C build/tests/tcg/$ARCH-linux-user run-plugin-test-plugin-mem-acces=
+s-with-libmem.so
+>
+> Tested-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   include/hw/ppc/xive2.h      | 12 ++++++
->   include/hw/ppc/xive2_regs.h |  6 +++
->   hw/intc/pnv_xive2.c         | 56 ++++++++++++++++++++++++--
->   hw/intc/xive2.c             | 80 +++++++++++++++++++++++++++++++++++++
->   4 files changed, 151 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
-> index 654f485e9b..b7a7c33ddd 100644
-> --- a/include/hw/ppc/xive2.h
-> +++ b/include/hw/ppc/xive2.h
-> @@ -53,6 +53,12 @@ typedef struct Xive2RouterClass {
->                      Xive2Nvp *nvp);
->       int (*write_nvp)(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->                        Xive2Nvp *nvp, uint8_t word_number);
-> +    int (*get_nvgc)(Xive2Router *xrtr, bool crowd,
-> +                    uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                    Xive2Nvgc *nvgc);
-> +    int (*write_nvgc)(Xive2Router *xrtr, bool crowd,
-> +                      uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                      Xive2Nvgc *nvgc);
->       uint8_t (*get_block_id)(Xive2Router *xrtr);
->       uint32_t (*get_config)(Xive2Router *xrtr);
->   } Xive2RouterClass;
-> @@ -67,6 +73,12 @@ int xive2_router_get_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->                           Xive2Nvp *nvp);
->   int xive2_router_write_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->                             Xive2Nvp *nvp, uint8_t word_number);
-> +int xive2_router_get_nvgc(Xive2Router *xrtr, bool crowd,
-> +                          uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                          Xive2Nvgc *nvgc);
-> +int xive2_router_write_nvgc(Xive2Router *xrtr, bool crowd,
-> +                            uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                            Xive2Nvgc *nvgc);
->   uint32_t xive2_router_get_config(Xive2Router *xrtr);
->   
->   void xive2_router_notify(XiveNotifier *xn, uint32_t lisn, bool pq_checked);
-> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-> index d71a54f9ff..99840e88a8 100644
-> --- a/include/hw/ppc/xive2_regs.h
-> +++ b/include/hw/ppc/xive2_regs.h
-> @@ -212,6 +212,7 @@ void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf);
->   typedef struct Xive2Nvgc {
->           uint32_t        w0;
->   #define NVGC2_W0_VALID             PPC_BIT32(0)
-> +#define NVGC2_W0_PGONEXT           PPC_BITMASK32(26, 31)
->           uint32_t        w1;
->           uint32_t        w2;
->           uint32_t        w3;
-> @@ -221,4 +222,9 @@ typedef struct Xive2Nvgc {
->           uint32_t        w7;
->   } Xive2Nvgc;
->   
-> +#define xive2_nvgc_is_valid(nvgc)    (be32_to_cpu((nvgc)->w0) & NVGC2_W0_VALID)
-> +
-> +void xive2_nvgc_pic_print_info(Xive2Nvgc *nvgc, uint32_t nvgc_idx,
-> +                               GString *buf);
-> +
->   #endif /* PPC_XIVE2_REGS_H */
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index 4740c56347..5959e2df3a 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -490,6 +490,35 @@ static int pnv_xive2_write_nvp(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
->                                 word_number);
->   }
->   
-> +static int pnv_xive2_get_nvgc(Xive2Router *xrtr, bool crowd,
-> +                              uint8_t blk, uint32_t idx,
-> +                              Xive2Nvgc *nvgc)
-> +{
-> +    int type;
+>  tests/tcg/multiarch/test-plugin-mem-access.c  | 175 ++++++++++++++++++
+>  tests/tcg/multiarch/Makefile.target           |   7 +
+>  .../tcg/multiarch/check-plugin-mem-access.sh  |  30 +++
+>  3 files changed, 212 insertions(+)
+>  create mode 100644 tests/tcg/multiarch/test-plugin-mem-access.c
+>  create mode 100755 tests/tcg/multiarch/check-plugin-mem-access.sh
+>
+> diff --git a/tests/tcg/multiarch/test-plugin-mem-access.c b/tests/tcg/mul=
+tiarch/test-plugin-mem-access.c
+> new file mode 100644
+> index 00000000000..09d1fa22e35
+> --- /dev/null
+> +++ b/tests/tcg/multiarch/test-plugin-mem-access.c
+> @@ -0,0 +1,175 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * Check if we detect all memory accesses expected using plugin API.
+> + * Used in conjunction with ./check-plugin-mem-access.sh check script.
+> + * Output of this program is the list of patterns expected in plugin out=
+put.
+> + *
+> + * 8,16,32 load/store are tested for all arch.
+> + * 64,128 load/store are tested for aarch64/x64.
+> + * atomic operations (8,16,32,64) are tested for x64 only.
+> + */
 
-May be define type with :
-
-        int type = crowd ? VST_NVC : VST_NVG;
-
-or use directly the ternary operation in the pnv_xive2_vst_read() call below.
+It would be nice to build this for the softmmu path as well. I'm not
+sure if this can be done with as single source or we need a second test.
+I shall have a play.
 
 > +
-> +    if (crowd) {
-> +        type = VST_NVC;
-> +    } else {
-> +        type = VST_NVG;
-> +    }
-> +    return pnv_xive2_vst_read(PNV_XIVE2(xrtr), type, blk, idx, nvgc);
+> +#include <pthread.h>
+> +#include <stdint.h>
+> +#include <stdio.h>
+> +#include <stdlib.h>
+> +
+> +#if defined(__x86_64__)
+> +#include <emmintrin.h>
+> +#elif defined(__aarch64__)
+> +#include <arm_neon.h>
+> +#endif /* __x86_64__ */
+> +
+> +static void *data;
+> +
+> +/* ,store_u8,.*,8,store,0xf1 */
+> +#define PRINT_EXPECTED(function, type, value, action)                 \
+> +do {                                                                  \
+> +    printf(",%s,.*,%d,%s,%s\n",                                       \
+> +           #function, (int) sizeof(type) * 8, action, value);         \
+> +}                                                                     \
+> +while (0)
+> +
+> +#define DEFINE_STORE(name, type, value)                  \
+> +                                                         \
+> +static void print_expected_store_##name(void)            \
+> +{                                                        \
+> +    PRINT_EXPECTED(store_##name, type, #value, "store"); \
+> +}                                                        \
+> +                                                         \
+> +static void store_##name(void)                           \
+> +{                                                        \
+> +    *((type *)data) =3D value;                             \
+> +    print_expected_store_##name();                       \
 > +}
 > +
-> +static int pnv_xive2_write_nvgc(Xive2Router *xrtr, bool crowd,
-> +                                uint8_t blk, uint32_t idx,
-> +                                Xive2Nvgc *nvgc)
-> +{
-> +    int type;
-> +
-> +    if (crowd) {
-> +        type = VST_NVC;
-> +    } else {
-> +        type = VST_NVG;
-> +    }
-> +    return pnv_xive2_vst_write(PNV_XIVE2(xrtr), type, blk, idx, nvgc,
-> +                               XIVE_VST_WORD_ALL);
+> +#define DEFINE_ATOMIC_OP(name, type, value)                    \
+> +                                                               \
+> +static void print_expected_atomic_op_##name(void)              \
+> +{                                                              \
+> +    PRINT_EXPECTED(atomic_op_##name, type, "0x0*42", "load");  \
+> +    PRINT_EXPECTED(atomic_op_##name, type, #value, "store");   \
+> +}                                                              \
+> +                                                               \
+> +static void atomic_op_##name(void)                             \
+> +{                                                              \
+> +    *((type *)data) =3D 0x42;                                    \
+> +    __sync_val_compare_and_swap((type *)data, 0x42, value);    \
+> +    print_expected_atomic_op_##name();                         \
 > +}
 > +
->   static int pnv_xive2_nxc_to_table_type(uint8_t nxc_type, uint32_t *table_type)
->   {
->       switch (nxc_type) {
-> @@ -2407,6 +2436,8 @@ static void pnv_xive2_class_init(ObjectClass *klass, void *data)
->       xrc->write_end = pnv_xive2_write_end;
->       xrc->get_nvp   = pnv_xive2_get_nvp;
->       xrc->write_nvp = pnv_xive2_write_nvp;
-> +    xrc->get_nvgc   = pnv_xive2_get_nvgc;
-> +    xrc->write_nvgc = pnv_xive2_write_nvgc;
->       xrc->get_config  = pnv_xive2_get_config;
->       xrc->get_block_id = pnv_xive2_get_block_id;
->   
-> @@ -2497,8 +2528,9 @@ void pnv_xive2_pic_print_info(PnvXive2 *xive, GString *buf)
->       Xive2Eas eas;
->       Xive2End end;
->       Xive2Nvp nvp;
-> +    Xive2Nvgc nvgc;
->       int i;
-> -    uint64_t xive_nvp_per_subpage;
-> +    uint64_t entries_per_subpage;
->   
->       g_string_append_printf(buf, "XIVE[%x] Source %08x .. %08x\n",
->                              blk, srcno0, srcno0 + nr_esbs - 1);
-> @@ -2530,10 +2562,28 @@ void pnv_xive2_pic_print_info(PnvXive2 *xive, GString *buf)
->   
->       g_string_append_printf(buf, "XIVE[%x] #%d NVPT %08x .. %08x\n",
->                              chip_id, blk, 0, XIVE2_NVP_COUNT - 1);
-> -    xive_nvp_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVP);
-> -    for (i = 0; i < XIVE2_NVP_COUNT; i += xive_nvp_per_subpage) {
-> +    entries_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVP);
-> +    for (i = 0; i < XIVE2_NVP_COUNT; i += entries_per_subpage) {
->           while (!xive2_router_get_nvp(xrtr, blk, i, &nvp)) {
->               xive2_nvp_pic_print_info(&nvp, i++, buf);
->           }
->       }
+> +#define DEFINE_LOAD(name, type, value)                  \
+> +                                                        \
+> +static void print_expected_load_##name(void)            \
+> +{                                                       \
+> +    PRINT_EXPECTED(load_##name, type, #value, "load");  \
+> +}                                                       \
+> +                                                        \
+> +static void load_##name(void)                           \
+> +{                                                       \
+> +    type src =3D *((type *) data);                        \
+> +    type dest =3D src;                                    \
+> +    (void)src, (void)dest;                              \
+> +    print_expected_load_##name();                       \
+> +}
 > +
-> +    g_string_append_printf(buf, "XIVE[%x] #%d NVGT %08x .. %08x\n",
-> +                           chip_id, blk, 0, XIVE2_NVP_COUNT - 1);
-> +    entries_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVG);
-> +    for (i = 0; i < XIVE2_NVP_COUNT; i += entries_per_subpage) {
-> +        while (!xive2_router_get_nvgc(xrtr, false, blk, i, &nvgc)) {
-> +            xive2_nvgc_pic_print_info(&nvgc, i++, buf);
-> +        }
-> +    }
+> +DEFINE_STORE(u8, uint8_t, 0xf1)
+> +DEFINE_LOAD(u8, uint8_t, 0xf1)
+> +DEFINE_STORE(u16, uint16_t, 0xf123)
+> +DEFINE_LOAD(u16, uint16_t, 0xf123)
+> +DEFINE_STORE(u32, uint32_t, 0xff112233)
+> +DEFINE_LOAD(u32, uint32_t, 0xff112233)
 > +
-> +    g_string_append_printf(buf, "XIVE[%x] #%d NVCT %08x .. %08x\n",
-> +                          chip_id, blk, 0, XIVE2_NVP_COUNT - 1);
-> +    entries_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVC);
-> +    for (i = 0; i < XIVE2_NVP_COUNT; i += entries_per_subpage) {
-> +        while (!xive2_router_get_nvgc(xrtr, true, blk, i, &nvgc)) {
-> +            xive2_nvgc_pic_print_info(&nvgc, i++, buf);
-> +        }
-> +    }
->   }
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 034baabf1e..9d19273bc8 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -43,6 +43,51 @@ static uint64_t xive2_nvp_reporting_addr(Xive2Nvp *nvp)
->       return cache_addr;
->   }
->   
-> +static uint32_t xive2_nvgc_get_backlog(Xive2Nvgc *nvgc, uint8_t priority)
+> +#if defined(__x86_64__) || defined(__aarch64__)
+> +DEFINE_STORE(u64, uint64_t, 0xf123456789abcdef)
+> +DEFINE_LOAD(u64, uint64_t, 0xf123456789abcdef)
+> +
+> +static void print_expected_store_u128(void)
 > +{
-> +    uint32_t val = 0;
-> +    uint8_t *ptr, i;
+> +    PRINT_EXPECTED(store_u128, __int128,
+> +                   "0xf122334455667788f123456789abcdef", "store");
+> +}
 > +
-> +    if (priority > 7) {
-> +        return 0;
-> +    }
+> +static void store_u128(void)
+> +{
+> +#ifdef __x86_64__
+> +    _mm_store_si128(data, _mm_set_epi32(0xf1223344, 0x55667788,
+> +                                        0xf1234567, 0x89abcdef));
+> +#else
+> +    const uint32_t init[4] =3D {0x89abcdef, 0xf1234567, 0x55667788, 0xf1=
+223344};
+> +    uint32x4_t vec =3D vld1q_u32(init);
+> +    vst1q_u32(data, vec);
+> +#endif /* __x86_64__ */
+> +    print_expected_store_u128();
+> +}
 > +
+> +static void print_expected_load_u128(void)
+> +{
+> +    PRINT_EXPECTED(load_u128, __int128,
+> +                   "0xf122334455667788f123456789abcdef", "load");
+> +}
+> +
+> +static void load_u128(void)
+> +{
+> +#ifdef __x86_64__
+> +    __m128i var =3D _mm_load_si128(data);
+> +#else
+> +    uint32x4_t var =3D vld1q_u32(data);
+> +#endif
+> +    (void) var;
+> +    print_expected_load_u128();
+> +}
+> +#endif /* __x86_64__ || __aarch64__ */
+> +
+> +#if defined(__x86_64__)
+> +DEFINE_ATOMIC_OP(u8, uint8_t, 0xf1)
+> +DEFINE_ATOMIC_OP(u16, uint16_t, 0xf123)
+> +DEFINE_ATOMIC_OP(u32, uint32_t, 0xff112233)
+> +DEFINE_ATOMIC_OP(u64, uint64_t, 0xf123456789abcdef)
+> +#endif /* __x86_64__ */
+> +
+> +static void *f(void *p)
+> +{
+> +    return NULL;
+> +}
+> +
+> +int main(void)
+> +{
 > +    /*
-> +     * The per-priority backlog counters are 24-bit and the structure
-> +     * is stored in big endian
+> +     * We force creation of a second thread to enable cpu flag CF_PARALL=
+EL.
+> +     * This will generate atomic operations when needed.
 > +     */
-> +    ptr = (uint8_t *)&nvgc->w2 + priority * 3;
-> +    for (i = 0; i < 3; i++, ptr++) {
-> +        val = (val << 8) + *ptr;
-
-I see these values are not word aligned. Using be32_to_cpu() would have
-been clearer though.
-
-> +    }
-> +    return val;
-> +}
+> +    pthread_t thread;
+> +    pthread_create(&thread, NULL, &f, NULL);
+> +    pthread_join(thread, NULL);
 > +
-> +__attribute__((unused))
-> +static void  xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
-> +                                   uint32_t val)
-
-please drop this routine if unused.
-
+> +    /* allocate storage up to 128 bits */
+> +    data =3D malloc(16);
+> +
+> +    store_u8();
+> +    load_u8();
+> +
+> +    store_u16();
+> +    load_u16();
+> +
+> +    store_u32();
+> +    load_u32();
+> +
+> +#if defined(__x86_64__) || defined(__aarch64__)
+> +    store_u64();
+> +    load_u64();
+> +
+> +    store_u128();
+> +    load_u128();
+> +#endif /* __x86_64__ || __aarch64__ */
+> +
+> +#if defined(__x86_64__)
+> +    atomic_op_u8();
+> +    atomic_op_u16();
+> +    atomic_op_u32();
+> +    atomic_op_u64();
+> +#endif /* __x86_64__ */
+> +
+> +    free(data);
+> +}
+> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Ma=
+kefile.target
+> index 5e3391ec9d2..d90cbd3e521 100644
+> --- a/tests/tcg/multiarch/Makefile.target
+> +++ b/tests/tcg/multiarch/Makefile.target
+> @@ -170,5 +170,12 @@ run-plugin-semiconsole-with-%:
+>  TESTS +=3D semihosting semiconsole
+>  endif
+>=20=20
+> +# Test plugin memory access instrumentation
+> +run-plugin-test-plugin-mem-access-with-libmem.so: \
+> +	PLUGIN_ARGS=3D$(COMMA)print-accesses=3Dtrue
+> +run-plugin-test-plugin-mem-access-with-libmem.so: \
+> +	CHECK_PLUGIN_OUTPUT_COMMAND=3D \
+> +	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-mem-access.sh
+> +
+>  # Update TESTS
+>  TESTS +=3D $(MULTIARCH_TESTS)
+> diff --git a/tests/tcg/multiarch/check-plugin-mem-access.sh b/tests/tcg/m=
+ultiarch/check-plugin-mem-access.sh
+> new file mode 100755
+> index 00000000000..909606943bb
+> --- /dev/null
+> +++ b/tests/tcg/multiarch/check-plugin-mem-access.sh
+> @@ -0,0 +1,30 @@
+> +#!/usr/bin/env bash
+> +
+> +set -euo pipefail
+> +
+> +die()
 > +{
-> +    uint8_t *ptr, i;
-> +    uint32_t shift;
-> +
-> +    if (priority > 7) {
-> +        return;
-> +    }
-> +
-> +    if (val > 0xFFFFFF) {
-> +        val = 0xFFFFFF;
-> +    }
-> +    /*
-> +     * The per-priority backlog counters are 24-bit and the structure
-> +     * is stored in big endian
-> +     */
-> +    ptr = (uint8_t *)&nvgc->w2 + priority * 3;
-> +    for (i = 0; i < 3; i++, ptr++) {
-> +        shift = 8 * (2 - i);
-> +        *ptr = (val >> shift) & 0xFF;
-> +    }
+> +    echo "$@" 1>&2
+> +    exit 1
 > +}
 > +
->   void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf)
->   {
->       if (!xive2_eas_is_valid(eas)) {
-> @@ -189,6 +234,23 @@ void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf)
->       g_string_append_c(buf, '\n');
->   }
->   
-> +void xive2_nvgc_pic_print_info(Xive2Nvgc *nvgc, uint32_t nvgc_idx, GString *buf)
+> +check()
 > +{
-> +    uint8_t i;
-> +
-> +    if (!xive2_nvgc_is_valid(nvgc)) {
-> +        return;
-> +    }
-> +
-> +    g_string_append_printf(buf, "  %08x PGoNext:%02x bklog: ", nvgc_idx,
-> +                           xive_get_field32(NVGC2_W0_PGONEXT, nvgc->w0));
-> +    for (i = 0; i <= XIVE_PRIORITY_MAX; i++) {
-> +        g_string_append_printf(buf, "[%d]=0x%x ",
-> +                               i, xive2_nvgc_get_backlog(nvgc, i));
-> +    }
-> +    g_string_append_printf(buf, "\n");
+> +    file=3D$1
+> +    pattern=3D$2
+> +    grep "$pattern" "$file" > /dev/null || die "\"$pattern\" not found i=
+n $file"
 > +}
 > +
->   static void xive2_end_enqueue(Xive2End *end, uint32_t data)
->   {
->       uint64_t qaddr_base = xive2_end_qaddr(end);
-> @@ -600,6 +662,24 @@ int xive2_router_write_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->      return xrc->write_nvp(xrtr, nvp_blk, nvp_idx, nvp, word_number);
->   }
->   
-> +int xive2_router_get_nvgc(Xive2Router *xrtr, bool crowd,
-> +                          uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                          Xive2Nvgc *nvgc)
+> +[ $# -eq 1 ] || die "usage: plugin_out_file"
+> +
+> +plugin_out=3D$1
+> +
+> +expected()
 > +{
-> +   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
-> +
-> +   return xrc->get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, nvgc);
+> +    ./test-plugin-mem-access ||
+> +        die "running test-plugin-mem-access executable failed"
+
+I'm confused by this. We seem to be running the test again and this is
+going to fail if binfmt_misc isn't setup (which we don't assume for
+running the TCG tests).
+
 > +}
 > +
-> +int xive2_router_write_nvgc(Xive2Router *xrtr, bool crowd,
-> +                            uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                            Xive2Nvgc *nvgc)
-> +{
-> +   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
-> +
-> +   return xrc->write_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, nvgc);
-> +}
-> +
->   /*
->    * The thread context register words are in big-endian format.
->    */
+> +expected | while read line; do
+> +    check "$plugin_out" "$line"
+> +done
 
-
-
-Thanks,
-
-C.
-
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
