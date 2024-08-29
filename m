@@ -4,75 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73EE4C83F15
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3104DC83F16
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjebS-0008OE-QI; Thu, 29 Aug 2024 08:50:18 -0400
+	id 1sjejL-0005Hy-Uh; Thu, 29 Aug 2024 08:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjebR-0008NH-GM
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:50:17 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjebP-0003OV-KT
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:50:17 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a866cea40c4so69090066b.0
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 05:50:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724935813; x=1725540613; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2wRSRQffSI3jvGx4sR+FNXzobzhljUOnvnpFox4nMKE=;
- b=RwtSw+I1ZuCa3XwzZBIdEMDDwFwcmwYgmTr3UP/LWxcrbi2M4Ro1IuhaU1lLXNDtCz
- qp7vgOwTOukPjTIHdaBGMLjRnp91n2ZeJlczpS3a8nLiWP/W8jRu5CJSCxjw4F30legr
- QRI0TT52UHFtyAvog+ODrlfeZNBSXtcDxELCAKGeoijwfKQUk2ESqlxfMKjrou/uQ+uq
- HHaHJVQim/poyCLXrbviccJ9hQzOJ4+5/VaKHQ+cUj0yprRq2CA6E+WCmcgLmfeY8b/s
- RqD9cA6VGm4SiznQ3PlhOeb06M9kfme37jQHdQZF77RCzWTk07eJxC6S6gXzNHMCgBkW
- 3/Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724935813; x=1725540613;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2wRSRQffSI3jvGx4sR+FNXzobzhljUOnvnpFox4nMKE=;
- b=sqOeaV3Sl39QsZQh2bsX9aHIZhl8JhIzQxQ8+ca0NWJl+08o+Y8KpvepwjeUuvG2eS
- 2ikiyHE9vA+tyvMUIlo7O71nZKTO6rhGbYZI15Ha+6yaTK1YMlM8k+1CWu4LwkxmBWAC
- oKj+KaYD6RK0GfU/hRLtgdCQbIvn3BgTOe6LPZwuTtBbM2ejIFpuGR6LvWBSXVbPFx2i
- nZdmTKtYjDxz5GwKJb1CQ9fYLx14xvB1/X+1Bdi7O0RM/bJS3XZObFy0ZMpF2TDE6M6u
- JY+Ddk3rAQRdJkOLTmxU8j20qsYJFdrzNuNDF6Pkkb1duvWTk7whNqM2XnFBTkxuLmxT
- 1Cig==
-X-Gm-Message-State: AOJu0Yyvou1LD31OnblMT1TO+Vt4XX0sI2LfHveV//DEO8EooNgxldhD
- fJpE2VQK6k1MP/HpesXVcmXPnUwy6mJrvRYLqq/r6d4OqV5Sazkd6O4oloZK9gxyRjfY7vVw3dm
- r6PsZoKjcYM/YFh6XBw0w+c+V6mY8HMHY2bTTbw==
-X-Google-Smtp-Source: AGHT+IEsvJzLk6edFPQgUf+ojCTi7/5sj2WOgy5fdEQI6A0SdJv3GO12cTLoUXUSnczWoG++kPwdFK9IX/kAKi7q7Hw=
-X-Received: by 2002:a17:907:d8c:b0:a86:a30f:4b0d with SMTP id
- a640c23a62f3a-a897f930927mr259336266b.38.1724935813430; Thu, 29 Aug 2024
- 05:50:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
+ id 1sjejL-0005H2-1J; Thu, 29 Aug 2024 08:58:27 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
+ id 1sjejI-0003vc-77; Thu, 29 Aug 2024 08:58:26 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WvhCt6ZsCz4x0t;
+ Thu, 29 Aug 2024 22:58:18 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WvhCr26LBz4wxH;
+ Thu, 29 Aug 2024 22:58:15 +1000 (AEST)
+Message-ID: <6e71ef7d-3a69-41bf-ab29-345f47a396d3@kaod.org>
+Date: Thu, 29 Aug 2024 14:58:12 +0200
 MIME-Version: 1.0
-References: <20240828005019.57705-1-sebastian.huber@embedded-brains.de>
-In-Reply-To: <20240828005019.57705-1-sebastian.huber@embedded-brains.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Aug 2024 13:50:02 +0100
-Message-ID: <CAFEAcA-p+CBeKTgH-YXzrATKDpwG5iY+A3WGaVkbEeHCXxTzug@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/xilinx_zynq: Enable Security Extensions
-To: Sebastian Huber <sebastian.huber@embedded-brains.de>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/13] pnv/xive: Update PIPR when updating CPPR
+To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240801203008.11224-1-kowal@linux.ibm.com>
+ <20240801203008.11224-12-kowal@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240801203008.11224-12-kowal@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=t/gt=P4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,49 +67,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Aug 2024 at 01:51, Sebastian Huber
-<sebastian.huber@embedded-brains.de> wrote:
->
-> The system supports the Security Extensions (core and GIC).  This change is
-> necessary to run tests which pass on the real hardware.
->
-> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
-
-(Added the maintainers to cc.)
-
-Does the system have any secure-only devices, RAM, etc?
-
-How much testing have you done with this change? (The main
-reason we disabled has-el3 on this board back in 2014 was
-as a backwards-compatibility thing when we added EL3 support
-to the CPU model -- we didn't have a ton of images for the
-board so we erred on the safe side of not changing the
-behaviour to avoid potentially breaking existing guest code.)
-
+On 8/1/24 22:30, Michael Kowal wrote:
+> From: Glenn Miles <milesg@linux.vnet.ibm.com>
+> 
+> Current code was updating the PIPR inside the xive_tctx_accept() function
+> instead of the xive_tctx_set_cppr function, which is where the HW would
+> have it updated.
+> 
+> Moved the update to the xive_tctx_set_cppr function which required
+> additional support for pool interrupts.
+> 
+> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->  hw/arm/xilinx_zynq.c | 8 --------
->  1 file changed, 8 deletions(-)
->
-> diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-> index 3c56b9abe1..37c234f5ab 100644
-> --- a/hw/arm/xilinx_zynq.c
-> +++ b/hw/arm/xilinx_zynq.c
-> @@ -219,14 +219,6 @@ static void zynq_init(MachineState *machine)
->      for (n = 0; n < smp_cpus; n++) {
->          Object *cpuobj = object_new(machine->cpu_type);
->
-> -        /*
-> -         * By default A9 CPUs have EL3 enabled.  This board does not currently
-> -         * support EL3 so the CPU EL3 property is disabled before realization.
-> -         */
-> -        if (object_property_find(cpuobj, "has_el3")) {
-> -            object_property_set_bool(cpuobj, "has_el3", false, &error_fatal);
-> -        }
-> -
->          object_property_set_int(cpuobj, "midr", ZYNQ_BOARD_MIDR,
->                                  &error_fatal);
->          object_property_set_int(cpuobj, "reset-cbar", MPCORE_PERIPHBASE,
+>   hw/intc/xive.c | 34 ++++++++++++++++++++++++++++++++--
+>   1 file changed, 32 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index 5c4ca7f6e0..d951aac3a0 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -89,7 +89,6 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
+>   
+>           /* Reset the pending buffer bit */
+>           aregs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
+> -        regs[TM_PIPR] = ipb_to_pipr(aregs[TM_IPB]);
+>   
+>           /* Drop Exception bit */
+>           regs[TM_NSR] &= ~mask;
+> @@ -143,6 +142,8 @@ void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
+>   static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+>   {
+>       uint8_t *regs = &tctx->regs[ring];
+> +    uint8_t pipr_min;
+> +    uint8_t ring_min;
+>   
+>       trace_xive_tctx_set_cppr(tctx->cs->cpu_index, ring,
+>                                regs[TM_IPB], regs[TM_PIPR],
+> @@ -154,8 +155,37 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+>   
+>       tctx->regs[ring + TM_CPPR] = cppr;
+>   
+> +    /*
+> +     * Recompute the PIPR based on local pending interrupts.  The PHYS
+> +     * ring must take the minimum of both the PHYS and POOL PIPR values.
+> +     */
+> +    pipr_min = ipb_to_pipr(regs[TM_IPB]);
+> +    ring_min = ring;
+> +
+> +    /* PHYS updates also depend on POOL values */
+> +    if (ring == TM_QW3_HV_PHYS) {
+> +        uint8_t *pregs = &tctx->regs[TM_QW2_HV_POOL];
 
-thanks
--- PMM
+'pool_regs' would be clearer
+
+> +
+> +        /* POOL values only matter if POOL ctx is valid */
+> +        if (pregs[TM_WORD2] & 0x80) {
+> +
+> +            uint8_t pool_pipr = ipb_to_pipr(pregs[TM_IPB]);
+> +
+> +            /*
+> +             * Determine highest priority interrupt and
+> +             * remember which ring has it.
+> +             */
+> +            if (pool_pipr < pipr_min) {
+> +                pipr_min = pool_pipr;
+> +                ring_min = TM_QW2_HV_POOL;
+> +            }
+> +        }
+> +    }
+> +
+> +    regs[TM_PIPR] = pipr_min;
+> +
+>       /* CPPR has changed, check if we need to raise a pending exception */
+> -    xive_tctx_notify(tctx, ring);
+> +    xive_tctx_notify(tctx, ring_min);
+>   }
+>   
+>   void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb)
+
 
