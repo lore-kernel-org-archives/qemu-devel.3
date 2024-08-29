@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81277C83F2D
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 15:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C019C83F2D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 15:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjhQ9-0006TX-W8; Thu, 29 Aug 2024 11:50:50 -0400
+	id 1sjhSY-0002GV-Jo; Thu, 29 Aug 2024 11:53:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjhQ5-0006Rn-Bc
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:50:46 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1sjhSX-0002FQ-Et
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:53:17 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjhQ3-0002OL-Kw
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:50:45 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a866d3ae692so50443366b.0
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 08:50:41 -0700 (PDT)
+ id 1sjhSV-0002d0-HU
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:53:17 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5c07eebf29eso395683a12.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 08:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724946640; x=1725551440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724946793; x=1725551593; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sDzdYnFnLpA5ZwUifCBHYZokw3Cn95gQWDGm5vrk9vk=;
- b=TB9mk4cSY1JDZ/3ta1GIL4Jx6+ZrssTEhF3O2Qnz4z4/Q+iyn87NbFsVF2kiGm61cj
- 0MxAG72edSzIJoaJiF2iLo8CshGGFJLpC4hXKhTHd9OfCwsAtWdnPzWuWSdXMynUC1hW
- RRDHn7xJxwMLC82dG1vXueqGbBiiixt+8GzFwtYYTLlV6I6YbxfhFpJyXDrenwzyuJ+4
- nm9wflhbutE0HccGCwdDE3hWHh4BlVGvdB6Nz63Mf3ZtScbJlHwiPXNJpspdRwIh00xb
- gkgiZAHmE3nViu7mNQ+87s+gpxhBaL5YYWWvfwHLPHPkHexnIv+93bRlObZbsDJKJ1ni
- eMuw==
+ bh=McawBfqRY/ikDHmMAVLzXkGHHa+mdW6v+TRFQwiw2w4=;
+ b=I+mOcSwlvhd0dYULPplX+3XNgIEnsNspLOA8ylosk5ksqDXGKcbIE0cVXWgIQo2OhE
+ 8BIE/2AGRJCyOZ+GuPR4hV/eOEvUe1/FrWjeylBI/iy8m/VRmWgdtylioRW5+TDFr9EI
+ Ek1lWiDnLovXZFJsx4mTlZ6Lege4ooYD2IjYWbmBPRYFOqwdQha68NC0sY3EHIEhM49K
+ pxQx/zpAos7YP5y0a2TssnR1fu+G+hyUl0YjZwaA7kviujuWTn1HZfIBWOwl9psqIvAh
+ J1q12vWcWxeZEgQCeL8m8jPUDLMwe0J1Yplr1Yc9XLnAndz2ZMuIRlrHQpAvRTmaOmlb
+ bMmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724946640; x=1725551440;
+ d=1e100.net; s=20230601; t=1724946793; x=1725551593;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sDzdYnFnLpA5ZwUifCBHYZokw3Cn95gQWDGm5vrk9vk=;
- b=gfhIGgcMv3Q202oqI6WsHN2qSHAFRTxGio5OBYKT3MbwNjjUCy+TbGm/jLjbO2IzrX
- b+PZWKeBYfq13YygKZM9LmfekyZuxpLBpxGiElGDYZOtIn4ADAvbvp8SUhi+jFAJCAEr
- 0S6X6KZljuHEvJS7SN+Ge6qWSLahyVvkFGqK98D6xJyBO8vVQEZeFTWE4XmK82HmsaEz
- 099LE+g4zw+9Zsxw78rg65vTCu//XhRw1xaS7v5b3usnaHL3IZ47bodhlkLPbefbnYRg
- fDC2AYqESBxrGRLz7Anp+P73U1LdzmtBsgWDvQVUr0Yw1NGBmoFyZd5E0DC8heSM9WZw
- zj5Q==
+ bh=McawBfqRY/ikDHmMAVLzXkGHHa+mdW6v+TRFQwiw2w4=;
+ b=jSdNAMQ7IqJtNAAP6gNfvY6F4KSNXqzWcO1MA5geEqlYjfyIj0kfDKPPkL2bIT+K5o
+ NmHk92//642Ji8i9qQSCwbsfjH1a6Ir1vhm1O5gDD9eb5zhY+rHuvtyzQq8fMVy1vI9U
+ tMoSMc+Wg/80Q9bL7W7e4X1DdQJtIMzUIyjIwepDwL16N0LBEQjGQVJFYIJ5t4u+/oRU
+ Xa9uRmQb4Ltvy7aesZibDT8r3ILgKSiGyhAVm5vSQ5eKlEZoQAmovjfEaZtk8Qvnj1Df
+ 7jFfOxmLW9Z7S501kEWfPqDOOeeubI6vEGqF8amUHeSVLGvSgt7pvyAjt0/j1VdwmgOP
+ wzuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLoB//X3IYGGM1NflL3wZ6lfHvdre5AZccGF9gqcXwsgw2Fz8Dx6tF65XQmpDUuttmsQ/fy3RPtSha@nongnu.org
-X-Gm-Message-State: AOJu0YwQaVv9KrAcHTGy9qj3wZmmwq//jF3IoOFQlKfOS4TSNnpeHmLm
- Kc+vvJTchsLi8TI3w2b12s94ZEbhvMLyWesVDC+n4+fIHUa+Sn1vppj/PIJB2zGlZfqlzDDn9DU
- h+NCwn/GR6pNXfUlhS17TpToeKYgGOfjpU87IiQ==
-X-Google-Smtp-Source: AGHT+IEpgiCdMuYtCNR81ph47XSGNak7jXRVQU/Rm9vT0wcQDh8UCTrodbS9lMQTOgskN/1gtX6mV1a0rdROZEadVow=
-X-Received: by 2002:a05:6402:2554:b0:5c0:ad36:284e with SMTP id
- 4fb4d7f45d1cf-5c21ed3e9admr4006267a12.12.1724946640253; Thu, 29 Aug 2024
- 08:50:40 -0700 (PDT)
+ AJvYcCUNSLbYdqiT45LbqOY0/qU8uUhYlpjyCxUXs9cPPqPDy9j1J+LYer7EK22iV49hNlkrCXynGJmaGLrA@nongnu.org
+X-Gm-Message-State: AOJu0Yz9T7dKGVX6UVpMqOs+faguUL/4U3X9Q8zQlDIBbUqaDpZUsTP0
+ pFNE09SQm1AkbrG5a7yEI2dJPkBvhOBwiC5RPYMj5z40A8hLikKfXuj3dKg4UbL9+WYBT5i6YLc
+ 1J5wmfc4GXafx6Vwbs1VP2rm+Sj2+/blwacbgFg==
+X-Google-Smtp-Source: AGHT+IELWfEmDqstFZYAgfBK7egFvQR/iynp0xEehtWhA4pZOtqyX8HQQ2hUDsmagwIkfnpPj9kSavV+/27WG/kUyyM=
+X-Received: by 2002:a05:6402:40ce:b0:58b:1a5e:c0e7 with SMTP id
+ 4fb4d7f45d1cf-5c21eda0d11mr4408482a12.35.1724946793246; Thu, 29 Aug 2024
+ 08:53:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240813153922.311788-1-jmarcin@redhat.com>
- <20240813153922.311788-3-jmarcin@redhat.com>
- <CAFEAcA9BWOkSmNh_b7HcNgfD429L1iLrjYTHWBJKDP2dJYCjCA@mail.gmail.com>
- <CAC2qdxAfvKubvO7fs4KF8dy_+Ad5kbAaxyn2P0FCDL-zkhEiMw@mail.gmail.com>
- <6ab58af7-3584-40b5-b56c-45544a06c7af@redhat.com>
- <CAFEAcA-NogX_8Phq_7YZuL1eGKeHbnowPzQoTo3P+8Sur=Xbsw@mail.gmail.com>
- <CAC2qdxCJ3=OzAsnM-paMUmvGAMau2Mc_OxNjxpP3T-F=69Boaw@mail.gmail.com>
- <fe5dbb5b-d744-476b-a574-65c5860faf28@redhat.com>
-In-Reply-To: <fe5dbb5b-d744-476b-a574-65c5860faf28@redhat.com>
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
+ <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
+ <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
+ <172467410002.31767.12365606864399178508@t14-nrb.local>
+ <172483282308.162301.11735420619446380771@t14-nrb.local>
+In-Reply-To: <172483282308.162301.11735420619446380771@t14-nrb.local>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Aug 2024 16:50:28 +0100
-Message-ID: <CAFEAcA-uaOttk5wVPYDy-EKo2X4kxjHsq8D-Hm43nSt5jtFDGA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] reset: Add RESET_TYPE_WAKEUP
-To: David Hildenbrand <david@redhat.com>
-Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
+Date: Thu, 29 Aug 2024 16:53:02 +0100
+Message-ID: <CAFEAcA9c1pAE7gttju5ib470ZhEMjd1=UMjLuhS+gXohnLs=Xw@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw, cpu to
+ three-phase reset, and followup cleanup
+To: Nico Boehr <nrb@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Michael Mueller <mimu@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,38 +103,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Aug 2024 at 16:48, David Hildenbrand <david@redhat.com> wrote:
+On Wed, 28 Aug 2024 at 09:13, Nico Boehr <nrb@linux.ibm.com> wrote:
 >
-> > I have rewritten the documentation section to make it more explicit
-> > that the reset might not happen. I would appreciate feedback if some
-> > part still needs some care or if it is clear now.
-> >
-> >    If the machine supports waking up from a suspended state and needs to
-> >    reset its devices during wake-up (from ``MachineClass::wakeup()``
-> >    method), this reset type should be used for such a request. Devices
-> >    can utilize this reset type to differentiate the reset requested
-> >    during machine wake-up from other reset requests. For example, a
-> >    virtio-mem device must not unplug its memory blocks during wake-up as
-> >    the contents of the guest RAM would get lost. However, this reset type
-> >    should not be used for wake-up detection, as not every machine type
-> >    issues a device reset request during wake-up.
+> Quoting Nico Boehr (2024-08-26 14:08:20)
+> > There was a little hickup without the fixup to patch 2, but after Nina
+> > pushed the fixup, we did not observe any failures related to your
+> > changes in our CI. Thanks!
 >
-> Sounds good to me.
+> Peter, after a few CI runs, we unfortunately did find some issues with your
+> patch :-(
 >
-> I'd probably generalize the virtio-mem bit to:
+> Rebooting a guest in a loop sometimes fails. Michael was able to bisect it
+> to your series.
 >
-> "For example, RAM content must not be lost during wake-up, and memory
-> devices like virtio-mem that provide additional RAM must not reset such
-> state during wake-ups, but might do so during cold resets."
+> The problem is intermittent. The guest is unable to load its initramfs:
 >
+>   [    0.560674] rootfs image is not initramfs (no cpio magic); looks like an initrd
+>   [    0.588605] Freeing initrd memory: 95680K
+>   [    0.593143] md: Waiting for all devices to be available before autodetect
+>   [    0.593144] md: If you don't use raid, use raid=noautodetect
+>   [    0.593145] md: Autodetecting RAID arrays.
+>   [    0.593146] md: autorun ...
+>   [    0.593147] md: ... autorun DONE.
+>   [    0.593156] RAMDISK: gzip image found at block 0
+>   [    0.609110] RAMDISK: incomplete write (29120 != 32768)
+>   [    0.609113] write error
 >
-> @Peter, WDYT?
+> ...and then a panic because the kernel doesn't find a rootfs.
 
-Yep, seems good to me: I think it's clear about when this
-reset type happens and what you can/can't expect from it.
+I repro'd *something*, but it wasn't quite this. I got:
 
-Minor grammar nit: should be
-"from the ``MachineClass::wakeup()`` method".
 
+[    4.691853] clk: Disabling unused clocks
+[    4.695419] Freeing unused kernel image (initmem) memory: 6520K
+[    4.695430] Write protected read-only-after-init data: 144k
+[    4.695834] Checked W+X mappings: passed, no unexpected W+X pages found
+[    4.695849] Run /init as init process
+/init: error while loading shared libraries: libgcc_s.so.1: cannot
+open shared object file: No such file or directory
+[    4.697009] Kernel panic - not syncing: Attempted to kill init!
+exitcode=0x00007f00
+[    4.697030] CPU: 0 PID: 1 Comm: init Not tainted 6.8.5-301.fc40.s390x #1
+[    4.697035] Hardware name: IBM 8561 LT1 400 (KVM/Linux)
+[    4.697040] Call Trace:
+[    4.697047]  [<000000007ab6ae36>] dump_stack_lvl+0x66/0x88
+[    4.697081]  [<0000000079e17c2a>] panic+0x312/0x328
+[    4.697096]  [<0000000079e1de84>] do_exit+0x8a4/0xae8
+[    4.697101]  [<0000000079e1e2e0>] do_group_exit+0x40/0xb8
+[    4.697103]  [<0000000079e1e386>] __s390x_sys_exit_group+0x2e/0x30
+[    4.697105]  [<000000007ab9526a>] __do_syscall+0x252/0x2c0
+[    4.697113]  [<000000007aba8840>] system_call+0x70/0x98
+
+Which I guess could be caused by a different corruption
+of the initramfs ?
+
+thanks
 -- PMM
 
