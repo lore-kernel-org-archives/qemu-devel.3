@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD47C7EE3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 08:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 986D5C8300F
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 08:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjahN-0000M7-IN; Thu, 29 Aug 2024 04:40:09 -0400
+	id 1sjajp-0005K7-EA; Thu, 29 Aug 2024 04:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sjahM-0000KW-99
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:40:08 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sjajn-0005Iy-L6
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:42:39 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sjahK-0008Vt-HS
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:40:08 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5bed68129a7so446321a12.2
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 01:40:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sjajl-0000A2-GC
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:42:39 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2d3bc043e81so309234a91.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 01:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1724920804; x=1725525604; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1724920953; x=1725525753; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mbWbqYoyluppncMW0T7AjEVIwxQPlFi/vO8bJwXgZ6c=;
- b=fjZJ+RIFMe1XbnO+EUD+VCwg3d2XLjxxAbbbbbG3W8JL20YlihCvFsxJpwVTReueHz
- VybLMzST4ccQuuaCWFMr0BLn6Hh09z2bv9ELcIsgovl4oT/fniQNo16CedlDVblGdx0V
- oy9wDlKK6Ko2Q+lXJscK8gd0uT0yQfJIHvJt3a2kX2Oeau60KclWslrMb/2P3iHYxo/o
- TAgm2sk086HcVOM2ruJ89vRA96KBagVGdHSp5AXph5PYiOAw8FLmoMVhM+TJJmYUWAp+
- R6ZGGfU7m1kvUFEjxsJTtV3akr8GXpDb6YG6W4XHnMw00YNuScTQx3vXv+PfJ3iGyIfG
- VrQg==
+ bh=9pujDbo0lkszsHv41sSuVtbF7Up1CXVHOfpXCOvwjn4=;
+ b=GLNp6Bzl/A09l0Sg7tfQqPciZhEtDX+FzAQ4gAvkJoSGt5ftxCAV32M3YlJg1/S54h
+ kymn5/zEal4ViCGLZH9g4HyBUSTn4zbE36e+68pMXTIkI17+1zFRE1cuRMpKS9eNkKfT
+ GA8YAl4ejSREJksYTTGGoh8TGUtbRaPrfV6awn1S2WKNf8xohzlpM5FIivgystJE/1eR
+ PHuaQ7vAgnKgB4TB6gQ8zIJ2xL5gr2c0UsWaWyBLaxBtPYuhIplvDtBo9JnsAweLpRho
+ fi2CYNmmEO2m3YDkSxG1C7alZ0xggMa/77RFw8++0G0Qb9U8Y8cEFTvhMAeMyRS5dvX1
+ H1Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724920804; x=1725525604;
+ d=1e100.net; s=20230601; t=1724920953; x=1725525753;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mbWbqYoyluppncMW0T7AjEVIwxQPlFi/vO8bJwXgZ6c=;
- b=rtMrO25w9z+ezTo2rIe3Mxx6rHp+VtUqb3mDYObEGTBTU+A4k/rne05G27DABTRsAO
- EQF42tw6KWZhPIJdvPIhQ5y8spmviVZh8xVDElqj31NWvtN2+KeiBKPsBzXkpYQ6UHp3
- SBE48NA67MXF/pRpdqLbNsHnC4KMsGKxXcDoIvLz8ht3rxGIEjGRJ2Xve9x9LyPmlhwR
- 7lHzDOqA6fa27bHCNeRTsmxAdv8hK3YfhDen+8+wcBQ8M7RACubu0VKIvOcvX9FWU3aG
- IFfg20JwlMbAS8rFP6P8vFpAnv28KS0gXIKDcLKVTkhtEbfe1pNwtMJw5sUNetSgAdGb
- kQDg==
-X-Gm-Message-State: AOJu0YySd5vGIlyXLDu+BtLmYR7u7mwD/jTKrpLhm1bTQFfd1cCSklJM
- gsTQJTelN3CH0q8VBvWyWwZZYPHZHIUUp/29FY5ltGHbSI/j5nZeUs+52pq8dzHjYTMY4QrxHQj
- OjpQ=
-X-Google-Smtp-Source: AGHT+IFnKVvj42PDH+02HJVgSs1VoNY05sXS7V13QqM9xpi37TZ3/5lYeh8H+bOXJM0eMyi2QdW0Dw==
-X-Received: by 2002:a17:907:2ce5:b0:a7a:9f0f:ab26 with SMTP id
- a640c23a62f3a-a897f83b149mr134684666b.23.1724920803893; 
- Thu, 29 Aug 2024 01:40:03 -0700 (PDT)
-Received: from localhost (cst2-173-13.cust.vodafone.cz. [31.30.173.13])
+ bh=9pujDbo0lkszsHv41sSuVtbF7Up1CXVHOfpXCOvwjn4=;
+ b=VEIEP96f4Ga1jbl5doBpyzvup/UJc1dqmCshsPFdSE1fEtMJiOlqPpbChr6ecEpanD
+ +lJxN+zfECHDSXdmqIoKNhOfrMrZysCmwhMsO3ksnZX6zDGzuMfHJcfM5XRfX3Tytq5z
+ v1z9icPWzKMfWg6JRlTOI0pIjYSLYQQ6qKHaE9xFGjVhNMSwqNZU8LPMva6dT8FKdRy7
+ zGtI55ruIiDEjO/UalBZO+BMGQSWPCrBInoEzPr/mN5OCrRBoilw0UEV2hCIyP5ySfj4
+ tbMBCBGR1fp+qCuSpT7Uij43SZLOQdhdquJnAz30OFDh9sbrYATvJhf4lKSOOCICDsls
+ GWvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0WaiLmEIATAfINk4kLe7NINhyN/vVTVEC8BSo/oeY1o0hJXc+iE3zYneLuXpt+HLNgQK3Cf78Q6v5@nongnu.org
+X-Gm-Message-State: AOJu0YyzxMFmRsVWWCwFfB2w/qPpd+G4nUpxYf0T8xT4Xsi2cmEG2uzy
+ VH3/oE10jhXt3YWr7pbYNO6LY/cXNtXp22oJYjI8Gv5vfd7QBh2gg+0Zy9ecU4ex1F1MA3bAJec
+ o
+X-Google-Smtp-Source: AGHT+IHt1dHqFB3lpvL1SuNyB6mjN7H6BO+C9MeKcHk2Ph6YNdvxOvZxYhbZ5nju2nG0/vNxeiypIQ==
+X-Received: by 2002:a17:90a:8409:b0:2d3:d4ca:62f6 with SMTP id
+ 98e67ed59e1d1-2d8564b3cf2mr1963586a91.42.1724920953231; 
+ Thu, 29 Aug 2024 01:42:33 -0700 (PDT)
+Received: from TF4D9JK212.bytedance.net ([61.213.176.6])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8988feb580sm48789866b.37.2024.08.29.01.40.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Aug 2024 01:40:03 -0700 (PDT)
-From: Andrew Jones <ajones@ventanamicro.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Anup Patel <apatel@ventanamicro.com>, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, atishp@rivosinc.com
-Subject: [PATCH] target/riscv: Stop timer with infinite timecmp
-Date: Thu, 29 Aug 2024 10:40:03 +0200
-Message-ID: <20240829084002.1805006-2-ajones@ventanamicro.com>
-X-Mailer: git-send-email 2.45.2
+ 98e67ed59e1d1-2d8446f3897sm3431856a91.49.2024.08.29.01.42.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 29 Aug 2024 01:42:32 -0700 (PDT)
+From: Changqi Lu <luchangqi.123@bytedance.com>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
+ kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com, k.jensen@samsung.com,
+ Changqi Lu <luchangqi.123@bytedance.com>
+Subject: [PATCH v10 00/10] Support persistent reservation operations
+Date: Thu, 29 Aug 2024 16:42:04 +0800
+Message-Id: <20240829084214.50548-1-luchangqi.123@bytedance.com>
+X-Mailer: git-send-email 2.39.2 (Apple Git-143)
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,38 +98,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the spec doesn't state it, setting timecmp to UINT64_MAX is
-another way to stop a timer, as it's considered setting the next
-timer event to occur at infinity. And, even if the time CSR does
-eventually reach UINT64_MAX, the very next tick will bring it back to
-zero, once again less than timecmp. For this reason
-riscv_timer_write_timecmp() special cases UINT64_MAX. However, if a
-previously set timecmp has not yet expired, then setting timecmp to
-UINT64_MAX to disable / stop it would not work, as the special case
-left the previous QEMU timer active, which would then still deliver
-an interrupt at that previous timecmp time. Ensure the stopped timer
-will not still deliver an interrupt by also deleting the QEMU timer
-in the UINT64_MAX special case.
+Hi,
 
-Fixes: ae0edf2188b3 ("target/riscv: No need to re-start QEMU timer when timecmp == UINT64_MAX")
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
----
- target/riscv/time_helper.c | 1 +
- 1 file changed, 1 insertion(+)
+Patch v10 has been modified, thanks to Klaus for the code review.
 
-diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-index 8d245bed3ae3..bc0d9a0c4c35 100644
---- a/target/riscv/time_helper.c
-+++ b/target/riscv/time_helper.c
-@@ -92,6 +92,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-      * equals UINT64_MAX.
-      */
-     if (timecmp == UINT64_MAX) {
-+        timer_del(timer);
-         return;
-     }
- 
+v9->v10:
+- When the driver does not support the pr operation, the error
+  code returned by nvme changes to Invalid Command Opcode.
+
+v8->v9:
+- Fix double-free and remove persistent reservation operations at nvme_is_write().
+
+v7->v8:
+- Fix num_keys may be less than 0 at scsi_pr_read_keys_complete().
+- Fix buf memory leak at iscsi driver.
+
+v6->v7:
+- Add buferlen size check at SCSI layer.
+- Add pr_cap calculation in bdrv_merge_limits() function at block layer,
+  so the ugly bs->file->bs->bl.pr_cap in scsi and nvme layers was
+  changed to bs->bl.pr_cap.
+- Fix memory leak at iscsi driver, and some other spelling errors.
+
+v5->v6:
+- Add relevant comments in the io layer.
+
+v4->v5:
+- Fixed a memory leak bug at hw/nvme/ctrl.c.
+
+v3->v4:
+- At the nvme layer, the two patches of enabling the ONCS
+  function and enabling rescap are combined into one.
+- At the nvme layer, add helper functions for pr capacity
+  conversion between the block layer and the nvme layer.
+
+v2->v3:
+In v2 Persist Through Power Loss(PTPL) is enable default.
+In v3 PTPL is supported, which is passed as a parameter.
+
+v1->v2:
+- Add sg_persist --report-capabilities for SCSI protocol and enable
+  oncs and rescap for NVMe protocol.
+- Add persistent reservation capabilities constants and helper functions for
+  SCSI and NVMe protocol.
+- Add comments for necessary APIs.
+
+v1:
+- Add seven APIs about persistent reservation command for block layer.
+  These APIs including reading keys, reading reservations, registering,
+  reserving, releasing, clearing and preempting.
+- Add the necessary pr-related operation APIs for both the
+  SCSI protocol and NVMe protocol at the device layer.
+- Add scsi driver at the driver layer to verify the functions
+
+Changqi Lu (10):
+  block: add persistent reservation in/out api
+  block/raw: add persistent reservation in/out driver
+  scsi/constant: add persistent reservation in/out protocol constants
+  scsi/util: add helper functions for persistent reservation types
+    conversion
+  hw/scsi: add persistent reservation in/out api for scsi device
+  block/nvme: add reservation command protocol constants
+  hw/nvme: add helper functions for converting reservation types
+  hw/nvme: enable ONCS and rescap function
+  hw/nvme: add reservation protocal command
+  block/iscsi: add persistent reservation in/out driver
+
+ block/block-backend.c             | 403 ++++++++++++++++++++++++++++
+ block/io.c                        | 164 ++++++++++++
+ block/iscsi.c                     | 423 ++++++++++++++++++++++++++++++
+ block/raw-format.c                |  56 ++++
+ hw/nvme/ctrl.c                    | 333 ++++++++++++++++++++++-
+ hw/nvme/ns.c                      |   5 +
+ hw/nvme/nvme.h                    |  88 +++++++
+ hw/scsi/scsi-disk.c               | 368 ++++++++++++++++++++++++++
+ include/block/block-common.h      |  40 +++
+ include/block/block-io.h          |  20 ++
+ include/block/block_int-common.h  |  84 ++++++
+ include/block/nvme.h              | 100 ++++++-
+ include/scsi/constants.h          |  52 ++++
+ include/scsi/utils.h              |   8 +
+ include/sysemu/block-backend-io.h |  24 ++
+ scsi/utils.c                      |  81 ++++++
+ 16 files changed, 2247 insertions(+), 2 deletions(-)
+
 -- 
-2.45.2
+2.20.1
 
 
