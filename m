@@ -4,53 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3104DC83F16
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531F7C83F16
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjejL-0005Hy-Uh; Thu, 29 Aug 2024 08:58:28 -0400
+	id 1sjesi-0002Hy-JI; Thu, 29 Aug 2024 09:08:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
- id 1sjejL-0005H2-1J; Thu, 29 Aug 2024 08:58:27 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=t/gt=P4=kaod.org=clg@ozlabs.org>)
- id 1sjejI-0003vc-77; Thu, 29 Aug 2024 08:58:26 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WvhCt6ZsCz4x0t;
- Thu, 29 Aug 2024 22:58:18 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sjesh-0002HF-0k
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:08:07 -0400
+Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sjesd-0004xL-JJ
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:08:06 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id CFEC139D6C;
+ Thu, 29 Aug 2024 15:07:57 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id imRQovtThQzF; Thu, 29 Aug 2024 15:07:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1724936875;
+ bh=MS+HAijVI95lz0e6SLIAjIVuMoSuJ0MkS1S0AmAIoOQ=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=VIR8pEiQPuYHdRHCWiRWIUoYXhICdm1H/Akn81f42+fIP04INRfJTvezJ7vNsWkYV
+ I3VENdR6m84EkQoEd7M/0h2VdFmHzcgdhNjx5XZIaAy63tetYCoShN93My+ARponbj
+ yLj+fhjmb1zr3E67UenbldLqY1Mqj/s3fDshE6Rz8TFeT47mBBkHxBSBgqgwph07BR
+ 1aBHHsMRPO28b8jYrKDLuq0mU7RiFJo1bq3QqiwN2udEMqPWYVp756dQ9x9VjtOMPK
+ VQS22Q94Gg0By2r0LaxJofqwVuikuW/l6lRh9TUERJHfbeuYA3vwgz8rCYSH8yL93w
+ Q29hYqNjx+8AA==
+Received: from [147.32.86.193] (unknown [147.32.86.193])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WvhCr26LBz4wxH;
- Thu, 29 Aug 2024 22:58:15 +1000 (AEST)
-Message-ID: <6e71ef7d-3a69-41bf-ab29-345f47a396d3@kaod.org>
-Date: Thu, 29 Aug 2024 14:58:12 +0200
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 3E4F539F68;
+ Thu, 29 Aug 2024 15:07:55 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Doug Brown <doug@schmorgal.com>
+Subject: Re: [PATCH v2 1/7] hw/net/can/xlnx-versal-canfd: Fix interrupt level
+Date: Thu, 29 Aug 2024 15:08:00 +0200
+User-Agent: KMail/1.9.10
+Cc: Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <bonzini@gnu.org>,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20240827034927.66659-1-doug@schmorgal.com>
+ <20240827034927.66659-2-doug@schmorgal.com>
+In-Reply-To: <20240827034927.66659-2-doug@schmorgal.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/13] pnv/xive: Update PIPR when updating CPPR
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240801203008.11224-1-kowal@linux.ibm.com>
- <20240801203008.11224-12-kowal@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240801203008.11224-12-kowal@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: Text/Plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=t/gt=P4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Disposition: inline
+Message-Id: <202408291508.00537.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-1.084,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,84 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/24 22:30, Michael Kowal wrote:
-> From: Glenn Miles <milesg@linux.vnet.ibm.com>
-> 
-> Current code was updating the PIPR inside the xive_tctx_accept() function
-> instead of the xive_tctx_set_cppr function, which is where the HW would
-> have it updated.
-> 
-> Moved the update to the xive_tctx_set_cppr function which required
-> additional support for pool interrupts.
-> 
-> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-> ---
->   hw/intc/xive.c | 34 ++++++++++++++++++++++++++++++++--
->   1 file changed, 32 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index 5c4ca7f6e0..d951aac3a0 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -89,7 +89,6 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
->   
->           /* Reset the pending buffer bit */
->           aregs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
-> -        regs[TM_PIPR] = ipb_to_pipr(aregs[TM_IPB]);
->   
->           /* Drop Exception bit */
->           regs[TM_NSR] &= ~mask;
-> @@ -143,6 +142,8 @@ void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
->   static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
->   {
->       uint8_t *regs = &tctx->regs[ring];
-> +    uint8_t pipr_min;
-> +    uint8_t ring_min;
->   
->       trace_xive_tctx_set_cppr(tctx->cs->cpu_index, ring,
->                                regs[TM_IPB], regs[TM_PIPR],
-> @@ -154,8 +155,37 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
->   
->       tctx->regs[ring + TM_CPPR] = cppr;
->   
-> +    /*
-> +     * Recompute the PIPR based on local pending interrupts.  The PHYS
-> +     * ring must take the minimum of both the PHYS and POOL PIPR values.
-> +     */
-> +    pipr_min = ipb_to_pipr(regs[TM_IPB]);
-> +    ring_min = ring;
-> +
-> +    /* PHYS updates also depend on POOL values */
-> +    if (ring == TM_QW3_HV_PHYS) {
-> +        uint8_t *pregs = &tctx->regs[TM_QW2_HV_POOL];
+On Tuesday 27 of August 2024 05:49:21 Doug Brown wrote:
+> The interrupt level should be 0 or 1. The existing code was using the
+> interrupt flags to determine the level. In the only machine currently
+> supported (xlnx-versal-virt), the GICv3 was masking off all bits except
+> bit 0 when applying it, resulting in the IRQ never being delivered.
+>
+> Signed-off-by: Doug Brown <doug@schmorgal.com>
+> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
-'pool_regs' would be clearer
+Reviewed-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
 
-> +
-> +        /* POOL values only matter if POOL ctx is valid */
-> +        if (pregs[TM_WORD2] & 0x80) {
-> +
-> +            uint8_t pool_pipr = ipb_to_pipr(pregs[TM_IPB]);
-> +
-> +            /*
-> +             * Determine highest priority interrupt and
-> +             * remember which ring has it.
-> +             */
-> +            if (pool_pipr < pipr_min) {
-> +                pipr_min = pool_pipr;
-> +                ring_min = TM_QW2_HV_POOL;
-> +            }
-> +        }
-> +    }
-> +
-> +    regs[TM_PIPR] = pipr_min;
-> +
->       /* CPPR has changed, check if we need to raise a pending exception */
-> -    xive_tctx_notify(tctx, ring);
-> +    xive_tctx_notify(tctx, ring_min);
->   }
->   
->   void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb)
 
+-- 
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
