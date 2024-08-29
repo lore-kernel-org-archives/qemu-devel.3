@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46541C83030
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 10:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBEEC83030
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 10:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjcND-0007p3-RX; Thu, 29 Aug 2024 06:27:27 -0400
+	id 1sjcUT-0004yr-LV; Thu, 29 Aug 2024 06:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjcNA-0007nr-Mg
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 06:27:24 -0400
+ id 1sjcUR-0004xA-RQ
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 06:34:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjcN6-0003bV-OZ
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 06:27:24 -0400
+ id 1sjcUM-0004Bm-MS
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 06:34:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724927238;
+ s=mimecast20190719; t=1724927689;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NCW5PWnlz9fGHVlwfMwUfFd7wBcctbMy5UKyWW/iFMk=;
- b=Tj3FGzhZ6pih5zmmzARHXIOiR0M/0rzxpUs3ZFN1EMg9+Nl1kVgjq43SaHvY5vTRYQxVvF
- dKGmCnZqONLRVaWvgV01PxrJDfO7YDyHToJ/PTWSqqL4EJdp+VhQTrrHiRqcaRrYrH2sXJ
- yQ3LAgSiF8CSE7jJ66CUi7EU8qgzhfQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HVArTEp6Aqrkh8YQ6sol69DZaPRDK/2JnOjb8HtJwVM=;
+ b=gxyIPVGSqBdZsSEcakLF6tEeTI+ydPcBUoR09uC0kR7zKPZDLGwmPRWFQvNXzGC3VixTrG
+ nO4Riup8ovy+dXUzGAtXxefURg6e1YA5uLRhedYekTSuDqkbm8sDJfIxcrPggVIvTJXv4V
+ SFWYfaHNKEKyzY+HYtTgUm915JJvc90=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-VIb0aBrgPDuSgagm2nELQA-1; Thu,
- 29 Aug 2024 06:27:14 -0400
-X-MC-Unique: VIb0aBrgPDuSgagm2nELQA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-d4eUJzrFNT2H-iiq96dcgA-1; Thu,
+ 29 Aug 2024 06:34:46 -0400
+X-MC-Unique: d4eUJzrFNT2H-iiq96dcgA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCEA91955F65; Thu, 29 Aug 2024 10:27:12 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D0881955BFA; Thu, 29 Aug 2024 10:34:44 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.64])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4229B1955F1B; Thu, 29 Aug 2024 10:27:09 +0000 (UTC)
-Date: Thu, 29 Aug 2024 11:27:06 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3801B300019C; Thu, 29 Aug 2024 10:34:40 +0000 (UTC)
+Date: Thu, 29 Aug 2024 11:34:36 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,18 +57,18 @@ Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v4 34/35] docs/devel/testing: Rename avocado_qemu.Test
- class
-Message-ID: <ZtBM-iMu-HRmmAOl@redhat.com>
+Subject: Re: [PATCH v4 35/35] docs/devel/testing: Add documentation for
+ functional tests
+Message-ID: <ZtBOvBh-keKVeCni@redhat.com>
 References: <20240821082748.65853-1-thuth@redhat.com>
- <20240821082748.65853-35-thuth@redhat.com>
+ <20240821082748.65853-36-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240821082748.65853-35-thuth@redhat.com>
+In-Reply-To: <20240821082748.65853-36-thuth@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -96,17 +96,72 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 21, 2024 at 10:27:35AM +0200, Thomas Huth wrote:
-> The avocado_qemu.Test class has been renamed a while back in commit
-> 2283b627bc ("tests/avocado: Rename avocado_qemu.Test -> QemuSystemTest"),
-> so we should reflect this now in the documentation, too.
+On Wed, Aug 21, 2024 at 10:27:36AM +0200, Thomas Huth wrote:
+> Document the new functional testing framework. The text is originally
+> based on the Avocado documentation, but heavily modified to match the
+> new framework.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  docs/devel/testing/avocado.rst | 32 ++++++++++++++++----------------
->  1 file changed, 16 insertions(+), 16 deletions(-)
+>  docs/devel/testing/functional.rst | 269 ++++++++++++++++++++++++++++++
+>  docs/devel/testing/index.rst      |   1 +
+>  docs/devel/testing/main.rst       |  12 ++
+>  3 files changed, 282 insertions(+)
+>  create mode 100644 docs/devel/testing/functional.rst
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+> +The tests should be written in the style of the Python `unittest`_
+> +framework, using stdio for the TAP protocol. The folder
+> +``tests/functional/qemu_test`` provides classes (e.g. the ``QemuBaseTest``
+> +and the ``QemuSystemTest`` classes) and utility functions that help
+> +to get your test into the right shape.
+
+One gotcha when using TAP protocol is that you can't just spew
+debug info to stdout/stderr. Each line of debug info needs to
+be prefixed with '#' so it is interpreted as diagnostic output.
+
+We should point this out and recommend people to exclusively
+using the 'logging' framework.
+
+Particular care should be taken when spawning sub-processes
+to capture both stdout/stderr and then log the result if
+needed.
+
+
+> +Overview
+> +--------
+> +
+> +The ``tests/functional/qemu_test`` directory provides the ``qemu_test``
+> +Python module, containing the ``qemu_test.QemuSystemTest`` class.
+> +Here is a simple usage example:
+> +
+> +.. code::
+> +
+> +  #!/usr/bin/env python3
+> +
+> +  from qemu_test import QemuSystemTest
+> +
+> +  class Version(QemuSystemTest):
+> +
+> +      def test_qmp_human_info_version(self):
+> +          self.vm.launch()
+> +          res = self.vm.cmd('human-monitor-command',
+> +                            command_line='info version')
+> +          self.assertRegex(res, r'^(\d+\.\d+\.\d)')
+> +
+> +  if __name__ == '__main__':
+> +      QemuSystemTest.main()
+> +
+> +By providing the "hash bang" line at the beginning of the script,
+> +and by calling into QemuSystemTest.main() when it is run directly,
+> +the test framework makes sure to run all test_*() functions in the
+> +right fassion (e.g. with TAP output that is required by the meson test
+> +runner).
+
+Perhaps say that the test file should have execute permissions,
+given the hash bang ?
+
 
 
 With regards,
