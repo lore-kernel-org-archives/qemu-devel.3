@@ -4,109 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD88DC83F16
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B7AC83F16
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:29:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjfAn-0007ea-Hy; Thu, 29 Aug 2024 09:26:49 -0400
+	id 1sjfD2-0003nB-S7; Thu, 29 Aug 2024 09:29:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
- id 1sjfAk-0007dN-FO; Thu, 29 Aug 2024 09:26:46 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1sje7d-0003xB-Iz; Thu, 29 Aug 2024 08:19:29 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
- id 1sjfAh-0000an-W5; Thu, 29 Aug 2024 09:26:46 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47TDMkDf011867;
- Thu, 29 Aug 2024 13:26:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-type:mime-version:content-transfer-encoding:in-reply-to
- :references:subject:from:cc:to:date:message-id; s=pp1; bh=hvuydx
- XkEY9v9OsZlUMXaucx5tv2vOsns21zd4hwEYk=; b=gSoYvoR9aeZ9m9Pa7W5lwS
- eIZIcYicsEAuTlAZvyTbm2lV14Ot1x+LTkLTjc0Taq5MYFYrkN5qPqq6ZPbikIpD
- r3SueCDs6Bg65lBDQRDzUnkyz//WC3geMjT86qJoKefkvKuny9IQkirgniqJ+jsP
- /Qp38C+Qo54yuexWwdKFDlWF6+wEBDhVKPYb8CEiuRDSK+PQXOlOn9CPIy28lZ9W
- y4obH6zY+ll8BDqOQ23hVoyhHZVyCZyj7H8N1/qsRFGg0MuhiRezcY5t/b0QO2Lq
- ImHUcYZvpBF9mIcrgXXSaBTkbknVSBu0s77ew03sthO3wZrtHRYa33EgEW8EkExw
- ==
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1sje7a-0008AM-TW; Thu, 29 Aug 2024 08:19:29 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47T3Poa8015583;
+ Thu, 29 Aug 2024 12:19:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date
+ :from:to:cc:subject:message-id:references:content-type
+ :in-reply-to:mime-version; s=pp1; bh=elXBKp3D9qMlFIbftT+K2XigBxw
+ V9bQ16hHoYPke5ds=; b=nEz4MYCLwIH3wjL3nfK4N7l9siaXUgJOLhmcPyfxorA
+ GRi1zPGvQgKkq7x2L2UlC+tEj373PuJwyjvhzq9nWIiOK6wdbcnMwfi0Fv/PlaSD
+ 85QFtCa9pUQLDNc+bNgNIIWNPFEU33BVq44at+6RiwVpFU5I4IT7EO7w26ESc4WU
+ 8+ycSre7rwnDa7qXxdXW/ONtPTOAWXVadd4diIGpDI8qu0d2aGHISD8hMaMGt61R
+ Z1gOSwQCxwn2RVhXIzGlvGBHFENmvCIvDUTmEMMMN++RiZjrD/CrP8A1ZdtqrRQH
+ fb7K+bZKhE+7tV41gh9jfSmNTFkbEW3ZC/Wlecy0crw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8p0dwm-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8q7vry-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Aug 2024 13:26:39 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47TDPkXp025533;
- Thu, 29 Aug 2024 13:26:39 GMT
+ Thu, 29 Aug 2024 12:19:22 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47TCJMRj031628;
+ Thu, 29 Aug 2024 12:19:22 GMT
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8p0dwg-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8q7vru-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Aug 2024 13:26:39 +0000 (GMT)
+ Thu, 29 Aug 2024 12:19:22 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47TAvOBO003161;
- Thu, 29 Aug 2024 13:26:37 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 417tuq4u3r-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47TAXM3Q003100;
+ Thu, 29 Aug 2024 12:19:21 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 417tuq4k35-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Aug 2024 13:26:37 +0000
+ Thu, 29 Aug 2024 12:19:21 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 47TDQYvE53150104
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 47TCJHwS15794540
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 Aug 2024 13:26:34 GMT
+ Thu, 29 Aug 2024 12:19:17 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 00C6B20043;
- Thu, 29 Aug 2024 13:26:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6A00B20040;
+ Thu, 29 Aug 2024 12:19:17 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCFE020040;
- Thu, 29 Aug 2024 13:26:33 +0000 (GMT)
-Received: from t14-nrb (unknown [9.171.78.87])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 29 Aug 2024 13:26:33 +0000 (GMT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAFEAcA_nXq91A79d0ROc54y=MFoTBETpMmSd_hvk4BzQ9A7=3Q@mail.gmail.com>
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
- <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
- <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
- <172467410002.31767.12365606864399178508@t14-nrb.local>
- <172483282308.162301.11735420619446380771@t14-nrb.local>
- <CAFEAcA-wVqbuW1aG2fd6O9BwMKrFXTLzcvuF4xd6j_4x5WUQ+Q@mail.gmail.com>
- <172493399778.162301.4960007495977124327@t14-nrb.local>
- <CAFEAcA_nXq91A79d0ROc54y=MFoTBETpMmSd_hvk4BzQ9A7=3Q@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw,
- cpu to three-phase reset, and followup cleanup
-From: Nico Boehr <nrb@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Mueller <mimu@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Aug 2024 15:26:32 +0200
-Message-ID: <172493799281.162301.9447178356877601539@t14-nrb.local>
-User-Agent: alot/0.10
+ by IMSVA (Postfix) with ESMTP id CB08F2004B;
+ Thu, 29 Aug 2024 12:19:15 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com (unknown
+ [9.124.208.246])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 29 Aug 2024 12:19:15 +0000 (GMT)
+Date: Thu, 29 Aug 2024 17:49:10 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH v6 RESEND 0/5] Power11 support for QEMU [PSeries]
+Message-ID: <20240829174443.06c0b2ae-eb-amachhiw@linux.ibm.com>
+Mail-Followup-To: Aditya Gupta <adityag@linux.ibm.com>, 
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+References: <20240731055022.696051-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240731055022.696051-1-adityag@linux.ibm.com>
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: BpODEx2NoeCvvcQrYJX58HOmu8RWj73k
-X-Proofpoint-ORIG-GUID: 0H3CV6gl928Jjzi2kNqkKlsbwAVW2JQq
+X-Proofpoint-GUID: JJGMGPiLj_C1L7qQn7qPdFOUMcG6DbDC
+X-Proofpoint-ORIG-GUID: qE27b-IviDFnSEHpPsE_kj3PuKUnBOc9
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-29_02,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 impostorscore=0 phishscore=0 suspectscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408290090
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=nrb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+X-Proofpoint-Spam-Details: rule=outbound_spam_definite policy=outbound
+ score=100 priorityscore=1501
+ clxscore=1011 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ adultscore=0 bulkscore=0 malwarescore=0 spamscore=100 phishscore=0
+ mlxlogscore=-999 mlxscore=100 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408290085
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -117,6 +113,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 29 Aug 2024 09:29:04 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -131,95 +128,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Quoting Peter Maydell (2024-08-29 15:09:44)
-> Thanks. I tried this repro, but mkosi falls over almost
-> immediately:
->=20
-> =E2=80=A3 Detaching namespace
-> =E2=80=A3 Setting up package cache=E2=80=A6
-> =E2=80=A3 Setting up package cache /home/linux1/s390-failure/.mkosi-htsau=
-2ot complete
-> =E2=80=A3 Setting up temporary workspace.
-> =E2=80=A3 Temporary workspace set up in /var/tmp/mkosi-tjc0nror
-> =E2=80=A3 Running second (final) stage=E2=80=A6
-> =E2=80=A3  Creating image with partition table=E2=80=A6
-> Disk /home/linux1/s390-failure/.mkosi-ddkx5xpb: 3 GiB, 3221266432
-> bytes, 6291536 sectors
-> Units: sectors of 1 * 512 =3D 512 bytes
-> Sector size (logical/physical): 512 bytes / 512 bytes
-> I/O size (minimum/optimal): 512 bytes / 512 bytes
->=20
-> >>> Script header accepted.
-> >>> Script header accepted.
-> >>> Script header accepted.
-> >>> Created a new GPT disklabel (GUID: 14CF3B05-D072-0A45-8EE4-3219112ACB=
-2E).
-> /home/linux1/s390-failure/.mkosi-ddkx5xpb1: Created a new partition 1
-> of type 'unknown' and of size 3 GiB.
-> /home/linux1/s390-failure/.mkosi-ddkx5xpb2: Done.
->=20
-> New situation:
-> Disklabel type: gpt
-> Disk identifier: 14CF3B05-D072-0A45-8EE4-3219112ACB2E
->=20
-> Device                                     Start     End Sectors Size Type
-> /home/linux1/s390-failure/.mkosi-ddkx5xpb1    40 6291495 6291456   3G unk=
-nown
->=20
-> The partition table has been altered.
-> =E2=80=A3  Created image with partition table as
-> /home/linux1/s390-failure/.mkosi-ddkx5xpb
-> =E2=80=A3  Attaching /home/linux1/s390-failure/.mkosi-ddkx5xpb as loopbac=
-k=E2=80=A6
-> =E2=80=A3  Attached /dev/loop13
-> =E2=80=A3  Formatting root partition=E2=80=A6
-> mke2fs 1.46.5 (30-Dec-2021)
-> The file /dev/loop13p1 does not exist and no size was specified.
-> =E2=80=A3  (Detaching /dev/loop13)
-> Traceback (most recent call last):
->   File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
->     return _run_code(code, main_globals, None,
->   File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
->     exec(code, run_globals)
->   File "/usr/lib/python3/dist-packages/mkosi/__main__.py", line 32, in <m=
-odule>
->     main()
->   File "/usr/lib/python3/dist-packages/mkosi/__main__.py", line 26, in ma=
-in
->     run_verb(a)
->   File "/usr/lib/python3/dist-packages/mkosi/__init__.py", line 7809,
-> in run_verb
->     manifest =3D build_stuff(args)
->   File "/usr/lib/python3/dist-packages/mkosi/__init__.py", line 7227,
-> in build_stuff
->     image =3D build_image(args, root, manifest=3Dmanifest,
-> do_run_build_script=3DFalse, cleanup=3DTrue)
->   File "/usr/lib/python3/dist-packages/mkosi/__init__.py", line 6941,
-> in build_image
->     prepare_root(args, encrypted.root, cached)
->   File "/usr/lib/python3/dist-packages/mkosi/__init__.py", line 1308,
-> in prepare_root
->     mkfs_generic(args, label, path, dev)
->   File "/usr/lib/python3/dist-packages/mkosi/__init__.py", line 1031,
-> in mkfs_generic
->     run([*cmdline, dev])
->   File "/usr/lib/python3/dist-packages/mkosi/backend.py", line 699, in run
->     return subprocess.run(cmdline, check=3Dcheck, stdout=3Dstdout,
-> stderr=3Dstderr, **kwargs)
->   File "/usr/lib/python3.10/subprocess.py", line 526, in run
->     raise CalledProcessError(retcode, process.args,
-> subprocess.CalledProcessError: Command '['mkfs.ext4', '-I', '256',
-> '-L', 'root', '-M', '/', '/dev/loop13p1']' returned non-zero exit
-> status 1.
->=20
-> (My s390 box is running Ubuntu, in case that makes a difference.)
->=20
-> Maybe you could put the kernel and initrd somewhere I can
-> get them from?
+Hi Aditya,
 
-Sigh. Yeah, I'll try to find a way (may take a while).
+On 2024/07/31 11:20 AM, Aditya Gupta wrote:
+> Overview
+> ============
+> 
+> Split "Power11 support for QEMU" into 2 patch series: pseries & powernv.
+> 
+> This patch series is for pseries support for Power11.
+> 
+> As Power11 core is same as Power10, hence much of the code has been reused from
+> Power10.
+> 
+> Power11 was added in Linux in:
+>   commit c2ed087ed35c ("powerpc: Add Power11 architected and raw mode")
+> 
+> Git Tree for Testing
+> ====================
+> 
+> QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v6-pseries
+> 
+> Has been tested with following cases:
+> * '-M pseries' / '-M pseries -cpu Power11'
 
-In the meantime, looks like mkosi is trying to create an block image, but
-that's not what it's configured to do; are you sure mkosi.conf is in the
-same directory you're calling it from?
+I tried the below command with mailine QEMU and this patch series applied. I
+could boot the guest with -cpu Power11 option but when I check inside the guest
+with `lscpu`, I can still see the Model name being reported as "Power 10" while
+the PVR value looks fine corresponding to Power11.
+
+Did you see "Power 11" while you were testing this?
+
+  $ qemu-system-ppc64 -m 4G -smp 4 -nographic -drive file=/root/testing/debian-12-generic-ppc64el.qcow2,format=qcow2 -accel tcg -cpu Power11
+
+  root@localhost:~# lscpu
+  Architecture:             ppc64le
+    Byte Order:             Little Endian
+  CPU(s):                   4
+    On-line CPU(s) list:    0-3
+  Model name:               POWER10 (architected), altivec supported
+    Model:                  18.0 (pvr 0082 1200)
+
+Thanks,
+Amit
+
+> * '-smp' option tested
+> * with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
+> * with/without device 'virtio-scsi-pci'
+> * with/without -kernel and -drive with qcow_file
+> 
+> Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+> 
+> Changelog
+> =========
+> v6 RESEND:
+>   + added my initials instead of PMM in patch #1 description
+> 
+> v6: 
+>   + reorganised patches such that Power11 introduction is at end, and
+>   cleanups and fixes is done before
+>   + patch #1: renamed macros from POWER_* to PCC_*
+>   + patch #2: rename 'logical_pvr' to 'spapr_logical_pvr' to better convey
+>   the context
+> 
+> v5:
+>   + split patch series into pseries+powernv
+>   + patch #1: apply harsh's patch to reduce duplication
+>   + patch #2: simplified, by removing duplication
+>   + patch #3: update docs, according to harsh's suggestion
+>   + patch #4: no functional change, #define used for P9 & P10 pcr_supported
+>   + patch #5: no change
+> 
+> v4:
+>   + patch #5: fix memory leak in pnv_chip_power10_quad_realize
+>   - no change in other patches
+> 
+> v3:
+>   + patch #1: version power11 as power11_v2.0
+>   + patch #2: split target hw/pseries code into patch #2
+>   + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
+>   + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
+>   + patch #6-#11: no change
+>   - remove commit to make Power11 as default
+> 
+> v2:
+>   + split powernv patch into homer,lpc,occ,psi,sbe
+>   + reduce code duplication by reusing power10 code
+>   + make power11 as default
+>   + rebase on qemu upstream/master
+>   + add more information in commit descriptions
+>   + update docs
+>   + update skiboot.lid
+> 
+> 
+> Aditya Gupta (4):
+>   target/ppc: Introduce 'PowerPCCPUClass::spapr_logical_pvr'
+>   target/ppc: Fix regression due to Power10 and Power11 having same PCR
+>   target/ppc: Add Power11 DD2.0 processor
+>   ppc/pseries: Add Power11 cpu type
+> 
+> Harsh Prateek Bora (1):
+>   target/ppc: Reduce code duplication across Power9/10 init code
+> 
+>  docs/system/ppc/pseries.rst |  17 +++-
+>  hw/ppc/spapr_cpu_core.c     |   1 +
+>  target/ppc/compat.c         |  11 +++
+>  target/ppc/cpu-models.c     |   3 +
+>  target/ppc/cpu-models.h     |   3 +
+>  target/ppc/cpu.h            |   3 +
+>  target/ppc/cpu_init.c       | 188 +++++++++++++++---------------------
+>  target/ppc/cpu_init.h       |  92 ++++++++++++++++++
+>  8 files changed, 205 insertions(+), 113 deletions(-)
+>  create mode 100644 target/ppc/cpu_init.h
+> 
+> -- 
+> 2.45.2
+> 
+> 
 
