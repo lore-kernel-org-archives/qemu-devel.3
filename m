@@ -4,92 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD32AC71150
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Aug 2024 23:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471C5C7114C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 00:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjSM8-0002z7-Nv; Wed, 28 Aug 2024 19:45:41 -0400
+	id 1sjSc0-0001fr-98; Wed, 28 Aug 2024 20:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sjSM4-0002y6-PF
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 19:45:36 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sjSby-0001cR-KD; Wed, 28 Aug 2024 20:02:02 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sjSM1-0002Zn-BG
- for qemu-devel@nongnu.org; Wed, 28 Aug 2024 19:45:36 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-71434174201so86581b3a.0
- for <qemu-devel@nongnu.org>; Wed, 28 Aug 2024 16:45:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sjSbw-0003qX-8F; Wed, 28 Aug 2024 20:02:02 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3db14339fb0so38714b6e.2; 
+ Wed, 28 Aug 2024 17:01:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724888731; x=1725493531;
- darn=nongnu.org; 
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=WxdkL1obvAnCJUAIqTIhPFS1dEvxW1fvCGrzJ7vvk2o=;
- b=miG/yiK17cHhthG1RHx1uCqPt11AJBHYv9Gkc1fv9n5BhJajd0LBRl0q2pjOvvCgIN
- oe4rzYJPeA2MlYnibCCxqlEtmnRQXp6M/IP7j6s2fKmDckRqh4w78FPYby03ZQv1s/S5
- RJgvIlH94n+o6uBys1QdleVFGDhaPrr+K/7vw+hEQbM7yd1vDjScmF3s1iJMgkmxRKpw
- pyzCvw29c8QKpZYUicShYepNNenVUNAu6OpBq63b6L3o3XKVealwpVvpmC9AUrKSY8LW
- 58UZDcXehYF0HQLRffF+YLgIfJsybwxGI4UM9fA+FJXWJ1huU/F+M/cWN/BVKcBGRSzk
- nIkw==
+ d=gmail.com; s=20230601; t=1724889717; x=1725494517; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NAHKTVPYI9c/nz80GN8ovrKmVljGCelJCXsiS+hVZr0=;
+ b=HGF+vi8PHh2QdACexPEC0NlniDIXu80uy6FZB26816jhEJ5EXQgKlMcmX2D3g7XciT
+ Xbqf/D/xbRtnucIlChzJnoGfjQbLaCOiLhy7+KZU4kXgfl9v9JBUxvSgq6bn/KaXbG6n
+ 0fyqKufoxaHKMJazzIM6vazKlKPKwDwPbr+O995hJSJdlyXZryXgm7ZASlXl5w2rp1tG
+ Yk0c50Ta4ybpW872M4UdOzPJnML/4NBHnUUTqbrk06sbJ0XdwDA3mT4pdGr2G3SG4ejY
+ pv3ahWIIcSKjsRs698SbivzGepcYS0858fdkNBbkofvM2PtMCy7THnl8hec2rgIeokqK
+ OVqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724888731; x=1725493531;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WxdkL1obvAnCJUAIqTIhPFS1dEvxW1fvCGrzJ7vvk2o=;
- b=lNBA156Exu7tR3A3o0cytf7lsgO6J/kq69XHW/a2tNgp7Cu9U01Xzv5s7zU+fDu5yH
- 9R9BfUw8KoI+d7KZYRz4Gyb4lNU3IFNH/D4BKd45mYzw+gUki4RpjtxAjNY98urX1u7G
- D8yPruquEGDcXYEYfoqg6IZjPrB5ffo5Cc5l1SKC4wxSPST6kVU8b/jV5ekukTGUxmdp
- 9BExBx3JPS7mkrtMzglVOy8q28ICBN4iCCumEjBnsozfEKh7YXAQZP51pkp/PrHvbHnQ
- WS2bqsnBmKGRDFPnlaKaGQMk2m5l4o3DlN6TNnFTJC7mBgvaaxeSFgD/3wKjza6oiHsR
- ZchQ==
+ d=1e100.net; s=20230601; t=1724889717; x=1725494517;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NAHKTVPYI9c/nz80GN8ovrKmVljGCelJCXsiS+hVZr0=;
+ b=D9vgdFhdRVkHqmN4qZzSzpyWpKIhEQT6ZwcYu+M9VzBuIGsmd+1zYuV6fwwoGaNrs5
+ 5aY8Tst0xjh8q6QKKwj5YMekvlQY5uNBl6TbuC/EqN+oWVRfbuvAg/hdWa+9k0fr8cc3
+ qzXjeNkWAoG5bGCyvswuCfYqvETUdKVDaLRKBsqBdQDpPO4SpHC5qGW5R3JM/HYYtGQy
+ sQtnUUphekZdBDCXgSFPZvkb7Ft6MCvWUtFTLmi8FnyuIOvubvziXhUqZ2iEq7M/0SOJ
+ GYCQVHm5wgcUH2N6WXOO0ELhICwqArZwEJ4utTwmFQTAltU5lefdHWospyB74reRqo6N
+ Ke3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVP07Q5l6PlqfoBJIDAUgmGho17FeGIQA1dGqQH/9rOvKTgZvRWb4nZLydDQIF6SUGlKPTpmYRsaROY@nongnu.org
-X-Gm-Message-State: AOJu0YwV5Z2penckSqUe7IV0lQzQVeIn5C5qjFFu2OFLgwoYf9DHqW50
- hJYzK+OdF1TTxd48R2ioEprTesA0L6IhHHmIfbvi7eCuMm/mEiFG/760oSUzTtU=
-X-Google-Smtp-Source: AGHT+IFE4OavEM0RTVcHNMvDTI2mH5L3lC5VkKRjYAgZzXKOKW7fY/CANheJdl2vBLz+I789MPIlzw==
-X-Received: by 2002:a05:6a00:3cca:b0:704:2563:5079 with SMTP id
- d2e1a72fcca58-715dfc7a8dcmr1412305b3a.27.1724888731272; 
- Wed, 28 Aug 2024 16:45:31 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-715e5576d7bsm30509b3a.30.2024.08.28.16.45.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Aug 2024 16:45:30 -0700 (PDT)
-Date: Wed, 28 Aug 2024 16:45:28 -0700
-From: Deepak Gupta <debug@rivosinc.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
- Alistair.Francis@wdc.com, laurent@vivier.eu, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com,
- andy.chiu@sifive.com, kito.cheng@sifive.com,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v11 13/20] target/riscv: mmu changes for zicfiss shadow
- stack protection
-Message-ID: <Zs+2mIsAw2BKODtk@debug.ba.rivosinc.com>
-References: <20240828174739.714313-1-debug@rivosinc.com>
- <20240828174739.714313-14-debug@rivosinc.com>
- <CAKmqyKPyyupykqc-0yrGm+msZPuf+=jVWvD86yz7mfqjn5MT9A@mail.gmail.com>
+ AJvYcCUSEsbysd5jfV0bUZOHFvv+mFpqW7EXC8WTm3uYU6a7mcIVRn5GgBEAlVyAVORAd/pKtDwbR3CKb566@nongnu.org
+X-Gm-Message-State: AOJu0YzHUnMMy+M81LWHIAMoh33dvv80KILQPXUlsEb1z6TvpEKRlZTn
+ 6Hc5GGzm9/oFHFxWcemWCTMcKw/wIhUruEqi055eiFoYC3SEodHzzE0DcWd3fWX4FcUlrpcEzsg
+ i/DHhQ/iaWAnQw1dUVQHgtm+j9aA=
+X-Google-Smtp-Source: AGHT+IFq/QYEQbQm+YFNt1hvj3nynGW7FU909Vwf8ZpzDrBPoO13IElB/nUI6gNCG1d07POdji766Op+y58f6Sy+tN8=
+X-Received: by 2002:a05:6808:1388:b0:3db:42b2:ee28 with SMTP id
+ 5614622812f47-3df05e8e9dbmr1225484b6e.51.1724889717194; Wed, 28 Aug 2024
+ 17:01:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKPyyupykqc-0yrGm+msZPuf+=jVWvD86yz7mfqjn5MT9A@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=debug@rivosinc.com; helo=mail-pf1-x42c.google.com
+References: <20240828174739.714313-1-debug@rivosinc.com>
+ <20240828174739.714313-17-debug@rivosinc.com>
+In-Reply-To: <20240828174739.714313-17-debug@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 29 Aug 2024 10:01:30 +1000
+Message-ID: <CAKmqyKOF0XGhSH5-vNKqFXhX=XB9p5STRAsm6kNaph=7i-7=3A@mail.gmail.com>
+Subject: Re: [PATCH v11 16/20] target/riscv: implement zicfiss instructions
+To: Deepak Gupta <debug@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ Alistair.Francis@wdc.com, laurent@vivier.eu, bmeng.cn@gmail.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ jim.shu@sifive.com, andy.chiu@sifive.com, kito.cheng@sifive.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=alistair23@gmail.com; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,107 +94,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 29, 2024 at 09:29:49AM +1000, Alistair Francis wrote:
->On Thu, Aug 29, 2024 at 3:49 AM Deepak Gupta <debug@rivosinc.com> wrote:
->>
->> zicfiss protects shadow stack using new page table encodings PTE.W=1,
->> PTE.R=0 and PTE.X=0. This encoding is reserved if zicfiss is not
->> implemented or if shadow stack are not enabled.
->> Loads on shadow stack memory are allowed while stores to shadow stack
->> memory leads to access faults. Shadow stack accesses to RO memory
->> leads to store page fault.
->>
->> To implement special nature of shadow stack memory where only selected
->> stores (shadow stack stores from sspush) have to be allowed while rest
->> of regular stores disallowed, new MMU TLB index is created for shadow
->> stack.
->>
->> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
->> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>  target/riscv/cpu_helper.c | 37 +++++++++++++++++++++++++++++++------
->>  target/riscv/internals.h  |  3 +++
->>  2 files changed, 34 insertions(+), 6 deletions(-)
->>
->> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
->> index be4ac3d54e..39544cade6 100644
->> --- a/target/riscv/cpu_helper.c
->> +++ b/target/riscv/cpu_helper.c
->> @@ -893,6 +893,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->>      hwaddr ppn;
->>      int napot_bits = 0;
->>      target_ulong napot_mask;
->> +    bool is_sstack_idx = ((mmu_idx & MMU_IDX_SS_WRITE) == MMU_IDX_SS_WRITE);
->> +    bool sstack_page = false;
->>
->>      /*
->>       * Check if we should use the background registers for the two
->> @@ -1101,21 +1103,36 @@ restart:
->>          return TRANSLATE_FAIL;
->>      }
->>
->> +    target_ulong rwx = pte & (PTE_R | PTE_W | PTE_X);
->>      /* Check for reserved combinations of RWX flags. */
->> -    switch (pte & (PTE_R | PTE_W | PTE_X)) {
->> -    case PTE_W:
->> +    switch (rwx) {
->>      case PTE_W | PTE_X:
->>          return TRANSLATE_FAIL;
->> +    case PTE_W:
->> +        /* if bcfi enabled, PTE_W is not reserved and shadow stack page */
->> +        if (cpu_get_bcfien(env) && first_stage) {
->> +            sstack_page = true;
->> +            /* if ss index, read and write allowed. else only read allowed */
->> +            rwx = is_sstack_idx ? PTE_R | PTE_W : PTE_R;
->> +            break;
->> +        }
->> +        return TRANSLATE_FAIL;
->> +    case PTE_R:
->> +        /* shadow stack writes to readonly memory are page faults */
->> +        if (is_sstack_idx && access_type == MMU_DATA_STORE) {
-
-While responding to your question, I noticed there is a bug here. Its a leftover from
-previous patches where I was promoting shadow stack loads to stores. No need to check
-`access_type == MMU_DATA_STORE` because we store unwind information as part of tcg
-compile.
-
-Will fix it.
-
->> +            return TRANSLATE_FAIL;
->> +        }
->> +        break;
->>      }
->>
->>      int prot = 0;
->> -    if (pte & PTE_R) {
->> +    if (rwx & PTE_R) {
->>          prot |= PAGE_READ;
->>      }
->> -    if (pte & PTE_W) {
->> +    if (rwx & PTE_W) {
->>          prot |= PAGE_WRITE;
->>      }
->> -    if (pte & PTE_X) {
->> +    if (rwx & PTE_X) {
->>          bool mxr = false;
->>
->>          /*
->> @@ -1160,7 +1177,7 @@ restart:
->>
->>      if (!((prot >> access_type) & 1)) {
->>          /* Access check failed */
->> -        return TRANSLATE_FAIL;
->> +        return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
+On Thu, Aug 29, 2024 at 3:53=E2=80=AFAM Deepak Gupta <debug@rivosinc.com> w=
+rote:
 >
->Why is it a PMP error if it's a shadow stack page?
-
-A shadow stack page is readable by regular loads.
-We are making sure of that in `case PTE_W` in above switch case.
-But shadow stack page is not writeable via regular stores. And must raise
-access fault. return code `TRANSLATE_PMP_FAIL` is translated to access fault
-while raising fault.
-
+> zicfiss has following instructions
+>  - sspopchk: pops a value from shadow stack and compares with x1/x5.
+>    If they dont match, reports a sw check exception with tval =3D 3.
+>  - sspush: pushes value in x1/x5 on shadow stack
+>  - ssrdp: reads current shadow stack
+>  - ssamoswap: swaps contents of shadow stack atomically
 >
->Alistair
+> sspopchk/sspush/ssrdp default to zimop if zimop implemented and SSE=3D0
+>
+> If SSE=3D0, ssamoswap is illegal instruction exception.
+>
+> This patch implements shadow stack operations for qemu-user and shadow
+> stack is not protected.
+>
+> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> Co-developed-by: Jim Shu <jim.shu@sifive.com>
+> Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+> ---
+>  target/riscv/cpu_bits.h                       |  2 +
+>  target/riscv/insn32.decode                    | 21 +++++-
+>  target/riscv/insn_trans/trans_rva.c.inc       | 39 ++++++++++
+>  target/riscv/insn_trans/trans_rvzicfiss.c.inc | 75 +++++++++++++++++++
+>  target/riscv/translate.c                      |  5 ++
+>  5 files changed, 140 insertions(+), 2 deletions(-)
+>  create mode 100644 target/riscv/insn_trans/trans_rvzicfiss.c.inc
+>
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index 48ce24dc32..bb62fbe9ec 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -690,6 +690,8 @@ typedef enum RISCVException {
+>
+>  /* zicfilp defines lp violation results in sw check with tval =3D 2*/
+>  #define RISCV_EXCP_SW_CHECK_FCFI_TVAL      2
+> +/* zicfiss defines ss violation results in sw check with tval =3D 3*/
+> +#define RISCV_EXCP_SW_CHECK_BCFI_TVAL      3
+>
+>  #define RISCV_EXCP_INT_FLAG                0x80000000
+>  #define RISCV_EXCP_INT_MASK                0x7fffffff
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index 27108b992b..e9139ec1b9 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -246,6 +246,7 @@ remud    0000001 .....  ..... 111 ..... 1111011 @r
+>  lr_w       00010 . . 00000 ..... 010 ..... 0101111 @atom_ld
+>  sc_w       00011 . . ..... ..... 010 ..... 0101111 @atom_st
+>  amoswap_w  00001 . . ..... ..... 010 ..... 0101111 @atom_st
+> +ssamoswap_w 01001 . . ..... ..... 010 ..... 0101111 @atom_st
+>  amoadd_w   00000 . . ..... ..... 010 ..... 0101111 @atom_st
+>  amoxor_w   00100 . . ..... ..... 010 ..... 0101111 @atom_st
+>  amoand_w   01100 . . ..... ..... 010 ..... 0101111 @atom_st
+> @@ -259,6 +260,7 @@ amomaxu_w  11100 . . ..... ..... 010 ..... 0101111 @a=
+tom_st
+>  lr_d       00010 . . 00000 ..... 011 ..... 0101111 @atom_ld
+>  sc_d       00011 . . ..... ..... 011 ..... 0101111 @atom_st
+>  amoswap_d  00001 . . ..... ..... 011 ..... 0101111 @atom_st
+> +ssamoswap_d 01001 . . ..... ..... 011 ..... 0101111 @atom_st
+>  amoadd_d   00000 . . ..... ..... 011 ..... 0101111 @atom_st
+>  amoxor_d   00100 . . ..... ..... 011 ..... 0101111 @atom_st
+>  amoand_d   01100 . . ..... ..... 011 ..... 0101111 @atom_st
+> @@ -1022,8 +1024,23 @@ amocas_d    00101 . . ..... ..... 011 ..... 010111=
+1 @atom_st
+>  amocas_q    00101 . . ..... ..... 100 ..... 0101111 @atom_st
+>
+>  # *** Zimop may-be-operation extension ***
+> -mop_r_n     1 . 00 .. 0111 .. ..... 100 ..... 1110011 @mop5
+> -mop_rr_n    1 . 00 .. 1 ..... ..... 100 ..... 1110011 @mop3
+> +{
+> +  # zicfiss instructions carved out of mop.r
+> +  [
+> +    ssrdp     1100110 11100 00000 100 rd:5  1110011
+> +    sspopchk  1100110 11100 00001 100 00000 1110011 &r2 rs1=3D1 rd=3D0
+> +    sspopchk  1100110 11100 00101 100 00000 1110011 &r2 rs1=3D5 rd=3D0
+> +  ]
+> +  mop_r_n    1 . 00 .. 0111 .. ..... 100 ..... 1110011 @mop5
+> +}
+> +{
+> +  # zicfiss instruction carved out of mop.rr
+> +  [
+> +    sspush    1100111 00001  00000 100 00000 1110011 &r2_s rs2=3D1 rs1=
+=3D0
+> +    sspush    1100111 00101  00000 100 00000 1110011 &r2_s rs2=3D5 rs1=
+=3D0
+> +  ]
+> +  mop_rr_n   1 . 00 .. 1 ..... ..... 100 ..... 1110011 @mop3
+> +}
+>
+>  # *** Zabhb Standard Extension ***
+>  amoswap_b  00001 . . ..... ..... 000 ..... 0101111 @atom_st
+> diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_=
+trans/trans_rva.c.inc
+> index 9cf3ae8019..a2119393a6 100644
+> --- a/target/riscv/insn_trans/trans_rva.c.inc
+> +++ b/target/riscv/insn_trans/trans_rva.c.inc
+> @@ -114,6 +114,25 @@ static bool trans_amoswap_w(DisasContext *ctx, arg_a=
+moswap_w *a)
+>      return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TESL);
+>  }
+>
+> +static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
+> +{
+> +    REQUIRE_A_OR_ZAAMO(ctx);
+> +    if (!ctx->bcfi_enabled) {
+> +        return false;
+> +    }
+> +
+> +    TCGv dest =3D dest_gpr(ctx, a->rd);
+> +    TCGv src1, src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +
+> +    decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+> +    src1 =3D get_address(ctx, a->rs1, 0);
+> +
+> +    tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx),
+> +                           (MO_ALIGN | MO_TESL));
+> +    gen_set_gpr(ctx, a->rd, dest);
+> +    return true;
+> +}
+> +
+>  static bool trans_amoadd_w(DisasContext *ctx, arg_amoadd_w *a)
+>  {
+>      REQUIRE_A_OR_ZAAMO(ctx);
+> @@ -183,6 +202,26 @@ static bool trans_amoswap_d(DisasContext *ctx, arg_a=
+moswap_d *a)
+>      return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TEUQ);
+>  }
+>
+> +static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +    REQUIRE_A_OR_ZAAMO(ctx);
+> +    if (!ctx->bcfi_enabled) {
+> +        return false;
+> +    }
+> +
+> +    TCGv dest =3D dest_gpr(ctx, a->rd);
+> +    TCGv src1, src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +
+> +    decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+> +    src1 =3D get_address(ctx, a->rs1, 0);
+> +
+> +    tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx),
+> +                           (MO_ALIGN | MO_TESQ));
+> +    gen_set_gpr(ctx, a->rd, dest);
+> +    return true;
+> +}
+
+Why aren't these in the rvzicfiss file?
+
+Otherwise:
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> +
+>  static bool trans_amoadd_d(DisasContext *ctx, arg_amoadd_d *a)
+>  {
+>      REQUIRE_64BIT(ctx);
+> diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv=
+/insn_trans/trans_rvzicfiss.c.inc
+> new file mode 100644
+> index 0000000000..741459003d
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+> @@ -0,0 +1,75 @@
+> +/*
+> + * RISC-V translation routines for the Control-Flow Integrity Extension
+> + *
+> + * Copyright (c) 2024 Rivos Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+> +{
+> +    if (!ctx->bcfi_enabled) {
+> +        return false;
+> +    }
+> +
+> +    TCGv addr =3D tcg_temp_new();
+> +    TCGLabel *skip =3D gen_new_label();
+> +    uint32_t tmp =3D (get_xl(ctx) =3D=3D MXL_RV64) ? 8 : 4;
+> +    TCGv data =3D tcg_temp_new();
+> +    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
+> +    decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+> +    tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
+> +                       mxl_memop(ctx) | MO_ALIGN);
+> +    TCGv rs1 =3D get_gpr(ctx, a->rs1, EXT_NONE);
+> +    tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
+> +    tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
+> +                  tcg_env, offsetof(CPURISCVState, sw_check_code));
+> +    gen_helper_raise_exception(tcg_env,
+> +                  tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+> +    gen_set_label(skip);
+> +    tcg_gen_addi_tl(addr, addr, tmp);
+> +    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
+> +{
+> +    if (!ctx->bcfi_enabled) {
+> +        return false;
+> +    }
+> +
+> +    TCGv addr =3D tcg_temp_new();
+> +    int tmp =3D (get_xl(ctx) =3D=3D MXL_RV64) ? -8 : -4;
+> +    TCGv data =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +    decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+> +    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
+> +    tcg_gen_addi_tl(addr, addr, tmp);
+> +    tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
+> +                       mxl_memop(ctx) | MO_ALIGN);
+> +    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
+> +{
+> +    if (!ctx->bcfi_enabled || a->rd =3D=3D 0) {
+> +        return false;
+> +    }
+> +
+> +    TCGv dest =3D dest_gpr(ctx, a->rd);
+> +    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
+> +    gen_set_gpr(ctx, a->rd, dest);
+> +
+> +    return true;
+> +}
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index e677062a10..2753c154ba 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -144,6 +144,8 @@ static inline bool has_ext(DisasContext *ctx, uint32_=
+t ext)
+>  #define get_address_xl(ctx)    ((ctx)->address_xl)
+>  #endif
+>
+> +#define mxl_memop(ctx) ((get_xl(ctx) + 1) | MO_TE)
+> +
+>  /* The word size for this machine mode. */
+>  static inline int __attribute__((unused)) get_xlen(DisasContext *ctx)
+>  {
+> @@ -1127,6 +1129,8 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
+ target_ulong pc)
+>      return translator_ldl(env, &ctx->base, pc);
+>  }
+>
+> +#define SS_MMU_INDEX(ctx) (ctx->mem_idx | MMU_IDX_SS_WRITE)
+> +
+>  /* Include insn module translation function */
+>  #include "insn_trans/trans_rvi.c.inc"
+>  #include "insn_trans/trans_rvm.c.inc"
+> @@ -1157,6 +1161,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
+ target_ulong pc)
+>  #include "decode-insn16.c.inc"
+>  #include "insn_trans/trans_rvzce.c.inc"
+>  #include "insn_trans/trans_rvzcmop.c.inc"
+> +#include "insn_trans/trans_rvzicfiss.c.inc"
+>
+>  /* Include decoders for factored-out extensions */
+>  #include "decode-XVentanaCondOps.c.inc"
+> --
+> 2.44.0
+>
+>
 
