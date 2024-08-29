@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42585C83027
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 09:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB35C83028
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 09:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjbrq-0007m3-9m; Thu, 29 Aug 2024 05:55:02 -0400
+	id 1sjbuv-0005dF-P7; Thu, 29 Aug 2024 05:58:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjbrk-0007kU-OU
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:54:57 -0400
+ id 1sjbuu-0005cj-Ui
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:58:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjbrf-000885-31
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:54:55 -0400
+ id 1sjbus-00007Q-KK
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 05:58:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724925285;
+ s=mimecast20190719; t=1724925490;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TMEhPvh0GYVd9X5QN+yTFu3LYoJYsT6cc7rKpWNz+4Q=;
- b=LbOk0Bt33H1l4ev0i5CNqg6oByHo2Dn0IA+ONcGCZ/393HtLa/6bXYPrqI/wRkJ3pap8Ec
- 47iQVG8vsxmbPSsGeQeFukbevlwRnBs3WZSOKNkwRrfTAQNgeJ6mmkPoS5Xb7FEB5UJG74
- y+Ha0c8qnntgucNa7KARwt+772sWpBE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BWYA5XfoPZHbQGbduotB8/a6K6hA9gUCkQJAfVme9PA=;
+ b=ckXcB3kFrKCz/6XQyWYeTaGPMUmV37aVJgjW3blPNWYEJlo3zuDCAqxgW3wgsv8hXsUtN1
+ Mo0I3+QJk2PtL++rc+hYzT7fqdpF0WHIBHNHCuwgHaLcqsdJyYQof9cWHJjkdZDGyMtXdg
+ hqD9TdZvqYqsyRuK7W/5OLvNskA27sA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-jiMzjDvGMby6wpig8mP0Bg-1; Thu,
- 29 Aug 2024 05:54:41 -0400
-X-MC-Unique: jiMzjDvGMby6wpig8mP0Bg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-niDkMFpdOkqL9WyuF8anmw-1; Thu,
+ 29 Aug 2024 05:58:06 -0400
+X-MC-Unique: niDkMFpdOkqL9WyuF8anmw-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A64F41955D4E; Thu, 29 Aug 2024 09:54:40 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 402FC1955F56; Thu, 29 Aug 2024 09:58:05 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.64])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15D041956048; Thu, 29 Aug 2024 09:54:37 +0000 (UTC)
-Date: Thu, 29 Aug 2024 10:54:34 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C11AE1955F1B; Thu, 29 Aug 2024 09:58:02 +0000 (UTC)
+Date: Thu, 29 Aug 2024 10:57:59 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>,
  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v4 11/35] tests/functional: Prepare the meson build
- system for the functional tests
-Message-ID: <ZtBFWtVQ9qaKibTL@redhat.com>
+Subject: Re: [PATCH v4 14/35] tests/functional: add a module for handling
+ asset download & caching
+Message-ID: <ZtBGJzmkmflSze-V@redhat.com>
 References: <20240821082748.65853-1-thuth@redhat.com>
- <20240821082748.65853-12-thuth@redhat.com>
- <4b4018c6-4a2b-4250-bb53-be9cc5df7cb4@linaro.org>
- <b60d967a-6d87-4dfa-9ed5-da547be453a4@redhat.com>
+ <20240821082748.65853-15-thuth@redhat.com>
+ <ab83a55f-6413-4d8e-9fdc-edb5f568d6f4@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b60d967a-6d87-4dfa-9ed5-da547be453a4@redhat.com>
+In-Reply-To: <ab83a55f-6413-4d8e-9fdc-edb5f568d6f4@linaro.org>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -97,61 +96,165 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 26, 2024 at 10:18:44AM +0200, Thomas Huth wrote:
-> On 23/08/2024 14.54, Philippe Mathieu-Daudé wrote:
-> > On 21/8/24 10:27, Thomas Huth wrote:
-> > > Provide a meson.build file for the upcoming python-based functional
-> > > tests, and add some wrapper glue targets to the tests/Makefile.include
-> > > file. We are going to use two "speed" modes for the functional tests:
-> > > The "quick" tests can be run at any time (i.e. also during "make check"),
-> > > while the "thorough" tests should only be run when running a
-> > > "make check-functional" test run (since these tests might download
-> > > additional assets from the internet).
-> > > 
-> > > The changes to the meson.build files are partly based on an earlier
-> > > patch by Ani Sinha.
-> > > 
-> > > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > > ---
-> > >   tests/Makefile.include       | 11 ++++++
-> > >   tests/functional/meson.build | 66 ++++++++++++++++++++++++++++++++++++
-> > >   tests/meson.build            |  1 +
-> > >   3 files changed, 78 insertions(+)
-> > >   create mode 100644 tests/functional/meson.build
+On Wed, Aug 21, 2024 at 04:49:42PM +0200, Philippe Mathieu-Daudé wrote:
+> On 21/8/24 10:27, Thomas Huth wrote:
+> > From: Daniel P. Berrangé <berrange@redhat.com>
 > > 
+> > The 'Asset' class is a simple module that declares a downloadable
+> > asset that can be cached locally. Downloads are stored in the user's
+> > home dir at ~/.cache/qemu/download, using a sha256 sum of the URL.
 > > 
-> > > +# Timeouts for individual tests that can be slow e.g. with debugging enabled
-> > > +test_timeouts = {
-> > > +}
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > [thuth: Drop sha1 support, use hash on file content for naming instead of URL,
+> >          add the possibility to specify the cache dir via environment variable]
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >   tests/functional/qemu_test/__init__.py |  1 +
+> >   tests/functional/qemu_test/asset.py    | 97 ++++++++++++++++++++++++++
+> >   2 files changed, 98 insertions(+)
+> >   create mode 100644 tests/functional/qemu_test/asset.py
 > > 
-> > 
-> > > +    foreach test : target_tests
-> > > +      test('func-@0@/@1@'.format(target_base, test),
-> > > +           python,
-> > > +           depends: [test_deps, test_emulator, emulator_modules],
-> > > +           env: test_env,
-> > > +           args: [meson.current_source_dir() / 'test_' + test + '.py'],
-> > > +           protocol: 'tap',
-> > > +           timeout: test_timeouts.get(test, 60),
-> > > +           priority: test_timeouts.get(test, 60),
-> > 
-> > IIUC with Avocado the timeout was for each test_func in a TestClass.
-> > Now this is only per TestClass. Hopefully I'm wrong...
+> > diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+> > index 2f1e0bc70d..db05c8f412 100644
+> > --- a/tests/functional/qemu_test/__init__.py
+> > +++ b/tests/functional/qemu_test/__init__.py
+> > @@ -6,6 +6,7 @@
+> >   # later.  See the COPYING file in the top-level directory.
+> > +from .asset import Asset
+> >   from .config import BUILD_DIR
+> >   from .cmd import has_cmd, has_cmds, run_cmd, is_readable_executable_file, \
+> >       interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
+> > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> > new file mode 100644
+> > index 0000000000..cbeb6278af
+> > --- /dev/null
+> > +++ b/tests/functional/qemu_test/asset.py
+> > @@ -0,0 +1,97 @@
+> > +# Test utilities for fetching & caching assets
+> > +#
+> > +# Copyright 2024 Red Hat, Inc.
+> > +#
+> > +# This work is licensed under the terms of the GNU GPL, version 2 or
+> > +# later.  See the COPYING file in the top-level directory.
+> > +
+> > +import hashlib
+> > +import logging
+> > +import os
+> > +import subprocess
+> > +import urllib.request
+> > +from pathlib import Path
+> > +from shutil import copyfileobj
+> > +
+> > +
+> > +# Instances of this class must be declared as class level variables
+> > +# starting with a name "ASSET_". This enables the pre-caching logic
+> > +# to easily find all referenced assets and download them prior to
+> > +# execution of the tests.
+> > +class Asset:
+> > +
+> > +    def __init__(self, url, hashsum):
+> > +        self.url = url
+> > +        self.hash = hashsum
+> > +        cache_dir_env = os.getenv('QEMU_TEST_CACHE_DIR')
+> > +        if cache_dir_env:
+> > +            self.cache_dir = Path(cache_dir_env, "download")
+> > +        else:
+> > +            self.cache_dir = Path(Path("~").expanduser(),
+> > +                                  ".cache", "qemu", "download")
+> > +        self.cache_file = Path(self.cache_dir, hashsum)
+> > +        self.log = logging.getLogger('qemu-test')
+> > +
+> > +    def __repr__(self):
+> > +        return "Asset: url=%s hash=%s cache=%s" % (
+> > +            self.url, self.hash, self.cache_file)
+> > +
+> > +    def _check(self, cache_file):
+> > +        if self.hash is None:
+> > +            return True
+> > +        if len(self.hash) == 64:
+> > +            sum_prog = 'sha256sum'
+> > +        elif len(self.hash) == 128:
+> > +            sum_prog = 'sha512sum'
+> > +        else:
+> > +            raise Exception("unknown hash type")
+> > +
+> > +        checksum = subprocess.check_output(
+> > +            [sum_prog, str(cache_file)]).split()[0]
+> > +        return self.hash == checksum.decode("utf-8")
+> > +
+> > +    def valid(self):
+> > +        return self.cache_file.exists() and self._check(self.cache_file)
+> > +
+> > +    def fetch(self):
+> > +        if not self.cache_dir.exists():
+> > +            self.cache_dir.mkdir(parents=True, exist_ok=True)
 > 
-> I think you're right ... we might need to adjust the meson timeouts here and
-> there in case they are causing problems, but that's just business as usual
-> (we had to do the same when enabling the meson timeouts for the qtests for
-> example).
+> This doesn't work with QEMU_TEST_CACHE_DIR set to someone else:
+> 
+>   File
+> "/home/philippe.mathieu-daude/qemu/tests/functional/qemu_test/asset.py",
+> line 60, in fetch
+>     self.cache_dir.mkdir(parents=True, exist_ok=True)
+>   File "/usr/lib/python3.10/pathlib.py", line 1175, in mkdir
+>     self._accessor.mkdir(self, mode)
+> PermissionError: [Errno 13] Permission denied:
+> '/home/alex.bennee/.cache/qemu/download'
+> ninja: build stopped: subcommand failed.
+> 
+> Maybe use a getter which falls back to Path("~").expanduser() when
+> no access on QEMU_TEST_CACHE_DIR? This happens when downloading a
+> new file (the recent MIPS tests I converted) which isn't in Alex's cache:
 
-Meson timeouts are around the lifetime of whatever child process
-we tell it to execute.  So, yes, the timeout is for the .py file
-as a whole, not the individual TestClass within it.
+Is it really valid to point QEMU_TEST_CACHE_DIR to a directory
+that you don't have permission to access ? This feels like it
+could be classed as invalid usage to me, rather than needing a
+workaround.
 
-This is different from Avocado, but not a big problem. Worst case
-we'll adjust some meson level timeouts, or split overly long running
-.py test files into multiple test .py files.
+> 
+> 2024-08-21 15:45:48,896 - qemu-test - INFO - Attempting to cache 'Asset: url=https://s3-eu-west-1.amazonaws.com/downloads-mips/mips-downloads/YAMON/yamon-bin-02.22.zip
+> hash=eef86f0eed0ef554f041dcd47b87eebea0e6f9f1184ed31f7e9e8b4a803860ab cache=/home/alex.bennee/.cache/download/eef86f0eed0ef554f041dcd47b87eebea0e6f9f1184ed31f7e9e8b4a803860ab'
+> 
+> > +        if self.valid():
+> > +            self.log.debug("Using cached asset %s for %s",
+> > +                           self.cache_file, self.url)
+> > +            return str(self.cache_file)
+> > +
+> > +        self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+> > +        tmp_cache_file = self.cache_file.with_suffix(".download")
+> > +
+> > +        try:
+> > +            resp = urllib.request.urlopen(self.url)
+> > +        except Exception as e:
+> > +            self.log.error("Unable to download %s: %s", self.url, e)
+> > +            raise
+> > +
+> > +        try:
+> > +            with tmp_cache_file.open("wb+") as dst:
+> > +                copyfileobj(resp, dst)
+> > +        except:
+> > +            tmp_cache_file.unlink()
+> > +            raise
+> > +        try:
+> > +            # Set these just for informational purposes
+> > +            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+> > +                        self.url.encode('utf8'))
+> > +            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
+> > +                        self.hash.encode('utf8'))
+> > +        except Exception as e:
+> > +            self.log.info("Unable to set xattr on %s: %s", tmp_cache_file, e)
+> > +            pass
+> > +
+> > +        if not self._check(tmp_cache_file):
+> > +            tmp_cache_file.unlink()
+> > +            raise Exception("Hash of %s does not match %s" %
+> > +                            (self.url, self.hash))
+> > +        tmp_cache_file.replace(self.cache_file)
+> > +
+> > +        self.log.info("Cached %s at %s" % (self.url, self.cache_file))
+> > +        return str(self.cache_file)
+> 
 
 With regards,
 Daniel
