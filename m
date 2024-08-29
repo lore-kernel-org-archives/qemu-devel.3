@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5DE1C87FCB
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4227CA0EC8
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjomv-0007lc-Gi; Thu, 29 Aug 2024 19:42:49 -0400
+	id 1sjoqs-0006BX-32; Thu, 29 Aug 2024 19:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sjomt-0007g9-SN; Thu, 29 Aug 2024 19:42:47 -0400
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ id 1sjoqq-000645-1Q; Thu, 29 Aug 2024 19:46:52 -0400
+Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sjomr-0004JC-Nk; Thu, 29 Aug 2024 19:42:47 -0400
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-842f00b7352so352821241.1; 
- Thu, 29 Aug 2024 16:42:44 -0700 (PDT)
+ id 1sjoqo-0004eT-FQ; Thu, 29 Aug 2024 19:46:51 -0400
+Received: by mail-ua1-x936.google.com with SMTP id
+ a1e0cc1a2514c-8430670f247so350958241.0; 
+ Thu, 29 Aug 2024 16:46:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724974964; x=1725579764; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724975209; x=1725580009; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bl1niWjvorbhP02psXXuoE6COOqqhvSKOuKpSwyN6XI=;
- b=F3eOQSt4p2aXA1qJErhV80jjZlEH+e34Iav1+m+nJRMMXZUVO+FVl8JXAQxrzGQoZ2
- 1IRKyLn2SVfYYt+v4w8AOg4Et1Mre9ym98T90VvOOjxfvRptYrzYJcDsa8aosgT20qzQ
- 8SgU/Nv3ShcHOPPYYmyBowU4wksQ1nr5s+Jxo/l0M4+nB5mSN5QbOwGXwR706VfISQ6C
- 9GAIhq7oaR2MW8si1Xtz1FKPUhpGt3ELVn70jSfVxvp0JFPK/rvqZxm20EWI3xSoKlSo
- FZkJ4MxkM1ZQWgWQaRDg6MJqN0l2eVQU0NW/17jutYEEN1hXvZdLlB0/aL6TcjsWeJa0
- ERLw==
+ bh=/YzhvPajGjsKerUyziCDusDULFqTyAakcHBnOHoj3dI=;
+ b=FIGhweSVb6pfVstQjJ+ND2bxchUVZiOAUkPqzmvmIAnI9Orys1qVtWl43dU7G1qG2r
+ 9cjFB+Xs35C/ErwCscnOcQyy0clVZkYtUn2OKo2Kg6SOiJPPv7dW9cfueCBFUVNkg+xY
+ V/Fwu/XSblQYhgn9eRi1UavreFcH9kJlYLLDxPRYpnsUB4Bm+WSExcvu/Sj+E8PQVC/w
+ XAWseDK7U9/jV5oBwtAD9LKRXJQYjqp6/Uc/cZCRSzKOcENLQhqlrzggjQBnYUD5kvUd
+ dRtBqWdQqVFMiP1w7lTbLXwHp7q4YWQRWYtQTPV0hQjJC4bETIw4DJ3L1loOrGmhOX6a
+ 4eOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724974964; x=1725579764;
+ d=1e100.net; s=20230601; t=1724975209; x=1725580009;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bl1niWjvorbhP02psXXuoE6COOqqhvSKOuKpSwyN6XI=;
- b=ZsTRJ1sixg1CSLIn2aXEo8fn80uhzuXABeR2v7sDjPFI9BCruY0aETA/zCOhROpjCD
- lHNdzFI78skqe/2v4VSPu8VGL33ry5zIue3AUsSlSKbuq/HG/aBt0lUy1vRK+HsgX43Z
- j3rsRPNzIbffygVLSAsXQgsqIY5NaQtZHeE//ch/Y/m+0KJT42GL2Oi4IAO8VX9l9ruS
- FXuzyoDVgQcV+B7G3lmzWUVuwuirToMVV/o2XQyLomcfsBEmpD0CaPAX+yrCRDRyOeri
- M6UXiBMCzoVvG1Qcr/qs/QXIBAvMh4edd4kdQqDphLeRUXE5cKjqkVMIdZLplsKIxp5k
- V8tQ==
+ bh=/YzhvPajGjsKerUyziCDusDULFqTyAakcHBnOHoj3dI=;
+ b=ZS2Okrls+YlQZWcJL12bEtA/KM59k2FfjlzFu7Jy7DXW8DYcmb7CHYxH+b0DNaqzEm
+ Q0WOZAtGriSdROxPSSaVxlcVdGB/3pVe/rOIP1+3GuivupNLMaCE+klGZ18XEichLXgD
+ uponwSBs2ThgF5QfJ8zYka8ySQlnNIxTq7x7OPn9wxuAsTvJyKgGPXoan0qPL+ILW1zR
+ zZ6qq01AGQZMDVDThEYC7wGvqbbs16Tg/lbVLIbCinbIPwF29s4kWhAzFQgZt/czQIWr
+ XkxDl93p5exebGebLyWt3cs2aMRXyUE/4Od6aJc5tzctw46xbe470aOnV6LxSXnx++UP
+ RFQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqO58HgAlqEae7C7vLxFJsQj3OE3ziH3qbV1BTHqQtcIfV3IVlhMxV1n96H/exA7YozdAX6yn0cnVZ@nongnu.org
-X-Gm-Message-State: AOJu0YxcC++I8tdtidQ+V3teRmUqLElx6pKx8AIFJvya11L6GwYLrUND
- USxGJdabEbHhKXw5qt3+ZfYhVnA9vLnWlFOTRnQsXKgP7suaMP7H1XntUDBcMuXAeWIXaQE49hu
- 2X6QPB5OhmJGgjevsWDBHNmyf0+0=
-X-Google-Smtp-Source: AGHT+IFmkgnDcNGvSBoG7uVh9QJe0KvxOdRThwDV1Ut5WK/R3B589Ic9/43Xq6Bi31umKji3Y8k6gU1FvwpnI5vUy98=
-X-Received: by 2002:a05:6102:3050:b0:498:cf81:3a40 with SMTP id
- ada2fe7eead31-49a5ae8a57cmr5682246137.17.1724974963598; Thu, 29 Aug 2024
- 16:42:43 -0700 (PDT)
+ AJvYcCXtOnQJ/Gsp6dUUE0zH25X1xlMsvI5hj3KQM25pfG9S6SSZ1Flf85KRExbiQ5J7vBfs+EU3SYwMJfhU@nongnu.org
+X-Gm-Message-State: AOJu0YwVVdEcZ2vdqkvlb0h4Z7/1TbWEBAfzYoEjXEOSuyB4iCUvurSH
+ CIysP3K41fzJjYGPS8PVXkzvaKUSWE8FMIuQKTEcDbxLieCZbQrHIgzBV9JVD5eCAvvKM/O7K6N
+ P/bxdGvIQmXOaCJjSR837upixJxM=
+X-Google-Smtp-Source: AGHT+IG+2iEotchdvSQmQMiFs6RRS+s5o/yhiiSgnLZPBRDPmfm3sFg+0XBTSE9OQpPF79PoQrLi6AgYLf6M660QSuA=
+X-Received: by 2002:a05:6102:5492:b0:493:c95b:4c15 with SMTP id
+ ada2fe7eead31-49a5afcd492mr5913635137.0.1724975208890; Thu, 29 Aug 2024
+ 16:46:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240809081227.1588508-1-tommy.wu@sifive.com>
- <20240809081227.1588508-5-tommy.wu@sifive.com>
- <CAKmqyKPfn8P4Ky977N=DNSDuf2BK5Cv9bX8B=XwSYvptNYMoEw@mail.gmail.com>
- <CANj3q_kUhx=aPvf2P+nvuUp-rKK+FvyF+UErbPcbYRO7JFQqWw@mail.gmail.com>
-In-Reply-To: <CANj3q_kUhx=aPvf2P+nvuUp-rKK+FvyF+UErbPcbYRO7JFQqWw@mail.gmail.com>
+References: <20240829084002.1805006-2-ajones@ventanamicro.com>
+In-Reply-To: <20240829084002.1805006-2-ajones@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 30 Aug 2024 09:42:17 +1000
-Message-ID: <CAKmqyKPYjcE45rW6b=o2rDeSrRHjsByVCYwF=CjK=pawoJF5Tw@mail.gmail.com>
-Subject: Re: [PATCH v5 4/5] target/riscv: Add Smrnmi mnret instruction.
-To: Tommy Wu <tommy.wu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, frank.chang@sifive.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
- liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com
+Date: Fri, 30 Aug 2024 09:46:22 +1000
+Message-ID: <CAKmqyKNb4T1NFv1NxQgHoeT0Ou=cwXU2guKaH0W3MhQH1z0DYg@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Stop timer with infinite timecmp
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Anup Patel <apatel@ventanamicro.com>, palmer@dabbelt.com,
+ alistair.francis@wdc.com, 
+ bmeng.cn@gmail.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, atishp@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,202 +94,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 30, 2024 at 2:12=E2=80=AFAM Tommy Wu <tommy.wu@sifive.com> wrot=
-e:
+On Thu, Aug 29, 2024 at 6:40=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
+om> wrote:
 >
-> On Mon, Aug 19, 2024 at 11:49=E2=80=AFAM Alistair Francis <alistair23@gma=
-il.com> wrote:
-> >
-> > On Fri, Aug 9, 2024 at 6:12=E2=80=AFPM Tommy Wu <tommy.wu@sifive.com> w=
-rote:
-> > >
-> > > This patch adds a new instruction `mnret`. `mnret` is an M-mode-only
-> > > instruction that uses the values in `mnepc` and `mnstatus` to return =
-to the
-> > > program counter, privilege mode, and virtualization mode of the
-> > > interrupted context.
-> > >
-> > > Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> > > Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
-> > > ---
-> > >  target/riscv/helper.h                         |  1 +
-> > >  target/riscv/insn32.decode                    |  3 ++
-> > >  .../riscv/insn_trans/trans_privileged.c.inc   | 12 +++++
-> > >  target/riscv/op_helper.c                      | 46 +++++++++++++++++=
-++
-> > >  4 files changed, 62 insertions(+)
-> > >
-> > > diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> > > index 451261ce5a..16ea240d26 100644
-> > > --- a/target/riscv/helper.h
-> > > +++ b/target/riscv/helper.h
-> > > @@ -131,6 +131,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl=
-, tl)
-> > >  #ifndef CONFIG_USER_ONLY
-> > >  DEF_HELPER_1(sret, tl, env)
-> > >  DEF_HELPER_1(mret, tl, env)
-> > > +DEF_HELPER_1(mnret, tl, env)
-> > >  DEF_HELPER_1(wfi, void, env)
-> > >  DEF_HELPER_1(wrs_nto, void, env)
-> > >  DEF_HELPER_1(tlb_flush, void, env)
-> > > diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> > > index c45b8fa1d8..d320631e8c 100644
-> > > --- a/target/riscv/insn32.decode
-> > > +++ b/target/riscv/insn32.decode
-> > > @@ -121,6 +121,9 @@ wfi         0001000    00101 00000 000 00000 1110=
-011
-> > >  sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
-> > >  sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
-> > >
-> > > +# *** NMI ***
-> > > +mnret       0111000    00010 00000 000 00000 1110011
-> > > +
-> > >  # *** RV32I Base Instruction Set ***
-> > >  lui      ....................       ..... 0110111 @u
-> > >  auipc    ....................       ..... 0010111 @u
-> > > diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/=
-riscv/insn_trans/trans_privileged.c.inc
-> > > index bc5263a4e0..06bc20dda4 100644
-> > > --- a/target/riscv/insn_trans/trans_privileged.c.inc
-> > > +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-> > > @@ -106,6 +106,18 @@ static bool trans_mret(DisasContext *ctx, arg_mr=
-et *a)
-> > >  #endif
-> > >  }
-> > >
-> > > +static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
-> > > +{
-> > > +#ifndef CONFIG_USER_ONLY
-> > > +    gen_helper_mnret(cpu_pc, tcg_env);
-> > > +    tcg_gen_exit_tb(NULL, 0); /* no chaining */
-> > > +    ctx->base.is_jmp =3D DISAS_NORETURN;
-> > > +    return true;
-> > > +#else
-> > > +    return false;
-> > > +#endif
-> > > +}
-> > > +
-> > >  static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
-> > >  {
-> > >  #ifndef CONFIG_USER_ONLY
-> > > diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> > > index 25a5263573..3e26392e65 100644
-> > > --- a/target/riscv/op_helper.c
-> > > +++ b/target/riscv/op_helper.c
-> > > @@ -353,6 +353,52 @@ target_ulong helper_mret(CPURISCVState *env)
-> > >      return retpc;
-> > >  }
-> > >
-> > > +target_ulong helper_mnret(CPURISCVState *env)
-> > > +{
-> > > +    if (!riscv_cpu_cfg(env)->ext_smrnmi) {
-> > > +        /* RNMI feature is not presented. */
-> > > +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC())=
-;
-> > > +    }
-> > > +
-> > > +    if (!(env->priv >=3D PRV_M)) {
-> >
-> > This should just be (env->priv !=3D PRV_M)
-> >
+> While the spec doesn't state it, setting timecmp to UINT64_MAX is
+> another way to stop a timer, as it's considered setting the next
+> timer event to occur at infinity. And, even if the time CSR does
+> eventually reach UINT64_MAX, the very next tick will bring it back to
+> zero, once again less than timecmp. For this reason
+> riscv_timer_write_timecmp() special cases UINT64_MAX. However, if a
+> previously set timecmp has not yet expired, then setting timecmp to
+> UINT64_MAX to disable / stop it would not work, as the special case
+> left the previous QEMU timer active, which would then still deliver
+> an interrupt at that previous timecmp time. Ensure the stopped timer
+> will not still deliver an interrupt by also deleting the QEMU timer
+> in the UINT64_MAX special case.
 >
-> Thanks for the suggestion. You=E2=80=99re right.
-> The reason that we write the code is that we want to do the same
-> checks that `helper_mret` does.[1]
->
-> Maybe we can send another patchset to fix both `helper_mret` and `helper_=
-mnret`.
->
-> [1]  https://github.com/qemu/qemu/commit/0c3e702aca76ca6ebf2aac4451870efc=
-9d52a7a3
->
-> > > +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC())=
-;
-> > > +    }
-> > > +
-> > > +    /* Get return PC from mnepc CSR. */
-> > > +    target_ulong retpc =3D env->mnepc;
-> > > +    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> >
-> > What is the purpose of this check? The low bits should be zero,
-> > unrelated to the compressed instructions
-> >
->
-> This is also the same check that `helper_mret` does.[1]
-> Maybe we can send another patchset to fix both `helper_mret` and `helper_=
-mnret`.
+> Fixes: ae0edf2188b3 ("target/riscv: No need to re-start QEMU timer when t=
+imecmp =3D=3D UINT64_MAX")
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 
-Ah, ok. It's probably worth splitting the shared helper_mret() code
-into a helper function then
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  target/riscv/time_helper.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> [1]  https://github.com/qemu/qemu/commit/0c3e702aca76ca6ebf2aac4451870efc=
-9d52a7a3
+> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
+> index 8d245bed3ae3..bc0d9a0c4c35 100644
+> --- a/target/riscv/time_helper.c
+> +++ b/target/riscv/time_helper.c
+> @@ -92,6 +92,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMU=
+Timer *timer,
+>       * equals UINT64_MAX.
+>       */
+>      if (timecmp =3D=3D UINT64_MAX) {
+> +        timer_del(timer);
+>          return;
+>      }
 >
-> > > +        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC()=
-);
-> > > +    }
-> > > +
-> > > +    /* Get previous privilege level from mnstatus CSR. */
-> > > +    target_ulong prev_priv =3D get_field(env->mnstatus, MNSTATUS_MNP=
-P);
-> > > +
-> > > +    if (riscv_cpu_cfg(env)->pmp &&
-> > > +        !pmp_get_num_rules(env) && (prev_priv !=3D PRV_M)) {
-> >
-> > I don't see this mentioned in:
-> >
-> > https://github.com/riscv/riscv-isa-manual/blob/a4382e9c8e285360a88d8056=
-c1253e1525552393/src/rnmi.adoc
-> >
-> > Alistair
-> >
+> --
+> 2.45.2
 >
-> This is also the same check that `helper_mret` does.[2]
-> It seems that this part is mentioned in the `riscv-privileged`
-> specification, `Priority and Matching Logic` section.
 >
-> [2] https://github.com/qemu/qemu/commit/0fbb5d2d3c9ded9fbd3f6f993974cc5e8=
-8e28912
->
-> Thanks for all the suggestions and code review.
->
-> Best Regards,
-> Tommy Wu.
->
-> > > +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC())=
-;
-> > > +    }
-> > > +
-> > > +    target_ulong prev_virt =3D get_field(env->mnstatus, MNSTATUS_MNP=
-V) &&
-> > > +                             (prev_priv !=3D PRV_M);
-> > > +    env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, true);
-> > > +
-> > > +    /*
-> > > +     * If MNRET changes the privilege mode to a mode
-> > > +     * less privileged than M, it also sets mstatus.MPRV to 0.
-> > > +     */
-> > > +    if (prev_priv < PRV_M) {
-> > > +        env->mstatus =3D set_field(env->mstatus, MSTATUS_MPRV, false=
-);
-> > > +    }
-> > > +
-> > > +    if (riscv_has_ext(env, RVH) && prev_virt) {
-> > > +        riscv_cpu_swap_hypervisor_regs(env);
-> > > +    }
-> > > +
-> > > +    riscv_cpu_set_mode(env, prev_priv, prev_virt);
-> > > +
-> > > +    return retpc;
-> > > +}
-> > > +
-> > >  void helper_wfi(CPURISCVState *env)
-> > >  {
-> > >      CPUState *cs =3D env_cpu(env);
-> > > --
-> > > 2.39.3
-> > >
 
