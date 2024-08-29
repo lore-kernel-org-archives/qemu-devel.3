@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0CDEC8300F
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 08:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC082C8300F
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 08:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjakV-0008LI-NM; Thu, 29 Aug 2024 04:43:23 -0400
+	id 1sjake-0000PQ-7z; Thu, 29 Aug 2024 04:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sjakT-0008BO-Th
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:43:21 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1sjakY-0000B9-O3
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:43:28 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sjakR-0000F6-9F
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:43:21 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2d46f2816c0so286287a91.2
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 01:43:18 -0700 (PDT)
+ id 1sjakW-0000GM-Ay
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 04:43:26 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7cdf2ac6130so113053a12.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 01:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1724920998; x=1725525798; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1724921003; x=1725525803; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NMaZ9oBX1Yz/2ONgK+9C8PrrW2XoRxFPdUH+nbt2b9U=;
- b=EpPVcGPti8T7p43oQZhGvR9sF3NhGDdVgjtQhirG75YQ2YNISl3Q/RCazsNfYBDCDP
- FxEBHTrW19T1rWMRdBDZi8UX9UonCGiWRnNUwEHwtW5R3ZNL+wgGNyn7SBMZ7GPUpvxw
- /KB/CtMvQdq9vwOKuA8JmlZmhJdRLDBg5tc269OwE7bbqbQk8LUXCLzZ4+IlQr8pdGBA
- rbjA3A9wnIXrLFNwPMj2TCblU86WJt/yT0TWVV5rc5VvodsWEk2/5V/NV8TMoyfuU9pS
- oH3hlAo27bsc3QmELancfgKoNN3plWzSUJDMHoC9bk7svxfijoJkpdHTe4JJ0E4QpTjL
- bizg==
+ bh=rgUCVYxpkn4gdGhPb4ljzj8elSOPnC8HJSAkqH9qe/g=;
+ b=Bpgw9WWEHbIXOrJyb01An+mQCIGPUzMofFMUQmYMahG9vbVqYjUxbUxpSYzwt1bLqk
+ FYmHXWpdqWOg/hQkMzr2SOJcNqoNK7hERs6RN/ff8ZPFn5AhtfT/+i5+09bHuoR2aJLK
+ ZN8boHoGB0LUQWZkyp9Ahy4ja2Yvws8Ofa6Lg76TY7FAOufd+bEcDcFhJCy8lWcGMDdM
+ Yc09/dZS+Ccr9v6aO0dZI/XKE8HgArlWqwCN8xIAZJDiBu9ICcLd9qags09Kusd8L1op
+ cxjCqADyN9gNCyph9nr7KQ3t9/WdI8Yli/yhRUSiDC3voiltUJKWC3V1P4U4q5rUL390
+ zR4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724920998; x=1725525798;
+ d=1e100.net; s=20230601; t=1724921003; x=1725525803;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NMaZ9oBX1Yz/2ONgK+9C8PrrW2XoRxFPdUH+nbt2b9U=;
- b=pIzklEI9JBI7s2k2s853y2C/rHPRJQtKhoxZaPcIznFAMKfTK9SaxRbJy4toVlBm/b
- s50GryRbZh1bar0u367HxCs6lKkfz7VewaDk3bC/uAnkP63iBNSIwLLWQVGtUVKwGsZ3
- J408LvIqELUOIlCc4TL951R6OgXfdLs4HRxViYGS7TiZLCXCO6J+YDyj4SmR5mESqu1s
- ZCa2QknugDVaYvBdkwT1z9XNCGw3vrULixigNfLyOqHnc3M7WMSEplHfTaXtHsErj9Je
- vK9GO9AJcVVCl/+f061bh6fK0Yyg5+vANvnZfKJD8Ai1IDOL6V+4u7TLPzDtrijcpMF/
- NPHQ==
+ bh=rgUCVYxpkn4gdGhPb4ljzj8elSOPnC8HJSAkqH9qe/g=;
+ b=FC+ZCQwZKCyIFc7ZlJPpce56Ya6LCv2cNTKYu+6e7YLe2qUnXTOFWDDbz/dAX8WBww
+ YAXRVjAa2GMKsudEeJRYaK8Fj9keQb5tshToyJgy1WL9aYA+pXdJvGvzC+KrbqkeBhC9
+ 7TNjFa1pBhC5Li+eiyVqSE1qrxYgojHv0QRTS8HnVDJKVCagKoB9rknf0EPAYO6TOJ/X
+ iErGoF12ULEXitSGTgN4z0Et5mA2bJnl78No1OCT51HCcMeeIcSFmzez4oXiJDk6/iKT
+ jpBqhDwEFfKkgt6VTosx9s9AcZgVI4yloDEDAcQicb4/xw5TOcFPZHd4kySN7fvPyJA5
+ 3JFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUu5Ci03UKYYpgQ0LeU31v/0n4bEc68WFXpOoTdWIguu6NvJXfjErvmHfJT444esPZc2nAauszd+5Tw@nongnu.org
-X-Gm-Message-State: AOJu0YyRqStSCz6/fF2WYzCD9jbPw9TrTqEhMES7cJYpZ9AvVd/khi2j
- 4l9CSYlhmSFWa2MHbFtGB9/fXXG25p7PnEopvXKUbrrY7D8rphH4UVUzIg/IJBo=
-X-Google-Smtp-Source: AGHT+IGgUphDinX61huDwV5aR3fT0eflW4nEo0Oi2JKhVRWAFJ95jeZqy6TgKkzmZFlHwKEfYnGR2w==
-X-Received: by 2002:a17:90b:46d8:b0:2d3:b55e:5f2 with SMTP id
- 98e67ed59e1d1-2d8561a24f8mr2209951a91.14.1724920997691; 
- Thu, 29 Aug 2024 01:43:17 -0700 (PDT)
+ AJvYcCWphmoPcyy/c6wzCuVeETSDffJ25s9jYwX0TNgUQU2RSVOnuqL3F2DWXtB6w3ztrJZccVP9QpmFjPx7@nongnu.org
+X-Gm-Message-State: AOJu0YxPw1jQ1K3qPynM6Vdo2gomK2evki0hvFjexpoSV9/Q/DaSmpLG
+ WlfPx8KoQPpUA1QGbgeTLvDCyH4EzC3hhu4FmoZMQ5jm7McpS/Ic7hp+ULB7j/Y=
+X-Google-Smtp-Source: AGHT+IHaV0P7/60vOSSezg6sn2ogadEv8qn/ni5tBstfbi/cLASf+TDgASlP1T+HcsWxEayY02vO/A==
+X-Received: by 2002:a17:90b:4b88:b0:2d3:dacd:d94f with SMTP id
+ 98e67ed59e1d1-2d8561a7135mr2087523a91.13.1724921002713; 
+ Thu, 29 Aug 2024 01:43:22 -0700 (PDT)
 Received: from TF4D9JK212.bytedance.net ([61.213.176.6])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d8446f3897sm3431856a91.49.2024.08.29.01.43.13
+ 98e67ed59e1d1-2d8446f3897sm3431856a91.49.2024.08.29.01.43.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Aug 2024 01:43:17 -0700 (PDT)
+ Thu, 29 Aug 2024 01:43:22 -0700 (PDT)
 From: Changqi Lu <luchangqi.123@bytedance.com>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
@@ -68,16 +68,17 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
  kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
  pizhenwei@bytedance.com, k.jensen@samsung.com,
  Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v10 09/10] hw/nvme: add reservation protocal command
-Date: Thu, 29 Aug 2024 16:42:13 +0800
-Message-Id: <20240829084214.50548-10-luchangqi.123@bytedance.com>
+Subject: [PATCH v10 10/10] block/iscsi: add persistent reservation in/out
+ driver
+Date: Thu, 29 Aug 2024 16:42:14 +0800
+Message-Id: <20240829084214.50548-11-luchangqi.123@bytedance.com>
 X-Mailer: git-send-email 2.39.2 (Apple Git-143)
 In-Reply-To: <20240829084214.50548-1-luchangqi.123@bytedance.com>
 References: <20240829084214.50548-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,467 +101,494 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add reservation acquire, reservation register,
-reservation release and reservation report commands
-in the nvme device layer.
+Add persistent reservation in/out operations for iscsi driver.
+The following methods are implemented: bdrv_co_pr_read_keys,
+bdrv_co_pr_read_reservation, bdrv_co_pr_register, bdrv_co_pr_reserve,
+bdrv_co_pr_release, bdrv_co_pr_clear and bdrv_co_pr_preempt.
 
-By introducing these commands, this enables the nvme
-device to perform reservation-related tasks, including
-querying keys, querying reservation status, registering
-reservation keys, initiating and releasing reservations,
-as well as clearing and preempting reservations held by
-other keys.
-
-These commands are crucial for management and control of
-shared storage resources in a persistent manner.
 Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
 Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Acked-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/nvme/ctrl.c       | 330 +++++++++++++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h       |   4 +
- include/block/nvme.h |  37 +++++
- 3 files changed, 371 insertions(+)
+ block/iscsi.c | 423 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 423 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index ad212de723..1f8a5659c9 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -294,6 +294,10 @@ static const uint32_t nvme_cse_iocs_nvm[256] = {
-     [NVME_CMD_COMPARE]              = NVME_CMD_EFF_CSUPP,
-     [NVME_CMD_IO_MGMT_RECV]         = NVME_CMD_EFF_CSUPP,
-     [NVME_CMD_IO_MGMT_SEND]         = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-+    [NVME_CMD_RESV_REGISTER]        = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_REPORT]          = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_ACQUIRE]         = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_RELEASE]         = NVME_CMD_EFF_CSUPP,
- };
- 
- static const uint32_t nvme_cse_iocs_zoned[256] = {
-@@ -308,6 +312,10 @@ static const uint32_t nvme_cse_iocs_zoned[256] = {
-     [NVME_CMD_ZONE_APPEND]          = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-     [NVME_CMD_ZONE_MGMT_SEND]       = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-     [NVME_CMD_ZONE_MGMT_RECV]       = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_REGISTER]        = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_REPORT]          = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_ACQUIRE]         = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_RELEASE]         = NVME_CMD_EFF_CSUPP,
- };
- 
- static void nvme_process_sq(void *opaque);
-@@ -1747,6 +1755,13 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
-     case NVME_CMD_READ:
-         status = NVME_UNRECOVERED_READ;
-         break;
-+    case NVME_CMD_RESV_REPORT:
-+        if (ret == -ENOTSUP) {
-+            status = NVME_INVALID_OPCODE;
-+        } else {
-+            status = NVME_UNRECOVERED_READ;
-+        }
-+        break;
-     case NVME_CMD_FLUSH:
-     case NVME_CMD_WRITE:
-     case NVME_CMD_WRITE_ZEROES:
-@@ -1754,6 +1769,15 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
-     case NVME_CMD_COPY:
-         status = NVME_WRITE_FAULT;
-         break;
-+    case NVME_CMD_RESV_REGISTER:
-+    case NVME_CMD_RESV_ACQUIRE:
-+    case NVME_CMD_RESV_RELEASE:
-+        if (ret == -ENOTSUP) {
-+            status = NVME_INVALID_OPCODE;
-+        } else {
-+            status = NVME_WRITE_FAULT;
-+        }
-+        break;
-     default:
-         status = NVME_INTERNAL_DEV_ERROR;
-         break;
-@@ -2692,6 +2716,304 @@ static uint16_t nvme_verify(NvmeCtrl *n, NvmeRequest *req)
-     return NVME_NO_COMPLETE;
- }
- 
-+typedef struct NvmeKeyInfo {
-+    uint64_t cr_key;
-+    uint64_t nr_key;
-+} NvmeKeyInfo;
-+
-+static uint16_t nvme_resv_register(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    int ret;
-+    NvmeKeyInfo key_info;
-+    NvmeNamespace *ns = req->ns;
-+    uint32_t cdw10 = le32_to_cpu(req->cmd.cdw10);
-+    bool ignore_key = cdw10 >> 3 & 0x1;
-+    uint8_t action = cdw10 & 0x7;
-+    uint8_t ptpl = cdw10 >> 30 & 0x3;
-+    bool aptpl;
-+
-+    switch (ptpl) {
-+    case NVME_RESV_PTPL_NO_CHANGE:
-+        aptpl = (ns->id_ns.rescap & NVME_PR_CAP_PTPL) ? true : false;
-+        break;
-+    case NVME_RESV_PTPL_DISABLE:
-+        aptpl = false;
-+        break;
-+    case NVME_RESV_PTPL_ENABLE:
-+        aptpl = true;
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    ret = nvme_h2c(n, (uint8_t *)&key_info, sizeof(NvmeKeyInfo), req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    switch (action) {
-+    case NVME_RESV_REGISTER_ACTION_REGISTER:
-+        req->aiocb = blk_aio_pr_register(ns->blkconf.blk, 0,
-+                                         key_info.nr_key, 0, aptpl,
-+                                         ignore_key, nvme_misc_cb,
-+                                         req);
-+        break;
-+    case NVME_RESV_REGISTER_ACTION_UNREGISTER:
-+        req->aiocb = blk_aio_pr_register(ns->blkconf.blk, key_info.cr_key, 0,
-+                                         0, aptpl, ignore_key,
-+                                         nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_REGISTER_ACTION_REPLACE:
-+        req->aiocb = blk_aio_pr_register(ns->blkconf.blk, key_info.cr_key,
-+                                         key_info.nr_key, 0, aptpl, ignore_key,
-+                                         nvme_misc_cb, req);
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    return NVME_NO_COMPLETE;
-+}
-+
-+static uint16_t nvme_resv_release(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    int ret;
-+    uint64_t cr_key;
-+    NvmeNamespace *ns = req->ns;
-+    uint32_t cdw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint8_t action = cdw10 & 0x7;
-+    NvmeResvType type = cdw10 >> 8 & 0xff;
-+
-+    ret = nvme_h2c(n, (uint8_t *)&cr_key, sizeof(cr_key), req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    switch (action) {
-+    case NVME_RESV_RELEASE_ACTION_RELEASE:
-+        req->aiocb = blk_aio_pr_release(ns->blkconf.blk, cr_key,
-+                                        nvme_pr_type_to_block(type),
-+                                        nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_RELEASE_ACTION_CLEAR:
-+        req->aiocb = blk_aio_pr_clear(ns->blkconf.blk, cr_key,
-+                                      nvme_misc_cb, req);
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    return NVME_NO_COMPLETE;
-+}
-+
-+static uint16_t nvme_resv_acquire(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    int ret;
-+    NvmeKeyInfo key_info;
-+    NvmeNamespace *ns = req->ns;
-+    uint32_t cdw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint8_t action = cdw10 & 0x7;
-+    NvmeResvType type = cdw10 >> 8 & 0xff;
-+
-+    ret = nvme_h2c(n, (uint8_t *)&key_info, sizeof(NvmeKeyInfo), req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    switch (action) {
-+    case NVME_RESV_ACQUIRE_ACTION_ACQUIRE:
-+        req->aiocb = blk_aio_pr_reserve(ns->blkconf.blk, key_info.cr_key,
-+                                        nvme_pr_type_to_block(type),
-+                                        nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_ACQUIRE_ACTION_PREEMPT:
-+        req->aiocb = blk_aio_pr_preempt(ns->blkconf.blk,
-+                     key_info.cr_key, key_info.nr_key,
-+                     nvme_pr_type_to_block(type),
-+                     false, nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_ACQUIRE_ACTION_PREEMPT_AND_ABORT:
-+        req->aiocb = blk_aio_pr_preempt(ns->blkconf.blk, key_info.cr_key,
-+                                        key_info.nr_key, type, true,
-+                                        nvme_misc_cb, req);
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    return NVME_NO_COMPLETE;
-+}
-+
-+typedef struct NvmeResvKeys {
-+    uint32_t generation;
-+    uint32_t num_keys;
-+    uint64_t *keys;
-+    NvmeRequest *req;
-+} NvmeResvKeys;
-+
-+typedef struct NvmeReadReservation {
-+    uint32_t generation;
-+    uint64_t key;
-+    BlockPrType type;
-+    NvmeRequest *req;
-+    NvmeResvKeys *keys_info;
-+} NvmeReadReservation;
-+
-+static int nvme_read_reservation_cb(NvmeReadReservation *reservation)
-+{
-+    int rc;
-+    NvmeReservationStatus *nvme_status;
-+    NvmeRequest *req = reservation->req;
-+    NvmeCtrl *n = req->sq->ctrl;
-+    NvmeResvKeys *keys_info = reservation->keys_info;
-+    int len = sizeof(NvmeReservationStatusHeader) +
-+              sizeof(NvmeRegisteredCtrl) * keys_info->num_keys;
-+
-+    nvme_status = g_malloc(len);
-+    nvme_status->header.gen = reservation->generation;
-+    nvme_status->header.rtype = block_pr_type_to_nvme(reservation->type);
-+    nvme_status->header.regctl = keys_info->num_keys;
-+    for (int i = 0; i < keys_info->num_keys; i++) {
-+        nvme_status->regctl_ds[i].cntlid = nvme_ctrl(req)->cntlid;
-+        nvme_status->regctl_ds[i].rkey = keys_info->keys[i];
-+        nvme_status->regctl_ds[i].rcsts = keys_info->keys[i] ==
-+                                          reservation->key ? 1 : 0;
-+        /* hostid is not supported currently */
-+        memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
-+    }
-+
-+    rc = nvme_c2h(n, (uint8_t *)nvme_status, len, req);
-+    g_free(nvme_status);
-+    return rc;
-+}
-+
-+static int nvme_read_reservation_ext_cb(NvmeReadReservation *reservation)
-+{
-+    int rc;
-+    NvmeReservationStatusExt *nvme_status_ext;
-+    NvmeRequest *req = reservation->req;
-+    NvmeCtrl *n = req->sq->ctrl;
-+    NvmeResvKeys *keys_info = reservation->keys_info;
-+    int len = sizeof(NvmeReservationStatusHeader) +
-+              sizeof(uint8_t) * 40 +
-+              sizeof(NvmeRegisteredCtrlExt) * keys_info->num_keys;
-+
-+    nvme_status_ext = g_malloc(len);
-+    nvme_status_ext->header.gen = cpu_to_be32(reservation->generation);
-+    nvme_status_ext->header.rtype = block_pr_type_to_nvme(reservation->type);
-+    nvme_status_ext->header.regctl = cpu_to_be16(keys_info->num_keys);
-+
-+    for (int i = 0; i < keys_info->num_keys; i++) {
-+        uint16_t ctnlid = nvme_ctrl(req)->cntlid;
-+        nvme_status_ext->regctl_eds[i].cntlid = cpu_to_be16(ctnlid);
-+        nvme_status_ext->regctl_eds[i].rkey = cpu_to_be64(keys_info->keys[i]);
-+        nvme_status_ext->regctl_eds[i].rcsts = keys_info->keys[i] ==
-+                                               reservation->key ? 1 : 0;
-+        /* hostid is not supported currently */
-+        memset(&nvme_status_ext->regctl_eds[i].hostid, 0, 16);
-+    }
-+
-+    rc = nvme_c2h(n, (uint8_t *)nvme_status_ext, len, req);
-+    g_free(nvme_status_ext);
-+    return rc;
-+}
-+
-+static void nvme_resv_read_reservation_cb(void *opaque, int ret)
-+{
-+    NvmeReadReservation *reservation = opaque;
-+    NvmeRequest *req = reservation->req;
-+    bool eds = req->cmd.cdw11 & 0x1;
-+    NvmeResvKeys *keys_info = reservation->keys_info;
-+
-+    if (ret < 0) {
-+        goto out;
-+    }
-+
-+    if (eds) {
-+        ret = nvme_read_reservation_ext_cb(reservation);
-+    } else {
-+        ret = nvme_read_reservation_cb(reservation);
-+    }
-+
-+out:
-+    g_free(keys_info->keys);
-+    g_free(keys_info);
-+    g_free(reservation);
-+    nvme_misc_cb(req, ret);
-+}
-+
-+static void nvme_resv_read_keys_cb(void *opaque, int ret)
-+{
-+    NvmeResvKeys *keys_info = opaque;
-+    NvmeRequest *req = keys_info->req;
-+    NvmeNamespace *ns = req->ns;
-+    NvmeReadReservation *reservation;
-+
-+    if (ret < 0) {
-+        goto out;
-+    }
-+
-+    keys_info->num_keys = MIN(ret, keys_info->num_keys);
-+    reservation = g_new0(NvmeReadReservation, 1);
-+    memset(reservation, 0, sizeof(*reservation));
-+    reservation->req = req;
-+    reservation->keys_info = keys_info;
-+
-+    req->aiocb = blk_aio_pr_read_reservation(ns->blkconf.blk,
-+                 &reservation->generation, &reservation->key,
-+                 &reservation->type, nvme_resv_read_reservation_cb,
-+                 reservation);
-+    return;
-+
-+out:
-+    g_free(keys_info->keys);
-+    g_free(keys_info);
-+    nvme_misc_cb(req, ret);
-+}
-+
-+
-+static uint16_t nvme_resv_report(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    int num_keys;
-+    uint32_t cdw10 = req->cmd.cdw10;
-+    uint32_t cdw11 = req->cmd.cdw11;
-+    int buflen = (cdw10 + 1) * sizeof(uint32_t);
-+    bool eds = cdw11 & 0x1;
-+    NvmeNamespace *ns = req->ns;
-+    NvmeResvKeys *keys_info;
-+
-+    if (eds) {
-+        if (buflen < sizeof(NvmeReservationStatusHeader) +
-+           sizeof(uint8_t) * 40) {
-+            return NVME_INVALID_FIELD;
-+        }
-+
-+        num_keys = (buflen - sizeof(NvmeReservationStatusHeader) -
-+                   sizeof(uint8_t) * 40) /
-+                   sizeof(struct NvmeRegisteredCtrlExt);
-+    } else {
-+        if (buflen < sizeof(NvmeReservationStatusHeader)) {
-+            return NVME_INVALID_FIELD;
-+        }
-+
-+        num_keys = (buflen - sizeof(NvmeReservationStatusHeader)) /
-+                   sizeof(struct NvmeRegisteredCtrl);
-+    }
-+
-+    keys_info = g_new0(NvmeResvKeys, 1);
-+    keys_info->generation = 0;
-+    /* num_keys is the maximum number of keys that can be transmitted */
-+    keys_info->num_keys = num_keys;
-+    keys_info->keys = g_malloc(sizeof(uint64_t) * num_keys);
-+    keys_info->req = req;
-+
-+    req->aiocb = blk_aio_pr_read_keys(ns->blkconf.blk, &keys_info->generation,
-+                                      keys_info->num_keys, keys_info->keys,
-+                                      nvme_resv_read_keys_cb, keys_info);
-+
-+    return NVME_NO_COMPLETE;
-+}
-+
- typedef struct NvmeCopyAIOCB {
-     BlockAIOCB common;
-     BlockAIOCB *aiocb;
-@@ -4469,6 +4791,14 @@ static uint16_t nvme_io_cmd(NvmeCtrl *n, NvmeRequest *req)
-         return nvme_dsm(n, req);
-     case NVME_CMD_VERIFY:
-         return nvme_verify(n, req);
-+    case NVME_CMD_RESV_REGISTER:
-+        return nvme_resv_register(n, req);
-+    case NVME_CMD_RESV_REPORT:
-+        return nvme_resv_report(n, req);
-+    case NVME_CMD_RESV_ACQUIRE:
-+        return nvme_resv_acquire(n, req);
-+    case NVME_CMD_RESV_RELEASE:
-+        return nvme_resv_release(n, req);
-     case NVME_CMD_COPY:
-         return nvme_copy(n, req);
-     case NVME_CMD_ZONE_MGMT_SEND:
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 6d0e456348..fdd919c2b1 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -470,6 +470,10 @@ static inline const char *nvme_io_opc_str(uint8_t opc)
-     case NVME_CMD_ZONE_MGMT_SEND:   return "NVME_ZONED_CMD_MGMT_SEND";
-     case NVME_CMD_ZONE_MGMT_RECV:   return "NVME_ZONED_CMD_MGMT_RECV";
-     case NVME_CMD_ZONE_APPEND:      return "NVME_ZONED_CMD_ZONE_APPEND";
-+    case NVME_CMD_RESV_REGISTER:    return "NVME_CMD_RESV_REGISTER";
-+    case NVME_CMD_RESV_REPORT:      return "NVME_CMD_RESV_REPORT";
-+    case NVME_CMD_RESV_ACQUIRE:     return "NVME_CMD_RESV_ACQUIRE";
-+    case NVME_CMD_RESV_RELEASE:     return "NVME_CMD_RESV_RELEASE";
-     default:                        return "NVME_NVM_CMD_UNKNOWN";
+diff --git a/block/iscsi.c b/block/iscsi.c
+index 2ff14b7472..7a12fd59eb 100644
+--- a/block/iscsi.c
++++ b/block/iscsi.c
+@@ -96,6 +96,7 @@ typedef struct IscsiLun {
+     unsigned long *allocmap_valid;
+     long allocmap_size;
+     int cluster_size;
++    uint8_t pr_cap;
+     bool use_16_for_rw;
+     bool write_protected;
+     bool lbpme;
+@@ -280,6 +281,10 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
+                     iTask->err_code = -error;
+                     iTask->err_str = g_strdup(iscsi_get_error(iscsi));
+                 }
++            } else if (status == SCSI_STATUS_RESERVATION_CONFLICT) {
++                iTask->err_code = -EBADE;
++                error_report("iSCSI Persistent Reservation Conflict: %s",
++                             iscsi_get_error(iscsi));
+             }
+         }
+     }
+@@ -1792,6 +1797,50 @@ static void iscsi_save_designator(IscsiLun *lun,
      }
  }
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 9b9eaeb3a7..2f24570d4a 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -702,6 +702,43 @@ typedef enum NVMEPrCap {
-                       NVME_PR_CAP_EX_AC_AR),
- } NvmePrCap;
  
-+typedef struct QEMU_PACKED NvmeRegisteredCtrl {
-+    uint16_t    cntlid;
-+    uint8_t     rcsts;
-+    uint8_t     rsvd3[5];
-+    uint8_t     hostid[8];
-+    uint64_t    rkey;
-+} NvmeRegisteredCtrl;
++/*
++ *  Ensure iscsi_open() must succeed, weather or not the target
++ *  implement SCSI_PR_IN_REPORT_CAPABILITIES.
++ */
++static void iscsi_get_pr_cap_sync(IscsiLun *iscsilun)
++{
++    struct scsi_task *task = NULL;
++    struct scsi_persistent_reserve_in_report_capabilities *rc = NULL;
++    int retries = ISCSI_CMD_RETRIES;
++    int xferlen = sizeof(struct scsi_persistent_reserve_in_report_capabilities);
 +
-+typedef struct QEMU_PACKED NvmeRegisteredCtrlExt {
-+    uint16_t  cntlid;
-+    uint8_t   rcsts;
-+    uint8_t   rsvd3[5];
-+    uint64_t  rkey;
-+    uint8_t   hostid[16];
-+    uint8_t   rsvd32[32];
-+} NvmeRegisteredCtrlExt;
++    do {
++        if (task != NULL) {
++            scsi_free_scsi_task(task);
++            task = NULL;
++        }
 +
-+typedef struct QEMU_PACKED NvmeReservationStatusHeader {
-+    uint32_t  gen;
-+    uint8_t   rtype;
-+    uint16_t  regctl;
-+    uint16_t  resv5;
-+    uint8_t   ptpls;
-+    uint8_t   resv10[14];
-+} NvmeReservationStatusHeader;
++        task = iscsi_persistent_reserve_in_sync(iscsilun->iscsi,
++               iscsilun->lun, SCSI_PR_IN_REPORT_CAPABILITIES, xferlen);
++        if (task != NULL && task->status == SCSI_STATUS_GOOD) {
++                rc = scsi_datain_unmarshall(task);
++                if (rc == NULL) {
++                    error_report("iSCSI: Failed to unmarshall "
++                                 "report capabilities data.");
++                } else {
++                    iscsilun->pr_cap =
++                    scsi_pr_cap_to_block(rc->persistent_reservation_type_mask);
++                    iscsilun->pr_cap |= (rc->ptpl_a) ? BLK_PR_CAP_PTPL : 0;
++                }
++                break;
++        }
++    } while (task != NULL && task->status == SCSI_STATUS_CHECK_CONDITION
++             && task->sense.key == SCSI_SENSE_UNIT_ATTENTION
++             && retries-- > 0);
 +
-+typedef struct QEMU_PACKED NvmeReservationStatus {
-+    struct NvmeReservationStatusHeader header;
-+    struct NvmeRegisteredCtrl regctl_ds[];
-+} NvmeReservationStatus;
++    if (task == NULL || task->status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI: failed to send report capabilities command.");
++    }
 +
-+typedef struct QEMU_PACKED NvmeReservationStatusExt {
-+    struct NvmeReservationStatusHeader header;
-+    uint8_t   rsvd24[40];
-+    struct NvmeRegisteredCtrlExt regctl_eds[];
-+} NvmeReservationStatusExt;
++    if (task) {
++        scsi_free_scsi_task(task);
++    }
++}
 +
- typedef struct QEMU_PACKED NvmeDeleteQ {
-     uint8_t     opcode;
-     uint8_t     flags;
+ static int iscsi_open(BlockDriverState *bs, QDict *options, int flags,
+                       Error **errp)
+ {
+@@ -2024,6 +2073,7 @@ static int iscsi_open(BlockDriverState *bs, QDict *options, int flags,
+         bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP;
+     }
+ 
++    iscsi_get_pr_cap_sync(iscsilun);
+ out:
+     qemu_opts_del(opts);
+     g_free(initiator_name);
+@@ -2110,6 +2160,8 @@ static void iscsi_refresh_limits(BlockDriverState *bs, Error **errp)
+         bs->bl.opt_transfer = pow2floor(iscsilun->bl.opt_xfer_len *
+                                         iscsilun->block_size);
+     }
++
++    bs->bl.pr_cap = iscsilun->pr_cap;
+ }
+ 
+ /* Note that this will not re-establish a connection with an iSCSI target - it
+@@ -2408,6 +2460,369 @@ out_unlock:
+     return r;
+ }
+ 
++static int coroutine_fn
++iscsi_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
++                      uint32_t num_keys, uint64_t *keys)
++{
++    IscsiLun *iscsilun = bs->opaque;
++    QEMUIOVector qiov;
++    struct IscsiTask iTask;
++    int xferlen = sizeof(struct scsi_persistent_reserve_in_read_keys) +
++                  sizeof(uint64_t) * num_keys;
++    g_autofree uint8_t *buf = g_malloc0(xferlen);
++    int32_t num_collect_keys = 0;
++    int r = 0;
++
++    qemu_iovec_init_buf(&qiov, buf, xferlen);
++    iscsi_co_init_iscsitask(iscsilun, &iTask);
++    qemu_mutex_lock(&iscsilun->mutex);
++retry:
++    iTask.task = iscsi_persistent_reserve_in_task(iscsilun->iscsi,
++                 iscsilun->lun, SCSI_PR_IN_READ_KEYS, xferlen,
++                 iscsi_co_generic_cb, &iTask);
++
++    if (iTask.task == NULL) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -ENOMEM;
++    }
++
++    scsi_task_set_iov_in(iTask.task, (struct scsi_iovec *)qiov.iov, qiov.niov);
++    iscsi_co_wait_for_task(&iTask, iscsilun);
++
++    if (iTask.task != NULL) {
++        scsi_free_scsi_task(iTask.task);
++        iTask.task = NULL;
++    }
++
++    if (iTask.do_retry) {
++        iTask.complete = 0;
++        goto retry;
++    }
++
++    if (iTask.status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI PERSISTENT_RESERVE_IN failed: %s", iTask.err_str);
++        r = iTask.err_code;
++        goto out;
++    }
++
++    memcpy(generation, &buf[0], 4);
++    *generation = be32_to_cpu(*generation);
++    memcpy(&num_collect_keys, &buf[4], 4);
++    num_collect_keys = be32_to_cpu(num_collect_keys) / sizeof(uint64_t);
++    if (num_collect_keys > num_keys) {
++        r = -EINVAL;
++        goto out;
++    }
++
++    for (int i = 0; i < num_collect_keys; i++) {
++        memcpy(&keys[i], &buf[8 + i * 8], 8);
++        keys[i] = be64_to_cpu(keys[i]);
++    }
++    r = num_collect_keys;
++
++out:
++    qemu_mutex_unlock(&iscsilun->mutex);
++    g_free(iTask.err_str);
++    return r;
++}
++
++static int coroutine_fn
++iscsi_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
++                             uint64_t *key, BlockPrType *type)
++{
++    IscsiLun *iscsilun = bs->opaque;
++    QEMUIOVector qiov;
++    struct IscsiTask iTask;
++    int xferlen = sizeof(struct scsi_persistent_reserve_in_read_reservation);
++    g_autofree uint8_t *buf = g_malloc0(xferlen);
++    uint8_t scope_type = 0;
++    int32_t num_collect_keys = 0;
++    int r = 0;
++
++    qemu_iovec_init_buf(&qiov, buf, xferlen);
++    iscsi_co_init_iscsitask(iscsilun, &iTask);
++    qemu_mutex_lock(&iscsilun->mutex);
++retry:
++    iTask.task = iscsi_persistent_reserve_in_task(iscsilun->iscsi,
++                 iscsilun->lun, SCSI_PR_IN_READ_RESERVATION,
++                 xferlen, iscsi_co_generic_cb, &iTask);
++
++    if (iTask.task == NULL) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -ENOMEM;
++    }
++
++    scsi_task_set_iov_in(iTask.task, (struct scsi_iovec *)qiov.iov, qiov.niov);
++    iscsi_co_wait_for_task(&iTask, iscsilun);
++
++    if (iTask.task != NULL) {
++        scsi_free_scsi_task(iTask.task);
++        iTask.task = NULL;
++    }
++
++    if (iTask.do_retry) {
++        iTask.complete = 0;
++        goto retry;
++    }
++
++    if (iTask.status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI PERSISTENT_RESERVE_IN failed: %s", iTask.err_str);
++        r = iTask.err_code;
++        goto out;
++    }
++
++    memcpy(generation, &buf[0], 4);
++    *generation = be32_to_cpu(*generation);
++    memcpy(key, &buf[8], 8);
++    *key = be64_to_cpu(*key);
++    memcpy(&scope_type, &buf[21], 1);
++    *type = scsi_pr_type_to_block(scope_type & 0xf);
++    memcpy(&num_collect_keys, &buf[4], 4);
++    r = be32_to_cpu(num_collect_keys) / sizeof(uint64_t);
++out:
++    qemu_mutex_unlock(&iscsilun->mutex);
++    g_free(iTask.err_str);
++    return r;
++}
++
++static int coroutine_fn
++iscsi_co_pr_register(BlockDriverState *bs, uint64_t old_key,
++                     uint64_t new_key, BlockPrType type,
++                     bool ptpl, bool ignore_key)
++{
++    IscsiLun *iscsilun = bs->opaque;
++    struct IscsiTask iTask;
++    struct scsi_persistent_reserve_out_basic basic;
++    SCSIPrOutAction action = ignore_key ? SCSI_PR_OUT_REG_AND_IGNORE_KEY :
++                                          SCSI_PR_OUT_REGISTER;
++    int r = 0;
++
++    basic.reservation_key = old_key;
++    basic.service_action_reservation_key = new_key;
++    basic.aptpl = ptpl ? 1 : 0;
++
++    iscsi_co_init_iscsitask(iscsilun, &iTask);
++    qemu_mutex_lock(&iscsilun->mutex);
++retry:
++    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
++                 iscsilun->lun, action, 0, block_pr_type_to_scsi(type),
++                 &basic, iscsi_co_generic_cb, &iTask);
++
++    if (iTask.task == NULL) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -ENOMEM;
++    }
++
++    iscsi_co_wait_for_task(&iTask, iscsilun);
++
++    if (iTask.task != NULL) {
++        scsi_free_scsi_task(iTask.task);
++        iTask.task = NULL;
++    }
++
++    if (iTask.do_retry) {
++        iTask.complete = 0;
++        goto retry;
++    }
++
++    if (iTask.status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
++        r = iTask.err_code;
++    }
++
++    qemu_mutex_unlock(&iscsilun->mutex);
++
++    g_free(iTask.err_str);
++    return r;
++}
++
++static int coroutine_fn
++iscsi_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type)
++{
++    IscsiLun *iscsilun = bs->opaque;
++    struct IscsiTask iTask;
++    struct scsi_persistent_reserve_out_basic basic;
++    int r = 0;
++
++    basic.reservation_key = key;
++    iscsi_co_init_iscsitask(iscsilun, &iTask);
++    qemu_mutex_lock(&iscsilun->mutex);
++retry:
++    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
++                 iscsilun->lun, SCSI_PR_OUT_RESERVE, 0,
++                 block_pr_type_to_scsi(type), &basic,
++                 iscsi_co_generic_cb, &iTask);
++
++    if (iTask.task == NULL) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -ENOMEM;
++    }
++
++
++    iscsi_co_wait_for_task(&iTask, iscsilun);
++
++    if (iTask.task != NULL) {
++        scsi_free_scsi_task(iTask.task);
++        iTask.task = NULL;
++    }
++
++    if (iTask.do_retry) {
++        iTask.complete = 0;
++        goto retry;
++    }
++
++    if (iTask.status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
++        r = iTask.err_code;
++    }
++
++    qemu_mutex_unlock(&iscsilun->mutex);
++
++    g_free(iTask.err_str);
++    return r;
++}
++
++static int coroutine_fn
++iscsi_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type)
++{
++    IscsiLun *iscsilun = bs->opaque;
++    struct IscsiTask iTask;
++    struct scsi_persistent_reserve_out_basic basic;
++    int r = 0;
++
++    basic.reservation_key = key;
++    iscsi_co_init_iscsitask(iscsilun, &iTask);
++    qemu_mutex_lock(&iscsilun->mutex);
++retry:
++    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
++                 iscsilun->lun, SCSI_PR_OUT_RELEASE, 0,
++                 block_pr_type_to_scsi(type), &basic,
++                 iscsi_co_generic_cb, &iTask);
++
++    if (iTask.task == NULL) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -ENOMEM;
++    }
++
++
++    iscsi_co_wait_for_task(&iTask, iscsilun);
++
++    if (iTask.task != NULL) {
++        scsi_free_scsi_task(iTask.task);
++        iTask.task = NULL;
++    }
++
++    if (iTask.do_retry) {
++        iTask.complete = 0;
++        goto retry;
++    }
++
++    if (iTask.status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
++        r = iTask.err_code;
++    }
++
++    qemu_mutex_unlock(&iscsilun->mutex);
++
++    g_free(iTask.err_str);
++    return r;
++}
++
++static int coroutine_fn
++iscsi_co_pr_clear(BlockDriverState *bs, uint64_t key)
++{
++    IscsiLun *iscsilun = bs->opaque;
++    struct IscsiTask iTask;
++    struct scsi_persistent_reserve_out_basic basic;
++    int r = 0;
++
++    basic.reservation_key = key;
++    iscsi_co_init_iscsitask(iscsilun, &iTask);
++    qemu_mutex_lock(&iscsilun->mutex);
++retry:
++    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
++                 iscsilun->lun, SCSI_PR_OUT_CLEAR, 0, 0, &basic,
++                 iscsi_co_generic_cb, &iTask);
++
++    if (iTask.task == NULL) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -ENOMEM;
++    }
++
++
++    iscsi_co_wait_for_task(&iTask, iscsilun);
++
++    if (iTask.task != NULL) {
++        scsi_free_scsi_task(iTask.task);
++        iTask.task = NULL;
++    }
++
++    if (iTask.do_retry) {
++        iTask.complete = 0;
++        goto retry;
++    }
++
++    if (iTask.status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
++        r = iTask.err_code;
++    }
++
++    qemu_mutex_unlock(&iscsilun->mutex);
++
++    g_free(iTask.err_str);
++    return r;
++}
++
++static int coroutine_fn
++iscsi_co_pr_preempt(BlockDriverState *bs, uint64_t old_key,
++                    uint64_t new_key, BlockPrType type, bool abort)
++{
++    IscsiLun *iscsilun = bs->opaque;
++    struct IscsiTask iTask;
++    struct scsi_persistent_reserve_out_basic basic;
++    SCSIPrOutAction action = abort ? SCSI_PR_OUT_PREEMPT_AND_ABORT :
++                                     SCSI_PR_OUT_PREEMPT;
++    int r = 0;
++
++    basic.reservation_key = old_key;
++    basic.service_action_reservation_key = new_key;
++
++    iscsi_co_init_iscsitask(iscsilun, &iTask);
++    qemu_mutex_lock(&iscsilun->mutex);
++retry:
++    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
++                 iscsilun->lun, action, 0, block_pr_type_to_scsi(type),
++                 &basic, iscsi_co_generic_cb, &iTask);
++
++    if (iTask.task == NULL) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -ENOMEM;
++    }
++
++
++    iscsi_co_wait_for_task(&iTask, iscsilun);
++
++    if (iTask.task != NULL) {
++        scsi_free_scsi_task(iTask.task);
++        iTask.task = NULL;
++    }
++
++    if (iTask.do_retry) {
++        iTask.complete = 0;
++        goto retry;
++    }
++
++    if (iTask.status != SCSI_STATUS_GOOD) {
++        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
++        r = iTask.err_code;
++    }
++
++    qemu_mutex_unlock(&iscsilun->mutex);
++
++    g_free(iTask.err_str);
++    return r;
++}
++
+ 
+ static const char *const iscsi_strong_runtime_opts[] = {
+     "transport",
+@@ -2451,6 +2866,14 @@ static BlockDriver bdrv_iscsi = {
+     .bdrv_co_writev        = iscsi_co_writev,
+     .bdrv_co_flush_to_disk = iscsi_co_flush,
+ 
++    .bdrv_co_pr_read_keys     = iscsi_co_pr_read_keys,
++    .bdrv_co_pr_read_reservation = iscsi_co_pr_read_reservation,
++    .bdrv_co_pr_register      = iscsi_co_pr_register,
++    .bdrv_co_pr_reserve       = iscsi_co_pr_reserve,
++    .bdrv_co_pr_release       = iscsi_co_pr_release,
++    .bdrv_co_pr_clear         = iscsi_co_pr_clear,
++    .bdrv_co_pr_preempt       = iscsi_co_pr_preempt,
++
+ #ifdef __linux__
+     .bdrv_aio_ioctl   = iscsi_aio_ioctl,
+ #endif
 -- 
 2.20.1
 
