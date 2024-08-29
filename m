@@ -4,67 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E587EC83F0F
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6AFC83F0A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sje6x-0001wd-0r; Thu, 29 Aug 2024 08:18:48 -0400
+	id 1sje8L-00069w-MK; Thu, 29 Aug 2024 08:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sje6t-0001vn-Ff
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:18:44 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
+ id 1sje8I-00068K-9h; Thu, 29 Aug 2024 08:20:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sje6p-00086n-Qn
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:18:42 -0400
-Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c00:2588:0:640:36aa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B8C1360B16;
- Thu, 29 Aug 2024 15:18:31 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:6::1:2d] (unknown [2a02:6b8:b081:6::1:2d])
- by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id NIVwGX1XleA0-WbXSqgGw; 
- Thu, 29 Aug 2024 15:18:30 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1724933910;
- bh=whDKoX+cDWWO7+wguBr7L+KzicQncCI7EcuLEMq1skE=;
- h=In-Reply-To:Cc:Date:References:To:Subject:From:Message-ID;
- b=Mp+xvwHZYr070UBaukPiAyzrY0ueAbDdue+ddAU/OLgx4sNett5YqdTOcJ9fB9v9b
- YqrgzII4saMxneLA5KO2xnHF8GldCaHdp4qFWRoKHl1qJbp02Ldo2JTQc2aCTdSr1A
- T3SXFzVM26VCsHV2DUhkF8U5bRnjLoJwPiVpxVnc=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <849fa448-42d3-4438-84d0-1bf4872ecb85@yandex-team.ru>
-Date: Thu, 29 Aug 2024 15:18:23 +0300
+ (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
+ id 1sje8G-0008OI-9R; Thu, 29 Aug 2024 08:20:10 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47T1xVg6032371;
+ Thu, 29 Aug 2024 12:20:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-type:mime-version:content-transfer-encoding:in-reply-to
+ :references:subject:from:cc:to:date:message-id; s=pp1; bh=uVycpn
+ gdC48HsBpEtwrW5i/EJXnfgl9rxxUY5kGlcUU=; b=ePpUCcixQv8/DEUzr4vVSA
+ gFOVarOkEJYe2MGqoL7A0OR/VO1nszNKXhYhd+VLkowUAKkPEnp9xPw2SAPt9vy1
+ nkp/5nD90Ip18zt3jeRhY93zs7jr1C10OE1z7HNxJ5nklL0g7jcUe0gXStgTBYOI
+ GjTAe6Ylf6nIc+nJXfbdnn/KeII0mbQVM2owzMvdpQUQ7JXjDqgBaoySpsM7zQPB
+ tV0gmK1XmTDiGhO9FkbTzCBRLAN/nNMs62uauGK6/US742h/qtx8NmCXU6P6Y44I
+ QHD/5A+IVHEKu+s246iDVsQEe4+dj6SQ4BtjOLkg50RqC+14OqIM7K8maKFpcgoQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8u7u1x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Aug 2024 12:20:03 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47TCK3mH027275;
+ Thu, 29 Aug 2024 12:20:03 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8u7u1t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Aug 2024 12:20:03 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47TAMuQ7030991;
+ Thu, 29 Aug 2024 12:20:02 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 417t814pdm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Aug 2024 12:20:02 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 47TCJwPB56295934
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Aug 2024 12:19:59 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D898720043;
+ Thu, 29 Aug 2024 12:19:58 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AEA9220040;
+ Thu, 29 Aug 2024 12:19:58 +0000 (GMT)
+Received: from t14-nrb (unknown [9.171.78.87])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Aug 2024 12:19:58 +0000 (GMT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Subject: Re: [PATCH] chardev: allow specifying finer-grained reconnect timeouts
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-devel@nongnu.org, devel@lists.libvirt.org,
- Peter Krempa <pkrempa@redhat.com>, Michal Privoznik <mprivozn@redhat.com>
-References: <20240816100723.2815-1-d-tatianin@yandex-team.ru>
- <87v7zjleys.fsf@pond.sub.org>
-Content-Language: en-US
-In-Reply-To: <87v7zjleys.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAFEAcA-wVqbuW1aG2fd6O9BwMKrFXTLzcvuF4xd6j_4x5WUQ+Q@mail.gmail.com>
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
+ <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
+ <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
+ <172467410002.31767.12365606864399178508@t14-nrb.local>
+ <172483282308.162301.11735420619446380771@t14-nrb.local>
+ <CAFEAcA-wVqbuW1aG2fd6O9BwMKrFXTLzcvuF4xd6j_4x5WUQ+Q@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw,
+ cpu to three-phase reset, and followup cleanup
+From: Nico Boehr <nrb@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Mueller <mimu@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 29 Aug 2024 14:19:57 +0200
+Message-ID: <172493399778.162301.4960007495977124327@t14-nrb.local>
+User-Agent: alot/0.10
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: j9MrIOpTuYjNFnE5NCDjN5TZ_87nr8YK
+X-Proofpoint-ORIG-GUID: n6iIst2dKGox8ir2axfRnj2h1O_QuKZL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-29_02,2024-08-29_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=999 spamscore=0 priorityscore=1501 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408290085
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=nrb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,106 +129,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/29/24 2:56 PM, Markus Armbruster wrote:
-> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->
->> The "reconnect" option only allows to specify the time in seconds,
->> which is way too long for certain workflows.
->>
->> We have a lightweight disk backend server, which takes about 20ms to
->> live update, but due to this limitation in QEMU, previously the guest
->> disk controller would hang for one second because it would take this
->> long for QEMU to reinitialize the socket connection.
->>
->> Make it possible to specify a smaller timeout by treating the value in
->> "reconnect" as milliseconds via the new "reconnect-is-ms" option.
->>
->> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-> Your use case demonstrates that a granularity of seconds was the wrong
-> choice for the reconnection delay.
->
-> [...]
->
->> diff --git a/qapi/char.json b/qapi/char.json
->> index ef58445cee..61aeccf09d 100644
->> --- a/qapi/char.json
->> +++ b/qapi/char.json
->> @@ -272,8 +272,13 @@
->> # (default: false) (Since: 3.1)
->> #
->> # @reconnect: For a client socket, if a socket is disconnected, then
->> -# attempt a reconnect after the given number of seconds. Setting
->> -# this to zero disables this function. (default: 0) (Since: 2.2)
->> +# attempt a reconnect after the given number of seconds (unless
->> +# @reconnect-is-ms is set to true, in that case the number is
->> +# treated as milliseconds). Setting this to zero disables
->> +# this function. (default: 0) (Since: 2.2)
->> +#
->> +# @reconnect-is-ms: The value specified in @reconnect should be treated
->> +# as milliseconds. (default: false) (Since: 9.2)
->> #
->> # Since: 1.4
->> ##
->> @@ -287,7 +292,8 @@
->> '*telnet': 'bool',
->> '*tn3270': 'bool',
->> '*websocket': 'bool',
->> - '*reconnect': 'int' },
->> + '*reconnect': 'int',
->> + '*reconnect-is-ms': 'bool' },
->> 'base': 'ChardevCommon' }
->> ##
-> I don't like this interface.
+Quoting Peter Maydell (2024-08-28 17:46:42)
+[...]
+> Well, the series is *supposed* to be just a refactoring, not a change of
+> behaviour, so I'm not sure. I don't suppose you have a reproduce case
+> that I can run? (I do have access to an s390 machine if that helps.)
 
-Indeed. After discussing this more internally we have actually settled 
-on one of the alternatives you have mentioned below.
+Well, it's on an internal testing framework which we do not release
+publicly. :-(
 
-> PRO: compatible extension; no management application updates needed
-> unless they want to support sub-second delays.
->
-> CON: specifying a sub-second delay takes two parameters, which is
-> awkward.
->
-> CON: trap in combination with -set. Before the patch, something like
-> -set chardev.ID.reconnect=N means N seconds no matter what.
-> Afterwards, it depends on the value of reconnect-is-ms, which may be
-> set far away. Mitigating factor: -set is obscure.
->
-> Alternatives:
->
-> 1. Change @reconnect to 'number', specify sub-second delays as
-> fractions.
->
-> PRO: compatible extension; no management application updates needed
-> unless they want to support sub-second delays.
->
-> CON: first use of floating-point for time in seconds in QAPI, as far
-> as I can see.
->
-> CON: QemuOpts can't do floating-point.
->
-> 2. Deprecate @reconnect in favour of a new member with a more suitable
-> unit. Error if both are present.
->
-> PRO: after @reconnect is gone, the interface is what it arguably
-> should've been from the start.
->
-> CON: incompatible change. Management application updates needed
-> within the deprecation grace period.
+Luckily, it's not that difficult to reproduce.  It seems like this only
+happens when a reboot is initiated over SSH connection via vsock. Here are
+some instructions on how to reproduce (with mkosi and Fedora):
 
-This is the one we decided to go with. We simply added a new 
-"reconnect-ms" option, which doesn't replace the old one for backwards 
-compatibility, but also disallows both to be specified at the same time, 
-making them mutually exclusive. I think deprecation would be the way to 
-go here.
+1. Craft an mkosi.conf like this:
+   [Distribution]
+   Distribution=3Dfedora
+   Architecture=3Ds390x
+  =20
+   [Output]
+   Format=3Dcpio
+   CompressOutput=3Dxz
+  =20
+   [Content]
+   Packages=3Dopenssh-server
+   Packages=3Dkernel-modules-core-6.8.5-301.fc40.s390x
+   Bootloader=3Dnone
+   MakeInitrd=3Dno
+   Ssh=3Dyes
+   Autologin=3Dyes
+   RootPassword=3Dhunter
+   Timezone=3DEtc/UTC
+   Locale=3DC.UTF-8
+2. Generate SSH host key:
+   mkdir -p mkosi.extra/etc/ssh && ssh-keygen -t ed25519 -f mkosi.extra/etc=
+/ssh/ssh_host_ed25519_key
+3. Build image:
+   mkosi
+4. Boot with QEMU:
+   qemu-system-s390x -machine s390-ccw-virtio,accel=3Dkvm -nodefaults -nogr=
+aphic -chardev stdio,id=3Dcon0 -device sclpconsole,chardev=3Dcon0 -m 2048 -=
+kernel image.vmlinuz -initrd image.cpio.xz -device vhost-vsock-ccw,guest-ci=
+d=3D3
+5. In a different terminal, run a reboot loop:
+   i=3D0; while true; do ssh -o ProxyCommand=3D'socat VSOCK-CONNECT:3:22 -'=
+ localhost -l root reboot; echo $i; let i=3Di+1; done
 
->
-> Let's get additional input from management application developers. I
-> cc'ed some.
+After a while (10 minutes, sometimes longer) you should see the quest crash
+either with "Attempted to kill init" or "Unable to mount rootfs" and a mess=
+age
+about corrupted initramfs:
+[    1.599082] Initramfs unpacking failed: XZ-compressed data is corrupt
 
-Sure, sounds great. Thanks!
+I had this run without your series for 45 minutes, while with your series
+this crashed within ~5-10 minutes.
 
->
-> Related: NetdevSocketOptions member @reconnect.
->
+Thanks!
 
