@@ -4,73 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B43CC83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4912C83F23
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjfFm-0002TU-Nl; Thu, 29 Aug 2024 09:31:58 -0400
+	id 1sjfJW-0007yO-DS; Thu, 29 Aug 2024 09:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sjfFk-0002ST-2t; Thu, 29 Aug 2024 09:31:56 -0400
-Received: from dedi548.your-server.de ([85.10.215.148])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sjfFh-0003L2-W4; Thu, 29 Aug 2024 09:31:55 -0400
-Received: from sslproxy04.your-server.de ([78.46.152.42])
- by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sjfFc-000KqY-0q; Thu, 29 Aug 2024 15:31:48 +0200
-Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
- by sslproxy04.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sjfFc-0008hG-1A; Thu, 29 Aug 2024 15:31:48 +0200
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id DDD5A480180;
- Thu, 29 Aug 2024 15:31:47 +0200 (CEST)
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id 5UqitALMj2Q1; Thu, 29 Aug 2024 15:31:47 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 749BA4801BB;
- Thu, 29 Aug 2024 15:31:47 +0200 (CEST)
-X-Virus-Scanned: amavis at zimbra.eb.localhost
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id GJ3th0uv7_34; Thu, 29 Aug 2024 15:31:47 +0200 (CEST)
-Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
- by mail.embedded-brains.de (Postfix) with ESMTP id 4F259480180;
- Thu, 29 Aug 2024 15:31:47 +0200 (CEST)
-Date: Thu, 29 Aug 2024 15:31:47 +0200 (CEST)
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>
-Message-ID: <694012793.134674.1724938307291.JavaMail.zimbra@embedded-brains.de>
-In-Reply-To: <CAFEAcA-p+CBeKTgH-YXzrATKDpwG5iY+A3WGaVkbEeHCXxTzug@mail.gmail.com>
-References: <20240828005019.57705-1-sebastian.huber@embedded-brains.de>
- <CAFEAcA-p+CBeKTgH-YXzrATKDpwG5iY+A3WGaVkbEeHCXxTzug@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/xilinx_zynq: Enable Security Extensions
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjfJV-0007ws-BP
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:35:49 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjfJQ-0005K7-HU
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:35:49 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5bf0261f162so668495a12.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 06:35:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724938543; x=1725543343; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Yeqwa/66xo358U8jOGHzHMjFv9R0TEjKGPwZB9UJaOc=;
+ b=pCMSxraWk2dKuPzz5EVtkp/2NZKTcS6ymzB/PU/ojQWymxkVMDDO5b/gZ/qB6vmTbR
+ EGczzRkxvGLDlKk/q2t0AVcCURtk65YGnog65EjFjDJ2s+XM4Lfc2xNWB1NheBaNtT9g
+ tNGIHHCFgtO92oFTk8R/Pg6d89veN4/ANgiEos+zQbhGhaEsoxny0UGF9EtePHYlmkTr
+ w5A70G6d1fPJ2LH+Na5hsM0ML+PpNUYkJi+lB3SiQKGtVQuKZCedYb4L4XZ08whqzes/
+ SxYhE92pKUDRhCVeAAeyWRV8LL4BCjavihFyZ8WQE/Ke/Uti2C18Zsm0HOOSVuIbAeoN
+ q1Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724938543; x=1725543343;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Yeqwa/66xo358U8jOGHzHMjFv9R0TEjKGPwZB9UJaOc=;
+ b=Bg2/scFabxsQjBb5cQmCGurLROqbY7mUgl5JjUoFnsCQjr+v4AxcKPiCTaofnyIPjA
+ QHsk16WlDUrYcLcDCdGRgRTB/t9WVU+b+3JTncFWoQehzupg3KfNkctibh63gkKE22jU
+ XYzsl/N++iuq1M6aDAEZH7hqv3BFdJI+T5EtUolUzcQvCG3YwKM0OkkUVxBbfKh9/3GR
+ KlI03eCvNZekZv+uW5vSCsKjr3455Ghrm2JtFsmH7FLe/mVeo/yUJS9YW+LkzYQlM/jp
+ zkvBFwDNTmNBhkPItV/jMe5LVB9xqLDes2cjsVLXi5odHmMMUrc3xhszdJyhnaJ04ycE
+ lHhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7ynKelQzA1Np6h0rk/2Wra8d43qFTQmQnT8c37mQaxufn9c0u4VD0kVzSJq0PB+O7xewwiS0gdxS9@nongnu.org
+X-Gm-Message-State: AOJu0YzUycO7HP+Apnn1/FeT0HvllwZCrplwcwKNgAZBUXsPYCFVZVlG
+ WHNSiOSJl4vL8B6iIFgrbMFd73vmd40FiHmaQMXkgnCBXOJ2pCGBkH1IcIiu3KhDKm1Ah6oy/Q3
+ i+MRKQJftvGSIa3vSwIzJso5UAj8v3RAfiw0S3g==
+X-Google-Smtp-Source: AGHT+IFD+1Fne1VlzbwcNDL2QpC4KlTzUXxg6EZeLpjW7gFUE5BQq0AImf1www1S3+DIL/txa9gdAQJ7p1nCfU01QIw=
+X-Received: by 2002:a05:6402:34d5:b0:5c0:ac1d:b970 with SMTP id
+ 4fb4d7f45d1cf-5c21ed9febdmr2168394a12.32.1724938542443; Thu, 29 Aug 2024
+ 06:35:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
+ <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
+ <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
+ <172467410002.31767.12365606864399178508@t14-nrb.local>
+ <172483282308.162301.11735420619446380771@t14-nrb.local>
+ <CAFEAcA-wVqbuW1aG2fd6O9BwMKrFXTLzcvuF4xd6j_4x5WUQ+Q@mail.gmail.com>
+ <172493399778.162301.4960007495977124327@t14-nrb.local>
+ <CAFEAcA_nXq91A79d0ROc54y=MFoTBETpMmSd_hvk4BzQ9A7=3Q@mail.gmail.com>
+ <172493799281.162301.9447178356877601539@t14-nrb.local>
+In-Reply-To: <172493799281.162301.9447178356877601539@t14-nrb.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 29 Aug 2024 14:35:30 +0100
+Message-ID: <CAFEAcA8dk65ByV+x6A0hapL_D-52Rxwk35bgG2YMfL6bOAbcPw@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw, cpu to
+ three-phase reset, and followup cleanup
+To: Nico Boehr <nrb@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Michael Mueller <mimu@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [192.168.96.204]
-X-Mailer: Zimbra 9.0.0_GA_4615 (ZimbraWebClient - FF115 (Linux)/9.0.0_GA_4615)
-Thread-Topic: hw/arm/xilinx_zynq: Enable Security Extensions
-Thread-Index: xRCJRVSMo8Gofd7M0UxQXxVZXgJSAA==
-X-Authenticated-Sender: smtp-embedded@poldi-networks.de
-X-Virus-Scanned: Clear (ClamAV 1.0.5/27382/Thu Aug 29 10:52:14 2024)
-Received-SPF: pass client-ip=85.10.215.148;
- envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,50 +109,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter,
+On Thu, 29 Aug 2024 at 14:26, Nico Boehr <nrb@linux.ibm.com> wrote:
+>
+> Quoting Peter Maydell (2024-08-29 15:09:44)
+> > Thanks. I tried this repro, but mkosi falls over almost
+> > immediately:
 
------ Am 29. Aug 2024 um 14:50 schrieb Peter Maydell peter.maydell@linaro.o=
-rg:
+> In the meantime, looks like mkosi is trying to create an block image, but
+> that's not what it's configured to do; are you sure mkosi.conf is in the
+> same directory you're calling it from?
 
-> On Wed, 28 Aug 2024 at 01:51, Sebastian Huber
-> <sebastian.huber@embedded-brains.de> wrote:
->>
->> The system supports the Security Extensions (core and GIC).  This change=
- is
->> necessary to run tests which pass on the real hardware.
->>
->> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
->=20
-> (Added the maintainers to cc.)
->=20
-> Does the system have any secure-only devices, RAM, etc?
->=20
-> How much testing have you done with this change? (The main
-> reason we disabled has-el3 on this board back in 2014 was
-> as a backwards-compatibility thing when we added EL3 support
-> to the CPU model -- we didn't have a ton of images for the
-> board so we erred on the safe side of not changing the
-> behaviour to avoid potentially breaking existing guest code.)
+It is. I notice however that the manpage for mkosi
+says that it looks for "mkosi.default", not "mkosi.conf".
+Maybe it needs a newer mkosi than Ubuntu ships?
+(mkosi --version says "mkosi 12".)
 
-I only tested this change with the RTEMS test suite. I added new tests for =
-the exception handling and this change was necessary to trigger FIQs.
+I'll use the images C=C3=A9dric has kindly generated.
 
-I haven't used this machine to work with Linux so far.
-
---=20
-embedded brains GmbH & Co. KG
-Herr Sebastian HUBER
-Dornierstr. 4
-82178 Puchheim
-Germany
-email: sebastian.huber@embedded-brains.de
-phone: +49-89-18 94 741 - 16
-fax:   +49-89-18 94 741 - 08
-
-Registergericht: Amtsgericht M=C3=BCnchen
-Registernummer: HRB 157899
-Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
-=C3=B6rfler
-Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
-https://embedded-brains.de/datenschutzerklaerung/
+-- PMM
 
