@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A13FC83F15
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43525C83F15
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 13:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjew8-00060y-DN; Thu, 29 Aug 2024 09:11:40 -0400
+	id 1sjey0-0005K9-GV; Thu, 29 Aug 2024 09:13:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sjew3-0005oH-1E
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:11:35 -0400
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sjexy-0005E9-Pq
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:13:34 -0400
 Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sjew1-0005Pd-6o
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:11:34 -0400
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sjexw-0005nD-FB
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 09:13:34 -0400
 Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 184B839F6F;
- Thu, 29 Aug 2024 15:11:32 +0200 (CEST)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id 0E2083A301;
+ Thu, 29 Aug 2024 15:13:31 +0200 (CEST)
 X-Virus-Scanned: IMAP STYX AMAVIS
 Received: from smtpx.fel.cvut.cz ([192.168.200.2])
  by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id AEVKjVlG3EEE; Thu, 29 Aug 2024 15:11:30 +0200 (CEST)
+ with ESMTP id ZZ7P37I27Mg6; Thu, 29 Aug 2024 15:13:28 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1724937089;
- bh=QRVGSTdM3QnQIQ7162w5F8RQOXjb1nxs01/nExz70JY=;
+ s=felmail; t=1724937208;
+ bh=apV8L9XfX6jHjwXhMbl6Hhc6+uDO7AxqPmEXPHbd1G4=;
  h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
- b=bHiBvGOm059VmwF/HTaQT7xt7fQgYPy/g9rPjTM9SpEmSix+vGocxvo5RO3EMdbOx
- 7y6h036LCQuHRp9Vym14wiSabHZzzGjIE5RZPhCys2knB7DkRgTMPf9wNjRb39WSJe
- +CU02ABBct//BELf4hesZ9Jg2ANkZW68Ws9I01LY0oc7Q/4itRRHkZxLhGJMwAUpLY
- /FDJWaApGZou94ZFfgzqPGNEjvRdvxrLkm39VlM71GJEVVkDSsiD0FhpJSDw7EqVfo
- dATj464yQ8jbMLhOPCkZpclZjnM2klezJSZY0QGvj/oYX0wYQD1fLD5DAhKj3LZPIJ
- bjZRVSYA77TQQ==
+ b=aWy74r7ELqnB9G8LxcVMxAEah2aGfrT8VLM9FDLujA7sgXxXe94G04E2F6DQc43E5
+ VLgT0bSeFBIfj2+ofs40hlT2Txha72oTdylLhMgJGG2LzJEbEDMYQPqeG319zojTST
+ bZ1afkY4f7MZC+esHUSbLYMa0hAK/KatPyAX9hTusmv36QPzTv6Fh3nrPbv+spFIEn
+ hDii52CDai4qSs26dPUHlJYeBiXTYVmcarI6Wpp9roNGaUNs7LCirs1f95HQh6iC50
+ SzxUH9U9C0HD4jEYUlVbjpGh93KdW2lp1OK4dtMk9f8dlNeCl7vMmNHAzGi1o7cnEJ
+ xv9y8m+M/deqw==
 Received: from [147.32.86.193] (unknown [147.32.86.193])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id DA19A39FDF;
- Thu, 29 Aug 2024 15:11:29 +0200 (CEST)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id BDDBA3A300;
+ Thu, 29 Aug 2024 15:13:28 +0200 (CEST)
 From: Pavel Pisa <pisa@fel.cvut.cz>
 To: Doug Brown <doug@schmorgal.com>
-Subject: Re: [PATCH v2 3/7] hw/net/can/xlnx-versal-canfd: Translate CAN ID
- registers
-Date: Thu, 29 Aug 2024 15:11:35 +0200
+Subject: Re: [PATCH v2 4/7] hw/net/can/xlnx-versal-canfd: Handle flags
+ correctly
+Date: Thu, 29 Aug 2024 15:13:34 +0200
 User-Agent: KMail/1.9.10
 Cc: Francisco Iglesias <francisco.iglesias@amd.com>,
  Jason Wang <jasowang@redhat.com>, Paolo Bonzini <bonzini@gnu.org>,
- qemu-devel@nongnu.org
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 References: <20240827034927.66659-1-doug@schmorgal.com>
- <20240827034927.66659-4-doug@schmorgal.com>
-In-Reply-To: <20240827034927.66659-4-doug@schmorgal.com>
+ <20240827034927.66659-5-doug@schmorgal.com>
+In-Reply-To: <20240827034927.66659-5-doug@schmorgal.com>
 X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
 Content-Type: Text/Plain;
   charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
-Message-Id: <202408291511.35249.pisa@fel.cvut.cz>
+Message-Id: <202408291513.34117.pisa@fel.cvut.cz>
 Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
  helo=smtpx.fel.cvut.cz
 X-Spam_score_int: -53
@@ -85,17 +85,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday 27 of August 2024 05:49:23 Doug Brown wrote:
-> Previously the emulated CAN ID register was being set to the exact same
-> value stored in qemu_can_frame.can_id. This doesn't work correctly
-> because the Xilinx IP core uses a different bit arrangement than
-> qemu_can_frame for all of its ID registers. Correct this problem for
-> both RX and TX, including RX filtering.
+On Tuesday 27 of August 2024 05:49:24 Doug Brown wrote:
+> Add support for QEMU_CAN_FRMF_ESI and QEMU_CAN_FRMF_BRS flags, and
+> ensure frame->flags is always initialized to 0.
+>
+> Note that the Xilinx IP core doesn't allow manually setting the ESI bit
+> during transmits, so it's only implemented for the receive case.
 >
 > Signed-off-by: Doug Brown <doug@schmorgal.com>
-> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
-Acked-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+Reviewed-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
 
 -- 
                 Pavel Pisa
