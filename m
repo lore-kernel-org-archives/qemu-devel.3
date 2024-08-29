@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34305C83F05
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 11:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA99C83F07
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 11:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjd6X-0003kc-KG; Thu, 29 Aug 2024 07:14:17 -0400
+	id 1sjdR6-0002nB-Hk; Thu, 29 Aug 2024 07:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sjd6U-0003iZ-DD
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 07:14:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sjdR4-0002lA-R1
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 07:35:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sjd6S-0000XF-0q
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 07:14:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sjdR2-0003Kv-UE
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 07:35:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724930049;
+ s=mimecast20190719; t=1724931328;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=h0prew2U7A3Gb6TIHRJg7orrfBRrcWDmpS3hROkViuI=;
- b=SrucsLYSLpPthbCnueGNv7o2a0ZOIoG7GvQ6aw5dobP7z4PRsNrgzxeA3EmOSa8tass1SC
- PupIxKmg57mH1NIEeaLcWQN66k0YLop04P1J1X9vzv/matXbhg/n4fGq7NT2AplePar/eV
- 3+zOMGNC2B7C06uU0qJ9xeCKjOCJxqk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=j1ujaW8DZbgjy6h17GbvOw9MwJIxWCXNp+emv6sJ2zI=;
+ b=Yb9C8mZFKM/7GlrS+y/w7cl74GNDBeynSoELNPGrMXnMCRLxNIDNLA/7l4+jl+vm0oM5Z2
+ 29P2O/VQ1kET7hZths3Wgnxhyo13kHg3ar8GCwAq2JPSp+J3QckdhcZepJzil13MfCXWxF
+ oZV2ZSO9EP0FXsNpLo29pi9lqPvyLrc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-PL5V4rx4Pi6-dwbdpUjICg-1; Thu, 29 Aug 2024 07:14:08 -0400
-X-MC-Unique: PL5V4rx4Pi6-dwbdpUjICg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42bb5950d1aso6548205e9.2
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 04:14:08 -0700 (PDT)
+ us-mta-583-ktJnneEHNRip6LxTw3Oeqg-1; Thu, 29 Aug 2024 07:35:25 -0400
+X-MC-Unique: ktJnneEHNRip6LxTw3Oeqg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3717ddcae71so429083f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 04:35:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724930047; x=1725534847;
+ d=1e100.net; s=20230601; t=1724931324; x=1725536124;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=h0prew2U7A3Gb6TIHRJg7orrfBRrcWDmpS3hROkViuI=;
- b=E0TLbfAfXtt6jkvsZUDftXxoGYXmQ8LD0cxttkYzsrceh0i1SWRVUYWKspHMmseQiW
- XScFGTY0NQFYv93CUvLf2ys1jb0C+dOCv3+qWtOMm7KrTxBtzAE1py1NCMiDRTkTj9yT
- LOdb3v7dpkj/YaSds+KAv5Lfv/MFYvfXJEbuE2PTpP1oQG4v572+nhxyBn7SUqDPAd1O
- t91iqvQsFSKY3Es69/3MqDOkC4iI8WiLy5Ye3do0sVmq5AdKCZbkq3u/0KDcB6oMG/JQ
- 2728FmZ2YjRyDAPyiKRiXrC5d7BF6grobmhgCUddAZ3bWeOF6n5Ljo6Nfzyq9tWdkTAT
- mkaQ==
+ bh=j1ujaW8DZbgjy6h17GbvOw9MwJIxWCXNp+emv6sJ2zI=;
+ b=iLni4A+1BkpVV8qKrIF/brUBRmUVIGYERa8/7VjLuCrlthNkFAq+FtGyvIyGD9wScW
+ 0R4EZpXDPkufz/fi78XWA9H55clLgor4ANy7z8eeRyZ40L59L2KS2B6SZsJFo2uQZM9p
+ fKN/j5c7oiXlh43RUkb7TtvzWjU3esww5gTFGVhnYVVmtTqLENYnJ+cC58mXncg5Xr7X
+ LS7AjvoG4gEglQQXCJVg5r8cMJjYonSqx7WsOhqtvyHdvthh63rqp0LypzlKcp3tbi3k
+ C7KY4mbjtrXfnLv24a2q1GG+rC80GPtH4vDrU0oob4L/2K4gQiOaYxB4jR0jOvPwqDT4
+ bp3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWiofpqCY/SQKJ8SJEZWUyNBseDzpyQ0DjzO9B+UBPtVKeFUBCWF0Dw4dBIVFkbDxWqZdbyKVEt8zWN@nongnu.org
-X-Gm-Message-State: AOJu0YyhFCRHo1l6A8rrpSBpXCY+KQaGtqHWnUPWqWKuSfMQGwJApEp1
- cfkN8n4uTIuprfU5tQ+wV6VqRkHlHCXdn/tB5uEUy8a5I/v0dXW4psnw2FSOmYfWXQC76924tPM
- fYYUROGyCMVJ6wwkieO7xA8f/vSBlC3NsEb1UNV6DeKA4rWNQ7Cn/
-X-Received: by 2002:a05:600c:1f86:b0:426:6fd2:e14b with SMTP id
- 5b1f17b1804b1-42bb01b5f44mr24687705e9.11.1724930046957; 
- Thu, 29 Aug 2024 04:14:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzsm1Vp4KS6iH6a8Ifqa+c41F86Pi5kYypj2XQCCxLkoyao2Qj94eN4sht09OsKvoXewwPGA==
-X-Received: by 2002:a05:600c:1f86:b0:426:6fd2:e14b with SMTP id
- 5b1f17b1804b1-42bb01b5f44mr24687145e9.11.1724930046476; 
- Thu, 29 Aug 2024 04:14:06 -0700 (PDT)
+ AJvYcCVGJOtWOLWp85YCF4tbs1XxKujv1hfbryUl5wHxeMBiw7WIy2MhNfawLcc8kkqEJyI45y0R2Q2//ad4@nongnu.org
+X-Gm-Message-State: AOJu0YxE4WHPFzKFK/jv+/X4v/0Y/zp/TO3Xg7SlXh6Fr/bf4y/FdHp7
+ rqZJ9/UhHrtc+Gho/UEfIvxyjFvcC7+UULm+o7ChP9UyYMjF8lf5cPPGVL+4HuRw2giO2ez6Ceg
+ kGdDayFbYvL596h2xTTsc840QkQdShr2mX9X07MNgD+pQNZxT9m2z
+X-Received: by 2002:a05:6000:4d0:b0:371:8e50:2d06 with SMTP id
+ ffacd0b85a97d-3749b58123emr1673107f8f.43.1724931324307; 
+ Thu, 29 Aug 2024 04:35:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFaA74YMvM1yvFuO2AtLOnNAyps1L/HLKZhgZHos7H9vdqzV4MQEt2kKFzrTZnXQ7jZngiB6g==
+X-Received: by 2002:a05:6000:4d0:b0:371:8e50:2d06 with SMTP id
+ ffacd0b85a97d-3749b58123emr1673076f8f.43.1724931323829; 
+ Thu, 29 Aug 2024 04:35:23 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-179-35.web.vodafone.de.
  [109.43.179.35]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3749ee71650sm1129634f8f.40.2024.08.29.04.14.04
+ 5b1f17b1804b1-42bb6a10353sm13289255e9.1.2024.08.29.04.35.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Aug 2024 04:14:05 -0700 (PDT)
-Message-ID: <e29d26d3-74f4-4bf0-87fd-8ecd9ae614e9@redhat.com>
-Date: Thu, 29 Aug 2024 13:14:03 +0200
+ Thu, 29 Aug 2024 04:35:23 -0700 (PDT)
+Message-ID: <37bd851e-4957-443c-9e7a-949ee2eaf3d8@redhat.com>
+Date: Thu, 29 Aug 2024 13:35:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iotests: fix expected output from gnutls in NBD test
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>, qemu-block@nongnu.org,
- qemu-stable@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20240829110256.394443-1-berrange@redhat.com>
+Subject: Re: [PATCH v4 35/35] docs/devel/testing: Add documentation for
+ functional tests
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>
+References: <20240821082748.65853-1-thuth@redhat.com>
+ <20240821082748.65853-36-thuth@redhat.com> <ZtBOvBh-keKVeCni@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -125,17 +125,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240829110256.394443-1-berrange@redhat.com>
+In-Reply-To: <ZtBOvBh-keKVeCni@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -154,31 +154,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/08/2024 13.02, Daniel P. Berrangé wrote:
-> Error reporting from gnutls was improved by:
+On 29/08/2024 12.34, Daniel P. Berrangé wrote:
+> On Wed, Aug 21, 2024 at 10:27:36AM +0200, Thomas Huth wrote:
+>> Document the new functional testing framework. The text is originally
+>> based on the Avocado documentation, but heavily modified to match the
+>> new framework.
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   docs/devel/testing/functional.rst | 269 ++++++++++++++++++++++++++++++
+>>   docs/devel/testing/index.rst      |   1 +
+>>   docs/devel/testing/main.rst       |  12 ++
+>>   3 files changed, 282 insertions(+)
+>>   create mode 100644 docs/devel/testing/functional.rst
 > 
->    commit 57941c9c86357a6a642f9ee3279d881df4043b6d
->    Author: Daniel P. Berrangé <berrange@redhat.com>
->    Date:   Fri Mar 15 14:07:58 2024 +0000
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > 
->      crypto: push error reporting into TLS session I/O APIs
+>> +The tests should be written in the style of the Python `unittest`_
+>> +framework, using stdio for the TAP protocol. The folder
+>> +``tests/functional/qemu_test`` provides classes (e.g. the ``QemuBaseTest``
+>> +and the ``QemuSystemTest`` classes) and utility functions that help
+>> +to get your test into the right shape.
 > 
-> This has the effect of changing the output from one of the NBD
-> tests.
-> 
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
-> 
-> NB, wrt qemu-stable this will be for the 9.1 stable branch once
-> that is created, no earlier releases will need this.
-> 
->   tests/qemu-iotests/233.out | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
+> One gotcha when using TAP protocol is that you can't just spew
+> debug info to stdout/stderr. Each line of debug info needs to
+> be prefixed with '#' so it is interpreted as diagnostic output.
 
-Thanks, that fixes the issue, indeed.
+Actually, that's the great thing about pycotap (in comparison to other 
+Python TAP implementations that I've seen), it helps you to get this right: 
+By instantiating the TAPTestRunner like this:
 
-Tested-by: Thomas Huth <thuth@redhat.com>
+     tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                test_output_log = pycotap.LogMode.LogToError)
 
+The stdio output gets redirected to stderr. And the meson test runner is 
+fine by collecting the error messages from stderr and showing them to the 
+user in the right way in case the test failed (and puts them into the log 
+file if the test succeeded).
+
+But yes, the doc text is a little bit sparse on this topic, I'll try to 
+elaborate in the next iteration.
+
+  Thomas
 
 
