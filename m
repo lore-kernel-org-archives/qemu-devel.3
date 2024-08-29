@@ -4,79 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89415C87FCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 17:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11A2C87FD3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 18:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjiuW-0006TJ-Uh; Thu, 29 Aug 2024 13:26:17 -0400
+	id 1sjkJG-0001TJ-KB; Thu, 29 Aug 2024 14:55:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjiuR-0006SO-HZ
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 13:26:13 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sjiuO-0004IL-HC
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 13:26:11 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5c210e23651so1010354a12.3
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 10:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724952366; x=1725557166; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Nw8G2fxey5pXqsJnNfpMwmAaWGRa7VeooNStNunD9v4=;
- b=VVMF4Yz5L7EtRZmLZuR5AhvFHriVgnzjNamgQLCuAhJ0nsOO90Skt50+75jzRy1tSz
- hzj6e/79TaFTojBoh1gE5tlZf+ZvVhKF28tQ/ccR10iVvsEzWBRt5P2iX5e5Jcoa7UzQ
- 3q+8bdIEHv9nSS6n5+3NLuUR/V75IXou5CneNxnROpWWKvQIaCLBW/+cNUvx9hUpdrJJ
- QyyE6Ug8Aitjn2ZUFNttg+9eqRqK9btlzB+80rHZ+745AQ25xIw7mn1WoFxFwSdJBiEQ
- JR27twbPsk+1nNXyyXZNnBUpIq4RsvUd1Qf44bRNvwTAS2PEZQGJNzb0flb7YAP8iJmZ
- smdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724952366; x=1725557166;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Nw8G2fxey5pXqsJnNfpMwmAaWGRa7VeooNStNunD9v4=;
- b=kz4rEY7A3i9dgRbiabj7gQlTsn7yDweoJmTPSJflLtflH0h3Jtb4EQiV8xKkEdDPLL
- 6HtuT8g78zCAe0oC+iR3ox5IvMlN4bQL2PUrn3CTNX5o7wM2Jr8K3aeHdyUkZBqycKyH
- 3HTNDOF3XOJi+251DpwSGbGYpXuWTcvCL1Tqd1IMpyTuLyAemWeUaUJmf1wyzgXIh3lj
- GpR77xhh9WNN5fdrssiCAuA9as25Qjjjh3Tm0tbDAGG72plsRXdim1pReDH51M8+ak2E
- gyWiQ9XesBAZLWt2nJ00XYSfEOUworfk6SVzZMrGsRTldXEGtBhcpARpazsSmJ6QEG28
- Zv0w==
-X-Gm-Message-State: AOJu0Yw94PUQwe89XkVPMFOubcdBxnV/wiyB3gKO3RXcd8k4ku/oxwqM
- KMTdlZ1WbnxCAGVVCetqJVM5MKDp//J6q+Gu1tp4xb37zi5jRszUxvP+B1w2qpY7YxbDnJzGBLk
- ww/i1OUE3iWnzFN3yPkiHX+ZvA1lMfle9SKq6Pw==
-X-Google-Smtp-Source: AGHT+IHMqPXqkErUAjUBoZvaUhH2KyI4shkOzk+5HVskvLAcUjkln4Jbc3xonknhxGQI9nIsx6cKM8Xp6n6ddLweBSk=
-X-Received: by 2002:a05:6402:50d2:b0:5c0:8b17:cefe with SMTP id
- 4fb4d7f45d1cf-5c21ed96fbcmr2956929a12.26.1724952366075; Thu, 29 Aug 2024
- 10:26:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sjkJ9-0001R7-Ez
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 14:55:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sjkJ3-0005T4-PD
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 14:55:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724957736;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=0Bdjwg+wVHr7lgkjg5NDEEE9wbBc2M5WHVf4RDVCbI8=;
+ b=goQhVO87oVfqQPB5b3iZITD92cuhOrFj6z0ipiaPuuznuLIGx/z0WNImdZKxnXWG72KLw7
+ 1ObXOuz2Zglze+rktks1cUCvo000TrculFBEHvlKfC4JBuFAsWBG37qLoFT1d+lzszZpuZ
+ 0bIWkzaVPTohp7rEUKKhs4+f3VmjFpY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562--2fyShQaOqeRHLfHm3CCMw-1; Thu,
+ 29 Aug 2024 14:55:34 -0400
+X-MC-Unique: -2fyShQaOqeRHLfHm3CCMw-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E5EF1955D4E; Thu, 29 Aug 2024 18:55:33 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.39.192.96])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9B2511955F21; Thu, 29 Aug 2024 18:55:31 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com,
+ afrosi@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH] raw-format: Fix error message for invalid offset/size
+Date: Thu, 29 Aug 2024 20:55:27 +0200
+Message-ID: <20240829185527.47152-1-kwolf@redhat.com>
 MIME-Version: 1.0
-References: <20240305135237.3111642-1-peter.maydell@linaro.org>
- <20240305135237.3111642-18-peter.maydell@linaro.org>
- <241ba192-359c-483c-aeea-1023a47c4e74@tls.msk.ru>
- <CAFEAcA9=ALwWzRn5mitmgEELy07HaGQkesYr=w+D8ceZxg9UQw@mail.gmail.com>
-In-Reply-To: <CAFEAcA9=ALwWzRn5mitmgEELy07HaGQkesYr=w+D8ceZxg9UQw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Aug 2024 18:25:54 +0100
-Message-ID: <CAFEAcA-zJkODkRYO_Qzi_VtMGTvHTj9qPrSBLKW5hUX9qjXJoQ@mail.gmail.com>
-Subject: Re: [PULL 17/20] target/arm: Do memory type alignment check when
- translation disabled
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,65 +79,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Aug 2024 at 16:51, Peter Maydell <peter.maydell@linaro.org> wrot=
-e:
->
-> On Wed, 28 Aug 2024 at 08:22, Michael Tokarev <mjt@tls.msk.ru> wrote:
-> >
-> > 05.03.2024 16:52, Peter Maydell wrote:
-> > > From: Richard Henderson <richard.henderson@linaro.org>
-> > >
-> > > If translation is disabled, the default memory type is Device, which
-> > > requires alignment checking.  This is more optimally done early via
-> > > the MemOp given to the TCG memory operation.
-> > >
-> > > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > > Reported-by: Idan Horowitz <idan.horowitz@gmail.com>
-> > > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > > Message-id: 20240301204110.656742-6-richard.henderson@linaro.org
-> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1204
-> > > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> >
-> > Hi!
-> >
-> > Apparently this change also breaks picolibc testsuite (between
-> > 8.2 and 9.0, bisect points to this commit).
-> >
-> > For example:
-> >
-> > ./qemu-system-arm \
-> >    -m 1G \
-> >    -chardev stdio,mux=3Don,id=3Dstdio0 \
-> >    -semihosting-config enable=3Don,chardev=3Dstdio0,arg=3Dprogram-name =
-\
-> >    -monitor none \
-> >    -serial none \
-> >    -machine none,accel=3Dtcg \
-> >    -cpu cortex-a8 \
-> >    -device loader,file=3D/tmp/picolibc-1.8.6/arm-none-eabi/test/printf_=
-scanf_thumb_v7_fp_softfp,cpu-num=3D0 \
-> >    -nographic
-> >
-> > (yes, this testsuite uses qemu-system as a substitute of
-> > qemu-user, sort of, (ab)using -device loader)
->
-> My immediate guess is that this code won't run on real hardware
-> either -- i.e. that is bare-metal code that was only ever tested
-> and run on QEMU and was previously relying on the incorrect
-> behaviour that we didn't enforce the alignment checks that we're
-> supposed to do when the MMU is off.
+s->offset and s->size are only set at the end of the function and still
+contain the old values when formatting the error message. Print the
+parameters with the new values that we actually checked instead.
 
-I had a look at the test binary you kindly provided in
-https://gitlab.com/qemu-project/qemu/-/issues/2542
-and that confirmed my guess. This binary would never have
-worked on real hardware, and it only worked on older QEMU
-because we weren't correctly emulating this corner of the
-architecture. You need to either use a new enough picolibc
-that you can turn on its _PICOCRT_ENABLE_MMU option, or
-else make sure everything is built with gcc's -mstrict-align
-or similar option to avoid any unaligned loads.
+Fixes: 500e2434207d ('raw-format: Split raw_read_options()')
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ block/raw-format.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-thanks
--- PMM
+diff --git a/block/raw-format.c b/block/raw-format.c
+index ac7e8495f6..e08526e2ec 100644
+--- a/block/raw-format.c
++++ b/block/raw-format.c
+@@ -111,7 +111,7 @@ raw_apply_options(BlockDriverState *bs, BDRVRawState *s, uint64_t offset,
+     if (offset > real_size) {
+         error_setg(errp, "Offset (%" PRIu64 ") cannot be greater than "
+                    "size of the containing file (%" PRId64 ")",
+-                   s->offset, real_size);
++                   offset, real_size);
+         return -EINVAL;
+     }
+ 
+@@ -119,7 +119,7 @@ raw_apply_options(BlockDriverState *bs, BDRVRawState *s, uint64_t offset,
+         error_setg(errp, "The sum of offset (%" PRIu64 ") and size "
+                    "(%" PRIu64 ") has to be smaller or equal to the "
+                    " actual size of the containing file (%" PRId64 ")",
+-                   s->offset, s->size, real_size);
++                   offset, size, real_size);
+         return -EINVAL;
+     }
+ 
+-- 
+2.46.0
+
 
