@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67866CA0EC8
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18B2C87FCB
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 23:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjp2i-0003qo-NL; Thu, 29 Aug 2024 19:59:10 -0400
+	id 1sjp3K-0006lf-PE; Thu, 29 Aug 2024 19:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sjp2g-0003gJ-8g
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:59:06 -0400
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ id 1sjp3I-0006d0-Mj
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:59:44 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sjp2X-0005j0-PH
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:58:59 -0400
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-4fcf9102c8bso419582e0c.2
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 16:58:57 -0700 (PDT)
+ id 1sjp3H-0005lE-5j
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 19:59:44 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-842fe7187b3so378270241.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 16:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724975936; x=1725580736; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1724975982; x=1725580782; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G+AQUvkE8egu+LZuwk+Fm8JzwF+4QrDgYAYgQ/xFZxk=;
- b=npWwibUOaCZcG9eyiWS6QW8kR3+oBGp4ZCZha34MTV0MlRS1hgWNORD0c23TckEsBk
- ITW9u9ytVhFUhLeBCzfN3aUule3MnoGmXgKyRxaV8rSU5Rz47AWjM4+1Qy7McB9qJ+Im
- Gke0RPNovQFb9ySl7Xed3UhnSS52aI5kfhpC62Rmaa5ME9qbDHKGr4Q6uRF1KOqENulD
- 0PCc1wyPC4AidQS3Ieh5wEi0GnHHy1wMNoOYY2hN+yLXh2bzW/xSLOVLIPP1DPRjn27W
- W5R1qUUFkDgLwAv6qo16B3D3o0T4fuxyQrJwDZ7X7G22DcSRrPq8OC0EUsBBeFqg9fVm
- Asww==
+ bh=EdEmML8dQca++rwXiq/7V17cQc8CXZesqmruXrdHq9s=;
+ b=bnMUkSdrYpibwrVFxZEEscBe9oNWYjw5Kd7q1HxNOOEnWug/l0ftHJlkkSB6L104W/
+ 1oQzYtoRtnBapakXKQOMCVq92MAYjwLIQmrN96sXycz/9sa0TK7GAys7tIp8N1TvCP2i
+ B1cL8cAJ4n8+PnERRPJXgBC0P5BAiB6ZOI1vTz6CDkgU7nOkIhvSwbzrnuG/kiX6ovR4
+ w3uof0vTAuk96FC+qzrBA5+Gw9io/tftFXrOrqdMaFW4FRG4FBbZmKqfqA4N76Kpt04o
+ PUrQN3dgX3bzwfZSuhRo+Hn/67c4BS2cX9JRTy546v4CI/nxkR0EDDC3HQW4nxkpiIUy
+ jpcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724975936; x=1725580736;
+ d=1e100.net; s=20230601; t=1724975982; x=1725580782;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G+AQUvkE8egu+LZuwk+Fm8JzwF+4QrDgYAYgQ/xFZxk=;
- b=uat6uNyET+27p0hgACD4+bEI87t/VkgCYGK5B9PBsoU7/CsOSPR1EBiMRFfc3L3VYY
- vesBOPyigvDZgQiMj+9bfuMorJZw1nyt7wSZCpmuskQRZkoFmkYFODC6ZE5HjpOpiRye
- M2QoG7CXFdgOqCGsQNG37x5Ho/vMruUzfxH9kxy3WQHjUvN6g/cW02LqlPv7p2bAF60w
- otUaiE5yqq6bXjMIlOxqcR60NEeNUZoB8vSzW1Q2R7H06vxMxVedB54hNrVuuhFb1Bjo
- +LlPRmN3SR8qov/8ywVje8muOUD1SzRt5SacMtVFKWx03A3aZ0GICUiAytcJ477qGkAj
- 0vWQ==
+ bh=EdEmML8dQca++rwXiq/7V17cQc8CXZesqmruXrdHq9s=;
+ b=bjRrRmyC7n04zA1TQOj8YOC5iZuGqUsaS/9cq3FFcMowVwg/a3a37u61JXo7IEOKVX
+ 4p75lYvhlB3rnNzP/0yhL6IP6gmXs5Pk5hCi5+dNOTntebKCHNPoN5Nl9GJlpN4DAAOs
+ LeyNNHSBegfafoVEUI9am/THN4EAqTv+mWDj6BtJXRmaskO8cIVTRS1ukVrriKZGiyt8
+ +jh1n7F16qeeRm11ScVMwfqQrJHmVJgPY8RFbPUoN+R/oXOii+UK8i1hA9T104stD9Jx
+ vmHib+1GS8SjchhLSSj3GsPJjVDGSopBsTubyOLipbm07laMxBxL2VNparSXnJMrXB8m
+ Ry5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXn4qhH9fgyvCo/MltdKE3YpZlZDboX9dTCr5eXLYF3Kx3k8J3KiV+0NES6q9DKXmbb0KlulliJ2Zto@nongnu.org
-X-Gm-Message-State: AOJu0YxqPv5caM052JPEys3lJT7I371farDnaquJpR/djlGFKAiOJ/bg
- axO4PzYrNYB0Dnrjn1groNhHb0CkDa5EBXmvOoaIzzp6GJH2mZ9KiMwO09DvU4VjAjBy8JoHCPX
- +IGBrWKLnOuTC9EJMSrir2DMQJME=
-X-Google-Smtp-Source: AGHT+IHxbk/yp7puHOQjnVp7nDuZQIJQAiT8z7lQHk/MEDrVpsofoykcYBk2UsDO8l319QGfPGg22UCdIjo/fs54IU0=
-X-Received: by 2002:a05:6122:3198:b0:4d3:3846:73bb with SMTP id
- 71dfb90a1353d-4ffe4bb8f9dmr4964678e0c.7.1724975936541; Thu, 29 Aug 2024
- 16:58:56 -0700 (PDT)
+ AJvYcCWmU/6E3Ic1nRiSFfB7D4H848uVxT1hEZkKwCg2WSviRVkL/fMoTMuwhwnNZsTHh3TtK/iLTDvaK0oB@nongnu.org
+X-Gm-Message-State: AOJu0YxHE8ocydDTtssuBNLAFmh3N4OArvHxB+0dgImlODboV9vQfh09
+ SXVLDiTyV3pBOnVhRpfrujwlrTv1pMv1bnKHo3P5oarYLNJNvr9mHj/KIBMNGLh2DWE9lb1PcJS
+ KCZbnSuS9lNlIln9wiFLso0HzIV4=
+X-Google-Smtp-Source: AGHT+IFeRC7hQydc+oyI1GcDSG+r82DPwcsdj9EZ69ZkUo+M4IM84gF+Uok50E++zuSi65lUeZq37wnalmBB4obAFeQ=
+X-Received: by 2002:a05:6122:2a45:b0:4f6:a697:d380 with SMTP id
+ 71dfb90a1353d-4fff169e144mr4599723e0c.10.1724975981806; Thu, 29 Aug 2024
+ 16:59:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
- <20240828122258.928947-8-mark.cave-ayland@ilande.co.uk>
-In-Reply-To: <20240828122258.928947-8-mark.cave-ayland@ilande.co.uk>
+ <20240828122258.928947-9-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20240828122258.928947-9-mark.cave-ayland@ilande.co.uk>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 30 Aug 2024 09:58:30 +1000
-Message-ID: <CAKmqyKNJEQpPhmo_J0pSfwoNXXUN5ax=KXySbkdSfZD5QKv6Ug@mail.gmail.com>
-Subject: Re: [PATCH 7/9] fifo8: add fifo8_peek_buf() function
+Date: Fri, 30 Aug 2024 09:59:16 +1000
+Message-ID: <CAKmqyKMbsArhqcNdUcg95h5Y3BwXFyqbTXcBnpJADM7ac74qTw@mail.gmail.com>
+Subject: Re: [PATCH 8/9] fifo8: introduce fifo8_peek() function
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: philmd@linaro.org, Alistair.Francis@wdc.com, tavip@google.com, 
  qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,14 +94,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 28, 2024 at 10:25=E2=80=AFPM Mark Cave-Ayland
+On Wed, Aug 28, 2024 at 10:26=E2=80=AFPM Mark Cave-Ayland
 <mark.cave-ayland@ilande.co.uk> wrote:
 >
-> This is a wrapper function around fifo8_peekpop_buf() that allows the cal=
-ler to
-> peek into FIFO, including handling the case where there is a wraparound o=
-f the
-> internal FIFO buffer.
+> This allows uses to peek the byte at the current head of the FIFO.
 >
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
@@ -110,52 +106,52 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  include/qemu/fifo8.h | 14 ++++++++++++++
->  util/fifo8.c         |  5 +++++
->  2 files changed, 19 insertions(+)
+>  include/qemu/fifo8.h | 11 +++++++++++
+>  util/fifo8.c         |  6 ++++++
+>  2 files changed, 17 insertions(+)
 >
 > diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
-> index d1d06754d8..d09984b146 100644
+> index d09984b146..4f768d4ee3 100644
 > --- a/include/qemu/fifo8.h
 > +++ b/include/qemu/fifo8.h
-> @@ -76,6 +76,20 @@ uint8_t fifo8_pop(Fifo8 *fifo);
+> @@ -62,6 +62,17 @@ void fifo8_push_all(Fifo8 *fifo, const uint8_t *data, =
+uint32_t num);
 >   */
->  uint32_t fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen);
+>  uint8_t fifo8_pop(Fifo8 *fifo);
 >
 > +/**
-> + * fifo8_peek_buf:
-> + * @fifo: FIFO to read from
-> + * @dest: the buffer to write the data into (can be NULL)
-> + * @destlen: size of @dest and maximum number of bytes to peek
+> + * fifo8_peek:
+> + * @fifo: fifo to peek from
 > + *
-> + * Peek a number of elements from the FIFO up to a maximum of @destlen.
-> + * The peeked data is copied into the @dest buffer.
-> + * Care is taken when the data wraps around in the ring buffer.
+> + * Peek the data byte at the current head of the FIFO. Clients are respo=
+nsible
+> + * for checking for emptyness using fifo8_is_empty().
 > + *
-> + * Returns: number of bytes peeked.
+> + * Returns: The peeked data byte.
 > + */
-> +uint32_t fifo8_peek_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen);
+> +uint8_t fifo8_peek(Fifo8 *fifo);
 > +
 >  /**
->   * fifo8_pop_bufptr:
+>   * fifo8_pop_buf:
 >   * @fifo: FIFO to pop from
 > diff --git a/util/fifo8.c b/util/fifo8.c
-> index 1031ffbe7e..a8f5cea158 100644
+> index a8f5cea158..a26da66ad2 100644
 > --- a/util/fifo8.c
 > +++ b/util/fifo8.c
-> @@ -140,6 +140,11 @@ uint32_t fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, u=
-int32_t destlen)
->      return fifo8_peekpop_buf(fifo, dest, destlen, true);
+> @@ -71,6 +71,12 @@ uint8_t fifo8_pop(Fifo8 *fifo)
+>      return ret;
 >  }
 >
-> +uint32_t fifo8_peek_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen)
+> +uint8_t fifo8_peek(Fifo8 *fifo)
 > +{
-> +    return fifo8_peekpop_buf(fifo, dest, destlen, false);
+> +    assert(fifo->num > 0);
+> +    return fifo->data[fifo->head];
 > +}
 > +
->  void fifo8_drop(Fifo8 *fifo, uint32_t len)
->  {
->      len -=3D fifo8_pop_buf(fifo, NULL, len);
+>  static const uint8_t *fifo8_peekpop_bufptr(Fifo8 *fifo, uint32_t max,
+>                                             uint32_t skip, uint32_t *nump=
+tr,
+>                                             bool do_pop)
 > --
 > 2.39.2
 >
