@@ -4,85 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F4D4C83F16
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 15:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2598C83F2D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 15:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjhGf-0005Vg-9u; Thu, 29 Aug 2024 11:41:01 -0400
+	id 1sjhO0-0002AG-Cc; Thu, 29 Aug 2024 11:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1sjhGe-0005VC-6A
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:41:00 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1sjhGa-0001H5-Qj
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:40:59 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5a108354819so1079690a12.0
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 08:40:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724946055; x=1725550855; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ERbFzOwVPlGwpXVkv2XYWXs4JWWracOiCiXw9VVI8gg=;
- b=ai+z4go6omzR0A+Xpp8RMxuSe3afjUSfM9jo8jitEZk19kClwZV5r4uWas+rIbRUkY
- tS7XTTvUPM2SJFfPvGoy7mG7eT1aVZaaYJTU3FD8BAo3Il2/QeNPuLILE4Wwx9dZNTIC
- FVYowlvdX49/oGmbQMENhIdmnxK5rDhYbL2qRVWS7OdE/QAZb5p6l1FY3dZ6ppXy0E6w
- yXY7a5MwWZQMzTDcx88NbA3oLw5xQfPfdkvECsrXAXlAmkXIegPZ0BSY9v0UvDmWSE4Z
- GPX7o6IFqtPyriphjsod5ODwcIwA8CuhA1FOef4usCTU0SZWfhwi75RqLhE160cMLVov
- //MQ==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sjhNy-00029k-Q5
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:48:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sjhNv-0001zz-G2
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:48:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724946509;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=vAYOr3c8kAOiX+b7fYPI/8X+NEy8JkqKLKZyrEqgK8I=;
+ b=Pnigi5SP1wPpX2r7VWF+qKmJhntaLO/gRhNj6Q680v0y8Blm0gtXEX8Sqgd9/7PSrtJLz5
+ 0KoIPstW8FW0s6nEGSjqjvzYQS3YESA/j3en64oE7gWwqMSvqGHdVR4rdv9kElNQQr0aq/
+ ia9FLKYq4lgV6tlYG+wzkzw+hUArM50=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-HjZpcmztO3W6J2ss0yM-Ew-1; Thu, 29 Aug 2024 11:48:28 -0400
+X-MC-Unique: HjZpcmztO3W6J2ss0yM-Ew-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-371a1391265so504392f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 08:48:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724946055; x=1725550855;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1724946507; x=1725551307;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ERbFzOwVPlGwpXVkv2XYWXs4JWWracOiCiXw9VVI8gg=;
- b=iRebPioau9BlXWt4O24epXuWmbaZlJbIzO2GZIV2/qPJRkjxh3lvGi46tYU98vdtYF
- wkIC008iloMh/gkxZkxhd8UvxnIvzRjDLVa3QhL8dfc0nU4Yabube+OZWIqATpd1lwud
- hE6HseBALwaoeSe4ZAJaB4L/ldmRO3hgtvXQfUS8BgprxvwHFzo/ONmtBqr2JXovOj7i
- 7KjwjQYlq1ZQVDja7F+y5rCKsDLx6PHt3LNP+46cA+MzuyLHlXRJ6f40bQU5CHKZ0YEH
- LQ0Gp6K3Ws3zqsmDbiG0QP6b9QpdAvx2ig7HPykZUc815eAi4UCXbYkwd1kR3jA5bofB
- DMWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUqtAp418pAvTwC3ej5T4CnerXsnFpR3sb/XmnfPMzPvo2U2XG9bYkbpFTmoF+12hKWmxjOhgbW5vwp@nongnu.org
-X-Gm-Message-State: AOJu0YztLN9Fs4WFN3LqW79Zqk3Ey39ouu/OpKZ+YfIqCHUHifnVUUaB
- R5U3r3RTbEkgLix4a70VJbttNQdhGpuhhyedJImwmpv+TRW6Kjjq
-X-Google-Smtp-Source: AGHT+IHXWUl93EzdzAUbMUJfW464wG9ArFmqcJl0AGwHaswWIB5XtR5xZoh8agZ8gjePnVcEXVw8Tg==
-X-Received: by 2002:a17:907:7f1f:b0:a86:a090:5caa with SMTP id
- a640c23a62f3a-a897f8e2be2mr297923666b.34.1724946054498; 
- Thu, 29 Aug 2024 08:40:54 -0700 (PDT)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a89891d6f7bsm91974566b.157.2024.08.29.08.40.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Aug 2024 08:40:53 -0700 (PDT)
-Date: Thu, 29 Aug 2024 16:40:52 +0100
-From: Stafford Horne <shorne@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Ahmad Fatoum <a.fatoum@pengutronix.de>, qemu-devel@nongnu.org,
- linux-openrisc@vger.kernel.org
-Subject: Re: [PATCH RESEND] hw/openrisc/openrisc_sim: keep serial@90000000 as
- default
-Message-ID: <ZtCWhGD8vIv1e88a@antec>
-References: <20240822163838.3722764-1-a.fatoum@pengutronix.de>
- <ZsgsG_WL7TNcM1_l@antec> <ZssWudpcVotQWr45@zx2c4.com>
- <CAFEAcA95TEA-5Mq9n9+Mva0r-W040A-nt9doCmPg7xW+dU3E2w@mail.gmail.com>
- <Zs4grgFlhYFMjO4j@antec>
- <CAFEAcA-ty1FDvjK+p+CtYVQcWVzgrNTW4jcamWFEbYgHkgXLuA@mail.gmail.com>
+ bh=vAYOr3c8kAOiX+b7fYPI/8X+NEy8JkqKLKZyrEqgK8I=;
+ b=bxeE6UfY6OKowLPa/BZR2X5/LEBP74UpmEsLVmqZGd0j+EUGtUd8vg6yVKasJ9Jnjg
+ k8P3ozehNopsDx4ZrPZn6Co+HqbIUK08HKD8OGibJKPtYLG3O6B4Q9tLw8AtkR7kHpAy
+ E2qlLXKF6W80RAm9XRums53i0+QbsNRplJ6GlYRtUzOYluIz5WpKJZUvrSigkijWbvHj
+ PxELXFAmjxgxZbTh/Yv04PeYGnkGjubHRxPHFbtpCFBUZi17fnVI5fdqsMXQFSmIerLi
+ 1ZPIvt0gxYiafczIt1qwqD9un0PpRcAz+Zs/phV3CqKb/LgONyXdZyftsiZHh62L0Isc
+ ZmIQ==
+X-Gm-Message-State: AOJu0YwvNPvYNNwLwHjPbCcB4RSEg4DBAKBUbZAXuRdk4pfbiwoFehtu
+ mNnysJSUGj4YYfkDatt+zvloNvPOu+5OnQLfRlyYozlbva0ml4NwHuctjDR/kkvt4kJq92bPgiS
+ AOliCytG5sp5b7pcTE87X7rVvVbTyAVZA/7MHjzIYSAy+IrlLbtvQ
+X-Received: by 2002:a5d:6685:0:b0:36b:5d86:d889 with SMTP id
+ ffacd0b85a97d-3749fe45fa7mr1699958f8f.6.1724946506807; 
+ Thu, 29 Aug 2024 08:48:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjZ1ESm9IGKvQ6Q7/h/icOxvub4ypieibxjLE3WzP6nAaxRKMgciPM/b79K8ykPzmWn+xYSg==
+X-Received: by 2002:a5d:6685:0:b0:36b:5d86:d889 with SMTP id
+ ffacd0b85a97d-3749fe45fa7mr1699954f8f.6.1724946505923; 
+ Thu, 29 Aug 2024 08:48:25 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c711:c600:c1d6:7158:f946:f083?
+ (p200300cbc711c600c1d67158f946f083.dip0.t-ipconnect.de.
+ [2003:cb:c711:c600:c1d6:7158:f946:f083])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3749ef8adcbsm1727270f8f.71.2024.08.29.08.48.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Aug 2024 08:48:25 -0700 (PDT)
+Message-ID: <fe5dbb5b-d744-476b-a574-65c5860faf28@redhat.com>
+Date: Thu, 29 Aug 2024 17:48:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-ty1FDvjK+p+CtYVQcWVzgrNTW4jcamWFEbYgHkgXLuA@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=shorne@gmail.com; helo=mail-ed1-x530.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] reset: Add RESET_TYPE_WAKEUP
+To: Juraj Marcin <jmarcin@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240813153922.311788-1-jmarcin@redhat.com>
+ <20240813153922.311788-3-jmarcin@redhat.com>
+ <CAFEAcA9BWOkSmNh_b7HcNgfD429L1iLrjYTHWBJKDP2dJYCjCA@mail.gmail.com>
+ <CAC2qdxAfvKubvO7fs4KF8dy_+Ad5kbAaxyn2P0FCDL-zkhEiMw@mail.gmail.com>
+ <6ab58af7-3584-40b5-b56c-45544a06c7af@redhat.com>
+ <CAFEAcA-NogX_8Phq_7YZuL1eGKeHbnowPzQoTo3P+8Sur=Xbsw@mail.gmail.com>
+ <CAC2qdxCJ3=OzAsnM-paMUmvGAMau2Mc_OxNjxpP3T-F=69Boaw@mail.gmail.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CAC2qdxCJ3=OzAsnM-paMUmvGAMau2Mc_OxNjxpP3T-F=69Boaw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,122 +156,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 28, 2024 at 04:38:49PM +0100, Peter Maydell wrote:
-> On Tue, 27 Aug 2024 at 19:53, Stafford Horne <shorne@gmail.com> wrote:
-> >
-> > On Sun, Aug 25, 2024 at 03:09:20PM +0100, Peter Maydell wrote:
-> > > On Sun, 25 Aug 2024 at 12:35, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> > > >
-> > > > On Fri, Aug 23, 2024 at 07:28:43AM +0100, Stafford Horne wrote:
-> > > > > Also, I will wait to see if Jason has anything to say.
-> > > >
-> > > > So long as this doesn't change the assignment of the serial ports to
-> > > > device nodes in Linux, I don't think this should interfere with much.
-> > > > You might want to try it, though.
-> > >
-> > > It looks like this board already creates the fdt /aliases/
-> > > node and puts uart0, uart1, etc, so that part should be OK.
-> > >
-> > > However I notice that the openrisc_sim_serial_init() code
-> > > will always set the /chosen/stdout-path, so this means
-> > > (unless I'm misreading the code -- I haven't tested) that
-> > > the last UART we create will be the stdout-path one. Before
-> > > this patch, that would be serial_hd(0), but after this it
-> > > will not be. So I think we probably need to fix this too
-> > > in the same patch, so that we only set stdout-path for uart0,
-> > > rather than setting it and then overwriting it on all the
-> > > subsequent calls. This patch on its own will change the
-> > > stdout-path value I think.
-> >
-> > Hi Peter,
-> >
-> > I suspected the same and tested the theory.  Now when running linux with
-> > or1k-sim machine we get no stdout output from qemu.  Upon debugging and
-> > looking at dmesg via gdb I can see the wrong uart is getting setup in
-> > Linux:
-> >
-> >     [    0.080000] workingset: timestamp_bits=30 max_order=17 bucket_order=0
-> >     [    0.100000] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
-> >     [    0.110000] printk: legacy console [ttyS0] disabled
-> >     [    0.110000] 90000300.serial: ttyS0 at MMIO 0x90000300 (irq = 2, base_baud = 1250000) is a 16550A
-> >     [    0.120000] printk: legacy console [ttyS0] enabled
-> >     [    0.120000] 90000200.serial: ttyS1 at MMIO 0x90000200 (irq = 2, base_baud = 1250000) is a 16550A
-> >     [    0.130000] 90000100.serial: ttyS2 at MMIO 0x90000100 (irq = 2, base_baud = 1250000) is a 16550A
-> >     [    0.130000] 90000000.serial: ttyS3 at MMIO 0x90000000 (irq = 2, base_baud = 1250000) is a 16550A
-> >     [    0.150000] NET: Registered PF_PACKET protocol family
-> >     [    0.160000] clk: Disabling unused clocks
+> I have rewritten the documentation section to make it more explicit
+> that the reset might not happen. I would appreciate feedback if some
+> part still needs some care or if it is clear now.
 > 
-> Interesting, that seems to have assigned ttyS0/1/2/3 in the
-> reverse order, which suggests it might be ignoring the /aliases/
-> nodes entirely? Though that would surprise me, so perhaps
-> something else is going on.
+>    If the machine supports waking up from a suspended state and needs to
+>    reset its devices during wake-up (from ``MachineClass::wakeup()``
+>    method), this reset type should be used for such a request. Devices
+>    can utilize this reset type to differentiate the reset requested
+>    during machine wake-up from other reset requests. For example, a
+>    virtio-mem device must not unplug its memory blocks during wake-up as
+>    the contents of the guest RAM would get lost. However, this reset type
+>    should not be used for wake-up detection, as not every machine type
+>    issues a device reset request during wake-up.
 
-This got me thinking, the /aliases/ defined in OpenRISC are "uart0", "uart1"...
-this is different than almost everything else which use "serial0", "serial1"...
-I don't know why OpenRISC chose to use "uart0" and I think this is an issue.
+Sounds good to me.
 
-I tried the patch below.
+I'd probably generalize the virtio-mem bit to:
 
-After switching to the more standard "serial0", ... everything is working well.
+"For example, RAM content must not be lost during wake-up, and memory 
+devices like virtio-mem that provide additional RAM must not reset such 
+state during wake-ups, but might do so during cold resets."
 
-It seems only one driver uses device tree alias stem (prefix) "uart" and that is
-drivers/tty/serial/bcm63xx_uart.c.  Which we have no intention of supporting.
 
-All other drivers look for aliases using the serial prefix via call:
+@Peter, WDYT?
 
-  of_alias_get_id(np, "serial");.
+-- 
+Cheers,
 
-> For the Arm virt board we ended up taking a conservative
-> approach of making sure the UARTs were listed in the dtb
-> in the exact same order we'd traditionally done it, for
-> the benefit of any guests which didn't honour /aliases/
-> or /chosen/stdout-path. But we were thinking more about
-> that being old firmware rather than the kernel.
+David / dhildenb
 
-In this case only the openrisc_sim board has been setup with multiple
-UARTs.  I think making sure the first/qemu default serial device
-stays the same is the most important for this point, which the original patch
-fixes.
-
--Stafford
-
-diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-index bffd6f721f..2a15a3a4f0 100644
---- a/hw/openrisc/openrisc_sim.c
-+++ b/hw/openrisc/openrisc_sim.c
-@@ -250,7 +250,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-     void *fdt = state->fdt;
-     char *nodename;
-     qemu_irq serial_irq;
--    char alias[sizeof("uart0")];
-+    char alias[sizeof("serial0")];
-     int i;
- 
-     if (num_cpus > 1) {
-@@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-         serial_irq = get_cpu_irq(cpus, 0, irq_pin);
-     }
-     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
--                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
-+                   serial_hd(uart_idx),
-                    DEVICE_NATIVE_ENDIAN);
- 
-     /* Add device tree node for serial. */
-@@ -277,10 +277,13 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-     qemu_fdt_setprop_cell(fdt, nodename, "clock-frequency", OR1KSIM_CLK_MHZ);
-     qemu_fdt_setprop(fdt, nodename, "big-endian", NULL, 0);
- 
--    /* The /chosen node is created during fdt creation. */
--    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
--    snprintf(alias, sizeof(alias), "uart%d", uart_idx);
-+    if (uart_idx == 0) {
-+        /* The /chosen node is created during fdt creation. */
-+        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
-+    }
-+    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
-     qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
-+
-     g_free(nodename);
- }
- 
 
