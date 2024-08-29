@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D35C83F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 14:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1456FC83F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 15:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjgOx-0006wO-Bl; Thu, 29 Aug 2024 10:45:31 -0400
+	id 1sjgiI-0004NR-Ec; Thu, 29 Aug 2024 11:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sjgOv-0006mC-Ft
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 10:45:29 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sjgOt-0002tc-0H
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 10:45:29 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5c0a9f2b967so843796a12.2
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 07:45:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724942725; x=1725547525; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7FipoVkQ9gkOn2t82W0M6/yWJgg9Wigs02TS+sGC+E0=;
- b=ZleeLa2mGnAF1HR4D5GaIDD9b40QkuDVuN0m6haIVq0/Z5uY1G8Od4DxjqaQ2dEYq1
- ND92aiXodbz++VIZYAMxLirvnz41/DoaEeYHT60kuNp7QsNa44hSE4w8+1GPjg0BJHod
- VqDiOjf1xkiscOrQlj9iCsOc5Ji/Gz4RTEzIZPLIiZM8Nlsg6xebe0HLICsbGUfpja4s
- e1hoGHqrYZ8RGlccLE28Gzbk6E8kgsDHu9MXVzE8L3JJArStnOguuUYV99h23of2a8Ws
- QnSguFPaTOX/wdqtmV2o//MJ3rJZYlT7+F2FudGjEusG2AX+7ymsEwL5HQTKe+a7uvk3
- iOGQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sjgiH-0004Mr-Mi
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:05:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sjgiF-0005j2-Ic
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:05:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724943925;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NhRYA+jZKPAtfeD1zY4r3Me8U3VwUGxSzuNhFc65Bh0=;
+ b=YuBlpRKnmJMVvL8nDPx+496bF9aCpFpzN4lFEg9FY/aM29ZIohTvx2ew8jj9w1mDroMdMC
+ pJUJqVaxAPt027qQE0gWm6+cAhxZ/r1jMFdfXtsOLOhpAzdX/LJtg8kpmD1j0AGoOIX5iO
+ 2899SC6dlj6sngDC0xtGPqsRbEj5gD0=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587-6WVvmJTiOzm6y3DR1JtAVw-1; Thu, 29 Aug 2024 11:05:23 -0400
+X-MC-Unique: 6WVvmJTiOzm6y3DR1JtAVw-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a86a784b1easo84105266b.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 08:05:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724942725; x=1725547525;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7FipoVkQ9gkOn2t82W0M6/yWJgg9Wigs02TS+sGC+E0=;
- b=PDUXjmIDQCnLJ1k3lZms/CTd0DBvi0YKR/f7b7pftTqgFPogR5VJG2BQEbU7Ext91m
- pjobcGCkB8U5JRMwL30qD18et5jed1aALL7ZXoRFb4iu2zXpqmzScFUJTxfSN59PgOGn
- jRfWxPYXZb6OYnDNzDMREL8IzCEFbyR0IB/WefnFqf57RGRbkWUIlGNc2hyZa3It93Qp
- L0oR3ZUgoLumi70qSq2Cqlq7fKTuUre04XNisZWBziBXCZ16KPPhkmut1FMzHvs8JrBm
- nVW7dVnjp+njcOS8q1azMb+NtvlWS4uUqPJqq3fE6uUKE3JntSev7M6uvV1nR6BDlI29
- YtRA==
-X-Gm-Message-State: AOJu0YzMEsk8xWPTePYVV687S4VKeX76rjOSCl4M5kleAUvbxlmQnFnh
- jzNrXhNf+V6ldT1Bk9nJdxtAwRYhmGrBRf7sNEBJ2R9Qq1GEcRdk0Oy29gdH
-X-Google-Smtp-Source: AGHT+IHg8jxCDW6ZWSMhTlUHXWS6maN+8RjgL/Q5+4gRrpj7d0EiCeMzBiwUYhCoXsvhFnL2FS7yjQ==
-X-Received: by 2002:a05:6402:51cb:b0:5be:fadc:e13c with SMTP id
- 4fb4d7f45d1cf-5c21ed34d91mr2727163a12.4.1724942724685; 
- Thu, 29 Aug 2024 07:45:24 -0700 (PDT)
-Received: from top.fritz.box (p4fd6b0d7.dip0.t-ipconnect.de. [79.214.176.215])
+ d=1e100.net; s=20230601; t=1724943922; x=1725548722;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NhRYA+jZKPAtfeD1zY4r3Me8U3VwUGxSzuNhFc65Bh0=;
+ b=cNKpZ0B7uHGRMTdGW7dPL2rRu6iYFLpNUT/alC36Rge8+RtQclOgDQaeUfvPzuTSeO
+ AW0i4Qv6gDqwcXH21y6bZvCZqoEPCNCTet5XDlwFgjGVdr23nrBeCAisKwr+JylzUFtg
+ F+CmMQrixlcx9Je3hf6SoNN1LJWn5I+V68iHVP/TQwekXCB1ypXnAerH7wsjwVUMJ+Lz
+ zbZj17AXj9nTmCsQIotuJzQtKlUhdub6/zKK0eSD1pHpDhE3p2e8CkglLk8GbVp4txF/
+ wp+GJrX/cEbZUsRbz/6hfXT+/BgxiQwllK9P0+aQlyWl5W9xrUfvoTCKsNs8XsF9E7DQ
+ zHyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+Gbhf0XF2sG6lmKD7KneSWb9080YH82Y1HX+0QKOawSiC9h+Y/PmLGJUJUW0xJKO0ZdvPPkLzfwS0@nongnu.org
+X-Gm-Message-State: AOJu0Yz7AEKU3cgkGwdPLs7awfV5aFKNl8Wnkj9zbt4GdKSksuhwplIn
+ mwAIveevYoCDzU3yvrHwQsYZqXd53w2JdPSkoSW6w2lFGnV9Jo4J4O1uFgOkDJ2F45cc4wsRDki
+ LBY1FT7q8KN9dStqaKjp8qqscqfQTXXKUBFi3yNnaJtAKbZb/XP8G
+X-Received: by 2002:a17:907:94d1:b0:a7d:e84c:a9e7 with SMTP id
+ a640c23a62f3a-a897fa6b5b4mr217623466b.53.1724943921999; 
+ Thu, 29 Aug 2024 08:05:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFto1NzXm0SzOerOLtoN/Nh49wei/HRJnXJivfwJJPYzAm9MgH7xvHpNMoWgrwQoDeEf51mrQ==
+X-Received: by 2002:a17:907:94d1:b0:a7d:e84c:a9e7 with SMTP id
+ a640c23a62f3a-a897fa6b5b4mr217613566b.53.1724943921017; 
+ Thu, 29 Aug 2024 08:05:21 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:17c:f3dd:4b1c:bb80:a038:2df3])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8989035f80sm87313166b.78.2024.08.29.07.45.24
+ a640c23a62f3a-a8989221c3esm87825566b.190.2024.08.29.08.05.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Aug 2024 07:45:24 -0700 (PDT)
-From: Michael Vogt <michael.vogt@gmail.com>
-X-Google-Original-From: Michael Vogt <mvogt@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Michael Vogt <mvogt@redhat.com>
-Subject: [PATCH v2 1/1] linux-user: add openat2 support in linux-user
-Date: Thu, 29 Aug 2024 16:44:15 +0200
-Message-ID: <20240829144413.6942-4-mvogt@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240829144413.6942-2-mvogt@redhat.com>
-References: <20240829144413.6942-2-mvogt@redhat.com>
+ Thu, 29 Aug 2024 08:05:20 -0700 (PDT)
+Date: Thu, 29 Aug 2024 11:05:15 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
+ farosas@suse.de, jasowang@redhat.com, mcoqueli@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>,
+ "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v2 2/2] vhost-user: add a request-reply lock
+Message-ID: <20240829104323-mutt-send-email-mst@kernel.org>
+References: <20240828100914.105728-1-ppandit@redhat.com>
+ <20240828100914.105728-3-ppandit@redhat.com>
+ <20240829033717-mutt-send-email-mst@kernel.org>
+ <CAE8KmOzC__Z6wgSv9sGcAPrbbZBOQg7tD=6An-=XZVouPCA2Bg@mail.gmail.com>
+ <ZtCFxLfFKvojRD2u@x1n>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=michael.vogt@gmail.com; helo=mail-ed1-x52a.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZtCFxLfFKvojRD2u@x1n>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,212 +109,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds support for the `openat2()` syscall in the
-`linux-user` userspace emulator.
+On Thu, Aug 29, 2024 at 10:29:24AM -0400, Peter Xu wrote:
+> On Thu, Aug 29, 2024 at 02:45:45PM +0530, Prasad Pandit wrote:
+> > Hello Michael,
+> > 
+> > On Thu, 29 Aug 2024 at 13:12, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > Weird.  Seems to indicate some kind of deadlock?
+> > 
+> > * Such a deadlock should occur across all environments I guess, not
+> > sure why it happens selectively. It is strange.
+> > 
+> > > So maybe vhost_user_postcopy_end should take the BQL?
+> > ===
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index e7c1215671..31acda3818 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -2050,7 +2050,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> >           */
+> >          qemu_event_wait(&mis->main_thread_load_event);
+> >      }
+> > +    bql_lock();
+> >      postcopy_ram_incoming_cleanup(mis);
+> > +    bql_unlock();
+> > 
+> >      if (load_res < 0) {
+> >          /*
+> > ===
+> > 
+> > * Actually a BQL patch above was tested and it worked fine. But not
+> > sure if it is an acceptable solution. Another contention was taking
+> > BQL could make things more complicated, so a local vhost-user specific
+> > lock should be better.
+> > 
+> > ...wdyt?
+> 
+> I think Michael was suggesting taking bql in vhost_user_postcopy_end(), not
+> in postcopy code directly.
 
-It is implemented by extracting a new helper `maybe_do_fake_open()`
-out of the exiting `do_guest_openat()` and share that with the
-new `do_guest_openat2()`. Unfortunatly we cannot just make
-do_guest_openat2() a superset of do_guest_openat() because the
-openat2() syscall is stricter with the argument checking and
-will return an error for invalid flags or mode combinations (which
-open()/openat() will ignore).
+maybe that's better, ok.
 
-Note that in this commit using openat2() for a "faked" file in
-/proc will ignore the "resolve" flags. This is not great but it
-seems similar to the exiting behavior when openat() is called
-with a dirfd to "/proc". Here too the fake file lookup may
-not catch the special file because "realpath()" is used to
-determine if the path is in /proc. Alternatively to ignoring
-we could simply fail with `-TARGET_ENOSYS` (or similar) if
-`resolve` flags are passed and we found something that looks
-like a file in /proc that needs faking.
+>  I'm recently looking at how to make precopy
+> load even take less bql and even make it a separate thread. Above is
+> definitely going backwards, per we discussed already internally.
 
-Signed-off-by: Michael Vogt <mvogt@redhat.com>
-Buglink: https://github.com/osbuild/bootc-image-builder/issues/619
----
- linux-user/syscall.c      | 98 +++++++++++++++++++++++++++++++++++++--
- linux-user/syscall_defs.h |  7 +++
- meson.build               |  1 +
- 3 files changed, 102 insertions(+), 4 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 9d5415674d..c241c6d3a0 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -85,6 +85,10 @@
- #include <sys/kcov.h>
- #endif
- 
-+#ifdef HAVE_OPENAT2_H
-+#include <linux/openat2.h>
-+#endif
-+
- #define termios host_termios
- #define winsize host_winsize
- #define termio host_termio
-@@ -653,6 +657,10 @@ safe_syscall3(ssize_t, read, int, fd, void *, buff, size_t, count)
- safe_syscall3(ssize_t, write, int, fd, const void *, buff, size_t, count)
- safe_syscall4(int, openat, int, dirfd, const char *, pathname, \
-               int, flags, mode_t, mode)
-+#ifdef HAVE_OPENAT2_H
-+safe_syscall4(int, openat2, int, dirfd, const char *, pathname, \
-+              const struct open_how *, how, size_t, size)
-+#endif
- #if defined(TARGET_NR_wait4) || defined(TARGET_NR_waitpid)
- safe_syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, \
-               struct rusage *, rusage)
-@@ -8334,8 +8342,9 @@ static int open_net_route(CPUArchState *cpu_env, int fd)
- }
- #endif
- 
--int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
--                    int flags, mode_t mode, bool safe)
-+static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
-+                              const char *fname, int flags, mode_t mode,
-+                              bool safe, bool *use_returned_fd)
- {
-     g_autofree char *proc_name = NULL;
-     const char *pathname;
-@@ -8362,6 +8371,7 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
- #endif
-         { NULL, NULL, NULL }
-     };
-+    *use_returned_fd = true;
- 
-     /* if this is a file from /proc/ filesystem, expand full name */
-     proc_name = realpath(fname, NULL);
-@@ -8418,12 +8428,87 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
-         return fd;
-     }
- 
-+    *use_returned_fd = false;
-+    return -1;
-+}
-+
-+int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
-+                    int flags, mode_t mode, bool safe)
-+{
-+    bool use_returned_fd;
-+    int fd = maybe_do_fake_open(cpu_env, dirfd, fname, flags, mode, safe,
-+                                &use_returned_fd);
-+    if (use_returned_fd)
-+        return fd;
-+
-     if (safe) {
--        return safe_openat(dirfd, path(pathname), flags, mode);
-+        return safe_openat(dirfd, path(fname), flags, mode);
-     } else {
--        return openat(dirfd, path(pathname), flags, mode);
-+        return openat(dirfd, path(fname), flags, mode);
-+    }
-+}
-+
-+#ifdef HAVE_OPENAT2_H
-+static int do_guest_openat2(CPUArchState *cpu_env, int dirfd, const char *fname,
-+                            struct open_how *how)
-+{
-+    /*
-+     * Ideally we would pass "how->resolve" flags into this helper too but
-+     * the lookup for files that need faking is based on "realpath()" so
-+     * neither a dirfd for "proc" nor restrictions via "resolve" flags can
-+     * be honored right now.
-+     */
-+    bool use_returned_fd;
-+    int fd = maybe_do_fake_open(cpu_env, dirfd, fname, how->flags, how->mode,
-+                                true, &use_returned_fd);
-+    if (use_returned_fd)
-+        return fd;
-+
-+    return safe_openat2(dirfd, fname, how, sizeof(struct open_how));
-+}
-+
-+static int do_openat2(CPUArchState *cpu_env, abi_long arg1, abi_long arg2,
-+                      abi_long arg3, abi_long arg4)
-+{
-+    struct open_how how = {0};
-+    struct target_open_how *target_how = NULL;
-+    int ret;
-+
-+    char *p = lock_user_string(arg2);
-+    if (!p) {
-+        ret = -TARGET_EFAULT;
-+        goto out;
-+    }
-+    if (!(lock_user_struct(VERIFY_READ, target_how, arg3, 1))) {
-+        ret = -TARGET_EFAULT;
-+        goto out;
-+    }
-+    size_t target_open_how_struct_size = arg4;
-+    if (target_open_how_struct_size < sizeof(struct target_open_how)) {
-+        ret = -TARGET_EINVAL;
-+        goto out;
-+    }
-+    if (target_open_how_struct_size > sizeof(struct target_open_how)) {
-+        qemu_log_mask(LOG_UNIMP, "Unimplemented openat2 open_how size: %lu\n",
-+                      target_open_how_struct_size);
-+        ret = -TARGET_E2BIG;
-+        goto out;
-     }
-+
-+    how.flags = target_to_host_bitmask(target_how->flags, fcntl_flags_tbl);
-+    how.mode = tswap64(target_how->mode);
-+    how.resolve = tswap64(target_how->resolve);
-+    ret = get_errno(do_guest_openat2(cpu_env, arg1, p, &how));
-+
-+    fd_trans_unregister(ret);
-+ out:
-+    if (target_how)
-+        unlock_user_struct(target_how, arg3, 0);
-+    if (p)
-+        unlock_user(p, arg2, 0);
-+    return ret;
- }
-+#endif
- 
- ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
- {
-@@ -9197,6 +9282,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         fd_trans_unregister(ret);
-         unlock_user(p, arg2, 0);
-         return ret;
-+#if defined(TARGET_NR_openat2) && defined(HAVE_OPENAT2_H)
-+    case TARGET_NR_openat2:
-+        ret = do_openat2(cpu_env, arg1, arg2, arg3, arg4);
-+        return ret;
-+#endif
- #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
-     case TARGET_NR_name_to_handle_at:
-         ret = do_name_to_handle_at(arg1, arg2, arg3, arg4, arg5);
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index a00b617cae..2a79ae13c9 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2754,4 +2754,11 @@ struct target_sched_param {
-     abi_int sched_priority;
- };
- 
-+/* from kernel's include/uapi/linux/openat2.h */
-+struct target_open_how {
-+    abi_ullong flags;
-+    abi_ullong mode;
-+    abi_ullong resolve;
-+};
-+
- #endif
-diff --git a/meson.build b/meson.build
-index fbda17c987..220ccbcbe6 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2465,6 +2465,7 @@ config_host_data.set('CONFIG_LINUX_MAGIC_H', cc.has_header('linux/magic.h'))
- config_host_data.set('CONFIG_VALGRIND_H', cc.has_header('valgrind/valgrind.h'))
- config_host_data.set('HAVE_BTRFS_H', cc.has_header('linux/btrfs.h'))
- config_host_data.set('HAVE_DRM_H', cc.has_header('libdrm/drm.h'))
-+config_host_data.set('HAVE_OPENAT2_H', cc.has_header('linux/openat2.h'))
- config_host_data.set('HAVE_PTY_H', cc.has_header('pty.h'))
- config_host_data.set('HAVE_SYS_DISK_H', cc.has_header('sys/disk.h'))
- config_host_data.set('HAVE_SYS_IOCCOM_H', cc.has_header('sys/ioccom.h'))
--- 
-2.45.2
+At the same time a small bugfix is better, can be backported.
+
+
+> I cherish postcopy doesn't need to take bql on its own in most paths, and
+> we shouldn't add unnecessary bql requirement even if vhost-user isn't used.
+> 
+> Personally I still prefer we look into why a separate mutex won't work and
+> why that timed out; that could be part of whoever is going to investigate
+> the whole issue (including the hang later on). Otherwise I'm ok from
+> migration pov that we take bql in the vhost-user hook, but not in savevm.c.
+> 
+> Thanks,
+
+ok
+
+> -- 
+> Peter Xu
 
 
