@@ -4,139 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C51C83F0A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF500C83F12
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 12:26:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjeDg-0002Q7-1j; Thu, 29 Aug 2024 08:25:44 -0400
+	id 1sjeE7-0002dU-5f; Thu, 29 Aug 2024 08:26:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1sjeDd-0002PV-VC
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:25:41 -0400
-Received: from mail-bn8nam11on2071.outbound.protection.outlook.com
- ([40.107.236.71] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1sjeDZ-0000W5-6w
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:25:41 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bYnpVUuq7Pgd3adO6fo3YTLPM0zfn1PcZpex6DO0GEsFU/aNmzvTv258Lm6j6x/l+wrXYhNVhwXFqpNLNKLE3+tZ4dqAZM4coU/XGa3ihgv4jyUHQPeIFAHW1zJyKwVE91ifMT9xFNNuTqxLHWw7382Rx3hKpaAwpIE1vXzFrCNRV1yVusvT8EGWJDQ+U2QSMXT4RgH5JFRxv92XlqlfvAdlRffiZA/V7aKN72f48BCj6SSId9Hzc8a6deYiTDUpcsEyg5hWDUdYSVH+5F90hWkpieL1/IIRzMqWb6DNPtUL55H3dfjj3KFAdnsnDnSzKbb4/emrx8fT3JMci4u0vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wecPkW1Su38h4e5heNvvaGqUYkIxzGHUeoR8MtCoP3I=;
- b=nNSAlibftYljz9FCfXQsZtTD+gV65gygY5qpoLE8OYdx7Kn+EuuwRJ1xN9Ajps5buMtZ7GgY6k/NY3iZtXAG9ms0eCsBALV5IocojTwTxQyLerPtiOCLHvuh383QesHwmsjyBx8lqB6gaMiYnipTyE1OSS6OvJ0FzQbLeCIxhzrCe2K00qCac7dXw2erWPZGr9HP5IwIC9pd097Ze429nOZq5ceXjOs9eSP3SM7W3AdSFVTHnenQq4ExFa7VFN67wH+ZX6tfATWeCchl2HEZwnSJbrXdjVsJKFqgvvLqg53MqTnQEdUvO7LlJnYNqw21dGeY0ekpLgN0jAOeMoALhg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wecPkW1Su38h4e5heNvvaGqUYkIxzGHUeoR8MtCoP3I=;
- b=0cwM1f0tjrxgjN/HqdeFMWS/kxNQXENHIb1gvzRBSEQhDXIQU7odyscpwHoLUfNxb1xnREbKiGB7Fgw7kks97Rmf0ALXK7n17wJMHCMMw2BJGJUmzAmObdqNPWLHzEmk/C4D1/RohDg4MlXboJKfgd6rWMlQ2stdY/A0gJQkKvQ=
-Received: from BN9PR03CA0589.namprd03.prod.outlook.com (2603:10b6:408:10d::24)
- by PH7PR12MB6658.namprd12.prod.outlook.com (2603:10b6:510:211::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.28; Thu, 29 Aug
- 2024 12:20:29 +0000
-Received: from BL6PEPF0001AB50.namprd04.prod.outlook.com
- (2603:10b6:408:10d:cafe::78) by BN9PR03CA0589.outlook.office365.com
- (2603:10b6:408:10d::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.28 via Frontend
- Transport; Thu, 29 Aug 2024 12:20:29 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BL6PEPF0001AB50.mail.protection.outlook.com (10.167.242.74) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7918.13 via Frontend Transport; Thu, 29 Aug 2024 12:20:28 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 29 Aug
- 2024 07:20:28 -0500
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjeE2-0002ck-GF
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:26:06 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjeDy-0000ZS-Bu
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 08:26:05 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c0abaae174so609929a12.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 05:26:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724934360; x=1725539160; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=I+bFiiWHwg+S1SlMlqQlidd45CJKeyXad20DDKqFU2o=;
+ b=D02+DVOD2tOZpelR2kx/c65dA4ftWR/yytSxLb5vYekr3Z6FoosKSGioe1++SxbKK+
+ 7MekJpJOH4t0QrRnbc9cb9IyRDd4JgFhv2k5mhNEhc/8yaNrmyXdfPU04//lIgL42OUD
+ 3tV3Ugqdk4LPiRMSpNqKI3GyfeJXlGcZhIGNnTV5CyaPA5bY5SKMn+9uH2wWOPewZzE+
+ 5ujCwonDAaZe5In0P7tP1aob0wys31guLN1tyrbnO40vN/SkUmAgDX66WieOs8WU1Xal
+ oF+eqHDgGNanvwaLvGj/G8IA5EwX79ItRbQVtNgH30niQNNGXWR5pBt50jx/JCN6Jx0o
+ jmKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724934360; x=1725539160;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I+bFiiWHwg+S1SlMlqQlidd45CJKeyXad20DDKqFU2o=;
+ b=Q8dPTBM1SPfFZAyY9H/GI9tN5GK3YEpRfw7HYx3o7eOdA6L0NDTIV9CKIRjilPQMMp
+ N8Ao93Gkec/K4hGKLqT1qZ81ta6DoibuSg26qyjs7eYb96YvBAAjjbz7bIg+4ZvyuJCm
+ yZgYRvTvSicgRC/SwquzHi5AEglcePCH8JqDbV3bG331Apj0VYCsXpiWR5Ndb3qUfueB
+ 4/QbqJ+4qI9zaH9Pt5GptOk5wLoC1UhCi/4Ae08+8iRc+gFp4CE7BPxG8nACCz6WzvKz
+ P+by23P59gY6STcOxCQRG1+f8+98S4UYcHlfIZUTwcHYsDRy7d/mvpb+DSKSYF1W/r7z
+ TmGA==
+X-Gm-Message-State: AOJu0Yz6sOz4ITPRS87/5cAOIOv6mpZ1oOJ1K5cL8VNeQBN8x82Wa/14
+ wwRrKEu+YLo8/EoXYN8qQeRNGF+6ezwBjwchqKhnn+yju2lnAVz3nybKtcc4qnx46mdebRZVsJv
+ X6L6NxueyIESBewj5HWaTRfdTLsI4TkrXG8apdF+78NUQOzUN
+X-Google-Smtp-Source: AGHT+IHC8/wXa5Syp5YUDA4i4v4b/T3UR2z7j5XDJpD9BUpAwwScn3hMSIRWt7IBA2VKCqIOiJ9kmdi/0tn7hSDDYek=
+X-Received: by 2002:a17:907:7e94:b0:a7a:a3f7:389e with SMTP id
+ a640c23a62f3a-a897f78daccmr246547066b.6.1724934359916; Thu, 29 Aug 2024
+ 05:25:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 9.1.0-rc4 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Richard Henderson <richard.henderson@linaro.org>
-Date: Thu, 29 Aug 2024 07:19:37 -0500
-Message-ID: <172493397792.2948649.489614605350422137@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB50:EE_|PH7PR12MB6658:EE_
-X-MS-Office365-Filtering-Correlation-Id: e2d80f97-6c02-4897-8e62-08dcc824f86d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cmEvMkdzNCsvNVBDa3RPZ0RFeEJ6bnZ3bmV5eGNDVWhxU0tROWtoRnloN2k3?=
- =?utf-8?B?MkRHd2VDZ1JhU3ZGSWpLdC8xQVhsOGRWNEJjdmhuMkpzdEZORE5QZFlZSHNV?=
- =?utf-8?B?RHdBMGRHb2pnVzFvT0FTSWdQdGRkc1pyaUxBaUlWaFNwZlIxYnRNM0RMSi94?=
- =?utf-8?B?UDIrbDlYTGE1ZzB1ZUVSN2VMeStueDNnalI4OHNoS0xxajBQWFA5Z1NsLzZu?=
- =?utf-8?B?RzBjZnBTMnpRQTF1dEZ5SDhoRXFiQlNQa21HYklhVHF3QVdEM2hjY2FPTyt2?=
- =?utf-8?B?T1BGVDRsRzRxUGNEYU9hdTc4bWcvVllibisyZ2gzcERkazZoNytrVTd4dUV2?=
- =?utf-8?B?WmxxQXB1NnhOMGdyTWhPa09UblBMU2tGdDlSa3pNWHQrNVNjZU80N2lOS0wr?=
- =?utf-8?B?WmJGVnJteG9RU3ZpVklIUll6cC9aMTFxRlMrRFBFczB2MzR0WHlCOGVlbTVo?=
- =?utf-8?B?RDlFZWJMNG41RVovNW5vb1Y1Nm01RWdVMmZKb0FtbEl2QkxKd2hwQ0taT2JO?=
- =?utf-8?B?dXJHZVMvUjdHMmkrODNZSjhsUkloWGxNWVh6RXl3cGNrRit1UHA2alV6SFJu?=
- =?utf-8?B?amdWYlo2TmVUUkdWVzA4OTZXNWlTU2pYZE8wY0pzN3o3bHNVcUxrRFJrNUVn?=
- =?utf-8?B?c29JdmMyalp3LzBDempadFFBTG91ZnhScjUvODNKWUpRZ0tZYmVGenkzeDRo?=
- =?utf-8?B?UUJFUVY1Zmtodis4bUtZai9rSmtHelpEbjlrbnBaZEE0aHhjSkRsbEl2U0Nn?=
- =?utf-8?B?RjJlU2s0UW9LQUJZMFZBM09yK0dReFFybC9GbUN4RGhkNWNoNFp6NFBsMGVk?=
- =?utf-8?B?QjBZUyt2U2VEdFM5cW8ycWd1eVNJTTVSeWJEN011R0t1QnBGNTl6YTBDWVoz?=
- =?utf-8?B?Z1JuenorcWU5elZYaDhKK253cFhzYldDYU55eEtRUWdVMmRoZk5HTnBhcVJD?=
- =?utf-8?B?Y254MGNqeGNJTFdBYmZiNEdQNENQOXFyODV3L25sNFF3QWFUVFpVUjNhcURy?=
- =?utf-8?B?bk9kcW1OZ3llaWEycjBWWlhqM0NuU3dJMGowT0pNK0JjK1VNaDFNUHAycE5X?=
- =?utf-8?B?cnhHbU9NWVZyRVI1dGJrQVFScXdpSlJ0M1JzNU93UXdZZzEwelg1eVRZYmZQ?=
- =?utf-8?B?emxQVWF5cjZCODMyS051a2dCRjFEenUwRTlSTTYzT2l5eml4dGMzeVlFWUhG?=
- =?utf-8?B?VVZJWVFaWkVESWpGaktkZ3duNWtrZGNwTk44OVZIOUFUbDRZS0EvZzJjZWdX?=
- =?utf-8?B?L1RxcFdUVG9Vc2RHSEtkdVF5aFoxNERRcUhkUWR3K2N3WDd5TlFOZlk0dkdZ?=
- =?utf-8?B?S0JPMFY0RUhVNUxrbEQ2RjBXOGVjbm9YNzFSQXREMDliczlBNURFWkp0THdL?=
- =?utf-8?B?K3dWMFozTVhiMDJGOXZZc2IzYStESE83VWNRTDhwdnNLSUlGS0hMWkhMdlRr?=
- =?utf-8?B?bURkdkdZdTB2dmVsamFMblFKbzlGaXhOYWxYclBQTStrMTJReWZPelRUMWw3?=
- =?utf-8?B?ZGpCWHFwYnIvOUdaTmtjdFAvTG1uTE9GNEtxcWpMcFhaTy81QSt3TDhhOFJS?=
- =?utf-8?B?RUxMNUdzcVQyZWQxNzcrKytqMHNpK2JCbVlOMktVeXhUOEJmSWpiSEY4b282?=
- =?utf-8?B?eEhyTlhObSsyTTFxaXh1UHRBSDREaklmbHZRVjN4dGt6UmdDWTNkblZGZ1c5?=
- =?utf-8?B?TzVKTENBTkExYnFONDM0cGVDQnhyV09PeWEzV3ZXYm82ekQza3UvVGt2WjVY?=
- =?utf-8?B?RWhLdjFUNGpaQ0FwcGl1Y21kTmI2SE1oK3h3VThSdzZ5eFJXMUNZMEt0QnNu?=
- =?utf-8?B?cVhldEhJYmwxOWdSWC85clpHd3piblpPcjAzOXY5K04xWWVhTEZPUmF2bWFw?=
- =?utf-8?Q?9IvGLC8viPOMb?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2024 12:20:28.9887 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e2d80f97-6c02-4897-8e62-08dcc824f86d
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB50.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6658
-Received-SPF: permerror client-ip=40.107.236.71;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
+References: <20240815122747.3053871-1-peter.maydell@linaro.org>
+In-Reply-To: <20240815122747.3053871-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 29 Aug 2024 13:25:48 +0100
+Message-ID: <CAFEAcA8avK960jpseD-QUb8Ef_hGem1LDstF=bxgb0Beb53YFg@mail.gmail.com>
+Subject: Re: [PATCH for-9.2] kvm: Use 'unsigned long' for request argument in
+ functions wrapping ioctl()
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Johannes Stoelp <johannes.stoelp@googlemail.com>,
+ Eric Blake <eblake@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,47 +90,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Ping for code review, please?
 
-On behalf of the QEMU Team, I'd like to announce the availability of the
-fifth release candidate for the QEMU 9.1 release. This release is meant
-for testing purposes and should not be used in a production environment.
+thanks
+-- PMM
 
-  http://download.qemu.org/qemu-9.1.0-rc4.tar.xz
-  http://download.qemu.org/qemu-9.1.0-rc4.tar.xz.sig
-
-You can help improve the quality of the QEMU 9.1 release by testing this
-release and reporting bugs using our GitLab issue tracker:
-
-  https://gitlab.com/qemu-project/qemu/-/milestones/13
-
-The release plan, as well a documented known issues for release
-candidates, are available at:
-
-  http://wiki.qemu.org/Planning/9.1
-
-Please add entries to the ChangeLog for the 9.1 release below:
-
-  http://wiki.qemu.org/ChangeLog/9.1
-
-Thank you to everyone involved!
-
-Changes since rc3:
-
-cec9917193: Update version for v9.1.0-rc4 release (Richard Henderson)
-43e0d14ee0: docs/sphinx: fix extra stuff in TOC after freeform QMP sections=
- (John Snow)
-3874f5f73c: nbd/server: CVE-2024-7409: Avoid use-after-free when closing se=
-rver (Eric Blake)
-aee07f2563: tests/qtest: Delete previous boot file (Akihiko Odaki)
-8f97deb99c: .gitlab-ci.d/windows.yml: Disable the qtests in the MSYS2 job (=
-Thomas Huth)
-eb9ca730da: gitlab-ci: Replace build_script -> step_script in Cirrus jobs (=
-Philippe Mathieu-Daud=C3=A9)
-d6192f3f75: hw/display/vhost-user-gpu.c: fix vhost_user_gpu_chr_read() (Hao=
-ran Zhang)
-d53bb908b5: system/vl.c: Print machine name, not "(null)", for unknown mach=
-ine types (Peter Maydell)
-80e3541282: hw/x86: add a couple of comments explaining how the kernel imag=
-e is parsed (Ani Sinha)
+On Thu, 15 Aug 2024 at 13:27, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> From: Johannes Stoelp <johannes.stoelp@googlemail.com>
+>
+> Change the data type of the ioctl _request_ argument from 'int' to
+> 'unsigned long' for the various accel/kvm functions which are
+> essentially wrappers around the ioctl() syscall.
+>
+> The correct type for ioctl()'s 'request' argument is confused:
+>  * POSIX defines the request argument as 'int'
+>  * glibc uses 'unsigned long' in the prototype in sys/ioctl.h
+>  * the glibc info documentation uses 'int'
+>  * the Linux manpage uses 'unsigned long'
+>  * the Linux implementation of the syscall uses 'unsigned int'
+>
+> If we wrap ioctl() with another function which uses 'int' as the
+> type for the request argument, then requests with the 0x8000_0000
+> bit set will be sign-extended when the 'int' is cast to
+> 'unsigned long' for the call to ioctl().
+>
+> On x86_64 one such example is the KVM_IRQ_LINE_STATUS request.
+> Bit requests with the _IOC_READ direction bit set, will have the high
+> bit set.
+>
+> Fortunately the Linux Kernel truncates the upper 32bit of the request
+> on 64bit machines (because it uses 'unsigned int', and see also Linus
+> Torvalds' comments in
+>   https://sourceware.org/bugzilla/show_bug.cgi?id=14362 )
+> so this doesn't cause active problems for us.  However it is more
+> consistent to follow the glibc ioctl() prototype when we define
+> functions that are essentially wrappers around ioctl().
+>
+> This resolves a Coverity issue where it points out that in
+> kvm_get_xsave() we assign a value (KVM_GET_XSAVE or KVM_GET_XSAVE2)
+> to an 'int' variable which can't hold it without overflow.
+>
+> Resolves: Coverity CID 1547759
+> Signed-off-by: Johannes Stoelp <johannes.stoelp@gmail.com>
+> [PMM: Rebased patch, adjusted commit message, included note about
+>  Coverity fix, updated the type of the local var in kvm_get_xsave,
+>  updated the comment in the KVMState struct definition]
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> This is a patch that was posted back in 2021, and I reviewed it
+> at the time
+> https://lore.kernel.org/qemu-devel/20210901213426.360748-1-johannes.stoelp@gmail.com/
+> but we never actually took it into the tree. I was reminded of it
+> by the Coverity issue, where a change to Coverity means it now
+> complains about the potential integer overflow when we put one
+> of these high-bit-set ioctls into an "int". So I thought it would
+> be worth dusting this off and getting it upstream.
+>
+> For more discussion of the ioctl request datatype see also the
+> review thread on the previous version of the patch:
+> https://lore.kernel.org/qemu-devel/CAFEAcA8TRQdj33Ycm=XzmuUUNApaXVgeDexfS+3Ycg6kLnpmyg@mail.gmail.com/
+>
+> Since this doesn't actually cause any incorrect behaviour this
+> is obviously for-9.2 material.
+> ---
+>  include/sysemu/kvm.h     |  8 ++++----
+>  include/sysemu/kvm_int.h | 16 ++++++++++++----
+>  accel/kvm/kvm-all.c      |  8 ++++----
+>  target/i386/kvm/kvm.c    |  3 ++-
+>  accel/kvm/trace-events   |  8 ++++----
+>  5 files changed, 26 insertions(+), 17 deletions(-)
+>
+> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> index 9cf14ca3d5b..613d3f7581f 100644
+> --- a/include/sysemu/kvm.h
+> +++ b/include/sysemu/kvm.h
+> @@ -235,11 +235,11 @@ static inline int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_t
+>
+>  /* internal API */
+>
+> -int kvm_ioctl(KVMState *s, int type, ...);
+> +int kvm_ioctl(KVMState *s, unsigned long type, ...);
+>
+> -int kvm_vm_ioctl(KVMState *s, int type, ...);
+> +int kvm_vm_ioctl(KVMState *s, unsigned long type, ...);
+>
+> -int kvm_vcpu_ioctl(CPUState *cpu, int type, ...);
+> +int kvm_vcpu_ioctl(CPUState *cpu, unsigned long type, ...);
+>
+>  /**
+>   * kvm_device_ioctl - call an ioctl on a kvm device
+> @@ -248,7 +248,7 @@ int kvm_vcpu_ioctl(CPUState *cpu, int type, ...);
+>   *
+>   * Returns: -errno on error, nonnegative on success
+>   */
+> -int kvm_device_ioctl(int fd, int type, ...);
+> +int kvm_device_ioctl(int fd, unsigned long type, ...);
+>
+>  /**
+>   * kvm_vm_check_attr - check for existence of a specific vm attribute
+> diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
+> index 1d8fb1473bd..b52e3483511 100644
+> --- a/include/sysemu/kvm_int.h
+> +++ b/include/sysemu/kvm_int.h
+> @@ -122,10 +122,18 @@ struct KVMState
+>      bool sync_mmu;
+>      bool guest_state_protected;
+>      uint64_t manual_dirty_log_protect;
+> -    /* The man page (and posix) say ioctl numbers are signed int, but
+> -     * they're not.  Linux, glibc and *BSD all treat ioctl numbers as
+> -     * unsigned, and treating them as signed here can break things */
+> -    unsigned irq_set_ioctl;
+> +    /*
+> +     * POSIX says that ioctl numbers are signed int, but in practice
+> +     * they are not. Linux, glibc and *BSD all treat ioctl numbers as
+> +     * unsigned, and real-world ioctl values like KVM_GET_XSAVE have
+> +     * bit 31 set, which means that passing them via an 'int' will
+> +     * result in sign-extension when they get converted back to the
+> +     * 'unsigned long' which the ioctl() prototype uses. Luckily Linux
+> +     * always treats the argument as an unsigned 32-bit int, so any
+> +     * possible sign-extension is deliberately ignored, but for
+> +     * consistency we keep to the same type that glibc is using.
+> +     */
+> +    unsigned long irq_set_ioctl;
+>      unsigned int sigmask_len;
+>      GHashTable *gsimap;
+>  #ifdef KVM_CAP_IRQ_ROUTING
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 75d11a07b2b..beb1988d12c 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3170,7 +3170,7 @@ int kvm_cpu_exec(CPUState *cpu)
+>      return ret;
+>  }
+>
+> -int kvm_ioctl(KVMState *s, int type, ...)
+> +int kvm_ioctl(KVMState *s, unsigned long type, ...)
+>  {
+>      int ret;
+>      void *arg;
+> @@ -3188,7 +3188,7 @@ int kvm_ioctl(KVMState *s, int type, ...)
+>      return ret;
+>  }
+>
+> -int kvm_vm_ioctl(KVMState *s, int type, ...)
+> +int kvm_vm_ioctl(KVMState *s, unsigned long type, ...)
+>  {
+>      int ret;
+>      void *arg;
+> @@ -3208,7 +3208,7 @@ int kvm_vm_ioctl(KVMState *s, int type, ...)
+>      return ret;
+>  }
+>
+> -int kvm_vcpu_ioctl(CPUState *cpu, int type, ...)
+> +int kvm_vcpu_ioctl(CPUState *cpu, unsigned long type, ...)
+>  {
+>      int ret;
+>      void *arg;
+> @@ -3228,7 +3228,7 @@ int kvm_vcpu_ioctl(CPUState *cpu, int type, ...)
+>      return ret;
+>  }
+>
+> -int kvm_device_ioctl(int fd, int type, ...)
+> +int kvm_device_ioctl(int fd, unsigned long type, ...)
+>  {
+>      int ret;
+>      void *arg;
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 2fa88ef1e37..ada581c5d6e 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -4102,7 +4102,8 @@ static int kvm_get_xsave(X86CPU *cpu)
+>  {
+>      CPUX86State *env = &cpu->env;
+>      void *xsave = env->xsave_buf;
+> -    int type, ret;
+> +    unsigned long type;
+> +    int ret;
+>
+>      type = has_xsave2 ? KVM_GET_XSAVE2 : KVM_GET_XSAVE;
+>      ret = kvm_vcpu_ioctl(CPU(cpu), type, xsave);
+> diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+> index 37626c1ac5d..82c65fd2ab8 100644
+> --- a/accel/kvm/trace-events
+> +++ b/accel/kvm/trace-events
+> @@ -1,11 +1,11 @@
+>  # See docs/devel/tracing.rst for syntax documentation.
+>
+>  # kvm-all.c
+> -kvm_ioctl(int type, void *arg) "type 0x%x, arg %p"
+> -kvm_vm_ioctl(int type, void *arg) "type 0x%x, arg %p"
+> -kvm_vcpu_ioctl(int cpu_index, int type, void *arg) "cpu_index %d, type 0x%x, arg %p"
+> +kvm_ioctl(unsigned long type, void *arg) "type 0x%lx, arg %p"
+> +kvm_vm_ioctl(unsigned long type, void *arg) "type 0x%lx, arg %p"
+> +kvm_vcpu_ioctl(int cpu_index, unsigned long type, void *arg) "cpu_index %d, type 0x%lx, arg %p"
+>  kvm_run_exit(int cpu_index, uint32_t reason) "cpu_index %d, reason %d"
+> -kvm_device_ioctl(int fd, int type, void *arg) "dev fd %d, type 0x%x, arg %p"
+> +kvm_device_ioctl(int fd, unsigned long type, void *arg) "dev fd %d, type 0x%lx, arg %p"
+>  kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable to retrieve ONEREG %" PRIu64 " from KVM: %s"
+>  kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable to set ONEREG %" PRIu64 " to KVM: %s"
+>  kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
+> --
+> 2.34.1
 
