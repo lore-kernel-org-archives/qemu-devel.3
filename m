@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1456FC83F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 15:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46121C83F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Aug 2024 15:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjgiI-0004NR-Ec; Thu, 29 Aug 2024 11:05:30 -0400
+	id 1sjglT-0000MZ-9I; Thu, 29 Aug 2024 11:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sjgiH-0004Mr-Mi
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:05:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sjgiF-0005j2-Ic
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:05:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724943925;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NhRYA+jZKPAtfeD1zY4r3Me8U3VwUGxSzuNhFc65Bh0=;
- b=YuBlpRKnmJMVvL8nDPx+496bF9aCpFpzN4lFEg9FY/aM29ZIohTvx2ew8jj9w1mDroMdMC
- pJUJqVaxAPt027qQE0gWm6+cAhxZ/r1jMFdfXtsOLOhpAzdX/LJtg8kpmD1j0AGoOIX5iO
- 2899SC6dlj6sngDC0xtGPqsRbEj5gD0=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-587-6WVvmJTiOzm6y3DR1JtAVw-1; Thu, 29 Aug 2024 11:05:23 -0400
-X-MC-Unique: 6WVvmJTiOzm6y3DR1JtAVw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a86a784b1easo84105266b.2
- for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 08:05:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724943922; x=1725548722;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjglP-0000KI-B9
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:08:44 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjglM-00061F-Fl
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 11:08:42 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5bed05c0a2fso885242a12.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 08:08:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724944118; x=1725548918; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NhRYA+jZKPAtfeD1zY4r3Me8U3VwUGxSzuNhFc65Bh0=;
- b=cNKpZ0B7uHGRMTdGW7dPL2rRu6iYFLpNUT/alC36Rge8+RtQclOgDQaeUfvPzuTSeO
- AW0i4Qv6gDqwcXH21y6bZvCZqoEPCNCTet5XDlwFgjGVdr23nrBeCAisKwr+JylzUFtg
- F+CmMQrixlcx9Je3hf6SoNN1LJWn5I+V68iHVP/TQwekXCB1ypXnAerH7wsjwVUMJ+Lz
- zbZj17AXj9nTmCsQIotuJzQtKlUhdub6/zKK0eSD1pHpDhE3p2e8CkglLk8GbVp4txF/
- wp+GJrX/cEbZUsRbz/6hfXT+/BgxiQwllK9P0+aQlyWl5W9xrUfvoTCKsNs8XsF9E7DQ
- zHyw==
+ bh=hvNuios4HApr/Y+i6mS7JZhR4zEmQ90eCTdmzt41o68=;
+ b=pZQHC25U57M64mmPRiIaV2CVisB7BGsp9WN2G+RS1YzDuLOaT+x0uC/0spEYkZzb1f
+ /k/3jUPBipmRrPlwk+CKphYca2FPpJzu7OOllvIr2HVrZaS4sqajwbONigbah+7DGVG4
+ uhAQPlgkCG1V3TRpJmKtyxue/8fv9GgkREUmEjhNbgjk8ELYw5Y8goR7D7depTidJCuJ
+ swNLG37UKKKLfNrchMkr6smR/MUZpSsinf++M1ueLpq1uX0xot5izdHJ2hcUgJp8Ktnb
+ 7sQhdcZy/C+dvlSMCR7Kp32pdGNViTP/85sHj5XDF232g7X6umYkMaBRfq4AC8WyJwt/
+ 91sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724944118; x=1725548918;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hvNuios4HApr/Y+i6mS7JZhR4zEmQ90eCTdmzt41o68=;
+ b=SFo0y6OL8kFmoS7TL/HKPZ0b9+1GGhTgBXHJ/8enzMuD/Dq2FSrNc2qMMHkeOjObiU
+ gaManatFlUHuC3EzIwg301GUfZf+CGiIzQRSNype5Qm/++HqIRbr/4PfRuP0W5x9+1Of
+ P0JbtxfzYyQjOTUNhHV1kJydnruiuOb/vTwoj7MvxbZtq/vC4/ZCGnvmqMZTKzs12S32
+ gZgKT2ayMDDz2+Su6K33zeCP649UW1JqEl+SULNpjaq1K8NCoskJPqecDW3q0bU7oMVG
+ qmSuH0Jkf9IhQdZ+MIlH3d9xQtopwrwJJKC4k8v0RJQCgGPFTtBM0Q6DDg4xOu4+NK2X
+ zV7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+Gbhf0XF2sG6lmKD7KneSWb9080YH82Y1HX+0QKOawSiC9h+Y/PmLGJUJUW0xJKO0ZdvPPkLzfwS0@nongnu.org
-X-Gm-Message-State: AOJu0Yz7AEKU3cgkGwdPLs7awfV5aFKNl8Wnkj9zbt4GdKSksuhwplIn
- mwAIveevYoCDzU3yvrHwQsYZqXd53w2JdPSkoSW6w2lFGnV9Jo4J4O1uFgOkDJ2F45cc4wsRDki
- LBY1FT7q8KN9dStqaKjp8qqscqfQTXXKUBFi3yNnaJtAKbZb/XP8G
-X-Received: by 2002:a17:907:94d1:b0:a7d:e84c:a9e7 with SMTP id
- a640c23a62f3a-a897fa6b5b4mr217623466b.53.1724943921999; 
- Thu, 29 Aug 2024 08:05:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFto1NzXm0SzOerOLtoN/Nh49wei/HRJnXJivfwJJPYzAm9MgH7xvHpNMoWgrwQoDeEf51mrQ==
-X-Received: by 2002:a17:907:94d1:b0:a7d:e84c:a9e7 with SMTP id
- a640c23a62f3a-a897fa6b5b4mr217613566b.53.1724943921017; 
- Thu, 29 Aug 2024 08:05:21 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17c:f3dd:4b1c:bb80:a038:2df3])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8989221c3esm87825566b.190.2024.08.29.08.05.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Aug 2024 08:05:20 -0700 (PDT)
-Date: Thu, 29 Aug 2024 11:05:15 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
- farosas@suse.de, jasowang@redhat.com, mcoqueli@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>,
- "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v2 2/2] vhost-user: add a request-reply lock
-Message-ID: <20240829104323-mutt-send-email-mst@kernel.org>
-References: <20240828100914.105728-1-ppandit@redhat.com>
- <20240828100914.105728-3-ppandit@redhat.com>
- <20240829033717-mutt-send-email-mst@kernel.org>
- <CAE8KmOzC__Z6wgSv9sGcAPrbbZBOQg7tD=6An-=XZVouPCA2Bg@mail.gmail.com>
- <ZtCFxLfFKvojRD2u@x1n>
+ AJvYcCW5NadUcH2uxY8yMcnsT9ZDK8TjlgeP4HWXvpDtAk8gdluFOnHtCqlTC9Vi1T4Y2CYw/Eld5VM1kIta@nongnu.org
+X-Gm-Message-State: AOJu0YxkpwyicwO4S3lMIRkbQiWJ3K/tGRr8Hz8KQfd02LomKKJq9FxJ
+ RFvrL9XWevqpeaxPaLv9EcL5zG82iKCkPoUqGWIP3RMLKzPAtHHpCoqBrW1bwdyuJVQHuiILJuR
+ 362gObMwLnq4MErYBLTXQIHeF+VWZY8GtFS6peA==
+X-Google-Smtp-Source: AGHT+IFIOtKIlQ7XhYZILKCMoMsjEKH5YMi24OAgpJjoQY6O0RTnb6+gkYJRHQvfvzSC59QXATu9/nLVRTwQdeA1Ct0=
+X-Received: by 2002:a05:6402:50d2:b0:5bf:7dc:bbaa with SMTP id
+ 4fb4d7f45d1cf-5c21ed8e67emr3420816a12.26.1724944117992; Thu, 29 Aug 2024
+ 08:08:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZtCFxLfFKvojRD2u@x1n>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
+ <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
+ <172467410002.31767.12365606864399178508@t14-nrb.local>
+ <172483282308.162301.11735420619446380771@t14-nrb.local>
+ <CAFEAcA-wVqbuW1aG2fd6O9BwMKrFXTLzcvuF4xd6j_4x5WUQ+Q@mail.gmail.com>
+ <172493399778.162301.4960007495977124327@t14-nrb.local>
+ <CAFEAcA_nXq91A79d0ROc54y=MFoTBETpMmSd_hvk4BzQ9A7=3Q@mail.gmail.com>
+ <172493799281.162301.9447178356877601539@t14-nrb.local>
+ <CAFEAcA8dk65ByV+x6A0hapL_D-52Rxwk35bgG2YMfL6bOAbcPw@mail.gmail.com>
+ <172494264766.6066.36832168091845428@t14-nrb.local>
+In-Reply-To: <172494264766.6066.36832168091845428@t14-nrb.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 29 Aug 2024 16:08:25 +0100
+Message-ID: <CAFEAcA_8ENX+z0=G+wpQtp4mvttBQMpW3TM_D7uuT7nnWVX6EA@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw, cpu to
+ three-phase reset, and followup cleanup
+To: Nico Boehr <nrb@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Michael Mueller <mimu@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,67 +110,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 29, 2024 at 10:29:24AM -0400, Peter Xu wrote:
-> On Thu, Aug 29, 2024 at 02:45:45PM +0530, Prasad Pandit wrote:
-> > Hello Michael,
-> > 
-> > On Thu, 29 Aug 2024 at 13:12, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > Weird.  Seems to indicate some kind of deadlock?
-> > 
-> > * Such a deadlock should occur across all environments I guess, not
-> > sure why it happens selectively. It is strange.
-> > 
-> > > So maybe vhost_user_postcopy_end should take the BQL?
-> > ===
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index e7c1215671..31acda3818 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -2050,7 +2050,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
-> >           */
-> >          qemu_event_wait(&mis->main_thread_load_event);
-> >      }
-> > +    bql_lock();
-> >      postcopy_ram_incoming_cleanup(mis);
-> > +    bql_unlock();
-> > 
-> >      if (load_res < 0) {
-> >          /*
-> > ===
-> > 
-> > * Actually a BQL patch above was tested and it worked fine. But not
-> > sure if it is an acceptable solution. Another contention was taking
-> > BQL could make things more complicated, so a local vhost-user specific
-> > lock should be better.
-> > 
-> > ...wdyt?
-> 
-> I think Michael was suggesting taking bql in vhost_user_postcopy_end(), not
-> in postcopy code directly.
+On Thu, 29 Aug 2024 at 15:44, Nico Boehr <nrb@linux.ibm.com> wrote:
+>
+> Quoting Peter Maydell (2024-08-29 15:35:30)
+> > On Thu, 29 Aug 2024 at 14:26, Nico Boehr <nrb@linux.ibm.com> wrote:
+> > >
+> > > Quoting Peter Maydell (2024-08-29 15:09:44)
+> > > > Thanks. I tried this repro, but mkosi falls over almost
+> > > > immediately:
+> >
+> > > In the meantime, looks like mkosi is trying to create an block image,=
+ but
+> > > that's not what it's configured to do; are you sure mkosi.conf is in =
+the
+> > > same directory you're calling it from?
+> >
+> > It is. I notice however that the manpage for mkosi
+> > says that it looks for "mkosi.default", not "mkosi.conf".
+> > Maybe it needs a newer mkosi than Ubuntu ships?
+> > (mkosi --version says "mkosi 12".)
+>
+> Likely. I have mkosi 22 here.
+>
+> > I'll use the images C=C3=A9dric has kindly generated.
+>
+> Thanks, images by C=C3=A9dric look good, but I forgot to tell you that
+> you need a SSH key for login too :)
+>
+> You could unpack image.cpio.gz, add your key to root/.ssh and repack the
+> whole thing to image.new.xz:
+> - mkdir xtract && cd xtract
+> - unxz < ../image.cpio.xz | cpio -H newc -iv
+> - cp ~/.ssh/authorized_keys root/.ssh/
+> - find . 2>/dev/null | cpio -o -c -R root:root | xz -9 --format=3Dlzma > =
+../image.new.xz
 
-maybe that's better, ok.
+Thanks, I was just wondering how to get the ssh key into there.
 
->  I'm recently looking at how to make precopy
-> load even take less bql and even make it a separate thread. Above is
-> definitely going backwards, per we discussed already internally.
+I found I needed ...  cpio -H newc -o -R root:root | xz -9 -C crc32
+when creating the new image, otherwise the kernel doesn't
+like the format. (Also since I'm not root I needed to
+sprinkle in some sudo invocations.)
 
-
-At the same time a small bugfix is better, can be backported.
-
-
-> I cherish postcopy doesn't need to take bql on its own in most paths, and
-> we shouldn't add unnecessary bql requirement even if vhost-user isn't used.
-> 
-> Personally I still prefer we look into why a separate mutex won't work and
-> why that timed out; that could be part of whoever is going to investigate
-> the whole issue (including the hang later on). Otherwise I'm ok from
-> migration pov that we take bql in the vhost-user hook, but not in savevm.c.
-> 
-> Thanks,
-
-ok
-
-> -- 
-> Peter Xu
-
+-- PMM
 
