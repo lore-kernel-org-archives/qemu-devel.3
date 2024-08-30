@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D82CA0FE1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E74CA0FE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjzRq-000854-92; Fri, 30 Aug 2024 07:05:46 -0400
+	id 1sjzUY-0003Ic-9D; Fri, 30 Aug 2024 07:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjzRp-000825-Gv
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:05:45 -0400
+ id 1sjzUW-0003Bs-JX
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:08:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjzRn-0005t3-OL
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:05:45 -0400
+ id 1sjzUU-000656-Ly
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:08:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725015942;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LRv60yb9OW9m8a0eygl5RDRTdVLgaPkJ900k0QOGIiM=;
- b=jSpyC11p2ChKSagUnOXQK+iYINfynhrmys2j6gcI0udBJ0hCg5fjvv5R4muqGyPOCL8yON
- KG2WL0Nw5Vz3qBwdi8EFmEpZkGuBJaePTgeNQ5+ib6x9rf5g+ipXMNnICXvB9hxuRdMdqX
- k+NJkQtulU28nffp+5meSbDs+ljY+Bk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1725016107;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=FQt9VQxn2dlhs5gj5G2FeY+W78UI+q2R099do50/Alg=;
+ b=JJk9OwP3iQXMVpDOwQ4gEiYGRTb9WtLDU3rN3yl1Cc1isyYuUlIgD9k+1u7EJfrGUbp9NQ
+ DUoPo4ee+JJmWSGiOpWbmgfZAOwF7HJqMuC9CmPC/rQyv3eP57CIsSoDtP8JOgg/UljSYj
+ VglD8ufKXjVKYSqIx/Jp2CcZc3UFmmM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-P7Z2ujZUMZKI-cMB0FXIMA-1; Fri,
- 30 Aug 2024 07:05:40 -0400
-X-MC-Unique: P7Z2ujZUMZKI-cMB0FXIMA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-d-0vf9CPPFKpdlKc09dE8g-1; Fri,
+ 30 Aug 2024 07:08:24 -0400
+X-MC-Unique: d-0vf9CPPFKpdlKc09dE8g-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94A0A1954B08
- for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 11:05:39 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.49])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 46D5B19560A3; Fri, 30 Aug 2024 11:05:37 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/2] tests/unit: always build the pbkdf crypto unit test
-Date: Fri, 30 Aug 2024 12:05:33 +0100
-Message-ID: <20240830110533.2544070-3-berrange@redhat.com>
-In-Reply-To: <20240830110533.2544070-1-berrange@redhat.com>
-References: <20240830110533.2544070-1-berrange@redhat.com>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60BCB1955F42; Fri, 30 Aug 2024 11:08:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.49])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3852300019C; Fri, 30 Aug 2024 11:08:21 +0000 (UTC)
+Date: Fri, 30 Aug 2024 12:08:18 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Tiago Pasqualini <tiago.pasqualini@canonical.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] crypto: run qcrypto_pbkdf2_count_iters in a new thread
+Message-ID: <ZtGoIvroHBwF53oF@redhat.com>
+References: <20240813131928.842265-1-tiago.pasqualini@canonical.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240813131928.842265-1-tiago.pasqualini@canonical.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -82,75 +81,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The meson rules were excluding the pbkdf crypto test when gnutls was the
-crypto backend. It was then excluded again in #if statements in the test
-file.
+On Tue, Aug 13, 2024 at 10:19:28AM -0300, Tiago Pasqualini wrote:
+> CPU time accounting in the kernel has been demonstrated to have a
+> sawtooth pattern[1][2]. This can cause the getrusage system call to
+> not be as accurate as we are expecting, which can cause this calculation
+> to stall.
+> 
+> The kernel discussions shows that this inaccuracy happens when CPU time
+> gets big enough, so this patch changes qcrypto_pbkdf2_count_iters to run
+> in a fresh thread to avoid this inaccuracy. It also adds a sanity check
+> to fail the process if CPU time is not accounted.
+> 
+> [1] https://lore.kernel.org/lkml/159231011694.16989.16351419333851309713.tip-bot2@tip-bot2/
+> [2] https://lore.kernel.org/lkml/20221226031010.4079885-1-maxing.lan@bytedance.com/t/#m1c7f2fdc0ea742776a70fd1aa2a2e414c437f534
+> 
+> Resolves: #2398
+> Signed-off-by: Tiago Pasqualini <tiago.pasqualini@canonical.com>
+> ---
+>  crypto/pbkdf.c         | 42 +++++++++++++++++++++++++++++++++++-------
+>  include/crypto/pbkdf.h | 10 ++++++++++
+>  2 files changed, 45 insertions(+), 7 deletions(-)
 
-Rather than update these conditions, remove them all, and use the result
-of the qcrypto_pbkdf_supports() function to determine whether to skip
-test registration.
+Mostly looks good, but one minor issue...
 
-Also add CONFIG_DARWIN to the remaining condition, since we have a way
-to measure CPU time on this platform since commit bf98afc75efedf1.
+> diff --git a/include/crypto/pbkdf.h b/include/crypto/pbkdf.h
+> index 2c31a44a27..b3757003e4 100644
+> --- a/include/crypto/pbkdf.h
+> +++ b/include/crypto/pbkdf.h
+> @@ -153,4 +153,14 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
+>                                      size_t nout,
+>                                      Error **errp);
+>  
+> +typedef struct CountItersData {
+> +    QCryptoHashAlgorithm hash;
+> +    const uint8_t *key;
+> +    size_t nkey;
+> +    const uint8_t *salt;
+> +    size_t nsalt;
+> +    size_t nout;
+> +    Error **errp;
+> +    uint64_t iterations;
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/unit/meson.build         | 4 +---
- tests/unit/test-crypto-pbkdf.c | 9 ++++++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
+Super fussy here, but lets make 'Error **errp' the very
+last item in the struct.
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 490ab8182d..972d792883 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -121,9 +121,7 @@ if have_block
-   if config_host_data.get('CONFIG_REPLICATION')
-     tests += {'test-replication': [testblock]}
-   endif
--  if nettle.found() or gcrypt.found()
--    tests += {'test-crypto-pbkdf': [io]}
--  endif
-+  tests += {'test-crypto-pbkdf': [io]}
- endif
- 
- if have_system
-diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkdf.c
-index 43c417f6b4..034bb02422 100644
---- a/tests/unit/test-crypto-pbkdf.c
-+++ b/tests/unit/test-crypto-pbkdf.c
-@@ -25,8 +25,7 @@
- #include <sys/resource.h>
- #endif
- 
--#if ((defined(CONFIG_NETTLE) || defined(CONFIG_GCRYPT)) && \
--     (defined(_WIN32) || defined(RUSAGE_THREAD)))
-+#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
- #include "crypto/pbkdf.h"
- 
- typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
-@@ -422,13 +421,17 @@ int main(int argc, char **argv)
-     g_assert(qcrypto_init(NULL) == 0);
- 
-     for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
-+        if (!qcrypto_pbkdf2_supports(test_data[i].hash)) {
-+            continue;
-+        }
-+
-         if (!test_data[i].slow ||
-             g_test_slow()) {
-             g_test_add_data_func(test_data[i].path, &test_data[i], test_pbkdf);
-         }
-     }
- 
--    if (g_test_slow()) {
-+    if (g_test_slow() && qcrypto_pbkdf2_supports(QCRYPTO_HASH_ALG_SHA256)) {
-         g_test_add_func("/crypt0/pbkdf/timing", test_pbkdf_timing);
-     }
- 
+> +} CountItersData;
+>  #endif /* QCRYPTO_PBKDF_H */
+
+...this should remain in the pbkdf.c file, since it is not intended to
+be part of the public API.
+
+
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
