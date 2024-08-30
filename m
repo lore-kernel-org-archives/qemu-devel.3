@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DBBCA101A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 23:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 338E6CA100A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 23:29:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1skB29-0002Fy-BU; Fri, 30 Aug 2024 19:28:01 -0400
+	id 1skB28-0002BU-Oc; Fri, 30 Aug 2024 19:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1skB27-00026o-1g
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 19:27:59 -0400
+ id 1skB23-00023w-Lk
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 19:27:55 -0400
 Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1skB25-0001rX-Gn
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 19:27:58 -0400
+ id 1skB1z-0001qa-8z
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 19:27:55 -0400
 Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e13d5cbc067so2518597276.2
- for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 16:27:57 -0700 (PDT)
+ 3f1490d57ef6-e115c8aa51fso2502743276.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 16:27:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1725060476; x=1725665276; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1725060469; x=1725665269; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NwTaXma1P8wCOFOi5BsJFNvgHenJODlA3HdTsBM5hh8=;
- b=lPnFn0oXjI9eH0trUQGYNpTF4+8gfK1NmL48BvMxc/+mgtG376l+BSSPyLaai01RJ9
- Y4+AYOMAd0o1RP02TtEKR747I3CYqzaK3AymWDIaE3BY27cwBBxxEHmtlx2wOe8Ih6Kq
- BRWDLIkG1zSg5gLActOF+5uTFlmriPECCjclZAJs6ZRuCMqc0u1+Yf+0jJb1913DXR3z
- 1zlxThaeNiLIraUGIOYWngtj4qtlFnJbbqbT8an7X8MhYeoAN2uTSWERI6p2o4+C9nfy
- LQfexdTk8Upd387L06hczYt1l+lssMoZMa0bcgSSjMDZtUTxC8lXOVvVrCUwoCi3K22l
- yV9Q==
+ bh=M6kzDBDnEq23R80njs6FyZJuIYVc6qdV8gw3M4/+OWM=;
+ b=jS7KO+rUFDdyix7hQmsXJ2YHZvmsLKJpcaXSrVvPvtNoIjOwnlKcRPspO7tIc0+kMp
+ XMO2OqhedHKok3d657I0QBYGe7Wp2XGZDWT4+RwX/iifnDN8c6nYEtvwCY3IFnwH/Jqs
+ P93W+U4jI6BXw7xjiyNkdLJp7NsdZ+IBozTqBdtAQpwE3L6s81U3YBq5+6axwS3BP4Af
+ gRnPGAUFWhoibOT42RWJZvj0KuAYUKzfSPj3S9Edq5UvlzYO8PZWaK5/BCnyzVHQ+wE9
+ xFRdmox3eCQAhvtxPuL4clVOMsYboQXaZi/opfY+9rXxkFasbqb6e6F/H6J2ZcAHb0yd
+ NBOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725060476; x=1725665276;
+ d=1e100.net; s=20230601; t=1725060469; x=1725665269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NwTaXma1P8wCOFOi5BsJFNvgHenJODlA3HdTsBM5hh8=;
- b=UP4wO18Dqq4Rxp4k6ymrOsQAyKgy90BmxcE5fRKS4yCs0IJMR8ytBVXRa20dy8wwIH
- ni/PhL0h2f/cLDL5rrB2wxPaYak6oqtrXU/d6n0WOab0XpxHacCPr2O6mnjbxEDuN6f7
- MO+BNKXiOirGKMWu4X9bFKh1T6uDDEXk5We1Mku3eEatQDJ15oOQ69O+kEtDPGz5nPr/
- Bc26C87/Ok4HuTDGJqywYdvBHB+i3RRdS/Bmqa6Ggt4W6fdXBIcLrZbZ90Oi4FgGz7zo
- ljtckz9oDLPQDKnQ79hMBLkSY0P6Rx9yzeTtwmCuxrJj6DnL/Z7mWksOfZtjBM3m224u
- 4x1g==
+ bh=M6kzDBDnEq23R80njs6FyZJuIYVc6qdV8gw3M4/+OWM=;
+ b=f9BVySv8VGTzMTbr+Kwq2yDVnFBvPpclm+PLLQ2BH4PVtTbxBFX0JOeVMuoWRbJ+m5
+ BUDZkbsDyAvwiSSs69uOah9liOreQoPqnNJ4niZdpRn8y33Xusj8qR1D3zRPxGq4FiTp
+ N3APJDwykGz5jtTFhtAkGjMNqDqpSCYj3HIyw76nnLiNVioxNDS/6z4ziTKLI3s9ycNM
+ 6GhRho840JlYU/aTuXLP30vlN+NAZlKKeQ2F6NpQQoFN+YVGJUKIPvJY+ADRJbQS/O7x
+ qdLD0yHfOLPWfNiXX39bVmm4LIGkZUZhK1XH+dbUIuPDP2v6cM7Bb8PpLCLM+DFT6eFf
+ 15EQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkMKAZl7pQoiYX3YEKGrQ3uOB2JeammjjK/02d1BoBwL80giheOKvLMvV0VvmkLPtyOsIEWGTf12ij@nongnu.org
-X-Gm-Message-State: AOJu0Ywsi1s+RmJSlo9w/loT6nx48fvgLmD5UtOzCUprIT5YbkLGdu5q
- E7uX1MJVuP3nd/+V40cHs2j4Xanrdj8CSjqFDKkculJPyQzUAqwKElp8gnYp3UM=
-X-Google-Smtp-Source: AGHT+IHCOpvKqBz5shhbJntWKk8hIPq+ozwk0BCKFeFthiqNmlaEC2OsiLL1rpJGMD/Ama8wvsVPSQ==
-X-Received: by 2002:a25:ce50:0:b0:e1a:8026:e71b with SMTP id
- 3f1490d57ef6-e1a8026e893mr2736340276.54.1725060476556; 
- Fri, 30 Aug 2024 16:27:56 -0700 (PDT)
+ AJvYcCWlygkVIQQBI/xJSrx1Drp+zX+zzOQ1E07Clf2DSSjEZx6rM4UNxuflW6enz1Iyp2gzMVr61DVfmYGw@nongnu.org
+X-Gm-Message-State: AOJu0YyBjkODMEl0gL8FGswwgJoDWdrO5/8Pe9/HwEC6mdn+HAor0qEJ
+ vXkNSk7oLkMgLrppBty01C3gwhNL5Ehrab4TBPPRzEFWJfENQKJhl9OroK/tMFQ=
+X-Google-Smtp-Source: AGHT+IGi0vzOrR56tutZMI2tVmiF5Z3cgRgYIakb0zpeJDIAki1XG/7UBTf2/IG78bKLC0LiGLDj6A==
+X-Received: by 2002:a05:6902:228f:b0:e1a:8ae4:c4f2 with SMTP id
+ 3f1490d57ef6-e1a8ae4c5damr1546233276.50.1725060468987; 
+ Fri, 30 Aug 2024 16:27:48 -0700 (PDT)
 Received: from DY4X0N7X05.bytedance.net ([72.29.204.230])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c340ca689asm19129176d6.109.2024.08.30.16.27.54
+ 6a1803df08f44-6c340ca689asm19129176d6.109.2024.08.30.16.27.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 30 Aug 2024 16:27:56 -0700 (PDT)
+ Fri, 30 Aug 2024 16:27:48 -0700 (PDT)
 From: Yichen Wang <yichen.wang@bytedance.com>
 To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -76,10 +76,9 @@ Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
  "Yichen Wang" <yichen.wang@bytedance.com>,
  "Xiaoning Ding" <xiaoning.ding@bytedance.com>,
  Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v9 5/5] tests/migration: Add integration test for 'qatzip'
- compression method
-Date: Fri, 30 Aug 2024 16:27:22 -0700
-Message-Id: <20240830232722.58272-6-yichen.wang@bytedance.com>
+Subject: [PATCH v9 2/5] meson: Introduce 'qatzip' feature to the build system
+Date: Fri, 30 Aug 2024 16:27:19 -0700
+Message-Id: <20240830232722.58272-3-yichen.wang@bytedance.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20240830232722.58272-1-yichen.wang@bytedance.com>
 References: <20240830232722.58272-1-yichen.wang@bytedance.com>
@@ -111,68 +110,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bryan Zhang <bryan.zhang@bytedance.com>
 
-Adds an integration test for 'qatzip'.
+Add a 'qatzip' feature, which is automatically disabled, and which
+depends on the QATzip library if enabled.
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
 Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
 ---
- tests/qtest/migration-test.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ meson.build                   | 10 ++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 6c06100d91..9f74b1722c 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2996,6 +2996,18 @@ test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
- }
- #endif /* CONFIG_ZSTD */
+diff --git a/meson.build b/meson.build
+index fbda17c987..b89b713e79 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1262,6 +1262,14 @@ if not get_option('uadk').auto() or have_system
+      uadk = declare_dependency(dependencies: [libwd, libwd_comp])
+   endif
+ endif
++
++qatzip = not_found
++if not get_option('qatzip').auto() or have_system
++  qatzip = dependency('qatzip', version: '>=1.1.2',
++                      required: get_option('qatzip'),
++                      method: 'pkg-config')
++endif
++
+ virgl = not_found
  
-+#ifdef CONFIG_QATZIP
-+static void *
-+test_migrate_precopy_tcp_multifd_qatzip_start(QTestState *from,
-+                                              QTestState *to)
-+{
-+    migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
-+    migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
-+
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "qatzip");
-+}
-+#endif
-+
- #ifdef CONFIG_QPL
- static void *
- test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
-@@ -3093,6 +3105,17 @@ static void test_multifd_tcp_zstd(void)
- }
- #endif
- 
-+#ifdef CONFIG_QATZIP
-+static void test_multifd_tcp_qatzip(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_qatzip_start,
-+    };
-+    test_precopy_common(&args);
-+}
-+#endif
-+
- #ifdef CONFIG_QPL
- static void test_multifd_tcp_qpl(void)
- {
-@@ -3996,6 +4019,10 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/multifd/tcp/plain/zstd",
-                        test_multifd_tcp_zstd);
- #endif
-+#ifdef CONFIG_QATZIP
-+    migration_test_add("/migration/multifd/tcp/plain/qatzip",
-+                test_multifd_tcp_qatzip);
-+#endif
- #ifdef CONFIG_QPL
-     migration_test_add("/migration/multifd/tcp/plain/qpl",
-                        test_multifd_tcp_qpl);
+ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+@@ -2412,6 +2420,7 @@ config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+ config_host_data.set('CONFIG_ZSTD', zstd.found())
+ config_host_data.set('CONFIG_QPL', qpl.found())
+ config_host_data.set('CONFIG_UADK', uadk.found())
++config_host_data.set('CONFIG_QATZIP', qatzip.found())
+ config_host_data.set('CONFIG_FUSE', fuse.found())
+ config_host_data.set('CONFIG_FUSE_LSEEK', fuse_lseek.found())
+ config_host_data.set('CONFIG_SPICE_PROTOCOL', spice_protocol.found())
+@@ -4535,6 +4544,7 @@ summary_info += {'lzfse support':     liblzfse}
+ summary_info += {'zstd support':      zstd}
+ summary_info += {'Query Processing Library support': qpl}
+ summary_info += {'UADK Library support': uadk}
++summary_info += {'qatzip support':    qatzip}
+ summary_info += {'NUMA host support': numa}
+ summary_info += {'capstone':          capstone}
+ summary_info += {'libpmem support':   libpmem}
+diff --git a/meson_options.txt b/meson_options.txt
+index 0269fa0f16..f7b652b30d 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -261,6 +261,8 @@ option('qpl', type : 'feature', value : 'auto',
+        description: 'Query Processing Library support')
+ option('uadk', type : 'feature', value : 'auto',
+        description: 'UADK Library support')
++option('qatzip', type: 'feature', value: 'auto',
++       description: 'QATzip compression support')
+ option('fuse', type: 'feature', value: 'auto',
+        description: 'FUSE block device export')
+ option('fuse_lseek', type : 'feature', value : 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c97079a38c..5f377a6d81 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -163,6 +163,7 @@ meson_options_help() {
+   printf "%s\n" '  pixman          pixman support'
+   printf "%s\n" '  plugins         TCG plugins via shared library loading'
+   printf "%s\n" '  png             PNG support with libpng'
++  printf "%s\n" '  qatzip          QATzip compression support'
+   printf "%s\n" '  qcow1           qcow1 image format support'
+   printf "%s\n" '  qed             qed image format support'
+   printf "%s\n" '  qga-vss         build QGA VSS support (broken with MinGW)'
+@@ -427,6 +428,8 @@ _meson_option_parse() {
+     --enable-png) printf "%s" -Dpng=enabled ;;
+     --disable-png) printf "%s" -Dpng=disabled ;;
+     --prefix=*) quote_sh "-Dprefix=$2" ;;
++    --enable-qatzip) printf "%s" -Dqatzip=enabled ;;
++    --disable-qatzip) printf "%s" -Dqatzip=disabled ;;
+     --enable-qcow1) printf "%s" -Dqcow1=enabled ;;
+     --disable-qcow1) printf "%s" -Dqcow1=disabled ;;
+     --enable-qed) printf "%s" -Dqed=enabled ;;
 -- 
 Yichen Wang
 
