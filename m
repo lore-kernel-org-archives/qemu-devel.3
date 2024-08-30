@@ -4,120 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23846CA1009
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 19:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E403CA0FE8
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 19:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk7It-0003I9-V6; Fri, 30 Aug 2024 15:29:04 -0400
+	id 1sk7Kq-0007XI-HZ; Fri, 30 Aug 2024 15:31:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sk7In-0003HN-Cv
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 15:28:57 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sk7Ko-0007W5-Va
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 15:31:03 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sk7Il-0001QH-Hr
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 15:28:57 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id CF8CD1F7E8;
- Fri, 30 Aug 2024 19:28:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725046132; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O1F4wKwi7av5kijwG+KhCYCM9j8MZHP2C/kGpYu/YMM=;
- b=hk8VnfFvTNCFU+TsDxP3FcTLK8H+YVNFk457Sz9zZ5dHmZdPkkxURAkVJWSFmaW7qDrPW5
- rchJ/orh/n9/GTPk/ziXrzQpTTQB3fuKPGebKg2EHuyYJ9zcZ/o8buPI5okfBQ+FxpKG0j
- csR1IBULJex4wy7wcxWNwAdEtXvICZ4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725046132;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O1F4wKwi7av5kijwG+KhCYCM9j8MZHP2C/kGpYu/YMM=;
- b=H/ViIWBk544MTt+zwJXo/zj8lWYGjQtry0+KaWqhCpVAC3Sr7zjmZ19gb4UX3pAuULweJk
- elR4qbrIe1VhS/Cg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="L3/B+qnm";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Aqz2LsQ6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725046131; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O1F4wKwi7av5kijwG+KhCYCM9j8MZHP2C/kGpYu/YMM=;
- b=L3/B+qnmsiLMkFJW7okKMmCs8e+38B1I/Rf5Lj4vhihi9tCpyhDUIcT+LfRMbFD2SNAI16
- PgQDF+Rk6iV7k6fCjjchtQ5xi6N30+PfipBuxksD8P4ZkJ+erOGUn4clkwN5NsNsAz1t0W
- IQDtOpCL+1/9v2ZJiDEFaaojVvGEFSk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725046131;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O1F4wKwi7av5kijwG+KhCYCM9j8MZHP2C/kGpYu/YMM=;
- b=Aqz2LsQ6WV6xNzA2gM64ZiTFUgkxi5FBtKQlrbA7Hq/FKOXqNePlX1gq4gsXMNEq7jQnHr
- 6QwuGo7bc/4/hXCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4DC67139D3;
- Fri, 30 Aug 2024 19:28:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id se4UBXMd0mb5PgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 30 Aug 2024 19:28:51 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
- <peterx@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Avihai
- Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 08/17] migration: Add load_finish handler and
- associated functions
-In-Reply-To: <1a7599896decdbae61cee385739dc0badc9b4364.1724701542.git.maciej.szmigiero@oracle.com>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <1a7599896decdbae61cee385739dc0badc9b4364.1724701542.git.maciej.szmigiero@oracle.com>
-Date: Fri, 30 Aug 2024 16:28:48 -0300
-Message-ID: <87wmjxn72n.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sk7Kn-0001pI-36
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 15:31:02 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2d3e44b4613so1668930a91.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 12:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725046259; x=1725651059; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SBb7+dm+rm3ph24huqG/oAT5Z3rNHDsNGEBpccGDhZU=;
+ b=uR1j086rtWhIm+sgBGIELHye9bLyy8wyjcPE/mUL9Wbp9HvIiKnopT/ajofoD0sg82
+ XszkAX3KWLfEM2UMQQxMa+GCdCb3TqJ+f00aJT6pu6+YCYCbhDZTQ0+6R5tTYOUYuzcV
+ WED4AzlV1XahlaFo0AYOKC/odTK3Wo9D9P2wZN76qG36o4L08voCeffkLVrAER8N9IrQ
+ i/l4fCbxFd6TYPuMfrXyJ02ZVooMaImnfOpTRrNQfjnBQ9nDWaLn3+AJNexaW3qjvb98
+ gCYUeddpE1W1WuuTzXP5h2/DlNkhn3U26zfemcO51VFAU955CuJ9z7+4KzrIU2KQFGLl
+ d1RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725046259; x=1725651059;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SBb7+dm+rm3ph24huqG/oAT5Z3rNHDsNGEBpccGDhZU=;
+ b=IXEuW6ii4E3x/pa8zbQFxOjEvaCijCNS2QiMBrydXa506vr50whDE77VpNYtlrIgFc
+ c3o2DbuGjMkl3uSOxJ3JPAL2bBLo1Ar8DijEbhzAJ/D6KT1KXZq+udMAqHX4ooxZwsZ4
+ owRVDkwzhqdNkOle7tI9Py8VoC0v1d+seSD3XuR+eKcG+fRJI/sK4V330e31VGkbgzkm
+ N7gP9z8RbHnD0NXWCZNyu6iZYaVEiAK7bnse4TTGbjeG6ZWQYEvsrWJqxsSb6ixFuGPX
+ 97NKbVLb/2psKfjf+PDNQYG61M979RI6gcz5NOBhh3qcEwcKsez0XaB80kxk1XMhhyGa
+ f3ZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU5/pGBGvTYieaU4dQVCr9sj3yAZCOxAFJob9XyrNVVoXAOwhZ3O09HgcNz7c8CX5Usg63hW6AXe8Ej@nongnu.org
+X-Gm-Message-State: AOJu0YyG6RKtq7aia1uWySXpkt+phBcj03WrsNfSZxSIs6YgjrS1wFdd
+ gMRGyQPz6FFXz2fKi5ZnuW7FmTTU7/CBlfOq9Cn1IAsmkpQvQOKbVl7LjPn1gco=
+X-Google-Smtp-Source: AGHT+IEF5IAKhZonPV4j8yKT/exU8DkhvYGMdu1YzyQZe5CiU5BAMlyck/wZu5VwSUa+IJk2oBKHtQ==
+X-Received: by 2002:a17:90b:180d:b0:2cf:eaec:d74c with SMTP id
+ 98e67ed59e1d1-2d8561af98cmr7651598a91.16.1725046259408; 
+ Fri, 30 Aug 2024 12:30:59 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::27bd? ([2604:3d08:9384:1d00::27bd])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d8445e813dsm6759441a91.17.2024.08.30.12.30.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 30 Aug 2024 12:30:59 -0700 (PDT)
+Message-ID: <b2e9c814-36e2-49b6-8109-fbee788d4486@linaro.org>
+Date: Fri, 30 Aug 2024 12:30:58 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: CF8CD1F7E8
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email, imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid, suse.de:email]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] plugins: add API to read guest CPU memory from hwaddr
+Content-Language: en-US
+To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240828063224.291503-1-rowanbhart@gmail.com>
+ <20240828063224.291503-2-rowanbhart@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240828063224.291503-2-rowanbhart@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,96 +99,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+Hi Rowan,
 
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->
-> load_finish SaveVMHandler allows migration code to poll whether
-> a device-specific asynchronous device state loading operation had finished.
->
-> In order to avoid calling this handler needlessly the device is supposed
-> to notify the migration code of its possible readiness via a call to
-> qemu_loadvm_load_finish_ready_broadcast() while holding
-> qemu_loadvm_load_finish_ready_lock.
->
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+thanks for this good complement on the virt address read function.
+
+However, to be able to merge a new plugins API function, we must have a 
+concrete usage of it, through one of the existing plugin.
+What could be a good demonstration of value brought by being able to 
+read a physical address?
+
+Thanks,
+Pierrick
+
+On 8/27/24 23:32, Rowan Hart wrote:
+> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
 > ---
->  include/migration/register.h | 21 +++++++++++++++
->  migration/migration.c        |  6 +++++
->  migration/migration.h        |  3 +++
->  migration/savevm.c           | 52 ++++++++++++++++++++++++++++++++++++
->  migration/savevm.h           |  4 +++
->  5 files changed, 86 insertions(+)
->
-> diff --git a/include/migration/register.h b/include/migration/register.h
-> index 4a578f140713..44d8cf5192ae 100644
-> --- a/include/migration/register.h
-> +++ b/include/migration/register.h
-> @@ -278,6 +278,27 @@ typedef struct SaveVMHandlers {
->      int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
->                               Error **errp);
->  
-> +    /**
-> +     * @load_finish
-> +     *
-> +     * Poll whether all asynchronous device state loading had finished.
-> +     * Not called on the load failure path.
-> +     *
-> +     * Called while holding the qemu_loadvm_load_finish_ready_lock.
-> +     *
-> +     * If this method signals "not ready" then it might not be called
-> +     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
-> +     * while holding qemu_loadvm_load_finish_ready_lock.
-> +     *
-> +     * @opaque: data pointer passed to register_savevm_live()
-> +     * @is_finished: whether the loading had finished (output parameter)
-> +     * @errp: pointer to Error*, to store an error if it happens.
-> +     *
-> +     * Returns zero to indicate success and negative for error
-> +     * It's not an error that the loading still hasn't finished.
-> +     */
-> +    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+>   include/qemu/qemu-plugin.h   | 22 ++++++++++++++++++++++
+>   plugins/api.c                | 17 +++++++++++++++++
+>   plugins/qemu-plugins.symbols |  2 ++
+>   3 files changed, 41 insertions(+)
+> 
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index c71c705b69..25f39c0960 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -868,6 +868,28 @@ QEMU_PLUGIN_API
+>   int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+>                                 GByteArray *buf);
+>   
+> +/**
+> + * qemu_plugin_read_cpu_memory_hwaddr() - read CPU memory from hwaddr
+> + *
+> + * @addr: A virtual address to read from
+> + * @data: A byte array to store data into
+> + * @len: The number of bytes to read, starting from @addr
+> + *
+> + * @len bytes of data is read starting at @addr and stored into @data. If @data
+> + * is not large enough to hold @len bytes, it will be expanded to the necessary
+> + * size, reallocating if necessary. @len must be greater than 0.
+> + *
+> + * This function does not ensure writes are flushed prior to reading, so
+> + * callers should take care when calling this function in plugin callbacks to
+> + * avoid attempting to read data which may not yet be written and should use
+> + * the memory callback API instead.
+> + *
+> + * Returns true on success and false on failure.
+> + */
+> +QEMU_PLUGIN_API
+> +bool qemu_plugin_read_cpu_memory_hwaddr(uint64_t addr,
+> +                                          GByteArray *data, size_t len);
 > +
->      /**
->       * @load_setup
->       *
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 3dea06d57732..d61e7b055e07 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -259,6 +259,9 @@ void migration_object_init(void)
->  
->      current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
->  
-> +    qemu_mutex_init(&current_incoming->load_finish_ready_mutex);
-> +    qemu_cond_init(&current_incoming->load_finish_ready_cond);
+>   /**
+>    * qemu_plugin_scoreboard_new() - alloc a new scoreboard
+>    *
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 2ff13d09de..c87bed6641 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -527,6 +527,22 @@ GArray *qemu_plugin_get_registers(void)
+>       return create_register_handles(regs);
+>   }
+>   
+> +bool qemu_plugin_read_cpu_memory_hwaddr(uint64_t addr,
+> +                                        GByteArray *data, uint64_t len)
+> +{
+> +#ifndef CONFIG_USER_ONLY
+> +    if (len == 0) {
+> +        return false;
+> +    }
 > +
->      migration_object_check(current_migration, &error_fatal);
->  
->      ram_mig_init();
-> @@ -410,6 +413,9 @@ void migration_incoming_state_destroy(void)
->          mis->postcopy_qemufile_dst = NULL;
->      }
->  
-> +    qemu_mutex_destroy(&mis->load_finish_ready_mutex);
-> +    qemu_cond_destroy(&mis->load_finish_ready_cond);
+> +    g_byte_array_set_size(data, len);
+> +    cpu_physical_memory_rw(addr, (void *)data->data, len, 0);
+> +    return true;
+> +#else
+> +    return false;
+> +#endif
+> +}
 > +
->      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
->  }
->  
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 38aa1402d516..4e2443e6c8ec 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -230,6 +230,9 @@ struct MigrationIncomingState {
->  
->      /* Do exit on incoming migration failure */
->      bool exit_on_error;
+>   int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+>   {
+>       g_assert(current_cpu);
+> @@ -534,6 +550,7 @@ int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+>       return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
+>   }
+>   
 > +
-> +    QemuCond load_finish_ready_cond;
-> +    QemuMutex load_finish_ready_mutex;
+>   struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
+>   {
+>       return plugin_scoreboard_new(element_size);
+> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+> index ca773d8d9f..5d9cfd71bb 100644
+> --- a/plugins/qemu-plugins.symbols
+> +++ b/plugins/qemu-plugins.symbols
+> @@ -20,6 +20,8 @@
+>     qemu_plugin_num_vcpus;
+>     qemu_plugin_outs;
+>     qemu_plugin_path_to_binary;
+> +  qemu_plugin_read_cpu_memory_hwaddr;
+> +  qemu_plugin_read_io_memory_hwaddr;
 
-With these moved to MigrationState:
+As you mentioned, you can remove the second one for v2.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>     qemu_plugin_read_register;
+>     qemu_plugin_register_atexit_cb;
+>     qemu_plugin_register_flush_cb;
 
