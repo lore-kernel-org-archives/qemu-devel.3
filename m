@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C928CA0FF5
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D71CA0FF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk1rG-0000Ot-3x; Fri, 30 Aug 2024 09:40:10 -0400
+	id 1sk1sg-0002MY-FM; Fri, 30 Aug 2024 09:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1rC-0000JF-NY
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:40:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1sd-0001vv-L5
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1rA-0005QS-DN
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:40:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1sb-0005eI-8N
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725025203;
+ s=mimecast20190719; t=1725025292;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dJbQZJGwqu7BKGegMKr2BErsIPZVL+r3Bfkwsv4GRx8=;
- b=GzHtzrsn1vyuX5SG23Xk2GVoqu8jePd5JVpM5mXPKbf4f0pSOGB7i5+V3++zFyxB7/sgNL
- AkbVeK9hdB+HgXTc4qOD4enY8HKwgXd6z3WkhMcRQ2h4McGn6YOBAEefZXzNQBfz+a7MMo
- 10JwNBn+jCgGVcNuyclTiIDN6wRn3K0=
+ bh=Xhy1BSCohpIoQg+VSoYYxiPc5WzgWchrjchDtLPRrd8=;
+ b=HdgnZ3+YOfs+H3WQMZBOWdSwtwE3vtWtnNB58pufBZV6G2qsf23ZMLewygC+kI4LmnKCpb
+ n+T9xoxfyXjJ3nKaGXfMc+mtFgBUUk4oDTxxyeqybjQkoCZ1qyE+V7/uXuf/zCn3ftuMzP
+ KqmBq0AQIhEs+Z2aIlWUYwi6jCeVu/w=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-Phv6HJwLNLuNO2Fk1YwucQ-1; Fri,
- 30 Aug 2024 09:40:02 -0400
-X-MC-Unique: Phv6HJwLNLuNO2Fk1YwucQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-pEkHzIXhMfGUtgtG5RdCYw-1; Fri,
+ 30 Aug 2024 09:41:29 -0400
+X-MC-Unique: pEkHzIXhMfGUtgtG5RdCYw-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 832741955D4A; Fri, 30 Aug 2024 13:40:01 +0000 (UTC)
+ id 5805619560B4; Fri, 30 Aug 2024 13:41:28 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 848C83001FC3; Fri, 30 Aug 2024 13:39:56 +0000 (UTC)
+ id 48D57300019C; Fri, 30 Aug 2024 13:41:24 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -52,24 +52,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v5 15/44] tests/functional: enable pre-emptive caching of
- assets
-Date: Fri, 30 Aug 2024 15:38:09 +0200
-Message-ID: <20240830133841.142644-16-thuth@redhat.com>
+Subject: [PATCH v5 36/44] tests/functional: Convert mips64el Fuloong2e avocado
+ test (1/2)
+Date: Fri, 30 Aug 2024 15:38:30 +0200
+Message-ID: <20240830133841.142644-37-thuth@redhat.com>
 In-Reply-To: <20240830133841.142644-1-thuth@redhat.com>
 References: <20240830133841.142644-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -88,207 +88,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Many tests need to access assets stored on remote sites. We don't want
-to download these during test execution when run by meson, since this
-risks hitting test timeouts when data transfers are slow.
+Straight forward conversion. Update the SHA1 hashes to
+SHA256 hashes since SHA1 should not be used anymore nowadays.
 
-Add support for pre-emptive caching of assets by setting the env var
-QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
-instead of running the test, the assets will be downloaded and saved
-to the cache, then the timestamp file created.
+Since the asset is expected locally and the test is guarded
+with RESCUE_YL_PATH, keep it under the 'quick' category.
 
-A meson custom target is created as a dependency of each test suite
-to trigger the pre-emptive caching logic before the test runs.
+  $ RESCUE_YL_PATH=/path/to/rescue-yl QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 \
+    make check-functional-mips64el
+  1/4 qemu:func-quick+func-mips64el / func-mips64el-empty_cpu_model      OK   0.12s   1 subtests passed
+  2/4 qemu:func-quick+func-mips64el / func-mips64el-version              OK   0.13s   1 subtests passed
+  3/4 qemu:func-quick+func-mips64el / func-mips64el-info_usernet         OK   0.15s   1 subtests passed
+  4/4 qemu:func-quick+func-mips64el / func-mips64el-mips64el_fuloong2e   OK   0.19s   1 subtests passed
 
-When run in caching mode, it will locate assets by looking for class
-level variables with a name prefix "ASSET_", and type "Asset".
-
-At the ninja level
-
-   ninja test --suite functional
-
-will speculatively download any assets that are not already cached,
-so it is advisable to set a timeout multiplier.
-
-   QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
-
-will fail the test if a required asset is not already cached
-
-   ninja precache-functional
-
-will download and cache all assets required by the functional
-tests
-
-At the make level, precaching is always done by
-
-   make check-functional
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Richard Henderson <richard.henderson@linaro.org>
-[thuth: Remove the duplicated "path = os.path.basename(...)" line]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240827094905.80648-2-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/Makefile.include                 |  3 ++-
- tests/functional/meson.build           | 33 +++++++++++++++++++++++--
- tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
- tests/functional/qemu_test/testcase.py |  7 ++++++
- 4 files changed, 74 insertions(+), 3 deletions(-)
+ MAINTAINERS                                   |  2 +-
+ tests/functional/meson.build                  |  4 +++
+ .../test_mips64el_fuloong2e.py}               | 33 ++++++++++---------
+ 3 files changed, 23 insertions(+), 16 deletions(-)
+ rename tests/{avocado/machine_mips_fuloong2e.py => functional/test_mips64el_fuloong2e.py} (58%)
+ mode change 100644 => 100755
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 66c8cc3123..010369bd3a 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -161,7 +161,8 @@ $(FUNCTIONAL_TARGETS):
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cbdf2863fa..f6e6e5ebf5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1384,7 +1384,7 @@ S: Odd Fixes
+ F: hw/mips/fuloong2e.c
+ F: hw/pci-host/bonito.c
+ F: include/hw/pci-host/bonito.h
+-F: tests/avocado/machine_mips_fuloong2e.py
++F: tests/functional/test_mips64el_fuloong2e.py
  
- .PHONY: check-functional
- check-functional:
--	@$(MAKE) SPEED=thorough check-func check-func-quick
-+	@$(NINJA) precache-functional
-+	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
- 
- # Consolidated targets
- 
+ Loongson-3 virtual platforms
+ M: Huacai Chen <chenhuacai@kernel.org>
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index f1f344f860..df79775df3 100644
+index 4154b1cbcd..dcede9733e 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -39,6 +39,7 @@ tests_x86_64_system_quick = [
- tests_x86_64_system_thorough = [
+@@ -65,6 +65,10 @@ tests_microblazeel_system_thorough = [
+   'microblazeel_s3adsp1800'
  ]
  
-+precache_all = []
- foreach speed : ['quick', 'thorough']
-   foreach dir : target_dirs
- 
-@@ -78,11 +79,35 @@ foreach speed : ['quick', 'thorough']
-                                meson.current_source_dir())
- 
-     foreach test : target_tests
--      test('func-@0@/@1@'.format(target_base, test),
-+      testname = '@0@-@1@'.format(target_base, test)
-+      testfile = 'test_' + test + '.py'
-+      testpath = meson.current_source_dir() / testfile
-+      teststamp = testname + '.tstamp'
-+      test_precache_env = environment()
-+      test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
-+      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-+                                          meson.current_source_dir())
-+      precache = custom_target('func-precache-' + testname,
-+                               output: teststamp,
-+                               command: [python, testpath],
-+                               depend_files: files(testpath),
-+                               build_by_default: false,
-+                               env: test_precache_env)
-+      precache_all += precache
++tests_mips64el_system_quick = [
++  'mips64el_fuloong2e',
++]
 +
-+      # Ideally we would add 'precache' to 'depends' here, such that
-+      # 'build_by_default: false' lets the pre-caching automatically
-+      # run immediately before the test runs. In practice this is
-+      # broken in meson, with it running the pre-caching in the normal
-+      # compile phase https://github.com/mesonbuild/meson/issues/2518
-+      # If the above bug ever gets fixed, when QEMU changes the min
-+      # meson version, add the 'depends' and remove the custom
-+      # 'run_target' logic below & in Makefile.include
-+      test('func-' + testname,
-            python,
-            depends: [test_deps, test_emulator, emulator_modules],
-            env: test_env,
--           args: [meson.current_source_dir() / 'test_' + test + '.py'],
-+           args: [testpath],
-            protocol: 'tap',
-            timeout: test_timeouts.get(test, 60),
-            priority: test_timeouts.get(test, 60),
-@@ -90,3 +115,7 @@ foreach speed : ['quick', 'thorough']
-     endforeach
-   endforeach
- endforeach
-+
-+run_target('precache-functional',
-+           depends: precache_all,
-+           command: ['true'])
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index c0e675d847..b329ab7dbe 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -9,6 +9,8 @@
- import logging
+ tests_mips64el_system_thorough = [
+   'mips64el_loongson3v',
+ ]
+diff --git a/tests/avocado/machine_mips_fuloong2e.py b/tests/functional/test_mips64el_fuloong2e.py
+old mode 100644
+new mode 100755
+similarity index 58%
+rename from tests/avocado/machine_mips_fuloong2e.py
+rename to tests/functional/test_mips64el_fuloong2e.py
+index 89291f47b2..7688a32713
+--- a/tests/avocado/machine_mips_fuloong2e.py
++++ b/tests/functional/test_mips64el_fuloong2e.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional tests for the Lemote Fuloong-2E machine.
+ #
+ # Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
+@@ -8,35 +10,36 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
  import os
- import subprocess
-+import sys
-+import unittest
- import urllib.request
- from pathlib import Path
- from shutil import copyfileobj
-@@ -62,6 +64,9 @@ def fetch(self):
-                            self.cache_file, self.url)
-             return str(self.cache_file)
++import subprocess
  
-+        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
-+            raise Exception("Asset cache is invalid and downloads disabled")
-+
-         self.log.info("Downloading %s to %s...", self.url, self.cache_file)
-         tmp_cache_file = self.cache_file.with_suffix(".download")
+-from avocado import skipUnless
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++from unittest import skipUnless
  
-@@ -95,3 +100,32 @@ def fetch(self):
+ class MipsFuloong2e(QemuSystemTest):
  
-         self.log.info("Cached %s at %s" % (self.url, self.cache_file))
-         return str(self.cache_file)
-+
-+    def precache_test(test):
-+        log = logging.getLogger('qemu-test')
-+        log.setLevel(logging.DEBUG)
-+        handler = logging.StreamHandler(sys.stdout)
-+        handler.setLevel(logging.DEBUG)
-+        formatter = logging.Formatter(
-+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-+        handler.setFormatter(formatter)
-+        log.addHandler(handler)
-+        for name, asset in vars(test.__class__).items():
-+            if name.startswith("ASSET_") and type(asset) == Asset:
-+                log.info("Attempting to cache '%s'" % asset)
-+                asset.fetch()
-+        log.removeHandler(handler)
-+
-+    def precache_suite(suite):
-+        for test in suite:
-+            if isinstance(test, unittest.TestSuite):
-+                Asset.precache_suite(test)
-+            elif isinstance(test, unittest.TestCase):
-+                Asset.precache_test(test)
-+
-+    def precache_suites(path, cacheTstamp):
-+        loader = unittest.loader.defaultTestLoader
-+        tests = loader.loadTestsFromNames([path], None)
-+
-+        with open(cacheTstamp, "w") as fh:
-+            Asset.precache_suite(tests)
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index b2dd863c6e..18314be9d1 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -21,6 +21,7 @@
- from qemu.machine import QEMUMachine
- from qemu.utils import kvm_available, tcg_available
+     timeout = 60
  
-+from .asset import Asset
- from .cmd import run_cmd
- from .config import BUILD_DIR
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     @skipUnless(os.getenv('RESCUE_YL_PATH'), 'RESCUE_YL_PATH not available')
+-    def test_linux_kernel_isa_serial(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:fuloong2e
+-        :avocado: tags=endian:little
+-        :avocado: tags=device:bonito64
+-        :avocado: tags=device:via686b
+-        """
++    def test_linux_kernel_2_6_27_isa_serial(self):
+         # Recovery system for the Yeeloong laptop
+         # (enough to test the fuloong2e southbridge, accessing its ISA bus)
+         # http://dev.lemote.com/files/resource/download/rescue/rescue-yl
+-        kernel_hash = 'ec4d1bd89a8439c41033ca63db60160cc6d6f09a'
+-        kernel_path = self.fetch_asset('file://' + os.getenv('RESCUE_YL_PATH'),
+-                                       asset_hash=kernel_hash)
++        sha = 'ab588d3316777c62cc81baa20ac92e98b01955c244dff3794b711bc34e26e51d'
++        kernel_path = os.getenv('RESCUE_YL_PATH')
++        output = subprocess.check_output(['sha256sum', kernel_path])
++        checksum = output.split()[0]
++        assert checksum.decode("utf-8") == sha
  
-@@ -58,6 +59,12 @@ def tearDown(self):
- 
-     def main():
-         path = os.path.basename(sys.argv[0])[:-3]
++        self.set_machine('fuloong2e')
+         self.vm.set_console()
+         self.vm.add_args('-kernel', kernel_path)
+         self.vm.launch()
+         wait_for_console_pattern(self, 'Linux version 2.6.27.7lemote')
+         cpu_revision = 'CPU revision is: 00006302 (ICT Loongson-2)'
+         wait_for_console_pattern(self, cpu_revision)
 +
-+        cache = os.environ.get("QEMU_TEST_PRECACHE", None)
-+        if cache is not None:
-+            Asset.precache_suites(path, cache)
-+            return
 +
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-                                    test_output_log = pycotap.LogMode.LogToError)
-         unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.46.0
 
