@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD59ECA0FE0
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34001CA0FE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:31:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjzp7-0005rr-9J; Fri, 30 Aug 2024 07:29:49 -0400
+	id 1sjzqd-0000Me-M6; Fri, 30 Aug 2024 07:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjzp5-0005rF-5z
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:29:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjzqb-0000EK-9D
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:31:21 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjzp3-0008G8-70
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:29:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725017384;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=3ThKtUkTqewH3+rqfcu3V1wlYzw0xAqRACgiAfew/to=;
- b=ZzmtZDDrYm4ooM32tI0GjTByZ/pawN1NOSCGveVHcLUCunFFYL5bfG+YhCHQOU3bLhfaDh
- PDQ0wX4O4muTexKeJOyxua1OPfBEvyHkcNnbwmH4xDaTc6PHbuVx91GH02QNH/46MT+0ql
- YHCKolUEVbn2P/DUw79GpvljgWB6XBA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-VADDnHpxO1WpCNFN5HYVAw-1; Fri,
- 30 Aug 2024 07:29:40 -0400
-X-MC-Unique: VADDnHpxO1WpCNFN5HYVAw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA10219560BF; Fri, 30 Aug 2024 11:29:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.49])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 482731955F1B; Fri, 30 Aug 2024 11:29:36 +0000 (UTC)
-Date: Fri, 30 Aug 2024 12:29:32 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org,
- Cleber Rosa <crosa@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 7/8] python/qapi: move scripts/qapi to python/qemu/qapi
-Message-ID: <ZtGtHHXW6uFjaNPz@redhat.com>
-References: <20240820002318.1380276-1-jsnow@redhat.com>
- <20240820002318.1380276-8-jsnow@redhat.com>
- <87bk1acl4s.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjzqY-0008WH-Ke
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:31:20 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E3FF28A0CD;
+ Fri, 30 Aug 2024 14:29:58 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2C74812F52E;
+ Fri, 30 Aug 2024 14:31:06 +0300 (MSK)
+Message-ID: <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
+Date: Fri, 30 Aug 2024 14:31:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87bk1acl4s.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return value
+ == -1
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240830111451.3799490-1-cleger@rivosinc.com>
+ <20240830111451.3799490-3-cleger@rivosinc.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240830111451.3799490-3-cleger@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -89,86 +86,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 30, 2024 at 01:20:35PM +0200, Markus Armbruster wrote:
-> John Snow <jsnow@redhat.com> writes:
+30.08.2024 14:14, Clément Léger wrote:
+> On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can return
+> -1. In that case we should fallback to using the OPEN_MAX define.
+> According to "man sysconf", the OPEN_MAX define should be present and
+> provided by either unistd.h and/or limits.h so include them for that
+> purpose. For other OSes, just assume a maximum of 1024 files descriptors
+> as a fallback.
 > 
-> > This is being done for the sake of unifying the linting and static type
-> > analysis configurations between scripts/qapi and python/qemu/*.
-> >
-> > With this change, the qapi module will now be checked by mypy, flake8,
-> > pylint, isort etc under all python versions from 3.8 through 3.13 under
-> > a variety of different dependency configurations in the GitLab testing
-> > pipelines.
-> >
-> > The tests can be run locally, as always:
-> >
-> >> cd qemu.git/python
-> >> make check-minreqs
-> >> make check-tox
-> >> make check-dev
-> >
-> > "check-minreqs" is the must-pass GitLab test.
-> > "check-tox" is the optional allowed-to-fail GitLab test.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> 
-> I don't understand why we have to keep Python code in its own directory
-> just to get it checked.  We wouldn't do that say for Rust code, would
-> we?  Anyway, if it's the price of checking, I'll pay[*].
+> Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-posix")
+> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Clément Léger <cleger@rivosinc.com>
 
-The 'check-tox' target is defined in python/Makefile, and is
-written to only check code below that location, which is a
-somewhat arbitrary choice.
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Having this in "make" at all is a bit outdated. Ideally all
-the targets in python/Makefile should be converted into meson
-targets and/or tests, in a "python" suite.
+> @@ -928,6 +933,13 @@ static void qemu_close_all_open_fd_fallback(const int *skip, unsigned int nskip,
+>   void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+>   {
+>       int open_max = sysconf(_SC_OPEN_MAX);
+> +    if (open_max == -1) {
+> +#ifdef CONFIG_DARWIN
+> +        open_max = OPEN_MAX;
+> +#else
+> +        open_max = 1024;
+> +#endif
 
-IOW, we should make 'check-tox' a target in meson.build at the
-top level, and have it check any .py file in the source tree,
-with an exclude list for files we know are not "clean" yet,
-so we don't have to move stuff around as we clean up individual
-files.
+BTW, Can we PLEASE cap this to 1024 in all cases? :)
+(unrelated to this change but still).
 
-> 
-> [...]
-> 
-> > diff --git a/scripts/qapi-gen.py b/scripts/qapi-gen.py
-> > index f3518d29a54..42912c91716 100644
-> > --- a/scripts/qapi-gen.py
-> > +++ b/scripts/qapi-gen.py
-> > @@ -11,9 +11,11 @@
-> >  execution environment.
-> >  """
-> >  
-> > +import os
-> >  import sys
-> >  
-> > -from qapi import main
-> > +sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'python'))
-> > +from qemu.qapi import main
-> >  
-> >  if __name__ == '__main__':
-> >      sys.exit(main.main())
-> 
-> Suggest to use the opportunity to rename to just qapi-gen (no .py) and
-> chmod +x, possibly in a separate patch.
-> 
-> [...]
-> 
-> 
-> [*] Grudgingly.
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+/mjt
 
