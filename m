@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34001CA0FE0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 370A5CA0FE1
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:31:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjzqd-0000Me-M6; Fri, 30 Aug 2024 07:31:23 -0400
+	id 1sjzql-0000qQ-Rh; Fri, 30 Aug 2024 07:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjzqb-0000EK-9D
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:31:21 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjzqi-0000ff-4y
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:31:28 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjzqY-0008WH-Ke
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:31:20 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sjzqg-00006R-74
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:31:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E3FF28A0CD;
- Fri, 30 Aug 2024 14:29:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 457788A0D0;
+ Fri, 30 Aug 2024 14:30:16 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2C74812F52E;
- Fri, 30 Aug 2024 14:31:06 +0300 (MSK)
-Message-ID: <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
-Date: Fri, 30 Aug 2024 14:31:06 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 738EA12F52F;
+ Fri, 30 Aug 2024 14:31:23 +0300 (MSK)
+Message-ID: <0b943dc9-3b3a-445c-9760-6ef781ccdd65@tls.msk.ru>
+Date: Fri, 30 Aug 2024 14:31:23 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return value
- == -1
+Subject: Re: [PATCH 1/2] qemu/osdep: fix current process fds path for other
+ OSes
 To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20240830111451.3799490-1-cleger@rivosinc.com>
- <20240830111451.3799490-3-cleger@rivosinc.com>
+ <20240830111451.3799490-2-cleger@rivosinc.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -62,7 +62,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240830111451.3799490-3-cleger@rivosinc.com>
+In-Reply-To: <20240830111451.3799490-2-cleger@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -89,33 +89,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-30.08.2024 14:14, Clément Léger wrote:
-> On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can return
-> -1. In that case we should fallback to using the OPEN_MAX define.
-> According to "man sysconf", the OPEN_MAX define should be present and
-> provided by either unistd.h and/or limits.h so include them for that
-> purpose. For other OSes, just assume a maximum of 1024 files descriptors
-> as a fallback.
+30.08.2024 14:14, Clément Léger:
+> While Linux and Solaris uses /proc/self/fd, other OSes (MacOS,
+> FreeBSD) uses /dev/fd. In order to support theses OSes, use /dev/fd as
+> a fallback.
 > 
 > Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-posix")
 > Reported-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Clément Léger <cleger@rivosinc.com>
 
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-
-> @@ -928,6 +933,13 @@ static void qemu_close_all_open_fd_fallback(const int *skip, unsigned int nskip,
->   void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
->   {
->       int open_max = sysconf(_SC_OPEN_MAX);
-> +    if (open_max == -1) {
-> +#ifdef CONFIG_DARWIN
-> +        open_max = OPEN_MAX;
-> +#else
-> +        open_max = 1024;
-> +#endif
-
-BTW, Can we PLEASE cap this to 1024 in all cases? :)
-(unrelated to this change but still).
 
 /mjt
 
