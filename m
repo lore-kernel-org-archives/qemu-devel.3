@@ -4,52 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DB0CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 05:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C8A9CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 05:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjtwQ-0004Bk-DB; Fri, 30 Aug 2024 01:12:58 -0400
+	id 1sju3Z-0000gb-2A; Fri, 30 Aug 2024 01:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1sjtwM-0004AA-7V; Fri, 30 Aug 2024 01:12:55 -0400
-Received: from mailout04.t-online.de ([194.25.134.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1sjtwK-0001Et-9F; Fri, 30 Aug 2024 01:12:53 -0400
-Received: from fwd85.aul.t-online.de (fwd85.aul.t-online.de [10.223.144.111])
- by mailout04.t-online.de (Postfix) with SMTP id 24C7217CF1;
- Fri, 30 Aug 2024 07:12:48 +0200 (CEST)
-Received: from [192.168.211.200] ([93.236.150.177]) by fwd85.t-online.de
- with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
- esmtp id 1sjtwF-0MmJBh0; Fri, 30 Aug 2024 07:12:47 +0200
-Message-ID: <122bf0db-8763-432b-979c-f0c91c7710b9@t-online.de>
-Date: Fri, 30 Aug 2024 07:12:46 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sju3W-0000fV-Lt
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 01:20:18 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sju3U-0002el-85
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 01:20:18 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7141feed424so1221530b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 22:20:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724995215; x=1725600015; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Dvj+Jkf9UOIs1rtRDSsJ2H7qrxcydtnGfDt2mhRQays=;
+ b=mkGdWCoaA5wt47wEAtjivMSaXO+CDqd+w3EFLySY/sfw+6Ssn60I9qlJlPYovIXxRj
+ cA90nLy8oZmFc6Lz9r7jrQwIx6HJrHGEV8U+LSU90BpjMjwCohSy+MUHYWLpz4kUTBNR
+ o8RTqrp8U+vSXViqKDwGSBL4SOCepC/KJz+oSfog4EOn+tpBpzrJmMCBXon6wOLNitjb
+ 69ui/DX31Wz46MCuHtmaVNgxF01Z78GGxC2AdCKs8CnGf4gYZvF7nOr4SDYl0BFYPBlj
+ Bl+9bJG5MUhZTUC4r1XOKnOa4VQmWUxh+eb6fT4TF+ip7KXjQj3Zw0fePz2sdmdOieTl
+ rPOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724995215; x=1725600015;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dvj+Jkf9UOIs1rtRDSsJ2H7qrxcydtnGfDt2mhRQays=;
+ b=q1P2XIdtuJqMbKecVBOj6lskjrtJ8AxcQ6Hx/1EAb0jhmFD+IC57EFlv21nBS3JVQa
+ 2qeyvVTfmN72M7zVAVRt3whxTjSgiRd6fztu7HON8GK0iyMgaEy6y3dzvuCNIqpowhOe
+ WhhQS93E5fT7dOAGIzbYRzHn5sY8kdSC6d677PVGLqQIAH9goUE1Vi/c+vyP4SLbQCnW
+ y5o75rONYMsbMud14jGNro+qG9lr7FpuP3sUkG1anj4BB/4ozrTvOOGXEn5ltFQlRl+I
+ HQQ7ZqD1wQtdAdO7AnUyMkPcoMSqgTjcKX5a3v4nhQLroBL92JcvsNS9gO7dUEdHBgMS
+ /3ww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVE3T2QVIAkWWDKRK7c1ODQUrzPNAZ6yVXFmDRhl5Q5ilWVSi88Cn6ZvmchsiQqnJBvmEkpBCqhxlRx@nongnu.org
+X-Gm-Message-State: AOJu0YwizxSWD/pES9uKOtW+YsqWQGi4pypsPrSL+o/6MaFdhEHlPPMd
+ IHOG7Ub97Pg4N2+pPcZfaqyPrL7nrPSwFLSCAL5i4b2HC6mSbYIHDVYOO1Fqaec=
+X-Google-Smtp-Source: AGHT+IGXbkhjwVhxmWlZ68NL6Cf5rdiHMnnpGnfd5onrCvLYMC6+5k1+n9Tp9OOzKVFbIma7yifFSw==
+X-Received: by 2002:a05:6a20:e196:b0:1cc:cdb6:c11a with SMTP id
+ adf61e73a8af0-1cce1015a21mr5335893637.24.1724995214538; 
+ Thu, 29 Aug 2024 22:20:14 -0700 (PDT)
+Received: from ?IPV6:2001:8004:5100:1c02:35b7:18d3:3fc5:9f02?
+ ([2001:8004:5100:1c02:35b7:18d3:3fc5:9f02])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d8446f3bd4sm5229210a91.53.2024.08.29.22.20.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Aug 2024 22:20:14 -0700 (PDT)
+Message-ID: <abc033ff-7638-4d2d-b2d7-65b3c88311e8@linaro.org>
+Date: Fri, 30 Aug 2024 15:20:04 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/3] hw/audio/virtio-snd: fix invalid param check
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-References: <cover.1724151593.git.mst@redhat.com>
- <7d14471a121878602cb4e748c4707f9ab9a9e3e2.1724151593.git.mst@redhat.com>
+Subject: Re: [PATCH v12 11/20] target/riscv: introduce ssp and enabling
+ controls for zicfiss
+To: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, andy.chiu@sifive.com,
+ kito.cheng@sifive.com
+References: <20240829233425.1005029-1-debug@rivosinc.com>
+ <20240829233425.1005029-12-debug@rivosinc.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-In-Reply-To: <7d14471a121878602cb4e748c4707f9ab9a9e3e2.1724151593.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1724994767-F37FD872-039FF045/0/0 CLEAN NORMAL
-X-TOI-MSGID: 02d816ef-2acd-4990-b971-7fad3887e43b
-Received-SPF: pass client-ip=194.25.134.18; envelope-from=vr_qemu@t-online.de;
- helo=mailout04.t-online.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240829233425.1005029-12-debug@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,51 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: qemu-stable@nongnu.org
+On 8/30/24 09:34, Deepak Gupta wrote:
+> +bool cpu_get_bcfien(CPURISCVState *env)
 
-Without this patch, the virtio-sound device will not work in the next
-QEMU stable-8.2 and stable-9.0 versions.
+It occurs to me that a better name would be "cpu_get_sspen".
+The backward cfi is merely a consequence of the shadow stack.
 
-With best regards,
-Volker
+> +{
+> +    /* no cfi extension, return false */
+> +    if (!env_archcpu(env)->cfg.ext_zicfiss) {
+> +        return false;
+> +    }
+> +
+> +    switch (env->priv) {
+> +    case PRV_U:
+> +        if (riscv_has_ext(env, RVS)) {
+> +            return env->senvcfg & SENVCFG_SSE;
+> +        }
+> +        return env->menvcfg & MENVCFG_SSE;
+> +#ifndef CONFIG_USER_ONLY
+> +    case PRV_S:
+> +        if (env->virt_enabled) {
+> +            return env->henvcfg & HENVCFG_SSE;
+> +        }
+> +        return env->menvcfg & MENVCFG_SSE;
+> +    case PRV_M: /* M-mode shadow stack is always on if hart implements */
+> +        return true;
 
-> From: Volker Rümelin <vr_qemu@t-online.de>
->
-> Commit 9b6083465f ("virtio-snd: check for invalid param shift
-> operands") tries to prevent invalid parameters specified by the
-> guest. However, the code is not correct.
->
-> Change the code so that the parameters format and rate, which are
-> a bit numbers, are compared with the bit size of the data type.
->
-> Fixes: 9b6083465f ("virtio-snd: check for invalid param shift operands")
-> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-> Message-Id: <20240802071805.7123-1-vr_qemu@t-online.de>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->  hw/audio/virtio-snd.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> index e5196aa4bb..d1cf5eb445 100644
-> --- a/hw/audio/virtio-snd.c
-> +++ b/hw/audio/virtio-snd.c
-> @@ -282,12 +282,12 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
->          error_report("Number of channels is not supported.");
->          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->      }
-> -    if (BIT(params->format) > sizeof(supported_formats) ||
-> +    if (params->format >= sizeof(supported_formats) * BITS_PER_BYTE ||
->          !(supported_formats & BIT(params->format))) {
->          error_report("Stream format is not supported.");
->          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->      }
-> -    if (BIT(params->rate) > sizeof(supported_rates) ||
-> +    if (params->rate >= sizeof(supported_rates) * BITS_PER_BYTE ||
->          !(supported_rates & BIT(params->rate))) {
->          error_report("Stream rate is not supported.");
->          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+ From the manual:
 
+Activating Zicfiss in M-mode is currently not supported. Additionally, when S-mode is not
+implemented, activation in U-mode is also not supported.
+
+So two of the cases above are wrong.
+
+
+r~
 
