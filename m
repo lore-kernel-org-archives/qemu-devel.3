@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D71CA0FF1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36523CA0FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:43:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk1sg-0002MY-FM; Fri, 30 Aug 2024 09:41:38 -0400
+	id 1sk1s3-0004pN-6E; Fri, 30 Aug 2024 09:40:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1sd-0001vv-L5
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1s0-0004Yu-UM
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:40:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1sb-0005eI-8N
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1rv-0005YY-Ra
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:40:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725025292;
+ s=mimecast20190719; t=1725025251;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xhy1BSCohpIoQg+VSoYYxiPc5WzgWchrjchDtLPRrd8=;
- b=HdgnZ3+YOfs+H3WQMZBOWdSwtwE3vtWtnNB58pufBZV6G2qsf23ZMLewygC+kI4LmnKCpb
- n+T9xoxfyXjJ3nKaGXfMc+mtFgBUUk4oDTxxyeqybjQkoCZ1qyE+V7/uXuf/zCn3ftuMzP
- KqmBq0AQIhEs+Z2aIlWUYwi6jCeVu/w=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=SWOQQkfUz6JS2lXFxnlkkQQEMwyL997hyDsGEWuURF8=;
+ b=OXQCD3jfdYYGpGLnDK5iSDH7NazmSqVXqNkIJiBDCUnKHyvNqIs5Os4Eri4FlLslJ24SCv
+ +LhRdbnRgH5kE0tAYkdDtJya7XhKdqFUQBPz3CuPnv0t5wX3AaVrrT7FucAtnZEaZS9eoa
+ JkRp6D1K2rejslZTlw3v3vTSi2C3iXw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-pEkHzIXhMfGUtgtG5RdCYw-1; Fri,
- 30 Aug 2024 09:41:29 -0400
-X-MC-Unique: pEkHzIXhMfGUtgtG5RdCYw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-LgGt98RUNKSIy6QWkBwgYA-1; Fri,
+ 30 Aug 2024 09:40:49 -0400
+X-MC-Unique: LgGt98RUNKSIy6QWkBwgYA-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5805619560B4; Fri, 30 Aug 2024 13:41:28 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82C381954B01; Fri, 30 Aug 2024 13:40:48 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 48D57300019C; Fri, 30 Aug 2024 13:41:24 +0000 (UTC)
+ id 9D5143001FC3; Fri, 30 Aug 2024 13:40:44 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -52,24 +52,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v5 36/44] tests/functional: Convert mips64el Fuloong2e avocado
- test (1/2)
-Date: Fri, 30 Aug 2024 15:38:30 +0200
-Message-ID: <20240830133841.142644-37-thuth@redhat.com>
+Subject: [PATCH v5 26/44] tests/functional: Convert the ppc_amiga avocado test
+ into a standalone test
+Date: Fri, 30 Aug 2024 15:38:20 +0200
+Message-ID: <20240830133841.142644-27-thuth@redhat.com>
 In-Reply-To: <20240830133841.142644-1-thuth@redhat.com>
 References: <20240830133841.142644-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -88,125 +88,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Use the Python standard zipfile module instead of avocado.utils for
+extracting the ZIP file that we download here, and use the standard
+subprocess module for running the "tail" command.
 
-Straight forward conversion. Update the SHA1 hashes to
-SHA256 hashes since SHA1 should not be used anymore nowadays.
-
-Since the asset is expected locally and the test is guarded
-with RESCUE_YL_PATH, keep it under the 'quick' category.
-
-  $ RESCUE_YL_PATH=/path/to/rescue-yl QEMU_TEST_ALLOW_UNTRUSTED_CODE=1 \
-    make check-functional-mips64el
-  1/4 qemu:func-quick+func-mips64el / func-mips64el-empty_cpu_model      OK   0.12s   1 subtests passed
-  2/4 qemu:func-quick+func-mips64el / func-mips64el-version              OK   0.13s   1 subtests passed
-  3/4 qemu:func-quick+func-mips64el / func-mips64el-info_usernet         OK   0.15s   1 subtests passed
-  4/4 qemu:func-quick+func-mips64el / func-mips64el-mips64el_fuloong2e   OK   0.19s   1 subtests passed
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240827094905.80648-2-philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  2 +-
- tests/functional/meson.build                  |  4 +++
- .../test_mips64el_fuloong2e.py}               | 33 ++++++++++---------
- 3 files changed, 23 insertions(+), 16 deletions(-)
- rename tests/{avocado/machine_mips_fuloong2e.py => functional/test_mips64el_fuloong2e.py} (58%)
- mode change 100644 => 100755
+ MAINTAINERS                        |  1 +
+ tests/avocado/ppc_amiga.py         | 38 --------------------------
+ tests/functional/meson.build       |  1 +
+ tests/functional/test_ppc_amiga.py | 43 ++++++++++++++++++++++++++++++
+ 4 files changed, 45 insertions(+), 38 deletions(-)
+ delete mode 100644 tests/avocado/ppc_amiga.py
+ create mode 100755 tests/functional/test_ppc_amiga.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index cbdf2863fa..f6e6e5ebf5 100644
+index 26c9fba7c5..f01e865025 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1384,7 +1384,7 @@ S: Odd Fixes
- F: hw/mips/fuloong2e.c
- F: hw/pci-host/bonito.c
- F: include/hw/pci-host/bonito.h
--F: tests/avocado/machine_mips_fuloong2e.py
-+F: tests/functional/test_mips64el_fuloong2e.py
+@@ -1597,6 +1597,7 @@ S: Maintained
+ F: hw/ppc/amigaone.c
+ F: hw/pci-host/articia.c
+ F: include/hw/pci-host/articia.h
++F: tests/functional/test_ppc_amiga.py
  
- Loongson-3 virtual platforms
- M: Huacai Chen <chenhuacai@kernel.org>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 4154b1cbcd..dcede9733e 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -65,6 +65,10 @@ tests_microblazeel_system_thorough = [
-   'microblazeel_s3adsp1800'
- ]
- 
-+tests_mips64el_system_quick = [
-+  'mips64el_fuloong2e',
-+]
-+
- tests_mips64el_system_thorough = [
-   'mips64el_loongson3v',
- ]
-diff --git a/tests/avocado/machine_mips_fuloong2e.py b/tests/functional/test_mips64el_fuloong2e.py
-old mode 100644
-new mode 100755
-similarity index 58%
-rename from tests/avocado/machine_mips_fuloong2e.py
-rename to tests/functional/test_mips64el_fuloong2e.py
-index 89291f47b2..7688a32713
---- a/tests/avocado/machine_mips_fuloong2e.py
-+++ b/tests/functional/test_mips64el_fuloong2e.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Functional tests for the Lemote Fuloong-2E machine.
- #
- # Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-@@ -8,35 +10,36 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- import os
-+import subprocess
- 
--from avocado import skipUnless
+ Virtual Open Firmware (VOF)
+ M: Alexey Kardashevskiy <aik@ozlabs.ru>
+diff --git a/tests/avocado/ppc_amiga.py b/tests/avocado/ppc_amiga.py
+deleted file mode 100644
+index b6f866f91d..0000000000
+--- a/tests/avocado/ppc_amiga.py
++++ /dev/null
+@@ -1,38 +0,0 @@
+-# Test AmigaNG boards
+-#
+-# Copyright (c) 2023 BALATON Zoltan
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-from avocado.utils import archive
+-from avocado.utils import process
 -from avocado_qemu import QemuSystemTest
 -from avocado_qemu import wait_for_console_pattern
-+from qemu_test import QemuSystemTest
-+from qemu_test import wait_for_console_pattern
-+from unittest import skipUnless
- 
- class MipsFuloong2e(QemuSystemTest):
- 
-     timeout = 60
- 
--    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-+    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-     @skipUnless(os.getenv('RESCUE_YL_PATH'), 'RESCUE_YL_PATH not available')
--    def test_linux_kernel_isa_serial(self):
+-
+-class AmigaOneMachine(QemuSystemTest):
+-
+-    timeout = 90
+-
+-    def test_ppc_amigaone(self):
 -        """
--        :avocado: tags=arch:mips64el
--        :avocado: tags=machine:fuloong2e
--        :avocado: tags=endian:little
--        :avocado: tags=device:bonito64
--        :avocado: tags=device:via686b
+-        :avocado: tags=arch:ppc
+-        :avocado: tags=machine:amigaone
+-        :avocado: tags=device:articia
+-        :avocado: tags=accel:tcg
 -        """
-+    def test_linux_kernel_2_6_27_isa_serial(self):
-         # Recovery system for the Yeeloong laptop
-         # (enough to test the fuloong2e southbridge, accessing its ISA bus)
-         # http://dev.lemote.com/files/resource/download/rescue/rescue-yl
--        kernel_hash = 'ec4d1bd89a8439c41033ca63db60160cc6d6f09a'
--        kernel_path = self.fetch_asset('file://' + os.getenv('RESCUE_YL_PATH'),
--                                       asset_hash=kernel_hash)
-+        sha = 'ab588d3316777c62cc81baa20ac92e98b01955c244dff3794b711bc34e26e51d'
-+        kernel_path = os.getenv('RESCUE_YL_PATH')
-+        output = subprocess.check_output(['sha256sum', kernel_path])
-+        checksum = output.split()[0]
-+        assert checksum.decode("utf-8") == sha
- 
-+        self.set_machine('fuloong2e')
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_path)
-         self.vm.launch()
-         wait_for_console_pattern(self, 'Linux version 2.6.27.7lemote')
-         cpu_revision = 'CPU revision is: 00006302 (ICT Loongson-2)'
-         wait_for_console_pattern(self, cpu_revision)
+-        self.require_accelerator("tcg")
+-        tar_name = 'A1Firmware_Floppy_05-Mar-2005.zip'
+-        tar_url = ('https://www.hyperion-entertainment.com/index.php/'
+-                   'downloads?view=download&format=raw&file=25')
+-        tar_hash = 'c52e59bc73e31d8bcc3cc2106778f7ac84f6c755'
+-        zip_file = self.fetch_asset(tar_name, locations=tar_url,
+-                                    asset_hash=tar_hash)
+-        archive.extract(zip_file, self.workdir)
+-        cmd = f"tail -c 524288 {self.workdir}/floppy_edition/updater.image >{self.workdir}/u-boot-amigaone.bin"
+-        process.run(cmd, shell=True)
+-
+-        self.vm.set_console()
+-        self.vm.add_args('-bios', self.workdir + '/u-boot-amigaone.bin')
+-        self.vm.launch()
+-        wait_for_console_pattern(self, 'FLASH:')
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 3726c61ca3..8f46a90003 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -62,6 +62,7 @@ tests_ppc_system_quick = [
+ tests_ppc_system_thorough = [
+   'ppc_405',
+   'ppc_40p',
++  'ppc_amiga',
+   'ppc_bamboo',
+   'ppc_mpc8544ds',
+   'ppc_virtex_ml507',
+diff --git a/tests/functional/test_ppc_amiga.py b/tests/functional/test_ppc_amiga.py
+new file mode 100755
+index 0000000000..b793b5c432
+--- /dev/null
++++ b/tests/functional/test_ppc_amiga.py
+@@ -0,0 +1,43 @@
++#!/usr/bin/env python3
++#
++# Test AmigaNG boards
++#
++# Copyright (c) 2023 BALATON Zoltan
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
 +
++import subprocess
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern, run_cmd
++from zipfile import ZipFile
++
++class AmigaOneMachine(QemuSystemTest):
++
++    timeout = 90
++
++    ASSET_IMAGE = Asset(
++        ('https://www.hyperion-entertainment.com/index.php/'
++         'downloads?view=download&format=raw&file=25'),
++        '8ff39330ba47d4f64de4ee8fd6809e9c010a9ef17fe51e95c3c1d53437cb481f')
++
++    def test_ppc_amigaone(self):
++        self.require_accelerator("tcg")
++        self.set_machine('amigaone')
++        tar_name = 'A1Firmware_Floppy_05-Mar-2005.zip'
++        zip_file = self.ASSET_IMAGE.fetch()
++        with ZipFile(zip_file, 'r') as zf:
++            zf.extractall(path=self.workdir)
++        bios_fh = open(self.workdir + "/u-boot-amigaone.bin", "wb")
++        subprocess.run(['tail', '-c', '524288',
++                        self.workdir + "/floppy_edition/updater.image"],
++                        stdout=bios_fh)
++
++        self.vm.set_console()
++        self.vm.add_args('-bios', self.workdir + '/u-boot-amigaone.bin')
++        self.vm.launch()
++        wait_for_console_pattern(self, 'FLASH:')
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
