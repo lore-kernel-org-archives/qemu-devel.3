@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EC6CA0FE1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6053ECA0FE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk0FL-0007ZX-5g; Fri, 30 Aug 2024 07:56:55 -0400
+	id 1sk0FL-0007bw-U1; Fri, 30 Aug 2024 07:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sk0FC-0007IE-6R
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:56:46 -0400
+ id 1sk0FI-0007N9-KI
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:56:52 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sk0FA-0002r7-2v
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:56:45 -0400
+ id 1sk0FF-0002rB-Oz
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:56:51 -0400
 Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47U7tVM4014619;
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47U7tVM5014619;
  Fri, 30 Aug 2024 11:56:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id; s=corp-2023-11-20; bh=/oDLQk
- D1jveM/iB7OghI1a9DqNcDF4XkvQIcbf4ruso=; b=QvOH9h83cdOhoDMKlhZRAP
- VxuQPhbR7rrme1sGJC9rwex8F1+m0tcdsf1uFzI6wVZajRqxoGnnAOEnBb2OHOGy
- zXFZrHStsotZfbXj2rKhsWxFydSzwN2iOztADfIgj9MKvq1NVAFeuR1mnLO6r39r
- Tm7sEvvDvq+P48AyxulyM7yq/DLpnLLOzUzhV/iYu6tr24Ovx5zKHh6NK/cS2KGG
- QhdiF+dUbNVn256+ktH0m+V244qE1HARqb+RDSF4+86mPYRGhWtmzjQzm1E5XuXK
- U76oV6FCZZfEVDoQDypwJMj9SZNv2GSDokMmoIoA9ZE8XwoEGW8Xyzyog+9qT/Sg
- ==
+ from:to:cc:subject:date:message-id:in-reply-to:references; s=
+ corp-2023-11-20; bh=lTkdRg+GBBI4tZWpYzx20rweRuoFZnawHnP0zLPVa+0=; b=
+ EBqQfFVUGFeavupf7pa2syaeY9MGcRFJU4tGtnP5uJB0LvINND+i/W50DJhApLWo
+ 3w6CwImhgh7ksH5jvRY7TNj9gdDmj7OLQTun5xEdikgEtGRQgwcFqSKJV/v09l4O
+ iILWspN3kIXQ4fOML1ZSZ+iP5qbhfbhOK5kpWJlvoEMjD7q8+ene8B7yEsMcsF7q
+ W1FzVgY4hnAk/wPGYYrkTpyg4JYcudBkTWP1Lm9LOIKVOhQsKjU0VK5NiUXGC29t
+ SNpPwSh2Jxgh4ReiFucMLESMk829GHuo+l831VsVcFyCYgHo9PJR/ryOSTZcY/NH
+ nFYghu3ZS4O3QY3lPJpU1A==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 419pugxg17-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 419pugxg18-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Aug 2024 11:56:39 +0000 (GMT)
+ Fri, 30 Aug 2024 11:56:40 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 47UBu3Pk036782; Fri, 30 Aug 2024 11:56:38 GMT
+ with ESMTP id 47UA5gQc036621; Fri, 30 Aug 2024 11:56:40 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4189jpg9av-1
+ 4189jpg9b9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Aug 2024 11:56:38 +0000
+ Fri, 30 Aug 2024 11:56:39 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 47UBucxG028887;
- Fri, 30 Aug 2024 11:56:38 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 47UBucxI028887;
+ Fri, 30 Aug 2024 11:56:39 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 4189jpg9ae-1; Fri, 30 Aug 2024 11:56:38 +0000
+ ESMTP id 4189jpg9ae-2; Fri, 30 Aug 2024 11:56:39 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Euan Turner <euan.turner@nutanix.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 0/6] Live Update: tap and vhost
-Date: Fri, 30 Aug 2024 04:56:31 -0700
-Message-Id: <1725018997-363706-1-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 1/6] Revert "vhost-backend: remove
+ vhost_kernel_reset_device()"
+Date: Fri, 30 Aug 2024 04:56:32 -0700
+Message-Id: <1725018997-363706-2-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1725018997-363706-1-git-send-email-steven.sistare@oracle.com>
+References: <1725018997-363706-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-30_06,2024-08-30_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  mlxscore=0 suspectscore=0
- phishscore=0 malwarescore=0 bulkscore=0 mlxlogscore=922 adultscore=0
+ phishscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
  definitions=main-2408300090
-X-Proofpoint-GUID: WcTx6YB89cchyFwFCz37PFF37oqwUgNT
-X-Proofpoint-ORIG-GUID: WcTx6YB89cchyFwFCz37PFF37oqwUgNT
+X-Proofpoint-GUID: 2p8eCbpzXUOL3tlXJerM-UIXTz5--a0y
+X-Proofpoint-ORIG-GUID: 2p8eCbpzXUOL3tlXJerM-UIXTz5--a0y
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -99,25 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CPR support for tap with/without vhost.
-Works for cpr-exec and cpr-transfer.
+This reverts commit e6383293eb01928692047e617665a742cca87e23.
+The reset function is needed for CPR.
 
-Steve Sistare (6):
-  Revert "vhost-backend: remove vhost_kernel_reset_device()"
-  tap: common return label
-  tap: fix net_init_tap() return code
-  migration: cpr_get_fd_param helper
-  tap: cpr support
-  tap: postload fix for cpr
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ hw/virtio/vhost-backend.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
- hw/net/virtio-net.c       |  20 +++++++
- hw/virtio/vhost-backend.c |   6 +++
- include/migration/cpr.h   |   2 +
- include/net/tap.h         |   1 +
- migration/cpr.c           |  26 ++++++++++
- net/tap.c                 | 130 ++++++++++++++++++++++++++++++++++------------
- 6 files changed, 151 insertions(+), 34 deletions(-)
-
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index 833804d..9b75141 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -221,6 +221,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+ }
+ 
++static int vhost_kernel_reset_device(struct vhost_dev *dev)
++{
++    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
++}
++
+ static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+ {
+     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+@@ -345,6 +350,7 @@ const VhostOps kernel_ops = {
+         .vhost_get_features = vhost_kernel_get_features,
+         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+         .vhost_set_owner = vhost_kernel_set_owner,
++        .vhost_reset_device = vhost_kernel_reset_device,
+         .vhost_get_vq_index = vhost_kernel_get_vq_index,
+         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
+         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
 -- 
 1.8.3.1
 
