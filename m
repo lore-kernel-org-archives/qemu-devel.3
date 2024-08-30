@@ -4,116 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7C1CA0EE1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 05:49:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E4ACA0EE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 05:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjuUl-0006qY-HG; Fri, 30 Aug 2024 01:48:28 -0400
+	id 1sjucs-0003Ck-L5; Fri, 30 Aug 2024 01:56:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
- id 1sjuUj-0006pL-HB; Fri, 30 Aug 2024 01:48:25 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nrb@linux.ibm.com>)
- id 1sjuUg-00081f-V5; Fri, 30 Aug 2024 01:48:24 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47U3wnla011108;
- Fri, 30 Aug 2024 05:48:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-type:mime-version:content-transfer-encoding:in-reply-to
- :references:subject:from:cc:to:date:message-id; s=pp1; bh=ZGTNiw
- 0HoAgiua+lb78K1WcYQKkbS7Cu1KI/YGLoZfY=; b=iiaAz/Odv4zOKJHxOk9uPQ
- /CQWFgYsjY2nLYm51OYLqnsTFevxwule2iJcQq8XBufBdmr8L4ETXYXadDPTMW0+
- g+8J2RMfdr24A6VHCAfoTJ1GC2oYfIz+kaF21cKMDh6wSjQv+mo/BDgAGFsm4Ezt
- uVAqqa/arm0yGH5+yclvKUAdmOpA/CS4TyIlEDJ6X6v+lmHdyg4Oldxt5mvNWlYF
- OXpEolYrQVMV3oxjibqreatuIKBZ2rGvAm4WU85VGvEW3hS6SFPs5p7yGdydJx2a
- lhFph4OzAAc3WlE64kUPjVJzZ0LJpXNHTyZwoNHUcO6rI2Ean9FaSrgHfmhhdspw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8ucp0d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Aug 2024 05:48:19 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47U5jsNE030690;
- Fri, 30 Aug 2024 05:48:19 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8ucp08-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Aug 2024 05:48:19 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47U5dMeA028267;
- Fri, 30 Aug 2024 05:48:18 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 417ubnhhx0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Aug 2024 05:48:18 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 47U5mE5G25100864
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Aug 2024 05:48:14 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5B9292004B;
- Fri, 30 Aug 2024 05:48:14 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 28E1220040;
- Fri, 30 Aug 2024 05:48:14 +0000 (GMT)
-Received: from t14-nrb (unknown [9.171.15.216])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 30 Aug 2024 05:48:14 +0000 (GMT)
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sjucq-00039B-06
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 01:56:48 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sjucn-0000zW-T4
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 01:56:47 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2d41b082ab8so1092197a91.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Aug 2024 22:56:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724997404; x=1725602204;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=XqcyJD5DyxBXbyRLYX5PCWo1ecqcyiHZra8ghQOL9gg=;
+ b=hNBAuR4UjpBY9Anni7JW0h+LQxh+x0KyH8nQNlXxQ9FeeGVm+CYFzXLKVbeb85qwJy
+ hCAVCvydfmXgWnujHAqTxR+18JQoKf3MbZwSUZkswrPXTVlerYZTYhjCckERdTXAne7G
+ sP7ANWOSVa/yBOM/MWS9iVOFqolNmgZq98jLZp8E3gHDhucpts0niGXNA32ay164zVnq
+ EFVnbKT+s5XyR2Il7OgRGykN1k2D9kWlyrQNshH3rqPxEnDAZdVkzAJC7YeDFyqJ46up
+ NT9OthFBiyxMBm6i+o8sErUMsoDHYxWcF25PHBsmHjwrEuOV/yT+puG58Hyw03vpuXPJ
+ aeng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724997404; x=1725602204;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XqcyJD5DyxBXbyRLYX5PCWo1ecqcyiHZra8ghQOL9gg=;
+ b=blg6Ouzj7dr8MrlGzNe0WopYEbJQsmYuhUOjgfAkQ9v2+9i3p0TreGpHNugaW3pVqH
+ hNGgIctAxhzLO4VZJS1jUG/jR1GwZoW1ZlyG08cRmcNgFOP7KkPlV5xR2YXRyEIzwXrX
+ dJTRqochKF1RGAMw/nHVQ4xfsWU0zFRQUlY9MNUgP+GHM1JhkarU/p5ZSC35hWYL+f9S
+ cgME0dr0j88h8sUVcdy8+fFwd835CUGHe1CTu6PjvctueFBnfRbc2oVDawCQdd8fk3cF
+ A1HgM6IQUJ+ARpjsYxBEU9QgavDsw/Jy06YGeYkAhgzNw2GEs5cOcRMT7oJ4YIsuqPrF
+ 5kBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCORAdRQa+7NG+T5VTLpStM1ZyGgXpZLpbNl7S5I4eJ0LQoKQhxwWqAPkTlQ7RNOxh1n8wQb1YdQxM@nongnu.org
+X-Gm-Message-State: AOJu0Yz4QTvGwEtJk9JOHOOhyYR9MFlCuNsDgAqNvMKb4v+xWn2vvYWf
+ f6y8JB9zqRrT8qWtqUFZGIb+5UAF799Egj/lDJmVrluylRooh6nQC2jNXZ3C0Xg=
+X-Google-Smtp-Source: AGHT+IHEgiEKx2DuVgu3if1os90uQ4eqjODKvqmTGEmBS9VBl38IsG15cbk6E/uyy9DNQIKIegA2Cw==
+X-Received: by 2002:a17:90a:d196:b0:2d3:c5f1:d0d9 with SMTP id
+ 98e67ed59e1d1-2d8561db9ffmr5637201a91.25.1724997403542; 
+ Thu, 29 Aug 2024 22:56:43 -0700 (PDT)
+Received: from debug.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d844624dc7sm5321530a91.30.2024.08.29.22.56.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Aug 2024 22:56:43 -0700 (PDT)
+Date: Thu, 29 Aug 2024 22:56:41 -0700
+From: Deepak Gupta <debug@rivosinc.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
+ Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ jim.shu@sifive.com, andy.chiu@sifive.com, kito.cheng@sifive.com
+Subject: Re: [PATCH v12 11/20] target/riscv: introduce ssp and enabling
+ controls for zicfiss
+Message-ID: <ZtFfGR94f5EwIl90@debug.ba.rivosinc.com>
+References: <20240829233425.1005029-1-debug@rivosinc.com>
+ <20240829233425.1005029-12-debug@rivosinc.com>
+ <abc033ff-7638-4d2d-b2d7-65b3c88311e8@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAFEAcA9c1pAE7gttju5ib470ZhEMjd1=UMjLuhS+gXohnLs=Xw@mail.gmail.com>
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
- <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
- <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
- <172467410002.31767.12365606864399178508@t14-nrb.local>
- <172483282308.162301.11735420619446380771@t14-nrb.local>
- <CAFEAcA9c1pAE7gttju5ib470ZhEMjd1=UMjLuhS+gXohnLs=Xw@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw,
- cpu to three-phase reset, and followup cleanup
-From: Nico Boehr <nrb@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Mueller <mimu@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 30 Aug 2024 07:48:13 +0200
-Message-ID: <172499689329.6066.495009881329074086@t14-nrb.local>
-User-Agent: alot/0.10
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ItnJDqY_X1ed3DBFPpFSAgKcTrlVm1dR
-X-Proofpoint-ORIG-GUID: tVamUr6nPMVsZe7qO2QHeL2Ga3DXI9YG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-30_02,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0 mlxscore=0
- malwarescore=0 mlxlogscore=999 spamscore=0 priorityscore=1501 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408300039
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=nrb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <abc033ff-7638-4d2d-b2d7-65b3c88311e8@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=debug@rivosinc.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,69 +100,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Quoting Peter Maydell (2024-08-29 17:53:02)
-> On Wed, 28 Aug 2024 at 09:13, Nico Boehr <nrb@linux.ibm.com> wrote:
-> >
-> > Quoting Nico Boehr (2024-08-26 14:08:20)
-> > > There was a little hickup without the fixup to patch 2, but after Nina
-> > > pushed the fixup, we did not observe any failures related to your
-> > > changes in our CI. Thanks!
-> >
-> > Peter, after a few CI runs, we unfortunately did find some issues with =
-your
-> > patch :-(
-> >
-> > Rebooting a guest in a loop sometimes fails. Michael was able to bisect=
- it
-> > to your series.
-> >
-> > The problem is intermittent. The guest is unable to load its initramfs:
-> >
-> >   [    0.560674] rootfs image is not initramfs (no cpio magic); looks l=
-ike an initrd
-> >   [    0.588605] Freeing initrd memory: 95680K
-> >   [    0.593143] md: Waiting for all devices to be available before aut=
-odetect
-> >   [    0.593144] md: If you don't use raid, use raid=3Dnoautodetect
-> >   [    0.593145] md: Autodetecting RAID arrays.
-> >   [    0.593146] md: autorun ...
-> >   [    0.593147] md: ... autorun DONE.
-> >   [    0.593156] RAMDISK: gzip image found at block 0
-> >   [    0.609110] RAMDISK: incomplete write (29120 !=3D 32768)
-> >   [    0.609113] write error
-> >
-> > ...and then a panic because the kernel doesn't find a rootfs.
->=20
-> I repro'd *something*, but it wasn't quite this. I got:
->=20
->=20
-> [    4.691853] clk: Disabling unused clocks
-> [    4.695419] Freeing unused kernel image (initmem) memory: 6520K
-> [    4.695430] Write protected read-only-after-init data: 144k
-> [    4.695834] Checked W+X mappings: passed, no unexpected W+X pages found
-> [    4.695849] Run /init as init process
-> /init: error while loading shared libraries: libgcc_s.so.1: cannot
-> open shared object file: No such file or directory
-> [    4.697009] Kernel panic - not syncing: Attempted to kill init!
-> exitcode=3D0x00007f00
-> [    4.697030] CPU: 0 PID: 1 Comm: init Not tainted 6.8.5-301.fc40.s390x =
-#1
-> [    4.697035] Hardware name: IBM 8561 LT1 400 (KVM/Linux)
-> [    4.697040] Call Trace:
-> [    4.697047]  [<000000007ab6ae36>] dump_stack_lvl+0x66/0x88
-> [    4.697081]  [<0000000079e17c2a>] panic+0x312/0x328
-> [    4.697096]  [<0000000079e1de84>] do_exit+0x8a4/0xae8
-> [    4.697101]  [<0000000079e1e2e0>] do_group_exit+0x40/0xb8
-> [    4.697103]  [<0000000079e1e386>] __s390x_sys_exit_group+0x2e/0x30
-> [    4.697105]  [<000000007ab9526a>] __do_syscall+0x252/0x2c0
-> [    4.697113]  [<000000007aba8840>] system_call+0x70/0x98
->=20
-> Which I guess could be caused by a different corruption
-> of the initramfs ?
+On Fri, Aug 30, 2024 at 03:20:04PM +1000, Richard Henderson wrote:
+>On 8/30/24 09:34, Deepak Gupta wrote:
+>>+bool cpu_get_bcfien(CPURISCVState *env)
+>
+>It occurs to me that a better name would be "cpu_get_sspen".
+>The backward cfi is merely a consequence of the shadow stack.
 
-I think that is the problem, just a different symptom. I also got this
-sometimes (in random libraries all over the place).
+Want me to change cpu_get_fcfien as well to cpu_get_lpen ?
 
-And yes, agree, it is a corruption of the initramfs:
-[    1.597465] Initramfs unpacking failed: XZ-compressed data is corrupt
+>
+>>+{
+>>+    /* no cfi extension, return false */
+>>+    if (!env_archcpu(env)->cfg.ext_zicfiss) {
+>>+        return false;
+>>+    }
+>>+
+>>+    switch (env->priv) {
+>>+    case PRV_U:
+>>+        if (riscv_has_ext(env, RVS)) {
+>>+            return env->senvcfg & SENVCFG_SSE;
+>>+        }
+>>+        return env->menvcfg & MENVCFG_SSE;
+>>+#ifndef CONFIG_USER_ONLY
+>>+    case PRV_S:
+>>+        if (env->virt_enabled) {
+>>+            return env->henvcfg & HENVCFG_SSE;
+>>+        }
+>>+        return env->menvcfg & MENVCFG_SSE;
+>>+    case PRV_M: /* M-mode shadow stack is always on if hart implements */
+>>+        return true;
+>
+>From the manual:
+>
+>Activating Zicfiss in M-mode is currently not supported. Additionally, when S-mode is not
+>implemented, activation in U-mode is also not supported.
+
+Hmm. This is a good catch.
+It seems I was using an earlier spec and missed this. Or atleast
+I didn't bother to check assuming that spec didn't change.
+Thanks for catching it and pointing it out.
+
+I'll fix the M-mode case by return false.
+
+For case of,
+If S-mode is not implemented then activation in U-mode is also not supported. I am thinking of
+making this check during extensions validation (in case user turned zicfiss=true).
+Below options:
+
+Option 1
+In `riscv_cpu_validate_set_extensions`, check for S and if S is not implemented then error out
+saying that zicfiss can't be turned on.
+
+OR
+
+Option 2
+In `riscv_cpu_validate_set_extensions`, check for S and if S is not implemented then silently
+clear `ext_zicfiss` in cpu config.
+
+I think option 1 is better.
+
+>
+>So two of the cases above are wrong.
+>
+>
+>r~
 
