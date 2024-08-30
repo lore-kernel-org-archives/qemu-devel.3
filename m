@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 399E7CA0FF1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C928CA0FF5
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:43:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk1sz-000463-ME; Fri, 30 Aug 2024 09:41:57 -0400
+	id 1sk1rG-0000Ot-3x; Fri, 30 Aug 2024 09:40:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1so-0003Dc-My
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1rC-0000JF-NY
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:40:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1sl-0005em-Hu
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1rA-0005QS-DN
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:40:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725025302;
+ s=mimecast20190719; t=1725025203;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AiCpW9mlrliMsd0sml8PvZbAgZSRZheKGz2GIntE/hc=;
- b=CpHjW1nOSUyg54HAzlWVfxQ4/mH2rGvAewWeza0UH2SMsNefmNe4UwmQuJRBDD9/270hGr
- 34AnDN4RHtdTMyLFOawmJAXGpaZxBsrfRTrHoMxvkvs82C+k0C2Ev0ppIVYgqmKy1w9+tD
- F11IEB4QfiYL5oQLUiQ2eFiAGe3FMUE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dJbQZJGwqu7BKGegMKr2BErsIPZVL+r3Bfkwsv4GRx8=;
+ b=GzHtzrsn1vyuX5SG23Xk2GVoqu8jePd5JVpM5mXPKbf4f0pSOGB7i5+V3++zFyxB7/sgNL
+ AkbVeK9hdB+HgXTc4qOD4enY8HKwgXd6z3WkhMcRQ2h4McGn6YOBAEefZXzNQBfz+a7MMo
+ 10JwNBn+jCgGVcNuyclTiIDN6wRn3K0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-3W5w2x5jNKWJQ4ynAB7ctg-1; Fri,
- 30 Aug 2024 09:41:37 -0400
-X-MC-Unique: 3W5w2x5jNKWJQ4ynAB7ctg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-Phv6HJwLNLuNO2Fk1YwucQ-1; Fri,
+ 30 Aug 2024 09:40:02 -0400
+X-MC-Unique: Phv6HJwLNLuNO2Fk1YwucQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 34DD31955BF7; Fri, 30 Aug 2024 13:41:36 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 832741955D4A; Fri, 30 Aug 2024 13:40:01 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BA8503001FE8; Fri, 30 Aug 2024 13:41:32 +0000 (UTC)
+ id 848C83001FC3; Fri, 30 Aug 2024 13:39:56 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -52,24 +52,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v5 38/44] tests/functional: Convert ARM bFLT linux-user
- avocado test
-Date: Fri, 30 Aug 2024 15:38:32 +0200
-Message-ID: <20240830133841.142644-39-thuth@redhat.com>
+Subject: [PATCH v5 15/44] tests/functional: enable pre-emptive caching of
+ assets
+Date: Fri, 30 Aug 2024 15:38:09 +0200
+Message-ID: <20240830133841.142644-16-thuth@redhat.com>
 In-Reply-To: <20240830133841.142644-1-thuth@redhat.com>
 References: <20240830133841.142644-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -88,174 +88,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Straight forward conversion. Update the SHA1 hashes to
-SHA256 hashes since SHA1 should not be used anymore nowadays.
-Expose cpio_extract() in qemu_test.utils for possible reuse.
+Many tests need to access assets stored on remote sites. We don't want
+to download these during test execution when run by meson, since this
+risks hitting test timeouts when data transfers are slow.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240822104238.75045-3-philmd@linaro.org>
-[thuth: Add test to meson.build]
+Add support for pre-emptive caching of assets by setting the env var
+QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
+instead of running the test, the assets will be downloaded and saved
+to the cache, then the timestamp file created.
+
+A meson custom target is created as a dependency of each test suite
+to trigger the pre-emptive caching logic before the test runs.
+
+When run in caching mode, it will locate assets by looking for class
+level variables with a name prefix "ASSET_", and type "Asset".
+
+At the ninja level
+
+   ninja test --suite functional
+
+will speculatively download any assets that are not already cached,
+so it is advisable to set a timeout multiplier.
+
+   QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
+
+will fail the test if a required asset is not already cached
+
+   ninja precache-functional
+
+will download and cache all assets required by the functional
+tests
+
+At the make level, precaching is always done by
+
+   make check-functional
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Tested-by: Richard Henderson <richard.henderson@linaro.org>
+[thuth: Remove the duplicated "path = os.path.basename(...)" line]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/load_bflt.py          | 54 -----------------------------
- tests/functional/meson.build        |  4 +++
- tests/functional/qemu_test/utils.py |  9 +++++
- tests/functional/test_arm_bflt.py   | 44 +++++++++++++++++++++++
- 4 files changed, 57 insertions(+), 54 deletions(-)
- delete mode 100644 tests/avocado/load_bflt.py
- create mode 100755 tests/functional/test_arm_bflt.py
+ tests/Makefile.include                 |  3 ++-
+ tests/functional/meson.build           | 33 +++++++++++++++++++++++--
+ tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
+ tests/functional/qemu_test/testcase.py |  7 ++++++
+ 4 files changed, 74 insertions(+), 3 deletions(-)
 
-diff --git a/tests/avocado/load_bflt.py b/tests/avocado/load_bflt.py
-deleted file mode 100644
-index bb50cec1ee..0000000000
---- a/tests/avocado/load_bflt.py
-+++ /dev/null
-@@ -1,54 +0,0 @@
--# Test the bFLT loader format
--#
--# Copyright (C) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
--#
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--import os
--import bz2
--import subprocess
--
--from avocado import skipUnless
--from avocado_qemu import QemuUserTest
--from avocado_qemu import has_cmd
--
--
--class LoadBFLT(QemuUserTest):
--
--    def extract_cpio(self, cpio_path):
--        """
--        Extracts a cpio archive into the test workdir
--
--        :param cpio_path: path to the cpio archive
--        """
--        cwd = os.getcwd()
--        os.chdir(self.workdir)
--        with bz2.open(cpio_path, 'rb') as archive_cpio:
--            subprocess.run(['cpio', '-i'], input=archive_cpio.read(),
--                           stderr=subprocess.DEVNULL)
--        os.chdir(cwd)
--
--    @skipUnless(*has_cmd('cpio'))
--    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
--    def test_stm32(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=linux_user
--        :avocado: tags=quick
--        """
--        # See https://elinux.org/STM32#User_Space
--        rootfs_url = ('https://elinux.org/images/5/51/'
--                      'Stm32_mini_rootfs.cpio.bz2')
--        rootfs_hash = '9f065e6ba40cce7411ba757f924f30fcc57951e6'
--        rootfs_path_bz2 = self.fetch_asset(rootfs_url, asset_hash=rootfs_hash)
--        busybox_path = os.path.join(self.workdir, "/bin/busybox")
--
--        self.extract_cpio(rootfs_path_bz2)
--
--        res = self.run(busybox_path)
--        ver = 'BusyBox v1.24.0.git (2015-02-03 22:17:13 CET) multi-call binary.'
--        self.assertIn(ver, res.stdout_text)
--
--        res = self.run(busybox_path, ['uname', '-a'])
--        unm = 'armv7l GNU/Linux'
--        self.assertIn(unm, res.stdout_text)
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 66c8cc3123..010369bd3a 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -161,7 +161,8 @@ $(FUNCTIONAL_TARGETS):
+ 
+ .PHONY: check-functional
+ check-functional:
+-	@$(MAKE) SPEED=thorough check-func check-func-quick
++	@$(NINJA) precache-functional
++	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
+ 
+ # Consolidated targets
+ 
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index dcede9733e..6b00d240dd 100644
+index f1f344f860..df79775df3 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -45,6 +45,10 @@ tests_arm_system_thorough = [
-   'arm_n8x0',
+@@ -39,6 +39,7 @@ tests_x86_64_system_quick = [
+ tests_x86_64_system_thorough = [
  ]
  
-+tests_arm_linuxuser_thorough = [
-+  'arm_bflt',
-+]
++precache_all = []
+ foreach speed : ['quick', 'thorough']
+   foreach dir : target_dirs
+ 
+@@ -78,11 +79,35 @@ foreach speed : ['quick', 'thorough']
+                                meson.current_source_dir())
+ 
+     foreach test : target_tests
+-      test('func-@0@/@1@'.format(target_base, test),
++      testname = '@0@-@1@'.format(target_base, test)
++      testfile = 'test_' + test + '.py'
++      testpath = meson.current_source_dir() / testfile
++      teststamp = testname + '.tstamp'
++      test_precache_env = environment()
++      test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
++      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
++                                          meson.current_source_dir())
++      precache = custom_target('func-precache-' + testname,
++                               output: teststamp,
++                               command: [python, testpath],
++                               depend_files: files(testpath),
++                               build_by_default: false,
++                               env: test_precache_env)
++      precache_all += precache
 +
- tests_avr_system_thorough = [
-   'avr_mega2560',
- ]
-diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index 99eae5fc45..2a1cb60d38 100644
---- a/tests/functional/qemu_test/utils.py
-+++ b/tests/functional/qemu_test/utils.py
-@@ -12,6 +12,7 @@
- import lzma
++      # Ideally we would add 'precache' to 'depends' here, such that
++      # 'build_by_default: false' lets the pre-caching automatically
++      # run immediately before the test runs. In practice this is
++      # broken in meson, with it running the pre-caching in the normal
++      # compile phase https://github.com/mesonbuild/meson/issues/2518
++      # If the above bug ever gets fixed, when QEMU changes the min
++      # meson version, add the 'depends' and remove the custom
++      # 'run_target' logic below & in Makefile.include
++      test('func-' + testname,
+            python,
+            depends: [test_deps, test_emulator, emulator_modules],
+            env: test_env,
+-           args: [meson.current_source_dir() / 'test_' + test + '.py'],
++           args: [testpath],
+            protocol: 'tap',
+            timeout: test_timeouts.get(test, 60),
+            priority: test_timeouts.get(test, 60),
+@@ -90,3 +115,7 @@ foreach speed : ['quick', 'thorough']
+     endforeach
+   endforeach
+ endforeach
++
++run_target('precache-functional',
++           depends: precache_all,
++           command: ['true'])
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index c0e675d847..b329ab7dbe 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -9,6 +9,8 @@
+ import logging
  import os
- import shutil
-+import subprocess
- import tarfile
+ import subprocess
++import sys
++import unittest
+ import urllib.request
+ from pathlib import Path
+ from shutil import copyfileobj
+@@ -62,6 +64,9 @@ def fetch(self):
+                            self.cache_file, self.url)
+             return str(self.cache_file)
  
- def archive_extract(archive, dest_dir, member=None):
-@@ -45,3 +46,11 @@ def lzma_uncompress(xz_path, output_path):
-         except:
-             os.remove(output_path)
-             raise
++        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
++            raise Exception("Asset cache is invalid and downloads disabled")
 +
-+def cpio_extract(cpio_handle, output_path):
-+    cwd = os.getcwd()
-+    os.chdir(output_path)
-+    subprocess.run(['cpio', '-i'],
-+                   input=cpio_handle.read(),
-+                   stderr=subprocess.DEVNULL)
-+    os.chdir(cwd)
-diff --git a/tests/functional/test_arm_bflt.py b/tests/functional/test_arm_bflt.py
-new file mode 100755
-index 0000000000..281925d11a
---- /dev/null
-+++ b/tests/functional/test_arm_bflt.py
-@@ -0,0 +1,44 @@
-+#!/usr/bin/env python3
-+#
-+# Test the bFLT loader format
-+#
-+# Copyright (C) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+         self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+         tmp_cache_file = self.cache_file.with_suffix(".download")
+ 
+@@ -95,3 +100,32 @@ def fetch(self):
+ 
+         self.log.info("Cached %s at %s" % (self.url, self.cache_file))
+         return str(self.cache_file)
 +
-+import os
-+import bz2
++    def precache_test(test):
++        log = logging.getLogger('qemu-test')
++        log.setLevel(logging.DEBUG)
++        handler = logging.StreamHandler(sys.stdout)
++        handler.setLevel(logging.DEBUG)
++        formatter = logging.Formatter(
++            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
++        handler.setFormatter(formatter)
++        log.addHandler(handler)
++        for name, asset in vars(test.__class__).items():
++            if name.startswith("ASSET_") and type(asset) == Asset:
++                log.info("Attempting to cache '%s'" % asset)
++                asset.fetch()
++        log.removeHandler(handler)
 +
-+from qemu_test import QemuUserTest, Asset
-+from qemu_test import has_cmd
-+from qemu_test.utils import cpio_extract
-+from unittest import skipUnless
++    def precache_suite(suite):
++        for test in suite:
++            if isinstance(test, unittest.TestSuite):
++                Asset.precache_suite(test)
++            elif isinstance(test, unittest.TestCase):
++                Asset.precache_test(test)
 +
++    def precache_suites(path, cacheTstamp):
++        loader = unittest.loader.defaultTestLoader
++        tests = loader.loadTestsFromNames([path], None)
 +
-+class LoadBFLT(QemuUserTest):
++        with open(cacheTstamp, "w") as fh:
++            Asset.precache_suite(tests)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index b2dd863c6e..18314be9d1 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -21,6 +21,7 @@
+ from qemu.machine import QEMUMachine
+ from qemu.utils import kvm_available, tcg_available
+ 
++from .asset import Asset
+ from .cmd import run_cmd
+ from .config import BUILD_DIR
+ 
+@@ -58,6 +59,12 @@ def tearDown(self):
+ 
+     def main():
+         path = os.path.basename(sys.argv[0])[:-3]
 +
-+    ASSET_ROOTFS = Asset(
-+        ('https://elinux.org/images/5/51/Stm32_mini_rootfs.cpio.bz2'),
-+         'eefb788e4980c9e8d6c9d60ce7d15d4da6bf4fbc6a80f487673824600d5ba9cc')
++        cache = os.environ.get("QEMU_TEST_PRECACHE", None)
++        if cache is not None:
++            Asset.precache_suites(path, cache)
++            return
 +
-+    @skipUnless(*has_cmd('cpio'))
-+    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-+    def test_stm32(self):
-+        # See https://elinux.org/STM32#User_Space
-+        rootfs_path_bz2 = self.ASSET_ROOTFS.fetch()
-+        busybox_path = os.path.join(self.workdir, "bin/busybox")
-+
-+        with bz2.open(rootfs_path_bz2, 'rb') as cpio_handle:
-+            cpio_extract(cpio_handle, self.workdir)
-+
-+        res = self.run_cmd(busybox_path)
-+        ver = 'BusyBox v1.24.0.git (2015-02-03 22:17:13 CET) multi-call binary.'
-+        self.assertIn(ver, res.stdout)
-+
-+        res = self.run_cmd(busybox_path, ['uname', '-a'])
-+        unm = 'armv7l GNU/Linux'
-+        self.assertIn(unm, res.stdout)
-+
-+
-+if __name__ == '__main__':
-+    QemuUserTest.main()
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
+         unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
 -- 
 2.46.0
 
