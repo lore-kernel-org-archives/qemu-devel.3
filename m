@@ -4,81 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 961AECA1005
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 15:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C783CA1009
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 16:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk3jj-0007CN-EE; Fri, 30 Aug 2024 11:40:31 -0400
+	id 1sk4Ll-0002Hu-83; Fri, 30 Aug 2024 12:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sk3jh-0007Bs-UB
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 11:40:29 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sk3jf-0000gs-N2
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 11:40:29 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-58ef19aa69dso1843093a12.3
- for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 08:40:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725032426; x=1725637226; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3dtWBVBnvRzXmNnNzQnWmL83+wdr3RB3HRnVZEGFSZY=;
- b=TcsTX84QeJdeuK1zHaiyXnP5j7S7NQfwbkzGAvaH3uly1gGW21GGgwhG+Im+RCncRp
- 9WzieDn3jjv7jgLqqZeeo5l51F6UNzWA3SXdzll7HEVCoRSfg3krvcLpIyVkbY2bxUio
- MWSuwRlLs/mVYoJJA3Fv8VQ9UFffCb4wFO2BiGGJ3RhL/TJ5kCaCZ3Jw9NVSYFIIPBTh
- +p70hvtnM9+A/KfbkRww++Lvr7VoKTr3CMEcGPfAMtEKaz5zVHmGxy7CCaGvXA96BP/a
- c29pyoe9n7djV9gydYjrC5pmtFqugpkGy4TU1QI/s9LX+d7up8+VvWFB69YiWTzXD5Ns
- BRiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725032426; x=1725637226;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3dtWBVBnvRzXmNnNzQnWmL83+wdr3RB3HRnVZEGFSZY=;
- b=IjRvlkhxNzKQMStvkb5OuUfWY2CFsgwOIQTIr6xHCQbErNa4c+fA4H8iWG9sHXLSxM
- 8GkI+LDMmzf9pQ43oFFkMzFtsKRs0wuOfrJv5ym/kO5X8KAWy4m7WuW4Iu9Sms3eKjts
- 7zvvm/LUgTA83Cvqzl1vINkW7Utd6rEptSWxjiPCuXgFfTdDSTPfgD1LBKX7Poh9XAk0
- bJmsdhJ450HiiVq8KahnPtg7U2Kxu6DdzXRVX6A/ZXDrHi6XgUHXfh7J+eg6koeDN86E
- wZXaRqkdgsKajoZfbYwuxnHA5sKDooPLUWZoiSCAm4SLmG009LiMHaxTYFu0+YFb4jBC
- HjAw==
-X-Gm-Message-State: AOJu0YyODtMQVlAlx2QxAM5KvrbJlI8sUVCf40tQNyMuw/qEXqliO19n
- 0crG2H6MJsThejHzBzqOksxbxZZUKH3HPg5BrJbif9Qc5oJDeK3fIpF6iV/x
-X-Google-Smtp-Source: AGHT+IEiJwbwWNY04n8hqw1xkzCXrOIJ3b0QBS1OI4zT561StpIzLDnQVCuccf4W7RRcmRJUDm02Kg==
-X-Received: by 2002:a17:907:97c8:b0:a71:ddb8:9394 with SMTP id
- a640c23a62f3a-a89b95694c8mr5824666b.40.1725032425317; 
- Fri, 30 Aug 2024 08:40:25 -0700 (PDT)
-Received: from top.fritz.box (p4fd6b0d7.dip0.t-ipconnect.de. [79.214.176.215])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a89891964d8sm227525766b.129.2024.08.30.08.40.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Aug 2024 08:40:25 -0700 (PDT)
-From: Michael Vogt <michael.vogt@gmail.com>
-X-Google-Original-From: Michael Vogt <mvogt@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Michael Vogt <mvogt@redhat.com>
-Subject: [PATCH v3 1/1] linux-user: add openat2 support in linux-user
-Date: Fri, 30 Aug 2024 17:39:45 +0200
-Message-ID: <20240830153943.5337-4-mvogt@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240830153943.5337-2-mvogt@redhat.com>
-References: <20240830153943.5337-2-mvogt@redhat.com>
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1sk4Li-0002H0-Sf; Fri, 30 Aug 2024 12:19:46 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1sk4Lf-0004Ij-K7; Fri, 30 Aug 2024 12:19:46 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WwNXs5tz8z6K783;
+ Sat, 31 Aug 2024 00:15:25 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0561114038F;
+ Sat, 31 Aug 2024 00:19:34 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.47.73.222) by
+ lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 30 Aug 2024 17:19:33 +0100
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <linuxarm@huawei.com>, <peter.maydell@linaro.org>,
+ <richard.henderson@linaro.org>, <shameerali.kolothum.thodi@huawei.com>,
+ <Jonathan.Cameron@Huawei.com>, <jiangkunkun@huawei.com>
+Subject: [PATCH] target/arm/tcg: refine cache descriptions with a wrapper
+Date: Fri, 30 Aug 2024 17:19:32 +0100
+Message-ID: <20240830161932.44-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=michael.vogt@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.47.73.222]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500006.china.huawei.com (7.191.161.198)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,230 +63,286 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds support for the `openat2()` syscall in the
-`linux-user` userspace emulator.
+Add wrapper for different types of CPUs available in tcg to decribe
+caches. Two functions `make_ccsidr32` and `make_ccsidr64`
+describing descriptions. The 32 bit version receives extra parameters
+that became unknown later in 64 bit.
 
-It is implemented by extracting a new helper `maybe_do_fake_open()`
-out of the exiting `do_guest_openat()` and share that with the
-new `do_guest_openat2()`. Unfortunatly we cannot just make
-do_guest_openat2() a superset of do_guest_openat() because the
-openat2() syscall is stricter with the argument checking and
-will return an error for invalid flags or mode combinations (which
-open()/openat() will ignore).
+For CCSIDR register, 32 bit version follows specification [1].
+Conversely, 64 bit version follows specification [2].
 
-The implementation is similar to SYSCALL_DEFINE(openat2), i.e.
-a new `copy_struct_from_user()` is usef that works the same
-as the kernels version to support backwards-compatibility
-for struct syscall argument.
+[1] B4.1.19, ARM Architecture Reference Manual ARMv7-A and ARMv7-R
+edition, https://developer.arm.com/documentation/ddi0406
+[2] D23.2.29, ARM Architecture Reference Manual for A-profile Architecture,
+https://developer.arm.com/documentation/ddi0487/latest/
 
-Instead of including openat2.h we create a copy of `open_how`
-as `open_how_ver0` to ensure that if the structure grows we
-can log a LOG_UNIMP warning.
-
-Note that in this commit using openat2() for a "faked" file in
-/proc will ignore the "resolve" flags. This is not great but it
-seems similar to the exiting behavior when openat() is called
-with a dirfd to "/proc". Here too the fake file lookup may
-not catch the special file because "realpath()" is used to
-determine if the path is in /proc. Alternatively to ignoring
-we could simply fail with `-TARGET_ENOSYS` (or similar) if
-`resolve` flags are passed and we found something that looks
-like a file in /proc that needs faking.
-
-Signed-off-by: Michael Vogt <mvogt@redhat.com>
-Buglink: https://github.com/osbuild/bootc-image-builder/issues/619
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 ---
- linux-user/syscall.c      | 116 ++++++++++++++++++++++++++++++++++++--
- linux-user/syscall_defs.h |   7 +++
- 2 files changed, 119 insertions(+), 4 deletions(-)
+ target/arm/cpu-features.h | 53 ++++++++++++++++++++++++
+ target/arm/cpu64.c        | 19 ++++++---
+ target/arm/tcg/cpu64.c    | 86 ++++++++++++++++++---------------------
+ 3 files changed, 105 insertions(+), 53 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 9d5415674d..83c944508b 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -602,6 +602,34 @@ static int check_zeroed_user(abi_long addr, size_t ksize, size_t usize)
-     return 1;
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index c59ca104fe..00a0f0d963 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1022,6 +1022,59 @@ static inline bool isar_feature_any_evt(const ARMISARegisters *id)
+     return isar_feature_aa64_evt(id) || isar_feature_aa32_evt(id);
  }
  
-+/*
-+ * Copies a target struct to a host struct, in a way that guarantees
-+ * backwards-compatibility for struct syscall arguments.
-+ *
-+ * Similar to kernels uaccess.h:copy_struct_from_user()
-+ */
-+static int
-+copy_struct_from_user(void *dst, size_t ksize, abi_ptr src, size_t usize)
++static inline uint64_t make_ccsidr32(unsigned assoc, unsigned linesize,
++                                     unsigned cachesize, uint8_t flags)
 +{
-+    size_t size = MIN(ksize, usize);
-+    size_t rest = MAX(ksize, usize) - size;
-+
-+    /* Deal with trailing bytes. */
-+    if (usize < ksize) {
-+        memset(dst + size, 0, rest);
-+    } else if (usize > ksize) {
-+        int ret = check_zeroed_user(src, ksize, usize);
-+        if (ret <= 0) {
-+            return ret ?: -TARGET_E2BIG;
-+        }
-+    }
-+    /* Copy the interoperable parts of the struct. */
-+    if (copy_from_user(dst, src, size)) {
-+        return -TARGET_EFAULT;
-+    }
-+    return 0;
-+}
-+
- #define safe_syscall0(type, name) \
- static type safe_##name(void) \
- { \
-@@ -653,6 +681,15 @@ safe_syscall3(ssize_t, read, int, fd, void *, buff, size_t, count)
- safe_syscall3(ssize_t, write, int, fd, const void *, buff, size_t, count)
- safe_syscall4(int, openat, int, dirfd, const char *, pathname, \
-               int, flags, mode_t, mode)
-+
-+struct open_how_ver0 {
-+    __u64 flags;
-+    __u64 mode;
-+    __u64 resolve;
-+};
-+safe_syscall4(int, openat2, int, dirfd, const char *, pathname, \
-+              const struct open_how_ver0 *, how, size_t, size)
-+
- #if defined(TARGET_NR_wait4) || defined(TARGET_NR_waitpid)
- safe_syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, \
-               struct rusage *, rusage)
-@@ -8334,8 +8371,9 @@ static int open_net_route(CPUArchState *cpu_env, int fd)
- }
- #endif
- 
--int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
--                    int flags, mode_t mode, bool safe)
-+static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
-+                              const char *fname, int flags, mode_t mode,
-+                              bool safe, bool *use_returned_fd)
- {
-     g_autofree char *proc_name = NULL;
-     const char *pathname;
-@@ -8362,6 +8400,7 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
- #endif
-         { NULL, NULL, NULL }
-     };
-+    *use_returned_fd = true;
- 
-     /* if this is a file from /proc/ filesystem, expand full name */
-     proc_name = realpath(fname, NULL);
-@@ -8418,13 +8457,77 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
-         return fd;
-     }
- 
-+    *use_returned_fd = false;
-+    return -1;
-+}
-+
-+int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
-+                    int flags, mode_t mode, bool safe)
-+{
-+    bool use_returned_fd;
-+    int fd = maybe_do_fake_open(cpu_env, dirfd, fname, flags, mode, safe,
-+                                &use_returned_fd);
-+    if (use_returned_fd) {
-+        return fd;
-+    }
-+
-     if (safe) {
--        return safe_openat(dirfd, path(pathname), flags, mode);
-+        return safe_openat(dirfd, path(fname), flags, mode);
-     } else {
--        return openat(dirfd, path(pathname), flags, mode);
-+        return openat(dirfd, path(fname), flags, mode);
-     }
- }
- 
-+
-+static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
-+                      abi_ptr guest_pathname, abi_ptr guest_open_how,
-+                      abi_long guest_size)
-+{
-+    struct open_how_ver0 how = {0};
-+    int ret;
-+
-+    if (guest_size < sizeof(struct target_open_how_ver0)) {
-+        return -TARGET_EINVAL;
-+    }
-+    ret = copy_struct_from_user(&how, sizeof(how), guest_open_how, guest_size);
-+    if (ret) {
-+        if (ret == -TARGET_E2BIG) {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "Unimplemented openat2 open_how size: %lu\n",
-+                          guest_size);
-+        }
-+        return ret;
-+    }
-+    char *pathname = lock_user_string(guest_pathname);
-+    if (!pathname) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    how.flags = target_to_host_bitmask(how.flags, fcntl_flags_tbl);
-+    how.mode = tswap64(how.mode);
-+    how.resolve = tswap64(how.resolve);
++    unsigned lg_linesize = ctz32(linesize);
++    unsigned sets;
 +
 +    /*
-+     * Ideally we would pass "how->resolve" flags into this helper too but
-+     * the lookup for files that need faking is based on "realpath()" so
-+     * neither a dirfd for "proc" nor restrictions via "resolve" flags can
-+     * be honored right now.
++     * The 32-bit CCSIDR_EL1 format is:
++     *   [27:13] number of sets - 1
++     *   [12:3]  associativity - 1
++     *   [2:0]   log2(linesize) - 4
++     *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
 +     */
-+    bool use_returned_fd;
-+    int fd = maybe_do_fake_open(cpu_env, dirfd, pathname, how.flags, how.mode,
-+                                true, &use_returned_fd);
-+    if (use_returned_fd) {
-+        return fd;
-+    } else {
-+        ret = get_errno(safe_openat2(dirfd, pathname, &how,
-+                                     sizeof(struct open_how_ver0)));
-+    }
++    assert(assoc != 0);
++    assert(is_power_of_2(linesize));
++    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
 +
-+    fd_trans_unregister(ret);
-+    unlock_user(pathname, guest_pathname, 0);
-+    return ret;
++    /* sets * associativity * linesize == cachesize. */
++    sets = cachesize / (assoc * linesize);
++    assert(cachesize % (assoc * linesize) == 0);
++
++    return ((uint64_t)(flags) << 28)
++        | ((sets - 1) << 13)
++        | ((assoc - 1) << 3)
++        | (lg_linesize - 4);
 +}
 +
- ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
- {
-     ssize_t ret;
-@@ -9197,6 +9300,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         fd_trans_unregister(ret);
-         unlock_user(p, arg2, 0);
-         return ret;
-+#if defined(TARGET_NR_openat2)
-+    case TARGET_NR_openat2:
-+        ret = do_openat2(cpu_env, arg1, arg2, arg3, arg4);
-+        return ret;
-+#endif
- #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
-     case TARGET_NR_name_to_handle_at:
-         ret = do_name_to_handle_at(arg1, arg2, arg3, arg4, arg5);
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index a00b617cae..74abcb4613 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2754,4 +2754,11 @@ struct target_sched_param {
-     abi_int sched_priority;
- };
- 
-+/* from kernel's include/uapi/linux/openat2.h */
-+struct target_open_how_ver0 {
-+    abi_ullong flags;
-+    abi_ullong mode;
-+    abi_ullong resolve;
-+};
++static inline uint64_t make_ccsidr64(unsigned assoc, unsigned linesize,
++                              unsigned cachesize)
++{
++    unsigned lg_linesize = ctz32(linesize);
++    unsigned sets;
 +
- #endif
++    /*
++     * The 64-bit CCSIDR_EL1 format is:
++     *   [55:32] number of sets - 1
++     *   [23:3]  associativity - 1
++     *   [2:0]   log2(linesize) - 4
++     *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
++     */
++    assert(assoc != 0);
++    assert(is_power_of_2(linesize));
++    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
++
++    /* sets * associativity * linesize == cachesize. */
++    sets = cachesize / (assoc * linesize);
++    assert(cachesize % (assoc * linesize) == 0);
++
++    return ((uint64_t)(sets - 1) << 32)
++         | ((assoc - 1) << 3)
++         | (lg_linesize - 4);
++}
++
+ /*
+  * Forward to the above feature tests given an ARMCPU pointer.
+  */
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 262a1d6c0b..57ebc1b979 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -23,6 +23,7 @@
+ #include "cpu.h"
+ #include "cpregs.h"
+ #include "qemu/module.h"
++#include "qemu/units.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/hvf.h"
+ #include "sysemu/qtest.h"
+@@ -642,9 +643,12 @@ static void aarch64_a57_initfn(Object *obj)
+     cpu->isar.dbgdevid1 = 0x2;
+     cpu->isar.reset_pmcr_el0 = 0x41013000;
+     cpu->clidr = 0x0a200023;
+-    cpu->ccsidr[0] = 0x701fe00a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe012; /* 48KB L1 icache */
+-    cpu->ccsidr[2] = 0x70ffe07a; /* 2048KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 32 * KiB, 7);
++    /* 48KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr32(3, 64, 48 * KiB, 2);
++    /* 2048KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr32(16, 64, 2 * MiB, 7);
+     cpu->dcz_blocksize = 4; /* 64 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+@@ -700,9 +704,12 @@ static void aarch64_a53_initfn(Object *obj)
+     cpu->isar.dbgdevid1 = 0x1;
+     cpu->isar.reset_pmcr_el0 = 0x41033000;
+     cpu->clidr = 0x0a200023;
+-    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe00a; /* 32KB L1 icache */
+-    cpu->ccsidr[2] = 0x707fe07a; /* 1024KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 32 * KiB, 7);
++    /* 32KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr32(1, 64, 32 * KiB, 2);
++    /* 1024KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr32(16, 64, 1 * MiB, 7);
+     cpu->dcz_blocksize = 4; /* 64 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index fe232eb306..85d8b1a5b4 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -29,32 +29,6 @@
+ #include "cpu-features.h"
+ #include "cpregs.h"
+ 
+-static uint64_t make_ccsidr64(unsigned assoc, unsigned linesize,
+-                              unsigned cachesize)
+-{
+-    unsigned lg_linesize = ctz32(linesize);
+-    unsigned sets;
+-
+-    /*
+-     * The 64-bit CCSIDR_EL1 format is:
+-     *   [55:32] number of sets - 1
+-     *   [23:3]  associativity - 1
+-     *   [2:0]   log2(linesize) - 4
+-     *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
+-     */
+-    assert(assoc != 0);
+-    assert(is_power_of_2(linesize));
+-    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
+-
+-    /* sets * associativity * linesize == cachesize. */
+-    sets = cachesize / (assoc * linesize);
+-    assert(cachesize % (assoc * linesize) == 0);
+-
+-    return ((uint64_t)(sets - 1) << 32)
+-         | ((assoc - 1) << 3)
+-         | (lg_linesize - 4);
+-}
+-
+ static void aarch64_a35_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -106,9 +80,12 @@ static void aarch64_a35_initfn(Object *obj)
+     cpu->isar.reset_pmcr_el0 = 0x410a3000;
+ 
+     /* From B2.29 Cache ID registers */
+-    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe00a; /* 32KB L1 icache */
+-    cpu->ccsidr[2] = 0x703fe03a; /* 512KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 32 * KiB, 7);
++    /* 32KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr32(4, 64, 32 * KiB, 2);
++    /* 512KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr32(16, 64, 512 * KiB, 7);
+ 
+     /* From B3.5 VGIC Type register */
+     cpu->gic_num_lrs = 4;
+@@ -272,9 +249,12 @@ static void aarch64_a55_initfn(Object *obj)
+     cpu->revidr = 0;
+ 
+     /* From B2.23 CCSIDR_EL1 */
+-    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x200fe01a; /* 32KB L1 icache */
+-    cpu->ccsidr[2] = 0x703fe07a; /* 512KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 32 * KiB, 7);
++    /* 32KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr32(4, 64, 32 * KiB, 2);
++    /* 512KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr32(16, 64, 512 * KiB, 7);
+ 
+     /* From B2.96 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -338,9 +318,12 @@ static void aarch64_a72_initfn(Object *obj)
+     cpu->isar.dbgdevid1 = 0x2;
+     cpu->isar.reset_pmcr_el0 = 0x41023000;
+     cpu->clidr = 0x0a200023;
+-    cpu->ccsidr[0] = 0x701fe00a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe012; /* 48KB L1 icache */
+-    cpu->ccsidr[2] = 0x707fe07a; /* 1MB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 32 * KiB, 7);
++    /* 48KB L1 dcache */
++    cpu->ccsidr[1] = make_ccsidr32(3, 64, 48 * KiB, 2);
++    /* 1MB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr32(16, 64, 1 * MiB, 7);
+     cpu->dcz_blocksize = 4; /* 64 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+@@ -397,9 +380,12 @@ static void aarch64_a76_initfn(Object *obj)
+     cpu->revidr = 0;
+ 
+     /* From B2.18 CCSIDR_EL1 */
+-    cpu->ccsidr[0] = 0x701fe01a; /* 64KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe01a; /* 64KB L1 icache */
+-    cpu->ccsidr[2] = 0x707fe03a; /* 512KB L2 cache */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 64 * KiB, 7);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr32(4, 64, 64 * KiB, 2);
++    /* 512KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr32(8, 64, 512 * KiB, 7);
+ 
+     /* From B2.93 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -449,9 +435,12 @@ static void aarch64_a64fx_initfn(Object *obj)
+     cpu->isar.id_aa64isar1 = 0x0000000000010001;
+     cpu->isar.id_aa64zfr0 = 0x0000000000000000;
+     cpu->clidr = 0x0000000080000023;
+-    cpu->ccsidr[0] = 0x7007e01c; /* 64KB L1 dcache */
+-    cpu->ccsidr[1] = 0x2007e01c; /* 64KB L1 icache */
+-    cpu->ccsidr[2] = 0x70ffe07c; /* 8MB L2 cache */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 256, 64 * KiB, 7);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr32(4, 256, 64 * KiB, 2);
++    /* 8MB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr32(16, 256, 8 * MiB, 7);
+     cpu->dcz_blocksize = 6; /* 256 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+@@ -637,9 +626,12 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     cpu->revidr = 0;
+ 
+     /* From B2.23 CCSIDR_EL1 */
+-    cpu->ccsidr[0] = 0x701fe01a; /* 64KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe01a; /* 64KB L1 icache */
+-    cpu->ccsidr[2] = 0x70ffe03a; /* 1MB L2 cache */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr32(4, 64, 64 * KiB, 7);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr32(4, 64, 64 * KiB, 2);
++    /* 1MB L2 dcache */
++    cpu->ccsidr[2] = make_ccsidr32(8, 64, 1 * MiB, 7);
+ 
+     /* From B2.98 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -721,9 +713,9 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+      * L2: 8-way set associative, 64 byte line size, either 512K or 1MB.
+      * L3: No L3 (this matches the CLIDR_EL1 value).
+      */
+-    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB); /* L1 dcache */
+-    cpu->ccsidr[1] = cpu->ccsidr[0];                 /* L1 icache */
+-    cpu->ccsidr[2] = make_ccsidr64(8, 64, 1 * MiB);  /* L2 cache */
++    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB); /* 64KB L1 dcache */
++    cpu->ccsidr[1] = cpu->ccsidr[0];                 /* 64KB L1 icache */
++    cpu->ccsidr[2] = make_ccsidr64(8, 64, 1 * MiB);  /* 1MB L2 cache */
+ 
+     /* From 3.2.115 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
 -- 
-2.45.2
+2.34.1
 
 
