@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481A2CA0EEA
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 07:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8316ACA0EEC
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 08:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjwHp-0003tl-Jj; Fri, 30 Aug 2024 03:43:13 -0400
+	id 1sjwdL-00021R-V1; Fri, 30 Aug 2024 04:05:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjwHn-0003sf-9w
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 03:43:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sjwHl-00055k-7r
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 03:43:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725003788;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mTVOCFReQ6gJIn9Jq1FWbCKGFU1FOvZoDCRk6jMa65A=;
- b=KtbMC1MiydGpkolIi3iFYirMYHYYfn+JeTCejcJsn0tG18yErQ6p6HFUk4RAxBv5ikMXru
- 1NKrsQMx+fABI1IVcjTrli9JAkIfnmm3ilCC6YTnQgm5553xKAcMhuwHSaYkWeslk1fDgY
- Dy8fJ1ix3Rg0fw+k969XSOx4G+na3pE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-51wYV1y6NLKqnBaLhKP9oQ-1; Fri,
- 30 Aug 2024 03:43:03 -0400
-X-MC-Unique: 51wYV1y6NLKqnBaLhKP9oQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A38501955D42; Fri, 30 Aug 2024 07:43:01 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.49])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6DD91956048; Fri, 30 Aug 2024 07:42:58 +0000 (UTC)
-Date: Fri, 30 Aug 2024 08:42:55 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v4 15/35] tests/functional: enable pre-emptive caching of
- assets
-Message-ID: <ZtF366lfxm1gNR_Z@redhat.com>
-References: <20240821082748.65853-1-thuth@redhat.com>
- <20240821082748.65853-16-thuth@redhat.com>
- <3a435391-f485-4223-93aa-b937a141db16@linaro.org>
- <2e2c6480-8a43-4606-b500-2e60bf583d00@redhat.com>
- <f126030e-faf9-429e-957d-db503f7e5e33@redhat.com>
- <ZtBKR205LUm9qvgu@redhat.com>
- <c6d6f31d-d507-437f-9f7e-7857ed415fea@redhat.com>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sjwdL-00020Y-8s; Fri, 30 Aug 2024 04:05:27 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sjwdJ-0001Rg-Cg; Fri, 30 Aug 2024 04:05:27 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5353cd2fa28so1939943e87.3; 
+ Fri, 30 Aug 2024 01:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1725005123; x=1725609923; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=MC7aFzaY1FZaEi2O4l4eCXSkJoXGvCzyVJYM3mZE2S0=;
+ b=It8HHJHLWH5jW1F1LCnbfkyXuSNDWGx/Vf8g/sVHgaKN3+gNEuqvR5eq/GIkdnOXo5
+ 91mTxIme/FeDzBEKkc+4yrovyyGkSeFbn64fLUmETzaWX5zmIcE8AZhvcDuEsxvfhpYn
+ zCk06r40v/3MJuTfCG5Tg2H+++yzWs329QoTJm4WwU4PDXJHZGS35DROGgSQV76ubqjI
+ urxpkorCOWk/rKMmQhS3zqoTlblWPjbvfui3JEd218ialQxi0AEQoEDpMWggExc5Zrlb
+ 4CdsNs2KZo5KHP2Zs0U3V8SKsU7qtEviVC38CycvvFhw21+EWxk9WTh8GRxqpwL8eZGx
+ 2zpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725005123; x=1725609923;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MC7aFzaY1FZaEi2O4l4eCXSkJoXGvCzyVJYM3mZE2S0=;
+ b=jjhJj0h2qMZ9Wrb9ss1aLkMnhHzfNogSiNhQmtwH3gbJ+cUAUZ+Chzavgn4dGOZ4Ag
+ 3gzNwlvQNefaybdRzTPujdR0uwfcIlrI6rCqrjCp0Qs2HCenaGx9BZipx69TflRZEyJg
+ pT+DScfHVORJ9ys5lYr9X2XxjxDnyS3Q6IspbMpAhTiDwzSWrKP56Y6ak9oe1jIdHTS4
+ n2UzaCilsm6+9QGybAP6wOFudNrVJm8IuoaJQAgjmeIyd9rsthY/WQlT2DyRrMauztTL
+ oo7z/MMMYhQVseClzpwRU4LimXXwkxtae/UgJusUFoGDDoqw18EHwYoQqLIbLArPDUUC
+ d+Jw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVk2Ii/+VPs1oxekI13BbJgV0xrrhOLD8zd5UD8AybLGsvvh/p+b40wJExJhfSfH83dlwAprqDzq2ARBw==@nongnu.org,
+ AJvYcCXissrGKWJbUSOlSnwpPf6RdGVgfiuqwmYvG2ski0RZLB+6E3PzMKwIFMjsvFh3WdAxtzz/1kEqlA==@nongnu.org
+X-Gm-Message-State: AOJu0Yx6wYmvEruYtzbRy0idY/Dnn4Y6uYFd6pj7gE5CyKK2yw+BhuED
+ cmVG3xErokE1ZeraR8aZ0w/KA6pTVmR7hK1jqXEba3TynnWnv1rZ
+X-Google-Smtp-Source: AGHT+IHw90eSNuHVIV7FmKSoQVDshPPnIysG/chwVnt/h0rUnsSVy4wE8Uruh/8WwcyJGN77KmU/wg==
+X-Received: by 2002:a05:6512:3b0b:b0:530:aa82:a50a with SMTP id
+ 2adb3069b0e04-53546ba0471mr890486e87.45.1725005122066; 
+ Fri, 30 Aug 2024 01:05:22 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-535408412a0sm479985e87.192.2024.08.30.01.05.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 Aug 2024 01:05:20 -0700 (PDT)
+Date: Fri, 30 Aug 2024 10:05:19 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Alistair Francis <alistair@alistair23.me>
+Subject: Re: [PATCH] hw/arm/xilinx_zynq: Enable Security Extensions
+Message-ID: <ZtF9P_QtnH1nAYuu@zapote>
+References: <20240828005019.57705-1-sebastian.huber@embedded-brains.de>
+ <CAFEAcA-p+CBeKTgH-YXzrATKDpwG5iY+A3WGaVkbEeHCXxTzug@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c6d6f31d-d507-437f-9f7e-7857ed415fea@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <CAFEAcA-p+CBeKTgH-YXzrATKDpwG5iY+A3WGaVkbEeHCXxTzug@mail.gmail.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,120 +93,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 30, 2024 at 09:38:17AM +0200, Thomas Huth wrote:
-> On 29/08/2024 12.15, Daniel P. Berrangé wrote:
-> > On Tue, Aug 27, 2024 at 04:24:59PM +0200, Thomas Huth wrote:
-> > > On 27/08/2024 15.16, Thomas Huth wrote:
-> > > > On 23/08/2024 09.28, Philippe Mathieu-Daudé wrote:
-> > > > > Hi,
-> > > > > 
-> > > > > On 21/8/24 10:27, Thomas Huth wrote:
-> > > > > > From: Daniel P. Berrangé <berrange@redhat.com>
-> > > > > > 
-> > > > > > Many tests need to access assets stored on remote sites. We don't want
-> > > > > > to download these during test execution when run by meson, since this
-> > > > > > risks hitting test timeouts when data transfers are slow.
-> > > > > > 
-> > > > > > Add support for pre-emptive caching of assets by setting the env var
-> > > > > > QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
-> > > > > > instead of running the test, the assets will be downloaded and saved
-> > > > > > to the cache, then the timestamp file created.
-> ...
-> > > > > 
-> > > > > When using multiple jobs (-jN) I'm observing some hangs,
-> > > > > apparently multiple threads trying to download the same file.
-> > > > > The files are eventually downloaded successfully but it takes
-> > > > > longer. Should we acquire some exclusive lock somewhere?
-> > > > 
-> > > > I haven't seen that yet ... what did you exactly run? "make
-> > > > check-functional -jN" ? Or "make check-functional-<target> -jN" ?
-> > > 
-> > > After applying some of your patches, I think I've run now into this problem,
-> > > too: It's because test_aarch64_sbsaref.py and test_aarch64_virt.py try to
-> > > download the same asset in parallel (alpine-standard-3.17.2-aarch64.iso).
-> > > 
-> > > Daniel, any ideas how to fix this in the Asset code?
-> > 
-> > So when downloading we open a file with a ".download" suffix, write to
-> > that, and then rename it to the final filename.
-> > 
-> > If we have concurrent usage, both will open the same file and try to
-> > write to it. Assuming both are downloading the same content we would
-> > probably "get lucky" and have a consistent file at the end, but clearly
-> > it is bad to rely on luck.
-> > 
-> > The lame option is to use NamedTemporaryFile for the teporary file.
-> > This ensures both processes will write to different temp files, and
-> > the final rename is atomic. This guarantees safety, but still has
-> > the double download penalty.
-> > 
-> > The serious option is to use fcntl.lockf(..., fcntl.LOCK_EX) on the
-> > temp file. If we can't acquire the lock then just immediately close
-> > the temp file (don't delete it) and assume another thread is going to
-> > finish its download.
-> > 
-> > On windows  we'll need msvcrt.locking(..., msvcrt.LK_WLCK, ...)
-> > instead of fcntl.
+On Thu, Aug 29, 2024 at 01:50:02PM +0100, Peter Maydell wrote:
+> On Wed, 28 Aug 2024 at 01:51, Sebastian Huber
+> <sebastian.huber@embedded-brains.de> wrote:
+> >
+> > The system supports the Security Extensions (core and GIC).  This change is
+> > necessary to run tests which pass on the real hardware.
+> >
+> > Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
 > 
-> While looking for portable solutions, I noticed that newer versions
-> of Python have a "x" mode for creating files only if they do not
-> exist yet. So I think something like this could be a solution:
+> (Added the maintainers to cc.)
 > 
-> @@ -71,17 +72,26 @@ def fetch(self):
->          tmp_cache_file = self.cache_file.with_suffix(".download")
->          try:
-> -            resp = urllib.request.urlopen(self.url)
-> +            with tmp_cache_file.open("xb") as dst:
-> +                with urllib.request.urlopen(self.url) as resp:
-> +                    copyfileobj(resp, dst)
-> +        except FileExistsError:
-> +            # Another thread already seems to download this asset,
-> +            # so wait until it is done
-> +            self.log.debug("%s already exists, waiting for other thread to finish...",
-> +                           tmp_cache_file)
-> +            i = 0
-> +            while i < 600 and os.path.exists(tmp_cache_file):
-> +                sleep(1)
-> +                i += 1
-> +            if os.path.exists(self.cache_file):
-> +                return str(self.cache_file)
-> +            raise
->          except Exception as e:
->              self.log.error("Unable to download %s: %s", self.url, e)
-> -            raise
-> -
-> -        try:
-> -            with tmp_cache_file.open("wb+") as dst:
-> -                copyfileobj(resp, dst)
-> -        except:
->              tmp_cache_file.unlink()
->              raise
-> +
->          try:
->              # Set these just for informational purposes
->              os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+> Does the system have any secure-only devices, RAM, etc?
+
+Yes, on real HW there are but I don't think we've modelled any of it yet.
+There's TZ both on the SoC and also ability to create FPGA logic that
+can issue secure/non-secure transactions. Here's an overview:
+https://docs.amd.com/v/u/en-US/ug1019-zynq-trustzone
+
+The primary use-case for the upstream Zynq-7000 QEMU models has historically
+been to run the Open Source SW stack from Linux (some times from u-boot)
+and up. It's important that we don't break that.
+
+So as long as we add additional support without breaking direct Linux
+boots, I think it's OK to incrementally enable missing pieces even
+if there's not yet coherent support for firmware boot.
+
+In this case, IIUC, when doing direct Linux boot, TYPE_ARM_LINUX_BOOT_IF
+will take care of the GIC setup for us.
+
 > 
-> What do you think, does it look reasonable?
+> How much testing have you done with this change? (The main
+> reason we disabled has-el3 on this board back in 2014 was
+> as a backwards-compatibility thing when we added EL3 support
+> to the CPU model -- we didn't have a ton of images for the
+> board so we erred on the safe side of not changing the
+> behaviour to avoid potentially breaking existing guest code.)
 
-The main risk with this, as opposed to fcntl locking, is that it is not
-crash-safe. If a download is interrupted, subsequent cache runs will
-wait for a process that doesn't exist to finish downloading and then
-raise an exception, requiring manual user cleanup of the partial
-download.
 
-Perhaps if we see the tmp_cache_file, and it doesn't change in size
-after N seconds, we could force unlink it, and create a new download,
-so we gracefully recover ?
+I tried this patch on a couple of my images and it works fine for me!
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Tested-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
+
+
+> 
+> > ---
+> >  hw/arm/xilinx_zynq.c | 8 --------
+> >  1 file changed, 8 deletions(-)
+> >
+> > diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+> > index 3c56b9abe1..37c234f5ab 100644
+> > --- a/hw/arm/xilinx_zynq.c
+> > +++ b/hw/arm/xilinx_zynq.c
+> > @@ -219,14 +219,6 @@ static void zynq_init(MachineState *machine)
+> >      for (n = 0; n < smp_cpus; n++) {
+> >          Object *cpuobj = object_new(machine->cpu_type);
+> >
+> > -        /*
+> > -         * By default A9 CPUs have EL3 enabled.  This board does not currently
+> > -         * support EL3 so the CPU EL3 property is disabled before realization.
+> > -         */
+> > -        if (object_property_find(cpuobj, "has_el3")) {
+> > -            object_property_set_bool(cpuobj, "has_el3", false, &error_fatal);
+> > -        }
+> > -
+> >          object_property_set_int(cpuobj, "midr", ZYNQ_BOARD_MIDR,
+> >                                  &error_fatal);
+> >          object_property_set_int(cpuobj, "reset-cbar", MPCORE_PERIPHBASE,
+> 
+> thanks
+> -- PMM
 
