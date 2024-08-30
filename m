@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C088CA0EE1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 06:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08776CA0EE5
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 06:23:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjv1Q-0003V0-AH; Fri, 30 Aug 2024 02:22:12 -0400
+	id 1sjv1y-00069N-2S; Fri, 30 Aug 2024 02:22:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sjv1O-0003Lb-KD; Fri, 30 Aug 2024 02:22:10 -0400
-Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
+ id 1sjv1w-00063q-Lk; Fri, 30 Aug 2024 02:22:44 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sjv1M-0005bi-1N; Fri, 30 Aug 2024 02:22:10 -0400
+ id 1sjv1s-0005gI-Md; Fri, 30 Aug 2024 02:22:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1724998922; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=BHCqwJw5aRewUdGWcWDnnl2zsOtJz7NeqgbD35JXVug=;
- b=PYix7eiRzY5qM/VDA9Weu85mXvEFtV2HqfrNDAG8URpIcDkV5hT8NuORSY8yEqn5UsKwoSyD6B1X1fxHrlas0nKVfLD8n41nvcZoU29jYNw9neMs1adisJZkKNu3Y4ClF9CwN2W1nrBK6DLDTWfF5rWHdqxEl60ojKEflxDdCTY=
+ t=1724998953; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=/zsFQC12bhfJKf5nzHbKeJO0WCXHnFNVHyGdYjhRr1c=;
+ b=BD8iHMJKBUD1Q0gqyrCFvCqdSqnrqZUZTgdli26dQb+z3iYMwfH6z916XM6EmjHUE8sWKVtEL8wtxXy+3hN9aaf9fOw6oK3WyaxDqcdYwqcBKsU0/Gk/lpwNGYahApjwFOobstEaRnpnIr5zcfNgo+ipiY/5EeIaatEa4aWW1bI=
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WDvk4GJ_1724998921) by smtp.aliyun-inc.com;
- Fri, 30 Aug 2024 14:22:01 +0800
+ fp:SMTPD_---0WDvk4aq_1724998952) by smtp.aliyun-inc.com;
+ Fri, 30 Aug 2024 14:22:33 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  zhiwei_liu@linux.alibaba.com, richard.henderson@linaro.org,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Subject: [PATCH v2 10/14] tcg/riscv: Implement vector sat/mul ops
-Date: Fri, 30 Aug 2024 14:16:03 +0800
-Message-Id: <20240830061607.1940-11-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v2 11/14] tcg/riscv: Implement vector min/max ops
+Date: Fri, 30 Aug 2024 14:16:04 +0800
+Message-Id: <20240830061607.1940-12-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
 References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.97;
+Received-SPF: pass client-ip=115.124.30.133;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-97.freemail.mail.aliyun.com
+ helo=out30-133.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -72,93 +72,84 @@ From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- tcg/riscv/tcg-target.c.inc | 36 ++++++++++++++++++++++++++++++++++++
- tcg/riscv/tcg-target.h     |  4 ++--
- 2 files changed, 38 insertions(+), 2 deletions(-)
+ tcg/riscv/tcg-target.c.inc | 29 +++++++++++++++++++++++++++++
+ tcg/riscv/tcg-target.h     |  2 +-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index 4fc82481a7..01d03a9208 100644
+index 01d03a9208..7de2da3571 100644
 --- a/tcg/riscv/tcg-target.c.inc
 +++ b/tcg/riscv/tcg-target.c.inc
-@@ -323,6 +323,12 @@ typedef enum {
-     OPC_VXOR_VI = 0x2c000057 | V_OPIVI,
+@@ -329,6 +329,11 @@ typedef enum {
+     OPC_VSADDU_VV = 0x80000057 | V_OPIVV,
+     OPC_VSSUBU_VV = 0x88000057 | V_OPIVV,
  
-     OPC_VRSUB_VI = 0xc000057 | V_OPIVI,
-+    OPC_VMUL_VV = 0x94000057 | V_OPMVV,
-+    OPC_VSADD_VV = 0x84000057 | V_OPIVV,
-+    OPC_VSSUB_VV = 0x8c000057 | V_OPIVV,
-+    OPC_VSADDU_VV = 0x80000057 | V_OPIVV,
-+    OPC_VSSUBU_VV = 0x88000057 | V_OPIVV,
++    OPC_VMAX_VV = 0x1c000057 | V_OPIVV,
++    OPC_VMAXU_VV = 0x18000057 | V_OPIVV,
++    OPC_VMIN_VV = 0x14000057 | V_OPIVV,
++    OPC_VMINU_VV = 0x10000057 | V_OPIVV,
 +
      OPC_VMSEQ_VV = 0x60000057 | V_OPIVV,
      OPC_VMSEQ_VI = 0x60000057 | V_OPIVI,
      OPC_VMSEQ_VX = 0x60000057 | V_OPIVX,
-@@ -2399,6 +2405,26 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+@@ -2425,6 +2430,22 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
          riscv_set_vec_config_vl_vece(s, type, vece);
-         tcg_out_opc_vi(s, OPC_VRSUB_VI, a0, a1, 0, true);
+         tcg_out_opc_vv(s, OPC_VSSUBU_VV, a0, a1, a2, true);
          break;
-+    case INDEX_op_mul_vec:
++    case INDEX_op_smax_vec:
 +        riscv_set_vec_config_vl_vece(s, type, vece);
-+        tcg_out_opc_vv(s, OPC_VMUL_VV, a0, a1, a2, true);
++        tcg_out_opc_vv(s, OPC_VMAX_VV, a0, a1, a2, true);
 +        break;
-+    case INDEX_op_ssadd_vec:
++    case INDEX_op_smin_vec:
 +        riscv_set_vec_config_vl_vece(s, type, vece);
-+        tcg_out_opc_vv(s, OPC_VSADD_VV, a0, a1, a2, true);
++        tcg_out_opc_vv(s, OPC_VMIN_VV, a0, a1, a2, true);
 +        break;
-+    case INDEX_op_sssub_vec:
++    case INDEX_op_umax_vec:
 +        riscv_set_vec_config_vl_vece(s, type, vece);
-+        tcg_out_opc_vv(s, OPC_VSSUB_VV, a0, a1, a2, true);
++        tcg_out_opc_vv(s, OPC_VMAXU_VV, a0, a1, a2, true);
 +        break;
-+    case INDEX_op_usadd_vec:
++    case INDEX_op_umin_vec:
 +        riscv_set_vec_config_vl_vece(s, type, vece);
-+        tcg_out_opc_vv(s, OPC_VSADDU_VV, a0, a1, a2, true);
-+        break;
-+    case INDEX_op_ussub_vec:
-+        riscv_set_vec_config_vl_vece(s, type, vece);
-+        tcg_out_opc_vv(s, OPC_VSSUBU_VV, a0, a1, a2, true);
++        tcg_out_opc_vv(s, OPC_VMINU_VV, a0, a1, a2, true);
 +        break;
      case INDEX_op_rvv_cmp_vx:
          riscv_set_vec_config_vl_vece(s, type, vece);
          tcg_out_cmp_vec_vx(s, a2, a0, a1);
-@@ -2527,6 +2553,11 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
-     case INDEX_op_xor_vec:
-     case INDEX_op_not_vec:
-     case INDEX_op_neg_vec:
-+    case INDEX_op_mul_vec:
-+    case INDEX_op_ssadd_vec:
-+    case INDEX_op_sssub_vec:
-+    case INDEX_op_usadd_vec:
-+    case INDEX_op_ussub_vec:
+@@ -2558,6 +2579,10 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+     case INDEX_op_sssub_vec:
+     case INDEX_op_usadd_vec:
+     case INDEX_op_ussub_vec:
++    case INDEX_op_smax_vec:
++    case INDEX_op_smin_vec:
++    case INDEX_op_umax_vec:
++    case INDEX_op_umin_vec:
          return 1;
      case INDEX_op_cmp_vec:
          return -1;
-@@ -2688,6 +2719,11 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
-     case INDEX_op_and_vec:
-     case INDEX_op_or_vec:
-     case INDEX_op_xor_vec:
-+    case INDEX_op_mul_vec:
-+    case INDEX_op_ssadd_vec:
-+    case INDEX_op_sssub_vec:
-+    case INDEX_op_usadd_vec:
-+    case INDEX_op_ussub_vec:
+@@ -2724,6 +2749,10 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
+     case INDEX_op_sssub_vec:
+     case INDEX_op_usadd_vec:
+     case INDEX_op_ussub_vec:
++    case INDEX_op_smax_vec:
++    case INDEX_op_smin_vec:
++    case INDEX_op_umax_vec:
++    case INDEX_op_umin_vec:
          return C_O1_I2(v, v, v);
      case INDEX_op_rvv_merge_vec:
          return C_O1_I2(v, v, vK);
 diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
-index 401696d639..21251f8b23 100644
+index 21251f8b23..35e7086ad7 100644
 --- a/tcg/riscv/tcg-target.h
 +++ b/tcg/riscv/tcg-target.h
-@@ -160,8 +160,8 @@ typedef enum {
- #define TCG_TARGET_HAS_shi_vec          0
- #define TCG_TARGET_HAS_shs_vec          0
+@@ -162,7 +162,7 @@ typedef enum {
  #define TCG_TARGET_HAS_shv_vec          0
--#define TCG_TARGET_HAS_mul_vec          0
--#define TCG_TARGET_HAS_sat_vec          0
-+#define TCG_TARGET_HAS_mul_vec          1
-+#define TCG_TARGET_HAS_sat_vec          1
- #define TCG_TARGET_HAS_minmax_vec       0
+ #define TCG_TARGET_HAS_mul_vec          1
+ #define TCG_TARGET_HAS_sat_vec          1
+-#define TCG_TARGET_HAS_minmax_vec       0
++#define TCG_TARGET_HAS_minmax_vec       1
  #define TCG_TARGET_HAS_bitsel_vec       0
  #define TCG_TARGET_HAS_cmpsel_vec       0
+ 
 -- 
 2.43.0
 
