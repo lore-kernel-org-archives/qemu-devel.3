@@ -4,59 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03058CA0EFC
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 09:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4FCCA0EFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 10:02:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjyJO-0005Qt-Rj; Fri, 30 Aug 2024 05:52:58 -0400
+	id 1sjySC-0002ZY-Kr; Fri, 30 Aug 2024 06:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sjyJH-0005Nf-Tl; Fri, 30 Aug 2024 05:52:52 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sjyJE-00060r-Rb; Fri, 30 Aug 2024 05:52:51 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WwCz8038Hz6K5q9;
- Fri, 30 Aug 2024 17:49:08 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id A1083140736;
- Fri, 30 Aug 2024 17:52:31 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 30 Aug
- 2024 10:52:31 +0100
-Date: Fri, 30 Aug 2024 10:52:30 +0100
-To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-CC: <quic_llindhol@quicinc.com>, <peter.maydell@linaro.org>,
- <marcin.juszkiewicz@linaro.org>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <chenbaozi@phytium.com.cn>, <wangyinfeng@phytium.com.cn>,
- <shuyiqi@phytium.com.cn>
-Subject: Re: [RFC PATCH 1/2] hw/arm/sbsa-ref: Enable CXL Host Bridge by pxb-cxl
-Message-ID: <20240830105230.00002043@Huawei.com>
-In-Reply-To: <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>
-References: <20240830041557.600607-1-wangyuquan1236@phytium.com.cn>
- <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjySB-0002XO-7u
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 06:02:03 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sjyS9-00074G-BS
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 06:02:02 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2f50966c448so18015191fa.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 03:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725012119; x=1725616919; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=agH1A5OLMu1tGcVDGtShfo7up6OwjPkWQS6ZoDf+6Ig=;
+ b=oaNbel3JEdx2SYbRxm7Kg6sVmxFJD6WT0BB+2ma+yysAVaPjDsHBB2VirSJtPrTOX2
+ b3cpJruaEvXsvm4iuEqZPq3Sjho2FJgStidY1dEJwaOkJDzkNQfiejR4cDHNh0ODZyJO
+ ZVj4cvmS7UQpfW2Zk5z17e06da0zzRGQPrNXCzyf5x/p+FVDKBH/R2XCTOBquxKfG9ls
+ lvyphtJAoEP9jne3oou5eZcK7etgWB35BeBl5JueTHrTZOvxC7It3r6C3f2cCjkKM4gO
+ VbNwGSBxbnTQVqduDkv157iy51A/AdEUabwB0vNFa/24w5yzhl5SSpwyruYCW2Y2ZkRB
+ seyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725012119; x=1725616919;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=agH1A5OLMu1tGcVDGtShfo7up6OwjPkWQS6ZoDf+6Ig=;
+ b=U/YolZ0fKUNUMuEzPPrQWkE9A3gwFbiLE+Kf6EMaWOiomzHcDGUQIkLc/vm8dYrRCM
+ yn1Bq5Wa6OWcXM5T/eTIXhuMets5G1cWCTuXVzsJcAXRHEP3v2tyWL8358sHkAaPLSv/
+ Z75SR/PP/9B/nCUp0aJIAX6imvORX1fbq8T42+UF8cB8XG2i2sPM8gbVNs835wA7qyKN
+ YNbYErwZUTF1iBs1cU0cBIMxCWnk/we58iQTxCwHzhWjFp4uw68yB2QPl7+gNZfZk7M0
+ lXGYCYUTbGHNcDk5ir4WgWsKDPSppeFZZTJVIRi/yrRB3nSa4Oj1OHsmdNRuJmiAEX6G
+ GSGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXx1lSARizX5tUwmfOOgePBxiTHQ1s6Zs4W2yfgT88hYbW18boqipTZ8jMzlA05Or2KgnEnjZd6meO3@nongnu.org
+X-Gm-Message-State: AOJu0YxRPSMyIg8b8yAT7drDYBKOFVJMLLHjuCkCFL8dDsprRauHhT+U
+ raRCdbyr5uUI/RP19ppzf366a3ya3gVfLCwLA06h50TVHxDFk6tKhxJk79sJltavwNzBuSsnWsk
+ TPIo4gkv2gXjuD2NcsL1vO9aNukccHA9/jg3vpA==
+X-Google-Smtp-Source: AGHT+IHDSPBO5uwrwl9b6t8LbrQL+2pIM07EPjHU4CeuMCic6380Stc6oTc55LoCD4IaT/yscbWPdIGt2Dp5M6+Y5mM=
+X-Received: by 2002:a05:651c:1506:b0:2ef:2c62:f058 with SMTP id
+ 38308e7fff4ca-2f6104f32b9mr42821311fa.39.1725012118579; Fri, 30 Aug 2024
+ 03:01:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
+ <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
+ <8050216dbbdd0762347d8e14f17d030ff8874283.camel@linux.ibm.com>
+ <172467410002.31767.12365606864399178508@t14-nrb.local>
+ <172483282308.162301.11735420619446380771@t14-nrb.local>
+ <CAFEAcA9c1pAE7gttju5ib470ZhEMjd1=UMjLuhS+gXohnLs=Xw@mail.gmail.com>
+ <172499689329.6066.495009881329074086@t14-nrb.local>
+In-Reply-To: <172499689329.6066.495009881329074086@t14-nrb.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 30 Aug 2024 11:01:47 +0100
+Message-ID: <CAFEAcA8nTAPi9wr5h_V_GZkVV9f-YDV19mi9yybry0wxMyh6Eg@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw, cpu to
+ three-phase reset, and followup cleanup
+To: Nico Boehr <nrb@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Michael Mueller <mimu@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,204 +102,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 30 Aug 2024 12:15:56 +0800
-Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+On Fri, 30 Aug 2024 at 06:48, Nico Boehr <nrb@linux.ibm.com> wrote:
+>
+> Quoting Peter Maydell (2024-08-29 17:53:02)
+> > I repro'd *something*, but it wasn't quite this. I got:
+> >
+> >
+> > [    4.691853] clk: Disabling unused clocks
+> > [    4.695419] Freeing unused kernel image (initmem) memory: 6520K
+> > [    4.695430] Write protected read-only-after-init data: 144k
+> > [    4.695834] Checked W+X mappings: passed, no unexpected W+X pages found
+> > [    4.695849] Run /init as init process
+> > /init: error while loading shared libraries: libgcc_s.so.1: cannot
+> > open shared object file: No such file or directory
+> > [    4.697009] Kernel panic - not syncing: Attempted to kill init!
+> > exitcode=0x00007f00
+> > [    4.697030] CPU: 0 PID: 1 Comm: init Not tainted 6.8.5-301.fc40.s390x #1
+> > [    4.697035] Hardware name: IBM 8561 LT1 400 (KVM/Linux)
+> > [    4.697040] Call Trace:
+> > [    4.697047]  [<000000007ab6ae36>] dump_stack_lvl+0x66/0x88
+> > [    4.697081]  [<0000000079e17c2a>] panic+0x312/0x328
+> > [    4.697096]  [<0000000079e1de84>] do_exit+0x8a4/0xae8
+> > [    4.697101]  [<0000000079e1e2e0>] do_group_exit+0x40/0xb8
+> > [    4.697103]  [<0000000079e1e386>] __s390x_sys_exit_group+0x2e/0x30
+> > [    4.697105]  [<000000007ab9526a>] __do_syscall+0x252/0x2c0
+> > [    4.697113]  [<000000007aba8840>] system_call+0x70/0x98
+> >
+> > Which I guess could be caused by a different corruption
+> > of the initramfs ?
+>
+> I think that is the problem, just a different symptom. I also got this
+> sometimes (in random libraries all over the place).
 
-> The memory layout places 1M space for 16 host bridge register regions
-> in the sbsa-ref memmap. In addition, this creates a default pxb-cxl
-> (bus_nr=3D0xfe) bridge with one cxl-rp on sbsa-ref.
+I ran overnight with none of the patchset applied, and it never
+failed (as expected). Running with just the first virtio-ccw
+patch does fall over fairly quickly. So something's up with
+that patch, which is curious because that's the one I thought
+was a straightforward conversion without any complications :-)
 
-If you are only supporting 1 host bridge you could reduce the space to just
-fit that?
+I'll investigate further today, I have the beginnings of a
+theory about what might be happening...
 
-=46rom the command line example and code here it seems the pxb instances are =
-hard
-coded so you don't need to support the flexibility I needed for virt.
-
-Otherwise, just superficial code comments inline.
-Fixed setups are definitely easier to support :)
-
-Jonathan
-
-
->=20
-> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-> ---
->  hw/arm/sbsa-ref.c | 54 ++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 51 insertions(+), 3 deletions(-)
->=20
-> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> index ae37a92301..dc924d181e 100644
-> --- a/hw/arm/sbsa-ref.c
-> +++ b/hw/arm/sbsa-ref.c
-> @@ -41,7 +41,10 @@
->  #include "hw/intc/arm_gicv3_common.h"
->  #include "hw/intc/arm_gicv3_its_common.h"
->  #include "hw/loader.h"
-> +#include "hw/pci/pci_bridge.h"
-> +#include "hw/pci/pci_bus.h"
->  #include "hw/pci-host/gpex.h"
-> +#include "hw/pci-bridge/pci_expander_bridge.h"
->  #include "hw/qdev-properties.h"
->  #include "hw/usb.h"
->  #include "hw/usb/xhci.h"
-> @@ -52,6 +55,8 @@
->  #include "qom/object.h"
->  #include "target/arm/cpu-qom.h"
->  #include "target/arm/gtimer.h"
-> +#include "hw/cxl/cxl.h"
-> +#include "hw/cxl/cxl_host.h"
-
-Headers look to be alphabetical order.
-
-> =20
->  #define RAMLIMIT_GB 8192
->  #define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
-> @@ -94,6 +99,7 @@ enum {
->      SBSA_SECURE_MEM,
->      SBSA_AHCI,
->      SBSA_XHCI,
-> +    SBSA_CXL_HOST,
->  };
-> =20
->  struct SBSAMachineState {
-> @@ -105,6 +111,9 @@ struct SBSAMachineState {
->      int psci_conduit;
->      DeviceState *gic;
->      PFlashCFI01 *flash[2];
-> +    CXLState cxl_devices_state;
-> +    PCIBus *bus;
-
-Lot of buses in a system, I'd call the pcibus
-or similar. However, see below - I don't think
-it is necessary.
-
-
-> +    PCIBus *cxlbus;
->  };
-> =20
->  #define TYPE_SBSA_MACHINE   MACHINE_TYPE_NAME("sbsa-ref")
-> @@ -132,6 +141,8 @@ static const MemMapEntry sbsa_ref_memmap[] =3D {
->      /* Space here reserved for more SMMUs */
->      [SBSA_AHCI] =3D               { 0x60100000, 0x00010000 },
->      [SBSA_XHCI] =3D               { 0x60110000, 0x00010000 },
-> +    /* 1M CXL Host Bridge Registers space (64KiB * 16) */
-> +    [SBSA_CXL_HOST] =3D           { 0x60120000, 0x00100000 },
-
-As below, can just leave space for however many you are creating.
-
->      /* Space here reserved for other devices */
->      [SBSA_PCIE_PIO] =3D           { 0x7fff0000, 0x00010000 },
->      /* 32-bit address PCIE MMIO space */
-> @@ -631,6 +642,26 @@ static void create_smmu(const SBSAMachineState *sms,=
- PCIBus *bus)
->      }
->  }
-> =20
-> +static void create_pxb_cxl(SBSAMachineState *sms)
-> +{
-> +    CXLHost *host;
-> +    PCIHostState *cxl;
-> +
-> +    sms->cxl_devices_state.is_enabled =3D true;
-> +
-> +    DeviceState *qdev;
-
-I think qemu still sticks mostly to declarations at the top
-of functions. So move this up.
-
-> +    qdev =3D qdev_new(TYPE_PXB_CXL_DEV);
-> +    qdev_prop_set_uint32(qdev, "bus_nr", 0xfe);
-
-Ouch. That's not a lot of space in bus numbers.
-Move it down a bit so there is room for switches etc
-and not just a single root port.
-Up to SBSA ref maintainers, but I'd use 0xc0 or something
-like that.
-
-> +
-> +    PCIDevice *dev =3D PCI_DEVICE(qdev);
-
-Declarations at the top I think.
-
-> +    pci_realize_and_unref(dev, sms->bus, &error_fatal);
-> +
-> +    host =3D PXB_CXL_DEV(dev)->cxl_host_bridge;
-> +    cxl =3D PCI_HOST_BRIDGE(host);
-> +    sms->cxlbus =3D cxl->bus;
-> +    pci_create_simple(sms->cxlbus, -1, "cxl-rp");
-
-You want to enable at least some interleaving the HB so I'd
-add at least 2 root ports.
-
-> +}
-> +
->  static void create_pcie(SBSAMachineState *sms)
->  {
->      hwaddr base_ecam =3D sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
-> @@ -682,12 +713,25 @@ static void create_pcie(SBSAMachineState *sms)
->      }
-> =20
->      pci =3D PCI_HOST_BRIDGE(dev);
-> +    sms->bus =3D pci->bus;
-
-I'd carry on using pci->bus for this code to minimize changes
-needed and set sms->bus at the end of the function, not the
-start (see below - you can get rid of need to store pci->bus
-I think).
-
-> +
-> +    pci_init_nic_devices(sms->bus, mc->default_nic);
-> =20
-> -    pci_init_nic_devices(pci->bus, mc->default_nic);
-> +    pci_create_simple(sms->bus, -1, "bochs-display");
-> =20
-> -    pci_create_simple(pci->bus, -1, "bochs-display");
-> +    create_smmu(sms, sms->bus);
-> =20
-> -    create_smmu(sms, pci->bus);
-> +    create_pxb_cxl(sms);
-
-Keep this similar to the others and pass in pci->bus even
-though you are going to stash pci->bus
-
-> +}
-
-
-> =20
->  static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_si=
-ze)
-> @@ -823,6 +867,10 @@ static void sbsa_ref_init(MachineState *machine)
-> =20
->      create_pcie(sms);
-> =20
-> +    create_cxl_host_reg_region(sms);
-> +
-> +    cxl_hook_up_pxb_registers(sms->bus, &sms->cxl_devices_state, &error_=
-fatal);
-> +
-
-Fixed pxb instances certainly make this less of a dance than we need for pc=
- / virt
-as the creation order is constrained in a way it isn't for those generic ma=
-chines.
-
-Given you know you only have one PXB-cxl and have it in sms->cxlbus
-you could just call
-pxb_cxl_hook_up_registers(&sms->cxl_devices_state, pci->cxlbus, &error_fata=
-l)
-I think and get same result without needed to add sms->bus to get hold of t=
-he
-pci bus.
-
-
->      create_secure_ec(secure_sysmem);
-> =20
->      sms->bootinfo.ram_size =3D machine->ram_size;
-
+-- PMM
 
