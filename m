@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDCD1CA1009
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90B1CA0EDC
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 17:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk5WZ-00055g-54; Fri, 30 Aug 2024 13:35:03 -0400
+	id 1sk5WW-0004vE-4a; Fri, 30 Aug 2024 13:35:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sk5WU-0004tS-S6
+ id 1sk5WU-0004tB-KL
  for qemu-devel@nongnu.org; Fri, 30 Aug 2024 13:34:58 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sk5WS-0003OB-Vz
+ id 1sk5WS-0003O4-3c
  for qemu-devel@nongnu.org; Fri, 30 Aug 2024 13:34:58 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-371a13c7c80so1948038f8f.0
- for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 10:34:56 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4280bca3960so18080295e9.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 10:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725039295; x=1725644095; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RAPk9TkgHuJzLy5angeKNdvCxMHfEkd/1HkV7jTog4w=;
- b=ZTCIBFovd8c3W4PzR9CPh12tME7Vm/uwte82i1x9LsnrRu4ZgYyPZ5gMc6BS2JLPeO
- I4vsEWVngPrMGYFKlnuPxm/JunRia4Wp3i30Kt2Opgq6yuOTGsIDwyKUGiObrpQx5Vwx
- CnJijBbyMDp3pzOVxYQ+rBlaAB/u4Z+8ckRj3QWpGPbPaMNjtR1hCYmoHhlJ10KRHkyG
- 5bsyW4KQcT80SBs+2HGEdPikfI1w6kfwPf58pVL0Ux9RO37BpFa3ZO0gHrPdutsv1Gq0
- HnzrL+uOIusRtqrfTs+9sD1onfiHKTN9c1flXSoh6Kk1Aw7e+aWevYHfDFRyuJuohg6/
- fmdQ==
+ d=linaro.org; s=google; t=1725039294; x=1725644094; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=H5TolmHItSaUT9hOvsjRNnuWQE0yYjs/BM9Yo7vZ56M=;
+ b=qy1d6AgJcu71SwTMZoPNFYO2A4ZGEChpoa3WDdR/wVM8yyaMcM4mngRKwKS8ECYV5d
+ S77ZWvFH1WI8/yRBjaqzakEsUpOWJ3gx3dNQZwdGSdIcgpQZCEj2Y2JYW73CFGF6x61O
+ 1EKBNgRdPzlrypfJ0YZ5SleIFK+4j6to2sKhax7ufBxCHr0p/GOBXMZAhTwtRs7bMQmJ
+ rL5aXmqxwMRkMNhLhgkR0IfAJce1tOCq5TJfUx9rMAZVnuOkaBx+T7yQK3hzeNvyfpee
+ mlYrdK2eD2Ybdsl2ax6X0p6lymgBRa1BPxbxJkJCnUPSDXZIvwWVgn419bGC5FwyE33G
+ ZrCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725039295; x=1725644095;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RAPk9TkgHuJzLy5angeKNdvCxMHfEkd/1HkV7jTog4w=;
- b=bZw9B9yUB74nshc6ad7SH+riJqvD9Fakv+54k73G7A/OQWn/Upg6uMBUb9xoai3HE1
- P7B9o1yEw+Zs0Hu/E0N6x4yNAV2RMePBY30QxtXVgmUKGijir4jKNG7CAUdIinhUx1z7
- R9SZ6bHRZp5QLucxEOJpHXZ7OQ6XBeAypGN+G3XsllJ5wUXquMKyVf6gi/UekLiUVmkk
- XI3G2kQavUDEIRuDsiF/hY54S+qkzvO5ZI/cnuq9+Y9pXsGWAs1Z0rr49stqjHHJByRD
- H8M9/Qljtg9ZHbPT3XpaGEDkKoARIWWYRACG9fYb/P9OemH3Qz/8pOWoxFfzwRgXXJLi
- 2tig==
-X-Gm-Message-State: AOJu0Yy04pLWLVzL2HaxDaoh4oXa77r2ZDErx9i0K62X2Wfa8LFZdJcV
- Y2RRWEOyNAstFNI3bc1IhVG8syk8hO9CG4zf8EIPP1+B4/O4p8AV4bLhEVaFwgIRzPKdf9rJzWB
- 9
-X-Google-Smtp-Source: AGHT+IEqtATpvfs6JhyQ68/6pRcxTngQ/JZ/C2J5l2GOC7p3fQk5WWTVZa8M5Xc8NvFloloW+iy69Q==
-X-Received: by 2002:a05:6000:4020:b0:367:895f:619e with SMTP id
- ffacd0b85a97d-3749c1c8000mr5273662f8f.11.1725039295167; 
- Fri, 30 Aug 2024 10:34:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725039294; x=1725644094;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H5TolmHItSaUT9hOvsjRNnuWQE0yYjs/BM9Yo7vZ56M=;
+ b=u++BtRrPZNjSWyliK4ZvpQ+3AsGW1X1Mhxa6YheuM/0jqLyLAvAzW9i5nKdnHykIn9
+ VgFT3/iPgBOjgmttYLbZI1/QoKMj10U/8mDUjmaRkYD7AvlrqWLJrsA34n9FJoKRDa/Y
+ RKpKzB+bUWvhKw7BGDAHnMoinVKLay+zpEhLLtkFqwfYoCtKNMTQja/aza6IYlmtElJ+
+ AvQdkCxq5sNHpC6KxfgQrc0cRLYjM12wZwGCsmZq7p/CNHqk+yr1iCQ37XeA0B/vTncW
+ A5K4/eAZqAU3zIhMx6ldGxHyh4mskSGRh19eBLR2KEcinnO6glhGNeKAXeDy6wD06jEj
+ 25Dg==
+X-Gm-Message-State: AOJu0Yy+UQ6kSQJBzVby5KqLmxAI9sxYKaL1+exaoGmmEM0OtkJ5OIkf
+ q0y2fcy2IcrBun8sYFYQ93EcAApp453cO3h0M3US1fQN0BxbhPbG3iVdnug5ULupsaByUazrhCb
+ 4
+X-Google-Smtp-Source: AGHT+IG/UkIusFEk/aL9dXQ/kOvHMmwbHMZ9qsbkbdFNDppdNo9YKqC+LoHO8M+zI8Udtbtu9o+0ag==
+X-Received: by 2002:a05:600c:1c89:b0:426:66a2:b200 with SMTP id
+ 5b1f17b1804b1-42bd052b0f6mr3284395e9.0.1725039294139; 
+ Fri, 30 Aug 2024 10:34:54 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb37f7849sm58471775e9.7.2024.08.30.10.34.54
+ 5b1f17b1804b1-42bb37f7849sm58471775e9.7.2024.08.30.10.34.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Aug 2024 10:34:54 -0700 (PDT)
+ Fri, 30 Aug 2024 10:34:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <huth@tuxfamily.org>,
 	Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 2/3] hw/m68k/mcf5208: Add URLs for datasheets
-Date: Fri, 30 Aug 2024 18:34:51 +0100
-Message-Id: <20240830173452.2086140-3-peter.maydell@linaro.org>
+Subject: [PATCH 0/3] m68k: Fix a couple of Coverity nits
+Date: Fri, 30 Aug 2024 18:34:49 +0100
+Message-Id: <20240830173452.2086140-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240830173452.2086140-1-peter.maydell@linaro.org>
-References: <20240830173452.2086140-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,34 +92,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The datasheets for the SoC and board we model here are still
-available from the NXP website; add their URLs and titles for
-future reference.
+This patchset fixes a couple of very minor Coverity issues: one
+"shift off top of integer", and one "overflow in multiplication". 
+Neither will happen in normal use. I would not bother backporting
+either fix to stable.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/m68k/mcf5208.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+I threw in also a patch adding a comment to mcf5208.c giving the URLs
+of the datasheets, since I had to go find them to check the fix in
+patch 1.
 
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index 0ad347dfa81..b6677ad6bc3 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -4,6 +4,14 @@
-  * Copyright (c) 2007 CodeSourcery.
-  *
-  * This code is licensed under the GPL
-+ *
-+ * This file models both the MCF5208 SoC, and the
-+ * MCF5208EVB evaluation board. For details see
-+ *
-+ * "MCF5208 Reference Manual"
-+ * https://www.nxp.com/docs/en/reference-manual/MCF5208RM.pdf
-+ * "M5208EVB-RevB 32-bit Microcontroller User Manual"
-+ * https://www.nxp.com/docs/en/reference-manual/M5208EVBUM.pdf
-  */
- 
- #include "qemu/osdep.h"
+thanks
+-- PMM
+
+Peter Maydell (3):
+  hw/m68k/mcf5208: Avoid shifting off end of integer
+  hw/m68k/mcf5208: Add URLs for datasheets
+  hw/nubus/nubus-device: Range check 'slot' property
+
+ hw/m68k/mcf5208.c       | 10 +++++++++-
+ hw/nubus/nubus-device.c |  7 +++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
 -- 
 2.34.1
 
