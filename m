@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A390CA0FE0
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C9BCA0FE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjzRc-0007mQ-Mb; Fri, 30 Aug 2024 07:05:32 -0400
+	id 1sjzRo-0007zU-OC; Fri, 30 Aug 2024 07:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
- id 1sjzRa-0007jF-UH; Fri, 30 Aug 2024 07:05:30 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sjzRm-0007wb-RI
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:05:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
- id 1sjzRY-0005rT-VQ; Fri, 30 Aug 2024 07:05:30 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 3396CC0005
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1725015919;
- bh=sAr3E9Fn35Mo6C+1dszsP++274O+2deiwlmokajn63o=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=JOPeNpnq8oDtPbjqQ/K4dl0xjxedKBwdTmVHY+yB7lUMsF2yoQN/3W67T9oSMrERK
- zDydn8z8U/+tR65sLhRioyVMrqc8ATpEBApWbeAX5PWMzhbi6GgEpakgpAInTl4Ev1
- wtC63UDJHD7YabbWWzLcm0HgUpZ+0cNMTzITGp7KZKUuDrzrDUgfGmlZf2Ew3NG6qB
- DV5NZoYa2P1NHagnQdXv9Tn/j1pBlF0bGpx8BRZKfVASj35EE7n9ea1v8JVjZoQ6ep
- qzcpEhFvsc0tYZG8RLUGBSm2gD2V52xubAYOX5flJ3Y1SOJgUUc+cgxXYHqUmoCBqV
- OEtyMjQmAuLkg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1725015919;
- bh=sAr3E9Fn35Mo6C+1dszsP++274O+2deiwlmokajn63o=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=m4kb3oerMKUgLlRHISCzvHPmJGI5A+Ss8qZPeEnphrA8CvsKnYluC6OQ5sN/IXD1T
- h7lRIdn8sPNpmMkBhOn8ubwSV9DV31p3U7VXYRiVdTlfYH+w87gsLgxYD0YzeuREGd
- l6+VujCTaT/Hb4NIOu6hIO/ytN7/rcfe0GOUA1bq39CZIuNd6QVjxSEowY1qB5q3Fq
- krsf7xr6oqphXyOu3el1zuzS/VGfYu5fUkC7splYUnU56j28EJVVdEqsxdEBTKG6YE
- /sH+l459TmsqH1PoqLJeh+hA9W0N1slAZlP5pdgJKP1AcmHojcgL+RYWVl9HXZkoEA
- b2ff5gS6IxA0g==
-Message-ID: <5f547cd8-2068-4499-af7e-04f3f27ea617@syntacore.com>
-Date: Fri, 30 Aug 2024 14:05:05 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sjzRk-0005sk-Tm
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 07:05:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725015940;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nNIEowkyGqYnWUy3zFriawigcVy5SiC/moM4zd6MBVY=;
+ b=eWN80RNVZuc3RL+br8RI47gSIuFaRzaFCmkywCnridKDddGiqkDwSBZ/Y/gQ9BNXGzqFtY
+ Ae2YUEuVCWf9rxg4s/rKNZWPd+bf/V6Af9bvs8YctbY7EH7pk58lj7BF5slKuE47dGgbR8
+ mOsxcHo2PknD3ook/ZnG7geCfJCPm0w=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-F7WxAP95PlyxDr9pR8tyqg-1; Fri,
+ 30 Aug 2024 07:05:38 -0400
+X-MC-Unique: F7WxAP95PlyxDr9pR8tyqg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B743F19560AB
+ for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 11:05:37 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.49])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 74BA319560A3; Fri, 30 Aug 2024 11:05:35 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 1/2] crypto: check gnutls & gcrypt support the requested pbkdf
+ hash
+Date: Fri, 30 Aug 2024 12:05:32 +0100
+Message-ID: <20240830110533.2544070-2-berrange@redhat.com>
+In-Reply-To: <20240830110533.2544070-1-berrange@redhat.com>
+References: <20240830110533.2544070-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Stop timer with infinite timecmp
-To: Andrew Jones <ajones@ventanamicro.com>, <qemu-devel@nongnu.org>,
- <qemu-riscv@nongnu.org>
-CC: Anup Patel <apatel@ventanamicro.com>, <palmer@dabbelt.com>,
- <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>, <liwei1518@gmail.com>,
- <zhiwei_liu@linux.alibaba.com>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>, <atishp@rivosinc.com>
-References: <20240829084002.1805006-2-ajones@ventanamicro.com>
-Content-Language: en-US, ru-RU
-From: Vladimir Isaev <vladimir.isaev@syntacore.com>
-In-Reply-To: <20240829084002.1805006-2-ajones@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
- S-Exch-01.corp.yadro.com (10.78.5.241)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=vladimir.isaev@syntacore.com; helo=mta-04.yadro.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,53 +86,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Andrew,
+Both gnutls and gcrypt can be configured to exclude support for certain
+algorithms via a runtime check against system crypto policies. Thus it
+is not sufficient to have a compile time test for hash support in their
+pbkdf implementations.
 
-29.08.2024 11:40, Andrew Jones wrote:
-> While the spec doesn't state it, setting timecmp to UINT64_MAX is
-> another way to stop a timer, as it's considered setting the next
-> timer event to occur at infinity. 
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/pbkdf-gcrypt.c | 2 +-
+ crypto/pbkdf-gnutls.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-I think this should be explicitly stated in the spec, since some software
-may initially set time and timecmp to big values just to check how overflow
-is handled. And without it no chance that all HW implementations will interpret
-UINT64_MAX as 'stop timer'.
-
-Do we need github issue on SSTC/privileged?
-
-Thank you,
-Vladimir Isaev
-
-> And, even if the time CSR does
-> eventually reach UINT64_MAX, the very next tick will bring it back to
-> zero, once again less than timecmp. For this reason
-> riscv_timer_write_timecmp() special cases UINT64_MAX. However, if a
-> previously set timecmp has not yet expired, then setting timecmp to
-> UINT64_MAX to disable / stop it would not work, as the special case
-> left the previous QEMU timer active, which would then still deliver
-> an interrupt at that previous timecmp time. Ensure the stopped timer
-> will not still deliver an interrupt by also deleting the QEMU timer
-> in the UINT64_MAX special case.
-> 
-> Fixes: ae0edf2188b3 ("target/riscv: No need to re-start QEMU timer when timecmp == UINT64_MAX")
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> ---
->  target/riscv/time_helper.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-> index 8d245bed3ae3..bc0d9a0c4c35 100644
-> --- a/target/riscv/time_helper.c
-> +++ b/target/riscv/time_helper.c
-> @@ -92,6 +92,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
->       * equals UINT64_MAX.
->       */
->      if (timecmp == UINT64_MAX) {
-> +        timer_del(timer);
->          return;
->      }
->  
-
-
+diff --git a/crypto/pbkdf-gcrypt.c b/crypto/pbkdf-gcrypt.c
+index a8d8e64f4d..bc0719c831 100644
+--- a/crypto/pbkdf-gcrypt.c
++++ b/crypto/pbkdf-gcrypt.c
+@@ -33,7 +33,7 @@ bool qcrypto_pbkdf2_supports(QCryptoHashAlgorithm hash)
+     case QCRYPTO_HASH_ALG_SHA384:
+     case QCRYPTO_HASH_ALG_SHA512:
+     case QCRYPTO_HASH_ALG_RIPEMD160:
+-        return true;
++        return qcrypto_hash_supports(hash);
+     default:
+         return false;
+     }
+diff --git a/crypto/pbkdf-gnutls.c b/crypto/pbkdf-gnutls.c
+index 2dfbbd382c..911b565bea 100644
+--- a/crypto/pbkdf-gnutls.c
++++ b/crypto/pbkdf-gnutls.c
+@@ -33,7 +33,7 @@ bool qcrypto_pbkdf2_supports(QCryptoHashAlgorithm hash)
+     case QCRYPTO_HASH_ALG_SHA384:
+     case QCRYPTO_HASH_ALG_SHA512:
+     case QCRYPTO_HASH_ALG_RIPEMD160:
+-        return true;
++        return qcrypto_hash_supports(hash);
+     default:
+         return false;
+     }
+-- 
+2.45.2
 
 
