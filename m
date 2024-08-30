@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF987CA0EFD
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 18:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B544CA100C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 18:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk6HA-0000wP-EO; Fri, 30 Aug 2024 14:23:12 -0400
+	id 1sk6RE-0006Mm-AB; Fri, 30 Aug 2024 14:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sk6H9-0000v1-3g
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 14:23:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sk6RC-0006MG-3W
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 14:33:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sk6H5-00080b-JE
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 14:23:10 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sk6R8-0000fc-0y
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 14:33:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725042186;
+ s=mimecast20190719; t=1725042807;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mGeEKNBKpGT7iBKMk++VTHAxQTbCVnzIVpkQYlIZ1E8=;
- b=M77NGfMVeGfmbJxflIasnYTWv/SizVOFoqqFtOHqmmzrpIjrtOs3hAJT4xNHQ6ZkTxR+gc
- MTi1MX0mDU2likn+nPmmPJaOg1eRq+Vi34hl8uoYZE4tRQKY4CDwSB7N5gTlYS6FB/7qJE
- z316bO8ljl1m5JdQ4NGjJ94vYoXitWI=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wWL8wwbc/ToTNjsa6egkPGLfmYjcUGxF4bYkrx6xB34=;
+ b=H0JiORZ64FNsBlipRVvmPSZnG9F+bfLH3u9eoYKA6H0xPPyW92hPVRILkOh3r0tCeWQPRN
+ c/bJI5nTOOifKJeJV8KCdhbM/g0kbxlSFK9t3I1WdrNS2x1N/M8PHyT5aqCBJpy3AfQ9YT
+ 9wG3BsFF/5oaOc4RuWqixiFTX50XfHw=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-458-29-5IPwmNnuEefqPGjTdRQ-1; Fri, 30 Aug 2024 14:23:04 -0400
-X-MC-Unique: 29-5IPwmNnuEefqPGjTdRQ-1
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2052d07ff07so8997495ad.2
- for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 11:23:03 -0700 (PDT)
+ us-mta-635-7MnBoV9hPgCGGmjH9ti1jw-1; Fri, 30 Aug 2024 14:33:25 -0400
+X-MC-Unique: 7MnBoV9hPgCGGmjH9ti1jw-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2d3ce4f35c1so1937196a91.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 11:33:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725042183; x=1725646983;
+ d=1e100.net; s=20230601; t=1725042804; x=1725647604;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mGeEKNBKpGT7iBKMk++VTHAxQTbCVnzIVpkQYlIZ1E8=;
- b=wa3pchnW+9e9+VAxRpSf+Yr2Jyky7oF/ahXH3I06buFT65zbLh3hW/TIFCOEGuwlkF
- PCcxJ0+0IWpix3LuiwYwGtMTB7difYTi77HIzzq+u0ISuy/n9g0dlGwdKZcWfgCDxO6e
- NodeKP5ykjKbpMoT8u9S9K38V2RUsV9Jp3iWIPjhvB4YWcyDdqpVgKUHPh/1Mm9YFPKr
- 9pbFzX0asMXxnydP3ghhN/vUwadxx9w2EO2Oc6GecWXG/XEsq9BBExS6fDxzNM47ZCf0
- 5FLz2xcnaPv3W84PdkjYtvhxO8vBG81aBsYgqqT8899zxI1UetyG5DnN6P/OaiOagaFx
- omFQ==
-X-Gm-Message-State: AOJu0YyCaQLC9OSz9WE6/vl3MBAlkv9hlB2FiS9YnZgvFbG0bAY2VBNb
- m5OsMD5D1RzfDU8veP+GOyVu24cJdz31zoz3L0RbRBJ46YPsw/UKyGOTn+ArjdICXX6gWCmjHEQ
- z4tB6KnkUKly3Ka/sN8yDBaPUK17kaI5as3CjjxnUCr4MBcEjagYVDJjhJqlWpLPG91NLRlgVKP
- thAwQKvkuLE6FKwdNwRNV92pCZ/O0=
-X-Received: by 2002:a17:902:d4c7:b0:205:3ae0:a573 with SMTP id
- d9443c01a7336-2053ae0a890mr16848335ad.25.1725042182928; 
- Fri, 30 Aug 2024 11:23:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOlX9VpWKO1pSaMLbuYFGQXfu9fk8hrOSCk8WUh+O2HxKsqPDHJ4Z8eA4QqZHHM8UbEraRvh69TSAvMPXHWNQ=
-X-Received: by 2002:a17:902:d4c7:b0:205:3ae0:a573 with SMTP id
- d9443c01a7336-2053ae0a890mr16848035ad.25.1725042182482; Fri, 30 Aug 2024
- 11:23:02 -0700 (PDT)
+ bh=wWL8wwbc/ToTNjsa6egkPGLfmYjcUGxF4bYkrx6xB34=;
+ b=Ff44fv0oqcAEXGed4jBrjeI9nT2Ul6oSeLLY0OG4nLc6rOn+Ts3nEsa2tPpEznIvR1
+ zdJXPWrZOkLrh7yAmuLAf9PFqRIiHr0vp4Z5c9NfAJC+m5mAJjbz/8MZ5pbj6V/rXDvg
+ BTwv6wwNzmAh79EG4VX491yN4e+rFTZhOHuDUBeKRMkU/AFfF7hZUH4WwWPOUxjK99Wp
+ +cGhHjU7h9TXv4yQFxSwc8vBonmjnCi6rQyNRLfM8vsq9qquVefdPRgJExNfcl8RajkI
+ nKZfEtAOu5lVCHs6zdscdkOdjnAwGCh3l67aqL5aZQfmZz2mjcA/GVwRy1h/vYBJa7Vc
+ jisg==
+X-Gm-Message-State: AOJu0YzhCMBsothJ2RM3i/G90nN8HIWpPMUG1FKdBtbOvCivtIzXFYCH
+ FBADvKnTO1jQe2PHw8ZR3ihtQAK5tbUFgTdHnBIPpExj+JVJuLT8PXr1fzNuXTes5td1JlYNqt+
+ QJaAAzocZcP/mHr1upGWt7paFgletCheTjzWj2AKHilX9cyLX3Q1vv2+UolFVnpaGf3LscXN6XG
+ KkFY4Sb2w/eqgP+fGru7tn5D/OqE8=
+X-Received: by 2002:a17:90a:b00a:b0:2cb:5dbb:d394 with SMTP id
+ 98e67ed59e1d1-2d856a2ea26mr10207753a91.4.1725042804020; 
+ Fri, 30 Aug 2024 11:33:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgWKfO3PFTu/2GQ5fD0DH5SrXYZxyKUT6zCaY+LY6PCj4/XN806irVCE+D7b57VnclGXubRxL+SNS9OC7ZtQI=
+X-Received: by 2002:a17:90a:b00a:b0:2cb:5dbb:d394 with SMTP id
+ 98e67ed59e1d1-2d856a2ea26mr10207704a91.4.1725042803554; Fri, 30 Aug 2024
+ 11:33:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240820002318.1380276-1-jsnow@redhat.com>
- <20240820002318.1380276-8-jsnow@redhat.com>
- <87bk1acl4s.fsf@pond.sub.org>
-In-Reply-To: <87bk1acl4s.fsf@pond.sub.org>
+ <20240820002318.1380276-3-jsnow@redhat.com>
+ <87ikvicln3.fsf@pond.sub.org>
+In-Reply-To: <87ikvicln3.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Fri, 30 Aug 2024 14:22:50 -0400
-Message-ID: <CAFn=p-a=ob68-_8fkfFMj2AkVtOgL081j4d385n1qXMsN+ehFQ@mail.gmail.com>
-Subject: Re: [PATCH 7/8] python/qapi: move scripts/qapi to python/qemu/qapi
+Date: Fri, 30 Aug 2024 14:33:12 -0400
+Message-ID: <CAFn=p-Y2sBXQPpA7-qL6q9yZa36WuyPeuFsveFiYn0UhubT+Pg@mail.gmail.com>
+Subject: Re: [PATCH 2/8] python/qapi: change "FIXME" to "TODO"
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -75,15 +75,15 @@ Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000828eed0620eaaedf"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/alternative; boundary="0000000000008762050620ead3cb"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
  RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -102,239 +102,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000828eed0620eaaedf
+--0000000000008762050620ead3cb
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 30, 2024 at 7:20=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+On Fri, Aug 30, 2024 at 7:09=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
 m> wrote:
 
 > John Snow <jsnow@redhat.com> writes:
 >
-> > This is being done for the sake of unifying the linting and static type
-> > analysis configurations between scripts/qapi and python/qemu/*.
-> >
-> > With this change, the qapi module will now be checked by mypy, flake8,
-> > pylint, isort etc under all python versions from 3.8 through 3.13 under
-> > a variety of different dependency configurations in the GitLab testing
-> > pipelines.
-> >
-> > The tests can be run locally, as always:
-> >
-> >> cd qemu.git/python
-> >> make check-minreqs
-> >> make check-tox
-> >> make check-dev
-> >
-> > "check-minreqs" is the must-pass GitLab test.
-> > "check-tox" is the optional allowed-to-fail GitLab test.
+> > qemu.git/python/setup.cfg disallows checking in any code with "XXX",
+> > "FIXME" or "TODO" in the comments. Soften the restriction to only
+> > prohibit "FIXME", and change the two occurrences of "FIXME" in qapi to
+> > read "TODO" instead.
 > >
 > > Signed-off-by: John Snow <jsnow@redhat.com>
 >
-> I don't understand why we have to keep Python code in its own directory
-> just to get it checked.  We wouldn't do that say for Rust code, would
-> we?  Anyway, if it's the price of checking, I'll pay[*].
+> I don't like forbidding FIXME comments.  It's as futile as forbidding
+> known bugs.  All it can accomplish is making people use other, and
+> likely less clear ways to document them.
 >
-
-Gave Dan a related answer. For you, my explanation is:
-
-- It's nice to have just one configuration for static analysis in just one
-place
-- It's nice to have that configuration follow python ecosystem norms
-- It's nice to use standard python management tools to configure and test
-the supported versions of static analysis tools, again kept in one place.
-- Just moving the folder costs virtually nothing.
-- Moving it here makes it easier for me to test the eventual integration
-with make check in one place.
-- I like being able to say that anything under `python/` is fiercely
-guarded by high standards (and the gitlab pipelines) and everything else is
-not. I consider this to be organizationally simple and easy to communicate.
-i.e., I find it attractive to say that "python is maintained, scripts are
-YMMV." I am *not* willing to maintain everything under `scripts/` with the
-same level of effort I apply to `python/`. I think it's important to allow
-people to commit low-development-cost scripts ("contrib quality") that they
-can run from time to time and not everything needs to be held to a
-crystalline perfect standard, but some stuff does.
-
-If I'm being honest, I also just don't want to develop more testing
-infrastructure and scaffolding to start picking up scattershot python
-modules from elsewhere in the tree. I'd rather bring qapi into the fold and
-then continue working on integrating `python/` static analysis tests to the
-make check suite instead. I've spent enough time already writing and
-carrying around my little ad-hoc static analysis scripts for qapi during
-the strict typing conversion, and ensuring static analysis passes with
-totally arbitrary versions of whatever tools the user happens to have
-installed sounds like a colossal pain. I already have a system set up to do
-all of the environment prep work so that it Just Works :tm: and is tested
-across a large matrix of tooling versions to ensure it continues to work
-both locally (for developer ease) and in the gitlab pipeline (for rigorous
-testing) with both forms of test readily accessible in the local developer
-environment: I'd deeply appreciate just being able to let that system do
-what I designed it to do.
-
-This series is 99% "converge on a static analysis configuration standard"
-and 1% "move it into place so it starts being checked regularly." I think
-that's worth a simple "git mv", honestly. Do we each lose some control over
-our preferred standard of formatting? Yes, but we gain consistency and ease
-of testing.
-
-As for rust: I dunno! I imagine there are similar benefits there for
-modeling things as standards compliant packages, too. I'm not doing rust
-tooling right now, so I can't say.
-
-
+> Perhaps projects exist that use FIXME comments only for known bugs in
+> uncommitted code.  To me, that feels *nuts*.  I commit all kinds of crap
+> in my tree.  I don't need silly "make check" failures while I develop,
+> the non-silly ones cause enough friction already.
 >
-> [...]
+> In fact, we're quite happy to use FIXME comments even in merged code:
 >
-> > diff --git a/scripts/qapi-gen.py b/scripts/qapi-gen.py
-> > index f3518d29a54..42912c91716 100644
-> > --- a/scripts/qapi-gen.py
-> > +++ b/scripts/qapi-gen.py
-> > @@ -11,9 +11,11 @@
-> >  execution environment.
-> >  """
+>     $ git-grep FIXME | wc -l
+>     494
+>
+> I can't see why python/ should be different.
+>
+> > ---
+> >  python/setup.cfg         | 5 +++++
+> >  scripts/qapi/commands.py | 2 +-
+> >  scripts/qapi/events.py   | 2 +-
+> >  3 files changed, 7 insertions(+), 2 deletions(-)
 > >
-> > +import os
-> >  import sys
+> > diff --git a/python/setup.cfg b/python/setup.cfg
+> > index 3b4e2cc5501..72b58c98c99 100644
+> > --- a/python/setup.cfg
+> > +++ b/python/setup.cfg
+> > @@ -169,6 +169,11 @@ ignore-signatures=3Dyes
+> >  # TODO: Remove after we opt in to Pylint 2.8.3. See commit msg.
+> >  min-similarity-lines=3D6
 > >
-> > -from qapi import main
-> > +sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'python'=
-))
-> > +from qemu.qapi import main
+> > +[pylint.miscellaneous]
+> > +
+> > +# forbid FIXME/XXX comments, allow TODO.
+> > +notes=3DFIXME,
+> > +      XXX,
 > >
-> >  if __name__ =3D=3D '__main__':
-> >      sys.exit(main.main())
+> >  [isort]
+> >  force_grid_wrap=3D4
+> > diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
+> > index 79951a841f5..cffed6cd3ba 100644
+> > --- a/scripts/qapi/commands.py
+> > +++ b/scripts/qapi/commands.py
+> > @@ -385,7 +385,7 @@ def visit_command(self,
+> >                        coroutine: bool) -> None:
+> >          if not gen:
+> >              return
+> > -        # FIXME: If T is a user-defined type, the user is responsible
+> > +        # TODO: If T is a user-defined type, the user is responsible
+> >          # for making this work, i.e. to make T's condition the
+> >          # conjunction of the T-returning commands' conditions.  If T
+> >          # is a built-in type, this isn't possible: the
+> > diff --git a/scripts/qapi/events.py b/scripts/qapi/events.py
+> > index d1f639981a9..36dc0c50c78 100644
+> > --- a/scripts/qapi/events.py
+> > +++ b/scripts/qapi/events.py
+> > @@ -84,7 +84,7 @@ def gen_event_send(name: str,
+> >                     boxed: bool,
+> >                     event_enum_name: str,
+> >                     event_emit: str) -> str:
+> > -    # FIXME: Our declaration of local variables (and of 'errp' in the
+> > +    # TODO: Our declaration of local variables (and of 'errp' in the
+> >      # parameter list) can collide with exploded members of the event's
+> >      # data type passed in as parameters.  If this collision ever hits =
+in
+> >      # practice, we can rename our local variables with a leading _
+> prefix,
 >
-> Suggest to use the opportunity to rename to just qapi-gen (no .py) and
-> chmod +x, possibly in a separate patch.
+> Starting a comment with TODO tells me there's work to do.
 >
-> [...]
->
->
-> [*] Grudgingly.
+> Starting it with FIXME tells me there's a bug to fix.  That's more
+> specific.  Replacing FIXME by TODO loses information.
 >
 
-Why the resistance? Is there some harm I've overlooked? This seems fairly
-benign to me.
+meh. I do use the "prohibit fixme" personally because I've the memory of a
+goldfish and I like setting up bombs for myself when I run tests, but
+willing to cede if it gets me what I want otherwise. I could be coerced to
+using "XXX" as my WIP testing bomb. Or maybe literally just adding "WIP" as
+a new bomb. Is that a fair trade?
 
---000000000000828eed0620eaaedf
+There are likely other standards differences between the two subtrees,
+potentially things like documentation string length and so on -- I invite
+you to take a look at the setup.cfg file and tweak things to your liking
+and run "make check-minreqs" to see what barks, if anything.
+
+After you run that command, you can type "source .dev-venv/bin/activate.sh"
+(or .fish or whatever) and then "pylint --generate-rcfile | less" to get a
+sample config and see all of the buttons, knobs and levers you could pull.
+You can leave the environment when you're done with "deactivate".
+
+Mentioning this only because there have been times in the past that my
+formatting hasn't been to your liking, but there are avenues to
+programmatically enforce it to make my qapi patches nicer for your tastes
+in the future.
+
+--js
+
+--0000000000008762050620ead3cb
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Aug 30, 2024 at 7:20=E2=80=AF=
+<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Aug 30, 2024 at 7:09=E2=80=AF=
 AM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat=
 .com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
 gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
 ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank">jsn=
 ow@redhat.com</a>&gt; writes:<br>
 <br>
-&gt; This is being done for the sake of unifying the linting and static typ=
-e<br>
-&gt; analysis configurations between scripts/qapi and python/qemu/*.<br>
-&gt;<br>
-&gt; With this change, the qapi module will now be checked by mypy, flake8,=
-<br>
-&gt; pylint, isort etc under all python versions from 3.8 through 3.13 unde=
-r<br>
-&gt; a variety of different dependency configurations in the GitLab testing=
-<br>
-&gt; pipelines.<br>
-&gt;<br>
-&gt; The tests can be run locally, as always:<br>
-&gt;<br>
-&gt;&gt; cd qemu.git/python<br>
-&gt;&gt; make check-minreqs<br>
-&gt;&gt; make check-tox<br>
-&gt;&gt; make check-dev<br>
-&gt;<br>
-&gt; &quot;check-minreqs&quot; is the must-pass GitLab test.<br>
-&gt; &quot;check-tox&quot; is the optional allowed-to-fail GitLab test.<br>
+&gt; qemu.git/python/setup.cfg disallows checking in any code with &quot;XX=
+X&quot;,<br>
+&gt; &quot;FIXME&quot; or &quot;TODO&quot; in the comments. Soften the rest=
+riction to only<br>
+&gt; prohibit &quot;FIXME&quot;, and change the two occurrences of &quot;FI=
+XME&quot; in qapi to<br>
+&gt; read &quot;TODO&quot; instead.<br>
 &gt;<br>
 &gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
 t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
 <br>
-I don&#39;t understand why we have to keep Python code in its own directory=
+I don&#39;t like forbidding FIXME comments.=C2=A0 It&#39;s as futile as for=
+bidding<br>
+known bugs.=C2=A0 All it can accomplish is making people use other, and<br>
+likely less clear ways to document them.<br>
 <br>
-just to get it checked.=C2=A0 We wouldn&#39;t do that say for Rust code, wo=
-uld<br>
-we?=C2=A0 Anyway, if it&#39;s the price of checking, I&#39;ll pay[*].<br></=
-blockquote><div><br></div><div>Gave Dan a related answer. For you, my expla=
-nation is:</div><div><br></div><div>- It&#39;s nice to have just one config=
-uration for static analysis in just one place</div><div>- It&#39;s nice to =
-have that configuration follow python ecosystem norms</div><div>- It&#39;s =
-nice to use standard python management tools to configure and test the supp=
-orted versions of static analysis tools, again kept in one place.<br></div>=
-<div>- Just moving the folder costs virtually nothing.<br></div><div>- Movi=
-ng it here makes it easier for me to test the eventual integration with mak=
-e check in one place.</div>- I like being able to say that anything under `=
-python/` is fiercely guarded by high standards (and the gitlab pipelines) a=
-nd everything else is not. I consider this to be organizationally simple an=
-d easy to communicate. i.e., I find it attractive to say that &quot;python =
-is maintained, scripts are YMMV.&quot; I am *not* willing to maintain every=
-thing under `scripts/` with the same level of effort I apply to `python/`. =
-I think it&#39;s important to allow people to commit low-development-cost s=
-cripts (&quot;contrib quality&quot;) that they can run from time to time an=
-d not everything needs to be held to a crystalline perfect standard, but so=
-me stuff does.<br></div><div class=3D"gmail_quote"><br></div><div class=3D"=
-gmail_quote">If I&#39;m being honest, I also just don&#39;t want to develop=
- more testing infrastructure and scaffolding to start picking up scattersho=
-t python modules from elsewhere in the tree. I&#39;d rather bring qapi into=
- the fold and then continue working on integrating `python/` static analysi=
-s tests to the make check suite instead. I&#39;ve spent enough time already=
- writing and carrying around my little ad-hoc static analysis scripts for q=
-api during the strict typing conversion, and ensuring static analysis passe=
-s with totally arbitrary versions of whatever tools the user happens to hav=
-e installed sounds like a colossal pain. I already have a system set up to =
-do all of the environment prep work so that it Just Works :tm: and is teste=
-d across a large matrix of tooling versions to ensure it continues to work =
-both locally (for developer ease) and in the gitlab pipeline (for rigorous =
-testing) with both forms of test readily accessible in the local developer =
-environment: I&#39;d deeply appreciate just being able to let that system d=
-o what I designed it to do.</div><div class=3D"gmail_quote"><br></div><div =
-class=3D"gmail_quote">This series is 99% &quot;converge on a static analysi=
-s configuration standard&quot; and 1% &quot;move it into place so it starts=
- being checked regularly.&quot; I think that&#39;s worth a simple &quot;git=
- mv&quot;, honestly. Do we each lose some control over our preferred standa=
-rd of formatting? Yes, but we gain consistency and ease of testing.</div><d=
-iv class=3D"gmail_quote"><br></div><div class=3D"gmail_quote">As for rust: =
-I dunno! I imagine there are similar benefits there for modeling things as =
-standards compliant packages, too. I&#39;m not doing rust tooling right now=
-, so I can&#39;t say.</div><div class=3D"gmail_quote"><div>=C2=A0</div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">
+Perhaps projects exist that use FIXME comments only for known bugs in<br>
+uncommitted code.=C2=A0 To me, that feels *nuts*.=C2=A0 I commit all kinds =
+of crap<br>
+in my tree.=C2=A0 I don&#39;t need silly &quot;make check&quot; failures wh=
+ile I develop,<br>
+the non-silly ones cause enough friction already.<br>
 <br>
-[...]<br>
+In fact, we&#39;re quite happy to use FIXME comments even in merged code:<b=
+r>
 <br>
-&gt; diff --git a/scripts/qapi-gen.py b/scripts/qapi-gen.py<br>
-&gt; index f3518d29a54..42912c91716 100644<br>
-&gt; --- a/scripts/qapi-gen.py<br>
-&gt; +++ b/scripts/qapi-gen.py<br>
-&gt; @@ -11,9 +11,11 @@<br>
-&gt;=C2=A0 execution environment.<br>
-&gt;=C2=A0 &quot;&quot;&quot;<br>
+=C2=A0 =C2=A0 $ git-grep FIXME | wc -l<br>
+=C2=A0 =C2=A0 494<br>
+<br>
+I can&#39;t see why python/ should be different.<br>
+<br>
+&gt; ---<br>
+&gt;=C2=A0 python/setup.cfg=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 5 +++++<br>
+&gt;=C2=A0 scripts/qapi/commands.py | 2 +-<br>
+&gt;=C2=A0 scripts/qapi/events.py=C2=A0 =C2=A0| 2 +-<br>
+&gt;=C2=A0 3 files changed, 7 insertions(+), 2 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/python/setup.cfg b/python/setup.cfg<br>
+&gt; index 3b4e2cc5501..72b58c98c99 100644<br>
+&gt; --- a/python/setup.cfg<br>
+&gt; +++ b/python/setup.cfg<br>
+&gt; @@ -169,6 +169,11 @@ ignore-signatures=3Dyes<br>
+&gt;=C2=A0 # TODO: Remove after we opt in to Pylint 2.8.3. See commit msg.<=
+br>
+&gt;=C2=A0 min-similarity-lines=3D6<br>
 &gt;=C2=A0 <br>
-&gt; +import os<br>
-&gt;=C2=A0 import sys<br>
+&gt; +[pylint.miscellaneous]<br>
+&gt; +<br>
+&gt; +# forbid FIXME/XXX comments, allow TODO.<br>
+&gt; +notes=3DFIXME,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 XXX,<br>
 &gt;=C2=A0 <br>
-&gt; -from qapi import main<br>
-&gt; +sys.path.append(os.path.join(os.path.dirname(__file__), &#39;..&#39;,=
- &#39;python&#39;))<br>
-&gt; +from qemu.qapi import main<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 if __name__ =3D=3D &#39;__main__&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 sys.exit(main.main())<br>
+&gt;=C2=A0 [isort]<br>
+&gt;=C2=A0 force_grid_wrap=3D4<br>
+&gt; diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py<br>
+&gt; index 79951a841f5..cffed6cd3ba 100644<br>
+&gt; --- a/scripts/qapi/commands.py<br>
+&gt; +++ b/scripts/qapi/commands.py<br>
+&gt; @@ -385,7 +385,7 @@ def visit_command(self,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 coroutine: bool) -&gt; None:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not gen:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 # FIXME: If T is a user-defined type, the=
+ user is responsible<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # TODO: If T is a user-defined type, the =
+user is responsible<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # for making this work, i.e. to make=
+ T&#39;s condition the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # conjunction of the T-returning com=
+mands&#39; conditions.=C2=A0 If T<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # is a built-in type, this isn&#39;t=
+ possible: the<br>
+&gt; diff --git a/scripts/qapi/events.py b/scripts/qapi/events.py<br>
+&gt; index d1f639981a9..36dc0c50c78 100644<br>
+&gt; --- a/scripts/qapi/events.py<br>
+&gt; +++ b/scripts/qapi/events.py<br>
+&gt; @@ -84,7 +84,7 @@ def gen_event_send(name: str,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0boxed: bool,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0event_enum_name: str,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0event_emit: str) -&gt; str:<br>
+&gt; -=C2=A0 =C2=A0 # FIXME: Our declaration of local variables (and of &#3=
+9;errp&#39; in the<br>
+&gt; +=C2=A0 =C2=A0 # TODO: Our declaration of local variables (and of &#39=
+;errp&#39; in the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 # parameter list) can collide with exploded member=
+s of the event&#39;s<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 # data type passed in as parameters.=C2=A0 If this=
+ collision ever hits in<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 # practice, we can rename our local variables with=
+ a leading _ prefix,<br>
 <br>
-Suggest to use the opportunity to rename to just qapi-gen (no .py) and<br>
-chmod +x, possibly in a separate patch.<br>
+Starting a comment with TODO tells me there&#39;s work to do.<br>
 <br>
-[...]<br>
-<br>
-<br>
-[*] Grudgingly.<br></blockquote><div><br></div><div>Why the resistance? Is =
-there some harm I&#39;ve overlooked? This seems fairly benign to me.<br></d=
-iv></div></div>
+Starting it with FIXME tells me there&#39;s a bug to fix.=C2=A0 That&#39;s =
+more<br>
+specific.=C2=A0 Replacing FIXME by TODO loses information.<br></blockquote>=
+<div><br></div><div>meh. I do use the &quot;prohibit fixme&quot; personally=
+ because I&#39;ve the memory of a goldfish and I like setting up bombs for =
+myself when I run tests, but willing to cede if it gets me what I want othe=
+rwise. I could be coerced to using &quot;XXX&quot; as my WIP testing bomb. =
+Or maybe literally just adding &quot;WIP&quot; as a new bomb. Is that a fai=
+r trade?<br></div><div><br></div><div>There are likely other standards diff=
+erences between the two subtrees, potentially things like documentation str=
+ing length and so on -- I invite you to take a look at the setup.cfg file a=
+nd tweak things to your liking and run &quot;make check-minreqs&quot; to se=
+e what barks, if anything.</div><div><br></div><div>After you run that comm=
+and, you can type &quot;source .dev-venv/bin/activate.sh&quot; (or .fish or=
+ whatever) and then &quot;pylint --generate-rcfile | less&quot; to get a sa=
+mple config and see all of the buttons, knobs and levers you could pull. Yo=
+u can leave the environment when you&#39;re done with &quot;deactivate&quot=
+;.<br></div><div><br></div><div>Mentioning this only because there have bee=
+n times in the past that my formatting hasn&#39;t been to your liking, but =
+there are avenues to programmatically enforce it to make my qapi patches ni=
+cer for your tastes in the future.</div><div><br></div><div>--js<br></div><=
+/div></div>
 
---000000000000828eed0620eaaedf--
+--0000000000008762050620ead3cb--
 
 
