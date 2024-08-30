@@ -4,86 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EDD2CA0EFB
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 10:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76AFACA0EC5
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 10:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjyk5-0004tU-EH; Fri, 30 Aug 2024 06:20:33 -0400
+	id 1sjynO-0000lD-Eu; Fri, 30 Aug 2024 06:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sjyk2-0004sN-Dr
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 06:20:30 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sjyjy-0000Rq-OB
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 06:20:29 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7143165f23fso1322845b3a.1
- for <qemu-devel@nongnu.org>; Fri, 30 Aug 2024 03:20:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725013225; x=1725618025; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M2BVh9yj4u13ZNAH9P7AK5Jp6VC+IKLtIdSSEALT0mg=;
- b=gEy1CNThFasCv8Us4X+XcbN4pBMo6dGSfH03Ims0+dJ74rX4vOJW3XY+PkQYqVPXXz
- 8lai42dt9a6CnQCum3a4ulAvbRZoRl69rm+alNpbm65dJ3TIqaO+bWh5ymEJtRTFhGL6
- 5DlENm9zVEGV6WL76uZoB4Nchij8YQ0hbmdm0JU11NwXQlkhWWNiaaJ4dRGKVCRGfsLS
- bJAsE6yYtZOFXaIhXhR3QqeBgKv8NK1jGi9VuWiFp2D6mSBvopcDO3JqB1fTeCGpULzo
- qQgj4YUdxtEA2QOo+VXdXG1QYu3XPKRXIsWECtumbRo1SGusbGZ7KcRfd42ntkJoNGyP
- 8VWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725013225; x=1725618025;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M2BVh9yj4u13ZNAH9P7AK5Jp6VC+IKLtIdSSEALT0mg=;
- b=lplyOQqOEanCMQNCAYRyN8puL0NImfqOHFiGoY42tptBEktESkKYt0yn99DRtxIWfJ
- l9zyaWvcEus0IqO94t3a/b1WsA0UN+dtiYtiaKWDy0IbQsHM7PgwMTuqoEHU/ITbZQr3
- ReyUlnnR1wZJWVVtkU+4mblB5f6BQzStCNPFRjCHEd9FHYRagcuI/yoNX4WYBohgsfg5
- 96iZxNppSk3eUNg5elAT5CQDu7yYAe+JfECWiaWO2kgWuWvzJulrDD8T42oDLDVQMges
- CfebNhByn9h/WKxYYPPlUR4ZouxhHnk0O//YOb56GUXb697bFXZF51+XDqyRAtsPqDO4
- 38Qg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUTQ46AhKikasnOAtjXvgX0dsAaR5h9R95+4w+6cyrmxBvD/kbmgazRD/eVmFH0PVme911Y5sesb+6Z@nongnu.org
-X-Gm-Message-State: AOJu0Yz+jFGYMLTVYMA0LAbjTTBHoRtYLWPNanswpeGKs4iFrP7oQSRY
- 6mKtS3OIafU0ALeszQHwFxLLzhQt3k0WZcEkO7U64a9jt+SwlGTLnfe03g==
-X-Google-Smtp-Source: AGHT+IEZQz+IFPzcLqMrHdbULD/aepHakoEQJDidVvLjOTHBeGoJBKCab1IwtWMO9CnVNjxw67eCWg==
-X-Received: by 2002:a05:6a21:648c:b0:1c6:a4e7:bd1a with SMTP id
- adf61e73a8af0-1cce103b05emr5263869637.32.1725013224576; 
- Fri, 30 Aug 2024 03:20:24 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.81.109])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-715e56a0638sm2443955b3a.118.2024.08.30.03.20.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Aug 2024 03:20:24 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
- Sahil Siddiq <sahilcdq@proton.me>
-Subject: Re: [RFC v3 3/3] vhost: Allocate memory for packed vring
-Date: Fri, 30 Aug 2024 15:50:21 +0530
-Message-ID: <2620452.Lt9SDvczpP@valdaarhun>
-In-Reply-To: <CAJaqyWeDxL039GV=QzreenSNGm7S1XWWp=FH2KeB6PLGf=11-w@mail.gmail.com>
-References: <20240802112138.46831-1-sahilcdq@proton.me>
- <1901750.tdWV9SEqCh@valdaarhun>
- <CAJaqyWeDxL039GV=QzreenSNGm7S1XWWp=FH2KeB6PLGf=11-w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sjynM-0000jn-AG; Fri, 30 Aug 2024 06:23:56 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sjynH-0000ZE-7w; Fri, 30 Aug 2024 06:23:56 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WwDgC6SZBz6K9F1;
+ Fri, 30 Aug 2024 18:20:23 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 979E514073F;
+ Fri, 30 Aug 2024 18:23:47 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 30 Aug
+ 2024 11:23:47 +0100
+Date: Fri, 30 Aug 2024 11:23:46 +0100
+To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+CC: <quic_llindhol@quicinc.com>, <peter.maydell@linaro.org>,
+ <marcin.juszkiewicz@linaro.org>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <chenbaozi@phytium.com.cn>, <wangyinfeng@phytium.com.cn>,
+ <shuyiqi@phytium.com.cn>
+Subject: Re: [RFC PATCH 2/2] hw/arm/sbsa-ref: Support CXL Fixed Memory Window
+Message-ID: <20240830112346.0000667c@Huawei.com>
+In-Reply-To: <20240830041557.600607-3-wangyuquan1236@phytium.com.cn>
+References: <20240830041557.600607-1-wangyuquan1236@phytium.com.cn>
+ <20240830041557.600607-3-wangyuquan1236@phytium.com.cn>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=icegambit91@gmail.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,161 +69,316 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Fri, 30 Aug 2024 12:15:57 +0800
+Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
 
-On Tuesday, August 27, 2024 9:00:36=E2=80=AFPM GMT+5:30 Eugenio Perez Marti=
-n wrote:
-> On Wed, Aug 21, 2024 at 2:20=E2=80=AFPM Sahil <icegambit91@gmail.com> wro=
-te:
-> > [...]
-> > I have been trying to test my changes so far as well. I am not very cle=
-ar
-> > on a few things.
-> >=20
-> > Q1.
-> > I built QEMU from source with my changes and followed the vdpa_sim +
-> > vhost_vdpa tutorial [1]. The VM seems to be running fine. How do I check
-> > if the packed format is being used instead of the split vq format for
-> > shadow virtqueues? I know the packed format is used when virtio_vdev has
-> > got the VIRTIO_F_RING_PACKED bit enabled. Is there a way of checking th=
-at
-> > this is the case?
->=20
-> You can see the features that the driver acked from the guest by
-> checking sysfs. Once you know the PCI BFN from lspci:
-> # lspci -nn|grep '\[1af4:1041\]'
-> 01:00.0 Ethernet controller [0200]: Red Hat, Inc. Virtio 1.0 network
-> device [1af4:1041] (rev 01)
-> # cut -c 35
-> /sys/devices/pci0000:00/0000:00:02.0/0000:01:00.0/virtio0/features 0
->=20
-> Also, you can check from QEMU by simply tracing if your functions are
-> being called.
->=20
-> > Q2.
-> > What's the recommended way to see what's going on under the hood? I tri=
-ed
-> > using the -D option so QEMU's logs are written to a file but the file w=
-as
-> > empty. Would using qemu with -monitor stdio or attaching gdb to the QEMU
-> > VM be worthwhile?
->=20
-> You need to add --trace options with the regex you want to get to
-> enable any output. For example, --trace 'vhost_vdpa_*' print all the
-> trace_vhost_vdpa_* functions.
->=20
-> If you want to speed things up, you can just replace the interesting
-> trace_... functions with fprintf(stderr, ...). We can add the trace
-> ones afterwards.
+> In order to provide CFMWs on sbsa-ref, this extends 1TB space
+> from the hole above RAM Memory [SBSA_MEM] for CXL Fixed Memory
+> Window. 0xA0000000000 is chosen as the base address of this
+> space because of 3 reasons:
+> 
+> 1) It is more suitable to choose a static address instead of that
+> implementation in virt, since a dynamic address space layout of
+> sbsa-ref is not appropriate for its original purpose as a reference
+> platform.
+> 
+> 2) The Hotplug Memory address range should in the range of maximum
+> addressable range of sbsa-ref platform(0x10000000000-0x80ffffffffff).
+> It is satisfied the requirements of memory hotplug in linux kernel.
+> 
+> 3) The start pfn of CFMW should exceed the reserved_pfn_range for
+> onlined numa node.
+> 
+> Based on 'cxl_fmws_link_targets', this adds a new function
+> 'sbsa_cxl_fmws_link_targets' for binding cfmws.target with the default
+> pxb-cxl-bus on sbsa-ref.
+> 
+> In addition, this also adds 'create_cxl_fixed_window_region' which
+> based on 'machine_set_cfmw' to support creating a static cfmw region on
+> sbsa-ref.
+> 
+> Thus, to run sbsa-ref with a cxl device could use:
+> qemu-system-aarch64 \
+> -machine sbsa-ref \
+> -cpu cortex-a57 \
+> -smp 4 \
+> -m 4G \
+> -object memory-backend-ram,size=2G,id=mem0 \
+> -numa node,nodeid=0,cpus=0-1,memdev=mem0 \
+> -object memory-backend-ram,size=2G,id=mem1 \
+> -numa node,nodeid=1,cpus=2-3,memdev=mem1 \
+> -object memory-backend-file,id=mem2,mem-path=/tmp/mem2,size=256M,share=true \
+> -device cxl-type3,bus=cxl.0,volatile-memdev=mem2,id=cxl-mem1 \
+> -hda ubuntu.ext4 \
+> -pflash SBSA_FLASH0.fd \
+> -pflash SBSA_FLASH1.fd \
+> 
+> I'm not sure if the new space layout would bring a series of bad
+> influence, this patch is here to hopefully some comments to guide me!
 
-Understood. I am able to trace the functions that are being called with
-fprintf. I'll stick with fprintf for now.
+I've no idea on memory layout for sbsaref so will leave those
+more knowledgeable to comment on that.
 
-I realized that packed vqs are not being used in the test environment. I
-see that in "hw/virtio/vhost-shadow-virtqueue.c", svq->is_packed is set
-to 0 and that calls vhost_svq_add_split(). I am not sure how one enables
-the packed feature bit. I don't know if this is an environment issue.
+I'm not sure why you can't use the generic code to set up the 
+target linkage.  That 'should' work, but you will need the options
+to be a match for the naming of the pxb bus.
 
-I built qemu from the latest source with my changes on top of it. I followed
-this article [1] to set up the environment.
+Given you know how many fixed windows there are etc, you can
+also simplify various code paths.  See inline.
 
-On the host machine:
+Overall though this looks right to me. Again things are much simpler
+if you have everything hard coded but not so useful to me as my
+interest is poking the kernel stack and that needs a broad range
+of flexibility I can't do in SBSA ref for all the reasons you've
+hardcoded things.
 
-$ uname -a
-Linux fedora 6.10.5-100.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Wed Aug 14 15:49=
-:25 UTC 2024 x86_64 GNU/Linux
-
-$ ./qemu/build/qemu-system-x86_64 --version
-QEMU emulator version 9.0.91
-
-$ vdpa -V
-vdpa utility, iproute2-6.4.0
-
-All the relevant vdpa modules have been loaded in accordance with [1].
-
-$ lsmod | grep -iE "(vdpa|virtio)"
-vdpa_sim_net	12288  0
-vdpa_sim		24576  1 vdpa_sim_net
-vringh		32768  2 vdpa_sim,vdpa_sim_net
-vhost_vdpa		32768  2
-vhost		65536  1 vhost_vdpa
-vhost_iotlb		16384  4 vdpa_sim,vringh,vhost_vdpa,vhost
-vdpa		36864  3 vdpa_sim,vhost_vdpa,vdpa_sim_net
-
-$ ls -l /sys/bus/vdpa/devices/vdpa0/driver
-lrwxrwxrwx. 1 root root 0 Aug 30 11:25 /sys/bus/vdpa/devices/vdpa0/driver -=
-> ../../bus/vdpa/drivers/vhost_vdpa
-
-In the output of the following command, I see ANY_LAYOUT is supported.
-According to virtio_config.h [2] in the linux kernel, this represents the
-layout of descriptors. This refers to split and packed vqs, right?
-
-$ vdpa mgmtdev show
-vdpasim_net:=20
-  supported_classes net
-  max_supported_vqs 3
-  dev_features MTU MAC STATUS CTRL_VQ CTRL_MAC_ADDR ANY_LAYOUT VERSION_1 AC=
-CESS_PLATFORM
-
-$ vdpa dev show -jp
-{
-    "dev": {
-        "vdpa0": {
-            "type": "network",
-            "mgmtdev": "vdpasim_net",
-            "vendor_id": 0,
-            "max_vqs": 3,
-            "max_vq_size": 256
-        }
-    }
-}
-
-I started the VM by running:
-
-$ sudo ./qemu/build/qemu-system-x86_64 \
-=2Denable-kvm \
-=2Ddrive file=3D//home/ig91/fedora_qemu_test_vm/L1.qcow2,media=3Ddisk,if=3D=
-virtio \
-=2Dnet nic,model=3Dvirtio \
-=2Dnet user,hostfwd=3Dtcp::2226-:22 \
-=2Dnetdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0 \
-=2Ddevice virtio-net-pci,netdev=3Dvhost-vdpa0,bus=3Dpci.0,addr=3D0x7,disabl=
-e-legacy=3Don,disable-modern=3Doff,page-per-vq=3Don,event_idx=3Doff,packed=
-=3Don \
-=2Dnographic \
-=2Dm 2G \
-=2Dsmp 2 \
-=2Dcpu host \
-2>&1 | tee vm.log
-
-I added the packed=3Don option to -device virtio-net-pci.
-
-In the VM:
-
-# uname -a
-Linux fedora 6.8.5-201.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Apr 11 18:25:=
-26 UTC 2024 x86_64 GNU/Linux
-
-# lspci -nn | grep -i -A15 "\[1af4:1041\]"
-00:07.0 Ethernet controller [0200]: Red Hat, Inc. Virtio 1.0 network device=
- [1af4:1041] (rev 01)
-
-# cut -c 35 /sys/devices/pci0000:00/0000:00:07.0/virtio1/features
-0
-
-The packed vq feature bit hasn't been set. Am I missing something here?
-
-Thanks,
-Sahil
-
-[1] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-=
-got-hardware-part-1
-[2] https://github.com/torvalds/linux/blob/master/include/uapi/linux/virtio=
-_config.h#L63
+Jonathan
 
 
+> 
+> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+> ---
+>  hw/arm/sbsa-ref.c                   | 73 +++++++++++++++++++++++++++++
+>  hw/cxl/cxl-host-stubs.c             |  1 +
+>  hw/cxl/cxl-host.c                   |  2 +-
+>  hw/pci-bridge/pci_expander_bridge.c |  1 -
+>  include/hw/cxl/cxl_host.h           |  1 +
+>  include/hw/pci/pci_bridge.h         |  1 +
+>  6 files changed, 77 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+> index dc924d181e..b10865920e 100644
+> --- a/hw/arm/sbsa-ref.c
+> +++ b/hw/arm/sbsa-ref.c
+> @@ -100,6 +100,7 @@ enum {
+>      SBSA_AHCI,
+>      SBSA_XHCI,
+>      SBSA_CXL_HOST,
+> +    SBSA_CXL_FIXED_WINDOW,
+>  };
+>  
+>  struct SBSAMachineState {
+> @@ -152,6 +153,8 @@ static const MemMapEntry sbsa_ref_memmap[] = {
+>      /* ~1TB PCIE MMIO space (4GB to 1024GB boundary) */
+>      [SBSA_PCIE_MMIO_HIGH] =     { 0x100000000ULL, 0xFF00000000ULL },
+>      [SBSA_MEM] =                { 0x10000000000ULL, RAMLIMIT_BYTES },
+> +    /* 1TB CXL FIXED WINDOW space */
+> +    [SBSA_CXL_FIXED_WINDOW] =   { 0xA0000000000ULL, 0x10000000000ULL },
+>  };
+>  
+>  static const int sbsa_ref_irqmap[] = {
+> @@ -734,6 +737,72 @@ static void create_cxl_host_reg_region(SBSAMachineState *sms)
+>      memory_region_add_subregion(sysmem, sbsa_ref_memmap[SBSA_CXL_HOST].base, mr);
+>  }
+>  
+> +static void create_cxl_fixed_window_region(SBSAMachineState *sms, MemoryRegion *mem)
+> +{
+> +    char cxl_host[] = "pxb-cxl-bus.0";
+
+Better to retrieve this from the object rather than hard coding.
+	object_get_canonical_path(sms->cxlbus); I think?
+
+> +    CXLFixedMemoryWindowOptionsList *list;
+> +    hwaddr base, end;
+> +    GList *it;
+> +    strList host_target = { NULL, cxl_host };
+> +    CXLFixedMemoryWindowOptions sbsa_ref_cfmwoptions = {
+> +        .size = 1 * TiB,
+> +        .has_interleave_granularity = false,
+> +        .targets = &host_target,
+> +    };
+> +    CXLFixedMemoryWindowOptionsList sbsa_ref_cfmwlist = { NULL, &sbsa_ref_cfmwoptions };
+
+Wrap all these long lines to 80 chars unless it significantly hurts readability.
+
+> +
+> +    for (list = &sbsa_ref_cfmwlist; list; list = list->next) {
+
+It's a list of 1, so no point in parsing it like this.  Just use the values
+directly for now. If you add more windows, great but that probably only makes
+sense if you either:
+1) Want windows that have different properties (pmem vs volatile etc)
+   Maybe windows that don't support HDM-DB once that is supported in general.
+2) You have more than one root bridge and want to do interleave.
+
+I'd quite like to see 2 enabled as that stresses a lot more of the kernel code
+that won't be touched here.  However probably that's a job for the future.
+For now, just call this as
+
+	cxl_fixed_memory_window_config(&sms->cxl_devices_state,
+				       &sbsa_ref_cfmwoptions, &error_fatal);
+and have drop the loop.
+
+
+> +        cxl_fixed_memory_window_config(&sms->cxl_devices_state, list->value, &error_fatal);
+> +    }
+> +
+> +    base = sbsa_ref_memmap[SBSA_CXL_FIXED_WINDOW].base;
+> +    end = base + sbsa_ref_memmap[SBSA_CXL_FIXED_WINDOW].size;
+> +
+> +    for (it = sms->cxl_devices_state.fixed_windows; it; it = it->next) {
+
+As above.  Don't code for multiple windows if you only support one.
+For now code it for one and if you later follow up with multiple
+then that series has a precursor refactoring the code to handle a list.
+
+So just get the first element and work on that to give simpler code
+for review today.
+
+
+> +        CXLFixedWindow *fw = it->data;
+> +        if (base + fw->size > end) {
+> +            error_report("CFMWS does not fit under PA limit");
+> +            exit(EXIT_FAILURE);
+> +        }
+> +
+> +        fw->base = base;
+> +        memory_region_init_io(&fw->mr, OBJECT(sms), &cfmws_ops, fw,
+> +                                "cxl-fixed-memory-region", fw->size);
+> +
+> +        memory_region_add_subregion(mem, fw->base, &fw->mr);
+> +        base += fw->size;
+> +    }
+> +}
+> +
+> +static void sbsa_cxl_fmws_link_targets(SBSAMachineState *sms,
+> +                                CXLState *cxl_state, Error **errp)
+> +{
+> +    PXBCXLDev *pxb =  PXB_CXL_DEV(pci_bridge_get_device(sms->cxlbus));
+> +    if (cxl_state && cxl_state->fixed_windows) {
+> +        GList *it;
+> +
+> +        for (it = cxl_state->fixed_windows; it; it = it->next) {
+> +            CXLFixedWindow *fw = it->data;
+> +            int i;
+> +
+> +            for (i = 0; i < fw->num_targets; i++) {
+> +                Object *o;
+> +                bool ambig;
+> +
+> +                o = object_resolve_path_type(fw->targets[i],
+> +                                             TYPE_PXB_CXL_BUS,
+> +                                             &ambig);
+> +                if (!o) {
+> +                    error_setg(errp, "Could not resolve CXLFM target %s",
+> +                               fw->targets[i]);
+> +                    return;
+> +                }
+> +                fw->target_hbs[i] = pxb;
+This has me confused.  The loop is looking for wrong things and then
+you are setting the single target to pxb (Which is correct).
+
+So this whole function could be written
+
+	GList *it = glist_first(cxl_state->fixed_windows);
+	CXLFixedWindow *fw = it->data;
+
+	fw->target_hbs[0] = PXB_CXL_DEV(pci_bridge_get_device(sms->cxlbus));
+
+Which doesn't need TYPE_PXB_CXL_BUS etc so you can drop the
+moving of that to a header.
+
+I wonder if we can just make this use the normal code however.
+You've already set up targets above so why doesn't calling
+cxl_fmws_link_targets() not find it?
+
+Of is that magic string above wrong?
+
+> +            
+> +        }
+> +    }
+> +}
+> +
+>  static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
+>  {
+>      const SBSAMachineState *board = container_of(binfo, SBSAMachineState,
+> @@ -869,8 +938,12 @@ static void sbsa_ref_init(MachineState *machine)
+>  
+>      create_cxl_host_reg_region(sms);
+>  
+> +    create_cxl_fixed_window_region(sms, sysmem);
+> +
+I'd be tempted to not have blank space between the various cxl setup steps
+as they are all related, however up to sbsa maintainers.
+
+>      cxl_hook_up_pxb_registers(sms->bus, &sms->cxl_devices_state, &error_fatal);
+>  
+> +    sbsa_cxl_fmws_link_targets(sms, &sms->cxl_devices_state, &error_fatal);
+> +
+>      create_secure_ec(secure_sysmem);
+>  
+>      sms->bootinfo.ram_size = machine->ram_size;
+> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
+> index cae4afcdde..d523be24a2 100644
+> --- a/hw/cxl/cxl-host-stubs.c
+> +++ b/hw/cxl/cxl-host-stubs.c
+> @@ -11,5 +11,6 @@
+>  void cxl_fmws_link_targets(CXLState *stat, Error **errp) {};
+>  void cxl_machine_init(Object *obj, CXLState *state) {};
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state, CXLFixedMemoryWindowOptions *object, Error **errp) {};
+Wrap that line to 80 chars.
+
+>  
+>  const MemoryRegionOps cfmws_ops;
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index e9f2543c43..d408c7db15 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+> @@ -22,7 +22,7 @@
+>  #include "hw/pci/pcie_port.h"
+>  #include "hw/pci-bridge/pci_expander_bridge.h"
+>  
+> -static void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+>                                             CXLFixedMemoryWindowOptions *object,
+>                                             Error **errp)
+>  {
+> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> index 0411ad31ea..f5431443b9 100644
+> --- a/hw/pci-bridge/pci_expander_bridge.c
+> +++ b/hw/pci-bridge/pci_expander_bridge.c
+> @@ -38,7 +38,6 @@ DECLARE_INSTANCE_CHECKER(PXBBus, PXB_BUS,
+>  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_PCIE_BUS,
+>                           TYPE_PXB_PCIE_BUS)
+>  
+> -#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
+>  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_CXL_BUS,
+>                           TYPE_PXB_CXL_BUS)
+>  
+> diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
+> index c9bc9c7c50..5fbf5a9347 100644
+> --- a/include/hw/cxl/cxl_host.h
+> +++ b/include/hw/cxl/cxl_host.h
+> @@ -16,6 +16,7 @@
+>  void cxl_machine_init(Object *obj, CXLState *state);
+>  void cxl_fmws_link_targets(CXLState *stat, Error **errp);
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state, CXLFixedMemoryWindowOptions *object, Error **errp);
+
+Very long online. Wrap at 80 chars.
+Otherwise I'm fine with exposing this.
+
+
+>  
+>  extern const MemoryRegionOps cfmws_ops;
+>  
+> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+> index 5cd452115a..5456e24883 100644
+> --- a/include/hw/pci/pci_bridge.h
+> +++ b/include/hw/pci/pci_bridge.h
+> @@ -102,6 +102,7 @@ typedef struct PXBPCIEDev {
+>      PXBDev parent_obj;
+>  } PXBPCIEDev;
+>  
+> +#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
+>  #define TYPE_PXB_DEV "pxb"
+>  OBJECT_DECLARE_SIMPLE_TYPE(PXBDev, PXB_DEV)
+>  
 
 
