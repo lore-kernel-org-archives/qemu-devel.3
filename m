@@ -4,88 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CCDCA0ED2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 03:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55FECCA0ED2
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 03:17:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjs53-0001r3-DU; Thu, 29 Aug 2024 23:13:45 -0400
+	id 1sjs7h-00062F-45; Thu, 29 Aug 2024 23:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sjs51-0001qS-6X
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 23:13:43 -0400
-Received: from mx2.zhaoxin.com ([203.110.167.99])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sjs4x-0001z4-Bp
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 23:13:42 -0400
-X-ASG-Debug-ID: 1724987596-1eb14e31a8dcda0001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx2.zhaoxin.com with ESMTP id nraA4FDw3jRuuGkN (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 30 Aug 2024 11:13:16 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ZXSHMBX2.zhaoxin.com (10.28.252.164) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 30 Aug
- 2024 11:13:15 +0800
-Received: from ZXSHMBX2.zhaoxin.com ([fe80::d4e0:880a:d21:684d]) by
- ZXSHMBX2.zhaoxin.com ([fe80::d4e0:880a:d21:684d%4]) with mapi id
- 15.01.2507.039; Fri, 30 Aug 2024 11:13:15 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from localhost.localdomain (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 30 Aug
- 2024 10:58:27 +0800
-From: EwanHai <ewanhai-oc@zhaoxin.com>
-To: <ewanhai-oc@zhaoxin.com>
-CC: <cobechen@zhaoxin.com>, <ewanhai@zhaoxin.com>, <kvm@vger.kernel.org>,
- <mtosatti@redhat.com>, <pbonzini@redhat.com>, <qemu-devel@nongnu.org>,
- <xiaoyao.li@intel.com>, <zhao1.liu@intel.com>
-Subject: PING: [PATCH v3] target/i386/kvm: Refine VMX controls setting for
- backward compatibility
-Date: Thu, 29 Aug 2024 22:58:27 -0400
-X-ASG-Orig-Subj: PING: [PATCH v3] target/i386/kvm: Refine VMX controls setting
- for backward compatibility
-Message-ID: <20240830025827.2175695-1-ewanhai-oc@zhaoxin.com>
+ (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
+ id 1sjs7c-00061l-6E
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 23:16:24 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <wangyuquan1236@phytium.com.cn>) id 1sjs7X-0002HZ-Kx
+ for qemu-devel@nongnu.org; Thu, 29 Aug 2024 23:16:23 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBXN+h6OdFmXJ2AAg--.18065S2;
+ Fri, 30 Aug 2024 11:16:10 +0800 (CST)
+Received: from phytium.com.cn (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwAnVLRyOdFmhaMpAA--.16473S3;
+ Fri, 30 Aug 2024 11:16:03 +0800 (CST)
+From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+To: Jonathan.Cameron@Huawei.com, ardb+tianocore@kernel.org,
+ quic_llindhol@quicinc.com, peter.maydell@linaro.org
+Cc: devel@edk2.groups.io, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ chenbaozi@phytium.com.cn, wangyinfeng@phytium.com.cn,
+ shuyiqi@phytium.com.cn, Yuquan Wang <wangyuquan1236@phytium.com.cn>
+Subject: [RFC PATCH edk2-platforms 0/2] add basic support for CXL on sbsa-ref
+Date: Fri, 30 Aug 2024 11:15:43 +0800
+Message-Id: <20240830031545.548789-1-wangyuquan1236@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <a8f89526-5226-4859-98ef-5342c360d7db@zhaoxin.com>
-References: <a8f89526-5226-4859-98ef-5342c360d7db@zhaoxin.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 8/30/2024 11:13:14 AM
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1724987596
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 517
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -1.52
-X-Barracuda-Spam-Status: No,
- SCORE=-1.52 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_SC0_SA_TO_FROM_ADDR_MATCH
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.129737
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
- 0.50 BSF_SC0_SA_TO_FROM_ADDR_MATCH Sender Address Matches Recipient
- Address
-Received-SPF: pass client-ip=203.110.167.99;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwAnVLRyOdFmhaMpAA--.16473S3
+X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQANAWbQ2MkCDAAAsk
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
+ 1236@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7Kr1DZFy8urWfuw4fWFWDCFg_yoW8Cw4UpF
+ Wa93WYkFWUCryIkw4fGa4Fvr4rCa1fZr4DCrsFqw18ua43tFn8Xr4ftF1xtF13JF93W39r
+ WF18t34rCa1F93DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=wangyuquan1236@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,19 +72,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear Maintainers and Paolo,
+RFC because
+- Many contents are ported from Jonathan' patch on qemu virt design
 
-I hope this email finds you well. This is my second follow-up regarding the
-patch I submitted for review. I previously sent a reminder on July 23rd, bu=
-t
-I have yet to receive any updates or further comments.
+- Bring plenty of PCDs values and modifying the original PCIE values
 
-I understand that you have many responsibilities, but I would greatly
-appreciate any feedback or status updates on this patch. Your guidance is
-essential for moving this forward.
+- Less experience and not particularly confident in ACPI area so this might be
+  stupidly broken in a way I've not considered.
 
-Thank you once again for your time and attention to this matter.
+This series leverages Jonathan's patches[1] to add acpi0016 & acpi0017 objects into the
+previous DSDT table of sbsa-ref. Since the acpi0016 implementation model on qemu side is
+the pxb-cxl, this cxl Bus would share the MMIO space and ECAM sapce of PCIE Bus. Thus I
+divide some space from PciMmio32、PciMmio64、PciExpressBar to support cxl-related values.
 
-Best regards,
-Ewan
+Based on the new CEDT definitions patch on edk2[2], this series adds a static Cedt.aslc to
+support the [SBSA_CXL_HOST] & [SBSA_CXL_FIXED_WINDOW] space on sbsa-ref.
+
+Since I was first developing this platform design for cxl, at the initial stage I only reserved 
+one cxl host bridge (Bus: 0000:fe) and a cxl root port underneath (fe:00.0), therefore, only one
+cxl device(ff:00.0)could be added by user on this cxl Bus.
+
+Link:
+[1]: https://lore.kernel.org/linux-cxl/20220616141950.23374-2-Jonathan.Cameron@huawei.com/
+[2]: https://edk2.groups.io/g/devel/topic/rfc_patch_0_1/108173029
+
+Yuquan Wang (2):
+  SbsaQemu: Add acpi0016 & acpi0017 objects into DSDT
+  SbsaQemu: AcpiTables: Add CEDT Table
+
+ Platform/Qemu/SbsaQemu/SbsaQemu.dsc           |  30 +-
+ .../Qemu/SbsaQemu/AcpiTables/AcpiTables.inf   |  20 +-
+ Silicon/Qemu/SbsaQemu/AcpiTables/Cedt.aslc    |  70 +++
+ Silicon/Qemu/SbsaQemu/AcpiTables/Dsdt.asl     | 410 +++++++++++++++++-
+ Silicon/Qemu/SbsaQemu/AcpiTables/Mcfg.aslc    |   2 +-
+ .../SbsaQemuPciHostBridgeLib.c                |   4 +-
+ .../SbsaQemuPciHostBridgeLib.inf              |   3 +
+ Silicon/Qemu/SbsaQemu/SbsaQemu.dec            |  34 +-
+ 8 files changed, 555 insertions(+), 18 deletions(-)
+ create mode 100644 Silicon/Qemu/SbsaQemu/AcpiTables/Cedt.aslc
+
+-- 
+2.34.1
+
 
