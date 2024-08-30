@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD704CA0FF1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11531CA0FF5
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk1qC-0005W6-O3; Fri, 30 Aug 2024 09:39:06 -0400
+	id 1sk1qG-0005Zv-Rp; Fri, 30 Aug 2024 09:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1q5-0005VA-GV
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:38:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1qC-0005XB-Sv
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:39:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1q2-00057x-JZ
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:38:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1qA-0005AV-SD
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:39:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725025133;
+ s=mimecast20190719; t=1725025142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=YpVNhtCl37tBRveQOqd1SWDaD57U0Nq5H3PIpg6sOss=;
- b=Q0S62CttjhDDCYIi+NRzlPDZojE1yYULjLSVYuEKfxlIEf8iOs4EuB+5bZwhUHzD59uHzD
- tDNggf2bIiY9Zcp9kJcvukpKz2YNIEBUQKMvR5XyRnyen7sXLckOKPQDwCCiVuibPr6sDU
- jG9A8DcMHRkXBF0x4mrX0ADaFGmm07k=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t2Lv61V7e4ZwGeTVBaeIVh9jO6Nj6mHSFeOrznA7SVw=;
+ b=KZpMaJBRRVBEUhJLq9w9QpYn/lFvubsru5QgyKBVgMttAFGmIUEtGLzKz760srZqKXDIZN
+ 3ShBGMldb92bTHXWcd85LsfFpCRmrQnzyjZpvmsb2trhjFlUSaV6VueQ7CSrGpAqhfeJIV
+ 9fjQ+w0QYTT3RxVfxi5QaWrpj2RrK90=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-iSQ6VifgPc2VJxayjDmqTQ-1; Fri,
- 30 Aug 2024 09:38:49 -0400
-X-MC-Unique: iSQ6VifgPc2VJxayjDmqTQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-wSh26SsxPQKAGNdGh19kcA-1; Fri,
+ 30 Aug 2024 09:38:58 -0400
+X-MC-Unique: wSh26SsxPQKAGNdGh19kcA-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22C391955F67; Fri, 30 Aug 2024 13:38:48 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B52CC1954B04; Fri, 30 Aug 2024 13:38:57 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 09426300019C; Fri, 30 Aug 2024 13:38:43 +0000 (UTC)
+ id 69B50300019C; Fri, 30 Aug 2024 13:38:54 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -51,11 +52,13 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v5 00/44] Convert avocado tests to normal Python unittests
-Date: Fri, 30 Aug 2024 15:37:54 +0200
-Message-ID: <20240830133841.142644-1-thuth@redhat.com>
+Subject: [PATCH v5 02/44] tests/avocado/boot_xen.py: fetch kernel during test
+ setUp()
+Date: Fri, 30 Aug 2024 15:37:56 +0200
+Message-ID: <20240830133841.142644-3-thuth@redhat.com>
+In-Reply-To: <20240830133841.142644-1-thuth@redhat.com>
+References: <20240830133841.142644-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -84,384 +87,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Avocado v88 that we use in QEMU is already on a life support
-system: It is not supported by upstream anymore, and with the latest
-versions of Python, it won't work anymore since it depends on the
-"imp" module that has been removed in Python 3.12.
+From: Cleber Rosa <crosa@redhat.com>
 
-There have been several attempts to update the test suite in QEMU
-to a newer version of Avocado, but so far no attempt has successfully
-been merged yet. There's now a new attempt available (I've included
-the relevant patches from Cleber at the beginning of this series now),
-but still, it would be nicer to finally get away from the Avocado test
-runner nowadays: The whole "make check" test suite in QEMU is using the
-meson test runner nowadays, so running the python-based tests via the
-Avocodo test runner looks and feels quite like an oddball, requiring
-the users to deal with the knowledge of multiple test runners in
-parallel (e.g. the timeout settings work completely differently).
+The kernel is a common blob used in all tests.  By moving it to the
+setUp() method, the "fetch asset" plugin will recognize the kernel and
+attempt to fetch it and cache it before the tests are started.
 
-So this series now starts integrating the python-based tests with the
-test runner of meson instead. Indeed most tests work quite nicely
-without the Avocado framework already. It does not convert all tests,
-just a subset so far, but this already proves that many tests only need
-small modifi- cations to work without Avocado.
+Signed-off-by: Cleber Rosa <crosa@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Tested-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Message-ID: <20240806173119.582857-7-crosa@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/avocado/boot_xen.py | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-Only tests that use the LinuxTest / LinuxDistro and LinuxSSHMixIn
-classes (e.g. based on cloud-init images or using SSH) really depend
-on the Avocado framework, so we'd need a solution for those if we
-want to convert them, too. One solution might be to simply use the
-required functions from avocado.utils for these tests, and still run
-them via the meson test runner instead, but that needs some further
-investigation that will be done later.
-
-Now if you want to try out these patches: Apply the patches, then
-recompile and then run:
-
- make check-functional
-
-You can also run single targets e.g. with:
-
- make check-functional-ppc
-
-You can also run the tests without any test runner now by
-setting the PYTHONPATH environment variable to the "python" folder
-of your source tree, and by specifying the build directory via
-QEMU_BUILD_ROOT (if autodetection fails) and by specifying the
-QEMU binary via QEMU_TEST_QEMU_BINARY. For example:
-
- export PYTHONPATH=$HOME/qemu/python
- export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
- export QEMU_BUILD_ROOT=$HOME/qemu/build
- ~/qemu/tests/functional/test_virtio_version.py
-
-The logs of the tests can be found in the build directory under
-tests/functional/<arch>/<testname> - console log and general logs will
-be put in separate files there.
-
-*** Note: The naming in the cache changed between v3 and v4 of this patch
-*** series. If you already used v3 of this patch series and want to avoid
-*** re-downloading all assets, you should rename the files in the cache
-*** like this before running the tests again:
-
-    cd ~/.cache/qemu/download/
-    for i in * ; do mv -v $i $(sha256sum $i | cut -d " " -f 1);  done
-
-v5:
-- Updated the documentation patch with information about the asset handling
-- Added "Allow asset downloading with concurrent threads" patch
-- Improved the meson.build file to be able to handle linux-user tests, too
-- Included many of Philippe's test convertions
-- Converted the vnc test
-
-v4:
-- Addressed review comments from v3 (e.g. update to MAINTAINERS file)
-- Included Cleber's patches to update Avocado tests (to avoid conflicts)
-- Drop sha1 support, use sha256 in all tests instead
-- The files in the cache are now named after the sha256 of the file
-  contents instead of the sha256 of the URL (to avoid redownloading
-  if just the URL changed)
-- Allow to set the cache location via environment variable and make
-  sure that the cache gets saved in the gitlab-CI
-- Run pre-caching as a separate command in the gitlab-CI since Ninja
-  is disabled during "make check-*" in the functional-* CI jobs
-- Convert the linux_initrd test to the new framework, too
-- Fix documentation of the acpi-bits test
-- Add documentation for the functional testing framework
-
-v3:
-- Split tests/functional/__init__.py into multiple files
-- Introduce an 'Asset' class to handle downloading & caching
-- Convert all tests to use new Asset class instead of 'fetch_asset'
-- Ensure 'make check-functional' pre-caches all assets before
-  running the tests, to avoid meson test timeouts due to slow
-  downloads
-- Fix bios bits test logging in verbose mode to not print subprocess
-  output to stdout, since it confuses TAP parsing
-
-v2:
-- Addressed review feedback from v1
-- Add pycotap as a wheel instead of trying to install it on demand
-  when running "make check-functional" (works much better now!)
-- Converted much more tests
-- Lots of other small improvements here and there
-
-RFC -> v1:
-- Now using pycotap for running the tests instead of "pytest"
-- Change the name from "tests/pytest" to "tests/functional" accordingly
-- Make it possible to run the tests directly
-- Use Python's urllib instead of wget for downloading
-- Lots of makefile / meson integration improvements
-- Converted more tests
-- Update MAINTAINERS file accordingly
-- Added a patch to run check-functional in the gitlab-CI
-- ... lots of other changes I forgot about ... in fact, I changed so
-  many things that I also did not dare to pick up the Reviewed-bys
-  from the RFC
-
-Cleber Rosa (4):
-  tests/avocado: machine aarch64: standardize location and RO access
-  tests/avocado/boot_xen.py: fetch kernel during test setUp()
-  tests/avocado/machine_aarch64_sbsaref.py: allow for rw usage of image
-  Bump avocado to 103.0
-
-Daniel P. Berrangé (2):
-  tests/functional: add a module for handling asset download & caching
-  tests/functional: enable pre-emptive caching of assets
-
-Philippe Mathieu-Daudé (7):
-  tests/functional: Convert ARM Integrator/CP avocado tests
-  tests/functional: Convert Aarch64 SBSA-Ref avocado tests
-  tests/functional: Convert Aarch64 Virt machine avocado tests
-  tests/functional: Convert mips64el Fuloong2e avocado test (1/2)
-  tests/functional: Add QemuUserTest class
-  tests/functional: Convert ARM bFLT linux-user avocado test
-  tests/avocado: Remove unused QemuUserTest class
-
-Thomas Huth (31):
-  tests/avocado/avocado_qemu: Fix the "from" statements in linuxtest.py
-  tests/avocado/boot_linux_console: Remove the s390x subtest
-  python: Install pycotap in our venv if necessary
-  tests/functional: Add base classes for the upcoming pytest-based tests
-  tests/functional: Set up logging
-  tests/Makefile.include: Increase the level of indentation in the help
-    text
-  tests/functional: Prepare the meson build system for the functional
-    tests
-  tests/functional: Convert simple avocado tests into standalone python
-    tests
-  tests/functional: Convert avocado tests that just need a small
-    adjustment
-  tests/functional: Allow asset downloading with concurrent threads
-  tests/functional: Convert some tests that download files via
-    fetch_asset()
-  tests/functional: Add a function for extracting files from an archive
-  tests/functional: Convert some avocado tests that needed
-    avocado.utils.archive
-  tests/functional: Convert the s390x avocado tests into standalone
-    tests
-  tests/functional: Convert the x86_cpu_model_versions test
-  tests/functional: Convert the microblaze avocado tests into standalone
-    tests
-  tests/functional: Convert the riscv_opensbi avocado test into a
-    standalone test
-  tests/functional: Convert the virtio_gpu avocado test into a
-    standalone test
-  tests/functional: Convert most ppc avocado tests into standalone tests
-  tests/functional: Convert the ppc_amiga avocado test into a standalone
-    test
-  tests/functional: Convert the ppc_hv avocado test into a standalone
-    test
-  tests/functional: Convert the m68k nextcube test with tesseract
-  tests/functional: Convert the acpi-bits test into a standalone test
-  tests/functional: Convert the rx_gdbsim avocado test into a standalone
-    test
-  tests/functional: Convert the linux_initrd avocado test into a
-    standalone test
-  tests/functional: Convert the vnc test
-  gitlab-ci: Add "check-functional" to the build tests
-  docs/devel: Split testing docs from the build docs and move to
-    separate folder
-  docs/devel/testing: Split the Avocado documentation into a separate
-    file
-  docs/devel/testing: Rename avocado_qemu.Test class
-  docs/devel/testing: Add documentation for functional tests
-
- MAINTAINERS                                   |  66 +-
- docs/devel/index-build.rst                    |  14 +-
- docs/devel/index.rst                          |   1 +
- docs/devel/{ => testing}/acpi-bits.rst        |  62 +-
- docs/devel/testing/avocado.rst                | 581 ++++++++++++++++++
- .../{ => testing}/ci-definitions.rst.inc      |   0
- docs/devel/{ => testing}/ci-jobs.rst.inc      |   0
- docs/devel/{ => testing}/ci-runners.rst.inc   |   0
- docs/devel/{ => testing}/ci.rst               |   0
- docs/devel/testing/functional.rst             | 338 ++++++++++
- docs/devel/{ => testing}/fuzzing.rst          |   0
- docs/devel/testing/index.rst                  |  16 +
- docs/devel/{testing.rst => testing/main.rst}  | 577 +----------------
- docs/devel/{ => testing}/qgraph.rst           |   0
- docs/devel/{ => testing}/qtest.rst            |   0
- .gitlab-ci.d/buildtest-template.yml           |  14 +-
- .gitlab-ci.d/buildtest.yml                    |  60 +-
- python/wheels/pycotap-1.3.1-py3-none-any.whl  | Bin 0 -> 5119 bytes
- pythondeps.toml                               |   3 +-
- tests/Makefile.include                        |  44 +-
- tests/avocado/avocado_qemu/__init__.py        |  17 -
- tests/avocado/avocado_qemu/linuxtest.py       |   4 +-
- tests/avocado/boot_linux_console.py           |  20 -
- tests/avocado/boot_xen.py                     |  13 +-
- tests/avocado/load_bflt.py                    |  54 --
- tests/avocado/machine_microblaze.py           |  61 --
- tests/avocado/machine_mips_loongson3v.py      |  39 --
- tests/avocado/machine_sparc64_sun4u.py        |  36 --
- tests/avocado/ppc_amiga.py                    |  38 --
- tests/avocado/riscv_opensbi.py                |  63 --
- tests/avocado/tesseract_utils.py              |  46 --
- .../acpi-bits/bits-config/bits-cfg.txt        |   0
- .../acpi-bits/bits-tests/smbios.py2           |   0
- .../acpi-bits/bits-tests/smilatency.py2       |   0
- .../acpi-bits/bits-tests/testacpi.py2         |   0
- .../acpi-bits/bits-tests/testcpuid.py2        |   0
- tests/functional/meson.build                  | 215 +++++++
- tests/functional/qemu_test/__init__.py        |  14 +
- tests/functional/qemu_test/asset.py           | 171 ++++++
- tests/functional/qemu_test/cmd.py             | 193 ++++++
- tests/functional/qemu_test/config.py          |  36 ++
- tests/functional/qemu_test/tesseract.py       |  35 ++
- tests/functional/qemu_test/testcase.py        | 202 ++++++
- tests/functional/qemu_test/utils.py           |  56 ++
- .../test_aarch64_sbsaref.py}                  | 144 ++---
- .../test_aarch64_virt.py}                     |  71 +--
- .../test_acpi_bits.py}                        |  83 +--
- tests/functional/test_arm_bflt.py             |  44 ++
- .../test_arm_canona1100.py}                   |  30 +-
- .../test_arm_integratorcp.py}                 |  56 +-
- .../test_arm_n8x0.py}                         |  36 +-
- .../test_avr_mega2560.py}                     |  22 +-
- .../test_cpu_queries.py}                      |  12 +-
- .../test_empty_cpu_model.py}                  |   7 +-
- .../test_info_usernet.py}                     |  11 +-
- .../test_linux_initrd.py}                     |  37 +-
- .../test_loongarch64_virt.py}                 |  46 +-
- .../test_m68k_nextcube.py}                    |  29 +-
- .../test_mem_addr_space.py}                   |  52 +-
- .../functional/test_microblaze_s3adsp1800.py  |  40 ++
- .../test_microblazeel_s3adsp1800.py           |  42 ++
- .../test_mips64el_fuloong2e.py}               |  33 +-
- tests/functional/test_mips64el_loongson3v.py  |  39 ++
- .../test_netdev_ethtool.py}                   |  51 +-
- .../test_pc_cpu_hotplug_props.py}             |  11 +-
- .../test_ppc64_hv.py}                         |  52 +-
- .../test_ppc64_powernv.py}                    |  56 +-
- .../test_ppc64_pseries.py}                    |  56 +-
- .../ppc_405.py => functional/test_ppc_405.py} |  29 +-
- .../test_ppc_40p.py}                          |  65 +-
- .../test_ppc_74xx.py}                         |  74 +--
- tests/functional/test_ppc_amiga.py            |  43 ++
- .../test_ppc_bamboo.py}                       |  33 +-
- .../test_ppc_mpc8544ds.py}                    |  29 +-
- .../test_ppc_virtex_ml507.py}                 |  29 +-
- tests/functional/test_riscv_opensbi.py        |  40 ++
- .../test_rx_gdbsim.py}                        |  54 +-
- .../test_s390x_ccw_virtio.py}                 |  81 ++-
- .../test_s390x_topology.py}                   |  86 +--
- tests/functional/test_sparc64_sun4u.py        |  41 ++
- .../version.py => functional/test_version.py} |  13 +-
- .../test_virtio_gpu.py}                       |  64 +-
- .../test_virtio_version.py}                   |   8 +-
- .../vnc.py => functional/test_vnc.py}         |  12 +-
- .../test_x86_cpu_model_versions.py}           |  65 +-
- tests/meson.build                             |   1 +
- 86 files changed, 2992 insertions(+), 1924 deletions(-)
- rename docs/devel/{ => testing}/acpi-bits.rst (78%)
- create mode 100644 docs/devel/testing/avocado.rst
- rename docs/devel/{ => testing}/ci-definitions.rst.inc (100%)
- rename docs/devel/{ => testing}/ci-jobs.rst.inc (100%)
- rename docs/devel/{ => testing}/ci-runners.rst.inc (100%)
- rename docs/devel/{ => testing}/ci.rst (100%)
- create mode 100644 docs/devel/testing/functional.rst
- rename docs/devel/{ => testing}/fuzzing.rst (100%)
- create mode 100644 docs/devel/testing/index.rst
- rename docs/devel/{testing.rst => testing/main.rst} (67%)
- rename docs/devel/{ => testing}/qgraph.rst (100%)
- rename docs/devel/{ => testing}/qtest.rst (100%)
- create mode 100644 python/wheels/pycotap-1.3.1-py3-none-any.whl
- delete mode 100644 tests/avocado/load_bflt.py
- delete mode 100644 tests/avocado/machine_microblaze.py
- delete mode 100644 tests/avocado/machine_mips_loongson3v.py
- delete mode 100644 tests/avocado/machine_sparc64_sun4u.py
- delete mode 100644 tests/avocado/ppc_amiga.py
- delete mode 100644 tests/avocado/riscv_opensbi.py
- delete mode 100644 tests/avocado/tesseract_utils.py
- rename tests/{avocado => functional}/acpi-bits/bits-config/bits-cfg.txt (100%)
- rename tests/{avocado => functional}/acpi-bits/bits-tests/smbios.py2 (100%)
- rename tests/{avocado => functional}/acpi-bits/bits-tests/smilatency.py2 (100%)
- rename tests/{avocado => functional}/acpi-bits/bits-tests/testacpi.py2 (100%)
- rename tests/{avocado => functional}/acpi-bits/bits-tests/testcpuid.py2 (100%)
- create mode 100644 tests/functional/meson.build
- create mode 100644 tests/functional/qemu_test/__init__.py
- create mode 100644 tests/functional/qemu_test/asset.py
- create mode 100644 tests/functional/qemu_test/cmd.py
- create mode 100644 tests/functional/qemu_test/config.py
- create mode 100644 tests/functional/qemu_test/tesseract.py
- create mode 100644 tests/functional/qemu_test/testcase.py
- create mode 100644 tests/functional/qemu_test/utils.py
- rename tests/{avocado/machine_aarch64_sbsaref.py => functional/test_aarch64_sbsaref.py} (56%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_aarch64_virt.py => functional/test_aarch64_virt.py} (68%)
- mode change 100644 => 100755
- rename tests/{avocado/acpi-bits.py => functional/test_acpi_bits.py} (86%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_arm_bflt.py
- rename tests/{avocado/machine_arm_canona1100.py => functional/test_arm_canona1100.py} (51%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_arm_integratorcp.py => functional/test_arm_integratorcp.py} (63%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_arm_n8x0.py => functional/test_arm_n8x0.py} (51%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_avr6.py => functional/test_avr_mega2560.py} (72%)
- mode change 100644 => 100755
- rename tests/{avocado/cpu_queries.py => functional/test_cpu_queries.py} (85%)
- mode change 100644 => 100755
- rename tests/{avocado/empty_cpu_model.py => functional/test_empty_cpu_model.py} (84%)
- mode change 100644 => 100755
- rename tests/{avocado/info_usernet.py => functional/test_info_usernet.py} (87%)
- mode change 100644 => 100755
- rename tests/{avocado/linux_initrd.py => functional/test_linux_initrd.py} (76%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_loongarch.py => functional/test_loongarch64_virt.py} (54%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_m68k_nextcube.py => functional/test_m68k_nextcube.py} (75%)
- mode change 100644 => 100755
- rename tests/{avocado/mem-addr-space-check.py => functional/test_mem_addr_space.py} (93%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_microblaze_s3adsp1800.py
- create mode 100755 tests/functional/test_microblazeel_s3adsp1800.py
- rename tests/{avocado/machine_mips_fuloong2e.py => functional/test_mips64el_fuloong2e.py} (58%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_mips64el_loongson3v.py
- rename tests/{avocado/netdev-ethtool.py => functional/test_netdev_ethtool.py} (66%)
- mode change 100644 => 100755
- rename tests/{avocado/pc_cpu_hotplug_props.py => functional/test_pc_cpu_hotplug_props.py} (90%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_hv_tests.py => functional/test_ppc64_hv.py} (85%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_powernv.py => functional/test_ppc64_powernv.py} (71%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_pseries.py => functional/test_ppc64_pseries.py} (76%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_405.py => functional/test_ppc_405.py} (53%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_prep_40p.py => functional/test_ppc_40p.py} (51%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_74xx.py => functional/test_ppc_74xx.py} (74%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_ppc_amiga.py
- rename tests/{avocado/ppc_bamboo.py => functional/test_ppc_bamboo.py} (60%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_mpc8544ds.py => functional/test_ppc_mpc8544ds.py} (55%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_virtex_ml507.py => functional/test_ppc_virtex_ml507.py} (60%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_riscv_opensbi.py
- rename tests/{avocado/machine_rx_gdbsim.py => functional/test_rx_gdbsim.py} (58%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_s390_ccw_virtio.py => functional/test_s390x_ccw_virtio.py} (85%)
- mode change 100644 => 100755
- rename tests/{avocado/s390_topology.py => functional/test_s390x_topology.py} (88%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_sparc64_sun4u.py
- rename tests/{avocado/version.py => functional/test_version.py} (78%)
- mode change 100644 => 100755
- rename tests/{avocado/virtio-gpu.py => functional/test_virtio_gpu.py} (73%)
- mode change 100644 => 100755
- rename tests/{avocado/virtio_version.py => functional/test_virtio_version.py} (98%)
- mode change 100644 => 100755
- rename tests/{avocado/vnc.py => functional/test_vnc.py} (97%)
- mode change 100644 => 100755
- rename tests/{avocado/x86_cpu_model_versions.py => functional/test_x86_cpu_model_versions.py} (92%)
- mode change 100644 => 100755
-
+diff --git a/tests/avocado/boot_xen.py b/tests/avocado/boot_xen.py
+index f29bc58b9e..490a127a3e 100644
+--- a/tests/avocado/boot_xen.py
++++ b/tests/avocado/boot_xen.py
+@@ -30,23 +30,22 @@ class BootXen(LinuxKernelTest):
+     timeout = 90
+     XEN_COMMON_COMMAND_LINE = 'dom0_mem=128M loglvl=all guest_loglvl=all'
+ 
+-    def fetch_guest_kernel(self):
++    def setUp(self):
++        super(BootXen, self).setUp()
++
+         # Using my own built kernel - which works
+         kernel_url = ('https://fileserver.linaro.org/'
+                       's/JSsewXGZ6mqxPr5/download?path=%2F&files='
+                       'linux-5.9.9-arm64-ajb')
+         kernel_sha1 = '4f92bc4b9f88d5ab792fa7a43a68555d344e1b83'
+-        kernel_path = self.fetch_asset(kernel_url,
+-                                       asset_hash=kernel_sha1)
+-
+-        return kernel_path
++        self.kernel_path = self.fetch_asset(kernel_url,
++                                            asset_hash=kernel_sha1)
+ 
+     def launch_xen(self, xen_path):
+         """
+         Launch Xen with a dom0 guest kernel
+         """
+         self.log.info("launch with xen_path: %s", xen_path)
+-        kernel_path = self.fetch_guest_kernel()
+ 
+         self.vm.set_console()
+ 
+@@ -56,7 +55,7 @@ def launch_xen(self, xen_path):
+                          '-append', self.XEN_COMMON_COMMAND_LINE,
+                          '-device',
+                          'guest-loader,addr=0x47000000,kernel=%s,bootargs=console=hvc0'
+-                         % (kernel_path))
++                         % (self.kernel_path))
+ 
+         self.vm.launch()
+ 
 -- 
 2.46.0
 
