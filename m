@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD735CA0FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28712CA0FF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 13:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk1t7-0005D5-6b; Fri, 30 Aug 2024 09:42:05 -0400
+	id 1sk1sK-00073w-57; Fri, 30 Aug 2024 09:41:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1t5-0004zR-70
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:42:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1sF-0006KE-8A
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1t3-0005gZ-4R
- for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:42:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sk1sC-0005am-TZ
+ for qemu-devel@nongnu.org; Fri, 30 Aug 2024 09:41:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725025320;
+ s=mimecast20190719; t=1725025268;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QkhJavEe0X0q0yUh49xPwf3nJaS3G+VwicrY9S8SqGo=;
- b=dxPTwxkVRTh3fiGoG/DyWoL5svGyus8KyF3R5eaEXbUO8jXaht/eWCKUKmuFopD0PlrquT
- a0uUJGsbA7KhtJPsFdhvTFVhDBj54+uGaN6JVszuRrUk0CeC6fFYKJR1XyPXNphQ052Jip
- 6gKwKz5AwjnelNQAlZ21GTv0/PhFeEQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1h8nsjSdCePfHdUZXnTEXll7gpGJ8XJl5SgCjjKp8XU=;
+ b=fwpgEQ1mlTlEho/qeXDBUC992Ei4KoDWnwz89uSB+s3qJ+GvGPcmrKdAco9aATkl4t+YhU
+ I9gBM6p3BhZ61P3pT4SfiT6Z8fzA/dXwL75Gr/GHOpYCF6PT1YnK7mx3ffemUvVy8pF7GD
+ ftlbQ5a9Sbn4ll7HvxapeNVkj/ZHaOQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-0vorLHPHOR-xvx6HduCGIg-1; Fri,
- 30 Aug 2024 09:41:59 -0400
-X-MC-Unique: 0vorLHPHOR-xvx6HduCGIg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-CjnsKdGpOnqasfWp41wcxw-1; Fri,
+ 30 Aug 2024 09:41:05 -0400
+X-MC-Unique: CjnsKdGpOnqasfWp41wcxw-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B7341955F2D; Fri, 30 Aug 2024 13:41:58 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 014A819560B0; Fri, 30 Aug 2024 13:41:04 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3EF0C300019C; Fri, 30 Aug 2024 13:41:53 +0000 (UTC)
+ id 0AA74300019C; Fri, 30 Aug 2024 13:40:59 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -52,9 +52,10 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v5 43/44] docs/devel/testing: Rename avocado_qemu.Test class
-Date: Fri, 30 Aug 2024 15:38:37 +0200
-Message-ID: <20240830133841.142644-44-thuth@redhat.com>
+Subject: [PATCH v5 30/44] tests/functional: Convert the rx_gdbsim avocado test
+ into a standalone test
+Date: Fri, 30 Aug 2024 15:38:24 +0200
+Message-ID: <20240830133841.142644-31-thuth@redhat.com>
 In-Reply-To: <20240830133841.142644-1-thuth@redhat.com>
 References: <20240830133841.142644-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -87,116 +88,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The avocado_qemu.Test class has been renamed a while back in commit
-2283b627bc ("tests/avocado: Rename avocado_qemu.Test -> QemuSystemTest"),
-so we should reflect this now in the documentation, too.
+Provide a "gzip_uncompress" function based on the standard "gzip" module
+to avoid the usage of avocado.utils here.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/testing/avocado.rst | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ MAINTAINERS                                   |  2 +-
+ tests/functional/meson.build                  |  4 ++
+ tests/functional/qemu_test/utils.py           | 12 +++++
+ .../test_rx_gdbsim.py}                        | 54 ++++++++++---------
+ 4 files changed, 46 insertions(+), 26 deletions(-)
+ rename tests/{avocado/machine_rx_gdbsim.py => functional/test_rx_gdbsim.py} (58%)
+ mode change 100644 => 100755
 
-diff --git a/docs/devel/testing/avocado.rst b/docs/devel/testing/avocado.rst
-index 0d207a05c5..eda76fe2db 100644
---- a/docs/devel/testing/avocado.rst
-+++ b/docs/devel/testing/avocado.rst
-@@ -8,11 +8,11 @@ The ``tests/avocado`` directory hosts integration tests. They're usually
- higher level tests, and may interact with external resources and with
- various guest operating systems.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c2dfb3dad3..25e71ac14c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1665,7 +1665,7 @@ R: Yoshinori Sato <ysato@users.sourceforge.jp>
+ S: Orphan
+ F: docs/system/target-rx.rst
+ F: hw/rx/rx-gdbsim.c
+-F: tests/avocado/machine_rx_gdbsim.py
++F: tests/functional/test_rx_gdbsim.py
  
--These tests are written using the Avocado Testing Framework (which must
--be installed separately) in conjunction with a the ``avocado_qemu.Test``
-+These tests are written using the Avocado Testing Framework (which must be
-+installed separately) in conjunction with a the ``avocado_qemu.QemuSystemTest``
- class, implemented at ``tests/avocado/avocado_qemu``.
+ SH4 Machines
+ ------------
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 76eb00ef46..bb511482cb 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -88,6 +88,10 @@ tests_riscv64_system_quick = [
+   'riscv_opensbi',
+ ]
  
--Tests based on ``avocado_qemu.Test`` can easily:
-+Tests based on ``avocado_qemu.QemuSystemTest`` can easily:
++tests_rx_system_thorough = [
++  'rx_gdbsim',
++]
++
+ tests_s390x_system_thorough = [
+   's390x_ccw_virtio',
+   's390x_topology',
+diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
+index a12dac51b6..99eae5fc45 100644
+--- a/tests/functional/qemu_test/utils.py
++++ b/tests/functional/qemu_test/utils.py
+@@ -8,6 +8,7 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
  
-  * Customize the command line arguments given to the convenience
-    ``self.vm`` attribute (a QEMUMachine instance)
-@@ -154,7 +154,7 @@ Overview
- --------
++import gzip
+ import lzma
+ import os
+ import shutil
+@@ -23,6 +24,17 @@ def archive_extract(archive, dest_dir, member=None):
+         else:
+             tf.extractall(path=dest_dir)
  
- The ``tests/avocado/avocado_qemu`` directory provides the
--``avocado_qemu`` Python module, containing the ``avocado_qemu.Test``
-+``avocado_qemu`` Python module, containing the ``avocado_qemu.QemuSystemTest``
- class.  Here's a simple usage example:
++def gzip_uncompress(gz_path, output_path):
++    if os.path.exists(output_path):
++        return
++    with gzip.open(gz_path, 'rb') as gz_in:
++        try:
++            with open(output_path, 'wb') as raw_out:
++                shutil.copyfileobj(gz_in, raw_out)
++        except:
++            os.remove(output_path)
++            raise
++
+ def lzma_uncompress(xz_path, output_path):
+     if os.path.exists(output_path):
+         return
+diff --git a/tests/avocado/machine_rx_gdbsim.py b/tests/functional/test_rx_gdbsim.py
+old mode 100644
+new mode 100755
+similarity index 58%
+rename from tests/avocado/machine_rx_gdbsim.py
+rename to tests/functional/test_rx_gdbsim.py
+index 6bd9ce8199..5687f756bb
+--- a/tests/avocado/machine_rx_gdbsim.py
++++ b/tests/functional/test_rx_gdbsim.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional test that boots a Linux kernel and checks the console
+ #
+ # Copyright (c) 2018 Red Hat, Inc.
+@@ -10,11 +12,11 @@
  
- .. code::
-@@ -186,11 +186,11 @@ in the current directory, tagged as "quick", run:
+ import os
  
-   avocado run -t quick .
+-from avocado import skipUnless
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import exec_command_and_wait_for_pattern
+-from avocado_qemu import wait_for_console_pattern
+-from avocado.utils import archive
++from unittest import skipUnless
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
++from qemu_test.utils import gzip_uncompress
  
--The ``avocado_qemu.Test`` base test class
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+The ``avocado_qemu.QemuSystemTest`` base test class
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
--The ``avocado_qemu.Test`` class has a number of characteristics that
--are worth being mentioned right away.
-+The ``avocado_qemu.QemuSystemTest`` class has a number of characteristics
-+that are worth being mentioned right away.
+ class RxGdbSimMachine(QemuSystemTest):
+@@ -22,19 +24,25 @@ class RxGdbSimMachine(QemuSystemTest):
+     timeout = 30
+     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
  
- First of all, it attempts to give each test a ready to use QEMUMachine
- instance, available at ``self.vm``.  Because many tests will tweak the
-@@ -233,15 +233,15 @@ and hypothetical example follows:
++    ASSET_UBOOT = Asset(
++        'https://acc.dl.osdn.jp/users/23/23888/u-boot.bin.gz',
++        '7146567d669e91dbac166384b29aeba1715beb844c8551e904b86831bfd9d046')
++    ASSET_DTB = Asset(
++        'https://acc.dl.osdn.jp/users/23/23887/rx-virt.dtb',
++        'aa278d9c1907a4501741d7ee57e7f65c02dd1b3e0323b33c6d4247f1b32cf29a')
++    ASSET_KERNEL = Asset(
++        'http://acc.dl.osdn.jp/users/23/23845/zImage',
++        'baa43205e74a7220ed8482188c5e9ce497226712abb7f4e7e4f825ce19ff9656')
++
+     def test_uboot(self):
+         """
+         U-Boot and checks that the console is operational.
+-
+-        :avocado: tags=arch:rx
+-        :avocado: tags=machine:gdbsim-r5f562n8
+-        :avocado: tags=endian:little
+-        :avocado: tags=flaky
+         """
+-        uboot_url = ('https://acc.dl.osdn.jp/users/23/23888/u-boot.bin.gz')
+-        uboot_hash = '9b78dbd43b40b2526848c0b1ce9de02c24f4dcdb'
+-        uboot_path = self.fetch_asset(uboot_url, asset_hash=uboot_hash)
+-        uboot_path = archive.uncompress(uboot_path, self.workdir)
++        self.set_machine('gdbsim-r5f562n8')
++
++        uboot_path_gz = self.ASSET_UBOOT.fetch()
++        uboot_path = os.path.join(self.workdir, 'u-boot.bin')
++        gzip_uncompress(uboot_path_gz, uboot_path)
  
-           self.assertEqual(first_res, second_res, third_res)
+         self.vm.set_console()
+         self.vm.add_args('-bios', uboot_path,
+@@ -50,18 +58,11 @@ def test_uboot(self):
+     def test_linux_sash(self):
+         """
+         Boots a Linux kernel and checks that the console is operational.
+-
+-        :avocado: tags=arch:rx
+-        :avocado: tags=machine:gdbsim-r5f562n7
+-        :avocado: tags=endian:little
+-        :avocado: tags=flaky
+         """
+-        dtb_url = ('https://acc.dl.osdn.jp/users/23/23887/rx-virt.dtb')
+-        dtb_hash = '7b4e4e2c71905da44e86ce47adee2210b026ac18'
+-        dtb_path = self.fetch_asset(dtb_url, asset_hash=dtb_hash)
+-        kernel_url = ('http://acc.dl.osdn.jp/users/23/23845/zImage')
+-        kernel_hash = '39a81067f8d72faad90866ddfefa19165d68fc99'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
++        self.set_machine('gdbsim-r5f562n7')
++
++        dtb_path = self.ASSET_DTB.fetch()
++        kernel_path = self.ASSET_KERNEL.fetch()
  
--At test "tear down", ``avocado_qemu.Test`` handles all the QEMUMachines
--shutdown.
-+At test "tear down", ``avocado_qemu.QemuSystemTest`` handles all the
-+QEMUMachines shutdown.
- 
- The ``avocado_qemu.LinuxTest`` base test class
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
- The ``avocado_qemu.LinuxTest`` is further specialization of the
--``avocado_qemu.Test`` class, so it contains all the characteristics of
--the later plus some extra features.
-+``avocado_qemu.QemuSystemTest`` class, so it contains all the characteristics
-+of the later plus some extra features.
- 
- First of all, this base class is intended for tests that need to
- interact with a fully booted and operational Linux guest.  At this
-@@ -298,7 +298,7 @@ the following approaches:
-    working directory, or in the current source tree.
- 
- The resulting ``qemu_bin`` value will be preserved in the
--``avocado_qemu.Test`` as an attribute with the same name.
-+``avocado_qemu.QemuSystemTest`` as an attribute with the same name.
- 
- Attribute reference
- -------------------
-@@ -308,7 +308,7 @@ Test
- 
- Besides the attributes and methods that are part of the base
- ``avocado.Test`` class, the following attributes are available on any
--``avocado_qemu.Test`` instance.
-+``avocado_qemu.QemuSystemTest`` instance.
- 
- vm
- ""
-@@ -365,7 +365,7 @@ source tree.
- LinuxTest
- ^^^^^^^^^
- 
--Besides the attributes present on the ``avocado_qemu.Test`` base
-+Besides the attributes present on the ``avocado_qemu.QemuSystemTest`` base
- class, the ``avocado_qemu.LinuxTest`` adds the following attributes:
- 
- distro
-@@ -446,7 +446,7 @@ The exact QEMU binary to be used on QEMUMachine.
- LinuxTest
- ^^^^^^^^^
- 
--Besides the parameters present on the ``avocado_qemu.Test`` base
-+Besides the parameters present on the ``avocado_qemu.QemuSystemTest`` base
- class, the ``avocado_qemu.LinuxTest`` adds the following parameters:
- 
- distro
+         self.vm.set_console()
+         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'earlycon'
+@@ -72,3 +73,6 @@ def test_linux_sash(self):
+         wait_for_console_pattern(self, 'Sash command shell (version 1.1.1)',
+                                  failure_message='Kernel panic - not syncing')
+         exec_command_and_wait_for_pattern(self, 'printenv', 'TERM=linux')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.46.0
 
