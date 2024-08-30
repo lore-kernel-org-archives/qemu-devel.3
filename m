@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCEBCA0ED2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 03:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E6EECA0EE5
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 04:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjs7h-00067w-QI; Thu, 29 Aug 2024 23:16:29 -0400
+	id 1sjt3y-0005nb-Et; Fri, 30 Aug 2024 00:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1sjs7d-00062M-Ne
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 23:16:25 -0400
+ id 1sjt3s-0005g7-AX; Fri, 30 Aug 2024 00:16:36 -0400
 Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1sjs7b-0002Ht-Ez
- for qemu-devel@nongnu.org; Thu, 29 Aug 2024 23:16:25 -0400
+ (envelope-from <wangyuquan1236@phytium.com.cn>)
+ id 1sjt3q-0001hF-7s; Fri, 30 Aug 2024 00:16:36 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCH3saDOdFm1Z6AAg--.18288S2;
- Fri, 30 Aug 2024 11:16:19 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwCHjSGWR9Fmws5CAg--.63162S2;
+ Fri, 30 Aug 2024 12:16:22 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwAnVLRyOdFmhaMpAA--.16473S5;
- Fri, 30 Aug 2024 11:16:15 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwC34bGOR9FmmakpAA--.16568S4;
+ Fri, 30 Aug 2024 12:16:21 +0800 (CST)
 From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: Jonathan.Cameron@Huawei.com, ardb+tianocore@kernel.org,
- quic_llindhol@quicinc.com, peter.maydell@linaro.org
-Cc: devel@edk2.groups.io, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+To: Jonathan.Cameron@Huawei.com, quic_llindhol@quicinc.com,
+ peter.maydell@linaro.org, marcin.juszkiewicz@linaro.org
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
  chenbaozi@phytium.com.cn, wangyinfeng@phytium.com.cn,
  shuyiqi@phytium.com.cn, Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [RFC PATCH edk2-platforms 2/2] SbsaQemu: AcpiTables: Add CEDT Table
-Date: Fri, 30 Aug 2024 11:15:45 +0800
-Message-Id: <20240830031545.548789-3-wangyuquan1236@phytium.com.cn>
+Subject: [RFC PATCH 1/2] hw/arm/sbsa-ref: Enable CXL Host Bridge by pxb-cxl
+Date: Fri, 30 Aug 2024 12:15:56 +0800
+Message-Id: <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240830031545.548789-1-wangyuquan1236@phytium.com.cn>
-References: <20240830031545.548789-1-wangyuquan1236@phytium.com.cn>
+In-Reply-To: <20240830041557.600607-1-wangyuquan1236@phytium.com.cn>
+References: <20240830041557.600607-1-wangyuquan1236@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAnVLRyOdFmhaMpAA--.16473S5
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQANAWbQ2MkCEAAAs4
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
+X-CM-TRANSID: AQAAfwC34bGOR9FmmakpAA--.16568S4
+X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQANAWbQ2MkCWwAAsz
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
  1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxWF4kWr47CFWktw1kXF17GFg_yoWrKry3pF
- 1IvFZYkr4kA343tr4xGanYvF4YkFya9F4DCa9xXr1UCrsxJF1UXa15Ka4IvFy7J3Z3Zw4D
- GF4Iv34jvr4fu3DanT9S1TB71UUUUjUqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxXr48Jr1UGFy5KFWrJFyrZwb_yoWrXFyUpF
+ 45ur95CrW8GF17ArZ3Z347GF45Wayvkayjyry7Cr9YyF17Gr1Fq3ykK3WUKa47JFWDt34j
+ 9FZxZr1fWr17AaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=129.150.39.64;
@@ -74,139 +73,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide CXL Early Discovery Table that describes the static CXL
-Platform Components of sbsa-ref.
-
-This adds a static CXL Host Bridge structure and a CXL Fixed Memory
-Window structure which are implemented as two independent space on
-sbsa-ref: [SBSA_CXL_HOST] & [SBSA_CXL_FIXED_WINDOW].
+The memory layout places 1M space for 16 host bridge register regions
+in the sbsa-ref memmap. In addition, this creates a default pxb-cxl
+(bus_nr=0xfe) bridge with one cxl-rp on sbsa-ref.
 
 Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
 ---
- .../Qemu/SbsaQemu/AcpiTables/AcpiTables.inf   |  6 +-
- Silicon/Qemu/SbsaQemu/AcpiTables/Cedt.aslc    | 70 +++++++++++++++++++
- Silicon/Qemu/SbsaQemu/SbsaQemu.dec            |  7 ++
- 3 files changed, 82 insertions(+), 1 deletion(-)
- create mode 100644 Silicon/Qemu/SbsaQemu/AcpiTables/Cedt.aslc
+ hw/arm/sbsa-ref.c | 54 ++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 51 insertions(+), 3 deletions(-)
 
-diff --git a/Silicon/Qemu/SbsaQemu/AcpiTables/AcpiTables.inf b/Silicon/Qemu/SbsaQemu/AcpiTables/AcpiTables.inf
-index b4d5aa807bd9..f39b06d708d5 100644
---- a/Silicon/Qemu/SbsaQemu/AcpiTables/AcpiTables.inf
-+++ b/Silicon/Qemu/SbsaQemu/AcpiTables/AcpiTables.inf
-@@ -21,7 +21,7 @@
-   Fadt.aslc
-   Mcfg.aslc
-   Spcr.aslc
--
-+  Cedt.aslc
- [Packages]
-   ArmPlatformPkg/ArmPlatformPkg.dec
-   ArmPkg/ArmPkg.dec
-@@ -78,6 +78,10 @@
-   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCxlBarSize
-   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCxlBarLimit
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index ae37a92301..dc924d181e 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -41,7 +41,10 @@
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/intc/arm_gicv3_its_common.h"
+ #include "hw/loader.h"
++#include "hw/pci/pci_bridge.h"
++#include "hw/pci/pci_bus.h"
+ #include "hw/pci-host/gpex.h"
++#include "hw/pci-bridge/pci_expander_bridge.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/usb.h"
+ #include "hw/usb/xhci.h"
+@@ -52,6 +55,8 @@
+ #include "qom/object.h"
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/gtimer.h"
++#include "hw/cxl/cxl.h"
++#include "hw/cxl/cxl_host.h"
  
-+  gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdChbcrBase
-+  gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCfmwsBase
-+  gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCfmwsSize
-+
-   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase
+ #define RAMLIMIT_GB 8192
+ #define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
+@@ -94,6 +99,7 @@ enum {
+     SBSA_SECURE_MEM,
+     SBSA_AHCI,
+     SBSA_XHCI,
++    SBSA_CXL_HOST,
+ };
  
-   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdPlatformAhciBase
-diff --git a/Silicon/Qemu/SbsaQemu/AcpiTables/Cedt.aslc b/Silicon/Qemu/SbsaQemu/AcpiTables/Cedt.aslc
-new file mode 100644
-index 000000000000..66c9dc8858bc
---- /dev/null
-+++ b/Silicon/Qemu/SbsaQemu/AcpiTables/Cedt.aslc
-@@ -0,0 +1,70 @@
-+/** @file
-+*  CXL Early Discovery Table (CEDT)
-+*
-+*  Copyright (c) 2024, Phytium Technology Co Ltd. All rights reserved.
-+*
-+**/
-+
-+#include <IndustryStandard/CXLEarlyDiscoveryTable.h>
-+#include <IndustryStandard/Acpi64.h>
-+#include <IndustryStandard/SbsaQemuAcpi.h>
-+
-+#pragma pack(1)
-+
-+typedef struct
+ struct SBSAMachineState {
+@@ -105,6 +111,9 @@ struct SBSAMachineState {
+     int psci_conduit;
+     DeviceState *gic;
+     PFlashCFI01 *flash[2];
++    CXLState cxl_devices_state;
++    PCIBus *bus;
++    PCIBus *cxlbus;
+ };
+ 
+ #define TYPE_SBSA_MACHINE   MACHINE_TYPE_NAME("sbsa-ref")
+@@ -132,6 +141,8 @@ static const MemMapEntry sbsa_ref_memmap[] = {
+     /* Space here reserved for more SMMUs */
+     [SBSA_AHCI] =               { 0x60100000, 0x00010000 },
+     [SBSA_XHCI] =               { 0x60110000, 0x00010000 },
++    /* 1M CXL Host Bridge Registers space (64KiB * 16) */
++    [SBSA_CXL_HOST] =           { 0x60120000, 0x00100000 },
+     /* Space here reserved for other devices */
+     [SBSA_PCIE_PIO] =           { 0x7fff0000, 0x00010000 },
+     /* 32-bit address PCIE MMIO space */
+@@ -631,6 +642,26 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
+     }
+ }
+ 
++static void create_pxb_cxl(SBSAMachineState *sms)
 +{
-+  EFI_ACPI_6_4_CXL_Early_Discovery_TABLE           Header;
-+  EFI_ACPI_6_4_CXL_Host_Bridge_Structure           Chbs;
-+  EFI_ACPI_6_4_CXL_Fixed_Memory_Window_Structure   Cfmws;
-+} SBSA_REF_CEDT;
++    CXLHost *host;
++    PCIHostState *cxl;
 +
++    sms->cxl_devices_state.is_enabled = true;
 +
-+SBSA_REF_CEDT Cedt =
-+{
-+  // EFI_ACPI_6_4_CXL_Early_Discovery_TABLE(Header)
-+  {
-+     SBSAQEMU_ACPI_HEADER  // EFI_ACPI_DESCRIPTION_HEADER
-+     (
-+       EFI_ACPI_6_4_CXL_EARLY_DISCOVERY_TABLE_SIGNATURE,
-+       SBSA_REF_CEDT,
-+       EFI_ACPI_CXL_Early_Discovery_TABLE_REVISION_01
-+     ),
-+  },
-+  // EFI_ACPI_6_4_CXL_Host_Bridge_Structure
-+  {
-+    // EFI_ACPI_6_4_CEDT_Structure
-+    {
-+        EFI_ACPI_CEDT_TYPE_CHBS,                                 // Type
-+        0,                                                       // Reserved
-+        sizeof (EFI_ACPI_6_4_CXL_Host_Bridge_Structure),         // Length
-+    },
-+    FixedPcdGet32 (PcdCxlBusMin),          // UID
-+    0x1,                                   // CXLVersion
-+    0,                                     // Reserved
-+    FixedPcdGet32 (PcdChbcrBase),          // CHBCR Base
-+    0X10000,                               // Length
-+  },
-+  // EFI_ACPI_6_4_CXL_Fixed_Memory_Window_Structure
-+  {
-+    // EFI_ACPI_6_4_CEDT_Structure
-+    {
-+        EFI_ACPI_CEDT_TYPE_CFMWS,                                // Type
-+        0,                                                       // Reserved
-+        sizeof (EFI_ACPI_6_4_CXL_Fixed_Memory_Window_Structure), // Length
-+    },
-+    0,                                     // Reserved
-+    FixedPcdGet32 (PcdCfmwsBase),          // BaseHPA
-+    FixedPcdGet32 (PcdCfmwsSize),          // WindowSize
-+    0,                                     // InterleaveMembers
-+    0,                                     // InterleaveArithmetic
-+    0,                                     // Reserved1
-+    0,                                     // Granularity
-+    0xF,                                   // Restrictions
-+    0,                                     // QtgId
-+    FixedPcdGet32 (PcdCxlBusMin),          // FirstTarget
-+  }
-+};
++    DeviceState *qdev;
++    qdev = qdev_new(TYPE_PXB_CXL_DEV);
++    qdev_prop_set_uint32(qdev, "bus_nr", 0xfe);
 +
-+#pragma pack ()
++    PCIDevice *dev = PCI_DEVICE(qdev);
++    pci_realize_and_unref(dev, sms->bus, &error_fatal);
 +
-+VOID* CONST ReferenceAcpiTable = &Cedt;
-diff --git a/Silicon/Qemu/SbsaQemu/SbsaQemu.dec b/Silicon/Qemu/SbsaQemu/SbsaQemu.dec
-index 7d8c7997160b..dff838315d06 100644
---- a/Silicon/Qemu/SbsaQemu/SbsaQemu.dec
-+++ b/Silicon/Qemu/SbsaQemu/SbsaQemu.dec
-@@ -65,6 +65,13 @@ HardwareInfoLib|Include/Library/HardwareInfoLib.h
-   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCxlBusMin|254|UINT32|0x00000019
-   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCxlBusMax|255|UINT32|0x00000020
++    host = PXB_CXL_DEV(dev)->cxl_host_bridge;
++    cxl = PCI_HOST_BRIDGE(host);
++    sms->cxlbus = cxl->bus;
++    pci_create_simple(sms->cxlbus, -1, "cxl-rp");
++}
++
+ static void create_pcie(SBSAMachineState *sms)
+ {
+     hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
+@@ -682,12 +713,25 @@ static void create_pcie(SBSAMachineState *sms)
+     }
  
-+  # PCDs complementing base address for CXL CHBCR (CXL Host Bridge Component Registers)
-+  gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdChbcrBase|0x60120000|UINT64|0x00000021
+     pci = PCI_HOST_BRIDGE(dev);
++    sms->bus = pci->bus;
 +
-+  # CXL Fixed Memory Window
-+  gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCfmwsBase|0xA0000000000|UINT64|0x00000022
-+  gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdCfmwsSize|0x10000000000|UINT64|0x00000023
++    pci_init_nic_devices(sms->bus, mc->default_nic);
+ 
+-    pci_init_nic_devices(pci->bus, mc->default_nic);
++    pci_create_simple(sms->bus, -1, "bochs-display");
+ 
+-    pci_create_simple(pci->bus, -1, "bochs-display");
++    create_smmu(sms, sms->bus);
+ 
+-    create_smmu(sms, pci->bus);
++    create_pxb_cxl(sms);
++}
 +
- [PcdsDynamic.common]
-   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdSystemManufacturer|L""|VOID*|0x00000110
-   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdSystemSerialNumber|L""|VOID*|0x00000111
++static void create_cxl_host_reg_region(SBSAMachineState *sms)
++{
++    MemoryRegion *sysmem = get_system_memory();
++    MemoryRegion *mr = &sms->cxl_devices_state.host_mr;
++
++    memory_region_init(mr, OBJECT(sms), "cxl_host_reg",
++                       sbsa_ref_memmap[SBSA_CXL_HOST].size);
++    memory_region_add_subregion(sysmem, sbsa_ref_memmap[SBSA_CXL_HOST].base, mr);
+ }
+ 
+ static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
+@@ -823,6 +867,10 @@ static void sbsa_ref_init(MachineState *machine)
+ 
+     create_pcie(sms);
+ 
++    create_cxl_host_reg_region(sms);
++
++    cxl_hook_up_pxb_registers(sms->bus, &sms->cxl_devices_state, &error_fatal);
++
+     create_secure_ec(secure_sysmem);
+ 
+     sms->bootinfo.ram_size = machine->ram_size;
 -- 
 2.34.1
 
