@@ -4,202 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53726CA0EF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 08:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03058CA0EFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 09:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sjxLa-0003m5-FQ; Fri, 30 Aug 2024 04:51:10 -0400
+	id 1sjyJO-0005Qt-Rj; Fri, 30 Aug 2024 05:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@intel.com>)
- id 1sjxLY-0003j5-3Z; Fri, 30 Aug 2024 04:51:08 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sjyJH-0005Nf-Tl; Fri, 30 Aug 2024 05:52:52 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@intel.com>)
- id 1sjxLT-0007u0-Cm; Fri, 30 Aug 2024 04:51:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1725007863; x=1756543863;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=i99QEQBzVWbniav03MRI+WI7bnLAhcZjvtoIj6ubLR8=;
- b=l952u/X08pn2l4Q+nzY5kgYBJ28F+cNVFetYBWvYKxN8kamAF4dO9R0g
- ii6aaZXcg29B3E+jTwiC8W30OB1Y2I5fYANv16f5cL9qXKNFfI/Mj5W7P
- NYjG2lvd8eVOrGqtofsA8+qtOHIYwnbGP2ncLqPgVffwKDUGipuMmYL4Q
- t8ni4bnHxJwqb6l4pVTw3KTvC5A8JcOMVrKybJC5dnnK0TP7+8sonG70n
- 8KM5FsfzzN9LTx5omFbse32pPwjBUspBhhstcWvOWCypD4XadylRmhol9
- XNi62+aNRhoBxtaoOipAazeav1hkyNvMUEXPlUs4ezuPrk0uhRDm0nzY+ Q==;
-X-CSE-ConnectionGUID: 1qFgtObRRkG0fSQtj6Ixtw==
-X-CSE-MsgGUID: TwjBkG7VS2W1knaguI0ucw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11179"; a="23208102"
-X-IronPort-AV: E=Sophos;i="6.10,188,1719903600"; d="scan'208";a="23208102"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Aug 2024 01:51:00 -0700
-X-CSE-ConnectionGUID: VGf0lVytRYCMbrkLoW3SUQ==
-X-CSE-MsgGUID: ysgEAuBSTfmErLYBLjiDFQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,188,1719903600"; d="scan'208";a="68236224"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
- by fmviesa005.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 30 Aug 2024 01:50:59 -0700
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 30 Aug 2024 01:50:59 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Fri, 30 Aug 2024 01:50:59 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.172)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 30 Aug 2024 01:50:59 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mXJBMNnNna07ltL3HO6279MWYo5OBsW3BBXHzvsMP/UNSfD6bAG50j3tDLuopadOUGy7wA62m9fWP342w5s1Qvwv4YJvRUta6QxWnBiKNshRhodaMKniuMBqdHqQDf3uxkY3OODKmW+r0Kh0lBaChi/CCSMVkSEy2IaushxbWmrrQfHdQMw1UcA650WoaQrkRQL+eiqs/ENuUdY1Rq47vOwFvnL2GIZlpj9ef1r3iwdwyEUDCH4v14KApaAT0JUXTr36OtiAYvNN9+lJ7rahf63KfXHY2D/iV+mhSp4qz26Wr2jgyiUV+xPVvv3vuI5n2D/EKNTM95DUXWDzElb+IQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X3jTt/zAjcQ/lZ0Mx2bovUoaMrAY7LyKXErDL51s+9c=;
- b=sDfVhz7NkftqQMsE1L6cx4gyP7D7x1ZzcdctJpLnojc/lJu5RQylESL+GsuecE/2lr0TU4/87AkRlzmiE9eQFiAbb8JWZJTXHeA5RGtgLUrx2hjRMIxRAkgjZ0LEbcxB13Ln3u5RJOczDc0XC1axzk9JFNtvZQeTcghQ+TVla8fgPAGaVn4RuNnwXl/D5NQXjs3ioSVXR4uPtqYmqMzuph9Rr2sfrkViAYrQ7id0QjpUGnFwx1TVBavBR3So0Q5gF0Qhg0tk8Q1sc+xNqOs853Usq4PEmb+LVIdKz9zBi+GoE5/9W32VFgKy/GJCAPTDxCDJE+jPA4QVO/At9IydQQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CY8PR11MB7009.namprd11.prod.outlook.com (2603:10b6:930:57::12)
- by MN0PR11MB6060.namprd11.prod.outlook.com (2603:10b6:208:378::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.20; Fri, 30 Aug
- 2024 08:50:56 +0000
-Received: from CY8PR11MB7009.namprd11.prod.outlook.com
- ([fe80::7ebc:871a:bc7f:1eed]) by CY8PR11MB7009.namprd11.prod.outlook.com
- ([fe80::7ebc:871a:bc7f:1eed%4]) with mapi id 15.20.7897.027; Fri, 30 Aug 2024
- 08:50:56 +0000
-Message-ID: <8b82efb4-74a7-4d46-8ba9-c7354a812623@intel.com>
-Date: Fri, 30 Aug 2024 16:50:45 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v9 7/9] rust: add crate to expose bindings and
- interfaces
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-CC: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, "open list:ARM
- SMMU" <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Richard Henderson
- <richard.henderson@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240828-rust-pl011-v9-0-35579191f17c@linaro.org>
- <20240828-rust-pl011-v9-7-35579191f17c@linaro.org>
- <871q284wxk.fsf@draig.linaro.org>
- <dd2ed180-3624-4981-adb7-c78e699048a7@intel.com>
- <CAAjaMXZhvq3qppgEhs5zB-M=hfDFNT993XCUp0ZKPFmVxFXL2Q@mail.gmail.com>
-Content-Language: en-US
-From: Junjie Mao <junjie.mao@intel.com>
-In-Reply-To: <CAAjaMXZhvq3qppgEhs5zB-M=hfDFNT993XCUp0ZKPFmVxFXL2Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SG2PR01CA0197.apcprd01.prod.exchangelabs.com
- (2603:1096:4:189::8) To CY8PR11MB7009.namprd11.prod.outlook.com
- (2603:10b6:930:57::12)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sjyJE-00060r-Rb; Fri, 30 Aug 2024 05:52:51 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WwCz8038Hz6K5q9;
+ Fri, 30 Aug 2024 17:49:08 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id A1083140736;
+ Fri, 30 Aug 2024 17:52:31 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 30 Aug
+ 2024 10:52:31 +0100
+Date: Fri, 30 Aug 2024 10:52:30 +0100
+To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+CC: <quic_llindhol@quicinc.com>, <peter.maydell@linaro.org>,
+ <marcin.juszkiewicz@linaro.org>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <chenbaozi@phytium.com.cn>, <wangyinfeng@phytium.com.cn>,
+ <shuyiqi@phytium.com.cn>
+Subject: Re: [RFC PATCH 1/2] hw/arm/sbsa-ref: Enable CXL Host Bridge by pxb-cxl
+Message-ID: <20240830105230.00002043@Huawei.com>
+In-Reply-To: <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>
+References: <20240830041557.600607-1-wangyuquan1236@phytium.com.cn>
+ <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY8PR11MB7009:EE_|MN0PR11MB6060:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2ed519e5-d5e0-436e-867c-08dcc8d0dcf7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?R0xsdXZBK0Z5c0t3aE4vdk1HSkVjZXhBM3RFQ2lLYWFHNkt6VGZLbUJ1cGt4?=
- =?utf-8?B?WUFxWTNpYjNXT3NPUEdReTFwbEFYSnpnUXhqamY1Qm5KZ1M4YkNIcnl1R1Iv?=
- =?utf-8?B?RzFlUkR1cEpRYmkxcW5EZ0tzeDYzc1RGWlB3aGhrUWZQbWRSMGFqRkVPQm4r?=
- =?utf-8?B?TEJ2NDhmdDBsTUdmbndQdGM1ODBvaDNCQmk0QUNlRklKdnJFOCtDTmh1MnpI?=
- =?utf-8?B?Yys0aG0ra2c2L2dTWDQ5Q0hIWUlKcFJEL1ZnVXoxV1BHSktvZ3lDb0ZXa2dx?=
- =?utf-8?B?RTZWUkNxUWZEL0RsSDh3TEU5S3JQSFVRRzB6R3F2YnZnNnhVbjRpcXMrYW5U?=
- =?utf-8?B?OEt2NVVmZlRCb0FDUzZMMVlHSklHZjBHcW9LNDFZMGg5NUFJRytUQTNWUEZB?=
- =?utf-8?B?NXEzcnJXRVlkaFBoUVQwdjdSbGlLWFVDOVpRdDZIdnlnaVBPRHJtYXYvK3R0?=
- =?utf-8?B?K1FsOE81aEJaeFdqbkhGVHhnS0lKMm1lUW56cTdZRlA1S1habnRDRnNKZU9F?=
- =?utf-8?B?YmdGQitMdnRCTmExMDAyTjF0aVZCY1U2VXRoZE5ZU3Z4bmEva3NTVGpOWTc0?=
- =?utf-8?B?OGxNY2VacTQybG41QTRGU2Q5SitxRGFPcmNEdTNvK3lhaEVEZTIyQ3lrVVdG?=
- =?utf-8?B?VVA1K29LVTloTkhwUjZwUWtHWkovcU4zTkRSMjRjZVVVakdOcitBZ2Jpc0Uy?=
- =?utf-8?B?NzBHZk5zL1ZiSXZRWlBSOTh3ZkJDc2c0YzFmYzczc2dyTHUwenR3ak9aVkJC?=
- =?utf-8?B?bXcydDA1U0J6dmZpT09xSHVCc09ud1ZicDIycVY5SGNDZm9EQ0RKaHRrdzdj?=
- =?utf-8?B?YkxYaUFPcEtCc2ZqemJPYUg1bjQ2MnFPM05ncDR3S2xpS0dKWWhHQVJkU0V6?=
- =?utf-8?B?b2k1WmtGSHdBa1VYbVpSbjJwZkwxbDJjM2UyNmpkQURRN2l0T0ZiYWpydmtl?=
- =?utf-8?B?YkZ1TURwTlpxRWdLaUxWOGlSTVRtWHQ2bjdXcmVpbVArc01vVGdkN3J6ZXhX?=
- =?utf-8?B?YlhkbUZVVzJ5YmRnSXYrZ1loNStvZ29YeHFZVDM5YnVycGRUL1hXVm1jbDJH?=
- =?utf-8?B?bUF0bXFoNlV3c1RWRDc1MHpPeHNLZTNkK0VwYkR4dHdybitLQ2RsSmgrZUJ1?=
- =?utf-8?B?TUt2VU9saUx1Ukh1eE9wMFhXdzFFWjVEajRiaFpkaTQzU2lqeTVxNXpUUnM0?=
- =?utf-8?B?VEthQzBvdUR1OTI5ZHRyTlFTMnJkVzZ1TE1vQ1laeEUwcXlFOE1NUWtWM2xF?=
- =?utf-8?B?RnlMWTNYOStpTFhEMStIcXo1eFk2SCtRUTRtRHRud0tXUW5MQU1JYUFOblFs?=
- =?utf-8?B?ZzNVaUFpME1hMVpRVXE5Q0VYNmlnOWQwT1BEU2N5MnEwSXZ4TzMrcjA2c1N2?=
- =?utf-8?B?MmxHSGRRT0c3cnowME93bng3WHFpZ29hSnNORkJDc1dodGt4bVBCQlRhY1B0?=
- =?utf-8?B?THRlMTlYMyt0NXNTUXZJUy92ZDVncEJ1Vk5wQUJHR0pJR3daZnFsU2ZvQnBH?=
- =?utf-8?B?U3dIeUF4STc0WURpQ0ZqVmorS21OMjhJb3Z4MHlGditNajI1L1JVZGhVOTg4?=
- =?utf-8?B?MmFReURqYkFiZTF4V0plem5KU0VTL2t6SWdGWWZxOWZ2RGl1ZnRhcW9Gc3R2?=
- =?utf-8?B?S0hkK3d2R0twdTJsMWIzZkcxRFdKVWxnYlNOMUg4NXZOc3VyeXl2QTl1Uk9I?=
- =?utf-8?B?cFVVTEVUWjlGRWN2VGhwK2VoaHQ5ZkVaYndrV1BQSFN3TTczRUE1enBxVGF5?=
- =?utf-8?Q?3F0Zb3f+elv2Mc+UMY=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CY8PR11MB7009.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YktGZGdLSWIvMmhzcnJJRnh0RmppZmszbmFBVTh1QXVUSkJoR0d4MTUyb3Vk?=
- =?utf-8?B?bHllY1JjM3RJV1JxWEdCRWFDdjZTaDdiNnBQamU4THRWVUlkRG5aa1ZZUnVZ?=
- =?utf-8?B?QjZwOTR0T2J6VmdST0tYN2xrRy9jdjBNcnZVaUNaWW53Rm9HZUptNStCZ3l4?=
- =?utf-8?B?SWNpbktJM2NkN0R6N2ticXM1WnBUaHJ4dFZXVExxMklUNWhHRHpTelllMWZG?=
- =?utf-8?B?MFF6Qm9NQ1hxaC9PNGxtUHRlWTlzRmYyT3k5NnF6NW1ldmhWM2xROTQ5UmtU?=
- =?utf-8?B?cG9TSFJzUnByanZrYXl4MW5CMktMd3kwZWVEK2FZRXRqcksyR2Vwa2dMSFpQ?=
- =?utf-8?B?SGZsR29OWUtkc3pXblJDb3ZBbzRKUTUwc283VEJUWkIwc3Bpc0JxMDRNaENO?=
- =?utf-8?B?V0lqTWVJVnVpaVE4dmRHRm1pSzRWbkc5NVU4eVdoL00zRFVkN2lhZW5uRW1H?=
- =?utf-8?B?VmNRYnpEY3Jsd0FVbk0vY2w3YXlBdXN2RlZkRGNBYkNmRGlaV2JzL1Z5aUVh?=
- =?utf-8?B?czY5RkYvUGRrVDRCb3FlWFdzR3ZoQ3pmdXUrRUNWVHF1N1dSTGRUME0razYv?=
- =?utf-8?B?dXdSRlFwMWdZbmxtYUZKT0JLa0FOL2J1WlQ4NlJYZkI4R2VjbW9DUVNvSjZs?=
- =?utf-8?B?YmRYVVV2REtrcHJTMmNhUFdqc1U3UEZtMnV3bjZ2bm8zejMwVUU2YjZrcndj?=
- =?utf-8?B?OHVtZUpzSmtvMXJSbGJTZnZqMGJEUkl2NEhRNW02T0pJRDZudVVvTVZKcnFZ?=
- =?utf-8?B?QSs3eXo3aEFWbnR3UDNLblk1b3NUbnUzS3E4Q3lCNFVJY2lYRjN5RU0wMzUy?=
- =?utf-8?B?R1owMGdyaTV0ZFE1RHBzMFlOYUJDc2E5bjNlT3dVQnRXeU5xbFQ1R0dieThI?=
- =?utf-8?B?aGRDWDM2MXpHZTJyREZLNEpRWkJwR0pNaVFQT0l2Z25FWGQzRHlrRk5abElp?=
- =?utf-8?B?UjdUK1lBK3pOWXdhY0l1K0VvRkRLcm00UFlhN09yNG5DRkIwMWx1cTJHdGNE?=
- =?utf-8?B?NExSYi9LWnc0cmRnRjRTZGREdnhFd2tTb3lnQjBlZ2p1bTF6cy9yMzIzMlA0?=
- =?utf-8?B?bXlIK3pESjRjRFh5NTMvYUFTWW9rMm9rWU02d3dMdEJzNFVzTWVldWRuTEo0?=
- =?utf-8?B?OHpVMWFBbDVVaXdiOEd4dTcvRzJSZkR0OE9HMm5yVGlJZnYvRDlKdEw0eWZ0?=
- =?utf-8?B?QjFUZ0FXMlI5ejVGNHZXdHpFNHR3bmRsUW1wS3JpOWFoajNiVlhFV1ZhVzFY?=
- =?utf-8?B?TncxSzZzb1ZVU09SanE5SUpYWWN5RTErNHZNWlJMZitxUkZLT0VHZTdueDRs?=
- =?utf-8?B?b283UTQ3RUsvcHp6K2hVejZldnNMZFRmTnE5aFlkWWtwWWpyd3NpQlZVUGRG?=
- =?utf-8?B?T2VqRDBOL0ZzMG9VUHVVbGhiejlRR01mek9OVUorVjBWOHhja3YxeU5hdFZM?=
- =?utf-8?B?clUvS0pWeWNLekNWWkQwY3YyQ3NpS3ZMZytpc0pJOE0xeXdoK0lMR0sxeW05?=
- =?utf-8?B?aitWRUliTndnWWlIWFoySElxN3h0YUFoaWI2NjRQMmVDOUNlbkVhRlYzSjYz?=
- =?utf-8?B?ek95QTQ5N3R2ejFaMHJzK2hIc05rdjdWaVFFV1Izam1mR3g2Z3NrMmhIaXor?=
- =?utf-8?B?TGpFUkF2eXpvemUva2hIajUxcVFFRytOK1lwMEFCQmltR0F1b2pLTzN5aTg0?=
- =?utf-8?B?aHBRaVVEK1hKMm9vZlJaOWRmSTQvZUhOMFZlVWtGMkxIYWt2dG93am5kbDdK?=
- =?utf-8?B?ZkVLYStCTDhDL25Gd2dMeXVMaVRTVFoyMk5oR1BNVEFXSDMwcWZwUldhd0lm?=
- =?utf-8?B?dTExNEVrNFlZdStpcUFPbWpCbFFNeWhmNml6cmU5ekltQzFreHJ6T0VyMTVS?=
- =?utf-8?B?V2tBR3FpNVRlYXY3dWRMQldTY1ZEZEtjd29JN2l0d0VwM2s3cUp1QXB1cmdW?=
- =?utf-8?B?MEg2VUJZVGtsb3pHejFCdVM3Y2hkZGN4azRrQjV3RTljai9kQ0UybXFFbHM5?=
- =?utf-8?B?R0RQWGtqVDlGWlpmcHJBU25ZandsOFcybDZ3Z2IyWVQ4SENhRFEzUGZ0VnBT?=
- =?utf-8?B?bE5EcjFQUGxnZkFqRWIxOFBEZkVlQ1lEd1ZxR2h1dUN3MTBSWFRPOUhxZ2dE?=
- =?utf-8?Q?dJbQ7QnefVi6zUG1Jc6gPHBNE?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2ed519e5-d5e0-436e-867c-08dcc8d0dcf7
-X-MS-Exchange-CrossTenant-AuthSource: CY8PR11MB7009.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Aug 2024 08:50:56.6780 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8uBSjeGvCQU2U/urkVRJcIcuYEh5ew8qj1VNRHF2RIPiklOEDX2Fla+ygYvxlKVQuZpEFaRr+Y7PatkZ+Bq9AQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB6060
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=junjie.mao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -214,185 +69,204 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/2024 2:43 PM, Manos Pitsidianakis wrote:
-> 🎱
-> 
-> On Fri, 30 Aug 2024, 04:19 Junjie Mao, <junjie.mao@intel.com 
-> <mailto:junjie.mao@intel.com>> wrote:
-> 
->     On 8/28/2024 9:08 PM, Alex Bennée wrote:
->      > Manos Pitsidianakis <manos.pitsidianakis@linaro.org
->     <mailto:manos.pitsidianakis@linaro.org>> writes:
->      >
->      >> Add rust/qemu-api, which exposes rust-bindgen generated FFI bindings and
->      >> provides some declaration macros for symbols visible to the rest of
->      >> QEMU.
->      >
->      > As mentioned on IRC I'm hitting a compilation error that bisects to this
->      > commit:
->      >
->      >    [148/1010] Generating bindings for Rust rustmod-bindgen-rust_wrapper.h
->      >    FAILED: bindings.rs <http://bindings.rs>
->      >    /home/alex/.cargo/bin/bindgen ../../rust/wrapper.h --output
->     /home/alex/lsrc/qemu.git/builds/rust/bindings.rs <http://bindings.rs>
->     --disable-header-comment --raw-line '// @generated' --ctypes-prefix
->     core::ffi --formatter rustfmt --generate-block --generate-cstr --impl-debug
->     --merge-extern-blocks --no-doc-comments --use-core --with-derive-default
->     --allowlist-file '/home/alex/lsrc/qemu.git/include/.*' --allowlist-file
->     '/home/alex/lsrc/qemu.git/.*' --allowlist-file
->     '/home/alex/lsrc/qemu.git/builds/rust/.*' -- -I/home/alex/lsrc/qemu.git/.
->     -I/home/alex/lsrc/qemu.git/builds/rust/. -I/home/alex/lsrc/qemu.git/include
->     -I/home/alex/lsrc/qemu.git/builds/rust/include -I/usr/include/capstone
->     -I/usr/include/p11-kit-1 -I/usr/include/pixman-1 -I/usr/include/libpng16
->     -I/usr/include/spice-server -I/usr/include/spice-1 -I/usr/include/spice-1
->     -DSTRUCT_IOVEC_DEFINED -I/usr/include/libusb-1.0 -I/usr/include/SDL2
->     -D_REENTRANT -I/usr/include/glib-2.0
->     -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -pthread
->     -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0
->     -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
->     -pthread -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/slirp
->     -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
->     -DNCURSES_WIDECHAR=1 -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=600
->     -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
->     -I/usr/include/gtk-3.0 -I/usr/include/pango-1.0 -I/usr/include/glib-2.0
->     -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/harfbuzz
->     -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/libmount
->     -I/usr/include/blkid -I/usr/include/fribidi -I/usr/include/cairo
->     -I/usr/include/pixman-1 -I/usr/include/gdk-pixbuf-2.0
->     -I/usr/include/x86_64-linux-gnu -I/usr/include/gio-unix-2.0
->     -I/usr/include/atk-1.0 -I/usr/include/at-spi2-atk/2.0
->     -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0
->     -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -pthread -I/usr/include/gtk-3.0
->     -I/usr/include/pango-1.0 -I/usr/include/glib-2.0
->     -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/harfbuzz
->     -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/libmount
->     -I/usr/include/blkid -I/usr/include/fribidi -I/usr/include/cairo
->     -I/usr/include/pixman-1 -I/usr/include/gdk-pixbuf-2.0
->     -I/usr/include/x86_64-linux-gnu -I/usr/include/gio-unix-2.0
->     -I/usr/include/atk-1.0 -I/usr/include/at-spi2-atk/2.0
->     -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0
->     -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -pthread
->     -I/usr/include/vte-2.91 -I/usr/include/glib-2.0
->     -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/libmount
->     -I/usr/include/blkid -I/usr/include/pango-1.0 -I/usr/include/harfbuzz
->     -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/fribidi
->     -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/gtk-3.0
->     -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/x86_64-linux-gnu
->     -I/usr/include/gio-unix-2.0 -I/usr/include/atk-1.0
->     -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0
->     -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include
->     -pthread -I/usr/include/glib-2.0
->     -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/spice-server
->     -I/usr/include/spice-1 -I/usr/include/cacard -I/usr/include/glib-2.0
->     -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/nss
->     -I/usr/include/nspr -I/usr/include/PCSC -pthread -D_REENTRANT
->     -I/usr/include/pipewire-0.3 -I/usr/include/spa-0.2 -D_REENTRANT
->     -I/usr/include/p11-kit-1 -I/usr/include/fuse3
->     -I/usr/include/x86_64-linux-gnu -D_FILE_OFFSET_BITS=64 -D__USE_FILE_OFFSET64
->     -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=1 -I/usr/include/uuid
->     -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
->     -I/usr/include/p11-kit-1 -I/usr/include/p11-kit-1 -I/usr/include/p11-kit-1
->     -I/usr/include/p11-kit-1 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64
->     -D_LARGEFILE_SOURCE -I/usr/include/glib-2.0
->     -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -std=gnu11 -MD -MQ
->     ../../rust/wrapper.h -MF wrapper.h.d
->      >    /usr/include/liburing.h:296:3: error: use of undeclared identifier
->     'memory_order_release'
->      >    /usr/include/liburing.h:1080:11: error: use of undeclared identifier
->     'memory_order_acquire'
->      >    /usr/include/liburing.h:1116:9: error: use of undeclared identifier
->     'memory_order_acquire'
->      >    /usr/include/liburing.h:1125:9: error: use of undeclared identifier
->     'memory_order_relaxed'
->      >    /usr/include/liburing.h:1161:2: error: use of undeclared identifier
->     'memory_order_relaxed'
->      >    /usr/include/liburing.h:1197:19: error: use of undeclared identifier
->     'memory_order_acquire'
->      >    /usr/include/liburing.h:1267:10: error: use of undeclared identifier
->     'memory_order_relaxed'
->      >    /usr/include/liburing.h:1269:10: error: use of undeclared identifier
->     'memory_order_acquire'
->      >    /usr/include/liburing.h:1320:2: error: use of undeclared identifier
->     'memory_order_release'
->      >    panicked at
->     /home/alex/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bindgen-cli-0.69.4/main.rs:52:36:
->      >    Unable to generate bindings:
->     ClangDiagnostic("/usr/include/liburing.h:296:3: error: use of undeclared
->     identifier 'memory_order_release'\n/usr/include/liburing.h:1080:11: error:
->     use of undeclared identifier
->     'memory_order_acquire'\n/usr/include/liburing.h:1116:9: error: use of
->     undeclared identifier
->     'memory_order_acquire'\n/usr/include/liburing.h:1125:9: error: use of
->     undeclared identifier
->     'memory_order_relaxed'\n/usr/include/liburing.h:1161:2: error: use of
->     undeclared identifier
->     'memory_order_relaxed'\n/usr/include/liburing.h:1197:19: error: use of
->     undeclared identifier
->     'memory_order_acquire'\n/usr/include/liburing.h:1267:10: error: use of
->     undeclared identifier
->     'memory_order_relaxed'\n/usr/include/liburing.h:1269:10: error: use of
->     undeclared identifier
->     'memory_order_acquire'\n/usr/include/liburing.h:1320:2: error: use of
->     undeclared identifier 'memory_order_release'\n")
-> 
->     Those missing identifiers should have been defined in stdatomic.h which is part
->     of C11. You can check if that header exists under the default header search
->     paths (which is listed by clang -E -Wp,-v -) and whether that file declares
->     those enum constants. If so, you can further check whether there is any
->     stdatomic.h elsewhere that shadows the standard one.
-> 
-> 
-> Indeed. These are in the compiler's own header files. I had problems on Debian 
-> when using clang-14 and clang-15 but I got rid of them after I upgraded to newer 
-> versions. If anyone can confirm/reproduce this we can add a meson warning check?
-> 
-> 
+On Fri, 30 Aug 2024 12:15:56 +0800
+Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
 
-I can reproduce the issue after rolling back clang-18 to clang-15, but the issue 
-is not tied to any specific clang version. It happens when the version of newest 
-libclang does not match with the "clang" executable in PATH.
+> The memory layout places 1M space for 16 host bridge register regions
+> in the sbsa-ref memmap. In addition, this creates a default pxb-cxl
+> (bus_nr=3D0xfe) bridge with one cxl-rp on sbsa-ref.
 
-The effective header search paths of libclang invoked by bindgen have the following:
+If you are only supporting 1 host bridge you could reduce the space to just
+fit that?
 
-1. The default search paths used by the "clang" executable. The clang-sys crate 
-determines which executable to use and collects its default search paths, and 
-bindgen adds them (in the form of "-isystem") to clang args.
+=46rom the command line example and code here it seems the pxb instances are =
+hard
+coded so you don't need to support the flexibility I needed for virt.
 
-2. The default search paths that libclang has.
+Otherwise, just superficial code comments inline.
+Fixed setups are definitely easier to support :)
 
-Clang has a version-specific standard header directory (on my Ubuntu it looks 
-like /usr/lib/llvm-15/lib/clang/15.0.7/include). When those versions mismatch, 
-the effective search paths contain two standard header paths, causing 
-stdatomic.h to be included twice without declaring any symbol because clang's 
-stdatomic.h starts with:
+Jonathan
 
-#ifndef __CLANG_STDATOMIC_H
-#define __CLANG_STDATOMIC_H
 
-#if __STDC_HOSTED__ &&                                                         \
-     __has_include_next(<stdatomic.h>) &&                                       \
-     (!defined(_MSC_VER) || (defined(__cplusplus) && __cplusplus >= 202002L))
-# include_next <stdatomic.h>
-#else
-(symbol declarations ...)
+>=20
+> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+> ---
+>  hw/arm/sbsa-ref.c | 54 ++++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 51 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+> index ae37a92301..dc924d181e 100644
+> --- a/hw/arm/sbsa-ref.c
+> +++ b/hw/arm/sbsa-ref.c
+> @@ -41,7 +41,10 @@
+>  #include "hw/intc/arm_gicv3_common.h"
+>  #include "hw/intc/arm_gicv3_its_common.h"
+>  #include "hw/loader.h"
+> +#include "hw/pci/pci_bridge.h"
+> +#include "hw/pci/pci_bus.h"
+>  #include "hw/pci-host/gpex.h"
+> +#include "hw/pci-bridge/pci_expander_bridge.h"
+>  #include "hw/qdev-properties.h"
+>  #include "hw/usb.h"
+>  #include "hw/usb/xhci.h"
+> @@ -52,6 +55,8 @@
+>  #include "qom/object.h"
+>  #include "target/arm/cpu-qom.h"
+>  #include "target/arm/gtimer.h"
+> +#include "hw/cxl/cxl.h"
+> +#include "hw/cxl/cxl_host.h"
 
-Both the clang executable and libclang library are detected by clang-sys at 
-runtime. In my experiments, that crate always find the latest libclang, but 
-doesn't necessarily find the latest clang when there are multiple "clang-X" but 
-not "clang" in the system.
+Headers look to be alphabetical order.
 
-How about we try bindgen on a simple header like:
+> =20
+>  #define RAMLIMIT_GB 8192
+>  #define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
+> @@ -94,6 +99,7 @@ enum {
+>      SBSA_SECURE_MEM,
+>      SBSA_AHCI,
+>      SBSA_XHCI,
+> +    SBSA_CXL_HOST,
+>  };
+> =20
+>  struct SBSAMachineState {
+> @@ -105,6 +111,9 @@ struct SBSAMachineState {
+>      int psci_conduit;
+>      DeviceState *gic;
+>      PFlashCFI01 *flash[2];
+> +    CXLState cxl_devices_state;
+> +    PCIBus *bus;
 
-#include <libatomic.h>
-memory_order order;
+Lot of buses in a system, I'd call the pcibus
+or similar. However, see below - I don't think
+it is necessary.
 
-If that fails with unknown type name 'memory_order', suggest the user to 
-symbolic link the latest clang executable as "clang".
 
----
-Best Regards
-Junjie Mao
+> +    PCIBus *cxlbus;
+>  };
+> =20
+>  #define TYPE_SBSA_MACHINE   MACHINE_TYPE_NAME("sbsa-ref")
+> @@ -132,6 +141,8 @@ static const MemMapEntry sbsa_ref_memmap[] =3D {
+>      /* Space here reserved for more SMMUs */
+>      [SBSA_AHCI] =3D               { 0x60100000, 0x00010000 },
+>      [SBSA_XHCI] =3D               { 0x60110000, 0x00010000 },
+> +    /* 1M CXL Host Bridge Registers space (64KiB * 16) */
+> +    [SBSA_CXL_HOST] =3D           { 0x60120000, 0x00100000 },
+
+As below, can just leave space for however many you are creating.
+
+>      /* Space here reserved for other devices */
+>      [SBSA_PCIE_PIO] =3D           { 0x7fff0000, 0x00010000 },
+>      /* 32-bit address PCIE MMIO space */
+> @@ -631,6 +642,26 @@ static void create_smmu(const SBSAMachineState *sms,=
+ PCIBus *bus)
+>      }
+>  }
+> =20
+> +static void create_pxb_cxl(SBSAMachineState *sms)
+> +{
+> +    CXLHost *host;
+> +    PCIHostState *cxl;
+> +
+> +    sms->cxl_devices_state.is_enabled =3D true;
+> +
+> +    DeviceState *qdev;
+
+I think qemu still sticks mostly to declarations at the top
+of functions. So move this up.
+
+> +    qdev =3D qdev_new(TYPE_PXB_CXL_DEV);
+> +    qdev_prop_set_uint32(qdev, "bus_nr", 0xfe);
+
+Ouch. That's not a lot of space in bus numbers.
+Move it down a bit so there is room for switches etc
+and not just a single root port.
+Up to SBSA ref maintainers, but I'd use 0xc0 or something
+like that.
+
+> +
+> +    PCIDevice *dev =3D PCI_DEVICE(qdev);
+
+Declarations at the top I think.
+
+> +    pci_realize_and_unref(dev, sms->bus, &error_fatal);
+> +
+> +    host =3D PXB_CXL_DEV(dev)->cxl_host_bridge;
+> +    cxl =3D PCI_HOST_BRIDGE(host);
+> +    sms->cxlbus =3D cxl->bus;
+> +    pci_create_simple(sms->cxlbus, -1, "cxl-rp");
+
+You want to enable at least some interleaving the HB so I'd
+add at least 2 root ports.
+
+> +}
+> +
+>  static void create_pcie(SBSAMachineState *sms)
+>  {
+>      hwaddr base_ecam =3D sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
+> @@ -682,12 +713,25 @@ static void create_pcie(SBSAMachineState *sms)
+>      }
+> =20
+>      pci =3D PCI_HOST_BRIDGE(dev);
+> +    sms->bus =3D pci->bus;
+
+I'd carry on using pci->bus for this code to minimize changes
+needed and set sms->bus at the end of the function, not the
+start (see below - you can get rid of need to store pci->bus
+I think).
+
+> +
+> +    pci_init_nic_devices(sms->bus, mc->default_nic);
+> =20
+> -    pci_init_nic_devices(pci->bus, mc->default_nic);
+> +    pci_create_simple(sms->bus, -1, "bochs-display");
+> =20
+> -    pci_create_simple(pci->bus, -1, "bochs-display");
+> +    create_smmu(sms, sms->bus);
+> =20
+> -    create_smmu(sms, pci->bus);
+> +    create_pxb_cxl(sms);
+
+Keep this similar to the others and pass in pci->bus even
+though you are going to stash pci->bus
+
+> +}
+
+
+> =20
+>  static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_si=
+ze)
+> @@ -823,6 +867,10 @@ static void sbsa_ref_init(MachineState *machine)
+> =20
+>      create_pcie(sms);
+> =20
+> +    create_cxl_host_reg_region(sms);
+> +
+> +    cxl_hook_up_pxb_registers(sms->bus, &sms->cxl_devices_state, &error_=
+fatal);
+> +
+
+Fixed pxb instances certainly make this less of a dance than we need for pc=
+ / virt
+as the creation order is constrained in a way it isn't for those generic ma=
+chines.
+
+Given you know you only have one PXB-cxl and have it in sms->cxlbus
+you could just call
+pxb_cxl_hook_up_registers(&sms->cxl_devices_state, pci->cxlbus, &error_fata=
+l)
+I think and get same result without needed to add sms->bus to get hold of t=
+he
+pci bus.
+
+
+>      create_secure_ec(secure_sysmem);
+> =20
+>      sms->bootinfo.ram_size =3D machine->ram_size;
+
 
