@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A9BCA1018
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Aug 2024 11:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E645ACD3426
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Sep 2024 00:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1skMKt-0005Uq-Rm; Sat, 31 Aug 2024 07:32:08 -0400
+	id 1skY07-000682-Rq; Sat, 31 Aug 2024 19:59:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1skMKm-0005Qk-JV; Sat, 31 Aug 2024 07:32:01 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1skMKk-00014S-L6; Sat, 31 Aug 2024 07:32:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1725103918; x=1756639918;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=6uNMHpxaj+ivxkzstyBO1rbu0+125vnKHN4tTD6PoCs=;
- b=EZYOmO24fMJ/7aFdCKTdLMZPUsIWiz78wmiJDV4X8Jqwlk0ZCRrwWjuw
- OiNpaiNZpMXAegRGPXbRwdM5f5vNYstXzEOka6R9oWDOpDgFwpA/MQBOh
- H35Pa+GFHLN4x8YqgRV5Rk4e1cTQ28bxrI4H5Wp0toN9JwZR8wWHxWzm5
- 14xweneFlVVIqVbsN9NRscip/V+nBunz/dl8Ute3j4VLYwzc2zAb3xdfk
- p0oBZy8Tn64es/1rQwTDm/hv106V15HA6odJy+znqJH8quNENTLBoGYdu
- Jcyho0mYv1SRlKjybAZkoClKC6S05lgztT4+hpVLih/nSEhljeFG4WvfZ w==;
-X-CSE-ConnectionGUID: amfmdHGnQx6oJQCHyaE1mw==
-X-CSE-MsgGUID: zWleT8yJQxWJ/7Adb/MSgg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11180"; a="23256824"
-X-IronPort-AV: E=Sophos;i="6.10,191,1719903600"; d="scan'208";a="23256824"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Aug 2024 04:31:55 -0700
-X-CSE-ConnectionGUID: 5FitaHdGS7WP/YEJf2/TAA==
-X-CSE-MsgGUID: uqCpOO/sQhWzRMfQv5pZyw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,191,1719903600"; d="scan'208";a="64101388"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 31 Aug 2024 04:31:50 -0700
-Date: Sat, 31 Aug 2024 19:47:49 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, zhenyu.z.wang@intel.com,
- dapeng1.mi@linux.intel.com, yongwei.ma@intel.com, armbru@redhat.com,
- farman@linux.ibm.com, peter.maydell@linaro.org, mst@redhat.com,
- anisinha@redhat.com, shannon.zhaosl@gmail.com, imammedo@redhat.com,
- mtosatti@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, linuxarm@huwei.com,
- shameerali.kolothum.thodi@huawei.com, Jonathan.Cameron@huawei.com,
- jiangkunkun@huawei.com, zhao1.liu@intel.com
-Subject: Re: [PATCH 2/2] hw/acpi: add cache hierarchy node to pptt table
-Message-ID: <ZtMC5Y5AJW3mAmO2@intel.com>
-References: <20240823125446.721-1-alireza.sanaee@huawei.com>
- <20240823125446.721-3-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1skY05-00064X-HA
+ for qemu-devel@nongnu.org; Sat, 31 Aug 2024 19:59:25 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1skY04-0005xQ-2P
+ for qemu-devel@nongnu.org; Sat, 31 Aug 2024 19:59:25 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7141d7b270dso2450905b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 31 Aug 2024 16:59:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725148761; x=1725753561; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1C+IsaVHKuVb0BZ7RT7CeXQOGgCh8DSHYYCo+ATWA7g=;
+ b=SHkSdhJ2cRMDxCPZwIir9DkC0ZvwrUBjc6HpT6TgsiV9U4nieC7Hz4XX03VZs5PzRw
+ YXLjphxmWYE4a1JYOPOW9etlc5WmyoUWX0haJFBQbOoz3vxrXWFWXtkLM+k/pTBwIDDV
+ CptwmdxXMCxWnmru+Rs6bP4z6ZGsYcko3Q4Ymy/V8nugeQMV5Ue7J2g9NgIUPU2R3K6b
+ ZiNw+A3UQCAMvmMxaDU8ZtEycYYks0DO+wP3vjGs54cPlyAVmH4X7NRQFeSMRy/4YmY2
+ emJLOXCjs64w2MSBJ/LQWF13kmKG+SyQ0FxFH/3MdAW8jHMV9dVJQUU/Tp/J/HkLwVwN
+ Pe7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725148761; x=1725753561;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1C+IsaVHKuVb0BZ7RT7CeXQOGgCh8DSHYYCo+ATWA7g=;
+ b=SaK2PSNlsP7J13Bl1JZVnE9vSmRVGBzM0qRTDS9MTNxAb9JGCNrpwbnbkO5wsmX7XB
+ y0a1C5+G3uh34aqOlxZm5U/goc6S06ZS68TMMlJfx4ztjxrK+wAC66ZpF4Wqmh/ogGkr
+ UTzpCvA13hH9jdtglrbN1iuMRFVLCoCXvVsunX4qnnzKqVrKoSo6mm0R9B/bRlGm7hHs
+ 2aL7+PKgbmwa+AEB2+eFObmE2gLDiBRJrILSFVMtNVllxOeC+B77uyGtek9mRcCS9BTC
+ rihuyFw3Oaw83YQsUUo5vfwZlcx3WmP3CQFw683eDqfT+AJNiE9SjtLb2rgpcmGBCneF
+ 2W9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7ekrfwgQKBR19aQSwOqkP8sT4oKwUleq8bvh/lI/jotxrJ7i5coieRS+R7zmjBWMioTl5fvmSMoPk@nongnu.org
+X-Gm-Message-State: AOJu0Yzj2oMgo2ougSz3ptlLPprx/T9FfD2a4iydxG0P7iwtiAO+zEGM
+ YBVC9s1mGjc7Kj7IwkmstinVkp2GUP7UnPr81E2/s9kaBB3XpnR/NP3WWWq73kQ=
+X-Google-Smtp-Source: AGHT+IHHVaazqiC+4xe8vhuia00xeSDdvvNTGSEIOgQlpgTaK5j6mR+zGZl2Nf0LX+xdDZbzgsYAYQ==
+X-Received: by 2002:a05:6a20:c78f:b0:1c4:82fa:a5a4 with SMTP id
+ adf61e73a8af0-1ced6088166mr1331373637.18.1725148761223; 
+ Sat, 31 Aug 2024 16:59:21 -0700 (PDT)
+Received: from ?IPV6:2001:8004:5170:1fd8:20ac:c3e2:72e0:bdb8?
+ ([2001:8004:5170:1fd8:20ac:c3e2:72e0:bdb8])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-205155452ecsm45201015ad.219.2024.08.31.16.59.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 31 Aug 2024 16:59:20 -0700 (PDT)
+Message-ID: <6b3305c3-2f23-47d0-949e-a3e562f49cbb@linaro.org>
+Date: Sun, 1 Sep 2024 09:59:13 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240823125446.721-3-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/14] tcg/op-gvec: Fix iteration step in 32-bit
+ operation
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
+ <20240830061607.1940-2-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240830061607.1940-2-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,107 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alireza,
+On 8/30/24 16:15, LIU Zhiwei wrote:
+> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> 
+> The loop in the 32-bit case of the vector compare operation
+> was incorrectly incrementing by 8 bytes per iteration instead
+> of 4 bytes. This caused the function to process only half of
+> the intended elements.
+> 
+> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> Fixes: 9622c697d1 (tcg: Add gvec compare with immediate and scalar operand)
+> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+> ---
+>   tcg/tcg-op-gvec.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Fri, Aug 23, 2024 at 01:54:46PM +0100, Alireza Sanaee wrote:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-[snip]
+r~
 
-> +static int partial_cache_description(MachineState *ms, ACPIPPTTCache* caches,
-> +                                 int num_caches)
-> +{
-> +    int level, c;
-> +
-> +    for (level = 1; level < num_caches; level++) {
-> +        for (c = 0; c < num_caches; c++) {
-> +            if (caches[c].level != level) {
-> +                continue;
-> +            }
-> +
-> +            switch (level) {
-> +            case 1:
-> +                /*
-> +                 * L1 cache is assumed to have both L1I and L1D available.
-> +                 * Technically both need to be checked.
-> +                 */
-> +                if (machine_get_cache_topo_level(ms, SMP_CACHE_L1I) ==
-> +                        CPU_TOPO_LEVEL_DEFAULT) {
-
-This check just concerns L1i, but it looks not covering L1d, is L1d being
-missed?  
-
-> +                    assert(machine_get_cache_topo_level(ms, SMP_CACHE_L1D) !=
-> +                           CPU_TOPO_LEVEL_DEFAULT);
-
-I understand you don't want user to configure other different levels for
-L1d in this case...If so, it's better to return error (error_steg or
-error_report or some other error print ways) to tell user his cache
-configuration is invalid.
-
-> +                    return level;
-> +                }
-> +                break;
-> +            case 2:
-> +                if (machine_get_cache_topo_level(ms, SMP_CACHE_L2) ==
-> +                        CPU_TOPO_LEVEL_DEFAULT) {
-> +                    return level;
-> +                }
-> +                break;
-> +            case 3:
-> +                if (machine_get_cache_topo_level(ms, SMP_CACHE_L3) ==
-> +                        CPU_TOPO_LEVEL_DEFAULT) {
-> +                    return level;
-> +                }
-> +                break;
-> +            }
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-
-[snip]
-
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index b0c68d66a3..b723248ecf 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3093,6 +3093,11 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
->      hc->unplug = virt_machine_device_unplug_cb;
->      mc->nvdimm_supported = true;
->      mc->smp_props.clusters_supported = true;
-> +    /* Supported cached */
-> +    mc->smp_props.cache_supported[SMP_CACHE_L1D] = true;
-> +    mc->smp_props.cache_supported[SMP_CACHE_L1I] = true;
-> +    mc->smp_props.cache_supported[SMP_CACHE_L2] = true;
-> +    mc->smp_props.cache_supported[SMP_CACHE_L3] = true;
->      mc->auto_enable_numa_with_memhp = true;
->      mc->auto_enable_numa_with_memdev = true;
->      /* platform instead of architectural choice */
-> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-> index bf6f2f9107..de95ec9c0f 100644
-> --- a/hw/core/machine-smp.c
-> +++ b/hw/core/machine-smp.c
-> @@ -274,7 +274,11 @@ unsigned int machine_topo_get_threads_per_socket(const MachineState *ms)
->  CpuTopologyLevel machine_get_cache_topo_level(const MachineState *ms,
->                                                SMPCacheName cache)
->  {
-> -    return ms->smp_cache->props[cache].topo;
-> +    if (ms->smp_cache) {
-> +        return ms->smp_cache->props[cache].topo;
-> +    }
-> +
-> +    return CPU_TOPO_LEVEL_DEFAULT;
->  }
->  
->  static bool machine_check_topo_support(MachineState *ms,
-
-Maybe it's better to split smp-cache support/check on Arm in a seperate
-patch.
-
-Regards,
-Zhao
-
+> 
+> diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+> index 0308732d9b..78ee1ced80 100644
+> --- a/tcg/tcg-op-gvec.c
+> +++ b/tcg/tcg-op-gvec.c
+> @@ -3939,7 +3939,7 @@ void tcg_gen_gvec_cmps(TCGCond cond, unsigned vece, uint32_t dofs,
+>           uint32_t i;
+>   
+>           tcg_gen_extrl_i64_i32(t1, c);
+> -        for (i = 0; i < oprsz; i += 8) {
+> +        for (i = 0; i < oprsz; i += 4) {
+>               tcg_gen_ld_i32(t0, tcg_env, aofs + i);
+>               tcg_gen_negsetcond_i32(cond, t0, t0, t1);
+>               tcg_gen_st_i32(t0, tcg_env, dofs + i);
 
 
