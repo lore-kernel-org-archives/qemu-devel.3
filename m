@@ -4,29 +4,29 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F1BCA101E
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Sep 2024 14:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65297C54FC6
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Sep 2024 14:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sklWJ-0002TA-DT; Sun, 01 Sep 2024 10:25:35 -0400
+	id 1sklWI-0002OO-5v; Sun, 01 Sep 2024 10:25:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
- id 1sklWE-0002E5-Kk; Sun, 01 Sep 2024 10:25:30 -0400
-Received: from icts-p-cavuit-1.kulnet.kuleuven.be ([2a02:2c40:0:c0::25:132])
+ id 1sklWD-0002Ag-8v; Sun, 01 Sep 2024 10:25:29 -0400
+Received: from icts-p-cavuit-2.kulnet.kuleuven.be ([2a02:2c40:0:c0::25:131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
- id 1sklWC-0003Xd-BI; Sun, 01 Sep 2024 10:25:30 -0400
+ id 1sklWB-0003XJ-Ij; Sun, 01 Sep 2024 10:25:28 -0400
 X-KULeuven-Envelope-From: libvirt-e6954efa@volkihar.be
 X-KULeuven-Scanned: Found to be clean
-X-KULeuven-ID: DC24120078.AA034
+X-KULeuven-ID: 02D6D200B4.ADEE3
 X-KULeuven-Information: Katholieke Universiteit Leuven
-Received: from icts-p-ceifnet-smtps-1.kuleuven.be
+Received: from icts-p-ceifnet-smtps-0.kuleuven.be
  (icts-p-ceifnet-smtps.service.icts.svcd
- [IPv6:2a02:2c40:0:51:130:242:ac11:10])
- by icts-p-cavuit-1.kulnet.kuleuven.be (Postfix) with ESMTP id DC24120078;
- Sun,  1 Sep 2024 16:25:21 +0200 (CEST)
+ [IPv6:2a02:2c40:0:51:144:242:ac11:2e])
+ by icts-p-cavuit-2.kulnet.kuleuven.be (Postfix) with ESMTP id 02D6D200B4;
+ Sun,  1 Sep 2024 16:25:22 +0200 (CEST)
 BCmilterd-Mark-Subject: no
 BCmilterd-Errors: 
 BCmilterd-Report: 
@@ -36,10 +36,10 @@ Received: from flutterbat.volkihar.be (unknown
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by icts-p-ceifnet-smtps-1.kuleuven.be (Postfix) with ESMTPSA id C3DB8D4F7A27F; 
+ by icts-p-ceifnet-smtps-0.kuleuven.be (Postfix) with ESMTPSA id D75ADD4F7A477; 
  Sun,  1 Sep 2024 16:25:21 +0200 (CEST)
 Received: by flutterbat.volkihar.be (Postfix, from userid 1000)
- id 902C716E1C0; Sun, 01 Sep 2024 16:25:21 +0200 (CEST)
+ id A3C3016E054; Sun, 01 Sep 2024 16:25:21 +0200 (CEST)
 X-Kuleuven: This mail passed the K.U.Leuven mailcluster
 From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 To: qemu-devel@nongnu.org
@@ -48,17 +48,17 @@ Cc: John Snow <jsnow@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
  Hanna Reitz <hreitz@redhat.com>,
  Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
-Subject: [PATCH v3 3/5] block: refactor error handling of commit_iteration
-Date: Sun,  1 Sep 2024 16:24:03 +0200
-Message-ID: <20240901142405.3183874-4-libvirt-e6954efa@volkihar.be>
+Subject: [PATCH v3 4/5] block: allow commit to unmap zero blocks
+Date: Sun,  1 Sep 2024 16:24:04 +0200
+Message-ID: <20240901142405.3183874-5-libvirt-e6954efa@volkihar.be>
 X-Mailer: git-send-email 2.44.1
 In-Reply-To: <20240901142405.3183874-1-libvirt-e6954efa@volkihar.be>
 References: <20240901142405.3183874-1-libvirt-e6954efa@volkihar.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:2c40:0:c0::25:132;
+Received-SPF: pass client-ip=2a02:2c40:0:c0::25:131;
  envelope-from=libvirt-e6954efa@volkihar.be;
- helo=icts-p-cavuit-1.kulnet.kuleuven.be
+ helo=icts-p-cavuit-2.kulnet.kuleuven.be
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -79,81 +79,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Non-active block commits do not discard blocks only containing zeros,
+causing images to lose sparseness after the commit. This commit fixes
+that by writing zero blocks using blk_co_pwrite_zeroes rather than
+writing them out as any other arbitrary data.
+
 Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 ---
- block/commit.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ block/commit.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
 diff --git a/block/commit.c b/block/commit.c
-index 9eedd1fa47..288e413be3 100644
+index 288e413be3..2594917a74 100644
 --- a/block/commit.c
 +++ b/block/commit.c
-@@ -130,7 +130,6 @@ static void commit_clean(Job *job)
- 
- static int commit_iteration(CommitBlockJob *s, int64_t offset, int64_t *n, void *buf) {
-     int ret = 0;
--    bool copy;
-     bool error_in_source = true;
- 
-     /* Copy if allocated above the base */
-@@ -140,19 +139,34 @@ static int commit_iteration(CommitBlockJob *s, int64_t offset, int64_t *n, void
-             n, NULL, NULL, NULL);
-     }
- 
--    copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
-+    if (ret < 0) {
-+        goto handle_error;
-+    }
-+
+@@ -146,19 +146,35 @@ static int commit_iteration(CommitBlockJob *s, int64_t offset, int64_t *n, void
      trace_commit_one_iteration(s, offset, *n, ret);
--    if (copy) {
-+
-+    if (ret & BDRV_BLOCK_ALLOCATED) {
-         assert(*n < SIZE_MAX);
  
-         ret = blk_co_pread(s->top, offset, *n, buf, 0);
--        if (ret >= 0) {
--            ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
--            if (ret < 0) {
--                error_in_source = false;
--            }
-+        if (ret < 0) {
-+            goto handle_error;
-         }
-+
-+        ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
-+        if (ret < 0) {
-+            error_in_source = false;
-+            goto handle_error;
-+        }
-+
-+        block_job_ratelimit_processed_bytes(&s->common, *n);
-     }
-+
-+    /* Publish progress */
-+
-+    job_progress_update(&s->common.job, *n);
-+
-+handle_error:
-     if (ret < 0) {
-         BlockErrorAction action = block_job_error_action(&s->common, s->on_error,
-                                                          error_in_source, -ret);
-@@ -160,15 +174,8 @@ static int commit_iteration(CommitBlockJob *s, int64_t offset, int64_t *n, void
-             return ret;
-         } else {
-             *n = 0;
--            return 0;
-         }
-     }
--    /* Publish progress */
--    job_progress_update(&s->common.job, *n);
--
--    if (copy) {
--        block_job_ratelimit_processed_bytes(&s->common, *n);
--    }
+     if (ret & BDRV_BLOCK_ALLOCATED) {
+-        assert(*n < SIZE_MAX);
++        if (ret & BDRV_BLOCK_ZERO) {
++            /* If the top (sub)clusters are smaller than the base
++             * (sub)clusters, this will not unmap unless the underlying device
++             * does some tracking of these requests. Ideally, we would find
++             * the maximal extent of the zero clusters. */
++            ret = blk_co_pwrite_zeroes(s->base, offset, *n,
++                                       BDRV_REQ_MAY_UNMAP);
++            if (ret < 0) {
++                error_in_source = false;
++                goto handle_error;
++            }
++        } else {
++            assert(*n < SIZE_MAX);
  
-     return 0;
- }
+-        ret = blk_co_pread(s->top, offset, *n, buf, 0);
+-        if (ret < 0) {
+-            goto handle_error;
+-        }
++            ret = blk_co_pread(s->top, offset, *n, buf, 0);
++            if (ret < 0) {
++                goto handle_error;
++            }
+ 
+-        ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
+-        if (ret < 0) {
+-            error_in_source = false;
+-            goto handle_error;
++            ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
++            if (ret < 0) {
++                error_in_source = false;
++                goto handle_error;
++            }
+         }
+ 
++        /* Whether zeroes actually end up on disk depends on the details of
++         * the underlying driver. Therefore, this might rate limit more than
++         * is necessary. */
+         block_job_ratelimit_processed_bytes(&s->common, *n);
+     }
+ 
 -- 
 2.44.1
 
