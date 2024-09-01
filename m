@@ -4,91 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B9ACA101E
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Sep 2024 12:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1AD2CA101E
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Sep 2024 13:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1skjSr-0002BI-K0; Sun, 01 Sep 2024 08:13:53 -0400
+	id 1skkCp-0001NT-7d; Sun, 01 Sep 2024 09:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1skjSo-0002Ae-L7
- for qemu-devel@nongnu.org; Sun, 01 Sep 2024 08:13:50 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1skkCm-0001Mx-TF
+ for qemu-devel@nongnu.org; Sun, 01 Sep 2024 09:01:20 -0400
+Received: from mailout12.t-online.de ([194.25.134.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1skjSl-0001r4-S4
- for qemu-devel@nongnu.org; Sun, 01 Sep 2024 08:13:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=lUIvVvJ59NgPyCR28QUL5EbSWTpRRsf0iPCdPr7AGjU=; b=mJ5n4fx66UdKpp0GklMKhrkcv4
- SU2sLR56vaUbXHrUdGpR5g/pcpIQm9EoRhfSFoK/VGnQw/wosrL6Oq+hEzdxIFSmsw1bsyK3ROEUA
- emAPxdkHoIJy7Z+EW5U4ib0rZxvFaJbR6LXaUq1ukphP0u9+bngOvFn2ME/3YIJsPAUrrSAlyotmA
- T1mYWGHChxyVN0yyAybFKxP3gnV61vXJaPpNQKpTlkWkZVTgQH9+RQW+sV6Nwwly9Yw8dkkIl3ANw
- xaVfqkhK3ZJ1IkbhhvTVXvjAVCespO8DQekFwFnRxEC6PAjwAnKlH0rAVF78qHX2a1fn//efGhrHa
- yDNXOnwIEO/Xorst0y5zgLu9vH4zwqQNbIQOx+Aqrsm5Og671pdO737A/8ogupl2mkq7ebDIY1Nhf
- D9mzXWbhO+zlZxsoW2u1UgNktVuvwizi/NQzM4HTypKUVoW5QN4pqrYWwM4ghgsR6qnbISGXHo9AJ
- e7nglWH2a8IFSl4oOH38e+vksbeW7eBUHHRiRhEk4LBbCYRZ3TcoqQ38QVWXx4/Lo5PT7LlSMgdM7
- iiPYq93u/wWEqAxP3YrrPLi+SC/PxBJ6pJQFkIMAA97vihTOPiC59Nsj2gQ7aIWx9ucZYELTrQfxn
- YNPk9sOkqZglT7rtQ3FKJEP08gfkWpWFprWC1JfyY=;
-Received: from [2a00:23c4:8bb4:4000:ad5:9c31:686a:e195]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1skjSQ-000BP1-8P; Sun, 01 Sep 2024 13:13:30 +0100
-Message-ID: <1dbcc1f6-95b1-4d55-a1da-7a8dcc1abf81@ilande.co.uk>
-Date: Sun, 1 Sep 2024 13:13:33 +0100
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1skkCk-00005Y-Pw
+ for qemu-devel@nongnu.org; Sun, 01 Sep 2024 09:01:20 -0400
+Received: from fwd84.aul.t-online.de (fwd84.aul.t-online.de [10.223.144.110])
+ by mailout12.t-online.de (Postfix) with SMTP id 32F6D16EC1;
+ Sun,  1 Sep 2024 15:01:14 +0200 (CEST)
+Received: from linpower.localnet ([93.236.144.183]) by fwd84.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1skkCe-09xstV0; Sun, 1 Sep 2024 15:01:13 +0200
+Received: by linpower.localnet (Postfix, from userid 1000)
+ id A65B42002C8; Sun,  1 Sep 2024 15:01:12 +0200 (CEST)
+From: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
+To: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] hw/audio/virtio-sound: fix heap buffer overflow
+Date: Sun,  1 Sep 2024 15:01:12 +0200
+Message-Id: <20240901130112.8242-1-vr_qemu@t-online.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <huth@tuxfamily.org>, Laurent Vivier <laurent@vivier.eu>
-References: <20240830173452.2086140-1-peter.maydell@linaro.org>
- <20240830173452.2086140-4-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240830173452.2086140-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:ad5:9c31:686a:e195
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 3/3] hw/nubus/nubus-device: Range check 'slot' property
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TOI-EXPURGATEID: 150726::1725195673-577FD85B-AD4CCC9B/0/0 CLEAN NORMAL
+X-TOI-MSGID: 7681018d-402a-4602-a428-357717625670
+Received-SPF: pass client-ip=194.25.134.22;
+ envelope-from=volker.ruemelin@t-online.de; helo=mailout12.t-online.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,45 +65,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/08/2024 18:34, Peter Maydell wrote:
+Currently, the guest may write to the device configuration space,
+whereas the virtio sound device specification in chapter 5.14.4
+clearly states that the fields in the device configuration space
+are driver-read-only.
 
-> The TYPE_NUBUS_DEVICE class lets the user specify the nubus slot
-> using an int32 "slot" QOM property.  Its realize method doesn't do
-> any range checking on this value, which Coverity notices by way of
-> the possibility that 'nd->slot * NUBUS_SUPER_SLOT_SIZE' might
-> overflow the 32-bit arithmetic it is using.
-> 
-> Constrain the slot value to be less than NUBUS_SLOT_NB (16).
-> 
-> Resolves: Coverity CID 1464070
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/nubus/nubus-device.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/hw/nubus/nubus-device.c b/hw/nubus/nubus-device.c
-> index be4cb246966..26fbcf29a2b 100644
-> --- a/hw/nubus/nubus-device.c
-> +++ b/hw/nubus/nubus-device.c
-> @@ -35,6 +35,13 @@ static void nubus_device_realize(DeviceState *dev, Error **errp)
->       uint8_t *rom_ptr;
->       int ret;
->   
-> +    if (nd->slot < 0 || nd->slot >= NUBUS_SLOT_NB) {
-> +        error_setg(errp,
-> +                   "'slot' value %d out of range (must be between 0 and %d)",
-> +                   nd->slot, NUBUS_SLOT_NB - 1);
-> +        return;
-> +    }
-> +
->       /* Super */
->       slot_offset = nd->slot * NUBUS_SUPER_SLOT_SIZE;
+Remove the set_config function from the virtio_snd class.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+This also prevents a heap buffer overflow. See QEMU issue #2296.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2296
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+---
+ hw/audio/trace-events |  1 -
+ hw/audio/virtio-snd.c | 24 ------------------------
+ 2 files changed, 25 deletions(-)
 
-ATB,
-
-Mark.
+diff --git a/hw/audio/trace-events b/hw/audio/trace-events
+index b1870ff224..b8ef572767 100644
+--- a/hw/audio/trace-events
++++ b/hw/audio/trace-events
+@@ -41,7 +41,6 @@ asc_update_irq(int irq, int a, int b) "set IRQ to %d (A: 0x%x B: 0x%x)"
+ 
+ #virtio-snd.c
+ virtio_snd_get_config(void *vdev, uint32_t jacks, uint32_t streams, uint32_t chmaps) "snd %p: get_config jacks=%"PRIu32" streams=%"PRIu32" chmaps=%"PRIu32""
+-virtio_snd_set_config(void *vdev, uint32_t jacks, uint32_t new_jacks, uint32_t streams, uint32_t new_streams, uint32_t chmaps, uint32_t new_chmaps) "snd %p: set_config jacks from %"PRIu32"->%"PRIu32", streams from %"PRIu32"->%"PRIu32", chmaps from %"PRIu32"->%"PRIu32
+ virtio_snd_get_features(void *vdev, uint64_t features) "snd %p: get_features 0x%"PRIx64
+ virtio_snd_vm_state_running(void) "vm state running"
+ virtio_snd_vm_state_stopped(void) "vm state stopped"
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index d1cf5eb445..69838181dd 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -107,29 +107,6 @@ virtio_snd_get_config(VirtIODevice *vdev, uint8_t *config)
+ 
+ }
+ 
+-static void
+-virtio_snd_set_config(VirtIODevice *vdev, const uint8_t *config)
+-{
+-    VirtIOSound *s = VIRTIO_SND(vdev);
+-    const virtio_snd_config *sndconfig =
+-        (const virtio_snd_config *)config;
+-
+-
+-   trace_virtio_snd_set_config(vdev,
+-                               s->snd_conf.jacks,
+-                               sndconfig->jacks,
+-                               s->snd_conf.streams,
+-                               sndconfig->streams,
+-                               s->snd_conf.chmaps,
+-                               sndconfig->chmaps);
+-
+-    memcpy(&s->snd_conf, sndconfig, sizeof(virtio_snd_config));
+-    le32_to_cpus(&s->snd_conf.jacks);
+-    le32_to_cpus(&s->snd_conf.streams);
+-    le32_to_cpus(&s->snd_conf.chmaps);
+-
+-}
+-
+ static void
+ virtio_snd_pcm_buffer_free(VirtIOSoundPCMBuffer *buffer)
+ {
+@@ -1400,7 +1377,6 @@ static void virtio_snd_class_init(ObjectClass *klass, void *data)
+     vdc->realize = virtio_snd_realize;
+     vdc->unrealize = virtio_snd_unrealize;
+     vdc->get_config = virtio_snd_get_config;
+-    vdc->set_config = virtio_snd_set_config;
+     vdc->get_features = get_features;
+     vdc->reset = virtio_snd_reset;
+     vdc->legacy_features = 0;
+-- 
+2.35.3
 
 
