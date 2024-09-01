@@ -4,61 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CF4CD3420
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Sep 2024 06:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC648CA101E
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Sep 2024 10:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1skeG8-0005ga-A2; Sun, 01 Sep 2024 02:40:24 -0400
+	id 1skhmC-0002hV-La; Sun, 01 Sep 2024 06:25:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1skeG7-0005fc-2F; Sun, 01 Sep 2024 02:40:23 -0400
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
+ id 1skhm9-0002dn-A4; Sun, 01 Sep 2024 06:25:41 -0400
+Received: from icts-p-cavuit-1.kulnet.kuleuven.be ([2a02:2c40:0:c0::25:132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1skeG4-0003Ij-5d; Sun, 01 Sep 2024 02:40:22 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id F19B6A40B3D;
- Sun,  1 Sep 2024 06:40:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6867FC4CEC3;
- Sun,  1 Sep 2024 06:40:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1725172809;
- bh=tmjR4zaDQqO7YRVjV6+NxBxXp7jCIOzTqAf/ZYvJSWg=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=ldjtfvUatoq9YBC87fc5MdxjbiEcER9AURhuULLUaCOs071PXg1Dl+BfXWACnwyu/
- PBQLg33aUl579Oda2tTd4R1NGJw1EWpEUBHSds9n0YlfHEO7DA5874CJ1a5LoYG3Yt
- ZLPUP9Cp1JHRmHzjQGBCHDMwYpvqK0Q7fcE2m3GsawMWKCee+4s8a844L/OdzGLIuS
- 18rliCCCPbBuoet2xQBgRNJpGPSfHaGzhVx8bS3CsPig3sH5UUJDhsO5AB8gECihDe
- QmC3QlDrl4CPl9LWHiCnhPsxGYcn03VR8ZyyE9LL9mQbL8kEFfHE7VsW2Ic6ylgLzr
- lbmjatXIuz6tA==
-Date: Sun, 1 Sep 2024 08:40:04 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v9 11/12] target/arm: add an experimental mpidr arm cpu
- property object
-Message-ID: <20240901084004.166a3c96@sal.lan>
-In-Reply-To: <CAFEAcA-wD6U+onh3y4Y-LDTFuYoeWbGShkRPx7emi1ZPfKJP0w@mail.gmail.com>
-References: <cover.1724556967.git.mchehab+huawei@kernel.org>
- <b88fe895e6f71711387ca153f4f1b3fbb0aa2176.1724556967.git.mchehab+huawei@kernel.org>
- <CAFEAcA-OaQ1ypa7LXz5nOs+6+fjmYNHzNL0VVgapoXEHU=rHnQ@mail.gmail.com>
- <20240826035324.6b1edcc7@sal.lan>
- <CAFEAcA-wD6U+onh3y4Y-LDTFuYoeWbGShkRPx7emi1ZPfKJP0w@mail.gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
+ id 1skhm7-0000r9-CX; Sun, 01 Sep 2024 06:25:40 -0400
+X-KULeuven-Envelope-From: libvirt-e6954efa@volkihar.be
+X-KULeuven-Scanned: Found to be clean
+X-KULeuven-ID: D242520057.AA565
+X-KULeuven-Information: Katholieke Universiteit Leuven
+Received: from icts-p-ceifnet-smtps-0.kuleuven.be
+ (icts-p-ceifnet-smtps.service.icts.svcd
+ [IPv6:2a02:2c40:0:51:144:242:ac11:2e])
+ by icts-p-cavuit-1.kulnet.kuleuven.be (Postfix) with ESMTP id D242520057;
+ Sun,  1 Sep 2024 12:25:27 +0200 (CEST)
+BCmilterd-Mark-Subject: no
+BCmilterd-Errors: 
+BCmilterd-Report: 
+X-CAV-Cluster: smtps
+Received: from flutterbat.volkihar.be (unknown
+ [IPv6:2a02:a03f:8ada:7900:da25:11b6:eb0b:9b9d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by icts-p-ceifnet-smtps-0.kuleuven.be (Postfix) with ESMTPSA id B08C3D4F7A333; 
+ Sun,  1 Sep 2024 12:25:27 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+ by flutterbat.volkihar.be (Postfix) with ESMTP id 6C62B1AB112;
+ Sun, 01 Sep 2024 12:25:27 +0200 (CEST)
+Message-ID: <9e85f24f-c9ce-4495-8731-66226249b2d3@volkihar.be>
+Date: Sun, 1 Sep 2024 12:25:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] block: allow commit to unmap zero blocks
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
+References: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
+ <20240713215644.742244-4-libvirt-e6954efa@volkihar.be>
+ <9a4ad6af-d222-4d7a-9446-2ea090954731@yandex-team.ru>
+X-Kuleuven: This mail passed the K.U.Leuven mailcluster
+From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+Content-Language: nl, en-GB
+In-Reply-To: <9a4ad6af-d222-4d7a-9446-2ea090954731@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:2c40:0:c0::25:132;
+ envelope-from=libvirt-e6954efa@volkihar.be;
+ helo=icts-p-cavuit-1.kulnet.kuleuven.be
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,121 +82,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Fri, 30 Aug 2024 17:27:27 +0100
-Peter Maydell <peter.maydell@linaro.org> escreveu:
+On 2/08/2024 12:58, Vladimir Sementsov-Ogievskiy wrote:
+> On 14.07.24 00:56, Vincent Vanlaer wrote:
+>> Non-active block commits do not discard blocks only containing zeros,
+>> causing images to lose sparseness after the commit. This commit fixes
+>> that by writing zero blocks using blk_co_pwrite_zeroes rather than
+>> writing them out as any other arbitrary data.
+>>
+>> Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+>> ---
+>>   block/commit.c | 19 +++++++++++++++++++
+>>   1 file changed, 19 insertions(+)
+>>
+>> diff --git a/block/commit.c b/block/commit.c
+>> index fb54fc9560..6ce30927ac 100644
+>> --- a/block/commit.c
+>> +++ b/block/commit.c
+>> @@ -130,6 +130,7 @@ static void commit_clean(Job *job)
+>>     typedef enum CommitMethod {
+>>       COMMIT_METHOD_COPY,
+>> +    COMMIT_METHOD_ZERO,
+>>       COMMIT_METHOD_IGNORE,
+>>   } CommitMethod;
+>>   @@ -185,6 +186,18 @@ static int coroutine_fn commit_run(Job *job, 
+>> Error **errp)
+>>           if (ret >= 0) {
+>>               if (!(ret & BDRV_BLOCK_ALLOCATED)) {
+>>                   commit_method = COMMIT_METHOD_IGNORE;
+>> +            } else if (ret & BDRV_BLOCK_ZERO) {
+>> +                int64_t target_offset;
+>> +                int64_t target_bytes;
+>> +                WITH_GRAPH_RDLOCK_GUARD() {
+>> +                    bdrv_round_to_subclusters(s->base_bs, offset, n,
+>> +                                           &target_offset, 
+>> &target_bytes);
+>
+> indentation broken
+>
+>> +                }
+>> +
+>> +                if (target_offset == offset &&
+>> +                    target_bytes == n) {
+>> +                    commit_method = COMMIT_METHOD_ZERO;
+>
+> Why this is needed? Could we blindly do write-zeroes at original 
+> (offset, n)? Underlying logic would use any possiblity to write zeroes 
+> effectively, and unaligned tails (if any) would be written as data.
+>
+This originates from the mirroring code. I did some testing and it 
+indeed is not necessary in this case. Letting it the underlying code 
+handle it also simplifies this code quite a bit.
 
-> On Mon, 26 Aug 2024 at 04:12, Mauro Carvalho Chehab
-> <mchehab+huawei@kernel.org> wrote:
-> >
-> > Em Sun, 25 Aug 2024 12:34:14 +0100
-> > Peter Maydell <peter.maydell@linaro.org> escreveu:
-> >  
-> > > On Sun, 25 Aug 2024 at 04:46, Mauro Carvalho Chehab
-> > > <mchehab+huawei@kernel.org> wrote:  
-> > > >
-> > > > Accurately injecting an ARM Processor error ACPI/APEI GHES
-> > > > error record requires the value of the ARM Multiprocessor
-> > > > Affinity Register (mpidr).
-> > > >
-> > > > While ARM implements it, this is currently not visible.
-> > > >
-> > > > Add a field at CPU storing it, and place it at arm_cpu_properties
-> > > > as experimental, thus allowing it to be queried via QMP using
-> > > > qom-get function.  
-> > >  
-> > > >  static Property arm_cpu_properties[] = {
-> > > >      DEFINE_PROP_UINT64("midr", ARMCPU, midr, 0),
-> > > > +    DEFINE_PROP_UINT64("x-mpidr", ARMCPU, mpidr, 0),
-> > > >      DEFINE_PROP_UINT64("mp-affinity", ARMCPU,
-> > > >                          mp_affinity, ARM64_AFFINITY_INVALID),
-> > > >      DEFINE_PROP_INT32("node-id", ARMCPU, node_id, CPU_UNSET_NUMA_NODE_ID),  
-> > >
-> > > Why do we need this?  
-> >
-> > The ACPI HEST tables, in particular when using GHESv2 provide
-> > several kinds of errors. Among them, we have ARM Processor Error,
-> > as defined at UEFI 2.10 spec (and earlier versions), the Common
-> > Platform Error Record (CPER) is defined as:
-> >
-> >    https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html?highlight=ghes#arm-processor-error-section
-> >
-> > There are two fields that are part of the CPER record. One of them is
-> > mandatory (MIDR); the other one is optional, but needed to decode another
-> > field.
-> >
-> > So, basically those errors need them.  
-> 
-> OK, but why do scripts outside of QEMU need the information,
-> as opposed to telling QEMU "hey, generate an error" and
-> QEMU knowing the format to use? Do we have any other
-> QMP APIs where something external provides raw ACPI
-> data like this?
+>> +                }
+>>               }
+>>                 switch (commit_method) {
+>> @@ -198,6 +211,11 @@ static int coroutine_fn commit_run(Job *job, 
+>> Error **errp)
+>>                       }
+>>                   }
+>>                   break;
+>> +            case COMMIT_METHOD_ZERO:
+>> +                ret = blk_co_pwrite_zeroes(s->base, offset, n,
+>> +                    BDRV_REQ_MAY_UNMAP);
+>> +                error_in_source = false;
+>> +                break;
+>>               case COMMIT_METHOD_IGNORE:
+>>                   break;
+>>               default:
+>> @@ -216,6 +234,7 @@ static int coroutine_fn commit_run(Job *job, 
+>> Error **errp)
+>>                   continue;
+>>               }
+>>           }
+>> +
+>
+> extra unrelated hunk for style, I'd drop it
+>
+>>           /* Publish progress */
+>>           job_progress_update(&s->common.job, n);
+>
 
-This was discussed during the review of this patch series. 
-
-See, the ACPI Platform Error Interfaces (APEI) code currently in QEMU
-implements limited support for ACPI HEST - Hardware Error Source Table [1].
-
-[1] https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#acpi-error-source
-
-HEST consists of, currently, 9 error types (plus 3 obsoleted ones). Among 
-them, there is support for generic errors via GHES and GHESv2 types. 
-While not officially obsoleted, GHES is superseded by GHESv2.
-
-GHESv2 (and GHES) has a section type field to identify which error type it
-is [2]. Currently, there are +10 defined UUIDs for the section type. 
-
-[2] https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#section-descriptor
-
-The current code on ghes.c implements GHESv2 support for a single
-type (memory error), received from the host OS via SIGBUS.
-
-Testing such code and injecting such error is not easy, as the host OS needs
-to send a SIGBUS to the guest, this reflecting an error at the main OS.
-Such code also has several limitations.
-
--
-
-At the first three versions of this patch set, the code was just doing
-like what you said: it was adding an error injection for a HEST GHESv2 
-ARM Processor Error. So the error record (CPER) were produced in QEMU using 
-some optional parameters passed via QMP to change fields when needed. 
-With such approach, QEMU could use directly the value from MIDR and MPIDR.
-
-The main disadvantage is that, to make full support of HEST, a lot
-of code will be needed to add support for every GHESv2 type and for
-every GHESv2 section type. So, the feedback we had were to re-implement
-it into a generic way.
-
-The generic CPER error inject approach (since v4 of this series), has
-soma advantages:
-
-- it is easy to do fuzz testing, as the entire CPER is built via a python
-  script;
-- no need to modify QEMU to support other GHESv2 types of record and
-  to support other types of processors;
-- GHESv2 fields can also be dynamically generated;
-- It shouldn't be hard to change the code to support other types of
-  HEST table (currently, only GHESv2 is supported).
-
-The disadvantage is that queries are needed to pick configuration and
-register values from the current emulation to do error injection. For
-ARM Processor Error, it means that MPIDR and MIDR, are needed. Other 
-processors and other error types will also require to query other data
-from QEMU, either using already-existing QMP code or by adding new ones.
-
-Yet, the amount of code for such queries seem to be smaller than the
-amount of code to be added for every single GHESv2/HEST type.
-
--
-
-Worth saying that QEMU may still require internal HEST/GHES errors to be 
-able to reflect at the guests hardware problems detected at the host OS. 
-
-So, for instance, if a host OS memory is poisoned due to hardware errors,
-QEMU and guests need to know, in order to kill processes affected
-by a bad memory. 
-
-Regards,
-Mauro
 
