@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0698CCA0ED3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 20:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08804CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 20:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slDEE-0000NN-DW; Mon, 02 Sep 2024 16:00:46 -0400
+	id 1slDOt-00060Z-3q; Mon, 02 Sep 2024 16:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slDE6-0000L1-3q
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 16:00:40 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slDE2-0007GJ-Nb
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 16:00:36 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-53345dcd377so6269717e87.2
- for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 13:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725307230; x=1725912030; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=3MMrtHA5sT2aNyDhcNj28OxY3n+8qln5d9m2QgKTyow=;
- b=HzySVdN1xZk2UYwGBRb92a9e3or3Y48s8usETkpk76urRKZNa+K9Csfq7k0v/qlTHW
- xnOppwGHV5l02SA7LOZhs+s/tcd6qCZahNSvAZ+cHVgqXTeTrOBcz2XlpZFihRK9o8L7
- lJaeJV2vtobQnVhDVDqxNqDxbUiMYA/uNY3QekJxzSYWyTeBfGkVriUwJYhEjFzByuF5
- GoQ98S312Wa90XxhuFqoZnNScTG1BHV2kSmMN8uKICqBSAYsN68vRf8MYab91Ue5CMnV
- 7HIq5//4fCP+Pmg9C9Rp2JbsoY3YHFUopKl0hclJrMPqLrhjYdiLEfTcT0V8a7hiU6BR
- JZ8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725307230; x=1725912030;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3MMrtHA5sT2aNyDhcNj28OxY3n+8qln5d9m2QgKTyow=;
- b=MpQH7MDG/IZWTiad02YLs5zBve/bx3jp5nNZ5jcDKlAiWllUBbIbz77rw6Pkgyoyts
- eSk2vI7eQKEKpIys69tZMUCnFcsEMynAEGACkaQkExP6SHuxriRc72+E3ANoRbpNOARv
- 4YDwUQtIdflb5ooToNueuej6pC3Srykvlc7WXMsxDdV+HJBoYbTEuTn/Jqe/7PhJoH3I
- yyWd5vXN49dUekbvqsf0MlYFYco3eYRunZtXP0GC5J2GmwtLdOKuIkGBWltg8dp/8VBg
- kJbtX+Z2zSUNuSKBfFd7N55veomHea6vpYokUP+l0n0VEUNXUJhT5ApfXeQafDZtx9bt
- C1LA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCWYDu09qPLpUSwtzu8DagdJxryw65HdV+9k61TVQ2KtS50sSdqUqqD82kfi0FLTC7m1WRVVbeUp4p@nongnu.org
-X-Gm-Message-State: AOJu0YwZRrvJHn10Ej39mGVWrOjOyNcD5gy1Xe3fRcTM7WAf/cGTJXPP
- 15kN/sT9STkkLHhaeRjtfNNPI84g+6EXj5ee5/MipghMemV9zsJ3oHQPpR7pHbM=
-X-Google-Smtp-Source: AGHT+IGmwPwx3YCzWNW57dBNf7B44DJecUJ4EMPoyybIQ9NdVYyetib744gVHPxbQ6D1gGwBzfcRwg==
-X-Received: by 2002:a05:6512:3352:b0:530:b7f4:3aaa with SMTP id
- 2adb3069b0e04-53546bb5f64mr6125636e87.52.1725307229981; 
- Mon, 02 Sep 2024 13:00:29 -0700 (PDT)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-535407ac472sm1728954e87.112.2024.09.02.13.00.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Sep 2024 13:00:29 -0700 (PDT)
-Message-ID: <6c9429e2-90c0-423a-812f-33f98fe1bdc8@linaro.org>
-Date: Mon, 2 Sep 2024 22:00:27 +0200
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1slDOr-0005z5-5G
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 16:11:45 -0400
+Received: from vps-vb.mhejs.net ([37.28.154.113])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1slDOm-0008An-Vs
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 16:11:44 -0400
+Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mail@maciej.szmigiero.name>)
+ id 1slDOb-0003PF-JE; Mon, 02 Sep 2024 22:11:29 +0200
+Message-ID: <4aaad112-5fdf-4172-bfb4-65dd7880202d@maciej.szmigiero.name>
+Date: Mon, 2 Sep 2024 22:11:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/arm/boot: Report error msg if loading elf/dtb failed
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Changbin Du <changbin.du@huawei.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20240830105304.2547406-1-changbin.du@huawei.com>
- <7c67704e-a067-4b6e-8acb-51b33cf17ee0@linaro.org>
-Content-Language: en-US
-In-Reply-To: <7c67704e-a067-4b6e-8acb-51b33cf17ee0@linaro.org>
+Subject: Re: [PATCH v2 13/17] migration/multifd: Add
+ migration_has_device_state_support()
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <8407eb455dfc1dea3cabf065f90833fab337eb98.1724701542.git.maciej.szmigiero@oracle.com>
+ <8734mlon65.fsf@suse.de>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <8734mlon65.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=37.28.154.113;
+ envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,69 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/9/24 21:55, Philippe Mathieu-Daudé wrote:
-> Hi Changbin,
+On 30.08.2024 20:55, Fabiano Rosas wrote:
+> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 > 
-> On 30/8/24 12:53, Changbin Du via wrote:
->> Print errors before exit. Do not exit silently.
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> Signed-off-by: Changbin Du <changbin.du@huawei.com>
+>> Since device state transfer via multifd channels requires multifd
+>> channels with packets and is currently not compatible with multifd
+>> compression add an appropriate query function so device can learn
+>> whether it can actually make use of it.
 >>
->> ---
->> v2: remove msg for arm_load_dtb.
->> ---
->>   hw/arm/boot.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
->> index d480a7da02cf..e15bf097a559 100644
->> --- a/hw/arm/boot.c
->> +++ b/hw/arm/boot.c
->> @@ -839,6 +839,7 @@ static ssize_t arm_load_elf(struct arm_boot_info 
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> 
+> Out of curiosity, what do you see as a blocker for migrating to a file?
+> 
+> We would just need to figure out a mapping from file offset some unit of
+> data to be able to write in parallel like with ram (of which the page
+> offset is mapped to the file offset).
 
-Note that header error is also silently ignored and could be logged:
+I'm not sure whether there's a point in that since VFIO devices
+just provide a raw device state stream - there's no way to know
+that some buffer is no longer needed because it consisted of
+dirty data that was completely overwritten by a later buffer.
 
-     load_elf_hdr(info->kernel_filename, &elf_header, &elf_is64, &err);
-     if (err) {
--        error_free(err);
-+        error_report_err(err);
-         return ret;
-     }
+Also, the device type that the code was developed against - a (smart)
+NIC - has so large device state because (more or less) it keeps a lot
+of data about network connections passing / made through it.
 
-(untested)
+It doesn't really make sense to make snapshot of such device for later
+reload since these connections will be long dropped by their remote
+peers by this point.
 
->>       if (ret <= 0) {
->>           /* The header loaded but the image didn't */
->> +        error_report("could not load elf '%s'", info->kernel_filename);
-> 
-> "Could ..." (caps)
-> 
-> "hw/loader.h" is not well documented, but it seems load_elf*() returns:
-> 
->    #define ELF_LOAD_FAILED       -1
->    #define ELF_LOAD_NOT_ELF      -2
->    #define ELF_LOAD_WRONG_ARCH   -3
->    #define ELF_LOAD_WRONG_ENDIAN -4
->    #define ELF_LOAD_TOO_BIG      -5
-> 
-> And we can display this error calling:
-> 
->    const char *load_elf_strerror(ssize_t error);
-> 
-> So we can be more precise here using:
-> 
->    error_report("Could not load elf '%s'", info->kernel_filename,
->                 load_elf_strerror(ret));
-> 
->>           exit(1);
->>       }
-> 
-> Better (but out of scope of this patch) could be to pass an Error *errp
-> argument to the load_elf*() family of functions, and fill it with the
-> appropriate error message.
-> 
-> Regards,
-> 
-> Phil.
+Such snapshotting might make more sense with GPU VFIO devices though.
+
+If such file migration support is desired at some later point then for
+sure the whole code would need to be carefully re-checked for implicit
+assumptions.
+
+Thanks,
+Maciej
 
 
