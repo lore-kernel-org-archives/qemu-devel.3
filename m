@@ -4,64 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C0B9CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 13:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D5ECA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 13:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sl76r-0002SP-D3; Mon, 02 Sep 2024 09:28:45 -0400
+	id 1sl7Fl-000839-0l; Mon, 02 Sep 2024 09:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3a9v=QA=kaod.org=clg@ozlabs.org>)
- id 1sl76e-0001hM-NF; Mon, 02 Sep 2024 09:28:34 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <m.klauchek@yadro.com>)
+ id 1sl4P0-000119-Nk; Mon, 02 Sep 2024 06:35:19 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3a9v=QA=kaod.org=clg@ozlabs.org>)
- id 1sl76c-0007Ko-8r; Mon, 02 Sep 2024 09:28:32 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Wy8hq006Zz4xGl;
- Mon,  2 Sep 2024 23:28:26 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Wy8hj5Xbtz4xCy;
- Mon,  2 Sep 2024 23:28:21 +1000 (AEST)
-Message-ID: <0e62d8ed-f30d-4b18-914b-89a51d6d9687@kaod.org>
-Date: Mon, 2 Sep 2024 15:28:18 +0200
+ (Exim 4.90_1) (envelope-from <m.klauchek@yadro.com>)
+ id 1sl4Oy-0000nx-Ay; Mon, 02 Sep 2024 06:35:18 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com A50DCC0006
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1725273298;
+ bh=ezc+JC4ivNUFgixILBC+L5c+Mb1oZU6F8f5WPwh3r6I=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=WgR0gUrZ2gdwhNPTT6HebB8Jor5MjIEOC1qGsN/5uXQ5+Cs8u2Msb3loCIMBz9Du1
+ 4SgtbGpw49ggPaft1OCoo5CaRRvQYxV8GT7527vZSZjzvAb1wVxejanRZEdSzgZgyv
+ hhyhIbYlG+nOkakQwpJg1vBkXIjo1t+7X/FujUzdlo664uT3TSDTxVlyej/rJHs+/I
+ 8ZsPLpWaeRXja3WMoaSlzkLv0gkuRGOAV3eJW1W+xp8BQjV115TmSvZ2ca1Mq6cV3H
+ iMGx5LFaBIbC/qCZgJvGBPn4GeOVZw8V9sy2A0mKJ1tRG0apocqwto6HlkbZhcLbBX
+ wBodB9jzTFD1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1725273298;
+ bh=ezc+JC4ivNUFgixILBC+L5c+Mb1oZU6F8f5WPwh3r6I=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=vsWi4FkKJBlmyl+raBiyBs01kC2/khSBTCNtzILmjVbrptzwaGo8kgXHHB3uUCfoM
+ O1cMiJlzPDdc8mAso+dfg+Bh82HqJEarzAVT51HKzj4M6gfiyWm5a6Ox9U2W+YDjwE
+ 3vKAdTKbM7/A5WRTHLpJWyMTcsWFEXuwsfIYH1thua4/Z3ceILfDTW5pr1my4PXSCc
+ 70yj1SzY1dlh59pgIy6oIsIqInP0lxzXWnjiOaY0cUJpZf18uVElyBWEyO7p519dQb
+ rZLqzT5WAvn2rWl3JWJO9o5GD/BsCy/CVk70mBNp0PzDYeOytyHZPVwlq16skIoZjR
+ B8voXJjdZ3WCQ==
+From: Maria Klauchek <m.klauchek@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
+ <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
+ <zhiwei_liu@linux.alibaba.com>, Maria Klauchek <m.klauchek@syntacore.com>
+Subject: [PATCH 1/1] target/riscv/cpu.c: Add 'fcsr' register to QEMU log as a
+ part of F extension
+Date: Mon, 2 Sep 2024 13:34:33 +0300
+Message-ID: <20240902103433.18424-1-m.klauchek@syntacore.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] hw/i2c/aspeed: support high part dram offset for
- DMA 64 bits
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
- <20240808024916.1262715-8-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240808024916.1262715-8-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=3a9v=QA=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: pass client-ip=89.207.88.248; envelope-from=m.klauchek@yadro.com;
+ helo=mta-04.yadro.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 02 Sep 2024 09:37:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,80 +79,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
+FCSR is a part of F extension. Print it to log if FPU option is enabled.
 
-Please adjust commit title
+Signed-off-by: Maria Klauchek <m.klauchek@syntacore.com>
+---
+ target/riscv/cpu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-On 8/8/24 04:49, Jamin Lin wrote:
-> ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
-> And the base address of dram is "0x4 00000000" which
-> is 64bits address.
-> 
-> The AST2700 support the maximum DRAM size is 8 GB.
-> The DRAM physical address range is from "0x4_0000_0000" to
-> "0x5_FFFF_FFFF".
-> 
-> The DRAM offset range is from "0x0_0000_0000" to
-> "0x1_FFFF_FFFF" and it is enough to use bits [33:0]
-> saving the dram offset.
-> 
-> Therefore, save the high part physical address bit[1:0]
-> of Tx/Rx buffer address as dma_dram_offset bit[33:32].
-> It does not need to decrease the dram physical
-> high part address for DMA operation.
-> (high part physical address bit[7:0] – 4)
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/i2c/aspeed_i2c.c | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
-> 
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index c1ff80b1cf..44c3c39233 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -743,6 +743,14 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->                         __func__);
->           break;
->   
-> +    /*
-> +     * The AST2700 support the maximum DRAM size is 8 GB.
-> +     * The DRAM offset range is from 0x0_0000_0000 to
-> +     * 0x1_FFFF_FFFF and it is enough to use bits [33:0]
-> +     * saving the dram offset.
-> +     * Therefore, save the high part physical address bit[1:0]
-> +     * of Tx/Rx buffer address as dma_dram_offset bit[33:32].
-> +     */
->       case A_I2CM_DMA_TX_ADDR_HI:
->           if (!aic->has_dma64) {
->               qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
-> @@ -752,6 +760,8 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->           bus->regs[R_I2CM_DMA_TX_ADDR_HI] = FIELD_EX32(value,
->                                                         I2CM_DMA_TX_ADDR_HI,
->                                                         ADDR_HI);
-> +        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
-> +                                         extract32(value, 0, 2));
->           break;
->       case A_I2CM_DMA_RX_ADDR_HI:
->           if (!aic->has_dma64) {
-> @@ -762,6 +772,8 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->           bus->regs[R_I2CM_DMA_RX_ADDR_HI] = FIELD_EX32(value,
->                                                         I2CM_DMA_RX_ADDR_HI,
->                                                         ADDR_HI);
-> +        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
-> +                                         extract32(value, 0, 2));
->           break;
->       case A_I2CS_DMA_TX_ADDR_HI:
->           qemu_log_mask(LOG_UNIMP,
-> @@ -777,6 +789,8 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->           bus->regs[R_I2CS_DMA_RX_ADDR_HI] = FIELD_EX32(value,
->                                                         I2CS_DMA_RX_ADDR_HI,
->                                                         ADDR_HI);
-> +        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
-> +                                         extract32(value, 0, 2));
->           break;
->       default:
->           qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a90808a3ba..6ff6096777 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -839,6 +839,12 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+         }
+     }
+     if (flags & CPU_DUMP_FPU) {
++        target_ulong val = 0;
++        RISCVException res = riscv_csrrw_debug(env, CSR_FCSR, &val, 0, 0);
++        if (res == RISCV_EXCP_NONE) {
++            qemu_fprintf(f, " %-8s " TARGET_FMT_lx "\n",
++                    csr_ops[CSR_FCSR].name, val);
++        }
+         for (i = 0; i < 32; i++) {
+             qemu_fprintf(f, " %-8s %016" PRIx64,
+                          riscv_fpr_regnames[i], env->fpr[i]);
+-- 
+2.25.1
 
 
