@@ -4,117 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB53C54FC6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 22:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F87C54FC6
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 22:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slFCj-00042C-5U; Mon, 02 Sep 2024 18:07:21 -0400
+	id 1slFGS-0000lD-7s; Mon, 02 Sep 2024 18:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slFCh-000414-G3
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 18:07:19 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slFGR-0000iF-61
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 18:11:11 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slFCe-0002Ye-VI
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 18:07:19 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 11E7621B4C;
- Mon,  2 Sep 2024 22:07:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725314832; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r+ZawTVwLexRiFN4HOeJfhEpXhWHjJe5vKQ3SwZEMiE=;
- b=p9aK/sBFQ41ZXThSdDgEvI7h//kx9nwL3/Q0JFzNfG6ZBCJOvuxggTgPE6/+opmHgv9GyQ
- agYG7Th0bmT08ovC4C3ik/KEgL+TayyV+qHG9WC9FCJ3UHRLwwbI8m9t85DpskfpOD+9Ws
- QO1zr421hm2Tvj/V2k9VHYPGZbtuoyY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725314832;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r+ZawTVwLexRiFN4HOeJfhEpXhWHjJe5vKQ3SwZEMiE=;
- b=YS0zgQMK2eKmRn/Vv8rIWROfz/nChz2MAIyMWXc/enEUSRNyWHDtW1Q+IrRIPtGewzd6BD
- VO0E/IZsHCvybzDA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="p9aK/sBF";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=YS0zgQMK
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725314832; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r+ZawTVwLexRiFN4HOeJfhEpXhWHjJe5vKQ3SwZEMiE=;
- b=p9aK/sBFQ41ZXThSdDgEvI7h//kx9nwL3/Q0JFzNfG6ZBCJOvuxggTgPE6/+opmHgv9GyQ
- agYG7Th0bmT08ovC4C3ik/KEgL+TayyV+qHG9WC9FCJ3UHRLwwbI8m9t85DpskfpOD+9Ws
- QO1zr421hm2Tvj/V2k9VHYPGZbtuoyY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725314832;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r+ZawTVwLexRiFN4HOeJfhEpXhWHjJe5vKQ3SwZEMiE=;
- b=YS0zgQMK2eKmRn/Vv8rIWROfz/nChz2MAIyMWXc/enEUSRNyWHDtW1Q+IrRIPtGewzd6BD
- VO0E/IZsHCvybzDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 85A4A13A21;
- Mon,  2 Sep 2024 22:07:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id lPYBEw831mYZMwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 02 Sep 2024 22:07:11 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
- <peterx@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Avihai
- Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 05/17] thread-pool: Implement non-AIO (generic) pool
- support
-In-Reply-To: <54947c3a1df713f5b69d8296938f3da41116ffe0.1724701542.git.maciej.szmigiero@oracle.com>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <54947c3a1df713f5b69d8296938f3da41116ffe0.1724701542.git.maciej.szmigiero@oracle.com>
-Date: Mon, 02 Sep 2024 19:07:08 -0300
-Message-ID: <87o755n20j.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slFGO-0002zF-NP
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 18:11:10 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-374b686d62dso1664293f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 15:11:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725315067; x=1725919867; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JskBgnUrR0VM/2FuE+LPG6LX2p1Q6bCk3Pxxj8l6LeU=;
+ b=EDBJEbCFL0qJlBYMx8LgESSiDGAkN6CAqVlMO/J2GU5aUySJbT9KvTYDF0w2O9pen5
+ clYJjWfB1fIQQIRadDrIlx+TiitGnh7kN/v6qm7VJ6+lCGVhmZ8+I83CQMdVPbk1GC4R
+ Gf15zl6d9Ji3Vm8q5ovRY+KA75RqL6k61IpKsRnlnswlfxghk5gYzshJn795hhQZYXtM
+ lDgzMED1VLuSiAZJ9ShbEMWJSBeYpL0X6hyB2UPIQHr1MYSe5fh3814cvONmVjLwHZ2y
+ P3ZM8wthDn9omARB3VAxJ80L2GSgROdCmK+PfLQeCQbC3yZ3m8hMEX6uHqp56+kbOUKl
+ P3WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725315067; x=1725919867;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JskBgnUrR0VM/2FuE+LPG6LX2p1Q6bCk3Pxxj8l6LeU=;
+ b=OEuDQauBI4qmoRpszYkpty4TSomPaoeFvC5D/P1XzI3Kf1sGxpaxw2+YXicHYgRsSD
+ 2jCBHG2Fn3QyF8yT1UmNVwnVR4bSRc/hkaZX7y1ri5ccZ/3rkTQ6Jyn91TJDTSPhgX7x
+ Y2OyGyO51bHw241Udu2BMDKwktVd2Z9SfMp7+GANht6ErpfuEaoLTyU41TpIkihERXWj
+ O5sgDYG4xCDFSyy63ae+EMM8IUuz2g+Xk0uB8QjsfDtQojUxZ4HWwalwiQm33IMl76ze
+ nlxcZo0SY3ijrFSH/ZGjrDjlxxnPlH87CQ2E31a9HlRwQ82wfk/XUIV2EjST8tUu2UBw
+ LeIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUd7JwTjfA6zvk8Z5lNHxYsfQ8Jnqw6yoOJvtzmEqb1U3hTfA+061B8lQsmmQ9a9Jx2OYUePeuUFXzb@nongnu.org
+X-Gm-Message-State: AOJu0YzioAJM5xO5SiM9HZ9/7V2eFtPjAuGwbFgvC08QRDYBP3mx9eW0
+ QEKqYz/0s/rvQQff/TSP8l96XOLfViaT8y/pyHr0go+hXTEvyFhv6pVpgWnIAfs=
+X-Google-Smtp-Source: AGHT+IF9sZoxNMZkOxT+oweOAiua6Eq1hljv3YCwFUBJFfg12ei9d+cTNnqgiHLf/HyoI8veUcnKFA==
+X-Received: by 2002:a5d:6b91:0:b0:367:991d:8b76 with SMTP id
+ ffacd0b85a97d-374bf04f7b7mr4674524f8f.15.1725315066499; 
+ Mon, 02 Sep 2024 15:11:06 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bb6df0f41sm149588255e9.19.2024.09.02.15.11.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Sep 2024 15:11:05 -0700 (PDT)
+Message-ID: <f4cd3718-5775-4d88-92f4-48427895d4f2@linaro.org>
+Date: Tue, 3 Sep 2024 00:11:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 11E7621B4C
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[12]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/arm/tcg: refine cache descriptions with a
+ wrapper
+To: Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: linuxarm@huawei.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, shameerali.kolothum.thodi@huawei.com,
+ Jonathan.Cameron@Huawei.com, alex.bennee@linaro.org, jiangkunkun@huawei.com
+References: <20240902203211.270-1-alireza.sanaee@huawei.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240902203211.270-1-alireza.sanaee@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,313 +99,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+Hi Alireza,
 
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->
-> Migration code wants to manage device data sending threads in one place.
->
-> QEMU has an existing thread pool implementation, however it was limited
-> to queuing AIO operations only and essentially had a 1:1 mapping between
-> the current AioContext and the ThreadPool in use.
->
-> Implement what is necessary to queue generic (non-AIO) work on a ThreadPool
-> too.
->
-> This brings a few new operations on a pool:
-> * thread_pool_set_minmax_threads() explicitly sets the minimum and maximum
-> thread count in the pool.
->
-> * thread_pool_join() operation waits until all the submitted work requests
-> have finished.
->
-> * thread_pool_poll() lets the new thread and / or thread completion bottom
-> halves run (if they are indeed scheduled to be run).
-> It is useful for thread pool users that need to launch or terminate new
-> threads without returning to the QEMU main loop.
->
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+On 2/9/24 22:32, Alireza Sanaee wrote:
+> This patch allows for easier manipulation of the cache description
+> register, CCSIDR. Which is helpful for testing as well. Currently,
+> numbers get hard-coded and might be prone to errors.
+> 
+> Therefore, this patch adds a wrapper for different types of CPUs
+> available in tcg to decribe caches. One function `make_ccsidr` supports
+> two cases by carrying a parameter as FORMAT that can be LEGACY and
+> CCIDX which determines the specification of the register.
+> 
+> For CCSIDR register, 32 bit version follows specification [1].
+> Conversely, 64 bit version follows specification [2].
+
+---
+
+[cut]
+
+> Changes from v2 [3] -> v3:
+> 
+> 1) add only one function instead of ccsidr32 and ccsidr64
+> 2) use deposit32 and deposit64 in ccsidr function
+> 
+---
+
+> [1] B4.1.19, ARM Architecture Reference Manual ARMv7-A and ARMv7-R
+> edition, https://developer.arm.com/documentation/ddi0406
+> [2] D23.2.29, ARM Architecture Reference Manual for A-profile Architecture,
+> https://developer.arm.com/documentation/ddi0487/latest/
+
+---
+
+[cut]
+
+> [3] https://lore.kernel.org/qemu-devel/20240830184713.224-1-alireza.sanaee@huawei.com/
+> 
+
+---
+
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 > ---
->  include/block/thread-pool.h   | 10 ++++-
->  tests/unit/test-thread-pool.c |  2 +-
->  util/thread-pool.c            | 77 ++++++++++++++++++++++++++++++-----
->  3 files changed, 76 insertions(+), 13 deletions(-)
->
-> diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
-> index b484c4780ea6..1769496056cd 100644
-> --- a/include/block/thread-pool.h
-> +++ b/include/block/thread-pool.h
-> @@ -37,9 +37,15 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
->                                     void *arg, GDestroyNotify arg_destroy,
->                                     BlockCompletionFunc *cb, void *opaque);
->  int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
-> -void thread_pool_submit(ThreadPoolFunc *func,
-> -                        void *arg, GDestroyNotify arg_destroy);
-> +BlockAIOCB *thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
-> +                               void *arg, GDestroyNotify arg_destroy,
-> +                               BlockCompletionFunc *cb, void *opaque);
-
-These kinds of changes (create wrappers, change signatures, etc), could
-be in their own patch as it's just code motion that should not have
-functional impact. The "no_requests" stuff would be better discussed in
-a separate patch.
-
->  
-> +void thread_pool_join(ThreadPool *pool);
-> +void thread_pool_poll(ThreadPool *pool);
+>   target/arm/cpu-features.h |  50 ++++++++++++++++++
+>   target/arm/cpu64.c        |  19 ++++---
+>   target/arm/tcg/cpu64.c    | 108 +++++++++++++++++++-------------------
+>   3 files changed, 117 insertions(+), 60 deletions(-)
+> 
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index c59ca104fe..ef40b0dfdc 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -1022,6 +1022,56 @@ static inline bool isar_feature_any_evt(const ARMISARegisters *id)
+>       return isar_feature_aa64_evt(id) || isar_feature_aa32_evt(id);
+>   }
+>   
+> +typedef enum {
+> +    CCSIDR_FORMAT_LEGACY,
+> +    CCSIDR_FORMAT_CCIDX,
+> +} CCSIDRFormat;
 > +
-> +void thread_pool_set_minmax_threads(ThreadPool *pool,
-> +                                    int min_threads, int max_threads);
->  void thread_pool_update_params(ThreadPool *pool, struct AioContext *ctx);
->  
->  #endif
-> diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
-> index e4afb9e36292..469c0f7057b6 100644
-> --- a/tests/unit/test-thread-pool.c
-> +++ b/tests/unit/test-thread-pool.c
-> @@ -46,7 +46,7 @@ static void done_cb(void *opaque, int ret)
->  static void test_submit(void)
->  {
->      WorkerTestData data = { .n = 0 };
-> -    thread_pool_submit(worker_cb, &data, NULL);
-> +    thread_pool_submit(NULL, worker_cb, &data, NULL, NULL, NULL);
->      while (data.n == 0) {
->          aio_poll(ctx, true);
->      }
-> diff --git a/util/thread-pool.c b/util/thread-pool.c
-> index 69a87ee79252..2bf3be875a51 100644
-> --- a/util/thread-pool.c
-> +++ b/util/thread-pool.c
-> @@ -60,6 +60,7 @@ struct ThreadPool {
->      QemuMutex lock;
->      QemuCond worker_stopped;
->      QemuCond request_cond;
-> +    QemuCond no_requests_cond;
->      QEMUBH *new_thread_bh;
->  
->      /* The following variables are only accessed from one AioContext. */
-> @@ -73,6 +74,7 @@ struct ThreadPool {
->      int pending_threads; /* threads created but not running yet */
->      int min_threads;
->      int max_threads;
-> +    size_t requests_executing;
+> +static inline uint64_t make_ccsidr(CCSIDRFormat format, unsigned assoc,
+> +                                   unsigned linesize, unsigned cachesize,
+> +                                   uint8_t flags)
+> +{
+> +    unsigned lg_linesize = ctz32(linesize);
+> +    unsigned sets;
+> +    uint32_t ccsidr32 = 0;
+> +    uint64_t ccsidr64 = 0;
 
-What's with size_t? Should this be a uint32_t instead?
+deposit32() works with unsigned so you can use 'uint64_t ccsidr' for
+both cases and return once.
 
->  };
->  
->  static void *worker_thread(void *opaque)
-> @@ -107,6 +109,10 @@ static void *worker_thread(void *opaque)
->          req = QTAILQ_FIRST(&pool->request_list);
->          QTAILQ_REMOVE(&pool->request_list, req, reqs);
->          req->state = THREAD_ACTIVE;
 > +
-> +        assert(pool->requests_executing < SIZE_MAX);
-> +        pool->requests_executing++;
-> +
->          qemu_mutex_unlock(&pool->lock);
->  
->          ret = req->func(req->arg);
-> @@ -118,6 +124,14 @@ static void *worker_thread(void *opaque)
->  
->          qemu_bh_schedule(pool->completion_bh);
->          qemu_mutex_lock(&pool->lock);
-> +
-> +        assert(pool->requests_executing > 0);
-> +        pool->requests_executing--;
-> +
-> +        if (pool->requests_executing == 0 &&
-> +            QTAILQ_EMPTY(&pool->request_list)) {
-> +            qemu_cond_signal(&pool->no_requests_cond);
-> +        }
+> +    assert(assoc != 0);
+> +    assert(is_power_of_2(linesize));
 
-An empty requests list and no request in flight means the worker will
-now exit after the timeout, no? Can you just kick the worker out of the
-wait and use pool->worker_stopped instead of the new condition variable?
+As mentioned in v2, if you insist in using an inlined method, you have
+to include "qemu/host-utils.h" to get is_power_of_2() declaration.
 
->      }
->  
->      pool->cur_threads--;
-> @@ -243,13 +257,16 @@ static const AIOCBInfo thread_pool_aiocb_info = {
->      .cancel_async       = thread_pool_cancel,
->  };
->  
-> -BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
-> -                                   void *arg, GDestroyNotify arg_destroy,
-> -                                   BlockCompletionFunc *cb, void *opaque)
-> +BlockAIOCB *thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
-> +                               void *arg, GDestroyNotify arg_destroy,
-> +                               BlockCompletionFunc *cb, void *opaque)
->  {
->      ThreadPoolElement *req;
->      AioContext *ctx = qemu_get_current_aio_context();
-> -    ThreadPool *pool = aio_get_thread_pool(ctx);
+If the inlining is proven problematic later we can still un-inline
+it, so as this is an useful cleanup (preferably with one 'ccsidr'
+variable and the include):
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
 > +
-> +    if (!pool) {
-> +        pool = aio_get_thread_pool(ctx);
+> +    /* sets * associativity * linesize == cachesize. */
+> +    sets = cachesize / (assoc * linesize);
+> +    assert(cachesize % (assoc * linesize) == 0);
+> +
+> +    if (format == CCSIDR_FORMAT_LEGACY) {
+> +        /*
+> +         * The 32-bit CCSIDR format is:
+> +         *   [27:13] number of sets - 1
+> +         *   [12:3]  associativity - 1
+> +         *   [2:0]   log2(linesize) - 4
+> +         *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
+> +         */
+> +        ccsidr32 = deposit32(ccsidr32, 28,  4, flags);
+> +        ccsidr32 = deposit32(ccsidr32, 13, 15, sets - 1);
+> +        ccsidr32 = deposit32(ccsidr32,  3, 10, assoc - 1);
+> +        ccsidr32 = deposit32(ccsidr32,  0,  3, lg_linesize - 4);
+> +        return (uint64_t)ccsidr32;
+> +    } else {
+> +        /*
+> +         * The 64-bit CCSIDR_EL1 format is:
+> +         *   [55:32] number of sets - 1
+> +         *   [23:3]  associativity - 1
+> +         *   [2:0]   log2(linesize) - 4
+> +         *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
+> +         */
+> +        ccsidr64 = deposit64(ccsidr64, 32, 24, sets - 1);
+> +        ccsidr64 = deposit64(ccsidr64,  3, 21, assoc - 1);
+> +        ccsidr64 = deposit64(ccsidr64,  0,  3, lg_linesize - 4);
+> +        return ccsidr64;
 > +    }
-
-I'd go for a separate implementation to really drive the point that this
-new usage is different. See the code snippet below.
-
-It seems we're a short step away to being able to use this
-implementation in a general way. Is there something that can be done
-with the 'common' field in the ThreadPoolElement?
-
-========
-static void thread_pool_submit_request(ThreadPool *pool, ThreadPoolElement *req)
-{
-    req->state = THREAD_QUEUED;
-    req->pool = pool;
-
-    QLIST_INSERT_HEAD(&pool->head, req, all);
-
-    trace_thread_pool_submit(pool, req, req->arg);
-
-    qemu_mutex_lock(&pool->lock);
-    if (pool->idle_threads == 0 && pool->cur_threads < pool->max_threads) {
-        spawn_thread(pool);
-    }
-    QTAILQ_INSERT_TAIL(&pool->request_list, req, reqs);
-    qemu_mutex_unlock(&pool->lock);
-    qemu_cond_signal(&pool->request_cond);
-}
-
-BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
-                                   BlockCompletionFunc *cb, void *opaque)
-{
-    ThreadPoolElement *req;
-    AioContext *ctx = qemu_get_current_aio_context();
-    ThreadPool *pool = aio_get_thread_pool(ctx);
-
-    /* Assert that the thread submitting work is the same running the pool */
-    assert(pool->ctx == qemu_get_current_aio_context());
-
-    req = qemu_aio_get(&thread_pool_aiocb_info, NULL, cb, opaque);
-    req->func = func;
-    req->arg = arg;
-
-    thread_pool_submit_request(pool, req);
-    return &req->common;
-}
-
-void thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func, void *arg)
-{
-    ThreadPoolElement *req;
-
-    req = g_malloc(sizeof(ThreadPoolElement));
-    req->func = func;
-    req->arg = arg;
-
-    thread_pool_submit_request(pool, req);
-}
-=================
-
->  
->      /* Assert that the thread submitting work is the same running the pool */
->      assert(pool->ctx == qemu_get_current_aio_context());
-> @@ -275,6 +292,18 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
->      return &req->common;
->  }
->  
-> +BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func,
-> +                                   void *arg, GDestroyNotify arg_destroy,
-> +                                   BlockCompletionFunc *cb, void *opaque)
-> +{
-> +    return thread_pool_submit(NULL, func, arg, arg_destroy, cb, opaque);
 > +}
-> +
-> +void thread_pool_poll(ThreadPool *pool)
-> +{
-> +    aio_bh_poll(pool->ctx);
-> +}
-> +
->  typedef struct ThreadPoolCo {
->      Coroutine *co;
->      int ret;
-> @@ -297,18 +326,38 @@ int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg)
->      return tpc.ret;
->  }
->  
-> -void thread_pool_submit(ThreadPoolFunc *func,
-> -                        void *arg, GDestroyNotify arg_destroy)
-> +void thread_pool_join(ThreadPool *pool)
 
-This is misleading because it's about the requests, not the threads in
-the pool. Compare with what thread_pool_free does:
-
-    /* Wait for worker threads to terminate */
-    pool->max_threads = 0;
-    qemu_cond_broadcast(&pool->request_cond);
-    while (pool->cur_threads > 0) {
-        qemu_cond_wait(&pool->worker_stopped, &pool->lock);
-    }
-
->  {
-> -    thread_pool_submit_aio(func, arg, arg_destroy, NULL, NULL);
-> +    /* Assert that the thread waiting is the same running the pool */
-> +    assert(pool->ctx == qemu_get_current_aio_context());
-> +
-> +    qemu_mutex_lock(&pool->lock);
-> +
-> +    if (pool->requests_executing > 0 ||
-> +        !QTAILQ_EMPTY(&pool->request_list)) {
-> +        qemu_cond_wait(&pool->no_requests_cond, &pool->lock);
-> +    }
-> +    assert(pool->requests_executing == 0 &&
-> +           QTAILQ_EMPTY(&pool->request_list));
-> +
-> +    qemu_mutex_unlock(&pool->lock);
-> +
-> +    aio_bh_poll(pool->ctx);
-> +
-> +    assert(QLIST_EMPTY(&pool->head));
->  }
->  
-> -void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
-> +void thread_pool_set_minmax_threads(ThreadPool *pool,
-> +                                    int min_threads, int max_threads)
->  {
-> +    assert(min_threads >= 0);
-> +    assert(max_threads > 0);
-> +    assert(max_threads >= min_threads);
-> +
->      qemu_mutex_lock(&pool->lock);
->  
-> -    pool->min_threads = ctx->thread_pool_min;
-> -    pool->max_threads = ctx->thread_pool_max;
-> +    pool->min_threads = min_threads;
-> +    pool->max_threads = max_threads;
->  
->      /*
->       * We either have to:
-> @@ -330,6 +379,12 @@ void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
->      qemu_mutex_unlock(&pool->lock);
->  }
->  
-> +void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
-> +{
-> +    thread_pool_set_minmax_threads(pool,
-> +                                   ctx->thread_pool_min, ctx->thread_pool_max);
-> +}
-> +
->  static void thread_pool_init_one(ThreadPool *pool, AioContext *ctx)
->  {
->      if (!ctx) {
-> @@ -342,6 +397,7 @@ static void thread_pool_init_one(ThreadPool *pool, AioContext *ctx)
->      qemu_mutex_init(&pool->lock);
->      qemu_cond_init(&pool->worker_stopped);
->      qemu_cond_init(&pool->request_cond);
-> +    qemu_cond_init(&pool->no_requests_cond);
->      pool->new_thread_bh = aio_bh_new(ctx, spawn_thread_bh_fn, pool);
->  
->      QLIST_INIT(&pool->head);
-> @@ -382,6 +438,7 @@ void thread_pool_free(ThreadPool *pool)
->      qemu_mutex_unlock(&pool->lock);
->  
->      qemu_bh_delete(pool->completion_bh);
-> +    qemu_cond_destroy(&pool->no_requests_cond);
->      qemu_cond_destroy(&pool->request_cond);
->      qemu_cond_destroy(&pool->worker_stopped);
->      qemu_mutex_destroy(&pool->lock);
 
