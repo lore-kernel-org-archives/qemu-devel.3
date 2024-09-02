@@ -4,96 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E7FECD13CF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 20:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7FDCD13CF
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 20:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slDPQ-0006qh-6t; Mon, 02 Sep 2024 16:12:20 -0400
+	id 1slDis-0001Cc-6i; Mon, 02 Sep 2024 16:32:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1slDPN-0006kg-J3
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 16:12:17 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1slDiq-0001Ag-QD; Mon, 02 Sep 2024 16:32:24 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1slDPL-0008Dw-KG
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 16:12:17 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1slDPC-0003Pf-Mc; Mon, 02 Sep 2024 22:12:06 +0200
-Message-ID: <00eeacd5-ad27-4899-8526-0941b30e759d@maciej.szmigiero.name>
-Date: Mon, 2 Sep 2024 22:12:01 +0200
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1slDin-0001Wt-KO; Mon, 02 Sep 2024 16:32:24 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WyL0n6Bc8z6K5n5;
+ Tue,  3 Sep 2024 04:27:53 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
+ by mail.maildlp.com (Postfix) with ESMTPS id E221B14058E;
+ Tue,  3 Sep 2024 04:32:12 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.47.78.245) by
+ lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 2 Sep 2024 21:32:12 +0100
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <linuxarm@huawei.com>, <peter.maydell@linaro.org>,
+ <richard.henderson@linaro.org>, <shameerali.kolothum.thodi@huawei.com>,
+ <Jonathan.Cameron@Huawei.com>, <alex.bennee@linaro.org>, <philmd@linaro.org>, 
+ <jiangkunkun@huawei.com>
+Subject: [PATCH v3] target/arm/tcg: refine cache descriptions with a wrapper
+Date: Mon, 2 Sep 2024 21:32:11 +0100
+Message-ID: <20240902203211.270-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/17] migration/multifd: Device state transfer support
- - receive side
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <84141182083a8417c25b4d82a9c4b6228b22ac67.1724701542.git.maciej.szmigiero@oracle.com>
- <87ttf1n4lm.fsf@suse.de>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <87ttf1n4lm.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.47.78.245]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ lhrpeml500006.china.huawei.com (7.191.161.198)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,233 +64,329 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.08.2024 22:22, Fabiano Rosas wrote:
-> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
-> 
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> Add a basic support for receiving device state via multifd channels -
->> channels that are shared with RAM transfers.
->>
->> To differentiate between a device state and a RAM packet the packet
->> header is read first.
->>
->> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
->> packet header either device state (MultiFDPacketDeviceState_t) or RAM
->> data (existing MultiFDPacket_t) is then read.
->>
->> The received device state data is provided to
->> qemu_loadvm_load_state_buffer() function for processing in the
->> device's load_state_buffer handler.
->>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   migration/multifd.c | 127 +++++++++++++++++++++++++++++++++++++-------
->>   migration/multifd.h |  31 ++++++++++-
->>   2 files changed, 138 insertions(+), 20 deletions(-)
->>
->> diff --git a/migration/multifd.c b/migration/multifd.c
->> index b06a9fab500e..d5a8e5a9c9b5 100644
->> --- a/migration/multifd.c
->> +++ b/migration/multifd.c
-(..)
->>       g_free(p->zero);
->> @@ -1126,8 +1159,13 @@ static void *multifd_recv_thread(void *opaque)
->>       rcu_register_thread();
->>   
->>       while (true) {
->> +        MultiFDPacketHdr_t hdr;
->>           uint32_t flags = 0;
->> +        bool is_device_state = false;
->>           bool has_data = false;
->> +        uint8_t *pkt_buf;
->> +        size_t pkt_len;
->> +
->>           p->normal_num = 0;
->>   
->>           if (use_packets) {
->> @@ -1135,8 +1173,28 @@ static void *multifd_recv_thread(void *opaque)
->>                   break;
->>               }
->>   
->> -            ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
->> -                                           p->packet_len, &local_err);
->> +            ret = qio_channel_read_all_eof(p->c, (void *)&hdr,
->> +                                           sizeof(hdr), &local_err);
->> +            if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
->> +                break;
->> +            }
->> +
->> +            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
->> +            if (ret) {
->> +                break;
->> +            }
->> +
->> +            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
->> +            if (is_device_state) {
->> +                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
->> +                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
->> +            } else {
->> +                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
->> +                pkt_len = p->packet_len - sizeof(hdr);
->> +            }
-> 
-> Should we have made the packet an union as well? Would simplify these
-> sorts of operations. Not sure I want to start messing with that at this
-> point to be honest. But OTOH, look at this...
+This patch allows for easier manipulation of the cache description
+register, CCSIDR. Which is helpful for testing as well. Currently,
+numbers get hard-coded and might be prone to errors.
 
-RAM packet length is not constant (at least from the viewpoint of the
-migration code) so the union allocation would need some kind of a
-"multifd_ram_packet_size()" runtime size determination.
+Therefore, this patch adds a wrapper for different types of CPUs
+available in tcg to decribe caches. One function `make_ccsidr` supports
+two cases by carrying a parameter as FORMAT that can be LEGACY and
+CCIDX which determines the specification of the register.
 
-Also, since RAM and device state packet body size is different then
-for the extra complexity introduced by that union we'll just get rid of
-that single pkt_buf assignment.
+For CCSIDR register, 32 bit version follows specification [1].
+Conversely, 64 bit version follows specification [2].
 
->> +
->> +            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
->> +                                           &local_err);
->>               if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
->>                   break;
->>               }
->> @@ -1181,8 +1239,33 @@ static void *multifd_recv_thread(void *opaque)
->>               has_data = !!p->data->size;
->>           }
->>   
->> -        if (has_data) {
->> -            ret = multifd_recv_state->ops->recv(p, &local_err);
->> +        if (!is_device_state) {
->> +            if (has_data) {
->> +                ret = multifd_recv_state->ops->recv(p, &local_err);
->> +                if (ret != 0) {
->> +                    break;
->> +                }
->> +            }
->> +        } else {
->> +            g_autofree char *idstr = NULL;
->> +            g_autofree char *dev_state_buf = NULL;
->> +
->> +            assert(use_packets);
->> +
->> +            if (p->next_packet_size > 0) {
->> +                dev_state_buf = g_malloc(p->next_packet_size);
->> +
->> +                ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, &local_err);
->> +                if (ret != 0) {
->> +                    break;
->> +                }
->> +            }
-> 
-> What's the use case for !next_packet_size and still call
-> load_state_buffer below? I can't see it.
+Changes from v2 [3] -> v3:
 
-Currently, next_packet_size == 0 has not usage indeed - it is
-a leftover from an early version of the patch set (not public)
-that had device state packet (chunk) indexing done by
-the common migration code, rather than by the VFIO consumer.
+1) add only one function instead of ccsidr32 and ccsidr64
+2) use deposit32 and deposit64 in ccsidr function
 
-And then an empty packet could be used to mark the stream
-boundary - like the max chunk number to expect.
+[1] B4.1.19, ARM Architecture Reference Manual ARMv7-A and ARMv7-R
+edition, https://developer.arm.com/documentation/ddi0406
+[2] D23.2.29, ARM Architecture Reference Manual for A-profile Architecture,
+https://developer.arm.com/documentation/ddi0487/latest/
+[3] https://lore.kernel.org/qemu-devel/20240830184713.224-1-alireza.sanaee@huawei.com/
 
-> ...because I would suggest to set has_data up there with
-> p->next_packet_size:
-> 
-> if (use_packets) {
->     ...
->     has_data = p->next_packet_size || p->zero_num;
-> } else {
->     ...
->     has_data = !!p->data_size;
-> }
-> 
-> and this whole block would be:
-> 
-> if (has_data) {
->     if (is_device_state) {
->         multifd_device_state_recv(p, &local_err);
->     } else {
->         ret = multifd_recv_state->ops->recv(p, &local_err);
->     }
-> }
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+---
+ target/arm/cpu-features.h |  50 ++++++++++++++++++
+ target/arm/cpu64.c        |  19 ++++---
+ target/arm/tcg/cpu64.c    | 108 +++++++++++++++++++-------------------
+ 3 files changed, 117 insertions(+), 60 deletions(-)
 
-The above block makes sense to me with two caveats:
-1) If empty device state packets (next_packet_size == 0) were
-to be unsupported they need to be rejected cleanly rather
-than silently skipped,
-
-2) has_data has to have its value computed depending on whether
-this is a RAM or a device state packet since looking at
-p->normal_num and p->zero_num makes no sense for a device state
-packet while I am not sure that looking at p->next_packet_size
-for a RAM packet won't introduce some subtle regression.
-
->> +
->> +            idstr = g_strndup(p->packet_dev_state->idstr, sizeof(p->packet_dev_state->idstr));
->> +            ret = qemu_loadvm_load_state_buffer(idstr,
->> +                                                p->packet_dev_state->instance_id,
->> +                                                dev_state_buf, p->next_packet_size,
->> +                                                &local_err);
->>               if (ret != 0) {
->>                   break;
->>               }
->> @@ -1190,6 +1273,11 @@ static void *multifd_recv_thread(void *opaque)
->>   
->>           if (use_packets) {
->>               if (flags & MULTIFD_FLAG_SYNC) {
->> +                if (is_device_state) {
->> +                    error_setg(&local_err, "multifd: received SYNC device state packet");
->> +                    break;
->> +                }
-> 
-> assert(!is_device_state) enough?
-
-It's not bug in the receiver code but rather an issue with the
-remote QEMU sending us wrong data if we get a SYNC device state
-packet.
-
-So I think returning an error is more appropriate than triggering
-an assert() failure for that.
-
->> +
->>                   qemu_sem_post(&multifd_recv_state->sem_sync);
->>                   qemu_sem_wait(&p->sem_sync);
->>               }
->> @@ -1258,6 +1346,7 @@ int multifd_recv_setup(Error **errp)
->>               p->packet_len = sizeof(MultiFDPacket_t)
->>                   + sizeof(uint64_t) * page_count;
->>               p->packet = g_malloc0(p->packet_len);
->> +            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
->>           }
->>           p->name = g_strdup_printf("mig/dst/recv_%d", i);
->>           p->normal = g_new0(ram_addr_t, page_count);
->> diff --git a/migration/multifd.h b/migration/multifd.h
->> index a3e35196d179..a8f3e4838c01 100644
->> --- a/migration/multifd.h
->> +++ b/migration/multifd.h
->> @@ -45,6 +45,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
->>   #define MULTIFD_FLAG_QPL (4 << 1)
->>   #define MULTIFD_FLAG_UADK (8 << 1)
->>   
->> +/*
->> + * If set it means that this packet contains device state
->> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
->> + */
->> +#define MULTIFD_FLAG_DEVICE_STATE (1 << 4)
-> 
-> Overlaps with UADK. I assume on purpose because device_state doesn't
-> support compression? Might be worth a comment.
-> 
-
-Yes, the device state transfer bit stream does not support compression
-so it is not a problem since these "compression type" flags will never
-be set in such bit stream anyway.
-
-Will add a relevant comment here.
-
-Thanks,
-Maciej
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index c59ca104fe..ef40b0dfdc 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1022,6 +1022,56 @@ static inline bool isar_feature_any_evt(const ARMISARegisters *id)
+     return isar_feature_aa64_evt(id) || isar_feature_aa32_evt(id);
+ }
+ 
++typedef enum {
++    CCSIDR_FORMAT_LEGACY,
++    CCSIDR_FORMAT_CCIDX,
++} CCSIDRFormat;
++
++static inline uint64_t make_ccsidr(CCSIDRFormat format, unsigned assoc,
++                                   unsigned linesize, unsigned cachesize,
++                                   uint8_t flags)
++{
++    unsigned lg_linesize = ctz32(linesize);
++    unsigned sets;
++    uint32_t ccsidr32 = 0;
++    uint64_t ccsidr64 = 0;
++
++    assert(assoc != 0);
++    assert(is_power_of_2(linesize));
++    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
++
++    /* sets * associativity * linesize == cachesize. */
++    sets = cachesize / (assoc * linesize);
++    assert(cachesize % (assoc * linesize) == 0);
++
++    if (format == CCSIDR_FORMAT_LEGACY) {
++        /*
++         * The 32-bit CCSIDR format is:
++         *   [27:13] number of sets - 1
++         *   [12:3]  associativity - 1
++         *   [2:0]   log2(linesize) - 4
++         *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
++         */
++        ccsidr32 = deposit32(ccsidr32, 28,  4, flags);
++        ccsidr32 = deposit32(ccsidr32, 13, 15, sets - 1);
++        ccsidr32 = deposit32(ccsidr32,  3, 10, assoc - 1);
++        ccsidr32 = deposit32(ccsidr32,  0,  3, lg_linesize - 4);
++        return (uint64_t)ccsidr32;
++    } else {
++        /*
++         * The 64-bit CCSIDR_EL1 format is:
++         *   [55:32] number of sets - 1
++         *   [23:3]  associativity - 1
++         *   [2:0]   log2(linesize) - 4
++         *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
++         */
++        ccsidr64 = deposit64(ccsidr64, 32, 24, sets - 1);
++        ccsidr64 = deposit64(ccsidr64,  3, 21, assoc - 1);
++        ccsidr64 = deposit64(ccsidr64,  0,  3, lg_linesize - 4);
++        return ccsidr64;
++    }
++}
++
+ /*
+  * Forward to the above feature tests given an ARMCPU pointer.
+  */
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 262a1d6c0b..458d1cee01 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -23,6 +23,7 @@
+ #include "cpu.h"
+ #include "cpregs.h"
+ #include "qemu/module.h"
++#include "qemu/units.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/hvf.h"
+ #include "sysemu/qtest.h"
+@@ -642,9 +643,12 @@ static void aarch64_a57_initfn(Object *obj)
+     cpu->isar.dbgdevid1 = 0x2;
+     cpu->isar.reset_pmcr_el0 = 0x41013000;
+     cpu->clidr = 0x0a200023;
+-    cpu->ccsidr[0] = 0x701fe00a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe012; /* 48KB L1 icache */
+-    cpu->ccsidr[2] = 0x70ffe07a; /* 2048KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
++    /* 48KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
++    /* 2048KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB, 7);
+     cpu->dcz_blocksize = 4; /* 64 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+@@ -700,9 +704,12 @@ static void aarch64_a53_initfn(Object *obj)
+     cpu->isar.dbgdevid1 = 0x1;
+     cpu->isar.reset_pmcr_el0 = 0x41033000;
+     cpu->clidr = 0x0a200023;
+-    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe00a; /* 32KB L1 icache */
+-    cpu->ccsidr[2] = 0x707fe07a; /* 1024KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
++    /* 32KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 1, 64, 32 * KiB, 2);
++    /* 1024KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 1 * MiB, 7);
+     cpu->dcz_blocksize = 4; /* 64 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index fe232eb306..904a7e90b4 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -29,32 +29,6 @@
+ #include "cpu-features.h"
+ #include "cpregs.h"
+ 
+-static uint64_t make_ccsidr64(unsigned assoc, unsigned linesize,
+-                              unsigned cachesize)
+-{
+-    unsigned lg_linesize = ctz32(linesize);
+-    unsigned sets;
+-
+-    /*
+-     * The 64-bit CCSIDR_EL1 format is:
+-     *   [55:32] number of sets - 1
+-     *   [23:3]  associativity - 1
+-     *   [2:0]   log2(linesize) - 4
+-     *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
+-     */
+-    assert(assoc != 0);
+-    assert(is_power_of_2(linesize));
+-    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
+-
+-    /* sets * associativity * linesize == cachesize. */
+-    sets = cachesize / (assoc * linesize);
+-    assert(cachesize % (assoc * linesize) == 0);
+-
+-    return ((uint64_t)(sets - 1) << 32)
+-         | ((assoc - 1) << 3)
+-         | (lg_linesize - 4);
+-}
+-
+ static void aarch64_a35_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -106,9 +80,12 @@ static void aarch64_a35_initfn(Object *obj)
+     cpu->isar.reset_pmcr_el0 = 0x410a3000;
+ 
+     /* From B2.29 Cache ID registers */
+-    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe00a; /* 32KB L1 icache */
+-    cpu->ccsidr[2] = 0x703fe03a; /* 512KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
++    /* 32KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 2);
++    /* 512KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 512 * KiB, 7);
+ 
+     /* From B3.5 VGIC Type register */
+     cpu->gic_num_lrs = 4;
+@@ -272,9 +249,12 @@ static void aarch64_a55_initfn(Object *obj)
+     cpu->revidr = 0;
+ 
+     /* From B2.23 CCSIDR_EL1 */
+-    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x200fe01a; /* 32KB L1 icache */
+-    cpu->ccsidr[2] = 0x703fe07a; /* 512KB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
++    /* 32KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 2);
++    /* 512KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 512 * KiB, 7);
+ 
+     /* From B2.96 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -338,9 +318,12 @@ static void aarch64_a72_initfn(Object *obj)
+     cpu->isar.dbgdevid1 = 0x2;
+     cpu->isar.reset_pmcr_el0 = 0x41023000;
+     cpu->clidr = 0x0a200023;
+-    cpu->ccsidr[0] = 0x701fe00a; /* 32KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe012; /* 48KB L1 icache */
+-    cpu->ccsidr[2] = 0x707fe07a; /* 1MB L2 cache */
++    /* 32KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
++    /* 48KB L1 dcache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
++    /* 1MB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 1 * MiB, 7);
+     cpu->dcz_blocksize = 4; /* 64 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+@@ -397,9 +380,12 @@ static void aarch64_a76_initfn(Object *obj)
+     cpu->revidr = 0;
+ 
+     /* From B2.18 CCSIDR_EL1 */
+-    cpu->ccsidr[0] = 0x701fe01a; /* 64KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe01a; /* 64KB L1 icache */
+-    cpu->ccsidr[2] = 0x707fe03a; /* 512KB L2 cache */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 2);
++    /* 512KB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 512 * KiB, 7);
+ 
+     /* From B2.93 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -449,9 +435,12 @@ static void aarch64_a64fx_initfn(Object *obj)
+     cpu->isar.id_aa64isar1 = 0x0000000000010001;
+     cpu->isar.id_aa64zfr0 = 0x0000000000000000;
+     cpu->clidr = 0x0000000080000023;
+-    cpu->ccsidr[0] = 0x7007e01c; /* 64KB L1 dcache */
+-    cpu->ccsidr[1] = 0x2007e01c; /* 64KB L1 icache */
+-    cpu->ccsidr[2] = 0x70ffe07c; /* 8MB L2 cache */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 256, 64 * KiB, 7);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 256, 64 * KiB, 2);
++    /* 8MB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 256, 8 * MiB, 7);
+     cpu->dcz_blocksize = 6; /* 256 bytes */
+     cpu->gic_num_lrs = 4;
+     cpu->gic_vpribits = 5;
+@@ -637,9 +626,12 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     cpu->revidr = 0;
+ 
+     /* From B2.23 CCSIDR_EL1 */
+-    cpu->ccsidr[0] = 0x701fe01a; /* 64KB L1 dcache */
+-    cpu->ccsidr[1] = 0x201fe01a; /* 64KB L1 icache */
+-    cpu->ccsidr[2] = 0x70ffe03a; /* 1MB L2 cache */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 2);
++    /* 1MB L2 dcache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 1 * MiB, 7);
+ 
+     /* From B2.98 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -721,9 +713,12 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+      * L2: 8-way set associative, 64 byte line size, either 512K or 1MB.
+      * L3: No L3 (this matches the CLIDR_EL1 value).
+      */
+-    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB); /* L1 dcache */
+-    cpu->ccsidr[1] = cpu->ccsidr[0];                 /* L1 icache */
+-    cpu->ccsidr[2] = make_ccsidr64(8, 64, 1 * MiB);  /* L2 cache */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = cpu->ccsidr[0];
++    /* 1MB L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 8, 64, 1 * MiB, 0);
+ 
+     /* From 3.2.115 SCTLR_EL3 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -959,9 +954,12 @@ static void aarch64_a710_initfn(Object *obj)
+      * L1: 4-way set associative 64-byte line size, total either 32K or 64K.
+      * L2: 8-way set associative 64 byte line size, total either 256K or 512K.
+      */
+-    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB);   /* L1 dcache */
+-    cpu->ccsidr[1] = cpu->ccsidr[0];                   /* L1 icache */
+-    cpu->ccsidr[2] = make_ccsidr64(8, 64, 512 * KiB);  /* L2 cache */
++    /* L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
++    /* L1 icache */
++    cpu->ccsidr[1] = cpu->ccsidr[0];
++    /* L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 8, 64, 512 * KiB, 0);
+ 
+     /* FIXME: Not documented -- copied from neoverse-v1 */
+     cpu->reset_sctlr = 0x30c50838;
+@@ -1057,10 +1055,12 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+      * L1: 4-way set associative 64-byte line size, total 64K.
+      * L2: 8-way set associative 64 byte line size, total either 512K or 1024K.
+      */
+-    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB);   /* L1 dcache */
+-    cpu->ccsidr[1] = cpu->ccsidr[0];                   /* L1 icache */
+-    cpu->ccsidr[2] = make_ccsidr64(8, 64, 512 * KiB);  /* L2 cache */
+-
++    /* L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
++    /* L1 icache */
++    cpu->ccsidr[1] = cpu->ccsidr[0];
++    /* L2 cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 8, 64, 512 * KiB, 0);
+     /* FIXME: Not documented -- copied from neoverse-v1 */
+     cpu->reset_sctlr = 0x30c50838;
+ 
+-- 
+2.34.1
 
 
