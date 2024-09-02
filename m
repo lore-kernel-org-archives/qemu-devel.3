@@ -4,82 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 973D8CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 03:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB81CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 05:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1skxXJ-0006Fs-En; Sun, 01 Sep 2024 23:15:25 -0400
+	id 1skzwq-0007SA-BD; Mon, 02 Sep 2024 01:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tommy.wu@sifive.com>)
- id 1skxXH-0006E7-GD
- for qemu-devel@nongnu.org; Sun, 01 Sep 2024 23:15:23 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tommy.wu@sifive.com>)
- id 1skxXF-0004z1-8h
- for qemu-devel@nongnu.org; Sun, 01 Sep 2024 23:15:23 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-374ba78f192so1461104f8f.3
- for <qemu-devel@nongnu.org>; Sun, 01 Sep 2024 20:15:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1725246919; x=1725851719; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bx5JSSz7jW+5+lo/2gxxn6Z1kj4oERA3GvcGJXYaOyI=;
- b=XZoIEN27yRIS/18kMaxwcORCDdC/Wi1FpxeVA4cMufK3ozTJuhuolm1O2YPpOUVUJu
- qnZVnxBaWrI2hVofiHcwrtnneZaiGGi+IwbR5g0ZmHfM7DmH72BoFM7wA4shW5B7PcqJ
- Qw5J+WoSglAmBJv2Mpl8uZxC+GcyugPMv9as4BPTdlZe4+nbr/+FqxRh6OOqlllrDmwz
- qu9N43P6HRKbV3jvMPCw94qo46NAFRR3Isn5CmRHjxn37h2liGe70DD4bMW+gsPXdYhn
- whQs8NrPj4jFauYDcgnN6v0r4IQsB5WHpMVNgfhntRp1VqNE74hc8R7dGlj02NkRvmDq
- qd/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725246919; x=1725851719;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Bx5JSSz7jW+5+lo/2gxxn6Z1kj4oERA3GvcGJXYaOyI=;
- b=MsPY7eDULTwM2I2HBgwlZpGOnfykxf0HCZbUljjktVz0+uJmNQeIfEWohYGRI+MNfR
- N5TI4gXNG2T6Aze36qzGr7P29BCH92Qq4rkss7wONJry1vH3usWNRqyuZih/ZfKo+mpW
- XCQftNW6ozlfO0ioJjh+8P4lzCNMucfJ1xw4pwGsoaC12qzMpCuZiqxF4iruxAZVuAtm
- ESdZs2Y0uvstHeF4sN8Jy+L876tFPxAtzCDhVqgNmeZ1UmeBa4DDGIzYnD1uXVnrowtX
- aFI9vd/O9VslXX8r5/NCoAIsLkwSRi7V5zs6Z6+DvYMeobPgnugZqbwURzHoO/gpT2IR
- wLUw==
-X-Gm-Message-State: AOJu0YySTZDKR6PIXR+ZMF7HyZnsbHzEPEX4FEWYcNpwMysZI0Nm8PEU
- D9LXQdRs3F0JFH9zFMv2IA9FLE3KVWoGUv6nJX14UtFPJldx9oI0Gq4BXhEdAbi83FJfEkf/lzd
- XslmUdLr7a8hJTdzN0zcApLBcaGA/SigqVXU1Bhr0NlH6X/r/
-X-Google-Smtp-Source: AGHT+IH9ANQU22v2LDOAwCSliFx5rguhd+FUAjwLH8lShFuktV1SixEE6nIhf2g/8qcQCfEWEQbSdxFh0D3foincioo=
-X-Received: by 2002:a5d:5f4a:0:b0:374:c269:df6e with SMTP id
- ffacd0b85a97d-374c269e094mr3569915f8f.25.1725246918879; Sun, 01 Sep 2024
- 20:15:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1skzwn-0007Pr-Kq; Mon, 02 Sep 2024 01:49:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1skzwl-0003sF-FF; Mon, 02 Sep 2024 01:49:53 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 481CR3Qu014836;
+ Mon, 2 Sep 2024 05:49:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date
+ :from:to:cc:subject:message-id:references:content-type
+ :in-reply-to:mime-version; s=pp1; bh=+rl105i1zApPYavmnKj17bx74VZ
+ AR8P/5W7Vha4SEAs=; b=eLbM0B6fRRvVKye4xqQXP/NBNyhEtR4dKhhfJw0Bxlz
+ f0x5k1PInTYJJ8TSAWkRByoYi5XXc0vrzuXpT5lh5dIjVhC4ehi3o3M6qOYBG/hL
+ 1kr95mMMT2Dz8OlQqBLPL5cSNth5grFt9trutRn1g7Asmbs0FnnXl8frSQhmbYNE
+ Wq8oeJwly5gO2VQAN5YUsEowm7PQZzr18z24DiiAq8Ea/ns9oz60vl42QDjH3bIB
+ FY2Q0IPURgUD7Ym+xcfOz5MT9iDBEE4b53qU0725ypCrLLSkKJ5+un6fwod6q660
+ dtomhJRCEf2ACSZhyV7WtRiFmrEfOXNUGryRn5+cUfw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41btty77sx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Sep 2024 05:49:39 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4825ndYY016798;
+ Mon, 2 Sep 2024 05:49:39 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41btty77sv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Sep 2024 05:49:39 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48248KCN000941;
+ Mon, 2 Sep 2024 05:49:38 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41cf0mmnxs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Sep 2024 05:49:38 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4825nZZH57344266
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 2 Sep 2024 05:49:35 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0CE9F20040;
+ Mon,  2 Sep 2024 05:49:35 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 26E6720043;
+ Mon,  2 Sep 2024 05:49:33 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com (unknown
+ [9.195.47.119])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  2 Sep 2024 05:49:32 +0000 (GMT)
+Date: Mon, 2 Sep 2024 11:19:28 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH v6 RESEND 0/5] Power11 support for QEMU [PSeries]
+Message-ID: <20240902111703.0faafa80-d0-amachhiw@linux.ibm.com>
+Mail-Followup-To: Aditya Gupta <adityag@linux.ibm.com>, 
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+References: <20240731055022.696051-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240731055022.696051-1-adityag@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: djet6HbkZmqx_fD-sFiBcmL9Vn9nrJmA
+X-Proofpoint-ORIG-GUID: 6vdBbGgKB2tMtNrx41I4KGGuZoMd9p18
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20240809081227.1588508-1-tommy.wu@sifive.com>
- <20240809081227.1588508-5-tommy.wu@sifive.com>
- <CAKmqyKPfn8P4Ky977N=DNSDuf2BK5Cv9bX8B=XwSYvptNYMoEw@mail.gmail.com>
- <CANj3q_kUhx=aPvf2P+nvuUp-rKK+FvyF+UErbPcbYRO7JFQqWw@mail.gmail.com>
- <CAKmqyKPYjcE45rW6b=o2rDeSrRHjsByVCYwF=CjK=pawoJF5Tw@mail.gmail.com>
-In-Reply-To: <CAKmqyKPYjcE45rW6b=o2rDeSrRHjsByVCYwF=CjK=pawoJF5Tw@mail.gmail.com>
-From: Tommy Wu <tommy.wu@sifive.com>
-Date: Mon, 2 Sep 2024 11:15:11 +0800
-Message-ID: <CANj3q_mP29UMJFKqcQsj4EyvBDSf9aMkg+kt6Bqp-3fUV4Sw3w@mail.gmail.com>
-Subject: Re: [PATCH v5 4/5] target/riscv: Add Smrnmi mnret instruction.
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, frank.chang@sifive.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
- liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=tommy.wu@sifive.com; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-09-01_06,2024-08-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_spam_definite policy=outbound
+ score=100 clxscore=1015
+ mlxlogscore=-999 suspectscore=0 mlxscore=100 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 phishscore=0 spamscore=100 adultscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409020045
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,215 +125,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 30, 2024 at 7:42=E2=80=AFAM Alistair Francis <alistair23@gmail.=
-com> wrote:
->
-> On Fri, Aug 30, 2024 at 2:12=E2=80=AFAM Tommy Wu <tommy.wu@sifive.com> wr=
-ote:
-> >
-> > On Mon, Aug 19, 2024 at 11:49=E2=80=AFAM Alistair Francis <alistair23@g=
-mail.com> wrote:
-> > >
-> > > On Fri, Aug 9, 2024 at 6:12=E2=80=AFPM Tommy Wu <tommy.wu@sifive.com>=
- wrote:
-> > > >
-> > > > This patch adds a new instruction `mnret`. `mnret` is an M-mode-onl=
-y
-> > > > instruction that uses the values in `mnepc` and `mnstatus` to retur=
-n to the
-> > > > program counter, privilege mode, and virtualization mode of the
-> > > > interrupted context.
-> > > >
-> > > > Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> > > > Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
-> > > > ---
-> > > >  target/riscv/helper.h                         |  1 +
-> > > >  target/riscv/insn32.decode                    |  3 ++
-> > > >  .../riscv/insn_trans/trans_privileged.c.inc   | 12 +++++
-> > > >  target/riscv/op_helper.c                      | 46 +++++++++++++++=
-++++
-> > > >  4 files changed, 62 insertions(+)
-> > > >
-> > > > diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> > > > index 451261ce5a..16ea240d26 100644
-> > > > --- a/target/riscv/helper.h
-> > > > +++ b/target/riscv/helper.h
-> > > > @@ -131,6 +131,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, =
-tl, tl)
-> > > >  #ifndef CONFIG_USER_ONLY
-> > > >  DEF_HELPER_1(sret, tl, env)
-> > > >  DEF_HELPER_1(mret, tl, env)
-> > > > +DEF_HELPER_1(mnret, tl, env)
-> > > >  DEF_HELPER_1(wfi, void, env)
-> > > >  DEF_HELPER_1(wrs_nto, void, env)
-> > > >  DEF_HELPER_1(tlb_flush, void, env)
-> > > > diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decod=
-e
-> > > > index c45b8fa1d8..d320631e8c 100644
-> > > > --- a/target/riscv/insn32.decode
-> > > > +++ b/target/riscv/insn32.decode
-> > > > @@ -121,6 +121,9 @@ wfi         0001000    00101 00000 000 00000 11=
-10011
-> > > >  sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
-> > > >  sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
-> > > >
-> > > > +# *** NMI ***
-> > > > +mnret       0111000    00010 00000 000 00000 1110011
-> > > > +
-> > > >  # *** RV32I Base Instruction Set ***
-> > > >  lui      ....................       ..... 0110111 @u
-> > > >  auipc    ....................       ..... 0010111 @u
-> > > > diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/targe=
-t/riscv/insn_trans/trans_privileged.c.inc
-> > > > index bc5263a4e0..06bc20dda4 100644
-> > > > --- a/target/riscv/insn_trans/trans_privileged.c.inc
-> > > > +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-> > > > @@ -106,6 +106,18 @@ static bool trans_mret(DisasContext *ctx, arg_=
-mret *a)
-> > > >  #endif
-> > > >  }
-> > > >
-> > > > +static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
-> > > > +{
-> > > > +#ifndef CONFIG_USER_ONLY
-> > > > +    gen_helper_mnret(cpu_pc, tcg_env);
-> > > > +    tcg_gen_exit_tb(NULL, 0); /* no chaining */
-> > > > +    ctx->base.is_jmp =3D DISAS_NORETURN;
-> > > > +    return true;
-> > > > +#else
-> > > > +    return false;
-> > > > +#endif
-> > > > +}
-> > > > +
-> > > >  static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
-> > > >  {
-> > > >  #ifndef CONFIG_USER_ONLY
-> > > > diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> > > > index 25a5263573..3e26392e65 100644
-> > > > --- a/target/riscv/op_helper.c
-> > > > +++ b/target/riscv/op_helper.c
-> > > > @@ -353,6 +353,52 @@ target_ulong helper_mret(CPURISCVState *env)
-> > > >      return retpc;
-> > > >  }
-> > > >
-> > > > +target_ulong helper_mnret(CPURISCVState *env)
-> > > > +{
-> > > > +    if (!riscv_cpu_cfg(env)->ext_smrnmi) {
-> > > > +        /* RNMI feature is not presented. */
-> > > > +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC(=
-));
-> > > > +    }
-> > > > +
-> > > > +    if (!(env->priv >=3D PRV_M)) {
-> > >
-> > > This should just be (env->priv !=3D PRV_M)
-> > >
-> >
-> > Thanks for the suggestion. You=E2=80=99re right.
-> > The reason that we write the code is that we want to do the same
-> > checks that `helper_mret` does.[1]
-> >
-> > Maybe we can send another patchset to fix both `helper_mret` and `helpe=
-r_mnret`.
-> >
-> > [1]  https://github.com/qemu/qemu/commit/0c3e702aca76ca6ebf2aac4451870e=
-fc9d52a7a3
-> >
-> > > > +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC(=
-));
-> > > > +    }
-> > > > +
-> > > > +    /* Get return PC from mnepc CSR. */
-> > > > +    target_ulong retpc =3D env->mnepc;
-> > > > +    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> > >
-> > > What is the purpose of this check? The low bits should be zero,
-> > > unrelated to the compressed instructions
-> > >
-> >
-> > This is also the same check that `helper_mret` does.[1]
-> > Maybe we can send another patchset to fix both `helper_mret` and `helpe=
-r_mnret`.
->
-> Ah, ok. It's probably worth splitting the shared helper_mret() code
-> into a helper function then
->
-> Alistair
+On 2024/07/31 11:20 AM, Aditya Gupta wrote:
+> Overview
+> ============
+> 
+> Split "Power11 support for QEMU" into 2 patch series: pseries & powernv.
+> 
+> This patch series is for pseries support for Power11.
+> 
+> As Power11 core is same as Power10, hence much of the code has been reused from
+> Power10.
+> 
+> Power11 was added in Linux in:
+>   commit c2ed087ed35c ("powerpc: Add Power11 architected and raw mode")
+> 
+> Git Tree for Testing
+> ====================
+> 
+> QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v6-pseries
+> 
+> Has been tested with following cases:
+> * '-M pseries' / '-M pseries -cpu Power11'
 >
 
-Thanks for the suggestion, I'll split the shared code into
-a helper function in the v6 patchset.
+I could boot a Power11 pseries KVM guest with this patch series applied which
+does not work without it.
 
-Best Regards,
-Tommy Wu
+Command Used:
 
-> >
-> > [1]  https://github.com/qemu/qemu/commit/0c3e702aca76ca6ebf2aac4451870e=
-fc9d52a7a3
-> >
-> > > > +        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC=
-());
-> > > > +    }
-> > > > +
-> > > > +    /* Get previous privilege level from mnstatus CSR. */
-> > > > +    target_ulong prev_priv =3D get_field(env->mnstatus, MNSTATUS_M=
-NPP);
-> > > > +
-> > > > +    if (riscv_cpu_cfg(env)->pmp &&
-> > > > +        !pmp_get_num_rules(env) && (prev_priv !=3D PRV_M)) {
-> > >
-> > > I don't see this mentioned in:
-> > >
-> > > https://github.com/riscv/riscv-isa-manual/blob/a4382e9c8e285360a88d80=
-56c1253e1525552393/src/rnmi.adoc
-> > >
-> > > Alistair
-> > >
-> >
-> > This is also the same check that `helper_mret` does.[2]
-> > It seems that this part is mentioned in the `riscv-privileged`
-> > specification, `Priority and Matching Logic` section.
-> >
-> > [2] https://github.com/qemu/qemu/commit/0fbb5d2d3c9ded9fbd3f6f993974cc5=
-e88e28912
-> >
-> > Thanks for all the suggestions and code review.
-> >
-> > Best Regards,
-> > Tommy Wu.
-> >
-> > > > +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC(=
-));
-> > > > +    }
-> > > > +
-> > > > +    target_ulong prev_virt =3D get_field(env->mnstatus, MNSTATUS_M=
-NPV) &&
-> > > > +                             (prev_priv !=3D PRV_M);
-> > > > +    env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, true=
-);
-> > > > +
-> > > > +    /*
-> > > > +     * If MNRET changes the privilege mode to a mode
-> > > > +     * less privileged than M, it also sets mstatus.MPRV to 0.
-> > > > +     */
-> > > > +    if (prev_priv < PRV_M) {
-> > > > +        env->mstatus =3D set_field(env->mstatus, MSTATUS_MPRV, fal=
-se);
-> > > > +    }
-> > > > +
-> > > > +    if (riscv_has_ext(env, RVH) && prev_virt) {
-> > > > +        riscv_cpu_swap_hypervisor_regs(env);
-> > > > +    }
-> > > > +
-> > > > +    riscv_cpu_set_mode(env, prev_priv, prev_virt);
-> > > > +
-> > > > +    return retpc;
-> > > > +}
-> > > > +
-> > > >  void helper_wfi(CPURISCVState *env)
-> > > >  {
-> > > >      CPUState *cs =3D env_cpu(env);
-> > > > --
-> > > > 2.39.3
-> > > >
+ qemu-system-ppc64 -m 4G -smp 4 -nographic -drive file=/root/testing/debian-12-generic-ppc64el.qcow2,format=qcow2 -accel tcg -cpu Power11
+
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+> * '-smp' option tested
+> * with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
+> * with/without device 'virtio-scsi-pci'
+> * with/without -kernel and -drive with qcow_file
+> 
+> Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+> 
+> Changelog
+> =========
+> v6 RESEND:
+>   + added my initials instead of PMM in patch #1 description
+> 
+> v6: 
+>   + reorganised patches such that Power11 introduction is at end, and
+>   cleanups and fixes is done before
+>   + patch #1: renamed macros from POWER_* to PCC_*
+>   + patch #2: rename 'logical_pvr' to 'spapr_logical_pvr' to better convey
+>   the context
+> 
+> v5:
+>   + split patch series into pseries+powernv
+>   + patch #1: apply harsh's patch to reduce duplication
+>   + patch #2: simplified, by removing duplication
+>   + patch #3: update docs, according to harsh's suggestion
+>   + patch #4: no functional change, #define used for P9 & P10 pcr_supported
+>   + patch #5: no change
+> 
+> v4:
+>   + patch #5: fix memory leak in pnv_chip_power10_quad_realize
+>   - no change in other patches
+> 
+> v3:
+>   + patch #1: version power11 as power11_v2.0
+>   + patch #2: split target hw/pseries code into patch #2
+>   + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
+>   + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
+>   + patch #6-#11: no change
+>   - remove commit to make Power11 as default
+> 
+> v2:
+>   + split powernv patch into homer,lpc,occ,psi,sbe
+>   + reduce code duplication by reusing power10 code
+>   + make power11 as default
+>   + rebase on qemu upstream/master
+>   + add more information in commit descriptions
+>   + update docs
+>   + update skiboot.lid
+> 
+> 
+> Aditya Gupta (4):
+>   target/ppc: Introduce 'PowerPCCPUClass::spapr_logical_pvr'
+>   target/ppc: Fix regression due to Power10 and Power11 having same PCR
+>   target/ppc: Add Power11 DD2.0 processor
+>   ppc/pseries: Add Power11 cpu type
+> 
+> Harsh Prateek Bora (1):
+>   target/ppc: Reduce code duplication across Power9/10 init code
+> 
+>  docs/system/ppc/pseries.rst |  17 +++-
+>  hw/ppc/spapr_cpu_core.c     |   1 +
+>  target/ppc/compat.c         |  11 +++
+>  target/ppc/cpu-models.c     |   3 +
+>  target/ppc/cpu-models.h     |   3 +
+>  target/ppc/cpu.h            |   3 +
+>  target/ppc/cpu_init.c       | 188 +++++++++++++++---------------------
+>  target/ppc/cpu_init.h       |  92 ++++++++++++++++++
+>  8 files changed, 205 insertions(+), 113 deletions(-)
+>  create mode 100644 target/ppc/cpu_init.h
+> 
+> -- 
+> 2.45.2
+> 
+> 
 
