@@ -4,67 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59606C54FC6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 23:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7540AC54FC6
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 23:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slGHh-0002TR-Ui; Mon, 02 Sep 2024 19:16:33 -0400
+	id 1slGtF-0000QZ-UM; Mon, 02 Sep 2024 19:55:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <carl.hauser@gmail.com>)
- id 1slGHd-0002So-Tx
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 19:16:30 -0400
-Received: from mail-pf1-f177.google.com ([209.85.210.177])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1slGtE-0000PY-BY; Mon, 02 Sep 2024 19:55:20 -0400
+Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <carl.hauser@gmail.com>)
- id 1slGHY-0001aT-Ni
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 19:16:29 -0400
-Received: by mail-pf1-f177.google.com with SMTP id
- d2e1a72fcca58-714287e4083so4212651b3a.2
- for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 16:16:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1slGtB-0005TP-7c; Mon, 02 Sep 2024 19:55:19 -0400
+Received: by mail-ua1-x931.google.com with SMTP id
+ a1e0cc1a2514c-846c0a741cbso776357241.2; 
+ Mon, 02 Sep 2024 16:55:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1725321315; x=1725926115; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lWhPeY5N6+COPLNfbVBRldGQiErYp7LSBYN1sBE/NC4=;
+ b=VhpYBYBh/Fnx4QX6j5msYvnHZ5t9A/gPgQyYRylKfwsBBG/CyRXh+5eaK+RG9jA6OH
+ Tizx9Ux6iIbwd5aAhuniqZClo5dDMgoTB25duDiQFC7LPItTz5Bi/yfqwt+njgiW8g4W
+ O5Aje+VLQf3GpCohz4EDVEYmGVaGRxlxbxYYkofxzg82vf9w4wjYlorM4+Jx1mAtli2y
+ RZzxFW7Up6+9evVFPt91i4e7frSPb6e6AOfYAJwZNlu1ZkRvmrVE9gM20vU8JVYalbqS
+ irD8qFuQ/hKC0qlyR2GAdsUEJg6wwL5W0xepk6HvsYGpA3tittxBpANOl+gJga/+E/0G
+ dcZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725318983; x=1725923783;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=juKEpoAhPVPUaAXsCKN7YLrrQKpKt61oA+fOLIwtm88=;
- b=jHnC6z4OV+j3CYA3HQzB504Fg/j21Y1SSRfYW+ZTVfZ0hfG7WGsmcya8YgTngq7DiN
- 4U9orh50HnaQ9U8YjyBys3vFzCrGGD+xrWdKJEldCRmZe/GTL4JdSCN8G3ENCFFQhJ8q
- Zgmxdp6egraJw3lB1K1584F30h1AhVmfWZTOJpzCR8xqrrUc1Zu2/2/pfaxoW3Ick8Us
- TXA5LN33EDG1PDnUoDplQm+DAnt9rctRYz1qOQhYNDssdXK1en++LrkKKSE6uT4rbZJA
- /ngJ5k5A1eRHog/jPkxVMGGYq7UAX4FPx7POLokyzMern/d9bPlIwCmj+DABT4xjdM7A
- c6YA==
+ d=1e100.net; s=20230601; t=1725321315; x=1725926115;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lWhPeY5N6+COPLNfbVBRldGQiErYp7LSBYN1sBE/NC4=;
+ b=mXOc+LwyDEWQqk4S83cbIfFGPXPt0DW9ecmHuBLsAlfk5APi2DqL2KKhTRNSYM7xBz
+ xivkCyyfHGRfZGCK//bORdlCUaeM3ZGLz1lPpIurd3Fhp1qSpkneJEFuWQjWSRXKcx3m
+ XRKrxUSujOUZ99SCl30blVYbqisU0yPE3wYEUTYLzgNol7A81eqIegzNjpcRyEp8mC3D
+ Wq0OL8KvoZDOV+lM2Cdl1Wd8k4uWrMZ8HsGOua4Ii/VdbHHfe5dfJyPblk/xK/ws6LAS
+ 7Z78LDD5PhIjbv5vfUMDg21jk5a96130Il2mBzREKiwqtz5ajsR+6yG01bEb9begwnZj
+ Oplg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXl/Fu5Kc43CaaWPodFgTn9dqPPE3xMvbi7gLfOY1vsIfnka3qD/XgbBVdiWQoX087npCekFOg3kAOW@nongnu.org
-X-Gm-Message-State: AOJu0Yx1RWjavNVFqfGbc96X1EAoo80t+8ci7Ah0/YdafFm94Od3lmop
- 6f3ZtYFl3L2WaPaYF/sIjCmh11XmbmiDitBPuKiD+pyXg9QGgJ4tAsr6W0WyF3Dzcynj5qJEBZD
- GEDqewHa/rZOIm+hyT/Ux+4S159Z63A==
-X-Google-Smtp-Source: AGHT+IGeh64KpOzy7xyghVtezHbibt35zuzkaMzGVO/kcPdSXzfwme5btIu8kkTVyd2XC9sQ9Hz60dwcJBNWeXFTpNo=
-X-Received: by 2002:a05:6a20:d487:b0:1c6:fa4b:3648 with SMTP id
- adf61e73a8af0-1cecdf294b6mr13286185637.22.1725318982703; Mon, 02 Sep 2024
- 16:16:22 -0700 (PDT)
+ AJvYcCWJ2iK6NQlKobsghYpTPIC24VWzMlIinjBonLSIRGmucmNJt5Rd7MV637HegG+LmTyhnEd7n0/wr2Fl@nongnu.org
+X-Gm-Message-State: AOJu0YyuJDlJMVQIFcJSD+7u4XHPP5T/EnJdsSTYWOfsWrNjfMkWzBj7
+ iKg32VpiGE+Iv3eW62qAfH/+7Yj5AA/X49NNtHxDGrXJeukuK5RxFhJWxtWd8OGnpgPgXzIO3x7
+ mmQsn5ZQyoQ5XA10ozX6ek7mp87U=
+X-Google-Smtp-Source: AGHT+IFCHBUeupg4WwYo1gRPQOBMxaIUtwlnYST2nWfZ6ojxAuzhtZOhs1HTVqt8UmUzUFfWtVi5kg/NOX/7gOX8IS8=
+X-Received: by 2002:a05:6102:370e:b0:493:c3b2:b5ba with SMTP id
+ ada2fe7eead31-49a7773522cmr10340458137.6.1725321315194; Mon, 02 Sep 2024
+ 16:55:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240902213816.89071-1-mark.cave-ayland@ilande.co.uk>
-In-Reply-To: <20240902213816.89071-1-mark.cave-ayland@ilande.co.uk>
-Date: Mon, 2 Sep 2024 16:16:11 -0700
-Message-ID: <CABJXFgUxPWkbynMWZW_i20KDSetu1ucWWMFha7vk5+=GE9_vYA@mail.gmail.com>
-Subject: Re: [PATCH] escc: convert Sun mouse to use QemuInputHandler
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000016a12b06212b21d8"
-Received-SPF: pass client-ip=209.85.210.177;
- envelope-from=carl.hauser@gmail.com; helo=mail-pf1-f177.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+References: <747e3626-e4f4-47e2-bdfa-ca047f9f8443@redhat.com>
+In-Reply-To: <747e3626-e4f4-47e2-bdfa-ca047f9f8443@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 3 Sep 2024 09:54:49 +1000
+Message-ID: <CAKmqyKNk2u0ApN2PV40EX_tsY8cFD56XcSKhyepQbqzEdP4_zQ@mail.gmail.com>
+Subject: Re: tests/avocado/riscv_opensbi.py does not work reliable
+To: Thomas Huth <thuth@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-riscv@nongnu.org, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Bin Meng <bmeng@tinylab.org>, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,429 +89,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Carl Hauser <chauser@pullman.com>
-From:  Carl Hauser via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000016a12b06212b21d8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sat, Aug 31, 2024 at 1:35=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
+>
+>
+>   Hi!
+>
+> While running a lot of tests (i.e. with a very loaded machine), I noticed
+> that tests/avocado/riscv_opensbi.py is very flaky when the host machine i=
+s
+> slow. I can easily reproduce the problem when running a big compilation j=
+ob
+> on all CPUs in the background and then run the riscv_opensbi.py avocado
+> test. One of test_riscv32_spike, test_riscv64_spike, test_riscv32_sifive_=
+u
+> or test_riscv64_sifive_u is failing most of the time (but not the virt
+> machine tests).
+>
+> Looking at the logs, it seems like the output sometimes stops somewhere a=
+t a
+> random place before the boot process reaches the spot that the test is
+> looking for. Looking at riscv_htif.c, there does not seem to be any flow
 
-This still, but less frequently, shows the behavior of having the cursor
-leap downwards occasionally. I may not be able to work on debugging it
-until next week, but I'll try to see if I can figure it out sooner. The
-hypothesis with the old code was that it was sending floods of mouse
-messages and the Sun driver was dropping a byte at some point. So that's
-the first thing I'll look into with this new code, but it could be
-something different. This is definitely better than the old code -- just
-not sending anything in response to mouse wheel movement helps a lot.
+I suspect this is: https://gitlab.com/qemu-project/qemu/-/issues/2114
 
-On Mon, Sep 2, 2024 at 2:38=E2=80=AFPM Mark Cave-Ayland <
-mark.cave-ayland@ilande.co.uk> wrote:
+> control implemented here, so I guess at least the spike test is currently
+> doomed to fail occasionally. Is there anything that can be done about thi=
+s
+> (e.g. is flow control somehow possible here or does the interface not all=
+ow
+> this?)? Otherwise, I think it might be best to mark the spike and sifive_=
+u
 
-> Update the Sun mouse implementation to use QemuInputHandler instead of th=
-e
-> legacy qemu_add_mouse_event_handler() function.
->
-> Note that this conversion adds extra sunmouse_* members to ESCCChannelSta=
-te
-> but they are not added to the migration stream (similar to the Sun keyboa=
-rd
-> members). If this were desired in future, the Sun devices should be split
-> into separate devices and added to the migration stream there instead.
->
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
-> ---
->  hw/char/escc.c         | 79 ++++++++++++++++++++++++++++++------------
->  include/hw/char/escc.h |  3 ++
->  roms/seabios           |  2 +-
->  3 files changed, 60 insertions(+), 24 deletions(-)
->
-> diff --git a/hw/char/escc.c b/hw/char/escc.c
-> index d450d70eda..6d4e3e3350 100644
-> --- a/hw/char/escc.c
-> +++ b/hw/char/escc.c
-> @@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
->      s->rxint =3D s->txint =3D 0;
->      s->rxint_under_svc =3D s->txint_under_svc =3D 0;
->      s->e0_mode =3D s->led_mode =3D s->caps_lock_mode =3D s->num_lock_mod=
-e =3D 0;
-> +    s->sunmouse_dx =3D s->sunmouse_dy =3D s->sunmouse_buttons =3D 0;
->      clear_queue(s);
->  }
->
-> @@ -952,53 +953,85 @@ static void handle_kbd_command(ESCCChannelState *s,
-> int val)
->      }
->  }
->
-> -static void sunmouse_event(void *opaque,
-> -                               int dx, int dy, int dz, int buttons_state=
-)
-> +static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
-> +                                  InputEvent *evt)
->  {
-> -    ESCCChannelState *s =3D opaque;
-> -    int ch;
-> +    ESCCChannelState *s =3D (ESCCChannelState *)dev;
-> +    InputMoveEvent *move;
-> +    InputBtnEvent *btn;
-> +    static const int bmap[INPUT_BUTTON__MAX] =3D {
-> +        [INPUT_BUTTON_LEFT]   =3D 0x4,
-> +        [INPUT_BUTTON_MIDDLE] =3D 0x2,
-> +        [INPUT_BUTTON_RIGHT]  =3D 0x1,
-> +        [INPUT_BUTTON_SIDE]   =3D 0x0,
-> +        [INPUT_BUTTON_EXTRA]  =3D 0x0,
-> +    };
-> +
-> +    switch (evt->type) {
-> +    case INPUT_EVENT_KIND_REL:
-> +        move =3D evt->u.rel.data;
-> +        if (move->axis =3D=3D INPUT_AXIS_X) {
-> +            s->sunmouse_dx +=3D move->value;
-> +        } else if (move->axis =3D=3D INPUT_AXIS_Y) {
-> +            s->sunmouse_dy -=3D move->value;
-> +        }
-> +        break;
->
-> -    trace_escc_sunmouse_event(dx, dy, buttons_state);
-> -    ch =3D 0x80 | 0x7; /* protocol start byte, no buttons pressed */
-> +    case INPUT_EVENT_KIND_BTN:
-> +        btn =3D evt->u.btn.data;
-> +        if (btn->down) {
-> +            s->sunmouse_buttons |=3D bmap[btn->button];
-> +        } else {
-> +            s->sunmouse_buttons &=3D ~bmap[btn->button];
-> +        }
-> +        break;
->
-> -    if (buttons_state & MOUSE_EVENT_LBUTTON) {
-> -        ch ^=3D 0x4;
-> -    }
-> -    if (buttons_state & MOUSE_EVENT_MBUTTON) {
-> -        ch ^=3D 0x2;
-> -    }
-> -    if (buttons_state & MOUSE_EVENT_RBUTTON) {
-> -        ch ^=3D 0x1;
-> +    default:
-> +        /* keep gcc happy */
-> +        break;
->      }
-> +}
->
-> -    put_queue(s, ch);
-> +static void sunmouse_sync(DeviceState *dev)
-> +{
-> +    ESCCChannelState *s =3D (ESCCChannelState *)dev;
-> +    int ch;
->
-> -    ch =3D dx;
-> +    trace_escc_sunmouse_event(s->sunmouse_dx, s->sunmouse_dy, 0);
-> +    ch =3D 0x80 | 0x7; /* protocol start byte, no buttons pressed */
-> +    ch ^=3D s->sunmouse_buttons;
-> +    put_queue(s, ch);
->
-> +    ch =3D s->sunmouse_dx;
->      if (ch > 127) {
->          ch =3D 127;
->      } else if (ch < -127) {
->          ch =3D -127;
->      }
-> -
->      put_queue(s, ch & 0xff);
-> +    s->sunmouse_dx =3D 0;
->
-> -    ch =3D -dy;
-> -
-> +    ch =3D s->sunmouse_dy;
->      if (ch > 127) {
->          ch =3D 127;
->      } else if (ch < -127) {
->          ch =3D -127;
->      }
-> -
->      put_queue(s, ch & 0xff);
-> +    s->sunmouse_dy =3D 0;
->
->      /* MSC protocol specifies two extra motion bytes */
-> -
->      put_queue(s, 0);
->      put_queue(s, 0);
->  }
->
-> +static const QemuInputHandler sunmouse_handler =3D {
-> +    .name  =3D "QEMU Sun Mouse",
-> +    .mask  =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
-> +    .event =3D sunmouse_handle_event,
-> +    .sync  =3D sunmouse_sync,
-> +};
-> +
->  static void escc_init1(Object *obj)
->  {
->      ESCCState *s =3D ESCC(obj);
-> @@ -1036,8 +1069,8 @@ static void escc_realize(DeviceState *dev, Error
-> **errp)
->      }
->
->      if (s->chn[0].type =3D=3D escc_mouse) {
-> -        qemu_add_mouse_event_handler(sunmouse_event, &s->chn[0], 0,
-> -                                     "QEMU Sun Mouse");
-> +        s->chn[0].hs =3D qemu_input_handler_register((DeviceState
-> *)(&s->chn[0]),
-> +                                                   &sunmouse_handler);
->      }
->      if (s->chn[1].type =3D=3D escc_kbd) {
->          s->chn[1].hs =3D qemu_input_handler_register((DeviceState
-> *)(&s->chn[1]),
-> diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
-> index 5669a5b811..8c4c6a7730 100644
-> --- a/include/hw/char/escc.h
-> +++ b/include/hw/char/escc.h
-> @@ -46,6 +46,9 @@ typedef struct ESCCChannelState {
->      uint8_t rx, tx;
->      QemuInputHandlerState *hs;
->      char *sunkbd_layout;
-> +    int sunmouse_dx;
-> +    int sunmouse_dy;
-> +    int sunmouse_buttons;
->  } ESCCChannelState;
->
->  struct ESCCState {
-> diff --git a/roms/seabios b/roms/seabios
-> index a6ed6b701f..7d0c606870 160000
-> --- a/roms/seabios
-> +++ b/roms/seabios
-> @@ -1 +1 @@
-> -Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
-> +Subproject commit 7d0c6068703eae9f2498be0c900ab95b25b4f07a
-> --
-> 2.39.2
->
->
->
+Patches have been sent to the list to hopefully fix this:
 
---00000000000016a12b06212b21d8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+https://mail.gnu.org/archive/html/qemu-devel/2024-08/msg02743.html
 
-<div dir=3D"ltr">This still, but less frequently, shows the behavior of hav=
-ing the cursor leap downwards occasionally. I may not be able to work on de=
-bugging it until next week, but I&#39;ll try to see if I can figure it out =
-sooner. The hypothesis with the old code was that it was sending floods of =
-mouse messages and the Sun driver was dropping a byte at some point. So tha=
-t&#39;s the first thing I&#39;ll look into with this new code, but it could=
- be something different. This is definitely better than the old code -- jus=
-t not sending anything in response to mouse wheel movement helps a lot.<br>=
-</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=
-On Mon, Sep 2, 2024 at 2:38=E2=80=AFPM Mark Cave-Ayland &lt;<a href=3D"mail=
-to:mark.cave-ayland@ilande.co.uk">mark.cave-ayland@ilande.co.uk</a>&gt; wro=
-te:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Update the S=
-un mouse implementation to use QemuInputHandler instead of the<br>
-legacy qemu_add_mouse_event_handler() function.<br>
-<br>
-Note that this conversion adds extra sunmouse_* members to ESCCChannelState=
-<br>
-but they are not added to the migration stream (similar to the Sun keyboard=
-<br>
-members). If this were desired in future, the Sun devices should be split<b=
-r>
-into separate devices and added to the migration stream there instead.<br>
-<br>
-Signed-off-by: Mark Cave-Ayland &lt;<a href=3D"mailto:mark.cave-ayland@ilan=
-de.co.uk" target=3D"_blank">mark.cave-ayland@ilande.co.uk</a>&gt;<br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2518" re=
-l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/i=
-ssues/2518</a><br>
----<br>
-=C2=A0hw/char/escc.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 79 ++++++++++++++++=
-++++++++++++++------------<br>
-=C2=A0include/hw/char/escc.h |=C2=A0 3 ++<br>
-=C2=A0roms/seabios=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A03 files changed, 60 insertions(+), 24 deletions(-)<br>
-<br>
-diff --git a/hw/char/escc.c b/hw/char/escc.c<br>
-index d450d70eda..6d4e3e3350 100644<br>
---- a/hw/char/escc.c<br>
-+++ b/hw/char/escc.c<br>
-@@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)<br>
-=C2=A0 =C2=A0 =C2=A0s-&gt;rxint =3D s-&gt;txint =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0s-&gt;rxint_under_svc =3D s-&gt;txint_under_svc =3D 0;<=
-br>
-=C2=A0 =C2=A0 =C2=A0s-&gt;e0_mode =3D s-&gt;led_mode =3D s-&gt;caps_lock_mo=
-de =3D s-&gt;num_lock_mode =3D 0;<br>
-+=C2=A0 =C2=A0 s-&gt;sunmouse_dx =3D s-&gt;sunmouse_dy =3D s-&gt;sunmouse_b=
-uttons =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0clear_queue(s);<br>
-=C2=A0}<br>
-<br>
-@@ -952,53 +953,85 @@ static void handle_kbd_command(ESCCChannelState *s, i=
-nt val)<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0}<br>
-<br>
--static void sunmouse_event(void *opaque,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int dx, int dy, int dz, int buttons_s=
-tate)<br>
-+static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 InputEvent *evt)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 ESCCChannelState *s =3D opaque;<br>
--=C2=A0 =C2=A0 int ch;<br>
-+=C2=A0 =C2=A0 ESCCChannelState *s =3D (ESCCChannelState *)dev;<br>
-+=C2=A0 =C2=A0 InputMoveEvent *move;<br>
-+=C2=A0 =C2=A0 InputBtnEvent *btn;<br>
-+=C2=A0 =C2=A0 static const int bmap[INPUT_BUTTON__MAX] =3D {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_LEFT]=C2=A0 =C2=A0=3D 0x4,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_MIDDLE] =3D 0x2,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_RIGHT]=C2=A0 =3D 0x1,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_SIDE]=C2=A0 =C2=A0=3D 0x0,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_EXTRA]=C2=A0 =3D 0x0,<br>
-+=C2=A0 =C2=A0 };<br>
-+<br>
-+=C2=A0 =C2=A0 switch (evt-&gt;type) {<br>
-+=C2=A0 =C2=A0 case INPUT_EVENT_KIND_REL:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 move =3D evt-&gt;u.rel.data;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (move-&gt;axis =3D=3D INPUT_AXIS_X) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_dx +=3D move-&gt;=
-value;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (move-&gt;axis =3D=3D INPUT_AXIS_Y) =
-{<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_dy -=3D move-&gt;=
-value;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-<br>
--=C2=A0 =C2=A0 trace_escc_sunmouse_event(dx, dy, buttons_state);<br>
--=C2=A0 =C2=A0 ch =3D 0x80 | 0x7; /* protocol start byte, no buttons presse=
-d */<br>
-+=C2=A0 =C2=A0 case INPUT_EVENT_KIND_BTN:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 btn =3D evt-&gt;u.btn.data;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (btn-&gt;down) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_buttons |=3D bmap=
-[btn-&gt;button];<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_buttons &amp;=3D =
-~bmap[btn-&gt;button];<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-<br>
--=C2=A0 =C2=A0 if (buttons_state &amp; MOUSE_EVENT_LBUTTON) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ch ^=3D 0x4;<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 if (buttons_state &amp; MOUSE_EVENT_MBUTTON) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ch ^=3D 0x2;<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 if (buttons_state &amp; MOUSE_EVENT_RBUTTON) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ch ^=3D 0x1;<br>
-+=C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* keep gcc happy */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-+}<br>
-<br>
--=C2=A0 =C2=A0 put_queue(s, ch);<br>
-+static void sunmouse_sync(DeviceState *dev)<br>
-+{<br>
-+=C2=A0 =C2=A0 ESCCChannelState *s =3D (ESCCChannelState *)dev;<br>
-+=C2=A0 =C2=A0 int ch;<br>
-<br>
--=C2=A0 =C2=A0 ch =3D dx;<br>
-+=C2=A0 =C2=A0 trace_escc_sunmouse_event(s-&gt;sunmouse_dx, s-&gt;sunmouse_=
-dy, 0);<br>
-+=C2=A0 =C2=A0 ch =3D 0x80 | 0x7; /* protocol start byte, no buttons presse=
-d */<br>
-+=C2=A0 =C2=A0 ch ^=3D s-&gt;sunmouse_buttons;<br>
-+=C2=A0 =C2=A0 put_queue(s, ch);<br>
-<br>
-+=C2=A0 =C2=A0 ch =3D s-&gt;sunmouse_dx;<br>
-=C2=A0 =C2=A0 =C2=A0if (ch &gt; 127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D 127;<br>
-=C2=A0 =C2=A0 =C2=A0} else if (ch &lt; -127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D -127;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, ch &amp; 0xff);<br>
-+=C2=A0 =C2=A0 s-&gt;sunmouse_dx =3D 0;<br>
-<br>
--=C2=A0 =C2=A0 ch =3D -dy;<br>
--<br>
-+=C2=A0 =C2=A0 ch =3D s-&gt;sunmouse_dy;<br>
-=C2=A0 =C2=A0 =C2=A0if (ch &gt; 127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D 127;<br>
-=C2=A0 =C2=A0 =C2=A0} else if (ch &lt; -127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D -127;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, ch &amp; 0xff);<br>
-+=C2=A0 =C2=A0 s-&gt;sunmouse_dy =3D 0;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* MSC protocol specifies two extra motion bytes */<br>
--<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, 0);<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, 0);<br>
-=C2=A0}<br>
-<br>
-+static const QemuInputHandler sunmouse_handler =3D {<br>
-+=C2=A0 =C2=A0 .name=C2=A0 =3D &quot;QEMU Sun Mouse&quot;,<br>
-+=C2=A0 =C2=A0 .mask=C2=A0 =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,=
-<br>
-+=C2=A0 =C2=A0 .event =3D sunmouse_handle_event,<br>
-+=C2=A0 =C2=A0 .sync=C2=A0 =3D sunmouse_sync,<br>
-+};<br>
-+<br>
-=C2=A0static void escc_init1(Object *obj)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0ESCCState *s =3D ESCC(obj);<br>
-@@ -1036,8 +1069,8 @@ static void escc_realize(DeviceState *dev, Error **er=
-rp)<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0if (s-&gt;chn[0].type =3D=3D escc_mouse) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_add_mouse_event_handler(sunmouse_event, &=
-amp;s-&gt;chn[0], 0,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;QEMU Sun M=
-ouse&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;chn[0].hs =3D qemu_input_handler_registe=
-r((DeviceState *)(&amp;s-&gt;chn[0]),<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;sunmouse_handler);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0if (s-&gt;chn[1].type =3D=3D escc_kbd) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;chn[1].hs =3D qemu_input_handler_re=
-gister((DeviceState *)(&amp;s-&gt;chn[1]),<br>
-diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h<br>
-index 5669a5b811..8c4c6a7730 100644<br>
---- a/include/hw/char/escc.h<br>
-+++ b/include/hw/char/escc.h<br>
-@@ -46,6 +46,9 @@ typedef struct ESCCChannelState {<br>
-=C2=A0 =C2=A0 =C2=A0uint8_t rx, tx;<br>
-=C2=A0 =C2=A0 =C2=A0QemuInputHandlerState *hs;<br>
-=C2=A0 =C2=A0 =C2=A0char *sunkbd_layout;<br>
-+=C2=A0 =C2=A0 int sunmouse_dx;<br>
-+=C2=A0 =C2=A0 int sunmouse_dy;<br>
-+=C2=A0 =C2=A0 int sunmouse_buttons;<br>
-=C2=A0} ESCCChannelState;<br>
-<br>
-=C2=A0struct ESCCState {<br>
-diff --git a/roms/seabios b/roms/seabios<br>
-index a6ed6b701f..7d0c606870 160000<br>
---- a/roms/seabios<br>
-+++ b/roms/seabios<br>
-@@ -1 +1 @@<br>
--Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8<br>
-+Subproject commit 7d0c6068703eae9f2498be0c900ab95b25b4f07a<br>
--- <br>
-2.39.2<br>
-<br>
-<br>
-</blockquote></div>
+Just waiting on reviews and then the merge window to open up again
 
---00000000000016a12b06212b21d8--
+Alistair
+
+> tests with QEMU_TEST_FLAKY_TESTS here to make it clear that these tests a=
+re
+> not reliable by default...?
+>
+>   Thomas
+>
+>
 
