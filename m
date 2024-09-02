@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A7B4C54FC6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 00:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9154C54FC6
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 00:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1skuY2-0008IS-29; Sun, 01 Sep 2024 20:03:58 -0400
+	id 1skugu-0004P8-PW; Sun, 01 Sep 2024 20:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1skuY0-0008HR-Gp
- for qemu-devel@nongnu.org; Sun, 01 Sep 2024 20:03:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1skuXy-0004CS-DP
- for qemu-devel@nongnu.org; Sun, 01 Sep 2024 20:03:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725235429;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=B8BWBynZiqu5W0tPrxT2WqoU5n0IrKBPLt4KWbMfpz8=;
- b=hZoazc9hNxWGx9Atc8phupBqzWJpQaje2pjQz7EPS153iQOsX8pUfjYLM+nMTT/O4CuaUp
- 0TUX7YVkofgaHxFfXFajnOt490HMml/r5IX/mkKH7GU/oWBf90AK0OvtAQB+e8nC0pR2gG
- 6gQRUr3DCYNLWor5jPQD6EaLNb9yJh4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-Ov8PpLReNhSFeC0s34Bdew-1; Sun, 01 Sep 2024 20:03:48 -0400
-X-MC-Unique: Ov8PpLReNhSFeC0s34Bdew-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-374c434b952so635355f8f.1
- for <qemu-devel@nongnu.org>; Sun, 01 Sep 2024 17:03:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1skugp-0004Nj-Kd
+ for qemu-devel@nongnu.org; Sun, 01 Sep 2024 20:13:03 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1skugo-0004tL-0Y
+ for qemu-devel@nongnu.org; Sun, 01 Sep 2024 20:13:03 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2d877dab61fso1285422a91.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Sep 2024 17:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725235980; x=1725840780; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Yc+VPVnFPO/pMwvWd5m+AbWo9/GcBzAjwWFYro2xepw=;
+ b=hM+dRWryx2ExAdv6VTiRo93XbNpGa9rXSVicr5W0EKNs+JN4GFq9D6cJw6icLrYKr0
+ oRPEQgf1Tpfvgnn0RaDaAr7a5cOqzh66OLls+3g1MZNmDarIoSzjZuieaJ1scR/m7l2c
+ y7r+6M4uKLQCOwHKb+1D7cIEtOMqMSXpG7Apcn8ENe+viecZ6zDQeSPha8C+muOMocqZ
+ Nj1MEMakK3PXqW3JY672LZ3c7yb5QeBApc5PerIoAF+HjwvkeqW8lZsa2b3bMQVVUyyY
+ Q8NPV9tBEvhgOQr54coxxu8HjtnTO7DEuQODaGJutkBqs/LYeTzNCqvaA2dN4B5p5ZAV
+ QswQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725235426; x=1725840226;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B8BWBynZiqu5W0tPrxT2WqoU5n0IrKBPLt4KWbMfpz8=;
- b=Zp5jBth35J5tENkbEdTXDolF2lRtmL3TFzEyDPJWuclVh0TtEHbEVwSaBryJWDpur7
- Lc+orBi54UjMQVgFOlGjcVNzE7+gRBPn+lm9Ka6H5KUMsb60jHEt3WklEpzxmGxcKaBb
- CkVV1yWyM7IlGsvmpgqV8IiLTCck8qTsqgm4JH+pjIQFbBocoA2HdXYURGRQ3qjoIms6
- kqoOlD4eMXYpH+b8un08KPdVZX6XoTAAFQ05K4XPn2WnaJQepW9eVvsobp6S14x68nYO
- gHZrBxd5Za1R88LhdJLLhCwWCIoz/wRr3g+cITdEvjfYXgDrTzNV//6Fy0P+8R3qkx2b
- HK3A==
-X-Gm-Message-State: AOJu0Ywe+EBIT0uG8PcQUObKVRXB+SAbuimJteCAlviGxvYmqIFeAPIC
- iedfziNm7JORoupU+AIhNxRcpwEdBD1ISM6tFTt/GqV0wg17SQBmAFYukxcNH48oNwxQDxfXt/q
- Me3TvmIcw4RN0HVyo4iS4HM7sDBSnn1/lNKQAeMIRzs+J0Zi+BRXPUwhGTEbLCd1HqAX8C76dzX
- 0l3M4Y1BIhkxI5xeZQbel7zh9kO/wrg0/fOe7KC7g=
-X-Received: by 2002:adf:9c8b:0:b0:36c:ff0c:36d7 with SMTP id
- ffacd0b85a97d-374bef3a257mr4220604f8f.2.1725235425657; 
- Sun, 01 Sep 2024 17:03:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNpK0aYBnPtuRmJ0SVxHUCYRULi7xBQztXCsGUw9GMkcg7dA9qaiL0i1CRwV+/d1e2bH3Rpw==
-X-Received: by 2002:adf:9c8b:0:b0:36c:ff0c:36d7 with SMTP id
- ffacd0b85a97d-374bef3a257mr4220590f8f.2.1725235425010; 
- Sun, 01 Sep 2024 17:03:45 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
+ d=1e100.net; s=20230601; t=1725235980; x=1725840780;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yc+VPVnFPO/pMwvWd5m+AbWo9/GcBzAjwWFYro2xepw=;
+ b=ZvWOkZ4rsK6K0s4DhayCXymgCJ5Y1c27bc7Oa7/M5sqriFxe2EH7VP42DX7KndcxUw
+ QvPybjVob3Fj0ddkpJ6tvg9u6MxQq+nS6k9nlAume5Hb1/8RVPkkHPJcDW74qZcUwnWh
+ ajYtzXCIJuhh+DpNaZoxn+PkLhLLor7KVT6kLIfrGYkWX4P7MyNNzD7CWHbI2iioGb2G
+ dzxGvLHduSkR8mWV/qltl+5OA4x+wMhjaKN63F3wma8DCnRIM7ulJEdOSs9KA2G5YxVS
+ ct77rLDPSZQquYoQVq9+MEOR789RQ+UicDEmGr3DVcp0MyJp9AwZDeOscc1wO/2iS7Bx
+ BniQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqExIGHxRTRbcaqa0Cy9BY43ifX4Luvswma+mGdNC22g0A8abEGUOxMyf7gMCUaiWKBwZ3Zy73L5Ny@nongnu.org
+X-Gm-Message-State: AOJu0YwnN0b7+RKUL+ye0+OEBRl96+KZuIpJ9BEngEh6whCKka20aP7T
+ shxdBM03CDsBfoCuv1V92TWton8L+Gc2uOffk60nf9dLkg2kDuhsHOx1+367Xgo=
+X-Google-Smtp-Source: AGHT+IH3WWEgiwS6M/JLj4II9pOHmX2qAXrsxoz+XnIyvqCEcVrt6nI2a0ZoNI3pCkGWQUxB3XZxzg==
+X-Received: by 2002:a17:90b:3141:b0:2d3:c862:aa80 with SMTP id
+ 98e67ed59e1d1-2d856503ac0mr10749138a91.41.1725235979739; 
+ Sun, 01 Sep 2024 17:12:59 -0700 (PDT)
+Received: from ?IPV6:2001:8004:5170:1fd8:ef9d:e346:b99e:7072?
+ ([2001:8004:5170:1fd8:ef9d:e346:b99e:7072])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c226c7c32dsm4549226a12.48.2024.09.01.17.03.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Sep 2024 17:03:44 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Richard W.M. Jones" <rjones@redhat.com>
-Subject: [PATCH] tests/unit: remove block layer code from test-nested-aio-poll
-Date: Mon,  2 Sep 2024 02:03:43 +0200
-Message-ID: <20240902000343.54021-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.0
+ 98e67ed59e1d1-2d8c399f7c9sm1585028a91.21.2024.09.01.17.12.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 01 Sep 2024 17:12:59 -0700 (PDT)
+Message-ID: <b9562511-007e-4144-9291-119251c2d4e8@linaro.org>
+Date: Mon, 2 Sep 2024 10:12:51 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/14] util: Add RISC-V vector extension probe in
+ cpuinfo
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
+ <20240830061607.1940-3-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240830061607.1940-3-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,40 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GCC is reporting a NULL pointer dereference when compiling aio_wait_kick()
-with LTO.
+On 8/30/24 16:15, LIU Zhiwei wrote:
+> +extern unsigned riscv_vlen;
 
-The issue is that test-nested-aio-poll.c does not call qemu_init_main_loop().
-It doesn't _need_ to because it never calls AIO_WAIT_WHILE(), but it seems
-that LTO does not do enough dead-code elimination to catch that.
+Do you really want to store vlen and not vlenb?
+It seems that would simplify some of your computation in the tcg backend.
 
-Fortunately aio_wait_kick() is only used in few places, and only in block
-layer or system emulation code; and this test only needs the core event loop
-functionality.  It does not even need iothreads.   So remove everything that
-calls aio_wait_kick(), which is nice for coverage compared to adding the call
-to qemu_init_main_loop().
 
-Reported-by: Richard W.M. Jones <rjones@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2434
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- tests/unit/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> @@ -49,6 +50,9 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+>   #endif
+>   #if defined(__riscv_arch_test) && defined(__riscv_zicond)
+>       info |= CPUINFO_ZICOND;
+> +#endif
+> +#if defined(__riscv_arch_test) && defined(__riscv_zve64x)
+> +    info |= CPUINFO_ZVE64X;
+>   #endif
+>       left &= ~info;
+>   
+> @@ -64,7 +68,8 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+>               && pair.key >= 0) {
+>               info |= pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA : 0;
+>               info |= pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB : 0;
+> -            left &= ~(CPUINFO_ZBA | CPUINFO_ZBB);
+> +            info |= pair.value & RISCV_HWPROBE_IMA_V ? CPUINFO_ZVE64X : 0;
+> +            left &= ~(CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZVE64X);
+>   #ifdef RISCV_HWPROBE_EXT_ZICOND
+>               info |= pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZICOND : 0;
+>               left &= ~CPUINFO_ZICOND;
+> @@ -112,6 +117,23 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+>           assert(left == 0);
+>       }
+>   
+> +    if (info & CPUINFO_ZVE64X) {
+> +        /*
+> +         * Get vlen for Vector.
+> +         * VLMAX = LMUL * VLEN / SEW.
+> +         * The "vsetvli rd, x0, e64" means "LMUL = 1, SEW = 64, rd = VLMAX",
+> +         * so "vlen = VLMAX * 64".
+> +         */
+> +        unsigned long vlmax = 0;
+> +        asm("vsetvli %0, x0, e64" : "=r"(vlmax));
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 490ab8182dc..6c377917636 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -115,7 +115,7 @@ if have_block
-   if host_os != 'windows'
-     tests += {
-       'test-image-locking': [testblock],
--      'test-nested-aio-poll': [testblock],
-+      'test-nested-aio-poll': [],
-     }
-   endif
-   if config_host_data.get('CONFIG_REPLICATION')
--- 
-2.46.0
+This doesn't compile, surely.
 
+s/x0/zero/ is surely the minimum change, but this still won't work unless V is enabled at 
+compile-time.
+
+You need to use the .insn form, like we do for the Zba probe above:
+
+	.insn i 0x57, 7, %0, zero, 3 << 3
+
+I have verified that RISCV_HWPROBE_IMA_V went into the linux kernel at the same time as 
+vector support, so this probing is complete and sufficient.
+
+
+r~
 
