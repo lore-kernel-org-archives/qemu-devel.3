@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E924CD13CF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 19:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95DCCD13CF
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 19:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slCxa-0006uM-2n; Mon, 02 Sep 2024 15:43:34 -0400
+	id 1slCzM-0002el-MQ; Mon, 02 Sep 2024 15:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slCxY-0006tl-QE
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 15:43:32 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slCzB-0002dn-0l
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 15:45:16 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slCxX-0005Y6-2f
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 15:43:32 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-374c7d14191so844539f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 12:43:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slCz5-0005lv-B0
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 15:45:09 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-428e0d184b4so38180395e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 12:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725306209; x=1725911009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725306306; x=1725911106; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sDuhJWRa1QvylGm4bjVtfsbudlh0pem8sDtFZ6wOfqM=;
- b=p9V8+dMxPnT8Lw2gr2bCNFpTD9xbB4fu5yRxQYD9gmtbAmZM1htAuBl9Y02+0XJ5eO
- bOZ+g4tMqIbDqoQvJzffNsYFiGPoHFf4hDnRwNGF8GC2sCI33B1WEqtDkOfIshFBEtAm
- Twz/7FEyFzGh/ILQbpDSxDLCLOKuoP0sEono8/mE8DI/gihyMAhOhdujffnLJubkqEk/
- 9Pv8pXOUc/UhELViCKUviDvnX0XPGZ1ko/BOPVyzz7xbJP47NHffpJzs9woqGbkx9zOt
- GldlzefdZCaKoaLg3ejpVRjyv+pFh8PBTGC+Ynf5rxCIt6wLo/dYVLLaPpaUGlneNAd4
- /nog==
+ bh=KbeEd1FJSCDvgYbk3SHeYsIWUHUjSDuizEa3L2eFbCw=;
+ b=y1xWCQdQGzwX/5qEbhew+YeJAHZxgkaRv/Hgc0CQiYbL4TWpWGCG8BnFJay3QDugWq
+ AHfbxEtApGoFdQ5dRgo/eRpt9nF0U6wAv0m6pQnqN5ZhjoPFZg8f6WWDemQasETNW7oL
+ eqa2mc8M1cjAhDlcaA4/BO7rYPuM71bwpDzO4ic8Xu0DUtCIKlC24As4Vb3RXj3ZtUBZ
+ MjhZ8w54fSfqKsz69WCFCKPOBSWVpsLSki6cEnywVzfn4yYB/Eh8LhYr/pwprU8kNxbe
+ QMY1vw/01YLSZhOw0+J2ooDTMibZIL3bQfwiDc7jQXtC4iOCGKOVuwcnNEuyLOPzOxSo
+ YL7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725306209; x=1725911009;
+ d=1e100.net; s=20230601; t=1725306306; x=1725911106;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sDuhJWRa1QvylGm4bjVtfsbudlh0pem8sDtFZ6wOfqM=;
- b=Q7QBX5A2Cb5yPRTlp/45W8AHzA9LdBGMdrU9bFJVyqdvY4Rq7BIfow+ppXuJhurvy+
- YmXu8KuyVaDTjVlo3RXWKbHuXXkSCzHIwVz4v6fLuic7IGBproA8WNAYue00RbOCBSJx
- mFwpQlLAc83MKnTOtnjH20itJ6j5fcZDq5j003F2bUaP0S6mQikpcs0Kn/oJkFd/ereP
- c6m1KHAlJxpu1HHYXuiY0MzD2s8f62LmwA/WVA0XMlmSosX92CjsQCHfOrcn3pZLnAAY
- v2YjTgoiLs7/cnfPf7IND907OcnlgcpXsISuchvTQdF7XjUAvdNiMyboUlGc/rphKPq+
- 1CmA==
+ bh=KbeEd1FJSCDvgYbk3SHeYsIWUHUjSDuizEa3L2eFbCw=;
+ b=RscRMaVzpOK8nZtSpZY7j7t0fBIzwfoE7Erdu9l6djpgAQp/VNEViVTMnITpmMLkir
+ mir67trrlyVSdwE8OW/O3v2g40f9gC1nhl2VbDOh53AFOWby8VUjCRjH0gtQ9toHTlLq
+ CKNxc0PKZzHm8Z4GJiE+0PfljLaukbWvFO4ly+F3bJFp+EnTy/HpohdSQVdf6sIzid9l
+ EFPIFiHFzDKnTnxC2qvaJfigzA64B3h6wO0V12v5BUvZyr7tNOZvh6lbd/g1yoQBgl8Y
+ 7isB5niKq3BYJtOicQWQw7/z+4+fJXywCBcYT1CT0PY6BBORYn6257GJfrdYNtKMSnYt
+ BKXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXVMBc67LYx8YLXVF5Xr+pPYBwodhzLCw5ZT4NORPD4sd6sTBhkhIDyAas1s4ni5l5USbSTlXG/paT@nongnu.org
-X-Gm-Message-State: AOJu0YzHPH8WYLL56L0es81A/BS3/F0aOYsqsaWaMiV0lyq2OQHGtVXe
- ii/mRybJ9DG75x5/uMJVXNNHf1JHU4jduDS8o47sQMny+9Y1acykqk8rA1NQUcR7EIWTa87pGQ+
- nZqk=
-X-Google-Smtp-Source: AGHT+IGp81tbkAmTcWN/29Vl7pdPYeLql/6CmyjXtsj7dkJ5vDKVF5nrikpdAz3OLjnMqjsUoN9ulg==
-X-Received: by 2002:a05:6000:210e:b0:374:cf83:23dd with SMTP id
- ffacd0b85a97d-374cf83267cmr1962216f8f.2.1725306209186; 
- Mon, 02 Sep 2024 12:43:29 -0700 (PDT)
+ AJvYcCUrJOj72H7ljIhIs24JP3gkgN+Fo05HCGpDk8dsMAel8J1LATL37vLuNWwG1WDwjmoXdCMt6b9j8Jsi@nongnu.org
+X-Gm-Message-State: AOJu0YxSnEFu5X2nkOdl8WX2H8wQUqx7tLBMu6sdw22tC/XwJL6VIOVJ
+ HqgLIxVZfe+NzQbYpJws4s22NCX2C9UP2qxZa3IdvkxZPuWU6lWcerPxxQDNY7ecGdCxrLfNz8+
+ fsMw=
+X-Google-Smtp-Source: AGHT+IGTwYz2O9IuIn5uhf7V/A+LhxiL3BfOM3gG6YFNa0NCjpkFtKNDdpjy33G4SPdXbzgxX9fz9Q==
+X-Received: by 2002:a05:600c:3547:b0:426:5dd0:a1ea with SMTP id
+ 5b1f17b1804b1-42c7b5d8f34mr51354595e9.28.1725306305631; 
+ Mon, 02 Sep 2024 12:45:05 -0700 (PDT)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df79b6sm146505795e9.22.2024.09.02.12.43.28
+ 5b1f17b1804b1-42ba642594dsm184314075e9.47.2024.09.02.12.45.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Sep 2024 12:43:28 -0700 (PDT)
-Message-ID: <2438beb1-4f86-4890-b903-b2db6e1f4077@linaro.org>
-Date: Mon, 2 Sep 2024 21:43:27 +0200
+ Mon, 02 Sep 2024 12:45:05 -0700 (PDT)
+Message-ID: <2d0ade1c-42db-49ce-85b1-9c73a34ef015@linaro.org>
+Date: Mon, 2 Sep 2024 21:45:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] crypto: check gnutls & gcrypt support the requested
- pbkdf hash
+Subject: Re: [PATCH 2/2] tests/unit: always build the pbkdf crypto unit test
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 References: <20240830110533.2544070-1-berrange@redhat.com>
- <20240830110533.2544070-2-berrange@redhat.com>
+ <20240830110533.2544070-3-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240830110533.2544070-2-berrange@redhat.com>
+In-Reply-To: <20240830110533.2544070-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,17 +98,79 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/8/24 13:05, Daniel P. Berrangé wrote:
-> Both gnutls and gcrypt can be configured to exclude support for certain
-> algorithms via a runtime check against system crypto policies. Thus it
-> is not sufficient to have a compile time test for hash support in their
-> pbkdf implementations.
+> The meson rules were excluding the pbkdf crypto test when gnutls was the
+> crypto backend. It was then excluded again in #if statements in the test
+> file.
+> 
+> Rather than update these conditions, remove them all, and use the result
+> of the qcrypto_pbkdf_supports() function to determine whether to skip
+> test registration.
+> 
+> Also add CONFIG_DARWIN to the remaining condition, since we have a way
+> to measure CPU time on this platform since commit bf98afc75efedf1.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   crypto/pbkdf-gcrypt.c | 2 +-
->   crypto/pbkdf-gnutls.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   tests/unit/meson.build         | 4 +---
+>   tests/unit/test-crypto-pbkdf.c | 9 ++++++---
+>   2 files changed, 7 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+> index 490ab8182d..972d792883 100644
+> --- a/tests/unit/meson.build
+> +++ b/tests/unit/meson.build
+> @@ -121,9 +121,7 @@ if have_block
+>     if config_host_data.get('CONFIG_REPLICATION')
+>       tests += {'test-replication': [testblock]}
+>     endif
+> -  if nettle.found() or gcrypt.found()
+> -    tests += {'test-crypto-pbkdf': [io]}
+> -  endif
+> +  tests += {'test-crypto-pbkdf': [io]}
+>   endif
+>   
+>   if have_system
+> diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkdf.c
+> index 43c417f6b4..034bb02422 100644
+> --- a/tests/unit/test-crypto-pbkdf.c
+> +++ b/tests/unit/test-crypto-pbkdf.c
+> @@ -25,8 +25,7 @@
+>   #include <sys/resource.h>
+>   #endif
+>   
+> -#if ((defined(CONFIG_NETTLE) || defined(CONFIG_GCRYPT)) && \
+> -     (defined(_WIN32) || defined(RUSAGE_THREAD)))
+> +#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
 
+Add CONFIG_DARWIN in a subsequent commit?
+
+>   #include "crypto/pbkdf.h"
+>   
+>   typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
+> @@ -422,13 +421,17 @@ int main(int argc, char **argv)
+>       g_assert(qcrypto_init(NULL) == 0);
+>   
+>       for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
+> +        if (!qcrypto_pbkdf2_supports(test_data[i].hash)) {
+> +            continue;
+> +        }
+> +
+>           if (!test_data[i].slow ||
+>               g_test_slow()) {
+>               g_test_add_data_func(test_data[i].path, &test_data[i], test_pbkdf);
+>           }
+>       }
+>   
+> -    if (g_test_slow()) {
+> +    if (g_test_slow() && qcrypto_pbkdf2_supports(QCRYPTO_HASH_ALG_SHA256)) {
+>           g_test_add_func("/crypt0/pbkdf/timing", test_pbkdf_timing);
+
+While here, rename test_pbkdf_timing -> test_pbkdf_sha256_timing?
+
+>       }
+>   
+
+Anyway,
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
