@@ -4,90 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6C1CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 13:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC05CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 13:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sl6nh-0003u6-Jv; Mon, 02 Sep 2024 09:08:57 -0400
+	id 1sl6uB-0001Ok-D8; Mon, 02 Sep 2024 09:15:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sl6ne-0003gM-4k
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 09:08:54 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sl6nc-0004y8-41
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 09:08:53 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a86883231b4so508154966b.3
- for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 06:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725282529; x=1725887329; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9h9TdizzpmIEOqEs3tv5NtRfv14tQJArSoIkBX9s/dk=;
- b=thl7ecznDHZOjTGxF1UZaqCPk9OeMp6PVlYNQq9Db4/55LsSPk5AJsjBdb70jkXk7K
- ZH9IIGhSD7GrRM1BidZwLLJOyXm5nibRp/YIfAGu77frOtvSLaqO9IEqBoDRUf2Up7/w
- G7vGM7Ano4WNd7i/R2S1ivgyGZKo5qFblE1Pl3CxkF4mIn0OgnWE7A/ybUYj1a+IVCei
- 1xbm4zYN4+3lwWRv1xuQ1sz1hb4SMY8CnydHCrqpFcv5r3GOla3SfBxy9uXFcOLQ2RuX
- I396W2QFbv4leAeGrYCpMKd+HSLy2xO4b+CEStFLS88O8lhvJuZ4YieZdFEmxf9UAzPI
- kLXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725282529; x=1725887329;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9h9TdizzpmIEOqEs3tv5NtRfv14tQJArSoIkBX9s/dk=;
- b=KfXhOs+yQG2+CVAzRx83ekCB3w6/Ae/DdnriMBrQ3W4Kj5+vDlHl7EE+URlc/D2OWV
- vs+GAFw0JTNQOgtQcxo6So3pm3dQOIyrzhh+YFFoot9Po0DXK7mmRwFnmcexDf9A4JZ1
- IMZ9BAxxU9pvnkVllF/CRcF5cCcCe2l5f7B0eBwPZ+E4goNgVOm0V8MYy2YNmBbKW5gl
- KZQ2bKHzILpXKY1VLQlGW5G6RutYe3RSqERTVNuYy9BhFThfBu6nfXydu6LjeZa/2fqu
- CjVFeMPAdmy0aGlPL651UgBomDsrfYIBTqKofsLwDEOVVRBGilKuOQd3ah3SHGyCTgO+
- Cn5g==
-X-Gm-Message-State: AOJu0YzYMhknHAA9a1egrReVb7m3hZgIKqRjBfETv2a0K2rih6KuyuvK
- AQVPSdenz8ouGrCzpq+68auphAi4R6eKRn2nnLXs40UrrIeCvyaXRwEweJL90Tc=
-X-Google-Smtp-Source: AGHT+IHfLD0Tlu2+IZMXbYXHI2uz4bM6AVj4z4lHIk9SbgapubIsDpdJmccCFJ9+ETDdcn9oDqDVKg==
-X-Received: by 2002:a17:907:7e85:b0:a7a:aa35:408a with SMTP id
- a640c23a62f3a-a89d87821c7mr522519466b.25.1725282528240; 
- Mon, 02 Sep 2024 06:08:48 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a89891dbf2csm548686366b.186.2024.09.02.06.08.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Sep 2024 06:08:47 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BB8FF5F835;
- Mon,  2 Sep 2024 14:08:46 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Elisha Hollander <just4now666666@gmail.com>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/1] allow using a higher icount
-In-Reply-To: <CACkyd_ZhByWwPQtFmHGRQxmBcVwCEyeSKX6fqhS3K=1480ASOA@mail.gmail.com>
- (Elisha Hollander's message of "Mon, 2 Sep 2024 15:38:48 +0300")
-References: <20240816162044.5764-1-just4now666666@gmail.com>
- <871q2ae24s.fsf@draig.linaro.org>
- <CACkyd_anZKrjNUKE+nwzSvJGQwxQ2zq2J8sGawq3pKYLVT9vXQ@mail.gmail.com>
- <CACkyd_ZNPzhg8pqkdLucyJ70wZKJARR_65r5CJBy0+U=7GR_1Q@mail.gmail.com>
- <87h6b452m5.fsf@draig.linaro.org>
- <CACkyd_YG-r837VfoPaOw5bKCczAUQYFOobW=2SF37esppbc0XQ@mail.gmail.com>
- <CACkyd_ZhByWwPQtFmHGRQxmBcVwCEyeSKX6fqhS3K=1480ASOA@mail.gmail.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 02 Sep 2024 14:08:46 +0100
-Message-ID: <87wmjudwyp.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=3a9v=QA=kaod.org=clg@ozlabs.org>)
+ id 1sl6u2-0001EQ-F3; Mon, 02 Sep 2024 09:15:34 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=3a9v=QA=kaod.org=clg@ozlabs.org>)
+ id 1sl6tp-0005rK-99; Mon, 02 Sep 2024 09:15:28 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Wy8PL3gvDz4xMy;
+ Mon,  2 Sep 2024 23:15:02 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Wy8PF4LTRz4xDy;
+ Mon,  2 Sep 2024 23:14:57 +1000 (AEST)
+Message-ID: <58b88c74-a87d-447c-9ebe-ca92353e9851@kaod.org>
+Date: Mon, 2 Sep 2024 15:14:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/11] hw/i2c/aspeed: Add AST2700 support
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
+ <20240808024916.1262715-6-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240808024916.1262715-6-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=3a9v=QA=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,115 +73,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Elisha Hollander <just4now666666@gmail.com> writes:
+On 8/8/24 04:49, Jamin Lin wrote:
+> Introduce a new ast2700 class to support AST2700.
+> The I2C bus register memory regions and
+> I2C bus pool buffer memory regions are discontinuous
+> and they do not back compatible AST2600.
+> 
+> Add a new ast2700 i2c class init function to match the
+> address of I2C bus register and pool buffer from the datasheet.
+> 
+> An I2C controller registers owns 8KB address space.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-> But for qemu_plugin_update_ns
->
-> On Mon, Sep 2, 2024, 15:38 Elisha Hollander <just4now666666@gmail.com> wr=
-ote:
->
->  Just checked with 9.0.2 it it still gives the error...
->
->  On Wed, Aug 28, 2024, 14:05 Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
-ote:
->
->  Elisha Hollander <just4now666666@gmail.com> writes:
->
->  > Although it gives `undefined symbol: qemu_plugin_scoreboard_free`. But
->  > probably I messed something up...
->
->  Are you using an older QEMU? We should trigger an API warning if they
->  are mismatched but maybe thats not working.
->
->  >
->  > On Tue, Aug 27, 2024, 14:59 Elisha Hollander <just4now666666@gmail.com=
-> wrote:
->  >
->  >  Oh nice, I didn't know that
->  >
->  >  On Tue, Aug 27, 2024, 12:39 Alex Benn=C3=A9e <alex.bennee@linaro.org>=
- wrote:
->  >
->  >  Elisha Hollander <just4now666666@gmail.com> writes:
->  >
->  >  > Signed-off-by: Elisha Hollander <just4now666666@gmail.com>
->  >
->  >  What is the use-case for this patch?
->  >
->  >  If you are simply looking to slow the emulated system down please hav=
-e a
->  >  look at:
->  >
->  >    https://qemu.readthedocs.io/en/master/about/emulation.html#limit-in=
-structions-per-second
->  >
->  >  which uses the plugin system to limit the run rate and sleep if its
->  >  running too fast. The longer term goal is to deprecate the icount clo=
-ck
->  >  alignment feature from the core code and leave icount to just provide
->  >  the deterministic execution needed for record/replay and reverse
->  >  debugging.
->  >
->  >  > ---
->  >  >  accel/tcg/cpu-exec.c      | 4 +---
->  >  >  accel/tcg/icount-common.c | 4 ++--
->  >  >  2 files changed, 3 insertions(+), 5 deletions(-)
->  >  >
->  >  > diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
->  >  > index 8163295f34..4c2baf8ed4 100644
->  >  > --- a/accel/tcg/cpu-exec.c
->  >  > +++ b/accel/tcg/cpu-exec.c
->  >  > @@ -95,11 +95,10 @@ static void align_clocks(SyncClocks *sc, CPUSta=
-te *cpu)
->  >  >  static void print_delay(const SyncClocks *sc)
->  >  >  {
->  >  >      static float threshold_delay;
->  >  > -    static int64_t last_realtime_clock;
->  >  >      static int nb_prints;
->  >  >=20=20
->  >  >      if (icount_align_option &&
->  >  > -        sc->realtime_clock - last_realtime_clock >=3D MAX_DELAY_PR=
-INT_RATE &&
->  >  > +        sc->diff_clk >=3D MAX_DELAY_PRINT_RATE &&
->  >  >          nb_prints < MAX_NB_PRINTS) {
->  >  >          if ((-sc->diff_clk / (float)1000000000LL > threshold_delay=
-) ||
->  >  >              (-sc->diff_clk / (float)1000000000LL <
->  >  > @@ -109,7 +108,6 @@ static void print_delay(const SyncClocks *sc)
->  >  >                          threshold_delay - 1,
->  >  >                          threshold_delay);
->  >  >              nb_prints++;
->  >  > -            last_realtime_clock =3D sc->realtime_clock;
->  >  >          }
->  >  >      }
->  >  >  }
->  >  > diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
->  >  > index 8d3d3a7e9d..f07f8baf4d 100644
->  >  > --- a/accel/tcg/icount-common.c
->  >  > +++ b/accel/tcg/icount-common.c
->  >  > @@ -46,8 +46,8 @@
->  >  >   * is TCG-specific, and does not need to be built for other accels.
->  >  >   */
->  >  >  static bool icount_sleep =3D true;
->  >  > -/* Arbitrarily pick 1MIPS as the minimum allowable speed.  */
->  >  > -#define MAX_ICOUNT_SHIFT 10
->  >  > +/* Arbitrarily pick the minimum allowable speed.  */
->  >  > +#define MAX_ICOUNT_SHIFT 30
->  >  >=20=20
->  >  >  /* Do not count executed instructions */
->  >  >  ICountMode use_icount =3D ICOUNT_DISABLED;
->  >
->  >  --=20
->  >  Alex Benn=C3=A9e
->  >  Virtualisation Tech Lead @ Linaro
->
->  --=20
->  Alex Benn=C3=A9e
->  Virtualisation Tech Lead @ Linaro
 
-Can you give me your command line please?
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks,
+
+C.
+
+
+> ---
+>   hw/i2c/aspeed_i2c.c         | 62 +++++++++++++++++++++++++++++++++++++
+>   include/hw/i2c/aspeed_i2c.h |  1 +
+>   2 files changed, 63 insertions(+)
+> 
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 2dea3a42a0..819a875839 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -1102,6 +1102,41 @@ static void aspeed_i2c_instance_init(Object *obj)
+>    *   0xDA0 ... 0xDBF: Device 14 buffer
+>    *   0xDC0 ... 0xDDF: Device 15 buffer (15 and 16 unused in AST1030)
+>    *   0xDE0 ... 0xDFF: Device 16 buffer
+> + *
+> + * Address Definitions (AST2700)
+> + *   0x000 ... 0x0FF: Global Register
+> + *   0x100 ... 0x17F: Device 0
+> + *   0x1A0 ... 0x1BF: Device 0 buffer
+> + *   0x200 ... 0x27F: Device 1
+> + *   0x2A0 ... 0x2BF: Device 1 buffer
+> + *   0x300 ... 0x37F: Device 2
+> + *   0x3A0 ... 0x3BF: Device 2 buffer
+> + *   0x400 ... 0x47F: Device 3
+> + *   0x4A0 ... 0x4BF: Device 3 buffer
+> + *   0x500 ... 0x57F: Device 4
+> + *   0x5A0 ... 0x5BF: Device 4 buffer
+> + *   0x600 ... 0x67F: Device 5
+> + *   0x6A0 ... 0x6BF: Device 5 buffer
+> + *   0x700 ... 0x77F: Device 6
+> + *   0x7A0 ... 0x7BF: Device 6 buffer
+> + *   0x800 ... 0x87F: Device 7
+> + *   0x8A0 ... 0x8BF: Device 7 buffer
+> + *   0x900 ... 0x97F: Device 8
+> + *   0x9A0 ... 0x9BF: Device 8 buffer
+> + *   0xA00 ... 0xA7F: Device 9
+> + *   0xAA0 ... 0xABF: Device 9 buffer
+> + *   0xB00 ... 0xB7F: Device 10
+> + *   0xBA0 ... 0xBBF: Device 10 buffer
+> + *   0xC00 ... 0xC7F: Device 11
+> + *   0xCA0 ... 0xCBF: Device 11 buffer
+> + *   0xD00 ... 0xD7F: Device 12
+> + *   0xDA0 ... 0xDBF: Device 12 buffer
+> + *   0xE00 ... 0xE7F: Device 13
+> + *   0xEA0 ... 0xEBF: Device 13 buffer
+> + *   0xF00 ... 0xF7F: Device 14
+> + *   0xFA0 ... 0xFBF: Device 14 buffer
+> + *   0x1000 ... 0x107F: Device 15
+> + *   0x10A0 ... 0x10BF: Device 15 buffer
+>    */
+>   static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+>   {
+> @@ -1501,6 +1536,32 @@ static const TypeInfo aspeed_1030_i2c_info = {
+>       .class_init = aspeed_1030_i2c_class_init,
+>   };
+>   
+> +static void aspeed_2700_i2c_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedI2CClass *aic = ASPEED_I2C_CLASS(klass);
+> +
+> +    dc->desc = "ASPEED 2700 I2C Controller";
+> +
+> +    aic->num_busses = 16;
+> +    aic->reg_size = 0x80;
+> +    aic->reg_gap_size = 0x80;
+> +    aic->gap = -1; /* no gap */
+> +    aic->bus_get_irq = aspeed_2600_i2c_bus_get_irq;
+> +    aic->pool_size = 0x20;
+> +    aic->pool_gap_size = 0xe0;
+> +    aic->pool_base = 0x1a0;
+> +    aic->bus_pool_base = aspeed_2500_i2c_bus_pool_base;
+> +    aic->has_dma = true;
+> +    aic->mem_size = 0x2000;
+> +}
+> +
+> +static const TypeInfo aspeed_2700_i2c_info = {
+> +    .name = TYPE_ASPEED_2700_I2C,
+> +    .parent = TYPE_ASPEED_I2C,
+> +    .class_init = aspeed_2700_i2c_class_init,
+> +};
+> +
+>   static void aspeed_i2c_register_types(void)
+>   {
+>       type_register_static(&aspeed_i2c_bus_info);
+> @@ -1510,6 +1571,7 @@ static void aspeed_i2c_register_types(void)
+>       type_register_static(&aspeed_2500_i2c_info);
+>       type_register_static(&aspeed_2600_i2c_info);
+>       type_register_static(&aspeed_1030_i2c_info);
+> +    type_register_static(&aspeed_2700_i2c_info);
+>   }
+>   
+>   type_init(aspeed_i2c_register_types)
+> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+> index bdaea3207d..4f23dc10c3 100644
+> --- a/include/hw/i2c/aspeed_i2c.h
+> +++ b/include/hw/i2c/aspeed_i2c.h
+> @@ -31,6 +31,7 @@
+>   #define TYPE_ASPEED_2500_I2C TYPE_ASPEED_I2C "-ast2500"
+>   #define TYPE_ASPEED_2600_I2C TYPE_ASPEED_I2C "-ast2600"
+>   #define TYPE_ASPEED_1030_I2C TYPE_ASPEED_I2C "-ast1030"
+> +#define TYPE_ASPEED_2700_I2C TYPE_ASPEED_I2C "-ast2700"
+>   OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
+>   
+>   #define ASPEED_I2C_NR_BUSSES 16
+
 
