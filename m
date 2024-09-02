@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC97CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 17:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534B1CD13CF
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 18:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slBEI-0004UW-DT; Mon, 02 Sep 2024 13:52:42 -0400
+	id 1slCEm-0005lX-D9; Mon, 02 Sep 2024 14:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1slBEG-0004Ta-S7
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 13:52:40 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1slCEl-0005kw-1e
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 14:57:15 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1slBEE-0001rh-MV
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 13:52:40 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a8692bbec79so506416766b.3
- for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 10:52:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1slCEf-0000Rh-Os
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 14:57:14 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7cd9e4f550dso1206249a12.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 11:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725299556; x=1725904356; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WNDWjy6mbPbjIH2YfzrdrpGXdc/GT+l4ztQDl81a08w=;
- b=SLxfwvhlWyIecSNCFDZOeAB5BJAEG1knIySOGstwdayQz92dn3C6kGoYXe6+uOhHiB
- eifn3Cz5ilC/Q9bCWvivHeYRgwfE9VSPxierxZPv/cot7NTcC003UYWFq+QUOZ4W0XQO
- weh76RPo35JrX/1DPf6F+BWwioXWkTe8GJDQb8hqBsdnCAp4W4cK96u1VGFXxAQxEHTj
- xVEHG5Q4dTz04+wv2s9o0v84dg4hJKfJ68s/WcK3iGmFdB60+Cl/i7nZiC49DUciIWHF
- Qbz+ZilTNq+VzWpGWZEgoVXm0+LLRrOP6E82VdgI62a5pRumR094y3Qv995jZMPtdHxS
- F7xA==
+ d=linaro.org; s=google; t=1725303419; x=1725908219; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z209FirGpOEu6JnAf+XwlL1TgSHxXFhC9gh291ia+Nc=;
+ b=oiVHLzbLOiM400Y7gzRguFOCifE9MHslVW/SoXTKLNiaYUVVl4b5US3tJnuBqHp3ic
+ +pyOmKMGk5YENNQB0yqDQuuEGT03yB0eoEinyBEGZQoe6yVJZxv0nXte8GN8Qj9ePoPB
+ SLmbYVl/ZxAOfufycYDuEoherqjFXmw0QEkCqwHm3kgulTaPeJomvEhsc14PSz2O+eT7
+ zOIgVySPGsrk8YqiPqxXzC4JaBZglF4g938OdeWWG68d3ghx/EJf0mNZgmELJWtBpKVj
+ bqt1/k3UZaV4idbkp5OeKom2q2zSDixPU9jsAaInQbHQcu2xl/R5V+YkowTh0DI+bYIB
+ oZtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725299556; x=1725904356;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WNDWjy6mbPbjIH2YfzrdrpGXdc/GT+l4ztQDl81a08w=;
- b=PJdjPtjw0m+HV9b0RHql0ejjsTowsJCNr60lsiYcCDDlfy/h97qlrxGbEsEjDsjV7N
- Ct5IgSN7Tdm5NlJgMgptkfH2JzFmUc4GWLq15Osc3e6NJCZgt66ZGCHfomuGBiJ2jovd
- Im/EhQ5trw0w6emZbU4aeelHolQeexFCpy83JLOQ1QCE2zlQ0KQ5k50tT28OVEQHUgCS
- ewp5mr8ekJSGlnCog/Hntge7LxC6m97L93cWfdYpjYbJWcQKwVhU6g9XQ9xnAWZdBYYp
- f6JESMD9fCCTjCewQDV2CD6S3OzmjzTW8HU3GtKyMY6wXD9XWIbFEIYqeG+wDG603OOT
- 7fwA==
+ d=1e100.net; s=20230601; t=1725303419; x=1725908219;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z209FirGpOEu6JnAf+XwlL1TgSHxXFhC9gh291ia+Nc=;
+ b=aYSD18LVwV7D9yIJWxMx9w5Fz1B4yxVG/j+XU0YYaMrDTyAtr0zFLDyAQqI5HE5cHF
+ ape5GJ5uBduxHm5OWVh8f2gKRGtNHXEclVubO6w0tk5RtJAFI/VpaCciGErQuiOfglxa
+ AOMziNNWSrw8PyTwGebp+6nynUOqxBqYVLqqxAzeHJrJazO/h3wxE0mqbf5vlaE7+PnR
+ 2g669iMzHQ9BsAqYgkhwccg5Kab8jRBKYnSTX+CBwU85shGUiiQxaLlo5W6DUr3ywca+
+ mK6qnAR1HErIsl1bhZekqMYSXLZk0CeGV2mDfLUhnG3LtrlchVryp1edAXh+pRFdVPS8
+ g/og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+2CY2A3o4BogNbbg3RLyzRur6+v0Bj8HjHTmz6W518oyoCSyfqXoI6oThduri4YxWSegZIiIN81v1@nongnu.org
-X-Gm-Message-State: AOJu0YzWxs8G7oWuGsavG4bKGv1sXJDuALPHKs3DE/+ap6ADpVLrKaGo
- aFd1olnYW/zG/O6PobfjEUSMtWgIGtyEovj2gyJAvJMkt5/jrzEjwhZOWxqLYLE=
-X-Google-Smtp-Source: AGHT+IFxqZTybzELfRxZ6b40Tm0THAFw88gQ5KSmDSd5okxq0JlxnG6r7WdsjvprA4SHcd5l7/54/A==
-X-Received: by 2002:a17:907:9723:b0:a86:88f7:679c with SMTP id
- a640c23a62f3a-a89a37a7ff3mr638665866b.41.1725299555927; 
- Mon, 02 Sep 2024 10:52:35 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8988feb9c6sm585903566b.24.2024.09.02.10.52.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Sep 2024 10:52:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9556E5F835;
- Mon,  2 Sep 2024 18:52:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Xingran Wang <wangxingran123456@outlook.com>,  qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>
+ AJvYcCUsGEQ2A17XwduMPxeQlyi0BNlVQE+d4FrViszTb6jkSb5U1zUO9uZmXpsrk/YYiZTEolgPa/BygXBK@nongnu.org
+X-Gm-Message-State: AOJu0Yxrjwk1k6XiWYkyJodPBiqcVNgAZ4pYtQgxUv/0eSs6dWyrPa2L
+ PV+gdI3n/82Uc96DU5Njcn2sxbbFPaWZPobFQ8Itbj+e1csDbcTN5nh6XA5Q9EAzsJmc5VZnBqc
+ S+HJKaQ==
+X-Google-Smtp-Source: AGHT+IE7LVj/ARJ9abhyT+Uzyf+4YGkG503n9Lo2BkXtS71YQkFCYR6QsHHIrEl13jJyVKsJ5edkHA==
+X-Received: by 2002:a17:90a:f0d4:b0:2d8:9c97:3c33 with SMTP id
+ 98e67ed59e1d1-2d89c973dd3mr5299043a91.28.1725303419293; 
+ Mon, 02 Sep 2024 11:56:59 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::27bd? ([2604:3d08:9384:1d00::27bd])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2da509e97e3sm788405a91.19.2024.09.02.11.56.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Sep 2024 11:56:58 -0700 (PDT)
+Message-ID: <0635c334-c376-458c-8b8e-787c08f2ffcf@linaro.org>
+Date: Mon, 2 Sep 2024 11:56:57 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] plugins: add two events for cpu_restore_state_from_tb()
  and cpu_io_recompile()
-In-Reply-To: <592a0bc6-fbf0-4189-bd47-7b7cc6fc7681@linaro.org> (Pierrick
- Bouvier's message of "Mon, 2 Sep 2024 09:08:24 -0700")
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Xingran Wang <wangxingran123456@outlook.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <SY8P282MB4322879DBA2E5E3E3B72B383A1912@SY8P282MB4322.AUSP282.PROD.OUTLOOK.COM>
  <87mskqcp5n.fsf@draig.linaro.org>
  <592a0bc6-fbf0-4189-bd47-7b7cc6fc7681@linaro.org>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 02 Sep 2024 18:52:34 +0100
-Message-ID: <87seuidjtp.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+ <87seuidjtp.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87seuidjtp.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,159 +105,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-
-> Hi Xingran,
->
-> On 9/2/24 03:42, Alex Benn=C3=A9e wrote:
->> Xingran Wang <wangxingran123456@outlook.com> writes:
->>=20
->>> Currently, the instruction count obtained by plugins using the translat=
-ion
->>> block execution callback is larger than the actual value. Adding callba=
-cks
->>> in cpu_restore_state_from_tb() and cpu_io_recompile() allows plugins to
->>> correct the instruction count when exiting a translation block
->>> mid-execution, properly subtracting the excess unexecuted
->>> instructions.
->> This smells like exposing two much of the TCG internals to the
->> plugin
->> mechanism. You can already detect when we don't reach the end of a block
->> of instructions by instrumentation as I did in:
->>=20
->
-> I agree that this is definitely a QEMU implementation "detail", and
-> should not be a concern for end users.
->
-> The documentation already warns that all instructions may not execute,
-> and that in this case, it's better to instrument them directly,
-> instead of TB:
-> https://www.qemu.org/docs/master/devel/tcg-plugins.html#translation-block=
-s.
->
-> Finally, even if we integrated an API like what you propose in this
-> patch, I think it would be very easy for plugins writers to make a
-> mistake using it, as you need to keep track of everything yourself.
->
-> If we want to stay on the topic of this patch, one direction that
-> would be better in my opinion is a "after_tb_exec" API, where the TB
-> passed in parameter is guaranteed to have all its instructions that
-> were executed (not interrupted).
-
-Or indeed resolves with the current PC at the "end" of the TB where it
-gets to. QEMU could keep track of that easily enough as the recompile
-and bus fault paths are slow paths anyway. It would be tricky to support
-inline for that though.
-
-As TB is exposed internally I think we'd just need to set a flag and
-call out. Maybe an API like:
-
-  /**
-   * typedef qemu_plugin_vcpu_tb_end_cb_t - vcpu callback at end of block
-   * @vcpu_index: the current vcpu context
-   * @pc: the next PC
-   * @insns: instructions executed in block
-   * @userdata: a pointer to some user data supplied when the callback
-   * was registered.
-   */
-  typedef void (*qemu_plugin_vcpu_tb_end_cb_t)(unsigned int vcpu_index,
-                                               uint64_t next_pc,
-                                               size_t n_insns,
-                                               void *userdata);
-
-  /**
-   * qemu_plugin_register_vcpu_tb_exec_end_cb() - register execution callba=
-ck at end of TB
-   * @tb: the opaque qemu_plugin_tb handle for the translation
-   * @cb: callback function
-   * @flags: does the plugin read or write the CPU's registers?
-   * @userdata: any plugin data to pass to the @cb?
-   *
-   * The @cb function is called every time a translated unit executes.
-   */
-  QEMU_PLUGIN_API
-  void qemu_plugin_register_vcpu_tb_exec_end_cb(struct qemu_plugin_tb *tb,
-                                                 qemu_plugin_vcpu_tb_end_cb=
-_t cb,
-                                                 enum qemu_plugin_cb_flags =
-flags,
-                                                 void *userdata);
-
-I think the tricky bit would be getting TCG to emit the callback code
-for the last instruction before the
-tcg_gen_exit_tb/tcg_gen_lookup_and_goto_ptr bits but after whatever else
-it has done to execute the instruction.
-
-I don't think we could easily support inline ops at tb end though.
-
-Richard,
-
-What do you think?
-
-
->>    Message-Id: <20240718145958.1315270-1-alex.bennee@linaro.org>
->>    Date: Thu, 18 Jul 2024 15:59:58 +0100
->>    Subject: [RFC PATCH v3] contrib/plugins: control flow plugin
->>    From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.or=
-g>
->> So what exactly are we trying to achieve here? A more efficient
->> detection of short blocks?
->>=20
->>>
->>> Signed-off-by: Xingran Wang <wangxingran123456@outlook.com>
->>> ---
->>>   accel/tcg/translate-all.c    |  27 ++++++++
->>>   include/qemu/plugin-event.h  |   2 +
->>>   include/qemu/plugin.h        |  24 +++++++
->>>   include/qemu/qemu-plugin.h   | 131 +++++++++++++++++++++++++++++++++++
->>>   plugins/api.c                |  78 +++++++++++++++++++++
->>>   plugins/core.c               |  42 +++++++++++
->>>   plugins/qemu-plugins.symbols |  10 +++
->>>   tests/tcg/plugins/bb.c       |  25 +++++++
->>>   8 files changed, 339 insertions(+)
->>>
->>> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
->>> index fdf6d8ac19..642f684372 100644
->>> --- a/accel/tcg/translate-all.c
->>> +++ b/accel/tcg/translate-all.c
->>> @@ -65,6 +65,7 @@
->>>   #include "internal-target.h"
->>>   #include "tcg/perf.h"
->>>   #include "tcg/insn-start-words.h"
->>> +#include "qemu/plugin.h"
->>>     TBContext tb_ctx;
->>>   @@ -218,6 +219,19 @@ void cpu_restore_state_from_tb(CPUState
->>> *cpu, TranslationBlock *tb,
->>>           cpu->neg.icount_decr.u16.low +=3D insns_left;
->>>       }
->>>   +#ifdef CONFIG_PLUGIN
->>> +    /*
->>> +     * Notify the plugin with the relevant information
->>> +     * when restoring the execution state of a TB.
->>> +     */
->>> +    struct qemu_plugin_tb_restore ptb_restore;
->>> +    ptb_restore.cpu_index =3D cpu->cpu_index;
->>> +    ptb_restore.insns_left =3D insns_left;
->>> +    ptb_restore.tb_n =3D tb->icount;
->>> +    ptb_restore.tb_pc =3D tb->pc;
->>> +    qemu_plugin_tb_restore_cb(cpu, &ptb_restore);
->>> +#endif
->>> +
->> See also the unwind patches which is a more generic approach to
->> ensuring
->> "special" registers are synced at midpoint when using the register API:
->>    Message-Id: <20240606032926.83599-1-richard.henderson@linaro.org>
->>    Date: Wed,  5 Jun 2024 20:29:17 -0700
->>    Subject: [PATCH v2 0/9] plugins: Use unwind info for special gdb regi=
-sters
->>    From: Richard Henderson <richard.henderson@linaro.org>
->> <snip>
->>=20
->
-> Thanks,
-> Pierrick
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+T24gOS8yLzI0IDEwOjUyLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+IFBpZXJyaWNrIEJvdXZp
+ZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4gd3JpdGVzOg0KPiANCj4+IEhpIFhp
+bmdyYW4sDQo+Pg0KPj4gT24gOS8yLzI0IDAzOjQyLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+
+Pj4gWGluZ3JhbiBXYW5nIDx3YW5neGluZ3JhbjEyMzQ1NkBvdXRsb29rLmNvbT4gd3JpdGVz
+Og0KPj4+DQo+Pj4+IEN1cnJlbnRseSwgdGhlIGluc3RydWN0aW9uIGNvdW50IG9idGFpbmVk
+IGJ5IHBsdWdpbnMgdXNpbmcgdGhlIHRyYW5zbGF0aW9uDQo+Pj4+IGJsb2NrIGV4ZWN1dGlv
+biBjYWxsYmFjayBpcyBsYXJnZXIgdGhhbiB0aGUgYWN0dWFsIHZhbHVlLiBBZGRpbmcgY2Fs
+bGJhY2tzDQo+Pj4+IGluIGNwdV9yZXN0b3JlX3N0YXRlX2Zyb21fdGIoKSBhbmQgY3B1X2lv
+X3JlY29tcGlsZSgpIGFsbG93cyBwbHVnaW5zIHRvDQo+Pj4+IGNvcnJlY3QgdGhlIGluc3Ry
+dWN0aW9uIGNvdW50IHdoZW4gZXhpdGluZyBhIHRyYW5zbGF0aW9uIGJsb2NrDQo+Pj4+IG1p
+ZC1leGVjdXRpb24sIHByb3Blcmx5IHN1YnRyYWN0aW5nIHRoZSBleGNlc3MgdW5leGVjdXRl
+ZA0KPj4+PiBpbnN0cnVjdGlvbnMuDQo+Pj4gVGhpcyBzbWVsbHMgbGlrZSBleHBvc2luZyB0
+d28gbXVjaCBvZiB0aGUgVENHIGludGVybmFscyB0byB0aGUNCj4+PiBwbHVnaW4NCj4+PiBt
+ZWNoYW5pc20uIFlvdSBjYW4gYWxyZWFkeSBkZXRlY3Qgd2hlbiB3ZSBkb24ndCByZWFjaCB0
+aGUgZW5kIG9mIGEgYmxvY2sNCj4+PiBvZiBpbnN0cnVjdGlvbnMgYnkgaW5zdHJ1bWVudGF0
+aW9uIGFzIEkgZGlkIGluOg0KPj4+DQo+Pg0KPj4gSSBhZ3JlZSB0aGF0IHRoaXMgaXMgZGVm
+aW5pdGVseSBhIFFFTVUgaW1wbGVtZW50YXRpb24gImRldGFpbCIsIGFuZA0KPj4gc2hvdWxk
+IG5vdCBiZSBhIGNvbmNlcm4gZm9yIGVuZCB1c2Vycy4NCj4+DQo+PiBUaGUgZG9jdW1lbnRh
+dGlvbiBhbHJlYWR5IHdhcm5zIHRoYXQgYWxsIGluc3RydWN0aW9ucyBtYXkgbm90IGV4ZWN1
+dGUsDQo+PiBhbmQgdGhhdCBpbiB0aGlzIGNhc2UsIGl0J3MgYmV0dGVyIHRvIGluc3RydW1l
+bnQgdGhlbSBkaXJlY3RseSwNCj4+IGluc3RlYWQgb2YgVEI6DQo+PiBodHRwczovL3d3dy5x
+ZW11Lm9yZy9kb2NzL21hc3Rlci9kZXZlbC90Y2ctcGx1Z2lucy5odG1sI3RyYW5zbGF0aW9u
+LWJsb2Nrcy4NCj4+DQo+PiBGaW5hbGx5LCBldmVuIGlmIHdlIGludGVncmF0ZWQgYW4gQVBJ
+IGxpa2Ugd2hhdCB5b3UgcHJvcG9zZSBpbiB0aGlzDQo+PiBwYXRjaCwgSSB0aGluayBpdCB3
+b3VsZCBiZSB2ZXJ5IGVhc3kgZm9yIHBsdWdpbnMgd3JpdGVycyB0byBtYWtlIGENCj4+IG1p
+c3Rha2UgdXNpbmcgaXQsIGFzIHlvdSBuZWVkIHRvIGtlZXAgdHJhY2sgb2YgZXZlcnl0aGlu
+ZyB5b3Vyc2VsZi4NCj4+DQo+PiBJZiB3ZSB3YW50IHRvIHN0YXkgb24gdGhlIHRvcGljIG9m
+IHRoaXMgcGF0Y2gsIG9uZSBkaXJlY3Rpb24gdGhhdA0KPj4gd291bGQgYmUgYmV0dGVyIGlu
+IG15IG9waW5pb24gaXMgYSAiYWZ0ZXJfdGJfZXhlYyIgQVBJLCB3aGVyZSB0aGUgVEINCj4+
+IHBhc3NlZCBpbiBwYXJhbWV0ZXIgaXMgZ3VhcmFudGVlZCB0byBoYXZlIGFsbCBpdHMgaW5z
+dHJ1Y3Rpb25zIHRoYXQNCj4+IHdlcmUgZXhlY3V0ZWQgKG5vdCBpbnRlcnJ1cHRlZCkuDQo+
+IA0KPiBPciBpbmRlZWQgcmVzb2x2ZXMgd2l0aCB0aGUgY3VycmVudCBQQyBhdCB0aGUgImVu
+ZCIgb2YgdGhlIFRCIHdoZXJlIGl0DQo+IGdldHMgdG8uIFFFTVUgY291bGQga2VlcCB0cmFj
+ayBvZiB0aGF0IGVhc2lseSBlbm91Z2ggYXMgdGhlIHJlY29tcGlsZQ0KPiBhbmQgYnVzIGZh
+dWx0IHBhdGhzIGFyZSBzbG93IHBhdGhzIGFueXdheS4gSXQgd291bGQgYmUgdHJpY2t5IHRv
+IHN1cHBvcnQNCj4gaW5saW5lIGZvciB0aGF0IHRob3VnaC4NCj4gDQo+IEFzIFRCIGlzIGV4
+cG9zZWQgaW50ZXJuYWxseSBJIHRoaW5rIHdlJ2QganVzdCBuZWVkIHRvIHNldCBhIGZsYWcg
+YW5kDQo+IGNhbGwgb3V0LiBNYXliZSBhbiBBUEkgbGlrZToNCj4gDQo+ICAgIC8qKg0KPiAg
+ICAgKiB0eXBlZGVmIHFlbXVfcGx1Z2luX3ZjcHVfdGJfZW5kX2NiX3QgLSB2Y3B1IGNhbGxi
+YWNrIGF0IGVuZCBvZiBibG9jaw0KPiAgICAgKiBAdmNwdV9pbmRleDogdGhlIGN1cnJlbnQg
+dmNwdSBjb250ZXh0DQo+ICAgICAqIEBwYzogdGhlIG5leHQgUEMNCj4gICAgICogQGluc25z
+OiBpbnN0cnVjdGlvbnMgZXhlY3V0ZWQgaW4gYmxvY2sNCj4gICAgICogQHVzZXJkYXRhOiBh
+IHBvaW50ZXIgdG8gc29tZSB1c2VyIGRhdGEgc3VwcGxpZWQgd2hlbiB0aGUgY2FsbGJhY2sN
+Cj4gICAgICogd2FzIHJlZ2lzdGVyZWQuDQo+ICAgICAqLw0KPiAgICB0eXBlZGVmIHZvaWQg
+KCpxZW11X3BsdWdpbl92Y3B1X3RiX2VuZF9jYl90KSh1bnNpZ25lZCBpbnQgdmNwdV9pbmRl
+eCwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+dWludDY0X3QgbmV4dF9wYywNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgc2l6ZV90IG5faW5zbnMsDQo+ICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZvaWQgKnVzZXJkYXRhKTsNCj4gDQo+ICAg
+IC8qKg0KPiAgICAgKiBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1X3RiX2V4ZWNfZW5kX2Ni
+KCkgLSByZWdpc3RlciBleGVjdXRpb24gY2FsbGJhY2sgYXQgZW5kIG9mIFRCDQo+ICAgICAq
+IEB0YjogdGhlIG9wYXF1ZSBxZW11X3BsdWdpbl90YiBoYW5kbGUgZm9yIHRoZSB0cmFuc2xh
+dGlvbg0KPiAgICAgKiBAY2I6IGNhbGxiYWNrIGZ1bmN0aW9uDQo+ICAgICAqIEBmbGFnczog
+ZG9lcyB0aGUgcGx1Z2luIHJlYWQgb3Igd3JpdGUgdGhlIENQVSdzIHJlZ2lzdGVycz8NCj4g
+ICAgICogQHVzZXJkYXRhOiBhbnkgcGx1Z2luIGRhdGEgdG8gcGFzcyB0byB0aGUgQGNiPw0K
+PiAgICAgKg0KPiAgICAgKiBUaGUgQGNiIGZ1bmN0aW9uIGlzIGNhbGxlZCBldmVyeSB0aW1l
+IGEgdHJhbnNsYXRlZCB1bml0IGV4ZWN1dGVzLg0KPiAgICAgKi8NCj4gICAgUUVNVV9QTFVH
+SU5fQVBJDQo+ICAgIHZvaWQgcWVtdV9wbHVnaW5fcmVnaXN0ZXJfdmNwdV90Yl9leGVjX2Vu
+ZF9jYihzdHJ1Y3QgcWVtdV9wbHVnaW5fdGIgKnRiLA0KPiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHFlbXVfcGx1Z2luX3ZjcHVfdGJfZW5k
+X2NiX3QgY2IsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgZW51bSBxZW11X3BsdWdpbl9jYl9mbGFncyBmbGFncywNCj4gICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2b2lkICp1c2VyZGF0
+YSk7DQo+IA0KDQpTb21ldGhpbmcgbGlrZSB0aGlzLCB5ZXMuDQpJIHN0aWxsIHRoaW5rIGl0
+IG1ha2VzIHRoZSB3aG9sZSBBUEkgdG9vIGNvbXBsZXgsIGFuZCB3b3VsZCBjb25mdXNlIA0K
+dXNlcnMuIElmIHBsdWdpbnMgd3JpdGVycyBuZWVkICJpbnN0cnVjdGlvbiBhY2N1cmF0ZSIg
+aW5zdHJ1bWVudGF0aW9uLCANCnRoZXJlIGFyZSBhbHJlYWR5IGZ1bmN0aW9ucyBmb3IgdGhh
+dC4NCkFuZCBpZiB0aGUgb25seSB1c2UgY2FzZSBpcyB0byBpZGVudGlmeSBjb250cm9sIGZs
+b3cgY2hhbmdlcywgdGhlbiB3ZSANCmNvdWxkIGNyZWF0ZSBhIGRlZGljYXRlZCBBUEkgZm9y
+IHRoaXMuDQoNCkkgd29uZGVyIHdoYXQgaXMgdGhlIG9yaWdpbmFsIHVzZSBjYXNlIG9mIFhp
+bmdyYW4uIEFueSBjaGFuY2UgeW91IGNvdWxkIA0Kc2hhcmUgd2l0aCB1cyB3aHkgdGhpcyBp
+cyBuZWVkZWQsIGFuZCB3aHkgZXhpc3RpbmcgZnVuY3Rpb25zIGFyZSBub3QgZW5vdWdoPw0K
+DQo+IEkgdGhpbmsgdGhlIHRyaWNreSBiaXQgd291bGQgYmUgZ2V0dGluZyBUQ0cgdG8gZW1p
+dCB0aGUgY2FsbGJhY2sgY29kZQ0KPiBmb3IgdGhlIGxhc3QgaW5zdHJ1Y3Rpb24gYmVmb3Jl
+IHRoZQ0KPiB0Y2dfZ2VuX2V4aXRfdGIvdGNnX2dlbl9sb29rdXBfYW5kX2dvdG9fcHRyIGJp
+dHMgYnV0IGFmdGVyIHdoYXRldmVyIGVsc2UNCj4gaXQgaGFzIGRvbmUgdG8gZXhlY3V0ZSB0
+aGUgaW5zdHJ1Y3Rpb24uDQo+IA0KPiBJIGRvbid0IHRoaW5rIHdlIGNvdWxkIGVhc2lseSBz
+dXBwb3J0IGlubGluZSBvcHMgYXQgdGIgZW5kIHRob3VnaC4NCj4gDQo+IFJpY2hhcmQsDQo+
+IA0KPiBXaGF0IGRvIHlvdSB0aGluaz8NCj4gDQo+IA0KPj4+ICAgICBNZXNzYWdlLUlkOiA8
+MjAyNDA3MTgxNDU5NTguMTMxNTI3MC0xLWFsZXguYmVubmVlQGxpbmFyby5vcmc+DQo+Pj4g
+ICAgIERhdGU6IFRodSwgMTggSnVsIDIwMjQgMTU6NTk6NTggKzAxMDANCj4+PiAgICAgU3Vi
+amVjdDogW1JGQyBQQVRDSCB2M10gY29udHJpYi9wbHVnaW5zOiBjb250cm9sIGZsb3cgcGx1
+Z2luDQo+Pj4gICAgIEZyb206ID0/VVRGLTg/cT9BbGV4PTIwQmVubj1DMz1BOWU/PSA8YWxl
+eC5iZW5uZWVAbGluYXJvLm9yZz4NCj4+PiBTbyB3aGF0IGV4YWN0bHkgYXJlIHdlIHRyeWlu
+ZyB0byBhY2hpZXZlIGhlcmU/IEEgbW9yZSBlZmZpY2llbnQNCj4+PiBkZXRlY3Rpb24gb2Yg
+c2hvcnQgYmxvY2tzPw0KPj4+DQo+Pj4+DQo+Pj4+IFNpZ25lZC1vZmYtYnk6IFhpbmdyYW4g
+V2FuZyA8d2FuZ3hpbmdyYW4xMjM0NTZAb3V0bG9vay5jb20+DQo+Pj4+IC0tLQ0KPj4+PiAg
+ICBhY2NlbC90Y2cvdHJhbnNsYXRlLWFsbC5jICAgIHwgIDI3ICsrKysrKysrDQo+Pj4+ICAg
+IGluY2x1ZGUvcWVtdS9wbHVnaW4tZXZlbnQuaCAgfCAgIDIgKw0KPj4+PiAgICBpbmNsdWRl
+L3FlbXUvcGx1Z2luLmggICAgICAgIHwgIDI0ICsrKysrKysNCj4+Pj4gICAgaW5jbHVkZS9x
+ZW11L3FlbXUtcGx1Z2luLmggICB8IDEzMSArKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKw0KPj4+PiAgICBwbHVnaW5zL2FwaS5jICAgICAgICAgICAgICAgIHwgIDc4ICsr
+KysrKysrKysrKysrKysrKysrKw0KPj4+PiAgICBwbHVnaW5zL2NvcmUuYyAgICAgICAgICAg
+ICAgIHwgIDQyICsrKysrKysrKysrDQo+Pj4+ICAgIHBsdWdpbnMvcWVtdS1wbHVnaW5zLnN5
+bWJvbHMgfCAgMTAgKysrDQo+Pj4+ICAgIHRlc3RzL3RjZy9wbHVnaW5zL2JiLmMgICAgICAg
+fCAgMjUgKysrKysrKw0KPj4+PiAgICA4IGZpbGVzIGNoYW5nZWQsIDMzOSBpbnNlcnRpb25z
+KCspDQo+Pj4+DQo+Pj4+IGRpZmYgLS1naXQgYS9hY2NlbC90Y2cvdHJhbnNsYXRlLWFsbC5j
+IGIvYWNjZWwvdGNnL3RyYW5zbGF0ZS1hbGwuYw0KPj4+PiBpbmRleCBmZGY2ZDhhYzE5Li42
+NDJmNjg0MzcyIDEwMDY0NA0KPj4+PiAtLS0gYS9hY2NlbC90Y2cvdHJhbnNsYXRlLWFsbC5j
+DQo+Pj4+ICsrKyBiL2FjY2VsL3RjZy90cmFuc2xhdGUtYWxsLmMNCj4+Pj4gQEAgLTY1LDYg
+KzY1LDcgQEANCj4+Pj4gICAgI2luY2x1ZGUgImludGVybmFsLXRhcmdldC5oIg0KPj4+PiAg
+ICAjaW5jbHVkZSAidGNnL3BlcmYuaCINCj4+Pj4gICAgI2luY2x1ZGUgInRjZy9pbnNuLXN0
+YXJ0LXdvcmRzLmgiDQo+Pj4+ICsjaW5jbHVkZSAicWVtdS9wbHVnaW4uaCINCj4+Pj4gICAg
+ICBUQkNvbnRleHQgdGJfY3R4Ow0KPj4+PiAgICBAQCAtMjE4LDYgKzIxOSwxOSBAQCB2b2lk
+IGNwdV9yZXN0b3JlX3N0YXRlX2Zyb21fdGIoQ1BVU3RhdGUNCj4+Pj4gKmNwdSwgVHJhbnNs
+YXRpb25CbG9jayAqdGIsDQo+Pj4+ICAgICAgICAgICAgY3B1LT5uZWcuaWNvdW50X2RlY3Iu
+dTE2LmxvdyArPSBpbnNuc19sZWZ0Ow0KPj4+PiAgICAgICAgfQ0KPj4+PiAgICArI2lmZGVm
+IENPTkZJR19QTFVHSU4NCj4+Pj4gKyAgICAvKg0KPj4+PiArICAgICAqIE5vdGlmeSB0aGUg
+cGx1Z2luIHdpdGggdGhlIHJlbGV2YW50IGluZm9ybWF0aW9uDQo+Pj4+ICsgICAgICogd2hl
+biByZXN0b3JpbmcgdGhlIGV4ZWN1dGlvbiBzdGF0ZSBvZiBhIFRCLg0KPj4+PiArICAgICAq
+Lw0KPj4+PiArICAgIHN0cnVjdCBxZW11X3BsdWdpbl90Yl9yZXN0b3JlIHB0Yl9yZXN0b3Jl
+Ow0KPj4+PiArICAgIHB0Yl9yZXN0b3JlLmNwdV9pbmRleCA9IGNwdS0+Y3B1X2luZGV4Ow0K
+Pj4+PiArICAgIHB0Yl9yZXN0b3JlLmluc25zX2xlZnQgPSBpbnNuc19sZWZ0Ow0KPj4+PiAr
+ICAgIHB0Yl9yZXN0b3JlLnRiX24gPSB0Yi0+aWNvdW50Ow0KPj4+PiArICAgIHB0Yl9yZXN0
+b3JlLnRiX3BjID0gdGItPnBjOw0KPj4+PiArICAgIHFlbXVfcGx1Z2luX3RiX3Jlc3RvcmVf
+Y2IoY3B1LCAmcHRiX3Jlc3RvcmUpOw0KPj4+PiArI2VuZGlmDQo+Pj4+ICsNCj4+PiBTZWUg
+YWxzbyB0aGUgdW53aW5kIHBhdGNoZXMgd2hpY2ggaXMgYSBtb3JlIGdlbmVyaWMgYXBwcm9h
+Y2ggdG8NCj4+PiBlbnN1cmluZw0KPj4+ICJzcGVjaWFsIiByZWdpc3RlcnMgYXJlIHN5bmNl
+ZCBhdCBtaWRwb2ludCB3aGVuIHVzaW5nIHRoZSByZWdpc3RlciBBUEk6DQo+Pj4gICAgIE1l
+c3NhZ2UtSWQ6IDwyMDI0MDYwNjAzMjkyNi44MzU5OS0xLXJpY2hhcmQuaGVuZGVyc29uQGxp
+bmFyby5vcmc+DQo+Pj4gICAgIERhdGU6IFdlZCwgIDUgSnVuIDIwMjQgMjA6Mjk6MTcgLTA3
+MDANCj4+PiAgICAgU3ViamVjdDogW1BBVENIIHYyIDAvOV0gcGx1Z2luczogVXNlIHVud2lu
+ZCBpbmZvIGZvciBzcGVjaWFsIGdkYiByZWdpc3RlcnMNCj4+PiAgICAgRnJvbTogUmljaGFy
+ZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+DQo+Pj4gPHNuaXA+
+DQo+Pj4NCj4+DQo+PiBUaGFua3MsDQo+PiBQaWVycmljaw0KPiANCg==
 
