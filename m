@@ -4,92 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06182CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 06:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4642CCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 06:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sl06O-000593-NP; Mon, 02 Sep 2024 01:59:48 -0400
+	id 1sl0Dl-0006uT-2i; Mon, 02 Sep 2024 02:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sl06M-00058D-Nq
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 01:59:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=3a9v=QA=kaod.org=clg@ozlabs.org>)
+ id 1sl0Dj-0006sx-7Y; Mon, 02 Sep 2024 02:07:23 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sl06L-0004kG-7c
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 01:59:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725256783;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VhZxB5vswG2Ct8al9vaG9TBWQ/Nn9ErDRSjGjEw7ce8=;
- b=VXJ/aZz8vzLYzjsnTNfKvPaAaGCmDzklRKDfDilYHfm0/W0caRXB0lJLM4pw01qzpzGIvs
- y8mBw3noI7Nt6UoUCzPDdVd77g8AWVlll/nPYJJUEdT90IrvVxCwisIgwWzwLLszZfYC50
- b1wBWeznoH5VQCRRZyvwi9A3yIoqprM=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-0ByJcy2APnW84_2K_I2O-Q-1; Mon, 02 Sep 2024 01:59:42 -0400
-X-MC-Unique: 0ByJcy2APnW84_2K_I2O-Q-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6c359012445so19927426d6.3
- for <qemu-devel@nongnu.org>; Sun, 01 Sep 2024 22:59:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725256782; x=1725861582;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VhZxB5vswG2Ct8al9vaG9TBWQ/Nn9ErDRSjGjEw7ce8=;
- b=PxqHHkxPFHP16GT0bGjHZmbTEGys50bCFLvc//vNsHfUMQ7vsKRP6TPUc683K11bXk
- DJgJN7WDYmTJjk2mwrepDUo00uE0eUUR2wVrcf/uFVCzq9bvtnEFFslX5/EBzFgfcEsc
- J8eO87nNjqexetYpnCRqFm6ievX7NuVsZRenu6+tWzSGr1Sx1e0GUu/xDG55Thu/pc3n
- CfUAfxS1KY6RzmavGMq/6r8hloisK9JUOETypOmUNseDqU6sXK1pMycSjqn4jAldRZue
- ZjCme25n1wH/vBa5EmxkNKEsDWWDo7HKUNhzrQSlv9JRXGhzQn8zpn8zJo6wHcZNHF5s
- brHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVmpBR3D90EFXppKHJ6kPxHez7eqJ9CZynOvKkH2+xh43fxx5npwMFQEENsws4GbNT96i3SRHasZ5J0@nongnu.org
-X-Gm-Message-State: AOJu0YwIWDkGakYEzZad2DWanOTwFwz9xvprJ+SlNePt6M3i9To/8q0Z
- ECLaVEW5gFKiOb1JG8FdxlvP61Eux2fRsl5H5Av+nUa9PEsjSLt/KU+uIIBvU9bVjYmmK8Lv6mw
- qZIg/aCObZGEFkAZi9PUUyK3EJYry4LYaVJnwUpdbQ/yZrDHtouV5
-X-Received: by 2002:a05:6214:590e:b0:6c3:5db2:d994 with SMTP id
- 6a1803df08f44-6c35db2dc82mr48293536d6.5.1725256782397; 
- Sun, 01 Sep 2024 22:59:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEwgjhgjj6QLTwYceoJotRgtbWgMx07X1VYoggMUa0hXkjWjTHtzL1COGFhTIhvf2YMY4Yv1w==
-X-Received: by 2002:a05:6214:590e:b0:6c3:5db2:d994 with SMTP id
- 6a1803df08f44-6c35db2dc82mr48293436d6.5.1725256782049; 
- Sun, 01 Sep 2024 22:59:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c340bfa80dsm39192126d6.5.2024.09.01.22.59.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Sep 2024 22:59:41 -0700 (PDT)
-Message-ID: <6cd148e6-76ef-42f7-9d29-77a142ad4aa1@redhat.com>
-Date: Mon, 2 Sep 2024 07:59:39 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=3a9v=QA=kaod.org=clg@ozlabs.org>)
+ id 1sl0Dg-0005eh-Bm; Mon, 02 Sep 2024 02:07:22 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Wxyvd3vdJz4x9G;
+ Mon,  2 Sep 2024 16:07:09 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Wxyvb1HMYz4x9F;
+ Mon,  2 Sep 2024 16:07:06 +1000 (AEST)
+Message-ID: <85157261-6b91-4503-8423-e690079a1c5c@kaod.org>
+Date: Mon, 2 Sep 2024 08:07:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] vfio/igd: add passthrough support for IGDs of gen
- 11 and later
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>,
- qemu-devel@nongnu.org, c.koehne@beckhoff.com
-Cc: Alex Williamson <alex.williamson@redhat.com>
-References: <20240828134328.94528-1-c.koehne@beckhoff.com>
+Subject: Re: [PATCH 11/13] pnv/xive: Update PIPR when updating CPPR
+To: Mike Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240801203008.11224-1-kowal@linux.ibm.com>
+ <20240801203008.11224-12-kowal@linux.ibm.com>
+ <5dad962a-0815-40b8-b62a-d0c67612fa5f@kaod.org>
+ <16bbfc74-e7c0-41b6-a91f-c2d121296986@linux.ibm.com>
+ <cd6dee9a-8a98-49c8-832d-692a55dba909@kaod.org>
+ <6527910d-aa34-4abb-a57f-e5c1789d059c@linux.ibm.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240828134328.94528-1-c.koehne@beckhoff.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <6527910d-aa34-4abb-a57f-e5c1789d059c@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=3a9v=QA=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,40 +70,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/28/24 15:43, Corvin Köhne wrote:
-> Hi,
+On 8/30/24 19:06, Mike Kowal wrote:
 > 
-> Qemu has experimental support for GPU passthrough of Intels integrated graphic
-> devices. Unfortunately, Intel has changed some bits for their gen 11 devices
-> and later. To support these devices, we have to account for those changes. This
-> patch series adds the missing bits on the Qemu side.
+> On 8/30/2024 3:25 AM, Cédric Le Goater wrote:
+>> On 8/29/24 22:35, Mike Kowal wrote:
+>>>
+>>> On 8/29/2024 7:29 AM, Cédric Le Goater wrote:
+>>>> On 8/1/24 22:30, Michael Kowal wrote:
+>>>>> From: Glenn Miles <milesg@linux.vnet.ibm.com>
+>>>>>
+>>>>> Current code was updating the PIPR inside the xive_tctx_accept() function
+>>>>> instead of the xive_tctx_set_cppr function, which is where the HW would
+>>>>> have it updated.
+>>>>
+>>>> Did you confirm with the HW designer ?
+>>>>
+>>>> AFAIR, the PIPR is constructed from the IPB and the later is it updated
+>>>> the better. However, if now, both PIPR (HW and Pool) are required to
+>>>> identify the ctx to notify, I agree set_cppr() needs a change but what
+>>>> about xive_tctx_ipb_update() which is called when an interrupt
+>>>> needs a resend ?
+>>>
+>>>
+>>> This was fix to a bug and matches what  is specified in the XIVE2 architecture document CPPR flows (MMIO CPPR xxx processing).
+>>
+>> ok. I was also wondering if this was fixing a bug. Do you think this
+>> is the correct commit id ?
+>>
+>>  cdd4de68edb6 ("ppc/xive: notify the CPU when the interrupt priority is more privileged")
+>>
+>> If so, could you please add a Fixes tags ?
+>>
+>> Thanks,
+>>
+>> C.
+>>
 > 
-> I've tested the patch series on an ElkhartLake and TigerLake device. On the
-> guest side, I've tested an EFI environment (GOP driver), a Linux guest and a
-> Windows VM. The driver of all guests are able to use the GPU and produce an
-> output on the connected display.
-> 
-> Corvin Köhne (7):
->    vfio/igd: return an invalid generation for unknown devices
->    vfio/igd: support legacy mode for all known generations
->    vfio/igd: use new BDSM register location and size for gen 11 and later
->    vfio/igd: add new bar0 quirk to emulate BDSM mirror
->    vfio/igd: add ID's for ElkhartLake and TigerLake
->    vfio/igd: don't set stolen memory size to zero
->    vfio/igd: correctly calculate stolen memory size for gen 9 and later
-> 
->   hw/vfio/igd.c        | 185 +++++++++++++++++++++++++++++++++++++------
->   hw/vfio/pci-quirks.c |   1 +
->   hw/vfio/pci.h        |   1 +
->   3 files changed, 161 insertions(+), 26 deletions(-)
-> 
+> Many of these parts have been changed multiple time for different things.   I am not sure which commit this fixes.  
 
+I use 'tig blame <file>' to dig change history.
 
-Applied to vfio-next.
+> I am upstreaming other peoples work  that was done over the last couple of years so it hard to tell.  Also,  the original xive support was only complete enough to support Linux.   Much of this I would consider 'new development' expanding XIVE support for Power VM.   If you think it should still have a fixes-tag, I will add it.
+
+I think this is the right commit, please add it.
+
+Could you also add your self as a Reviewer ?
 
 Thanks,
 
 C.
-
-
 
