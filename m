@@ -4,75 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037A4CD13CF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 12:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5340CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 12:32:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sl5qh-0003W9-D4; Mon, 02 Sep 2024 08:07:59 -0400
+	id 1sl6Dl-0004rK-Td; Mon, 02 Sep 2024 08:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sl5qe-0003UQ-NG; Mon, 02 Sep 2024 08:07:56 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <jan.kloetzke@kernkonzept.com>)
+ id 1sl6D1-0004jz-6Z
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 08:31:03 -0400
+Received: from serv1.kernkonzept.com ([2a01:4f8:1c1c:b490::2]
+ helo=mx.kernkonzept.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sl5qc-0005Lc-As; Mon, 02 Sep 2024 08:07:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1725278874; x=1756814874;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=qgr1sU7wkJHclCHETFO8vyp0MlBwWnW+iyMOkHg9Fkk=;
- b=hENLyiwlK904calFsce5LwbM7Ubc8iepw7GriLluG3Wzd4OYxv6USiBr
- zU8pCew5pINv0c08AjkXxl+AaG/VMe7OEadNXfRhZucaTCgupMS/573Fd
- XPVLxz6q4HS7GDrzulbTsodGYc7vgBvNJk4NQ9Zgmy4TofdFcUIX8wQrx
- vJ0P7n+lKl024OAH0iaqrblJPlYjZ3cj+7D9ZlbtJtNDAGuph9SkP8o15
- HTGYMub/6SB0bLefi6LvCqpgZuMnoNNaMUrSWzXrFTQvaeKeYJX/9DrcX
- zQKQx9KWy34RfTuJbQTMC9rGoDk8mqN6Bz0id/nMgIb9l1WyzK7+9PWLC Q==;
-X-CSE-ConnectionGUID: 07UTZtAOTzeFJ7hroD6INA==
-X-CSE-MsgGUID: h/cuJ6LbRsWbYAjJBdfAGA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11182"; a="41333119"
-X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; d="scan'208";a="41333119"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2024 05:07:49 -0700
-X-CSE-ConnectionGUID: XhA4ac0RSvugfTevNzWVkQ==
-X-CSE-MsgGUID: O8z3vyWmQb2M+INS6gcYvA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; d="scan'208";a="95405433"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 02 Sep 2024 05:07:44 -0700
-Date: Mon, 2 Sep 2024 20:23:43 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, zhenyu.z.wang@intel.com,
- dapeng1.mi@linux.intel.com, yongwei.ma@intel.com, armbru@redhat.com,
- farman@linux.ibm.com, peter.maydell@linaro.org, mst@redhat.com,
- anisinha@redhat.com, shannon.zhaosl@gmail.com, imammedo@redhat.com,
- mtosatti@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, linuxarm@huwei.com,
- shameerali.kolothum.thodi@huawei.com, Jonathan.Cameron@huawei.com,
- jiangkunkun@huawei.com, zhao1.liu@intel.com
-Subject: Re: [RFC PATCH 0/2] Specifying cache topology on ARM
-Message-ID: <ZtWuT4W5kKEtodyo@intel.com>
-References: <20240823125446.721-1-alireza.sanaee@huawei.com>
- <ZtL9u9kQcx0GtEKq@intel.com> <20240902112519.00005b67@huawei.com>
+ (Exim 4.90_1) (envelope-from <jan.kloetzke@kernkonzept.com>)
+ id 1sl6Cv-0008UR-R0
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 08:31:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-Id:Date:Subject:Cc:To:From:References:In-Reply-To:
+ Reply-To:Content-ID:Content-Description;
+ bh=0lHBMMLjyV66zNy0vADjphnQD9Jvz+0KNvkhvWpuC8g=; b=mBLUezLnbDrgq4L6BKIq+72db2
+ 3n/OFWHBuVsw2ev2PQVAFmU33JghhL36HW2YvlMyuh6pAknqscaWpBfMIOgloxaXCgGUj7SjvhKxD
+ mkDb9j+bFsgPDjk1GCZG2oJ5ieI9p2lKmE/OvwIL1kChCEDcofPqg3dSa515w2NP2GIBwcSs23haC
+ b7rsv+ttVS01T6Z3fldefjDC349aFXY2ao7jN00euNdlL9M+SuZ4uEWmSDpZP9Mqclsuw21GkP0Bz
+ qJ2zrfWmQLzXet9gceIacOACBHwnVSvreoge3X0YtM+AneNYBEFsrvduKhZMXDoQb9vcc1Tsb3yiV
+ cIMkrLMA==;
+Received: from p50883c9a.dip0.t-ipconnect.de ([80.136.60.154]
+ helo=shark.dd1.int.kernkonzept.com)
+ by mx.kernkonzept.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
+ id 1sl6Cr-009sVb-12; Mon, 02 Sep 2024 14:30:53 +0200
+From: =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>
+Subject: [PATCH] hw/intc/arm_gic: fix spurious level triggered interrupts
+Date: Mon,  2 Sep 2024 14:30:38 +0200
+Message-Id: <20240902123038.1135412-1-jan.kloetzke@kernkonzept.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240902112519.00005b67@huawei.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a01:4f8:1c1c:b490::2;
+ envelope-from=jan.kloetzke@kernkonzept.com; helo=mx.kernkonzept.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,24 +70,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 02, 2024 at 11:25:19AM +0100, Alireza Sanaee wrote:
-> 
-> Hi Zhao,
-> 
-> Yes, please keep me CCed. 
-> 
-> One thing that I noticed, sometimes, since you were going down the
-> Intel path, some variables couldn't be NULL. But when I was gonna go
-> down to ARM path, I faced some scenarios where I ended up with
-> some uninit vars which is still OK but could have been avoided.
+Level triggered interrupts are pending when either the interrupt line
+is asserted or the interrupt was made pending by a GICD_ISPENDRn write.
+Making a level triggered interrupt pending by software persists until
+either the interrupt is acknowledged or cleared by writing
+GICD_ICPENDRn. As long as the interrupt line is asserted, the interrupt
+is pending in any case.
 
-Ah I didn't get your point very clearly. Could you please figure out
-those places on my patches? Then I can fix them in my next version. :)
+This logic is transparently implemented in gic_test_pending(). The
+function combines the "pending" irq_state flag (used for edge triggered
+interrupts and software requests) and the line status (tracked in the
+"level" field). Now, writing GICD_ISENABLERn incorrectly set the
+pending flag if the line of a level triggered interrupt was asserted.
+This keeps the interrupt pending even if the line is de-asserted after
+some time.
 
-Thanks,
-Zhao
+Fix this by simply removing the code. The pending status is fully
+handled by gic_test_pending() and does not need any special treatment
+when enabling the level interrupt.
 
-> Looking forward to the next revision.
-> 
-> Alireza
+Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+---
+ hw/intc/arm_gic.c | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 806832439b..10fc9bfd14 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -1248,9 +1248,6 @@ static void gic_dist_writeb(void *opaque, hwaddr offset,
+ 
+         for (i = 0; i < 8; i++) {
+             if (value & (1 << i)) {
+-                int mask =
+-                    (irq < GIC_INTERNAL) ? (1 << cpu)
+-                                         : GIC_DIST_TARGET(irq + i);
+                 int cm = (irq < GIC_INTERNAL) ? (1 << cpu) : ALL_CPU_MASK;
+ 
+                 if (s->security_extn && !attrs.secure &&
+@@ -1263,13 +1260,6 @@ static void gic_dist_writeb(void *opaque, hwaddr offset,
+                     trace_gic_enable_irq(irq + i);
+                 }
+                 GIC_DIST_SET_ENABLED(irq + i, cm);
+-                /* If a raised level triggered IRQ enabled then mark
+-                   is as pending.  */
+-                if (GIC_DIST_TEST_LEVEL(irq + i, mask)
+-                        && !GIC_DIST_TEST_EDGE_TRIGGER(irq + i)) {
+-                    DPRINTF("Set %d pending mask %x\n", irq + i, mask);
+-                    GIC_DIST_SET_PENDING(irq + i, mask);
+-                }
+             }
+         }
+     } else if (offset < 0x200) {
+-- 
+2.39.2
+
 
