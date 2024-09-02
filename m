@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DD60CD13CF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 18:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B89CCD13CF
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 19:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slCGH-0001f6-9r; Mon, 02 Sep 2024 14:58:49 -0400
+	id 1slCtB-0002M4-IE; Mon, 02 Sep 2024 15:39:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1slCGF-0001W3-62
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 14:58:47 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slCtA-0002Ks-0J
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 15:39:00 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1slCGD-0000al-Jz
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 14:58:46 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-58ef19aa69dso4153936a12.3
- for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 11:58:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slCt8-00058B-A7
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 15:38:59 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42c7a49152aso24873175e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 12:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725303524; x=1725908324; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fy8AbH05dPNdEMcmHsRkfyXz++nIDhf2xqP8PIzCBLY=;
- b=Jr5ImMw9kPunEXRUrGF0AzCLNsjCghTmWrG17fd2Kv2CBtnHVVapLWCvUVpcxT0WDA
- Cihf7soPXaAicUFAlEO4IiGUvX1saIX3GYNcTwsvl81407GxOnaBOxH/kCottS1d8Hmi
- e6/hbNTqsgeuf5BDEnUzpkdrwOayKcOaphKuZUw9uWVRE+NMAsyuw2TulRy9Czozo4BA
- b5O/QxVmQjLPS3/FYd4iqryqq43Ih7z+1DON8cxE/5q/XT1Zxm0OrkioO1x2HCNxrZnJ
- dZ9/V4zFS9xAuS3cSTefawurAxwT1bGbz2pdi7sV7J/Fw+Km4ZhhJa9MMQYNIxLAlOYE
- +hqQ==
+ d=linaro.org; s=google; t=1725305936; x=1725910736; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AFMPcbPdmswI/B5zFybuc3j30wz6uVogtZxVdmXH7yw=;
+ b=uL9ML+oqOyDZjQW/2E1vR2+tXpf3ApiHZI0kHnK7OtshVS+OujImWfRhOXLMtsAsjJ
+ wwwVRqqDgSfJjf8tRab2pB5w6a6DSTWY0l6M+hADhf51mZy8gsm6TRMo9GBsIkDOxgC0
+ /KnNzaQVNk+0XioidPMrvsVYRbI6VO2durdAB9A1iMTlOhLG/hhfAAeXAiu5xBANs48h
+ fBZQ8YDN2HtDDRxJUDIZVizhsxPEJXt/QJvM9Vt2hyX57Bur73xxKcT81diD9rx1n8WW
+ fWEODgeLO2SUY4PMq6PoMrzmMZoP7xK/qivc0dBahVY+Frn+JxMAOl+GJPZtH1ZD2mRJ
+ 3zrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725303524; x=1725908324;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fy8AbH05dPNdEMcmHsRkfyXz++nIDhf2xqP8PIzCBLY=;
- b=sgv/I5rPDKZ1SfGeGqaT/t2/50kKLOvC+xeBd+K4MC1YBZP6otX9N9zYCK/JWbaVDs
- hAkUNhaPd65GPKY3++o0pRsdVgC/a9BwIzgtmFdX00nXQyQG4U8oYBBdCuP8X6WKmCF6
- 5C9cWDtQlZ5gHLHLH+gx1ZtGDvZrRm4hnL4zP6lp056yBT+kIW8iNcL9qPtMyRz3noQo
- MCVIZxCSXPSnsn7O2oQZrOSSSRHUqvqo8BRM5rVxtQTmAUoXI15rMnDdy1EdYEo7k/9Q
- 7XK+uuAVBNeU0jX9p91oVurevF9rR67ZXeIK5wRLQlOfwbC37wA5Lt/7UiuD0sb3sQzl
- sDMg==
-X-Gm-Message-State: AOJu0YympV3ryqdJnauG/B4IQiIa/oES4K2aoCgpJjQ1idyH+jAusDuw
- pAHEu8W/+JOjLedZZS8Gs4/8eCw6IDRqqx2dw3vCh4Z4bYsKISfirjzCQbUolJc=
-X-Google-Smtp-Source: AGHT+IGFo/yaUHtsBpYH1wbm2cG+0DGxHY3A2xVeRAHW+1OU4RkFVCvxqMiKlGxChydmJGaVvy7i1w==
-X-Received: by 2002:a05:6402:440c:b0:5be:fdc0:e704 with SMTP id
- 4fb4d7f45d1cf-5c24235c696mr7054986a12.10.1725303523324; 
- Mon, 02 Sep 2024 11:58:43 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c226c6a2fdsm5507963a12.13.2024.09.02.11.58.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Sep 2024 11:58:42 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 199075F835;
- Mon,  2 Sep 2024 19:58:42 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH] contrib/plugins/Makefile: Add a 'distclean' target
-In-Reply-To: <20240902154749.73876-1-thuth@redhat.com> (Thomas Huth's message
- of "Mon, 2 Sep 2024 17:47:49 +0200")
-References: <20240902154749.73876-1-thuth@redhat.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 02 Sep 2024 19:58:42 +0100
-Message-ID: <87o755evbx.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1725305936; x=1725910736;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AFMPcbPdmswI/B5zFybuc3j30wz6uVogtZxVdmXH7yw=;
+ b=TrtSrJlaSovWIOgKNYYcL7qA1mLWIUHyUY+7hqmSRMKjKM7nmaRS7JHcpC/bIpkaX/
+ lLNzCd0SHgW+9uFYQpgDYEvSzCCyD3Rm95IhWjOg8e85mfjvz9YwNwZGuA8eEId8Hjgs
+ Ovso25daZ7SbliSFpg1ec+llhy4SexhSv+rRfZ54gB/sVb3N9p924CssrhTUKHnBOyrG
+ DDsBNXMp7cHobmNSJkNpjPA+DqdLKvvupQ5PeFTrxoAPGq9wl6yUfM/4LngEnTHHBDA0
+ vQIlozoaS3i1lVIz4Jx7p6UjliJwkyTRsFLMAZhdHcOO4sLQMJWwLvE93kVsSAkmfuR6
+ d7yQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVoMvrO724cK0tKEIU9qX/+nojwgGsBMMEc/hYIOyUTSYRaRt14s3GUBXHG0ekZz1uptJJb9gfRXlg@nongnu.org
+X-Gm-Message-State: AOJu0Yzmc+8ndPQvLYeKk4HVZwDjZZz9i40ECi+8rZkQEjiqfistG/YK
+ GWWnZRn5tn3TgrFkQkKd7BsIHxAJKXU02e8KbXE1YkitxmdpFFVH/R/760wfVGY=
+X-Google-Smtp-Source: AGHT+IHR6qspJEiqZ8IH1L0GkCh/8v7ecCjRiboYY8B4MlsCNCNceikjis674CXtUjzKt397LEu6dw==
+X-Received: by 2002:a05:6000:c8e:b0:367:9903:a91 with SMTP id
+ ffacd0b85a97d-3749b526808mr12341097f8f.11.1725305936096; 
+ Mon, 02 Sep 2024 12:38:56 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3749efb15b8sm12187072f8f.105.2024.09.02.12.38.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Sep 2024 12:38:55 -0700 (PDT)
+Message-ID: <294a5480-d871-41e2-8e08-c1067f45d454@linaro.org>
+Date: Mon, 2 Sep 2024 21:38:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return value
+ == -1
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240830111451.3799490-1-cleger@rivosinc.com>
+ <20240830111451.3799490-3-cleger@rivosinc.com>
+ <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
+ <dd28ea4f-67eb-4c42-84d2-24956cde7896@rivosinc.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <dd28ea4f-67eb-4c42-84d2-24956cde7896@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,19 +102,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On 30/8/24 13:57, Clément Léger wrote:
+> On 30/08/2024 13:31, Michael Tokarev wrote:
+>> 30.08.2024 14:14, Clément Léger wrote:
+>>> On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can return
+>>> -1. In that case we should fallback to using the OPEN_MAX define.
+>>> According to "man sysconf", the OPEN_MAX define should be present and
+>>> provided by either unistd.h and/or limits.h so include them for that
+>>> purpose. For other OSes, just assume a maximum of 1024 files descriptors
+>>> as a fallback.
+>>>
+>>> Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-
+>>> posix")
+>>> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+>>
+>> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+>>
+>>> @@ -928,6 +933,13 @@ static void qemu_close_all_open_fd_fallback(const
+>>> int *skip, unsigned int nskip,
+>>>    void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+>>>    {
+>>>        int open_max = sysconf(_SC_OPEN_MAX);
+>>> +    if (open_max == -1) {
+>>> +#ifdef CONFIG_DARWIN
+>>> +        open_max = OPEN_MAX;
 
-> Running "make distclean" in the build tree currently fails since this
-> tries to run the "distclean" target in the contrib/plugins/ folder, too,
-> but the Makefile there is missing this target. Thus add 'distclean' there
-> to fix this issue.
->
-> And to avoid regressions with "make distclean", add this command to one
-> of the build jobs, too.
+Missing errno check.
 
-Queued to plugins/next, thanks.
+>>> +#else
+>>> +        open_max = 1024;
+>>> +#endif
+>>
+>> BTW, Can we PLEASE cap this to 1024 in all cases? :)
+>> (unrelated to this change but still).
+> 
+> Hi Michael,
+> 
+> Do you mean for all OSes or always using 1024 rather than using the
+> sysconf returned value ?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Alternatively add:
+
+   long qemu_sysconf(int name, long unsupported_default);
+
+which returns value, unsupported_default if not supported, or -1.
+
+> 
+> In any case, the code now uses close_range() or /proc/self/fd and is
+> handling that efficiently.
+> 
+> Thanks,
+> 
+> Clément
+> 
+>>
+>> /mjt
+> 
+> 
+
 
