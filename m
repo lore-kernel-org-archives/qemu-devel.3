@@ -4,54 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7FDCD13CF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 20:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E61FCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Sep 2024 21:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slDis-0001Cc-6i; Mon, 02 Sep 2024 16:32:26 -0400
+	id 1slEkw-0003gP-4G; Mon, 02 Sep 2024 17:38:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1slDiq-0001Ag-QD; Mon, 02 Sep 2024 16:32:24 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1slEkr-0003fp-J5
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 17:38:33 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1slDin-0001Wt-KO; Mon, 02 Sep 2024 16:32:24 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WyL0n6Bc8z6K5n5;
- Tue,  3 Sep 2024 04:27:53 +0800 (CST)
-Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
- by mail.maildlp.com (Postfix) with ESMTPS id E221B14058E;
- Tue,  3 Sep 2024 04:32:12 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.78.245) by
- lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 2 Sep 2024 21:32:12 +0100
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <linuxarm@huawei.com>, <peter.maydell@linaro.org>,
- <richard.henderson@linaro.org>, <shameerali.kolothum.thodi@huawei.com>,
- <Jonathan.Cameron@Huawei.com>, <alex.bennee@linaro.org>, <philmd@linaro.org>, 
- <jiangkunkun@huawei.com>
-Subject: [PATCH v3] target/arm/tcg: refine cache descriptions with a wrapper
-Date: Mon, 2 Sep 2024 21:32:11 +0100
-Message-ID: <20240902203211.270-1-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1slEkp-0007r0-UC
+ for qemu-devel@nongnu.org; Mon, 02 Sep 2024 17:38:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=IHF8QA3Jkd4+btstC28ShQHVtDlsS4RsqKVOSDbRhMc=; b=zb5/WcBaShJktANAh6ogQGb+QU
+ KMmY/UarGi/lKB/oL68vMsqbR5thQsQY51KqSDjBBsG71uh332RjgSyxAXSf8tokJtsFfM3Z1nL6b
+ gMXWGn6JEBguQs7Ac94qoRXbX8wxrzAaz5Jr/f8+YxIgQUxY6fqkvFUzH1zCKpJZOOuIvy9coIni1
+ ltzMCHnwlItOelqr9D1hj7oMB/ColX6xELVS4nf36ReQeS5N8HR0u70TVbc4/BNmqDOHuwNBK5TQk
+ c2aDsFYzovMd5SssUO074mjKhKwzbHHWuMRagB5/pfbyyGoa1P28vtgqqMQ1ykagJILx44IHc1Qru
+ FM42Q56rRcXCtElUU98BHnMrslBIcCBf+UZHoM+YMMkACzoNc5Mmi9KM9IR/1pvarJBcH+TU+w2yp
+ Z6vdbT9zgjj+hP8LCymyFH/lPMZ8wvcnhCmpsUmpPIQ+52Cyw/+hOwyFIEYrXf8PSEkLvTrw3Mj/T
+ P64ccgk/Hv7iZBMc8YlxuvDaRWG3Br9UQkOySSoJAzbG2Mrg4mml7x9QrmOKeVhPfTKrWHPlsU+13
+ IoCFRUaVng4ZBHZk0h2eDNSLo9KxtO2O/+Y5YR3LNHM1rHDkYMboK29wAG6aUsqVn79ZeUR7aJlhG
+ 30jUAdbR9Gi35xLXTMujWvdHvY2wq/qbVYh5MWW9g=;
+Received: from [2a00:23c4:8bb4:4000:fb99:dbc7:e0ba:aaf]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1slEkQ-000CDb-Ih; Mon, 02 Sep 2024 22:38:10 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: chauser@pullman.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org
+Date: Mon,  2 Sep 2024 22:38:16 +0100
+Message-Id: <20240902213816.89071-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.78.245]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- lhrpeml500006.china.huawei.com (7.191.161.198)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:fb99:dbc7:e0ba:aaf
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH] escc: convert Sun mouse to use QemuInputHandler
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,329 +73,177 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch allows for easier manipulation of the cache description
-register, CCSIDR. Which is helpful for testing as well. Currently,
-numbers get hard-coded and might be prone to errors.
+Update the Sun mouse implementation to use QemuInputHandler instead of the
+legacy qemu_add_mouse_event_handler() function.
 
-Therefore, this patch adds a wrapper for different types of CPUs
-available in tcg to decribe caches. One function `make_ccsidr` supports
-two cases by carrying a parameter as FORMAT that can be LEGACY and
-CCIDX which determines the specification of the register.
+Note that this conversion adds extra sunmouse_* members to ESCCChannelState
+but they are not added to the migration stream (similar to the Sun keyboard
+members). If this were desired in future, the Sun devices should be split
+into separate devices and added to the migration stream there instead.
 
-For CCSIDR register, 32 bit version follows specification [1].
-Conversely, 64 bit version follows specification [2].
-
-Changes from v2 [3] -> v3:
-
-1) add only one function instead of ccsidr32 and ccsidr64
-2) use deposit32 and deposit64 in ccsidr function
-
-[1] B4.1.19, ARM Architecture Reference Manual ARMv7-A and ARMv7-R
-edition, https://developer.arm.com/documentation/ddi0406
-[2] D23.2.29, ARM Architecture Reference Manual for A-profile Architecture,
-https://developer.arm.com/documentation/ddi0487/latest/
-[3] https://lore.kernel.org/qemu-devel/20240830184713.224-1-alireza.sanaee@huawei.com/
-
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
 ---
- target/arm/cpu-features.h |  50 ++++++++++++++++++
- target/arm/cpu64.c        |  19 ++++---
- target/arm/tcg/cpu64.c    | 108 +++++++++++++++++++-------------------
- 3 files changed, 117 insertions(+), 60 deletions(-)
+ hw/char/escc.c         | 79 ++++++++++++++++++++++++++++++------------
+ include/hw/char/escc.h |  3 ++
+ roms/seabios           |  2 +-
+ 3 files changed, 60 insertions(+), 24 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index c59ca104fe..ef40b0dfdc 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1022,6 +1022,56 @@ static inline bool isar_feature_any_evt(const ARMISARegisters *id)
-     return isar_feature_aa64_evt(id) || isar_feature_aa32_evt(id);
+diff --git a/hw/char/escc.c b/hw/char/escc.c
+index d450d70eda..6d4e3e3350 100644
+--- a/hw/char/escc.c
++++ b/hw/char/escc.c
+@@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
+     s->rxint = s->txint = 0;
+     s->rxint_under_svc = s->txint_under_svc = 0;
+     s->e0_mode = s->led_mode = s->caps_lock_mode = s->num_lock_mode = 0;
++    s->sunmouse_dx = s->sunmouse_dy = s->sunmouse_buttons = 0;
+     clear_queue(s);
  }
  
-+typedef enum {
-+    CCSIDR_FORMAT_LEGACY,
-+    CCSIDR_FORMAT_CCIDX,
-+} CCSIDRFormat;
-+
-+static inline uint64_t make_ccsidr(CCSIDRFormat format, unsigned assoc,
-+                                   unsigned linesize, unsigned cachesize,
-+                                   uint8_t flags)
-+{
-+    unsigned lg_linesize = ctz32(linesize);
-+    unsigned sets;
-+    uint32_t ccsidr32 = 0;
-+    uint64_t ccsidr64 = 0;
-+
-+    assert(assoc != 0);
-+    assert(is_power_of_2(linesize));
-+    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
-+
-+    /* sets * associativity * linesize == cachesize. */
-+    sets = cachesize / (assoc * linesize);
-+    assert(cachesize % (assoc * linesize) == 0);
-+
-+    if (format == CCSIDR_FORMAT_LEGACY) {
-+        /*
-+         * The 32-bit CCSIDR format is:
-+         *   [27:13] number of sets - 1
-+         *   [12:3]  associativity - 1
-+         *   [2:0]   log2(linesize) - 4
-+         *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
-+         */
-+        ccsidr32 = deposit32(ccsidr32, 28,  4, flags);
-+        ccsidr32 = deposit32(ccsidr32, 13, 15, sets - 1);
-+        ccsidr32 = deposit32(ccsidr32,  3, 10, assoc - 1);
-+        ccsidr32 = deposit32(ccsidr32,  0,  3, lg_linesize - 4);
-+        return (uint64_t)ccsidr32;
-+    } else {
-+        /*
-+         * The 64-bit CCSIDR_EL1 format is:
-+         *   [55:32] number of sets - 1
-+         *   [23:3]  associativity - 1
-+         *   [2:0]   log2(linesize) - 4
-+         *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
-+         */
-+        ccsidr64 = deposit64(ccsidr64, 32, 24, sets - 1);
-+        ccsidr64 = deposit64(ccsidr64,  3, 21, assoc - 1);
-+        ccsidr64 = deposit64(ccsidr64,  0,  3, lg_linesize - 4);
-+        return ccsidr64;
-+    }
-+}
-+
- /*
-  * Forward to the above feature tests given an ARMCPU pointer.
-  */
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 262a1d6c0b..458d1cee01 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -23,6 +23,7 @@
- #include "cpu.h"
- #include "cpregs.h"
- #include "qemu/module.h"
-+#include "qemu/units.h"
- #include "sysemu/kvm.h"
- #include "sysemu/hvf.h"
- #include "sysemu/qtest.h"
-@@ -642,9 +643,12 @@ static void aarch64_a57_initfn(Object *obj)
-     cpu->isar.dbgdevid1 = 0x2;
-     cpu->isar.reset_pmcr_el0 = 0x41013000;
-     cpu->clidr = 0x0a200023;
--    cpu->ccsidr[0] = 0x701fe00a; /* 32KB L1 dcache */
--    cpu->ccsidr[1] = 0x201fe012; /* 48KB L1 icache */
--    cpu->ccsidr[2] = 0x70ffe07a; /* 2048KB L2 cache */
-+    /* 32KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
-+    /* 48KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
-+    /* 2048KB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB, 7);
-     cpu->dcz_blocksize = 4; /* 64 bytes */
-     cpu->gic_num_lrs = 4;
-     cpu->gic_vpribits = 5;
-@@ -700,9 +704,12 @@ static void aarch64_a53_initfn(Object *obj)
-     cpu->isar.dbgdevid1 = 0x1;
-     cpu->isar.reset_pmcr_el0 = 0x41033000;
-     cpu->clidr = 0x0a200023;
--    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
--    cpu->ccsidr[1] = 0x201fe00a; /* 32KB L1 icache */
--    cpu->ccsidr[2] = 0x707fe07a; /* 1024KB L2 cache */
-+    /* 32KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
-+    /* 32KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 1, 64, 32 * KiB, 2);
-+    /* 1024KB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 1 * MiB, 7);
-     cpu->dcz_blocksize = 4; /* 64 bytes */
-     cpu->gic_num_lrs = 4;
-     cpu->gic_vpribits = 5;
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index fe232eb306..904a7e90b4 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -29,32 +29,6 @@
- #include "cpu-features.h"
- #include "cpregs.h"
+@@ -952,53 +953,85 @@ static void handle_kbd_command(ESCCChannelState *s, int val)
+     }
+ }
  
--static uint64_t make_ccsidr64(unsigned assoc, unsigned linesize,
--                              unsigned cachesize)
--{
--    unsigned lg_linesize = ctz32(linesize);
--    unsigned sets;
--
--    /*
--     * The 64-bit CCSIDR_EL1 format is:
--     *   [55:32] number of sets - 1
--     *   [23:3]  associativity - 1
--     *   [2:0]   log2(linesize) - 4
--     *           so 0 == 16 bytes, 1 == 32 bytes, 2 == 64 bytes, etc
--     */
--    assert(assoc != 0);
--    assert(is_power_of_2(linesize));
--    assert(lg_linesize >= 4 && lg_linesize <= 7 + 4);
--
--    /* sets * associativity * linesize == cachesize. */
--    sets = cachesize / (assoc * linesize);
--    assert(cachesize % (assoc * linesize) == 0);
--
--    return ((uint64_t)(sets - 1) << 32)
--         | ((assoc - 1) << 3)
--         | (lg_linesize - 4);
--}
--
- static void aarch64_a35_initfn(Object *obj)
+-static void sunmouse_event(void *opaque,
+-                               int dx, int dy, int dz, int buttons_state)
++static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
++                                  InputEvent *evt)
  {
-     ARMCPU *cpu = ARM_CPU(obj);
-@@ -106,9 +80,12 @@ static void aarch64_a35_initfn(Object *obj)
-     cpu->isar.reset_pmcr_el0 = 0x410a3000;
+-    ESCCChannelState *s = opaque;
+-    int ch;
++    ESCCChannelState *s = (ESCCChannelState *)dev;
++    InputMoveEvent *move;
++    InputBtnEvent *btn;
++    static const int bmap[INPUT_BUTTON__MAX] = {
++        [INPUT_BUTTON_LEFT]   = 0x4,
++        [INPUT_BUTTON_MIDDLE] = 0x2,
++        [INPUT_BUTTON_RIGHT]  = 0x1,
++        [INPUT_BUTTON_SIDE]   = 0x0,
++        [INPUT_BUTTON_EXTRA]  = 0x0,
++    };
++
++    switch (evt->type) {
++    case INPUT_EVENT_KIND_REL:
++        move = evt->u.rel.data;
++        if (move->axis == INPUT_AXIS_X) {
++            s->sunmouse_dx += move->value;
++        } else if (move->axis == INPUT_AXIS_Y) {
++            s->sunmouse_dy -= move->value;
++        }
++        break;
  
-     /* From B2.29 Cache ID registers */
--    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
--    cpu->ccsidr[1] = 0x201fe00a; /* 32KB L1 icache */
--    cpu->ccsidr[2] = 0x703fe03a; /* 512KB L2 cache */
-+    /* 32KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
-+    /* 32KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 2);
-+    /* 512KB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 512 * KiB, 7);
+-    trace_escc_sunmouse_event(dx, dy, buttons_state);
+-    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
++    case INPUT_EVENT_KIND_BTN:
++        btn = evt->u.btn.data;
++        if (btn->down) {
++            s->sunmouse_buttons |= bmap[btn->button];
++        } else {
++            s->sunmouse_buttons &= ~bmap[btn->button];
++        }
++        break;
  
-     /* From B3.5 VGIC Type register */
-     cpu->gic_num_lrs = 4;
-@@ -272,9 +249,12 @@ static void aarch64_a55_initfn(Object *obj)
-     cpu->revidr = 0;
+-    if (buttons_state & MOUSE_EVENT_LBUTTON) {
+-        ch ^= 0x4;
+-    }
+-    if (buttons_state & MOUSE_EVENT_MBUTTON) {
+-        ch ^= 0x2;
+-    }
+-    if (buttons_state & MOUSE_EVENT_RBUTTON) {
+-        ch ^= 0x1;
++    default:
++        /* keep gcc happy */
++        break;
+     }
++}
  
-     /* From B2.23 CCSIDR_EL1 */
--    cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
--    cpu->ccsidr[1] = 0x200fe01a; /* 32KB L1 icache */
--    cpu->ccsidr[2] = 0x703fe07a; /* 512KB L2 cache */
-+    /* 32KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
-+    /* 32KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 2);
-+    /* 512KB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 512 * KiB, 7);
+-    put_queue(s, ch);
++static void sunmouse_sync(DeviceState *dev)
++{
++    ESCCChannelState *s = (ESCCChannelState *)dev;
++    int ch;
  
-     /* From B2.96 SCTLR_EL3 */
-     cpu->reset_sctlr = 0x30c50838;
-@@ -338,9 +318,12 @@ static void aarch64_a72_initfn(Object *obj)
-     cpu->isar.dbgdevid1 = 0x2;
-     cpu->isar.reset_pmcr_el0 = 0x41023000;
-     cpu->clidr = 0x0a200023;
--    cpu->ccsidr[0] = 0x701fe00a; /* 32KB L1 dcache */
--    cpu->ccsidr[1] = 0x201fe012; /* 48KB L1 icache */
--    cpu->ccsidr[2] = 0x707fe07a; /* 1MB L2 cache */
-+    /* 32KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB, 7);
-+    /* 48KB L1 dcache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
-+    /* 1MB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 1 * MiB, 7);
-     cpu->dcz_blocksize = 4; /* 64 bytes */
-     cpu->gic_num_lrs = 4;
-     cpu->gic_vpribits = 5;
-@@ -397,9 +380,12 @@ static void aarch64_a76_initfn(Object *obj)
-     cpu->revidr = 0;
+-    ch = dx;
++    trace_escc_sunmouse_event(s->sunmouse_dx, s->sunmouse_dy, 0);
++    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
++    ch ^= s->sunmouse_buttons;
++    put_queue(s, ch);
  
-     /* From B2.18 CCSIDR_EL1 */
--    cpu->ccsidr[0] = 0x701fe01a; /* 64KB L1 dcache */
--    cpu->ccsidr[1] = 0x201fe01a; /* 64KB L1 icache */
--    cpu->ccsidr[2] = 0x707fe03a; /* 512KB L2 cache */
-+    /* 64KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
-+    /* 64KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 2);
-+    /* 512KB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 512 * KiB, 7);
- 
-     /* From B2.93 SCTLR_EL3 */
-     cpu->reset_sctlr = 0x30c50838;
-@@ -449,9 +435,12 @@ static void aarch64_a64fx_initfn(Object *obj)
-     cpu->isar.id_aa64isar1 = 0x0000000000010001;
-     cpu->isar.id_aa64zfr0 = 0x0000000000000000;
-     cpu->clidr = 0x0000000080000023;
--    cpu->ccsidr[0] = 0x7007e01c; /* 64KB L1 dcache */
--    cpu->ccsidr[1] = 0x2007e01c; /* 64KB L1 icache */
--    cpu->ccsidr[2] = 0x70ffe07c; /* 8MB L2 cache */
-+    /* 64KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 256, 64 * KiB, 7);
-+    /* 64KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 256, 64 * KiB, 2);
-+    /* 8MB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 256, 8 * MiB, 7);
-     cpu->dcz_blocksize = 6; /* 256 bytes */
-     cpu->gic_num_lrs = 4;
-     cpu->gic_vpribits = 5;
-@@ -637,9 +626,12 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
-     cpu->revidr = 0;
- 
-     /* From B2.23 CCSIDR_EL1 */
--    cpu->ccsidr[0] = 0x701fe01a; /* 64KB L1 dcache */
--    cpu->ccsidr[1] = 0x201fe01a; /* 64KB L1 icache */
--    cpu->ccsidr[2] = 0x70ffe03a; /* 1MB L2 cache */
-+    /* 64KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
-+    /* 64KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 2);
-+    /* 1MB L2 dcache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 1 * MiB, 7);
- 
-     /* From B2.98 SCTLR_EL3 */
-     cpu->reset_sctlr = 0x30c50838;
-@@ -721,9 +713,12 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
-      * L2: 8-way set associative, 64 byte line size, either 512K or 1MB.
-      * L3: No L3 (this matches the CLIDR_EL1 value).
-      */
--    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB); /* L1 dcache */
--    cpu->ccsidr[1] = cpu->ccsidr[0];                 /* L1 icache */
--    cpu->ccsidr[2] = make_ccsidr64(8, 64, 1 * MiB);  /* L2 cache */
-+    /* 64KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
-+    /* 64KB L1 icache */
-+    cpu->ccsidr[1] = cpu->ccsidr[0];
-+    /* 1MB L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 8, 64, 1 * MiB, 0);
- 
-     /* From 3.2.115 SCTLR_EL3 */
-     cpu->reset_sctlr = 0x30c50838;
-@@ -959,9 +954,12 @@ static void aarch64_a710_initfn(Object *obj)
-      * L1: 4-way set associative 64-byte line size, total either 32K or 64K.
-      * L2: 8-way set associative 64 byte line size, total either 256K or 512K.
-      */
--    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB);   /* L1 dcache */
--    cpu->ccsidr[1] = cpu->ccsidr[0];                   /* L1 icache */
--    cpu->ccsidr[2] = make_ccsidr64(8, 64, 512 * KiB);  /* L2 cache */
-+    /* L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
-+    /* L1 icache */
-+    cpu->ccsidr[1] = cpu->ccsidr[0];
-+    /* L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 8, 64, 512 * KiB, 0);
- 
-     /* FIXME: Not documented -- copied from neoverse-v1 */
-     cpu->reset_sctlr = 0x30c50838;
-@@ -1057,10 +1055,12 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
-      * L1: 4-way set associative 64-byte line size, total 64K.
-      * L2: 8-way set associative 64 byte line size, total either 512K or 1024K.
-      */
--    cpu->ccsidr[0] = make_ccsidr64(4, 64, 64 * KiB);   /* L1 dcache */
--    cpu->ccsidr[1] = cpu->ccsidr[0];                   /* L1 icache */
--    cpu->ccsidr[2] = make_ccsidr64(8, 64, 512 * KiB);  /* L2 cache */
++    ch = s->sunmouse_dx;
+     if (ch > 127) {
+         ch = 127;
+     } else if (ch < -127) {
+         ch = -127;
+     }
 -
-+    /* L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
-+    /* L1 icache */
-+    cpu->ccsidr[1] = cpu->ccsidr[0];
-+    /* L2 cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 8, 64, 512 * KiB, 0);
-     /* FIXME: Not documented -- copied from neoverse-v1 */
-     cpu->reset_sctlr = 0x30c50838;
+     put_queue(s, ch & 0xff);
++    s->sunmouse_dx = 0;
  
+-    ch = -dy;
+-
++    ch = s->sunmouse_dy;
+     if (ch > 127) {
+         ch = 127;
+     } else if (ch < -127) {
+         ch = -127;
+     }
+-
+     put_queue(s, ch & 0xff);
++    s->sunmouse_dy = 0;
+ 
+     /* MSC protocol specifies two extra motion bytes */
+-
+     put_queue(s, 0);
+     put_queue(s, 0);
+ }
+ 
++static const QemuInputHandler sunmouse_handler = {
++    .name  = "QEMU Sun Mouse",
++    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
++    .event = sunmouse_handle_event,
++    .sync  = sunmouse_sync,
++};
++
+ static void escc_init1(Object *obj)
+ {
+     ESCCState *s = ESCC(obj);
+@@ -1036,8 +1069,8 @@ static void escc_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     if (s->chn[0].type == escc_mouse) {
+-        qemu_add_mouse_event_handler(sunmouse_event, &s->chn[0], 0,
+-                                     "QEMU Sun Mouse");
++        s->chn[0].hs = qemu_input_handler_register((DeviceState *)(&s->chn[0]),
++                                                   &sunmouse_handler);
+     }
+     if (s->chn[1].type == escc_kbd) {
+         s->chn[1].hs = qemu_input_handler_register((DeviceState *)(&s->chn[1]),
+diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
+index 5669a5b811..8c4c6a7730 100644
+--- a/include/hw/char/escc.h
++++ b/include/hw/char/escc.h
+@@ -46,6 +46,9 @@ typedef struct ESCCChannelState {
+     uint8_t rx, tx;
+     QemuInputHandlerState *hs;
+     char *sunkbd_layout;
++    int sunmouse_dx;
++    int sunmouse_dy;
++    int sunmouse_buttons;
+ } ESCCChannelState;
+ 
+ struct ESCCState {
+diff --git a/roms/seabios b/roms/seabios
+index a6ed6b701f..7d0c606870 160000
+--- a/roms/seabios
++++ b/roms/seabios
+@@ -1 +1 @@
+-Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
++Subproject commit 7d0c6068703eae9f2498be0c900ab95b25b4f07a
 -- 
-2.34.1
+2.39.2
 
 
