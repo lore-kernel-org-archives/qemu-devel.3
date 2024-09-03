@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FBBCD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C8D8CD379F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slWAp-000154-Rt; Tue, 03 Sep 2024 12:14:32 -0400
+	id 1slW4p-0005m7-0p; Tue, 03 Sep 2024 12:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWAa-0008NW-Fg
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:14:17 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1slW4l-0005VT-EJ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:15 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWAW-0003ju-PP
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:14:15 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42c2e50ec13so30067105e9.0
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:14:12 -0700 (PDT)
+ id 1slW4h-0002ix-Nn
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:14 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-42bb81e795bso45456515e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725380051; x=1725984851; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MhqQa99Ggu1rFojrVVBskbQrh44U6gQnOde+YvFWUHE=;
- b=uRI/0m3mWvWAsy1aMStKjBVtlRiHr9UopO8NMfzJ3+5PME2SG/0PcVIydwkhky47cn
- MNRhT7MUXSQ4OyCKLGPoszTTwaS9tK+Wgqb5YNAGuALjKSF+wiyhGpMeC9geQylWHElQ
- 8CXw9N8fm2M75/ux+1Cw8JadhFHkjsjGxCHWOnX9LKAO2I1Er2e3ahWNz1Lr5/zslyUi
- Jxyqh5GGg5UPiDim1Zf6MTeqG7VcUcsUv3RZcmlvVHjbWre53jHiiqOMM7HVwpExGoAy
- hwdPGQ0QzDOIMUynHuOeWx3GbY/ThC7lZ8jqHGrOKupuxlXPbI4N0naS2ANnpbCbsdg3
- SKzg==
+ d=linaro.org; s=google; t=1725379690; x=1725984490; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=fBVF/JugwgOMfdgy7gC72oIyysi6l06cymbWqbyXhO0=;
+ b=I/J82sytc0i0+/OOdtG1BcW/+LXPg/QJGdmx8OQZ6IHI6UfRaJFaGt2OVdEklLmyLv
+ 8h97DQplhNPOK38d8A111sgcTCZrf6zvVaKaJYIE16pIKLuWXiT3P1WzRvAEPSKYbbkn
+ HuaDafltVw+rahHKN86q+cKqaNNS7g8PUfeNteW5BushwiNthNSkIoMJ2Dpl0T43b31r
+ G/CCZEvju9d4lN+a5ZYxhSg7ypVOEpmjeYqXY0Fqen7ttyEhZKL3jzcHbqsnKBMJGyyY
+ 4XHEc40d1CZLOA9wtj+ZGhQ/1C/LHncxfKXw6+oXHo6pVViKEcUkLv8KGvUA5ROy1U7i
+ ACxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725380051; x=1725984851;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1725379690; x=1725984490;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MhqQa99Ggu1rFojrVVBskbQrh44U6gQnOde+YvFWUHE=;
- b=UtbMQojjkkhpvH3EyA48VhGSX4yI3yAZUNZXqgI9POILyFw3DeBjIBjuwyT52rLRTn
- zXIjSYJu2K25LyajNUi92a2HFtBKZQe0SeHZr2dvkGkm1loPIBIued/Gtq8AQ3Y0xBh4
- 523aIa/YCEXSE/dg+o4gl3eIP8S5El92wBy9lfaJpziXW9qiJvlnYfgIztsn601FDAWM
- tfg+PfZxMZpo3NJ6j7vcpcRNIEs4an8uWjgX+/VS5Iql23pYP9tD8iBZBzL95nU9vj4D
- mFi9p0fUnUrlDz3l6cH+dcOc9URg4HuoZgMkYjE92PvNZUF7HviZn6uonNPh21MVz4/L
- yw4Q==
-X-Gm-Message-State: AOJu0YwhPXxbwuMcCoL5A/KV4st+vgiPzUasuNF4jgdbiPO+HQv4t+8R
- YNkMMMAr2X98/8JT1jHO+7w54wlTnEz8E61VHwjQf8XIqtIUOpqk77Q/GUaIi91MYo/qkSR1j6O
- t1ne/AJpSNgPI+UZGLR9nND57mnJRGYhi5Afv7w==
-X-Google-Smtp-Source: AGHT+IHKfd2oS0R6ug7lK8hK2GjMJS/Qd91ngzP2h5GA0SSvc2NNkP+KyY/GLr6rQmvd52IWMAKjgsmNJWvStMRMIKU=
-X-Received: by 2002:a05:600c:3b9f:b0:426:6e8b:3dc5 with SMTP id
- 5b1f17b1804b1-42bbb440c8bmr117999105e9.32.1725380050837; Tue, 03 Sep 2024
- 09:14:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240903152757.17935-1-philmd@linaro.org>
-In-Reply-To: <20240903152757.17935-1-philmd@linaro.org>
+ bh=fBVF/JugwgOMfdgy7gC72oIyysi6l06cymbWqbyXhO0=;
+ b=DjCx+DJZzUD4bw+O7nxNjtbHDWlkI3S8wNq/F0nIQxup9pTZtFrU4bG9NqcCVH5z0b
+ k4Ri50Txh7wuUOT5HWwj1ejJP4TEF7tSiE7VYy3fK5yUnZ9y1fb3xVfivGyuUkxfNaFA
+ YZ45WWynZE77mZ9N1y7IxJeSF/LHlx2IqK7XHT3i5EOdpeSZBjwsDlY7bpF+tktm7hx2
+ k4XtjzWmCwXHcX9K+G/r2RAFTGyVY+ZzUbUu70Uwr2hhUZs5mL8aX8aUpblBt2S+PO3z
+ vu8sOKzpXuJVgots7m4CJ/BBzh/pEfVEBxOchsbnjx2SGp3gnH1c4wyuXb64gTGGR5J9
+ V55Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3LMZWehClwY62hlJ3zWXtzYdgrDOkocfY4mYUgGSO4oANEYdXlJVjralfybSMLGV8oFrb99pHDR4K@nongnu.org
+X-Gm-Message-State: AOJu0Yya1d6UTFXocpAOZ4+ybWxwm0IGLXqWoIyqqlEzS78c/z0GQoBh
+ oavg0PqYB4euCAs01VtxrxSfAl5TSVgNlzTXmLi3V8wAIgp/DrBmGrG9G/rgCaI=
+X-Google-Smtp-Source: AGHT+IFAQmCbeZ0S3TTLPtcGu8G2kZNzsuJpqZSmLuq65lF7Z1s1RnfxUy639t5QincOddBB/LZolQ==
+X-Received: by 2002:a05:600c:3c9e:b0:426:627e:37af with SMTP id
+ 5b1f17b1804b1-42bbb10d2d5mr98667595e9.3.1725379689902; 
+ Tue, 03 Sep 2024 09:08:09 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Sep 2024 09:08:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Sep 2024 17:13:50 +0100
-Message-ID: <CAFEAcA-EquoUoNNtbwMu7tW_VDHKHVuEuAsDWBVbD8hnDocz-g@mail.gmail.com>
-Subject: Re: [PATCH] target/cris: Remove the deprecated CRIS target
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- devel@lists.libvirt.org, Rabin Vincent <rabinv@axis.com>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH for-9.2 08/53] hw/arm: Remove 'cheetah' machine
+Date: Tue,  3 Sep 2024 17:07:06 +0100
+Message-Id: <20240903160751.4100218-9-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,379 +95,467 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 16:28, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> The CRIS target is deprecated since v9.0 (commit c7bbef40234
-> "docs: mark CRIS support as deprecated").
->
-> Remove:
-> - Buildsys / CI infra
-> - User emulation
-> - System emulation (axis-dev88 machine and ETRAX devices)
-> - Tests
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> Cc: Rabin Vincent <rabinv@axis.com>
-> Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-> ---
->  MAINTAINERS                                   |   17 -
->  docs/about/deprecated.rst                     |    8 -
->  docs/about/emulation.rst                      |    4 -
->  docs/about/removed-features.rst               |    7 +
->  docs/user/main.rst                            |    4 -
->  configure                                     |    4 -
->  configs/devices/cris-softmmu/default.mak      |    4 -
->  configs/targets/cris-linux-user.mak           |    1 -
->  configs/targets/cris-softmmu.mak              |    1 -
->  meson.build                                   |    1 -
->  qapi/machine.json                             |    2 +-
->  hw/cris/boot.h                                |   16 -
->  include/disas/dis-asm.h                       |    6 -
->  include/exec/poison.h                         |    2 -
->  include/hw/cris/etraxfs.h                     |   54 -
->  include/hw/cris/etraxfs_dma.h                 |   36 -
->  include/sysemu/arch_init.h                    |    1 -
->  include/user/abitypes.h                       |    7 -
->  linux-user/cris/sockbits.h                    |    1 -
->  linux-user/cris/syscall_nr.h                  |  367 --
->  linux-user/cris/target_cpu.h                  |   45 -
->  linux-user/cris/target_elf.h                  |   14 -
->  linux-user/cris/target_errno_defs.h           |    7 -
->  linux-user/cris/target_fcntl.h                |   11 -
->  linux-user/cris/target_mman.h                 |   13 -
->  linux-user/cris/target_prctl.h                |    1 -
->  linux-user/cris/target_proc.h                 |    1 -
->  linux-user/cris/target_resource.h             |    1 -
->  linux-user/cris/target_signal.h               |    9 -
->  linux-user/cris/target_structs.h              |    1 -
->  linux-user/cris/target_syscall.h              |   46 -
->  linux-user/cris/termbits.h                    |  225 --
->  linux-user/syscall_defs.h                     |    7 +-
->  target/cris/cpu-param.h                       |   16 -
->  target/cris/cpu-qom.h                         |   32 -
->  target/cris/cpu.h                             |  286 --
->  target/cris/crisv10-decode.h                  |  112 -
->  target/cris/crisv32-decode.h                  |  133 -
->  target/cris/helper.h                          |   23 -
->  target/cris/mmu.h                             |   22 -
->  target/cris/opcode-cris.h                     |  355 --
->  tests/tcg/cris/libc/crisutils.h               |   76 -
->  tests/tcg/cris/libc/sys.h                     |   18 -
->  disas/cris.c                                  | 2863 ---------------
->  hw/char/etraxfs_ser.c                         |  267 --
->  hw/cris/axis_dev88.c                          |  351 --
->  hw/cris/boot.c                                |  102 -
->  hw/dma/etraxfs_dma.c                          |  781 ----
->  hw/intc/etraxfs_pic.c                         |  172 -
->  hw/net/etraxfs_eth.c                          |  688 ----
->  hw/timer/etraxfs_timer.c                      |  407 ---
->  linux-user/cris/cpu_loop.c                    |   95 -
->  linux-user/cris/signal.c                      |  194 -
->  linux-user/elfload.c                          |   15 -
->  linux-user/syscall.c                          |   10 +-
->  system/qemu-seccomp.c                         |    2 +-
->  target/cris/cpu.c                             |  323 --
->  target/cris/gdbstub.c                         |  127 -
->  target/cris/helper.c                          |  287 --
->  target/cris/machine.c                         |   93 -
->  target/cris/mmu.c                             |  356 --
->  target/cris/op_helper.c                       |  580 ---
->  target/cris/translate.c                       | 3252 -----------------
->  tests/qtest/machine-none-test.c               |    1 -
->  tests/tcg/cris/bare/sys.c                     |   63 -
->  tests/tcg/cris/libc/check_abs.c               |   40 -
->  tests/tcg/cris/libc/check_addc.c              |   58 -
->  tests/tcg/cris/libc/check_addcm.c             |   85 -
->  tests/tcg/cris/libc/check_addo.c              |  125 -
->  tests/tcg/cris/libc/check_addoq.c             |   44 -
->  tests/tcg/cris/libc/check_bound.c             |  142 -
->  tests/tcg/cris/libc/check_ftag.c              |   37 -
->  .../cris/libc/check_gcctorture_pr28634-1.c    |   15 -
->  .../tcg/cris/libc/check_gcctorture_pr28634.c  |   15 -
->  .../tcg/cris/libc/check_glibc_kernelversion.c |  116 -
->  tests/tcg/cris/libc/check_hello.c             |    7 -
->  tests/tcg/cris/libc/check_int64.c             |   47 -
->  tests/tcg/cris/libc/check_lz.c                |   49 -
->  tests/tcg/cris/libc/check_mapbrk.c            |   39 -
->  tests/tcg/cris/libc/check_mmap1.c             |   48 -
->  tests/tcg/cris/libc/check_mmap2.c             |   48 -
->  tests/tcg/cris/libc/check_mmap3.c             |   33 -
->  tests/tcg/cris/libc/check_moveq.c             |   51 -
->  tests/tcg/cris/libc/check_openpf1.c           |   38 -
->  tests/tcg/cris/libc/check_openpf2.c           |   16 -
->  tests/tcg/cris/libc/check_openpf3.c           |   49 -
->  tests/tcg/cris/libc/check_openpf5.c           |   56 -
->  tests/tcg/cris/libc/check_settls1.c           |   45 -
->  tests/tcg/cris/libc/check_sigalrm.c           |   26 -
->  tests/tcg/cris/libc/check_stat1.c             |   16 -
->  tests/tcg/cris/libc/check_stat2.c             |   20 -
->  tests/tcg/cris/libc/check_stat3.c             |   25 -
->  tests/tcg/cris/libc/check_stat4.c             |   27 -
->  tests/tcg/cris/libc/check_swap.c              |   76 -
->  tests/tcg/cris/libc/check_time2.c             |   18 -
->  fpu/softfloat-specialize.c.inc                |    4 +-
->  target/cris/translate_v10.c.inc               | 1262 -------
->  .gitlab-ci.d/buildtest.yml                    |    2 +-
->  .gitlab-ci.d/container-cross.yml              |    5 -
->  .gitlab-ci.d/crossbuild-template.yml          |    4 +-
->  disas/meson.build                             |    1 -
->  hw/Kconfig                                    |    1 -
->  hw/char/meson.build                           |    1 -
->  hw/cris/Kconfig                               |   11 -
->  hw/cris/meson.build                           |    5 -
->  hw/dma/meson.build                            |    1 -
->  hw/intc/meson.build                           |    1 -
->  hw/meson.build                                |    1 -
->  hw/net/meson.build                            |    1 -
->  hw/net/trace-events                           |    5 -
->  hw/timer/meson.build                          |    1 -
->  scripts/coverity-scan/COMPONENTS.md           |    3 -
->  scripts/probe-gdb-support.py                  |    1 -
->  target/Kconfig                                |    1 -
->  target/cris/Kconfig                           |    2 -
->  target/cris/meson.build                       |   17 -
->  target/meson.build                            |    1 -
->  tests/data/qobject/qdict.txt                  |    6 -
->  tests/docker/Makefile.include                 |    1 -
->  .../dockerfiles/fedora-cris-cross.docker      |   14 -
->  tests/tcg/cris/.gdbinit                       |   11 -
->  tests/tcg/cris/Makefile.target                |   62 -
->  tests/tcg/cris/README                         |    1 -
->  tests/tcg/cris/bare/check_addcv17.s           |   65 -
->  tests/tcg/cris/bare/check_addi.s              |   57 -
->  tests/tcg/cris/bare/check_addiv32.s           |   62 -
->  tests/tcg/cris/bare/check_addm.s              |   96 -
->  tests/tcg/cris/bare/check_addq.s              |   47 -
->  tests/tcg/cris/bare/check_addr.s              |   96 -
->  tests/tcg/cris/bare/check_addxc.s             |   91 -
->  tests/tcg/cris/bare/check_addxm.s             |  106 -
->  tests/tcg/cris/bare/check_addxr.s             |   96 -
->  tests/tcg/cris/bare/check_andc.s              |   80 -
->  tests/tcg/cris/bare/check_andm.s              |   90 -
->  tests/tcg/cris/bare/check_andq.s              |   46 -
->  tests/tcg/cris/bare/check_andr.s              |   95 -
->  tests/tcg/cris/bare/check_asr.s               |  230 --
->  tests/tcg/cris/bare/check_ba.s                |   93 -
->  tests/tcg/cris/bare/check_bas.s               |  102 -
->  tests/tcg/cris/bare/check_bcc.s               |  197 -
->  tests/tcg/cris/bare/check_boundc.s            |  101 -
->  tests/tcg/cris/bare/check_boundr.s            |  125 -
->  tests/tcg/cris/bare/check_btst.s              |   96 -
->  tests/tcg/cris/bare/check_clearfv32.s         |   19 -
->  tests/tcg/cris/bare/check_clrjmp1.s           |   36 -
->  tests/tcg/cris/bare/check_cmp-2.s             |   15 -
->  tests/tcg/cris/bare/check_cmpc.s              |   86 -
->  tests/tcg/cris/bare/check_cmpm.s              |   96 -
->  tests/tcg/cris/bare/check_cmpq.s              |   75 -
->  tests/tcg/cris/bare/check_cmpr.s              |  102 -
->  tests/tcg/cris/bare/check_cmpxc.s             |   92 -
->  tests/tcg/cris/bare/check_cmpxm.s             |  106 -
->  tests/tcg/cris/bare/check_dstep.s             |   42 -
->  tests/tcg/cris/bare/check_jsr.s               |   85 -
->  tests/tcg/cris/bare/check_lapc.s              |   78 -
->  tests/tcg/cris/bare/check_lsl.s               |  217 --
->  tests/tcg/cris/bare/check_lsr.s               |  218 --
->  tests/tcg/cris/bare/check_mcp.s               |   49 -
->  tests/tcg/cris/bare/check_movdelsr1.s         |   33 -
->  tests/tcg/cris/bare/check_movecr.s            |   37 -
->  tests/tcg/cris/bare/check_movei.s             |   50 -
->  tests/tcg/cris/bare/check_movemr.s            |   78 -
->  tests/tcg/cris/bare/check_movemrv32.s         |   96 -
->  tests/tcg/cris/bare/check_mover.s             |   28 -
->  tests/tcg/cris/bare/check_moverm.s            |   45 -
->  tests/tcg/cris/bare/check_movmp.s             |  131 -
->  tests/tcg/cris/bare/check_movpmv32.s          |   35 -
->  tests/tcg/cris/bare/check_movpr.s             |   28 -
->  tests/tcg/cris/bare/check_movprv32.s          |   21 -
->  tests/tcg/cris/bare/check_movscr.s            |   29 -
->  tests/tcg/cris/bare/check_movsm.s             |   44 -
->  tests/tcg/cris/bare/check_movsr.s             |   46 -
->  tests/tcg/cris/bare/check_movucr.s            |   33 -
->  tests/tcg/cris/bare/check_movum.s             |   40 -
->  tests/tcg/cris/bare/check_movur.s             |   45 -
->  tests/tcg/cris/bare/check_mulv32.s            |   51 -
->  tests/tcg/cris/bare/check_mulx.s              |  257 --
->  tests/tcg/cris/bare/check_neg.s               |  104 -
->  tests/tcg/cris/bare/check_not.s               |   31 -
->  tests/tcg/cris/bare/check_orc.s               |   71 -
->  tests/tcg/cris/bare/check_orm.s               |   75 -
->  tests/tcg/cris/bare/check_orq.s               |   41 -
->  tests/tcg/cris/bare/check_orr.s               |   84 -
->  tests/tcg/cris/bare/check_ret.s               |   25 -
->  tests/tcg/cris/bare/check_scc.s               |   95 -
->  tests/tcg/cris/bare/check_subc.s              |   87 -
->  tests/tcg/cris/bare/check_subm.s              |   96 -
->  tests/tcg/cris/bare/check_subq.s              |   52 -
->  tests/tcg/cris/bare/check_subr.s              |  102 -
->  tests/tcg/cris/bare/check_xarith.s            |   72 -
->  tests/tcg/cris/bare/crt.s                     |   13 -
->  tests/tcg/cris/bare/testutils.inc             |  117 -
->  192 files changed, 18 insertions(+), 21324 deletions(-)
->  delete mode 100644 configs/devices/cris-softmmu/default.mak
->  delete mode 100644 configs/targets/cris-linux-user.mak
->  delete mode 100644 configs/targets/cris-softmmu.mak
->  delete mode 100644 hw/cris/boot.h
->  delete mode 100644 include/hw/cris/etraxfs.h
->  delete mode 100644 include/hw/cris/etraxfs_dma.h
->  delete mode 100644 linux-user/cris/sockbits.h
->  delete mode 100644 linux-user/cris/syscall_nr.h
->  delete mode 100644 linux-user/cris/target_cpu.h
->  delete mode 100644 linux-user/cris/target_elf.h
->  delete mode 100644 linux-user/cris/target_errno_defs.h
->  delete mode 100644 linux-user/cris/target_fcntl.h
->  delete mode 100644 linux-user/cris/target_mman.h
->  delete mode 100644 linux-user/cris/target_prctl.h
->  delete mode 100644 linux-user/cris/target_proc.h
->  delete mode 100644 linux-user/cris/target_resource.h
->  delete mode 100644 linux-user/cris/target_signal.h
->  delete mode 100644 linux-user/cris/target_structs.h
->  delete mode 100644 linux-user/cris/target_syscall.h
->  delete mode 100644 linux-user/cris/termbits.h
->  delete mode 100644 target/cris/cpu-param.h
->  delete mode 100644 target/cris/cpu-qom.h
->  delete mode 100644 target/cris/cpu.h
->  delete mode 100644 target/cris/crisv10-decode.h
->  delete mode 100644 target/cris/crisv32-decode.h
->  delete mode 100644 target/cris/helper.h
->  delete mode 100644 target/cris/mmu.h
->  delete mode 100644 target/cris/opcode-cris.h
->  delete mode 100644 tests/tcg/cris/libc/crisutils.h
->  delete mode 100644 tests/tcg/cris/libc/sys.h
->  delete mode 100644 disas/cris.c
->  delete mode 100644 hw/char/etraxfs_ser.c
->  delete mode 100644 hw/cris/axis_dev88.c
->  delete mode 100644 hw/cris/boot.c
->  delete mode 100644 hw/dma/etraxfs_dma.c
->  delete mode 100644 hw/intc/etraxfs_pic.c
->  delete mode 100644 hw/net/etraxfs_eth.c
->  delete mode 100644 hw/timer/etraxfs_timer.c
->  delete mode 100644 linux-user/cris/cpu_loop.c
->  delete mode 100644 linux-user/cris/signal.c
->  delete mode 100644 target/cris/cpu.c
->  delete mode 100644 target/cris/gdbstub.c
->  delete mode 100644 target/cris/helper.c
->  delete mode 100644 target/cris/machine.c
->  delete mode 100644 target/cris/mmu.c
->  delete mode 100644 target/cris/op_helper.c
->  delete mode 100644 target/cris/translate.c
->  delete mode 100644 tests/tcg/cris/bare/sys.c
->  delete mode 100644 tests/tcg/cris/libc/check_abs.c
->  delete mode 100644 tests/tcg/cris/libc/check_addc.c
->  delete mode 100644 tests/tcg/cris/libc/check_addcm.c
->  delete mode 100644 tests/tcg/cris/libc/check_addo.c
->  delete mode 100644 tests/tcg/cris/libc/check_addoq.c
->  delete mode 100644 tests/tcg/cris/libc/check_bound.c
->  delete mode 100644 tests/tcg/cris/libc/check_ftag.c
->  delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
->  delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634.c
->  delete mode 100644 tests/tcg/cris/libc/check_glibc_kernelversion.c
->  delete mode 100644 tests/tcg/cris/libc/check_hello.c
->  delete mode 100644 tests/tcg/cris/libc/check_int64.c
->  delete mode 100644 tests/tcg/cris/libc/check_lz.c
->  delete mode 100644 tests/tcg/cris/libc/check_mapbrk.c
->  delete mode 100644 tests/tcg/cris/libc/check_mmap1.c
->  delete mode 100644 tests/tcg/cris/libc/check_mmap2.c
->  delete mode 100644 tests/tcg/cris/libc/check_mmap3.c
->  delete mode 100644 tests/tcg/cris/libc/check_moveq.c
->  delete mode 100644 tests/tcg/cris/libc/check_openpf1.c
->  delete mode 100644 tests/tcg/cris/libc/check_openpf2.c
->  delete mode 100644 tests/tcg/cris/libc/check_openpf3.c
->  delete mode 100644 tests/tcg/cris/libc/check_openpf5.c
->  delete mode 100644 tests/tcg/cris/libc/check_settls1.c
->  delete mode 100644 tests/tcg/cris/libc/check_sigalrm.c
->  delete mode 100644 tests/tcg/cris/libc/check_stat1.c
->  delete mode 100644 tests/tcg/cris/libc/check_stat2.c
->  delete mode 100644 tests/tcg/cris/libc/check_stat3.c
->  delete mode 100644 tests/tcg/cris/libc/check_stat4.c
->  delete mode 100644 tests/tcg/cris/libc/check_swap.c
->  delete mode 100644 tests/tcg/cris/libc/check_time2.c
->  delete mode 100644 target/cris/translate_v10.c.inc
->  delete mode 100644 hw/cris/Kconfig
->  delete mode 100644 hw/cris/meson.build
->  delete mode 100644 target/cris/Kconfig
->  delete mode 100644 target/cris/meson.build
->  delete mode 100644 tests/docker/dockerfiles/fedora-cris-cross.docker
->  delete mode 100644 tests/tcg/cris/.gdbinit
->  delete mode 100644 tests/tcg/cris/Makefile.target
->  delete mode 100644 tests/tcg/cris/README
->  delete mode 100644 tests/tcg/cris/bare/check_addcv17.s
->  delete mode 100644 tests/tcg/cris/bare/check_addi.s
->  delete mode 100644 tests/tcg/cris/bare/check_addiv32.s
->  delete mode 100644 tests/tcg/cris/bare/check_addm.s
->  delete mode 100644 tests/tcg/cris/bare/check_addq.s
->  delete mode 100644 tests/tcg/cris/bare/check_addr.s
->  delete mode 100644 tests/tcg/cris/bare/check_addxc.s
->  delete mode 100644 tests/tcg/cris/bare/check_addxm.s
->  delete mode 100644 tests/tcg/cris/bare/check_addxr.s
->  delete mode 100644 tests/tcg/cris/bare/check_andc.s
->  delete mode 100644 tests/tcg/cris/bare/check_andm.s
->  delete mode 100644 tests/tcg/cris/bare/check_andq.s
->  delete mode 100644 tests/tcg/cris/bare/check_andr.s
->  delete mode 100644 tests/tcg/cris/bare/check_asr.s
->  delete mode 100644 tests/tcg/cris/bare/check_ba.s
->  delete mode 100644 tests/tcg/cris/bare/check_bas.s
->  delete mode 100644 tests/tcg/cris/bare/check_bcc.s
->  delete mode 100644 tests/tcg/cris/bare/check_boundc.s
->  delete mode 100644 tests/tcg/cris/bare/check_boundr.s
->  delete mode 100644 tests/tcg/cris/bare/check_btst.s
->  delete mode 100644 tests/tcg/cris/bare/check_clearfv32.s
->  delete mode 100644 tests/tcg/cris/bare/check_clrjmp1.s
->  delete mode 100644 tests/tcg/cris/bare/check_cmp-2.s
->  delete mode 100644 tests/tcg/cris/bare/check_cmpc.s
->  delete mode 100644 tests/tcg/cris/bare/check_cmpm.s
->  delete mode 100644 tests/tcg/cris/bare/check_cmpq.s
->  delete mode 100644 tests/tcg/cris/bare/check_cmpr.s
->  delete mode 100644 tests/tcg/cris/bare/check_cmpxc.s
->  delete mode 100644 tests/tcg/cris/bare/check_cmpxm.s
->  delete mode 100644 tests/tcg/cris/bare/check_dstep.s
->  delete mode 100644 tests/tcg/cris/bare/check_jsr.s
->  delete mode 100644 tests/tcg/cris/bare/check_lapc.s
->  delete mode 100644 tests/tcg/cris/bare/check_lsl.s
->  delete mode 100644 tests/tcg/cris/bare/check_lsr.s
->  delete mode 100644 tests/tcg/cris/bare/check_mcp.s
->  delete mode 100644 tests/tcg/cris/bare/check_movdelsr1.s
->  delete mode 100644 tests/tcg/cris/bare/check_movecr.s
->  delete mode 100644 tests/tcg/cris/bare/check_movei.s
->  delete mode 100644 tests/tcg/cris/bare/check_movemr.s
->  delete mode 100644 tests/tcg/cris/bare/check_movemrv32.s
->  delete mode 100644 tests/tcg/cris/bare/check_mover.s
->  delete mode 100644 tests/tcg/cris/bare/check_moverm.s
->  delete mode 100644 tests/tcg/cris/bare/check_movmp.s
->  delete mode 100644 tests/tcg/cris/bare/check_movpmv32.s
->  delete mode 100644 tests/tcg/cris/bare/check_movpr.s
->  delete mode 100644 tests/tcg/cris/bare/check_movprv32.s
->  delete mode 100644 tests/tcg/cris/bare/check_movscr.s
->  delete mode 100644 tests/tcg/cris/bare/check_movsm.s
->  delete mode 100644 tests/tcg/cris/bare/check_movsr.s
->  delete mode 100644 tests/tcg/cris/bare/check_movucr.s
->  delete mode 100644 tests/tcg/cris/bare/check_movum.s
->  delete mode 100644 tests/tcg/cris/bare/check_movur.s
->  delete mode 100644 tests/tcg/cris/bare/check_mulv32.s
->  delete mode 100644 tests/tcg/cris/bare/check_mulx.s
->  delete mode 100644 tests/tcg/cris/bare/check_neg.s
->  delete mode 100644 tests/tcg/cris/bare/check_not.s
->  delete mode 100644 tests/tcg/cris/bare/check_orc.s
->  delete mode 100644 tests/tcg/cris/bare/check_orm.s
->  delete mode 100644 tests/tcg/cris/bare/check_orq.s
->  delete mode 100644 tests/tcg/cris/bare/check_orr.s
->  delete mode 100644 tests/tcg/cris/bare/check_ret.s
->  delete mode 100644 tests/tcg/cris/bare/check_scc.s
->  delete mode 100644 tests/tcg/cris/bare/check_subc.s
->  delete mode 100644 tests/tcg/cris/bare/check_subm.s
->  delete mode 100644 tests/tcg/cris/bare/check_subq.s
->  delete mode 100644 tests/tcg/cris/bare/check_subr.s
->  delete mode 100644 tests/tcg/cris/bare/check_xarith.s
->  delete mode 100644 tests/tcg/cris/bare/crt.s
->  delete mode 100644 tests/tcg/cris/bare/testutils.inc
+The 'cheetah' machine has been deprecated since 9.0, so we can
+remove it for the 9.2 release.
 
-This is an enormous diffstat for a single patch, even if it
-is basically all deletions. (It took me ages just to select
-and delete the patch text so I could make this reply, let
-alone actually doing anything like review of it.) Could
-you split it up a bit, please?
+(tsc210x.c is also used by nseries, so move its MAINTAINER file
+line there; the nseries boards are also about to be removed.)
 
-thanks
--- PMM
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ MAINTAINERS                             |  10 +-
+ docs/system/arm/palm.rst                |  23 --
+ docs/system/target-arm.rst              |   1 -
+ configs/devices/arm-softmmu/default.mak |   1 -
+ hw/arm/palm.c                           | 324 ------------------------
+ hw/arm/Kconfig                          |   7 -
+ hw/arm/meson.build                      |   1 -
+ 7 files changed, 1 insertion(+), 366 deletions(-)
+ delete mode 100644 docs/system/arm/palm.rst
+ delete mode 100644 hw/arm/palm.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 52bf3a22e01..cf297e6d626 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -879,6 +879,7 @@ F: hw/arm/nseries.c
+ F: hw/display/blizzard.c
+ F: hw/input/lm832x.c
+ F: hw/input/tsc2005.c
++F: hw/input/tsc210x.c
+ F: hw/misc/cbus.c
+ F: hw/rtc/twl92230.c
+ F: include/hw/display/blizzard.h
+@@ -888,15 +889,6 @@ F: include/hw/misc/cbus.h
+ F: tests/avocado/machine_arm_n8x0.py
+ F: docs/system/arm/nseries.rst
+ 
+-Palm
+-M: Peter Maydell <peter.maydell@linaro.org>
+-L: qemu-arm@nongnu.org
+-S: Odd Fixes
+-F: hw/arm/palm.c
+-F: hw/input/tsc210x.c
+-F: include/hw/input/tsc2xxx.h
+-F: docs/system/arm/palm.rst
+-
+ Raspberry Pi
+ M: Peter Maydell <peter.maydell@linaro.org>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/docs/system/arm/palm.rst b/docs/system/arm/palm.rst
+deleted file mode 100644
+index 61bc8d34f40..00000000000
+--- a/docs/system/arm/palm.rst
++++ /dev/null
+@@ -1,23 +0,0 @@
+-Palm Tungsten|E PDA (``cheetah``)
+-=================================
+-
+-The Palm Tungsten|E PDA (codename \"Cheetah\") emulation includes the
+-following elements:
+-
+--  Texas Instruments OMAP310 System-on-chip (ARM925T core)
+-
+--  ROM and RAM memories (ROM firmware image can be loaded with
+-   -option-rom)
+-
+--  On-chip LCD controller
+-
+--  On-chip Real Time Clock
+-
+--  TI TSC2102i touchscreen controller / analog-digital converter /
+-   Audio CODEC, connected through MicroWire and |I2S| buses
+-
+--  GPIO-connected matrix keypad
+-
+--  Secure Digital card connected to OMAP MMC/SD host
+-
+--  Three on-chip UARTs
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index 326b69502b5..fde37385224 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -99,7 +99,6 @@ undocumented; you can get a complete list by running
+    arm/nuvoton
+    arm/imx25-pdk
+    arm/orangepi
+-   arm/palm
+    arm/raspi
+    arm/collie
+    arm/sx1
+diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
+index 4cbe04ffbf1..6ed821be220 100644
+--- a/configs/devices/arm-softmmu/default.mak
++++ b/configs/devices/arm-softmmu/default.mak
+@@ -18,7 +18,6 @@
+ # CONFIG_MUSICPAL=n
+ # CONFIG_MPS3R=n
+ # CONFIG_MUSCA=n
+-# CONFIG_CHEETAH=n
+ # CONFIG_SX1=n
+ # CONFIG_NSERIES=n
+ # CONFIG_STELLARIS=n
+diff --git a/hw/arm/palm.c b/hw/arm/palm.c
+deleted file mode 100644
+index e04ac92eb7f..00000000000
+--- a/hw/arm/palm.c
++++ /dev/null
+@@ -1,324 +0,0 @@
+-/*
+- * PalmOne's (TM) PDAs.
+- *
+- * Copyright (C) 2006-2007 Andrzej Zaborowski  <balrog@zabor.org>
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 or
+- * (at your option) version 3 of the License.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License along
+- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "audio/audio.h"
+-#include "sysemu/sysemu.h"
+-#include "sysemu/qtest.h"
+-#include "ui/console.h"
+-#include "hw/arm/omap.h"
+-#include "hw/boards.h"
+-#include "hw/arm/boot.h"
+-#include "hw/input/tsc2xxx.h"
+-#include "hw/irq.h"
+-#include "hw/loader.h"
+-#include "qemu/cutils.h"
+-#include "qom/object.h"
+-#include "qemu/error-report.h"
+-
+-
+-static uint64_t static_read(void *opaque, hwaddr offset, unsigned size)
+-{
+-    uint32_t *val = (uint32_t *)opaque;
+-    uint32_t sizemask = 7 >> size;
+-
+-    return *val >> ((offset & sizemask) << 3);
+-}
+-
+-static void static_write(void *opaque, hwaddr offset, uint64_t value,
+-                         unsigned size)
+-{
+-#ifdef SPY
+-    printf("%s: value %08lx written at " PA_FMT "\n",
+-                    __func__, value, offset);
+-#endif
+-}
+-
+-static const MemoryRegionOps static_ops = {
+-    .read = static_read,
+-    .write = static_write,
+-    .valid.min_access_size = 1,
+-    .valid.max_access_size = 4,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-};
+-
+-/* Palm Tunsgten|E support */
+-
+-/* Shared GPIOs */
+-#define PALMTE_USBDETECT_GPIO   0
+-#define PALMTE_USB_OR_DC_GPIO   1
+-#define PALMTE_TSC_GPIO                 4
+-#define PALMTE_PINTDAV_GPIO     6
+-#define PALMTE_MMC_WP_GPIO      8
+-#define PALMTE_MMC_POWER_GPIO   9
+-#define PALMTE_HDQ_GPIO                 11
+-#define PALMTE_HEADPHONES_GPIO  14
+-#define PALMTE_SPEAKER_GPIO     15
+-/* MPU private GPIOs */
+-#define PALMTE_DC_GPIO          2
+-#define PALMTE_MMC_SWITCH_GPIO  4
+-#define PALMTE_MMC1_GPIO        6
+-#define PALMTE_MMC2_GPIO        7
+-#define PALMTE_MMC3_GPIO        11
+-
+-static MouseTransformInfo palmte_pointercal = {
+-    .x = 320,
+-    .y = 320,
+-    .a = { -5909, 8, 22465308, 104, 7644, -1219972, 65536 },
+-};
+-
+-static void palmte_microwire_setup(struct omap_mpu_state_s *cpu)
+-{
+-    uWireSlave *tsc;
+-
+-    tsc = tsc2102_init(qdev_get_gpio_in(cpu->gpio, PALMTE_PINTDAV_GPIO));
+-
+-    omap_uwire_attach(cpu->microwire, tsc, 0);
+-    omap_mcbsp_i2s_attach(cpu->mcbsp1, tsc210x_codec(tsc));
+-
+-    tsc210x_set_transform(tsc, &palmte_pointercal);
+-}
+-
+-static struct {
+-    int row;
+-    int column;
+-} palmte_keymap[0x80] = {
+-    [0 ... 0x7f] = { -1, -1 },
+-    [0x3b] = { 0, 0 },  /* F1   -> Calendar */
+-    [0x3c] = { 1, 0 },  /* F2   -> Contacts */
+-    [0x3d] = { 2, 0 },  /* F3   -> Tasks List */
+-    [0x3e] = { 3, 0 },  /* F4   -> Note Pad */
+-    [0x01] = { 4, 0 },  /* Esc  -> Power */
+-    [0x4b] = { 0, 1 },  /*         Left */
+-    [0x50] = { 1, 1 },  /*         Down */
+-    [0x48] = { 2, 1 },  /*         Up */
+-    [0x4d] = { 3, 1 },  /*         Right */
+-    [0x4c] = { 4, 1 },  /*         Centre */
+-    [0x39] = { 4, 1 },  /* Spc  -> Centre */
+-};
+-
+-static void palmte_button_event(void *opaque, int keycode)
+-{
+-    struct omap_mpu_state_s *cpu = opaque;
+-
+-    if (palmte_keymap[keycode & 0x7f].row != -1)
+-        omap_mpuio_key(cpu->mpuio,
+-                        palmte_keymap[keycode & 0x7f].row,
+-                        palmte_keymap[keycode & 0x7f].column,
+-                        !(keycode & 0x80));
+-}
+-
+-/*
+- * Encapsulation of some GPIO line behaviour for the Palm board
+- *
+- * QEMU interface:
+- *  + unnamed GPIO inputs 0..6: for the various miscellaneous input lines
+- */
+-
+-#define TYPE_PALM_MISC_GPIO "palm-misc-gpio"
+-OBJECT_DECLARE_SIMPLE_TYPE(PalmMiscGPIOState, PALM_MISC_GPIO)
+-
+-struct PalmMiscGPIOState {
+-    SysBusDevice parent_obj;
+-};
+-
+-static void palmte_onoff_gpios(void *opaque, int line, int level)
+-{
+-    switch (line) {
+-    case 0:
+-        printf("%s: current to MMC/SD card %sabled.\n",
+-                        __func__, level ? "dis" : "en");
+-        break;
+-    case 1:
+-        printf("%s: internal speaker amplifier %s.\n",
+-                        __func__, level ? "down" : "on");
+-        break;
+-
+-    /* These LCD & Audio output signals have not been identified yet.  */
+-    case 2:
+-    case 3:
+-    case 4:
+-        printf("%s: LCD GPIO%i %s.\n",
+-                        __func__, line - 1, level ? "high" : "low");
+-        break;
+-    case 5:
+-    case 6:
+-        printf("%s: Audio GPIO%i %s.\n",
+-                        __func__, line - 4, level ? "high" : "low");
+-        break;
+-    }
+-}
+-
+-static void palm_misc_gpio_init(Object *obj)
+-{
+-    DeviceState *dev = DEVICE(obj);
+-
+-    qdev_init_gpio_in(dev, palmte_onoff_gpios, 7);
+-}
+-
+-static const TypeInfo palm_misc_gpio_info = {
+-    .name = TYPE_PALM_MISC_GPIO,
+-    .parent = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(PalmMiscGPIOState),
+-    .instance_init = palm_misc_gpio_init,
+-    /*
+-     * No class init required: device has no internal state so does not
+-     * need to set up reset or vmstate, and has no realize method.
+-     */
+-};
+-
+-static void palmte_gpio_setup(struct omap_mpu_state_s *cpu)
+-{
+-    DeviceState *misc_gpio;
+-
+-    misc_gpio = sysbus_create_simple(TYPE_PALM_MISC_GPIO, -1, NULL);
+-
+-    omap_mmc_handlers(cpu->mmc,
+-                    qdev_get_gpio_in(cpu->gpio, PALMTE_MMC_WP_GPIO),
+-                    qemu_irq_invert(omap_mpuio_in_get(cpu->mpuio)
+-                            [PALMTE_MMC_SWITCH_GPIO]));
+-
+-    qdev_connect_gpio_out(cpu->gpio, PALMTE_MMC_POWER_GPIO,
+-                          qdev_get_gpio_in(misc_gpio, 0));
+-    qdev_connect_gpio_out(cpu->gpio, PALMTE_SPEAKER_GPIO,
+-                          qdev_get_gpio_in(misc_gpio, 1));
+-    qdev_connect_gpio_out(cpu->gpio, 11, qdev_get_gpio_in(misc_gpio, 2));
+-    qdev_connect_gpio_out(cpu->gpio, 12, qdev_get_gpio_in(misc_gpio, 3));
+-    qdev_connect_gpio_out(cpu->gpio, 13, qdev_get_gpio_in(misc_gpio, 4));
+-    omap_mpuio_out_set(cpu->mpuio, 1, qdev_get_gpio_in(misc_gpio, 5));
+-    omap_mpuio_out_set(cpu->mpuio, 3, qdev_get_gpio_in(misc_gpio, 6));
+-
+-    /* Reset some inputs to initial state.  */
+-    qemu_irq_lower(qdev_get_gpio_in(cpu->gpio, PALMTE_USBDETECT_GPIO));
+-    qemu_irq_lower(qdev_get_gpio_in(cpu->gpio, PALMTE_USB_OR_DC_GPIO));
+-    qemu_irq_lower(qdev_get_gpio_in(cpu->gpio, 4));
+-    qemu_irq_lower(qdev_get_gpio_in(cpu->gpio, PALMTE_HEADPHONES_GPIO));
+-    qemu_irq_lower(omap_mpuio_in_get(cpu->mpuio)[PALMTE_DC_GPIO]);
+-    qemu_irq_raise(omap_mpuio_in_get(cpu->mpuio)[6]);
+-    qemu_irq_raise(omap_mpuio_in_get(cpu->mpuio)[7]);
+-    qemu_irq_raise(omap_mpuio_in_get(cpu->mpuio)[11]);
+-}
+-
+-static struct arm_boot_info palmte_binfo = {
+-    .loader_start = OMAP_EMIFF_BASE,
+-    .ram_size = 0x02000000,
+-    .board_id = 0x331,
+-};
+-
+-static void palmte_init(MachineState *machine)
+-{
+-    MemoryRegion *address_space_mem = get_system_memory();
+-    struct omap_mpu_state_s *mpu;
+-    int flash_size = 0x00800000;
+-    static uint32_t cs0val = 0xffffffff;
+-    static uint32_t cs1val = 0x0000e1a0;
+-    static uint32_t cs2val = 0x0000e1a0;
+-    static uint32_t cs3val = 0xe1a0e1a0;
+-    int rom_size, rom_loaded = 0;
+-    MachineClass *mc = MACHINE_GET_CLASS(machine);
+-    MemoryRegion *flash = g_new(MemoryRegion, 1);
+-    MemoryRegion *cs = g_new(MemoryRegion, 4);
+-
+-    if (machine->ram_size != mc->default_ram_size) {
+-        char *sz = size_to_str(mc->default_ram_size);
+-        error_report("Invalid RAM size, should be %s", sz);
+-        g_free(sz);
+-        exit(EXIT_FAILURE);
+-    }
+-
+-    memory_region_add_subregion(address_space_mem, OMAP_EMIFF_BASE,
+-                                machine->ram);
+-
+-    mpu = omap310_mpu_init(machine->ram, machine->cpu_type);
+-
+-    /* External Flash (EMIFS) */
+-    memory_region_init_rom(flash, NULL, "palmte.flash", flash_size,
+-                           &error_fatal);
+-    memory_region_add_subregion(address_space_mem, OMAP_CS0_BASE, flash);
+-
+-    memory_region_init_io(&cs[0], NULL, &static_ops, &cs0val, "palmte-cs0",
+-                          OMAP_CS0_SIZE - flash_size);
+-    memory_region_add_subregion(address_space_mem, OMAP_CS0_BASE + flash_size,
+-                                &cs[0]);
+-    memory_region_init_io(&cs[1], NULL, &static_ops, &cs1val, "palmte-cs1",
+-                          OMAP_CS1_SIZE);
+-    memory_region_add_subregion(address_space_mem, OMAP_CS1_BASE, &cs[1]);
+-    memory_region_init_io(&cs[2], NULL, &static_ops, &cs2val, "palmte-cs2",
+-                          OMAP_CS2_SIZE);
+-    memory_region_add_subregion(address_space_mem, OMAP_CS2_BASE, &cs[2]);
+-    memory_region_init_io(&cs[3], NULL, &static_ops, &cs3val, "palmte-cs3",
+-                          OMAP_CS3_SIZE);
+-    memory_region_add_subregion(address_space_mem, OMAP_CS3_BASE, &cs[3]);
+-
+-    palmte_microwire_setup(mpu);
+-
+-    qemu_add_kbd_event_handler(palmte_button_event, mpu);
+-
+-    palmte_gpio_setup(mpu);
+-
+-    /* Setup initial (reset) machine state */
+-    if (nb_option_roms) {
+-        rom_size = get_image_size(option_rom[0].name);
+-        if (rom_size > flash_size) {
+-            fprintf(stderr, "%s: ROM image too big (%x > %x)\n",
+-                            __func__, rom_size, flash_size);
+-            rom_size = 0;
+-        }
+-        if (rom_size > 0) {
+-            rom_size = load_image_targphys(option_rom[0].name, OMAP_CS0_BASE,
+-                                           flash_size);
+-            rom_loaded = 1;
+-        }
+-        if (rom_size < 0) {
+-            fprintf(stderr, "%s: error loading '%s'\n",
+-                            __func__, option_rom[0].name);
+-        }
+-    }
+-
+-    if (!rom_loaded && !machine->kernel_filename && !qtest_enabled()) {
+-        fprintf(stderr, "Kernel or ROM image must be specified\n");
+-        exit(1);
+-    }
+-
+-    /* Load the kernel.  */
+-    arm_load_kernel(mpu->cpu, machine, &palmte_binfo);
+-}
+-
+-static void palmte_machine_init(MachineClass *mc)
+-{
+-    mc->desc = "Palm Tungsten|E aka. Cheetah PDA (OMAP310)";
+-    mc->init = palmte_init;
+-    mc->ignore_memory_transaction_failures = true;
+-    mc->default_cpu_type = ARM_CPU_TYPE_NAME("ti925t");
+-    mc->default_ram_size = 0x02000000;
+-    mc->default_ram_id = "omap1.dram";
+-    mc->deprecation_reason = "machine is old and unmaintained";
+-
+-    machine_add_audiodev_property(mc);
+-}
+-
+-DEFINE_MACHINE("cheetah", palmte_machine_init)
+-
+-static void palm_register_types(void)
+-{
+-    type_register_static(&palm_misc_gpio_info);
+-}
+-
+-type_init(palm_register_types)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index c8c57497c5b..3261618ea74 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -37,13 +37,6 @@ config ARM_VIRT
+     select ACPI_CXL
+     select ACPI_HMAT
+ 
+-config CHEETAH
+-    bool
+-    default y
+-    depends on TCG && ARM
+-    select OMAP
+-    select TSC210X
+-
+ config CUBIEBOARD
+     bool
+     default y
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index b099319a223..4a8fd54586b 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -62,7 +62,6 @@ arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+ arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
+ 
+ system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
+-system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
+ system_ss.add(when: 'CONFIG_COLLIE', if_true: files('collie.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
+ system_ss.add(when: 'CONFIG_GUMSTIX', if_true: files('gumstix.c'))
+-- 
+2.34.1
+
 
