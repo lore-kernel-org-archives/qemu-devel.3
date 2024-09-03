@@ -4,63 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF178CD37AE
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696D7CD37AE
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slaIq-0001hh-Rs; Tue, 03 Sep 2024 16:39:05 -0400
+	id 1slaNP-0005xF-RJ; Tue, 03 Sep 2024 16:43:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slaIo-0001h6-Ux
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:39:02 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slaIn-0007Jn-36
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:39:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:In-Reply-To:References;
- bh=Ga9tUbl5e/OUDNpGNSOGPDIqAIn+xVuhJzCQUVAeQiU=; b=oCsZA6pWIc1ik3mu8y0ZnlUcpL
- mV5L/o7fwRlxKL4VQABQuf7F82MrJTURWcFl//RtOVBUQiTVgC3uMF9Uttnk3Wi2MipN0ImM9ENo1
- giEBDlksL2iilfXPMegBUKLPyj5qjk0Zu4by9TPBMdb0urp2UwBUcgkapaMpeFpWRjQsQLAhynBvd
- di2pPQ+ctpKWl+w1/coFGQN8HIBOztkDDI7A5ToqMwD37Rb/tPXVkCeKqWL0W/8+0VtfTpt26VpJQ
- 6UV05fjluPjUwUVdf6B97ZTpvzYOfQl6hkzzsfBJFOxgh5ikxuAvwnAwVy27pcSWv6oWz3X+CcMz7
- yci8XCeE8lsjFAcqX7hBYq/3Zz1Dhd/UNN1BdcTW+2fK4mwK1KXqYkdfQC+cqueT8dY6hHxQDW4qg
- dlla8Z6g98md+Jbc3ycKJgUQuf1Ma+4MBkHvw0ew4hRE6fnGntaz64c+X+oe0WXam3+H9ksexhbyC
- W9jJ0HeTo/DnBVyF4jwEcIx42JIBzdCglSRf9ViR2Ws9+pehfYuMnpuRgoxjYfcGvz6zBErGHt0wL
- TJuGgpRJw3kM4Dg3uXOeJGIkW5Mb+6Bv51TShv8Fb+E3ZSKtfjglsMx6igAWoR8ZlMQAM0n+X+j+m
- BncT0GOmghenZB/Z7UbaWyHHjsG+GSW+oOVvjiuw0=;
-Received: from [2a00:23c4:8bb8:1400:a01b:a703:4166:127]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slaIc-0008pg-VS; Tue, 03 Sep 2024 21:38:55 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: chauser@pullman.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org
-Date: Tue,  3 Sep 2024 21:38:46 +0100
-Message-Id: <20240903203846.144354-1-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1slaNL-0005wN-Ig
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:43:43 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1slaNJ-0007tL-IA
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:43:43 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7140ff4b1e9so4476202b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 13:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725396219; x=1726001019; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5oLq4jDrnix7Asl5lWkHaoR7vO7S00lk/Yem9S4+zDE=;
+ b=IYZz3EbcIm5g9zQV0ItntLthe96D+mcx2qLJWzO44/xdOzrjWDDaNAfP38fc/jaRmD
+ mvwsUEKXDFfRsdudwiSvRXl0HayO91lzM2T5Jwk2pk78SNrJdBbsx/bAxzf475qUjsr7
+ h8GMfBqi5hE8GFX4yCG8HTG5tNx0EwIitJj9EjD2L2g8Jo4TEteMPTlM8jalu3teRMl0
+ BzUQ6ey6GdBLybhe/FWnf98onN37aG3RW9Iwhf6O3YPgG+FPmqlqbG3KWkLoO9ftLBFA
+ StdyZLK6m3V3bW+HSOEEPb4jk3MPaIdBNG+MddAoKVMVWH49AllKesQCKSu2nlKsLMt0
+ AHbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725396219; x=1726001019;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5oLq4jDrnix7Asl5lWkHaoR7vO7S00lk/Yem9S4+zDE=;
+ b=gjuKqOX+K+Juwvzrhiuz4HZ+eiAwFmNSjoWoNTVgO182jAHEAd4Ggog33ktDuKCM4Z
+ 9EOW3UflsHJ3FI4rduoAMiPTZWjY5DprUc51ZDKtFHjfPKUlSmHMH5mrnIKq5oJVJx/T
+ gMEaR1SL5QruEWU+g5y5XSphLreihlgTlaUP+x2XRqjNJL1WGNVtBWM1JOURyi5Yjbmt
+ VrCLlvH3TJ0RNMnalwGleMlPwE9uvNG94WijB7RcH999Ef9/CQvM2EptsrFNwqGuSrwc
+ 3KYyKAVYeL7gmCpJ3h5/mSrvaPN9WkvQviEwsJotGxFYDrVqueLWqkaeYB0EHelszshB
+ uPDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxOV18CSF2f2FGxM7S6EKN+i1HCKa6wM5o4fhCZnY4XxtIGTinYsASMgF6XhEJC5Zyto19YCebz0L4@nongnu.org
+X-Gm-Message-State: AOJu0Yz6tr7Cmr67pb+JcCgBVPetLGyUOk0DtSEECDzQZgoQN8lMQmdq
+ Cjq0AMeivISTFTzMKlZHd8CqczQbzmk8tyTptrDmrqHyBW1UA4QaI6ntH6AOl2oeUBJvC24PFSf
+ QPH4=
+X-Google-Smtp-Source: AGHT+IHX6rAq/KJ3jSI6VQyHaCMpjEDAKM5SuoJrfI+tbIZzk1tiRjqRrNsp37p/3LT+S+5zct3xeA==
+X-Received: by 2002:a05:6a21:38b:b0:1be:c9bd:7b8b with SMTP id
+ adf61e73a8af0-1ced058a805mr12325545637.45.1725396219082; 
+ Tue, 03 Sep 2024 13:43:39 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7d4fbd85b0asm304104a12.17.2024.09.03.13.43.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Sep 2024 13:43:38 -0700 (PDT)
+Message-ID: <d4409097-f60a-4f7d-adfe-dee8073f176f@linaro.org>
+Date: Tue, 3 Sep 2024 13:43:36 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:1400:a01b:a703:4166:127
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2] escc: convert Sun mouse to use QemuInputHandler
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] escc: convert Sun mouse to use QemuInputHandler
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, chauser@pullman.com,
+ marcandre.lureau@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
+References: <20240903203846.144354-1-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240903203846.144354-1-mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,184 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the Sun mouse implementation to use QemuInputHandler instead of the
-legacy qemu_add_mouse_event_handler() function.
+On 9/3/24 13:38, Mark Cave-Ayland wrote:
+> Update the Sun mouse implementation to use QemuInputHandler instead of the
+> legacy qemu_add_mouse_event_handler() function.
+> 
+> Note that this conversion adds extra sunmouse_* members to ESCCChannelState
+> but they are not added to the migration stream (similar to the Sun keyboard
+> members). If this were desired in future, the Sun devices should be split
+> into separate devices and added to the migration stream there instead.
+> 
+> Signed-off-by: Mark Cave-Ayland<mark.cave-ayland@ilande.co.uk>
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2518
+> ---
+>   hw/char/escc.c         | 88 +++++++++++++++++++++++++++++++-----------
+>   include/hw/char/escc.h |  3 ++
+>   2 files changed, 69 insertions(+), 22 deletions(-)
+> 
 
-Note that this conversion adds extra sunmouse_* members to ESCCChannelState
-but they are not added to the migration stream (similar to the Sun keyboard
-members). If this were desired in future, the Sun devices should be split
-into separate devices and added to the migration stream there instead.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
----
- hw/char/escc.c         | 88 +++++++++++++++++++++++++++++++-----------
- include/hw/char/escc.h |  3 ++
- 2 files changed, 69 insertions(+), 22 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
-v2:
-- Only allow left, middle and right button events (use bit 7 which is always
-  set in the first byte to indicate a valid event)
-
-- Remove zero entries from the bmap table as static entries should be
-  zero anyway
-
-diff --git a/hw/char/escc.c b/hw/char/escc.c
-index d450d70eda..641d4ee206 100644
---- a/hw/char/escc.c
-+++ b/hw/char/escc.c
-@@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
-     s->rxint = s->txint = 0;
-     s->rxint_under_svc = s->txint_under_svc = 0;
-     s->e0_mode = s->led_mode = s->caps_lock_mode = s->num_lock_mode = 0;
-+    s->sunmouse_dx = s->sunmouse_dy = s->sunmouse_buttons = 0;
-     clear_queue(s);
- }
- 
-@@ -952,53 +953,96 @@ static void handle_kbd_command(ESCCChannelState *s, int val)
-     }
- }
- 
--static void sunmouse_event(void *opaque,
--                               int dx, int dy, int dz, int buttons_state)
-+static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
-+                                  InputEvent *evt)
- {
--    ESCCChannelState *s = opaque;
--    int ch;
-+    ESCCChannelState *s = (ESCCChannelState *)dev;
-+    InputMoveEvent *move;
-+    InputBtnEvent *btn;
-+    static const int bmap[INPUT_BUTTON__MAX] = {
-+        [INPUT_BUTTON_LEFT]   = 0x4,
-+        [INPUT_BUTTON_MIDDLE] = 0x2,
-+        [INPUT_BUTTON_RIGHT]  = 0x1,
-+    };
-+
-+    switch (evt->type) {
-+    case INPUT_EVENT_KIND_REL:
-+        move = evt->u.rel.data;
-+        if (move->axis == INPUT_AXIS_X) {
-+            s->sunmouse_dx += move->value;
-+        } else if (move->axis == INPUT_AXIS_Y) {
-+            s->sunmouse_dy -= move->value;
-+        }
-+        break;
- 
--    trace_escc_sunmouse_event(dx, dy, buttons_state);
--    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
-+    case INPUT_EVENT_KIND_BTN:
-+        btn = evt->u.btn.data;
-+        if (bmap[btn->button]) {
-+            if (btn->down) {
-+                s->sunmouse_buttons |= bmap[btn->button];
-+            } else {
-+                s->sunmouse_buttons &= ~bmap[btn->button];
-+            }
-+            /* Indicate we have a supported button event */
-+            s->sunmouse_buttons |= 0x80;
-+        }
-+        break;
- 
--    if (buttons_state & MOUSE_EVENT_LBUTTON) {
--        ch ^= 0x4;
--    }
--    if (buttons_state & MOUSE_EVENT_MBUTTON) {
--        ch ^= 0x2;
-+    default:
-+        /* keep gcc happy */
-+        break;
-     }
--    if (buttons_state & MOUSE_EVENT_RBUTTON) {
--        ch ^= 0x1;
-+}
-+
-+static void sunmouse_sync(DeviceState *dev)
-+{
-+    ESCCChannelState *s = (ESCCChannelState *)dev;
-+    int ch;
-+
-+    if (s->sunmouse_dx == 0 && s->sunmouse_dy == 0 &&
-+        (s->sunmouse_buttons & 0x80) == 0) {
-+            /* Nothing to do after button event filter */
-+            return;
-     }
- 
-+    /* Clear our button event flag */
-+    s->sunmouse_buttons &= ~0x80;
-+    trace_escc_sunmouse_event(s->sunmouse_dx, s->sunmouse_dy,
-+                              s->sunmouse_buttons);
-+    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
-+    ch ^= s->sunmouse_buttons;
-     put_queue(s, ch);
- 
--    ch = dx;
--
-+    ch = s->sunmouse_dx;
-     if (ch > 127) {
-         ch = 127;
-     } else if (ch < -127) {
-         ch = -127;
-     }
--
-     put_queue(s, ch & 0xff);
-+    s->sunmouse_dx = 0;
- 
--    ch = -dy;
--
-+    ch = s->sunmouse_dy;
-     if (ch > 127) {
-         ch = 127;
-     } else if (ch < -127) {
-         ch = -127;
-     }
--
-     put_queue(s, ch & 0xff);
-+    s->sunmouse_dy = 0;
- 
-     /* MSC protocol specifies two extra motion bytes */
--
-     put_queue(s, 0);
-     put_queue(s, 0);
- }
- 
-+static const QemuInputHandler sunmouse_handler = {
-+    .name  = "QEMU Sun Mouse",
-+    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
-+    .event = sunmouse_handle_event,
-+    .sync  = sunmouse_sync,
-+};
-+
- static void escc_init1(Object *obj)
- {
-     ESCCState *s = ESCC(obj);
-@@ -1036,8 +1080,8 @@ static void escc_realize(DeviceState *dev, Error **errp)
-     }
- 
-     if (s->chn[0].type == escc_mouse) {
--        qemu_add_mouse_event_handler(sunmouse_event, &s->chn[0], 0,
--                                     "QEMU Sun Mouse");
-+        s->chn[0].hs = qemu_input_handler_register((DeviceState *)(&s->chn[0]),
-+                                                   &sunmouse_handler);
-     }
-     if (s->chn[1].type == escc_kbd) {
-         s->chn[1].hs = qemu_input_handler_register((DeviceState *)(&s->chn[1]),
-diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
-index 5669a5b811..8c4c6a7730 100644
---- a/include/hw/char/escc.h
-+++ b/include/hw/char/escc.h
-@@ -46,6 +46,9 @@ typedef struct ESCCChannelState {
-     uint8_t rx, tx;
-     QemuInputHandlerState *hs;
-     char *sunkbd_layout;
-+    int sunmouse_dx;
-+    int sunmouse_dy;
-+    int sunmouse_buttons;
- } ESCCChannelState;
- 
- struct ESCCState {
--- 
-2.39.2
-
+r~
 
