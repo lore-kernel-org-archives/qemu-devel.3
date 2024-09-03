@@ -4,114 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC21ECD3442
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20F7CD3443
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slVcW-0008J1-L0; Tue, 03 Sep 2024 11:39:04 -0400
+	id 1slVdY-00020S-3H; Tue, 03 Sep 2024 11:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slVcU-0008IX-Vn
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:39:03 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slVdW-0001vt-Ce
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:40:06 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slVcT-0006Dr-Dm
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:39:02 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8702221A21;
- Tue,  3 Sep 2024 15:38:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725377939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S0QvYXplFMNZ2d93Mlr+O+bR5hweq+OuT/kh6FAKtbg=;
- b=CzWE5KFO+hbOToCR7hOXKoCRCjWUz0hGe4G18nNqKTe74sG2575QvCXPi/y/Yv+lY22CuS
- Ec//PwkU7yZ4AnqnGwV0FPm/3DSuYq+N2qAUDP8+7e4KUy3SJIvOY6KAzF4vvVqddTwpV8
- 0BXShH5ab6HeSvwirSODwYVNYYJqB0Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725377939;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S0QvYXplFMNZ2d93Mlr+O+bR5hweq+OuT/kh6FAKtbg=;
- b=la2X63dy1giVNGw8KHNzwgIeo9M7dZRQFg3Yi0ULMGqzdzlk9qdNbDsVxpLnhIWohXWfi9
- ME7Pq3j7EOD8cDBA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CzWE5KFO;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=la2X63dy
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725377939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S0QvYXplFMNZ2d93Mlr+O+bR5hweq+OuT/kh6FAKtbg=;
- b=CzWE5KFO+hbOToCR7hOXKoCRCjWUz0hGe4G18nNqKTe74sG2575QvCXPi/y/Yv+lY22CuS
- Ec//PwkU7yZ4AnqnGwV0FPm/3DSuYq+N2qAUDP8+7e4KUy3SJIvOY6KAzF4vvVqddTwpV8
- 0BXShH5ab6HeSvwirSODwYVNYYJqB0Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725377939;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S0QvYXplFMNZ2d93Mlr+O+bR5hweq+OuT/kh6FAKtbg=;
- b=la2X63dy1giVNGw8KHNzwgIeo9M7dZRQFg3Yi0ULMGqzdzlk9qdNbDsVxpLnhIWohXWfi9
- ME7Pq3j7EOD8cDBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 031EE13A52;
- Tue,  3 Sep 2024 15:38:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WfloLpIt12b7cQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 03 Sep 2024 15:38:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Peter Xu <peterx@redhat.com>, Euan Turner <euan.turner@nutanix.com>, Steve
- Sistare <steven.sistare@oracle.com>
-Subject: Re: [RFC V1 4/6] migration: cpr_get_fd_param helper
-In-Reply-To: <1725018997-363706-5-git-send-email-steven.sistare@oracle.com>
-References: <1725018997-363706-1-git-send-email-steven.sistare@oracle.com>
- <1725018997-363706-5-git-send-email-steven.sistare@oracle.com>
-Date: Tue, 03 Sep 2024 12:38:56 -0300
-Message-ID: <877cbsn3vz.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slVdT-0006LE-AR
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:40:06 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42c7a49152aso35685715e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 08:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725378001; x=1725982801; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IjJBVSJBVK08cjjPKvTMib0MeQYe05YnRDAmcYrt6jk=;
+ b=Au4ds6B6bF+VKU7tzz1uruHeWx1OvCiVQsrC0ibBqfTiWmhdqKMLxkJNV2vnkIxKsI
+ jKZDSeNCKCHrVzKGr54ArtODkcJPkD2YqEVRJGgB0Ouz6qp4MMTs1aNBpbD5M7ZCRPhn
+ 2KHZdu1MBKt3XwTy6f5M+pu7nSF0y3jIY24j0YugAm/fdmAcHgOu1iZQQURmtJrLukQD
+ GTsKgHm5hXtLOzvg2HWfN8n9ciklTJBmQayTxqMnqEgijrQLcve70sKr68tzJTtt0Zw7
+ n74rTro0+xwF4k3jh/MdiLp0Xwt42uheyrM6TBSJMk7fDo/1EwVBDUpQTWF0NuCBIw4e
+ FAUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725378001; x=1725982801;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IjJBVSJBVK08cjjPKvTMib0MeQYe05YnRDAmcYrt6jk=;
+ b=QU1vGU601neYWAumZzBVoFN7Wm4C/YV50+NkcpReLTCOmvFRF28Xkxz1fVkhEFPHI4
+ tSyE7ytArIy21KWDMeY0X+HQnyenOQlNP/JEruMabPQzHRrwaQhpz0bfPdra1pVXD2vP
+ SVlQ8BMne7j4u8io8qrKE/UY0zdwuaTX9Uv9ut/rLbh730o9Gr9NbB+GpleYH1B9w3Xw
+ gjF9jkK94I4cjpGOfhqthSMcOXoge/OSGN5eG/fFD3Ib4dUjJqf7aYbERjHwHd6WcPIz
+ edEv+CTri0sqm9uJpjohpQJaLfShS3/CD7Pr2BJX0fWmkBOaNYJ5YX92s5Bh/2uZ32N1
+ 92EQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUioN83QrW6qvEpwrtfoI5upfuBRDXCvzur+MNaBwr7k5nIr/uc1/JoS1KN3RBiub47UujrdHF2L693@nongnu.org
+X-Gm-Message-State: AOJu0Yyzor0XxxuUF+43GKBX/W5SszsLvW3kd2awJ8zqnHf8aWGJgWmY
+ snXDLI+bsXO/ta1ikbVGKHN19/KqU7VdabxEPwdszHnRtx/ieseTuJJ7syY9Yxw=
+X-Google-Smtp-Source: AGHT+IEpEtpYtpauw7j1Ok3Y/v+8fst05IZgyvY/+Eyy77Hj6cUPjiUcQRUdI3KiGrNZF5bQY80N6w==
+X-Received: by 2002:a05:600c:45c4:b0:425:64c5:5780 with SMTP id
+ 5b1f17b1804b1-42bb01ae2d7mr146314105e9.1.1725378001383; 
+ Tue, 03 Sep 2024 08:40:01 -0700 (PDT)
+Received: from localhost.localdomain ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bb6deb303sm178363365e9.9.2024.09.03.08.40.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 03 Sep 2024 08:40:00 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Samuel Tardieu <sam@rfc1149.net>,
+	qemu-devel@nongnu.org
+Cc: devel@lists.libvirt.org, Magnus Damm <magnus.damm@gmail.com>,
+ qemu-block@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/3] hw/sh4: Remove the deprecated SHIX machine
+Date: Tue,  3 Sep 2024 17:39:56 +0200
+Message-ID: <20240903153959.18392-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 8702221A21
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.51 / 50.00];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,oracle.com:email];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,11 +94,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+Remove the deprecated SH4 SHIX machine, along
+with the TC58128 NAND EEPROM.
 
-> Add the helper function cpr_get_fd_param, for use by tap and vdpa.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Philippe Mathieu-Daudé (3):
+  hw/sh4: Remove the deprecated SHIX machine
+  hw/block: Remove TC58128 NAND EEPROM
+  hw/sh4: Remove sh7750_register_io_device() helper
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+ MAINTAINERS                             |  11 --
+ docs/about/deprecated.rst               |   6 -
+ docs/about/removed-features.rst         |   5 +
+ configs/devices/sh4-softmmu/default.mak |   1 -
+ include/hw/sh4/sh.h                     |  19 ---
+ hw/block/tc58128.c                      | 211 ------------------------
+ hw/sh4/sh7750.c                         |  57 +------
+ hw/sh4/shix.c                           |  86 ----------
+ hw/block/Kconfig                        |   3 -
+ hw/block/meson.build                    |   1 -
+ hw/sh4/Kconfig                          |   7 -
+ hw/sh4/meson.build                      |   1 -
+ 12 files changed, 7 insertions(+), 401 deletions(-)
+ delete mode 100644 hw/block/tc58128.c
+ delete mode 100644 hw/sh4/shix.c
+
+-- 
+2.45.2
+
 
