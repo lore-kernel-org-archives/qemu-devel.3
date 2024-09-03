@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59383CD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25887CD379F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW4z-0006RD-H6; Tue, 03 Sep 2024 12:08:29 -0400
+	id 1slW5N-0000I4-0R; Tue, 03 Sep 2024 12:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4n-0005ep-EQ
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:18 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1slW5L-00009A-Hf
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:51 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4i-0002jI-PZ
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:16 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-53438aa64a4so6717039e87.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:12 -0700 (PDT)
+ id 1slW5A-0002re-Jm
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:51 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-42bb81e795bso45462325e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379691; x=1725984491; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379719; x=1725984519; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Kb2hlNOkuGqsXxdmbrthsU/1g1vBxCB4j6840EtQwyY=;
- b=WajZzY5nG4iXstZ2ezhqOrVe+NcVtzKL5TnaWGFCyKsC1q9SCkubW+dlonKU9nLIWK
- diObgU0h2ggcJv6HffYAdYdDS0k1kjbqmq7fmjU7nfns0Y2vUBlEOTmjwlWe6WSpccDs
- Xy5pO89bWSgQTIgSSzT2K752vYCb6APYzlO9hyRu5EcRDRj0tjCxo3veOY07tJzFry86
- TChXbm85RHInX0BSkS9YY8odgC4qQu8GMq4/g/taxddkUVhM/eVvDo33eHL90AUMQ14k
- fdwn3FlIWpFqe1XLdCYvrQIC6Mvr2qHflpcYY+4l32LWLb4W+5wmuZqv14HLpg1FllQq
- C2YA==
+ :reply-to; bh=S5c89sKQbPl5fIjq2ETHtRbYiVtxAIAEgqCXSPrAcUc=;
+ b=jokZzNrO+JscMvRcnK5JitShQX3hPpE/RJWz+ogHGQH4MuAFcMeIZN5EsTjOpGQVCO
+ aeRH+C59aPenYW9ay/VuZsr7e5FpLnZIsvJV0wuhQ7vTpGNUXJZfO+HTIxngRsXZ0+cX
+ t07/OwHFbY08NLfKwDt2SvPbpiX5at/6IdvnMx64N9CJF3s+ww2qsHIlTBgEHQMhiPyF
+ qLk3BSxnoGdSyIcHyW/8k5DsYJd60BK5FsF/LX/9+ThDqdMx/oYU9115kJ0WyitaBeAt
+ iISIpkz9SHm1/6Ya8ds5xMcNwxzgPwqj6lBzqIbwsTdI5lmrWWuGgTfblXCxkeO3v731
+ HSQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379691; x=1725984491;
+ d=1e100.net; s=20230601; t=1725379719; x=1725984519;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Kb2hlNOkuGqsXxdmbrthsU/1g1vBxCB4j6840EtQwyY=;
- b=dhOYl3Kmpa1/dUkgynv/llRZ90ZD+LdYQ2Mt4sD3im2TMqm9eEBOg1FG/lglL4DNtj
- oShqG4xi8fcBEOgx966TQDBKbG9nJJY+dYbV3xa82dmx4cCK1eAJCBT5Dus5GbRHEJZu
- 5Ur5G5gSMcGwQYRaOPQoupGgk5oIdirCpTnJw6bsXcHtK5gmJmWZrfZ5pk2C6rQR0+48
- FlefGmu4VCfSeb3WNreIURS3q1o+Qypi3IHBi5uZwQcedQNE/48CIzsfAoj+13wDoxEM
- 9s8j9ipPtx27V1lhhULCjzbBnf0LpCfo9dFt2yBo4u48vhaaAjH+TYUGU6Zvjs3rQUtp
- kqHQ==
+ bh=S5c89sKQbPl5fIjq2ETHtRbYiVtxAIAEgqCXSPrAcUc=;
+ b=C3eXMOLezY0qwclwfq+PC/9As5HXbMPOYx4MA9ik+IB06rcczQfG3bl2itSOu3MzSa
+ qtaO0Mc26PMV55b9PehZlL2SG0jUVycJVTLjymvmeWXXuwsjVfSBpQIAn4b9n/X+MMeX
+ 25A6DdhCMOfr4kkYbFy2xs0Il9Z6MEJFO2EJvlulBEkw86pDw5EUphdf+BYH48Iu2/gO
+ v2FYOPNLERx1ZebJLvniroOWdJ1O6P0TATiAk1YQ7AV9w4fl97cxt+581idUNKPVuaT8
+ nBVkK4LTW6ctG99AjfWafBaZjjTzNvWN5nbCo+qqgq8nqJRYQb8+GYwe1uM1dfAnSS5d
+ hHIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF4WUE3ELbXeLwcsOiCMlRI1s2YrNVrncUZAvfhLL8cqHyA9fA9FrNwkLBf2uUUr7rCRsHgUcRdmG/@nongnu.org
-X-Gm-Message-State: AOJu0Yyd4YHcSwAq8+y9gOBg55aCkdvDFOIGypzviX5+hzyXIbH/Z2Gf
- kwdyR9pDWcj8qhmu8+OwGK54Ba7L9clCDtsCYGsobraFpp5Na46JdThpAbc1v5e0hvovIBwFgE8
- C
-X-Google-Smtp-Source: AGHT+IHrm2DsB4tKBWaFfPgtNsz4fOEYgQGYNQvN6Bq1pK/ghza3nG7qCHbXTGt2GSp1y3oNNzzMdg==
-X-Received: by 2002:a05:6512:2346:b0:52c:dc25:d706 with SMTP id
- 2adb3069b0e04-53546b9b8e8mr10968870e87.52.1725379690624; 
- Tue, 03 Sep 2024 09:08:10 -0700 (PDT)
+ AJvYcCVfMZewueOwIqtYikrYoOcH2zeqQcRLoMj3uKy3BpctRHaTLBRjRTGpw6AvVguLrQ74ZOJ11XTq2Ulx@nongnu.org
+X-Gm-Message-State: AOJu0YxSZXPXJVWrkydO+3A+5Rk+KGGzs8cRSp9nCxwtQn3+jD7PEQeM
+ Ymw9epWoUB9hrlPkh8goSlLQwYYCs17bCwfYmruU6+o1aJXsyZjaQxzve9G4h5Q=
+X-Google-Smtp-Source: AGHT+IFnHNAinU8LWdvnumAIbNjCiYLk8Sa5IgPfNMJOHjRqsx0Rcw8VYEKqQIb734+Q2+JXTAHhEg==
+X-Received: by 2002:a05:600c:1914:b0:426:647b:1bfc with SMTP id
+ 5b1f17b1804b1-42bbb440222mr89442075e9.30.1725379718888; 
+ Tue, 03 Sep 2024 09:08:38 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.10
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:10 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 09/53] hw/arm: Remove 'connex' and 'verdex' machines
-Date: Tue,  3 Sep 2024 17:07:07 +0100
-Message-Id: <20240903160751.4100218-10-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 32/53] hw/block: Remove OneNAND device
+Date: Tue,  3 Sep 2024 17:07:30 +0100
+Message-Id: <20240903160751.4100218-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,270 +94,936 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The connex and verdex machines have been deprecated since
-9.0 and so can be removed for the 9.2 release.
+The OneNAND devices were only used by n800/n810, so they
+can be removed now.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                             |   8 --
- docs/system/arm/gumstix.rst             |  21 ----
- docs/system/target-arm.rst              |   1 -
- configs/devices/arm-softmmu/default.mak |   1 -
- hw/arm/gumstix.c                        | 141 ------------------------
- hw/arm/Kconfig                          |   8 --
- hw/arm/meson.build                      |   1 -
- 7 files changed, 181 deletions(-)
- delete mode 100644 docs/system/arm/gumstix.rst
- delete mode 100644 hw/arm/gumstix.c
+ include/hw/block/flash.h |   3 -
+ hw/block/onenand.c       | 872 ---------------------------------------
+ hw/block/Kconfig         |   3 -
+ hw/block/meson.build     |   1 -
+ 4 files changed, 879 deletions(-)
+ delete mode 100644 hw/block/onenand.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cf297e6d626..13685711f61 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -743,14 +743,6 @@ S: Maintained
- F: hw/rtc/goldfish_rtc.c
- F: include/hw/rtc/goldfish_rtc.h
+diff --git a/include/hw/block/flash.h b/include/hw/block/flash.h
+index 2b5ccd92f46..b985c825a01 100644
+--- a/include/hw/block/flash.h
++++ b/include/hw/block/flash.h
+@@ -62,9 +62,6 @@ uint32_t nand_getbuswidth(DeviceState *dev);
+ #define NAND_MFR_HYNIX      0xad
+ #define NAND_MFR_MICRON     0x2c
  
--Gumstix
--M: Peter Maydell <peter.maydell@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
--L: qemu-arm@nongnu.org
--S: Odd Fixes
--F: hw/arm/gumstix.c
--F: docs/system/arm/gumstix.rst
+-/* onenand.c */
+-void *onenand_raw_otp(DeviceState *onenand_device);
 -
- i.MX25 PDK
- M: Peter Maydell <peter.maydell@linaro.org>
- R: Jean-Christophe Dubois <jcd@tribudubois.net>
-diff --git a/docs/system/arm/gumstix.rst b/docs/system/arm/gumstix.rst
+ /* ecc.c */
+ typedef struct {
+     uint8_t cp;     /* Column parity */
+diff --git a/hw/block/onenand.c b/hw/block/onenand.c
 deleted file mode 100644
-index cb373139dcb..00000000000
---- a/docs/system/arm/gumstix.rst
+index d8a6944027a..00000000000
+--- a/hw/block/onenand.c
 +++ /dev/null
-@@ -1,21 +0,0 @@
--Gumstix Connex and Verdex (``connex``, ``verdex``)
--==================================================
--
--These machines model the Gumstix Connex and Verdex boards.
--The Connex has a PXA255 CPU and the Verdex has a PXA270.
--
--Implemented devices:
--
-- * NOR flash
-- * SMC91C111 ethernet
-- * Interrupt controller
-- * DMA
-- * Timer
-- * GPIO
-- * MMC/SD card
-- * Fast infra-red communications port (FIR)
-- * LCD controller
-- * Synchronous serial ports (SPI)
-- * PCMCIA interface
-- * I2C
-- * I2S
-diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-index fde37385224..ddaf1675dcc 100644
---- a/docs/system/target-arm.rst
-+++ b/docs/system/target-arm.rst
-@@ -91,7 +91,6 @@ undocumented; you can get a complete list by running
-    arm/cubieboard
-    arm/emcraft-sf2
-    arm/musicpal
--   arm/gumstix
-    arm/mainstone
-    arm/kzm
-    arm/nseries
-diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
-index 6ed821be220..490ef4b3943 100644
---- a/configs/devices/arm-softmmu/default.mak
-+++ b/configs/devices/arm-softmmu/default.mak
-@@ -28,7 +28,6 @@
- # CONFIG_VEXPRESS=n
- # CONFIG_ZYNQ=n
- # CONFIG_MAINSTONE=n
--# CONFIG_GUMSTIX=n
- # CONFIG_Z2=n
- # CONFIG_NPCM7XX=n
- # CONFIG_COLLIE=n
-diff --git a/hw/arm/gumstix.c b/hw/arm/gumstix.c
-deleted file mode 100644
-index 91462691531..00000000000
---- a/hw/arm/gumstix.c
-+++ /dev/null
-@@ -1,141 +0,0 @@
+@@ -1,872 +0,0 @@
 -/*
-- * Gumstix Platforms
+- * OneNAND flash memories emulation.
 - *
-- * Copyright (c) 2007 by Thorsten Zitterell <info@bitmux.org>
+- * Copyright (C) 2008 Nokia Corporation
+- * Written by Andrzej Zaborowski <andrew@openedhand.com>
 - *
-- * Code based on spitz platform by Andrzej Zaborowski <balrog@zabor.org>
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 or
+- * (at your option) version 3 of the License.
 - *
-- * This code is licensed under the GNU GPL v2.
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
 - *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
-- */
--
--/* 
-- * Example usage:
-- * 
-- * connex:
-- * =======
-- * create image:
-- * # dd of=flash bs=1k count=16k if=/dev/zero
-- * # dd of=flash bs=1k conv=notrunc if=u-boot.bin
-- * # dd of=flash bs=1k conv=notrunc seek=256 if=rootfs.arm_nofpu.jffs2
-- * start it:
-- * # qemu-system-arm -M connex -pflash flash -monitor null -nographic
-- *
-- * verdex:
-- * =======
-- * create image:
-- * # dd of=flash bs=1k count=32k if=/dev/zero
-- * # dd of=flash bs=1k conv=notrunc if=u-boot.bin
-- * # dd of=flash bs=1k conv=notrunc seek=256 if=rootfs.arm_nofpu.jffs2
-- * # dd of=flash bs=1k conv=notrunc seek=31744 if=uImage
-- * start it:
-- * # qemu-system-arm -M verdex -pflash flash -monitor null -nographic -m 289
+- * You should have received a copy of the GNU General Public License along
+- * with this program; if not, see <http://www.gnu.org/licenses/>.
 - */
 -
 -#include "qemu/osdep.h"
--#include "qemu/units.h"
--#include "qemu/error-report.h"
--#include "hw/arm/pxa.h"
--#include "net/net.h"
+-#include "qapi/error.h"
+-#include "hw/hw.h"
 -#include "hw/block/flash.h"
--#include "hw/net/smc91c111.h"
--#include "hw/boards.h"
--#include "exec/address-spaces.h"
--#include "sysemu/qtest.h"
+-#include "hw/irq.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
+-#include "sysemu/block-backend.h"
+-#include "exec/memory.h"
+-#include "hw/sysbus.h"
+-#include "migration/vmstate.h"
+-#include "qemu/error-report.h"
+-#include "qemu/log.h"
+-#include "qemu/module.h"
+-#include "qom/object.h"
 -
--#define CONNEX_FLASH_SIZE   (16 * MiB)
--#define CONNEX_RAM_SIZE     (64 * MiB)
+-/* 11 for 2kB-page OneNAND ("2nd generation") and 10 for 1kB-page chips */
+-#define PAGE_SHIFT 11
 -
--#define VERDEX_FLASH_SIZE   (32 * MiB)
--#define VERDEX_RAM_SIZE     (256 * MiB)
+-/* Fixed */
+-#define BLOCK_SHIFT (PAGE_SHIFT + 6)
 -
--#define FLASH_SECTOR_SIZE   (128 * KiB)
+-#define TYPE_ONE_NAND "onenand"
+-OBJECT_DECLARE_SIMPLE_TYPE(OneNANDState, ONE_NAND)
 -
--static void connex_init(MachineState *machine)
--{
--    PXA2xxState *cpu;
--    DriveInfo *dinfo;
+-struct OneNANDState {
+-    SysBusDevice parent_obj;
 -
--    cpu = pxa255_init(CONNEX_RAM_SIZE);
+-    struct {
+-        uint16_t man;
+-        uint16_t dev;
+-        uint16_t ver;
+-    } id;
+-    int shift;
+-    hwaddr base;
+-    qemu_irq intr;
+-    qemu_irq rdy;
+-    BlockBackend *blk;
+-    BlockBackend *blk_cur;
+-    uint8_t *image;
+-    uint8_t *otp;
+-    uint8_t *current;
+-    MemoryRegion ram;
+-    MemoryRegion mapped_ram;
+-    uint8_t current_direction;
+-    uint8_t *boot[2];
+-    uint8_t *data[2][2];
+-    MemoryRegion iomem;
+-    MemoryRegion container;
+-    int cycle;
+-    int otpmode;
 -
--    dinfo = drive_get(IF_PFLASH, 0, 0);
--    if (!dinfo && !qtest_enabled()) {
--        error_report("A flash image must be given with the "
--                     "'pflash' parameter");
--        exit(1);
--    }
+-    uint16_t addr[8];
+-    uint16_t unladdr[8];
+-    int bufaddr;
+-    int count;
+-    uint16_t command;
+-    uint16_t config[2];
+-    uint16_t status;
+-    uint16_t intstatus;
+-    uint16_t wpstatus;
 -
--    /* Numonyx RC28F128J3F75 */
--    pflash_cfi01_register(0x00000000, "connext.rom", CONNEX_FLASH_SIZE,
--                          dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
--                          FLASH_SECTOR_SIZE, 2, 0, 0, 0, 0, 0);
+-    ECCState ecc;
 -
--    /* Interrupt line of NIC is connected to GPIO line 36 */
--    smc91c111_init(0x04000300, qdev_get_gpio_in(cpu->gpio, 36));
--}
--
--static void verdex_init(MachineState *machine)
--{
--    PXA2xxState *cpu;
--    DriveInfo *dinfo;
--
--    cpu = pxa270_init(VERDEX_RAM_SIZE, machine->cpu_type);
--
--    dinfo = drive_get(IF_PFLASH, 0, 0);
--    if (!dinfo && !qtest_enabled()) {
--        error_report("A flash image must be given with the "
--                     "'pflash' parameter");
--        exit(1);
--    }
--
--    /* Micron RC28F256P30TFA */
--    pflash_cfi01_register(0x00000000, "verdex.rom", VERDEX_FLASH_SIZE,
--                          dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
--                          FLASH_SECTOR_SIZE, 2, 0, 0, 0, 0, 0);
--
--    /* Interrupt line of NIC is connected to GPIO line 99 */
--    smc91c111_init(0x04000300, qdev_get_gpio_in(cpu->gpio, 99));
--}
--
--static void connex_class_init(ObjectClass *oc, void *data)
--{
--    MachineClass *mc = MACHINE_CLASS(oc);
--
--    mc->desc = "Gumstix Connex (PXA255)";
--    mc->init = connex_init;
--    mc->ignore_memory_transaction_failures = true;
--    mc->deprecation_reason = "machine is old and unmaintained";
--}
--
--static const TypeInfo connex_type = {
--    .name = MACHINE_TYPE_NAME("connex"),
--    .parent = TYPE_MACHINE,
--    .class_init = connex_class_init,
+-    int density_mask;
+-    int secs;
+-    int secs_cur;
+-    int blocks;
+-    uint8_t *blockwp;
 -};
 -
--static void verdex_class_init(ObjectClass *oc, void *data)
--{
--    MachineClass *mc = MACHINE_CLASS(oc);
--
--    mc->desc = "Gumstix Verdex Pro XL6P COMs (PXA270)";
--    mc->init = verdex_init;
--    mc->ignore_memory_transaction_failures = true;
--    mc->deprecation_reason = "machine is old and unmaintained";
--    mc->default_cpu_type = ARM_CPU_TYPE_NAME("pxa270-c0");
--}
--
--static const TypeInfo verdex_type = {
--    .name = MACHINE_TYPE_NAME("verdex"),
--    .parent = TYPE_MACHINE,
--    .class_init = verdex_class_init,
+-enum {
+-    ONEN_BUF_BLOCK = 0,
+-    ONEN_BUF_BLOCK2 = 1,
+-    ONEN_BUF_DEST_BLOCK = 2,
+-    ONEN_BUF_DEST_PAGE = 3,
+-    ONEN_BUF_PAGE = 7,
 -};
 -
--static void gumstix_machine_init(void)
+-enum {
+-    ONEN_ERR_CMD = 1 << 10,
+-    ONEN_ERR_ERASE = 1 << 11,
+-    ONEN_ERR_PROG = 1 << 12,
+-    ONEN_ERR_LOAD = 1 << 13,
+-};
+-
+-enum {
+-    ONEN_INT_RESET = 1 << 4,
+-    ONEN_INT_ERASE = 1 << 5,
+-    ONEN_INT_PROG = 1 << 6,
+-    ONEN_INT_LOAD = 1 << 7,
+-    ONEN_INT = 1 << 15,
+-};
+-
+-enum {
+-    ONEN_LOCK_LOCKTIGHTEN = 1 << 0,
+-    ONEN_LOCK_LOCKED = 1 << 1,
+-    ONEN_LOCK_UNLOCKED = 1 << 2,
+-};
+-
+-static void onenand_mem_setup(OneNANDState *s)
 -{
--    type_register_static(&connex_type);
--    type_register_static(&verdex_type);
+-    /* XXX: We should use IO_MEM_ROMD but we broke it earlier...
+-     * Both 0x0000 ... 0x01ff and 0x8000 ... 0x800f can be used to
+-     * write boot commands.  Also take note of the BWPS bit.  */
+-    memory_region_init(&s->container, OBJECT(s), "onenand",
+-                       0x10000 << s->shift);
+-    memory_region_add_subregion(&s->container, 0, &s->iomem);
+-    memory_region_init_alias(&s->mapped_ram, OBJECT(s), "onenand-mapped-ram",
+-                             &s->ram, 0x0200 << s->shift,
+-                             0xbe00 << s->shift);
+-    memory_region_add_subregion_overlap(&s->container,
+-                                        0x0200 << s->shift,
+-                                        &s->mapped_ram,
+-                                        1);
 -}
 -
--type_init(gumstix_machine_init)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 3261618ea74..d3e07262b14 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -184,14 +184,6 @@ config PXA2XX
-     select USB_OHCI_SYSBUS
-     select PCMCIA
- 
--config GUMSTIX
--    bool
--    default y
--    depends on TCG && ARM
--    select PFLASH_CFI01
--    select SMC91C111
--    select PXA2XX
+-static void onenand_intr_update(OneNANDState *s)
+-{
+-    qemu_set_irq(s->intr, ((s->intstatus >> 15) ^ (~s->config[0] >> 6)) & 1);
+-}
 -
- config Z2
+-static int onenand_pre_save(void *opaque)
+-{
+-    OneNANDState *s = opaque;
+-    if (s->current == s->otp) {
+-        s->current_direction = 1;
+-    } else if (s->current == s->image) {
+-        s->current_direction = 2;
+-    } else {
+-        s->current_direction = 0;
+-    }
+-
+-    return 0;
+-}
+-
+-static int onenand_post_load(void *opaque, int version_id)
+-{
+-    OneNANDState *s = opaque;
+-    switch (s->current_direction) {
+-    case 0:
+-        break;
+-    case 1:
+-        s->current = s->otp;
+-        break;
+-    case 2:
+-        s->current = s->image;
+-        break;
+-    default:
+-        return -1;
+-    }
+-    onenand_intr_update(s);
+-    return 0;
+-}
+-
+-static const VMStateDescription vmstate_onenand = {
+-    .name = "onenand",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .pre_save = onenand_pre_save,
+-    .post_load = onenand_post_load,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT8(current_direction, OneNANDState),
+-        VMSTATE_INT32(cycle, OneNANDState),
+-        VMSTATE_INT32(otpmode, OneNANDState),
+-        VMSTATE_UINT16_ARRAY(addr, OneNANDState, 8),
+-        VMSTATE_UINT16_ARRAY(unladdr, OneNANDState, 8),
+-        VMSTATE_INT32(bufaddr, OneNANDState),
+-        VMSTATE_INT32(count, OneNANDState),
+-        VMSTATE_UINT16(command, OneNANDState),
+-        VMSTATE_UINT16_ARRAY(config, OneNANDState, 2),
+-        VMSTATE_UINT16(status, OneNANDState),
+-        VMSTATE_UINT16(intstatus, OneNANDState),
+-        VMSTATE_UINT16(wpstatus, OneNANDState),
+-        VMSTATE_INT32(secs_cur, OneNANDState),
+-        VMSTATE_PARTIAL_VBUFFER(blockwp, OneNANDState, blocks),
+-        VMSTATE_UINT8(ecc.cp, OneNANDState),
+-        VMSTATE_UINT16_ARRAY(ecc.lp, OneNANDState, 2),
+-        VMSTATE_UINT16(ecc.count, OneNANDState),
+-        VMSTATE_BUFFER_POINTER_UNSAFE(otp, OneNANDState, 0,
+-            ((64 + 2) << PAGE_SHIFT)),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-/* Hot reset (Reset OneNAND command) or warm reset (RP pin low) */
+-static void onenand_reset(OneNANDState *s, int cold)
+-{
+-    memset(&s->addr, 0, sizeof(s->addr));
+-    s->command = 0;
+-    s->count = 1;
+-    s->bufaddr = 0;
+-    s->config[0] = 0x40c0;
+-    s->config[1] = 0x0000;
+-    onenand_intr_update(s);
+-    qemu_irq_raise(s->rdy);
+-    s->status = 0x0000;
+-    s->intstatus = cold ? 0x8080 : 0x8010;
+-    s->unladdr[0] = 0;
+-    s->unladdr[1] = 0;
+-    s->wpstatus = 0x0002;
+-    s->cycle = 0;
+-    s->otpmode = 0;
+-    s->blk_cur = s->blk;
+-    s->current = s->image;
+-    s->secs_cur = s->secs;
+-
+-    if (cold) {
+-        /* Lock the whole flash */
+-        memset(s->blockwp, ONEN_LOCK_LOCKED, s->blocks);
+-
+-        if (s->blk_cur && blk_pread(s->blk_cur, 0, 8 << BDRV_SECTOR_BITS,
+-                                    s->boot[0], 0) < 0) {
+-            hw_error("%s: Loading the BootRAM failed.\n", __func__);
+-        }
+-    }
+-}
+-
+-static void onenand_system_reset(DeviceState *dev)
+-{
+-    OneNANDState *s = ONE_NAND(dev);
+-
+-    onenand_reset(s, 1);
+-}
+-
+-static inline int onenand_load_main(OneNANDState *s, int sec, int secn,
+-                void *dest)
+-{
+-    assert(UINT32_MAX >> BDRV_SECTOR_BITS > sec);
+-    assert(UINT32_MAX >> BDRV_SECTOR_BITS > secn);
+-    if (s->blk_cur) {
+-        return blk_pread(s->blk_cur, sec << BDRV_SECTOR_BITS,
+-                         secn << BDRV_SECTOR_BITS, dest, 0) < 0;
+-    } else if (sec + secn > s->secs_cur) {
+-        return 1;
+-    }
+-
+-    memcpy(dest, s->current + (sec << 9), secn << 9);
+-
+-    return 0;
+-}
+-
+-static inline int onenand_prog_main(OneNANDState *s, int sec, int secn,
+-                void *src)
+-{
+-    int result = 0;
+-
+-    if (secn > 0) {
+-        uint32_t size = secn << BDRV_SECTOR_BITS;
+-        uint32_t offset = sec << BDRV_SECTOR_BITS;
+-        assert(UINT32_MAX >> BDRV_SECTOR_BITS > sec);
+-        assert(UINT32_MAX >> BDRV_SECTOR_BITS > secn);
+-        const uint8_t *sp = (const uint8_t *)src;
+-        uint8_t *dp = 0;
+-        if (s->blk_cur) {
+-            dp = g_malloc(size);
+-            if (!dp || blk_pread(s->blk_cur, offset, size, dp, 0) < 0) {
+-                result = 1;
+-            }
+-        } else {
+-            if (sec + secn > s->secs_cur) {
+-                result = 1;
+-            } else {
+-                dp = (uint8_t *)s->current + offset;
+-            }
+-        }
+-        if (!result) {
+-            uint32_t i;
+-            for (i = 0; i < size; i++) {
+-                dp[i] &= sp[i];
+-            }
+-            if (s->blk_cur) {
+-                result = blk_pwrite(s->blk_cur, offset, size, dp, 0) < 0;
+-            }
+-        }
+-        if (dp && s->blk_cur) {
+-            g_free(dp);
+-        }
+-    }
+-
+-    return result;
+-}
+-
+-static inline int onenand_load_spare(OneNANDState *s, int sec, int secn,
+-                void *dest)
+-{
+-    uint8_t buf[512];
+-
+-    if (s->blk_cur) {
+-        uint32_t offset = (s->secs_cur + (sec >> 5)) << BDRV_SECTOR_BITS;
+-        if (blk_pread(s->blk_cur, offset, BDRV_SECTOR_SIZE, buf, 0) < 0) {
+-            return 1;
+-        }
+-        memcpy(dest, buf + ((sec & 31) << 4), secn << 4);
+-    } else if (sec + secn > s->secs_cur) {
+-        return 1;
+-    } else {
+-        memcpy(dest, s->current + (s->secs_cur << 9) + (sec << 4), secn << 4);
+-    }
+-
+-    return 0;
+-}
+-
+-static inline int onenand_prog_spare(OneNANDState *s, int sec, int secn,
+-                void *src)
+-{
+-    int result = 0;
+-    if (secn > 0) {
+-        const uint8_t *sp = (const uint8_t *)src;
+-        uint8_t *dp = 0, *dpp = 0;
+-        uint32_t offset = (s->secs_cur + (sec >> 5)) << BDRV_SECTOR_BITS;
+-        assert(UINT32_MAX >> BDRV_SECTOR_BITS > s->secs_cur + (sec >> 5));
+-        if (s->blk_cur) {
+-            dp = g_malloc(512);
+-            if (!dp
+-                || blk_pread(s->blk_cur, offset, BDRV_SECTOR_SIZE, dp, 0) < 0) {
+-                result = 1;
+-            } else {
+-                dpp = dp + ((sec & 31) << 4);
+-            }
+-        } else {
+-            if (sec + secn > s->secs_cur) {
+-                result = 1;
+-            } else {
+-                dpp = s->current + (s->secs_cur << 9) + (sec << 4);
+-            }
+-        }
+-        if (!result) {
+-            uint32_t i;
+-            for (i = 0; i < (secn << 4); i++) {
+-                dpp[i] &= sp[i];
+-            }
+-            if (s->blk_cur) {
+-                result = blk_pwrite(s->blk_cur, offset, BDRV_SECTOR_SIZE, dp,
+-                                    0) < 0;
+-            }
+-        }
+-        g_free(dp);
+-    }
+-    return result;
+-}
+-
+-static inline int onenand_erase(OneNANDState *s, int sec, int num)
+-{
+-    uint8_t *blankbuf, *tmpbuf;
+-
+-    blankbuf = g_malloc(512);
+-    tmpbuf = g_malloc(512);
+-    memset(blankbuf, 0xff, 512);
+-    for (; num > 0; num--, sec++) {
+-        if (s->blk_cur) {
+-            int erasesec = s->secs_cur + (sec >> 5);
+-            if (blk_pwrite(s->blk_cur, sec << BDRV_SECTOR_BITS,
+-                           BDRV_SECTOR_SIZE, blankbuf, 0) < 0) {
+-                goto fail;
+-            }
+-            if (blk_pread(s->blk_cur, erasesec << BDRV_SECTOR_BITS,
+-                          BDRV_SECTOR_SIZE, tmpbuf, 0) < 0) {
+-                goto fail;
+-            }
+-            memcpy(tmpbuf + ((sec & 31) << 4), blankbuf, 1 << 4);
+-            if (blk_pwrite(s->blk_cur, erasesec << BDRV_SECTOR_BITS,
+-                           BDRV_SECTOR_SIZE, tmpbuf, 0) < 0) {
+-                goto fail;
+-            }
+-        } else {
+-            if (sec + 1 > s->secs_cur) {
+-                goto fail;
+-            }
+-            memcpy(s->current + (sec << 9), blankbuf, 512);
+-            memcpy(s->current + (s->secs_cur << 9) + (sec << 4),
+-                   blankbuf, 1 << 4);
+-        }
+-    }
+-
+-    g_free(tmpbuf);
+-    g_free(blankbuf);
+-    return 0;
+-
+-fail:
+-    g_free(tmpbuf);
+-    g_free(blankbuf);
+-    return 1;
+-}
+-
+-static void onenand_command(OneNANDState *s)
+-{
+-    int b;
+-    int sec;
+-    void *buf;
+-#define SETADDR(block, page)                                \
+-    sec = (s->addr[page] & 3) +                             \
+-          ((((s->addr[page] >> 2) & 0x3f) +                 \
+-            (((s->addr[block] & 0xfff) |                    \
+-              (s->addr[block] >> 15 ? s->density_mask : 0)) \
+-             << 6))                                         \
+-           << (PAGE_SHIFT - 9));
+-#define SETBUF_M()                                                           \
+-    buf = (s->bufaddr & 8) ? s->data[(s->bufaddr >> 2) & 1][0] : s->boot[0]; \
+-    buf += (s->bufaddr & 3) << 9;
+-#define SETBUF_S()                                          \
+-    buf = (s->bufaddr & 8) ?                                \
+-            s->data[(s->bufaddr >> 2) & 1][1] : s->boot[1]; \
+-    buf += (s->bufaddr & 3) << 4;
+-
+-    switch (s->command) {
+-    case 0x00:  /* Load single/multiple sector data unit into buffer */
+-        SETADDR(ONEN_BUF_BLOCK, ONEN_BUF_PAGE)
+-
+-        SETBUF_M()
+-        if (onenand_load_main(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_LOAD;
+-
+-#if 0
+-        SETBUF_S()
+-        if (onenand_load_spare(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_LOAD;
+-#endif
+-
+-        /* TODO: if (s->bufaddr & 3) + s->count was > 4 (2k-pages)
+-         * or    if (s->bufaddr & 1) + s->count was > 2 (1k-pages)
+-         * then we need two split the read/write into two chunks.
+-         */
+-        s->intstatus |= ONEN_INT | ONEN_INT_LOAD;
+-        break;
+-    case 0x13:  /* Load single/multiple spare sector into buffer */
+-        SETADDR(ONEN_BUF_BLOCK, ONEN_BUF_PAGE)
+-
+-        SETBUF_S()
+-        if (onenand_load_spare(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_LOAD;
+-
+-        /* TODO: if (s->bufaddr & 3) + s->count was > 4 (2k-pages)
+-         * or    if (s->bufaddr & 1) + s->count was > 2 (1k-pages)
+-         * then we need two split the read/write into two chunks.
+-         */
+-        s->intstatus |= ONEN_INT | ONEN_INT_LOAD;
+-        break;
+-    case 0x80:  /* Program single/multiple sector data unit from buffer */
+-        SETADDR(ONEN_BUF_BLOCK, ONEN_BUF_PAGE)
+-
+-        SETBUF_M()
+-        if (onenand_prog_main(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_PROG;
+-
+-#if 0
+-        SETBUF_S()
+-        if (onenand_prog_spare(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_PROG;
+-#endif
+-
+-        /* TODO: if (s->bufaddr & 3) + s->count was > 4 (2k-pages)
+-         * or    if (s->bufaddr & 1) + s->count was > 2 (1k-pages)
+-         * then we need two split the read/write into two chunks.
+-         */
+-        s->intstatus |= ONEN_INT | ONEN_INT_PROG;
+-        break;
+-    case 0x1a:  /* Program single/multiple spare area sector from buffer */
+-        SETADDR(ONEN_BUF_BLOCK, ONEN_BUF_PAGE)
+-
+-        SETBUF_S()
+-        if (onenand_prog_spare(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_PROG;
+-
+-        /* TODO: if (s->bufaddr & 3) + s->count was > 4 (2k-pages)
+-         * or    if (s->bufaddr & 1) + s->count was > 2 (1k-pages)
+-         * then we need two split the read/write into two chunks.
+-         */
+-        s->intstatus |= ONEN_INT | ONEN_INT_PROG;
+-        break;
+-    case 0x1b:  /* Copy-back program */
+-        SETBUF_S()
+-
+-        SETADDR(ONEN_BUF_BLOCK, ONEN_BUF_PAGE)
+-        if (onenand_load_main(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_PROG;
+-
+-        SETADDR(ONEN_BUF_DEST_BLOCK, ONEN_BUF_DEST_PAGE)
+-        if (onenand_prog_main(s, sec, s->count, buf))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_PROG;
+-
+-        /* TODO: spare areas */
+-
+-        s->intstatus |= ONEN_INT | ONEN_INT_PROG;
+-        break;
+-
+-    case 0x23:  /* Unlock NAND array block(s) */
+-        s->intstatus |= ONEN_INT;
+-
+-        /* XXX the previous (?) area should be locked automatically */
+-        for (b = s->unladdr[0]; b <= s->unladdr[1]; b ++) {
+-            if (b >= s->blocks) {
+-                s->status |= ONEN_ERR_CMD;
+-                break;
+-            }
+-            if (s->blockwp[b] == ONEN_LOCK_LOCKTIGHTEN)
+-                break;
+-
+-            s->wpstatus = s->blockwp[b] = ONEN_LOCK_UNLOCKED;
+-        }
+-        break;
+-    case 0x27:  /* Unlock All NAND array blocks */
+-        s->intstatus |= ONEN_INT;
+-
+-        for (b = 0; b < s->blocks; b ++) {
+-            if (s->blockwp[b] == ONEN_LOCK_LOCKTIGHTEN)
+-                break;
+-
+-            s->wpstatus = s->blockwp[b] = ONEN_LOCK_UNLOCKED;
+-        }
+-        break;
+-
+-    case 0x2a:  /* Lock NAND array block(s) */
+-        s->intstatus |= ONEN_INT;
+-
+-        for (b = s->unladdr[0]; b <= s->unladdr[1]; b ++) {
+-            if (b >= s->blocks) {
+-                s->status |= ONEN_ERR_CMD;
+-                break;
+-            }
+-            if (s->blockwp[b] == ONEN_LOCK_LOCKTIGHTEN)
+-                break;
+-
+-            s->wpstatus = s->blockwp[b] = ONEN_LOCK_LOCKED;
+-        }
+-        break;
+-    case 0x2c:  /* Lock-tight NAND array block(s) */
+-        s->intstatus |= ONEN_INT;
+-
+-        for (b = s->unladdr[0]; b <= s->unladdr[1]; b ++) {
+-            if (b >= s->blocks) {
+-                s->status |= ONEN_ERR_CMD;
+-                break;
+-            }
+-            if (s->blockwp[b] == ONEN_LOCK_UNLOCKED)
+-                continue;
+-
+-            s->wpstatus = s->blockwp[b] = ONEN_LOCK_LOCKTIGHTEN;
+-        }
+-        break;
+-
+-    case 0x71:  /* Erase-Verify-Read */
+-        s->intstatus |= ONEN_INT;
+-        break;
+-    case 0x95:  /* Multi-block erase */
+-        qemu_irq_pulse(s->intr);
+-        /* Fall through.  */
+-    case 0x94:  /* Block erase */
+-        sec = ((s->addr[ONEN_BUF_BLOCK] & 0xfff) |
+-                        (s->addr[ONEN_BUF_BLOCK] >> 15 ? s->density_mask : 0))
+-                << (BLOCK_SHIFT - 9);
+-        if (onenand_erase(s, sec, 1 << (BLOCK_SHIFT - 9)))
+-            s->status |= ONEN_ERR_CMD | ONEN_ERR_ERASE;
+-
+-        s->intstatus |= ONEN_INT | ONEN_INT_ERASE;
+-        break;
+-    case 0xb0:  /* Erase suspend */
+-        break;
+-    case 0x30:  /* Erase resume */
+-        s->intstatus |= ONEN_INT | ONEN_INT_ERASE;
+-        break;
+-
+-    case 0xf0:  /* Reset NAND Flash core */
+-        onenand_reset(s, 0);
+-        break;
+-    case 0xf3:  /* Reset OneNAND */
+-        onenand_reset(s, 0);
+-        break;
+-
+-    case 0x65:  /* OTP Access */
+-        s->intstatus |= ONEN_INT;
+-        s->blk_cur = NULL;
+-        s->current = s->otp;
+-        s->secs_cur = 1 << (BLOCK_SHIFT - 9);
+-        s->addr[ONEN_BUF_BLOCK] = 0;
+-        s->otpmode = 1;
+-        break;
+-
+-    default:
+-        s->status |= ONEN_ERR_CMD;
+-        s->intstatus |= ONEN_INT;
+-        qemu_log_mask(LOG_GUEST_ERROR, "unknown OneNAND command %x\n",
+-                      s->command);
+-    }
+-
+-    onenand_intr_update(s);
+-}
+-
+-static uint64_t onenand_read(void *opaque, hwaddr addr,
+-                             unsigned size)
+-{
+-    OneNANDState *s = (OneNANDState *) opaque;
+-    int offset = addr >> s->shift;
+-
+-    switch (offset) {
+-    case 0x0000 ... 0xbffe:
+-        return lduw_le_p(s->boot[0] + addr);
+-
+-    case 0xf000:  /* Manufacturer ID */
+-        return s->id.man;
+-    case 0xf001:  /* Device ID */
+-        return s->id.dev;
+-    case 0xf002:  /* Version ID */
+-        return s->id.ver;
+-    /* TODO: get the following values from a real chip!  */
+-    case 0xf003:  /* Data Buffer size */
+-        return 1 << PAGE_SHIFT;
+-    case 0xf004:  /* Boot Buffer size */
+-        return 0x200;
+-    case 0xf005:  /* Amount of buffers */
+-        return 1 | (2 << 8);
+-    case 0xf006:  /* Technology */
+-        return 0;
+-
+-    case 0xf100 ... 0xf107:  /* Start addresses */
+-        return s->addr[offset - 0xf100];
+-
+-    case 0xf200:  /* Start buffer */
+-        return (s->bufaddr << 8) | ((s->count - 1) & (1 << (PAGE_SHIFT - 10)));
+-
+-    case 0xf220:  /* Command */
+-        return s->command;
+-    case 0xf221:  /* System Configuration 1 */
+-        return s->config[0] & 0xffe0;
+-    case 0xf222:  /* System Configuration 2 */
+-        return s->config[1];
+-
+-    case 0xf240:  /* Controller Status */
+-        return s->status;
+-    case 0xf241:  /* Interrupt */
+-        return s->intstatus;
+-    case 0xf24c:  /* Unlock Start Block Address */
+-        return s->unladdr[0];
+-    case 0xf24d:  /* Unlock End Block Address */
+-        return s->unladdr[1];
+-    case 0xf24e:  /* Write Protection Status */
+-        return s->wpstatus;
+-
+-    case 0xff00:  /* ECC Status */
+-        return 0x00;
+-    case 0xff01:  /* ECC Result of main area data */
+-    case 0xff02:  /* ECC Result of spare area data */
+-    case 0xff03:  /* ECC Result of main area data */
+-    case 0xff04:  /* ECC Result of spare area data */
+-        qemu_log_mask(LOG_UNIMP,
+-                      "onenand: ECC result registers unimplemented\n");
+-        return 0x0000;
+-    }
+-
+-    qemu_log_mask(LOG_GUEST_ERROR, "read of unknown OneNAND register 0x%x\n",
+-                  offset);
+-    return 0;
+-}
+-
+-static void onenand_write(void *opaque, hwaddr addr,
+-                          uint64_t value, unsigned size)
+-{
+-    OneNANDState *s = (OneNANDState *) opaque;
+-    int offset = addr >> s->shift;
+-    int sec;
+-
+-    switch (offset) {
+-    case 0x0000 ... 0x01ff:
+-    case 0x8000 ... 0x800f:
+-        if (s->cycle) {
+-            s->cycle = 0;
+-
+-            if (value == 0x0000) {
+-                SETADDR(ONEN_BUF_BLOCK, ONEN_BUF_PAGE)
+-                onenand_load_main(s, sec,
+-                                1 << (PAGE_SHIFT - 9), s->data[0][0]);
+-                s->addr[ONEN_BUF_PAGE] += 4;
+-                s->addr[ONEN_BUF_PAGE] &= 0xff;
+-            }
+-            break;
+-        }
+-
+-        switch (value) {
+-        case 0x00f0:  /* Reset OneNAND */
+-            onenand_reset(s, 0);
+-            break;
+-
+-        case 0x00e0:  /* Load Data into Buffer */
+-            s->cycle = 1;
+-            break;
+-
+-        case 0x0090:  /* Read Identification Data */
+-            memset(s->boot[0], 0, 3 << s->shift);
+-            s->boot[0][0 << s->shift] = s->id.man & 0xff;
+-            s->boot[0][1 << s->shift] = s->id.dev & 0xff;
+-            s->boot[0][2 << s->shift] = s->wpstatus & 0xff;
+-            break;
+-
+-        default:
+-            qemu_log_mask(LOG_GUEST_ERROR,
+-                          "unknown OneNAND boot command %" PRIx64 "\n",
+-                          value);
+-        }
+-        break;
+-
+-    case 0xf100 ... 0xf107:  /* Start addresses */
+-        s->addr[offset - 0xf100] = value;
+-        break;
+-
+-    case 0xf200:  /* Start buffer */
+-        s->bufaddr = (value >> 8) & 0xf;
+-        if (PAGE_SHIFT == 11)
+-            s->count = (value & 3) ?: 4;
+-        else if (PAGE_SHIFT == 10)
+-            s->count = (value & 1) ?: 2;
+-        break;
+-
+-    case 0xf220:  /* Command */
+-        if (s->intstatus & (1 << 15))
+-            break;
+-        s->command = value;
+-        onenand_command(s);
+-        break;
+-    case 0xf221:  /* System Configuration 1 */
+-        s->config[0] = value;
+-        onenand_intr_update(s);
+-        qemu_set_irq(s->rdy, (s->config[0] >> 7) & 1);
+-        break;
+-    case 0xf222:  /* System Configuration 2 */
+-        s->config[1] = value;
+-        break;
+-
+-    case 0xf241:  /* Interrupt */
+-        s->intstatus &= value;
+-        if ((1 << 15) & ~s->intstatus)
+-            s->status &= ~(ONEN_ERR_CMD | ONEN_ERR_ERASE |
+-                            ONEN_ERR_PROG | ONEN_ERR_LOAD);
+-        onenand_intr_update(s);
+-        break;
+-    case 0xf24c:  /* Unlock Start Block Address */
+-        s->unladdr[0] = value & (s->blocks - 1);
+-        /* For some reason we have to set the end address to by default
+-         * be same as start because the software forgets to write anything
+-         * in there.  */
+-        s->unladdr[1] = value & (s->blocks - 1);
+-        break;
+-    case 0xf24d:  /* Unlock End Block Address */
+-        s->unladdr[1] = value & (s->blocks - 1);
+-        break;
+-
+-    default:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "write to unknown OneNAND register 0x%x\n",
+-                      offset);
+-    }
+-}
+-
+-static const MemoryRegionOps onenand_ops = {
+-    .read = onenand_read,
+-    .write = onenand_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-};
+-
+-static void onenand_realize(DeviceState *dev, Error **errp)
+-{
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+-    OneNANDState *s = ONE_NAND(dev);
+-    uint32_t size = 1 << (24 + ((s->id.dev >> 4) & 7));
+-    void *ram;
+-    Error *local_err = NULL;
+-
+-    s->base = (hwaddr)-1;
+-    s->rdy = NULL;
+-    s->blocks = size >> BLOCK_SHIFT;
+-    s->secs = size >> 9;
+-    s->blockwp = g_malloc(s->blocks);
+-    s->density_mask = (s->id.dev & 0x08)
+-        ? (1 << (6 + ((s->id.dev >> 4) & 7))) : 0;
+-    memory_region_init_io(&s->iomem, OBJECT(s), &onenand_ops, s, "onenand",
+-                          0x10000 << s->shift);
+-    if (!s->blk) {
+-        s->image = memset(g_malloc(size + (size >> 5)),
+-                          0xff, size + (size >> 5));
+-    } else {
+-        if (!blk_supports_write_perm(s->blk)) {
+-            error_setg(errp, "Can't use a read-only drive");
+-            return;
+-        }
+-        blk_set_perm(s->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
+-                     BLK_PERM_ALL, &local_err);
+-        if (local_err) {
+-            error_propagate(errp, local_err);
+-            return;
+-        }
+-        s->blk_cur = s->blk;
+-    }
+-    s->otp = memset(g_malloc((64 + 2) << PAGE_SHIFT),
+-                    0xff, (64 + 2) << PAGE_SHIFT);
+-    memory_region_init_ram_nomigrate(&s->ram, OBJECT(s), "onenand.ram",
+-                           0xc000 << s->shift, &error_fatal);
+-    vmstate_register_ram_global(&s->ram);
+-    ram = memory_region_get_ram_ptr(&s->ram);
+-    s->boot[0] = ram + (0x0000 << s->shift);
+-    s->boot[1] = ram + (0x8000 << s->shift);
+-    s->data[0][0] = ram + ((0x0200 + (0 << (PAGE_SHIFT - 1))) << s->shift);
+-    s->data[0][1] = ram + ((0x8010 + (0 << (PAGE_SHIFT - 6))) << s->shift);
+-    s->data[1][0] = ram + ((0x0200 + (1 << (PAGE_SHIFT - 1))) << s->shift);
+-    s->data[1][1] = ram + ((0x8010 + (1 << (PAGE_SHIFT - 6))) << s->shift);
+-    onenand_mem_setup(s);
+-    sysbus_init_irq(sbd, &s->intr);
+-    sysbus_init_mmio(sbd, &s->container);
+-    vmstate_register(VMSTATE_IF(dev),
+-                     ((s->shift & 0x7f) << 24)
+-                     | ((s->id.man & 0xff) << 16)
+-                     | ((s->id.dev & 0xff) << 8)
+-                     | (s->id.ver & 0xff),
+-                     &vmstate_onenand, s);
+-}
+-
+-static Property onenand_properties[] = {
+-    DEFINE_PROP_UINT16("manufacturer_id", OneNANDState, id.man, 0),
+-    DEFINE_PROP_UINT16("device_id", OneNANDState, id.dev, 0),
+-    DEFINE_PROP_UINT16("version_id", OneNANDState, id.ver, 0),
+-    DEFINE_PROP_INT32("shift", OneNANDState, shift, 0),
+-    DEFINE_PROP_DRIVE("drive", OneNANDState, blk),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void onenand_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    dc->realize = onenand_realize;
+-    dc->reset = onenand_system_reset;
+-    device_class_set_props(dc, onenand_properties);
+-}
+-
+-static const TypeInfo onenand_info = {
+-    .name          = TYPE_ONE_NAND,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(OneNANDState),
+-    .class_init    = onenand_class_init,
+-};
+-
+-static void onenand_register_types(void)
+-{
+-    type_register_static(&onenand_info);
+-}
+-
+-void *onenand_raw_otp(DeviceState *onenand_device)
+-{
+-    OneNANDState *s = ONE_NAND(onenand_device);
+-
+-    return s->otp;
+-}
+-
+-type_init(onenand_register_types)
+diff --git a/hw/block/Kconfig b/hw/block/Kconfig
+index 9e8f28f9824..002d255dced 100644
+--- a/hw/block/Kconfig
++++ b/hw/block/Kconfig
+@@ -25,9 +25,6 @@ config PFLASH_CFI02
+ config ECC
      bool
-     default y
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 4a8fd54586b..7b474ad518b 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -64,7 +64,6 @@ arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
- system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
- system_ss.add(when: 'CONFIG_COLLIE', if_true: files('collie.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
--system_ss.add(when: 'CONFIG_GUMSTIX', if_true: files('gumstix.c'))
- system_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap2.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
+ 
+-config ONENAND
+-    bool
+-
+ config TC58128
+     bool
+ 
+diff --git a/hw/block/meson.build b/hw/block/meson.build
+index 8aa4dc3893c..74c8eb9e735 100644
+--- a/hw/block/meson.build
++++ b/hw/block/meson.build
+@@ -8,7 +8,6 @@ system_ss.add(when: 'CONFIG_FDC', if_true: files('fdc.c'))
+ system_ss.add(when: 'CONFIG_FDC_ISA', if_true: files('fdc-isa.c'))
+ system_ss.add(when: 'CONFIG_FDC_SYSBUS', if_true: files('fdc-sysbus.c'))
+ system_ss.add(when: 'CONFIG_NAND', if_true: files('nand.c'))
+-system_ss.add(when: 'CONFIG_ONENAND', if_true: files('onenand.c'))
+ system_ss.add(when: 'CONFIG_PFLASH_CFI01', if_true: files('pflash_cfi01.c'))
+ system_ss.add(when: 'CONFIG_PFLASH_CFI02', if_true: files('pflash_cfi02.c'))
+ system_ss.add(when: 'CONFIG_SSI_M25P80', if_true: files('m25p80.c'))
 -- 
 2.34.1
 
