@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0BE7CD37AA
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D88FCD37AA
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slZlu-0001Lb-OV; Tue, 03 Sep 2024 16:05:02 -0400
+	id 1slZlt-0001AA-G3; Tue, 03 Sep 2024 16:05:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slZlp-00010U-Bi
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slZlp-0000zi-4l
  for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:04:57 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slZlj-0003NY-9G
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:04:57 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42c7bc97423so36976235e9.0
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 13:04:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slZln-0003P5-IJ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:04:56 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-428e1915e18so47840395e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 13:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725393889; x=1725998689; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OY76Qt8T9LK/vUD7hekByl1wPB2B9FXxv8XnTxxgVPw=;
- b=B/ZOxTpuh2krsFR1iyl2QpP+beC/sDGN8akad8Pli4PxIuh2GCHi5l6pZUVSgvrwA+
- RsXrEqJU0+lt9uFKC9/3Bi9WK3E7Fs20pH17JXPEzp9HXqbtlbvGlLVjWfYh6nnst3/s
- aut5VjKa5OG/hiU1sjJ7G+rW0riOYUriSUwAc1me5hfmaC2tyk928Ho+61H2+9A3F/NI
- G6hxgtt+hErSVzDw3Ui/DFPdpJWSoENUBbmax+D564ffRLdDsRH0y8Pb1r9LEIMRadd+
- ttJfp17+W1fyBo1bgdeU3M6P5g9+bsbXBZtViiDvrkaTYdG3sFXIKb/9puxJUGVMF4A1
- /FaQ==
+ d=linaro.org; s=google; t=1725393894; x=1725998694; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ydW/DUmoEhTycpzh2ZqhDuCiUbu+QsaUgEgBthr/XBE=;
+ b=tmJz+0iaAR2OskddzQDBGF3OchDkNScHMkRq7LBsDyiuju7bVvm6dXTl/Fo6PCyiW2
+ 2NKKXUSukgYOvcLmLe0NkySY0pORIMNitSeD5ikZx4AxPJAapcposE3C/MVXjp37TzPl
+ rZjNsAAHDk9Qo71CZ11Ifx0ae+EnBdS/X3ToldViV10l0UhykvyJgDMe+zGJcOPAn5s5
+ MFarTn2+eo1EOsKzZBvqLz+SDN2JjaGv6WBhtUrKY73uFRkMnyEAgIgN0ddg4oQ0imnW
+ m3/nIWECOLdvlpZM7/AlVTp2DUvlPk+v/OA67dkEJ+dcQhcsNJbs1lEkhLTDWTCEbvz5
+ qVPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725393889; x=1725998689;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OY76Qt8T9LK/vUD7hekByl1wPB2B9FXxv8XnTxxgVPw=;
- b=cvjzarcuW3dWh5rzcObEKsI1xtJZMokCNDVzkDF7wJcFxDr0ZLds5SHSa8J4lJTLil
- myvFRP77YLaHjDKPTRjYbHqW4u2A6UPXLhhGaLbyOm4GAzc1GIRmWzWxpEDnUr4HW9dT
- 8WgHTMW/lTWEsR3H5oY1kfJ+7G3RBx2cUuPTRlvo51C6tkoWvC3T+cpOjHLAfa9YnBBj
- c5GBipkAN0leurcQm2xR7LUEmd106EGNtuaMxO/cPx9OwALXa836jQhOcyE7o3eqEnsw
- CjPt27GeQQstXKN6d0eGfsh+ffSbLOBWDIwW4JekeI0Umkgok97dOy81X02NmNQ9aeeC
- 9SBw==
-X-Gm-Message-State: AOJu0YwHMyxUcOAUAxb+1RWKaEARSZ5zdkKKZei2kvZTh9qAOsBcCWJf
- 29NF1HDiq0JixKO0quV85Fs6ABtBdMBCjVAywYzIKjT9P+Ix453ql6+4gLR8EpPkBATWRk9sVyA
- 6
-X-Google-Smtp-Source: AGHT+IE6kltQ4YDPoiHdbKwpu00UGFwGPTich2hp7agH6ATmfYgnBTd31v0FJeSquxsZaRPRczBO/w==
-X-Received: by 2002:a05:600c:a01:b0:426:6857:3156 with SMTP id
- 5b1f17b1804b1-42bb01edd50mr174313115e9.27.1725393888727; 
- Tue, 03 Sep 2024 13:04:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725393894; x=1725998694;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ydW/DUmoEhTycpzh2ZqhDuCiUbu+QsaUgEgBthr/XBE=;
+ b=QpzmP5L4il6Cv5N0XwE1p52XwmHlbG2WKh5Laj+P3s7Vx9ecc3Rm0Qtp+MXnJU08NL
+ A07pab/mrE4paSqNCDilRZylUDVRIwXNkdsyOiL6mT4zjkjXZLK8wVVTlWThJOzaRfde
+ o+eO3toWAjdhV5uu4lW0pd//r/cBN6Oyn9y33r52JgMY22dAsdXbUcVuID/zLKL28b6D
+ vvT4AqyK0mtqWTO0W3Lbv3ijz1I2tUAYUjoqOZnzdEBUcZcC5aPGmMV7lwVxWezoJqfO
+ kBN0drl2roCdxC1bI8tFDuKKa2BY7en+zwHiQUbhpzcwAndo3bXDWlbxH3MIVmt9b/TX
+ hUBg==
+X-Gm-Message-State: AOJu0YyYpWGlRu3efKuc8YDcIL8yilHnaGMbSjwCZzbcy+vh6lVjrtIz
+ 6rtPJjNLfD3+HX94pDjJ6RVKQWxorBoC2bldk7r4yu++MVXouDRl0zfdcy66ZEH4txlvS37gjXx
+ S
+X-Google-Smtp-Source: AGHT+IEmKb/zUkaHjfxBhhWhFAZ/Vtm8EHLqzdNDMJPuDMAKsxSYFsS9atOljl3M6RKrBDMR0tVjCg==
+X-Received: by 2002:a05:600c:5493:b0:428:52a:3580 with SMTP id
+ 5b1f17b1804b1-42c7b59e329mr72825255e9.3.1725393893472; 
+ Tue, 03 Sep 2024 13:04:53 -0700 (PDT)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6e33d83sm181906235e9.44.2024.09.03.13.04.47
+ 5b1f17b1804b1-42bb6deb1ebsm181070985e9.3.2024.09.03.13.04.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Sep 2024 13:04:48 -0700 (PDT)
+ Tue, 03 Sep 2024 13:04:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
-Subject: [PATCH 0/2] hw/sd: Remove a pair of legacy methods
-Date: Tue,  3 Sep 2024 22:04:44 +0200
-Message-ID: <20240903200446.25921-1-philmd@linaro.org>
+Subject: [PATCH 1/2] hw/sd: Remove legacy sd_set_cb()
+Date: Tue,  3 Sep 2024 22:04:45 +0200
+Message-ID: <20240903200446.25921-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240903200446.25921-1-philmd@linaro.org>
+References: <20240903200446.25921-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,22 +96,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The omap2_mmc device -- deprecated and about to be
-removed -- was the last user of the legacy sd_set_cb()
-and sd_enable() methods. Remove them too along with
-the me_no_qdev_me_kill_mammoth_with_rocks kludge.
+sd_set_cb() was only used by omap2_mmc_init() which
+got recently removed. Time to remove it. For historical
+background on the me_no_qdev_me_kill_mammoth_with_rocks
+kludge, see commit 007d1dbf72 ("sd: Hide the qdev-but-not-quite
+thing created by sd_init()").
 
-Based-on: <20240903160751.4100218-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/sd/sdcard_legacy.h |  1 -
+ hw/sd/sd.c                    | 30 ++++--------------------------
+ 2 files changed, 4 insertions(+), 27 deletions(-)
 
-Philippe Mathieu-Daudé (2):
-  hw/sd: Remove legacy sd_set_cb()
-  hw/sd: Remove legacy sd_enable()
-
- include/hw/sd/sd.h            |  1 -
- include/hw/sd/sdcard_legacy.h | 10 -------
- hw/sd/sd.c                    | 50 +++++++----------------------------
- 3 files changed, 10 insertions(+), 51 deletions(-)
-
+diff --git a/include/hw/sd/sdcard_legacy.h b/include/hw/sd/sdcard_legacy.h
+index 0dc3889555..a121232560 100644
+--- a/include/hw/sd/sdcard_legacy.h
++++ b/include/hw/sd/sdcard_legacy.h
+@@ -36,7 +36,6 @@ SDState *sd_init(BlockBackend *blk, bool is_spi);
+ int sd_do_command(SDState *card, SDRequest *request, uint8_t *response);
+ void sd_write_byte(SDState *card, uint8_t value);
+ uint8_t sd_read_byte(SDState *card);
+-void sd_set_cb(SDState *card, qemu_irq readonly, qemu_irq insert);
+ 
+ /* sd_enable should not be used -- it is only used on the nseries boards,
+  * where it is part of a broken implementation of the MMC card slot switch
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index a140a32ccd..8a30c61ce0 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -112,10 +112,6 @@ typedef struct SDProto {
+ struct SDState {
+     DeviceState parent_obj;
+ 
+-    /* If true, created by sd_init() for a non-qdevified caller */
+-    /* TODO purge them with fire */
+-    bool me_no_qdev_me_kill_mammoth_with_rocks;
+-
+     /* SD Memory Card Registers */
+     uint32_t ocr;
+     uint8_t scr[8];
+@@ -169,8 +165,6 @@ struct SDState {
+     uint32_t data_offset;
+     size_t data_size;
+     uint8_t data[512];
+-    qemu_irq readonly_cb;
+-    qemu_irq inserted_cb;
+     QEMUTimer *ocr_power_timer;
+     bool enable;
+     uint8_t dat_lines;
+@@ -889,17 +883,10 @@ static void sd_cardchange(void *opaque, bool load, Error **errp)
+         trace_sdcard_ejected();
+     }
+ 
+-    if (sd->me_no_qdev_me_kill_mammoth_with_rocks) {
+-        qemu_set_irq(sd->inserted_cb, inserted);
+-        if (inserted) {
+-            qemu_set_irq(sd->readonly_cb, readonly);
+-        }
+-    } else {
+-        sdbus = SD_BUS(qdev_get_parent_bus(dev));
+-        sdbus_set_inserted(sdbus, inserted);
+-        if (inserted) {
+-            sdbus_set_readonly(sdbus, readonly);
+-        }
++    sdbus = SD_BUS(qdev_get_parent_bus(dev));
++    sdbus_set_inserted(sdbus, inserted);
++    if (inserted) {
++        sdbus_set_readonly(sdbus, readonly);
+     }
+ }
+ 
+@@ -1027,18 +1014,9 @@ SDState *sd_init(BlockBackend *blk, bool is_spi)
+     }
+ 
+     sd = SD_CARD(dev);
+-    sd->me_no_qdev_me_kill_mammoth_with_rocks = true;
+     return sd;
+ }
+ 
+-void sd_set_cb(SDState *sd, qemu_irq readonly, qemu_irq insert)
+-{
+-    sd->readonly_cb = readonly;
+-    sd->inserted_cb = insert;
+-    qemu_set_irq(readonly, sd->blk ? !blk_is_writable(sd->blk) : 0);
+-    qemu_set_irq(insert, sd->blk ? blk_is_inserted(sd->blk) : 0);
+-}
+-
+ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+ {
+     trace_sdcard_read_block(addr, len);
 -- 
 2.45.2
 
