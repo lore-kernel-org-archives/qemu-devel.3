@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E84CD37AC
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:32:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AABCFCD37AC
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slaC0-00032T-3A; Tue, 03 Sep 2024 16:32:00 -0400
+	id 1slaCK-00050R-QW; Tue, 03 Sep 2024 16:32:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slaBb-0001U8-Mq
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:31:54 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slaBW-0006FE-NH
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:31:33 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-715e64ea7d1so4966424b3a.0
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 13:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725395489; x=1726000289; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kXJfT3y0f5XCSjrkvcEuP8Uv79zBVDHxfI0HTHS1+hY=;
- b=IySAK610QK6p6ltvli76Z4wBOe9eBynlkDlDYsHI/dF8vvIMAnASnScr+F/4C7HctR
- Y/0brllQgSX2h3BpGjEePldMxIUGCsCgkXT7359QXvTbNSXyq83z0Dn/6eME8Eg614du
- avl33jnJbYL+Uann+ZFcqW13Y+PLAu6tIJvPELlxNi+SSqPwhzr2GbYPzdPOqjrniqe/
- SyzOIXehizHQ9uyBRkRq5PToGd6D3MIkYGa8H9gdjMBo9Ex0lRm1YXEdPj1A58WkQqLd
- y+Nlyq3WyOG/3x709GV/tj3ehwfqapCOnu0i+dsOsCGWFK/fI/Ft7gFs6HS/v5GomkT/
- S9ng==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1slaCH-0004at-9l
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:32:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1slaCC-0006K8-RQ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:32:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725395530;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MfYRLqZOo/10v/hDkZlT07PBggLSyskmul9443lWRjk=;
+ b=UVPh94Reiom9QcuieOiy4pgFq42upR5jnIITL0yVYuUlEFl+G1lbOiKVv247HYJF+kcDP9
+ JcqM8SKsP0qWy/USOwRVIg1TRFw6e8DibZyd1xecG8/7TWKEHPzLxTOpk8OJ+f8mQ5ahCJ
+ NHA8oN5Ze74rq8UiINU80mYBYvKq62s=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-43-NjLI1eT7N_aqCjNsRfYW2Q-1; Tue, 03 Sep 2024 16:32:07 -0400
+X-MC-Unique: NjLI1eT7N_aqCjNsRfYW2Q-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5c25d413306so2280218a12.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 13:32:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725395489; x=1726000289;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1725395526; x=1726000326;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kXJfT3y0f5XCSjrkvcEuP8Uv79zBVDHxfI0HTHS1+hY=;
- b=w6X6fMmm2wcNM6rF7kb0NWuZH3AwaR3wzwf+ZLWk9TTQqfM/b+dUIsYoZADfxiCdCL
- 3iQrzBJfcLAuOrhxvjQokpoj1kDZW6xXc07nvciY6FKK/2iIdPKfwqYEcr23lGNZsP5C
- XKXVQi/0K2DPc83md8qi9JGf5CqmYrl3+zZeaTKkD3HLOMGICg8toJ/z5Mtwnp1m7lFz
- X6h+fTuzNB1MuBqyfnAzyaKWOOPS6PLcGq6cNiUiPvfMwBOIVtDOPl8XA9spH/SOZKBB
- 0u/PP/KaOFSpzXb2UFdNFu2/s9MIuyhjZzvvV6Fykv1HF2vH99Cwq0CtXhuo57iC6aKC
- MbCw==
+ bh=MfYRLqZOo/10v/hDkZlT07PBggLSyskmul9443lWRjk=;
+ b=DHfJXqZnbooGT+tI8d/wwGg5/XmLnrq5E74PPXWQY0ZSP/K+dm2MjFjJ1YzcBNYobH
+ 65pQYu1J+pXD2KO3K6kpdOYY3R3lof/FiECq+6uBWJnC8IXkHawf50rdziR+8/oMgUFY
+ o0XFC3Gfbnz+0WRnExi/pJYwzajrOZkOLeZEhM1gd/h5uYXJg4ggYNaFF88ad5xeNgUP
+ 8oJjoo5VeZZW38BZKrtJxDIU0HZoqIX8bsHgbMnA3I7pMegwK/aFB9ViSzbKgw4NfxKY
+ 6yC43GNz7GINn5erxT9TEL0XnKloSp/5Wf6dbK66xIOOv5H9oaAa9J6LjNI86mQzyTUF
+ AtOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRD5aszZAxWjZ1EGINe+WxP1sV7bAqY3jFRfVOkKaI6DawGtyx1xE5HMJ0gFsa+7xByFNOhhX4aMej@nongnu.org
-X-Gm-Message-State: AOJu0YwhUwvxtCKCQqCUJelFn/zt5mMxRg1hJpp2qCLciAFPfsBGCdjc
- THPSyVVFlxyhgFdS0+u63dtC4Puxej0WVxaguqkrX8+JKfvSzbHe1stTElVadBE=
-X-Google-Smtp-Source: AGHT+IGUDpiWu7rZoJJEoedY8hKP7vZqsTm2b52fjBaYXjySOOwcd71ekND8nBqX9+VBiojLl4RQtg==
-X-Received: by 2002:a05:6a20:4389:b0:1c0:e997:7081 with SMTP id
- adf61e73a8af0-1cecdf2e14amr15017521637.29.1725395488633; 
- Tue, 03 Sep 2024 13:31:28 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ AJvYcCXcDLqF/JrwnNd9wZybmTidjvc3U54LQ4WPjhfxC7ZCjNcvoPeqnRWqnVew5APPXf7vACd15lJinAhu@nongnu.org
+X-Gm-Message-State: AOJu0YxtXYnGU1Bl7qMXA6k0n8XMBsa/1Ql+XqS28be3fccdDDg4Njnk
+ zt0+80oJAH+8eB7xze5tczd92IdaHp55VOCcGtEP8m6tIEjS4izD6/LqRJHOtlOoJR5uRMsZa+n
+ oT++3wySQKGbkL/LdjHGp0yFz82tT3sgv2ZrS78Xc0Ca/gq7qtMXK
+X-Received: by 2002:a17:907:3f9c:b0:a86:8b2f:49b3 with SMTP id
+ a640c23a62f3a-a89d8848df0mr740255366b.46.1725395526042; 
+ Tue, 03 Sep 2024 13:32:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPq5Nv58VEuChptsfZpJakRgLROqfdTwFRNPSi0AmCQsMSq5tCP+Aw/rGlwGKEHysicFyFrg==
+X-Received: by 2002:a17:907:3f9c:b0:a86:8b2f:49b3 with SMTP id
+ a640c23a62f3a-a89d8848df0mr740251566b.46.1725395525148; 
+ Tue, 03 Sep 2024 13:32:05 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:441:95c6:9977:c577:f3d1:99e1])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7177858c42csm272166b3a.136.2024.09.03.13.31.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 13:31:28 -0700 (PDT)
-Message-ID: <f091410b-5ffb-482f-bafd-4f608755baa6@linaro.org>
-Date: Tue, 3 Sep 2024 13:31:26 -0700
+ a640c23a62f3a-a8989230a9dsm713729566b.224.2024.09.03.13.32.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Sep 2024 13:32:04 -0700 (PDT)
+Date: Tue, 3 Sep 2024 16:32:00 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Cc: graf@amazon.com, qemu-devel@nongnu.org, agraf@csgraf.de,
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, berrange@redhat.com, philmd@linaro.org
+Subject: Re: [PATCH v5 5/8] device/virtio-nsm: Support for Nitro Secure
+ Module device
+Message-ID: <20240903162013-mutt-send-email-mst@kernel.org>
+References: <20240822150849.21759-1-dorjoychy111@gmail.com>
+ <20240822150849.21759-6-dorjoychy111@gmail.com>
+ <20240828122221-mutt-send-email-mst@kernel.org>
+ <CAFfO_h5URpD4qnC5Cqh9tG49ijzRGpWqezdPDeaSMAOHnzFF9g@mail.gmail.com>
+ <20240828151005-mutt-send-email-mst@kernel.org>
+ <CAFfO_h66g138yVwufKY_C22Aiu8XctzyyjqsBYM4wdYN77JLuQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 01/12] exec/memtxattr: add process identifier to the
- transaction attributes
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com, tjeznach@rivosinc.com,
- Frank Chang <frank.chang@sifive.com>, Jason Chien <jason.chien@sifive.com>
-References: <20240903201633.93182-1-dbarboza@ventanamicro.com>
- <20240903201633.93182-2-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240903201633.93182-2-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFfO_h66g138yVwufKY_C22Aiu8XctzyyjqsBYM4wdYN77JLuQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,43 +112,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/24 13:16, Daniel Henrique Barboza wrote:
-> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+On Wed, Sep 04, 2024 at 01:58:15AM +0600, Dorjoy Chowdhury wrote:
+> On Thu, Aug 29, 2024 at 1:11 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Thu, Aug 29, 2024 at 01:04:05AM +0600, Dorjoy Chowdhury wrote:
+> > > On Thu, Aug 29, 2024 at 12:28 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > >
+> > > > On Thu, Aug 22, 2024 at 09:08:46PM +0600, Dorjoy Chowdhury wrote:
+> > > > > Nitro Secure Module (NSM)[1] device is used in AWS Nitro Enclaves[2]
+> > > > > for stripped down TPM functionality like cryptographic attestation.
+> > > > > The requests to and responses from NSM device are CBOR[3] encoded.
+> > > > >
+> > > > > This commit adds support for NSM device in QEMU. Although related to
+> > > > > AWS Nitro Enclaves, the virito-nsm device is independent and can be
+> > > > > used in other machine types as well. The libcbor[4] library has been
+> > > > > used for the CBOR encoding and decoding functionalities.
+> > > > >
+> > > > > [1] https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
+> > > > > [2] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
+> > > > > [3] http://cbor.io/
+> > > > > [4] https://libcbor.readthedocs.io/en/latest/
+> > > > >
+> > > > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > > > > ---
+> > > > >  MAINTAINERS                      |   10 +
+> > > > >  hw/virtio/Kconfig                |    5 +
+> > > > >  hw/virtio/cbor-helpers.c         |  326 ++++++
+> > > > >  hw/virtio/meson.build            |    6 +
+> > > > >  hw/virtio/virtio-nsm-pci.c       |   73 ++
+> > > > >  hw/virtio/virtio-nsm.c           | 1638 ++++++++++++++++++++++++++++++
+> > > > >  include/hw/virtio/cbor-helpers.h |   46 +
+> > > > >  include/hw/virtio/virtio-nsm.h   |   59 ++
+> > > > >  meson.build                      |    2 +
+> > > > >  9 files changed, 2165 insertions(+)
+> > >
+> > > [...]
+> > >
+> > > > > +static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
+> > > > > +{
+> > > > > +    g_autofree VirtQueueElement *out_elem = NULL;
+> > > > > +    g_autofree VirtQueueElement *in_elem = NULL;
+> > > > > +    VirtIONSM *vnsm = VIRTIO_NSM(vdev);
+> > > > > +    Error *err = NULL;
+> > > > > +
+> > > > > +    out_elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+> > > > > +    if (!out_elem) {
+> > > > > +        /* nothing in virtqueue */
+> > > > > +        return;
+> > > > > +    }
+> > > > > +
+> > > > > +    if (out_elem->out_num != 1) {
+> > > > > +        virtio_error(vdev, "Expected one request buffer first in virtqueue");
+> > > > > +        goto cleanup;
+> > > > > +    }
+> > > >
+> > > > Seems to assume request in a single s/g element?
+> > > > We generally avoid this kind of thing.
+> > > >
+> > > > Applies equally elsewheree.
+> > > >
+> > >
+> > > Thank you for reviewing. I think I did it this way (first virqueue_pop
+> > > gives out_elem with out_num == 1 and the next virtqueue_pop gives
+> > > in_elem with in_num == 1) after seeing what the virqueue contains
+> > > (using printfs) when running in a VM and sending some NSM requests and
+> > > I noticed the above. Can you give me a bit more details about what
+> > > this should be like? Is there any existing virtio device code I can
+> > > look at for example?
+> > > Thanks!
+> >
+> >
+> > Use iov_to_buf / iov_from_buf
+> >
+> > there are many examples in the tree, I'd look for some recent ones.
+> >
 > 
-> Extend memory transaction attributes with process identifier to allow
-> per-request address translation logic to use requester_id / process_id
-> to identify memory mapping (e.g. enabling IOMMU w/ PASID translations).
+> I am a bit stuck at this and I would appreciate some help. I looked at
+> other "iov_to_buf" and "iov_from_buf" examples in QEMU and in those I
+> see there are known request and response "structs" associated with it.
+> But in the case of NSM, the request and responses can be arbitrary
+> CBOR objects i.e., no specific structs or lengths associated.
+
+
+take whatever you want to access, move it to a buffer with iov_to_buf
+then access the buffer.
+
+reverse is even easier. put in a buffer, copy with iov_from_buf.
+
+> So I am
+> not sure using "iov_to_buf" / "iov_from_buf" makes sense here.
+> And about the request response being in a single s/g element, I think
+> it's because of how the NSM driver is in drivers/misc/nsm.c (see
+> nsm_sendrecv_msg_locked function)in the linux kernel tree.
+
+yes but driver is free to change this.
+Isn't there a spec for this device to consult?
+Sending that to virtio tc will be needed before we add this to qemu.
+
+> I am not sure what changes are needed in the current code if any. Do
+> you have any suggestions on this?
 > 
-> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Jason Chien <jason.chien@sifive.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   include/exec/memattrs.h | 5 +++++
->   1 file changed, 5 insertions(+)
-
-What is this for?  What is different about it than requester_id?
-
-
-r~
-
-> 
-> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-> index 14cdd8d582..e27c18f3dc 100644
-> --- a/include/exec/memattrs.h
-> +++ b/include/exec/memattrs.h
-> @@ -52,6 +52,11 @@ typedef struct MemTxAttrs {
->       unsigned int memory:1;
->       /* Requester ID (for MSI for example) */
->       unsigned int requester_id:16;
-> +
-> +    /*
-> +     * PID (PCI PASID) support: Limited to 8 bits process identifier.
-> +     */
-> +    unsigned int pid:8;
->   } MemTxAttrs;
->   
->   /* Bus masters which don't specify any attributes will get this,
+> Regards,
+> Dorjoy
 
 
