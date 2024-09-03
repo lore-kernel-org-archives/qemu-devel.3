@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7894ACD379F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 627DACD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW4W-0004Su-1Y; Tue, 03 Sep 2024 12:08:00 -0400
+	id 1slW4r-00061A-KB; Tue, 03 Sep 2024 12:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4U-0004OS-UA
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:07:58 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1slW4o-0005k8-Jp
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:18 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4S-0002eH-9N
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:07:58 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-428e0d184b4so46210835e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:07:55 -0700 (PDT)
+ id 1slW4j-0002jd-M7
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:17 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42c79deb7c4so26687365e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379674; x=1725984474; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379692; x=1725984492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=THIrIBfM4vzOfJ3nHM2ubG7+E5S52F8G9as4tfAXnnQ=;
- b=OiP5F+uOFDoaoEmh/UEQI1EfponDU6E+/CRPFjFx6el6fuNV8s+xuYnA5vvRuAMdiR
- IG01rjLjN3ZE1N4RXliSY+40FFx1zbYCWmKeHsKtT/ShiBtgbWJFxVwx+xm8Q3oncs8X
- VmGyA67E9o4AcMkbW3JYXTSOyy/JfjUTV6BJ86KdeFvmS7rtIDq7MC/BOh1y0FM/b179
- CBvn2QH80GXsWWfM2GLoWnHO8KZ5K6BIs+1uhaGaDJRMBtlwAeE+DslVd4dwYplkpVkU
- BOIqfVU3QVZRv1JygTGzr0YGinDfICXX/Mpwiy1FqVpQwg7Cq6HzJ5arevNYA8UKssIW
- c7TA==
+ :reply-to; bh=CNGlNlhm3w0Tc5jsEQfIJE+eX1vq7NIKThLse4tBcKw=;
+ b=RTPJBeL/hUdT5TuaTlfAOX2FyRJDGg+Rd3XHcr9e8hTjd3xyVGocoaHxZ1HvYWYE2t
+ /ZFMpaeqIwBUC3mAX6M6x8G4F3ROBor06zinrj7y6jI0TxXIIi57ABKx/oh5GVG6qPsw
+ EDeQ1b497XAAQ+zoVuL35YbGvp+2m69sgdBjAe2lh8iUnzGuMkj29nhewmUlYuIlWALY
+ tL42pQjWTlY/i+3K6gWbq8atIQqBZ9Wyn8z8Jx3Ff/Z4GyN+tWCOgdl+WGKQcQnKwVKR
+ bWaeUVKTRGyzrPViwQyOGe61Ez1mG06RM0WbN61++pxmaUOLVV1dfcdQBy6OfFHdAGGY
+ UWhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379674; x=1725984474;
+ d=1e100.net; s=20230601; t=1725379692; x=1725984492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=THIrIBfM4vzOfJ3nHM2ubG7+E5S52F8G9as4tfAXnnQ=;
- b=vCPUOmHc06xQJY0oycpbHoSUWiB62mWcXuoKjKAlK4TIStAW1PHDwioe55UtIXW3Ri
- AYS2av1ZJ8ozPkUiJvVVZAY4+we3v6hXoLtooJvlsKccegE0Hxlyxjg1kdqvjdpip47m
- sgnQG49S5ZHTXr7Iy/AVaKsj9Rvcl6veV/dbvJduTzgV7L7P2nczyZkHTw47/Wm+liSw
- JYphpAzry2CCnwD/YZIvYfSzlVnKpEpOjnUCKZNKLalGhXerO6MlllBRn3MlChswtITd
- 7j0Tc7NAd9j2hgq2e00dlmxI71RMdVKJnG2J/yEI7Lfoc2MQKDkIr5FMW1DW8+SzMAWk
- FzxQ==
+ bh=CNGlNlhm3w0Tc5jsEQfIJE+eX1vq7NIKThLse4tBcKw=;
+ b=DZn2s7pWPeN+mlqmI1DpAjT49gHb1WE/iqMF2jTgvWDGmRp7QJZIrg6wZG9MNrPyVd
+ ySK+/lWy3aRAfiMtdq7VeHVz9FRphHAFeF/tMKG6xGt0PhgforjwRG3IbVniKVj/Q/CF
+ zEKl7eLcHTJRTvAD51BYqVwruPaU+3V88Dt+iYX/xh2TEFS0530qA878aYhjRa0uy0cS
+ Skls/u2NtEDwjhbN1nSE1tnHa9SJOpIOstisb2Xm00xI7m6NcxJhNGG+jdC419Nf46Mk
+ AMMGGxRhWr1QlyS3/hXwwE+TS6MerWASSjKKCXwWBBC+d93EmjgSNikEWJFH5Z7wd61X
+ nc+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmFgoFsn38gLJgKipYAiUysaVzzMqCo8p0xptkuU0L4ixDMbPqz9Jb9Db/lj0AsL8TNyWCW0ZXjRTR@nongnu.org
-X-Gm-Message-State: AOJu0YzURZf22x1vb4RkJPeaHYsweT1csWKJlufIoSGImaqulnwG3cTW
- 0B34POCmElrIIp0tXz5BOfS/tIyqFBTkUBnBylRPf/epWgDrXybUzhkqiocn4vUIWGoDSytDNVH
- +
-X-Google-Smtp-Source: AGHT+IEp7TvbwtOJWUi4Sn5IYHzE+ZJ3TCXshTUBXDmRm1Nhrk5H2AIoHEN+PJVi/Cs+0uls+57vrQ==
-X-Received: by 2002:a05:600c:1d16:b0:42b:892d:54c0 with SMTP id
- 5b1f17b1804b1-42c7b5a8db6mr72483765e9.12.1725379674527; 
- Tue, 03 Sep 2024 09:07:54 -0700 (PDT)
+ AJvYcCXdZnVdMI68iWOE6LFG/g/VJCzBek3asDxSGtEt1daikf5HzdyMU9NtxG9s6djZwe2AQ1rlotpTfO2V@nongnu.org
+X-Gm-Message-State: AOJu0YwoVcx8Djz4Gx0gaWZmFm99tuOhYgaoS9VJATUHF4QY1Vn8eHdq
+ ry9/EFEoUjdvsUJhCfVi7fk+im6SLFyRgyAakgDSTNFTkMGSTF4OZav03kygA5M=
+X-Google-Smtp-Source: AGHT+IFxsQAl8aZ2nVy2CdqOChhYcsvyO+Bs4sRMeZmaV0Q6Bh/Nuc+eDKGwgNHlClYyqCEkUdmupw==
+X-Received: by 2002:a05:600c:1c09:b0:423:791:f446 with SMTP id
+ 5b1f17b1804b1-42c7b59e335mr76564075e9.7.1725379691768; 
+ Tue, 03 Sep 2024 09:08:11 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.07.54
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:07:54 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 02/53] hw/input: Drop ADS7846 device
-Date: Tue,  3 Sep 2024 17:07:00 +0100
-Message-Id: <20240903160751.4100218-3-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 11/53] hw/misc: Remove MAINSTONE_FPGA device
+Date: Tue,  3 Sep 2024 17:07:09 +0100
+Message-Id: <20240903160751.4100218-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,43 +94,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ADS7846 touchscreen controller device was used only by
-the XScale-based PDA machine types. Now that they have been
-removed, this device is not used in the tree and can be
-deleted.
+The MAINSTONE_FPGA device was used only by the 'mainstone' machine
+type, so we can remove it now.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS          |   1 -
- hw/input/ads7846.c   | 186 -------------------------------------------
- hw/input/Kconfig     |   3 -
- hw/input/meson.build |   1 -
- 4 files changed, 191 deletions(-)
- delete mode 100644 hw/input/ads7846.c
+ MAINTAINERS         |   1 -
+ hw/misc/mst_fpga.c  | 269 --------------------------------------------
+ hw/misc/meson.build |   1 -
+ 3 files changed, 271 deletions(-)
+ delete mode 100644 hw/misc/mst_fpga.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index bcd84582099..4f00c7a3427 100644
+index bfc0868aa64..fd4e8b0d705 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -929,7 +929,6 @@ F: hw/*/pxa2xx*
- F: hw/display/tc6393xb.c
- F: hw/gpio/max7310.c
- F: hw/gpio/zaurus.c
--F: hw/input/ads7846.c
- F: hw/misc/mst_fpga.c
- F: hw/adc/max111x.c
- F: include/hw/adc/max111x.h
-diff --git a/hw/input/ads7846.c b/hw/input/ads7846.c
+@@ -909,7 +909,6 @@ L: qemu-arm@nongnu.org
+ S: Odd Fixes
+ F: hw/arm/z2.c
+ F: hw/*/pxa2xx*
+-F: hw/misc/mst_fpga.c
+ F: include/hw/arm/pxa.h
+ 
+ SABRELITE / i.MX6
+diff --git a/hw/misc/mst_fpga.c b/hw/misc/mst_fpga.c
 deleted file mode 100644
-index cde38922165..00000000000
---- a/hw/input/ads7846.c
+index 2d7bfa5ad9e..00000000000
+--- a/hw/misc/mst_fpga.c
 +++ /dev/null
-@@ -1,186 +0,0 @@
+@@ -1,269 +0,0 @@
 -/*
-- * TI ADS7846 / TSC2046 chip emulation.
+- * PXA270-based Intel Mainstone platforms.
+- * FPGA driver
 - *
-- * Copyright (c) 2006 Openedhand Ltd.
-- * Written by Andrzej Zaborowski <balrog@zabor.org>
+- * Copyright (c) 2007 by Armin Kuster <akuster@kama-aina.net> or
+- *                                    <akuster@mvista.com>
 - *
 - * This code is licensed under the GNU GPL v2.
 - *
@@ -141,203 +138,272 @@ index cde38922165..00000000000
 -
 -#include "qemu/osdep.h"
 -#include "hw/irq.h"
--#include "hw/ssi/ssi.h"
+-#include "hw/sysbus.h"
 -#include "migration/vmstate.h"
 -#include "qemu/module.h"
--#include "ui/console.h"
 -#include "qom/object.h"
 -
--struct ADS7846State {
--    SSIPeripheral ssidev;
--    qemu_irq interrupt;
+-/* Mainstone FPGA for extern irqs */
+-#define FPGA_GPIO_PIN	0
+-#define MST_NUM_IRQS	16
+-#define MST_LEDDAT1		0x10
+-#define MST_LEDDAT2		0x14
+-#define MST_LEDCTRL		0x40
+-#define MST_GPSWR		0x60
+-#define MST_MSCWR1		0x80
+-#define MST_MSCWR2		0x84
+-#define MST_MSCWR3		0x88
+-#define MST_MSCRD		0x90
+-#define MST_INTMSKENA	0xc0
+-#define MST_INTSETCLR	0xd0
+-#define MST_PCMCIA0		0xe0
+-#define MST_PCMCIA1		0xe4
 -
--    int input[8];
--    int pressure;
--    int noise;
+-#define MST_PCMCIAx_READY	(1 << 10)
+-#define MST_PCMCIAx_nCD		(1 << 5)
 -
--    int cycle;
--    int output;
+-#define MST_PCMCIA_CD0_IRQ	9
+-#define MST_PCMCIA_CD1_IRQ	13
+-
+-#define TYPE_MAINSTONE_FPGA "mainstone-fpga"
+-OBJECT_DECLARE_SIMPLE_TYPE(mst_irq_state, MAINSTONE_FPGA)
+-
+-struct mst_irq_state {
+-    SysBusDevice parent_obj;
+-
+-    MemoryRegion iomem;
+-
+-    qemu_irq parent;
+-
+-    uint32_t prev_level;
+-    uint32_t leddat1;
+-    uint32_t leddat2;
+-    uint32_t ledctrl;
+-    uint32_t gpswr;
+-    uint32_t mscwr1;
+-    uint32_t mscwr2;
+-    uint32_t mscwr3;
+-    uint32_t mscrd;
+-    uint32_t intmskena;
+-    uint32_t intsetclr;
+-    uint32_t pcmcia0;
+-    uint32_t pcmcia1;
 -};
 -
--#define TYPE_ADS7846 "ads7846"
--OBJECT_DECLARE_SIMPLE_TYPE(ADS7846State, ADS7846)
--
--/* Control-byte bitfields */
--#define CB_PD0          (1 << 0)
--#define CB_PD1          (1 << 1)
--#define CB_SER          (1 << 2)
--#define CB_MODE         (1 << 3)
--#define CB_A0           (1 << 4)
--#define CB_A1           (1 << 5)
--#define CB_A2           (1 << 6)
--#define CB_START        (1 << 7)
--
--#define X_AXIS_DMAX     3470
--#define X_AXIS_MIN      290
--#define Y_AXIS_DMAX     3450
--#define Y_AXIS_MIN      200
--
--#define ADS_VBAT        2000
--#define ADS_VAUX        2000
--#define ADS_TEMP0       2000
--#define ADS_TEMP1       3000
--#define ADS_XPOS(x, y)  (X_AXIS_MIN + ((X_AXIS_DMAX * (x)) >> 15))
--#define ADS_YPOS(x, y)  (Y_AXIS_MIN + ((Y_AXIS_DMAX * (y)) >> 15))
--#define ADS_Z1POS(x, y) 600
--#define ADS_Z2POS(x, y) (600 + 6000 / ADS_XPOS(x, y))
--
--static void ads7846_int_update(ADS7846State *s)
+-static void
+-mst_fpga_set_irq(void *opaque, int irq, int level)
 -{
--    if (s->interrupt)
--        qemu_set_irq(s->interrupt, s->pressure == 0);
+-	mst_irq_state *s = (mst_irq_state *)opaque;
+-	uint32_t oldint = s->intsetclr & s->intmskena;
+-
+-	if (level)
+-		s->prev_level |= 1u << irq;
+-	else
+-		s->prev_level &= ~(1u << irq);
+-
+-	switch(irq) {
+-	case MST_PCMCIA_CD0_IRQ:
+-		if (level)
+-			s->pcmcia0 &= ~MST_PCMCIAx_nCD;
+-		else
+-			s->pcmcia0 |=  MST_PCMCIAx_nCD;
+-		break;
+-	case MST_PCMCIA_CD1_IRQ:
+-		if (level)
+-			s->pcmcia1 &= ~MST_PCMCIAx_nCD;
+-		else
+-			s->pcmcia1 |=  MST_PCMCIAx_nCD;
+-		break;
+-	}
+-
+-	if ((s->intmskena & (1u << irq)) && level)
+-		s->intsetclr |= 1u << irq;
+-
+-	if (oldint != (s->intsetclr & s->intmskena))
+-		qemu_set_irq(s->parent, s->intsetclr & s->intmskena);
 -}
 -
--static uint32_t ads7846_transfer(SSIPeripheral *dev, uint32_t value)
+-
+-static uint64_t
+-mst_fpga_readb(void *opaque, hwaddr addr, unsigned size)
 -{
--    ADS7846State *s = ADS7846(dev);
+-	mst_irq_state *s = (mst_irq_state *) opaque;
 -
--    switch (s->cycle ++) {
--    case 0:
--        if (!(value & CB_START)) {
--            s->cycle = 0;
--            break;
--        }
--
--        s->output = s->input[(value >> 4) & 7];
--
--        /* Imitate the ADC noise, some drivers expect this.  */
--        s->noise = (s->noise + 3) & 7;
--        switch ((value >> 4) & 7) {
--        case 1: s->output += s->noise ^ 2; break;
--        case 3: s->output += s->noise ^ 0; break;
--        case 4: s->output += s->noise ^ 7; break;
--        case 5: s->output += s->noise ^ 5; break;
--        }
--
--        if (value & CB_MODE)
--            s->output >>= 4;    /* 8 bits instead of 12 */
--
--        break;
--    case 1:
--        s->cycle = 0;
--        break;
--    }
--    return s->output;
+-	switch (addr) {
+-	case MST_LEDDAT1:
+-		return s->leddat1;
+-	case MST_LEDDAT2:
+-		return s->leddat2;
+-	case MST_LEDCTRL:
+-		return s->ledctrl;
+-	case MST_GPSWR:
+-		return s->gpswr;
+-	case MST_MSCWR1:
+-		return s->mscwr1;
+-	case MST_MSCWR2:
+-		return s->mscwr2;
+-	case MST_MSCWR3:
+-		return s->mscwr3;
+-	case MST_MSCRD:
+-		return s->mscrd;
+-	case MST_INTMSKENA:
+-		return s->intmskena;
+-	case MST_INTSETCLR:
+-		return s->intsetclr;
+-	case MST_PCMCIA0:
+-		return s->pcmcia0;
+-	case MST_PCMCIA1:
+-		return s->pcmcia1;
+-	default:
+-		printf("Mainstone - mst_fpga_readb: Bad register offset "
+-			"0x" HWADDR_FMT_plx "\n", addr);
+-	}
+-	return 0;
 -}
 -
--static void ads7846_ts_event(void *opaque,
--                int x, int y, int z, int buttons_state)
+-static void
+-mst_fpga_writeb(void *opaque, hwaddr addr, uint64_t value,
+-		unsigned size)
 -{
--    ADS7846State *s = opaque;
+-	mst_irq_state *s = (mst_irq_state *) opaque;
+-	value &= 0xffffffff;
 -
--    if (buttons_state) {
--        x = 0x7fff - x;
--        s->input[1] = ADS_XPOS(x, y);
--        s->input[3] = ADS_Z1POS(x, y);
--        s->input[4] = ADS_Z2POS(x, y);
--        s->input[5] = ADS_YPOS(x, y);
--    }
--
--    if (s->pressure == !buttons_state) {
--        s->pressure = !!buttons_state;
--
--        ads7846_int_update(s);
--    }
+-	switch (addr) {
+-	case MST_LEDDAT1:
+-		s->leddat1 = value;
+-		break;
+-	case MST_LEDDAT2:
+-		s->leddat2 = value;
+-		break;
+-	case MST_LEDCTRL:
+-		s->ledctrl = value;
+-		break;
+-	case MST_GPSWR:
+-		s->gpswr = value;
+-		break;
+-	case MST_MSCWR1:
+-		s->mscwr1 = value;
+-		break;
+-	case MST_MSCWR2:
+-		s->mscwr2 = value;
+-		break;
+-	case MST_MSCWR3:
+-		s->mscwr3 = value;
+-		break;
+-	case MST_MSCRD:
+-		s->mscrd =  value;
+-		break;
+-	case MST_INTMSKENA:	/* Mask interrupt */
+-		s->intmskena = (value & 0xFEEFF);
+-		qemu_set_irq(s->parent, s->intsetclr & s->intmskena);
+-		break;
+-	case MST_INTSETCLR:	/* clear or set interrupt */
+-		s->intsetclr = (value & 0xFEEFF);
+-		qemu_set_irq(s->parent, s->intsetclr & s->intmskena);
+-		break;
+-		/* For PCMCIAx allow the to change only power and reset */
+-	case MST_PCMCIA0:
+-		s->pcmcia0 = (value & 0x1f) | (s->pcmcia0 & ~0x1f);
+-		break;
+-	case MST_PCMCIA1:
+-		s->pcmcia1 = (value & 0x1f) | (s->pcmcia1 & ~0x1f);
+-		break;
+-	default:
+-		printf("Mainstone - mst_fpga_writeb: Bad register offset "
+-			"0x" HWADDR_FMT_plx "\n", addr);
+-	}
 -}
 -
--static int ads7856_post_load(void *opaque, int version_id)
--{
--    ADS7846State *s = opaque;
+-static const MemoryRegionOps mst_fpga_ops = {
+-	.read = mst_fpga_readb,
+-	.write = mst_fpga_writeb,
+-	.endianness = DEVICE_NATIVE_ENDIAN,
+-};
 -
--    s->pressure = 0;
--    ads7846_int_update(s);
--    return 0;
+-static int mst_fpga_post_load(void *opaque, int version_id)
+-{
+-	mst_irq_state *s = (mst_irq_state *) opaque;
+-
+-	qemu_set_irq(s->parent, s->intsetclr & s->intmskena);
+-	return 0;
 -}
 -
--static const VMStateDescription vmstate_ads7846 = {
--    .name = "ads7846",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .post_load = ads7856_post_load,
+-static void mst_fpga_init(Object *obj)
+-{
+-    DeviceState *dev = DEVICE(obj);
+-    mst_irq_state *s = MAINSTONE_FPGA(obj);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-
+-    s->pcmcia0 = MST_PCMCIAx_READY | MST_PCMCIAx_nCD;
+-    s->pcmcia1 = MST_PCMCIAx_READY | MST_PCMCIAx_nCD;
+-
+-    sysbus_init_irq(sbd, &s->parent);
+-
+-    /* alloc the external 16 irqs */
+-    qdev_init_gpio_in(dev, mst_fpga_set_irq, MST_NUM_IRQS);
+-
+-    memory_region_init_io(&s->iomem, obj, &mst_fpga_ops, s,
+-                          "fpga", 0x00100000);
+-    sysbus_init_mmio(sbd, &s->iomem);
+-}
+-
+-static const VMStateDescription vmstate_mst_fpga_regs = {
+-    .name = "mainstone_fpga",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .post_load = mst_fpga_post_load,
 -    .fields = (const VMStateField[]) {
--        VMSTATE_SSI_PERIPHERAL(ssidev, ADS7846State),
--        VMSTATE_INT32_ARRAY(input, ADS7846State, 8),
--        VMSTATE_INT32(noise, ADS7846State),
--        VMSTATE_INT32(cycle, ADS7846State),
--        VMSTATE_INT32(output, ADS7846State),
--        VMSTATE_END_OF_LIST()
--    }
+-		VMSTATE_UINT32(prev_level, mst_irq_state),
+-		VMSTATE_UINT32(leddat1, mst_irq_state),
+-		VMSTATE_UINT32(leddat2, mst_irq_state),
+-		VMSTATE_UINT32(ledctrl, mst_irq_state),
+-		VMSTATE_UINT32(gpswr, mst_irq_state),
+-		VMSTATE_UINT32(mscwr1, mst_irq_state),
+-		VMSTATE_UINT32(mscwr2, mst_irq_state),
+-		VMSTATE_UINT32(mscwr3, mst_irq_state),
+-		VMSTATE_UINT32(mscrd, mst_irq_state),
+-		VMSTATE_UINT32(intmskena, mst_irq_state),
+-		VMSTATE_UINT32(intsetclr, mst_irq_state),
+-		VMSTATE_UINT32(pcmcia0, mst_irq_state),
+-		VMSTATE_UINT32(pcmcia1, mst_irq_state),
+-		VMSTATE_END_OF_LIST(),
+-	},
 -};
 -
--static void ads7846_realize(SSIPeripheral *d, Error **errp)
--{
--    DeviceState *dev = DEVICE(d);
--    ADS7846State *s = ADS7846(d);
--
--    qdev_init_gpio_out(dev, &s->interrupt, 1);
--
--    s->input[0] = ADS_TEMP0;    /* TEMP0 */
--    s->input[2] = ADS_VBAT;     /* VBAT */
--    s->input[6] = ADS_VAUX;     /* VAUX */
--    s->input[7] = ADS_TEMP1;    /* TEMP1 */
--
--    /* We want absolute coordinates */
--    qemu_add_mouse_event_handler(ads7846_ts_event, s, 1,
--                    "QEMU ADS7846-driven Touchscreen");
--
--    ads7846_int_update(s);
--
--    vmstate_register_any(NULL, &vmstate_ads7846, s);
--}
--
--static void ads7846_class_init(ObjectClass *klass, void *data)
+-static void mst_fpga_class_init(ObjectClass *klass, void *data)
 -{
 -    DeviceClass *dc = DEVICE_CLASS(klass);
--    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
 -
--    k->realize = ads7846_realize;
--    k->transfer = ads7846_transfer;
--    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+-    dc->desc = "Mainstone II FPGA";
+-    dc->vmsd = &vmstate_mst_fpga_regs;
 -}
 -
--static const TypeInfo ads7846_info = {
--    .name          = TYPE_ADS7846,
--    .parent        = TYPE_SSI_PERIPHERAL,
--    .instance_size = sizeof(ADS7846State),
--    .class_init    = ads7846_class_init,
+-static const TypeInfo mst_fpga_info = {
+-    .name          = TYPE_MAINSTONE_FPGA,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(mst_irq_state),
+-    .instance_init = mst_fpga_init,
+-    .class_init    = mst_fpga_class_init,
 -};
 -
--static void ads7846_register_types(void)
+-static void mst_fpga_register_types(void)
 -{
--    type_register_static(&ads7846_info);
+-    type_register_static(&mst_fpga_info);
 -}
 -
--type_init(ads7846_register_types)
-diff --git a/hw/input/Kconfig b/hw/input/Kconfig
-index f86e98c8293..acfdba5c4ca 100644
---- a/hw/input/Kconfig
-+++ b/hw/input/Kconfig
-@@ -1,9 +1,6 @@
- config ADB
-     bool
- 
--config ADS7846
--    bool
--
- config LM832X
-     bool
-     depends on I2C
-diff --git a/hw/input/meson.build b/hw/input/meson.build
-index 3cc8ab85f0c..07a28c2c01c 100644
---- a/hw/input/meson.build
-+++ b/hw/input/meson.build
-@@ -1,6 +1,5 @@
- system_ss.add(files('hid.c'))
- system_ss.add(when: 'CONFIG_ADB', if_true: files('adb.c', 'adb-mouse.c', 'adb-kbd.c'))
--system_ss.add(when: 'CONFIG_ADS7846', if_true: files('ads7846.c'))
- system_ss.add(when: 'CONFIG_LM832X', if_true: files('lm832x.c'))
- system_ss.add(when: 'CONFIG_PCKBD', if_true: files('pckbd.c'))
- system_ss.add(when: 'CONFIG_PL050', if_true: files('pl050.c'))
+-type_init(mst_fpga_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 2ca8717be28..56b94655152 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -67,7 +67,6 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx_ccm.c',
+   'imx_rngc.c',
+ ))
+-system_ss.add(when: 'CONFIG_MAINSTONE', if_true: files('mst_fpga.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+   'npcm7xx_clk.c',
+   'npcm7xx_gcr.c',
 -- 
 2.34.1
 
