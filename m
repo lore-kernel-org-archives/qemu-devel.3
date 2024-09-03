@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F30FCD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1672CD379F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW50-0006dz-V8; Tue, 03 Sep 2024 12:08:30 -0400
+	id 1slW57-000750-D0; Tue, 03 Sep 2024 12:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4r-00063D-WC
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:22 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1slW56-00072I-Mw
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:36 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4p-0002mN-Hs
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:21 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42bb72a5e0bso48709835e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:19 -0700 (PDT)
+ id 1slW51-0002o8-Gw
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:36 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42bbf138477so33770205e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379698; x=1725984498; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379710; x=1725984510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1hkuiM8kCwtLjA2hmy1f4xZ9hVGPuFvO8PEzKFEDgtQ=;
- b=wlmfmf1qINVei1nNLsbxUWhVcF1Fs9aYdRCp+2H8HHkAyfVZPK/qs2ypU7zQ+Nv3sl
- t3NOP8hELrV2h/RwBzrs2QPX1bNrfuRf1wlaIGkORpuBeMpeMVktdORjt470voZ8R/RN
- g1IQMyCmtZ8bQgdqeTS2OnF+qWf6YkSOQ8CE2GcY+qu+IMVyamXGWAOv7hXgQHMoEoMy
- zt4nyV9wn9Hg9IatbQ1sWFwtG4ojeKUpuC4qiW8KY+Nwu1+4q1mVI7gxzEhsnVvmqUzi
- 2gjSIBKjCr2vZ5lVKBlfEsFEeoOlsLYEVyiPBVE/Y8wk7QPDrBRP3ERd+Qv91wXht3aj
- 2B4A==
+ :reply-to; bh=QtQ5OrKSW2t6fizJbre4gyRxKdC3jG5vkpvzi9b1A8w=;
+ b=c13ijzcIMlB2w9KPTwC8tQPVEBk46Q8sv9xLOKbKL0HqikWJ5Rlzo4kjv0yB8vPyyi
+ 3w5ogNSt7O5hcM1orTOx1zE01bRsKzUJSc2A4kr62BVSgNg4FZqba+EjfYvbtGeQaSxd
+ NMdHK5TbCzgnnQKhGYDqlNrUlE4oRUWW25yFlFDlf5msv2TLFwFxrRfRQGGPAo2TUFMb
+ NUAyX0WRcVGzBSKtFxMVKtWzmPHE66SbtTEi8EsgJewlNBmZ7wR7zcVyrmEq5RNIAi3I
+ WBDr+jZMnCIw4DS8jS4Nufg+WF2GxZcBTM4XgW/pA3ASaetBt2dno/t0dk47bcw1CObC
+ lABA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379698; x=1725984498;
+ d=1e100.net; s=20230601; t=1725379710; x=1725984510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1hkuiM8kCwtLjA2hmy1f4xZ9hVGPuFvO8PEzKFEDgtQ=;
- b=p4WNjIEbUkobwEr6XicqZKzSPkazYuKXiYMxZESfANJi/XmA+lVjt3KCxpS6aB/mZ1
- PY2MubgGZI3O5GWNW2vQar6GJHlAZblA84N5fkTxHvuU7vRIFaGsNbDiMU1o7fMKb8e7
- IrCGxlxn5pDBQLI9khiPKOI7kAhd6+wPoF9BJpJLnWeX+WO9MIQ8vPIOhzpF4+ukEJEo
- N2+8Pj18y5clyPKhQgA1+utwa53NYXZC0TWiJRI4pWHCwmroSNsSB+20GibX5MMUN5ou
- 7/7Lb47WVABKDtGlWph6/IzXcYLZ0Pp42FwhxRP6d4Vi5kEolQInU6fAmU+lPSylXHkI
- oxoA==
+ bh=QtQ5OrKSW2t6fizJbre4gyRxKdC3jG5vkpvzi9b1A8w=;
+ b=qPyZJ/BpEGwbcJC058geFhrrJ3ehGKKpeP9buSquu8tviyTObQ4BgE4GLNvoGlO3LY
+ P2eNJYVUH0utXY4HshXXpPyKbAv2v3hlOvn7KbAA5FO6ZXj4H1AhmNJl/vHL+BwYkBnq
+ VbhGk5Y+dR+ldU7Q4OazSyI8G/G8u5E8+qOdXj0FfawenKQrL508xxH6PvMfbhz9aG/S
+ /1YlzohCs2IuU6VOHat+0PE0uCTvGR6vAkUBr5Kx991SmyFt1WSwiYlgIyrY0O8iEfEy
+ HjiY91p1L+4wFSXvjFwz0oTf7l4KMWXObiEAK68tcve6CKxEd32VSRBrzfveYF9YQ6m1
+ Og3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYDtr8Wlk4BFJoV++iaHR6E3/kEcQPX6fSCXHnJ8plKnQF+JxQPvuBpXSshOBC8l1s/Nx0BdwraxuG@nongnu.org
-X-Gm-Message-State: AOJu0YyIzaMQsH+W9ivWFq1Ua8J4dqzgDY6qZPac+VR8HfvrP6ymMAH6
- 4qIwYPnAWT3dOTjaxjapEgifK5MBvRdmggztWn5Ngi55kq9riNFa+2glBVinbLE=
-X-Google-Smtp-Source: AGHT+IFU8w2lXOHDeUHrZSLlRWMPbfyK3n2ZSvDgLYjf92oM+rJ66zc6J4V9wuIw1ZFfqY0Q4SrwHA==
-X-Received: by 2002:a05:600c:4fd3:b0:428:3b5:816b with SMTP id
- 5b1f17b1804b1-42bb01aa120mr127645985e9.3.1725379697985; 
- Tue, 03 Sep 2024 09:08:17 -0700 (PDT)
+ AJvYcCWFMxl/LFQyStvUlDL7lG5UhVRy+QEnnuhYYBraEmMNbJGvfQWQyyHyZap+hh7o6L63yvfI7TkshlqZ@nongnu.org
+X-Gm-Message-State: AOJu0YzPnf7Ey48jpkI/ZnSB0Fk3/w6ecowQDDBhidbMsI/UEfqO+2oX
+ 5zi9JvaYR989ZZXXOWTPuTNGDIUF/OLgXOQyrhL+Y8/11Z0Jcu+1Qf0vWSyaznB7y33e58S/lzQ
+ A
+X-Google-Smtp-Source: AGHT+IHTj+yTmcwW3Uw8jmHwDTKG5raPogogt0m+i7gdKCd7aDwH8SvFYUKFN9/I5jD2p1WBEQQKPA==
+X-Received: by 2002:a05:600c:4f8e:b0:426:6edb:7e14 with SMTP id
+ 5b1f17b1804b1-42c881085ecmr27252485e9.35.1725379710130; 
+ Tue, 03 Sep 2024 09:08:30 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.15
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:15 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 17/53] hw/input: Remove pxa2xx_keypad
-Date: Tue,  3 Sep 2024 17:07:15 +0100
-Message-Id: <20240903160751.4100218-18-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 20/53] hw/pcmcia: Remove pxa2xx pcmcia device
+Date: Tue,  3 Sep 2024 17:07:18 +0100
+Message-Id: <20240903160751.4100218-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,49 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the pxa2xx-specific pxa2xx_keypad device.
+Remove the pxa2xx specific pcmcia device.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/pxa.h     |  12 --
- hw/input/pxa2xx_keypad.c | 331 ---------------------------------------
- hw/input/meson.build     |   1 -
- 3 files changed, 344 deletions(-)
- delete mode 100644 hw/input/pxa2xx_keypad.c
+ include/hw/arm/pxa.h  |   8 --
+ hw/pcmcia/pxa2xx.c    | 248 ------------------------------------------
+ hw/pcmcia/meson.build |   1 -
+ 3 files changed, 257 deletions(-)
+ delete mode 100644 hw/pcmcia/pxa2xx.c
 
 diff --git a/include/hw/arm/pxa.h b/include/hw/arm/pxa.h
-index cc4de0750af..40f9356b226 100644
+index 944926e514b..5f98536bc69 100644
 --- a/include/hw/arm/pxa.h
 +++ b/include/hw/arm/pxa.h
-@@ -94,16 +94,4 @@ int pxa2xx_pcmcia_attach(void *opaque, PCMCIACardState *card);
- int pxa2xx_pcmcia_detach(void *opaque);
- void pxa2xx_pcmcia_set_irq_cb(void *opaque, qemu_irq irq, qemu_irq cd_irq);
+@@ -76,12 +76,4 @@ DeviceState *pxa2xx_gpio_init(hwaddr base,
+                               ARMCPU *cpu, DeviceState *pic, int lines);
+ void pxa2xx_gpio_read_notifier(DeviceState *dev, qemu_irq handler);
  
--/* pxa2xx_keypad.c */
--struct  keymap {
--    int8_t column;
--    int8_t row;
--};
--typedef struct PXA2xxKeyPadState PXA2xxKeyPadState;
--PXA2xxKeyPadState *pxa27x_keypad_init(MemoryRegion *sysmem,
--                                      hwaddr base,
--                                      qemu_irq irq);
--void pxa27x_register_keypad(PXA2xxKeyPadState *kp,
--                            const struct keymap *map, int size);
+-/* pxa2xx_pcmcia.c */
+-#define TYPE_PXA2XX_PCMCIA "pxa2xx-pcmcia"
+-OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxPCMCIAState, PXA2XX_PCMCIA)
+-
+-int pxa2xx_pcmcia_attach(void *opaque, PCMCIACardState *card);
+-int pxa2xx_pcmcia_detach(void *opaque);
+-void pxa2xx_pcmcia_set_irq_cb(void *opaque, qemu_irq irq, qemu_irq cd_irq);
 -
  #endif /* PXA_H */
-diff --git a/hw/input/pxa2xx_keypad.c b/hw/input/pxa2xx_keypad.c
+diff --git a/hw/pcmcia/pxa2xx.c b/hw/pcmcia/pxa2xx.c
 deleted file mode 100644
-index 3858648d9f6..00000000000
---- a/hw/input/pxa2xx_keypad.c
+index e3111fdf1a1..00000000000
+--- a/hw/pcmcia/pxa2xx.c
 +++ /dev/null
-@@ -1,331 +0,0 @@
+@@ -1,248 +0,0 @@
 -/*
-- * Intel PXA27X Keypad Controller emulation.
+- * Intel XScale PXA255/270 PC Card and CompactFlash Interface.
 - *
-- * Copyright (c) 2007 MontaVista Software, Inc
-- * Written by Armin Kuster <akuster@kama-aina.net>
-- *              or  <Akuster@mvista.com>
+- * Copyright (c) 2006 Openedhand Ltd.
+- * Written by Andrzej Zaborowski <balrog@zabor.org>
 - *
 - * This code is licensed under the GPLv2.
 - *
@@ -145,334 +141,248 @@ index 3858648d9f6..00000000000
 - */
 -
 -#include "qemu/osdep.h"
--#include "qemu/log.h"
 -#include "hw/irq.h"
--#include "migration/vmstate.h"
+-#include "hw/sysbus.h"
+-#include "qapi/error.h"
+-#include "qemu/module.h"
+-#include "hw/pcmcia.h"
 -#include "hw/arm/pxa.h"
--#include "ui/console.h"
 -
--/*
-- * Keypad
-- */
--#define KPC         0x00    /* Keypad Interface Control register */
--#define KPDK        0x08    /* Keypad Interface Direct Key register */
--#define KPREC       0x10    /* Keypad Interface Rotary Encoder register */
--#define KPMK        0x18    /* Keypad Interface Matrix Key register */
--#define KPAS        0x20    /* Keypad Interface Automatic Scan register */
--#define KPASMKP0    0x28    /* Keypad Interface Automatic Scan Multiple
--                                Key Presser register 0 */
--#define KPASMKP1    0x30    /* Keypad Interface Automatic Scan Multiple
--                                Key Presser register 1 */
--#define KPASMKP2    0x38    /* Keypad Interface Automatic Scan Multiple
--                                Key Presser register 2 */
--#define KPASMKP3    0x40    /* Keypad Interface Automatic Scan Multiple
--                                Key Presser register 3 */
--#define KPKDI       0x48    /* Keypad Interface Key Debounce Interval
--                                register */
+-struct PXA2xxPCMCIAState {
+-    SysBusDevice parent_obj;
 -
--/* Keypad defines */
--#define KPC_AS          (0x1 << 30)  /* Automatic Scan bit */
--#define KPC_ASACT       (0x1 << 29)  /* Automatic Scan on Activity */
--#define KPC_MI          (0x1 << 22)  /* Matrix interrupt bit */
--#define KPC_IMKP        (0x1 << 21)  /* Ignore Multiple Key Press */
--#define KPC_MS7         (0x1 << 20)  /* Matrix scan line 7 */
--#define KPC_MS6         (0x1 << 19)  /* Matrix scan line 6 */
--#define KPC_MS5         (0x1 << 18)  /* Matrix scan line 5 */
--#define KPC_MS4         (0x1 << 17)  /* Matrix scan line 4 */
--#define KPC_MS3         (0x1 << 16)  /* Matrix scan line 3 */
--#define KPC_MS2         (0x1 << 15)  /* Matrix scan line 2 */
--#define KPC_MS1         (0x1 << 14)  /* Matrix scan line 1 */
--#define KPC_MS0         (0x1 << 13)  /* Matrix scan line 0 */
--#define KPC_ME          (0x1 << 12)  /* Matrix Keypad Enable */
--#define KPC_MIE         (0x1 << 11)  /* Matrix Interrupt Enable */
--#define KPC_DK_DEB_SEL  (0x1 <<  9)  /* Direct Keypad Debounce Select */
--#define KPC_DI          (0x1 <<  5)  /* Direct key interrupt bit */
--#define KPC_RE_ZERO_DEB (0x1 <<  4)  /* Rotary Encoder Zero Debounce */
--#define KPC_REE1        (0x1 <<  3)  /* Rotary Encoder1 Enable */
--#define KPC_REE0        (0x1 <<  2)  /* Rotary Encoder0 Enable */
--#define KPC_DE          (0x1 <<  1)  /* Direct Keypad Enable */
--#define KPC_DIE         (0x1 <<  0)  /* Direct Keypad interrupt Enable */
--
--#define KPDK_DKP        (0x1 << 31)
--#define KPDK_DK7        (0x1 <<  7)
--#define KPDK_DK6        (0x1 <<  6)
--#define KPDK_DK5        (0x1 <<  5)
--#define KPDK_DK4        (0x1 <<  4)
--#define KPDK_DK3        (0x1 <<  3)
--#define KPDK_DK2        (0x1 <<  2)
--#define KPDK_DK1        (0x1 <<  1)
--#define KPDK_DK0        (0x1 <<  0)
--
--#define KPREC_OF1       (0x1 << 31)
--#define KPREC_UF1       (0x1 << 30)
--#define KPREC_OF0       (0x1 << 15)
--#define KPREC_UF0       (0x1 << 14)
--
--#define KPMK_MKP        (0x1 << 31)
--#define KPAS_SO         (0x1 << 31)
--#define KPASMKPx_SO     (0x1 << 31)
--
--
--#define KPASMKPx_MKC(row, col)  (1 << (row + 16 * (col % 2)))
--
--#define PXAKBD_MAXROW   8
--#define PXAKBD_MAXCOL   8
--
--struct PXA2xxKeyPadState {
+-    PCMCIASocket slot;
+-    MemoryRegion container_mem;
+-    MemoryRegion common_iomem;
+-    MemoryRegion attr_iomem;
 -    MemoryRegion iomem;
--    qemu_irq    irq;
--    const struct  keymap *map;
--    int         pressed_cnt;
--    int         alt_code;
 -
--    uint32_t    kpc;
--    uint32_t    kpdk;
--    uint32_t    kprec;
--    uint32_t    kpmk;
--    uint32_t    kpas;
--    uint32_t    kpasmkp[4];
--    uint32_t    kpkdi;
+-    qemu_irq irq;
+-    qemu_irq cd_irq;
+-
+-    PCMCIACardState *card;
 -};
 -
--static void pxa27x_keypad_find_pressed_key(PXA2xxKeyPadState *kp, int *row, int *col)
+-static uint64_t pxa2xx_pcmcia_common_read(void *opaque,
+-                hwaddr offset, unsigned size)
 -{
--    int i;
--    for (i = 0; i < 4; i++)
--    {
--        *col = i * 2;
--        for (*row = 0; *row < 8; (*row)++) {
--            if (kp->kpasmkp[i] & (1 << *row))
--                return;
--        }
--        *col = i * 2 + 1;
--        for (*row = 0; *row < 8; (*row)++) {
--            if (kp->kpasmkp[i] & (1 << (*row + 16)))
--                return;
--        }
--    }
--}
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
 -
--static void pxa27x_keyboard_event (PXA2xxKeyPadState *kp, int keycode)
--{
--    int row, col, rel, assert_irq = 0;
--    uint32_t val;
--
--    if (keycode == 0xe0) {
--        kp->alt_code = 1;
--        return;
--    }
--
--    if(!(kp->kpc & KPC_ME)) /* skip if not enabled */
--        return;
--
--    rel = (keycode & 0x80) ? 1 : 0; /* key release from qemu */
--    keycode &= ~0x80; /* strip qemu key release bit */
--    if (kp->alt_code) {
--        keycode |= 0x80;
--        kp->alt_code = 0;
--    }
--
--    row = kp->map[keycode].row;
--    col = kp->map[keycode].column;
--    if (row == -1 || col == -1) {
--        return;
--    }
--
--    val = KPASMKPx_MKC(row, col);
--    if (rel) {
--        if (kp->kpasmkp[col / 2] & val) {
--            kp->kpasmkp[col / 2] &= ~val;
--            kp->pressed_cnt--;
--            assert_irq = 1;
--        }
--    } else {
--        if (!(kp->kpasmkp[col / 2] & val)) {
--            kp->kpasmkp[col / 2] |= val;
--            kp->pressed_cnt++;
--            assert_irq = 1;
--        }
--    }
--    kp->kpas = ((kp->pressed_cnt & 0x1f) << 26) | (0xf << 4) | 0xf;
--    if (kp->pressed_cnt == 1) {
--        kp->kpas &= ~((0xf << 4) | 0xf);
--        if (rel) {
--            pxa27x_keypad_find_pressed_key(kp, &row, &col);
--        }
--        kp->kpas |= ((row & 0xf) << 4) | (col & 0xf);
--    }
--
--    if (!(kp->kpc & (KPC_AS | KPC_ASACT)))
--        assert_irq = 0;
--
--    if (assert_irq && (kp->kpc & KPC_MIE)) {
--        kp->kpc |= KPC_MI;
--        qemu_irq_raise(kp->irq);
--    }
--}
--
--static uint64_t pxa2xx_keypad_read(void *opaque, hwaddr offset,
--                                   unsigned size)
--{
--    PXA2xxKeyPadState *s = (PXA2xxKeyPadState *) opaque;
--    uint32_t tmp;
--
--    switch (offset) {
--    case KPC:
--        tmp = s->kpc;
--        if(tmp & KPC_MI)
--            s->kpc &= ~(KPC_MI);
--        if(tmp & KPC_DI)
--            s->kpc &= ~(KPC_DI);
--        qemu_irq_lower(s->irq);
--        return tmp;
--    case KPDK:
--        return s->kpdk;
--    case KPREC:
--        tmp = s->kprec;
--        if(tmp & KPREC_OF1)
--            s->kprec &= ~(KPREC_OF1);
--        if(tmp & KPREC_UF1)
--            s->kprec &= ~(KPREC_UF1);
--        if(tmp & KPREC_OF0)
--            s->kprec &= ~(KPREC_OF0);
--        if(tmp & KPREC_UF0)
--            s->kprec &= ~(KPREC_UF0);
--        return tmp;
--    case KPMK:
--        tmp = s->kpmk;
--        if(tmp & KPMK_MKP)
--            s->kpmk &= ~(KPMK_MKP);
--        return tmp;
--    case KPAS:
--        return s->kpas;
--    case KPASMKP0:
--        return s->kpasmkp[0];
--    case KPASMKP1:
--        return s->kpasmkp[1];
--    case KPASMKP2:
--        return s->kpasmkp[2];
--    case KPASMKP3:
--        return s->kpasmkp[3];
--    case KPKDI:
--        return s->kpkdi;
--    default:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: Bad read offset 0x%"HWADDR_PRIx"\n",
--                      __func__, offset);
+-    if (s->slot.attached) {
+-        pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-        return pcc->common_read(s->card, offset);
 -    }
 -
 -    return 0;
 -}
 -
--static void pxa2xx_keypad_write(void *opaque, hwaddr offset,
--                                uint64_t value, unsigned size)
+-static void pxa2xx_pcmcia_common_write(void *opaque, hwaddr offset,
+-                                       uint64_t value, unsigned size)
 -{
--    PXA2xxKeyPadState *s = (PXA2xxKeyPadState *) opaque;
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
 -
--    switch (offset) {
--    case KPC:
--        s->kpc = value;
--        if (s->kpc & KPC_AS) {
--            s->kpc &= ~(KPC_AS);
--        }
--        break;
--    case KPDK:
--        s->kpdk = value;
--        break;
--    case KPREC:
--        s->kprec = value;
--        break;
--    case KPMK:
--        s->kpmk = value;
--        break;
--    case KPAS:
--        s->kpas = value;
--        break;
--    case KPASMKP0:
--        s->kpasmkp[0] = value;
--        break;
--    case KPASMKP1:
--        s->kpasmkp[1] = value;
--        break;
--    case KPASMKP2:
--        s->kpasmkp[2] = value;
--        break;
--    case KPASMKP3:
--        s->kpasmkp[3] = value;
--        break;
--    case KPKDI:
--        s->kpkdi = value;
--        break;
--
--    default:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: Bad write offset 0x%"HWADDR_PRIx"\n",
--                      __func__, offset);
+-    if (s->slot.attached) {
+-        pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-        pcc->common_write(s->card, offset, value);
 -    }
 -}
 -
--static const MemoryRegionOps pxa2xx_keypad_ops = {
--    .read = pxa2xx_keypad_read,
--    .write = pxa2xx_keypad_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
--static const VMStateDescription vmstate_pxa2xx_keypad = {
--    .name = "pxa2xx_keypad",
--    .version_id = 0,
--    .minimum_version_id = 0,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(kpc, PXA2xxKeyPadState),
--        VMSTATE_UINT32(kpdk, PXA2xxKeyPadState),
--        VMSTATE_UINT32(kprec, PXA2xxKeyPadState),
--        VMSTATE_UINT32(kpmk, PXA2xxKeyPadState),
--        VMSTATE_UINT32(kpas, PXA2xxKeyPadState),
--        VMSTATE_UINT32_ARRAY(kpasmkp, PXA2xxKeyPadState, 4),
--        VMSTATE_UINT32(kpkdi, PXA2xxKeyPadState),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--PXA2xxKeyPadState *pxa27x_keypad_init(MemoryRegion *sysmem,
--                                      hwaddr base,
--                                      qemu_irq irq)
+-static uint64_t pxa2xx_pcmcia_attr_read(void *opaque,
+-                hwaddr offset, unsigned size)
 -{
--    PXA2xxKeyPadState *s;
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
 -
--    s = g_new0(PXA2xxKeyPadState, 1);
+-    if (s->slot.attached) {
+-        pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-        return pcc->attr_read(s->card, offset);
+-    }
+-
+-    return 0;
+-}
+-
+-static void pxa2xx_pcmcia_attr_write(void *opaque, hwaddr offset,
+-                                     uint64_t value, unsigned size)
+-{
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
+-
+-    if (s->slot.attached) {
+-        pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-        pcc->attr_write(s->card, offset, value);
+-    }
+-}
+-
+-static uint64_t pxa2xx_pcmcia_io_read(void *opaque,
+-                hwaddr offset, unsigned size)
+-{
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
+-
+-    if (s->slot.attached) {
+-        pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-        return pcc->io_read(s->card, offset);
+-    }
+-
+-    return 0;
+-}
+-
+-static void pxa2xx_pcmcia_io_write(void *opaque, hwaddr offset,
+-                                   uint64_t value, unsigned size)
+-{
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
+-
+-    if (s->slot.attached) {
+-        pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-        pcc->io_write(s->card, offset, value);
+-    }
+-}
+-
+-static const MemoryRegionOps pxa2xx_pcmcia_common_ops = {
+-    .read = pxa2xx_pcmcia_common_read,
+-    .write = pxa2xx_pcmcia_common_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN
+-};
+-
+-static const MemoryRegionOps pxa2xx_pcmcia_attr_ops = {
+-    .read = pxa2xx_pcmcia_attr_read,
+-    .write = pxa2xx_pcmcia_attr_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN
+-};
+-
+-static const MemoryRegionOps pxa2xx_pcmcia_io_ops = {
+-    .read = pxa2xx_pcmcia_io_read,
+-    .write = pxa2xx_pcmcia_io_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN
+-};
+-
+-static void pxa2xx_pcmcia_set_irq(void *opaque, int line, int level)
+-{
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    if (!s->irq)
+-        return;
+-
+-    qemu_set_irq(s->irq, level);
+-}
+-
+-static void pxa2xx_pcmcia_initfn(Object *obj)
+-{
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-    PXA2xxPCMCIAState *s = PXA2XX_PCMCIA(obj);
+-
+-    memory_region_init(&s->container_mem, obj, "container", 0x10000000);
+-    sysbus_init_mmio(sbd, &s->container_mem);
+-
+-    /* Socket I/O Memory Space */
+-    memory_region_init_io(&s->iomem, obj, &pxa2xx_pcmcia_io_ops, s,
+-                          "pxa2xx-pcmcia-io", 0x04000000);
+-    memory_region_add_subregion(&s->container_mem, 0x00000000,
+-                                &s->iomem);
+-
+-    /* Then next 64 MB is reserved */
+-
+-    /* Socket Attribute Memory Space */
+-    memory_region_init_io(&s->attr_iomem, obj, &pxa2xx_pcmcia_attr_ops, s,
+-                          "pxa2xx-pcmcia-attribute", 0x04000000);
+-    memory_region_add_subregion(&s->container_mem, 0x08000000,
+-                                &s->attr_iomem);
+-
+-    /* Socket Common Memory Space */
+-    memory_region_init_io(&s->common_iomem, obj, &pxa2xx_pcmcia_common_ops, s,
+-                          "pxa2xx-pcmcia-common", 0x04000000);
+-    memory_region_add_subregion(&s->container_mem, 0x0c000000,
+-                                &s->common_iomem);
+-
+-    s->slot.irq = qemu_allocate_irq(pxa2xx_pcmcia_set_irq, s, 0);
+-
+-    object_property_add_link(obj, "card", TYPE_PCMCIA_CARD,
+-                             (Object **)&s->card,
+-                             NULL, /* read-only property */
+-                             0);
+-}
+-
+-/* Insert a new card into a slot */
+-int pxa2xx_pcmcia_attach(void *opaque, PCMCIACardState *card)
+-{
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
+-
+-    if (s->slot.attached) {
+-        return -EEXIST;
+-    }
+-
+-    if (s->cd_irq) {
+-        qemu_irq_raise(s->cd_irq);
+-    }
+-
+-    s->card = card;
+-    pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-
+-    s->slot.attached = true;
+-    s->card->slot = &s->slot;
+-    pcc->attach(s->card);
+-
+-    return 0;
+-}
+-
+-/* Eject card from the slot */
+-int pxa2xx_pcmcia_detach(void *opaque)
+-{
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
+-    PCMCIACardClass *pcc;
+-
+-    if (!s->slot.attached) {
+-        return -ENOENT;
+-    }
+-
+-    pcc = PCMCIA_CARD_GET_CLASS(s->card);
+-    pcc->detach(s->card);
+-    s->card->slot = NULL;
+-    s->card = NULL;
+-
+-    s->slot.attached = false;
+-
+-    if (s->irq) {
+-        qemu_irq_lower(s->irq);
+-    }
+-    if (s->cd_irq) {
+-        qemu_irq_lower(s->cd_irq);
+-    }
+-
+-    return 0;
+-}
+-
+-/* Who to notify on card events */
+-void pxa2xx_pcmcia_set_irq_cb(void *opaque, qemu_irq irq, qemu_irq cd_irq)
+-{
+-    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
 -    s->irq = irq;
--
--    memory_region_init_io(&s->iomem, NULL, &pxa2xx_keypad_ops, s,
--                          "pxa2xx-keypad", 0x00100000);
--    memory_region_add_subregion(sysmem, base, &s->iomem);
--
--    vmstate_register(NULL, 0, &vmstate_pxa2xx_keypad, s);
--
--    return s;
+-    s->cd_irq = cd_irq;
 -}
 -
--void pxa27x_register_keypad(PXA2xxKeyPadState *kp,
--                            const struct keymap *map, int size)
+-static const TypeInfo pxa2xx_pcmcia_type_info = {
+-    .name = TYPE_PXA2XX_PCMCIA,
+-    .parent = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(PXA2xxPCMCIAState),
+-    .instance_init = pxa2xx_pcmcia_initfn,
+-};
+-
+-static void pxa2xx_pcmcia_register_types(void)
 -{
--    if(!map || size < 0x80) {
--        fprintf(stderr, "%s - No PXA keypad map defined\n", __func__);
--        exit(-1);
--    }
--
--    kp->map = map;
--    qemu_add_kbd_event_handler((QEMUPutKBDEvent *) pxa27x_keyboard_event, kp);
+-    type_register_static(&pxa2xx_pcmcia_type_info);
 -}
-diff --git a/hw/input/meson.build b/hw/input/meson.build
-index 07a28c2c01c..fe60b6e28fc 100644
---- a/hw/input/meson.build
-+++ b/hw/input/meson.build
-@@ -11,6 +11,5 @@ system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input.c'))
- system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input-hid.c'))
- system_ss.add(when: 'CONFIG_VIRTIO_INPUT_HOST', if_true: files('virtio-input-host.c'))
- 
--system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_keypad.c'))
- system_ss.add(when: 'CONFIG_TSC210X', if_true: files('tsc210x.c'))
- system_ss.add(when: 'CONFIG_LASIPS2', if_true: files('lasips2.c'))
+-
+-type_init(pxa2xx_pcmcia_register_types)
+diff --git a/hw/pcmcia/meson.build b/hw/pcmcia/meson.build
+index 04e29c109c0..edcb7f5d263 100644
+--- a/hw/pcmcia/meson.build
++++ b/hw/pcmcia/meson.build
+@@ -1,2 +1 @@
+ system_ss.add(when: 'CONFIG_PCMCIA', if_true: files('pcmcia.c'))
+-system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx.c'))
 -- 
 2.34.1
 
