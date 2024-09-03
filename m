@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44C43CD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B191CD37A7
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW4d-0004vT-2m; Tue, 03 Sep 2024 12:08:07 -0400
+	id 1slW5D-0007eO-QH; Tue, 03 Sep 2024 12:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4a-0004nE-W2
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:05 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1slW5B-0007Ry-Ur
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:41 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW4U-0002f5-0f
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:04 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-42c7a49152aso36158465e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:07:57 -0700 (PDT)
+ id 1slW55-0002pL-Kj
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:41 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42bb6d3e260so46938035e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379676; x=1725984476; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379714; x=1725984514; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fmDEQAHR61WT1tBB8RVs6stzaZ4Kwf55ODK6be7k5N4=;
- b=VYlUeRNs/VA+lob0HIcuxhHMKTXfPidW5eqLlk4EoVXWDtxyX1jX2HP5847KY9u9KO
- 6nLlsJ6fQq4cbjJ/DCwFu6s1D37cg+TUHh6sXVD+ZhIK4LkbT5BBIGZOOyR9go+w/qSR
- tctX6tIvBjZlQOupCMqPDhDeX42aIu2xeDcSjVXWDvyMoNqUNiSdyIOqeM9ZotwXdTTx
- YBdOhmK/tGFUI/FhuA4CFxkAi0FyZFGkywgbygOmYzAA2SLkOeBarc/mqECWpmHVNpsp
- Ne+Vp1//mNsYgnsLmcs/GDzoQ1+0bhMC4FEeZdzosD+xn5Hl+AdPeNwnIS55HSMJhKB9
- IPjA==
+ :reply-to; bh=pg5awZIlWa5+7tugwU/FO8CAJe08el6Zg/lK80MSr1U=;
+ b=O7Yh790jusj7V9LrIfbfkoBqvAVna35hjAS/9lDtX31nwRL1H4y7yEwkSim0sZgrEJ
+ qUsD96lpsCKfvRz+j8PIg8ys5pYftqQv/CxQjCbwTKJc951yzs85ZImbOK3oXCB3zt55
+ oMeEWovbD6/qXgrNOLgs7u9KwA0ULKsoSEgYqicvQMv6gdSVS5rG8S94R2tLrwdqnr9P
+ 3h5WF9x5b6ZGdsBwstFLDV7DaRHn6zXnLxv/8xvTmzXdHoCJLdXiUeJKZzcs0BiEkkgW
+ sWdU7uQ/zJ/fMYf/u93HPgSkp1CE9T4cRa+D1fIaL/LkRuTQmx0ZzdIVXbHAMZooHMnZ
+ DvRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379676; x=1725984476;
+ d=1e100.net; s=20230601; t=1725379714; x=1725984514;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fmDEQAHR61WT1tBB8RVs6stzaZ4Kwf55ODK6be7k5N4=;
- b=M8EHkR5VfmS8f3vgFgMs3sfisQDCTzrS1l9DKG2dfpu4G6KUBsIeJ+NnmwFYAC0+Ye
- mi+dl/LFOBFgIXI6WMhHJe6UhQgiPR8MBNVXLJRcy65AGZgwV3U/NIHa41bD4rsqAhZj
- /LiIl4J3Lqh0pc2ZxXjJkx0gK6wBZkI0WVEr5UDasHmR1N/QP7X/Yw1KgPAB06YynXc0
- 1nmtch4/p1PJf/IazB5ALvvFlDUL3YLuxsgUNlKFbP1fsT5uByUvU9dXddewpb4jGnGL
- OFqrQh9c8Deth5JnBUmans2e4N17xE0hwZKtFUkqNiqv6n1jR67mwIH5aFmnKTGI0jWn
- GDWw==
+ bh=pg5awZIlWa5+7tugwU/FO8CAJe08el6Zg/lK80MSr1U=;
+ b=rYLDo1VT5V/zfSUVT9LNWxzAtTiEMXHxwLXxGcxcAHOu+/hUJFBrVCvpDObNtZBn+B
+ LfBU/sBlva9dDWeGJ+nFH80GYlI1zhfBczYbhjxx+fueUDUdKtlZPAuxUHDVj9WlDKn+
+ xn8K6a6JFoL2tHytDix0AzNwfTcmbTiFPfORZXZFmzheI70mNWN2dDKPThUdVxS+H4ZG
+ tlLziw9RRE+/eOMxXuNjE7BC1vsJRF9gtq9aZT5MpTCEUPj25V9FFS0rxxXAIEr3T3cD
+ WzN3e1GOYhKdM2lPWkZr9VU3d9j/w+C7UNdZXpPb0jke4+eqCzgOQwT2Ps8Q8BYJ3mI2
+ 9edw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVs87/ZQu9+eooUEOK48vFSmER5LwB9OJdk3frRSYNIvkYeZGKMqjy03XLTbS7o/6SAiygJ/rAJ/zcM@nongnu.org
-X-Gm-Message-State: AOJu0YwB1uKUl+7w9G3DlygCyIg2u0Pt3f62teQ95+SxIzyLEllWvMBp
- pQ2UWlTD/QGRBK+0koOyjyflLRzUWiRoucVXnkc2yZ8DllJQ5uR1MNTinEU1Oi8=
-X-Google-Smtp-Source: AGHT+IFQ5xQJHKA18SxOorVN/1A+6sCylkkSqvmMy8zToWoTL/7rBvm6cle8rNJ7HhqfTBrn76wYZg==
-X-Received: by 2002:a05:600c:a01:b0:426:6857:3156 with SMTP id
- 5b1f17b1804b1-42bb01edd50mr169493835e9.27.1725379676341; 
- Tue, 03 Sep 2024 09:07:56 -0700 (PDT)
+ AJvYcCW31Qt6xWr7yd6JWAhl5O0qH3uCtGSfTtJ8DJ4PmoGsFVnWmSMhym5YxIKe3QDj7CAtwVXYs0yzGt4n@nongnu.org
+X-Gm-Message-State: AOJu0YyDvcfdJxW64TU7rVFu5bvvXji8HpTYFE4sFgBxcG2YmexoOsZS
+ EPFLhSK+HTKkvX8XEoLgpfhkDaab5idYztqjsc9jnq9ukCkrC8HzT6YrSl0GwAo=
+X-Google-Smtp-Source: AGHT+IEnT6NrQFditrAFB66A3mCKQBhx/0vZIdnW2BdoSDSC5Y4YAQHUA1Gz1r8xHEuRf+wztAoFHg==
+X-Received: by 2002:a05:600c:3503:b0:428:2e9:6573 with SMTP id
+ 5b1f17b1804b1-42bdc6370a2mr78923175e9.17.1725379714096; 
+ Tue, 03 Sep 2024 09:08:34 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.07.55
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:07:55 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:33 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 05/53] hw/ide: Remove DSCM-1XXXX microdrive device
- model
-Date: Tue,  3 Sep 2024 17:07:03 +0100
-Message-Id: <20240903160751.4100218-6-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 26/53] hw/misc: Remove cbus
+Date: Tue,  3 Sep 2024 17:07:24 +0100
+Message-Id: <20240903160751.4100218-27-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,707 +94,739 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The DSCM-1XXXX microdrive device model was used only by the
-XScale-based Zaurus machine types.  Now they have been removed, we
-can delete this device too.
+The devices in hw/misc/cbus.c were used only by the
+now-removed nseries machine types, so they can be removed.
+
+As this is the last use of the CONFIG_NSERIES define we
+can remove that from KConfig now.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/pcmcia.h |   3 -
- hw/ide/microdrive.c | 644 --------------------------------------------
- hw/ide/Kconfig      |   6 -
- hw/ide/meson.build  |   1 -
- 4 files changed, 654 deletions(-)
- delete mode 100644 hw/ide/microdrive.c
+ MAINTAINERS            |   2 -
+ include/hw/misc/cbus.h |  31 ---
+ hw/misc/cbus.c         | 619 -----------------------------------------
+ hw/arm/Kconfig         |  14 -
+ hw/misc/meson.build    |   1 -
+ 5 files changed, 667 deletions(-)
+ delete mode 100644 include/hw/misc/cbus.h
+ delete mode 100644 hw/misc/cbus.c
 
-diff --git a/include/hw/pcmcia.h b/include/hw/pcmcia.h
-index ab268027511..6c08ad616a5 100644
---- a/include/hw/pcmcia.h
-+++ b/include/hw/pcmcia.h
-@@ -60,7 +60,4 @@ struct PCMCIACardClass {
- #define CISTPL_END            0xff  /* Tuple End */
- #define CISTPL_ENDMARK        0xff
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0c1fad7afda..156c1ba992c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -871,12 +871,10 @@ F: hw/display/blizzard.c
+ F: hw/input/lm832x.c
+ F: hw/input/tsc2005.c
+ F: hw/input/tsc210x.c
+-F: hw/misc/cbus.c
+ F: hw/rtc/twl92230.c
+ F: include/hw/display/blizzard.h
+ F: include/hw/input/lm832x.h
+ F: include/hw/input/tsc2xxx.h
+-F: include/hw/misc/cbus.h
  
--/* dscm1xxxx.c */
--PCMCIACardState *dscm1xxxx_init(DriveInfo *bdrv);
--
- #endif
-diff --git a/hw/ide/microdrive.c b/hw/ide/microdrive.c
+ Raspberry Pi
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/include/hw/misc/cbus.h b/include/hw/misc/cbus.h
 deleted file mode 100644
-index 3bb152b5d33..00000000000
---- a/hw/ide/microdrive.c
+index 5334984020d..00000000000
+--- a/include/hw/misc/cbus.h
 +++ /dev/null
-@@ -1,644 +0,0 @@
+@@ -1,31 +0,0 @@
 -/*
-- * QEMU IDE Emulation: microdrive (CF / PCMCIA)
+- * CBUS three-pin bus and the Retu / Betty / Tahvo / Vilma / Avilma /
+- * Hinku / Vinku / Ahne / Pihi chips used in various Nokia platforms.
+- * Based on reverse-engineering of a linux driver.
 - *
-- * Copyright (c) 2003 Fabrice Bellard
-- * Copyright (c) 2006 Openedhand Ltd.
+- * Copyright (C) 2008 Nokia Corporation
+- * Written by Andrzej Zaborowski
 - *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- */
+-
+-#ifndef HW_MISC_CBUS_H
+-#define HW_MISC_CBUS_H
+-
+-
+-typedef struct {
+-    qemu_irq clk;
+-    qemu_irq dat;
+-    qemu_irq sel;
+-} CBus;
+-
+-CBus *cbus_init(qemu_irq dat_out);
+-void cbus_attach(CBus *bus, void *slave_opaque);
+-
+-void *retu_init(qemu_irq irq, int vilma);
+-void *tahvo_init(qemu_irq irq, int betty);
+-
+-void retu_key_event(void *retu, int state);
+-
+-#endif
+diff --git a/hw/misc/cbus.c b/hw/misc/cbus.c
+deleted file mode 100644
+index 653e8ddcd5b..00000000000
+--- a/hw/misc/cbus.c
++++ /dev/null
+@@ -1,619 +0,0 @@
+-/*
+- * CBUS three-pin bus and the Retu / Betty / Tahvo / Vilma / Avilma /
+- * Hinku / Vinku / Ahne / Pihi chips used in various Nokia platforms.
+- * Based on reverse-engineering of a linux driver.
 - *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
+- * Copyright (C) 2008 Nokia Corporation
+- * Written by Andrzej Zaborowski <andrew@openedhand.com>
 - *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 or
+- * (at your option) version 3 of the License.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License along
+- * with this program; if not, see <http://www.gnu.org/licenses/>.
 - */
 -
 -#include "qemu/osdep.h"
--#include "hw/pcmcia.h"
--#include "migration/vmstate.h"
--#include "qapi/error.h"
--#include "qemu/module.h"
--#include "sysemu/dma.h"
+-#include "hw/hw.h"
 -#include "hw/irq.h"
+-#include "hw/misc/cbus.h"
+-#include "sysemu/runstate.h"
 -
--#include "qom/object.h"
--#include "ide-internal.h"
+-//#define DEBUG
 -
--#define TYPE_MICRODRIVE "microdrive"
--OBJECT_DECLARE_SIMPLE_TYPE(MicroDriveState, MICRODRIVE)
+-typedef struct {
+-    void *opaque;
+-    void (*io)(void *opaque, int rw, int reg, uint16_t *val);
+-    int addr;
+-} CBusSlave;
 -
--/***********************************************************/
--/* CF-ATA Microdrive */
+-typedef struct {
+-    CBus cbus;
 -
--#define METADATA_SIZE   0x20
+-    int sel;
+-    int dat;
+-    int clk;
+-    int bit;
+-    int dir;
+-    uint16_t val;
+-    qemu_irq dat_out;
 -
--/* DSCM-1XXXX Microdrive hard disk with CF+ II / PCMCIA interface.  */
+-    int addr;
+-    int reg;
+-    int rw;
+-    enum {
+-        cbus_address,
+-        cbus_value,
+-    } cycle;
 -
--struct MicroDriveState {
--    /*< private >*/
--    PCMCIACardState parent_obj;
--    /*< public >*/
+-    CBusSlave *slave[8];
+-} CBusPriv;
 -
--    IDEBus bus;
--    uint32_t attr_base;
--    uint32_t io_base;
--
--    /* Card state */
--    uint8_t opt;
--    uint8_t stat;
--    uint8_t pins;
--
--    uint8_t ctrl;
--    uint16_t io;
--    uint8_t cycle;
--};
--
--/* Register bitfields */
--enum md_opt {
--    OPT_MODE_MMAP    = 0,
--    OPT_MODE_IOMAP16 = 1,
--    OPT_MODE_IOMAP1  = 2,
--    OPT_MODE_IOMAP2  = 3,
--    OPT_MODE         = 0x3f,
--    OPT_LEVIREQ      = 0x40,
--    OPT_SRESET       = 0x80,
--};
--enum md_cstat {
--    STAT_INT        = 0x02,
--    STAT_PWRDWN     = 0x04,
--    STAT_XE         = 0x10,
--    STAT_IOIS8      = 0x20,
--    STAT_SIGCHG     = 0x40,
--    STAT_CHANGED    = 0x80,
--};
--enum md_pins {
--    PINS_MRDY       = 0x02,
--    PINS_CRDY       = 0x20,
--};
--enum md_ctrl {
--    CTRL_IEN        = 0x02,
--    CTRL_SRST       = 0x04,
--};
--
--static inline void md_interrupt_update(MicroDriveState *s)
+-static void cbus_io(CBusPriv *s)
 -{
--    PCMCIACardState *card = PCMCIA_CARD(s);
--
--    if (card->slot == NULL) {
--        return;
--    }
--
--    qemu_set_irq(card->slot->irq,
--                    !(s->stat & STAT_INT) &&    /* Inverted */
--                    !(s->ctrl & (CTRL_IEN | CTRL_SRST)) &&
--                    !(s->opt & OPT_SRESET));
+-    if (s->slave[s->addr])
+-        s->slave[s->addr]->io(s->slave[s->addr]->opaque,
+-                        s->rw, s->reg, &s->val);
+-    else
+-        hw_error("%s: bad slave address %i\n", __func__, s->addr);
 -}
 -
--static void md_set_irq(void *opaque, int irq, int level)
+-static void cbus_cycle(CBusPriv *s)
 -{
--    MicroDriveState *s = opaque;
+-    switch (s->cycle) {
+-    case cbus_address:
+-        s->addr = (s->val >> 6) & 7;
+-        s->rw =   (s->val >> 5) & 1;
+-        s->reg =  (s->val >> 0) & 0x1f;
 -
--    if (level) {
--        s->stat |= STAT_INT;
--    } else {
--        s->stat &= ~STAT_INT;
+-        s->cycle = cbus_value;
+-        s->bit = 15;
+-        s->dir = !s->rw;
+-        s->val = 0;
+-
+-        if (s->rw)
+-            cbus_io(s);
+-        break;
+-
+-    case cbus_value:
+-        if (!s->rw)
+-            cbus_io(s);
+-
+-        s->cycle = cbus_address;
+-        s->bit = 8;
+-        s->dir = 1;
+-        s->val = 0;
+-        break;
 -    }
--
--    md_interrupt_update(s);
 -}
 -
--static void md_reset(DeviceState *dev)
+-static void cbus_clk(void *opaque, int line, int level)
 -{
--    MicroDriveState *s = MICRODRIVE(dev);
+-    CBusPriv *s = (CBusPriv *) opaque;
 -
--    s->opt = OPT_MODE_MMAP;
--    s->stat = 0;
--    s->pins = 0;
--    s->cycle = 0;
--    s->ctrl = 0;
--    ide_bus_reset(&s->bus);
--}
+-    if (!s->sel && level && !s->clk) {
+-        if (s->dir)
+-            s->val |= s->dat << (s->bit --);
+-        else
+-            qemu_set_irq(s->dat_out, (s->val >> (s->bit --)) & 1);
 -
--static uint8_t md_attr_read(PCMCIACardState *card, uint32_t at)
--{
--    MicroDriveState *s = MICRODRIVE(card);
--    PCMCIACardClass *pcc = PCMCIA_CARD_GET_CLASS(card);
--
--    if (at < s->attr_base) {
--        if (at < pcc->cis_len) {
--            return pcc->cis[at];
--        } else {
--            return 0x00;
--        }
+-        if (s->bit < 0)
+-            cbus_cycle(s);
 -    }
 -
--    at -= s->attr_base;
+-    s->clk = level;
+-}
 -
--    switch (at) {
--    case 0x00:  /* Configuration Option Register */
--        return s->opt;
--    case 0x02:  /* Card Configuration Status Register */
--        if (s->ctrl & CTRL_IEN) {
--            return s->stat & ~STAT_INT;
--        } else {
--            return s->stat;
--        }
--    case 0x04:  /* Pin Replacement Register */
--        return (s->pins & PINS_CRDY) | 0x0c;
--    case 0x06:  /* Socket and Copy Register */
--        return 0x00;
--#ifdef VERBOSE
--    default:
--        printf("%s: Bad attribute space register %02x\n", __func__, at);
+-static void cbus_dat(void *opaque, int line, int level)
+-{
+-    CBusPriv *s = (CBusPriv *) opaque;
+-
+-    s->dat = level;
+-}
+-
+-static void cbus_sel(void *opaque, int line, int level)
+-{
+-    CBusPriv *s = (CBusPriv *) opaque;
+-
+-    if (!level) {
+-        s->dir = 1;
+-        s->bit = 8;
+-        s->val = 0;
+-    }
+-
+-    s->sel = level;
+-}
+-
+-CBus *cbus_init(qemu_irq dat)
+-{
+-    CBusPriv *s = g_malloc0(sizeof(*s));
+-
+-    s->dat_out = dat;
+-    s->cbus.clk = qemu_allocate_irq(cbus_clk, s, 0);
+-    s->cbus.dat = qemu_allocate_irq(cbus_dat, s, 0);
+-    s->cbus.sel = qemu_allocate_irq(cbus_sel, s, 0);
+-
+-    s->sel = 1;
+-    s->clk = 0;
+-    s->dat = 0;
+-
+-    return &s->cbus;
+-}
+-
+-void cbus_attach(CBus *bus, void *slave_opaque)
+-{
+-    CBusSlave *slave = (CBusSlave *) slave_opaque;
+-    CBusPriv *s = (CBusPriv *) bus;
+-
+-    s->slave[slave->addr] = slave;
+-}
+-
+-/* Retu/Vilma */
+-typedef struct {
+-    uint16_t irqst;
+-    uint16_t irqen;
+-    uint16_t cc[2];
+-    int channel;
+-    uint16_t result[16];
+-    uint16_t sample;
+-    uint16_t status;
+-
+-    struct {
+-        uint16_t cal;
+-    } rtc;
+-
+-    int is_vilma;
+-    qemu_irq irq;
+-    CBusSlave cbus;
+-} CBusRetu;
+-
+-static void retu_interrupt_update(CBusRetu *s)
+-{
+-    qemu_set_irq(s->irq, s->irqst & ~s->irqen);
+-}
+-
+-#define RETU_REG_ASICR		0x00	/* (RO) ASIC ID & revision */
+-#define RETU_REG_IDR		0x01	/* (T)  Interrupt ID */
+-#define RETU_REG_IMR		0x02	/* (RW) Interrupt mask */
+-#define RETU_REG_RTCDSR		0x03	/* (RW) RTC seconds register */
+-#define RETU_REG_RTCHMR		0x04	/* (RO) RTC hours and minutes reg */
+-#define RETU_REG_RTCHMAR	0x05	/* (RW) RTC hours and minutes set reg */
+-#define RETU_REG_RTCCALR	0x06	/* (RW) RTC calibration register */
+-#define RETU_REG_ADCR		0x08	/* (RW) ADC result register */
+-#define RETU_REG_ADCSCR		0x09	/* (RW) ADC sample control register */
+-#define RETU_REG_AFCR		0x0a	/* (RW) AFC register */
+-#define RETU_REG_ANTIFR		0x0b	/* (RW) AntiF register */
+-#define RETU_REG_CALIBR		0x0c	/* (RW) CalibR register*/
+-#define RETU_REG_CCR1		0x0d	/* (RW) Common control register 1 */
+-#define RETU_REG_CCR2		0x0e	/* (RW) Common control register 2 */
+-#define RETU_REG_RCTRL_CLR	0x0f	/* (T)  Regulator clear register */
+-#define RETU_REG_RCTRL_SET	0x10	/* (T)  Regulator set register */
+-#define RETU_REG_TXCR		0x11	/* (RW) TxC register */
+-#define RETU_REG_STATUS		0x16	/* (RO) Status register */
+-#define RETU_REG_WATCHDOG	0x17	/* (RW) Watchdog register */
+-#define RETU_REG_AUDTXR		0x18	/* (RW) Audio Codec Tx register */
+-#define RETU_REG_AUDPAR		0x19	/* (RW) AudioPA register */
+-#define RETU_REG_AUDRXR1	0x1a	/* (RW) Audio receive register 1 */
+-#define RETU_REG_AUDRXR2	0x1b	/* (RW) Audio receive register 2 */
+-#define RETU_REG_SGR1		0x1c	/* (RW) */
+-#define RETU_REG_SCR1		0x1d	/* (RW) */
+-#define RETU_REG_SGR2		0x1e	/* (RW) */
+-#define RETU_REG_SCR2		0x1f	/* (RW) */
+-
+-/* Retu Interrupt sources */
+-enum {
+-    retu_int_pwr	= 0,	/* Power button */
+-    retu_int_char	= 1,	/* Charger */
+-    retu_int_rtcs	= 2,	/* Seconds */
+-    retu_int_rtcm	= 3,	/* Minutes */
+-    retu_int_rtcd	= 4,	/* Days */
+-    retu_int_rtca	= 5,	/* Alarm */
+-    retu_int_hook	= 6,	/* Hook */
+-    retu_int_head	= 7,	/* Headset */
+-    retu_int_adcs	= 8,	/* ADC sample */
+-};
+-
+-/* Retu ADC channel wiring */
+-enum {
+-    retu_adc_bsi	= 1,	/* BSI */
+-    retu_adc_batt_temp	= 2,	/* Battery temperature */
+-    retu_adc_chg_volt	= 3,	/* Charger voltage */
+-    retu_adc_head_det	= 4,	/* Headset detection */
+-    retu_adc_hook_det	= 5,	/* Hook detection */
+-    retu_adc_rf_gp	= 6,	/* RF GP */
+-    retu_adc_tx_det	= 7,	/* Wideband Tx detection */
+-    retu_adc_batt_volt	= 8,	/* Battery voltage */
+-    retu_adc_sens	= 10,	/* Light sensor */
+-    retu_adc_sens_temp	= 11,	/* Light sensor temperature */
+-    retu_adc_bbatt_volt	= 12,	/* Backup battery voltage */
+-    retu_adc_self_temp	= 13,	/* RETU temperature */
+-};
+-
+-static inline uint16_t retu_read(CBusRetu *s, int reg)
+-{
+-#ifdef DEBUG
+-    printf("RETU read at %02x\n", reg);
 -#endif
--    }
 -
--    return 0;
--}
+-    switch (reg) {
+-    case RETU_REG_ASICR:
+-        return 0x0215 | (s->is_vilma << 7);
 -
--static void md_attr_write(PCMCIACardState *card, uint32_t at, uint8_t value)
--{
--    MicroDriveState *s = MICRODRIVE(card);
+-    case RETU_REG_IDR:	/* TODO: Or is this ffs(s->irqst)?  */
+-        return s->irqst;
 -
--    at -= s->attr_base;
+-    case RETU_REG_IMR:
+-        return s->irqen;
 -
--    switch (at) {
--    case 0x00:  /* Configuration Option Register */
--        s->opt = value & 0xcf;
--        if (value & OPT_SRESET) {
--            device_cold_reset(DEVICE(s));
--        }
--        md_interrupt_update(s);
--        break;
--    case 0x02:  /* Card Configuration Status Register */
--        if ((s->stat ^ value) & STAT_PWRDWN) {
--            s->pins |= PINS_CRDY;
--        }
--        s->stat &= 0x82;
--        s->stat |= value & 0x74;
--        md_interrupt_update(s);
--        /* Word 170 in Identify Device must be equal to STAT_XE */
--        break;
--    case 0x04:  /* Pin Replacement Register */
--        s->pins &= PINS_CRDY;
--        s->pins |= value & PINS_MRDY;
--        break;
--    case 0x06:  /* Socket and Copy Register */
--        break;
+-    case RETU_REG_RTCDSR:
+-    case RETU_REG_RTCHMR:
+-    case RETU_REG_RTCHMAR:
+-        /* TODO */
+-        return 0x0000;
+-
+-    case RETU_REG_RTCCALR:
+-        return s->rtc.cal;
+-
+-    case RETU_REG_ADCR:
+-        return (s->channel << 10) | s->result[s->channel];
+-    case RETU_REG_ADCSCR:
+-        return s->sample;
+-
+-    case RETU_REG_AFCR:
+-    case RETU_REG_ANTIFR:
+-    case RETU_REG_CALIBR:
+-        /* TODO */
+-        return 0x0000;
+-
+-    case RETU_REG_CCR1:
+-        return s->cc[0];
+-    case RETU_REG_CCR2:
+-        return s->cc[1];
+-
+-    case RETU_REG_RCTRL_CLR:
+-    case RETU_REG_RCTRL_SET:
+-    case RETU_REG_TXCR:
+-        /* TODO */
+-        return 0x0000;
+-
+-    case RETU_REG_STATUS:
+-        return s->status;
+-
+-    case RETU_REG_WATCHDOG:
+-    case RETU_REG_AUDTXR:
+-    case RETU_REG_AUDPAR:
+-    case RETU_REG_AUDRXR1:
+-    case RETU_REG_AUDRXR2:
+-    case RETU_REG_SGR1:
+-    case RETU_REG_SCR1:
+-    case RETU_REG_SGR2:
+-    case RETU_REG_SCR2:
+-        /* TODO */
+-        return 0x0000;
+-
 -    default:
--        printf("%s: Bad attribute space register %02x\n", __func__, at);
+-        hw_error("%s: bad register %02x\n", __func__, reg);
 -    }
 -}
 -
--static uint16_t md_common_read(PCMCIACardState *card, uint32_t at)
+-static inline void retu_write(CBusRetu *s, int reg, uint16_t val)
 -{
--    MicroDriveState *s = MICRODRIVE(card);
--    IDEState *ifs;
--    uint16_t ret;
--    at -= s->io_base;
+-#ifdef DEBUG
+-    printf("RETU write of %04x at %02x\n", val, reg);
+-#endif
 -
--    switch (s->opt & OPT_MODE) {
--    case OPT_MODE_MMAP:
--        if ((at & ~0x3ff) == 0x400) {
--            at = 0;
--        }
+-    switch (reg) {
+-    case RETU_REG_IDR:
+-        s->irqst ^= val;
+-        retu_interrupt_update(s);
 -        break;
--    case OPT_MODE_IOMAP16:
--        at &= 0xf;
--        break;
--    case OPT_MODE_IOMAP1:
--        if ((at & ~0xf) == 0x3f0) {
--            at -= 0x3e8;
--        } else if ((at & ~0xf) == 0x1f0) {
--            at -= 0x1f0;
--        }
--        break;
--    case OPT_MODE_IOMAP2:
--        if ((at & ~0xf) == 0x370) {
--            at -= 0x368;
--        } else if ((at & ~0xf) == 0x170) {
--            at -= 0x170;
--        }
--    }
 -
--    switch (at) {
--    case 0x0:  /* Even RD Data */
--    case 0x8:
--        return ide_data_readw(&s->bus, 0);
+-    case RETU_REG_IMR:
+-        s->irqen = val;
+-        retu_interrupt_update(s);
+-        break;
 -
--        /* TODO: 8-bit accesses */
--        if (s->cycle) {
--            ret = s->io >> 8;
--        } else {
--            s->io = ide_data_readw(&s->bus, 0);
--            ret = s->io & 0xff;
--        }
--        s->cycle = !s->cycle;
--        return ret;
--    case 0x9:  /* Odd RD Data */
--        return s->io >> 8;
--    case 0xd:  /* Error */
--        return ide_ioport_read(&s->bus, 0x1);
--    case 0xe:  /* Alternate Status */
--        ifs = ide_bus_active_if(&s->bus);
--        if (ifs->blk) {
--            return ifs->status;
--        } else {
--            return 0;
--        }
--    case 0xf:  /* Device Address */
--        ifs = ide_bus_active_if(&s->bus);
--        return 0xc2 | ((~ifs->select << 2) & 0x3c);
+-    case RETU_REG_RTCDSR:
+-    case RETU_REG_RTCHMAR:
+-        /* TODO */
+-        break;
+-
+-    case RETU_REG_RTCCALR:
+-        s->rtc.cal = val;
+-        break;
+-
+-    case RETU_REG_ADCR:
+-        s->channel = (val >> 10) & 0xf;
+-        s->irqst |= 1 << retu_int_adcs;
+-        retu_interrupt_update(s);
+-        break;
+-    case RETU_REG_ADCSCR:
+-        s->sample &= ~val;
+-        break;
+-
+-    case RETU_REG_AFCR:
+-    case RETU_REG_ANTIFR:
+-    case RETU_REG_CALIBR:
+-
+-    case RETU_REG_CCR1:
+-        s->cc[0] = val;
+-        break;
+-    case RETU_REG_CCR2:
+-        s->cc[1] = val;
+-        break;
+-
+-    case RETU_REG_RCTRL_CLR:
+-    case RETU_REG_RCTRL_SET:
+-        /* TODO */
+-        break;
+-
+-    case RETU_REG_WATCHDOG:
+-        if (val == 0 && (s->cc[0] & 2))
+-            qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+-        break;
+-
+-    case RETU_REG_TXCR:
+-    case RETU_REG_AUDTXR:
+-    case RETU_REG_AUDPAR:
+-    case RETU_REG_AUDRXR1:
+-    case RETU_REG_AUDRXR2:
+-    case RETU_REG_SGR1:
+-    case RETU_REG_SCR1:
+-    case RETU_REG_SGR2:
+-    case RETU_REG_SCR2:
+-        /* TODO */
+-        break;
+-
 -    default:
--        return ide_ioport_read(&s->bus, at);
+-        hw_error("%s: bad register %02x\n", __func__, reg);
 -    }
--
--    return 0;
 -}
 -
--static void md_common_write(PCMCIACardState *card, uint32_t at, uint16_t value)
+-static void retu_io(void *opaque, int rw, int reg, uint16_t *val)
 -{
--    MicroDriveState *s = MICRODRIVE(card);
--    at -= s->io_base;
+-    CBusRetu *s = (CBusRetu *) opaque;
 -
--    switch (s->opt & OPT_MODE) {
--    case OPT_MODE_MMAP:
--        if ((at & ~0x3ff) == 0x400) {
--            at = 0;
--        }
--        break;
--    case OPT_MODE_IOMAP16:
--        at &= 0xf;
--        break;
--    case OPT_MODE_IOMAP1:
--        if ((at & ~0xf) == 0x3f0) {
--            at -= 0x3e8;
--        } else if ((at & ~0xf) == 0x1f0) {
--            at -= 0x1f0;
--        }
--        break;
--    case OPT_MODE_IOMAP2:
--        if ((at & ~0xf) == 0x370) {
--            at -= 0x368;
--        } else if ((at & ~0xf) == 0x170) {
--            at -= 0x170;
--        }
+-    if (rw)
+-        *val = retu_read(s, reg);
+-    else
+-        retu_write(s, reg, *val);
+-}
+-
+-void *retu_init(qemu_irq irq, int vilma)
+-{
+-    CBusRetu *s = g_malloc0(sizeof(*s));
+-
+-    s->irq = irq;
+-    s->irqen = 0xffff;
+-    s->irqst = 0x0000;
+-    s->status = 0x0020;
+-    s->is_vilma = !!vilma;
+-    s->rtc.cal = 0x01;
+-    s->result[retu_adc_bsi] = 0x3c2;
+-    s->result[retu_adc_batt_temp] = 0x0fc;
+-    s->result[retu_adc_chg_volt] = 0x165;
+-    s->result[retu_adc_head_det] = 123;
+-    s->result[retu_adc_hook_det] = 1023;
+-    s->result[retu_adc_rf_gp] = 0x11;
+-    s->result[retu_adc_tx_det] = 0x11;
+-    s->result[retu_adc_batt_volt] = 0x250;
+-    s->result[retu_adc_sens] = 2;
+-    s->result[retu_adc_sens_temp] = 0x11;
+-    s->result[retu_adc_bbatt_volt] = 0x3d0;
+-    s->result[retu_adc_self_temp] = 0x330;
+-
+-    s->cbus.opaque = s;
+-    s->cbus.io = retu_io;
+-    s->cbus.addr = 1;
+-
+-    return &s->cbus;
+-}
+-
+-void retu_key_event(void *retu, int state)
+-{
+-    CBusSlave *slave = (CBusSlave *) retu;
+-    CBusRetu *s = (CBusRetu *) slave->opaque;
+-
+-    s->irqst |= 1 << retu_int_pwr;
+-    retu_interrupt_update(s);
+-
+-    if (state)
+-        s->status &= ~(1 << 5);
+-    else
+-        s->status |= 1 << 5;
+-}
+-
+-#if 0
+-static void retu_head_event(void *retu, int state)
+-{
+-    CBusSlave *slave = (CBusSlave *) retu;
+-    CBusRetu *s = (CBusRetu *) slave->opaque;
+-
+-    if ((s->cc[0] & 0x500) == 0x500) {	/* TODO: Which bits? */
+-        /* TODO: reissue the interrupt every 100ms or so.  */
+-        s->irqst |= 1 << retu_int_head;
+-        retu_interrupt_update(s);
 -    }
 -
--    switch (at) {
--    case 0x0:  /* Even WR Data */
--    case 0x8:
--        ide_data_writew(&s->bus, 0, value);
--        break;
+-    if (state)
+-        s->result[retu_adc_head_det] = 50;
+-    else
+-        s->result[retu_adc_head_det] = 123;
+-}
 -
--        /* TODO: 8-bit accesses */
--        if (s->cycle) {
--            ide_data_writew(&s->bus, 0, s->io | (value << 8));
--        } else {
--            s->io = value & 0xff;
--        }
--        s->cycle = !s->cycle;
--        break;
--    case 0x9:
--        s->io = value & 0xff;
--        s->cycle = !s->cycle;
--        break;
--    case 0xd:  /* Features */
--        ide_ioport_write(&s->bus, 0x1, value);
--        break;
--    case 0xe:  /* Device Control */
--        s->ctrl = value;
--        if (value & CTRL_SRST) {
--            device_cold_reset(DEVICE(s));
--        }
--        md_interrupt_update(s);
--        break;
+-static void retu_hook_event(void *retu, int state)
+-{
+-    CBusSlave *slave = (CBusSlave *) retu;
+-    CBusRetu *s = (CBusRetu *) slave->opaque;
+-
+-    if ((s->cc[0] & 0x500) == 0x500) {
+-        /* TODO: reissue the interrupt every 100ms or so.  */
+-        s->irqst |= 1 << retu_int_hook;
+-        retu_interrupt_update(s);
+-    }
+-
+-    if (state)
+-        s->result[retu_adc_hook_det] = 50;
+-    else
+-        s->result[retu_adc_hook_det] = 123;
+-}
+-#endif
+-
+-/* Tahvo/Betty */
+-typedef struct {
+-    uint16_t irqst;
+-    uint16_t irqen;
+-    uint8_t charger;
+-    uint8_t backlight;
+-    uint16_t usbr;
+-    uint16_t power;
+-
+-    int is_betty;
+-    qemu_irq irq;
+-    CBusSlave cbus;
+-} CBusTahvo;
+-
+-static void tahvo_interrupt_update(CBusTahvo *s)
+-{
+-    qemu_set_irq(s->irq, s->irqst & ~s->irqen);
+-}
+-
+-#define TAHVO_REG_ASICR		0x00	/* (RO) ASIC ID & revision */
+-#define TAHVO_REG_IDR		0x01	/* (T)  Interrupt ID */
+-#define TAHVO_REG_IDSR		0x02	/* (RO) Interrupt status */
+-#define TAHVO_REG_IMR		0x03	/* (RW) Interrupt mask */
+-#define TAHVO_REG_CHAPWMR	0x04	/* (RW) Charger PWM */
+-#define TAHVO_REG_LEDPWMR	0x05	/* (RW) LED PWM */
+-#define TAHVO_REG_USBR		0x06	/* (RW) USB control */
+-#define TAHVO_REG_RCR		0x07	/* (RW) Some kind of power management */
+-#define TAHVO_REG_CCR1		0x08	/* (RW) Common control register 1 */
+-#define TAHVO_REG_CCR2		0x09	/* (RW) Common control register 2 */
+-#define TAHVO_REG_TESTR1	0x0a	/* (RW) Test register 1 */
+-#define TAHVO_REG_TESTR2	0x0b	/* (RW) Test register 2 */
+-#define TAHVO_REG_NOPR		0x0c	/* (RW) Number of periods */
+-#define TAHVO_REG_FRR		0x0d	/* (RO) FR */
+-
+-static inline uint16_t tahvo_read(CBusTahvo *s, int reg)
+-{
+-#ifdef DEBUG
+-    printf("TAHVO read at %02x\n", reg);
+-#endif
+-
+-    switch (reg) {
+-    case TAHVO_REG_ASICR:
+-        return 0x0021 | (s->is_betty ? 0x0b00 : 0x0300);	/* 22 in N810 */
+-
+-    case TAHVO_REG_IDR:
+-    case TAHVO_REG_IDSR:	/* XXX: what does this do?  */
+-        return s->irqst;
+-
+-    case TAHVO_REG_IMR:
+-        return s->irqen;
+-
+-    case TAHVO_REG_CHAPWMR:
+-        return s->charger;
+-
+-    case TAHVO_REG_LEDPWMR:
+-        return s->backlight;
+-
+-    case TAHVO_REG_USBR:
+-        return s->usbr;
+-
+-    case TAHVO_REG_RCR:
+-        return s->power;
+-
+-    case TAHVO_REG_CCR1:
+-    case TAHVO_REG_CCR2:
+-    case TAHVO_REG_TESTR1:
+-    case TAHVO_REG_TESTR2:
+-    case TAHVO_REG_NOPR:
+-    case TAHVO_REG_FRR:
+-        return 0x0000;
+-
 -    default:
--        if (s->stat & STAT_PWRDWN) {
--            s->pins |= PINS_CRDY;
--            s->stat &= ~STAT_PWRDWN;
+-        hw_error("%s: bad register %02x\n", __func__, reg);
+-    }
+-}
+-
+-static inline void tahvo_write(CBusTahvo *s, int reg, uint16_t val)
+-{
+-#ifdef DEBUG
+-    printf("TAHVO write of %04x at %02x\n", val, reg);
+-#endif
+-
+-    switch (reg) {
+-    case TAHVO_REG_IDR:
+-        s->irqst ^= val;
+-        tahvo_interrupt_update(s);
+-        break;
+-
+-    case TAHVO_REG_IMR:
+-        s->irqen = val;
+-        tahvo_interrupt_update(s);
+-        break;
+-
+-    case TAHVO_REG_CHAPWMR:
+-        s->charger = val;
+-        break;
+-
+-    case TAHVO_REG_LEDPWMR:
+-        if (s->backlight != (val & 0x7f)) {
+-            s->backlight = val & 0x7f;
+-            printf("%s: LCD backlight now at %i / 127\n",
+-                            __func__, s->backlight);
 -        }
--        ide_ioport_write(&s->bus, at, value);
+-        break;
+-
+-    case TAHVO_REG_USBR:
+-        s->usbr = val;
+-        break;
+-
+-    case TAHVO_REG_RCR:
+-        s->power = val;
+-        break;
+-
+-    case TAHVO_REG_CCR1:
+-    case TAHVO_REG_CCR2:
+-    case TAHVO_REG_TESTR1:
+-    case TAHVO_REG_TESTR2:
+-    case TAHVO_REG_NOPR:
+-    case TAHVO_REG_FRR:
+-        break;
+-
+-    default:
+-        hw_error("%s: bad register %02x\n", __func__, reg);
 -    }
 -}
 -
--static const VMStateDescription vmstate_microdrive = {
--    .name = "microdrive",
--    .version_id = 3,
--    .minimum_version_id = 0,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT8(opt, MicroDriveState),
--        VMSTATE_UINT8(stat, MicroDriveState),
--        VMSTATE_UINT8(pins, MicroDriveState),
--        VMSTATE_UINT8(ctrl, MicroDriveState),
--        VMSTATE_UINT16(io, MicroDriveState),
--        VMSTATE_UINT8(cycle, MicroDriveState),
--        VMSTATE_IDE_BUS(bus, MicroDriveState),
--        VMSTATE_IDE_DRIVES(bus.ifs, MicroDriveState),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--static const uint8_t dscm1xxxx_cis[0x14a] = {
--    [0x000] = CISTPL_DEVICE,    /* 5V Device Information */
--    [0x002] = 0x03,             /* Tuple length = 4 bytes */
--    [0x004] = 0xdb,             /* ID: DTYPE_FUNCSPEC, non WP, DSPEED_150NS */
--    [0x006] = 0x01,             /* Size = 2K bytes */
--    [0x008] = CISTPL_ENDMARK,
--
--    [0x00a] = CISTPL_DEVICE_OC, /* Additional Device Information */
--    [0x00c] = 0x04,             /* Tuple length = 4 byest */
--    [0x00e] = 0x03,             /* Conditions: Ext = 0, Vcc 3.3V, MWAIT = 1 */
--    [0x010] = 0xdb,             /* ID: DTYPE_FUNCSPEC, non WP, DSPEED_150NS */
--    [0x012] = 0x01,             /* Size = 2K bytes */
--    [0x014] = CISTPL_ENDMARK,
--
--    [0x016] = CISTPL_JEDEC_C,   /* JEDEC ID */
--    [0x018] = 0x02,             /* Tuple length = 2 bytes */
--    [0x01a] = 0xdf,             /* PC Card ATA with no Vpp required */
--    [0x01c] = 0x01,
--
--    [0x01e] = CISTPL_MANFID,    /* Manufacture ID */
--    [0x020] = 0x04,             /* Tuple length = 4 bytes */
--    [0x022] = 0xa4,             /* TPLMID_MANF = 00a4 (IBM) */
--    [0x024] = 0x00,
--    [0x026] = 0x00,             /* PLMID_CARD = 0000 */
--    [0x028] = 0x00,
--
--    [0x02a] = CISTPL_VERS_1,    /* Level 1 Version */
--    [0x02c] = 0x12,             /* Tuple length = 23 bytes */
--    [0x02e] = 0x04,             /* Major Version = JEIDA 4.2 / PCMCIA 2.1 */
--    [0x030] = 0x01,             /* Minor Version = 1 */
--    [0x032] = 'I',
--    [0x034] = 'B',
--    [0x036] = 'M',
--    [0x038] = 0x00,
--    [0x03a] = 'm',
--    [0x03c] = 'i',
--    [0x03e] = 'c',
--    [0x040] = 'r',
--    [0x042] = 'o',
--    [0x044] = 'd',
--    [0x046] = 'r',
--    [0x048] = 'i',
--    [0x04a] = 'v',
--    [0x04c] = 'e',
--    [0x04e] = 0x00,
--    [0x050] = CISTPL_ENDMARK,
--
--    [0x052] = CISTPL_FUNCID,    /* Function ID */
--    [0x054] = 0x02,             /* Tuple length = 2 bytes */
--    [0x056] = 0x04,             /* TPLFID_FUNCTION = Fixed Disk */
--    [0x058] = 0x01,             /* TPLFID_SYSINIT: POST = 1, ROM = 0 */
--
--    [0x05a] = CISTPL_FUNCE,     /* Function Extension */
--    [0x05c] = 0x02,             /* Tuple length = 2 bytes */
--    [0x05e] = 0x01,             /* TPLFE_TYPE = Disk Device Interface */
--    [0x060] = 0x01,             /* TPLFE_DATA = PC Card ATA Interface */
--
--    [0x062] = CISTPL_FUNCE,     /* Function Extension */
--    [0x064] = 0x03,             /* Tuple length = 3 bytes */
--    [0x066] = 0x02,             /* TPLFE_TYPE = Basic PC Card ATA Interface */
--    [0x068] = 0x08,             /* TPLFE_DATA: Rotating, Unique, Single */
--    [0x06a] = 0x0f,             /* TPLFE_DATA: Sleep, Standby, Idle, Auto */
--
--    [0x06c] = CISTPL_CONFIG,    /* Configuration */
--    [0x06e] = 0x05,             /* Tuple length = 5 bytes */
--    [0x070] = 0x01,             /* TPCC_RASZ = 2 bytes, TPCC_RMSZ = 1 byte */
--    [0x072] = 0x07,             /* TPCC_LAST = 7 */
--    [0x074] = 0x00,             /* TPCC_RADR = 0200 */
--    [0x076] = 0x02,
--    [0x078] = 0x0f,             /* TPCC_RMSK = 200, 202, 204, 206 */
--
--    [0x07a] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x07c] = 0x0b,             /* Tuple length = 11 bytes */
--    [0x07e] = 0xc0,             /* TPCE_INDX = Memory Mode, Default, Iface */
--    [0x080] = 0xc0,             /* TPCE_IF = Memory, no BVDs, no WP, READY */
--    [0x082] = 0xa1,             /* TPCE_FS = Vcc only, no I/O, Memory, Misc */
--    [0x084] = 0x27,             /* NomV = 1, MinV = 1, MaxV = 1, Peakl = 1 */
--    [0x086] = 0x55,             /* NomV: 5.0 V */
--    [0x088] = 0x4d,             /* MinV: 4.5 V */
--    [0x08a] = 0x5d,             /* MaxV: 5.5 V */
--    [0x08c] = 0x4e,             /* Peakl: 450 mA */
--    [0x08e] = 0x08,             /* TPCE_MS = 1 window, 1 byte, Host address */
--    [0x090] = 0x00,             /* Window descriptor: Window length = 0 */
--    [0x092] = 0x20,             /* TPCE_MI: support power down mode, RW */
--
--    [0x094] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x096] = 0x06,             /* Tuple length = 6 bytes */
--    [0x098] = 0x00,             /* TPCE_INDX = Memory Mode, no Default */
--    [0x09a] = 0x01,             /* TPCE_FS = Vcc only, no I/O, no Memory */
--    [0x09c] = 0x21,             /* NomV = 1, MinV = 0, MaxV = 0, Peakl = 1 */
--    [0x09e] = 0xb5,             /* NomV: 3.3 V */
--    [0x0a0] = 0x1e,
--    [0x0a2] = 0x3e,             /* Peakl: 350 mA */
--
--    [0x0a4] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x0a6] = 0x0d,             /* Tuple length = 13 bytes */
--    [0x0a8] = 0xc1,             /* TPCE_INDX = I/O and Memory Mode, Default */
--    [0x0aa] = 0x41,             /* TPCE_IF = I/O and Memory, no BVD, no WP */
--    [0x0ac] = 0x99,             /* TPCE_FS = Vcc only, I/O, Interrupt, Misc */
--    [0x0ae] = 0x27,             /* NomV = 1, MinV = 1, MaxV = 1, Peakl = 1 */
--    [0x0b0] = 0x55,             /* NomV: 5.0 V */
--    [0x0b2] = 0x4d,             /* MinV: 4.5 V */
--    [0x0b4] = 0x5d,             /* MaxV: 5.5 V */
--    [0x0b6] = 0x4e,             /* Peakl: 450 mA */
--    [0x0b8] = 0x64,             /* TPCE_IO = 16-byte boundary, 16/8 accesses */
--    [0x0ba] = 0xf0,             /* TPCE_IR =  MASK, Level, Pulse, Share */
--    [0x0bc] = 0xff,             /* IRQ0..IRQ7 supported */
--    [0x0be] = 0xff,             /* IRQ8..IRQ15 supported */
--    [0x0c0] = 0x20,             /* TPCE_MI = support power down mode */
--
--    [0x0c2] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x0c4] = 0x06,             /* Tuple length = 6 bytes */
--    [0x0c6] = 0x01,             /* TPCE_INDX = I/O and Memory Mode */
--    [0x0c8] = 0x01,             /* TPCE_FS = Vcc only, no I/O, no Memory */
--    [0x0ca] = 0x21,             /* NomV = 1, MinV = 0, MaxV = 0, Peakl = 1 */
--    [0x0cc] = 0xb5,             /* NomV: 3.3 V */
--    [0x0ce] = 0x1e,
--    [0x0d0] = 0x3e,             /* Peakl: 350 mA */
--
--    [0x0d2] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x0d4] = 0x12,             /* Tuple length = 18 bytes */
--    [0x0d6] = 0xc2,             /* TPCE_INDX = I/O Primary Mode */
--    [0x0d8] = 0x41,             /* TPCE_IF = I/O and Memory, no BVD, no WP */
--    [0x0da] = 0x99,             /* TPCE_FS = Vcc only, I/O, Interrupt, Misc */
--    [0x0dc] = 0x27,             /* NomV = 1, MinV = 1, MaxV = 1, Peakl = 1 */
--    [0x0de] = 0x55,             /* NomV: 5.0 V */
--    [0x0e0] = 0x4d,             /* MinV: 4.5 V */
--    [0x0e2] = 0x5d,             /* MaxV: 5.5 V */
--    [0x0e4] = 0x4e,             /* Peakl: 450 mA */
--    [0x0e6] = 0xea,             /* TPCE_IO = 1K boundary, 16/8 access, Range */
--    [0x0e8] = 0x61,             /* Range: 2 fields, 2 bytes addr, 1 byte len */
--    [0x0ea] = 0xf0,             /* Field 1 address = 0x01f0 */
--    [0x0ec] = 0x01,
--    [0x0ee] = 0x07,             /* Address block length = 8 */
--    [0x0f0] = 0xf6,             /* Field 2 address = 0x03f6 */
--    [0x0f2] = 0x03,
--    [0x0f4] = 0x01,             /* Address block length = 2 */
--    [0x0f6] = 0xee,             /* TPCE_IR = IRQ E, Level, Pulse, Share */
--    [0x0f8] = 0x20,             /* TPCE_MI = support power down mode */
--
--    [0x0fa] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x0fc] = 0x06,             /* Tuple length = 6 bytes */
--    [0x0fe] = 0x02,             /* TPCE_INDX = I/O Primary Mode, no Default */
--    [0x100] = 0x01,             /* TPCE_FS = Vcc only, no I/O, no Memory */
--    [0x102] = 0x21,             /* NomV = 1, MinV = 0, MaxV = 0, Peakl = 1 */
--    [0x104] = 0xb5,             /* NomV: 3.3 V */
--    [0x106] = 0x1e,
--    [0x108] = 0x3e,             /* Peakl: 350 mA */
--
--    [0x10a] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x10c] = 0x12,             /* Tuple length = 18 bytes */
--    [0x10e] = 0xc3,             /* TPCE_INDX = I/O Secondary Mode, Default */
--    [0x110] = 0x41,             /* TPCE_IF = I/O and Memory, no BVD, no WP */
--    [0x112] = 0x99,             /* TPCE_FS = Vcc only, I/O, Interrupt, Misc */
--    [0x114] = 0x27,             /* NomV = 1, MinV = 1, MaxV = 1, Peakl = 1 */
--    [0x116] = 0x55,             /* NomV: 5.0 V */
--    [0x118] = 0x4d,             /* MinV: 4.5 V */
--    [0x11a] = 0x5d,             /* MaxV: 5.5 V */
--    [0x11c] = 0x4e,             /* Peakl: 450 mA */
--    [0x11e] = 0xea,             /* TPCE_IO = 1K boundary, 16/8 access, Range */
--    [0x120] = 0x61,             /* Range: 2 fields, 2 byte addr, 1 byte len */
--    [0x122] = 0x70,             /* Field 1 address = 0x0170 */
--    [0x124] = 0x01,
--    [0x126] = 0x07,             /* Address block length = 8 */
--    [0x128] = 0x76,             /* Field 2 address = 0x0376 */
--    [0x12a] = 0x03,
--    [0x12c] = 0x01,             /* Address block length = 2 */
--    [0x12e] = 0xee,             /* TPCE_IR = IRQ E, Level, Pulse, Share */
--    [0x130] = 0x20,             /* TPCE_MI = support power down mode */
--
--    [0x132] = CISTPL_CFTABLE_ENTRY, /* 16-bit PC Card Configuration */
--    [0x134] = 0x06,             /* Tuple length = 6 bytes */
--    [0x136] = 0x03,             /* TPCE_INDX = I/O Secondary Mode */
--    [0x138] = 0x01,             /* TPCE_FS = Vcc only, no I/O, no Memory */
--    [0x13a] = 0x21,             /* NomV = 1, MinV = 0, MaxV = 0, Peakl = 1 */
--    [0x13c] = 0xb5,             /* NomV: 3.3 V */
--    [0x13e] = 0x1e,
--    [0x140] = 0x3e,             /* Peakl: 350 mA */
--
--    [0x142] = CISTPL_NO_LINK,   /* No Link */
--    [0x144] = 0x00,             /* Tuple length = 0 bytes */
--
--    [0x146] = CISTPL_END,       /* Tuple End */
--};
--
--#define TYPE_DSCM1XXXX "dscm1xxxx"
--
--static int dscm1xxxx_attach(PCMCIACardState *card)
+-static void tahvo_io(void *opaque, int rw, int reg, uint16_t *val)
 -{
--    MicroDriveState *md = MICRODRIVE(card);
--    PCMCIACardClass *pcc = PCMCIA_CARD_GET_CLASS(card);
+-    CBusTahvo *s = (CBusTahvo *) opaque;
 -
--    md->attr_base = pcc->cis[0x74] | (pcc->cis[0x76] << 8);
--    md->io_base = 0x0;
--
--    device_cold_reset(DEVICE(md));
--    md_interrupt_update(md);
--
--    return 0;
+-    if (rw)
+-        *val = tahvo_read(s, reg);
+-    else
+-        tahvo_write(s, reg, *val);
 -}
 -
--static int dscm1xxxx_detach(PCMCIACardState *card)
+-void *tahvo_init(qemu_irq irq, int betty)
 -{
--    MicroDriveState *md = MICRODRIVE(card);
+-    CBusTahvo *s = g_malloc0(sizeof(*s));
 -
--    device_cold_reset(DEVICE(md));
--    return 0;
+-    s->irq = irq;
+-    s->irqen = 0xffff;
+-    s->irqst = 0x0000;
+-    s->is_betty = !!betty;
+-
+-    s->cbus.opaque = s;
+-    s->cbus.io = tahvo_io;
+-    s->cbus.addr = 2;
+-
+-    return &s->cbus;
 -}
--
--PCMCIACardState *dscm1xxxx_init(DriveInfo *dinfo)
--{
--    MicroDriveState *md;
--
--    md = MICRODRIVE(object_new(TYPE_DSCM1XXXX));
--    qdev_realize(DEVICE(md), NULL, &error_fatal);
--
--    if (dinfo != NULL) {
--        ide_bus_create_drive(&md->bus, 0, dinfo);
--    }
--    md->bus.ifs[0].drive_kind = IDE_CFATA;
--    md->bus.ifs[0].mdata_size = METADATA_SIZE;
--    md->bus.ifs[0].mdata_storage = g_malloc0(METADATA_SIZE);
--
--    return PCMCIA_CARD(md);
--}
--
--static void dscm1xxxx_class_init(ObjectClass *oc, void *data)
--{
--    PCMCIACardClass *pcc = PCMCIA_CARD_CLASS(oc);
--    DeviceClass *dc = DEVICE_CLASS(oc);
--
--    pcc->cis = dscm1xxxx_cis;
--    pcc->cis_len = sizeof(dscm1xxxx_cis);
--
--    pcc->attach = dscm1xxxx_attach;
--    pcc->detach = dscm1xxxx_detach;
--    /* Reason: Needs to be wired-up in code, see dscm1xxxx_init() */
--    dc->user_creatable = false;
--}
--
--static const TypeInfo dscm1xxxx_type_info = {
--    .name = TYPE_DSCM1XXXX,
--    .parent = TYPE_MICRODRIVE,
--    .class_init = dscm1xxxx_class_init,
--};
--
--static void microdrive_realize(DeviceState *dev, Error **errp)
--{
--    MicroDriveState *md = MICRODRIVE(dev);
--
--    ide_bus_init_output_irq(&md->bus, qemu_allocate_irq(md_set_irq, md, 0));
--}
--
--static void microdrive_init(Object *obj)
--{
--    MicroDriveState *md = MICRODRIVE(obj);
--
--    ide_bus_init(&md->bus, sizeof(md->bus), DEVICE(obj), 0, 1);
--}
--
--static void microdrive_class_init(ObjectClass *oc, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(oc);
--    PCMCIACardClass *pcc = PCMCIA_CARD_CLASS(oc);
--
--    pcc->attr_read = md_attr_read;
--    pcc->attr_write = md_attr_write;
--    pcc->common_read = md_common_read;
--    pcc->common_write = md_common_write;
--    pcc->io_read = md_common_read;
--    pcc->io_write = md_common_write;
--
--    dc->realize = microdrive_realize;
--    dc->reset = md_reset;
--    dc->vmsd = &vmstate_microdrive;
--}
--
--static const TypeInfo microdrive_type_info = {
--    .name = TYPE_MICRODRIVE,
--    .parent = TYPE_PCMCIA_CARD,
--    .instance_size = sizeof(MicroDriveState),
--    .instance_init = microdrive_init,
--    .abstract = true,
--    .class_init = microdrive_class_init,
--};
--
--static void microdrive_register_types(void)
--{
--    type_register_static(&microdrive_type_info);
--    type_register_static(&dscm1xxxx_type_info);
--}
--
--type_init(microdrive_register_types)
-diff --git a/hw/ide/Kconfig b/hw/ide/Kconfig
-index 6dfc5a21292..2e22b677da3 100644
---- a/hw/ide/Kconfig
-+++ b/hw/ide/Kconfig
-@@ -43,12 +43,6 @@ config IDE_VIA
-     bool
-     select IDE_PCI
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index d33d59bee90..a70ceff504b 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -142,20 +142,6 @@ config OLIMEX_STM32_H405
+     depends on TCG && ARM
+     select STM32F405_SOC
  
--config MICRODRIVE
+-config NSERIES
 -    bool
--    select IDE_BUS
--    select IDE_DEV
--    depends on PCMCIA
+-    default y
+-    depends on TCG && ARM
+-    select OMAP
+-    select TMP105   # temperature sensor
+-    select BLIZZARD # LCD/TV controller
+-    select ONENAND
+-    select TSC210X  # touchscreen/sensors/audio
+-    select TSC2005  # touchscreen/sensors/keypad
+-    select LM832X   # GPIO keyboard chip
+-    select TWL92230 # energy-management
+-    select TUSB6010
 -
- config AHCI
+ config OMAP
      bool
-     select IDE_BUS
-diff --git a/hw/ide/meson.build b/hw/ide/meson.build
-index d09705cac03..90ea8614233 100644
---- a/hw/ide/meson.build
-+++ b/hw/ide/meson.build
-@@ -13,4 +13,3 @@ system_ss.add(when: 'CONFIG_IDE_PCI', if_true: files('pci.c'))
- system_ss.add(when: 'CONFIG_IDE_PIIX', if_true: files('piix.c', 'ioport.c'))
- system_ss.add(when: 'CONFIG_IDE_SII3112', if_true: files('sii3112.c'))
- system_ss.add(when: 'CONFIG_IDE_VIA', if_true: files('via.c'))
--system_ss.add(when: 'CONFIG_MICRODRIVE', if_true: files('microdrive.c'))
+     select FRAMEBUFFER
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 56b94655152..01b77ca200f 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -51,7 +51,6 @@ system_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40-ccu.c'
+ system_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40-dramc.c'))
+ system_ss.add(when: 'CONFIG_AXP2XX_PMU', if_true: files('axp2xx.c'))
+ system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('arm_sysctl.c'))
+-system_ss.add(when: 'CONFIG_NSERIES', if_true: files('cbus.c'))
+ system_ss.add(when: 'CONFIG_ECCMEMCTL', if_true: files('eccmemctl.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pmu.c', 'exynos4210_clk.c', 'exynos4210_rng.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files(
 -- 
 2.34.1
 
