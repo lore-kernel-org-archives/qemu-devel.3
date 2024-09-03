@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B25CD37A9
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F467CD37A9
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slX8B-00022z-CO; Tue, 03 Sep 2024 13:15:51 -0400
+	id 1slXAC-0001uA-8c; Tue, 03 Sep 2024 13:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1slX85-0001lF-Ku
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:15:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1slX84-0003Es-0B
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:15:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725383741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8z9IuWVwM90ATBC0rbg4REiIuxiuTPKKJcmhSRpEp+g=;
- b=L7iKFKod9vbEj17qFC3/9yUJWvQcPEfyN/ZRY95aSudaxOF7dWnDaAE8p2r1EHvMqtE8wg
- F2uDnff9KoB9BUoGIaXvhJYS03ij/Tvs5MO0Sjfy5cGbl3OX3DnCTu2mfrtZBhoVq0CPNB
- opJ3L4YCBvKupxmCvzsM7ErDtRegxP8=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-DLCBKUvUPZesRRTN1E241Q-1; Tue, 03 Sep 2024 13:15:39 -0400
-X-MC-Unique: DLCBKUvUPZesRRTN1E241Q-1
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-7d235d55c41so5228749a12.0
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:15:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1slXA8-0001mj-Qe
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:17:53 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1slXA6-0003KG-Ry
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:17:52 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-53346132365so6903703e87.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:17:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725383869; x=1725988669; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cYbenkBoYNCeNgQP8dsyHNhQG3ZkFGz3Dry3Yum6nAE=;
+ b=q3hUDRTiwfo3O6Hh/LuEVpCUIUSiLpjDiXqtU/f2C7kExrk5l1a262SDEinD9tRIQr
+ Q97+2hN8r0HZknr6MetlW/2w/Yb/7dFP1XfRRIPFdnDM7TsrBBQSIzyDMNoAo+2qiYLG
+ +6azldzC/ngp4Mz2TFuDuUCcPnJGg+HghOfd+qthcVa2Xk8Bu0QC53qsn1GHPZkdnCWo
+ NfYmTvi0sGBl/Ox5vfr7sw6SiuzH9N+jQ9cCtkndFJ3I7HDmVVpZl39OaZbH6GVxJS0u
+ YUCPpAIWUdXx77BiHH2lH1bcicBwRVLExp7mhMVPl7C89iFAPVx9Bk0B1eY8wvnRva6p
+ +xGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725383738; x=1725988538;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8z9IuWVwM90ATBC0rbg4REiIuxiuTPKKJcmhSRpEp+g=;
- b=riolRpyvsaMVb68QIdPPsLDNkxz6ub4fmTeANCeS66iSKWieiiQJhtKAGmDwyECGc+
- CN4hNbUpYdxItzIbLSQZG7Y+whbn+RSXPjXt4HYD6i5Vo41uGYe1sOpq9pw/d1TM1xDv
- B+tKZoyt6nw36iVuC6Hg/6IozNCZXhJ+3nTzOaCniqHd4FotKk+p+D42ODZj3SEbtsWQ
- VgjmECGRrE+1U+hL3up1EXbb87ObPRptSv2UNSnVi8sDfWTewXJSXiATfK/TnKeRFuRT
- 5j5AQ5fs2gQFP3tetg7wNG65vvCx5pcjKwrzBa7v1nuKz8kr5OWXdlNaUl68CLqUaVyZ
- VZZw==
+ d=1e100.net; s=20230601; t=1725383869; x=1725988669;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cYbenkBoYNCeNgQP8dsyHNhQG3ZkFGz3Dry3Yum6nAE=;
+ b=cOwyvppK5hl+mSYCrtXcxWC4+NTQyr2UsOr/R0cCMmRMK05P/o26PG61xkwgXsRVUt
+ GxYZlU7XIZ7jY6VPfmk5AFaD8MbkKaDI/IfS3Frtz5hswie1p4Sd3cL+jyW6xQkNSrTg
+ +EUnACLml9YxvMUw8zjf3Vr2hlRkTL117ldQRYUJkADl8bB982oktbFJ/AFhVChVGgO3
+ hV6yLavg9GeISXXSQjYS34S4vLIUF2qtWq09zkTcr71ZEFs7CeeypYaJtf9TNID3Lczh
+ /oDHNw5qPlvGpS4oXYhkDBV+53tRq4T2VSsxZ61jJdI7OCu2ffSR/IzEK8y/pgZr9nZy
+ Dkdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNG4pRxfDGAijfLgX9uqMDtDGAMvvAnnabeI1FfinE3DFsCLR/WlPOzIKYJorI4bO3sQM6Y0VD0kEB@nongnu.org
-X-Gm-Message-State: AOJu0YxIaL09s79iLhk2fIS+LZFrXyqormxqpAjKYGZPCxEUXisXf5nz
- KyPlnXG4S6J95whO5NALB4lhoepi48qLusxoKJRVhxN/V7EKICxeefjGYXG0ExA9eYpL+wZ0HZ6
- sTva5PMP3QggRogT/WeBNllMf2sm/2zfjmtumFQG17ETIP6ihCZAY0qE1OH9GLVjxKv8r/+6V+q
- aTmGgGHIUVdpcJeNB4nTFzOdfmnEg=
-X-Received: by 2002:a17:90a:ea93:b0:2d3:bd6f:a31e with SMTP id
- 98e67ed59e1d1-2d88e3e64dcmr11303764a91.28.1725383738455; 
- Tue, 03 Sep 2024 10:15:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLgsy8ehz1wwuFw/yY5qdN4ldUz4Ochb4gKXCTWYG8/2N6AmQqFRUPPT2vt+i53o7NvPJvvxAApa+TOd6nf2M=
-X-Received: by 2002:a17:90a:ea93:b0:2d3:bd6f:a31e with SMTP id
- 98e67ed59e1d1-2d88e3e64dcmr11303740a91.28.1725383738049; Tue, 03 Sep 2024
- 10:15:38 -0700 (PDT)
+ AJvYcCXuzoqg9IsW7uiFEkh2juFfVdhECeCo58VqdObJQ6TthJmnHfepub35Gy+5mxkhW3XfDiNnuOtqABsi@nongnu.org
+X-Gm-Message-State: AOJu0YxiQUiUpWyVnsBycQZs+kKRQqWiad65Uf91ZV9szwwT1J32/gJg
+ a184MNt1xKtLXuSy40tMEuBK39O+yxHmiZ+UYfNY/ADg6IHtbOorc8Rgr5ChitI=
+X-Google-Smtp-Source: AGHT+IHZ+SeE8WkDk0ggAw8Md8Qm8+Cser4NRBKVOFaV9s+pmrNJSYeoWu0U1z/g9p0RPovKowlhnQ==
+X-Received: by 2002:a05:6512:e94:b0:533:483f:9563 with SMTP id
+ 2adb3069b0e04-53546b8d711mr9089736e87.45.1725383868207; 
+ Tue, 03 Sep 2024 10:17:48 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a89891d7368sm706414966b.168.2024.09.03.10.17.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Sep 2024 10:17:47 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AF79F5F846;
+ Tue,  3 Sep 2024 18:17:46 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Xingran Wang
+ <wangxingran123456@outlook.com>,  qemu-devel@nongnu.org,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud
+ Mandour <ma.mandourr@gmail.com>
+Subject: Re: [PATCH] plugins: add two events for cpu_restore_state_from_tb()
+ and cpu_io_recompile()
+In-Reply-To: <664c54d6-ac73-4e3f-9d2c-dd0a357fd1d8@linaro.org> (Richard
+ Henderson's message of "Tue, 3 Sep 2024 09:41:40 -0700")
+References: <SY8P282MB4322879DBA2E5E3E3B72B383A1912@SY8P282MB4322.AUSP282.PROD.OUTLOOK.COM>
+ <87mskqcp5n.fsf@draig.linaro.org>
+ <592a0bc6-fbf0-4189-bd47-7b7cc6fc7681@linaro.org>
+ <87seuidjtp.fsf@draig.linaro.org>
+ <664c54d6-ac73-4e3f-9d2c-dd0a357fd1d8@linaro.org>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Tue, 03 Sep 2024 18:17:46 +0100
+Message-ID: <871q20vepx.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <762867ba-8980-44f6-a9a6-5e766bc6a60b@redhat.com>
- <CAFEAcA-uTqq9Ke4pS59aQ_9t7KObRxff8DN_rY-2JkfSCQkASQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA-uTqq9Ke4pS59aQ_9t7KObRxff8DN_rY-2JkfSCQkASQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 3 Sep 2024 19:15:24 +0200
-Message-ID: <CABgObfY--e1h=fEC=7TxA9eaHog1N4V4+3oEm+W_RSKEEUSU4w@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,28 +107,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 3, 2024 at 7:04=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
-> The PXA display device doesn't pass anything through to the guest,
-> by the way -- it just draws the pixels in the guest framebuffer
-> in a different place in the UI window. As the FIXME comment in
-> pxa2xx_lcd.c notes, this should really have been done in common
-> code, not in a specific display driver.
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-spitz also passes it through SPITZ_GPIO_SWB ("Tablet mode"), though
-it's incomplete because it should have treated 180 the same as 0.
+> On 9/2/24 10:52, Alex Benn=C3=A9e wrote:
+>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>>=20
+>>> Hi Xingran,
+>>>
+>>> On 9/2/24 03:42, Alex Benn=C3=A9e wrote:
+>>>> Xingran Wang <wangxingran123456@outlook.com> writes:
+>>>>
+>>>>> Currently, the instruction count obtained by plugins using the transl=
+ation
+>>>>> block execution callback is larger than the actual value. Adding call=
+backs
+>>>>> in cpu_restore_state_from_tb() and cpu_io_recompile() allows plugins =
+to
+>>>>> correct the instruction count when exiting a translation block
+>>>>> mid-execution, properly subtracting the excess unexecuted
+>>>>> instructions.
+>>>> This smells like exposing two much of the TCG internals to the
+>>>> plugin
+>>>> mechanism. You can already detect when we don't reach the end of a blo=
+ck
+>>>> of instructions by instrumentation as I did in:
+>>>>
+>>>
+>>> I agree that this is definitely a QEMU implementation "detail", and
+>>> should not be a concern for end users.
+>>>
+<snip>
+>>    /**
+>>     * qemu_plugin_register_vcpu_tb_exec_end_cb() - register execution ca=
+llback at end of TB
+>>     * @tb: the opaque qemu_plugin_tb handle for the translation
+>>     * @cb: callback function
+>>     * @flags: does the plugin read or write the CPU's registers?
+>>     * @userdata: any plugin data to pass to the @cb?
+>>     *
+>>     * The @cb function is called every time a translated unit executes.
+>>     */
+>>    QEMU_PLUGIN_API
+>>    void qemu_plugin_register_vcpu_tb_exec_end_cb(struct qemu_plugin_tb *=
+tb,
+>>                                                   qemu_plugin_vcpu_tb_en=
+d_cb_t cb,
+>>                                                   enum qemu_plugin_cb_fl=
+ags flags,
+>>                                                   void *userdata);
+>> I think the tricky bit would be getting TCG to emit the callback
+>> code
+>> for the last instruction before the
+>> tcg_gen_exit_tb/tcg_gen_lookup_and_goto_ptr bits but after whatever else
+>> it has done to execute the instruction.
+>> I don't think we could easily support inline ops at tb end though.
+>> Richard,
+>> What do you think?
+> I think this will miss all exceptions raised in the middle of the block.
+> I don't think it will be reliable at all.
 
-> As we both note, the UI input layer part *is* generic code so it
-> will do the rotation regardless of whether the display device is
-> also rotating the guest output. But that seems to me more of
-> an accident than an intentional feature.
+Ahh yes - I guess we can't fixup as we go through cpu_loop_exit() and
+the restore code is only called from helpers. Oh well I think we can
+make do with what we currently have.
 
-Yes, it is, though it *is* working. On the other hand I doubt anyone
-is using it. Since we have in the past removed single options like
--alt-grab, whoever needs it can resurrect the code from git and add
-the options to -display. They can also add rotation of the output as a
-separate knob from rotation of the input.
+>
+>
+> r~
 
-Paolo
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
