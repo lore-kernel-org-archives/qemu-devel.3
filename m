@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6573FCD343D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8131CCD343F
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 14:53:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slUuJ-00088z-Kx; Tue, 03 Sep 2024 10:53:23 -0400
+	id 1slUuU-0000XZ-Db; Tue, 03 Sep 2024 10:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slUuH-0007yD-JT
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:53:21 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slUuS-0000Oh-Mc
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:53:32 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slUuG-0006HR-2j
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:53:21 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7142a93ea9cso4347635b3a.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 07:53:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slUuR-0006JA-89
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:53:32 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42c79deb7c4so25933795e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 07:53:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725375199; x=1725979999; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725375209; x=1725980009; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lMsprjbDFrqzMBMLLkPObTJcD1In7cDg2YgTR7/YT0U=;
- b=WfSOwnCvM32fDyACSAzsFHVYCszAqWyBGv44BoSNcOxP8E3qnHsnnkYjcywb9absII
- 1VB6Qu7xi/BW/dwUxrHjWAjjSa6DDqPNC0RlKIZ0NnpubjoVpJ7y73XKOFeTR4iD/qi4
- oRni/CyP6a/L2Ho8d20uX4JQFC0hASDso2UYQId42j+2UdjaOK/wB7uuANs8knMbmMIW
- g0tofCXPaSltm8pUd9/kNSv1eky8P3IWeGisIhBJ1/eRRWP49CHfSYCP77xE98IPP5TM
- 8s2UfxSJLJygdY2BJgXYBTwfyXNIrOp91CR2tenmQyEHNexwwaslKsTERSsGZ/XxW/ES
- i8Jg==
+ bh=23eIW1kHKAzS5myirB4E/FTjy/Vsl8w9Q2gYhpWOr0s=;
+ b=Llrnk2PKzF68WzrDsNk/UfW8GjbHAVObydmtHq75v5uBuavlEhPCjvG3CLU6qD9seA
+ /C7+wsG1kYRWxRWB3Z0ySFhfs4HYXmTwWCvuf4ff0O+pIQ9ojzpKOm3DXkl0rGCJ8xYb
+ ai4zdJX1EgAFCcxPUx2MbuMaME9GqgDTkeeKcmv0EL60wLDYZUHJLM7JIuP+ED4qMpbO
+ uM5hMYN74fUhuz1dSv2Hamn9PkSYYJ9iwLAz4FxNhAOvF1YekWmOrlALAoNbtlMeK09B
+ RCqLm4/D5ddvf4IoHgv1dbCPsLTii7znEa8de8p8/4lrbsZ78gKgm5kZFOtrmGgE1a1k
+ Ytnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725375199; x=1725979999;
+ d=1e100.net; s=20230601; t=1725375209; x=1725980009;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lMsprjbDFrqzMBMLLkPObTJcD1In7cDg2YgTR7/YT0U=;
- b=LQyz7wrk/yt0r6Z4hM6+hnoy3sxEauBNLTBpWrbmq2svGZLdqlqi8kSORQsodQvJ3P
- X1ZarY01Ko2ziePwlKRlhunjiUV9oxueYbqCpWS+RlVr30yZ00LE1uH7QQFarIip+nYQ
- s4FcdpCfEdmLgdbV42lmsZV9PCMHYikkj8cBad/yUyX3DzmFuGCuBG/jevztKZPvu5SV
- Gd5TU6p/eCwpDoN98JWTXys+5TG4CWLw4lrWaB1oNtbAfLQF/6qdLi/m7pPFnZozFQ+g
- PzuCXLNoefICeHD3VM0Hp4gPHvXXBvIloZxVY7l4juyl+RMdTiBoyvHLITBXV3I2UL9C
- y6wQ==
+ bh=23eIW1kHKAzS5myirB4E/FTjy/Vsl8w9Q2gYhpWOr0s=;
+ b=VL7gJFbUkZA+XyGbOJnAg4EKiLeeAUh6KgG33QtnZimdWI8G0HOcepPXau6iytV5hx
+ Ewtk2dsyRWZh9w0/l++4CYHD6YJOlo2DeJt/xSfI74wS4qp3ol/fwmndpDnGcV6hm0fj
+ ZmmHg/78kVafTnvn+fty4EI3D2yw87jHl1tyNphv4Ds3ImLUEPkYyL0kEBnsAXSs1bp8
+ 7pHOWXdvOHihZ/sP31rAo8tNn1onHvclodZI2FVp9Ul9BrKprDiDN6YincN17Oqo/3zu
+ w3t0cQNUK4P7pRRRI6VZYcneddVgm5Ck4JLVbP/XTgDT6/Tu261S1ij1Xxc1CV6U5alB
+ x3ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3X+XYu2rIrNvsWHS3TU+0oI0gGGo23sHxPDAjwhvxjTbgzZDefG90qqRnQwc6EssHViPPJNM/BVqW@nongnu.org
-X-Gm-Message-State: AOJu0Yz6G/iRwZ0tMvhjN0EHRsBECB49QkEEDVd5bN7VsdMJToTRI/Ie
- lInwr6Qd4126RD154kyet+GKJFlPTIi5HPb/BWqm5kWLuRDjyETeD78ByXLieSU=
-X-Google-Smtp-Source: AGHT+IH7dMoSVUacW4lVzOPXWfu6aE1JyStmQcdEklvZdnL9+RuZDGoHZ1eoquEVSUYEPCBGllnVTg==
-X-Received: by 2002:a05:6a21:3947:b0:1ce:dd2e:d875 with SMTP id
- adf61e73a8af0-1cedd2edc1bmr8514020637.37.1725375198555; 
- Tue, 03 Sep 2024 07:53:18 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ AJvYcCX0bSUxn3Dx13GNZ8KHETLsE8oPXu3kEAFOc60/y2As/eOdfOGyTvEOgeepPZw3fCETiBNeCeyrk0ln@nongnu.org
+X-Gm-Message-State: AOJu0Yw1euu5D3RP7FIVk5jGWpiqwd0LvI0RFLQfPGn72jRJwKjVr4gU
+ xy0bLS7PIVUxovnuNHoOKo/neFBckrAkFMdaj8W5CvzdMp2Gf42DxStLJWzJCII=
+X-Google-Smtp-Source: AGHT+IFFE5mlfkBrHXMDv//VxAlslM/8FKwfvwZKGSLhu3cQNJBLGzQr0V8lt/6dWrL2qSqMHhPMyw==
+X-Received: by 2002:a5d:6345:0:b0:371:c518:6f54 with SMTP id
+ ffacd0b85a97d-374bf169505mr7737727f8f.29.1725375209529; 
+ Tue, 03 Sep 2024 07:53:29 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-715e55a9a44sm8621416b3a.68.2024.09.03.07.53.17
+ ffacd0b85a97d-3749ee4a5edsm14573398f8f.1.2024.09.03.07.53.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 07:53:18 -0700 (PDT)
-Message-ID: <b766bc85-4da3-41ff-894b-03e2d2642a71@linaro.org>
-Date: Tue, 3 Sep 2024 07:53:15 -0700
+ Tue, 03 Sep 2024 07:53:28 -0700 (PDT)
+Message-ID: <67778680-33c8-4d5e-967e-11b891c99240@linaro.org>
+Date: Tue, 3 Sep 2024 16:53:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/14] tcg/riscv: Implement vector min/max ops
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
- <20240830061607.1940-12-zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v2 01/11] hw/s390/ccw-device: Convert to three-phase reset
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nico Boehr <nrb@linux.ibm.com>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+References: <20240830145812.1967042-1-peter.maydell@linaro.org>
+ <20240830145812.1967042-2-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240830061607.1940-12-zhiwei_liu@linux.alibaba.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240830145812.1967042-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,17 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/29/24 23:16, LIU Zhiwei wrote:
-> From: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+On 30/8/24 16:58, Peter Maydell wrote:
+> Convert the TYPE_CCW_DEVICE to three-phase reset. This is a
+> device class which is subclassed, so it needs to be three-phase
+> before we can convert the subclass.
 > 
-> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
-> Reviewed-by: Liu Zhiwei<zhiwei_liu@linux.alibaba.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tcg/riscv/tcg-target.c.inc | 29 +++++++++++++++++++++++++++++
->   tcg/riscv/tcg-target.h     |  2 +-
->   2 files changed, 30 insertions(+), 1 deletion(-)
+>   hw/s390x/ccw-device.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-r~
 
