@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8FACD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B38FCCD379F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:39:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slWXQ-0002sB-25; Tue, 03 Sep 2024 12:37:52 -0400
+	id 1slWYM-0006xx-SW; Tue, 03 Sep 2024 12:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWXO-0002nO-OG
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:37:50 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1slWYI-0006np-Lc
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:38:46 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWXM-000700-GX
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:37:50 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-374b5f27cf2so2675663f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:37:48 -0700 (PDT)
+ id 1slWYF-00078X-QT
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:38:45 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-374c326c638so2088751f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725381467; x=1725986267; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4nkSogmG8EqlyWUOtW2AZGduld22wLpFVTNuCgxWRD0=;
- b=zj+gN3oULC+uPSTSspigI6Eml5uAAFB7LacZV61AFVYUNXGTY2Sh3LQoJMDwwT/HD5
- WABoqrDv0rtb5XTBLvFVqjpoMiYpDcAszUq5fgGHAgXE9fRa4FSezOgP9ETA83oKQK8/
- PpeF55EWWGLam5KpJSQ+U3smq3wS27RLSwrCisSQyyyaTqvQfb0UqjNTmnFFCkV7YN+W
- O0CyqXal33xb8FAoqDZb7kLcaS8au62OmNvH8gk1SxLh44s92xRAHzFqET3i+a7DSo+1
- nRLWjYKpFaHfAeBHroj9AwK4rstkOPNlBZf9Ur1Eybv8RmnkaejbeWVUgEg3M6RzLcKW
- wTOg==
+ d=linaro.org; s=google; t=1725381521; x=1725986321; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mmHYRpE5cDo3krpudjkkf6vZQqE/rCgFPn3mx8tfzDU=;
+ b=xpJO9DjI4EmQaGqIWvddyt+rct1oX19PjHUMVYIFc0xozOR/iFh+6xL2rsxeg24xvw
+ b4rYp+ZCR0svXSETkvn/LNZkan+ot4BFaQ23np1MgWnteUMIiFbOOAnLZySloLmFoZUv
+ S/dQ8y6X8Hj0LYxFs60sMLp2Y1+Lcx2+FAIm2NtTANRrpF75OySgMGa8+UlcN5EoiiUw
+ JRo84qt6bkX6bRO0lIldEZZoDYO5OZNMM4+QSuDxK6hYss5J/ftts+kOdfQbF7xO5ac5
+ FDMdRCOtXJay+csi0HJDBa2WvUuZU6BKS2T8RMNxX774eFLfg6AnT33+DckKNyBnERTL
+ AOAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725381467; x=1725986267;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4nkSogmG8EqlyWUOtW2AZGduld22wLpFVTNuCgxWRD0=;
- b=kU/BNnIhX5/xXZBuWfbj3Ct8gY78oXdD/LnSQ32zt2XqsjLbqpXa6Ye7ogvZHoUWwg
- 8zWQVJf5fuNBJ6b5xfCxfORjRYIxNpFqukdogMPdCiPFrRU7TysOhnU0b1ZELuxvUxe4
- JpDlZtEENaucXvED9UI3kq5zRNDfS4mqsnBqRQ84zch7NRiUBgV/a3dbISQbrkFLva7f
- cpJ3x/rKq9SDn3ndMKf/Wvc9XKeA7Mm/J26REDmUJrH7rK6u+czVvPMdK7mLY98qVmWT
- Vl6wsnmysf94xEXiQixAMSndnYbtt7aQuNF1/kSquy11B1SaY9ldKARhNzFkZCcP10Vw
- OcFQ==
+ d=1e100.net; s=20230601; t=1725381521; x=1725986321;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mmHYRpE5cDo3krpudjkkf6vZQqE/rCgFPn3mx8tfzDU=;
+ b=nphcZpISl7FGxu4FTnFrn3wVoQaz0Xg1E2xbzWlEeek+AI3DXhArLfJqUnpzgJgzdM
+ pNUnD3szJl71JpWGeMPVkt7PXliAk0Z2zRZoW+TFGpZN1EAGIBqak3vjX/jd9FNEV5Z0
+ /wlDhwG4nBnTxnphgcF7c1lOV8t5MLacFDu2ByQvdFqT11CwZGa0cKgqKVHX0Lv1NFNJ
+ 9fkP94LQB4cDmtR3sMYXpZQOfm6M4T2cf33rGmsVRZYeQhttgmm5mo+y9O+zcKTXtTc7
+ t12ShQ8G00PmblB5R7skX00cG1Z4qsryJWPeEYY3Jk0TdgfGhn0Z7UGz4dcr+I0Ju8yv
+ cErA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5UfUlbKcgqfl13XITIbqk/Ak1sUHx1Dwswf7btUJVaecoT6Awm/0gUPUZusap9+qLNEZ2AjnnZ5oa@nongnu.org
-X-Gm-Message-State: AOJu0YwBX91tiqQs8N4mgNKALNedlRdV0DSJ2NGSie5AJ5UC1xGgLjLF
- e6zw/ZvGA8iAKu4Hh8rmve30QleS18sBwwPbPCS7fxFRmtbkR7MhNVA86p2c2EcOfeQQh4Wtktj
- 72EgT/UIr7bVGPBdXVz9aWBmKWX/tzEB7L4VSIw==
-X-Google-Smtp-Source: AGHT+IG1gKliWGlQ3Hwbqj0R5Sc7Bndg26M/nbxPBIaIbsrafGCz0q6JOsMCX9DZ6eXQGWzaJXhDyMVJJdGBCKTeXzo=
-X-Received: by 2002:adf:e98f:0:b0:374:c287:2afe with SMTP id
- ffacd0b85a97d-374c2872bf0mr7397571f8f.56.1725381466585; Tue, 03 Sep 2024
- 09:37:46 -0700 (PDT)
+ AJvYcCUPUKAtcLnm3+oVziObOL2uwFTVNTwuuCaSQALNwveETG1QYuCPZaa5HQ2gPA4mELFvyAu3h6Of9Jr7@nongnu.org
+X-Gm-Message-State: AOJu0YxTdRUm56td2wdRbaEWWuH0gz5BKuU5eNyTJG/HxsrgD48cSs0u
+ L9fCVy2zfZrUTFLEKrgwga8XdGXKwo5ZSD2Te7LUmXUdhy6IjdxmS97H8kHDcnWPavpWqbYLDvv
+ vJeA8fjUR3Xbd7/ptFFtWnrk2bb+HOZrh4VcnkgyY6VLQwtZn
+X-Google-Smtp-Source: AGHT+IF3BF9QHCe2FGpvMy9kS2sZ/MdtTVp3Bu3rX0/EPDezBMLIcfGdmfWOBbjuv/RyPq96HoXbOTvY3HEPipNsrXs=
+X-Received: by 2002:a5d:4f08:0:b0:371:7e73:eb43 with SMTP id
+ ffacd0b85a97d-374bf1c9498mr7075937f8f.42.1725381521357; Tue, 03 Sep 2024
+ 09:38:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240828005019.57705-1-sebastian.huber@embedded-brains.de>
- <CAFEAcA-p+CBeKTgH-YXzrATKDpwG5iY+A3WGaVkbEeHCXxTzug@mail.gmail.com>
- <ZtF9P_QtnH1nAYuu@zapote>
-In-Reply-To: <ZtF9P_QtnH1nAYuu@zapote>
+References: <20240903133940.3447430-1-changbin.du@huawei.com>
+ <cceb62dd-742c-471b-8b4c-6bfc304d4565@linaro.org>
+In-Reply-To: <cceb62dd-742c-471b-8b4c-6bfc304d4565@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Sep 2024 17:37:19 +0100
-Message-ID: <CAFEAcA8Lv_9nW7GwHwEdc-CQb36iRC0hx5X75BC_cjR=sVGuUA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/xilinx_zynq: Enable Security Extensions
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>
+Date: Tue, 3 Sep 2024 17:38:30 +0100
+Message-ID: <CAFEAcA-7FjL0SZzJsJ6WZ-Cccx8W2711_CrkNpknrJgYtJx=iQ@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/arm/boot: Report error msg if loading elf/dtb failed
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Changbin Du <changbin.du@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,42 +93,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 30 Aug 2024 at 09:05, Edgar E. Iglesias
-<edgar.iglesias@gmail.com> wrote:
+On Tue, 3 Sept 2024 at 14:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> On Thu, Aug 29, 2024 at 01:50:02PM +0100, Peter Maydell wrote:
-> > On Wed, 28 Aug 2024 at 01:51, Sebastian Huber
-> > <sebastian.huber@embedded-brains.de> wrote:
-> > >
-> > > The system supports the Security Extensions (core and GIC).  This change is
-> > > necessary to run tests which pass on the real hardware.
-> > >
-> > > Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
+> On 3/9/24 15:39, Changbin Du wrote:
+> > Print errors before exit. Do not exit silently.
 > >
-> > (Added the maintainers to cc.)
+> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > Signed-off-by: Changbin Du <changbin.du@huawei.com>
 > >
-> > Does the system have any secure-only devices, RAM, etc?
+> > ---
+> > v3: use load_elf_strerror() to format errno.
+> > v2: remove msg for arm_load_dtb.
+> > ---
+> >   hw/arm/boot.c | 2 ++
+> >   1 file changed, 2 insertions(+)
+> >
+> > diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+> > index d480a7da02cf..6c895e05cbc0 100644
+> > --- a/hw/arm/boot.c
+> > +++ b/hw/arm/boot.c
+> > @@ -839,6 +839,8 @@ static ssize_t arm_load_elf(struct arm_boot_info *i=
+nfo, uint64_t *pentry,
+> >                         1, data_swab, as);
+> >       if (ret <=3D 0) {
+> >           /* The header loaded but the image didn't */
+> > +        error_report("Couldn't load elf '%s': %s",
+> > +                     info->kernel_filename, load_elf_strerror(ret));
+> >           exit(1);
+> >       }
+> >
 >
-> Yes, on real HW there are but I don't think we've modelled any of it yet.
-> There's TZ both on the SoC and also ability to create FPGA logic that
-> can issue secure/non-secure transactions. Here's an overview:
-> https://docs.amd.com/v/u/en-US/ug1019-zynq-trustzone
->
-> The primary use-case for the upstream Zynq-7000 QEMU models has historically
-> been to run the Open Source SW stack from Linux (some times from u-boot)
-> and up. It's important that we don't break that.
->
-> So as long as we add additional support without breaking direct Linux
-> boots, I think it's OK to incrementally enable missing pieces even
-> if there's not yet coherent support for firmware boot.
->
-> In this case, IIUC, when doing direct Linux boot, TYPE_ARM_LINUX_BOOT_IF
-> will take care of the GIC setup for us.
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Yep, that's the way it's supposed to work. OK, let's enable this;
-it's the beginning of the release cycle for 9.2 so there's
-plenty of time to fix any problem that might get reported
-to us before release.
+
 
 Applied to target-arm.next, thanks.
 
