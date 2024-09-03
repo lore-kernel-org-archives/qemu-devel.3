@@ -4,85 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1095FCD37AA
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 19:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F191CD37AA
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 19:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slYq9-0004Qo-BJ; Tue, 03 Sep 2024 15:05:21 -0400
+	id 1slZU5-0003Lj-KV; Tue, 03 Sep 2024 15:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1slYpy-0004Oq-On
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 15:05:13 -0400
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1slYpw-0006kZ-2y
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 15:05:09 -0400
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-5e174925b7bso1186706eaf.0
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 12:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725390306; x=1725995106; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rW/PLP82ejUxwwp2CtMSKKKyTQs0NkVVFEXjtEsYFrk=;
- b=CdDKzMPi6nUsrhs+zYWLz4qBgWIQFAIGxptfce90X+V7wPEQDOvM1f6t47ChsTa04f
- NDAJuEyqeYoAA4TBeolC5O5mUhVpEuw4rAsfv+xddNSdlgu8X27OS+sX1vWWHnLycQyu
- ey+lrNBYh1v/9CzIeGLLUux4tIryTDNYJaD6nCstFxNsFCLX6OSBXyqhvhOCfALnwNMD
- 5k/fu4/4Y/nizQ5Dg7XmMdMzpgvjAl6QLc4TN4+dOR61e3ECsexnIUUkc7eXZyqNbI/C
- 0JpCkwF1ni9vPJlhdQRH9pdhoJTOr5ZSEUV70HM/GLTLVgP1QaBPDCwBtws+TLfbK4t+
- sIRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725390306; x=1725995106;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rW/PLP82ejUxwwp2CtMSKKKyTQs0NkVVFEXjtEsYFrk=;
- b=B8yOJG5RY4B+LfeuTnmDN6DGsFuGgxqGssIYKNBDxN1Kizx+9uIodEpP2QTf1azjhj
- H4TDCsloe9iPNnb9EOAFgmaadCQcs11Cy0UkgxpGfw8/QR/fRXDKE1mg2YbpCZPrMJgG
- i7XtWjBUOxo5QrLuE91qPzjE/MCMO5b9WFkgnO2sKjLGUObGrM32dwwq7UXHkP9oSr67
- ScAt1ypLMBrzEYrS7nChVQ5m73Dc+Fd80VhaeOxiiirMZ1wGep1uwmtx3K7B7tmEkgZ7
- 3kPdK3uKYMmAQYWQYYu1WPRJ5sVok/Uj094DFL4WiiNEVViozEDDyPOOaTMWXYC0G6zh
- asQA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCjyQl4qJyczAZfDxk43rVOZ6cZDsNR7IpjqeXLl0AL9iE+vMTGHA/G9LyG3W9N+NvLTcbOT2/nB9g@nongnu.org
-X-Gm-Message-State: AOJu0Yy38m+8cQOzQONVtof66kZLsrxu7TKUKyf/bBHeA8laF4peVSBh
- zVaVQMbBe872XOqSmMxVcC4qtNpwvnvBTBp7mOpuVJmMf7ugbfLVnu6o0azSimnDxjJaQsVNm1t
- n+uvd0R9cqTGJ1URItjzdnd8F7ec=
-X-Google-Smtp-Source: AGHT+IHgHkHViCzk+T+PZGF8nEtWGX4WpdQiT4/YO+qciBls0M1imx3o/QALU5jOUUwXhxwN8yeSk/2qIs870tW3X3Q=
-X-Received: by 2002:a05:6871:23c3:b0:277:e1e8:a085 with SMTP id
- 586e51a60fabf-277e1e8d7a2mr6483322fac.23.1725390306336; Tue, 03 Sep 2024
- 12:05:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1slZU3-0003L9-Fd
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 15:46:35 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1slZU1-0001zn-A9
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 15:46:34 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id ADD5CA43D57;
+ Tue,  3 Sep 2024 19:46:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3770CC4CEC4;
+ Tue,  3 Sep 2024 19:46:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1725392791;
+ bh=ysZPsnNd3kpF3n+8IozMgz2v1zNkNppqWJ1IaiWjDiM=;
+ h=Date:From:To:Cc:Subject:From;
+ b=lHbsP6K+Z+Yw07JvPU9U4ZHcRYoP+zNZqQ73tjeOl7IZNpJY5BW13Y7HHvb+e5ost
+ NIvBGIY/Tkn6rdQVrLMahHOxlojmZPltdPzvw1L5Sq5gFEfK9Yxj2zF22//IctGzhG
+ AItQsKsge0o1h/VqBKlwZxbyeq9ZZ+862siqPSNkF/VdVpn3+jtgEiCCIqUK8UlRIP
+ 4Ax8YVbpYqcHlswj4OVLJBl+DVtb3FQMGb7iolrwyzniriKuzA7pSBjHQQlEuQxRuQ
+ qZ7uLktnrhXEU31gczK+OQWINpOA8U3C3hP6dZ/CaivRhoORNb/ZWSHR4UnXgNrVs8
+ SY6x4SraNBIYQ==
+Date: Tue, 3 Sep 2024 21:46:27 +0200
+From: Helge Deller <deller@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-15?Q?Mathieu-Daud=E9?= <f4bug@amsat.org>
+Cc: linux-parisc@vger.kernel.org
+Subject: [PATCH v2] target/hppa: Fix PSW V-bit packaging in cpu_hppa_get for
+ hppa64
+Message-ID: <ZtdnkxJP31cxxnf3@p100>
 MIME-Version: 1.0
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <54947c3a1df713f5b69d8296938f3da41116ffe0.1724701542.git.maciej.szmigiero@oracle.com>
- <CAJSP0QU+dhh_e2LJRoGCxtCEh6C2-GBoZoFZL2W-SMSQPzUtYg@mail.gmail.com>
- <d6e7dbd4-634f-4f62-8516-7bbf404b7adf@maciej.szmigiero.name>
-In-Reply-To: <d6e7dbd4-634f-4f62-8516-7bbf404b7adf@maciej.szmigiero.name>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 3 Sep 2024 15:04:54 -0400
-Message-ID: <CAJSP0QXURSS4cHj0i6xy27HMbtF2D4ckL4fwDk5rHA3vFFtHUg@mail.gmail.com>
-Subject: Re: [PATCH v2 05/17] thread-pool: Implement non-AIO (generic) pool
- support
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=stefanha@gmail.com; helo=mail-oo1-xc36.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,117 +69,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 12:54, Maciej S. Szmigiero
-<mail@maciej.szmigiero.name> wrote:
->
-> On 3.09.2024 15:55, Stefan Hajnoczi wrote:
-> > On Tue, 27 Aug 2024 at 13:58, Maciej S. Szmigiero
-> > <mail@maciej.szmigiero.name> wrote:
-> >>
-> >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> >>
-> >> Migration code wants to manage device data sending threads in one place.
-> >>
-> >> QEMU has an existing thread pool implementation, however it was limited
-> >> to queuing AIO operations only and essentially had a 1:1 mapping between
-> >> the current AioContext and the ThreadPool in use.
-> >>
-> >> Implement what is necessary to queue generic (non-AIO) work on a ThreadPool
-> >> too.
-> >>
-> >> This brings a few new operations on a pool:
-> >> * thread_pool_set_minmax_threads() explicitly sets the minimum and maximum
-> >> thread count in the pool.
-> >>
-> >> * thread_pool_join() operation waits until all the submitted work requests
-> >> have finished.
-> >>
-> >> * thread_pool_poll() lets the new thread and / or thread completion bottom
-> >> halves run (if they are indeed scheduled to be run).
-> >> It is useful for thread pool users that need to launch or terminate new
-> >> threads without returning to the QEMU main loop.
-> >
-> > Did you consider glib's GThreadPool?
-> > https://docs.gtk.org/glib/struct.ThreadPool.html
-> >
-> > QEMU's thread pool is integrated into the QEMU event loop. If your
-> > goal is to bypass the QEMU event loop, then you may as well use the
-> > glib API instead.
-> >
-> > thread_pool_join() and thread_pool_poll() will lead to code that
-> > blocks the event loop. QEMU's aio_poll() and nested event loops in
-> > general are a source of hangs and re-entrancy bugs. I would prefer not
-> > introducing these issues in the QEMU ThreadPool API.
-> >
->
-> Unfortunately, the problem with the migration code is that it is
-> synchronous - it does not return to the main event loop until the
-> migration is done.
->
-> So the only way to handle things that need working event loop is to
-> pump it manually from inside the migration code.
->
-> The reason why I used the QEMU thread pool in the first place in this
-> patch set version is because Peter asked me to do so during the review
-> of its previous iteration [1].
->
-> Peter also asked me previously to move to QEMU synchronization
-> primitives from using the Glib ones in the early version of this
-> patch set [2].
->
-> I personally would rather use something common to many applications,
-> well tested and with more pairs of eyes looking at it rather to
-> re-invent things in QEMU.
->
-> Looking at GThreadPool it seems that it lacks ability to wait until
-> all queued work have finished, so this would need to be open-coded
-> in the migration code.
->
-> @Peter, what's your opinion on using Glib's thread pool instead of
-> QEMU's one, considering the above things?
+While adding hppa64 support, the psw_v variable got extended from 32 to 64
+bits.  So, when packaging the PSW-V bit from the psw_v variable for interrupt
+processing, check bit 31 instead the 63th (sign) bit.
 
-I'll add a bit more about my thinking:
+This fixes a hard to find Linux kernel boot issue where the loss of the PSW-V
+bit due to an ITLB interruption in the middle of a series of ds/addc
+instructions (from the divU milicode library) generated the wrong division
+result and thus triggered a Linux kernel crash.
 
-Using QEMU's event-driven model is usually preferred because it makes
-integrating with the rest of QEMU easy and avoids having lots of
-single-purpose threads that are hard to observe/manage (e.g. through
-the QMP monitor).
+Link: https://lore.kernel.org/lkml/718b8afe-222f-4b3a-96d3-93af0e4ceff1@roeck-us.net/
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
+Cc: qemu-stable@nongnu.org # v8.2+
 
-When there is a genuine need to spawn a thread and write synchronous
-code (e.g. a blocking ioctl(2) call or something CPU-intensive), then
-it's okay to do that. Use QEMUBH, EventNotifier, or other QEMU APIs to
-synchronize between event loop threads and special-purpose synchronous
-threads.
+---
+v2:
+- added change to cpu.h (as requested by Richard)
+- added Richards R-b
+- added stable CC tag
 
-I haven't looked at the patch series enough to have an opinion about
-whether this use case needs a special-purpose thread or not. I am
-assuming it really needs to be a special-purpose thread. Peter and you
-could discuss that further if you want.
-
-I agree with Peter's request to use QEMU's synchronization primitives.
-They do not depend on the event loop so they can be used outside the
-event loop.
-
-The issue I'm raising with this patch is that adding new join()/poll()
-APIs that shouldn't be called from the event loop is bug-prone. It
-will make the QEMU ThreadPool code harder to understand and maintain
-because now there are two different contexts where different subsets
-of this API can be used and mixing them leads to problems. To me the
-non-event loop case is beyond the scope of QEMU's ThreadPool. I have
-CCed Paolo, who wrote the thread pool in its current form in case he
-wants to participate in the discussion.
-
-Using glib's ThreadPool solves the issue while still reusing an
-existing thread pool implementation. Waiting for all work to complete
-can be done using QemuSemaphore.
-
-Thanks,
-Stefan
-
-> Thanks,
-> Maciej
->
-> [1]: https://lore.kernel.org/qemu-devel/ZniFH14DT6ycjbrL@x1n/ point 5: "Worker thread model"
-> [2]: https://lore.kernel.org/qemu-devel/Zi_9SyJy__8wJTou@x1n/
->
+diff --git a/target/hppa/helper.c b/target/hppa/helper.c
+index b79ddd8184..d4b1a3cd5a 100644
+--- a/target/hppa/helper.c
++++ b/target/hppa/helper.c
+@@ -53,7 +53,7 @@ target_ulong cpu_hppa_get_psw(CPUHPPAState *env)
+     }
+ 
+     psw |= env->psw_n * PSW_N;
+-    psw |= (env->psw_v < 0) * PSW_V;
++    psw |= ((env->psw_v >> 31) & 1) * PSW_V;
+     psw |= env->psw | env->psw_xb;
+ 
+     return psw;
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 56d9568d6c..43074d80bf 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -211,7 +211,7 @@ typedef struct CPUArchState {
+     uint32_t psw;            /* All psw bits except the following:  */
+     uint32_t psw_xb;         /* X and B, in their normal positions */
+     target_ulong psw_n;      /* boolean */
+-    target_long psw_v;       /* in most significant bit */
++    target_long psw_v;       /* in bit 31 */
+ 
+     /* Splitting the carry-borrow field into the MSB and "the rest", allows
+      * for "the rest" to be deleted when it is unused, but the MSB is in use.
 
