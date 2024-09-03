@@ -4,77 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5E9CD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7369CCD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slWZj-0004hS-Bv; Tue, 03 Sep 2024 12:40:15 -0400
+	id 1slWaw-0001nO-RG; Tue, 03 Sep 2024 12:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWZh-0004cP-Ja
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:40:13 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWZf-0007RA-WB
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:40:13 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-374c4d4f219so1836994f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:40:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725381609; x=1725986409; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7Ca4/u9BxH3ehujKMf3VQzgAvKmTY63OWpDI6n9L/94=;
- b=QXJAzkWL8dnt1YQUEtEG4rpWSume2XZkkQP7xUJLALZ0O4Ched7qXO/5rw6CuUrSEt
- l3XkpkaphQ4IiEWebjPQGxcWVdEV5DtCDBWj6G1eRNAIyUIXm3hbHJnHCfG+IASYOyY4
- HzcxjW/DfaspA2qQ94p1boHIwtlfrmkgr4JOrP8LmovlBwwEbpaVT18kgXRPCCc3xUyf
- bZr5DyeBm6p8oboaNATPDl6+3TlWhCa0Qhlz0f+tAzYyef3l3a/Y0k1/Yi/Z3pSau43x
- M93v4mWnTUaN78W5f+x+m+PmaaijN8a6ButYTJ1nfTY/F4PmQIAwAe6trzP9VQmeH8gr
- ikvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725381609; x=1725986409;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7Ca4/u9BxH3ehujKMf3VQzgAvKmTY63OWpDI6n9L/94=;
- b=NT1nUifCGYnEKv8gO5d/RWNanF5KrB6DSwSGJx0+1o5NPasuTCbZJ4qsY58wJmYp0c
- IcmAgfUgCn5cl+5CuJi+NB2UZrTDpHOPQHlSeKUlgqCq7r/dPs1bO6jUC5uumxiezpPH
- PzSOBSe/Tm5dTQ7hFPXCHbQYdYsnxSkE0glIV1aB/ZweLRVyUj4XLMFoSIM2vRXPOK5K
- YDEGfSZz5CCJlP809zPK0z2nE8MAeGyPRyydNwNp6ZvEbpmvGZel5N22T+ngcfJaA9gY
- t6FDhYr3wjbRTJY3i+PlKTLQ9ydwFDsl+xFIR8ZD0dLRrCIobzF3jEK1HI2nt+ajHPYl
- wfEA==
-X-Gm-Message-State: AOJu0YxskUxFR7egrNS0kL//3INqXgozhC+bQDB/Y6y/1IBP+sT31iuB
- rPDE8btP+BT6+1EW7V5VZ0diA/c0Uqky1Fc2X0pVd6/iCBcEuCzJIu3jwXLBsNjzrWnbshglru1
- dTNAQHs/S97G2nRTxNVTA/jIniWVp6PXKwL92TA==
-X-Google-Smtp-Source: AGHT+IFIMMkbh+81lxAC9Q9Wcmfqz5V5FMwoz/lBwheLstu0Uf9QN1yi5pFyg1f0rwgXX2rVdU4Fr2a8d1xkIQrdOls=
-X-Received: by 2002:adf:f589:0:b0:374:c92e:f699 with SMTP id
- ffacd0b85a97d-374ecc8f1c7mr2962135f8f.23.1725381609426; Tue, 03 Sep 2024
- 09:40:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1slWav-0001fc-3c
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:41:29 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1slWat-0007ZF-DU
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:41:28 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 929175C55E2;
+ Tue,  3 Sep 2024 16:41:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7815EC4CEC4;
+ Tue,  3 Sep 2024 16:41:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1725381685;
+ bh=N5itbBNwcKzNlXtLrNFjkDqkY6ASrGrYF8VbZ4aaX+4=;
+ h=Date:From:To:Cc:Subject:From;
+ b=dJ+nWiG2H4IzhJD3NfVHSEzPs9Vy0X/uOsB6OGBTo2NiIvw17ULialHLDWir17fpk
+ vtD7xAbABIhX3QX4MAjtDRuAXSh1hUxQS07q7SYPGvohCzTAiZVITq2/k3RaljmMty
+ 04nsgl5qsvqCq5JoX0gwr8vtA8zcEBtI3jsCqifTHQk+T4+Uqza38TqtlyNA9fsvDZ
+ GHfikp4zZcw6tynBRCN9YjawiRHmWpaURRPWGlAQzBxvtisZdLALfvyrm2YChmSrPQ
+ icD8vZqNJeISRdilIuADlwngp8RdZpT514daRK4hi4s9l89eg6+ohB7f6bj+ThPkJd
+ /79HPUjmGg8EA==
+Date: Tue, 3 Sep 2024 18:41:21 +0200
+From: Helge Deller <deller@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-15?Q?Mathieu-Daud=E9?= <f4bug@amsat.org>
+Cc: linux-parisc@vger.kernel.org
+Subject: [PATCH] target/hppa: Fix random 32-bit linux-user crashes
+Message-ID: <Ztc8MaxI8SfD71mx@p100>
 MIME-Version: 1.0
-References: <20240903144154.17135-1-philmd@linaro.org>
-In-Reply-To: <20240903144154.17135-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Sep 2024 17:39:49 +0100
-Message-ID: <CAFEAcA92ze+sow=S71hG0HNwYOyUnPh=+26kzxu=W7NLYN09KA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/boot: Explain why load_elf_hdr() error is ignored
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Changbin Du <changbin.du@huawei.com>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,20 +68,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 15:41, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> If the file is not an ELF file, arm_setup_direct_kernel_boot()
-> falls back to try it as a uimage or an AArch64 Image file or as
-> last resort a bare raw binary. We can discard load_elf_hdr()
-> error and silently return.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
+The linux-user hppa target crashes randomly for me since commit
+081a0ed188d8 ("target/hppa: Do not mask in copy_iaoq_entry").
 
+That commit dropped the masking of the IAOQ addresses while copying them
+from other registers and instead keeps them with all 64 bits up until
+the full gva is formed with the help of hppa_form_gva_psw().
 
+So, when running in linux-user mode on an emulated 64-bit CPU, we need
+to mask to a 32-bit address space at the very end in hppa_form_gva_psw()
+if the PSW-W flag isn't set (which is the case for linux-user on hppa).
 
-Applied to target-arm.next, thanks.
+Fixes: 081a0ed188d8 ("target/hppa: Do not mask in copy_iaoq_entry")
+Signed-off-by: Helge Deller <deller@gmx.de>
 
--- PMM
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 2bcb3b602b..56d9568d6c 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -319,7 +319,7 @@ static inline target_ulong hppa_form_gva_psw(target_ulong psw, uint64_t spc,
+                                              target_ulong off)
+ {
+ #ifdef CONFIG_USER_ONLY
+-    return off;
++    return off & gva_offset_mask(psw);
+ #else
+     return spc | (off & gva_offset_mask(psw));
+ #endif
 
