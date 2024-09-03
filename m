@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E69CD37A7
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2668CD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW5P-0000XH-W8; Tue, 03 Sep 2024 12:08:56 -0400
+	id 1slW5Z-0001P7-Mq; Tue, 03 Sep 2024 12:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5I-0008D6-8j
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:48 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1slW5Y-0001El-1h
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:04 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW59-0002qu-7S
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:47 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42bb9d719d4so41368835e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:38 -0700 (PDT)
+ id 1slW5T-0002x4-Rx
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:03 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42bbbff40bbso37453495e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379718; x=1725984518; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379738; x=1725984538; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sWgTKWF1q/iwi0Dju64WKpJXH7pPPy5M/YmPdvCvrb0=;
- b=mjWgLpiOIlFkdbDwyz1fWReSALmiC1BXCLxUsmtMe3NDLK59eEZv6Bsd4U5maHSbgd
- 74ZWGTR4xqHy+DaRTcJ7PLEsIRR24HIfR0MvQJdlh25yGI/htkRCn8HKAbUWgPsRSntc
- ebdDtvwYPgD/jv7lcyQd04+vi5lUtjFO0G6+kIW6P+Z0o8aC34b821t7Lt5QnUpA0yba
- KJT80oy7QL8UJki/vjcN1lBbKyjGi111wFslh1Mq4P2/CpAKu4guuBYDbhPyHWAI/nhN
- dQGxdU8qPTGo2P2/Ayh2OO+ooYW59EsM4RWBoy5Q8edirNPPEV3Qnal0YlKOPc/zBPhH
- rTdg==
+ :reply-to; bh=fOfef+JkPcTbeQrgH3GrXKLVyKFTqxllcvWZvuS9QLo=;
+ b=iiqJ70zBrNWXRVWGU2ADE9eLipjpe6KmDoQEh693yW27ijWz57U6O9pQ+kQM/YrSk7
+ HkjVkybLqfuRR1uK1P29B5pg6QGsINU64zx83gKM/C/EAUUvIfGAzzq0V5ct9vaIq3Vb
+ IShtPoiR2hmsP9QQuhgmCofM0tsBOnRgo5lWUl8NdCDWn7zzz6+U+GxIdRGo9Mn3mxPB
+ YGxz/vwfYr8NpaPOoWIHJttRl9IIkwIejXJhW4Q8Ogryi/XDOY79iJ8y5hT+5DslUsvK
+ AlLB4zo+2m9ZqI4XN05m7/783dSslbDgrwCZos31Q1FiSqlM+BeKRqgjYqLoytGg5u6q
+ UVng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379718; x=1725984518;
+ d=1e100.net; s=20230601; t=1725379738; x=1725984538;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sWgTKWF1q/iwi0Dju64WKpJXH7pPPy5M/YmPdvCvrb0=;
- b=NUNYUmVEju3Xi+XkmenABov92fk+AGS/lERMtuaEuSnqG/Qhd9yXAGWqlX8/KLPJGm
- JPJpYF04zSVCPpK5EI0HnLg5A48ucJLhimPZmgzMiC594M6srN11jC7oTJJk/Vclc5Na
- XkNChDWWbz3FKHr9oYI9IVGrg//ovKGVjoYFlgjv9H4aV4HcR9c+ZfDXGzJCC8+g7Shq
- IIFF72InEtQkIeYu7+7IoWbMvDUAusyHZFnRlyU1aFTXJlrc+l8W5O1k1aO5pic0WgU1
- t/tqUQfr4HpkHmUoAgJGZPwtS5EKq4iavS0gf+Y6zvUtN6Hdn2mdVfF43KsYGcR7j355
- TVPw==
+ bh=fOfef+JkPcTbeQrgH3GrXKLVyKFTqxllcvWZvuS9QLo=;
+ b=YCA7xKtnkRGF7N1mwdQNUHtxHTjjSAf9Jry7nZQV5QD6ZfrUtchWS5aaPHDNuG0EOU
+ PH1XJmb8e/8SuxI+AfhM4/WG+lJS75ShgNuhO96kEsYO4/BqW/9ByyF+qMaoe8+9IKfD
+ sO4rSNkhxdYzX291UGPbCn+Vpss/5mjVW2IX7lhz9vst8vYm2Z+mE1+ipGKu4UPYxoDZ
+ w5vFZeTOYQ4hht7rHl1XC2liNBMA8Jb1BPF1jhOdczzf9RkTYJANk2ez5t7iQE23Tus6
+ o3cR4sgzNptMFAZWdtola4fTzgiJd5YPHn/GHnFupKvYJ2E6RP3ihaDtZ4E5vVx+wn2E
+ egVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWddLVD2munRTaUq0mrX32TYbFDvR8+aWoelnP/CqMQV1bJTXclDKNnCVr/VA8WNoOtxn/btPWUoFqr@nongnu.org
-X-Gm-Message-State: AOJu0YyNFickFpC86sAi3LoRAvk6vPxDUTNFHyDXkFB/VSJhnIU7PhyH
- V/jqXSTnTCmzlieldyUEvGuG4ycfDoznSFYsybAgO2rVgryi6H6EpTbsq89Bm5Daq6rq29p2DNv
- l
-X-Google-Smtp-Source: AGHT+IGpCtOujhuQ0CGc9Ki30G3+dPAG7NgxEJSiS7LR47vuMRQY+Nx5tKHlhqu1+1m98KObG/0gTw==
-X-Received: by 2002:a05:600c:3ba6:b0:426:647b:1bf7 with SMTP id
- 5b1f17b1804b1-42c88108625mr33785575e9.32.1725379717608; 
- Tue, 03 Sep 2024 09:08:37 -0700 (PDT)
+ AJvYcCUzZEmGyusns/oxAFsjYbEAz6LANQCQ4XcA2uEcqoEpyvf6kWO4+hW9m6vY7PnYe0AB+8YQG3cRYNfm@nongnu.org
+X-Gm-Message-State: AOJu0YxP/OEwcs+TbWDAF7FsiQ9cPqatuWh0rNZDMn7ZrZIHZK1LoXX+
+ PGrgftGI5dSkHxitoyIGDR7jYIzTDNcF4+Kl2YVPGAIPtR17RiY546rVmel+Ez0=
+X-Google-Smtp-Source: AGHT+IFTSMnzsSZgkuph2JBbKk55HKzV9Vi2f8PjTlN2Y6JLmifXHklOS5vFLCf5AaI7oonGbDFyew==
+X-Received: by 2002:a05:600c:3c9e:b0:426:627e:37af with SMTP id
+ 5b1f17b1804b1-42bbb10d2d5mr98685375e9.3.1725379738076; 
+ Tue, 03 Sep 2024 09:08:58 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.37
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:37 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 30/53] hw/rtc: Remove twl92230 device
-Date: Tue,  3 Sep 2024 17:07:28 +0100
-Message-Id: <20240903160751.4100218-31-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 43/53] hw/misc: Remove omap_gpmc
+Date: Tue,  3 Sep 2024 17:07:41 +0100
+Message-Id: <20240903160751.4100218-44-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,46 +95,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the TWL92230 RTC device, which was used only by the n800 and n810.
+The omap_gpmc device is only in OMAP2, which we are removing.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS        |   1 -
- hw/rtc/twl92230.c  | 882 ---------------------------------------------
- hw/rtc/Kconfig     |   4 -
- hw/rtc/meson.build |   1 -
- 4 files changed, 888 deletions(-)
- delete mode 100644 hw/rtc/twl92230.c
+ include/hw/arm/omap.h |  11 -
+ hw/misc/omap_gpmc.c   | 898 ------------------------------------------
+ hw/misc/meson.build   |   1 -
+ 3 files changed, 910 deletions(-)
+ delete mode 100644 hw/misc/omap_gpmc.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e44b6eb38b0..7ae424fbf9f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -868,7 +868,6 @@ M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/input/lm832x.c
--F: hw/rtc/twl92230.c
- F: include/hw/input/lm832x.h
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index dcd338c7c49..0cbbf2fecb5 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -147,15 +147,6 @@ hwaddr omap_l4_region_base(struct omap_target_agent_s *ta,
+ hwaddr omap_l4_region_size(struct omap_target_agent_s *ta,
+                                        int region);
  
- Raspberry Pi
-diff --git a/hw/rtc/twl92230.c b/hw/rtc/twl92230.c
+-/* OMAP2 general purpose memory controller */
+-struct omap_gpmc_s;
+-struct omap_gpmc_s *omap_gpmc_init(struct omap_mpu_state_s *mpu,
+-                                   hwaddr base,
+-                                   qemu_irq irq, qemu_irq drq);
+-void omap_gpmc_reset(struct omap_gpmc_s *s);
+-void omap_gpmc_attach(struct omap_gpmc_s *s, int cs, MemoryRegion *iomem);
+-void omap_gpmc_attach_nand(struct omap_gpmc_s *s, int cs, DeviceState *nand);
+-
+ /*
+  * Common IRQ numbers for level 1 interrupt handler
+  * See /usr/include/asm-arm/arch-omap/irqs.h in Linux.
+@@ -948,8 +939,6 @@ struct omap_mpu_state_s {
+     struct omap_gp_timer_s *gptimer[12];
+     struct omap_synctimer_s *synctimer;
+ 
+-    struct omap_gpmc_s *gpmc;
+-
+     struct omap_mcspi_s *mcspi[2];
+ 
+     struct omap_dss_s *dss;
+diff --git a/hw/misc/omap_gpmc.c b/hw/misc/omap_gpmc.c
 deleted file mode 100644
-index efd19a76e61..00000000000
---- a/hw/rtc/twl92230.c
+index 67158eb1649..00000000000
+--- a/hw/misc/omap_gpmc.c
 +++ /dev/null
-@@ -1,882 +0,0 @@
+@@ -1,898 +0,0 @@
 -/*
-- * TI TWL92230C energy-management companion device for the OMAP24xx.
-- * Aka. Menelaus (N4200 MENELAUS1_V2.2)
+- * TI OMAP general purpose memory controller emulation.
 - *
-- * Copyright (C) 2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
+- * Copyright (C) 2007-2009 Nokia Corporation
+- * Original code written by Andrzej Zaborowski <andrew@openedhand.com>
+- * Enhancements for OMAP3 and NAND support written by Juha Riihimäki
 - *
 - * This program is free software; you can redistribute it and/or
 - * modify it under the terms of the GNU General Public License as
 - * published by the Free Software Foundation; either version 2 or
-- * (at your option) version 3 of the License.
+- * (at your option) any later version of the License.
 - *
 - * This program is distributed in the hope that it will be useful,
 - * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -146,893 +162,894 @@ index efd19a76e61..00000000000
 - */
 -
 -#include "qemu/osdep.h"
--#include "qemu/timer.h"
--#include "hw/i2c/i2c.h"
 -#include "hw/irq.h"
--#include "migration/qemu-file-types.h"
--#include "migration/vmstate.h"
--#include "sysemu/sysemu.h"
--#include "sysemu/rtc.h"
--#include "qemu/bcd.h"
--#include "qemu/module.h"
--#include "qom/object.h"
+-#include "hw/block/flash.h"
+-#include "hw/arm/omap.h"
+-#include "exec/memory.h"
+-#include "exec/address-spaces.h"
 -
--#define VERBOSE 1
+-/* General-Purpose Memory Controller */
+-struct omap_gpmc_s {
+-    qemu_irq irq;
+-    qemu_irq drq;
+-    MemoryRegion iomem;
+-    int accept_256;
 -
--#define TYPE_TWL92230 "twl92230"
--OBJECT_DECLARE_SIMPLE_TYPE(MenelausState, TWL92230)
--
--struct MenelausState {
--    I2CSlave parent_obj;
--
--    int firstbyte;
--    uint8_t reg;
--
--    uint8_t vcore[5];
--    uint8_t dcdc[3];
--    uint8_t ldo[8];
--    uint8_t sleep[2];
--    uint8_t osc;
--    uint8_t detect;
--    uint16_t mask;
--    uint16_t status;
--    uint8_t dir;
--    uint8_t inputs;
--    uint8_t outputs;
--    uint8_t bbsms;
--    uint8_t pull[4];
--    uint8_t mmc_ctrl[3];
--    uint8_t mmc_debounce;
--    struct {
--        uint8_t ctrl;
--        uint16_t comp;
--        QEMUTimer *hz_tm;
--        int64_t next;
--        struct tm tm;
--        struct tm new;
--        struct tm alm;
--        int64_t sec_offset;
--        int64_t alm_sec;
--        int next_comp;
--    } rtc;
--    uint16_t rtc_next_vmstate;
--    qemu_irq out[4];
--    uint8_t pwrbtn_state;
+-    uint8_t revision;
+-    uint8_t sysconfig;
+-    uint16_t irqst;
+-    uint16_t irqen;
+-    uint16_t lastirq;
+-    uint16_t timeout;
+-    uint16_t config;
+-    struct omap_gpmc_cs_file_s {
+-        uint32_t config[7];
+-        MemoryRegion *iomem;
+-        MemoryRegion container;
+-        MemoryRegion nandiomem;
+-        DeviceState *dev;
+-    } cs_file[8];
+-    int ecc_cs;
+-    int ecc_ptr;
+-    uint32_t ecc_cfg;
+-    ECCState ecc[9];
+-    struct prefetch {
+-        uint32_t config1; /* GPMC_PREFETCH_CONFIG1 */
+-        uint32_t transfercount; /* GPMC_PREFETCH_CONFIG2:TRANSFERCOUNT */
+-        int startengine; /* GPMC_PREFETCH_CONTROL:STARTENGINE */
+-        int fifopointer; /* GPMC_PREFETCH_STATUS:FIFOPOINTER */
+-        int count; /* GPMC_PREFETCH_STATUS:COUNTVALUE */
+-        MemoryRegion iomem;
+-        uint8_t fifo[64];
+-    } prefetch;
 -};
 -
--static inline void menelaus_update(MenelausState *s)
+-#define OMAP_GPMC_8BIT 0
+-#define OMAP_GPMC_16BIT 1
+-#define OMAP_GPMC_NOR 0
+-#define OMAP_GPMC_NAND 2
+-
+-static int omap_gpmc_devtype(struct omap_gpmc_cs_file_s *f)
 -{
--    qemu_set_irq(s->out[3], s->status & ~s->mask);
+-    return (f->config[0] >> 10) & 3;
 -}
 -
--static inline void menelaus_rtc_start(MenelausState *s)
+-static int omap_gpmc_devsize(struct omap_gpmc_cs_file_s *f)
 -{
--    s->rtc.next += qemu_clock_get_ms(rtc_clock);
--    timer_mod(s->rtc.hz_tm, s->rtc.next);
+-    /* devsize field is really 2 bits but we ignore the high
+-     * bit to ensure consistent behaviour if the guest sets
+-     * it (values 2 and 3 are reserved in the TRM)
+-     */
+-    return (f->config[0] >> 12) & 1;
 -}
 -
--static inline void menelaus_rtc_stop(MenelausState *s)
+-/* Extract the chip-select value from the prefetch config1 register */
+-static int prefetch_cs(uint32_t config1)
 -{
--    timer_del(s->rtc.hz_tm);
--    s->rtc.next -= qemu_clock_get_ms(rtc_clock);
--    if (s->rtc.next < 1)
--        s->rtc.next = 1;
+-    return (config1 >> 24) & 7;
 -}
 -
--static void menelaus_rtc_update(MenelausState *s)
+-static int prefetch_threshold(uint32_t config1)
 -{
--    qemu_get_timedate(&s->rtc.tm, s->rtc.sec_offset);
+-    return (config1 >> 8) & 0x7f;
 -}
 -
--static void menelaus_alm_update(MenelausState *s)
+-static void omap_gpmc_int_update(struct omap_gpmc_s *s)
 -{
--    if ((s->rtc.ctrl & 3) == 3)
--        s->rtc.alm_sec = qemu_timedate_diff(&s->rtc.alm) - s->rtc.sec_offset;
--}
--
--static void menelaus_rtc_hz(void *opaque)
--{
--    MenelausState *s = (MenelausState *) opaque;
--
--    s->rtc.next_comp --;
--    s->rtc.alm_sec --;
--    s->rtc.next += 1000;
--    timer_mod(s->rtc.hz_tm, s->rtc.next);
--    if ((s->rtc.ctrl >> 3) & 3) {               /* EVERY */
--        menelaus_rtc_update(s);
--        if (((s->rtc.ctrl >> 3) & 3) == 1 && !s->rtc.tm.tm_sec)
--            s->status |= 1 << 8;                /* RTCTMR */
--        else if (((s->rtc.ctrl >> 3) & 3) == 2 && !s->rtc.tm.tm_min)
--            s->status |= 1 << 8;                /* RTCTMR */
--        else if (!s->rtc.tm.tm_hour)
--            s->status |= 1 << 8;                /* RTCTMR */
--    } else
--        s->status |= 1 << 8;                    /* RTCTMR */
--    if ((s->rtc.ctrl >> 1) & 1) {               /* RTC_AL_EN */
--        if (s->rtc.alm_sec == 0)
--            s->status |= 1 << 9;                /* RTCALM */
--        /* TODO: wake-up */
+-    /* The TRM is a bit unclear, but it seems to say that
+-     * the TERMINALCOUNTSTATUS bit is set only on the
+-     * transition when the prefetch engine goes from
+-     * active to inactive, whereas the FIFOEVENTSTATUS
+-     * bit is held high as long as the fifo has at
+-     * least THRESHOLD bytes available.
+-     * So we do the latter here, but TERMINALCOUNTSTATUS
+-     * is set elsewhere.
+-     */
+-    if (s->prefetch.fifopointer >= prefetch_threshold(s->prefetch.config1)) {
+-        s->irqst |= 1;
 -    }
--    if (s->rtc.next_comp <= 0) {
--        s->rtc.next -= muldiv64((int16_t) s->rtc.comp, 1000, 0x8000);
--        s->rtc.next_comp = 3600;
+-    if ((s->irqen & s->irqst) != s->lastirq) {
+-        s->lastirq = s->irqen & s->irqst;
+-        qemu_set_irq(s->irq, s->lastirq);
 -    }
--    menelaus_update(s);
 -}
 -
--static void menelaus_reset(I2CSlave *i2c)
+-static void omap_gpmc_dma_update(struct omap_gpmc_s *s, int value)
 -{
--    MenelausState *s = TWL92230(i2c);
--
--    s->reg = 0x00;
--
--    s->vcore[0] = 0x0c; /* XXX: X-loader needs 0x8c? check!  */
--    s->vcore[1] = 0x05;
--    s->vcore[2] = 0x02;
--    s->vcore[3] = 0x0c;
--    s->vcore[4] = 0x03;
--    s->dcdc[0] = 0x33;  /* Depends on wiring */
--    s->dcdc[1] = 0x03;
--    s->dcdc[2] = 0x00;
--    s->ldo[0] = 0x95;
--    s->ldo[1] = 0x7e;
--    s->ldo[2] = 0x00;
--    s->ldo[3] = 0x00;   /* Depends on wiring */
--    s->ldo[4] = 0x03;   /* Depends on wiring */
--    s->ldo[5] = 0x00;
--    s->ldo[6] = 0x00;
--    s->ldo[7] = 0x00;
--    s->sleep[0] = 0x00;
--    s->sleep[1] = 0x00;
--    s->osc = 0x01;
--    s->detect = 0x09;
--    s->mask = 0x0fff;
--    s->status = 0;
--    s->dir = 0x07;
--    s->outputs = 0x00;
--    s->bbsms = 0x00;
--    s->pull[0] = 0x00;
--    s->pull[1] = 0x00;
--    s->pull[2] = 0x00;
--    s->pull[3] = 0x00;
--    s->mmc_ctrl[0] = 0x03;
--    s->mmc_ctrl[1] = 0xc0;
--    s->mmc_ctrl[2] = 0x00;
--    s->mmc_debounce = 0x05;
--
--    if (s->rtc.ctrl & 1)
--        menelaus_rtc_stop(s);
--    s->rtc.ctrl = 0x00;
--    s->rtc.comp = 0x0000;
--    s->rtc.next = 1000;
--    s->rtc.sec_offset = 0;
--    s->rtc.next_comp = 1800;
--    s->rtc.alm_sec = 1800;
--    s->rtc.alm.tm_sec = 0x00;
--    s->rtc.alm.tm_min = 0x00;
--    s->rtc.alm.tm_hour = 0x00;
--    s->rtc.alm.tm_mday = 0x01;
--    s->rtc.alm.tm_mon = 0x00;
--    s->rtc.alm.tm_year = 2004;
--    menelaus_update(s);
+-    if (s->prefetch.config1 & 4) {
+-        qemu_set_irq(s->drq, value);
+-    }
 -}
 -
--static void menelaus_gpio_set(void *opaque, int line, int level)
+-/* Access functions for when a NAND-like device is mapped into memory:
+- * all addresses in the region behave like accesses to the relevant
+- * GPMC_NAND_DATA_i register (which is actually implemented to call these)
+- */
+-static uint64_t omap_nand_read(void *opaque, hwaddr addr,
+-                               unsigned size)
 -{
--    MenelausState *s = (MenelausState *) opaque;
+-    struct omap_gpmc_cs_file_s *f = opaque;
+-    uint64_t v;
+-    nand_setpins(f->dev, 0, 0, 0, 1, 0);
+-    switch (omap_gpmc_devsize(f)) {
+-    case OMAP_GPMC_8BIT:
+-        v = nand_getio(f->dev);
+-        if (size == 1) {
+-            return v;
+-        }
+-        v |= (nand_getio(f->dev) << 8);
+-        if (size == 2) {
+-            return v;
+-        }
+-        v |= (nand_getio(f->dev) << 16);
+-        v |= (nand_getio(f->dev) << 24);
+-        return v;
+-    case OMAP_GPMC_16BIT:
+-        v = nand_getio(f->dev);
+-        if (size == 1) {
+-            /* 8 bit read from 16 bit device : probably a guest bug */
+-            return v & 0xff;
+-        }
+-        if (size == 2) {
+-            return v;
+-        }
+-        v |= (nand_getio(f->dev) << 16);
+-        return v;
+-    default:
+-        abort();
+-    }
+-}
 -
--    if (line < 3) {
--        /* No interrupt generated */
--        s->inputs &= ~(1 << line);
--        s->inputs |= level << line;
+-static void omap_nand_setio(DeviceState *dev, uint64_t value,
+-                            int nandsize, int size)
+-{
+-    /* Write the specified value to the NAND device, respecting
+-     * both size of the NAND device and size of the write access.
+-     */
+-    switch (nandsize) {
+-    case OMAP_GPMC_8BIT:
+-        switch (size) {
+-        case 1:
+-            nand_setio(dev, value & 0xff);
+-            break;
+-        case 2:
+-            nand_setio(dev, value & 0xff);
+-            nand_setio(dev, (value >> 8) & 0xff);
+-            break;
+-        case 4:
+-        default:
+-            nand_setio(dev, value & 0xff);
+-            nand_setio(dev, (value >> 8) & 0xff);
+-            nand_setio(dev, (value >> 16) & 0xff);
+-            nand_setio(dev, (value >> 24) & 0xff);
+-            break;
+-        }
+-        break;
+-    case OMAP_GPMC_16BIT:
+-        switch (size) {
+-        case 1:
+-            /* writing to a 16bit device with 8bit access is probably a guest
+-             * bug; pass the value through anyway.
+-             */
+-        case 2:
+-            nand_setio(dev, value & 0xffff);
+-            break;
+-        case 4:
+-        default:
+-            nand_setio(dev, value & 0xffff);
+-            nand_setio(dev, (value >> 16) & 0xffff);
+-            break;
+-        }
+-        break;
+-    }
+-}
+-
+-static void omap_nand_write(void *opaque, hwaddr addr,
+-                            uint64_t value, unsigned size)
+-{
+-    struct omap_gpmc_cs_file_s *f = opaque;
+-    nand_setpins(f->dev, 0, 0, 0, 1, 0);
+-    omap_nand_setio(f->dev, value, omap_gpmc_devsize(f), size);
+-}
+-
+-static const MemoryRegionOps omap_nand_ops = {
+-    .read = omap_nand_read,
+-    .write = omap_nand_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-};
+-
+-static void fill_prefetch_fifo(struct omap_gpmc_s *s)
+-{
+-    /* Fill the prefetch FIFO by reading data from NAND.
+-     * We do this synchronously, unlike the hardware which
+-     * will do this asynchronously. We refill when the
+-     * FIFO has THRESHOLD bytes free, and we always refill
+-     * as much data as possible starting at the top end
+-     * of the FIFO.
+-     * (We have to refill at THRESHOLD rather than waiting
+-     * for the FIFO to empty to allow for the case where
+-     * the FIFO size isn't an exact multiple of THRESHOLD
+-     * and we're doing DMA transfers.)
+-     * This means we never need to handle wrap-around in
+-     * the fifo-reading code, and the next byte of data
+-     * to read is always fifo[63 - fifopointer].
+-     */
+-    int fptr;
+-    int cs = prefetch_cs(s->prefetch.config1);
+-    int is16bit = (((s->cs_file[cs].config[0] >> 12) & 3) != 0);
+-    int bytes;
+-    /* Don't believe the bit of the OMAP TRM that says that COUNTVALUE
+-     * and TRANSFERCOUNT are in units of 16 bit words for 16 bit NAND.
+-     * Instead believe the bit that says it is always a byte count.
+-     */
+-    bytes = 64 - s->prefetch.fifopointer;
+-    if (bytes > s->prefetch.count) {
+-        bytes = s->prefetch.count;
+-    }
+-    if (is16bit) {
+-        bytes &= ~1;
+-    }
+-
+-    s->prefetch.count -= bytes;
+-    s->prefetch.fifopointer += bytes;
+-    fptr = 64 - s->prefetch.fifopointer;
+-    /* Move the existing data in the FIFO so it sits just
+-     * before what we're about to read in
+-     */
+-    while (fptr < (64 - bytes)) {
+-        s->prefetch.fifo[fptr] = s->prefetch.fifo[fptr + bytes];
+-        fptr++;
+-    }
+-    while (fptr < 64) {
+-        if (is16bit) {
+-            uint32_t v = omap_nand_read(&s->cs_file[cs], 0, 2);
+-            s->prefetch.fifo[fptr++] = v & 0xff;
+-            s->prefetch.fifo[fptr++] = (v >> 8) & 0xff;
+-        } else {
+-            s->prefetch.fifo[fptr++] = omap_nand_read(&s->cs_file[cs], 0, 1);
+-        }
+-    }
+-    if (s->prefetch.startengine && (s->prefetch.count == 0)) {
+-        /* This was the final transfer: raise TERMINALCOUNTSTATUS */
+-        s->irqst |= 2;
+-        s->prefetch.startengine = 0;
+-    }
+-    /* If there are any bytes in the FIFO at this point then
+-     * we must raise a DMA request (either this is a final part
+-     * transfer, or we filled the FIFO in which case we certainly
+-     * have THRESHOLD bytes available)
+-     */
+-    if (s->prefetch.fifopointer != 0) {
+-        omap_gpmc_dma_update(s, 1);
+-    }
+-    omap_gpmc_int_update(s);
+-}
+-
+-/* Access functions for a NAND-like device when the prefetch/postwrite
+- * engine is enabled -- all addresses in the region behave alike:
+- * data is read or written to the FIFO.
+- */
+-static uint64_t omap_gpmc_prefetch_read(void *opaque, hwaddr addr,
+-                                        unsigned size)
+-{
+-    struct omap_gpmc_s *s = opaque;
+-    uint32_t data;
+-    if (s->prefetch.config1 & 1) {
+-        /* The TRM doesn't define the behaviour if you read from the
+-         * FIFO when the prefetch engine is in write mode. We choose
+-         * to always return zero.
+-         */
+-        return 0;
+-    }
+-    /* Note that trying to read an empty fifo repeats the last byte */
+-    if (s->prefetch.fifopointer) {
+-        s->prefetch.fifopointer--;
+-    }
+-    data = s->prefetch.fifo[63 - s->prefetch.fifopointer];
+-    if (s->prefetch.fifopointer ==
+-        (64 - prefetch_threshold(s->prefetch.config1))) {
+-        /* We've drained THRESHOLD bytes now. So deassert the
+-         * DMA request, then refill the FIFO (which will probably
+-         * assert it again.)
+-         */
+-        omap_gpmc_dma_update(s, 0);
+-        fill_prefetch_fifo(s);
+-    }
+-    omap_gpmc_int_update(s);
+-    return data;
+-}
+-
+-static void omap_gpmc_prefetch_write(void *opaque, hwaddr addr,
+-                                     uint64_t value, unsigned size)
+-{
+-    struct omap_gpmc_s *s = opaque;
+-    int cs = prefetch_cs(s->prefetch.config1);
+-    if ((s->prefetch.config1 & 1) == 0) {
+-        /* The TRM doesn't define the behaviour of writing to the
+-         * FIFO when the prefetch engine is in read mode. We
+-         * choose to ignore the write.
+-         */
+-        return;
+-    }
+-    if (s->prefetch.count == 0) {
+-        /* The TRM doesn't define the behaviour of writing to the
+-         * FIFO if the transfer is complete. We choose to ignore.
+-         */
+-        return;
+-    }
+-    /* The only reason we do any data buffering in postwrite
+-     * mode is if we are talking to a 16 bit NAND device, in
+-     * which case we need to buffer the first byte of the
+-     * 16 bit word until the other byte arrives.
+-     */
+-    int is16bit = (((s->cs_file[cs].config[0] >> 12) & 3) != 0);
+-    if (is16bit) {
+-        /* fifopointer alternates between 64 (waiting for first
+-         * byte of word) and 63 (waiting for second byte)
+-         */
+-        if (s->prefetch.fifopointer == 64) {
+-            s->prefetch.fifo[0] = value;
+-            s->prefetch.fifopointer--;
+-        } else {
+-            value = (value << 8) | s->prefetch.fifo[0];
+-            omap_nand_write(&s->cs_file[cs], 0, value, 2);
+-            s->prefetch.count--;
+-            s->prefetch.fifopointer = 64;
+-        }
+-    } else {
+-        /* Just write the byte : fifopointer remains 64 at all times */
+-        omap_nand_write(&s->cs_file[cs], 0, value, 1);
+-        s->prefetch.count--;
+-    }
+-    if (s->prefetch.count == 0) {
+-        /* Final transfer: raise TERMINALCOUNTSTATUS */
+-        s->irqst |= 2;
+-        s->prefetch.startengine = 0;
+-    }
+-    omap_gpmc_int_update(s);
+-}
+-
+-static const MemoryRegionOps omap_prefetch_ops = {
+-    .read = omap_gpmc_prefetch_read,
+-    .write = omap_gpmc_prefetch_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .impl.min_access_size = 1,
+-    .impl.max_access_size = 1,
+-};
+-
+-static MemoryRegion *omap_gpmc_cs_memregion(struct omap_gpmc_s *s, int cs)
+-{
+-    /* Return the MemoryRegion* to map/unmap for this chipselect */
+-    struct omap_gpmc_cs_file_s *f = &s->cs_file[cs];
+-    if (omap_gpmc_devtype(f) == OMAP_GPMC_NOR) {
+-        return f->iomem;
+-    }
+-    if ((s->prefetch.config1 & 0x80) &&
+-        (prefetch_cs(s->prefetch.config1) == cs)) {
+-        /* The prefetch engine is enabled for this CS: map the FIFO */
+-        return &s->prefetch.iomem;
+-    }
+-    return &f->nandiomem;
+-}
+-
+-static void omap_gpmc_cs_map(struct omap_gpmc_s *s, int cs)
+-{
+-    struct omap_gpmc_cs_file_s *f = &s->cs_file[cs];
+-    uint32_t mask = (f->config[6] >> 8) & 0xf;
+-    uint32_t base = f->config[6] & 0x3f;
+-    uint32_t size;
+-
+-    if (!f->iomem && !f->dev) {
 -        return;
 -    }
 -
--    if (!s->pwrbtn_state && level) {
--        s->status |= 1 << 11;               /* PSHBTN */
--        menelaus_update(s);
+-    if (!(f->config[6] & (1 << 6))) {
+-        /* Do nothing unless CSVALID */
+-        return;
 -    }
--    s->pwrbtn_state = level;
+-
+-    /* TODO: check for overlapping regions and report access errors */
+-    if (mask != 0x8 && mask != 0xc && mask != 0xe && mask != 0xf
+-         && !(s->accept_256 && !mask)) {
+-        fprintf(stderr, "%s: invalid chip-select mask address (0x%x)\n",
+-                 __func__, mask);
+-    }
+-
+-    base <<= 24;
+-    size = (0x0fffffff & ~(mask << 24)) + 1;
+-    /* TODO: rather than setting the size of the mapping (which should be
+-     * constant), the mask should cause wrapping of the address space, so
+-     * that the same memory becomes accessible at every <i>size</i> bytes
+-     * starting from <i>base</i>.  */
+-    memory_region_init(&f->container, NULL, "omap-gpmc-file", size);
+-    memory_region_add_subregion(&f->container, 0,
+-                                omap_gpmc_cs_memregion(s, cs));
+-    memory_region_add_subregion(get_system_memory(), base,
+-                                &f->container);
 -}
 -
--#define MENELAUS_REV            0x01
--#define MENELAUS_VCORE_CTRL1    0x02
--#define MENELAUS_VCORE_CTRL2    0x03
--#define MENELAUS_VCORE_CTRL3    0x04
--#define MENELAUS_VCORE_CTRL4    0x05
--#define MENELAUS_VCORE_CTRL5    0x06
--#define MENELAUS_DCDC_CTRL1     0x07
--#define MENELAUS_DCDC_CTRL2     0x08
--#define MENELAUS_DCDC_CTRL3     0x09
--#define MENELAUS_LDO_CTRL1      0x0a
--#define MENELAUS_LDO_CTRL2      0x0b
--#define MENELAUS_LDO_CTRL3      0x0c
--#define MENELAUS_LDO_CTRL4      0x0d
--#define MENELAUS_LDO_CTRL5      0x0e
--#define MENELAUS_LDO_CTRL6      0x0f
--#define MENELAUS_LDO_CTRL7      0x10
--#define MENELAUS_LDO_CTRL8      0x11
--#define MENELAUS_SLEEP_CTRL1    0x12
--#define MENELAUS_SLEEP_CTRL2    0x13
--#define MENELAUS_DEVICE_OFF     0x14
--#define MENELAUS_OSC_CTRL       0x15
--#define MENELAUS_DETECT_CTRL    0x16
--#define MENELAUS_INT_MASK1      0x17
--#define MENELAUS_INT_MASK2      0x18
--#define MENELAUS_INT_STATUS1    0x19
--#define MENELAUS_INT_STATUS2    0x1a
--#define MENELAUS_INT_ACK1       0x1b
--#define MENELAUS_INT_ACK2       0x1c
--#define MENELAUS_GPIO_CTRL      0x1d
--#define MENELAUS_GPIO_IN        0x1e
--#define MENELAUS_GPIO_OUT       0x1f
--#define MENELAUS_BBSMS          0x20
--#define MENELAUS_RTC_CTRL       0x21
--#define MENELAUS_RTC_UPDATE     0x22
--#define MENELAUS_RTC_SEC        0x23
--#define MENELAUS_RTC_MIN        0x24
--#define MENELAUS_RTC_HR         0x25
--#define MENELAUS_RTC_DAY        0x26
--#define MENELAUS_RTC_MON        0x27
--#define MENELAUS_RTC_YR         0x28
--#define MENELAUS_RTC_WKDAY      0x29
--#define MENELAUS_RTC_AL_SEC     0x2a
--#define MENELAUS_RTC_AL_MIN     0x2b
--#define MENELAUS_RTC_AL_HR      0x2c
--#define MENELAUS_RTC_AL_DAY     0x2d
--#define MENELAUS_RTC_AL_MON     0x2e
--#define MENELAUS_RTC_AL_YR      0x2f
--#define MENELAUS_RTC_COMP_MSB   0x30
--#define MENELAUS_RTC_COMP_LSB   0x31
--#define MENELAUS_S1_PULL_EN     0x32
--#define MENELAUS_S1_PULL_DIR    0x33
--#define MENELAUS_S2_PULL_EN     0x34
--#define MENELAUS_S2_PULL_DIR    0x35
--#define MENELAUS_MCT_CTRL1      0x36
--#define MENELAUS_MCT_CTRL2      0x37
--#define MENELAUS_MCT_CTRL3      0x38
--#define MENELAUS_MCT_PIN_ST     0x39
--#define MENELAUS_DEBOUNCE1      0x3a
--
--static uint8_t menelaus_read(void *opaque, uint8_t addr)
+-static void omap_gpmc_cs_unmap(struct omap_gpmc_s *s, int cs)
 -{
--    MenelausState *s = (MenelausState *) opaque;
+-    struct omap_gpmc_cs_file_s *f = &s->cs_file[cs];
+-    if (!(f->config[6] & (1 << 6))) {
+-        /* Do nothing unless CSVALID */
+-        return;
+-    }
+-    if (!f->iomem && !f->dev) {
+-        return;
+-    }
+-    memory_region_del_subregion(get_system_memory(), &f->container);
+-    memory_region_del_subregion(&f->container, omap_gpmc_cs_memregion(s, cs));
+-    object_unparent(OBJECT(&f->container));
+-}
+-
+-void omap_gpmc_reset(struct omap_gpmc_s *s)
+-{
+-    int i;
+-
+-    s->sysconfig = 0;
+-    s->irqst = 0;
+-    s->irqen = 0;
+-    omap_gpmc_int_update(s);
+-    for (i = 0; i < 8; i++) {
+-        /* This has to happen before we change any of the config
+-         * used to determine which memory regions are mapped or unmapped.
+-         */
+-        omap_gpmc_cs_unmap(s, i);
+-    }
+-    s->timeout = 0;
+-    s->config = 0xa00;
+-    s->prefetch.config1 = 0x00004000;
+-    s->prefetch.transfercount = 0x00000000;
+-    s->prefetch.startengine = 0;
+-    s->prefetch.fifopointer = 0;
+-    s->prefetch.count = 0;
+-    for (i = 0; i < 8; i ++) {
+-        s->cs_file[i].config[1] = 0x101001;
+-        s->cs_file[i].config[2] = 0x020201;
+-        s->cs_file[i].config[3] = 0x10031003;
+-        s->cs_file[i].config[4] = 0x10f1111;
+-        s->cs_file[i].config[5] = 0;
+-        s->cs_file[i].config[6] = 0xf00;
+-        /* In theory we could probe attached devices for some CFG1
+-         * bits here, but we just retain them across resets as they
+-         * were set initially by omap_gpmc_attach().
+-         */
+-        if (i == 0) {
+-            s->cs_file[i].config[0] &= 0x00433e00;
+-            s->cs_file[i].config[6] |= 1 << 6; /* CSVALID */
+-            omap_gpmc_cs_map(s, i);
+-        } else {
+-            s->cs_file[i].config[0] &= 0x00403c00;
+-        }
+-    }
+-    s->ecc_cs = 0;
+-    s->ecc_ptr = 0;
+-    s->ecc_cfg = 0x3fcff000;
+-    for (i = 0; i < 9; i ++)
+-        ecc_reset(&s->ecc[i]);
+-}
+-
+-static int gpmc_wordaccess_only(hwaddr addr)
+-{
+-    /* Return true if the register offset is to a register that
+-     * only permits word width accesses.
+-     * Non-word accesses are only OK for GPMC_NAND_DATA/ADDRESS/COMMAND
+-     * for any chipselect.
+-     */
+-    if (addr >= 0x60 && addr <= 0x1d4) {
+-        int cs = (addr - 0x60) / 0x30;
+-        addr -= cs * 0x30;
+-        if (addr >= 0x7c && addr < 0x88) {
+-            /* GPMC_NAND_COMMAND, GPMC_NAND_ADDRESS, GPMC_NAND_DATA */
+-            return 0;
+-        }
+-    }
+-    return 1;
+-}
+-
+-static uint64_t omap_gpmc_read(void *opaque, hwaddr addr,
+-                               unsigned size)
+-{
+-    struct omap_gpmc_s *s = opaque;
+-    int cs;
+-    struct omap_gpmc_cs_file_s *f;
+-
+-    if (size != 4 && gpmc_wordaccess_only(addr)) {
+-        return omap_badwidth_read32(opaque, addr);
+-    }
 -
 -    switch (addr) {
--    case MENELAUS_REV:
--        return 0x22;
+-    case 0x000:	/* GPMC_REVISION */
+-        return s->revision;
 -
--    case MENELAUS_VCORE_CTRL1 ... MENELAUS_VCORE_CTRL5:
--        return s->vcore[addr - MENELAUS_VCORE_CTRL1];
+-    case 0x010:	/* GPMC_SYSCONFIG */
+-        return s->sysconfig;
 -
--    case MENELAUS_DCDC_CTRL1 ... MENELAUS_DCDC_CTRL3:
--        return s->dcdc[addr - MENELAUS_DCDC_CTRL1];
+-    case 0x014:	/* GPMC_SYSSTATUS */
+-        return 1;						/* RESETDONE */
 -
--    case MENELAUS_LDO_CTRL1 ... MENELAUS_LDO_CTRL8:
--        return s->ldo[addr - MENELAUS_LDO_CTRL1];
+-    case 0x018:	/* GPMC_IRQSTATUS */
+-        return s->irqst;
 -
--    case MENELAUS_SLEEP_CTRL1:
--    case MENELAUS_SLEEP_CTRL2:
--        return s->sleep[addr - MENELAUS_SLEEP_CTRL1];
+-    case 0x01c:	/* GPMC_IRQENABLE */
+-        return s->irqen;
 -
--    case MENELAUS_DEVICE_OFF:
+-    case 0x040:	/* GPMC_TIMEOUT_CONTROL */
+-        return s->timeout;
+-
+-    case 0x044:	/* GPMC_ERR_ADDRESS */
+-    case 0x048:	/* GPMC_ERR_TYPE */
 -        return 0;
 -
--    case MENELAUS_OSC_CTRL:
--        return s->osc | (1 << 7);           /* CLK32K_GOOD */
+-    case 0x050:	/* GPMC_CONFIG */
+-        return s->config;
 -
--    case MENELAUS_DETECT_CTRL:
--        return s->detect;
+-    case 0x054:	/* GPMC_STATUS */
+-        return 0x001;
 -
--    case MENELAUS_INT_MASK1:
--        return (s->mask >> 0) & 0xff;
--    case MENELAUS_INT_MASK2:
--        return (s->mask >> 8) & 0xff;
--
--    case MENELAUS_INT_STATUS1:
--        return (s->status >> 0) & 0xff;
--    case MENELAUS_INT_STATUS2:
--        return (s->status >> 8) & 0xff;
--
--    case MENELAUS_INT_ACK1:
--    case MENELAUS_INT_ACK2:
--        return 0;
--
--    case MENELAUS_GPIO_CTRL:
--        return s->dir;
--    case MENELAUS_GPIO_IN:
--        return s->inputs | (~s->dir & s->outputs);
--    case MENELAUS_GPIO_OUT:
--        return s->outputs;
--
--    case MENELAUS_BBSMS:
--        return s->bbsms;
--
--    case MENELAUS_RTC_CTRL:
--        return s->rtc.ctrl;
--    case MENELAUS_RTC_UPDATE:
--        return 0x00;
--    case MENELAUS_RTC_SEC:
--        menelaus_rtc_update(s);
--        return to_bcd(s->rtc.tm.tm_sec);
--    case MENELAUS_RTC_MIN:
--        menelaus_rtc_update(s);
--        return to_bcd(s->rtc.tm.tm_min);
--    case MENELAUS_RTC_HR:
--        menelaus_rtc_update(s);
--        if ((s->rtc.ctrl >> 2) & 1)         /* MODE12_n24 */
--            return to_bcd((s->rtc.tm.tm_hour % 12) + 1) |
--                    (!!(s->rtc.tm.tm_hour >= 12) << 7); /* PM_nAM */
--        else
--            return to_bcd(s->rtc.tm.tm_hour);
--    case MENELAUS_RTC_DAY:
--        menelaus_rtc_update(s);
--        return to_bcd(s->rtc.tm.tm_mday);
--    case MENELAUS_RTC_MON:
--        menelaus_rtc_update(s);
--        return to_bcd(s->rtc.tm.tm_mon + 1);
--    case MENELAUS_RTC_YR:
--        menelaus_rtc_update(s);
--        return to_bcd(s->rtc.tm.tm_year - 2000);
--    case MENELAUS_RTC_WKDAY:
--        menelaus_rtc_update(s);
--        return to_bcd(s->rtc.tm.tm_wday);
--    case MENELAUS_RTC_AL_SEC:
--        return to_bcd(s->rtc.alm.tm_sec);
--    case MENELAUS_RTC_AL_MIN:
--        return to_bcd(s->rtc.alm.tm_min);
--    case MENELAUS_RTC_AL_HR:
--        if ((s->rtc.ctrl >> 2) & 1)         /* MODE12_n24 */
--            return to_bcd((s->rtc.alm.tm_hour % 12) + 1) |
--                    (!!(s->rtc.alm.tm_hour >= 12) << 7);/* AL_PM_nAM */
--        else
--            return to_bcd(s->rtc.alm.tm_hour);
--    case MENELAUS_RTC_AL_DAY:
--        return to_bcd(s->rtc.alm.tm_mday);
--    case MENELAUS_RTC_AL_MON:
--        return to_bcd(s->rtc.alm.tm_mon + 1);
--    case MENELAUS_RTC_AL_YR:
--        return to_bcd(s->rtc.alm.tm_year - 2000);
--    case MENELAUS_RTC_COMP_MSB:
--        return (s->rtc.comp >> 8) & 0xff;
--    case MENELAUS_RTC_COMP_LSB:
--        return (s->rtc.comp >> 0) & 0xff;
--
--    case MENELAUS_S1_PULL_EN:
--        return s->pull[0];
--    case MENELAUS_S1_PULL_DIR:
--        return s->pull[1];
--    case MENELAUS_S2_PULL_EN:
--        return s->pull[2];
--    case MENELAUS_S2_PULL_DIR:
--        return s->pull[3];
--
--    case MENELAUS_MCT_CTRL1 ... MENELAUS_MCT_CTRL3:
--        return s->mmc_ctrl[addr - MENELAUS_MCT_CTRL1];
--    case MENELAUS_MCT_PIN_ST:
--        /* TODO: return the real Card Detect */
--        return 0;
--    case MENELAUS_DEBOUNCE1:
--        return s->mmc_debounce;
--
--    default:
--#ifdef VERBOSE
--        printf("%s: unknown register %02x\n", __func__, addr);
--#endif
+-    case 0x060 ... 0x1d4:
+-        cs = (addr - 0x060) / 0x30;
+-        addr -= cs * 0x30;
+-        f = s->cs_file + cs;
+-        switch (addr) {
+-        case 0x60:      /* GPMC_CONFIG1 */
+-            return f->config[0];
+-        case 0x64:      /* GPMC_CONFIG2 */
+-            return f->config[1];
+-        case 0x68:      /* GPMC_CONFIG3 */
+-            return f->config[2];
+-        case 0x6c:      /* GPMC_CONFIG4 */
+-            return f->config[3];
+-        case 0x70:      /* GPMC_CONFIG5 */
+-            return f->config[4];
+-        case 0x74:      /* GPMC_CONFIG6 */
+-            return f->config[5];
+-        case 0x78:      /* GPMC_CONFIG7 */
+-            return f->config[6];
+-        case 0x84 ... 0x87: /* GPMC_NAND_DATA */
+-            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
+-                return omap_nand_read(f, 0, size);
+-            }
+-            return 0;
+-        }
 -        break;
+-
+-    case 0x1e0:	/* GPMC_PREFETCH_CONFIG1 */
+-        return s->prefetch.config1;
+-    case 0x1e4:	/* GPMC_PREFETCH_CONFIG2 */
+-        return s->prefetch.transfercount;
+-    case 0x1ec:	/* GPMC_PREFETCH_CONTROL */
+-        return s->prefetch.startengine;
+-    case 0x1f0:	/* GPMC_PREFETCH_STATUS */
+-        /* NB: The OMAP3 TRM is inconsistent about whether the GPMC
+-         * FIFOTHRESHOLDSTATUS bit should be set when
+-         * FIFOPOINTER > FIFOTHRESHOLD or when it is >= FIFOTHRESHOLD.
+-         * Apparently the underlying functional spec from which the TRM was
+-         * created states that the behaviour is ">=", and this also
+-         * makes more conceptual sense.
+-         */
+-        return (s->prefetch.fifopointer << 24) |
+-                ((s->prefetch.fifopointer >=
+-                  ((s->prefetch.config1 >> 8) & 0x7f) ? 1 : 0) << 16) |
+-                s->prefetch.count;
+-
+-    case 0x1f4:	/* GPMC_ECC_CONFIG */
+-        return s->ecc_cs;
+-    case 0x1f8:	/* GPMC_ECC_CONTROL */
+-        return s->ecc_ptr;
+-    case 0x1fc:	/* GPMC_ECC_SIZE_CONFIG */
+-        return s->ecc_cfg;
+-    case 0x200 ... 0x220:	/* GPMC_ECC_RESULT */
+-        cs = (addr & 0x1f) >> 2;
+-        /* TODO: check correctness */
+-        return
+-                ((s->ecc[cs].cp    &  0x07) <<  0) |
+-                ((s->ecc[cs].cp    &  0x38) << 13) |
+-                ((s->ecc[cs].lp[0] & 0x1ff) <<  3) |
+-                ((s->ecc[cs].lp[1] & 0x1ff) << 19);
+-
+-    case 0x230:	/* GPMC_TESTMODE_CTRL */
+-        return 0;
+-    case 0x234:	/* GPMC_PSA_LSB */
+-    case 0x238:	/* GPMC_PSA_MSB */
+-        return 0x00000000;
 -    }
+-
+-    OMAP_BAD_REG(addr);
 -    return 0;
 -}
 -
--static void menelaus_write(void *opaque, uint8_t addr, uint8_t value)
+-static void omap_gpmc_write(void *opaque, hwaddr addr,
+-                            uint64_t value, unsigned size)
 -{
--    MenelausState *s = (MenelausState *) opaque;
--    int line;
--    struct tm tm;
+-    struct omap_gpmc_s *s = opaque;
+-    int cs;
+-    struct omap_gpmc_cs_file_s *f;
+-
+-    if (size != 4 && gpmc_wordaccess_only(addr)) {
+-        omap_badwidth_write32(opaque, addr, value);
+-        return;
+-    }
 -
 -    switch (addr) {
--    case MENELAUS_VCORE_CTRL1:
--        s->vcore[0] = (value & 0xe) | MIN(value & 0x1f, 0x12);
--        break;
--    case MENELAUS_VCORE_CTRL2:
--        s->vcore[1] = value;
--        break;
--    case MENELAUS_VCORE_CTRL3:
--        s->vcore[2] = MIN(value & 0x1f, 0x12);
--        break;
--    case MENELAUS_VCORE_CTRL4:
--        s->vcore[3] = MIN(value & 0x1f, 0x12);
--        break;
--    case MENELAUS_VCORE_CTRL5:
--        s->vcore[4] = value & 3;
--        /* XXX
--         * auto set to 3 on M_Active, nRESWARM
--         * auto set to 0 on M_WaitOn, M_Backup
--         */
+-    case 0x000:	/* GPMC_REVISION */
+-    case 0x014:	/* GPMC_SYSSTATUS */
+-    case 0x054:	/* GPMC_STATUS */
+-    case 0x1f0:	/* GPMC_PREFETCH_STATUS */
+-    case 0x200 ... 0x220:	/* GPMC_ECC_RESULT */
+-    case 0x234:	/* GPMC_PSA_LSB */
+-    case 0x238:	/* GPMC_PSA_MSB */
+-        OMAP_RO_REG(addr);
 -        break;
 -
--    case MENELAUS_DCDC_CTRL1:
--        s->dcdc[0] = value & 0x3f;
--        break;
--    case MENELAUS_DCDC_CTRL2:
--        s->dcdc[1] = value & 0x07;
--        /* XXX
--         * auto set to 3 on M_Active, nRESWARM
--         * auto set to 0 on M_WaitOn, M_Backup
--         */
--        break;
--    case MENELAUS_DCDC_CTRL3:
--        s->dcdc[2] = value & 0x07;
+-    case 0x010:	/* GPMC_SYSCONFIG */
+-        if ((value >> 3) == 0x3)
+-            fprintf(stderr, "%s: bad SDRAM idle mode %"PRIi64"\n",
+-                            __func__, value >> 3);
+-        if (value & 2)
+-            omap_gpmc_reset(s);
+-        s->sysconfig = value & 0x19;
 -        break;
 -
--    case MENELAUS_LDO_CTRL1:
--        s->ldo[0] = value;
--        break;
--    case MENELAUS_LDO_CTRL2:
--        s->ldo[1] = value & 0x7f;
--        /* XXX
--         * auto set to 0x7e on M_WaitOn, M_Backup
--         */
--        break;
--    case MENELAUS_LDO_CTRL3:
--        s->ldo[2] = value & 3;
--        /* XXX
--         * auto set to 3 on M_Active, nRESWARM
--         * auto set to 0 on M_WaitOn, M_Backup
--         */
--        break;
--    case MENELAUS_LDO_CTRL4:
--        s->ldo[3] = value & 3;
--        /* XXX
--         * auto set to 3 on M_Active, nRESWARM
--         * auto set to 0 on M_WaitOn, M_Backup
--         */
--        break;
--    case MENELAUS_LDO_CTRL5:
--        s->ldo[4] = value & 3;
--        /* XXX
--         * auto set to 3 on M_Active, nRESWARM
--         * auto set to 0 on M_WaitOn, M_Backup
--         */
--        break;
--    case MENELAUS_LDO_CTRL6:
--        s->ldo[5] = value & 3;
--        break;
--    case MENELAUS_LDO_CTRL7:
--        s->ldo[6] = value & 3;
--        break;
--    case MENELAUS_LDO_CTRL8:
--        s->ldo[7] = value & 3;
+-    case 0x018:	/* GPMC_IRQSTATUS */
+-        s->irqst &= ~value;
+-        omap_gpmc_int_update(s);
 -        break;
 -
--    case MENELAUS_SLEEP_CTRL1:
--    case MENELAUS_SLEEP_CTRL2:
--        s->sleep[addr - MENELAUS_SLEEP_CTRL1] = value;
+-    case 0x01c:	/* GPMC_IRQENABLE */
+-        s->irqen = value & 0xf03;
+-        omap_gpmc_int_update(s);
 -        break;
 -
--    case MENELAUS_DEVICE_OFF:
--        if (value & 1) {
--            menelaus_reset(I2C_SLAVE(s));
--        }
+-    case 0x040:	/* GPMC_TIMEOUT_CONTROL */
+-        s->timeout = value & 0x1ff1;
 -        break;
 -
--    case MENELAUS_OSC_CTRL:
--        s->osc = value & 7;
+-    case 0x044:	/* GPMC_ERR_ADDRESS */
+-    case 0x048:	/* GPMC_ERR_TYPE */
 -        break;
 -
--    case MENELAUS_DETECT_CTRL:
--        s->detect = value & 0x7f;
+-    case 0x050:	/* GPMC_CONFIG */
+-        s->config = value & 0xf13;
 -        break;
 -
--    case MENELAUS_INT_MASK1:
--        s->mask &= 0xf00;
--        s->mask |= value << 0;
--        menelaus_update(s);
--        break;
--    case MENELAUS_INT_MASK2:
--        s->mask &= 0x0ff;
--        s->mask |= value << 8;
--        menelaus_update(s);
--        break;
--
--    case MENELAUS_INT_ACK1:
--        s->status &= ~(((uint16_t) value) << 0);
--        menelaus_update(s);
--        break;
--    case MENELAUS_INT_ACK2:
--        s->status &= ~(((uint16_t) value) << 8);
--        menelaus_update(s);
--        break;
--
--    case MENELAUS_GPIO_CTRL:
--        for (line = 0; line < 3; line ++) {
--            if (((s->dir ^ value) >> line) & 1) {
--                qemu_set_irq(s->out[line],
--                             ((s->outputs & ~s->dir) >> line) & 1);
+-    case 0x060 ... 0x1d4:
+-        cs = (addr - 0x060) / 0x30;
+-        addr -= cs * 0x30;
+-        f = s->cs_file + cs;
+-        switch (addr) {
+-        case 0x60:      /* GPMC_CONFIG1 */
+-            f->config[0] = value & 0xffef3e13;
+-            break;
+-        case 0x64:      /* GPMC_CONFIG2 */
+-            f->config[1] = value & 0x001f1f8f;
+-            break;
+-        case 0x68:      /* GPMC_CONFIG3 */
+-            f->config[2] = value & 0x001f1f8f;
+-            break;
+-        case 0x6c:      /* GPMC_CONFIG4 */
+-            f->config[3] = value & 0x1f8f1f8f;
+-            break;
+-        case 0x70:      /* GPMC_CONFIG5 */
+-            f->config[4] = value & 0x0f1f1f1f;
+-            break;
+-        case 0x74:      /* GPMC_CONFIG6 */
+-            f->config[5] = value & 0x00000fcf;
+-            break;
+-        case 0x78:      /* GPMC_CONFIG7 */
+-            if ((f->config[6] ^ value) & 0xf7f) {
+-                omap_gpmc_cs_unmap(s, cs);
+-                f->config[6] = value & 0x00000f7f;
+-                omap_gpmc_cs_map(s, cs);
 -            }
--        }
--        s->dir = value & 0x67;
--        break;
--    case MENELAUS_GPIO_OUT:
--        for (line = 0; line < 3; line ++) {
--            if ((((s->outputs ^ value) & ~s->dir) >> line) & 1) {
--                qemu_set_irq(s->out[line], (s->outputs >> line) & 1);
+-            break;
+-        case 0x7c ... 0x7f: /* GPMC_NAND_COMMAND */
+-            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
+-                nand_setpins(f->dev, 1, 0, 0, 1, 0); /* CLE */
+-                omap_nand_setio(f->dev, value, omap_gpmc_devsize(f), size);
 -            }
--        }
--        s->outputs = value & 0x07;
--        break;
--
--    case MENELAUS_BBSMS:
--        s->bbsms = 0x0d;
--        break;
--
--    case MENELAUS_RTC_CTRL:
--        if ((s->rtc.ctrl ^ value) & 1) {    /* RTC_EN */
--            if (value & 1)
--                menelaus_rtc_start(s);
--            else
--                menelaus_rtc_stop(s);
--        }
--        s->rtc.ctrl = value & 0x1f;
--        menelaus_alm_update(s);
--        break;
--    case MENELAUS_RTC_UPDATE:
--        menelaus_rtc_update(s);
--        memcpy(&tm, &s->rtc.tm, sizeof(tm));
--        switch (value & 0xf) {
--        case 0:
 -            break;
--        case 1:
--            tm.tm_sec = s->rtc.new.tm_sec;
+-        case 0x80 ... 0x83: /* GPMC_NAND_ADDRESS */
+-            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
+-                nand_setpins(f->dev, 0, 1, 0, 1, 0); /* ALE */
+-                omap_nand_setio(f->dev, value, omap_gpmc_devsize(f), size);
+-            }
 -            break;
--        case 2:
--            tm.tm_min = s->rtc.new.tm_min;
+-        case 0x84 ... 0x87: /* GPMC_NAND_DATA */
+-            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
+-                omap_nand_write(f, 0, value, size);
+-            }
 -            break;
--        case 3:
--            if (s->rtc.new.tm_hour > 23)
--                goto rtc_badness;
--            tm.tm_hour = s->rtc.new.tm_hour;
--            break;
--        case 4:
--            if (s->rtc.new.tm_mday < 1)
--                goto rtc_badness;
--            /* TODO check range */
--            tm.tm_mday = s->rtc.new.tm_mday;
--            break;
--        case 5:
--            if (s->rtc.new.tm_mon < 0 || s->rtc.new.tm_mon > 11)
--                goto rtc_badness;
--            tm.tm_mon = s->rtc.new.tm_mon;
--            break;
--        case 6:
--            tm.tm_year = s->rtc.new.tm_year;
--            break;
--        case 7:
--            /* TODO set .tm_mday instead */
--            tm.tm_wday = s->rtc.new.tm_wday;
--            break;
--        case 8:
--            if (s->rtc.new.tm_hour > 23)
--                goto rtc_badness;
--            if (s->rtc.new.tm_mday < 1)
--                goto rtc_badness;
--            if (s->rtc.new.tm_mon < 0 || s->rtc.new.tm_mon > 11)
--                goto rtc_badness;
--            tm.tm_sec = s->rtc.new.tm_sec;
--            tm.tm_min = s->rtc.new.tm_min;
--            tm.tm_hour = s->rtc.new.tm_hour;
--            tm.tm_mday = s->rtc.new.tm_mday;
--            tm.tm_mon = s->rtc.new.tm_mon;
--            tm.tm_year = s->rtc.new.tm_year;
--            break;
--        rtc_badness:
 -        default:
--            fprintf(stderr, "%s: bad RTC_UPDATE value %02x\n",
--                            __func__, value);
--            s->status |= 1 << 10;           /* RTCERR */
--            menelaus_update(s);
+-            goto bad_reg;
 -        }
--        s->rtc.sec_offset = qemu_timedate_diff(&tm);
--        break;
--    case MENELAUS_RTC_SEC:
--        s->rtc.tm.tm_sec = from_bcd(value & 0x7f);
--        break;
--    case MENELAUS_RTC_MIN:
--        s->rtc.tm.tm_min = from_bcd(value & 0x7f);
--        break;
--    case MENELAUS_RTC_HR:
--        s->rtc.tm.tm_hour = (s->rtc.ctrl & (1 << 2)) ?  /* MODE12_n24 */
--                MIN(from_bcd(value & 0x3f), 12) + ((value >> 7) ? 11 : -1) :
--                from_bcd(value & 0x3f);
--        break;
--    case MENELAUS_RTC_DAY:
--        s->rtc.tm.tm_mday = from_bcd(value);
--        break;
--    case MENELAUS_RTC_MON:
--        s->rtc.tm.tm_mon = MAX(1, from_bcd(value)) - 1;
--        break;
--    case MENELAUS_RTC_YR:
--        s->rtc.tm.tm_year = 2000 + from_bcd(value);
--        break;
--    case MENELAUS_RTC_WKDAY:
--        s->rtc.tm.tm_mday = from_bcd(value);
--        break;
--    case MENELAUS_RTC_AL_SEC:
--        s->rtc.alm.tm_sec = from_bcd(value & 0x7f);
--        menelaus_alm_update(s);
--        break;
--    case MENELAUS_RTC_AL_MIN:
--        s->rtc.alm.tm_min = from_bcd(value & 0x7f);
--        menelaus_alm_update(s);
--        break;
--    case MENELAUS_RTC_AL_HR:
--        s->rtc.alm.tm_hour = (s->rtc.ctrl & (1 << 2)) ? /* MODE12_n24 */
--                MIN(from_bcd(value & 0x3f), 12) + ((value >> 7) ? 11 : -1) :
--                from_bcd(value & 0x3f);
--        menelaus_alm_update(s);
--        break;
--    case MENELAUS_RTC_AL_DAY:
--        s->rtc.alm.tm_mday = from_bcd(value);
--        menelaus_alm_update(s);
--        break;
--    case MENELAUS_RTC_AL_MON:
--        s->rtc.alm.tm_mon = MAX(1, from_bcd(value)) - 1;
--        menelaus_alm_update(s);
--        break;
--    case MENELAUS_RTC_AL_YR:
--        s->rtc.alm.tm_year = 2000 + from_bcd(value);
--        menelaus_alm_update(s);
--        break;
--    case MENELAUS_RTC_COMP_MSB:
--        s->rtc.comp &= 0xff;
--        s->rtc.comp |= value << 8;
--        break;
--    case MENELAUS_RTC_COMP_LSB:
--        s->rtc.comp &= 0xff << 8;
--        s->rtc.comp |= value;
 -        break;
 -
--    case MENELAUS_S1_PULL_EN:
--        s->pull[0] = value;
--        break;
--    case MENELAUS_S1_PULL_DIR:
--        s->pull[1] = value & 0x1f;
--        break;
--    case MENELAUS_S2_PULL_EN:
--        s->pull[2] = value;
--        break;
--    case MENELAUS_S2_PULL_DIR:
--        s->pull[3] = value & 0x1f;
+-    case 0x1e0:	/* GPMC_PREFETCH_CONFIG1 */
+-        if (!s->prefetch.startengine) {
+-            uint32_t newconfig1 = value & 0x7f8f7fbf;
+-            uint32_t changed;
+-            changed = newconfig1 ^ s->prefetch.config1;
+-            if (changed & (0x80 | 0x7000000)) {
+-                /* Turning the engine on or off, or mapping it somewhere else.
+-                 * cs_map() and cs_unmap() check the prefetch config and
+-                 * overall CSVALID bits, so it is sufficient to unmap-and-map
+-                 * both the old cs and the new one. Note that we adhere to
+-                 * the "unmap/change config/map" order (and not unmap twice
+-                 * if newcs == oldcs), otherwise we'll try to delete the wrong
+-                 * memory region.
+-                 */
+-                int oldcs = prefetch_cs(s->prefetch.config1);
+-                int newcs = prefetch_cs(newconfig1);
+-                omap_gpmc_cs_unmap(s, oldcs);
+-                if (oldcs != newcs) {
+-                    omap_gpmc_cs_unmap(s, newcs);
+-                }
+-                s->prefetch.config1 = newconfig1;
+-                omap_gpmc_cs_map(s, oldcs);
+-                if (oldcs != newcs) {
+-                    omap_gpmc_cs_map(s, newcs);
+-                }
+-            } else {
+-                s->prefetch.config1 = newconfig1;
+-            }
+-        }
 -        break;
 -
--    case MENELAUS_MCT_CTRL1:
--        s->mmc_ctrl[0] = value & 0x7f;
+-    case 0x1e4:	/* GPMC_PREFETCH_CONFIG2 */
+-        if (!s->prefetch.startengine) {
+-            s->prefetch.transfercount = value & 0x3fff;
+-        }
 -        break;
--    case MENELAUS_MCT_CTRL2:
--        s->mmc_ctrl[1] = value;
--        /* TODO update Card Detect interrupts */
+-
+-    case 0x1ec:	/* GPMC_PREFETCH_CONTROL */
+-        if (s->prefetch.startengine != (value & 1)) {
+-            s->prefetch.startengine = value & 1;
+-            if (s->prefetch.startengine) {
+-                /* Prefetch engine start */
+-                s->prefetch.count = s->prefetch.transfercount;
+-                if (s->prefetch.config1 & 1) {
+-                    /* Write */
+-                    s->prefetch.fifopointer = 64;
+-                } else {
+-                    /* Read */
+-                    s->prefetch.fifopointer = 0;
+-                    fill_prefetch_fifo(s);
+-                }
+-            } else {
+-                /* Prefetch engine forcibly stopped. The TRM
+-                 * doesn't define the behaviour if you do this.
+-                 * We clear the prefetch count, which means that
+-                 * we permit no more writes, and don't read any
+-                 * more data from NAND. The CPU can still drain
+-                 * the FIFO of unread data.
+-                 */
+-                s->prefetch.count = 0;
+-            }
+-            omap_gpmc_int_update(s);
+-        }
 -        break;
--    case MENELAUS_MCT_CTRL3:
--        s->mmc_ctrl[2] = value & 0xf;
+-
+-    case 0x1f4:	/* GPMC_ECC_CONFIG */
+-        s->ecc_cs = 0x8f;
 -        break;
--    case MENELAUS_DEBOUNCE1:
--        s->mmc_debounce = value & 0x3f;
+-    case 0x1f8:	/* GPMC_ECC_CONTROL */
+-        if (value & (1 << 8))
+-            for (cs = 0; cs < 9; cs ++)
+-                ecc_reset(&s->ecc[cs]);
+-        s->ecc_ptr = value & 0xf;
+-        if (s->ecc_ptr == 0 || s->ecc_ptr > 9) {
+-            s->ecc_ptr = 0;
+-            s->ecc_cs &= ~1;
+-        }
+-        break;
+-    case 0x1fc:	/* GPMC_ECC_SIZE_CONFIG */
+-        s->ecc_cfg = value & 0x3fcff1ff;
+-        break;
+-    case 0x230:	/* GPMC_TESTMODE_CTRL */
+-        if (value & 7)
+-            fprintf(stderr, "%s: test mode enable attempt\n", __func__);
 -        break;
 -
 -    default:
--#ifdef VERBOSE
--        printf("%s: unknown register %02x\n", __func__, addr);
--#endif
--        break;
+-    bad_reg:
+-        OMAP_BAD_REG(addr);
+-        return;
 -    }
 -}
 -
--static int menelaus_event(I2CSlave *i2c, enum i2c_event event)
--{
--    MenelausState *s = TWL92230(i2c);
--
--    if (event == I2C_START_SEND)
--        s->firstbyte = 1;
--
--    return 0;
--}
--
--static int menelaus_tx(I2CSlave *i2c, uint8_t data)
--{
--    MenelausState *s = TWL92230(i2c);
--
--    /* Interpret register address byte */
--    if (s->firstbyte) {
--        s->reg = data;
--        s->firstbyte = 0;
--    } else
--        menelaus_write(s, s->reg ++, data);
--
--    return 0;
--}
--
--static uint8_t menelaus_rx(I2CSlave *i2c)
--{
--    MenelausState *s = TWL92230(i2c);
--
--    return menelaus_read(s, s->reg ++);
--}
--
--/* Save restore 32 bit int as uint16_t
--   This is a Big hack, but it is how the old state did it.
--   Or we broke compatibility in the state, or we can't use struct tm
-- */
--
--static int get_int32_as_uint16(QEMUFile *f, void *pv, size_t size,
--                               const VMStateField *field)
--{
--    int *v = pv;
--    *v = qemu_get_be16(f);
--    return 0;
--}
--
--static int put_int32_as_uint16(QEMUFile *f, void *pv, size_t size,
--                               const VMStateField *field, JSONWriter *vmdesc)
--{
--    int *v = pv;
--    qemu_put_be16(f, *v);
--
--    return 0;
--}
--
--static const VMStateInfo vmstate_hack_int32_as_uint16 = {
--    .name = "int32_as_uint16",
--    .get  = get_int32_as_uint16,
--    .put  = put_int32_as_uint16,
+-static const MemoryRegionOps omap_gpmc_ops = {
+-    .read = omap_gpmc_read,
+-    .write = omap_gpmc_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
 -};
 -
--#define VMSTATE_UINT16_HACK(_f, _s)                                  \
--    VMSTATE_SINGLE(_f, _s, 0, vmstate_hack_int32_as_uint16, int32_t)
+-struct omap_gpmc_s *omap_gpmc_init(struct omap_mpu_state_s *mpu,
+-                                   hwaddr base,
+-                                   qemu_irq irq, qemu_irq drq)
+-{
+-    int cs;
+-    struct omap_gpmc_s *s = g_new0(struct omap_gpmc_s, 1);
 -
+-    memory_region_init_io(&s->iomem, NULL, &omap_gpmc_ops, s, "omap-gpmc", 0x1000);
+-    memory_region_add_subregion(get_system_memory(), base, &s->iomem);
 -
--static const VMStateDescription vmstate_menelaus_tm = {
--    .name = "menelaus_tm",
--    .version_id = 0,
--    .minimum_version_id = 0,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT16_HACK(tm_sec, struct tm),
--        VMSTATE_UINT16_HACK(tm_min, struct tm),
--        VMSTATE_UINT16_HACK(tm_hour, struct tm),
--        VMSTATE_UINT16_HACK(tm_mday, struct tm),
--        VMSTATE_UINT16_HACK(tm_min, struct tm),
--        VMSTATE_UINT16_HACK(tm_year, struct tm),
--        VMSTATE_END_OF_LIST()
+-    s->irq = irq;
+-    s->drq = drq;
+-    s->accept_256 = cpu_is_omap3630(mpu);
+-    s->revision = cpu_class_omap3(mpu) ? 0x50 : 0x20;
+-    s->lastirq = 0;
+-    omap_gpmc_reset(s);
+-
+-    /* We have to register a different IO memory handler for each
+-     * chip select region in case a NAND device is mapped there. We
+-     * make the region the worst-case size of 256MB and rely on the
+-     * container memory region in cs_map to chop it down to the actual
+-     * guest-requested size.
+-     */
+-    for (cs = 0; cs < 8; cs++) {
+-        memory_region_init_io(&s->cs_file[cs].nandiomem, NULL,
+-                              &omap_nand_ops,
+-                              &s->cs_file[cs],
+-                              "omap-nand",
+-                              256 * 1024 * 1024);
 -    }
--};
 -
--static int menelaus_pre_save(void *opaque)
--{
--    MenelausState *s = opaque;
--    /* Should be <= 1000 */
--    s->rtc_next_vmstate =  s->rtc.next - qemu_clock_get_ms(rtc_clock);
--
--    return 0;
+-    memory_region_init_io(&s->prefetch.iomem, NULL, &omap_prefetch_ops, s,
+-                          "omap-gpmc-prefetch", 256 * 1024 * 1024);
+-    return s;
 -}
 -
--static int menelaus_post_load(void *opaque, int version_id)
+-void omap_gpmc_attach(struct omap_gpmc_s *s, int cs, MemoryRegion *iomem)
 -{
--    MenelausState *s = opaque;
+-    struct omap_gpmc_cs_file_s *f;
+-    assert(iomem);
 -
--    if (s->rtc.ctrl & 1)                    /* RTC_EN */
--        menelaus_rtc_stop(s);
--
--    s->rtc.next = s->rtc_next_vmstate;
--
--    menelaus_alm_update(s);
--    menelaus_update(s);
--    if (s->rtc.ctrl & 1)                    /* RTC_EN */
--        menelaus_rtc_start(s);
--    return 0;
--}
--
--static const VMStateDescription vmstate_menelaus = {
--    .name = "menelaus",
--    .version_id = 0,
--    .minimum_version_id = 0,
--    .pre_save = menelaus_pre_save,
--    .post_load = menelaus_post_load,
--    .fields = (const VMStateField[]) {
--        VMSTATE_INT32(firstbyte, MenelausState),
--        VMSTATE_UINT8(reg, MenelausState),
--        VMSTATE_UINT8_ARRAY(vcore, MenelausState, 5),
--        VMSTATE_UINT8_ARRAY(dcdc, MenelausState, 3),
--        VMSTATE_UINT8_ARRAY(ldo, MenelausState, 8),
--        VMSTATE_UINT8_ARRAY(sleep, MenelausState, 2),
--        VMSTATE_UINT8(osc, MenelausState),
--        VMSTATE_UINT8(detect, MenelausState),
--        VMSTATE_UINT16(mask, MenelausState),
--        VMSTATE_UINT16(status, MenelausState),
--        VMSTATE_UINT8(dir, MenelausState),
--        VMSTATE_UINT8(inputs, MenelausState),
--        VMSTATE_UINT8(outputs, MenelausState),
--        VMSTATE_UINT8(bbsms, MenelausState),
--        VMSTATE_UINT8_ARRAY(pull, MenelausState, 4),
--        VMSTATE_UINT8_ARRAY(mmc_ctrl, MenelausState, 3),
--        VMSTATE_UINT8(mmc_debounce, MenelausState),
--        VMSTATE_UINT8(rtc.ctrl, MenelausState),
--        VMSTATE_UINT16(rtc.comp, MenelausState),
--        VMSTATE_UINT16(rtc_next_vmstate, MenelausState),
--        VMSTATE_STRUCT(rtc.new, MenelausState, 0, vmstate_menelaus_tm,
--                       struct tm),
--        VMSTATE_STRUCT(rtc.alm, MenelausState, 0, vmstate_menelaus_tm,
--                       struct tm),
--        VMSTATE_UINT8(pwrbtn_state, MenelausState),
--        VMSTATE_I2C_SLAVE(parent_obj, MenelausState),
--        VMSTATE_END_OF_LIST()
+-    if (cs < 0 || cs >= 8) {
+-        fprintf(stderr, "%s: bad chip-select %i\n", __func__, cs);
+-        exit(-1);
 -    }
--};
+-    f = &s->cs_file[cs];
 -
--static void twl92230_realize(DeviceState *dev, Error **errp)
--{
--    MenelausState *s = TWL92230(dev);
--
--    s->rtc.hz_tm = timer_new_ms(rtc_clock, menelaus_rtc_hz, s);
--    /* Three output pins plus one interrupt pin.  */
--    qdev_init_gpio_out(dev, s->out, 4);
--
--    /* Three input pins plus one power-button pin.  */
--    qdev_init_gpio_in(dev, menelaus_gpio_set, 4);
--
--    menelaus_reset(I2C_SLAVE(dev));
+-    omap_gpmc_cs_unmap(s, cs);
+-    f->config[0] &= ~(0xf << 10);
+-    f->iomem = iomem;
+-    omap_gpmc_cs_map(s, cs);
 -}
 -
--static void twl92230_class_init(ObjectClass *klass, void *data)
+-void omap_gpmc_attach_nand(struct omap_gpmc_s *s, int cs, DeviceState *nand)
 -{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    I2CSlaveClass *sc = I2C_SLAVE_CLASS(klass);
+-    struct omap_gpmc_cs_file_s *f;
+-    assert(nand);
 -
--    dc->realize = twl92230_realize;
--    sc->event = menelaus_event;
--    sc->recv = menelaus_rx;
--    sc->send = menelaus_tx;
--    dc->vmsd = &vmstate_menelaus;
+-    if (cs < 0 || cs >= 8) {
+-        fprintf(stderr, "%s: bad chip-select %i\n", __func__, cs);
+-        exit(-1);
+-    }
+-    f = &s->cs_file[cs];
+-
+-    omap_gpmc_cs_unmap(s, cs);
+-    f->config[0] &= ~(0xf << 10);
+-    f->config[0] |= (OMAP_GPMC_NAND << 10);
+-    f->dev = nand;
+-    if (nand_getbuswidth(f->dev) == 16) {
+-        f->config[0] |= OMAP_GPMC_16BIT << 12;
+-    }
+-    omap_gpmc_cs_map(s, cs);
 -}
--
--static const TypeInfo twl92230_info = {
--    .name          = TYPE_TWL92230,
--    .parent        = TYPE_I2C_SLAVE,
--    .instance_size = sizeof(MenelausState),
--    .class_init    = twl92230_class_init,
--};
--
--static void twl92230_register_types(void)
--{
--    type_register_static(&twl92230_info);
--}
--
--type_init(twl92230_register_types)
-diff --git a/hw/rtc/Kconfig b/hw/rtc/Kconfig
-index d0d8dda0840..2fe04ec1d04 100644
---- a/hw/rtc/Kconfig
-+++ b/hw/rtc/Kconfig
-@@ -14,10 +14,6 @@ config M48T59
- config PL031
-     bool
- 
--config TWL92230
--    bool
--    depends on I2C
--
- config MC146818RTC
-     depends on ISA_BUS
-     bool
-diff --git a/hw/rtc/meson.build b/hw/rtc/meson.build
-index 3ea2affe0b9..8ecc2d792c1 100644
---- a/hw/rtc/meson.build
-+++ b/hw/rtc/meson.build
-@@ -3,7 +3,6 @@ system_ss.add(when: 'CONFIG_DS1338', if_true: files('ds1338.c'))
- system_ss.add(when: 'CONFIG_M41T80', if_true: files('m41t80.c'))
- system_ss.add(when: 'CONFIG_M48T59', if_true: files('m48t59.c'))
- system_ss.add(when: 'CONFIG_PL031', if_true: files('pl031.c'))
--system_ss.add(when: 'CONFIG_TWL92230', if_true: files('twl92230.c'))
- system_ss.add(when: ['CONFIG_ISA_BUS', 'CONFIG_M48T59'], if_true: files('m48t59-isa.c'))
- system_ss.add(when: 'CONFIG_XLNX_ZYNQMP', if_true: files('xlnx-zynqmp-rtc.c'))
- 
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 7c9addbe68f..122084b1694 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -75,7 +75,6 @@ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+ ))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files(
+   'omap_clk.c',
+-  'omap_gpmc.c',
+   'omap_l4.c',
+   'omap_tap.c',
+ ))
 -- 
 2.34.1
 
