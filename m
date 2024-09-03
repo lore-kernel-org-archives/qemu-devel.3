@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B3ACD342E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 08:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEA4CD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 08:02:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slOSe-0006kG-Du; Tue, 03 Sep 2024 04:00:24 -0400
+	id 1slOTv-0007Qx-2V; Tue, 03 Sep 2024 04:01:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slOSc-0006ja-5o
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 04:00:22 -0400
+ id 1slOT6-0006xV-6t
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 04:00:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slOSZ-0004R8-2n
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 04:00:20 -0400
+ id 1slOT4-0004Vk-8e
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 04:00:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725350418;
+ s=mimecast20190719; t=1725350448;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=g9gMF5nZosX4YpZl1BMI7RIZtJmjwIKTODTm+IlxJgU=;
- b=XjQUp6qlmNFX2BnDUjDJks+RLlE9RPFD6CU4dmerU/HbY41Ip3VHRFXIG9bJyP4di9S+6/
- yVvGi2vup2bap+eJGy/yF+RZAFf3DqwIbiDFiQSSjM9jEZVsvpFaBCIqEXJgwlX91N0K6q
- jOHDYvt2+fkeIa1FZnk0q5U1CMH2hog=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VQgES2SHE5kJKblMfzziYGbwwaww6AKxF4Mqvc0CMjU=;
+ b=Hsdx1eo30iE1ncNNV9bB0TxE8b0V+Q9o0iwunQ9tVn/z2kZkBzqvkuzjs7zR25omGDAnjc
+ 87FXf7BkY2I+uFMH00ppIvwXdRjqiMz6DGOKA4fQAzpCSaVbp/6npk7I80w4dAk7tfOC65
+ xk54NRHOQ97MqFFkgDBY0crKcYIRfRI=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-6povwN8bMrK8TfCx3-aDgA-1; Tue, 03 Sep 2024 04:00:16 -0400
-X-MC-Unique: 6povwN8bMrK8TfCx3-aDgA-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2da511a99e1so995449a91.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 01:00:16 -0700 (PDT)
+ us-mta-621--ZRYfZFbPwS-ilZQCNw_FQ-1; Tue, 03 Sep 2024 04:00:47 -0400
+X-MC-Unique: -ZRYfZFbPwS-ilZQCNw_FQ-1
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2056364914eso15979955ad.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 01:00:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725350415; x=1725955215;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g9gMF5nZosX4YpZl1BMI7RIZtJmjwIKTODTm+IlxJgU=;
- b=oiNXqIfp2kBxaYKHEXcf/F4OHcudi2GfO3892SmDH6WwMtc0trjrgJ6wKS1b2Uhwca
- nrg0KNvlxAuGqTb90Rn/fOvRVqDVYL6Zjqt6k8mCZczOfgg6CrNkGp9ATh0DaH0BDc4U
- I7q1gL1YEXco5zn80E7Ci0wtcGs29aDnhJIDQDA0OEZm//S5G64YpJaEN5OiV/mqSsGd
- LfZZF+zYdLgtjrDBQtDqSBqCLYhF9qZ/7KRnC+ExLGSfp1ct6BR5npTwcMM6U6x8EKAx
- Yq37nOPzikuoutOkbBw9DSLqEOrM4oOw1TDTIGbGA/250Gn9IGy7AZBfpUZIYhLccrIO
- 64ag==
+ d=1e100.net; s=20230601; t=1725350446; x=1725955246;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VQgES2SHE5kJKblMfzziYGbwwaww6AKxF4Mqvc0CMjU=;
+ b=uhZhELCKbEYSI9odNeBLoVIQtsqOGVoBy/G8G4895p9uIx9OyzvM+cmVrXmSJUkkYm
+ wTZ87RRhiOldlCzxxRX1A5l/Iv522nCWWKDU/O16kSz5KfSbV2TCjXJxGIpipWgJimN4
+ HzW20bmkI5IopOV7fAGyqWvxlJ4qluRZ1d+lA/z340dGDsfpOj+FD5FP4ZdjD+vjGCbO
+ 47sKoXOdIxhCZ60GxHGnbQXztVubCFRAUCBLIadOgFOjuNaGleEpcdkvsG2zbIOGt9W2
+ tXKnGzggTXTSqyMrOzYUIyn6fHLVq/7qtdkWqwXDh4Cl1vq6kUYMd0lZlpi9uEahQcCb
+ lTrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZUTWTeOdOpteQyfkMuIy1n0UTQ99DIl8ZthcN+naYY5qSFoFOWIAn7UhL6l9mIX1j5bFyuduFtpHz@nongnu.org
-X-Gm-Message-State: AOJu0YywrSYos0sBKetNQ5v/bHYAsThiysid4ljvTOLIGDaeYpAmY0Gz
- iIX8gL6Nz1XZ+g6UzQj664/vzYGOaL2aKNGdDxcSV+md+7xZBXU841WdmNkYs1vB8zO7K8PgEU9
- dw9PzKhxEiSnHmdvSBPEf1rc11ZiqyEG3vNGFYc8Gx6CpA+2mWcOn
-X-Received: by 2002:a17:90a:1c17:b0:2c9:6f06:8005 with SMTP id
- 98e67ed59e1d1-2d856383fdemr18245909a91.26.1725350415410; 
- Tue, 03 Sep 2024 01:00:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgp3jyb0JRyqdYlU153uTlOouysm2/8u5v4zt+2XiMXPK739+XzYYL6QlH7ASSM6+7XmH0JA==
-X-Received: by 2002:a17:90a:1c17:b0:2c9:6f06:8005 with SMTP id
- 98e67ed59e1d1-2d856383fdemr18245877a91.26.1725350415002; 
- Tue, 03 Sep 2024 01:00:15 -0700 (PDT)
-Received: from localhost.localdomain ([115.96.207.26])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-2d8edadf788sm2998821a91.15.2024.09.03.01.00.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 01:00:14 -0700 (PDT)
+ AJvYcCX5fObPQURKja+S7/1g3iKrIIxPfyq8AEcfvf2WEqfv/g5oUJaZBWfiS0yQXiojPNAa7sWB6dNwViQy@nongnu.org
+X-Gm-Message-State: AOJu0Yx4J8pV2y/UewVQZvd+hxMX2ONH5h0FiD2qfOnMQkpcYFfOP5X7
+ x3262cZhKRZ2l8b/BzeUY85SFL2JHU2++WVmx8h6waJYgmMWPl006wtsqgsPpbEO+NJEYKwB+yN
+ jpotZbDEu+Oxo+uv69w+6NxaTJQQeQ2Ol+CfMGX4qCuLwYu8f753L
+X-Received: by 2002:a17:902:f650:b0:205:5de3:b964 with SMTP id
+ d9443c01a7336-2055de3bbe9mr48274395ad.5.1725350444988; 
+ Tue, 03 Sep 2024 01:00:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE45T9KeHgvKqCeFSvDtKlTMmyS8e/LokVC/OmwOZsaymL1yoXxJHhvPGWygRz6isjqiTrYRA==
+X-Received: by 2002:a17:902:f650:b0:205:5de3:b964 with SMTP id
+ d9443c01a7336-2055de3bbe9mr48274095ad.5.1725350444454; 
+ Tue, 03 Sep 2024 01:00:44 -0700 (PDT)
+Received: from smtpclient.apple ([115.96.207.26])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20515537813sm76088755ad.156.2024.09.03.01.00.42
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 03 Sep 2024 01:00:44 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Subject: Re: [PATCH] kvm/i386: fix a check that ensures we are running on host
+ intel CPU
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [PATCH v2] kvm/i386: fix return values of is_host_cpu_intel()
-Date: Tue,  3 Sep 2024 13:30:04 +0530
-Message-ID: <20240903080004.33746-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <32332f54-0c20-434c-be43-e4e00bcebe29@redhat.com>
+Date: Tue, 3 Sep 2024 13:30:30 +0530
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B9CFEBF6-A926-442F-96F4-1F1345D8E921@redhat.com>
+References: <20240903071942.32058-1-anisinha@redhat.com>
+ <32332f54-0c20-434c-be43-e4e00bcebe29@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+X-Mailer: Apple Mail (2.3776.700.51)
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -101,70 +109,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-is_host_cpu_intel() should return TRUE if the host cpu in Intel based, otherwise
-it should return FALSE. Currently, it returns zero (FALSE) when the host CPU
-is INTEL and non-zero otherwise. Fix the function so that it agrees more with
-the semantics. Adjust the calling logic accordingly. RAPL needs Intel host cpus.
-If the host CPU is not Intel baseed, we should report error.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- target/i386/kvm/kvm.c         | 2 +-
- target/i386/kvm/vmsr_energy.c | 4 ++--
- target/i386/kvm/vmsr_energy.h | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
- 
-changelog:
-v2: fix comparison logic in is_host_cpu_intel so that it returns
-boolean TRUE for Intel host CPU and false otherwise.
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 11c7619bfd..503e8d956e 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2898,7 +2898,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-      * 1. Host cpu must be Intel cpu
-      * 2. RAPL must be enabled on the Host
-      */
--    if (is_host_cpu_intel()) {
-+    if (!is_host_cpu_intel()) {
-         error_report("The RAPL feature can only be enabled on hosts\
-                       with Intel CPU models");
-         ret = 1;
-diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
-index 7e064c5aef..ce7eecb02d 100644
---- a/target/i386/kvm/vmsr_energy.c
-+++ b/target/i386/kvm/vmsr_energy.c
-@@ -27,14 +27,14 @@ char *vmsr_compute_default_paths(void)
-     return g_build_filename(state, "run", "qemu-vmsr-helper.sock", NULL);
- }
- 
--bool is_host_cpu_intel(void)
-+gboolean is_host_cpu_intel(void)
- {
-     int family, model, stepping;
-     char vendor[CPUID_VENDOR_SZ + 1];
- 
-     host_cpu_vendor_fms(vendor, &family, &model, &stepping);
- 
--    return strcmp(vendor, CPUID_VENDOR_INTEL);
-+    return g_str_equal(vendor, CPUID_VENDOR_INTEL);
- }
- 
- int is_rapl_enabled(void)
-diff --git a/target/i386/kvm/vmsr_energy.h b/target/i386/kvm/vmsr_energy.h
-index 16cc1f4814..97045986b7 100644
---- a/target/i386/kvm/vmsr_energy.h
-+++ b/target/i386/kvm/vmsr_energy.h
-@@ -94,6 +94,6 @@ double vmsr_get_ratio(uint64_t e_delta,
-                       unsigned long long delta_ticks,
-                       unsigned int maxticks);
- void vmsr_init_topo_info(X86CPUTopoInfo *topo_info, const MachineState *ms);
--bool is_host_cpu_intel(void);
-+gboolean is_host_cpu_intel(void);
- int is_rapl_enabled(void);
- #endif /* VMSR_ENERGY_H */
--- 
-2.42.0
+> On 3 Sep 2024, at 1:13=E2=80=AFPM, Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
+>=20
+> On 9/3/24 09:19, Ani Sinha wrote:
+>> is_host_cpu_intel() returns TRUE if the host cpu in Intel based. RAPL =
+needs
+>> Intel host cpus. If the host CPU is not Intel baseed, we should =
+report error.
+>> Fix the check accordingly.
+>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>=20
+> It's the function that is returning the incorrect value too; so your =
+patch is breaking the feature: this line in is_host_cpu_intel()
+>=20
+> return strcmp(vendor, CPUID_VENDOR_INTEL);
+>=20
+> needs to be changed to use g_str_equal.
+
+Ah that is why it got unnoticed as programatically it was not broken. I =
+will send a v2.
+
+>=20
+> Paolo
+>=20
+>> ---
+>>  target/i386/kvm/kvm.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+>> index 11c7619bfd..503e8d956e 100644
+>> --- a/target/i386/kvm/kvm.c
+>> +++ b/target/i386/kvm/kvm.c
+>> @@ -2898,7 +2898,7 @@ static int kvm_msr_energy_thread_init(KVMState =
+*s, MachineState *ms)
+>>       * 1. Host cpu must be Intel cpu
+>>       * 2. RAPL must be enabled on the Host
+>>       */
+>> -    if (is_host_cpu_intel()) {
+>> +    if (!is_host_cpu_intel()) {
+>>          error_report("The RAPL feature can only be enabled on hosts\
+>>                        with Intel CPU models");
+>>          ret =3D 1;
+>=20
 
 
