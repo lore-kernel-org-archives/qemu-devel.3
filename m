@@ -4,69 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7CFDCD342C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 05:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54036CA101E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 05:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slLrO-0007MY-I3; Tue, 03 Sep 2024 01:13:46 -0400
+	id 1slMJD-000591-2Y; Tue, 03 Sep 2024 01:42:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slLrN-0007M1-1e
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 01:13:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slMJ7-000571-88
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 01:42:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slLrK-0005K0-QY
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 01:13:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slMJ3-000857-Bm
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 01:42:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725340420;
+ s=mimecast20190719; t=1725342138;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=H4lvrbhW6l3S8CRXACEVOg8ySqpQMRl+NcveP0sohw4=;
- b=TUUWUF7NnHfU96nvO4KqjMVp1+eT9asIpcodWFEWYqJmaGRYXb5ZtH8Ni3LoKpb5FqKifO
- Dv6iuVVs8zEjVtCYVbMZU7JHeEu1AykaPl4tvVu66ITTYgVhJ0AsJ40v+GxQlqcGPeYHpH
- L9PTY2bBv8JcfIZXyEOTf9HP4VnZ9Us=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-w7svKeDvOYqHMY3CN8CXgw-1; Tue,
- 03 Sep 2024 01:13:38 -0400
-X-MC-Unique: w7svKeDvOYqHMY3CN8CXgw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD4A6195608A; Tue,  3 Sep 2024 05:13:37 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.86])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 908D61956048; Tue,  3 Sep 2024 05:13:34 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH] tests/functional: Convert the multiprocess avocado test into
- a standalone test
-Date: Tue,  3 Sep 2024 07:13:33 +0200
-Message-ID: <20240903051333.102494-1-thuth@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3GpDdDj8f7eXtTtExAr/YXGbGcs/x1vYCck+HYIMqZM=;
+ b=fAZsCciNZjp4k8B5LOWSnUe2HSBTIrime4bhNDlHiBmP5CCatFupEEzLJL3WF7eXV2HMI5
+ Lz+2t2nlB+E0BNg5q7PwQUCXUTDIdPQ7qrjrtoeiwPHiUHYc4fUY8YpBRC84JeT1rNF5qJ
+ 8ExNQSKPjqqKZa2pc4DHmTCALUOIHPg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-22-WVk8F1YxO0WpnK_XAp_s8g-1; Tue, 03 Sep 2024 01:42:17 -0400
+X-MC-Unique: WVk8F1YxO0WpnK_XAp_s8g-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-374cbbaf315so836591f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 22:42:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725342136; x=1725946936;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3GpDdDj8f7eXtTtExAr/YXGbGcs/x1vYCck+HYIMqZM=;
+ b=Yp7OdJEe3RjEv4BU8ctP/yW6gAZ1QMQncTCEjJ6YLXwGCaKX+eGEO2r9ixT+HbMssO
+ Cqz0G8LY1omYaTyEJ5SZMwwooutuFdklJWjkiJuP+mVwLAeIYhyL0ICZHgZIvM2EQzU6
+ gT9lrc1f8D/8I+SKtr71dYpaNvm5XgwCvgJ1WEBwjAQIh+Af8ravQEGvHIl/PrT7Fvbs
+ 4iFaEyqSyvTV31Tgi+HPOtLCqo2Ixt69F1KeVy+gtEoL9NHxHTPP/RfKBPVU6uTeXmT/
+ 3pTAFr/y6ubTWPkPPByhic3vDpemBnPij2rWuK6eL8xw3A5HK4FY9HdZbJDUzbICaiYD
+ uYVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU61+Ea6O9lpVErvX6vLgfiiJrqfPXmvWSQDq22TYl/Y15/lh+XMkQ/uYd6cxFKpUV+7SRLsP//RIiw@nongnu.org
+X-Gm-Message-State: AOJu0YwQ2rbOXR9KG09ROr1yafY4KRw9kFxoqAadv5I4QRQNGN36RZeK
+ GZjbMkjaFndR124S4k7ZgUoxs7CdHHYyHzBxRs48wyFYJv0IIfZepVFNqVlaHJZ00iTJHaaw09w
+ uoJClxWr9AYdD7K0bHEt4+cnPBo/tAVmPucbGGaz5J74ht2UoZBTN
+X-Received: by 2002:a5d:6d0e:0:b0:374:d2a3:d213 with SMTP id
+ ffacd0b85a97d-374d2a3d311mr2041706f8f.18.1725342135765; 
+ Mon, 02 Sep 2024 22:42:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEult4l++lXKT/sxr2K3V1DV8FOb1PMGUZncIyEYreRY2Og/RRXDX4oX0s9LqIBPVZxmXXDyg==
+X-Received: by 2002:a5d:6d0e:0:b0:374:d2a3:d213 with SMTP id
+ ffacd0b85a97d-374d2a3d311mr2041685f8f.18.1725342135196; 
+ Mon, 02 Sep 2024 22:42:15 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
+ [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-374ccab8a76sm3880004f8f.99.2024.09.02.22.42.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Sep 2024 22:42:14 -0700 (PDT)
+Message-ID: <2a39f92d-533f-4242-9f21-f9e34a65f4e9@redhat.com>
+Date: Tue, 3 Sep 2024 07:42:12 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] hw/char: riscv_htif: Use blocking
+ qemu_chr_fe_write_all
+To: Alistair Francis <alistair23@gmail.com>, peter.maydell@linaro.org,
+ qemu-devel@nongnu.org, alex.bennee@linaro.org
+Cc: liwei1518@gmail.com, atishp@rivosinc.com, palmer@dabbelt.com,
+ Bin Meng <bmeng.cn@gmail.com>, zhiwei_liu@linux.alibaba.com,
+ Paolo Bonzini <pbonzini@redhat.com>, dbarboza@ventanamicro.com,
+ qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20240819113148.3007047-1-alistair.francis@wdc.com>
+ <20240819113148.3007047-2-alistair.francis@wdc.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240819113148.3007047-2-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,191 +154,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This test handles both, aarch64 and x86_64, with the same test code
-(apart from some initial setup), so don't split this file by target
-but add a check for self.arch in the main test function.
+On 19/08/2024 13.31, Alistair Francis wrote:
+> The current approach of using qemu_chr_fe_write() and ignoring the
+> return values results in dropped charecters [1]. Ideally we want to
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- Based-on: 20240830133841.142644-1-thuth@redhat.com
+s/charecters/characters/
 
- tests/avocado/avocado_qemu/__init__.py        | 10 ---
- tests/functional/meson.build                  |  2 +
- .../test_multiprocess.py}                     | 90 +++++++++----------
- 3 files changed, 46 insertions(+), 56 deletions(-)
- rename tests/{avocado/multiprocess.py => functional/test_multiprocess.py} (48%)
- mode change 100644 => 100755
+> report FIFO status to the guest, but the HTIF isn't a real UART, so we
+> don't really have a way to do that.
+> 
+> Instead let's just use qemu_chr_fe_write_all() so at least we don't drop
+> charecters.
 
-diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
-index 0e4ecea7a0..93c3460242 100644
---- a/tests/avocado/avocado_qemu/__init__.py
-+++ b/tests/avocado/avocado_qemu/__init__.py
-@@ -307,16 +307,6 @@ def require_netdev(self, netdevname):
-         if netdevhelp.find('\n' + netdevname + '\n') < 0:
-             self.cancel('no support for user networking')
- 
--    def require_multiprocess(self):
--        """
--        Test for the presence of the x-pci-proxy-dev which is required
--        to support multiprocess.
--        """
--        devhelp = run_cmd([self.qemu_bin,
--                           '-M', 'none', '-device', 'help'])[0];
--        if devhelp.find('x-pci-proxy-dev') < 0:
--            self.cancel('no support for multiprocess device emulation')
--
-     def _new_vm(self, name, *args):
-         self._sd = tempfile.TemporaryDirectory(prefix="qemu_")
-         vm = QEMUMachine(self.qemu_bin, base_temp_dir=self.workdir,
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 6b00d240dd..34c6b3d4c0 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -37,6 +37,7 @@ tests_generic_bsduser = [
- tests_aarch64_system_thorough = [
-   'aarch64_sbsaref',
-   'aarch64_virt',
-+  'multiprocess',
- ]
- 
- tests_arm_system_thorough = [
-@@ -129,6 +130,7 @@ tests_x86_64_system_quick = [
- tests_x86_64_system_thorough = [
-   'acpi_bits',
-   'linux_initrd',
-+  'multiprocess',
-   'netdev_ethtool',
-   'virtio_gpu',
- ]
-diff --git a/tests/avocado/multiprocess.py b/tests/functional/test_multiprocess.py
-old mode 100644
-new mode 100755
-similarity index 48%
-rename from tests/avocado/multiprocess.py
-rename to tests/functional/test_multiprocess.py
-index ee7490ae08..a5dc1b12a3
---- a/tests/avocado/multiprocess.py
-+++ b/tests/functional/test_multiprocess.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Test for multiprocess qemu
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
-@@ -7,22 +9,38 @@
- import os
- import socket
- 
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado_qemu import exec_command
--from avocado_qemu import exec_command_and_wait_for_pattern
-+from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
-+from qemu_test import exec_command, exec_command_and_wait_for_pattern
- 
- class Multiprocess(QemuSystemTest):
--    """
--    :avocado: tags=multiprocess
--    """
-+
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
- 
--    def do_test(self, kernel_url, kernel_hash, initrd_url, initrd_hash,
-+    ASSET_KERNEL_X86 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
-+
-+    ASSET_INITRD_X86 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/x86_64/os/images/pxeboot/initrd.img'),
-+        '3b6cb5c91a14c42e2f61520f1689264d865e772a1f0069e660a800d31dd61fb9')
-+
-+    ASSET_KERNEL_AARCH64 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/aarch64/os/images/pxeboot/vmlinuz'),
-+        '413c7f95e7f40cfa3e73290ffae855c88fae54cccc46123a4b4ed2db7d5c2120')
-+
-+    ASSET_INITRD_AARCH64 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/aarch64/os/images/pxeboot/initrd.img'),
-+        '9fd230cab10b1dafea41cf00150e6669d37051fad133bd618d2130284e16d526')
-+
-+    def do_test(self, kernel_asset, initrd_asset,
-                 kernel_command_line, machine_type):
-         """Main test method"""
-         self.require_accelerator('kvm')
--        self.require_multiprocess()
-+        self.require_device('x-pci-proxy-dev')
- 
-         # Create socketpair to connect proxy and remote processes
-         proxy_sock, remote_sock = socket.socketpair(socket.AF_UNIX,
-@@ -30,8 +48,8 @@ def do_test(self, kernel_url, kernel_hash, initrd_url, initrd_hash,
-         os.set_inheritable(proxy_sock.fileno(), True)
-         os.set_inheritable(remote_sock.fileno(), True)
- 
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--        initrd_path = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-+        kernel_path = kernel_asset.fetch()
-+        initrd_path = initrd_asset.fetch()
- 
-         # Create remote process
-         remote_vm = self.get_vm()
-@@ -65,38 +83,18 @@ def do_test(self, kernel_url, kernel_hash, initrd_url, initrd_hash,
-                                           'cat /sys/bus/pci/devices/*/uevent',
-                                           'PCI_ID=1000:0012')
- 
--    def test_multiprocess_x86_64(self):
--        """
--        :avocado: tags=arch:x86_64
--        """
--        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/31/Everything/x86_64/os/images'
--                      '/pxeboot/vmlinuz')
--        kernel_hash = '5b6f6876e1b5bda314f93893271da0d5777b1f3c'
--        initrd_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/31/Everything/x86_64/os/images'
--                      '/pxeboot/initrd.img')
--        initrd_hash = 'dd0340a1b39bd28f88532babd4581c67649ec5b1'
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'console=ttyS0 rdinit=/bin/bash')
--        machine_type = 'pc'
--        self.do_test(kernel_url, kernel_hash, initrd_url, initrd_hash,
--                     kernel_command_line, machine_type)
--
--    def test_multiprocess_aarch64(self):
--        """
--        :avocado: tags=arch:aarch64
--        """
--        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/31/Everything/aarch64/os/images'
--                      '/pxeboot/vmlinuz')
--        kernel_hash = '3505f2751e2833c681de78cee8dda1e49cabd2e8'
--        initrd_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/31/Everything/aarch64/os/images'
--                      '/pxeboot/initrd.img')
--        initrd_hash = '519a1962daf17d67fc3a9c89d45affcb399607db'
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'rdinit=/bin/bash console=ttyAMA0')
--        machine_type = 'virt,gic-version=3'
--        self.do_test(kernel_url, kernel_hash, initrd_url, initrd_hash,
--                     kernel_command_line, machine_type)
-+    def test_multiprocess(self):
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
-+        if self.arch == 'x86_64':
-+            kernel_command_line += 'console=ttyS0 rdinit=/bin/bash'
-+            self.do_test(self.ASSET_KERNEL_X86, self.ASSET_INITRD_X86,
-+                         kernel_command_line, 'pc')
-+        elif self.arch == 'aarch64':
-+            kernel_command_line += 'rdinit=/bin/bash console=ttyAMA0'
-+            self.do_test(self.ASSET_KERNEL_AARCH64, self.ASSET_INITRD_AARCH64,
-+                         kernel_command_line, 'virt,gic-version=3')
-+        else:
-+            assert False
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.46.0
+dito
+
+> 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+> 
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>   hw/char/riscv_htif.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
+
+With above typos fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
