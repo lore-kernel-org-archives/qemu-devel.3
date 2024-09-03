@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 895DCCD3420
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 12:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A843CD3420
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 12:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slSck-0003BN-2T; Tue, 03 Sep 2024 08:27:06 -0400
+	id 1slSgJ-0007qj-JP; Tue, 03 Sep 2024 08:30:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1slScj-0003Au-Fe
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:27:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1slScg-0005h6-1y
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:27:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725366420;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GF1AvVkZJ/yxNG73qXOy8cgo6Vg+HB1+fH5AqyVbd8E=;
- b=CTb8UDFprKvgxMkqlppSouxJctFYm2n2HrCDp4r8B+OxYZybM8lsKCP9cFaqogHvm5aTrp
- aVHyzaAtF5QI0RQ/KtvGoQDo0AzInjO36eHxLWSz/d3gM/5JRF8r81Wa3BqUHvmGOau2ts
- AqEqE6GUKMYR0RjqUgN9KrGIbbGrlkQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-uX-Hp9XYPBOZAvoT56eB6g-1; Tue, 03 Sep 2024 06:19:20 -0400
-X-MC-Unique: uX-Hp9XYPBOZAvoT56eB6g-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-374c3a31ebcso1556269f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 03:19:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725358759; x=1725963559;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1slSfx-0007lm-Kt
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:30:32 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1slSfv-0006BN-Gs
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:30:25 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5c26815e174so1585679a12.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 05:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725366622; x=1725971422; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GF1AvVkZJ/yxNG73qXOy8cgo6Vg+HB1+fH5AqyVbd8E=;
- b=QX9x+jLZPFNYeR+3aj5Q5FyZ5O8qh8a2iGTHW8DUUzLlW/a6a7FegClviM9bg43/sA
- GwVCmt0f+e4gPk1Fq52sOzKCSJdcLEZdQAaLQvPmjKON5BrT/GiJngsfs5Ys033CzlUI
- R37fuFYSHXs/Inv2DU9cQK5ha0llSyTADo2c2vIPWdDznCkI8+qYIHAE4c/N3FPe72lJ
- GU7wO6NhRiOyoWkv5HEscrpM6KZrBUPxIfc4vGMOUDDgOFUImkrRhwbnKSbAFArytVwV
- S8twY1ulF2J3QgEyHXgjepCjV9ApjCI+bfWoDCUZMTfRIyK9QxWWl5juVbN6DxOpn9HW
- MjMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZovO3Lz3OQ19Ote04qTcQXMlPrcyikFC736dhMs9wWwpce8jyxQydimHRGZzkvcUQg4SNOmmFTYGT@nongnu.org
-X-Gm-Message-State: AOJu0YwpBBdhmJQoCmEn8U5+86NxIZLEA/5OeascuO1TTPqHOmGOzo5o
- lXmuumYPBbVC/b6//Zy1fwBoQYUJBAXssQDyIznvnfsSvL+SZnrA82xxXsAKEnioQtIp4YcZnC3
- 6wzdhIg+q31+x1Mqq7aBQ04/ggZmgo5/f0GaiZV1rwo2zgW4yRlZY
-X-Received: by 2002:adf:9b02:0:b0:374:c0f5:79f4 with SMTP id
- ffacd0b85a97d-376dcc8b82dmr186919f8f.7.1725358759372; 
- Tue, 03 Sep 2024 03:19:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNdrXkMxrzzTevbRReSfq7f2AUvnATqt+U6xVFSDTFfd5Z9cN5M9vTcLKJLcLQNX2/v0fnMg==
-X-Received: by 2002:adf:9b02:0:b0:374:c0f5:79f4 with SMTP id
- ffacd0b85a97d-376dcc8b82dmr186897f8f.7.1725358758493; 
- Tue, 03 Sep 2024 03:19:18 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:441:95c6:9977:c577:f3d1:99e1])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374bdcbe0f0sm9345802f8f.117.2024.09.03.03.19.16
+ bh=RFzyvgfY8c6IcdQy4tKyErKBZg8IMW81gHDJ+gljST8=;
+ b=ugpodlV/TXp5cW/xF2io6BbuzAPxVfnXMDNP4DC+PRxdPS0GBz6yj5e1J54A96yugv
+ hlboucCs3DCJ+7fA2kKV26PtO/YfrhsoM/vGvimzk+ID8q+Cm04fhlK+2NhOZIdu6i79
+ 5xlcGT8bu6PORmSY3kHSXaClDJwaXiL8KWq3sPIEVm2J3oFOwzOmwFhNER4awY6jqWuS
+ L2LOUc5ViGrZHS79Bq4oGY4+dUtqzG9iTj7puhzN1xpv0XAIWCTF15eyGfPB8dN7+Eed
+ 8YKKBRbXgqZyqQ8Y/Y3Z4W69t+BYk087pJ6+9z4SPtdy2kcZV9CaPLOkbmerQ9/x2pHu
+ IVyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725366622; x=1725971422;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RFzyvgfY8c6IcdQy4tKyErKBZg8IMW81gHDJ+gljST8=;
+ b=tbrn6SzP0qixT9L2iUoE9jCA3luGug6bLQv+ZFqdKAjVdtWgqr2w6+3w11/FbkFATd
+ MO3TOrhdooAokLMu2g3DLgsF7kC9YOFcmOg5cKKjgmwqcMgFI4y9IqwOueRVLemk0+wg
+ aIuPd+TOgKy9adrOxAwpqPZvgb252/GLA4jFd2seAXNwqUGxgbVNQaiBD0m7BG7EFGxu
+ dkfGqIMrAVt77haX7pLskLmFSfLWrPwwp2j4ISK43Hv6E/pWYMqx1j/EXFuNHUnICK+r
+ mUXltSeWdPPz2XHnk82RdyTA8G6xuAQoZS9Yj0h19ujoVzoMVg16ji8Z2jZs00wS4MjH
+ 21bg==
+X-Gm-Message-State: AOJu0YwZ0exJEd+Fsd+PwkrEYQ/x2oirCNvMwt5LuwZyeYJ+po+xYmYI
+ zOynavkUXunZQ7U1oDOuSIs6QFJDP+jaTNU2WxRUyyrL63IDKripv7HxmxIbJ419jr7iCJK0DLs
+ 9fvk=
+X-Google-Smtp-Source: AGHT+IFNtNUxcVnEw4xj6fnYUKsYyV3bbyusBOK/9Oo34F2UEJg8RpwEmd4ylWOAoYFEpBdOU2s71g==
+X-Received: by 2002:a17:907:7253:b0:a86:7b71:7b77 with SMTP id
+ a640c23a62f3a-a89d8848dfemr590741466b.44.1725358920109; 
+ Tue, 03 Sep 2024 03:22:00 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a898900f62fsm665523766b.63.2024.09.03.03.21.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 03:19:17 -0700 (PDT)
-Date: Tue, 3 Sep 2024 06:19:10 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gao Shiyuan <gaoshiyuan@baidu.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- Jason Wang <jasowang@redhat.com>, zuoboqun@baidu.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH V2 1/1] virtio-pci: Add lookup subregion of
- VirtIOPCIRegion MR
-Message-ID: <20240903061829-mutt-send-email-mst@kernel.org>
-References: <20240820115631.52522-1-gaoshiyuan@baidu.com>
+ Tue, 03 Sep 2024 03:21:59 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A537F60A67;
+ Tue,  3 Sep 2024 11:21:58 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Elisha Hollander <just4now666666@gmail.com>
+Cc: qemu-devel@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/1] allow using a higher icount
+In-Reply-To: <CACkyd_YpxVdGC04cEEPr4O44P+FQ9P51T32AtBxCmOVV1b9f-g@mail.gmail.com>
+ (Elisha Hollander's message of "Tue, 3 Sep 2024 10:06:03 +0300")
+References: <20240816162044.5764-1-just4now666666@gmail.com>
+ <871q2ae24s.fsf@draig.linaro.org>
+ <CACkyd_anZKrjNUKE+nwzSvJGQwxQ2zq2J8sGawq3pKYLVT9vXQ@mail.gmail.com>
+ <CACkyd_ZNPzhg8pqkdLucyJ70wZKJARR_65r5CJBy0+U=7GR_1Q@mail.gmail.com>
+ <87h6b452m5.fsf@draig.linaro.org>
+ <CACkyd_YG-r837VfoPaOw5bKCczAUQYFOobW=2SF37esppbc0XQ@mail.gmail.com>
+ <CACkyd_ZhByWwPQtFmHGRQxmBcVwCEyeSKX6fqhS3K=1480ASOA@mail.gmail.com>
+ <87wmjudwyp.fsf@draig.linaro.org>
+ <CACkyd_YpxVdGC04cEEPr4O44P+FQ9P51T32AtBxCmOVV1b9f-g@mail.gmail.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Tue, 03 Sep 2024 11:21:58 +0100
+Message-ID: <87jzftdol5.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240820115631.52522-1-gaoshiyuan@baidu.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,82 +107,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 20, 2024 at 07:56:31PM +0800, Gao Shiyuan wrote:
-> When VHOST_USER_PROTOCOL_F_HOST_NOTIFIER feature negotiated and
-> virtio_queue_set_host_notifier_mr success on system blk
-> device's queue, the VM can't load MBR if the notify region's
-> address above 4GB.
-> 
-> Assign the address of notify region in the modern bar above 4G, the vp_notify
-> in SeaBIOS will use PCI Cfg Capability to write notify region. This will trap
-> into QEMU and be handled by the host bridge when we don't enable mmconfig.
-> QEMU will call virtio_write_config and since it writes to the BAR region
-> through the PCI Cfg Capability, it will call virtio_address_space_write.
-> 
-> virtio_queue_set_host_notifier_mr add host notifier subregion of notify region
-> MR, QEMU need write the mmap address instead of eventfd notify the hardware
-> accelerator at the vhost-user backend. So virtio_address_space_lookup in
-> virtio_address_space_write need return a host-notifier subregion of notify MR
-> instead of notify MR.
-> 
-> Add lookup subregion of VirtIOPCIRegion MR instead of only lookup container MR.
-> 
-> Fixes: a93c8d8 ("virtio-pci: Replace modern_as with direct access to modern_bar")
-> 
-> Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
-> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
-> ---
->  hw/virtio/virtio-pci.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> ---
-> v1 -> v2:
-> * modify commit message
-> * replace direct iteration over subregions with memory_region_find.
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 9534730bba..5d2d27a6a3 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -610,19 +610,29 @@ static MemoryRegion *virtio_address_space_lookup(VirtIOPCIProxy *proxy,
->  {
->      int i;
->      VirtIOPCIRegion *reg;
-> +    MemoryRegion *mr = NULL;
-> +    MemoryRegionSection mrs;
->  
->      for (i = 0; i < ARRAY_SIZE(proxy->regs); ++i) {
->          reg = &proxy->regs[i];
->          if (*off >= reg->offset &&
->              *off + len <= reg->offset + reg->size) {
-> -            *off -= reg->offset;
-> -            return &reg->mr;
-> +            mrs = memory_region_find(&reg->mr, *off - reg->offset, len);
-> +            if (!mrs.mr) {
-> +                error_report("Failed to find memory region for address"
-> +                             "0x%" PRIx64 "", *off);
-> +                return NULL;
-> +            }
+Elisha Hollander <just4now666666@gmail.com> writes:
+
+> Sure!
+>
+> `build/qemu-system-i386 -plugin build/contrib/plugins/libips.so,ips=3D1 -=
+display curses -bios bios.raw`
+>
+> Also, I just tested with 9.1.0-rc4 and it resulted with
+> `tcg.c:3167:remove_label_use: code should not be reached`
+
+I can replicate but it seems to be an edge case with ips=3D1, try a higher
+number, even ips=3D10 doesn't trigger the crash (but 10 instructions a
+second is very slow to do anything).
+
+  ./qemu-system-i386  -plugin contrib/plugins/libips.so,ips=3D1 -display no=
+ne -serial mon:stdio
+  **
+  ERROR:../../tcg/tcg.c:3167:remove_label_use: code should not be reached
+  Bail out! ERROR:../../tcg/tcg.c:3167:remove_label_use: code should not be=
+ reached
+  fish: Job 1, './qemu-system-i386  -plugin con=E2=80=A6' terminated by sig=
+nal SIGABRT (Abort)
 
 
-I'm not sure when can this happen. If it can't assert will do.
+>
+> On Mon, Sep 2, 2024, 16:08 Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+>  Elisha Hollander <just4now666666@gmail.com> writes:
+>
+>  > But for qemu_plugin_update_ns
+>  >
+>  > On Mon, Sep 2, 2024, 15:38 Elisha Hollander <just4now666666@gmail.com>=
+ wrote:
+>  >
+>  >  Just checked with 9.0.2 it it still gives the error...
+>  >
+>  >  On Wed, Aug 28, 2024, 14:05 Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+>  >
+>  >  Elisha Hollander <just4now666666@gmail.com> writes:
+>  >
+>  >  > Although it gives `undefined symbol: qemu_plugin_scoreboard_free`. =
+But
+>  >  > probably I messed something up...
+>  >
+>  >  Are you using an older QEMU? We should trigger an API warning if they
+>  >  are mismatched but maybe thats not working.
+>  >
+>  >  >
+>  >  > On Tue, Aug 27, 2024, 14:59 Elisha Hollander <just4now666666@gmail.=
+com> wrote:
+>  >  >
+>  >  >  Oh nice, I didn't know that
+>  >  >
+>  >  >  On Tue, Aug 27, 2024, 12:39 Alex Benn=C3=A9e <alex.bennee@linaro.o=
+rg> wrote:
+>  >  >
+>  >  >  Elisha Hollander <just4now666666@gmail.com> writes:
+>  >  >
+>  >  >  > Signed-off-by: Elisha Hollander <just4now666666@gmail.com>
+>  >  >
+>  >  >  What is the use-case for this patch?
+>  >  >
+>  >  >  If you are simply looking to slow the emulated system down please =
+have a
+>  >  >  look at:
+>  >  >
+>  >  >    https://qemu.readthedocs.io/en/master/about/emulation.html#limit=
+-instructions-per-second
+>  >  >
+>  >  >  which uses the plugin system to limit the run rate and sleep if its
+>  >  >  running too fast. The longer term goal is to deprecate the icount =
+clock
+>  >  >  alignment feature from the core code and leave icount to just prov=
+ide
+>  >  >  the deterministic execution needed for record/replay and reverse
+>  >  >  debugging.
+>  >  >
+>  >  >  > ---
+>  >  >  >  accel/tcg/cpu-exec.c      | 4 +---
+>  >  >  >  accel/tcg/icount-common.c | 4 ++--
+>  >  >  >  2 files changed, 3 insertions(+), 5 deletions(-)
+>  >  >  >
+>  >  >  > diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+>  >  >  > index 8163295f34..4c2baf8ed4 100644
+>  >  >  > --- a/accel/tcg/cpu-exec.c
+>  >  >  > +++ b/accel/tcg/cpu-exec.c
+>  >  >  > @@ -95,11 +95,10 @@ static void align_clocks(SyncClocks *sc, CPU=
+State *cpu)
+>  >  >  >  static void print_delay(const SyncClocks *sc)
+>  >  >  >  {
+>  >  >  >      static float threshold_delay;
+>  >  >  > -    static int64_t last_realtime_clock;
+>  >  >  >      static int nb_prints;
+>  >  >  >=20=20
+>  >  >  >      if (icount_align_option &&
+>  >  >  > -        sc->realtime_clock - last_realtime_clock >=3D MAX_DELAY=
+_PRINT_RATE &&
+>  >  >  > +        sc->diff_clk >=3D MAX_DELAY_PRINT_RATE &&
+>  >  >  >          nb_prints < MAX_NB_PRINTS) {
+>  >  >  >          if ((-sc->diff_clk / (float)1000000000LL > threshold_de=
+lay) ||
+>  >  >  >              (-sc->diff_clk / (float)1000000000LL <
+>  >  >  > @@ -109,7 +108,6 @@ static void print_delay(const SyncClocks *sc)
+>  >  >  >                          threshold_delay - 1,
+>  >  >  >                          threshold_delay);
+>  >  >  >              nb_prints++;
+>  >  >  > -            last_realtime_clock =3D sc->realtime_clock;
+>  >  >  >          }
+>  >  >  >      }
+>  >  >  >  }
+>  >  >  > diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common=
+.c
+>  >  >  > index 8d3d3a7e9d..f07f8baf4d 100644
+>  >  >  > --- a/accel/tcg/icount-common.c
+>  >  >  > +++ b/accel/tcg/icount-common.c
+>  >  >  > @@ -46,8 +46,8 @@
+>  >  >  >   * is TCG-specific, and does not need to be built for other acc=
+els.
+>  >  >  >   */
+>  >  >  >  static bool icount_sleep =3D true;
+>  >  >  > -/* Arbitrarily pick 1MIPS as the minimum allowable speed.  */
+>  >  >  > -#define MAX_ICOUNT_SHIFT 10
+>  >  >  > +/* Arbitrarily pick the minimum allowable speed.  */
+>  >  >  > +#define MAX_ICOUNT_SHIFT 30
+>  >  >  >=20=20
+>  >  >  >  /* Do not count executed instructions */
+>  >  >  >  ICountMode use_icount =3D ICOUNT_DISABLED;
+>  >  >
+>  >  >  --=20
+>  >  >  Alex Benn=C3=A9e
+>  >  >  Virtualisation Tech Lead @ Linaro
+>  >
+>  >  --=20
+>  >  Alex Benn=C3=A9e
+>  >  Virtualisation Tech Lead @ Linaro
+>
+>  Can you give me your command line please?
+>
+>  --=20
+>  Alex Benn=C3=A9e
+>  Virtualisation Tech Lead @ Linaro
 
-
-> +            *off = mrs.offset_within_region;
-> +            memory_region_unref(mrs.mr);
-> +            return mrs.mr;
->          }
->      }
->  
->      return NULL;
->  }
->  
-> +
->  /* Below are generic functions to do memcpy from/to an address space,
->   * without byteswaps, with input validation.
->   *
-> -- 
-> 2.39.3 (Apple Git-146)
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
