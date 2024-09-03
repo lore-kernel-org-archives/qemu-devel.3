@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014E9CD343E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 202F0CD342A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slVGO-00082E-UC; Tue, 03 Sep 2024 11:16:12 -0400
+	id 1slVLZ-0004y0-4R; Tue, 03 Sep 2024 11:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slVGA-0007y1-PQ
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:15:59 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slVG7-0002Du-Qc
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:15:58 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7141e20e31cso4456279b3a.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 08:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725376551; x=1725981351; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dCSwEr56B/IZH5hqdte0NmJ82E6p5nvadjeSBP7X3+I=;
- b=voCvQUJD8B8QMgs0lxJNcSwZN9LA9JdKFpWptFmApsmAHktQnVyrHj03zvgDwgjm7B
- fY/Tf+jyZkr1m0uk3me1AACQ7vn0gBHCIYuJGvMsvDZtJ0HIUf+NPnMvoAPnlJCfssgi
- 2AEpHm/G1Wn6qX7m9CRBqiNuPk1ZRm9dLPKex1lf0jwuTnCdd90BydoG8/zbQsOzQFHK
- l+pCOkIoPjN8PeZ8BtoK+r0v+yvq8PTFdHvYZRk9865P5gElXGHE5+JOshCL33Ohvxjd
- 2dLAT9Xp6ih+iliJ6qi1RO98/13f0V9O3/YBfha0gZampDzRlPbkdOUamyPoxs6QGLvV
- 4AmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725376551; x=1725981351;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dCSwEr56B/IZH5hqdte0NmJ82E6p5nvadjeSBP7X3+I=;
- b=QqG+95LN0gpSQAxhscyBKAcaUQr15MgmR3oBW3hQEjzeHPvkQ9YyS2pLXoX3yv6new
- reqg+tcEuVLA8t47bot7s5QeLuphBP+cA1T7Tl+1YcJqKsIZTgDiTae7JUpRJqQZeI0X
- vqA9oFoJvtE0Y0fTPjTZ3CTu9JRdCJkGb9CFK1EMPEn8Gv8418a7Lm6SQPykmZwQymjh
- 77MaWuxQx/gjVy/xVm+Ex8jY7rmUhwW1T/xe5H7dzeHf9kg8E8kVxj2CZ7uZiG5DxiIH
- NC4BbWJqYVBWDhru94dnAgKEJTxuLoVZ82C5hxhcYn8sJ7gw8wLWANEhnXy3vuyVjbl9
- YQAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXYmosyaMAIQ6bCFPuV5A0/mnSUS17kacn3HU/+IW9IO9Ubtrfg6OwarGJzum7Kn4w8t9KPmmBAOLv@nongnu.org
-X-Gm-Message-State: AOJu0Yz93IyTSa4qSnI4kYDXPWr3DoxNIpehMEB6ZL73XGwPLmBZmw3N
- xt3taSY8Ec+YZxisps49rQNsEoQARGB/h4pi3pALWWD1hfw6k7Unp91XAcQVl64=
-X-Google-Smtp-Source: AGHT+IFcCGvrhp1Sq9SrRlwCRmR6LHwLBRu0GxkWxMJoAylxoZtK1mlxawXU6MDFajoLE+7Z/8+L7g==
-X-Received: by 2002:a05:6a21:6b0c:b0:1cc:d4a0:2675 with SMTP id
- adf61e73a8af0-1cecf49aeedmr12877607637.3.1725376551288; 
- Tue, 03 Sep 2024 08:15:51 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-715edc66743sm7633024b3a.152.2024.09.03.08.15.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 08:15:50 -0700 (PDT)
-Message-ID: <97873524-9e47-44c4-b34a-a27e9833b0e1@linaro.org>
-Date: Tue, 3 Sep 2024 08:15:49 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1slVLY-0004xX-Ev
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:21:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1slVLW-00036C-6i
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:21:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725376888;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4WbUQoRRWmMI0SMvAnR2u4IjbgkZrzicErmC6r/9Cj4=;
+ b=MgdPjULRIEVmmC6O+79+izZBOlnZmydmSqS7TIEiLT7es7fym8hcHv9JVQfZjuZ/gzXUkL
+ W7B2Erb/WCg6lca0ymkwp/OUeJn0D5uzsuHqnLHzed/OESRi9G/VY4gDLsR+crVe7DP7PB
+ 6XFT1BMkVXKKo6s/ZcPY7thxovunhBU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-v7M7woMEPtScDT2gzGsdWQ-1; Tue,
+ 03 Sep 2024 11:21:24 -0400
+X-MC-Unique: v7M7woMEPtScDT2gzGsdWQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2B184190F99C; Tue,  3 Sep 2024 15:21:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.129])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 446C719560AE; Tue,  3 Sep 2024 15:21:19 +0000 (UTC)
+Date: Tue, 3 Sep 2024 16:21:16 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: =?utf-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return
+ value == -1
+Message-ID: <ZtcpbNx0SAzzW0Ta@redhat.com>
+References: <20240830111451.3799490-1-cleger@rivosinc.com>
+ <20240830111451.3799490-3-cleger@rivosinc.com>
+ <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
+ <dd28ea4f-67eb-4c42-84d2-24956cde7896@rivosinc.com>
+ <294a5480-d871-41e2-8e08-c1067f45d454@linaro.org>
+ <563f3b75-bf13-4ca7-a995-f2c8ff1b6799@rivosinc.com>
+ <7e405b99-50b4-4c87-a9b6-83c90110eca5@linaro.org>
+ <313c9a55-4cc8-4beb-a483-c0202665b226@rivosinc.com>
+ <b9b574e7-11de-4f04-a84f-40b9ffac986c@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/14] tcg/riscv: Implement vector roti/v/x shi ops
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
- <20240830061607.1940-14-zhiwei_liu@linux.alibaba.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240830061607.1940-14-zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b9b574e7-11de-4f04-a84f-40b9ffac986c@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,89 +96,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/29/24 23:16, LIU Zhiwei wrote:
-> @@ -2589,6 +2605,69 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
->               }
->           }
->           break;
-> +    case INDEX_op_shli_vec:
-> +        if (a2 > 31) {
-> +            tcg_gen_shls_vec(vece, v0, v1, tcg_constant_i32(a2));
-> +        } else {
-> +            vec_gen_3(INDEX_op_rvv_shli_vec, type, vece, tcgv_vec_arg(v0),
-> +                      tcgv_vec_arg(v1), a2);
-> +        }
-> +        break;
-> +    case INDEX_op_shri_vec:
-> +        if (a2 > 31) {
-> +            tcg_gen_shrs_vec(vece, v0, v1, tcg_constant_i32(a2));
-> +        } else {
-> +            vec_gen_3(INDEX_op_rvv_shri_vec, type, vece, tcgv_vec_arg(v0),
-> +                      tcgv_vec_arg(v1), a2);
-> +        }
-> +        break;
-> +    case INDEX_op_sari_vec:
-> +        if (a2 > 31) {
-> +            tcg_gen_sars_vec(vece, v0, v1, tcg_constant_i32(a2));
-> +        } else {
-> +            vec_gen_3(INDEX_op_rvv_sari_vec, type, vece, tcgv_vec_arg(v0),
-> +                      tcgv_vec_arg(v1), a2);
-> +        }
-> +        break;
-> +    case INDEX_op_rotli_vec:
-> +        t1 = tcg_temp_new_vec(type);
-> +        tcg_gen_shli_vec(vece, t1, v1, a2);
-> +        tcg_gen_shri_vec(vece, v0, v1, (8 << vece) - a2);
-> +        tcg_gen_or_vec(vece, v0, v0, t1);
-> +        tcg_temp_free_vec(t1);
-> +        break;
-> +    case INDEX_op_rotls_vec:
-> +        t1 = tcg_temp_new_vec(type);
-> +        t2 = tcg_temp_new_i32();
-> +        tcg_gen_neg_i32(t2, temp_tcgv_i32(arg_temp(a2)));
-> +        tcg_gen_shrs_vec(vece, v0, v1, t2);
-> +        tcg_gen_shls_vec(vece, t1, v1, temp_tcgv_i32(arg_temp(a2)));
-> +        tcg_gen_or_vec(vece, v0, v0, t1);
-> +        tcg_temp_free_vec(t1);
-> +        tcg_temp_free_i32(t2);
-> +        break;
+On Tue, Sep 03, 2024 at 05:02:44PM +0200, Philippe Mathieu-Daudé wrote:
+> On 3/9/24 15:37, Clément Léger wrote:
+> > On 03/09/2024 15:34, Philippe Mathieu-Daudé wrote:
+> > > On 3/9/24 09:53, Clément Léger wrote:
+> > > > On 02/09/2024 21:38, Philippe Mathieu-Daudé wrote:
+> > > > > On 30/8/24 13:57, Clément Léger wrote:
+> > > > > > On 30/08/2024 13:31, Michael Tokarev wrote:
+> > > > > > > 30.08.2024 14:14, Clément Léger wrote:
+> > > > > > > > On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can
+> > > > > > > > return
+> > > > > > > > -1. In that case we should fallback to using the OPEN_MAX define.
+> > > > > > > > According to "man sysconf", the OPEN_MAX define should be present and
+> > > > > > > > provided by either unistd.h and/or limits.h so include them for that
+> > > > > > > > purpose. For other OSes, just assume a maximum of 1024 files
+> > > > > > > > descriptors
+> > > > > > > > as a fallback.
+> > > > > > > > 
+> > > > > > > > Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-
+> > > > > > > > posix")
+> > > > > > > > Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > > > > > > Signed-off-by: Clément Léger <cleger@rivosinc.com>
+> > > > > > > 
+> > > > > > > Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+> > > > > > > 
+> > > > > > > > @@ -928,6 +933,13 @@ static void
+> > > > > > > > qemu_close_all_open_fd_fallback(const
+> > > > > > > > int *skip, unsigned int nskip,
+> > > > > > > >      void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+> > > > > > > >      {
+> > > > > > > >          int open_max = sysconf(_SC_OPEN_MAX);
+> > > > > > > > +    if (open_max == -1) {
+> > > > > > > > +#ifdef CONFIG_DARWIN
+> > > > > > > > +        open_max = OPEN_MAX;
+> > > > > 
+> > > > > Missing errno check.
+> > > > 
+> > > > man sysconf states that:
+> > > > 
+> > > > "On error, -1 is returned and errno is set to indicate the error (for
+> > > > example, EINVAL, indicating that name is invalid)."
+> > > > 
+> > > > So it seems checking for -1 is enough no ? Or were you thinking about
+> > > > something else ?
+> > > 
+> > > Mine (macOS 14.6) is:
+> > > 
+> > >   RETURN VALUES
+> > >       If the call to sysconf() is not successful, -1 is returned and
+> > >       errno is set appropriately.  Otherwise, if the variable is
+> > >       associated with functionality that is not supported, -1 is
+> > >       returned and errno is not modified.  Otherwise, the current
+> > >       variable value is returned.
+> > 
+> > Which seems to imply the same than mine right ? -1 is always returned in
+> > case of error and errno might or not be set. So checking for -1 seems
+> > enough to check an error return.
+> 
+> Yes but we can check for the unsupported case. Something like:
+> 
+>     long qemu_sysconf(int name, long unsupported_default)
+>     {
+>         int current_errno = errno;
+>         long retval;
+> 
+>         retval = sysconf(name);
+>         if (retval == -1) {
+>             if (errno == current_errno) {
+>                 return unsupported_default;
+>             }
+>             perror("sysconf");
+>             return -1;
+>         }
+>         return retval;
+>     }
 
-I'm trying to work out how much benefit there is here of expanding these early, as opposed 
-to simply using TCG_REG_TMP0 when the immediate doesn't fit, or for rotls_vec negation.
+That looks uncessarily complicated, and IMHO makes it less
+portable. eg consider macOS behaviour:
 
-> +    case INDEX_op_rotlv_vec:
-> +        v2 = temp_tcgv_vec(arg_temp(a2));
-> +        t1 = tcg_temp_new_vec(type);
-> +        tcg_gen_neg_vec(vece, t1, v2);
-> +        vec_gen_3(INDEX_op_shrv_vec, type, vece, tcgv_vec_arg(t1),
-> +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
-> +        vec_gen_3(INDEX_op_shlv_vec, type, vece, tcgv_vec_arg(v0),
-> +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
-> +        tcg_gen_or_vec(vece, v0, v0, t1);
-> +        tcg_temp_free_vec(t1);
-> +        break;
-> +    case INDEX_op_rotrv_vec:
-> +        v2 = temp_tcgv_vec(arg_temp(a2));
-> +        t1 = tcg_temp_new_vec(type);
-> +        tcg_gen_neg_vec(vece, t1, v2);
-> +        vec_gen_3(INDEX_op_shlv_vec, type, vece, tcgv_vec_arg(t1),
-> +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
-> +        vec_gen_3(INDEX_op_shrv_vec, type, vece, tcgv_vec_arg(v0),
-> +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
-> +        tcg_gen_or_vec(vece, v0, v0, t1);
-> +        tcg_temp_free_vec(t1);
-> +        break;
+ "if the variable is associated with functionality that is
+  not supported, -1 is returned and errno is not modified"
 
-And here we can use TCG_REG_V0 as the temporary, both for negation and shift intermediate.
+vs Linux documented behaviour:
 
-     vrsub_vi  V0, a2, 0
-     vshlv_vv  V0, a1, V0
-     vshrv_vv  a0, a1, a2
-     vor_vv    a0, a0, V0
+  "If name corresponds to a maximum or minimum limit, and
+   that limit is indeterminate, -1 is returned and errno
+   is  not  changed."
 
+IMHO we should do what Clément already suggested and set a
+default anytime retval == -1, and ignore errno. There is
+no user benefit from turning errnos into a fatal error
+via perror()
 
-r~
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
