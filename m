@@ -4,122 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37ACCCD343D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014E9CD343E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slV9w-0003d1-Cu; Tue, 03 Sep 2024 11:09:32 -0400
+	id 1slVGO-00082E-UC; Tue, 03 Sep 2024 11:16:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slV9t-0003c0-Au
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:09:30 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1slVGA-0007y1-PQ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:15:59 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slV9r-0000zx-Om
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:09:29 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 118081F397;
- Tue,  3 Sep 2024 15:09:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725376166; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
- b=j2VVMYSye5tmWxWYAkoPMfXYkH0JT4Zmy4gIYvDGzNa9i9Gqf7YHgeWXT5LnjuBH1oRLMX
- OeX/QV+Nf8e9euKL7r6b31ZQwuK658LbnqRYKv66yez+vmQhYTYNkTAEisNbZ0HQB8tb3y
- gWqqXqa1tepavrlYJuGEw5FsGz/fdOg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725376166;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
- b=PF5qc5voEKT114OHhxMyodw4IsXav0HJcw4sxFJ3Jp+VQHLeeS54ioZFPitbJUgr3Al8xO
- JNE/WB4l0ur3C5AA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=j2VVMYSy;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PF5qc5vo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725376166; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
- b=j2VVMYSye5tmWxWYAkoPMfXYkH0JT4Zmy4gIYvDGzNa9i9Gqf7YHgeWXT5LnjuBH1oRLMX
- OeX/QV+Nf8e9euKL7r6b31ZQwuK658LbnqRYKv66yez+vmQhYTYNkTAEisNbZ0HQB8tb3y
- gWqqXqa1tepavrlYJuGEw5FsGz/fdOg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725376166;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
- b=PF5qc5voEKT114OHhxMyodw4IsXav0HJcw4sxFJ3Jp+VQHLeeS54ioZFPitbJUgr3Al8xO
- JNE/WB4l0ur3C5AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9025913A80;
- Tue,  3 Sep 2024 15:09:25 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id EACTFaUm12aiaAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 03 Sep 2024 15:09:25 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, =?utf-8?Q?Dan?=
- =?utf-8?Q?iel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Avihai Horon
- <avihaih@nvidia.com>, Joao
- Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 13/17] migration/multifd: Add
- migration_has_device_state_support()
-In-Reply-To: <4aaad112-5fdf-4172-bfb4-65dd7880202d@maciej.szmigiero.name>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <8407eb455dfc1dea3cabf065f90833fab337eb98.1724701542.git.maciej.szmigiero@oracle.com>
- <8734mlon65.fsf@suse.de>
- <4aaad112-5fdf-4172-bfb4-65dd7880202d@maciej.szmigiero.name>
-Date: Tue, 03 Sep 2024 12:09:23 -0300
-Message-ID: <87a5gon598.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1slVG7-0002Du-Qc
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:15:58 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7141e20e31cso4456279b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 08:15:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725376551; x=1725981351; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dCSwEr56B/IZH5hqdte0NmJ82E6p5nvadjeSBP7X3+I=;
+ b=voCvQUJD8B8QMgs0lxJNcSwZN9LA9JdKFpWptFmApsmAHktQnVyrHj03zvgDwgjm7B
+ fY/Tf+jyZkr1m0uk3me1AACQ7vn0gBHCIYuJGvMsvDZtJ0HIUf+NPnMvoAPnlJCfssgi
+ 2AEpHm/G1Wn6qX7m9CRBqiNuPk1ZRm9dLPKex1lf0jwuTnCdd90BydoG8/zbQsOzQFHK
+ l+pCOkIoPjN8PeZ8BtoK+r0v+yvq8PTFdHvYZRk9865P5gElXGHE5+JOshCL33Ohvxjd
+ 2dLAT9Xp6ih+iliJ6qi1RO98/13f0V9O3/YBfha0gZampDzRlPbkdOUamyPoxs6QGLvV
+ 4AmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725376551; x=1725981351;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dCSwEr56B/IZH5hqdte0NmJ82E6p5nvadjeSBP7X3+I=;
+ b=QqG+95LN0gpSQAxhscyBKAcaUQr15MgmR3oBW3hQEjzeHPvkQ9YyS2pLXoX3yv6new
+ reqg+tcEuVLA8t47bot7s5QeLuphBP+cA1T7Tl+1YcJqKsIZTgDiTae7JUpRJqQZeI0X
+ vqA9oFoJvtE0Y0fTPjTZ3CTu9JRdCJkGb9CFK1EMPEn8Gv8418a7Lm6SQPykmZwQymjh
+ 77MaWuxQx/gjVy/xVm+Ex8jY7rmUhwW1T/xe5H7dzeHf9kg8E8kVxj2CZ7uZiG5DxiIH
+ NC4BbWJqYVBWDhru94dnAgKEJTxuLoVZ82C5hxhcYn8sJ7gw8wLWANEhnXy3vuyVjbl9
+ YQAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXYmosyaMAIQ6bCFPuV5A0/mnSUS17kacn3HU/+IW9IO9Ubtrfg6OwarGJzum7Kn4w8t9KPmmBAOLv@nongnu.org
+X-Gm-Message-State: AOJu0Yz93IyTSa4qSnI4kYDXPWr3DoxNIpehMEB6ZL73XGwPLmBZmw3N
+ xt3taSY8Ec+YZxisps49rQNsEoQARGB/h4pi3pALWWD1hfw6k7Unp91XAcQVl64=
+X-Google-Smtp-Source: AGHT+IFcCGvrhp1Sq9SrRlwCRmR6LHwLBRu0GxkWxMJoAylxoZtK1mlxawXU6MDFajoLE+7Z/8+L7g==
+X-Received: by 2002:a05:6a21:6b0c:b0:1cc:d4a0:2675 with SMTP id
+ adf61e73a8af0-1cecf49aeedmr12877607637.3.1725376551288; 
+ Tue, 03 Sep 2024 08:15:51 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-715edc66743sm7633024b3a.152.2024.09.03.08.15.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Sep 2024 08:15:50 -0700 (PDT)
+Message-ID: <97873524-9e47-44c4-b34a-a27e9833b0e1@linaro.org>
+Date: Tue, 3 Sep 2024 08:15:49 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 118081F397
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid, suse.de:email]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 13/14] tcg/riscv: Implement vector roti/v/x shi ops
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
+ <20240830061607.1940-14-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240830061607.1940-14-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,51 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+On 8/29/24 23:16, LIU Zhiwei wrote:
+> @@ -2589,6 +2605,69 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
+>               }
+>           }
+>           break;
+> +    case INDEX_op_shli_vec:
+> +        if (a2 > 31) {
+> +            tcg_gen_shls_vec(vece, v0, v1, tcg_constant_i32(a2));
+> +        } else {
+> +            vec_gen_3(INDEX_op_rvv_shli_vec, type, vece, tcgv_vec_arg(v0),
+> +                      tcgv_vec_arg(v1), a2);
+> +        }
+> +        break;
+> +    case INDEX_op_shri_vec:
+> +        if (a2 > 31) {
+> +            tcg_gen_shrs_vec(vece, v0, v1, tcg_constant_i32(a2));
+> +        } else {
+> +            vec_gen_3(INDEX_op_rvv_shri_vec, type, vece, tcgv_vec_arg(v0),
+> +                      tcgv_vec_arg(v1), a2);
+> +        }
+> +        break;
+> +    case INDEX_op_sari_vec:
+> +        if (a2 > 31) {
+> +            tcg_gen_sars_vec(vece, v0, v1, tcg_constant_i32(a2));
+> +        } else {
+> +            vec_gen_3(INDEX_op_rvv_sari_vec, type, vece, tcgv_vec_arg(v0),
+> +                      tcgv_vec_arg(v1), a2);
+> +        }
+> +        break;
+> +    case INDEX_op_rotli_vec:
+> +        t1 = tcg_temp_new_vec(type);
+> +        tcg_gen_shli_vec(vece, t1, v1, a2);
+> +        tcg_gen_shri_vec(vece, v0, v1, (8 << vece) - a2);
+> +        tcg_gen_or_vec(vece, v0, v0, t1);
+> +        tcg_temp_free_vec(t1);
+> +        break;
+> +    case INDEX_op_rotls_vec:
+> +        t1 = tcg_temp_new_vec(type);
+> +        t2 = tcg_temp_new_i32();
+> +        tcg_gen_neg_i32(t2, temp_tcgv_i32(arg_temp(a2)));
+> +        tcg_gen_shrs_vec(vece, v0, v1, t2);
+> +        tcg_gen_shls_vec(vece, t1, v1, temp_tcgv_i32(arg_temp(a2)));
+> +        tcg_gen_or_vec(vece, v0, v0, t1);
+> +        tcg_temp_free_vec(t1);
+> +        tcg_temp_free_i32(t2);
+> +        break;
 
-> On 30.08.2024 20:55, Fabiano Rosas wrote:
->> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
->> 
->>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>
->>> Since device state transfer via multifd channels requires multifd
->>> channels with packets and is currently not compatible with multifd
->>> compression add an appropriate query function so device can learn
->>> whether it can actually make use of it.
->>>
->>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> 
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->> 
->> Out of curiosity, what do you see as a blocker for migrating to a file?
->> 
->> We would just need to figure out a mapping from file offset some unit of
->> data to be able to write in parallel like with ram (of which the page
->> offset is mapped to the file offset).
->
-> I'm not sure whether there's a point in that since VFIO devices
-> just provide a raw device state stream - there's no way to know
-> that some buffer is no longer needed because it consisted of
-> dirty data that was completely overwritten by a later buffer.
->
-> Also, the device type that the code was developed against - a (smart)
-> NIC - has so large device state because (more or less) it keeps a lot
-> of data about network connections passing / made through it.
->
-> It doesn't really make sense to make snapshot of such device for later
-> reload since these connections will be long dropped by their remote
-> peers by this point.
->
-> Such snapshotting might make more sense with GPU VFIO devices though.
->
-> If such file migration support is desired at some later point then for
-> sure the whole code would need to be carefully re-checked for implicit
-> assumptions.
+I'm trying to work out how much benefit there is here of expanding these early, as opposed 
+to simply using TCG_REG_TMP0 when the immediate doesn't fit, or for rotls_vec negation.
 
-Thanks, let's keep those arguments in mind, maybe we put them in a doc
-somewhere so we remember this in the future.
+> +    case INDEX_op_rotlv_vec:
+> +        v2 = temp_tcgv_vec(arg_temp(a2));
+> +        t1 = tcg_temp_new_vec(type);
+> +        tcg_gen_neg_vec(vece, t1, v2);
+> +        vec_gen_3(INDEX_op_shrv_vec, type, vece, tcgv_vec_arg(t1),
+> +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
+> +        vec_gen_3(INDEX_op_shlv_vec, type, vece, tcgv_vec_arg(v0),
+> +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
+> +        tcg_gen_or_vec(vece, v0, v0, t1);
+> +        tcg_temp_free_vec(t1);
+> +        break;
+> +    case INDEX_op_rotrv_vec:
+> +        v2 = temp_tcgv_vec(arg_temp(a2));
+> +        t1 = tcg_temp_new_vec(type);
+> +        tcg_gen_neg_vec(vece, t1, v2);
+> +        vec_gen_3(INDEX_op_shlv_vec, type, vece, tcgv_vec_arg(t1),
+> +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
+> +        vec_gen_3(INDEX_op_shrv_vec, type, vece, tcgv_vec_arg(v0),
+> +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
+> +        tcg_gen_or_vec(vece, v0, v0, t1);
+> +        tcg_temp_free_vec(t1);
+> +        break;
 
->
-> Thanks,
-> Maciej
+And here we can use TCG_REG_V0 as the temporary, both for negation and shift intermediate.
+
+     vrsub_vi  V0, a2, 0
+     vshlv_vv  V0, a1, V0
+     vshrv_vv  a0, a1, a2
+     vor_vv    a0, a0, V0
+
+
+r~
 
