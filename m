@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 202F0CD342A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D8CBCD343E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slVLZ-0004y0-4R; Tue, 03 Sep 2024 11:21:33 -0400
+	id 1slVNr-0001EJ-W6; Tue, 03 Sep 2024 11:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1slVLY-0004xX-Ev
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:21:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1slVLW-00036C-6i
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:21:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725376888;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4WbUQoRRWmMI0SMvAnR2u4IjbgkZrzicErmC6r/9Cj4=;
- b=MgdPjULRIEVmmC6O+79+izZBOlnZmydmSqS7TIEiLT7es7fym8hcHv9JVQfZjuZ/gzXUkL
- W7B2Erb/WCg6lca0ymkwp/OUeJn0D5uzsuHqnLHzed/OESRi9G/VY4gDLsR+crVe7DP7PB
- 6XFT1BMkVXKKo6s/ZcPY7thxovunhBU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-v7M7woMEPtScDT2gzGsdWQ-1; Tue,
- 03 Sep 2024 11:21:24 -0400
-X-MC-Unique: v7M7woMEPtScDT2gzGsdWQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B184190F99C; Tue,  3 Sep 2024 15:21:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.129])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 446C719560AE; Tue,  3 Sep 2024 15:21:19 +0000 (UTC)
-Date: Tue, 3 Sep 2024 16:21:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: =?utf-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return
- value == -1
-Message-ID: <ZtcpbNx0SAzzW0Ta@redhat.com>
-References: <20240830111451.3799490-1-cleger@rivosinc.com>
- <20240830111451.3799490-3-cleger@rivosinc.com>
- <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
- <dd28ea4f-67eb-4c42-84d2-24956cde7896@rivosinc.com>
- <294a5480-d871-41e2-8e08-c1067f45d454@linaro.org>
- <563f3b75-bf13-4ca7-a995-f2c8ff1b6799@rivosinc.com>
- <7e405b99-50b4-4c87-a9b6-83c90110eca5@linaro.org>
- <313c9a55-4cc8-4beb-a483-c0202665b226@rivosinc.com>
- <b9b574e7-11de-4f04-a84f-40b9ffac986c@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slVNq-0001C3-BO
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:23:54 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slVNo-0003Pp-Jr
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:23:54 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-427fc97a88cso45185255e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 08:23:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725377031; x=1725981831; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iT5pBN8PxBTkq82fOMKVzoFYg8GWHcdkhNz9qrdMkRU=;
+ b=PYRWDnKAvGIO1UTXORGp9OnMMStKHDtH+/48Gu0tiglh1KnjUczlv3v2A/AUB8dWIg
+ US2NniAs1xA6MxLqmxU/ycWohyk9+/bfRfCg8wQyWrF05SYWvsTLqRwmk/R5Qwd7Y7T0
+ SFZne4r0s5DkinSm8oyeCXDUnuYWT+O2y3fEnx4Efw0o78g6OOp3Wfde1WYTyuBxgKa6
+ WtlTDW/SdhjX3oZyTzdHqA7ganzfyP8u/9q+rRLbiwHJhi3FE/yL2VJq6EZbKKLD4dOC
+ DCm+Jz4WBTdDkHVn93NY0VMs2mtSvJEhlX6sl207rrQu9dHHf9DN7JA37yvPw8yOpRy3
+ KTmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725377031; x=1725981831;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iT5pBN8PxBTkq82fOMKVzoFYg8GWHcdkhNz9qrdMkRU=;
+ b=V/7lEp4H5bzL2TLgQCCfk3mWBQU/RifLtaB4JWAWFqotGE6944i919IHAM47v0QW4s
+ 0YLWMiU6CzaK6g5SNeas0FLB2+IMoSLgCaP8KLT5qWE0ZBowJzXcQdG0TS5BfXeib9MX
+ 27aAWRR3Wft9qLVNgzcW4s6IstVi+sPAvoSKrj8xQKpMKGBnQRf0MiTmmQkkqc59ajsP
+ +OI9mi6TgnGq59UGyF+KcpXtFAP0ShhlVG8SYXEXL+FidOPYMJQKQ61dcRYTmIGjfdpK
+ +T3URfCMe8TxP1WYgNtyNwIgpLcAjVB7NFYb2PQqbHUOfhV+Pumf9rv0/5QlqEbtsL1+
+ 0u/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUW0A5pHU9UOHUTqO+7eeVE0pt5RMct0C6E3XecGXvtfUMiiKXlOBTs+nHquYIX+pn12JqFPwffAjbm@nongnu.org
+X-Gm-Message-State: AOJu0YxDOJ+U5slfrO2BtlFR2a8lUSIT28ZL7bf6NY4HQfK1INwYdJMf
+ M1FXjMYXtm+t1fB0x2VgXTfId4dOcXL201+EhN1WH5Mi85xnTT0YsBTOTh1QVDI=
+X-Google-Smtp-Source: AGHT+IEMsfaZ7ob0Ym1L9PXiOpsYdgs2mYgQj5vYY9SsyfvXMu4jQ2YQ72ytU39m2gw6MhwTIWhtdg==
+X-Received: by 2002:a5d:5184:0:b0:374:b960:f847 with SMTP id
+ ffacd0b85a97d-374c947189amr4199068f8f.41.1725377030793; 
+ Tue, 03 Sep 2024 08:23:50 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bb6e2737dsm174239655e9.29.2024.09.03.08.23.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Sep 2024 08:23:50 -0700 (PDT)
+Message-ID: <c07957a1-fb5c-4973-aa7d-220ad06a0889@linaro.org>
+Date: Tue, 3 Sep 2024 17:23:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] target/arm/tcg: refine cache descriptions with a
+ wrapper
+To: Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: linuxarm@huawei.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, shameerali.kolothum.thodi@huawei.com,
+ Jonathan.Cameron@Huawei.com, alex.bennee@linaro.org, jiangkunkun@huawei.com
+References: <20240903144550.280-1-alireza.sanaee@huawei.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240903144550.280-1-alireza.sanaee@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b9b574e7-11de-4f04-a84f-40b9ffac986c@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,107 +96,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 03, 2024 at 05:02:44PM +0200, Philippe Mathieu-Daudé wrote:
-> On 3/9/24 15:37, Clément Léger wrote:
-> > On 03/09/2024 15:34, Philippe Mathieu-Daudé wrote:
-> > > On 3/9/24 09:53, Clément Léger wrote:
-> > > > On 02/09/2024 21:38, Philippe Mathieu-Daudé wrote:
-> > > > > On 30/8/24 13:57, Clément Léger wrote:
-> > > > > > On 30/08/2024 13:31, Michael Tokarev wrote:
-> > > > > > > 30.08.2024 14:14, Clément Léger wrote:
-> > > > > > > > On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can
-> > > > > > > > return
-> > > > > > > > -1. In that case we should fallback to using the OPEN_MAX define.
-> > > > > > > > According to "man sysconf", the OPEN_MAX define should be present and
-> > > > > > > > provided by either unistd.h and/or limits.h so include them for that
-> > > > > > > > purpose. For other OSes, just assume a maximum of 1024 files
-> > > > > > > > descriptors
-> > > > > > > > as a fallback.
-> > > > > > > > 
-> > > > > > > > Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-
-> > > > > > > > posix")
-> > > > > > > > Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > > > > > > Signed-off-by: Clément Léger <cleger@rivosinc.com>
-> > > > > > > 
-> > > > > > > Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-> > > > > > > 
-> > > > > > > > @@ -928,6 +933,13 @@ static void
-> > > > > > > > qemu_close_all_open_fd_fallback(const
-> > > > > > > > int *skip, unsigned int nskip,
-> > > > > > > >      void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
-> > > > > > > >      {
-> > > > > > > >          int open_max = sysconf(_SC_OPEN_MAX);
-> > > > > > > > +    if (open_max == -1) {
-> > > > > > > > +#ifdef CONFIG_DARWIN
-> > > > > > > > +        open_max = OPEN_MAX;
-> > > > > 
-> > > > > Missing errno check.
-> > > > 
-> > > > man sysconf states that:
-> > > > 
-> > > > "On error, -1 is returned and errno is set to indicate the error (for
-> > > > example, EINVAL, indicating that name is invalid)."
-> > > > 
-> > > > So it seems checking for -1 is enough no ? Or were you thinking about
-> > > > something else ?
-> > > 
-> > > Mine (macOS 14.6) is:
-> > > 
-> > >   RETURN VALUES
-> > >       If the call to sysconf() is not successful, -1 is returned and
-> > >       errno is set appropriately.  Otherwise, if the variable is
-> > >       associated with functionality that is not supported, -1 is
-> > >       returned and errno is not modified.  Otherwise, the current
-> > >       variable value is returned.
-> > 
-> > Which seems to imply the same than mine right ? -1 is always returned in
-> > case of error and errno might or not be set. So checking for -1 seems
-> > enough to check an error return.
+On 3/9/24 16:45, Alireza Sanaee wrote:
+> This patch allows for easier manipulation of the cache description
+> register, CCSIDR. Which is helpful for testing as well. Currently,
+> numbers get hard-coded and might be prone to errors.
 > 
-> Yes but we can check for the unsupported case. Something like:
+> Therefore, this patch adds a wrapper for different types of CPUs
+> available in tcg to decribe caches. One function `make_ccsidr` supports
+> two cases by carrying a parameter as FORMAT that can be LEGACY and
+> CCIDX which determines the specification of the register.
 > 
->     long qemu_sysconf(int name, long unsupported_default)
->     {
->         int current_errno = errno;
->         long retval;
+> For CCSIDR register, 32 bit version follows specification [1].
+> Conversely, 64 bit version follows specification [2].
 > 
->         retval = sysconf(name);
->         if (retval == -1) {
->             if (errno == current_errno) {
->                 return unsupported_default;
->             }
->             perror("sysconf");
->             return -1;
->         }
->         return retval;
->     }
+> [1] B4.1.19, ARM Architecture Reference Manual ARMv7-A and ARMv7-R
+> edition, https://developer.arm.com/documentation/ddi0406
+> [2] D23.2.29, ARM Architecture Reference Manual for A-profile Architecture,
+> https://developer.arm.com/documentation/ddi0487/latest/
+> 
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> ---
+>   target/arm/cpu-features.h |  50 ++++++++++++++++++
+>   target/arm/cpu64.c        |  19 ++++---
+>   target/arm/tcg/cpu64.c    | 108 +++++++++++++++++++-------------------
+>   3 files changed, 117 insertions(+), 60 deletions(-)
 
-That looks uncessarily complicated, and IMHO makes it less
-portable. eg consider macOS behaviour:
+For minor / doc changes it helps reviewer to carry their tag ;)
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
 
- "if the variable is associated with functionality that is
-  not supported, -1 is returned and errno is not modified"
-
-vs Linux documented behaviour:
-
-  "If name corresponds to a maximum or minimum limit, and
-   that limit is indeterminate, -1 is returned and errno
-   is  not  changed."
-
-IMHO we should do what Clément already suggested and set a
-default anytime retval == -1, and ignore errno. There is
-no user benefit from turning errnos into a fatal error
-via perror()
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
