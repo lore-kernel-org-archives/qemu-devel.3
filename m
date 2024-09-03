@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B5DCD379F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B25CD37A9
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slWww-0000fK-U1; Tue, 03 Sep 2024 13:04:14 -0400
+	id 1slX8B-00022z-CO; Tue, 03 Sep 2024 13:15:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWww-0000cG-5D
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:04:14 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWws-0001iq-OP
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:04:13 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4280ca0791bso48519055e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725383048; x=1725987848; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SzD5+zVDqSDxG8DuYOWElnkzoc20vrPEEDM4mF8RX8s=;
- b=Tl0qxFb08jvcQA5jsW0+J5IEr6i+0I486Qt+9daDel8nx95vEQnv5S7vm2COggLZyW
- WcxLFi1XnKEThhgVd1b7W6h7W7BHIV8xwvs+E+cEip1VqvLBt5SSqyF3AX9i+tUifeUl
- GuPnwtayYdWxSJfPpRJ0eOKi5aYaksieyZFjRCd5XketkrZE9hi4JdT7HVgLgxHV+t7B
- B24axvCeRe0wZDeUTHhBqC7xHbKSztBGk3q5/yO30skM60mZVf011JrGqsvsH/WRAQ/4
- JxeqOZ13+c2/tH5MQ+QFTUcUkuVE4G0lDPEs/7Z1SaiA35ZKqGwMpbZxCIKW2ibZaNZV
- zyfA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1slX85-0001lF-Ku
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:15:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1slX84-0003Es-0B
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:15:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725383741;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8z9IuWVwM90ATBC0rbg4REiIuxiuTPKKJcmhSRpEp+g=;
+ b=L7iKFKod9vbEj17qFC3/9yUJWvQcPEfyN/ZRY95aSudaxOF7dWnDaAE8p2r1EHvMqtE8wg
+ F2uDnff9KoB9BUoGIaXvhJYS03ij/Tvs5MO0Sjfy5cGbl3OX3DnCTu2mfrtZBhoVq0CPNB
+ opJ3L4YCBvKupxmCvzsM7ErDtRegxP8=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-340-DLCBKUvUPZesRRTN1E241Q-1; Tue, 03 Sep 2024 13:15:39 -0400
+X-MC-Unique: DLCBKUvUPZesRRTN1E241Q-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-7d235d55c41so5228749a12.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:15:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725383048; x=1725987848;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SzD5+zVDqSDxG8DuYOWElnkzoc20vrPEEDM4mF8RX8s=;
- b=jMjNN3zZSA2ywEgFkLOsLEyI7Z0MnNPOd3gxqdn7koTEFG6lnv05+WOFdjAgChPKBo
- lCN0bvgudx4/TYnGqBRb+UebNwl83i1RdgpBhCpX8cyitt3G2/kbRL8LwMVlt4YpWSNX
- mcwXyawyxjlyHL4xID+aVS6uPjkkrZ1RPTxXQL9dlLst4OIcRZR+EW/uFzbxH2q2CBZk
- sGklt4df1eR4NvqNIg8sxxPZXk4KGxb0eshe0FpfNOqLSaQAJpA6MmzaPytJY+cDi22R
- qrgQvOAirFqwBGj3G+v0UIeTaYHcKtkX+Wy4Dm+LVaYK5z7MRJovI3TeTrZymxuRv5cw
- Pccw==
+ d=1e100.net; s=20230601; t=1725383738; x=1725988538;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8z9IuWVwM90ATBC0rbg4REiIuxiuTPKKJcmhSRpEp+g=;
+ b=riolRpyvsaMVb68QIdPPsLDNkxz6ub4fmTeANCeS66iSKWieiiQJhtKAGmDwyECGc+
+ CN4hNbUpYdxItzIbLSQZG7Y+whbn+RSXPjXt4HYD6i5Vo41uGYe1sOpq9pw/d1TM1xDv
+ B+tKZoyt6nw36iVuC6Hg/6IozNCZXhJ+3nTzOaCniqHd4FotKk+p+D42ODZj3SEbtsWQ
+ VgjmECGRrE+1U+hL3up1EXbb87ObPRptSv2UNSnVi8sDfWTewXJSXiATfK/TnKeRFuRT
+ 5j5AQ5fs2gQFP3tetg7wNG65vvCx5pcjKwrzBa7v1nuKz8kr5OWXdlNaUl68CLqUaVyZ
+ VZZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbY5Y1i8otI5KKvpkV5wrNUdVmS3lHcSr3Tp+xiE9KxWLEnRFvYWzy0hivW/iHpuYL2zxkqw/38VR+@nongnu.org
-X-Gm-Message-State: AOJu0YzpsFDMQVpEFOLdNMOhPCPHV7EzlFwEqL6GlnaNItOrvclFNjY4
- PRQZDsVb1irf/zv6hfWBD7iRIjzgXRy79XK0IDDEe9fsCrecjHwBrHUosxgCIwJulUbAmQxFUoa
- Y8CjKD+aQ9Ky9M3RrF1UejfQzW/VPiijku+mC/Q==
-X-Google-Smtp-Source: AGHT+IGQvP78rXaruSU+62ABZodVX3t6snswbk8HN5iVHXY2LD0ih4YlU6X7RqLFa6sHkUE6tQtbSefzaPpdLPNlhSQ=
-X-Received: by 2002:adf:e2c6:0:b0:374:c671:2324 with SMTP id
- ffacd0b85a97d-376dea47305mr1124877f8f.44.1725383048189; Tue, 03 Sep 2024
- 10:04:08 -0700 (PDT)
+ AJvYcCXNG4pRxfDGAijfLgX9uqMDtDGAMvvAnnabeI1FfinE3DFsCLR/WlPOzIKYJorI4bO3sQM6Y0VD0kEB@nongnu.org
+X-Gm-Message-State: AOJu0YxIaL09s79iLhk2fIS+LZFrXyqormxqpAjKYGZPCxEUXisXf5nz
+ KyPlnXG4S6J95whO5NALB4lhoepi48qLusxoKJRVhxN/V7EKICxeefjGYXG0ExA9eYpL+wZ0HZ6
+ sTva5PMP3QggRogT/WeBNllMf2sm/2zfjmtumFQG17ETIP6ihCZAY0qE1OH9GLVjxKv8r/+6V+q
+ aTmGgGHIUVdpcJeNB4nTFzOdfmnEg=
+X-Received: by 2002:a17:90a:ea93:b0:2d3:bd6f:a31e with SMTP id
+ 98e67ed59e1d1-2d88e3e64dcmr11303764a91.28.1725383738455; 
+ Tue, 03 Sep 2024 10:15:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLgsy8ehz1wwuFw/yY5qdN4ldUz4Ochb4gKXCTWYG8/2N6AmQqFRUPPT2vt+i53o7NvPJvvxAApa+TOd6nf2M=
+X-Received: by 2002:a17:90a:ea93:b0:2d3:bd6f:a31e with SMTP id
+ 98e67ed59e1d1-2d88e3e64dcmr11303740a91.28.1725383738049; Tue, 03 Sep 2024
+ 10:15:38 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
  <762867ba-8980-44f6-a9a6-5e766bc6a60b@redhat.com>
-In-Reply-To: <762867ba-8980-44f6-a9a6-5e766bc6a60b@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Sep 2024 18:03:43 +0100
-Message-ID: <CAFEAcA-uTqq9Ke4pS59aQ_9t7KObRxff8DN_rY-2JkfSCQkASQ@mail.gmail.com>
+ <CAFEAcA-uTqq9Ke4pS59aQ_9t7KObRxff8DN_rY-2JkfSCQkASQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA-uTqq9Ke4pS59aQ_9t7KObRxff8DN_rY-2JkfSCQkASQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 3 Sep 2024 19:15:24 +0200
+Message-ID: <CABgObfY--e1h=fEC=7TxA9eaHog1N4V4+3oEm+W_RSKEEUSU4w@mail.gmail.com>
 Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
-To: Paolo Bonzini <pbonzini@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,56 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 17:55, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On 9/3/24 18:06, Peter Maydell wrote:
-> > This patchset removes the various Arm machines which we deprecated
-> > for the 9.0 release and are therefore allowed to remove for the 9.2
-> > release:
-> >   akita, borzoi, cheetah, connex, mainstone, n800, n810,
-> >   spitz, terrier, tosa, verdex, z2
-> > We get to drop over 30,000 lines of unmaintained code. So it's
-> > a big patchset but it's almost all deletions.
-> >
-> > We have some command line options which were documented as only used
-> > by the pxa2xx LCD display driver: -portrait and -rotate.  These
-> > allowed the user to tell the display device to rotate its output by
-> > 90/180/270 degrees (and the ui input layer to correspondingly rotate
-> > mouse event coordinates to match).  I didn't realize these existed
-> > when we deprecated the pxa2xx machines -- do we need a separate
-> > deprecate-and-drop period to remove the command line options?  (If
-> > so, I can drop the relevant patch from this series.)
->
-> They are not specific to PXA; PXA LCD is the only one that supports
-> passing it to the guest, but the logic is generic: if (for whatever
-> reason) your VM generates output that is rotated, you can use the option
-> to rotate mouse input.
->
-> It's okay to remove it without deprecation notice, but also to keep it.
-> Your choice, it's not a lot of code.
+On Tue, Sep 3, 2024 at 7:04=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+> The PXA display device doesn't pass anything through to the guest,
+> by the way -- it just draws the pixels in the guest framebuffer
+> in a different place in the UI window. As the FIXME comment in
+> pxa2xx_lcd.c notes, this should really have been done in common
+> code, not in a specific display driver.
 
-Well, the documentation for them says:
- -portrait       rotate graphical output 90 deg left (only PXA LCD)
- -rotate <deg>   rotate graphical output some deg left (only PXA LCD)
+spitz also passes it through SPITZ_GPIO_SWB ("Tablet mode"), though
+it's incomplete because it should have treated 180 the same as 0.
 
-so the original intent was clearly (a) that the main effect
-was rotation of the graphical output and (b) that these were
-only effective for PXA.
+> As we both note, the UI input layer part *is* generic code so it
+> will do the rotation regardless of whether the display device is
+> also rotating the guest output. But that seems to me more of
+> an accident than an intentional feature.
 
-The PXA display device doesn't pass anything through to the guest,
-by the way -- it just draws the pixels in the guest framebuffer
-in a different place in the UI window. As the FIXME comment in
-pxa2xx_lcd.c notes, this should really have been done in common
-code, not in a specific display driver.
+Yes, it is, though it *is* working. On the other hand I doubt anyone
+is using it. Since we have in the past removed single options like
+-alt-grab, whoever needs it can resurrect the code from git and add
+the options to -display. They can also add rotation of the output as a
+separate knob from rotation of the input.
 
-As we both note, the UI input layer part *is* generic code so it
-will do the rotation regardless of whether the display device is
-also rotating the guest output. But that seems to me more of
-an accident than an intentional feature.
+Paolo
 
-I don't care very much because there's not that much code
-involved. It's all separated out into patch 24 of this series:
-https://patchew.org/QEMU/20240903160751.4100218-1-peter.maydell@linaro.org/20240903160751.4100218-25-peter.maydell@linaro.org/
-
--- PMM
 
