@@ -1,106 +1,83 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39EF9CA0FE1
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Aug 2024 11:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DEDDCD342A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sk0C2-0002DF-Rp; Fri, 30 Aug 2024 07:53:31 -0400
+	id 1slVS3-0001eZ-Fg; Tue, 03 Sep 2024 11:28:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sk0Bz-0002Bh-RC; Fri, 30 Aug 2024 07:53:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sk0Bx-0002S5-9F; Fri, 30 Aug 2024 07:53:27 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47U8DiwY021313;
- Fri, 30 Aug 2024 11:53:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:subject:to:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- gbX1YTkXO/Z7vgobBnnOePUtvkkIhKJIOp487VLEbb8=; b=eG5m+084Qf0GrcxX
- gPpq+SYFaw6xNU81991gf1epDGHgxes3N+uAuMaOLTs/pYbT5YjR9mPite0lq9Td
- UG0brCYnRER/jiMoIe0xykW9xQ0Nzo1+XxTxksIH8ddfgbbN8eYD0DnBXT3DlrMc
- YTAglCdhFRgOlPVSt6AJYCVxRwIaXxFcyjmVL/3IakUYGia0UcMgvRKCa0acvPLQ
- 3SdsdR/r/AbM4d5+SIeoIs4ku8/XvhJxrTMXW45cne/cHypJckojCsEE8opGr6Y3
- IRk5gSesNQa3XnsFmvwF/jg2atmy13pZjJluzSbrLrFDwKCeytxMTJICZOaksMIY
- oOi5CA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8p74wr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Aug 2024 11:53:13 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47UBrC1w009724;
- Fri, 30 Aug 2024 11:53:12 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 419q8p74wp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Aug 2024 11:53:12 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47UAuh33003100;
- Fri, 30 Aug 2024 11:53:11 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 417tuqbjb7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Aug 2024 11:53:11 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 47UBr7nt20709814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Aug 2024 11:53:07 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C67F12004B;
- Fri, 30 Aug 2024 11:53:07 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A88E920049;
- Fri, 30 Aug 2024 11:53:04 +0000 (GMT)
-Received: from [9.195.47.18] (unknown [9.195.47.18])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 30 Aug 2024 11:53:04 +0000 (GMT)
-Message-ID: <d658080e-e23c-4213-a6f6-35d4d4bd21ad@linux.ibm.com>
-Date: Fri, 30 Aug 2024 17:23:02 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 RESEND 0/5] Power11 support for QEMU [PSeries]
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20240731055022.696051-1-adityag@linux.ibm.com>
- <20240829174443.06c0b2ae-eb-amachhiw@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <20240829174443.06c0b2ae-eb-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: i4voK4S3b5y9CIgKNFj7jCksAkQZTSvN
-X-Proofpoint-ORIG-GUID: RRWA8OiFNhVVFHod2jyrllcSX2RXy7XL
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slVS0-0001dF-V7
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:28:13 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slVRu-0004Ee-Af
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:28:12 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-42bb4f8a4bfso29974425e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 08:28:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725377284; x=1725982084; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qf1Ubs2ZRFSudgltaQSUtR+jLW03mxUZCEK/37WcVc8=;
+ b=DpeDmamng5T6IB05dZv93lMyHqFsDwLNZzGDYZGrbqxAP+OOW70htQSj3ZlR/UoOO0
+ qOTL0Plx15Vva2chx+Tr731x4msm7JZOgm4odE+3B6vnRi5ZTFUuVgDGQB1WwNfSsyr2
+ v4BdluhhnTARoecQ6N/b2QMtec+nnFHkd6y9EkOPmyrX8lhWuL8RID/AicL2Cw6ZQwso
+ 0UhlXaZ9ii5MBMgMO/RycLK624CngH5oNoLmZJxn+gyTJex7bl8Ucc/jegMPU0tBMOTt
+ 3u7fsrRRR3Hv2PUnSgG/Bo/jtWFXPvOsI8baGwzVITXC2GuL+AnqlGCDSCCH+VyYQHc+
+ rlXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725377284; x=1725982084;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qf1Ubs2ZRFSudgltaQSUtR+jLW03mxUZCEK/37WcVc8=;
+ b=p8pW1AlzOY03YGJlVpUAAo9ReObHqO/1IqIKRPXP/X91YeyVBfL61tqvFP8E8nZwjk
+ L5nmv4woFod16kEYPdERaAK9uDSzR0qJfPo4RbmoAtWiUZwgFjzAnzR9ag303agyVtDS
+ IaL0vXC/1ClEI0USpaoCaUcL7lqXtYcnDInV4EvX8kIA8PE1Pl2WrKHUtwnOBglgT4lS
+ hJ5sVZ0lH6ijfgzUwydEi2aZost3B1yKlqWxmoYGiNligX/2sFpp5GWTTvqn8vx+fEPg
+ Q0YGKLsWayN9a3Vp4hf/7ImYhk3pjd//QQglAUiAglEFoVsH1TY8vXxONTKfTRJpPe3S
+ zurw==
+X-Gm-Message-State: AOJu0YwiF2Oq6ggf9NAqN3hKFS3iDEM2ogPgo2kos5QGR/Bsu+q5YxcI
+ KcOSsCSlxYFpzpl8lvloxbI2V6+nW887/iTY/+9L78z6H242wTUyoODExyva1WEmFwWgxkSp3tu
+ /
+X-Google-Smtp-Source: AGHT+IFAs8/0SvNFtgNARqDWgZWmuSFIU2GgssL+aCENNo+YvpxBJt0cVaX72dMBtR6k6GjMUkAVsQ==
+X-Received: by 2002:adf:f9ce:0:b0:374:cde8:20d9 with SMTP id
+ ffacd0b85a97d-374cde823b6mr3388594f8f.23.1725377281494; 
+ Tue, 03 Sep 2024 08:28:01 -0700 (PDT)
+Received: from localhost.localdomain ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bbe79f545sm142458135e9.2.2024.09.03.08.27.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 03 Sep 2024 08:27:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org,
+ Rabin Vincent <rabinv@axis.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH] target/cris: Remove the deprecated CRIS target
+Date: Tue,  3 Sep 2024 17:27:57 +0200
+Message-ID: <20240903152757.17935-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-30_06,2024-08-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 clxscore=1011
- spamscore=0 impostorscore=0 phishscore=0 suspectscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408300087
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,144 +94,23099 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Amit,
+The CRIS target is deprecated since v9.0 (commit c7bbef40234
+"docs: mark CRIS support as deprecated").
 
-On 29/08/24 17:49, Amit Machhiwal wrote:
-> Hi Aditya,
->
-> On 2024/07/31 11:20 AM, Aditya Gupta wrote:
->> Overview
->> ============
->>
->> Split "Power11 support for QEMU" into 2 patch series: pseries & powernv.
->>
->> This patch series is for pseries support for Power11.
->>
->> As Power11 core is same as Power10, hence much of the code has been reused from
->> Power10.
->>
->> Power11 was added in Linux in:
->>    commit c2ed087ed35c ("powerpc: Add Power11 architected and raw mode")
->>
->> Git Tree for Testing
->> ====================
->>
->> QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v6-pseries
->>
->> Has been tested with following cases:
->> * '-M pseries' / '-M pseries -cpu Power11'
-> I tried the below command with mailine QEMU and this patch series applied. I
-> could boot the guest with -cpu Power11 option but when I check inside the guest
-> with `lscpu`, I can still see the Model name being reported as "Power 10" while
-> the PVR value looks fine corresponding to Power11.
->
-> Did you see "Power 11" while you were testing this?
->
->    $ qemu-system-ppc64 -m 4G -smp 4 -nographic -drive file=/root/testing/debian-12-generic-ppc64el.qcow2,format=qcow2 -accel tcg -cpu Power11
->
->    root@localhost:~# lscpu
->    Architecture:             ppc64le
->      Byte Order:             Little Endian
->    CPU(s):                   4
->      On-line CPU(s) list:    0-3
->    Model name:               POWER10 (architected), altivec supported
->      Model:                  18.0 (pvr 0082 1200)
+Remove:
+- Buildsys / CI infra
+- User emulation
+- System emulation (axis-dev88 machine and ETRAX devices)
+- Tests
 
-Yes.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Cc: Rabin Vincent <rabinv@axis.com>
+Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+---
+ MAINTAINERS                                   |   17 -
+ docs/about/deprecated.rst                     |    8 -
+ docs/about/emulation.rst                      |    4 -
+ docs/about/removed-features.rst               |    7 +
+ docs/user/main.rst                            |    4 -
+ configure                                     |    4 -
+ configs/devices/cris-softmmu/default.mak      |    4 -
+ configs/targets/cris-linux-user.mak           |    1 -
+ configs/targets/cris-softmmu.mak              |    1 -
+ meson.build                                   |    1 -
+ qapi/machine.json                             |    2 +-
+ hw/cris/boot.h                                |   16 -
+ include/disas/dis-asm.h                       |    6 -
+ include/exec/poison.h                         |    2 -
+ include/hw/cris/etraxfs.h                     |   54 -
+ include/hw/cris/etraxfs_dma.h                 |   36 -
+ include/sysemu/arch_init.h                    |    1 -
+ include/user/abitypes.h                       |    7 -
+ linux-user/cris/sockbits.h                    |    1 -
+ linux-user/cris/syscall_nr.h                  |  367 --
+ linux-user/cris/target_cpu.h                  |   45 -
+ linux-user/cris/target_elf.h                  |   14 -
+ linux-user/cris/target_errno_defs.h           |    7 -
+ linux-user/cris/target_fcntl.h                |   11 -
+ linux-user/cris/target_mman.h                 |   13 -
+ linux-user/cris/target_prctl.h                |    1 -
+ linux-user/cris/target_proc.h                 |    1 -
+ linux-user/cris/target_resource.h             |    1 -
+ linux-user/cris/target_signal.h               |    9 -
+ linux-user/cris/target_structs.h              |    1 -
+ linux-user/cris/target_syscall.h              |   46 -
+ linux-user/cris/termbits.h                    |  225 --
+ linux-user/syscall_defs.h                     |    7 +-
+ target/cris/cpu-param.h                       |   16 -
+ target/cris/cpu-qom.h                         |   32 -
+ target/cris/cpu.h                             |  286 --
+ target/cris/crisv10-decode.h                  |  112 -
+ target/cris/crisv32-decode.h                  |  133 -
+ target/cris/helper.h                          |   23 -
+ target/cris/mmu.h                             |   22 -
+ target/cris/opcode-cris.h                     |  355 --
+ tests/tcg/cris/libc/crisutils.h               |   76 -
+ tests/tcg/cris/libc/sys.h                     |   18 -
+ disas/cris.c                                  | 2863 ---------------
+ hw/char/etraxfs_ser.c                         |  267 --
+ hw/cris/axis_dev88.c                          |  351 --
+ hw/cris/boot.c                                |  102 -
+ hw/dma/etraxfs_dma.c                          |  781 ----
+ hw/intc/etraxfs_pic.c                         |  172 -
+ hw/net/etraxfs_eth.c                          |  688 ----
+ hw/timer/etraxfs_timer.c                      |  407 ---
+ linux-user/cris/cpu_loop.c                    |   95 -
+ linux-user/cris/signal.c                      |  194 -
+ linux-user/elfload.c                          |   15 -
+ linux-user/syscall.c                          |   10 +-
+ system/qemu-seccomp.c                         |    2 +-
+ target/cris/cpu.c                             |  323 --
+ target/cris/gdbstub.c                         |  127 -
+ target/cris/helper.c                          |  287 --
+ target/cris/machine.c                         |   93 -
+ target/cris/mmu.c                             |  356 --
+ target/cris/op_helper.c                       |  580 ---
+ target/cris/translate.c                       | 3252 -----------------
+ tests/qtest/machine-none-test.c               |    1 -
+ tests/tcg/cris/bare/sys.c                     |   63 -
+ tests/tcg/cris/libc/check_abs.c               |   40 -
+ tests/tcg/cris/libc/check_addc.c              |   58 -
+ tests/tcg/cris/libc/check_addcm.c             |   85 -
+ tests/tcg/cris/libc/check_addo.c              |  125 -
+ tests/tcg/cris/libc/check_addoq.c             |   44 -
+ tests/tcg/cris/libc/check_bound.c             |  142 -
+ tests/tcg/cris/libc/check_ftag.c              |   37 -
+ .../cris/libc/check_gcctorture_pr28634-1.c    |   15 -
+ .../tcg/cris/libc/check_gcctorture_pr28634.c  |   15 -
+ .../tcg/cris/libc/check_glibc_kernelversion.c |  116 -
+ tests/tcg/cris/libc/check_hello.c             |    7 -
+ tests/tcg/cris/libc/check_int64.c             |   47 -
+ tests/tcg/cris/libc/check_lz.c                |   49 -
+ tests/tcg/cris/libc/check_mapbrk.c            |   39 -
+ tests/tcg/cris/libc/check_mmap1.c             |   48 -
+ tests/tcg/cris/libc/check_mmap2.c             |   48 -
+ tests/tcg/cris/libc/check_mmap3.c             |   33 -
+ tests/tcg/cris/libc/check_moveq.c             |   51 -
+ tests/tcg/cris/libc/check_openpf1.c           |   38 -
+ tests/tcg/cris/libc/check_openpf2.c           |   16 -
+ tests/tcg/cris/libc/check_openpf3.c           |   49 -
+ tests/tcg/cris/libc/check_openpf5.c           |   56 -
+ tests/tcg/cris/libc/check_settls1.c           |   45 -
+ tests/tcg/cris/libc/check_sigalrm.c           |   26 -
+ tests/tcg/cris/libc/check_stat1.c             |   16 -
+ tests/tcg/cris/libc/check_stat2.c             |   20 -
+ tests/tcg/cris/libc/check_stat3.c             |   25 -
+ tests/tcg/cris/libc/check_stat4.c             |   27 -
+ tests/tcg/cris/libc/check_swap.c              |   76 -
+ tests/tcg/cris/libc/check_time2.c             |   18 -
+ fpu/softfloat-specialize.c.inc                |    4 +-
+ target/cris/translate_v10.c.inc               | 1262 -------
+ .gitlab-ci.d/buildtest.yml                    |    2 +-
+ .gitlab-ci.d/container-cross.yml              |    5 -
+ .gitlab-ci.d/crossbuild-template.yml          |    4 +-
+ disas/meson.build                             |    1 -
+ hw/Kconfig                                    |    1 -
+ hw/char/meson.build                           |    1 -
+ hw/cris/Kconfig                               |   11 -
+ hw/cris/meson.build                           |    5 -
+ hw/dma/meson.build                            |    1 -
+ hw/intc/meson.build                           |    1 -
+ hw/meson.build                                |    1 -
+ hw/net/meson.build                            |    1 -
+ hw/net/trace-events                           |    5 -
+ hw/timer/meson.build                          |    1 -
+ scripts/coverity-scan/COMPONENTS.md           |    3 -
+ scripts/probe-gdb-support.py                  |    1 -
+ target/Kconfig                                |    1 -
+ target/cris/Kconfig                           |    2 -
+ target/cris/meson.build                       |   17 -
+ target/meson.build                            |    1 -
+ tests/data/qobject/qdict.txt                  |    6 -
+ tests/docker/Makefile.include                 |    1 -
+ .../dockerfiles/fedora-cris-cross.docker      |   14 -
+ tests/tcg/cris/.gdbinit                       |   11 -
+ tests/tcg/cris/Makefile.target                |   62 -
+ tests/tcg/cris/README                         |    1 -
+ tests/tcg/cris/bare/check_addcv17.s           |   65 -
+ tests/tcg/cris/bare/check_addi.s              |   57 -
+ tests/tcg/cris/bare/check_addiv32.s           |   62 -
+ tests/tcg/cris/bare/check_addm.s              |   96 -
+ tests/tcg/cris/bare/check_addq.s              |   47 -
+ tests/tcg/cris/bare/check_addr.s              |   96 -
+ tests/tcg/cris/bare/check_addxc.s             |   91 -
+ tests/tcg/cris/bare/check_addxm.s             |  106 -
+ tests/tcg/cris/bare/check_addxr.s             |   96 -
+ tests/tcg/cris/bare/check_andc.s              |   80 -
+ tests/tcg/cris/bare/check_andm.s              |   90 -
+ tests/tcg/cris/bare/check_andq.s              |   46 -
+ tests/tcg/cris/bare/check_andr.s              |   95 -
+ tests/tcg/cris/bare/check_asr.s               |  230 --
+ tests/tcg/cris/bare/check_ba.s                |   93 -
+ tests/tcg/cris/bare/check_bas.s               |  102 -
+ tests/tcg/cris/bare/check_bcc.s               |  197 -
+ tests/tcg/cris/bare/check_boundc.s            |  101 -
+ tests/tcg/cris/bare/check_boundr.s            |  125 -
+ tests/tcg/cris/bare/check_btst.s              |   96 -
+ tests/tcg/cris/bare/check_clearfv32.s         |   19 -
+ tests/tcg/cris/bare/check_clrjmp1.s           |   36 -
+ tests/tcg/cris/bare/check_cmp-2.s             |   15 -
+ tests/tcg/cris/bare/check_cmpc.s              |   86 -
+ tests/tcg/cris/bare/check_cmpm.s              |   96 -
+ tests/tcg/cris/bare/check_cmpq.s              |   75 -
+ tests/tcg/cris/bare/check_cmpr.s              |  102 -
+ tests/tcg/cris/bare/check_cmpxc.s             |   92 -
+ tests/tcg/cris/bare/check_cmpxm.s             |  106 -
+ tests/tcg/cris/bare/check_dstep.s             |   42 -
+ tests/tcg/cris/bare/check_jsr.s               |   85 -
+ tests/tcg/cris/bare/check_lapc.s              |   78 -
+ tests/tcg/cris/bare/check_lsl.s               |  217 --
+ tests/tcg/cris/bare/check_lsr.s               |  218 --
+ tests/tcg/cris/bare/check_mcp.s               |   49 -
+ tests/tcg/cris/bare/check_movdelsr1.s         |   33 -
+ tests/tcg/cris/bare/check_movecr.s            |   37 -
+ tests/tcg/cris/bare/check_movei.s             |   50 -
+ tests/tcg/cris/bare/check_movemr.s            |   78 -
+ tests/tcg/cris/bare/check_movemrv32.s         |   96 -
+ tests/tcg/cris/bare/check_mover.s             |   28 -
+ tests/tcg/cris/bare/check_moverm.s            |   45 -
+ tests/tcg/cris/bare/check_movmp.s             |  131 -
+ tests/tcg/cris/bare/check_movpmv32.s          |   35 -
+ tests/tcg/cris/bare/check_movpr.s             |   28 -
+ tests/tcg/cris/bare/check_movprv32.s          |   21 -
+ tests/tcg/cris/bare/check_movscr.s            |   29 -
+ tests/tcg/cris/bare/check_movsm.s             |   44 -
+ tests/tcg/cris/bare/check_movsr.s             |   46 -
+ tests/tcg/cris/bare/check_movucr.s            |   33 -
+ tests/tcg/cris/bare/check_movum.s             |   40 -
+ tests/tcg/cris/bare/check_movur.s             |   45 -
+ tests/tcg/cris/bare/check_mulv32.s            |   51 -
+ tests/tcg/cris/bare/check_mulx.s              |  257 --
+ tests/tcg/cris/bare/check_neg.s               |  104 -
+ tests/tcg/cris/bare/check_not.s               |   31 -
+ tests/tcg/cris/bare/check_orc.s               |   71 -
+ tests/tcg/cris/bare/check_orm.s               |   75 -
+ tests/tcg/cris/bare/check_orq.s               |   41 -
+ tests/tcg/cris/bare/check_orr.s               |   84 -
+ tests/tcg/cris/bare/check_ret.s               |   25 -
+ tests/tcg/cris/bare/check_scc.s               |   95 -
+ tests/tcg/cris/bare/check_subc.s              |   87 -
+ tests/tcg/cris/bare/check_subm.s              |   96 -
+ tests/tcg/cris/bare/check_subq.s              |   52 -
+ tests/tcg/cris/bare/check_subr.s              |  102 -
+ tests/tcg/cris/bare/check_xarith.s            |   72 -
+ tests/tcg/cris/bare/crt.s                     |   13 -
+ tests/tcg/cris/bare/testutils.inc             |  117 -
+ 192 files changed, 18 insertions(+), 21324 deletions(-)
+ delete mode 100644 configs/devices/cris-softmmu/default.mak
+ delete mode 100644 configs/targets/cris-linux-user.mak
+ delete mode 100644 configs/targets/cris-softmmu.mak
+ delete mode 100644 hw/cris/boot.h
+ delete mode 100644 include/hw/cris/etraxfs.h
+ delete mode 100644 include/hw/cris/etraxfs_dma.h
+ delete mode 100644 linux-user/cris/sockbits.h
+ delete mode 100644 linux-user/cris/syscall_nr.h
+ delete mode 100644 linux-user/cris/target_cpu.h
+ delete mode 100644 linux-user/cris/target_elf.h
+ delete mode 100644 linux-user/cris/target_errno_defs.h
+ delete mode 100644 linux-user/cris/target_fcntl.h
+ delete mode 100644 linux-user/cris/target_mman.h
+ delete mode 100644 linux-user/cris/target_prctl.h
+ delete mode 100644 linux-user/cris/target_proc.h
+ delete mode 100644 linux-user/cris/target_resource.h
+ delete mode 100644 linux-user/cris/target_signal.h
+ delete mode 100644 linux-user/cris/target_structs.h
+ delete mode 100644 linux-user/cris/target_syscall.h
+ delete mode 100644 linux-user/cris/termbits.h
+ delete mode 100644 target/cris/cpu-param.h
+ delete mode 100644 target/cris/cpu-qom.h
+ delete mode 100644 target/cris/cpu.h
+ delete mode 100644 target/cris/crisv10-decode.h
+ delete mode 100644 target/cris/crisv32-decode.h
+ delete mode 100644 target/cris/helper.h
+ delete mode 100644 target/cris/mmu.h
+ delete mode 100644 target/cris/opcode-cris.h
+ delete mode 100644 tests/tcg/cris/libc/crisutils.h
+ delete mode 100644 tests/tcg/cris/libc/sys.h
+ delete mode 100644 disas/cris.c
+ delete mode 100644 hw/char/etraxfs_ser.c
+ delete mode 100644 hw/cris/axis_dev88.c
+ delete mode 100644 hw/cris/boot.c
+ delete mode 100644 hw/dma/etraxfs_dma.c
+ delete mode 100644 hw/intc/etraxfs_pic.c
+ delete mode 100644 hw/net/etraxfs_eth.c
+ delete mode 100644 hw/timer/etraxfs_timer.c
+ delete mode 100644 linux-user/cris/cpu_loop.c
+ delete mode 100644 linux-user/cris/signal.c
+ delete mode 100644 target/cris/cpu.c
+ delete mode 100644 target/cris/gdbstub.c
+ delete mode 100644 target/cris/helper.c
+ delete mode 100644 target/cris/machine.c
+ delete mode 100644 target/cris/mmu.c
+ delete mode 100644 target/cris/op_helper.c
+ delete mode 100644 target/cris/translate.c
+ delete mode 100644 tests/tcg/cris/bare/sys.c
+ delete mode 100644 tests/tcg/cris/libc/check_abs.c
+ delete mode 100644 tests/tcg/cris/libc/check_addc.c
+ delete mode 100644 tests/tcg/cris/libc/check_addcm.c
+ delete mode 100644 tests/tcg/cris/libc/check_addo.c
+ delete mode 100644 tests/tcg/cris/libc/check_addoq.c
+ delete mode 100644 tests/tcg/cris/libc/check_bound.c
+ delete mode 100644 tests/tcg/cris/libc/check_ftag.c
+ delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
+ delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634.c
+ delete mode 100644 tests/tcg/cris/libc/check_glibc_kernelversion.c
+ delete mode 100644 tests/tcg/cris/libc/check_hello.c
+ delete mode 100644 tests/tcg/cris/libc/check_int64.c
+ delete mode 100644 tests/tcg/cris/libc/check_lz.c
+ delete mode 100644 tests/tcg/cris/libc/check_mapbrk.c
+ delete mode 100644 tests/tcg/cris/libc/check_mmap1.c
+ delete mode 100644 tests/tcg/cris/libc/check_mmap2.c
+ delete mode 100644 tests/tcg/cris/libc/check_mmap3.c
+ delete mode 100644 tests/tcg/cris/libc/check_moveq.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf1.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf2.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf3.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf5.c
+ delete mode 100644 tests/tcg/cris/libc/check_settls1.c
+ delete mode 100644 tests/tcg/cris/libc/check_sigalrm.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat1.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat2.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat3.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat4.c
+ delete mode 100644 tests/tcg/cris/libc/check_swap.c
+ delete mode 100644 tests/tcg/cris/libc/check_time2.c
+ delete mode 100644 target/cris/translate_v10.c.inc
+ delete mode 100644 hw/cris/Kconfig
+ delete mode 100644 hw/cris/meson.build
+ delete mode 100644 target/cris/Kconfig
+ delete mode 100644 target/cris/meson.build
+ delete mode 100644 tests/docker/dockerfiles/fedora-cris-cross.docker
+ delete mode 100644 tests/tcg/cris/.gdbinit
+ delete mode 100644 tests/tcg/cris/Makefile.target
+ delete mode 100644 tests/tcg/cris/README
+ delete mode 100644 tests/tcg/cris/bare/check_addcv17.s
+ delete mode 100644 tests/tcg/cris/bare/check_addi.s
+ delete mode 100644 tests/tcg/cris/bare/check_addiv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_addm.s
+ delete mode 100644 tests/tcg/cris/bare/check_addq.s
+ delete mode 100644 tests/tcg/cris/bare/check_addr.s
+ delete mode 100644 tests/tcg/cris/bare/check_addxc.s
+ delete mode 100644 tests/tcg/cris/bare/check_addxm.s
+ delete mode 100644 tests/tcg/cris/bare/check_addxr.s
+ delete mode 100644 tests/tcg/cris/bare/check_andc.s
+ delete mode 100644 tests/tcg/cris/bare/check_andm.s
+ delete mode 100644 tests/tcg/cris/bare/check_andq.s
+ delete mode 100644 tests/tcg/cris/bare/check_andr.s
+ delete mode 100644 tests/tcg/cris/bare/check_asr.s
+ delete mode 100644 tests/tcg/cris/bare/check_ba.s
+ delete mode 100644 tests/tcg/cris/bare/check_bas.s
+ delete mode 100644 tests/tcg/cris/bare/check_bcc.s
+ delete mode 100644 tests/tcg/cris/bare/check_boundc.s
+ delete mode 100644 tests/tcg/cris/bare/check_boundr.s
+ delete mode 100644 tests/tcg/cris/bare/check_btst.s
+ delete mode 100644 tests/tcg/cris/bare/check_clearfv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_clrjmp1.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmp-2.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpc.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpm.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpq.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpr.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpxc.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpxm.s
+ delete mode 100644 tests/tcg/cris/bare/check_dstep.s
+ delete mode 100644 tests/tcg/cris/bare/check_jsr.s
+ delete mode 100644 tests/tcg/cris/bare/check_lapc.s
+ delete mode 100644 tests/tcg/cris/bare/check_lsl.s
+ delete mode 100644 tests/tcg/cris/bare/check_lsr.s
+ delete mode 100644 tests/tcg/cris/bare/check_mcp.s
+ delete mode 100644 tests/tcg/cris/bare/check_movdelsr1.s
+ delete mode 100644 tests/tcg/cris/bare/check_movecr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movei.s
+ delete mode 100644 tests/tcg/cris/bare/check_movemr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movemrv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_mover.s
+ delete mode 100644 tests/tcg/cris/bare/check_moverm.s
+ delete mode 100644 tests/tcg/cris/bare/check_movmp.s
+ delete mode 100644 tests/tcg/cris/bare/check_movpmv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_movpr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movprv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_movscr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movsm.s
+ delete mode 100644 tests/tcg/cris/bare/check_movsr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movucr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movum.s
+ delete mode 100644 tests/tcg/cris/bare/check_movur.s
+ delete mode 100644 tests/tcg/cris/bare/check_mulv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_mulx.s
+ delete mode 100644 tests/tcg/cris/bare/check_neg.s
+ delete mode 100644 tests/tcg/cris/bare/check_not.s
+ delete mode 100644 tests/tcg/cris/bare/check_orc.s
+ delete mode 100644 tests/tcg/cris/bare/check_orm.s
+ delete mode 100644 tests/tcg/cris/bare/check_orq.s
+ delete mode 100644 tests/tcg/cris/bare/check_orr.s
+ delete mode 100644 tests/tcg/cris/bare/check_ret.s
+ delete mode 100644 tests/tcg/cris/bare/check_scc.s
+ delete mode 100644 tests/tcg/cris/bare/check_subc.s
+ delete mode 100644 tests/tcg/cris/bare/check_subm.s
+ delete mode 100644 tests/tcg/cris/bare/check_subq.s
+ delete mode 100644 tests/tcg/cris/bare/check_subr.s
+ delete mode 100644 tests/tcg/cris/bare/check_xarith.s
+ delete mode 100644 tests/tcg/cris/bare/crt.s
+ delete mode 100644 tests/tcg/cris/bare/testutils.inc
 
-Above system's kernel is probably older, and doesn't know about Power11.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3584d6a6c6..e13a2c9675 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -224,15 +224,6 @@ F: gdb-xml/avr-cpu.xml
+ F: target/avr/
+ F: tests/avocado/machine_avr6.py
+ 
+-CRIS TCG CPUs
+-M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+-S: Maintained
+-F: target/cris/
+-F: hw/cris/
+-F: include/hw/cris/
+-F: tests/tcg/cris/
+-F: disas/cris.c
+-
+ Hexagon TCG CPUs
+ M: Brian Cain <bcain@quicinc.com>
+ S: Supported
+@@ -1209,14 +1200,6 @@ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: hw/avr/arduino.c
+ 
+-CRIS Machines
+--------------
+-Axis Dev88
+-M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+-S: Maintained
+-F: hw/cris/axis_dev88.c
+-F: hw/*/etraxfs_*.c
+-
+ HP-PARISC Machines
+ ------------------
+ HP B160L, HP C3700
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 88f0f03786..e4e7e852c3 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -206,14 +206,6 @@ in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
+ but for consistency these will get removed in a future release, too.
+ Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
+ 
+-CRIS CPU architecture (since 9.0)
+-'''''''''''''''''''''''''''''''''
+-
+-The CRIS architecture was pulled from Linux in 4.17 and the compiler
+-is no longer packaged in any distro making it harder to run the
+-``check-tcg`` tests. Unless we can improve the testing situation there
+-is a chance the code will bitrot without anyone noticing.
+-
+ System emulator machines
+ ------------------------
+ 
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index eea1261baa..05f54d3f27 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -26,10 +26,6 @@ depending on the guest architecture.
+     - :ref:`Yes<AVR-System-emulator>`
+     - No
+     - 8 bit micro controller, often used in maker projects
+-  * - Cris
+-    - Yes
+-    - Yes
+-    - Embedded RISC chip developed by AXIS
+   * - Hexagon
+     - No
+     - Yes
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index fc7b28e637..a0a5ec23c6 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -889,6 +889,13 @@ Nios II CPU (removed in 9.1)
+ QEMU Nios II architecture was orphan; Intel has EOL'ed the Nios II
+ processor IP (see `Intel discontinuance notification`_).
+ 
++CRIS CPU architecture (removed in 9.2)
++''''''''''''''''''''''''''''''''''''''
++
++The CRIS architecture was pulled from Linux in 4.17 and the compiler
++was no longer packaged in any distro making it harder to run the
++``check-tcg`` tests.
++
+ System accelerators
+ -------------------
+ 
+diff --git a/docs/user/main.rst b/docs/user/main.rst
+index e04bc2cb86..7a126ee809 100644
+--- a/docs/user/main.rst
++++ b/docs/user/main.rst
+@@ -130,10 +130,6 @@ Other binaries
+ 
+    The binary format is detected automatically.
+ 
+--  user mode (Cris)
+-
+-   * ``qemu-cris`` TODO.
+-
+ -  user mode (i386)
+ 
+    * ``qemu-i386`` TODO.
+diff --git a/configure b/configure
+index d08b71f14b..4cf8be9eeb 100755
+--- a/configure
++++ b/configure
+@@ -1250,7 +1250,6 @@ probe_target_compiler() {
+     aarch64) container_hosts="x86_64 aarch64" ;;
+     alpha) container_hosts=x86_64 ;;
+     arm) container_hosts="x86_64 aarch64" ;;
+-    cris) container_hosts=x86_64 ;;
+     hexagon) container_hosts=x86_64 ;;
+     hppa) container_hosts=x86_64 ;;
+     i386) container_hosts=x86_64 ;;
+@@ -1309,9 +1308,6 @@ probe_target_compiler() {
+         container_image=debian-armhf-cross
+         container_cross_prefix=arm-linux-gnueabihf-
+         ;;
+-      cris)
+-        container_image=fedora-cris-cross
+-        ;;
+       hexagon)
+         container_cross_prefix=hexagon-unknown-linux-musl-
+         container_cross_cc=${container_cross_prefix}clang
+diff --git a/configs/devices/cris-softmmu/default.mak b/configs/devices/cris-softmmu/default.mak
+deleted file mode 100644
+index ff73cd4084..0000000000
+--- a/configs/devices/cris-softmmu/default.mak
++++ /dev/null
+@@ -1,4 +0,0 @@
+-# Default configuration for cris-softmmu
+-
+-# Boards are selected by default, uncomment to keep out of the build.
+-# CONFIG_AXIS=n
+diff --git a/configs/targets/cris-linux-user.mak b/configs/targets/cris-linux-user.mak
+deleted file mode 100644
+index e483c42066..0000000000
+--- a/configs/targets/cris-linux-user.mak
++++ /dev/null
+@@ -1 +0,0 @@
+-TARGET_ARCH=cris
+diff --git a/configs/targets/cris-softmmu.mak b/configs/targets/cris-softmmu.mak
+deleted file mode 100644
+index e483c42066..0000000000
+--- a/configs/targets/cris-softmmu.mak
++++ /dev/null
+@@ -1 +0,0 @@
+-TARGET_ARCH=cris
+diff --git a/meson.build b/meson.build
+index fbda17c987..27ff8b5bf4 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3045,7 +3045,6 @@ config_target_mak = {}
+ disassemblers = {
+   'alpha' : ['CONFIG_ALPHA_DIS'],
+   'avr' : ['CONFIG_AVR_DIS'],
+-  'cris' : ['CONFIG_CRIS_DIS'],
+   'hexagon' : ['CONFIG_HEXAGON_DIS'],
+   'hppa' : ['CONFIG_HPPA_DIS'],
+   'i386' : ['CONFIG_I386_DIS'],
+diff --git a/qapi/machine.json b/qapi/machine.json
+index d4317435e7..63b84bc575 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -33,7 +33,7 @@
+ # Since: 3.0
+ ##
+ { 'enum' : 'SysEmuTarget',
+-  'data' : [ 'aarch64', 'alpha', 'arm', 'avr', 'cris', 'hppa', 'i386',
++  'data' : [ 'aarch64', 'alpha', 'arm', 'avr', 'hppa', 'i386',
+              'loongarch64', 'm68k', 'microblaze', 'microblazeel', 'mips', 'mips64',
+              'mips64el', 'mipsel', 'or1k', 'ppc',
+              'ppc64', 'riscv32', 'riscv64', 'rx', 's390x', 'sh4',
+diff --git a/hw/cris/boot.h b/hw/cris/boot.h
+deleted file mode 100644
+index 9f1e0e340c..0000000000
+--- a/hw/cris/boot.h
++++ /dev/null
+@@ -1,16 +0,0 @@
+-#ifndef HW_CRIS_BOOT_H
+-#define HW_CRIS_BOOT_H
+-
+-struct cris_load_info
+-{
+-    const char *image_filename;
+-    const char *cmdline;
+-    int image_size;
+-    ram_addr_t ram_size;
+-
+-    hwaddr entry;
+-};
+-
+-void cris_load_image(CRISCPU *cpu, struct cris_load_info *li);
+-
+-#endif
+diff --git a/include/disas/dis-asm.h b/include/disas/dis-asm.h
+index a1d26ce903..3b50ecfb54 100644
+--- a/include/disas/dis-asm.h
++++ b/include/disas/dis-asm.h
+@@ -232,10 +232,6 @@ enum bfd_architecture
+ #define bfd_mach_avrxmega5  105
+ #define bfd_mach_avrxmega6  106
+ #define bfd_mach_avrxmega7  107
+-  bfd_arch_cris,       /* Axis CRIS */
+-#define bfd_mach_cris_v0_v10   255
+-#define bfd_mach_cris_v32      32
+-#define bfd_mach_cris_v10_v32  1032
+   bfd_arch_microblaze, /* Xilinx MicroBlaze.  */
+   bfd_arch_moxie,      /* The Moxie core.  */
+   bfd_arch_ia64,      /* HP/Intel ia64 */
+@@ -448,8 +444,6 @@ int print_insn_w65              (bfd_vma, disassemble_info*);
+ int print_insn_d10v             (bfd_vma, disassemble_info*);
+ int print_insn_v850             (bfd_vma, disassemble_info*);
+ int print_insn_tic30            (bfd_vma, disassemble_info*);
+-int print_insn_crisv32          (bfd_vma, disassemble_info*);
+-int print_insn_crisv10          (bfd_vma, disassemble_info*);
+ int print_insn_microblaze       (bfd_vma, disassemble_info*);
+ int print_insn_ia64             (bfd_vma, disassemble_info*);
+ int print_insn_xtensa           (bfd_vma, disassemble_info*);
+diff --git a/include/exec/poison.h b/include/exec/poison.h
+index 792a83f493..f4283f693a 100644
+--- a/include/exec/poison.h
++++ b/include/exec/poison.h
+@@ -11,7 +11,6 @@
+ #pragma GCC poison TARGET_AARCH64
+ #pragma GCC poison TARGET_ALPHA
+ #pragma GCC poison TARGET_ARM
+-#pragma GCC poison TARGET_CRIS
+ #pragma GCC poison TARGET_HEXAGON
+ #pragma GCC poison TARGET_HPPA
+ #pragma GCC poison TARGET_LOONGARCH64
+@@ -64,7 +63,6 @@
+ #pragma GCC poison CPU_INTERRUPT_TGT_INT_2
+ 
+ #pragma GCC poison CONFIG_ALPHA_DIS
+-#pragma GCC poison CONFIG_CRIS_DIS
+ #pragma GCC poison CONFIG_HPPA_DIS
+ #pragma GCC poison CONFIG_I386_DIS
+ #pragma GCC poison CONFIG_HEXAGON_DIS
+diff --git a/include/hw/cris/etraxfs.h b/include/hw/cris/etraxfs.h
+deleted file mode 100644
+index 012c4e9974..0000000000
+--- a/include/hw/cris/etraxfs.h
++++ /dev/null
+@@ -1,54 +0,0 @@
+-/*
+- * QEMU ETRAX System Emulator
+- *
+- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#ifndef HW_ETRAXFS_H
+-#define HW_ETRAXFS_H
+-
+-#include "net/net.h"
+-#include "hw/cris/etraxfs_dma.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/sysbus.h"
+-#include "qapi/error.h"
+-
+-DeviceState *etraxfs_eth_init(hwaddr base, int phyaddr,
+-                              struct etraxfs_dma_client *dma_out,
+-                              struct etraxfs_dma_client *dma_in);
+-
+-static inline DeviceState *etraxfs_ser_create(hwaddr addr,
+-                                              qemu_irq irq,
+-                                              Chardev *chr)
+-{
+-    DeviceState *dev;
+-    SysBusDevice *s;
+-
+-    dev = qdev_new("etraxfs-serial");
+-    s = SYS_BUS_DEVICE(dev);
+-    qdev_prop_set_chr(dev, "chardev", chr);
+-    sysbus_realize_and_unref(s, &error_fatal);
+-    sysbus_mmio_map(s, 0, addr);
+-    sysbus_connect_irq(s, 0, irq);
+-    return dev;
+-}
+-
+-#endif
+diff --git a/include/hw/cris/etraxfs_dma.h b/include/hw/cris/etraxfs_dma.h
+deleted file mode 100644
+index 095d76b956..0000000000
+--- a/include/hw/cris/etraxfs_dma.h
++++ /dev/null
+@@ -1,36 +0,0 @@
+-#ifndef HW_ETRAXFS_DMA_H
+-#define HW_ETRAXFS_DMA_H
+-
+-#include "exec/hwaddr.h"
+-
+-struct dma_context_metadata {
+-	/* data descriptor md */
+-	uint16_t metadata;
+-};
+-
+-struct etraxfs_dma_client
+-{
+-	/* DMA controller. */
+-	int channel;
+-	void *ctrl;
+-
+-	/* client.  */
+-	struct {
+-		int (*push)(void *opaque, unsigned char *buf,
+-		            int len, bool eop);
+-		void (*pull)(void *opaque);
+-		void (*metadata_push)(void *opaque,
+-		                      const struct dma_context_metadata *md);
+-		void *opaque;
+-	} client;
+-};
+-
+-void *etraxfs_dmac_init(hwaddr base, int nr_channels);
+-void etraxfs_dmac_connect(void *opaque, int channel, qemu_irq *line,
+-			  int input);
+-void etraxfs_dmac_connect_client(void *opaque, int c, 
+-				 struct etraxfs_dma_client *cl);
+-int etraxfs_dmac_input(struct etraxfs_dma_client *client, 
+-		       void *buf, int len, int eop);
+-
+-#endif
+diff --git a/include/sysemu/arch_init.h b/include/sysemu/arch_init.h
+index 8d041aa84e..5b1c1026f3 100644
+--- a/include/sysemu/arch_init.h
++++ b/include/sysemu/arch_init.h
+@@ -6,7 +6,6 @@ enum {
+     QEMU_ARCH_ALL = -1,
+     QEMU_ARCH_ALPHA = (1 << 0),
+     QEMU_ARCH_ARM = (1 << 1),
+-    QEMU_ARCH_CRIS = (1 << 2),
+     QEMU_ARCH_I386 = (1 << 3),
+     QEMU_ARCH_M68K = (1 << 4),
+     QEMU_ARCH_MICROBLAZE = (1 << 6),
+diff --git a/include/user/abitypes.h b/include/user/abitypes.h
+index 5c9a955631..7528124b62 100644
+--- a/include/user/abitypes.h
++++ b/include/user/abitypes.h
+@@ -21,13 +21,6 @@
+ #define ABI_LLONG_ALIGNMENT 2
+ #endif
+ 
+-#ifdef TARGET_CRIS
+-#define ABI_SHORT_ALIGNMENT 1
+-#define ABI_INT_ALIGNMENT 1
+-#define ABI_LONG_ALIGNMENT 1
+-#define ABI_LLONG_ALIGNMENT 1
+-#endif
+-
+ #if (defined(TARGET_I386) && !defined(TARGET_X86_64)) \
+     || defined(TARGET_SH4) \
+     || defined(TARGET_OPENRISC) \
+diff --git a/linux-user/cris/sockbits.h b/linux-user/cris/sockbits.h
+deleted file mode 100644
+index 0e4c8f012d..0000000000
+--- a/linux-user/cris/sockbits.h
++++ /dev/null
+@@ -1 +0,0 @@
+-#include "../generic/sockbits.h"
+diff --git a/linux-user/cris/syscall_nr.h b/linux-user/cris/syscall_nr.h
+deleted file mode 100644
+index 4b6cf65c42..0000000000
+--- a/linux-user/cris/syscall_nr.h
++++ /dev/null
+@@ -1,367 +0,0 @@
+-/*
+- * This file contains the system call numbers, and stub macros for libc.
+- */
+-
+-#ifndef LINUX_USER_CRIS_SYSCALL_NR_H
+-#define LINUX_USER_CRIS_SYSCALL_NR_H
+-
+-#define TARGET_NR_restart_syscall      0
+-#define TARGET_NR_exit		  1
+-#define TARGET_NR_fork		  2
+-#define TARGET_NR_read		  3
+-#define TARGET_NR_write		  4
+-#define TARGET_NR_open		  5
+-#define TARGET_NR_close		  6
+-#define TARGET_NR_waitpid		  7
+-#define TARGET_NR_creat		  8
+-#define TARGET_NR_link		  9
+-#define TARGET_NR_unlink		 10
+-#define TARGET_NR_execve		 11
+-#define TARGET_NR_chdir		 12
+-#define TARGET_NR_time		 13
+-#define TARGET_NR_mknod		 14
+-#define TARGET_NR_chmod		 15
+-#define TARGET_NR_lchown		 16
+-#define TARGET_NR_break		 17
+-#define TARGET_NR_oldstat		 18
+-#define TARGET_NR_lseek		 19
+-#define TARGET_NR_getpid		 20
+-#define TARGET_NR_mount		 21
+-#define TARGET_NR_umount		 22
+-#define TARGET_NR_setuid		 23
+-#define TARGET_NR_getuid		 24
+-#define TARGET_NR_stime		 25
+-#define TARGET_NR_ptrace		 26
+-#define TARGET_NR_alarm		 27
+-#define TARGET_NR_oldfstat		 28
+-#define TARGET_NR_pause		 29
+-#define TARGET_NR_utime		 30
+-#define TARGET_NR_stty		 31
+-#define TARGET_NR_gtty		 32
+-#define TARGET_NR_access		 33
+-#define TARGET_NR_nice		 34
+-#define TARGET_NR_ftime		 35
+-#define TARGET_NR_sync		 36
+-#define TARGET_NR_kill		 37
+-#define TARGET_NR_rename		 38
+-#define TARGET_NR_mkdir		 39
+-#define TARGET_NR_rmdir		 40
+-#define TARGET_NR_dup		 41
+-#define TARGET_NR_pipe		 42
+-#define TARGET_NR_times		 43
+-#define TARGET_NR_prof		 44
+-#define TARGET_NR_brk		 45
+-#define TARGET_NR_setgid		 46
+-#define TARGET_NR_getgid		 47
+-#define TARGET_NR_signal		 48
+-#define TARGET_NR_geteuid		 49
+-#define TARGET_NR_getegid		 50
+-#define TARGET_NR_acct		 51
+-#define TARGET_NR_umount2		 52
+-#define TARGET_NR_lock		 53
+-#define TARGET_NR_ioctl		 54
+-#define TARGET_NR_fcntl		 55
+-#define TARGET_NR_mpx		 56
+-#define TARGET_NR_setpgid		 57
+-#define TARGET_NR_ulimit		 58
+-#define TARGET_NR_oldolduname	 59
+-#define TARGET_NR_umask		 60
+-#define TARGET_NR_chroot		 61
+-#define TARGET_NR_ustat		 62
+-#define TARGET_NR_dup2		 63
+-#define TARGET_NR_getppid		 64
+-#define TARGET_NR_getpgrp		 65
+-#define TARGET_NR_setsid		 66
+-#define TARGET_NR_sigaction		 67
+-#define TARGET_NR_sgetmask		 68
+-#define TARGET_NR_ssetmask		 69
+-#define TARGET_NR_setreuid		 70
+-#define TARGET_NR_setregid		 71
+-#define TARGET_NR_sigsuspend		 72
+-#define TARGET_NR_sigpending		 73
+-#define TARGET_NR_sethostname	 74
+-#define TARGET_NR_setrlimit		 75
+-#define TARGET_NR_getrlimit		 76
+-#define TARGET_NR_getrusage		 77
+-#define TARGET_NR_gettimeofday	 78
+-#define TARGET_NR_settimeofday	 79
+-#define TARGET_NR_getgroups		 80
+-#define TARGET_NR_setgroups		 81
+-#define TARGET_NR_select		 82
+-#define TARGET_NR_symlink		 83
+-#define TARGET_NR_oldlstat		 84
+-#define TARGET_NR_readlink		 85
+-#define TARGET_NR_uselib		 86
+-#define TARGET_NR_swapon		 87
+-#define TARGET_NR_reboot		 88
+-#define TARGET_NR_readdir		 89
+-#define TARGET_NR_mmap		 90
+-#define TARGET_NR_munmap		 91
+-#define TARGET_NR_truncate		 92
+-#define TARGET_NR_ftruncate		 93
+-#define TARGET_NR_fchmod		 94
+-#define TARGET_NR_fchown		 95
+-#define TARGET_NR_getpriority	 96
+-#define TARGET_NR_setpriority	 97
+-#define TARGET_NR_profil		 98
+-#define TARGET_NR_statfs		 99
+-#define TARGET_NR_fstatfs		100
+-#define TARGET_NR_ioperm		101
+-#define TARGET_NR_socketcall		102
+-#define TARGET_NR_syslog		103
+-#define TARGET_NR_setitimer		104
+-#define TARGET_NR_getitimer		105
+-#define TARGET_NR_stat		106
+-#define TARGET_NR_lstat		107
+-#define TARGET_NR_fstat		108
+-#define TARGET_NR_olduname		109
+-#define TARGET_NR_iopl		110
+-#define TARGET_NR_vhangup		111
+-#define TARGET_NR_idle		112
+-#define TARGET_NR_vm86		113
+-#define TARGET_NR_wait4		114
+-#define TARGET_NR_swapoff		115
+-#define TARGET_NR_sysinfo		116
+-#define TARGET_NR_ipc		117
+-#define TARGET_NR_fsync		118
+-#define TARGET_NR_sigreturn		119
+-#define TARGET_NR_clone		120
+-#define TARGET_NR_setdomainname	121
+-#define TARGET_NR_uname		122
+-#define TARGET_NR_modify_ldt		123
+-#define TARGET_NR_adjtimex		124
+-#define TARGET_NR_mprotect		125
+-#define TARGET_NR_sigprocmask	126
+-#define TARGET_NR_create_module	127
+-#define TARGET_NR_init_module	128
+-#define TARGET_NR_delete_module	129
+-#define TARGET_NR_get_kernel_syms	130
+-#define TARGET_NR_quotactl		131
+-#define TARGET_NR_getpgid		132
+-#define TARGET_NR_fchdir		133
+-#define TARGET_NR_bdflush		134
+-#define TARGET_NR_sysfs		135
+-#define TARGET_NR_personality	136
+-#define TARGET_NR_afs_syscall	137 /* Syscall for Andrew File System */
+-#define TARGET_NR_setfsuid		138
+-#define TARGET_NR_setfsgid		139
+-#define TARGET_NR__llseek		140
+-#define TARGET_NR_getdents		141
+-#define TARGET_NR__newselect		142
+-#define TARGET_NR_flock		143
+-#define TARGET_NR_msync		144
+-#define TARGET_NR_readv		145
+-#define TARGET_NR_writev		146
+-#define TARGET_NR_getsid		147
+-#define TARGET_NR_fdatasync		148
+-#define TARGET_NR__sysctl		149
+-#define TARGET_NR_mlock		150
+-#define TARGET_NR_munlock		151
+-#define TARGET_NR_mlockall		152
+-#define TARGET_NR_munlockall		153
+-#define TARGET_NR_sched_setparam		154
+-#define TARGET_NR_sched_getparam		155
+-#define TARGET_NR_sched_setscheduler		156
+-#define TARGET_NR_sched_getscheduler		157
+-#define TARGET_NR_sched_yield		158
+-#define TARGET_NR_sched_get_priority_max	159
+-#define TARGET_NR_sched_get_priority_min	160
+-#define TARGET_NR_sched_rr_get_interval	161
+-#define TARGET_NR_nanosleep		162
+-#define TARGET_NR_mremap		163
+-#define TARGET_NR_setresuid		164
+-#define TARGET_NR_getresuid		165
+-
+-#define TARGET_NR_query_module	167
+-#define TARGET_NR_poll		168
+-#define TARGET_NR_nfsservctl		169
+-#define TARGET_NR_setresgid		170
+-#define TARGET_NR_getresgid		171
+-#define TARGET_NR_prctl              172
+-#define TARGET_NR_rt_sigreturn	173
+-#define TARGET_NR_rt_sigaction	174
+-#define TARGET_NR_rt_sigprocmask	175
+-#define TARGET_NR_rt_sigpending	176
+-#define TARGET_NR_rt_sigtimedwait	177
+-#define TARGET_NR_rt_sigqueueinfo	178
+-#define TARGET_NR_rt_sigsuspend	179
+-#define TARGET_NR_pread64		180
+-#define TARGET_NR_pwrite64		181
+-#define TARGET_NR_chown		182
+-#define TARGET_NR_getcwd		183
+-#define TARGET_NR_capget		184
+-#define TARGET_NR_capset		185
+-#define TARGET_NR_sigaltstack	186
+-#define TARGET_NR_sendfile		187
+-#define TARGET_NR_getpmsg		188	/* some people actually want streams */
+-#define TARGET_NR_putpmsg		189	/* some people actually want streams */
+-#define TARGET_NR_vfork		190
+-#define TARGET_NR_ugetrlimit		191	/* SuS compliant getrlimit */
+-#define TARGET_NR_mmap2		192
+-#define TARGET_NR_truncate64		193
+-#define TARGET_NR_ftruncate64	194
+-#define TARGET_NR_stat64		195
+-#define TARGET_NR_lstat64		196
+-#define TARGET_NR_fstat64		197
+-#define TARGET_NR_lchown32		198
+-#define TARGET_NR_getuid32		199
+-#define TARGET_NR_getgid32		200
+-#define TARGET_NR_geteuid32		201
+-#define TARGET_NR_getegid32		202
+-#define TARGET_NR_setreuid32		203
+-#define TARGET_NR_setregid32		204
+-#define TARGET_NR_getgroups32	205
+-#define TARGET_NR_setgroups32	206
+-#define TARGET_NR_fchown32		207
+-#define TARGET_NR_setresuid32	208
+-#define TARGET_NR_getresuid32	209
+-#define TARGET_NR_setresgid32	210
+-#define TARGET_NR_getresgid32	211
+-#define TARGET_NR_chown32		212
+-#define TARGET_NR_setuid32		213
+-#define TARGET_NR_setgid32		214
+-#define TARGET_NR_setfsuid32		215
+-#define TARGET_NR_setfsgid32		216
+-#define TARGET_NR_pivot_root		217
+-#define TARGET_NR_mincore		218
+-#define TARGET_NR_madvise		219
+-#define TARGET_NR_getdents64		220
+-#define TARGET_NR_fcntl64		221
+-/* 223 is unused */
+-#define TARGET_NR_gettid             224
+-#define TARGET_NR_readahead          225
+-#define TARGET_NR_setxattr		226
+-#define TARGET_NR_lsetxattr		227
+-#define TARGET_NR_fsetxattr		228
+-#define TARGET_NR_getxattr		229
+-#define TARGET_NR_lgetxattr		230
+-#define TARGET_NR_fgetxattr		231
+-#define TARGET_NR_listxattr		232
+-#define TARGET_NR_llistxattr		233
+-#define TARGET_NR_flistxattr		234
+-#define TARGET_NR_removexattr	235
+-#define TARGET_NR_lremovexattr	236
+-#define TARGET_NR_fremovexattr	237
+-#define TARGET_NR_tkill		238
+-#define TARGET_NR_sendfile64		239
+-#define TARGET_NR_futex		240
+-#define TARGET_NR_sched_setaffinity	241
+-#define TARGET_NR_sched_getaffinity	242
+-#define TARGET_NR_set_thread_area	243
+-#define TARGET_NR_get_thread_area	244
+-#define TARGET_NR_io_setup		245
+-#define TARGET_NR_io_destroy		246
+-#define TARGET_NR_io_getevents	247
+-#define TARGET_NR_io_submit		248
+-#define TARGET_NR_io_cancel		249
+-#define TARGET_NR_fadvise64		250
+-#define TARGET_NR_exit_group		252
+-#define TARGET_NR_lookup_dcookie	253
+-#define TARGET_NR_epoll_create	254
+-#define TARGET_NR_epoll_ctl		255
+-#define TARGET_NR_epoll_wait		256
+-#define TARGET_NR_remap_file_pages	257
+-#define TARGET_NR_set_tid_address	258
+-#define TARGET_NR_timer_create	259
+-#define TARGET_NR_timer_settime	(TARGET_NR_timer_create+1)
+-#define TARGET_NR_timer_gettime	(TARGET_NR_timer_create+2)
+-#define TARGET_NR_timer_getoverrun	(TARGET_NR_timer_create+3)
+-#define TARGET_NR_timer_delete	(TARGET_NR_timer_create+4)
+-#define TARGET_NR_clock_settime	(TARGET_NR_timer_create+5)
+-#define TARGET_NR_clock_gettime	(TARGET_NR_timer_create+6)
+-#define TARGET_NR_clock_getres	(TARGET_NR_timer_create+7)
+-#define TARGET_NR_clock_nanosleep	(TARGET_NR_timer_create+8)
+-#define TARGET_NR_statfs64		268
+-#define TARGET_NR_fstatfs64		269
+-#define TARGET_NR_tgkill		270
+-#define TARGET_NR_utimes		271
+-#define TARGET_NR_fadvise64_64	272
+-#define TARGET_NR_vserver		273
+-#define TARGET_NR_mbind		274
+-#define TARGET_NR_get_mempolicy	275
+-#define TARGET_NR_set_mempolicy	276
+-#define TARGET_NR_mq_open 		277
+-#define TARGET_NR_mq_unlink		(TARGET_NR_mq_open+1)
+-#define TARGET_NR_mq_timedsend	(TARGET_NR_mq_open+2)
+-#define TARGET_NR_mq_timedreceive	(TARGET_NR_mq_open+3)
+-#define TARGET_NR_mq_notify		(TARGET_NR_mq_open+4)
+-#define TARGET_NR_mq_getsetattr	(TARGET_NR_mq_open+5)
+-#define TARGET_NR_kexec_load		283
+-#define TARGET_NR_waitid		284
+-/* #define TARGET_NR_sys_setaltroot	285 */
+-#define TARGET_NR_add_key		286
+-#define TARGET_NR_request_key	287
+-#define TARGET_NR_keyctl		288
+-#define TARGET_NR_ioprio_set         289
+-#define TARGET_NR_ioprio_get         290
+-#define TARGET_NR_inotify_init       291
+-#define TARGET_NR_inotify_add_watch  292
+-#define TARGET_NR_inotify_rm_watch   293
+-#define TARGET_NR_migrate_pages      294
+-#define TARGET_NR_openat             295
+-#define TARGET_NR_mkdirat            296
+-#define TARGET_NR_mknodat            297
+-#define TARGET_NR_fchownat           298
+-#define TARGET_NR_futimesat          299
+-#define TARGET_NR_fstatat64          300
+-#define TARGET_NR_unlinkat           301
+-#define TARGET_NR_renameat           302
+-#define TARGET_NR_linkat             303
+-#define TARGET_NR_symlinkat          304
+-#define TARGET_NR_readlinkat         305
+-#define TARGET_NR_fchmodat           306
+-#define TARGET_NR_faccessat          307
+-#define TARGET_NR_pselect6           308
+-#define TARGET_NR_ppoll              309
+-#define TARGET_NR_unshare            310
+-#define TARGET_NR_set_robust_list    311
+-#define TARGET_NR_get_robust_list    312
+-#define TARGET_NR_splice             313
+-#define TARGET_NR_sync_file_range    314
+-#define TARGET_NR_tee                315
+-#define TARGET_NR_vmsplice           316
+-#define TARGET_NR_move_pages         317
+-#define TARGET_NR_getcpu             318
+-#define TARGET_NR_epoll_pwait        319
+-#define TARGET_NR_utimensat          320
+-#define TARGET_NR_signalfd           321
+-#define TARGET_NR_timerfd_create     322
+-#define TARGET_NR_eventfd            323
+-#define TARGET_NR_fallocate          324
+-#define TARGET_NR_timerfd_settime    325
+-#define TARGET_NR_timerfd_gettime    326
+-#define TARGET_NR_signalfd4          327
+-#define TARGET_NR_eventfd2           328
+-#define TARGET_NR_epoll_create1      329
+-#define TARGET_NR_dup3               330
+-#define TARGET_NR_pipe2              331
+-#define TARGET_NR_inotify_init1      332
+-#define TARGET_NR_preadv             333
+-#define TARGET_NR_pwritev            334
+-#define TARGET_NR_setns              335
+-#define TARGET_NR_name_to_handle_at  336
+-#define TARGET_NR_open_by_handle_at  337
+-#define TARGET_NR_rt_tgsigqueueinfo  338
+-#define TARGET_NR_perf_event_open    339
+-#define TARGET_NR_recvmmsg           340
+-#define TARGET_NR_accept4            341
+-#define TARGET_NR_fanotify_init      342
+-#define TARGET_NR_fanotify_mark      343
+-#define TARGET_NR_prlimit64          344
+-#define TARGET_NR_clock_adjtime      345
+-#define TARGET_NR_syncfs             346
+-#define TARGET_NR_sendmmsg           347
+-#define TARGET_NR_process_vm_readv   348
+-#define TARGET_NR_process_vm_writev  349
+-#define TARGET_NR_kcmp               350
+-#define TARGET_NR_finit_module       351
+-#define TARGET_NR_sched_setattr      352
+-#define TARGET_NR_sched_getattr      353
+-#define TARGET_NR_renameat2          354
+-#define TARGET_NR_seccomp            355
+-#define TARGET_NR_getrandom          356
+-#define TARGET_NR_memfd_create       357
+-#define TARGET_NR_bpf                358
+-#define TARGET_NR_execveat           359
+-
+-#endif
+diff --git a/linux-user/cris/target_cpu.h b/linux-user/cris/target_cpu.h
+deleted file mode 100644
+index 7f6cade7b6..0000000000
+--- a/linux-user/cris/target_cpu.h
++++ /dev/null
+@@ -1,45 +0,0 @@
+-/*
+- * CRIS specific CPU ABI and functions for linux-user
+- *
+- * Copyright (c) 2007 AXIS Communications AB
+- * Written by Edgar E. Iglesias
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-#ifndef CRIS_TARGET_CPU_H
+-#define CRIS_TARGET_CPU_H
+-
+-static inline void cpu_clone_regs_child(CPUCRISState *env, target_ulong newsp,
+-                                        unsigned flags)
+-{
+-    if (newsp) {
+-        env->regs[14] = newsp;
+-    }
+-    env->regs[10] = 0;
+-}
+-
+-static inline void cpu_clone_regs_parent(CPUCRISState *env, unsigned flags)
+-{
+-}
+-
+-static inline void cpu_set_tls(CPUCRISState *env, target_ulong newtls)
+-{
+-    env->pregs[PR_PID] = (env->pregs[PR_PID] & 0xff) | newtls;
+-}
+-
+-static inline abi_ulong get_sp_from_cpustate(CPUCRISState *state)
+-{
+-    return state->regs[14];
+-}
+-#endif
+diff --git a/linux-user/cris/target_elf.h b/linux-user/cris/target_elf.h
+deleted file mode 100644
+index 99eb4ec704..0000000000
+--- a/linux-user/cris/target_elf.h
++++ /dev/null
+@@ -1,14 +0,0 @@
+-/*
+- * This program is free software; you can redistribute it and/or modify
+- * it under the terms of the GNU General Public License version 2 as
+- * published by the Free Software Foundation, or (at your option) any
+- * later version. See the COPYING file in the top-level directory.
+- */
+-
+-#ifndef CRIS_TARGET_ELF_H
+-#define CRIS_TARGET_ELF_H
+-static inline const char *cpu_get_model(uint32_t eflags)
+-{
+-    return "any";
+-}
+-#endif
+diff --git a/linux-user/cris/target_errno_defs.h b/linux-user/cris/target_errno_defs.h
+deleted file mode 100644
+index 1cf43b17a5..0000000000
+--- a/linux-user/cris/target_errno_defs.h
++++ /dev/null
+@@ -1,7 +0,0 @@
+-#ifndef CRIS_TARGET_ERRNO_DEFS_H
+-#define CRIS_TARGET_ERRNO_DEFS_H
+-
+-/* Target uses generic errno */
+-#include "../generic/target_errno_defs.h"
+-
+-#endif
+diff --git a/linux-user/cris/target_fcntl.h b/linux-user/cris/target_fcntl.h
+deleted file mode 100644
+index df0aceea34..0000000000
+--- a/linux-user/cris/target_fcntl.h
++++ /dev/null
+@@ -1,11 +0,0 @@
+-/*
+- * This program is free software; you can redistribute it and/or modify
+- * it under the terms of the GNU General Public License version 2 as
+- * published by the Free Software Foundation, or (at your option) any
+- * later version. See the COPYING file in the top-level directory.
+- */
+-
+-#ifndef CRIS_TARGET_FCNTL_H
+-#define CRIS_TARGET_FCNTL_H
+-#include "../generic/fcntl.h"
+-#endif
+diff --git a/linux-user/cris/target_mman.h b/linux-user/cris/target_mman.h
+deleted file mode 100644
+index 9ace8ac292..0000000000
+--- a/linux-user/cris/target_mman.h
++++ /dev/null
+@@ -1,13 +0,0 @@
+-/*
+- * arch/cris/include/asm/processor.h:
+- * TASK_UNMAPPED_BASE      (PAGE_ALIGN(TASK_SIZE / 3))
+- *
+- * arch/cris/include/arch-v32/arch/processor.h
+- * TASK_SIZE               0xb0000000
+- */
+-#define TASK_UNMAPPED_BASE TARGET_PAGE_ALIGN(0xb0000000 / 3)
+-
+-/* arch/cris/include/uapi/asm/elf.h */
+-#define ELF_ET_DYN_BASE    (TASK_UNMAPPED_BASE * 2)
+-
+-#include "../generic/target_mman.h"
+diff --git a/linux-user/cris/target_prctl.h b/linux-user/cris/target_prctl.h
+deleted file mode 100644
+index eb53b31ad5..0000000000
+--- a/linux-user/cris/target_prctl.h
++++ /dev/null
+@@ -1 +0,0 @@
+-/* No special prctl support required. */
+diff --git a/linux-user/cris/target_proc.h b/linux-user/cris/target_proc.h
+deleted file mode 100644
+index 43fe29ca72..0000000000
+--- a/linux-user/cris/target_proc.h
++++ /dev/null
+@@ -1 +0,0 @@
+-/* No target-specific /proc support */
+diff --git a/linux-user/cris/target_resource.h b/linux-user/cris/target_resource.h
+deleted file mode 100644
+index 227259594c..0000000000
+--- a/linux-user/cris/target_resource.h
++++ /dev/null
+@@ -1 +0,0 @@
+-#include "../generic/target_resource.h"
+diff --git a/linux-user/cris/target_signal.h b/linux-user/cris/target_signal.h
+deleted file mode 100644
+index ab0653fcdc..0000000000
+--- a/linux-user/cris/target_signal.h
++++ /dev/null
+@@ -1,9 +0,0 @@
+-#ifndef CRIS_TARGET_SIGNAL_H
+-#define CRIS_TARGET_SIGNAL_H
+-
+-#include "../generic/signal.h"
+-
+-#define TARGET_ARCH_HAS_SETUP_FRAME
+-#define TARGET_ARCH_HAS_SIGTRAMP_PAGE 1
+-
+-#endif /* CRIS_TARGET_SIGNAL_H */
+diff --git a/linux-user/cris/target_structs.h b/linux-user/cris/target_structs.h
+deleted file mode 100644
+index 3a06f373c3..0000000000
+--- a/linux-user/cris/target_structs.h
++++ /dev/null
+@@ -1 +0,0 @@
+-#include "../generic/target_structs.h"
+diff --git a/linux-user/cris/target_syscall.h b/linux-user/cris/target_syscall.h
+deleted file mode 100644
+index 0b5ebf1f02..0000000000
+--- a/linux-user/cris/target_syscall.h
++++ /dev/null
+@@ -1,46 +0,0 @@
+-#ifndef CRIS_TARGET_SYSCALL_H
+-#define CRIS_TARGET_SYSCALL_H
+-
+-#define UNAME_MACHINE "cris"
+-#define UNAME_MINIMUM_RELEASE "2.6.32"
+-
+-/* pt_regs not only specifies the format in the user-struct during
+- * ptrace but is also the frame format used in the kernel prologue/epilogues
+- * themselves
+- */
+-
+-struct target_pt_regs {
+-        unsigned long orig_r10;
+-        /* pushed by movem r13, [sp] in SAVE_ALL. */
+-        unsigned long r0;
+-        unsigned long r1;
+-        unsigned long r2;
+-        unsigned long r3;
+-        unsigned long r4;
+-        unsigned long r5;
+-        unsigned long r6;
+-        unsigned long r7;
+-        unsigned long r8;
+-        unsigned long r9;
+-        unsigned long r10;
+-        unsigned long r11;
+-        unsigned long r12;
+-        unsigned long r13;
+-        unsigned long acr;
+-        unsigned long srs;
+-        unsigned long mof;
+-        unsigned long spc;
+-        unsigned long ccs;
+-        unsigned long srp;
+-        unsigned long erp; /* This is actually the debugged process's PC */
+-        /* For debugging purposes; saved only when needed. */
+-        unsigned long exs;
+-        unsigned long eda;
+-};
+-
+-#define TARGET_CLONE_BACKWARDS2
+-#define TARGET_MCL_CURRENT 1
+-#define TARGET_MCL_FUTURE  2
+-#define TARGET_MCL_ONFAULT 4
+-
+-#endif
+diff --git a/linux-user/cris/termbits.h b/linux-user/cris/termbits.h
+deleted file mode 100644
+index 0c8d8fc051..0000000000
+--- a/linux-user/cris/termbits.h
++++ /dev/null
+@@ -1,225 +0,0 @@
+-/* from asm/termbits.h */
+-
+-#ifndef LINUX_USER_CRIS_TERMBITS_H
+-#define LINUX_USER_CRIS_TERMBITS_H
+-
+-#define TARGET_NCCS 19
+-
+-typedef unsigned char   target_cc_t;        /* cc_t */
+-typedef unsigned int    target_speed_t;     /* speed_t */
+-typedef unsigned int    target_tcflag_t;    /* tcflag_t */
+-
+-struct target_termios {
+-    target_tcflag_t c_iflag;               /* input mode flags */
+-    target_tcflag_t c_oflag;               /* output mode flags */
+-    target_tcflag_t c_cflag;               /* control mode flags */
+-    target_tcflag_t c_lflag;               /* local mode flags */
+-    target_cc_t c_line;                    /* line discipline */
+-    target_cc_t c_cc[TARGET_NCCS];         /* control characters */
+-};
+-
+-/* c_iflag bits */
+-#define TARGET_IGNBRK  0000001
+-#define TARGET_BRKINT  0000002
+-#define TARGET_IGNPAR  0000004
+-#define TARGET_PARMRK  0000010
+-#define TARGET_INPCK   0000020
+-#define TARGET_ISTRIP  0000040
+-#define TARGET_INLCR   0000100
+-#define TARGET_IGNCR   0000200
+-#define TARGET_ICRNL   0000400
+-#define TARGET_IUCLC   0001000
+-#define TARGET_IXON    0002000
+-#define TARGET_IXANY   0004000
+-#define TARGET_IXOFF   0010000
+-#define TARGET_IMAXBEL 0020000
+-#define TARGET_IUTF8   0040000
+-
+-/* c_oflag bits */
+-#define TARGET_OPOST   0000001
+-#define TARGET_OLCUC   0000002
+-#define TARGET_ONLCR   0000004
+-#define TARGET_OCRNL   0000010
+-#define TARGET_ONOCR   0000020
+-#define TARGET_ONLRET  0000040
+-#define TARGET_OFILL   0000100
+-#define TARGET_OFDEL   0000200
+-#define TARGET_NLDLY   0000400
+-#define   TARGET_NL0   0000000
+-#define   TARGET_NL1   0000400
+-#define TARGET_CRDLY   0003000
+-#define   TARGET_CR0   0000000
+-#define   TARGET_CR1   0001000
+-#define   TARGET_CR2   0002000
+-#define   TARGET_CR3   0003000
+-#define TARGET_TABDLY  0014000
+-#define   TARGET_TAB0  0000000
+-#define   TARGET_TAB1  0004000
+-#define   TARGET_TAB2  0010000
+-#define   TARGET_TAB3  0014000
+-#define   TARGET_XTABS 0014000
+-#define TARGET_BSDLY   0020000
+-#define   TARGET_BS0   0000000
+-#define   TARGET_BS1   0020000
+-#define TARGET_VTDLY   0040000
+-#define   TARGET_VT0   0000000
+-#define   TARGET_VT1   0040000
+-#define TARGET_FFDLY   0100000
+-#define   TARGET_FF0   0000000
+-#define   TARGET_FF1   0100000
+-
+-/* c_cflag bit meaning */
+-#define TARGET_CBAUD   0010017
+-#define  TARGET_B0     0000000         /* hang up */
+-#define  TARGET_B50    0000001
+-#define  TARGET_B75    0000002
+-#define  TARGET_B110   0000003
+-#define  TARGET_B134   0000004
+-#define  TARGET_B150   0000005
+-#define  TARGET_B200   0000006
+-#define  TARGET_B300   0000007
+-#define  TARGET_B600   0000010
+-#define  TARGET_B1200  0000011
+-#define  TARGET_B1800  0000012
+-#define  TARGET_B2400  0000013
+-#define  TARGET_B4800  0000014
+-#define  TARGET_B9600  0000015
+-#define  TARGET_B19200 0000016
+-#define  TARGET_B38400 0000017
+-#define TARGET_EXTA B19200
+-#define TARGET_EXTB B38400
+-#define TARGET_CSIZE   0000060
+-#define   TARGET_CS5   0000000
+-#define   TARGET_CS6   0000020
+-#define   TARGET_CS7   0000040
+-#define   TARGET_CS8   0000060
+-#define TARGET_CSTOPB  0000100
+-#define TARGET_CREAD   0000200
+-#define TARGET_PARENB  0000400
+-#define TARGET_PARODD  0001000
+-#define TARGET_HUPCL   0002000
+-#define TARGET_CLOCAL  0004000
+-#define TARGET_CBAUDEX 0010000
+-#define  TARGET_B57600  0010001
+-#define  TARGET_B115200 0010002
+-#define  TARGET_B230400 0010003
+-#define  TARGET_B460800 0010004
+-#define TARGET_CIBAUD    002003600000  /* input baud rate (not used) */
+-#define TARGET_CRTSCTS   020000000000          /* flow control */
+-
+-/* c_lflag bits */
+-#define TARGET_ISIG    0000001
+-#define TARGET_ICANON  0000002
+-#define TARGET_XCASE   0000004
+-#define TARGET_ECHO    0000010
+-#define TARGET_ECHOE   0000020
+-#define TARGET_ECHOK   0000040
+-#define TARGET_ECHONL  0000100
+-#define TARGET_NOFLSH  0000200
+-#define TARGET_TOSTOP  0000400
+-#define TARGET_ECHOCTL 0001000
+-#define TARGET_ECHOPRT 0002000
+-#define TARGET_ECHOKE  0004000
+-#define TARGET_FLUSHO  0010000
+-#define TARGET_PENDIN  0040000
+-#define TARGET_IEXTEN  0100000
+-#define TARGET_EXTPROC 0200000
+-
+-/* c_cc character offsets */
+-#define TARGET_VINTR	0
+-#define TARGET_VQUIT	1
+-#define TARGET_VERASE	2
+-#define TARGET_VKILL	3
+-#define TARGET_VEOF	4
+-#define TARGET_VTIME	5
+-#define TARGET_VMIN	6
+-#define TARGET_VSWTC	7
+-#define TARGET_VSTART	8
+-#define TARGET_VSTOP	9
+-#define TARGET_VSUSP	10
+-#define TARGET_VEOL	11
+-#define TARGET_VREPRINT	12
+-#define TARGET_VDISCARD	13
+-#define TARGET_VWERASE	14
+-#define TARGET_VLNEXT	15
+-#define TARGET_VEOL2	16
+-
+-/* ioctls */
+-
+-#define TARGET_TCGETS		0x5401
+-#define TARGET_TCSETS		0x5402
+-#define TARGET_TCSETSW		0x5403
+-#define TARGET_TCSETSF		0x5404
+-#define TARGET_TCGETA		0x5405
+-#define TARGET_TCSETA		0x5406
+-#define TARGET_TCSETAW		0x5407
+-#define TARGET_TCSETAF		0x5408
+-#define TARGET_TCSBRK		0x5409
+-#define TARGET_TCXONC		0x540A
+-#define TARGET_TCFLSH		0x540B
+-
+-#define TARGET_TIOCEXCL	0x540C
+-#define TARGET_TIOCNXCL	0x540D
+-#define TARGET_TIOCSCTTY	0x540E
+-#define TARGET_TIOCGPGRP	0x540F
+-#define TARGET_TIOCSPGRP	0x5410
+-#define TARGET_TIOCOUTQ	0x5411
+-#define TARGET_TIOCSTI		0x5412
+-#define TARGET_TIOCGWINSZ	0x5413
+-#define TARGET_TIOCSWINSZ	0x5414
+-#define TARGET_TIOCMGET	0x5415
+-#define TARGET_TIOCMBIS	0x5416
+-#define TARGET_TIOCMBIC	0x5417
+-#define TARGET_TIOCMSET	0x5418
+-#define TARGET_TIOCGSOFTCAR	0x5419
+-#define TARGET_TIOCSSOFTCAR	0x541A
+-#define TARGET_FIONREAD	0x541B
+-#define TARGET_TIOCINQ		TARGET_FIONREAD
+-#define TARGET_TIOCLINUX	0x541C
+-#define TARGET_TIOCCONS	0x541D
+-#define TARGET_TIOCGSERIAL	0x541E
+-#define TARGET_TIOCSSERIAL	0x541F
+-#define TARGET_TIOCPKT		0x5420
+-#define TARGET_FIONBIO		0x5421
+-#define TARGET_TIOCNOTTY	0x5422
+-#define TARGET_TIOCSETD	0x5423
+-#define TARGET_TIOCGETD	0x5424
+-#define TARGET_TCSBRKP		0x5425	/* Needed for POSIX tcsendbreak() */
+-#define TARGET_TIOCTTYGSTRUCT	0x5426  /* For debugging only */
+-#define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
+-#define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
+-#define TARGET_TIOCGSID	0x5429  /* Return the session ID of FD */
+-#define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
+-#define TARGET_TIOCSPTLCK	TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
+-#define TARGET_TIOCGPTPEER      TARGET_IO('T', 0x41) /* Safely open the slave */
+-
+-#define TARGET_FIONCLEX	0x5450  /* these numbers need to be adjusted. */
+-#define TARGET_FIOCLEX		0x5451
+-#define TARGET_FIOASYNC	0x5452
+-#define TARGET_TIOCSERCONFIG	0x5453
+-#define TARGET_TIOCSERGWILD	0x5454
+-#define TARGET_TIOCSERSWILD	0x5455
+-#define TARGET_TIOCGLCKTRMIOS	0x5456
+-#define TARGET_TIOCSLCKTRMIOS	0x5457
+-#define TARGET_TIOCSERGSTRUCT	0x5458 /* For debugging only */
+-#define TARGET_TIOCSERGETLSR   0x5459 /* Get line status register */
+-#define TARGET_TIOCSERGETMULTI 0x545A /* Get multiport config  */
+-#define TARGET_TIOCSERSETMULTI 0x545B /* Set multiport config */
+-
+-#define TARGET_TIOCMIWAIT	0x545C	/* wait for a change on serial input line(s) */
+-#define TARGET_TIOCGICOUNT	0x545D	/* read serial port inline interrupt counts */
+-#define TARGET_TIOCGHAYESESP   0x545E  /* Get Hayes ESP configuration */
+-#define TARGET_TIOCSHAYESESP   0x545F  /* Set Hayes ESP configuration */
+-
+-/* Used for packet mode */
+-#define TARGET_TIOCPKT_DATA		 0
+-#define TARGET_TIOCPKT_FLUSHREAD	 1
+-#define TARGET_TIOCPKT_FLUSHWRITE	 2
+-#define TARGET_TIOCPKT_STOP		 4
+-#define TARGET_TIOCPKT_START		 8
+-#define TARGET_TIOCPKT_NOSTOP		16
+-#define TARGET_TIOCPKT_DOSTOP		32
+-
+-#define TARGET_TIOCSER_TEMT    0x01	/* Transmitter physically empty */
+-
+-#endif
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index a00b617cae..8ed53904ed 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -62,7 +62,7 @@
+ #if (defined(TARGET_I386) && defined(TARGET_ABI32))                     \
+     || (defined(TARGET_ARM) && defined(TARGET_ABI32))                   \
+     || (defined(TARGET_SPARC) && defined(TARGET_ABI32))                 \
+-    || defined(TARGET_M68K) || defined(TARGET_SH4) || defined(TARGET_CRIS)
++    || defined(TARGET_M68K) || defined(TARGET_SH4)
+ /* 16 bit uid wrappers emulation */
+ #define USE_UID16
+ #define target_id uint16_t
+@@ -71,7 +71,7 @@
+ #endif
+ 
+ #if defined(TARGET_I386) || defined(TARGET_ARM) || defined(TARGET_SH4)  \
+-    || defined(TARGET_M68K) || defined(TARGET_CRIS)                     \
++    || defined(TARGET_M68K)                                             \
+     || defined(TARGET_S390X) || defined(TARGET_OPENRISC)                \
+     || defined(TARGET_RISCV)                                            \
+     || defined(TARGET_XTENSA) || defined(TARGET_LOONGARCH64)
+@@ -1234,8 +1234,7 @@ struct target_winsize {
+ #include "target_mman.h"
+ 
+ #if (defined(TARGET_I386) && defined(TARGET_ABI32))     \
+-    || (defined(TARGET_ARM) && defined(TARGET_ABI32))   \
+-    || defined(TARGET_CRIS)
++    || (defined(TARGET_ARM) && defined(TARGET_ABI32))
+ #define TARGET_STAT_HAVE_NSEC
+ struct target_stat {
+     abi_ushort st_dev;
+diff --git a/target/cris/cpu-param.h b/target/cris/cpu-param.h
+deleted file mode 100644
+index b31b742c0d..0000000000
+--- a/target/cris/cpu-param.h
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/*
+- * CRIS cpu parameters for qemu.
+- *
+- * Copyright (c) 2007 AXIS Communications AB
+- * SPDX-License-Identifier: LGPL-2.0+
+- */
+-
+-#ifndef CRIS_CPU_PARAM_H
+-#define CRIS_CPU_PARAM_H
+-
+-#define TARGET_LONG_BITS 32
+-#define TARGET_PAGE_BITS 13
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+-#define TARGET_VIRT_ADDR_SPACE_BITS 32
+-
+-#endif
+diff --git a/target/cris/cpu-qom.h b/target/cris/cpu-qom.h
+deleted file mode 100644
+index 741ca97a1b..0000000000
+--- a/target/cris/cpu-qom.h
++++ /dev/null
+@@ -1,32 +0,0 @@
+-/*
+- * QEMU CRIS CPU QOM header (target agnostic)
+- *
+- * Copyright (c) 2012 SUSE LINUX Products GmbH
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see
+- * <http://www.gnu.org/licenses/lgpl-2.1.html>
+- */
+-#ifndef QEMU_CRIS_CPU_QOM_H
+-#define QEMU_CRIS_CPU_QOM_H
+-
+-#include "hw/core/cpu.h"
+-
+-#define TYPE_CRIS_CPU "cris-cpu"
+-
+-OBJECT_DECLARE_CPU_TYPE(CRISCPU, CRISCPUClass, CRIS_CPU)
+-
+-#define CRIS_CPU_TYPE_SUFFIX "-" TYPE_CRIS_CPU
+-#define CRIS_CPU_TYPE_NAME(name) (name CRIS_CPU_TYPE_SUFFIX)
+-
+-#endif
+diff --git a/target/cris/cpu.h b/target/cris/cpu.h
+deleted file mode 100644
+index 3904e5448c..0000000000
+--- a/target/cris/cpu.h
++++ /dev/null
+@@ -1,286 +0,0 @@
+-/*
+- *  CRIS virtual CPU header
+- *
+- *  Copyright (c) 2007 AXIS Communications AB
+- *  Written by Edgar E. Iglesias
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef CRIS_CPU_H
+-#define CRIS_CPU_H
+-
+-#include "cpu-qom.h"
+-#include "exec/cpu-defs.h"
+-
+-#define EXCP_NMI        1
+-#define EXCP_GURU       2
+-#define EXCP_BUSFAULT   3
+-#define EXCP_IRQ        4
+-#define EXCP_BREAK      5
+-
+-/* CRIS-specific interrupt pending bits.  */
+-#define CPU_INTERRUPT_NMI       CPU_INTERRUPT_TGT_EXT_3
+-
+-/* CRUS CPU device objects interrupt lines.  */
+-/* PIC passes the vector for the IRQ as the value of it sends over qemu_irq */
+-#define CRIS_CPU_IRQ 0
+-#define CRIS_CPU_NMI 1
+-
+-/* Register aliases. R0 - R15 */
+-#define R_FP  8
+-#define R_SP  14
+-#define R_ACR 15
+-
+-/* Support regs, P0 - P15  */
+-#define PR_BZ  0
+-#define PR_VR  1
+-#define PR_PID 2
+-#define PR_SRS 3
+-#define PR_WZ  4
+-#define PR_EXS 5
+-#define PR_EDA 6
+-#define PR_PREFIX 6    /* On CRISv10 P6 is reserved, we use it as prefix.  */
+-#define PR_MOF 7
+-#define PR_DZ  8
+-#define PR_EBP 9
+-#define PR_ERP 10
+-#define PR_SRP 11
+-#define PR_NRP 12
+-#define PR_CCS 13
+-#define PR_USP 14
+-#define PRV10_BRP 14
+-#define PR_SPC 15
+-
+-/* CPU flags.  */
+-#define Q_FLAG 0x80000000
+-#define M_FLAG_V32 0x40000000
+-#define PFIX_FLAG 0x800      /* CRISv10 Only.  */
+-#define F_FLAG_V10 0x400
+-#define P_FLAG_V10 0x200
+-#define S_FLAG 0x200
+-#define R_FLAG 0x100
+-#define P_FLAG 0x80
+-#define M_FLAG_V10 0x80
+-#define U_FLAG 0x40
+-#define I_FLAG 0x20
+-#define X_FLAG 0x10
+-#define N_FLAG 0x08
+-#define Z_FLAG 0x04
+-#define V_FLAG 0x02
+-#define C_FLAG 0x01
+-#define ALU_FLAGS 0x1F
+-
+-/* Condition codes.  */
+-#define CC_CC   0
+-#define CC_CS   1
+-#define CC_NE   2
+-#define CC_EQ   3
+-#define CC_VC   4
+-#define CC_VS   5
+-#define CC_PL   6
+-#define CC_MI   7
+-#define CC_LS   8
+-#define CC_HI   9
+-#define CC_GE  10
+-#define CC_LT  11
+-#define CC_GT  12
+-#define CC_LE  13
+-#define CC_A   14
+-#define CC_P   15
+-
+-typedef struct {
+-    uint32_t hi;
+-    uint32_t lo;
+-} TLBSet;
+-
+-typedef struct CPUArchState {
+-	uint32_t regs[16];
+-	/* P0 - P15 are referred to as special registers in the docs.  */
+-	uint32_t pregs[16];
+-
+-	/* Pseudo register for the PC. Not directly accessible on CRIS.  */
+-	uint32_t pc;
+-
+-	/* Pseudo register for the kernel stack.  */
+-	uint32_t ksp;
+-
+-	/* Branch.  */
+-	int dslot;
+-	int btaken;
+-	uint32_t btarget;
+-
+-	/* Condition flag tracking.  */
+-	uint32_t cc_op;
+-	uint32_t cc_mask;
+-	uint32_t cc_dest;
+-	uint32_t cc_src;
+-	uint32_t cc_result;
+-	/* size of the operation, 1 = byte, 2 = word, 4 = dword.  */
+-	int cc_size;
+-	/* X flag at the time of cc snapshot.  */
+-	int cc_x;
+-
+-	/* CRIS has certain insns that lockout interrupts.  */
+-	int locked_irq;
+-	int interrupt_vector;
+-	int fault_vector;
+-	int trap_vector;
+-
+-	/* FIXME: add a check in the translator to avoid writing to support
+-	   register sets beyond the 4th. The ISA allows up to 256! but in
+-	   practice there is no core that implements more than 4.
+-
+-	   Support function registers are used to control units close to the
+-	   core. Accesses do not pass down the normal hierarchy.
+-	*/
+-	uint32_t sregs[4][16];
+-
+-	/* Linear feedback shift reg in the mmu. Used to provide pseudo
+-	   randomness for the 'hint' the mmu gives to sw for choosing valid
+-	   sets on TLB refills.  */
+-	uint32_t mmu_rand_lfsr;
+-
+-	/*
+-	 * We just store the stores to the tlbset here for later evaluation
+-	 * when the hw needs access to them.
+-	 *
+-	 * One for I and another for D.
+-	 */
+-        TLBSet tlbsets[2][4][16];
+-
+-        /* Fields up to this point are cleared by a CPU reset */
+-        struct {} end_reset_fields;
+-
+-        /* Members from load_info on are preserved across resets.  */
+-        void *load_info;
+-} CPUCRISState;
+-
+-/**
+- * CRISCPU:
+- * @env: #CPUCRISState
+- *
+- * A CRIS CPU.
+- */
+-struct ArchCPU {
+-    CPUState parent_obj;
+-
+-    CPUCRISState env;
+-};
+-
+-/**
+- * CRISCPUClass:
+- * @parent_realize: The parent class' realize handler.
+- * @parent_phases: The parent class' reset phase handlers.
+- * @vr: Version Register value.
+- *
+- * A CRIS CPU model.
+- */
+-struct CRISCPUClass {
+-    CPUClass parent_class;
+-
+-    DeviceRealize parent_realize;
+-    ResettablePhases parent_phases;
+-
+-    uint32_t vr;
+-};
+-
+-#ifndef CONFIG_USER_ONLY
+-extern const VMStateDescription vmstate_cris_cpu;
+-
+-void cris_cpu_do_interrupt(CPUState *cpu);
+-void crisv10_cpu_do_interrupt(CPUState *cpu);
+-bool cris_cpu_exec_interrupt(CPUState *cpu, int int_req);
+-
+-bool cris_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                       MMUAccessType access_type, int mmu_idx,
+-                       bool probe, uintptr_t retaddr);
+-hwaddr cris_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+-#endif
+-
+-void cris_cpu_dump_state(CPUState *cs, FILE *f, int flags);
+-
+-int crisv10_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+-int cris_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+-int cris_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+-
+-void cris_initialize_tcg(void);
+-void cris_initialize_crisv10_tcg(void);
+-
+-/* Instead of computing the condition codes after each CRIS instruction,
+- * QEMU just stores one operand (called CC_SRC), the result
+- * (called CC_DEST) and the type of operation (called CC_OP). When the
+- * condition codes are needed, the condition codes can be calculated
+- * using this information. Condition codes are not generated if they
+- * are only needed for conditional branches.
+- */
+-enum {
+-    CC_OP_DYNAMIC, /* Use env->cc_op  */
+-    CC_OP_FLAGS,
+-    CC_OP_CMP,
+-    CC_OP_MOVE,
+-    CC_OP_ADD,
+-    CC_OP_ADDC,
+-    CC_OP_MCP,
+-    CC_OP_ADDU,
+-    CC_OP_SUB,
+-    CC_OP_SUBU,
+-    CC_OP_NEG,
+-    CC_OP_BTST,
+-    CC_OP_MULS,
+-    CC_OP_MULU,
+-    CC_OP_DSTEP,
+-    CC_OP_MSTEP,
+-    CC_OP_BOUND,
+-
+-    CC_OP_OR,
+-    CC_OP_AND,
+-    CC_OP_XOR,
+-    CC_OP_LSL,
+-    CC_OP_LSR,
+-    CC_OP_ASR,
+-    CC_OP_LZ
+-};
+-
+-/* CRIS uses 8k pages.  */
+-#define MMAP_SHIFT TARGET_PAGE_BITS
+-
+-#define CPU_RESOLVING_TYPE TYPE_CRIS_CPU
+-
+-/* MMU modes definitions */
+-#define MMU_USER_IDX 1
+-
+-/* Support function regs.  */
+-#define SFR_RW_GC_CFG      0][0
+-#define SFR_RW_MM_CFG      env->pregs[PR_SRS]][0
+-#define SFR_RW_MM_KBASE_LO env->pregs[PR_SRS]][1
+-#define SFR_RW_MM_KBASE_HI env->pregs[PR_SRS]][2
+-#define SFR_R_MM_CAUSE     env->pregs[PR_SRS]][3
+-#define SFR_RW_MM_TLB_SEL  env->pregs[PR_SRS]][4
+-#define SFR_RW_MM_TLB_LO   env->pregs[PR_SRS]][5
+-#define SFR_RW_MM_TLB_HI   env->pregs[PR_SRS]][6
+-
+-#include "exec/cpu-all.h"
+-
+-static inline void cpu_get_tb_cpu_state(CPUCRISState *env, vaddr *pc,
+-                                        uint64_t *cs_base, uint32_t *flags)
+-{
+-    *pc = env->pc;
+-    *cs_base = 0;
+-    *flags = env->dslot |
+-            (env->pregs[PR_CCS] & (S_FLAG | P_FLAG | U_FLAG
+-				     | X_FLAG | PFIX_FLAG));
+-}
+-
+-#endif
+diff --git a/target/cris/crisv10-decode.h b/target/cris/crisv10-decode.h
+deleted file mode 100644
+index 9c531f36b4..0000000000
+--- a/target/cris/crisv10-decode.h
++++ /dev/null
+@@ -1,112 +0,0 @@
+-/*
+- *  CRISv10 insn decoding macros.
+- *
+- *  Copyright (c) 2010 AXIS Communications AB
+- *  Written by Edgar E. Iglesias.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef TARGET_CRIS_CRISV10_DECODE_H
+-#define TARGET_CRIS_CRISV10_DECODE_H
+-
+-#define CRISV10_MODE_QIMMEDIATE  0
+-#define CRISV10_MODE_REG         1
+-#define CRISV10_MODE_INDIRECT    2
+-#define CRISV10_MODE_AUTOINC     3
+-
+-/* Quick Immediate.  */
+-#define CRISV10_QIMM_BCC_R0      0
+-#define CRISV10_QIMM_BCC_R1      1
+-#define CRISV10_QIMM_BCC_R2      2
+-#define CRISV10_QIMM_BCC_R3      3
+-
+-#define CRISV10_QIMM_BDAP_R0     4
+-#define CRISV10_QIMM_BDAP_R1     5
+-#define CRISV10_QIMM_BDAP_R2     6
+-#define CRISV10_QIMM_BDAP_R3     7
+-
+-#define CRISV10_QIMM_ADDQ        8
+-#define CRISV10_QIMM_MOVEQ       9
+-#define CRISV10_QIMM_SUBQ       10
+-#define CRISV10_QIMM_CMPQ       11
+-#define CRISV10_QIMM_ANDQ       12
+-#define CRISV10_QIMM_ORQ        13
+-#define CRISV10_QIMM_ASHQ       14
+-#define CRISV10_QIMM_LSHQ       15
+-
+-
+-#define CRISV10_REG_ADDX         0
+-#define CRISV10_REG_MOVX         1
+-#define CRISV10_REG_SUBX         2
+-#define CRISV10_REG_LSL          3
+-#define CRISV10_REG_ADDI         4
+-#define CRISV10_REG_BIAP         5
+-#define CRISV10_REG_NEG          6
+-#define CRISV10_REG_BOUND        7
+-#define CRISV10_REG_ADD          8
+-#define CRISV10_REG_MOVE_R       9
+-#define CRISV10_REG_MOVE_SPR_R   9
+-#define CRISV10_REG_MOVE_R_SPR   8
+-#define CRISV10_REG_SUB         10
+-#define CRISV10_REG_CMP         11
+-#define CRISV10_REG_AND         12
+-#define CRISV10_REG_OR          13
+-#define CRISV10_REG_ASR         14
+-#define CRISV10_REG_LSR         15
+-
+-#define CRISV10_REG_BTST         3
+-#define CRISV10_REG_SCC          4
+-#define CRISV10_REG_SETF         6
+-#define CRISV10_REG_CLEARF       7
+-#define CRISV10_REG_BIAP         5
+-#define CRISV10_REG_ABS         10
+-#define CRISV10_REG_DSTEP       11
+-#define CRISV10_REG_LZ          12
+-#define CRISV10_REG_NOT         13
+-#define CRISV10_REG_SWAP        13
+-#define CRISV10_REG_XOR         14
+-#define CRISV10_REG_MSTEP       15
+-
+-/* Indirect, var size.  */
+-#define CRISV10_IND_TEST        14
+-#define CRISV10_IND_MUL          4
+-#define CRISV10_IND_BDAP_M       5
+-#define CRISV10_IND_ADD          8
+-#define CRISV10_IND_MOVE_M_R     9
+-
+-
+-/* indirect fixed size.  */
+-#define CRISV10_IND_ADDX         0
+-#define CRISV10_IND_MOVX         1
+-#define CRISV10_IND_SUBX         2
+-#define CRISV10_IND_CMPX         3
+-#define CRISV10_IND_JUMP_M       4
+-#define CRISV10_IND_DIP          5
+-#define CRISV10_IND_JUMP_R       6
+-#define CRISV17_IND_ADDC         6
+-#define CRISV10_IND_BOUND        7
+-#define CRISV10_IND_BCC_M        7
+-#define CRISV10_IND_MOVE_M_SPR   8
+-#define CRISV10_IND_MOVE_SPR_M   9
+-#define CRISV10_IND_SUB         10
+-#define CRISV10_IND_CMP         11
+-#define CRISV10_IND_AND         12
+-#define CRISV10_IND_OR          13
+-#define CRISV10_IND_MOVE_R_M    15
+-
+-#define CRISV10_IND_MOVEM_M_R    14
+-#define CRISV10_IND_MOVEM_R_M    15
+-
+-#endif
+diff --git a/target/cris/crisv32-decode.h b/target/cris/crisv32-decode.h
+deleted file mode 100644
+index fa0a7f0d63..0000000000
+--- a/target/cris/crisv32-decode.h
++++ /dev/null
+@@ -1,133 +0,0 @@
+-/*
+- *  CRIS insn decoding macros.
+- *
+- *  Copyright (c) 2007 AXIS Communications AB
+- *  Written by Edgar E. Iglesias.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef CRISV32_DECODE_H
+-#define CRISV32_DECODE_H
+-
+-/* Convenient binary macros.  */
+-#define HEX__(n) 0x##n##LU
+-#define B8__(x) ((x&0x0000000FLU)?1:0) \
+-                 + ((x&0x000000F0LU)?2:0) \
+-                 + ((x&0x00000F00LU)?4:0) \
+-                 + ((x&0x0000F000LU)?8:0) \
+-                 + ((x&0x000F0000LU)?16:0) \
+-                 + ((x&0x00F00000LU)?32:0) \
+-                 + ((x&0x0F000000LU)?64:0) \
+-                 + ((x&0xF0000000LU)?128:0)
+-#define B8(d) ((unsigned char)B8__(HEX__(d)))
+-
+-/* Quick imm.  */
+-#define DEC_BCCQ     {B8(00000000), B8(11110000)}
+-#define DEC_ADDOQ    {B8(00010000), B8(11110000)}
+-#define DEC_ADDQ     {B8(00100000), B8(11111100)}
+-#define DEC_MOVEQ    {B8(00100100), B8(11111100)}
+-#define DEC_SUBQ     {B8(00101000), B8(11111100)}
+-#define DEC_CMPQ     {B8(00101100), B8(11111100)}
+-#define DEC_ANDQ     {B8(00110000), B8(11111100)}
+-#define DEC_ORQ      {B8(00110100), B8(11111100)}
+-#define DEC_BTSTQ    {B8(00111000), B8(11111110)}
+-#define DEC_ASRQ     {B8(00111010), B8(11111110)}
+-#define DEC_LSLQ     {B8(00111100), B8(11111110)}
+-#define DEC_LSRQ     {B8(00111110), B8(11111110)}
+-
+-/* Register.  */
+-#define DEC_MOVU_R   {B8(01000100), B8(11111110)}
+-#define DEC_MOVU_R   {B8(01000100), B8(11111110)}
+-#define DEC_MOVS_R   {B8(01000110), B8(11111110)}
+-#define DEC_MOVE_R   {B8(01100100), B8(11111100)}
+-#define DEC_MOVE_RP  {B8(01100011), B8(11111111)}
+-#define DEC_MOVE_PR  {B8(01100111), B8(11111111)}
+-#define DEC_DSTEP_R  {B8(01101111), B8(11111111)}
+-#define DEC_MOVE_RS  {B8(10110111), B8(11111111)}
+-#define DEC_MOVE_SR  {B8(11110111), B8(11111111)}
+-#define DEC_ADDU_R   {B8(01000000), B8(11111110)}
+-#define DEC_ADDS_R   {B8(01000010), B8(11111110)}
+-#define DEC_ADD_R    {B8(01100000), B8(11111100)}
+-#define DEC_ADDI_R   {B8(01010000), B8(11111100)}
+-#define DEC_MULS_R   {B8(11010000), B8(11111100)}
+-#define DEC_MULU_R   {B8(10010000), B8(11111100)}
+-#define DEC_ADDI_ACR {B8(01010100), B8(11111100)}
+-#define DEC_NEG_R    {B8(01011000), B8(11111100)}
+-#define DEC_BOUND_R  {B8(01011100), B8(11111100)}
+-#define DEC_SUBU_R   {B8(01001000), B8(11111110)}
+-#define DEC_SUBS_R   {B8(01001010), B8(11111110)}
+-#define DEC_SUB_R    {B8(01101000), B8(11111100)}
+-#define DEC_CMP_R    {B8(01101100), B8(11111100)}
+-#define DEC_AND_R    {B8(01110000), B8(11111100)}
+-#define DEC_ABS_R    {B8(01101011), B8(11111111)}
+-#define DEC_LZ_R     {B8(01110011), B8(11111111)}
+-#define DEC_MCP_R    {B8(01111111), B8(11111111)}
+-#define DEC_SWAP_R   {B8(01110111), B8(11111111)}
+-#define DEC_XOR_R    {B8(01111011), B8(11111111)}
+-#define DEC_LSL_R    {B8(01001100), B8(11111100)}
+-#define DEC_LSR_R    {B8(01111100), B8(11111100)}
+-#define DEC_ASR_R    {B8(01111000), B8(11111100)}
+-#define DEC_OR_R     {B8(01110100), B8(11111100)}
+-#define DEC_BTST_R   {B8(01001111), B8(11111111)}
+-
+-/* Fixed.  */
+-#define DEC_SETF     {B8(01011011), B8(11111111)}
+-#define DEC_CLEARF   {B8(01011111), B8(11111111)}
+-
+-/* Memory.  */
+-#define DEC_ADDU_M   {B8(10000000), B8(10111110)}
+-#define DEC_ADDS_M   {B8(10000010), B8(10111110)}
+-#define DEC_MOVU_M   {B8(10000100), B8(10111110)}
+-#define DEC_MOVS_M   {B8(10000110), B8(10111110)}
+-#define DEC_SUBU_M   {B8(10001000), B8(10111110)}
+-#define DEC_SUBS_M   {B8(10001010), B8(10111110)}
+-#define DEC_CMPU_M   {B8(10001100), B8(10111110)}
+-#define DEC_CMPS_M   {B8(10001110), B8(10111110)}
+-#define DEC_ADDO_M   {B8(10010100), B8(10111100)}
+-#define DEC_BOUND_M  {B8(10011100), B8(10111100)}
+-#define DEC_ADD_M    {B8(10100000), B8(10111100)}
+-#define DEC_MOVE_MR  {B8(10100100), B8(10111100)}
+-#define DEC_SUB_M    {B8(10101000), B8(10111100)}
+-#define DEC_CMP_M    {B8(10101100), B8(10111100)}
+-#define DEC_AND_M    {B8(10110000), B8(10111100)}
+-#define DEC_OR_M     {B8(10110100), B8(10111100)}
+-#define DEC_TEST_M   {B8(10111000), B8(10111100)}
+-#define DEC_MOVE_RM  {B8(10111100), B8(10111100)}
+-
+-#define DEC_ADDC_R   {B8(01010111), B8(11111111)}
+-#define DEC_ADDC_MR  {B8(10011010), B8(10111111)}
+-#define DEC_LAPCQ    {B8(10010111), B8(11111111)}
+-#define DEC_LAPC_IM  {B8(11010111), B8(11111111)}
+-
+-#define DEC_MOVE_MP  {B8(10100011), B8(10111111)}
+-#define DEC_MOVE_PM  {B8(10100111), B8(10111111)}
+-
+-#define DEC_SCC_R    {B8(01010011), B8(11111111)}
+-#define DEC_RFE_ETC  {B8(10010011), B8(11111111)}
+-#define DEC_JUMP_P   {B8(10011111), B8(11111111)}
+-#define DEC_BCC_IM   {B8(11011111), B8(11111111)}
+-#define DEC_JAS_R    {B8(10011011), B8(11111111)}
+-#define DEC_JASC_R   {B8(10110011), B8(11111111)}
+-#define DEC_JAS_IM   {B8(11011011), B8(11111111)}
+-#define DEC_JASC_IM  {B8(11110011), B8(11111111)}
+-#define DEC_BAS_IM   {B8(11101011), B8(11111111)}
+-#define DEC_BASC_IM  {B8(11101111), B8(11111111)}
+-#define DEC_MOVEM_MR {B8(10111011), B8(10111111)}
+-#define DEC_MOVEM_RM {B8(10111111), B8(10111111)}
+-
+-#define DEC_FTAG_FIDX_D_M {B8(10101011), B8(11111111)}
+-#define DEC_FTAG_FIDX_I_M {B8(11010011), B8(11111111)}
+-
+-#endif
+diff --git a/target/cris/helper.h b/target/cris/helper.h
+deleted file mode 100644
+index 3abf608682..0000000000
+--- a/target/cris/helper.h
++++ /dev/null
+@@ -1,23 +0,0 @@
+-DEF_HELPER_2(raise_exception, noreturn, env, i32)
+-DEF_HELPER_2(tlb_flush_pid, void, env, i32)
+-DEF_HELPER_2(spc_write, void, env, i32)
+-DEF_HELPER_1(rfe, void, env)
+-DEF_HELPER_1(rfn, void, env)
+-
+-DEF_HELPER_3(movl_sreg_reg, void, env, i32, i32)
+-DEF_HELPER_3(movl_reg_sreg, void, env, i32, i32)
+-
+-DEF_HELPER_FLAGS_4(btst, TCG_CALL_NO_SE, i32, env, i32, i32, i32)
+-
+-DEF_HELPER_FLAGS_4(evaluate_flags_muls, TCG_CALL_NO_SE, i32, env, i32, i32, i32)
+-DEF_HELPER_FLAGS_4(evaluate_flags_mulu, TCG_CALL_NO_SE, i32, env, i32, i32, i32)
+-DEF_HELPER_FLAGS_5(evaluate_flags_mcp, TCG_CALL_NO_SE, i32, env,
+-                                                      i32, i32, i32, i32)
+-DEF_HELPER_FLAGS_5(evaluate_flags_alu_4, TCG_CALL_NO_SE, i32, env,
+-                                                        i32, i32, i32, i32)
+-DEF_HELPER_FLAGS_5(evaluate_flags_sub_4, TCG_CALL_NO_SE, i32, env,
+-                                                        i32, i32, i32, i32)
+-DEF_HELPER_FLAGS_3(evaluate_flags_move_4, TCG_CALL_NO_SE, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(evaluate_flags_move_2, TCG_CALL_NO_SE, i32, env, i32, i32)
+-DEF_HELPER_1(evaluate_flags, void, env)
+-DEF_HELPER_1(top_evaluate_flags, void, env)
+diff --git a/target/cris/mmu.h b/target/cris/mmu.h
+deleted file mode 100644
+index d57386ec6c..0000000000
+--- a/target/cris/mmu.h
++++ /dev/null
+@@ -1,22 +0,0 @@
+-#ifndef TARGET_CRIS_MMU_H
+-#define TARGET_CRIS_MMU_H
+-
+-#define CRIS_MMU_ERR_EXEC  0
+-#define CRIS_MMU_ERR_READ  1
+-#define CRIS_MMU_ERR_WRITE 2
+-#define CRIS_MMU_ERR_FLUSH 3
+-
+-struct cris_mmu_result
+-{
+-        uint32_t phy;
+-        int prot;
+-        int bf_vec;
+-};
+-
+-void cris_mmu_init(CPUCRISState *env);
+-void cris_mmu_flush_pid(CPUCRISState *env, uint32_t pid);
+-int cris_mmu_translate(struct cris_mmu_result *res,
+-                       CPUCRISState *env, uint32_t vaddr,
+-                       MMUAccessType access_type, int mmu_idx, int debug);
+-
+-#endif
+diff --git a/target/cris/opcode-cris.h b/target/cris/opcode-cris.h
+deleted file mode 100644
+index 40509c88db..0000000000
+--- a/target/cris/opcode-cris.h
++++ /dev/null
+@@ -1,355 +0,0 @@
+-/* cris.h -- Header file for CRIS opcode and register tables.
+-   Copyright (C) 2000, 2001, 2004 Free Software Foundation, Inc.
+-   Contributed by Axis Communications AB, Lund, Sweden.
+-   Originally written for GAS 1.38.1 by Mikael Asker.
+-   Updated, BFDized and GNUified by Hans-Peter Nilsson.
+-
+-This file is part of GAS, GDB and the GNU binutils.
+-
+-GAS, GDB, and GNU binutils is free software; you can redistribute it
+-and/or modify it under the terms of the GNU General Public License as
+-published by the Free Software Foundation; either version 2, or (at your
+-option) any later version.
+-
+-GAS, GDB, and GNU binutils are distributed in the hope that they will be
+-useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, see <http://www.gnu.org/licenses/>.  */
+-
+-#ifndef TARGET_CRIS_OPCODE_CRIS_H
+-#define TARGET_CRIS_OPCODE_CRIS_H
+-
+-#if !defined(__STDC__) && !defined(const)
+-#define const
+-#endif
+-
+-
+-/* Registers.  */
+-#define MAX_REG (15)
+-#define CRIS_REG_SP (14)
+-#define CRIS_REG_PC (15)
+-
+-/* CPU version control of disassembly and assembly of instructions.
+-   May affect how the instruction is assembled, at least the size of
+-   immediate operands.  */
+-enum cris_insn_version_usage
+-{
+-  /* Any version.  */
+-  cris_ver_version_all=0,
+-
+-  /* Indeterminate (intended for disassembly only, or obsolete).  */
+-  cris_ver_warning,
+-
+-  /* Only for v0..3 (Etrax 1..4).  */
+-  cris_ver_v0_3,
+-
+-  /* Only for v3 or higher (ETRAX 4 and beyond).  */
+-  cris_ver_v3p,
+-
+-  /* Only for v8 (Etrax 100).  */
+-  cris_ver_v8,
+-
+-  /* Only for v8 or higher (ETRAX 100, ETRAX 100 LX).  */
+-  cris_ver_v8p,
+-
+-  /* Only for v0..10.  FIXME: Not sure what to do with this.  */
+-  cris_ver_sim_v0_10,
+-
+-  /* Only for v0..10.  */
+-  cris_ver_v0_10,
+-
+-  /* Only for v3..10.  (ETRAX 4, ETRAX 100 and ETRAX 100 LX).  */
+-  cris_ver_v3_10,
+-
+-  /* Only for v8..10 (ETRAX 100 and ETRAX 100 LX).  */
+-  cris_ver_v8_10,
+-
+-  /* Only for v10 (ETRAX 100 LX) and same series.  */
+-  cris_ver_v10,
+-
+-  /* Only for v10 (ETRAX 100 LX) and same series.  */
+-  cris_ver_v10p,
+-
+-  /* Only for v32 or higher (codename GUINNESS).
+-     Of course some or all these of may change to cris_ver_v32p if/when
+-     there's a new revision. */
+-  cris_ver_v32p
+-};
+-
+-
+-/* Special registers.  */
+-struct cris_spec_reg
+-{
+-  const char *const name;
+-  unsigned int number;
+-
+-  /* The size of the register.  */
+-  unsigned int reg_size;
+-
+-  /* What CPU version the special register of that name is implemented
+-     in.  If cris_ver_warning, emit an unimplemented-warning.  */
+-  enum cris_insn_version_usage applicable_version;
+-
+-  /* There might be a specific warning for using a special register
+-     here.  */
+-  const char *const warning;
+-};
+-extern const struct cris_spec_reg cris_spec_regs[];
+-
+-
+-/* Support registers (kind of special too, but not named as such).  */
+-struct cris_support_reg
+-{
+-  const char *const name;
+-  unsigned int number;
+-};
+-extern const struct cris_support_reg cris_support_regs[];
+-
+-/* Opcode-dependent constants.  */
+-#define AUTOINCR_BIT (0x04)
+-
+-/* Prefixes.  */
+-#define BDAP_QUICK_OPCODE (0x0100)
+-#define BDAP_QUICK_Z_BITS (0x0e00)
+-
+-#define BIAP_OPCODE	  (0x0540)
+-#define BIAP_Z_BITS	  (0x0a80)
+-
+-#define DIP_OPCODE	  (0x0970)
+-#define DIP_Z_BITS	  (0xf280)
+-
+-#define BDAP_INDIR_LOW	  (0x40)
+-#define BDAP_INDIR_LOW_Z  (0x80)
+-#define BDAP_INDIR_HIGH	  (0x09)
+-#define BDAP_INDIR_HIGH_Z (0x02)
+-
+-#define BDAP_INDIR_OPCODE (BDAP_INDIR_HIGH * 0x0100 + BDAP_INDIR_LOW)
+-#define BDAP_INDIR_Z_BITS (BDAP_INDIR_HIGH_Z * 0x100 + BDAP_INDIR_LOW_Z)
+-#define BDAP_PC_LOW	  (BDAP_INDIR_LOW + CRIS_REG_PC)
+-#define BDAP_INCR_HIGH	  (BDAP_INDIR_HIGH + AUTOINCR_BIT)
+-
+-/* No prefix must have this code for its "match" bits in the
+-   opcode-table.  "BCC .+2" will do nicely.  */
+-#define NO_CRIS_PREFIX 0
+-
+-/* Definitions for condition codes.  */
+-#define CC_CC  0x0
+-#define CC_HS  0x0
+-#define CC_CS  0x1
+-#define CC_LO  0x1
+-#define CC_NE  0x2
+-#define CC_EQ  0x3
+-#define CC_VC  0x4
+-#define CC_VS  0x5
+-#define CC_PL  0x6
+-#define CC_MI  0x7
+-#define CC_LS  0x8
+-#define CC_HI  0x9
+-#define CC_GE  0xA
+-#define CC_LT  0xB
+-#define CC_GT  0xC
+-#define CC_LE  0xD
+-#define CC_A   0xE
+-#define CC_EXT 0xF
+-
+-/* A table of strings "cc", "cs"... indexed with condition code
+-   values as above.  */
+-extern const char *const cris_cc_strings[];
+-
+-/* Bcc quick.  */
+-#define BRANCH_QUICK_LOW  (0)
+-#define BRANCH_QUICK_HIGH (0)
+-#define BRANCH_QUICK_OPCODE (BRANCH_QUICK_HIGH * 0x0100 + BRANCH_QUICK_LOW)
+-#define BRANCH_QUICK_Z_BITS (0x0F00)
+-
+-/* BA quick.  */
+-#define BA_QUICK_HIGH (BRANCH_QUICK_HIGH + CC_A * 0x10)
+-#define BA_QUICK_OPCODE (BA_QUICK_HIGH * 0x100 + BRANCH_QUICK_LOW)
+-
+-/* Bcc [PC+].  */
+-#define BRANCH_PC_LOW	 (0xFF)
+-#define BRANCH_INCR_HIGH (0x0D)
+-#define BA_PC_INCR_OPCODE \
+- ((BRANCH_INCR_HIGH + CC_A * 0x10) * 0x0100 + BRANCH_PC_LOW)
+-
+-/* Jump.  */
+-/* Note that old versions generated special register 8 (in high bits)
+-   and not-that-old versions recognized it as a jump-instruction.
+-   That opcode now belongs to JUMPU.  */
+-#define JUMP_INDIR_OPCODE (0x0930)
+-#define JUMP_INDIR_Z_BITS (0xf2c0)
+-#define JUMP_PC_INCR_OPCODE \
+- (JUMP_INDIR_OPCODE + AUTOINCR_BIT * 0x0100 + CRIS_REG_PC)
+-
+-#define MOVE_M_TO_PREG_OPCODE 0x0a30
+-#define MOVE_M_TO_PREG_ZBITS 0x01c0
+-
+-/* BDAP.D N,PC.  */
+-#define MOVE_PC_INCR_OPCODE_PREFIX \
+- (((BDAP_INCR_HIGH | (CRIS_REG_PC << 4)) << 8) | BDAP_PC_LOW | (2 << 4))
+-#define MOVE_PC_INCR_OPCODE_SUFFIX \
+- (MOVE_M_TO_PREG_OPCODE | CRIS_REG_PC | (AUTOINCR_BIT << 8))
+-
+-#define JUMP_PC_INCR_OPCODE_V32 (0x0DBF)
+-
+-/* BA DWORD (V32).  */
+-#define BA_DWORD_OPCODE (0x0EBF)
+-
+-/* Nop.  */
+-#define NOP_OPCODE (0x050F)
+-#define NOP_Z_BITS (0xFFFF ^ NOP_OPCODE)
+-
+-#define NOP_OPCODE_V32 (0x05B0)
+-#define NOP_Z_BITS_V32 (0xFFFF ^ NOP_OPCODE_V32)
+-
+-/* For the compatibility mode, let's use "MOVE R0,P0".  Doesn't affect
+-   registers or flags.  Unfortunately shuts off interrupts for one cycle
+-   for < v32, but there doesn't seem to be any alternative without that
+-   effect.  */
+-#define NOP_OPCODE_COMMON (0x630)
+-#define NOP_OPCODE_ZBITS_COMMON (0xffff & ~NOP_OPCODE_COMMON)
+-
+-/* LAPC.D  */
+-#define LAPC_DWORD_OPCODE (0x0D7F)
+-#define LAPC_DWORD_Z_BITS (0x0fff & ~LAPC_DWORD_OPCODE)
+-
+-/* Structure of an opcode table entry.  */
+-enum cris_imm_oprnd_size_type
+-{
+-  /* No size is applicable.  */
+-  SIZE_NONE,
+-
+-  /* Always 32 bits.  */
+-  SIZE_FIX_32,
+-
+-  /* Indicated by size of special register.  */
+-  SIZE_SPEC_REG,
+-
+-  /* Indicated by size field, signed.  */
+-  SIZE_FIELD_SIGNED,
+-
+-  /* Indicated by size field, unsigned.  */
+-  SIZE_FIELD_UNSIGNED,
+-
+-  /* Indicated by size field, no sign implied.  */
+-  SIZE_FIELD
+-};
+-
+-/* For GDB.  FIXME: Is this the best way to handle opcode
+-   interpretation?  */
+-enum cris_op_type
+-{
+-  cris_not_implemented_op = 0,
+-  cris_abs_op,
+-  cris_addi_op,
+-  cris_asr_op,
+-  cris_asrq_op,
+-  cris_ax_ei_setf_op,
+-  cris_bdap_prefix,
+-  cris_biap_prefix,
+-  cris_break_op,
+-  cris_btst_nop_op,
+-  cris_clearf_di_op,
+-  cris_dip_prefix,
+-  cris_dstep_logshift_mstep_neg_not_op,
+-  cris_eight_bit_offset_branch_op,
+-  cris_move_mem_to_reg_movem_op,
+-  cris_move_reg_to_mem_movem_op,
+-  cris_move_to_preg_op,
+-  cris_muls_op,
+-  cris_mulu_op,
+-  cris_none_reg_mode_add_sub_cmp_and_or_move_op,
+-  cris_none_reg_mode_clear_test_op,
+-  cris_none_reg_mode_jump_op,
+-  cris_none_reg_mode_move_from_preg_op,
+-  cris_quick_mode_add_sub_op,
+-  cris_quick_mode_and_cmp_move_or_op,
+-  cris_quick_mode_bdap_prefix,
+-  cris_reg_mode_add_sub_cmp_and_or_move_op,
+-  cris_reg_mode_clear_op,
+-  cris_reg_mode_jump_op,
+-  cris_reg_mode_move_from_preg_op,
+-  cris_reg_mode_test_op,
+-  cris_scc_op,
+-  cris_sixteen_bit_offset_branch_op,
+-  cris_three_operand_add_sub_cmp_and_or_op,
+-  cris_three_operand_bound_op,
+-  cris_two_operand_bound_op,
+-  cris_xor_op
+-};
+-
+-struct cris_opcode
+-{
+-  /* The name of the insn.  */
+-  const char *name;
+-
+-  /* Bits that must be 1 for a match.  */
+-  unsigned int match;
+-
+-  /* Bits that must be 0 for a match.  */
+-  unsigned int lose;
+-
+-  /* See the table in "opcodes/cris-opc.c".  */
+-  const char *args;
+-
+-  /* Nonzero if this is a delayed branch instruction.  */
+-  char delayed;
+-
+-  /* Size of immediate operands.  */
+-  enum cris_imm_oprnd_size_type imm_oprnd_size;
+-
+-  /* Indicates which version this insn was first implemented in.  */
+-  enum cris_insn_version_usage applicable_version;
+-
+-  /* What kind of operation this is.  */
+-  enum cris_op_type op;
+-};
+-extern const struct cris_opcode cris_opcodes[];
+-
+-
+-/* These macros are for the target-specific flags in disassemble_info
+-   used at disassembly.  */
+-
+-/* This insn accesses memory.  This flag is more trustworthy than
+-   checking insn_type for "dis_dref" which does not work for
+-   e.g. "JSR [foo]".  */
+-#define CRIS_DIS_FLAG_MEMREF (1 << 0)
+-
+-/* The "target" field holds a register number.  */
+-#define CRIS_DIS_FLAG_MEM_TARGET_IS_REG (1 << 1)
+-
+-/* The "target2" field holds a register number; add it to "target".  */
+-#define CRIS_DIS_FLAG_MEM_TARGET2_IS_REG (1 << 2)
+-
+-/* Yet another add-on: the register in "target2" must be multiplied
+-   by 2 before adding to "target".  */
+-#define CRIS_DIS_FLAG_MEM_TARGET2_MULT2 (1 << 3)
+-
+-/* Yet another add-on: the register in "target2" must be multiplied
+-   by 4 (mutually exclusive with .._MULT2).  */
+-#define CRIS_DIS_FLAG_MEM_TARGET2_MULT4 (1 << 4)
+-
+-/* The register in "target2" is an indirect memory reference (of the
+-   register there), add to "target".  Assumed size is dword (mutually
+-   exclusive with .._MULT[24]).  */
+-#define CRIS_DIS_FLAG_MEM_TARGET2_MEM (1 << 5)
+-
+-/* Add-on to CRIS_DIS_FLAG_MEM_TARGET2_MEM; the memory access is "byte";
+-   sign-extended before adding to "target".  */
+-#define CRIS_DIS_FLAG_MEM_TARGET2_MEM_BYTE (1 << 6)
+-
+-/* Add-on to CRIS_DIS_FLAG_MEM_TARGET2_MEM; the memory access is "word";
+-   sign-extended before adding to "target".  */
+-#define CRIS_DIS_FLAG_MEM_TARGET2_MEM_WORD (1 << 7)
+-
+-#endif /* TARGET_CRIS_OPCODE_CRIS_H */
+-
+-/*
+- * Local variables:
+- * eval: (c-set-style "gnu")
+- * indent-tabs-mode: t
+- * End:
+- */
+diff --git a/tests/tcg/cris/libc/crisutils.h b/tests/tcg/cris/libc/crisutils.h
+deleted file mode 100644
+index bbbe6c5540..0000000000
+--- a/tests/tcg/cris/libc/crisutils.h
++++ /dev/null
+@@ -1,76 +0,0 @@
+-#ifndef CRISUTILS_H
+-#define CRISUTILS_H 1
+-
+-static char *tst_cc_loc = NULL;
+-
+-#define cris_tst_cc_init() \
+-do { tst_cc_loc = "test_cc failed at " CURRENT_LOCATION; } while(0)
+-
+-/* We need a real symbol to signal error.  */
+-void _err(void) {
+-	if (!tst_cc_loc)
+-		tst_cc_loc = "tst_cc_failed\n";
+-	_fail(tst_cc_loc);
+-}
+-
+-static always_inline void cris_tst_cc_n1(void)
+-{
+-	asm volatile ("bpl _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_n0(void)
+-{
+-	asm volatile ("bmi _err\n"
+-		      "nop\n");
+-}
+-
+-static always_inline void cris_tst_cc_z1(void)
+-{
+-	asm volatile ("bne _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_z0(void)
+-{
+-	asm volatile ("beq _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_v1(void)
+-{
+-	asm volatile ("bvc _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_v0(void)
+-{
+-	asm volatile ("bvs _err\n"
+-		      "nop\n");
+-}
+-
+-static always_inline void cris_tst_cc_c1(void)
+-{
+-	asm volatile ("bcc _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_c0(void)
+-{
+-	asm volatile ("bcs _err\n"
+-		      "nop\n");
+-}
+-
+-static always_inline void cris_tst_mov_cc(int n, int z)
+-{
+-	if (n) cris_tst_cc_n1(); else cris_tst_cc_n0();
+-	if (z) cris_tst_cc_z1(); else cris_tst_cc_z0();
+-	asm volatile ("" : : "g" (_err));
+-}
+-
+-static always_inline void cris_tst_cc(const int n, const int z,
+-			       const int v, const int c)
+-{
+-	if (n) cris_tst_cc_n1(); else cris_tst_cc_n0();
+-	if (z) cris_tst_cc_z1(); else cris_tst_cc_z0();
+-	if (v) cris_tst_cc_v1(); else cris_tst_cc_v0();
+-	if (c) cris_tst_cc_c1(); else cris_tst_cc_c0();
+-	asm volatile ("" : : "g" (_err));
+-}
+-
+-#endif
+diff --git a/tests/tcg/cris/libc/sys.h b/tests/tcg/cris/libc/sys.h
+deleted file mode 100644
+index 3dd47bb673..0000000000
+--- a/tests/tcg/cris/libc/sys.h
++++ /dev/null
+@@ -1,18 +0,0 @@
+-#include <unistd.h>
+-
+-#define STRINGIFY(x) #x
+-#define TOSTRING(x) STRINGIFY(x)
+-
+-#define always_inline inline __attribute__((always_inline))
+-
+-#define CURRENT_LOCATION __FILE__ ":" TOSTRING(__LINE__)
+-
+-#define err()                         \
+-{                                     \
+-  _fail("at " CURRENT_LOCATION " ");  \
+-}
+-
+-#define mb() asm volatile ("" : : : "memory")
+-
+-void pass(void);
+-void _fail(char *reason);
+diff --git a/disas/cris.c b/disas/cris.c
+deleted file mode 100644
+index 409a224c5d..0000000000
+--- a/disas/cris.c
++++ /dev/null
+@@ -1,2863 +0,0 @@
+-/* Disassembler code for CRIS.
+-   Copyright 2000, 2001, 2002, 2004, 2005, 2006 Free Software Foundation, Inc.
+-   Contributed by Axis Communications AB, Lund, Sweden.
+-   Written by Hans-Peter Nilsson.
+-
+-   This file is part of the GNU binutils and GDB, the GNU debugger.
+-
+-   This program is free software; you can redistribute it and/or modify it
+-   under the terms of the GNU General Public License as published by the
+-   Free Software Foundation; either version 2, or (at your option) any later
+-   version.
+-
+-   This program is distributed in the hope that it will be useful, but WITHOUT
+-   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+-   more details.
+-
+-   You should have received a copy of the GNU General Public License
+-   along with this program; if not, see <http://www.gnu.org/licenses/>. */
+-
+-#include "qemu/osdep.h"
+-#include "disas/dis-asm.h"
+-#include "target/cris/opcode-cris.h"
+-
+-#define CONST_STRNEQ(STR1,STR2) (strncmp ((STR1), (STR2), sizeof (STR2) - 1) == 0)
+-
+-/* cris-opc.c -- Table of opcodes for the CRIS processor.
+-   Copyright 2000, 2001, 2004 Free Software Foundation, Inc.
+-   Contributed by Axis Communications AB, Lund, Sweden.
+-   Originally written for GAS 1.38.1 by Mikael Asker.
+-   Reorganized by Hans-Peter Nilsson.
+-
+-This file is part of GAS, GDB and the GNU binutils.
+-
+-GAS, GDB, and GNU binutils is free software; you can redistribute it
+-and/or modify it under the terms of the GNU General Public License as
+-published by the Free Software Foundation; either version 2, or (at your
+-option) any later version.
+-
+-GAS, GDB, and GNU binutils are distributed in the hope that they will be
+-useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, see <http://www.gnu.org/licenses/>.  */
+-
+-#ifndef NULL
+-#define NULL (0)
+-#endif
+-
+-/* This table isn't used for CRISv32 and the size of immediate operands.  */
+-const struct cris_spec_reg
+-cris_spec_regs[] =
+-{
+-  {"bz",  0,  1, cris_ver_v32p,	   NULL},
+-  {"p0",  0,  1, 0,		   NULL},
+-  {"vr",  1,  1, 0,		   NULL},
+-  {"p1",  1,  1, 0,		   NULL},
+-  {"pid", 2,  1, cris_ver_v32p,    NULL},
+-  {"p2",  2,  1, cris_ver_v32p,	   NULL},
+-  {"p2",  2,  1, cris_ver_warning, NULL},
+-  {"srs", 3,  1, cris_ver_v32p,    NULL},
+-  {"p3",  3,  1, cris_ver_v32p,	   NULL},
+-  {"p3",  3,  1, cris_ver_warning, NULL},
+-  {"wz",  4,  2, cris_ver_v32p,	   NULL},
+-  {"p4",  4,  2, 0,		   NULL},
+-  {"ccr", 5,  2, cris_ver_v0_10,   NULL},
+-  {"exs", 5,  4, cris_ver_v32p,	   NULL},
+-  {"p5",  5,  2, cris_ver_v0_10,   NULL},
+-  {"p5",  5,  4, cris_ver_v32p,	   NULL},
+-  {"dcr0",6,  2, cris_ver_v0_3,	   NULL},
+-  {"eda", 6,  4, cris_ver_v32p,	   NULL},
+-  {"p6",  6,  2, cris_ver_v0_3,	   NULL},
+-  {"p6",  6,  4, cris_ver_v32p,	   NULL},
+-  {"dcr1/mof", 7, 4, cris_ver_v10p,
+-   "Register `dcr1/mof' with ambiguous size specified.  Guessing 4 bytes"},
+-  {"dcr1/mof", 7, 2, cris_ver_v0_3,
+-   "Register `dcr1/mof' with ambiguous size specified.  Guessing 2 bytes"},
+-  {"mof", 7,  4, cris_ver_v10p,	   NULL},
+-  {"dcr1",7,  2, cris_ver_v0_3,	   NULL},
+-  {"p7",  7,  4, cris_ver_v10p,	   NULL},
+-  {"p7",  7,  2, cris_ver_v0_3,	   NULL},
+-  {"dz",  8,  4, cris_ver_v32p,	   NULL},
+-  {"p8",  8,  4, 0,		   NULL},
+-  {"ibr", 9,  4, cris_ver_v0_10,   NULL},
+-  {"ebp", 9,  4, cris_ver_v32p,	   NULL},
+-  {"p9",  9,  4, 0,		   NULL},
+-  {"irp", 10, 4, cris_ver_v0_10,   NULL},
+-  {"erp", 10, 4, cris_ver_v32p,	   NULL},
+-  {"p10", 10, 4, 0,		   NULL},
+-  {"srp", 11, 4, 0,		   NULL},
+-  {"p11", 11, 4, 0,		   NULL},
+-  /* For disassembly use only.  Accept at assembly with a warning.  */
+-  {"bar/dtp0", 12, 4, cris_ver_warning,
+-   "Ambiguous register `bar/dtp0' specified"},
+-  {"nrp", 12, 4, cris_ver_v32p,	   NULL},
+-  {"bar", 12, 4, cris_ver_v8_10,   NULL},
+-  {"dtp0",12, 4, cris_ver_v0_3,	   NULL},
+-  {"p12", 12, 4, 0,		   NULL},
+-  /* For disassembly use only.  Accept at assembly with a warning.  */
+-  {"dccr/dtp1",13, 4, cris_ver_warning,
+-   "Ambiguous register `dccr/dtp1' specified"},
+-  {"ccs", 13, 4, cris_ver_v32p,	   NULL},
+-  {"dccr",13, 4, cris_ver_v8_10,   NULL},
+-  {"dtp1",13, 4, cris_ver_v0_3,	   NULL},
+-  {"p13", 13, 4, 0,		   NULL},
+-  {"brp", 14, 4, cris_ver_v3_10,   NULL},
+-  {"usp", 14, 4, cris_ver_v32p,	   NULL},
+-  {"p14", 14, 4, cris_ver_v3p,	   NULL},
+-  {"usp", 15, 4, cris_ver_v10,	   NULL},
+-  {"spc", 15, 4, cris_ver_v32p,	   NULL},
+-  {"p15", 15, 4, cris_ver_v10p,	   NULL},
+-  {NULL, 0, 0, cris_ver_version_all, NULL}
+-};
+-
+-/* Add version specifiers to this table when necessary.
+-   The (now) regular coding of register names suggests a simpler
+-   implementation.  */
+-const struct cris_support_reg cris_support_regs[] =
+-{
+-  {"s0", 0},
+-  {"s1", 1},
+-  {"s2", 2},
+-  {"s3", 3},
+-  {"s4", 4},
+-  {"s5", 5},
+-  {"s6", 6},
+-  {"s7", 7},
+-  {"s8", 8},
+-  {"s9", 9},
+-  {"s10", 10},
+-  {"s11", 11},
+-  {"s12", 12},
+-  {"s13", 13},
+-  {"s14", 14},
+-  {"s15", 15},
+-  {NULL, 0}
+-};
+-
+-/* All CRIS opcodes are 16 bits.
+-
+-   - The match component is a mask saying which bits must match a
+-     particular opcode in order for an instruction to be an instance
+-     of that opcode.
+-
+-   - The args component is a string containing characters symbolically
+-     matching the operands of an instruction.  Used for both assembly
+-     and disassembly.
+-
+-     Operand-matching characters:
+-     [ ] , space
+-        Verbatim.
+-     A	The string "ACR" (case-insensitive).
+-     B	Not really an operand.  It causes a "BDAP -size,SP" prefix to be
+-	output for the PUSH alias-instructions and recognizes a push-
+-	prefix at disassembly.  This letter isn't recognized for v32.
+-	Must be followed by a R or P letter.
+-     !	Non-match pattern, will not match if there's a prefix insn.
+-     b	Non-matching operand, used for branches with 16-bit
+-	displacement. Only recognized by the disassembler.
+-     c	5-bit unsigned immediate in bits <4:0>.
+-     C	4-bit unsigned immediate in bits <3:0>.
+-     d  At assembly, optionally (as in put other cases before this one)
+-	".d" or ".D" at the start of the operands, followed by one space
+-	character.  At disassembly, nothing.
+-     D	General register in bits <15:12> and <3:0>.
+-     f	List of flags in bits <15:12> and <3:0>.
+-     i	6-bit signed immediate in bits <5:0>.
+-     I	6-bit unsigned immediate in bits <5:0>.
+-     M	Size modifier (B, W or D) for CLEAR instructions.
+-     m	Size modifier (B, W or D) in bits <5:4>
+-     N  A 32-bit dword, like in the difference between s and y.
+-        This has no effect on bits in the opcode.  Can also be expressed
+-	as "[pc+]" in input.
+-     n  As N, but PC-relative (to the start of the instruction).
+-     o	[-128..127] word offset in bits <7:1> and <0>.  Used by 8-bit
+-	branch instructions.
+-     O	[-128..127] offset in bits <7:0>.  Also matches a comma and a
+-	general register after the expression, in bits <15:12>.  Used
+-	only for the BDAP prefix insn (in v32 the ADDOQ insn; same opcode).
+-     P	Special register in bits <15:12>.
+-     p	Indicates that the insn is a prefix insn.  Must be first
+-	character.
+-     Q  As O, but don't relax; force an 8-bit offset.
+-     R	General register in bits <15:12>.
+-     r	General register in bits <3:0>.
+-     S	Source operand in bit <10> and a prefix; a 3-operand prefix
+-	without side-effect.
+-     s	Source operand in bits <10> and <3:0>, optionally with a
+-	side-effect prefix, except [pc] (the name, not R15 as in ACR)
+-	isn't allowed for v32 and higher.
+-     T  Support register in bits <15:12>.
+-     u  4-bit (PC-relative) unsigned immediate word offset in bits <3:0>.
+-     U  Relaxes to either u or n, instruction is assumed LAPCQ or LAPC.
+-	Not recognized at disassembly.
+-     x	Register-dot-modifier, for example "r5.w" in bits <15:12> and <5:4>.
+-     y	Like 's' but do not allow an integer at assembly.
+-     Y	The difference s-y; only an integer is allowed.
+-     z	Size modifier (B or W) in bit <4>.  */
+-
+-
+-/* Please note the order of the opcodes in this table is significant.
+-   The assembler requires that all instances of the same mnemonic must
+-   be consecutive.  If they aren't, the assembler might not recognize
+-   them, or may indicate an internal error.
+-
+-   The disassembler should not normally care about the order of the
+-   opcodes, but will prefer an earlier alternative if the "match-score"
+-   (see cris-dis.c) is computed as equal.
+-
+-   It should not be significant for proper execution that this table is
+-   in alphabetical order, but please follow that convention for an easy
+-   overview.  */
+-
+-const struct cris_opcode
+-cris_opcodes[] =
+-{
+-  {"abs",     0x06B0, 0x0940,		  "r,R",     0, SIZE_NONE,     0,
+-   cris_abs_op},
+-
+-  {"add",     0x0600, 0x09c0,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"add",     0x0A00, 0x01c0,		  "m s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"add",     0x0A00, 0x01c0,		  "m S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"add",     0x0a00, 0x05c0,		  "m S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"add",     0x0A00, 0x01c0,		  "m s,R",   0, SIZE_FIELD,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"addc",    0x0570, 0x0A80,		  "r,R",     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"addc",    0x09A0, 0x0250,		  "s,R",     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"addi",    0x0540, 0x0A80,		  "x,r,A",   0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_addi_op},
+-
+-  {"addi",    0x0500, 0x0Ac0,		  "x,r",     0, SIZE_NONE,     0,
+-   cris_addi_op},
+-
+-  /* This collates after "addo", but we want to disassemble as "addoq",
+-     not "addo".  */
+-  {"addoq",   0x0100, 0x0E00,		  "Q,A",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"addo",    0x0940, 0x0280,		  "m s,R,A", 0, SIZE_FIELD_SIGNED,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  /* This must be located after the insn above, lest we misinterpret
+-     "addo.b -1,r0,acr" as "addo .b-1,r0,acr".  FIXME: Sounds like a
+-     parser bug.  */
+-  {"addo",   0x0100, 0x0E00,		  "O,A",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"addq",    0x0200, 0x0Dc0,		  "I,R",     0, SIZE_NONE,     0,
+-   cris_quick_mode_add_sub_op},
+-
+-  {"adds",    0x0420, 0x0Bc0,		  "z r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  /* FIXME: SIZE_FIELD_SIGNED and all necessary changes.  */
+-  {"adds",    0x0820, 0x03c0,		  "z s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"adds",    0x0820, 0x03c0,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"adds",    0x0820, 0x07c0,		  "z S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"addu",    0x0400, 0x0be0,		  "z r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  /* FIXME: SIZE_FIELD_UNSIGNED and all necessary changes.  */
+-  {"addu",    0x0800, 0x03e0,		  "z s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"addu",    0x0800, 0x03e0,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"addu",    0x0800, 0x07e0,		  "z S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"and",     0x0700, 0x08C0,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"and",     0x0B00, 0x00C0,		  "m s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"and",     0x0B00, 0x00C0,		  "m S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"and",     0x0B00, 0x04C0,		  "m S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"andq",    0x0300, 0x0CC0,		  "i,R",     0, SIZE_NONE,     0,
+-   cris_quick_mode_and_cmp_move_or_op},
+-
+-  {"asr",     0x0780, 0x0840,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_asr_op},
+-
+-  {"asrq",    0x03a0, 0x0c40,		  "c,R",     0, SIZE_NONE,     0,
+-   cris_asrq_op},
+-
+-  {"ax",      0x15B0, 0xEA4F,		  "",	     0, SIZE_NONE,     0,
+-   cris_ax_ei_setf_op},
+-
+-  /* FIXME: Should use branch #defines.  */
+-  {"b",	      0x0dff, 0x0200,		  "b",	     1, SIZE_NONE,     0,
+-   cris_sixteen_bit_offset_branch_op},
+-
+-  {"ba",
+-   BA_QUICK_OPCODE,
+-   0x0F00+(0xF-CC_A)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  /* Needs to come after the usual "ba o", which might be relaxed to
+-     this one.  */
+-  {"ba",     BA_DWORD_OPCODE,
+-   0xffff & (~BA_DWORD_OPCODE),		  "n",	     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"bas",     0x0EBF, 0x0140,		  "n,P",     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"basc",     0x0EFF, 0x0100,		  "n,P",     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"bcc",
+-   BRANCH_QUICK_OPCODE+CC_CC*0x1000,
+-   0x0f00+(0xF-CC_CC)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bcs",
+-   BRANCH_QUICK_OPCODE+CC_CS*0x1000,
+-   0x0f00+(0xF-CC_CS)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bdap",
+-   BDAP_INDIR_OPCODE, BDAP_INDIR_Z_BITS,  "pm s,R",  0, SIZE_FIELD_SIGNED,
+-   cris_ver_v0_10,
+-   cris_bdap_prefix},
+-
+-  {"bdap",
+-   BDAP_QUICK_OPCODE, BDAP_QUICK_Z_BITS,  "pO",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_quick_mode_bdap_prefix},
+-
+-  {"beq",
+-   BRANCH_QUICK_OPCODE+CC_EQ*0x1000,
+-   0x0f00+(0xF-CC_EQ)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  /* This is deliberately put before "bext" to trump it, even though not
+-     in alphabetical order, since we don't do excluding version checks
+-     for v0..v10.  */
+-  {"bwf",
+-   BRANCH_QUICK_OPCODE+CC_EXT*0x1000,
+-   0x0f00+(0xF-CC_EXT)*0x1000,		  "o",	     1, SIZE_NONE,
+-   cris_ver_v10,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bext",
+-   BRANCH_QUICK_OPCODE+CC_EXT*0x1000,
+-   0x0f00+(0xF-CC_EXT)*0x1000,		  "o",	     1, SIZE_NONE,
+-   cris_ver_v0_3,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bge",
+-   BRANCH_QUICK_OPCODE+CC_GE*0x1000,
+-   0x0f00+(0xF-CC_GE)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bgt",
+-   BRANCH_QUICK_OPCODE+CC_GT*0x1000,
+-   0x0f00+(0xF-CC_GT)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bhi",
+-   BRANCH_QUICK_OPCODE+CC_HI*0x1000,
+-   0x0f00+(0xF-CC_HI)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bhs",
+-   BRANCH_QUICK_OPCODE+CC_HS*0x1000,
+-   0x0f00+(0xF-CC_HS)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"biap", BIAP_OPCODE, BIAP_Z_BITS,	  "pm r,R",  0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_biap_prefix},
+-
+-  {"ble",
+-   BRANCH_QUICK_OPCODE+CC_LE*0x1000,
+-   0x0f00+(0xF-CC_LE)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"blo",
+-   BRANCH_QUICK_OPCODE+CC_LO*0x1000,
+-   0x0f00+(0xF-CC_LO)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bls",
+-   BRANCH_QUICK_OPCODE+CC_LS*0x1000,
+-   0x0f00+(0xF-CC_LS)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"blt",
+-   BRANCH_QUICK_OPCODE+CC_LT*0x1000,
+-   0x0f00+(0xF-CC_LT)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bmi",
+-   BRANCH_QUICK_OPCODE+CC_MI*0x1000,
+-   0x0f00+(0xF-CC_MI)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bmod",    0x0ab0, 0x0140,		  "s,R",     0, SIZE_FIX_32,
+-   cris_ver_sim_v0_10,
+-   cris_not_implemented_op},
+-
+-  {"bmod",    0x0ab0, 0x0140,		  "S,D",     0, SIZE_NONE,
+-   cris_ver_sim_v0_10,
+-   cris_not_implemented_op},
+-
+-  {"bmod",    0x0ab0, 0x0540,		  "S,R,r",   0, SIZE_NONE,
+-   cris_ver_sim_v0_10,
+-   cris_not_implemented_op},
+-
+-  {"bne",
+-   BRANCH_QUICK_OPCODE+CC_NE*0x1000,
+-   0x0f00+(0xF-CC_NE)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bound",   0x05c0, 0x0A00,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_two_operand_bound_op},
+-  /* FIXME: SIZE_FIELD_UNSIGNED and all necessary changes.  */
+-  {"bound",   0x09c0, 0x0200,		  "m s,R",   0, SIZE_FIELD,
+-   cris_ver_v0_10,
+-   cris_two_operand_bound_op},
+-  /* FIXME: SIZE_FIELD_UNSIGNED and all necessary changes.  */
+-  {"bound",   0x0dcf, 0x0200,		  "m Y,R",   0, SIZE_FIELD,    0,
+-   cris_two_operand_bound_op},
+-  {"bound",   0x09c0, 0x0200,		  "m S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_two_operand_bound_op},
+-  {"bound",   0x09c0, 0x0600,		  "m S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_bound_op},
+-
+-  {"bpl",
+-   BRANCH_QUICK_OPCODE+CC_PL*0x1000,
+-   0x0f00+(0xF-CC_PL)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"break",   0xe930, 0x16c0,		  "C",	     0, SIZE_NONE,
+-   cris_ver_v3p,
+-   cris_break_op},
+-
+-  {"bsb",
+-   BRANCH_QUICK_OPCODE+CC_EXT*0x1000,
+-   0x0f00+(0xF-CC_EXT)*0x1000,		  "o",	     1, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bsr",     0xBEBF, 0x4140,		  "n",	     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"bsrc",     0xBEFF, 0x4100,		  "n",	     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"bstore",  0x0af0, 0x0100,		  "s,R",     0, SIZE_FIX_32,
+-   cris_ver_warning,
+-   cris_not_implemented_op},
+-
+-  {"bstore",  0x0af0, 0x0100,		  "S,D",     0, SIZE_NONE,
+-   cris_ver_warning,
+-   cris_not_implemented_op},
+-
+-  {"bstore",  0x0af0, 0x0500,		  "S,R,r",   0, SIZE_NONE,
+-   cris_ver_warning,
+-   cris_not_implemented_op},
+-
+-  {"btst",    0x04F0, 0x0B00,		  "r,R",     0, SIZE_NONE,     0,
+-   cris_btst_nop_op},
+-  {"btstq",   0x0380, 0x0C60,		  "c,R",     0, SIZE_NONE,     0,
+-   cris_btst_nop_op},
+-
+-  {"bvc",
+-   BRANCH_QUICK_OPCODE+CC_VC*0x1000,
+-   0x0f00+(0xF-CC_VC)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"bvs",
+-   BRANCH_QUICK_OPCODE+CC_VS*0x1000,
+-   0x0f00+(0xF-CC_VS)*0x1000,		  "o",	     1, SIZE_NONE,     0,
+-   cris_eight_bit_offset_branch_op},
+-
+-  {"clear",   0x0670, 0x3980,		  "M r",     0, SIZE_NONE,     0,
+-   cris_reg_mode_clear_op},
+-
+-  {"clear",   0x0A70, 0x3180,		  "M y",     0, SIZE_NONE,     0,
+-   cris_none_reg_mode_clear_test_op},
+-
+-  {"clear",   0x0A70, 0x3180,		  "M S",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_clear_test_op},
+-
+-  {"clearf",  0x05F0, 0x0A00,		  "f",	     0, SIZE_NONE,     0,
+-   cris_clearf_di_op},
+-
+-  {"cmp",     0x06C0, 0x0900,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"cmp",     0x0Ac0, 0x0100,		  "m s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"cmp",     0x0Ac0, 0x0100,		  "m S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"cmpq",    0x02C0, 0x0D00,		  "i,R",     0, SIZE_NONE,     0,
+-   cris_quick_mode_and_cmp_move_or_op},
+-
+-  /* FIXME: SIZE_FIELD_SIGNED and all necessary changes.  */
+-  {"cmps",    0x08e0, 0x0300,		  "z s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"cmps",    0x08e0, 0x0300,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  /* FIXME: SIZE_FIELD_UNSIGNED and all necessary changes.  */
+-  {"cmpu",    0x08c0, 0x0320,		  "z s,R" ,  0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"cmpu",    0x08c0, 0x0320,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"di",      0x25F0, 0xDA0F,		  "",	     0, SIZE_NONE,     0,
+-   cris_clearf_di_op},
+-
+-  {"dip",     DIP_OPCODE, DIP_Z_BITS,	  "ps",	     0, SIZE_FIX_32,
+-   cris_ver_v0_10,
+-   cris_dip_prefix},
+-
+-  {"div",     0x0980, 0x0640,		  "m R,r",   0, SIZE_FIELD,    0,
+-   cris_not_implemented_op},
+-
+-  {"dstep",   0x06f0, 0x0900,		  "r,R",     0, SIZE_NONE,     0,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"ei",      0x25B0, 0xDA4F,		  "",	     0, SIZE_NONE,     0,
+-   cris_ax_ei_setf_op},
+-
+-  {"fidxd",    0x0ab0, 0xf540,		  "[r]",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"fidxi",    0x0d30, 0xF2C0,		  "[r]",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"ftagd",    0x1AB0, 0xE540,		  "[r]",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"ftagi",    0x1D30, 0xE2C0,		  "[r]",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"halt",    0xF930, 0x06CF,		  "",	     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"jas",    0x09B0, 0x0640,		  "r,P",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_reg_mode_jump_op},
+-
+-  {"jas",    0x0DBF, 0x0240,		  "N,P",     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_reg_mode_jump_op},
+-
+-  {"jasc",    0x0B30, 0x04C0,		  "r,P",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_reg_mode_jump_op},
+-
+-  {"jasc",    0x0F3F, 0x00C0,		  "N,P",     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_reg_mode_jump_op},
+-
+-  {"jbrc",    0x69b0, 0x9640,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_reg_mode_jump_op},
+-
+-  {"jbrc",    0x6930, 0x92c0,		  "s",	     0, SIZE_FIX_32,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jbrc",    0x6930, 0x92c0,		  "S",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jir",     0xA9b0, 0x5640,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_reg_mode_jump_op},
+-
+-  {"jir",     0xA930, 0x52c0,		  "s",	     0, SIZE_FIX_32,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jir",     0xA930, 0x52c0,		  "S",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jirc",    0x29b0, 0xd640,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_reg_mode_jump_op},
+-
+-  {"jirc",    0x2930, 0xd2c0,		  "s",	     0, SIZE_FIX_32,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jirc",    0x2930, 0xd2c0,		  "S",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jsr",     0xB9b0, 0x4640,		  "r",	     0, SIZE_NONE,     0,
+-   cris_reg_mode_jump_op},
+-
+-  {"jsr",     0xB930, 0x42c0,		  "s",	     0, SIZE_FIX_32,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jsr",     0xBDBF, 0x4240,		  "N",	     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jsr",     0xB930, 0x42c0,		  "S",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jsrc",    0x39b0, 0xc640,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_reg_mode_jump_op},
+-
+-  {"jsrc",    0x3930, 0xc2c0,		  "s",	     0, SIZE_FIX_32,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jsrc",    0x3930, 0xc2c0,		  "S",	     0, SIZE_NONE,
+-   cris_ver_v8_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jsrc",    0xBB30, 0x44C0,		  "r",       0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_reg_mode_jump_op},
+-
+-  {"jsrc",    0xBF3F, 0x40C0,		  "N",	     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_reg_mode_jump_op},
+-
+-  {"jump",    0x09b0, 0xF640,		  "r",	     0, SIZE_NONE,     0,
+-   cris_reg_mode_jump_op},
+-
+-  {"jump",
+-   JUMP_INDIR_OPCODE, JUMP_INDIR_Z_BITS,  "s",	     0, SIZE_FIX_32,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jump",
+-   JUMP_INDIR_OPCODE, JUMP_INDIR_Z_BITS,  "S",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jump",    0x09F0, 0x060F,		  "P",	     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jump",
+-   JUMP_PC_INCR_OPCODE_V32,
+-   (0xffff & ~JUMP_PC_INCR_OPCODE_V32),	  "N",	     0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jmpu",    0x8930, 0x72c0,		  "s",	     0, SIZE_FIX_32,
+-   cris_ver_v10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"jmpu",    0x8930, 0x72c0,		   "S",	     0, SIZE_NONE,
+-   cris_ver_v10,
+-   cris_none_reg_mode_jump_op},
+-
+-  {"lapc",    0x0970, 0x0680,		  "U,R",    0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"lapc",    0x0D7F, 0x0280,		  "dn,R",    0, SIZE_FIX_32,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"lapcq",   0x0970, 0x0680,		  "u,R",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_addi_op},
+-
+-  {"lsl",     0x04C0, 0x0B00,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"lslq",    0x03c0, 0x0C20,		  "c,R",     0, SIZE_NONE,     0,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"lsr",     0x07C0, 0x0800,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"lsrq",    0x03e0, 0x0C00,		  "c,R",     0, SIZE_NONE,     0,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"lz",      0x0730, 0x08C0,		  "r,R",     0, SIZE_NONE,
+-   cris_ver_v3p,
+-   cris_not_implemented_op},
+-
+-  {"mcp",      0x07f0, 0x0800,		  "P,r",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"move",    0x0640, 0x0980,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"move",    0x0A40, 0x0180,		  "m s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"move",    0x0A40, 0x0180,		  "m S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"move",    0x0630, 0x09c0,		  "r,P",     0, SIZE_NONE,     0,
+-   cris_move_to_preg_op},
+-
+-  {"move",    0x0670, 0x0980,		  "P,r",     0, SIZE_NONE,     0,
+-   cris_reg_mode_move_from_preg_op},
+-
+-  {"move",    0x0BC0, 0x0000,		  "m R,y",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"move",    0x0BC0, 0x0000,		  "m D,S",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"move",
+-   MOVE_M_TO_PREG_OPCODE, MOVE_M_TO_PREG_ZBITS,
+-   "s,P",   0, SIZE_SPEC_REG, 0,
+-   cris_move_to_preg_op},
+-
+-  {"move",    0x0A30, 0x01c0,		  "S,P",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_move_to_preg_op},
+-
+-  {"move",    0x0A70, 0x0180,		  "P,y",     0, SIZE_SPEC_REG, 0,
+-   cris_none_reg_mode_move_from_preg_op},
+-
+-  {"move",    0x0A70, 0x0180,		  "P,S",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_move_from_preg_op},
+-
+-  {"move",    0x0B70, 0x0480,		  "r,T",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"move",    0x0F70, 0x0080,		  "T,r",     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"movem",   0x0BF0, 0x0000,		  "R,y",     0, SIZE_FIX_32,   0,
+-   cris_move_reg_to_mem_movem_op},
+-
+-  {"movem",   0x0BF0, 0x0000,		  "D,S",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_move_reg_to_mem_movem_op},
+-
+-  {"movem",   0x0BB0, 0x0040,		  "s,R",     0, SIZE_FIX_32,   0,
+-   cris_move_mem_to_reg_movem_op},
+-
+-  {"movem",   0x0BB0, 0x0040,		  "S,D",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_move_mem_to_reg_movem_op},
+-
+-  {"moveq",   0x0240, 0x0D80,		  "i,R",     0, SIZE_NONE,     0,
+-   cris_quick_mode_and_cmp_move_or_op},
+-
+-  {"movs",    0x0460, 0x0B80,		  "z r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  /* FIXME: SIZE_FIELD_SIGNED and all necessary changes.  */
+-  {"movs",    0x0860, 0x0380,		  "z s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"movs",    0x0860, 0x0380,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"movu",    0x0440, 0x0Ba0,		  "z r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  /* FIXME: SIZE_FIELD_UNSIGNED and all necessary changes.  */
+-  {"movu",    0x0840, 0x03a0,		  "z s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"movu",    0x0840, 0x03a0,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"mstep",   0x07f0, 0x0800,		  "r,R",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"muls",    0x0d00, 0x02c0,		  "m r,R",   0, SIZE_NONE,
+-   cris_ver_v10p,
+-   cris_muls_op},
+-
+-  {"mulu",    0x0900, 0x06c0,		  "m r,R",   0, SIZE_NONE,
+-   cris_ver_v10p,
+-   cris_mulu_op},
+-
+-  {"neg",     0x0580, 0x0A40,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"nop",     NOP_OPCODE, NOP_Z_BITS,	  "",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_btst_nop_op},
+-
+-  {"nop",     NOP_OPCODE_V32, NOP_Z_BITS_V32, "",    0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_btst_nop_op},
+-
+-  {"not",     0x8770, 0x7880,		  "r",	     0, SIZE_NONE,     0,
+-   cris_dstep_logshift_mstep_neg_not_op},
+-
+-  {"or",      0x0740, 0x0880,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"or",      0x0B40, 0x0080,		  "m s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"or",      0x0B40, 0x0080,		  "m S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"or",      0x0B40, 0x0480,		  "m S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"orq",     0x0340, 0x0C80,		  "i,R",     0, SIZE_NONE,     0,
+-   cris_quick_mode_and_cmp_move_or_op},
+-
+-  {"pop",     0x0E6E, 0x0191,		  "!R",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"pop",     0x0e3e, 0x01c1,		  "!P",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_move_from_preg_op},
+-
+-  {"push",    0x0FEE, 0x0011,		  "BR",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"push",    0x0E7E, 0x0181,		  "BP",	     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_move_to_preg_op},
+-
+-  {"rbf",     0x3b30, 0xc0c0,		  "y",	     0, SIZE_NONE,
+-   cris_ver_v10,
+-   cris_not_implemented_op},
+-
+-  {"rbf",     0x3b30, 0xc0c0,		  "S",	     0, SIZE_NONE,
+-   cris_ver_v10,
+-   cris_not_implemented_op},
+-
+-  {"rfe",     0x2930, 0xD6CF,		  "",	     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"rfg",     0x4930, 0xB6CF,		  "",	     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"rfn",     0x5930, 0xA6CF,		  "",	     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  {"ret",     0xB67F, 0x4980,		  "",	     1, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_reg_mode_move_from_preg_op},
+-
+-  {"ret",     0xB9F0, 0x460F,		  "",	     1, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_reg_mode_move_from_preg_op},
+-
+-  {"retb",    0xe67f, 0x1980,		  "",	     1, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_reg_mode_move_from_preg_op},
+-
+-  {"rete",     0xA9F0, 0x560F,		  "",	     1, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_reg_mode_move_from_preg_op},
+-
+-  {"reti",    0xA67F, 0x5980,		  "",	     1, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_reg_mode_move_from_preg_op},
+-
+-  {"retn",     0xC9F0, 0x360F,		  "",	     1, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_reg_mode_move_from_preg_op},
+-
+-  {"sbfs",    0x3b70, 0xc080,		  "y",	     0, SIZE_NONE,
+-   cris_ver_v10,
+-   cris_not_implemented_op},
+-
+-  {"sbfs",    0x3b70, 0xc080,		  "S",	     0, SIZE_NONE,
+-   cris_ver_v10,
+-   cris_not_implemented_op},
+-
+-  {"sa",
+-   0x0530+CC_A*0x1000,
+-   0x0AC0+(0xf-CC_A)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"ssb",
+-   0x0530+CC_EXT*0x1000,
+-   0x0AC0+(0xf-CC_EXT)*0x1000,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_scc_op},
+-
+-  {"scc",
+-   0x0530+CC_CC*0x1000,
+-   0x0AC0+(0xf-CC_CC)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"scs",
+-   0x0530+CC_CS*0x1000,
+-   0x0AC0+(0xf-CC_CS)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"seq",
+-   0x0530+CC_EQ*0x1000,
+-   0x0AC0+(0xf-CC_EQ)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"setf",    0x05b0, 0x0A40,		  "f",	     0, SIZE_NONE,     0,
+-   cris_ax_ei_setf_op},
+-
+-  {"sfe",    0x3930, 0xC6CF,		  "",	     0, SIZE_NONE,
+-   cris_ver_v32p,
+-   cris_not_implemented_op},
+-
+-  /* Need to have "swf" in front of "sext" so it is the one displayed in
+-     disassembly.  */
+-  {"swf",
+-   0x0530+CC_EXT*0x1000,
+-   0x0AC0+(0xf-CC_EXT)*0x1000,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v10,
+-   cris_scc_op},
+-
+-  {"sext",
+-   0x0530+CC_EXT*0x1000,
+-   0x0AC0+(0xf-CC_EXT)*0x1000,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v0_3,
+-   cris_scc_op},
+-
+-  {"sge",
+-   0x0530+CC_GE*0x1000,
+-   0x0AC0+(0xf-CC_GE)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"sgt",
+-   0x0530+CC_GT*0x1000,
+-   0x0AC0+(0xf-CC_GT)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"shi",
+-   0x0530+CC_HI*0x1000,
+-   0x0AC0+(0xf-CC_HI)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"shs",
+-   0x0530+CC_HS*0x1000,
+-   0x0AC0+(0xf-CC_HS)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"sle",
+-   0x0530+CC_LE*0x1000,
+-   0x0AC0+(0xf-CC_LE)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"slo",
+-   0x0530+CC_LO*0x1000,
+-   0x0AC0+(0xf-CC_LO)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"sls",
+-   0x0530+CC_LS*0x1000,
+-   0x0AC0+(0xf-CC_LS)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"slt",
+-   0x0530+CC_LT*0x1000,
+-   0x0AC0+(0xf-CC_LT)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"smi",
+-   0x0530+CC_MI*0x1000,
+-   0x0AC0+(0xf-CC_MI)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"sne",
+-   0x0530+CC_NE*0x1000,
+-   0x0AC0+(0xf-CC_NE)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"spl",
+-   0x0530+CC_PL*0x1000,
+-   0x0AC0+(0xf-CC_PL)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"sub",     0x0680, 0x0940,		  "m r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"sub",     0x0a80, 0x0140,		  "m s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"sub",     0x0a80, 0x0140,		  "m S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"sub",     0x0a80, 0x0540,		  "m S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"subq",    0x0280, 0x0d40,		  "I,R",     0, SIZE_NONE,     0,
+-   cris_quick_mode_add_sub_op},
+-
+-  {"subs",    0x04a0, 0x0b40,		  "z r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  /* FIXME: SIZE_FIELD_SIGNED and all necessary changes.  */
+-  {"subs",    0x08a0, 0x0340,		  "z s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"subs",    0x08a0, 0x0340,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"subs",    0x08a0, 0x0740,		  "z S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"subu",    0x0480, 0x0b60,		  "z r,R",   0, SIZE_NONE,     0,
+-   cris_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  /* FIXME: SIZE_FIELD_UNSIGNED and all necessary changes.  */
+-  {"subu",    0x0880, 0x0360,		  "z s,R",   0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"subu",    0x0880, 0x0360,		  "z S,D",   0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_add_sub_cmp_and_or_move_op},
+-
+-  {"subu",    0x0880, 0x0760,		  "z S,R,r", 0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_three_operand_add_sub_cmp_and_or_op},
+-
+-  {"svc",
+-   0x0530+CC_VC*0x1000,
+-   0x0AC0+(0xf-CC_VC)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  {"svs",
+-   0x0530+CC_VS*0x1000,
+-   0x0AC0+(0xf-CC_VS)*0x1000,		  "r",	     0, SIZE_NONE,     0,
+-   cris_scc_op},
+-
+-  /* The insn "swapn" is the same as "not" and will be disassembled as
+-     such, but the swap* family of mnmonics are generally v8-and-higher
+-     only, so count it in.  */
+-  {"swapn",   0x8770, 0x7880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapw",   0x4770, 0xb880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapnw",  0xc770, 0x3880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapb",   0x2770, 0xd880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapnb",  0xA770, 0x5880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapwb",  0x6770, 0x9880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapnwb", 0xE770, 0x1880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapr",   0x1770, 0xe880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapnr",  0x9770, 0x6880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapwr",  0x5770, 0xa880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapnwr", 0xd770, 0x2880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapbr",  0x3770, 0xc880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapnbr", 0xb770, 0x4880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapwbr", 0x7770, 0x8880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"swapnwbr", 0xf770, 0x0880,		  "r",	     0, SIZE_NONE,
+-   cris_ver_v8p,
+-   cris_not_implemented_op},
+-
+-  {"test",    0x0640, 0x0980,		  "m D",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_reg_mode_test_op},
+-
+-  {"test",    0x0b80, 0xf040,		  "m y",     0, SIZE_FIELD,    0,
+-   cris_none_reg_mode_clear_test_op},
+-
+-  {"test",    0x0b80, 0xf040,		  "m S",     0, SIZE_NONE,
+-   cris_ver_v0_10,
+-   cris_none_reg_mode_clear_test_op},
+-
+-  {"xor",     0x07B0, 0x0840,		  "r,R",     0, SIZE_NONE,     0,
+-   cris_xor_op},
+-
+-  {NULL, 0, 0, NULL, 0, 0, 0, cris_not_implemented_op}
+-};
+-
+-/* Condition-names, indexed by the CC_* numbers as found in cris.h. */
+-const char * const
+-cris_cc_strings[] =
+-{
+-  "hs",
+-  "lo",
+-  "ne",
+-  "eq",
+-  "vc",
+-  "vs",
+-  "pl",
+-  "mi",
+-  "ls",
+-  "hi",
+-  "ge",
+-  "lt",
+-  "gt",
+-  "le",
+-  "a",
+-  /* This is a placeholder.  In v0, this would be "ext".  In v32, this
+-     is "sb". */
+-  "wf"
+-};
+-
+-/*
+- * Local variables:
+- * eval: (c-set-style "gnu")
+- * indent-tabs-mode: t
+- * End:
+- */
+-
+-
+-/* No instruction will be disassembled longer than this.  In theory, and
+-   in silicon, address prefixes can be cascaded.  In practice, cascading
+-   is not used by GCC, and not supported by the assembler.  */
+-#ifndef MAX_BYTES_PER_CRIS_INSN
+-#define MAX_BYTES_PER_CRIS_INSN 8
+-#endif
+-
+-/* Whether or not to decode prefixes, folding it into the following
+-   instruction.  FIXME: Make this optional later.  */
+-#ifndef PARSE_PREFIX
+-#define PARSE_PREFIX 1
+-#endif
+-
+-/* Sometimes we prefix all registers with this character.  */
+-#define REGISTER_PREFIX_CHAR '$'
+-
+-/* Whether or not to trace the following sequence:
+-   sub* X,r%d
+-   bound* Y,r%d
+-   adds.w [pc+r%d.w],pc
+-
+-   This is the assembly form of a switch-statement in C.
+-   The "sub is optional.  If there is none, then X will be zero.
+-   X is the value of the first case,
+-   Y is the number of cases (including default).
+-
+-   This results in case offsets printed on the form:
+-    case N: -> case_address
+-   where N is an estimation on the corresponding 'case' operand in C,
+-   and case_address is where execution of that case continues after the
+-   sequence presented above.
+-
+-   The old style of output was to print the offsets as instructions,
+-   which made it hard to follow "case"-constructs in the disassembly,
+-   and caused a lot of annoying warnings about undefined instructions.
+-
+-   FIXME: Make this optional later.  */
+-#ifndef TRACE_CASE
+-#define TRACE_CASE (disdata->trace_case)
+-#endif
+-
+-enum cris_disass_family
+- { cris_dis_v0_v10, cris_dis_common_v10_v32, cris_dis_v32 };
+-
+-/* Stored in the disasm_info->private_data member.  */
+-struct cris_disasm_data
+-{
+-  /* Whether to print something less confusing if we find something
+-     matching a switch-construct.  */
+-  bfd_boolean trace_case;
+-
+-  /* Whether this code is flagged as crisv32.  FIXME: Should be an enum
+-     that includes "compatible".  */
+-  enum cris_disass_family distype;
+-};
+-
+-/* Value of first element in switch.  */
+-static long case_offset = 0;
+-
+-/* How many more case-offsets to print.  */
+-static long case_offset_counter = 0;
+-
+-/* Number of case offsets.  */
+-static long no_of_case_offsets = 0;
+-
+-/* Candidate for next case_offset.  */
+-static long last_immediate = 0;
+-
+-static int cris_constraint
+-  (const char *, unsigned, unsigned, struct cris_disasm_data *);
+-
+-/* Parse disassembler options and store state in info.  FIXME: For the
+-   time being, we abuse static variables.  */
+-
+-static void
+-cris_parse_disassembler_options (struct cris_disasm_data *disdata,
+-				 char *disassembler_options,
+-				 enum cris_disass_family distype)
+-{
+-  /* Default true.  */
+-  disdata->trace_case
+-    = (disassembler_options == NULL
+-       || (strcmp (disassembler_options, "nocase") != 0));
+-
+-  disdata->distype = distype;
+-}
+-
+-static const struct cris_spec_reg *
+-spec_reg_info (unsigned int sreg, enum cris_disass_family distype)
+-{
+-  int i;
+-
+-  for (i = 0; cris_spec_regs[i].name != NULL; i++)
+-    {
+-      if (cris_spec_regs[i].number == sreg)
+-	{
+-	  if (distype == cris_dis_v32)
+-	    switch (cris_spec_regs[i].applicable_version)
+-	      {
+-	      case cris_ver_warning:
+-	      case cris_ver_version_all:
+-	      case cris_ver_v3p:
+-	      case cris_ver_v8p:
+-	      case cris_ver_v10p:
+-	      case cris_ver_v32p:
+-		/* No ambiguous sizes or register names with CRISv32.  */
+-		if (cris_spec_regs[i].warning == NULL)
+-		  return &cris_spec_regs[i];
+-	      default:
+-		;
+-	      }
+-	  else if (cris_spec_regs[i].applicable_version != cris_ver_v32p)
+-	    return &cris_spec_regs[i];
+-	}
+-    }
+-
+-  return NULL;
+-}
+-
+-/* Return the number of bits in the argument.  */
+-
+-static int
+-number_of_bits (unsigned int val)
+-{
+-  int bits;
+-
+-  for (bits = 0; val != 0; val &= val - 1)
+-    bits++;
+-
+-  return bits;
+-}
+-
+-/* Get an entry in the opcode-table.  */
+-
+-static const struct cris_opcode *
+-get_opcode_entry (unsigned int insn,
+-		  unsigned int prefix_insn,
+-		  struct cris_disasm_data *disdata)
+-{
+-  /* For non-prefixed insns, we keep a table of pointers, indexed by the
+-     insn code.  Each entry is initialized when found to be NULL.  */
+-  static const struct cris_opcode **opc_table = NULL;
+-
+-  const struct cris_opcode *max_matchedp = NULL;
+-  const struct cris_opcode **prefix_opc_table = NULL;
+-
+-  /* We hold a table for each prefix that need to be handled differently.  */
+-  static const struct cris_opcode **dip_prefixes = NULL;
+-  static const struct cris_opcode **bdapq_m1_prefixes = NULL;
+-  static const struct cris_opcode **bdapq_m2_prefixes = NULL;
+-  static const struct cris_opcode **bdapq_m4_prefixes = NULL;
+-  static const struct cris_opcode **rest_prefixes = NULL;
+-
+-  /* Allocate and clear the opcode-table.  */
+-  if (opc_table == NULL)
+-    {
+-      opc_table = g_new0(const struct cris_opcode *, 65536);
+-      dip_prefixes = g_new0(const struct cris_opcode *, 65536);
+-      bdapq_m1_prefixes = g_new0(const struct cris_opcode *, 65536);
+-      bdapq_m2_prefixes = g_new0(const struct cris_opcode *, 65536);
+-      bdapq_m4_prefixes = g_new0(const struct cris_opcode *, 65536);
+-      rest_prefixes = g_new0(const struct cris_opcode *, 65536);
+-    }
+-
+-  /* Get the right table if this is a prefix.
+-     This code is connected to cris_constraints in that it knows what
+-     prefixes play a role in recognition of patterns; the necessary
+-     state is reflected by which table is used.  If constraints
+-     involving match or non-match of prefix insns are changed, then this
+-     probably needs changing too.  */
+-  if (prefix_insn != NO_CRIS_PREFIX)
+-    {
+-      const struct cris_opcode *popcodep
+-	= (opc_table[prefix_insn] != NULL
+-	   ? opc_table[prefix_insn]
+-	   : get_opcode_entry (prefix_insn, NO_CRIS_PREFIX, disdata));
+-
+-      if (popcodep == NULL)
+-	return NULL;
+-
+-      if (popcodep->match == BDAP_QUICK_OPCODE)
+-	{
+-	  /* Since some offsets are recognized with "push" macros, we
+-	     have to have different tables for them.  */
+-	  int offset = (prefix_insn & 255);
+-
+-	  if (offset > 127)
+-	    offset -= 256;
+-
+-	  switch (offset)
+-	    {
+-	    case -4:
+-	      prefix_opc_table = bdapq_m4_prefixes;
+-	      break;
+-
+-	    case -2:
+-	      prefix_opc_table = bdapq_m2_prefixes;
+-	      break;
+-
+-	    case -1:
+-	      prefix_opc_table = bdapq_m1_prefixes;
+-	      break;
+-
+-	    default:
+-	      prefix_opc_table = rest_prefixes;
+-	      break;
+-	    }
+-	}
+-      else if (popcodep->match == DIP_OPCODE)
+-	/* We don't allow postincrement when the prefix is DIP, so use a
+-	   different table for DIP.  */
+-	prefix_opc_table = dip_prefixes;
+-      else
+-	prefix_opc_table = rest_prefixes;
+-    }
+-
+-  if (prefix_insn != NO_CRIS_PREFIX
+-      && prefix_opc_table[insn] != NULL)
+-    max_matchedp = prefix_opc_table[insn];
+-  else if (prefix_insn == NO_CRIS_PREFIX && opc_table[insn] != NULL)
+-    max_matchedp = opc_table[insn];
+-  else
+-    {
+-      const struct cris_opcode *opcodep;
+-      int max_level_of_match = -1;
+-
+-      for (opcodep = cris_opcodes;
+-	   opcodep->name != NULL;
+-	   opcodep++)
+-	{
+-	  int level_of_match;
+-
+-	  if (disdata->distype == cris_dis_v32)
+-	    {
+-	      switch (opcodep->applicable_version)
+-		{
+-		case cris_ver_version_all:
+-		  break;
+-
+-		case cris_ver_v0_3:
+-		case cris_ver_v0_10:
+-		case cris_ver_v3_10:
+-		case cris_ver_sim_v0_10:
+-		case cris_ver_v8_10:
+-		case cris_ver_v10:
+-		case cris_ver_warning:
+-		  continue;
+-
+-		case cris_ver_v3p:
+-		case cris_ver_v8p:
+-		case cris_ver_v10p:
+-		case cris_ver_v32p:
+-		  break;
+-
+-		case cris_ver_v8:
+-		  abort ();
+-		default:
+-		  abort ();
+-		}
+-	    }
+-	  else
+-	    {
+-	      switch (opcodep->applicable_version)
+-		{
+-		case cris_ver_version_all:
+-		case cris_ver_v0_3:
+-		case cris_ver_v3p:
+-		case cris_ver_v0_10:
+-		case cris_ver_v8p:
+-		case cris_ver_v8_10:
+-		case cris_ver_v10:
+-		case cris_ver_sim_v0_10:
+-		case cris_ver_v10p:
+-		case cris_ver_warning:
+-		  break;
+-
+-		case cris_ver_v32p:
+-		  continue;
+-
+-		case cris_ver_v8:
+-		  abort ();
+-		default:
+-		  abort ();
+-		}
+-	    }
+-
+-	  /* We give a double lead for bits matching the template in
+-	     cris_opcodes.  Not even, because then "move p8,r10" would
+-	     be given 2 bits lead over "clear.d r10".  When there's a
+-	     tie, the first entry in the table wins.  This is
+-	     deliberate, to avoid a more complicated recognition
+-	     formula.  */
+-	  if ((opcodep->match & insn) == opcodep->match
+-	      && (opcodep->lose & insn) == 0
+-	      && ((level_of_match
+-		   = cris_constraint (opcodep->args,
+-				      insn,
+-				      prefix_insn,
+-				      disdata))
+-		  >= 0)
+-	      && ((level_of_match
+-		   += 2 * number_of_bits (opcodep->match
+-					  | opcodep->lose))
+-			  > max_level_of_match))
+-		    {
+-		      max_matchedp = opcodep;
+-		      max_level_of_match = level_of_match;
+-
+-		      /* If there was a full match, never mind looking
+-			 further.  */
+-		      if (level_of_match >= 2 * 16)
+-			break;
+-		    }
+-		}
+-      /* Fill in the new entry.
+-
+-	 If there are changes to the opcode-table involving prefixes, and
+-	 disassembly then does not work correctly, try removing the
+-	 else-clause below that fills in the prefix-table.  If that
+-	 helps, you need to change the prefix_opc_table setting above, or
+-	 something related.  */
+-      if (prefix_insn == NO_CRIS_PREFIX)
+-	opc_table[insn] = max_matchedp;
+-      else
+-	prefix_opc_table[insn] = max_matchedp;
+-    }
+-
+-  return max_matchedp;
+-}
+-
+-/* Return -1 if the constraints of a bitwise-matched instruction say
+-   that there is no match.  Otherwise return a nonnegative number
+-   indicating the confidence in the match (higher is better).  */
+-
+-static int
+-cris_constraint (const char *cs,
+-		 unsigned int insn,
+-		 unsigned int prefix_insn,
+-		 struct cris_disasm_data *disdata)
+-{
+-  int retval = 0;
+-  int tmp;
+-  int prefix_ok = 0;
+-  const char *s;
+-
+-  for (s = cs; *s; s++)
+-    switch (*s)
+-      {
+-      case '!':
+-	/* Do not recognize "pop" if there's a prefix and then only for
+-           v0..v10.  */
+-	if (prefix_insn != NO_CRIS_PREFIX
+-	    || disdata->distype != cris_dis_v0_v10)
+-	  return -1;
+-	break;
+-
+-      case 'U':
+-	/* Not recognized at disassembly.  */
+-	return -1;
+-
+-      case 'M':
+-	/* Size modifier for "clear", i.e. special register 0, 4 or 8.
+-	   Check that it is one of them.  Only special register 12 could
+-	   be mismatched, but checking for matches is more logical than
+-	   checking for mismatches when there are only a few cases.  */
+-	tmp = ((insn >> 12) & 0xf);
+-	if (tmp != 0 && tmp != 4 && tmp != 8)
+-	  return -1;
+-	break;
+-
+-      case 'm':
+-	if ((insn & 0x30) == 0x30)
+-	  return -1;
+-	break;
+-
+-      case 'S':
+-	/* A prefix operand without side-effect.  */
+-	if (prefix_insn != NO_CRIS_PREFIX && (insn & 0x400) == 0)
+-	  {
+-	    prefix_ok = 1;
+-	    break;
+-	  }
+-	else
+-	  return -1;
+-
+-      case 's':
+-      case 'y':
+-      case 'Y':
+-	/* If this is a prefixed insn with postincrement (side-effect),
+-	   the prefix must not be DIP.  */
+-	if (prefix_insn != NO_CRIS_PREFIX)
+-	  {
+-	    if (insn & 0x400)
+-	      {
+-		const struct cris_opcode *prefix_opcodep
+-		  = get_opcode_entry (prefix_insn, NO_CRIS_PREFIX, disdata);
+-
+-		if (prefix_opcodep->match == DIP_OPCODE)
+-		  return -1;
+-	      }
+-
+-	    prefix_ok = 1;
+-	  }
+-	break;
+-
+-      case 'B':
+-	/* If we don't fall through, then the prefix is ok.  */
+-	prefix_ok = 1;
+-
+-	/* A "push" prefix.  Check for valid "push" size.
+-	   In case of special register, it may be != 4.  */
+-	if (prefix_insn != NO_CRIS_PREFIX)
+-	  {
+-	    /* Match the prefix insn to BDAPQ.  */
+-	    const struct cris_opcode *prefix_opcodep
+-	      = get_opcode_entry (prefix_insn, NO_CRIS_PREFIX, disdata);
+-
+-	    if (prefix_opcodep->match == BDAP_QUICK_OPCODE)
+-	      {
+-		int pushsize = (prefix_insn & 255);
+-
+-		if (pushsize > 127)
+-		  pushsize -= 256;
+-
+-		if (s[1] == 'P')
+-		  {
+-		    unsigned int spec_reg = (insn >> 12) & 15;
+-		    const struct cris_spec_reg *sregp
+-		      = spec_reg_info (spec_reg, disdata->distype);
+-
+-		    /* For a special-register, the "prefix size" must
+-		       match the size of the register.  */
+-		    if (sregp && sregp->reg_size == (unsigned int) -pushsize)
+-		      break;
+-		  }
+-		else if (s[1] == 'R')
+-		  {
+-		    if ((insn & 0x30) == 0x20 && pushsize == -4)
+-		      break;
+-		  }
+-		/* FIXME:  Should abort here; next constraint letter
+-		   *must* be 'P' or 'R'.  */
+-	      }
+-	  }
+-	return -1;
+-
+-      case 'D':
+-	retval = (((insn >> 12) & 15) == (insn & 15));
+-	if (!retval)
+-	  return -1;
+-	else
+-	  retval += 4;
+-	break;
+-
+-      case 'P':
+-	{
+-	  const struct cris_spec_reg *sregp
+-	    = spec_reg_info ((insn >> 12) & 15, disdata->distype);
+-
+-	  /* Since we match four bits, we will give a value of 4-1 = 3
+-	     in a match.  If there is a corresponding exact match of a
+-	     special register in another pattern, it will get a value of
+-	     4, which will be higher.  This should be correct in that an
+-	     exact pattern would match better than a general pattern.
+-
+-	     Note that there is a reason for not returning zero; the
+-	     pattern for "clear" is partly  matched in the bit-pattern
+-	     (the two lower bits must be zero), while the bit-pattern
+-	     for a move from a special register is matched in the
+-	     register constraint.  */
+-
+-	  if (sregp != NULL)
+-	    {
+-	      retval += 3;
+-	      break;
+-	    }
+-	  else
+-	    return -1;
+-	}
+-      }
+-
+-  if (prefix_insn != NO_CRIS_PREFIX && ! prefix_ok)
+-    return -1;
+-
+-  return retval;
+-}
+-
+-/* Format number as hex with a leading "0x" into outbuffer.  */
+-
+-static char *
+-format_hex (unsigned long number,
+-	    char *outbuffer,
+-	    struct cris_disasm_data *disdata)
+-{
+-  /* Truncate negative numbers on >32-bit hosts.  */
+-  number &= 0xffffffff;
+-
+-  sprintf (outbuffer, "0x%lx", number);
+-
+-  /* Save this value for the "case" support.  */
+-  if (TRACE_CASE)
+-    last_immediate = number;
+-
+-  return outbuffer + strlen (outbuffer);
+-}
+-
+-/* Format number as decimal into outbuffer.  Parameter signedp says
+-   whether the number should be formatted as signed (!= 0) or
+-   unsigned (== 0).  */
+-
+-static char *
+-format_dec (long number, char *outbuffer, size_t outsize, int signedp)
+-{
+-  last_immediate = number;
+-  snprintf (outbuffer, outsize, signedp ? "%ld" : "%lu", number);
+-
+-  return outbuffer + strlen (outbuffer);
+-}
+-
+-/* Format the name of the general register regno into outbuffer.  */
+-
+-static char *
+-format_reg (struct cris_disasm_data *disdata,
+-	    int regno,
+-	    char *outbuffer_start,
+-	    bfd_boolean with_reg_prefix)
+-{
+-  char *outbuffer = outbuffer_start;
+-
+-  if (with_reg_prefix)
+-    *outbuffer++ = REGISTER_PREFIX_CHAR;
+-
+-  switch (regno)
+-    {
+-    case 15:
+-      /* For v32, there is no context in which we output PC.  */
+-      if (disdata->distype == cris_dis_v32)
+-	strcpy (outbuffer, "acr");
+-      else
+-	strcpy (outbuffer, "pc");
+-      break;
+-
+-    case 14:
+-      strcpy (outbuffer, "sp");
+-      break;
+-
+-    default:
+-      sprintf (outbuffer, "r%d", regno);
+-      break;
+-    }
+-
+-  return outbuffer_start + strlen (outbuffer_start);
+-}
+-
+-/* Format the name of a support register into outbuffer.  */
+-
+-static char *
+-format_sup_reg (unsigned int regno,
+-		char *outbuffer_start,
+-		bfd_boolean with_reg_prefix)
+-{
+-  char *outbuffer = outbuffer_start;
+-  int i;
+-
+-  if (with_reg_prefix)
+-    *outbuffer++ = REGISTER_PREFIX_CHAR;
+-
+-  for (i = 0; cris_support_regs[i].name != NULL; i++)
+-    if (cris_support_regs[i].number == regno)
+-      {
+-	sprintf (outbuffer, "%s", cris_support_regs[i].name);
+-	return outbuffer_start + strlen (outbuffer_start);
+-      }
+-
+-  /* There's supposed to be register names covering all numbers, though
+-     some may be generic names.  */
+-  sprintf (outbuffer, "format_sup_reg-BUG");
+-  return outbuffer_start + strlen (outbuffer_start);
+-}
+-
+-/* Return the length of an instruction.  */
+-
+-static unsigned
+-bytes_to_skip (unsigned int insn,
+-	       const struct cris_opcode *matchedp,
+-	       enum cris_disass_family distype,
+-	       const struct cris_opcode *prefix_matchedp)
+-{
+-  /* Each insn is a word plus "immediate" operands.  */
+-  unsigned to_skip = 2;
+-  const char *template = matchedp->args;
+-  const char *s;
+-
+-  for (s = template; *s; s++)
+-    if ((*s == 's' || *s == 'N' || *s == 'Y')
+-	&& (insn & 0x400) && (insn & 15) == 15
+-	&& prefix_matchedp == NULL)
+-      {
+-	/* Immediate via [pc+], so we have to check the size of the
+-	   operand.  */
+-	int mode_size = 1 << ((insn >> 4) & (*template == 'z' ? 1 : 3));
+-
+-	if (matchedp->imm_oprnd_size == SIZE_FIX_32)
+-	  to_skip += 4;
+-	else if (matchedp->imm_oprnd_size == SIZE_SPEC_REG)
+-	  {
+-	    const struct cris_spec_reg *sregp
+-	      = spec_reg_info ((insn >> 12) & 15, distype);
+-
+-	    /* FIXME: Improve error handling; should have been caught
+-	       earlier.  */
+-	    if (sregp == NULL)
+-	      return 2;
+-
+-	    /* PC is incremented by two, not one, for a byte.  Except on
+-	       CRISv32, where constants are always DWORD-size for
+-	       special registers.  */
+-	    to_skip +=
+-	      distype == cris_dis_v32 ? 4 : (sregp->reg_size + 1) & ~1;
+-	  }
+-	else
+-	  to_skip += (mode_size + 1) & ~1;
+-      }
+-    else if (*s == 'n')
+-      to_skip += 4;
+-    else if (*s == 'b')
+-      to_skip += 2;
+-
+-  return to_skip;
+-}
+-
+-/* Print condition code flags.  */
+-
+-static char *
+-print_flags (struct cris_disasm_data *disdata, unsigned int insn, char *cp)
+-{
+-  /* Use the v8 (Etrax 100) flag definitions for disassembly.
+-     The differences with v0 (Etrax 1..4) vs. Svinto are:
+-      v0 'd' <=> v8 'm'
+-      v0 'e' <=> v8 'b'.
+-     FIXME: Emit v0..v3 flag names somehow.  */
+-  static const char v8_fnames[] = "cvznxibm";
+-  static const char v32_fnames[] = "cvznxiup";
+-  const char *fnames
+-    = disdata->distype == cris_dis_v32 ? v32_fnames : v8_fnames;
+-
+-  unsigned char flagbits = (((insn >> 8) & 0xf0) | (insn & 15));
+-  int i;
+-
+-  for (i = 0; i < 8; i++)
+-    if (flagbits & (1 << i))
+-      *cp++ = fnames[i];
+-
+-  return cp;
+-}
+-
+-#define FORMAT_DEC(number, tp, signedp)                      \
+-    format_dec (number, tp, ({                                \
+-            assert(tp >= temp && tp <= temp + sizeof(temp)); \
+-            temp + sizeof(temp) - tp;                        \
+-        }), signedp)
+-
+-/* Print out an insn with its operands, and update the info->insn_type
+-   fields.  The prefix_opcodep and the rest hold a prefix insn that is
+-   supposed to be output as an address mode.  */
+-
+-static void
+-print_with_operands (const struct cris_opcode *opcodep,
+-		     unsigned int insn,
+-		     unsigned char *buffer,
+-		     bfd_vma addr,
+-		     disassemble_info *info,
+-		     /* If a prefix insn was before this insn (and is supposed
+-			to be output as an address), here is a description of
+-			it.  */
+-		     const struct cris_opcode *prefix_opcodep,
+-		     unsigned int prefix_insn,
+-		     unsigned char *prefix_buffer,
+-		     bfd_boolean with_reg_prefix)
+-{
+-  /* Get a buffer of somewhat reasonable size where we store
+-     intermediate parts of the insn.  */
+-  char temp[sizeof (".d [$r13=$r12-2147483648],$r10") * 2];
+-  char *tp = temp;
+-  static const char mode_char[] = "bwd?";
+-  const char *s;
+-  const char *cs;
+-  struct cris_disasm_data *disdata
+-    = (struct cris_disasm_data *) info->private_data;
+-
+-  /* Print out the name first thing we do.  */
+-  (*info->fprintf_func) (info->stream, "%s", opcodep->name);
+-
+-  cs = opcodep->args;
+-  s = cs;
+-
+-  /* Ignore any prefix indicator.  */
+-  if (*s == 'p')
+-    s++;
+-
+-  if (*s == 'm' || *s == 'M' || *s == 'z')
+-    {
+-      *tp++ = '.';
+-
+-      /* Get the size-letter.  */
+-      *tp++ = *s == 'M'
+-	? (insn & 0x8000 ? 'd'
+-	   : insn & 0x4000 ? 'w' : 'b')
+-	: mode_char[(insn >> 4) & (*s == 'z' ? 1 : 3)];
+-
+-      /* Ignore the size and the space character that follows.  */
+-      s += 2;
+-    }
+-
+-  /* Add a space if this isn't a long-branch, because for those will add
+-     the condition part of the name later.  */
+-  if (opcodep->match != (BRANCH_PC_LOW + BRANCH_INCR_HIGH * 256))
+-    *tp++ = ' ';
+-
+-  /* Fill in the insn-type if deducible from the name (and there's no
+-     better way).  */
+-  if (opcodep->name[0] == 'j')
+-    {
+-      if (CONST_STRNEQ (opcodep->name, "jsr"))
+-	/* It's "jsr" or "jsrc".  */
+-	info->insn_type = dis_jsr;
+-      else
+-	/* Any other jump-type insn is considered a branch.  */
+-	info->insn_type = dis_branch;
+-    }
+-
+-  /* We might know some more fields right now.  */
+-  info->branch_delay_insns = opcodep->delayed;
+-
+-  /* Handle operands.  */
+-  for (; *s; s++)
+-    {
+-    switch (*s)
+-      {
+-      case 'T':
+-	tp = format_sup_reg ((insn >> 12) & 15, tp, with_reg_prefix);
+-	break;
+-
+-      case 'A':
+-	if (with_reg_prefix)
+-	  *tp++ = REGISTER_PREFIX_CHAR;
+-	*tp++ = 'a';
+-	*tp++ = 'c';
+-	*tp++ = 'r';
+-	break;
+-
+-      case '[':
+-      case ']':
+-      case ',':
+-	*tp++ = *s;
+-	break;
+-
+-      case '!':
+-	/* Ignore at this point; used at earlier stages to avoid
+-	   recognition if there's a prefix at something that in other
+-	   ways looks like a "pop".  */
+-	break;
+-
+-      case 'd':
+-	/* Ignore.  This is an optional ".d " on the large one of
+-	   relaxable insns.  */
+-	break;
+-
+-      case 'B':
+-	/* This was the prefix that made this a "push".  We've already
+-	   handled it by recognizing it, so signal that the prefix is
+-	   handled by setting it to NULL.  */
+-	prefix_opcodep = NULL;
+-	break;
+-
+-      case 'D':
+-      case 'r':
+-	tp = format_reg (disdata, insn & 15, tp, with_reg_prefix);
+-	break;
+-
+-      case 'R':
+-	tp = format_reg (disdata, (insn >> 12) & 15, tp, with_reg_prefix);
+-	break;
+-
+-      case 'n':
+-	{
+-	  /* Like N but pc-relative to the start of the insn.  */
+-	  uint32_t number
+-	    = (buffer[2] + buffer[3] * 256 + buffer[4] * 65536
+-	       + buffer[5] * 0x1000000 + addr);
+-
+-	  /* Finish off and output previous formatted bytes.  */
+-	  *tp = 0;
+-	  if (temp[0])
+-	    (*info->fprintf_func) (info->stream, "%s", temp);
+-	  tp = temp;
+-
+-	  (*info->print_address_func) ((bfd_vma) number, info);
+-	}
+-	break;
+-
+-      case 'u':
+-	{
+-	  /* Like n but the offset is bits <3:0> in the instruction.  */
+-	  unsigned long number = (buffer[0] & 0xf) * 2 + addr;
+-
+-	  /* Finish off and output previous formatted bytes.  */
+-	  *tp = 0;
+-	  if (temp[0])
+-	    (*info->fprintf_func) (info->stream, "%s", temp);
+-	  tp = temp;
+-
+-	  (*info->print_address_func) ((bfd_vma) number, info);
+-	}
+-	break;
+-
+-      case 'N':
+-      case 'y':
+-      case 'Y':
+-      case 'S':
+-      case 's':
+-	/* Any "normal" memory operand.  */
+-	if ((insn & 0x400) && (insn & 15) == 15 && prefix_opcodep == NULL)
+-	  {
+-	    /* We're looking at [pc+], i.e. we need to output an immediate
+-	       number, where the size can depend on different things.  */
+-	    int32_t number;
+-	    int signedp
+-	      = ((*cs == 'z' && (insn & 0x20))
+-		 || opcodep->match == BDAP_QUICK_OPCODE);
+-	    int nbytes;
+-
+-	    if (opcodep->imm_oprnd_size == SIZE_FIX_32)
+-	      nbytes = 4;
+-	    else if (opcodep->imm_oprnd_size == SIZE_SPEC_REG)
+-	      {
+-		const struct cris_spec_reg *sregp
+-		  = spec_reg_info ((insn >> 12) & 15, disdata->distype);
+-
+-		/* A NULL return should have been as a non-match earlier,
+-		   so catch it as an internal error in the error-case
+-		   below.  */
+-		if (sregp == NULL)
+-		  /* Whatever non-valid size.  */
+-		  nbytes = 42;
+-		else
+-		  /* PC is always incremented by a multiple of two.
+-		     For CRISv32, immediates are always 4 bytes for
+-		     special registers.  */
+-		  nbytes = disdata->distype == cris_dis_v32
+-		    ? 4 : (sregp->reg_size + 1) & ~1;
+-	      }
+-	    else
+-	      {
+-		int mode_size = 1 << ((insn >> 4) & (*cs == 'z' ? 1 : 3));
+-
+-		if (mode_size == 1)
+-		  nbytes = 2;
+-		else
+-		  nbytes = mode_size;
+-	      }
+-
+-	    switch (nbytes)
+-	      {
+-	      case 1:
+-		number = buffer[2];
+-		if (signedp && number > 127)
+-		  number -= 256;
+-		break;
+-
+-	      case 2:
+-		number = buffer[2] + buffer[3] * 256;
+-		if (signedp && number > 32767)
+-		  number -= 65536;
+-		break;
+-
+-	      case 4:
+-		number
+-		  = buffer[2] + buffer[3] * 256 + buffer[4] * 65536
+-		  + buffer[5] * 0x1000000;
+-		break;
+-
+-	      default:
+-		strcpy (tp, "bug");
+-		tp += 3;
+-		number = 42;
+-	      }
+-
+-	    if ((*cs == 'z' && (insn & 0x20))
+-		|| (opcodep->match == BDAP_QUICK_OPCODE
+-		    && (nbytes <= 2 || buffer[1 + nbytes] == 0)))
+-	      tp = FORMAT_DEC (number, tp, signedp);
+-	    else
+-	      {
+-		unsigned int highbyte = (number >> 24) & 0xff;
+-
+-		/* Either output this as an address or as a number.  If it's
+-		   a dword with the same high-byte as the address of the
+-		   insn, assume it's an address, and also if it's a non-zero
+-		   non-0xff high-byte.  If this is a jsr or a jump, then
+-		   it's definitely an address.  */
+-		if (nbytes == 4
+-		    && (highbyte == ((addr >> 24) & 0xff)
+-			|| (highbyte != 0 && highbyte != 0xff)
+-			|| info->insn_type == dis_branch
+-			|| info->insn_type == dis_jsr))
+-		  {
+-		    /* Finish off and output previous formatted bytes.  */
+-		    *tp = 0;
+-		    tp = temp;
+-		    if (temp[0])
+-		      (*info->fprintf_func) (info->stream, "%s", temp);
+-
+-		    (*info->print_address_func) ((bfd_vma) number, info);
+-
+-		    info->target = number;
+-		  }
+-		else
+-		  tp = format_hex (number, tp, disdata);
+-	      }
+-	  }
+-	else
+-	  {
+-	    /* Not an immediate number.  Then this is a (possibly
+-	       prefixed) memory operand.  */
+-	    if (info->insn_type != dis_nonbranch)
+-	      {
+-		int mode_size
+-		  = 1 << ((insn >> 4)
+-			  & (opcodep->args[0] == 'z' ? 1 : 3));
+-		int size;
+-		info->insn_type = dis_dref;
+-		info->flags |= CRIS_DIS_FLAG_MEMREF;
+-
+-		if (opcodep->imm_oprnd_size == SIZE_FIX_32)
+-		  size = 4;
+-		else if (opcodep->imm_oprnd_size == SIZE_SPEC_REG)
+-		  {
+-		    const struct cris_spec_reg *sregp
+-		      = spec_reg_info ((insn >> 12) & 15, disdata->distype);
+-
+-		    /* FIXME: Improve error handling; should have been caught
+-		       earlier.  */
+-		    if (sregp == NULL)
+-		      size = 4;
+-		    else
+-		      size = sregp->reg_size;
+-		  }
+-		else
+-		  size = mode_size;
+-
+-		info->data_size = size;
+-	      }
+-
+-	    *tp++ = '[';
+-
+-	    if (prefix_opcodep
+-		/* We don't match dip with a postincremented field
+-		   as a side-effect address mode.  */
+-		&& ((insn & 0x400) == 0
+-		    || prefix_opcodep->match != DIP_OPCODE))
+-	      {
+-		if (insn & 0x400)
+-		  {
+-		    tp = format_reg (disdata, insn & 15, tp, with_reg_prefix);
+-		    *tp++ = '=';
+-		  }
+-
+-
+-		/* We mainly ignore the prefix format string when the
+-		   address-mode syntax is output.  */
+-		switch (prefix_opcodep->match)
+-		  {
+-		  case DIP_OPCODE:
+-		    /* It's [r], [r+] or [pc+].  */
+-		    if ((prefix_insn & 0x400) && (prefix_insn & 15) == 15)
+-		      {
+-			/* It's [pc+].  This cannot possibly be anything
+-			   but an address.  */
+-			uint32_t number
+-			  = prefix_buffer[2] + prefix_buffer[3] * 256
+-			  + prefix_buffer[4] * 65536
+-			  + prefix_buffer[5] * 0x1000000;
+-
+-			info->target = (bfd_vma) number;
+-
+-			/* Finish off and output previous formatted
+-			   data.  */
+-			*tp = 0;
+-			tp = temp;
+-			if (temp[0])
+-			  (*info->fprintf_func) (info->stream, "%s", temp);
+-
+-			(*info->print_address_func) ((bfd_vma) number, info);
+-		      }
+-		    else
+-		      {
+-			/* For a memref in an address, we use target2.
+-			   In this case, target is zero.  */
+-			info->flags
+-			  |= (CRIS_DIS_FLAG_MEM_TARGET2_IS_REG
+-			      | CRIS_DIS_FLAG_MEM_TARGET2_MEM);
+-
+-			info->target2 = prefix_insn & 15;
+-
+-			*tp++ = '[';
+-			tp = format_reg (disdata, prefix_insn & 15, tp,
+-					 with_reg_prefix);
+-			if (prefix_insn & 0x400)
+-			  *tp++ = '+';
+-			*tp++ = ']';
+-		      }
+-		    break;
+-
+-		  case BDAP_QUICK_OPCODE:
+-		    {
+-		      int number;
+-
+-		      number = prefix_buffer[0];
+-		      if (number > 127)
+-			number -= 256;
+-
+-		      /* Output "reg+num" or, if num < 0, "reg-num".  */
+-		      tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp,
+-				       with_reg_prefix);
+-		      if (number >= 0)
+-			*tp++ = '+';
+-		      tp = FORMAT_DEC (number, tp, 1);
+-
+-		      info->flags |= CRIS_DIS_FLAG_MEM_TARGET_IS_REG;
+-		      info->target = (prefix_insn >> 12) & 15;
+-		      info->target2 = (bfd_vma) number;
+-		      break;
+-		    }
+-
+-		  case BIAP_OPCODE:
+-		    /* Output "r+R.m".  */
+-		    tp = format_reg (disdata, prefix_insn & 15, tp,
+-				     with_reg_prefix);
+-		    *tp++ = '+';
+-		    tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp,
+-				     with_reg_prefix);
+-		    *tp++ = '.';
+-		    *tp++ = mode_char[(prefix_insn >> 4) & 3];
+-
+-		    info->flags
+-		      |= (CRIS_DIS_FLAG_MEM_TARGET2_IS_REG
+-			  | CRIS_DIS_FLAG_MEM_TARGET_IS_REG
+-
+-			  | ((prefix_insn & 0x8000)
+-			     ? CRIS_DIS_FLAG_MEM_TARGET2_MULT4
+-			     : ((prefix_insn & 0x8000)
+-				? CRIS_DIS_FLAG_MEM_TARGET2_MULT2 : 0)));
+-
+-		    /* Is it the casejump?  It's a "adds.w [pc+r%d.w],pc".  */
+-		    if (insn == 0xf83f && (prefix_insn & ~0xf000) == 0x55f)
+-		      /* Then start interpreting data as offsets.  */
+-		      case_offset_counter = no_of_case_offsets;
+-		    break;
+-
+-		  case BDAP_INDIR_OPCODE:
+-		    /* Output "r+s.m", or, if "s" is [pc+], "r+s" or
+-		       "r-s".  */
+-		    tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp,
+-				     with_reg_prefix);
+-
+-		    if ((prefix_insn & 0x400) && (prefix_insn & 15) == 15)
+-		      {
+-			int32_t number;
+-			unsigned int nbytes;
+-
+-			/* It's a value.  Get its size.  */
+-			int mode_size = 1 << ((prefix_insn >> 4) & 3);
+-
+-			if (mode_size == 1)
+-			  nbytes = 2;
+-			else
+-			  nbytes = mode_size;
+-
+-			switch (nbytes)
+-			  {
+-			  case 1:
+-			    number = prefix_buffer[2];
+-			    if (number > 127)
+-			      number -= 256;
+-			    break;
+-
+-			  case 2:
+-			    number = prefix_buffer[2] + prefix_buffer[3] * 256;
+-			    if (number > 32767)
+-			      number -= 65536;
+-			    break;
+-
+-			  case 4:
+-			    number
+-			      = prefix_buffer[2] + prefix_buffer[3] * 256
+-			      + prefix_buffer[4] * 65536
+-			      + prefix_buffer[5] * 0x1000000;
+-			    break;
+-
+-			  default:
+-			    strcpy (tp, "bug");
+-			    tp += 3;
+-			    number = 42;
+-			  }
+-
+-			info->flags |= CRIS_DIS_FLAG_MEM_TARGET_IS_REG;
+-			info->target2 = (bfd_vma) number;
+-
+-			/* If the size is dword, then assume it's an
+-			   address.  */
+-			if (nbytes == 4)
+-			  {
+-			    /* Finish off and output previous formatted
+-			       bytes.  */
+-			    *tp++ = '+';
+-			    *tp = 0;
+-			    tp = temp;
+-			    (*info->fprintf_func) (info->stream, "%s", temp);
+-
+-			    (*info->print_address_func) ((bfd_vma) number, info);
+-			  }
+-			else
+-			  {
+-			    if (number >= 0)
+-			      *tp++ = '+';
+-			    tp = FORMAT_DEC (number, tp, 1);
+-			  }
+-		      }
+-		    else
+-		      {
+-			/* Output "r+[R].m" or "r+[R+].m".  */
+-			*tp++ = '+';
+-			*tp++ = '[';
+-			tp = format_reg (disdata, prefix_insn & 15, tp,
+-					 with_reg_prefix);
+-			if (prefix_insn & 0x400)
+-			  *tp++ = '+';
+-			*tp++ = ']';
+-			*tp++ = '.';
+-			*tp++ = mode_char[(prefix_insn >> 4) & 3];
+-
+-			info->flags
+-			  |= (CRIS_DIS_FLAG_MEM_TARGET2_IS_REG
+-			      | CRIS_DIS_FLAG_MEM_TARGET2_MEM
+-			      | CRIS_DIS_FLAG_MEM_TARGET_IS_REG
+-
+-			      | (((prefix_insn >> 4) == 2)
+-				 ? 0
+-				 : (((prefix_insn >> 4) & 3) == 1
+-				    ? CRIS_DIS_FLAG_MEM_TARGET2_MEM_WORD
+-				    : CRIS_DIS_FLAG_MEM_TARGET2_MEM_BYTE)));
+-		      }
+-		    break;
+-
+-		  default:
+-		    (*info->fprintf_func) (info->stream, "?prefix-bug");
+-		  }
+-
+-		/* To mark that the prefix is used, reset it.  */
+-		prefix_opcodep = NULL;
+-	      }
+-	    else
+-	      {
+-		tp = format_reg (disdata, insn & 15, tp, with_reg_prefix);
+-
+-		info->flags |= CRIS_DIS_FLAG_MEM_TARGET_IS_REG;
+-		info->target = insn & 15;
+-
+-		if (insn & 0x400)
+-		  *tp++ = '+';
+-	      }
+-	    *tp++ = ']';
+-	  }
+-	break;
+-
+-      case 'x':
+-	tp = format_reg (disdata, (insn >> 12) & 15, tp, with_reg_prefix);
+-	*tp++ = '.';
+-	*tp++ = mode_char[(insn >> 4) & 3];
+-	break;
+-
+-      case 'I':
+-	tp = FORMAT_DEC (insn & 63, tp, 0);
+-	break;
+-
+-      case 'b':
+-	{
+-	  int where = buffer[2] + buffer[3] * 256;
+-
+-	  if (where > 32767)
+-	    where -= 65536;
+-
+-	  where += addr + ((disdata->distype == cris_dis_v32) ? 0 : 4);
+-
+-	  if (insn == BA_PC_INCR_OPCODE)
+-	    info->insn_type = dis_branch;
+-	  else
+-	    info->insn_type = dis_condbranch;
+-
+-	  info->target = (bfd_vma) where;
+-
+-	  *tp = 0;
+-	  tp = temp;
+-	  (*info->fprintf_func) (info->stream, "%s%s ",
+-				 temp, cris_cc_strings[insn >> 12]);
+-
+-	  (*info->print_address_func) ((bfd_vma) where, info);
+-	}
+-      break;
+-
+-    case 'c':
+-      tp = FORMAT_DEC (insn & 31, tp, 0);
+-      break;
+-
+-    case 'C':
+-      tp = FORMAT_DEC (insn & 15, tp, 0);
+-      break;
+-
+-    case 'o':
+-      {
+-	long offset = insn & 0xfe;
+-	bfd_vma target;
+-
+-	if (insn & 1)
+-	  offset |= ~0xff;
+-
+-	if (opcodep->match == BA_QUICK_OPCODE)
+-	  info->insn_type = dis_branch;
+-	else
+-	  info->insn_type = dis_condbranch;
+-
+-	target = addr + ((disdata->distype == cris_dis_v32) ? 0 : 2) + offset;
+-	info->target = target;
+-	*tp = 0;
+-	tp = temp;
+-	(*info->fprintf_func) (info->stream, "%s", temp);
+-	(*info->print_address_func) (target, info);
+-      }
+-      break;
+-
+-    case 'Q':
+-    case 'O':
+-      {
+-	long number = buffer[0];
+-
+-	if (number > 127)
+-	  number = number - 256;
+-
+-	tp = FORMAT_DEC (number, tp, 1);
+-	*tp++ = ',';
+-	tp = format_reg (disdata, (insn >> 12) & 15, tp, with_reg_prefix);
+-      }
+-      break;
+-
+-    case 'f':
+-      tp = print_flags (disdata, insn, tp);
+-      break;
+-
+-    case 'i':
+-      tp = FORMAT_DEC ((insn & 32) ? (insn & 31) | ~31L : insn & 31, tp, 1);
+-      break;
+-
+-    case 'P':
+-      {
+-	const struct cris_spec_reg *sregp
+-	  = spec_reg_info ((insn >> 12) & 15, disdata->distype);
+-
+-	if (sregp == NULL || sregp->name == NULL)
+-	  /* Should have been caught as a non-match earlier.  */
+-	  *tp++ = '?';
+-	else
+-	  {
+-	    if (with_reg_prefix)
+-	      *tp++ = REGISTER_PREFIX_CHAR;
+-	    strcpy (tp, sregp->name);
+-	    tp += strlen (tp);
+-	  }
+-      }
+-      break;
+-
+-    default:
+-      strcpy (tp, "???");
+-      tp += 3;
+-    }
+-  }
+-
+-  *tp = 0;
+-
+-  if (prefix_opcodep)
+-    (*info->fprintf_func) (info->stream, " (OOPS unused prefix \"%s: %s\")",
+-			   prefix_opcodep->name, prefix_opcodep->args);
+-
+-  (*info->fprintf_func) (info->stream, "%s", temp);
+-
+-  /* Get info for matching case-tables, if we don't have any active.
+-     We assume that the last constant seen is used; either in the insn
+-     itself or in a "move.d const,rN, sub.d rN,rM"-like sequence.  */
+-  if (TRACE_CASE && case_offset_counter == 0)
+-    {
+-      if (CONST_STRNEQ (opcodep->name, "sub"))
+-	case_offset = last_immediate;
+-
+-      /* It could also be an "add", if there are negative case-values.  */
+-      else if (CONST_STRNEQ (opcodep->name, "add"))
+-	/* The first case is the negated operand to the add.  */
+-	case_offset = -last_immediate;
+-
+-      /* A bound insn will tell us the number of cases.  */
+-      else if (CONST_STRNEQ (opcodep->name, "bound"))
+-	no_of_case_offsets = last_immediate + 1;
+-
+-      /* A jump or jsr or branch breaks the chain of insns for a
+-	 case-table, so assume default first-case again.  */
+-      else if (info->insn_type == dis_jsr
+-	       || info->insn_type == dis_branch
+-	       || info->insn_type == dis_condbranch)
+-	case_offset = 0;
+-    }
+-}
+-
+-
+-/* Print the CRIS instruction at address memaddr on stream.  Returns
+-   length of the instruction, in bytes.  Prefix register names with `$' if
+-   WITH_REG_PREFIX.  */
+-
+-static int
+-print_insn_cris_generic (bfd_vma memaddr,
+-			 disassemble_info *info,
+-			 bfd_boolean with_reg_prefix)
+-{
+-  int nbytes;
+-  unsigned int insn;
+-  const struct cris_opcode *matchedp;
+-  int advance = 0;
+-  struct cris_disasm_data *disdata
+-    = (struct cris_disasm_data *) info->private_data;
+-
+-  /* No instruction will be disassembled as longer than this number of
+-     bytes; stacked prefixes will not be expanded.  */
+-  unsigned char buffer[MAX_BYTES_PER_CRIS_INSN];
+-  unsigned char *bufp;
+-  int status = 0;
+-  bfd_vma addr;
+-
+-  /* There will be an "out of range" error after the last instruction.
+-     Reading pairs of bytes in decreasing number, we hope that we will get
+-     at least the amount that we will consume.
+-
+-     If we can't get any data, or we do not get enough data, we print
+-     the error message.  */
+-
+-  nbytes = info->buffer_length ? info->buffer_length
+-                               : MAX_BYTES_PER_CRIS_INSN;
+-  nbytes = MIN(nbytes, MAX_BYTES_PER_CRIS_INSN);
+-  status = (*info->read_memory_func) (memaddr, buffer, nbytes, info);  
+-
+-  /* If we did not get all we asked for, then clear the rest.
+-     Hopefully this makes a reproducible result in case of errors.  */
+-  if (nbytes != MAX_BYTES_PER_CRIS_INSN)
+-    memset (buffer + nbytes, 0, MAX_BYTES_PER_CRIS_INSN - nbytes);
+-
+-  addr = memaddr;
+-  bufp = buffer;
+-
+-  /* Set some defaults for the insn info.  */
+-  info->insn_info_valid = 1;
+-  info->branch_delay_insns = 0;
+-  info->data_size = 0;
+-  info->insn_type = dis_nonbranch;
+-  info->flags = 0;
+-  info->target = 0;
+-  info->target2 = 0;
+-
+-  /* If we got any data, disassemble it.  */
+-  if (nbytes != 0)
+-    {
+-      matchedp = NULL;
+-
+-      insn = bufp[0] + bufp[1] * 256;
+-
+-      /* If we're in a case-table, don't disassemble the offsets.  */
+-      if (TRACE_CASE && case_offset_counter != 0)
+-	{
+-	  info->insn_type = dis_noninsn;
+-	  advance += 2;
+-
+-	  /* If to print data as offsets, then shortcut here.  */
+-	  (*info->fprintf_func) (info->stream, "case %ld%s: -> ",
+-				 case_offset + no_of_case_offsets
+-				 - case_offset_counter,
+-				 case_offset_counter == 1 ? "/default" :
+-				 "");
+-
+-	  (*info->print_address_func) ((bfd_vma)
+-				       ((short) (insn)
+-					+ (long) (addr
+-						  - (no_of_case_offsets
+-						     - case_offset_counter)
+-						  * 2)), info);
+-	  case_offset_counter--;
+-
+-	  /* The default case start (without a "sub" or "add") must be
+-	     zero.  */
+-	  if (case_offset_counter == 0)
+-	    case_offset = 0;
+-	}
+-      else if (insn == 0)
+-	{
+-	  /* We're often called to disassemble zeroes.  While this is a
+-	     valid "bcc .+2" insn, it is also useless enough and enough
+-	     of a nuiscance that we will just output "bcc .+2" for it
+-	     and signal it as a noninsn.  */
+-	  (*info->fprintf_func) (info->stream,
+-				 disdata->distype == cris_dis_v32
+-				 ? "bcc ." : "bcc .+2");
+-	  info->insn_type = dis_noninsn;
+-	  advance += 2;
+-	}
+-      else
+-	{
+-	  const struct cris_opcode *prefix_opcodep = NULL;
+-	  unsigned char *prefix_buffer = bufp;
+-	  unsigned int prefix_insn = insn;
+-	  int prefix_size = 0;
+-
+-	  matchedp = get_opcode_entry (insn, NO_CRIS_PREFIX, disdata);
+-
+-	  /* Check if we're supposed to write out prefixes as address
+-	     modes and if this was a prefix.  */
+-	  if (matchedp != NULL && PARSE_PREFIX && matchedp->args[0] == 'p')
+-	    {
+-	      /* If it's a prefix, put it into the prefix vars and get the
+-		 main insn.  */
+-	      prefix_size = bytes_to_skip (prefix_insn, matchedp,
+-					   disdata->distype, NULL);
+-	      prefix_opcodep = matchedp;
+-
+-	      insn = bufp[prefix_size] + bufp[prefix_size + 1] * 256;
+-	      matchedp = get_opcode_entry (insn, prefix_insn, disdata);
+-
+-	      if (matchedp != NULL)
+-		{
+-		  addr += prefix_size;
+-		  bufp += prefix_size;
+-		  advance += prefix_size;
+-		}
+-	      else
+-		{
+-		  /* The "main" insn wasn't valid, at least not when
+-		     prefixed.  Put back things enough to output the
+-		     prefix insn only, as a normal insn.  */
+-		  matchedp = prefix_opcodep;
+-		  insn = prefix_insn;
+-		  prefix_opcodep = NULL;
+-		}
+-	    }
+-
+-	  if (matchedp == NULL)
+-	    {
+-	      (*info->fprintf_func) (info->stream, "??0x%x", insn);
+-	      advance += 2;
+-
+-	      info->insn_type = dis_noninsn;
+-	    }
+-	  else
+-	    {
+-	      advance
+-		+= bytes_to_skip (insn, matchedp, disdata->distype,
+-				  prefix_opcodep);
+-
+-	      /* The info_type and assorted fields will be set according
+-		 to the operands.   */
+-	      print_with_operands (matchedp, insn, bufp, addr, info,
+-				   prefix_opcodep, prefix_insn,
+-				   prefix_buffer, with_reg_prefix);
+-	    }
+-	}
+-    }
+-  else
+-    info->insn_type = dis_noninsn;
+-
+-  /* If we read less than MAX_BYTES_PER_CRIS_INSN, i.e. we got an error
+-     status when reading that much, and the insn decoding indicated a
+-     length exceeding what we read, there is an error.  */
+-  if (status != 0 && (nbytes == 0 || advance > nbytes))
+-    {
+-      (*info->memory_error_func) (status, memaddr, info);
+-      return -1;
+-    }
+-
+-  /* Max supported insn size with one folded prefix insn.  */
+-  info->bytes_per_line = MAX_BYTES_PER_CRIS_INSN;
+-
+-  /* I would like to set this to a fixed value larger than the actual
+-     number of bytes to print in order to avoid spaces between bytes,
+-     but objdump.c (2.9.1) does not like that, so we print 16-bit
+-     chunks, which is the next choice.  */
+-  info->bytes_per_chunk = 2;
+-
+-  /* Printing bytes in order of increasing addresses makes sense,
+-     especially on a little-endian target.
+-     This is completely the opposite of what you think; setting this to
+-     BFD_ENDIAN_LITTLE will print bytes in order N..0 rather than the 0..N
+-     we want.  */
+-  info->display_endian = BFD_ENDIAN_BIG;
+-
+-  return advance;
+-}
+-
+-/* Disassemble, prefixing register names with `$'.  CRIS v0..v10.  */
+-static int
+-print_insn_cris_with_register_prefix (bfd_vma vma,
+-				      disassemble_info *info)
+-{
+-  struct cris_disasm_data disdata;
+-  info->private_data = &disdata;
+-  cris_parse_disassembler_options (&disdata, info->disassembler_options,
+-				   cris_dis_v0_v10);
+-  return print_insn_cris_generic (vma, info, true);
+-}
+-/* Disassemble, prefixing register names with `$'.  CRIS v32.  */
+-
+-static int
+-print_insn_crisv32_with_register_prefix (bfd_vma vma,
+-					 disassemble_info *info)
+-{
+-  struct cris_disasm_data disdata;
+-  info->private_data = &disdata;
+-  cris_parse_disassembler_options (&disdata, info->disassembler_options,
+-				   cris_dis_v32);
+-  return print_insn_cris_generic (vma, info, true);
+-}
+-
+-#if 0
+-/* Disassemble, prefixing register names with `$'.
+-   Common v10 and v32 subset.  */
+-
+-static int
+-print_insn_crisv10_v32_with_register_prefix (bfd_vma vma,
+-					     disassemble_info *info)
+-{
+-  struct cris_disasm_data disdata;
+-  info->private_data = &disdata;
+-  cris_parse_disassembler_options (&disdata, info->disassembler_options,
+-				   cris_dis_common_v10_v32);
+-  return print_insn_cris_generic (vma, info, true);
+-}
+-
+-/* Disassemble, no prefixes on register names.  CRIS v0..v10.  */
+-
+-static int
+-print_insn_cris_without_register_prefix (bfd_vma vma,
+-					 disassemble_info *info)
+-{
+-  struct cris_disasm_data disdata;
+-  info->private_data = &disdata;
+-  cris_parse_disassembler_options (&disdata, info->disassembler_options,
+-				   cris_dis_v0_v10);
+-  return print_insn_cris_generic (vma, info, false);
+-}
+-
+-/* Disassemble, no prefixes on register names.  CRIS v32.  */
+-
+-static int
+-print_insn_crisv32_without_register_prefix (bfd_vma vma,
+-					    disassemble_info *info)
+-{
+-  struct cris_disasm_data disdata;
+-  info->private_data = &disdata;
+-  cris_parse_disassembler_options (&disdata, info->disassembler_options,
+-				   cris_dis_v32);
+-  return print_insn_cris_generic (vma, info, false);
+-}
+-
+-/* Disassemble, no prefixes on register names.
+-   Common v10 and v32 subset.  */
+-
+-static int
+-print_insn_crisv10_v32_without_register_prefix (bfd_vma vma,
+-						disassemble_info *info)
+-{
+-  struct cris_disasm_data disdata;
+-  info->private_data = &disdata;
+-  cris_parse_disassembler_options (&disdata, info->disassembler_options,
+-				   cris_dis_common_v10_v32);
+-  return print_insn_cris_generic (vma, info, false);
+-}
+-#endif
+-
+-int
+-print_insn_crisv10 (bfd_vma vma,
+-		    disassemble_info *info)
+-{
+-  return print_insn_cris_with_register_prefix(vma, info);
+-}
+-
+-int
+-print_insn_crisv32 (bfd_vma vma,
+-		    disassemble_info *info)
+-{
+-  return print_insn_crisv32_with_register_prefix(vma, info);
+-}
+-
+-/* Return a disassembler-function that prints registers with a `$' prefix,
+-   or one that prints registers without a prefix.
+-   FIXME: We should improve the solution to avoid the multitude of
+-   functions seen above.  */
+-#if 0
+-disassembler_ftype
+-cris_get_disassembler (bfd *abfd)
+-{
+-  /* If there's no bfd in sight, we return what is valid as input in all
+-     contexts if fed back to the assembler: disassembly *with* register
+-     prefix.  Unfortunately this will be totally wrong for v32.  */
+-  if (abfd == NULL)
+-    return print_insn_cris_with_register_prefix;
+-
+-  if (bfd_get_symbol_leading_char (abfd) == 0)
+-    {
+-      if (bfd_get_mach (abfd) == bfd_mach_cris_v32)
+-	return print_insn_crisv32_with_register_prefix;
+-      if (bfd_get_mach (abfd) == bfd_mach_cris_v10_v32)
+-	return print_insn_crisv10_v32_with_register_prefix;
+-
+-      /* We default to v10.  This may be specifically specified in the
+-	 bfd mach, but is also the default setting.  */
+-      return print_insn_cris_with_register_prefix;
+-    }
+-
+-  if (bfd_get_mach (abfd) == bfd_mach_cris_v32)
+-    return print_insn_crisv32_without_register_prefix;
+-  if (bfd_get_mach (abfd) == bfd_mach_cris_v10_v32)
+-    return print_insn_crisv10_v32_without_register_prefix;
+-  return print_insn_cris_without_register_prefix;
+-}
+-#endif
+-/* Local variables:
+-   eval: (c-set-style "gnu")
+-   indent-tabs-mode: t
+-   End:  */
+diff --git a/hw/char/etraxfs_ser.c b/hw/char/etraxfs_ser.c
+deleted file mode 100644
+index 8d6422dae4..0000000000
+--- a/hw/char/etraxfs_ser.c
++++ /dev/null
+@@ -1,267 +0,0 @@
+-/*
+- * QEMU ETRAX System Emulator
+- *
+- * Copyright (c) 2007 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/irq.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
+-#include "hw/sysbus.h"
+-#include "chardev/char-fe.h"
+-#include "qemu/log.h"
+-#include "qemu/module.h"
+-#include "qom/object.h"
+-
+-#define D(x)
+-
+-#define RW_TR_CTRL     (0x00 / 4)
+-#define RW_TR_DMA_EN   (0x04 / 4)
+-#define RW_REC_CTRL    (0x08 / 4)
+-#define RW_DOUT        (0x1c / 4)
+-#define RS_STAT_DIN    (0x20 / 4)
+-#define R_STAT_DIN     (0x24 / 4)
+-#define RW_INTR_MASK   (0x2c / 4)
+-#define RW_ACK_INTR    (0x30 / 4)
+-#define R_INTR         (0x34 / 4)
+-#define R_MASKED_INTR  (0x38 / 4)
+-#define R_MAX          (0x3c / 4)
+-
+-#define STAT_DAV     16
+-#define STAT_TR_IDLE 22
+-#define STAT_TR_RDY  24
+-
+-#define TYPE_ETRAX_FS_SERIAL "etraxfs-serial"
+-typedef struct ETRAXSerial ETRAXSerial;
+-DECLARE_INSTANCE_CHECKER(ETRAXSerial, ETRAX_SERIAL,
+-                         TYPE_ETRAX_FS_SERIAL)
+-
+-struct ETRAXSerial {
+-    SysBusDevice parent_obj;
+-
+-    MemoryRegion mmio;
+-    CharBackend chr;
+-    qemu_irq irq;
+-
+-    int pending_tx;
+-
+-    uint8_t rx_fifo[16];
+-    unsigned int rx_fifo_pos;
+-    unsigned int rx_fifo_len;
+-
+-    /* Control registers.  */
+-    uint32_t regs[R_MAX];
+-};
+-
+-static void ser_update_irq(ETRAXSerial *s)
+-{
+-
+-    if (s->rx_fifo_len) {
+-        s->regs[R_INTR] |= 8;
+-    } else {
+-        s->regs[R_INTR] &= ~8;
+-    }
+-
+-    s->regs[R_MASKED_INTR] = s->regs[R_INTR] & s->regs[RW_INTR_MASK];
+-    qemu_set_irq(s->irq, !!s->regs[R_MASKED_INTR]);
+-}
+-
+-static uint64_t
+-ser_read(void *opaque, hwaddr addr, unsigned int size)
+-{
+-    ETRAXSerial *s = opaque;
+-    uint32_t r = 0;
+-
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case R_STAT_DIN:
+-            r = s->rx_fifo[(s->rx_fifo_pos - s->rx_fifo_len) & 15];
+-            if (s->rx_fifo_len) {
+-                r |= 1 << STAT_DAV;
+-            }
+-            r |= 1 << STAT_TR_RDY;
+-            r |= 1 << STAT_TR_IDLE;
+-            break;
+-        case RS_STAT_DIN:
+-            r = s->rx_fifo[(s->rx_fifo_pos - s->rx_fifo_len) & 15];
+-            if (s->rx_fifo_len) {
+-                r |= 1 << STAT_DAV;
+-                s->rx_fifo_len--;
+-            }
+-            r |= 1 << STAT_TR_RDY;
+-            r |= 1 << STAT_TR_IDLE;
+-            break;
+-        default:
+-            r = s->regs[addr];
+-            D(qemu_log("%s " HWADDR_FMT_plx "=%x\n", __func__, addr, r));
+-            break;
+-    }
+-    return r;
+-}
+-
+-static void
+-ser_write(void *opaque, hwaddr addr,
+-          uint64_t val64, unsigned int size)
+-{
+-    ETRAXSerial *s = opaque;
+-    uint32_t value = val64;
+-    unsigned char ch = val64;
+-
+-    D(qemu_log("%s " HWADDR_FMT_plx "=%x\n",  __func__, addr, value));
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case RW_DOUT:
+-            /* XXX this blocks entire thread. Rewrite to use
+-             * qemu_chr_fe_write and background I/O callbacks */
+-            qemu_chr_fe_write_all(&s->chr, &ch, 1);
+-            s->regs[R_INTR] |= 3;
+-            s->pending_tx = 1;
+-            s->regs[addr] = value;
+-            break;
+-        case RW_ACK_INTR:
+-            if (s->pending_tx) {
+-                value &= ~1;
+-                s->pending_tx = 0;
+-                D(qemu_log("fixedup value=%x r_intr=%x\n",
+-                           value, s->regs[R_INTR]));
+-            }
+-            s->regs[addr] = value;
+-            s->regs[R_INTR] &= ~value;
+-            D(printf("r_intr=%x\n", s->regs[R_INTR]));
+-            break;
+-        default:
+-            s->regs[addr] = value;
+-            break;
+-    }
+-    ser_update_irq(s);
+-}
+-
+-static const MemoryRegionOps ser_ops = {
+-    .read = ser_read,
+-    .write = ser_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4
+-    }
+-};
+-
+-static Property etraxfs_ser_properties[] = {
+-    DEFINE_PROP_CHR("chardev", ETRAXSerial, chr),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void serial_receive(void *opaque, const uint8_t *buf, int size)
+-{
+-    ETRAXSerial *s = opaque;
+-    int i;
+-
+-    /* Got a byte.  */
+-    if (s->rx_fifo_len >= 16) {
+-        D(qemu_log("WARNING: UART dropped char.\n"));
+-        return;
+-    }
+-
+-    for (i = 0; i < size; i++) { 
+-        s->rx_fifo[s->rx_fifo_pos] = buf[i];
+-        s->rx_fifo_pos++;
+-        s->rx_fifo_pos &= 15;
+-        s->rx_fifo_len++;
+-    }
+-
+-    ser_update_irq(s);
+-}
+-
+-static int serial_can_receive(void *opaque)
+-{
+-    ETRAXSerial *s = opaque;
+-
+-    /* Is the receiver enabled?  */
+-    if (!(s->regs[RW_REC_CTRL] & (1 << 3))) {
+-        return 0;
+-    }
+-
+-    return sizeof(s->rx_fifo) - s->rx_fifo_len;
+-}
+-
+-static void serial_event(void *opaque, QEMUChrEvent event)
+-{
+-
+-}
+-
+-static void etraxfs_ser_reset(DeviceState *d)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(d);
+-
+-    /* transmitter begins ready and idle.  */
+-    s->regs[RS_STAT_DIN] |= (1 << STAT_TR_RDY);
+-    s->regs[RS_STAT_DIN] |= (1 << STAT_TR_IDLE);
+-
+-    s->regs[RW_REC_CTRL] = 0x10000;
+-
+-}
+-
+-static void etraxfs_ser_init(Object *obj)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(obj);
+-    SysBusDevice *dev = SYS_BUS_DEVICE(obj);
+-
+-    sysbus_init_irq(dev, &s->irq);
+-    memory_region_init_io(&s->mmio, obj, &ser_ops, s,
+-                          "etraxfs-serial", R_MAX * 4);
+-    sysbus_init_mmio(dev, &s->mmio);
+-}
+-
+-static void etraxfs_ser_realize(DeviceState *dev, Error **errp)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(dev);
+-
+-    qemu_chr_fe_set_handlers(&s->chr,
+-                             serial_can_receive, serial_receive,
+-                             serial_event, NULL, s, NULL, true);
+-}
+-
+-static void etraxfs_ser_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    dc->reset = etraxfs_ser_reset;
+-    device_class_set_props(dc, etraxfs_ser_properties);
+-    dc->realize = etraxfs_ser_realize;
+-}
+-
+-static const TypeInfo etraxfs_ser_info = {
+-    .name          = TYPE_ETRAX_FS_SERIAL,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(ETRAXSerial),
+-    .instance_init = etraxfs_ser_init,
+-    .class_init    = etraxfs_ser_class_init,
+-};
+-
+-static void etraxfs_serial_register_types(void)
+-{
+-    type_register_static(&etraxfs_ser_info);
+-}
+-
+-type_init(etraxfs_serial_register_types)
+diff --git a/hw/cris/axis_dev88.c b/hw/cris/axis_dev88.c
+deleted file mode 100644
+index 5556634921..0000000000
+--- a/hw/cris/axis_dev88.c
++++ /dev/null
+@@ -1,351 +0,0 @@
+-/*
+- * QEMU model for the AXIS devboard 88.
+- *
+- * Copyright (c) 2009 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/units.h"
+-#include "qapi/error.h"
+-#include "cpu.h"
+-#include "hw/sysbus.h"
+-#include "net/net.h"
+-#include "hw/block/flash.h"
+-#include "hw/boards.h"
+-#include "hw/cris/etraxfs.h"
+-#include "hw/loader.h"
+-#include "elf.h"
+-#include "boot.h"
+-#include "sysemu/qtest.h"
+-#include "sysemu/sysemu.h"
+-
+-#define D(x)
+-#define DNAND(x)
+-
+-struct nand_state_t
+-{
+-    DeviceState *nand;
+-    MemoryRegion iomem;
+-    unsigned int rdy:1;
+-    unsigned int ale:1;
+-    unsigned int cle:1;
+-    unsigned int ce:1;
+-};
+-
+-static struct nand_state_t nand_state;
+-static uint64_t nand_read(void *opaque, hwaddr addr, unsigned size)
+-{
+-    struct nand_state_t *s = opaque;
+-    uint32_t r;
+-    int rdy;
+-
+-    r = nand_getio(s->nand);
+-    nand_getpins(s->nand, &rdy);
+-    s->rdy = rdy;
+-
+-    DNAND(printf("%s addr=%x r=%x\n", __func__, addr, r));
+-    return r;
+-}
+-
+-static void
+-nand_write(void *opaque, hwaddr addr, uint64_t value,
+-           unsigned size)
+-{
+-    struct nand_state_t *s = opaque;
+-    int rdy;
+-
+-    DNAND(printf("%s addr=%x v=%x\n", __func__, addr, (unsigned)value));
+-    nand_setpins(s->nand, s->cle, s->ale, s->ce, 1, 0);
+-    nand_setio(s->nand, value);
+-    nand_getpins(s->nand, &rdy);
+-    s->rdy = rdy;
+-}
+-
+-static const MemoryRegionOps nand_ops = {
+-    .read = nand_read,
+-    .write = nand_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-};
+-
+-struct tempsensor_t
+-{
+-    unsigned int shiftreg;
+-    unsigned int count;
+-    enum {
+-        ST_OUT, ST_IN, ST_Z
+-    } state;
+-
+-    uint16_t regs[3];
+-};
+-
+-static void tempsensor_clkedge(struct tempsensor_t *s,
+-                               unsigned int clk, unsigned int data_in)
+-{
+-    D(printf("%s clk=%d state=%d sr=%x\n", __func__,
+-             clk, s->state, s->shiftreg));
+-    if (s->count == 0) {
+-        s->count = 16;
+-        s->state = ST_OUT;
+-    }
+-    switch (s->state) {
+-        case ST_OUT:
+-            /* Output reg is clocked at negedge.  */
+-            if (!clk) {
+-                s->count--;
+-                s->shiftreg <<= 1;
+-                if (s->count == 0) {
+-                    s->shiftreg = 0;
+-                    s->state = ST_IN;
+-                    s->count = 16;
+-                }
+-            }
+-            break;
+-        case ST_Z:
+-            if (clk) {
+-                s->count--;
+-                if (s->count == 0) {
+-                    s->shiftreg = 0;
+-                    s->state = ST_OUT;
+-                    s->count = 16;
+-                }
+-            }
+-            break;
+-        case ST_IN:
+-            /* Indata is sampled at posedge.  */
+-            if (clk) {
+-                s->count--;
+-                s->shiftreg <<= 1;
+-                s->shiftreg |= data_in & 1;
+-                if (s->count == 0) {
+-                    D(printf("%s cfgreg=%x\n", __func__, s->shiftreg));
+-                    s->regs[0] = s->shiftreg;
+-                    s->state = ST_OUT;
+-                    s->count = 16;
+-
+-                    if ((s->regs[0] & 0xff) == 0) {
+-                        /* 25 degrees celsius.  */
+-                        s->shiftreg = 0x0b9f;
+-                    } else if ((s->regs[0] & 0xff) == 0xff) {
+-                        /* Sensor ID, 0x8100 LM70.  */
+-                        s->shiftreg = 0x8100;
+-                    } else
+-                        printf("Invalid tempsens state %x\n", s->regs[0]);
+-                }
+-            }
+-            break;
+-    }
+-}
+-
+-
+-#define RW_PA_DOUT    0x00
+-#define R_PA_DIN      0x01
+-#define RW_PA_OE      0x02
+-#define RW_PD_DOUT    0x10
+-#define R_PD_DIN      0x11
+-#define RW_PD_OE      0x12
+-
+-static struct gpio_state_t
+-{
+-    MemoryRegion iomem;
+-    struct nand_state_t *nand;
+-    struct tempsensor_t tempsensor;
+-    uint32_t regs[0x5c / 4];
+-} gpio_state;
+-
+-static uint64_t gpio_read(void *opaque, hwaddr addr, unsigned size)
+-{
+-    struct gpio_state_t *s = opaque;
+-    uint32_t r = 0;
+-
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case R_PA_DIN:
+-            r = s->regs[RW_PA_DOUT] & s->regs[RW_PA_OE];
+-
+-            /* Encode pins from the nand.  */
+-            r |= s->nand->rdy << 7;
+-            break;
+-        case R_PD_DIN:
+-            r = s->regs[RW_PD_DOUT] & s->regs[RW_PD_OE];
+-
+-            /* Encode temp sensor pins.  */
+-            r |= (!!(s->tempsensor.shiftreg & 0x10000)) << 4;
+-            break;
+-
+-        default:
+-            r = s->regs[addr];
+-            break;
+-    }
+-    return r;
+-    D(printf("%s %x=%x\n", __func__, addr, r));
+-}
+-
+-static void gpio_write(void *opaque, hwaddr addr, uint64_t value,
+-                       unsigned size)
+-{
+-    struct gpio_state_t *s = opaque;
+-    D(printf("%s %x=%x\n", __func__, addr, (unsigned)value));
+-
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case RW_PA_DOUT:
+-            /* Decode nand pins.  */
+-            s->nand->ale = !!(value & (1 << 6));
+-            s->nand->cle = !!(value & (1 << 5));
+-            s->nand->ce  = !!(value & (1 << 4));
+-
+-            s->regs[addr] = value;
+-            break;
+-
+-        case RW_PD_DOUT:
+-            /* Temp sensor clk.  */
+-            if ((s->regs[addr] ^ value) & 2)
+-                tempsensor_clkedge(&s->tempsensor, !!(value & 2),
+-                                   !!(value & 16));
+-            s->regs[addr] = value;
+-            break;
+-
+-        default:
+-            s->regs[addr] = value;
+-            break;
+-    }
+-}
+-
+-static const MemoryRegionOps gpio_ops = {
+-    .read = gpio_read,
+-    .write = gpio_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4,
+-    },
+-};
+-
+-#define INTMEM_SIZE (128 * KiB)
+-
+-static struct cris_load_info li;
+-
+-static
+-void axisdev88_init(MachineState *machine)
+-{
+-    const char *kernel_filename = machine->kernel_filename;
+-    const char *kernel_cmdline = machine->kernel_cmdline;
+-    CRISCPU *cpu;
+-    DeviceState *dev;
+-    SysBusDevice *s;
+-    DriveInfo *nand;
+-    qemu_irq irq[30], nmi[2];
+-    void *etraxfs_dmac;
+-    struct etraxfs_dma_client *dma_eth;
+-    int i;
+-    MemoryRegion *address_space_mem = get_system_memory();
+-    MemoryRegion *phys_intmem = g_new(MemoryRegion, 1);
+-
+-    /* init CPUs */
+-    cpu = CRIS_CPU(cpu_create(machine->cpu_type));
+-
+-    memory_region_add_subregion(address_space_mem, 0x40000000, machine->ram);
+-
+-    /* The ETRAX-FS has 128Kb on chip ram, the docs refer to it as the 
+-       internal memory.  */
+-    memory_region_init_ram(phys_intmem, NULL, "axisdev88.chipram",
+-                           INTMEM_SIZE, &error_fatal);
+-    memory_region_add_subregion(address_space_mem, 0x38000000, phys_intmem);
+-
+-      /* Attach a NAND flash to CS1.  */
+-    nand = drive_get(IF_MTD, 0, 0);
+-    nand_state.nand = nand_init(nand ? blk_by_legacy_dinfo(nand) : NULL,
+-                                NAND_MFR_STMICRO, 0x39);
+-    memory_region_init_io(&nand_state.iomem, NULL, &nand_ops, &nand_state,
+-                          "nand", 0x05000000);
+-    memory_region_add_subregion(address_space_mem, 0x10000000,
+-                                &nand_state.iomem);
+-
+-    gpio_state.nand = &nand_state;
+-    memory_region_init_io(&gpio_state.iomem, NULL, &gpio_ops, &gpio_state,
+-                          "gpio", 0x5c);
+-    memory_region_add_subregion(address_space_mem, 0x3001a000,
+-                                &gpio_state.iomem);
+-
+-
+-    dev = qdev_new("etraxfs-pic");
+-    s = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(s, &error_fatal);
+-    sysbus_mmio_map(s, 0, 0x3001c000);
+-    sysbus_connect_irq(s, 0, qdev_get_gpio_in(DEVICE(cpu), CRIS_CPU_IRQ));
+-    sysbus_connect_irq(s, 1, qdev_get_gpio_in(DEVICE(cpu), CRIS_CPU_NMI));
+-    for (i = 0; i < 30; i++) {
+-        irq[i] = qdev_get_gpio_in(dev, i);
+-    }
+-    nmi[0] = qdev_get_gpio_in(dev, 30);
+-    nmi[1] = qdev_get_gpio_in(dev, 31);
+-
+-    etraxfs_dmac = etraxfs_dmac_init(0x30000000, 10);
+-    for (i = 0; i < 10; i++) {
+-        /* On ETRAX, odd numbered channels are inputs.  */
+-        etraxfs_dmac_connect(etraxfs_dmac, i, irq + 7 + i, i & 1);
+-    }
+-
+-    /* Add the two ethernet blocks.  */
+-    dma_eth = g_malloc0(sizeof dma_eth[0] * 4); /* Allocate 4 channels.  */
+-
+-    etraxfs_eth_init(0x30034000, 1, &dma_eth[0], &dma_eth[1]);
+-    /* The DMA Connector block is missing, hardwire things for now.  */
+-    etraxfs_dmac_connect_client(etraxfs_dmac, 0, &dma_eth[0]);
+-    etraxfs_dmac_connect_client(etraxfs_dmac, 1, &dma_eth[1]);
+-
+-    if (qemu_find_nic_info("etraxfs-eth", true, "fseth")) {
+-        etraxfs_eth_init(0x30036000, 2, &dma_eth[2], &dma_eth[3]);
+-        etraxfs_dmac_connect_client(etraxfs_dmac, 6, &dma_eth[2]);
+-        etraxfs_dmac_connect_client(etraxfs_dmac, 7, &dma_eth[3]);
+-    }
+-
+-    /* 2 timers.  */
+-    sysbus_create_varargs("etraxfs-timer", 0x3001e000, irq[0x1b], nmi[1], NULL);
+-    sysbus_create_varargs("etraxfs-timer", 0x3005e000, irq[0x1b], nmi[1], NULL);
+-
+-    for (i = 0; i < 4; i++) {
+-        etraxfs_ser_create(0x30026000 + i * 0x2000, irq[0x14 + i], serial_hd(i));
+-    }
+-
+-    if (kernel_filename) {
+-        li.image_filename = kernel_filename;
+-        li.cmdline = kernel_cmdline;
+-        li.ram_size = machine->ram_size;
+-        cris_load_image(cpu, &li);
+-    } else if (!qtest_enabled()) {
+-        fprintf(stderr, "Kernel image must be specified\n");
+-        exit(1);
+-    }
+-}
+-
+-static void axisdev88_machine_init(MachineClass *mc)
+-{
+-    mc->desc = "AXIS devboard 88";
+-    mc->init = axisdev88_init;
+-    mc->is_default = true;
+-    mc->default_cpu_type = CRIS_CPU_TYPE_NAME("crisv32");
+-    mc->default_ram_id = "axisdev88.ram";
+-}
+-
+-DEFINE_MACHINE("axis-dev88", axisdev88_machine_init)
+diff --git a/hw/cris/boot.c b/hw/cris/boot.c
+deleted file mode 100644
+index 9fa09cfd83..0000000000
+--- a/hw/cris/boot.c
++++ /dev/null
+@@ -1,102 +0,0 @@
+-/*
+- * CRIS image loading.
+- *
+- * Copyright (c) 2010 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "hw/loader.h"
+-#include "elf.h"
+-#include "boot.h"
+-#include "qemu/cutils.h"
+-#include "sysemu/reset.h"
+-
+-static void main_cpu_reset(void *opaque)
+-{
+-    CRISCPU *cpu = opaque;
+-    CPUCRISState *env = &cpu->env;
+-    struct cris_load_info *li;
+-
+-    li = env->load_info;
+-
+-    cpu_reset(CPU(cpu));
+-
+-    if (!li) {
+-        /* nothing more to do.  */
+-        return;
+-    }
+-
+-    env->pc = li->entry;
+-
+-    if (li->image_filename) {
+-        env->regs[8] = 0x56902387; /* RAM boot magic.  */
+-        env->regs[9] = 0x40004000 + li->image_size;
+-    }
+-
+-    if (li->cmdline) {
+-        /* Let the kernel know we are modifying the cmdline.  */
+-        env->regs[10] = 0x87109563;
+-        env->regs[11] = 0x40000000;
+-    }
+-}
+-
+-static uint64_t translate_kernel_address(void *opaque, uint64_t addr)
+-{
+-    return addr - 0x80000000LL;
+-}
+-
+-void cris_load_image(CRISCPU *cpu, struct cris_load_info *li)
+-{
+-    CPUCRISState *env = &cpu->env;
+-    uint64_t entry;
+-    int kcmdline_len;
+-    int image_size;
+-
+-    env->load_info = li;
+-    /* Boots a kernel elf binary, os/linux-2.6/vmlinux from the axis 
+-       devboard SDK.  */
+-    image_size = load_elf(li->image_filename, NULL,
+-                          translate_kernel_address, NULL,
+-                          &entry, NULL, NULL, NULL, 0, EM_CRIS, 0, 0);
+-    li->entry = entry;
+-    if (image_size < 0) {
+-        /* Takes a kimage from the axis devboard SDK.  */
+-        image_size = load_image_targphys(li->image_filename, 0x40004000,
+-                                         li->ram_size);
+-        li->entry = 0x40004000;
+-    }
+-
+-    if (image_size < 0) {
+-        fprintf(stderr, "qemu: could not load kernel '%s'\n",
+-                li->image_filename);
+-        exit(1);
+-    }
+-
+-    if (li->cmdline && (kcmdline_len = strlen(li->cmdline))) {
+-        if (kcmdline_len > 256) {
+-            fprintf(stderr, "Too long CRIS kernel cmdline (max 256)\n");
+-            exit(1);
+-        }
+-        pstrcpy_targphys("cmdline", 0x40000000, 256, li->cmdline);
+-    }
+-    qemu_register_reset(main_cpu_reset, cpu);
+-}
+diff --git a/hw/dma/etraxfs_dma.c b/hw/dma/etraxfs_dma.c
+deleted file mode 100644
+index 9c0003de51..0000000000
+--- a/hw/dma/etraxfs_dma.c
++++ /dev/null
+@@ -1,781 +0,0 @@
+-/*
+- * QEMU ETRAX DMA Controller.
+- *
+- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/hw.h"
+-#include "hw/irq.h"
+-#include "qemu/main-loop.h"
+-#include "sysemu/runstate.h"
+-#include "exec/address-spaces.h"
+-#include "exec/memory.h"
+-
+-#include "hw/cris/etraxfs_dma.h"
+-
+-#define D(x)
+-
+-#define RW_DATA           (0x0 / 4)
+-#define RW_SAVED_DATA     (0x58 / 4)
+-#define RW_SAVED_DATA_BUF (0x5c / 4)
+-#define RW_GROUP          (0x60 / 4)
+-#define RW_GROUP_DOWN     (0x7c / 4)
+-#define RW_CMD            (0x80 / 4)
+-#define RW_CFG            (0x84 / 4)
+-#define RW_STAT           (0x88 / 4)
+-#define RW_INTR_MASK      (0x8c / 4)
+-#define RW_ACK_INTR       (0x90 / 4)
+-#define R_INTR            (0x94 / 4)
+-#define R_MASKED_INTR     (0x98 / 4)
+-#define RW_STREAM_CMD     (0x9c / 4)
+-
+-#define DMA_REG_MAX       (0x100 / 4)
+-
+-/* descriptors */
+-
+-// ------------------------------------------------------------ dma_descr_group
+-typedef struct dma_descr_group {
+-  uint32_t                      next;
+-  unsigned                      eol        : 1;
+-  unsigned                      tol        : 1;
+-  unsigned                      bol        : 1;
+-  unsigned                                 : 1;
+-  unsigned                      intr       : 1;
+-  unsigned                                 : 2;
+-  unsigned                      en         : 1;
+-  unsigned                                 : 7;
+-  unsigned                      dis        : 1;
+-  unsigned                      md         : 16;
+-  struct dma_descr_group       *up;
+-  union {
+-    struct dma_descr_context   *context;
+-    struct dma_descr_group     *group;
+-  }                             down;
+-} dma_descr_group;
+-
+-// ---------------------------------------------------------- dma_descr_context
+-typedef struct dma_descr_context {
+-  uint32_t                      next;
+-  unsigned                      eol        : 1;
+-  unsigned                                 : 3;
+-  unsigned                      intr       : 1;
+-  unsigned                                 : 1;
+-  unsigned                      store_mode : 1;
+-  unsigned                      en         : 1;
+-  unsigned                                 : 7;
+-  unsigned                      dis        : 1;
+-  unsigned                      md0        : 16;
+-  unsigned                      md1;
+-  unsigned                      md2;
+-  unsigned                      md3;
+-  unsigned                      md4;
+-  uint32_t                      saved_data;
+-  uint32_t                      saved_data_buf;
+-} dma_descr_context;
+-
+-// ------------------------------------------------------------- dma_descr_data
+-typedef struct dma_descr_data {
+-  uint32_t                      next;
+-  uint32_t                      buf;
+-  unsigned                      eol        : 1;
+-  unsigned                                 : 2;
+-  unsigned                      out_eop    : 1;
+-  unsigned                      intr       : 1;
+-  unsigned                      wait       : 1;
+-  unsigned                                 : 2;
+-  unsigned                                 : 3;
+-  unsigned                      in_eop     : 1;
+-  unsigned                                 : 4;
+-  unsigned                      md         : 16;
+-  uint32_t                      after;
+-} dma_descr_data;
+-
+-/* Constants */
+-enum {
+-  regk_dma_ack_pkt                         = 0x00000100,
+-  regk_dma_anytime                         = 0x00000001,
+-  regk_dma_array                           = 0x00000008,
+-  regk_dma_burst                           = 0x00000020,
+-  regk_dma_client                          = 0x00000002,
+-  regk_dma_copy_next                       = 0x00000010,
+-  regk_dma_copy_up                         = 0x00000020,
+-  regk_dma_data_at_eol                     = 0x00000001,
+-  regk_dma_dis_c                           = 0x00000010,
+-  regk_dma_dis_g                           = 0x00000020,
+-  regk_dma_idle                            = 0x00000001,
+-  regk_dma_intern                          = 0x00000004,
+-  regk_dma_load_c                          = 0x00000200,
+-  regk_dma_load_c_n                        = 0x00000280,
+-  regk_dma_load_c_next                     = 0x00000240,
+-  regk_dma_load_d                          = 0x00000140,
+-  regk_dma_load_g                          = 0x00000300,
+-  regk_dma_load_g_down                     = 0x000003c0,
+-  regk_dma_load_g_next                     = 0x00000340,
+-  regk_dma_load_g_up                       = 0x00000380,
+-  regk_dma_next_en                         = 0x00000010,
+-  regk_dma_next_pkt                        = 0x00000010,
+-  regk_dma_no                              = 0x00000000,
+-  regk_dma_only_at_wait                    = 0x00000000,
+-  regk_dma_restore                         = 0x00000020,
+-  regk_dma_rst                             = 0x00000001,
+-  regk_dma_running                         = 0x00000004,
+-  regk_dma_rw_cfg_default                  = 0x00000000,
+-  regk_dma_rw_cmd_default                  = 0x00000000,
+-  regk_dma_rw_intr_mask_default            = 0x00000000,
+-  regk_dma_rw_stat_default                 = 0x00000101,
+-  regk_dma_rw_stream_cmd_default           = 0x00000000,
+-  regk_dma_save_down                       = 0x00000020,
+-  regk_dma_save_up                         = 0x00000020,
+-  regk_dma_set_reg                         = 0x00000050,
+-  regk_dma_set_w_size1                     = 0x00000190,
+-  regk_dma_set_w_size2                     = 0x000001a0,
+-  regk_dma_set_w_size4                     = 0x000001c0,
+-  regk_dma_stopped                         = 0x00000002,
+-  regk_dma_store_c                         = 0x00000002,
+-  regk_dma_store_descr                     = 0x00000000,
+-  regk_dma_store_g                         = 0x00000004,
+-  regk_dma_store_md                        = 0x00000001,
+-  regk_dma_sw                              = 0x00000008,
+-  regk_dma_update_down                     = 0x00000020,
+-  regk_dma_yes                             = 0x00000001
+-};
+-
+-enum dma_ch_state
+-{
+-    RST = 1,
+-    STOPPED = 2,
+-    RUNNING = 4
+-};
+-
+-struct fs_dma_channel
+-{
+-    qemu_irq irq;
+-    struct etraxfs_dma_client *client;
+-
+-    /* Internal status.  */
+-    int stream_cmd_src;
+-    enum dma_ch_state state;
+-
+-    unsigned int input : 1;
+-    unsigned int eol : 1;
+-
+-    struct dma_descr_group current_g;
+-    struct dma_descr_context current_c;
+-    struct dma_descr_data current_d;
+-
+-    /* Control registers.  */
+-    uint32_t regs[DMA_REG_MAX];
+-};
+-
+-struct fs_dma_ctrl
+-{
+-    MemoryRegion mmio;
+-    int nr_channels;
+-    struct fs_dma_channel *channels;
+-
+-    QEMUBH *bh;
+-};
+-
+-static void DMA_run(void *opaque);
+-static int channel_out_run(struct fs_dma_ctrl *ctrl, int c);
+-
+-static inline uint32_t channel_reg(struct fs_dma_ctrl *ctrl, int c, int reg)
+-{
+-    return ctrl->channels[c].regs[reg];
+-}
+-
+-static inline int channel_stopped(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    return channel_reg(ctrl, c, RW_CFG) & 2;
+-}
+-
+-static inline int channel_en(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    return (channel_reg(ctrl, c, RW_CFG) & 1)
+-            && ctrl->channels[c].client;
+-}
+-
+-static inline int fs_channel(hwaddr addr)
+-{
+-    /* Every channel has a 0x2000 ctrl register map.  */
+-    return addr >> 13;
+-}
+-
+-#ifdef USE_THIS_DEAD_CODE
+-static void channel_load_g(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_GROUP);
+-
+-    /* Load and decode. FIXME: handle endianness.  */
+-    cpu_physical_memory_read(addr, &ctrl->channels[c].current_g,
+-                             sizeof(ctrl->channels[c].current_g));
+-}
+-
+-static void dump_c(int ch, struct dma_descr_context *c)
+-{
+-    printf("%s ch=%d\n", __func__, ch);
+-    printf("next=%x\n", c->next);
+-    printf("saved_data=%x\n", c->saved_data);
+-    printf("saved_data_buf=%x\n", c->saved_data_buf);
+-    printf("eol=%x\n", (uint32_t) c->eol);
+-}
+-
+-static void dump_d(int ch, struct dma_descr_data *d)
+-{
+-    printf("%s ch=%d\n", __func__, ch);
+-    printf("next=%x\n", d->next);
+-    printf("buf=%x\n", d->buf);
+-    printf("after=%x\n", d->after);
+-    printf("intr=%x\n", (uint32_t) d->intr);
+-    printf("out_eop=%x\n", (uint32_t) d->out_eop);
+-    printf("in_eop=%x\n", (uint32_t) d->in_eop);
+-    printf("eol=%x\n", (uint32_t) d->eol);
+-}
+-#endif
+-
+-static void channel_load_c(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_GROUP_DOWN);
+-
+-    /* Load and decode. FIXME: handle endianness.  */
+-    cpu_physical_memory_read(addr, &ctrl->channels[c].current_c,
+-                             sizeof(ctrl->channels[c].current_c));
+-
+-    D(dump_c(c, &ctrl->channels[c].current_c));
+-    /* I guess this should update the current pos.  */
+-    ctrl->channels[c].regs[RW_SAVED_DATA] =
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_c.saved_data;
+-    ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_c.saved_data_buf;
+-}
+-
+-static void channel_load_d(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_SAVED_DATA);
+-
+-    /* Load and decode. FIXME: handle endianness.  */
+-    D(printf("%s ch=%d addr=" HWADDR_FMT_plx "\n", __func__, c, addr));
+-    cpu_physical_memory_read(addr, &ctrl->channels[c].current_d,
+-                             sizeof(ctrl->channels[c].current_d));
+-
+-    D(dump_d(c, &ctrl->channels[c].current_d));
+-    ctrl->channels[c].regs[RW_DATA] = addr;
+-}
+-
+-static void channel_store_c(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_GROUP_DOWN);
+-
+-    /* Encode and store. FIXME: handle endianness.  */
+-    D(printf("%s ch=%d addr=" HWADDR_FMT_plx "\n", __func__, c, addr));
+-    D(dump_d(c, &ctrl->channels[c].current_d));
+-    cpu_physical_memory_write(addr, &ctrl->channels[c].current_c,
+-                              sizeof(ctrl->channels[c].current_c));
+-}
+-
+-static void channel_store_d(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_SAVED_DATA);
+-
+-    /* Encode and store. FIXME: handle endianness.  */
+-    D(printf("%s ch=%d addr=" HWADDR_FMT_plx "\n", __func__, c, addr));
+-    cpu_physical_memory_write(addr, &ctrl->channels[c].current_d,
+-                              sizeof(ctrl->channels[c].current_d));
+-}
+-
+-static inline void channel_stop(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    /* FIXME:  */
+-}
+-
+-static inline void channel_start(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (ctrl->channels[c].client)
+-    {
+-        ctrl->channels[c].eol = 0;
+-        ctrl->channels[c].state = RUNNING;
+-        if (!ctrl->channels[c].input)
+-            channel_out_run(ctrl, c);
+-    } else
+-        printf("WARNING: starting DMA ch %d with no client\n", c);
+-
+-    qemu_bh_schedule_idle(ctrl->bh);
+-}
+-
+-static void channel_continue(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (!channel_en(ctrl, c)
+-        || channel_stopped(ctrl, c)
+-        || ctrl->channels[c].state != RUNNING
+-        /* Only reload the current data descriptor if it has eol set.  */
+-        || !ctrl->channels[c].current_d.eol) {
+-        D(printf("continue failed ch=%d state=%d stopped=%d en=%d eol=%d\n",
+-                 c, ctrl->channels[c].state,
+-                 channel_stopped(ctrl, c),
+-                 channel_en(ctrl,c),
+-                 ctrl->channels[c].eol));
+-        D(dump_d(c, &ctrl->channels[c].current_d));
+-        return;
+-    }
+-
+-    /* Reload the current descriptor.  */
+-    channel_load_d(ctrl, c);
+-
+-    /* If the current descriptor cleared the eol flag and we had already
+-       reached eol state, do the continue.  */
+-    if (!ctrl->channels[c].current_d.eol && ctrl->channels[c].eol) {
+-        D(printf("continue %d ok %x\n", c,
+-                 ctrl->channels[c].current_d.next));
+-        ctrl->channels[c].regs[RW_SAVED_DATA] =
+-            (uint32_t)(unsigned long)ctrl->channels[c].current_d.next;
+-        channel_load_d(ctrl, c);
+-        ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-            (uint32_t)(unsigned long)ctrl->channels[c].current_d.buf;
+-
+-        channel_start(ctrl, c);
+-    }
+-    ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_d.buf;
+-}
+-
+-static void channel_stream_cmd(struct fs_dma_ctrl *ctrl, int c, uint32_t v)
+-{
+-    unsigned int cmd = v & ((1 << 10) - 1);
+-
+-    D(printf("%s ch=%d cmd=%x\n",
+-             __func__, c, cmd));
+-    if (cmd & regk_dma_load_d) {
+-        channel_load_d(ctrl, c);
+-        if (cmd & regk_dma_burst)
+-            channel_start(ctrl, c);
+-    }
+-
+-    if (cmd & regk_dma_load_c) {
+-        channel_load_c(ctrl, c);
+-    }
+-}
+-
+-static void channel_update_irq(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    D(printf("%s %d\n", __func__, c));
+-    ctrl->channels[c].regs[R_INTR] &=
+-        ~(ctrl->channels[c].regs[RW_ACK_INTR]);
+-
+-    ctrl->channels[c].regs[R_MASKED_INTR] =
+-        ctrl->channels[c].regs[R_INTR]
+-        & ctrl->channels[c].regs[RW_INTR_MASK];
+-
+-    D(printf("%s: chan=%d masked_intr=%x\n", __func__,
+-             c,
+-             ctrl->channels[c].regs[R_MASKED_INTR]));
+-
+-    qemu_set_irq(ctrl->channels[c].irq,
+-                 !!ctrl->channels[c].regs[R_MASKED_INTR]);
+-}
+-
+-static int channel_out_run(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    uint32_t len;
+-    uint32_t saved_data_buf;
+-    unsigned char buf[2 * 1024];
+-
+-    struct dma_context_metadata meta;
+-    bool send_context = true;
+-
+-    if (ctrl->channels[c].eol)
+-        return 0;
+-
+-    do {
+-        bool out_eop;
+-        D(printf("ch=%d buf=%x after=%x\n",
+-                 c,
+-                 (uint32_t)ctrl->channels[c].current_d.buf,
+-                 (uint32_t)ctrl->channels[c].current_d.after));
+-
+-        if (send_context) {
+-            if (ctrl->channels[c].client->client.metadata_push) {
+-                meta.metadata = ctrl->channels[c].current_d.md;
+-                ctrl->channels[c].client->client.metadata_push(
+-                    ctrl->channels[c].client->client.opaque,
+-                    &meta);
+-            }
+-            send_context = false;
+-        }
+-
+-        channel_load_d(ctrl, c);
+-        saved_data_buf = channel_reg(ctrl, c, RW_SAVED_DATA_BUF);
+-        len = (uint32_t)(unsigned long)
+-            ctrl->channels[c].current_d.after;
+-        len -= saved_data_buf;
+-
+-        if (len > sizeof buf)
+-            len = sizeof buf;
+-        cpu_physical_memory_read (saved_data_buf, buf, len);
+-
+-        out_eop = ((saved_data_buf + len) ==
+-                   ctrl->channels[c].current_d.after) &&
+-                   ctrl->channels[c].current_d.out_eop;
+-
+-        D(printf("channel %d pushes %x %u bytes eop=%u\n", c,
+-                 saved_data_buf, len, out_eop));
+-
+-        if (ctrl->channels[c].client->client.push) {
+-            if (len > 0) {
+-                ctrl->channels[c].client->client.push(
+-                    ctrl->channels[c].client->client.opaque,
+-                    buf, len, out_eop);
+-            }
+-        } else {
+-            printf("WARNING: DMA ch%d dataloss,"
+-                   " no attached client.\n", c);
+-        }
+-
+-        saved_data_buf += len;
+-
+-        if (saved_data_buf == (uint32_t)(unsigned long)
+-                ctrl->channels[c].current_d.after) {
+-            /* Done. Step to next.  */
+-            if (ctrl->channels[c].current_d.out_eop) {
+-                send_context = true;
+-            }
+-            if (ctrl->channels[c].current_d.intr) {
+-                /* data intr.  */
+-                D(printf("signal intr %d eol=%d\n",
+-                         len, ctrl->channels[c].current_d.eol));
+-                ctrl->channels[c].regs[R_INTR] |= (1 << 2);
+-                channel_update_irq(ctrl, c);
+-            }
+-            channel_store_d(ctrl, c);
+-            if (ctrl->channels[c].current_d.eol) {
+-                D(printf("channel %d EOL\n", c));
+-                ctrl->channels[c].eol = 1;
+-
+-                /* Mark the context as disabled.  */
+-                ctrl->channels[c].current_c.dis = 1;
+-                channel_store_c(ctrl, c);
+-
+-                channel_stop(ctrl, c);
+-            } else {
+-                ctrl->channels[c].regs[RW_SAVED_DATA] =
+-                    (uint32_t)(unsigned long)ctrl->
+-                        channels[c].current_d.next;
+-                /* Load new descriptor.  */
+-                channel_load_d(ctrl, c);
+-                saved_data_buf = (uint32_t)(unsigned long)
+-                    ctrl->channels[c].current_d.buf;
+-            }
+-
+-            ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-                            saved_data_buf;
+-            D(dump_d(c, &ctrl->channels[c].current_d));
+-        }
+-        ctrl->channels[c].regs[RW_SAVED_DATA_BUF] = saved_data_buf;
+-    } while (!ctrl->channels[c].eol);
+-    return 1;
+-}
+-
+-static int channel_in_process(struct fs_dma_ctrl *ctrl, int c, 
+-                              unsigned char *buf, int buflen, int eop)
+-{
+-    uint32_t len;
+-    uint32_t saved_data_buf;
+-
+-    if (ctrl->channels[c].eol == 1)
+-        return 0;
+-
+-    channel_load_d(ctrl, c);
+-    saved_data_buf = channel_reg(ctrl, c, RW_SAVED_DATA_BUF);
+-    len = (uint32_t)(unsigned long)ctrl->channels[c].current_d.after;
+-    len -= saved_data_buf;
+-
+-    if (len > buflen)
+-        len = buflen;
+-
+-    cpu_physical_memory_write (saved_data_buf, buf, len);
+-    saved_data_buf += len;
+-
+-    if (saved_data_buf ==
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_d.after
+-        || eop) {
+-        uint32_t r_intr = ctrl->channels[c].regs[R_INTR];
+-
+-        D(printf("in dscr end len=%d\n",
+-                 ctrl->channels[c].current_d.after
+-                 - ctrl->channels[c].current_d.buf));
+-        ctrl->channels[c].current_d.after = saved_data_buf;
+-
+-        /* Done. Step to next.  */
+-        if (ctrl->channels[c].current_d.intr) {
+-            /* TODO: signal eop to the client.  */
+-            /* data intr.  */
+-            ctrl->channels[c].regs[R_INTR] |= 3;
+-        }
+-        if (eop) {
+-            ctrl->channels[c].current_d.in_eop = 1;
+-            ctrl->channels[c].regs[R_INTR] |= 8;
+-        }
+-        if (r_intr != ctrl->channels[c].regs[R_INTR])
+-            channel_update_irq(ctrl, c);
+-
+-        channel_store_d(ctrl, c);
+-        D(dump_d(c, &ctrl->channels[c].current_d));
+-
+-        if (ctrl->channels[c].current_d.eol) {
+-            D(printf("channel %d EOL\n", c));
+-            ctrl->channels[c].eol = 1;
+-
+-            /* Mark the context as disabled.  */
+-            ctrl->channels[c].current_c.dis = 1;
+-            channel_store_c(ctrl, c);
+-
+-            channel_stop(ctrl, c);
+-        } else {
+-            ctrl->channels[c].regs[RW_SAVED_DATA] =
+-                (uint32_t)(unsigned long)ctrl->
+-                    channels[c].current_d.next;
+-            /* Load new descriptor.  */
+-            channel_load_d(ctrl, c);
+-            saved_data_buf = (uint32_t)(unsigned long)
+-                ctrl->channels[c].current_d.buf;
+-        }
+-    }
+-
+-    ctrl->channels[c].regs[RW_SAVED_DATA_BUF] = saved_data_buf;
+-    return len;
+-}
+-
+-static inline int channel_in_run(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (ctrl->channels[c].client->client.pull) {
+-        ctrl->channels[c].client->client.pull(
+-            ctrl->channels[c].client->client.opaque);
+-        return 1;
+-    } else
+-        return 0;
+-}
+-
+-static uint32_t dma_rinvalid (void *opaque, hwaddr addr)
+-{
+-    hw_error("Unsupported short raccess. reg=" HWADDR_FMT_plx "\n", addr);
+-    return 0;
+-}
+-
+-static uint64_t
+-dma_read(void *opaque, hwaddr addr, unsigned int size)
+-{
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    int c;
+-    uint32_t r = 0;
+-
+-    if (size != 4) {
+-        dma_rinvalid(opaque, addr);
+-    }
+-
+-    /* Make addr relative to this channel and bounded to nr regs.  */
+-    c = fs_channel(addr);
+-    addr &= 0xff;
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-    case RW_STAT:
+-        r = ctrl->channels[c].state & 7;
+-        r |= ctrl->channels[c].eol << 5;
+-        r |= ctrl->channels[c].stream_cmd_src << 8;
+-        break;
+-
+-    default:
+-        r = ctrl->channels[c].regs[addr];
+-        D(printf("%s c=%d addr=" HWADDR_FMT_plx "\n",
+-                 __func__, c, addr));
+-        break;
+-    }
+-    return r;
+-}
+-
+-static void
+-dma_winvalid (void *opaque, hwaddr addr, uint32_t value)
+-{
+-    hw_error("Unsupported short waccess. reg=" HWADDR_FMT_plx "\n", addr);
+-}
+-
+-static void
+-dma_update_state(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (ctrl->channels[c].regs[RW_CFG] & 2)
+-        ctrl->channels[c].state = STOPPED;
+-    if (!(ctrl->channels[c].regs[RW_CFG] & 1))
+-        ctrl->channels[c].state = RST;
+-}
+-
+-static void
+-dma_write(void *opaque, hwaddr addr,
+-          uint64_t val64, unsigned int size)
+-{
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    uint32_t value = val64;
+-    int c;
+-
+-    if (size != 4) {
+-        dma_winvalid(opaque, addr, value);
+-    }
+-
+-        /* Make addr relative to this channel and bounded to nr regs.  */
+-    c = fs_channel(addr);
+-    addr &= 0xff;
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-    case RW_DATA:
+-        ctrl->channels[c].regs[addr] = value;
+-        break;
+-
+-    case RW_CFG:
+-        ctrl->channels[c].regs[addr] = value;
+-        dma_update_state(ctrl, c);
+-        break;
+-    case RW_CMD:
+-        /* continue.  */
+-        if (value & ~1)
+-            printf("Invalid store to ch=%d RW_CMD %x\n",
+-                   c, value);
+-        ctrl->channels[c].regs[addr] = value;
+-        channel_continue(ctrl, c);
+-        break;
+-
+-    case RW_SAVED_DATA:
+-    case RW_SAVED_DATA_BUF:
+-    case RW_GROUP:
+-    case RW_GROUP_DOWN:
+-        ctrl->channels[c].regs[addr] = value;
+-        break;
+-
+-    case RW_ACK_INTR:
+-    case RW_INTR_MASK:
+-        ctrl->channels[c].regs[addr] = value;
+-        channel_update_irq(ctrl, c);
+-        if (addr == RW_ACK_INTR)
+-            ctrl->channels[c].regs[RW_ACK_INTR] = 0;
+-        break;
+-
+-    case RW_STREAM_CMD:
+-        if (value & ~1023)
+-            printf("Invalid store to ch=%d "
+-                   "RW_STREAMCMD %x\n",
+-                   c, value);
+-        ctrl->channels[c].regs[addr] = value;
+-        D(printf("stream_cmd ch=%d\n", c));
+-        channel_stream_cmd(ctrl, c, value);
+-        break;
+-
+-    default:
+-        D(printf("%s c=%d " HWADDR_FMT_plx "\n",
+-                 __func__, c, addr));
+-        break;
+-    }
+-}
+-
+-static const MemoryRegionOps dma_ops = {
+-    .read = dma_read,
+-    .write = dma_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 1,
+-        .max_access_size = 4
+-    }
+-};
+-
+-static int etraxfs_dmac_run(void *opaque)
+-{
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    int i;
+-    int p = 0;
+-
+-    for (i = 0;
+-         i < ctrl->nr_channels;
+-         i++)
+-    {
+-        if (ctrl->channels[i].state == RUNNING)
+-        {
+-            if (ctrl->channels[i].input) {
+-                p += channel_in_run(ctrl, i);
+-            } else {
+-                p += channel_out_run(ctrl, i);
+-            }
+-        }
+-    }
+-    return p;
+-}
+-
+-int etraxfs_dmac_input(struct etraxfs_dma_client *client, 
+-                       void *buf, int len, int eop)
+-{
+-    return channel_in_process(client->ctrl, client->channel,
+-                              buf, len, eop);
+-}
+-
+-/* Connect an IRQ line with a channel.  */
+-void etraxfs_dmac_connect(void *opaque, int c, qemu_irq *line, int input)
+-{
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    ctrl->channels[c].irq = *line;
+-    ctrl->channels[c].input = input;
+-}
+-
+-void etraxfs_dmac_connect_client(void *opaque, int c, 
+-                                 struct etraxfs_dma_client *cl)
+-{
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    cl->ctrl = ctrl;
+-    cl->channel = c;
+-    ctrl->channels[c].client = cl;
+-}
+-
+-
+-static void DMA_run(void *opaque)
+-{
+-    struct fs_dma_ctrl *etraxfs_dmac = opaque;
+-    int p = 1;
+-
+-    if (runstate_is_running())
+-        p = etraxfs_dmac_run(etraxfs_dmac);
+-
+-    if (p)
+-        qemu_bh_schedule_idle(etraxfs_dmac->bh);
+-}
+-
+-void *etraxfs_dmac_init(hwaddr base, int nr_channels)
+-{
+-    struct fs_dma_ctrl *ctrl = NULL;
+-
+-    ctrl = g_malloc0(sizeof *ctrl);
+-
+-    ctrl->bh = qemu_bh_new(DMA_run, ctrl);
+-
+-    ctrl->nr_channels = nr_channels;
+-    ctrl->channels = g_malloc0(sizeof ctrl->channels[0] * nr_channels);
+-
+-    memory_region_init_io(&ctrl->mmio, NULL, &dma_ops, ctrl, "etraxfs-dma",
+-                          nr_channels * 0x2000);
+-    memory_region_add_subregion(get_system_memory(), base, &ctrl->mmio);
+-
+-    return ctrl;
+-}
+diff --git a/hw/intc/etraxfs_pic.c b/hw/intc/etraxfs_pic.c
+deleted file mode 100644
+index bd37d1cca0..0000000000
+--- a/hw/intc/etraxfs_pic.c
++++ /dev/null
+@@ -1,172 +0,0 @@
+-/*
+- * QEMU ETRAX Interrupt Controller.
+- *
+- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/sysbus.h"
+-#include "qemu/module.h"
+-#include "hw/irq.h"
+-#include "hw/qdev-properties.h"
+-#include "qom/object.h"
+-
+-#define D(x)
+-
+-#define R_RW_MASK   0
+-#define R_R_VECT    1
+-#define R_R_MASKED_VECT 2
+-#define R_R_NMI     3
+-#define R_R_GURU    4
+-#define R_MAX       5
+-
+-#define TYPE_ETRAX_FS_PIC "etraxfs-pic"
+-DECLARE_INSTANCE_CHECKER(struct etrax_pic, ETRAX_FS_PIC,
+-                         TYPE_ETRAX_FS_PIC)
+-
+-struct etrax_pic
+-{
+-    SysBusDevice parent_obj;
+-
+-    MemoryRegion mmio;
+-    qemu_irq parent_irq;
+-    qemu_irq parent_nmi;
+-    uint32_t regs[R_MAX];
+-};
+-
+-static void pic_update(struct etrax_pic *fs)
+-{   
+-    uint32_t vector = 0;
+-    int i;
+-
+-    fs->regs[R_R_MASKED_VECT] = fs->regs[R_R_VECT] & fs->regs[R_RW_MASK];
+-
+-    /* The ETRAX interrupt controller signals interrupts to the core
+-       through an interrupt request wire and an irq vector bus. If 
+-       multiple interrupts are simultaneously active it chooses vector 
+-       0x30 and lets the sw choose the priorities.  */
+-    if (fs->regs[R_R_MASKED_VECT]) {
+-        uint32_t mv = fs->regs[R_R_MASKED_VECT];
+-        for (i = 0; i < 31; i++) {
+-            if (mv & 1) {
+-                vector = 0x31 + i;
+-                /* Check for multiple interrupts.  */
+-                if (mv > 1)
+-                    vector = 0x30;
+-                break;
+-            }
+-            mv >>= 1;
+-        }
+-    }
+-
+-    qemu_set_irq(fs->parent_irq, vector);
+-}
+-
+-static uint64_t
+-pic_read(void *opaque, hwaddr addr, unsigned int size)
+-{
+-    struct etrax_pic *fs = opaque;
+-    uint32_t rval;
+-
+-    rval = fs->regs[addr >> 2];
+-    D(printf("%s %x=%x\n", __func__, addr, rval));
+-    return rval;
+-}
+-
+-static void pic_write(void *opaque, hwaddr addr,
+-                      uint64_t value, unsigned int size)
+-{
+-    struct etrax_pic *fs = opaque;
+-    D(printf("%s addr=%x val=%x\n", __func__, addr, value));
+-
+-    if (addr == R_RW_MASK) {
+-        fs->regs[R_RW_MASK] = value;
+-        pic_update(fs);
+-    }
+-}
+-
+-static const MemoryRegionOps pic_ops = {
+-    .read = pic_read,
+-    .write = pic_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4
+-    }
+-};
+-
+-static void nmi_handler(void *opaque, int irq, int level)
+-{   
+-    struct etrax_pic *fs = (void *)opaque;
+-    uint32_t mask;
+-
+-    mask = 1 << irq;
+-    if (level)
+-        fs->regs[R_R_NMI] |= mask;
+-    else
+-        fs->regs[R_R_NMI] &= ~mask;
+-
+-    qemu_set_irq(fs->parent_nmi, !!fs->regs[R_R_NMI]);
+-}
+-
+-static void irq_handler(void *opaque, int irq, int level)
+-{
+-    struct etrax_pic *fs = (void *)opaque;
+-
+-    if (irq >= 30) {
+-        nmi_handler(opaque, irq, level);
+-        return;
+-    }
+-
+-    irq -= 1;
+-    fs->regs[R_R_VECT] &= ~(1 << irq);
+-    fs->regs[R_R_VECT] |= (!!level << irq);
+-    pic_update(fs);
+-}
+-
+-static void etraxfs_pic_init(Object *obj)
+-{
+-    DeviceState *dev = DEVICE(obj);
+-    struct etrax_pic *s = ETRAX_FS_PIC(obj);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-
+-    qdev_init_gpio_in(dev, irq_handler, 32);
+-    sysbus_init_irq(sbd, &s->parent_irq);
+-    sysbus_init_irq(sbd, &s->parent_nmi);
+-
+-    memory_region_init_io(&s->mmio, obj, &pic_ops, s,
+-                          "etraxfs-pic", R_MAX * 4);
+-    sysbus_init_mmio(sbd, &s->mmio);
+-}
+-
+-static const TypeInfo etraxfs_pic_info = {
+-    .name          = TYPE_ETRAX_FS_PIC,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(struct etrax_pic),
+-    .instance_init = etraxfs_pic_init,
+-};
+-
+-static void etraxfs_pic_register_types(void)
+-{
+-    type_register_static(&etraxfs_pic_info);
+-}
+-
+-type_init(etraxfs_pic_register_types)
+diff --git a/hw/net/etraxfs_eth.c b/hw/net/etraxfs_eth.c
+deleted file mode 100644
+index 5faf20c782..0000000000
+--- a/hw/net/etraxfs_eth.c
++++ /dev/null
+@@ -1,688 +0,0 @@
+-/*
+- * QEMU ETRAX Ethernet Controller.
+- *
+- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "hw/sysbus.h"
+-#include "net/net.h"
+-#include "hw/cris/etraxfs.h"
+-#include "qemu/error-report.h"
+-#include "qemu/module.h"
+-#include "trace.h"
+-#include "qom/object.h"
+-
+-#define D(x)
+-
+-/* Advertisement control register. */
+-#define ADVERTISE_10HALF        0x0020  /* Try for 10mbps half-duplex  */
+-#define ADVERTISE_10FULL        0x0040  /* Try for 10mbps full-duplex  */
+-#define ADVERTISE_100HALF       0x0080  /* Try for 100mbps half-duplex */
+-#define ADVERTISE_100FULL       0x0100  /* Try for 100mbps full-duplex */
+-
+-/*
+- * The MDIO extensions in the TDK PHY model were reversed engineered from the
+- * linux driver (PHYID and Diagnostics reg).
+- * TODO: Add friendly names for the register nums.
+- */
+-struct qemu_phy
+-{
+-    uint32_t regs[32];
+-
+-    int link;
+-
+-    unsigned int (*read)(struct qemu_phy *phy, unsigned int req);
+-    void (*write)(struct qemu_phy *phy, unsigned int req, unsigned int data);
+-};
+-
+-static unsigned int tdk_read(struct qemu_phy *phy, unsigned int req)
+-{
+-    int regnum;
+-    unsigned r = 0;
+-
+-    regnum = req & 0x1f;
+-
+-    switch (regnum) {
+-    case 1:
+-        if (!phy->link) {
+-            break;
+-        }
+-        /* MR1.     */
+-        /* Speeds and modes.  */
+-        r |= (1 << 13) | (1 << 14);
+-        r |= (1 << 11) | (1 << 12);
+-        r |= (1 << 5); /* Autoneg complete.  */
+-        r |= (1 << 3); /* Autoneg able.     */
+-        r |= (1 << 2); /* link.     */
+-        break;
+-    case 5:
+-        /* Link partner ability.
+-           We are kind; always agree with whatever best mode
+-           the guest advertises.  */
+-        r = 1 << 14; /* Success.  */
+-        /* Copy advertised modes.  */
+-        r |= phy->regs[4] & (15 << 5);
+-        /* Autoneg support.  */
+-        r |= 1;
+-        break;
+-    case 18:
+-    {
+-        /* Diagnostics reg.  */
+-        int duplex = 0;
+-        int speed_100 = 0;
+-
+-        if (!phy->link) {
+-            break;
+-        }
+-
+-        /* Are we advertising 100 half or 100 duplex ? */
+-        speed_100 = !!(phy->regs[4] & ADVERTISE_100HALF);
+-        speed_100 |= !!(phy->regs[4] & ADVERTISE_100FULL);
+-
+-        /* Are we advertising 10 duplex or 100 duplex ? */
+-        duplex = !!(phy->regs[4] & ADVERTISE_100FULL);
+-        duplex |= !!(phy->regs[4] & ADVERTISE_10FULL);
+-        r = (speed_100 << 10) | (duplex << 11);
+-    }
+-    break;
+-
+-    default:
+-        r = phy->regs[regnum];
+-        break;
+-    }
+-    trace_mdio_phy_read(regnum, r);
+-    return r;
+-}
+-
+-static void
+-tdk_write(struct qemu_phy *phy, unsigned int req, unsigned int data)
+-{
+-    int regnum;
+-
+-    regnum = req & 0x1f;
+-    trace_mdio_phy_write(regnum, data);
+-    switch (regnum) {
+-    default:
+-        phy->regs[regnum] = data;
+-        break;
+-    }
+-}
+-
+-static void
+-tdk_reset(struct qemu_phy *phy)
+-{
+-    phy->regs[0] = 0x3100;
+-    /* PHY Id.  */
+-    phy->regs[2] = 0x0300;
+-    phy->regs[3] = 0xe400;
+-    /* Autonegotiation advertisement reg.  */
+-    phy->regs[4] = 0x01E1;
+-    phy->link = 1;
+-}
+-
+-struct qemu_mdio
+-{
+-    /* bus.     */
+-    int mdc;
+-    int mdio;
+-
+-    /* decoder.  */
+-    enum {
+-        PREAMBLE,
+-        SOF,
+-        OPC,
+-        ADDR,
+-        REQ,
+-        TURNAROUND,
+-        DATA
+-    } state;
+-    unsigned int drive;
+-
+-    unsigned int cnt;
+-    unsigned int addr;
+-    unsigned int opc;
+-    unsigned int req;
+-    unsigned int data;
+-
+-    struct qemu_phy *devs[32];
+-};
+-
+-static void
+-mdio_attach(struct qemu_mdio *bus, struct qemu_phy *phy, unsigned int addr)
+-{
+-    bus->devs[addr & 0x1f] = phy;
+-}
+-
+-#ifdef USE_THIS_DEAD_CODE
+-static void
+-mdio_detach(struct qemu_mdio *bus, struct qemu_phy *phy, unsigned int addr)
+-{
+-    bus->devs[addr & 0x1f] = NULL;
+-}
+-#endif
+-
+-static void mdio_read_req(struct qemu_mdio *bus)
+-{
+-    struct qemu_phy *phy;
+-
+-    phy = bus->devs[bus->addr];
+-    if (phy && phy->read) {
+-        bus->data = phy->read(phy, bus->req);
+-    } else {
+-        bus->data = 0xffff;
+-    }
+-}
+-
+-static void mdio_write_req(struct qemu_mdio *bus)
+-{
+-    struct qemu_phy *phy;
+-
+-    phy = bus->devs[bus->addr];
+-    if (phy && phy->write) {
+-        phy->write(phy, bus->req, bus->data);
+-    }
+-}
+-
+-static void mdio_cycle(struct qemu_mdio *bus)
+-{
+-    bus->cnt++;
+-
+-    trace_mdio_bitbang(bus->mdc, bus->mdio, bus->state, bus->cnt, bus->drive);
+-#if 0
+-    if (bus->mdc) {
+-        printf("%d", bus->mdio);
+-    }
+-#endif
+-    switch (bus->state) {
+-    case PREAMBLE:
+-        if (bus->mdc) {
+-            if (bus->cnt >= (32 * 2) && !bus->mdio) {
+-                bus->cnt = 0;
+-                bus->state = SOF;
+-                bus->data = 0;
+-            }
+-        }
+-        break;
+-    case SOF:
+-        if (bus->mdc) {
+-            if (bus->mdio != 1) {
+-                printf("WARNING: no SOF\n");
+-            }
+-            if (bus->cnt == 1*2) {
+-                bus->cnt = 0;
+-                bus->opc = 0;
+-                bus->state = OPC;
+-            }
+-        }
+-        break;
+-    case OPC:
+-        if (bus->mdc) {
+-            bus->opc <<= 1;
+-            bus->opc |= bus->mdio & 1;
+-            if (bus->cnt == 2*2) {
+-                bus->cnt = 0;
+-                bus->addr = 0;
+-                bus->state = ADDR;
+-            }
+-        }
+-        break;
+-    case ADDR:
+-        if (bus->mdc) {
+-            bus->addr <<= 1;
+-            bus->addr |= bus->mdio & 1;
+-
+-            if (bus->cnt == 5*2) {
+-                bus->cnt = 0;
+-                bus->req = 0;
+-                bus->state = REQ;
+-            }
+-        }
+-        break;
+-    case REQ:
+-        if (bus->mdc) {
+-            bus->req <<= 1;
+-            bus->req |= bus->mdio & 1;
+-            if (bus->cnt == 5*2) {
+-                bus->cnt = 0;
+-                bus->state = TURNAROUND;
+-            }
+-        }
+-        break;
+-    case TURNAROUND:
+-        if (bus->mdc && bus->cnt == 2*2) {
+-            bus->mdio = 0;
+-            bus->cnt = 0;
+-
+-            if (bus->opc == 2) {
+-                bus->drive = 1;
+-                mdio_read_req(bus);
+-                bus->mdio = bus->data & 1;
+-            }
+-            bus->state = DATA;
+-        }
+-        break;
+-    case DATA:
+-        if (!bus->mdc) {
+-            if (bus->drive) {
+-                bus->mdio = !!(bus->data & (1 << 15));
+-                bus->data <<= 1;
+-            }
+-        } else {
+-            if (!bus->drive) {
+-                bus->data <<= 1;
+-                bus->data |= bus->mdio;
+-            }
+-            if (bus->cnt == 16 * 2) {
+-                bus->cnt = 0;
+-                bus->state = PREAMBLE;
+-                if (!bus->drive) {
+-                    mdio_write_req(bus);
+-                }
+-                bus->drive = 0;
+-            }
+-        }
+-        break;
+-    default:
+-        break;
+-    }
+-}
+-
+-/* ETRAX-FS Ethernet MAC block starts here.  */
+-
+-#define RW_MA0_LO      0x00
+-#define RW_MA0_HI      0x01
+-#define RW_MA1_LO      0x02
+-#define RW_MA1_HI      0x03
+-#define RW_GA_LO      0x04
+-#define RW_GA_HI      0x05
+-#define RW_GEN_CTRL      0x06
+-#define RW_REC_CTRL      0x07
+-#define RW_TR_CTRL      0x08
+-#define RW_CLR_ERR      0x09
+-#define RW_MGM_CTRL      0x0a
+-#define R_STAT          0x0b
+-#define FS_ETH_MAX_REGS      0x17
+-
+-#define TYPE_ETRAX_FS_ETH "etraxfs-eth"
+-OBJECT_DECLARE_SIMPLE_TYPE(ETRAXFSEthState, ETRAX_FS_ETH)
+-
+-struct ETRAXFSEthState {
+-    SysBusDevice parent_obj;
+-
+-    MemoryRegion mmio;
+-    NICState *nic;
+-    NICConf conf;
+-
+-    /* Two addrs in the filter.  */
+-    uint8_t macaddr[2][6];
+-    uint32_t regs[FS_ETH_MAX_REGS];
+-
+-    struct etraxfs_dma_client *dma_out;
+-    struct etraxfs_dma_client *dma_in;
+-
+-    /* MDIO bus.  */
+-    struct qemu_mdio mdio_bus;
+-    unsigned int phyaddr;
+-    int duplex_mismatch;
+-
+-    /* PHY.     */
+-    struct qemu_phy phy;
+-};
+-
+-static void eth_validate_duplex(ETRAXFSEthState *eth)
+-{
+-    struct qemu_phy *phy;
+-    unsigned int phy_duplex;
+-    unsigned int mac_duplex;
+-    int new_mm = 0;
+-
+-    phy = eth->mdio_bus.devs[eth->phyaddr];
+-    phy_duplex = !!(phy->read(phy, 18) & (1 << 11));
+-    mac_duplex = !!(eth->regs[RW_REC_CTRL] & 128);
+-
+-    if (mac_duplex != phy_duplex) {
+-        new_mm = 1;
+-    }
+-
+-    if (eth->regs[RW_GEN_CTRL] & 1) {
+-        if (new_mm != eth->duplex_mismatch) {
+-            if (new_mm) {
+-                printf("HW: WARNING ETH duplex mismatch MAC=%d PHY=%d\n",
+-                       mac_duplex, phy_duplex);
+-            } else {
+-                printf("HW: ETH duplex ok.\n");
+-            }
+-        }
+-        eth->duplex_mismatch = new_mm;
+-    }
+-}
+-
+-static uint64_t
+-eth_read(void *opaque, hwaddr addr, unsigned int size)
+-{
+-    ETRAXFSEthState *eth = opaque;
+-    uint32_t r = 0;
+-
+-    addr >>= 2;
+-
+-    switch (addr) {
+-    case R_STAT:
+-        r = eth->mdio_bus.mdio & 1;
+-        break;
+-    default:
+-        r = eth->regs[addr];
+-        D(printf("%s %x\n", __func__, addr * 4));
+-        break;
+-    }
+-    return r;
+-}
+-
+-static void eth_update_ma(ETRAXFSEthState *eth, int ma)
+-{
+-    int reg;
+-    int i = 0;
+-
+-    ma &= 1;
+-
+-    reg = RW_MA0_LO;
+-    if (ma) {
+-        reg = RW_MA1_LO;
+-    }
+-
+-    eth->macaddr[ma][i++] = eth->regs[reg];
+-    eth->macaddr[ma][i++] = eth->regs[reg] >> 8;
+-    eth->macaddr[ma][i++] = eth->regs[reg] >> 16;
+-    eth->macaddr[ma][i++] = eth->regs[reg] >> 24;
+-    eth->macaddr[ma][i++] = eth->regs[reg + 1];
+-    eth->macaddr[ma][i] = eth->regs[reg + 1] >> 8;
+-
+-    D(printf("set mac%d=%x.%x.%x.%x.%x.%x\n", ma,
+-             eth->macaddr[ma][0], eth->macaddr[ma][1],
+-             eth->macaddr[ma][2], eth->macaddr[ma][3],
+-             eth->macaddr[ma][4], eth->macaddr[ma][5]));
+-}
+-
+-static void
+-eth_write(void *opaque, hwaddr addr,
+-          uint64_t val64, unsigned int size)
+-{
+-    ETRAXFSEthState *eth = opaque;
+-    uint32_t value = val64;
+-
+-    addr >>= 2;
+-    switch (addr) {
+-    case RW_MA0_LO:
+-    case RW_MA0_HI:
+-        eth->regs[addr] = value;
+-        eth_update_ma(eth, 0);
+-        break;
+-    case RW_MA1_LO:
+-    case RW_MA1_HI:
+-        eth->regs[addr] = value;
+-        eth_update_ma(eth, 1);
+-        break;
+-
+-    case RW_MGM_CTRL:
+-        /* Attach an MDIO/PHY abstraction.  */
+-        if (value & 2) {
+-            eth->mdio_bus.mdio = value & 1;
+-        }
+-        if (eth->mdio_bus.mdc != (value & 4)) {
+-            mdio_cycle(&eth->mdio_bus);
+-            eth_validate_duplex(eth);
+-        }
+-        eth->mdio_bus.mdc = !!(value & 4);
+-        eth->regs[addr] = value;
+-        break;
+-
+-    case RW_REC_CTRL:
+-        eth->regs[addr] = value;
+-        eth_validate_duplex(eth);
+-        break;
+-
+-    default:
+-        eth->regs[addr] = value;
+-        D(printf("%s %x %x\n", __func__, addr, value));
+-        break;
+-    }
+-}
+-
+-/* The ETRAX FS has a groupt address table (GAT) which works like a k=1 bloom
+-   filter dropping group addresses we have not joined.    The filter has 64
+-   bits (m). The has function is a simple nible xor of the group addr.    */
+-static int eth_match_groupaddr(ETRAXFSEthState *eth, const unsigned char *sa)
+-{
+-    unsigned int hsh;
+-    int m_individual = eth->regs[RW_REC_CTRL] & 4;
+-    int match;
+-
+-    /* First bit on the wire of a MAC address signals multicast or
+-       physical address.  */
+-    if (!m_individual && !(sa[0] & 1)) {
+-        return 0;
+-    }
+-
+-    /* Calculate the hash index for the GA registers. */
+-    hsh = 0;
+-    hsh ^= (*sa) & 0x3f;
+-    hsh ^= ((*sa) >> 6) & 0x03;
+-    ++sa;
+-    hsh ^= ((*sa) << 2) & 0x03c;
+-    hsh ^= ((*sa) >> 4) & 0xf;
+-    ++sa;
+-    hsh ^= ((*sa) << 4) & 0x30;
+-    hsh ^= ((*sa) >> 2) & 0x3f;
+-    ++sa;
+-    hsh ^= (*sa) & 0x3f;
+-    hsh ^= ((*sa) >> 6) & 0x03;
+-    ++sa;
+-    hsh ^= ((*sa) << 2) & 0x03c;
+-    hsh ^= ((*sa) >> 4) & 0xf;
+-    ++sa;
+-    hsh ^= ((*sa) << 4) & 0x30;
+-    hsh ^= ((*sa) >> 2) & 0x3f;
+-
+-    hsh &= 63;
+-    if (hsh > 31) {
+-        match = eth->regs[RW_GA_HI] & (1 << (hsh - 32));
+-    } else {
+-        match = eth->regs[RW_GA_LO] & (1 << hsh);
+-    }
+-    D(printf("hsh=%x ga=%x.%x mtch=%d\n", hsh,
+-             eth->regs[RW_GA_HI], eth->regs[RW_GA_LO], match));
+-    return match;
+-}
+-
+-static ssize_t eth_receive(NetClientState *nc, const uint8_t *buf, size_t size)
+-{
+-    unsigned char sa_bcast[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
+-    ETRAXFSEthState *eth = qemu_get_nic_opaque(nc);
+-    int use_ma0 = eth->regs[RW_REC_CTRL] & 1;
+-    int use_ma1 = eth->regs[RW_REC_CTRL] & 2;
+-    int r_bcast = eth->regs[RW_REC_CTRL] & 8;
+-
+-    if (size < 12) {
+-        return -1;
+-    }
+-
+-    D(printf("%x.%x.%x.%x.%x.%x ma=%d %d bc=%d\n",
+-         buf[0], buf[1], buf[2], buf[3], buf[4], buf[5],
+-         use_ma0, use_ma1, r_bcast));
+-
+-    /* Does the frame get through the address filters?  */
+-    if ((!use_ma0 || memcmp(buf, eth->macaddr[0], 6))
+-        && (!use_ma1 || memcmp(buf, eth->macaddr[1], 6))
+-        && (!r_bcast || memcmp(buf, sa_bcast, 6))
+-        && !eth_match_groupaddr(eth, buf)) {
+-        return size;
+-    }
+-
+-    /* FIXME: Find another way to pass on the fake csum.  */
+-    etraxfs_dmac_input(eth->dma_in, (void *)buf, size + 4, 1);
+-
+-    return size;
+-}
+-
+-static int eth_tx_push(void *opaque, unsigned char *buf, int len, bool eop)
+-{
+-    ETRAXFSEthState *eth = opaque;
+-
+-    D(printf("%s buf=%p len=%d\n", __func__, buf, len));
+-    qemu_send_packet(qemu_get_queue(eth->nic), buf, len);
+-    return len;
+-}
+-
+-static void eth_set_link(NetClientState *nc)
+-{
+-    ETRAXFSEthState *eth = qemu_get_nic_opaque(nc);
+-    D(printf("%s %d\n", __func__, nc->link_down));
+-    eth->phy.link = !nc->link_down;
+-}
+-
+-static const MemoryRegionOps eth_ops = {
+-    .read = eth_read,
+-    .write = eth_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4
+-    }
+-};
+-
+-static NetClientInfo net_etraxfs_info = {
+-    .type = NET_CLIENT_DRIVER_NIC,
+-    .size = sizeof(NICState),
+-    .receive = eth_receive,
+-    .link_status_changed = eth_set_link,
+-};
+-
+-static void etraxfs_eth_reset(DeviceState *dev)
+-{
+-    ETRAXFSEthState *s = ETRAX_FS_ETH(dev);
+-
+-    memset(s->regs, 0, sizeof(s->regs));
+-    memset(s->macaddr, 0, sizeof(s->macaddr));
+-    s->duplex_mismatch = 0;
+-
+-    s->mdio_bus.mdc = 0;
+-    s->mdio_bus.mdio = 0;
+-    s->mdio_bus.state = 0;
+-    s->mdio_bus.drive = 0;
+-    s->mdio_bus.cnt = 0;
+-    s->mdio_bus.addr = 0;
+-    s->mdio_bus.opc = 0;
+-    s->mdio_bus.req = 0;
+-    s->mdio_bus.data = 0;
+-
+-    tdk_reset(&s->phy);
+-}
+-
+-static void etraxfs_eth_realize(DeviceState *dev, Error **errp)
+-{
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+-    ETRAXFSEthState *s = ETRAX_FS_ETH(dev);
+-
+-    if (!s->dma_out || !s->dma_in) {
+-        error_setg(errp, "Unconnected ETRAX-FS Ethernet MAC");
+-        return;
+-    }
+-
+-    s->dma_out->client.push = eth_tx_push;
+-    s->dma_out->client.opaque = s;
+-    s->dma_in->client.opaque = s;
+-    s->dma_in->client.pull = NULL;
+-
+-    memory_region_init_io(&s->mmio, OBJECT(dev), &eth_ops, s,
+-                          "etraxfs-eth", 0x5c);
+-    sysbus_init_mmio(sbd, &s->mmio);
+-
+-    qemu_macaddr_default_if_unset(&s->conf.macaddr);
+-    s->nic = qemu_new_nic(&net_etraxfs_info, &s->conf,
+-                          object_get_typename(OBJECT(s)), dev->id,
+-                          &dev->mem_reentrancy_guard, s);
+-    qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
+-
+-    s->phy.read = tdk_read;
+-    s->phy.write = tdk_write;
+-    mdio_attach(&s->mdio_bus, &s->phy, s->phyaddr);
+-}
+-
+-static Property etraxfs_eth_properties[] = {
+-    DEFINE_PROP_UINT32("phyaddr", ETRAXFSEthState, phyaddr, 1),
+-    DEFINE_NIC_PROPERTIES(ETRAXFSEthState, conf),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void etraxfs_eth_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    dc->realize = etraxfs_eth_realize;
+-    dc->reset = etraxfs_eth_reset;
+-    device_class_set_props(dc, etraxfs_eth_properties);
+-    /* Reason: dma_out, dma_in are not user settable */
+-    dc->user_creatable = false;
+-}
+-
+-
+-/* Instantiate an ETRAXFS Ethernet MAC.  */
+-DeviceState *
+-etraxfs_eth_init(hwaddr base, int phyaddr,
+-                 struct etraxfs_dma_client *dma_out,
+-                 struct etraxfs_dma_client *dma_in)
+-{
+-    DeviceState *dev;
+-
+-    dev = qdev_new("etraxfs-eth");
+-    qemu_configure_nic_device(dev, true, "fseth");
+-    qdev_prop_set_uint32(dev, "phyaddr", phyaddr);
+-
+-    /*
+-     * TODO: QOM design, define a QOM interface for "I am an etraxfs
+-     * DMA client" (which replaces the current 'struct
+-     * etraxfs_dma_client' ad-hoc interface), implement it on the
+-     * ethernet device, and then have QOM link properties on the DMA
+-     * controller device so that you can pass the interface
+-     * implementations to it.
+-     */
+-    ETRAX_FS_ETH(dev)->dma_out = dma_out;
+-    ETRAX_FS_ETH(dev)->dma_in = dma_in;
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+-
+-    return dev;
+-}
+-
+-static const TypeInfo etraxfs_eth_info = {
+-    .name          = TYPE_ETRAX_FS_ETH,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(ETRAXFSEthState),
+-    .class_init    = etraxfs_eth_class_init,
+-};
+-
+-static void etraxfs_eth_register_types(void)
+-{
+-    type_register_static(&etraxfs_eth_info);
+-}
+-
+-type_init(etraxfs_eth_register_types)
+diff --git a/hw/timer/etraxfs_timer.c b/hw/timer/etraxfs_timer.c
+deleted file mode 100644
+index dd6d96b0a1..0000000000
+--- a/hw/timer/etraxfs_timer.c
++++ /dev/null
+@@ -1,407 +0,0 @@
+-/*
+- * QEMU ETRAX Timers
+- *
+- * Copyright (c) 2007 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/sysbus.h"
+-#include "sysemu/reset.h"
+-#include "sysemu/runstate.h"
+-#include "migration/vmstate.h"
+-#include "qemu/module.h"
+-#include "qemu/timer.h"
+-#include "hw/irq.h"
+-#include "hw/ptimer.h"
+-#include "qom/object.h"
+-
+-#define D(x)
+-
+-#define RW_TMR0_DIV   0x00
+-#define R_TMR0_DATA   0x04
+-#define RW_TMR0_CTRL  0x08
+-#define RW_TMR1_DIV   0x10
+-#define R_TMR1_DATA   0x14
+-#define RW_TMR1_CTRL  0x18
+-#define R_TIME        0x38
+-#define RW_WD_CTRL    0x40
+-#define R_WD_STAT     0x44
+-#define RW_INTR_MASK  0x48
+-#define RW_ACK_INTR   0x4c
+-#define R_INTR        0x50
+-#define R_MASKED_INTR 0x54
+-
+-#define TYPE_ETRAX_FS_TIMER "etraxfs-timer"
+-typedef struct ETRAXTimerState ETRAXTimerState;
+-DECLARE_INSTANCE_CHECKER(ETRAXTimerState, ETRAX_TIMER,
+-                         TYPE_ETRAX_FS_TIMER)
+-
+-struct ETRAXTimerState {
+-    SysBusDevice parent_obj;
+-
+-    MemoryRegion mmio;
+-    qemu_irq irq;
+-    qemu_irq nmi;
+-
+-    ptimer_state *ptimer_t0;
+-    ptimer_state *ptimer_t1;
+-    ptimer_state *ptimer_wd;
+-
+-    uint32_t wd_hits;
+-
+-    /* Control registers.  */
+-    uint32_t rw_tmr0_div;
+-    uint32_t r_tmr0_data;
+-    uint32_t rw_tmr0_ctrl;
+-
+-    uint32_t rw_tmr1_div;
+-    uint32_t r_tmr1_data;
+-    uint32_t rw_tmr1_ctrl;
+-
+-    uint32_t rw_wd_ctrl;
+-
+-    uint32_t rw_intr_mask;
+-    uint32_t rw_ack_intr;
+-    uint32_t r_intr;
+-    uint32_t r_masked_intr;
+-};
+-
+-static const VMStateDescription vmstate_etraxfs = {
+-    .name = "etraxfs",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_PTIMER(ptimer_t0, ETRAXTimerState),
+-        VMSTATE_PTIMER(ptimer_t1, ETRAXTimerState),
+-        VMSTATE_PTIMER(ptimer_wd, ETRAXTimerState),
+-
+-        VMSTATE_UINT32(wd_hits, ETRAXTimerState),
+-
+-        VMSTATE_UINT32(rw_tmr0_div, ETRAXTimerState),
+-        VMSTATE_UINT32(r_tmr0_data, ETRAXTimerState),
+-        VMSTATE_UINT32(rw_tmr0_ctrl, ETRAXTimerState),
+-
+-        VMSTATE_UINT32(rw_tmr1_div, ETRAXTimerState),
+-        VMSTATE_UINT32(r_tmr1_data, ETRAXTimerState),
+-        VMSTATE_UINT32(rw_tmr1_ctrl, ETRAXTimerState),
+-
+-        VMSTATE_UINT32(rw_wd_ctrl, ETRAXTimerState),
+-
+-        VMSTATE_UINT32(rw_intr_mask, ETRAXTimerState),
+-        VMSTATE_UINT32(rw_ack_intr, ETRAXTimerState),
+-        VMSTATE_UINT32(r_intr, ETRAXTimerState),
+-        VMSTATE_UINT32(r_masked_intr, ETRAXTimerState),
+-
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-static uint64_t
+-timer_read(void *opaque, hwaddr addr, unsigned int size)
+-{
+-    ETRAXTimerState *t = opaque;
+-    uint32_t r = 0;
+-
+-    switch (addr) {
+-    case R_TMR0_DATA:
+-        r = ptimer_get_count(t->ptimer_t0);
+-        break;
+-    case R_TMR1_DATA:
+-        r = ptimer_get_count(t->ptimer_t1);
+-        break;
+-    case R_TIME:
+-        r = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / 10;
+-        break;
+-    case RW_INTR_MASK:
+-        r = t->rw_intr_mask;
+-        break;
+-    case R_MASKED_INTR:
+-        r = t->r_intr & t->rw_intr_mask;
+-        break;
+-    default:
+-        D(printf ("%s %x\n", __func__, addr));
+-        break;
+-    }
+-    return r;
+-}
+-
+-static void update_ctrl(ETRAXTimerState *t, int tnum)
+-{
+-    unsigned int op;
+-    unsigned int freq;
+-    unsigned int freq_hz;
+-    unsigned int div;
+-    uint32_t ctrl;
+-
+-    ptimer_state *timer;
+-
+-    if (tnum == 0) {
+-        ctrl = t->rw_tmr0_ctrl;
+-        div = t->rw_tmr0_div;
+-        timer = t->ptimer_t0;
+-    } else {
+-        ctrl = t->rw_tmr1_ctrl;
+-        div = t->rw_tmr1_div;
+-        timer = t->ptimer_t1;
+-    }
+-
+-
+-    op = ctrl & 3;
+-    freq = ctrl >> 2;
+-    freq_hz = 32000000;
+-
+-    switch (freq)
+-    {
+-    case 0:
+-    case 1:
+-        D(printf ("extern or disabled timer clock?\n"));
+-        break;
+-    case 4: freq_hz =  29493000; break;
+-    case 5: freq_hz =  32000000; break;
+-    case 6: freq_hz =  32768000; break;
+-    case 7: freq_hz = 100000000; break;
+-    default:
+-        abort();
+-        break;
+-    }
+-
+-    D(printf ("freq_hz=%d div=%d\n", freq_hz, div));
+-    ptimer_transaction_begin(timer);
+-    ptimer_set_freq(timer, freq_hz);
+-    ptimer_set_limit(timer, div, 0);
+-
+-    switch (op)
+-    {
+-        case 0:
+-            /* Load.  */
+-            ptimer_set_limit(timer, div, 1);
+-            break;
+-        case 1:
+-            /* Hold.  */
+-            ptimer_stop(timer);
+-            break;
+-        case 2:
+-            /* Run.  */
+-            ptimer_run(timer, 0);
+-            break;
+-        default:
+-            abort();
+-            break;
+-    }
+-    ptimer_transaction_commit(timer);
+-}
+-
+-static void timer_update_irq(ETRAXTimerState *t)
+-{
+-    t->r_intr &= ~(t->rw_ack_intr);
+-    t->r_masked_intr = t->r_intr & t->rw_intr_mask;
+-
+-    D(printf("%s: masked_intr=%x\n", __func__, t->r_masked_intr));
+-    qemu_set_irq(t->irq, !!t->r_masked_intr);
+-}
+-
+-static void timer0_hit(void *opaque)
+-{
+-    ETRAXTimerState *t = opaque;
+-    t->r_intr |= 1;
+-    timer_update_irq(t);
+-}
+-
+-static void timer1_hit(void *opaque)
+-{
+-    ETRAXTimerState *t = opaque;
+-    t->r_intr |= 2;
+-    timer_update_irq(t);
+-}
+-
+-static void watchdog_hit(void *opaque)
+-{
+-    ETRAXTimerState *t = opaque;
+-    if (t->wd_hits == 0) {
+-        /* real hw gives a single tick before resetting but we are
+-           a bit friendlier to compensate for our slower execution.  */
+-        ptimer_set_count(t->ptimer_wd, 10);
+-        ptimer_run(t->ptimer_wd, 1);
+-        qemu_irq_raise(t->nmi);
+-    }
+-    else
+-        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+-
+-    t->wd_hits++;
+-}
+-
+-static inline void timer_watchdog_update(ETRAXTimerState *t, uint32_t value)
+-{
+-    unsigned int wd_en = t->rw_wd_ctrl & (1 << 8);
+-    unsigned int wd_key = t->rw_wd_ctrl >> 9;
+-    unsigned int wd_cnt = t->rw_wd_ctrl & 511;
+-    unsigned int new_key = value >> 9 & ((1 << 7) - 1);
+-    unsigned int new_cmd = (value >> 8) & 1;
+-
+-    /* If the watchdog is enabled, they written key must match the
+-       complement of the previous.  */
+-    wd_key = ~wd_key & ((1 << 7) - 1);
+-
+-    if (wd_en && wd_key != new_key)
+-        return;
+-
+-    D(printf("en=%d new_key=%x oldkey=%x cmd=%d cnt=%d\n", 
+-         wd_en, new_key, wd_key, new_cmd, wd_cnt));
+-
+-    if (t->wd_hits)
+-        qemu_irq_lower(t->nmi);
+-
+-    t->wd_hits = 0;
+-
+-    ptimer_transaction_begin(t->ptimer_wd);
+-    ptimer_set_freq(t->ptimer_wd, 760);
+-    if (wd_cnt == 0)
+-        wd_cnt = 256;
+-    ptimer_set_count(t->ptimer_wd, wd_cnt);
+-    if (new_cmd)
+-        ptimer_run(t->ptimer_wd, 1);
+-    else
+-        ptimer_stop(t->ptimer_wd);
+-
+-    t->rw_wd_ctrl = value;
+-    ptimer_transaction_commit(t->ptimer_wd);
+-}
+-
+-static void
+-timer_write(void *opaque, hwaddr addr,
+-            uint64_t val64, unsigned int size)
+-{
+-    ETRAXTimerState *t = opaque;
+-    uint32_t value = val64;
+-
+-    switch (addr)
+-    {
+-        case RW_TMR0_DIV:
+-            t->rw_tmr0_div = value;
+-            break;
+-        case RW_TMR0_CTRL:
+-            D(printf ("RW_TMR0_CTRL=%x\n", value));
+-            t->rw_tmr0_ctrl = value;
+-            update_ctrl(t, 0);
+-            break;
+-        case RW_TMR1_DIV:
+-            t->rw_tmr1_div = value;
+-            break;
+-        case RW_TMR1_CTRL:
+-            D(printf ("RW_TMR1_CTRL=%x\n", value));
+-            t->rw_tmr1_ctrl = value;
+-            update_ctrl(t, 1);
+-            break;
+-        case RW_INTR_MASK:
+-            D(printf ("RW_INTR_MASK=%x\n", value));
+-            t->rw_intr_mask = value;
+-            timer_update_irq(t);
+-            break;
+-        case RW_WD_CTRL:
+-            timer_watchdog_update(t, value);
+-            break;
+-        case RW_ACK_INTR:
+-            t->rw_ack_intr = value;
+-            timer_update_irq(t);
+-            t->rw_ack_intr = 0;
+-            break;
+-        default:
+-            printf("%s " HWADDR_FMT_plx " %x\n", __func__, addr, value);
+-            break;
+-    }
+-}
+-
+-static const MemoryRegionOps timer_ops = {
+-    .read = timer_read,
+-    .write = timer_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4
+-    }
+-};
+-
+-static void etraxfs_timer_reset_enter(Object *obj, ResetType type)
+-{
+-    ETRAXTimerState *t = ETRAX_TIMER(obj);
+-
+-    ptimer_transaction_begin(t->ptimer_t0);
+-    ptimer_stop(t->ptimer_t0);
+-    ptimer_transaction_commit(t->ptimer_t0);
+-    ptimer_transaction_begin(t->ptimer_t1);
+-    ptimer_stop(t->ptimer_t1);
+-    ptimer_transaction_commit(t->ptimer_t1);
+-    ptimer_transaction_begin(t->ptimer_wd);
+-    ptimer_stop(t->ptimer_wd);
+-    ptimer_transaction_commit(t->ptimer_wd);
+-    t->rw_wd_ctrl = 0;
+-    t->r_intr = 0;
+-    t->rw_intr_mask = 0;
+-}
+-
+-static void etraxfs_timer_reset_hold(Object *obj, ResetType type)
+-{
+-    ETRAXTimerState *t = ETRAX_TIMER(obj);
+-
+-    qemu_irq_lower(t->irq);
+-}
+-
+-static void etraxfs_timer_realize(DeviceState *dev, Error **errp)
+-{
+-    ETRAXTimerState *t = ETRAX_TIMER(dev);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+-
+-    t->ptimer_t0 = ptimer_init(timer0_hit, t, PTIMER_POLICY_LEGACY);
+-    t->ptimer_t1 = ptimer_init(timer1_hit, t, PTIMER_POLICY_LEGACY);
+-    t->ptimer_wd = ptimer_init(watchdog_hit, t, PTIMER_POLICY_LEGACY);
+-
+-    sysbus_init_irq(sbd, &t->irq);
+-    sysbus_init_irq(sbd, &t->nmi);
+-
+-    memory_region_init_io(&t->mmio, OBJECT(t), &timer_ops, t,
+-                          "etraxfs-timer", 0x5c);
+-    sysbus_init_mmio(sbd, &t->mmio);
+-}
+-
+-static void etraxfs_timer_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    ResettableClass *rc = RESETTABLE_CLASS(klass);
+-
+-    dc->realize = etraxfs_timer_realize;
+-    dc->vmsd = &vmstate_etraxfs;
+-    rc->phases.enter = etraxfs_timer_reset_enter;
+-    rc->phases.hold = etraxfs_timer_reset_hold;
+-}
+-
+-static const TypeInfo etraxfs_timer_info = {
+-    .name          = TYPE_ETRAX_FS_TIMER,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(ETRAXTimerState),
+-    .class_init    = etraxfs_timer_class_init,
+-};
+-
+-static void etraxfs_timer_register_types(void)
+-{
+-    type_register_static(&etraxfs_timer_info);
+-}
+-
+-type_init(etraxfs_timer_register_types)
+diff --git a/linux-user/cris/cpu_loop.c b/linux-user/cris/cpu_loop.c
+deleted file mode 100644
+index 04c9086b6d..0000000000
+--- a/linux-user/cris/cpu_loop.c
++++ /dev/null
+@@ -1,95 +0,0 @@
+-/*
+- *  qemu user cpu loop
+- *
+- *  Copyright (c) 2003-2008 Fabrice Bellard
+- *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu.h"
+-#include "user-internals.h"
+-#include "cpu_loop-common.h"
+-#include "signal-common.h"
+-
+-void cpu_loop(CPUCRISState *env)
+-{
+-    CPUState *cs = env_cpu(env);
+-    int trapnr, ret;
+-
+-    while (1) {
+-        cpu_exec_start(cs);
+-        trapnr = cpu_exec(cs);
+-        cpu_exec_end(cs);
+-        process_queued_cpu_work(cs);
+-
+-        switch (trapnr) {
+-        case EXCP_INTERRUPT:
+-            /* just indicate that signals should be handled asap */
+-            break;
+-        case EXCP_BREAK:
+-            ret = do_syscall(env, 
+-                             env->regs[9], 
+-                             env->regs[10], 
+-                             env->regs[11], 
+-                             env->regs[12], 
+-                             env->regs[13], 
+-                             env->pregs[7], 
+-                             env->pregs[11],
+-                             0, 0);
+-            if (ret == -QEMU_ERESTARTSYS) {
+-                env->pc -= 2;
+-            } else if (ret != -QEMU_ESIGRETURN) {
+-                env->regs[10] = ret;
+-            }
+-            break;
+-        case EXCP_DEBUG:
+-            force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->pc);
+-            break;
+-        case EXCP_ATOMIC:
+-            cpu_exec_step_atomic(cs);
+-            break;
+-        default:
+-            fprintf(stderr, "Unhandled trap: 0x%x\n", trapnr);
+-            cpu_dump_state(cs, stderr, 0);
+-            exit(EXIT_FAILURE);
+-        }
+-        process_pending_signals (env);
+-    }
+-}
+-
+-void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
+-{
+-    CPUState *cpu = env_cpu(env);
+-    TaskState *ts = get_task_state(cpu);
+-    struct image_info *info = ts->info;
+-
+-    env->regs[0] = regs->r0;
+-    env->regs[1] = regs->r1;
+-    env->regs[2] = regs->r2;
+-    env->regs[3] = regs->r3;
+-    env->regs[4] = regs->r4;
+-    env->regs[5] = regs->r5;
+-    env->regs[6] = regs->r6;
+-    env->regs[7] = regs->r7;
+-    env->regs[8] = regs->r8;
+-    env->regs[9] = regs->r9;
+-    env->regs[10] = regs->r10;
+-    env->regs[11] = regs->r11;
+-    env->regs[12] = regs->r12;
+-    env->regs[13] = regs->r13;
+-    env->regs[14] = info->start_stack;
+-    env->regs[15] = regs->acr;
+-    env->pc = regs->erp;
+-}
+diff --git a/linux-user/cris/signal.c b/linux-user/cris/signal.c
+deleted file mode 100644
+index 10948bcf30..0000000000
+--- a/linux-user/cris/signal.c
++++ /dev/null
+@@ -1,194 +0,0 @@
+-/*
+- *  Emulation of Linux signals
+- *
+- *  Copyright (c) 2003 Fabrice Bellard
+- *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-#include "qemu/osdep.h"
+-#include "qemu.h"
+-#include "user-internals.h"
+-#include "signal-common.h"
+-#include "linux-user/trace.h"
+-
+-struct target_sigcontext {
+-    struct target_pt_regs regs;  /* needs to be first */
+-    uint32_t oldmask;
+-    uint32_t usp;    /* usp before stacking this gunk on it */
+-};
+-
+-/* Signal frames. */
+-struct target_signal_frame {
+-    struct target_sigcontext sc;
+-    uint32_t extramask[TARGET_NSIG_WORDS - 1];
+-    uint16_t retcode[4];      /* Trampoline code. */
+-};
+-
+-static void setup_sigcontext(struct target_sigcontext *sc, CPUCRISState *env)
+-{
+-    __put_user(env->regs[0], &sc->regs.r0);
+-    __put_user(env->regs[1], &sc->regs.r1);
+-    __put_user(env->regs[2], &sc->regs.r2);
+-    __put_user(env->regs[3], &sc->regs.r3);
+-    __put_user(env->regs[4], &sc->regs.r4);
+-    __put_user(env->regs[5], &sc->regs.r5);
+-    __put_user(env->regs[6], &sc->regs.r6);
+-    __put_user(env->regs[7], &sc->regs.r7);
+-    __put_user(env->regs[8], &sc->regs.r8);
+-    __put_user(env->regs[9], &sc->regs.r9);
+-    __put_user(env->regs[10], &sc->regs.r10);
+-    __put_user(env->regs[11], &sc->regs.r11);
+-    __put_user(env->regs[12], &sc->regs.r12);
+-    __put_user(env->regs[13], &sc->regs.r13);
+-    __put_user(env->regs[14], &sc->usp);
+-    __put_user(env->regs[15], &sc->regs.acr);
+-    __put_user(env->pregs[PR_MOF], &sc->regs.mof);
+-    __put_user(env->pregs[PR_SRP], &sc->regs.srp);
+-    __put_user(env->pc, &sc->regs.erp);
+-}
+-
+-static void restore_sigcontext(struct target_sigcontext *sc, CPUCRISState *env)
+-{
+-    __get_user(env->regs[0], &sc->regs.r0);
+-    __get_user(env->regs[1], &sc->regs.r1);
+-    __get_user(env->regs[2], &sc->regs.r2);
+-    __get_user(env->regs[3], &sc->regs.r3);
+-    __get_user(env->regs[4], &sc->regs.r4);
+-    __get_user(env->regs[5], &sc->regs.r5);
+-    __get_user(env->regs[6], &sc->regs.r6);
+-    __get_user(env->regs[7], &sc->regs.r7);
+-    __get_user(env->regs[8], &sc->regs.r8);
+-    __get_user(env->regs[9], &sc->regs.r9);
+-    __get_user(env->regs[10], &sc->regs.r10);
+-    __get_user(env->regs[11], &sc->regs.r11);
+-    __get_user(env->regs[12], &sc->regs.r12);
+-    __get_user(env->regs[13], &sc->regs.r13);
+-    __get_user(env->regs[14], &sc->usp);
+-    __get_user(env->regs[15], &sc->regs.acr);
+-    __get_user(env->pregs[PR_MOF], &sc->regs.mof);
+-    __get_user(env->pregs[PR_SRP], &sc->regs.srp);
+-    __get_user(env->pc, &sc->regs.erp);
+-}
+-
+-static abi_ulong get_sigframe(CPUCRISState *env, int framesize)
+-{
+-    abi_ulong sp;
+-    /* Align the stack downwards to 4.  */
+-    sp = (env->regs[R_SP] & ~3);
+-    return sp - framesize;
+-}
+-
+-static void setup_sigreturn(uint16_t *retcode)
+-{
+-    /* This is movu.w __NR_sigreturn, r9; break 13; */
+-    __put_user(0x9c5f, retcode + 0);
+-    __put_user(TARGET_NR_sigreturn, retcode + 1);
+-    __put_user(0xe93d, retcode + 2);
+-}
+-
+-void setup_frame(int sig, struct target_sigaction *ka,
+-                 target_sigset_t *set, CPUCRISState *env)
+-{
+-    struct target_signal_frame *frame;
+-    abi_ulong frame_addr;
+-    int i;
+-
+-    frame_addr = get_sigframe(env, sizeof *frame);
+-    trace_user_setup_frame(env, frame_addr);
+-    if (!lock_user_struct(VERIFY_WRITE, frame, frame_addr, 0))
+-        goto badframe;
+-
+-    /*
+-     * The CRIS signal return trampoline. A real linux/CRIS kernel doesn't
+-     * use this trampoline anymore but it sets it up for GDB.
+-     */
+-    setup_sigreturn(frame->retcode);
+-
+-    /* Save the mask.  */
+-    __put_user(set->sig[0], &frame->sc.oldmask);
+-
+-    for(i = 1; i < TARGET_NSIG_WORDS; i++) {
+-        __put_user(set->sig[i], &frame->extramask[i - 1]);
+-    }
+-
+-    setup_sigcontext(&frame->sc, env);
+-
+-    /* Move the stack and setup the arguments for the handler.  */
+-    env->regs[R_SP] = frame_addr;
+-    env->regs[10] = sig;
+-    env->pc = (unsigned long) ka->_sa_handler;
+-    /* Link SRP so the guest returns through the trampoline.  */
+-    env->pregs[PR_SRP] = default_sigreturn;
+-
+-    unlock_user_struct(frame, frame_addr, 1);
+-    return;
+-badframe:
+-    force_sigsegv(sig);
+-}
+-
+-void setup_rt_frame(int sig, struct target_sigaction *ka,
+-                    target_siginfo_t *info,
+-                     target_sigset_t *set, CPUCRISState *env)
+-{
+-    qemu_log_mask(LOG_UNIMP, "setup_rt_frame: not implemented\n");
+-}
+-
+-long do_sigreturn(CPUCRISState *env)
+-{
+-    struct target_signal_frame *frame;
+-    abi_ulong frame_addr;
+-    target_sigset_t target_set;
+-    sigset_t set;
+-    int i;
+-
+-    frame_addr = env->regs[R_SP];
+-    trace_user_do_sigreturn(env, frame_addr);
+-    /* Make sure the guest isn't playing games.  */
+-    if (!lock_user_struct(VERIFY_WRITE, frame, frame_addr, 1)) {
+-        goto badframe;
+-    }
+-
+-    /* Restore blocked signals */
+-    __get_user(target_set.sig[0], &frame->sc.oldmask);
+-    for(i = 1; i < TARGET_NSIG_WORDS; i++) {
+-        __get_user(target_set.sig[i], &frame->extramask[i - 1]);
+-    }
+-    target_to_host_sigset_internal(&set, &target_set);
+-    set_sigmask(&set);
+-
+-    restore_sigcontext(&frame->sc, env);
+-    unlock_user_struct(frame, frame_addr, 0);
+-    return -QEMU_ESIGRETURN;
+-badframe:
+-    force_sig(TARGET_SIGSEGV);
+-    return -QEMU_ESIGRETURN;
+-}
+-
+-long do_rt_sigreturn(CPUCRISState *env)
+-{
+-    trace_user_do_rt_sigreturn(env, 0);
+-    qemu_log_mask(LOG_UNIMP, "do_rt_sigreturn: not implemented\n");
+-    return -TARGET_ENOSYS;
+-}
+-
+-void setup_sigtramp(abi_ulong sigtramp_page)
+-{
+-    uint16_t *tramp = lock_user(VERIFY_WRITE, sigtramp_page, 6, 0);
+-    assert(tramp != NULL);
+-
+-    default_sigreturn = sigtramp_page;
+-    setup_sigreturn(tramp);
+-
+-    unlock_user(tramp, sigtramp_page, 6);
+-}
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index b27dd01734..0678c9d506 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -1647,21 +1647,6 @@ static uint32_t get_elf_hwcap(void)
+ 
+ #endif
+ 
+-#ifdef TARGET_CRIS
+-
+-#define ELF_CLASS ELFCLASS32
+-#define ELF_ARCH  EM_CRIS
+-
+-static inline void init_thread(struct target_pt_regs *regs,
+-                               struct image_info *infop)
+-{
+-    regs->erp = infop->entry;
+-}
+-
+-#define ELF_EXEC_PAGESIZE        8192
+-
+-#endif
+-
+ #ifdef TARGET_M68K
+ 
+ #define ELF_CLASS       ELFCLASS32
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 9d5415674d..b693aeff5b 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -10484,7 +10484,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_mmap:
+ #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
+     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
+-    defined(TARGET_M68K) || defined(TARGET_CRIS) || defined(TARGET_MICROBLAZE) \
++    defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) \
+     || defined(TARGET_S390X)
+         {
+             abi_ulong *v;
+@@ -12638,14 +12638,6 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+ #if defined(TARGET_MIPS)
+       cpu_env->active_tc.CP0_UserLocal = arg1;
+       return 0;
+-#elif defined(TARGET_CRIS)
+-      if (arg1 & 0xff)
+-          ret = -TARGET_EINVAL;
+-      else {
+-          cpu_env->pregs[PR_PID] = arg1;
+-          ret = 0;
+-      }
+-      return ret;
+ #elif defined(TARGET_I386) && defined(TARGET_ABI32)
+       return do_set_thread_area(cpu_env, arg1);
+ #elif defined(TARGET_M68K)
+diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
+index 98ffce075c..a14a0c0635 100644
+--- a/system/qemu-seccomp.c
++++ b/system/qemu-seccomp.c
+@@ -50,7 +50,7 @@ const struct scmp_arg_cmp sched_setscheduler_arg[] = {
+  * See 'NOTES' in 'man 2 clone' - s390 & cross have 'flags' in
+  *  different position to other architectures
+  */
+-#if defined(HOST_S390X) || defined(HOST_S390) || defined(HOST_CRIS)
++#if defined(HOST_S390X) || defined(HOST_S390)
+ #define CLONE_FLAGS_ARG 1
+ #else
+ #define CLONE_FLAGS_ARG 0
+diff --git a/target/cris/cpu.c b/target/cris/cpu.c
+deleted file mode 100644
+index ff31ca7fbc..0000000000
+--- a/target/cris/cpu.c
++++ /dev/null
+@@ -1,323 +0,0 @@
+-/*
+- * QEMU CRIS CPU
+- *
+- * Copyright (c) 2008 AXIS Communications AB
+- * Written by Edgar E. Iglesias.
+- *
+- * Copyright (c) 2012 SUSE LINUX Products GmbH
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see
+- * <http://www.gnu.org/licenses/lgpl-2.1.html>
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "qemu/qemu-print.h"
+-#include "cpu.h"
+-#include "mmu.h"
+-
+-
+-static void cris_cpu_set_pc(CPUState *cs, vaddr value)
+-{
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-
+-    cpu->env.pc = value;
+-}
+-
+-static vaddr cris_cpu_get_pc(CPUState *cs)
+-{
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-
+-    return cpu->env.pc;
+-}
+-
+-static void cris_restore_state_to_opc(CPUState *cs,
+-                                      const TranslationBlock *tb,
+-                                      const uint64_t *data)
+-{
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-
+-    cpu->env.pc = data[0];
+-}
+-
+-static bool cris_cpu_has_work(CPUState *cs)
+-{
+-    return cs->interrupt_request & (CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI);
+-}
+-
+-static int cris_cpu_mmu_index(CPUState *cs, bool ifetch)
+-{
+-    return !!(cpu_env(cs)->pregs[PR_CCS] & U_FLAG);
+-}
+-
+-static void cris_cpu_reset_hold(Object *obj, ResetType type)
+-{
+-    CPUState *cs = CPU(obj);
+-    CRISCPUClass *ccc = CRIS_CPU_GET_CLASS(obj);
+-    CPUCRISState *env = cpu_env(cs);
+-    uint32_t vr;
+-
+-    if (ccc->parent_phases.hold) {
+-        ccc->parent_phases.hold(obj, type);
+-    }
+-
+-    vr = env->pregs[PR_VR];
+-    memset(env, 0, offsetof(CPUCRISState, end_reset_fields));
+-    env->pregs[PR_VR] = vr;
+-
+-#if defined(CONFIG_USER_ONLY)
+-    /* start in user mode with interrupts enabled.  */
+-    env->pregs[PR_CCS] |= U_FLAG | I_FLAG | P_FLAG;
+-#else
+-    cris_mmu_init(env);
+-    env->pregs[PR_CCS] = 0;
+-#endif
+-}
+-
+-static ObjectClass *cris_cpu_class_by_name(const char *cpu_model)
+-{
+-    ObjectClass *oc;
+-    char *typename;
+-
+-#if defined(CONFIG_USER_ONLY)
+-    if (strcasecmp(cpu_model, "any") == 0) {
+-        return object_class_by_name(CRIS_CPU_TYPE_NAME("crisv32"));
+-    }
+-#endif
+-
+-    typename = g_strdup_printf(CRIS_CPU_TYPE_NAME("%s"), cpu_model);
+-    oc = object_class_by_name(typename);
+-    g_free(typename);
+-
+-    return oc;
+-}
+-
+-static void cris_cpu_realizefn(DeviceState *dev, Error **errp)
+-{
+-    CPUState *cs = CPU(dev);
+-    CRISCPUClass *ccc = CRIS_CPU_GET_CLASS(dev);
+-    Error *local_err = NULL;
+-
+-    cpu_exec_realizefn(cs, &local_err);
+-    if (local_err != NULL) {
+-        error_propagate(errp, local_err);
+-        return;
+-    }
+-
+-    cpu_reset(cs);
+-    qemu_init_vcpu(cs);
+-
+-    ccc->parent_realize(dev, errp);
+-}
+-
+-#ifndef CONFIG_USER_ONLY
+-static void cris_cpu_set_irq(void *opaque, int irq, int level)
+-{
+-    CRISCPU *cpu = opaque;
+-    CPUState *cs = CPU(cpu);
+-    int type = irq == CRIS_CPU_IRQ ? CPU_INTERRUPT_HARD : CPU_INTERRUPT_NMI;
+-
+-    if (irq == CRIS_CPU_IRQ) {
+-        /*
+-         * The PIC passes us the vector for the IRQ as the value it sends
+-         * over the qemu_irq line
+-         */
+-        cpu->env.interrupt_vector = level;
+-    }
+-
+-    if (level) {
+-        cpu_interrupt(cs, type);
+-    } else {
+-        cpu_reset_interrupt(cs, type);
+-    }
+-}
+-#endif
+-
+-static void cris_disas_set_info(CPUState *cpu, disassemble_info *info)
+-{
+-    if (cpu_env(cpu)->pregs[PR_VR] != 32) {
+-        info->mach = bfd_mach_cris_v0_v10;
+-        info->print_insn = print_insn_crisv10;
+-    } else {
+-        info->mach = bfd_mach_cris_v32;
+-        info->print_insn = print_insn_crisv32;
+-    }
+-}
+-
+-static void cris_cpu_initfn(Object *obj)
+-{
+-    CRISCPU *cpu = CRIS_CPU(obj);
+-    CRISCPUClass *ccc = CRIS_CPU_GET_CLASS(obj);
+-    CPUCRISState *env = &cpu->env;
+-
+-    env->pregs[PR_VR] = ccc->vr;
+-
+-#ifndef CONFIG_USER_ONLY
+-    /* IRQ and NMI lines.  */
+-    qdev_init_gpio_in(DEVICE(cpu), cris_cpu_set_irq, 2);
+-#endif
+-}
+-
+-#ifndef CONFIG_USER_ONLY
+-#include "hw/core/sysemu-cpu-ops.h"
+-
+-static const struct SysemuCPUOps cris_sysemu_ops = {
+-    .get_phys_page_debug = cris_cpu_get_phys_page_debug,
+-};
+-#endif
+-
+-#include "hw/core/tcg-cpu-ops.h"
+-
+-static const TCGCPUOps crisv10_tcg_ops = {
+-    .initialize = cris_initialize_crisv10_tcg,
+-    .restore_state_to_opc = cris_restore_state_to_opc,
+-
+-#ifndef CONFIG_USER_ONLY
+-    .tlb_fill = cris_cpu_tlb_fill,
+-    .cpu_exec_interrupt = cris_cpu_exec_interrupt,
+-    .cpu_exec_halt = cris_cpu_has_work,
+-    .do_interrupt = crisv10_cpu_do_interrupt,
+-#endif /* !CONFIG_USER_ONLY */
+-};
+-
+-static const TCGCPUOps crisv32_tcg_ops = {
+-    .initialize = cris_initialize_tcg,
+-    .restore_state_to_opc = cris_restore_state_to_opc,
+-
+-#ifndef CONFIG_USER_ONLY
+-    .tlb_fill = cris_cpu_tlb_fill,
+-    .cpu_exec_interrupt = cris_cpu_exec_interrupt,
+-    .cpu_exec_halt = cris_cpu_has_work,
+-    .do_interrupt = cris_cpu_do_interrupt,
+-#endif /* !CONFIG_USER_ONLY */
+-};
+-
+-static void crisv8_cpu_class_init(ObjectClass *oc, void *data)
+-{
+-    CPUClass *cc = CPU_CLASS(oc);
+-    CRISCPUClass *ccc = CRIS_CPU_CLASS(oc);
+-
+-    ccc->vr = 8;
+-    cc->gdb_read_register = crisv10_cpu_gdb_read_register;
+-    cc->tcg_ops = &crisv10_tcg_ops;
+-}
+-
+-static void crisv9_cpu_class_init(ObjectClass *oc, void *data)
+-{
+-    CPUClass *cc = CPU_CLASS(oc);
+-    CRISCPUClass *ccc = CRIS_CPU_CLASS(oc);
+-
+-    ccc->vr = 9;
+-    cc->gdb_read_register = crisv10_cpu_gdb_read_register;
+-    cc->tcg_ops = &crisv10_tcg_ops;
+-}
+-
+-static void crisv10_cpu_class_init(ObjectClass *oc, void *data)
+-{
+-    CPUClass *cc = CPU_CLASS(oc);
+-    CRISCPUClass *ccc = CRIS_CPU_CLASS(oc);
+-
+-    ccc->vr = 10;
+-    cc->gdb_read_register = crisv10_cpu_gdb_read_register;
+-    cc->tcg_ops = &crisv10_tcg_ops;
+-}
+-
+-static void crisv11_cpu_class_init(ObjectClass *oc, void *data)
+-{
+-    CPUClass *cc = CPU_CLASS(oc);
+-    CRISCPUClass *ccc = CRIS_CPU_CLASS(oc);
+-
+-    ccc->vr = 11;
+-    cc->gdb_read_register = crisv10_cpu_gdb_read_register;
+-    cc->tcg_ops = &crisv10_tcg_ops;
+-}
+-
+-static void crisv17_cpu_class_init(ObjectClass *oc, void *data)
+-{
+-    CPUClass *cc = CPU_CLASS(oc);
+-    CRISCPUClass *ccc = CRIS_CPU_CLASS(oc);
+-
+-    ccc->vr = 17;
+-    cc->gdb_read_register = crisv10_cpu_gdb_read_register;
+-    cc->tcg_ops = &crisv10_tcg_ops;
+-}
+-
+-static void crisv32_cpu_class_init(ObjectClass *oc, void *data)
+-{
+-    CPUClass *cc = CPU_CLASS(oc);
+-    CRISCPUClass *ccc = CRIS_CPU_CLASS(oc);
+-
+-    ccc->vr = 32;
+-    cc->tcg_ops = &crisv32_tcg_ops;
+-}
+-
+-static void cris_cpu_class_init(ObjectClass *oc, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(oc);
+-    CPUClass *cc = CPU_CLASS(oc);
+-    CRISCPUClass *ccc = CRIS_CPU_CLASS(oc);
+-    ResettableClass *rc = RESETTABLE_CLASS(oc);
+-
+-    device_class_set_parent_realize(dc, cris_cpu_realizefn,
+-                                    &ccc->parent_realize);
+-
+-    resettable_class_set_parent_phases(rc, NULL, cris_cpu_reset_hold, NULL,
+-                                       &ccc->parent_phases);
+-
+-    cc->class_by_name = cris_cpu_class_by_name;
+-    cc->has_work = cris_cpu_has_work;
+-    cc->mmu_index = cris_cpu_mmu_index;
+-    cc->dump_state = cris_cpu_dump_state;
+-    cc->set_pc = cris_cpu_set_pc;
+-    cc->get_pc = cris_cpu_get_pc;
+-    cc->gdb_read_register = cris_cpu_gdb_read_register;
+-    cc->gdb_write_register = cris_cpu_gdb_write_register;
+-#ifndef CONFIG_USER_ONLY
+-    dc->vmsd = &vmstate_cris_cpu;
+-    cc->sysemu_ops = &cris_sysemu_ops;
+-#endif
+-
+-    cc->gdb_num_core_regs = 49;
+-    cc->gdb_stop_before_watchpoint = true;
+-
+-    cc->disas_set_info = cris_disas_set_info;
+-}
+-
+-#define DEFINE_CRIS_CPU_TYPE(cpu_model, initfn) \
+-     {                                          \
+-         .parent = TYPE_CRIS_CPU,               \
+-         .class_init = initfn,                  \
+-         .name = CRIS_CPU_TYPE_NAME(cpu_model), \
+-     }
+-
+-static const TypeInfo cris_cpu_model_type_infos[] = {
+-    {
+-        .name = TYPE_CRIS_CPU,
+-        .parent = TYPE_CPU,
+-        .instance_size = sizeof(CRISCPU),
+-        .instance_align = __alignof(CRISCPU),
+-        .instance_init = cris_cpu_initfn,
+-        .abstract = true,
+-        .class_size = sizeof(CRISCPUClass),
+-        .class_init = cris_cpu_class_init,
+-    },
+-    DEFINE_CRIS_CPU_TYPE("crisv8", crisv8_cpu_class_init),
+-    DEFINE_CRIS_CPU_TYPE("crisv9", crisv9_cpu_class_init),
+-    DEFINE_CRIS_CPU_TYPE("crisv10", crisv10_cpu_class_init),
+-    DEFINE_CRIS_CPU_TYPE("crisv11", crisv11_cpu_class_init),
+-    DEFINE_CRIS_CPU_TYPE("crisv17", crisv17_cpu_class_init),
+-    DEFINE_CRIS_CPU_TYPE("crisv32", crisv32_cpu_class_init),
+-};
+-
+-DEFINE_TYPES(cris_cpu_model_type_infos)
+diff --git a/target/cris/gdbstub.c b/target/cris/gdbstub.c
+deleted file mode 100644
+index 9e87069da8..0000000000
+--- a/target/cris/gdbstub.c
++++ /dev/null
+@@ -1,127 +0,0 @@
+-/*
+- * CRIS gdb server stub
+- *
+- * Copyright (c) 2003-2005 Fabrice Bellard
+- * Copyright (c) 2013 SUSE LINUX Products GmbH
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "gdbstub/helpers.h"
+-
+-int crisv10_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+-{
+-    CPUCRISState *env = cpu_env(cs);
+-
+-    if (n < 15) {
+-        return gdb_get_reg32(mem_buf, env->regs[n]);
+-    }
+-
+-    if (n == 15) {
+-        return gdb_get_reg32(mem_buf, env->pc);
+-    }
+-
+-    if (n < 32) {
+-        switch (n) {
+-        case 16:
+-            return gdb_get_reg8(mem_buf, env->pregs[n - 16]);
+-        case 17:
+-            return gdb_get_reg8(mem_buf, env->pregs[n - 16]);
+-        case 20:
+-        case 21:
+-            return gdb_get_reg16(mem_buf, env->pregs[n - 16]);
+-        default:
+-            if (n >= 23) {
+-                return gdb_get_reg32(mem_buf, env->pregs[n - 16]);
+-            }
+-            break;
+-        }
+-    }
+-    return 0;
+-}
+-
+-int cris_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+-{
+-    CPUCRISState *env = cpu_env(cs);
+-    uint8_t srs;
+-
+-    srs = env->pregs[PR_SRS];
+-    if (n < 16) {
+-        return gdb_get_reg32(mem_buf, env->regs[n]);
+-    }
+-
+-    if (n >= 21 && n < 32) {
+-        return gdb_get_reg32(mem_buf, env->pregs[n - 16]);
+-    }
+-    if (n >= 33 && n < 49) {
+-        return gdb_get_reg32(mem_buf, env->sregs[srs][n - 33]);
+-    }
+-    switch (n) {
+-    case 16:
+-        return gdb_get_reg8(mem_buf, env->pregs[0]);
+-    case 17:
+-        return gdb_get_reg8(mem_buf, env->pregs[1]);
+-    case 18:
+-        return gdb_get_reg32(mem_buf, env->pregs[2]);
+-    case 19:
+-        return gdb_get_reg8(mem_buf, srs);
+-    case 20:
+-        return gdb_get_reg16(mem_buf, env->pregs[4]);
+-    case 32:
+-        return gdb_get_reg32(mem_buf, env->pc);
+-    }
+-
+-    return 0;
+-}
+-
+-int cris_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+-{
+-    CPUCRISState *env = cpu_env(cs);
+-    uint32_t tmp;
+-
+-    if (n > 49) {
+-        return 0;
+-    }
+-
+-    tmp = ldl_p(mem_buf);
+-
+-    if (n < 16) {
+-        env->regs[n] = tmp;
+-    }
+-
+-    if (n >= 21 && n < 32) {
+-        env->pregs[n - 16] = tmp;
+-    }
+-
+-    /* FIXME: Should support function regs be writable?  */
+-    switch (n) {
+-    case 16:
+-        return 1;
+-    case 17:
+-        return 1;
+-    case 18:
+-        env->pregs[PR_PID] = tmp;
+-        break;
+-    case 19:
+-        return 1;
+-    case 20:
+-        return 2;
+-    case 32:
+-        env->pc = tmp;
+-        break;
+-    }
+-
+-    return 4;
+-}
+diff --git a/target/cris/helper.c b/target/cris/helper.c
+deleted file mode 100644
+index 1c3f86876f..0000000000
+--- a/target/cris/helper.c
++++ /dev/null
+@@ -1,287 +0,0 @@
+-/*
+- *  CRIS helper routines.
+- *
+- *  Copyright (c) 2007 AXIS Communications AB
+- *  Written by Edgar E. Iglesias.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/log.h"
+-#include "cpu.h"
+-#include "hw/core/tcg-cpu-ops.h"
+-#include "mmu.h"
+-#include "qemu/host-utils.h"
+-#include "exec/exec-all.h"
+-#include "exec/cpu_ldst.h"
+-#include "exec/helper-proto.h"
+-
+-
+-//#define CRIS_HELPER_DEBUG
+-
+-
+-#ifdef CRIS_HELPER_DEBUG
+-#define D(x) x
+-#define D_LOG(...) qemu_log(__VA_ARGS__)
+-#else
+-#define D(x)
+-#define D_LOG(...) do { } while (0)
+-#endif
+-
+-static void cris_shift_ccs(CPUCRISState *env)
+-{
+-    uint32_t ccs;
+-    /* Apply the ccs shift.  */
+-    ccs = env->pregs[PR_CCS];
+-    ccs = ((ccs & 0xc0000000) | ((ccs << 12) >> 2)) & ~0x3ff;
+-    env->pregs[PR_CCS] = ccs;
+-}
+-
+-bool cris_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                       MMUAccessType access_type, int mmu_idx,
+-                       bool probe, uintptr_t retaddr)
+-{
+-    CPUCRISState *env = cpu_env(cs);
+-    struct cris_mmu_result res;
+-    int prot, miss;
+-    target_ulong phy;
+-
+-    miss = cris_mmu_translate(&res, env, address & TARGET_PAGE_MASK,
+-                              access_type, mmu_idx, 0);
+-    if (likely(!miss)) {
+-        /*
+-         * Mask off the cache selection bit. The ETRAX busses do not
+-         * see the top bit.
+-         */
+-        phy = res.phy & ~0x80000000;
+-        prot = res.prot;
+-        tlb_set_page(cs, address & TARGET_PAGE_MASK, phy,
+-                     prot, mmu_idx, TARGET_PAGE_SIZE);
+-        return true;
+-    }
+-
+-    if (probe) {
+-        return false;
+-    }
+-
+-    if (cs->exception_index == EXCP_BUSFAULT) {
+-        cpu_abort(cs, "CRIS: Illegal recursive bus fault."
+-                      "addr=%" VADDR_PRIx " access_type=%d\n",
+-                      address, access_type);
+-    }
+-
+-    env->pregs[PR_EDA] = address;
+-    cs->exception_index = EXCP_BUSFAULT;
+-    env->fault_vector = res.bf_vec;
+-    if (retaddr) {
+-        if (cpu_restore_state(cs, retaddr)) {
+-            /* Evaluate flags after retranslation. */
+-            helper_top_evaluate_flags(env);
+-        }
+-    }
+-    cpu_loop_exit(cs);
+-}
+-
+-void crisv10_cpu_do_interrupt(CPUState *cs)
+-{
+-    CPUCRISState *env = cpu_env(cs);
+-    int ex_vec = -1;
+-
+-    D_LOG("exception index=%d interrupt_req=%d\n",
+-          cs->exception_index,
+-          cs->interrupt_request);
+-
+-    if (env->dslot) {
+-        /* CRISv10 never takes interrupts while in a delay-slot.  */
+-        cpu_abort(cs, "CRIS: Interrupt on delay-slot\n");
+-    }
+-
+-    assert(!(env->pregs[PR_CCS] & PFIX_FLAG));
+-    switch (cs->exception_index) {
+-    case EXCP_BREAK:
+-        /* These exceptions are generated by the core itself.
+-           ERP should point to the insn following the brk.  */
+-        ex_vec = env->trap_vector;
+-        env->pregs[PRV10_BRP] = env->pc;
+-        break;
+-
+-    case EXCP_NMI:
+-        /* NMI is hardwired to vector zero.  */
+-        ex_vec = 0;
+-        env->pregs[PR_CCS] &= ~M_FLAG_V10;
+-        env->pregs[PRV10_BRP] = env->pc;
+-        break;
+-
+-    case EXCP_BUSFAULT:
+-        cpu_abort(cs, "Unhandled busfault");
+-        break;
+-
+-    default:
+-        /* The interrupt controller gives us the vector.  */
+-        ex_vec = env->interrupt_vector;
+-        /* Normal interrupts are taken between
+-           TB's.  env->pc is valid here.  */
+-        env->pregs[PR_ERP] = env->pc;
+-        break;
+-    }
+-
+-    if (env->pregs[PR_CCS] & U_FLAG) {
+-        /* Swap stack pointers.  */
+-        env->pregs[PR_USP] = env->regs[R_SP];
+-        env->regs[R_SP] = env->ksp;
+-    }
+-
+-    /* Now that we are in kernel mode, load the handlers address.  */
+-    env->pc = cpu_ldl_code(env, env->pregs[PR_EBP] + ex_vec * 4);
+-    env->locked_irq = 1;
+-    env->pregs[PR_CCS] |= F_FLAG_V10; /* set F.  */
+-
+-    qemu_log_mask(CPU_LOG_INT, "%s isr=%x vec=%x ccs=%x pid=%d erp=%x\n",
+-                  __func__, env->pc, ex_vec,
+-                  env->pregs[PR_CCS],
+-                  env->pregs[PR_PID],
+-                  env->pregs[PR_ERP]);
+-}
+-
+-void cris_cpu_do_interrupt(CPUState *cs)
+-{
+-    CPUCRISState *env = cpu_env(cs);
+-    int ex_vec = -1;
+-
+-    D_LOG("exception index=%d interrupt_req=%d\n",
+-          cs->exception_index,
+-          cs->interrupt_request);
+-
+-    switch (cs->exception_index) {
+-    case EXCP_BREAK:
+-        /* These exceptions are generated by the core itself.
+-           ERP should point to the insn following the brk.  */
+-        ex_vec = env->trap_vector;
+-        env->pregs[PR_ERP] = env->pc;
+-        break;
+-
+-    case EXCP_NMI:
+-        /* NMI is hardwired to vector zero.  */
+-        ex_vec = 0;
+-        env->pregs[PR_CCS] &= ~M_FLAG_V32;
+-        env->pregs[PR_NRP] = env->pc;
+-        break;
+-
+-    case EXCP_BUSFAULT:
+-        ex_vec = env->fault_vector;
+-        env->pregs[PR_ERP] = env->pc;
+-        break;
+-
+-    default:
+-        /* The interrupt controller gives us the vector.  */
+-        ex_vec = env->interrupt_vector;
+-        /* Normal interrupts are taken between
+-           TB's.  env->pc is valid here.  */
+-        env->pregs[PR_ERP] = env->pc;
+-        break;
+-    }
+-
+-    /* Fill in the IDX field.  */
+-    env->pregs[PR_EXS] = (ex_vec & 0xff) << 8;
+-
+-    if (env->dslot) {
+-        D_LOG("excp isr=%x PC=%x ds=%d SP=%x"
+-              " ERP=%x pid=%x ccs=%x cc=%d %x\n",
+-              ex_vec, env->pc, env->dslot,
+-              env->regs[R_SP],
+-              env->pregs[PR_ERP], env->pregs[PR_PID],
+-              env->pregs[PR_CCS],
+-              env->cc_op, env->cc_mask);
+-        /* We loose the btarget, btaken state here so rexec the
+-           branch.  */
+-        env->pregs[PR_ERP] -= env->dslot;
+-        /* Exception starts with dslot cleared.  */
+-        env->dslot = 0;
+-    }
+-
+-    if (env->pregs[PR_CCS] & U_FLAG) {
+-        /* Swap stack pointers.  */
+-        env->pregs[PR_USP] = env->regs[R_SP];
+-        env->regs[R_SP] = env->ksp;
+-    }
+-
+-    /* Apply the CRIS CCS shift. Clears U if set.  */
+-    cris_shift_ccs(env);
+-
+-    /* Now that we are in kernel mode, load the handlers address.
+-       This load may not fault, real hw leaves that behaviour as
+-       undefined.  */
+-    env->pc = cpu_ldl_code(env, env->pregs[PR_EBP] + ex_vec * 4);
+-
+-    /* Clear the excption_index to avoid spurious hw_aborts for recursive
+-       bus faults.  */
+-    cs->exception_index = -1;
+-
+-    D_LOG("%s isr=%x vec=%x ccs=%x pid=%d erp=%x\n",
+-          __func__, env->pc, ex_vec,
+-          env->pregs[PR_CCS],
+-          env->pregs[PR_PID],
+-          env->pregs[PR_ERP]);
+-}
+-
+-hwaddr cris_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+-{
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    uint32_t phy = addr;
+-    struct cris_mmu_result res;
+-    int miss;
+-
+-    miss = cris_mmu_translate(&res, &cpu->env, addr, MMU_DATA_LOAD, 0, 1);
+-    /* If D TLB misses, try I TLB.  */
+-    if (miss) {
+-        miss = cris_mmu_translate(&res, &cpu->env, addr, MMU_INST_FETCH, 0, 1);
+-    }
+-
+-    if (!miss) {
+-        phy = res.phy;
+-    }
+-    D(fprintf(stderr, "%s %x -> %x\n", __func__, addr, phy));
+-    return phy;
+-}
+-
+-bool cris_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+-{
+-    CPUClass *cc = CPU_GET_CLASS(cs);
+-    CPUCRISState *env = cpu_env(cs);
+-    bool ret = false;
+-
+-    if (interrupt_request & CPU_INTERRUPT_HARD
+-        && (env->pregs[PR_CCS] & I_FLAG)
+-        && !env->locked_irq) {
+-        cs->exception_index = EXCP_IRQ;
+-        cc->tcg_ops->do_interrupt(cs);
+-        ret = true;
+-    }
+-    if (interrupt_request & CPU_INTERRUPT_NMI) {
+-        unsigned int m_flag_archval;
+-        if (env->pregs[PR_VR] < 32) {
+-            m_flag_archval = M_FLAG_V10;
+-        } else {
+-            m_flag_archval = M_FLAG_V32;
+-        }
+-        if ((env->pregs[PR_CCS] & m_flag_archval)) {
+-            cs->exception_index = EXCP_NMI;
+-            cc->tcg_ops->do_interrupt(cs);
+-            ret = true;
+-        }
+-    }
+-
+-    return ret;
+-}
+diff --git a/target/cris/machine.c b/target/cris/machine.c
+deleted file mode 100644
+index 7b9bde872a..0000000000
+--- a/target/cris/machine.c
++++ /dev/null
+@@ -1,93 +0,0 @@
+-/*
+- *  CRIS virtual CPU state save/load support
+- *
+- *  Copyright (c) 2012 Red Hat, Inc.
+- *  Written by Juan Quintela <quintela@redhat.com>
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "migration/cpu.h"
+-
+-static const VMStateDescription vmstate_tlbset = {
+-    .name = "cpu/tlbset",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(lo, TLBSet),
+-        VMSTATE_UINT32(hi, TLBSet),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-static const VMStateDescription vmstate_cris_env = {
+-    .name = "env",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32_ARRAY(regs, CPUCRISState, 16),
+-        VMSTATE_UINT32_ARRAY(pregs, CPUCRISState, 16),
+-        VMSTATE_UINT32(pc, CPUCRISState),
+-        VMSTATE_UINT32(ksp, CPUCRISState),
+-        VMSTATE_INT32(dslot, CPUCRISState),
+-        VMSTATE_INT32(btaken, CPUCRISState),
+-        VMSTATE_UINT32(btarget, CPUCRISState),
+-        VMSTATE_UINT32(cc_op, CPUCRISState),
+-        VMSTATE_UINT32(cc_mask, CPUCRISState),
+-        VMSTATE_UINT32(cc_dest, CPUCRISState),
+-        VMSTATE_UINT32(cc_src, CPUCRISState),
+-        VMSTATE_UINT32(cc_result, CPUCRISState),
+-        VMSTATE_INT32(cc_size, CPUCRISState),
+-        VMSTATE_INT32(cc_x, CPUCRISState),
+-        VMSTATE_INT32(locked_irq, CPUCRISState),
+-        VMSTATE_INT32(interrupt_vector, CPUCRISState),
+-        VMSTATE_INT32(fault_vector, CPUCRISState),
+-        VMSTATE_INT32(trap_vector, CPUCRISState),
+-        VMSTATE_UINT32_ARRAY(sregs[0], CPUCRISState, 16),
+-        VMSTATE_UINT32_ARRAY(sregs[1], CPUCRISState, 16),
+-        VMSTATE_UINT32_ARRAY(sregs[2], CPUCRISState, 16),
+-        VMSTATE_UINT32_ARRAY(sregs[3], CPUCRISState, 16),
+-        VMSTATE_UINT32(mmu_rand_lfsr, CPUCRISState),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[0][0], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[0][1], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[0][2], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[0][3], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[1][0], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[1][1], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[1][2], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_STRUCT_ARRAY(tlbsets[1][3], CPUCRISState, 16, 0,
+-                             vmstate_tlbset, TLBSet),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-const VMStateDescription vmstate_cris_cpu = {
+-    .name = "cpu",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_CPU(),
+-        VMSTATE_STRUCT(env, CRISCPU, 1, vmstate_cris_env, CPUCRISState),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+diff --git a/target/cris/mmu.c b/target/cris/mmu.c
+deleted file mode 100644
+index d51008c541..0000000000
+--- a/target/cris/mmu.c
++++ /dev/null
+@@ -1,356 +0,0 @@
+-/*
+- *  CRIS mmu emulation.
+- *
+- *  Copyright (c) 2007 AXIS Communications AB
+- *  Written by Edgar E. Iglesias.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "exec/exec-all.h"
+-#include "exec/page-protection.h"
+-#include "mmu.h"
+-
+-#ifdef DEBUG
+-#define D(x) x
+-#define D_LOG(...) qemu_log(__VA_ARGS__)
+-#else
+-#define D(x) do { } while (0)
+-#define D_LOG(...) do { } while (0)
+-#endif
+-
+-void cris_mmu_init(CPUCRISState *env)
+-{
+-    env->mmu_rand_lfsr = 0xcccc;
+-}
+-
+-#define SR_POLYNOM 0x8805
+-static inline unsigned int compute_polynom(unsigned int sr)
+-{
+-    unsigned int i;
+-    unsigned int f;
+-
+-    f = 0;
+-    for (i = 0; i < 16; i++) {
+-        f += ((SR_POLYNOM >> i) & 1) & ((sr >> i) & 1);
+-    }
+-
+-    return f;
+-}
+-
+-static void cris_mmu_update_rand_lfsr(CPUCRISState *env)
+-{
+-    unsigned int f;
+-
+-    /* Update lfsr at every fault.  */
+-    f = compute_polynom(env->mmu_rand_lfsr);
+-    env->mmu_rand_lfsr >>= 1;
+-    env->mmu_rand_lfsr |= (f << 15);
+-    env->mmu_rand_lfsr &= 0xffff;
+-}
+-
+-static inline int cris_mmu_enabled(uint32_t rw_gc_cfg)
+-{
+-    return (rw_gc_cfg & 12) != 0;
+-}
+-
+-static inline int cris_mmu_segmented_addr(int seg, uint32_t rw_mm_cfg)
+-{
+-    return (1 << seg) & rw_mm_cfg;
+-}
+-
+-static uint32_t cris_mmu_translate_seg(CPUCRISState *env, int seg)
+-{
+-    uint32_t base;
+-    int i;
+-
+-    if (seg < 8) {
+-        base = env->sregs[SFR_RW_MM_KBASE_LO];
+-    } else {
+-        base = env->sregs[SFR_RW_MM_KBASE_HI];
+-    }
+-
+-    i = seg & 7;
+-    base >>= i * 4;
+-    base &= 15;
+-
+-    base <<= 28;
+-    return base;
+-}
+-
+-/* Used by the tlb decoder.  */
+-#define EXTRACT_FIELD(src, start, end)                  \
+-    (((src) >> start) & ((1 << (end - start + 1)) - 1))
+-
+-static inline void set_field(uint32_t *dst, unsigned int val,
+-			     unsigned int offset, unsigned int width)
+-{
+-    uint32_t mask;
+-
+-    mask = (1 << width) - 1;
+-    mask <<= offset;
+-    val <<= offset;
+-
+-    val &= mask;
+-    *dst &= ~(mask);
+-    *dst |= val;
+-}
+-
+-#ifdef DEBUG
+-static void dump_tlb(CPUCRISState *env, int mmu)
+-{
+-    int set;
+-    int idx;
+-    uint32_t hi, lo, tlb_vpn, tlb_pfn;
+-
+-    for (set = 0; set < 4; set++) {
+-        for (idx = 0; idx < 16; idx++) {
+-            lo = env->tlbsets[mmu][set][idx].lo;
+-            hi = env->tlbsets[mmu][set][idx].hi;
+-            tlb_vpn = EXTRACT_FIELD(hi, 13, 31);
+-            tlb_pfn = EXTRACT_FIELD(lo, 13, 31);
+-
+-            printf("TLB: [%d][%d] hi=%x lo=%x v=%x p=%x\n",
+-                   set, idx, hi, lo, tlb_vpn, tlb_pfn);
+-        }
+-    }
+-}
+-#endif
+-
+-static int cris_mmu_translate_page(struct cris_mmu_result *res,
+-                                   CPUCRISState *env, uint32_t vaddr,
+-                                   MMUAccessType access_type,
+-                                   int usermode, int debug)
+-{
+-    unsigned int vpage;
+-    unsigned int idx;
+-    uint32_t pid, lo, hi;
+-    uint32_t tlb_vpn, tlb_pfn = 0;
+-    int tlb_pid, tlb_g, tlb_v, tlb_k, tlb_w, tlb_x;
+-    int cfg_v, cfg_k, cfg_w, cfg_x;
+-    int set, match = 0;
+-    uint32_t r_cause;
+-    uint32_t r_cfg;
+-    int rwcause;
+-    int mmu = 1; /* Data mmu is default.  */
+-    int vect_base;
+-
+-    r_cause = env->sregs[SFR_R_MM_CAUSE];
+-    r_cfg = env->sregs[SFR_RW_MM_CFG];
+-    pid = env->pregs[PR_PID] & 0xff;
+-
+-    switch (access_type) {
+-    case MMU_INST_FETCH:
+-        rwcause = CRIS_MMU_ERR_EXEC;
+-        mmu = 0;
+-        break;
+-    case MMU_DATA_STORE:
+-        rwcause = CRIS_MMU_ERR_WRITE;
+-        break;
+-    default:
+-    case MMU_DATA_LOAD:
+-        rwcause = CRIS_MMU_ERR_READ;
+-        break;
+-    }
+-
+-    /* I exception vectors 4 - 7, D 8 - 11.  */
+-    vect_base = (mmu + 1) * 4;
+-
+-    vpage = vaddr >> 13;
+-
+-    /*
+-     * We know the index which to check on each set.
+-     * Scan both I and D.
+-     */
+-    idx = vpage & 15;
+-    for (set = 0; set < 4; set++) {
+-        lo = env->tlbsets[mmu][set][idx].lo;
+-        hi = env->tlbsets[mmu][set][idx].hi;
+-
+-        tlb_vpn = hi >> 13;
+-        tlb_pid = EXTRACT_FIELD(hi, 0, 7);
+-        tlb_g  = EXTRACT_FIELD(lo, 4, 4);
+-
+-        D_LOG("TLB[%d][%d][%d] v=%x vpage=%x lo=%x hi=%x\n",
+-              mmu, set, idx, tlb_vpn, vpage, lo, hi);
+-        if ((tlb_g || (tlb_pid == pid)) && tlb_vpn == vpage) {
+-            match = 1;
+-            break;
+-        }
+-    }
+-
+-    res->bf_vec = vect_base;
+-    if (match) {
+-        cfg_w  = EXTRACT_FIELD(r_cfg, 19, 19);
+-        cfg_k  = EXTRACT_FIELD(r_cfg, 18, 18);
+-        cfg_x  = EXTRACT_FIELD(r_cfg, 17, 17);
+-        cfg_v  = EXTRACT_FIELD(r_cfg, 16, 16);
+-
+-        tlb_pfn = EXTRACT_FIELD(lo, 13, 31);
+-        tlb_v = EXTRACT_FIELD(lo, 3, 3);
+-        tlb_k = EXTRACT_FIELD(lo, 2, 2);
+-        tlb_w = EXTRACT_FIELD(lo, 1, 1);
+-        tlb_x = EXTRACT_FIELD(lo, 0, 0);
+-
+-        /*
+-         * set_exception_vector(0x04, i_mmu_refill);
+-         * set_exception_vector(0x05, i_mmu_invalid);
+-         * set_exception_vector(0x06, i_mmu_access);
+-         * set_exception_vector(0x07, i_mmu_execute);
+-         * set_exception_vector(0x08, d_mmu_refill);
+-         * set_exception_vector(0x09, d_mmu_invalid);
+-         * set_exception_vector(0x0a, d_mmu_access);
+-         * set_exception_vector(0x0b, d_mmu_write);
+-         */
+-        if (cfg_k && tlb_k && usermode) {
+-            D(printf("tlb: kernel protected %x lo=%x pc=%x\n",
+-                     vaddr, lo, env->pc));
+-            match = 0;
+-            res->bf_vec = vect_base + 2;
+-        } else if (access_type == MMU_DATA_STORE && cfg_w && !tlb_w) {
+-            D(printf("tlb: write protected %x lo=%x pc=%x\n",
+-                     vaddr, lo, env->pc));
+-            match = 0;
+-            /* write accesses never go through the I mmu.  */
+-            res->bf_vec = vect_base + 3;
+-        } else if (access_type == MMU_INST_FETCH && cfg_x && !tlb_x) {
+-            D(printf("tlb: exec protected %x lo=%x pc=%x\n",
+-                     vaddr, lo, env->pc));
+-            match = 0;
+-            res->bf_vec = vect_base + 3;
+-        } else if (cfg_v && !tlb_v) {
+-            D(printf("tlb: invalid %x\n", vaddr));
+-            match = 0;
+-            res->bf_vec = vect_base + 1;
+-        }
+-
+-        res->prot = 0;
+-        if (match) {
+-            res->prot |= PAGE_READ;
+-            if (tlb_w) {
+-                res->prot |= PAGE_WRITE;
+-            }
+-            if (mmu == 0 && (cfg_x || tlb_x)) {
+-                res->prot |= PAGE_EXEC;
+-            }
+-        } else {
+-            D(dump_tlb(env, mmu));
+-        }
+-    } else {
+-        /* If refill, provide a randomized set.  */
+-        set = env->mmu_rand_lfsr & 3;
+-    }
+-
+-    if (!match && !debug) {
+-        cris_mmu_update_rand_lfsr(env);
+-
+-        /* Compute index.  */
+-        idx = vpage & 15;
+-
+-        /* Update RW_MM_TLB_SEL.  */
+-        env->sregs[SFR_RW_MM_TLB_SEL] = 0;
+-        set_field(&env->sregs[SFR_RW_MM_TLB_SEL], idx, 0, 4);
+-        set_field(&env->sregs[SFR_RW_MM_TLB_SEL], set, 4, 2);
+-
+-        /* Update RW_MM_CAUSE.  */
+-        set_field(&r_cause, rwcause, 8, 2);
+-        set_field(&r_cause, vpage, 13, 19);
+-        set_field(&r_cause, pid, 0, 8);
+-        env->sregs[SFR_R_MM_CAUSE] = r_cause;
+-        D(printf("refill vaddr=%x pc=%x\n", vaddr, env->pc));
+-    }
+-
+-    D(printf("%s access=%u mtch=%d pc=%x va=%x vpn=%x tlbvpn=%x pfn=%x pid=%x"
+-             " %x cause=%x sel=%x sp=%x %x %x\n",
+-             __func__, access_type, match, env->pc,
+-             vaddr, vpage,
+-             tlb_vpn, tlb_pfn, tlb_pid,
+-             pid,
+-             r_cause,
+-             env->sregs[SFR_RW_MM_TLB_SEL],
+-             env->regs[R_SP], env->pregs[PR_USP], env->ksp));
+-
+-    res->phy = tlb_pfn << TARGET_PAGE_BITS;
+-    return !match;
+-}
+-
+-void cris_mmu_flush_pid(CPUCRISState *env, uint32_t pid)
+-{
+-    target_ulong vaddr;
+-    unsigned int idx;
+-    uint32_t lo, hi;
+-    uint32_t tlb_vpn;
+-    int tlb_pid, tlb_g, tlb_v;
+-    unsigned int set;
+-    unsigned int mmu;
+-
+-    pid &= 0xff;
+-    for (mmu = 0; mmu < 2; mmu++) {
+-        for (set = 0; set < 4; set++) {
+-            for (idx = 0; idx < 16; idx++) {
+-                lo = env->tlbsets[mmu][set][idx].lo;
+-                hi = env->tlbsets[mmu][set][idx].hi;
+-
+-                tlb_vpn = EXTRACT_FIELD(hi, 13, 31);
+-                tlb_pid = EXTRACT_FIELD(hi, 0, 7);
+-                tlb_g  = EXTRACT_FIELD(lo, 4, 4);
+-                tlb_v = EXTRACT_FIELD(lo, 3, 3);
+-
+-                if (tlb_v && !tlb_g && (tlb_pid == pid)) {
+-                    vaddr = tlb_vpn << TARGET_PAGE_BITS;
+-                    D_LOG("flush pid=%x vaddr=%x\n", pid, vaddr);
+-                    tlb_flush_page(env_cpu(env), vaddr);
+-                }
+-            }
+-        }
+-    }
+-}
+-
+-int cris_mmu_translate(struct cris_mmu_result *res,
+-                       CPUCRISState *env, uint32_t vaddr,
+-                       MMUAccessType access_type, int mmu_idx, int debug)
+-{
+-    int seg;
+-    int miss = 0;
+-    int is_user = mmu_idx == MMU_USER_IDX;
+-    uint32_t old_srs;
+-
+-    old_srs = env->pregs[PR_SRS];
+-
+-    env->pregs[PR_SRS] = access_type == MMU_INST_FETCH ? 1 : 2;
+-
+-    if (!cris_mmu_enabled(env->sregs[SFR_RW_GC_CFG])) {
+-        res->phy = vaddr;
+-        res->prot = PAGE_RWX;
+-        goto done;
+-    }
+-
+-    seg = vaddr >> 28;
+-    if (!is_user && cris_mmu_segmented_addr(seg, env->sregs[SFR_RW_MM_CFG])) {
+-        uint32_t base;
+-
+-        miss = 0;
+-        base = cris_mmu_translate_seg(env, seg);
+-        res->phy = base | (0x0fffffff & vaddr);
+-        res->prot = PAGE_RWX;
+-    } else {
+-        miss = cris_mmu_translate_page(res, env, vaddr, access_type,
+-                                       is_user, debug);
+-    }
+- done:
+-    env->pregs[PR_SRS] = old_srs;
+-    return miss;
+-}
+diff --git a/target/cris/op_helper.c b/target/cris/op_helper.c
+deleted file mode 100644
+index 98a9aaf504..0000000000
+--- a/target/cris/op_helper.c
++++ /dev/null
+@@ -1,580 +0,0 @@
+-/*
+- *  CRIS helper routines
+- *
+- *  Copyright (c) 2007 AXIS Communications
+- *  Written by Edgar E. Iglesias
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "mmu.h"
+-#include "exec/helper-proto.h"
+-#include "qemu/host-utils.h"
+-#include "exec/exec-all.h"
+-
+-//#define CRIS_OP_HELPER_DEBUG
+-
+-
+-#ifdef CRIS_OP_HELPER_DEBUG
+-#define D(x) x
+-#define D_LOG(...) qemu_log(__VA_ARGS__)
+-#else
+-#define D(x)
+-#define D_LOG(...) do { } while (0)
+-#endif
+-
+-void helper_raise_exception(CPUCRISState *env, uint32_t index)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = index;
+-    cpu_loop_exit(cs);
+-}
+-
+-void helper_tlb_flush_pid(CPUCRISState *env, uint32_t pid)
+-{
+-#if !defined(CONFIG_USER_ONLY)
+-    pid &= 0xff;
+-    if (pid != (env->pregs[PR_PID] & 0xff)) {
+-        cris_mmu_flush_pid(env, env->pregs[PR_PID]);
+-    }
+-#endif
+-}
+-
+-void helper_spc_write(CPUCRISState *env, uint32_t new_spc)
+-{
+-#if !defined(CONFIG_USER_ONLY)
+-    CPUState *cs = env_cpu(env);
+-
+-    tlb_flush_page(cs, env->pregs[PR_SPC]);
+-    tlb_flush_page(cs, new_spc);
+-#endif
+-}
+-
+-/* Used by the tlb decoder.  */
+-#define EXTRACT_FIELD(src, start, end)                  \
+-    (((src) >> start) & ((1 << (end - start + 1)) - 1))
+-
+-void helper_movl_sreg_reg(CPUCRISState *env, uint32_t sreg, uint32_t reg)
+-{
+-    uint32_t srs;
+-    srs = env->pregs[PR_SRS];
+-    srs &= 3;
+-    env->sregs[srs][sreg] = env->regs[reg];
+-
+-#if !defined(CONFIG_USER_ONLY)
+-    if (srs == 1 || srs == 2) {
+-        if (sreg == 6) {
+-            /* Writes to tlb-hi write to mm_cause as a side effect.  */
+-            env->sregs[SFR_RW_MM_TLB_HI] = env->regs[reg];
+-            env->sregs[SFR_R_MM_CAUSE] = env->regs[reg];
+-        } else if (sreg == 5) {
+-            uint32_t set;
+-            uint32_t idx;
+-            uint32_t lo, hi;
+-            uint32_t vaddr;
+-            int tlb_v;
+-
+-            idx = set = env->sregs[SFR_RW_MM_TLB_SEL];
+-            set >>= 4;
+-            set &= 3;
+-
+-            idx &= 15;
+-            /* We've just made a write to tlb_lo.  */
+-            lo = env->sregs[SFR_RW_MM_TLB_LO];
+-            /* Writes are done via r_mm_cause.  */
+-            hi = env->sregs[SFR_R_MM_CAUSE];
+-
+-            vaddr = EXTRACT_FIELD(env->tlbsets[srs - 1][set][idx].hi, 13, 31);
+-            vaddr <<= TARGET_PAGE_BITS;
+-            tlb_v = EXTRACT_FIELD(env->tlbsets[srs - 1][set][idx].lo, 3, 3);
+-            env->tlbsets[srs - 1][set][idx].lo = lo;
+-            env->tlbsets[srs - 1][set][idx].hi = hi;
+-
+-            D_LOG("tlb flush vaddr=%x v=%d pc=%x\n",
+-                  vaddr, tlb_v, env->pc);
+-            if (tlb_v) {
+-                tlb_flush_page(env_cpu(env), vaddr);
+-            }
+-        }
+-    }
+-#endif
+-}
+-
+-void helper_movl_reg_sreg(CPUCRISState *env, uint32_t reg, uint32_t sreg)
+-{
+-    uint32_t srs;
+-    env->pregs[PR_SRS] &= 3;
+-    srs = env->pregs[PR_SRS];
+-
+-#if !defined(CONFIG_USER_ONLY)
+-    if (srs == 1 || srs == 2) {
+-        uint32_t set;
+-        uint32_t idx;
+-        uint32_t lo, hi;
+-
+-        idx = set = env->sregs[SFR_RW_MM_TLB_SEL];
+-        set >>= 4;
+-        set &= 3;
+-        idx &= 15;
+-
+-        /* Update the mirror regs.  */
+-        hi = env->tlbsets[srs - 1][set][idx].hi;
+-        lo = env->tlbsets[srs - 1][set][idx].lo;
+-        env->sregs[SFR_RW_MM_TLB_HI] = hi;
+-        env->sregs[SFR_RW_MM_TLB_LO] = lo;
+-    }
+-#endif
+-    env->regs[reg] = env->sregs[srs][sreg];
+-}
+-
+-static void cris_ccs_rshift(CPUCRISState *env)
+-{
+-    uint32_t ccs;
+-
+-    /* Apply the ccs shift.  */
+-    ccs = env->pregs[PR_CCS];
+-    ccs = (ccs & 0xc0000000) | ((ccs & 0x0fffffff) >> 10);
+-    if (ccs & U_FLAG) {
+-        /* Enter user mode.  */
+-        env->ksp = env->regs[R_SP];
+-        env->regs[R_SP] = env->pregs[PR_USP];
+-    }
+-
+-    env->pregs[PR_CCS] = ccs;
+-}
+-
+-void helper_rfe(CPUCRISState *env)
+-{
+-    int rflag = env->pregs[PR_CCS] & R_FLAG;
+-
+-    D_LOG("rfe: erp=%x pid=%x ccs=%x btarget=%x\n",
+-          env->pregs[PR_ERP], env->pregs[PR_PID],
+-          env->pregs[PR_CCS],
+-          env->btarget);
+-
+-    cris_ccs_rshift(env);
+-
+-    /* RFE sets the P_FLAG only if the R_FLAG is not set.  */
+-    if (!rflag) {
+-        env->pregs[PR_CCS] |= P_FLAG;
+-    }
+-}
+-
+-void helper_rfn(CPUCRISState *env)
+-{
+-    int rflag = env->pregs[PR_CCS] & R_FLAG;
+-
+-    D_LOG("rfn: erp=%x pid=%x ccs=%x btarget=%x\n",
+-          env->pregs[PR_ERP], env->pregs[PR_PID],
+-          env->pregs[PR_CCS],
+-          env->btarget);
+-
+-    cris_ccs_rshift(env);
+-
+-    /* Set the P_FLAG only if the R_FLAG is not set.  */
+-    if (!rflag) {
+-        env->pregs[PR_CCS] |= P_FLAG;
+-    }
+-
+-    /* Always set the M flag.  */
+-    env->pregs[PR_CCS] |= M_FLAG_V32;
+-}
+-
+-uint32_t helper_btst(CPUCRISState *env, uint32_t t0, uint32_t t1, uint32_t ccs)
+-{
+-    /* FIXME: clean this up.  */
+-
+-    /*
+-     * des ref:
+-     *  The N flag is set according to the selected bit in the dest reg.
+-     *  The Z flag is set if the selected bit and all bits to the right are
+-     *  zero.
+-     *  The X flag is cleared.
+-     *  Other flags are left untouched.
+-     *  The destination reg is not affected.
+-     */
+-    unsigned int fz, sbit, bset, mask, masked_t0;
+-
+-    sbit = t1 & 31;
+-    bset = !!(t0 & (1 << sbit));
+-    mask = sbit == 31 ? -1 : (1 << (sbit + 1)) - 1;
+-    masked_t0 = t0 & mask;
+-    fz = !(masked_t0 | bset);
+-
+-    /* Clear the X, N and Z flags.  */
+-    ccs = ccs & ~(X_FLAG | N_FLAG | Z_FLAG);
+-    if (env->pregs[PR_VR] < 32) {
+-        ccs &= ~(V_FLAG | C_FLAG);
+-    }
+-    /* Set the N and Z flags accordingly.  */
+-    ccs |= (bset << 3) | (fz << 2);
+-    return ccs;
+-}
+-
+-static inline uint32_t evaluate_flags_writeback(CPUCRISState *env,
+-                                                uint32_t flags, uint32_t ccs)
+-{
+-    unsigned int x, z, mask;
+-
+-    /* Extended arithmetic, leave the z flag alone.  */
+-    x = env->cc_x;
+-    mask = env->cc_mask | X_FLAG;
+-    if (x) {
+-        z = flags & Z_FLAG;
+-        mask = mask & ~z;
+-    }
+-    flags &= mask;
+-
+-    /* all insn clear the x-flag except setf or clrf.  */
+-    ccs &= ~mask;
+-    ccs |= flags;
+-    return ccs;
+-}
+-
+-uint32_t helper_evaluate_flags_muls(CPUCRISState *env,
+-                                    uint32_t ccs, uint32_t res, uint32_t mof)
+-{
+-    uint32_t flags = 0;
+-    int64_t tmp;
+-    int dneg;
+-
+-    dneg = ((int32_t)res) < 0;
+-
+-    tmp = mof;
+-    tmp <<= 32;
+-    tmp |= res;
+-    if (tmp == 0) {
+-        flags |= Z_FLAG;
+-    } else if (tmp < 0) {
+-        flags |= N_FLAG;
+-    }
+-    if ((dneg && mof != -1) || (!dneg && mof != 0)) {
+-        flags |= V_FLAG;
+-    }
+-    return evaluate_flags_writeback(env, flags, ccs);
+-}
+-
+-uint32_t helper_evaluate_flags_mulu(CPUCRISState *env,
+-                                    uint32_t ccs, uint32_t res, uint32_t mof)
+-{
+-    uint32_t flags = 0;
+-    uint64_t tmp;
+-
+-    tmp = mof;
+-    tmp <<= 32;
+-    tmp |= res;
+-    if (tmp == 0) {
+-        flags |= Z_FLAG;
+-    } else if (tmp >> 63) {
+-        flags |= N_FLAG;
+-    }
+-    if (mof) {
+-        flags |= V_FLAG;
+-    }
+-
+-    return evaluate_flags_writeback(env, flags, ccs);
+-}
+-
+-uint32_t helper_evaluate_flags_mcp(CPUCRISState *env, uint32_t ccs,
+-				   uint32_t src, uint32_t dst, uint32_t res)
+-{
+-    uint32_t flags = 0;
+-
+-    src = src & 0x80000000;
+-    dst = dst & 0x80000000;
+-
+-    if ((res & 0x80000000L) != 0L) {
+-        flags |= N_FLAG;
+-        if (!src && !dst) {
+-            flags |= V_FLAG;
+-        } else if (src & dst) {
+-            flags |= R_FLAG;
+-        }
+-    } else {
+-        if (res == 0L) {
+-            flags |= Z_FLAG;
+-        }
+-        if (src & dst) {
+-            flags |= V_FLAG;
+-        }
+-        if (dst | src) {
+-            flags |= R_FLAG;
+-        }
+-    }
+-
+-    return evaluate_flags_writeback(env, flags, ccs);
+-}
+-
+-uint32_t helper_evaluate_flags_alu_4(CPUCRISState *env, uint32_t ccs,
+-				     uint32_t src, uint32_t dst, uint32_t res)
+-{
+-    uint32_t flags = 0;
+-
+-    src = src & 0x80000000;
+-    dst = dst & 0x80000000;
+-
+-    if ((res & 0x80000000L) != 0L) {
+-        flags |= N_FLAG;
+-        if (!src && !dst) {
+-            flags |= V_FLAG;
+-        } else if (src & dst) {
+-            flags |= C_FLAG;
+-        }
+-    } else {
+-        if (res == 0L) {
+-            flags |= Z_FLAG;
+-        }
+-        if (src & dst) {
+-            flags |= V_FLAG;
+-        }
+-        if (dst | src) {
+-            flags |= C_FLAG;
+-        }
+-    }
+-
+-    return evaluate_flags_writeback(env, flags, ccs);
+-}
+-
+-uint32_t helper_evaluate_flags_sub_4(CPUCRISState *env, uint32_t ccs,
+-				     uint32_t src, uint32_t dst, uint32_t res)
+-{
+-    uint32_t flags = 0;
+-
+-    src = (~src) & 0x80000000;
+-    dst = dst & 0x80000000;
+-
+-    if ((res & 0x80000000L) != 0L) {
+-        flags |= N_FLAG;
+-        if (!src && !dst) {
+-            flags |= V_FLAG;
+-        } else if (src & dst) {
+-            flags |= C_FLAG;
+-        }
+-    } else {
+-        if (res == 0L) {
+-            flags |= Z_FLAG;
+-        }
+-        if (src & dst) {
+-            flags |= V_FLAG;
+-        }
+-        if (dst | src) {
+-            flags |= C_FLAG;
+-        }
+-    }
+-
+-    flags ^= C_FLAG;
+-    return evaluate_flags_writeback(env, flags, ccs);
+-}
+-
+-uint32_t helper_evaluate_flags_move_4(CPUCRISState *env,
+-                                      uint32_t ccs, uint32_t res)
+-{
+-    uint32_t flags = 0;
+-
+-    if ((int32_t)res < 0) {
+-        flags |= N_FLAG;
+-    } else if (res == 0L) {
+-        flags |= Z_FLAG;
+-    }
+-
+-    return evaluate_flags_writeback(env, flags, ccs);
+-}
+-
+-uint32_t helper_evaluate_flags_move_2(CPUCRISState *env,
+-                                      uint32_t ccs, uint32_t res)
+-{
+-    uint32_t flags = 0;
+-
+-    if ((int16_t)res < 0L) {
+-        flags |= N_FLAG;
+-    } else if (res == 0) {
+-        flags |= Z_FLAG;
+-    }
+-
+-    return evaluate_flags_writeback(env, flags, ccs);
+-}
+-
+-/*
+- * TODO: This is expensive. We could split things up and only evaluate part of
+- * CCR on a need to know basis. For now, we simply re-evaluate everything.
+- */
+-void helper_evaluate_flags(CPUCRISState *env)
+-{
+-    uint32_t src, dst, res;
+-    uint32_t flags = 0;
+-
+-    src = env->cc_src;
+-    dst = env->cc_dest;
+-    res = env->cc_result;
+-
+-    if (env->cc_op == CC_OP_SUB || env->cc_op == CC_OP_CMP) {
+-        src = ~src;
+-    }
+-
+-    /*
+-     * Now, evaluate the flags. This stuff is based on
+-     * Per Zander's CRISv10 simulator.
+-     */
+-    switch (env->cc_size) {
+-    case 1:
+-        if ((res & 0x80L) != 0L) {
+-            flags |= N_FLAG;
+-            if (((src & 0x80L) == 0L) && ((dst & 0x80L) == 0L)) {
+-                flags |= V_FLAG;
+-            } else if (((src & 0x80L) != 0L) && ((dst & 0x80L) != 0L)) {
+-                flags |= C_FLAG;
+-            }
+-        } else {
+-            if ((res & 0xFFL) == 0L) {
+-                flags |= Z_FLAG;
+-            }
+-            if (((src & 0x80L) != 0L) && ((dst & 0x80L) != 0L)) {
+-                flags |= V_FLAG;
+-            }
+-            if ((dst & 0x80L) != 0L || (src & 0x80L) != 0L) {
+-                flags |= C_FLAG;
+-            }
+-        }
+-        break;
+-    case 2:
+-        if ((res & 0x8000L) != 0L) {
+-            flags |= N_FLAG;
+-            if (((src & 0x8000L) == 0L) && ((dst & 0x8000L) == 0L)) {
+-                flags |= V_FLAG;
+-            } else if (((src & 0x8000L) != 0L) && ((dst & 0x8000L) != 0L)) {
+-                flags |= C_FLAG;
+-            }
+-        } else {
+-            if ((res & 0xFFFFL) == 0L) {
+-                flags |= Z_FLAG;
+-            }
+-            if (((src & 0x8000L) != 0L) && ((dst & 0x8000L) != 0L)) {
+-                flags |= V_FLAG;
+-            }
+-            if ((dst & 0x8000L) != 0L || (src & 0x8000L) != 0L) {
+-                flags |= C_FLAG;
+-            }
+-        }
+-        break;
+-    case 4:
+-        if ((res & 0x80000000L) != 0L) {
+-            flags |= N_FLAG;
+-            if (((src & 0x80000000L) == 0L) && ((dst & 0x80000000L) == 0L)) {
+-                flags |= V_FLAG;
+-            } else if (((src & 0x80000000L) != 0L) &&
+-                       ((dst & 0x80000000L) != 0L)) {
+-                flags |= C_FLAG;
+-            }
+-        } else {
+-            if (res == 0L) {
+-                flags |= Z_FLAG;
+-            }
+-            if (((src & 0x80000000L) != 0L) && ((dst & 0x80000000L) != 0L)) {
+-                flags |= V_FLAG;
+-            }
+-            if ((dst & 0x80000000L) != 0L || (src & 0x80000000L) != 0L) {
+-                flags |= C_FLAG;
+-            }
+-        }
+-        break;
+-    default:
+-        break;
+-    }
+-
+-    if (env->cc_op == CC_OP_SUB || env->cc_op == CC_OP_CMP) {
+-        flags ^= C_FLAG;
+-    }
+-
+-    env->pregs[PR_CCS] = evaluate_flags_writeback(env, flags,
+-                                                  env->pregs[PR_CCS]);
+-}
+-
+-void helper_top_evaluate_flags(CPUCRISState *env)
+-{
+-    switch (env->cc_op) {
+-    case CC_OP_MCP:
+-        env->pregs[PR_CCS]
+-            = helper_evaluate_flags_mcp(env, env->pregs[PR_CCS],
+-                                        env->cc_src, env->cc_dest,
+-                                        env->cc_result);
+-        break;
+-    case CC_OP_MULS:
+-        env->pregs[PR_CCS]
+-            = helper_evaluate_flags_muls(env, env->pregs[PR_CCS],
+-                                         env->cc_result, env->pregs[PR_MOF]);
+-        break;
+-    case CC_OP_MULU:
+-        env->pregs[PR_CCS]
+-            = helper_evaluate_flags_mulu(env, env->pregs[PR_CCS],
+-                                         env->cc_result, env->pregs[PR_MOF]);
+-        break;
+-    case CC_OP_MOVE:
+-    case CC_OP_AND:
+-    case CC_OP_OR:
+-    case CC_OP_XOR:
+-    case CC_OP_ASR:
+-    case CC_OP_LSR:
+-    case CC_OP_LSL:
+-        switch (env->cc_size) {
+-        case 4:
+-            env->pregs[PR_CCS] =
+-                helper_evaluate_flags_move_4(env,
+-                                             env->pregs[PR_CCS],
+-                                             env->cc_result);
+-            break;
+-        case 2:
+-            env->pregs[PR_CCS] =
+-                helper_evaluate_flags_move_2(env,
+-                                             env->pregs[PR_CCS],
+-                                             env->cc_result);
+-            break;
+-        default:
+-            helper_evaluate_flags(env);
+-            break;
+-        }
+-        break;
+-    case CC_OP_FLAGS:
+-        /* live.  */
+-        break;
+-    case CC_OP_SUB:
+-    case CC_OP_CMP:
+-        if (env->cc_size == 4) {
+-            env->pregs[PR_CCS] =
+-                helper_evaluate_flags_sub_4(env,
+-                                            env->pregs[PR_CCS],
+-                                            env->cc_src, env->cc_dest,
+-                                            env->cc_result);
+-        } else {
+-            helper_evaluate_flags(env);
+-        }
+-        break;
+-    default:
+-        switch (env->cc_size) {
+-        case 4:
+-            env->pregs[PR_CCS] =
+-                helper_evaluate_flags_alu_4(env,
+-                                            env->pregs[PR_CCS],
+-                                            env->cc_src, env->cc_dest,
+-                                            env->cc_result);
+-            break;
+-        default:
+-            helper_evaluate_flags(env);
+-            break;
+-        }
+-        break;
+-    }
+-}
+diff --git a/target/cris/translate.c b/target/cris/translate.c
+deleted file mode 100644
+index a30c67eb07..0000000000
+--- a/target/cris/translate.c
++++ /dev/null
+@@ -1,3252 +0,0 @@
+-/*
+- *  CRIS emulation for qemu: main translation routines.
+- *
+- *  Copyright (c) 2008 AXIS Communications AB
+- *  Written by Edgar E. Iglesias.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-/*
+- * FIXME:
+- * The condition code translation is in need of attention.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "exec/exec-all.h"
+-#include "tcg/tcg-op.h"
+-#include "exec/helper-proto.h"
+-#include "mmu.h"
+-#include "exec/translator.h"
+-#include "crisv32-decode.h"
+-#include "qemu/qemu-print.h"
+-#include "exec/helper-gen.h"
+-#include "exec/log.h"
+-
+-#define HELPER_H "helper.h"
+-#include "exec/helper-info.c.inc"
+-#undef  HELPER_H
+-
+-
+-#define DISAS_CRIS 0
+-#if DISAS_CRIS
+-#  define LOG_DIS(...) qemu_log_mask(CPU_LOG_TB_IN_ASM, ## __VA_ARGS__)
+-#else
+-#  define LOG_DIS(...) do { } while (0)
+-#endif
+-
+-#define D(x)
+-#define BUG() (gen_BUG(dc, __FILE__, __LINE__))
+-#define BUG_ON(x) ({if (x) BUG();})
+-
+-/*
+- * Target-specific is_jmp field values
+- */
+-/* Only pc was modified dynamically */
+-#define DISAS_JUMP          DISAS_TARGET_0
+-/* Cpu state was modified dynamically, including pc */
+-#define DISAS_UPDATE        DISAS_TARGET_1
+-/* Cpu state was modified dynamically, excluding pc -- use npc */
+-#define DISAS_UPDATE_NEXT   DISAS_TARGET_2
+-/* PC update for delayed branch, see cpustate_changed otherwise */
+-#define DISAS_DBRANCH       DISAS_TARGET_3
+-
+-/* Used by the decoder.  */
+-#define EXTRACT_FIELD(src, start, end) \
+-            (((src) >> start) & ((1 << (end - start + 1)) - 1))
+-
+-#define CC_MASK_NZ 0xc
+-#define CC_MASK_NZV 0xe
+-#define CC_MASK_NZVC 0xf
+-#define CC_MASK_RNZV 0x10e
+-
+-static TCGv cpu_R[16];
+-static TCGv cpu_PR[16];
+-static TCGv cc_x;
+-static TCGv cc_src;
+-static TCGv cc_dest;
+-static TCGv cc_result;
+-static TCGv cc_op;
+-static TCGv cc_size;
+-static TCGv cc_mask;
+-
+-static TCGv env_btaken;
+-static TCGv env_btarget;
+-static TCGv env_pc;
+-
+-/* This is the state at translation time.  */
+-typedef struct DisasContext {
+-    DisasContextBase base;
+-
+-    CRISCPU *cpu;
+-    target_ulong pc, ppc;
+-    int mem_index;
+-
+-    /* Decoder.  */
+-        unsigned int (*decoder)(CPUCRISState *env, struct DisasContext *dc);
+-    uint32_t ir;
+-    uint32_t opcode;
+-    unsigned int op1;
+-    unsigned int op2;
+-    unsigned int zsize, zzsize;
+-    unsigned int mode;
+-    unsigned int postinc;
+-
+-    unsigned int size;
+-    unsigned int src;
+-    unsigned int dst;
+-    unsigned int cond;
+-
+-    int update_cc;
+-    int cc_op;
+-    int cc_size;
+-    uint32_t cc_mask;
+-
+-    int cc_size_uptodate; /* -1 invalid or last written value.  */
+-
+-    int cc_x_uptodate;  /* 1 - ccs, 2 - known | X_FLAG. 0 not up-to-date.  */
+-    int flags_uptodate; /* Whether or not $ccs is up-to-date.  */
+-    int flags_x;
+-
+-    int clear_x; /* Clear x after this insn?  */
+-    int clear_prefix; /* Clear prefix after this insn?  */
+-    int clear_locked_irq; /* Clear the irq lockout.  */
+-    int cpustate_changed;
+-    unsigned int tb_flags; /* tb dependent flags.  */
+-
+-#define JMP_NOJMP     0
+-#define JMP_DIRECT    1
+-#define JMP_DIRECT_CC 2
+-#define JMP_INDIRECT  3
+-    int jmp; /* 0=nojmp, 1=direct, 2=indirect.  */
+-    uint32_t jmp_pc;
+-
+-    int delayed_branch;
+-} DisasContext;
+-
+-static void gen_BUG(DisasContext *dc, const char *file, int line)
+-{
+-    cpu_abort(CPU(dc->cpu), "%s:%d pc=%x\n", file, line, dc->pc);
+-}
+-
+-static const char * const regnames_v32[] =
+-{
+-    "$r0", "$r1", "$r2", "$r3",
+-    "$r4", "$r5", "$r6", "$r7",
+-    "$r8", "$r9", "$r10", "$r11",
+-    "$r12", "$r13", "$sp", "$acr",
+-};
+-
+-static const char * const pregnames_v32[] =
+-{
+-    "$bz", "$vr", "$pid", "$srs",
+-    "$wz", "$exs", "$eda", "$mof",
+-    "$dz", "$ebp", "$erp", "$srp",
+-    "$nrp", "$ccs", "$usp", "$spc",
+-};
+-
+-/* We need this table to handle preg-moves with implicit width.  */
+-static const int preg_sizes[] = {
+-    1, /* bz.  */
+-    1, /* vr.  */
+-    4, /* pid.  */
+-    1, /* srs.  */
+-    2, /* wz.  */
+-    4, 4, 4,
+-    4, 4, 4, 4,
+-    4, 4, 4, 4,
+-};
+-
+-#define t_gen_mov_TN_env(tn, member) \
+-    tcg_gen_ld_tl(tn, tcg_env, offsetof(CPUCRISState, member))
+-#define t_gen_mov_env_TN(member, tn) \
+-    tcg_gen_st_tl(tn, tcg_env, offsetof(CPUCRISState, member))
+-#define t_gen_movi_env_TN(member, c) \
+-    t_gen_mov_env_TN(member, tcg_constant_tl(c))
+-
+-static inline void t_gen_mov_TN_preg(TCGv tn, int r)
+-{
+-    assert(r >= 0 && r <= 15);
+-    if (r == PR_BZ || r == PR_WZ || r == PR_DZ) {
+-        tcg_gen_movi_tl(tn, 0);
+-    } else if (r == PR_VR) {
+-        tcg_gen_movi_tl(tn, 32);
+-    } else {
+-        tcg_gen_mov_tl(tn, cpu_PR[r]);
+-    }
+-}
+-static inline void t_gen_mov_preg_TN(DisasContext *dc, int r, TCGv tn)
+-{
+-    assert(r >= 0 && r <= 15);
+-    if (r == PR_BZ || r == PR_WZ || r == PR_DZ) {
+-        return;
+-    } else if (r == PR_SRS) {
+-        tcg_gen_andi_tl(cpu_PR[r], tn, 3);
+-    } else {
+-        if (r == PR_PID) {
+-            gen_helper_tlb_flush_pid(tcg_env, tn);
+-        }
+-        if (dc->tb_flags & S_FLAG && r == PR_SPC) {
+-            gen_helper_spc_write(tcg_env, tn);
+-        } else if (r == PR_CCS) {
+-            dc->cpustate_changed = 1;
+-        }
+-        tcg_gen_mov_tl(cpu_PR[r], tn);
+-    }
+-}
+-
+-/* Sign extend at translation time.  */
+-static int sign_extend(unsigned int val, unsigned int width)
+-{
+-    int sval;
+-
+-    /* LSL.  */
+-    val <<= 31 - width;
+-    sval = val;
+-    /* ASR.  */
+-    sval >>= 31 - width;
+-    return sval;
+-}
+-
+-static int cris_fetch(CPUCRISState *env, DisasContext *dc, uint32_t addr,
+-                      unsigned int size, bool sign)
+-{
+-    int r;
+-
+-    switch (size) {
+-    case 4:
+-        r = translator_ldl(env, &dc->base, addr);
+-        break;
+-    case 2:
+-        r = translator_lduw(env, &dc->base, addr);
+-        if (sign) {
+-            r = (int16_t)r;
+-        }
+-        break;
+-    case 1:
+-        r = translator_ldub(env, &dc->base, addr);
+-        if (sign) {
+-            r = (int8_t)r;
+-        }
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-    return r;
+-}
+-
+-static void cris_lock_irq(DisasContext *dc)
+-{
+-    dc->clear_locked_irq = 0;
+-    t_gen_movi_env_TN(locked_irq, 1);
+-}
+-
+-static inline void t_gen_raise_exception(uint32_t index)
+-{
+-    gen_helper_raise_exception(tcg_env, tcg_constant_i32(index));
+-}
+-
+-static void t_gen_lsl(TCGv d, TCGv a, TCGv b)
+-{
+-    TCGv t0, t_31;
+-
+-    t0 = tcg_temp_new();
+-    t_31 = tcg_constant_tl(31);
+-    tcg_gen_shl_tl(d, a, b);
+-
+-    tcg_gen_sub_tl(t0, t_31, b);
+-    tcg_gen_sar_tl(t0, t0, t_31);
+-    tcg_gen_and_tl(t0, t0, d);
+-    tcg_gen_xor_tl(d, d, t0);
+-}
+-
+-static void t_gen_lsr(TCGv d, TCGv a, TCGv b)
+-{
+-    TCGv t0, t_31;
+-
+-    t0 = tcg_temp_new();
+-    t_31 = tcg_temp_new();
+-    tcg_gen_shr_tl(d, a, b);
+-
+-    tcg_gen_movi_tl(t_31, 31);
+-    tcg_gen_sub_tl(t0, t_31, b);
+-    tcg_gen_sar_tl(t0, t0, t_31);
+-    tcg_gen_and_tl(t0, t0, d);
+-    tcg_gen_xor_tl(d, d, t0);
+-}
+-
+-static void t_gen_asr(TCGv d, TCGv a, TCGv b)
+-{
+-    TCGv t0, t_31;
+-
+-    t0 = tcg_temp_new();
+-    t_31 = tcg_temp_new();
+-    tcg_gen_sar_tl(d, a, b);
+-
+-    tcg_gen_movi_tl(t_31, 31);
+-    tcg_gen_sub_tl(t0, t_31, b);
+-    tcg_gen_sar_tl(t0, t0, t_31);
+-    tcg_gen_or_tl(d, d, t0);
+-}
+-
+-static void t_gen_cris_dstep(TCGv d, TCGv a, TCGv b)
+-{
+-    TCGv t = tcg_temp_new();
+-
+-    /*
+-     * d <<= 1
+-     * if (d >= s)
+-     *    d -= s;
+-     */
+-    tcg_gen_shli_tl(d, a, 1);
+-    tcg_gen_sub_tl(t, d, b);
+-    tcg_gen_movcond_tl(TCG_COND_GEU, d, d, b, t, d);
+-}
+-
+-static void t_gen_cris_mstep(TCGv d, TCGv a, TCGv b, TCGv ccs)
+-{
+-    TCGv t;
+-
+-    /*
+-     * d <<= 1
+-     * if (n)
+-     *    d += s;
+-     */
+-    t = tcg_temp_new();
+-    tcg_gen_shli_tl(d, a, 1);
+-    tcg_gen_shli_tl(t, ccs, 31 - 3);
+-    tcg_gen_sari_tl(t, t, 31);
+-    tcg_gen_and_tl(t, t, b);
+-    tcg_gen_add_tl(d, d, t);
+-}
+-
+-/* Extended arithmetic on CRIS.  */
+-static inline void t_gen_add_flag(TCGv d, int flag)
+-{
+-    TCGv c;
+-
+-    c = tcg_temp_new();
+-    t_gen_mov_TN_preg(c, PR_CCS);
+-    /* Propagate carry into d.  */
+-    tcg_gen_andi_tl(c, c, 1 << flag);
+-    if (flag) {
+-        tcg_gen_shri_tl(c, c, flag);
+-    }
+-    tcg_gen_add_tl(d, d, c);
+-}
+-
+-static inline void t_gen_addx_carry(DisasContext *dc, TCGv d)
+-{
+-    if (dc->flags_x) {
+-        TCGv c = tcg_temp_new();
+-
+-        t_gen_mov_TN_preg(c, PR_CCS);
+-        /* C flag is already at bit 0.  */
+-        tcg_gen_andi_tl(c, c, C_FLAG);
+-        tcg_gen_add_tl(d, d, c);
+-    }
+-}
+-
+-static inline void t_gen_subx_carry(DisasContext *dc, TCGv d)
+-{
+-    if (dc->flags_x) {
+-        TCGv c = tcg_temp_new();
+-
+-        t_gen_mov_TN_preg(c, PR_CCS);
+-        /* C flag is already at bit 0.  */
+-        tcg_gen_andi_tl(c, c, C_FLAG);
+-        tcg_gen_sub_tl(d, d, c);
+-    }
+-}
+-
+-/* Swap the two bytes within each half word of the s operand.
+-   T0 = ((T0 << 8) & 0xff00ff00) | ((T0 >> 8) & 0x00ff00ff)  */
+-static inline void t_gen_swapb(TCGv d, TCGv s)
+-{
+-    TCGv t, org_s;
+-
+-    t = tcg_temp_new();
+-    org_s = tcg_temp_new();
+-
+-    /* d and s may refer to the same object.  */
+-    tcg_gen_mov_tl(org_s, s);
+-    tcg_gen_shli_tl(t, org_s, 8);
+-    tcg_gen_andi_tl(d, t, 0xff00ff00);
+-    tcg_gen_shri_tl(t, org_s, 8);
+-    tcg_gen_andi_tl(t, t, 0x00ff00ff);
+-    tcg_gen_or_tl(d, d, t);
+-}
+-
+-/* Swap the halfwords of the s operand.  */
+-static inline void t_gen_swapw(TCGv d, TCGv s)
+-{
+-    TCGv t;
+-    /* d and s refer the same object.  */
+-    t = tcg_temp_new();
+-    tcg_gen_mov_tl(t, s);
+-    tcg_gen_shli_tl(d, t, 16);
+-    tcg_gen_shri_tl(t, t, 16);
+-    tcg_gen_or_tl(d, d, t);
+-}
+-
+-/*
+- * Reverse the bits within each byte.
+- *
+- *  T0 = ((T0 << 7) & 0x80808080)
+- *     | ((T0 << 5) & 0x40404040)
+- *     | ((T0 << 3) & 0x20202020)
+- *     | ((T0 << 1) & 0x10101010)
+- *     | ((T0 >> 1) & 0x08080808)
+- *     | ((T0 >> 3) & 0x04040404)
+- *     | ((T0 >> 5) & 0x02020202)
+- *     | ((T0 >> 7) & 0x01010101);
+- */
+-static void t_gen_swapr(TCGv d, TCGv s)
+-{
+-    static const struct {
+-        int shift; /* LSL when positive, LSR when negative.  */
+-        uint32_t mask;
+-    } bitrev[] = {
+-        {7, 0x80808080},
+-        {5, 0x40404040},
+-        {3, 0x20202020},
+-        {1, 0x10101010},
+-        {-1, 0x08080808},
+-        {-3, 0x04040404},
+-        {-5, 0x02020202},
+-        {-7, 0x01010101}
+-    };
+-    int i;
+-    TCGv t, org_s;
+-
+-    /* d and s refer the same object.  */
+-    t = tcg_temp_new();
+-    org_s = tcg_temp_new();
+-    tcg_gen_mov_tl(org_s, s);
+-
+-    tcg_gen_shli_tl(t, org_s,  bitrev[0].shift);
+-    tcg_gen_andi_tl(d, t,  bitrev[0].mask);
+-    for (i = 1; i < ARRAY_SIZE(bitrev); i++) {
+-        if (bitrev[i].shift >= 0) {
+-            tcg_gen_shli_tl(t, org_s,  bitrev[i].shift);
+-        } else {
+-            tcg_gen_shri_tl(t, org_s,  -bitrev[i].shift);
+-        }
+-        tcg_gen_andi_tl(t, t,  bitrev[i].mask);
+-        tcg_gen_or_tl(d, d, t);
+-    }
+-}
+-
+-static bool use_goto_tb(DisasContext *dc, target_ulong dest)
+-{
+-    return translator_use_goto_tb(&dc->base, dest);
+-}
+-
+-static void gen_goto_tb(DisasContext *dc, int n, target_ulong dest)
+-{
+-    if (use_goto_tb(dc, dest)) {
+-        tcg_gen_goto_tb(n);
+-        tcg_gen_movi_tl(env_pc, dest);
+-        tcg_gen_exit_tb(dc->base.tb, n);
+-    } else {
+-        tcg_gen_movi_tl(env_pc, dest);
+-        tcg_gen_lookup_and_goto_ptr();
+-    }
+-}
+-
+-static inline void cris_clear_x_flag(DisasContext *dc)
+-{
+-    if (dc->flags_x) {
+-        dc->flags_uptodate = 0;
+-    }
+-    dc->flags_x = 0;
+-}
+-
+-static void cris_flush_cc_state(DisasContext *dc)
+-{
+-    if (dc->cc_size_uptodate != dc->cc_size) {
+-        tcg_gen_movi_tl(cc_size, dc->cc_size);
+-        dc->cc_size_uptodate = dc->cc_size;
+-    }
+-    tcg_gen_movi_tl(cc_op, dc->cc_op);
+-    tcg_gen_movi_tl(cc_mask, dc->cc_mask);
+-}
+-
+-static void cris_evaluate_flags(DisasContext *dc)
+-{
+-    if (dc->flags_uptodate) {
+-        return;
+-    }
+-
+-    cris_flush_cc_state(dc);
+-
+-    switch (dc->cc_op) {
+-    case CC_OP_MCP:
+-        gen_helper_evaluate_flags_mcp(cpu_PR[PR_CCS], tcg_env,
+-                cpu_PR[PR_CCS], cc_src,
+-                cc_dest, cc_result);
+-        break;
+-    case CC_OP_MULS:
+-        gen_helper_evaluate_flags_muls(cpu_PR[PR_CCS], tcg_env,
+-                cpu_PR[PR_CCS], cc_result,
+-                cpu_PR[PR_MOF]);
+-        break;
+-    case CC_OP_MULU:
+-        gen_helper_evaluate_flags_mulu(cpu_PR[PR_CCS], tcg_env,
+-                cpu_PR[PR_CCS], cc_result,
+-                cpu_PR[PR_MOF]);
+-        break;
+-    case CC_OP_MOVE:
+-    case CC_OP_AND:
+-    case CC_OP_OR:
+-    case CC_OP_XOR:
+-    case CC_OP_ASR:
+-    case CC_OP_LSR:
+-    case CC_OP_LSL:
+-        switch (dc->cc_size) {
+-        case 4:
+-            gen_helper_evaluate_flags_move_4(cpu_PR[PR_CCS],
+-                    tcg_env, cpu_PR[PR_CCS], cc_result);
+-            break;
+-        case 2:
+-            gen_helper_evaluate_flags_move_2(cpu_PR[PR_CCS],
+-                    tcg_env, cpu_PR[PR_CCS], cc_result);
+-            break;
+-        default:
+-            gen_helper_evaluate_flags(tcg_env);
+-            break;
+-        }
+-        break;
+-    case CC_OP_FLAGS:
+-        /* live.  */
+-        break;
+-    case CC_OP_SUB:
+-    case CC_OP_CMP:
+-        if (dc->cc_size == 4) {
+-            gen_helper_evaluate_flags_sub_4(cpu_PR[PR_CCS], tcg_env,
+-                    cpu_PR[PR_CCS], cc_src, cc_dest, cc_result);
+-        } else {
+-            gen_helper_evaluate_flags(tcg_env);
+-        }
+-
+-        break;
+-    default:
+-        switch (dc->cc_size) {
+-        case 4:
+-            gen_helper_evaluate_flags_alu_4(cpu_PR[PR_CCS], tcg_env,
+-                    cpu_PR[PR_CCS], cc_src, cc_dest, cc_result);
+-            break;
+-        default:
+-            gen_helper_evaluate_flags(tcg_env);
+-            break;
+-        }
+-        break;
+-    }
+-
+-    if (dc->flags_x) {
+-        tcg_gen_ori_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], X_FLAG);
+-    } else if (dc->cc_op == CC_OP_FLAGS) {
+-        tcg_gen_andi_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], ~X_FLAG);
+-    }
+-    dc->flags_uptodate = 1;
+-}
+-
+-static void cris_cc_mask(DisasContext *dc, unsigned int mask)
+-{
+-    uint32_t ovl;
+-
+-    if (!mask) {
+-        dc->update_cc = 0;
+-        return;
+-    }
+-
+-    /* Check if we need to evaluate the condition codes due to
+-       CC overlaying.  */
+-    ovl = (dc->cc_mask ^ mask) & ~mask;
+-    if (ovl) {
+-        /* TODO: optimize this case. It trigs all the time.  */
+-        cris_evaluate_flags(dc);
+-    }
+-    dc->cc_mask = mask;
+-    dc->update_cc = 1;
+-}
+-
+-static void cris_update_cc_op(DisasContext *dc, int op, int size)
+-{
+-    dc->cc_op = op;
+-    dc->cc_size = size;
+-    dc->flags_uptodate = 0;
+-}
+-
+-static inline void cris_update_cc_x(DisasContext *dc)
+-{
+-    /* Save the x flag state at the time of the cc snapshot.  */
+-    if (dc->cc_x_uptodate == (2 | dc->flags_x)) {
+-        return;
+-    }
+-    tcg_gen_movi_tl(cc_x, dc->flags_x);
+-    dc->cc_x_uptodate = 2 | dc->flags_x;
+-}
+-
+-/* Update cc prior to executing ALU op. Needs source operands untouched.  */
+-static void cris_pre_alu_update_cc(DisasContext *dc, int op, 
+-                   TCGv dst, TCGv src, int size)
+-{
+-    if (dc->update_cc) {
+-        cris_update_cc_op(dc, op, size);
+-        tcg_gen_mov_tl(cc_src, src);
+-
+-        if (op != CC_OP_MOVE
+-            && op != CC_OP_AND
+-            && op != CC_OP_OR
+-            && op != CC_OP_XOR
+-            && op != CC_OP_ASR
+-            && op != CC_OP_LSR
+-            && op != CC_OP_LSL) {
+-            tcg_gen_mov_tl(cc_dest, dst);
+-        }
+-
+-        cris_update_cc_x(dc);
+-    }
+-}
+-
+-/* Update cc after executing ALU op. needs the result.  */
+-static inline void cris_update_result(DisasContext *dc, TCGv res)
+-{
+-    if (dc->update_cc) {
+-        tcg_gen_mov_tl(cc_result, res);
+-    }
+-}
+-
+-/* Returns one if the write back stage should execute.  */
+-static void cris_alu_op_exec(DisasContext *dc, int op, 
+-                   TCGv dst, TCGv a, TCGv b, int size)
+-{
+-    /* Emit the ALU insns.  */
+-    switch (op) {
+-    case CC_OP_ADD:
+-        tcg_gen_add_tl(dst, a, b);
+-        /* Extended arithmetic.  */
+-        t_gen_addx_carry(dc, dst);
+-        break;
+-    case CC_OP_ADDC:
+-        tcg_gen_add_tl(dst, a, b);
+-        t_gen_add_flag(dst, 0); /* C_FLAG.  */
+-        break;
+-    case CC_OP_MCP:
+-        tcg_gen_add_tl(dst, a, b);
+-        t_gen_add_flag(dst, 8); /* R_FLAG.  */
+-        break;
+-    case CC_OP_SUB:
+-        tcg_gen_sub_tl(dst, a, b);
+-        /* Extended arithmetic.  */
+-        t_gen_subx_carry(dc, dst);
+-        break;
+-    case CC_OP_MOVE:
+-        tcg_gen_mov_tl(dst, b);
+-        break;
+-    case CC_OP_OR:
+-        tcg_gen_or_tl(dst, a, b);
+-        break;
+-    case CC_OP_AND:
+-        tcg_gen_and_tl(dst, a, b);
+-        break;
+-    case CC_OP_XOR:
+-        tcg_gen_xor_tl(dst, a, b);
+-        break;
+-    case CC_OP_LSL:
+-        t_gen_lsl(dst, a, b);
+-        break;
+-    case CC_OP_LSR:
+-        t_gen_lsr(dst, a, b);
+-        break;
+-    case CC_OP_ASR:
+-        t_gen_asr(dst, a, b);
+-        break;
+-    case CC_OP_NEG:
+-        tcg_gen_neg_tl(dst, b);
+-        /* Extended arithmetic.  */
+-        t_gen_subx_carry(dc, dst);
+-        break;
+-    case CC_OP_LZ:
+-        tcg_gen_clzi_tl(dst, b, TARGET_LONG_BITS);
+-        break;
+-    case CC_OP_MULS:
+-        tcg_gen_muls2_tl(dst, cpu_PR[PR_MOF], a, b);
+-        break;
+-    case CC_OP_MULU:
+-        tcg_gen_mulu2_tl(dst, cpu_PR[PR_MOF], a, b);
+-        break;
+-    case CC_OP_DSTEP:
+-        t_gen_cris_dstep(dst, a, b);
+-        break;
+-    case CC_OP_MSTEP:
+-        t_gen_cris_mstep(dst, a, b, cpu_PR[PR_CCS]);
+-        break;
+-    case CC_OP_BOUND:
+-        tcg_gen_movcond_tl(TCG_COND_LEU, dst, a, b, a, b);
+-        break;
+-    case CC_OP_CMP:
+-        tcg_gen_sub_tl(dst, a, b);
+-        /* Extended arithmetic.  */
+-        t_gen_subx_carry(dc, dst);
+-        break;
+-    default:
+-        qemu_log_mask(LOG_GUEST_ERROR, "illegal ALU op.\n");
+-        BUG();
+-        break;
+-    }
+-
+-    if (size == 1) {
+-        tcg_gen_andi_tl(dst, dst, 0xff);
+-    } else if (size == 2) {
+-        tcg_gen_andi_tl(dst, dst, 0xffff);
+-    }
+-}
+-
+-static void cris_alu(DisasContext *dc, int op,
+-                   TCGv d, TCGv op_a, TCGv op_b, int size)
+-{
+-    TCGv tmp;
+-    int writeback;
+-
+-    writeback = 1;
+-
+-    if (op == CC_OP_CMP) {
+-        tmp = tcg_temp_new();
+-        writeback = 0;
+-    } else if (size == 4) {
+-        tmp = d;
+-        writeback = 0;
+-    } else {
+-        tmp = tcg_temp_new();
+-    }
+-
+-
+-    cris_pre_alu_update_cc(dc, op, op_a, op_b, size);
+-    cris_alu_op_exec(dc, op, tmp, op_a, op_b, size);
+-    cris_update_result(dc, tmp);
+-
+-    /* Writeback.  */
+-    if (writeback) {
+-        if (size == 1) {
+-            tcg_gen_andi_tl(d, d, ~0xff);
+-        } else {
+-            tcg_gen_andi_tl(d, d, ~0xffff);
+-        }
+-        tcg_gen_or_tl(d, d, tmp);
+-    }
+-}
+-
+-static int arith_cc(DisasContext *dc)
+-{
+-    if (dc->update_cc) {
+-        switch (dc->cc_op) {
+-        case CC_OP_ADDC: return 1;
+-        case CC_OP_ADD: return 1;
+-        case CC_OP_SUB: return 1;
+-        case CC_OP_DSTEP: return 1;
+-        case CC_OP_LSL: return 1;
+-        case CC_OP_LSR: return 1;
+-        case CC_OP_ASR: return 1;
+-        case CC_OP_CMP: return 1;
+-        case CC_OP_NEG: return 1;
+-        case CC_OP_OR: return 1;
+-        case CC_OP_AND: return 1;
+-        case CC_OP_XOR: return 1;
+-        case CC_OP_MULU: return 1;
+-        case CC_OP_MULS: return 1;
+-        default:
+-            return 0;
+-        }
+-    }
+-    return 0;
+-}
+-
+-static void gen_tst_cc (DisasContext *dc, TCGv cc, int cond)
+-{
+-    int arith_opt, move_opt;
+-
+-    /* TODO: optimize more condition codes.  */
+-
+-    /*
+-     * If the flags are live, we've gotta look into the bits of CCS.
+-     * Otherwise, if we just did an arithmetic operation we try to
+-     * evaluate the condition code faster.
+-     *
+-     * When this function is done, T0 should be non-zero if the condition
+-     * code is true.
+-     */
+-    arith_opt = arith_cc(dc) && !dc->flags_uptodate;
+-    move_opt = (dc->cc_op == CC_OP_MOVE);
+-    switch (cond) {
+-    case CC_EQ:
+-        if ((arith_opt || move_opt)
+-                && dc->cc_x_uptodate != (2 | X_FLAG)) {
+-            tcg_gen_setcondi_tl(TCG_COND_EQ, cc, cc_result, 0);
+-        } else {
+-            cris_evaluate_flags(dc);
+-            tcg_gen_andi_tl(cc,
+-                    cpu_PR[PR_CCS], Z_FLAG);
+-        }
+-        break;
+-    case CC_NE:
+-        if ((arith_opt || move_opt)
+-                && dc->cc_x_uptodate != (2 | X_FLAG)) {
+-            tcg_gen_mov_tl(cc, cc_result);
+-        } else {
+-            cris_evaluate_flags(dc);
+-            tcg_gen_xori_tl(cc, cpu_PR[PR_CCS],
+-                    Z_FLAG);
+-            tcg_gen_andi_tl(cc, cc, Z_FLAG);
+-        }
+-        break;
+-    case CC_CS:
+-        cris_evaluate_flags(dc);
+-        tcg_gen_andi_tl(cc, cpu_PR[PR_CCS], C_FLAG);
+-        break;
+-    case CC_CC:
+-        cris_evaluate_flags(dc);
+-        tcg_gen_xori_tl(cc, cpu_PR[PR_CCS], C_FLAG);
+-        tcg_gen_andi_tl(cc, cc, C_FLAG);
+-        break;
+-    case CC_VS:
+-        cris_evaluate_flags(dc);
+-        tcg_gen_andi_tl(cc, cpu_PR[PR_CCS], V_FLAG);
+-        break;
+-    case CC_VC:
+-        cris_evaluate_flags(dc);
+-        tcg_gen_xori_tl(cc, cpu_PR[PR_CCS],
+-                V_FLAG);
+-        tcg_gen_andi_tl(cc, cc, V_FLAG);
+-        break;
+-    case CC_PL:
+-        if (arith_opt || move_opt) {
+-            int bits = 31;
+-
+-            if (dc->cc_size == 1) {
+-                bits = 7;
+-            } else if (dc->cc_size == 2) {
+-                bits = 15;
+-            }
+-
+-            tcg_gen_shri_tl(cc, cc_result, bits);
+-            tcg_gen_xori_tl(cc, cc, 1);
+-        } else {
+-            cris_evaluate_flags(dc);
+-            tcg_gen_xori_tl(cc, cpu_PR[PR_CCS],
+-                    N_FLAG);
+-            tcg_gen_andi_tl(cc, cc, N_FLAG);
+-        }
+-        break;
+-    case CC_MI:
+-        if (arith_opt || move_opt) {
+-            int bits = 31;
+-
+-            if (dc->cc_size == 1) {
+-                bits = 7;
+-            } else if (dc->cc_size == 2) {
+-                bits = 15;
+-            }
+-
+-            tcg_gen_shri_tl(cc, cc_result, bits);
+-            tcg_gen_andi_tl(cc, cc, 1);
+-        } else {
+-            cris_evaluate_flags(dc);
+-            tcg_gen_andi_tl(cc, cpu_PR[PR_CCS],
+-                    N_FLAG);
+-        }
+-        break;
+-    case CC_LS:
+-        cris_evaluate_flags(dc);
+-        tcg_gen_andi_tl(cc, cpu_PR[PR_CCS],
+-                C_FLAG | Z_FLAG);
+-        break;
+-    case CC_HI:
+-        cris_evaluate_flags(dc);
+-        {
+-            TCGv tmp;
+-
+-            tmp = tcg_temp_new();
+-            tcg_gen_xori_tl(tmp, cpu_PR[PR_CCS],
+-                    C_FLAG | Z_FLAG);
+-            /* Overlay the C flag on top of the Z.  */
+-            tcg_gen_shli_tl(cc, tmp, 2);
+-            tcg_gen_and_tl(cc, tmp, cc);
+-            tcg_gen_andi_tl(cc, cc, Z_FLAG);
+-        }
+-        break;
+-    case CC_GE:
+-        cris_evaluate_flags(dc);
+-        /* Overlay the V flag on top of the N.  */
+-        tcg_gen_shli_tl(cc, cpu_PR[PR_CCS], 2);
+-        tcg_gen_xor_tl(cc,
+-                cpu_PR[PR_CCS], cc);
+-        tcg_gen_andi_tl(cc, cc, N_FLAG);
+-        tcg_gen_xori_tl(cc, cc, N_FLAG);
+-        break;
+-    case CC_LT:
+-        cris_evaluate_flags(dc);
+-        /* Overlay the V flag on top of the N.  */
+-        tcg_gen_shli_tl(cc, cpu_PR[PR_CCS], 2);
+-        tcg_gen_xor_tl(cc,
+-                cpu_PR[PR_CCS], cc);
+-        tcg_gen_andi_tl(cc, cc, N_FLAG);
+-        break;
+-    case CC_GT:
+-        cris_evaluate_flags(dc);
+-        {
+-            TCGv n, z;
+-
+-            n = tcg_temp_new();
+-            z = tcg_temp_new();
+-
+-            /* To avoid a shift we overlay everything on
+-                   the V flag.  */
+-            tcg_gen_shri_tl(n, cpu_PR[PR_CCS], 2);
+-            tcg_gen_shri_tl(z, cpu_PR[PR_CCS], 1);
+-            /* invert Z.  */
+-            tcg_gen_xori_tl(z, z, 2);
+-
+-            tcg_gen_xor_tl(n, n, cpu_PR[PR_CCS]);
+-            tcg_gen_xori_tl(n, n, 2);
+-            tcg_gen_and_tl(cc, z, n);
+-            tcg_gen_andi_tl(cc, cc, 2);
+-        }
+-        break;
+-    case CC_LE:
+-        cris_evaluate_flags(dc);
+-        {
+-            TCGv n, z;
+-
+-            n = tcg_temp_new();
+-            z = tcg_temp_new();
+-
+-            /* To avoid a shift we overlay everything on
+-                   the V flag.  */
+-            tcg_gen_shri_tl(n, cpu_PR[PR_CCS], 2);
+-            tcg_gen_shri_tl(z, cpu_PR[PR_CCS], 1);
+-
+-            tcg_gen_xor_tl(n, n, cpu_PR[PR_CCS]);
+-            tcg_gen_or_tl(cc, z, n);
+-            tcg_gen_andi_tl(cc, cc, 2);
+-        }
+-        break;
+-    case CC_P:
+-        cris_evaluate_flags(dc);
+-        tcg_gen_andi_tl(cc, cpu_PR[PR_CCS], P_FLAG);
+-        break;
+-    case CC_A:
+-        tcg_gen_movi_tl(cc, 1);
+-        break;
+-    default:
+-        BUG();
+-        break;
+-    };
+-}
+-
+-static void cris_store_direct_jmp(DisasContext *dc)
+-{
+-    /* Store the direct jmp state into the cpu-state.  */
+-    if (dc->jmp == JMP_DIRECT || dc->jmp == JMP_DIRECT_CC) {
+-        if (dc->jmp == JMP_DIRECT) {
+-            tcg_gen_movi_tl(env_btaken, 1);
+-        }
+-        tcg_gen_movi_tl(env_btarget, dc->jmp_pc);
+-        dc->jmp = JMP_INDIRECT;
+-    }
+-}
+-
+-static void cris_prepare_cc_branch (DisasContext *dc, 
+-                    int offset, int cond)
+-{
+-    /* This helps us re-schedule the micro-code to insns in delay-slots
+-       before the actual jump.  */
+-    dc->delayed_branch = 2;
+-    dc->jmp = JMP_DIRECT_CC;
+-    dc->jmp_pc = dc->pc + offset;
+-
+-    gen_tst_cc(dc, env_btaken, cond);
+-    tcg_gen_movi_tl(env_btarget, dc->jmp_pc);
+-}
+-
+-
+-/* jumps, when the dest is in a live reg for example. Direct should be set
+-   when the dest addr is constant to allow tb chaining.  */
+-static inline void cris_prepare_jmp (DisasContext *dc, unsigned int type)
+-{
+-    /* This helps us re-schedule the micro-code to insns in delay-slots
+-       before the actual jump.  */
+-    dc->delayed_branch = 2;
+-    dc->jmp = type;
+-    if (type == JMP_INDIRECT) {
+-        tcg_gen_movi_tl(env_btaken, 1);
+-    }
+-}
+-
+-static void gen_load64(DisasContext *dc, TCGv_i64 dst, TCGv addr)
+-{
+-    /* If we get a fault on a delayslot we must keep the jmp state in
+-       the cpu-state to be able to re-execute the jmp.  */
+-    if (dc->delayed_branch == 1) {
+-        cris_store_direct_jmp(dc);
+-    }
+-
+-    tcg_gen_qemu_ld_i64(dst, addr, dc->mem_index, MO_TEUQ);
+-}
+-
+-static void gen_load(DisasContext *dc, TCGv dst, TCGv addr, 
+-             unsigned int size, int sign)
+-{
+-    /* If we get a fault on a delayslot we must keep the jmp state in
+-       the cpu-state to be able to re-execute the jmp.  */
+-    if (dc->delayed_branch == 1) {
+-        cris_store_direct_jmp(dc);
+-    }
+-
+-    tcg_gen_qemu_ld_tl(dst, addr, dc->mem_index,
+-                       MO_TE + ctz32(size) + (sign ? MO_SIGN : 0));
+-}
+-
+-static void gen_store (DisasContext *dc, TCGv addr, TCGv val,
+-               unsigned int size)
+-{
+-    /* If we get a fault on a delayslot we must keep the jmp state in
+-       the cpu-state to be able to re-execute the jmp.  */
+-    if (dc->delayed_branch == 1) {
+-        cris_store_direct_jmp(dc);
+-    }
+-
+-
+-    /* Conditional writes. We only support the kind were X and P are known
+-       at translation time.  */
+-    if (dc->flags_x && (dc->tb_flags & P_FLAG)) {
+-        dc->postinc = 0;
+-        cris_evaluate_flags(dc);
+-        tcg_gen_ori_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], C_FLAG);
+-        return;
+-    }
+-
+-    tcg_gen_qemu_st_tl(val, addr, dc->mem_index, MO_TE + ctz32(size));
+-
+-    if (dc->flags_x) {
+-        cris_evaluate_flags(dc);
+-        tcg_gen_andi_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], ~C_FLAG);
+-    }
+-}
+-
+-static inline void t_gen_sext(TCGv d, TCGv s, int size)
+-{
+-    if (size == 1) {
+-        tcg_gen_ext8s_i32(d, s);
+-    } else if (size == 2) {
+-        tcg_gen_ext16s_i32(d, s);
+-    } else {
+-        tcg_gen_mov_tl(d, s);
+-    }
+-}
+-
+-static inline void t_gen_zext(TCGv d, TCGv s, int size)
+-{
+-    if (size == 1) {
+-        tcg_gen_ext8u_i32(d, s);
+-    } else if (size == 2) {
+-        tcg_gen_ext16u_i32(d, s);
+-    } else {
+-        tcg_gen_mov_tl(d, s);
+-    }
+-}
+-
+-#if DISAS_CRIS
+-static char memsize_char(int size)
+-{
+-    switch (size) {
+-    case 1: return 'b';
+-    case 2: return 'w';
+-    case 4: return 'd';
+-    default:
+-        return 'x';
+-    }
+-}
+-#endif
+-
+-static inline unsigned int memsize_z(DisasContext *dc)
+-{
+-    return dc->zsize + 1;
+-}
+-
+-static inline unsigned int memsize_zz(DisasContext *dc)
+-{
+-    switch (dc->zzsize) {
+-    case 0: return 1;
+-    case 1: return 2;
+-    default:
+-        return 4;
+-    }
+-}
+-
+-static inline void do_postinc (DisasContext *dc, int size)
+-{
+-    if (dc->postinc) {
+-        tcg_gen_addi_tl(cpu_R[dc->op1], cpu_R[dc->op1], size);
+-    }
+-}
+-
+-static inline void dec_prep_move_r(DisasContext *dc, int rs, int rd,
+-                   int size, int s_ext, TCGv dst)
+-{
+-    if (s_ext) {
+-        t_gen_sext(dst, cpu_R[rs], size);
+-    } else {
+-        t_gen_zext(dst, cpu_R[rs], size);
+-    }
+-}
+-
+-/* Prepare T0 and T1 for a register alu operation.
+-   s_ext decides if the operand1 should be sign-extended or zero-extended when
+-   needed.  */
+-static void dec_prep_alu_r(DisasContext *dc, int rs, int rd,
+-              int size, int s_ext, TCGv dst, TCGv src)
+-{
+-    dec_prep_move_r(dc, rs, rd, size, s_ext, src);
+-
+-    if (s_ext) {
+-        t_gen_sext(dst, cpu_R[rd], size);
+-    } else {
+-        t_gen_zext(dst, cpu_R[rd], size);
+-    }
+-}
+-
+-static int dec_prep_move_m(CPUCRISState *env, DisasContext *dc,
+-                           int s_ext, int memsize, TCGv dst)
+-{
+-    unsigned int rs;
+-    uint32_t imm;
+-    int is_imm;
+-    int insn_len = 2;
+-
+-    rs = dc->op1;
+-    is_imm = rs == 15 && dc->postinc;
+-
+-    /* Load [$rs] onto T1.  */
+-    if (is_imm) {
+-        insn_len = 2 + memsize;
+-        if (memsize == 1) {
+-            insn_len++;
+-        }
+-
+-        imm = cris_fetch(env, dc, dc->pc + 2, memsize, s_ext);
+-        tcg_gen_movi_tl(dst, imm);
+-        dc->postinc = 0;
+-    } else {
+-        cris_flush_cc_state(dc);
+-        gen_load(dc, dst, cpu_R[rs], memsize, 0);
+-        if (s_ext) {
+-            t_gen_sext(dst, dst, memsize);
+-        } else {
+-            t_gen_zext(dst, dst, memsize);
+-        }
+-    }
+-    return insn_len;
+-}
+-
+-/* Prepare T0 and T1 for a memory + alu operation.
+-   s_ext decides if the operand1 should be sign-extended or zero-extended when
+-   needed.  */
+-static int dec_prep_alu_m(CPUCRISState *env, DisasContext *dc,
+-                          int s_ext, int memsize, TCGv dst, TCGv src)
+-{
+-    int insn_len;
+-
+-    insn_len = dec_prep_move_m(env, dc, s_ext, memsize, src);
+-    tcg_gen_mov_tl(dst, cpu_R[dc->op2]);
+-    return insn_len;
+-}
+-
+-#if DISAS_CRIS
+-static const char *cc_name(int cc)
+-{
+-    static const char * const cc_names[16] = {
+-        "cc", "cs", "ne", "eq", "vc", "vs", "pl", "mi",
+-        "ls", "hi", "ge", "lt", "gt", "le", "a", "p"
+-    };
+-    assert(cc < 16);
+-    return cc_names[cc];
+-}
+-#endif
+-
+-/* Start of insn decoders.  */
+-
+-static int dec_bccq(CPUCRISState *env, DisasContext *dc)
+-{
+-    int32_t offset;
+-    int sign;
+-    uint32_t cond = dc->op2;
+-
+-    offset = EXTRACT_FIELD(dc->ir, 1, 7);
+-    sign = EXTRACT_FIELD(dc->ir, 0, 0);
+-
+-    offset *= 2;
+-    offset |= sign << 8;
+-    offset = sign_extend(offset, 8);
+-
+-    LOG_DIS("b%s %x\n", cc_name(cond), dc->pc + offset);
+-
+-    /* op2 holds the condition-code.  */
+-    cris_cc_mask(dc, 0);
+-    cris_prepare_cc_branch(dc, offset, cond);
+-    return 2;
+-}
+-static int dec_addoq(CPUCRISState *env, DisasContext *dc)
+-{
+-    int32_t imm;
+-
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 7);
+-    imm = sign_extend(dc->op1, 7);
+-
+-    LOG_DIS("addoq %d, $r%u\n", imm, dc->op2);
+-    cris_cc_mask(dc, 0);
+-    /* Fetch register operand,  */
+-    tcg_gen_addi_tl(cpu_R[R_ACR], cpu_R[dc->op2], imm);
+-
+-    return 2;
+-}
+-static int dec_addq(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv c;
+-    LOG_DIS("addq %u, $r%u\n", dc->op1, dc->op2);
+-
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 5);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-
+-    c = tcg_constant_tl(dc->op1);
+-    cris_alu(dc, CC_OP_ADD,
+-            cpu_R[dc->op2], cpu_R[dc->op2], c, 4);
+-    return 2;
+-}
+-static int dec_moveq(CPUCRISState *env, DisasContext *dc)
+-{
+-    uint32_t imm;
+-
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 5);
+-    imm = sign_extend(dc->op1, 5);
+-    LOG_DIS("moveq %d, $r%u\n", imm, dc->op2);
+-
+-    tcg_gen_movi_tl(cpu_R[dc->op2], imm);
+-    return 2;
+-}
+-static int dec_subq(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv c;
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 5);
+-
+-    LOG_DIS("subq %u, $r%u\n", dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    c = tcg_constant_tl(dc->op1);
+-    cris_alu(dc, CC_OP_SUB,
+-            cpu_R[dc->op2], cpu_R[dc->op2], c, 4);
+-    return 2;
+-}
+-static int dec_cmpq(CPUCRISState *env, DisasContext *dc)
+-{
+-    uint32_t imm;
+-    TCGv c;
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 5);
+-    imm = sign_extend(dc->op1, 5);
+-
+-    LOG_DIS("cmpq %d, $r%d\n", imm, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-
+-    c = tcg_constant_tl(imm);
+-    cris_alu(dc, CC_OP_CMP,
+-            cpu_R[dc->op2], cpu_R[dc->op2], c, 4);
+-    return 2;
+-}
+-static int dec_andq(CPUCRISState *env, DisasContext *dc)
+-{
+-    uint32_t imm;
+-    TCGv c;
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 5);
+-    imm = sign_extend(dc->op1, 5);
+-
+-    LOG_DIS("andq %d, $r%d\n", imm, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-
+-    c = tcg_constant_tl(imm);
+-    cris_alu(dc, CC_OP_AND,
+-            cpu_R[dc->op2], cpu_R[dc->op2], c, 4);
+-    return 2;
+-}
+-static int dec_orq(CPUCRISState *env, DisasContext *dc)
+-{
+-    uint32_t imm;
+-    TCGv c;
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 5);
+-    imm = sign_extend(dc->op1, 5);
+-    LOG_DIS("orq %d, $r%d\n", imm, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-
+-    c = tcg_constant_tl(imm);
+-    cris_alu(dc, CC_OP_OR,
+-            cpu_R[dc->op2], cpu_R[dc->op2], c, 4);
+-    return 2;
+-}
+-static int dec_btstq(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv c;
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 4);
+-    LOG_DIS("btstq %u, $r%d\n", dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    c = tcg_constant_tl(dc->op1);
+-    cris_evaluate_flags(dc);
+-    gen_helper_btst(cpu_PR[PR_CCS], tcg_env, cpu_R[dc->op2],
+-            c, cpu_PR[PR_CCS]);
+-    cris_alu(dc, CC_OP_MOVE,
+-         cpu_R[dc->op2], cpu_R[dc->op2], cpu_R[dc->op2], 4);
+-    cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-    dc->flags_uptodate = 1;
+-    return 2;
+-}
+-static int dec_asrq(CPUCRISState *env, DisasContext *dc)
+-{
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 4);
+-    LOG_DIS("asrq %u, $r%d\n", dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-
+-    tcg_gen_sari_tl(cpu_R[dc->op2], cpu_R[dc->op2], dc->op1);
+-    cris_alu(dc, CC_OP_MOVE,
+-            cpu_R[dc->op2],
+-            cpu_R[dc->op2], cpu_R[dc->op2], 4);
+-    return 2;
+-}
+-static int dec_lslq(CPUCRISState *env, DisasContext *dc)
+-{
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 4);
+-    LOG_DIS("lslq %u, $r%d\n", dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-
+-    tcg_gen_shli_tl(cpu_R[dc->op2], cpu_R[dc->op2], dc->op1);
+-
+-    cris_alu(dc, CC_OP_MOVE,
+-            cpu_R[dc->op2],
+-            cpu_R[dc->op2], cpu_R[dc->op2], 4);
+-    return 2;
+-}
+-static int dec_lsrq(CPUCRISState *env, DisasContext *dc)
+-{
+-    dc->op1 = EXTRACT_FIELD(dc->ir, 0, 4);
+-    LOG_DIS("lsrq %u, $r%d\n", dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-
+-    tcg_gen_shri_tl(cpu_R[dc->op2], cpu_R[dc->op2], dc->op1);
+-    cris_alu(dc, CC_OP_MOVE,
+-            cpu_R[dc->op2],
+-            cpu_R[dc->op2], cpu_R[dc->op2], 4);
+-    return 2;
+-}
+-
+-static int dec_move_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    int size = memsize_zz(dc);
+-
+-    LOG_DIS("move.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    if (size == 4) {
+-        dec_prep_move_r(dc, dc->op1, dc->op2, size, 0, cpu_R[dc->op2]);
+-        cris_cc_mask(dc, CC_MASK_NZ);
+-        cris_update_cc_op(dc, CC_OP_MOVE, 4);
+-        cris_update_cc_x(dc);
+-        cris_update_result(dc, cpu_R[dc->op2]);
+-    } else {
+-        TCGv t0;
+-
+-        t0 = tcg_temp_new();
+-        dec_prep_move_r(dc, dc->op1, dc->op2, size, 0, t0);
+-        cris_alu(dc, CC_OP_MOVE,
+-             cpu_R[dc->op2],
+-             cpu_R[dc->op2], t0, size);
+-    }
+-    return 2;
+-}
+-
+-static int dec_scc_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    int cond = dc->op2;
+-
+-    LOG_DIS("s%s $r%u\n",
+-            cc_name(cond), dc->op1);
+-
+-    gen_tst_cc(dc, cpu_R[dc->op1], cond);
+-    tcg_gen_setcondi_tl(TCG_COND_NE, cpu_R[dc->op1], cpu_R[dc->op1], 0);
+-
+-    cris_cc_mask(dc, 0);
+-    return 2;
+-}
+-
+-static inline void cris_alu_alloc_temps(DisasContext *dc, int size, TCGv *t)
+-{
+-    if (size == 4) {
+-        t[0] = cpu_R[dc->op2];
+-        t[1] = cpu_R[dc->op1];
+-    } else {
+-        t[0] = tcg_temp_new();
+-        t[1] = tcg_temp_new();
+-    }
+-}
+-
+-static int dec_and_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-
+-    LOG_DIS("and.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-    cris_alu(dc, CC_OP_AND, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_lz_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    LOG_DIS("lz $r%u, $r%u\n",
+-            dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    t0 = tcg_temp_new();
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, 4, 0, cpu_R[dc->op2], t0);
+-    cris_alu(dc, CC_OP_LZ, cpu_R[dc->op2], cpu_R[dc->op2], t0, 4);
+-    return 2;
+-}
+-
+-static int dec_lsl_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-
+-    LOG_DIS("lsl.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-    tcg_gen_andi_tl(t[1], t[1], 63);
+-    cris_alu(dc, CC_OP_LSL, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_lsr_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-
+-    LOG_DIS("lsr.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-    tcg_gen_andi_tl(t[1], t[1], 63);
+-    cris_alu(dc, CC_OP_LSR, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_asr_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-
+-    LOG_DIS("asr.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 1, t[0], t[1]);
+-    tcg_gen_andi_tl(t[1], t[1], 63);
+-    cris_alu(dc, CC_OP_ASR, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_muls_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-
+-    LOG_DIS("muls.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZV);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 1, t[0], t[1]);
+-
+-    cris_alu(dc, CC_OP_MULS, cpu_R[dc->op2], t[0], t[1], 4);
+-    return 2;
+-}
+-
+-static int dec_mulu_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-
+-    LOG_DIS("mulu.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZV);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-
+-    cris_alu(dc, CC_OP_MULU, cpu_R[dc->op2], t[0], t[1], 4);
+-    return 2;
+-}
+-
+-
+-static int dec_dstep_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    LOG_DIS("dstep $r%u, $r%u\n", dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu(dc, CC_OP_DSTEP,
+-            cpu_R[dc->op2], cpu_R[dc->op2], cpu_R[dc->op1], 4);
+-    return 2;
+-}
+-
+-static int dec_xor_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-    LOG_DIS("xor.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    BUG_ON(size != 4); /* xor is dword.  */
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-
+-    cris_alu(dc, CC_OP_XOR, cpu_R[dc->op2], t[0], t[1], 4);
+-    return 2;
+-}
+-
+-static int dec_bound_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv l0;
+-    int size = memsize_zz(dc);
+-    LOG_DIS("bound.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    l0 = tcg_temp_new();
+-    dec_prep_move_r(dc, dc->op1, dc->op2, size, 0, l0);
+-    cris_alu(dc, CC_OP_BOUND, cpu_R[dc->op2], cpu_R[dc->op2], l0, 4);
+-    return 2;
+-}
+-
+-static int dec_cmp_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-    LOG_DIS("cmp.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-
+-    cris_alu(dc, CC_OP_CMP, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_abs_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    LOG_DIS("abs $r%u, $r%u\n",
+-            dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-
+-    tcg_gen_abs_tl(cpu_R[dc->op2], cpu_R[dc->op1]);
+-    cris_alu(dc, CC_OP_MOVE,
+-            cpu_R[dc->op2], cpu_R[dc->op2], cpu_R[dc->op2], 4);
+-    return 2;
+-}
+-
+-static int dec_add_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-    LOG_DIS("add.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-
+-    cris_alu(dc, CC_OP_ADD, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_addc_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    LOG_DIS("addc $r%u, $r%u\n",
+-            dc->op1, dc->op2);
+-    cris_evaluate_flags(dc);
+-
+-    /* Set for this insn.  */
+-    dc->flags_x = X_FLAG;
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_ADDC,
+-         cpu_R[dc->op2], cpu_R[dc->op2], cpu_R[dc->op1], 4);
+-    return 2;
+-}
+-
+-static int dec_mcp_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    LOG_DIS("mcp $p%u, $r%u\n",
+-             dc->op2, dc->op1);
+-    cris_evaluate_flags(dc);
+-    cris_cc_mask(dc, CC_MASK_RNZV);
+-    cris_alu(dc, CC_OP_MCP,
+-            cpu_R[dc->op1], cpu_R[dc->op1], cpu_PR[dc->op2], 4);
+-    return 2;
+-}
+-
+-#if DISAS_CRIS
+-static char * swapmode_name(int mode, char *modename) {
+-    int i = 0;
+-    if (mode & 8) {
+-        modename[i++] = 'n';
+-    }
+-    if (mode & 4) {
+-        modename[i++] = 'w';
+-    }
+-    if (mode & 2) {
+-        modename[i++] = 'b';
+-    }
+-    if (mode & 1) {
+-        modename[i++] = 'r';
+-    }
+-    modename[i++] = 0;
+-    return modename;
+-}
+-#endif
+-
+-static int dec_swap_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-#if DISAS_CRIS
+-    char modename[4];
+-#endif
+-    LOG_DIS("swap%s $r%u\n",
+-             swapmode_name(dc->op2, modename), dc->op1);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    t0 = tcg_temp_new();
+-    tcg_gen_mov_tl(t0, cpu_R[dc->op1]);
+-    if (dc->op2 & 8) {
+-        tcg_gen_not_tl(t0, t0);
+-    }
+-    if (dc->op2 & 4) {
+-        t_gen_swapw(t0, t0);
+-    }
+-    if (dc->op2 & 2) {
+-        t_gen_swapb(t0, t0);
+-    }
+-    if (dc->op2 & 1) {
+-        t_gen_swapr(t0, t0);
+-    }
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->op1], cpu_R[dc->op1], t0, 4);
+-    return 2;
+-}
+-
+-static int dec_or_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-    LOG_DIS("or.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-    cris_alu(dc, CC_OP_OR, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_addi_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    LOG_DIS("addi.%c $r%u, $r%u\n",
+-            memsize_char(memsize_zz(dc)), dc->op2, dc->op1);
+-    cris_cc_mask(dc, 0);
+-    t0 = tcg_temp_new();
+-    tcg_gen_shli_tl(t0, cpu_R[dc->op2], dc->zzsize);
+-    tcg_gen_add_tl(cpu_R[dc->op1], cpu_R[dc->op1], t0);
+-    return 2;
+-}
+-
+-static int dec_addi_acr(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    LOG_DIS("addi.%c $r%u, $r%u, $acr\n",
+-          memsize_char(memsize_zz(dc)), dc->op2, dc->op1);
+-    cris_cc_mask(dc, 0);
+-    t0 = tcg_temp_new();
+-    tcg_gen_shli_tl(t0, cpu_R[dc->op2], dc->zzsize);
+-    tcg_gen_add_tl(cpu_R[R_ACR], cpu_R[dc->op1], t0);
+-    return 2;
+-}
+-
+-static int dec_neg_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-    LOG_DIS("neg.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-
+-    cris_alu(dc, CC_OP_NEG, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-static int dec_btst_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    LOG_DIS("btst $r%u, $r%u\n",
+-            dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_evaluate_flags(dc);
+-        gen_helper_btst(cpu_PR[PR_CCS], tcg_env, cpu_R[dc->op2],
+-            cpu_R[dc->op1], cpu_PR[PR_CCS]);
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->op2],
+-         cpu_R[dc->op2], cpu_R[dc->op2], 4);
+-    cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-    dc->flags_uptodate = 1;
+-    return 2;
+-}
+-
+-static int dec_sub_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int size = memsize_zz(dc);
+-    LOG_DIS("sub.%c $r%u, $r%u\n",
+-            memsize_char(size), dc->op1, dc->op2);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu_alloc_temps(dc, size, t);
+-    dec_prep_alu_r(dc, dc->op1, dc->op2, size, 0, t[0], t[1]);
+-    cris_alu(dc, CC_OP_SUB, cpu_R[dc->op2], t[0], t[1], size);
+-    return 2;
+-}
+-
+-/* Zero extension. From size to dword.  */
+-static int dec_movu_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    int size = memsize_z(dc);
+-    LOG_DIS("movu.%c $r%u, $r%u\n",
+-            memsize_char(size),
+-            dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    t0 = tcg_temp_new();
+-    dec_prep_move_r(dc, dc->op1, dc->op2, size, 0, t0);
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->op2], cpu_R[dc->op2], t0, 4);
+-    return 2;
+-}
+-
+-/* Sign extension. From size to dword.  */
+-static int dec_movs_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    int size = memsize_z(dc);
+-    LOG_DIS("movs.%c $r%u, $r%u\n",
+-            memsize_char(size),
+-            dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    t0 = tcg_temp_new();
+-    /* Size can only be qi or hi.  */
+-    t_gen_sext(t0, cpu_R[dc->op1], size);
+-    cris_alu(dc, CC_OP_MOVE,
+-            cpu_R[dc->op2], cpu_R[dc->op1], t0, 4);
+-    return 2;
+-}
+-
+-/* zero extension. From size to dword.  */
+-static int dec_addu_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    int size = memsize_z(dc);
+-    LOG_DIS("addu.%c $r%u, $r%u\n",
+-            memsize_char(size),
+-            dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    t0 = tcg_temp_new();
+-    /* Size can only be qi or hi.  */
+-    t_gen_zext(t0, cpu_R[dc->op1], size);
+-    cris_alu(dc, CC_OP_ADD, cpu_R[dc->op2], cpu_R[dc->op2], t0, 4);
+-    return 2;
+-}
+-
+-/* Sign extension. From size to dword.  */
+-static int dec_adds_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    int size = memsize_z(dc);
+-    LOG_DIS("adds.%c $r%u, $r%u\n",
+-            memsize_char(size),
+-            dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    t0 = tcg_temp_new();
+-    /* Size can only be qi or hi.  */
+-    t_gen_sext(t0, cpu_R[dc->op1], size);
+-    cris_alu(dc, CC_OP_ADD,
+-            cpu_R[dc->op2], cpu_R[dc->op2], t0, 4);
+-    return 2;
+-}
+-
+-/* Zero extension. From size to dword.  */
+-static int dec_subu_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    int size = memsize_z(dc);
+-    LOG_DIS("subu.%c $r%u, $r%u\n",
+-            memsize_char(size),
+-            dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    t0 = tcg_temp_new();
+-    /* Size can only be qi or hi.  */
+-    t_gen_zext(t0, cpu_R[dc->op1], size);
+-    cris_alu(dc, CC_OP_SUB,
+-            cpu_R[dc->op2], cpu_R[dc->op2], t0, 4);
+-    return 2;
+-}
+-
+-/* Sign extension. From size to dword.  */
+-static int dec_subs_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    int size = memsize_z(dc);
+-    LOG_DIS("subs.%c $r%u, $r%u\n",
+-            memsize_char(size),
+-            dc->op1, dc->op2);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    t0 = tcg_temp_new();
+-    /* Size can only be qi or hi.  */
+-    t_gen_sext(t0, cpu_R[dc->op1], size);
+-    cris_alu(dc, CC_OP_SUB,
+-            cpu_R[dc->op2], cpu_R[dc->op2], t0, 4);
+-    return 2;
+-}
+-
+-static int dec_setclrf(CPUCRISState *env, DisasContext *dc)
+-{
+-    uint32_t flags;
+-    int set = (~dc->opcode >> 2) & 1;
+-
+-
+-    flags = (EXTRACT_FIELD(dc->ir, 12, 15) << 4)
+-        | EXTRACT_FIELD(dc->ir, 0, 3);
+-    if (set && flags == 0) {
+-        LOG_DIS("nop\n");
+-        return 2;
+-    } else if (!set && (flags & 0x20)) {
+-        LOG_DIS("di\n");
+-    } else {
+-        LOG_DIS("%sf %x\n", set ? "set" : "clr", flags);
+-    }
+-
+-    /* User space is not allowed to touch these. Silently ignore.  */
+-    if (dc->tb_flags & U_FLAG) {
+-        flags &= ~(S_FLAG | I_FLAG | U_FLAG);
+-    }
+-
+-    if (flags & X_FLAG) {
+-        if (set) {
+-            dc->flags_x = X_FLAG;
+-        } else {
+-            dc->flags_x = 0;
+-        }
+-    }
+-
+-    /* Break the TB if any of the SPI flag changes.  */
+-    if (flags & (P_FLAG | S_FLAG)) {
+-        tcg_gen_movi_tl(env_pc, dc->pc + 2);
+-        dc->base.is_jmp = DISAS_UPDATE;
+-        dc->cpustate_changed = 1;
+-    }
+-
+-    /* For the I flag, only act on posedge.  */
+-    if ((flags & I_FLAG)) {
+-        tcg_gen_movi_tl(env_pc, dc->pc + 2);
+-        dc->base.is_jmp = DISAS_UPDATE;
+-        dc->cpustate_changed = 1;
+-    }
+-
+-
+-    /* Simply decode the flags.  */
+-    cris_evaluate_flags(dc);
+-    cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-    cris_update_cc_x(dc);
+-    tcg_gen_movi_tl(cc_op, dc->cc_op);
+-
+-    if (set) {
+-        if (!(dc->tb_flags & U_FLAG) && (flags & U_FLAG)) {
+-            /* Enter user mode.  */
+-            t_gen_mov_env_TN(ksp, cpu_R[R_SP]);
+-            tcg_gen_mov_tl(cpu_R[R_SP], cpu_PR[PR_USP]);
+-            dc->cpustate_changed = 1;
+-        }
+-        tcg_gen_ori_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], flags);
+-    } else {
+-        tcg_gen_andi_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], ~flags);
+-    }
+-
+-    dc->flags_uptodate = 1;
+-    dc->clear_x = 0;
+-    return 2;
+-}
+-
+-static int dec_move_rs(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv c2, c1;
+-    LOG_DIS("move $r%u, $s%u\n", dc->op1, dc->op2);
+-    c1 = tcg_constant_tl(dc->op1);
+-    c2 = tcg_constant_tl(dc->op2);
+-    cris_cc_mask(dc, 0);
+-    gen_helper_movl_sreg_reg(tcg_env, c2, c1);
+-    return 2;
+-}
+-static int dec_move_sr(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv c2, c1;
+-    LOG_DIS("move $s%u, $r%u\n", dc->op2, dc->op1);
+-    c1 = tcg_constant_tl(dc->op1);
+-    c2 = tcg_constant_tl(dc->op2);
+-    cris_cc_mask(dc, 0);
+-    gen_helper_movl_reg_sreg(tcg_env, c1, c2);
+-    return 2;
+-}
+-
+-static int dec_move_rp(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    LOG_DIS("move $r%u, $p%u\n", dc->op1, dc->op2);
+-    cris_cc_mask(dc, 0);
+-
+-    t[0] = tcg_temp_new();
+-    if (dc->op2 == PR_CCS) {
+-        cris_evaluate_flags(dc);
+-        tcg_gen_mov_tl(t[0], cpu_R[dc->op1]);
+-        if (dc->tb_flags & U_FLAG) {
+-            t[1] = tcg_temp_new();
+-            /* User space is not allowed to touch all flags.  */
+-            tcg_gen_andi_tl(t[0], t[0], 0x39f);
+-            tcg_gen_andi_tl(t[1], cpu_PR[PR_CCS], ~0x39f);
+-            tcg_gen_or_tl(t[0], t[1], t[0]);
+-        }
+-    } else {
+-        tcg_gen_mov_tl(t[0], cpu_R[dc->op1]);
+-    }
+-
+-    t_gen_mov_preg_TN(dc, dc->op2, t[0]);
+-    if (dc->op2 == PR_CCS) {
+-        cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-        dc->flags_uptodate = 1;
+-    }
+-    return 2;
+-}
+-static int dec_move_pr(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    LOG_DIS("move $p%u, $r%u\n", dc->op2, dc->op1);
+-    cris_cc_mask(dc, 0);
+-
+-    if (dc->op2 == PR_CCS) {
+-        cris_evaluate_flags(dc);
+-    }
+-
+-    if (dc->op2 == PR_DZ) {
+-        tcg_gen_movi_tl(cpu_R[dc->op1], 0);
+-    } else {
+-        t0 = tcg_temp_new();
+-        t_gen_mov_TN_preg(t0, dc->op2);
+-        cris_alu(dc, CC_OP_MOVE,
+-                cpu_R[dc->op1], cpu_R[dc->op1], t0,
+-                preg_sizes[dc->op2]);
+-    }
+-    return 2;
+-}
+-
+-static int dec_move_mr(CPUCRISState *env, DisasContext *dc)
+-{
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("move.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-                    dc->op2);
+-
+-    if (memsize == 4) {
+-        insn_len = dec_prep_move_m(env, dc, 0, 4, cpu_R[dc->op2]);
+-        cris_cc_mask(dc, CC_MASK_NZ);
+-        cris_update_cc_op(dc, CC_OP_MOVE, 4);
+-        cris_update_cc_x(dc);
+-        cris_update_result(dc, cpu_R[dc->op2]);
+-    } else {
+-        TCGv t0;
+-
+-        t0 = tcg_temp_new();
+-        insn_len = dec_prep_move_m(env, dc, 0, memsize, t0);
+-        cris_cc_mask(dc, CC_MASK_NZ);
+-        cris_alu(dc, CC_OP_MOVE,
+-                cpu_R[dc->op2], cpu_R[dc->op2], t0, memsize);
+-    }
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static inline void cris_alu_m_alloc_temps(TCGv *t)
+-{
+-    t[0] = tcg_temp_new();
+-    t[1] = tcg_temp_new();
+-}
+-
+-static int dec_movs_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-    LOG_DIS("movs.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-    /* sign extend.  */
+-        insn_len = dec_prep_alu_m(env, dc, 1, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu(dc, CC_OP_MOVE,
+-            cpu_R[dc->op2], cpu_R[dc->op2], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_addu_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-    LOG_DIS("addu.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-    /* sign extend.  */
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_ADD,
+-            cpu_R[dc->op2], cpu_R[dc->op2], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_adds_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-    LOG_DIS("adds.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-    /* sign extend.  */
+-        insn_len = dec_prep_alu_m(env, dc, 1, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_ADD, cpu_R[dc->op2], cpu_R[dc->op2], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_subu_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-    LOG_DIS("subu.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-    /* sign extend.  */
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_SUB, cpu_R[dc->op2], cpu_R[dc->op2], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_subs_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-    LOG_DIS("subs.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-    /* sign extend.  */
+-        insn_len = dec_prep_alu_m(env, dc, 1, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_SUB, cpu_R[dc->op2], cpu_R[dc->op2], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_movu_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-
+-    LOG_DIS("movu.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->op2], cpu_R[dc->op2], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_cmpu_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-    LOG_DIS("cmpu.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_CMP, cpu_R[dc->op2], cpu_R[dc->op2], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_cmps_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_z(dc);
+-    int insn_len;
+-    LOG_DIS("cmps.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 1, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_CMP,
+-            cpu_R[dc->op2], cpu_R[dc->op2], t[1],
+-            memsize_zz(dc));
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_cmp_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("cmp.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_CMP,
+-            cpu_R[dc->op2], cpu_R[dc->op2], t[1],
+-            memsize_zz(dc));
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_test_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2], c;
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("test.%c [$r%u%s] op2=%x\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_evaluate_flags(dc);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    tcg_gen_andi_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], ~3);
+-
+-    c = tcg_constant_tl(0);
+-    cris_alu(dc, CC_OP_CMP,
+-         cpu_R[dc->op2], t[1], c, memsize_zz(dc));
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_and_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("and.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu(dc, CC_OP_AND, cpu_R[dc->op2], t[0], t[1], memsize_zz(dc));
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_add_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("add.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_ADD,
+-         cpu_R[dc->op2], t[0], t[1], memsize_zz(dc));
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_addo_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("add.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 1, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, 0);
+-    cris_alu(dc, CC_OP_ADD, cpu_R[R_ACR], t[0], t[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_bound_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv l[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("bound.%c [$r%u%s, $r%u\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    l[0] = tcg_temp_new();
+-    l[1] = tcg_temp_new();
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, l[0], l[1]);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu(dc, CC_OP_BOUND, cpu_R[dc->op2], l[0], l[1], 4);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_addc_mr(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int insn_len = 2;
+-    LOG_DIS("addc [$r%u%s, $r%u\n",
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_evaluate_flags(dc);
+-
+-    /* Set for this insn.  */
+-    dc->flags_x = X_FLAG;
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, 4, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_ADDC, cpu_R[dc->op2], t[0], t[1], 4);
+-    do_postinc(dc, 4);
+-    return insn_len;
+-}
+-
+-static int dec_sub_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("sub.%c [$r%u%s, $r%u ir=%x zz=%x\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2, dc->ir, dc->zzsize);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    cris_alu(dc, CC_OP_SUB, cpu_R[dc->op2], t[0], t[1], memsize);
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_or_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len;
+-    LOG_DIS("or.%c [$r%u%s, $r%u pc=%x\n",
+-            memsize_char(memsize),
+-            dc->op1, dc->postinc ? "+]" : "]",
+-            dc->op2, dc->pc);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, CC_MASK_NZ);
+-    cris_alu(dc, CC_OP_OR,
+-            cpu_R[dc->op2], t[0], t[1], memsize_zz(dc));
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_move_mp(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t[2];
+-    int memsize = memsize_zz(dc);
+-    int insn_len = 2;
+-
+-    LOG_DIS("move.%c [$r%u%s, $p%u\n",
+-            memsize_char(memsize),
+-            dc->op1,
+-            dc->postinc ? "+]" : "]",
+-            dc->op2);
+-
+-    cris_alu_m_alloc_temps(t);
+-        insn_len = dec_prep_alu_m(env, dc, 0, memsize, t[0], t[1]);
+-    cris_cc_mask(dc, 0);
+-    if (dc->op2 == PR_CCS) {
+-        cris_evaluate_flags(dc);
+-        if (dc->tb_flags & U_FLAG) {
+-            /* User space is not allowed to touch all flags.  */
+-            tcg_gen_andi_tl(t[1], t[1], 0x39f);
+-            tcg_gen_andi_tl(t[0], cpu_PR[PR_CCS], ~0x39f);
+-            tcg_gen_or_tl(t[1], t[0], t[1]);
+-        }
+-    }
+-
+-    t_gen_mov_preg_TN(dc, dc->op2, t[1]);
+-
+-    do_postinc(dc, memsize);
+-    return insn_len;
+-}
+-
+-static int dec_move_pm(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv t0;
+-    int memsize;
+-
+-    memsize = preg_sizes[dc->op2];
+-
+-    LOG_DIS("move.%c $p%u, [$r%u%s\n",
+-            memsize_char(memsize),
+-            dc->op2, dc->op1, dc->postinc ? "+]" : "]");
+-
+-    /* prepare store. Address in T0, value in T1.  */
+-    if (dc->op2 == PR_CCS) {
+-        cris_evaluate_flags(dc);
+-    }
+-    t0 = tcg_temp_new();
+-    t_gen_mov_TN_preg(t0, dc->op2);
+-    cris_flush_cc_state(dc);
+-    gen_store(dc, cpu_R[dc->op1], t0, memsize);
+-
+-    cris_cc_mask(dc, 0);
+-    if (dc->postinc) {
+-        tcg_gen_addi_tl(cpu_R[dc->op1], cpu_R[dc->op1], memsize);
+-    }
+-    return 2;
+-}
+-
+-static int dec_movem_mr(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv_i64 tmp[16];
+-    TCGv tmp32;
+-    TCGv addr;
+-    int i;
+-    int nr = dc->op2 + 1;
+-
+-    LOG_DIS("movem [$r%u%s, $r%u\n", dc->op1,
+-            dc->postinc ? "+]" : "]", dc->op2);
+-
+-    addr = tcg_temp_new();
+-    /* There are probably better ways of doing this.  */
+-    cris_flush_cc_state(dc);
+-    for (i = 0; i < (nr >> 1); i++) {
+-        tmp[i] = tcg_temp_new_i64();
+-        tcg_gen_addi_tl(addr, cpu_R[dc->op1], i * 8);
+-        gen_load64(dc, tmp[i], addr);
+-    }
+-    if (nr & 1) {
+-        tmp32 = tcg_temp_new_i32();
+-        tcg_gen_addi_tl(addr, cpu_R[dc->op1], i * 8);
+-        gen_load(dc, tmp32, addr, 4, 0);
+-    } else {
+-        tmp32 = NULL;
+-    }
+-
+-    for (i = 0; i < (nr >> 1); i++) {
+-        tcg_gen_extrl_i64_i32(cpu_R[i * 2], tmp[i]);
+-        tcg_gen_shri_i64(tmp[i], tmp[i], 32);
+-        tcg_gen_extrl_i64_i32(cpu_R[i * 2 + 1], tmp[i]);
+-    }
+-    if (nr & 1) {
+-        tcg_gen_mov_tl(cpu_R[dc->op2], tmp32);
+-    }
+-
+-    /* writeback the updated pointer value.  */
+-    if (dc->postinc) {
+-        tcg_gen_addi_tl(cpu_R[dc->op1], cpu_R[dc->op1], nr * 4);
+-    }
+-
+-    /* gen_load might want to evaluate the previous insns flags.  */
+-    cris_cc_mask(dc, 0);
+-    return 2;
+-}
+-
+-static int dec_movem_rm(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv tmp;
+-    TCGv addr;
+-    int i;
+-
+-    LOG_DIS("movem $r%u, [$r%u%s\n", dc->op2, dc->op1,
+-            dc->postinc ? "+]" : "]");
+-
+-    cris_flush_cc_state(dc);
+-
+-    tmp = tcg_temp_new();
+-    addr = tcg_temp_new();
+-    tcg_gen_movi_tl(tmp, 4);
+-    tcg_gen_mov_tl(addr, cpu_R[dc->op1]);
+-    for (i = 0; i <= dc->op2; i++) {
+-        /* Displace addr.  */
+-        /* Perform the store.  */
+-        gen_store(dc, addr, cpu_R[i], 4);
+-        tcg_gen_add_tl(addr, addr, tmp);
+-    }
+-    if (dc->postinc) {
+-        tcg_gen_mov_tl(cpu_R[dc->op1], addr);
+-    }
+-    cris_cc_mask(dc, 0);
+-    return 2;
+-}
+-
+-static int dec_move_rm(CPUCRISState *env, DisasContext *dc)
+-{
+-    int memsize;
+-
+-    memsize = memsize_zz(dc);
+-
+-    LOG_DIS("move.%c $r%u, [$r%u]\n",
+-            memsize_char(memsize), dc->op2, dc->op1);
+-
+-    /* prepare store.  */
+-    cris_flush_cc_state(dc);
+-    gen_store(dc, cpu_R[dc->op1], cpu_R[dc->op2], memsize);
+-
+-    if (dc->postinc) {
+-        tcg_gen_addi_tl(cpu_R[dc->op1], cpu_R[dc->op1], memsize);
+-    }
+-    cris_cc_mask(dc, 0);
+-    return 2;
+-}
+-
+-static int dec_lapcq(CPUCRISState *env, DisasContext *dc)
+-{
+-    LOG_DIS("lapcq %x, $r%u\n",
+-            dc->pc + dc->op1*2, dc->op2);
+-    cris_cc_mask(dc, 0);
+-    tcg_gen_movi_tl(cpu_R[dc->op2], dc->pc + dc->op1 * 2);
+-    return 2;
+-}
+-
+-static int dec_lapc_im(CPUCRISState *env, DisasContext *dc)
+-{
+-    unsigned int rd;
+-    int32_t imm;
+-    int32_t pc;
+-
+-    rd = dc->op2;
+-
+-    cris_cc_mask(dc, 0);
+-    imm = cris_fetch(env, dc, dc->pc + 2, 4, 0);
+-    LOG_DIS("lapc 0x%x, $r%u\n", imm + dc->pc, dc->op2);
+-
+-    pc = dc->pc;
+-    pc += imm;
+-    tcg_gen_movi_tl(cpu_R[rd], pc);
+-    return 6;
+-}
+-
+-/* Jump to special reg.  */
+-static int dec_jump_p(CPUCRISState *env, DisasContext *dc)
+-{
+-    LOG_DIS("jump $p%u\n", dc->op2);
+-
+-    if (dc->op2 == PR_CCS) {
+-        cris_evaluate_flags(dc);
+-    }
+-    t_gen_mov_TN_preg(env_btarget, dc->op2);
+-    /* rete will often have low bit set to indicate delayslot.  */
+-    tcg_gen_andi_tl(env_btarget, env_btarget, ~1);
+-    cris_cc_mask(dc, 0);
+-    cris_prepare_jmp(dc, JMP_INDIRECT);
+-    return 2;
+-}
+-
+-/* Jump and save.  */
+-static int dec_jas_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv c;
+-    LOG_DIS("jas $r%u, $p%u\n", dc->op1, dc->op2);
+-    cris_cc_mask(dc, 0);
+-    /* Store the return address in Pd.  */
+-    tcg_gen_mov_tl(env_btarget, cpu_R[dc->op1]);
+-    if (dc->op2 > 15) {
+-        abort();
+-    }
+-    c = tcg_constant_tl(dc->pc + 4);
+-    t_gen_mov_preg_TN(dc, dc->op2, c);
+-
+-    cris_prepare_jmp(dc, JMP_INDIRECT);
+-    return 2;
+-}
+-
+-static int dec_jas_im(CPUCRISState *env, DisasContext *dc)
+-{
+-    uint32_t imm;
+-    TCGv c;
+-
+-    imm = cris_fetch(env, dc, dc->pc + 2, 4, 0);
+-
+-    LOG_DIS("jas 0x%x\n", imm);
+-    cris_cc_mask(dc, 0);
+-    c = tcg_constant_tl(dc->pc + 8);
+-    /* Store the return address in Pd.  */
+-    t_gen_mov_preg_TN(dc, dc->op2, c);
+-
+-    dc->jmp_pc = imm;
+-    cris_prepare_jmp(dc, JMP_DIRECT);
+-    return 6;
+-}
+-
+-static int dec_jasc_im(CPUCRISState *env, DisasContext *dc)
+-{
+-    uint32_t imm;
+-    TCGv c;
+-
+-    imm = cris_fetch(env, dc, dc->pc + 2, 4, 0);
+-
+-    LOG_DIS("jasc 0x%x\n", imm);
+-    cris_cc_mask(dc, 0);
+-    c = tcg_constant_tl(dc->pc + 8 + 4);
+-    /* Store the return address in Pd.  */
+-    t_gen_mov_preg_TN(dc, dc->op2, c);
+-
+-    dc->jmp_pc = imm;
+-    cris_prepare_jmp(dc, JMP_DIRECT);
+-    return 6;
+-}
+-
+-static int dec_jasc_r(CPUCRISState *env, DisasContext *dc)
+-{
+-    TCGv c;
+-    LOG_DIS("jasc_r $r%u, $p%u\n", dc->op1, dc->op2);
+-    cris_cc_mask(dc, 0);
+-    /* Store the return address in Pd.  */
+-    tcg_gen_mov_tl(env_btarget, cpu_R[dc->op1]);
+-    c = tcg_constant_tl(dc->pc + 4 + 4);
+-    t_gen_mov_preg_TN(dc, dc->op2, c);
+-    cris_prepare_jmp(dc, JMP_INDIRECT);
+-    return 2;
+-}
+-
+-static int dec_bcc_im(CPUCRISState *env, DisasContext *dc)
+-{
+-    int32_t offset;
+-    uint32_t cond = dc->op2;
+-
+-    offset = cris_fetch(env, dc, dc->pc + 2, 2, 1);
+-
+-    LOG_DIS("b%s %d pc=%x dst=%x\n",
+-            cc_name(cond), offset,
+-            dc->pc, dc->pc + offset);
+-
+-    cris_cc_mask(dc, 0);
+-    /* op2 holds the condition-code.  */
+-    cris_prepare_cc_branch(dc, offset, cond);
+-    return 4;
+-}
+-
+-static int dec_bas_im(CPUCRISState *env, DisasContext *dc)
+-{
+-    int32_t simm;
+-    TCGv c;
+-
+-    simm = cris_fetch(env, dc, dc->pc + 2, 4, 0);
+-
+-    LOG_DIS("bas 0x%x, $p%u\n", dc->pc + simm, dc->op2);
+-    cris_cc_mask(dc, 0);
+-    c = tcg_constant_tl(dc->pc + 8);
+-    /* Store the return address in Pd.  */
+-    t_gen_mov_preg_TN(dc, dc->op2, c);
+-
+-    dc->jmp_pc = dc->pc + simm;
+-    cris_prepare_jmp(dc, JMP_DIRECT);
+-    return 6;
+-}
+-
+-static int dec_basc_im(CPUCRISState *env, DisasContext *dc)
+-{
+-    int32_t simm;
+-    TCGv c;
+-    simm = cris_fetch(env, dc, dc->pc + 2, 4, 0);
+-
+-    LOG_DIS("basc 0x%x, $p%u\n", dc->pc + simm, dc->op2);
+-    cris_cc_mask(dc, 0);
+-    c = tcg_constant_tl(dc->pc + 12);
+-    /* Store the return address in Pd.  */
+-    t_gen_mov_preg_TN(dc, dc->op2, c);
+-
+-    dc->jmp_pc = dc->pc + simm;
+-    cris_prepare_jmp(dc, JMP_DIRECT);
+-    return 6;
+-}
+-
+-static int dec_rfe_etc(CPUCRISState *env, DisasContext *dc)
+-{
+-    cris_cc_mask(dc, 0);
+-
+-    if (dc->op2 == 15) {
+-        tcg_gen_st_i32(tcg_constant_i32(1), tcg_env,
+-                       -offsetof(CRISCPU, env) + offsetof(CPUState, halted));
+-        tcg_gen_movi_tl(env_pc, dc->pc + 2);
+-        t_gen_raise_exception(EXCP_HLT);
+-        dc->base.is_jmp = DISAS_NORETURN;
+-        return 2;
+-    }
+-
+-    switch (dc->op2 & 7) {
+-    case 2:
+-        /* rfe.  */
+-        LOG_DIS("rfe\n");
+-        cris_evaluate_flags(dc);
+-        gen_helper_rfe(tcg_env);
+-        dc->base.is_jmp = DISAS_UPDATE;
+-        dc->cpustate_changed = true;
+-        break;
+-    case 5:
+-        /* rfn.  */
+-        LOG_DIS("rfn\n");
+-        cris_evaluate_flags(dc);
+-        gen_helper_rfn(tcg_env);
+-        dc->base.is_jmp = DISAS_UPDATE;
+-        dc->cpustate_changed = true;
+-        break;
+-    case 6:
+-        LOG_DIS("break %d\n", dc->op1);
+-        cris_evaluate_flags(dc);
+-        /* break.  */
+-        tcg_gen_movi_tl(env_pc, dc->pc + 2);
+-
+-        /* Breaks start at 16 in the exception vector.  */
+-        t_gen_movi_env_TN(trap_vector, dc->op1 + 16);
+-        t_gen_raise_exception(EXCP_BREAK);
+-        dc->base.is_jmp = DISAS_NORETURN;
+-        break;
+-    default:
+-        printf("op2=%x\n", dc->op2);
+-        BUG();
+-        break;
+-
+-    }
+-    return 2;
+-}
+-
+-static int dec_ftag_fidx_d_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    return 2;
+-}
+-
+-static int dec_ftag_fidx_i_m(CPUCRISState *env, DisasContext *dc)
+-{
+-    return 2;
+-}
+-
+-static int dec_null(CPUCRISState *env, DisasContext *dc)
+-{
+-    printf("unknown insn pc=%x opc=%x op1=%x op2=%x\n",
+-        dc->pc, dc->opcode, dc->op1, dc->op2);
+-    fflush(NULL);
+-    BUG();
+-    return 2;
+-}
+-
+-static const struct decoder_info {
+-    struct {
+-        uint32_t bits;
+-        uint32_t mask;
+-    };
+-    int (*dec)(CPUCRISState *env, DisasContext *dc);
+-} decinfo[] = {
+-    /* Order matters here.  */
+-    {DEC_MOVEQ, dec_moveq},
+-    {DEC_BTSTQ, dec_btstq},
+-    {DEC_CMPQ, dec_cmpq},
+-    {DEC_ADDOQ, dec_addoq},
+-    {DEC_ADDQ, dec_addq},
+-    {DEC_SUBQ, dec_subq},
+-    {DEC_ANDQ, dec_andq},
+-    {DEC_ORQ, dec_orq},
+-    {DEC_ASRQ, dec_asrq},
+-    {DEC_LSLQ, dec_lslq},
+-    {DEC_LSRQ, dec_lsrq},
+-    {DEC_BCCQ, dec_bccq},
+-
+-    {DEC_BCC_IM, dec_bcc_im},
+-    {DEC_JAS_IM, dec_jas_im},
+-    {DEC_JAS_R, dec_jas_r},
+-    {DEC_JASC_IM, dec_jasc_im},
+-    {DEC_JASC_R, dec_jasc_r},
+-    {DEC_BAS_IM, dec_bas_im},
+-    {DEC_BASC_IM, dec_basc_im},
+-    {DEC_JUMP_P, dec_jump_p},
+-    {DEC_LAPC_IM, dec_lapc_im},
+-    {DEC_LAPCQ, dec_lapcq},
+-
+-    {DEC_RFE_ETC, dec_rfe_etc},
+-    {DEC_ADDC_MR, dec_addc_mr},
+-
+-    {DEC_MOVE_MP, dec_move_mp},
+-    {DEC_MOVE_PM, dec_move_pm},
+-    {DEC_MOVEM_MR, dec_movem_mr},
+-    {DEC_MOVEM_RM, dec_movem_rm},
+-    {DEC_MOVE_PR, dec_move_pr},
+-    {DEC_SCC_R, dec_scc_r},
+-    {DEC_SETF, dec_setclrf},
+-    {DEC_CLEARF, dec_setclrf},
+-
+-    {DEC_MOVE_SR, dec_move_sr},
+-    {DEC_MOVE_RP, dec_move_rp},
+-    {DEC_SWAP_R, dec_swap_r},
+-    {DEC_ABS_R, dec_abs_r},
+-    {DEC_LZ_R, dec_lz_r},
+-    {DEC_MOVE_RS, dec_move_rs},
+-    {DEC_BTST_R, dec_btst_r},
+-    {DEC_ADDC_R, dec_addc_r},
+-
+-    {DEC_DSTEP_R, dec_dstep_r},
+-    {DEC_XOR_R, dec_xor_r},
+-    {DEC_MCP_R, dec_mcp_r},
+-    {DEC_CMP_R, dec_cmp_r},
+-
+-    {DEC_ADDI_R, dec_addi_r},
+-    {DEC_ADDI_ACR, dec_addi_acr},
+-
+-    {DEC_ADD_R, dec_add_r},
+-    {DEC_SUB_R, dec_sub_r},
+-
+-    {DEC_ADDU_R, dec_addu_r},
+-    {DEC_ADDS_R, dec_adds_r},
+-    {DEC_SUBU_R, dec_subu_r},
+-    {DEC_SUBS_R, dec_subs_r},
+-    {DEC_LSL_R, dec_lsl_r},
+-
+-    {DEC_AND_R, dec_and_r},
+-    {DEC_OR_R, dec_or_r},
+-    {DEC_BOUND_R, dec_bound_r},
+-    {DEC_ASR_R, dec_asr_r},
+-    {DEC_LSR_R, dec_lsr_r},
+-
+-    {DEC_MOVU_R, dec_movu_r},
+-    {DEC_MOVS_R, dec_movs_r},
+-    {DEC_NEG_R, dec_neg_r},
+-    {DEC_MOVE_R, dec_move_r},
+-
+-    {DEC_FTAG_FIDX_I_M, dec_ftag_fidx_i_m},
+-    {DEC_FTAG_FIDX_D_M, dec_ftag_fidx_d_m},
+-
+-    {DEC_MULS_R, dec_muls_r},
+-    {DEC_MULU_R, dec_mulu_r},
+-
+-    {DEC_ADDU_M, dec_addu_m},
+-    {DEC_ADDS_M, dec_adds_m},
+-    {DEC_SUBU_M, dec_subu_m},
+-    {DEC_SUBS_M, dec_subs_m},
+-
+-    {DEC_CMPU_M, dec_cmpu_m},
+-    {DEC_CMPS_M, dec_cmps_m},
+-    {DEC_MOVU_M, dec_movu_m},
+-    {DEC_MOVS_M, dec_movs_m},
+-
+-    {DEC_CMP_M, dec_cmp_m},
+-    {DEC_ADDO_M, dec_addo_m},
+-    {DEC_BOUND_M, dec_bound_m},
+-    {DEC_ADD_M, dec_add_m},
+-    {DEC_SUB_M, dec_sub_m},
+-    {DEC_AND_M, dec_and_m},
+-    {DEC_OR_M, dec_or_m},
+-    {DEC_MOVE_RM, dec_move_rm},
+-    {DEC_TEST_M, dec_test_m},
+-    {DEC_MOVE_MR, dec_move_mr},
+-
+-    {{0, 0}, dec_null}
+-};
+-
+-static unsigned int crisv32_decoder(CPUCRISState *env, DisasContext *dc)
+-{
+-    int insn_len = 2;
+-    int i;
+-
+-    /* Load a halfword onto the instruction register.  */
+-    dc->ir = cris_fetch(env, dc, dc->pc, 2, 0);
+-
+-    /* Now decode it.  */
+-    dc->opcode   = EXTRACT_FIELD(dc->ir, 4, 11);
+-    dc->op1      = EXTRACT_FIELD(dc->ir, 0, 3);
+-    dc->op2      = EXTRACT_FIELD(dc->ir, 12, 15);
+-    dc->zsize    = EXTRACT_FIELD(dc->ir, 4, 4);
+-    dc->zzsize   = EXTRACT_FIELD(dc->ir, 4, 5);
+-    dc->postinc  = EXTRACT_FIELD(dc->ir, 10, 10);
+-
+-    /* Large switch for all insns.  */
+-    for (i = 0; i < ARRAY_SIZE(decinfo); i++) {
+-        if ((dc->opcode & decinfo[i].mask) == decinfo[i].bits) {
+-            insn_len = decinfo[i].dec(env, dc);
+-            break;
+-        }
+-    }
+-
+-#if !defined(CONFIG_USER_ONLY)
+-    /* Single-stepping ?  */
+-    if (dc->tb_flags & S_FLAG) {
+-        TCGLabel *l1 = gen_new_label();
+-        tcg_gen_brcondi_tl(TCG_COND_NE, cpu_PR[PR_SPC], dc->pc, l1);
+-        /* We treat SPC as a break with an odd trap vector.  */
+-        cris_evaluate_flags(dc);
+-        t_gen_movi_env_TN(trap_vector, 3);
+-        tcg_gen_movi_tl(env_pc, dc->pc + insn_len);
+-        tcg_gen_movi_tl(cpu_PR[PR_SPC], dc->pc + insn_len);
+-        t_gen_raise_exception(EXCP_BREAK);
+-        gen_set_label(l1);
+-    }
+-#endif
+-    return insn_len;
+-}
+-
+-#include "translate_v10.c.inc"
+-
+-/*
+- * Delay slots on QEMU/CRIS.
+- *
+- * If an exception hits on a delayslot, the core will let ERP (the Exception
+- * Return Pointer) point to the branch (the previous) insn and set the lsb to
+- * to give SW a hint that the exception actually hit on the dslot.
+- *
+- * CRIS expects all PC addresses to be 16-bit aligned. The lsb is ignored by
+- * the core and any jmp to an odd addresses will mask off that lsb. It is 
+- * simply there to let sw know there was an exception on a dslot.
+- *
+- * When the software returns from an exception, the branch will re-execute.
+- * On QEMU care needs to be taken when a branch+delayslot sequence is broken
+- * and the branch and delayslot don't share pages.
+- *
+- * The TB containing the branch insn will set up env->btarget and evaluate 
+- * env->btaken. When the translation loop exits we will note that the branch 
+- * sequence is broken and let env->dslot be the size of the branch insn (those
+- * vary in length).
+- *
+- * The TB containing the delayslot will have the PC of its real insn (i.e no lsb
+- * set). It will also expect to have env->dslot setup with the size of the 
+- * delay slot so that env->pc - env->dslot point to the branch insn. This TB 
+- * will execute the dslot and take the branch, either to btarget or just one 
+- * insn ahead.
+- *
+- * When exceptions occur, we check for env->dslot in do_interrupt to detect 
+- * broken branch sequences and setup $erp accordingly (i.e let it point to the
+- * branch and set lsb). Then env->dslot gets cleared so that the exception 
+- * handler can enter. When returning from exceptions (jump $erp) the lsb gets
+- * masked off and we will reexecute the branch insn.
+- *
+- */
+-
+-static void cris_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+-{
+-    DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    CPUCRISState *env = cpu_env(cs);
+-    uint32_t tb_flags = dc->base.tb->flags;
+-    uint32_t pc_start;
+-
+-    if (env->pregs[PR_VR] == 32) {
+-        dc->decoder = crisv32_decoder;
+-        dc->clear_locked_irq = 0;
+-    } else {
+-        dc->decoder = crisv10_decoder;
+-        dc->clear_locked_irq = 1;
+-    }
+-
+-    /*
+-     * Odd PC indicates that branch is rexecuting due to exception in the
+-     * delayslot, like in real hw.
+-     */
+-    pc_start = dc->base.pc_first & ~1;
+-    dc->base.pc_first = pc_start;
+-    dc->base.pc_next = pc_start;
+-
+-    dc->cpu = env_archcpu(env);
+-    dc->ppc = pc_start;
+-    dc->pc = pc_start;
+-    dc->mem_index = cpu_mmu_index(cs, false);
+-    dc->flags_uptodate = 1;
+-    dc->flags_x = tb_flags & X_FLAG;
+-    dc->cc_x_uptodate = 0;
+-    dc->cc_mask = 0;
+-    dc->update_cc = 0;
+-    dc->clear_prefix = 0;
+-    dc->cpustate_changed = 0;
+-
+-    cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-    dc->cc_size_uptodate = -1;
+-
+-    /* Decode TB flags.  */
+-    dc->tb_flags = tb_flags & (S_FLAG | P_FLAG | U_FLAG | X_FLAG | PFIX_FLAG);
+-    dc->delayed_branch = !!(tb_flags & 7);
+-    if (dc->delayed_branch) {
+-        dc->jmp = JMP_INDIRECT;
+-    } else {
+-        dc->jmp = JMP_NOJMP;
+-    }
+-}
+-
+-static void cris_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+-{
+-}
+-
+-static void cris_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+-{
+-    DisasContext *dc = container_of(dcbase, DisasContext, base);
+-
+-    tcg_gen_insn_start(dc->delayed_branch == 1 ? dc->ppc | 1 : dc->pc);
+-}
+-
+-static void cris_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+-{
+-    DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    unsigned int insn_len;
+-
+-    /* Pretty disas.  */
+-    LOG_DIS("%8.8x:\t", dc->pc);
+-
+-    dc->clear_x = 1;
+-
+-    insn_len = dc->decoder(cpu_env(cs), dc);
+-    dc->ppc = dc->pc;
+-    dc->pc += insn_len;
+-    dc->base.pc_next += insn_len;
+-
+-    if (dc->base.is_jmp == DISAS_NORETURN) {
+-        return;
+-    }
+-
+-    if (dc->clear_x) {
+-        cris_clear_x_flag(dc);
+-    }
+-
+-    /*
+-     * All branches are delayed branches, handled immediately below.
+-     * We don't expect to see odd combinations of exit conditions.
+-     */
+-    assert(dc->base.is_jmp == DISAS_NEXT || dc->cpustate_changed);
+-
+-    if (dc->delayed_branch && --dc->delayed_branch == 0) {
+-        dc->base.is_jmp = DISAS_DBRANCH;
+-        return;
+-    }
+-
+-    if (dc->base.is_jmp != DISAS_NEXT) {
+-        return;
+-    }
+-
+-    /* Force an update if the per-tb cpu state has changed.  */
+-    if (dc->cpustate_changed) {
+-        dc->base.is_jmp = DISAS_UPDATE_NEXT;
+-        return;
+-    }
+-
+-    /*
+-     * FIXME: Only the first insn in the TB should cross a page boundary.
+-     * If we can detect the length of the next insn easily, we should.
+-     * In the meantime, simply stop when we do cross.
+-     */
+-    if ((dc->pc ^ dc->base.pc_first) & TARGET_PAGE_MASK) {
+-        dc->base.is_jmp = DISAS_TOO_MANY;
+-    }
+-}
+-
+-static void cris_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+-{
+-    DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    DisasJumpType is_jmp = dc->base.is_jmp;
+-    target_ulong npc = dc->pc;
+-
+-    if (is_jmp == DISAS_NORETURN) {
+-        /* If we have a broken branch+delayslot sequence, it's too late. */
+-        assert(dc->delayed_branch != 1);
+-        return;
+-    }
+-
+-    if (dc->clear_locked_irq) {
+-        t_gen_movi_env_TN(locked_irq, 0);
+-    }
+-
+-    /* Broken branch+delayslot sequence.  */
+-    if (dc->delayed_branch == 1) {
+-        /* Set env->dslot to the size of the branch insn.  */
+-        t_gen_movi_env_TN(dslot, dc->pc - dc->ppc);
+-        cris_store_direct_jmp(dc);
+-    }
+-
+-    cris_evaluate_flags(dc);
+-
+-    /* Evaluate delayed branch destination and fold to another is_jmp case. */
+-    if (is_jmp == DISAS_DBRANCH) {
+-        if (dc->base.tb->flags & 7) {
+-            t_gen_movi_env_TN(dslot, 0);
+-        }
+-
+-        switch (dc->jmp) {
+-        case JMP_DIRECT:
+-            npc = dc->jmp_pc;
+-            is_jmp = dc->cpustate_changed ? DISAS_UPDATE_NEXT : DISAS_TOO_MANY;
+-            break;
+-
+-        case JMP_DIRECT_CC:
+-            /*
+-             * Use a conditional branch if either taken or not-taken path
+-             * can use goto_tb.  If neither can, then treat it as indirect.
+-             */
+-            if (likely(!dc->cpustate_changed)
+-                && (use_goto_tb(dc, dc->jmp_pc) || use_goto_tb(dc, npc))) {
+-                TCGLabel *not_taken = gen_new_label();
+-
+-                tcg_gen_brcondi_tl(TCG_COND_EQ, env_btaken, 0, not_taken);
+-                gen_goto_tb(dc, 1, dc->jmp_pc);
+-                gen_set_label(not_taken);
+-
+-                /* not-taken case handled below. */
+-                is_jmp = DISAS_TOO_MANY;
+-                break;
+-            }
+-            tcg_gen_movi_tl(env_btarget, dc->jmp_pc);
+-            /* fall through */
+-
+-        case JMP_INDIRECT:
+-            tcg_gen_movcond_tl(TCG_COND_NE, env_pc,
+-                               env_btaken, tcg_constant_tl(0),
+-                               env_btarget, tcg_constant_tl(npc));
+-            is_jmp = dc->cpustate_changed ? DISAS_UPDATE : DISAS_JUMP;
+-
+-            /*
+-             * We have now consumed btaken and btarget.  Hint to the
+-             * tcg compiler that the writeback to env may be dropped.
+-             */
+-            tcg_gen_discard_tl(env_btaken);
+-            tcg_gen_discard_tl(env_btarget);
+-            break;
+-
+-        default:
+-            g_assert_not_reached();
+-        }
+-    }
+-
+-    switch (is_jmp) {
+-    case DISAS_TOO_MANY:
+-        gen_goto_tb(dc, 0, npc);
+-        break;
+-    case DISAS_UPDATE_NEXT:
+-        tcg_gen_movi_tl(env_pc, npc);
+-        /* fall through */
+-    case DISAS_JUMP:
+-        tcg_gen_lookup_and_goto_ptr();
+-        break;
+-    case DISAS_UPDATE:
+-        /* Indicate that interrupts must be re-evaluated before the next TB. */
+-        tcg_gen_exit_tb(NULL, 0);
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+-static const TranslatorOps cris_tr_ops = {
+-    .init_disas_context = cris_tr_init_disas_context,
+-    .tb_start           = cris_tr_tb_start,
+-    .insn_start         = cris_tr_insn_start,
+-    .translate_insn     = cris_tr_translate_insn,
+-    .tb_stop            = cris_tr_tb_stop,
+-};
+-
+-void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           vaddr pc, void *host_pc)
+-{
+-    DisasContext dc;
+-    translator_loop(cs, tb, max_insns, pc, host_pc, &cris_tr_ops, &dc.base);
+-}
+-
+-void cris_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+-{
+-    CPUCRISState *env = cpu_env(cs);
+-    const char * const *regnames;
+-    const char * const *pregnames;
+-    int i;
+-
+-    if (!env) {
+-        return;
+-    }
+-    if (env->pregs[PR_VR] < 32) {
+-        pregnames = pregnames_v10;
+-        regnames = regnames_v10;
+-    } else {
+-        pregnames = pregnames_v32;
+-        regnames = regnames_v32;
+-    }
+-
+-    qemu_fprintf(f, "PC=%x CCS=%x btaken=%d btarget=%x\n"
+-                 "cc_op=%d cc_src=%d cc_dest=%d cc_result=%x cc_mask=%x\n",
+-                 env->pc, env->pregs[PR_CCS], env->btaken, env->btarget,
+-                 env->cc_op,
+-                 env->cc_src, env->cc_dest, env->cc_result, env->cc_mask);
+-
+-
+-    for (i = 0; i < 16; i++) {
+-        qemu_fprintf(f, "%s=%8.8x ", regnames[i], env->regs[i]);
+-        if ((i + 1) % 4 == 0) {
+-            qemu_fprintf(f, "\n");
+-        }
+-    }
+-    qemu_fprintf(f, "\nspecial regs:\n");
+-    for (i = 0; i < 16; i++) {
+-        qemu_fprintf(f, "%s=%8.8x ", pregnames[i], env->pregs[i]);
+-        if ((i + 1) % 4 == 0) {
+-            qemu_fprintf(f, "\n");
+-        }
+-    }
+-    if (env->pregs[PR_VR] >= 32) {
+-        uint32_t srs = env->pregs[PR_SRS];
+-        qemu_fprintf(f, "\nsupport function regs bank %x:\n", srs);
+-        if (srs < ARRAY_SIZE(env->sregs)) {
+-            for (i = 0; i < 16; i++) {
+-                qemu_fprintf(f, "s%2.2d=%8.8x ",
+-                             i, env->sregs[srs][i]);
+-                if ((i + 1) % 4 == 0) {
+-                    qemu_fprintf(f, "\n");
+-                }
+-            }
+-        }
+-    }
+-    qemu_fprintf(f, "\n\n");
+-
+-}
+-
+-void cris_initialize_tcg(void)
+-{
+-    int i;
+-
+-    cc_x = tcg_global_mem_new(tcg_env,
+-                              offsetof(CPUCRISState, cc_x), "cc_x");
+-    cc_src = tcg_global_mem_new(tcg_env,
+-                                offsetof(CPUCRISState, cc_src), "cc_src");
+-    cc_dest = tcg_global_mem_new(tcg_env,
+-                                 offsetof(CPUCRISState, cc_dest),
+-                                 "cc_dest");
+-    cc_result = tcg_global_mem_new(tcg_env,
+-                                   offsetof(CPUCRISState, cc_result),
+-                                   "cc_result");
+-    cc_op = tcg_global_mem_new(tcg_env,
+-                               offsetof(CPUCRISState, cc_op), "cc_op");
+-    cc_size = tcg_global_mem_new(tcg_env,
+-                                 offsetof(CPUCRISState, cc_size),
+-                                 "cc_size");
+-    cc_mask = tcg_global_mem_new(tcg_env,
+-                                 offsetof(CPUCRISState, cc_mask),
+-                                 "cc_mask");
+-
+-    env_pc = tcg_global_mem_new(tcg_env,
+-                                offsetof(CPUCRISState, pc),
+-                                "pc");
+-    env_btarget = tcg_global_mem_new(tcg_env,
+-                                     offsetof(CPUCRISState, btarget),
+-                                     "btarget");
+-    env_btaken = tcg_global_mem_new(tcg_env,
+-                                    offsetof(CPUCRISState, btaken),
+-                                    "btaken");
+-    for (i = 0; i < 16; i++) {
+-        cpu_R[i] = tcg_global_mem_new(tcg_env,
+-                                      offsetof(CPUCRISState, regs[i]),
+-                                      regnames_v32[i]);
+-    }
+-    for (i = 0; i < 16; i++) {
+-        cpu_PR[i] = tcg_global_mem_new(tcg_env,
+-                                       offsetof(CPUCRISState, pregs[i]),
+-                                       pregnames_v32[i]);
+-    }
+-}
+diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
+index 05da7bc72d..159b2a705a 100644
+--- a/tests/qtest/machine-none-test.c
++++ b/tests/qtest/machine-none-test.c
+@@ -30,7 +30,6 @@ static struct arch2cpu cpus_map[] = {
+     { "x86_64", "qemu64,apic-id=0" },
+     { "i386", "qemu32,apic-id=0" },
+     { "alpha", "ev67" },
+-    { "cris", "crisv32" },
+     { "m68k", "m5206" },
+     { "microblaze", "any" },
+     { "microblazeel", "any" },
+diff --git a/tests/tcg/cris/bare/sys.c b/tests/tcg/cris/bare/sys.c
+deleted file mode 100644
+index 1644eecc33..0000000000
+--- a/tests/tcg/cris/bare/sys.c
++++ /dev/null
+@@ -1,63 +0,0 @@
+-/*
+- * Helper functions for CRIS system tests
+- *
+- * There is no libc and only a limited set of headers.
+- */
+-
+-#include <stddef.h>
+-
+-void exit(int status)
+-{
+-    register unsigned int callno asm ("r9") = 1; /* NR_exit */
+-
+-    asm volatile ("break 13\n"
+-                  : /* no outputs */
+-                  : "r" (callno)
+-                  : "memory");
+-    while (1) {
+-        /* do nothing */
+-    };
+-}
+-
+-size_t write(int fd, const void *buf, size_t count)
+-{
+-    register unsigned int callno asm ("r9") = 4; /* NR_write */
+-    register unsigned int r10 asm ("r10") = fd;
+-    register const void *r11 asm ("r11") = buf;
+-    register size_t r12 asm ("r12") = count;
+-    register unsigned int r asm ("r10");
+-
+-    asm volatile ("break 13\n"
+-                  : "=r" (r)
+-                  : "r" (callno), "0" (r10), "r" (r11), "r" (r12)
+-                  : "memory");
+-
+-    return r;
+-}
+-
+-static inline int mystrlen(char *s)
+-{
+-    int i = 0;
+-    while (s[i]) {
+-        i++;
+-    }
+-    return i;
+-}
+-
+-
+-void pass(void)
+-{
+-    char s[] = "passed.\n";
+-    write(1, s, sizeof(s) - 1);
+-    exit(0);
+-}
+-
+-void _fail(char *reason)
+-{
+-    char s[] = "\nfailed: ";
+-    int len = mystrlen(reason);
+-    write(1, s, sizeof(s) - 1);
+-    write(1, reason, len);
+-    write(1, "\n", 1);
+-    exit(1);
+-}
+diff --git a/tests/tcg/cris/libc/check_abs.c b/tests/tcg/cris/libc/check_abs.c
+deleted file mode 100644
+index 08b67b6ef0..0000000000
+--- a/tests/tcg/cris/libc/check_abs.c
++++ /dev/null
+@@ -1,40 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline int cris_abs(int n)
+-{
+-	int r;
+-	asm ("abs\t%1, %0\n" : "=r" (r) : "r" (n));
+-	return r;
+-}
+-
+-static always_inline void
+-verify_abs(int val, int res,
+-	   const int n, const int z, const int v, const int c)
+-{
+-	int r;
+-
+-	cris_tst_cc_init();
+-	r = cris_abs(val);
+-	cris_tst_cc(n, z, v, c);
+-	if (r != res)
+-		err();
+-}
+-
+-int main(void)
+-{
+-	verify_abs(-1, 1, 0, 0, 0, 0);
+-	verify_abs(0x80000000, 0x80000000, 1, 0, 0, 0);
+-	verify_abs(0x7fffffff, 0x7fffffff, 0, 0, 0, 0);
+-	verify_abs(42, 42, 0, 0, 0, 0);
+-	verify_abs(1, 1, 0, 0, 0, 0);
+-	verify_abs(0xffff, 0xffff, 0, 0, 0, 0);
+-	verify_abs(0xffff, 0xffff, 0, 0, 0, 0);
+-	verify_abs(-31, 0x1f, 0, 0, 0, 0);
+-	verify_abs(0, 0, 0, 1, 0, 0);
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addc.c b/tests/tcg/cris/libc/check_addc.c
+deleted file mode 100644
+index fc3fb1faa8..0000000000
+--- a/tests/tcg/cris/libc/check_addc.c
++++ /dev/null
+@@ -1,58 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline int cris_addc(int a, const int b)
+-{
+-	asm ("addc\t%1, %0\n" : "+r" (a) : "r" (b));
+-	return a;
+-}
+-
+-#define verify_addc(a, b, res, n, z, v, c)  \
+-{                                           \
+-	int r;                              \
+-	r = cris_addc((a), (b));            \
+-	cris_tst_cc((n), (z), (v), (c));    \
+-	if (r != (res))                     \
+-		err();                      \
+-}
+-
+-int main(void)
+-{
+-	cris_tst_cc_init();
+-	asm volatile ("clearf cz");
+-	verify_addc(0, 0, 0, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf z");
+-	verify_addc(0, 0, 0, 0, 1, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf cz");
+-	verify_addc(0, 0, 1, 0, 0, 0, 0);
+-	cris_tst_cc_init();
+-	asm volatile ("clearf c");
+-	verify_addc(-1, 2, 1, 0, 0, 0, 1);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf nzv");
+-	asm volatile ("setf c");
+-	verify_addc(-1, 2, 2, 0, 0, 0, 1);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc(0xffff, 0xffff, 0x1ffff, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf nzvc");
+-	verify_addc(-1, -1, 0xfffffffe, 1, 0, 0, 1);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc(0x78134452, 0x5432f789, 0xcc463bdc, 1, 0, 1, 0);
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addcm.c b/tests/tcg/cris/libc/check_addcm.c
+deleted file mode 100644
+index b355ba164f..0000000000
+--- a/tests/tcg/cris/libc/check_addcm.c
++++ /dev/null
+@@ -1,85 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-/* need to avoid acr as source here.  */
+-static always_inline int cris_addc_m(int a, const int *b)
+-{
+-	asm volatile ("addc [%1], %0\n" : "+r" (a) : "r" (b));
+-	return a;
+-}
+-
+-/* 'b' is a crisv32 constrain to avoid postinc with $acr.  */
+-static always_inline int cris_addc_pi_m(int a, int **b)
+-{
+-	asm volatile ("addc [%1+], %0\n" : "+r" (a), "+b" (*b));
+-	return a;
+-}
+-
+-#define verify_addc_m(a, b, res, n, z, v, c)  \
+-{                                           \
+-	int r;                              \
+-	r = cris_addc_m((a), (b));            \
+-	cris_tst_cc((n), (z), (v), (c));    \
+-	if (r != (res))                     \
+-		err();                      \
+-}
+-
+-#define verify_addc_pi_m(a, b, res, n, z, v, c)  \
+-{                                           \
+-	int r;                              \
+-	r = cris_addc_pi_m((a), (b));            \
+-	cris_tst_cc((n), (z), (v), (c));    \
+-	if (r != (res))                     \
+-		err();                      \
+-}
+-
+-int x[] = { 0, 0, 2, -1, 0xffff, -1, 0x5432f789};
+-
+-int main(void)
+-{
+-	int *p = (void *)&x[0];
+-#if 1
+-	cris_tst_cc_init();
+-	asm volatile ("clearf cz");
+-	verify_addc_m(0, p, 0, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf z");
+-	verify_addc_m(0, p, 0, 0, 1, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc_m(0, p, 1, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf c");
+-	verify_addc_pi_m(0, &p, 0, 0, 1, 0, 0);
+-
+-	p = &x[1];
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc_pi_m(0, &p, 1, 0, 0, 0, 0);
+-
+-	if (p != &x[2])
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf c");
+-	verify_addc_pi_m(-1, &p, 1, 0, 0, 0, 1);
+-
+-	if (p != &x[3])
+-		err();
+-#endif
+-	p = &x[3];
+-	/* TODO: investigate why this one fails.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc_m(2, p, 2, 0, 0, 0, 1);
+-	p += 4;
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addo.c b/tests/tcg/cris/libc/check_addo.c
+deleted file mode 100644
+index 4235e5fc65..0000000000
+--- a/tests/tcg/cris/libc/check_addo.c
++++ /dev/null
+@@ -1,125 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-/* this would be better to do in asm, it's an orgy in GCC inline asm now.  */
+-
+-#define cris_addo_b(o, v) \
+-	asm volatile ("addo.b\t[%0], %1, $acr\n" : : "r" (o), "r" (v) : "acr");
+-#define cris_addo_w(o, v) \
+-	asm volatile ("addo.w\t[%0], %1, $acr\n" : : "r" (o), "r" (v) : "acr");
+-#define cris_addo_d(o, v) \
+-	asm volatile ("addo.d\t[%0], %1, $acr\n" : : "r" (o), "r" (v) : "acr");
+-#define cris_addo_pi_b(o, v) \
+-	asm volatile ("addo.b\t[%0+], %1, $acr\n" \
+-                         : "+b" (o): "r" (v) : "acr");
+-#define cris_addo_pi_w(o, v) \
+-	asm volatile ("addo.w\t[%0+], %1, $acr\n" \
+-                         : "+b" (o): "r" (v) : "acr");
+-#define cris_addo_pi_d(o, v) \
+-	asm volatile ("addo.d\t[%0+], %1, $acr\n" \
+-                         : "+b" (o): "r" (v) : "acr");
+-
+-struct {
+-	uint32_t v1;
+-	uint16_t v2;
+-	uint32_t v3;
+-	uint8_t v4;
+-	uint8_t v5;
+-	uint16_t v6;
+-	uint32_t v7;
+-} y = {
+-	32769,
+-	-1,
+-	5,
+-	3, -4,
+-	2,
+-	-76789887
+-};
+-
+-static int x[3] = {0x55aa77ff, 0xccff2244, 0x88ccee19};
+-
+-int main(void)
+-{
+-	int *r;
+-	unsigned char *t, *p;
+-
+-	/* Note, this test-case will trig an unaligned access, partly
+-	   to x[0] and to [x1].  */
+-	t = (unsigned char *)x;
+-	t -= 32768;
+-	p = (unsigned char *) &y.v1;
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_d(p, t);
+-	cris_tst_cc(1, 1, 1, 1);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0x4455aa77)
+-		err();
+-
+-
+-	t += 32770;
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_w(p, t);
+-	cris_tst_cc(1, 1, 1, 1);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0x4455aa77)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_d(p, r);
+-	cris_tst_cc(1, 1, 1, 1);
+-	p += 4;
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0xee19ccff)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_b(p, t);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*(uint16_t*)r != 0xff22)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_b(p, r);
+-	cris_tst_cc(1, 1, 1, 1);
+-	p += 1;
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0x4455aa77)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_w(p, r);
+-	cris_tst_cc(1, 1, 1, 1);
+-	p += 2;
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0xff224455)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_d(p, t);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	r = (void*)(((char *)r) + 76789885);
+-	if (*r != 0x55aa77ff)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addoq.c b/tests/tcg/cris/libc/check_addoq.c
+deleted file mode 100644
+index ed509e27e0..0000000000
+--- a/tests/tcg/cris/libc/check_addoq.c
++++ /dev/null
+@@ -1,44 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-/* this would be better to do in asm, it's an orgy in GCC inline asm now.  */
+-
+-/* ACR will be clobbered.  */
+-#define cris_addoq(o, v) \
+-	asm volatile ("addoq\t%1, %0, $acr\n" : : "r" (v), "i" (o) : "acr");
+-
+-
+-int main(void)
+-{
+-	int x[3] = {0x55aa77ff, 0xccff2244, 0x88ccee19};
+-	int *p, *t = x + 1;
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addoq(0, t);
+-	cris_tst_cc(1, 1, 1, 1);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (p));
+-	if (*p != 0xccff2244)
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addoq(4, t);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (p));
+-	if (*p != 0x88ccee19)
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf\tzvnc\n");
+-	cris_addoq(-8, t + 1);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (p));
+-	if (*p != 0x55aa77ff)
+-		err();
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_bound.c b/tests/tcg/cris/libc/check_bound.c
+deleted file mode 100644
+index d956ab9ade..0000000000
+--- a/tests/tcg/cris/libc/check_bound.c
++++ /dev/null
+@@ -1,142 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline int cris_bound_b(int v, int b)
+-{
+-	int r = v;
+-	asm ("bound.b\t%1, %0\n" : "+r" (r) : "ri" (b));
+-	return r;
+-}
+-
+-static always_inline int cris_bound_w(int v, int b)
+-{
+-	int r = v;
+-	asm ("bound.w\t%1, %0\n" : "+r" (r) : "ri" (b));
+-	return r;
+-}
+-
+-static always_inline int cris_bound_d(int v, int b)
+-{
+-	int r = v;
+-	asm ("bound.d\t%1, %0\n" : "+r" (r) : "ri" (b));
+-	return r;
+-}
+-
+-int main(void)
+-{
+-	int r;
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(-1, 2);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(2, 0xffffffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(0xffff, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(-1, 0xffffffff);
+-	cris_tst_cc(1, 0, 0, 0);
+-	if (r != 0xffffffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(0x78134452, 0x5432f789);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0x5432f789)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(-1, 2);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(-1, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(2, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(0xfedaffff, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(0x78134452, 0xf789);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xf789)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(-1, 2);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(2, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(-1, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0xff, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0xfeda49ff, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0x78134452, 0x89);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0x89)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(0x78134452, 0);
+-	cris_tst_cc(0, 1, 0, 0);
+-	if (r != 0)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0xffff, -1);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_ftag.c b/tests/tcg/cris/libc/check_ftag.c
+deleted file mode 100644
+index aaa5c97115..0000000000
+--- a/tests/tcg/cris/libc/check_ftag.c
++++ /dev/null
+@@ -1,37 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline void cris_ftag_i(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("ftagi\t[%0]\n" : : "r" (v) );
+-}
+-static always_inline void cris_ftag_d(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("ftagd\t[%0]\n" : : "r" (v) );
+-}
+-static always_inline void cris_fidx_i(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("fidxi\t[%0]\n" : : "r" (v) );
+-}
+-static always_inline void cris_fidx_d(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("fidxd\t[%0]\n" : : "r" (v) );
+-}
+-
+-
+-int main(void)
+-{
+-	cris_ftag_i(0);
+-	cris_ftag_d(0);
+-	cris_fidx_i(0);
+-	cris_fidx_d(0);
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_gcctorture_pr28634-1.c b/tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
+deleted file mode 100644
+index 45ecd159b3..0000000000
+--- a/tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
++++ /dev/null
+@@ -1,15 +0,0 @@
+-/* PR rtl-optimization/28634.  On targets with delayed branches,
+-   dbr_schedule could do the next iteration's addition in the
+-   branch delay slot, then subtract the value again if the branch
+-   wasn't taken.  This can lead to rounding errors.  */
+-int x = -1;
+-int y = 1;
+-int
+-main (void)
+-{
+-  while (y > 0)
+-    y += x;
+-  if (y != x + 1)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_gcctorture_pr28634.c b/tests/tcg/cris/libc/check_gcctorture_pr28634.c
+deleted file mode 100644
+index a0c525497d..0000000000
+--- a/tests/tcg/cris/libc/check_gcctorture_pr28634.c
++++ /dev/null
+@@ -1,15 +0,0 @@
+-/* PR rtl-optimization/28634.  On targets with delayed branches,
+-   dbr_schedule could do the next iteration's addition in the
+-   branch delay slot, then subtract the value again if the branch
+-   wasn't taken.  This can lead to rounding errors.  */
+-double x = -0x1.0p53;
+-double y = 1;
+-int
+-main (void)
+-{
+-  while (y > 0)
+-    y += x;
+-  if (y != x + 1)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_glibc_kernelversion.c b/tests/tcg/cris/libc/check_glibc_kernelversion.c
+deleted file mode 100644
+index 7aada89911..0000000000
+--- a/tests/tcg/cris/libc/check_glibc_kernelversion.c
++++ /dev/null
+@@ -1,116 +0,0 @@
+-/*
+- * Check the lz insn.
+- */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-
+-#define __LINUX_KERNEL_VERSION 131584
+-
+-#define DL_SYSDEP_OSCHECK(FATAL) \
+-  do {                                                                        \
+-    /* Test whether the kernel is new enough.  This test is only              \
+-       performed if the library is not compiled to run on all                 \
+-       kernels.  */                                                           \
+-    if (__LINUX_KERNEL_VERSION > 0)                                           \
+-      {                                                                       \
+-        char bufmem[64];                                                      \
+-        char *buf = bufmem;                                                   \
+-        unsigned int version;                                                 \
+-        int parts;                                                            \
+-        char *cp;                                                             \
+-        struct utsname uts;                                                   \
+-                                                                              \
+-        /* Try the uname syscall */                                           \
+-        if (__uname (&uts))                                                   \
+-          {                                                                   \
+-            /* This was not successful.  Now try reading the /proc            \
+-               filesystem.  */                                                \
+-            ssize_t reslen;                                                   \
+-            int fd = __open ("/proc/sys/kernel/osrelease", O_RDONLY);         \
+-            if (fd == -1                                                      \
+-                || (reslen = __read (fd, bufmem, sizeof (bufmem))) <= 0)      \
+-              /* This also didn't work.  We give up since we cannot           \
+-                 make sure the library can actually work.  */                 \
+-              FATAL ("FATAL: cannot determine library version\n");            \
+-            __close (fd);                                                     \
+-            buf[MIN (reslen, (ssize_t) sizeof (bufmem) - 1)] = '\0';          \
+-          }                                                                   \
+-        else                                                                  \
+-          buf = uts.release;                                                  \
+-                                                                              \
+-        /* Now convert it into a number.  The string consists of at most      \
+-           three parts.  */                                                   \
+-        version = 0;                                                          \
+-        parts = 0;                                                            \
+-        cp = buf;                                                             \
+-        while ((*cp >= '0') && (*cp <= '9'))                                  \
+-          {                                                                   \
+-            unsigned int here = *cp++ - '0';                                  \
+-                                                                              \
+-            while ((*cp >= '0') && (*cp <= '9'))                              \
+-              {                                                               \
+-                here *= 10;                                                   \
+-                here += *cp++ - '0';                                          \
+-              }                                                               \
+-                                                                              \
+-            ++parts;                                                          \
+-            version <<= 8;                                                    \
+-            version |= here;                                                  \
+-                                                                              \
+-            if (*cp++ != '.')                                                 \
+-              /* Another part following?  */                                  \
+-              break;                                                          \
+-          }                                                                   \
+-                                                                              \
+-        if (parts < 3)                                                        \
+-          version <<= 8 * (3 - parts);                                        \
+-                                                                              \
+-        /* Now we can test with the required version.  */                     \
+-        if (version < __LINUX_KERNEL_VERSION)                                 \
+-          /* Not sufficient.  */                                               \
+-          FATAL ("FATAL: kernel too old\n");                                  \
+-                                                                              \
+-        _dl_osversion = version;                                              \
+-      }                                                                       \
+-  } while (0)
+-
+-int main(void)
+-{
+-        char bufmem[64] = "2.6.22";
+-        char *buf = bufmem;
+-        unsigned int version;
+-        int parts;
+-        char *cp;
+-
+-        version = 0;
+-        parts = 0;
+-        cp = buf;
+-        while ((*cp >= '0') && (*cp <= '9'))
+-          {
+-            unsigned int here = *cp++ - '0';
+-
+-            while ((*cp >= '0') && (*cp <= '9'))
+-              {
+-                here *= 10;
+-                here += *cp++ - '0';
+-              }
+-
+-            ++parts;
+-            version <<= 8;
+-            version |= here;
+-
+-            if (*cp++ != '.')
+-              /* Another part following?  */
+-              break;
+-          }
+-
+-        if (parts < 3)
+-          version <<= 8 * (3 - parts);
+-        if (version < __LINUX_KERNEL_VERSION)
+-                err();
+-        pass();
+-        exit(0);
+-}
+diff --git a/tests/tcg/cris/libc/check_hello.c b/tests/tcg/cris/libc/check_hello.c
+deleted file mode 100644
+index fb403ba996..0000000000
+--- a/tests/tcg/cris/libc/check_hello.c
++++ /dev/null
+@@ -1,7 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-int main ()
+-{
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_int64.c b/tests/tcg/cris/libc/check_int64.c
+deleted file mode 100644
+index 69caec1bb2..0000000000
+--- a/tests/tcg/cris/libc/check_int64.c
++++ /dev/null
+@@ -1,47 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-
+-static always_inline int64_t add64(const int64_t a, const int64_t b)
+-{
+-	return a + b;
+-}
+-
+-static always_inline int64_t sub64(const int64_t a, const int64_t b)
+-{
+-	return a - b;
+-}
+-
+-int main(void)
+-{
+-	int64_t a = 1;
+-	int64_t b = 2;
+-
+-	/* FIXME: add some tests.  */
+-	a = add64(a, b);
+-	if (a != 3)
+-		err();
+-
+-	a = sub64(a, b);
+-	if (a != 1)
+-		err();
+-
+-	a = add64(a, -4);
+-	if (a != -3)
+-		err();
+-
+-	a = add64(a, 3);
+-	if (a != 0)
+-		err();
+-
+-	a = 0;
+-	a = sub64(a, 1);
+-	if (a != -1)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_lz.c b/tests/tcg/cris/libc/check_lz.c
+deleted file mode 100644
+index bf051a6b55..0000000000
+--- a/tests/tcg/cris/libc/check_lz.c
++++ /dev/null
+@@ -1,49 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-
+-static always_inline int cris_lz(int x)
+-{
+-	int r;
+-	asm ("lz\t%1, %0\n" : "=r" (r) : "r" (x));
+-	return r;
+-}
+-
+-void check_lz(void)
+-{
+-	int i;
+-
+-	if (cris_lz(0) != 32)
+-		err();
+-	if (cris_lz(1) != 31)
+-		err();
+-	if (cris_lz(2) != 30)
+-		err();
+-	if (cris_lz(4) != 29)
+-		err();
+-	if (cris_lz(8) != 28)
+-		err();
+-
+-	/* try all positions with a single bit.  */
+-	for (i = 1; i < 32; i++) {
+-		if (cris_lz(1 << (i-1)) != (32 - i))
+-			err();
+-	}
+-
+-	/* try all positions with all bits.  */
+-	for (i = 1; i < 32; i++) {
+-		/* split up this computation to clarify it.  */
+-		uint32_t val;
+-		val = (unsigned int)-1 >> (32 - i);
+-		if (cris_lz(val) != (32 - i))
+-			err();
+-	}
+-}
+-
+-int main(void)
+-{
+-	check_lz();
+-	pass();
+-	exit(0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mapbrk.c b/tests/tcg/cris/libc/check_mapbrk.c
+deleted file mode 100644
+index 1aff7622bc..0000000000
+--- a/tests/tcg/cris/libc/check_mapbrk.c
++++ /dev/null
+@@ -1,39 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-/* Basic sanity check that syscalls to implement malloc (brk, mmap2,
+-   munmap) are trivially functional.  */
+-
+-int main ()
+-{
+-  void *p1, *p2, *p3, *p4, *p5, *p6;
+-
+-  if ((p1 = malloc (8100)) == NULL
+-      || (p2 = malloc (16300)) == NULL
+-      || (p3 = malloc (4000)) == NULL
+-      || (p4 = malloc (500)) == NULL
+-      || (p5 = malloc (1023*1024)) == NULL
+-      || (p6 = malloc (8191*1024)) == NULL)
+-  {
+-    printf ("fail\n");
+-    exit (1);
+-  }
+-
+-  free (p1);
+-  free (p2);
+-  free (p3);
+-  free (p4);
+-  free (p5);
+-  free (p6);
+-
+-  p1 = malloc (64000);
+-  if (p1 == NULL)
+-  {
+-    printf ("fail\n");
+-    exit (1);
+-  }
+-  free (p1);
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mmap1.c b/tests/tcg/cris/libc/check_mmap1.c
+deleted file mode 100644
+index b803f0c431..0000000000
+--- a/tests/tcg/cris/libc/check_mmap1.c
++++ /dev/null
+@@ -1,48 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#define _GNU_SOURCE
+-#include <string.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <fcntl.h>
+-#include <unistd.h>
+-#include <sys/mman.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  int fd = open (argv[0], O_RDONLY);
+-  struct stat sb;
+-  int size;
+-  void *a;
+-  const char *str = "a string you'll only find in the program";
+-
+-  if (fd == -1)
+-    {
+-      perror ("open");
+-      abort ();
+-    }
+-
+-  if (fstat (fd, &sb) < 0)
+-    {
+-      perror ("fstat");
+-      abort ();
+-    }
+-
+-  size = sb.st_size;
+-
+-  /* We want to test mmapping a size that isn't exactly a page.  */
+-  if ((size & 8191) == 0)
+-    size--;
+-
+-  a = mmap (NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+-
+-  if (memmem (a, size, str, strlen (str) + 1) == NULL)
+-    abort ();
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mmap2.c b/tests/tcg/cris/libc/check_mmap2.c
+deleted file mode 100644
+index 35139a0ed9..0000000000
+--- a/tests/tcg/cris/libc/check_mmap2.c
++++ /dev/null
+@@ -1,48 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#define _GNU_SOURCE
+-#include <string.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <fcntl.h>
+-#include <unistd.h>
+-#include <sys/mman.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  int fd = open (argv[0], O_RDONLY);
+-  struct stat sb;
+-  int size;
+-  void *a;
+-  const char *str = "a string you'll only find in the program";
+-
+-  if (fd == -1)
+-    {
+-      perror ("open");
+-      abort ();
+-    }
+-
+-  if (fstat (fd, &sb) < 0)
+-    {
+-      perror ("fstat");
+-      abort ();
+-    }
+-
+-  size = sb.st_size;
+-
+-  /* We want to test mmapping a size that isn't exactly a page.  */
+-  if ((size & 8191) == 0)
+-    size--;
+-
+-  a = mmap (NULL, size, PROT_READ, MAP_SHARED, fd, 0);
+-
+-  if (memmem (a, size, str, strlen (str) + 1) == NULL)
+-    abort ();
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mmap3.c b/tests/tcg/cris/libc/check_mmap3.c
+deleted file mode 100644
+index cb890ef120..0000000000
+--- a/tests/tcg/cris/libc/check_mmap3.c
++++ /dev/null
+@@ -1,33 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#define _GNU_SOURCE
+-#include <string.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <sys/mman.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  volatile unsigned char *a;
+-
+-  /* Check that we can map a non-multiple of a page and still get a full page.  */
+-  a = mmap (NULL, 0x4c, PROT_READ | PROT_WRITE | PROT_EXEC,
+-            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+-  if (a == NULL || a == (unsigned char *) -1)
+-    abort ();
+-
+-  a[0] = 0xbe;
+-  a[8191] = 0xef;
+-  memset ((char *) a + 1, 0, 8190);
+-
+-  if (a[0] != 0xbe || a[8191] != 0xef)
+-    abort ();
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_moveq.c b/tests/tcg/cris/libc/check_moveq.c
+deleted file mode 100644
+index 80f2dff6ab..0000000000
+--- a/tests/tcg/cris/libc/check_moveq.c
++++ /dev/null
+@@ -1,51 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-#define cris_moveq(dst, src) \
+-               asm volatile ("moveq %1, %0\n" : "=r" (dst) : "i" (src));
+-
+-
+-
+-int main(void)
+-{
+-	int t;
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_moveq(t, 10);
+-	cris_tst_cc(1, 1, 1, 1);
+-	if (t != 10)
+-		err();
+-
+-	/* make sure moveq doesn't clobber the zflag.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf vnc\n");
+-	asm volatile ("clearf z\n");
+-	cris_moveq(t, 0);
+-	cris_tst_cc(1, 0, 1, 1);
+-	if (t != 0)
+-		err();
+-
+-	/* make sure moveq doesn't clobber the nflag.
+-	   Also check large immediates  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf zvc\n");
+-	asm volatile ("clearf n\n");
+-	cris_moveq(t, -31);
+-	cris_tst_cc(0, 1, 1, 1);
+-	if (t != -31)
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf nzvc\n");
+-	cris_moveq(t, 31);
+-	cris_tst_cc(1, 1, 1, 1);
+-	if (t != 31)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf1.c b/tests/tcg/cris/libc/check_openpf1.c
+deleted file mode 100644
+index 251d26eec2..0000000000
+--- a/tests/tcg/cris/libc/check_openpf1.c
++++ /dev/null
+@@ -1,38 +0,0 @@
+-/* Check that --sysroot is applied to open(2).
+-#sim: --sysroot=@exedir@
+-
+-   We assume, with EXE being the name of the executable:
+-   - The simulator executes with cwd the same directory where the executable
+-     is located (so argv[0] contains a plain filename without directory
+-     components).
+-   - There's no /EXE on the host file system.  */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <string.h>
+-#include <errno.h>
+-int main (int argc, char *argv[])
+-{
+-  char *fnam = argv[0];
+-  FILE *f;
+-  if (argv[0][0] != '/')
+-    {
+-      fnam = malloc (strlen (argv[0]) + 2);
+-      if (fnam == NULL)
+-        abort ();
+-      strcpy (fnam, "/");
+-      strcat (fnam, argv[0]);
+-    }
+-
+-  f = fopen (fnam, "rb");
+-  if (f == NULL)
+-    abort ();
+-  fclose(f);
+-
+-  /* Cover another execution path.  */
+-  if (fopen ("/nonexistent", "rb") != NULL
+-      || errno != ENOENT)
+-    abort ();
+-  printf ("pass\n");
+-  return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf2.c b/tests/tcg/cris/libc/check_openpf2.c
+deleted file mode 100644
+index 5d56189f8e..0000000000
+--- a/tests/tcg/cris/libc/check_openpf2.c
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/* Check that the simulator has chdir:ed to the --sysroot argument
+-#sim: --sysroot=@srcdir@
+-   (or that  --sysroot is applied to relative file paths).  */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <errno.h>
+-int main (int argc, char *argv[])
+-{
+-  FILE *f = fopen ("check_openpf2.c", "rb");
+-  if (f == NULL)
+-    abort ();
+-  fclose(f);
+-  printf ("pass\n");
+-  return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf3.c b/tests/tcg/cris/libc/check_openpf3.c
+deleted file mode 100644
+index 557adee92d..0000000000
+--- a/tests/tcg/cris/libc/check_openpf3.c
++++ /dev/null
+@@ -1,49 +0,0 @@
+-/* Basic file operations (rename, unlink); once without sysroot.  We
+-   also test that the simulator has chdir:ed to PREFIX, when defined.  */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <errno.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-
+-#ifndef PREFIX
+-#define PREFIX
+-#endif
+-
+-void err (const char *s)
+-{
+-  perror (s);
+-  abort ();
+-}
+-
+-int main (int argc, char *argv[])
+-{
+-  FILE *f;
+-  struct stat buf;
+-
+-  unlink (PREFIX "testfoo2.tmp");
+-
+-  f = fopen ("testfoo1.tmp", "w");
+-  if (f == NULL)
+-    err ("open");
+-  fclose (f);
+-
+-  if (rename (PREFIX "testfoo1.tmp", PREFIX "testfoo2.tmp") != 0)
+-    err ("rename");
+-
+-  if (stat (PREFIX "testfoo2.tmp", &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    err ("stat 1");
+-
+-  if (stat ("testfoo2.tmp", &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    err ("stat 2");
+-
+-  if (unlink (PREFIX "testfoo2.tmp") != 0)
+-    err ("unlink");
+-
+-  printf ("pass\n");
+-  return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf5.c b/tests/tcg/cris/libc/check_openpf5.c
+deleted file mode 100644
+index 1f86ea283d..0000000000
+--- a/tests/tcg/cris/libc/check_openpf5.c
++++ /dev/null
+@@ -1,56 +0,0 @@
+-/* Check that TRT happens when error on too many opened files.
+-#notarget: cris*-*-elf
+-#sim: --sysroot=@exedir@
+-*/
+-#include <stddef.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <unistd.h>
+-#include <errno.h>
+-#include <limits.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <fcntl.h>
+-#include <string.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  int i;
+-  int filemax;
+-
+-#ifdef OPEN_MAX
+-  filemax = OPEN_MAX;
+-#else
+-  filemax = sysconf (_SC_OPEN_MAX);
+-#endif
+-
+-  char *fn = malloc (strlen (argv[0]) + 2);
+-  if (fn == NULL)
+-    abort ();
+-  strcpy (fn, "/");
+-  strcat (fn, argv[0]);
+-
+-  for (i = 0; i < filemax + 1; i++)
+-    {
+-      if (open (fn, O_RDONLY) < 0)
+-	{
+-	  /* Shouldn't happen too early.  */
+-	  if (i < filemax - 3 - 1)
+-	    {
+-	      fprintf (stderr, "i: %d\n", i);
+-	      abort ();
+-	    }
+-	  if (errno != EMFILE)
+-	    {
+-	      perror ("open");
+-	      abort ();
+-	    }
+-	  goto ok;
+-	}
+-    }
+-  abort ();
+-
+-ok:
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_settls1.c b/tests/tcg/cris/libc/check_settls1.c
+deleted file mode 100644
+index 3abc3a9ea8..0000000000
+--- a/tests/tcg/cris/libc/check_settls1.c
++++ /dev/null
+@@ -1,45 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <errno.h>
+-#include <unistd.h>
+-
+-#include <sys/syscall.h>
+-
+-#ifndef SYS_set_thread_area
+-#define SYS_set_thread_area 243
+-#endif
+-
+-int main (void)
+-{
+-    unsigned long tp, old_tp;
+-    int ret;
+-
+-    asm volatile ("move $pid,%0" : "=r" (old_tp));
+-    old_tp &= ~0xff;
+-
+-    ret = syscall (SYS_set_thread_area, 0xf0);
+-    if (ret != -1 || errno != EINVAL) {
+-        syscall (SYS_set_thread_area, old_tp);
+-        perror ("Invalid thread area accepted:");
+-        abort();
+-    }
+-
+-    ret = syscall (SYS_set_thread_area, 0xeddeed00);
+-    if (ret != 0) {
+-        perror ("Valid thread area not accepted: ");
+-        abort ();
+-    }
+-
+-    asm volatile ("move $pid,%0" : "=r" (tp));
+-    tp &= ~0xff;
+-    syscall (SYS_set_thread_area, old_tp);
+-
+-    if (tp != 0xeddeed00) {
+-        * (volatile int *) 0 = 0;
+-        perror ("tls2");
+-        abort ();
+-    }
+-
+-    printf ("pass\n");
+-    return EXIT_SUCCESS;
+-}
+diff --git a/tests/tcg/cris/libc/check_sigalrm.c b/tests/tcg/cris/libc/check_sigalrm.c
+deleted file mode 100644
+index 39fa8d9bac..0000000000
+--- a/tests/tcg/cris/libc/check_sigalrm.c
++++ /dev/null
+@@ -1,26 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <signal.h>
+-#include <unistd.h>
+-
+-#define MAGIC (0xdeadbeef)
+-
+-int s = 0;
+-void sighandler(int sig)
+-{
+-	s = MAGIC;
+-}
+-
+-int main(int argc, char **argv)
+-{
+-	int p;
+-
+-	p = getpid();
+-	signal(SIGALRM, sighandler);
+-	kill(p, SIGALRM);
+-	if (s != MAGIC)
+-		return EXIT_FAILURE;
+-
+-	printf ("passed\n");
+-	return EXIT_SUCCESS;
+-}
+diff --git a/tests/tcg/cris/libc/check_stat1.c b/tests/tcg/cris/libc/check_stat1.c
+deleted file mode 100644
+index 2e2cae51df..0000000000
+--- a/tests/tcg/cris/libc/check_stat1.c
++++ /dev/null
+@@ -1,16 +0,0 @@
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-int main (void)
+-{
+-  struct stat buf;
+-
+-  if (stat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_stat2.c b/tests/tcg/cris/libc/check_stat2.c
+deleted file mode 100644
+index e36172ed25..0000000000
+--- a/tests/tcg/cris/libc/check_stat2.c
++++ /dev/null
+@@ -1,20 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-int main (void)
+-{
+-  struct stat buf;
+-
+-  if (lstat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_stat3.c b/tests/tcg/cris/libc/check_stat3.c
+deleted file mode 100644
+index 36a9d5d274..0000000000
+--- a/tests/tcg/cris/libc/check_stat3.c
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/* Simulator options:
+-#sim: --sysroot=@exedir@
+-*/
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <string.h>
+-#include <stdlib.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  char path[1024] = "/";
+-  struct stat buf;
+-
+-  strncat(path, argv[0], sizeof(path) - 2);
+-  if (stat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  if (stat (path, &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_stat4.c b/tests/tcg/cris/libc/check_stat4.c
+deleted file mode 100644
+index 04f21fe7c4..0000000000
+--- a/tests/tcg/cris/libc/check_stat4.c
++++ /dev/null
+@@ -1,27 +0,0 @@
+-/* Simulator options:
+-#notarget: cris*-*-elf
+-#sim: --sysroot=@exedir@
+-*/
+-
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <string.h>
+-#include <stdlib.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  char path[1024] = "/";
+-  struct stat buf;
+-
+-  strncat(path, argv[0], sizeof(path) - 2);
+-  if (lstat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  if (lstat (path, &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_swap.c b/tests/tcg/cris/libc/check_swap.c
+deleted file mode 100644
+index 9a68c1e5d7..0000000000
+--- a/tests/tcg/cris/libc/check_swap.c
++++ /dev/null
+@@ -1,76 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-#define N 8
+-#define W 4
+-#define B 2
+-#define R 1
+-
+-static always_inline int cris_swap(const int mode, int x)
+-{
+-	switch (mode)
+-	{
+-		case N: asm ("swapn\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W: asm ("swapw\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case B: asm ("swapb\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case R: asm ("swapr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case B|R: asm ("swapbr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W|R: asm ("swapwr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W|B: asm ("swapwb\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W|B|R: asm ("swapwbr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|R: asm ("swapnr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|B: asm ("swapnb\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|B|R: asm ("swapnbr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|W: asm ("swapnw\t%0\n" : "+r" (x) : "0" (x)); break;
+-		default:
+-			err();
+-			break;
+-	}
+-	return x;
+-}
+-
+-/* Made this a macro to be able to pick up the location of the errors.  */
+-#define verify_swap(mode, val, expected, n, z)          \
+-do {                                                    \
+-        int r;                                          \
+-        cris_tst_cc_init();                             \
+-	r = cris_swap(mode, val);                       \
+-        cris_tst_mov_cc(n, z);                          \
+-	if (r != expected)                              \
+-		err();                                  \
+-} while(0)
+-
+-void check_swap(void)
+-{
+-	/* Some of these numbers are borrowed from GDB's cris sim
+-	   testsuite.  */
+-	if (cris_swap(N, 0) != 0xffffffff)
+-		err();
+-	if (cris_swap(W, 0x12345678) != 0x56781234)
+-		err();
+-	if (cris_swap(B, 0x12345678) != 0x34127856)
+-		err();
+-
+-	verify_swap(R, 0x78134452, 0x1ec8224a, 0, 0);
+-	verify_swap(B, 0x78134452, 0x13785244, 0, 0);
+-	verify_swap(B|R, 0x78134452, 0xc81e4a22, 1, 0);
+-	verify_swap(W, 0x78134452, 0x44527813, 0, 0);
+-	verify_swap(W|R, 0x78134452, 0x224a1ec8, 0, 0);
+-	verify_swap(W|B|R, 0x78134452, 0x4a22c81e, 0, 0);
+-	verify_swap(N, 0x78134452, 0x87ecbbad, 1, 0);
+-	verify_swap(N|R, 0x78134452, 0xe137ddb5, 1, 0);
+-	verify_swap(N|B, 0x78134452, 0xec87adbb, 1, 0);
+-	verify_swap(N|B|R, 0x78134452, 0x37e1b5dd, 0, 0);
+-	verify_swap(N|W, 0x78134452, 0xbbad87ec, 1, 0);
+-	verify_swap(N|B|R, 0xffffffff, 0, 0, 1);
+-}
+-
+-int main(void)
+-{
+-	check_swap();
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_time2.c b/tests/tcg/cris/libc/check_time2.c
+deleted file mode 100644
+index 20b69b4f60..0000000000
+--- a/tests/tcg/cris/libc/check_time2.c
++++ /dev/null
+@@ -1,18 +0,0 @@
+-/* CB_SYS_time doesn't implement the Linux time syscall; the return
+-   value isn't written to the argument.  */
+-
+-#include <time.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-int
+-main (void)
+-{
+-  time_t x = (time_t) -1;
+-  time_t t = time (&x);
+-
+-  if (t == (time_t) -1 || t != x)
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 8f3b97d9bf..4e279b9bc4 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -151,8 +151,8 @@ static void parts64_default_nan(FloatParts64 *p, float_status *status)
+ #else
+     /*
+      * This case is true for Alpha, ARM, MIPS, OpenRISC, PPC, RISC-V,
+-     * S390, SH4, TriCore, and Xtensa.  Our other supported targets,
+-     * such CRIS, do not have floating-point.
++     * S390, SH4, TriCore, and Xtensa.  Our other supported targets
++     * do not have floating-point.
+      */
+     if (snan_bit_is_one(status)) {
+         /* set all bits other than msb */
+diff --git a/target/cris/translate_v10.c.inc b/target/cris/translate_v10.c.inc
+deleted file mode 100644
+index c15ff47505..0000000000
+--- a/target/cris/translate_v10.c.inc
++++ /dev/null
+@@ -1,1262 +0,0 @@
+-/*
+- *  CRISv10 emulation for qemu: main translation routines.
+- *
+- *  Copyright (c) 2010 AXIS Communications AB
+- *  Written by Edgar E. Iglesias.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "crisv10-decode.h"
+-
+-static const char * const regnames_v10[] =
+-{
+-    "$r0", "$r1", "$r2", "$r3",
+-    "$r4", "$r5", "$r6", "$r7",
+-    "$r8", "$r9", "$r10", "$r11",
+-    "$r12", "$r13", "$sp", "$pc",
+-};
+-
+-static const char * const pregnames_v10[] =
+-{
+-    "$bz", "$vr", "$p2", "$p3",
+-    "$wz", "$ccr", "$p6-prefix", "$mof",
+-    "$dz", "$ibr", "$irp", "$srp",
+-    "$bar", "$dccr", "$brp", "$usp",
+-};
+-
+-/* We need this table to handle preg-moves with implicit width.  */
+-static const int preg_sizes_v10[] = {
+-    1, /* bz.  */
+-    1, /* vr.  */
+-    1, /* pid. */
+-    1, /* srs. */
+-    2, /* wz.  */
+-    2, 2, 4,
+-    4, 4, 4, 4,
+-    4, 4, 4, 4,
+-};
+-
+-static inline int dec10_size(unsigned int size)
+-{
+-    size++;
+-    if (size == 3)
+-        size++;
+-    return size;
+-}
+-
+-static inline void cris_illegal_insn(DisasContext *dc)
+-{
+-    qemu_log_mask(LOG_GUEST_ERROR, "illegal insn at pc=%x\n", dc->pc);
+-    t_gen_raise_exception(EXCP_BREAK);
+-    dc->base.is_jmp = DISAS_NORETURN;
+-}
+-
+-static void gen_store_v10_conditional(DisasContext *dc, TCGv addr, TCGv val,
+-                       unsigned int size, int mem_index)
+-{
+-    TCGLabel *l1 = gen_new_label();
+-    TCGv taddr = tcg_temp_new();
+-    TCGv tval = tcg_temp_new();
+-    TCGv t1 = tcg_temp_new();
+-    dc->postinc = 0;
+-    cris_evaluate_flags(dc);
+-
+-    tcg_gen_mov_tl(taddr, addr);
+-    tcg_gen_mov_tl(tval, val);
+-
+-    /* Store only if F flag isn't set */
+-    tcg_gen_andi_tl(t1, cpu_PR[PR_CCS], F_FLAG_V10);
+-    tcg_gen_brcondi_tl(TCG_COND_NE, t1, 0, l1);
+-
+-    tcg_gen_qemu_st_tl(tval, taddr, mem_index, ctz32(size) | MO_TE);
+-
+-    gen_set_label(l1);
+-    tcg_gen_shri_tl(t1, t1, 1);  /* shift F to P position */
+-    tcg_gen_or_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], t1); /*P=F*/
+-}
+-
+-static void gen_store_v10(DisasContext *dc, TCGv addr, TCGv val,
+-                       unsigned int size)
+-{
+-    /* If we get a fault on a delayslot we must keep the jmp state in
+-       the cpu-state to be able to re-execute the jmp.  */
+-    if (dc->delayed_branch == 1) {
+-        cris_store_direct_jmp(dc);
+-    }
+-
+-    /* Conditional writes. */
+-    if (dc->flags_x) {
+-        gen_store_v10_conditional(dc, addr, val, size, dc->mem_index);
+-        return;
+-    }
+-
+-    tcg_gen_qemu_st_tl(val, addr, dc->mem_index, ctz32(size) | MO_TE);
+-}
+-
+-
+-/* Prefix flag and register are used to handle the more complex
+-   addressing modes.  */
+-static void cris_set_prefix(DisasContext *dc)
+-{
+-    dc->clear_prefix = 0;
+-    dc->tb_flags |= PFIX_FLAG;
+-    tcg_gen_ori_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], PFIX_FLAG);
+-
+-    /* prefix insns don't clear the x flag.  */
+-    dc->clear_x = 0;
+-    cris_lock_irq(dc);
+-}
+-
+-static void crisv10_prepare_memaddr(DisasContext *dc,
+-                                    TCGv addr, unsigned int size)
+-{
+-    if (dc->tb_flags & PFIX_FLAG) {
+-        tcg_gen_mov_tl(addr, cpu_PR[PR_PREFIX]);
+-    } else {
+-        tcg_gen_mov_tl(addr, cpu_R[dc->src]);
+-    }
+-}
+-
+-static unsigned int crisv10_post_memaddr(DisasContext *dc, unsigned int size)
+-{
+-    unsigned int insn_len = 0;
+-
+-    if (dc->tb_flags & PFIX_FLAG) {
+-        if (dc->mode == CRISV10_MODE_AUTOINC) {
+-            tcg_gen_mov_tl(cpu_R[dc->src], cpu_PR[PR_PREFIX]);
+-        }
+-    } else {
+-        if (dc->mode == CRISV10_MODE_AUTOINC) {
+-            if (dc->src == 15) {
+-                insn_len += size & ~1;
+-            } else {
+-                tcg_gen_addi_tl(cpu_R[dc->src], cpu_R[dc->src], size);
+-            }
+-        }
+-    }
+-    return insn_len;
+-}
+-
+-static int dec10_prep_move_m(CPUCRISState *env, DisasContext *dc,
+-                             int s_ext, int memsize, TCGv dst)
+-{
+-    unsigned int rs;
+-    uint32_t imm;
+-    int is_imm;
+-    int insn_len = 0;
+-
+-    rs = dc->src;
+-    is_imm = rs == 15 && !(dc->tb_flags & PFIX_FLAG);
+-    LOG_DIS("rs=%d rd=%d is_imm=%d mode=%d pfix=%d\n",
+-             rs, dc->dst, is_imm, dc->mode, dc->tb_flags & PFIX_FLAG);
+-
+-    /* Load [$rs] onto T1.  */
+-    if (is_imm) {
+-        imm = cris_fetch(env, dc, dc->pc + 2, memsize, s_ext);
+-
+-        tcg_gen_movi_tl(dst, imm);
+-
+-        if (dc->mode == CRISV10_MODE_AUTOINC) {
+-            insn_len += memsize;
+-            if (memsize == 1)
+-                insn_len++;
+-            tcg_gen_addi_tl(cpu_R[15], cpu_R[15], insn_len);
+-        }
+-    } else {
+-        TCGv addr;
+-
+-        addr = tcg_temp_new();
+-        cris_flush_cc_state(dc);
+-        crisv10_prepare_memaddr(dc, addr, memsize);
+-        gen_load(dc, dst, addr, memsize, 0);
+-        if (s_ext)
+-            t_gen_sext(dst, dst, memsize);
+-        else
+-            t_gen_zext(dst, dst, memsize);
+-        insn_len += crisv10_post_memaddr(dc, memsize);
+-    }
+-
+-    if (dc->mode == CRISV10_MODE_INDIRECT && (dc->tb_flags & PFIX_FLAG)) {
+-        dc->dst = dc->src;
+-    }
+-    return insn_len;
+-}
+-
+-static unsigned int dec10_quick_imm(DisasContext *dc)
+-{
+-    int32_t imm, simm;
+-    int op;
+-    TCGv c;
+-
+-    /* sign extend.  */
+-    imm = dc->ir & ((1 << 6) - 1);
+-    simm = (int8_t) (imm << 2);
+-    simm >>= 2;
+-    switch (dc->opcode) {
+-        case CRISV10_QIMM_BDAP_R0:
+-        case CRISV10_QIMM_BDAP_R1:
+-        case CRISV10_QIMM_BDAP_R2:
+-        case CRISV10_QIMM_BDAP_R3:
+-            simm = (int8_t)dc->ir;
+-            LOG_DIS("bdap %d $r%d\n", simm, dc->dst);
+-            LOG_DIS("pc=%x mode=%x quickimm %d r%d r%d\n",
+-                     dc->pc, dc->mode, dc->opcode, dc->src, dc->dst);
+-            cris_set_prefix(dc);
+-            if (dc->dst == 15) {
+-                tcg_gen_movi_tl(cpu_PR[PR_PREFIX], dc->pc + 2 + simm);
+-            } else {
+-                tcg_gen_addi_tl(cpu_PR[PR_PREFIX], cpu_R[dc->dst], simm);
+-            }
+-            break;
+-
+-        case CRISV10_QIMM_MOVEQ:
+-            LOG_DIS("moveq %d, $r%d\n", simm, dc->dst);
+-
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            c = tcg_constant_tl(simm);
+-            cris_alu(dc, CC_OP_MOVE, cpu_R[dc->dst],
+-                     cpu_R[dc->dst], c, 4);
+-            break;
+-        case CRISV10_QIMM_CMPQ:
+-            LOG_DIS("cmpq %d, $r%d\n", simm, dc->dst);
+-
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            c = tcg_constant_tl(simm);
+-            cris_alu(dc, CC_OP_CMP, cpu_R[dc->dst],
+-                     cpu_R[dc->dst], c, 4);
+-            break;
+-        case CRISV10_QIMM_ADDQ:
+-            LOG_DIS("addq %d, $r%d\n", imm, dc->dst);
+-
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            c = tcg_constant_tl(imm);
+-            cris_alu(dc, CC_OP_ADD, cpu_R[dc->dst],
+-                     cpu_R[dc->dst], c, 4);
+-            break;
+-        case CRISV10_QIMM_ANDQ:
+-            LOG_DIS("andq %d, $r%d\n", simm, dc->dst);
+-
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            c = tcg_constant_tl(simm);
+-            cris_alu(dc, CC_OP_AND, cpu_R[dc->dst],
+-                     cpu_R[dc->dst], c, 4);
+-            break;
+-        case CRISV10_QIMM_ASHQ:
+-            LOG_DIS("ashq %d, $r%d\n", simm, dc->dst);
+-
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            op = imm & (1 << 5);
+-            imm &= 0x1f;
+-            c = tcg_constant_tl(imm);
+-            if (op) {
+-                cris_alu(dc, CC_OP_ASR, cpu_R[dc->dst],
+-                          cpu_R[dc->dst], c, 4);
+-            } else {
+-                /* BTST */
+-                cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-                gen_helper_btst(cpu_PR[PR_CCS], tcg_env, cpu_R[dc->dst],
+-                           c, cpu_PR[PR_CCS]);
+-            }
+-            break;
+-        case CRISV10_QIMM_LSHQ:
+-            LOG_DIS("lshq %d, $r%d\n", simm, dc->dst);
+-
+-            op = CC_OP_LSL;
+-            if (imm & (1 << 5)) {
+-                op = CC_OP_LSR; 
+-            }
+-            imm &= 0x1f;
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            c = tcg_constant_tl(imm);
+-            cris_alu(dc, op, cpu_R[dc->dst],
+-                     cpu_R[dc->dst], c, 4);
+-            break;
+-        case CRISV10_QIMM_SUBQ:
+-            LOG_DIS("subq %d, $r%d\n", imm, dc->dst);
+-
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            c = tcg_constant_tl(imm);
+-            cris_alu(dc, CC_OP_SUB, cpu_R[dc->dst],
+-                     cpu_R[dc->dst], c, 4);
+-            break;
+-        case CRISV10_QIMM_ORQ:
+-            LOG_DIS("andq %d, $r%d\n", simm, dc->dst);
+-
+-            cris_cc_mask(dc, CC_MASK_NZVC);
+-            c = tcg_constant_tl(simm);
+-            cris_alu(dc, CC_OP_OR, cpu_R[dc->dst],
+-                     cpu_R[dc->dst], c, 4);
+-            break;
+-
+-        case CRISV10_QIMM_BCC_R0:
+-        case CRISV10_QIMM_BCC_R1:
+-        case CRISV10_QIMM_BCC_R2:
+-        case CRISV10_QIMM_BCC_R3:
+-            imm = dc->ir & 0xff;
+-            /* bit 0 is a sign bit.  */
+-            if (imm & 1) {
+-                imm |= 0xffffff00;   /* sign extend.  */
+-                imm &= ~1;           /* get rid of the sign bit.  */
+-            }
+-            imm += 2;
+-            LOG_DIS("b%s %d\n", cc_name(dc->cond), imm);
+-
+-            cris_cc_mask(dc, 0);
+-            cris_prepare_cc_branch(dc, imm, dc->cond); 
+-            break;
+-
+-        default:
+-            LOG_DIS("pc=%x mode=%x quickimm %d r%d r%d\n",
+-                     dc->pc, dc->mode, dc->opcode, dc->src, dc->dst);
+-            cpu_abort(CPU(dc->cpu), "Unhandled quickimm\n");
+-            break;
+-    }
+-    return 2;
+-}
+-
+-static unsigned int dec10_setclrf(DisasContext *dc)
+-{
+-    uint32_t flags;
+-    unsigned int set = ~dc->opcode & 1;
+-
+-    flags = EXTRACT_FIELD(dc->ir, 0, 3)
+-            | (EXTRACT_FIELD(dc->ir, 12, 15) << 4);
+-    LOG_DIS("%s set=%d flags=%x\n", __func__, set, flags);
+-
+-
+-    if (flags & X_FLAG) {
+-        if (set)
+-            dc->flags_x = X_FLAG;
+-        else
+-            dc->flags_x = 0;
+-    }
+-
+-    cris_evaluate_flags (dc);
+-    cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-    cris_update_cc_x(dc);
+-    tcg_gen_movi_tl(cc_op, dc->cc_op);
+-
+-    if (set) {
+-        tcg_gen_ori_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], flags);
+-    } else {
+-        tcg_gen_andi_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS],
+-                        ~(flags|F_FLAG_V10|P_FLAG_V10));
+-    }
+-
+-    dc->flags_uptodate = 1;
+-    dc->clear_x = 0;
+-    cris_lock_irq(dc);
+-    return 2;
+-}
+-
+-static inline void dec10_reg_prep_sext(DisasContext *dc, int size, int sext,
+-                                       TCGv dd, TCGv ds, TCGv sd, TCGv ss)
+-{
+-    if (sext) {
+-        t_gen_sext(dd, sd, size);
+-        t_gen_sext(ds, ss, size);
+-    } else {
+-        t_gen_zext(dd, sd, size);
+-        t_gen_zext(ds, ss, size);
+-    }
+-}
+-
+-static void dec10_reg_alu(DisasContext *dc, int op, int size, int sext)
+-{
+-    TCGv t[2];
+-
+-    t[0] = tcg_temp_new();
+-    t[1] = tcg_temp_new();
+-    dec10_reg_prep_sext(dc, size, sext,
+-                        t[0], t[1], cpu_R[dc->dst], cpu_R[dc->src]);
+-
+-    if (op == CC_OP_LSL || op == CC_OP_LSR || op == CC_OP_ASR) {
+-        tcg_gen_andi_tl(t[1], t[1], 63);
+-    }
+-
+-    assert(dc->dst != 15);
+-    cris_alu(dc, op, cpu_R[dc->dst], t[0], t[1], size);
+-}
+-
+-static void dec10_reg_bound(DisasContext *dc, int size)
+-{
+-    TCGv t;
+-
+-    t = tcg_temp_new();
+-    t_gen_zext(t, cpu_R[dc->src], size);
+-    cris_alu(dc, CC_OP_BOUND, cpu_R[dc->dst], cpu_R[dc->dst], t, 4);
+-}
+-
+-static void dec10_reg_mul(DisasContext *dc, int size, int sext)
+-{
+-    int op = sext ? CC_OP_MULS : CC_OP_MULU;
+-    TCGv t[2];
+-
+-    t[0] = tcg_temp_new();
+-    t[1] = tcg_temp_new();
+-    dec10_reg_prep_sext(dc, size, sext,
+-                        t[0], t[1], cpu_R[dc->dst], cpu_R[dc->src]);
+-
+-    cris_alu(dc, op, cpu_R[dc->dst], t[0], t[1], 4);
+-}
+-
+-
+-static void dec10_reg_movs(DisasContext *dc)
+-{
+-    int size = (dc->size & 1) + 1;
+-    TCGv t;
+-
+-    LOG_DIS("movx.%d $r%d, $r%d\n", size, dc->src, dc->dst);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-
+-    t = tcg_temp_new();
+-    if (dc->ir & 32)
+-        t_gen_sext(t, cpu_R[dc->src], size);
+-    else
+-        t_gen_zext(t, cpu_R[dc->src], size);
+-
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->dst], cpu_R[dc->dst], t, 4);
+-}
+-
+-static void dec10_reg_alux(DisasContext *dc, int op)
+-{
+-    int size = (dc->size & 1) + 1;
+-    TCGv t;
+-
+-    LOG_DIS("movx.%d $r%d, $r%d\n", size, dc->src, dc->dst);
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-
+-    t = tcg_temp_new();
+-    if (dc->ir & 32)
+-        t_gen_sext(t, cpu_R[dc->src], size);
+-    else
+-        t_gen_zext(t, cpu_R[dc->src], size);
+-
+-    cris_alu(dc, op, cpu_R[dc->dst], cpu_R[dc->dst], t, 4);
+-}
+-
+-static void dec10_reg_mov_pr(DisasContext *dc)
+-{
+-    LOG_DIS("move p%d r%d sz=%d\n", dc->dst, dc->src, preg_sizes_v10[dc->dst]);
+-    cris_lock_irq(dc);
+-    if (dc->src == 15) {
+-        tcg_gen_mov_tl(env_btarget, cpu_PR[dc->dst]);
+-        cris_prepare_jmp(dc, JMP_INDIRECT);
+-        return;
+-    }
+-    if (dc->dst == PR_CCS) {
+-        cris_evaluate_flags(dc); 
+-    }
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->src],
+-                 cpu_R[dc->src], cpu_PR[dc->dst], preg_sizes_v10[dc->dst]);
+-}
+-
+-static void dec10_reg_abs(DisasContext *dc)
+-{
+-    TCGv t0;
+-
+-    LOG_DIS("abs $r%u, $r%u\n", dc->src, dc->dst);
+-
+-    assert(dc->dst != 15);
+-    t0 = tcg_temp_new();
+-    tcg_gen_sari_tl(t0, cpu_R[dc->src], 31);
+-    tcg_gen_xor_tl(cpu_R[dc->dst], cpu_R[dc->src], t0);
+-    tcg_gen_sub_tl(t0, cpu_R[dc->dst], t0);
+-
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->dst], cpu_R[dc->dst], t0, 4);
+-}
+-
+-static void dec10_reg_swap(DisasContext *dc)
+-{
+-    TCGv t0;
+-
+-    LOG_DIS("not $r%d, $r%d\n", dc->src, dc->dst);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    t0 = tcg_temp_new();
+-    tcg_gen_mov_tl(t0, cpu_R[dc->src]);
+-    if (dc->dst & 8)
+-        tcg_gen_not_tl(t0, t0);
+-    if (dc->dst & 4)
+-        t_gen_swapw(t0, t0);
+-    if (dc->dst & 2)
+-        t_gen_swapb(t0, t0);
+-    if (dc->dst & 1)
+-        t_gen_swapr(t0, t0);
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->src], cpu_R[dc->src], t0, 4);
+-}
+-
+-static void dec10_reg_scc(DisasContext *dc)
+-{
+-    int cond = dc->dst;
+-
+-    LOG_DIS("s%s $r%u\n", cc_name(cond), dc->src);
+-
+-    gen_tst_cc(dc, cpu_R[dc->src], cond);
+-    tcg_gen_setcondi_tl(TCG_COND_NE, cpu_R[dc->src], cpu_R[dc->src], 0);
+-
+-    cris_cc_mask(dc, 0);
+-}
+-
+-static unsigned int dec10_reg(DisasContext *dc)
+-{
+-    TCGv t;
+-    unsigned int insn_len = 2;
+-    unsigned int size = dec10_size(dc->size);
+-    unsigned int tmp;
+-
+-    if (dc->size != 3) {
+-        switch (dc->opcode) {
+-            case CRISV10_REG_MOVE_R:
+-                LOG_DIS("move.%d $r%d, $r%d\n", dc->size, dc->src, dc->dst);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_MOVE, size, 0);
+-                if (dc->dst == 15) {
+-                    tcg_gen_mov_tl(env_btarget, cpu_R[dc->dst]);
+-                    cris_prepare_jmp(dc, JMP_INDIRECT);
+-                    dc->delayed_branch = 1;
+-                }
+-                break;
+-            case CRISV10_REG_MOVX:
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_movs(dc);
+-                break;
+-            case CRISV10_REG_ADDX:
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alux(dc, CC_OP_ADD);
+-                break;
+-            case CRISV10_REG_SUBX:
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alux(dc, CC_OP_SUB);
+-                break;
+-            case CRISV10_REG_ADD:
+-                LOG_DIS("add $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_ADD, size, 0);
+-                break;
+-            case CRISV10_REG_SUB:
+-                LOG_DIS("sub $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_SUB, size, 0);
+-                break;
+-            case CRISV10_REG_CMP:
+-                LOG_DIS("cmp $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_CMP, size, 0);
+-                break;
+-            case CRISV10_REG_BOUND:
+-                LOG_DIS("bound $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_bound(dc, size);
+-                break;
+-            case CRISV10_REG_AND:
+-                LOG_DIS("and $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_AND, size, 0);
+-                break;
+-            case CRISV10_REG_ADDI:
+-                if (dc->src == 15) {
+-                    /* nop.  */
+-                    return 2;
+-                }
+-                t = tcg_temp_new();
+-                LOG_DIS("addi r%d r%d size=%d\n", dc->src, dc->dst, dc->size);
+-                tcg_gen_shli_tl(t, cpu_R[dc->dst], dc->size & 3);
+-                tcg_gen_add_tl(cpu_R[dc->src], cpu_R[dc->src], t);
+-                break;
+-            case CRISV10_REG_LSL:
+-                LOG_DIS("lsl $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_LSL, size, 0);
+-                break;
+-            case CRISV10_REG_LSR:
+-                LOG_DIS("lsr $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_LSR, size, 0);
+-                break;
+-            case CRISV10_REG_ASR:
+-                LOG_DIS("asr $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_ASR, size, 1);
+-                break;
+-            case CRISV10_REG_OR:
+-                LOG_DIS("or $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_OR, size, 0);
+-                break;
+-            case CRISV10_REG_NEG:
+-                LOG_DIS("neg $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_NEG, size, 0);
+-                break;
+-            case CRISV10_REG_BIAP:
+-                LOG_DIS("BIAP pc=%x reg %d r%d r%d size=%d\n", dc->pc,
+-                         dc->opcode, dc->src, dc->dst, size);
+-                switch (size) {
+-                    case 4: tmp = 2; break;
+-                    case 2: tmp = 1; break;
+-                    case 1: tmp = 0; break;
+-                    default:
+-                        cpu_abort(CPU(dc->cpu), "Unhandled BIAP");
+-                        break;
+-                }
+-
+-                t = tcg_temp_new();
+-                tcg_gen_shli_tl(t, cpu_R[dc->dst], tmp);
+-                if (dc->src == 15) {
+-                    tcg_gen_addi_tl(cpu_PR[PR_PREFIX], t, ((dc->pc +2)| 1) + 1);
+-                } else {
+-                    tcg_gen_add_tl(cpu_PR[PR_PREFIX], cpu_R[dc->src], t);
+-                }
+-                cris_set_prefix(dc);
+-                break;
+-
+-            default:
+-                LOG_DIS("pc=%x reg %d r%d r%d\n", dc->pc,
+-                         dc->opcode, dc->src, dc->dst);
+-                cpu_abort(CPU(dc->cpu), "Unhandled opcode");
+-                break;
+-        }
+-    } else {
+-        switch (dc->opcode) {
+-            case CRISV10_REG_MOVX:
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_movs(dc);
+-                break;
+-            case CRISV10_REG_ADDX:
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alux(dc, CC_OP_ADD);
+-                break;
+-            case CRISV10_REG_SUBX:
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alux(dc, CC_OP_SUB);
+-                break;
+-            case CRISV10_REG_MOVE_SPR_R:
+-                cris_evaluate_flags(dc);
+-                cris_cc_mask(dc, 0);
+-                dec10_reg_mov_pr(dc);
+-                break;
+-            case CRISV10_REG_MOVE_R_SPR:
+-                LOG_DIS("move r%d p%d\n", dc->src, dc->dst);
+-                cris_evaluate_flags(dc);
+-                if (dc->src != 11) /* fast for srp.  */
+-                    dc->cpustate_changed = 1;
+-                t_gen_mov_preg_TN(dc, dc->dst, cpu_R[dc->src]);
+-                break;
+-            case CRISV10_REG_SETF:
+-            case CRISV10_REG_CLEARF:
+-                dec10_setclrf(dc);
+-                break;
+-            case CRISV10_REG_SWAP:
+-                dec10_reg_swap(dc);
+-                break;
+-            case CRISV10_REG_ABS:
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_abs(dc);
+-                break;
+-            case CRISV10_REG_LZ:
+-                LOG_DIS("lz $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_LZ, 4, 0);
+-                break;
+-            case CRISV10_REG_XOR:
+-                LOG_DIS("xor $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_alu(dc, CC_OP_XOR, 4, 0);
+-                break;
+-            case CRISV10_REG_BTST:
+-                LOG_DIS("btst $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                cris_update_cc_op(dc, CC_OP_FLAGS, 4);
+-                gen_helper_btst(cpu_PR[PR_CCS], tcg_env, cpu_R[dc->dst],
+-                           cpu_R[dc->src], cpu_PR[PR_CCS]);
+-                break;
+-            case CRISV10_REG_DSTEP:
+-                LOG_DIS("dstep $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                cris_alu(dc, CC_OP_DSTEP, cpu_R[dc->dst],
+-                            cpu_R[dc->dst], cpu_R[dc->src], 4);
+-                break;
+-            case CRISV10_REG_MSTEP:
+-                LOG_DIS("mstep $r%d, $r%d sz=%d\n", dc->src, dc->dst, size);
+-                cris_evaluate_flags(dc);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                cris_alu(dc, CC_OP_MSTEP, cpu_R[dc->dst],
+-                            cpu_R[dc->dst], cpu_R[dc->src], 4);
+-                break;
+-            case CRISV10_REG_SCC:
+-                dec10_reg_scc(dc);
+-                break;
+-            default:
+-                LOG_DIS("pc=%x reg %d r%d r%d\n", dc->pc,
+-                         dc->opcode, dc->src, dc->dst);
+-                cpu_abort(CPU(dc->cpu), "Unhandled opcode");
+-                break;
+-        }
+-    }
+-    return insn_len;
+-}
+-
+-static unsigned int dec10_ind_move_m_r(CPUCRISState *env, DisasContext *dc,
+-                                       unsigned int size)
+-{
+-    unsigned int insn_len = 2;
+-    TCGv t;
+-
+-    LOG_DIS("%s: move.%d [$r%d], $r%d\n", __func__,
+-             size, dc->src, dc->dst);
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    t = tcg_temp_new();
+-    insn_len += dec10_prep_move_m(env, dc, 0, size, t);
+-    cris_alu(dc, CC_OP_MOVE, cpu_R[dc->dst], cpu_R[dc->dst], t, size);
+-    if (dc->dst == 15) {
+-        tcg_gen_mov_tl(env_btarget, cpu_R[dc->dst]);
+-        cris_prepare_jmp(dc, JMP_INDIRECT);
+-        dc->delayed_branch = 1;
+-    }
+-
+-    return insn_len;
+-}
+-
+-static unsigned int dec10_ind_move_r_m(DisasContext *dc, unsigned int size)
+-{
+-    unsigned int insn_len = 2;
+-    TCGv addr;
+-
+-    LOG_DIS("move.%d $r%d, [$r%d]\n", dc->size, dc->src, dc->dst);
+-    addr = tcg_temp_new();
+-    crisv10_prepare_memaddr(dc, addr, size);
+-    gen_store_v10(dc, addr, cpu_R[dc->dst], size);
+-    insn_len += crisv10_post_memaddr(dc, size);
+-
+-    return insn_len;
+-}
+-
+-static unsigned int dec10_ind_move_m_pr(CPUCRISState *env, DisasContext *dc)
+-{
+-    unsigned int insn_len = 2, rd = dc->dst;
+-    TCGv t;
+-
+-    LOG_DIS("move.%d $p%d, [$r%d]\n", dc->size, dc->dst, dc->src);
+-    cris_lock_irq(dc);
+-
+-    t = tcg_temp_new();
+-    insn_len += dec10_prep_move_m(env, dc, 0, 4, t);
+-    if (rd == 15) {
+-        tcg_gen_mov_tl(env_btarget, t);
+-        cris_prepare_jmp(dc, JMP_INDIRECT);
+-        dc->delayed_branch = 1;
+-    } else {
+-        tcg_gen_mov_tl(cpu_PR[rd], t);
+-        dc->cpustate_changed = 1;
+-    }
+-    return insn_len;
+-}
+-
+-static unsigned int dec10_ind_move_pr_m(DisasContext *dc)
+-{
+-    unsigned int insn_len = 2, size = preg_sizes_v10[dc->dst];
+-    TCGv addr, t0;
+-
+-    LOG_DIS("move.%d $p%d, [$r%d]\n", dc->size, dc->dst, dc->src);
+-
+-    addr = tcg_temp_new();
+-    crisv10_prepare_memaddr(dc, addr, size);
+-    if (dc->dst == PR_CCS) {
+-        t0 = tcg_temp_new();
+-        cris_evaluate_flags(dc);
+-        tcg_gen_andi_tl(t0, cpu_PR[PR_CCS], ~PFIX_FLAG);
+-        gen_store_v10(dc, addr, t0, size);
+-    } else {
+-        gen_store_v10(dc, addr, cpu_PR[dc->dst], size);
+-    }
+-    insn_len += crisv10_post_memaddr(dc, size);
+-    cris_lock_irq(dc);
+-
+-    return insn_len;
+-}
+-
+-static void dec10_movem_r_m(DisasContext *dc)
+-{
+-    int i, pfix = dc->tb_flags & PFIX_FLAG;
+-    TCGv addr, t0;
+-
+-    LOG_DIS("%s r%d, [r%d] pi=%d ir=%x\n", __func__,
+-              dc->dst, dc->src, dc->postinc, dc->ir);
+-
+-    addr = tcg_temp_new();
+-    t0 = tcg_temp_new();
+-    crisv10_prepare_memaddr(dc, addr, 4);
+-    tcg_gen_mov_tl(t0, addr);
+-    for (i = dc->dst; i >= 0; i--) {
+-        if ((pfix && dc->mode == CRISV10_MODE_AUTOINC) && dc->src == i) {
+-            gen_store_v10(dc, addr, t0, 4);
+-        } else {
+-            gen_store_v10(dc, addr, cpu_R[i], 4);
+-        }
+-        tcg_gen_addi_tl(addr, addr, 4);
+-    }
+-
+-    if (pfix && dc->mode == CRISV10_MODE_AUTOINC) {
+-        tcg_gen_mov_tl(cpu_R[dc->src], t0);
+-    }
+-
+-    if (!pfix && dc->mode == CRISV10_MODE_AUTOINC) {
+-        tcg_gen_mov_tl(cpu_R[dc->src], addr);
+-    }
+-}
+-
+-static void dec10_movem_m_r(DisasContext *dc)
+-{
+-    int i, pfix = dc->tb_flags & PFIX_FLAG;
+-    TCGv addr, t0;
+-
+-    LOG_DIS("%s [r%d], r%d pi=%d ir=%x\n", __func__,
+-              dc->src, dc->dst, dc->postinc, dc->ir);
+-
+-    addr = tcg_temp_new();
+-    t0 = tcg_temp_new();
+-    crisv10_prepare_memaddr(dc, addr, 4);
+-    tcg_gen_mov_tl(t0, addr);
+-    for (i = dc->dst; i >= 0; i--) {
+-        gen_load(dc, cpu_R[i], addr, 4, 0);
+-        tcg_gen_addi_tl(addr, addr, 4);
+-    }
+-
+-    if (pfix && dc->mode == CRISV10_MODE_AUTOINC) {
+-        tcg_gen_mov_tl(cpu_R[dc->src], t0);
+-    }
+-
+-    if (!pfix && dc->mode == CRISV10_MODE_AUTOINC) {
+-        tcg_gen_mov_tl(cpu_R[dc->src], addr);
+-    }
+-}
+-
+-static int dec10_ind_alu(CPUCRISState *env, DisasContext *dc,
+-                         int op, unsigned int size)
+-{
+-    int insn_len = 0;
+-    int rd = dc->dst;
+-    TCGv t[2];
+-
+-    cris_alu_m_alloc_temps(t);
+-    insn_len += dec10_prep_move_m(env, dc, 0, size, t[0]);
+-    cris_alu(dc, op, cpu_R[dc->dst], cpu_R[rd], t[0], size);
+-    if (dc->dst == 15) {
+-        tcg_gen_mov_tl(env_btarget, cpu_R[dc->dst]);
+-        cris_prepare_jmp(dc, JMP_INDIRECT);
+-        dc->delayed_branch = 1;
+-        return insn_len;
+-    }
+-    return insn_len;
+-}
+-
+-static int dec10_ind_bound(CPUCRISState *env, DisasContext *dc,
+-                           unsigned int size)
+-{
+-    int insn_len = 0;
+-    int rd = dc->dst;
+-    TCGv t;
+-
+-    t = tcg_temp_new();
+-    insn_len += dec10_prep_move_m(env, dc, 0, size, t);
+-    cris_alu(dc, CC_OP_BOUND, cpu_R[dc->dst], cpu_R[rd], t, 4);
+-    if (dc->dst == 15) {
+-        tcg_gen_mov_tl(env_btarget, cpu_R[dc->dst]);
+-        cris_prepare_jmp(dc, JMP_INDIRECT);
+-        dc->delayed_branch = 1;
+-    }
+-
+-    return insn_len;
+-}
+-
+-static int dec10_alux_m(CPUCRISState *env, DisasContext *dc, int op)
+-{
+-    unsigned int size = (dc->size & 1) ? 2 : 1;
+-    unsigned int sx = !!(dc->size & 2);
+-    int insn_len = 2;
+-    int rd = dc->dst;
+-    TCGv t;
+-
+-    LOG_DIS("addx size=%d sx=%d op=%d %d\n", size, sx, dc->src, dc->dst);
+-
+-    t = tcg_temp_new();
+-
+-    cris_cc_mask(dc, CC_MASK_NZVC);
+-    insn_len += dec10_prep_move_m(env, dc, sx, size, t);
+-    cris_alu(dc, op, cpu_R[dc->dst], cpu_R[rd], t, 4);
+-    if (dc->dst == 15) {
+-        tcg_gen_mov_tl(env_btarget, cpu_R[dc->dst]);
+-        cris_prepare_jmp(dc, JMP_INDIRECT);
+-        dc->delayed_branch = 1;
+-    }
+-
+-    return insn_len;
+-}
+-
+-static int dec10_dip(CPUCRISState *env, DisasContext *dc)
+-{
+-    int insn_len = 2;
+-    uint32_t imm;
+-
+-    LOG_DIS("dip pc=%x opcode=%d r%d r%d\n",
+-              dc->pc, dc->opcode, dc->src, dc->dst);
+-    if (dc->src == 15) {
+-        imm = cris_fetch(env, dc, dc->pc + 2, 4, 0);
+-        tcg_gen_movi_tl(cpu_PR[PR_PREFIX], imm);
+-        if (dc->postinc) {
+-            insn_len += 4;
+-        }
+-        tcg_gen_addi_tl(cpu_R[15], cpu_R[15], insn_len - 2);
+-    } else {
+-        gen_load(dc, cpu_PR[PR_PREFIX], cpu_R[dc->src], 4, 0);
+-        if (dc->postinc)
+-            tcg_gen_addi_tl(cpu_R[dc->src], cpu_R[dc->src], 4);
+-    }
+-
+-    cris_set_prefix(dc);
+-    return insn_len;
+-}
+-
+-static int dec10_bdap_m(CPUCRISState *env, DisasContext *dc, int size)
+-{
+-    int insn_len = 2;
+-    int rd = dc->dst;
+-
+-    LOG_DIS("bdap_m pc=%x opcode=%d r%d r%d sz=%d\n",
+-              dc->pc, dc->opcode, dc->src, dc->dst, size);
+-
+-    assert(dc->dst != 15);
+-#if 0
+-    /* 8bit embedded offset?  */
+-    if (!dc->postinc && (dc->ir & (1 << 11))) {
+-        int simm = dc->ir & 0xff;
+-
+-        /* cpu_abort(CPU(dc->cpu), "Unhandled opcode"); */
+-        /* sign extended.  */
+-        simm = (int8_t)simm;
+-
+-        tcg_gen_addi_tl(cpu_PR[PR_PREFIX], cpu_R[dc->dst], simm);
+-
+-        cris_set_prefix(dc);
+-        return insn_len;
+-    }
+-#endif
+-    /* Now the rest of the modes are truly indirect.  */
+-    insn_len += dec10_prep_move_m(env, dc, 1, size, cpu_PR[PR_PREFIX]);
+-    tcg_gen_add_tl(cpu_PR[PR_PREFIX], cpu_PR[PR_PREFIX], cpu_R[rd]);
+-    cris_set_prefix(dc);
+-    return insn_len;
+-}
+-
+-static unsigned int dec10_ind(CPUCRISState *env, DisasContext *dc)
+-{
+-    unsigned int insn_len = 2;
+-    unsigned int size = dec10_size(dc->size);
+-    uint32_t imm;
+-    int32_t simm;
+-    TCGv t[2], c;
+-
+-    if (dc->size != 3) {
+-        switch (dc->opcode) {
+-            case CRISV10_IND_MOVE_M_R:
+-                return dec10_ind_move_m_r(env, dc, size);
+-            case CRISV10_IND_MOVE_R_M:
+-                return dec10_ind_move_r_m(dc, size);
+-            case CRISV10_IND_CMP:
+-                LOG_DIS("cmp size=%d op=%d %d\n",  size, dc->src, dc->dst);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                insn_len += dec10_ind_alu(env, dc, CC_OP_CMP, size);
+-                break;
+-            case CRISV10_IND_TEST:
+-                LOG_DIS("test size=%d op=%d %d\n",  size, dc->src, dc->dst);
+-
+-                cris_evaluate_flags(dc);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                cris_alu_m_alloc_temps(t);
+-                insn_len += dec10_prep_move_m(env, dc, 0, size, t[0]);
+-                tcg_gen_andi_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], ~3);
+-                c = tcg_constant_tl(0);
+-                cris_alu(dc, CC_OP_CMP, cpu_R[dc->dst],
+-                         t[0], c, size);
+-                break;
+-            case CRISV10_IND_ADD:
+-                LOG_DIS("add size=%d op=%d %d\n",  size, dc->src, dc->dst);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                insn_len += dec10_ind_alu(env, dc, CC_OP_ADD, size);
+-                break;
+-            case CRISV10_IND_SUB:
+-                LOG_DIS("sub size=%d op=%d %d\n",  size, dc->src, dc->dst);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                insn_len += dec10_ind_alu(env, dc, CC_OP_SUB, size);
+-                break;
+-            case CRISV10_IND_BOUND:
+-                LOG_DIS("bound size=%d op=%d %d\n",  size, dc->src, dc->dst);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                insn_len += dec10_ind_bound(env, dc, size);
+-                break;
+-            case CRISV10_IND_AND:
+-                LOG_DIS("and size=%d op=%d %d\n",  size, dc->src, dc->dst);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                insn_len += dec10_ind_alu(env, dc, CC_OP_AND, size);
+-                break;
+-            case CRISV10_IND_OR:
+-                LOG_DIS("or size=%d op=%d %d\n",  size, dc->src, dc->dst);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                insn_len += dec10_ind_alu(env, dc, CC_OP_OR, size);
+-                break;
+-            case CRISV10_IND_MOVX:
+-                insn_len = dec10_alux_m(env, dc, CC_OP_MOVE);
+-                break;
+-            case CRISV10_IND_ADDX:
+-                insn_len = dec10_alux_m(env, dc, CC_OP_ADD);
+-                break;
+-            case CRISV10_IND_SUBX:
+-                insn_len = dec10_alux_m(env, dc, CC_OP_SUB);
+-                break;
+-            case CRISV10_IND_CMPX:
+-                insn_len = dec10_alux_m(env, dc, CC_OP_CMP);
+-                break;
+-            case CRISV10_IND_MUL:
+-                /* This is a reg insn coded in the mem indir space.  */
+-                LOG_DIS("mul pc=%x opcode=%d\n", dc->pc, dc->opcode);
+-                cris_cc_mask(dc, CC_MASK_NZVC);
+-                dec10_reg_mul(dc, size, dc->ir & (1 << 10));
+-                break;
+-            case CRISV10_IND_BDAP_M:
+-                insn_len = dec10_bdap_m(env, dc, size);
+-                break;
+-            default:
+-            /*
+-             * ADDC for v17:
+-             *
+-             * Instruction format: ADDC [Rs],Rd
+-             *
+-             *  +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+-+
+-             *  |Destination(Rd)| 1   0   0   1   1   0   1   0 |   Source(Rs)|
+-             *  +---+---+---+---+---+---+---+---+---+---+---+---+---+---+--+--+
+-             *
+-             * Instruction format: ADDC [Rs+],Rd
+-             *
+-             *  +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+-+
+-             *  |Destination(Rd)| 1   1   0   1   1   0   1   0 |   Source(Rs)|
+-             *  +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+-+
+-             */
+-                if (dc->opcode == CRISV17_IND_ADDC && dc->size == 2 &&
+-                    env->pregs[PR_VR] == 17) {
+-                    LOG_DIS("addc op=%d %d\n",  dc->src, dc->dst);
+-                    cris_cc_mask(dc, CC_MASK_NZVC);
+-                    insn_len += dec10_ind_alu(env, dc, CC_OP_ADDC, size);
+-                    break;
+-                }
+-
+-                LOG_DIS("pc=%x var-ind.%d %d r%d r%d\n",
+-                          dc->pc, size, dc->opcode, dc->src, dc->dst);
+-                cpu_abort(CPU(dc->cpu), "Unhandled opcode");
+-                break;
+-        }
+-        return insn_len;
+-    }
+-
+-    switch (dc->opcode) {
+-        case CRISV10_IND_MOVE_M_SPR:
+-            insn_len = dec10_ind_move_m_pr(env, dc);
+-            break;
+-        case CRISV10_IND_MOVE_SPR_M:
+-            insn_len = dec10_ind_move_pr_m(dc);
+-            break;
+-        case CRISV10_IND_JUMP_M:
+-            if (dc->src == 15) {
+-                LOG_DIS("jump.%d %d r%d r%d direct\n", size,
+-                         dc->opcode, dc->src, dc->dst);
+-                imm = cris_fetch(env, dc, dc->pc + 2, size, 0);
+-                if (dc->mode == CRISV10_MODE_AUTOINC) {
+-                    insn_len += size;
+-                }
+-                c = tcg_constant_tl(dc->pc + insn_len);
+-                t_gen_mov_preg_TN(dc, dc->dst, c);
+-                dc->jmp_pc = imm;
+-                cris_prepare_jmp(dc, JMP_DIRECT);
+-                dc->delayed_branch--; /* v10 has no dslot here.  */
+-            } else {
+-                if (dc->dst == 14) {
+-                    LOG_DIS("break %d\n", dc->src);
+-                    cris_evaluate_flags(dc);
+-                    tcg_gen_movi_tl(env_pc, dc->pc + 2);
+-                    c = tcg_constant_tl(dc->src + 2);
+-                    t_gen_mov_env_TN(trap_vector, c);
+-                    t_gen_raise_exception(EXCP_BREAK);
+-                    dc->base.is_jmp = DISAS_NORETURN;
+-                    return insn_len;
+-                }
+-                LOG_DIS("%d: jump.%d %d r%d r%d\n", __LINE__, size,
+-                         dc->opcode, dc->src, dc->dst);
+-                t[0] = tcg_temp_new();
+-                c = tcg_constant_tl(dc->pc + insn_len);
+-                t_gen_mov_preg_TN(dc, dc->dst, c);
+-                crisv10_prepare_memaddr(dc, t[0], size);
+-                gen_load(dc, env_btarget, t[0], 4, 0);
+-                insn_len += crisv10_post_memaddr(dc, size);
+-                cris_prepare_jmp(dc, JMP_INDIRECT);
+-                dc->delayed_branch--; /* v10 has no dslot here.  */
+-            }
+-            break;
+-
+-        case CRISV10_IND_MOVEM_R_M:
+-            LOG_DIS("movem_r_m pc=%x opcode=%d r%d r%d\n",
+-                        dc->pc, dc->opcode, dc->dst, dc->src);
+-            dec10_movem_r_m(dc);
+-            break;
+-        case CRISV10_IND_MOVEM_M_R:
+-            LOG_DIS("movem_m_r pc=%x opcode=%d\n", dc->pc, dc->opcode);
+-            dec10_movem_m_r(dc);
+-            break;
+-        case CRISV10_IND_JUMP_R:
+-            LOG_DIS("jmp pc=%x opcode=%d r%d r%d\n",
+-                        dc->pc, dc->opcode, dc->dst, dc->src);
+-            tcg_gen_mov_tl(env_btarget, cpu_R[dc->src]);
+-            c = tcg_constant_tl(dc->pc + insn_len);
+-            t_gen_mov_preg_TN(dc, dc->dst, c);
+-            cris_prepare_jmp(dc, JMP_INDIRECT);
+-            dc->delayed_branch--; /* v10 has no dslot here.  */
+-            break;
+-        case CRISV10_IND_MOVX:
+-            insn_len = dec10_alux_m(env, dc, CC_OP_MOVE);
+-            break;
+-        case CRISV10_IND_ADDX:
+-            insn_len = dec10_alux_m(env, dc, CC_OP_ADD);
+-            break;
+-        case CRISV10_IND_SUBX:
+-            insn_len = dec10_alux_m(env, dc, CC_OP_SUB);
+-            break;
+-        case CRISV10_IND_CMPX:
+-            insn_len = dec10_alux_m(env, dc, CC_OP_CMP);
+-            break;
+-        case CRISV10_IND_DIP:
+-            insn_len = dec10_dip(env, dc);
+-            break;
+-        case CRISV10_IND_BCC_M:
+-
+-            cris_cc_mask(dc, 0);
+-            simm = cris_fetch(env, dc, dc->pc + 2, 2, 1);
+-            simm += 4;
+-
+-            LOG_DIS("bcc_m: b%s %x\n", cc_name(dc->cond), dc->pc + simm);
+-            cris_prepare_cc_branch(dc, simm, dc->cond);
+-            insn_len = 4;
+-            break;
+-        default:
+-            LOG_DIS("ERROR pc=%x opcode=%d\n", dc->pc, dc->opcode);
+-            cpu_abort(CPU(dc->cpu), "Unhandled opcode");
+-            break;
+-    }
+-
+-    return insn_len;
+-}
+-
+-static unsigned int crisv10_decoder(CPUCRISState *env, DisasContext *dc)
+-{
+-    unsigned int insn_len = 2;
+-
+-    /* Load a halfword onto the instruction register.  */
+-    dc->ir = cris_fetch(env, dc, dc->pc, 2, 0);
+-
+-    /* Now decode it.  */
+-    dc->opcode   = EXTRACT_FIELD(dc->ir, 6, 9);
+-    dc->mode     = EXTRACT_FIELD(dc->ir, 10, 11);
+-    dc->src      = EXTRACT_FIELD(dc->ir, 0, 3);
+-    dc->size     = EXTRACT_FIELD(dc->ir, 4, 5);
+-    dc->cond = dc->dst = EXTRACT_FIELD(dc->ir, 12, 15);
+-    dc->postinc  = EXTRACT_FIELD(dc->ir, 10, 10);
+-
+-    dc->clear_prefix = 1;
+-
+-    /* FIXME: What if this insn insn't 2 in length??  */
+-    if (dc->src == 15 || dc->dst == 15)
+-        tcg_gen_movi_tl(cpu_R[15], dc->pc + 2);
+-
+-    switch (dc->mode) {
+-        case CRISV10_MODE_QIMMEDIATE:
+-            insn_len = dec10_quick_imm(dc);
+-            break;
+-        case CRISV10_MODE_REG:
+-            insn_len = dec10_reg(dc);
+-            break;
+-        case CRISV10_MODE_AUTOINC:
+-        case CRISV10_MODE_INDIRECT:
+-            insn_len = dec10_ind(env, dc);
+-            break;
+-    }
+-
+-    if (dc->clear_prefix && dc->tb_flags & PFIX_FLAG) {
+-        dc->tb_flags &= ~PFIX_FLAG;
+-        tcg_gen_andi_tl(cpu_PR[PR_CCS], cpu_PR[PR_CCS], ~PFIX_FLAG);
+-        if (dc->tb_flags != dc->base.tb->flags) {
+-            dc->cpustate_changed = 1;
+-        }
+-    }
+-
+-    /* CRISv10 locks out interrupts on dslots.  */
+-    if (dc->delayed_branch == 2) {
+-        cris_lock_irq(dc);
+-    }
+-    return insn_len;
+-}
+-
+-void cris_initialize_crisv10_tcg(void)
+-{
+-    int i;
+-
+-    cc_x = tcg_global_mem_new(tcg_env,
+-                              offsetof(CPUCRISState, cc_x), "cc_x");
+-    cc_src = tcg_global_mem_new(tcg_env,
+-                                offsetof(CPUCRISState, cc_src), "cc_src");
+-    cc_dest = tcg_global_mem_new(tcg_env,
+-                                 offsetof(CPUCRISState, cc_dest),
+-                                 "cc_dest");
+-    cc_result = tcg_global_mem_new(tcg_env,
+-                                   offsetof(CPUCRISState, cc_result),
+-                                   "cc_result");
+-    cc_op = tcg_global_mem_new(tcg_env,
+-                               offsetof(CPUCRISState, cc_op), "cc_op");
+-    cc_size = tcg_global_mem_new(tcg_env,
+-                                 offsetof(CPUCRISState, cc_size),
+-                                 "cc_size");
+-    cc_mask = tcg_global_mem_new(tcg_env,
+-                                 offsetof(CPUCRISState, cc_mask),
+-                                 "cc_mask");
+-
+-    env_pc = tcg_global_mem_new(tcg_env,
+-                                offsetof(CPUCRISState, pc),
+-                                "pc");
+-    env_btarget = tcg_global_mem_new(tcg_env,
+-                                     offsetof(CPUCRISState, btarget),
+-                                     "btarget");
+-    env_btaken = tcg_global_mem_new(tcg_env,
+-                                    offsetof(CPUCRISState, btaken),
+-                                    "btaken");
+-    for (i = 0; i < 16; i++) {
+-        cpu_R[i] = tcg_global_mem_new(tcg_env,
+-                                      offsetof(CPUCRISState, regs[i]),
+-                                      regnames_v10[i]);
+-    }
+-    for (i = 0; i < 16; i++) {
+-        cpu_PR[i] = tcg_global_mem_new(tcg_env,
+-                                       offsetof(CPUCRISState, pregs[i]),
+-                                       pregnames_v10[i]);
+-    }
+-}
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index aa32782405..0933d62db8 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -667,7 +667,7 @@ build-without-defaults:
+       --disable-pie
+       --disable-qom-cast-debug
+       --disable-strip
+-    TARGETS: alpha-softmmu avr-softmmu cris-softmmu hppa-softmmu m68k-softmmu
++    TARGETS: alpha-softmmu avr-softmmu hppa-softmmu m68k-softmmu
+       mips-softmmu mips64-softmmu mipsel-softmmu mips64el-softmmu
+       ppc-softmmu s390x-softmmu sh4-softmmu sh4eb-softmmu sparc-softmmu
+       sparc64-softmmu tricore-softmmu xtensa-softmmu xtensaeb-softmmu
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index e3103940a0..78c8d2faa8 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -96,11 +96,6 @@ xtensa-debian-cross-container:
+   variables:
+     NAME: debian-xtensa-cross
+ 
+-cris-fedora-cross-container:
+-  extends: .container_job_template
+-  variables:
+-    NAME: fedora-cris-cross
+-
+ win64-fedora-cross-container:
+   extends: .container_job_template
+   variables:
+diff --git a/.gitlab-ci.d/crossbuild-template.yml b/.gitlab-ci.d/crossbuild-template.yml
+index 53051ec793..2ce0432eb7 100644
+--- a/.gitlab-ci.d/crossbuild-template.yml
++++ b/.gitlab-ci.d/crossbuild-template.yml
+@@ -20,7 +20,7 @@
+     - ccache --zero-stats
+     - ../configure --enable-werror --disable-docs --enable-fdt=system
+         --disable-user $QEMU_CONFIGURE_OPTS $EXTRA_CONFIGURE_OPTS
+-        --target-list-exclude="arm-softmmu cris-softmmu
++        --target-list-exclude="arm-softmmu
+           i386-softmmu microblaze-softmmu mips-softmmu mipsel-softmmu
+           mips64-softmmu ppc-softmmu riscv32-softmmu sh4-softmmu
+           sparc-softmmu xtensa-softmmu $CROSS_SKIP_TARGETS"
+@@ -73,7 +73,7 @@
+     - cd build
+     - ../configure --enable-werror --disable-docs $QEMU_CONFIGURE_OPTS
+         --disable-system --target-list-exclude="aarch64_be-linux-user
+-          alpha-linux-user cris-linux-user m68k-linux-user microblazeel-linux-user
++          alpha-linux-user m68k-linux-user microblazeel-linux-user
+           or1k-linux-user ppc-linux-user sparc-linux-user
+           xtensa-linux-user $CROSS_SKIP_TARGETS"
+     - make -j$(expr $(nproc) + 1) all check-build $MAKE_CHECK_ARGS
+diff --git a/disas/meson.build b/disas/meson.build
+index 20d6aef9a7..bbfa119783 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -1,5 +1,4 @@
+ common_ss.add(when: 'CONFIG_ALPHA_DIS', if_true: files('alpha.c'))
+-common_ss.add(when: 'CONFIG_CRIS_DIS', if_true: files('cris.c'))
+ common_ss.add(when: 'CONFIG_HEXAGON_DIS', if_true: files('hexagon.c'))
+ common_ss.add(when: 'CONFIG_HPPA_DIS', if_true: files('hppa.c'))
+ common_ss.add(when: 'CONFIG_M68K_DIS', if_true: files('m68k.c'))
+diff --git a/hw/Kconfig b/hw/Kconfig
+index f7866e76f7..6fdaff1b1b 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -50,7 +50,6 @@ source arm/Kconfig
+ source cpu/Kconfig
+ source alpha/Kconfig
+ source avr/Kconfig
+-source cris/Kconfig
+ source hppa/Kconfig
+ source i386/Kconfig
+ source loongarch/Kconfig
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index e5b13b6958..a4c4c5ff0f 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -1,7 +1,6 @@
+ system_ss.add(when: 'CONFIG_CADENCE', if_true: files('cadence_uart.c'))
+ system_ss.add(when: 'CONFIG_CMSDK_APB_UART', if_true: files('cmsdk-apb-uart.c'))
+ system_ss.add(when: 'CONFIG_ESCC', if_true: files('escc.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_ser.c'))
+ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_apbuart.c'))
+ system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_uart.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_serial.c'))
+diff --git a/hw/cris/Kconfig b/hw/cris/Kconfig
+deleted file mode 100644
+index 26c7eef743..0000000000
+--- a/hw/cris/Kconfig
++++ /dev/null
+@@ -1,11 +0,0 @@
+-config AXIS
+-    bool
+-    default y
+-    depends on CRIS
+-    select ETRAXFS
+-    select PFLASH_CFI02
+-    select NAND
+-
+-config ETRAXFS
+-   bool
+-   select PTIMER
+diff --git a/hw/cris/meson.build b/hw/cris/meson.build
+deleted file mode 100644
+index dc808a4e0f..0000000000
+--- a/hw/cris/meson.build
++++ /dev/null
+@@ -1,5 +0,0 @@
+-cris_ss = ss.source_set()
+-cris_ss.add(files('boot.c'))
+-cris_ss.add(when: 'CONFIG_AXIS', if_true: files('axis_dev88.c'))
+-
+-hw_arch += {'cris': cris_ss}
+diff --git a/hw/dma/meson.build b/hw/dma/meson.build
+index a96c1be2c8..dd7781961e 100644
+--- a/hw/dma/meson.build
++++ b/hw/dma/meson.build
+@@ -5,7 +5,6 @@ system_ss.add(when: 'CONFIG_I82374', if_true: files('i82374.c'))
+ system_ss.add(when: 'CONFIG_I8257', if_true: files('i8257.c'))
+ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('xilinx_axidma.c'))
+ system_ss.add(when: 'CONFIG_ZYNQ_DEVCFG', if_true: files('xlnx-zynq-devcfg.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_dma.c'))
+ system_ss.add(when: 'CONFIG_STP2000', if_true: files('sparc32_dma.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx_dpdma.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZDMA', if_true: files('xlnx-zdma.c'))
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index f4d81eb8e4..6bfdc4eb33 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -15,7 +15,6 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
+ system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
+ system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
+ system_ss.add(when: 'CONFIG_HEATHROW_PIC', if_true: files('heathrow_pic.c'))
+diff --git a/hw/meson.build b/hw/meson.build
+index 1c6308fe95..e86badc541 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -48,7 +48,6 @@ subdir('fsi')
+ subdir('alpha')
+ subdir('arm')
+ subdir('avr')
+-subdir('cris')
+ subdir('hppa')
+ subdir('i386')
+ subdir('loongarch')
+diff --git a/hw/net/meson.build b/hw/net/meson.build
+index b7426870e8..00a9e9dd51 100644
+--- a/hw/net/meson.build
++++ b/hw/net/meson.build
+@@ -40,7 +40,6 @@ system_ss.add(when: 'CONFIG_FTGMAC100', if_true: files('ftgmac100.c'))
+ system_ss.add(when: 'CONFIG_SUNGEM', if_true: files('sungem.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_emc.c', 'npcm_gmac.c'))
+ 
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_eth.c'))
+ system_ss.add(when: 'CONFIG_COLDFIRE', if_true: files('mcf_fec.c'))
+ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_llan.c'))
+ system_ss.add(when: 'CONFIG_XILINX_ETHLITE', if_true: files('xilinx_ethlite.c'))
+diff --git a/hw/net/trace-events b/hw/net/trace-events
+index 78efa2ec2c..4c6687923e 100644
+--- a/hw/net/trace-events
++++ b/hw/net/trace-events
+@@ -10,11 +10,6 @@ allwinner_sun8i_emac_set_link(bool active) "Set link: active=%u"
+ allwinner_sun8i_emac_read(uint64_t offset, uint64_t val) "MMIO read: offset=0x%" PRIx64 " value=0x%" PRIx64
+ allwinner_sun8i_emac_write(uint64_t offset, uint64_t val) "MMIO write: offset=0x%" PRIx64 " value=0x%" PRIx64
+ 
+-# etraxfs_eth.c
+-mdio_phy_read(int regnum, uint16_t value) "read phy_reg:%d value:0x%04x"
+-mdio_phy_write(int regnum, uint16_t value) "write phy_reg:%d value:0x%04x"
+-mdio_bitbang(bool mdc, bool mdio, int state, uint16_t cnt, unsigned int drive) "bitbang mdc=%u mdio=%u state=%d cnt=%u drv=%d"
+-
+ # lance.c
+ lance_mem_readw(uint64_t addr, uint32_t ret) "addr=0x%"PRIx64"val=0x%04x"
+ lance_mem_writew(uint64_t addr, uint32_t val) "addr=0x%"PRIx64"val=0x%04x"
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 80427852e0..5b6c8b4be9 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -10,7 +10,6 @@ system_ss.add(when: 'CONFIG_CMSDK_APB_TIMER', if_true: files('cmsdk-apb-timer.c'
+ system_ss.add(when: 'CONFIG_RENESAS_TMR', if_true: files('renesas_tmr.c'))
+ system_ss.add(when: 'CONFIG_RENESAS_CMT', if_true: files('renesas_cmt.c'))
+ system_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic-timer.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_timer.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_mct.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pwm.c'))
+ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_gptimer.c'))
+diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
+index 858190be09..a58e7414c7 100644
+--- a/scripts/coverity-scan/COMPONENTS.md
++++ b/scripts/coverity-scan/COMPONENTS.md
+@@ -9,9 +9,6 @@ arm
+ avr
+   ~ .*/qemu((/include)?/hw/avr/.*|/target/avr/.*)
+ 
+-cris
+-  ~ .*/qemu((/include)?/hw/cris/.*|/target/cris/.*)
+-
+ hexagon-gen (component should be ignored in analysis)
+   ~ .*/qemu(/target/hexagon/.*generated.*)
+ 
+diff --git a/scripts/probe-gdb-support.py b/scripts/probe-gdb-support.py
+index 46d6c00140..6dc58d06c7 100644
+--- a/scripts/probe-gdb-support.py
++++ b/scripts/probe-gdb-support.py
+@@ -28,7 +28,6 @@
+     "armv7": "arm",
+     "armv8-a" : ["aarch64", "aarch64_be"],
+     "avr" : "avr",
+-    "cris" : "cris",
+     # no hexagon in upstream gdb
+     "hppa1.0" : "hppa",
+     "i386" : "i386",
+diff --git a/target/Kconfig b/target/Kconfig
+index 7f64112e9e..d0c7b59d9c 100644
+--- a/target/Kconfig
++++ b/target/Kconfig
+@@ -1,7 +1,6 @@
+ source alpha/Kconfig
+ source arm/Kconfig
+ source avr/Kconfig
+-source cris/Kconfig
+ source hppa/Kconfig
+ source i386/Kconfig
+ source loongarch/Kconfig
+diff --git a/target/cris/Kconfig b/target/cris/Kconfig
+deleted file mode 100644
+index 3fdc309fbb..0000000000
+--- a/target/cris/Kconfig
++++ /dev/null
+@@ -1,2 +0,0 @@
+-config CRIS
+-    bool
+diff --git a/target/cris/meson.build b/target/cris/meson.build
+deleted file mode 100644
+index bbfcdf7f7a..0000000000
+--- a/target/cris/meson.build
++++ /dev/null
+@@ -1,17 +0,0 @@
+-cris_ss = ss.source_set()
+-cris_ss.add(files(
+-  'cpu.c',
+-  'gdbstub.c',
+-  'op_helper.c',
+-  'translate.c',
+-))
+-
+-cris_system_ss = ss.source_set()
+-cris_system_ss.add(files(
+-  'helper.c',
+-  'machine.c',
+-  'mmu.c',
+-))
+-
+-target_arch += {'cris': cris_ss}
+-target_system_arch += {'cris': cris_system_ss}
+diff --git a/target/meson.build b/target/meson.build
+index 1c2e6f2b19..b29598e7c5 100644
+--- a/target/meson.build
++++ b/target/meson.build
+@@ -1,7 +1,6 @@
+ subdir('alpha')
+ subdir('arm')
+ subdir('avr')
+-subdir('cris')
+ subdir('hexagon')
+ subdir('hppa')
+ subdir('i386')
+diff --git a/tests/data/qobject/qdict.txt b/tests/data/qobject/qdict.txt
+index e2edc88161..888f3431b5 100644
+--- a/tests/data/qobject/qdict.txt
++++ b/tests/data/qobject/qdict.txt
+@@ -3487,12 +3487,6 @@ cred-internals.h: 559
+ CREDITS: 603
+ crime.c: 2833
+ crime.h: 5271
+-cris: 4096
+-cris_defs_asm.h: 3805
+-crisksyms.c: 472
+-cris_supp_reg.h: 198
+-crisv10.c: 129158
+-crisv10.h: 4289
+ crm_regs.h: 1700
+ cr_pll.c: 4842
+ crt0_ram.S: 2152
+diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+index 708e3a72fb..681feae744 100644
+--- a/tests/docker/Makefile.include
++++ b/tests/docker/Makefile.include
+@@ -117,7 +117,6 @@ docker-image-debian-microblaze-cross: $(DOCKER_FILES_DIR)/debian-toolchain.docke
+ # These images may be good enough for building tests but not for test builds
+ DOCKER_PARTIAL_IMAGES += debian-microblaze-cross
+ DOCKER_PARTIAL_IMAGES += debian-xtensa-cross
+-DOCKER_PARTIAL_IMAGES += fedora-cris-cross
+ 
+ # images that are only used to build other images
+ DOCKER_VIRTUAL_IMAGES := debian-bootstrap debian-toolchain
+diff --git a/tests/docker/dockerfiles/fedora-cris-cross.docker b/tests/docker/dockerfiles/fedora-cris-cross.docker
+deleted file mode 100644
+index 97c9d37ede..0000000000
+--- a/tests/docker/dockerfiles/fedora-cris-cross.docker
++++ /dev/null
+@@ -1,14 +0,0 @@
+-#
+-# Cross compiler for cris system tests
+-#
+-
+-FROM registry.fedoraproject.org/fedora:33
+-ENV PACKAGES gcc-cris-linux-gnu
+-ENV MAKE /usr/bin/make
+-RUN dnf install -y $PACKAGES
+-RUN rpm -q $PACKAGES | sort > /packages.txt
+-# As a final step configure the user (if env is defined)
+-ARG USER
+-ARG UID
+-RUN if [ "${USER}" ]; then \
+-  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
+diff --git a/tests/tcg/cris/.gdbinit b/tests/tcg/cris/.gdbinit
+deleted file mode 100644
+index 5e8c1d32f3..0000000000
+--- a/tests/tcg/cris/.gdbinit
++++ /dev/null
+@@ -1,11 +0,0 @@
+-b main
+-b _fail
+-b exit
+-display /i $pc
+-display /x $srp
+-display /x $r0
+-display /x $r1
+-display /x $r2
+-display /x $r3
+-display /x $r4
+-display /t $ccs
+diff --git a/tests/tcg/cris/Makefile.target b/tests/tcg/cris/Makefile.target
+deleted file mode 100644
+index 713e2a5b6c..0000000000
+--- a/tests/tcg/cris/Makefile.target
++++ /dev/null
+@@ -1,62 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# Cris tests
+-#
+-# Currently we can only build the "bare" tests with the docker
+-# supplied cross-compiler.
+-#
+-
+-CRIS_SRC = $(SRC_PATH)/tests/tcg/cris/bare
+-CRIS_ALL = $(wildcard $(CRIS_SRC)/*.s)
+-CRIS_TESTS = $(patsubst $(CRIS_SRC)/%.s, %, $(CRIS_ALL))
+-# Filter out common blobs and broken tests
+-CRIS_BROKEN_TESTS  = crt check_jsr
+-# upstream GCC doesn't support v32
+-CRIS_BROKEN_TESTS += check_mcp check_mulv32 check_addiv32 check_movpmv32
+-CRIS_BROKEN_TESTS += check_movprv32 check_clearfv32 check_movemrv32 check_bas
+-CRIS_BROKEN_TESTS += check_lapc check_movei
+-# no sure why
+-CRIS_BROKEN_TESTS += check_scc check_xarith
+-
+-CRIS_USABLE_TESTS = $(filter-out $(CRIS_BROKEN_TESTS), $(CRIS_TESTS))
+-CRIS_RUNS = $(patsubst %, run-%, $(CRIS_USABLE_TESTS))
+-
+-# override the list of tests, as we can't build the multiarch tests
+-TESTS = $(CRIS_USABLE_TESTS)
+-EXTRA_RUNS =
+-VPATH = $(CRIS_SRC)
+-
+-AS	= $(CC) -x assembler-with-cpp
+-LD      = $(CC)
+-
+-# we rely on GCC inline:ing the stuff we tell it to in many places here.
+-CFLAGS  = -Winline -Wall -g -O2 -static -fno-stack-protector
+-NOSTDFLAGS = -nostartfiles -nostdlib
+-ASFLAGS += -mcpu=v10 -g -Wa,-I,$(SRC_PATH)/tests/tcg/cris/bare
+-CRT_FILES = crt.o sys.o
+-
+-# stop make deleting crt files if build fails
+-.PRECIOUS: $(CRT_FILES)
+-
+-%.o: %.c
+-	$(CC) -c $< -o $@
+-
+-%.o: %.s
+-	$(AS) $(ASFLAGS) -c $< -o $@
+-
+-%: %.s $(CRT_FILES)
+-	$(CC) $(ASFLAGS) $< -o $@ $(LDFLAGS) $(NOSTDFLAGS) $(CRT_FILES)
+-
+-# The default CPU breaks (possibly as it's max?) so force crisv17
+-QEMU_OPTS=-cpu crisv17
+-
+-# Additional runners to run under GNU SIM
+-CRIS_RUNS_ON_SIM=$(patsubst %, %-on-sim, $(CRIS_RUNS))
+-SIMG:=cris-axis-linux-gnu-run
+-
+-# e.g.: make -f ../../tests/tcg/Makefile run-check_orm-on-sim
+-run-%-on-sim:
+-	$(call run-test, $<, $(SIMG) $<)
+-
+-# We don't currently support the multiarch tests
+-undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/cris/README b/tests/tcg/cris/README
+deleted file mode 100644
+index 2e65a76f10..0000000000
+--- a/tests/tcg/cris/README
++++ /dev/null
+@@ -1 +0,0 @@
+-Test-suite for the cris port. Heavily based on the test-suite for the CRIS port of sim by Hans-Peter Nilsson.
+diff --git a/tests/tcg/cris/bare/check_addcv17.s b/tests/tcg/cris/bare/check_addcv17.s
+deleted file mode 100644
+index 52ef7a9716..0000000000
+--- a/tests/tcg/cris/bare/check_addcv17.s
++++ /dev/null
+@@ -1,65 +0,0 @@
+-# mach:  crisv17
+-
+- .include "testutils.inc"
+-
+- .macro addc Rs Rd inc=0
+-# Create the instruction manually since there is no assembler support yet
+- .word (\Rd << 12) | \Rs | (\inc << 10) | 0x09a0
+- .endm
+-
+- start
+-
+- .data
+-mem1:
+- .dword 0x0
+-mem2:
+- .dword 0x12345678
+-
+- .text
+- move.d mem1,r4
+- clearf nzvc
+- addc 4 3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- move.d mem1,r4
+- clearf nzvc
+- ax
+- addc 4 3
+- test_cc 0 0 0 0
+- checkr3 0
+-
+- move.d mem1,r4
+- clearf nzvc
+- setf c
+- addc 4 3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d mem2,r4
+- moveq 2, r3
+- clearf nzvc
+- setf c
+- addc 4 3
+- test_cc 0 0 0 0
+- checkr3 1234567b
+-
+- move.d mem2,r5
+- clearf nzvc
+- cmp.d r4,r5
+- test_cc 0 1 0 0
+-
+- move.d mem2,r4
+- moveq 2, r3
+- clearf nzvc
+- addc 4 3 inc=1
+- test_cc 0 0 0 0
+- checkr3 1234567a
+-
+- move.d mem2,r5
+- clearf nzvc
+- addq 4,r5
+- cmp.d r4,r5
+- test_cc 0 1 0 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addi.s b/tests/tcg/cris/bare/check_addi.s
+deleted file mode 100644
+index a00dec02af..0000000000
+--- a/tests/tcg/cris/bare/check_addi.s
++++ /dev/null
+@@ -1,57 +0,0 @@
+-# mach:  crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 0\n1\n2\n4\nbe02460f\n69d035a6\nc16c14d4\n
+-
+- .include "testutils.inc"
+- start
+- moveq 0,r3
+- moveq 0,r4
+- clearf zcvn
+- addi r4.b,r3
+- test_cc 0 0 0 0
+- checkr3 0
+-
+- moveq 0,r3
+- moveq 1,r4
+- setf zcvn
+- addi r4.b,r3
+- test_cc 1 1 1 1
+- checkr3 1
+-
+- moveq 0,r3
+- moveq 1,r4
+- setf cv
+- clearf zn
+- addi r4.w,r3
+- test_cc 0 0 1 1
+- checkr3 2
+-
+- moveq 0,r3
+- moveq 1,r4
+- clearf cv
+- setf zn
+- addi r4.d,r3
+- test_cc 1 1 0 0
+- checkr3 4
+-
+- move.d 0x12345678,r3
+- move.d 0xabcdef97,r4
+- clearf cn
+- setf zv
+- addi r4.b,r3
+- test_cc 0 1 1 0
+- checkr3 be02460f
+-
+- move.d 0x12345678,r3
+- move.d 0xabcdef97,r4
+- setf cn
+- clearf zv
+- addi r4.w,r3
+- test_cc 1 0 0 1
+- checkr3 69d035a6
+-
+- move.d 0x12345678,r3
+- move.d 0xabcdef97,r4
+- addi r4.d,r3
+- checkr3 c16c14d4
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addiv32.s b/tests/tcg/cris/bare/check_addiv32.s
+deleted file mode 100644
+index 20ba25d219..0000000000
+--- a/tests/tcg/cris/bare/check_addiv32.s
++++ /dev/null
+@@ -1,62 +0,0 @@
+-# mach: crisv32
+-# output: 4455aa77\n4455aa77\nee19ccff\nff22\n4455aa77\nff224455\n55aa77ff\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 0x55aa77ff
+- .dword 0xccff2244
+- .dword 0x88ccee19
+-
+- start
+- setf cv
+- moveq -1,r0
+- move.d x-32768,r5
+- move.d 32769,r6
+- addi r6.b,r5,acr
+- test_cc 0 0 1 1
+- move.d [acr],r3
+- checkr3 4455aa77
+-
+- addu.w 32771,r5
+- setf znvc
+- moveq -1,r8
+- addi r8.w,r5,acr
+- test_cc 1 1 1 1
+- move.d [acr],r3
+- checkr3 4455aa77
+-
+- moveq 5,r10
+- clearf znvc
+- addi r10.b,acr,acr
+- test_cc 0 0 0 0
+- move.d [acr],r3
+- checkr3 ee19ccff
+-
+- subq 1,r5
+- move.d r5,r8
+- subq 1,r8
+- moveq 1,r9
+- addi r9.d,r8,acr
+- test_cc 0 0 0 0
+- movu.w [acr],r3
+- checkr3 ff22
+-
+- moveq -2,r11
+- addi r11.w,acr,acr
+- move.d [acr],r3
+- checkr3 4455aa77
+-
+- moveq 5,r9
+- addi r9.d,acr,acr
+- subq 18,acr
+- move.d [acr],r3
+- checkr3 ff224455
+-
+- move.d -76789888/4,r12
+- addi r12.d,r5,acr
+- add.d 76789886,acr
+- move.d [acr],r3
+- checkr3 55aa77ff
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addm.s b/tests/tcg/cris/bare/check_addm.s
+deleted file mode 100644
+index efece9f538..0000000000
+--- a/tests/tcg/cris/bare/check_addm.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n781344d0\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 2,-1,0xffff,-1,0x5432f789
+- .word 2,-1,0xffff,0xf789
+- .byte 2,0xff,0x89
+- .byte 0x7e
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- add.d [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- add.d [r5],r3
+- test_cc 0 0 0 1
+- addq 4,r5
+- checkr3 1
+-
+- move.d 0xffff,r3
+- add.d [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- moveq -1,r3
+- add.d [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- add.d [r5+],r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- add.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- add.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r3
+- add.w [r5],r3
+- test_cc 1 0 0 1
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- add.w [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 fedafffe
+-
+- move.d 0x78134452,r3
+- add.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- add.b [r5],r3
+- test_cc 0 0 0 1
+- addq 1,r5
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- add.b [r5],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xff,r3
+- add.b [r5],r3
+- test_cc 1 0 0 1
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r3
+- add.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 feda49fe
+-
+- move.d 0x78134452,r3
+- add.b [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 781344db
+-
+- move.d 0x78134452,r3
+- add.b [r5],r3
+- test_cc 1 0 1 0
+- checkr3 781344d0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addq.s b/tests/tcg/cris/bare/check_addq.s
+deleted file mode 100644
+index e6f874f9b2..0000000000
+--- a/tests/tcg/cris/bare/check_addq.s
++++ /dev/null
+@@ -1,47 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n0\n1\n100\n10000\n47\n67\na6\n80000001\n
+-
+- .include "testutils.inc"
+- start
+- moveq -2,r3
+- addq 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- addq 1,r3
+- test_cc 0 1 0 1
+- checkr3 0
+-
+- addq 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xff,r3
+- addq 1,r3
+- test_cc 0 0 0 0
+- checkr3 100
+-
+- move.d 0xffff,r3
+- addq 1,r3
+- test_cc 0 0 0 0
+- checkr3 10000
+-
+- move.d 0x42,r3
+- addq 5,r3
+- test_cc 0 0 0 0
+- checkr3 47
+-
+- addq 32,r3
+- test_cc 0 0 0 0
+- checkr3 67
+-
+- addq 63,r3
+- test_cc 0 0 0 0
+- checkr3 a6
+-
+- move.d 0x7ffffffe,r3
+- addq 3,r3
+- test_cc 1 0 1 0
+- checkr3 80000001
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addr.s b/tests/tcg/cris/bare/check_addr.s
+deleted file mode 100644
+index 7f55cdc1b5..0000000000
+--- a/tests/tcg/cris/bare/check_addr.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- moveq -1,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.d r4,r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fedafffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 feda49fe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addxc.s b/tests/tcg/cris/bare/check_addxc.s
+deleted file mode 100644
+index 09c8355bf8..0000000000
+--- a/tests/tcg/cris/bare/check_addxc.s
++++ /dev/null
+@@ -1,91 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n101\n10001\n100fe\n1fffe\nfffe\nfffe\nfffffffe\nfe\nfffffffe\n781344db\n781343db\n78143bdb\n78133bdb\n800000ed\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq 2,r3
+- adds.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- adds.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- addu.b 0xff,r3
+- checkr3 101
+-
+- moveq 2,r3
+- move.d 0xffffffff,r4
+- addu.w -1,r3
+- test_cc 0 0 0 0
+- checkr3 10001
+-
+- move.d 0xffff,r3
+- addu.b -1,r3
+- test_cc 0 0 0 0
+- checkr3 100fe
+-
+- move.d 0xffff,r3
+- addu.w -1,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- move.d 0xffff,r3
+- adds.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- move.d 0xffff,r3
+- adds.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- moveq -1,r3
+- adds.b 0xff,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- moveq -1,r3
+- adds.w 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 fe
+-
+- moveq -1,r3
+- adds.w 0xffff,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- addu.b 0x89,r3
+- test_cc 0 0 0 0
+- checkr3 781344db
+-
+- move.d 0x78134452,r3
+- adds.b 0x89,r3
+- test_cc 0 0 0 1
+- checkr3 781343db
+-
+- move.d 0x78134452,r3
+- addu.w 0xf789,r3
+- test_cc 0 0 0 0
+- checkr3 78143bdb
+-
+- move.d 0x78134452,r3
+- adds.w 0xf789,r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- move.d 0x7fffffee,r3
+- addu.b 0xff,r3
+- test_cc 1 0 1 0
+- checkr3 800000ed
+-
+- move.d 0x1,r3
+- adds.w 0xffff,r3
+- test_cc 0 1 0 1
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addxm.s b/tests/tcg/cris/bare/check_addxm.s
+deleted file mode 100644
+index 7563494b99..0000000000
+--- a/tests/tcg/cris/bare/check_addxm.s
++++ /dev/null
+@@ -1,106 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n101\n10001\n100fe\n1fffe\nfffe\nfffe\nfffffffe\nfe\nfffffffe\n781344db\n781343db\n78143bdb\n78133bdb\n800000ed\n0\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .byte 0xff
+- .word 0xffff
+- .word 0xff
+- .word 0xffff
+- .byte 0x89
+- .word 0xf789
+- .byte 0xff
+- .word 0xffff
+-
+- start
+- moveq 2,r3
+- move.d x,r5
+- adds.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- adds.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- subq 3,r5
+- addu.b [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 101
+-
+- moveq 2,r3
+- addu.w [r5+],r3
+- subq 3,r5
+- test_cc 0 0 0 0
+- checkr3 10001
+-
+- move.d 0xffff,r3
+- addu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 100fe
+-
+- move.d 0xffff,r3
+- addu.w [r5],r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- move.d 0xffff,r3
+- adds.b [r5],r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- move.d 0xffff,r3
+- adds.w [r5],r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- moveq -1,r3
+- adds.b [r5],r3
+- test_cc 1 0 0 1
+- addq 3,r5
+- checkr3 fffffffe
+-
+- moveq -1,r3
+- adds.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 fe
+-
+- moveq -1,r3
+- adds.w [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- addu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 781344db
+-
+- move.d 0x78134452,r3
+- adds.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 781343db
+-
+- move.d 0x78134452,r3
+- addu.w [r5],r3
+- test_cc 0 0 0 0
+- checkr3 78143bdb
+-
+- move.d 0x78134452,r3
+- adds.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- move.d 0x7fffffee,r3
+- addu.b [r5+],r3
+- test_cc 1 0 1 0
+- checkr3 800000ed
+-
+- move.d 0x1,r3
+- adds.w [r5+],r3
+- test_cc 0 1 0 1
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addxr.s b/tests/tcg/cris/bare/check_addxr.s
+deleted file mode 100644
+index 7f55cdc1b5..0000000000
+--- a/tests/tcg/cris/bare/check_addxr.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- moveq -1,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.d r4,r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fedafffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 feda49fe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andc.s b/tests/tcg/cris/bare/check_andc.s
+deleted file mode 100644
+index a947b773c9..0000000000
+--- a/tests/tcg/cris/bare/check_andc.s
++++ /dev/null
+@@ -1,80 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n50124400\nffff0002\n2\nfffff\nfedaff0f\n78134400\nffffff02\n2\nf02\n78134401\n78134400\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- and.d 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- and.d -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- and.d 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- and.d -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- and.d 0x5432f789,r3
+- test_move_cc 0 0 0 0
+- checkr3 50124400
+-
+- moveq -1,r3
+- and.w 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0002
+-
+- moveq 2,r3
+- and.w -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfffff,r3
+- and.w 0xffff,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffff
+-
+- move.d 0xfedaffaf,r3
+- and.w 0xff5f,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaff0f
+-
+- move.d 0x78134452,r3
+- and.w 0xf789,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134400
+-
+- moveq -1,r3
+- and.b 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff02
+-
+- moveq 2,r3
+- and.b -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfa7,r3
+- and.b 0x5a,r3
+- test_move_cc 0 0 0 0
+- checkr3 f02
+-
+- move.d 0x78134453,r3
+- and.b 0x89,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134401
+-
+- and.b 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 78134400
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andm.s b/tests/tcg/cris/bare/check_andm.s
+deleted file mode 100644
+index 93858863fe..0000000000
+--- a/tests/tcg/cris/bare/check_andm.s
++++ /dev/null
+@@ -1,90 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n50124400\nffff0002\n2\nfffff\nfedaff0f\n78134400\nffffff02\n2\nf02\n78134401\n78134400\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 2,-1,0xffff,-1,0x5432f789
+- .word 2,-1,0xffff,0xff5f,0xf789
+- .byte 2,-1,0x5a,0x89,0
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- and.d [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- and.d [r5],r3
+- test_move_cc 0 0 0 0
+- addq 4,r5
+- checkr3 2
+-
+- move.d 0xffff,r3
+- and.d [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- and.d [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- and.d [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 50124400
+-
+- moveq -1,r3
+- and.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0002
+-
+- moveq 2,r3
+- and.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfffff,r3
+- and.w [r5],r3
+- test_move_cc 1 0 0 0
+- addq 2,r5
+- checkr3 fffff
+-
+- move.d 0xfedaffaf,r3
+- and.w [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaff0f
+-
+- move.d 0x78134452,r3
+- and.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 78134400
+-
+- moveq -1,r3
+- and.b [r5],r3
+- test_move_cc 0 0 0 0
+- addq 1,r5
+- checkr3 ffffff02
+-
+- moveq 2,r3
+- and.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfa7,r3
+- and.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 f02
+-
+- move.d 0x78134453,r3
+- and.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 78134401
+-
+- and.b [r5],r3
+- test_move_cc 0 1 0 0
+- checkr3 78134400
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andq.s b/tests/tcg/cris/bare/check_andq.s
+deleted file mode 100644
+index 55aa7b0607..0000000000
+--- a/tests/tcg/cris/bare/check_andq.s
++++ /dev/null
+@@ -1,46 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n1f\nffffffe0\n78134452\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- andq 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- andq -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- andq -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- andq -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- andq 31,r3
+- test_move_cc 0 0 0 0
+- checkr3 1f
+-
+- moveq -1,r3
+- andq -32,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffe0
+-
+- move.d 0x78134457,r3
+- andq -14,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq 0,r3
+- andq -14,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andr.s b/tests/tcg/cris/bare/check_andr.s
+deleted file mode 100644
+index 61aa1dc32f..0000000000
+--- a/tests/tcg/cris/bare/check_andr.s
++++ /dev/null
+@@ -1,95 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n50124400\nffff0002\n2\nfffff\nfedaff0f\n78134400\nffffff02\n2\nf02\n78134401\n78134400\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- and.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 50124400
+-
+- moveq -1,r3
+- moveq 2,r4
+- and.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0002
+-
+- moveq 2,r3
+- moveq -1,r4
+- and.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfffff,r3
+- move.d 0xffff,r4
+- and.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffff
+-
+- move.d 0xfedaffaf,r3
+- move.d 0xff5f,r4
+- and.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaff0f
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- and.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134400
+-
+- moveq -1,r3
+- moveq 2,r4
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff02
+-
+- moveq 2,r3
+- moveq -1,r4
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0x5a,r4
+- move.d 0xfa7,r3
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 f02
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134453,r3
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134401
+-
+- moveq 0,r7
+- and.b r7,r3
+- test_move_cc 0 1 0 0
+- checkr3 78134400
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_asr.s b/tests/tcg/cris/bare/check_asr.s
+deleted file mode 100644
+index 0a02ae6f7e..0000000000
+--- a/tests/tcg/cris/bare/check_asr.s
++++ /dev/null
+@@ -1,230 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n1\nffffffff\nffffffff\n5a67f\nffffffff\nffffffff\nffffffff\nf699fc67\nffffffff\n1\nffffffff\nffffffff\n5a67f\nda67ffff\nda67ffff\nda67ffff\nda67fc67\nffffffff\nffffffff\n1\nffffffff\nffffffff\n5a670007\nda67f1ff\nda67f1ff\nda67f1ff\nda67f1e7\nffffffff\nffffffff\n1\nffffffff\nffffffff\nffffffff\n5a67f1ff\n5a67f1f9\n0\n5a670000\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- asrq 0,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- asrq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- asrq 31,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- asrq 15,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5a67f19f,r3
+- asrq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 f699fc67
+-
+- moveq -1,r3
+- moveq 0,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- asr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 15,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- asr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67ffff
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67ffff
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67ffff
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67fc67
+-
+- moveq -1,r3
+- moveq 0,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- asr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 15,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5a67719f,r3
+- moveq 12,r4
+- asr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a670007
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1ff
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1ff
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1ff
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1e7
+-
+- moveq -1,r3
+- moveq 0,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- asr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 15,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 7,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+-; FIXME: was wrong.
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f1ff
+-
+-; FIXME: was wrong.
+- move.d 0x5a67f19f,r3
+- moveq 4,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f1f9
+-
+- move.d 0x5a67f19f,r3
+- asrq 31,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x5a67419f,r3
+- moveq 16,r4
+- asr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 5a670000
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_ba.s b/tests/tcg/cris/bare/check_ba.s
+deleted file mode 100644
+index 873a4086c5..0000000000
+--- a/tests/tcg/cris/bare/check_ba.s
++++ /dev/null
+@@ -1,93 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: a\n
+-
+-
+- .set smalloffset,0
+- .set largeoffset,0
+-
+-
+-	.macro fail
+-	jump _fail
+-	.endm
+-
+-	.global	main
+-main:
+- moveq 0,$r3
+-
+-; Short forward branch.
+- ba 0f
+- addq 1,$r3
+- fail
+-
+-; Max short forward branch.
+-1:
+- ba 2f
+- addq 1,$r3
+- fail
+-
+-; Short backward branch.
+-0:
+- ba 1b
+- addq 1,$r3
+- fail
+-
+- .space 254-2+smalloffset+1b-.,0
+- moveq 0,$r3
+-
+-2:
+-; Transit branch (long).
+- ba 3f
+- addq 1,$r3
+- fail
+-
+- moveq 0,$r3
+-4:
+-; Long forward branch.
+- ba 5f
+- addq 1,$r3
+- fail
+-
+- .space 256-2-smalloffset+4b-.,0
+-
+- moveq 0,$r3
+-
+-; Max short backward branch.
+-3:
+- ba 4b
+- addq 1,$r3
+- fail
+-
+-5:
+-; Max long forward branch.
+- ba 6f
+- addq 1,$r3
+- fail
+-
+- .space 32766+largeoffset-2+5b-.,0
+-
+- moveq 0,$r3
+-6:
+-; Transit branch.
+- ba 7f
+- addq 1,$r3
+- fail
+-
+- moveq 0,$r3
+-9:
+- jsr pass
+- nop
+-
+-; Transit branch.
+- moveq 0,$r3
+-7:
+- ba 8f
+- addq 1,$r3
+- fail
+-
+- .space 32768-largeoffset+9b-.,0
+-
+-8:
+-; Max long backward branch.
+- ba 9b
+- addq 1,$r3
+- fail
+diff --git a/tests/tcg/cris/bare/check_bas.s b/tests/tcg/cris/bare/check_bas.s
+deleted file mode 100644
+index 11929d4202..0000000000
+--- a/tests/tcg/cris/bare/check_bas.s
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# mach: crisv32
+-# output: 0\n0\n0\nfb349abc\n0\n12124243\n0\n0\neab5baad\n0\nefb37832\n
+-
+- .include "testutils.inc"
+- start
+-x:
+- setf zncv
+- bsr 0f
+- nop
+-0:
+- test_cc 1 1 1 1
+- move srp,r3
+- sub.d 0b,r3
+- checkr3 0
+-
+- bas 1f,mof
+- moveq 0,r0
+-6:
+- nop
+- quit
+-
+-2:
+- move srp,r3
+- sub.d 3f,r3
+- checkr3 0
+- move srp,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 fb349abc
+-
+- basc 4f,mof
+- nop
+- .dword 0x12124243
+-7:
+- nop
+- quit
+-
+-8:
+- move mof,r3
+- sub.d 7f,r3
+- checkr3 0
+-
+- move mof,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 eab5baad
+-
+- jasc 9f,mof
+- nop
+- .dword 0xefb37832
+-0:
+- quit
+-
+- quit
+-9:
+- move mof,r3
+- sub.d 0b,r3
+- checkr3 0
+-
+- move mof,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 efb37832
+-
+- quit
+-
+-4:
+- move mof,r3
+- sub.d 7b,r3
+- checkr3 0
+- move mof,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 12124243
+- basc 5f,bz
+- moveq 0,r3
+- .dword 0x7634aeba
+- quit
+-
+- .space 32770,0
+-1:
+- move mof,r3
+- sub.d 6b,r3
+- checkr3 0
+-
+- bsrc 2b
+- nop
+- .dword 0xfb349abc
+-3:
+-
+- quit
+-
+-5:
+- move mof,r3
+- sub.d 7b,r3
+- checkr3 0
+- move.d 8b,r6
+- jasc r6,mof
+- nop
+- .dword 0xeab5baad
+-7:
+- quit
+diff --git a/tests/tcg/cris/bare/check_bcc.s b/tests/tcg/cris/bare/check_bcc.s
+deleted file mode 100644
+index c57ffa6fa3..0000000000
+--- a/tests/tcg/cris/bare/check_bcc.s
++++ /dev/null
+@@ -1,197 +0,0 @@
+-	.global	main
+-	.type	main, @function
+-main:
+-	clearf nzvc
+-	setf   nzv
+-	bcc    0f
+-	addq   1, $r3
+-	jump   dofail
+-
+-0:
+-	clearf nzvc
+-	setf   nzv
+-	bcs    dofail
+-	addq   1,$r3
+-
+-	clearf nzvc
+-	setf   ncv
+-	bne    1f
+-	addq   1, $r3
+-
+-fail:
+-dofail:
+-	jump	_fail
+-
+-1:
+-	clearf nzvc
+-	setf ncv
+-	beq dofail
+-	addq 1,$r3
+-
+-	clearf nzvc
+-	setf ncz
+-	bvc 2f
+-	addq 1,$r3
+-	jump dofail
+-
+-2:
+-	clearf nzvc
+-	setf ncz
+-	bvs dofail
+-	addq 1,$r3
+-
+-	clearf	nzvc
+-	setf	vcz
+-	bpl	3f
+-	addq	1,$r3
+-	jump	fail
+-3:
+-	clearf	nzvc
+-	setf	vcz
+-	bmi	dofail
+-	addq	1,$r3
+-
+-	clearf	nzvc
+-	setf	nv
+-	bls	dofail
+-	addq	1,$r3
+-
+-	clearf	nzvc
+-	setf	nv
+-	bhi	4f
+-	addq	1,$r3
+-	jump	dofail
+-
+-4:
+-	clearf	nzvc
+-	setf	zc
+-	bge	5f
+-	addq	1,$r3
+-	jump	dofail
+-
+-5:
+-	clearf	nzvc
+-	setf zc
+-	blt dofail
+-	addq 1,$r3
+-
+-	clearf nzvc
+-	setf c
+-	bgt 6f
+-	addq 1,$r3
+-	jump  fail
+-
+-6:
+- clearf nzvc
+- setf c
+- ble dofail
+- addq 1,$r3
+-
+-;;;;;;;;;;
+-
+- setf nzvc
+- clearf nzv
+- bcc dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf nzv
+- bcs 0f
+- addq 1,$r3
+- jump fail
+-
+-0:
+- setf nzvc
+- clearf ncv
+- bne dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf ncv
+- beq 1f
+- addq 1,$r3
+- jump fail
+-
+-1:
+- setf nzvc
+- clearf ncz
+- bvc dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf ncz
+- bvs 2f
+- addq 1,$r3
+- jump fail
+-
+-2:
+- setf nzvc
+- clearf vcz
+- bpl dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf vcz
+- bmi 3f
+- addq 1,$r3
+- jump fail
+-
+-3:
+- setf nzvc
+- clearf nv
+- bls 4f
+- addq 1,$r3
+- jump fail
+-
+-4:
+- setf nzvc
+- clearf nv
+- bhi dofail
+- addq 1,$r3
+-
+- setf zvc
+- clearf nzc
+- bge dofail
+- addq 1,$r3
+-
+- setf nzc
+- clearf vzc
+- blt 5f
+- addq 1,$r3
+- jump fail
+-
+-5:
+- setf nzvc
+- clearf c
+- bgt dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf c
+- ble 6f
+- addq 1,$r3
+- jump fail
+-
+-6:
+-	; do a forward branch.
+-	ba   2f
+-	nop
+-	.fill	100
+-1:
+-	ba	3f
+-	nop
+-	.fill	800
+-2:
+-	ba	1b
+-	nop
+-	.fill	1024
+-3:
+-
+-	moveq	31, $r0
+-1:	bne	1b
+-	subq	1, $r0
+-
+-	jsr	pass
+-	moveq	0, $r10
+-	ret
+-	nop
+diff --git a/tests/tcg/cris/bare/check_boundc.s b/tests/tcg/cris/bare/check_boundc.s
+deleted file mode 100644
+index fb9e5bc905..0000000000
+--- a/tests/tcg/cris/bare/check_boundc.s
++++ /dev/null
+@@ -1,101 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n5432f789\n2\nffff\n2\nffff\nffff\nf789\n2\n2\nff\nff\nff\n89\n0\nff\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- bound.d 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- bound.d 0xffffffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- bound.d 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- bound.d 0xffffffff,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- bound.d 0x5432f789,r3
+- test_move_cc 0 0 0 0
+- checkr3 5432f789
+-
+- moveq -1,r3
+- bound.w 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq -1,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq 2,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0x78134452,r3
+- bound.w 0xf789,r3
+- test_move_cc 0 0 0 0
+- checkr3 f789
+-
+- moveq -1,r3
+- bound.b 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq -1,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0xff,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0x78134452,r3
+- bound.b 0x89,r3
+- test_move_cc 0 0 0 0
+- checkr3 89
+-
+- bound.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xffff,r3
+- bound.b -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_boundr.s b/tests/tcg/cris/bare/check_boundr.s
+deleted file mode 100644
+index 5c50cc5f6a..0000000000
+--- a/tests/tcg/cris/bare/check_boundr.s
++++ /dev/null
+@@ -1,125 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n5432f789\n2\n2\nffff\nffff\nffff\nf789\n2\n2\nff\nff\n89\nfeda4953\nfeda4962\n0\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- bound.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5432f789
+-
+- moveq -1,r3
+- moveq 2,r4
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq -1,r3
+- bound.w r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r4
+- move.d r4,r3
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 f789
+-
+- moveq -1,r3
+- moveq 2,r4
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 89
+-
+- move.d 0xfeda4956,r3
+- move.d 0xfeda4953,r4
+- bound.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 feda4953
+-
+- move.d 0xfeda4962,r3
+- move.d 0xfeda4963,r4
+- bound.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 feda4962
+-
+- move.d 0xfeda4956,r3
+- move.d 0,r4
+- bound.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xfeda4956,r4
+- move.d 0,r3
+- bound.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_btst.s b/tests/tcg/cris/bare/check_btst.s
+deleted file mode 100644
+index 485deb2006..0000000000
+--- a/tests/tcg/cris/bare/check_btst.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1111\n
+-
+- .include "testutils.inc"
+- start
+- clearf nzvc
+- moveq -1,r3
+- .if 1 ;..asm.arch.cris.v32
+- .else
+- setf vc
+- .endif
+- btstq 0,r3
+- test_cc 1 0 0 0
+-
+- moveq 2,r3
+- btstq 1,r3
+- test_cc 1 0 0 0
+-
+- moveq 4,r3
+- btstq 1,r3
+- test_cc 0 1 0 0
+-
+- moveq -1,r3
+- btstq 31,r3
+- test_cc 1 0 0 0
+-
+- move.d 0x5a67f19f,r3
+- btstq 12,r3
+- test_cc 1 0 0 0
+-
+- move.d 0xda67f19f,r3
+- move.d 29,r4
+- btst r4,r3
+- test_cc 0 0 0 0
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- move.d 0xda67f191,r3
+- move.d 33,r4
+- btst r4,r3
+- test_cc 0 0 0 0
+-
+- moveq -1,r3
+- moveq 0,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- moveq 2,r3
+- moveq 1,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- moveq -1,r3
+- moveq 31,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- moveq 4,r3
+- btstq 1,r3
+- test_cc 0 1 0 0
+-
+- moveq -1,r3
+- moveq 15,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- move.d 0x5a678000,r3
+- moveq 11,r4
+- btst r4,r3
+- test_cc 0 1 0 0
+-
+- move.d 0x5a67f19f,r3
+- btst r3,r3
+- test_cc 0 0 0 0
+-
+- move.d 0x1111,r3
+- checkr3 1111
+-
+- ; check that X gets cleared and that only the NZ flags are touched.
+- ;; move.d	0xff, $r0
+- ;; move $r0, $ccs
+- ;; btst r3,r3
+- ;; move $ccs, $r0
+- ;; and.d 0xff, $r0
+- ;; cmp.d	0xe3, $r0
+- ;; test_cc 0 1 0 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_clearfv32.s b/tests/tcg/cris/bare/check_clearfv32.s
+deleted file mode 100644
+index 4e91360273..0000000000
+--- a/tests/tcg/cris/bare/check_clearfv32.s
++++ /dev/null
+@@ -1,19 +0,0 @@
+-# mach: crisv32
+-# output: ef\nef\n
+-
+-; Check that "clearf x" doesn't trivially fail.
+-
+- .include "testutils.inc"
+- start
+- setf puixnzvc
+- clearf x	; Actually, x would be cleared by almost-all other insns.
+- move ccs,r3
+- and.d 0xff, $r3
+- checkr3 ef
+-
+- setf puixnzvc
+- moveq 0, $r3	; moveq should only clear the xflag.
+- move ccs,r3
+- and.d 0xff, $r3
+- checkr3 ef
+- quit
+diff --git a/tests/tcg/cris/bare/check_clrjmp1.s b/tests/tcg/cris/bare/check_clrjmp1.s
+deleted file mode 100644
+index 45a7005e24..0000000000
+--- a/tests/tcg/cris/bare/check_clrjmp1.s
++++ /dev/null
+@@ -1,36 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff00\n
+-
+-; A bug resulting in a non-effectual clear.b discovered running the GCC
+-; testsuite; jump actually wrote to p0.
+-
+- .include "testutils.inc"
+-
+- start
+- jump 1f
+- nop
+- .p2align 8
+-1:
+- move.d y,r4
+-
+- .if 0 ;0 == ..asm.arch.cris.v32
+-; There was a bug causing this insn to set special register p0
+-; (byte-clear) to 8 (low 8 bits of location after insn).
+- jump [r4+]
+- .endif
+-
+-1:
+- move.d 0f,r4
+-
+-; The corresponding bug would cause this insn too, to set p0.
+- jump r4
+- nop
+- quit
+-0:
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+- quit
+-
+-y:
+- .dword 1b
+diff --git a/tests/tcg/cris/bare/check_cmp-2.s b/tests/tcg/cris/bare/check_cmp-2.s
+deleted file mode 100644
+index 414d370517..0000000000
+--- a/tests/tcg/cris/bare/check_cmp-2.s
++++ /dev/null
+@@ -1,15 +0,0 @@
+-
+-
+-.include "testutils.inc"
+-
+-	start
+-
+-	move.d	4294967283, $r0
+-	move.d	$r0, $r10
+-	cmp.d	$r0, $r10
+-	beq	1f
+-	move.d $r10, $r3
+-	fail
+-1:
+-	pass
+-	quit
+diff --git a/tests/tcg/cris/bare/check_cmpc.s b/tests/tcg/cris/bare/check_cmpc.s
+deleted file mode 100644
+index 267c9ba8c0..0000000000
+--- a/tests/tcg/cris/bare/check_cmpc.s
++++ /dev/null
+@@ -1,86 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n2\nffff\nffffffff\n78134452\nffffffff\n2\nffff\nfedaffff\n78134452\nffffffff\n2\nff\nfeda49ff\n78134452\n85649282\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- cmp.d -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.d 1,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.d -0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmp.d 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmp.d -0x5432f789,r3
+- test_cc 1 0 1 1
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.w -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.w 1,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- cmp.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- cmp.w 0x877,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.b -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.b 1,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xff,r3
+- cmp.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r3
+- cmp.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 feda49ff
+-
+- move.d 0x78134452,r3
+- cmp.b 0x77,r3
+- test_cc 1 0 0 1
+- checkr3 78134452
+-
+- move.d 0x85649282,r3
+- cmp.b 0x82,r3
+- test_cc 0 1 0 0
+- checkr3 85649282
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpm.s b/tests/tcg/cris/bare/check_cmpm.s
+deleted file mode 100644
+index e4dde15b32..0000000000
+--- a/tests/tcg/cris/bare/check_cmpm.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n2\nffff\nffffffff\n78134452\nffffffff\n2\nffff\nfedaffff\n78134452\nffffffff\n2\nff\nfeda49ff\n78134452\n85649222\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword -2,1,-0xffff,1,-0x5432f789
+- .word -2,1,1,0x877
+- .byte -2,1,0x77
+- .byte 0x22
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- cmp.d [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.d [r5],r3
+- test_cc 0 0 0 0
+- addq 4,r5
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.d [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmp.d [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmp.d [r5+],r3
+- test_cc 1 0 1 1
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.w [r5],r3
+- test_cc 1 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- cmp.w [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- cmp.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.b [r5],r3
+- test_cc 0 0 0 0
+- addq 1,r5
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xff,r3
+- cmp.b [r5],r3
+- test_cc 1 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r3
+- cmp.b [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 feda49ff
+-
+- move.d 0x78134452,r3
+- cmp.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 78134452
+-
+- move.d 0x85649222,r3
+- cmp.b [r5],r3
+- test_cc 0 1 0 0
+- checkr3 85649222
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpq.s b/tests/tcg/cris/bare/check_cmpq.s
+deleted file mode 100644
+index 5469141c91..0000000000
+--- a/tests/tcg/cris/bare/check_cmpq.s
++++ /dev/null
+@@ -1,75 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1\n1f\n1f\nffffffe1\nffffffe1\nffffffe0\n0\n0\nffffffff\nffffffff\n10000\n100\n5678900\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- cmpq 1,r3
+- test_cc 0 1 0 0
+- checkr3 1
+-
+- cmpq -1,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- cmpq 31,r3
+- test_cc 1 0 0 1
+- checkr3 1
+-
+- moveq 31,r3
+- cmpq 31,r3
+- test_cc 0 1 0 0
+- checkr3 1f
+-
+- cmpq -31,r3
+- test_cc 0 0 0 1
+- checkr3 1f
+-
+- movs.b -31,r3
+- cmpq -31,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffe1
+-
+- cmpq -32,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffe1
+-
+- movs.b -32,r3
+- cmpq -32,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffe0
+-
+- moveq 0,r3
+- cmpq 1,r3
+- test_cc 1 0 0 1
+- checkr3 0
+-
+- cmpq -32,r3
+- test_cc 0 0 0 1
+- checkr3 0
+-
+- moveq -1,r3
+- cmpq 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- cmpq -1,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- move.d 0x10000,r3
+- cmpq 1,r3
+- test_cc 0 0 0 0
+- checkr3 10000
+-
+- move.d 0x100,r3
+- cmpq 1,r3
+- test_cc 0 0 0 0
+- checkr3 100
+-
+- move.d 0x5678900,r3
+- cmpq 7,r3
+- test_cc 0 0 0 0
+- checkr3 5678900
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpr.s b/tests/tcg/cris/bare/check_cmpr.s
+deleted file mode 100644
+index b30af7a538..0000000000
+--- a/tests/tcg/cris/bare/check_cmpr.s
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n2\nffff\nffffffff\n78134452\nffffffff\n2\nffff\nfedaffff\n78134452\nffffffff\n2\nff\nfeda49ff\n78134452\n85649222\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq -2,r4
+- cmp.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- cmp.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- cmp.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq 1,r4
+- moveq -1,r3
+- cmp.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- cmp.d r4,r3
+- test_cc 1 0 1 1
+- checkr3 78134452
+-
+- moveq -1,r3
+- moveq -2,r4
+- cmp.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- cmp.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- cmp.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- move.d -0xfedaffff,r4
+- cmp.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- cmp.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq -1,r3
+- moveq -2,r4
+- cmp.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- cmp.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d -0xff,r4
+- move.d 0xff,r3
+- cmp.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 ff
+-
+- move.d -0xfeda49ff,r4
+- move.d 0xfeda49ff,r3
+- cmp.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 feda49ff
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- cmp.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 78134452
+-
+- move.d 0x85649222,r3
+- move.d 0x77445622,r4
+- cmp.b r4,r3
+- test_cc 0 1 0 0
+- checkr3 85649222
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpxc.s b/tests/tcg/cris/bare/check_cmpxc.s
+deleted file mode 100644
+index b237a93175..0000000000
+--- a/tests/tcg/cris/bare/check_cmpxc.s
++++ /dev/null
+@@ -1,92 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\n2\n2\nffff\nffff\nffff\nffff\nffffffff\nffffffff\nffffffff\n78134452\n78134452\n78134452\n78134452\n4452\n80000032\n
+-
+- .include "testutils.inc"
+- start
+- moveq 2,r3
+- cmps.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmps.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmpu.b 0xff,r3
+- test_cc 1 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- move.d 0xffffffff,r4
+- cmpu.w -1,r3
+- test_cc 1 0 0 1
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmpu.b -1,r3
+- test_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmpu.w -1,r3
+- test_cc 0 1 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmps.b 0xff,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w 0xff,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w 0xffff,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmpu.b 0x89,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.b 0x89,r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmpu.w 0xf789,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.w 0xf789,r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x4452,r3
+- cmps.w 0x8002,r3
+- test_cc 0 0 0 1
+- checkr3 4452
+-
+- move.d 0x80000032,r3
+- cmpu.w 0x764,r3
+- test_cc 0 0 1 0
+- checkr3 80000032
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpxm.s b/tests/tcg/cris/bare/check_cmpxm.s
+deleted file mode 100644
+index 87ea5bf8e3..0000000000
+--- a/tests/tcg/cris/bare/check_cmpxm.s
++++ /dev/null
+@@ -1,106 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\n2\n2\nffff\nffff\nffff\nffff\nffffffff\nffffffff\nffffffff\n78134452\n78134452\n78134452\n78134452\n4452\n80000032\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .byte 0xff
+- .word 0xffff
+- .word 0xff
+- .word 0xffff
+- .byte 0x89
+- .word 0xf789
+- .word 0x8002
+- .word 0x764
+-
+- start
+- moveq 2,r3
+- move.d x,r5
+- cmps.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmps.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- subq 3,r5
+- cmpu.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmpu.w [r5+],r3
+- test_cc 1 0 0 1
+- subq 3,r5
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmpu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmpu.w [r5],r3
+- test_cc 0 1 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.b [r5],r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.w [r5],r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmps.b [r5],r3
+- test_cc 0 1 0 0
+- addq 3,r5
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w [r5+],r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmpu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmpu.w [r5],r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x4452,r3
+- cmps.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 4452
+-
+- move.d 0x80000032,r3
+- cmpu.w [r5+],r3
+- test_cc 0 0 1 0
+- checkr3 80000032
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_dstep.s b/tests/tcg/cris/bare/check_dstep.s
+deleted file mode 100644
+index bd43b838ea..0000000000
+--- a/tests/tcg/cris/bare/check_dstep.s
++++ /dev/null
+@@ -1,42 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: fffffffc\n4\nffff\nfffffffe\n9bf3911b\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- dstep r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffc
+-
+- moveq 2,r3
+- moveq -1,r4
+- dstep r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- dstep r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- dstep r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- dstep r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 9bf3911b
+-
+- move.d 0xffff,r3
+- move.d 0x1fffe,r4
+- dstep r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_jsr.s b/tests/tcg/cris/bare/check_jsr.s
+deleted file mode 100644
+index 1060237873..0000000000
+--- a/tests/tcg/cris/bare/check_jsr.s
++++ /dev/null
+@@ -1,85 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 0\n0\n0\n0\n0\n0\n
+-
+-# Test that jsr Rn and jsr [PC+] work.
+-
+- .include "testutils.inc"
+- start
+-x:
+- move.d 0f,r6
+- setf nzvc
+- jsr r6
+- .if 1; ..asm.arch.cris.v32
+- nop
+- .endif
+-0:
+- test_move_cc 1 1 1 1
+- move srp,r3
+- sub.d 0b,r3
+- checkr3 0
+-
+- move.d 1f,r0
+- setf nzvc
+- jsr r0
+- .if 1 ; ..asm.arch.cris.v32
+- moveq 0,r0
+- .endif
+-6:
+- nop
+- quit
+-
+-2:
+- test_move_cc 0 0 0 0
+- move srp,r3
+- sub.d 3f,r3
+- checkr3 0
+- jsr 4f
+- .if 1 ; ..asm.arch.cris.v32
+- nop
+- .endif
+-7:
+- nop
+- quit
+-
+-8:
+- move srp,r3
+- sub.d 7b,r3
+- checkr3 0
+- quit
+-
+-4:
+- move srp,r3
+- sub.d 7b,r3
+- checkr3 0
+- move.d 5f,r3
+- jump r3
+- .if 1; ..asm.arch.cris.v32
+- moveq 0,r3
+- .endif
+- quit
+-
+- .space 32770,0
+-1:
+- test_move_cc 1 1 1 1
+- move srp,r3
+- sub.d 6b,r3
+- checkr3 0
+-
+- clearf cznv
+- jsr 2b
+- .if 1; ..asm.arch.cris.v32
+- nop
+- .endif
+-3:
+-
+- quit
+-
+-5:
+- move srp,r3
+- sub.d 7b,r3
+- checkr3 0
+- jump 8b
+- .if 1 ; ..asm.arch.cris.v32
+- nop
+- .endif
+- quit
+diff --git a/tests/tcg/cris/bare/check_lapc.s b/tests/tcg/cris/bare/check_lapc.s
+deleted file mode 100644
+index 9a6150b749..0000000000
+--- a/tests/tcg/cris/bare/check_lapc.s
++++ /dev/null
+@@ -1,78 +0,0 @@
+-# mach: crisv32
+-# output: 0\n0\nfffffffa\nfffffffe\nffffffda\n1e\n1e\n0\n
+-
+-.include "testutils.inc"
+-
+-; To accommodate dumpr3 with more than one instruction, keep it
+-; out of lapc operand ranges and difference calculations.
+-
+- start
+- lapc.d 0f,r3
+-0:
+- sub.d .,r3
+- checkr3 0
+-
+- lapcq 0f,r3
+-0:
+- sub.d .,r3
+- checkr3 0
+-
+- lapc.d .,r3
+- sub.d .,r3
+- checkr3 fffffffa
+-
+- lapcq .,r3
+- sub.d .,r3
+- checkr3 fffffffe
+-
+-0:
+- .rept 16
+- nop
+- .endr
+- lapc.d 0b,r3
+- sub.d .,r3
+- checkr3 ffffffda
+-
+- setf zcvn
+- lapc.d 0f,r3
+- test_cc 1 1 1 1
+- sub.d .,r3
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+-0:
+- checkr3 1e
+-0:
+- lapcq 0f,r3
+- sub.d 0b,r3
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+-0:
+- checkr3 1e
+- clearf cn
+- setf zv
+-1:
+- lapcq .,r3
+- test_cc 0 1 1 0
+- sub.d 1b,r3
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_lsl.s b/tests/tcg/cris/bare/check_lsl.s
+deleted file mode 100644
+index 9e2ddd7cd0..0000000000
+--- a/tests/tcg/cris/bare/check_lsl.s
++++ /dev/null
+@@ -1,217 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n4\n80000000\nffff8000\n7f19f000\n80000000\n0\n0\n699fc67c\nffffffff\n4\n80000000\nffff8000\n7f19f000\nda670000\nda670000\nda670000\nda67c67c\nffffffff\nfffafffe\n4\nffff0000\nffff8000\n5a67f000\nda67f100\nda67f100\nda67f100\nda67f17c\nfff3faff\nfff3fafe\n4\nffffff00\nffffff00\nffffff80\n5a67f100\n5a67f1f0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- lslq 0,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- lslq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- lslq 31,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- moveq -1,r3
+- lslq 15,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8000
+-
+- move.d 0x5a67f19f,r3
+- lslq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 7f19f000
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsl.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsl.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsl.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 699fc67c
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsl.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8000
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsl.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 7f19f000
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67c67c
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xfffaffff,r3
+- moveq 1,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffafffe
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsl.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8000
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f000
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsl.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 da67f17c
+-
+- move.d 0xfff3faff,r3
+- moveq 0,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fff3faff
+-
+- move.d 0xfff3faff,r3
+- moveq 1,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fff3fafe
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsl.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 7,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffff80
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 5a67f100
+-
+- move.d 0x5a67f19f,r3
+- moveq 4,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f1f0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_lsr.s b/tests/tcg/cris/bare/check_lsr.s
+deleted file mode 100644
+index 18fdbef9b2..0000000000
+--- a/tests/tcg/cris/bare/check_lsr.s
++++ /dev/null
+@@ -1,218 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n1\n1\n1ffff\n5a67f\n1\n0\n0\n3699fc67\nffffffff\n1\n1\n1ffff\n5a67f\nda670000\nda670000\nda670000\nda673c67\nffffffff\nffff7fff\n1\nffff0000\nffff0001\n5a67000f\nda67f100\nda67f100\nda67f100\nda67f127\nffffffff\nffffff7f\n1\nffffff00\nffffff00\nffffff01\n5a67f100\n5a67f109\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- lsrq 0,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- lsrq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- lsrq 31,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- lsrq 15,r3
+- test_move_cc 0 0 0 0
+- checkr3 1ffff
+-
+- move.d 0x5a67f19f,r3
+- lsrq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsr.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsr.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3699fc67
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1ffff
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 da673c67
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff7fff
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+-;; FIXME: this was wrong. Z should be set.
+- moveq -1,r3
+- moveq 31,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67000f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 da67f127
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff7f
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 7,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 5a67f100
+-
+- move.d 0x5a67f19f,r3
+- moveq 4,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f109
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mcp.s b/tests/tcg/cris/bare/check_mcp.s
+deleted file mode 100644
+index e65ccddfd4..0000000000
+--- a/tests/tcg/cris/bare/check_mcp.s
++++ /dev/null
+@@ -1,49 +0,0 @@
+-# mach: crisv32
+-# output: fffffffe\n1\n1ffff\nfffffffe\ncc463bdc\n4c463bdc\n0\n
+-
+- .include "testutils.inc"
+- start
+-
+-; Set R, clear C.
+- move 0x100,ccs
+- moveq -5,r3
+- move 2,mof
+- mcp mof,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- moveq 2,r3
+- move -1,srp
+- mcp srp,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move 0xffff,srp
+- move srp,r3
+- mcp srp,r3
+- test_cc 0 0 0 0
+- checkr3 1ffff
+-
+- move -1,mof
+- move mof,r3
+- mcp mof,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move 0x5432f789,mof
+- move.d 0x78134452,r3
+- mcp mof,r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdc
+-
+- move 0x80000000,srp
+- mcp srp,r3
+- test_cc 0 0 1 0
+- checkr3 4c463bdc
+-
+- move 0xb3b9c423,srp
+- mcp srp,r3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movdelsr1.s b/tests/tcg/cris/bare/check_movdelsr1.s
+deleted file mode 100644
+index 300cc87742..0000000000
+--- a/tests/tcg/cris/bare/check_movdelsr1.s
++++ /dev/null
+@@ -1,33 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: aa117acd\n
+-# output: eeaabb42\n
+-
+-; Bug with move to special register in delay slot, due to
+-; special flush-insn-cache simulator use.  Ordinary move worked;
+-; special register caused branch to fail.
+-
+- .include "testutils.inc"
+- start
+- move -1,srp
+-
+- move.d 0xaa117acd,r1
+- moveq 3,r9
+- cmpq 1,r9
+- bhi 0f
+- move.d r1,r3
+-
+- fail
+-0:
+- checkr3 aa117acd
+-
+- move.d 0xeeaabb42,r1
+- moveq 3,r9
+- cmpq 1,r9
+- bhi 0f
+- move r1,srp
+-
+- fail
+-0:
+- move srp,r3
+- checkr3 eeaabb42
+- quit
+diff --git a/tests/tcg/cris/bare/check_movecr.s b/tests/tcg/cris/bare/check_movecr.s
+deleted file mode 100644
+index da8ec26284..0000000000
+--- a/tests/tcg/cris/bare/check_movecr.s
++++ /dev/null
+@@ -1,37 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff42\n94\nffff4321\n9234\n76543210\n76540000\n
+-
+-; Move constant byte, word, dword to register.  Check that no extension is
+-; performed, that only part of the register is set.
+-
+- .include "testutils.inc"
+- startnostack
+- moveq -1,r3
+- move.b 0x42,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff42
+-
+- moveq 0,r3
+- move.b 0x94,r3
+- test_move_cc 1 0 0 0
+- checkr3 94
+-
+- moveq -1,r3
+- move.w 0x4321,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff4321
+-
+- moveq 0,r3
+- move.w 0x9234,r3
+- test_move_cc 1 0 0 0
+- checkr3 9234
+-
+- move.d 0x76543210,r3
+- test_move_cc 0 0 0 0
+- checkr3 76543210
+-
+- move.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 76540000
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movei.s b/tests/tcg/cris/bare/check_movei.s
+deleted file mode 100644
+index bbfa633373..0000000000
+--- a/tests/tcg/cris/bare/check_movei.s
++++ /dev/null
+@@ -1,50 +0,0 @@
+-# mach: crisv32
+-# output: fffffffe\n
+-# output: fffffffe\n
+-
+-; Check basic integral-write semantics regarding flags.
+-
+- .include "testutils.inc"
+- start
+-
+- move.d 0, $r3	
+-; A write that works.  Check that flags are set correspondingly.
+- move.d d,r4
+- ;; store to bring it into the tlb with the right prot bits
+- move.d r3,[r4]
+- moveq -2,r5
+- setf c
+- clearf p
+- move.d [r4],r3
+- ax
+- move.d r5,[r4]
+- move.d [r4],r3
+-
+- bcc 0f
+- nop
+- fail
+-
+-0:
+- checkr3 fffffffe
+-
+-; A write that fails; check flags too.
+- move.d d,r4
+- moveq 23,r5
+- setf p
+- clearf c
+- move.d [r4],r3
+- ax
+- move.d r5,[r4]
+- move.d [r4],r3
+-
+- bcs 0f
+- nop
+- fail
+-
+-0:
+- checkr3 fffffffe
+- quit
+-
+- .data
+-d:
+- .dword 42424242
+diff --git a/tests/tcg/cris/bare/check_movemr.s b/tests/tcg/cris/bare/check_movemr.s
+deleted file mode 100644
+index 88489dee31..0000000000
+--- a/tests/tcg/cris/bare/check_movemr.s
++++ /dev/null
+@@ -1,78 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 12345678\n10234567\n12345678\n12344567\n12344523\n76543210\nffffffaa\naa\n9911\nffff9911\n78\n56\n3456\n6712\n
+-
+- .include "testutils.inc"
+- start
+-
+- .data
+-mem1:
+- .dword 0x12345678
+-mem2:
+- .word 0x4567
+-mem3:
+- .byte 0x23
+- .dword 0x76543210
+- .byte 0xaa,0x11,0x99
+-
+- .text
+- move.d mem1,r2
+- move.d [r2],r3
+- test_move_cc 0 0 0 0
+- checkr3 12345678
+-
+- move.d mem2,r3
+- move.d [r3],r3
+- test_move_cc 0 0 0 0
+- checkr3 10234567
+-
+- move.d mem1,r2
+- move.d [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 12345678
+-
+- move.w [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 12344567
+-
+- move.b [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 12344523
+-
+- move.d [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 76543210
+-
+- movs.b [r2],r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffaa
+-
+- movu.b [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 aa
+-
+- movu.w [r2],r3
+- test_move_cc 0 0 0 0
+- checkr3 9911
+-
+- movs.w [r2+],r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff9911
+-
+- move.d mem1,r13
+- movs.b [r13+],r3
+- test_move_cc 0 0 0 0
+- checkr3 78
+-
+- movu.b [r13],r3
+- test_move_cc 0 0 0 0
+- checkr3 56
+-
+- movs.w [r13+],r3
+- test_move_cc 0 0 0 0
+- checkr3 3456
+-
+- movu.w [r13+],r3
+- test_move_cc 0 0 0 0
+- checkr3 6712
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movemrv32.s b/tests/tcg/cris/bare/check_movemrv32.s
+deleted file mode 100644
+index 53950abd5b..0000000000
+--- a/tests/tcg/cris/bare/check_movemrv32.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv32
+-# output: 15\n7\n2\nffff1234\nb\n16\nf\n2\nffffffef\nf\nffff1234\nf\nfffffff4\nd\nfffffff2\n10\nfffffff2\nd\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 8,9,10,11
+-y:
+- .dword -12,13,-14,15,16
+-
+- start
+- moveq 7,r0
+- moveq 2,r1
+- move.d 0xffff1234,r2
+- moveq 21,r3
+- move.d x,r4
+- setf zcvn
+- movem r2,[r4+]
+- test_cc 1 1 1 1
+- subq 12,r4
+-
+- checkr3 15
+-
+- move.d [r4+],r3
+- checkr3 7
+-
+- move.d [r4+],r3
+- checkr3 2
+-
+- move.d [r4+],r3
+- checkr3 ffff1234
+-
+- move.d [r4+],r3
+- checkr3 b
+-
+- subq 16,r4
+- moveq 22,r0
+- moveq 15,r1
+- clearf zcvn
+- movem r0,[r4]
+- test_cc 0 0 0 0
+- move.d [r4+],r3
+- checkr3 16
+-
+- move.d r1,r3
+- checkr3 f
+-
+- move.d [r4+],r3
+- checkr3 2
+-
+- subq 8,r4
+- moveq 10,r2
+- moveq -17,r0
+- clearf zc
+- setf vn
+- movem r1,[r4]
+- test_cc 1 0 1 0
+- move.d [r4+],r3
+- checkr3 ffffffef
+-
+- move.d [r4+],r3
+- checkr3 f
+-
+- move.d [r4+],r3
+- checkr3 ffff1234
+-
+- move.d y,r4
+- setf zc
+- clearf vn
+- movem [r4+],r3
+- test_cc 0 1 0 1
+- checkr3 f
+-
+- move.d r0,r3
+- checkr3 fffffff4
+-
+- move.d r1,r3
+- checkr3 d
+-
+- move.d r2,r3
+- checkr3 fffffff2
+-
+- move.d [r4],r3
+- checkr3 10
+-
+- subq 8,r4
+- setf zcvn
+- movem [r4+],r0
+- test_cc 1 1 1 1
+- move.d r0,r3
+- checkr3 fffffff2
+-
+- move.d r1,r3
+- checkr3 d
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mover.s b/tests/tcg/cris/bare/check_mover.s
+deleted file mode 100644
+index b4db595d64..0000000000
+--- a/tests/tcg/cris/bare/check_mover.s
++++ /dev/null
+@@ -1,28 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff05\nffff0005\n5\nffffff00\n
+-
+-; Move between registers.  Check that just the subreg is copied.
+-
+- .include "testutils.inc"
+- startnostack
+- moveq -30,r3
+- moveq 5,r4
+- move.b r4,r3
+- test_move_cc 0 0 0 0  		; FIXME
+- checkr3 ffffff05
+-
+- move.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0005
+-
+- move.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq -1,r3
+- moveq 0,r4
+- move.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_moverm.s b/tests/tcg/cris/bare/check_moverm.s
+deleted file mode 100644
+index eabc9588d4..0000000000
+--- a/tests/tcg/cris/bare/check_moverm.s
++++ /dev/null
+@@ -1,45 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 7823fec2\n10231879\n102318fe\n
+-
+- .include "testutils.inc"
+- start
+-
+- .data
+-mem1:
+- .dword 0x12345678
+-mem2:
+- .word 0x4567
+-mem3:
+- .byte 0x23
+- .dword 0x76543210
+- .byte 0xaa,0x11,0x99
+-
+- .text
+- move.d mem1,r2
+- move.d 0x7823fec2,r4
+- setf nzvc
+- move.d r4,[r2+]
+- test_cc 1 1 1 1
+- subq 4,r2
+- move.d [r2],r3
+- checkr3 7823fec2
+-
+- move.d mem2,r3
+- move.d 0x45231879,r4
+- clearf nzvc
+- move.w r4,[r3]
+- test_cc 0 0 0 0
+- move.d [r3],r3
+- checkr3 10231879
+-
+- move.d mem2,r2
+- moveq -2,r4
+- clearf nc
+- setf zv
+- move.b r4,[r2+]
+- test_cc 0 1 1 0
+- subq 1,r2
+- move.d [r2],r3
+- checkr3 102318fe
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movmp.s b/tests/tcg/cris/bare/check_movmp.s
+deleted file mode 100644
+index 7fc11f064d..0000000000
+--- a/tests/tcg/cris/bare/check_movmp.s
++++ /dev/null
+@@ -1,131 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff00\nffff0000\n0\nffffff00\nffff0000\n0\nffffff00\nffff0000\n0\nbb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-
+-# Test generic "move Ps,[]" and "move [],Pd" insns; the ones with
+-# functionality common to all models.
+-
+- .include "testutils.inc"
+- start
+-
+- .data
+-filler:
+- .byte 0xaa
+- .word 0x4433
+- .dword 0x55778866
+- .byte 0xcc
+-
+- .text
+-; Test that writing to zero-registers is a nop
+- .if 0
+- ; We used to just ignore the writes, but now an error is emitted.  We
+- ; keep the test-code but disabled, in case we need to change this again.
+- move 0xaa,p0
+- move 0x4433,p4
+- move 0x55774433,p8
+- .endif
+-
+- moveq -1,r3
+- setf zcvn
+- clear.b r3
+- test_cc 1 1 1 1
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clearf zcvn
+- clear.w r3
+- test_cc 0 0 0 0
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+-; "Write" using ordinary memory references too.
+- .if 0 ; See ".if 0" above.
+- move.d filler,r6
+- move [r6],p0
+- move [r6],p4
+- move [r6],p8
+- .endif
+-
+-# ffffff00\nffff0000\n0\nffffff00\nffff0000\n0\nbb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clear.w r3
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+-; And postincremented.
+- .if 0 ; See ".if 0" above.
+- move [r6+],p0
+- move [r6+],p4
+- move [r6+],p8
+- .endif
+-
+-# ffffff00\nffff0000\n0\nbb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clear.w r3
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+-; Now see that we can write to the registers too.
+-# bb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-; [PC+]
+- move.d filler,r9
+- move 0xbb113344,srp
+- move srp,r3
+- checkr3 bb113344
+-
+-; [R+]
+- move [r9+],srp
+- move srp,r3
+- checkr3 664433aa
+-
+-; [R]
+- move [r9],srp
+- move srp,r3
+- checkr3 cc557788
+-
+-; And check writing to memory, clear and srp.
+-
+- move.d filler,r9
+- move 0xabcde012,srp
+- setf zcvn
+- move srp,[r9+]
+- test_cc 1 1 1 1
+- subq 4,r9
+- move.d [r9],r3
+- checkr3 abcde012
+-
+- clearf zcvn
+- clear.b [r9]
+- test_cc 0 0 0 0
+- move.d [r9],r3
+- checkr3 abcde000
+-
+- addq 2,r9
+- clear.w [r9+]
+- subq 2,r9
+- move.d [r9],r3
+- checkr3 77880000
+-
+- clear.d [r9]
+- move.d [r9],r3
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movpmv32.s b/tests/tcg/cris/bare/check_movpmv32.s
+deleted file mode 100644
+index daf0970e4a..0000000000
+--- a/tests/tcg/cris/bare/check_movpmv32.s
++++ /dev/null
+@@ -1,35 +0,0 @@
+-# mach: crisv32
+-# output: 11223320\nbb113344\naa557711\n
+-
+-# Test v32-specific special registers.  FIXME: more registers.
+-
+- .include "testutils.inc"
+- start
+- .data
+-store:
+- .dword 0x11223344
+- .dword 0x77665544
+-
+- .text
+- moveq -1,r3
+- move.d store,r4
+- move vr,[r4]
+- move [r4+],mof
+- move mof,r3
+- checkr3 11223320
+-
+- moveq -1,r3
+- clearf zcvn
+- move 0xbb113344,mof
+- test_cc 0 0 0 0
+- move mof,r3
+- checkr3 bb113344
+-
+- setf zcvn
+- move 0xaa557711,mof
+- test_cc 1 1 1 1
+- move mof,[r4]
+- move.d [r4],r3
+- checkr3 aa557711
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movpr.s b/tests/tcg/cris/bare/check_movpr.s
+deleted file mode 100644
+index eef9bdb4fb..0000000000
+--- a/tests/tcg/cris/bare/check_movpr.s
++++ /dev/null
+@@ -1,28 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff00\nffff0000\n0\nbb113344\n
+-
+-# Test generic "move Ps,Rd" and "move Rs,Pd" insns; the ones with
+-# functionality common to all models.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clear.w r3
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+- moveq -1,r3
+- move.d 0xbb113344,r4
+- setf zcvn
+- move r4,srp
+- move srp,r3
+- test_cc 1 1 1 1
+- checkr3 bb113344
+- quit
+diff --git a/tests/tcg/cris/bare/check_movprv32.s b/tests/tcg/cris/bare/check_movprv32.s
+deleted file mode 100644
+index d0d90e1246..0000000000
+--- a/tests/tcg/cris/bare/check_movprv32.s
++++ /dev/null
+@@ -1,21 +0,0 @@
+-# mach: crisv32
+-# output: ffffff20\nbb113344\n
+-
+-# Test v32-specific special registers.  FIXME: more registers.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- setf zcvn
+- move vr,r3
+- test_cc 1 1 1 1
+- checkr3 ffffff20
+-
+- moveq -1,r3
+- move.d 0xbb113344,r4
+- clearf cvnz
+- move r4,mof
+- test_cc 0 0 0 0
+- move mof,r3
+- checkr3 bb113344
+- quit
+diff --git a/tests/tcg/cris/bare/check_movscr.s b/tests/tcg/cris/bare/check_movscr.s
+deleted file mode 100644
+index 53c8ce6b50..0000000000
+--- a/tests/tcg/cris/bare/check_movscr.s
++++ /dev/null
+@@ -1,29 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 42\nffffff85\n7685\nffff8765\n0\n
+-
+-; Move constant byte, word, dword to register.  Check that sign-extension
+-; is performed.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- movs.b 0x42,r3
+- checkr3 42
+-
+- movs.b 0x85,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffff85
+-
+- movs.w 0x7685,r3
+- test_move_cc 0 0 0 0
+- checkr3 7685
+-
+- movs.w 0x8765,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8765
+-
+- movs.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movsm.s b/tests/tcg/cris/bare/check_movsm.s
+deleted file mode 100644
+index 7074336e78..0000000000
+--- a/tests/tcg/cris/bare/check_movsm.s
++++ /dev/null
+@@ -1,44 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nfffffff5\n5\nfffffff5\n0\n
+-
+-; Movs between registers.  Check that sign-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+-
+- .data
+-x:
+- .byte 5,-11
+- .word 5,-11
+- .word 0
+-
+- start
+- move.d x,r5
+-
+- moveq -1,r3
+- movs.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r3
+- movs.b [r5],r3
+- test_move_cc 1 0 0 0
+- addq 1,r5
+- checkr3 fffffff5
+-
+- moveq -1,r3
+- movs.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r3
+- movs.w [r5],r3
+- test_move_cc 1 0 0 0
+- addq 2,r5
+- checkr3 fffffff5
+-
+- movs.w [r5],r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movsr.s b/tests/tcg/cris/bare/check_movsr.s
+deleted file mode 100644
+index d1889a7a1b..0000000000
+--- a/tests/tcg/cris/bare/check_movsr.s
++++ /dev/null
+@@ -1,46 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nfffffff5\n5\nfffffff5\n0\n
+-
+-; Movs between registers.  Check that sign-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r5
+- moveq 5,r4
+- move.b r4,r5
+- moveq -1,r3
+- movs.b r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.b r4,r5
+- moveq 0,r3
+- movs.b r5,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffff5
+-
+- moveq -1,r5
+- moveq 5,r4
+- move.w r4,r5
+- moveq -1,r3
+- movs.w r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.w r4,r5
+- moveq 0,r3
+- movs.w r5,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffff5
+-
+- moveq 0,r5
+- movs.b r5,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movucr.s b/tests/tcg/cris/bare/check_movucr.s
+deleted file mode 100644
+index 7c8487d1a2..0000000000
+--- a/tests/tcg/cris/bare/check_movucr.s
++++ /dev/null
+@@ -1,33 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 42\n85\n7685\n8765\n0\n
+-
+-; Move constant byte, word, dword to register.  Check that zero-extension
+-; is performed.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- movu.b 0x42,r3
+- test_move_cc 0 0 0 0
+- checkr3 42
+-
+- moveq -1,r3
+- movu.b 0x85,r3
+- test_move_cc 0 0 0 0
+- checkr3 85
+-
+- moveq -1,r3
+- movu.w 0x7685,r3
+- test_move_cc 0 0 0 0
+- checkr3 7685
+-
+- moveq -1,r3
+- movu.w 0x8765,r3
+- test_move_cc 0 0 0 0
+- checkr3 8765
+-
+- movu.b 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movum.s b/tests/tcg/cris/bare/check_movum.s
+deleted file mode 100644
+index 038e539463..0000000000
+--- a/tests/tcg/cris/bare/check_movum.s
++++ /dev/null
+@@ -1,40 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nf5\n5\nfff5\n0\n
+-
+-; Movu between registers.  Check that zero-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+-
+- .data
+-x:
+- .byte 5,-11
+- .word 5,-11
+- .word 0
+-
+- start
+- move.d x,r5
+-
+- movu.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- movu.b [r5],r3
+- test_move_cc 0 0 0 0
+- addq 1,r5
+- checkr3 f5
+-
+- movu.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- movu.w [r5],r3
+- test_move_cc 0 0 0 0
+- addq 2,r5
+- checkr3 fff5
+-
+- movu.w [r5],r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movur.s b/tests/tcg/cris/bare/check_movur.s
+deleted file mode 100644
+index 3ecf475f75..0000000000
+--- a/tests/tcg/cris/bare/check_movur.s
++++ /dev/null
+@@ -1,45 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nf5\n5\nfff5\n0\n
+-
+-; Movu between registers.  Check that zero-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r5
+- moveq 5,r4
+- move.b r4,r5
+- moveq -1,r3
+- movu.b r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.b r4,r5
+- moveq -1,r3
+- movu.b r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 f5
+-
+- moveq -1,r5
+- moveq 5,r4
+- move.w r4,r5
+- moveq -1,r3
+- movu.w r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.w r4,r5
+- moveq -1,r3
+- movu.w r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 fff5
+-
+- movu.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mulv32.s b/tests/tcg/cris/bare/check_mulv32.s
+deleted file mode 100644
+index f379358765..0000000000
+--- a/tests/tcg/cris/bare/check_mulv32.s
++++ /dev/null
+@@ -1,51 +0,0 @@
+-# mach: crisv32
+-# output: fffffffe\n
+-# output: ffffffff\n
+-# output: fffffffe\n
+-# output: 1\n
+-# output: fffffffe\n
+-# output: ffffffff\n
+-# output: fffffffe\n
+-# output: 1\n
+-
+-; Check that carry is not modified on v32.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- setf c
+- muls.d r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- setf c
+- mulu.d r4,r3
+- test_cc 0 0 1 1
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 2,r4
+- clearf c
+- muls.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- clearf c
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mulx.s b/tests/tcg/cris/bare/check_mulx.s
+deleted file mode 100644
+index a7a1f82a82..0000000000
+--- a/tests/tcg/cris/bare/check_mulx.s
++++ /dev/null
+@@ -1,257 +0,0 @@
+-# mach: crisv10 crisv32
+-# output: fffffffe\nffffffff\nfffffffe\n1\nfffffffe\nffffffff\nfffffffe\n1\nfffe0001\n0\nfffe0001\n0\n1\n0\n1\nfffffffe\n193eade2\n277e3a49\n193eade2\n277e3a49\nfffffffe\nffffffff\n1fffe\n0\nfffffffe\nffffffff\n1fffe\n0\n1\n0\nfffe0001\n0\nfdbdade2\nffffffff\n420fade2\n0\nfffffffe\nffffffff\n1fe\n0\nfffffffe\nffffffff\n1fe\n0\n1\n0\nfe01\n0\n1\n0\nfe01\n0\nffffd9e2\nffffffff\n2be2\n0\n0\n0\n0\n0\n
+-
+- .include "testutils.inc"
+- start
+-
+- .align 4
+- moveq -1,r3
+- moveq 2,r4
+- muls.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- .align 4
+- moveq -1,r3
+- moveq 2,r4
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- .align 4
+- moveq 2,r3
+- moveq -1,r4
+- muls.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- .align 4
+- moveq 2,r3
+- moveq -1,r4
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- muls.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffe0001
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- mulu.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 fffe0001
+- move mof,r3
+- checkr3 0
+-
+- moveq -1,r4
+- move.d r4,r3
+- muls.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+-
+- moveq -1,r4
+- move.d r4,r3
+- mulu.d r4,r3
+- test_cc 1 0 1 0
+- checkr3 1
+- move mof,r3
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- muls.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 193eade2
+- move mof,r3
+- checkr3 277e3a49
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 193eade2
+- move mof,r3
+- checkr3 277e3a49
+-
+- move.d 0xffff,r3
+- moveq 2,r4
+- muls.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+- move mof,r3
+- checkr3 0
+- nop
+-
+- moveq 2,r3
+- move.d 0xffff,r4
+- muls.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq -1,r4
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- muls.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+-
+- moveq -1,r4
+- move.d r4,r3
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 fffe0001
+- move mof,r3
+- checkr3 0
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- muls.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fdbdade2
+- move mof,r3
+- checkr3 ffffffff
+- nop
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 420fade2
+- move mof,r3
+- checkr3 0
+- nop
+-
+- move.d 0xff,r3
+- moveq 2,r4
+- muls.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fe
+- move mof,r3
+- checkr3 0
+-
+- moveq 2,r3
+- moveq -1,r4
+- muls.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq -1,r4
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fe
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- muls.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+- nop
+-
+- moveq -1,r4
+- move.d r4,r3
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 fe01
+- move mof,r3
+- checkr3 0
+- nop
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- muls.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+- nop
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 fe01
+- move mof,r3
+- checkr3 0
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- muls.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 ffffd9e2
+- move mof,r3
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 2be2
+- move mof,r3
+- checkr3 0
+-
+- moveq 0,r3
+- move.d 0xf87f4aeb,r4
+- muls.d r4,r3
+- test_cc 0 1 0 0
+- checkr3 0
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xf87f4aeb,r3
+- moveq 0,r4
+- mulu.d r4,r3
+- test_cc 0 1 0 0
+- checkr3 0
+- move mof,r3
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_neg.s b/tests/tcg/cris/bare/check_neg.s
+deleted file mode 100644
+index 963c4b6f5e..0000000000
+--- a/tests/tcg/cris/bare/check_neg.s
++++ /dev/null
+@@ -1,104 +0,0 @@
+-# mach:  crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\nffffffff\n0\n80000000\n1\nba987655\nffff\nffff\n0\n89ab8000\nffff0001\n45677655\nff\nff\n0\n89abae80\nffffff01\n45678955\n
+-
+- .include "testutils.inc"
+- start
+- moveq 0,r3
+- moveq 1,r4
+- neg.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 1,r3
+- moveq 0,r4
+- neg.d r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+-;; FIXME: this was wrong.
+- moveq 0,r3
+- neg.d r3,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x80000000,r3
+- neg.d r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- moveq -1,r3
+- neg.d r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0x456789ab,r3
+- neg.d r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ba987655
+-
+- moveq 0,r3
+- moveq 1,r4
+- neg.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff
+-
+- moveq 1,r3
+- moveq 0,r4
+- neg.w r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff
+-
+- moveq 0,r3
+- neg.w r3,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x89ab8000,r3
+- neg.w r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 89ab8000
+-
+- moveq -1,r3
+- neg.w r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- move.d 0x456789ab,r3
+- neg.w r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 45677655
+-
+- moveq 0,r3
+- moveq 1,r4
+- neg.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ff
+-
+- moveq 1,r3
+- moveq 0,r4
+- neg.b r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ff
+-
+- moveq 0,r3
+- neg.b r3,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+-;; FIXME: was wrong.
+- move.d 0x89abae80,r3
+- neg.b r3,r3
+- test_move_cc 1 0 0 1
+- checkr3 89abae80
+-
+- moveq -1,r3
+- neg.b r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- move.d 0x456789ab,r3
+- neg.b r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 45678955
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_not.s b/tests/tcg/cris/bare/check_not.s
+deleted file mode 100644
+index 33bcf155e5..0000000000
+--- a/tests/tcg/cris/bare/check_not.s
++++ /dev/null
+@@ -1,31 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: fffffffe\nfffffffd\nffff0f00\n0\n87ecbbad\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- moveq 2,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffd
+-
+- move.d 0xf0ff,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff0f00
+-
+- moveq -1,r3
+- not r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x78134452,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 87ecbbad
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orc.s b/tests/tcg/cris/bare/check_orc.s
+deleted file mode 100644
+index c733f036a2..0000000000
+--- a/tests/tcg/cris/bare/check_orc.s
++++ /dev/null
+@@ -1,71 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffff\nffffffff\n7c33f7db\nffff0003\n3\nfedaffff\n7813f7db\n3\n3\nfeb\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- or.d 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- or.d 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xf0ff,r3
+- or.d 0xff0f,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- or.d -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- or.d 0x5432f789,r3
+- test_move_cc 0 0 0 0
+- checkr3 7c33f7db
+-
+- move.d 0xffff0001,r3
+- or.w 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0003
+-
+- moveq 2,r3
+- or.w 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfedaffaf,r3
+- or.w 0xff5f,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- or.w 0xf789,r3
+- test_move_cc 1 0 0 0
+- checkr3 7813f7db
+-
+- moveq 1,r3
+- or.b 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- or.b 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfa3,r3
+- or.b 0x4a,r3
+- test_move_cc 1 0 0 0
+- checkr3 feb
+-
+- move.d 0x78134453,r3
+- or.b 0x89,r3
+- test_move_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orm.s b/tests/tcg/cris/bare/check_orm.s
+deleted file mode 100644
+index ee723a6aa0..0000000000
+--- a/tests/tcg/cris/bare/check_orm.s
++++ /dev/null
+@@ -1,75 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffff\nffffffff\n7c33f7db\nffff0003\n3\nfedaffff\n7813f7db\n3\n3\nfeb\n781344db\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 2,1,0xff0f,-1,0x5432f789
+- .word 2,1,0xff5f,0xf789
+- .byte 2,1,0x4a,0x89
+-
+- start
+- moveq 1,r3
+- move.d x,r5
+- or.d [r5+],r3
+- checkr3 3
+-
+- moveq 2,r3
+- or.d [r5],r3
+- addq 4,r5
+- checkr3 3
+-
+- move.d 0xf0ff,r3
+- or.d [r5+],r3
+- checkr3 ffff
+-
+- moveq -1,r3
+- or.d [r5+],r3
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- or.d [r5+],r3
+- checkr3 7c33f7db
+-
+- move.d 0xffff0001,r3
+- or.w [r5+],r3
+- checkr3 ffff0003
+-
+- moveq 2,r3
+- or.w [r5],r3
+- addq 2,r5
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfedaffaf,r3
+- or.w [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- or.w [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 7813f7db
+-
+- moveq 1,r3
+- or.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- or.b [r5],r3
+- addq 1,r5
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfa3,r3
+- or.b [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 feb
+-
+- move.d 0x78134453,r3
+- or.b [r5],r3
+- test_move_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orq.s b/tests/tcg/cris/bare/check_orq.s
+deleted file mode 100644
+index 5060edc72d..0000000000
+--- a/tests/tcg/cris/bare/check_orq.s
++++ /dev/null
+@@ -1,41 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffffffff\nffffffff\n1f\nffffffe0\n7813445e\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- orq 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- orq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xf0ff,r3
+- orq -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 0,r3
+- orq -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 0,r3
+- orq 31,r3
+- test_move_cc 0 0 0 0
+- checkr3 1f
+-
+- moveq 0,r3
+- orq -32,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffe0
+-
+- move.d 0x78134452,r3
+- orq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 7813445e
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orr.s b/tests/tcg/cris/bare/check_orr.s
+deleted file mode 100644
+index a514c11bc9..0000000000
+--- a/tests/tcg/cris/bare/check_orr.s
++++ /dev/null
+@@ -1,84 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffff\nffffffff\n7c33f7db\nffff0003\n3\nfedaffff\n7813f7db\n3\n3\nfeb\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- moveq 2,r4
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- moveq 1,r4
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xff0f,r4
+- move.d 0xf0ff,r3
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- or.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 7c33f7db
+-
+- move.d 0xffff0001,r3
+- moveq 2,r4
+- or.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0003
+-
+- moveq 2,r3
+- move.d 0xffff0001,r4
+- or.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfedaffaf,r3
+- move.d 0xffffff5f,r4
+- or.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- or.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 7813f7db
+-
+- moveq 1,r3
+- move.d 0xffffff02,r4
+- or.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- moveq 1,r4
+- or.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0x4a,r4
+- move.d 0xfa3,r3
+- or.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 feb
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134453,r3
+- or.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_ret.s b/tests/tcg/cris/bare/check_ret.s
+deleted file mode 100644
+index b44fb25933..0000000000
+--- a/tests/tcg/cris/bare/check_ret.s
++++ /dev/null
+@@ -1,25 +0,0 @@
+-# mach: crisv3 crisv8 crisv10
+-# output: 3\n
+-
+-# Test that ret works.
+-
+- .include "testutils.inc"
+- start
+-x:
+- moveq 0,r3
+- jsr z
+-w:
+- quit
+-y:
+- addq 1,r3
+- checkr3 3
+- quit
+-
+-z:
+- addq 1,r3
+- move srp,r2
+- add.d y-w,r2
+- move r2,srp
+- ret
+- addq 1,r3
+- quit
+diff --git a/tests/tcg/cris/bare/check_scc.s b/tests/tcg/cris/bare/check_scc.s
+deleted file mode 100644
+index 4a8674cc1a..0000000000
+--- a/tests/tcg/cris/bare/check_scc.s
++++ /dev/null
+@@ -1,95 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n0\n1\n0\n1\n0\n1\n0\n0\n1\n1\n0\n1\n0\n1\n0\n1\n0\n0\n1\n0\n1\n1\n0\n1\n0\n0\n1\n1\n0\n1\n1\n0\n
+-
+- .include "testutils.inc"
+-
+- .macro lcheckr3 v
+-	move	 $ccs, $r9
+-	checkr3 \v
+-	move	$r9, $ccs
+- .endm
+-
+- start
+- clearf nzvc
+- scc r3
+- lcheckr3 1
+- scs r3
+- lcheckr3 0
+- sne r3
+- lcheckr3 1
+- seq r3
+- lcheckr3 0
+- svc r3
+- lcheckr3 1
+- svs r3
+- lcheckr3 0
+- spl r3
+- lcheckr3 1
+- smi r3
+- lcheckr3 0
+- sls r3
+- lcheckr3 0
+- shi r3
+- lcheckr3 1
+- sge r3
+- lcheckr3 1
+- slt r3
+- lcheckr3 0
+- sgt r3
+- lcheckr3 1
+- sle r3
+- lcheckr3 0
+- sa r3
+- lcheckr3 1
+- setf nzvc
+- scc r3
+- lcheckr3 0
+- scs r3
+- lcheckr3 1
+- sne r3
+- lcheckr3 0
+- svc r3
+- lcheckr3 0
+- svs r3
+- lcheckr3 1
+- spl r3
+- lcheckr3 0
+- smi r3
+- lcheckr3 1
+- sls r3
+- lcheckr3 1
+- shi r3
+- lcheckr3 0
+- sge r3
+- lcheckr3 1
+- slt r3
+- lcheckr3 0
+- sgt r3
+- lcheckr3 0
+- sle r3
+- lcheckr3 1
+- sa r3
+- lcheckr3 1
+- clearf n
+- sge r3
+- lcheckr3 0
+- slt r3
+- lcheckr3 1
+-
+- .if 1 ;..asm.arch.cris.v32
+- setf p
+- ssb r3
+- .else
+- moveq 1,r3
+- .endif
+- lcheckr3 1
+-
+- .if 1 ;..asm.arch.cris.v32
+- clearf p
+- ssb r3
+- .else
+- moveq 0,r3
+- .endif
+- lcheckr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subc.s b/tests/tcg/cris/bare/check_subc.s
+deleted file mode 100644
+index e34b5448e2..0000000000
+--- a/tests/tcg/cris/bare/check_subc.s
++++ /dev/null
+@@ -1,87 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n85649200\n
+-
+- .include "testutils.inc"
+- start
+-
+- moveq -1,r3
+- sub.d -2,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- moveq 2,r3
+- sub.d 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.d -0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 1fffe
+-
+- moveq -1,r3
+- sub.d 1,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- sub.d -0x5432f789,r3
+- test_cc 1 0 1 1
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- sub.w -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- sub.w 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- sub.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 fedafffe
+-
+- move.d 0x78134452,r3
+- sub.w 0x877,r3
+- test_cc 0 0 0 0
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- sub.b -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- sub.b 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xff,r3
+- sub.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r3
+- sub.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 feda49fe
+-
+- move.d 0x78134452,r3
+- sub.b 0x77,r3
+- test_cc 1 0 0 1
+- checkr3 781344db
+-
+- move.d 0x85649282,r3
+- sub.b 0x82,r3
+- test_cc 0 1 0 0
+- checkr3 85649200
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subm.s b/tests/tcg/cris/bare/check_subm.s
+deleted file mode 100644
+index e07ea02dd4..0000000000
+--- a/tests/tcg/cris/bare/check_subm.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n85649200\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword -2,1,-0xffff,1,-0x5432f789
+- .word -2,1,1,0x877
+- .byte -2,1,0x77
+- .byte 0x22
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- sub.d [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- moveq 2,r3
+- sub.d [r5],r3
+- test_cc 0 0 0 0
+- addq 4,r5
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.d [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1fffe
+-
+- moveq -1,r3
+- sub.d [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- sub.d [r5+],r3
+- test_cc 1 0 1 1
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- sub.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- sub.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.w [r5],r3
+- test_cc 1 0 0 0
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- sub.w [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 fedafffe
+-
+- move.d 0x78134452,r3
+- sub.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- sub.b [r5],r3
+- test_cc 0 0 0 0
+- addq 1,r5
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- sub.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xff,r3
+- sub.b [r5],r3
+- test_cc 1 0 0 0
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r3
+- sub.b [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 feda49fe
+-
+- move.d 0x78134452,r3
+- sub.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 781344db
+-
+- move.d 0x85649222,r3
+- sub.b [r5],r3
+- test_cc 0 1 0 0
+- checkr3 85649200
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subq.s b/tests/tcg/cris/bare/check_subq.s
+deleted file mode 100644
+index 9e34fa31ab..0000000000
+--- a/tests/tcg/cris/bare/check_subq.s
++++ /dev/null
+@@ -1,52 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 0\nffffffff\nfffffffe\nffff\nff\n56788f9\n56788d9\n567889a\n0\n7ffffffc\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- subq 1,r3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- subq 1,r3
+- test_cc 1 0 0 1
+- checkr3 ffffffff
+-
+- subq 1,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x10000,r3
+- subq 1,r3
+- test_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0x100,r3
+- subq 1,r3
+- test_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0x5678900,r3
+- subq 7,r3
+- test_cc 0 0 0 0
+- checkr3 56788f9
+-
+- subq 32,r3
+- test_cc 0 0 0 0
+- checkr3 56788d9
+-
+- subq 63,r3
+- test_cc 0 0 0 0
+- checkr3 567889a
+-
+- move.d 34,r3
+- subq 34,r3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x80000024,r3
+- subq 40,r3
+- test_cc 0 0 1 0
+- checkr3 7ffffffc
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subr.s b/tests/tcg/cris/bare/check_subr.s
+deleted file mode 100644
+index 742fbc8915..0000000000
+--- a/tests/tcg/cris/bare/check_subr.s
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n85649200\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq -2,r4
+- sub.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- moveq 2,r3
+- moveq 1,r4
+- sub.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- sub.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1fffe
+-
+- moveq 1,r4
+- moveq -1,r3
+- sub.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- sub.d r4,r3
+- test_cc 1 0 1 1
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- moveq -2,r4
+- sub.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- moveq 1,r4
+- sub.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- sub.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- move.d -0xfedaffff,r4
+- sub.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fedafffe
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- sub.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- moveq -2,r4
+- sub.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- moveq 1,r4
+- sub.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d -0xff,r4
+- move.d 0xff,r3
+- sub.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 fe
+-
+- move.d -0xfeda49ff,r4
+- move.d 0xfeda49ff,r3
+- sub.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 feda49fe
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- sub.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 781344db
+-
+- move.d 0x85649222,r3
+- move.d 0x77445622,r4
+- sub.b r4,r3
+- test_cc 0 1 0 0
+- checkr3 85649200
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_xarith.s b/tests/tcg/cris/bare/check_xarith.s
+deleted file mode 100644
+index 80038b2ab9..0000000000
+--- a/tests/tcg/cris/bare/check_xarith.s
++++ /dev/null
+@@ -1,72 +0,0 @@
+-
+-.include "testutils.inc"
+-
+-	start
+-
+-	moveq	-1, $r0
+-	moveq	0, $r1
+-	addq	1, $r0
+-	ax
+-	addq	0, $r1
+-
+-	move.d	$r0, $r3
+-	checkr3 0
+-	move.d	$r1, $r3
+-	checkr3 1
+-
+-	move.d  0, $r0
+-	moveq	-1, $r1
+-	subq	1, $r0
+-	ax
+-	subq	0, $r1
+-
+-	move.d	$r0, $r3
+-	checkr3 ffffffff
+-	move.d	$r1, $r3
+-	checkr3 fffffffe
+-
+-
+-	moveq	-1, $r0
+-	moveq	-1, $r1
+-	cmpq	-1, $r0
+-	ax
+-	cmpq	-1, $r1
+-	beq	1f
+-	nop
+-	fail
+-1:
+-	cmpq	0, $r0
+-	ax
+-	cmpq	-1, $r1
+-	bne	1f
+-	nop
+-	fail
+-1:
+-
+-	;; test for broken X sequence, run it several times.
+-	moveq	8, $r0
+-1:
+-	moveq	0, $r3
+-	move.d	$r0, $r1
+-	andq	1, $r1
+-	lslq	4, $r1
+-	moveq	1, $r2
+-	or.d	$r1, $r2
+-	ba	2f
+-	move	$r2, $ccs
+-2:
+-	addq	0, $r3
+-	move.d	$r0, $r4
+-	move.d	$r1, $r5
+-	move.d	$r2, $r6
+-	move.d	$r3, $r7
+-	lsrq	4, $r1
+-	move.d	$r1, $r8
+-	xor	$r1, $r3
+-	checkr3	0
+-	subq	1, $r0
+-	bne	1b
+-	nop
+-
+-	pass
+-	quit
+diff --git a/tests/tcg/cris/bare/crt.s b/tests/tcg/cris/bare/crt.s
+deleted file mode 100644
+index af027d7475..0000000000
+--- a/tests/tcg/cris/bare/crt.s
++++ /dev/null
+@@ -1,13 +0,0 @@
+-	.data
+-_stack_start:
+-	.space	8192, 0
+-_stack_end:
+-	.text
+-	.global	_start
+-_start:
+-	move.d	_stack_end, $sp
+-	jsr	main
+-	nop
+-	moveq	0, $r10
+-	jump	exit
+-	nop
+diff --git a/tests/tcg/cris/bare/testutils.inc b/tests/tcg/cris/bare/testutils.inc
+deleted file mode 100644
+index aa1641b2e6..0000000000
+--- a/tests/tcg/cris/bare/testutils.inc
++++ /dev/null
+@@ -1,117 +0,0 @@
+-	.syntax	no_register_prefix
+-
+-	.macro	start
+-	.text
+-	.global	main
+-main:
+-	.endm
+-
+-	.macro	quit
+-	jump	pass
+-	nop
+-	.endm
+-
+-	.macro	pass
+-	jump	pass
+-	nop
+-	.endm
+-
+-	.macro	startnostack
+-	start
+-	.endm
+-
+-	.macro	fail
+-	.data
+-99:
+-	.asciz " checkr3 failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-	.endm
+-
+-	.macro	checkr3 val
+-	cmp.d	0x\val, $r3
+-	beq	100f
+-	nop
+-	.data
+-99:
+-	.asciz "checkr3 failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-100:
+-	.endm
+-
+-; Test the condition codes
+-        .macro test_cc N Z V C
+-        .if \N
+-        bpl 9f
+-        nop
+-        .else
+-        bmi 9f
+-        nop
+-        .endif
+-        .if \Z
+-        bne 9f
+-        nop
+-        .else
+-        beq 9f
+-        nop
+-        .endif
+-        .if \V
+-        bvc 9f
+-        nop
+-        .else
+-        bvs 9f
+-        nop
+-        .endif
+-        .if \C
+-        bcc 9f
+-        nop
+-        .else
+-        bcs 9f
+-        nop
+-        .endif
+-        ba 8f
+-        nop
+-9:
+-	.data
+-99:
+-	.asciz "test_move_cc failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-8:
+-        .endm
+-
+-
+-        .macro test_move_cc N Z V C
+-        .if \N
+-        bpl 9f
+-        nop
+-        .else
+-        bmi 9f
+-        nop
+-        .endif
+-        .if \Z
+-        bne 9f
+-        nop
+-        .else
+-        beq 9f
+-        nop
+-        .endif
+-        ba 8f
+-        nop
+-9:
+-	.data
+-99:
+-	.asciz "test_move_cc failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-8:
+-        .endm
+-- 
+2.45.2
 
-Power11 support was added in upstream linux, with commit c2ed087ed35c 
-("powerpc: Add Power11 architected and raw mode").
-
-Also, if you notice the model is being printed as 0x00821200, it is the 
-Processor version register (PVR), the 0x82 in it is for Power11. If it 
-had been Power10, it would be 0x80. You can try that with -cpu Power10.
-
-
-You will need to use a kernel newer than v6.9-rc1, which contains the 
-commit adding Power11 support to the kernel.
-
-
-Thanks,
-
-Aditya Gupta
-
->
-> Thanks,
-> Amit
->
->> * '-smp' option tested
->> * with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
->> * with/without device 'virtio-scsi-pci'
->> * with/without -kernel and -drive with qcow_file
->>
->> Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
->>
->> Changelog
->> =========
->> v6 RESEND:
->>    + added my initials instead of PMM in patch #1 description
->>
->> v6:
->>    + reorganised patches such that Power11 introduction is at end, and
->>    cleanups and fixes is done before
->>    + patch #1: renamed macros from POWER_* to PCC_*
->>    + patch #2: rename 'logical_pvr' to 'spapr_logical_pvr' to better convey
->>    the context
->>
->> v5:
->>    + split patch series into pseries+powernv
->>    + patch #1: apply harsh's patch to reduce duplication
->>    + patch #2: simplified, by removing duplication
->>    + patch #3: update docs, according to harsh's suggestion
->>    + patch #4: no functional change, #define used for P9 & P10 pcr_supported
->>    + patch #5: no change
->>
->> v4:
->>    + patch #5: fix memory leak in pnv_chip_power10_quad_realize
->>    - no change in other patches
->>
->> v3:
->>    + patch #1: version power11 as power11_v2.0
->>    + patch #2: split target hw/pseries code into patch #2
->>    + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
->>    + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
->>    + patch #6-#11: no change
->>    - remove commit to make Power11 as default
->>
->> v2:
->>    + split powernv patch into homer,lpc,occ,psi,sbe
->>    + reduce code duplication by reusing power10 code
->>    + make power11 as default
->>    + rebase on qemu upstream/master
->>    + add more information in commit descriptions
->>    + update docs
->>    + update skiboot.lid
->>
->>
->> Aditya Gupta (4):
->>    target/ppc: Introduce 'PowerPCCPUClass::spapr_logical_pvr'
->>    target/ppc: Fix regression due to Power10 and Power11 having same PCR
->>    target/ppc: Add Power11 DD2.0 processor
->>    ppc/pseries: Add Power11 cpu type
->>
->> Harsh Prateek Bora (1):
->>    target/ppc: Reduce code duplication across Power9/10 init code
->>
->>   docs/system/ppc/pseries.rst |  17 +++-
->>   hw/ppc/spapr_cpu_core.c     |   1 +
->>   target/ppc/compat.c         |  11 +++
->>   target/ppc/cpu-models.c     |   3 +
->>   target/ppc/cpu-models.h     |   3 +
->>   target/ppc/cpu.h            |   3 +
->>   target/ppc/cpu_init.c       | 188 +++++++++++++++---------------------
->>   target/ppc/cpu_init.h       |  92 ++++++++++++++++++
->>   8 files changed, 205 insertions(+), 113 deletions(-)
->>   create mode 100644 target/ppc/cpu_init.h
->>
->> -- 
->> 2.45.2
->>
->>
 
