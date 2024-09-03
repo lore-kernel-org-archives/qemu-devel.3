@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222DACD379F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B178CD379F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW5Z-0001LG-1V; Tue, 03 Sep 2024 12:09:05 -0400
+	id 1slW4Z-0004iu-Vh; Tue, 03 Sep 2024 12:08:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5U-0000pw-9l
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:00 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1slW4Y-0004be-55
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:02 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5P-0002vk-Ul
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:00 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42c7a49152aso36171775e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:55 -0700 (PDT)
+ id 1slW4T-0002eT-0d
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:01 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-42bb8cf8a5bso42053135e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379734; x=1725984534; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379675; x=1725984475; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DBc/bJy+JM7lDQDRwxqLPG14xFZM1slW+0SGy2bjs2k=;
- b=Kab+6SPql0RnCcKZUjgmSa0mDb/ukAGx/SNmovemAAX4uadp3IYPiTNOFtL+ymMtQF
- JHvHWTIZnCxHe7OqoTWLgnOxA3RtZoqk62xv0IUPXqVSoYENLRtadgyr1V+dT/Y8FKkC
- AszI+YDfIe7+iEOli7+uBRAGUay54urn+Fw3+uPEe84J9dris+ifq4D2Iw0z1jeGBB3z
- YqYTTzjknCpd4lSoUTjyZeC60DDzgRcwBNlhMln6C5swVkMN2m7arpyMIa8UlLl0ndsa
- y7AL2dbntX6A8y0SExc9B3wBxDUDQpATmvDiSslxo55+KQMvzHwNPW+/Bu23COvEdzlH
- Wgpw==
+ :reply-to; bh=REWeNOczEUu8BH+jrYSxe0zGnjLj2cnjciq59tS1KWA=;
+ b=vYsoeN2d+IuTTJVeK5/Oob8Zmq4hzj7I3glv83e24eQ5AkT1lc9wNjz6FrypzTqb6+
+ E/SyFMdBJ3D6IpUeF9ahMTHEmtRzgq36yfIAuT0KKIbUbwiZkva3LKSUlNnAQVO6AL4z
+ /qAfYDXXk509cnNqa7GJHEbiwkCRFz3uGDFYNqoZbLJ7BevDhUpayksZTwkhGmImxlbU
+ 6k844XmLdFHR0OeS4yU0rpOYtm1krlGBLBVIcX9daP8DKID6Nva3lvCgkxHXT1fecbFB
+ I/4Xr/81aXEI/BlgAVJ9MBTzgDPVZnL3QFMy6ZNV7B92hY3t1qpbfuc657Y6B+3gToCZ
+ pJtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379734; x=1725984534;
+ d=1e100.net; s=20230601; t=1725379675; x=1725984475;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DBc/bJy+JM7lDQDRwxqLPG14xFZM1slW+0SGy2bjs2k=;
- b=ErSNJbmhXRL1F/m64BWGRiNRQ+sO+GGLca91wPiVZINDqq45jJXeW9skXg0KcuBpH+
- Uz0/dUamRvKx3w/iw1tYhrCwFRSYsDK1+dART5+HIEve7bxCqxbFiDy54F5/1yjCtUIr
- 3qDM0s6C5yB1m/OghGRNV3t5oO3SfDAXzTQqQvo7iFqay7x8ODl113W0WuLn5prdZDvM
- KLLuzxATGlq9zXSfdZY7eJQmX+EBR8vXziMPu3dW2J58I9DIOiwtSvKmc6ovSgBTEpSv
- J/tRQmpOQ+ohf7x7W6OBpQh4VwA5Pb/l+3joUE4+rAAAd0XgJxZvfOl56YE5Xo5sre+m
- FDsw==
+ bh=REWeNOczEUu8BH+jrYSxe0zGnjLj2cnjciq59tS1KWA=;
+ b=wBfqXf+KlPAUWDF8Qpf7L7B1jBBbx37SmGLbELNc8o/3fC89tscHqf+VvELJy1XP99
+ BvaLIBedLXwMjeJ4+brTckxDTOoiP+xI2uURn/JXkT7hDo1ftLy2aPrSeMNKJxR9MAKT
+ KDEl1D7IWPEu/HlQrDkoKVltiH/lMZnGvD+eIpS4L2A+0tIUlNy4BVhCgWIeOY3vS+nm
+ h2ozf+BTPuzD9hSuTRT99g4lGeK9IF4aEdjE9q8DMdNno7dzZ7bHgBlmEXcZ+D3CMrWL
+ HQEiAdotbroJgvkHqsq4Qt4vHgTDph3GQBOvS/xClQkg1CIiN+08qMH525aQjk5l092D
+ l1nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXiHmonX3JeTR+83gTjZOh1ulU+s0tNxhq3tmc6Q+yv2I1i7eT5Fq0plVpf//DQpOqTS0tm25ukCJzF@nongnu.org
-X-Gm-Message-State: AOJu0YzH/EBDPTN1ULpggkaNX7ndgKBhBGF1AJjSoYBAoAiwOdvMw+4k
- lmMFml0Y2LCVgBa4aZb2Wi4qNzUQgzOYKqKf9stKCPZsHiuPtHh2U2YX+0qv7ao=
-X-Google-Smtp-Source: AGHT+IGVLC7oZTaQNZ1zgMcusgInMSTnHktRIpj32Nj3Yqz6jgtY79H6CRWfklLBGC7/IvlBk873eQ==
-X-Received: by 2002:a05:600c:4586:b0:426:61fc:fc1a with SMTP id
- 5b1f17b1804b1-42bb01ae2a7mr162606245e9.3.1725379734319; 
- Tue, 03 Sep 2024 09:08:54 -0700 (PDT)
+ AJvYcCVkUrju2GsESyTZz7DzDXqobGEh7nte2hpLU6FVZhZMJyBj1Di7qqm88kQjdrIM/+Agsad5Nz4MdKD5@nongnu.org
+X-Gm-Message-State: AOJu0Yy6grShXbRuTvo9xw602LXWCRmGulLutIzMBz1o/cmKtWZRndjh
+ oRvSiGUQ3igBnZyhyJuWZd9LKQIbOJ5wTGKpb7vs97sOT5BWCBkfVAGFCUa3esc=
+X-Google-Smtp-Source: AGHT+IHA/ysar/lnj22iVGBqGGVi0huK0gXmS9asmpFQfYTmeA0r63KUsVl4dzqpzDMtxAZK46PQsA==
+X-Received: by 2002:a05:600c:46c6:b0:426:4978:65f0 with SMTP id
+ 5b1f17b1804b1-42c82f56727mr57670035e9.18.1725379675077; 
+ Tue, 03 Sep 2024 09:07:55 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.53
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.07.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:53 -0700 (PDT)
+ Tue, 03 Sep 2024 09:07:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 40/53] hw/intc: Remove omap2-intc device
-Date: Tue,  3 Sep 2024 17:07:38 +0100
-Message-Id: <20240903160751.4100218-41-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 03/53] hw/adc: Remove MAX111X device
+Date: Tue,  3 Sep 2024 17:07:01 +0100
+Message-Id: <20240903160751.4100218-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,321 +94,357 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the OMAP2 specific code from omap_intc.c.
+The MAX111X ADC device was used only by the XScale-based
+Zaurus machine types. Now they have all been removed, we can
+drop this device model too.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/omap_intc.c | 276 --------------------------------------------
- 1 file changed, 276 deletions(-)
+ MAINTAINERS              |   2 -
+ include/hw/adc/max111x.h |  56 ----------
+ hw/adc/max111x.c         | 236 ---------------------------------------
+ hw/adc/Kconfig           |   3 -
+ hw/adc/meson.build       |   1 -
+ 5 files changed, 298 deletions(-)
+ delete mode 100644 include/hw/adc/max111x.h
+ delete mode 100644 hw/adc/max111x.c
 
-diff --git a/hw/intc/omap_intc.c b/hw/intc/omap_intc.c
-index 435c47600fc..c14b22d3819 100644
---- a/hw/intc/omap_intc.c
-+++ b/hw/intc/omap_intc.c
-@@ -50,8 +50,6 @@ struct OMAPIntcState {
-     int level_only;
-     uint32_t size;
- 
--    uint8_t revision;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4f00c7a3427..7873350f6ef 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -930,8 +930,6 @@ F: hw/display/tc6393xb.c
+ F: hw/gpio/max7310.c
+ F: hw/gpio/zaurus.c
+ F: hw/misc/mst_fpga.c
+-F: hw/adc/max111x.c
+-F: include/hw/adc/max111x.h
+ F: include/hw/arm/pxa.h
+ F: include/hw/arm/sharpsl.h
+ F: include/hw/display/tc6393xb.h
+diff --git a/include/hw/adc/max111x.h b/include/hw/adc/max111x.h
+deleted file mode 100644
+index beff59c815d..00000000000
+--- a/include/hw/adc/max111x.h
++++ /dev/null
+@@ -1,56 +0,0 @@
+-/*
+- * Maxim MAX1110/1111 ADC chip emulation.
+- *
+- * Copyright (c) 2006 Openedhand Ltd.
+- * Written by Andrzej Zaborowski <balrog@zabor.org>
+- *
+- * This code is licensed under the GNU GPLv2.
+- *
+- * Contributions after 2012-01-13 are licensed under the terms of the
+- * GNU GPL, version 2 or (at your option) any later version.
+- */
 -
-     /* state */
-     uint32_t new_agr[2];
-     int sir_intr[2];
-@@ -133,26 +131,6 @@ static void omap_set_intr(void *opaque, int irq, int req)
-     }
- }
- 
--/* Simplified version with no edge detection */
--static void omap_set_intr_noedge(void *opaque, int irq, int req)
+-#ifndef HW_MISC_MAX111X_H
+-#define HW_MISC_MAX111X_H
+-
+-#include "hw/ssi/ssi.h"
+-#include "qom/object.h"
+-
+-/*
+- * This is a model of the Maxim MAX1110/1111 ADC chip, which for QEMU
+- * is an SSI slave device. It has either 4 (max1110) or 8 (max1111)
+- * 8-bit ADC channels.
+- *
+- * QEMU interface:
+- *  + GPIO inputs 0..3 (for max1110) or 0..7 (for max1111): set the value
+- *    of each ADC input, as an unsigned 8-bit value
+- *  + GPIO output 0: interrupt line
+- *  + Properties "input0" to "input3" (max1110) or "input0" to "input7"
+- *    (max1111): initial reset values for ADC inputs.
+- *
+- * Known bugs:
+- *  + the interrupt line is not correctly implemented, and will never
+- *    be lowered once it has been asserted.
+- */
+-struct MAX111xState {
+-    SSIPeripheral parent_obj;
+-
+-    qemu_irq interrupt;
+-    /* Values of inputs at system reset (settable by QOM property) */
+-    uint8_t reset_input[8];
+-
+-    uint8_t tb1, rb2, rb3;
+-    int cycle;
+-
+-    uint8_t input[8];
+-    int inputs, com;
+-};
+-
+-#define TYPE_MAX_111X "max111x"
+-
+-OBJECT_DECLARE_SIMPLE_TYPE(MAX111xState, MAX_111X)
+-
+-#define TYPE_MAX_1110 "max1110"
+-#define TYPE_MAX_1111 "max1111"
+-
+-#endif
+diff --git a/hw/adc/max111x.c b/hw/adc/max111x.c
+deleted file mode 100644
+index 957d177e1ce..00000000000
+--- a/hw/adc/max111x.c
++++ /dev/null
+@@ -1,236 +0,0 @@
+-/*
+- * Maxim MAX1110/1111 ADC chip emulation.
+- *
+- * Copyright (c) 2006 Openedhand Ltd.
+- * Written by Andrzej Zaborowski <balrog@zabor.org>
+- *
+- * This code is licensed under the GNU GPLv2.
+- *
+- * Contributions after 2012-01-13 are licensed under the terms of the
+- * GNU GPL, version 2 or (at your option) any later version.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/adc/max111x.h"
+-#include "hw/irq.h"
+-#include "migration/vmstate.h"
+-#include "qemu/module.h"
+-#include "hw/qdev-properties.h"
+-
+-/* Control-byte bitfields */
+-#define CB_PD0		(1 << 0)
+-#define CB_PD1		(1 << 1)
+-#define CB_SGL		(1 << 2)
+-#define CB_UNI		(1 << 3)
+-#define CB_SEL0		(1 << 4)
+-#define CB_SEL1		(1 << 5)
+-#define CB_SEL2		(1 << 6)
+-#define CB_START	(1 << 7)
+-
+-#define CHANNEL_NUM(v, b0, b1, b2)	\
+-                        ((((v) >> (2 + (b0))) & 4) |	\
+-                         (((v) >> (3 + (b1))) & 2) |	\
+-                         (((v) >> (4 + (b2))) & 1))
+-
+-static uint32_t max111x_read(MAX111xState *s)
 -{
--    OMAPIntcState *ih = opaque;
--    uint32_t rise;
+-    if (!s->tb1)
+-        return 0;
 -
--    struct omap_intr_handler_bank_s *bank = &ih->bank[irq >> 5];
--    int n = irq & 31;
--
--    if (req) {
--        rise = ~bank->inputs & (1 << n);
--        if (rise) {
--            bank->irqs |= bank->inputs |= rise;
--            omap_inth_update(ih, 0);
--            omap_inth_update(ih, 1);
--        }
--    } else
--        bank->irqs = (bank->inputs &= ~(1 << n)) | bank->swi;
--}
--
- static uint64_t omap_inth_read(void *opaque, hwaddr addr,
-                                unsigned size)
- {
-@@ -420,259 +398,6 @@ static const TypeInfo omap_intc_info = {
-     .class_init    = omap_intc_class_init,
- };
- 
--static uint64_t omap2_inth_read(void *opaque, hwaddr addr,
--                                unsigned size)
--{
--    OMAPIntcState *s = opaque;
--    int offset = addr;
--    int bank_no, line_no;
--    struct omap_intr_handler_bank_s *bank = NULL;
--
--    if ((offset & 0xf80) == 0x80) {
--        bank_no = (offset & 0x60) >> 5;
--        if (bank_no < s->nbanks) {
--            offset &= ~0x60;
--            bank = &s->bank[bank_no];
--        } else {
--            OMAP_BAD_REG(addr);
--            return 0;
--        }
+-    switch (s->cycle ++) {
+-    case 1:
+-        return s->rb2;
+-    case 2:
+-        return s->rb3;
 -    }
 -
--    switch (offset) {
--    case 0x00:	/* INTC_REVISION */
--        return s->revision;
--
--    case 0x10:	/* INTC_SYSCONFIG */
--        return (s->autoidle >> 2) & 1;
--
--    case 0x14:	/* INTC_SYSSTATUS */
--        return 1;						/* RESETDONE */
--
--    case 0x40:	/* INTC_SIR_IRQ */
--        return s->sir_intr[0];
--
--    case 0x44:	/* INTC_SIR_FIQ */
--        return s->sir_intr[1];
--
--    case 0x48:	/* INTC_CONTROL */
--        return (!s->mask) << 2;					/* GLOBALMASK */
--
--    case 0x4c:	/* INTC_PROTECTION */
--        return 0;
--
--    case 0x50:	/* INTC_IDLE */
--        return s->autoidle & 3;
--
--    /* Per-bank registers */
--    case 0x80:	/* INTC_ITR */
--        return bank->inputs;
--
--    case 0x84:	/* INTC_MIR */
--        return bank->mask;
--
--    case 0x88:	/* INTC_MIR_CLEAR */
--    case 0x8c:	/* INTC_MIR_SET */
--        return 0;
--
--    case 0x90:	/* INTC_ISR_SET */
--        return bank->swi;
--
--    case 0x94:	/* INTC_ISR_CLEAR */
--        return 0;
--
--    case 0x98:	/* INTC_PENDING_IRQ */
--        return bank->irqs & ~bank->mask & ~bank->fiq;
--
--    case 0x9c:	/* INTC_PENDING_FIQ */
--        return bank->irqs & ~bank->mask & bank->fiq;
--
--    /* Per-line registers */
--    case 0x100 ... 0x300:	/* INTC_ILR */
--        bank_no = (offset - 0x100) >> 7;
--        if (bank_no > s->nbanks)
--            break;
--        bank = &s->bank[bank_no];
--        line_no = (offset & 0x7f) >> 2;
--        return (bank->priority[line_no] << 2) |
--                ((bank->fiq >> line_no) & 1);
--    }
--    OMAP_BAD_REG(addr);
 -    return 0;
 -}
 -
--static void omap2_inth_write(void *opaque, hwaddr addr,
--                             uint64_t value, unsigned size)
+-/* Interpret a control-byte */
+-static void max111x_write(MAX111xState *s, uint32_t value)
 -{
--    OMAPIntcState *s = opaque;
--    int offset = addr;
--    int bank_no, line_no;
--    struct omap_intr_handler_bank_s *bank = NULL;
+-    int measure, chan;
 -
--    if ((offset & 0xf80) == 0x80) {
--        bank_no = (offset & 0x60) >> 5;
--        if (bank_no < s->nbanks) {
--            offset &= ~0x60;
--            bank = &s->bank[bank_no];
--        } else {
--            OMAP_BAD_REG(addr);
--            return;
--        }
--    }
--
--    switch (offset) {
--    case 0x10:	/* INTC_SYSCONFIG */
--        s->autoidle &= 4;
--        s->autoidle |= (value & 1) << 2;
--        if (value & 2) {                                        /* SOFTRESET */
--            omap_inth_reset(DEVICE(s));
--        }
+-    /* Ignore the value if START bit is zero */
+-    if (!(value & CB_START))
 -        return;
 -
--    case 0x48:	/* INTC_CONTROL */
--        s->mask = (value & 4) ? 0 : ~0;				/* GLOBALMASK */
--        if (value & 2) {					/* NEWFIQAGR */
--            qemu_set_irq(s->parent_intr[1], 0);
--            s->new_agr[1] = ~0;
--            omap_inth_update(s, 1);
--        }
--        if (value & 1) {					/* NEWIRQAGR */
--            qemu_set_irq(s->parent_intr[0], 0);
--            s->new_agr[0] = ~0;
--            omap_inth_update(s, 0);
--        }
--        return;
+-    s->cycle = 0;
 -
--    case 0x4c:	/* INTC_PROTECTION */
--        /* TODO: Make a bitmap (or sizeof(char)map) of access privileges
--         * for every register, see Chapter 3 and 4 for privileged mode.  */
--        if (value & 1)
--            fprintf(stderr, "%s: protection mode enable attempt\n",
--                            __func__);
--        return;
--
--    case 0x50:	/* INTC_IDLE */
--        s->autoidle &= ~3;
--        s->autoidle |= value & 3;
--        return;
--
--    /* Per-bank registers */
--    case 0x84:	/* INTC_MIR */
--        bank->mask = value;
--        omap_inth_update(s, 0);
--        omap_inth_update(s, 1);
--        return;
--
--    case 0x88:	/* INTC_MIR_CLEAR */
--        bank->mask &= ~value;
--        omap_inth_update(s, 0);
--        omap_inth_update(s, 1);
--        return;
--
--    case 0x8c:	/* INTC_MIR_SET */
--        bank->mask |= value;
--        return;
--
--    case 0x90:	/* INTC_ISR_SET */
--        bank->irqs |= bank->swi |= value;
--        omap_inth_update(s, 0);
--        omap_inth_update(s, 1);
--        return;
--
--    case 0x94:	/* INTC_ISR_CLEAR */
--        bank->swi &= ~value;
--        bank->irqs = bank->swi & bank->inputs;
--        return;
--
--    /* Per-line registers */
--    case 0x100 ... 0x300:	/* INTC_ILR */
--        bank_no = (offset - 0x100) >> 7;
--        if (bank_no > s->nbanks)
--            break;
--        bank = &s->bank[bank_no];
--        line_no = (offset & 0x7f) >> 2;
--        bank->priority[line_no] = (value >> 2) & 0x3f;
--        bank->fiq &= ~(1 << line_no);
--        bank->fiq |= (value & 1) << line_no;
--        return;
--
--    case 0x00:	/* INTC_REVISION */
--    case 0x14:	/* INTC_SYSSTATUS */
--    case 0x40:	/* INTC_SIR_IRQ */
--    case 0x44:	/* INTC_SIR_FIQ */
--    case 0x80:	/* INTC_ITR */
--    case 0x98:	/* INTC_PENDING_IRQ */
--    case 0x9c:	/* INTC_PENDING_FIQ */
--        OMAP_RO_REG(addr);
+-    if (!(value & CB_PD1)) {
+-        s->tb1 = 0;
 -        return;
 -    }
--    OMAP_BAD_REG(addr);
+-
+-    s->tb1 = value;
+-
+-    if (s->inputs == 8)
+-        chan = CHANNEL_NUM(value, 1, 0, 2);
+-    else
+-        chan = CHANNEL_NUM(value & ~CB_SEL0, 0, 1, 2);
+-
+-    if (value & CB_SGL)
+-        measure = s->input[chan] - s->com;
+-    else
+-        measure = s->input[chan] - s->input[chan ^ 1];
+-
+-    if (!(value & CB_UNI))
+-        measure ^= 0x80;
+-
+-    s->rb2 = (measure >> 2) & 0x3f;
+-    s->rb3 = (measure << 6) & 0xc0;
+-
+-    /* FIXME: When should the IRQ be lowered?  */
+-    qemu_irq_raise(s->interrupt);
 -}
 -
--static const MemoryRegionOps omap2_inth_mem_ops = {
--    .read = omap2_inth_read,
--    .write = omap2_inth_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--    .valid = {
--        .min_access_size = 4,
--        .max_access_size = 4,
--    },
+-static uint32_t max111x_transfer(SSIPeripheral *dev, uint32_t value)
+-{
+-    MAX111xState *s = MAX_111X(dev);
+-    max111x_write(s, value);
+-    return max111x_read(s);
+-}
+-
+-static const VMStateDescription vmstate_max111x = {
+-    .name = "max111x",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_SSI_PERIPHERAL(parent_obj, MAX111xState),
+-        VMSTATE_UINT8(tb1, MAX111xState),
+-        VMSTATE_UINT8(rb2, MAX111xState),
+-        VMSTATE_UINT8(rb3, MAX111xState),
+-        VMSTATE_INT32_EQUAL(inputs, MAX111xState, NULL),
+-        VMSTATE_INT32(com, MAX111xState),
+-        VMSTATE_ARRAY_INT32_UNSAFE(input, MAX111xState, inputs,
+-                                   vmstate_info_uint8, uint8_t),
+-        VMSTATE_END_OF_LIST()
+-    }
 -};
 -
--static void omap2_intc_init(Object *obj)
+-static void max111x_input_set(void *opaque, int line, int value)
 -{
--    DeviceState *dev = DEVICE(obj);
--    OMAPIntcState *s = OMAP_INTC(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-    MAX111xState *s = MAX_111X(opaque);
 -
--    s->level_only = 1;
--    s->nbanks = 3;
--    sysbus_init_irq(sbd, &s->parent_intr[0]);
--    sysbus_init_irq(sbd, &s->parent_intr[1]);
--    qdev_init_gpio_in(dev, omap_set_intr_noedge, s->nbanks * 32);
--    memory_region_init_io(&s->mmio, obj, &omap2_inth_mem_ops, s,
--                          "omap2-intc", 0x1000);
--    sysbus_init_mmio(sbd, &s->mmio);
+-    assert(line >= 0 && line < s->inputs);
+-    s->input[line] = value;
 -}
 -
--static void omap2_intc_realize(DeviceState *dev, Error **errp)
+-static int max111x_init(SSIPeripheral *d, int inputs)
 -{
--    OMAPIntcState *s = OMAP_INTC(dev);
+-    DeviceState *dev = DEVICE(d);
+-    MAX111xState *s = MAX_111X(dev);
 -
--    if (!s->iclk) {
--        error_setg(errp, "omap2-intc: iclk not connected");
--        return;
--    }
--    if (!s->fclk) {
--        error_setg(errp, "omap2-intc: fclk not connected");
--        return;
--    }
+-    qdev_init_gpio_out(dev, &s->interrupt, 1);
+-    qdev_init_gpio_in(dev, max111x_input_set, inputs);
+-
+-    s->inputs = inputs;
+-
+-    return 0;
 -}
 -
--static Property omap2_intc_properties[] = {
--    DEFINE_PROP_UINT8("revision", OMAPIntcState,
--    revision, 0x21),
+-static void max1110_realize(SSIPeripheral *dev, Error **errp)
+-{
+-    max111x_init(dev, 8);
+-}
+-
+-static void max1111_realize(SSIPeripheral *dev, Error **errp)
+-{
+-    max111x_init(dev, 4);
+-}
+-
+-static void max111x_reset(DeviceState *dev)
+-{
+-    MAX111xState *s = MAX_111X(dev);
+-    int i;
+-
+-    for (i = 0; i < s->inputs; i++) {
+-        s->input[i] = s->reset_input[i];
+-    }
+-    s->com = 0;
+-    s->tb1 = 0;
+-    s->rb2 = 0;
+-    s->rb3 = 0;
+-    s->cycle = 0;
+-}
+-
+-static Property max1110_properties[] = {
+-    /* Reset values for ADC inputs */
+-    DEFINE_PROP_UINT8("input0", MAX111xState, reset_input[0], 0xf0),
+-    DEFINE_PROP_UINT8("input1", MAX111xState, reset_input[1], 0xe0),
+-    DEFINE_PROP_UINT8("input2", MAX111xState, reset_input[2], 0xd0),
+-    DEFINE_PROP_UINT8("input3", MAX111xState, reset_input[3], 0xc0),
 -    DEFINE_PROP_END_OF_LIST(),
 -};
 -
--static void omap2_intc_class_init(ObjectClass *klass, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->reset = omap_inth_reset;
--    device_class_set_props(dc, omap2_intc_properties);
--    /* Reason: pointer property "iclk", "fclk" */
--    dc->user_creatable = false;
--    dc->realize = omap2_intc_realize;
--}
--
--static const TypeInfo omap2_intc_info = {
--    .name          = "omap2-intc",
--    .parent        = TYPE_OMAP_INTC,
--    .instance_init = omap2_intc_init,
--    .class_init    = omap2_intc_class_init,
+-static Property max1111_properties[] = {
+-    /* Reset values for ADC inputs */
+-    DEFINE_PROP_UINT8("input0", MAX111xState, reset_input[0], 0xf0),
+-    DEFINE_PROP_UINT8("input1", MAX111xState, reset_input[1], 0xe0),
+-    DEFINE_PROP_UINT8("input2", MAX111xState, reset_input[2], 0xd0),
+-    DEFINE_PROP_UINT8("input3", MAX111xState, reset_input[3], 0xc0),
+-    DEFINE_PROP_UINT8("input4", MAX111xState, reset_input[4], 0xb0),
+-    DEFINE_PROP_UINT8("input5", MAX111xState, reset_input[5], 0xa0),
+-    DEFINE_PROP_UINT8("input6", MAX111xState, reset_input[6], 0x90),
+-    DEFINE_PROP_UINT8("input7", MAX111xState, reset_input[7], 0x80),
+-    DEFINE_PROP_END_OF_LIST(),
 -};
 -
- static const TypeInfo omap_intc_type_info = {
-     .name          = TYPE_OMAP_INTC,
-     .parent        = TYPE_SYS_BUS_DEVICE,
-@@ -684,7 +409,6 @@ static void omap_intc_register_types(void)
- {
-     type_register_static(&omap_intc_type_info);
-     type_register_static(&omap_intc_info);
--    type_register_static(&omap2_intc_info);
- }
- 
- type_init(omap_intc_register_types)
+-static void max111x_class_init(ObjectClass *klass, void *data)
+-{
+-    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    k->transfer = max111x_transfer;
+-    dc->reset = max111x_reset;
+-    dc->vmsd = &vmstate_max111x;
+-    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+-}
+-
+-static const TypeInfo max111x_info = {
+-    .name          = TYPE_MAX_111X,
+-    .parent        = TYPE_SSI_PERIPHERAL,
+-    .instance_size = sizeof(MAX111xState),
+-    .class_init    = max111x_class_init,
+-    .abstract      = true,
+-};
+-
+-static void max1110_class_init(ObjectClass *klass, void *data)
+-{
+-    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    k->realize = max1110_realize;
+-    device_class_set_props(dc, max1110_properties);
+-}
+-
+-static const TypeInfo max1110_info = {
+-    .name          = TYPE_MAX_1110,
+-    .parent        = TYPE_MAX_111X,
+-    .class_init    = max1110_class_init,
+-};
+-
+-static void max1111_class_init(ObjectClass *klass, void *data)
+-{
+-    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    k->realize = max1111_realize;
+-    device_class_set_props(dc, max1111_properties);
+-}
+-
+-static const TypeInfo max1111_info = {
+-    .name          = TYPE_MAX_1111,
+-    .parent        = TYPE_MAX_111X,
+-    .class_init    = max1111_class_init,
+-};
+-
+-static void max111x_register_types(void)
+-{
+-    type_register_static(&max111x_info);
+-    type_register_static(&max1110_info);
+-    type_register_static(&max1111_info);
+-}
+-
+-type_init(max111x_register_types)
+diff --git a/hw/adc/Kconfig b/hw/adc/Kconfig
+index a825bd3d343..25d2229fb83 100644
+--- a/hw/adc/Kconfig
++++ b/hw/adc/Kconfig
+@@ -1,5 +1,2 @@
+ config STM32F2XX_ADC
+     bool
+-
+-config MAX111X
+-    bool
+diff --git a/hw/adc/meson.build b/hw/adc/meson.build
+index a4f85b7d468..7f7acc16196 100644
+--- a/hw/adc/meson.build
++++ b/hw/adc/meson.build
+@@ -2,4 +2,3 @@ system_ss.add(when: 'CONFIG_STM32F2XX_ADC', if_true: files('stm32f2xx_adc.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_adc.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_adc.c'))
+ system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq-xadc.c'))
+-system_ss.add(when: 'CONFIG_MAX111X', if_true: files('max111x.c'))
 -- 
 2.34.1
 
