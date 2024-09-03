@@ -4,90 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AD3CD37B1
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B894DCD37AE
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 20:50:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slaRc-0001qm-JB; Tue, 03 Sep 2024 16:48:08 -0400
+	id 1slaTC-00063Q-QT; Tue, 03 Sep 2024 16:49:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1slaRb-0001pd-7o
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:48:07 -0400
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1slaT9-00062P-56; Tue, 03 Sep 2024 16:49:44 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1slaRY-0008TB-P2
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 16:48:06 -0400
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-498c4d5a912so2128668137.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 13:48:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1slaT6-0000a4-Le; Tue, 03 Sep 2024 16:49:42 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2053525bd90so29077505ad.0; 
+ Tue, 03 Sep 2024 13:49:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725396483; x=1726001283; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=R86XYK+Tfl2nLFncXM0zgkqo7jP/tNY3vcKfo3FOsqc=;
- b=TZUzctY/CtippCwB25ggvyDVjRRNAUYHSj/ScddqHeWUvmnN7ad/8F3GUXoZiXKeUq
- jEA/SzvRTdAgYYuK3YQm4wJJ9w4P2CZTVkBcDTsCQMW+dMUk6lLDGKNS5NrABm3fai7V
- xsOwi6u9M+F09Q57o/9lr+LUuDfPJrBkVCjKxJmHnncdTp19vw8ctxlPvkVGm/uUnpGF
- ot0Gv0UkZOW3SN53RDjmgB5Oz/nIFlKOCq5kJC1JHKaRZwV/bwJjdDYF+WyR+Egy/Epg
- jGxvIeVZtL8xJ1Q5q10+xIdR6MCnXC9pW5ZhorzaK+T/ZMS6ukiycx+Bhvf/dJu+IDwO
- uLMw==
+ d=gmail.com; s=20230601; t=1725396579; x=1726001379; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=E0F/v2veV0YuRAxAXeKlGuCZDMCkYwUcOReGiMDAL9k=;
+ b=CbbTuV7T7kCbsoaKZmNRDXpetJAH1dqpM+mUyH7H08nbqSj2CdiB59FGKMy5er643r
+ RJZpwkOziyht57gIwRgIQbrrjXmJtu5+hU+LBkUNfVtG7/oCRgA4HQrPMrMx+8szB1We
+ OXKrwYYDabSHGLiUJpl9y7pfFAfAYqziD3bx+ualpyMlJJs3YIG5EmtxAtKOC6Z4klrG
+ CCfoParTENp9Sw5xDNA7QYVkjonz9XulOESVtizutEMht2vXaFfWZrmp+fYJwRkG7ZbF
+ VJvECG47pgrLRS8D4vTjPX66Y1wqtPCteNsvhWPvQzGMC44e7qzczBiH7wHPBs19RO38
+ 4AMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725396483; x=1726001283;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=R86XYK+Tfl2nLFncXM0zgkqo7jP/tNY3vcKfo3FOsqc=;
- b=SgCDlz+fC6+XGpbQLtQ8o9WTBvXrm7Jj5CiiMNi7HiZGOPSVJTDIK6eu6dJsf+CygL
- 9suIOgKJnUuMbg+dx9tU+NwM9BdknBe6wr/wtSGXl+kFDgpryJDTd1ibE6/oT87iTKA6
- btyLmzn7NDNCclBkp4dWqABwnJydJJxPptIzlM00n13KJeRe+pp0FfPcMejEaH+ukVDC
- 65I5/ReB0ecWIbJB9FrxQpY/q5y8ZkXRyzwmfxGEvRHn8sO5OYIqFpJQbIB2lp05byN+
- J7m7V7268I+ThilRw+O0QGlWtce4Cm1k3EB+3nRIDelFz2M4xWkDRXa+SM21Ij9CR7o/
- luJg==
+ d=1e100.net; s=20230601; t=1725396579; x=1726001379;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E0F/v2veV0YuRAxAXeKlGuCZDMCkYwUcOReGiMDAL9k=;
+ b=xTWSN8ZMTRbC2ZL6PgJ5iMgwHVe9NIb2wecBGuqbLHnBMStMmzPOjxXIAy+WcYyiS9
+ alFbEKZdxIv2RtBvckaGgb2CIUU/fvi7/xicjPSUiVFRIEvlKemGjBXCSYI23l2pgSCv
+ VjTmARRG46xJm5vnZc7skVzSNqXEjBKua+ssJMYoEY2YjCy0SQy1JJP7zsnkWROYqHer
+ msu92EVtu+DGzZLea1yF5NgEt5fm4NthHfyoo4SxkubrkWfvz7MN8Ch24AKFCURRsZI5
+ h5u9gxK3581aBNCHMEv4l+nAq+dWj8QoliUth//O47vOEzwd49fv99H0a9mO8bbCuLrL
+ pRiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPX8VMFONYNB+96AaKqaMC261r/PXMcoBAiMcpvYwDmvgLakIQQ3XFG2SE7+w/X1hrMan/iva4Vylp@nongnu.org
-X-Gm-Message-State: AOJu0YzdGnmAGZ5o3+oaICH4qffDU81BjD9SPptLWkSwqp807EHOzWh6
- Uxvj+Fz1QqUK4GuNk/jGe7YxJ4Qrpyrs+WdWzB4SoShCeeQBgtML4gu2Z0KblXhapkSWFqs3MjF
- /12bGOSqIvUWDo4/nS+VopwsPjBk=
-X-Google-Smtp-Source: AGHT+IGn5MNfoFDOZl2Rwoy0cxQpc3V8Y6VDXLmAvVaBSpunNwEmELCPqrNI7y992GZfFtbf21+wtCuVqenclU0HVVM=
-X-Received: by 2002:a05:6102:292b:b0:493:b9ae:31ea with SMTP id
- ada2fe7eead31-49ba89b532emr5412070137.6.1725396483400; Tue, 03 Sep 2024
- 13:48:03 -0700 (PDT)
+ AJvYcCU+ZwjYFaGBtZxqxNQ2MzK1bi4HMVPL3UAD8Yo9B4fMI4ZZPYmH0YxmlyvhnhWOGwueGErhjiii7lKh@nongnu.org,
+ AJvYcCV4hLdFJ42zyR1rfIcFJ8rYGz3zG/gqAi+IuS8T/VXsHJgB7D9SzBc3RqjLPyl49QtTcCRVr4J2hWCW1g==@nongnu.org
+X-Gm-Message-State: AOJu0YzIDECLWqXF86GPjWnHoQz3V4kFe+RTKK3FL4fNGM5oWihjY6xZ
+ NfPayZl8xWnOEwUVuFmZctWUYMOHyMZgsK/Tu1Lc0mVcYd5MOYlP
+X-Google-Smtp-Source: AGHT+IH9h6yiS/YKyJdLYJsAgY5ehXDKH0SZfxEcH/yujmhdf6IAFsFyFeH9yoNIUk0u+Flu+43/Sg==
+X-Received: by 2002:a17:902:d2c2:b0:202:3324:68bd with SMTP id
+ d9443c01a7336-2054c248f61mr108409115ad.43.1725396578549; 
+ Tue, 03 Sep 2024 13:49:38 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-206aea67fc8sm2345535ad.269.2024.09.03.13.49.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Sep 2024 13:49:37 -0700 (PDT)
+Message-ID: <ac3df79a-edc1-44bb-9981-09142dcff44c@roeck-us.net>
+Date: Tue, 3 Sep 2024 13:49:36 -0700
 MIME-Version: 1.0
-References: <20240822150849.21759-1-dorjoychy111@gmail.com>
- <20240822150849.21759-6-dorjoychy111@gmail.com>
- <20240828122221-mutt-send-email-mst@kernel.org>
- <CAFfO_h5URpD4qnC5Cqh9tG49ijzRGpWqezdPDeaSMAOHnzFF9g@mail.gmail.com>
- <20240828151005-mutt-send-email-mst@kernel.org>
- <CAFfO_h66g138yVwufKY_C22Aiu8XctzyyjqsBYM4wdYN77JLuQ@mail.gmail.com>
- <20240903162013-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240903162013-mutt-send-email-mst@kernel.org>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Wed, 4 Sep 2024 02:47:51 +0600
-Message-ID: <CAFfO_h4B6jt7QvBBk-Axf9btCm6sg8hao_o+Q_4+X=+86H6Pcw@mail.gmail.com>
-Subject: Re: [PATCH v5 5/8] device/virtio-nsm: Support for Nitro Secure Module
- device
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, stefanha@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, 
- slp@redhat.com, Richard Henderson <richard.henderson@linaro.org>,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000007d6bfb06213d2c6b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=dorjoychy111@gmail.com; helo=mail-vs1-xe2b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/sd: Remove legacy sd_set_cb()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
+ Bin Meng <bmeng.cn@gmail.com>
+References: <20240903200446.25921-1-philmd@linaro.org>
+ <20240903200446.25921-2-philmd@linaro.org>
+ <4965aeea-4e19-47a3-b330-6caa5994f40c@linaro.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <4965aeea-4e19-47a3-b330-6caa5994f40c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=groeck7@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,321 +148,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007d6bfb06213d2c6b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 9/3/24 13:10, Philippe Mathieu-Daudé wrote:
+> (Cc'ing Guenter who asked to keep the SX1 machine)
+> 
+> On 3/9/24 22:04, Philippe Mathieu-Daudé wrote:
+>> sd_set_cb() was only used by omap2_mmc_init() which
+>> got recently removed. Time to remove it. For historical
+>> background on the me_no_qdev_me_kill_mammoth_with_rocks
+>> kludge, see commit 007d1dbf72 ("sd: Hide the qdev-but-not-quite
+>> thing created by sd_init()").
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/sd/sdcard_legacy.h |  1 -
+>>   hw/sd/sd.c                    | 30 ++++--------------------------
+>>   2 files changed, 4 insertions(+), 27 deletions(-)
+>>
+>> diff --git a/include/hw/sd/sdcard_legacy.h b/include/hw/sd/sdcard_legacy.h
+>> index 0dc3889555..a121232560 100644
+>> --- a/include/hw/sd/sdcard_legacy.h
+>> +++ b/include/hw/sd/sdcard_legacy.h
+>> @@ -36,7 +36,6 @@ SDState *sd_init(BlockBackend *blk, bool is_spi);
+>>   int sd_do_command(SDState *card, SDRequest *request, uint8_t *response);
+>>   void sd_write_byte(SDState *card, uint8_t value);
+>>   uint8_t sd_read_byte(SDState *card);
+>> -void sd_set_cb(SDState *card, qemu_irq readonly, qemu_irq insert);
+>>   /* sd_enable should not be used -- it is only used on the nseries boards,
+>>    * where it is part of a broken implementation of the MMC card slot switch
+>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+>> index a140a32ccd..8a30c61ce0 100644
+>> --- a/hw/sd/sd.c
+>> +++ b/hw/sd/sd.c
+>> @@ -112,10 +112,6 @@ typedef struct SDProto {
+>>   struct SDState {
+>>       DeviceState parent_obj;
+>> -    /* If true, created by sd_init() for a non-qdevified caller */
+>> -    /* TODO purge them with fire */
+>> -    bool me_no_qdev_me_kill_mammoth_with_rocks;
+>> -
+>>       /* SD Memory Card Registers */
+>>       uint32_t ocr;
+>>       uint8_t scr[8];
+>> @@ -169,8 +165,6 @@ struct SDState {
+>>       uint32_t data_offset;
+>>       size_t data_size;
+>>       uint8_t data[512];
+>> -    qemu_irq readonly_cb;
+>> -    qemu_irq inserted_cb;
+>>       QEMUTimer *ocr_power_timer;
+>>       bool enable;
+>>       uint8_t dat_lines;
+>> @@ -889,17 +883,10 @@ static void sd_cardchange(void *opaque, bool load, Error **errp)
+>>           trace_sdcard_ejected();
+>>       }
+>> -    if (sd->me_no_qdev_me_kill_mammoth_with_rocks) {
+>> -        qemu_set_irq(sd->inserted_cb, inserted);
+>> -        if (inserted) {
+>> -            qemu_set_irq(sd->readonly_cb, readonly);
+>> -        }
+>> -    } else {
+>> -        sdbus = SD_BUS(qdev_get_parent_bus(dev));
+>> -        sdbus_set_inserted(sdbus, inserted);
+>> -        if (inserted) {
+>> -            sdbus_set_readonly(sdbus, readonly);
+>> -        }
+>> +    sdbus = SD_BUS(qdev_get_parent_bus(dev));
+> 
+> Guenter, we don't have SX1 tests. I wonder if this call could
+> fire an assertion. Do you have test images I can use? I'd need
+> to eject/reinsert a card to get there.
+> 
 
-On Wed, Sep 4, 2024, 2:32 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+Have a look into
+https://github.com/groeck/linux-build-test/tree/master/rootfs/arm
 
-> On Wed, Sep 04, 2024 at 01:58:15AM +0600, Dorjoy Chowdhury wrote:
-> > On Thu, Aug 29, 2024 at 1:11=E2=80=AFAM Michael S. Tsirkin <mst@redhat.=
-com>
-> wrote:
-> > >
-> > > On Thu, Aug 29, 2024 at 01:04:05AM +0600, Dorjoy Chowdhury wrote:
-> > > > On Thu, Aug 29, 2024 at 12:28=E2=80=AFAM Michael S. Tsirkin <mst@re=
-dhat.com>
-> wrote:
-> > > > >
-> > > > > On Thu, Aug 22, 2024 at 09:08:46PM +0600, Dorjoy Chowdhury wrote:
-> > > > > > Nitro Secure Module (NSM)[1] device is used in AWS Nitro
-> Enclaves[2]
-> > > > > > for stripped down TPM functionality like cryptographic
-> attestation.
-> > > > > > The requests to and responses from NSM device are CBOR[3]
-> encoded.
-> > > > > >
-> > > > > > This commit adds support for NSM device in QEMU. Although
-> related to
-> > > > > > AWS Nitro Enclaves, the virito-nsm device is independent and ca=
-n
-> be
-> > > > > > used in other machine types as well. The libcbor[4] library has
-> been
-> > > > > > used for the CBOR encoding and decoding functionalities.
-> > > > > >
-> > > > > > [1]
-> https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
-> > > > > > [2]
-> https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-> > > > > > [3] http://cbor.io/
-> > > > > > [4] https://libcbor.readthedocs.io/en/latest/
-> > > > > >
-> > > > > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > > > > > ---
-> > > > > >  MAINTAINERS                      |   10 +
-> > > > > >  hw/virtio/Kconfig                |    5 +
-> > > > > >  hw/virtio/cbor-helpers.c         |  326 ++++++
-> > > > > >  hw/virtio/meson.build            |    6 +
-> > > > > >  hw/virtio/virtio-nsm-pci.c       |   73 ++
-> > > > > >  hw/virtio/virtio-nsm.c           | 1638
-> ++++++++++++++++++++++++++++++
-> > > > > >  include/hw/virtio/cbor-helpers.h |   46 +
-> > > > > >  include/hw/virtio/virtio-nsm.h   |   59 ++
-> > > > > >  meson.build                      |    2 +
-> > > > > >  9 files changed, 2165 insertions(+)
-> > > >
-> > > > [...]
-> > > >
-> > > > > > +static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
-> > > > > > +{
-> > > > > > +    g_autofree VirtQueueElement *out_elem =3D NULL;
-> > > > > > +    g_autofree VirtQueueElement *in_elem =3D NULL;
-> > > > > > +    VirtIONSM *vnsm =3D VIRTIO_NSM(vdev);
-> > > > > > +    Error *err =3D NULL;
-> > > > > > +
-> > > > > > +    out_elem =3D virtqueue_pop(vq, sizeof(VirtQueueElement));
-> > > > > > +    if (!out_elem) {
-> > > > > > +        /* nothing in virtqueue */
-> > > > > > +        return;
-> > > > > > +    }
-> > > > > > +
-> > > > > > +    if (out_elem->out_num !=3D 1) {
-> > > > > > +        virtio_error(vdev, "Expected one request buffer first
-> in virtqueue");
-> > > > > > +        goto cleanup;
-> > > > > > +    }
-> > > > >
-> > > > > Seems to assume request in a single s/g element?
-> > > > > We generally avoid this kind of thing.
-> > > > >
-> > > > > Applies equally elsewheree.
-> > > > >
-> > > >
-> > > > Thank you for reviewing. I think I did it this way (first
-> virqueue_pop
-> > > > gives out_elem with out_num =3D=3D 1 and the next virtqueue_pop giv=
-es
-> > > > in_elem with in_num =3D=3D 1) after seeing what the virqueue contai=
-ns
-> > > > (using printfs) when running in a VM and sending some NSM requests
-> and
-> > > > I noticed the above. Can you give me a bit more details about what
-> > > > this should be like? Is there any existing virtio device code I can
-> > > > look at for example?
-> > > > Thanks!
-> > >
-> > >
-> > > Use iov_to_buf / iov_from_buf
-> > >
-> > > there are many examples in the tree, I'd look for some recent ones.
-> > >
-> >
-> > I am a bit stuck at this and I would appreciate some help. I looked at
-> > other "iov_to_buf" and "iov_from_buf" examples in QEMU and in those I
-> > see there are known request and response "structs" associated with it.
-> > But in the case of NSM, the request and responses can be arbitrary
-> > CBOR objects i.e., no specific structs or lengths associated.
->
->
-> take whatever you want to access, move it to a buffer with iov_to_buf
-> then access the buffer.
->
-> reverse is even easier. put in a buffer, copy with iov_from_buf.
->
+rootfs-armv4*are root file systems. You'd boot those with "noreboot"
+command line argument to prevent them from rebooting automatically.
+Let me know if you need more detailed directions; if so, I can make
+a directory with everything needed.
 
-I guess I will just need to copy the iov buffer (whatever the length was in
-the out_elem's out buf) to another buffer using iov_to_buf and then pass it
-to the processing function and then copy the response to the in_elem's
-buffer using iov_from_buf, right? Wouldn't the copying be redundant in this
-case as we could just instead pass the original buffers (like the iov-s are
-passed right now) to the processing function?
+Guenter
 
-
-> > So I am
-> > not sure using "iov_to_buf" / "iov_from_buf" makes sense here.
-> > And about the request response being in a single s/g element, I think
-> > it's because of how the NSM driver is in drivers/misc/nsm.c (see
-> > nsm_sendrecv_msg_locked function)in the linux kernel tree.
->
-> yes but driver is free to change this.
-> Isn't there a spec for this device to consult?
-> Sending that to virtio tc will be needed before we add this to qemu.
->
-
-I think this is the spec for this device (also mentioned in the commit
-message of this patch)
-https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
-
-Regards,
-Dorjoy
-
---0000000000007d6bfb06213d2c6b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Wed, Sep 4, 2024, 2:32 AM Michael S. Tsirkin &lt;<a=
- href=3D"mailto:mst@redhat.com">mst@redhat.com</a>&gt; wrote:<br></div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
-cc solid;padding-left:1ex">On Wed, Sep 04, 2024 at 01:58:15AM +0600, Dorjoy=
- Chowdhury wrote:<br>
-&gt; On Thu, Aug 29, 2024 at 1:11=E2=80=AFAM Michael S. Tsirkin &lt;<a href=
-=3D"mailto:mst@redhat.com" target=3D"_blank" rel=3D"noreferrer">mst@redhat.=
-com</a>&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt; On Thu, Aug 29, 2024 at 01:04:05AM +0600, Dorjoy Chowdhury wrote:=
-<br>
-&gt; &gt; &gt; On Thu, Aug 29, 2024 at 12:28=E2=80=AFAM Michael S. Tsirkin =
-&lt;<a href=3D"mailto:mst@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-mst@redhat.com</a>&gt; wrote:<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; On Thu, Aug 22, 2024 at 09:08:46PM +0600, Dorjoy Chowdh=
-ury wrote:<br>
-&gt; &gt; &gt; &gt; &gt; Nitro Secure Module (NSM)[1] device is used in AWS=
- Nitro Enclaves[2]<br>
-&gt; &gt; &gt; &gt; &gt; for stripped down TPM functionality like cryptogra=
-phic attestation.<br>
-&gt; &gt; &gt; &gt; &gt; The requests to and responses from NSM device are =
-CBOR[3] encoded.<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; This commit adds support for NSM device in QEMU. A=
-lthough related to<br>
-&gt; &gt; &gt; &gt; &gt; AWS Nitro Enclaves, the virito-nsm device is indep=
-endent and can be<br>
-&gt; &gt; &gt; &gt; &gt; used in other machine types as well. The libcbor[4=
-] library has been<br>
-&gt; &gt; &gt; &gt; &gt; used for the CBOR encoding and decoding functional=
-ities.<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; [1] <a href=3D"https://lists.oasis-open.org/archiv=
-es/virtio-comment/202310/msg00387.html" rel=3D"noreferrer noreferrer" targe=
-t=3D"_blank">https://lists.oasis-open.org/archives/virtio-comment/202310/ms=
-g00387.html</a><br>
-&gt; &gt; &gt; &gt; &gt; [2] <a href=3D"https://docs.aws.amazon.com/enclave=
-s/latest/user/nitro-enclave.html" rel=3D"noreferrer noreferrer" target=3D"_=
-blank">https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html<=
-/a><br>
-&gt; &gt; &gt; &gt; &gt; [3] <a href=3D"http://cbor.io/" rel=3D"noreferrer =
-noreferrer" target=3D"_blank">http://cbor.io/</a><br>
-&gt; &gt; &gt; &gt; &gt; [4] <a href=3D"https://libcbor.readthedocs.io/en/l=
-atest/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://libcbor.rea=
-dthedocs.io/en/latest/</a><br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; Signed-off-by: Dorjoy Chowdhury &lt;<a href=3D"mai=
-lto:dorjoychy111@gmail.com" target=3D"_blank" rel=3D"noreferrer">dorjoychy1=
-11@gmail.com</a>&gt;<br>
-&gt; &gt; &gt; &gt; &gt; ---<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A010 +<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 5 +<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/cbor-helpers.c=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0|=C2=A0 326 ++++++<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/meson.build=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 6 +<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/virtio-nsm-pci.c=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0|=C2=A0 =C2=A073 ++<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/virtio-nsm.c=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0| 1638 ++++++++++++++++++++++++++++++<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 include/hw/virtio/cbor-helpers.h |=C2=A0 =C2=
-=A046 +<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 include/hw/virtio/virtio-nsm.h=C2=A0 =C2=A0|=
-=C2=A0 =C2=A059 ++<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 2 +<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 9 files changed, 2165 insertions(+)<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; [...]<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; +static void handle_input(VirtIODevice *vdev, Virt=
-Queue *vq)<br>
-&gt; &gt; &gt; &gt; &gt; +{<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 g_autofree VirtQueueElement *out_el=
-em =3D NULL;<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 g_autofree VirtQueueElement *in_ele=
-m =3D NULL;<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 VirtIONSM *vnsm =3D VIRTIO_NSM(vdev=
-);<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 Error *err =3D NULL;<br>
-&gt; &gt; &gt; &gt; &gt; +<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 out_elem =3D virtqueue_pop(vq, size=
-of(VirtQueueElement));<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 if (!out_elem) {<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* nothing in virtque=
-ue */<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt; &gt; +<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 if (out_elem-&gt;out_num !=3D 1) {<=
-br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 virtio_error(vdev, &q=
-uot;Expected one request buffer first in virtqueue&quot;);<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto cleanup;<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; Seems to assume request in a single s/g element?<br>
-&gt; &gt; &gt; &gt; We generally avoid this kind of thing.<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; Applies equally elsewheree.<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Thank you for reviewing. I think I did it this way (first vi=
-rqueue_pop<br>
-&gt; &gt; &gt; gives out_elem with out_num =3D=3D 1 and the next virtqueue_=
-pop gives<br>
-&gt; &gt; &gt; in_elem with in_num =3D=3D 1) after seeing what the virqueue=
- contains<br>
-&gt; &gt; &gt; (using printfs) when running in a VM and sending some NSM re=
-quests and<br>
-&gt; &gt; &gt; I noticed the above. Can you give me a bit more details abou=
-t what<br>
-&gt; &gt; &gt; this should be like? Is there any existing virtio device cod=
-e I can<br>
-&gt; &gt; &gt; look at for example?<br>
-&gt; &gt; &gt; Thanks!<br>
-&gt; &gt;<br>
-&gt; &gt;<br>
-&gt; &gt; Use iov_to_buf / iov_from_buf<br>
-&gt; &gt;<br>
-&gt; &gt; there are many examples in the tree, I&#39;d look for some recent=
- ones.<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; I am a bit stuck at this and I would appreciate some help. I looked at=
-<br>
-&gt; other &quot;iov_to_buf&quot; and &quot;iov_from_buf&quot; examples in =
-QEMU and in those I<br>
-&gt; see there are known request and response &quot;structs&quot; associate=
-d with it.<br>
-&gt; But in the case of NSM, the request and responses can be arbitrary<br>
-&gt; CBOR objects i.e., no specific structs or lengths associated.<br>
-<br>
-<br>
-take whatever you want to access, move it to a buffer with iov_to_buf<br>
-then access the buffer.<br>
-<br>
-reverse is even easier. put in a buffer, copy with iov_from_buf.<br></block=
-quote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I guess I w=
-ill just need to copy the iov buffer (whatever the length was in the out_el=
-em&#39;s out buf) to another buffer using iov_to_buf and then pass it to th=
-e processing function and then copy the response to the in_elem&#39;s buffe=
-r using iov_from_buf, right? Wouldn&#39;t the copying be redundant in this =
-case as we could just instead pass the original buffers (like the iov-s are=
- passed right now) to the processing function?</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left=
-:1ex">
-<br>
-&gt; So I am<br>
-&gt; not sure using &quot;iov_to_buf&quot; / &quot;iov_from_buf&quot; makes=
- sense here.<br>
-&gt; And about the request response being in a single s/g element, I think<=
-br>
-&gt; it&#39;s because of how the NSM driver is in drivers/misc/nsm.c (see<b=
-r>
-&gt; nsm_sendrecv_msg_locked function)in the linux kernel tree.<br>
-<br>
-yes but driver is free to change this.<br>
-Isn&#39;t there a spec for this device to consult?<br>
-Sending that to virtio tc will be needed before we add this to qemu.<br></b=
-lockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I think=
- this is the spec for this device (also mentioned in the commit message of =
-this patch)=C2=A0</div><div dir=3D"auto"><a href=3D"https://lists.oasis-ope=
-n.org/archives/virtio-comment/202310/msg00387.html">https://lists.oasis-ope=
-n.org/archives/virtio-comment/202310/msg00387.html</a></div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto">Regards,</div><div dir=3D"auto">Dorjoy</div>=
-</div>
-
---0000000000007d6bfb06213d2c6b--
 
