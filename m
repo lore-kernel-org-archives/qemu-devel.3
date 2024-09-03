@@ -4,68 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F48EC54FC6
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 01:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C3BC54FC6
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 02:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slIQm-00020N-Ti; Mon, 02 Sep 2024 21:34:05 -0400
+	id 1slJGY-00025H-HC; Mon, 02 Sep 2024 22:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <carl.hauser@gmail.com>)
- id 1slIQk-0001yy-HU
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 21:34:02 -0400
-Received: from mail-pj1-f51.google.com ([209.85.216.51])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <carl.hauser@gmail.com>)
- id 1slIQg-0001FC-VX
- for qemu-devel@nongnu.org; Mon, 02 Sep 2024 21:34:02 -0400
-Received: by mail-pj1-f51.google.com with SMTP id
- 98e67ed59e1d1-2d88edf1340so1587413a91.1
- for <qemu-devel@nongnu.org>; Mon, 02 Sep 2024 18:33:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725327237; x=1725932037;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SQrjnHF3llA+2jPX+2p1rx8s/XVRy3e5LuL2DQAPqog=;
- b=nLHkp9ynq/m2YOuorsbcNwFk18hWEGtAvrTGg1ioVnTz1Q9+v+ZTHbcDO66fhR1zrJ
- Upj4lyKQwXuZLsnmVZwXC+sjvbjeVWnuOU1MbbN1itJ8vCOZnx1orPm8U3SkD/eySdSW
- PxtOfPquY6gV1mgcAZWji8QL74APvVlLetmiMunjH+iYmAiMpkS+2rVGBTe3o8deOBCS
- 5HyA8eXdWJC/TSuwAHQu/r8Ga8htvvCRp6y2VQ+/ETOpkHpVJJareh4BcnmIZFEv6CnG
- 8r6g4KniJlsHZTTNCXa7MQ22c0D/Z7ZHIAjP3Xiw9BUjXAHS9jFFZfxSBzL926EnwXB1
- 09JA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1C1WqxISldeBTCAHjy2MnR8Yeo/S2AhrZd+fFDgE2kJMkAUxewfaX9vSe7+SU3y65+8yMQJ4iig/5@nongnu.org
-X-Gm-Message-State: AOJu0YwAnF2NagfEz/qgCzisZLqbdxrU3Saz3rsOccXVXi1zAVAHQibj
- vQzVJadEnZC1DtE7b0zzGL1KwcYGsPC7skXGdgU/cj3HDfEwqK63rNH9htJJNuuLUBVjAWp44eV
- JZMWZy4NOoznZF9/1emCSbkM0wfo=
-X-Google-Smtp-Source: AGHT+IHTOCMFygJYEm1C3lelnlSHvqaqGp2+WjcTYD6M1gUFdRZfPd5BlJk+/oGQe4zvLAiGDmxHu8YS5Ab5EYBhx/o=
-X-Received: by 2002:a17:90a:ba94:b0:2d8:cd04:c8f0 with SMTP id
- 98e67ed59e1d1-2da55a78cb0mr1724885a91.39.1725327237238; Mon, 02 Sep 2024
- 18:33:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1slJGV-00024D-Ui; Mon, 02 Sep 2024 22:27:31 -0400
+Received: from mail-psaapc01on20707.outbound.protection.outlook.com
+ ([2a01:111:f400:feae::707]
+ helo=APC01-PSA-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1slJGT-0006oB-6f; Mon, 02 Sep 2024 22:27:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j7ztyMf4MZztIsj3KUMgD6djDsOJBIdzc/nMtEfcidis+cC0Cz602+eVFiOqlvbx9/IuI4z4dE8FnDBa4a5j0pNhxSufqApAKERCQFbbjdW6kM7ijpI7qV9JDf3VlZwv+r7lWRQhkg2hRwYLdp9hfcK3Q8AT89S03ipOcHUVlviCGMWD4pNedF2IL20Shr3IhjBWYJTw+TH9NI1acKg+XmWGDKVo1hVjGtKKNa52/PdW/M8HCIwJuj8T/uJlk6wYIYIrWUm+kTCR2SNZq0uPBMcPWrSVX3Tyv3yy3EvVK1ZMM0fKdT1m5wXGkqJOzNXyiZaXQu7AOzE3ShhlxGN06Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GEHODvyV1uD37XP6BStr8NLZM+7QxBAPhl1QAK1BtxM=;
+ b=CAkxvqjCmZoWnOXWLYI9RbGAKxijuWgPNZ27pMl3FIZQe/OkNTExJN50E2jYGOnpCkQjeSf84DRm/S+SlJZ5HZ6kp/JAA/dhg52Pr304+bI98KrxbwPibv+PqocpkgfRjEy+weTPqoj+3fr77silwHHuhctE+tXy0jZTyLbxAvHiSuvU7QbC0WmGRiCvWrzJlmDbEx0reV4zxxYnwsYLspZ0a8gR4YveBkmvAh8GBAQeXdoeRiqARADMNs7PzsXesIN+RqxMnMzDXu9E8bpgs5cJthSyIi7514rORe4eyXwda6Yzh1i2Qyj1WPUT2m0SxSJkG4vGP80XA3INsrwWIQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GEHODvyV1uD37XP6BStr8NLZM+7QxBAPhl1QAK1BtxM=;
+ b=XUW2FWLPjzDLPU0wkBlICosf7EKIgf9dmIM1Mqn10xW71arLfoOgSQhoJhr19D62tbfBRJ1dDhoVz4C8lABpr0sS+BIUlTATRIUBHR1EDHbHqsPEUnftOdwd7XnShGwbshHK0gSXPpaAFQPl24RN9rKE+tj1amzahnu1RE2OVaiE8eR/HLEFY8NnECmES/rcRPBNxWIHWqCaNgNOncayOkYccOuo3E47zjH5LPtGRhNevIchgYn6GsDH8ZGyIezCvmnLxXJpNYz/+1YHfOw0PYShdwu6ZLaZv4qSelR6h+VrC2GQIrz6p7lbpMBV9s5VWE8inQDQ5Rxu+Gqm8KI30A==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ SI2PR06MB5089.apcprd06.prod.outlook.com (2603:1096:4:1a8::13) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7918.23; Tue, 3 Sep 2024 02:27:15 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.7918.020; Tue, 3 Sep 2024
+ 02:27:15 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, Cleber Rosa <crosa@redhat.com>,
+ =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Wainer dos
+ Santos Moschetta <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
+ here" <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
+ <yunlin.tang@aspeedtech.com>
+Subject: RE: [PATCH v2 04/11] hw/i2c/aspeed: introduce a new dma_dram_offset
+ attribute in AspeedI2Cbus
+Thread-Topic: [PATCH v2 04/11] hw/i2c/aspeed: introduce a new dma_dram_offset
+ attribute in AspeedI2Cbus
+Thread-Index: AQHa6T2XRZgGZEVrw0SzwF7AD4cswrJEo7eAgADabEA=
+Date: Tue, 3 Sep 2024 02:27:15 +0000
+Message-ID: <SI2PR06MB5041505FFC36C3F6013D5476FC932@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
+ <20240808024916.1262715-5-jamin_lin@aspeedtech.com>
+ <96b40e88-fefd-4149-b5b7-d0db65616690@kaod.org>
+In-Reply-To: <96b40e88-fefd-4149-b5b7-d0db65616690@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SI2PR06MB5089:EE_
+x-ms-office365-filtering-correlation-id: 56800c8f-4351-41ee-eb2a-08dccbbfed06
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|7416014|376014|38070700018|921020; 
+x-microsoft-antispam-message-info: =?utf-8?B?dlhsZWZQQk05MVprZVpMZ2Fja01JeUkxbEg1Q3NjYnVzN01ITmpYdXdXaEI5?=
+ =?utf-8?B?WGZ1WEdzaTVyYnJmUmU4MmsrdG1iS0lFSzhRZ2RqeWFXQmRLNkkySHpCV0pI?=
+ =?utf-8?B?Y0Z0RDI4SE4yWld3WWh0RCtnYlplRFJlN2ZUaXhVTWI4MXFOc1Nlc3BsZEhO?=
+ =?utf-8?B?ZUhFeDF1L0VrUUZGTUppVjhENXJuWDgvMm5ndm5HdkNTZC8xVDRTb2pLY291?=
+ =?utf-8?B?MHYxa3BTamVzRm1YRTBuMHA5cy9MaTR2WmttUmdJcjd2VFh3SmNwcHdrUDEr?=
+ =?utf-8?B?aGVFb3h3c0JiblE3OXkxeXkvWFdSYzF1QmRCbXlWMTRBODF3c3owN3hDeHp1?=
+ =?utf-8?B?bm4rTkFyQzR0MzJSVDJNY1N5RnVucjF5dFpUN0dQRFNqRXhpSVV6d3JpMEZH?=
+ =?utf-8?B?dE9oVTE5ZVVBME8xREFydXFkT2RrK0hTL3ZpT1hmdG5jZExGT3NZanRYdEcy?=
+ =?utf-8?B?OFlRRTFhVWhDN25RSE9iUDZOQUE4ak5IL3ZrUTM3bUdJakF5RlBSR1M0WUxS?=
+ =?utf-8?B?OElqQW90Q09yTnFCMjdTSzU5MWw4Q1RIV2xDSExpWXNXVTg4aHNuMzlDc3V5?=
+ =?utf-8?B?SnhtQkNxQXFZSXlxNnVSL01NL0x0QTM2VTk2bDY1SG1FMFhDYmNUV3hUdUQ5?=
+ =?utf-8?B?UmVVMWRxUzNqVWg2UHJCTi9zQmhTaTQ0Q01JUGV6UkdTUGZyaXpqSlBFOGxW?=
+ =?utf-8?B?Ukp6TGQxSTlkbVI1UW9ydEhVeUNNZE1DRjBqWVgvZWVLMGtqOC9kUk9SbVp4?=
+ =?utf-8?B?NkxMU1RXV0FzZFd6T0N4di9USlViSzB2aEkwY3A0UUZjd1RFZmlhRGs3SEdl?=
+ =?utf-8?B?QnZuSSs1NUwrSjl5ZWJwaEZVT0lWQzhXZVJ0d2xyLzhlaUh0RWhFSks5MDhj?=
+ =?utf-8?B?aVA2ckFMcGRmaGtvRWRudnNwbDRIQmJWd1g1bGFaQXF6dHRPcm9mWS9rU3pT?=
+ =?utf-8?B?eUQrTlVIK2wrbXN1Mzg0TW5JZmg3OHRNTXhsM1ErS0JMdlVIc2VkVnBRejV3?=
+ =?utf-8?B?SGlzRFl5OWVMVlNseEg5a3ZMRFdtem9EOXZwZlhBb2gyMGdLTEVmVHNDMURN?=
+ =?utf-8?B?Nk95SEZTQ0dTeEpNWGtodHVNbXpPK2FDd0FJODNITnR0TkZDU1VpUTk5Vnc3?=
+ =?utf-8?B?RmRDVlA3MWJHZEdZREVPRGk5RkNqSUZQbUVOOTAzVCtEVXlNWVVDSTZDS2w3?=
+ =?utf-8?B?Q1hzaTVUMnlLenZFN0xFS28yK0V1UVlaZkRMRjBDWXJSRlFnWk1Ua3JpMHpr?=
+ =?utf-8?B?SEltTWgyd3BxdWkvcFQ1Zng2SERlMzkwcUo0eldtV3dhdE1pR2s0Nml6VDFZ?=
+ =?utf-8?B?WkIrN3pxNlhMYTVjZlRaY0M3encwQWg5Q0xFY1Vib0R1Z1RhTkpCcFNvMjV6?=
+ =?utf-8?B?NVlhSk81aFl0dmZIQnc0eFVVM1l4bEo4UU9TbVpSSURBNnJuem4yWS9xUG0v?=
+ =?utf-8?B?UkxFdkQzTW1YeWd5R0N5azVKeGZTT1l6MUxmTjA0MXJ1Y2lDVElaYTJmbERZ?=
+ =?utf-8?B?d3hveWVHbThXTGNzVFQzdkRFQ3hrc0Zxd0NWSXhSOTRsYVcweC9ZRm1NK2Fs?=
+ =?utf-8?B?MTBFcEdHWEI5Ry9TZWRPUlVNQldBWjR1T3VUeWErUGVOT1pHaklSaHYvS2gx?=
+ =?utf-8?B?T1BhRlhQbys2TjRETTBQWEgxNHU1MnB2RzBlb3EvcEhYb0lxa0RTM0tsb0FD?=
+ =?utf-8?B?YXRkUUI2Q05QZCtlV0g1TWR1NnpkOWhDWFVSTnJuUWJMcVZjb3ZaeXErQ3d3?=
+ =?utf-8?B?dlRaSUVFbkpHV0Y1MmhwNWpsMDBJMHlJTlFZbUZFRExJQ0V2bitpTndlZW9x?=
+ =?utf-8?B?ZmJSKzAzRnNxYjlQWUw1V0kwM0hTVjdadmhBcWkzTFpvOWlCUFh4cGhXckxJ?=
+ =?utf-8?B?K25mWXpKc1VtRW95bVNpS1lCZ3BvbVJaZExyT1QrNTZ2Y0F6UHVsek5NTjJa?=
+ =?utf-8?Q?uX3QWG86hIY=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700018)(921020);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RVZEbCtFUndPNTI5eFZvRUFNakdESGhQTkdDbHptODNiaXBSb2Y2bXFpa1dw?=
+ =?utf-8?B?L2g0ZDd4R2ZPbzFXZEFDWHFLYWgxQzg4cm5xWTlzYWE0OHZ6NmE0OUJBMlFC?=
+ =?utf-8?B?YkQxcjFUK21FWkFLUDJzUDRkWStXZFpDamlRYzRNTzVYaFVZdm51aGtBaU5U?=
+ =?utf-8?B?WEQrZ1BTVmowR2gwZjZpVVE0b2wxOU1RazdNc2NheUNXVzBEeWk4MFZRSnZ3?=
+ =?utf-8?B?SDdVdk8vaG94NnNycE5DYzBUbzNaUGM4U21EdnRjRytpMkxyZHRVdUdNRWxW?=
+ =?utf-8?B?UWhLaGR5WjFCSDQ1TU45ZWp4NEhXTXR1N0xqTXd6UlBKUzRjNVlKeWhIdWdH?=
+ =?utf-8?B?KzlTTFQwanhOd3o1SDFpRUh6ZFgyaVBoNmpHVjJJY0JxOXBzeVFLdm5saDlX?=
+ =?utf-8?B?UVZOREI0d1dQQjR4bmkzVnZOZ2s4M0JmTldYOEw2ejJzNlpTaXRNSzBVSFU3?=
+ =?utf-8?B?aG0wT2Y1SG9lYitJZ3BRYVhSMTh6RVhUVUlVbTRDckM1TVprY0tvZFVCQzc4?=
+ =?utf-8?B?eVJwSGhSOUNHZ3pSZUc3K1FrVkVBS0F2THphbkpJanB6bjhlLzMwU082cnAx?=
+ =?utf-8?B?YmtCejI3dUFtcTRZNkRXSVNXY1YyMm12SDA5WERsSGk3ZnRoVFlvcXVZT0R6?=
+ =?utf-8?B?TFlhTlJidkRKM1FnRFpCME5renR5Nk0yZHZzQkdKY3hBdURUeG55TWZ2ak9j?=
+ =?utf-8?B?L0srUkgvWVRTVVovZy9wbTZKeURJaUF3cUw1UnlMUENGa0pFMTZBRHhCNmlV?=
+ =?utf-8?B?RVdZS0RUQmd3TGhUbHoyZC9FWlJ6WW51WUJyTnlPVHZQZE5iTjIwZ2lqMDMw?=
+ =?utf-8?B?aGF6c1hQR2pDcnJwZmlzbHFxSC9vRWRpc2FQcCsrSXNha3pxMmxHNHJnSG93?=
+ =?utf-8?B?RU9SNnBBSWxLLzRGWFh5WUI4MnNMUlFoWlAybnZjMWFlRDNWZDlvWlJhNWZ6?=
+ =?utf-8?B?ZGxSSzJhZW04MlRLaXVrZGRHbEZkNzBKRVlWRGRrdkhqQ2J3MVU1RTNEUmZN?=
+ =?utf-8?B?eTJQMnZDUkgrc01PcS9iRjA5QzV3V3gvdk5mbmMrNmJMQ0c0dmwrM21BeURr?=
+ =?utf-8?B?SGRISUF4cjJxNVdRalVRM1BwaDZUV3ROYzNjTXZnV01hcVlvOWhWODBNUEps?=
+ =?utf-8?B?ZW5CVTU0M0JFeXoxWmI4RjRnN0kzYTVjYUF0MjdDUVpLY0poMlV0a25UYzYz?=
+ =?utf-8?B?OTZMZ2IyRU81bFljdGtiNVZpZVRudjJrOVBjSmZpeG5PT1VuQ2d5RERLMFJj?=
+ =?utf-8?B?VjM0UVZvVHU3b1Nza2ZpSEJoT1IvaTJneWhUTEFEVExpSGE1ZDQzSUw1eTZ6?=
+ =?utf-8?B?Yyt0cnR1NERXenRpR2thVFRPcGxRc0Y3elIxRkE0R3BJY3N4dzJDSHVkWEkw?=
+ =?utf-8?B?M1BBSS9PYmFoM3lMN1Q1Nk02SXJzeFpDMEU2cW9DanNnYmozY1d3SHhpNHhC?=
+ =?utf-8?B?MzBIQzVBOTNmL01ZR1VzZ0Z2OVR5VmpPcnhzTi93a1YyeURYK2RkZnJtKzVp?=
+ =?utf-8?B?QTcvZ0dJUlZmL1RnUGJoNEJKak5XbDRpTkVZQTV3VEZwOVR4ajUyWGxmRXZq?=
+ =?utf-8?B?L2pBOXQvU3gvZVBmZWY4OEJOUTVEUmRwS2xVdE9aRi8xZzEybkRYTDJFZ0d4?=
+ =?utf-8?B?K3hWeTJVMlRuMGI5dXFNWUVjWmxtTElMa1FiSDJ0T2k1aXQxNTNuaHREQmV0?=
+ =?utf-8?B?N1F3S3k1LzNOM1JrRE9uNHk5UzljYmRwc2tUY0JtL1VRZ2JvQituK3FBMDg0?=
+ =?utf-8?B?dnMzelhCZHU3UFAwZlBnVnFRcEtaUU0rdy85cGY4RjBlZjZCcmlaTFNQMGY3?=
+ =?utf-8?B?Mk1Xcmw3Zks4Z0pzeGdYUG9SRUgyNlJaVnpPKy91eTlRT1RrUDYvelFaUmpP?=
+ =?utf-8?B?S0Z5STN3KzNhWTVYS0MyQWthVHQ2TUk1V1pDbHNnYVBJczhHYXJQSURiYmdY?=
+ =?utf-8?B?cklzNTJGazNYNmhjYWVYblNMVXhVQVhRL0JxZ2d1U1R4N2ZkdTNxeEFHSWxl?=
+ =?utf-8?B?Q1pWMng2OFlHa0E4MUZUaWZxSHNXMXd6VWhIZDZMUGVzQnZ4MW5tV0x3eGpy?=
+ =?utf-8?B?dS85SjEwUGhhdHFaSlJsaUFqeEREUVF2SGgvSXJRbDJEZlM0UUFlandQVVlI?=
+ =?utf-8?Q?5w9MHAmpvS2BsMDfUTam2wfh8?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20240902213816.89071-1-mark.cave-ayland@ilande.co.uk>
- <CABJXFgUxPWkbynMWZW_i20KDSetu1ucWWMFha7vk5+=GE9_vYA@mail.gmail.com>
-In-Reply-To: <CABJXFgUxPWkbynMWZW_i20KDSetu1ucWWMFha7vk5+=GE9_vYA@mail.gmail.com>
-Date: Mon, 2 Sep 2024 18:33:45 -0700
-Message-ID: <CABJXFgWEL0M+1UuyTX6UajwMMzLjhKD+qBkTDG20BudakKPcmw@mail.gmail.com>
-Subject: Re: [PATCH] escc: convert Sun mouse to use QemuInputHandler
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000018e1ed06212d0d0b"
-Received-SPF: pass client-ip=209.85.216.51; envelope-from=carl.hauser@gmail.com;
- helo=mail-pj1-f51.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 56800c8f-4351-41ee-eb2a-08dccbbfed06
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2024 02:27:15.5141 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vL87hB3he7aFpFqAhkMgNtEZJ+w2EVAzya26hUICBHSeuyF7CDP7XlMFnO7WTez2N9iK6P13xNtu8J89ISySqoAeI9YymujRJdMyWPa3MTM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB5089
+Received-SPF: pass client-ip=2a01:111:f400:feae::707;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=APC01-PSA-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,468 +189,196 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Carl Hauser <chauser@pullman.com>
-From:  Carl Hauser via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000018e1ed06212d0d0b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Well, I was wrong -- it is sending a duplicate mouse packets when the mouse
-wheel is rotated. The packets correctly represent the mouse buttons state.
-I just now discovered that one of my Logitech mice sends continuous mouse
-events when the wheel is rotated half a notch and held there. Another
-Logitech mouse doesn't do that but does send multiple (6-10) events per
-notch. A Microsoft mouse sends 2 events per notch.
-
-I don't know where these should be suppressed. Mouse wheel rotation of a
-host mouse shouldn't send anything to the emulated Sun mouse. I suspect
-that the unwanted host events are propagating down to escc via calls to
-sunmouse_sync. So is sunmouse_sync where they should be filtered out?
-Probably, because the calling code is not specific to sunmouse and for
-other mice those calls are needed.
-
--- Carl
-
-On Mon, Sep 2, 2024 at 4:16=E2=80=AFPM Carl Hauser <chauser@pullman.com> wr=
-ote:
-
-> This still, but less frequently, shows the behavior of having the cursor
-> leap downwards occasionally. I may not be able to work on debugging it
-> until next week, but I'll try to see if I can figure it out sooner. The
-> hypothesis with the old code was that it was sending floods of mouse
-> messages and the Sun driver was dropping a byte at some point. So that's
-> the first thing I'll look into with this new code, but it could be
-> something different. This is definitely better than the old code -- just
-> not sending anything in response to mouse wheel movement helps a lot.
->
-> On Mon, Sep 2, 2024 at 2:38=E2=80=AFPM Mark Cave-Ayland <
-> mark.cave-ayland@ilande.co.uk> wrote:
->
->> Update the Sun mouse implementation to use QemuInputHandler instead of t=
-he
->> legacy qemu_add_mouse_event_handler() function.
->>
->> Note that this conversion adds extra sunmouse_* members to
->> ESCCChannelState
->> but they are not added to the migration stream (similar to the Sun
->> keyboard
->> members). If this were desired in future, the Sun devices should be spli=
-t
->> into separate devices and added to the migration stream there instead.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
->> ---
->>  hw/char/escc.c         | 79 ++++++++++++++++++++++++++++++------------
->>  include/hw/char/escc.h |  3 ++
->>  roms/seabios           |  2 +-
->>  3 files changed, 60 insertions(+), 24 deletions(-)
->>
->> diff --git a/hw/char/escc.c b/hw/char/escc.c
->> index d450d70eda..6d4e3e3350 100644
->> --- a/hw/char/escc.c
->> +++ b/hw/char/escc.c
->> @@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
->>      s->rxint =3D s->txint =3D 0;
->>      s->rxint_under_svc =3D s->txint_under_svc =3D 0;
->>      s->e0_mode =3D s->led_mode =3D s->caps_lock_mode =3D s->num_lock_mo=
-de =3D 0;
->> +    s->sunmouse_dx =3D s->sunmouse_dy =3D s->sunmouse_buttons =3D 0;
->>      clear_queue(s);
->>  }
->>
->> @@ -952,53 +953,85 @@ static void handle_kbd_command(ESCCChannelState *s=
-,
->> int val)
->>      }
->>  }
->>
->> -static void sunmouse_event(void *opaque,
->> -                               int dx, int dy, int dz, int buttons_stat=
-e)
->> +static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
->> +                                  InputEvent *evt)
->>  {
->> -    ESCCChannelState *s =3D opaque;
->> -    int ch;
->> +    ESCCChannelState *s =3D (ESCCChannelState *)dev;
->> +    InputMoveEvent *move;
->> +    InputBtnEvent *btn;
->> +    static const int bmap[INPUT_BUTTON__MAX] =3D {
->> +        [INPUT_BUTTON_LEFT]   =3D 0x4,
->> +        [INPUT_BUTTON_MIDDLE] =3D 0x2,
->> +        [INPUT_BUTTON_RIGHT]  =3D 0x1,
->> +        [INPUT_BUTTON_SIDE]   =3D 0x0,
->> +        [INPUT_BUTTON_EXTRA]  =3D 0x0,
->> +    };
->> +
->> +    switch (evt->type) {
->> +    case INPUT_EVENT_KIND_REL:
->> +        move =3D evt->u.rel.data;
->> +        if (move->axis =3D=3D INPUT_AXIS_X) {
->> +            s->sunmouse_dx +=3D move->value;
->> +        } else if (move->axis =3D=3D INPUT_AXIS_Y) {
->> +            s->sunmouse_dy -=3D move->value;
->> +        }
->> +        break;
->>
->> -    trace_escc_sunmouse_event(dx, dy, buttons_state);
->> -    ch =3D 0x80 | 0x7; /* protocol start byte, no buttons pressed */
->> +    case INPUT_EVENT_KIND_BTN:
->> +        btn =3D evt->u.btn.data;
->> +        if (btn->down) {
->> +            s->sunmouse_buttons |=3D bmap[btn->button];
->> +        } else {
->> +            s->sunmouse_buttons &=3D ~bmap[btn->button];
->> +        }
->> +        break;
->>
->> -    if (buttons_state & MOUSE_EVENT_LBUTTON) {
->> -        ch ^=3D 0x4;
->> -    }
->> -    if (buttons_state & MOUSE_EVENT_MBUTTON) {
->> -        ch ^=3D 0x2;
->> -    }
->> -    if (buttons_state & MOUSE_EVENT_RBUTTON) {
->> -        ch ^=3D 0x1;
->> +    default:
->> +        /* keep gcc happy */
->> +        break;
->>      }
->> +}
->>
->> -    put_queue(s, ch);
->> +static void sunmouse_sync(DeviceState *dev)
->> +{
->> +    ESCCChannelState *s =3D (ESCCChannelState *)dev;
->> +    int ch;
->>
->> -    ch =3D dx;
->> +    trace_escc_sunmouse_event(s->sunmouse_dx, s->sunmouse_dy, 0);
->> +    ch =3D 0x80 | 0x7; /* protocol start byte, no buttons pressed */
->> +    ch ^=3D s->sunmouse_buttons;
->> +    put_queue(s, ch);
->>
->> +    ch =3D s->sunmouse_dx;
->>      if (ch > 127) {
->>          ch =3D 127;
->>      } else if (ch < -127) {
->>          ch =3D -127;
->>      }
->> -
->>      put_queue(s, ch & 0xff);
->> +    s->sunmouse_dx =3D 0;
->>
->> -    ch =3D -dy;
->> -
->> +    ch =3D s->sunmouse_dy;
->>      if (ch > 127) {
->>          ch =3D 127;
->>      } else if (ch < -127) {
->>          ch =3D -127;
->>      }
->> -
->>      put_queue(s, ch & 0xff);
->> +    s->sunmouse_dy =3D 0;
->>
->>      /* MSC protocol specifies two extra motion bytes */
->> -
->>      put_queue(s, 0);
->>      put_queue(s, 0);
->>  }
->>
->> +static const QemuInputHandler sunmouse_handler =3D {
->> +    .name  =3D "QEMU Sun Mouse",
->> +    .mask  =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
->> +    .event =3D sunmouse_handle_event,
->> +    .sync  =3D sunmouse_sync,
->> +};
->> +
->>  static void escc_init1(Object *obj)
->>  {
->>      ESCCState *s =3D ESCC(obj);
->> @@ -1036,8 +1069,8 @@ static void escc_realize(DeviceState *dev, Error
->> **errp)
->>      }
->>
->>      if (s->chn[0].type =3D=3D escc_mouse) {
->> -        qemu_add_mouse_event_handler(sunmouse_event, &s->chn[0], 0,
->> -                                     "QEMU Sun Mouse");
->> +        s->chn[0].hs =3D qemu_input_handler_register((DeviceState
->> *)(&s->chn[0]),
->> +                                                   &sunmouse_handler);
->>      }
->>      if (s->chn[1].type =3D=3D escc_kbd) {
->>          s->chn[1].hs =3D qemu_input_handler_register((DeviceState
->> *)(&s->chn[1]),
->> diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
->> index 5669a5b811..8c4c6a7730 100644
->> --- a/include/hw/char/escc.h
->> +++ b/include/hw/char/escc.h
->> @@ -46,6 +46,9 @@ typedef struct ESCCChannelState {
->>      uint8_t rx, tx;
->>      QemuInputHandlerState *hs;
->>      char *sunkbd_layout;
->> +    int sunmouse_dx;
->> +    int sunmouse_dy;
->> +    int sunmouse_buttons;
->>  } ESCCChannelState;
->>
->>  struct ESCCState {
->> diff --git a/roms/seabios b/roms/seabios
->> index a6ed6b701f..7d0c606870 160000
->> --- a/roms/seabios
->> +++ b/roms/seabios
->> @@ -1 +1 @@
->> -Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
->> +Subproject commit 7d0c6068703eae9f2498be0c900ab95b25b4f07a
->> --
->> 2.39.2
->>
->>
->>
-
---00000000000018e1ed06212d0d0b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Well, I was wrong -- it is sending a duplicate mouse =
-packets when the mouse wheel is rotated. The packets correctly represent th=
-e mouse buttons state. I just now discovered that one of my Logitech mice s=
-ends continuous mouse events when the wheel is rotated half a notch and hel=
-d there. Another Logitech mouse doesn&#39;t do that but does send multiple =
-(6-10) events per notch. A Microsoft mouse sends 2 events per notch.</div><=
-div><br></div><div>I don&#39;t know where these should be suppressed. Mouse=
- wheel rotation of a host mouse shouldn&#39;t send anything to the emulated=
- Sun mouse. I suspect that the unwanted host events are propagating down to=
- escc via calls to sunmouse_sync. So is sunmouse_sync where they should be =
-filtered out? Probably, because the calling code is not specific to sunmous=
-e and for other mice those calls are needed.</div><div><br></div><div>-- Ca=
-rl<br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"=
-gmail_attr">On Mon, Sep 2, 2024 at 4:16=E2=80=AFPM Carl Hauser &lt;<a href=
-=3D"mailto:chauser@pullman.com">chauser@pullman.com</a>&gt; wrote:<br></div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">This st=
-ill, but less frequently, shows the behavior of having the cursor leap down=
-wards occasionally. I may not be able to work on debugging it until next we=
-ek, but I&#39;ll try to see if I can figure it out sooner. The hypothesis w=
-ith the old code was that it was sending floods of mouse messages and the S=
-un driver was dropping a byte at some point. So that&#39;s the first thing =
-I&#39;ll look into with this new code, but it could be something different.=
- This is definitely better than the old code -- just not sending anything i=
-n response to mouse wheel movement helps a lot.<br></div><br><div class=3D"=
-gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Sep 2, 2024 at 2=
-:38=E2=80=AFPM Mark Cave-Ayland &lt;<a href=3D"mailto:mark.cave-ayland@ilan=
-de.co.uk" target=3D"_blank">mark.cave-ayland@ilande.co.uk</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex">Update the Sun mou=
-se implementation to use QemuInputHandler instead of the<br>
-legacy qemu_add_mouse_event_handler() function.<br>
-<br>
-Note that this conversion adds extra sunmouse_* members to ESCCChannelState=
-<br>
-but they are not added to the migration stream (similar to the Sun keyboard=
-<br>
-members). If this were desired in future, the Sun devices should be split<b=
-r>
-into separate devices and added to the migration stream there instead.<br>
-<br>
-Signed-off-by: Mark Cave-Ayland &lt;<a href=3D"mailto:mark.cave-ayland@ilan=
-de.co.uk" target=3D"_blank">mark.cave-ayland@ilande.co.uk</a>&gt;<br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2518" re=
-l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/i=
-ssues/2518</a><br>
----<br>
-=C2=A0hw/char/escc.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 79 ++++++++++++++++=
-++++++++++++++------------<br>
-=C2=A0include/hw/char/escc.h |=C2=A0 3 ++<br>
-=C2=A0roms/seabios=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A03 files changed, 60 insertions(+), 24 deletions(-)<br>
-<br>
-diff --git a/hw/char/escc.c b/hw/char/escc.c<br>
-index d450d70eda..6d4e3e3350 100644<br>
---- a/hw/char/escc.c<br>
-+++ b/hw/char/escc.c<br>
-@@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)<br>
-=C2=A0 =C2=A0 =C2=A0s-&gt;rxint =3D s-&gt;txint =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0s-&gt;rxint_under_svc =3D s-&gt;txint_under_svc =3D 0;<=
-br>
-=C2=A0 =C2=A0 =C2=A0s-&gt;e0_mode =3D s-&gt;led_mode =3D s-&gt;caps_lock_mo=
-de =3D s-&gt;num_lock_mode =3D 0;<br>
-+=C2=A0 =C2=A0 s-&gt;sunmouse_dx =3D s-&gt;sunmouse_dy =3D s-&gt;sunmouse_b=
-uttons =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0clear_queue(s);<br>
-=C2=A0}<br>
-<br>
-@@ -952,53 +953,85 @@ static void handle_kbd_command(ESCCChannelState *s, i=
-nt val)<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0}<br>
-<br>
--static void sunmouse_event(void *opaque,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int dx, int dy, int dz, int buttons_s=
-tate)<br>
-+static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 InputEvent *evt)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 ESCCChannelState *s =3D opaque;<br>
--=C2=A0 =C2=A0 int ch;<br>
-+=C2=A0 =C2=A0 ESCCChannelState *s =3D (ESCCChannelState *)dev;<br>
-+=C2=A0 =C2=A0 InputMoveEvent *move;<br>
-+=C2=A0 =C2=A0 InputBtnEvent *btn;<br>
-+=C2=A0 =C2=A0 static const int bmap[INPUT_BUTTON__MAX] =3D {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_LEFT]=C2=A0 =C2=A0=3D 0x4,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_MIDDLE] =3D 0x2,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_RIGHT]=C2=A0 =3D 0x1,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_SIDE]=C2=A0 =C2=A0=3D 0x0,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [INPUT_BUTTON_EXTRA]=C2=A0 =3D 0x0,<br>
-+=C2=A0 =C2=A0 };<br>
-+<br>
-+=C2=A0 =C2=A0 switch (evt-&gt;type) {<br>
-+=C2=A0 =C2=A0 case INPUT_EVENT_KIND_REL:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 move =3D evt-&gt;u.rel.data;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (move-&gt;axis =3D=3D INPUT_AXIS_X) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_dx +=3D move-&gt;=
-value;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (move-&gt;axis =3D=3D INPUT_AXIS_Y) =
-{<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_dy -=3D move-&gt;=
-value;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-<br>
--=C2=A0 =C2=A0 trace_escc_sunmouse_event(dx, dy, buttons_state);<br>
--=C2=A0 =C2=A0 ch =3D 0x80 | 0x7; /* protocol start byte, no buttons presse=
-d */<br>
-+=C2=A0 =C2=A0 case INPUT_EVENT_KIND_BTN:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 btn =3D evt-&gt;u.btn.data;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (btn-&gt;down) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_buttons |=3D bmap=
-[btn-&gt;button];<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sunmouse_buttons &amp;=3D =
-~bmap[btn-&gt;button];<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-<br>
--=C2=A0 =C2=A0 if (buttons_state &amp; MOUSE_EVENT_LBUTTON) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ch ^=3D 0x4;<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 if (buttons_state &amp; MOUSE_EVENT_MBUTTON) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ch ^=3D 0x2;<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 if (buttons_state &amp; MOUSE_EVENT_RBUTTON) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ch ^=3D 0x1;<br>
-+=C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* keep gcc happy */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-+}<br>
-<br>
--=C2=A0 =C2=A0 put_queue(s, ch);<br>
-+static void sunmouse_sync(DeviceState *dev)<br>
-+{<br>
-+=C2=A0 =C2=A0 ESCCChannelState *s =3D (ESCCChannelState *)dev;<br>
-+=C2=A0 =C2=A0 int ch;<br>
-<br>
--=C2=A0 =C2=A0 ch =3D dx;<br>
-+=C2=A0 =C2=A0 trace_escc_sunmouse_event(s-&gt;sunmouse_dx, s-&gt;sunmouse_=
-dy, 0);<br>
-+=C2=A0 =C2=A0 ch =3D 0x80 | 0x7; /* protocol start byte, no buttons presse=
-d */<br>
-+=C2=A0 =C2=A0 ch ^=3D s-&gt;sunmouse_buttons;<br>
-+=C2=A0 =C2=A0 put_queue(s, ch);<br>
-<br>
-+=C2=A0 =C2=A0 ch =3D s-&gt;sunmouse_dx;<br>
-=C2=A0 =C2=A0 =C2=A0if (ch &gt; 127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D 127;<br>
-=C2=A0 =C2=A0 =C2=A0} else if (ch &lt; -127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D -127;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, ch &amp; 0xff);<br>
-+=C2=A0 =C2=A0 s-&gt;sunmouse_dx =3D 0;<br>
-<br>
--=C2=A0 =C2=A0 ch =3D -dy;<br>
--<br>
-+=C2=A0 =C2=A0 ch =3D s-&gt;sunmouse_dy;<br>
-=C2=A0 =C2=A0 =C2=A0if (ch &gt; 127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D 127;<br>
-=C2=A0 =C2=A0 =C2=A0} else if (ch &lt; -127) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ch =3D -127;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, ch &amp; 0xff);<br>
-+=C2=A0 =C2=A0 s-&gt;sunmouse_dy =3D 0;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* MSC protocol specifies two extra motion bytes */<br>
--<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, 0);<br>
-=C2=A0 =C2=A0 =C2=A0put_queue(s, 0);<br>
-=C2=A0}<br>
-<br>
-+static const QemuInputHandler sunmouse_handler =3D {<br>
-+=C2=A0 =C2=A0 .name=C2=A0 =3D &quot;QEMU Sun Mouse&quot;,<br>
-+=C2=A0 =C2=A0 .mask=C2=A0 =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,=
-<br>
-+=C2=A0 =C2=A0 .event =3D sunmouse_handle_event,<br>
-+=C2=A0 =C2=A0 .sync=C2=A0 =3D sunmouse_sync,<br>
-+};<br>
-+<br>
-=C2=A0static void escc_init1(Object *obj)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0ESCCState *s =3D ESCC(obj);<br>
-@@ -1036,8 +1069,8 @@ static void escc_realize(DeviceState *dev, Error **er=
-rp)<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0if (s-&gt;chn[0].type =3D=3D escc_mouse) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_add_mouse_event_handler(sunmouse_event, &=
-amp;s-&gt;chn[0], 0,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;QEMU Sun M=
-ouse&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;chn[0].hs =3D qemu_input_handler_registe=
-r((DeviceState *)(&amp;s-&gt;chn[0]),<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;sunmouse_handler);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0if (s-&gt;chn[1].type =3D=3D escc_kbd) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;chn[1].hs =3D qemu_input_handler_re=
-gister((DeviceState *)(&amp;s-&gt;chn[1]),<br>
-diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h<br>
-index 5669a5b811..8c4c6a7730 100644<br>
---- a/include/hw/char/escc.h<br>
-+++ b/include/hw/char/escc.h<br>
-@@ -46,6 +46,9 @@ typedef struct ESCCChannelState {<br>
-=C2=A0 =C2=A0 =C2=A0uint8_t rx, tx;<br>
-=C2=A0 =C2=A0 =C2=A0QemuInputHandlerState *hs;<br>
-=C2=A0 =C2=A0 =C2=A0char *sunkbd_layout;<br>
-+=C2=A0 =C2=A0 int sunmouse_dx;<br>
-+=C2=A0 =C2=A0 int sunmouse_dy;<br>
-+=C2=A0 =C2=A0 int sunmouse_buttons;<br>
-=C2=A0} ESCCChannelState;<br>
-<br>
-=C2=A0struct ESCCState {<br>
-diff --git a/roms/seabios b/roms/seabios<br>
-index a6ed6b701f..7d0c606870 160000<br>
---- a/roms/seabios<br>
-+++ b/roms/seabios<br>
-@@ -1 +1 @@<br>
--Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8<br>
-+Subproject commit 7d0c6068703eae9f2498be0c900ab95b25b4f07a<br>
--- <br>
-2.39.2<br>
-<br>
-<br>
-</blockquote></div>
-</blockquote></div>
-
---00000000000018e1ed06212d0d0b--
+SGkgQ2VkcmljLA0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMDQvMTFdIGh3L2kyYy9hc3Bl
+ZWQ6IGludHJvZHVjZSBhIG5ldw0KPiBkbWFfZHJhbV9vZmZzZXQgYXR0cmlidXRlIGluIEFzcGVl
+ZEkyQ2J1cw0KPiANCj4gSmFtaW4sDQo+IA0KPiBJbiBjYXNlIHlvdSByZXNlbmQsIHdvdWxkIHlv
+dSBtaW5kIGNoYW5naW5nIHRoZSBjb21taXQgdGl0bGUgYW5kIHVzZSBhDQo+IGNhcGl0YWwgbGV0
+dGVyIG9uIHRoZSBmaXJzdCB3b3JkIDoNCj4gDQoNCk9rYXksIEkgd2lsbCBjaGFuZ2UgYWxsIGNv
+bW1pdCB0aXRsZSB0byB1c2UgYSBjYXBpdGFsIGxldHRlciBvbiB0aGUgZmlyc3Qgd29yZCBpbiB0
+aGUgbmV4dCBwYXRjaCBzZXJpZXModjMpDQogDQo+ICAgICBody9pMmMvYXNwZWVkOiBJbnRyb2R1
+Y2UgYSBuZXcgZG1hX2RyYW1fb2Zmc2V0IGF0dHJpYnV0ZSBpbg0KPiBBc3BlZWRJMkNidXMNCj4g
+DQo+IE9uIDgvOC8yNCAwNDo0OSwgSmFtaW4gTGluIHdyb3RlOg0KPiA+IFRoZSAiQ3VycmVudCBE
+TUEgT3BlcmF0aW5nIEFkZHJlc3MgU3RhdHVzKDB4NTApIiByZWdpc3RlciBvZiBJMkMgbmV3DQo+
+ID4gbW9kZSBoYXMgYmVlbiByZW1vdmVkIGluIEFTVDI3MDAuDQo+ID4gVGhpcyByZWdpc3RlciBp
+cyB1c2VkIGZvciBkZWJ1Z2dpbmcgYW5kIGl0IGlzIGEgcmVhZCBvbmx5IHJlZ2lzdGVyLg0KPiA+
+DQo+ID4gVG8gc3VwcG9ydCBBU1QyNzAwIERNQSBtb2RlLCBpbnRyb2R1Y2UgYSBuZXcgZG1hX2Ry
+YW1fb2Zmc2V0IGNsYXNzDQo+ID4gYXR0cmlidXRlIGluIEFzcGVlZEkyQ2J1cyB0byBzYXZlIHRo
+ZSBjdXJyZW50IERNQSBvcGVyYXRpbmcgYWRkcmVzcy4NCj4gPg0KPiA+IEFTUEVFRCBBU1QyNzAw
+IFNPQyBpcyBhIDY0IGJpdHMgcXVhZCBjb3JlIENQVXMgKENvcnRleC1hMzUpIEFuZCB0aGUNCj4g
+PiBiYXNlIGFkZHJlc3Mgb2YgZHJhbSBpcyAiMHg0IDAwMDAwMDAwIiB3aGljaCBpcyA2NGJpdHMg
+YWRkcmVzcy4NCj4gPg0KPiA+IFNldCB0aGUgZG1hX2RyYW1fb2Zmc2V0IGRhdGEgdHlwZSB0byB1
+aW50NjRfdCBmb3INCj4gPiA2NCBiaXRzIGRyYW0gYWRkcmVzcyBETUEgc3VwcG9ydC4NCj4gPg0K
+PiA+IEJvdGggIkRNQSBNb2RlIEJ1ZmZlciBBZGRyZXNzIFJlZ2lzdGVyKEkyQ0QyNCBvbGQgbW9k
+ZSkiIGFuZCAiRE1BDQo+ID4gT3BlcmF0aW5nIEFkZHJlc3MgU3RhdHVzIChJMkNDNTAgbmV3IG1v
+ZGUpIiBhcmUgdXNlZCBmb3Igc2hvd2luZyB0aGUNCj4gPiBsb3cgcGFydCBkcmFtIG9mZnNldCBi
+aXRzIFszMTowXSwgc28gY2hhbmdlIHRvIHJlYWQvd3JpdGUgYm90aA0KPiA+IHJlZ2lzdGVyIGJp
+dHMgWzMxOjBdIGluIGJ1cyByZWdpc3RlciByZWFkL3dyaXRlIGZ1bmN0aW9ucy4NCj4gDQo+IEkg
+dGhpbmsgaXQgaXMgd29ydGggbWVudGlvbmluZyB0aGF0IGFzcGVlZF9pMmNfYnVzX3Ztc3RhdGUg
+aXMgY2hhbmdlZCBhZ2Fpbg0KPiBhbmQgdmVyc2lvbiBpcyBub3QgaW5jcmVhc2VkIGJlY2F1c2Ug
+aXQgd2FzIGRvbmUgZWFybGllciBpbiB0aGUgc2FtZSBzZXJpZXMuDQo+IA0KR290IGl0IHdpbGwg
+YWRkIHRoaXMgZGVzY3JpcHRpb24gaW4gdGhpcyBjb21taXQgbWVzc2FnZS4NCg0KVGhhbmtzIGZv
+ciByZXZpZXcgYW5kIHN1Z2dlc3Rpb24uDQoNCkphbWluDQo+IA0KPiBUaGFua3MsDQo+IA0KPiBD
+Lg0KPiANCj4gDQo+IA0KPiA+IFNpZ25lZC1vZmYtYnk6IEphbWluIExpbiA8amFtaW5fbGluQGFz
+cGVlZHRlY2guY29tPg0KPiA+IC0tLQ0KPiA+ICAgaHcvaTJjL2FzcGVlZF9pMmMuYyAgICAgICAg
+IHwgNTENCj4gKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tLQ0KPiA+ICAgaW5j
+bHVkZS9ody9pMmMvYXNwZWVkX2kyYy5oIHwgIDkgKy0tLS0tLQ0KPiA+ICAgMiBmaWxlcyBjaGFu
+Z2VkLCAzMyBpbnNlcnRpb25zKCspLCAyNyBkZWxldGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1n
+aXQgYS9ody9pMmMvYXNwZWVkX2kyYy5jIGIvaHcvaTJjL2FzcGVlZF9pMmMuYyBpbmRleA0KPiA+
+IGFiY2IxZDUzMzAuLjJkZWEzYTQyYTAgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvaTJjL2FzcGVlZF9p
+MmMuYw0KPiA+ICsrKyBiL2h3L2kyYy9hc3BlZWRfaTJjLmMNCj4gPiBAQCAtMTE0LDcgKzExNCwx
+MCBAQCBzdGF0aWMgdWludDY0X3QNCj4gYXNwZWVkX2kyY19idXNfb2xkX3JlYWQoQXNwZWVkSTJD
+QnVzICpidXMsIGh3YWRkciBvZmZzZXQsDQo+ID4gICAgICAgICAgIGlmICghYWljLT5oYXNfZG1h
+KSB7DQo+ID4gICAgICAgICAgICAgICBxZW11X2xvZ19tYXNrKExPR19HVUVTVF9FUlJPUiwgIiVz
+OiBObyBETUENCj4gc3VwcG9ydFxuIiwgIF9fZnVuY19fKTsNCj4gPiAgICAgICAgICAgICAgIHZh
+bHVlID0gLTE7DQo+ID4gKyAgICAgICAgICAgIGJyZWFrOw0KPiA+ICAgICAgICAgICB9DQo+ID4g
+Kw0KPiA+ICsgICAgICAgIHZhbHVlID0gZXh0cmFjdDY0KGJ1cy0+ZG1hX2RyYW1fb2Zmc2V0LCAw
+LCAzMik7DQo+ID4gICAgICAgICAgIGJyZWFrOw0KPiA+ICAgICAgIGNhc2UgQV9JMkNEX0RNQV9M
+RU46DQo+ID4gICAgICAgICAgIGlmICghYWljLT5oYXNfZG1hKSB7DQo+ID4gQEAgLTE1MCw5ICsx
+NTMsNyBAQCBzdGF0aWMgdWludDY0X3QNCj4gYXNwZWVkX2kyY19idXNfbmV3X3JlYWQoQXNwZWVk
+STJDQnVzICpidXMsIGh3YWRkciBvZmZzZXQsDQo+ID4gICAgICAgY2FzZSBBX0kyQ01fRE1BX1RY
+X0FERFI6DQo+ID4gICAgICAgY2FzZSBBX0kyQ01fRE1BX1JYX0FERFI6DQo+ID4gICAgICAgY2Fz
+ZSBBX0kyQ01fRE1BX0xFTl9TVFM6DQo+ID4gLSAgICBjYXNlIEFfSTJDQ19ETUFfQUREUjoNCj4g
+PiAgICAgICBjYXNlIEFfSTJDQ19ETUFfTEVOOg0KPiA+IC0NCj4gPiAgICAgICBjYXNlIEFfSTJD
+U19ERVZfQUREUjoNCj4gPiAgICAgICBjYXNlIEFfSTJDU19ETUFfUlhfQUREUjoNCj4gPiAgICAg
+ICBjYXNlIEFfSTJDU19ETUFfTEVOOg0KPiA+IEBAIC0xNjEsNiArMTYyLDkgQEAgc3RhdGljIHVp
+bnQ2NF90DQo+IGFzcGVlZF9pMmNfYnVzX25ld19yZWFkKEFzcGVlZEkyQ0J1cyAqYnVzLCBod2Fk
+ZHIgb2Zmc2V0LA0KPiA+ICAgICAgIGNhc2UgQV9JMkNTX0RNQV9MRU5fU1RTOg0KPiA+ICAgICAg
+ICAgICAvKiBWYWx1ZSBpcyBhbHJlYWR5IHNldCwgZG9uJ3QgZG8gYW55dGhpbmcuICovDQo+ID4g
+ICAgICAgICAgIGJyZWFrOw0KPiA+ICsgICAgY2FzZSBBX0kyQ0NfRE1BX0FERFI6DQo+ID4gKyAg
+ICAgICAgdmFsdWUgPSBleHRyYWN0NjQoYnVzLT5kbWFfZHJhbV9vZmZzZXQsIDAsIDMyKTsNCj4g
+PiArICAgICAgICBicmVhazsNCj4gPiAgICAgICBjYXNlIEFfSTJDU19JTlRSX1NUUzoNCj4gPiAg
+ICAgICAgICAgYnJlYWs7DQo+ID4gICAgICAgY2FzZSBBX0kyQ01fQ01EOg0KPiA+IEBAIC0yMTAs
+MTggKzIxNCwxOCBAQCBzdGF0aWMgaW50IGFzcGVlZF9pMmNfZG1hX3JlYWQoQXNwZWVkSTJDQnVz
+DQo+ICpidXMsIHVpbnQ4X3QgKmRhdGEpDQo+ID4gICB7DQo+ID4gICAgICAgTWVtVHhSZXN1bHQg
+cmVzdWx0Ow0KPiA+ICAgICAgIEFzcGVlZEkyQ1N0YXRlICpzID0gYnVzLT5jb250cm9sbGVyOw0K
+PiA+IC0gICAgdWludDMyX3QgcmVnX2RtYV9hZGRyID0gYXNwZWVkX2kyY19idXNfZG1hX2FkZHJf
+b2Zmc2V0KGJ1cyk7DQo+ID4gICAgICAgdWludDMyX3QgcmVnX2RtYV9sZW4gPSBhc3BlZWRfaTJj
+X2J1c19kbWFfbGVuX29mZnNldChidXMpOw0KPiA+DQo+ID4gLSAgICByZXN1bHQgPSBhZGRyZXNz
+X3NwYWNlX3JlYWQoJnMtPmRyYW1fYXMsIGJ1cy0+cmVnc1tyZWdfZG1hX2FkZHJdLA0KPiA+ICsg
+ICAgcmVzdWx0ID0gYWRkcmVzc19zcGFjZV9yZWFkKCZzLT5kcmFtX2FzLCBidXMtPmRtYV9kcmFt
+X29mZnNldCwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTUVNVFhBVFRS
+U19VTlNQRUNJRklFRCwgZGF0YSwNCj4gMSk7DQo+ID4gICAgICAgaWYgKHJlc3VsdCAhPSBNRU1U
+WF9PSykgew0KPiA+IC0gICAgICAgIHFlbXVfbG9nX21hc2soTE9HX0dVRVNUX0VSUk9SLCAiJXM6
+IERSQU0gcmVhZCBmYWlsZWQNCj4gQCUwOHhcbiIsDQo+ID4gLSAgICAgICAgICAgICAgICAgICAg
+ICBfX2Z1bmNfXywgYnVzLT5yZWdzW3JlZ19kbWFfYWRkcl0pOw0KPiA+ICsgICAgICAgIHFlbXVf
+bG9nX21hc2soTE9HX0dVRVNUX0VSUk9SLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgIiVz
+OiBEUkFNIHJlYWQgZmFpbGVkIEAlIiBQUkl4NjQgIlxuIiwNCj4gPiArICAgICAgICAgICAgICAg
+ICAgICAgIF9fZnVuY19fLCBidXMtPmRtYV9kcmFtX29mZnNldCk7DQo+ID4gICAgICAgICAgIHJl
+dHVybiAtMTsNCj4gPiAgICAgICB9DQo+ID4NCj4gPiAtICAgIGJ1cy0+cmVnc1tyZWdfZG1hX2Fk
+ZHJdKys7DQo+ID4gKyAgICBidXMtPmRtYV9kcmFtX29mZnNldCsrOw0KPiA+ICAgICAgIGJ1cy0+
+cmVnc1tyZWdfZG1hX2xlbl0tLTsNCj4gPiAgICAgICByZXR1cm4gMDsNCj4gPiAgIH0NCj4gPiBA
+QCAtMjkxLDcgKzI5NSw2IEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9pMmNfYnVzX3JlY3YoQXNwZWVk
+STJDQnVzICpidXMpDQo+ID4gICAgICAgdWludDMyX3QgcmVnX3Bvb2xfY3RybCA9IGFzcGVlZF9p
+MmNfYnVzX3Bvb2xfY3RybF9vZmZzZXQoYnVzKTsNCj4gPiAgICAgICB1aW50MzJfdCByZWdfYnl0
+ZV9idWYgPSBhc3BlZWRfaTJjX2J1c19ieXRlX2J1Zl9vZmZzZXQoYnVzKTsNCj4gPiAgICAgICB1
+aW50MzJfdCByZWdfZG1hX2xlbiA9IGFzcGVlZF9pMmNfYnVzX2RtYV9sZW5fb2Zmc2V0KGJ1cyk7
+DQo+ID4gLSAgICB1aW50MzJfdCByZWdfZG1hX2FkZHIgPSBhc3BlZWRfaTJjX2J1c19kbWFfYWRk
+cl9vZmZzZXQoYnVzKTsNCj4gPiAgICAgICBpbnQgcG9vbF9yeF9jb3VudCA9IFNIQVJFRF9BUlJB
+WV9GSUVMRF9FWDMyKGJ1cy0+cmVncywNCj4gcmVnX3Bvb2xfY3RybCwNCj4gPiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFJYX1NJWkUpICsgMTsNCj4g
+Pg0KPiA+IEBAIC0zMjMsMTQgKzMyNiwxNyBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfaTJjX2J1c19y
+ZWN2KEFzcGVlZEkyQ0J1cw0KPiAqYnVzKQ0KPiA+ICAgICAgICAgICAgICAgZGF0YSA9IGkyY19y
+ZWN2KGJ1cy0+YnVzKTsNCj4gPiAgICAgICAgICAgICAgIHRyYWNlX2FzcGVlZF9pMmNfYnVzX3Jl
+Y3YoIkRNQSIsDQo+IGJ1cy0+cmVnc1tyZWdfZG1hX2xlbl0sDQo+ID4gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIGJ1cy0+cmVnc1tyZWdfZG1hX2xlbl0sDQo+IGRhdGEp
+Ow0KPiA+IC0gICAgICAgICAgICByZXN1bHQgPSBhZGRyZXNzX3NwYWNlX3dyaXRlKCZzLT5kcmFt
+X2FzLA0KPiBidXMtPnJlZ3NbcmVnX2RtYV9hZGRyXSwNCj4gPiArDQo+ID4gKyAgICAgICAgICAg
+IHJlc3VsdCA9IGFkZHJlc3Nfc3BhY2Vfd3JpdGUoJnMtPmRyYW1fYXMsDQo+ID4gKyBidXMtPmRt
+YV9kcmFtX29mZnNldCwNCj4gPg0KPiBNRU1UWEFUVFJTX1VOU1BFQ0lGSUVELCAmZGF0YSwgMSk7
+DQo+ID4gICAgICAgICAgICAgICBpZiAocmVzdWx0ICE9IE1FTVRYX09LKSB7DQo+ID4gLSAgICAg
+ICAgICAgICAgICBxZW11X2xvZ19tYXNrKExPR19HVUVTVF9FUlJPUiwgIiVzOiBEUkFNIHdyaXRl
+DQo+IGZhaWxlZCBAJTA4eFxuIiwNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+X19mdW5jX18sIGJ1cy0+cmVnc1tyZWdfZG1hX2FkZHJdKTsNCj4gPiArICAgICAgICAgICAgICAg
+IHFlbXVfbG9nX21hc2soTE9HX0dVRVNUX0VSUk9SLA0KPiA+ICsgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAiJXM6IERSQU0gd3JpdGUgZmFpbGVkIEAlIiBQUkl4NjQNCj4gIlxuIiwNCj4g
+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgX19mdW5jX18sIGJ1cy0+ZG1hX2RyYW1f
+b2Zmc2V0KTsNCj4gPiAgICAgICAgICAgICAgICAgICByZXR1cm47DQo+ID4gICAgICAgICAgICAg
+ICB9DQo+ID4gLSAgICAgICAgICAgIGJ1cy0+cmVnc1tyZWdfZG1hX2FkZHJdKys7DQo+ID4gKw0K
+PiA+ICsgICAgICAgICAgICBidXMtPmRtYV9kcmFtX29mZnNldCsrOw0KPiA+ICAgICAgICAgICAg
+ICAgYnVzLT5yZWdzW3JlZ19kbWFfbGVuXS0tOw0KPiA+ICAgICAgICAgICAgICAgLyogSW4gbmV3
+IG1vZGUsIGtlZXAgdHJhY2sgb2YgaG93IG1hbnkgYnl0ZXMgd2UgUlhlZCAqLw0KPiA+ICAgICAg
+ICAgICAgICAgaWYgKGFzcGVlZF9pMmNfaXNfbmV3X21vZGUoYnVzLT5jb250cm9sbGVyKSkgeyBA
+QA0KPiA+IC02MzYsMTQgKzY0MiwxOCBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfaTJjX2J1c19uZXdf
+d3JpdGUoQXNwZWVkSTJDQnVzDQo+ICpidXMsIGh3YWRkciBvZmZzZXQsDQo+ID4gICAgICAgY2Fz
+ZSBBX0kyQ01fRE1BX1RYX0FERFI6DQo+ID4gICAgICAgICAgIGJ1cy0+cmVnc1tSX0kyQ01fRE1B
+X1RYX0FERFJdID0gRklFTERfRVgzMih2YWx1ZSwNCj4gSTJDTV9ETUFfVFhfQUREUiwNCj4gPiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEFERFIp
+Ow0KPiA+IC0gICAgICAgIGJ1cy0+cmVnc1tSX0kyQ0NfRE1BX0FERFJdID0gRklFTERfRVgzMih2
+YWx1ZSwNCj4gSTJDTV9ETUFfVFhfQUREUiwgQUREUik7DQo+ID4gKyAgICAgICAgYnVzLT5kbWFf
+ZHJhbV9vZmZzZXQgPQ0KPiA+ICsgICAgICAgICAgICBkZXBvc2l0NjQoYnVzLT5kbWFfZHJhbV9v
+ZmZzZXQsIDAsIDMyLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgRklFTERfRVgzMih2YWx1
+ZSwgSTJDTV9ETUFfVFhfQUREUiwNCj4gQUREUikpOw0KPiA+ICAgICAgICAgICBidXMtPnJlZ3Nb
+Ul9JMkNDX0RNQV9MRU5dID0gQVJSQVlfRklFTERfRVgzMihidXMtPnJlZ3MsDQo+IEkyQ01fRE1B
+X0xFTiwNCj4gPg0KPiBUWF9CVUZfTEVOKSArIDE7DQo+ID4gICAgICAgICAgIGJyZWFrOw0KPiA+
+ICAgICAgIGNhc2UgQV9JMkNNX0RNQV9SWF9BRERSOg0KPiA+ICAgICAgICAgICBidXMtPnJlZ3Nb
+Ul9JMkNNX0RNQV9SWF9BRERSXSA9IEZJRUxEX0VYMzIodmFsdWUsDQo+IEkyQ01fRE1BX1JYX0FE
+RFIsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBBRERSKTsNCj4gPiAtICAgICAgICBidXMtPnJlZ3NbUl9JMkNDX0RNQV9BRERSXSA9IEZJ
+RUxEX0VYMzIodmFsdWUsDQo+IEkyQ01fRE1BX1JYX0FERFIsIEFERFIpOw0KPiA+ICsgICAgICAg
+IGJ1cy0+ZG1hX2RyYW1fb2Zmc2V0ID0NCj4gPiArICAgICAgICAgICAgZGVwb3NpdDY0KGJ1cy0+
+ZG1hX2RyYW1fb2Zmc2V0LCAwLCAzMiwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgIEZJRUxE
+X0VYMzIodmFsdWUsIEkyQ01fRE1BX1JYX0FERFIsDQo+IEFERFIpKTsNCj4gPiAgICAgICAgICAg
+YnVzLT5yZWdzW1JfSTJDQ19ETUFfTEVOXSA9IEFSUkFZX0ZJRUxEX0VYMzIoYnVzLT5yZWdzLA0K
+PiBJMkNNX0RNQV9MRU4sDQo+ID4NCj4gUlhfQlVGX0xFTikgKyAxOw0KPiA+ICAgICAgICAgICBi
+cmVhazsNCj4gPiBAQCAtODExLDcgKzgyMSw4IEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9pMmNfYnVz
+X29sZF93cml0ZShBc3BlZWRJMkNCdXMNCj4gKmJ1cywgaHdhZGRyIG9mZnNldCwNCj4gPiAgICAg
+ICAgICAgICAgIGJyZWFrOw0KPiA+ICAgICAgICAgICB9DQo+ID4NCj4gPiAtICAgICAgICBidXMt
+PnJlZ3NbUl9JMkNEX0RNQV9BRERSXSA9IHZhbHVlICYgMHgzZmZmZmZmYzsNCj4gPiArICAgICAg
+ICBidXMtPmRtYV9kcmFtX29mZnNldCA9IGRlcG9zaXQ2NChidXMtPmRtYV9kcmFtX29mZnNldCwg
+MCwNCj4gMzIsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+dmFsdWUgJiAweDNmZmZmZmZjKTsNCj4gPiAgICAgICAgICAgYnJlYWs7DQo+ID4NCj4gPiAgICAg
+ICBjYXNlIEFfSTJDRF9ETUFfTEVOOg0KPiA+IEBAIC05ODMsNiArOTk0LDcgQEAgc3RhdGljIGNv
+bnN0IFZNU3RhdGVEZXNjcmlwdGlvbg0KPiBhc3BlZWRfaTJjX2J1c192bXN0YXRlID0gew0KPiA+
+ICAgICAgIC5maWVsZHMgPSAoY29uc3QgVk1TdGF0ZUZpZWxkW10pIHsNCj4gPiAgICAgICAgICAg
+Vk1TVEFURV9VSU5UMzJfQVJSQVkocmVncywgQXNwZWVkSTJDQnVzLA0KPiBBU1BFRURfSTJDX05F
+V19OVU1fUkVHKSwNCj4gPiAgICAgICAgICAgVk1TVEFURV9VSU5UOF9BUlJBWShwb29sLCBBc3Bl
+ZWRJMkNCdXMsDQo+ID4gQVNQRUVEX0kyQ19CVVNfUE9PTF9TSVpFKSwNCj4gPiArICAgICAgICBW
+TVNUQVRFX1VJTlQ2NChkbWFfZHJhbV9vZmZzZXQsIEFzcGVlZEkyQ0J1cyksDQo+ID4gICAgICAg
+ICAgIFZNU1RBVEVfRU5EX09GX0xJU1QoKQ0KPiA+ICAgICAgIH0NCj4gPiAgIH07DQo+ID4gQEAg
+LTExODgsOCArMTIwMCw5IEBAIHN0YXRpYyBpbnQNCj4gYXNwZWVkX2kyY19idXNfbmV3X3NsYXZl
+X2V2ZW50KEFzcGVlZEkyQ0J1cyAqYnVzLA0KPiA+ICAgICAgICAgICAgICAgcmV0dXJuIC0xOw0K
+PiA+ICAgICAgICAgICB9DQo+ID4gICAgICAgICAgIEFSUkFZX0ZJRUxEX0RQMzIoYnVzLT5yZWdz
+LCBJMkNTX0RNQV9MRU5fU1RTLCBSWF9MRU4sDQo+IDApOw0KPiA+IC0gICAgICAgIGJ1cy0+cmVn
+c1tSX0kyQ0NfRE1BX0FERFJdID0NCj4gPiAtICAgICAgICAgICAgQVJSQVlfRklFTERfRVgzMihi
+dXMtPnJlZ3MsIEkyQ1NfRE1BX1JYX0FERFIsIEFERFIpOw0KPiA+ICsgICAgICAgIGJ1cy0+ZG1h
+X2RyYW1fb2Zmc2V0ID0NCj4gPiArICAgICAgICAgICAgZGVwb3NpdDY0KGJ1cy0+ZG1hX2RyYW1f
+b2Zmc2V0LCAwLCAzMiwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgIEFSUkFZX0ZJRUxEX0VY
+MzIoYnVzLT5yZWdzLA0KPiBJMkNTX0RNQV9SWF9BRERSLA0KPiA+ICsgQUREUikpOw0KPiA+ICAg
+ICAgICAgICBidXMtPnJlZ3NbUl9JMkNDX0RNQV9MRU5dID0NCj4gPiAgICAgICAgICAgICAgIEFS
+UkFZX0ZJRUxEX0VYMzIoYnVzLT5yZWdzLCBJMkNTX0RNQV9MRU4sDQo+IFJYX0JVRl9MRU4pICsg
+MTsNCj4gPiAgICAgICAgICAgaTJjX2FjayhidXMtPmJ1cyk7DQo+ID4gQEAgLTEyNTUsMTAgKzEy
+NjgsMTAgQEAgc3RhdGljIGludCBhc3BlZWRfaTJjX2J1c19zbGF2ZV9ldmVudChJMkNTbGF2ZQ0K
+PiAqc2xhdmUsIGVudW0gaTJjX2V2ZW50IGV2ZW50KQ0KPiA+ICAgc3RhdGljIHZvaWQgYXNwZWVk
+X2kyY19idXNfbmV3X3NsYXZlX3NlbmRfYXN5bmMoQXNwZWVkSTJDQnVzICpidXMsDQo+IHVpbnQ4
+X3QgZGF0YSkNCj4gPiAgIHsNCj4gPiAgICAgICBhc3NlcnQoYWRkcmVzc19zcGFjZV93cml0ZSgm
+YnVzLT5jb250cm9sbGVyLT5kcmFtX2FzLA0KPiA+IC0gICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgYnVzLT5yZWdzW1JfSTJDQ19ETUFfQUREUl0sDQo+ID4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBidXMtPmRtYV9kcmFtX29mZnNldCwNCj4gPiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICBNRU1UWEFUVFJTX1VOU1BFQ0lGSUVELCAmZGF0YSwNCj4gMSkgPT0N
+Cj4gPiBNRU1UWF9PSyk7DQo+ID4NCj4gPiAtICAgIGJ1cy0+cmVnc1tSX0kyQ0NfRE1BX0FERFJd
+Kys7DQo+ID4gKyAgICBidXMtPmRtYV9kcmFtX29mZnNldCsrOw0KPiA+ICAgICAgIGJ1cy0+cmVn
+c1tSX0kyQ0NfRE1BX0xFTl0tLTsNCj4gPiAgICAgICBBUlJBWV9GSUVMRF9EUDMyKGJ1cy0+cmVn
+cywgSTJDU19ETUFfTEVOX1NUUywgUlhfTEVOLA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAg
+QVJSQVlfRklFTERfRVgzMihidXMtPnJlZ3MsDQo+IEkyQ1NfRE1BX0xFTl9TVFMsDQo+ID4gUlhf
+TEVOKSArIDEpOyBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9pMmMvYXNwZWVkX2kyYy5oDQo+ID4g
+Yi9pbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJjLmggaW5kZXggYjQyYzRkYzU4NC4uYmRhZWEzMjA3
+ZCAxMDA2NDQNCj4gPiAtLS0gYS9pbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJjLmgNCj4gPiArKysg
+Yi9pbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJjLmgNCj4gPiBAQCAtMjQ4LDYgKzI0OCw3IEBAIHN0
+cnVjdCBBc3BlZWRJMkNCdXMgew0KPiA+DQo+ID4gICAgICAgdWludDMyX3QgcmVnc1tBU1BFRURf
+STJDX05FV19OVU1fUkVHXTsNCj4gPiAgICAgICB1aW50OF90IHBvb2xbQVNQRUVEX0kyQ19CVVNf
+UE9PTF9TSVpFXTsNCj4gPiArICAgIHVpbnQ2NF90IGRtYV9kcmFtX29mZnNldDsNCj4gPiAgIH07
+DQo+ID4NCj4gPiAgIHN0cnVjdCBBc3BlZWRJMkNTdGF0ZSB7DQo+ID4gQEAgLTM2OSwxNCArMzcw
+LDYgQEAgc3RhdGljIGlubGluZSB1aW50MzJfdA0KPiBhc3BlZWRfaTJjX2J1c19kbWFfbGVuX29m
+ZnNldChBc3BlZWRJMkNCdXMgKmJ1cykNCj4gPiAgICAgICByZXR1cm4gUl9JMkNEX0RNQV9MRU47
+DQo+ID4gICB9DQo+ID4NCj4gPiAtc3RhdGljIGlubGluZSB1aW50MzJfdCBhc3BlZWRfaTJjX2J1
+c19kbWFfYWRkcl9vZmZzZXQoQXNwZWVkSTJDQnVzDQo+ID4gKmJ1cykgLXsNCj4gPiAtICAgIGlm
+IChhc3BlZWRfaTJjX2lzX25ld19tb2RlKGJ1cy0+Y29udHJvbGxlcikpIHsNCj4gPiAtICAgICAg
+ICByZXR1cm4gUl9JMkNDX0RNQV9BRERSOw0KPiA+IC0gICAgfQ0KPiA+IC0gICAgcmV0dXJuIFJf
+STJDRF9ETUFfQUREUjsNCj4gPiAtfQ0KPiA+IC0NCj4gPiAgIHN0YXRpYyBpbmxpbmUgYm9vbCBh
+c3BlZWRfaTJjX2J1c19pc19tYXN0ZXIoQXNwZWVkSTJDQnVzICpidXMpDQo+ID4gICB7DQo+ID4g
+ICAgICAgcmV0dXJuIFNIQVJFRF9BUlJBWV9GSUVMRF9FWDMyKGJ1cy0+cmVncywNCj4gPiBhc3Bl
+ZWRfaTJjX2J1c19jdHJsX29mZnNldChidXMpLA0KDQo=
 
