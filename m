@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80909CD37AB
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F17CD37AB
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slXjE-0005vF-Fx; Tue, 03 Sep 2024 13:54:08 -0400
+	id 1slXlB-0001uD-A7; Tue, 03 Sep 2024 13:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slXjC-0005tr-GB
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:54:06 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slXl7-0001qR-Un
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:56:07 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slXj9-0007ew-G7
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:54:06 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-428e0d184b4so46991565e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:54:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slXl6-0007wC-6U
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:56:05 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-374c1963cb6so1959555f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:56:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725386042; x=1725990842; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725386162; x=1725990962; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Xn9RRF/KWi6o7IId7xdKJMcFlkHyoZxgQ7RJi6PCKjU=;
- b=ujFaxU8jOl9DVgX4mOko+31X3vUgift9K5PhNIofJ1dw0R/7ESVRZpLwSifto6gT9v
- +HrWLOcBn8pE14ZtI68glHcCjcv9eWO2ErU454jCA3E66wWj6MZ68cfOxuxoEItPn1/T
- LW8q7UDSUVXzzLak3hNdAZ43pp40fqEA2HYchONMBWLWRdufiLA/V0GEjjrHB3dqaGqE
- I8WAQMvx8hLvxUZPRmYX1aVFBS8ZFhGPkVV2ANLYT5Pd8AGyDOYXaaESCZ5CYUqsIm5K
- oZigJus/51fAX4hdoP675iHkpbnY+r0qL+FlQYgNR2hGd7aNh411tVzTEFMFHDpe4vsb
- FXLQ==
+ bh=WdjLJKg2Ic45CVk94s71tKPC0FGEyFur/YHotqbniPg=;
+ b=o+yUDYU3aveuAKO6ooQizHi3wbelczw52TCAQ8ifAilt8CRNuXvTKrQ7sAmtN+EYAQ
+ nYvX0En/WYxab5zlZZq/hkArgJlCXV1iEGEDfSBXCrOApVS/EAvDermvyntRjjUYnsnl
+ Lm9piX4BLUn5cxUaC4Ub/kMlGTz8BUD2N3boQEZprfzdOa4G3Grgc7VgUjzYrhIUP9MH
+ NQ8G2qc7grhrtp9tnk3PseyvV3szBmOz27Iko3Csr6l/RGwZyqHNEcJc4z+0EK4NIHhE
+ x3mvvDjK30kfiG9GnlePE1qnc7XX7TyqHzoyFR2BjIg/arc/zIKFS5kTVYljY8v7QsMW
+ X0Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725386042; x=1725990842;
+ d=1e100.net; s=20230601; t=1725386162; x=1725990962;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Xn9RRF/KWi6o7IId7xdKJMcFlkHyoZxgQ7RJi6PCKjU=;
- b=mUQJ0Yz81JIZXyeU730bEjFqgwVWw2ij/vC3Su3j6agvtFe9BmYSTnwHv6qc0ATggX
- 6LTfMEGjeJYM/rTBidasgF8/LPgosT6zI9ax3MfYC4gCFAiDHhX3L7S4boGhvu7Ojral
- Q4KCIpmFft81eqnPGZ+ncCe6sDJasqDdb+DWvSnQNe4W3EoIhIwOROqC4RTaiff/mwE3
- HUGALD1lKmk9pnm1MYev/jFg7CeAi1i8mTgMGos/yo2i32vSfLus7ko67y+eAvR6mX2s
- CnGBnHkHCIa4zELWofBF3elPBQ/K/ncgy0ODIvcmeL/aRt6o6k4nI4PrvI6oCWCF/dY8
- gr8A==
-X-Gm-Message-State: AOJu0Yy6L0bFj2nsGMeD95rfaN9it5aOmS3XQUrNtdoc7InQYtr/fROV
- hGABHnptY9l/cBMUknyAmGOYrNfUGSM6fTJNRgVai9KKpiESjzvQ6a+P+Q3+RqU=
-X-Google-Smtp-Source: AGHT+IEGvINi3f2ZwG6i17XIXDp/VX+QO+Yd9GNT/h2/2qRNKKnP5CpAaDF8Z+0CRPi+Yu/5QansXw==
-X-Received: by 2002:a05:600c:3582:b0:42b:9260:235f with SMTP id
- 5b1f17b1804b1-42c7b5b4b72mr67674255e9.19.1725386041445; 
- Tue, 03 Sep 2024 10:54:01 -0700 (PDT)
+ bh=WdjLJKg2Ic45CVk94s71tKPC0FGEyFur/YHotqbniPg=;
+ b=lPTg6kcogda0V1PMHCIcrB70RONtPz9wJZf2RfFz08fuC1bBjgSt336k5TnzllOHpp
+ iM0ChpKjW0Ya2mfEbQ4j77wZH4SRYZ2F6pYO7M1SaXHn7pjRYvJYUNKtP+Y217AjZOrb
+ LVj4QBKhJj79ekPSkJbD4ghW2E5xlOE4RpijQUr5gLCAwy13K5xUTl3CTdPeWKPEAkNC
+ 9sBxtZTmVkgP2+ZRKBMBco0pmb/OsNuwDna3xjO0d6zorggbxIMnhSmjeTrj7ZQxj9vv
+ TFsX4icwaYgnqGeMSYizSdAvcDz2iKV/ILmf1xBJMKQbRnEpwIvYVrlwfhug/APiTO/7
+ oShg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWSLULm0TQjv0Tm9GA1WCzaJQII86UEPSMa+kXM9N+xWS9caQhn7wF7nZLJaMxdn8rYcUZ1hD9BIty@nongnu.org
+X-Gm-Message-State: AOJu0YxBTFt30KiphNay5S7G3GvV+iPJa8P/0Cge0X74qx4TBQRxjiOV
+ vakHaXz81Rak8D5TbN9zQgtCRSmn7jmcR+iog3SJ/DGFofnoT7Hl7HptwLjX2ug=
+X-Google-Smtp-Source: AGHT+IHABg9lT9FvUlDjsBbYq86Ui16QaqC8brIJL+cBisV3pwrDzuWsJydlAeBw1rHECwXsQ/WR9A==
+X-Received: by 2002:adf:e604:0:b0:374:ca43:abff with SMTP id
+ ffacd0b85a97d-374ca43ada7mr4876184f8f.26.1725386162398; 
+ Tue, 03 Sep 2024 10:56:02 -0700 (PDT)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ba6425a77sm216629325e9.45.2024.09.03.10.54.00
+ ffacd0b85a97d-374bb1ea80csm10692788f8f.73.2024.09.03.10.56.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 10:54:00 -0700 (PDT)
-Message-ID: <575c0982-b724-4af5-bd91-b85a4b0226ff@linaro.org>
-Date: Tue, 3 Sep 2024 19:53:59 +0200
+ Tue, 03 Sep 2024 10:56:01 -0700 (PDT)
+Message-ID: <c4d65b6b-ed7e-46c8-8c4b-fc54e53169f1@linaro.org>
+Date: Tue, 3 Sep 2024 19:56:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/cris: Remove the deprecated CRIS target
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, devel@lists.libvirt.org,
- Rabin Vincent <rabinv@axis.com>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
-References: <20240903152757.17935-1-philmd@linaro.org>
- <CAFEAcA-EquoUoNNtbwMu7tW_VDHKHVuEuAsDWBVbD8hnDocz-g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return value
+ == -1
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+References: <20240830111451.3799490-1-cleger@rivosinc.com>
+ <20240830111451.3799490-3-cleger@rivosinc.com>
+ <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
+ <dd28ea4f-67eb-4c42-84d2-24956cde7896@rivosinc.com>
+ <294a5480-d871-41e2-8e08-c1067f45d454@linaro.org>
+ <563f3b75-bf13-4ca7-a995-f2c8ff1b6799@rivosinc.com>
+ <7e405b99-50b4-4c87-a9b6-83c90110eca5@linaro.org>
+ <313c9a55-4cc8-4beb-a483-c0202665b226@rivosinc.com>
+ <b9b574e7-11de-4f04-a84f-40b9ffac986c@linaro.org>
+ <ZtcpbNx0SAzzW0Ta@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-EquoUoNNtbwMu7tW_VDHKHVuEuAsDWBVbD8hnDocz-g@mail.gmail.com>
+In-Reply-To: <ZtcpbNx0SAzzW0Ta@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,379 +107,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/24 18:13, Peter Maydell wrote:
-> On Tue, 3 Sept 2024 at 16:28, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+On 3/9/24 17:21, Daniel P. Berrangé wrote:
+> On Tue, Sep 03, 2024 at 05:02:44PM +0200, Philippe Mathieu-Daudé wrote:
+>> On 3/9/24 15:37, Clément Léger wrote:
+>>> On 03/09/2024 15:34, Philippe Mathieu-Daudé wrote:
+>>>> On 3/9/24 09:53, Clément Léger wrote:
+>>>>> On 02/09/2024 21:38, Philippe Mathieu-Daudé wrote:
+>>>>>> On 30/8/24 13:57, Clément Léger wrote:
+>>>>>>> On 30/08/2024 13:31, Michael Tokarev wrote:
+>>>>>>>> 30.08.2024 14:14, Clément Léger wrote:
+>>>>>>>>> On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can
+>>>>>>>>> return
+>>>>>>>>> -1. In that case we should fallback to using the OPEN_MAX define.
+>>>>>>>>> According to "man sysconf", the OPEN_MAX define should be present and
+>>>>>>>>> provided by either unistd.h and/or limits.h so include them for that
+>>>>>>>>> purpose. For other OSes, just assume a maximum of 1024 files
+>>>>>>>>> descriptors
+>>>>>>>>> as a fallback.
+>>>>>>>>>
+>>>>>>>>> Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-
+>>>>>>>>> posix")
+>>>>>>>>> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+>>>>>>>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+>>>>>>>>
+>>>>>>>> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+>>>>>>>>
+>>>>>>>>> @@ -928,6 +933,13 @@ static void
+>>>>>>>>> qemu_close_all_open_fd_fallback(const
+>>>>>>>>> int *skip, unsigned int nskip,
+>>>>>>>>>       void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+>>>>>>>>>       {
+>>>>>>>>>           int open_max = sysconf(_SC_OPEN_MAX);
+>>>>>>>>> +    if (open_max == -1) {
+>>>>>>>>> +#ifdef CONFIG_DARWIN
+>>>>>>>>> +        open_max = OPEN_MAX;
+>>>>>>
+>>>>>> Missing errno check.
+>>>>>
+>>>>> man sysconf states that:
+>>>>>
+>>>>> "On error, -1 is returned and errno is set to indicate the error (for
+>>>>> example, EINVAL, indicating that name is invalid)."
+>>>>>
+>>>>> So it seems checking for -1 is enough no ? Or were you thinking about
+>>>>> something else ?
+>>>>
+>>>> Mine (macOS 14.6) is:
+>>>>
+>>>>    RETURN VALUES
+>>>>        If the call to sysconf() is not successful, -1 is returned and
+>>>>        errno is set appropriately.  Otherwise, if the variable is
+>>>>        associated with functionality that is not supported, -1 is
+>>>>        returned and errno is not modified.  Otherwise, the current
+>>>>        variable value is returned.
+>>>
+>>> Which seems to imply the same than mine right ? -1 is always returned in
+>>> case of error and errno might or not be set. So checking for -1 seems
+>>> enough to check an error return.
 >>
->> The CRIS target is deprecated since v9.0 (commit c7bbef40234
->> "docs: mark CRIS support as deprecated").
+>> Yes but we can check for the unsupported case. Something like:
 >>
->> Remove:
->> - Buildsys / CI infra
->> - User emulation
->> - System emulation (axis-dev88 machine and ETRAX devices)
->> - Tests
+>>      long qemu_sysconf(int name, long unsupported_default)
+>>      {
+>>          int current_errno = errno;
+>>          long retval;
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> Cc: Rabin Vincent <rabinv@axis.com>
->> Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
->> ---
->>   MAINTAINERS                                   |   17 -
->>   docs/about/deprecated.rst                     |    8 -
->>   docs/about/emulation.rst                      |    4 -
->>   docs/about/removed-features.rst               |    7 +
->>   docs/user/main.rst                            |    4 -
->>   configure                                     |    4 -
->>   configs/devices/cris-softmmu/default.mak      |    4 -
->>   configs/targets/cris-linux-user.mak           |    1 -
->>   configs/targets/cris-softmmu.mak              |    1 -
->>   meson.build                                   |    1 -
->>   qapi/machine.json                             |    2 +-
->>   hw/cris/boot.h                                |   16 -
->>   include/disas/dis-asm.h                       |    6 -
->>   include/exec/poison.h                         |    2 -
->>   include/hw/cris/etraxfs.h                     |   54 -
->>   include/hw/cris/etraxfs_dma.h                 |   36 -
->>   include/sysemu/arch_init.h                    |    1 -
->>   include/user/abitypes.h                       |    7 -
->>   linux-user/cris/sockbits.h                    |    1 -
->>   linux-user/cris/syscall_nr.h                  |  367 --
->>   linux-user/cris/target_cpu.h                  |   45 -
->>   linux-user/cris/target_elf.h                  |   14 -
->>   linux-user/cris/target_errno_defs.h           |    7 -
->>   linux-user/cris/target_fcntl.h                |   11 -
->>   linux-user/cris/target_mman.h                 |   13 -
->>   linux-user/cris/target_prctl.h                |    1 -
->>   linux-user/cris/target_proc.h                 |    1 -
->>   linux-user/cris/target_resource.h             |    1 -
->>   linux-user/cris/target_signal.h               |    9 -
->>   linux-user/cris/target_structs.h              |    1 -
->>   linux-user/cris/target_syscall.h              |   46 -
->>   linux-user/cris/termbits.h                    |  225 --
->>   linux-user/syscall_defs.h                     |    7 +-
->>   target/cris/cpu-param.h                       |   16 -
->>   target/cris/cpu-qom.h                         |   32 -
->>   target/cris/cpu.h                             |  286 --
->>   target/cris/crisv10-decode.h                  |  112 -
->>   target/cris/crisv32-decode.h                  |  133 -
->>   target/cris/helper.h                          |   23 -
->>   target/cris/mmu.h                             |   22 -
->>   target/cris/opcode-cris.h                     |  355 --
->>   tests/tcg/cris/libc/crisutils.h               |   76 -
->>   tests/tcg/cris/libc/sys.h                     |   18 -
->>   disas/cris.c                                  | 2863 ---------------
->>   hw/char/etraxfs_ser.c                         |  267 --
->>   hw/cris/axis_dev88.c                          |  351 --
->>   hw/cris/boot.c                                |  102 -
->>   hw/dma/etraxfs_dma.c                          |  781 ----
->>   hw/intc/etraxfs_pic.c                         |  172 -
->>   hw/net/etraxfs_eth.c                          |  688 ----
->>   hw/timer/etraxfs_timer.c                      |  407 ---
->>   linux-user/cris/cpu_loop.c                    |   95 -
->>   linux-user/cris/signal.c                      |  194 -
->>   linux-user/elfload.c                          |   15 -
->>   linux-user/syscall.c                          |   10 +-
->>   system/qemu-seccomp.c                         |    2 +-
->>   target/cris/cpu.c                             |  323 --
->>   target/cris/gdbstub.c                         |  127 -
->>   target/cris/helper.c                          |  287 --
->>   target/cris/machine.c                         |   93 -
->>   target/cris/mmu.c                             |  356 --
->>   target/cris/op_helper.c                       |  580 ---
->>   target/cris/translate.c                       | 3252 -----------------
->>   tests/qtest/machine-none-test.c               |    1 -
->>   tests/tcg/cris/bare/sys.c                     |   63 -
->>   tests/tcg/cris/libc/check_abs.c               |   40 -
->>   tests/tcg/cris/libc/check_addc.c              |   58 -
->>   tests/tcg/cris/libc/check_addcm.c             |   85 -
->>   tests/tcg/cris/libc/check_addo.c              |  125 -
->>   tests/tcg/cris/libc/check_addoq.c             |   44 -
->>   tests/tcg/cris/libc/check_bound.c             |  142 -
->>   tests/tcg/cris/libc/check_ftag.c              |   37 -
->>   .../cris/libc/check_gcctorture_pr28634-1.c    |   15 -
->>   .../tcg/cris/libc/check_gcctorture_pr28634.c  |   15 -
->>   .../tcg/cris/libc/check_glibc_kernelversion.c |  116 -
->>   tests/tcg/cris/libc/check_hello.c             |    7 -
->>   tests/tcg/cris/libc/check_int64.c             |   47 -
->>   tests/tcg/cris/libc/check_lz.c                |   49 -
->>   tests/tcg/cris/libc/check_mapbrk.c            |   39 -
->>   tests/tcg/cris/libc/check_mmap1.c             |   48 -
->>   tests/tcg/cris/libc/check_mmap2.c             |   48 -
->>   tests/tcg/cris/libc/check_mmap3.c             |   33 -
->>   tests/tcg/cris/libc/check_moveq.c             |   51 -
->>   tests/tcg/cris/libc/check_openpf1.c           |   38 -
->>   tests/tcg/cris/libc/check_openpf2.c           |   16 -
->>   tests/tcg/cris/libc/check_openpf3.c           |   49 -
->>   tests/tcg/cris/libc/check_openpf5.c           |   56 -
->>   tests/tcg/cris/libc/check_settls1.c           |   45 -
->>   tests/tcg/cris/libc/check_sigalrm.c           |   26 -
->>   tests/tcg/cris/libc/check_stat1.c             |   16 -
->>   tests/tcg/cris/libc/check_stat2.c             |   20 -
->>   tests/tcg/cris/libc/check_stat3.c             |   25 -
->>   tests/tcg/cris/libc/check_stat4.c             |   27 -
->>   tests/tcg/cris/libc/check_swap.c              |   76 -
->>   tests/tcg/cris/libc/check_time2.c             |   18 -
->>   fpu/softfloat-specialize.c.inc                |    4 +-
->>   target/cris/translate_v10.c.inc               | 1262 -------
->>   .gitlab-ci.d/buildtest.yml                    |    2 +-
->>   .gitlab-ci.d/container-cross.yml              |    5 -
->>   .gitlab-ci.d/crossbuild-template.yml          |    4 +-
->>   disas/meson.build                             |    1 -
->>   hw/Kconfig                                    |    1 -
->>   hw/char/meson.build                           |    1 -
->>   hw/cris/Kconfig                               |   11 -
->>   hw/cris/meson.build                           |    5 -
->>   hw/dma/meson.build                            |    1 -
->>   hw/intc/meson.build                           |    1 -
->>   hw/meson.build                                |    1 -
->>   hw/net/meson.build                            |    1 -
->>   hw/net/trace-events                           |    5 -
->>   hw/timer/meson.build                          |    1 -
->>   scripts/coverity-scan/COMPONENTS.md           |    3 -
->>   scripts/probe-gdb-support.py                  |    1 -
->>   target/Kconfig                                |    1 -
->>   target/cris/Kconfig                           |    2 -
->>   target/cris/meson.build                       |   17 -
->>   target/meson.build                            |    1 -
->>   tests/data/qobject/qdict.txt                  |    6 -
->>   tests/docker/Makefile.include                 |    1 -
->>   .../dockerfiles/fedora-cris-cross.docker      |   14 -
->>   tests/tcg/cris/.gdbinit                       |   11 -
->>   tests/tcg/cris/Makefile.target                |   62 -
->>   tests/tcg/cris/README                         |    1 -
->>   tests/tcg/cris/bare/check_addcv17.s           |   65 -
->>   tests/tcg/cris/bare/check_addi.s              |   57 -
->>   tests/tcg/cris/bare/check_addiv32.s           |   62 -
->>   tests/tcg/cris/bare/check_addm.s              |   96 -
->>   tests/tcg/cris/bare/check_addq.s              |   47 -
->>   tests/tcg/cris/bare/check_addr.s              |   96 -
->>   tests/tcg/cris/bare/check_addxc.s             |   91 -
->>   tests/tcg/cris/bare/check_addxm.s             |  106 -
->>   tests/tcg/cris/bare/check_addxr.s             |   96 -
->>   tests/tcg/cris/bare/check_andc.s              |   80 -
->>   tests/tcg/cris/bare/check_andm.s              |   90 -
->>   tests/tcg/cris/bare/check_andq.s              |   46 -
->>   tests/tcg/cris/bare/check_andr.s              |   95 -
->>   tests/tcg/cris/bare/check_asr.s               |  230 --
->>   tests/tcg/cris/bare/check_ba.s                |   93 -
->>   tests/tcg/cris/bare/check_bas.s               |  102 -
->>   tests/tcg/cris/bare/check_bcc.s               |  197 -
->>   tests/tcg/cris/bare/check_boundc.s            |  101 -
->>   tests/tcg/cris/bare/check_boundr.s            |  125 -
->>   tests/tcg/cris/bare/check_btst.s              |   96 -
->>   tests/tcg/cris/bare/check_clearfv32.s         |   19 -
->>   tests/tcg/cris/bare/check_clrjmp1.s           |   36 -
->>   tests/tcg/cris/bare/check_cmp-2.s             |   15 -
->>   tests/tcg/cris/bare/check_cmpc.s              |   86 -
->>   tests/tcg/cris/bare/check_cmpm.s              |   96 -
->>   tests/tcg/cris/bare/check_cmpq.s              |   75 -
->>   tests/tcg/cris/bare/check_cmpr.s              |  102 -
->>   tests/tcg/cris/bare/check_cmpxc.s             |   92 -
->>   tests/tcg/cris/bare/check_cmpxm.s             |  106 -
->>   tests/tcg/cris/bare/check_dstep.s             |   42 -
->>   tests/tcg/cris/bare/check_jsr.s               |   85 -
->>   tests/tcg/cris/bare/check_lapc.s              |   78 -
->>   tests/tcg/cris/bare/check_lsl.s               |  217 --
->>   tests/tcg/cris/bare/check_lsr.s               |  218 --
->>   tests/tcg/cris/bare/check_mcp.s               |   49 -
->>   tests/tcg/cris/bare/check_movdelsr1.s         |   33 -
->>   tests/tcg/cris/bare/check_movecr.s            |   37 -
->>   tests/tcg/cris/bare/check_movei.s             |   50 -
->>   tests/tcg/cris/bare/check_movemr.s            |   78 -
->>   tests/tcg/cris/bare/check_movemrv32.s         |   96 -
->>   tests/tcg/cris/bare/check_mover.s             |   28 -
->>   tests/tcg/cris/bare/check_moverm.s            |   45 -
->>   tests/tcg/cris/bare/check_movmp.s             |  131 -
->>   tests/tcg/cris/bare/check_movpmv32.s          |   35 -
->>   tests/tcg/cris/bare/check_movpr.s             |   28 -
->>   tests/tcg/cris/bare/check_movprv32.s          |   21 -
->>   tests/tcg/cris/bare/check_movscr.s            |   29 -
->>   tests/tcg/cris/bare/check_movsm.s             |   44 -
->>   tests/tcg/cris/bare/check_movsr.s             |   46 -
->>   tests/tcg/cris/bare/check_movucr.s            |   33 -
->>   tests/tcg/cris/bare/check_movum.s             |   40 -
->>   tests/tcg/cris/bare/check_movur.s             |   45 -
->>   tests/tcg/cris/bare/check_mulv32.s            |   51 -
->>   tests/tcg/cris/bare/check_mulx.s              |  257 --
->>   tests/tcg/cris/bare/check_neg.s               |  104 -
->>   tests/tcg/cris/bare/check_not.s               |   31 -
->>   tests/tcg/cris/bare/check_orc.s               |   71 -
->>   tests/tcg/cris/bare/check_orm.s               |   75 -
->>   tests/tcg/cris/bare/check_orq.s               |   41 -
->>   tests/tcg/cris/bare/check_orr.s               |   84 -
->>   tests/tcg/cris/bare/check_ret.s               |   25 -
->>   tests/tcg/cris/bare/check_scc.s               |   95 -
->>   tests/tcg/cris/bare/check_subc.s              |   87 -
->>   tests/tcg/cris/bare/check_subm.s              |   96 -
->>   tests/tcg/cris/bare/check_subq.s              |   52 -
->>   tests/tcg/cris/bare/check_subr.s              |  102 -
->>   tests/tcg/cris/bare/check_xarith.s            |   72 -
->>   tests/tcg/cris/bare/crt.s                     |   13 -
->>   tests/tcg/cris/bare/testutils.inc             |  117 -
->>   192 files changed, 18 insertions(+), 21324 deletions(-)
->>   delete mode 100644 configs/devices/cris-softmmu/default.mak
->>   delete mode 100644 configs/targets/cris-linux-user.mak
->>   delete mode 100644 configs/targets/cris-softmmu.mak
->>   delete mode 100644 hw/cris/boot.h
->>   delete mode 100644 include/hw/cris/etraxfs.h
->>   delete mode 100644 include/hw/cris/etraxfs_dma.h
->>   delete mode 100644 linux-user/cris/sockbits.h
->>   delete mode 100644 linux-user/cris/syscall_nr.h
->>   delete mode 100644 linux-user/cris/target_cpu.h
->>   delete mode 100644 linux-user/cris/target_elf.h
->>   delete mode 100644 linux-user/cris/target_errno_defs.h
->>   delete mode 100644 linux-user/cris/target_fcntl.h
->>   delete mode 100644 linux-user/cris/target_mman.h
->>   delete mode 100644 linux-user/cris/target_prctl.h
->>   delete mode 100644 linux-user/cris/target_proc.h
->>   delete mode 100644 linux-user/cris/target_resource.h
->>   delete mode 100644 linux-user/cris/target_signal.h
->>   delete mode 100644 linux-user/cris/target_structs.h
->>   delete mode 100644 linux-user/cris/target_syscall.h
->>   delete mode 100644 linux-user/cris/termbits.h
->>   delete mode 100644 target/cris/cpu-param.h
->>   delete mode 100644 target/cris/cpu-qom.h
->>   delete mode 100644 target/cris/cpu.h
->>   delete mode 100644 target/cris/crisv10-decode.h
->>   delete mode 100644 target/cris/crisv32-decode.h
->>   delete mode 100644 target/cris/helper.h
->>   delete mode 100644 target/cris/mmu.h
->>   delete mode 100644 target/cris/opcode-cris.h
->>   delete mode 100644 tests/tcg/cris/libc/crisutils.h
->>   delete mode 100644 tests/tcg/cris/libc/sys.h
->>   delete mode 100644 disas/cris.c
->>   delete mode 100644 hw/char/etraxfs_ser.c
->>   delete mode 100644 hw/cris/axis_dev88.c
->>   delete mode 100644 hw/cris/boot.c
->>   delete mode 100644 hw/dma/etraxfs_dma.c
->>   delete mode 100644 hw/intc/etraxfs_pic.c
->>   delete mode 100644 hw/net/etraxfs_eth.c
->>   delete mode 100644 hw/timer/etraxfs_timer.c
->>   delete mode 100644 linux-user/cris/cpu_loop.c
->>   delete mode 100644 linux-user/cris/signal.c
->>   delete mode 100644 target/cris/cpu.c
->>   delete mode 100644 target/cris/gdbstub.c
->>   delete mode 100644 target/cris/helper.c
->>   delete mode 100644 target/cris/machine.c
->>   delete mode 100644 target/cris/mmu.c
->>   delete mode 100644 target/cris/op_helper.c
->>   delete mode 100644 target/cris/translate.c
->>   delete mode 100644 tests/tcg/cris/bare/sys.c
->>   delete mode 100644 tests/tcg/cris/libc/check_abs.c
->>   delete mode 100644 tests/tcg/cris/libc/check_addc.c
->>   delete mode 100644 tests/tcg/cris/libc/check_addcm.c
->>   delete mode 100644 tests/tcg/cris/libc/check_addo.c
->>   delete mode 100644 tests/tcg/cris/libc/check_addoq.c
->>   delete mode 100644 tests/tcg/cris/libc/check_bound.c
->>   delete mode 100644 tests/tcg/cris/libc/check_ftag.c
->>   delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
->>   delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634.c
->>   delete mode 100644 tests/tcg/cris/libc/check_glibc_kernelversion.c
->>   delete mode 100644 tests/tcg/cris/libc/check_hello.c
->>   delete mode 100644 tests/tcg/cris/libc/check_int64.c
->>   delete mode 100644 tests/tcg/cris/libc/check_lz.c
->>   delete mode 100644 tests/tcg/cris/libc/check_mapbrk.c
->>   delete mode 100644 tests/tcg/cris/libc/check_mmap1.c
->>   delete mode 100644 tests/tcg/cris/libc/check_mmap2.c
->>   delete mode 100644 tests/tcg/cris/libc/check_mmap3.c
->>   delete mode 100644 tests/tcg/cris/libc/check_moveq.c
->>   delete mode 100644 tests/tcg/cris/libc/check_openpf1.c
->>   delete mode 100644 tests/tcg/cris/libc/check_openpf2.c
->>   delete mode 100644 tests/tcg/cris/libc/check_openpf3.c
->>   delete mode 100644 tests/tcg/cris/libc/check_openpf5.c
->>   delete mode 100644 tests/tcg/cris/libc/check_settls1.c
->>   delete mode 100644 tests/tcg/cris/libc/check_sigalrm.c
->>   delete mode 100644 tests/tcg/cris/libc/check_stat1.c
->>   delete mode 100644 tests/tcg/cris/libc/check_stat2.c
->>   delete mode 100644 tests/tcg/cris/libc/check_stat3.c
->>   delete mode 100644 tests/tcg/cris/libc/check_stat4.c
->>   delete mode 100644 tests/tcg/cris/libc/check_swap.c
->>   delete mode 100644 tests/tcg/cris/libc/check_time2.c
->>   delete mode 100644 target/cris/translate_v10.c.inc
->>   delete mode 100644 hw/cris/Kconfig
->>   delete mode 100644 hw/cris/meson.build
->>   delete mode 100644 target/cris/Kconfig
->>   delete mode 100644 target/cris/meson.build
->>   delete mode 100644 tests/docker/dockerfiles/fedora-cris-cross.docker
->>   delete mode 100644 tests/tcg/cris/.gdbinit
->>   delete mode 100644 tests/tcg/cris/Makefile.target
->>   delete mode 100644 tests/tcg/cris/README
->>   delete mode 100644 tests/tcg/cris/bare/check_addcv17.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addi.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addiv32.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addq.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addxc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addxm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_addxr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_andc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_andm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_andq.s
->>   delete mode 100644 tests/tcg/cris/bare/check_andr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_asr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_ba.s
->>   delete mode 100644 tests/tcg/cris/bare/check_bas.s
->>   delete mode 100644 tests/tcg/cris/bare/check_bcc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_boundc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_boundr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_btst.s
->>   delete mode 100644 tests/tcg/cris/bare/check_clearfv32.s
->>   delete mode 100644 tests/tcg/cris/bare/check_clrjmp1.s
->>   delete mode 100644 tests/tcg/cris/bare/check_cmp-2.s
->>   delete mode 100644 tests/tcg/cris/bare/check_cmpc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_cmpm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_cmpq.s
->>   delete mode 100644 tests/tcg/cris/bare/check_cmpr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_cmpxc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_cmpxm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_dstep.s
->>   delete mode 100644 tests/tcg/cris/bare/check_jsr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_lapc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_lsl.s
->>   delete mode 100644 tests/tcg/cris/bare/check_lsr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_mcp.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movdelsr1.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movecr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movei.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movemr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movemrv32.s
->>   delete mode 100644 tests/tcg/cris/bare/check_mover.s
->>   delete mode 100644 tests/tcg/cris/bare/check_moverm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movmp.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movpmv32.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movpr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movprv32.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movscr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movsm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movsr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movucr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movum.s
->>   delete mode 100644 tests/tcg/cris/bare/check_movur.s
->>   delete mode 100644 tests/tcg/cris/bare/check_mulv32.s
->>   delete mode 100644 tests/tcg/cris/bare/check_mulx.s
->>   delete mode 100644 tests/tcg/cris/bare/check_neg.s
->>   delete mode 100644 tests/tcg/cris/bare/check_not.s
->>   delete mode 100644 tests/tcg/cris/bare/check_orc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_orm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_orq.s
->>   delete mode 100644 tests/tcg/cris/bare/check_orr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_ret.s
->>   delete mode 100644 tests/tcg/cris/bare/check_scc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_subc.s
->>   delete mode 100644 tests/tcg/cris/bare/check_subm.s
->>   delete mode 100644 tests/tcg/cris/bare/check_subq.s
->>   delete mode 100644 tests/tcg/cris/bare/check_subr.s
->>   delete mode 100644 tests/tcg/cris/bare/check_xarith.s
->>   delete mode 100644 tests/tcg/cris/bare/crt.s
->>   delete mode 100644 tests/tcg/cris/bare/testutils.inc
+>>          retval = sysconf(name);
+>>          if (retval == -1) {
+>>              if (errno == current_errno) {
+>>                  return unsupported_default;
+>>              }
+>>              perror("sysconf");
+>>              return -1;
+>>          }
+>>          return retval;
+>>      }
 > 
-> This is an enormous diffstat for a single patch, even if it
-> is basically all deletions. (It took me ages just to select
-> and delete the patch text so I could make this reply, let
-> alone actually doing anything like review of it.) Could
-> you split it up a bit, please?
+> That looks uncessarily complicated, and IMHO makes it less
+> portable. eg consider macOS behaviour:
+> 
+>   "if the variable is associated with functionality that is
+>    not supported, -1 is returned and errno is not modified"
+> 
+> vs Linux documented behaviour:
+> 
+>    "If name corresponds to a maximum or minimum limit, and
+>     that limit is indeterminate, -1 is returned and errno
+>     is  not  changed."
+> 
+> IMHO we should do what Clément already suggested and set a
+> default anytime retval == -1, and ignore errno. There is
+> no user benefit from turning errnos into a fatal error
+> via perror()
 
-Sorry, sure.
-
+Fine by me.
 
