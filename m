@@ -4,95 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEA4CD342F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 08:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1481CD13CF
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 08:36:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slOTv-0007Qx-2V; Tue, 03 Sep 2024 04:01:43 -0400
+	id 1slP0n-0002jG-LN; Tue, 03 Sep 2024 04:35:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slOT6-0006xV-6t
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 04:00:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1slP0l-0002Za-6L; Tue, 03 Sep 2024 04:35:39 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slOT4-0004Vk-8e
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 04:00:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725350448;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VQgES2SHE5kJKblMfzziYGbwwaww6AKxF4Mqvc0CMjU=;
- b=Hsdx1eo30iE1ncNNV9bB0TxE8b0V+Q9o0iwunQ9tVn/z2kZkBzqvkuzjs7zR25omGDAnjc
- 87FXf7BkY2I+uFMH00ppIvwXdRjqiMz6DGOKA4fQAzpCSaVbp/6npk7I80w4dAk7tfOC65
- xk54NRHOQ97MqFFkgDBY0crKcYIRfRI=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621--ZRYfZFbPwS-ilZQCNw_FQ-1; Tue, 03 Sep 2024 04:00:47 -0400
-X-MC-Unique: -ZRYfZFbPwS-ilZQCNw_FQ-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2056364914eso15979955ad.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 01:00:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725350446; x=1725955246;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VQgES2SHE5kJKblMfzziYGbwwaww6AKxF4Mqvc0CMjU=;
- b=uhZhELCKbEYSI9odNeBLoVIQtsqOGVoBy/G8G4895p9uIx9OyzvM+cmVrXmSJUkkYm
- wTZ87RRhiOldlCzxxRX1A5l/Iv522nCWWKDU/O16kSz5KfSbV2TCjXJxGIpipWgJimN4
- HzW20bmkI5IopOV7fAGyqWvxlJ4qluRZ1d+lA/z340dGDsfpOj+FD5FP4ZdjD+vjGCbO
- 47sKoXOdIxhCZ60GxHGnbQXztVubCFRAUCBLIadOgFOjuNaGleEpcdkvsG2zbIOGt9W2
- tXKnGzggTXTSqyMrOzYUIyn6fHLVq/7qtdkWqwXDh4Cl1vq6kUYMd0lZlpi9uEahQcCb
- lTrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5fObPQURKja+S7/1g3iKrIIxPfyq8AEcfvf2WEqfv/g5oUJaZBWfiS0yQXiojPNAa7sWB6dNwViQy@nongnu.org
-X-Gm-Message-State: AOJu0Yx4J8pV2y/UewVQZvd+hxMX2ONH5h0FiD2qfOnMQkpcYFfOP5X7
- x3262cZhKRZ2l8b/BzeUY85SFL2JHU2++WVmx8h6waJYgmMWPl006wtsqgsPpbEO+NJEYKwB+yN
- jpotZbDEu+Oxo+uv69w+6NxaTJQQeQ2Ol+CfMGX4qCuLwYu8f753L
-X-Received: by 2002:a17:902:f650:b0:205:5de3:b964 with SMTP id
- d9443c01a7336-2055de3bbe9mr48274395ad.5.1725350444988; 
- Tue, 03 Sep 2024 01:00:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE45T9KeHgvKqCeFSvDtKlTMmyS8e/LokVC/OmwOZsaymL1yoXxJHhvPGWygRz6isjqiTrYRA==
-X-Received: by 2002:a17:902:f650:b0:205:5de3:b964 with SMTP id
- d9443c01a7336-2055de3bbe9mr48274095ad.5.1725350444454; 
- Tue, 03 Sep 2024 01:00:44 -0700 (PDT)
-Received: from smtpclient.apple ([115.96.207.26])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20515537813sm76088755ad.156.2024.09.03.01.00.42
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 03 Sep 2024 01:00:44 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: [PATCH] kvm/i386: fix a check that ensures we are running on host
- intel CPU
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <32332f54-0c20-434c-be43-e4e00bcebe29@redhat.com>
-Date: Tue, 3 Sep 2024 13:30:30 +0530
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B9CFEBF6-A926-442F-96F4-1F1345D8E921@redhat.com>
-References: <20240903071942.32058-1-anisinha@redhat.com>
- <32332f54-0c20-434c-be43-e4e00bcebe29@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1slP0i-00084x-T5; Tue, 03 Sep 2024 04:35:38 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 3 Sep
+ 2024 16:35:28 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Tue, 3 Sep 2024 16:35:28 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Wainer dos
+ Santos Moschetta" <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
+ here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v3 00/11] support I2C for AST2700
+Date: Tue, 3 Sep 2024 16:35:17 +0800
+Message-ID: <20240903083528.2182190-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,52 +63,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+v1:
+- support I2C for AST2700
 
+v2:
+- fix review issues and add reviewer suggestion
+- update avocado test case for AST2700 I2C
+- support i2c bus pool
 
-> On 3 Sep 2024, at 1:13=E2=80=AFPM, Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->=20
-> On 9/3/24 09:19, Ani Sinha wrote:
->> is_host_cpu_intel() returns TRUE if the host cpu in Intel based. RAPL =
-needs
->> Intel host cpus. If the host CPU is not Intel baseed, we should =
-report error.
->> Fix the check accordingly.
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->=20
-> It's the function that is returning the incorrect value too; so your =
-patch is breaking the feature: this line in is_host_cpu_intel()
->=20
-> return strcmp(vendor, CPUID_VENDOR_INTEL);
->=20
-> needs to be changed to use g_str_equal.
+v3:
+- update commit messages and commit title
+- update API to get the device irq
 
-Ah that is why it got unnoticed as programatically it was not broken. I =
-will send a v2.
+Jamin Lin (11):
+  hw/i2c/aspeed: Support discontinuous register memory region of I2C bus
+  hw/i2c/aspeed: Introduce a new bus pool buffer attribute in
+    AspeedI2Cbus
+  hw/i2c/aspeed: Support discontinuous poll buffer memory region of I2C
+    bus
+  hw/i2c/aspeed: Introduce a new dma_dram_offset attribute in
+    AspeedI2Cbus
+  hw/i2c/aspeed: Add AST2700 support
+  hw/i2c/aspeed: Add support for Tx/Rx buffer 64 bit addresses
+  hw/i2c/aspeed: Add support for 64 bit addresses
+  aspeed/soc: Introduce a new API to get the device irq
+  aspeed/soc: Support I2C for AST2700
+  aspeed: Add tmp105 in i2c bus 0 for AST2700
+  machine_aspeed.py: Update to test I2C for AST2700
 
->=20
-> Paolo
->=20
->> ---
->>  target/i386/kvm/kvm.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
->> index 11c7619bfd..503e8d956e 100644
->> --- a/target/i386/kvm/kvm.c
->> +++ b/target/i386/kvm/kvm.c
->> @@ -2898,7 +2898,7 @@ static int kvm_msr_energy_thread_init(KVMState =
-*s, MachineState *ms)
->>       * 1. Host cpu must be Intel cpu
->>       * 2. RAPL must be enabled on the Host
->>       */
->> -    if (is_host_cpu_intel()) {
->> +    if (!is_host_cpu_intel()) {
->>          error_report("The RAPL feature can only be enabled on hosts\
->>                        with Intel CPU models");
->>          ret =3D 1;
->=20
+ hw/arm/aspeed.c                 |  10 ++
+ hw/arm/aspeed_ast27x0.c         |  45 +++++
+ hw/i2c/aspeed_i2c.c             | 310 ++++++++++++++++++++++++++++----
+ include/hw/i2c/aspeed_i2c.h     |  28 ++-
+ tests/avocado/machine_aspeed.py |  16 ++
+ 5 files changed, 362 insertions(+), 47 deletions(-)
+
+-- 
+2.34.1
 
 
