@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DBBDCD379F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39D3CD37AA
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW56-000723-Ln; Tue, 03 Sep 2024 12:08:36 -0400
+	id 1slW4r-00062P-RQ; Tue, 03 Sep 2024 12:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW55-0006wq-BX
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:35 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1slW4p-0005ru-Rg
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:19 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW50-0002ny-LJ
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:35 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-42bbe809b06so34545865e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:30 -0700 (PDT)
+ id 1slW4l-0002k3-6o
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:19 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-533496017f8so7423055e87.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379709; x=1725984509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379692; x=1725984492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5unmeuI8alOgM/XhlyusQhY9aV4SblS1jZdNnLGY91Q=;
- b=tlZd0x2AEzt00YKP6EfVjfn3WTpGjpxkfMCFBs9XZfIF+6SRghWmpvwhHdTmQ86QwS
- aNozQygFCVsAsA8x2TISVg9mXsQyNr5+gwhqsj9yhYUc9q65kZe3uzfhRDZxau2Ilxf7
- 63lNlhldIJXGnx00oM/oEdQ38AtS+wriqY4jgnKyA6rpDA6dNfX/Y+uqVUEcYrVSyqdR
- P8f+CnTedEaj9fjW8e7Bk3J4YgznDOZ/lFkoNzgdR099rvS6nT2ZwYEg/m03oCy58C4C
- /gxPe/ieqXLvPjmN+M+QVjDoVtlTtqYDQmXTXUP6wRuYyjoNlt+07lydWgRclykFmWKH
- 76uw==
+ :reply-to; bh=4XZ7NOx/WtVIQqrk01ux4dOB629Yo/Ds1l4cW4PljMY=;
+ b=DW+3XEP1Pi9Us1XjOb7IFupTSqr5qPoVI5Uz9nguQWNLwlFR5k9gvgEgGFuTYPJIYD
+ Cj8tbPCAYoPV13GArvW3Vj0vUyYdunWwqNEH7XHG69UqYesW5HLn9B0D96L8tBENQqx1
+ u9H4vpH3k7uv+QTSbre2nf0FdLcf1Ryfcz9oTE4lQzSnB8Dv7Hwrjwm1MzGucnYOcsdO
+ YmAXbs/n1AB10tcQXBnw5z9cM8feCZs/3s174Syhudy9mOUtsd7jw8pawZ5JQoWKcWXZ
+ U95Jh9NNbdvChFYux9F8OPa5FEc638stnXQmrqWjrVCdWUb6fPPANGiRsqmHAGTv5+0O
+ wtgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379709; x=1725984509;
+ d=1e100.net; s=20230601; t=1725379692; x=1725984492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5unmeuI8alOgM/XhlyusQhY9aV4SblS1jZdNnLGY91Q=;
- b=mNNscarKLOTEbOHBobQH+sNyZfkHySrJ5q5hGRV91YKK0dFSVsS9KKXoRHjo2uNab5
- lFZnImbHDVKNZ8u/mJ+o2N7EF2+Hbyr5PbjC5XjrpiEbRqiqk9DQ9VbAp+eQsPknNGOJ
- iaMh5YwSSZmb5Cf0/v2OIPbbQ5WGhJAdY2WVg3bHLL0BstSS5r5ffFPFRTx9TePwQ6zO
- Z2nbXInrO1EaALnJ5TCJ1AzakMfkUB17A+6fWvc9iCbBPqgzVk50CdGb2yD7GSaGEUx3
- BL8ZR6FVI1VeO8O6RWrjv+4+DaThHvCIRunxDs6E5zTvbGW/Zop3JcvTtuSVkH5l/omd
- GOyA==
+ bh=4XZ7NOx/WtVIQqrk01ux4dOB629Yo/Ds1l4cW4PljMY=;
+ b=k75g6kuDeebdTeZWUiUPzXQrKP7p5ELbkc4eZewuYAxWVSiQYWnSmBOd76agKm6njC
+ Zzj5/1bJvw8bFRNY3SsPY8E986Pb2xZK67KZhZ9gq4tMrJN+mYuYw/B+MjfLk51c+E0B
+ CHT9HsMuZQrlt54/6XN2mdhib9YiocE47eXbO1oDT38LcWuQOzo7Z4SHXLVfrYQ4KDzn
+ YKWfPYWWluebL4XqbO48AMqx69jbGUAsFEjOKJciiIvQMnGAeJsfsO+bg6Qai0wodNl7
+ fXGc98Q/hDuGWVaKrnkh0Ggdol9rEaaRNIbYYx9TZczxML2oXqrozKLeZKDy+Fr1En3K
+ kUug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4/Tp6uQYQzCiu7CBZAL0GyXrlpnUJMHecCt5TENrFHj2mOH1V25zSC9I4vMvr9afugMLdy43abHVs@nongnu.org
-X-Gm-Message-State: AOJu0Yxg5tU4UXwqwjqg9F6Uqirim47sVwcDcwm0UF3BHN3vj6WwN3wY
- fXI2fUoq/jvTSOQnxlQpz38idj1mTwEM+Q3e6VnrQScspOONjdfK3DzLplTf/N1dkSZ5dnV6jo8
- O
-X-Google-Smtp-Source: AGHT+IFBmumiEaifNwvZ5zjKCPDzU5G5T5Q7/nELdweyArKKVvCSdi/XweRXKWXV2tv0e8DrcQwJmQ==
-X-Received: by 2002:a05:600c:19c6:b0:428:1e8c:ff75 with SMTP id
- 5b1f17b1804b1-42bb27bc825mr133913535e9.35.1725379709077; 
- Tue, 03 Sep 2024 09:08:29 -0700 (PDT)
+ AJvYcCX5sciJTVbbuF/uiuTZxLDApRieStxfQ8agKpx/8D10kVzLkA077SJjvukosoA7fZnexVLSnGsiwm9z@nongnu.org
+X-Gm-Message-State: AOJu0YzROOM6Z7sN46WtzpN1oTkGYVPL66Jzp8bMls3rmbLqa7I5lOEM
+ EgWsV2ge5bcd8MhvWYVWZW27ORVKDwEM0uVOFYyq/JuxS/dqwBQkrbVmJFKZ3Ev0ETf9TTfX8YQ
+ F
+X-Google-Smtp-Source: AGHT+IGVX+H8QJXOxhgG88Ijc58u0AYSQw/GKKKtW6pZQCo6D+8TtgUtzmVI+UGLYI96PnN+QMFm6A==
+X-Received: by 2002:a05:6512:138d:b0:533:4bd0:df69 with SMTP id
+ 2adb3069b0e04-53546b9cdcbmr9082639e87.55.1725379692364; 
+ Tue, 03 Sep 2024 09:08:12 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.26
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:26 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:12 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 19/53] hw/dma: Remove pxa2xx_dma
-Date: Tue,  3 Sep 2024 17:07:17 +0100
-Message-Id: <20240903160751.4100218-20-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 12/53] hw/arm: Remove 'z2' machine
+Date: Tue,  3 Sep 2024 17:07:10 +0100
+Message-Id: <20240903160751.4100218-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,640 +95,435 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the pxa2xx-specific pxa2xx_dma device.
+The 'z2' machine was deprecated in 9.0, so we can remove it for
+9.2.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/pxa.h |   4 -
- hw/dma/pxa2xx_dma.c  | 591 -------------------------------------------
- hw/dma/meson.build   |   1 -
- 3 files changed, 596 deletions(-)
- delete mode 100644 hw/dma/pxa2xx_dma.c
+ MAINTAINERS                             |   1 -
+ configs/devices/arm-softmmu/default.mak |   1 -
+ hw/arm/z2.c                             | 355 ------------------------
+ hw/arm/Kconfig                          |   9 -
+ hw/arm/meson.build                      |   1 -
+ 5 files changed, 367 deletions(-)
+ delete mode 100644 hw/arm/z2.c
 
-diff --git a/include/hw/arm/pxa.h b/include/hw/arm/pxa.h
-index ef7976e1821..944926e514b 100644
---- a/include/hw/arm/pxa.h
-+++ b/include/hw/arm/pxa.h
-@@ -76,10 +76,6 @@ DeviceState *pxa2xx_gpio_init(hwaddr base,
-                               ARMCPU *cpu, DeviceState *pic, int lines);
- void pxa2xx_gpio_read_notifier(DeviceState *dev, qemu_irq handler);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fd4e8b0d705..8ca445ad5a0 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -907,7 +907,6 @@ PXA2XX
+ M: Peter Maydell <peter.maydell@linaro.org>
+ L: qemu-arm@nongnu.org
+ S: Odd Fixes
+-F: hw/arm/z2.c
+ F: hw/*/pxa2xx*
+ F: include/hw/arm/pxa.h
  
--/* pxa2xx_dma.c */
--DeviceState *pxa255_dma_init(hwaddr base, qemu_irq irq);
--DeviceState *pxa27x_dma_init(hwaddr base, qemu_irq irq);
--
- /* pxa2xx_pcmcia.c */
- #define TYPE_PXA2XX_PCMCIA "pxa2xx-pcmcia"
- OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxPCMCIAState, PXA2XX_PCMCIA)
-diff --git a/hw/dma/pxa2xx_dma.c b/hw/dma/pxa2xx_dma.c
+diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
+index 547100a06f3..260b0cf9772 100644
+--- a/configs/devices/arm-softmmu/default.mak
++++ b/configs/devices/arm-softmmu/default.mak
+@@ -27,7 +27,6 @@
+ # CONFIG_VERSATILE=n
+ # CONFIG_VEXPRESS=n
+ # CONFIG_ZYNQ=n
+-# CONFIG_Z2=n
+ # CONFIG_NPCM7XX=n
+ # CONFIG_COLLIE=n
+ # CONFIG_ASPEED_SOC=n
+diff --git a/hw/arm/z2.c b/hw/arm/z2.c
 deleted file mode 100644
-index 9f62f0b633b..00000000000
---- a/hw/dma/pxa2xx_dma.c
+index fc5672e7ab2..00000000000
+--- a/hw/arm/z2.c
 +++ /dev/null
-@@ -1,591 +0,0 @@
+@@ -1,355 +0,0 @@
 -/*
-- * Intel XScale PXA255/270 DMA controller.
+- * PXA270-based Zipit Z2 device
 - *
-- * Copyright (c) 2006 Openedhand Ltd.
-- * Copyright (c) 2006 Thorsten Zitterell
-- * Written by Andrzej Zaborowski <balrog@zabor.org>
+- * Copyright (c) 2011 by Vasily Khoruzhick <anarsoul@gmail.com>
 - *
-- * This code is licensed under the GPL.
+- * Code is based on mainstone platform.
+- *
+- * This code is licensed under the GNU GPL v2.
+- *
+- * Contributions after 2012-01-13 are licensed under the terms of the
+- * GNU GPL, version 2 or (at your option) any later version.
 - */
 -
 -#include "qemu/osdep.h"
--#include "qemu/log.h"
--#include "hw/hw.h"
--#include "hw/irq.h"
--#include "hw/qdev-properties.h"
+-#include "qemu/units.h"
 -#include "hw/arm/pxa.h"
--#include "hw/sysbus.h"
+-#include "hw/arm/boot.h"
+-#include "hw/i2c/i2c.h"
+-#include "hw/irq.h"
+-#include "hw/ssi/ssi.h"
 -#include "migration/vmstate.h"
--#include "qapi/error.h"
--#include "qemu/module.h"
+-#include "hw/boards.h"
+-#include "hw/block/flash.h"
+-#include "ui/console.h"
+-#include "hw/audio/wm8750.h"
+-#include "audio/audio.h"
+-#include "exec/address-spaces.h"
 -#include "qom/object.h"
+-#include "qapi/error.h"
+-#include "trace.h"
 -
--#define PXA255_DMA_NUM_CHANNELS 16
--#define PXA27X_DMA_NUM_CHANNELS 32
--
--#define PXA2XX_DMA_NUM_REQUESTS 75
--
--typedef struct {
--    uint32_t descr;
--    uint32_t src;
--    uint32_t dest;
--    uint32_t cmd;
--    uint32_t state;
--    int request;
--} PXA2xxDMAChannel;
--
--#define TYPE_PXA2XX_DMA "pxa2xx-dma"
--OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxDMAState, PXA2XX_DMA)
--
--struct PXA2xxDMAState {
--    SysBusDevice parent_obj;
--
--    MemoryRegion iomem;
--    qemu_irq irq;
--
--    uint32_t stopintr;
--    uint32_t eorintr;
--    uint32_t rasintr;
--    uint32_t startintr;
--    uint32_t endintr;
--
--    uint32_t align;
--    uint32_t pio;
--
--    int channels;
--    PXA2xxDMAChannel *chan;
--
--    uint8_t req[PXA2XX_DMA_NUM_REQUESTS];
--
--    /* Flag to avoid recursive DMA invocations.  */
--    int running;
+-static const struct keymap map[0x100] = {
+-    [0 ... 0xff] = { -1, -1 },
+-    [0x3b] = {0, 0}, /* Option = F1 */
+-    [0xc8] = {0, 1}, /* Up */
+-    [0xd0] = {0, 2}, /* Down */
+-    [0xcb] = {0, 3}, /* Left */
+-    [0xcd] = {0, 4}, /* Right */
+-    [0xcf] = {0, 5}, /* End */
+-    [0x0d] = {0, 6}, /* KPPLUS */
+-    [0xc7] = {1, 0}, /* Home */
+-    [0x10] = {1, 1}, /* Q */
+-    [0x17] = {1, 2}, /* I */
+-    [0x22] = {1, 3}, /* G */
+-    [0x2d] = {1, 4}, /* X */
+-    [0x1c] = {1, 5}, /* Enter */
+-    [0x0c] = {1, 6}, /* KPMINUS */
+-    [0xc9] = {2, 0}, /* PageUp */
+-    [0x11] = {2, 1}, /* W */
+-    [0x18] = {2, 2}, /* O */
+-    [0x23] = {2, 3}, /* H */
+-    [0x2e] = {2, 4}, /* C */
+-    [0x38] = {2, 5}, /* LeftAlt */
+-    [0xd1] = {3, 0}, /* PageDown */
+-    [0x12] = {3, 1}, /* E */
+-    [0x19] = {3, 2}, /* P */
+-    [0x24] = {3, 3}, /* J */
+-    [0x2f] = {3, 4}, /* V */
+-    [0x2a] = {3, 5}, /* LeftShift */
+-    [0x01] = {4, 0}, /* Esc */
+-    [0x13] = {4, 1}, /* R */
+-    [0x1e] = {4, 2}, /* A */
+-    [0x25] = {4, 3}, /* K */
+-    [0x30] = {4, 4}, /* B */
+-    [0x1d] = {4, 5}, /* LeftCtrl */
+-    [0x0f] = {5, 0}, /* Tab */
+-    [0x14] = {5, 1}, /* T */
+-    [0x1f] = {5, 2}, /* S */
+-    [0x26] = {5, 3}, /* L */
+-    [0x31] = {5, 4}, /* N */
+-    [0x39] = {5, 5}, /* Space */
+-    [0x3c] = {6, 0}, /* Stop = F2 */
+-    [0x15] = {6, 1}, /* Y */
+-    [0x20] = {6, 2}, /* D */
+-    [0x0e] = {6, 3}, /* Backspace */
+-    [0x32] = {6, 4}, /* M */
+-    [0x33] = {6, 5}, /* Comma */
+-    [0x3d] = {7, 0}, /* Play = F3 */
+-    [0x16] = {7, 1}, /* U */
+-    [0x21] = {7, 2}, /* F */
+-    [0x2c] = {7, 3}, /* Z */
+-    [0x27] = {7, 4}, /* Semicolon */
+-    [0x34] = {7, 5}, /* Dot */
 -};
 -
--#define DCSR0	0x0000	/* DMA Control / Status register for Channel 0 */
--#define DCSR31	0x007c	/* DMA Control / Status register for Channel 31 */
--#define DALGN	0x00a0	/* DMA Alignment register */
--#define DPCSR	0x00a4	/* DMA Programmed I/O Control Status register */
--#define DRQSR0	0x00e0	/* DMA DREQ<0> Status register */
--#define DRQSR1	0x00e4	/* DMA DREQ<1> Status register */
--#define DRQSR2	0x00e8	/* DMA DREQ<2> Status register */
--#define DINT	0x00f0	/* DMA Interrupt register */
--#define DRCMR0	0x0100	/* Request to Channel Map register 0 */
--#define DRCMR63	0x01fc	/* Request to Channel Map register 63 */
--#define D_CH0	0x0200	/* Channel 0 Descriptor start */
--#define DRCMR64	0x1100	/* Request to Channel Map register 64 */
--#define DRCMR74	0x1128	/* Request to Channel Map register 74 */
+-#define Z2_RAM_SIZE     0x02000000
+-#define Z2_FLASH_BASE   0x00000000
+-#define Z2_FLASH_SIZE   0x00800000
 -
--/* Per-channel register */
--#define DDADR	0x00
--#define DSADR	0x01
--#define DTADR	0x02
--#define DCMD	0x03
+-static struct arm_boot_info z2_binfo = {
+-    .loader_start   = PXA2XX_SDRAM_BASE,
+-    .ram_size       = Z2_RAM_SIZE,
+-};
 -
--/* Bit-field masks */
--#define DRCMR_CHLNUM		0x1f
--#define DRCMR_MAPVLD		(1 << 7)
--#define DDADR_STOP		(1 << 0)
--#define DDADR_BREN		(1 << 1)
--#define DCMD_LEN		0x1fff
--#define DCMD_WIDTH(x)		(1 << ((((x) >> 14) & 3) - 1))
--#define DCMD_SIZE(x)		(4 << (((x) >> 16) & 3))
--#define DCMD_FLYBYT		(1 << 19)
--#define DCMD_FLYBYS		(1 << 20)
--#define DCMD_ENDIRQEN		(1 << 21)
--#define DCMD_STARTIRQEN		(1 << 22)
--#define DCMD_CMPEN		(1 << 25)
--#define DCMD_FLOWTRG		(1 << 28)
--#define DCMD_FLOWSRC		(1 << 29)
--#define DCMD_INCTRGADDR		(1 << 30)
--#define DCMD_INCSRCADDR		(1 << 31)
--#define DCSR_BUSERRINTR		(1 << 0)
--#define DCSR_STARTINTR		(1 << 1)
--#define DCSR_ENDINTR		(1 << 2)
--#define DCSR_STOPINTR		(1 << 3)
--#define DCSR_RASINTR		(1 << 4)
--#define DCSR_REQPEND		(1 << 8)
--#define DCSR_EORINT		(1 << 9)
--#define DCSR_CMPST		(1 << 10)
--#define DCSR_MASKRUN		(1 << 22)
--#define DCSR_RASIRQEN		(1 << 23)
--#define DCSR_CLRCMPST		(1 << 24)
--#define DCSR_SETCMPST		(1 << 25)
--#define DCSR_EORSTOPEN		(1 << 26)
--#define DCSR_EORJMPEN		(1 << 27)
--#define DCSR_EORIRQEN		(1 << 28)
--#define DCSR_STOPIRQEN		(1 << 29)
--#define DCSR_NODESCFETCH	(1 << 30)
--#define DCSR_RUN		(1 << 31)
+-#define Z2_GPIO_SD_DETECT   96
+-#define Z2_GPIO_AC_IN       0
+-#define Z2_GPIO_KEY_ON      1
+-#define Z2_GPIO_LCD_CS      88
 -
--static inline void pxa2xx_dma_update(PXA2xxDMAState *s, int ch)
+-struct ZipitLCD {
+-    SSIPeripheral ssidev;
+-    int32_t selected;
+-    int32_t enabled;
+-    uint8_t buf[3];
+-    uint32_t cur_reg;
+-    int pos;
+-};
+-
+-#define TYPE_ZIPIT_LCD "zipit-lcd"
+-OBJECT_DECLARE_SIMPLE_TYPE(ZipitLCD, ZIPIT_LCD)
+-
+-static uint32_t zipit_lcd_transfer(SSIPeripheral *dev, uint32_t value)
 -{
--    if (ch >= 0) {
--        if ((s->chan[ch].state & DCSR_STOPIRQEN) &&
--                (s->chan[ch].state & DCSR_STOPINTR))
--            s->stopintr |= 1 << ch;
--        else
--            s->stopintr &= ~(1 << ch);
+-    ZipitLCD *z = ZIPIT_LCD(dev);
+-    uint16_t val;
 -
--        if ((s->chan[ch].state & DCSR_EORIRQEN) &&
--                (s->chan[ch].state & DCSR_EORINT))
--            s->eorintr |= 1 << ch;
--        else
--            s->eorintr &= ~(1 << ch);
--
--        if ((s->chan[ch].state & DCSR_RASIRQEN) &&
--                (s->chan[ch].state & DCSR_RASINTR))
--            s->rasintr |= 1 << ch;
--        else
--            s->rasintr &= ~(1 << ch);
--
--        if (s->chan[ch].state & DCSR_STARTINTR)
--            s->startintr |= 1 << ch;
--        else
--            s->startintr &= ~(1 << ch);
--
--        if (s->chan[ch].state & DCSR_ENDINTR)
--            s->endintr |= 1 << ch;
--        else
--            s->endintr &= ~(1 << ch);
+-    trace_z2_lcd_reg_update(z->cur_reg, z->buf[0], z->buf[1], z->buf[2], value);
+-    if (z->selected) {
+-        z->buf[z->pos] = value & 0xff;
+-        z->pos++;
 -    }
--
--    if (s->stopintr | s->eorintr | s->rasintr | s->startintr | s->endintr)
--        qemu_irq_raise(s->irq);
--    else
--        qemu_irq_lower(s->irq);
--}
--
--static inline void pxa2xx_dma_descriptor_fetch(
--                PXA2xxDMAState *s, int ch)
--{
--    uint32_t desc[4];
--    hwaddr daddr = s->chan[ch].descr & ~0xf;
--    if ((s->chan[ch].descr & DDADR_BREN) && (s->chan[ch].state & DCSR_CMPST))
--        daddr += 32;
--
--    cpu_physical_memory_read(daddr, desc, 16);
--    s->chan[ch].descr = desc[DDADR];
--    s->chan[ch].src = desc[DSADR];
--    s->chan[ch].dest = desc[DTADR];
--    s->chan[ch].cmd = desc[DCMD];
--
--    if (s->chan[ch].cmd & DCMD_FLOWSRC)
--        s->chan[ch].src &= ~3;
--    if (s->chan[ch].cmd & DCMD_FLOWTRG)
--        s->chan[ch].dest &= ~3;
--
--    if (s->chan[ch].cmd & (DCMD_CMPEN | DCMD_FLYBYS | DCMD_FLYBYT))
--        printf("%s: unsupported mode in channel %i\n", __func__, ch);
--
--    if (s->chan[ch].cmd & DCMD_STARTIRQEN)
--        s->chan[ch].state |= DCSR_STARTINTR;
--}
--
--static void pxa2xx_dma_run(PXA2xxDMAState *s)
--{
--    int c, srcinc, destinc;
--    uint32_t n, size;
--    uint32_t width;
--    uint32_t length;
--    uint8_t buffer[32];
--    PXA2xxDMAChannel *ch;
--
--    if (s->running ++)
--        return;
--
--    while (s->running) {
--        s->running = 1;
--        for (c = 0; c < s->channels; c ++) {
--            ch = &s->chan[c];
--
--            while ((ch->state & DCSR_RUN) && !(ch->state & DCSR_STOPINTR)) {
--                /* Test for pending requests */
--                if ((ch->cmd & (DCMD_FLOWSRC | DCMD_FLOWTRG)) && !ch->request)
--                    break;
--
--                length = ch->cmd & DCMD_LEN;
--                size = DCMD_SIZE(ch->cmd);
--                width = DCMD_WIDTH(ch->cmd);
--
--                srcinc = (ch->cmd & DCMD_INCSRCADDR) ? width : 0;
--                destinc = (ch->cmd & DCMD_INCTRGADDR) ? width : 0;
--
--                while (length) {
--                    size = MIN(length, size);
--
--                    for (n = 0; n < size; n += width) {
--                        cpu_physical_memory_read(ch->src, buffer + n, width);
--                        ch->src += srcinc;
--                    }
--
--                    for (n = 0; n < size; n += width) {
--                        cpu_physical_memory_write(ch->dest, buffer + n, width);
--                        ch->dest += destinc;
--                    }
--
--                    length -= size;
--
--                    if ((ch->cmd & (DCMD_FLOWSRC | DCMD_FLOWTRG)) &&
--                            !ch->request) {
--                        ch->state |= DCSR_EORINT;
--                        if (ch->state & DCSR_EORSTOPEN)
--                            ch->state |= DCSR_STOPINTR;
--                        if ((ch->state & DCSR_EORJMPEN) &&
--                                        !(ch->state & DCSR_NODESCFETCH))
--                            pxa2xx_dma_descriptor_fetch(s, c);
--                        break;
--                    }
--                }
--
--                ch->cmd = (ch->cmd & ~DCMD_LEN) | length;
--
--                /* Is the transfer complete now? */
--                if (!length) {
--                    if (ch->cmd & DCMD_ENDIRQEN)
--                        ch->state |= DCSR_ENDINTR;
--
--                    if ((ch->state & DCSR_NODESCFETCH) ||
--                                (ch->descr & DDADR_STOP) ||
--                                (ch->state & DCSR_EORSTOPEN)) {
--                        ch->state |= DCSR_STOPINTR;
--                        ch->state &= ~DCSR_RUN;
--
--                        break;
--                    }
--
--                    ch->state |= DCSR_STOPINTR;
--                    break;
--                }
+-    if (z->pos == 3) {
+-        switch (z->buf[0]) {
+-        case 0x74:
+-            z->cur_reg = z->buf[2];
+-            break;
+-        case 0x76:
+-            val = z->buf[1] << 8 | z->buf[2];
+-            if (z->cur_reg == 0x22 && val == 0x0000) {
+-                z->enabled = 1;
+-                trace_z2_lcd_enable_disable_result("enabled");
+-            } else if (z->cur_reg == 0x10 && val == 0x0000) {
+-                z->enabled = 0;
+-                trace_z2_lcd_enable_disable_result("disabled");
 -            }
--        }
--
--        s->running --;
--    }
--}
--
--static uint64_t pxa2xx_dma_read(void *opaque, hwaddr offset,
--                                unsigned size)
--{
--    PXA2xxDMAState *s = (PXA2xxDMAState *) opaque;
--    unsigned int channel;
--
--    if (size != 4) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad access width %u\n",
--                      __func__, size);
--        return 5;
--    }
--
--    switch (offset) {
--    case DRCMR64 ... DRCMR74:
--        offset -= DRCMR64 - DRCMR0 - (64 << 2);
--        /* Fall through */
--    case DRCMR0 ... DRCMR63:
--        channel = (offset - DRCMR0) >> 2;
--        return s->req[channel];
--
--    case DRQSR0:
--    case DRQSR1:
--    case DRQSR2:
--        return 0;
--
--    case DCSR0 ... DCSR31:
--        channel = offset >> 2;
--        if (s->chan[channel].request)
--            return s->chan[channel].state | DCSR_REQPEND;
--        return s->chan[channel].state;
--
--    case DINT:
--        return s->stopintr | s->eorintr | s->rasintr |
--                s->startintr | s->endintr;
--
--    case DALGN:
--        return s->align;
--
--    case DPCSR:
--        return s->pio;
--    }
--
--    if (offset >= D_CH0 && offset < D_CH0 + (s->channels << 4)) {
--        channel = (offset - D_CH0) >> 4;
--        switch ((offset & 0x0f) >> 2) {
--        case DDADR:
--            return s->chan[channel].descr;
--        case DSADR:
--            return s->chan[channel].src;
--        case DTADR:
--            return s->chan[channel].dest;
--        case DCMD:
--            return s->chan[channel].cmd;
--        }
--    }
--    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
--                  __func__, offset);
--    return 7;
--}
--
--static void pxa2xx_dma_write(void *opaque, hwaddr offset,
--                             uint64_t value, unsigned size)
--{
--    PXA2xxDMAState *s = (PXA2xxDMAState *) opaque;
--    unsigned int channel;
--
--    if (size != 4) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad access width %u\n",
--                      __func__, size);
--        return;
--    }
--
--    switch (offset) {
--    case DRCMR64 ... DRCMR74:
--        offset -= DRCMR64 - DRCMR0 - (64 << 2);
--        /* Fall through */
--    case DRCMR0 ... DRCMR63:
--        channel = (offset - DRCMR0) >> 2;
--
--        if (value & DRCMR_MAPVLD)
--            if ((value & DRCMR_CHLNUM) > s->channels)
--                hw_error("%s: Bad DMA channel %i\n",
--                         __func__, (unsigned)value & DRCMR_CHLNUM);
--
--        s->req[channel] = value;
--        break;
--
--    case DRQSR0:
--    case DRQSR1:
--    case DRQSR2:
--        /* Nothing to do */
--        break;
--
--    case DCSR0 ... DCSR31:
--        channel = offset >> 2;
--        s->chan[channel].state &= 0x0000071f & ~(value &
--                        (DCSR_EORINT | DCSR_ENDINTR |
--                         DCSR_STARTINTR | DCSR_BUSERRINTR));
--        s->chan[channel].state |= value & 0xfc800000;
--
--        if (s->chan[channel].state & DCSR_STOPIRQEN)
--            s->chan[channel].state &= ~DCSR_STOPINTR;
--
--        if (value & DCSR_NODESCFETCH) {
--            /* No-descriptor-fetch mode */
--            if (value & DCSR_RUN) {
--                s->chan[channel].state &= ~DCSR_STOPINTR;
--                pxa2xx_dma_run(s);
--            }
--        } else {
--            /* Descriptor-fetch mode */
--            if (value & DCSR_RUN) {
--                s->chan[channel].state &= ~DCSR_STOPINTR;
--                pxa2xx_dma_descriptor_fetch(s, channel);
--                pxa2xx_dma_run(s);
--            }
--        }
--
--        /* Shouldn't matter as our DMA is synchronous.  */
--        if (!(value & (DCSR_RUN | DCSR_MASKRUN)))
--            s->chan[channel].state |= DCSR_STOPINTR;
--
--        if (value & DCSR_CLRCMPST)
--            s->chan[channel].state &= ~DCSR_CMPST;
--        if (value & DCSR_SETCMPST)
--            s->chan[channel].state |= DCSR_CMPST;
--
--        pxa2xx_dma_update(s, channel);
--        break;
--
--    case DALGN:
--        s->align = value;
--        break;
--
--    case DPCSR:
--        s->pio = value & 0x80000001;
--        break;
--
--    default:
--        if (offset >= D_CH0 && offset < D_CH0 + (s->channels << 4)) {
--            channel = (offset - D_CH0) >> 4;
--            switch ((offset & 0x0f) >> 2) {
--            case DDADR:
--                s->chan[channel].descr = value;
--                break;
--            case DSADR:
--                s->chan[channel].src = value;
--                break;
--            case DTADR:
--                s->chan[channel].dest = value;
--                break;
--            case DCMD:
--                s->chan[channel].cmd = value;
--                break;
--            default:
--                goto fail;
--            }
--
+-            break;
+-        default:
 -            break;
 -        }
--    fail:
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
--                      __func__, offset);
+-        z->pos = 0;
 -    }
+-    return 0;
 -}
 -
--static const MemoryRegionOps pxa2xx_dma_ops = {
--    .read = pxa2xx_dma_read,
--    .write = pxa2xx_dma_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
+-static void z2_lcd_cs(void *opaque, int line, int level)
+-{
+-    ZipitLCD *z2_lcd = opaque;
+-    z2_lcd->selected = !level;
+-}
+-
+-static void zipit_lcd_realize(SSIPeripheral *dev, Error **errp)
+-{
+-    ZipitLCD *z = ZIPIT_LCD(dev);
+-    z->selected = 0;
+-    z->enabled = 0;
+-    z->pos = 0;
+-}
+-
+-static const VMStateDescription vmstate_zipit_lcd_state = {
+-    .name = "zipit-lcd",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_SSI_PERIPHERAL(ssidev, ZipitLCD),
+-        VMSTATE_INT32(selected, ZipitLCD),
+-        VMSTATE_INT32(enabled, ZipitLCD),
+-        VMSTATE_BUFFER(buf, ZipitLCD),
+-        VMSTATE_UINT32(cur_reg, ZipitLCD),
+-        VMSTATE_INT32(pos, ZipitLCD),
+-        VMSTATE_END_OF_LIST(),
+-    }
 -};
 -
--static void pxa2xx_dma_request(void *opaque, int req_num, int on)
+-static void zipit_lcd_class_init(ObjectClass *klass, void *data)
 -{
--    PXA2xxDMAState *s = opaque;
--    int ch;
--    if (req_num < 0 || req_num >= PXA2XX_DMA_NUM_REQUESTS)
--        hw_error("%s: Bad DMA request %i\n", __func__, req_num);
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
 -
--    if (!(s->req[req_num] & DRCMR_MAPVLD))
--        return;
--    ch = s->req[req_num] & DRCMR_CHLNUM;
--
--    if (!s->chan[ch].request && on)
--        s->chan[ch].state |= DCSR_RASINTR;
--    else
--        s->chan[ch].state &= ~DCSR_RASINTR;
--    if (s->chan[ch].request && !on)
--        s->chan[ch].state |= DCSR_EORINT;
--
--    s->chan[ch].request = on;
--    if (on) {
--        pxa2xx_dma_run(s);
--        pxa2xx_dma_update(s, ch);
--    }
+-    k->realize = zipit_lcd_realize;
+-    k->transfer = zipit_lcd_transfer;
+-    dc->vmsd = &vmstate_zipit_lcd_state;
 -}
 -
--static void pxa2xx_dma_init(Object *obj)
+-static const TypeInfo zipit_lcd_info = {
+-    .name          = TYPE_ZIPIT_LCD,
+-    .parent        = TYPE_SSI_PERIPHERAL,
+-    .instance_size = sizeof(ZipitLCD),
+-    .class_init    = zipit_lcd_class_init,
+-};
+-
+-#define TYPE_AER915 "aer915"
+-OBJECT_DECLARE_SIMPLE_TYPE(AER915State, AER915)
+-
+-struct AER915State {
+-    I2CSlave parent_obj;
+-
+-    int len;
+-    uint8_t buf[3];
+-};
+-
+-static int aer915_send(I2CSlave *i2c, uint8_t data)
 -{
--    DeviceState *dev = DEVICE(obj);
--    PXA2xxDMAState *s = PXA2XX_DMA(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-    AER915State *s = AER915(i2c);
 -
--    memset(s->req, 0, sizeof(uint8_t) * PXA2XX_DMA_NUM_REQUESTS);
--
--    qdev_init_gpio_in(dev, pxa2xx_dma_request, PXA2XX_DMA_NUM_REQUESTS);
--
--    memory_region_init_io(&s->iomem, obj, &pxa2xx_dma_ops, s,
--                          "pxa2xx.dma", 0x00010000);
--    sysbus_init_mmio(sbd, &s->iomem);
--    sysbus_init_irq(sbd, &s->irq);
--}
--
--static void pxa2xx_dma_realize(DeviceState *dev, Error **errp)
--{
--    PXA2xxDMAState *s = PXA2XX_DMA(dev);
--    int i;
--
--    if (s->channels <= 0) {
--        error_setg(errp, "channels value invalid");
--        return;
+-    s->buf[s->len] = data;
+-    if (s->len++ > 2) {
+-        trace_z2_aer915_send_too_long(s->len);
+-        return 1;
 -    }
 -
--    s->chan = g_new0(PXA2xxDMAChannel, s->channels);
+-    if (s->len == 2) {
+-        trace_z2_aer915_send(s->buf[0], s->buf[1]);
+-    }
 -
--    for (i = 0; i < s->channels; i ++)
--        s->chan[i].state = DCSR_STOPINTR;
+-    return 0;
 -}
 -
--DeviceState *pxa27x_dma_init(hwaddr base, qemu_irq irq)
+-static int aer915_event(I2CSlave *i2c, enum i2c_event event)
 -{
--    DeviceState *dev;
+-    AER915State *s = AER915(i2c);
 -
--    dev = qdev_new("pxa2xx-dma");
--    qdev_prop_set_int32(dev, "channels", PXA27X_DMA_NUM_CHANNELS);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-    trace_z2_aer915_event(s->len, event);
+-    switch (event) {
+-    case I2C_START_SEND:
+-        s->len = 0;
+-        break;
+-    case I2C_START_RECV:
+-        break;
+-    case I2C_FINISH:
+-        break;
+-    default:
+-        break;
+-    }
 -
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
--    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
--
--    return dev;
+-    return 0;
 -}
 -
--DeviceState *pxa255_dma_init(hwaddr base, qemu_irq irq)
+-static uint8_t aer915_recv(I2CSlave *slave)
 -{
--    DeviceState *dev;
+-    AER915State *s = AER915(slave);
+-    int retval = 0x00;
 -
--    dev = qdev_new("pxa2xx-dma");
--    qdev_prop_set_int32(dev, "channels", PXA27X_DMA_NUM_CHANNELS);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-    switch (s->buf[0]) {
+-    /* Return hardcoded battery voltage,
+-     * 0xf0 means ~4.1V
+-     */
+-    case 0x02:
+-        retval = 0xf0;
+-        break;
+-    /* Return 0x00 for other regs,
+-     * we don't know what they are for,
+-     * anyway they return 0x00 on real hardware.
+-     */
+-    default:
+-        break;
+-    }
 -
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
--    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
--
--    return dev;
+-    return retval;
 -}
 -
--static bool is_version_0(void *opaque, int version_id)
--{
--    return version_id == 0;
--}
--
--static const VMStateDescription vmstate_pxa2xx_dma_chan = {
--    .name = "pxa2xx_dma_chan",
+-static const VMStateDescription vmstate_aer915_state = {
+-    .name = "aer915",
 -    .version_id = 1,
 -    .minimum_version_id = 1,
 -    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(descr, PXA2xxDMAChannel),
--        VMSTATE_UINT32(src, PXA2xxDMAChannel),
--        VMSTATE_UINT32(dest, PXA2xxDMAChannel),
--        VMSTATE_UINT32(cmd, PXA2xxDMAChannel),
--        VMSTATE_UINT32(state, PXA2xxDMAChannel),
--        VMSTATE_INT32(request, PXA2xxDMAChannel),
+-        VMSTATE_INT32(len, AER915State),
+-        VMSTATE_BUFFER(buf, AER915State),
 -        VMSTATE_END_OF_LIST(),
--    },
+-    }
 -};
 -
--static const VMStateDescription vmstate_pxa2xx_dma = {
--    .name = "pxa2xx_dma",
--    .version_id = 1,
--    .minimum_version_id = 0,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UNUSED_TEST(is_version_0, 4),
--        VMSTATE_UINT32(stopintr, PXA2xxDMAState),
--        VMSTATE_UINT32(eorintr, PXA2xxDMAState),
--        VMSTATE_UINT32(rasintr, PXA2xxDMAState),
--        VMSTATE_UINT32(startintr, PXA2xxDMAState),
--        VMSTATE_UINT32(endintr, PXA2xxDMAState),
--        VMSTATE_UINT32(align, PXA2xxDMAState),
--        VMSTATE_UINT32(pio, PXA2xxDMAState),
--        VMSTATE_BUFFER(req, PXA2xxDMAState),
--        VMSTATE_STRUCT_VARRAY_POINTER_INT32(chan, PXA2xxDMAState, channels,
--                vmstate_pxa2xx_dma_chan, PXA2xxDMAChannel),
--        VMSTATE_END_OF_LIST(),
--    },
--};
--
--static Property pxa2xx_dma_properties[] = {
--    DEFINE_PROP_INT32("channels", PXA2xxDMAState, channels, -1),
--    DEFINE_PROP_END_OF_LIST(),
--};
--
--static void pxa2xx_dma_class_init(ObjectClass *klass, void *data)
+-static void aer915_class_init(ObjectClass *klass, void *data)
 -{
 -    DeviceClass *dc = DEVICE_CLASS(klass);
+-    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
 -
--    dc->desc = "PXA2xx DMA controller";
--    dc->vmsd = &vmstate_pxa2xx_dma;
--    device_class_set_props(dc, pxa2xx_dma_properties);
--    dc->realize = pxa2xx_dma_realize;
+-    k->event = aer915_event;
+-    k->recv = aer915_recv;
+-    k->send = aer915_send;
+-    dc->vmsd = &vmstate_aer915_state;
 -}
 -
--static const TypeInfo pxa2xx_dma_info = {
--    .name          = TYPE_PXA2XX_DMA,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(PXA2xxDMAState),
--    .instance_init = pxa2xx_dma_init,
--    .class_init    = pxa2xx_dma_class_init,
+-static const TypeInfo aer915_info = {
+-    .name          = TYPE_AER915,
+-    .parent        = TYPE_I2C_SLAVE,
+-    .instance_size = sizeof(AER915State),
+-    .class_init    = aer915_class_init,
 -};
 -
--static void pxa2xx_dma_register_types(void)
+-#define FLASH_SECTOR_SIZE   (64 * KiB)
+-
+-static void z2_init(MachineState *machine)
 -{
--    type_register_static(&pxa2xx_dma_info);
+-    PXA2xxState *mpu;
+-    DriveInfo *dinfo;
+-    void *z2_lcd;
+-    I2CBus *bus;
+-    DeviceState *wm;
+-    I2CSlave *i2c_dev;
+-
+-    /* Setup CPU & memory */
+-    mpu = pxa270_init(z2_binfo.ram_size, machine->cpu_type);
+-
+-    dinfo = drive_get(IF_PFLASH, 0, 0);
+-    pflash_cfi01_register(Z2_FLASH_BASE, "z2.flash0", Z2_FLASH_SIZE,
+-                          dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+-                          FLASH_SECTOR_SIZE, 4, 0, 0, 0, 0, 0);
+-
+-    /* setup keypad */
+-    pxa27x_register_keypad(mpu->kp, map, 0x100);
+-
+-    /* MMC/SD host */
+-    pxa2xx_mmci_handlers(mpu->mmc,
+-        NULL,
+-        qdev_get_gpio_in(mpu->gpio, Z2_GPIO_SD_DETECT));
+-
+-    type_register_static(&zipit_lcd_info);
+-    type_register_static(&aer915_info);
+-    z2_lcd = ssi_create_peripheral(mpu->ssp[1], TYPE_ZIPIT_LCD);
+-    bus = pxa2xx_i2c_bus(mpu->i2c[0]);
+-
+-    i2c_slave_create_simple(bus, TYPE_AER915, 0x55);
+-
+-    i2c_dev = i2c_slave_new(TYPE_WM8750, 0x1b);
+-    wm = DEVICE(i2c_dev);
+-
+-    if (machine->audiodev) {
+-        qdev_prop_set_string(wm, "audiodev", machine->audiodev);
+-    }
+-    i2c_slave_realize_and_unref(i2c_dev, bus, &error_abort);
+-
+-    mpu->i2s->opaque = wm;
+-    mpu->i2s->codec_out = wm8750_dac_dat;
+-    mpu->i2s->codec_in = wm8750_adc_dat;
+-    wm8750_data_req_set(wm, mpu->i2s->data_req, mpu->i2s);
+-
+-    qdev_connect_gpio_out(mpu->gpio, Z2_GPIO_LCD_CS,
+-                          qemu_allocate_irq(z2_lcd_cs, z2_lcd, 0));
+-
+-    z2_binfo.board_id = 0x6dd;
+-    arm_load_kernel(mpu->cpu, machine, &z2_binfo);
 -}
 -
--type_init(pxa2xx_dma_register_types)
-diff --git a/hw/dma/meson.build b/hw/dma/meson.build
-index a96c1be2c8d..90c875ac51a 100644
---- a/hw/dma/meson.build
-+++ b/hw/dma/meson.build
-@@ -10,7 +10,6 @@ system_ss.add(when: 'CONFIG_STP2000', if_true: files('sparc32_dma.c'))
- system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx_dpdma.c'))
- system_ss.add(when: 'CONFIG_XLNX_ZDMA', if_true: files('xlnx-zdma.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_dma.c', 'soc_dma.c'))
--system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_dma.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_dma.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_PDMA', if_true: files('sifive_pdma.c'))
- system_ss.add(when: 'CONFIG_XLNX_CSU_DMA', if_true: files('xlnx_csu_dma.c'))
+-static void z2_machine_init(MachineClass *mc)
+-{
+-    mc->desc = "Zipit Z2 (PXA27x)";
+-    mc->init = z2_init;
+-    mc->ignore_memory_transaction_failures = true;
+-    mc->default_cpu_type = ARM_CPU_TYPE_NAME("pxa270-c5");
+-    mc->deprecation_reason = "machine is old and unmaintained";
+-
+-    machine_add_audiodev_property(mc);
+-}
+-
+-DEFINE_MACHINE("z2", z2_machine_init)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 84cc34f016c..c2452bd7b91 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -176,15 +176,6 @@ config PXA2XX
+     select USB_OHCI_SYSBUS
+     select PCMCIA
+ 
+-config Z2
+-    bool
+-    default y
+-    depends on TCG && ARM
+-    select PFLASH_CFI01
+-    select WM8750
+-    select PL011 # UART
+-    select PXA2XX
+-
+ config REALVIEW
+     bool
+     default y
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 72afb9e62a7..1a4a51d6302 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -71,6 +71,5 @@ system_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
+ system_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+ system_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+ system_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+-system_ss.add(when: 'CONFIG_Z2', if_true: files('z2.c'))
+ 
+ hw_arch += {'arm': arm_ss}
 -- 
 2.34.1
 
