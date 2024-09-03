@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F28CD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D028CD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW5H-00086j-GY; Tue, 03 Sep 2024 12:08:47 -0400
+	id 1slW5b-0001Vq-5t; Tue, 03 Sep 2024 12:09:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5E-0007nm-Oo
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:44 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1slW5Y-0001JI-JN
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:04 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW56-0002pq-VF
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:44 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42c79deb7c4so26691765e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:36 -0700 (PDT)
+ id 1slW5V-0002xd-5N
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:04 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-374c4d4f219so1818141f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379715; x=1725984515; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379739; x=1725984539; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=d4zgQemzlUvoPteh3pQegi4dzqKhMHoQFPiq/20dsA0=;
- b=K09oSdtGwCviUA6LkPxI+K/DJOfqF6jtu5uh9bAriSodWZ6f4KLUU4Amuy26EXWHg9
- XbNrLZo54j02a4iBAc2KhSGnMBE7ET2g/OCFC9VWaliuVC5C6KI/DRAS5UgadQUQ2721
- RG9jTyTGJcaUY4voYnBDdLleeZDAt40ONGtNU/bdpDFKrVpdViK/MN/snkTSTS5eAiyA
- sUid77PpfuGP3rRYZl3uMN/A1MuIfzjPA/FyCzRE3McFrbT+hvA5D1VmbE7h1/34Hws3
- VCG5j4pkh/YVF+IPCd0w9jJpWjhkuyCn2kb8BgMn0SKHhG/ANWy4hHdc5mrK3R+GKh9A
- VHuA==
+ :reply-to; bh=QIZtZFtHVcUSbCLhBNB0yt7hebc2R/UctN0rfEP7jDs=;
+ b=hc4B7HOFWw+56fhovq5yiRzOlSTcg0bbCW5RErKqU9PObiRIHlPMwZ+3pCn0kYurD9
+ jl6cYenH59GWUILseRj4Wpz+rq9hai6ze3zcF2LgaXG0AYYDmylI699pAtC5lJ0mNOce
+ RKgAKKAr/8dcu8ZPHxXogZmqzU9QdlaXi9oNnVcI4/FaXH8zi8MrkM+DIbRvlSUF1R4d
+ ZU2u+l23prL4KEmiAi6MVy2yNvjV9oSPZuTJx75I25h58+qlvFRkMB3iGQwYROrI6ndm
+ cAY722o535Eu4ka/5p43sT5dVpHLgZ6LwiimJx0kELKDCHNRjVBLC0mWX52mYt6fY08a
+ 4SdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379715; x=1725984515;
+ d=1e100.net; s=20230601; t=1725379739; x=1725984539;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=d4zgQemzlUvoPteh3pQegi4dzqKhMHoQFPiq/20dsA0=;
- b=JMWw7q/04cO2cMoYJA/MAkTSF9Xp/4iUP9X+L65ngpjZvU8qkl2VHpKLs2pzDTbm34
- cNY7gE60m4nwoGmPS7ute3DP2fsYE4qMQstQCUC7yoy08CqSgRVcDfJgIPxpqIKQPITK
- hPsh5QL+87RhYwpmkTRrjIsMGi1byX8WiK63lw9EDi9iuxJ6KQB90jyDy+hGxxPZvRP0
- jLCU8BEXaxXX5vVO8uo86R8riMDHfCy2JJDsL5kSGbFTPOprzB/2N4ba/hJvwrwEeDjU
- 7hq/Lc1sX+6ikv7rwHCnnZX3J37s4eNTJS8ZvM0XUCsN6XTnZZmQBAvkuM9H60UNh8EF
- 3o1w==
+ bh=QIZtZFtHVcUSbCLhBNB0yt7hebc2R/UctN0rfEP7jDs=;
+ b=iMRYqFDdQgaM7yc3bNjsLKKmrzbbwwJHchwdmhx8HA2oHdMgodoju6l7adS7+AacEU
+ nJ7gbt1z6a/cap+k/YnJLhUshmQoKoToGyGYxmnlqvJI8bUnfXc8RlKAe+wxweIjXDwC
+ SEX089kX5qoL3tDHlgOT9TYBO+NpUUSwXL3ubGJ4YUpHsbrnw0GqJniuuqk9pMABeb/o
+ Ohlg0U0lxVKYyY8L3hu9EVHExSpJv8xPFk3EOcyLAK81J3IVOmtruzGsQEdh8gdK+bEU
+ g4nIfKFWnakXhvwOyUbsSuKHmrIbEivbmSDGd2Fw0HQh+B/fWDd+Mk38iVV3oAgSpRLW
+ pgrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYm07aT1Uuz6y1uK2NSe4MbNCFyee+ZPMNJv8SFAJwrjhh8swwnUDh2CWvLeiXJ2aSjHzpjJTWRQzg@nongnu.org
-X-Gm-Message-State: AOJu0YxV8RGfM5wkfGiEaXYOzqWeGC3P6/LCMyt4b8uu/1BaOJmXxuqF
- sR/kQE5StCfaqzjP0sQ+OXs4z2SGu9qPHhhUwSL10ZfctB3dGOZN0+xo7G7pez4=
-X-Google-Smtp-Source: AGHT+IFF4C02TSawjC2CUuacS4If2deL9yLCtfcPiCb+QAB5Bk2uXlb7jEosOUs+pE5Gvohuzi4erQ==
-X-Received: by 2002:a05:600c:1d16:b0:42b:892d:54c0 with SMTP id
- 5b1f17b1804b1-42c7b5a8db6mr72500195e9.12.1725379715370; 
- Tue, 03 Sep 2024 09:08:35 -0700 (PDT)
+ AJvYcCUHm/iAahYblfAe5FhPnvteU1U0qRKH6LTfjckNQkYbA/cMo5/rYquEY4rpdd+dFfLeWrNwLieWRPFu@nongnu.org
+X-Gm-Message-State: AOJu0Yx4tC0h+PzOGe77KhIAqqqEmCfzQCkgRwkoWRQttJfQsBElHS1r
+ r2OqtkXBSeYFxb2fYL88UCvZ6r78aOdVYe2CVqv5yafbwEmZcAqc3eV2mIWePscwMcP3YgA04J5
+ /
+X-Google-Smtp-Source: AGHT+IFfkMbCV7+CO1DSFSfH8+mt0XLbTsSbd05YRuSLk4EN+aXi10XS1y6sDVeMOsu5owqcJ7xmqg==
+X-Received: by 2002:adf:f784:0:b0:374:c69b:5a16 with SMTP id
+ ffacd0b85a97d-374f9e47a5cmr2812336f8f.50.1725379739320; 
+ Tue, 03 Sep 2024 09:08:59 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.34
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:35 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:58 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 28/53] hw/input: Remove tsc2005 touchscreen controller
-Date: Tue,  3 Sep 2024 17:07:26 +0100
-Message-Id: <20240903160751.4100218-29-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 44/53] hw/timer: Remove omap_gptimer
+Date: Tue,  3 Sep 2024 17:07:42 +0100
+Message-Id: <20240903160751.4100218-45-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,62 +95,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the tsc2005 touchscreen controller, which was only used
-by the n800 and n810 machines.
+The omap_gptimer device is only in the OMAP2 SoC, which we
+are removing.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                |   1 -
- include/hw/input/tsc2xxx.h |   5 -
- hw/input/tsc2005.c         | 571 -------------------------------------
- hw/input/Kconfig           |   3 -
- hw/input/meson.build       |   1 -
- hw/input/trace-events      |   3 -
- 6 files changed, 584 deletions(-)
- delete mode 100644 hw/input/tsc2005.c
+ include/hw/arm/omap.h   |   8 -
+ hw/timer/omap_gptimer.c | 512 ----------------------------------------
+ hw/timer/meson.build    |   1 -
+ 3 files changed, 521 deletions(-)
+ delete mode 100644 hw/timer/omap_gptimer.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index beee6cb9613..6d7248ad022 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -868,7 +868,6 @@ M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/input/lm832x.c
--F: hw/input/tsc2005.c
- F: hw/input/tsc210x.c
- F: hw/rtc/twl92230.c
- F: include/hw/input/lm832x.h
-diff --git a/include/hw/input/tsc2xxx.h b/include/hw/input/tsc2xxx.h
-index 00eca17674e..dcd4fa7faed 100644
---- a/include/hw/input/tsc2xxx.h
-+++ b/include/hw/input/tsc2xxx.h
-@@ -33,9 +33,4 @@ uint32_t tsc210x_txrx(void *opaque, uint32_t value, int len);
- void tsc210x_set_transform(uWireSlave *chip, const MouseTransformInfo *info);
- void tsc210x_key_event(uWireSlave *chip, int key, int down);
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index 0cbbf2fecb5..cced3d28605 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -676,13 +676,6 @@ struct omap_dma_lcd_channel_s {
+ # define OMAP24XX_DMA_MS		63	/* Not in OMAP2420 */
+ # define OMAP24XX_DMA_EXT_DMAREQ5	64
  
--/* tsc2005.c */
--void *tsc2005_init(qemu_irq pintdav);
--uint32_t tsc2005_txrx(void *opaque, uint32_t value, int len);
--void tsc2005_set_transform(void *opaque, const MouseTransformInfo *info);
+-/* omap[123].c */
+-/* OMAP2 gp timer */
+-struct omap_gp_timer_s;
+-struct omap_gp_timer_s *omap_gp_timer_init(struct omap_target_agent_s *ta,
+-                qemu_irq irq, omap_clk fclk, omap_clk iclk);
+-void omap_gp_timer_reset(struct omap_gp_timer_s *s);
 -
- #endif
-diff --git a/hw/input/tsc2005.c b/hw/input/tsc2005.c
+ /* OMAP2 sysctimer */
+ struct omap_synctimer_s;
+ struct omap_synctimer_s *omap_synctimer_init(struct omap_target_agent_s *ta,
+@@ -936,7 +929,6 @@ struct omap_mpu_state_s {
+     /* OMAP2-only peripherals */
+     struct omap_l4_s *l4;
+ 
+-    struct omap_gp_timer_s *gptimer[12];
+     struct omap_synctimer_s *synctimer;
+ 
+     struct omap_mcspi_s *mcspi[2];
+diff --git a/hw/timer/omap_gptimer.c b/hw/timer/omap_gptimer.c
 deleted file mode 100644
-index 54a15d24410..00000000000
---- a/hw/input/tsc2005.c
+index 34e6af7aff5..00000000000
+--- a/hw/timer/omap_gptimer.c
 +++ /dev/null
-@@ -1,571 +0,0 @@
+@@ -1,512 +0,0 @@
 -/*
-- * TI TSC2005 emulator.
+- * TI OMAP2 general purpose timers emulation.
 - *
-- * Copyright (c) 2006 Andrzej Zaborowski  <balrog@zabor.org>
-- * Copyright (C) 2008 Nokia Corporation
+- * Copyright (C) 2007-2008 Nokia Corporation
+- * Written by Andrzej Zaborowski <andrew@openedhand.com>
 - *
 - * This program is free software; you can redistribute it and/or
 - * modify it under the terms of the GNU General Public License as
 - * published by the Free Software Foundation; either version 2 or
-- * (at your option) version 3 of the License.
+- * (at your option) any later version of the License.
 - *
 - * This program is distributed in the hope that it will be useful,
 - * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -161,596 +159,509 @@ index 54a15d24410..00000000000
 - */
 -
 -#include "qemu/osdep.h"
--#include "qemu/log.h"
--#include "qemu/timer.h"
--#include "sysemu/reset.h"
--#include "ui/console.h"
--#include "hw/input/tsc2xxx.h"
 -#include "hw/irq.h"
--#include "migration/vmstate.h"
--#include "trace.h"
+-#include "qemu/timer.h"
+-#include "hw/arm/omap.h"
 -
--#define TSC_CUT_RESOLUTION(value, p)  ((value) >> (16 - (p ? 12 : 10)))
--
--typedef struct {
--    qemu_irq pint;  /* Combination of the nPENIRQ and DAV signals */
+-/* GP timers */
+-struct omap_gp_timer_s {
+-    MemoryRegion iomem;
+-    qemu_irq irq;
+-    qemu_irq wkup;
+-    qemu_irq in;
+-    qemu_irq out;
+-    omap_clk clk;
 -    QEMUTimer *timer;
--    uint16_t model;
+-    QEMUTimer *match;
+-    struct omap_target_agent_s *ta;
 -
--    int32_t x, y;
--    bool pressure;
+-    int in_val;
+-    int out_val;
+-    int64_t time;
+-    int64_t rate;
+-    int64_t ticks_per_sec;
 -
--    uint8_t reg, state;
--    bool irq, command;
--    uint16_t data, dav;
+-    int16_t config;
+-    int status;
+-    int it_ena;
+-    int wu_ena;
+-    int enable;
+-    int inout;
+-    int capt2;
+-    int pt;
+-    enum {
+-        gpt_trigger_none, gpt_trigger_overflow, gpt_trigger_both
+-    } trigger;
+-    enum {
+-        gpt_capture_none, gpt_capture_rising,
+-        gpt_capture_falling, gpt_capture_both
+-    } capture;
+-    int scpwm;
+-    int ce;
+-    int pre;
+-    int ptv;
+-    int ar;
+-    int st;
+-    int posted;
+-    uint32_t val;
+-    uint32_t load_val;
+-    uint32_t capture_val[2];
+-    uint32_t match_val;
+-    int capt_num;
 -
--    bool busy;
--    bool enabled;
--    bool host_mode;
--    int8_t function;
--    int8_t nextfunction;
--    bool precision;
--    bool nextprecision;
--    uint16_t filter;
--    uint8_t pin_func;
--    uint16_t timing[2];
--    uint8_t noise;
--    bool reset;
--    bool pdst;
--    bool pnd0;
--    uint16_t temp_thr[2];
--    uint16_t aux_thr[2];
--
--    int32_t tr[8];
--} TSC2005State;
--
--enum {
--    TSC_MODE_XYZ_SCAN = 0x0,
--    TSC_MODE_XY_SCAN,
--    TSC_MODE_X,
--    TSC_MODE_Y,
--    TSC_MODE_Z,
--    TSC_MODE_AUX,
--    TSC_MODE_TEMP1,
--    TSC_MODE_TEMP2,
--    TSC_MODE_AUX_SCAN,
--    TSC_MODE_X_TEST,
--    TSC_MODE_Y_TEST,
--    TSC_MODE_TS_TEST,
--    TSC_MODE_RESERVED,
--    TSC_MODE_XX_DRV,
--    TSC_MODE_YY_DRV,
--    TSC_MODE_YX_DRV,
+-    uint16_t writeh;	/* LSB */
+-    uint16_t readh;	/* MSB */
 -};
 -
--static const uint16_t mode_regs[16] = {
--    0xf000, /* X, Y, Z scan */
--    0xc000, /* X, Y scan */
--    0x8000, /* X */
--    0x4000, /* Y */
--    0x3000, /* Z */
--    0x0800, /* AUX */
--    0x0400, /* TEMP1 */
--    0x0200, /* TEMP2 */
--    0x0800, /* AUX scan */
--    0x0040, /* X test */
--    0x0020, /* Y test */
--    0x0080, /* Short-circuit test */
--    0x0000, /* Reserved */
--    0x0000, /* X+, X- drivers */
--    0x0000, /* Y+, Y- drivers */
--    0x0000, /* Y+, X- drivers */
--};
+-#define GPT_TCAR_IT	(1 << 2)
+-#define GPT_OVF_IT	(1 << 1)
+-#define GPT_MAT_IT	(1 << 0)
 -
--#define X_TRANSFORM(s)      \
--    ((s->y * s->tr[0] - s->x * s->tr[1]) / s->tr[2] + s->tr[3])
--#define Y_TRANSFORM(s)      \
--    ((s->y * s->tr[4] - s->x * s->tr[5]) / s->tr[6] + s->tr[7])
--#define Z1_TRANSFORM(s)     \
--    ((400 - ((s)->x >> 7) + ((s)->pressure << 10)) << 4)
--#define Z2_TRANSFORM(s)     \
--    ((4000 + ((s)->y >> 7) - ((s)->pressure << 10)) << 4)
--
--#define AUX_VAL       (700 << 4)  /* +/- 3 at 12-bit */
--#define TEMP1_VAL     (1264 << 4) /* +/- 5 at 12-bit */
--#define TEMP2_VAL     (1531 << 4) /* +/- 5 at 12-bit */
--
--static uint16_t tsc2005_read(TSC2005State *s, int reg)
+-static inline void omap_gp_timer_intr(struct omap_gp_timer_s *timer, int it)
 -{
--    uint16_t ret;
+-    if (timer->it_ena & it) {
+-        if (!timer->status)
+-            qemu_irq_raise(timer->irq);
 -
--    switch (reg) {
--    case 0x0: /* X */
--        s->dav &= ~mode_regs[TSC_MODE_X];
--        return TSC_CUT_RESOLUTION(X_TRANSFORM(s), s->precision) +
--                (s->noise & 3);
--    case 0x1: /* Y */
--        s->dav &= ~mode_regs[TSC_MODE_Y];
--        s->noise++;
--        return TSC_CUT_RESOLUTION(Y_TRANSFORM(s), s->precision) ^
--                (s->noise & 3);
--    case 0x2: /* Z1 */
--        s->dav &= 0xdfff;
--        return TSC_CUT_RESOLUTION(Z1_TRANSFORM(s), s->precision) -
--                (s->noise & 3);
--    case 0x3: /* Z2 */
--        s->dav &= 0xefff;
--        return TSC_CUT_RESOLUTION(Z2_TRANSFORM(s), s->precision) |
--                (s->noise & 3);
--
--    case 0x4: /* AUX */
--        s->dav &= ~mode_regs[TSC_MODE_AUX];
--        return TSC_CUT_RESOLUTION(AUX_VAL, s->precision);
--
--    case 0x5: /* TEMP1 */
--        s->dav &= ~mode_regs[TSC_MODE_TEMP1];
--        return TSC_CUT_RESOLUTION(TEMP1_VAL, s->precision) -
--                (s->noise & 5);
--    case 0x6: /* TEMP2 */
--        s->dav &= 0xdfff;
--        s->dav &= ~mode_regs[TSC_MODE_TEMP2];
--        return TSC_CUT_RESOLUTION(TEMP2_VAL, s->precision) ^
--                (s->noise & 3);
--
--    case 0x7: /* Status */
--        ret = s->dav | (s->reset << 7) | (s->pdst << 2) | 0x0;
--        s->dav &= ~(mode_regs[TSC_MODE_X_TEST] | mode_regs[TSC_MODE_Y_TEST] |
--                        mode_regs[TSC_MODE_TS_TEST]);
--        s->reset = true;
--        return ret;
--
--    case 0x8: /* AUX high threshold */
--        return s->aux_thr[1];
--    case 0x9: /* AUX low threshold */
--        return s->aux_thr[0];
--
--    case 0xa: /* TEMP high threshold */
--        return s->temp_thr[1];
--    case 0xb: /* TEMP low threshold */
--        return s->temp_thr[0];
--
--    case 0xc: /* CFR0 */
--        return (s->pressure << 15) | ((!s->busy) << 14) |
--                (s->nextprecision << 13) | s->timing[0];
--    case 0xd: /* CFR1 */
--        return s->timing[1];
--    case 0xe: /* CFR2 */
--        return (s->pin_func << 14) | s->filter;
--
--    case 0xf: /* Function select status */
--        return s->function >= 0 ? 1 << s->function : 0;
+-        timer->status |= it;
+-        /* Or are the status bits set even when masked?
+-         * i.e. is masking applied before or after the status register?  */
 -    }
 -
--    /* Never gets here */
--    return 0xffff;
+-    if (timer->wu_ena & it)
+-        qemu_irq_pulse(timer->wkup);
 -}
 -
--static void tsc2005_write(TSC2005State *s, int reg, uint16_t data)
+-static inline void omap_gp_timer_out(struct omap_gp_timer_s *timer, int level)
 -{
--    switch (reg) {
--    case 0x8:   /* AUX high threshold */
--        s->aux_thr[1] = data;
--        break;
--    case 0x9:   /* AUX low threshold */
--        s->aux_thr[0] = data;
--        break;
--
--    case 0xa:   /* TEMP high threshold */
--        s->temp_thr[1] = data;
--        break;
--    case 0xb:   /* TEMP low threshold */
--        s->temp_thr[0] = data;
--        break;
--
--    case 0xc: /* CFR0 */
--        s->host_mode = (data >> 15) != 0;
--        if (s->enabled != !(data & 0x4000)) {
--            s->enabled = !(data & 0x4000);
--            trace_tsc2005_sense(s->enabled ? "enabled" : "disabled");
--            if (s->busy && !s->enabled) {
--                timer_del(s->timer);
--            }
--            s->busy = s->busy && s->enabled;
--        }
--        s->nextprecision = (data >> 13) & 1;
--        s->timing[0] = data & 0x1fff;
--        if ((s->timing[0] >> 11) == 3) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "tsc2005_write: illegal conversion clock setting\n");
--        }
--        break;
--    case 0xd: /* CFR1 */
--        s->timing[1] = data & 0xf07;
--        break;
--    case 0xe: /* CFR2 */
--        s->pin_func = (data >> 14) & 3;
--        s->filter = data & 0x3fff;
--        break;
--
--    default:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: write into read-only register 0x%x\n",
--                      __func__, reg);
+-    if (!timer->inout && timer->out_val != level) {
+-        timer->out_val = level;
+-        qemu_set_irq(timer->out, level);
 -    }
 -}
 -
--/* This handles most of the chip's logic.  */
--static void tsc2005_pin_update(TSC2005State *s)
+-static inline uint32_t omap_gp_timer_read(struct omap_gp_timer_s *timer)
 -{
--    int64_t expires;
--    bool pin_state;
+-    uint64_t distance;
 -
--    switch (s->pin_func) {
--    case 0:
--        pin_state = !s->pressure && !!s->dav;
--        break;
--    case 1:
--    case 3:
--    default:
--        pin_state = !s->dav;
--        break;
--    case 2:
--        pin_state = !s->pressure;
--    }
+-    if (timer->st && timer->rate) {
+-        distance = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - timer->time;
+-        distance = muldiv64(distance, timer->rate, timer->ticks_per_sec);
 -
--    if (pin_state != s->irq) {
--        s->irq = pin_state;
--        qemu_set_irq(s->pint, s->irq);
--    }
--
--    switch (s->nextfunction) {
--    case TSC_MODE_XYZ_SCAN:
--    case TSC_MODE_XY_SCAN:
--        if (!s->host_mode && s->dav) {
--            s->enabled = false;
--        }
--        if (!s->pressure) {
--            return;
--        }
--        /* Fall through */
--    case TSC_MODE_AUX_SCAN:
--        break;
--
--    case TSC_MODE_X:
--    case TSC_MODE_Y:
--    case TSC_MODE_Z:
--        if (!s->pressure) {
--            return;
--        }
--        /* Fall through */
--    case TSC_MODE_AUX:
--    case TSC_MODE_TEMP1:
--    case TSC_MODE_TEMP2:
--    case TSC_MODE_X_TEST:
--    case TSC_MODE_Y_TEST:
--    case TSC_MODE_TS_TEST:
--        if (s->dav) {
--            s->enabled = false;
--        }
--        break;
--
--    case TSC_MODE_RESERVED:
--    case TSC_MODE_XX_DRV:
--    case TSC_MODE_YY_DRV:
--    case TSC_MODE_YX_DRV:
--    default:
--        return;
--    }
--
--    if (!s->enabled || s->busy) {
--        return;
--    }
--
--    s->busy = true;
--    s->precision = s->nextprecision;
--    s->function = s->nextfunction;
--    s->pdst = !s->pnd0; /* Synchronised on internal clock */
--    expires = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
--        (NANOSECONDS_PER_SECOND >> 7);
--    timer_mod(s->timer, expires);
+-        if (distance >= 0xffffffff - timer->val)
+-            return 0xffffffff;
+-        else
+-            return timer->val + distance;
+-    } else
+-        return timer->val;
 -}
 -
--static void tsc2005_reset(TSC2005State *s)
+-static inline void omap_gp_timer_sync(struct omap_gp_timer_s *timer)
 -{
--    s->state = 0;
--    s->pin_func = 0;
--    s->enabled = false;
--    s->busy = false;
--    s->nextprecision = false;
--    s->nextfunction = 0;
--    s->timing[0] = 0;
--    s->timing[1] = 0;
--    s->irq = false;
--    s->dav = 0;
--    s->reset = false;
--    s->pdst = true;
--    s->pnd0 = false;
--    s->function = -1;
--    s->temp_thr[0] = 0x000;
--    s->temp_thr[1] = 0xfff;
--    s->aux_thr[0] = 0x000;
--    s->aux_thr[1] = 0xfff;
--
--    tsc2005_pin_update(s);
+-    if (timer->st) {
+-        timer->val = omap_gp_timer_read(timer);
+-        timer->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    }
 -}
 -
--static uint8_t tsc2005_txrx_word(void *opaque, uint8_t value)
+-static inline void omap_gp_timer_update(struct omap_gp_timer_s *timer)
 -{
--    TSC2005State *s = opaque;
--    uint32_t ret = 0;
+-    int64_t expires, matches;
 -
--    switch (s->state++) {
--    case 0:
--        if (value & 0x80) {
--            /* Command */
--            if (value & (1 << 1))
--                tsc2005_reset(s);
--            else {
--                s->nextfunction = (value >> 3) & 0xf;
--                s->nextprecision = (value >> 2) & 1;
--                if (s->enabled != !(value & 1)) {
--                    s->enabled = !(value & 1);
--                    trace_tsc2005_sense(s->enabled ? "enabled" : "disabled");
--                    if (s->busy && !s->enabled) {
--                        timer_del(s->timer);
--                    }
--                    s->busy = s->busy && s->enabled;
--                }
--                tsc2005_pin_update(s);
--            }
+-    if (timer->st && timer->rate) {
+-        expires = muldiv64(0x100000000ll - timer->val,
+-                        timer->ticks_per_sec, timer->rate);
+-        timer_mod(timer->timer, timer->time + expires);
 -
--            s->state = 0;
--        } else if (value) {
--            /* Data transfer */
--            s->reg = (value >> 3) & 0xf;
--            s->pnd0 = (value >> 1) & 1;
--            s->command = value & 1;
--
--            if (s->command) {
--                /* Read */
--                s->data = tsc2005_read(s, s->reg);
--                tsc2005_pin_update(s);
--            } else
--                s->data = 0;
+-        if (timer->ce && timer->match_val >= timer->val) {
+-            matches = muldiv64(timer->ticks_per_sec,
+-                               timer->match_val - timer->val, timer->rate);
+-            timer_mod(timer->match, timer->time + matches);
 -        } else
--            s->state = 0;
+-            timer_del(timer->match);
+-    } else {
+-        timer_del(timer->timer);
+-        timer_del(timer->match);
+-        omap_gp_timer_out(timer, timer->scpwm);
+-    }
+-}
+-
+-static inline void omap_gp_timer_trigger(struct omap_gp_timer_s *timer)
+-{
+-    if (timer->pt)
+-        /* TODO in overflow-and-match mode if the first event to
+-         * occur is the match, don't toggle.  */
+-        omap_gp_timer_out(timer, !timer->out_val);
+-    else
+-        /* TODO inverted pulse on timer->out_val == 1?  */
+-        qemu_irq_pulse(timer->out);
+-}
+-
+-static void omap_gp_timer_tick(void *opaque)
+-{
+-    struct omap_gp_timer_s *timer = opaque;
+-
+-    if (!timer->ar) {
+-        timer->st = 0;
+-        timer->val = 0;
+-    } else {
+-        timer->val = timer->load_val;
+-        timer->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    }
+-
+-    if (timer->trigger == gpt_trigger_overflow ||
+-                    timer->trigger == gpt_trigger_both)
+-        omap_gp_timer_trigger(timer);
+-
+-    omap_gp_timer_intr(timer, GPT_OVF_IT);
+-    omap_gp_timer_update(timer);
+-}
+-
+-static void omap_gp_timer_match(void *opaque)
+-{
+-    struct omap_gp_timer_s *timer = opaque;
+-
+-    if (timer->trigger == gpt_trigger_both)
+-        omap_gp_timer_trigger(timer);
+-
+-    omap_gp_timer_intr(timer, GPT_MAT_IT);
+-}
+-
+-static void omap_gp_timer_input(void *opaque, int line, int on)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-    int trigger;
+-
+-    switch (s->capture) {
+-    default:
+-    case gpt_capture_none:
+-        trigger = 0;
 -        break;
--
--    case 1:
--        if (s->command) {
--            ret = (s->data >> 8) & 0xff;
--        } else {
--            s->data |= value << 8;
--        }
+-    case gpt_capture_rising:
+-        trigger = !s->in_val && on;
 -        break;
--
--    case 2:
--        if (s->command)
--            ret = s->data & 0xff;
--        else {
--            s->data |= value;
--            tsc2005_write(s, s->reg, s->data);
--            tsc2005_pin_update(s);
--        }
--
--        s->state = 0;
+-    case gpt_capture_falling:
+-        trigger = s->in_val && !on;
+-        break;
+-    case gpt_capture_both:
+-        trigger = (s->in_val == !on);
 -        break;
 -    }
+-    s->in_val = on;
 -
--    return ret;
--}
+-    if (s->inout && trigger && s->capt_num < 2) {
+-        s->capture_val[s->capt_num] = omap_gp_timer_read(s);
 -
--uint32_t tsc2005_txrx(void *opaque, uint32_t value, int len)
--{
--    uint32_t ret = 0;
--
--    len &= ~7;
--    while (len > 0) {
--        len -= 8;
--        ret |= tsc2005_txrx_word(opaque, (value >> len) & 0xff) << len;
--    }
--
--    return ret;
--}
--
--static void tsc2005_timer_tick(void *opaque)
--{
--    TSC2005State *s = opaque;
--    unsigned int function = s->function;
--
--    assert(function < ARRAY_SIZE(mode_regs));
--
--    /* Timer ticked -- a set of conversions has been finished.  */
--
--    if (!s->busy) {
--        return;
--    }
--
--    s->busy = false;
--    s->dav |= mode_regs[function];
--    s->function = -1;
--    tsc2005_pin_update(s);
--}
--
--static void tsc2005_touchscreen_event(void *opaque,
--                int x, int y, int z, int buttons_state)
--{
--    TSC2005State *s = opaque;
--    int p = s->pressure;
--
--    if (buttons_state) {
--        s->x = x;
--        s->y = y;
--    }
--    s->pressure = !!buttons_state;
--
--    /*
--     * Note: We would get better responsiveness in the guest by
--     * signaling TS events immediately, but for now we simulate
--     * the first conversion delay for sake of correctness.
--     */
--    if (p != s->pressure) {
--        tsc2005_pin_update(s);
+-        if (s->capt2 == s->capt_num ++)
+-            omap_gp_timer_intr(s, GPT_TCAR_IT);
 -    }
 -}
 -
--static int tsc2005_post_load(void *opaque, int version_id)
+-static void omap_gp_timer_clk_update(void *opaque, int line, int on)
 -{
--    TSC2005State *s = (TSC2005State *) opaque;
+-    struct omap_gp_timer_s *timer = opaque;
 -
--    s->busy = timer_pending(s->timer);
--    tsc2005_pin_update(s);
+-    omap_gp_timer_sync(timer);
+-    timer->rate = on ? omap_clk_getrate(timer->clk) : 0;
+-    omap_gp_timer_update(timer);
+-}
 -
+-static void omap_gp_timer_clk_setup(struct omap_gp_timer_s *timer)
+-{
+-    omap_clk_adduser(timer->clk,
+-                     qemu_allocate_irq(omap_gp_timer_clk_update, timer, 0));
+-    timer->rate = omap_clk_getrate(timer->clk);
+-}
+-
+-void omap_gp_timer_reset(struct omap_gp_timer_s *s)
+-{
+-    s->config = 0x000;
+-    s->status = 0;
+-    s->it_ena = 0;
+-    s->wu_ena = 0;
+-    s->inout = 0;
+-    s->capt2 = 0;
+-    s->capt_num = 0;
+-    s->pt = 0;
+-    s->trigger = gpt_trigger_none;
+-    s->capture = gpt_capture_none;
+-    s->scpwm = 0;
+-    s->ce = 0;
+-    s->pre = 0;
+-    s->ptv = 0;
+-    s->ar = 0;
+-    s->st = 0;
+-    s->posted = 1;
+-    s->val = 0x00000000;
+-    s->load_val = 0x00000000;
+-    s->capture_val[0] = 0x00000000;
+-    s->capture_val[1] = 0x00000000;
+-    s->match_val = 0x00000000;
+-    omap_gp_timer_update(s);
+-}
+-
+-static uint32_t omap_gp_timer_readw(void *opaque, hwaddr addr)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-
+-    switch (addr) {
+-    case 0x00:	/* TIDR */
+-        return 0x21;
+-
+-    case 0x10:	/* TIOCP_CFG */
+-        return s->config;
+-
+-    case 0x14:	/* TISTAT */
+-        /* ??? When's this bit reset? */
+-        return 1;						/* RESETDONE */
+-
+-    case 0x18:	/* TISR */
+-        return s->status;
+-
+-    case 0x1c:	/* TIER */
+-        return s->it_ena;
+-
+-    case 0x20:	/* TWER */
+-        return s->wu_ena;
+-
+-    case 0x24:	/* TCLR */
+-        return (s->inout << 14) |
+-                (s->capt2 << 13) |
+-                (s->pt << 12) |
+-                (s->trigger << 10) |
+-                (s->capture << 8) |
+-                (s->scpwm << 7) |
+-                (s->ce << 6) |
+-                (s->pre << 5) |
+-                (s->ptv << 2) |
+-                (s->ar << 1) |
+-                (s->st << 0);
+-
+-    case 0x28:	/* TCRR */
+-        return omap_gp_timer_read(s);
+-
+-    case 0x2c:	/* TLDR */
+-        return s->load_val;
+-
+-    case 0x30:	/* TTGR */
+-        return 0xffffffff;
+-
+-    case 0x34:	/* TWPS */
+-        return 0x00000000;	/* No posted writes pending.  */
+-
+-    case 0x38:	/* TMAR */
+-        return s->match_val;
+-
+-    case 0x3c:	/* TCAR1 */
+-        return s->capture_val[0];
+-
+-    case 0x40:	/* TSICR */
+-        return s->posted << 2;
+-
+-    case 0x44:	/* TCAR2 */
+-        return s->capture_val[1];
+-    }
+-
+-    OMAP_BAD_REG(addr);
 -    return 0;
 -}
 -
--static const VMStateDescription vmstate_tsc2005 = {
--    .name = "tsc2005",
--    .version_id = 2,
--    .minimum_version_id = 2,
--    .post_load = tsc2005_post_load,
--    .fields = (const VMStateField []) {
--        VMSTATE_BOOL(pressure, TSC2005State),
--        VMSTATE_BOOL(irq, TSC2005State),
--        VMSTATE_BOOL(command, TSC2005State),
--        VMSTATE_BOOL(enabled, TSC2005State),
--        VMSTATE_BOOL(host_mode, TSC2005State),
--        VMSTATE_BOOL(reset, TSC2005State),
--        VMSTATE_BOOL(pdst, TSC2005State),
--        VMSTATE_BOOL(pnd0, TSC2005State),
--        VMSTATE_BOOL(precision, TSC2005State),
--        VMSTATE_BOOL(nextprecision, TSC2005State),
--        VMSTATE_UINT8(reg, TSC2005State),
--        VMSTATE_UINT8(state, TSC2005State),
--        VMSTATE_UINT16(data, TSC2005State),
--        VMSTATE_UINT16(dav, TSC2005State),
--        VMSTATE_UINT16(filter, TSC2005State),
--        VMSTATE_INT8(nextfunction, TSC2005State),
--        VMSTATE_INT8(function, TSC2005State),
--        VMSTATE_INT32(x, TSC2005State),
--        VMSTATE_INT32(y, TSC2005State),
--        VMSTATE_TIMER_PTR(timer, TSC2005State),
--        VMSTATE_UINT8(pin_func, TSC2005State),
--        VMSTATE_UINT16_ARRAY(timing, TSC2005State, 2),
--        VMSTATE_UINT8(noise, TSC2005State),
--        VMSTATE_UINT16_ARRAY(temp_thr, TSC2005State, 2),
--        VMSTATE_UINT16_ARRAY(aux_thr, TSC2005State, 2),
--        VMSTATE_INT32_ARRAY(tr, TSC2005State, 8),
--        VMSTATE_END_OF_LIST()
+-static uint32_t omap_gp_timer_readh(void *opaque, hwaddr addr)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-    uint32_t ret;
+-
+-    if (addr & 2)
+-        return s->readh;
+-    else {
+-        ret = omap_gp_timer_readw(opaque, addr);
+-        s->readh = ret >> 16;
+-        return ret & 0xffff;
 -    }
+-}
+-
+-static void omap_gp_timer_write(void *opaque, hwaddr addr, uint32_t value)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-
+-    switch (addr) {
+-    case 0x00:	/* TIDR */
+-    case 0x14:	/* TISTAT */
+-    case 0x34:	/* TWPS */
+-    case 0x3c:	/* TCAR1 */
+-    case 0x44:	/* TCAR2 */
+-        OMAP_RO_REG(addr);
+-        break;
+-
+-    case 0x10:	/* TIOCP_CFG */
+-        s->config = value & 0x33d;
+-        if (((value >> 3) & 3) == 3)				/* IDLEMODE */
+-            fprintf(stderr, "%s: illegal IDLEMODE value in TIOCP_CFG\n",
+-                            __func__);
+-        if (value & 2)						/* SOFTRESET */
+-            omap_gp_timer_reset(s);
+-        break;
+-
+-    case 0x18:	/* TISR */
+-        if (value & GPT_TCAR_IT)
+-            s->capt_num = 0;
+-        if (s->status && !(s->status &= ~value))
+-            qemu_irq_lower(s->irq);
+-        break;
+-
+-    case 0x1c:	/* TIER */
+-        s->it_ena = value & 7;
+-        break;
+-
+-    case 0x20:	/* TWER */
+-        s->wu_ena = value & 7;
+-        break;
+-
+-    case 0x24:	/* TCLR */
+-        omap_gp_timer_sync(s);
+-        s->inout = (value >> 14) & 1;
+-        s->capt2 = (value >> 13) & 1;
+-        s->pt = (value >> 12) & 1;
+-        s->trigger = (value >> 10) & 3;
+-        if (s->capture == gpt_capture_none &&
+-                        ((value >> 8) & 3) != gpt_capture_none)
+-            s->capt_num = 0;
+-        s->capture = (value >> 8) & 3;
+-        s->scpwm = (value >> 7) & 1;
+-        s->ce = (value >> 6) & 1;
+-        s->pre = (value >> 5) & 1;
+-        s->ptv = (value >> 2) & 7;
+-        s->ar = (value >> 1) & 1;
+-        s->st = (value >> 0) & 1;
+-        if (s->inout && s->trigger != gpt_trigger_none)
+-            fprintf(stderr, "%s: GP timer pin must be an output "
+-                            "for this trigger mode\n", __func__);
+-        if (!s->inout && s->capture != gpt_capture_none)
+-            fprintf(stderr, "%s: GP timer pin must be an input "
+-                            "for this capture mode\n", __func__);
+-        if (s->trigger == gpt_trigger_none)
+-            omap_gp_timer_out(s, s->scpwm);
+-        /* TODO: make sure this doesn't overflow 32-bits */
+-        s->ticks_per_sec = NANOSECONDS_PER_SECOND << (s->pre ? s->ptv + 1 : 0);
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x28:	/* TCRR */
+-        s->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-        s->val = value;
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x2c:	/* TLDR */
+-        s->load_val = value;
+-        break;
+-
+-    case 0x30:	/* TTGR */
+-        s->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-        s->val = s->load_val;
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x38:	/* TMAR */
+-        omap_gp_timer_sync(s);
+-        s->match_val = value;
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x40:	/* TSICR */
+-        s->posted = (value >> 2) & 1;
+-        if (value & 2)	/* How much exactly are we supposed to reset? */
+-            omap_gp_timer_reset(s);
+-        break;
+-
+-    default:
+-        OMAP_BAD_REG(addr);
+-    }
+-}
+-
+-static void omap_gp_timer_writeh(void *opaque, hwaddr addr, uint32_t value)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-
+-    if (addr & 2)
+-        omap_gp_timer_write(opaque, addr, (value << 16) | s->writeh);
+-    else
+-        s->writeh = (uint16_t) value;
+-}
+-
+-static uint64_t omap_gp_timer_readfn(void *opaque, hwaddr addr,
+-                                     unsigned size)
+-{
+-    switch (size) {
+-    case 1:
+-        return omap_badwidth_read32(opaque, addr);
+-    case 2:
+-        return omap_gp_timer_readh(opaque, addr);
+-    case 4:
+-        return omap_gp_timer_readw(opaque, addr);
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+-static void omap_gp_timer_writefn(void *opaque, hwaddr addr,
+-                                  uint64_t value, unsigned size)
+-{
+-    switch (size) {
+-    case 1:
+-        omap_badwidth_write32(opaque, addr, value);
+-        break;
+-    case 2:
+-        omap_gp_timer_writeh(opaque, addr, value);
+-        break;
+-    case 4:
+-        omap_gp_timer_write(opaque, addr, value);
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+-static const MemoryRegionOps omap_gp_timer_ops = {
+-    .read = omap_gp_timer_readfn,
+-    .write = omap_gp_timer_writefn,
+-    .valid.min_access_size = 1,
+-    .valid.max_access_size = 4,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
 -};
 -
--void *tsc2005_init(qemu_irq pintdav)
+-struct omap_gp_timer_s *omap_gp_timer_init(struct omap_target_agent_s *ta,
+-                qemu_irq irq, omap_clk fclk, omap_clk iclk)
 -{
--    TSC2005State *s;
+-    struct omap_gp_timer_s *s = g_new0(struct omap_gp_timer_s, 1);
 -
--    s = g_new0(TSC2005State, 1);
--    s->x = 400;
--    s->y = 240;
--    s->pressure = false;
--    s->precision = s->nextprecision = false;
--    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, tsc2005_timer_tick, s);
--    s->pint = pintdav;
--    s->model = 0x2005;
+-    s->ta = ta;
+-    s->irq = irq;
+-    s->clk = fclk;
+-    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, omap_gp_timer_tick, s);
+-    s->match = timer_new_ns(QEMU_CLOCK_VIRTUAL, omap_gp_timer_match, s);
+-    s->in = qemu_allocate_irq(omap_gp_timer_input, s, 0);
+-    omap_gp_timer_reset(s);
+-    omap_gp_timer_clk_setup(s);
 -
--    s->tr[0] = 0;
--    s->tr[1] = 1;
--    s->tr[2] = 1;
--    s->tr[3] = 0;
--    s->tr[4] = 1;
--    s->tr[5] = 0;
--    s->tr[6] = 1;
--    s->tr[7] = 0;
--
--    tsc2005_reset(s);
--
--    qemu_add_mouse_event_handler(tsc2005_touchscreen_event, s, 1,
--                    "QEMU TSC2005-driven Touchscreen");
--
--    qemu_register_reset((void *) tsc2005_reset, s);
--    vmstate_register(NULL, 0, &vmstate_tsc2005, s);
+-    memory_region_init_io(&s->iomem, NULL, &omap_gp_timer_ops, s, "omap.gptimer",
+-                          omap_l4_region_size(ta, 0));
+-    omap_l4_attach(ta, 0, &s->iomem);
 -
 -    return s;
 -}
--
--/*
-- * Use tslib generated calibration data to generate ADC input values
-- * from the touchscreen.  Assuming 12-bit precision was used during
-- * tslib calibration.
-- */
--void tsc2005_set_transform(void *opaque, const MouseTransformInfo *info)
--{
--    TSC2005State *s = (TSC2005State *) opaque;
--
--    /* This version assumes touchscreen X & Y axis are parallel or
--     * perpendicular to LCD's  X & Y axis in some way.  */
--    if (abs(info->a[0]) > abs(info->a[1])) {
--        s->tr[0] = 0;
--        s->tr[1] = -info->a[6] * info->x;
--        s->tr[2] = info->a[0];
--        s->tr[3] = -info->a[2] / info->a[0];
--        s->tr[4] = info->a[6] * info->y;
--        s->tr[5] = 0;
--        s->tr[6] = info->a[4];
--        s->tr[7] = -info->a[5] / info->a[4];
--    } else {
--        s->tr[0] = info->a[6] * info->y;
--        s->tr[1] = 0;
--        s->tr[2] = info->a[1];
--        s->tr[3] = -info->a[2] / info->a[1];
--        s->tr[4] = 0;
--        s->tr[5] = -info->a[6] * info->x;
--        s->tr[6] = info->a[3];
--        s->tr[7] = -info->a[5] / info->a[3];
--    }
--
--    s->tr[0] >>= 11;
--    s->tr[1] >>= 11;
--    s->tr[3] <<= 4;
--    s->tr[4] >>= 11;
--    s->tr[5] >>= 11;
--    s->tr[7] <<= 4;
--}
-diff --git a/hw/input/Kconfig b/hw/input/Kconfig
-index acfdba5c4ca..01a64a9aa7e 100644
---- a/hw/input/Kconfig
-+++ b/hw/input/Kconfig
-@@ -20,9 +20,6 @@ config PS2
- config STELLARIS_GAMEPAD
-     bool
- 
--config TSC2005
--    bool
--
- config VIRTIO_INPUT
-     bool
-     default y
-diff --git a/hw/input/meson.build b/hw/input/meson.build
-index fe60b6e28fc..064d1e47802 100644
---- a/hw/input/meson.build
-+++ b/hw/input/meson.build
-@@ -5,7 +5,6 @@ system_ss.add(when: 'CONFIG_PCKBD', if_true: files('pckbd.c'))
- system_ss.add(when: 'CONFIG_PL050', if_true: files('pl050.c'))
- system_ss.add(when: 'CONFIG_PS2', if_true: files('ps2.c'))
- system_ss.add(when: 'CONFIG_STELLARIS_GAMEPAD', if_true: files('stellaris_gamepad.c'))
--system_ss.add(when: 'CONFIG_TSC2005', if_true: files('tsc2005.c'))
- 
- system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input.c'))
- system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input-hid.c'))
-diff --git a/hw/input/trace-events b/hw/input/trace-events
-index 29001a827d9..1484625565b 100644
---- a/hw/input/trace-events
-+++ b/hw/input/trace-events
-@@ -46,9 +46,6 @@ ps2_mouse_reset(void *opaque) "%p"
- hid_kbd_queue_full(void) "queue full"
- hid_kbd_queue_empty(void) "queue empty"
- 
--# tsc2005.c
--tsc2005_sense(const char *state) "touchscreen sense %s"
--
- # virtio-input.c
- virtio_input_queue_full(void) "queue full"
- 
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 3a78636ab45..1292d9530ca 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -22,7 +22,6 @@ system_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gictimer.c'))
+ system_ss.add(when: 'CONFIG_MSF2', if_true: files('mss-timer.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_timer.c'))
+ system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_timer.c'))
+-system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_gptimer.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_synctimer.c'))
+ system_ss.add(when: 'CONFIG_PXA2XX_TIMER', if_true: files('pxa2xx_timer.c'))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_systmr.c'))
 -- 
 2.34.1
 
