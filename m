@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44DBCD3436
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 14:06:54 +0000 (UTC)
-Received: from [::1] (helo=lists1p.gnu.org)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F02A2CD3439
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 14:09:59 +0000 (UTC)
+Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slU4d-0008Ow-BB; Tue, 03 Sep 2024 10:00:04 -0400
+	id 1slUDn-0005Ou-Tq; Tue, 03 Sep 2024 10:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slU3t-0008Dd-US
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 09:59:19 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slU3H-0006i3-Ox
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 09:59:07 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42bb8cf8abeso42952785e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 06:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725371825; x=1725976625; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F/J3s1WCd5IHhbCw5NkWJ0Lag6fROvedX/tz/g1GSR4=;
- b=DI8ZOcpPLkCKqPlEJ4qAZYvGZAXYK/uEqEGJbtbfYCT3uACGwr2heGzT2zPj/XejM4
- 7xKh6E18Iq0V3XykbwKsElt15vkgHdiyay66ONuiXKDABVoDugztoVk5DSfzvTustYGw
- 0Eq7joH/aNOTLHOmy+8zEcrkTAMX+KV+pp98mpXpvT3mR2jSY8tUuxWmhdivXMinf+fy
- qcifvI7ZYQJosn6WMT5ykdH8m8DnbaSzG6MXg08mQQkF8E3UdWGEJT6riLQuVUI7kfpx
- yb79QMxeN+SKz4rxyDw8iERyHz69tBTrBkbv6+CfqmHKhmiaIxCT6SWRbSSK21YBeB7l
- dmmA==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1slUDk-0005CE-MZ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:09:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1slUDi-0008Ok-Fc
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:09:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725372560;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jjhSCJBJuSAurBQThL2GuR+Yd4wjnt/EI+Br8d8wwkM=;
+ b=LthbPTNMrE0l7WrkqBr6UT/V71e9NkCEoQV0gwy3lZkhTQUypDqeJdwqmsBImaAGMxz7NV
+ 0BV8enC7XrQ1bsEKvYueH6HaXhyA0IQQSJaq2WP6nhWsLOSQX9P4dRYq7UrTFZefEqcd53
+ na/Hvu+5ACWYgrVNHdAgWpvrHMt/RIo=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587-hTd0IyMKPW6oxUtYT9NXFQ-1; Tue, 03 Sep 2024 10:00:57 -0400
+X-MC-Unique: hTd0IyMKPW6oxUtYT9NXFQ-1
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2052d07ff07so35447585ad.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 07:00:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725371825; x=1725976625;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F/J3s1WCd5IHhbCw5NkWJ0Lag6fROvedX/tz/g1GSR4=;
- b=j+N6aUhNHFNlI3w6VEleUG8CcJmchEf/W5s9bqOI41JdNHB+aT8FVITBFlwoiJTwsQ
- Yfen68hz+5FXCLQUfnoJCPUGS9+M9ccEYjUoAbXJ4Pa7Rbk+FNIaQllxByZzry7+EYSV
- dVKvSmXRbxKLCXS844EVRIT3YeOG7X4ID8jmIGVYhP1g24Hj+NLVAgYR+z6HukRUOzVS
- Z48F288YDtmBE8LwgvsxNv/ochfyhX4Qw36IsAL0GOzGO5/n8wKbIwWnLLzrROPRbkYa
- uHrxGk9R3gortrw+snv4+o3O8Nu+jhgozaYVkH1KmLAPQikck/k0MhWztqwhzafrp+j+
- 2X/w==
+ d=1e100.net; s=20230601; t=1725372055; x=1725976855;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jjhSCJBJuSAurBQThL2GuR+Yd4wjnt/EI+Br8d8wwkM=;
+ b=DNXMRFZEjHVqwo7MPI9d2BnMUpJj5GjrBSg+/mP0kflBF7dbBQortx3ISUVjlMDqqd
+ MpGVRid+2cdjDu61+ww+aVH5Be7Hhu9L4THiFe2l6yDR1DUPHwDhEMG0t/DUJM7M7fUS
+ 37Zs8qa504Yw/KJNZSe4SfvpGTaoku0aknd1B6WsQzRXXYjRnX2RpY+JhxjQ4cM557Hh
+ eiH3wbsE/ilqWi39Y2FiE57dnACFrepw2zN3j4Z4k/Wm+b57rFmu4jI0/8FIq5WKeDP8
+ /1MbLNVJ75p5tkY3P6B53bYSvZj40tYllPCU4XODyYvopnp8zvofjCMDDg6wp4u1s0uC
+ xiIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRH+DIoE6jw7RTsZcjyuuHQ+WYJLfSalk0LASKSqn3qg6quzGAI+TIdWyxdCFAHxb5YJ2FBM0O7wl3@nongnu.org
-X-Gm-Message-State: AOJu0Yy6exVaCv5+vomCCXnDh7CCbgcWYC2dQG08OFZAx2Cg4H6ce8f3
- dYr1CnVt2jcFmU9PiPmEyCLNBuBSVIKxD3A7ATQTEjn9kB8uDUaVE7nJufG6n0Mn9IfODGbOmM6
- b
-X-Google-Smtp-Source: AGHT+IG4ZgE5qyHBuzMeaI7ScNcsMJYwiYR/FGDB0KfWaK1LkgabWDxjiGiWIpv9zGn/4Wf09ld6Ig==
-X-Received: by 2002:adf:cd0a:0:b0:374:ba7b:42af with SMTP id
- ffacd0b85a97d-376dd15b687mr652456f8f.26.1725371462325; 
- Tue, 03 Sep 2024 06:51:02 -0700 (PDT)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374bdcbe0f0sm9857061f8f.117.2024.09.03.06.51.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 06:51:01 -0700 (PDT)
-Message-ID: <df273147-17f9-4333-a357-5f032e652fb4@linaro.org>
-Date: Tue, 3 Sep 2024 15:51:00 +0200
+ AJvYcCUcecCYSrkAdct09fnR4zfJH4bXUP1+2t1xMScT4mkLzM0CJ48BNbgxlWAZUcqDNVmlNCkm6LBYBT34@nongnu.org
+X-Gm-Message-State: AOJu0Yy11v3HJJpXMSFkl7WT1xEaJYKv87iE4uCP5bvXD25TN9vsBySC
+ 1nKmYI+GRShBP+kTCZ2kGH89WGsun/9EJ5UKboxzfdYGjWaONWQWxTeTX9KSjBSN+Ch3nExwW68
+ KZUEGjF5P2EzJSDuiI2fGsNd+wUYbILZbiwRxLUeBA5JRoS5jPMb9
+X-Received: by 2002:a17:902:f786:b0:203:a02c:992b with SMTP id
+ d9443c01a7336-2054bc96937mr79291745ad.3.1725372055366; 
+ Tue, 03 Sep 2024 07:00:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESt9Cl068xl1wlir0hWjmhG+W99U/WXJNrsXvb0csaMwc4arZlnKCEMz2eall7CtqN3IZy9Q==
+X-Received: by 2002:a17:902:f786:b0:203:a02c:992b with SMTP id
+ d9443c01a7336-2054bc96937mr79291325ad.3.1725372054841; 
+ Tue, 03 Sep 2024 07:00:54 -0700 (PDT)
+Received: from localhost.localdomain ([115.96.207.26])
+ by smtp.googlemail.com with ESMTPSA id
+ d9443c01a7336-2057554f328sm32900445ad.266.2024.09.03.07.00.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Sep 2024 07:00:54 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, philmd@linaro.org, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v3] kvm/i386: make kvm_filter_msr() and related definitions
+ private to kvm module
+Date: Tue,  3 Sep 2024 19:30:45 +0530
+Message-ID: <20240903140045.41167-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 34/44] tests/functional: Convert Aarch64 SBSA-Ref
- avocado tests
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Daniel P . Berrange" <berrange@redhat.com>, qemu-devel@nongnu.org
-References: <20240830133841.142644-1-thuth@redhat.com>
- <20240830133841.142644-35-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240830133841.142644-35-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,135 +104,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/8/24 15:38, Thomas Huth wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Straight forward conversion. Since SBSA_FLASH files are not
-> tarballs, use lzma_uncompress() method.
-> 
-> Avocado used to set a timeout of 11 tests * 180s = 1980s.
-> Hopefully 600s should be sufficient.
-> 
-> Running on macOS Sonoma / Apple silicon M1:
-> 
->    $ QEMU_TEST_TIMEOUT_EXPECTED=1 make check-functional-aarch64 V=1
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max              OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_off    OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_neoverse_n1      OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_edk2_firmware                 OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_cortex_a57          OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max                 OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_impdef    OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_off       OK
->    ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_neoverse_n1         OK
->    1/5 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_sbsaref        OK   241.79s  11 subtests passed
->    ...
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-> Message-ID: <20240823131614.10269-1-philmd@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   MAINTAINERS                                   |   2 +-
->   tests/functional/meson.build                  |   5 +
->   .../test_aarch64_sbsaref.py}                  | 144 ++++++------------
->   3 files changed, 55 insertions(+), 96 deletions(-)
->   rename tests/{avocado/machine_aarch64_sbsaref.py => functional/test_aarch64_sbsaref.py} (56%)
->   mode change 100644 => 100755
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 14500cf8a5..e9aa174dc7 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -971,7 +971,7 @@ F: hw/misc/sbsa_ec.c
->   F: hw/watchdog/sbsa_gwdt.c
->   F: include/hw/watchdog/sbsa_gwdt.h
->   F: docs/system/arm/sbsa.rst
-> -F: tests/avocado/machine_aarch64_sbsaref.py
-> +F: tests/functional/test_aarch64_sbsaref.py
->   
->   Sharp SL-5500 (Collie) PDA
->   M: Peter Maydell <peter.maydell@linaro.org>
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 182d40e052..bfa04818cc 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -11,6 +11,7 @@ endif
->   
->   # Timeouts for individual tests that can be slow e.g. with debugging enabled
->   test_timeouts = {
-> +  'aarch64_sbsaref' : 600,
->     'acpi_bits' : 240,
->     'netdev_ethtool' : 180,
->     'ppc_40p' : 240,
-> @@ -32,6 +33,10 @@ tests_generic_linuxuser = [
->   tests_generic_bsduser = [
->   ]
->   
-> +tests_aarch64_system_thorough = [
-> +  'aarch64_sbsaref',
-> +]
-> +
->   tests_arm_system_thorough = [
->     'arm_canona1100',
->     'arm_integratorcp',
-> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
-> old mode 100644
-> new mode 100755
-> similarity index 56%
-> rename from tests/avocado/machine_aarch64_sbsaref.py
-> rename to tests/functional/test_aarch64_sbsaref.py
-> index f8bf40c192..e90566cdb8
-> --- a/tests/avocado/machine_aarch64_sbsaref.py
-> +++ b/tests/functional/test_aarch64_sbsaref.py
-> @@ -1,3 +1,5 @@
-> +#!/usr/bin/env python3
-> +#
->   # Functional test that boots a Linux kernel and checks the console
->   #
->   # SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
-> @@ -8,12 +10,11 @@
->   
->   import os
->   
-> -from avocado import skipUnless
-> -from avocado.utils import archive
-> -
-> -from avocado_qemu import QemuSystemTest
-> -from avocado_qemu import wait_for_console_pattern
-> -from avocado_qemu import interrupt_interactive_console_until_pattern
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +from qemu_test import interrupt_interactive_console_until_pattern
-> +from qemu_test.utils import lzma_uncompress
-> +from unittest import skipUnless
->   
->   
->   class Aarch64SbsarefMachine(QemuSystemTest):
+kvm_filer_msr() is only used from i386 kvm module. Make it static so that its
+easy for developers to understand that its not used anywhere else.
+Same for QEMURDMSRHandler, QEMUWRMSRHandler and KVMMSRHandlers definitions.
 
-Oops, I forgot to squash:
-
--- >8 --
-diff --git a/tests/functional/test_aarch64_sbsaref.py 
-b/tests/functional/test_aarch64_sbsaref.py
-index e90566cdb8..f31c2a60b6 100755
---- a/tests/functional/test_aarch64_sbsaref.py
-+++ b/tests/functional/test_aarch64_sbsaref.py
-@@ -20,8 +20,4 @@
-  class Aarch64SbsarefMachine(QemuSystemTest):
-      """
--    :avocado: tags=arch:aarch64
--    :avocado: tags=machine:sbsa-ref
--    :avocado: tags=accel:tcg
--
-      As firmware runs at a higher privilege level than the hypervisor we
-      can only run these tests under TCG emulation.
+CC: philmd@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
+ target/i386/kvm/kvm.c      | 12 +++++++++++-
+ target/i386/kvm/kvm_i386.h | 11 -----------
+ 2 files changed, 11 insertions(+), 12 deletions(-)
 
-> @@ -28,6 +29,16 @@ class Aarch64SbsarefMachine(QemuSystemTest):
->   
->       timeout = 180
+changelog:
+v2: make QEMURDMSRHandler, QEMUWRMSRHandler and KVMMSRHandlers private
+to kvm.c
+v3: typo fix. tags added.
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 2fa88ef1e3..d714f54ee4 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -92,7 +92,17 @@
+  * 255 kvm_msr_entry structs */
+ #define MSR_BUF_SIZE 4096
+ 
++typedef bool QEMURDMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t *val);
++typedef bool QEMUWRMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t val);
++typedef struct kvm_msr_handlers {
++    uint32_t msr;
++    QEMURDMSRHandler *rdmsr;
++    QEMUWRMSRHandler *wrmsr;
++} KVMMSRHandlers;
++
+ static void kvm_init_msrs(X86CPU *cpu);
++static bool kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
++                           QEMUWRMSRHandler *wrmsr);
+ 
+ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+     KVM_CAP_INFO(SET_TSS_ADDR),
+@@ -5728,7 +5738,7 @@ static bool kvm_install_msr_filters(KVMState *s)
+     return true;
+ }
+ 
+-bool kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
++static bool kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
+                     QEMUWRMSRHandler *wrmsr)
+ {
+     int i;
+diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+index 34fc60774b..9de9c0d303 100644
+--- a/target/i386/kvm/kvm_i386.h
++++ b/target/i386/kvm/kvm_i386.h
+@@ -66,17 +66,6 @@ uint64_t kvm_swizzle_msi_ext_dest_id(uint64_t address);
+ void kvm_update_msi_routes_all(void *private, bool global,
+                                uint32_t index, uint32_t mask);
+ 
+-typedef bool QEMURDMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t *val);
+-typedef bool QEMUWRMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t val);
+-typedef struct kvm_msr_handlers {
+-    uint32_t msr;
+-    QEMURDMSRHandler *rdmsr;
+-    QEMUWRMSRHandler *wrmsr;
+-} KVMMSRHandlers;
+-
+-bool kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
+-                    QEMUWRMSRHandler *wrmsr);
+-
+ #endif /* CONFIG_KVM */
+ 
+ void kvm_pc_setup_irq_routing(bool pci_enabled);
+-- 
+2.42.0
 
 
