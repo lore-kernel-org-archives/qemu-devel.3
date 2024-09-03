@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B38FCCD379F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5E9CD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slWYM-0006xx-SW; Tue, 03 Sep 2024 12:38:53 -0400
+	id 1slWZj-0004hS-Bv; Tue, 03 Sep 2024 12:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWYI-0006np-Lc
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:38:46 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1slWZh-0004cP-Ja
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:40:13 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slWYF-00078X-QT
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:38:45 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-374c326c638so2088751f8f.2
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:38:42 -0700 (PDT)
+ id 1slWZf-0007RA-WB
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:40:13 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-374c4d4f219so1836994f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:40:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725381521; x=1725986321; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725381609; x=1725986409; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mmHYRpE5cDo3krpudjkkf6vZQqE/rCgFPn3mx8tfzDU=;
- b=xpJO9DjI4EmQaGqIWvddyt+rct1oX19PjHUMVYIFc0xozOR/iFh+6xL2rsxeg24xvw
- b4rYp+ZCR0svXSETkvn/LNZkan+ot4BFaQ23np1MgWnteUMIiFbOOAnLZySloLmFoZUv
- S/dQ8y6X8Hj0LYxFs60sMLp2Y1+Lcx2+FAIm2NtTANRrpF75OySgMGa8+UlcN5EoiiUw
- JRo84qt6bkX6bRO0lIldEZZoDYO5OZNMM4+QSuDxK6hYss5J/ftts+kOdfQbF7xO5ac5
- FDMdRCOtXJay+csi0HJDBa2WvUuZU6BKS2T8RMNxX774eFLfg6AnT33+DckKNyBnERTL
- AOAQ==
+ bh=7Ca4/u9BxH3ehujKMf3VQzgAvKmTY63OWpDI6n9L/94=;
+ b=QXJAzkWL8dnt1YQUEtEG4rpWSume2XZkkQP7xUJLALZ0O4Ched7qXO/5rw6CuUrSEt
+ l3XkpkaphQ4IiEWebjPQGxcWVdEV5DtCDBWj6G1eRNAIyUIXm3hbHJnHCfG+IASYOyY4
+ HzcxjW/DfaspA2qQ94p1boHIwtlfrmkgr4JOrP8LmovlBwwEbpaVT18kgXRPCCc3xUyf
+ bZr5DyeBm6p8oboaNATPDl6+3TlWhCa0Qhlz0f+tAzYyef3l3a/Y0k1/Yi/Z3pSau43x
+ M93v4mWnTUaN78W5f+x+m+PmaaijN8a6ButYTJ1nfTY/F4PmQIAwAe6trzP9VQmeH8gr
+ ikvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725381521; x=1725986321;
+ d=1e100.net; s=20230601; t=1725381609; x=1725986409;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mmHYRpE5cDo3krpudjkkf6vZQqE/rCgFPn3mx8tfzDU=;
- b=nphcZpISl7FGxu4FTnFrn3wVoQaz0Xg1E2xbzWlEeek+AI3DXhArLfJqUnpzgJgzdM
- pNUnD3szJl71JpWGeMPVkt7PXliAk0Z2zRZoW+TFGpZN1EAGIBqak3vjX/jd9FNEV5Z0
- /wlDhwG4nBnTxnphgcF7c1lOV8t5MLacFDu2ByQvdFqT11CwZGa0cKgqKVHX0Lv1NFNJ
- 9fkP94LQB4cDmtR3sMYXpZQOfm6M4T2cf33rGmsVRZYeQhttgmm5mo+y9O+zcKTXtTc7
- t12ShQ8G00PmblB5R7skX00cG1Z4qsryJWPeEYY3Jk0TdgfGhn0Z7UGz4dcr+I0Ju8yv
- cErA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPUKAtcLnm3+oVziObOL2uwFTVNTwuuCaSQALNwveETG1QYuCPZaa5HQ2gPA4mELFvyAu3h6Of9Jr7@nongnu.org
-X-Gm-Message-State: AOJu0YxTdRUm56td2wdRbaEWWuH0gz5BKuU5eNyTJG/HxsrgD48cSs0u
- L9fCVy2zfZrUTFLEKrgwga8XdGXKwo5ZSD2Te7LUmXUdhy6IjdxmS97H8kHDcnWPavpWqbYLDvv
- vJeA8fjUR3Xbd7/ptFFtWnrk2bb+HOZrh4VcnkgyY6VLQwtZn
-X-Google-Smtp-Source: AGHT+IF3BF9QHCe2FGpvMy9kS2sZ/MdtTVp3Bu3rX0/EPDezBMLIcfGdmfWOBbjuv/RyPq96HoXbOTvY3HEPipNsrXs=
-X-Received: by 2002:a5d:4f08:0:b0:371:7e73:eb43 with SMTP id
- ffacd0b85a97d-374bf1c9498mr7075937f8f.42.1725381521357; Tue, 03 Sep 2024
- 09:38:41 -0700 (PDT)
+ bh=7Ca4/u9BxH3ehujKMf3VQzgAvKmTY63OWpDI6n9L/94=;
+ b=NT1nUifCGYnEKv8gO5d/RWNanF5KrB6DSwSGJx0+1o5NPasuTCbZJ4qsY58wJmYp0c
+ IcmAgfUgCn5cl+5CuJi+NB2UZrTDpHOPQHlSeKUlgqCq7r/dPs1bO6jUC5uumxiezpPH
+ PzSOBSe/Tm5dTQ7hFPXCHbQYdYsnxSkE0glIV1aB/ZweLRVyUj4XLMFoSIM2vRXPOK5K
+ YDEGfSZz5CCJlP809zPK0z2nE8MAeGyPRyydNwNp6ZvEbpmvGZel5N22T+ngcfJaA9gY
+ t6FDhYr3wjbRTJY3i+PlKTLQ9ydwFDsl+xFIR8ZD0dLRrCIobzF3jEK1HI2nt+ajHPYl
+ wfEA==
+X-Gm-Message-State: AOJu0YxskUxFR7egrNS0kL//3INqXgozhC+bQDB/Y6y/1IBP+sT31iuB
+ rPDE8btP+BT6+1EW7V5VZ0diA/c0Uqky1Fc2X0pVd6/iCBcEuCzJIu3jwXLBsNjzrWnbshglru1
+ dTNAQHs/S97G2nRTxNVTA/jIniWVp6PXKwL92TA==
+X-Google-Smtp-Source: AGHT+IFIMMkbh+81lxAC9Q9Wcmfqz5V5FMwoz/lBwheLstu0Uf9QN1yi5pFyg1f0rwgXX2rVdU4Fr2a8d1xkIQrdOls=
+X-Received: by 2002:adf:f589:0:b0:374:c92e:f699 with SMTP id
+ ffacd0b85a97d-374ecc8f1c7mr2962135f8f.23.1725381609426; Tue, 03 Sep 2024
+ 09:40:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240903133940.3447430-1-changbin.du@huawei.com>
- <cceb62dd-742c-471b-8b4c-6bfc304d4565@linaro.org>
-In-Reply-To: <cceb62dd-742c-471b-8b4c-6bfc304d4565@linaro.org>
+References: <20240903144154.17135-1-philmd@linaro.org>
+In-Reply-To: <20240903144154.17135-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Sep 2024 17:38:30 +0100
-Message-ID: <CAFEAcA-7FjL0SZzJsJ6WZ-Cccx8W2711_CrkNpknrJgYtJx=iQ@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/arm/boot: Report error msg if loading elf/dtb failed
+Date: Tue, 3 Sep 2024 17:39:49 +0100
+Message-ID: <CAFEAcA92ze+sow=S71hG0HNwYOyUnPh=+26kzxu=W7NLYN09KA@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/boot: Explain why load_elf_hdr() error is ignored
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Changbin Du <changbin.du@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, Changbin Du <changbin.du@huawei.com>,
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,38 +90,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 14:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+On Tue, 3 Sept 2024 at 15:41, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
 g> wrote:
 >
-> On 3/9/24 15:39, Changbin Du wrote:
-> > Print errors before exit. Do not exit silently.
-> >
-> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Signed-off-by: Changbin Du <changbin.du@huawei.com>
-> >
-> > ---
-> > v3: use load_elf_strerror() to format errno.
-> > v2: remove msg for arm_load_dtb.
-> > ---
-> >   hw/arm/boot.c | 2 ++
-> >   1 file changed, 2 insertions(+)
-> >
-> > diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-> > index d480a7da02cf..6c895e05cbc0 100644
-> > --- a/hw/arm/boot.c
-> > +++ b/hw/arm/boot.c
-> > @@ -839,6 +839,8 @@ static ssize_t arm_load_elf(struct arm_boot_info *i=
-nfo, uint64_t *pentry,
-> >                         1, data_swab, as);
-> >       if (ret <=3D 0) {
-> >           /* The header loaded but the image didn't */
-> > +        error_report("Couldn't load elf '%s': %s",
-> > +                     info->kernel_filename, load_elf_strerror(ret));
-> >           exit(1);
-> >       }
-> >
+> If the file is not an ELF file, arm_setup_direct_kernel_boot()
+> falls back to try it as a uimage or an AArch64 Image file or as
+> last resort a bare raw binary. We can discard load_elf_hdr()
+> error and silently return.
 >
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
 
 
 
