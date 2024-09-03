@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E27FCD379F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59383CD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:12:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW5e-0001qA-W4; Tue, 03 Sep 2024 12:09:11 -0400
+	id 1slW4z-0006RD-H6; Tue, 03 Sep 2024 12:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5Z-0001Pl-P6
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:05 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1slW4n-0005ep-EQ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:18 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5V-0002xt-KZ
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:05 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-374c84dcc90so1626730f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:09:01 -0700 (PDT)
+ id 1slW4i-0002jI-PZ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:16 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-53438aa64a4so6717039e87.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379740; x=1725984540; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379691; x=1725984491; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Ke08yY4/dopOYtA2QapUAC0xejTJLaqgAeW0nPXO+d4=;
- b=f1gtZ1nrWpZ70GVrb/EJx00c/7VxiK+4R1AIK9Z9sUv5REtGjJEKAKOOXFP1nfqJq9
- zKTSRFLbbA/UJQSweilHP5PNEz+dMKHEAu2SZm4Y64ZCdZh7s+XJUVjeZD+scGwR5WMo
- 7xqzqjs3pLwtFBvApH0Sv/XHW5/CHQ1WY9btHpFpj+U560gc4sheNBiaIPLZTDVnkS7t
- 74om1KN1QriDnrk1eaUrkWGQO4CP92JQj3DA94sWMS4mleRZ2/ynKKhrEHwhLLclILY5
- ofY+j1dfPeBNBDBG9RXJri1Te4bv7TL8SrBC3hLnwZ59XPrYhckHmFxl53XZXLQKTffG
- m49A==
+ :reply-to; bh=Kb2hlNOkuGqsXxdmbrthsU/1g1vBxCB4j6840EtQwyY=;
+ b=WajZzY5nG4iXstZ2ezhqOrVe+NcVtzKL5TnaWGFCyKsC1q9SCkubW+dlonKU9nLIWK
+ diObgU0h2ggcJv6HffYAdYdDS0k1kjbqmq7fmjU7nfns0Y2vUBlEOTmjwlWe6WSpccDs
+ Xy5pO89bWSgQTIgSSzT2K752vYCb6APYzlO9hyRu5EcRDRj0tjCxo3veOY07tJzFry86
+ TChXbm85RHInX0BSkS9YY8odgC4qQu8GMq4/g/taxddkUVhM/eVvDo33eHL90AUMQ14k
+ fdwn3FlIWpFqe1XLdCYvrQIC6Mvr2qHflpcYY+4l32LWLb4W+5wmuZqv14HLpg1FllQq
+ C2YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379740; x=1725984540;
+ d=1e100.net; s=20230601; t=1725379691; x=1725984491;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ke08yY4/dopOYtA2QapUAC0xejTJLaqgAeW0nPXO+d4=;
- b=ipbsf++Bl9zt5Xbo5vGN9Ydik09mMLu3abtAHz8Aanwivx85HTMmXkAMnqtHOlfbQ6
- q2J08OCbbV03R6b9GRDrn6klgp8n1wwJwr71bYUQCR00S++/J560XPxb6wEH6Kfj7TDT
- /fG6iVbkcTzH4tRHHp0/5XlexVQ8qdtYlbzuLKsssy7B+K9l5OwtpmqugI+bXxgNYu+X
- 0oQ7wsd6xGWYTOfTnW39JjjQJJjDgl6w/fAEOSApuk/zJ+KtG2X9R/Lm3UrYbrGfsf5D
- lYOXPzwbyBYUKIRM8EGP0fuyxAW8U7yRbzsDEOtC8LdEHmMg59jNsLuLY9JKnWkB4Bwp
- 2V1Q==
+ bh=Kb2hlNOkuGqsXxdmbrthsU/1g1vBxCB4j6840EtQwyY=;
+ b=dhOYl3Kmpa1/dUkgynv/llRZ90ZD+LdYQ2Mt4sD3im2TMqm9eEBOg1FG/lglL4DNtj
+ oShqG4xi8fcBEOgx966TQDBKbG9nJJY+dYbV3xa82dmx4cCK1eAJCBT5Dus5GbRHEJZu
+ 5Ur5G5gSMcGwQYRaOPQoupGgk5oIdirCpTnJw6bsXcHtK5gmJmWZrfZ5pk2C6rQR0+48
+ FlefGmu4VCfSeb3WNreIURS3q1o+Qypi3IHBi5uZwQcedQNE/48CIzsfAoj+13wDoxEM
+ 9s8j9ipPtx27V1lhhULCjzbBnf0LpCfo9dFt2yBo4u48vhaaAjH+TYUGU6Zvjs3rQUtp
+ kqHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDg90N1Fu+bt+A5RokA8w78aStROY2v5IQa0uRmYeGsc3KANfgbj4hAOwC5pFj0wiAKGZnJ888fkkd@nongnu.org
-X-Gm-Message-State: AOJu0YzmBz2GRJPwkaexqHD335B6rz0Q7ZWujLri2/A5dPyoEczvgAK2
- to6Kcuoa0ObgFnPtzDw/9BsY8HAwkl//CAHp8SCvf2VzTfS+sFZVInlKJuPdeDFULOPC4y9Qcxw
+ AJvYcCVF4WUE3ELbXeLwcsOiCMlRI1s2YrNVrncUZAvfhLL8cqHyA9fA9FrNwkLBf2uUUr7rCRsHgUcRdmG/@nongnu.org
+X-Gm-Message-State: AOJu0Yyd4YHcSwAq8+y9gOBg55aCkdvDFOIGypzviX5+hzyXIbH/Z2Gf
+ kwdyR9pDWcj8qhmu8+OwGK54Ba7L9clCDtsCYGsobraFpp5Na46JdThpAbc1v5e0hvovIBwFgE8
  C
-X-Google-Smtp-Source: AGHT+IGF5RMPbu9V1C4CbduAsqSU6Vs1Xkm4JhjaGKmENWuy0aaQjfqxoMlWPSpwzlMWULvJHSdOIg==
-X-Received: by 2002:a5d:40c5:0:b0:371:87d4:8f12 with SMTP id
- ffacd0b85a97d-374c945c787mr5338156f8f.17.1725379739932; 
- Tue, 03 Sep 2024 09:08:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrm2DsB4tKBWaFfPgtNsz4fOEYgQGYNQvN6Bq1pK/ghza3nG7qCHbXTGt2GSp1y3oNNzzMdg==
+X-Received: by 2002:a05:6512:2346:b0:52c:dc25:d706 with SMTP id
+ 2adb3069b0e04-53546b9b8e8mr10968870e87.52.1725379690624; 
+ Tue, 03 Sep 2024 09:08:10 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.59
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:59 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 45/53] hw/timer: Remove omap_synctimer
-Date: Tue,  3 Sep 2024 17:07:43 +0100
-Message-Id: <20240903160751.4100218-46-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 09/53] hw/arm: Remove 'connex' and 'verdex' machines
+Date: Tue,  3 Sep 2024 17:07:07 +0100
+Message-Id: <20240903160751.4100218-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,170 +96,270 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the omap_synctimer device, which is only in the OMAP2 SoC.
+The connex and verdex machines have been deprecated since
+9.0 and so can be removed for the 9.2 release.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/omap.h     |   8 ---
- hw/timer/omap_synctimer.c | 110 --------------------------------------
- hw/timer/meson.build      |   1 -
- 3 files changed, 119 deletions(-)
- delete mode 100644 hw/timer/omap_synctimer.c
+ MAINTAINERS                             |   8 --
+ docs/system/arm/gumstix.rst             |  21 ----
+ docs/system/target-arm.rst              |   1 -
+ configs/devices/arm-softmmu/default.mak |   1 -
+ hw/arm/gumstix.c                        | 141 ------------------------
+ hw/arm/Kconfig                          |   8 --
+ hw/arm/meson.build                      |   1 -
+ 7 files changed, 181 deletions(-)
+ delete mode 100644 docs/system/arm/gumstix.rst
+ delete mode 100644 hw/arm/gumstix.c
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index cced3d28605..982341d0079 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -676,12 +676,6 @@ struct omap_dma_lcd_channel_s {
- # define OMAP24XX_DMA_MS		63	/* Not in OMAP2420 */
- # define OMAP24XX_DMA_EXT_DMAREQ5	64
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cf297e6d626..13685711f61 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -743,14 +743,6 @@ S: Maintained
+ F: hw/rtc/goldfish_rtc.c
+ F: include/hw/rtc/goldfish_rtc.h
  
--/* OMAP2 sysctimer */
--struct omap_synctimer_s;
--struct omap_synctimer_s *omap_synctimer_init(struct omap_target_agent_s *ta,
--                struct omap_mpu_state_s *mpu, omap_clk fclk, omap_clk iclk);
--void omap_synctimer_reset(struct omap_synctimer_s *s);
+-Gumstix
+-M: Peter Maydell <peter.maydell@linaro.org>
+-R: Philippe Mathieu-Daudé <philmd@linaro.org>
+-L: qemu-arm@nongnu.org
+-S: Odd Fixes
+-F: hw/arm/gumstix.c
+-F: docs/system/arm/gumstix.rst
 -
- struct omap_uart_s;
- struct omap_uart_s *omap_uart_init(hwaddr base,
-                 qemu_irq irq, omap_clk fclk, omap_clk iclk,
-@@ -929,8 +923,6 @@ struct omap_mpu_state_s {
-     /* OMAP2-only peripherals */
-     struct omap_l4_s *l4;
- 
--    struct omap_synctimer_s *synctimer;
--
-     struct omap_mcspi_s *mcspi[2];
- 
-     struct omap_dss_s *dss;
-diff --git a/hw/timer/omap_synctimer.c b/hw/timer/omap_synctimer.c
+ i.MX25 PDK
+ M: Peter Maydell <peter.maydell@linaro.org>
+ R: Jean-Christophe Dubois <jcd@tribudubois.net>
+diff --git a/docs/system/arm/gumstix.rst b/docs/system/arm/gumstix.rst
 deleted file mode 100644
-index d93a9344ede..00000000000
---- a/hw/timer/omap_synctimer.c
+index cb373139dcb..00000000000
+--- a/docs/system/arm/gumstix.rst
 +++ /dev/null
-@@ -1,110 +0,0 @@
+@@ -1,21 +0,0 @@
+-Gumstix Connex and Verdex (``connex``, ``verdex``)
+-==================================================
+-
+-These machines model the Gumstix Connex and Verdex boards.
+-The Connex has a PXA255 CPU and the Verdex has a PXA270.
+-
+-Implemented devices:
+-
+- * NOR flash
+- * SMC91C111 ethernet
+- * Interrupt controller
+- * DMA
+- * Timer
+- * GPIO
+- * MMC/SD card
+- * Fast infra-red communications port (FIR)
+- * LCD controller
+- * Synchronous serial ports (SPI)
+- * PCMCIA interface
+- * I2C
+- * I2S
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index fde37385224..ddaf1675dcc 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -91,7 +91,6 @@ undocumented; you can get a complete list by running
+    arm/cubieboard
+    arm/emcraft-sf2
+    arm/musicpal
+-   arm/gumstix
+    arm/mainstone
+    arm/kzm
+    arm/nseries
+diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
+index 6ed821be220..490ef4b3943 100644
+--- a/configs/devices/arm-softmmu/default.mak
++++ b/configs/devices/arm-softmmu/default.mak
+@@ -28,7 +28,6 @@
+ # CONFIG_VEXPRESS=n
+ # CONFIG_ZYNQ=n
+ # CONFIG_MAINSTONE=n
+-# CONFIG_GUMSTIX=n
+ # CONFIG_Z2=n
+ # CONFIG_NPCM7XX=n
+ # CONFIG_COLLIE=n
+diff --git a/hw/arm/gumstix.c b/hw/arm/gumstix.c
+deleted file mode 100644
+index 91462691531..00000000000
+--- a/hw/arm/gumstix.c
++++ /dev/null
+@@ -1,141 +0,0 @@
 -/*
-- * TI OMAP2 32kHz sync timer emulation.
+- * Gumstix Platforms
 - *
-- * Copyright (C) 2007-2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
+- * Copyright (c) 2007 by Thorsten Zitterell <info@bitmux.org>
 - *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) any later version of the License.
+- * Code based on spitz platform by Andrzej Zaborowski <balrog@zabor.org>
 - *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
+- * This code is licensed under the GNU GPL v2.
 - *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- * Contributions after 2012-01-13 are licensed under the terms of the
+- * GNU GPL, version 2 or (at your option) any later version.
 - */
+-
+-/* 
+- * Example usage:
+- * 
+- * connex:
+- * =======
+- * create image:
+- * # dd of=flash bs=1k count=16k if=/dev/zero
+- * # dd of=flash bs=1k conv=notrunc if=u-boot.bin
+- * # dd of=flash bs=1k conv=notrunc seek=256 if=rootfs.arm_nofpu.jffs2
+- * start it:
+- * # qemu-system-arm -M connex -pflash flash -monitor null -nographic
+- *
+- * verdex:
+- * =======
+- * create image:
+- * # dd of=flash bs=1k count=32k if=/dev/zero
+- * # dd of=flash bs=1k conv=notrunc if=u-boot.bin
+- * # dd of=flash bs=1k conv=notrunc seek=256 if=rootfs.arm_nofpu.jffs2
+- * # dd of=flash bs=1k conv=notrunc seek=31744 if=uImage
+- * start it:
+- * # qemu-system-arm -M verdex -pflash flash -monitor null -nographic -m 289
+- */
+-
 -#include "qemu/osdep.h"
--#include "qemu/timer.h"
--#include "hw/arm/omap.h"
--struct omap_synctimer_s {
--    MemoryRegion iomem;
--    uint32_t val;
--    uint16_t readh;
+-#include "qemu/units.h"
+-#include "qemu/error-report.h"
+-#include "hw/arm/pxa.h"
+-#include "net/net.h"
+-#include "hw/block/flash.h"
+-#include "hw/net/smc91c111.h"
+-#include "hw/boards.h"
+-#include "exec/address-spaces.h"
+-#include "sysemu/qtest.h"
+-
+-#define CONNEX_FLASH_SIZE   (16 * MiB)
+-#define CONNEX_RAM_SIZE     (64 * MiB)
+-
+-#define VERDEX_FLASH_SIZE   (32 * MiB)
+-#define VERDEX_RAM_SIZE     (256 * MiB)
+-
+-#define FLASH_SECTOR_SIZE   (128 * KiB)
+-
+-static void connex_init(MachineState *machine)
+-{
+-    PXA2xxState *cpu;
+-    DriveInfo *dinfo;
+-
+-    cpu = pxa255_init(CONNEX_RAM_SIZE);
+-
+-    dinfo = drive_get(IF_PFLASH, 0, 0);
+-    if (!dinfo && !qtest_enabled()) {
+-        error_report("A flash image must be given with the "
+-                     "'pflash' parameter");
+-        exit(1);
+-    }
+-
+-    /* Numonyx RC28F128J3F75 */
+-    pflash_cfi01_register(0x00000000, "connext.rom", CONNEX_FLASH_SIZE,
+-                          dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+-                          FLASH_SECTOR_SIZE, 2, 0, 0, 0, 0, 0);
+-
+-    /* Interrupt line of NIC is connected to GPIO line 36 */
+-    smc91c111_init(0x04000300, qdev_get_gpio_in(cpu->gpio, 36));
+-}
+-
+-static void verdex_init(MachineState *machine)
+-{
+-    PXA2xxState *cpu;
+-    DriveInfo *dinfo;
+-
+-    cpu = pxa270_init(VERDEX_RAM_SIZE, machine->cpu_type);
+-
+-    dinfo = drive_get(IF_PFLASH, 0, 0);
+-    if (!dinfo && !qtest_enabled()) {
+-        error_report("A flash image must be given with the "
+-                     "'pflash' parameter");
+-        exit(1);
+-    }
+-
+-    /* Micron RC28F256P30TFA */
+-    pflash_cfi01_register(0x00000000, "verdex.rom", VERDEX_FLASH_SIZE,
+-                          dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+-                          FLASH_SECTOR_SIZE, 2, 0, 0, 0, 0, 0);
+-
+-    /* Interrupt line of NIC is connected to GPIO line 99 */
+-    smc91c111_init(0x04000300, qdev_get_gpio_in(cpu->gpio, 99));
+-}
+-
+-static void connex_class_init(ObjectClass *oc, void *data)
+-{
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-
+-    mc->desc = "Gumstix Connex (PXA255)";
+-    mc->init = connex_init;
+-    mc->ignore_memory_transaction_failures = true;
+-    mc->deprecation_reason = "machine is old and unmaintained";
+-}
+-
+-static const TypeInfo connex_type = {
+-    .name = MACHINE_TYPE_NAME("connex"),
+-    .parent = TYPE_MACHINE,
+-    .class_init = connex_class_init,
 -};
 -
--/* 32-kHz Sync Timer of the OMAP2 */
--static uint32_t omap_synctimer_read(struct omap_synctimer_s *s) {
--    return muldiv64(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL), 0x8000,
--                    NANOSECONDS_PER_SECOND);
--}
--
--void omap_synctimer_reset(struct omap_synctimer_s *s)
+-static void verdex_class_init(ObjectClass *oc, void *data)
 -{
--    s->val = omap_synctimer_read(s);
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-
+-    mc->desc = "Gumstix Verdex Pro XL6P COMs (PXA270)";
+-    mc->init = verdex_init;
+-    mc->ignore_memory_transaction_failures = true;
+-    mc->deprecation_reason = "machine is old and unmaintained";
+-    mc->default_cpu_type = ARM_CPU_TYPE_NAME("pxa270-c0");
 -}
 -
--static uint32_t omap_synctimer_readw(void *opaque, hwaddr addr)
--{
--    struct omap_synctimer_s *s = opaque;
--
--    switch (addr) {
--    case 0x00:	/* 32KSYNCNT_REV */
--        return 0x21;
--
--    case 0x10:	/* CR */
--        return omap_synctimer_read(s) - s->val;
--    }
--
--    OMAP_BAD_REG(addr);
--    return 0;
--}
--
--static uint32_t omap_synctimer_readh(void *opaque, hwaddr addr)
--{
--    struct omap_synctimer_s *s = opaque;
--    uint32_t ret;
--
--    if (addr & 2)
--        return s->readh;
--    else {
--        ret = omap_synctimer_readw(opaque, addr);
--        s->readh = ret >> 16;
--        return ret & 0xffff;
--    }
--}
--
--static uint64_t omap_synctimer_readfn(void *opaque, hwaddr addr,
--                                      unsigned size)
--{
--    switch (size) {
--    case 1:
--        return omap_badwidth_read32(opaque, addr);
--    case 2:
--        return omap_synctimer_readh(opaque, addr);
--    case 4:
--        return omap_synctimer_readw(opaque, addr);
--    default:
--        g_assert_not_reached();
--    }
--}
--
--static void omap_synctimer_writefn(void *opaque, hwaddr addr,
--                                   uint64_t value, unsigned size)
--{
--    OMAP_BAD_REG(addr);
--}
--
--static const MemoryRegionOps omap_synctimer_ops = {
--    .read = omap_synctimer_readfn,
--    .write = omap_synctimer_writefn,
--    .valid.min_access_size = 1,
--    .valid.max_access_size = 4,
--    .endianness = DEVICE_NATIVE_ENDIAN,
+-static const TypeInfo verdex_type = {
+-    .name = MACHINE_TYPE_NAME("verdex"),
+-    .parent = TYPE_MACHINE,
+-    .class_init = verdex_class_init,
 -};
 -
--struct omap_synctimer_s *omap_synctimer_init(struct omap_target_agent_s *ta,
--                struct omap_mpu_state_s *mpu, omap_clk fclk, omap_clk iclk)
+-static void gumstix_machine_init(void)
 -{
--    struct omap_synctimer_s *s = g_malloc0(sizeof(*s));
--
--    omap_synctimer_reset(s);
--    memory_region_init_io(&s->iomem, NULL, &omap_synctimer_ops, s, "omap.synctimer",
--                          omap_l4_region_size(ta, 0));
--    omap_l4_attach(ta, 0, &s->iomem);
--
--    return s;
+-    type_register_static(&connex_type);
+-    type_register_static(&verdex_type);
 -}
-diff --git a/hw/timer/meson.build b/hw/timer/meson.build
-index 1292d9530ca..fe131666b17 100644
---- a/hw/timer/meson.build
-+++ b/hw/timer/meson.build
-@@ -22,7 +22,6 @@ system_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gictimer.c'))
- system_ss.add(when: 'CONFIG_MSF2', if_true: files('mss-timer.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_timer.c'))
- system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_timer.c'))
--system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_synctimer.c'))
- system_ss.add(when: 'CONFIG_PXA2XX_TIMER', if_true: files('pxa2xx_timer.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_systmr.c'))
- system_ss.add(when: 'CONFIG_SH_TIMER', if_true: files('sh_timer.c'))
+-
+-type_init(gumstix_machine_init)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 3261618ea74..d3e07262b14 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -184,14 +184,6 @@ config PXA2XX
+     select USB_OHCI_SYSBUS
+     select PCMCIA
+ 
+-config GUMSTIX
+-    bool
+-    default y
+-    depends on TCG && ARM
+-    select PFLASH_CFI01
+-    select SMC91C111
+-    select PXA2XX
+-
+ config Z2
+     bool
+     default y
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 4a8fd54586b..7b474ad518b 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -64,7 +64,6 @@ arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
+ system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
+ system_ss.add(when: 'CONFIG_COLLIE', if_true: files('collie.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
+-system_ss.add(when: 'CONFIG_GUMSTIX', if_true: files('gumstix.c'))
+ system_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap2.c'))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
 -- 
 2.34.1
 
