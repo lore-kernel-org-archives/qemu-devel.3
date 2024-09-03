@@ -4,130 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57CDFCD342F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 07:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB0CCD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 07:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slOCC-0005l8-1I; Tue, 03 Sep 2024 03:43:24 -0400
+	id 1slOLg-00025C-9i; Tue, 03 Sep 2024 03:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1slOC8-0005kP-A1
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 03:43:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1slOC6-00027b-8P
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 03:43:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725349395;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1AwvxU2FuOYSnLn87kkYf7HRlnU0avXnduIOEZLfLtA=;
- b=M/OUtvAnW9UXPlWESJt+yAnOL46dOZeHwI75L910Soae/79N/sC3+IJLGKnZLIUH4xDT3S
- b9EAQYZxzu/X4+Zhs+QJmAXWh22TRtFf9G5Xahk3JqKWK509jIwdlvhT+5X2w8zB48IOnc
- vTCqHi7Qxi/WsEgn0wR7EhSjHhPUdn0=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-WYhOIJKRMKWp7vFyzbX8Jw-1; Tue, 03 Sep 2024 03:43:13 -0400
-X-MC-Unique: WYhOIJKRMKWp7vFyzbX8Jw-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a868b6d6882so682171666b.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 00:43:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1slOLc-00024X-EN
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 03:53:10 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1slOLa-0003WG-5H
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 03:53:07 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-374c5bab490so1231808f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 00:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1725349984; x=1725954784;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IZNpcvjBnjOZsEop3XwjpMPZkk0NO4drzCJ+Gd6qezE=;
+ b=gb4BovFtPAiiP4B+dElpH0svknOqrWOrH4yFqMFES2193hPqm4ovpW4yFPE1eAMPby
+ gYAPeDoWQ31G+OKORWW4c5cWDYwfOna7jmsUtMrsglrqjkAmTYgxafuOjZ7PzQUA5XJq
+ J2eCP8fFWSprbf9VahN3so6RXMNfHED4pw6Em57+v6W+SUYaRCMg0vDJ+vKrN14MjIOe
+ RwDxbRtK/pL0k07dDjpw5/sjh0Uj9rHvCAk8JFRMJ+B8S4U2Zngkr7k1MhkXnvZXJ0yP
+ daWy9kmM/4dRsYsqSSPmnvHPi2Gq5AQQZeXPkPNDM4K6dB/avjhhsJ8Je2wvLdm4UrWz
+ GH4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725349392; x=1725954192;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1AwvxU2FuOYSnLn87kkYf7HRlnU0avXnduIOEZLfLtA=;
- b=PoaRJez0OmY8WFL6oz55eLw1if45MqTf89xPsHvF3Uc+wohLgCdkaMR6bihV2M+fhy
- aaQkGacXHijHCYarLUoh+p/3YsbNS9Y4uVL1qaFLlmL8autWA/KQfU0Wnb7eCXxbjamm
- P3Kt1v6iw7fPjjO2LNRhmfCNKZKnR9z2uVyRUjjBtAiHawjkvcqWEoWLqatW23Sm8fjJ
- x0LMyY/L23ntSLyL0ie7AuPNgm1M2K+yZNSkE3wtTP6qrliBvlE6RGGZvoNcd3gUBIiT
- 8qFEqbQXqC9G0gvJLcA8qT3+WohA11MNXTborVJiWIveV0k6Ng9cVi0TOPX+0Bp5Gbvh
- wi9g==
+ d=1e100.net; s=20230601; t=1725349984; x=1725954784;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IZNpcvjBnjOZsEop3XwjpMPZkk0NO4drzCJ+Gd6qezE=;
+ b=h8I27s9+/tDzqWejjjePrgVGZm1sRAu+8U5ryxqz1jC/k1hlbw/PoNBdTgLGMoVpSr
+ aNd7Z2Q5cC8rP8tcKJLB95gvEuwyIkZLA/u0yoaOPCkggxTRxt8GqYZ+zzNN6EncQTQ9
+ glzLmkdddhtpN2zOtL2lL/XgXqxdulroU373E3UvjlosmDhX8AEiy3fOTjSXXFfkahRv
+ cKWuXzsuNDS4/Y3m5GQm0JyCBiUdsw1/ViLzD9M2UXNERo5PdZqlcv/hocu5qPScezjr
+ LpY/lhXNeqnNXx+zbwhqH6dmW1QSUFcuJU3OlOh+N/7Eg9D5uC2B1sWUbrQ7Q2RH12cw
+ V8dg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsk1/CnwVxrlU1cfsIamqAfiuVPVkk/n+mmz4Jv3yXJqtSDw5jE3EPga/V1SHkSqxd7CUtsNBBcJw5@nongnu.org
-X-Gm-Message-State: AOJu0YwD2YGfuUC0NuztNOuFE+GZXnVRohn1lOY8O+VCLmEGIr6fmBjt
- zZKxeGQAaXl9mWV0ie3KJ3mI4O9sgwnpCYYbvPKtkEVszoQYfhHS751VI/KkgPaAa3eWO/7d80z
- Mx+DQZlGByUkgA3V/yIWmh34HbRZzOXi42bP2mrreybTOobI695Xy
-X-Received: by 2002:a17:907:9726:b0:a7a:ac5f:bbef with SMTP id
- a640c23a62f3a-a8982833612mr1566267966b.31.1725349392611; 
- Tue, 03 Sep 2024 00:43:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxAPJPwSoWCLXS336TviAXav/oIrctZZtj/CPGQfhgefyOseoxvyBCRE6rzeKph/2mklaCkA==
-X-Received: by 2002:a17:907:9726:b0:a7a:ac5f:bbef with SMTP id
- a640c23a62f3a-a8982833612mr1566265366b.31.1725349392109; 
- Tue, 03 Sep 2024 00:43:12 -0700 (PDT)
-Received: from [192.168.10.47] ([151.95.101.29])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-a8988feaf05sm651137366b.33.2024.09.03.00.43.08
+ AJvYcCWCsF85N7knVGTMkCkEOocAbvse6GWetjuuoj86uUvALE89Vmgs300/cb+ttnIJd0MF0iCfydGnHaHy@nongnu.org
+X-Gm-Message-State: AOJu0YzpBLIh4sXX/UrMNzWqdUYlT1yD8GlXkdQW/OHbjH90v5tay4AO
+ FN81MPCbnjz29eDIiCrcnqlOygohyTEnXFnJAXnvNpYQaYJ5nMbj0P6YVKY+NU0=
+X-Google-Smtp-Source: AGHT+IFV2PcPZOa67iu9QiGleAncoJTgp8enBG2pdOVUvlou8NTyFZ8kltjwxMuwR6hFH2zdpDtVDQ==
+X-Received: by 2002:a05:6000:1971:b0:371:8685:84c with SMTP id
+ ffacd0b85a97d-374a91a3911mr6854494f8f.15.1725349983503; 
+ Tue, 03 Sep 2024 00:53:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
+ ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3749efb37efsm13527075f8f.109.2024.09.03.00.53.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 00:43:11 -0700 (PDT)
-Message-ID: <32332f54-0c20-434c-be43-e4e00bcebe29@redhat.com>
-Date: Tue, 3 Sep 2024 09:43:05 +0200
+ Tue, 03 Sep 2024 00:53:03 -0700 (PDT)
+Message-ID: <563f3b75-bf13-4ca7-a995-f2c8ff1b6799@rivosinc.com>
+Date: Tue, 3 Sep 2024 09:53:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] kvm/i386: fix a check that ensures we are running on host
- intel CPU
-To: Ani Sinha <anisinha@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20240903071942.32058-1-anisinha@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return value
+ == -1
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240830111451.3799490-1-cleger@rivosinc.com>
+ <20240830111451.3799490-3-cleger@rivosinc.com>
+ <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
+ <dd28ea4f-67eb-4c42-84d2-24956cde7896@rivosinc.com>
+ <294a5480-d871-41e2-8e08-c1067f45d454@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20240903071942.32058-1-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+In-Reply-To: <294a5480-d871-41e2-8e08-c1067f45d454@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=cleger@rivosinc.com; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,38 +106,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/24 09:19, Ani Sinha wrote:
-> is_host_cpu_intel() returns TRUE if the host cpu in Intel based. RAPL needs
-> Intel host cpus. If the host CPU is not Intel baseed, we should report error.
-> Fix the check accordingly.
+
+
+On 02/09/2024 21:38, Philippe Mathieu-Daudé wrote:
+> On 30/8/24 13:57, Clément Léger wrote:
+>> On 30/08/2024 13:31, Michael Tokarev wrote:
+>>> 30.08.2024 14:14, Clément Léger wrote:
+>>>> On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can return
+>>>> -1. In that case we should fallback to using the OPEN_MAX define.
+>>>> According to "man sysconf", the OPEN_MAX define should be present and
+>>>> provided by either unistd.h and/or limits.h so include them for that
+>>>> purpose. For other OSes, just assume a maximum of 1024 files
+>>>> descriptors
+>>>> as a fallback.
+>>>>
+>>>> Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-
+>>>> posix")
+>>>> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+>>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+>>>
+>>> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+>>>
+>>>> @@ -928,6 +933,13 @@ static void qemu_close_all_open_fd_fallback(const
+>>>> int *skip, unsigned int nskip,
+>>>>    void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+>>>>    {
+>>>>        int open_max = sysconf(_SC_OPEN_MAX);
+>>>> +    if (open_max == -1) {
+>>>> +#ifdef CONFIG_DARWIN
+>>>> +        open_max = OPEN_MAX;
 > 
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Missing errno check.
 
-It's the function that is returning the incorrect value too; so your 
-patch is breaking the feature: this line in is_host_cpu_intel()
+man sysconf states that:
 
-return strcmp(vendor, CPUID_VENDOR_INTEL);
+"On error, -1 is returned and errno is set to indicate the error (for
+example, EINVAL, indicating that name is invalid)."
 
-needs to be changed to use g_str_equal.
+So it seems checking for -1 is enough no ? Or were you thinking about
+something else ?
 
-Paolo
-
-> ---
->   target/i386/kvm/kvm.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 11c7619bfd..503e8d956e 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -2898,7 +2898,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
->        * 1. Host cpu must be Intel cpu
->        * 2. RAPL must be enabled on the Host
->        */
-> -    if (is_host_cpu_intel()) {
-> +    if (!is_host_cpu_intel()) {
->           error_report("The RAPL feature can only be enabled on hosts\
->                         with Intel CPU models");
->           ret = 1;
+>>>> +#else
+>>>> +        open_max = 1024;
+>>>> +#endif
+>>>
+>>> BTW, Can we PLEASE cap this to 1024 in all cases? :)
+>>> (unrelated to this change but still).
+>>
+>> Hi Michael,
+>>
+>> Do you mean for all OSes or always using 1024 rather than using the
+>> sysconf returned value ?
+> 
+> Alternatively add:
+> 
+>   long qemu_sysconf(int name, long unsupported_default);
+> 
+> which returns value, unsupported_default if not supported, or -1.
+
+Acked, should this be a global function even if only used in the
+qemu_close_all_open_fd() helper yet ?
+
+Thanks,
+
+Clément
+
+> 
+>>
+>> In any case, the code now uses close_range() or /proc/self/fd and is
+>> handling that efficiently.
+>>
+>> Thanks,
+>>
+>> Clément
+>>
+>>>
+>>> /mjt
+>>
+>>
+> 
 
 
