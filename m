@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5708CD379F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2091FCD37A7
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW5e-0001nS-Nw; Tue, 03 Sep 2024 12:09:10 -0400
+	id 1slW5i-0002JS-RW; Tue, 03 Sep 2024 12:09:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5c-0001br-DH
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:08 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1slW5f-0001vV-TV
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:11 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5Z-0002zD-T7
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:07 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42bb885f97eso27867685e9.0
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:09:05 -0700 (PDT)
+ id 1slW5c-00030L-PZ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:11 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-428e0d184b4so46223915e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379744; x=1725984544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379747; x=1725984547; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XSUXLx8RymjZoH3CUxgDuuHRurRfQuokj7VlT6LUHv4=;
- b=rTL7waw7sFmpNRf9INKP5bxBEcy9CAA5ggb0MpdAS+tMjg1oQY00hP8T6riRZTs9sc
- 3XwYUJc9eIRtI652Te0Fjfgv7ofQLTWW81SL0/DJxsbjVyEY8e2gpZuf1QkmUfbu8QBo
- ePQfUnY5qLEDd3jG8Uarj8s1llJ7bW11ZSnzHTNEWbBbwC6W7cRQuSrRcSE3V+gWPsb7
- icANAlpjbEQMSa9b7V4yiCfuUHXaqGlpK+1F8XM1eaBjK45RRRTAAQKOYkUkOxSWOU87
- Ce86kh6+gKZiOViIMc6fqEGu6HYFWpsFyMUzNP5xoh0i7pEG3BclCZTOgcEgCtyydJ57
- b/1A==
+ :reply-to; bh=98dHBXppZY7GIvhfWwkwSB+S+qCyCFrZ2JMSYpx+b9s=;
+ b=VIJG3UsiXrMsogi3ocjPz8wds1OyQVVDoi/a7Oa2gLwPPT/xiSNI9TgsNlkcNKW7Np
+ 3ZYV9mp2LN3PCVpMUpjpETukgS22LHycWlpndfKlYU1+eLFA2+wpmmjfVBOyXitltM4V
+ U34gI5nj2Qa53/gyOb1+QxGkbIKPyMl9Vmw5XPo+AWnmfTslqJ/9gCQmJkSUFJQ9P0sE
+ hapzcJMylxSPEZ4lsUgcHq1E5+wH1Nl1Ce41N3AArrO6MiuA8sRYlo60fvuAlA6TUYZy
+ PwekQDnEF9yMZvIoSwF1cqhGy3TSsIpmm2Ha/sjtrNuersKv/3WC9I3417ngTW80q2fs
+ LWxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379744; x=1725984544;
+ d=1e100.net; s=20230601; t=1725379747; x=1725984547;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XSUXLx8RymjZoH3CUxgDuuHRurRfQuokj7VlT6LUHv4=;
- b=YGACZq/RPzgdA9J7KdKwFRsY+BeCRtSsb107pBvgxeDVBHUBBZrA7SCefWT0zfayL3
- KvV7MZGan23YGd4l8ATsm4p8ZEMxT56csdopat36Escj1jEJEhrhcPgt9hgUgY+Rmrgc
- lbrJGZZfQK7J78SGJuoXLBNWiaJ+/ElEl/rjx2Pd09lHh94WelOiPZATc+xvVGpqWXd9
- gNEyLKFGOcjlr8gK7mheFyrQI6Qe34MFn0NjZxWuggJTl2s7283mGFja+Ja29CaBkfJz
- +eV6Wfvn2+kqxwXDTPLm+ExMHgrR39+3H8yemSLPm0JsZLYUcQPb8Zp/6wJUte8Fhizt
- qShg==
+ bh=98dHBXppZY7GIvhfWwkwSB+S+qCyCFrZ2JMSYpx+b9s=;
+ b=wQ6oLbmnh7JkKXITJFJFHKOYu4vPA8REzaUXgYe8ymOOTFjjS5BI3yEV85/8axtUfV
+ Otbsc6IuOg/zonBba5B64PhyweW8GuoMOklY5W1Hvk3VYva6tmQpy3ecGNCjGSJSZdAh
+ 6C43VVnQDlLqVImV4EuVB43QibtkU6RW7a9mm0QL6aI8WoIRR8oljlfcdSQ2dxY8bWcZ
+ 0Qtr2nDxJ/J65nQrO+fbumpXbXX6NAQJZ30UCSPgN1cdX81EYnu8GpaXwxfZtoxcl6dD
+ 2COiJ+iA2sTFPqdMByBDAhGDj3/ueawlkwUq02vRElzmBChuwek22uHOSfQNsY+Kv2W6
+ inRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9B57PtuYakzUQ+U6GHQS1AxpdAwuwQYlU/Nd7iD5eaQkdlv38810WQK/sDXsxjptc8Evhg4B8hVu2@nongnu.org
-X-Gm-Message-State: AOJu0Yxheex95k++9HbuN9PY/+j0U1tiUfLQ9kFFhx1E9r7LrB7kFHlg
- /1+wOU1BxfcpNjD+0Hgk9UaLq5CJqEj+p+ODGLnjRrKxikZ/lsAcuAyMVVDQVucX4Y9wg2eTR1T
- t
-X-Google-Smtp-Source: AGHT+IG+Q/rDCSPqC2utYdSAYBJtxzkfKX8N29Il5he5SXMciHb8LUuA7aaoiqTK0JMxmRWwYk9HtQ==
-X-Received: by 2002:a05:600c:3510:b0:429:ea2e:36e1 with SMTP id
- 5b1f17b1804b1-42bb4caa0c2mr106323075e9.13.1725379744333; 
- Tue, 03 Sep 2024 09:09:04 -0700 (PDT)
+ AJvYcCUnox0LDJKJM/LPFOMQMnG8OFhRVkC75AxlrevI7ZVgcC+mjvydH4yiDFNy1KEFpYh8cNOjpY76xbmW@nongnu.org
+X-Gm-Message-State: AOJu0YwVYwkiYSiCrFpUovqu25Mk4cc8mE7nZm0KGcCqpePcvSrvbh6z
+ RRW/sLjQqdWTDLLhJeRe6CV4eIRKA9kHd1R2X/sXsQjzRr8bVgdf7SraGnaOwDF2oTHFMVt1rvM
+ a
+X-Google-Smtp-Source: AGHT+IG4B7YQkmHZs8XousnWTVdC5xuHvPGZePhdB0TuHH5TModpzGCTI0Yw6RSPJ72XmciT0oKOsg==
+X-Received: by 2002:adf:e602:0:b0:374:b9a0:ddee with SMTP id
+ ffacd0b85a97d-374bf1e4a3dmr6742058f8f.56.1725379747195; 
+ Tue, 03 Sep 2024 09:09:07 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.09.00
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.09.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:09:01 -0700 (PDT)
+ Tue, 03 Sep 2024 09:09:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 47/53] hw/ssi: Remove omap_mcspi
-Date: Tue,  3 Sep 2024 17:07:45 +0100
-Message-Id: <20240903160751.4100218-48-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 50/53] hw/misc: Remove omap_l4 device
+Date: Tue,  3 Sep 2024 17:07:48 +0100
+Message-Id: <20240903160751.4100218-51-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,58 +95,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The omap_mcspi device is used only in the OMAP2 SoC, which we
-are removing.
+The omap_l4 device is OMAP2 only, so we can remove it.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/omap.h |  11 --
- hw/ssi/omap_spi.c     | 380 ------------------------------------------
- hw/ssi/meson.build    |   1 -
- 3 files changed, 392 deletions(-)
- delete mode 100644 hw/ssi/omap_spi.c
+ include/hw/arm/omap.h |  42 -----------
+ hw/misc/omap_l4.c     | 162 ------------------------------------------
+ hw/misc/meson.build   |   1 -
+ 3 files changed, 205 deletions(-)
+ delete mode 100644 hw/misc/omap_l4.c
 
 diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index 982341d0079..118874d8775 100644
+index 2300b97716d..f82b820d4d8 100644
 --- a/include/hw/arm/omap.h
 +++ b/include/hw/arm/omap.h
-@@ -698,15 +698,6 @@ struct omap_uwire_s;
- void omap_uwire_attach(struct omap_uwire_s *s,
-                 uWireSlave *slave, int chipselect);
+@@ -108,45 +108,6 @@ DECLARE_INSTANCE_CHECKER(Omap1GpioState, OMAP1_GPIO,
+ /* TODO: clock framework (see above) */
+ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
  
--/* OMAP2 spi */
--struct omap_mcspi_s;
--struct omap_mcspi_s *omap_mcspi_init(struct omap_target_agent_s *ta, int chnum,
--                qemu_irq irq, qemu_irq *drq, omap_clk fclk, omap_clk iclk);
--void omap_mcspi_attach(struct omap_mcspi_s *s,
--                uint32_t (*txrx)(void *opaque, uint32_t, int), void *opaque,
--                int chipselect);
--void omap_mcspi_reset(struct omap_mcspi_s *s);
+-/* OMAP2 l4 Interconnect */
+-struct omap_l4_s;
+-struct omap_l4_region_s {
+-    hwaddr offset;
+-    size_t size;
+-    int access;
+-};
+-struct omap_l4_agent_info_s {
+-    int ta;
+-    int region;
+-    int regions;
+-    int ta_region;
+-};
+-struct omap_target_agent_s {
+-    MemoryRegion iomem;
+-    struct omap_l4_s *bus;
+-    int regions;
+-    const struct omap_l4_region_s *start;
+-    hwaddr base;
+-    uint32_t component;
+-    uint32_t control;
+-    uint32_t status;
+-};
+-struct omap_l4_s *omap_l4_init(MemoryRegion *address_space,
+-                               hwaddr base, int ta_num);
 -
- struct I2SCodec {
-     void *opaque;
- 
-@@ -923,8 +914,6 @@ struct omap_mpu_state_s {
-     /* OMAP2-only peripherals */
-     struct omap_l4_s *l4;
- 
--    struct omap_mcspi_s *mcspi[2];
+-struct omap_target_agent_s;
+-struct omap_target_agent_s *omap_l4ta_get(
+-    struct omap_l4_s *bus,
+-    const struct omap_l4_region_s *regions,
+-    const struct omap_l4_agent_info_s *agents,
+-    int cs);
+-hwaddr omap_l4_attach(struct omap_target_agent_s *ta,
+-                                         int region, MemoryRegion *mr);
+-hwaddr omap_l4_region_base(struct omap_target_agent_s *ta,
+-                                       int region);
+-hwaddr omap_l4_region_size(struct omap_target_agent_s *ta,
+-                                       int region);
 -
-     struct omap_dss_s *dss;
+ /*
+  * Common IRQ numbers for level 1 interrupt handler
+  * See /usr/include/asm-arm/arch-omap/irqs.h in Linux.
+@@ -890,9 +851,6 @@ struct omap_mpu_state_s {
+         uint16_t dsp_idlect2;
+         uint16_t dsp_rstct2;
+     } clkm;
+-
+-    /* OMAP2-only peripherals */
+-    struct omap_l4_s *l4;
  };
  
-diff --git a/hw/ssi/omap_spi.c b/hw/ssi/omap_spi.c
+ /* omap1.c */
+diff --git a/hw/misc/omap_l4.c b/hw/misc/omap_l4.c
 deleted file mode 100644
-index 8f85c3e3918..00000000000
---- a/hw/ssi/omap_spi.c
+index b7875489da3..00000000000
+--- a/hw/misc/omap_l4.c
 +++ /dev/null
-@@ -1,380 +0,0 @@
+@@ -1,162 +0,0 @@
 -/*
-- * TI OMAP processor's Multichannel SPI emulation.
+- * TI OMAP L4 interconnect emulation.
 - *
 - * Copyright (C) 2007-2009 Nokia Corporation
-- *
-- * Original code for OMAP2 by Andrzej Zaborowski <andrew@openedhand.com>
+- * Written by Andrzej Zaborowski <andrew@openedhand.com>
 - *
 - * This program is free software; you can redistribute it and/or
 - * modify it under the terms of the GNU General Public License as
@@ -159,217 +188,70 @@ index 8f85c3e3918..00000000000
 - * GNU General Public License for more details.
 - *
 - * You should have received a copy of the GNU General Public License along
-- * with this program; if not, write to the Free Software Foundation, Inc.,
-- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+- * with this program; if not, see <http://www.gnu.org/licenses/>.
 - */
--
 -#include "qemu/osdep.h"
--#include "qemu/log.h"
--#include "hw/hw.h"
--#include "hw/irq.h"
 -#include "hw/arm/omap.h"
 -
--/* Multichannel SPI */
--struct omap_mcspi_s {
--    MemoryRegion iomem;
--    qemu_irq irq;
--    int chnum;
--
--    uint32_t sysconfig;
--    uint32_t systest;
--    uint32_t irqst;
--    uint32_t irqen;
--    uint32_t wken;
--    uint32_t control;
--
--    struct omap_mcspi_ch_s {
--        qemu_irq txdrq;
--        qemu_irq rxdrq;
--        uint32_t (*txrx)(void *opaque, uint32_t, int);
--        void *opaque;
--
--        uint32_t tx;
--        uint32_t rx;
--
--        uint32_t config;
--        uint32_t status;
--        uint32_t control;
--    } ch[4];
+-struct omap_l4_s {
+-    MemoryRegion *address_space;
+-    hwaddr base;
+-    int ta_num;
+-    struct omap_target_agent_s ta[];
 -};
 -
--static inline void omap_mcspi_interrupt_update(struct omap_mcspi_s *s)
+-struct omap_l4_s *omap_l4_init(MemoryRegion *address_space,
+-                               hwaddr base, int ta_num)
 -{
--    qemu_set_irq(s->irq, s->irqst & s->irqen);
+-    struct omap_l4_s *bus = g_malloc0(
+-                    sizeof(*bus) + ta_num * sizeof(*bus->ta));
+-
+-    bus->address_space = address_space;
+-    bus->ta_num = ta_num;
+-    bus->base = base;
+-
+-    return bus;
 -}
 -
--static inline void omap_mcspi_dmarequest_update(struct omap_mcspi_ch_s *ch)
+-hwaddr omap_l4_region_base(struct omap_target_agent_s *ta,
+-                                       int region)
 -{
--    qemu_set_irq(ch->txdrq,
--                    (ch->control & 1) &&		/* EN */
--                    (ch->config & (1 << 14)) &&		/* DMAW */
--                    (ch->status & (1 << 1)) &&		/* TXS */
--                    ((ch->config >> 12) & 3) != 1);	/* TRM */
--    qemu_set_irq(ch->rxdrq,
--                    (ch->control & 1) &&		/* EN */
--                    (ch->config & (1 << 15)) &&		/* DMAW */
--                    (ch->status & (1 << 0)) &&		/* RXS */
--                    ((ch->config >> 12) & 3) != 2);	/* TRM */
+-    return ta->bus->base + ta->start[region].offset;
 -}
 -
--static void omap_mcspi_transfer_run(struct omap_mcspi_s *s, int chnum)
+-hwaddr omap_l4_region_size(struct omap_target_agent_s *ta,
+-                                       int region)
 -{
--    struct omap_mcspi_ch_s *ch = s->ch + chnum;
--
--    if (!(ch->control & 1))				/* EN */
--        return;
--    if ((ch->status & (1 << 0)) &&			/* RXS */
--                    ((ch->config >> 12) & 3) != 2 &&	/* TRM */
--                    !(ch->config & (1 << 19)))		/* TURBO */
--        goto intr_update;
--    if ((ch->status & (1 << 1)) &&			/* TXS */
--                    ((ch->config >> 12) & 3) != 1)	/* TRM */
--        goto intr_update;
--
--    if (!(s->control & 1) ||				/* SINGLE */
--                    (ch->config & (1 << 20))) {		/* FORCE */
--        if (ch->txrx)
--            ch->rx = ch->txrx(ch->opaque, ch->tx,	/* WL */
--                            1 + (0x1f & (ch->config >> 7)));
--    }
--
--    ch->tx = 0;
--    ch->status |= 1 << 2;				/* EOT */
--    ch->status |= 1 << 1;				/* TXS */
--    if (((ch->config >> 12) & 3) != 2)			/* TRM */
--        ch->status |= 1 << 0;				/* RXS */
--
--intr_update:
--    if ((ch->status & (1 << 0)) &&			/* RXS */
--                    ((ch->config >> 12) & 3) != 2 &&	/* TRM */
--                    !(ch->config & (1 << 19)))		/* TURBO */
--        s->irqst |= 1 << (2 + 4 * chnum);		/* RX_FULL */
--    if ((ch->status & (1 << 1)) &&			/* TXS */
--                    ((ch->config >> 12) & 3) != 1)	/* TRM */
--        s->irqst |= 1 << (0 + 4 * chnum);		/* TX_EMPTY */
--    omap_mcspi_interrupt_update(s);
--    omap_mcspi_dmarequest_update(ch);
+-    return ta->start[region].size;
 -}
 -
--void omap_mcspi_reset(struct omap_mcspi_s *s)
+-static uint64_t omap_l4ta_read(void *opaque, hwaddr addr, unsigned size)
 -{
--    int ch;
+-    struct omap_target_agent_s *s = opaque;
 -
--    s->sysconfig = 0;
--    s->systest = 0;
--    s->irqst = 0;
--    s->irqen = 0;
--    s->wken = 0;
--    s->control = 4;
--
--    for (ch = 0; ch < 4; ch ++) {
--        s->ch[ch].config = 0x060000;
--        s->ch[ch].status = 2;				/* TXS */
--        s->ch[ch].control = 0;
--
--        omap_mcspi_dmarequest_update(s->ch + ch);
--    }
--
--    omap_mcspi_interrupt_update(s);
--}
--
--static uint64_t omap_mcspi_read(void *opaque, hwaddr addr, unsigned size)
--{
--    struct omap_mcspi_s *s = opaque;
--    int ch = 0;
--    uint32_t ret;
--
--    if (size != 4) {
--        return omap_badwidth_read32(opaque, addr);
+-    if (size != 2) {
+-        return omap_badwidth_read16(opaque, addr);
 -    }
 -
 -    switch (addr) {
--    case 0x00:	/* MCSPI_REVISION */
--        return 0x91;
+-    case 0x00:	/* COMPONENT */
+-        return s->component;
 -
--    case 0x10:	/* MCSPI_SYSCONFIG */
--        return s->sysconfig;
--
--    case 0x14:	/* MCSPI_SYSSTATUS */
--        return 1;					/* RESETDONE */
--
--    case 0x18:	/* MCSPI_IRQSTATUS */
--        return s->irqst;
--
--    case 0x1c:	/* MCSPI_IRQENABLE */
--        return s->irqen;
--
--    case 0x20:	/* MCSPI_WAKEUPENABLE */
--        return s->wken;
--
--    case 0x24:	/* MCSPI_SYST */
--        return s->systest;
--
--    case 0x28:	/* MCSPI_MODULCTRL */
+-    case 0x20:	/* AGENT_CONTROL */
 -        return s->control;
 -
--    case 0x68: ch ++;
--        /* fall through */
--    case 0x54: ch ++;
--        /* fall through */
--    case 0x40: ch ++;
--        /* fall through */
--    case 0x2c:	/* MCSPI_CHCONF */
--        return s->ch[ch].config;
--
--    case 0x6c: ch ++;
--        /* fall through */
--    case 0x58: ch ++;
--        /* fall through */
--    case 0x44: ch ++;
--        /* fall through */
--    case 0x30:	/* MCSPI_CHSTAT */
--        return s->ch[ch].status;
--
--    case 0x70: ch ++;
--        /* fall through */
--    case 0x5c: ch ++;
--        /* fall through */
--    case 0x48: ch ++;
--        /* fall through */
--    case 0x34:	/* MCSPI_CHCTRL */
--        return s->ch[ch].control;
--
--    case 0x74: ch ++;
--        /* fall through */
--    case 0x60: ch ++;
--        /* fall through */
--    case 0x4c: ch ++;
--        /* fall through */
--    case 0x38:	/* MCSPI_TX */
--        return s->ch[ch].tx;
--
--    case 0x78: ch ++;
--        /* fall through */
--    case 0x64: ch ++;
--        /* fall through */
--    case 0x50: ch ++;
--        /* fall through */
--    case 0x3c:	/* MCSPI_RX */
--        s->ch[ch].status &= ~(1 << 0);			/* RXS */
--        ret = s->ch[ch].rx;
--        omap_mcspi_transfer_run(s, ch);
--        return ret;
+-    case 0x28:	/* AGENT_STATUS */
+-        return s->status;
 -    }
 -
 -    OMAP_BAD_REG(addr);
 -    return 0;
 -}
 -
--static void omap_mcspi_write(void *opaque, hwaddr addr,
--                             uint64_t value, unsigned size)
+-static void omap_l4ta_write(void *opaque, hwaddr addr,
+-                            uint64_t value, unsigned size)
 -{
--    struct omap_mcspi_s *s = opaque;
--    int ch = 0;
+-    struct omap_target_agent_s *s = opaque;
 -
 -    if (size != 4) {
 -        omap_badwidth_write32(opaque, addr, value);
@@ -377,162 +259,92 @@ index 8f85c3e3918..00000000000
 -    }
 -
 -    switch (addr) {
--    case 0x00:	/* MCSPI_REVISION */
--    case 0x14:	/* MCSPI_SYSSTATUS */
--    case 0x30:	/* MCSPI_CHSTAT0 */
--    case 0x3c:	/* MCSPI_RX0 */
--    case 0x44:	/* MCSPI_CHSTAT1 */
--    case 0x50:	/* MCSPI_RX1 */
--    case 0x58:	/* MCSPI_CHSTAT2 */
--    case 0x64:	/* MCSPI_RX2 */
--    case 0x6c:	/* MCSPI_CHSTAT3 */
--    case 0x78:	/* MCSPI_RX3 */
+-    case 0x00:	/* COMPONENT */
+-    case 0x28:	/* AGENT_STATUS */
 -        OMAP_RO_REG(addr);
--        return;
--
--    case 0x10:	/* MCSPI_SYSCONFIG */
--        if (value & (1 << 1))				/* SOFTRESET */
--            omap_mcspi_reset(s);
--        s->sysconfig = value & 0x31d;
 -        break;
 -
--    case 0x18:	/* MCSPI_IRQSTATUS */
--        if (!((s->control & (1 << 3)) && (s->systest & (1 << 11)))) {
--            s->irqst &= ~value;
--            omap_mcspi_interrupt_update(s);
--        }
--        break;
--
--    case 0x1c:	/* MCSPI_IRQENABLE */
--        s->irqen = value & 0x1777f;
--        omap_mcspi_interrupt_update(s);
--        break;
--
--    case 0x20:	/* MCSPI_WAKEUPENABLE */
--        s->wken = value & 1;
--        break;
--
--    case 0x24:	/* MCSPI_SYST */
--        if (s->control & (1 << 3))			/* SYSTEM_TEST */
--            if (value & (1 << 11)) {			/* SSB */
--                s->irqst |= 0x1777f;
--                omap_mcspi_interrupt_update(s);
--            }
--        s->systest = value & 0xfff;
--        break;
--
--    case 0x28:	/* MCSPI_MODULCTRL */
--        if (value & (1 << 3))				/* SYSTEM_TEST */
--            if (s->systest & (1 << 11)) {		/* SSB */
--                s->irqst |= 0x1777f;
--                omap_mcspi_interrupt_update(s);
--            }
--        s->control = value & 0xf;
--        break;
--
--    case 0x68: ch ++;
--        /* fall through */
--    case 0x54: ch ++;
--        /* fall through */
--    case 0x40: ch ++;
--        /* fall through */
--    case 0x2c:	/* MCSPI_CHCONF */
--        if ((value ^ s->ch[ch].config) & (3 << 14))	/* DMAR | DMAW */
--            omap_mcspi_dmarequest_update(s->ch + ch);
--        if (((value >> 12) & 3) == 3) { /* TRM */
--            qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid TRM value (3)\n",
--                          __func__);
--        }
--        if (((value >> 7) & 0x1f) < 3) { /* WL */
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "%s: invalid WL value (%" PRIx64 ")\n",
--                          __func__, (value >> 7) & 0x1f);
--        }
--        s->ch[ch].config = value & 0x7fffff;
--        break;
--
--    case 0x70: ch ++;
--        /* fall through */
--    case 0x5c: ch ++;
--        /* fall through */
--    case 0x48: ch ++;
--        /* fall through */
--    case 0x34:	/* MCSPI_CHCTRL */
--        if (value & ~s->ch[ch].control & 1) {		/* EN */
--            s->ch[ch].control |= 1;
--            omap_mcspi_transfer_run(s, ch);
--        } else
--            s->ch[ch].control = value & 1;
--        break;
--
--    case 0x74: ch ++;
--        /* fall through */
--    case 0x60: ch ++;
--        /* fall through */
--    case 0x4c: ch ++;
--        /* fall through */
--    case 0x38:	/* MCSPI_TX */
--        s->ch[ch].tx = value;
--        s->ch[ch].status &= ~(1 << 1);			/* TXS */
--        omap_mcspi_transfer_run(s, ch);
+-    case 0x20:	/* AGENT_CONTROL */
+-        s->control = value & 0x01000700;
+-        if (value & 1)					/* OCP_RESET */
+-            s->status &= ~1;				/* REQ_TIMEOUT */
 -        break;
 -
 -    default:
 -        OMAP_BAD_REG(addr);
--        return;
 -    }
 -}
 -
--static const MemoryRegionOps omap_mcspi_ops = {
--    .read = omap_mcspi_read,
--    .write = omap_mcspi_write,
+-static const MemoryRegionOps omap_l4ta_ops = {
+-    .read = omap_l4ta_read,
+-    .write = omap_l4ta_write,
 -    .endianness = DEVICE_NATIVE_ENDIAN,
 -};
 -
--struct omap_mcspi_s *omap_mcspi_init(struct omap_target_agent_s *ta, int chnum,
--                qemu_irq irq, qemu_irq *drq, omap_clk fclk, omap_clk iclk)
+-struct omap_target_agent_s *omap_l4ta_get(struct omap_l4_s *bus,
+-        const struct omap_l4_region_s *regions,
+-        const struct omap_l4_agent_info_s *agents,
+-        int cs)
 -{
--    struct omap_mcspi_s *s = g_new0(struct omap_mcspi_s, 1);
--    struct omap_mcspi_ch_s *ch = s->ch;
+-    int i;
+-    struct omap_target_agent_s *ta = NULL;
+-    const struct omap_l4_agent_info_s *info = NULL;
 -
--    s->irq = irq;
--    s->chnum = chnum;
--    while (chnum --) {
--        ch->txdrq = *drq ++;
--        ch->rxdrq = *drq ++;
--        ch ++;
+-    for (i = 0; i < bus->ta_num; i ++)
+-        if (agents[i].ta == cs) {
+-            ta = &bus->ta[i];
+-            info = &agents[i];
+-            break;
+-        }
+-    if (!ta) {
+-        fprintf(stderr, "%s: bad target agent (%i)\n", __func__, cs);
+-        exit(-1);
 -    }
--    omap_mcspi_reset(s);
 -
--    memory_region_init_io(&s->iomem, NULL, &omap_mcspi_ops, s, "omap.mcspi",
--                          omap_l4_region_size(ta, 0));
--    omap_l4_attach(ta, 0, &s->iomem);
+-    ta->bus = bus;
+-    ta->start = &regions[info->region];
+-    ta->regions = info->regions;
 -
--    return s;
+-    ta->component = ('Q' << 24) | ('E' << 16) | ('M' << 8) | ('U' << 0);
+-    ta->status = 0x00000000;
+-    ta->control = 0x00000200;	/* XXX 01000200 for L4TAO */
+-
+-    memory_region_init_io(&ta->iomem, NULL, &omap_l4ta_ops, ta, "omap.l4ta",
+-                          omap_l4_region_size(ta, info->ta_region));
+-    omap_l4_attach(ta, info->ta_region, &ta->iomem);
+-
+-    return ta;
 -}
 -
--void omap_mcspi_attach(struct omap_mcspi_s *s,
--                uint32_t (*txrx)(void *opaque, uint32_t, int), void *opaque,
--                int chipselect)
+-hwaddr omap_l4_attach(struct omap_target_agent_s *ta,
+-                                         int region, MemoryRegion *mr)
 -{
--    if (chipselect < 0 || chipselect >= s->chnum)
--        hw_error("%s: Bad chipselect %i\n", __func__, chipselect);
+-    hwaddr base;
 -
--    s->ch[chipselect].txrx = txrx;
--    s->ch[chipselect].opaque = opaque;
+-    if (region < 0 || region >= ta->regions) {
+-        fprintf(stderr, "%s: bad io region (%i)\n", __func__, region);
+-        exit(-1);
+-    }
+-
+-    base = ta->bus->base + ta->start[region].offset;
+-    if (mr) {
+-        memory_region_add_subregion(ta->bus->address_space, base, mr);
+-    }
+-
+-    return base;
 -}
-diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-index b7ad7fca3b3..23cd425ab00 100644
---- a/hw/ssi/meson.build
-+++ b/hw/ssi/meson.build
-@@ -9,7 +9,6 @@ system_ss.add(when: 'CONFIG_XILINX_SPI', if_true: files('xilinx_spi.c'))
- system_ss.add(when: 'CONFIG_XILINX_SPIPS', if_true: files('xilinx_spips.c'))
- system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-ospi.c'))
- system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
--system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_spi.c'))
- system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
- system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
- system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index b7e97e47cf9..a2951951b59 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -75,7 +75,6 @@ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+ ))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files(
+   'omap_clk.c',
+-  'omap_l4.c',
+ ))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'bcm2835_mbox.c',
 -- 
 2.34.1
 
