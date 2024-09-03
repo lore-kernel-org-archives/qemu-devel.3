@@ -4,98 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A6C9CD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD628CD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slWo5-0006GP-Kk; Tue, 03 Sep 2024 12:55:05 -0400
+	id 1slWod-0008Tc-Ba; Tue, 03 Sep 2024 12:55:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1slWo3-00069h-Gb
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:55:03 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1slWoa-0008FC-N2
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:55:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1slWo1-0000bK-3C
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:55:02 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1slWnp-0007uy-O9; Tue, 03 Sep 2024 18:54:49 +0200
-Message-ID: <d6e7dbd4-634f-4f62-8516-7bbf404b7adf@maciej.szmigiero.name>
-Date: Tue, 3 Sep 2024 18:54:44 +0200
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1slWoM-0000oG-Ka
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:55:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725382520;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=TzGHsTPwbo7y9GvAFEd0eWxpbpA9qjgaCZBT9AhWJio=;
+ b=GDNylC0MSIIgHgDbhEB7S9kO42YAfButSgh+Z4+hdb3dOWsmuk66UAATlOOfsL8k5hYGVs
+ pmy9MdZMqeY6fn+5TCTN2//V/TJSS50caVaaw5dzKMlaCQbr4nVwS8TlFvCFpS0t4AXB0L
+ yoUdXHWnIh2dqVzyzCBoVIV4dSmGjnQ=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-121-04KanFS2NYiOMYXlgduxxA-1; Tue, 03 Sep 2024 12:55:19 -0400
+X-MC-Unique: 04KanFS2NYiOMYXlgduxxA-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5bed5e6c46eso4184572a12.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:55:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725382518; x=1725987318;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TzGHsTPwbo7y9GvAFEd0eWxpbpA9qjgaCZBT9AhWJio=;
+ b=cpOfgY/wf+nF27N7Vu43Yls3D+ka8fLAyamRY+XAId6hZ0g/iFDr+WTAgHl0zbBX/I
+ VE+FLRW53Yuoxe6Z8wNWmSqqY8ECLjinI0OLDgnM4S9pZAqYjIc1NZGT53MyV9siSoha
+ kuI6dXlrWF7AuxnCDezzxozyxZl16wzubRSKWVoff25Nwo4PZo7jHsFuFu7ouEcZAnXc
+ SyBZJF7fntdYSSWPtbOoi5pVfzBLo5tkxEfCU0tB5QDjwT7AjEcLmr22xGW175KKlTpn
+ 4qdvMC5w0jX0wSaJI4isHfzpwfRxNAjw4sbqCi+Xc2/jblhP92yWP3aFnENCUmSYTx7u
+ WNOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWN8UNGvcgjHOhMnXLVGG2T5HiK+DpCnovsWiryqm0fsYxca2DRvYmTHy/jTMotURhrwG2al7hCdeWL@nongnu.org
+X-Gm-Message-State: AOJu0Ywifst9TfL3DaoMVUAyLKIFi98zGnM4cmH0J0L5KavlaNBI7Blo
+ dPlj0Xp/0Gxoq+/A1R047pVXES1NkY/B22NJjwbYp4wVVfNVhfARnNqzLYtjYBcTY9Lj46YQb3f
+ x4XCkxpcs/Sh9RqJ8QCDSKfHg50zKhn4e9pGQLQca7VeMB2gcJI4M
+X-Received: by 2002:a17:907:a02:b0:a7a:9f0f:ab26 with SMTP id
+ a640c23a62f3a-a89d878234bmr820436566b.23.1725382517905; 
+ Tue, 03 Sep 2024 09:55:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOOwIAUmzXiaQjI7KvsVaIIway9hBrm5uO6ZkNkD46qFDDNSr4EcL61eA8tKCsyG7rst9zew==
+X-Received: by 2002:a17:907:a02:b0:a7a:9f0f:ab26 with SMTP id
+ a640c23a62f3a-a89d878234bmr820432466b.23.1725382517235; 
+ Tue, 03 Sep 2024 09:55:17 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.101.29])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-a8989196975sm707109066b.135.2024.09.03.09.55.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Sep 2024 09:55:16 -0700 (PDT)
+Message-ID: <762867ba-8980-44f6-a9a6-5e766bc6a60b@redhat.com>
+Date: Tue, 3 Sep 2024 18:55:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/17] thread-pool: Implement non-AIO (generic) pool
- support
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <54947c3a1df713f5b69d8296938f3da41116ffe0.1724701542.git.maciej.szmigiero@oracle.com>
- <CAJSP0QU+dhh_e2LJRoGCxtCEh6C2-GBoZoFZL2W-SMSQPzUtYg@mail.gmail.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <CAJSP0QU+dhh_e2LJRoGCxtCEh6C2-GBoZoFZL2W-SMSQPzUtYg@mail.gmail.com>
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,76 +141,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.09.2024 15:55, Stefan Hajnoczi wrote:
-> On Tue, 27 Aug 2024 at 13:58, Maciej S. Szmigiero
-> <mail@maciej.szmigiero.name> wrote:
->>
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> Migration code wants to manage device data sending threads in one place.
->>
->> QEMU has an existing thread pool implementation, however it was limited
->> to queuing AIO operations only and essentially had a 1:1 mapping between
->> the current AioContext and the ThreadPool in use.
->>
->> Implement what is necessary to queue generic (non-AIO) work on a ThreadPool
->> too.
->>
->> This brings a few new operations on a pool:
->> * thread_pool_set_minmax_threads() explicitly sets the minimum and maximum
->> thread count in the pool.
->>
->> * thread_pool_join() operation waits until all the submitted work requests
->> have finished.
->>
->> * thread_pool_poll() lets the new thread and / or thread completion bottom
->> halves run (if they are indeed scheduled to be run).
->> It is useful for thread pool users that need to launch or terminate new
->> threads without returning to the QEMU main loop.
+On 9/3/24 18:06, Peter Maydell wrote:
+> This patchset removes the various Arm machines which we deprecated
+> for the 9.0 release and are therefore allowed to remove for the 9.2
+> release:
+>   akita, borzoi, cheetah, connex, mainstone, n800, n810,
+>   spitz, terrier, tosa, verdex, z2
+> We get to drop over 30,000 lines of unmaintained code. So it's
+> a big patchset but it's almost all deletions.
 > 
-> Did you consider glib's GThreadPool?
-> https://docs.gtk.org/glib/struct.ThreadPool.html
+> We have some command line options which were documented as only used
+> by the pxa2xx LCD display driver: -portrait and -rotate.  These
+> allowed the user to tell the display device to rotate its output by
+> 90/180/270 degrees (and the ui input layer to correspondingly rotate
+> mouse event coordinates to match).  I didn't realize these existed
+> when we deprecated the pxa2xx machines -- do we need a separate
+> deprecate-and-drop period to remove the command line options?  (If
+> so, I can drop the relevant patch from this series.)
+
+They are not specific to PXA; PXA LCD is the only one that supports 
+passing it to the guest, but the logic is generic: if (for whatever 
+reason) your VM generates output that is rotated, you can use the option 
+to rotate mouse input.
+
+It's okay to remove it without deprecation notice, but also to keep it. 
+Your choice, it's not a lot of code.
+
+Paolo
+
+> The series includes removal of some code which while not strictly
+> specific to these machines was in practice used only by them:
+>   * the OneNAND flash memory device
+>   * the PCMCIA subsystem
+>   * the MUSB USB2.0 OTG USB controller chip (hcd-musb)
 > 
-> QEMU's thread pool is integrated into the QEMU event loop. If your
-> goal is to bypass the QEMU event loop, then you may as well use the
-> glib API instead.
+> Removing these machines hopefully will make it easier to complete
+> some API transitions (e.g.  there is only one caller of the
+> ui/input-legacy.c function qemu_add_kbd_event_handler() left, and
+> five of qemu_add_mouse_event_handler(); a lot of
+> qemu_register_reset() calls have gone; and so on).
 > 
-> thread_pool_join() and thread_pool_poll() will lead to code that
-> blocks the event loop. QEMU's aio_poll() and nested event loops in
-> general are a source of hangs and re-entrancy bugs. I would prefer not
-> introducing these issues in the QEMU ThreadPool API.
+> (There will be a trivial conflict with my reset patch that gets rid
+> of direct setting of DeviceClass::reset in some places, but I'll fix
+> that up when merging.)
 > 
-
-Unfortunately, the problem with the migration code is that it is
-synchronous - it does not return to the main event loop until the
-migration is done.
-
-So the only way to handle things that need working event loop is to
-pump it manually from inside the migration code.
-
-The reason why I used the QEMU thread pool in the first place in this
-patch set version is because Peter asked me to do so during the review
-of its previous iteration [1].
-
-Peter also asked me previously to move to QEMU synchronization
-primitives from using the Glib ones in the early version of this
-patch set [2].
-
-I personally would rather use something common to many applications,
-well tested and with more pairs of eyes looking at it rather to
-re-invent things in QEMU.
-
-Looking at GThreadPool it seems that it lacks ability to wait until
-all queued work have finished, so this would need to be open-coded
-in the migration code.
-
-@Peter, what's your opinion on using Glib's thread pool instead of
-QEMU's one, considering the above things?
-
-Thanks,
-Maciej
-
-[1]: https://lore.kernel.org/qemu-devel/ZniFH14DT6ycjbrL@x1n/ point 5: "Worker thread model"
-[2]: https://lore.kernel.org/qemu-devel/Zi_9SyJy__8wJTou@x1n/
+> thanks
+> -- PMM
+> 
+> Peter Maydell (53):
+>    hw/arm: Remove deprecated akita, borzoi, spitz, terrier, tosa boards
+>    hw/input: Drop ADS7846 device
+>    hw/adc: Remove MAX111X device
+>    hw/gpio: Remove MAX7310 device
+>    hw/ide: Remove DSCM-1XXXX microdrive device model
+>    hw/display: Remove tc6393xb device
+>    hw/arm/KConfig: Replace ZAURUS with ZAURUS_SCOOP
+>    hw/arm: Remove 'cheetah' machine
+>    hw/arm: Remove 'connex' and 'verdex' machines
+>    hw/arm: Remove 'mainstone' machine
+>    hw/misc: Remove MAINSTONE_FPGA device
+>    hw/arm: Remove 'z2' machine
+>    hw/arm: Remove STRONGARM->PXA2XX dependency
+>    hw/timer/pxa2xx_timer: Remove use of pxa.h header
+>    hw/arm: Remove pxa2xx.c
+>    hw/sd: Remove pxa2xx_mmci.c
+>    hw/input: Remove pxa2xx_keypad
+>    hw/display: Remove pxa2xx_lcd.c
+>    hw/dma: Remove pxa2xx_dma
+>    hw/pcmcia: Remove pxa2xx pcmcia device
+>    hw/arm: Remove pxa2xx_gpio
+>    hw/arm: Remove pxa2xx_pic
+>    hw/timer: Remove pxa27x-timer
+>    vl.c: Remove pxa2xx-specific -portrait and -rotate options
+>    hw/arm: Remove 'n800' and 'n810' machines
+>    hw/misc: Remove cbus
+>    hw/display: Remove Blizzard display device
+>    hw/input: Remove tsc2005 touchscreen controller
+>    hw/input: Remove tsc210x device
+>    hw/rtc: Remove twl92230 device
+>    hw/input: Remove lm832x device
+>    hw/block: Remove OneNAND device
+>    hw/usb: Remove tusb6010 USB controller
+>    hw/usb: Remove MUSB USB host controller
+>    hw: Remove PCMCIA subsystem
+>    docs: Document removal of old Arm boards
+>    hw/arm: Remove omap2.c
+>    hw/gpio: Remove TYPE_OMAP2_GPIO
+>    hw/char: Remove omap2_uart
+>    hw/intc: Remove omap2-intc device
+>    hw/sd: Remove omap2_mmc device
+>    hw/misc: Remove omap_sdrc device
+>    hw/misc: Remove omap_gpmc
+>    hw/timer: Remove omap_gptimer
+>    hw/timer: Remove omap_synctimer
+>    hw/block: Remove ecc
+>    hw/ssi: Remove omap_mcspi
+>    hw/misc: Remove omap_tap device
+>    hw/display: Remove omap_dss
+>    hw/misc: Remove omap_l4 device
+>    hw/misc/omap_clk: Remove OMAP2-specifics
+>    hw/dma: Remove omap_dma4 device
+>    hw: Remove omap2 specific defines and enums
+> 
+>   MAINTAINERS                             |   58 +-
+>   docs/about/deprecated.rst               |   15 -
+>   docs/about/removed-features.rst         |   15 +
+>   docs/system/arm/gumstix.rst             |   21 -
+>   docs/system/arm/mainstone.rst           |   25 -
+>   docs/system/arm/nseries.rst             |   33 -
+>   docs/system/arm/palm.rst                |   23 -
+>   docs/system/arm/xscale.rst              |   35 -
+>   docs/system/target-arm.rst              |    5 -
+>   configs/devices/arm-softmmu/default.mak |    7 -
+>   include/hw/adc/max111x.h                |   56 -
+>   include/hw/arm/omap.h                   |  350 +--
+>   include/hw/arm/pxa.h                    |  197 --
+>   include/hw/block/flash.h                |   14 -
+>   include/hw/display/blizzard.h           |   21 -
+>   include/hw/display/tc6393xb.h           |   21 -
+>   include/hw/input/lm832x.h               |   28 -
+>   include/hw/input/tsc2xxx.h              |   41 -
+>   include/hw/misc/cbus.h                  |   31 -
+>   include/hw/pcmcia.h                     |   66 -
+>   include/hw/usb/hcd-musb.h               |   49 -
+>   include/sysemu/sysemu.h                 |    1 -
+>   hw/adc/max111x.c                        |  236 --
+>   hw/arm/gumstix.c                        |  141 --
+>   hw/arm/mainstone.c                      |  175 --
+>   hw/arm/nseries.c                        | 1473 ------------
+>   hw/arm/omap2.c                          | 2715 -----------------------
+>   hw/arm/palm.c                           |  324 ---
+>   hw/arm/pxa2xx.c                         | 2393 --------------------
+>   hw/arm/pxa2xx_gpio.c                    |  365 ---
+>   hw/arm/pxa2xx_pic.c                     |  359 ---
+>   hw/arm/spitz.c                          | 1284 -----------
+>   hw/arm/tosa.c                           |  327 ---
+>   hw/arm/z2.c                             |  355 ---
+>   hw/block/ecc.c                          |   91 -
+>   hw/block/onenand.c                      |  872 --------
+>   hw/char/omap_uart.c                     |  113 -
+>   hw/display/blizzard.c                   | 1026 ---------
+>   hw/display/omap_dss.c                   | 1093 ---------
+>   hw/display/pxa2xx_lcd.c                 | 1451 ------------
+>   hw/display/tc6393xb.c                   |  568 -----
+>   hw/dma/omap_dma.c                       |  451 +---
+>   hw/dma/pxa2xx_dma.c                     |  591 -----
+>   hw/gpio/max7310.c                       |  217 --
+>   hw/gpio/omap_gpio.c                     |  557 -----
+>   hw/ide/microdrive.c                     |  644 ------
+>   hw/input/ads7846.c                      |  186 --
+>   hw/input/lm832x.c                       |  528 -----
+>   hw/input/pxa2xx_keypad.c                |  331 ---
+>   hw/input/tsc2005.c                      |  571 -----
+>   hw/input/tsc210x.c                      | 1241 -----------
+>   hw/intc/omap_intc.c                     |  276 ---
+>   hw/misc/cbus.c                          |  619 ------
+>   hw/misc/mst_fpga.c                      |  269 ---
+>   hw/misc/omap_clk.c                      |  527 +----
+>   hw/misc/omap_gpmc.c                     |  898 --------
+>   hw/misc/omap_l4.c                       |  162 --
+>   hw/misc/omap_sdrc.c                     |  167 --
+>   hw/misc/omap_tap.c                      |  117 -
+>   hw/pcmcia/pcmcia.c                      |   24 -
+>   hw/pcmcia/pxa2xx.c                      |  248 ---
+>   hw/rtc/twl92230.c                       |  882 --------
+>   hw/sd/omap_mmc.c                        |   63 -
+>   hw/sd/pxa2xx_mmci.c                     |  594 -----
+>   hw/ssi/omap_spi.c                       |  380 ----
+>   hw/timer/omap_gptimer.c                 |  512 -----
+>   hw/timer/omap_synctimer.c               |  110 -
+>   hw/timer/pxa2xx_timer.c                 |   25 -
+>   hw/usb/hcd-musb.c                       | 1553 -------------
+>   hw/usb/tusb6010.c                       |  850 -------
+>   system/globals.c                        |    1 -
+>   system/vl.c                             |   11 -
+>   ui/input.c                              |   36 -
+>   hw/Kconfig                              |    1 -
+>   hw/adc/Kconfig                          |    3 -
+>   hw/adc/meson.build                      |    1 -
+>   hw/arm/Kconfig                          |   90 +-
+>   hw/arm/meson.build                      |    9 -
+>   hw/block/Kconfig                        |    6 -
+>   hw/block/meson.build                    |    2 -
+>   hw/display/Kconfig                      |    3 -
+>   hw/display/meson.build                  |    4 -
+>   hw/dma/meson.build                      |    1 -
+>   hw/gpio/Kconfig                         |    7 +-
+>   hw/gpio/meson.build                     |    3 +-
+>   hw/ide/Kconfig                          |    6 -
+>   hw/ide/meson.build                      |    1 -
+>   hw/input/Kconfig                        |   13 -
+>   hw/input/meson.build                    |    5 -
+>   hw/input/trace-events                   |    3 -
+>   hw/meson.build                          |    1 -
+>   hw/misc/Kconfig                         |    1 -
+>   hw/misc/meson.build                     |    6 -
+>   hw/pcmcia/Kconfig                       |    2 -
+>   hw/pcmcia/meson.build                   |    2 -
+>   hw/rtc/Kconfig                          |    4 -
+>   hw/rtc/meson.build                      |    1 -
+>   hw/sd/meson.build                       |    1 -
+>   hw/sd/trace-events                      |    4 -
+>   hw/ssi/meson.build                      |    1 -
+>   hw/timer/Kconfig                        |    3 +
+>   hw/timer/meson.build                    |    4 +-
+>   hw/usb/Kconfig                          |    8 -
+>   hw/usb/meson.build                      |    2 -
+>   qemu-options.hx                         |   16 -
+>   tests/avocado/machine_arm_n8x0.py       |   49 -
+>   106 files changed, 39 insertions(+), 30338 deletions(-)
+>   delete mode 100644 docs/system/arm/gumstix.rst
+>   delete mode 100644 docs/system/arm/mainstone.rst
+>   delete mode 100644 docs/system/arm/nseries.rst
+>   delete mode 100644 docs/system/arm/palm.rst
+>   delete mode 100644 docs/system/arm/xscale.rst
+>   delete mode 100644 include/hw/adc/max111x.h
+>   delete mode 100644 include/hw/arm/pxa.h
+>   delete mode 100644 include/hw/display/blizzard.h
+>   delete mode 100644 include/hw/display/tc6393xb.h
+>   delete mode 100644 include/hw/input/lm832x.h
+>   delete mode 100644 include/hw/input/tsc2xxx.h
+>   delete mode 100644 include/hw/misc/cbus.h
+>   delete mode 100644 include/hw/pcmcia.h
+>   delete mode 100644 include/hw/usb/hcd-musb.h
+>   delete mode 100644 hw/adc/max111x.c
+>   delete mode 100644 hw/arm/gumstix.c
+>   delete mode 100644 hw/arm/mainstone.c
+>   delete mode 100644 hw/arm/nseries.c
+>   delete mode 100644 hw/arm/omap2.c
+>   delete mode 100644 hw/arm/palm.c
+>   delete mode 100644 hw/arm/pxa2xx.c
+>   delete mode 100644 hw/arm/pxa2xx_gpio.c
+>   delete mode 100644 hw/arm/pxa2xx_pic.c
+>   delete mode 100644 hw/arm/spitz.c
+>   delete mode 100644 hw/arm/tosa.c
+>   delete mode 100644 hw/arm/z2.c
+>   delete mode 100644 hw/block/ecc.c
+>   delete mode 100644 hw/block/onenand.c
+>   delete mode 100644 hw/display/blizzard.c
+>   delete mode 100644 hw/display/omap_dss.c
+>   delete mode 100644 hw/display/pxa2xx_lcd.c
+>   delete mode 100644 hw/display/tc6393xb.c
+>   delete mode 100644 hw/dma/pxa2xx_dma.c
+>   delete mode 100644 hw/gpio/max7310.c
+>   delete mode 100644 hw/ide/microdrive.c
+>   delete mode 100644 hw/input/ads7846.c
+>   delete mode 100644 hw/input/lm832x.c
+>   delete mode 100644 hw/input/pxa2xx_keypad.c
+>   delete mode 100644 hw/input/tsc2005.c
+>   delete mode 100644 hw/input/tsc210x.c
+>   delete mode 100644 hw/misc/cbus.c
+>   delete mode 100644 hw/misc/mst_fpga.c
+>   delete mode 100644 hw/misc/omap_gpmc.c
+>   delete mode 100644 hw/misc/omap_l4.c
+>   delete mode 100644 hw/misc/omap_sdrc.c
+>   delete mode 100644 hw/misc/omap_tap.c
+>   delete mode 100644 hw/pcmcia/pcmcia.c
+>   delete mode 100644 hw/pcmcia/pxa2xx.c
+>   delete mode 100644 hw/rtc/twl92230.c
+>   delete mode 100644 hw/sd/pxa2xx_mmci.c
+>   delete mode 100644 hw/ssi/omap_spi.c
+>   delete mode 100644 hw/timer/omap_gptimer.c
+>   delete mode 100644 hw/timer/omap_synctimer.c
+>   delete mode 100644 hw/usb/hcd-musb.c
+>   delete mode 100644 hw/usb/tusb6010.c
+>   delete mode 100644 hw/pcmcia/Kconfig
+>   delete mode 100644 hw/pcmcia/meson.build
+>   delete mode 100644 tests/avocado/machine_arm_n8x0.py
+> 
 
 
