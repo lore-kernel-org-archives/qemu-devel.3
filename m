@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7663CD379F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80909CD37AB
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 17:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slXNu-0000Xn-JQ; Tue, 03 Sep 2024 13:32:06 -0400
+	id 1slXjE-0005vF-Fx; Tue, 03 Sep 2024 13:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1slXNn-0000Od-8z
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:32:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1slXNk-00050U-7S
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:31:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725384713;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=f+w4MnDoVYjlG8+9zQeQW+vsMUe+1cKhV31JE9HHyX8=;
- b=EnS5eWvBkzX5AP63WitEYQO0P4DZPBvgWX9iSIfUpuab4vCTNzPPZTQFCZDkTbhDHPp+hO
- 6U5mDgBuT4lG+4760vcF7fdnE6zyk3voiIncTeFdEBLlFg7IvYxMT+O6Kbbl/O5YeikWqE
- 9wUYRIYB6r6Rw7qU00y35qGt5i5hwxo=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-LZ8maU-JPcyRyQkkpmwWAQ-1; Tue, 03 Sep 2024 13:31:51 -0400
-X-MC-Unique: LZ8maU-JPcyRyQkkpmwWAQ-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-6507e2f0615so4932364a12.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:31:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slXjC-0005tr-GB
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:54:06 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slXj9-0007ew-G7
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 13:54:06 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-428e0d184b4so46991565e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 10:54:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725386042; x=1725990842; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Xn9RRF/KWi6o7IId7xdKJMcFlkHyoZxgQ7RJi6PCKjU=;
+ b=ujFaxU8jOl9DVgX4mOko+31X3vUgift9K5PhNIofJ1dw0R/7ESVRZpLwSifto6gT9v
+ +HrWLOcBn8pE14ZtI68glHcCjcv9eWO2ErU454jCA3E66wWj6MZ68cfOxuxoEItPn1/T
+ LW8q7UDSUVXzzLak3hNdAZ43pp40fqEA2HYchONMBWLWRdufiLA/V0GEjjrHB3dqaGqE
+ I8WAQMvx8hLvxUZPRmYX1aVFBS8ZFhGPkVV2ANLYT5Pd8AGyDOYXaaESCZ5CYUqsIm5K
+ oZigJus/51fAX4hdoP675iHkpbnY+r0qL+FlQYgNR2hGd7aNh411tVzTEFMFHDpe4vsb
+ FXLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725384711; x=1725989511;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=f+w4MnDoVYjlG8+9zQeQW+vsMUe+1cKhV31JE9HHyX8=;
- b=ZP4voXbXN926aSsjls1wGS2dKO4MYTSYyDYNdcSQGJnG3CnFtXWPR2QZglxlQs8pyA
- a4ZfXR5Ij29v7PuuaTDYEmXulo+ps1Q5BmBbYdmtnDNagz+Fuik2ijoDHKZpgImyQAih
- WC9Kuyky+iqEbQIG4xHFlApeiAElQ749krXOdZt/6YCq7xm2p4/l9ha4hBb3qPycl6LD
- K4awgQ6gYRRWjQJM7Obwq6rexBbbAk5Ii9N+BQdNec1kZDahrjRUNzg0Sd8xQay2Gb9L
- ujzQ0fIQFk5ja2RBokq171//VyYlZeTfFNTTLGCj6eyu4ao/eNCRkKPI2dRVz6A8yZEX
- Q4cg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNU5HUxXb6A8FQePDccNuro0aWQpBI1VKQJNpB0Vh/3GiXGrGFiV9GE8GkorqSaOnBJVtey2mbqGQ2@nongnu.org
-X-Gm-Message-State: AOJu0YwTxzro/SQdYUmP7PeLl91vjMvB5W+1padkwXrri1TOkDRQmBPp
- 4hRFMAfXEOc4erCWwS4f1XopqB/atGVM2I3mhamsf5oesJmXsjonvkrfmvqoDFSnGSD552OldKm
- WCDHLHmEfy+W+8mNpqjhAiJnGoP3p6coioVQDwN6t0IUqWcnguyhFLL7rt5Won5ssXJC6FwCpAd
- UC9B8pc/Q8NKNeEq7uE6D4ZmmpqNc=
-X-Received: by 2002:a17:902:f686:b0:205:7574:3b87 with SMTP id
- d9443c01a7336-20575743c5fmr68800555ad.15.1725384710691; 
- Tue, 03 Sep 2024 10:31:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG8QRXNw/SqwZoSwo9v76FC2B2J5lClA2zvh41/seuKewQcqvzNZwmAOJFfL1Cb6nB+4v1HpSGTSmlTFndu2nQ=
-X-Received: by 2002:a17:902:f686:b0:205:7574:3b87 with SMTP id
- d9443c01a7336-20575743c5fmr68800225ad.15.1725384710290; Tue, 03 Sep 2024
- 10:31:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725386042; x=1725990842;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xn9RRF/KWi6o7IId7xdKJMcFlkHyoZxgQ7RJi6PCKjU=;
+ b=mUQJ0Yz81JIZXyeU730bEjFqgwVWw2ij/vC3Su3j6agvtFe9BmYSTnwHv6qc0ATggX
+ 6LTfMEGjeJYM/rTBidasgF8/LPgosT6zI9ax3MfYC4gCFAiDHhX3L7S4boGhvu7Ojral
+ Q4KCIpmFft81eqnPGZ+ncCe6sDJasqDdb+DWvSnQNe4W3EoIhIwOROqC4RTaiff/mwE3
+ HUGALD1lKmk9pnm1MYev/jFg7CeAi1i8mTgMGos/yo2i32vSfLus7ko67y+eAvR6mX2s
+ CnGBnHkHCIa4zELWofBF3elPBQ/K/ncgy0ODIvcmeL/aRt6o6k4nI4PrvI6oCWCF/dY8
+ gr8A==
+X-Gm-Message-State: AOJu0Yy6L0bFj2nsGMeD95rfaN9it5aOmS3XQUrNtdoc7InQYtr/fROV
+ hGABHnptY9l/cBMUknyAmGOYrNfUGSM6fTJNRgVai9KKpiESjzvQ6a+P+Q3+RqU=
+X-Google-Smtp-Source: AGHT+IEGvINi3f2ZwG6i17XIXDp/VX+QO+Yd9GNT/h2/2qRNKKnP5CpAaDF8Z+0CRPi+Yu/5QansXw==
+X-Received: by 2002:a05:600c:3582:b0:42b:9260:235f with SMTP id
+ 5b1f17b1804b1-42c7b5b4b72mr67674255e9.19.1725386041445; 
+ Tue, 03 Sep 2024 10:54:01 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ba6425a77sm216629325e9.45.2024.09.03.10.54.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Sep 2024 10:54:00 -0700 (PDT)
+Message-ID: <575c0982-b724-4af5-bd91-b85a4b0226ff@linaro.org>
+Date: Tue, 3 Sep 2024 19:53:59 +0200
 MIME-Version: 1.0
-References: <20240820002318.1380276-1-jsnow@redhat.com>
- <20240820002318.1380276-8-jsnow@redhat.com>
- <87bk1acl4s.fsf@pond.sub.org>
- <CAFn=p-a=ob68-_8fkfFMj2AkVtOgL081j4d385n1qXMsN+ehFQ@mail.gmail.com>
- <ZtV8eQfPyuuwHHkq@redhat.com>
-In-Reply-To: <ZtV8eQfPyuuwHHkq@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 3 Sep 2024 13:31:37 -0400
-Message-ID: <CAFn=p-a9B6ax1LzV0-d6zGCgc9S9Ka0htw+op_gvE-Jx38L6mg@mail.gmail.com>
-Subject: Re: [PATCH 7/8] python/qapi: move scripts/qapi to python/qemu/qapi
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Beraldo Leal <bleal@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000c2177f06213a6e99"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/cris: Remove the deprecated CRIS target
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, devel@lists.libvirt.org,
+ Rabin Vincent <rabinv@axis.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+References: <20240903152757.17935-1-philmd@linaro.org>
+ <CAFEAcA-EquoUoNNtbwMu7tW_VDHKHVuEuAsDWBVbD8hnDocz-g@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA-EquoUoNNtbwMu7tW_VDHKHVuEuAsDWBVbD8hnDocz-g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,277 +98,379 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c2177f06213a6e99
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/9/24 18:13, Peter Maydell wrote:
+> On Tue, 3 Sept 2024 at 16:28, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> The CRIS target is deprecated since v9.0 (commit c7bbef40234
+>> "docs: mark CRIS support as deprecated").
+>>
+>> Remove:
+>> - Buildsys / CI infra
+>> - User emulation
+>> - System emulation (axis-dev88 machine and ETRAX devices)
+>> - Tests
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> Cc: Rabin Vincent <rabinv@axis.com>
+>> Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+>> ---
+>>   MAINTAINERS                                   |   17 -
+>>   docs/about/deprecated.rst                     |    8 -
+>>   docs/about/emulation.rst                      |    4 -
+>>   docs/about/removed-features.rst               |    7 +
+>>   docs/user/main.rst                            |    4 -
+>>   configure                                     |    4 -
+>>   configs/devices/cris-softmmu/default.mak      |    4 -
+>>   configs/targets/cris-linux-user.mak           |    1 -
+>>   configs/targets/cris-softmmu.mak              |    1 -
+>>   meson.build                                   |    1 -
+>>   qapi/machine.json                             |    2 +-
+>>   hw/cris/boot.h                                |   16 -
+>>   include/disas/dis-asm.h                       |    6 -
+>>   include/exec/poison.h                         |    2 -
+>>   include/hw/cris/etraxfs.h                     |   54 -
+>>   include/hw/cris/etraxfs_dma.h                 |   36 -
+>>   include/sysemu/arch_init.h                    |    1 -
+>>   include/user/abitypes.h                       |    7 -
+>>   linux-user/cris/sockbits.h                    |    1 -
+>>   linux-user/cris/syscall_nr.h                  |  367 --
+>>   linux-user/cris/target_cpu.h                  |   45 -
+>>   linux-user/cris/target_elf.h                  |   14 -
+>>   linux-user/cris/target_errno_defs.h           |    7 -
+>>   linux-user/cris/target_fcntl.h                |   11 -
+>>   linux-user/cris/target_mman.h                 |   13 -
+>>   linux-user/cris/target_prctl.h                |    1 -
+>>   linux-user/cris/target_proc.h                 |    1 -
+>>   linux-user/cris/target_resource.h             |    1 -
+>>   linux-user/cris/target_signal.h               |    9 -
+>>   linux-user/cris/target_structs.h              |    1 -
+>>   linux-user/cris/target_syscall.h              |   46 -
+>>   linux-user/cris/termbits.h                    |  225 --
+>>   linux-user/syscall_defs.h                     |    7 +-
+>>   target/cris/cpu-param.h                       |   16 -
+>>   target/cris/cpu-qom.h                         |   32 -
+>>   target/cris/cpu.h                             |  286 --
+>>   target/cris/crisv10-decode.h                  |  112 -
+>>   target/cris/crisv32-decode.h                  |  133 -
+>>   target/cris/helper.h                          |   23 -
+>>   target/cris/mmu.h                             |   22 -
+>>   target/cris/opcode-cris.h                     |  355 --
+>>   tests/tcg/cris/libc/crisutils.h               |   76 -
+>>   tests/tcg/cris/libc/sys.h                     |   18 -
+>>   disas/cris.c                                  | 2863 ---------------
+>>   hw/char/etraxfs_ser.c                         |  267 --
+>>   hw/cris/axis_dev88.c                          |  351 --
+>>   hw/cris/boot.c                                |  102 -
+>>   hw/dma/etraxfs_dma.c                          |  781 ----
+>>   hw/intc/etraxfs_pic.c                         |  172 -
+>>   hw/net/etraxfs_eth.c                          |  688 ----
+>>   hw/timer/etraxfs_timer.c                      |  407 ---
+>>   linux-user/cris/cpu_loop.c                    |   95 -
+>>   linux-user/cris/signal.c                      |  194 -
+>>   linux-user/elfload.c                          |   15 -
+>>   linux-user/syscall.c                          |   10 +-
+>>   system/qemu-seccomp.c                         |    2 +-
+>>   target/cris/cpu.c                             |  323 --
+>>   target/cris/gdbstub.c                         |  127 -
+>>   target/cris/helper.c                          |  287 --
+>>   target/cris/machine.c                         |   93 -
+>>   target/cris/mmu.c                             |  356 --
+>>   target/cris/op_helper.c                       |  580 ---
+>>   target/cris/translate.c                       | 3252 -----------------
+>>   tests/qtest/machine-none-test.c               |    1 -
+>>   tests/tcg/cris/bare/sys.c                     |   63 -
+>>   tests/tcg/cris/libc/check_abs.c               |   40 -
+>>   tests/tcg/cris/libc/check_addc.c              |   58 -
+>>   tests/tcg/cris/libc/check_addcm.c             |   85 -
+>>   tests/tcg/cris/libc/check_addo.c              |  125 -
+>>   tests/tcg/cris/libc/check_addoq.c             |   44 -
+>>   tests/tcg/cris/libc/check_bound.c             |  142 -
+>>   tests/tcg/cris/libc/check_ftag.c              |   37 -
+>>   .../cris/libc/check_gcctorture_pr28634-1.c    |   15 -
+>>   .../tcg/cris/libc/check_gcctorture_pr28634.c  |   15 -
+>>   .../tcg/cris/libc/check_glibc_kernelversion.c |  116 -
+>>   tests/tcg/cris/libc/check_hello.c             |    7 -
+>>   tests/tcg/cris/libc/check_int64.c             |   47 -
+>>   tests/tcg/cris/libc/check_lz.c                |   49 -
+>>   tests/tcg/cris/libc/check_mapbrk.c            |   39 -
+>>   tests/tcg/cris/libc/check_mmap1.c             |   48 -
+>>   tests/tcg/cris/libc/check_mmap2.c             |   48 -
+>>   tests/tcg/cris/libc/check_mmap3.c             |   33 -
+>>   tests/tcg/cris/libc/check_moveq.c             |   51 -
+>>   tests/tcg/cris/libc/check_openpf1.c           |   38 -
+>>   tests/tcg/cris/libc/check_openpf2.c           |   16 -
+>>   tests/tcg/cris/libc/check_openpf3.c           |   49 -
+>>   tests/tcg/cris/libc/check_openpf5.c           |   56 -
+>>   tests/tcg/cris/libc/check_settls1.c           |   45 -
+>>   tests/tcg/cris/libc/check_sigalrm.c           |   26 -
+>>   tests/tcg/cris/libc/check_stat1.c             |   16 -
+>>   tests/tcg/cris/libc/check_stat2.c             |   20 -
+>>   tests/tcg/cris/libc/check_stat3.c             |   25 -
+>>   tests/tcg/cris/libc/check_stat4.c             |   27 -
+>>   tests/tcg/cris/libc/check_swap.c              |   76 -
+>>   tests/tcg/cris/libc/check_time2.c             |   18 -
+>>   fpu/softfloat-specialize.c.inc                |    4 +-
+>>   target/cris/translate_v10.c.inc               | 1262 -------
+>>   .gitlab-ci.d/buildtest.yml                    |    2 +-
+>>   .gitlab-ci.d/container-cross.yml              |    5 -
+>>   .gitlab-ci.d/crossbuild-template.yml          |    4 +-
+>>   disas/meson.build                             |    1 -
+>>   hw/Kconfig                                    |    1 -
+>>   hw/char/meson.build                           |    1 -
+>>   hw/cris/Kconfig                               |   11 -
+>>   hw/cris/meson.build                           |    5 -
+>>   hw/dma/meson.build                            |    1 -
+>>   hw/intc/meson.build                           |    1 -
+>>   hw/meson.build                                |    1 -
+>>   hw/net/meson.build                            |    1 -
+>>   hw/net/trace-events                           |    5 -
+>>   hw/timer/meson.build                          |    1 -
+>>   scripts/coverity-scan/COMPONENTS.md           |    3 -
+>>   scripts/probe-gdb-support.py                  |    1 -
+>>   target/Kconfig                                |    1 -
+>>   target/cris/Kconfig                           |    2 -
+>>   target/cris/meson.build                       |   17 -
+>>   target/meson.build                            |    1 -
+>>   tests/data/qobject/qdict.txt                  |    6 -
+>>   tests/docker/Makefile.include                 |    1 -
+>>   .../dockerfiles/fedora-cris-cross.docker      |   14 -
+>>   tests/tcg/cris/.gdbinit                       |   11 -
+>>   tests/tcg/cris/Makefile.target                |   62 -
+>>   tests/tcg/cris/README                         |    1 -
+>>   tests/tcg/cris/bare/check_addcv17.s           |   65 -
+>>   tests/tcg/cris/bare/check_addi.s              |   57 -
+>>   tests/tcg/cris/bare/check_addiv32.s           |   62 -
+>>   tests/tcg/cris/bare/check_addm.s              |   96 -
+>>   tests/tcg/cris/bare/check_addq.s              |   47 -
+>>   tests/tcg/cris/bare/check_addr.s              |   96 -
+>>   tests/tcg/cris/bare/check_addxc.s             |   91 -
+>>   tests/tcg/cris/bare/check_addxm.s             |  106 -
+>>   tests/tcg/cris/bare/check_addxr.s             |   96 -
+>>   tests/tcg/cris/bare/check_andc.s              |   80 -
+>>   tests/tcg/cris/bare/check_andm.s              |   90 -
+>>   tests/tcg/cris/bare/check_andq.s              |   46 -
+>>   tests/tcg/cris/bare/check_andr.s              |   95 -
+>>   tests/tcg/cris/bare/check_asr.s               |  230 --
+>>   tests/tcg/cris/bare/check_ba.s                |   93 -
+>>   tests/tcg/cris/bare/check_bas.s               |  102 -
+>>   tests/tcg/cris/bare/check_bcc.s               |  197 -
+>>   tests/tcg/cris/bare/check_boundc.s            |  101 -
+>>   tests/tcg/cris/bare/check_boundr.s            |  125 -
+>>   tests/tcg/cris/bare/check_btst.s              |   96 -
+>>   tests/tcg/cris/bare/check_clearfv32.s         |   19 -
+>>   tests/tcg/cris/bare/check_clrjmp1.s           |   36 -
+>>   tests/tcg/cris/bare/check_cmp-2.s             |   15 -
+>>   tests/tcg/cris/bare/check_cmpc.s              |   86 -
+>>   tests/tcg/cris/bare/check_cmpm.s              |   96 -
+>>   tests/tcg/cris/bare/check_cmpq.s              |   75 -
+>>   tests/tcg/cris/bare/check_cmpr.s              |  102 -
+>>   tests/tcg/cris/bare/check_cmpxc.s             |   92 -
+>>   tests/tcg/cris/bare/check_cmpxm.s             |  106 -
+>>   tests/tcg/cris/bare/check_dstep.s             |   42 -
+>>   tests/tcg/cris/bare/check_jsr.s               |   85 -
+>>   tests/tcg/cris/bare/check_lapc.s              |   78 -
+>>   tests/tcg/cris/bare/check_lsl.s               |  217 --
+>>   tests/tcg/cris/bare/check_lsr.s               |  218 --
+>>   tests/tcg/cris/bare/check_mcp.s               |   49 -
+>>   tests/tcg/cris/bare/check_movdelsr1.s         |   33 -
+>>   tests/tcg/cris/bare/check_movecr.s            |   37 -
+>>   tests/tcg/cris/bare/check_movei.s             |   50 -
+>>   tests/tcg/cris/bare/check_movemr.s            |   78 -
+>>   tests/tcg/cris/bare/check_movemrv32.s         |   96 -
+>>   tests/tcg/cris/bare/check_mover.s             |   28 -
+>>   tests/tcg/cris/bare/check_moverm.s            |   45 -
+>>   tests/tcg/cris/bare/check_movmp.s             |  131 -
+>>   tests/tcg/cris/bare/check_movpmv32.s          |   35 -
+>>   tests/tcg/cris/bare/check_movpr.s             |   28 -
+>>   tests/tcg/cris/bare/check_movprv32.s          |   21 -
+>>   tests/tcg/cris/bare/check_movscr.s            |   29 -
+>>   tests/tcg/cris/bare/check_movsm.s             |   44 -
+>>   tests/tcg/cris/bare/check_movsr.s             |   46 -
+>>   tests/tcg/cris/bare/check_movucr.s            |   33 -
+>>   tests/tcg/cris/bare/check_movum.s             |   40 -
+>>   tests/tcg/cris/bare/check_movur.s             |   45 -
+>>   tests/tcg/cris/bare/check_mulv32.s            |   51 -
+>>   tests/tcg/cris/bare/check_mulx.s              |  257 --
+>>   tests/tcg/cris/bare/check_neg.s               |  104 -
+>>   tests/tcg/cris/bare/check_not.s               |   31 -
+>>   tests/tcg/cris/bare/check_orc.s               |   71 -
+>>   tests/tcg/cris/bare/check_orm.s               |   75 -
+>>   tests/tcg/cris/bare/check_orq.s               |   41 -
+>>   tests/tcg/cris/bare/check_orr.s               |   84 -
+>>   tests/tcg/cris/bare/check_ret.s               |   25 -
+>>   tests/tcg/cris/bare/check_scc.s               |   95 -
+>>   tests/tcg/cris/bare/check_subc.s              |   87 -
+>>   tests/tcg/cris/bare/check_subm.s              |   96 -
+>>   tests/tcg/cris/bare/check_subq.s              |   52 -
+>>   tests/tcg/cris/bare/check_subr.s              |  102 -
+>>   tests/tcg/cris/bare/check_xarith.s            |   72 -
+>>   tests/tcg/cris/bare/crt.s                     |   13 -
+>>   tests/tcg/cris/bare/testutils.inc             |  117 -
+>>   192 files changed, 18 insertions(+), 21324 deletions(-)
+>>   delete mode 100644 configs/devices/cris-softmmu/default.mak
+>>   delete mode 100644 configs/targets/cris-linux-user.mak
+>>   delete mode 100644 configs/targets/cris-softmmu.mak
+>>   delete mode 100644 hw/cris/boot.h
+>>   delete mode 100644 include/hw/cris/etraxfs.h
+>>   delete mode 100644 include/hw/cris/etraxfs_dma.h
+>>   delete mode 100644 linux-user/cris/sockbits.h
+>>   delete mode 100644 linux-user/cris/syscall_nr.h
+>>   delete mode 100644 linux-user/cris/target_cpu.h
+>>   delete mode 100644 linux-user/cris/target_elf.h
+>>   delete mode 100644 linux-user/cris/target_errno_defs.h
+>>   delete mode 100644 linux-user/cris/target_fcntl.h
+>>   delete mode 100644 linux-user/cris/target_mman.h
+>>   delete mode 100644 linux-user/cris/target_prctl.h
+>>   delete mode 100644 linux-user/cris/target_proc.h
+>>   delete mode 100644 linux-user/cris/target_resource.h
+>>   delete mode 100644 linux-user/cris/target_signal.h
+>>   delete mode 100644 linux-user/cris/target_structs.h
+>>   delete mode 100644 linux-user/cris/target_syscall.h
+>>   delete mode 100644 linux-user/cris/termbits.h
+>>   delete mode 100644 target/cris/cpu-param.h
+>>   delete mode 100644 target/cris/cpu-qom.h
+>>   delete mode 100644 target/cris/cpu.h
+>>   delete mode 100644 target/cris/crisv10-decode.h
+>>   delete mode 100644 target/cris/crisv32-decode.h
+>>   delete mode 100644 target/cris/helper.h
+>>   delete mode 100644 target/cris/mmu.h
+>>   delete mode 100644 target/cris/opcode-cris.h
+>>   delete mode 100644 tests/tcg/cris/libc/crisutils.h
+>>   delete mode 100644 tests/tcg/cris/libc/sys.h
+>>   delete mode 100644 disas/cris.c
+>>   delete mode 100644 hw/char/etraxfs_ser.c
+>>   delete mode 100644 hw/cris/axis_dev88.c
+>>   delete mode 100644 hw/cris/boot.c
+>>   delete mode 100644 hw/dma/etraxfs_dma.c
+>>   delete mode 100644 hw/intc/etraxfs_pic.c
+>>   delete mode 100644 hw/net/etraxfs_eth.c
+>>   delete mode 100644 hw/timer/etraxfs_timer.c
+>>   delete mode 100644 linux-user/cris/cpu_loop.c
+>>   delete mode 100644 linux-user/cris/signal.c
+>>   delete mode 100644 target/cris/cpu.c
+>>   delete mode 100644 target/cris/gdbstub.c
+>>   delete mode 100644 target/cris/helper.c
+>>   delete mode 100644 target/cris/machine.c
+>>   delete mode 100644 target/cris/mmu.c
+>>   delete mode 100644 target/cris/op_helper.c
+>>   delete mode 100644 target/cris/translate.c
+>>   delete mode 100644 tests/tcg/cris/bare/sys.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_abs.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_addc.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_addcm.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_addo.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_addoq.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_bound.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_ftag.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_glibc_kernelversion.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_hello.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_int64.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_lz.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_mapbrk.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_mmap1.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_mmap2.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_mmap3.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_moveq.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_openpf1.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_openpf2.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_openpf3.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_openpf5.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_settls1.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_sigalrm.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_stat1.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_stat2.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_stat3.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_stat4.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_swap.c
+>>   delete mode 100644 tests/tcg/cris/libc/check_time2.c
+>>   delete mode 100644 target/cris/translate_v10.c.inc
+>>   delete mode 100644 hw/cris/Kconfig
+>>   delete mode 100644 hw/cris/meson.build
+>>   delete mode 100644 target/cris/Kconfig
+>>   delete mode 100644 target/cris/meson.build
+>>   delete mode 100644 tests/docker/dockerfiles/fedora-cris-cross.docker
+>>   delete mode 100644 tests/tcg/cris/.gdbinit
+>>   delete mode 100644 tests/tcg/cris/Makefile.target
+>>   delete mode 100644 tests/tcg/cris/README
+>>   delete mode 100644 tests/tcg/cris/bare/check_addcv17.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addi.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addiv32.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addq.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addxc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addxm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_addxr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_andc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_andm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_andq.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_andr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_asr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_ba.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_bas.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_bcc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_boundc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_boundr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_btst.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_clearfv32.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_clrjmp1.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_cmp-2.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_cmpc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_cmpm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_cmpq.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_cmpr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_cmpxc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_cmpxm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_dstep.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_jsr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_lapc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_lsl.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_lsr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_mcp.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movdelsr1.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movecr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movei.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movemr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movemrv32.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_mover.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_moverm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movmp.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movpmv32.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movpr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movprv32.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movscr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movsm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movsr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movucr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movum.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_movur.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_mulv32.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_mulx.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_neg.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_not.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_orc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_orm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_orq.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_orr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_ret.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_scc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_subc.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_subm.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_subq.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_subr.s
+>>   delete mode 100644 tests/tcg/cris/bare/check_xarith.s
+>>   delete mode 100644 tests/tcg/cris/bare/crt.s
+>>   delete mode 100644 tests/tcg/cris/bare/testutils.inc
+> 
+> This is an enormous diffstat for a single patch, even if it
+> is basically all deletions. (It took me ages just to select
+> and delete the patch text so I could make this reply, let
+> alone actually doing anything like review of it.) Could
+> you split it up a bit, please?
 
-On Mon, Sep 2, 2024, 4:51=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@redh=
-at.com> wrote:
-
-> On Fri, Aug 30, 2024 at 02:22:50PM -0400, John Snow wrote:
-> > Gave Dan a related answer. For you, my explanation is:
-> >
-> > - It's nice to have just one configuration for static analysis in just
-> one
-> > place
-> > - It's nice to have that configuration follow python ecosystem norms
-> > - It's nice to use standard python management tools to configure and te=
-st
-> > the supported versions of static analysis tools, again kept in one plac=
-e.
-> > - Just moving the folder costs virtually nothing.
-> > - Moving it here makes it easier for me to test the eventual integratio=
-n
-> > with make check in one place.
-> > - I like being able to say that anything under `python/` is fiercely
-> > guarded by high standards (and the gitlab pipelines) and everything els=
-e
-> is
-> > not. I consider this to be organizationally simple and easy to
-> communicate.
-> > i.e., I find it attractive to say that "python is maintained, scripts a=
-re
-> > YMMV." I am *not* willing to maintain everything under `scripts/` with
-> the
-> > same level of effort I apply to `python/`. I think it's important to
-> allow
-> > people to commit low-development-cost scripts ("contrib quality") that
-> they
-> > can run from time to time and not everything needs to be held to a
-> > crystalline perfect standard, but some stuff does.
->
-> FYI, I was NOT suggesting that you maintain anything under scripts/.
->
-> Rather I'm saying that if we want to apply python code standards, we
-> should (ultimately) apply them to all python code in the tree, and
-> that *ALL* maintainers and contributors should comply.
->
-
-Right, it's just that the level of care to bring everything up to that
-standard is currently more effort than I'd like to spend.
-
-Ideally everything WOULD be on the same standard, but...
-
-
-> Consider our C standards - we don't apply them selectively to a subset
-> of the tree - we expect all maintainers to comply. I'd like us to have
-> the same be true of Python.
->
-> The only real issue we have with python standards is bringing existing
-> code upto par, before we can enable the checks.
->
-
-Yeah, exactly. It took me long enough to do this with qmp, machine, qom and
-qapi. It'll take aeons for iotests.
-
-It's just not on my radar right now as a priority.
-
-More tractable: protect everything used for the build to that high
-standard, worry about the rest later.
-
-
-> Currently we have no easy way for other maintainers to enable their
-> python code be checked, without moving their code under python/ which
-> is undesirable IMHO.
->
-
-It's possible I can extend a "lower standard" to everything outside of
-python/ to help enforce the basics, without mandatory typing.
-
-(I did add an iotest checker to python/ tests that enforces a lower
-standard to those tests. I intend to remove iotests 297 once I get a
-top-level "make check-python" instituted.)
-
-I don't think one unified standard is something we can do in the near term.
-Mechanically I think it's easy, but in practice pushing all the linting
-patches through has been like pulling teeth and I've lost appetite for
-pursuing it beyond whatever is *super duper important*.
-
-In retrospect, 3.6 was too early to try adding static typing. I think I
-won't bother for anything else until we have 3.9 as a minimum. After the
-pushback last time, I doubt I'll make the push any time soon unless
-something really urgent comes up.
-
-
-> If we move the python coding standards to meson.build, such that apply
-> to all of the source tree, and then exclude everything except python/,
-> we make it easier for other maintainers to bring stuff upto par. All
-> need do at that point is remove the exclusion rule for files incrementall=
-y
-> as they fix them.
->
-
-Not against this in the future, I just think there are some higher priority
-items to take care of first:
-
-* Begin protecting qapi with the existing python static analysis regime
-* Add a "make check-python" target to the top level makefile that can set
-up the environment it needs on-demand and handles what python/'s "make
-check-minreqs" currently does (incl iotest 297)
-* Drop python/qemu/qmp from the tree in favor of the standalone package.
-There are mkvenv changes I'm currently developing here to make this happen.
-It's a little involved due to the wide spread of setuptools versions on
-platforms we support.
-
-Once I drill through these, I'm more than happy to try to support/maintain
-everything else to a lower baseline of care. Maybe this winter, if you'd be
-willing to volunteer some review time for the push.
-
-
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---000000000000c2177f06213a6e99
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
-s=3D"gmail_attr">On Mon, Sep 2, 2024, 4:51=E2=80=AFAM Daniel P. Berrang=C3=
-=A9 &lt;<a href=3D"mailto:berrange@redhat.com" target=3D"_blank" rel=3D"nor=
-eferrer">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-l=
-eft:1ex">On Fri, Aug 30, 2024 at 02:22:50PM -0400, John Snow wrote:<br>
-&gt; Gave Dan a related answer. For you, my explanation is:<br>
-&gt; <br>
-&gt; - It&#39;s nice to have just one configuration for static analysis in =
-just one<br>
-&gt; place<br>
-&gt; - It&#39;s nice to have that configuration follow python ecosystem nor=
-ms<br>
-&gt; - It&#39;s nice to use standard python management tools to configure a=
-nd test<br>
-&gt; the supported versions of static analysis tools, again kept in one pla=
-ce.<br>
-&gt; - Just moving the folder costs virtually nothing.<br>
-&gt; - Moving it here makes it easier for me to test the eventual integrati=
-on<br>
-&gt; with make check in one place.<br>
-&gt; - I like being able to say that anything under `python/` is fiercely<b=
-r>
-&gt; guarded by high standards (and the gitlab pipelines) and everything el=
-se is<br>
-&gt; not. I consider this to be organizationally simple and easy to communi=
-cate.<br>
-&gt; i.e., I find it attractive to say that &quot;python is maintained, scr=
-ipts are<br>
-&gt; YMMV.&quot; I am *not* willing to maintain everything under `scripts/`=
- with the<br>
-&gt; same level of effort I apply to `python/`. I think it&#39;s important =
-to allow<br>
-&gt; people to commit low-development-cost scripts (&quot;contrib quality&q=
-uot;) that they<br>
-&gt; can run from time to time and not everything needs to be held to a<br>
-&gt; crystalline perfect standard, but some stuff does.<br>
-<br>
-FYI, I was NOT suggesting that you maintain anything under scripts/.<br>
-<br>
-Rather I&#39;m saying that if we want to apply python code standards, we<br=
->
-should (ultimately) apply them to all python code in the tree, and<br>
-that *ALL* maintainers and contributors should comply.<br></blockquote></di=
-v></div><div dir=3D"auto"><br></div><div dir=3D"auto">Right, it&#39;s just =
-that the level of care to bring everything up to that standard is currently=
- more effort than I&#39;d like to spend.</div><div dir=3D"auto"><br></div><=
-div dir=3D"auto">Ideally everything WOULD be on the same standard, but...=
-=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gma=
-il_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
-er-left:1px #ccc solid;padding-left:1ex">
-<br>
-Consider our C standards - we don&#39;t apply them selectively to a subset<=
-br>
-of the tree - we expect all maintainers to comply. I&#39;d like us to have<=
-br>
-the same be true of Python.<br>
-<br>
-The only real issue we have with python standards is bringing existing<br>
-code upto par, before we can enable the checks.<br></blockquote></div></div=
-><div dir=3D"auto"><br></div><div dir=3D"auto">Yeah, exactly. It took me lo=
-ng enough to do this with qmp, machine, qom and qapi. It&#39;ll take aeons =
-for iotests.</div><div dir=3D"auto"><br></div><div dir=3D"auto">It&#39;s ju=
-st not on my radar right now as a priority.</div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">More tractable: protect everything used for the build t=
-o that high standard, worry about the rest later.</div><div dir=3D"auto"><b=
-r></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"g=
-mail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-l=
-eft:1ex">
-<br>
-Currently we have no easy way for other maintainers to enable their<br>
-python code be checked, without moving their code under python/ which<br>
-is undesirable IMHO.<br></blockquote></div></div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">It&#39;s possible I can extend a &quot;lower standard&q=
-uot; to everything outside of python/ to help enforce the basics, without m=
-andatory typing.</div><div dir=3D"auto"><br></div><div dir=3D"auto">(I did =
-add an iotest checker to python/ tests that enforces a lower standard to th=
-ose tests. I intend to remove iotests 297 once I get a top-level &quot;make=
- check-python&quot; instituted.)</div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">I don&#39;t think one unified standard is something we can do in =
-the near term. Mechanically I think it&#39;s easy, but in practice pushing =
-all the linting patches through has been like pulling teeth and I&#39;ve lo=
-st appetite for pursuing it beyond whatever is *super duper important*.</di=
-v><div dir=3D"auto"><br></div><div dir=3D"auto">In retrospect, 3.6 was too =
-early to try adding static typing. I think I won&#39;t bother for anything =
-else until we have 3.9 as a minimum. After the pushback last time, I doubt =
-I&#39;ll make the push any time soon unless something really urgent comes u=
-p.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_q=
-uote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-l=
-eft:1px #ccc solid;padding-left:1ex">
-<br>
-If we move the python coding standards to meson.build, such that apply<br>
-to all of the source tree, and then exclude everything except python/,<br>
-we make it easier for other maintainers to bring stuff upto par. All<br>
-need do at that point is remove the exclusion rule for files incrementally<=
-br>
-as they fix them.<br></blockquote></div></div><div dir=3D"auto"><br></div><=
-div dir=3D"auto">Not against this in the future, I just think there are som=
-e higher priority items to take care of first:</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">* Begin protecting qapi with the existing python sta=
-tic analysis regime</div><div dir=3D"auto">* Add a &quot;make check-python&=
-quot; target to the top level makefile that can set up the environment it n=
-eeds on-demand and handles what python/&#39;s &quot;make check-minreqs&quot=
-; currently does (incl iotest 297)</div><div dir=3D"auto">* Drop python/qem=
-u/qmp from the tree in favor of the standalone package. There are mkvenv ch=
-anges I&#39;m currently developing here to make this happen. It&#39;s a lit=
-tle involved due to the wide spread of setuptools versions on platforms we =
-support.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Once I drill th=
-rough these, I&#39;m more than happy to try to support/maintain everything =
-else to a lower baseline of care. Maybe this winter, if you&#39;d be willin=
-g to volunteer some review time for the push.</div><div dir=3D"auto"><br></=
-div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail=
-_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:=
-1ex">
-<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer noreferrer=
-" target=3D"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =
-=C2=A0 <a href=3D"https://www.flickr.com/photos/dberrange" rel=3D"noreferre=
-r noreferrer noreferrer" target=3D"_blank">https://www.flickr.com/photos/db=
-errange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer noreferrer"=
- target=3D"_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0-o-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138=
-.berrange.com" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">h=
-ttps://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer noreferrer nore=
-ferrer" target=3D"_blank">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=
-=C2=A0 =C2=A0 <a href=3D"https://www.instagram.com/dberrange" rel=3D"norefe=
-rrer noreferrer noreferrer" target=3D"_blank">https://www.instagram.com/dbe=
-rrange</a> :|<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000c2177f06213a6e99--
+Sorry, sure.
 
 
