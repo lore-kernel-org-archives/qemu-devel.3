@@ -4,93 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C12CD13CF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 12:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D84BCCD3420
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 12:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slSRs-0003eq-Qk; Tue, 03 Sep 2024 08:15:52 -0400
+	id 1slS0c-0001Ao-Lu; Tue, 03 Sep 2024 07:47:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slSRq-0003eB-Cj
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:15:50 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slS0W-0000nn-Vs
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 07:47:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slSRo-00047P-IN
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:15:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=Q2ByrsNmFU8JiBfegcpIeER8NacelVBDe7SzgH5y/Fg=; b=mmfzkABB8ET3OwwteQnpmotEHi
- SzrbIMO+JQ0DoYYRrUwPdmOppzgbReB15T13NBmsREoU3wFQRUAvHNlceg6Ew6zaQGTaivbbO4Ev4
- zcq3VJcThoM+GhmF13DZTxZREXmM6khT0yRQf2bVG/uVSyWTG7kRFI4BfCmfHtElI8hjtwNugrX7J
- NF9ka7a95/hh3VBmvfQZ0nSmICVWBi6Z/vrA9HYwlDHxxCr8M+tYLZojjzAa5iHrbchnhIl4T9pc7
- RO86gdA26qtAkjW9G7wQ8Xolc8GZNmbjdxD5kCB+oujrtQLigTZ5JCEWiUGUUCu/OeWbrog7UvhXy
- LNLGPHyvPAoS8CM3PsDXCKhaLsP0RjKAvXQFUiXbaQb7KO8CN4xCJnK3u/7o9lh2gOWHiYqv7hxSd
- AAgk5uKReKEDIprVnQnqI6vzpWONmkvXi/xzOdzAgiUiTWTmb4OSs7bu7MvG26RGidQ2LH9HuoOwt
- kZzOBu4sRWljqY5wPN9wwDQ0JohdXwlE7UpVVa5nq/XtsvohsFRIC6uMoJaQI0xAf+L725VFQZT3I
- g9+qSY+93BufTU4NKYVxPTrkSsp5rRdCtlButAylBwPvVHXmZ/9Ddp5aV/ifJOU+i07cHTERmbHSW
- PXzzdbp51nJe3GKswzyQzqx8oEYQsiAdUm1uOwLsA=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slRrM-0004ts-NC; Tue, 03 Sep 2024 12:38:09 +0100
-Message-ID: <5e447f9d-3517-4af9-a382-a0a44f24adf9@ilande.co.uk>
-Date: Tue, 3 Sep 2024 12:38:04 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slS0U-0007cz-Sb
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 07:47:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725364053;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=pbn98pDookGBOMEgjMFvFxlB9fzdz6bxbkPPyk8nZqM=;
+ b=h9idH0w8sik6iMDsZAfsgCYRAWnxyph13EdmtaPpasM8RPTxjFO5ZoJPV8cfNkRNayvos/
+ J9R0zPkB9Fcz99J7KwljhBYsxB2VD32TxgHKAyjx30FDDwhL4vd2weTtYlJ8qFwrhq9ukA
+ dyAaAMG8+ezrsnd+WRI45exbmwCKaAk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-H9KocZ5mO2u3OD4kIZSlSA-1; Tue,
+ 03 Sep 2024 07:47:32 -0400
+X-MC-Unique: H9KocZ5mO2u3OD4kIZSlSA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E42F91954B1C; Tue,  3 Sep 2024 11:47:30 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.86])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8722D1955BE1; Tue,  3 Sep 2024 11:47:28 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Subject: [PATCH] tests/qtest/migration: Add a check for the availability of
+ the "pc" machine
+Date: Tue,  3 Sep 2024 13:47:26 +0200
+Message-ID: <20240903114726.199881-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Carl Hauser <chauser@pullman.com>
-Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
-References: <20240902213816.89071-1-mark.cave-ayland@ilande.co.uk>
- <CABJXFgUxPWkbynMWZW_i20KDSetu1ucWWMFha7vk5+=GE9_vYA@mail.gmail.com>
- <CABJXFgWEL0M+1UuyTX6UajwMMzLjhKD+qBkTDG20BudakKPcmw@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CABJXFgWEL0M+1UuyTX6UajwMMzLjhKD+qBkTDG20BudakKPcmw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] escc: convert Sun mouse to use QemuInputHandler
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,30 +79,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2024 02:33, Carl Hauser via wrote:
+The test_vcpu_dirty_limit is the only test that does not check for the
+availability of the machine before starting the test, so it fails when
+QEMU has been configured with --without-default-devices. Add a check for
+the "pc" machine type to fix it.
 
-> Well, I was wrong -- it is sending a duplicate mouse packets when the mouse wheel is 
-> rotated. The packets correctly represent the mouse buttons state. I just now 
-> discovered that one of my Logitech mice sends continuous mouse events when the wheel 
-> is rotated half a notch and held there. Another Logitech mouse doesn't do that but 
-> does send multiple (6-10) events per notch. A Microsoft mouse sends 2 events per notch.
-> 
-> I don't know where these should be suppressed. Mouse wheel rotation of a host mouse 
-> shouldn't send anything to the emulated Sun mouse. I suspect that the unwanted host 
-> events are propagating down to escc via calls to sunmouse_sync. So is sunmouse_sync 
-> where they should be filtered out? Probably, because the calling code is not specific 
-> to sunmouse and for other mice those calls are needed.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qtest/migration-test.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Ah so it's from the events generated by the mouse wheel? I think we can safely assume 
-that Sun never produced any wheeled serial mice, in which case it should be possible 
-to filter those events out before they get to the guest.
-
-I should have a bit of time later today to make the relevant changes and send out a 
-v2 patch.
-
-
-ATB,
-
-Mark.
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 6c06100d91..8fee18dfbe 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -4026,8 +4026,10 @@ int main(int argc, char **argv)
+     if (g_str_equal(arch, "x86_64") && has_kvm && kvm_dirty_ring_supported()) {
+         migration_test_add("/migration/dirty_ring",
+                            test_precopy_unix_dirty_ring);
+-        migration_test_add("/migration/vcpu_dirty_limit",
+-                           test_vcpu_dirty_limit);
++        if (qtest_has_machine("pc")) {
++            migration_test_add("/migration/vcpu_dirty_limit",
++                               test_vcpu_dirty_limit);
++        }
+     }
+ 
+     ret = g_test_run();
+-- 
+2.46.0
 
 
