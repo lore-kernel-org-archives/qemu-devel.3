@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C767CD343E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 14:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61AFCD343E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 14:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slUrL-0004M1-Ri; Tue, 03 Sep 2024 10:50:20 -0400
+	id 1slUse-00007q-JG; Tue, 03 Sep 2024 10:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1slUrJ-0004L7-BT
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:50:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1slUrH-0005tu-5y
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:50:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725375012;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nwHwChkfulU561IRS1yNzIl/BN1v4u7trOhVcCrmRyc=;
- b=BXbrgtjET+f6qdwoYivqvdm3SzAe87aObQ3x/2Il9jUAIWtlQrrQxOhjLXL0JWzhFSWZ9R
- OOaCeEjFoGGyl6VRGytzP6vyV0t0iouIAKHdnM+xTS59L9mnJPYfc56Fd3+xTanrJ3kpMp
- 0j7lzOb0plvk8Gy8se9rTSlUBik+My0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-1FCQYBiZPHSgciwqT1dRCg-1; Tue,
- 03 Sep 2024 10:50:11 -0400
-X-MC-Unique: 1FCQYBiZPHSgciwqT1dRCg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DCDE195421C; Tue,  3 Sep 2024 14:50:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.129])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6FE931955DD8; Tue,  3 Sep 2024 14:50:08 +0000 (UTC)
-Date: Tue, 3 Sep 2024 15:50:05 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/functional/test_vnc: Reduce raciness in
- find_free_ports()
-Message-ID: <ZtciHTFGPtUlMKM_@redhat.com>
-References: <20240903143553.16877-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1slUsd-0008TP-1D
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:51:39 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1slUsa-000641-Le
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 10:51:38 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7cd9e634ea9so3618038a12.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 07:51:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725375095; x=1725979895; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=qvHojdF4lJZLPbBC2hJD3b76MJjEtK91JsTBBV1dQYc=;
+ b=ZoJzo3GNqaT9SjC/MrR4mLZZRA0XRCcmqAe/gADU5JsJWui+I/QSXCLu7bKDts6BRG
+ hLtzZvqCkSZdr56WOBqMIoGAKhWKGomtXg0nTKqNnRf6OC8W9sHkzhETXAe4nUdWlyu1
+ A+SZ8woteZoiSCeKS3jYI+F2tTwkwo9Lw8tjx7l++Ox+TfITUYEYnW7UjsqOqRGpfcvN
+ a/EzVveeJ7M6+6rwKYEA9ElBgSXGDZ4/cNNz6efhCwczxXTHh2jv+XwSCrGmsozdGuFQ
+ mSBmZAxKkE5c/f54YTi8xMKSo9TWQYKzT2FPQHa1b0t19ylRVoQ15c3svnJM5KUlnwfP
+ 9PmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725375095; x=1725979895;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qvHojdF4lJZLPbBC2hJD3b76MJjEtK91JsTBBV1dQYc=;
+ b=v2A3nMeCcXzE42tfsmNbkFjIttxGHmGjIWldY+viA/RpGgD9o0AB6sko/a0e2mSHJk
+ 8kAfDhXpvuzLGNBDqZnsd6l/OJ7yLcDBBNb/uQAAmjRejiPVm1IrVVWbLLvvpR2ZTkPf
+ TSMpNivxFhkByUPnORyxtg6ooxklC6V3QpbSyFMwS54W4NtrMXn36GlLOa7QTr+26bcO
+ 940LaiHXwRY8Kinaa0CDT+QWnoHbkE0ovqk/bza5OIxduVUWaSuYNDxUWM+wWAyEmSck
+ 3tbZZdNZMJMmlJvAS1GC7dE5zwiLI70ZT/DaQhFuDySfAIwJVYH20+6+O1ww5sNncJwO
+ zpPw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUO+RAG0msEi6TGMuBT7ivDebkcarUnq5uw1H5fD+vozBCUMmOa8nwLW+5MHOZer7BEQQPV0Xx5s33j@nongnu.org
+X-Gm-Message-State: AOJu0YxpV6lKlLdzST0wwyzDp1LQg8O4IM7cWgpmFLzGlaWCgQqESuqo
+ WQonxu50g17xAoygeZcU2pjio1hwJJv+8GkV6mC/GEaEfxSHW7Q01beX6p2X/yQ=
+X-Google-Smtp-Source: AGHT+IHFDc2JYZBnpNQtHOGBmhHIsqg30RiS2RhzNzTcpqMGzECWf948NXJtfnadLdZhYgrpH7joaQ==
+X-Received: by 2002:a17:902:e804:b0:205:3e68:7359 with SMTP id
+ d9443c01a7336-20547c0cdccmr100124325ad.53.1725375094770; 
+ Tue, 03 Sep 2024 07:51:34 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20689095700sm19620765ad.19.2024.09.03.07.51.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Sep 2024 07:51:34 -0700 (PDT)
+Message-ID: <181d95aa-9a2c-465b-b549-076572db601a@linaro.org>
+Date: Tue, 3 Sep 2024 07:51:31 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/14] tcg/riscv: Implement vector cmp ops
+From: Richard Henderson <richard.henderson@linaro.org>
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
+ <20240830061607.1940-9-zhiwei_liu@linux.alibaba.com>
+ <629e9969-157e-4f58-b48f-52aea4c0c48f@linaro.org>
+Content-Language: en-US
+In-Reply-To: <629e9969-157e-4f58-b48f-52aea4c0c48f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240903143553.16877-1-philmd@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,78 +98,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 03, 2024 at 04:35:53PM +0200, Philippe Mathieu-Daudé wrote:
-> Pass the port range as argument. In order to reduce races
-> when looking for free ports, use a per-target per-process
-> base port (based on the target built-in hash).
+On 9/2/24 23:45, Richard Henderson wrote:
+> I think the first implementation should be simpler:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20240830133841.142644-33-thuth@redhat.com>
-> ---
->  tests/functional/test_vnc.py | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
+> CONST('C', TCG_CT_CONST_CMP_VI)
 > 
-> diff --git a/tests/functional/test_vnc.py b/tests/functional/test_vnc.py
-> index b769d3b268..508db0709d 100755
-> --- a/tests/functional/test_vnc.py
-> +++ b/tests/functional/test_vnc.py
-> @@ -10,6 +10,7 @@
->  # This work is licensed under the terms of the GNU GPL, version 2 or
->  # later.  See the COPYING file in the top-level directory.
->  
-> +import os
->  import socket
->  from typing import List
->  
-> @@ -18,7 +19,6 @@
->  
->  VNC_ADDR = '127.0.0.1'
->  VNC_PORT_START = 32768
-> -VNC_PORT_END = VNC_PORT_START + 1024
->  
->  
->  def check_bind(port: int) -> bool:
-> @@ -41,9 +41,10 @@ def check_connect(port: int) -> bool:
->      return True
->  
->  
-> -def find_free_ports(count: int) -> List[int]:
-> +# warning, racy function
-> +def find_free_ports(portrange, count: int) -> List[int]:
->      result = []
-> -    for port in range(VNC_PORT_START, VNC_PORT_END):
-> +    for port in portrange:
->          if check_bind(port):
->              result.append(port)
->              if len(result) >= count:
-> @@ -91,7 +92,10 @@ def test_change_password(self):
->                      password='new_password')
->  
->      def test_change_listen(self):
-> -        a, b, c = find_free_ports(3)
-> +        per_arch_port_base = abs((os.getpid() + hash(self.arch)) % (10 ** 4))
-> +        port_start = VNC_PORT_START + per_arch_port_base
-> +        port_stop = port_start + 100
-> +        a, b, c = find_free_ports(range(port_start, port_stop), 3)
->          self.assertFalse(check_connect(a))
->          self.assertFalse(check_connect(b))
->          self.assertFalse(check_connect(c))
+> tcg_target_const_match()
+> {
+>      ...
+>      if ((ct & TCG_CT_CONST_CMP_VI) &&
+>          val >= tcg_cmpcond_to_rvv_vi[cond].min &&
+>          val <= tcg_cmpcond_to_rvv_vi[cond].max) {
+>          return true;
+>      }
+> }
+> 
+>      case INDEX_op_cmp_vec:
+>          riscv_set_vec_config_vl_vece(s, type, vece);
+>          cond = args[3];
+>          if (c2) {
+>              tcg_out_opc_vi(s, tcg_cmpcond_to_rvv_vi[cond].op, a0, a1,
+>                             a2 - tcg_cmpcond_to_rvv_vi[cond].adjust);
+>          } else if (tcg_cmpcond_to_rvv_vv[cond].swap) {
+>              tcg_out_opc_vv(s, tcg_cmpcond_to_rvv_vv[cond].op, a0, a2, a1);
+>          } else {
+>              tcg_out_opc_vv(s, tcg_cmpcond_to_rvv_vv[cond].op, a0, a1, a2);
+>          }
+>          break;
+> 
+> This appears to not require any expansion in tcg_expand_vec_op at all.
 
-As your comment says, this is still racey, and its also not too
-nice to read & understand this logic. How about we just make
-test_vnc.py be serialized wrt itself ?
+I knew I should have slept on that answer.
+Of course you need expansion, because riscv cmp_vv produces a mask.
+
+However, I think we should simply model this as INDEX_op_cmpsel_vec:
+
+     case INDEX_op_cmpsel_vec:
+           riscv_set_vec_config_vl_vece(s, type, vece);
+           a3 = args[3];
+           a4 = args[4];
+           cond = args[5];
+           /* Use only vmerge_vim if possible, by inverting the test. */
+           if (const_args[4] && !const_args[3]) {
+               cond = tcg_cond_inv(cond);
+               a3 = a4;
+               a4 = args[3];
+               const_args[3] = true;
+               const_args[4] = false;
+           }
+           /* Perform the comparison into V0 mask. */
+           if (const_args[2]) {
+               tcg_out_opc_vi(s, tcg_cmpcond_to_rvv_vi[cond].op,
+                              TCG_REG_V0, a1,
+                              a2 - tcg_cmpcond_to_rvv_vi[cond].adjust);
+           } else if (tcg_cmpcond_to_rvv_vv[cond].swap) {
+               tcg_out_opc_vv(s, tcg_cmpcond_to_rvv_vv[cond].op,
+                              TCG_REG_V0, a2, a1);
+           } else {
+               tcg_out_opc_vv(s, tcg_cmpcond_to_rvv_vv[cond].op,
+                              TCG_REG_V0, a1, a2);
+           }
+           if (const_args[3]) {
+               if (const_args[4]) {
+                   tcg_out_opc_vi(s, OPC_VMV_V_I, a0, TCG_REG_V0, a4, true);
+                   a4 = a0;
+               }
+               tcg_out_opc_vim_mask(s, OPC_VMERGE_VIM, a0, a3, a4);
+           } else {
+               tcg_out_opc_vvm_mask(s, OPC_VMERGE_VVM, a0, a3, a4);
+           }
+           break;
+
+Then INDEX_op_cmp_vec should be expanded to
+
+     INDEX_op_cmpsel_vec a0, a1, a2, -1, 0, a3
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
