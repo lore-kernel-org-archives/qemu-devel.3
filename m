@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D028CD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F30FCD3448
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW5b-0001Vq-5t; Tue, 03 Sep 2024 12:09:07 -0400
+	id 1slW50-0006dz-V8; Tue, 03 Sep 2024 12:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5Y-0001JI-JN
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:04 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1slW4r-00063D-WC
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:22 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5V-0002xd-5N
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:09:04 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-374c4d4f219so1818141f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:09:00 -0700 (PDT)
+ id 1slW4p-0002mN-Hs
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:21 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42bb72a5e0bso48709835e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379739; x=1725984539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379698; x=1725984498; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QIZtZFtHVcUSbCLhBNB0yt7hebc2R/UctN0rfEP7jDs=;
- b=hc4B7HOFWw+56fhovq5yiRzOlSTcg0bbCW5RErKqU9PObiRIHlPMwZ+3pCn0kYurD9
- jl6cYenH59GWUILseRj4Wpz+rq9hai6ze3zcF2LgaXG0AYYDmylI699pAtC5lJ0mNOce
- RKgAKKAr/8dcu8ZPHxXogZmqzU9QdlaXi9oNnVcI4/FaXH8zi8MrkM+DIbRvlSUF1R4d
- ZU2u+l23prL4KEmiAi6MVy2yNvjV9oSPZuTJx75I25h58+qlvFRkMB3iGQwYROrI6ndm
- cAY722o535Eu4ka/5p43sT5dVpHLgZ6LwiimJx0kELKDCHNRjVBLC0mWX52mYt6fY08a
- 4SdQ==
+ :reply-to; bh=1hkuiM8kCwtLjA2hmy1f4xZ9hVGPuFvO8PEzKFEDgtQ=;
+ b=wlmfmf1qINVei1nNLsbxUWhVcF1Fs9aYdRCp+2H8HHkAyfVZPK/qs2ypU7zQ+Nv3sl
+ t3NOP8hELrV2h/RwBzrs2QPX1bNrfuRf1wlaIGkORpuBeMpeMVktdORjt470voZ8R/RN
+ g1IQMyCmtZ8bQgdqeTS2OnF+qWf6YkSOQ8CE2GcY+qu+IMVyamXGWAOv7hXgQHMoEoMy
+ zt4nyV9wn9Hg9IatbQ1sWFwtG4ojeKUpuC4qiW8KY+Nwu1+4q1mVI7gxzEhsnVvmqUzi
+ 2gjSIBKjCr2vZ5lVKBlfEsFEeoOlsLYEVyiPBVE/Y8wk7QPDrBRP3ERd+Qv91wXht3aj
+ 2B4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379739; x=1725984539;
+ d=1e100.net; s=20230601; t=1725379698; x=1725984498;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QIZtZFtHVcUSbCLhBNB0yt7hebc2R/UctN0rfEP7jDs=;
- b=iMRYqFDdQgaM7yc3bNjsLKKmrzbbwwJHchwdmhx8HA2oHdMgodoju6l7adS7+AacEU
- nJ7gbt1z6a/cap+k/YnJLhUshmQoKoToGyGYxmnlqvJI8bUnfXc8RlKAe+wxweIjXDwC
- SEX089kX5qoL3tDHlgOT9TYBO+NpUUSwXL3ubGJ4YUpHsbrnw0GqJniuuqk9pMABeb/o
- Ohlg0U0lxVKYyY8L3hu9EVHExSpJv8xPFk3EOcyLAK81J3IVOmtruzGsQEdh8gdK+bEU
- g4nIfKFWnakXhvwOyUbsSuKHmrIbEivbmSDGd2Fw0HQh+B/fWDd+Mk38iVV3oAgSpRLW
- pgrw==
+ bh=1hkuiM8kCwtLjA2hmy1f4xZ9hVGPuFvO8PEzKFEDgtQ=;
+ b=p4WNjIEbUkobwEr6XicqZKzSPkazYuKXiYMxZESfANJi/XmA+lVjt3KCxpS6aB/mZ1
+ PY2MubgGZI3O5GWNW2vQar6GJHlAZblA84N5fkTxHvuU7vRIFaGsNbDiMU1o7fMKb8e7
+ IrCGxlxn5pDBQLI9khiPKOI7kAhd6+wPoF9BJpJLnWeX+WO9MIQ8vPIOhzpF4+ukEJEo
+ N2+8Pj18y5clyPKhQgA1+utwa53NYXZC0TWiJRI4pWHCwmroSNsSB+20GibX5MMUN5ou
+ 7/7Lb47WVABKDtGlWph6/IzXcYLZ0Pp42FwhxRP6d4Vi5kEolQInU6fAmU+lPSylXHkI
+ oxoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHm/iAahYblfAe5FhPnvteU1U0qRKH6LTfjckNQkYbA/cMo5/rYquEY4rpdd+dFfLeWrNwLieWRPFu@nongnu.org
-X-Gm-Message-State: AOJu0Yx4tC0h+PzOGe77KhIAqqqEmCfzQCkgRwkoWRQttJfQsBElHS1r
- r2OqtkXBSeYFxb2fYL88UCvZ6r78aOdVYe2CVqv5yafbwEmZcAqc3eV2mIWePscwMcP3YgA04J5
- /
-X-Google-Smtp-Source: AGHT+IFfkMbCV7+CO1DSFSfH8+mt0XLbTsSbd05YRuSLk4EN+aXi10XS1y6sDVeMOsu5owqcJ7xmqg==
-X-Received: by 2002:adf:f784:0:b0:374:c69b:5a16 with SMTP id
- ffacd0b85a97d-374f9e47a5cmr2812336f8f.50.1725379739320; 
- Tue, 03 Sep 2024 09:08:59 -0700 (PDT)
+ AJvYcCUYDtr8Wlk4BFJoV++iaHR6E3/kEcQPX6fSCXHnJ8plKnQF+JxQPvuBpXSshOBC8l1s/Nx0BdwraxuG@nongnu.org
+X-Gm-Message-State: AOJu0YyIzaMQsH+W9ivWFq1Ua8J4dqzgDY6qZPac+VR8HfvrP6ymMAH6
+ 4qIwYPnAWT3dOTjaxjapEgifK5MBvRdmggztWn5Ngi55kq9riNFa+2glBVinbLE=
+X-Google-Smtp-Source: AGHT+IFU8w2lXOHDeUHrZSLlRWMPbfyK3n2ZSvDgLYjf92oM+rJ66zc6J4V9wuIw1ZFfqY0Q4SrwHA==
+X-Received: by 2002:a05:600c:4fd3:b0:428:3b5:816b with SMTP id
+ 5b1f17b1804b1-42bb01aa120mr127645985e9.3.1725379697985; 
+ Tue, 03 Sep 2024 09:08:17 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.58
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:58 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 44/53] hw/timer: Remove omap_gptimer
-Date: Tue,  3 Sep 2024 17:07:42 +0100
-Message-Id: <20240903160751.4100218-45-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 17/53] hw/input: Remove pxa2xx_keypad
+Date: Tue,  3 Sep 2024 17:07:15 +0100
+Message-Id: <20240903160751.4100218-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,573 +94,385 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The omap_gptimer device is only in the OMAP2 SoC, which we
-are removing.
+Remove the pxa2xx-specific pxa2xx_keypad device.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/omap.h   |   8 -
- hw/timer/omap_gptimer.c | 512 ----------------------------------------
- hw/timer/meson.build    |   1 -
- 3 files changed, 521 deletions(-)
- delete mode 100644 hw/timer/omap_gptimer.c
+ include/hw/arm/pxa.h     |  12 --
+ hw/input/pxa2xx_keypad.c | 331 ---------------------------------------
+ hw/input/meson.build     |   1 -
+ 3 files changed, 344 deletions(-)
+ delete mode 100644 hw/input/pxa2xx_keypad.c
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index 0cbbf2fecb5..cced3d28605 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -676,13 +676,6 @@ struct omap_dma_lcd_channel_s {
- # define OMAP24XX_DMA_MS		63	/* Not in OMAP2420 */
- # define OMAP24XX_DMA_EXT_DMAREQ5	64
+diff --git a/include/hw/arm/pxa.h b/include/hw/arm/pxa.h
+index cc4de0750af..40f9356b226 100644
+--- a/include/hw/arm/pxa.h
++++ b/include/hw/arm/pxa.h
+@@ -94,16 +94,4 @@ int pxa2xx_pcmcia_attach(void *opaque, PCMCIACardState *card);
+ int pxa2xx_pcmcia_detach(void *opaque);
+ void pxa2xx_pcmcia_set_irq_cb(void *opaque, qemu_irq irq, qemu_irq cd_irq);
  
--/* omap[123].c */
--/* OMAP2 gp timer */
--struct omap_gp_timer_s;
--struct omap_gp_timer_s *omap_gp_timer_init(struct omap_target_agent_s *ta,
--                qemu_irq irq, omap_clk fclk, omap_clk iclk);
--void omap_gp_timer_reset(struct omap_gp_timer_s *s);
+-/* pxa2xx_keypad.c */
+-struct  keymap {
+-    int8_t column;
+-    int8_t row;
+-};
+-typedef struct PXA2xxKeyPadState PXA2xxKeyPadState;
+-PXA2xxKeyPadState *pxa27x_keypad_init(MemoryRegion *sysmem,
+-                                      hwaddr base,
+-                                      qemu_irq irq);
+-void pxa27x_register_keypad(PXA2xxKeyPadState *kp,
+-                            const struct keymap *map, int size);
 -
- /* OMAP2 sysctimer */
- struct omap_synctimer_s;
- struct omap_synctimer_s *omap_synctimer_init(struct omap_target_agent_s *ta,
-@@ -936,7 +929,6 @@ struct omap_mpu_state_s {
-     /* OMAP2-only peripherals */
-     struct omap_l4_s *l4;
- 
--    struct omap_gp_timer_s *gptimer[12];
-     struct omap_synctimer_s *synctimer;
- 
-     struct omap_mcspi_s *mcspi[2];
-diff --git a/hw/timer/omap_gptimer.c b/hw/timer/omap_gptimer.c
+ #endif /* PXA_H */
+diff --git a/hw/input/pxa2xx_keypad.c b/hw/input/pxa2xx_keypad.c
 deleted file mode 100644
-index 34e6af7aff5..00000000000
---- a/hw/timer/omap_gptimer.c
+index 3858648d9f6..00000000000
+--- a/hw/input/pxa2xx_keypad.c
 +++ /dev/null
-@@ -1,512 +0,0 @@
+@@ -1,331 +0,0 @@
 -/*
-- * TI OMAP2 general purpose timers emulation.
+- * Intel PXA27X Keypad Controller emulation.
 - *
-- * Copyright (C) 2007-2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
+- * Copyright (c) 2007 MontaVista Software, Inc
+- * Written by Armin Kuster <akuster@kama-aina.net>
+- *              or  <Akuster@mvista.com>
 - *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) any later version of the License.
+- * This code is licensed under the GPLv2.
 - *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- * Contributions after 2012-01-13 are licensed under the terms of the
+- * GNU GPL, version 2 or (at your option) any later version.
 - */
 -
 -#include "qemu/osdep.h"
+-#include "qemu/log.h"
 -#include "hw/irq.h"
--#include "qemu/timer.h"
--#include "hw/arm/omap.h"
+-#include "migration/vmstate.h"
+-#include "hw/arm/pxa.h"
+-#include "ui/console.h"
 -
--/* GP timers */
--struct omap_gp_timer_s {
+-/*
+- * Keypad
+- */
+-#define KPC         0x00    /* Keypad Interface Control register */
+-#define KPDK        0x08    /* Keypad Interface Direct Key register */
+-#define KPREC       0x10    /* Keypad Interface Rotary Encoder register */
+-#define KPMK        0x18    /* Keypad Interface Matrix Key register */
+-#define KPAS        0x20    /* Keypad Interface Automatic Scan register */
+-#define KPASMKP0    0x28    /* Keypad Interface Automatic Scan Multiple
+-                                Key Presser register 0 */
+-#define KPASMKP1    0x30    /* Keypad Interface Automatic Scan Multiple
+-                                Key Presser register 1 */
+-#define KPASMKP2    0x38    /* Keypad Interface Automatic Scan Multiple
+-                                Key Presser register 2 */
+-#define KPASMKP3    0x40    /* Keypad Interface Automatic Scan Multiple
+-                                Key Presser register 3 */
+-#define KPKDI       0x48    /* Keypad Interface Key Debounce Interval
+-                                register */
+-
+-/* Keypad defines */
+-#define KPC_AS          (0x1 << 30)  /* Automatic Scan bit */
+-#define KPC_ASACT       (0x1 << 29)  /* Automatic Scan on Activity */
+-#define KPC_MI          (0x1 << 22)  /* Matrix interrupt bit */
+-#define KPC_IMKP        (0x1 << 21)  /* Ignore Multiple Key Press */
+-#define KPC_MS7         (0x1 << 20)  /* Matrix scan line 7 */
+-#define KPC_MS6         (0x1 << 19)  /* Matrix scan line 6 */
+-#define KPC_MS5         (0x1 << 18)  /* Matrix scan line 5 */
+-#define KPC_MS4         (0x1 << 17)  /* Matrix scan line 4 */
+-#define KPC_MS3         (0x1 << 16)  /* Matrix scan line 3 */
+-#define KPC_MS2         (0x1 << 15)  /* Matrix scan line 2 */
+-#define KPC_MS1         (0x1 << 14)  /* Matrix scan line 1 */
+-#define KPC_MS0         (0x1 << 13)  /* Matrix scan line 0 */
+-#define KPC_ME          (0x1 << 12)  /* Matrix Keypad Enable */
+-#define KPC_MIE         (0x1 << 11)  /* Matrix Interrupt Enable */
+-#define KPC_DK_DEB_SEL  (0x1 <<  9)  /* Direct Keypad Debounce Select */
+-#define KPC_DI          (0x1 <<  5)  /* Direct key interrupt bit */
+-#define KPC_RE_ZERO_DEB (0x1 <<  4)  /* Rotary Encoder Zero Debounce */
+-#define KPC_REE1        (0x1 <<  3)  /* Rotary Encoder1 Enable */
+-#define KPC_REE0        (0x1 <<  2)  /* Rotary Encoder0 Enable */
+-#define KPC_DE          (0x1 <<  1)  /* Direct Keypad Enable */
+-#define KPC_DIE         (0x1 <<  0)  /* Direct Keypad interrupt Enable */
+-
+-#define KPDK_DKP        (0x1 << 31)
+-#define KPDK_DK7        (0x1 <<  7)
+-#define KPDK_DK6        (0x1 <<  6)
+-#define KPDK_DK5        (0x1 <<  5)
+-#define KPDK_DK4        (0x1 <<  4)
+-#define KPDK_DK3        (0x1 <<  3)
+-#define KPDK_DK2        (0x1 <<  2)
+-#define KPDK_DK1        (0x1 <<  1)
+-#define KPDK_DK0        (0x1 <<  0)
+-
+-#define KPREC_OF1       (0x1 << 31)
+-#define KPREC_UF1       (0x1 << 30)
+-#define KPREC_OF0       (0x1 << 15)
+-#define KPREC_UF0       (0x1 << 14)
+-
+-#define KPMK_MKP        (0x1 << 31)
+-#define KPAS_SO         (0x1 << 31)
+-#define KPASMKPx_SO     (0x1 << 31)
+-
+-
+-#define KPASMKPx_MKC(row, col)  (1 << (row + 16 * (col % 2)))
+-
+-#define PXAKBD_MAXROW   8
+-#define PXAKBD_MAXCOL   8
+-
+-struct PXA2xxKeyPadState {
 -    MemoryRegion iomem;
--    qemu_irq irq;
--    qemu_irq wkup;
--    qemu_irq in;
--    qemu_irq out;
--    omap_clk clk;
--    QEMUTimer *timer;
--    QEMUTimer *match;
--    struct omap_target_agent_s *ta;
+-    qemu_irq    irq;
+-    const struct  keymap *map;
+-    int         pressed_cnt;
+-    int         alt_code;
 -
--    int in_val;
--    int out_val;
--    int64_t time;
--    int64_t rate;
--    int64_t ticks_per_sec;
--
--    int16_t config;
--    int status;
--    int it_ena;
--    int wu_ena;
--    int enable;
--    int inout;
--    int capt2;
--    int pt;
--    enum {
--        gpt_trigger_none, gpt_trigger_overflow, gpt_trigger_both
--    } trigger;
--    enum {
--        gpt_capture_none, gpt_capture_rising,
--        gpt_capture_falling, gpt_capture_both
--    } capture;
--    int scpwm;
--    int ce;
--    int pre;
--    int ptv;
--    int ar;
--    int st;
--    int posted;
--    uint32_t val;
--    uint32_t load_val;
--    uint32_t capture_val[2];
--    uint32_t match_val;
--    int capt_num;
--
--    uint16_t writeh;	/* LSB */
--    uint16_t readh;	/* MSB */
+-    uint32_t    kpc;
+-    uint32_t    kpdk;
+-    uint32_t    kprec;
+-    uint32_t    kpmk;
+-    uint32_t    kpas;
+-    uint32_t    kpasmkp[4];
+-    uint32_t    kpkdi;
 -};
 -
--#define GPT_TCAR_IT	(1 << 2)
--#define GPT_OVF_IT	(1 << 1)
--#define GPT_MAT_IT	(1 << 0)
--
--static inline void omap_gp_timer_intr(struct omap_gp_timer_s *timer, int it)
+-static void pxa27x_keypad_find_pressed_key(PXA2xxKeyPadState *kp, int *row, int *col)
 -{
--    if (timer->it_ena & it) {
--        if (!timer->status)
--            qemu_irq_raise(timer->irq);
--
--        timer->status |= it;
--        /* Or are the status bits set even when masked?
--         * i.e. is masking applied before or after the status register?  */
--    }
--
--    if (timer->wu_ena & it)
--        qemu_irq_pulse(timer->wkup);
--}
--
--static inline void omap_gp_timer_out(struct omap_gp_timer_s *timer, int level)
--{
--    if (!timer->inout && timer->out_val != level) {
--        timer->out_val = level;
--        qemu_set_irq(timer->out, level);
+-    int i;
+-    for (i = 0; i < 4; i++)
+-    {
+-        *col = i * 2;
+-        for (*row = 0; *row < 8; (*row)++) {
+-            if (kp->kpasmkp[i] & (1 << *row))
+-                return;
+-        }
+-        *col = i * 2 + 1;
+-        for (*row = 0; *row < 8; (*row)++) {
+-            if (kp->kpasmkp[i] & (1 << (*row + 16)))
+-                return;
+-        }
 -    }
 -}
 -
--static inline uint32_t omap_gp_timer_read(struct omap_gp_timer_s *timer)
+-static void pxa27x_keyboard_event (PXA2xxKeyPadState *kp, int keycode)
 -{
--    uint64_t distance;
+-    int row, col, rel, assert_irq = 0;
+-    uint32_t val;
 -
--    if (timer->st && timer->rate) {
--        distance = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - timer->time;
--        distance = muldiv64(distance, timer->rate, timer->ticks_per_sec);
--
--        if (distance >= 0xffffffff - timer->val)
--            return 0xffffffff;
--        else
--            return timer->val + distance;
--    } else
--        return timer->val;
--}
--
--static inline void omap_gp_timer_sync(struct omap_gp_timer_s *timer)
--{
--    if (timer->st) {
--        timer->val = omap_gp_timer_read(timer);
--        timer->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    if (keycode == 0xe0) {
+-        kp->alt_code = 1;
+-        return;
 -    }
--}
 -
--static inline void omap_gp_timer_update(struct omap_gp_timer_s *timer)
--{
--    int64_t expires, matches;
+-    if(!(kp->kpc & KPC_ME)) /* skip if not enabled */
+-        return;
 -
--    if (timer->st && timer->rate) {
--        expires = muldiv64(0x100000000ll - timer->val,
--                        timer->ticks_per_sec, timer->rate);
--        timer_mod(timer->timer, timer->time + expires);
+-    rel = (keycode & 0x80) ? 1 : 0; /* key release from qemu */
+-    keycode &= ~0x80; /* strip qemu key release bit */
+-    if (kp->alt_code) {
+-        keycode |= 0x80;
+-        kp->alt_code = 0;
+-    }
 -
--        if (timer->ce && timer->match_val >= timer->val) {
--            matches = muldiv64(timer->ticks_per_sec,
--                               timer->match_val - timer->val, timer->rate);
--            timer_mod(timer->match, timer->time + matches);
--        } else
--            timer_del(timer->match);
+-    row = kp->map[keycode].row;
+-    col = kp->map[keycode].column;
+-    if (row == -1 || col == -1) {
+-        return;
+-    }
+-
+-    val = KPASMKPx_MKC(row, col);
+-    if (rel) {
+-        if (kp->kpasmkp[col / 2] & val) {
+-            kp->kpasmkp[col / 2] &= ~val;
+-            kp->pressed_cnt--;
+-            assert_irq = 1;
+-        }
 -    } else {
--        timer_del(timer->timer);
--        timer_del(timer->match);
--        omap_gp_timer_out(timer, timer->scpwm);
+-        if (!(kp->kpasmkp[col / 2] & val)) {
+-            kp->kpasmkp[col / 2] |= val;
+-            kp->pressed_cnt++;
+-            assert_irq = 1;
+-        }
+-    }
+-    kp->kpas = ((kp->pressed_cnt & 0x1f) << 26) | (0xf << 4) | 0xf;
+-    if (kp->pressed_cnt == 1) {
+-        kp->kpas &= ~((0xf << 4) | 0xf);
+-        if (rel) {
+-            pxa27x_keypad_find_pressed_key(kp, &row, &col);
+-        }
+-        kp->kpas |= ((row & 0xf) << 4) | (col & 0xf);
+-    }
+-
+-    if (!(kp->kpc & (KPC_AS | KPC_ASACT)))
+-        assert_irq = 0;
+-
+-    if (assert_irq && (kp->kpc & KPC_MIE)) {
+-        kp->kpc |= KPC_MI;
+-        qemu_irq_raise(kp->irq);
 -    }
 -}
 -
--static inline void omap_gp_timer_trigger(struct omap_gp_timer_s *timer)
+-static uint64_t pxa2xx_keypad_read(void *opaque, hwaddr offset,
+-                                   unsigned size)
 -{
--    if (timer->pt)
--        /* TODO in overflow-and-match mode if the first event to
--         * occur is the match, don't toggle.  */
--        omap_gp_timer_out(timer, !timer->out_val);
--    else
--        /* TODO inverted pulse on timer->out_val == 1?  */
--        qemu_irq_pulse(timer->out);
--}
+-    PXA2xxKeyPadState *s = (PXA2xxKeyPadState *) opaque;
+-    uint32_t tmp;
 -
--static void omap_gp_timer_tick(void *opaque)
--{
--    struct omap_gp_timer_s *timer = opaque;
--
--    if (!timer->ar) {
--        timer->st = 0;
--        timer->val = 0;
--    } else {
--        timer->val = timer->load_val;
--        timer->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    }
--
--    if (timer->trigger == gpt_trigger_overflow ||
--                    timer->trigger == gpt_trigger_both)
--        omap_gp_timer_trigger(timer);
--
--    omap_gp_timer_intr(timer, GPT_OVF_IT);
--    omap_gp_timer_update(timer);
--}
--
--static void omap_gp_timer_match(void *opaque)
--{
--    struct omap_gp_timer_s *timer = opaque;
--
--    if (timer->trigger == gpt_trigger_both)
--        omap_gp_timer_trigger(timer);
--
--    omap_gp_timer_intr(timer, GPT_MAT_IT);
--}
--
--static void omap_gp_timer_input(void *opaque, int line, int on)
--{
--    struct omap_gp_timer_s *s = opaque;
--    int trigger;
--
--    switch (s->capture) {
+-    switch (offset) {
+-    case KPC:
+-        tmp = s->kpc;
+-        if(tmp & KPC_MI)
+-            s->kpc &= ~(KPC_MI);
+-        if(tmp & KPC_DI)
+-            s->kpc &= ~(KPC_DI);
+-        qemu_irq_lower(s->irq);
+-        return tmp;
+-    case KPDK:
+-        return s->kpdk;
+-    case KPREC:
+-        tmp = s->kprec;
+-        if(tmp & KPREC_OF1)
+-            s->kprec &= ~(KPREC_OF1);
+-        if(tmp & KPREC_UF1)
+-            s->kprec &= ~(KPREC_UF1);
+-        if(tmp & KPREC_OF0)
+-            s->kprec &= ~(KPREC_OF0);
+-        if(tmp & KPREC_UF0)
+-            s->kprec &= ~(KPREC_UF0);
+-        return tmp;
+-    case KPMK:
+-        tmp = s->kpmk;
+-        if(tmp & KPMK_MKP)
+-            s->kpmk &= ~(KPMK_MKP);
+-        return tmp;
+-    case KPAS:
+-        return s->kpas;
+-    case KPASMKP0:
+-        return s->kpasmkp[0];
+-    case KPASMKP1:
+-        return s->kpasmkp[1];
+-    case KPASMKP2:
+-        return s->kpasmkp[2];
+-    case KPASMKP3:
+-        return s->kpasmkp[3];
+-    case KPKDI:
+-        return s->kpkdi;
 -    default:
--    case gpt_capture_none:
--        trigger = 0;
--        break;
--    case gpt_capture_rising:
--        trigger = !s->in_val && on;
--        break;
--    case gpt_capture_falling:
--        trigger = s->in_val && !on;
--        break;
--    case gpt_capture_both:
--        trigger = (s->in_val == !on);
--        break;
--    }
--    s->in_val = on;
--
--    if (s->inout && trigger && s->capt_num < 2) {
--        s->capture_val[s->capt_num] = omap_gp_timer_read(s);
--
--        if (s->capt2 == s->capt_num ++)
--            omap_gp_timer_intr(s, GPT_TCAR_IT);
--    }
--}
--
--static void omap_gp_timer_clk_update(void *opaque, int line, int on)
--{
--    struct omap_gp_timer_s *timer = opaque;
--
--    omap_gp_timer_sync(timer);
--    timer->rate = on ? omap_clk_getrate(timer->clk) : 0;
--    omap_gp_timer_update(timer);
--}
--
--static void omap_gp_timer_clk_setup(struct omap_gp_timer_s *timer)
--{
--    omap_clk_adduser(timer->clk,
--                     qemu_allocate_irq(omap_gp_timer_clk_update, timer, 0));
--    timer->rate = omap_clk_getrate(timer->clk);
--}
--
--void omap_gp_timer_reset(struct omap_gp_timer_s *s)
--{
--    s->config = 0x000;
--    s->status = 0;
--    s->it_ena = 0;
--    s->wu_ena = 0;
--    s->inout = 0;
--    s->capt2 = 0;
--    s->capt_num = 0;
--    s->pt = 0;
--    s->trigger = gpt_trigger_none;
--    s->capture = gpt_capture_none;
--    s->scpwm = 0;
--    s->ce = 0;
--    s->pre = 0;
--    s->ptv = 0;
--    s->ar = 0;
--    s->st = 0;
--    s->posted = 1;
--    s->val = 0x00000000;
--    s->load_val = 0x00000000;
--    s->capture_val[0] = 0x00000000;
--    s->capture_val[1] = 0x00000000;
--    s->match_val = 0x00000000;
--    omap_gp_timer_update(s);
--}
--
--static uint32_t omap_gp_timer_readw(void *opaque, hwaddr addr)
--{
--    struct omap_gp_timer_s *s = opaque;
--
--    switch (addr) {
--    case 0x00:	/* TIDR */
--        return 0x21;
--
--    case 0x10:	/* TIOCP_CFG */
--        return s->config;
--
--    case 0x14:	/* TISTAT */
--        /* ??? When's this bit reset? */
--        return 1;						/* RESETDONE */
--
--    case 0x18:	/* TISR */
--        return s->status;
--
--    case 0x1c:	/* TIER */
--        return s->it_ena;
--
--    case 0x20:	/* TWER */
--        return s->wu_ena;
--
--    case 0x24:	/* TCLR */
--        return (s->inout << 14) |
--                (s->capt2 << 13) |
--                (s->pt << 12) |
--                (s->trigger << 10) |
--                (s->capture << 8) |
--                (s->scpwm << 7) |
--                (s->ce << 6) |
--                (s->pre << 5) |
--                (s->ptv << 2) |
--                (s->ar << 1) |
--                (s->st << 0);
--
--    case 0x28:	/* TCRR */
--        return omap_gp_timer_read(s);
--
--    case 0x2c:	/* TLDR */
--        return s->load_val;
--
--    case 0x30:	/* TTGR */
--        return 0xffffffff;
--
--    case 0x34:	/* TWPS */
--        return 0x00000000;	/* No posted writes pending.  */
--
--    case 0x38:	/* TMAR */
--        return s->match_val;
--
--    case 0x3c:	/* TCAR1 */
--        return s->capture_val[0];
--
--    case 0x40:	/* TSICR */
--        return s->posted << 2;
--
--    case 0x44:	/* TCAR2 */
--        return s->capture_val[1];
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Bad read offset 0x%"HWADDR_PRIx"\n",
+-                      __func__, offset);
 -    }
 -
--    OMAP_BAD_REG(addr);
 -    return 0;
 -}
 -
--static uint32_t omap_gp_timer_readh(void *opaque, hwaddr addr)
+-static void pxa2xx_keypad_write(void *opaque, hwaddr offset,
+-                                uint64_t value, unsigned size)
 -{
--    struct omap_gp_timer_s *s = opaque;
--    uint32_t ret;
+-    PXA2xxKeyPadState *s = (PXA2xxKeyPadState *) opaque;
 -
--    if (addr & 2)
--        return s->readh;
--    else {
--        ret = omap_gp_timer_readw(opaque, addr);
--        s->readh = ret >> 16;
--        return ret & 0xffff;
--    }
--}
--
--static void omap_gp_timer_write(void *opaque, hwaddr addr, uint32_t value)
--{
--    struct omap_gp_timer_s *s = opaque;
--
--    switch (addr) {
--    case 0x00:	/* TIDR */
--    case 0x14:	/* TISTAT */
--    case 0x34:	/* TWPS */
--    case 0x3c:	/* TCAR1 */
--    case 0x44:	/* TCAR2 */
--        OMAP_RO_REG(addr);
+-    switch (offset) {
+-    case KPC:
+-        s->kpc = value;
+-        if (s->kpc & KPC_AS) {
+-            s->kpc &= ~(KPC_AS);
+-        }
 -        break;
--
--    case 0x10:	/* TIOCP_CFG */
--        s->config = value & 0x33d;
--        if (((value >> 3) & 3) == 3)				/* IDLEMODE */
--            fprintf(stderr, "%s: illegal IDLEMODE value in TIOCP_CFG\n",
--                            __func__);
--        if (value & 2)						/* SOFTRESET */
--            omap_gp_timer_reset(s);
+-    case KPDK:
+-        s->kpdk = value;
 -        break;
--
--    case 0x18:	/* TISR */
--        if (value & GPT_TCAR_IT)
--            s->capt_num = 0;
--        if (s->status && !(s->status &= ~value))
--            qemu_irq_lower(s->irq);
+-    case KPREC:
+-        s->kprec = value;
 -        break;
--
--    case 0x1c:	/* TIER */
--        s->it_ena = value & 7;
+-    case KPMK:
+-        s->kpmk = value;
 -        break;
--
--    case 0x20:	/* TWER */
--        s->wu_ena = value & 7;
+-    case KPAS:
+-        s->kpas = value;
 -        break;
--
--    case 0x24:	/* TCLR */
--        omap_gp_timer_sync(s);
--        s->inout = (value >> 14) & 1;
--        s->capt2 = (value >> 13) & 1;
--        s->pt = (value >> 12) & 1;
--        s->trigger = (value >> 10) & 3;
--        if (s->capture == gpt_capture_none &&
--                        ((value >> 8) & 3) != gpt_capture_none)
--            s->capt_num = 0;
--        s->capture = (value >> 8) & 3;
--        s->scpwm = (value >> 7) & 1;
--        s->ce = (value >> 6) & 1;
--        s->pre = (value >> 5) & 1;
--        s->ptv = (value >> 2) & 7;
--        s->ar = (value >> 1) & 1;
--        s->st = (value >> 0) & 1;
--        if (s->inout && s->trigger != gpt_trigger_none)
--            fprintf(stderr, "%s: GP timer pin must be an output "
--                            "for this trigger mode\n", __func__);
--        if (!s->inout && s->capture != gpt_capture_none)
--            fprintf(stderr, "%s: GP timer pin must be an input "
--                            "for this capture mode\n", __func__);
--        if (s->trigger == gpt_trigger_none)
--            omap_gp_timer_out(s, s->scpwm);
--        /* TODO: make sure this doesn't overflow 32-bits */
--        s->ticks_per_sec = NANOSECONDS_PER_SECOND << (s->pre ? s->ptv + 1 : 0);
--        omap_gp_timer_update(s);
+-    case KPASMKP0:
+-        s->kpasmkp[0] = value;
 -        break;
--
--    case 0x28:	/* TCRR */
--        s->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--        s->val = value;
--        omap_gp_timer_update(s);
+-    case KPASMKP1:
+-        s->kpasmkp[1] = value;
 -        break;
--
--    case 0x2c:	/* TLDR */
--        s->load_val = value;
+-    case KPASMKP2:
+-        s->kpasmkp[2] = value;
 -        break;
--
--    case 0x30:	/* TTGR */
--        s->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--        s->val = s->load_val;
--        omap_gp_timer_update(s);
+-    case KPASMKP3:
+-        s->kpasmkp[3] = value;
 -        break;
--
--    case 0x38:	/* TMAR */
--        omap_gp_timer_sync(s);
--        s->match_val = value;
--        omap_gp_timer_update(s);
--        break;
--
--    case 0x40:	/* TSICR */
--        s->posted = (value >> 2) & 1;
--        if (value & 2)	/* How much exactly are we supposed to reset? */
--            omap_gp_timer_reset(s);
+-    case KPKDI:
+-        s->kpkdi = value;
 -        break;
 -
 -    default:
--        OMAP_BAD_REG(addr);
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Bad write offset 0x%"HWADDR_PRIx"\n",
+-                      __func__, offset);
 -    }
 -}
 -
--static void omap_gp_timer_writeh(void *opaque, hwaddr addr, uint32_t value)
--{
--    struct omap_gp_timer_s *s = opaque;
--
--    if (addr & 2)
--        omap_gp_timer_write(opaque, addr, (value << 16) | s->writeh);
--    else
--        s->writeh = (uint16_t) value;
--}
--
--static uint64_t omap_gp_timer_readfn(void *opaque, hwaddr addr,
--                                     unsigned size)
--{
--    switch (size) {
--    case 1:
--        return omap_badwidth_read32(opaque, addr);
--    case 2:
--        return omap_gp_timer_readh(opaque, addr);
--    case 4:
--        return omap_gp_timer_readw(opaque, addr);
--    default:
--        g_assert_not_reached();
--    }
--}
--
--static void omap_gp_timer_writefn(void *opaque, hwaddr addr,
--                                  uint64_t value, unsigned size)
--{
--    switch (size) {
--    case 1:
--        omap_badwidth_write32(opaque, addr, value);
--        break;
--    case 2:
--        omap_gp_timer_writeh(opaque, addr, value);
--        break;
--    case 4:
--        omap_gp_timer_write(opaque, addr, value);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
--static const MemoryRegionOps omap_gp_timer_ops = {
--    .read = omap_gp_timer_readfn,
--    .write = omap_gp_timer_writefn,
--    .valid.min_access_size = 1,
--    .valid.max_access_size = 4,
+-static const MemoryRegionOps pxa2xx_keypad_ops = {
+-    .read = pxa2xx_keypad_read,
+-    .write = pxa2xx_keypad_write,
 -    .endianness = DEVICE_NATIVE_ENDIAN,
 -};
 -
--struct omap_gp_timer_s *omap_gp_timer_init(struct omap_target_agent_s *ta,
--                qemu_irq irq, omap_clk fclk, omap_clk iclk)
+-static const VMStateDescription vmstate_pxa2xx_keypad = {
+-    .name = "pxa2xx_keypad",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(kpc, PXA2xxKeyPadState),
+-        VMSTATE_UINT32(kpdk, PXA2xxKeyPadState),
+-        VMSTATE_UINT32(kprec, PXA2xxKeyPadState),
+-        VMSTATE_UINT32(kpmk, PXA2xxKeyPadState),
+-        VMSTATE_UINT32(kpas, PXA2xxKeyPadState),
+-        VMSTATE_UINT32_ARRAY(kpasmkp, PXA2xxKeyPadState, 4),
+-        VMSTATE_UINT32(kpkdi, PXA2xxKeyPadState),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-PXA2xxKeyPadState *pxa27x_keypad_init(MemoryRegion *sysmem,
+-                                      hwaddr base,
+-                                      qemu_irq irq)
 -{
--    struct omap_gp_timer_s *s = g_new0(struct omap_gp_timer_s, 1);
+-    PXA2xxKeyPadState *s;
 -
--    s->ta = ta;
+-    s = g_new0(PXA2xxKeyPadState, 1);
 -    s->irq = irq;
--    s->clk = fclk;
--    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, omap_gp_timer_tick, s);
--    s->match = timer_new_ns(QEMU_CLOCK_VIRTUAL, omap_gp_timer_match, s);
--    s->in = qemu_allocate_irq(omap_gp_timer_input, s, 0);
--    omap_gp_timer_reset(s);
--    omap_gp_timer_clk_setup(s);
 -
--    memory_region_init_io(&s->iomem, NULL, &omap_gp_timer_ops, s, "omap.gptimer",
--                          omap_l4_region_size(ta, 0));
--    omap_l4_attach(ta, 0, &s->iomem);
+-    memory_region_init_io(&s->iomem, NULL, &pxa2xx_keypad_ops, s,
+-                          "pxa2xx-keypad", 0x00100000);
+-    memory_region_add_subregion(sysmem, base, &s->iomem);
+-
+-    vmstate_register(NULL, 0, &vmstate_pxa2xx_keypad, s);
 -
 -    return s;
 -}
-diff --git a/hw/timer/meson.build b/hw/timer/meson.build
-index 3a78636ab45..1292d9530ca 100644
---- a/hw/timer/meson.build
-+++ b/hw/timer/meson.build
-@@ -22,7 +22,6 @@ system_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gictimer.c'))
- system_ss.add(when: 'CONFIG_MSF2', if_true: files('mss-timer.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_timer.c'))
- system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_timer.c'))
--system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_gptimer.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_synctimer.c'))
- system_ss.add(when: 'CONFIG_PXA2XX_TIMER', if_true: files('pxa2xx_timer.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_systmr.c'))
+-
+-void pxa27x_register_keypad(PXA2xxKeyPadState *kp,
+-                            const struct keymap *map, int size)
+-{
+-    if(!map || size < 0x80) {
+-        fprintf(stderr, "%s - No PXA keypad map defined\n", __func__);
+-        exit(-1);
+-    }
+-
+-    kp->map = map;
+-    qemu_add_kbd_event_handler((QEMUPutKBDEvent *) pxa27x_keyboard_event, kp);
+-}
+diff --git a/hw/input/meson.build b/hw/input/meson.build
+index 07a28c2c01c..fe60b6e28fc 100644
+--- a/hw/input/meson.build
++++ b/hw/input/meson.build
+@@ -11,6 +11,5 @@ system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input.c'))
+ system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input-hid.c'))
+ system_ss.add(when: 'CONFIG_VIRTIO_INPUT_HOST', if_true: files('virtio-input-host.c'))
+ 
+-system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_keypad.c'))
+ system_ss.add(when: 'CONFIG_TSC210X', if_true: files('tsc210x.c'))
+ system_ss.add(when: 'CONFIG_LASIPS2', if_true: files('lasips2.c'))
 -- 
 2.34.1
 
