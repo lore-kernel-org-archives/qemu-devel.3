@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57FDECD3448
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F775CD379F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 16:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slW5R-0000fF-P6; Tue, 03 Sep 2024 12:08:57 -0400
+	id 1slW54-0006uE-OW; Tue, 03 Sep 2024 12:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5Q-0000Xa-0P
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:56 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1slW53-0006nI-3N
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:33 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1slW5C-0002sG-SM
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:55 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42c7b5b2d01so35257745e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:42 -0700 (PDT)
+ id 1slW4y-0002nm-Sf
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 12:08:32 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-428e1915e18so46251725e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 09:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725379721; x=1725984521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725379706; x=1725984506; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=R0zus/hmvStD9AYmM67FwIfGoLe+e4E5KWQsKxXQpy0=;
- b=uMW/jxGGe80dPtd4M2jeIvAycm5ooCA1vO/Kg9TdcW15jXkbXggPDC+sY+E564PWqt
- B2/rW6iFPQGRTx9A99JHEE2WvvfCTS6hjmb9ugvScf2//bS4T/ciKjH7fVhXq3kuD65O
- uLuh2CgAQqY8ItbCUVJBsI9BEhqweRWJRO+Tvc+w56YdsXGDVvVI8vMV5L2A2CFrl44n
- 0Ib+hh6n7eMoM5gplBwCeC+v4hIte4aToU/1M6sW0rsbDYDe54DdrhLhed7C8dx6wPIG
- VoFMx0gByUjjr1Sjm8eV6dNc7X1pR9SF56Qrh/Og4ozdN45HCa2oEaegoNm6kSSTtmtS
- T0Vw==
+ :reply-to; bh=yX4S0pP3h3jdQcEcaWDgh1yRRNrnCz47HM7ku5iBKjE=;
+ b=jFLTxEon1AGQSocWc2JjBY6vRltZSNp4MoyIniKYnlX7pzNJV3UElaYo88aoO6lTs0
+ BYHrWM27wwZbiIH9bAQSXDfjpp9JJgBSoJoBHqdZ4k4tA7Q+y6HGTda4iVsemIKnZt50
+ fHWc+rDG/j5/G7DqA1qgwNpoHn/Y5bfB3rgVs9USCPnCK9epxMiVQzxqli2z1aS+xLYi
+ OC0DbrEXQe0cF6xHAvdHJoZHWd1RXYwRMjYEj9T1fN9gy9km6X4pGimpL/+jQFedHYlW
+ ZLK6KpqMpVRVkOAbyFsadbfbTY8AjpgXaGYvqQ8UTcq2Rsn9QoMSGGlcrYyI/1NF4jPK
+ yHNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725379721; x=1725984521;
+ d=1e100.net; s=20230601; t=1725379706; x=1725984506;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R0zus/hmvStD9AYmM67FwIfGoLe+e4E5KWQsKxXQpy0=;
- b=vb39CbHfVVSrJheY9RNNEtg2NJ7/pA047Hro29+m4GFl5m1PFXonAEjJpF68HKbVqJ
- Wmq7HfR/tiZQ+s4bOgGPDGwhDYlPuY41e6WjoxWgV0gjxCr435lqeHUGfNJnAZxsYVCB
- /Fk71Ecl+3vWFRir4yOGITBcKKDWv9Db/R41XxoZh8s2u56sJgA8EeWBD/FVZA1oMfAn
- tZulnvpvxG7SHgQYkYwAjg72PSpIbUQS/nV3xx408+U5gUCScYxs1vaarFhga5kYuniA
- KzbKHPWlH5Whvw4rWFUVUoBvg8xFFfGuQRpyedAHv+lxWYz/sBGhJcsOjrClyuMVOZ5b
- AHHw==
+ bh=yX4S0pP3h3jdQcEcaWDgh1yRRNrnCz47HM7ku5iBKjE=;
+ b=Xe+wzyvYQ/mOdBmrNqQfLaqWJLbAvK2XKyFfqXzVfXxp929E91V1Y1BsVkEica/WOr
+ gHwrALiAc7ZkDr+l7Qlh2Wm/ws5DGisvlBERw8v+69enTswGxro2e3zo0x8O7Bv+t6P6
+ 6AtpfzcrLHBaetwm+kaNnjrb7RcHk6Km8szIJPmTbOvwlFkukH+lubJvT3VV0bNcieOD
+ 737mfSP9mXk673WfjLo0YGlh7VUwV87X+OBfaRqQ+4+ltdxEq+amfvzumcQ2+d6fJxIx
+ 3hdUlkbiID4IlO+K91/LatGEKr1Y9CrRpuoTjxKTQH7nPp2jJJSEKqwCA+HbtumAgYci
+ MLcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0isK4o/ofbyAI5Hbc6P2vFOtaeX6O+M0i6qubUgZPeEkZFdq371F1nlujzh22ERNKvxZ4YrHmWe/A@nongnu.org
-X-Gm-Message-State: AOJu0YyTlQpWFMuxpSIrVhtzZ8O0IzCbI2P0KH5jStkRf2X/bXRWyv+K
- UwPsRrsulqVAuCHiyKTT76C+D6UTQhqpz6tzdjT9AwgXPJuvx5BORmMRisY3GkM=
-X-Google-Smtp-Source: AGHT+IHLA82KXbz+jJZejzCXLnrg0jea+JeY1gJk1oM/yh3b8ERoUBSZKZsfeU2pzBOI6yG4zAbKBw==
-X-Received: by 2002:a05:600c:3c9f:b0:426:5b44:2be7 with SMTP id
- 5b1f17b1804b1-42bb01b5f50mr145191715e9.10.1725379720931; 
- Tue, 03 Sep 2024 09:08:40 -0700 (PDT)
+ AJvYcCUOvCPzBsl0VTjDDrSkM6vspXKmoP+d9FSZbRy99YL/3LGpCW7O9cuqBkoVHzGO4n1v27JbqEwO/RHG@nongnu.org
+X-Gm-Message-State: AOJu0YyT+s1Fz92UH6Mf2IHgx7bWN9H9YK6GNmW08BeHM7YdGc5hwYAk
+ QQfMlRtUCVD64eTCxF/CcmeDuqUN2UVNwNGNid75Zowk9IbchlWsyHZvRA9mcVAajvdVf7AU1dS
+ h
+X-Google-Smtp-Source: AGHT+IHF6u+HQJtwZdQx1xAU4hpMiVzjx1Ssb2BsoWjqAZQLpw65dqFWUFSIjJzrb4Umu0WZBXpZlg==
+X-Received: by 2002:a05:600c:3d18:b0:426:5c9b:dee6 with SMTP id
+ 5b1f17b1804b1-42c7b5d8f7fmr62584125e9.26.1725379706304; 
+ Tue, 03 Sep 2024 09:08:26 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.39
+ 5b1f17b1804b1-42bb6df1066sm175123065e9.18.2024.09.03.09.08.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 09:08:40 -0700 (PDT)
+ Tue, 03 Sep 2024 09:08:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-9.2 34/53] hw/usb: Remove MUSB USB host controller
-Date: Tue,  3 Sep 2024 17:07:32 +0100
-Message-Id: <20240903160751.4100218-35-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 18/53] hw/display: Remove pxa2xx_lcd.c
+Date: Tue,  3 Sep 2024 17:07:16 +0100
+Message-Id: <20240903160751.4100218-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,1661 +95,1502 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the MUSB USB2.0 OTG-compliant USB host controller
-device model. This was only used by the tusb6010 USB
-controller in the n800/n810 machines.
+Remove the pxa2xx-specific pxa2xx_lcd device.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/usb/hcd-musb.h |   49 --
- hw/usb/hcd-musb.c         | 1553 -------------------------------------
- hw/usb/Kconfig            |    4 -
- hw/usb/meson.build        |    1 -
- 4 files changed, 1607 deletions(-)
- delete mode 100644 include/hw/usb/hcd-musb.h
- delete mode 100644 hw/usb/hcd-musb.c
+ include/hw/arm/pxa.h    |    6 -
+ hw/display/pxa2xx_lcd.c | 1451 ---------------------------------------
+ hw/display/meson.build  |    1 -
+ 3 files changed, 1458 deletions(-)
+ delete mode 100644 hw/display/pxa2xx_lcd.c
 
-diff --git a/include/hw/usb/hcd-musb.h b/include/hw/usb/hcd-musb.h
+diff --git a/include/hw/arm/pxa.h b/include/hw/arm/pxa.h
+index 40f9356b226..ef7976e1821 100644
+--- a/include/hw/arm/pxa.h
++++ b/include/hw/arm/pxa.h
+@@ -80,12 +80,6 @@ void pxa2xx_gpio_read_notifier(DeviceState *dev, qemu_irq handler);
+ DeviceState *pxa255_dma_init(hwaddr base, qemu_irq irq);
+ DeviceState *pxa27x_dma_init(hwaddr base, qemu_irq irq);
+ 
+-/* pxa2xx_lcd.c */
+-typedef struct PXA2xxLCDState PXA2xxLCDState;
+-PXA2xxLCDState *pxa2xx_lcdc_init(MemoryRegion *sysmem,
+-                hwaddr base, qemu_irq irq);
+-void pxa2xx_lcd_vsync_notifier(PXA2xxLCDState *s, qemu_irq handler);
+-
+ /* pxa2xx_pcmcia.c */
+ #define TYPE_PXA2XX_PCMCIA "pxa2xx-pcmcia"
+ OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxPCMCIAState, PXA2XX_PCMCIA)
+diff --git a/hw/display/pxa2xx_lcd.c b/hw/display/pxa2xx_lcd.c
 deleted file mode 100644
-index 4d4b1ec0fc2..00000000000
---- a/include/hw/usb/hcd-musb.h
+index a9d0d981a08..00000000000
+--- a/hw/display/pxa2xx_lcd.c
 +++ /dev/null
-@@ -1,49 +0,0 @@
+@@ -1,1451 +0,0 @@
 -/*
-- * "Inventra" High-speed Dual-Role Controller (MUSB-HDRC), Mentor Graphics,
-- * USB2.0 OTG compliant core used in various chips.
+- * Intel XScale PXA255/270 LCDC emulation.
 - *
-- * Only host-mode and non-DMA accesses are currently supported.
-- *
-- * Copyright (C) 2008 Nokia Corporation
+- * Copyright (c) 2006 Openedhand Ltd.
 - * Written by Andrzej Zaborowski <balrog@zabor.org>
 - *
-- * SPDX-License-Identifier: GPL-2.0-or-later
+- * This code is licensed under the GPLv2.
+- *
+- * Contributions after 2012-01-13 are licensed under the terms of the
+- * GNU GPL, version 2 or (at your option) any later version.
 - */
 -
--#ifndef HW_USB_HCD_MUSB_H
--#define HW_USB_HCD_MUSB_H
--
--#include "exec/hwaddr.h"
--
--enum musb_irq_source_e {
--    musb_irq_suspend = 0,
--    musb_irq_resume,
--    musb_irq_rst_babble,
--    musb_irq_sof,
--    musb_irq_connect,
--    musb_irq_disconnect,
--    musb_irq_vbus_request,
--    musb_irq_vbus_error,
--    musb_irq_rx,
--    musb_irq_tx,
--    musb_set_vbus,
--    musb_set_session,
--    /* Add new interrupts here */
--    musb_irq_max /* total number of interrupts defined */
--};
--
--/* TODO convert hcd-musb to QOM/qdev and remove MUSBReadFunc/MUSBWriteFunc */
--typedef void MUSBWriteFunc(void *opaque, hwaddr addr, uint32_t value);
--typedef uint32_t MUSBReadFunc(void *opaque, hwaddr addr);
--extern MUSBReadFunc * const musb_read[];
--extern MUSBWriteFunc * const musb_write[];
--
--typedef struct MUSBState MUSBState;
--
--MUSBState *musb_init(DeviceState *parent_device, int gpio_base);
--void musb_reset(MUSBState *s);
--uint32_t musb_core_intr_get(MUSBState *s);
--void musb_core_intr_clear(MUSBState *s, uint32_t mask);
--void musb_set_size(MUSBState *s, int epnum, int size, int is_tx);
--
--#endif
-diff --git a/hw/usb/hcd-musb.c b/hw/usb/hcd-musb.c
-deleted file mode 100644
-index 6dca373cb1f..00000000000
---- a/hw/usb/hcd-musb.c
-+++ /dev/null
-@@ -1,1553 +0,0 @@
--/*
-- * "Inventra" High-speed Dual-Role Controller (MUSB-HDRC), Mentor Graphics,
-- * USB2.0 OTG compliant core used in various chips.
-- *
-- * Copyright (C) 2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
-- *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) version 3 of the License.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
-- *
-- * Only host-mode and non-DMA accesses are currently supported.
-- */
 -#include "qemu/osdep.h"
--#include "qemu/timer.h"
--#include "hw/usb.h"
--#include "hw/usb/hcd-musb.h"
+-#include "qemu/log.h"
 -#include "hw/irq.h"
--#include "hw/hw.h"
+-#include "migration/vmstate.h"
+-#include "ui/console.h"
+-#include "hw/arm/pxa.h"
+-#include "ui/pixel_ops.h"
+-#include "hw/boards.h"
+-/* FIXME: For graphic_rotate. Should probably be done in common code.  */
+-#include "sysemu/sysemu.h"
+-#include "framebuffer.h"
 -
--/* Common USB registers */
--#define MUSB_HDRC_FADDR         0x00    /* 8-bit */
--#define MUSB_HDRC_POWER         0x01    /* 8-bit */
+-struct DMAChannel {
+-    uint32_t branch;
+-    uint8_t up;
+-    uint8_t palette[1024];
+-    uint8_t pbuffer[1024];
+-    void (*redraw)(PXA2xxLCDState *s, hwaddr addr,
+-                   int *miny, int *maxy);
 -
--#define MUSB_HDRC_INTRTX        0x02    /* 16-bit */
--#define MUSB_HDRC_INTRRX        0x04
--#define MUSB_HDRC_INTRTXE       0x06
--#define MUSB_HDRC_INTRRXE       0x08
--#define MUSB_HDRC_INTRUSB       0x0a    /* 8 bit */
--#define MUSB_HDRC_INTRUSBE      0x0b    /* 8 bit */
--#define MUSB_HDRC_FRAME         0x0c    /* 16-bit */
--#define MUSB_HDRC_INDEX         0x0e    /* 8 bit */
--#define MUSB_HDRC_TESTMODE      0x0f    /* 8 bit */
+-    uint32_t descriptor;
+-    uint32_t source;
+-    uint32_t id;
+-    uint32_t command;
+-};
 -
--/* Per-EP registers in indexed mode */
--#define MUSB_HDRC_EP_IDX        0x10    /* 8-bit */
+-struct PXA2xxLCDState {
+-    MemoryRegion *sysmem;
+-    MemoryRegion iomem;
+-    MemoryRegionSection fbsection;
+-    qemu_irq irq;
+-    int irqlevel;
 -
--/* EP FIFOs */
--#define MUSB_HDRC_FIFO          0x20
+-    int invalidated;
+-    QemuConsole *con;
+-    int dest_width;
+-    int xres, yres;
+-    int pal_for;
+-    int transp;
+-    enum {
+-        pxa_lcdc_2bpp = 1,
+-        pxa_lcdc_4bpp = 2,
+-        pxa_lcdc_8bpp = 3,
+-        pxa_lcdc_16bpp = 4,
+-        pxa_lcdc_18bpp = 5,
+-        pxa_lcdc_18pbpp = 6,
+-        pxa_lcdc_19bpp = 7,
+-        pxa_lcdc_19pbpp = 8,
+-        pxa_lcdc_24bpp = 9,
+-        pxa_lcdc_25bpp = 10,
+-    } bpp;
 -
--/* Additional Control Registers */
--#define MUSB_HDRC_DEVCTL        0x60    /* 8 bit */
+-    uint32_t control[6];
+-    uint32_t status[2];
+-    uint32_t ovl1c[2];
+-    uint32_t ovl2c[2];
+-    uint32_t ccr;
+-    uint32_t cmdcr;
+-    uint32_t trgbr;
+-    uint32_t tcr;
+-    uint32_t liidr;
+-    uint8_t bscntr;
 -
--/* These are indexed */
--#define MUSB_HDRC_TXFIFOSZ      0x62    /* 8 bit (see masks) */
--#define MUSB_HDRC_RXFIFOSZ      0x63    /* 8 bit (see masks) */
--#define MUSB_HDRC_TXFIFOADDR    0x64    /* 16 bit offset shifted right 3 */
--#define MUSB_HDRC_RXFIFOADDR    0x66    /* 16 bit offset shifted right 3 */
+-    struct DMAChannel dma_ch[7];
 -
--/* Some more registers */
--#define MUSB_HDRC_VCTRL         0x68    /* 8 bit */
--#define MUSB_HDRC_HWVERS        0x6c    /* 8 bit */
+-    qemu_irq vsync_cb;
+-    int orientation;
+-};
 -
--/* Added in HDRC 1.9(?) & MHDRC 1.4 */
--/* ULPI pass-through */
--#define MUSB_HDRC_ULPI_VBUSCTL  0x70
--#define MUSB_HDRC_ULPI_REGDATA  0x74
--#define MUSB_HDRC_ULPI_REGADDR  0x75
--#define MUSB_HDRC_ULPI_REGCTL   0x76
+-typedef struct QEMU_PACKED {
+-    uint32_t fdaddr;
+-    uint32_t fsaddr;
+-    uint32_t fidr;
+-    uint32_t ldcmd;
+-} PXAFrameDescriptor;
 -
--/* Extended config & PHY control */
--#define MUSB_HDRC_ENDCOUNT      0x78    /* 8 bit */
--#define MUSB_HDRC_DMARAMCFG     0x79    /* 8 bit */
--#define MUSB_HDRC_PHYWAIT       0x7a    /* 8 bit */
--#define MUSB_HDRC_PHYVPLEN      0x7b    /* 8 bit */
--#define MUSB_HDRC_HS_EOF1       0x7c    /* 8 bit, units of 546.1 us */
--#define MUSB_HDRC_FS_EOF1       0x7d    /* 8 bit, units of 533.3 ns */
--#define MUSB_HDRC_LS_EOF1       0x7e    /* 8 bit, units of 1.067 us */
+-#define LCCR0   0x000   /* LCD Controller Control register 0 */
+-#define LCCR1   0x004   /* LCD Controller Control register 1 */
+-#define LCCR2   0x008   /* LCD Controller Control register 2 */
+-#define LCCR3   0x00c   /* LCD Controller Control register 3 */
+-#define LCCR4   0x010   /* LCD Controller Control register 4 */
+-#define LCCR5   0x014   /* LCD Controller Control register 5 */
 -
--/* Per-EP BUSCTL registers */
--#define MUSB_HDRC_BUSCTL        0x80
+-#define FBR0    0x020   /* DMA Channel 0 Frame Branch register */
+-#define FBR1    0x024   /* DMA Channel 1 Frame Branch register */
+-#define FBR2    0x028   /* DMA Channel 2 Frame Branch register */
+-#define FBR3    0x02c   /* DMA Channel 3 Frame Branch register */
+-#define FBR4    0x030   /* DMA Channel 4 Frame Branch register */
+-#define FBR5    0x110   /* DMA Channel 5 Frame Branch register */
+-#define FBR6    0x114   /* DMA Channel 6 Frame Branch register */
 -
--/* Per-EP registers in flat mode */
--#define MUSB_HDRC_EP            0x100
+-#define LCSR1   0x034   /* LCD Controller Status register 1 */
+-#define LCSR0   0x038   /* LCD Controller Status register 0 */
+-#define LIIDR   0x03c   /* LCD Controller Interrupt ID register */
 -
--/* offsets to registers in flat model */
--#define MUSB_HDRC_TXMAXP        0x00    /* 16 bit apparently */
--#define MUSB_HDRC_TXCSR         0x02    /* 16 bit apparently */
--#define MUSB_HDRC_CSR0          MUSB_HDRC_TXCSR         /* re-used for EP0 */
--#define MUSB_HDRC_RXMAXP        0x04    /* 16 bit apparently */
--#define MUSB_HDRC_RXCSR         0x06    /* 16 bit apparently */
--#define MUSB_HDRC_RXCOUNT       0x08    /* 16 bit apparently */
--#define MUSB_HDRC_COUNT0        MUSB_HDRC_RXCOUNT       /* re-used for EP0 */
--#define MUSB_HDRC_TXTYPE        0x0a    /* 8 bit apparently */
--#define MUSB_HDRC_TYPE0         MUSB_HDRC_TXTYPE        /* re-used for EP0 */
--#define MUSB_HDRC_TXINTERVAL    0x0b    /* 8 bit apparently */
--#define MUSB_HDRC_NAKLIMIT0     MUSB_HDRC_TXINTERVAL    /* re-used for EP0 */
--#define MUSB_HDRC_RXTYPE        0x0c    /* 8 bit apparently */
--#define MUSB_HDRC_RXINTERVAL    0x0d    /* 8 bit apparently */
--#define MUSB_HDRC_FIFOSIZE      0x0f    /* 8 bit apparently */
--#define MUSB_HDRC_CONFIGDATA    MGC_O_HDRC_FIFOSIZE     /* re-used for EP0 */
+-#define TRGBR   0x040   /* TMED RGB Seed register */
+-#define TCR     0x044   /* TMED Control register */
 -
--/* "Bus control" registers */
--#define MUSB_HDRC_TXFUNCADDR    0x00
--#define MUSB_HDRC_TXHUBADDR     0x02
--#define MUSB_HDRC_TXHUBPORT     0x03
+-#define OVL1C1  0x050   /* Overlay 1 Control register 1 */
+-#define OVL1C2  0x060   /* Overlay 1 Control register 2 */
+-#define OVL2C1  0x070   /* Overlay 2 Control register 1 */
+-#define OVL2C2  0x080   /* Overlay 2 Control register 2 */
+-#define CCR     0x090   /* Cursor Control register */
 -
--#define MUSB_HDRC_RXFUNCADDR    0x04
--#define MUSB_HDRC_RXHUBADDR     0x06
--#define MUSB_HDRC_RXHUBPORT     0x07
+-#define CMDCR   0x100   /* Command Control register */
+-#define PRSR    0x104   /* Panel Read Status register */
 -
--/*
-- * MUSBHDRC Register bit masks
-- */
+-#define PXA_LCDDMA_CHANS        7
+-#define DMA_FDADR               0x00    /* Frame Descriptor Address register */
+-#define DMA_FSADR               0x04    /* Frame Source Address register */
+-#define DMA_FIDR                0x08    /* Frame ID register */
+-#define DMA_LDCMD               0x0c    /* Command register */
 -
--/* POWER */
--#define MGC_M_POWER_ISOUPDATE           0x80
--#define MGC_M_POWER_SOFTCONN            0x40
--#define MGC_M_POWER_HSENAB              0x20
--#define MGC_M_POWER_HSMODE              0x10
--#define MGC_M_POWER_RESET               0x08
--#define MGC_M_POWER_RESUME              0x04
--#define MGC_M_POWER_SUSPENDM            0x02
--#define MGC_M_POWER_ENSUSPEND           0x01
+-/* LCD Buffer Strength Control register */
+-#define BSCNTR  0x04000054
 -
--/* INTRUSB */
--#define MGC_M_INTR_SUSPEND              0x01
--#define MGC_M_INTR_RESUME               0x02
--#define MGC_M_INTR_RESET                0x04
--#define MGC_M_INTR_BABBLE               0x04
--#define MGC_M_INTR_SOF                  0x08
--#define MGC_M_INTR_CONNECT              0x10
--#define MGC_M_INTR_DISCONNECT           0x20
--#define MGC_M_INTR_SESSREQ              0x40
--#define MGC_M_INTR_VBUSERROR            0x80    /* FOR SESSION END */
--#define MGC_M_INTR_EP0                  0x01    /* FOR EP0 INTERRUPT */
+-/* Bitfield masks */
+-#define LCCR0_ENB       (1 << 0)
+-#define LCCR0_CMS       (1 << 1)
+-#define LCCR0_SDS       (1 << 2)
+-#define LCCR0_LDM       (1 << 3)
+-#define LCCR0_SOFM0     (1 << 4)
+-#define LCCR0_IUM       (1 << 5)
+-#define LCCR0_EOFM0     (1 << 6)
+-#define LCCR0_PAS       (1 << 7)
+-#define LCCR0_DPD       (1 << 9)
+-#define LCCR0_DIS       (1 << 10)
+-#define LCCR0_QDM       (1 << 11)
+-#define LCCR0_PDD       (0xff << 12)
+-#define LCCR0_BSM0      (1 << 20)
+-#define LCCR0_OUM       (1 << 21)
+-#define LCCR0_LCDT      (1 << 22)
+-#define LCCR0_RDSTM     (1 << 23)
+-#define LCCR0_CMDIM     (1 << 24)
+-#define LCCR0_OUC       (1 << 25)
+-#define LCCR0_LDDALT    (1 << 26)
+-#define LCCR1_PPL(x)    ((x) & 0x3ff)
+-#define LCCR2_LPP(x)    ((x) & 0x3ff)
+-#define LCCR3_API       (15 << 16)
+-#define LCCR3_BPP(x)    ((((x) >> 24) & 7) | (((x) >> 26) & 8))
+-#define LCCR3_PDFOR(x)  (((x) >> 30) & 3)
+-#define LCCR4_K1(x)     (((x) >> 0) & 7)
+-#define LCCR4_K2(x)     (((x) >> 3) & 7)
+-#define LCCR4_K3(x)     (((x) >> 6) & 7)
+-#define LCCR4_PALFOR(x) (((x) >> 15) & 3)
+-#define LCCR5_SOFM(ch)  (1 << (ch - 1))
+-#define LCCR5_EOFM(ch)  (1 << (ch + 7))
+-#define LCCR5_BSM(ch)   (1 << (ch + 15))
+-#define LCCR5_IUM(ch)   (1 << (ch + 23))
+-#define OVLC1_EN        (1 << 31)
+-#define CCR_CEN         (1 << 31)
+-#define FBR_BRA         (1 << 0)
+-#define FBR_BINT        (1 << 1)
+-#define FBR_SRCADDR     (0xfffffff << 4)
+-#define LCSR0_LDD       (1 << 0)
+-#define LCSR0_SOF0      (1 << 1)
+-#define LCSR0_BER       (1 << 2)
+-#define LCSR0_ABC       (1 << 3)
+-#define LCSR0_IU0       (1 << 4)
+-#define LCSR0_IU1       (1 << 5)
+-#define LCSR0_OU        (1 << 6)
+-#define LCSR0_QD        (1 << 7)
+-#define LCSR0_EOF0      (1 << 8)
+-#define LCSR0_BS0       (1 << 9)
+-#define LCSR0_SINT      (1 << 10)
+-#define LCSR0_RDST      (1 << 11)
+-#define LCSR0_CMDINT    (1 << 12)
+-#define LCSR0_BERCH(x)  (((x) & 7) << 28)
+-#define LCSR1_SOF(ch)   (1 << (ch - 1))
+-#define LCSR1_EOF(ch)   (1 << (ch + 7))
+-#define LCSR1_BS(ch)    (1 << (ch + 15))
+-#define LCSR1_IU(ch)    (1 << (ch + 23))
+-#define LDCMD_LENGTH(x) ((x) & 0x001ffffc)
+-#define LDCMD_EOFINT    (1 << 21)
+-#define LDCMD_SOFINT    (1 << 22)
+-#define LDCMD_PAL       (1 << 26)
 -
--/* DEVCTL */
--#define MGC_M_DEVCTL_BDEVICE            0x80
--#define MGC_M_DEVCTL_FSDEV              0x40
--#define MGC_M_DEVCTL_LSDEV              0x20
--#define MGC_M_DEVCTL_VBUS               0x18
--#define MGC_S_DEVCTL_VBUS               3
--#define MGC_M_DEVCTL_HM                 0x04
--#define MGC_M_DEVCTL_HR                 0x02
--#define MGC_M_DEVCTL_SESSION            0x01
+-/* Size of a pixel in the QEMU UI output surface, in bytes */
+-#define DEST_PIXEL_WIDTH 4
 -
--/* TESTMODE */
--#define MGC_M_TEST_FORCE_HOST           0x80
--#define MGC_M_TEST_FIFO_ACCESS          0x40
--#define MGC_M_TEST_FORCE_FS             0x20
--#define MGC_M_TEST_FORCE_HS             0x10
--#define MGC_M_TEST_PACKET               0x08
--#define MGC_M_TEST_K                    0x04
--#define MGC_M_TEST_J                    0x02
--#define MGC_M_TEST_SE0_NAK              0x01
+-/* Line drawing code to handle the various possible guest pixel formats */
 -
--/* CSR0 */
--#define MGC_M_CSR0_FLUSHFIFO            0x0100
--#define MGC_M_CSR0_TXPKTRDY             0x0002
--#define MGC_M_CSR0_RXPKTRDY             0x0001
+-# define SKIP_PIXEL(to) do { to += deststep; } while (0)
+-# define COPY_PIXEL(to, from)    \
+-    do {                         \
+-        *(uint32_t *) to = from; \
+-        SKIP_PIXEL(to);          \
+-    } while (0)
 -
--/* CSR0 in Peripheral mode */
--#define MGC_M_CSR0_P_SVDSETUPEND        0x0080
--#define MGC_M_CSR0_P_SVDRXPKTRDY        0x0040
--#define MGC_M_CSR0_P_SENDSTALL          0x0020
--#define MGC_M_CSR0_P_SETUPEND           0x0010
--#define MGC_M_CSR0_P_DATAEND            0x0008
--#define MGC_M_CSR0_P_SENTSTALL          0x0004
--
--/* CSR0 in Host mode */
--#define MGC_M_CSR0_H_NO_PING            0x0800
--#define MGC_M_CSR0_H_WR_DATATOGGLE      0x0400  /* set to allow setting: */
--#define MGC_M_CSR0_H_DATATOGGLE         0x0200  /* data toggle control */
--#define MGC_M_CSR0_H_NAKTIMEOUT         0x0080
--#define MGC_M_CSR0_H_STATUSPKT          0x0040
--#define MGC_M_CSR0_H_REQPKT             0x0020
--#define MGC_M_CSR0_H_ERROR              0x0010
--#define MGC_M_CSR0_H_SETUPPKT           0x0008
--#define MGC_M_CSR0_H_RXSTALL            0x0004
--
--/* CONFIGDATA */
--#define MGC_M_CONFIGDATA_MPRXE          0x80    /* auto bulk pkt combining */
--#define MGC_M_CONFIGDATA_MPTXE          0x40    /* auto bulk pkt splitting */
--#define MGC_M_CONFIGDATA_BIGENDIAN      0x20
--#define MGC_M_CONFIGDATA_HBRXE          0x10    /* HB-ISO for RX */
--#define MGC_M_CONFIGDATA_HBTXE          0x08    /* HB-ISO for TX */
--#define MGC_M_CONFIGDATA_DYNFIFO        0x04    /* dynamic FIFO sizing */
--#define MGC_M_CONFIGDATA_SOFTCONE       0x02    /* SoftConnect */
--#define MGC_M_CONFIGDATA_UTMIDW         0x01    /* Width, 0 => 8b, 1 => 16b */
--
--/* TXCSR in Peripheral and Host mode */
--#define MGC_M_TXCSR_AUTOSET             0x8000
--#define MGC_M_TXCSR_ISO                 0x4000
--#define MGC_M_TXCSR_MODE                0x2000
--#define MGC_M_TXCSR_DMAENAB             0x1000
--#define MGC_M_TXCSR_FRCDATATOG          0x0800
--#define MGC_M_TXCSR_DMAMODE             0x0400
--#define MGC_M_TXCSR_CLRDATATOG          0x0040
--#define MGC_M_TXCSR_FLUSHFIFO           0x0008
--#define MGC_M_TXCSR_FIFONOTEMPTY        0x0002
--#define MGC_M_TXCSR_TXPKTRDY            0x0001
--
--/* TXCSR in Peripheral mode */
--#define MGC_M_TXCSR_P_INCOMPTX          0x0080
--#define MGC_M_TXCSR_P_SENTSTALL         0x0020
--#define MGC_M_TXCSR_P_SENDSTALL         0x0010
--#define MGC_M_TXCSR_P_UNDERRUN          0x0004
--
--/* TXCSR in Host mode */
--#define MGC_M_TXCSR_H_WR_DATATOGGLE     0x0200
--#define MGC_M_TXCSR_H_DATATOGGLE        0x0100
--#define MGC_M_TXCSR_H_NAKTIMEOUT        0x0080
--#define MGC_M_TXCSR_H_RXSTALL           0x0020
--#define MGC_M_TXCSR_H_ERROR             0x0004
--
--/* RXCSR in Peripheral and Host mode */
--#define MGC_M_RXCSR_AUTOCLEAR           0x8000
--#define MGC_M_RXCSR_DMAENAB             0x2000
--#define MGC_M_RXCSR_DISNYET             0x1000
--#define MGC_M_RXCSR_DMAMODE             0x0800
--#define MGC_M_RXCSR_INCOMPRX            0x0100
--#define MGC_M_RXCSR_CLRDATATOG          0x0080
--#define MGC_M_RXCSR_FLUSHFIFO           0x0010
--#define MGC_M_RXCSR_DATAERROR           0x0008
--#define MGC_M_RXCSR_FIFOFULL            0x0002
--#define MGC_M_RXCSR_RXPKTRDY            0x0001
--
--/* RXCSR in Peripheral mode */
--#define MGC_M_RXCSR_P_ISO               0x4000
--#define MGC_M_RXCSR_P_SENTSTALL         0x0040
--#define MGC_M_RXCSR_P_SENDSTALL         0x0020
--#define MGC_M_RXCSR_P_OVERRUN           0x0004
--
--/* RXCSR in Host mode */
--#define MGC_M_RXCSR_H_AUTOREQ           0x4000
--#define MGC_M_RXCSR_H_WR_DATATOGGLE     0x0400
--#define MGC_M_RXCSR_H_DATATOGGLE        0x0200
--#define MGC_M_RXCSR_H_RXSTALL           0x0040
--#define MGC_M_RXCSR_H_REQPKT            0x0020
--#define MGC_M_RXCSR_H_ERROR             0x0004
--
--/* HUBADDR */
--#define MGC_M_HUBADDR_MULTI_TT          0x80
--
--/* ULPI: Added in HDRC 1.9(?) & MHDRC 1.4 */
--#define MGC_M_ULPI_VBCTL_USEEXTVBUSIND  0x02
--#define MGC_M_ULPI_VBCTL_USEEXTVBUS     0x01
--#define MGC_M_ULPI_REGCTL_INT_ENABLE    0x08
--#define MGC_M_ULPI_REGCTL_READNOTWRITE  0x04
--#define MGC_M_ULPI_REGCTL_COMPLETE      0x02
--#define MGC_M_ULPI_REGCTL_REG           0x01
--
--/* #define MUSB_DEBUG */
--
--#ifdef MUSB_DEBUG
--#define TRACE(fmt, ...) fprintf(stderr, "%s@%d: " fmt "\n", __func__, \
--                                __LINE__, ##__VA_ARGS__)
--#else
--#define TRACE(...)
+-#if HOST_BIG_ENDIAN
+-# define SWAP_WORDS 1
 -#endif
 -
+-#define FN_2(x) FN(x + 1) FN(x)
+-#define FN_4(x) FN_2(x + 2) FN_2(x)
 -
--static void musb_attach(USBPort *port);
--static void musb_detach(USBPort *port);
--static void musb_child_detach(USBPort *port, USBDevice *child);
--static void musb_schedule_cb(USBPort *port, USBPacket *p);
--static void musb_async_cancel_device(MUSBState *s, USBDevice *dev);
--
--static USBPortOps musb_port_ops = {
--    .attach = musb_attach,
--    .detach = musb_detach,
--    .child_detach = musb_child_detach,
--    .complete = musb_schedule_cb,
--};
--
--static USBBusOps musb_bus_ops = {
--};
--
--typedef struct MUSBPacket MUSBPacket;
--typedef struct MUSBEndPoint MUSBEndPoint;
--
--struct MUSBPacket {
--    USBPacket p;
--    MUSBEndPoint *ep;
--    int dir;
--};
--
--struct MUSBEndPoint {
--    uint16_t faddr[2];
--    uint8_t haddr[2];
--    uint8_t hport[2];
--    uint16_t csr[2];
--    uint16_t maxp[2];
--    uint16_t rxcount;
--    uint8_t type[2];
--    uint8_t interval[2];
--    uint8_t config;
--    uint8_t fifosize;
--    int timeout[2];     /* Always in microframes */
--
--    uint8_t *buf[2];
--    int fifolen[2];
--    int fifostart[2];
--    int fifoaddr[2];
--    MUSBPacket packey[2];
--    int status[2];
--    int ext_size[2];
--
--    /* For callbacks' use */
--    int epnum;
--    int interrupt[2];
--    MUSBState *musb;
--    USBCallback *delayed_cb[2];
--    QEMUTimer *intv_timer[2];
--};
--
--struct MUSBState {
--    qemu_irq irqs[musb_irq_max];
--    USBBus bus;
--    USBPort port;
--
--    int idx;
--    uint8_t devctl;
--    uint8_t power;
--    uint8_t faddr;
--
--    uint8_t intr;
--    uint8_t mask;
--    uint16_t tx_intr;
--    uint16_t tx_mask;
--    uint16_t rx_intr;
--    uint16_t rx_mask;
--
--    int setup_len;
--    int session;
--
--    uint8_t buf[0x8000];
--
--        /* Duplicating the world since 2008!...  probably we should have 32
--         * logical, single endpoints instead.  */
--    MUSBEndPoint ep[16];
--};
--
--void musb_reset(MUSBState *s)
+-static void pxa2xx_draw_line2(void *opaque, uint8_t *dest, const uint8_t *src,
+-                              int width, int deststep)
 -{
--    int i;
--
--    s->faddr = 0x00;
--    s->devctl = 0;
--    s->power = MGC_M_POWER_HSENAB;
--    s->tx_intr = 0x0000;
--    s->rx_intr = 0x0000;
--    s->tx_mask = 0xffff;
--    s->rx_mask = 0xffff;
--    s->intr = 0x00;
--    s->mask = 0x06;
--    s->idx = 0;
--
--    s->setup_len = 0;
--    s->session = 0;
--    memset(s->buf, 0, sizeof(s->buf));
--
--    /* TODO: _DW */
--    s->ep[0].config = MGC_M_CONFIGDATA_SOFTCONE | MGC_M_CONFIGDATA_DYNFIFO;
--    for (i = 0; i < 16; i ++) {
--        s->ep[i].fifosize = 64;
--        s->ep[i].maxp[0] = 0x40;
--        s->ep[i].maxp[1] = 0x40;
--        s->ep[i].musb = s;
--        s->ep[i].epnum = i;
--        usb_packet_init(&s->ep[i].packey[0].p);
--        usb_packet_init(&s->ep[i].packey[1].p);
+-    uint32_t *palette = opaque;
+-    uint32_t data;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#define FN(x) COPY_PIXEL(dest, palette[(data >> ((x) * 2)) & 3]);
+-#ifdef SWAP_WORDS
+-        FN_4(12)
+-        FN_4(8)
+-        FN_4(4)
+-        FN_4(0)
+-#else
+-        FN_4(0)
+-        FN_4(4)
+-        FN_4(8)
+-        FN_4(12)
+-#endif
+-#undef FN
+-        width -= 16;
+-        src += 4;
 -    }
 -}
 -
--struct MUSBState *musb_init(DeviceState *parent_device, int gpio_base)
+-static void pxa2xx_draw_line4(void *opaque, uint8_t *dest, const uint8_t *src,
+-                              int width, int deststep)
 -{
--    MUSBState *s = g_malloc0(sizeof(*s));
--    int i;
+-    uint32_t *palette = opaque;
+-    uint32_t data;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#define FN(x) COPY_PIXEL(dest, palette[(data >> ((x) * 4)) & 0xf]);
+-#ifdef SWAP_WORDS
+-        FN_2(6)
+-        FN_2(4)
+-        FN_2(2)
+-        FN_2(0)
+-#else
+-        FN_2(0)
+-        FN_2(2)
+-        FN_2(4)
+-        FN_2(6)
+-#endif
+-#undef FN
+-        width -= 8;
+-        src += 4;
+-    }
+-}
 -
--    for (i = 0; i < musb_irq_max; i++) {
--        s->irqs[i] = qdev_get_gpio_in(parent_device, gpio_base + i);
+-static void pxa2xx_draw_line8(void *opaque, uint8_t *dest, const uint8_t *src,
+-                              int width, int deststep)
+-{
+-    uint32_t *palette = opaque;
+-    uint32_t data;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#define FN(x) COPY_PIXEL(dest, palette[(data >> (x)) & 0xff]);
+-#ifdef SWAP_WORDS
+-        FN(24)
+-        FN(16)
+-        FN(8)
+-        FN(0)
+-#else
+-        FN(0)
+-        FN(8)
+-        FN(16)
+-        FN(24)
+-#endif
+-#undef FN
+-        width -= 4;
+-        src += 4;
+-    }
+-}
+-
+-static void pxa2xx_draw_line16(void *opaque, uint8_t *dest, const uint8_t *src,
+-                               int width, int deststep)
+-{
+-    uint32_t data;
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#ifdef SWAP_WORDS
+-        data = bswap32(data);
+-#endif
+-        b = (data & 0x1f) << 3;
+-        data >>= 5;
+-        g = (data & 0x3f) << 2;
+-        data >>= 6;
+-        r = (data & 0x1f) << 3;
+-        data >>= 5;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        b = (data & 0x1f) << 3;
+-        data >>= 5;
+-        g = (data & 0x3f) << 2;
+-        data >>= 6;
+-        r = (data & 0x1f) << 3;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        width -= 2;
+-        src += 4;
+-    }
+-}
+-
+-static void pxa2xx_draw_line16t(void *opaque, uint8_t *dest, const uint8_t *src,
+-                                int width, int deststep)
+-{
+-    uint32_t data;
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#ifdef SWAP_WORDS
+-        data = bswap32(data);
+-#endif
+-        b = (data & 0x1f) << 3;
+-        data >>= 5;
+-        g = (data & 0x1f) << 3;
+-        data >>= 5;
+-        r = (data & 0x1f) << 3;
+-        data >>= 5;
+-        if (data & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        data >>= 1;
+-        b = (data & 0x1f) << 3;
+-        data >>= 5;
+-        g = (data & 0x1f) << 3;
+-        data >>= 5;
+-        r = (data & 0x1f) << 3;
+-        data >>= 5;
+-        if (data & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        width -= 2;
+-        src += 4;
+-    }
+-}
+-
+-static void pxa2xx_draw_line18(void *opaque, uint8_t *dest, const uint8_t *src,
+-                               int width, int deststep)
+-{
+-    uint32_t data;
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#ifdef SWAP_WORDS
+-        data = bswap32(data);
+-#endif
+-        b = (data & 0x3f) << 2;
+-        data >>= 6;
+-        g = (data & 0x3f) << 2;
+-        data >>= 6;
+-        r = (data & 0x3f) << 2;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        width -= 1;
+-        src += 4;
+-    }
+-}
+-
+-/* The wicked packed format */
+-static void pxa2xx_draw_line18p(void *opaque, uint8_t *dest, const uint8_t *src,
+-                                int width, int deststep)
+-{
+-    uint32_t data[3];
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data[0] = *(uint32_t *) src;
+-        src += 4;
+-        data[1] = *(uint32_t *) src;
+-        src += 4;
+-        data[2] = *(uint32_t *) src;
+-        src += 4;
+-#ifdef SWAP_WORDS
+-        data[0] = bswap32(data[0]);
+-        data[1] = bswap32(data[1]);
+-        data[2] = bswap32(data[2]);
+-#endif
+-        b = (data[0] & 0x3f) << 2;
+-        data[0] >>= 6;
+-        g = (data[0] & 0x3f) << 2;
+-        data[0] >>= 6;
+-        r = (data[0] & 0x3f) << 2;
+-        data[0] >>= 12;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        b = (data[0] & 0x3f) << 2;
+-        data[0] >>= 6;
+-        g = ((data[1] & 0xf) << 4) | (data[0] << 2);
+-        data[1] >>= 4;
+-        r = (data[1] & 0x3f) << 2;
+-        data[1] >>= 12;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        b = (data[1] & 0x3f) << 2;
+-        data[1] >>= 6;
+-        g = (data[1] & 0x3f) << 2;
+-        data[1] >>= 6;
+-        r = ((data[2] & 0x3) << 6) | (data[1] << 2);
+-        data[2] >>= 8;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        b = (data[2] & 0x3f) << 2;
+-        data[2] >>= 6;
+-        g = (data[2] & 0x3f) << 2;
+-        data[2] >>= 6;
+-        r = data[2] << 2;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        width -= 4;
+-    }
+-}
+-
+-static void pxa2xx_draw_line19(void *opaque, uint8_t *dest, const uint8_t *src,
+-                               int width, int deststep)
+-{
+-    uint32_t data;
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#ifdef SWAP_WORDS
+-        data = bswap32(data);
+-#endif
+-        b = (data & 0x3f) << 2;
+-        data >>= 6;
+-        g = (data & 0x3f) << 2;
+-        data >>= 6;
+-        r = (data & 0x3f) << 2;
+-        data >>= 6;
+-        if (data & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        width -= 1;
+-        src += 4;
+-    }
+-}
+-
+-/* The wicked packed format */
+-static void pxa2xx_draw_line19p(void *opaque, uint8_t *dest, const uint8_t *src,
+-                                int width, int deststep)
+-{
+-    uint32_t data[3];
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data[0] = *(uint32_t *) src;
+-        src += 4;
+-        data[1] = *(uint32_t *) src;
+-        src += 4;
+-        data[2] = *(uint32_t *) src;
+-        src += 4;
+-# ifdef SWAP_WORDS
+-        data[0] = bswap32(data[0]);
+-        data[1] = bswap32(data[1]);
+-        data[2] = bswap32(data[2]);
+-# endif
+-        b = (data[0] & 0x3f) << 2;
+-        data[0] >>= 6;
+-        g = (data[0] & 0x3f) << 2;
+-        data[0] >>= 6;
+-        r = (data[0] & 0x3f) << 2;
+-        data[0] >>= 6;
+-        if (data[0] & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        data[0] >>= 6;
+-        b = (data[0] & 0x3f) << 2;
+-        data[0] >>= 6;
+-        g = ((data[1] & 0xf) << 4) | (data[0] << 2);
+-        data[1] >>= 4;
+-        r = (data[1] & 0x3f) << 2;
+-        data[1] >>= 6;
+-        if (data[1] & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        data[1] >>= 6;
+-        b = (data[1] & 0x3f) << 2;
+-        data[1] >>= 6;
+-        g = (data[1] & 0x3f) << 2;
+-        data[1] >>= 6;
+-        r = ((data[2] & 0x3) << 6) | (data[1] << 2);
+-        data[2] >>= 2;
+-        if (data[2] & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        data[2] >>= 6;
+-        b = (data[2] & 0x3f) << 2;
+-        data[2] >>= 6;
+-        g = (data[2] & 0x3f) << 2;
+-        data[2] >>= 6;
+-        r = data[2] << 2;
+-        data[2] >>= 6;
+-        if (data[2] & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        width -= 4;
+-    }
+-}
+-
+-static void pxa2xx_draw_line24(void *opaque, uint8_t *dest, const uint8_t *src,
+-                               int width, int deststep)
+-{
+-    uint32_t data;
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#ifdef SWAP_WORDS
+-        data = bswap32(data);
+-#endif
+-        b = data & 0xff;
+-        data >>= 8;
+-        g = data & 0xff;
+-        data >>= 8;
+-        r = data & 0xff;
+-        COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        width -= 1;
+-        src += 4;
+-    }
+-}
+-
+-static void pxa2xx_draw_line24t(void *opaque, uint8_t *dest, const uint8_t *src,
+-                                int width, int deststep)
+-{
+-    uint32_t data;
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#ifdef SWAP_WORDS
+-        data = bswap32(data);
+-#endif
+-        b = (data & 0x7f) << 1;
+-        data >>= 7;
+-        g = data & 0xff;
+-        data >>= 8;
+-        r = data & 0xff;
+-        data >>= 8;
+-        if (data & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        width -= 1;
+-        src += 4;
+-    }
+-}
+-
+-static void pxa2xx_draw_line25(void *opaque, uint8_t *dest, const uint8_t *src,
+-                               int width, int deststep)
+-{
+-    uint32_t data;
+-    unsigned int r, g, b;
+-    while (width > 0) {
+-        data = *(uint32_t *) src;
+-#ifdef SWAP_WORDS
+-        data = bswap32(data);
+-#endif
+-        b = data & 0xff;
+-        data >>= 8;
+-        g = data & 0xff;
+-        data >>= 8;
+-        r = data & 0xff;
+-        data >>= 8;
+-        if (data & 1) {
+-            SKIP_PIXEL(dest);
+-        } else {
+-            COPY_PIXEL(dest, rgb_to_pixel32(r, g, b));
+-        }
+-        width -= 1;
+-        src += 4;
+-    }
+-}
+-
+-/* Overlay planes disabled, no transparency */
+-static drawfn pxa2xx_draw_fn_32[16] = {
+-    [0 ... 0xf]       = NULL,
+-    [pxa_lcdc_2bpp]   = pxa2xx_draw_line2,
+-    [pxa_lcdc_4bpp]   = pxa2xx_draw_line4,
+-    [pxa_lcdc_8bpp]   = pxa2xx_draw_line8,
+-    [pxa_lcdc_16bpp]  = pxa2xx_draw_line16,
+-    [pxa_lcdc_18bpp]  = pxa2xx_draw_line18,
+-    [pxa_lcdc_18pbpp] = pxa2xx_draw_line18p,
+-    [pxa_lcdc_24bpp]  = pxa2xx_draw_line24,
+-};
+-
+-/* Overlay planes enabled, transparency used */
+-static drawfn pxa2xx_draw_fn_32t[16] = {
+-    [0 ... 0xf]       = NULL,
+-    [pxa_lcdc_4bpp]   = pxa2xx_draw_line4,
+-    [pxa_lcdc_8bpp]   = pxa2xx_draw_line8,
+-    [pxa_lcdc_16bpp]  = pxa2xx_draw_line16t,
+-    [pxa_lcdc_19bpp]  = pxa2xx_draw_line19,
+-    [pxa_lcdc_19pbpp] = pxa2xx_draw_line19p,
+-    [pxa_lcdc_24bpp]  = pxa2xx_draw_line24t,
+-    [pxa_lcdc_25bpp]  = pxa2xx_draw_line25,
+-};
+-
+-#undef COPY_PIXEL
+-#undef SKIP_PIXEL
+-
+-#ifdef SWAP_WORDS
+-# undef SWAP_WORDS
+-#endif
+-
+-/* Route internal interrupt lines to the global IC */
+-static void pxa2xx_lcdc_int_update(PXA2xxLCDState *s)
+-{
+-    int level = 0;
+-    level |= (s->status[0] & LCSR0_LDD)    && !(s->control[0] & LCCR0_LDM);
+-    level |= (s->status[0] & LCSR0_SOF0)   && !(s->control[0] & LCCR0_SOFM0);
+-    level |= (s->status[0] & LCSR0_IU0)    && !(s->control[0] & LCCR0_IUM);
+-    level |= (s->status[0] & LCSR0_IU1)    && !(s->control[5] & LCCR5_IUM(1));
+-    level |= (s->status[0] & LCSR0_OU)     && !(s->control[0] & LCCR0_OUM);
+-    level |= (s->status[0] & LCSR0_QD)     && !(s->control[0] & LCCR0_QDM);
+-    level |= (s->status[0] & LCSR0_EOF0)   && !(s->control[0] & LCCR0_EOFM0);
+-    level |= (s->status[0] & LCSR0_BS0)    && !(s->control[0] & LCCR0_BSM0);
+-    level |= (s->status[0] & LCSR0_RDST)   && !(s->control[0] & LCCR0_RDSTM);
+-    level |= (s->status[0] & LCSR0_CMDINT) && !(s->control[0] & LCCR0_CMDIM);
+-    level |= (s->status[1] & ~s->control[5]);
+-
+-    qemu_set_irq(s->irq, !!level);
+-    s->irqlevel = level;
+-}
+-
+-/* Set Branch Status interrupt high and poke associated registers */
+-static inline void pxa2xx_dma_bs_set(PXA2xxLCDState *s, int ch)
+-{
+-    int unmasked;
+-    if (ch == 0) {
+-        s->status[0] |= LCSR0_BS0;
+-        unmasked = !(s->control[0] & LCCR0_BSM0);
+-    } else {
+-        s->status[1] |= LCSR1_BS(ch);
+-        unmasked = !(s->control[5] & LCCR5_BSM(ch));
 -    }
 -
--    musb_reset(s);
+-    if (unmasked) {
+-        if (s->irqlevel)
+-            s->status[0] |= LCSR0_SINT;
+-        else
+-            s->liidr = s->dma_ch[ch].id;
+-    }
+-}
 -
--    usb_bus_new(&s->bus, sizeof(s->bus), &musb_bus_ops, parent_device);
--    usb_register_port(&s->bus, &s->port, s, 0, &musb_port_ops,
--                      USB_SPEED_MASK_LOW | USB_SPEED_MASK_FULL);
+-/* Set Start Of Frame Status interrupt high and poke associated registers */
+-static inline void pxa2xx_dma_sof_set(PXA2xxLCDState *s, int ch)
+-{
+-    int unmasked;
+-    if (!(s->dma_ch[ch].command & LDCMD_SOFINT))
+-        return;
+-
+-    if (ch == 0) {
+-        s->status[0] |= LCSR0_SOF0;
+-        unmasked = !(s->control[0] & LCCR0_SOFM0);
+-    } else {
+-        s->status[1] |= LCSR1_SOF(ch);
+-        unmasked = !(s->control[5] & LCCR5_SOFM(ch));
+-    }
+-
+-    if (unmasked) {
+-        if (s->irqlevel)
+-            s->status[0] |= LCSR0_SINT;
+-        else
+-            s->liidr = s->dma_ch[ch].id;
+-    }
+-}
+-
+-/* Set End Of Frame Status interrupt high and poke associated registers */
+-static inline void pxa2xx_dma_eof_set(PXA2xxLCDState *s, int ch)
+-{
+-    int unmasked;
+-    if (!(s->dma_ch[ch].command & LDCMD_EOFINT))
+-        return;
+-
+-    if (ch == 0) {
+-        s->status[0] |= LCSR0_EOF0;
+-        unmasked = !(s->control[0] & LCCR0_EOFM0);
+-    } else {
+-        s->status[1] |= LCSR1_EOF(ch);
+-        unmasked = !(s->control[5] & LCCR5_EOFM(ch));
+-    }
+-
+-    if (unmasked) {
+-        if (s->irqlevel)
+-            s->status[0] |= LCSR0_SINT;
+-        else
+-            s->liidr = s->dma_ch[ch].id;
+-    }
+-}
+-
+-/* Set Bus Error Status interrupt high and poke associated registers */
+-static inline void pxa2xx_dma_ber_set(PXA2xxLCDState *s, int ch)
+-{
+-    s->status[0] |= LCSR0_BERCH(ch) | LCSR0_BER;
+-    if (s->irqlevel)
+-        s->status[0] |= LCSR0_SINT;
+-    else
+-        s->liidr = s->dma_ch[ch].id;
+-}
+-
+-/* Load new Frame Descriptors from DMA */
+-static void pxa2xx_descriptor_load(PXA2xxLCDState *s)
+-{
+-    PXAFrameDescriptor desc;
+-    hwaddr descptr;
+-    int i;
+-
+-    for (i = 0; i < PXA_LCDDMA_CHANS; i ++) {
+-        s->dma_ch[i].source = 0;
+-
+-        if (!s->dma_ch[i].up)
+-            continue;
+-
+-        if (s->dma_ch[i].branch & FBR_BRA) {
+-            descptr = s->dma_ch[i].branch & FBR_SRCADDR;
+-            if (s->dma_ch[i].branch & FBR_BINT)
+-                pxa2xx_dma_bs_set(s, i);
+-            s->dma_ch[i].branch &= ~FBR_BRA;
+-        } else
+-            descptr = s->dma_ch[i].descriptor;
+-
+-        if (!((descptr >= PXA2XX_SDRAM_BASE && descptr +
+-                 sizeof(desc) <= PXA2XX_SDRAM_BASE + current_machine->ram_size) ||
+-                (descptr >= PXA2XX_INTERNAL_BASE && descptr + sizeof(desc) <=
+-                 PXA2XX_INTERNAL_BASE + PXA2XX_INTERNAL_SIZE))) {
+-            continue;
+-        }
+-
+-        cpu_physical_memory_read(descptr, &desc, sizeof(desc));
+-        s->dma_ch[i].descriptor = le32_to_cpu(desc.fdaddr);
+-        s->dma_ch[i].source = le32_to_cpu(desc.fsaddr);
+-        s->dma_ch[i].id = le32_to_cpu(desc.fidr);
+-        s->dma_ch[i].command = le32_to_cpu(desc.ldcmd);
+-    }
+-}
+-
+-static uint64_t pxa2xx_lcdc_read(void *opaque, hwaddr offset,
+-                                 unsigned size)
+-{
+-    PXA2xxLCDState *s = (PXA2xxLCDState *) opaque;
+-    int ch;
+-
+-    switch (offset) {
+-    case LCCR0:
+-        return s->control[0];
+-    case LCCR1:
+-        return s->control[1];
+-    case LCCR2:
+-        return s->control[2];
+-    case LCCR3:
+-        return s->control[3];
+-    case LCCR4:
+-        return s->control[4];
+-    case LCCR5:
+-        return s->control[5];
+-
+-    case OVL1C1:
+-        return s->ovl1c[0];
+-    case OVL1C2:
+-        return s->ovl1c[1];
+-    case OVL2C1:
+-        return s->ovl2c[0];
+-    case OVL2C2:
+-        return s->ovl2c[1];
+-
+-    case CCR:
+-        return s->ccr;
+-
+-    case CMDCR:
+-        return s->cmdcr;
+-
+-    case TRGBR:
+-        return s->trgbr;
+-    case TCR:
+-        return s->tcr;
+-
+-    case 0x200 ... 0x1000:      /* DMA per-channel registers */
+-        ch = (offset - 0x200) >> 4;
+-        if (!(ch >= 0 && ch < PXA_LCDDMA_CHANS))
+-            goto fail;
+-
+-        switch (offset & 0xf) {
+-        case DMA_FDADR:
+-            return s->dma_ch[ch].descriptor;
+-        case DMA_FSADR:
+-            return s->dma_ch[ch].source;
+-        case DMA_FIDR:
+-            return s->dma_ch[ch].id;
+-        case DMA_LDCMD:
+-            return s->dma_ch[ch].command;
+-        default:
+-            goto fail;
+-        }
+-
+-    case FBR0:
+-        return s->dma_ch[0].branch;
+-    case FBR1:
+-        return s->dma_ch[1].branch;
+-    case FBR2:
+-        return s->dma_ch[2].branch;
+-    case FBR3:
+-        return s->dma_ch[3].branch;
+-    case FBR4:
+-        return s->dma_ch[4].branch;
+-    case FBR5:
+-        return s->dma_ch[5].branch;
+-    case FBR6:
+-        return s->dma_ch[6].branch;
+-
+-    case BSCNTR:
+-        return s->bscntr;
+-
+-    case PRSR:
+-        return 0;
+-
+-    case LCSR0:
+-        return s->status[0];
+-    case LCSR1:
+-        return s->status[1];
+-    case LIIDR:
+-        return s->liidr;
+-
+-    default:
+-    fail:
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
+-                      __func__, offset);
+-    }
+-
+-    return 0;
+-}
+-
+-static void pxa2xx_lcdc_write(void *opaque, hwaddr offset,
+-                              uint64_t value, unsigned size)
+-{
+-    PXA2xxLCDState *s = (PXA2xxLCDState *) opaque;
+-    int ch;
+-
+-    switch (offset) {
+-    case LCCR0:
+-        /* ACK Quick Disable done */
+-        if ((s->control[0] & LCCR0_ENB) && !(value & LCCR0_ENB))
+-            s->status[0] |= LCSR0_QD;
+-
+-        if (!(s->control[0] & LCCR0_LCDT) && (value & LCCR0_LCDT)) {
+-            qemu_log_mask(LOG_UNIMP,
+-                          "%s: internal frame buffer unsupported\n", __func__);
+-        }
+-        if ((s->control[3] & LCCR3_API) &&
+-                (value & LCCR0_ENB) && !(value & LCCR0_LCDT))
+-            s->status[0] |= LCSR0_ABC;
+-
+-        s->control[0] = value & 0x07ffffff;
+-        pxa2xx_lcdc_int_update(s);
+-
+-        s->dma_ch[0].up = !!(value & LCCR0_ENB);
+-        s->dma_ch[1].up = (s->ovl1c[0] & OVLC1_EN) || (value & LCCR0_SDS);
+-        break;
+-
+-    case LCCR1:
+-        s->control[1] = value;
+-        break;
+-
+-    case LCCR2:
+-        s->control[2] = value;
+-        break;
+-
+-    case LCCR3:
+-        s->control[3] = value & 0xefffffff;
+-        s->bpp = LCCR3_BPP(value);
+-        break;
+-
+-    case LCCR4:
+-        s->control[4] = value & 0x83ff81ff;
+-        break;
+-
+-    case LCCR5:
+-        s->control[5] = value & 0x3f3f3f3f;
+-        break;
+-
+-    case OVL1C1:
+-        if (!(s->ovl1c[0] & OVLC1_EN) && (value & OVLC1_EN)) {
+-            qemu_log_mask(LOG_UNIMP, "%s: Overlay 1 not supported\n", __func__);
+-        }
+-        s->ovl1c[0] = value & 0x80ffffff;
+-        s->dma_ch[1].up = (value & OVLC1_EN) || (s->control[0] & LCCR0_SDS);
+-        break;
+-
+-    case OVL1C2:
+-        s->ovl1c[1] = value & 0x000fffff;
+-        break;
+-
+-    case OVL2C1:
+-        if (!(s->ovl2c[0] & OVLC1_EN) && (value & OVLC1_EN)) {
+-            qemu_log_mask(LOG_UNIMP, "%s: Overlay 2 not supported\n", __func__);
+-        }
+-        s->ovl2c[0] = value & 0x80ffffff;
+-        s->dma_ch[2].up = !!(value & OVLC1_EN);
+-        s->dma_ch[3].up = !!(value & OVLC1_EN);
+-        s->dma_ch[4].up = !!(value & OVLC1_EN);
+-        break;
+-
+-    case OVL2C2:
+-        s->ovl2c[1] = value & 0x007fffff;
+-        break;
+-
+-    case CCR:
+-        if (!(s->ccr & CCR_CEN) && (value & CCR_CEN)) {
+-            qemu_log_mask(LOG_UNIMP,
+-                          "%s: Hardware cursor unimplemented\n", __func__);
+-        }
+-        s->ccr = value & 0x81ffffe7;
+-        s->dma_ch[5].up = !!(value & CCR_CEN);
+-        break;
+-
+-    case CMDCR:
+-        s->cmdcr = value & 0xff;
+-        break;
+-
+-    case TRGBR:
+-        s->trgbr = value & 0x00ffffff;
+-        break;
+-
+-    case TCR:
+-        s->tcr = value & 0x7fff;
+-        break;
+-
+-    case 0x200 ... 0x1000:      /* DMA per-channel registers */
+-        ch = (offset - 0x200) >> 4;
+-        if (!(ch >= 0 && ch < PXA_LCDDMA_CHANS))
+-            goto fail;
+-
+-        switch (offset & 0xf) {
+-        case DMA_FDADR:
+-            s->dma_ch[ch].descriptor = value & 0xfffffff0;
+-            break;
+-
+-        default:
+-            goto fail;
+-        }
+-        break;
+-
+-    case FBR0:
+-        s->dma_ch[0].branch = value & 0xfffffff3;
+-        break;
+-    case FBR1:
+-        s->dma_ch[1].branch = value & 0xfffffff3;
+-        break;
+-    case FBR2:
+-        s->dma_ch[2].branch = value & 0xfffffff3;
+-        break;
+-    case FBR3:
+-        s->dma_ch[3].branch = value & 0xfffffff3;
+-        break;
+-    case FBR4:
+-        s->dma_ch[4].branch = value & 0xfffffff3;
+-        break;
+-    case FBR5:
+-        s->dma_ch[5].branch = value & 0xfffffff3;
+-        break;
+-    case FBR6:
+-        s->dma_ch[6].branch = value & 0xfffffff3;
+-        break;
+-
+-    case BSCNTR:
+-        s->bscntr = value & 0xf;
+-        break;
+-
+-    case PRSR:
+-        break;
+-
+-    case LCSR0:
+-        s->status[0] &= ~(value & 0xfff);
+-        if (value & LCSR0_BER)
+-            s->status[0] &= ~LCSR0_BERCH(7);
+-        break;
+-
+-    case LCSR1:
+-        s->status[1] &= ~(value & 0x3e3f3f);
+-        break;
+-
+-    default:
+-    fail:
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
+-                      __func__, offset);
+-    }
+-}
+-
+-static const MemoryRegionOps pxa2xx_lcdc_ops = {
+-    .read = pxa2xx_lcdc_read,
+-    .write = pxa2xx_lcdc_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-};
+-
+-/* Load new palette for a given DMA channel, convert to internal format */
+-static void pxa2xx_palette_parse(PXA2xxLCDState *s, int ch, int bpp)
+-{
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int i, n, format, r, g, b, alpha;
+-    uint32_t *dest;
+-    uint8_t *src;
+-    s->pal_for = LCCR4_PALFOR(s->control[4]);
+-    format = s->pal_for;
+-
+-    switch (bpp) {
+-    case pxa_lcdc_2bpp:
+-        n = 4;
+-        break;
+-    case pxa_lcdc_4bpp:
+-        n = 16;
+-        break;
+-    case pxa_lcdc_8bpp:
+-        n = 256;
+-        break;
+-    default:
+-        return;
+-    }
+-
+-    src = (uint8_t *) s->dma_ch[ch].pbuffer;
+-    dest = (uint32_t *) s->dma_ch[ch].palette;
+-    alpha = r = g = b = 0;
+-
+-    for (i = 0; i < n; i ++) {
+-        switch (format) {
+-        case 0: /* 16 bpp, no transparency */
+-            alpha = 0;
+-            if (s->control[0] & LCCR0_CMS) {
+-                r = g = b = *(uint16_t *) src & 0xff;
+-            }
+-            else {
+-                r = (*(uint16_t *) src & 0xf800) >> 8;
+-                g = (*(uint16_t *) src & 0x07e0) >> 3;
+-                b = (*(uint16_t *) src & 0x001f) << 3;
+-            }
+-            src += 2;
+-            break;
+-        case 1: /* 16 bpp plus transparency */
+-            alpha = *(uint32_t *) src & (1 << 24);
+-            if (s->control[0] & LCCR0_CMS)
+-                r = g = b = *(uint32_t *) src & 0xff;
+-            else {
+-                r = (*(uint32_t *) src & 0xf80000) >> 16;
+-                g = (*(uint32_t *) src & 0x00fc00) >> 8;
+-                b = (*(uint32_t *) src & 0x0000f8);
+-            }
+-            src += 4;
+-            break;
+-        case 2: /* 18 bpp plus transparency */
+-            alpha = *(uint32_t *) src & (1 << 24);
+-            if (s->control[0] & LCCR0_CMS)
+-                r = g = b = *(uint32_t *) src & 0xff;
+-            else {
+-                r = (*(uint32_t *) src & 0xfc0000) >> 16;
+-                g = (*(uint32_t *) src & 0x00fc00) >> 8;
+-                b = (*(uint32_t *) src & 0x0000fc);
+-            }
+-            src += 4;
+-            break;
+-        case 3: /* 24 bpp plus transparency */
+-            alpha = *(uint32_t *) src & (1 << 24);
+-            if (s->control[0] & LCCR0_CMS)
+-                r = g = b = *(uint32_t *) src & 0xff;
+-            else {
+-                r = (*(uint32_t *) src & 0xff0000) >> 16;
+-                g = (*(uint32_t *) src & 0x00ff00) >> 8;
+-                b = (*(uint32_t *) src & 0x0000ff);
+-            }
+-            src += 4;
+-            break;
+-        }
+-        switch (surface_bits_per_pixel(surface)) {
+-        case 8:
+-            *dest = rgb_to_pixel8(r, g, b) | alpha;
+-            break;
+-        case 15:
+-            *dest = rgb_to_pixel15(r, g, b) | alpha;
+-            break;
+-        case 16:
+-            *dest = rgb_to_pixel16(r, g, b) | alpha;
+-            break;
+-        case 24:
+-            *dest = rgb_to_pixel24(r, g, b) | alpha;
+-            break;
+-        case 32:
+-            *dest = rgb_to_pixel32(r, g, b) | alpha;
+-            break;
+-        }
+-        dest ++;
+-    }
+-}
+-
+-static inline drawfn pxa2xx_drawfn(PXA2xxLCDState *s)
+-{
+-    if (s->transp) {
+-        return pxa2xx_draw_fn_32t[s->bpp];
+-    } else {
+-        return pxa2xx_draw_fn_32[s->bpp];
+-    }
+-}
+-
+-static void pxa2xx_lcdc_dma0_redraw_rot0(PXA2xxLCDState *s,
+-                hwaddr addr, int *miny, int *maxy)
+-{
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int src_width, dest_width;
+-    drawfn fn = pxa2xx_drawfn(s);
+-    if (!fn)
+-        return;
+-
+-    src_width = (s->xres + 3) & ~3;     /* Pad to a 4 pixels multiple */
+-    if (s->bpp == pxa_lcdc_19pbpp || s->bpp == pxa_lcdc_18pbpp)
+-        src_width *= 3;
+-    else if (s->bpp > pxa_lcdc_16bpp)
+-        src_width *= 4;
+-    else if (s->bpp > pxa_lcdc_8bpp)
+-        src_width *= 2;
+-
+-    dest_width = s->xres * DEST_PIXEL_WIDTH;
+-    *miny = 0;
+-    if (s->invalidated) {
+-        framebuffer_update_memory_section(&s->fbsection, s->sysmem,
+-                                          addr, s->yres, src_width);
+-    }
+-    framebuffer_update_display(surface, &s->fbsection, s->xres, s->yres,
+-                               src_width, dest_width, DEST_PIXEL_WIDTH,
+-                               s->invalidated,
+-                               fn, s->dma_ch[0].palette, miny, maxy);
+-}
+-
+-static void pxa2xx_lcdc_dma0_redraw_rot90(PXA2xxLCDState *s,
+-               hwaddr addr, int *miny, int *maxy)
+-{
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int src_width, dest_width;
+-    drawfn fn = pxa2xx_drawfn(s);
+-    if (!fn)
+-        return;
+-
+-    src_width = (s->xres + 3) & ~3;     /* Pad to a 4 pixels multiple */
+-    if (s->bpp == pxa_lcdc_19pbpp || s->bpp == pxa_lcdc_18pbpp)
+-        src_width *= 3;
+-    else if (s->bpp > pxa_lcdc_16bpp)
+-        src_width *= 4;
+-    else if (s->bpp > pxa_lcdc_8bpp)
+-        src_width *= 2;
+-
+-    dest_width = s->yres * DEST_PIXEL_WIDTH;
+-    *miny = 0;
+-    if (s->invalidated) {
+-        framebuffer_update_memory_section(&s->fbsection, s->sysmem,
+-                                          addr, s->yres, src_width);
+-    }
+-    framebuffer_update_display(surface, &s->fbsection, s->xres, s->yres,
+-                               src_width, DEST_PIXEL_WIDTH, -dest_width,
+-                               s->invalidated,
+-                               fn, s->dma_ch[0].palette,
+-                               miny, maxy);
+-}
+-
+-static void pxa2xx_lcdc_dma0_redraw_rot180(PXA2xxLCDState *s,
+-                hwaddr addr, int *miny, int *maxy)
+-{
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int src_width, dest_width;
+-    drawfn fn = pxa2xx_drawfn(s);
+-    if (!fn) {
+-        return;
+-    }
+-
+-    src_width = (s->xres + 3) & ~3;     /* Pad to a 4 pixels multiple */
+-    if (s->bpp == pxa_lcdc_19pbpp || s->bpp == pxa_lcdc_18pbpp) {
+-        src_width *= 3;
+-    } else if (s->bpp > pxa_lcdc_16bpp) {
+-        src_width *= 4;
+-    } else if (s->bpp > pxa_lcdc_8bpp) {
+-        src_width *= 2;
+-    }
+-
+-    dest_width = s->xres * DEST_PIXEL_WIDTH;
+-    *miny = 0;
+-    if (s->invalidated) {
+-        framebuffer_update_memory_section(&s->fbsection, s->sysmem,
+-                                          addr, s->yres, src_width);
+-    }
+-    framebuffer_update_display(surface, &s->fbsection, s->xres, s->yres,
+-                               src_width, -dest_width, -DEST_PIXEL_WIDTH,
+-                               s->invalidated,
+-                               fn, s->dma_ch[0].palette, miny, maxy);
+-}
+-
+-static void pxa2xx_lcdc_dma0_redraw_rot270(PXA2xxLCDState *s,
+-               hwaddr addr, int *miny, int *maxy)
+-{
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int src_width, dest_width;
+-    drawfn fn = pxa2xx_drawfn(s);
+-    if (!fn) {
+-        return;
+-    }
+-
+-    src_width = (s->xres + 3) & ~3;     /* Pad to a 4 pixels multiple */
+-    if (s->bpp == pxa_lcdc_19pbpp || s->bpp == pxa_lcdc_18pbpp) {
+-        src_width *= 3;
+-    } else if (s->bpp > pxa_lcdc_16bpp) {
+-        src_width *= 4;
+-    } else if (s->bpp > pxa_lcdc_8bpp) {
+-        src_width *= 2;
+-    }
+-
+-    dest_width = s->yres * DEST_PIXEL_WIDTH;
+-    *miny = 0;
+-    if (s->invalidated) {
+-        framebuffer_update_memory_section(&s->fbsection, s->sysmem,
+-                                          addr, s->yres, src_width);
+-    }
+-    framebuffer_update_display(surface, &s->fbsection, s->xres, s->yres,
+-                               src_width, -DEST_PIXEL_WIDTH, dest_width,
+-                               s->invalidated,
+-                               fn, s->dma_ch[0].palette,
+-                               miny, maxy);
+-}
+-
+-static void pxa2xx_lcdc_resize(PXA2xxLCDState *s)
+-{
+-    int width, height;
+-    if (!(s->control[0] & LCCR0_ENB))
+-        return;
+-
+-    width = LCCR1_PPL(s->control[1]) + 1;
+-    height = LCCR2_LPP(s->control[2]) + 1;
+-
+-    if (width != s->xres || height != s->yres) {
+-        if (s->orientation == 90 || s->orientation == 270) {
+-            qemu_console_resize(s->con, height, width);
+-        } else {
+-            qemu_console_resize(s->con, width, height);
+-        }
+-        s->invalidated = 1;
+-        s->xres = width;
+-        s->yres = height;
+-    }
+-}
+-
+-static void pxa2xx_update_display(void *opaque)
+-{
+-    PXA2xxLCDState *s = (PXA2xxLCDState *) opaque;
+-    hwaddr fbptr;
+-    int miny, maxy;
+-    int ch;
+-    if (!(s->control[0] & LCCR0_ENB))
+-        return;
+-
+-    pxa2xx_descriptor_load(s);
+-
+-    pxa2xx_lcdc_resize(s);
+-    miny = s->yres;
+-    maxy = 0;
+-    s->transp = s->dma_ch[2].up || s->dma_ch[3].up;
+-    /* Note: With overlay planes the order depends on LCCR0 bit 25.  */
+-    for (ch = 0; ch < PXA_LCDDMA_CHANS; ch ++)
+-        if (s->dma_ch[ch].up) {
+-            if (!s->dma_ch[ch].source) {
+-                pxa2xx_dma_ber_set(s, ch);
+-                continue;
+-            }
+-            fbptr = s->dma_ch[ch].source;
+-            if (!((fbptr >= PXA2XX_SDRAM_BASE &&
+-                     fbptr <= PXA2XX_SDRAM_BASE + current_machine->ram_size) ||
+-                    (fbptr >= PXA2XX_INTERNAL_BASE &&
+-                     fbptr <= PXA2XX_INTERNAL_BASE + PXA2XX_INTERNAL_SIZE))) {
+-                pxa2xx_dma_ber_set(s, ch);
+-                continue;
+-            }
+-
+-            if (s->dma_ch[ch].command & LDCMD_PAL) {
+-                cpu_physical_memory_read(fbptr, s->dma_ch[ch].pbuffer,
+-                    MAX(LDCMD_LENGTH(s->dma_ch[ch].command),
+-                        sizeof(s->dma_ch[ch].pbuffer)));
+-                pxa2xx_palette_parse(s, ch, s->bpp);
+-            } else {
+-                /* Do we need to reparse palette */
+-                if (LCCR4_PALFOR(s->control[4]) != s->pal_for)
+-                    pxa2xx_palette_parse(s, ch, s->bpp);
+-
+-                /* ACK frame start */
+-                pxa2xx_dma_sof_set(s, ch);
+-
+-                s->dma_ch[ch].redraw(s, fbptr, &miny, &maxy);
+-                s->invalidated = 0;
+-
+-                /* ACK frame completed */
+-                pxa2xx_dma_eof_set(s, ch);
+-            }
+-        }
+-
+-    if (s->control[0] & LCCR0_DIS) {
+-        /* ACK last frame completed */
+-        s->control[0] &= ~LCCR0_ENB;
+-        s->status[0] |= LCSR0_LDD;
+-    }
+-
+-    if (miny >= 0) {
+-        switch (s->orientation) {
+-        case 0:
+-            dpy_gfx_update(s->con, 0, miny, s->xres, maxy - miny + 1);
+-            break;
+-        case 90:
+-            dpy_gfx_update(s->con, miny, 0, maxy - miny + 1, s->xres);
+-            break;
+-        case 180:
+-            maxy = s->yres - maxy - 1;
+-            miny = s->yres - miny - 1;
+-            dpy_gfx_update(s->con, 0, maxy, s->xres, miny - maxy + 1);
+-            break;
+-        case 270:
+-            maxy = s->yres - maxy - 1;
+-            miny = s->yres - miny - 1;
+-            dpy_gfx_update(s->con, maxy, 0, miny - maxy + 1, s->xres);
+-            break;
+-        }
+-    }
+-    pxa2xx_lcdc_int_update(s);
+-
+-    qemu_irq_raise(s->vsync_cb);
+-}
+-
+-static void pxa2xx_invalidate_display(void *opaque)
+-{
+-    PXA2xxLCDState *s = (PXA2xxLCDState *) opaque;
+-    s->invalidated = 1;
+-}
+-
+-static void pxa2xx_lcdc_orientation(void *opaque, int angle)
+-{
+-    PXA2xxLCDState *s = (PXA2xxLCDState *) opaque;
+-
+-    switch (angle) {
+-    case 0:
+-        s->dma_ch[0].redraw = pxa2xx_lcdc_dma0_redraw_rot0;
+-        break;
+-    case 90:
+-        s->dma_ch[0].redraw = pxa2xx_lcdc_dma0_redraw_rot90;
+-        break;
+-    case 180:
+-        s->dma_ch[0].redraw = pxa2xx_lcdc_dma0_redraw_rot180;
+-        break;
+-    case 270:
+-        s->dma_ch[0].redraw = pxa2xx_lcdc_dma0_redraw_rot270;
+-        break;
+-    }
+-
+-    s->orientation = angle;
+-    s->xres = s->yres = -1;
+-    pxa2xx_lcdc_resize(s);
+-}
+-
+-static const VMStateDescription vmstate_dma_channel = {
+-    .name = "dma_channel",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(branch, struct DMAChannel),
+-        VMSTATE_UINT8(up, struct DMAChannel),
+-        VMSTATE_BUFFER(pbuffer, struct DMAChannel),
+-        VMSTATE_UINT32(descriptor, struct DMAChannel),
+-        VMSTATE_UINT32(source, struct DMAChannel),
+-        VMSTATE_UINT32(id, struct DMAChannel),
+-        VMSTATE_UINT32(command, struct DMAChannel),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-static int pxa2xx_lcdc_post_load(void *opaque, int version_id)
+-{
+-    PXA2xxLCDState *s = opaque;
+-
+-    s->bpp = LCCR3_BPP(s->control[3]);
+-    s->xres = s->yres = s->pal_for = -1;
+-
+-    return 0;
+-}
+-
+-static const VMStateDescription vmstate_pxa2xx_lcdc = {
+-    .name = "pxa2xx_lcdc",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .post_load = pxa2xx_lcdc_post_load,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_INT32(irqlevel, PXA2xxLCDState),
+-        VMSTATE_INT32(transp, PXA2xxLCDState),
+-        VMSTATE_UINT32_ARRAY(control, PXA2xxLCDState, 6),
+-        VMSTATE_UINT32_ARRAY(status, PXA2xxLCDState, 2),
+-        VMSTATE_UINT32_ARRAY(ovl1c, PXA2xxLCDState, 2),
+-        VMSTATE_UINT32_ARRAY(ovl2c, PXA2xxLCDState, 2),
+-        VMSTATE_UINT32(ccr, PXA2xxLCDState),
+-        VMSTATE_UINT32(cmdcr, PXA2xxLCDState),
+-        VMSTATE_UINT32(trgbr, PXA2xxLCDState),
+-        VMSTATE_UINT32(tcr, PXA2xxLCDState),
+-        VMSTATE_UINT32(liidr, PXA2xxLCDState),
+-        VMSTATE_UINT8(bscntr, PXA2xxLCDState),
+-        VMSTATE_STRUCT_ARRAY(dma_ch, PXA2xxLCDState, 7, 0,
+-                             vmstate_dma_channel, struct DMAChannel),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-static const GraphicHwOps pxa2xx_ops = {
+-    .invalidate  = pxa2xx_invalidate_display,
+-    .gfx_update  = pxa2xx_update_display,
+-};
+-
+-PXA2xxLCDState *pxa2xx_lcdc_init(MemoryRegion *sysmem,
+-                                 hwaddr base, qemu_irq irq)
+-{
+-    PXA2xxLCDState *s;
+-
+-    s = g_new0(PXA2xxLCDState, 1);
+-    s->invalidated = 1;
+-    s->irq = irq;
+-    s->sysmem = sysmem;
+-
+-    pxa2xx_lcdc_orientation(s, graphic_rotate);
+-
+-    memory_region_init_io(&s->iomem, NULL, &pxa2xx_lcdc_ops, s,
+-                          "pxa2xx-lcd-controller", 0x00100000);
+-    memory_region_add_subregion(sysmem, base, &s->iomem);
+-
+-    s->con = graphic_console_init(NULL, 0, &pxa2xx_ops, s);
+-
+-    vmstate_register(NULL, 0, &vmstate_pxa2xx_lcdc, s);
 -
 -    return s;
 -}
 -
--static void musb_vbus_set(MUSBState *s, int level)
+-void pxa2xx_lcd_vsync_notifier(PXA2xxLCDState *s, qemu_irq handler)
 -{
--    if (level)
--        s->devctl |= 3 << MGC_S_DEVCTL_VBUS;
--    else
--        s->devctl &= ~MGC_M_DEVCTL_VBUS;
--
--    qemu_set_irq(s->irqs[musb_set_vbus], level);
+-    s->vsync_cb = handler;
 -}
--
--static void musb_intr_set(MUSBState *s, int line, int level)
--{
--    if (!level) {
--        s->intr &= ~(1 << line);
--        qemu_irq_lower(s->irqs[line]);
--    } else if (s->mask & (1 << line)) {
--        s->intr |= 1 << line;
--        qemu_irq_raise(s->irqs[line]);
--    }
--}
--
--static void musb_tx_intr_set(MUSBState *s, int line, int level)
--{
--    if (!level) {
--        s->tx_intr &= ~(1 << line);
--        if (!s->tx_intr)
--            qemu_irq_lower(s->irqs[musb_irq_tx]);
--    } else if (s->tx_mask & (1 << line)) {
--        s->tx_intr |= 1 << line;
--        qemu_irq_raise(s->irqs[musb_irq_tx]);
--    }
--}
--
--static void musb_rx_intr_set(MUSBState *s, int line, int level)
--{
--    if (line) {
--        if (!level) {
--            s->rx_intr &= ~(1 << line);
--            if (!s->rx_intr)
--                qemu_irq_lower(s->irqs[musb_irq_rx]);
--        } else if (s->rx_mask & (1 << line)) {
--            s->rx_intr |= 1 << line;
--            qemu_irq_raise(s->irqs[musb_irq_rx]);
--        }
--    } else
--        musb_tx_intr_set(s, line, level);
--}
--
--uint32_t musb_core_intr_get(MUSBState *s)
--{
--    return (s->rx_intr << 15) | s->tx_intr;
--}
--
--void musb_core_intr_clear(MUSBState *s, uint32_t mask)
--{
--    if (s->rx_intr) {
--        s->rx_intr &= mask >> 15;
--        if (!s->rx_intr)
--            qemu_irq_lower(s->irqs[musb_irq_rx]);
--    }
--
--    if (s->tx_intr) {
--        s->tx_intr &= mask & 0xffff;
--        if (!s->tx_intr)
--            qemu_irq_lower(s->irqs[musb_irq_tx]);
--    }
--}
--
--void musb_set_size(MUSBState *s, int epnum, int size, int is_tx)
--{
--    s->ep[epnum].ext_size[!is_tx] = size;
--    s->ep[epnum].fifostart[0] = 0;
--    s->ep[epnum].fifostart[1] = 0;
--    s->ep[epnum].fifolen[0] = 0;
--    s->ep[epnum].fifolen[1] = 0;
--}
--
--static void musb_session_update(MUSBState *s, int prev_dev, int prev_sess)
--{
--    int detect_prev = prev_dev && prev_sess;
--    int detect = !!s->port.dev && s->session;
--
--    if (detect && !detect_prev) {
--        /* Let's skip the ID pin sense and VBUS sense formalities and
--         * and signal a successful SRP directly.  This should work at least
--         * for the Linux driver stack.  */
--        musb_intr_set(s, musb_irq_connect, 1);
--
--        if (s->port.dev->speed == USB_SPEED_LOW) {
--            s->devctl &= ~MGC_M_DEVCTL_FSDEV;
--            s->devctl |= MGC_M_DEVCTL_LSDEV;
--        } else {
--            s->devctl |= MGC_M_DEVCTL_FSDEV;
--            s->devctl &= ~MGC_M_DEVCTL_LSDEV;
--        }
--
--        /* A-mode?  */
--        s->devctl &= ~MGC_M_DEVCTL_BDEVICE;
--
--        /* Host-mode bit?  */
--        s->devctl |= MGC_M_DEVCTL_HM;
--#if 1
--        musb_vbus_set(s, 1);
--#endif
--    } else if (!detect && detect_prev) {
--#if 1
--        musb_vbus_set(s, 0);
--#endif
--    }
--}
--
--/* Attach or detach a device on our only port.  */
--static void musb_attach(USBPort *port)
--{
--    MUSBState *s = (MUSBState *) port->opaque;
--
--    musb_intr_set(s, musb_irq_vbus_request, 1);
--    musb_session_update(s, 0, s->session);
--}
--
--static void musb_detach(USBPort *port)
--{
--    MUSBState *s = (MUSBState *) port->opaque;
--
--    musb_async_cancel_device(s, port->dev);
--
--    musb_intr_set(s, musb_irq_disconnect, 1);
--    musb_session_update(s, 1, s->session);
--}
--
--static void musb_child_detach(USBPort *port, USBDevice *child)
--{
--    MUSBState *s = (MUSBState *) port->opaque;
--
--    musb_async_cancel_device(s, child);
--}
--
--static void musb_cb_tick0(void *opaque)
--{
--    MUSBEndPoint *ep = (MUSBEndPoint *) opaque;
--
--    ep->delayed_cb[0](&ep->packey[0].p, opaque);
--}
--
--static void musb_cb_tick1(void *opaque)
--{
--    MUSBEndPoint *ep = (MUSBEndPoint *) opaque;
--
--    ep->delayed_cb[1](&ep->packey[1].p, opaque);
--}
--
--#define musb_cb_tick    (dir ? musb_cb_tick1 : musb_cb_tick0)
--
--static void musb_schedule_cb(USBPort *port, USBPacket *packey)
--{
--    MUSBPacket *p = container_of(packey, MUSBPacket, p);
--    MUSBEndPoint *ep = p->ep;
--    int dir = p->dir;
--    int timeout = 0;
--
--    if (ep->status[dir] == USB_RET_NAK)
--        timeout = ep->timeout[dir];
--    else if (ep->interrupt[dir])
--        timeout = 8;
--    else {
--        musb_cb_tick(ep);
--        return;
--    }
--
--    if (!ep->intv_timer[dir])
--        ep->intv_timer[dir] = timer_new_ns(QEMU_CLOCK_VIRTUAL, musb_cb_tick, ep);
--
--    timer_mod(ep->intv_timer[dir], qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
--                   muldiv64(timeout, NANOSECONDS_PER_SECOND, 8000));
--}
--
--static int musb_timeout(int ttype, int speed, int val)
--{
--#if 1
--    return val << 3;
--#endif
--
--    switch (ttype) {
--    case USB_ENDPOINT_XFER_CONTROL:
--        if (val < 2)
--            return 0;
--        else if (speed == USB_SPEED_HIGH)
--            return 1 << (val - 1);
--        else
--            return 8 << (val - 1);
--
--    case USB_ENDPOINT_XFER_INT:
--        if (speed == USB_SPEED_HIGH)
--            if (val < 2)
--                return 0;
--            else
--                return 1 << (val - 1);
--        else
--            return val << 3;
--
--    case USB_ENDPOINT_XFER_BULK:
--    case USB_ENDPOINT_XFER_ISOC:
--        if (val < 2)
--            return 0;
--        else if (speed == USB_SPEED_HIGH)
--            return 1 << (val - 1);
--        else
--            return 8 << (val - 1);
--        /* TODO: what with low-speed Bulk and Isochronous?  */
--    }
--
--    hw_error("bad interval\n");
--}
--
--static void musb_packet(MUSBState *s, MUSBEndPoint *ep,
--                int epnum, int pid, int len, USBCallback cb, int dir)
--{
--    USBDevice *dev;
--    USBEndpoint *uep;
--    int idx = epnum && dir;
--    int id;
--    int ttype;
--
--    /* ep->type[0,1] contains:
--     * in bits 7:6 the speed (0 - invalid, 1 - high, 2 - full, 3 - slow)
--     * in bits 5:4 the transfer type (BULK / INT)
--     * in bits 3:0 the EP num
--     */
--    ttype = epnum ? (ep->type[idx] >> 4) & 3 : 0;
--
--    ep->timeout[dir] = musb_timeout(ttype,
--                    ep->type[idx] >> 6, ep->interval[idx]);
--    ep->interrupt[dir] = ttype == USB_ENDPOINT_XFER_INT;
--    ep->delayed_cb[dir] = cb;
--
--    /* A wild guess on the FADDR semantics... */
--    dev = usb_find_device(&s->port, ep->faddr[idx]);
--    if (dev == NULL) {
--        return;
--    }
--    uep = usb_ep_get(dev, pid, ep->type[idx] & 0xf);
--    id = pid | (dev->addr << 16) | (uep->nr << 8);
--    usb_packet_setup(&ep->packey[dir].p, pid, uep, 0, id, false, true);
--    usb_packet_addbuf(&ep->packey[dir].p, ep->buf[idx], len);
--    ep->packey[dir].ep = ep;
--    ep->packey[dir].dir = dir;
--
--    usb_handle_packet(dev, &ep->packey[dir].p);
--
--    if (ep->packey[dir].p.status == USB_RET_ASYNC) {
--        usb_device_flush_ep_queue(dev, uep);
--        ep->status[dir] = len;
--        return;
--    }
--
--    if (ep->packey[dir].p.status == USB_RET_SUCCESS) {
--        ep->status[dir] = ep->packey[dir].p.actual_length;
--    } else {
--        ep->status[dir] = ep->packey[dir].p.status;
--    }
--    musb_schedule_cb(&s->port, &ep->packey[dir].p);
--}
--
--static void musb_tx_packet_complete(USBPacket *packey, void *opaque)
--{
--    /* Unfortunately we can't use packey->devep because that's the remote
--     * endpoint number and may be different than our local.  */
--    MUSBEndPoint *ep = (MUSBEndPoint *) opaque;
--    int epnum = ep->epnum;
--    MUSBState *s = ep->musb;
--
--    ep->fifostart[0] = 0;
--    ep->fifolen[0] = 0;
--#ifdef CLEAR_NAK
--    if (ep->status[0] != USB_RET_NAK) {
--#endif
--        if (epnum)
--            ep->csr[0] &= ~(MGC_M_TXCSR_FIFONOTEMPTY | MGC_M_TXCSR_TXPKTRDY);
--        else
--            ep->csr[0] &= ~MGC_M_CSR0_TXPKTRDY;
--#ifdef CLEAR_NAK
--    }
--#endif
--
--    /* Clear all of the error bits first */
--    if (epnum)
--        ep->csr[0] &= ~(MGC_M_TXCSR_H_ERROR | MGC_M_TXCSR_H_RXSTALL |
--                        MGC_M_TXCSR_H_NAKTIMEOUT);
--    else
--        ep->csr[0] &= ~(MGC_M_CSR0_H_ERROR | MGC_M_CSR0_H_RXSTALL |
--                        MGC_M_CSR0_H_NAKTIMEOUT | MGC_M_CSR0_H_NO_PING);
--
--    if (ep->status[0] == USB_RET_STALL) {
--        /* Command not supported by target! */
--        ep->status[0] = 0;
--
--        if (epnum)
--            ep->csr[0] |= MGC_M_TXCSR_H_RXSTALL;
--        else
--            ep->csr[0] |= MGC_M_CSR0_H_RXSTALL;
--    }
--
--    if (ep->status[0] == USB_RET_NAK) {
--        ep->status[0] = 0;
--
--        /* NAK timeouts are only generated in Bulk transfers and
--         * Data-errors in Isochronous.  */
--        if (ep->interrupt[0]) {
--            return;
--        }
--
--        if (epnum)
--            ep->csr[0] |= MGC_M_TXCSR_H_NAKTIMEOUT;
--        else
--            ep->csr[0] |= MGC_M_CSR0_H_NAKTIMEOUT;
--    }
--
--    if (ep->status[0] < 0) {
--        if (ep->status[0] == USB_RET_BABBLE)
--            musb_intr_set(s, musb_irq_rst_babble, 1);
--
--        /* Pretend we've tried three times already and failed (in
--         * case of USB_TOKEN_SETUP).  */
--        if (epnum)
--            ep->csr[0] |= MGC_M_TXCSR_H_ERROR;
--        else
--            ep->csr[0] |= MGC_M_CSR0_H_ERROR;
--
--        musb_tx_intr_set(s, epnum, 1);
--        return;
--    }
--    /* TODO: check len for over/underruns of an OUT packet?  */
--
--#ifdef SETUPLEN_HACK
--    if (!epnum && ep->packey[0].pid == USB_TOKEN_SETUP)
--        s->setup_len = ep->packey[0].data[6];
--#endif
--
--    /* In DMA mode: if no error, assert DMA request for this EP,
--     * and skip the interrupt.  */
--    musb_tx_intr_set(s, epnum, 1);
--}
--
--static void musb_rx_packet_complete(USBPacket *packey, void *opaque)
--{
--    /* Unfortunately we can't use packey->devep because that's the remote
--     * endpoint number and may be different than our local.  */
--    MUSBEndPoint *ep = (MUSBEndPoint *) opaque;
--    int epnum = ep->epnum;
--    MUSBState *s = ep->musb;
--
--    ep->fifostart[1] = 0;
--    ep->fifolen[1] = 0;
--
--#ifdef CLEAR_NAK
--    if (ep->status[1] != USB_RET_NAK) {
--#endif
--        ep->csr[1] &= ~MGC_M_RXCSR_H_REQPKT;
--        if (!epnum)
--            ep->csr[0] &= ~MGC_M_CSR0_H_REQPKT;
--#ifdef CLEAR_NAK
--    }
--#endif
--
--    /* Clear all of the imaginable error bits first */
--    ep->csr[1] &= ~(MGC_M_RXCSR_H_ERROR | MGC_M_RXCSR_H_RXSTALL |
--                    MGC_M_RXCSR_DATAERROR);
--    if (!epnum)
--        ep->csr[0] &= ~(MGC_M_CSR0_H_ERROR | MGC_M_CSR0_H_RXSTALL |
--                        MGC_M_CSR0_H_NAKTIMEOUT | MGC_M_CSR0_H_NO_PING);
--
--    if (ep->status[1] == USB_RET_STALL) {
--        ep->status[1] = 0;
--
--        ep->csr[1] |= MGC_M_RXCSR_H_RXSTALL;
--        if (!epnum)
--            ep->csr[0] |= MGC_M_CSR0_H_RXSTALL;
--    }
--
--    if (ep->status[1] == USB_RET_NAK) {
--        ep->status[1] = 0;
--
--        /* NAK timeouts are only generated in Bulk transfers and
--         * Data-errors in Isochronous.  */
--        if (ep->interrupt[1]) {
--            musb_packet(s, ep, epnum, USB_TOKEN_IN,
--                        packey->iov.size, musb_rx_packet_complete, 1);
--            return;
--        }
--
--        ep->csr[1] |= MGC_M_RXCSR_DATAERROR;
--        if (!epnum)
--            ep->csr[0] |= MGC_M_CSR0_H_NAKTIMEOUT;
--    }
--
--    if (ep->status[1] < 0) {
--        if (ep->status[1] == USB_RET_BABBLE) {
--            musb_intr_set(s, musb_irq_rst_babble, 1);
--            return;
--        }
--
--        /* Pretend we've tried three times already and failed (in
--         * case of a control transfer).  */
--        ep->csr[1] |= MGC_M_RXCSR_H_ERROR;
--        if (!epnum)
--            ep->csr[0] |= MGC_M_CSR0_H_ERROR;
--
--        musb_rx_intr_set(s, epnum, 1);
--        return;
--    }
--    /* TODO: check len for over/underruns of an OUT packet?  */
--    /* TODO: perhaps make use of e->ext_size[1] here.  */
--
--    if (!(ep->csr[1] & (MGC_M_RXCSR_H_RXSTALL | MGC_M_RXCSR_DATAERROR))) {
--        ep->csr[1] |= MGC_M_RXCSR_FIFOFULL | MGC_M_RXCSR_RXPKTRDY;
--        if (!epnum)
--            ep->csr[0] |= MGC_M_CSR0_RXPKTRDY;
--
--        ep->rxcount = ep->status[1]; /* XXX: MIN(packey->len, ep->maxp[1]); */
--        /* In DMA mode: assert DMA request for this EP */
--    }
--
--    /* Only if DMA has not been asserted */
--    musb_rx_intr_set(s, epnum, 1);
--}
--
--static void musb_async_cancel_device(MUSBState *s, USBDevice *dev)
--{
--    int ep, dir;
--
--    for (ep = 0; ep < 16; ep++) {
--        for (dir = 0; dir < 2; dir++) {
--            if (!usb_packet_is_inflight(&s->ep[ep].packey[dir].p) ||
--                s->ep[ep].packey[dir].p.ep->dev != dev) {
--                continue;
--            }
--            usb_cancel_packet(&s->ep[ep].packey[dir].p);
--            /* status updates needed here? */
--        }
--    }
--}
--
--static void musb_tx_rdy(MUSBState *s, int epnum)
--{
--    MUSBEndPoint *ep = s->ep + epnum;
--    int pid;
--    int total, valid = 0;
--    TRACE("start %d, len %d",  ep->fifostart[0], ep->fifolen[0] );
--    ep->fifostart[0] += ep->fifolen[0];
--    ep->fifolen[0] = 0;
--
--    /* XXX: how's the total size of the packet retrieved exactly in
--     * the generic case?  */
--    total = ep->maxp[0] & 0x3ff;
--
--    if (ep->ext_size[0]) {
--        total = ep->ext_size[0];
--        ep->ext_size[0] = 0;
--        valid = 1;
--    }
--
--    /* If the packet is not fully ready yet, wait for a next segment.  */
--    if (epnum && (ep->fifostart[0]) < total)
--        return;
--
--    if (!valid)
--        total = ep->fifostart[0];
--
--    pid = USB_TOKEN_OUT;
--    if (!epnum && (ep->csr[0] & MGC_M_CSR0_H_SETUPPKT)) {
--        pid = USB_TOKEN_SETUP;
--        if (total != 8) {
--            TRACE("illegal SETUPPKT length of %i bytes", total);
--        }
--        /* Controller should retry SETUP packets three times on errors
--         * but it doesn't make sense for us to do that.  */
--    }
--
--    musb_packet(s, ep, epnum, pid, total, musb_tx_packet_complete, 0);
--}
--
--static void musb_rx_req(MUSBState *s, int epnum)
--{
--    MUSBEndPoint *ep = s->ep + epnum;
--    int total;
--
--    /* If we already have a packet, which didn't fit into the
--     * 64 bytes of the FIFO, only move the FIFO start and return. (Obsolete) */
--    if (ep->packey[1].p.pid == USB_TOKEN_IN && ep->status[1] >= 0 &&
--                    (ep->fifostart[1]) + ep->rxcount <
--                    ep->packey[1].p.iov.size) {
--        TRACE("0x%08x, %d",  ep->fifostart[1], ep->rxcount );
--        ep->fifostart[1] += ep->rxcount;
--        ep->fifolen[1] = 0;
--
--        ep->rxcount = MIN(ep->packey[0].p.iov.size - (ep->fifostart[1]),
--                        ep->maxp[1]);
--
--        ep->csr[1] &= ~MGC_M_RXCSR_H_REQPKT;
--        if (!epnum)
--            ep->csr[0] &= ~MGC_M_CSR0_H_REQPKT;
--
--        /* Clear all of the error bits first */
--        ep->csr[1] &= ~(MGC_M_RXCSR_H_ERROR | MGC_M_RXCSR_H_RXSTALL |
--                        MGC_M_RXCSR_DATAERROR);
--        if (!epnum)
--            ep->csr[0] &= ~(MGC_M_CSR0_H_ERROR | MGC_M_CSR0_H_RXSTALL |
--                            MGC_M_CSR0_H_NAKTIMEOUT | MGC_M_CSR0_H_NO_PING);
--
--        ep->csr[1] |= MGC_M_RXCSR_FIFOFULL | MGC_M_RXCSR_RXPKTRDY;
--        if (!epnum)
--            ep->csr[0] |= MGC_M_CSR0_RXPKTRDY;
--        musb_rx_intr_set(s, epnum, 1);
--        return;
--    }
--
--    /* The driver sets maxp[1] to 64 or less because it knows the hardware
--     * FIFO is this deep.  Bigger packets get split in
--     * usb_generic_handle_packet but we can also do the splitting locally
--     * for performance.  It turns out we can also have a bigger FIFO and
--     * ignore the limit set in ep->maxp[1].  The Linux MUSB driver deals
--     * OK with single packets of even 32KB and we avoid splitting, however
--     * usb_msd.c sometimes sends a packet bigger than what Linux expects
--     * (e.g. 8192 bytes instead of 4096) and we get an OVERRUN.  Splitting
--     * hides this overrun from Linux.  Up to 4096 everything is fine
--     * though.  Currently this is disabled.
--     *
--     * XXX: mind ep->fifosize.  */
--    total = MIN(ep->maxp[1] & 0x3ff, sizeof(s->buf));
--
--#ifdef SETUPLEN_HACK
--    /* Why should *we* do that instead of Linux?  */
--    if (!epnum) {
--        if (ep->packey[0].p.devaddr == 2) {
--            total = MIN(s->setup_len, 8);
--        } else {
--            total = MIN(s->setup_len, 64);
--        }
--        s->setup_len -= total;
--    }
--#endif
--
--    musb_packet(s, ep, epnum, USB_TOKEN_IN, total, musb_rx_packet_complete, 1);
--}
--
--static uint8_t musb_read_fifo(MUSBEndPoint *ep)
--{
--    uint8_t value;
--    if (ep->fifolen[1] >= 64) {
--        /* We have a FIFO underrun */
--        TRACE("EP%d FIFO is now empty, stop reading", ep->epnum);
--        return 0x00000000;
--    }
--    /* In DMA mode clear RXPKTRDY and set REQPKT automatically
--     * (if AUTOREQ is set) */
--
--    ep->csr[1] &= ~MGC_M_RXCSR_FIFOFULL;
--    value=ep->buf[1][ep->fifostart[1] + ep->fifolen[1] ++];
--    TRACE("EP%d 0x%02x, %d", ep->epnum, value, ep->fifolen[1] );
--    return value;
--}
--
--static void musb_write_fifo(MUSBEndPoint *ep, uint8_t value)
--{
--    TRACE("EP%d = %02x", ep->epnum, value);
--    if (ep->fifolen[0] >= 64) {
--        /* We have a FIFO overrun */
--        TRACE("EP%d FIFO exceeded 64 bytes, stop feeding data", ep->epnum);
--        return;
--     }
--
--     ep->buf[0][ep->fifostart[0] + ep->fifolen[0] ++] = value;
--     ep->csr[0] |= MGC_M_TXCSR_FIFONOTEMPTY;
--}
--
--static void musb_ep_frame_cancel(MUSBEndPoint *ep, int dir)
--{
--    if (ep->intv_timer[dir])
--        timer_del(ep->intv_timer[dir]);
--}
--
--/* Bus control */
--static uint8_t musb_busctl_readb(void *opaque, int ep, int addr)
--{
--    MUSBState *s = (MUSBState *) opaque;
--
--    switch (addr) {
--    /* For USB2.0 HS hubs only */
--    case MUSB_HDRC_TXHUBADDR:
--        return s->ep[ep].haddr[0];
--    case MUSB_HDRC_TXHUBPORT:
--        return s->ep[ep].hport[0];
--    case MUSB_HDRC_RXHUBADDR:
--        return s->ep[ep].haddr[1];
--    case MUSB_HDRC_RXHUBPORT:
--        return s->ep[ep].hport[1];
--
--    default:
--        TRACE("unknown register 0x%02x", addr);
--        return 0x00;
--    };
--}
--
--static void musb_busctl_writeb(void *opaque, int ep, int addr, uint8_t value)
--{
--    MUSBState *s = (MUSBState *) opaque;
--
--    switch (addr) {
--    case MUSB_HDRC_TXFUNCADDR:
--        s->ep[ep].faddr[0] = value;
--        break;
--    case MUSB_HDRC_RXFUNCADDR:
--        s->ep[ep].faddr[1] = value;
--        break;
--    case MUSB_HDRC_TXHUBADDR:
--        s->ep[ep].haddr[0] = value;
--        break;
--    case MUSB_HDRC_TXHUBPORT:
--        s->ep[ep].hport[0] = value;
--        break;
--    case MUSB_HDRC_RXHUBADDR:
--        s->ep[ep].haddr[1] = value;
--        break;
--    case MUSB_HDRC_RXHUBPORT:
--        s->ep[ep].hport[1] = value;
--        break;
--
--    default:
--        TRACE("unknown register 0x%02x", addr);
--        break;
--    };
--}
--
--static uint16_t musb_busctl_readh(void *opaque, int ep, int addr)
--{
--    MUSBState *s = (MUSBState *) opaque;
--
--    switch (addr) {
--    case MUSB_HDRC_TXFUNCADDR:
--        return s->ep[ep].faddr[0];
--    case MUSB_HDRC_RXFUNCADDR:
--        return s->ep[ep].faddr[1];
--
--    default:
--        return musb_busctl_readb(s, ep, addr) |
--                (musb_busctl_readb(s, ep, addr | 1) << 8);
--    };
--}
--
--static void musb_busctl_writeh(void *opaque, int ep, int addr, uint16_t value)
--{
--    MUSBState *s = (MUSBState *) opaque;
--
--    switch (addr) {
--    case MUSB_HDRC_TXFUNCADDR:
--        s->ep[ep].faddr[0] = value;
--        break;
--    case MUSB_HDRC_RXFUNCADDR:
--        s->ep[ep].faddr[1] = value;
--        break;
--
--    default:
--        musb_busctl_writeb(s, ep, addr, value & 0xff);
--        musb_busctl_writeb(s, ep, addr | 1, value >> 8);
--    };
--}
--
--/* Endpoint control */
--static uint8_t musb_ep_readb(void *opaque, int ep, int addr)
--{
--    MUSBState *s = (MUSBState *) opaque;
--
--    switch (addr) {
--    case MUSB_HDRC_TXTYPE:
--        return s->ep[ep].type[0];
--    case MUSB_HDRC_TXINTERVAL:
--        return s->ep[ep].interval[0];
--    case MUSB_HDRC_RXTYPE:
--        return s->ep[ep].type[1];
--    case MUSB_HDRC_RXINTERVAL:
--        return s->ep[ep].interval[1];
--    case (MUSB_HDRC_FIFOSIZE & ~1):
--        return 0x00;
--    case MUSB_HDRC_FIFOSIZE:
--        return ep ? s->ep[ep].fifosize : s->ep[ep].config;
--    case MUSB_HDRC_RXCOUNT:
--        return s->ep[ep].rxcount;
--
--    default:
--        TRACE("unknown register 0x%02x", addr);
--        return 0x00;
--    };
--}
--
--static void musb_ep_writeb(void *opaque, int ep, int addr, uint8_t value)
--{
--    MUSBState *s = (MUSBState *) opaque;
--
--    switch (addr) {
--    case MUSB_HDRC_TXTYPE:
--        s->ep[ep].type[0] = value;
--        break;
--    case MUSB_HDRC_TXINTERVAL:
--        s->ep[ep].interval[0] = value;
--        musb_ep_frame_cancel(&s->ep[ep], 0);
--        break;
--    case MUSB_HDRC_RXTYPE:
--        s->ep[ep].type[1] = value;
--        break;
--    case MUSB_HDRC_RXINTERVAL:
--        s->ep[ep].interval[1] = value;
--        musb_ep_frame_cancel(&s->ep[ep], 1);
--        break;
--    case (MUSB_HDRC_FIFOSIZE & ~1):
--        break;
--    case MUSB_HDRC_FIFOSIZE:
--        TRACE("somebody messes with fifosize (now %i bytes)", value);
--        s->ep[ep].fifosize = value;
--        break;
--    default:
--        TRACE("unknown register 0x%02x", addr);
--        break;
--    };
--}
--
--static uint16_t musb_ep_readh(void *opaque, int ep, int addr)
--{
--    MUSBState *s = (MUSBState *) opaque;
--    uint16_t ret;
--
--    switch (addr) {
--    case MUSB_HDRC_TXMAXP:
--        return s->ep[ep].maxp[0];
--    case MUSB_HDRC_TXCSR:
--        return s->ep[ep].csr[0];
--    case MUSB_HDRC_RXMAXP:
--        return s->ep[ep].maxp[1];
--    case MUSB_HDRC_RXCSR:
--        ret = s->ep[ep].csr[1];
--
--        /* TODO: This and other bits probably depend on
--         * ep->csr[1] & MGC_M_RXCSR_AUTOCLEAR.  */
--        if (s->ep[ep].csr[1] & MGC_M_RXCSR_AUTOCLEAR)
--            s->ep[ep].csr[1] &= ~MGC_M_RXCSR_RXPKTRDY;
--
--        return ret;
--    case MUSB_HDRC_RXCOUNT:
--        return s->ep[ep].rxcount;
--
--    default:
--        return musb_ep_readb(s, ep, addr) |
--                (musb_ep_readb(s, ep, addr | 1) << 8);
--    };
--}
--
--static void musb_ep_writeh(void *opaque, int ep, int addr, uint16_t value)
--{
--    MUSBState *s = (MUSBState *) opaque;
--
--    switch (addr) {
--    case MUSB_HDRC_TXMAXP:
--        s->ep[ep].maxp[0] = value;
--        break;
--    case MUSB_HDRC_TXCSR:
--        if (ep) {
--            s->ep[ep].csr[0] &= value & 0xa6;
--            s->ep[ep].csr[0] |= value & 0xff59;
--        } else {
--            s->ep[ep].csr[0] &= value & 0x85;
--            s->ep[ep].csr[0] |= value & 0xf7a;
--        }
--
--        musb_ep_frame_cancel(&s->ep[ep], 0);
--
--        if ((ep && (value & MGC_M_TXCSR_FLUSHFIFO)) ||
--                        (!ep && (value & MGC_M_CSR0_FLUSHFIFO))) {
--            s->ep[ep].fifolen[0] = 0;
--            s->ep[ep].fifostart[0] = 0;
--            if (ep)
--                s->ep[ep].csr[0] &=
--                        ~(MGC_M_TXCSR_FIFONOTEMPTY | MGC_M_TXCSR_TXPKTRDY);
--            else
--                s->ep[ep].csr[0] &=
--                        ~(MGC_M_CSR0_TXPKTRDY | MGC_M_CSR0_RXPKTRDY);
--        }
--        if (
--                        (ep &&
--#ifdef CLEAR_NAK
--                         (value & MGC_M_TXCSR_TXPKTRDY) &&
--                         !(value & MGC_M_TXCSR_H_NAKTIMEOUT)) ||
--#else
--                         (value & MGC_M_TXCSR_TXPKTRDY)) ||
--#endif
--                        (!ep &&
--#ifdef CLEAR_NAK
--                         (value & MGC_M_CSR0_TXPKTRDY) &&
--                         !(value & MGC_M_CSR0_H_NAKTIMEOUT)))
--#else
--                         (value & MGC_M_CSR0_TXPKTRDY)))
--#endif
--            musb_tx_rdy(s, ep);
--        if (!ep &&
--                        (value & MGC_M_CSR0_H_REQPKT) &&
--#ifdef CLEAR_NAK
--                        !(value & (MGC_M_CSR0_H_NAKTIMEOUT |
--                                        MGC_M_CSR0_RXPKTRDY)))
--#else
--                        !(value & MGC_M_CSR0_RXPKTRDY))
--#endif
--            musb_rx_req(s, ep);
--        break;
--
--    case MUSB_HDRC_RXMAXP:
--        s->ep[ep].maxp[1] = value;
--        break;
--    case MUSB_HDRC_RXCSR:
--        /* (DMA mode only) */
--        if (
--                (value & MGC_M_RXCSR_H_AUTOREQ) &&
--                !(value & MGC_M_RXCSR_RXPKTRDY) &&
--                (s->ep[ep].csr[1] & MGC_M_RXCSR_RXPKTRDY))
--            value |= MGC_M_RXCSR_H_REQPKT;
--
--        s->ep[ep].csr[1] &= 0x102 | (value & 0x4d);
--        s->ep[ep].csr[1] |= value & 0xfeb0;
--
--        musb_ep_frame_cancel(&s->ep[ep], 1);
--
--        if (value & MGC_M_RXCSR_FLUSHFIFO) {
--            s->ep[ep].fifolen[1] = 0;
--            s->ep[ep].fifostart[1] = 0;
--            s->ep[ep].csr[1] &= ~(MGC_M_RXCSR_FIFOFULL | MGC_M_RXCSR_RXPKTRDY);
--            /* If double buffering and we have two packets ready, flush
--             * only the first one and set up the fifo at the second packet.  */
--        }
--#ifdef CLEAR_NAK
--        if ((value & MGC_M_RXCSR_H_REQPKT) && !(value & MGC_M_RXCSR_DATAERROR))
--#else
--        if (value & MGC_M_RXCSR_H_REQPKT)
--#endif
--            musb_rx_req(s, ep);
--        break;
--    case MUSB_HDRC_RXCOUNT:
--        s->ep[ep].rxcount = value;
--        break;
--
--    default:
--        musb_ep_writeb(s, ep, addr, value & 0xff);
--        musb_ep_writeb(s, ep, addr | 1, value >> 8);
--    };
--}
--
--/* Generic control */
--static uint32_t musb_readb(void *opaque, hwaddr addr)
--{
--    MUSBState *s = (MUSBState *) opaque;
--    int ep, i;
--    uint8_t ret;
--
--    switch (addr) {
--    case MUSB_HDRC_FADDR:
--        return s->faddr;
--    case MUSB_HDRC_POWER:
--        return s->power;
--    case MUSB_HDRC_INTRUSB:
--        ret = s->intr;
--        for (i = 0; i < sizeof(ret) * 8; i ++)
--            if (ret & (1 << i))
--                musb_intr_set(s, i, 0);
--        return ret;
--    case MUSB_HDRC_INTRUSBE:
--        return s->mask;
--    case MUSB_HDRC_INDEX:
--        return s->idx;
--    case MUSB_HDRC_TESTMODE:
--        return 0x00;
--
--    case MUSB_HDRC_EP_IDX ... (MUSB_HDRC_EP_IDX + 0xf):
--        return musb_ep_readb(s, s->idx, addr & 0xf);
--
--    case MUSB_HDRC_DEVCTL:
--        return s->devctl;
--
--    case MUSB_HDRC_TXFIFOSZ:
--    case MUSB_HDRC_RXFIFOSZ:
--    case MUSB_HDRC_VCTRL:
--        /* TODO */
--        return 0x00;
--
--    case MUSB_HDRC_HWVERS:
--        return (1 << 10) | 400;
--
--    case (MUSB_HDRC_VCTRL | 1):
--    case (MUSB_HDRC_HWVERS | 1):
--    case (MUSB_HDRC_DEVCTL | 1):
--        return 0x00;
--
--    case MUSB_HDRC_BUSCTL ... (MUSB_HDRC_BUSCTL + 0x7f):
--        ep = (addr >> 3) & 0xf;
--        return musb_busctl_readb(s, ep, addr & 0x7);
--
--    case MUSB_HDRC_EP ... (MUSB_HDRC_EP + 0xff):
--        ep = (addr >> 4) & 0xf;
--        return musb_ep_readb(s, ep, addr & 0xf);
--
--    case MUSB_HDRC_FIFO ... (MUSB_HDRC_FIFO + 0x3f):
--        ep = ((addr - MUSB_HDRC_FIFO) >> 2) & 0xf;
--        return musb_read_fifo(s->ep + ep);
--
--    default:
--        TRACE("unknown register 0x%02x", (int) addr);
--        return 0x00;
--    };
--}
--
--static void musb_writeb(void *opaque, hwaddr addr, uint32_t value)
--{
--    MUSBState *s = (MUSBState *) opaque;
--    int ep;
--
--    switch (addr) {
--    case MUSB_HDRC_FADDR:
--        s->faddr = value & 0x7f;
--        break;
--    case MUSB_HDRC_POWER:
--        s->power = (value & 0xef) | (s->power & 0x10);
--        /* MGC_M_POWER_RESET is also read-only in Peripheral Mode */
--        if ((value & MGC_M_POWER_RESET) && s->port.dev) {
--            usb_device_reset(s->port.dev);
--            /* Negotiate high-speed operation if MGC_M_POWER_HSENAB is set.  */
--            if ((value & MGC_M_POWER_HSENAB) &&
--                            s->port.dev->speed == USB_SPEED_HIGH)
--                s->power |= MGC_M_POWER_HSMODE; /* Success */
--            /* Restart frame counting.  */
--        }
--        if (value & MGC_M_POWER_SUSPENDM) {
--            /* When all transfers finish, suspend and if MGC_M_POWER_ENSUSPEND
--             * is set, also go into low power mode.  Frame counting stops.  */
--            /* XXX: Cleared when the interrupt register is read */
--        }
--        if (value & MGC_M_POWER_RESUME) {
--            /* Wait 20ms and signal resuming on the bus.  Frame counting
--             * restarts.  */
--        }
--        break;
--    case MUSB_HDRC_INTRUSB:
--        break;
--    case MUSB_HDRC_INTRUSBE:
--        s->mask = value & 0xff;
--        break;
--    case MUSB_HDRC_INDEX:
--        s->idx = value & 0xf;
--        break;
--    case MUSB_HDRC_TESTMODE:
--        break;
--
--    case MUSB_HDRC_EP_IDX ... (MUSB_HDRC_EP_IDX + 0xf):
--        musb_ep_writeb(s, s->idx, addr & 0xf, value);
--        break;
--
--    case MUSB_HDRC_DEVCTL:
--        s->session = !!(value & MGC_M_DEVCTL_SESSION);
--        musb_session_update(s,
--                        !!s->port.dev,
--                        !!(s->devctl & MGC_M_DEVCTL_SESSION));
--
--        /* It seems this is the only R/W bit in this register?  */
--        s->devctl &= ~MGC_M_DEVCTL_SESSION;
--        s->devctl |= value & MGC_M_DEVCTL_SESSION;
--        break;
--
--    case MUSB_HDRC_TXFIFOSZ:
--    case MUSB_HDRC_RXFIFOSZ:
--    case MUSB_HDRC_VCTRL:
--        /* TODO */
--        break;
--
--    case (MUSB_HDRC_VCTRL | 1):
--    case (MUSB_HDRC_DEVCTL | 1):
--        break;
--
--    case MUSB_HDRC_BUSCTL ... (MUSB_HDRC_BUSCTL + 0x7f):
--        ep = (addr >> 3) & 0xf;
--        musb_busctl_writeb(s, ep, addr & 0x7, value);
--        break;
--
--    case MUSB_HDRC_EP ... (MUSB_HDRC_EP + 0xff):
--        ep = (addr >> 4) & 0xf;
--        musb_ep_writeb(s, ep, addr & 0xf, value);
--        break;
--
--    case MUSB_HDRC_FIFO ... (MUSB_HDRC_FIFO + 0x3f):
--        ep = ((addr - MUSB_HDRC_FIFO) >> 2) & 0xf;
--        musb_write_fifo(s->ep + ep, value & 0xff);
--        break;
--
--    default:
--        TRACE("unknown register 0x%02x", (int) addr);
--        break;
--    };
--}
--
--static uint32_t musb_readh(void *opaque, hwaddr addr)
--{
--    MUSBState *s = (MUSBState *) opaque;
--    int ep, i;
--    uint16_t ret;
--
--    switch (addr) {
--    case MUSB_HDRC_INTRTX:
--        ret = s->tx_intr;
--        /* Auto clear */
--        for (i = 0; i < sizeof(ret) * 8; i ++)
--            if (ret & (1 << i))
--                musb_tx_intr_set(s, i, 0);
--        return ret;
--    case MUSB_HDRC_INTRRX:
--        ret = s->rx_intr;
--        /* Auto clear */
--        for (i = 0; i < sizeof(ret) * 8; i ++)
--            if (ret & (1 << i))
--                musb_rx_intr_set(s, i, 0);
--        return ret;
--    case MUSB_HDRC_INTRTXE:
--        return s->tx_mask;
--    case MUSB_HDRC_INTRRXE:
--        return s->rx_mask;
--
--    case MUSB_HDRC_FRAME:
--        /* TODO */
--        return 0x0000;
--    case MUSB_HDRC_TXFIFOADDR:
--        return s->ep[s->idx].fifoaddr[0];
--    case MUSB_HDRC_RXFIFOADDR:
--        return s->ep[s->idx].fifoaddr[1];
--
--    case MUSB_HDRC_EP_IDX ... (MUSB_HDRC_EP_IDX + 0xf):
--        return musb_ep_readh(s, s->idx, addr & 0xf);
--
--    case MUSB_HDRC_BUSCTL ... (MUSB_HDRC_BUSCTL + 0x7f):
--        ep = (addr >> 3) & 0xf;
--        return musb_busctl_readh(s, ep, addr & 0x7);
--
--    case MUSB_HDRC_EP ... (MUSB_HDRC_EP + 0xff):
--        ep = (addr >> 4) & 0xf;
--        return musb_ep_readh(s, ep, addr & 0xf);
--
--    case MUSB_HDRC_FIFO ... (MUSB_HDRC_FIFO + 0x3f):
--        ep = ((addr - MUSB_HDRC_FIFO) >> 2) & 0xf;
--        return (musb_read_fifo(s->ep + ep) | musb_read_fifo(s->ep + ep) << 8);
--
--    default:
--        return musb_readb(s, addr) | (musb_readb(s, addr | 1) << 8);
--    };
--}
--
--static void musb_writeh(void *opaque, hwaddr addr, uint32_t value)
--{
--    MUSBState *s = (MUSBState *) opaque;
--    int ep;
--
--    switch (addr) {
--    case MUSB_HDRC_INTRTXE:
--        s->tx_mask = value;
--        /* XXX: the masks seem to apply on the raising edge like with
--         * edge-triggered interrupts, thus no need to update.  I may be
--         * wrong though.  */
--        break;
--    case MUSB_HDRC_INTRRXE:
--        s->rx_mask = value;
--        break;
--
--    case MUSB_HDRC_FRAME:
--        /* TODO */
--        break;
--    case MUSB_HDRC_TXFIFOADDR:
--        s->ep[s->idx].fifoaddr[0] = value;
--        s->ep[s->idx].buf[0] =
--                s->buf + ((value << 3) & 0x7ff );
--        break;
--    case MUSB_HDRC_RXFIFOADDR:
--        s->ep[s->idx].fifoaddr[1] = value;
--        s->ep[s->idx].buf[1] =
--                s->buf + ((value << 3) & 0x7ff);
--        break;
--
--    case MUSB_HDRC_EP_IDX ... (MUSB_HDRC_EP_IDX + 0xf):
--        musb_ep_writeh(s, s->idx, addr & 0xf, value);
--        break;
--
--    case MUSB_HDRC_BUSCTL ... (MUSB_HDRC_BUSCTL + 0x7f):
--        ep = (addr >> 3) & 0xf;
--        musb_busctl_writeh(s, ep, addr & 0x7, value);
--        break;
--
--    case MUSB_HDRC_EP ... (MUSB_HDRC_EP + 0xff):
--        ep = (addr >> 4) & 0xf;
--        musb_ep_writeh(s, ep, addr & 0xf, value);
--        break;
--
--    case MUSB_HDRC_FIFO ... (MUSB_HDRC_FIFO + 0x3f):
--        ep = ((addr - MUSB_HDRC_FIFO) >> 2) & 0xf;
--        musb_write_fifo(s->ep + ep, value & 0xff);
--        musb_write_fifo(s->ep + ep, (value >> 8) & 0xff);
--        break;
--
--    default:
--        musb_writeb(s, addr, value & 0xff);
--        musb_writeb(s, addr | 1, value >> 8);
--    };
--}
--
--static uint32_t musb_readw(void *opaque, hwaddr addr)
--{
--    MUSBState *s = (MUSBState *) opaque;
--    int ep;
--
--    switch (addr) {
--    case MUSB_HDRC_FIFO ... (MUSB_HDRC_FIFO + 0x3f):
--        ep = ((addr - MUSB_HDRC_FIFO) >> 2) & 0xf;
--        return ( musb_read_fifo(s->ep + ep)       |
--                 musb_read_fifo(s->ep + ep) << 8  |
--                 musb_read_fifo(s->ep + ep) << 16 |
--                 musb_read_fifo(s->ep + ep) << 24 );
--    default:
--        TRACE("unknown register 0x%02x", (int) addr);
--        return 0x00000000;
--    };
--}
--
--static void musb_writew(void *opaque, hwaddr addr, uint32_t value)
--{
--    MUSBState *s = (MUSBState *) opaque;
--    int ep;
--
--    switch (addr) {
--    case MUSB_HDRC_FIFO ... (MUSB_HDRC_FIFO + 0x3f):
--        ep = ((addr - MUSB_HDRC_FIFO) >> 2) & 0xf;
--        musb_write_fifo(s->ep + ep, value & 0xff);
--        musb_write_fifo(s->ep + ep, (value >> 8 ) & 0xff);
--        musb_write_fifo(s->ep + ep, (value >> 16) & 0xff);
--        musb_write_fifo(s->ep + ep, (value >> 24) & 0xff);
--            break;
--    default:
--        TRACE("unknown register 0x%02x", (int) addr);
--        break;
--    };
--}
--
--MUSBReadFunc * const musb_read[] = {
--    musb_readb,
--    musb_readh,
--    musb_readw,
--};
--
--MUSBWriteFunc * const musb_write[] = {
--    musb_writeb,
--    musb_writeh,
--    musb_writew,
--};
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index 0bffcda1b19..5fbecd2f43b 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -53,10 +53,6 @@ config USB_XHCI_SYSBUS
-     bool
-     select USB_XHCI
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index dabc0d1da6b..1f965a1be84 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -27,7 +27,6 @@ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_fimd.c'))
+ system_ss.add(when: 'CONFIG_FRAMEBUFFER', if_true: files('framebuffer.c'))
  
--config USB_MUSB
--    bool
--    select USB
--
- config USB_DWC2
-     bool
-     select USB
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index ae901481597..1b4d1507e41 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -23,7 +23,6 @@ system_ss.add(when: 'CONFIG_USB_XHCI', if_true: files('hcd-xhci.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_PCI', if_true: files('hcd-xhci-pci.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_SYSBUS', if_true: files('hcd-xhci-sysbus.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_NEC', if_true: files('hcd-xhci-nec.c'))
--system_ss.add(when: 'CONFIG_USB_MUSB', if_true: files('hcd-musb.c'))
- system_ss.add(when: 'CONFIG_USB_DWC2', if_true: files('hcd-dwc2.c'))
- system_ss.add(when: 'CONFIG_USB_DWC3', if_true: files('hcd-dwc3.c'))
- 
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_dss.c'))
+-system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_lcd.c'))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_fb.c'))
+ system_ss.add(when: 'CONFIG_SM501', if_true: files('sm501.c'))
+ system_ss.add(when: 'CONFIG_TCX', if_true: files('tcx.c'))
 -- 
 2.34.1
 
