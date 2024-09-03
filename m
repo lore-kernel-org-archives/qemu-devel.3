@@ -4,93 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B83CD343D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37ACCCD343D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 15:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slV3j-0008Q8-Od; Tue, 03 Sep 2024 11:03:07 -0400
+	id 1slV9w-0003d1-Cu; Tue, 03 Sep 2024 11:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slV3X-0007fH-Lg
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:03:02 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slV9t-0003c0-Au
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:09:30 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slV3R-0008OU-Vq
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:02:55 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2f3f68dd44bso57786571fa.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 08:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725375766; x=1725980566; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9sJDSeP2xm/QhbbN6C+oU0hR2HMrMaxbBuidjug6c7c=;
- b=wZHU+05bWrHEXbcj4A0/yUbYAMspejF8IGIoRPokZYTtr1J2b6pg3NyLi4ybuZoEnF
- DYw65V2RnYEGiEzwD2ALxTmkrUsNK17LQ8qcBk4GOWoZssZPo4VqpUfy2/GjVRPNScoC
- n4yEYsC64FqnkVGTq8MXDmhneuk7ifme2l0j3xaBZOIyfPiVvW9rW+B2LtRdPX/MAMmW
- vZXCL5b2xmPWW/MHf0Jxsrijyv2wkjEk+6tw8iiCPYyDMnsA/TC2Hnn/PyvB4+PTKTsd
- I6UTex6s9ojf49afq89ZGEeZ1fixhmBYU7nAzL1WR65HsegWljhYPENcqeGC+OY4EuWr
- s6kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725375766; x=1725980566;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9sJDSeP2xm/QhbbN6C+oU0hR2HMrMaxbBuidjug6c7c=;
- b=r7+AtETzWhQVAYa6g6Cy0n0nAttvu5h23nvBv9TGxtgCYcC9v1kp2vKK3zyq1AUOey
- G6oRz71vlRrsR7Pr+NM4qU1KOIud6szJnYXDWT/dsMaYhqM4Jge3HhQ3wuYk0dCvy/zu
- eU8ak1nj4fZqGACouzA8aBBcQ5taeha+1vw8RGYPA3VVbdjS1NVRpyHOgL+zxhxxIvNY
- lwQ8qtuE0dZn6KA/X7bFvJKC19Woaf4mK6evzf5OKs9NmqQ5R5sr+BXaHHj1iVjf7ed1
- Yk7C/ZDZ8XbKRHysVujDy6fPoNrcsmEoXdghb/Bw6ettuass6pQpeNwYlwhQruAu0EP/
- RGbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvImV/vdOyeNymHWV6meW7BBLbslSAgibX2DyFlG4UENr011YIi8Z6tMFUaj4vGcNzckurMRdWgtDO@nongnu.org
-X-Gm-Message-State: AOJu0YyazZ0lf76HfVAmbZOWun28wgVtNrRqwQ2WIFihua5GCQS1La13
- ns7J8S5nASwMHmPUTcj4JgZRa4YCBcLsJLTfq5uMCleCsCqGZKUWp60syszvEy4=
-X-Google-Smtp-Source: AGHT+IGrdQM3gTGMOoe5Ylo4U3xoLDvXoXQcrEhO3jy5THvQdRHjJ73KGAAclx2B03XhGOL9pUyYmg==
-X-Received: by 2002:a05:651c:544:b0:2ef:2f37:345b with SMTP id
- 38308e7fff4ca-2f61e0a514emr97871931fa.30.1725375765631; 
- Tue, 03 Sep 2024 08:02:45 -0700 (PDT)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ba641dad0sm209842885e9.30.2024.09.03.08.02.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 08:02:45 -0700 (PDT)
-Message-ID: <b9b574e7-11de-4f04-a84f-40b9ffac986c@linaro.org>
-Date: Tue, 3 Sep 2024 17:02:44 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slV9r-0000zx-Om
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 11:09:29 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 118081F397;
+ Tue,  3 Sep 2024 15:09:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725376166; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
+ b=j2VVMYSye5tmWxWYAkoPMfXYkH0JT4Zmy4gIYvDGzNa9i9Gqf7YHgeWXT5LnjuBH1oRLMX
+ OeX/QV+Nf8e9euKL7r6b31ZQwuK658LbnqRYKv66yez+vmQhYTYNkTAEisNbZ0HQB8tb3y
+ gWqqXqa1tepavrlYJuGEw5FsGz/fdOg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725376166;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
+ b=PF5qc5voEKT114OHhxMyodw4IsXav0HJcw4sxFJ3Jp+VQHLeeS54ioZFPitbJUgr3Al8xO
+ JNE/WB4l0ur3C5AA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=j2VVMYSy;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PF5qc5vo
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725376166; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
+ b=j2VVMYSye5tmWxWYAkoPMfXYkH0JT4Zmy4gIYvDGzNa9i9Gqf7YHgeWXT5LnjuBH1oRLMX
+ OeX/QV+Nf8e9euKL7r6b31ZQwuK658LbnqRYKv66yez+vmQhYTYNkTAEisNbZ0HQB8tb3y
+ gWqqXqa1tepavrlYJuGEw5FsGz/fdOg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725376166;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3t+2khLuok8/MuRCDDjJ68e1sS1q7STeV0T3UgN1BzU=;
+ b=PF5qc5voEKT114OHhxMyodw4IsXav0HJcw4sxFJ3Jp+VQHLeeS54ioZFPitbJUgr3Al8xO
+ JNE/WB4l0ur3C5AA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9025913A80;
+ Tue,  3 Sep 2024 15:09:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EACTFaUm12aiaAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 03 Sep 2024 15:09:25 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, =?utf-8?Q?Dan?=
+ =?utf-8?Q?iel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Avihai Horon
+ <avihaih@nvidia.com>, Joao
+ Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 13/17] migration/multifd: Add
+ migration_has_device_state_support()
+In-Reply-To: <4aaad112-5fdf-4172-bfb4-65dd7880202d@maciej.szmigiero.name>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <8407eb455dfc1dea3cabf065f90833fab337eb98.1724701542.git.maciej.szmigiero@oracle.com>
+ <8734mlon65.fsf@suse.de>
+ <4aaad112-5fdf-4172-bfb4-65dd7880202d@maciej.szmigiero.name>
+Date: Tue, 03 Sep 2024 12:09:23 -0300
+Message-ID: <87a5gon598.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qemu/osdep: handle sysconf(_SC_OPEN_MAX) return value
- == -1
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240830111451.3799490-1-cleger@rivosinc.com>
- <20240830111451.3799490-3-cleger@rivosinc.com>
- <de7b12a3-7480-41b9-837a-880da9264dea@tls.msk.ru>
- <dd28ea4f-67eb-4c42-84d2-24956cde7896@rivosinc.com>
- <294a5480-d871-41e2-8e08-c1067f45d454@linaro.org>
- <563f3b75-bf13-4ca7-a995-f2c8ff1b6799@rivosinc.com>
- <7e405b99-50b4-4c87-a9b6-83c90110eca5@linaro.org>
- <313c9a55-4cc8-4beb-a483-c0202665b226@rivosinc.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <313c9a55-4cc8-4beb-a483-c0202665b226@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 118081F397
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid, suse.de:email]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,125 +135,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/24 15:37, Clément Léger wrote:
-> On 03/09/2024 15:34, Philippe Mathieu-Daudé wrote:
->> On 3/9/24 09:53, Clément Léger wrote:
->>> On 02/09/2024 21:38, Philippe Mathieu-Daudé wrote:
->>>> On 30/8/24 13:57, Clément Léger wrote:
->>>>> On 30/08/2024 13:31, Michael Tokarev wrote:
->>>>>> 30.08.2024 14:14, Clément Léger wrote:
->>>>>>> On some systems (MacOS for instance), sysconf(_SC_OPEN_MAX) can
->>>>>>> return
->>>>>>> -1. In that case we should fallback to using the OPEN_MAX define.
->>>>>>> According to "man sysconf", the OPEN_MAX define should be present and
->>>>>>> provided by either unistd.h and/or limits.h so include them for that
->>>>>>> purpose. For other OSes, just assume a maximum of 1024 files
->>>>>>> descriptors
->>>>>>> as a fallback.
->>>>>>>
->>>>>>> Fixes: 4ec5ebea078e ("qemu/osdep: Move close_all_open_fds() to oslib-
->>>>>>> posix")
->>>>>>> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
->>>>>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
->>>>>>
->>>>>> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
->>>>>>
->>>>>>> @@ -928,6 +933,13 @@ static void
->>>>>>> qemu_close_all_open_fd_fallback(const
->>>>>>> int *skip, unsigned int nskip,
->>>>>>>      void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
->>>>>>>      {
->>>>>>>          int open_max = sysconf(_SC_OPEN_MAX);
->>>>>>> +    if (open_max == -1) {
->>>>>>> +#ifdef CONFIG_DARWIN
->>>>>>> +        open_max = OPEN_MAX;
->>>>
->>>> Missing errno check.
->>>
->>> man sysconf states that:
->>>
->>> "On error, -1 is returned and errno is set to indicate the error (for
->>> example, EINVAL, indicating that name is invalid)."
->>>
->>> So it seems checking for -1 is enough no ? Or were you thinking about
->>> something else ?
->>
->> Mine (macOS 14.6) is:
->>
->>   RETURN VALUES
->>       If the call to sysconf() is not successful, -1 is returned and
->>       errno is set appropriately.  Otherwise, if the variable is
->>       associated with functionality that is not supported, -1 is
->>       returned and errno is not modified.  Otherwise, the current
->>       variable value is returned.
-> 
-> Which seems to imply the same than mine right ? -1 is always returned in
-> case of error and errno might or not be set. So checking for -1 seems
-> enough to check an error return.
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 
-Yes but we can check for the unsupported case. Something like:
-
-     long qemu_sysconf(int name, long unsupported_default)
-     {
-         int current_errno = errno;
-         long retval;
-
-         retval = sysconf(name);
-         if (retval == -1) {
-             if (errno == current_errno) {
-                 return unsupported_default;
-             }
-             perror("sysconf");
-             return -1;
-         }
-         return retval;
-     }
-
-(untested)
-
-> 
->>
->>   STANDARDS
->>       Except for the fact that values returned by sysconf() may change
->>       over the lifetime of the calling process, this function conforms
->>       to IEEE Std 1003.1-1988 (“POSIX.1”).
->>
+> On 30.08.2024 20:55, Fabiano Rosas wrote:
+>> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+>> 
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>>
->>>>
->>>>>>> +#else
->>>>>>> +        open_max = 1024;
->>>>>>> +#endif
->>>>>>
->>>>>> BTW, Can we PLEASE cap this to 1024 in all cases? :)
->>>>>> (unrelated to this change but still).
->>>>>
->>>>> Hi Michael,
->>>>>
->>>>> Do you mean for all OSes or always using 1024 rather than using the
->>>>> sysconf returned value ?
->>>>
->>>> Alternatively add:
->>>>
->>>>     long qemu_sysconf(int name, long unsupported_default);
->>>>
->>>> which returns value, unsupported_default if not supported, or -1.
+>>> Since device state transfer via multifd channels requires multifd
+>>> channels with packets and is currently not compatible with multifd
+>>> compression add an appropriate query function so device can learn
+>>> whether it can actually make use of it.
 >>>
->>> Acked, should this be a global function even if only used in the
->>> qemu_close_all_open_fd() helper yet ?
->>
->> I'm seeing a few more:
->>
->> $ git grep -w sysconf | wc -l
->>        35
->>
->>  From this list a dozen could use qemu_sysconf().
-> 
-> Acked.
-> 
->>
->>>
->>> Thanks,
->>>
->>> Clément
+>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> 
+>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>> 
+>> Out of curiosity, what do you see as a blocker for migrating to a file?
+>> 
+>> We would just need to figure out a mapping from file offset some unit of
+>> data to be able to write in parallel like with ram (of which the page
+>> offset is mapped to the file offset).
+>
+> I'm not sure whether there's a point in that since VFIO devices
+> just provide a raw device state stream - there's no way to know
+> that some buffer is no longer needed because it consisted of
+> dirty data that was completely overwritten by a later buffer.
+>
+> Also, the device type that the code was developed against - a (smart)
+> NIC - has so large device state because (more or less) it keeps a lot
+> of data about network connections passing / made through it.
+>
+> It doesn't really make sense to make snapshot of such device for later
+> reload since these connections will be long dropped by their remote
+> peers by this point.
+>
+> Such snapshotting might make more sense with GPU VFIO devices though.
+>
+> If such file migration support is desired at some later point then for
+> sure the whole code would need to be carefully re-checked for implicit
+> assumptions.
 
+Thanks, let's keep those arguments in mind, maybe we put them in a doc
+somewhere so we remember this in the future.
+
+>
+> Thanks,
+> Maciej
 
