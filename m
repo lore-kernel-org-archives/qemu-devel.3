@@ -4,85 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDA2CD37AA
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 18:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75348CD37AB
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 18:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slY6W-0007LY-9Y; Tue, 03 Sep 2024 14:18:12 -0400
+	id 1slYTb-0006Gi-36; Tue, 03 Sep 2024 14:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slY6U-0007L2-Dk
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 14:18:10 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1slY6S-0001wZ-Hl
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 14:18:10 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-7d4f8a1626cso486663a12.3
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 11:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725387487; x=1725992287; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7OjYGljhmdm5zqLgU5viOKQnBhqt6G43Kg3e8DJKOzE=;
- b=qDS9eLcp11TD0+QbRqN3W1MvRwZZibe9y/OX6QQhrwh/I065pcLNmJdft0YNLPNewa
- cVp+TNnRr635Kj3SKB4BQ5gPL5dDD86QKU3/B3M0EfPGEysPD99scv+WVInnpwFfe9+3
- znZkJ+P+WZy+4+LtLAp4SDt0S0N4MFGjvJukuNVMyvMwDN2cmfXVABdDrVUfVEEUpV0s
- Q1oA8TTEUdha0SDlw2UM7a7Hm+ny973OQ0ImGceyn21+6Q5roSwYo3YNeWc14r3rj2gK
- JPn2ychHDlS2wKSq7jKaeH3eB3ObnjutNxFxKh/ylXir8xQCKuEJi063rnZzV7G7y3S6
- G2qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725387487; x=1725992287;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7OjYGljhmdm5zqLgU5viOKQnBhqt6G43Kg3e8DJKOzE=;
- b=DLLDGlgd3XAazAfifFbW9F3U98xhID9REzH1sBrhJaxuIfwjl+aWsijvCY0iLgzgc6
- t6dAGz8eJ2t7zgbmHBrUELJX3WSWq4ooDJDnN2lH6DtPBks7fPNYZQH9I4ofTBADSsUN
- vqyi60dZ30U4uidx45QH9cMWm4qz2H5rZYa+t3vs+DtkazPKzMyqHva43Ssz1cigOd+q
- ZAidyPovhnU8+YS7IzFO+7IAMqqVp7tlQSQEH2DePZjNHq94Y+jO85XFlG0gsevfxbE3
- EDG1chZIF2v9WOTbi0CFPonfjnShip3ui5xvzt4ifHImC26LdhJoQoQgi7sRSgBPVULs
- kHfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbt1ajVetJdc0yKn+eTrZh6F8UpqqDLsFtpDakseeefLpuVisbK/7Kplu/H0g+aW1E4QG4YVnOKusC@nongnu.org
-X-Gm-Message-State: AOJu0YwEVTifI9icgmFwIuXCLcAxrSPDx6bHJIIS1XV53SEHYEyPLNy/
- 4pEEd2WWYPyY6X6fYzBmRxLtHa0tWCerdBJYcW3zyXo7y8MQ5me1XnK5D5qGokw=
-X-Google-Smtp-Source: AGHT+IE4dVwJJ7TspXl1F8qLtUhbOobgad9TpbJiXV+ZyZLlzKBLXHFut6Sok8jhDi8114TlyjhdVA==
-X-Received: by 2002:a17:90a:fb48:b0:2cf:c9df:4cc8 with SMTP id
- 98e67ed59e1d1-2d88e6f3aa2mr12743376a91.38.1725387486632; 
- Tue, 03 Sep 2024 11:18:06 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d8a5324db0sm6946551a91.56.2024.09.03.11.18.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 11:18:06 -0700 (PDT)
-Message-ID: <c5cc5902-dd23-46df-9c1f-b22d7625b926@linaro.org>
-Date: Tue, 3 Sep 2024 11:18:04 -0700
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1slYTY-0006Fe-MJ
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 14:42:00 -0400
+Received: from vps-vb.mhejs.net ([37.28.154.113])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1slYTW-0004L8-EW
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 14:42:00 -0400
+Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mail@maciej.szmigiero.name>)
+ id 1slYTI-00005e-T5; Tue, 03 Sep 2024 20:41:44 +0200
+Message-ID: <a7fc885e-b373-4e98-af33-efe11687a258@maciej.szmigiero.name>
+Date: Tue, 3 Sep 2024 20:41:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: Fix PSW V-bit packaging in cpu_hppa_get for
- hppa64
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
-Cc: linux-parisc@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>
-References: <Ztbk0Vk35dDGLoCd@p100>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <Ztbk0Vk35dDGLoCd@p100>
+Subject: Re: [PATCH v2 09/17] migration/multifd: Device state transfer support
+ - receive side
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <84141182083a8417c25b4d82a9c4b6228b22ac67.1724701542.git.maciej.szmigiero@oracle.com>
+ <87ttf1n4lm.fsf@suse.de>
+ <00eeacd5-ad27-4899-8526-0941b30e759d@maciej.szmigiero.name>
+ <87frqgn6ha.fsf@suse.de>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <87frqgn6ha.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=37.28.154.113;
+ envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,43 +112,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/24 03:28, Helge Deller wrote:
-> While adding hppa64 support, the psw_v variable got extended from 32 to 64
-> bits.  So, when packaging the PSW-V bit from the psw_v variable for interrupt
-> processing, check bit 31 instead the 63th (sign) bit.
+On 3.09.2024 16:42, Fabiano Rosas wrote:
+> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 > 
-> This fixes a hard to find Linux kernel boot issue where the loss of the PSW-V
-> bit due to an ITLB interruption in the middle of a series of ds/addc
-> instructions (from the divU milicode library) generated the wrong division
-> result and thus triggered a Linux kernel crash.
+>> On 30.08.2024 22:22, Fabiano Rosas wrote:
+>>> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+>>>
+>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>
+>>>> Add a basic support for receiving device state via multifd channels -
+>>>> channels that are shared with RAM transfers.
+>>>>
+>>>> To differentiate between a device state and a RAM packet the packet
+>>>> header is read first.
+>>>>
+>>>> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
+>>>> packet header either device state (MultiFDPacketDeviceState_t) or RAM
+>>>> data (existing MultiFDPacket_t) is then read.
+>>>>
+>>>> The received device state data is provided to
+>>>> qemu_loadvm_load_state_buffer() function for processing in the
+>>>> device's load_state_buffer handler.
+>>>>
+>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>> ---
+>>>>    migration/multifd.c | 127 +++++++++++++++++++++++++++++++++++++-------
+>>>>    migration/multifd.h |  31 ++++++++++-
+>>>>    2 files changed, 138 insertions(+), 20 deletions(-)
+>>>>
+>>>> diff --git a/migration/multifd.c b/migration/multifd.c
+>>>> index b06a9fab500e..d5a8e5a9c9b5 100644
+>>>> --- a/migration/multifd.c
+>>>> +++ b/migration/multifd.c
+(..)
+>>>> +
+>>>> +            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
+>>>> +                                           &local_err);
+>>>>                if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
+>>>>                    break;
+>>>>                }
+>>>> @@ -1181,8 +1239,33 @@ static void *multifd_recv_thread(void *opaque)
+>>>>                has_data = !!p->data->size;
+>>>>            }
+>>>>    
+>>>> -        if (has_data) {
+>>>> -            ret = multifd_recv_state->ops->recv(p, &local_err);
+>>>> +        if (!is_device_state) {
+>>>> +            if (has_data) {
+>>>> +                ret = multifd_recv_state->ops->recv(p, &local_err);
+>>>> +                if (ret != 0) {
+>>>> +                    break;
+>>>> +                }
+>>>> +            }
+>>>> +        } else {
+>>>> +            g_autofree char *idstr = NULL;
+>>>> +            g_autofree char *dev_state_buf = NULL;
+>>>> +
+>>>> +            assert(use_packets);
+>>>> +
+>>>> +            if (p->next_packet_size > 0) {
+>>>> +                dev_state_buf = g_malloc(p->next_packet_size);
+>>>> +
+>>>> +                ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, &local_err);
+>>>> +                if (ret != 0) {
+>>>> +                    break;
+>>>> +                }
+>>>> +            }
+>>>
+>>> What's the use case for !next_packet_size and still call
+>>> load_state_buffer below? I can't see it.
+>>
+>> Currently, next_packet_size == 0 has not usage indeed - it is
+>> a leftover from an early version of the patch set (not public)
+>> that had device state packet (chunk) indexing done by
+>> the common migration code, rather than by the VFIO consumer.
+>>
+>> And then an empty packet could be used to mark the stream
+>> boundary - like the max chunk number to expect.
+>>
+>>> ...because I would suggest to set has_data up there with
+>>> p->next_packet_size:
+>>>
+>>> if (use_packets) {
+>>>      ...
+>>>      has_data = p->next_packet_size || p->zero_num;
+>>> } else {
+>>>      ...
+>>>      has_data = !!p->data_size;
+>>> }
+>>>
+>>> and this whole block would be:
+>>>
+>>> if (has_data) {
+>>>      if (is_device_state) {
+>>>          multifd_device_state_recv(p, &local_err);
+>>>      } else {
+>>>          ret = multifd_recv_state->ops->recv(p, &local_err);
+>>>      }
+>>> }
+>>
+>> The above block makes sense to me with two caveats:
 > 
-> Link: https://lore.kernel.org/lkml/718b8afe-222f-4b3a-96d3-93af0e4ceff1@roeck-us.net/
-> Reported-by: Guenter Roeck <linux@roeck-us.net>
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
+> I have suggestions below, but this is no big deal, so feel free to go
+> with what you think works best.
 > 
-> diff --git a/target/hppa/helper.c b/target/hppa/helper.c
-> index b79ddd8184..d4b1a3cd5a 100644
-> --- a/target/hppa/helper.c
-> +++ b/target/hppa/helper.c
-> @@ -53,7 +53,7 @@ target_ulong cpu_hppa_get_psw(CPUHPPAState *env)
->       }
->   
->       psw |= env->psw_n * PSW_N;
-> -    psw |= (env->psw_v < 0) * PSW_V;
-> +    psw |= ((env->psw_v >> 31) & 1) * PSW_V;
->       psw |= env->psw | env->psw_xb;
->   
->       return psw;
+>> 1) If empty device state packets (next_packet_size == 0) were
+>> to be unsupported they need to be rejected cleanly rather
+>> than silently skipped,
+> 
+> Should this be rejected on the send side? That's the most likely source
+> of the problem if it happens. Don't need to send something we know will
+> cause an error when loading.
 
-While this is correct, we should also update cpu.h:
+Definitely we should send correct bit stream :), it was about the
+case of bit stream corruption or simply using some future bit stream
+format that the QEMU version with this patch set does not understand
+yet.
 
--    target_long psw_v;       /* in most significant bit */
-+    target_long psw_v;       /* in bit 31 */
+> And for the case of stream corruption of some sort we could hoist the
+> check from load_buffer into here:
+> 
+>   else if (is_device_state) {
+>      error_setg(errp, "empty device state packet);
+>      break;
+> }
 
-With that,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Right.
 
-r~
+>> 2) has_data has to have its value computed depending on whether
+>> this is a RAM or a device state packet since looking at
+>> p->normal_num and p->zero_num makes no sense for a device state
+>> packet while I am not sure that looking at p->next_packet_size
+>> for a RAM packet won't introduce some subtle regression.
+> 
+> It should be ok to use next_packet_size for RAM, it must always be in
+> sync with normal_num.
+
+Then it should be ok, but I'll look at this deeper to be sure when
+I will be preparing the next patch set version.
+
+Thanks,
+Maciej
 
 
