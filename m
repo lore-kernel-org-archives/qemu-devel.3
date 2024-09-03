@@ -4,92 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A14BBCD3420
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 12:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0A4CD342C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Sep 2024 12:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slSrP-0000WV-Ae; Tue, 03 Sep 2024 08:42:15 -0400
+	id 1slT1K-0005O1-HS; Tue, 03 Sep 2024 08:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slSrN-0000VD-OQ
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:42:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <erbse.13@gmx.de>) id 1slN3M-00013a-ML
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 02:30:12 -0400
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slSrL-0007Mt-Iu
- for qemu-devel@nongnu.org; Tue, 03 Sep 2024 08:42:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725367329;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=w1GemxTFsONEv2KjJqE+TTM5MVbTvqBJMVyVZjkkY+I=;
- b=JD23d3U34bvAtiVsH6hhAKiSOJOasNrs4qLYXGE2dmdf+UTomeh/B1lSzF1kB+j6B1lyIK
- ltbNM+mkKiteBJw6ZKBmQ8TAut3vflqv7RmqTefXA9Xgi0OHe+ZVphby6LnqYIrZDoRyfS
- 1CLVhKQXH44/yd6YISM/whvdDkK5Viw=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-158-ou4EazeNP26vdawYnafg3Q-1; Tue, 03 Sep 2024 08:42:08 -0400
-X-MC-Unique: ou4EazeNP26vdawYnafg3Q-1
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2052e7836a0so30145585ad.0
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 05:42:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725367327; x=1725972127;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w1GemxTFsONEv2KjJqE+TTM5MVbTvqBJMVyVZjkkY+I=;
- b=wCYoDpz5Y+Jpt4+WWzwkveMDSKcUi4SaSBnAjJTZwYXDb75E1MLROavKbvKCvTV3B8
- G2fQFAdo1vExIjoKGEQ6BGCwxINqmcCAoZLTNBojDNmIvBV23EVI+ctURBhjz38W8wln
- Hgqfp2f8fZEFDzqlfuYGxiaaSF8S+K0BCm+3PjOHbsIM9Bz7o0ub/yUr408RstiOwabB
- nKXqg/HuviXRLd1gPho7HOm2rB0ViVi2SbLrDvSYmceJm05hPz50cbkD+ybA4FdStcCk
- QnHImCvlVrzzUELqN+xUk0sBuT+Z22zozhsempTRhGlTIFpIICfWZmXcEqs+fO6gS/Py
- uIAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLAhdlfCgMpKCG+mIMc8lGDLDJXzkXG0P7MQCD/VfxB47Ai8lFwhs+nWb1ZB7V4QpaxFDgXZhuXePl@nongnu.org
-X-Gm-Message-State: AOJu0Ywku5U4Cj59/JIfJIsMXR9RY/E6sDLQC423BPEWUKnAhLnApY5j
- crhIMgf/Tn4VT8A6Abufp88dYAQbNRuOKPKL1ARUDRkR7YGlUcXdhTOXnSvyySp0v4ucUBdoyVX
- 1FADk05RYkr5GLV0wCagazGYDvuAs7nNvZ3NZqVNWu6sePbLKVV9c
-X-Received: by 2002:a17:902:c40a:b0:205:63c5:74be with SMTP id
- d9443c01a7336-20563c57554mr62196405ad.49.1725367327626; 
- Tue, 03 Sep 2024 05:42:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEDVJd/djxcrdfjh3cgK32uLwt43rMXO02RJFmG7Ytq7U9kEcnE5saN7Wt4NsiBzfaCahodZQ==
-X-Received: by 2002:a17:902:c40a:b0:205:63c5:74be with SMTP id
- d9443c01a7336-20563c57554mr62196245ad.49.1725367327229; 
- Tue, 03 Sep 2024 05:42:07 -0700 (PDT)
-Received: from localhost.localdomain ([115.96.207.26])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-20515542350sm80222025ad.213.2024.09.03.05.42.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Sep 2024 05:42:06 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: 
-Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH 0/2] kvm/i386: Some code refactoring and cleanups for
- kvm_arch_init 
-Date: Tue,  3 Sep 2024 18:11:41 +0530
-Message-ID: <20240903124143.39345-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
+ (Exim 4.90_1) (envelope-from <erbse.13@gmx.de>) id 1slN3K-0003bx-4b
+ for qemu-devel@nongnu.org; Tue, 03 Sep 2024 02:30:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1725345002; x=1725949802; i=erbse.13@gmx.de;
+ bh=vv2avKkp/oIl72L47UeSkMyREe7Sb6GxGrdiZncgkK0=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-Id:
+ MIME-Version:Content-Transfer-Encoding:cc:
+ content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=qUH2yqE2/OVD2gX/A3sGU6DA5Dp+vxWueu6TaMgIkDg5DIPGApGnNqecPs1Cql6Z
+ UjQENjY3SdD4toY/3EOX8Mf0FVdP9NZonU+VcXIK0GcLacD31g7hdLGqeB85X9Cot
+ ZaIwaXqYrMGTeYfi8/O3LYRAUV2JRmgP1Dh0ePhEaceDi78mlRtNVwCvVH2X9Djsb
+ 1hBpKjht0yZgan+9E3k1iFcxLKVvFcFDvZNu7fuwMo8RF3Dbhq/4/OGjeWEGPn6b1
+ tOlNazRHVqTMEjQq6xsH7R0l9G+TkiOHDmo0eruMKvBOrWFoIvWt1HYgxncO6sQ4l
+ fw5LnGyKh8aGMKip+w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from server ([109.192.237.113]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTiTt-1sdy6R10tZ-00SQLD; Tue, 03
+ Sep 2024 08:30:02 +0200
+From: Tom Dohrmann <erbse.13@gmx.de>
+To: Tom Dohrmann <erbse.13@gmx.de>
+Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] accel/kvm: check for KVM_CAP_READONLY_MEM on VM
+Date: Tue,  3 Sep 2024 06:29:53 +0000
+Message-Id: <20240903062953.3926498-1-erbse.13@gmx.de>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:TeL5Dpd+HeKRcyOCGLFIYa1mmRh2o78bO05fbEbFeB23MUB3yjt
+ NrkopVBcHiGVqvL7yqd58jff/wsZL3pzQmklSIikYloVrz48WtCa7KYPTtmibzyktKFUhkZ
+ BnmofNtDAG9HXHsXBqm14XjDjbb+VRECNPGrtL/pl1VxbVplSQ7by2SvH4D1MqCia/tMa8Z
+ 0+rYm2kgGjRTn+a0K9trQ==
+UI-OutboundReport: notjunk:1;M01:P0:Aoy+/hfHX8s=;PU1rzbY/jH+nOTiOGqaEGQqSIaS
+ aIzQ5HHpzr67nIlTmR1OKxf/idtQGgzCeOQ5sL95/KNlS6bEQjJNDh4YIcdl+LItMdlienN29
+ Noow4naiPzefqPqTthRDvPoz23RuH/9/PEKeG2bfWxHKj3TUcQKUB8NHJ0tMGJ55MvQNp3W4A
+ NiCfHjUSzpz2ncJAzThbzGNy+hMcwiws0WFaZbf3FFasnqF3vtIPwgCPZ/V/6lgZft3B2XwrO
+ aMjGGzCSFMpkBvi59+uuceuS8jeNd1BVPgVvb9LUwOCky4aD6r+osYfLRSugeIvKCDaljO1uy
+ Bv54LB1g2E6G4Ac8OWbuEMv8mB0noEe/l2oYMlkHHL6xRkv0+HfO8H7o5F4MMlr2n+FAX+2gI
+ Hns/tat79rf6TLDsGAIbch2RTKPuzSDGJd9v6F/BneHcoo+IjHVDW4pn9lSEKs+hE70U/xMrR
+ nRCdq89I/vUpdSzzyeT9368rQv7tSgeOAwF0yu+we1PNNXNBhZZSS4VCBpmOwNyH+ul6A5CSO
+ gSF+YyVFgVUp/UIRlYn9JpEh/zucWo1IQmA+aQtkLyMq5CAAJdfMGzGIblLA0PcmxFjJbo8kj
+ xmDZKMtF02W/LDcl+Q3CARkQZkw2i+nf0vBHxN8il601uoRrAjsS+B66ViRFJDi62/xzHin03
+ DZlqbL/NmSUUlQYFXTw5deI6pA8ss/nILH2yS+QA6JMxoyfvYVUpoQm4Wdba0BaGbF5+NLRuV
+ vESO+WGuYCpLmQENtw53o0jPd67zkBjr4ROri/rOx4UlYtIjECbD2qNwQENrm07YsWDQAmM1+
+ l0vbA9vHJv3otZyb2oYhbj86BhwJgdTaDzVCPuoxOnsKM=
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=erbse.13@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 03 Sep 2024 08:52:28 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,21 +89,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some cleanups. Should be no functional impact.
+KVM_CAP_READONLY_MEM used to be a global capability, but with the
+introduction of AMD SEV-SNP confidential VMs, this extension is not
+always available on all VM types [1,2].
 
-CC: Paolo Bonzini <pbonzini@redhat.com>
-CC: Marcelo Tosatti <mtosatti@redhat.com>
-CC: kvm@vger.kernel.org
-CC: qemu-devel@nongnu.org
+Query the extension on the VM level instead of on the KVM level.
 
-Ani Sinha (2):
-  kvm/i386: refactor kvm_arch_init and split it into smaller functions
-  kvm/i386: do not initialize identity_base variable
+[1] https://patchwork.kernel.org/project/kvm/patch/20240809190319.1710470-=
+2-seanjc@google.com/
+[2] https://patchwork.kernel.org/project/kvm/patch/20240902144219.3716974-=
+1-erbse.13@gmx.de/
 
- target/i386/kvm/kvm.c | 339 ++++++++++++++++++++++++++----------------
- 1 file changed, 212 insertions(+), 127 deletions(-)
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Tom Dohrmann <erbse.13@gmx.de>
+=2D--
+ accel/kvm/kvm-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--- 
-2.42.0
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 75d11a07b2..acc23092e7 100644
+=2D-- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2603,7 +2603,7 @@ static int kvm_init(MachineState *ms)
+     }
+
+     kvm_readonly_mem_allowed =3D
+-        (kvm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
++        (kvm_vm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
+
+     kvm_resamplefds_allowed =3D
+         (kvm_check_extension(s, KVM_CAP_IRQFD_RESAMPLE) > 0);
+=2D-
+2.34.1
 
 
