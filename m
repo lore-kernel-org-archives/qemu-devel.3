@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92860CD484D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56EA5CD37B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slr8E-0005cI-Ha; Wed, 04 Sep 2024 10:37:14 -0400
+	id 1slr8N-0006mt-5W; Wed, 04 Sep 2024 10:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8C-0005RF-QN
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:12 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8K-0006Q7-Kw
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:20 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8A-0005K7-Ch
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:12 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-374c1e5fe79so2804818f8f.1
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:37:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8I-0005NL-CZ
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:20 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-374c3400367so3001122f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725460628; x=1726065428; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725460637; x=1726065437; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SMqhDyW5QE8TfD14k61fEl5Bo8fbyrZNzqZaBAEhM1E=;
- b=lNhYuTYB51lfiCJbC/SiEUDeUQefJelyM4KFHFKSmsVDp9vXIulNLNyfSfBqPH/UHS
- uQK6dcPhLr+9ZL0ZheR05f5WFPS+zxmUuHdBv4ki7JzWh8dLyAHsB9R0cuwqrkfkE+rf
- ZqxdxSREtzJxGes7XOZq37G6DDcQZ4ACEbdKozYmw0n0baYcu7KKyOJIeezTbpZPZs7W
- FVhwsxxiO/Iq4uJElNDqKcuwcMJmVhARTYmXCL0BW71z0QVKQqKUkA2M2JVxhr2EjjN+
- qp3wNEffxSGH+2lBUvFlSb1Cc5ykTkXn8Ti9u2ehxNpUQyuR4MV3VBC4a54fJGqkAyBN
- QviQ==
+ bh=reUYcFpvFqro4uRXjaKuE8NgjJEMV1ydTwCE7etUopg=;
+ b=ohB9yeVE/IducidJroZnOyLMfhLoEd0yd9YGKWgkgtpr/jteDTa7K89OEkL/F0yIYa
+ mLZ3NA3woPUPkEvAary4LS2uq2u11tRwB4MgnRphHJfRI7olppPn9DPtBAQ1FV+2ksis
+ 8S1FpkQdbXQhywsnt1xJzqRcpMG2UBqlYdhc2gUAA7GKZ/tTy/ZirJLNzzIIdN8cghkW
+ ZhDATFueonh/Mnae5Q6GNa0mq67xP+I4K5yoAZH4JJa1kqQErIaaVT9iJ3tqFTLi3NUl
+ fxZ/rg41efjQSw6a1RPDXdfgXRwPcHNflcGozXHj5GWC65SBhNeBIRgzVJeg3i8VhCEd
+ H3hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725460628; x=1726065428;
+ d=1e100.net; s=20230601; t=1725460637; x=1726065437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SMqhDyW5QE8TfD14k61fEl5Bo8fbyrZNzqZaBAEhM1E=;
- b=TXAlVre9SCxZARCD1UUQJgjxtbqxh72hNfSWFK+kwMAggecJgidEzZGz4H6jE6XqU2
- slDgfuoRfXYs1vmnXqvqYhl8LwNRF4Vu+X6eHsHuxrnAPTwre3HHYmLwRKlaRu2pJMsW
- E2WCE7RJ9hGUrTr42D1xEMUkGXj0LX5PdspyrljSFbkDegE6qUdy+CUqG9BiNAd2jJlX
- cc8X9pVlYHlLDJwTMIwfMTQeaRUOfBqJbQJpWoWaizwZFSbEWYVk5lzwXc3+5HKpX3Gt
- 1A8vrdParDjhepGME1Qnywt714+hc6b6CUIbRrA6rxixIRgOlHDjDA/h+ZBeUX14tkkx
- VdOQ==
+ bh=reUYcFpvFqro4uRXjaKuE8NgjJEMV1ydTwCE7etUopg=;
+ b=QkpH4KHNWrajHUTrSYmBwzyzEoAMP+orqotLJqE0omdBVjogRC7HHML/fWkjwMuiAW
+ RnbLu57zfuwFyB4nBStNDXdijqD9IT4S1cleJAxhyyzk9XPp5QuOqKeQLu5zQfzYBd4i
+ a+XrMNKUeTKTtlYPCvpT222g2aRSLWmNt3FHL5loTNqJiGaH8nn16qFnKtRM/qDaLlBy
+ Yo3g87TxEacSA8A+ev5FlUITeUg0lZBuBhejVp59WoEiZwylKk7rdDPc0fsh9tXd5BIZ
+ IY8ZcohvoeIvPYMhC+RiyeAWB0LxiIVic+MP6BXiZh/gVQk1LOIRhAU8BUQhl6Lmx+ZR
+ 9fsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMWUZFXlstr0uGc3dTz37APpA3tdXdHnk+847bn/7dpJe9O9eV7jmzkDOc2PyOf0cm5Gs53Lrmwcu1@nongnu.org
-X-Gm-Message-State: AOJu0YzGTF/d6guaGE0jg9wp6ARytf/yB7qsShVeJoxmPG9rFeNlh5Kc
- W/aONTUXLRclWUqRNXtQ4iq3feB/OnKkKkuhYEL0UcXjGP0X34ycCpcaHPpjwzg=
-X-Google-Smtp-Source: AGHT+IFxcBnmAVU4Uxl26wyRMxn0skOlK29wBN/5QhKGSMOi8JYMLnFG8I/l8u3ANp5X0d31+JwAXw==
-X-Received: by 2002:adf:eac7:0:b0:374:cbe8:6f43 with SMTP id
- ffacd0b85a97d-374cbe8703bmr6886443f8f.33.1725460628494; 
- Wed, 04 Sep 2024 07:37:08 -0700 (PDT)
+ AJvYcCVMSv5QUUEPtWnn8w5UygB46X/RT+I3rkq3etkH4oPszW2XqrKt0U8KR1fuKv+cFJ0kaN0q+mHDsGS2@nongnu.org
+X-Gm-Message-State: AOJu0YztswKJE/egNBS5sdcwgZJK1oedUbu3KtocFY4eIPGhE26nxPCC
+ i/vh6NAYmxgjBcuTUIQpn5ZaG0vVGSyS/eokwuVbjNl/B4R9U3pS7Q5+F3VzxLk=
+X-Google-Smtp-Source: AGHT+IGezzOoyhGbkALsLB4HLP7xnCC/1WPV3TWPt9FIxISRPNuzTVhWLXF4ikuxokoMg0/mUTkZIw==
+X-Received: by 2002:a5d:6801:0:b0:374:c69b:5a24 with SMTP id
+ ffacd0b85a97d-374c69b5b9amr9703472f8f.51.1725460636626; 
+ Wed, 04 Sep 2024 07:37:16 -0700 (PDT)
 Received: from localhost.localdomain (56.red-95-127-44.staticip.rima-tde.net.
  [95.127.44.56]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3749ee9c692sm17103018f8f.53.2024.09.04.07.37.06
+ ffacd0b85a97d-374c0f6f4c4sm11715559f8f.44.2024.09.04.07.37.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Sep 2024 07:37:08 -0700 (PDT)
+ Wed, 04 Sep 2024 07:37:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
 	qemu-devel@nongnu.org
@@ -66,17 +66,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 06/15] hw/cris: Remove image loader helper
-Date: Wed,  4 Sep 2024 16:35:54 +0200
-Message-ID: <20240904143603.52934-7-philmd@linaro.org>
+Subject: [PATCH v2 07/15] hw/intc: Remove TYPE_ETRAX_FS_PIC device
+Date: Wed,  4 Sep 2024 16:35:55 +0200
+Message-ID: <20240904143603.52934-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240904143603.52934-1-philmd@linaro.org>
 References: <20240904143603.52934-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,51 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No more CRIS machine uses cris_load_image(), remove it.
+We just removed the single machine using it (axis-dev88).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/cris/boot.h      |  16 -------
- hw/cris/boot.c      | 102 --------------------------------------------
- hw/cris/meson.build |   4 --
- hw/meson.build      |   1 -
- 4 files changed, 123 deletions(-)
- delete mode 100644 hw/cris/boot.h
- delete mode 100644 hw/cris/boot.c
- delete mode 100644 hw/cris/meson.build
+ hw/intc/etraxfs_pic.c | 172 ------------------------------------------
+ hw/intc/meson.build   |   1 -
+ 2 files changed, 173 deletions(-)
+ delete mode 100644 hw/intc/etraxfs_pic.c
 
-diff --git a/hw/cris/boot.h b/hw/cris/boot.h
+diff --git a/hw/intc/etraxfs_pic.c b/hw/intc/etraxfs_pic.c
 deleted file mode 100644
-index 9f1e0e340c..0000000000
---- a/hw/cris/boot.h
+index bd37d1cca0..0000000000
+--- a/hw/intc/etraxfs_pic.c
 +++ /dev/null
-@@ -1,16 +0,0 @@
--#ifndef HW_CRIS_BOOT_H
--#define HW_CRIS_BOOT_H
--
--struct cris_load_info
--{
--    const char *image_filename;
--    const char *cmdline;
--    int image_size;
--    ram_addr_t ram_size;
--
--    hwaddr entry;
--};
--
--void cris_load_image(CRISCPU *cpu, struct cris_load_info *li);
--
--#endif
-diff --git a/hw/cris/boot.c b/hw/cris/boot.c
-deleted file mode 100644
-index 9fa09cfd83..0000000000
---- a/hw/cris/boot.c
-+++ /dev/null
-@@ -1,102 +0,0 @@
+@@ -1,172 +0,0 @@
 -/*
-- * CRIS image loading.
+- * QEMU ETRAX Interrupt Controller.
 - *
-- * Copyright (c) 2010 Edgar E. Iglesias, Axis Communications AB.
+- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
 - *
 - * Permission is hereby granted, free of charge, to any person obtaining a copy
 - * of this software and associated documentation files (the "Software"), to deal
@@ -165,105 +139,165 @@ index 9fa09cfd83..0000000000
 - */
 -
 -#include "qemu/osdep.h"
--#include "cpu.h"
--#include "hw/loader.h"
--#include "elf.h"
--#include "boot.h"
--#include "qemu/cutils.h"
--#include "sysemu/reset.h"
+-#include "hw/sysbus.h"
+-#include "qemu/module.h"
+-#include "hw/irq.h"
+-#include "hw/qdev-properties.h"
+-#include "qom/object.h"
 -
--static void main_cpu_reset(void *opaque)
+-#define D(x)
+-
+-#define R_RW_MASK   0
+-#define R_R_VECT    1
+-#define R_R_MASKED_VECT 2
+-#define R_R_NMI     3
+-#define R_R_GURU    4
+-#define R_MAX       5
+-
+-#define TYPE_ETRAX_FS_PIC "etraxfs-pic"
+-DECLARE_INSTANCE_CHECKER(struct etrax_pic, ETRAX_FS_PIC,
+-                         TYPE_ETRAX_FS_PIC)
+-
+-struct etrax_pic
 -{
--    CRISCPU *cpu = opaque;
--    CPUCRISState *env = &cpu->env;
--    struct cris_load_info *li;
+-    SysBusDevice parent_obj;
 -
--    li = env->load_info;
+-    MemoryRegion mmio;
+-    qemu_irq parent_irq;
+-    qemu_irq parent_nmi;
+-    uint32_t regs[R_MAX];
+-};
 -
--    cpu_reset(CPU(cpu));
+-static void pic_update(struct etrax_pic *fs)
+-{   
+-    uint32_t vector = 0;
+-    int i;
 -
--    if (!li) {
--        /* nothing more to do.  */
+-    fs->regs[R_R_MASKED_VECT] = fs->regs[R_R_VECT] & fs->regs[R_RW_MASK];
+-
+-    /* The ETRAX interrupt controller signals interrupts to the core
+-       through an interrupt request wire and an irq vector bus. If 
+-       multiple interrupts are simultaneously active it chooses vector 
+-       0x30 and lets the sw choose the priorities.  */
+-    if (fs->regs[R_R_MASKED_VECT]) {
+-        uint32_t mv = fs->regs[R_R_MASKED_VECT];
+-        for (i = 0; i < 31; i++) {
+-            if (mv & 1) {
+-                vector = 0x31 + i;
+-                /* Check for multiple interrupts.  */
+-                if (mv > 1)
+-                    vector = 0x30;
+-                break;
+-            }
+-            mv >>= 1;
+-        }
+-    }
+-
+-    qemu_set_irq(fs->parent_irq, vector);
+-}
+-
+-static uint64_t
+-pic_read(void *opaque, hwaddr addr, unsigned int size)
+-{
+-    struct etrax_pic *fs = opaque;
+-    uint32_t rval;
+-
+-    rval = fs->regs[addr >> 2];
+-    D(printf("%s %x=%x\n", __func__, addr, rval));
+-    return rval;
+-}
+-
+-static void pic_write(void *opaque, hwaddr addr,
+-                      uint64_t value, unsigned int size)
+-{
+-    struct etrax_pic *fs = opaque;
+-    D(printf("%s addr=%x val=%x\n", __func__, addr, value));
+-
+-    if (addr == R_RW_MASK) {
+-        fs->regs[R_RW_MASK] = value;
+-        pic_update(fs);
+-    }
+-}
+-
+-static const MemoryRegionOps pic_ops = {
+-    .read = pic_read,
+-    .write = pic_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4
+-    }
+-};
+-
+-static void nmi_handler(void *opaque, int irq, int level)
+-{   
+-    struct etrax_pic *fs = (void *)opaque;
+-    uint32_t mask;
+-
+-    mask = 1 << irq;
+-    if (level)
+-        fs->regs[R_R_NMI] |= mask;
+-    else
+-        fs->regs[R_R_NMI] &= ~mask;
+-
+-    qemu_set_irq(fs->parent_nmi, !!fs->regs[R_R_NMI]);
+-}
+-
+-static void irq_handler(void *opaque, int irq, int level)
+-{
+-    struct etrax_pic *fs = (void *)opaque;
+-
+-    if (irq >= 30) {
+-        nmi_handler(opaque, irq, level);
 -        return;
 -    }
 -
--    env->pc = li->entry;
--
--    if (li->image_filename) {
--        env->regs[8] = 0x56902387; /* RAM boot magic.  */
--        env->regs[9] = 0x40004000 + li->image_size;
--    }
--
--    if (li->cmdline) {
--        /* Let the kernel know we are modifying the cmdline.  */
--        env->regs[10] = 0x87109563;
--        env->regs[11] = 0x40000000;
--    }
+-    irq -= 1;
+-    fs->regs[R_R_VECT] &= ~(1 << irq);
+-    fs->regs[R_R_VECT] |= (!!level << irq);
+-    pic_update(fs);
 -}
 -
--static uint64_t translate_kernel_address(void *opaque, uint64_t addr)
+-static void etraxfs_pic_init(Object *obj)
 -{
--    return addr - 0x80000000LL;
+-    DeviceState *dev = DEVICE(obj);
+-    struct etrax_pic *s = ETRAX_FS_PIC(obj);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-
+-    qdev_init_gpio_in(dev, irq_handler, 32);
+-    sysbus_init_irq(sbd, &s->parent_irq);
+-    sysbus_init_irq(sbd, &s->parent_nmi);
+-
+-    memory_region_init_io(&s->mmio, obj, &pic_ops, s,
+-                          "etraxfs-pic", R_MAX * 4);
+-    sysbus_init_mmio(sbd, &s->mmio);
 -}
 -
--void cris_load_image(CRISCPU *cpu, struct cris_load_info *li)
+-static const TypeInfo etraxfs_pic_info = {
+-    .name          = TYPE_ETRAX_FS_PIC,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(struct etrax_pic),
+-    .instance_init = etraxfs_pic_init,
+-};
+-
+-static void etraxfs_pic_register_types(void)
 -{
--    CPUCRISState *env = &cpu->env;
--    uint64_t entry;
--    int kcmdline_len;
--    int image_size;
--
--    env->load_info = li;
--    /* Boots a kernel elf binary, os/linux-2.6/vmlinux from the axis 
--       devboard SDK.  */
--    image_size = load_elf(li->image_filename, NULL,
--                          translate_kernel_address, NULL,
--                          &entry, NULL, NULL, NULL, 0, EM_CRIS, 0, 0);
--    li->entry = entry;
--    if (image_size < 0) {
--        /* Takes a kimage from the axis devboard SDK.  */
--        image_size = load_image_targphys(li->image_filename, 0x40004000,
--                                         li->ram_size);
--        li->entry = 0x40004000;
--    }
--
--    if (image_size < 0) {
--        fprintf(stderr, "qemu: could not load kernel '%s'\n",
--                li->image_filename);
--        exit(1);
--    }
--
--    if (li->cmdline && (kcmdline_len = strlen(li->cmdline))) {
--        if (kcmdline_len > 256) {
--            fprintf(stderr, "Too long CRIS kernel cmdline (max 256)\n");
--            exit(1);
--        }
--        pstrcpy_targphys("cmdline", 0x40000000, 256, li->cmdline);
--    }
--    qemu_register_reset(main_cpu_reset, cpu);
+-    type_register_static(&etraxfs_pic_info);
 -}
-diff --git a/hw/cris/meson.build b/hw/cris/meson.build
-deleted file mode 100644
-index dc43251667..0000000000
---- a/hw/cris/meson.build
-+++ /dev/null
-@@ -1,4 +0,0 @@
--cris_ss = ss.source_set()
--cris_ss.add(files('boot.c'))
 -
--hw_arch += {'cris': cris_ss}
-diff --git a/hw/meson.build b/hw/meson.build
-index 1c6308fe95..e86badc541 100644
---- a/hw/meson.build
-+++ b/hw/meson.build
-@@ -48,7 +48,6 @@ subdir('fsi')
- subdir('alpha')
- subdir('arm')
- subdir('avr')
--subdir('cris')
- subdir('hppa')
- subdir('i386')
- subdir('loongarch')
+-type_init(etraxfs_pic_register_types)
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index f4d81eb8e4..6bfdc4eb33 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -15,7 +15,6 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
+ system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
+ system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
+ system_ss.add(when: 'CONFIG_HEATHROW_PIC', if_true: files('heathrow_pic.c'))
 -- 
 2.45.2
 
