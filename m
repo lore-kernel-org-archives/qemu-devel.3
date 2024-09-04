@@ -4,88 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF9CCD4853
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B28CD4857
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsSh-0002S3-6c; Wed, 04 Sep 2024 12:02:27 -0400
+	id 1slsUT-0001Qt-3s; Wed, 04 Sep 2024 12:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slsRx-0001CS-LI
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:01:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsUR-0001JZ-97
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:04:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1slsRt-0007ZF-Iv
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:01:40 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsUP-00007M-C7
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:04:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725465694;
+ s=mimecast20190719; t=1725465851;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4YMsrOHwdbwj1vJyLbDTSGRJoKcvxAjUZz1QB5PoqZg=;
- b=buRxeCabrG4IT/n8XMd9QlR1NE59p1ooZU0lR9agWP1+Laln/hs+cYhCYuafX/Gz/tQRnv
- xsLvMxMJoaP75sFhrQihhkMLOi+DmCXmSLUwkMPCB/1+WjyB4gyEYCmyTSjqfF2W0c9LuX
- it6Xj1O0LwGyMD+1IsUqWfs87sNsvpU=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Zd9sQet5kwX9p6t3oeXtGoej+z1F6/fvYgHi5hUSZ5Q=;
+ b=L6CHzptB8drT6p6dUjX5mpcJu+BrZdYVlaPdBVAb5oD5UAvb3jomQnujrxktv9STRiDRjp
+ KpItUAFMtDDxcAILPnUlSL6W8jy+BkSK1FIq84ajnvC/er+55BNl2Zw0fHFAkw+fscnsEj
+ x+n8zkc2evG1mzR0YGVR4yjutMH7WR4=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-AxGO1XvsP_qzPAJxna2otg-1; Wed, 04 Sep 2024 12:01:31 -0400
-X-MC-Unique: AxGO1XvsP_qzPAJxna2otg-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-6818fa37eecso6914874a12.1
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:01:30 -0700 (PDT)
+ us-mta-96-AlmAW4CdP6iwOpH3IoRD2w-1; Wed, 04 Sep 2024 12:04:09 -0400
+X-MC-Unique: AlmAW4CdP6iwOpH3IoRD2w-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6c353d32ea0so13715736d6.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:04:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725465689; x=1726070489;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4YMsrOHwdbwj1vJyLbDTSGRJoKcvxAjUZz1QB5PoqZg=;
- b=lP96PKZvPBa6X0139jpuG4CzEDZTl2peO6wrHedkFbSQQvN2arBfwsWVRzAD0Q9BlZ
- ZZdGG4xSiDcUiFKVdpPJhakQD2vKGBDbsprS8CEUx0eOhGpEICwuPYCPH+XvqdFNArvx
- RPvaXBy2n7TkVq81E4fP8Sx0uQbBxWdQfH5xn4tUNSModMAKAD9kaeOh8TonLLMN2Oaz
- ss5jz+MjihPN4yIAupmkiz7pd/dgVZRF05ZLxGl9m76LwUDthfLZpUl+8tRPh0Gbnbu7
- 0aUYwy5kPlMgw/hLCDOzzAHHzOuiPCMnJPEybzzdhu+6o6aUek8w6YdWoaCP8n2WmoAB
- CPow==
-X-Gm-Message-State: AOJu0YzYNvsxt00mTLBXuL03YeJ0Hn2VRC5qqsWAtqjUD0jLU5FuCKeB
- 3P+LYib0bWNs/IfhNCexK9tBF6UR3KlXdcZXXEniO/fJ0hgvX9OGdIfLQ6q4exrMjf7XCrgGrmM
- a6xgKq8ZYSfnPzT0ONCAzYZt/PbMVI2zzEwW+OPULGxsg1y4h5ILCaBdORrAq7tY=
-X-Received: by 2002:a17:90a:788e:b0:2da:8e9b:f37b with SMTP id
- 98e67ed59e1d1-2da8e9bf63amr2827390a91.24.1725465689120; 
- Wed, 04 Sep 2024 09:01:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGcRbhfB+lTkwbiKaObF/fWzamXZOgzAZayQTqPYVDZw+xrEKYnDlR0CVkZ74hiyBOKbhqEDQ==
-X-Received: by 2002:a17:90a:788e:b0:2da:8e9b:f37b with SMTP id
- 98e67ed59e1d1-2da8e9bf63amr2827344a91.24.1725465688624; 
- Wed, 04 Sep 2024 09:01:28 -0700 (PDT)
-Received: from smtpclient.apple ([115.96.124.26])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d8de63cf21sm6657254a91.56.2024.09.04.09.01.26
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 04 Sep 2024 09:01:28 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: [PATCH] kvm/i386: replace identity_base variable with a constant
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20240904123238.283627-1-pbonzini@redhat.com>
-Date: Wed, 4 Sep 2024 21:31:13 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <90FC8A16-85B6-4B59-BC49-E8CBD0C6DBD1@redhat.com>
-References: <20240904123238.283627-1-pbonzini@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ d=1e100.net; s=20230601; t=1725465849; x=1726070649;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Zd9sQet5kwX9p6t3oeXtGoej+z1F6/fvYgHi5hUSZ5Q=;
+ b=ih1pNbI87QDb0ndV7zqQEdbD5BAqaQIlb+9gdNJbZLy3o+so+OWGgE4DcsZdfaQJ3w
+ Uj53GuK74ewKhmeo14+Tur/CwXB7uNVgGbOVCiEYrvRd/uEbvpb2SHm43OoDNZnanzlm
+ lJqiaFSkGkvzrwrhc+IwNT+wPquos4w14wTTiH1grrQxzJ7/kpp8oPkZlBI6vPnqIaUh
+ 1o4YmM+6VX9DNoIcQV+NN9MNFkycmm9mGP4JxTBDM4B8QYGp9NrerIonxdJM3da+wx/4
+ V03ql+lTwm7545a8V+psaqsF5eiRvVy0xV3ibarrMUn2KAliHIhFxEoY4G9T0oqGrDE4
+ MGYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZSVFhS6jjmWSQpJRbLlrJvevgUzOqdo+8wF7nQDxS6xqBBoz4UvGQGc3stBvB0ffSihVCtx3xCP7g@nongnu.org
+X-Gm-Message-State: AOJu0Yz3SCIeF8tm1XyfSSLjsHh6eZJsaQw6azEHdJBWxA/6jONjSrkU
+ mQcvUs3rAYG4picf+Q5rUdNNuPwHJmh97Yw6tSSrVcayYYe7FajDI/zT72tU+yEoSZTfX2AkjuS
+ 1uXPZhNvonhdPiUCdsIpa79dQdsU+pUW66kR+BWr+YkwDHMaxT7X3
+X-Received: by 2002:a05:6214:448c:b0:6c5:1151:8cbe with SMTP id
+ 6a1803df08f44-6c511518da3mr74083066d6.38.1725465849162; 
+ Wed, 04 Sep 2024 09:04:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHG5DTJvtd9G4AZTbb2BSDdbcAOMp4rvx6RFVxa1HNUr6VVoaF5jSJ6ICSy0YaiE9TQ/GdofA==
+X-Received: by 2002:a05:6214:448c:b0:6c5:1151:8cbe with SMTP id
+ 6a1803df08f44-6c511518da3mr74082506d6.38.1725465848720; 
+ Wed, 04 Sep 2024 09:04:08 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
+ [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c36ebb1eaesm25617016d6.11.2024.09.04.09.04.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 09:04:08 -0700 (PDT)
+Message-ID: <fd4a524e-4d6b-4c90-a7f8-6d2309b9cb62@redhat.com>
+Date: Wed, 4 Sep 2024 18:04:04 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/15] hw/net: Remove TYPE_ETRAX_FS_ETH device
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
+References: <20240904143603.52934-1-philmd@linaro.org>
+ <20240904143603.52934-10-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240904143603.52934-10-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,132 +150,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 4 Sep 2024, at 6:02=E2=80=AFPM, Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->=20
-> identity_base variable is first initialzied to address 0xfffbc000 and =
-then
-> kvm_vm_set_identity_map_addr() overrides this value to address =
-0xfeffc000.
-> The initial address to which the variable was initialized was never =
-used. Clean
-> everything up, placing 0xfeffc000 in a preprocessor constant.
->=20
-> Reported-by: Ani Sinha <anisinha@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-
+On 04/09/2024 16.35, Philippe Mathieu-Daudé wrote:
+> We just removed the single machine using it (axis-dev88).
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> target/i386/kvm/kvm.c | 36 ++++++++++++++++++------------------
-> 1 file changed, 18 insertions(+), 18 deletions(-)
->=20
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 599faf0ac6e..5422fd7fa7d 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -81,6 +81,16 @@
->     do { } while (0)
-> #endif
->=20
-> +/*
-> + * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code =
-directly.
-> + * In order to use vm86 mode, an EPT identity map and a TSS  are =
-needed.
-> + * Since these must be part of guest physical memory, we need to =
-allocate
-> + * them, both by setting their start addresses in the kernel and by
-> + * creating a corresponding e820 entry. We need 4 pages before the =
-BIOS,
-> + * so this value allows up to 16M BIOSes.
-> + */
-> +#define KVM_IDENTITY_BASE 0xfeffc000
-> +
-> /* =46rom arch/x86/kvm/lapic.h */
-> #define KVM_APIC_BUS_CYCLE_NS       1
-> #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / =
-KVM_APIC_BUS_CYCLE_NS)
-> @@ -3036,18 +3046,9 @@ static int =
-kvm_vm_enable_triple_fault_event(KVMState *s)
->     return ret;
-> }
->=20
-> -static int kvm_vm_set_identity_map_addr(KVMState *s, uint64_t =
-*identity_base)
-> +static int kvm_vm_set_identity_map_addr(KVMState *s, uint64_t =
-identity_base)
-> {
-> -    /*
-> -     * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code =
-directly.
-> -     * In order to use vm86 mode, an EPT identity map and a TSS  are =
-needed.
-> -     * Since these must be part of guest physical memory, we need to =
-allocate
-> -     * them, both by setting their start addresses in the kernel and =
-by
-> -     * creating a corresponding e820 entry. We need 4 pages before =
-the BIOS,
-> -     * so this value allows up to 16M BIOSes.
-> -     */
-> -    *identity_base =3D 0xfeffc000;
-> -    return kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, identity_base);
-> +    return kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, =
-&identity_base);
-> }
->=20
-> static int kvm_vm_set_nr_mmu_pages(KVMState *s)
-> @@ -3064,10 +3065,9 @@ static int kvm_vm_set_nr_mmu_pages(KVMState *s)
->     return ret;
-> }
->=20
-> -static int kvm_vm_set_tss_addr(KVMState *s, uint64_t identity_base)
-> +static int kvm_vm_set_tss_addr(KVMState *s, uint64_t tss_base)
-> {
-> -    /* Set TSS base one page after EPT identity map. */
-> -    return kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, identity_base);
-> +    return kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, tss_base);
-> }
->=20
-> static int kvm_vm_enable_disable_exits(KVMState *s)
-> @@ -3195,7 +3195,6 @@ static void kvm_vm_enable_energy_msrs(KVMState =
-*s)
->=20
-> int kvm_arch_init(MachineState *ms, KVMState *s)
-> {
-> -    uint64_t identity_base =3D 0xfffbc000;
->     int ret;
->     struct utsname utsname;
->     Error *local_err =3D NULL;
-> @@ -3263,18 +3262,19 @@ int kvm_arch_init(MachineState *ms, KVMState =
-*s)
->     uname(&utsname);
->     lm_capable_kernel =3D strcmp(utsname.machine, "x86_64") =3D=3D 0;
->=20
-> -    ret =3D kvm_vm_set_identity_map_addr(s, &identity_base);
-> +    ret =3D kvm_vm_set_identity_map_addr(s, KVM_IDENTITY_BASE);
->     if (ret < 0) {
->         return ret;
->     }
->=20
-> -    ret =3D kvm_vm_set_tss_addr(s, identity_base + 0x1000);
-> +    /* Set TSS base one page after EPT identity map. */
-> +    ret =3D kvm_vm_set_tss_addr(s, KVM_IDENTITY_BASE + 0x1000);
->     if (ret < 0) {
->         return ret;
->     }
->=20
->     /* Tell fw_cfg to notify the BIOS to reserve the range. */
-> -    e820_add_entry(identity_base, 0x4000, E820_RESERVED);
-> +    e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
->=20
->     ret =3D kvm_vm_set_nr_mmu_pages(s);
->     if (ret < 0) {
-> --=20
-> 2.46.0
->=20
+>   include/hw/cris/etraxfs.h |  36 --
+>   hw/net/etraxfs_eth.c      | 688 --------------------------------------
+>   hw/net/meson.build        |   1 -
+>   hw/net/trace-events       |   5 -
+>   4 files changed, 730 deletions(-)
+>   delete mode 100644 include/hw/cris/etraxfs.h
+>   delete mode 100644 hw/net/etraxfs_eth.c
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
 
