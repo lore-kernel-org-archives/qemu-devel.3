@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA624CD4847
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3EDCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slo8c-0005qs-37; Wed, 04 Sep 2024 07:25:26 -0400
+	id 1slo95-00081j-2K; Wed, 04 Sep 2024 07:25:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8Y-0005h4-0M
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8a-0005rk-FW
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8V-0004UG-44
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8V-0004UW-Jp
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1725449118;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JwzLbDHsyLFUJ/vXiw1wuo5kYGCQumsIXEoc9OcztJ8=;
- b=QYEmtc3qSOeEcYU+jIMHA5KgJYpSPBXOccBaileSYMBm9TfuONWfyiligcLWjzHDbZZYAa
- RSsnjIr84aOu7zC63JawERw+CVCs4tuSSFXow2JbibLE3l9/Udkc3C4jurNMUQ2l79jkjY
- xRPdYBgB9y5n0AXlsQYgsE2gQGzgQLU=
+ bh=MjUHoQUWEQZufLYm+5meP3FvBAhucIo90QTzT/mE2fg=;
+ b=JfxVaK1v61KLhkWHUOweqK+8HqQFNsklO1voj8Sy4CkXJi7LUCrJ11Qm9IeaimKHiQw7cd
+ wH/oV77Vn3KheM3ggIUFPs316w9pzyx/pDPzfZ00ZEz4+l82V+L6o/Dtz6KSRiNxn0Z6kK
+ glOebjWaDIt73ph8JBkDT/CjDfV18xw=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-tzF7ZPmeNqWeDANuQ5DEzA-1; Wed,
- 04 Sep 2024 07:18:48 -0400
-X-MC-Unique: tzF7ZPmeNqWeDANuQ5DEzA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-OsK3oRsuOyiaiP7MSTnNqw-1; Wed,
+ 04 Sep 2024 07:18:51 -0400
+X-MC-Unique: OsK3oRsuOyiaiP7MSTnNqw-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D02DF1955E8C; Wed,  4 Sep 2024 11:18:42 +0000 (UTC)
+ id 660E019560A3; Wed,  4 Sep 2024 11:18:47 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 976F2300019A; Wed,  4 Sep 2024 11:18:38 +0000 (UTC)
+ id A08D7300019A; Wed,  4 Sep 2024 11:18:46 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8EA7521E691E; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
+ id CDA0121E681A; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
@@ -65,10 +65,10 @@ Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
  avihaih@nvidia.com
-Subject: [PATCH v2 01/19] qapi: Smarter camel_to_upper() to reduce need for
- 'prefix'
-Date: Wed,  4 Sep 2024 13:18:18 +0200
-Message-ID: <20240904111836.3273842-2-armbru@redhat.com>
+Subject: [PATCH v2 14/19] qapi/crypto: Rename QCryptoAkCipherAlgorithm to
+ *Algo, and drop prefix
+Date: Wed,  4 Sep 2024 13:18:31 +0200
+Message-ID: <20240904111836.3273842-15-armbru@redhat.com>
 In-Reply-To: <20240904111836.3273842-1-armbru@redhat.com>
 References: <20240904111836.3273842-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -100,509 +100,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-camel_to_upper() converts its argument from camel case to upper case
-with '_' between words.  Used for generated enumeration constant
-prefixes.
+QAPI's 'prefix' feature can make the connection between enumeration
+type and its constants less than obvious.  It's best used with
+restraint.
 
-When some of the words are spelled all caps, where exactly to insert
-'_' is guesswork.  camel_to_upper()'s guesses are bad enough in places
-to make people override them with a 'prefix' in the schema.
+QCryptoAkCipherAlgorithm has a 'prefix' that overrides the generated
+enumeration constants' prefix to QCRYPTO_AKCIPHER_ALG.
 
-Rewrite it to guess better:
+We could simply drop 'prefix', but then the prefix becomes
+QCRYPTO_AK_CIPHER_ALGORITHM, which is rather long.
 
-1. Insert '_' after a non-upper case character followed by an upper
-   case character:
+We could additionally rename the type to QCryptoAkCipherAlg, but I
+think the abbreviation "alg" is less than clear.
 
-       OneTwo -> ONE_TWO
-       One2Three -> ONE2_THREE
-
-2. Insert '_' before the last upper case character followed by a
-   non-upper case character:
-
-       ACRONYMWord -> ACRONYM_Word
-
-   Except at the beginning (as in OneTwo above), or when there is
-   already one:
-
-       AbCd -> AB_CD
-
-This changes the default enumeration constant prefix for a number of
-enums.  Generated enumeration constants change only where the default
-is not overridden with 'prefix'.
-
-The following enumerations without a 'prefix' change:
-
-    enum                            old camel_to_upper()
-                                    new camel_to_upper()
-    ------------------------------------------------------------------
-    DisplayGLMode                   DISPLAYGL_MODE
-                                    DISPLAY_GL_MODE
-    EbpfProgramID                   EBPF_PROGRAMID
-                                    EBPF_PROGRAM_ID
-    HmatLBDataType                  HMATLB_DATA_TYPE
-                                    HMAT_LB_DATA_TYPE
-    HmatLBMemoryHierarchy           HMATLB_MEMORY_HIERARCHY
-                                    HMAT_LB_MEMORY_HIERARCHY
-    MultiFDCompression              MULTIFD_COMPRESSION
-                                    MULTI_FD_COMPRESSION
-    OffAutoPCIBAR                   OFF_AUTOPCIBAR
-                                    OFF_AUTO_PCIBAR
-    QCryptoBlockFormat              Q_CRYPTO_BLOCK_FORMAT
-                                    QCRYPTO_BLOCK_FORMAT
-    QCryptoBlockLUKSKeyslotState    Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE
-                                    QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE
-    QKeyCode                        Q_KEY_CODE
-                                    QKEY_CODE
-    XDbgBlockGraphNodeType          X_DBG_BLOCK_GRAPH_NODE_TYPE
-                                    XDBG_BLOCK_GRAPH_NODE_TYPE
-    TestUnionEnumA                  TEST_UNION_ENUMA
-                                    TEST_UNION_ENUM_A
-
-Add a 'prefix' so generated code doesn't change now.  Subsequent
-commits will remove most of them again.  Two will remain:
-MULTIFD_COMPRESSION, because migration code generally spells "multifd"
-that way, and Q_KEY_CODE, because that one is baked into
-subprojects/keycodemapdb/tools/keymap-gen.
-
-The following enumerations with a 'prefix' change so that the prefix
-is now superfluous:
-
-    enum                            old camel_to_upper()
-                                    new camel_to_upper() [equal to prefix]
-    ------------------------------------------------------------------
-    BlkdebugIOType                  BLKDEBUGIO_TYPE
-                                    BLKDEBUG_IO_TYPE
-    QCryptoTLSCredsEndpoint         Q_CRYPTOTLS_CREDS_ENDPOINT
-                                    QCRYPTO_TLS_CREDS_ENDPOINT
-    QCryptoSecretFormat             Q_CRYPTO_SECRET_FORMAT
-                                    QCRYPTO_SECRET_FORMAT
-    QCryptoCipherMode               Q_CRYPTO_CIPHER_MODE
-                                    QCRYPTO_CIPHER_MODE
-    QCryptodevBackendType           Q_CRYPTODEV_BACKEND_TYPE
-                                    QCRYPTODEV_BACKEND_TYPE
-    QType [builtin]                 Q_TYPE
-                                    QTYPE
-
-Drop these prefixes.
-
-The following enumerations with a 'prefix' change without making the
-'prefix' superfluous:
-
-    enum                            old camel_to_upper()
-                                    new camel_to_upper() [equal to prefix]
-                                    prefix
-    ------------------------------------------------------------------
-    CpuS390Entitlement              CPUS390_ENTITLEMENT
-                                    CPU_S390_ENTITLEMENT
-                                    S390_CPU_ENTITLEMENT
-    CpuS390Polarization             CPUS390_POLARIZATION
-                                    CPU_S390_POLARIZATION
-                                    S390_CPU_POLARIZATION
-    CpuS390State                    CPUS390_STATE
-                                    CPU_S390_STATE
-                                    S390_CPU_STATE
-    QAuthZListFormat                Q_AUTHZ_LIST_FORMAT
-                                    QAUTH_Z_LIST_FORMAT
-                                    QAUTHZ_LIST_FORMAT
-    QAuthZListPolicy                Q_AUTHZ_LIST_POLICY
-                                    QAUTH_Z_LIST_POLICY
-                                    QAUTHZ_LIST_POLICY
-    QCryptoAkCipherAlgorithm        Q_CRYPTO_AK_CIPHER_ALGORITHM
-                                    QCRYPTO_AK_CIPHER_ALGORITHM
-                                    QCRYPTO_AKCIPHER_ALG
-    QCryptoAkCipherKeyType          Q_CRYPTO_AK_CIPHER_KEY_TYPE
-                                    QCRYPTO_AK_CIPHER_KEY_TYPE
-                                    QCRYPTO_AKCIPHER_KEY_TYPE
-    QCryptoCipherAlgorithm          Q_CRYPTO_CIPHER_ALGORITHM
-                                    QCRYPTO_CIPHER_ALGORITHM
-                                    QCRYPTO_CIPHER_ALG
-    QCryptoHashAlgorithm            Q_CRYPTO_HASH_ALGORITHM
-                                    QCRYPTO_HASH_ALGORITHM
-                                    QCRYPTO_HASH_ALG
-    QCryptoIVGenAlgorithm           Q_CRYPTOIV_GEN_ALGORITHM
-                                    QCRYPTO_IV_GEN_ALGORITHM
-                                    QCRYPTO_IVGEN_ALG
-    QCryptoRSAPaddingAlgorithm      Q_CRYPTORSA_PADDING_ALGORITHM
-                                    QCRYPTO_RSA_PADDING_ALGORITHM
-                                    QCRYPTO_RSA_PADDING_ALG
-    QCryptodevBackendAlgType        Q_CRYPTODEV_BACKEND_ALG_TYPE
-                                    QCRYPTODEV_BACKEND_ALG_TYPE
-                                    QCRYPTODEV_BACKEND_ALG
-    QCryptodevBackendServiceType    Q_CRYPTODEV_BACKEND_SERVICE_TYPE
-                                    QCRYPTODEV_BACKEND_SERVICE_TYPE
-                                    QCRYPTODEV_BACKEND_SERVICE
-
-Subsequent commits will tweak things to remove most of these prefixes.
-Only QAUTHZ_LIST_FORMAT and QAUTHZ_LIST_POLICY will remain.
+Rename the type to QCryptoAkCipherAlgo instead.  The prefix becomes
+QCRYPTO_AK_CIPHER_ALGO.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qapi/block-core.json                     |  3 +-
- qapi/common.json                         |  1 +
- qapi/crypto.json                         |  6 ++--
- qapi/cryptodev.json                      |  1 -
- qapi/ebpf.json                           |  1 +
- qapi/machine.json                        |  2 ++
- qapi/migration.json                      |  1 +
- qapi/ui.json                             |  2 ++
- scripts/qapi/common.py                   | 42 ++++++++++++++----------
- scripts/qapi/schema.py                   |  2 +-
- tests/qapi-schema/alternate-array.out    |  1 -
- tests/qapi-schema/comments.out           |  1 -
- tests/qapi-schema/doc-good.out           |  1 -
- tests/qapi-schema/empty.out              |  1 -
- tests/qapi-schema/include-repetition.out |  1 -
- tests/qapi-schema/include-simple.out     |  1 -
- tests/qapi-schema/indented-expr.out      |  1 -
- tests/qapi-schema/qapi-schema-test.json  |  1 +
- tests/qapi-schema/qapi-schema-test.out   |  2 +-
- 19 files changed, 38 insertions(+), 33 deletions(-)
+ qapi/crypto.json                        |  7 +++----
+ crypto/akcipherpriv.h                   |  2 +-
+ backends/cryptodev-builtin.c            |  4 ++--
+ backends/cryptodev-lkcf.c               |  4 ++--
+ crypto/akcipher.c                       |  2 +-
+ tests/bench/benchmark-crypto-akcipher.c |  2 +-
+ tests/unit/test-crypto-akcipher.c       | 10 +++++-----
+ crypto/akcipher-gcrypt.c.inc            |  4 ++--
+ crypto/akcipher-nettle.c.inc            |  4 ++--
+ 9 files changed, 19 insertions(+), 20 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index aa40d44f1d..452047102a 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2011,6 +2011,7 @@
- # Since: 4.0
- ##
- { 'enum': 'XDbgBlockGraphNodeType',
-+  'prefix': 'X_DBG_BLOCK_GRAPH_NODE_TYPE', # TODO drop
-   'data': [ 'block-backend', 'block-job', 'block-driver' ] }
- 
- ##
-@@ -3746,7 +3747,7 @@
- #
- # Since: 4.1
- ##
--{ 'enum': 'BlkdebugIOType', 'prefix': 'BLKDEBUG_IO_TYPE',
-+{ 'enum': 'BlkdebugIOType',
-   'data': [ 'read', 'write', 'write-zeroes', 'discard', 'flush',
-             'block-status' ] }
- 
-diff --git a/qapi/common.json b/qapi/common.json
-index 7558ce5430..25726d3113 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -92,6 +92,7 @@
- # Since: 2.12
- ##
- { 'enum': 'OffAutoPCIBAR',
-+  'prefix': 'OFF_AUTOPCIBAR',   # TODO drop
-   'data': [ 'off', 'auto', 'bar0', 'bar1', 'bar2', 'bar3', 'bar4', 'bar5' ] }
- 
- ##
 diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 97e02dbd59..a192641a03 100644
+index 3e6a7fb8e5..331d49ebb8 100644
 --- a/qapi/crypto.json
 +++ b/qapi/crypto.json
-@@ -20,7 +20,6 @@
- # Since: 2.5
+@@ -586,7 +586,7 @@
+             '*sanity-check': 'bool',
+             '*passwordid': 'str' } }
  ##
- { 'enum': 'QCryptoTLSCredsEndpoint',
--  'prefix': 'QCRYPTO_TLS_CREDS_ENDPOINT',
-   'data': ['client', 'server']}
+-# @QCryptoAkCipherAlgorithm:
++# @QCryptoAkCipherAlgo:
+ #
+ # The supported algorithms for asymmetric encryption ciphers
+ #
+@@ -594,8 +594,7 @@
+ #
+ # Since: 7.1
+ ##
+-{ 'enum': 'QCryptoAkCipherAlgorithm',
+-  'prefix': 'QCRYPTO_AKCIPHER_ALG',
++{ 'enum': 'QCryptoAkCipherAlgo',
+   'data': ['rsa']}
  
  ##
-@@ -36,7 +35,6 @@
- # Since: 2.6
+@@ -649,6 +648,6 @@
+ # Since: 7.1
  ##
- { 'enum': 'QCryptoSecretFormat',
--  'prefix': 'QCRYPTO_SECRET_FORMAT',
-   'data': ['raw', 'base64']}
+ { 'union': 'QCryptoAkCipherOptions',
+-  'base': { 'alg': 'QCryptoAkCipherAlgorithm' },
++  'base': { 'alg': 'QCryptoAkCipherAlgo' },
+   'discriminator': 'alg',
+   'data': { 'rsa': 'QCryptoAkCipherOptionsRSA' }}
+diff --git a/crypto/akcipherpriv.h b/crypto/akcipherpriv.h
+index 739f639bcf..3b33e54f08 100644
+--- a/crypto/akcipherpriv.h
++++ b/crypto/akcipherpriv.h
+@@ -27,7 +27,7 @@
+ typedef struct QCryptoAkCipherDriver QCryptoAkCipherDriver;
  
- ##
-@@ -123,7 +121,6 @@
- # Since: 2.6
- ##
- { 'enum': 'QCryptoCipherMode',
--  'prefix': 'QCRYPTO_CIPHER_MODE',
-   'data': ['ecb', 'cbc', 'xts', 'ctr']}
+ struct QCryptoAkCipher {
+-    QCryptoAkCipherAlgorithm alg;
++    QCryptoAkCipherAlgo alg;
+     QCryptoAkCipherKeyType type;
+     int max_plaintext_len;
+     int max_ciphertext_len;
+diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+index 2672755661..d8b64091b6 100644
+--- a/backends/cryptodev-builtin.c
++++ b/backends/cryptodev-builtin.c
+@@ -64,7 +64,7 @@ static void cryptodev_builtin_init_akcipher(CryptoDevBackend *backend)
+ {
+     QCryptoAkCipherOptions opts;
  
- ##
-@@ -160,7 +157,7 @@
- # Since: 2.6
- ##
- { 'enum': 'QCryptoBlockFormat',
--#  'prefix': 'QCRYPTO_BLOCK_FORMAT',
-+  'prefix': 'Q_CRYPTO_BLOCK_FORMAT', # TODO drop
-   'data': ['qcow', 'luks']}
+-    opts.alg = QCRYPTO_AKCIPHER_ALG_RSA;
++    opts.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
+     opts.u.rsa.padding_alg = QCRYPTO_RSA_PADDING_ALG_RAW;
+     if (qcrypto_akcipher_supports(&opts)) {
+         backend->conf.crypto_services |=
+@@ -318,7 +318,7 @@ static int cryptodev_builtin_create_akcipher_session(
  
- ##
-@@ -363,6 +360,7 @@
- # Since: 5.1
- ##
- { 'enum': 'QCryptoBlockLUKSKeyslotState',
-+  'prefix': 'Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE', # TODO drop
-   'data': [ 'active', 'inactive' ] }
+     switch (sess_info->algo) {
+     case VIRTIO_CRYPTO_AKCIPHER_RSA:
+-        opts.alg = QCRYPTO_AKCIPHER_ALG_RSA;
++        opts.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
+         if (cryptodev_builtin_set_rsa_options(sess_info->u.rsa.padding_algo,
+             sess_info->u.rsa.hash_algo, &opts.u.rsa, errp) != 0) {
+             return -1;
+diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
+index 6e6012e716..6fb6e03d98 100644
+--- a/backends/cryptodev-lkcf.c
++++ b/backends/cryptodev-lkcf.c
+@@ -133,7 +133,7 @@ static int cryptodev_lkcf_set_op_desc(QCryptoAkCipherOptions *opts,
+                                       Error **errp)
+ {
+     QCryptoAkCipherOptionsRSA *rsa_opt;
+-    if (opts->alg != QCRYPTO_AKCIPHER_ALG_RSA) {
++    if (opts->alg != QCRYPTO_AK_CIPHER_ALGO_RSA) {
+         error_setg(errp, "Unsupported alg: %u", opts->alg);
+         return -1;
+     }
+@@ -518,7 +518,7 @@ static int cryptodev_lkcf_create_asym_session(
  
- ##
-diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
-index 68289f4984..60f8fe8e4a 100644
---- a/qapi/cryptodev.json
-+++ b/qapi/cryptodev.json
-@@ -48,7 +48,6 @@
- # Since: 8.0
- ##
- { 'enum': 'QCryptodevBackendType',
--  'prefix': 'QCRYPTODEV_BACKEND_TYPE',
-   'data': ['builtin', 'vhost-user', 'lkcf']}
+     switch (sess_info->algo) {
+     case VIRTIO_CRYPTO_AKCIPHER_RSA:
+-        sess->akcipher_opts.alg = QCRYPTO_AKCIPHER_ALG_RSA;
++        sess->akcipher_opts.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
+         if (cryptodev_lkcf_set_rsa_opt(
+             sess_info->u.rsa.padding_algo, sess_info->u.rsa.hash_algo,
+             &sess->akcipher_opts.u.rsa, &local_error) != 0) {
+diff --git a/crypto/akcipher.c b/crypto/akcipher.c
+index e4bbc6e5f1..0a0576b792 100644
+--- a/crypto/akcipher.c
++++ b/crypto/akcipher.c
+@@ -115,7 +115,7 @@ int qcrypto_akcipher_export_p8info(const QCryptoAkCipherOptions *opts,
+                                    Error **errp)
+ {
+     switch (opts->alg) {
+-    case QCRYPTO_AKCIPHER_ALG_RSA:
++    case QCRYPTO_AK_CIPHER_ALGO_RSA:
+         qcrypto_akcipher_rsakey_export_p8info(key, keylen, dst, dst_len);
+         return 0;
  
- ##
-diff --git a/qapi/ebpf.json b/qapi/ebpf.json
-index db19ae850f..42df548777 100644
---- a/qapi/ebpf.json
-+++ b/qapi/ebpf.json
-@@ -42,6 +42,7 @@
- # Since: 9.0
- ##
- { 'enum': 'EbpfProgramID',
-+  'prefix': 'EBPF_PROGRAMID',   # TODO drop
-   'if': 'CONFIG_EBPF',
-   'data': [ { 'name': 'rss' } ] }
+diff --git a/tests/bench/benchmark-crypto-akcipher.c b/tests/bench/benchmark-crypto-akcipher.c
+index 0029972385..225e426bde 100644
+--- a/tests/bench/benchmark-crypto-akcipher.c
++++ b/tests/bench/benchmark-crypto-akcipher.c
+@@ -25,7 +25,7 @@ static QCryptoAkCipher *create_rsa_akcipher(const uint8_t *priv_key,
+ {
+     QCryptoAkCipherOptions opt;
  
-diff --git a/qapi/machine.json b/qapi/machine.json
-index d4317435e7..552d1c20e9 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -686,6 +686,7 @@
- # Since: 5.0
- ##
- { 'enum': 'HmatLBMemoryHierarchy',
-+  'prefix': 'HMATLB_MEMORY_HIERARCHY', # TODO drop
-   'data': [ 'memory', 'first-level', 'second-level', 'third-level' ] }
+-    opt.alg = QCRYPTO_AKCIPHER_ALG_RSA;
++    opt.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
+     opt.u.rsa.padding_alg = padding;
+     opt.u.rsa.hash_alg = hash;
+     return qcrypto_akcipher_new(&opt, QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+diff --git a/tests/unit/test-crypto-akcipher.c b/tests/unit/test-crypto-akcipher.c
+index 86501f19ab..7dd86125c2 100644
+--- a/tests/unit/test-crypto-akcipher.c
++++ b/tests/unit/test-crypto-akcipher.c
+@@ -785,7 +785,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
+     {
+         .path = "/crypto/akcipher/rsa1024-raw",
+         .opt = {
+-            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
++            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
+             .u.rsa = {
+                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_RAW,
+             },
+@@ -805,7 +805,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
+     {
+         .path = "/crypto/akcipher/rsa1024-pkcs1",
+         .opt = {
+-            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
++            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
+             .u.rsa = {
+                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_PKCS1,
+                 .hash_alg = QCRYPTO_HASH_ALGO_SHA1,
+@@ -830,7 +830,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
+     {
+         .path = "/crypto/akcipher/rsa2048-raw",
+         .opt = {
+-            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
++            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
+             .u.rsa = {
+                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_RAW,
+             },
+@@ -850,7 +850,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
+     {
+         .path = "/crypto/akcipher/rsa2048-pkcs1",
+         .opt = {
+-            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
++            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
+             .u.rsa = {
+                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_PKCS1,
+                 .hash_alg = QCRYPTO_HASH_ALGO_SHA1,
+@@ -944,7 +944,7 @@ static void test_rsakey(const void *opaque)
+ {
+     const QCryptoRSAKeyTestData *data = (const QCryptoRSAKeyTestData *)opaque;
+     QCryptoAkCipherOptions opt = {
+-        .alg = QCRYPTO_AKCIPHER_ALG_RSA,
++        .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
+         .u.rsa = {
+             .padding_alg = QCRYPTO_RSA_PADDING_ALG_PKCS1,
+             .hash_alg = QCRYPTO_HASH_ALGO_SHA1,
+diff --git a/crypto/akcipher-gcrypt.c.inc b/crypto/akcipher-gcrypt.c.inc
+index 2c81de97de..8f1c2b8143 100644
+--- a/crypto/akcipher-gcrypt.c.inc
++++ b/crypto/akcipher-gcrypt.c.inc
+@@ -59,7 +59,7 @@ QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCipherOptions *opts,
+                                       Error **errp)
+ {
+     switch (opts->alg) {
+-    case QCRYPTO_AKCIPHER_ALG_RSA:
++    case QCRYPTO_AK_CIPHER_ALGO_RSA:
+         return (QCryptoAkCipher *)qcrypto_gcrypt_rsa_new(
+             &opts->u.rsa, type, key, keylen, errp);
  
- ##
-@@ -712,6 +713,7 @@
- # Since: 5.0
- ##
- { 'enum': 'HmatLBDataType',
-+  'prefix': 'HMATLB_DATA_TYPE', # TODO drop
-   'data': [ 'access-latency', 'read-latency', 'write-latency',
-             'access-bandwidth', 'read-bandwidth', 'write-bandwidth' ] }
+@@ -568,7 +568,7 @@ error:
+ bool qcrypto_akcipher_supports(QCryptoAkCipherOptions *opts)
+ {
+     switch (opts->alg) {
+-    case QCRYPTO_AKCIPHER_ALG_RSA:
++    case QCRYPTO_AK_CIPHER_ALGO_RSA:
+         switch (opts->u.rsa.padding_alg) {
+         case QCRYPTO_RSA_PADDING_ALG_RAW:
+             return true;
+diff --git a/crypto/akcipher-nettle.c.inc b/crypto/akcipher-nettle.c.inc
+index 37a579fbd9..21f27f8286 100644
+--- a/crypto/akcipher-nettle.c.inc
++++ b/crypto/akcipher-nettle.c.inc
+@@ -61,7 +61,7 @@ QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCipherOptions *opts,
+                                       Error **errp)
+ {
+     switch (opts->alg) {
+-    case QCRYPTO_AKCIPHER_ALG_RSA:
++    case QCRYPTO_AK_CIPHER_ALGO_RSA:
+         return qcrypto_nettle_rsa_new(&opts->u.rsa, type, key, keylen, errp);
  
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 7324571e92..f0ff7b93b4 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -571,6 +571,7 @@
- # Since: 5.0
- ##
- { 'enum': 'MultiFDCompression',
-+  'prefix': 'MULTIFD_COMPRESSION',
-   'data': [ 'none', 'zlib',
-             { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
-             { 'name': 'qpl', 'if': 'CONFIG_QPL' },
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 8c8464faac..f61a2b6b65 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -949,6 +949,7 @@
- # Since: 1.3
- ##
- { 'enum': 'QKeyCode',
-+  'prefix': 'Q_KEY_CODE',
-   'data': [ 'unmapped',
-             'shift', 'shift_r', 'alt', 'alt_r', 'ctrl',
-             'ctrl_r', 'menu', 'esc', '1', '2', '3', '4', '5', '6', '7', '8',
-@@ -1396,6 +1397,7 @@
- # Since: 3.0
- ##
- { 'enum'    : 'DisplayGLMode',
-+  'prefix'  : 'DISPLAYGL_MODE', # TODO drop
-   'data'    : [ 'off', 'on', 'core', 'es' ] }
- 
- ##
-diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
-index 737b059e62..d7c8aa3365 100644
---- a/scripts/qapi/common.py
-+++ b/scripts/qapi/common.py
-@@ -40,22 +40,28 @@ def camel_to_upper(value: str) -> str:
-         ENUM_Name2 -> ENUM_NAME2
-         ENUM24_Name -> ENUM24_NAME
-     """
--    c_fun_str = c_name(value, False)
--    if value.isupper():
--        return c_fun_str
-+    ret = value[0]
-+    upc = value[0].isupper()
- 
--    new_name = ''
--    length = len(c_fun_str)
--    for i in range(length):
--        char = c_fun_str[i]
--        # When char is upper case and no '_' appears before, do more checks
--        if char.isupper() and (i > 0) and c_fun_str[i - 1] != '_':
--            if i < length - 1 and c_fun_str[i + 1].islower():
--                new_name += '_'
--            elif c_fun_str[i - 1].isdigit():
--                new_name += '_'
--        new_name += char
--    return new_name.lstrip('_').upper()
-+    # Copy remainder of ``value`` to ``ret`` with '_' inserted
-+    for ch in value[1:]:
-+        if ch.isupper() == upc:
-+            pass
-+        elif upc:
-+            # ``ret`` ends in upper case, next char isn't: insert '_'
-+            # before the last upper case char unless there is one
-+            # already, or it's at the beginning
-+            if len(ret) > 2 and ret[-2].isalnum():
-+                ret = ret[:-1] + '_' + ret[-1]
-+        else:
-+            # ``ret`` doesn't end in upper case, next char is: insert
-+            # '_' before it
-+            if ret[-1].isalnum():
-+                ret += '_'
-+        ret += ch
-+        upc = ch.isupper()
-+
-+    return c_name(ret.upper()).lstrip('_')
- 
- 
- def c_enum_const(type_name: str,
-@@ -68,9 +74,9 @@ def c_enum_const(type_name: str,
-     :param const_name: The name of this constant.
-     :param prefix: Optional, prefix that overrides the type_name.
-     """
--    if prefix is not None:
--        type_name = prefix
--    return camel_to_upper(type_name) + '_' + c_name(const_name, False).upper()
-+    if prefix is None:
-+        prefix = camel_to_upper(type_name)
-+    return prefix + '_' + c_name(const_name, False).upper()
- 
- 
- def c_name(name: str, protect: bool = True) -> str:
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index d65c35f6ee..e97c978d38 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -1249,7 +1249,7 @@ def _def_predefineds(self) -> None:
-             [{'name': n} for n in qtypes], None)
- 
-         self._def_definition(QAPISchemaEnumType(
--            'QType', None, None, None, None, qtype_values, 'QTYPE'))
-+            'QType', None, None, None, None, qtype_values, None))
- 
-     def _make_features(
-         self,
-diff --git a/tests/qapi-schema/alternate-array.out b/tests/qapi-schema/alternate-array.out
-index a657d85738..2f30973ac3 100644
---- a/tests/qapi-schema/alternate-array.out
-+++ b/tests/qapi-schema/alternate-array.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-diff --git a/tests/qapi-schema/comments.out b/tests/qapi-schema/comments.out
-index ce4f6a4f0f..937070c2c4 100644
---- a/tests/qapi-schema/comments.out
-+++ b/tests/qapi-schema/comments.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index 6d24f1127b..ec277be91e 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-diff --git a/tests/qapi-schema/empty.out b/tests/qapi-schema/empty.out
-index 3feb3f69d3..d1981f8586 100644
---- a/tests/qapi-schema/empty.out
-+++ b/tests/qapi-schema/empty.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-diff --git a/tests/qapi-schema/include-repetition.out b/tests/qapi-schema/include-repetition.out
-index 16dbd9b819..c564d27862 100644
---- a/tests/qapi-schema/include-repetition.out
-+++ b/tests/qapi-schema/include-repetition.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-diff --git a/tests/qapi-schema/include-simple.out b/tests/qapi-schema/include-simple.out
-index 48e923bfbc..ec8200ab18 100644
---- a/tests/qapi-schema/include-simple.out
-+++ b/tests/qapi-schema/include-simple.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-diff --git a/tests/qapi-schema/indented-expr.out b/tests/qapi-schema/indented-expr.out
-index 6a30ded3fa..a7c22c3eef 100644
---- a/tests/qapi-schema/indented-expr.out
-+++ b/tests/qapi-schema/indented-expr.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-diff --git a/tests/qapi-schema/qapi-schema-test.json b/tests/qapi-schema/qapi-schema-test.json
-index 8ca977c49d..0f5f54e621 100644
---- a/tests/qapi-schema/qapi-schema-test.json
-+++ b/tests/qapi-schema/qapi-schema-test.json
-@@ -119,6 +119,7 @@
-   'data': [ 'value-a', 'value-b' ] }
- 
- { 'enum': 'TestUnionEnumA',
-+  'prefix': 'TEST_UNION_ENUMA', # TODO drop
-   'data': [ 'value-a1', 'value-a2' ] }
- 
- { 'struct': 'TestUnionTypeA1',
-diff --git a/tests/qapi-schema/qapi-schema-test.out b/tests/qapi-schema/qapi-schema-test.out
-index e2f0981348..add7346f49 100644
---- a/tests/qapi-schema/qapi-schema-test.out
-+++ b/tests/qapi-schema/qapi-schema-test.out
-@@ -1,7 +1,6 @@
- module ./builtin
- object q_empty
- enum QType
--    prefix QTYPE
-     member none
-     member qnull
-     member qnum
-@@ -109,6 +108,7 @@ enum TestUnionEnum
-     member value-a
-     member value-b
- enum TestUnionEnumA
-+    prefix TEST_UNION_ENUMA
-     member value-a1
-     member value-a2
- object TestUnionTypeA1
+     default:
+@@ -425,7 +425,7 @@ error:
+ bool qcrypto_akcipher_supports(QCryptoAkCipherOptions *opts)
+ {
+     switch (opts->alg) {
+-    case QCRYPTO_AKCIPHER_ALG_RSA:
++    case QCRYPTO_AK_CIPHER_ALGO_RSA:
+         switch (opts->u.rsa.padding_alg) {
+         case QCRYPTO_RSA_PADDING_ALG_PKCS1:
+             switch (opts->u.rsa.hash_alg) {
 -- 
 2.46.0
 
