@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E246CD4857
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBD5CD4857
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsYf-0001Gb-JX; Wed, 04 Sep 2024 12:08:37 -0400
+	id 1slsdo-0005Wh-70; Wed, 04 Sep 2024 12:13:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsYa-0001Eb-Vq
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:08:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsdl-0005WA-NE
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:13:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsYX-0000fW-Mo
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:08:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsdj-0001gx-TM
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:13:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725466105;
+ s=mimecast20190719; t=1725466430;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=I/rbf2CoDE2cQv5vghzupnhoA/F22DlBk0ytnYYgHck=;
- b=QFezNV16PEtOb2xTzic/nKfar7IILENfp4z2sf7azsa4BQZl9jC+Oq5TJORgOCCSwmtnjO
- Dm+MiH53quT/H+C/XUnRkLmHFBJZGfZWhPWvDlEIXX/Go24/UnMcmbkCA/wN0xDDprYq19
- ty3qS0ui3aAf49yj02SArFLbExHPaeE=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SdcT0PP/Z9zalNeW0GzXZ4o+/MLnZP8j0/JGBnmzBvM=;
+ b=g3U+AZXsraVPRfU0vuHbR3KFvcvtIpUVG0pyFCGYRKq6osCXhQ0wYOO1s36OVqwekxKMmp
+ eRi6Zo97J9hJOwmhIL8MsPwD3bjD+S4oUXHLfi2WePyiQuQHFtKMpBboTHIwQpJafaMiIt
+ nrv2tBAEQJHwx1vSLl/hmMVdog/dFv4=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-235-o_bzC6QYPM-jgHepD4iwLw-1; Wed, 04 Sep 2024 12:08:24 -0400
-X-MC-Unique: o_bzC6QYPM-jgHepD4iwLw-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6c359012445so49584136d6.3
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:08:24 -0700 (PDT)
+ us-mta-375-7rNEFv-YOniHDN0fqbR17w-1; Wed, 04 Sep 2024 12:13:48 -0400
+X-MC-Unique: 7rNEFv-YOniHDN0fqbR17w-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a803adfe52so130616785a.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:13:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725466104; x=1726070904;
+ d=1e100.net; s=20230601; t=1725466428; x=1726071228;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=I/rbf2CoDE2cQv5vghzupnhoA/F22DlBk0ytnYYgHck=;
- b=oJN0lxtIEr13Om+3/djf2i8VMCjHrDTDIoTokz392cacD1XVGJtCOfTJjov9LT7nfG
- tf0iDywjkLzsMLJ+WjIgPsCojbdsktom46hgEdFnD1glja00tfc+ewPewA5Oye/HGVkT
- msrO9yrKzsj2J7ExlUNwj8RuJDZ2iDu66kxHIoHywAIvRuxc0ZHV1328/INLtLL3vuWA
- Uuxnv6gMAFzhqf5415lpYqc6YWiyEql3Rwkwcd0ygSfRVuYr5POCRmCWmfDqW356eIQB
- qPU6l0JQBPeJSyDjvFdVYY8C0j9gvSg4Bx9jCiUx+IhAKyvVO+dZFCRfkL708SF0joKA
- nfVg==
+ bh=SdcT0PP/Z9zalNeW0GzXZ4o+/MLnZP8j0/JGBnmzBvM=;
+ b=Wzez28qNP/U1mSNNXepK5dUTYCb6+PxfqxZ0DMBgpUuaY3m8PfC36ojSPmI+eBKqx6
+ RhiYhDvNq3ieboL4ynHdtcpBPhm6nJOAxcgBL04H0SfFlBNCg9lFypXrvYHLoTquFXQ7
+ 5m32h83ZlarhxEhC8XmST+JOz4Agn7qRsyhRLtBAhple6zuNcKEIUgZctux3bpyZTh2M
+ 7bCFrjBzzdXiCrsCNuJloSPs9lVtKLxGznuxS03Ad3lzum8DCL5UnIMOB7lmgRne90HH
+ xcgpFZXum+clv0P2qF6FcM+HCskkpr8uU6XcgyKQAVSk8vb0BYn2ZEZ0ZH9+20c1MBws
+ 13iA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnxOe9IwKMMsPUvzMMlGnD9DaxC7yCq2So6970xOQOCRTWT2PEmz0rr2r8uVlShlSzd9OHRIspRdoA@nongnu.org
-X-Gm-Message-State: AOJu0YyuR6wlhSm1oWMcQQpPIM/wq5RyLTFp1nPGVLaeTeUp5fUKB0YW
- YclEpTUUvJTYx/b6royHb42iHxvt2rRCa4hbmPo60RE1PmsieYrYVrGEdYsIEVu79e/W90shvti
- 0XyuL2lxK3hnT2PfiiV170kxE0Klc2r9wncxrNlbQRuFd0xE+eatf
-X-Received: by 2002:a05:6214:320d:b0:6b7:ab98:b8b4 with SMTP id
- 6a1803df08f44-6c510d0d834mr61968356d6.48.1725466103902; 
- Wed, 04 Sep 2024 09:08:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCwGrlqNKY1GKAY6i6b2CTON3iygA1PTQcu5PBkxsAGbQcD+im8vYriOWQepEF3MekEr+RqQ==
-X-Received: by 2002:a05:6214:320d:b0:6b7:ab98:b8b4 with SMTP id
- 6a1803df08f44-6c510d0d834mr61968016d6.48.1725466103555; 
- Wed, 04 Sep 2024 09:08:23 -0700 (PDT)
+ AJvYcCVIgPT8+8R4J3gn2Y0q+2lGibTdRUXwSPrNo4kVkGys96pLSGHhmbPFi+/T+RKYITEVFHPHB66aaVKm@nongnu.org
+X-Gm-Message-State: AOJu0Yz5GvHMKIqtauC/+UsXz2xHUo9qTb3Yo1577dJpwvLzzyzHqZK9
+ kfrJFHDu7WuoIWwU6rMuoT6BJhszz9Zn+zcnyaRw0u9TsyUaaUN05HzqXIjs1OGD6Htlu4/MLln
+ V2U5xsFjkHb+11rZN6/zom8nEQnR5tzvXax44humvGtV1Z4qTyIcv
+X-Received: by 2002:a05:620a:2807:b0:7a1:d8df:c0d7 with SMTP id
+ af79cd13be357-7a8041af4c3mr1825172885a.23.1725466427731; 
+ Wed, 04 Sep 2024 09:13:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVUTkOVDBfu9eLVZRA59rzrMluwT7f2lAZr4uj4t7qe9Z2qH78ujOPUYoFWsXN9YD0oYFrtg==
+X-Received: by 2002:a05:620a:2807:b0:7a1:d8df:c0d7 with SMTP id
+ af79cd13be357-7a8041af4c3mr1825170185a.23.1725466427368; 
+ Wed, 04 Sep 2024 09:13:47 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c340bfa6e9sm63996856d6.26.2024.09.04.09.08.21
+ af79cd13be357-7a806d390c4sm632429885a.95.2024.09.04.09.13.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 09:08:23 -0700 (PDT)
-Message-ID: <7551fbe9-672c-4173-8008-1b1640f8e417@redhat.com>
-Date: Wed, 4 Sep 2024 18:08:19 +0200
+ Wed, 04 Sep 2024 09:13:47 -0700 (PDT)
+Message-ID: <789b890f-837e-4157-afe4-9f91c31a2083@redhat.com>
+Date: Wed, 4 Sep 2024 18:13:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/15] system: Remove support for CRIS target
+Subject: Re: [PATCH v2 13/15] target/cris: Remove the deprecated CRIS target
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
  Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
 References: <20240904143603.52934-1-philmd@linaro.org>
- <20240904143603.52934-13-philmd@linaro.org>
+ <20240904143603.52934-14-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -122,7 +122,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240904143603.52934-13-philmd@linaro.org>
+In-Reply-To: <20240904143603.52934-14-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -151,22 +151,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/09/2024 16.36, Philippe Mathieu-Daudé wrote:
-> We are about to remove the CRIS target, so remove
-> the sysemu part. This remove the CRIS 'none' machine.
+> The CRIS target is deprecated since v9.0 (commit c7bbef40234
+> "docs: mark CRIS support as deprecated").
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   configs/devices/cris-softmmu/default.mak | 1 -
->   configs/targets/cris-softmmu.mak         | 1 -
->   qapi/machine.json                        | 2 +-
->   include/sysemu/arch_init.h               | 1 -
->   .gitlab-ci.d/buildtest.yml               | 2 +-
->   .gitlab-ci.d/crossbuild-template.yml     | 2 +-
->   6 files changed, 3 insertions(+), 6 deletions(-)
->   delete mode 100644 configs/devices/cris-softmmu/default.mak
->   delete mode 100644 configs/targets/cris-softmmu.mak
+>   MAINTAINERS                         |    1 -
+>   docs/about/deprecated.rst           |    8 -
+>   docs/about/emulation.rst            |    4 -
+>   docs/about/removed-features.rst     |    7 +
+>   include/exec/poison.h               |    1 -
+>   target/cris/cpu-param.h             |   16 -
+>   target/cris/cpu-qom.h               |   32 -
+>   target/cris/cpu.h                   |  286 ---
+>   target/cris/crisv10-decode.h        |  112 -
+>   target/cris/crisv32-decode.h        |  133 --
+>   target/cris/helper.h                |   23 -
+>   target/cris/mmu.h                   |   22 -
+>   target/cris/opcode-cris.h           |  355 ---
+>   target/cris/cpu.c                   |  323 ---
+>   target/cris/gdbstub.c               |  127 --
+>   target/cris/helper.c                |  287 ---
+>   target/cris/machine.c               |   93 -
+>   target/cris/mmu.c                   |  356 ---
+>   target/cris/op_helper.c             |  580 -----
+>   target/cris/translate.c             | 3252 ---------------------------
+>   tests/qtest/machine-none-test.c     |    1 -
+>   fpu/softfloat-specialize.c.inc      |    4 +-
+>   target/cris/translate_v10.c.inc     | 1262 -----------
+>   scripts/coverity-scan/COMPONENTS.md |    3 -
+>   target/Kconfig                      |    1 -
+>   target/cris/Kconfig                 |    2 -
+>   target/cris/meson.build             |   17 -
+>   target/meson.build                  |    1 -
+>   tests/data/qobject/qdict.txt        |    6 -
+>   29 files changed, 9 insertions(+), 7306 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-
 
 
