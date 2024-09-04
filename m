@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B52CD3431
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA624CD4847
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slo9T-0002bu-NS; Wed, 04 Sep 2024 07:26:24 -0400
+	id 1slo8c-0005qs-37; Wed, 04 Sep 2024 07:25:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo9K-0001Kq-1M
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:26:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8Y-0005h4-0M
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo9C-0004ku-V0
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:26:09 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8V-0004UG-44
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725449161;
+ s=mimecast20190719; t=1725449118;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XgpYkJsaI9m1H5zaH4zbGBX7PFklNC5stqAFMp25Csk=;
- b=OId3LlgybunkkZyO4e5UGMVh915YkudF0tVX2z1GqZYlymmlBUZAN1efKdC/KeaNwWl2w3
- AQILW07/P4FTFOg2tt14tZBoXfP/x0nGX1bem0W01j6d8p7TmUj85F0YtHRYl0zeCcOXIg
- xLAJ5uIx1j4HU7nq+gZwhOKbYE9P+/w=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JwzLbDHsyLFUJ/vXiw1wuo5kYGCQumsIXEoc9OcztJ8=;
+ b=QYEmtc3qSOeEcYU+jIMHA5KgJYpSPBXOccBaileSYMBm9TfuONWfyiligcLWjzHDbZZYAa
+ RSsnjIr84aOu7zC63JawERw+CVCs4tuSSFXow2JbibLE3l9/Udkc3C4jurNMUQ2l79jkjY
+ xRPdYBgB9y5n0AXlsQYgsE2gQGzgQLU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-63Bd3otfNrOJFq-UnnzLfw-1; Wed,
- 04 Sep 2024 07:18:49 -0400
-X-MC-Unique: 63Bd3otfNrOJFq-UnnzLfw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-tzF7ZPmeNqWeDANuQ5DEzA-1; Wed,
+ 04 Sep 2024 07:18:48 -0400
+X-MC-Unique: tzF7ZPmeNqWeDANuQ5DEzA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42F9D1955D57; Wed,  4 Sep 2024 11:18:45 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D02DF1955E8C; Wed,  4 Sep 2024 11:18:42 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27DC419560AE; Wed,  4 Sep 2024 11:18:44 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 976F2300019A; Wed,  4 Sep 2024 11:18:38 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B4BE621E681F; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
+ id 8EA7521E691E; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
@@ -65,24 +65,24 @@ Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
  avihaih@nvidia.com
-Subject: [PATCH v2 09/19] qapi/machine: Rename CpuS390* to S390Cpu*,
- and drop 'prefix'
-Date: Wed,  4 Sep 2024 13:18:26 +0200
-Message-ID: <20240904111836.3273842-10-armbru@redhat.com>
+Subject: [PATCH v2 01/19] qapi: Smarter camel_to_upper() to reduce need for
+ 'prefix'
+Date: Wed,  4 Sep 2024 13:18:18 +0200
+Message-ID: <20240904111836.3273842-2-armbru@redhat.com>
 In-Reply-To: <20240904111836.3273842-1-armbru@redhat.com>
 References: <20240904111836.3273842-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
 X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -100,250 +100,509 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QAPI's 'prefix' feature can make the connection between enumeration
-type and its constants less than obvious.  It's best used with
-restraint.
+camel_to_upper() converts its argument from camel case to upper case
+with '_' between words.  Used for generated enumeration constant
+prefixes.
 
-CpuS390Entitlement has a 'prefix' to change the generated enumeration
-constants' prefix from CPU_S390_ENTITLEMENT to S390_CPU_ENTITLEMENT.
-Rename the type to S390CpuEntitlement, so that 'prefix' is not needed.
+When some of the words are spelled all caps, where exactly to insert
+'_' is guesswork.  camel_to_upper()'s guesses are bad enough in places
+to make people override them with a 'prefix' in the schema.
 
-Likewise change CpuS390Polarization to S390CpuPolarization, and
-CpuS390State to S390CpuState.
+Rewrite it to guess better:
+
+1. Insert '_' after a non-upper case character followed by an upper
+   case character:
+
+       OneTwo -> ONE_TWO
+       One2Three -> ONE2_THREE
+
+2. Insert '_' before the last upper case character followed by a
+   non-upper case character:
+
+       ACRONYMWord -> ACRONYM_Word
+
+   Except at the beginning (as in OneTwo above), or when there is
+   already one:
+
+       AbCd -> AB_CD
+
+This changes the default enumeration constant prefix for a number of
+enums.  Generated enumeration constants change only where the default
+is not overridden with 'prefix'.
+
+The following enumerations without a 'prefix' change:
+
+    enum                            old camel_to_upper()
+                                    new camel_to_upper()
+    ------------------------------------------------------------------
+    DisplayGLMode                   DISPLAYGL_MODE
+                                    DISPLAY_GL_MODE
+    EbpfProgramID                   EBPF_PROGRAMID
+                                    EBPF_PROGRAM_ID
+    HmatLBDataType                  HMATLB_DATA_TYPE
+                                    HMAT_LB_DATA_TYPE
+    HmatLBMemoryHierarchy           HMATLB_MEMORY_HIERARCHY
+                                    HMAT_LB_MEMORY_HIERARCHY
+    MultiFDCompression              MULTIFD_COMPRESSION
+                                    MULTI_FD_COMPRESSION
+    OffAutoPCIBAR                   OFF_AUTOPCIBAR
+                                    OFF_AUTO_PCIBAR
+    QCryptoBlockFormat              Q_CRYPTO_BLOCK_FORMAT
+                                    QCRYPTO_BLOCK_FORMAT
+    QCryptoBlockLUKSKeyslotState    Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE
+                                    QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE
+    QKeyCode                        Q_KEY_CODE
+                                    QKEY_CODE
+    XDbgBlockGraphNodeType          X_DBG_BLOCK_GRAPH_NODE_TYPE
+                                    XDBG_BLOCK_GRAPH_NODE_TYPE
+    TestUnionEnumA                  TEST_UNION_ENUMA
+                                    TEST_UNION_ENUM_A
+
+Add a 'prefix' so generated code doesn't change now.  Subsequent
+commits will remove most of them again.  Two will remain:
+MULTIFD_COMPRESSION, because migration code generally spells "multifd"
+that way, and Q_KEY_CODE, because that one is baked into
+subprojects/keycodemapdb/tools/keymap-gen.
+
+The following enumerations with a 'prefix' change so that the prefix
+is now superfluous:
+
+    enum                            old camel_to_upper()
+                                    new camel_to_upper() [equal to prefix]
+    ------------------------------------------------------------------
+    BlkdebugIOType                  BLKDEBUGIO_TYPE
+                                    BLKDEBUG_IO_TYPE
+    QCryptoTLSCredsEndpoint         Q_CRYPTOTLS_CREDS_ENDPOINT
+                                    QCRYPTO_TLS_CREDS_ENDPOINT
+    QCryptoSecretFormat             Q_CRYPTO_SECRET_FORMAT
+                                    QCRYPTO_SECRET_FORMAT
+    QCryptoCipherMode               Q_CRYPTO_CIPHER_MODE
+                                    QCRYPTO_CIPHER_MODE
+    QCryptodevBackendType           Q_CRYPTODEV_BACKEND_TYPE
+                                    QCRYPTODEV_BACKEND_TYPE
+    QType [builtin]                 Q_TYPE
+                                    QTYPE
+
+Drop these prefixes.
+
+The following enumerations with a 'prefix' change without making the
+'prefix' superfluous:
+
+    enum                            old camel_to_upper()
+                                    new camel_to_upper() [equal to prefix]
+                                    prefix
+    ------------------------------------------------------------------
+    CpuS390Entitlement              CPUS390_ENTITLEMENT
+                                    CPU_S390_ENTITLEMENT
+                                    S390_CPU_ENTITLEMENT
+    CpuS390Polarization             CPUS390_POLARIZATION
+                                    CPU_S390_POLARIZATION
+                                    S390_CPU_POLARIZATION
+    CpuS390State                    CPUS390_STATE
+                                    CPU_S390_STATE
+                                    S390_CPU_STATE
+    QAuthZListFormat                Q_AUTHZ_LIST_FORMAT
+                                    QAUTH_Z_LIST_FORMAT
+                                    QAUTHZ_LIST_FORMAT
+    QAuthZListPolicy                Q_AUTHZ_LIST_POLICY
+                                    QAUTH_Z_LIST_POLICY
+                                    QAUTHZ_LIST_POLICY
+    QCryptoAkCipherAlgorithm        Q_CRYPTO_AK_CIPHER_ALGORITHM
+                                    QCRYPTO_AK_CIPHER_ALGORITHM
+                                    QCRYPTO_AKCIPHER_ALG
+    QCryptoAkCipherKeyType          Q_CRYPTO_AK_CIPHER_KEY_TYPE
+                                    QCRYPTO_AK_CIPHER_KEY_TYPE
+                                    QCRYPTO_AKCIPHER_KEY_TYPE
+    QCryptoCipherAlgorithm          Q_CRYPTO_CIPHER_ALGORITHM
+                                    QCRYPTO_CIPHER_ALGORITHM
+                                    QCRYPTO_CIPHER_ALG
+    QCryptoHashAlgorithm            Q_CRYPTO_HASH_ALGORITHM
+                                    QCRYPTO_HASH_ALGORITHM
+                                    QCRYPTO_HASH_ALG
+    QCryptoIVGenAlgorithm           Q_CRYPTOIV_GEN_ALGORITHM
+                                    QCRYPTO_IV_GEN_ALGORITHM
+                                    QCRYPTO_IVGEN_ALG
+    QCryptoRSAPaddingAlgorithm      Q_CRYPTORSA_PADDING_ALGORITHM
+                                    QCRYPTO_RSA_PADDING_ALGORITHM
+                                    QCRYPTO_RSA_PADDING_ALG
+    QCryptodevBackendAlgType        Q_CRYPTODEV_BACKEND_ALG_TYPE
+                                    QCRYPTODEV_BACKEND_ALG_TYPE
+                                    QCRYPTODEV_BACKEND_ALG
+    QCryptodevBackendServiceType    Q_CRYPTODEV_BACKEND_SERVICE_TYPE
+                                    QCRYPTODEV_BACKEND_SERVICE_TYPE
+                                    QCRYPTODEV_BACKEND_SERVICE
+
+Subsequent commits will tweak things to remove most of these prefixes.
+Only QAUTHZ_LIST_FORMAT and QAUTHZ_LIST_POLICY will remain.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
 ---
- qapi/machine-common.json            |  5 ++---
- qapi/machine-target.json            | 11 +++++------
- qapi/machine.json                   |  9 ++++-----
- qapi/pragma.json                    |  6 +++---
- include/hw/qdev-properties-system.h |  2 +-
- include/hw/s390x/cpu-topology.h     |  2 +-
- target/s390x/cpu.h                  |  2 +-
- hw/core/qdev-properties-system.c    |  6 +++---
- hw/s390x/cpu-topology.c             |  6 +++---
- 9 files changed, 23 insertions(+), 26 deletions(-)
+ qapi/block-core.json                     |  3 +-
+ qapi/common.json                         |  1 +
+ qapi/crypto.json                         |  6 ++--
+ qapi/cryptodev.json                      |  1 -
+ qapi/ebpf.json                           |  1 +
+ qapi/machine.json                        |  2 ++
+ qapi/migration.json                      |  1 +
+ qapi/ui.json                             |  2 ++
+ scripts/qapi/common.py                   | 42 ++++++++++++++----------
+ scripts/qapi/schema.py                   |  2 +-
+ tests/qapi-schema/alternate-array.out    |  1 -
+ tests/qapi-schema/comments.out           |  1 -
+ tests/qapi-schema/doc-good.out           |  1 -
+ tests/qapi-schema/empty.out              |  1 -
+ tests/qapi-schema/include-repetition.out |  1 -
+ tests/qapi-schema/include-simple.out     |  1 -
+ tests/qapi-schema/indented-expr.out      |  1 -
+ tests/qapi-schema/qapi-schema-test.json  |  1 +
+ tests/qapi-schema/qapi-schema-test.out   |  2 +-
+ 19 files changed, 38 insertions(+), 33 deletions(-)
 
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index fa6bd71d12..b64e4895cf 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -9,13 +9,12 @@
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index aa40d44f1d..452047102a 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -2011,6 +2011,7 @@
+ # Since: 4.0
  ##
+ { 'enum': 'XDbgBlockGraphNodeType',
++  'prefix': 'X_DBG_BLOCK_GRAPH_NODE_TYPE', # TODO drop
+   'data': [ 'block-backend', 'block-job', 'block-driver' ] }
  
  ##
--# @CpuS390Entitlement:
-+# @S390CpuEntitlement:
+@@ -3746,7 +3747,7 @@
  #
- # An enumeration of CPU entitlements that can be assumed by a virtual
- # S390 CPU
- #
- # Since: 8.2
+ # Since: 4.1
  ##
--{ 'enum': 'CpuS390Entitlement',
--  'prefix': 'S390_CPU_ENTITLEMENT',
-+{ 'enum': 'S390CpuEntitlement',
-   'data': [ 'auto', 'low', 'medium', 'high' ] }
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 1a394c08f5..541f93eeb7 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -405,15 +405,14 @@
-                    'TARGET_RISCV' ] } }
+-{ 'enum': 'BlkdebugIOType', 'prefix': 'BLKDEBUG_IO_TYPE',
++{ 'enum': 'BlkdebugIOType',
+   'data': [ 'read', 'write', 'write-zeroes', 'discard', 'flush',
+             'block-status' ] }
+ 
+diff --git a/qapi/common.json b/qapi/common.json
+index 7558ce5430..25726d3113 100644
+--- a/qapi/common.json
++++ b/qapi/common.json
+@@ -92,6 +92,7 @@
+ # Since: 2.12
+ ##
+ { 'enum': 'OffAutoPCIBAR',
++  'prefix': 'OFF_AUTOPCIBAR',   # TODO drop
+   'data': [ 'off', 'auto', 'bar0', 'bar1', 'bar2', 'bar3', 'bar4', 'bar5' ] }
  
  ##
--# @CpuS390Polarization:
-+# @S390CpuPolarization:
- #
- # An enumeration of CPU polarization that can be assumed by a virtual
- # S390 CPU
- #
- # Since: 8.2
+diff --git a/qapi/crypto.json b/qapi/crypto.json
+index 97e02dbd59..a192641a03 100644
+--- a/qapi/crypto.json
++++ b/qapi/crypto.json
+@@ -20,7 +20,6 @@
+ # Since: 2.5
  ##
--{ 'enum': 'CpuS390Polarization',
--  'prefix': 'S390_CPU_POLARIZATION',
-+{ 'enum': 'S390CpuPolarization',
-   'data': [ 'horizontal', 'vertical' ],
-   'if': 'TARGET_S390X'
- }
-@@ -450,7 +449,7 @@
-       '*socket-id': 'uint16',
-       '*book-id': 'uint16',
-       '*drawer-id': 'uint16',
--      '*entitlement': 'CpuS390Entitlement',
-+      '*entitlement': 'S390CpuEntitlement',
-       '*dedicated': 'bool'
-   },
-   'features': [ 'unstable' ],
-@@ -488,7 +487,7 @@
- #          "timestamp": { "seconds": 1401385907, "microseconds": 422329 } }
+ { 'enum': 'QCryptoTLSCredsEndpoint',
+-  'prefix': 'QCRYPTO_TLS_CREDS_ENDPOINT',
+   'data': ['client', 'server']}
+ 
  ##
- { 'event': 'CPU_POLARIZATION_CHANGE',
--  'data': { 'polarization': 'CpuS390Polarization' },
-+  'data': { 'polarization': 'S390CpuPolarization' },
-   'features': [ 'unstable' ],
-   'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
- }
-@@ -503,7 +502,7 @@
- # Since: 8.2
+@@ -36,7 +35,6 @@
+ # Since: 2.6
  ##
- { 'struct': 'CpuPolarizationInfo',
--  'data': { 'polarization': 'CpuS390Polarization' },
-+  'data': { 'polarization': 'S390CpuPolarization' },
-   'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
- }
+ { 'enum': 'QCryptoSecretFormat',
+-  'prefix': 'QCRYPTO_SECRET_FORMAT',
+   'data': ['raw', 'base64']}
+ 
+ ##
+@@ -123,7 +121,6 @@
+ # Since: 2.6
+ ##
+ { 'enum': 'QCryptoCipherMode',
+-  'prefix': 'QCRYPTO_CIPHER_MODE',
+   'data': ['ecb', 'cbc', 'xts', 'ctr']}
+ 
+ ##
+@@ -160,7 +157,7 @@
+ # Since: 2.6
+ ##
+ { 'enum': 'QCryptoBlockFormat',
+-#  'prefix': 'QCRYPTO_BLOCK_FORMAT',
++  'prefix': 'Q_CRYPTO_BLOCK_FORMAT', # TODO drop
+   'data': ['qcow', 'luks']}
+ 
+ ##
+@@ -363,6 +360,7 @@
+ # Since: 5.1
+ ##
+ { 'enum': 'QCryptoBlockLUKSKeyslotState',
++  'prefix': 'Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE', # TODO drop
+   'data': [ 'active', 'inactive' ] }
+ 
+ ##
+diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
+index 68289f4984..60f8fe8e4a 100644
+--- a/qapi/cryptodev.json
++++ b/qapi/cryptodev.json
+@@ -48,7 +48,6 @@
+ # Since: 8.0
+ ##
+ { 'enum': 'QCryptodevBackendType',
+-  'prefix': 'QCRYPTODEV_BACKEND_TYPE',
+   'data': ['builtin', 'vhost-user', 'lkcf']}
+ 
+ ##
+diff --git a/qapi/ebpf.json b/qapi/ebpf.json
+index db19ae850f..42df548777 100644
+--- a/qapi/ebpf.json
++++ b/qapi/ebpf.json
+@@ -42,6 +42,7 @@
+ # Since: 9.0
+ ##
+ { 'enum': 'EbpfProgramID',
++  'prefix': 'EBPF_PROGRAMID',   # TODO drop
+   'if': 'CONFIG_EBPF',
+   'data': [ { 'name': 'rss' } ] }
  
 diff --git a/qapi/machine.json b/qapi/machine.json
-index d4317435e7..63a5eb0070 100644
+index d4317435e7..552d1c20e9 100644
 --- a/qapi/machine.json
 +++ b/qapi/machine.json
-@@ -41,15 +41,14 @@
-              'x86_64', 'xtensa', 'xtensaeb' ] }
+@@ -686,6 +686,7 @@
+ # Since: 5.0
+ ##
+ { 'enum': 'HmatLBMemoryHierarchy',
++  'prefix': 'HMATLB_MEMORY_HIERARCHY', # TODO drop
+   'data': [ 'memory', 'first-level', 'second-level', 'third-level' ] }
  
  ##
--# @CpuS390State:
-+# @S390CpuState:
- #
- # An enumeration of cpu states that can be assumed by a virtual S390
- # CPU
- #
- # Since: 2.12
+@@ -712,6 +713,7 @@
+ # Since: 5.0
  ##
--{ 'enum': 'CpuS390State',
--  'prefix': 'S390_CPU_STATE',
-+{ 'enum': 'S390CpuState',
-   'data': [ 'uninitialized', 'stopped', 'check-stop', 'operating', 'load' ] }
+ { 'enum': 'HmatLBDataType',
++  'prefix': 'HMATLB_DATA_TYPE', # TODO drop
+   'data': [ 'access-latency', 'read-latency', 'write-latency',
+             'access-bandwidth', 'read-bandwidth', 'write-bandwidth' ] }
+ 
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 7324571e92..f0ff7b93b4 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -571,6 +571,7 @@
+ # Since: 5.0
+ ##
+ { 'enum': 'MultiFDCompression',
++  'prefix': 'MULTIFD_COMPRESSION',
+   'data': [ 'none', 'zlib',
+             { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
+             { 'name': 'qpl', 'if': 'CONFIG_QPL' },
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 8c8464faac..f61a2b6b65 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -949,6 +949,7 @@
+ # Since: 1.3
+ ##
+ { 'enum': 'QKeyCode',
++  'prefix': 'Q_KEY_CODE',
+   'data': [ 'unmapped',
+             'shift', 'shift_r', 'alt', 'alt_r', 'ctrl',
+             'ctrl_r', 'menu', 'esc', '1', '2', '3', '4', '5', '6', '7', '8',
+@@ -1396,6 +1397,7 @@
+ # Since: 3.0
+ ##
+ { 'enum'    : 'DisplayGLMode',
++  'prefix'  : 'DISPLAYGL_MODE', # TODO drop
+   'data'    : [ 'off', 'on', 'core', 'es' ] }
  
  ##
-@@ -66,9 +65,9 @@
- # Since: 2.12
- ##
- { 'struct': 'CpuInfoS390',
--  'data': { 'cpu-state': 'CpuS390State',
-+  'data': { 'cpu-state': 'S390CpuState',
-             '*dedicated': 'bool',
--            '*entitlement': 'CpuS390Entitlement' } }
-+            '*entitlement': 'S390CpuEntitlement' } }
+diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
+index 737b059e62..d7c8aa3365 100644
+--- a/scripts/qapi/common.py
++++ b/scripts/qapi/common.py
+@@ -40,22 +40,28 @@ def camel_to_upper(value: str) -> str:
+         ENUM_Name2 -> ENUM_NAME2
+         ENUM24_Name -> ENUM24_NAME
+     """
+-    c_fun_str = c_name(value, False)
+-    if value.isupper():
+-        return c_fun_str
++    ret = value[0]
++    upc = value[0].isupper()
  
- ##
- # @CpuInfoFast:
-diff --git a/qapi/pragma.json b/qapi/pragma.json
-index 59fbe74b8c..fad3a31628 100644
---- a/qapi/pragma.json
-+++ b/qapi/pragma.json
-@@ -47,9 +47,6 @@
-         'BlockdevSnapshotWrapper',
-         'BlockdevVmdkAdapterType',
-         'ChardevBackendKind',
--        'CpuS390Entitlement',
--        'CpuS390Polarization',
--        'CpuS390State',
-         'CxlCorErrorType',
-         'DisplayProtocol',
-         'DriveBackupWrapper',
-@@ -74,6 +71,9 @@
-         'QKeyCode',
-         'RbdAuthMode',
-         'RbdImageEncryptionFormat',
-+        'S390CpuEntitlement',
-+        'S390CpuPolarization',
-+        'S390CpuState',
-         'String',
-         'StringWrapper',
-         'SysEmuTarget',
-diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-index 438f65389f..cdcc63056e 100644
---- a/include/hw/qdev-properties-system.h
-+++ b/include/hw/qdev-properties-system.h
-@@ -88,7 +88,7 @@ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
+-    new_name = ''
+-    length = len(c_fun_str)
+-    for i in range(length):
+-        char = c_fun_str[i]
+-        # When char is upper case and no '_' appears before, do more checks
+-        if char.isupper() and (i > 0) and c_fun_str[i - 1] != '_':
+-            if i < length - 1 and c_fun_str[i + 1].islower():
+-                new_name += '_'
+-            elif c_fun_str[i - 1].isdigit():
+-                new_name += '_'
+-        new_name += char
+-    return new_name.lstrip('_').upper()
++    # Copy remainder of ``value`` to ``ret`` with '_' inserted
++    for ch in value[1:]:
++        if ch.isupper() == upc:
++            pass
++        elif upc:
++            # ``ret`` ends in upper case, next char isn't: insert '_'
++            # before the last upper case char unless there is one
++            # already, or it's at the beginning
++            if len(ret) > 2 and ret[-2].isalnum():
++                ret = ret[:-1] + '_' + ret[-1]
++        else:
++            # ``ret`` doesn't end in upper case, next char is: insert
++            # '_' before it
++            if ret[-1].isalnum():
++                ret += '_'
++        ret += ch
++        upc = ch.isupper()
++
++    return c_name(ret.upper()).lstrip('_')
  
- #define DEFINE_PROP_CPUS390ENTITLEMENT(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_cpus390entitlement, \
--                       CpuS390Entitlement)
-+                       S390CpuEntitlement)
  
- #define DEFINE_PROP_IOTHREAD_VQ_MAPPING_LIST(_name, _state, _field) \
-     DEFINE_PROP(_name, _state, _field, qdev_prop_iothread_vq_mapping_list, \
-diff --git a/include/hw/s390x/cpu-topology.h b/include/hw/s390x/cpu-topology.h
-index c064f427e9..a11b1baa77 100644
---- a/include/hw/s390x/cpu-topology.h
-+++ b/include/hw/s390x/cpu-topology.h
-@@ -37,7 +37,7 @@ typedef struct S390TopologyEntry {
+ def c_enum_const(type_name: str,
+@@ -68,9 +74,9 @@ def c_enum_const(type_name: str,
+     :param const_name: The name of this constant.
+     :param prefix: Optional, prefix that overrides the type_name.
+     """
+-    if prefix is not None:
+-        type_name = prefix
+-    return camel_to_upper(type_name) + '_' + c_name(const_name, False).upper()
++    if prefix is None:
++        prefix = camel_to_upper(type_name)
++    return prefix + '_' + c_name(const_name, False).upper()
  
- typedef struct S390Topology {
-     uint8_t *cores_per_socket;
--    CpuS390Polarization polarization;
-+    S390CpuPolarization polarization;
- } S390Topology;
  
- typedef QTAILQ_HEAD(, S390TopologyEntry) S390TopologyList;
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index d6b75ad0e0..6cbd77dfdf 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -133,7 +133,7 @@ typedef struct CPUArchState {
-     int32_t book_id;
-     int32_t drawer_id;
-     bool dedicated;
--    CpuS390Entitlement entitlement; /* Used only for vertical polarization */
-+    S390CpuEntitlement entitlement; /* Used only for vertical polarization */
-     uint64_t cpuid;
- #endif
+ def c_name(name: str, protect: bool = True) -> str:
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index d65c35f6ee..e97c978d38 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -1249,7 +1249,7 @@ def _def_predefineds(self) -> None:
+             [{'name': n} for n in qtypes], None)
  
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index f13350b4fb..f2db20417a 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -1188,12 +1188,12 @@ const PropertyInfo qdev_prop_uuid = {
+         self._def_definition(QAPISchemaEnumType(
+-            'QType', None, None, None, None, qtype_values, 'QTYPE'))
++            'QType', None, None, None, None, qtype_values, None))
  
- /* --- s390 cpu entitlement policy --- */
+     def _make_features(
+         self,
+diff --git a/tests/qapi-schema/alternate-array.out b/tests/qapi-schema/alternate-array.out
+index a657d85738..2f30973ac3 100644
+--- a/tests/qapi-schema/alternate-array.out
++++ b/tests/qapi-schema/alternate-array.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+diff --git a/tests/qapi-schema/comments.out b/tests/qapi-schema/comments.out
+index ce4f6a4f0f..937070c2c4 100644
+--- a/tests/qapi-schema/comments.out
++++ b/tests/qapi-schema/comments.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
+index 6d24f1127b..ec277be91e 100644
+--- a/tests/qapi-schema/doc-good.out
++++ b/tests/qapi-schema/doc-good.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+diff --git a/tests/qapi-schema/empty.out b/tests/qapi-schema/empty.out
+index 3feb3f69d3..d1981f8586 100644
+--- a/tests/qapi-schema/empty.out
++++ b/tests/qapi-schema/empty.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+diff --git a/tests/qapi-schema/include-repetition.out b/tests/qapi-schema/include-repetition.out
+index 16dbd9b819..c564d27862 100644
+--- a/tests/qapi-schema/include-repetition.out
++++ b/tests/qapi-schema/include-repetition.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+diff --git a/tests/qapi-schema/include-simple.out b/tests/qapi-schema/include-simple.out
+index 48e923bfbc..ec8200ab18 100644
+--- a/tests/qapi-schema/include-simple.out
++++ b/tests/qapi-schema/include-simple.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+diff --git a/tests/qapi-schema/indented-expr.out b/tests/qapi-schema/indented-expr.out
+index 6a30ded3fa..a7c22c3eef 100644
+--- a/tests/qapi-schema/indented-expr.out
++++ b/tests/qapi-schema/indented-expr.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+diff --git a/tests/qapi-schema/qapi-schema-test.json b/tests/qapi-schema/qapi-schema-test.json
+index 8ca977c49d..0f5f54e621 100644
+--- a/tests/qapi-schema/qapi-schema-test.json
++++ b/tests/qapi-schema/qapi-schema-test.json
+@@ -119,6 +119,7 @@
+   'data': [ 'value-a', 'value-b' ] }
  
--QEMU_BUILD_BUG_ON(sizeof(CpuS390Entitlement) != sizeof(int));
-+QEMU_BUILD_BUG_ON(sizeof(S390CpuEntitlement) != sizeof(int));
+ { 'enum': 'TestUnionEnumA',
++  'prefix': 'TEST_UNION_ENUMA', # TODO drop
+   'data': [ 'value-a1', 'value-a2' ] }
  
- const PropertyInfo qdev_prop_cpus390entitlement = {
--    .name  = "CpuS390Entitlement",
-+    .name  = "S390CpuEntitlement",
-     .description = "low/medium (default)/high",
--    .enum_table  = &CpuS390Entitlement_lookup,
-+    .enum_table  = &S390CpuEntitlement_lookup,
-     .get   = qdev_propinfo_get_enum,
-     .set   = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-diff --git a/hw/s390x/cpu-topology.c b/hw/s390x/cpu-topology.c
-index f16bdf65fa..7d4e1f5472 100644
---- a/hw/s390x/cpu-topology.c
-+++ b/hw/s390x/cpu-topology.c
-@@ -105,7 +105,7 @@ static void s390_topology_init(MachineState *ms)
-  */
- void s390_handle_ptf(S390CPU *cpu, uint8_t r1, uintptr_t ra)
- {
--    CpuS390Polarization polarization;
-+    S390CpuPolarization polarization;
-     CPUS390XState *env = &cpu->env;
-     uint64_t reg = env->regs[r1];
-     int fc = reg & S390_TOPO_FC_MASK;
-@@ -357,7 +357,7 @@ static void s390_change_topology(uint16_t core_id,
-                                  bool has_book_id, uint16_t book_id,
-                                  bool has_drawer_id, uint16_t drawer_id,
-                                  bool has_entitlement,
--                                 CpuS390Entitlement entitlement,
-+                                 S390CpuEntitlement entitlement,
-                                  bool has_dedicated, bool dedicated,
-                                  Error **errp)
- {
-@@ -446,7 +446,7 @@ void qmp_set_cpu_topology(uint16_t core,
-                           bool has_socket, uint16_t socket,
-                           bool has_book, uint16_t book,
-                           bool has_drawer, uint16_t drawer,
--                          bool has_entitlement, CpuS390Entitlement entitlement,
-+                          bool has_entitlement, S390CpuEntitlement entitlement,
-                           bool has_dedicated, bool dedicated,
-                           Error **errp)
- {
+ { 'struct': 'TestUnionTypeA1',
+diff --git a/tests/qapi-schema/qapi-schema-test.out b/tests/qapi-schema/qapi-schema-test.out
+index e2f0981348..add7346f49 100644
+--- a/tests/qapi-schema/qapi-schema-test.out
++++ b/tests/qapi-schema/qapi-schema-test.out
+@@ -1,7 +1,6 @@
+ module ./builtin
+ object q_empty
+ enum QType
+-    prefix QTYPE
+     member none
+     member qnull
+     member qnum
+@@ -109,6 +108,7 @@ enum TestUnionEnum
+     member value-a
+     member value-b
+ enum TestUnionEnumA
++    prefix TEST_UNION_ENUMA
+     member value-a1
+     member value-a2
+ object TestUnionTypeA1
 -- 
 2.46.0
 
