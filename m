@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A06D9CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 408BFCD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:36:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slmHv-00005m-2s; Wed, 04 Sep 2024 05:26:55 -0400
+	id 1slmQG-0006GW-U5; Wed, 04 Sep 2024 05:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmHt-0008Qt-Dh
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:26:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmQC-0006E1-0i
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:35:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmHs-0003Pa-2O
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:26:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmQ6-0007XV-Tk
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:35:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725442010;
+ s=mimecast20190719; t=1725442520;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QPjwRXnWp44YGux5S6HV6/YRI2xaOj9C1goC7fW4WSo=;
- b=FKakqO7UGcTjW/X6NEdb1srRTDC7fRVjnZSKL4T8UzorpPV1BqBP6K8hKcF+Yghuz6AskX
- FxOU4gcl+1EVMCnFomcZt06imOn/RRJghuSJXoXMC+31DLIUMFZGauHaMcjCkc50VFjFgS
- Z9LaiTtrT9rW6RTlNYE/1R9em+KGwAA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u1qvvd38jpZFbRaFCkwBAplQQpBkQX5DqI9NPOFaDK4=;
+ b=cko8FAT8fWdl4IR9KiAVnfOG0Hsz5XQBjUHrGcSpne43dTBWx8YoJgjrWdv+8SRecpmuRZ
+ QzUMeoYFmpl2FtreEqqhphguCeRXhpXiC2pJFa/SyMNLm1Iu4whWqvDutlY3rYPTgYe4yk
+ GxZdqEhvA8ALgdxtiYwvyVaE69Tyos4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-Tt-Ifje5Mj6aLEY3kJT5TQ-1; Wed, 04 Sep 2024 05:26:47 -0400
-X-MC-Unique: Tt-Ifje5Mj6aLEY3kJT5TQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42bb6f7e7adso57438625e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 02:26:47 -0700 (PDT)
+ us-mta-34-U3xrxYaSPnOyUcCBUCEd2g-1; Wed, 04 Sep 2024 05:35:18 -0400
+X-MC-Unique: U3xrxYaSPnOyUcCBUCEd2g-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-374beb23f35so2808383f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 02:35:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725442006; x=1726046806;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QPjwRXnWp44YGux5S6HV6/YRI2xaOj9C1goC7fW4WSo=;
- b=XSPwfI2WQDZM3J2Y0bAA2K02dM1BwxVj/z8cdsymvNkqqGoOKyDAFP/AaCPsnGLfLi
- 7QiOtj0lSibuv7Io19X5JMwdH8osvkMVl4Nsa2VqEM7pOyPZZrJZz5z6P7jXA2F6Po32
- xaJ83e4b9BO2wPU4Sh+9UHKhaibCmcsFxQs+cIvM2bIUY7mEJFiyDE6WHI/+rlOSlTYD
- oqYc5Vjtb3PoDCpmPGuaVSvojNZ2CirCMxqqr6X2xcpSsVdNbIGOvNKIm55Abm6QMasR
- nAOgtx+UYkB18OBp4ILmy8vwGRZWumGuLnXMvTYPdQRMskHlIBIdVeX0BbbUTAS8A1vF
- f9Cg==
+ d=1e100.net; s=20230601; t=1725442518; x=1726047318;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=u1qvvd38jpZFbRaFCkwBAplQQpBkQX5DqI9NPOFaDK4=;
+ b=QZef7Uib4bN7tvewCGCfhEiyLAsB3uy1neoLy/iFBY4EpFjxz41kZb1xI9nF138XTr
+ Xu6TAxip7zPL2L11kg8jnOaPZDh1a5DnmvEC6hXlwzlf8NuoXDx09ZX6JmJIQOVlwMa3
+ UDl6hcgXX2RhCQKsVN0kYXDfJ/W63R7h/1zldn351+h06bUoaCiJY0crJXz9TMMASTY/
+ qbA+upQgccJw2sFMA5sxHDAx8isilvGPGNyp/KhtfVCvBbLiaacqtlPK6vmaxL2Dxq3G
+ w4QSORj8BP7cmwj2wy6TaJcUGCM8tlkVVW+I29OOdCwq8cDlDBsSt/+bg9NbUSWpdlHB
+ oDKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAiMb3eW9N7SdntqThuwsj4JJtdqaRW8FjJlXjFP1Upfxuntq7T+20Q0vPds2I6uLXG6LqwjjK2wuI@nongnu.org
-X-Gm-Message-State: AOJu0Yzvbf3dKwJkOoLdOaZyd5/Mfg1Rw02CmHeyCaDtlC7kHR+uA6dA
- xFcoIHbcH19SfvXa2emoSoPfHG5TbpKcVnMFeu4OY+/fxRs9mLeDkq2h3zdUoDikw6A9aB/eePJ
- hybf07DT3rlEDmsyuthvtHLnJzHHNeXWlB23B61d2mhZCjzckIQghzxIPIQhM
-X-Received: by 2002:a05:600c:4587:b0:426:5d0d:a2c9 with SMTP id
- 5b1f17b1804b1-42c7b5a8f0amr76198245e9.10.1725442006019; 
- Wed, 04 Sep 2024 02:26:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEu/VGpjY6+6FYl3ua1s5Itbax4mJ4HCNN+/gtRIgN5Zlmnr5yvwaHI5E54lNHhnJQN5T/tjw==
-X-Received: by 2002:a05:600c:4587:b0:426:5d0d:a2c9 with SMTP id
- 5b1f17b1804b1-42c7b5a8f0amr76198105e9.10.1725442005569; 
- Wed, 04 Sep 2024 02:26:45 -0700 (PDT)
+ AJvYcCW1z5wDMTz0qk7Fcn5Iv22meYyUOpClTU3jOa7HCf0gPySjr5J8nvo8vhbt6+K0rTvj8lx+OlIW7pzx@nongnu.org
+X-Gm-Message-State: AOJu0YzstDIH9qcqi7QCxIB6AFENM8iGAZwazOjJ9Nbqv0HDr/Dyea5t
+ B0xtKbe4Q/dHqcL+MJxd8P8KoIdufWQoDErKSWXclqsT9AkuA63FPMYQUW9AYe9VyFFp6lRLwgM
+ 6oAiyoWLfh1Vpko8yHnpRkJbjphWwyOdcVFd+xBuIi7ezfaf/b3Gx
+X-Received: by 2002:adf:fbc3:0:b0:368:6337:4220 with SMTP id
+ ffacd0b85a97d-3749b531612mr13198065f8f.9.1725442517623; 
+ Wed, 04 Sep 2024 02:35:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElPqVUEob2+HDzqb4NY8PpLrsnuHovtDc3yjcGNXzf/4OIr2ZAPIfTjT4uLYZAKVWzB+4MWg==
+X-Received: by 2002:adf:fbc3:0:b0:368:6337:4220 with SMTP id
+ ffacd0b85a97d-3749b531612mr13198047f8f.9.1725442517082; 
+ Wed, 04 Sep 2024 02:35:17 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374d00564b6sm6295247f8f.91.2024.09.04.02.26.44
+ ffacd0b85a97d-3759637c766sm4575420f8f.57.2024.09.04.02.35.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 02:26:45 -0700 (PDT)
-Message-ID: <8019b75a-ea09-4169-94e4-bcb4e104e79c@redhat.com>
-Date: Wed, 4 Sep 2024 11:26:44 +0200
+ Wed, 04 Sep 2024 02:35:16 -0700 (PDT)
+Message-ID: <5cb5abb6-7b04-42e4-87b3-8179f5419519@redhat.com>
+Date: Wed, 4 Sep 2024 11:35:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 28/53] hw/input: Remove tsc2005 touchscreen
- controller
+Subject: Re: [PATCH for-9.2 29/53] hw/input: Remove tsc210x device
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <20240903160751.4100218-29-peter.maydell@linaro.org>
-Content-Language: en-US
+ <20240903160751.4100218-30-peter.maydell@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -120,7 +118,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240903160751.4100218-29-peter.maydell@linaro.org>
+In-Reply-To: <20240903160751.4100218-30-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -133,7 +131,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,21 +148,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/09/2024 18.07, Peter Maydell wrote:
-> Remove the tsc2005 touchscreen controller, which was only used
-> by the n800 and n810 machines.
+> Remove the tsc210x touchscreen controller device, which was
+> only used by the n800 and n810.
+
+... and the cheetah palm machine ... but you removed that earlier in the 
+series already.
+
+Anyway:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+> The uWireSlave struct is still used in omap1.c (at least for
+> compilation purposes -- nothing any longer calls omap_uwire_attach()
+> and so the struct's members will not be used at runtime), so
+> we move it into omap.h so we can delete tsc2xxx.h.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   MAINTAINERS                |   1 -
->   include/hw/input/tsc2xxx.h |   5 -
->   hw/input/tsc2005.c         | 571 -------------------------------------
->   hw/input/Kconfig           |   3 -
->   hw/input/meson.build       |   1 -
->   hw/input/trace-events      |   3 -
->   6 files changed, 584 deletions(-)
->   delete mode 100644 hw/input/tsc2005.c
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
+>   MAINTAINERS                |    2 -
+>   include/hw/arm/omap.h      |    7 +-
+>   include/hw/input/tsc2xxx.h |   36 --
+>   hw/input/tsc210x.c         | 1241 ------------------------------------
+>   hw/input/Kconfig           |    3 -
+>   hw/input/meson.build       |    1 -
+>   6 files changed, 6 insertions(+), 1284 deletions(-)
+>   delete mode 100644 include/hw/input/tsc2xxx.h
+>   delete mode 100644 hw/input/tsc210x.c
 
 
