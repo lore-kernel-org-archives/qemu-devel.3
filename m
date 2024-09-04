@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8426ECD4F25
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 20:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20180CD4F2E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 20:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slwjh-0003xY-T8; Wed, 04 Sep 2024 16:36:17 -0400
+	id 1slwmp-00087w-7O; Wed, 04 Sep 2024 16:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwjf-0003wY-WE
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:36:16 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwmn-00087M-4k
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:39:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwjd-00033S-PN
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:36:15 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwml-00047N-OQ
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:39:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725482170;
+ s=mimecast20190719; t=1725482366;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=82FLzmSX8u4fim/5W/BAHQ1w/mRikjOncxRicWqMsOY=;
- b=HP1qqWS2N7PqEQUu2ddyF9BYyFZ2sMSjIS6nXykdTsAMCRu37zz7/dBe7niNmWO83AUnNS
- p6IoHDtSHsWvT8knRWEFwFsjgWfb5teBc9rXip2X0kO9NrQWiEiKJ5lshMTt9yd11Kg73/
- +lZM+NTyTgawBP5M74pOk+lF9Wq69e8=
+ bh=qBrPzUnr9slSu2RhGnruRyr4ZgfUlDqwEl/RR6jrj20=;
+ b=gURsW6B6jlb6+q5u6dHqSyYOHSF5408VseJSVqDBHQ0Znmd/6196LyBCN5i5cKN69cgtsP
+ 08leOTzPc8WFZyMzpxK6c4dKquOVOErsd0zqOvod3PFht8eBXLkcjF028aqmks8g/EoEH0
+ oV+kRbOtaclXi/u6q7fPO7RAxxWtT6w=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-8LO3sGygOJ6bZZyIWTu_TQ-1; Wed, 04 Sep 2024 16:36:08 -0400
-X-MC-Unique: 8LO3sGygOJ6bZZyIWTu_TQ-1
+ us-mta-659-VO3R4_QwMzSfqoDRM2wE2Q-1; Wed, 04 Sep 2024 16:39:23 -0400
+X-MC-Unique: VO3R4_QwMzSfqoDRM2wE2Q-1
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42bbd062ac1so52395195e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 13:36:08 -0700 (PDT)
+ 5b1f17b1804b1-42bbf928882so48606055e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 13:39:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725482167; x=1726086967;
+ d=1e100.net; s=20230601; t=1725482362; x=1726087162;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=82FLzmSX8u4fim/5W/BAHQ1w/mRikjOncxRicWqMsOY=;
- b=EtqjiHMMxAq4yu7u92FrOZHVke5S8qyC6GrD8HjByg+Ul+ljNh5Tvwulf3j9Nbne7w
- S91qfmMWdJemxJSYTLNKm6nL4lB9pjDX4dPFioSRbKu05n4/iteRAzSaa8NisekBnguC
- RIdSO3ycrB4cf64Apzb4oTfw/uhwA5z1iyVdAh5oWK+yskHwLaER2t/MESjF80jf6pcK
- dcW/yLBN4GEYdyHRffbKf0KOAESz7bUhq58HZ7dlk540TinEeNwQiQWXJq7OK3UOBGuR
- w42TF+cahKDM+ni0hCgEhWLwUQN8AnUkz1l4fLYucTUXuKAeMa5fmxVcoaTbgaTWxqv6
- aePw==
+ bh=qBrPzUnr9slSu2RhGnruRyr4ZgfUlDqwEl/RR6jrj20=;
+ b=Z2jYH7puvIgDCVONzoGopRfxCXfPjS+TgSRkT15MBeLMVUjGVHkweGKpwi6PsswQWF
+ /z8yH94Ga3Rk2/C7YVdQUGEh0RFGNOMDihyg3/JeGg63udepfwIIetnKlTFN+a+V5Uo2
+ 3eJckjoUgdmh/DHsI46baKpmz6hnuC+LC5M/04cDKmzWKPXtxvHvq9JPNDzoPSoM32zD
+ TVjgz3cZBLbYqgqucp+pnSX6HTubzlm3GzDdq7PC+e/8jCPsDAbyK5fY9FuHCsBwMDdl
+ sD8HgC2SMdxdgRTWP0r/Q6hcwiLp8GYHlVa3pZfhx8iC7Z20o2zcxnzfPOmVT+8qmp50
+ hqGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeie6XVfVEhzIrxk7Jd9USNy914C9gHBrtDE1BEL6DLfTvjfmobn78TlniA6QWOEJvMFOq7mn0Ptiz@nongnu.org
-X-Gm-Message-State: AOJu0Yz6MB+40oOqcAYcSuO+D4YHHiwLk4iKu2eMD0lYswmhlNJnI5iG
- bgVN3yMHGVmQIgaOf5y6/mJckahOI/OIJXC4OY6GFkwrwHP3FLwUVLyI6FimqB1TkjZhQOSQgPd
- yNXFAZkraQ2lnK5SdBN3BiCKX4oNRAAaT48BgUvlZWm0Te9pJ4Abh
-X-Received: by 2002:a05:600c:4eca:b0:426:5471:156a with SMTP id
- 5b1f17b1804b1-42bdc6334cbmr112937235e9.13.1725482167379; 
- Wed, 04 Sep 2024 13:36:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYY6IXeuEIsp1fFTzjINVd+dUNZotlM8sJqgibAvSLuLwO/4VmLKepiilUnNuMxfl/k0RiCA==
-X-Received: by 2002:a05:600c:4eca:b0:426:5471:156a with SMTP id
- 5b1f17b1804b1-42bdc6334cbmr112936875e9.13.1725482166387; 
- Wed, 04 Sep 2024 13:36:06 -0700 (PDT)
+ AJvYcCVZgIwPMQ5EMmi4XO8VMPSi3ukUrkRfURCpHfIvZ8KygMZfH8dpD6m1v5vsGG3OW56/YqeLo+crInpf@nongnu.org
+X-Gm-Message-State: AOJu0YzjaGB4KxNtyNngRF+ZzjYguLhR2uYmlatpUkJW7GUurAuWesr6
+ eEUwxwcW6dg+PdhfayIvyztvUdXZQGOpUa9qPHxI9VDShObfQuTcwXBG2/GzwIcSsyCAr8fCnZ5
+ 2xeK9IZNPSAY+j7caIuIZ3de2wyC/Subd5i4v3npkh8+W5gOincDc
+X-Received: by 2002:a5d:5387:0:b0:374:c69c:2273 with SMTP id
+ ffacd0b85a97d-376dd80faadmr3994358f8f.37.1725482362114; 
+ Wed, 04 Sep 2024 13:39:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFm/QyXxwUTUDFPoS+4wLhS+H6hlKSv3yxJ/+7nCtkNcsYn+DuCz+ER9iP92CdV6KPVn0pnbg==
+X-Received: by 2002:a5d:5387:0:b0:374:c69c:2273 with SMTP id
+ ffacd0b85a97d-376dd80faadmr3994338f8f.37.1725482361092; 
+ Wed, 04 Sep 2024 13:39:21 -0700 (PDT)
 Received: from [192.168.3.141] (p4ff2399b.dip0.t-ipconnect.de. [79.242.57.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374c07eed5dsm12490386f8f.116.2024.09.04.13.36.05
+ ffacd0b85a97d-3749ee4ef35sm17620760f8f.13.2024.09.04.13.39.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 13:36:05 -0700 (PDT)
-Message-ID: <96b8153d-1604-43a0-b0f7-973fd81f6029@redhat.com>
-Date: Wed, 4 Sep 2024 22:36:04 +0200
+ Wed, 04 Sep 2024 13:39:20 -0700 (PDT)
+Message-ID: <06d4a880-79a5-4cba-b318-aeb8aec7e5e1@redhat.com>
+Date: Wed, 4 Sep 2024 22:39:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] KVM: Rename KVMState->nr_slots to nr_slots_max
+Subject: Re: [PATCH 2/4] KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  Julia Suvorova <jusual@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Vitaly Kuznetsov <vkuznets@redhat.com>
 References: <20240904191635.3045606-1-peterx@redhat.com>
- <20240904191635.3045606-2-peterx@redhat.com>
+ <20240904191635.3045606-3-peterx@redhat.com>
 Content-Language: en-US
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
@@ -124,7 +124,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240904191635.3045606-2-peterx@redhat.com>
+In-Reply-To: <20240904191635.3045606-3-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -153,28 +153,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04.09.24 21:16, Peter Xu wrote:
-> This value used to reflect the maximum supported memslots from KVM kernel.
-> Rename it to be clearer, preparing for dynamic sized memslot allocations.
+> Make the default max nr_slots a macro, it's only used when KVM reports
+> nothing.  Then we put all the rest macros together later soon.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   accel/kvm/kvm-all.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 991c389adc..e408dbb753 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -69,6 +69,9 @@
+>   #define KVM_GUESTDBG_BLOCKIRQ 0
+>   #endif
+>   
+> +/* Default max allowed memslots if kernel reported nothing */
+> +#define  KVM_MEMSLOTS_NUM_MAX_DEFAULT                       32
+> +
 
-Well, it matches "KVM_CAP_NR_MEMSLOTS" :)
+Any reason for the "NUM" vs. "NR" in there?
+
+Something that resembles KVM_CAP_NR_MEMSLOTS would be a bit ore 
+consistent, because the 32 is essentially the fallback if the capability 
+is not supported.
+
+Apart from that makes sense
 
 Reviewed-by: David Hildenbrand <david@redhat.com>
-
-> -    for (i = 0; i < s->nr_slots; i++) {
-> +    for (i = 0; i < s->nr_slots_max; i++) {
->           mem = &kml->slots[i];
->           /* Discard slots that are empty or do not overlap the section */
->           if (!mem->memory_size ||
-> @@ -1720,11 +1720,11 @@ static void kvm_log_sync_global(MemoryListener *l, bool last_stage)
->       kvm_dirty_ring_flush();
->   
->       /*
-> -     * TODO: make this faster when nr_slots is big while there are
-> +     * TODO: make this faster when nr_slots_max is big while there are
->        * only a few used slots (small VMs).
->        */
-
-Interesting TODO!
 
 -- 
 Cheers,
