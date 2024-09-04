@@ -4,89 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FB8CD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73193CD37B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sloFq-0004gq-JW; Wed, 04 Sep 2024 07:32:54 -0400
+	id 1slomD-0006TG-2i; Wed, 04 Sep 2024 08:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sloFn-0004Wb-OK
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:32:51 -0400
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1slomA-0006QM-AY
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:06:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sloFm-0008Pb-0k
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:32:51 -0400
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1slom8-0007sx-LM
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:06:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725449566;
+ s=mimecast20190719; t=1725451575;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HikrecDzuQZ+HW3KJp4Ub7/bQnHaCS7c5CHmC+pqSGQ=;
- b=e/fHyAWdHJlQDRw+qXVe1VmxnR+SNBcv/2d93bZZrffw5bq/fp5bgHDQDA/Hx5ha7Sr+TD
- Iy4GCASCKVokYUMimNaNARPrNjbxbSeA0vTqV1BJf1AfRZbcT9yOr6BtpOrhnh0+AdT2GJ
- 7QeAO6nNYrFomb4bfw9hM+vZhuJ5ueM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dBW9QyBTPJ2vPf7oNy3xBpLtcKazFBxSJAYyxXMm5To=;
+ b=H97ouyJG+7yXV6Pto5IniOVDuymOmDkAs1rEpmVbLaNv/Luhf4mzc0aWXBiqWrnrhZHlKD
+ Uzh/o3eL2ZQDYqRRitL70K4V1Vi3mnFRNoKNVzm23ES63FClyFRkjSyEWzRhC3FNgwyW9A
+ 7R9P2d0P0k2rm7boU6Am6gbpHkYDSbE=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-fjsbBxRwMPGEguvDpIcYEA-1; Wed, 04 Sep 2024 07:32:44 -0400
-X-MC-Unique: fjsbBxRwMPGEguvDpIcYEA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42c80412dc1so32166745e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 04:32:44 -0700 (PDT)
+ us-mta-515-ySx9gp-6PVSsDXmE5p3iog-1; Wed, 04 Sep 2024 07:59:22 -0400
+X-MC-Unique: ySx9gp-6PVSsDXmE5p3iog-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-6b43e6b9c82so169658737b3.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 04:59:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725449564; x=1726054364;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HikrecDzuQZ+HW3KJp4Ub7/bQnHaCS7c5CHmC+pqSGQ=;
- b=qX2M0G4aWAT2ATh48qX/1pUcC1ahdJja9FYsQ9wH2D5DDqjJRvqCf5lp/aPGWWmVKU
- SAuldgJliZF6yIzWgv1h0E8aoLL6zrBEpFbCdBdZ0DGMMvbTF+QB+x5HG3SEdlg3mANs
- fDKE+DlU3RiElkje1+WpWGv1FUbnb00YltmB4x/ARsjK4Bf0X0qp+xHroWItUSXmpqTA
- Akgi6lupRV+WmhBUyk9MkJLntGePQ2mWcy5huXQWGH8TyiNVLLIQ5/m6WsyijxTe4Ot6
- IKlIjahfEl1fy0Ev6dgt/dIDaYch4m+FbxmK+brMoScDUTlAwcOIoV6UG6WbAv0lELiP
- k07w==
+ d=1e100.net; s=20230601; t=1725451162; x=1726055962;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dBW9QyBTPJ2vPf7oNy3xBpLtcKazFBxSJAYyxXMm5To=;
+ b=nlLeW6b374DQVub5MeT7zWYGThwFu706tzxpbQql4BYZO1OsByTpQY+aGW/mi05anA
+ DLxJAsftcwYdWRU2CypUhBBVNhIO7PLOPBQdIy1tgt1XTZSjjBbieo8nJdXxRF6aoJqm
+ Ahn8OfcqXpUaM3IfrcdfemysnJWYmx1s9/3Dm0EdJv5hWReUTwNIB2dgK2Gn5HavKaju
+ 8xmp/djJ0aHkVrvrqFFeoVDJ+Gidmbls0neQCT86IWE6UjyI0BkVuFOXAMQaWdyIKzoR
+ SdJ74YW9I8uScJ4GtCIzi0vZjuFbEujovp7d20Knyp1hkXrnAHIxllIOCdllBfjN4ma2
+ 7xrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVe2pXjEA2g9NURKwvX3K2EcTcYuMKs+uefBy8X2NjWHkZFyePfOk4vcHUk3+tJvq0IonNaBuTsKHp3@nongnu.org
-X-Gm-Message-State: AOJu0YxPOyJ0GoSY82qPajqpTBj8buPrNbjiMddDGOfqNiEnmKJFlkJM
- L4vhVgTJ92h5vdtY+rItjfdzaR98CI6eF2fltMe7f7BdJYRAC1fcb1BdPq8VyEdj2RzbEatntGJ
- TJpVAw4qjP9dQzFu1C7RGh/kFa1PE6Opj+p7SxV2AHSQFndcand59cIJhjrEPZIL/GdhbdfjB4l
- akeZcwJGM2FuRq7214XA4h0okf1Os=
-X-Received: by 2002:a05:600c:1c89:b0:426:66a2:b200 with SMTP id
- 5b1f17b1804b1-42bd052b0f6mr102136235e9.0.1725449563664; 
- Wed, 04 Sep 2024 04:32:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRQXQvnJCUbRm/i4tPz9ykUbel9ixB1kEuUQHL6UCT9IKLQzmGoSzan5rcO0UG8e1HY2UscTVZQDoqELd7xOI=
-X-Received: by 2002:a05:600c:1c89:b0:426:66a2:b200 with SMTP id
- 5b1f17b1804b1-42bd052b0f6mr102135945e9.0.1725449563222; Wed, 04 Sep 2024
- 04:32:43 -0700 (PDT)
+ AJvYcCVdSjcjWdy1jZb8qAiCtJMba0jpMgVZMQx7OtdHR9IhftE1MoiXBhatQjCEdkFNEfHmOi5ULzlZqbvx@nongnu.org
+X-Gm-Message-State: AOJu0YyS+SPE334vRH3C/AX/qTLmCQsq+WuPC7GzyVCyAtzrCr1eINIu
+ H61YD1YDwjj5UHMn5MkBHmShIZ40f8y2MbMl03eV9alUNbGtRMv/jMsFe1wlvBDU+eNNOnMU0ln
+ sXEAEqqs6muqVM0hCED1jOpgbqo1y8n6hqY7AS68CvAeJTlFjAxDc
+X-Received: by 2002:a05:690c:6785:b0:630:f7c9:80d6 with SMTP id
+ 00721157ae682-6d40fe0f6f3mr192366177b3.27.1725451161914; 
+ Wed, 04 Sep 2024 04:59:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGq5HvwRqtezxFnSO42dBg91ombB3BJoTOvLU4UJi+3DHaAlCu/R/sHK6aAwUDyIFtI7vIAAA==
+X-Received: by 2002:a05:690c:6785:b0:630:f7c9:80d6 with SMTP id
+ 00721157ae682-6d40fe0f6f3mr192365827b3.27.1725451161569; 
+ Wed, 04 Sep 2024 04:59:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a806d5b0easm611441485a.100.2024.09.04.04.59.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 04:59:21 -0700 (PDT)
+Message-ID: <1a4270a7-212e-4651-a720-913b3dd11296@redhat.com>
+Date: Wed, 4 Sep 2024 13:59:14 +0200
 MIME-Version: 1.0
-References: <20240828-rust-pl011-v9-0-35579191f17c@linaro.org>
- <20240828-rust-pl011-v9-3-35579191f17c@linaro.org>
- <Zs8X7dV4XczEM5YU@redhat.com>
- <CABgObfYL6ACRK4GF80vjY42sWire4H0SyN+oz+99q5oPjA_3oQ@mail.gmail.com>
-In-Reply-To: <CABgObfYL6ACRK4GF80vjY42sWire4H0SyN+oz+99q5oPjA_3oQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 4 Sep 2024 13:32:31 +0200
-Message-ID: <CABgObfYRNxhD8FAsTSwdvdQJpEyY+hE=jS2nKoozZVkx1Fp2rg@mail.gmail.com>
-Subject: Re: [PATCH RESEND v9 3/9] configure, meson: detect Rust toolchain
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Junjie Mao <junjie.mao@intel.com>, 
- Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 19/19] qapi/vfio: Rename VfioMigrationState to Qapi*,
+ and drop prefix
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au,
+ andrew@daynix.com, arei.gonglei@huawei.com, berrange@redhat.com,
+ berto@igalia.com, borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
+ den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
+ farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
+ idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
+ jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com, kwolf@redhat.com,
+ leetroy@gmail.com, marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
+ michael.roth@amd.com, mst@redhat.com, mtosatti@redhat.com,
+ nsg@linux.ibm.com, pasic@linux.ibm.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org,
+ pizhenwei@bytedance.com, pl@dlhnet.de, richard.henderson@linaro.org,
+ stefanha@redhat.com, steven_lee@aspeedtech.com, thuth@redhat.com,
+ vsementsov@yandex-team.ru, wangyanan55@huawei.com,
+ yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
+ avihaih@nvidia.com
+References: <20240904111836.3273842-1-armbru@redhat.com>
+ <20240904111836.3273842-20-armbru@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <20240904111836.3273842-20-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -111,26 +124,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 4, 2024 at 1:03=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
-> On Wed, Aug 28, 2024 at 2:28=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange=
-@redhat.com> wrote:
-> > Defaulting to the $rust_host_triple is incorrect when QEMU has been
-> > told to build for a non-host target.
+On 9/4/24 13:18, Markus Armbruster wrote:
+> QAPI's 'prefix' feature can make the connection between enumeration
+> type and its constants less than obvious.  It's best used with
+> restraint.
+> 
+> VfioMigrationState has a 'prefix' that overrides the generated
+> enumeration constants' prefix to QAPI_VFIO_MIGRATION_STATE.
+> 
+> We could simply drop 'prefix', but then the enumeration constants
+> would look as if they came from kernel header linux/vfio.h.
+> 
+> Rename the type to QapiVfioMigrationState instead, so that 'prefix' is
+> not needed.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-BTW, this is why as of this patch rust is set to "disabled" by default.
 
-> > Either we need todo the right thing and auto-set rust target based
-> > on QEMU target (preferred), or we need to make it a fatal error
-> > when rust target is omitted & QEMU is building a non-host target.
->
-> I already have a patch to autodetect the right triple, but I didn't
-> have time to finish it (and send it to Manos) before disappearing on
-> vacation. I think it's okay to initially require --rust-target-triple=3D
-> for cross compilation.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Done: https://paste.debian.net/1328408/
+Thanks,
 
-Paolo
+C.
+
+
+> ---
+>   qapi/vfio.json      | 9 ++++-----
+>   hw/vfio/migration.c | 2 +-
+>   2 files changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/qapi/vfio.json b/qapi/vfio.json
+> index eccca82068..b53b7caecd 100644
+> --- a/qapi/vfio.json
+> +++ b/qapi/vfio.json
+> @@ -7,7 +7,7 @@
+>   ##
+>   
+>   ##
+> -# @VfioMigrationState:
+> +# @QapiVfioMigrationState:
+>   #
+>   # An enumeration of the VFIO device migration states.
+>   #
+> @@ -32,10 +32,9 @@
+>   #
+>   # Since: 9.1
+>   ##
+> -{ 'enum': 'VfioMigrationState',
+> +{ 'enum': 'QapiVfioMigrationState',
+>     'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
+> -            'pre-copy', 'pre-copy-p2p' ],
+> -  'prefix': 'QAPI_VFIO_MIGRATION_STATE' }
+> +            'pre-copy', 'pre-copy-p2p' ] }
+>   
+>   ##
+>   # @VFIO_MIGRATION:
+> @@ -63,5 +62,5 @@
+>     'data': {
+>         'device-id': 'str',
+>         'qom-path': 'str',
+> -      'device-state': 'VfioMigrationState'
+> +      'device-state': 'QapiVfioMigrationState'
+>     } }
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 262d42a46e..17199b73ae 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -81,7 +81,7 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
+>       }
+>   }
+>   
+> -static VfioMigrationState
+> +static QapiVfioMigrationState
+>   mig_state_to_qapi_state(enum vfio_device_mig_state state)
+>   {
+>       switch (state) {
 
 
