@@ -4,90 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421D1CD37B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BBECD37B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slpPA-0003Gr-5v; Wed, 04 Sep 2024 08:46:36 -0400
+	id 1slpNg-0005R0-MT; Wed, 04 Sep 2024 08:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1slpO1-00072a-GW
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1slpNv-0005u5-82
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:24 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484A1cLV011452;
- Wed, 4 Sep 2024 12:45:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=qVrHAAZhAPofVC3tmGINcL
- f5xrDC/y1K6U/HaJUDLTM=; b=VJhPSAzNMtujllttYf1YOebN72cHFhQREgNdfV
- /4WVqx8UWhZYOv3MNNVEeXlqYNXx6Ej2HjETVM1OokRfbbUem+hafWbQPpu07Gma
- N9W9hqEG/EWO6sLujrMKJnL3dpA2eLO/LGfsGHp1Dngx0BOZXspIHWF18Xv8ahuv
- Keg811FsYwqX1NmPWseJda09iLoJO9gjkB+kTjwJtjK7ICD14hXQ4qP2EjP7l0jk
- DPwZhDcjgsRRwWxQ7tP5Rbt7KLR6bddZ5w5dOWk+np7WgRZ0iX+UdRw4MRRk8Ibp
- Z+INvuHnG2axQWYGL+hU9VPzLb6zhNyruOd0hJGA9ba0VDZw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bt672ucr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Sep 2024 12:45:14 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484CjDOi019195
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 4 Sep 2024 12:45:13 GMT
-Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 4 Sep 2024 05:45:13 -0700
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <sidneym@quicinc.com>, <bcain@quicinc.com>, <quic_mliebel@quicinc.com>,
- <mburton@qti.qualcomm.com>, <alex.bennee@linaro.org>,
- <peter.maydell@linaro.org>, <quic_acaggian@quicinc.com>,
- <quic_ggregory@quicinc.com>, <quic_jaehyoo@quicinc.com>,
- <quic_jiles@quicinc.com>, <quic_llindhol@quicinc.com>,
- <quic_mkurapat@quicinc.com>, <quic_rcran@quicinc.com>,
- <steplong@quicinc.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: [PATCH] target/hexagon: relicense GPL files to BSD-3
-Date: Wed, 4 Sep 2024 09:45:00 -0300
-Message-ID: <65ff7613c1501821ec3b7a04eb7265bc735dcb4a.1725453875.git.quic_mathbern@quicinc.com>
-X-Mailer: git-send-email 2.37.2
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNg-0005Oc-1N
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:04 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNd-0005eR-TF
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:03 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 88096219AE;
+ Wed,  4 Sep 2024 12:45:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725453900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=HR4v3PxkH0s8+eS21lczadfjUDOhktr3ESG+wkxyRj5uZdBI4h96K7OtBEjooDbR3RYB7f
+ 2qXxDcFAvVkzSFsqfNJ4vL1MZPa66b28Vrxe+cQ8lVT4ahWX3IUkqMesocBfUjCMEakdy0
+ 4fv8kj20UrdV08WydIQ6Y6bQKMc3WRQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725453900;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=WJpMTK51+co9ql/V+3o0AE8ChjTQnOVA2LspLb8+1nvNmf0w/uvvgFLGVB2OjzZz2FWiY4
+ S9If3oOwt53FVMCg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725453900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=HR4v3PxkH0s8+eS21lczadfjUDOhktr3ESG+wkxyRj5uZdBI4h96K7OtBEjooDbR3RYB7f
+ 2qXxDcFAvVkzSFsqfNJ4vL1MZPa66b28Vrxe+cQ8lVT4ahWX3IUkqMesocBfUjCMEakdy0
+ 4fv8kj20UrdV08WydIQ6Y6bQKMc3WRQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725453900;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
+ b=WJpMTK51+co9ql/V+3o0AE8ChjTQnOVA2LspLb8+1nvNmf0w/uvvgFLGVB2OjzZz2FWiY4
+ S9If3oOwt53FVMCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 62FFD139D2;
+ Wed,  4 Sep 2024 12:44:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 0PCsCktW2GZuVQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 23/34] migration/multifd: Replace multifd_send_state->pages
+ with client data
+Date: Wed,  4 Sep 2024 09:44:06 -0300
+Message-Id: <20240904124417.14565-24-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
+References: <20240904124417.14565-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: -pUgrwrW3X9NCeN0ulyViG6clv6T-B_d
-X-Proofpoint-GUID: -pUgrwrW3X9NCeN0ulyViG6clv6T-B_d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_10,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0
- bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
- mlxlogscore=999 lowpriorityscore=0 spamscore=0 clxscore=1011
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409040096
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.935];
+ MIME_GOOD(-0.10)[text/plain]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,1312 +120,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our internal contribution guidelines for QEMU were to use the BSD 3
-clause license but we used GPLv2+ in error. So relicense the GPLv2+
-Hexagon files to the compatible BSD 3-Clause, also updating the verbose
-license boilerplate with the cleaner SPDX identifier.
+Multifd currently has a simple scheduling mechanism that distributes
+work to the various channels by keeping storage space within each
+channel and an extra space that is given to the client. Each time the
+client fills the space with data and calls into multifd, that space is
+given to the next idle channel and a free storage space is taken from
+the channel and given to client for the next iteration.
 
-To keep it simple, this patch only touches Hexagon files that have been
-contributed exclusive from Quic Inc employees (ignoring both files
-directly changed by other contributors as well as files with patches
-that have Helped-by and Co-authored-by trailers from others).
+This means we always need (#multifd_channels + 1) memory slots to
+operate multifd.
 
-Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+This is fine, except that the presence of this one extra memory slot
+doesn't allow different types of payloads to be processed at the same
+time in different channels, i.e. the data type of
+multifd_send_state->pages needs to be the same as p->pages.
+
+For each new data type different from MultiFDPage_t that is to be
+handled, this logic would need to be duplicated by adding new fields
+to multifd_send_state, to the channels and to multifd_send_pages().
+
+Fix this situation by moving the extra slot into the client and using
+only the generic type MultiFDSendData in the multifd core.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- target/hexagon/cpu_bits.h                    | 15 ++-------------
- target/hexagon/helper.h                      | 15 ++-------------
- target/hexagon/mmvec/mmvec.h                 | 15 ++-------------
- tests/tcg/hexagon/hex_test.h                 | 15 ++-------------
- tests/tcg/hexagon/hvx_histogram_input.h      | 15 ++-------------
- tests/tcg/hexagon/hvx_misc.h                 | 15 ++-------------
- disas/hexagon.c                              | 15 ++-------------
- target/hexagon/arch.c                        | 15 ++-------------
- target/hexagon/gen_semantics.c               | 15 ++-------------
- target/hexagon/iclass.c                      | 15 ++-------------
- target/hexagon/printinsn.c                   | 15 ++-------------
- tests/tcg/hexagon/atomics.c                  | 15 ++-------------
- tests/tcg/hexagon/brev.c                     | 15 ++-------------
- tests/tcg/hexagon/circ.c                     | 15 ++-------------
- tests/tcg/hexagon/dual_stores.c              | 15 ++-------------
- tests/tcg/hexagon/hex_sigsegv.c              | 15 ++-------------
- tests/tcg/hexagon/hvx_histogram.c            | 15 ++-------------
- tests/tcg/hexagon/load_align.c               | 15 ++-------------
- tests/tcg/hexagon/load_unpack.c              | 15 ++-------------
- tests/tcg/hexagon/mem_noshuf.c               | 15 ++-------------
- tests/tcg/hexagon/mem_noshuf_exception.c     | 15 ++-------------
- tests/tcg/hexagon/misc.c                     | 15 ++-------------
- tests/tcg/hexagon/multi_result.c             | 15 ++-------------
- tests/tcg/hexagon/overflow.c                 | 15 ++-------------
- tests/tcg/hexagon/read_write_overlap.c       | 15 ++-------------
- tests/tcg/hexagon/reg_mut.c                  | 15 ++-------------
- tests/tcg/hexagon/scatter_gather.c           | 15 ++-------------
- tests/tcg/hexagon/signal_context.c           | 15 ++-------------
- tests/tcg/hexagon/usr.c                      | 13 +------------
- tests/tcg/hexagon/v68_hvx.c                  | 15 ++-------------
- tests/tcg/hexagon/v68_scalar.c               | 15 ++-------------
- tests/tcg/hexagon/v69_hvx.c                  | 15 ++-------------
- tests/tcg/hexagon/v73_scalar.c               | 15 ++-------------
- tests/tcg/hexagon/v6mpy_ref.c.inc            | 15 ++-------------
- gdb-xml/hexagon-hvx.xml                      |  5 ++---
- target/hexagon/imported/branch.idef          | 15 ++-------------
- target/hexagon/imported/compare.idef         | 15 ++-------------
- target/hexagon/imported/encode.def           | 15 ++-------------
- target/hexagon/imported/encode_pp.def        | 15 ++-------------
- target/hexagon/imported/encode_subinsn.def   | 15 ++-------------
- target/hexagon/imported/float.idef           | 15 ++-------------
- target/hexagon/imported/iclass.def           | 15 ++-------------
- target/hexagon/imported/ldst.idef            | 15 ++-------------
- target/hexagon/imported/mmvec/encode_ext.def | 15 ++-------------
- target/hexagon/imported/mmvec/macros.def     | 15 ++-------------
- target/hexagon/imported/mpy.idef             | 15 ++-------------
- target/hexagon/imported/shift.idef           | 15 ++-------------
- target/hexagon/imported/subinsns.idef        | 15 ++-------------
- target/hexagon/imported/system.idef          | 15 ++-------------
- tests/tcg/hexagon/hvx_histogram_row.S        | 15 ++-------------
- 50 files changed, 99 insertions(+), 639 deletions(-)
+ migration/multifd.c | 79 ++++++++++++++++++++++++++-------------------
+ migration/multifd.h |  3 ++
+ migration/ram.c     |  2 ++
+ 3 files changed, 50 insertions(+), 34 deletions(-)
 
-diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
-index 4279281a71..31321ea92b 100644
---- a/target/hexagon/cpu_bits.h
-+++ b/target/hexagon/cpu_bits.h
-@@ -1,18 +1,7 @@
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 3a164c124d..cb7a121eb0 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -49,7 +49,6 @@ typedef struct {
+ 
+ struct {
+     MultiFDSendParams *params;
+-    MultiFDSendData *data;
+     /*
+      * Global number of generated multifd packets.
+      *
+@@ -97,6 +96,8 @@ struct {
+     MultiFDMethods *ops;
+ } *multifd_recv_state;
+ 
++static MultiFDSendData *multifd_ram_send;
++
+ static size_t multifd_ram_payload_size(void)
+ {
+     uint32_t n = multifd_ram_page_count();
+@@ -130,6 +131,17 @@ static MultiFDSendData *multifd_send_data_alloc(void)
+     return g_malloc0(size_minus_payload + max_payload_size);
+ }
+ 
++void multifd_ram_save_setup(void)
++{
++    multifd_ram_send = multifd_send_data_alloc();
++}
++
++void multifd_ram_save_cleanup(void)
++{
++    g_free(multifd_ram_send);
++    multifd_ram_send = NULL;
++}
++
+ static bool multifd_use_packets(void)
+ {
+     return !migrate_mapped_ram();
+@@ -610,25 +622,20 @@ static void multifd_send_kick_main(MultiFDSendParams *p)
+ }
+ 
  /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+- * How we use multifd_send_state->pages and channel->pages?
++ * multifd_send() works by exchanging the MultiFDSendData object
++ * provided by the caller with an unused MultiFDSendData object from
++ * the next channel that is found to be idle.
   *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #ifndef HEXAGON_CPU_BITS_H
-diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
-index fa0ebaf7c8..73a7b93b76 100644
---- a/target/hexagon/helper.h
-+++ b/target/hexagon/helper.h
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+- * We create a pages for each channel, and a main one.  Each time that
+- * we need to send a batch of pages we interchange the ones between
+- * multifd_send_state and the channel that is sending it.  There are
+- * two reasons for that:
+- *    - to not have to do so many mallocs during migration
+- *    - to make easier to know what to free at the end of migration
++ * The channel owns the data until it finishes transmitting and the
++ * caller owns the empty object until it fills it with data and calls
++ * this function again. No locking necessary.
   *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include "internal.h"
-diff --git a/target/hexagon/mmvec/mmvec.h b/target/hexagon/mmvec/mmvec.h
-index 52d470709c..9d92883f1a 100644
---- a/target/hexagon/mmvec/mmvec.h
-+++ b/target/hexagon/mmvec/mmvec.h
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+- * This way we always know who is the owner of each "pages" struct,
+- * and we don't need any locking.  It belongs to the migration thread
+- * or to the channel thread.  Switching is safe because the migration
+- * thread is using the channel mutex when changing it, and the channel
+- * have to had finish with its own, otherwise pending_job can't be
+- * false.
++ * Switching is safe because both the migration thread and the channel
++ * thread have barriers in place to serialize access.
   *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
+  * Returns true if succeed, false otherwise.
   */
+-static bool multifd_send_pages(void)
++static bool multifd_send(MultiFDSendData **send_data)
+ {
+     int i;
+     static int next_channel;
+@@ -669,11 +676,16 @@ static bool multifd_send_pages(void)
+      */
+     smp_mb_acquire();
  
- #ifndef HEXAGON_MMVEC_H
-diff --git a/tests/tcg/hexagon/hex_test.h b/tests/tcg/hexagon/hex_test.h
-index cfed06a58b..75c4128cc8 100644
---- a/tests/tcg/hexagon/hex_test.h
-+++ b/tests/tcg/hexagon/hex_test.h
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2022-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+-    assert(!p->data->u.ram.num);
++    assert(multifd_payload_empty(p->data));
  
+-    tmp = multifd_send_state->data;
+-    multifd_send_state->data = p->data;
++    /*
++     * Swap the pointers. The channel gets the client data for
++     * transferring and the client gets back an unused data slot.
++     */
++    tmp = *send_data;
++    *send_data = p->data;
+     p->data = tmp;
++
+     /*
+      * Making sure p->data is setup before marking pending_job=true. Pairs
+      * with the qatomic_load_acquire() in multifd_send_thread().
+@@ -705,7 +717,12 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
+     MultiFDPages_t *pages;
  
-diff --git a/tests/tcg/hexagon/hvx_histogram_input.h b/tests/tcg/hexagon/hvx_histogram_input.h
-index 2f9109255e..77aa100dca 100644
---- a/tests/tcg/hexagon/hvx_histogram_input.h
-+++ b/tests/tcg/hexagon/hvx_histogram_input.h
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2021-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+ retry:
+-    pages = &multifd_send_state->data->u.ram;
++    pages = &multifd_ram_send->u.ram;
++
++    if (multifd_payload_empty(multifd_ram_send)) {
++        multifd_pages_reset(pages);
++        multifd_set_payload_type(multifd_ram_send, MULTIFD_PAYLOAD_RAM);
++    }
  
-     { 0x26, 0x32, 0x2e, 0x2e, 0x2d, 0x2c, 0x2d, 0x2d,
-diff --git a/tests/tcg/hexagon/hvx_misc.h b/tests/tcg/hexagon/hvx_misc.h
-index 2e868340fd..1701f75810 100644
---- a/tests/tcg/hexagon/hvx_misc.h
-+++ b/tests/tcg/hexagon/hvx_misc.h
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2021-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2021-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+     /* If the queue is empty, we can already enqueue now */
+     if (multifd_queue_empty(pages)) {
+@@ -723,7 +740,7 @@ retry:
+      * After flush, always retry.
+      */
+     if (pages->block != block || multifd_queue_full(pages)) {
+-        if (!multifd_send_pages()) {
++        if (!multifd_send(&multifd_ram_send)) {
+             return false;
+         }
+         goto retry;
+@@ -853,8 +870,6 @@ static void multifd_send_cleanup_state(void)
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
+     g_free(multifd_send_state->params);
+     multifd_send_state->params = NULL;
+-    g_free(multifd_send_state->data);
+-    multifd_send_state->data = NULL;
+     g_free(multifd_send_state);
+     multifd_send_state = NULL;
+ }
+@@ -903,15 +918,14 @@ int multifd_send_sync_main(void)
+ {
+     int i;
+     bool flush_zero_copy;
+-    MultiFDPages_t *pages;
  
- #ifndef HVX_MISC_H
-diff --git a/disas/hexagon.c b/disas/hexagon.c
-index c1a4ffc5f6..833c6d5a4b 100644
---- a/disas/hexagon.c
-+++ b/disas/hexagon.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+     if (!migrate_multifd()) {
+         return 0;
+     }
+-    pages = &multifd_send_state->data->u.ram;
+-    if (pages->num) {
+-        if (!multifd_send_pages()) {
+-            error_report("%s: multifd_send_pages fail", __func__);
++
++    if (!multifd_payload_empty(multifd_ram_send)) {
++        if (!multifd_send(&multifd_ram_send)) {
++            error_report("%s: multifd_send fail", __func__);
+             return -1;
+         }
+     }
+@@ -985,13 +999,11 @@ static void *multifd_send_thread(void *opaque)
  
- /*
-diff --git a/target/hexagon/arch.c b/target/hexagon/arch.c
-index d053d68487..a972e1d6c3 100644
---- a/target/hexagon/arch.c
-+++ b/target/hexagon/arch.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+         /*
+          * Read pending_job flag before p->data.  Pairs with the
+-         * qatomic_store_release() in multifd_send_pages().
++         * qatomic_store_release() in multifd_send().
+          */
+         if (qatomic_load_acquire(&p->pending_job)) {
+-            MultiFDPages_t *pages = &p->data->u.ram;
+-
+             p->iovs_num = 0;
+-            assert(pages->num);
++            assert(!multifd_payload_empty(p->data));
  
- #include "qemu/osdep.h"
-diff --git a/target/hexagon/gen_semantics.c b/target/hexagon/gen_semantics.c
-index 4a2bdd70e9..b3a534c939 100644
---- a/target/hexagon/gen_semantics.c
-+++ b/target/hexagon/gen_semantics.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+             ret = multifd_send_state->ops->send_prepare(p, &local_err);
+             if (ret != 0) {
+@@ -1014,13 +1026,13 @@ static void *multifd_send_thread(void *opaque)
+             stat64_add(&mig_stats.multifd_bytes,
+                        p->next_packet_size + p->packet_len);
  
- /*
-diff --git a/target/hexagon/iclass.c b/target/hexagon/iclass.c
-index c3f8523b27..b803982edf 100644
---- a/target/hexagon/iclass.c
-+++ b/target/hexagon/iclass.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+-            multifd_pages_reset(pages);
+             p->next_packet_size = 0;
++            multifd_set_payload_type(p->data, MULTIFD_PAYLOAD_NONE);
  
- #include "qemu/osdep.h"
-diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
-index 4865cdd133..4046abddec 100644
---- a/target/hexagon/printinsn.c
-+++ b/target/hexagon/printinsn.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+             /*
+              * Making sure p->data is published before saying "we're
+              * free".  Pairs with the smp_mb_acquire() in
+-             * multifd_send_pages().
++             * multifd_send().
+              */
+             qatomic_store_release(&p->pending_job, false);
+         } else {
+@@ -1212,7 +1224,6 @@ bool multifd_send_setup(void)
+     thread_count = migrate_multifd_channels();
+     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
+     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
+-    multifd_send_state->data = multifd_send_data_alloc();
+     qemu_sem_init(&multifd_send_state->channels_created, 0);
+     qemu_sem_init(&multifd_send_state->channels_ready, 0);
+     qatomic_set(&multifd_send_state->exiting, 0);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 9175104aea..5fa384d9af 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -267,4 +267,7 @@ static inline uint32_t multifd_ram_page_count(void)
+ {
+     return MULTIFD_PACKET_SIZE / qemu_target_page_size();
+ }
++
++void multifd_ram_save_setup(void);
++void multifd_ram_save_cleanup(void);
+ #endif
+diff --git a/migration/ram.c b/migration/ram.c
+index edec1a2d07..1815b2557b 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2387,6 +2387,7 @@ static void ram_save_cleanup(void *opaque)
+     ram_bitmaps_destroy();
  
- #include "qemu/osdep.h"
-diff --git a/tests/tcg/hexagon/atomics.c b/tests/tcg/hexagon/atomics.c
-index 1c2169b28b..d261a0706c 100644
---- a/tests/tcg/hexagon/atomics.c
-+++ b/tests/tcg/hexagon/atomics.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
+     xbzrle_cleanup();
++    multifd_ram_save_cleanup();
+     ram_state_cleanup(rsp);
+     g_free(migration_ops);
+     migration_ops = NULL;
+@@ -3058,6 +3059,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+     migration_ops = g_malloc0(sizeof(MigrationOps));
  
- #include <stdlib.h>
-diff --git a/tests/tcg/hexagon/brev.c b/tests/tcg/hexagon/brev.c
-index 6c7b134084..17f03877d1 100644
---- a/tests/tcg/hexagon/brev.c
-+++ b/tests/tcg/hexagon/brev.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/circ.c b/tests/tcg/hexagon/circ.c
-index ab949ebef1..e9ce17c59f 100644
---- a/tests/tcg/hexagon/circ.c
-+++ b/tests/tcg/hexagon/circ.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2022 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/dual_stores.c b/tests/tcg/hexagon/dual_stores.c
-index 775458e0fc..feb386c393 100644
---- a/tests/tcg/hexagon/dual_stores.c
-+++ b/tests/tcg/hexagon/dual_stores.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/hex_sigsegv.c b/tests/tcg/hexagon/hex_sigsegv.c
-index f43e0308f9..19dfaea9b8 100644
---- a/tests/tcg/hexagon/hex_sigsegv.c
-+++ b/tests/tcg/hexagon/hex_sigsegv.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2021-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2021-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/hvx_histogram.c b/tests/tcg/hexagon/hvx_histogram.c
-index 43377a9abb..90bd29c29b 100644
---- a/tests/tcg/hexagon/hvx_histogram.c
-+++ b/tests/tcg/hexagon/hvx_histogram.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2021-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/load_align.c b/tests/tcg/hexagon/load_align.c
-index f5948fd539..5c8b41c43f 100644
---- a/tests/tcg/hexagon/load_align.c
-+++ b/tests/tcg/hexagon/load_align.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/load_unpack.c b/tests/tcg/hexagon/load_unpack.c
-index c30f4d80aa..28eedec66b 100644
---- a/tests/tcg/hexagon/load_unpack.c
-+++ b/tests/tcg/hexagon/load_unpack.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/mem_noshuf.c b/tests/tcg/hexagon/mem_noshuf.c
-index 6263d5ef8e..d8e3616277 100644
---- a/tests/tcg/hexagon/mem_noshuf.c
-+++ b/tests/tcg/hexagon/mem_noshuf.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/mem_noshuf_exception.c b/tests/tcg/hexagon/mem_noshuf_exception.c
-index 61108a99be..747a3c4a65 100644
---- a/tests/tcg/hexagon/mem_noshuf_exception.c
-+++ b/tests/tcg/hexagon/mem_noshuf_exception.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2022-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/misc.c b/tests/tcg/hexagon/misc.c
-index ca22bb79f7..7b54f845dd 100644
---- a/tests/tcg/hexagon/misc.c
-+++ b/tests/tcg/hexagon/misc.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/multi_result.c b/tests/tcg/hexagon/multi_result.c
-index 38ee369e76..445f182d6d 100644
---- a/tests/tcg/hexagon/multi_result.c
-+++ b/tests/tcg/hexagon/multi_result.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/overflow.c b/tests/tcg/hexagon/overflow.c
-index 7b5b9ebdde..67efd61ed4 100644
---- a/tests/tcg/hexagon/overflow.c
-+++ b/tests/tcg/hexagon/overflow.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2021-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2021-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdlib.h>
-diff --git a/tests/tcg/hexagon/read_write_overlap.c b/tests/tcg/hexagon/read_write_overlap.c
-index 95c54ccd63..acfb84f54a 100644
---- a/tests/tcg/hexagon/read_write_overlap.c
-+++ b/tests/tcg/hexagon/read_write_overlap.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2023-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/reg_mut.c b/tests/tcg/hexagon/reg_mut.c
-index c5a39e5510..53812cb3bb 100644
---- a/tests/tcg/hexagon/reg_mut.c
-+++ b/tests/tcg/hexagon/reg_mut.c
-@@ -1,19 +1,8 @@
- 
- /*
-- *  Copyright(c) 2022-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/scatter_gather.c b/tests/tcg/hexagon/scatter_gather.c
-index bf8b5e0317..dcb60bfb49 100644
---- a/tests/tcg/hexagon/scatter_gather.c
-+++ b/tests/tcg/hexagon/scatter_gather.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/signal_context.c b/tests/tcg/hexagon/signal_context.c
-index 7202fa64b6..a1bcbeabd0 100644
---- a/tests/tcg/hexagon/signal_context.c
-+++ b/tests/tcg/hexagon/signal_context.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2022 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/usr.c b/tests/tcg/hexagon/usr.c
-index f0b23d312b..f93f29e6c3 100644
---- a/tests/tcg/hexagon/usr.c
-+++ b/tests/tcg/hexagon/usr.c
-@@ -1,18 +1,7 @@
- /*
-  *  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/v68_hvx.c b/tests/tcg/hexagon/v68_hvx.c
-index 02718722a3..351fd25984 100644
---- a/tests/tcg/hexagon/v68_hvx.c
-+++ b/tests/tcg/hexagon/v68_hvx.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2022-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/v68_scalar.c b/tests/tcg/hexagon/v68_scalar.c
-index 7a8adb1130..1703ba5bf8 100644
---- a/tests/tcg/hexagon/v68_scalar.c
-+++ b/tests/tcg/hexagon/v68_scalar.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2023-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/v69_hvx.c b/tests/tcg/hexagon/v69_hvx.c
-index a0d567d142..017a04d5ff 100644
---- a/tests/tcg/hexagon/v69_hvx.c
-+++ b/tests/tcg/hexagon/v69_hvx.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2023-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/v73_scalar.c b/tests/tcg/hexagon/v73_scalar.c
-index fee67fc531..ac7464e579 100644
---- a/tests/tcg/hexagon/v73_scalar.c
-+++ b/tests/tcg/hexagon/v73_scalar.c
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2023-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/hexagon/v6mpy_ref.c.inc b/tests/tcg/hexagon/v6mpy_ref.c.inc
-index 8258cddcb1..ef4ed83116 100644
---- a/tests/tcg/hexagon/v6mpy_ref.c.inc
-+++ b/tests/tcg/hexagon/v6mpy_ref.c.inc
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2021-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2021-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- { 0xffffee11, 0xfffffcca, 0xffffc1b3, 0xffffd0cc,
-diff --git a/gdb-xml/hexagon-hvx.xml b/gdb-xml/hexagon-hvx.xml
-index 5f2e220733..59ba31b2c8 100644
---- a/gdb-xml/hexagon-hvx.xml
-+++ b/gdb-xml/hexagon-hvx.xml
-@@ -1,9 +1,8 @@
- <?xml version="1.0"?>
- <!--
--  Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+  Copyright(c) 2023-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- 
--  This work is licensed under the terms of the GNU GPL, version 2 or
--  (at your option) any later version. See the COPYING file in the
-+  SPDX-License-Identifier: BSD-3-Clause
-   top-level directory.
- 
-   Note: this file is intended to be use with LLDB, so it contains fields
-diff --git a/target/hexagon/imported/branch.idef b/target/hexagon/imported/branch.idef
-index 93e2e375a5..18f33d48af 100644
---- a/target/hexagon/imported/branch.idef
-+++ b/target/hexagon/imported/branch.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- 
-diff --git a/target/hexagon/imported/compare.idef b/target/hexagon/imported/compare.idef
-index abd016ffb5..c5bfbf8e6f 100644
---- a/target/hexagon/imported/compare.idef
-+++ b/target/hexagon/imported/compare.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/encode.def b/target/hexagon/imported/encode.def
-index e40e7fbffb..63d725be72 100644
---- a/target/hexagon/imported/encode.def
-+++ b/target/hexagon/imported/encode.def
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/encode_pp.def b/target/hexagon/imported/encode_pp.def
-index 0cd30a5e85..e4662472a3 100644
---- a/target/hexagon/imported/encode_pp.def
-+++ b/target/hexagon/imported/encode_pp.def
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/encode_subinsn.def b/target/hexagon/imported/encode_subinsn.def
-index 742fb50efb..1f48c00d30 100644
---- a/target/hexagon/imported/encode_subinsn.def
-+++ b/target/hexagon/imported/encode_subinsn.def
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- 
-diff --git a/target/hexagon/imported/float.idef b/target/hexagon/imported/float.idef
-index 3e75bc4604..4dfd35c0ed 100644
---- a/target/hexagon/imported/float.idef
-+++ b/target/hexagon/imported/float.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/iclass.def b/target/hexagon/imported/iclass.def
-index fb57968c6c..89a2784470 100644
---- a/target/hexagon/imported/iclass.def
-+++ b/target/hexagon/imported/iclass.def
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /* DEF_*(TYPE,SLOTS,UNITS) */
-diff --git a/target/hexagon/imported/ldst.idef b/target/hexagon/imported/ldst.idef
-index 53198176a9..582e9606ee 100644
---- a/target/hexagon/imported/ldst.idef
-+++ b/target/hexagon/imported/ldst.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
-index 402438f566..e604ca94fd 100644
---- a/target/hexagon/imported/mmvec/encode_ext.def
-+++ b/target/hexagon/imported/mmvec/encode_ext.def
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- #define CONCAT(A,B) A##B
-diff --git a/target/hexagon/imported/mmvec/macros.def b/target/hexagon/imported/mmvec/macros.def
-index 7e5438a998..c25f4a422f 100755
---- a/target/hexagon/imported/mmvec/macros.def
-+++ b/target/hexagon/imported/mmvec/macros.def
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- DEF_MACRO(fDUMPQ,
-diff --git a/target/hexagon/imported/mpy.idef b/target/hexagon/imported/mpy.idef
-index 8744f6596c..8ecd90ec19 100644
---- a/target/hexagon/imported/mpy.idef
-+++ b/target/hexagon/imported/mpy.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/shift.idef b/target/hexagon/imported/shift.idef
-index b32c4e04d1..bf79382cd0 100644
---- a/target/hexagon/imported/shift.idef
-+++ b/target/hexagon/imported/shift.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/subinsns.idef b/target/hexagon/imported/subinsns.idef
-index be0ae8779d..d9e56d5b24 100644
---- a/target/hexagon/imported/subinsns.idef
-+++ b/target/hexagon/imported/subinsns.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2022 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/target/hexagon/imported/system.idef b/target/hexagon/imported/system.idef
-index 7c6568e75e..0740f5a74c 100644
---- a/target/hexagon/imported/system.idef
-+++ b/target/hexagon/imported/system.idef
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2019-2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- /*
-diff --git a/tests/tcg/hexagon/hvx_histogram_row.S b/tests/tcg/hexagon/hvx_histogram_row.S
-index 5e42c33145..75c58289b4 100644
---- a/tests/tcg/hexagon/hvx_histogram_row.S
-+++ b/tests/tcg/hexagon/hvx_histogram_row.S
-@@ -1,18 +1,7 @@
- /*
-- *  Copyright(c) 2021 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2021-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *  SPDX-License-Identifier: BSD-3-Clause
-  */
- 
- 
+     if (migrate_multifd()) {
++        multifd_ram_save_setup();
+         migration_ops->ram_save_target_page = ram_save_target_page_multifd;
+     } else {
+         migration_ops->ram_save_target_page = ram_save_target_page_legacy;
 -- 
-2.37.2
+2.35.3
 
 
