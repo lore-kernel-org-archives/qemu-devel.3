@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998FFCA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5337CCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sln2X-0004Y4-7x; Wed, 04 Sep 2024 06:15:05 -0400
+	id 1sln2W-0004W9-Gq; Wed, 04 Sep 2024 06:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2M-0003uN-M2
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:14:55 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2M-0003sz-Aa
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:14:54 -0400
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2L-0002iw-26
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2J-0002iQ-PJ
  for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:14:54 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 9F50B5C56EA;
+ by dfw.source.kernel.org (Postfix) with ESMTP id 03BE45C3A62;
+ Wed,  4 Sep 2024 10:14:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0566BC4CEC8;
  Wed,  4 Sep 2024 10:14:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F230C4CEC2;
- Wed,  4 Sep 2024 10:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1725444891;
- bh=9l+qCXYoMaahzPy0jmL22EU3kbNbb8JoG9AUupuLTvU=;
+ s=k20201202; t=1725444890;
+ bh=Ww/ATg0fq9oyEeA7X9+YCqmySLFlQRuRy6f2ZA7sHds=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IOpuXQ1xaRGFk2oFreTa51a9qtpfL9BHABBGVdYD+Ihd3DjbGLA/Ii2YF8H7/qyCj
- w8VtiUn8SBfvZ1eokVO4zJuc9/iZOrqHZ3bZ52NN5yW7JLeSrIpi4xmnTXwu17kxlF
- 3NqZTtmx1GymOpqmM3v8l01Zt4mnK3fR1kQ1dlmANNS+lLcjo3EACiP7L3PuwX9NGV
- DDIkpitTsjG1FjxjFQJFcgjQhz43SeVmuCCchFHt8exWEJj+FMqIuPoljUZVCI6JTZ
- YvZULAqMhRapHmtX+xwYR10DSMwvRfGuB/bW6BeEER4f3bRHyLyxq1G3RLgdvEWPM5
- Qc9XocRUuO4/Q==
+ b=AvNZZAbr2KXTToRhx5uDVA5wqMNJoGtJO0v5Zfl9QIOJKKcCcBNzKs1KjBBZtbyUO
+ NyQpXpye68zP/3lUZYxKhKtz3k0TQGgJkXZqZ+aMpW3xzxLS4zyAfmgwJ5UegLMQj8
+ rc2e9mKvlgjf/iZKAID5Sjr8i55ni/Je9d6R+2g+eMpa/0B0a54mWugoKKjJlhHvEN
+ wMEZTChLJAQPkr1tr/K0JJKS+8VJ2hqj1h7wVufZ+E7QzP0CoR60uZdf9nzJ7OEGNk
+ 37cxfjx1fbXz3HvKYwvq22niAvViEiHi9dSJPIc29WqqVW8m+swhf4BbmB5DCtZlv9
+ aWr+CEIIgrMdg==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: deller@gmx.de
-Subject: [PULL 2/2] target/hppa: Fix random 32-bit linux-user crashes
-Date: Wed,  4 Sep 2024 12:14:45 +0200
-Message-ID: <20240904101445.4127-3-deller@kernel.org>
+Subject: [PULL 1/2] target/hppa: Fix PSW V-bit packaging in cpu_hppa_get for
+ hppa64
+Date: Wed,  4 Sep 2024 12:14:44 +0200
+Message-ID: <20240904101445.4127-2-deller@kernel.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240904101445.4127-1-deller@kernel.org>
 References: <20240904101445.4127-1-deller@kernel.org>
@@ -71,38 +72,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The linux-user hppa target crashes randomly for me since commit
-081a0ed188d8 ("target/hppa: Do not mask in copy_iaoq_entry").
+While adding hppa64 support, the psw_v variable got extended from 32 to 64
+bits.  So, when packaging the PSW-V bit from the psw_v variable for interrupt
+processing, check bit 31 instead the 63th (sign) bit.
 
-That commit dropped the masking of the IAOQ addresses while copying them
-from other registers and instead keeps them with all 64 bits up until
-the full gva is formed with the help of hppa_form_gva_psw().
+This fixes a hard to find Linux kernel boot issue where the loss of the PSW-V
+bit due to an ITLB interruption in the middle of a series of ds/addc
+instructions (from the divU milicode library) generated the wrong division
+result and thus triggered a Linux kernel crash.
 
-So, when running in linux-user mode on an emulated 64-bit CPU, we need
-to mask to a 32-bit address space at the very end in hppa_form_gva_psw()
-if the PSW-W flag isn't set (which is the case for linux-user on hppa).
-
-Fixes: 081a0ed188d8 ("target/hppa: Do not mask in copy_iaoq_entry")
-Cc: qemu-stable@nongnu.org # v9.1+
+Link: https://lore.kernel.org/lkml/718b8afe-222f-4b3a-96d3-93af0e4ceff1@roeck-us.net/
+Reported-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
+Cc: qemu-stable@nongnu.org # v8.2+
 ---
- target/hppa/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/hppa/cpu.h    | 2 +-
+ target/hppa/helper.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 5478b183dc..43074d80bf 100644
+index 2bcb3b602b..5478b183dc 100644
 --- a/target/hppa/cpu.h
 +++ b/target/hppa/cpu.h
-@@ -319,7 +319,7 @@ static inline target_ulong hppa_form_gva_psw(target_ulong psw, uint64_t spc,
-                                              target_ulong off)
- {
- #ifdef CONFIG_USER_ONLY
--    return off;
-+    return off & gva_offset_mask(psw);
- #else
-     return spc | (off & gva_offset_mask(psw));
- #endif
+@@ -211,7 +211,7 @@ typedef struct CPUArchState {
+     uint32_t psw;            /* All psw bits except the following:  */
+     uint32_t psw_xb;         /* X and B, in their normal positions */
+     target_ulong psw_n;      /* boolean */
+-    target_long psw_v;       /* in most significant bit */
++    target_long psw_v;       /* in bit 31 */
+ 
+     /* Splitting the carry-borrow field into the MSB and "the rest", allows
+      * for "the rest" to be deleted when it is unused, but the MSB is in use.
+diff --git a/target/hppa/helper.c b/target/hppa/helper.c
+index b79ddd8184..d4b1a3cd5a 100644
+--- a/target/hppa/helper.c
++++ b/target/hppa/helper.c
+@@ -53,7 +53,7 @@ target_ulong cpu_hppa_get_psw(CPUHPPAState *env)
+     }
+ 
+     psw |= env->psw_n * PSW_N;
+-    psw |= (env->psw_v < 0) * PSW_V;
++    psw |= ((env->psw_v >> 31) & 1) * PSW_V;
+     psw |= env->psw | env->psw_xb;
+ 
+     return psw;
 -- 
 2.46.0
 
