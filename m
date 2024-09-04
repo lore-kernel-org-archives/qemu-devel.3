@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A7B5CD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8670CCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slo8f-0006CV-Lo; Wed, 04 Sep 2024 07:25:29 -0400
+	id 1slo8Q-00056T-36; Wed, 04 Sep 2024 07:25:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8Y-0005kU-TS
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8O-00050h-5n
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8V-0004UH-BD
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo8K-0004Ot-6A
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:25:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725449118;
+ s=mimecast20190719; t=1725449106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gWp+iCFBJ9F2d1YyCUo75gPc+JrIQoSE3ebW3zYSASw=;
- b=MOqUdpZ5HXmjQEM/zzsUmIJ2HwVI8AAfUfIISo3bBQdIlu15L6Fp531KAlkm3ee71pI6iK
- 2yjfZjZixd5Ltwfpfd/L9a8aHKC9DJZsmqq6FcBtfGV8cr9ohbMx/cVUCl20ySeHiIP+tK
- y1SAklsI/gviYwr53q1+GAfNGQs2dd8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mx0VBf7PIZMmG9UblVDStv63N2fkZrKVnw2Bb2K1RLo=;
+ b=ctHXnx3aJ1jFbObUQp4G/Er3AoHRxTnmJcPsv0dNOSWl9ioSWrVzfkTbQUnaVTnboOwGAK
+ rKWIoaMzEJB+LvYuYkfLRmDDWrHGVXeaxImIMJEyNjI55m3wCOVSZGsQlXSxA6L+uwq8cQ
+ ZSPrBzwzuS/UrOeyBlZrQUr6OXhJcS4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-RA6P3sr1OiqPVB6mMsX1Cw-1; Wed,
- 04 Sep 2024 07:18:52 -0400
-X-MC-Unique: RA6P3sr1OiqPVB6mMsX1Cw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-f_RRaaRgPMeBbeFZ_Pxv9g-1; Wed,
+ 04 Sep 2024 07:18:49 -0400
+X-MC-Unique: f_RRaaRgPMeBbeFZ_Pxv9g-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91BE41956096; Wed,  4 Sep 2024 11:18:47 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF53D1955DA6; Wed,  4 Sep 2024 11:18:45 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9DE030001AB; Wed,  4 Sep 2024 11:18:46 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8C501956086; Wed,  4 Sep 2024 11:18:43 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D6E9421E682E; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
+ id AF9F021E68BD; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
@@ -65,15 +65,15 @@ Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
  avihaih@nvidia.com
-Subject: [PATCH v2 16/19] qapi/crypto: Rename QCryptoAFAlg to QCryptoAFAlgo
-Date: Wed,  4 Sep 2024 13:18:33 +0200
-Message-ID: <20240904111836.3273842-17-armbru@redhat.com>
+Subject: [PATCH v2 08/19] qapi/ui: Drop temporary 'prefix'
+Date: Wed,  4 Sep 2024 13:18:25 +0200
+Message-ID: <20240904111836.3273842-9-armbru@redhat.com>
 In-Reply-To: <20240904111836.3273842-1-armbru@redhat.com>
 References: <20240904111836.3273842-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
@@ -99,224 +99,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For consistency with other types names *Algo.
+Recent commit "qapi: Smarter camel_to_upper() to reduce need for
+'prefix'" added a temporary 'prefix' to delay changing the generated
+code.
+
+Revert it.  This improves DisplayGLMode's generated enumeration
+constant prefix from DISPLAYGL_MODE to DISPLAY_GL_MODE.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/afalgpriv.h    | 14 +++++++-------
- crypto/hmacpriv.h     |  2 +-
- crypto/afalg.c        |  8 ++++----
- crypto/cipher-afalg.c | 12 ++++++------
- crypto/hash-afalg.c   | 14 +++++++-------
- 5 files changed, 25 insertions(+), 25 deletions(-)
+ qapi/ui.json      |  1 -
+ system/vl.c       |  2 +-
+ ui/dbus.c         |  8 ++++----
+ ui/egl-context.c  |  2 +-
+ ui/egl-headless.c |  2 +-
+ ui/egl-helpers.c  | 12 ++++++------
+ ui/gtk.c          |  4 ++--
+ ui/sdl2-gl.c      |  8 ++++----
+ ui/sdl2.c         |  2 +-
+ ui/spice-core.c   |  2 +-
+ 10 files changed, 21 insertions(+), 22 deletions(-)
 
-diff --git a/crypto/afalgpriv.h b/crypto/afalgpriv.h
-index 5a2393f1b7..3fdcc0f831 100644
---- a/crypto/afalgpriv.h
-+++ b/crypto/afalgpriv.h
-@@ -30,9 +30,9 @@
- #define ALG_OPTYPE_LEN 4
- #define ALG_MSGIV_LEN(len) (sizeof(struct af_alg_iv) + (len))
+diff --git a/qapi/ui.json b/qapi/ui.json
+index f61a2b6b65..460a26b981 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1397,7 +1397,6 @@
+ # Since: 3.0
+ ##
+ { 'enum'    : 'DisplayGLMode',
+-  'prefix'  : 'DISPLAYGL_MODE', # TODO drop
+   'data'    : [ 'off', 'on', 'core', 'es' ] }
  
--typedef struct QCryptoAFAlg QCryptoAFAlg;
-+typedef struct QCryptoAFAlgo QCryptoAFAlgo;
+ ##
+diff --git a/system/vl.c b/system/vl.c
+index 01b8b8e77a..fe547ca47c 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1971,7 +1971,7 @@ static void qemu_create_early_backends(void)
  
--struct QCryptoAFAlg {
-+struct QCryptoAFAlgo {
-     QCryptoCipher base;
+     qemu_console_early_init();
  
-     int tfmfd;
-@@ -46,22 +46,22 @@ struct QCryptoAFAlg {
-  * @type: the type of crypto operation
-  * @name: the name of crypto operation
-  *
-- * Allocate a QCryptoAFAlg object and bind itself to
-+ * Allocate a QCryptoAFAlgo object and bind itself to
-  * a AF_ALG socket.
-  *
-  * Returns:
-- *  a new QCryptoAFAlg object, or NULL in error.
-+ *  a new QCryptoAFAlgo object, or NULL in error.
-  */
--QCryptoAFAlg *
-+QCryptoAFAlgo *
- qcrypto_afalg_comm_alloc(const char *type, const char *name,
-                          Error **errp);
+-    if (dpy.has_gl && dpy.gl != DISPLAYGL_MODE_OFF && display_opengl == 0) {
++    if (dpy.has_gl && dpy.gl != DISPLAY_GL_MODE_OFF && display_opengl == 0) {
+ #if defined(CONFIG_OPENGL)
+         error_report("OpenGL is not supported by display backend '%s'",
+                      DisplayType_str(dpy.type));
+diff --git a/ui/dbus.c b/ui/dbus.c
+index e08b5de064..7ecd39e784 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -176,7 +176,7 @@ dbus_display_add_console(DBusDisplay *dd, int idx, Error **errp)
+     assert(con);
  
- /**
-  * afalg_comm_free:
-- * @afalg: the QCryptoAFAlg object
-+ * @afalg: the QCryptoAFAlgo object
-  *
-  * Free the @afalg.
-  */
--void qcrypto_afalg_comm_free(QCryptoAFAlg *afalg);
-+void qcrypto_afalg_comm_free(QCryptoAFAlgo *afalg);
+     if (qemu_console_is_graphic(con) &&
+-        dd->gl_mode != DISPLAYGL_MODE_OFF) {
++        dd->gl_mode != DISPLAY_GL_MODE_OFF) {
+         qemu_console_set_display_gl_ctx(con, &dd->glctx);
+     }
  
+@@ -466,9 +466,9 @@ static const TypeInfo dbus_vc_type_info = {
+ static void
+ early_dbus_init(DisplayOptions *opts)
+ {
+-    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAYGL_MODE_OFF;
++    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAY_GL_MODE_OFF;
+ 
+-    if (mode != DISPLAYGL_MODE_OFF) {
++    if (mode != DISPLAY_GL_MODE_OFF) {
+ #ifdef CONFIG_OPENGL
+         egl_init(opts->u.dbus.rendernode, mode, &error_fatal);
+ #else
+@@ -482,7 +482,7 @@ early_dbus_init(DisplayOptions *opts)
+ static void
+ dbus_init(DisplayState *ds, DisplayOptions *opts)
+ {
+-    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAYGL_MODE_OFF;
++    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAY_GL_MODE_OFF;
+ 
+     if (opts->u.dbus.addr && opts->u.dbus.p2p) {
+         error_report("dbus: can't accept both addr=X and p2p=yes options");
+diff --git a/ui/egl-context.c b/ui/egl-context.c
+index 9e0df466f3..aed3e3ba1f 100644
+--- a/ui/egl-context.c
++++ b/ui/egl-context.c
+@@ -17,7 +17,7 @@ QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
+        EGL_CONTEXT_MINOR_VERSION_KHR, params->minor_ver,
+        EGL_NONE
+    };
+-   bool gles = (qemu_egl_mode == DISPLAYGL_MODE_ES);
++   bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
+ 
+    ctx = eglCreateContext(qemu_egl_display, qemu_egl_config,
+                           eglGetCurrentContext(),
+diff --git a/ui/egl-headless.c b/ui/egl-headless.c
+index 6187249c73..1f6b845500 100644
+--- a/ui/egl-headless.c
++++ b/ui/egl-headless.c
+@@ -207,7 +207,7 @@ static const DisplayGLCtxOps eglctx_ops = {
+ 
+ static void early_egl_headless_init(DisplayOptions *opts)
+ {
+-    DisplayGLMode mode = DISPLAYGL_MODE_ON;
++    DisplayGLMode mode = DISPLAY_GL_MODE_ON;
+ 
+     if (opts->has_gl) {
+         mode = opts->gl;
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index 99b2ebbe23..81a57fa975 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -503,7 +503,7 @@ static int qemu_egl_init_dpy(EGLNativeDisplayType dpy,
+     EGLint major, minor;
+     EGLBoolean b;
+     EGLint n;
+-    bool gles = (mode == DISPLAYGL_MODE_ES);
++    bool gles = (mode == DISPLAY_GL_MODE_ES);
+ 
+     qemu_egl_display = qemu_egl_get_display(dpy, platform);
+     if (qemu_egl_display == EGL_NO_DISPLAY) {
+@@ -533,7 +533,7 @@ static int qemu_egl_init_dpy(EGLNativeDisplayType dpy,
+         return -1;
+     }
+ 
+-    qemu_egl_mode = gles ? DISPLAYGL_MODE_ES : DISPLAYGL_MODE_CORE;
++    qemu_egl_mode = gles ? DISPLAY_GL_MODE_ES : DISPLAY_GL_MODE_CORE;
+     return 0;
+ }
+ 
+@@ -564,8 +564,8 @@ int qemu_egl_init_dpy_mesa(EGLNativeDisplayType dpy, DisplayGLMode mode)
+ int qemu_egl_init_dpy_win32(EGLNativeDisplayType dpy, DisplayGLMode mode)
+ {
+     /* prefer GL ES, as that's what ANGLE supports */
+-    if (mode == DISPLAYGL_MODE_ON) {
+-        mode = DISPLAYGL_MODE_ES;
++    if (mode == DISPLAY_GL_MODE_ON) {
++        mode = DISPLAY_GL_MODE_ES;
+     }
+ 
+     if (qemu_egl_init_dpy(dpy, 0, mode) < 0) {
+@@ -618,7 +618,7 @@ EGLContext qemu_egl_init_ctx(void)
+         EGL_CONTEXT_CLIENT_VERSION, 2,
+         EGL_NONE
+     };
+-    bool gles = (qemu_egl_mode == DISPLAYGL_MODE_ES);
++    bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
+     EGLContext ectx;
+     EGLBoolean b;
+ 
+@@ -642,7 +642,7 @@ bool egl_init(const char *rendernode, DisplayGLMode mode, Error **errp)
+ {
+     ERRP_GUARD();
+ 
+-    if (mode == DISPLAYGL_MODE_OFF) {
++    if (mode == DISPLAY_GL_MODE_OFF) {
+         error_setg(errp, "egl: turning off GL doesn't make sense");
+         return false;
+     }
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 8e14c2ac81..bf9d3dd679 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2514,7 +2514,7 @@ static void early_gtk_display_init(DisplayOptions *opts)
+     }
+ 
+     assert(opts->type == DISPLAY_TYPE_GTK);
+-    if (opts->has_gl && opts->gl != DISPLAYGL_MODE_OFF) {
++    if (opts->has_gl && opts->gl != DISPLAY_GL_MODE_OFF) {
+ #if defined(CONFIG_OPENGL)
+ #if defined(GDK_WINDOWING_WAYLAND)
+         if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default())) {
+@@ -2530,7 +2530,7 @@ static void early_gtk_display_init(DisplayOptions *opts)
  #endif
-diff --git a/crypto/hmacpriv.h b/crypto/hmacpriv.h
-index bd4c498c62..f339596bd9 100644
---- a/crypto/hmacpriv.h
-+++ b/crypto/hmacpriv.h
-@@ -37,7 +37,7 @@ extern QCryptoHmacDriver qcrypto_hmac_lib_driver;
+         {
+ #ifdef CONFIG_X11
+-            DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAYGL_MODE_ON;
++            DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAY_GL_MODE_ON;
+             gtk_egl_init(mode);
+ #endif
+         }
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 91b7ee2419..e01d9ab0c7 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -147,11 +147,11 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
  
- #include "afalgpriv.h"
+     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+-    if (scon->opts->gl == DISPLAYGL_MODE_ON ||
+-        scon->opts->gl == DISPLAYGL_MODE_CORE) {
++    if (scon->opts->gl == DISPLAY_GL_MODE_ON ||
++        scon->opts->gl == DISPLAY_GL_MODE_CORE) {
+         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+                             SDL_GL_CONTEXT_PROFILE_CORE);
+-    } else if (scon->opts->gl == DISPLAYGL_MODE_ES) {
++    } else if (scon->opts->gl == DISPLAY_GL_MODE_ES) {
+         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+                             SDL_GL_CONTEXT_PROFILE_ES);
+     }
+@@ -163,7 +163,7 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
+     /* If SDL fail to create a GL context and we use the "on" flag,
+      * then try to fallback to GLES.
+      */
+-    if (!ctx && scon->opts->gl == DISPLAYGL_MODE_ON) {
++    if (!ctx && scon->opts->gl == DISPLAY_GL_MODE_ON) {
+         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+                             SDL_GL_CONTEXT_PROFILE_ES);
+         ctx = SDL_GL_CreateContext(scon->real_window);
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 98ed974371..251ce97796 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -107,7 +107,7 @@ void sdl2_window_create(struct sdl2_console *scon)
+     if (scon->opengl) {
+         const char *driver = "opengl";
  
--QCryptoAFAlg *qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
-+QCryptoAFAlgo *qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
-                                          const uint8_t *key, size_t nkey,
-                                          Error **errp);
- extern QCryptoHmacDriver qcrypto_hmac_afalg_driver;
-diff --git a/crypto/afalg.c b/crypto/afalg.c
-index 52a491dbb5..246d0679d4 100644
---- a/crypto/afalg.c
-+++ b/crypto/afalg.c
-@@ -66,13 +66,13 @@ qcrypto_afalg_socket_bind(const char *type, const char *name,
-     return sbind;
- }
+-        if (scon->opts->gl == DISPLAYGL_MODE_ES) {
++        if (scon->opts->gl == DISPLAY_GL_MODE_ES) {
+             driver = "opengles2";
+         }
  
--QCryptoAFAlg *
-+QCryptoAFAlgo *
- qcrypto_afalg_comm_alloc(const char *type, const char *name,
-                          Error **errp)
- {
--    QCryptoAFAlg *afalg;
-+    QCryptoAFAlgo *afalg;
- 
--    afalg = g_new0(QCryptoAFAlg, 1);
-+    afalg = g_new0(QCryptoAFAlgo, 1);
-     /* initialize crypto API socket */
-     afalg->opfd = -1;
-     afalg->tfmfd = qcrypto_afalg_socket_bind(type, name, errp);
-@@ -93,7 +93,7 @@ error:
-     return NULL;
- }
- 
--void qcrypto_afalg_comm_free(QCryptoAFAlg *afalg)
-+void qcrypto_afalg_comm_free(QCryptoAFAlgo *afalg)
- {
-     if (!afalg) {
-         return;
-diff --git a/crypto/cipher-afalg.c b/crypto/cipher-afalg.c
-index c08eb7a39b..4980d419c4 100644
---- a/crypto/cipher-afalg.c
-+++ b/crypto/cipher-afalg.c
-@@ -65,7 +65,7 @@ qcrypto_afalg_cipher_ctx_new(QCryptoCipherAlgo alg,
-                              const uint8_t *key,
-                              size_t nkey, Error **errp)
- {
--    QCryptoAFAlg *afalg;
-+    QCryptoAFAlgo *afalg;
-     size_t expect_niv;
-     char *name;
- 
-@@ -119,7 +119,7 @@ qcrypto_afalg_cipher_setiv(QCryptoCipher *cipher,
-                            const uint8_t *iv,
-                            size_t niv, Error **errp)
- {
--    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
-+    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
-     struct af_alg_iv *alg_iv;
-     size_t expect_niv;
- 
-@@ -143,7 +143,7 @@ qcrypto_afalg_cipher_setiv(QCryptoCipher *cipher,
- }
- 
- static int
--qcrypto_afalg_cipher_op(QCryptoAFAlg *afalg,
-+qcrypto_afalg_cipher_op(QCryptoAFAlgo *afalg,
-                         const void *in, void *out,
-                         size_t len, bool do_encrypt,
-                         Error **errp)
-@@ -202,7 +202,7 @@ qcrypto_afalg_cipher_encrypt(QCryptoCipher *cipher,
-                              const void *in, void *out,
-                              size_t len, Error **errp)
- {
--    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
-+    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
- 
-     return qcrypto_afalg_cipher_op(afalg, in, out, len, true, errp);
- }
-@@ -212,14 +212,14 @@ qcrypto_afalg_cipher_decrypt(QCryptoCipher *cipher,
-                              const void *in, void *out,
-                              size_t len, Error **errp)
- {
--    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
-+    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
- 
-     return qcrypto_afalg_cipher_op(afalg, in, out, len, false, errp);
- }
- 
- static void qcrypto_afalg_comm_ctx_free(QCryptoCipher *cipher)
- {
--    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
-+    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
- 
-     qcrypto_afalg_comm_free(afalg);
- }
-diff --git a/crypto/hash-afalg.c b/crypto/hash-afalg.c
-index 8fc6bd0edf..28ab899b18 100644
---- a/crypto/hash-afalg.c
-+++ b/crypto/hash-afalg.c
-@@ -64,12 +64,12 @@ qcrypto_afalg_hash_format_name(QCryptoHashAlgo alg,
-     return name;
- }
- 
--static QCryptoAFAlg *
-+static QCryptoAFAlgo *
- qcrypto_afalg_hash_hmac_ctx_new(QCryptoHashAlgo alg,
-                                 const uint8_t *key, size_t nkey,
-                                 bool is_hmac, Error **errp)
- {
--    QCryptoAFAlg *afalg;
-+    QCryptoAFAlgo *afalg;
-     char *name;
- 
-     name = qcrypto_afalg_hash_format_name(alg, is_hmac, errp);
-@@ -98,14 +98,14 @@ qcrypto_afalg_hash_hmac_ctx_new(QCryptoHashAlgo alg,
-     return afalg;
- }
- 
--static QCryptoAFAlg *
-+static QCryptoAFAlgo *
- qcrypto_afalg_hash_ctx_new(QCryptoHashAlgo alg,
-                            Error **errp)
- {
-     return qcrypto_afalg_hash_hmac_ctx_new(alg, NULL, 0, false, errp);
- }
- 
--QCryptoAFAlg *
-+QCryptoAFAlgo *
- qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
-                            const uint8_t *key, size_t nkey,
-                            Error **errp)
-@@ -114,14 +114,14 @@ qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
- }
- 
- static int
--qcrypto_afalg_hash_hmac_bytesv(QCryptoAFAlg *hmac,
-+qcrypto_afalg_hash_hmac_bytesv(QCryptoAFAlgo *hmac,
-                                QCryptoHashAlgo alg,
-                                const struct iovec *iov,
-                                size_t niov, uint8_t **result,
-                                size_t *resultlen,
-                                Error **errp)
- {
--    QCryptoAFAlg *afalg;
-+    QCryptoAFAlgo *afalg;
-     struct iovec outv;
-     int ret = 0;
-     bool is_hmac = (hmac != NULL) ? true : false;
-@@ -197,7 +197,7 @@ qcrypto_afalg_hmac_bytesv(QCryptoHmac *hmac,
- 
- static void qcrypto_afalg_hmac_ctx_free(QCryptoHmac *hmac)
- {
--    QCryptoAFAlg *afalg;
-+    QCryptoAFAlgo *afalg;
- 
-     afalg = hmac->opaque;
-     qcrypto_afalg_comm_free(afalg);
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 15be640286..bd9dbe03f1 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -840,7 +840,7 @@ static void qemu_spice_init(void)
+                          "incompatible with -spice port/tls-port");
+             exit(1);
+         }
+-        egl_init(qemu_opt_get(opts, "rendernode"), DISPLAYGL_MODE_ON, &error_fatal);
++        egl_init(qemu_opt_get(opts, "rendernode"), DISPLAY_GL_MODE_ON, &error_fatal);
+         spice_opengl = 1;
+     }
+ #endif
 -- 
 2.46.0
 
