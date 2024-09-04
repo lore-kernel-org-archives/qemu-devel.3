@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB306CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05CC5CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnRR-0004XQ-0t; Wed, 04 Sep 2024 06:40:49 -0400
+	id 1slnVf-0000b0-GC; Wed, 04 Sep 2024 06:45:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRI-0003N0-Ij
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1slnVb-0000Mp-7t
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:45:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRD-0000JI-Rl
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:40 -0400
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1slnVY-0002A6-Q3
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:45:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446434;
+ s=mimecast20190719; t=1725446703;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PvXEhAaVvR0r7M8MIXYHuvVmX5uFNWssmN8pKm/CqL0=;
- b=JK0sMuVZ6fcbSdks9zrcJofR+POs88Bl4Al8TLKU9XfcV3YxCvlHIy+Y63AitJyJxoIeZA
- xorkARTOvoIeRVsdbFye4zCV+WOQR2/iQVFj9cSNCbeUB5C1NoaYP+pKjMdFLREvitrsMh
- 8ylh7naHpbrqJnchMaUa7NqIMkjRmB4=
+ bh=BH2nZ069vTgdVPVcpqPPG8whg4igkAfJo9IWQrDvPsY=;
+ b=MBLprpd7NUOXBCArn7K10j6wHNPxwf7SvL53f59Q1d+xTW/s3YuIEBznvi2vTeK1W8+YKI
+ Str0BsWekT0Jzq892UjwaRWMac42K587h3+swSwgW2vyMF2FV9A34D9SVg8jYlQRJ+iKGF
+ /DgzQDBzMMtsO8GHvPbjK6FGAYTOzO4=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-919Y-1kQN5mtcgtgzheTcQ-1; Wed,
- 04 Sep 2024 06:40:31 -0400
-X-MC-Unique: 919Y-1kQN5mtcgtgzheTcQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-czZSIrFeM5uX_cElknGRPw-1; Wed,
+ 04 Sep 2024 06:37:58 -0400
+X-MC-Unique: czZSIrFeM5uX_cElknGRPw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A484519560AD; Wed,  4 Sep 2024 10:40:30 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
+ id 76C7819560A5; Wed,  4 Sep 2024 10:37:57 +0000 (UTC)
+Received: from rh-jmarcin.redhat.com (unknown [10.45.225.176])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 12A8D195605A; Wed,  4 Sep 2024 10:40:28 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
+ id 6D0ED1955D44; Wed,  4 Sep 2024 10:37:55 +0000 (UTC)
+From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 22/42] tests/functional: Convert the microblaze avocado tests
- into standalone tests
-Date: Wed,  4 Sep 2024 12:38:57 +0200
-Message-ID: <20240904103923.451847-23-thuth@redhat.com>
-In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
-References: <20240904103923.451847-1-thuth@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 3/4] virtio-mem: Use new Resettable framework instead of
+ LegacyReset
+Date: Wed,  4 Sep 2024 12:37:14 +0200
+Message-ID: <20240904103722.946194-4-jmarcin@redhat.com>
+In-Reply-To: <20240904103722.946194-1-jmarcin@redhat.com>
+References: <20240904103722.946194-1-jmarcin@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
 X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
@@ -85,219 +85,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The machine_microblaze.py file contained two tests, one for each
-endianness. Since we only support one QEMU target binary per file
-in the new functional test environment, we have to split this file
-up into two files now.
+LegacyReset does not pass ResetType to the reset callback method, which
+the new Resettable framework uses. Due to this, virtio-mem cannot use
+the new RESET_TYPE_WAKEUP to skip the reset during wake-up from a
+suspended state.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240830133841.142644-23-thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+This patch adds overrides Resettable interface methods in VirtIOMEMClass
+to use the new Resettable framework and replaces
+qemu_[un]register_reset() calls with qemu_[un]register_resettable().
+
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 ---
- MAINTAINERS                                   |  2 +-
- tests/avocado/machine_microblaze.py           | 61 -------------------
- tests/functional/meson.build                  |  8 +++
- .../functional/test_microblaze_s3adsp1800.py  | 40 ++++++++++++
- .../test_microblazeel_s3adsp1800.py           | 42 +++++++++++++
- 5 files changed, 91 insertions(+), 62 deletions(-)
- delete mode 100644 tests/avocado/machine_microblaze.py
- create mode 100755 tests/functional/test_microblaze_s3adsp1800.py
- create mode 100755 tests/functional/test_microblazeel_s3adsp1800.py
+ hw/virtio/virtio-mem.c         | 38 +++++++++++++++++++++-------------
+ include/hw/virtio/virtio-mem.h |  4 ++++
+ 2 files changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8abbc7d861..7180667d37 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1329,7 +1329,7 @@ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
- S: Maintained
- F: hw/microblaze/petalogix_s3adsp1800_mmu.c
- F: include/hw/char/xilinx_uartlite.h
--F: tests/avocado/machine_microblaze.py
-+F: tests/functional/test_microblaze*.py
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index ef64bf1b4a..aeee381eb2 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -895,18 +895,6 @@ static int virtio_mem_validate_features(VirtIODevice *vdev)
+     return 0;
+ }
  
- petalogix_ml605
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-diff --git a/tests/avocado/machine_microblaze.py b/tests/avocado/machine_microblaze.py
-deleted file mode 100644
-index 807709cd11..0000000000
---- a/tests/avocado/machine_microblaze.py
-+++ /dev/null
-@@ -1,61 +0,0 @@
--# Functional test that boots a microblaze Linux kernel and checks the console
--#
--# Copyright (c) 2018, 2021 Red Hat, Inc.
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later. See the COPYING file in the top-level directory.
+-static void virtio_mem_system_reset(void *opaque)
+-{
+-    VirtIOMEM *vmem = VIRTIO_MEM(opaque);
 -
--import time
--from avocado_qemu import exec_command, exec_command_and_wait_for_pattern
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import archive
+-    /*
+-     * During usual resets, we will unplug all memory and shrink the usable
+-     * region size. This is, however, not possible in all scenarios. Then,
+-     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
+-     */
+-    virtio_mem_unplug_all(vmem);
+-}
 -
--class MicroblazeMachine(QemuSystemTest):
--
--    timeout = 90
--
--    def test_microblaze_s3adsp1800(self):
--        """
--        :avocado: tags=arch:microblaze
--        :avocado: tags=machine:petalogix-s3adsp1800
--        """
--
--        tar_url = ('https://qemu-advcal.gitlab.io'
--                   '/qac-best-of-multiarch/download/day17.tar.xz')
--        tar_hash = '08bf3e3bfb6b6c7ce1e54ab65d54e189f2caf13f'
--        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        archive.extract(file_path, self.workdir)
--        self.vm.set_console()
--        self.vm.add_args('-kernel', self.workdir + '/day17/ballerina.bin')
--        self.vm.launch()
--        wait_for_console_pattern(self, 'This architecture does not have '
--                                       'kernel memory protection')
--        # Note:
--        # The kernel sometimes gets stuck after the "This architecture ..."
--        # message, that's why we don't test for a later string here. This
--        # needs some investigation by a microblaze wizard one day...
--
--    def test_microblazeel_s3adsp1800(self):
--        """
--        :avocado: tags=arch:microblazeel
--        :avocado: tags=machine:petalogix-s3adsp1800
--        """
--
--        self.require_netdev('user')
--        tar_url = ('http://www.qemu-advent-calendar.org/2023/download/'
--                   'day13.tar.gz')
--        tar_hash = '6623d5fff5f84cfa8f34e286f32eff6a26546f44'
--        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        archive.extract(file_path, self.workdir)
--        self.vm.set_console()
--        self.vm.add_args('-kernel', self.workdir + '/day13/xmaton.bin')
--        self.vm.add_args('-nic', 'user,tftp=' + self.workdir + '/day13/')
--        self.vm.launch()
--        wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
--        time.sleep(0.1)
--        exec_command(self, 'root')
--        time.sleep(0.1)
--        exec_command_and_wait_for_pattern(self,
--                'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
--                '821cd3cab8efd16ad6ee5acc3642a8ea')
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 6d2e9321eb..b721b6ec44 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -39,6 +39,14 @@ tests_loongarch64_system_thorough = [
-   'loongarch64_virt',
- ]
+ static void virtio_mem_prepare_mr(VirtIOMEM *vmem)
+ {
+     const uint64_t region_size = memory_region_size(&vmem->memdev->mr);
+@@ -1123,7 +1111,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+         vmstate_register_any(VMSTATE_IF(vmem),
+                              &vmstate_virtio_mem_device_early, vmem);
+     }
+-    qemu_register_reset(virtio_mem_system_reset, vmem);
++    qemu_register_resettable(OBJECT(vmem));
  
-+tests_microblaze_system_thorough = [
-+  'microblaze_s3adsp1800'
-+]
+     /*
+      * Set ourselves as RamDiscardManager before the plug handler maps the
+@@ -1143,7 +1131,7 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
+      * found via an address space anymore. Unset ourselves.
+      */
+     memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
+-    qemu_unregister_reset(virtio_mem_system_reset, vmem);
++    qemu_unregister_resettable(OBJECT(vmem));
+     if (vmem->early_migration) {
+         vmstate_unregister(VMSTATE_IF(vmem), &vmstate_virtio_mem_device_early,
+                            vmem);
+@@ -1843,12 +1831,31 @@ static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
+     }
+ }
+ 
++static ResettableState *virtio_mem_get_reset_state(Object *obj)
++{
++    VirtIOMEM *vmem = VIRTIO_MEM(obj);
++    return &vmem->reset_state;
++}
 +
-+tests_microblazeel_system_thorough = [
-+  'microblazeel_s3adsp1800'
-+]
++static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
++{
++    VirtIOMEM *vmem = VIRTIO_MEM(obj);
 +
- tests_mips64el_system_thorough = [
-   'mips64el_loongson3v',
- ]
-diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
-new file mode 100755
-index 0000000000..4f692ffdb1
---- /dev/null
-+++ b/tests/functional/test_microblaze_s3adsp1800.py
-@@ -0,0 +1,40 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a microblaze Linux kernel and checks the console
-+#
-+# Copyright (c) 2018, 2021 Red Hat, Inc.
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later. See the COPYING file in the top-level directory.
++    /*
++     * During usual resets, we will unplug all memory and shrink the usable
++     * region size. This is, however, not possible in all scenarios. Then,
++     * the guest has to deal with this manually (VIRTIO_MEM_REQ_UNPLUG_ALL).
++     */
++    virtio_mem_unplug_all(vmem);
++}
 +
-+import time
-+from qemu_test import exec_command, exec_command_and_wait_for_pattern
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import archive_extract
+ static void virtio_mem_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
+     VirtIOMEMClass *vmc = VIRTIO_MEM_CLASS(klass);
+     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     device_class_set_props(dc, virtio_mem_properties);
+     dc->vmsd = &vmstate_virtio_mem;
+@@ -1875,6 +1882,9 @@ static void virtio_mem_class_init(ObjectClass *klass, void *data)
+     rdmc->replay_discarded = virtio_mem_rdm_replay_discarded;
+     rdmc->register_listener = virtio_mem_rdm_register_listener;
+     rdmc->unregister_listener = virtio_mem_rdm_unregister_listener;
 +
-+class MicroblazeMachine(QemuSystemTest):
++    rc->get_state = virtio_mem_get_reset_state;
++    rc->phases.hold = virtio_mem_system_reset_hold;
+ }
+ 
+ static const TypeInfo virtio_mem_info = {
+diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
+index 5f5b02b8f9..a1af144c28 100644
+--- a/include/hw/virtio/virtio-mem.h
++++ b/include/hw/virtio/virtio-mem.h
+@@ -14,6 +14,7 @@
+ #define HW_VIRTIO_MEM_H
+ 
+ #include "standard-headers/linux/virtio_mem.h"
++#include "hw/resettable.h"
+ #include "hw/virtio/virtio.h"
+ #include "qapi/qapi-types-misc.h"
+ #include "sysemu/hostmem.h"
+@@ -115,6 +116,9 @@ struct VirtIOMEM {
+ 
+     /* listeners to notify on plug/unplug activity. */
+     QLIST_HEAD(, RamDiscardListener) rdl_list;
 +
-+    timeout = 90
-+
-+    ASSET_IMAGE = Asset(
-+        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
-+         'day17.tar.xz'),
-+        '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
-+
-+    def test_microblaze_s3adsp1800(self):
-+        self.set_machine('petalogix-s3adsp1800')
-+        file_path = self.ASSET_IMAGE.fetch()
-+        archive_extract(file_path, self.workdir)
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', self.workdir + '/day17/ballerina.bin')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'This architecture does not have '
-+                                       'kernel memory protection')
-+        # Note:
-+        # The kernel sometimes gets stuck after the "This architecture ..."
-+        # message, that's why we don't test for a later string here. This
-+        # needs some investigation by a microblaze wizard one day...
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-new file mode 100755
-index 0000000000..faa3927f2e
---- /dev/null
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -0,0 +1,42 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a microblaze Linux kernel and checks the console
-+#
-+# Copyright (c) 2018, 2021 Red Hat, Inc.
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later. See the COPYING file in the top-level directory.
-+
-+import time
-+from qemu_test import exec_command, exec_command_and_wait_for_pattern
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import archive_extract
-+
-+class MicroblazeelMachine(QemuSystemTest):
-+
-+    timeout = 90
-+
-+    ASSET_IMAGE = Asset(
-+        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
-+        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
-+
-+    def test_microblazeel_s3adsp1800(self):
-+        self.require_netdev('user')
-+        self.set_machine('petalogix-s3adsp1800')
-+        file_path = self.ASSET_IMAGE.fetch()
-+        archive_extract(file_path, self.workdir)
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', self.workdir + '/day13/xmaton.bin')
-+        self.vm.add_args('-nic', 'user,tftp=' + self.workdir + '/day13/')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
-+        time.sleep(0.1)
-+        exec_command(self, 'root')
-+        time.sleep(0.1)
-+        exec_command_and_wait_for_pattern(self,
-+                'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
-+                '821cd3cab8efd16ad6ee5acc3642a8ea')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
++    /* State of the resettable container */
++    ResettableState reset_state;
+ };
+ 
+ struct VirtIOMEMClass {
 -- 
 2.46.0
 
