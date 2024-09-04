@@ -4,110 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73193CD37B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A31CD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slomD-0006TG-2i; Wed, 04 Sep 2024 08:06:21 -0400
+	id 1sloxt-0005mW-EI; Wed, 04 Sep 2024 08:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1slomA-0006QM-AY
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:06:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1slom8-0007sx-LM
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:06:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725451575;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dBW9QyBTPJ2vPf7oNy3xBpLtcKazFBxSJAYyxXMm5To=;
- b=H97ouyJG+7yXV6Pto5IniOVDuymOmDkAs1rEpmVbLaNv/Luhf4mzc0aWXBiqWrnrhZHlKD
- Uzh/o3eL2ZQDYqRRitL70K4V1Vi3mnFRNoKNVzm23ES63FClyFRkjSyEWzRhC3FNgwyW9A
- 7R9P2d0P0k2rm7boU6Am6gbpHkYDSbE=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-ySx9gp-6PVSsDXmE5p3iog-1; Wed, 04 Sep 2024 07:59:22 -0400
-X-MC-Unique: ySx9gp-6PVSsDXmE5p3iog-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-6b43e6b9c82so169658737b3.0
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 04:59:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sloxp-0005lm-49
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:18:22 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sloxn-00032R-Gw
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:18:20 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3c3b63135so581757a12.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 05:18:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725452297; x=1726057097; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6haIxqunDPo48CI/+2LsH2lpR7EwyF/jPInFjf8Gu90=;
+ b=xYr+G0xdd2VLekKGR4JYXhoVSfOO3s+79cU4BtVqC5bZ+Esum15W0d4aHgrckCxg0Z
+ XIgfJGQ2TNMXz7sjed+HVgnQPhUMgt+PXMmswTVyg2BKEn89vYoToRcwOu++wZNEZOsm
+ TQV+AsT20HOM5tXftvt0h6Yoq+WY/wdMizXV01ZUcnS3g6ryKDUApSDZrPJUldfzN2Ie
+ JWXs1MUBskQReKR/u+R+IhbEb+ZXoCzRFYIaWPI/1uET/+t1UHs9Le0XSE5VbIe+brlE
+ C4ZtvcZQsIudtXXudqsgrrX7WGUku0SH+MXLECDQKr/TcM/TYwyhDcnu9EjK1tY0INja
+ Tw+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725451162; x=1726055962;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dBW9QyBTPJ2vPf7oNy3xBpLtcKazFBxSJAYyxXMm5To=;
- b=nlLeW6b374DQVub5MeT7zWYGThwFu706tzxpbQql4BYZO1OsByTpQY+aGW/mi05anA
- DLxJAsftcwYdWRU2CypUhBBVNhIO7PLOPBQdIy1tgt1XTZSjjBbieo8nJdXxRF6aoJqm
- Ahn8OfcqXpUaM3IfrcdfemysnJWYmx1s9/3Dm0EdJv5hWReUTwNIB2dgK2Gn5HavKaju
- 8xmp/djJ0aHkVrvrqFFeoVDJ+Gidmbls0neQCT86IWE6UjyI0BkVuFOXAMQaWdyIKzoR
- SdJ74YW9I8uScJ4GtCIzi0vZjuFbEujovp7d20Knyp1hkXrnAHIxllIOCdllBfjN4ma2
- 7xrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdSjcjWdy1jZb8qAiCtJMba0jpMgVZMQx7OtdHR9IhftE1MoiXBhatQjCEdkFNEfHmOi5ULzlZqbvx@nongnu.org
-X-Gm-Message-State: AOJu0YyS+SPE334vRH3C/AX/qTLmCQsq+WuPC7GzyVCyAtzrCr1eINIu
- H61YD1YDwjj5UHMn5MkBHmShIZ40f8y2MbMl03eV9alUNbGtRMv/jMsFe1wlvBDU+eNNOnMU0ln
- sXEAEqqs6muqVM0hCED1jOpgbqo1y8n6hqY7AS68CvAeJTlFjAxDc
-X-Received: by 2002:a05:690c:6785:b0:630:f7c9:80d6 with SMTP id
- 00721157ae682-6d40fe0f6f3mr192366177b3.27.1725451161914; 
- Wed, 04 Sep 2024 04:59:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGq5HvwRqtezxFnSO42dBg91ombB3BJoTOvLU4UJi+3DHaAlCu/R/sHK6aAwUDyIFtI7vIAAA==
-X-Received: by 2002:a05:690c:6785:b0:630:f7c9:80d6 with SMTP id
- 00721157ae682-6d40fe0f6f3mr192365827b3.27.1725451161569; 
- Wed, 04 Sep 2024 04:59:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a806d5b0easm611441485a.100.2024.09.04.04.59.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 04:59:21 -0700 (PDT)
-Message-ID: <1a4270a7-212e-4651-a720-913b3dd11296@redhat.com>
-Date: Wed, 4 Sep 2024 13:59:14 +0200
+ d=1e100.net; s=20230601; t=1725452297; x=1726057097;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6haIxqunDPo48CI/+2LsH2lpR7EwyF/jPInFjf8Gu90=;
+ b=hZRWE5l8ctR0ZFd+wrGbj3K8rRU/sw4CbszR70RWFZU534OzsWLud+1qLq+vO9DzBU
+ mjb0sOToOw8P5MjGBgbLKycXUt52C52ZLNqZdrbL+kD2LU9IrW4UEcSqus5iHBOMQNrd
+ aIkxXO286o6bHc4BtoP9Vbg6VAURvReB3ni5cVV+lpqp8uymD2JhohY+Oqx4SP/X1KLs
+ HjORgTcWtGCDLmWaYkDtrgBfPYcBwOeDfYsI8bzrMVFN+5po6aoZ18jJCIE2oCCaYs5Q
+ CDfuo5Wn+0p3uVRBQG7TuxE6ena61iQNoItW3/zGnYUTtSsVMa8DOq+y4cRfIIM2ifhI
+ 03zQ==
+X-Gm-Message-State: AOJu0Yw6ZZQnYPE9Ut0QL8OgQLLiWok19qm3mnuzxpCdGo01nN0OL9Fk
+ cCUTGOQzgyCiVbnGuSmOZW5AUBa9r4M5bkGU5sP+HKWqrga21wUyWfdoFogja5dg98inDYtbjPI
+ S7ODum0uPpnhURmOlC7gM8LgcfkfAdpAO3kUImirrDm/21Sjw
+X-Google-Smtp-Source: AGHT+IGTYwCiT96aaHuoBRu1+oNNsbzbhbVnfQh4sY5ZU2tT+WAlXc9+6rLzoZIKxUXg+pulgjyI0DNAEmjgyxuVBbI=
+X-Received: by 2002:a05:6402:40cf:b0:5be:fd66:edf3 with SMTP id
+ 4fb4d7f45d1cf-5c2757dd0femr2940072a12.18.1725452296814; Wed, 04 Sep 2024
+ 05:18:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/19] qapi/vfio: Rename VfioMigrationState to Qapi*,
- and drop prefix
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au,
- andrew@daynix.com, arei.gonglei@huawei.com, berrange@redhat.com,
- berto@igalia.com, borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
- den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
- farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
- idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
- jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com, kwolf@redhat.com,
- leetroy@gmail.com, marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
- michael.roth@amd.com, mst@redhat.com, mtosatti@redhat.com,
- nsg@linux.ibm.com, pasic@linux.ibm.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org,
- pizhenwei@bytedance.com, pl@dlhnet.de, richard.henderson@linaro.org,
- stefanha@redhat.com, steven_lee@aspeedtech.com, thuth@redhat.com,
- vsementsov@yandex-team.ru, wangyanan55@huawei.com,
- yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
- avihaih@nvidia.com
-References: <20240904111836.3273842-1-armbru@redhat.com>
- <20240904111836.3273842-20-armbru@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-In-Reply-To: <20240904111836.3273842-20-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <1832886563.20496.1725444713946.JavaMail.zimbra@embedded-brains.de>
+In-Reply-To: <1832886563.20496.1725444713946.JavaMail.zimbra@embedded-brains.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 4 Sep 2024 13:18:05 +0100
+Message-ID: <CAFEAcA9dno-ZA6cSMr556-biNphdFHBhBXRZsavR43XajnTH2Q@mail.gmail.com>
+Subject: Re: Are floating-point exceptions usable on AArch64?
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,80 +87,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/24 13:18, Markus Armbruster wrote:
-> QAPI's 'prefix' feature can make the connection between enumeration
-> type and its constants less than obvious.  It's best used with
-> restraint.
-> 
-> VfioMigrationState has a 'prefix' that overrides the generated
-> enumeration constants' prefix to QAPI_VFIO_MIGRATION_STATE.
-> 
-> We could simply drop 'prefix', but then the enumeration constants
-> would look as if they came from kernel header linux/vfio.h.
-> 
-> Rename the type to QapiVfioMigrationState instead, so that 'prefix' is
-> not needed.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+On Wed, 4 Sept 2024 at 11:32, Sebastian Huber
+<sebastian.huber@embedded-brains.de> wrote:
+> I tried to provoke a division-by-zero exception on AArch64 using:
+>
+>     uint64_t value;
+>     __asm__ volatile (
+>       "mrs %0, FPCR\n"
+>       "orr %0, %0, 0x200\n"
+>       "msr FPCR, %0" :  "=&r" ( value ) : : "memory"
+>     );
+>     volatile double x = 0x0;
+>     volatile double y = 0x0;
+>     x /= y;
+>
+> When I look with the debugger at $fpcr it still says 0x0
+> after the msr. Are floating-point exceptions usable on
+> AArch64 in general?
 
+Floating point exceptions, in the sense of "when the
+exception condition happens the cumulative exception bit
+in the FPSR is set", work. What you're trying to use here is what
+the architecture calls "trapped exception handling", where
+you set the DZE etc bits in the FPCR to get a CPU exception
+instead of it updating the FPSR bit. Those are architecturally
+optional, and QEMU's CPU implementation doesn't implement them.
+(Nor do most real hardware implementations AFAIK.)
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   qapi/vfio.json      | 9 ++++-----
->   hw/vfio/migration.c | 2 +-
->   2 files changed, 5 insertions(+), 6 deletions(-)
-> 
-> diff --git a/qapi/vfio.json b/qapi/vfio.json
-> index eccca82068..b53b7caecd 100644
-> --- a/qapi/vfio.json
-> +++ b/qapi/vfio.json
-> @@ -7,7 +7,7 @@
->   ##
->   
->   ##
-> -# @VfioMigrationState:
-> +# @QapiVfioMigrationState:
->   #
->   # An enumeration of the VFIO device migration states.
->   #
-> @@ -32,10 +32,9 @@
->   #
->   # Since: 9.1
->   ##
-> -{ 'enum': 'VfioMigrationState',
-> +{ 'enum': 'QapiVfioMigrationState',
->     'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
-> -            'pre-copy', 'pre-copy-p2p' ],
-> -  'prefix': 'QAPI_VFIO_MIGRATION_STATE' }
-> +            'pre-copy', 'pre-copy-p2p' ] }
->   
->   ##
->   # @VFIO_MIGRATION:
-> @@ -63,5 +62,5 @@
->     'data': {
->         'device-id': 'str',
->         'qom-path': 'str',
-> -      'device-state': 'VfioMigrationState'
-> +      'device-state': 'QapiVfioMigrationState'
->     } }
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 262d42a46e..17199b73ae 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -81,7 +81,7 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
->       }
->   }
->   
-> -static VfioMigrationState
-> +static QapiVfioMigrationState
->   mig_state_to_qapi_state(enum vfio_device_mig_state state)
->   {
->       switch (state) {
-
+thanks
+-- PMM
 
