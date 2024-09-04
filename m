@@ -4,138 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8117CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 23:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A5A2CD4F4C
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 23:34:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slz5e-0002zw-7u; Wed, 04 Sep 2024 19:07:06 -0400
+	id 1slzVF-0002nJ-QO; Wed, 04 Sep 2024 19:33:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1slz5d-0002zT-Hq
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 19:07:05 -0400
-Received: from mail-bn7nam10on2089.outbound.protection.outlook.com
- ([40.107.92.89] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1slzVE-0002mY-4X
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 19:33:32 -0400
+Received: from mail-mw2nam04on20616.outbound.protection.outlook.com
+ ([2a01:111:f403:240a::616]
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1slz5b-0000yM-B8
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 19:07:05 -0400
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1slzVB-0007Op-AD
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 19:33:31 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=we3glyx/XWxhWwCHdY/WVdhbcDKLZ0bLvD8K35frsCC388VTm3LD12b7ja/5iAiaTihyVrsr6NprBO8lkhR6E1WamarJGHqbp1f01eQPEoHGoL/3f1DeGxB8KqxA7WdBWbLhsIzP3+KnuHZr/wijjwKYbimry/oqGsPyV6lMLDI7un4vKBgbdcizFGJdyUBGy0lFdi89DMyb8knAGXhIaMOdDGLK2tbDqboh/sPN7z2mq+p4upbaPdPNxDqBg2DOUzCNSZyzJsb5fzYEq3XfucvC2b8O7G9+J/uDou6e2KUYJ0oCEmHh4xeO50Q9n+fopJXvYCmU9djBjp7TEWzGBg==
+ b=XqY7EtxtBwzM7VRXoMceIhUmdWOAC47XoK1r7yJKnwv93E4H3u283LOe64WHSx9OAGMEsjjF6Hnd8vn1UZkkBGi+h4V67vremRHQzr77ByKf9G3OzEh0I/5CIbtms4jubtiO1kXk9AAE3OYExYg5ffdHC7oaF/U2Szw0eQtzNlrKMig24V2dV9j6u4MRXUKhnRPFCe8t89SXRbsZmfNGxLZBUvv/rhAfACsDXL84F6UIchCWK+96Cwa6mkxHK/0ydBHw97sdsYiSqTSRhroqFuPBDD5aA5iIGgOfKuQ3Q+CQCeUBdAXcvD5VJ4LN8gdfbOE5uVf1Luue94wHaHqAeA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8XF7+ui+RLEVRsUmDWvCvClm878U8pA+weg0foespMg=;
- b=QzxhyVOD7eBiLikk4nlhd3md4FCrkYYDS8+F0cy9BOO1qniLn2b0EP+3MqWTJliuGtDbRX1NY5dKHgUrJMzUJnl1epqwMXaSK1a5fsy2MeLaaHJELu/irMhiRq/ww2+yb2167kEgYa5d44xZSdTfmL2PIhRonQisw7mhTrsSyYiFAhUIJA0NW9bwJFDhFM4kTq24ikEPucAMzGJhi3Ps1nXAzmoq6KmAo43TorVoKDHX58EYfhadi8hezcpb8U4dqkvopnilWSCHKB/Crr7sM7xcW6sGOqyVcjMb4TLcMpkkR/R+YUsi9M4xXNW9gdl2EonWaluGitZ/Vwv00ff0yw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
+ bh=8Gl7HjP9x2x2Gp8V/TjnD9C81vadpJ5CDLuNY5oj6dc=;
+ b=ZPmdwAMDEFGpO1rcqXPneK4R9aJk86yqN6eSyS/tz/XccL1GDhPWXtEo2apE21aDBBCO9737bJGgiA5zstagJfNYomWx+K0b/EUGoDXe+reqZW9UZALnVzMYHKqKOPeFyqxBswiYMlN/k+RZRNeU/WzWuIMLSuUJn94q3m/6/BZdBqlTey4y/8+OX20rk4OVGvUxZaZavh0AqsZKCRhm4lip7Fdwkp6yF05mh1xqFrrHIfb/xXh8U8b+2Zk/ZXULm9gQfMRP1PldVMM7hvOMc86cn+zcixjb+UgyZBSoKeKZ15/C2PS5jUcAKzAkWGil0RZf9tfPpr2hl9mh6+NdAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8XF7+ui+RLEVRsUmDWvCvClm878U8pA+weg0foespMg=;
- b=H17B5vde+z/1qw016AgPtnf8dl4rNekkHZGJK3bLn5laTO5Ddj1K9gBUbL9aZf188q9Zn+yI3Z0xZ/xiLN2wD3nX3EdO3xWArBdSVy7r3xZWyymR00Pz4sjfVFuWQBK2ao7L6MVbyEHCPODBvpEcyY+hmLcSSi//RMn52dIup7g=
-Received: from SJ0PR13CA0169.namprd13.prod.outlook.com (2603:10b6:a03:2c7::24)
- by DS7PR12MB5839.namprd12.prod.outlook.com (2603:10b6:8:7a::21) with
+ bh=8Gl7HjP9x2x2Gp8V/TjnD9C81vadpJ5CDLuNY5oj6dc=;
+ b=dzPw63v0Jo9xFs7txM00oDTYJBmN54P8GqOOuUjy518e1mtEtfT3so4EAw0r7h9yRLq/C/0s+Tslm6oUu4lxvHHA5/PJFvhi8gNlU/uOU5mohNWTAOPiMSvxcstFPbsiocuaUzsa3H7fXBMrtNGvRQ1X+vbZsvg1/yB5I6KJJKY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
+ by CY5PR12MB6598.namprd12.prod.outlook.com (2603:10b6:930:42::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.25; Wed, 4 Sep
- 2024 23:01:53 +0000
-Received: from SJ5PEPF000001E9.namprd05.prod.outlook.com
- (2603:10b6:a03:2c7:cafe::98) by SJ0PR13CA0169.outlook.office365.com
- (2603:10b6:a03:2c7::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.13 via Frontend
- Transport; Wed, 4 Sep 2024 23:01:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- SJ5PEPF000001E9.mail.protection.outlook.com (10.167.242.197) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7918.13 via Frontend Transport; Wed, 4 Sep 2024 23:01:52 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 4 Sep
- 2024 18:01:49 -0500
-Content-Type: text/plain; charset="utf-8"
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.27; Wed, 4 Sep
+ 2024 23:33:24 +0000
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b%6]) with mapi id 15.20.7918.024; Wed, 4 Sep 2024
+ 23:33:23 +0000
+Date: Thu, 5 Sep 2024 01:33:11 +0200
+From: Francisco Iglesias <francisco.iglesias@amd.com>
+To: Doug Brown <doug@schmorgal.com>
+Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <bonzini@gnu.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 6/7] hw/net/can/xlnx-versal-canfd: Simplify DLC
+ conversions
+Message-ID: <ZtjuN8mKuZMgBFJg@xse-figlesia-l2.amd.com>
+References: <20240827034927.66659-1-doug@schmorgal.com>
+ <20240827034927.66659-7-doug@schmorgal.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240827034927.66659-7-doug@schmorgal.com>
+X-ClientProxiedBy: LO4P265CA0224.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:315::8) To SJ2PR12MB8739.namprd12.prod.outlook.com
+ (2603:10b6:a03:549::10)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 9.1.0 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Richard Henderson <richard.henderson@linaro.org>
-Date: Wed, 4 Sep 2024 18:01:20 -0500
-Message-ID: <172549088090.3334224.10887376086844748499@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB03.amd.com
- (10.181.40.144)
-X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001E9:EE_|DS7PR12MB5839:EE_
-X-MS-Office365-Filtering-Correlation-Id: 343e8466-fdf1-431c-4093-08dccd3590d7
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|CY5PR12MB6598:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f406b06-d18c-4e3a-160f-08dccd39f7dc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cFpIWUtCekVEazAzSVhJbldGOGtBSFh2TTNTeC9zRytHZXdFYVAxOE5lME1i?=
- =?utf-8?B?VFFDbVhtYVZ6YVRzNTdyQ3pNRThnejFlR3picnFkOE5QaEJaZW5OWldnLzg3?=
- =?utf-8?B?UXczei81TFZoNVZ3WEVFcURxL00rZW5SRFp3cXhlUXlGU252anZyRGt3ZENF?=
- =?utf-8?B?d2NrODdCbWZkcTFwWnFmTmxPZnBMcFo2ZzFPVE5BRGUyRWk0ZGU4QnRHWDdi?=
- =?utf-8?B?TDArelpBUGRQbE1sU2RJNDNjL1pyTENkOHdpU1AweWRXVzdtNkRheTVTNWpu?=
- =?utf-8?B?eUlwVTY4WGI4M2VSWVhVU3ZLdXBJQU1wSW4zSDhFeVRLK2pRQkFZeE9PVjJH?=
- =?utf-8?B?SXZlVnlUNmVXaFRqOTYwYXdvclhuY01HSXBXQURhR016TWJKelpTZmozWWtw?=
- =?utf-8?B?cEpnZzdMZFQzU3lhK0FMSkszeHpsWjgrd2NxZ1dOSElORnpVc01HUnZYcmpY?=
- =?utf-8?B?RzN4dTVMai9oSkd0elhkZGJ3aFAwMXhMMjQ5NlJkWTVicG1pRXY1VWdDZjF4?=
- =?utf-8?B?aVRWYW9UNDNXWkhRODNpaUkwWDg1S1l1MjltdDRuVy9xbEM2MGhJV2c0bGNt?=
- =?utf-8?B?RWd2b0dnNVl6OWRkcGFUY2Y5MHhVbS80Nnhydk5xZE1jWkwyL3pBSXZ0T2NM?=
- =?utf-8?B?NTNTcGJXN09RSzljMk5XTjcvQ1E0Zk15azVidzh0eTF2TFIyeWxFQ2s4STND?=
- =?utf-8?B?OU1RMG5GQkFGcDRIZ3gyRCtwNmltc1JDRFVxY0pwajNLayt6NlJiMUVLUTc3?=
- =?utf-8?B?RWMzeklvTTdhRFAycEh1eCtPbTB6OEpFeDFqazV4RnlmaFNMcVIwbGtCZmJD?=
- =?utf-8?B?dE01OW1Ra2M3S3gyZXJaVkYxOFFHZU5KTlNDRzNOQzM5Ynpaa2c4K25uUEV2?=
- =?utf-8?B?ZXgybG9aNEp6Rm9Pa1pudEtQbUlUMFVZMkNTOTJtNnhwQ1JWK2YvMW1zWjMz?=
- =?utf-8?B?RS9ZRGxVUk5tTitFZmltWnJCT3NOdmZJMVJoT2M3WVBZTTNMSVYvUUpxNDMy?=
- =?utf-8?B?c0lMbzNGd0VBamRKYmlkS3o5VlIwS2VkRDJnYUZSU0c2RGQzNWZXWGxTV01i?=
- =?utf-8?B?VUxIWTV5QllRVGl0dUZGOTVtUWRINlhwUms0ZG04MmhCU1BWN3BUaTVWMVVz?=
- =?utf-8?B?SUNNS3JpOVQwcEJXSit1d0g4VENKRlNnaEpCaWJ4NExjcDd0MmsyaWZJQ3E5?=
- =?utf-8?B?eHdBSVBhNHpmbVNvRVlpTnREZ1Q4bE90QWVVZ2l0NkhQdWtTeFB1aHFxd0Jk?=
- =?utf-8?B?Wjk3NWJaczVQM0J6TDVUQUt2MWcwWm4xWG9HMkxkelZ6UTFwUVY2MUo3NXlK?=
- =?utf-8?B?L1BuMkJkVUNCeSt4d3RuczUyMS85TVp0Q3p0N3hnamNocW9ZTFVNRVg0UE43?=
- =?utf-8?B?VWhZbjhxRUd4aDVGelFCblF2NXMzeldoSktyUlpRSkJRdWhqYmk2Qm9tUjdM?=
- =?utf-8?B?NGhsK3ZpL1FvQ0pFUktWcWtEdHBZMmJIbmszcU0wRDFjU1U2S29wV2JocWVL?=
- =?utf-8?B?ZkJLVzJoSTQ4dDE4RytCQzBQNlZvSnBQOHV6THVNOWtmdkdKTEFnNVowOHZP?=
- =?utf-8?B?LzhxUVUrbnFCZ0MxQTcvMFhIU0ZOZUQyNEQ2VDV0NDF0aGtUem43VWpNdHNR?=
- =?utf-8?B?dCtrQzVySUFrSXp5ZWpEMHFtRHhXY0JIeG12dkZhY1lMbitrY0lSNGE1Vmd4?=
- =?utf-8?B?R3IycExYb3d5ZkZuL0lwc0FYRWdtRzdSZkpJSTJLK3Y2MEZiOGlodmlaejRz?=
- =?utf-8?B?a01yU0VKZTNhb2ZtMHVlMkRXSk5ad04raEUvS05XSDRlRjBaZXlTTUhMcjVq?=
- =?utf-8?B?dDJ5Q1ZkakFwdHBCbTVGTDh6WEk0OTZ1d3RpaDJHb3JueWZCbk03ZE85eXFn?=
- =?utf-8?Q?ewM/+ME+YkypH?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VmFKbSszaWM0ZmczS2d5ejB6clR1cERmckxJMnJUZklVUC9XWCt5b0dQOTNU?=
+ =?utf-8?B?S1pacnhrd3pLMExMeW1DWEcyTDdhWXp5UHVnSXVGWUFMUXBGU1BESXBBS1ZK?=
+ =?utf-8?B?TzRoTG9kMXB0OTdoN3lIU0NBb0czem8vVU9PWWFldUxWd3pkajRPdlgzUm9V?=
+ =?utf-8?B?UzdlWHI5VnJRRFBDdnRYeDQ5VmxLQnlMUzhQdnpHaEJEWXpyNTRJckR6eE9i?=
+ =?utf-8?B?UnZCcnoxWGg1M1BLak9SeTNNWHc0VW13WWVDd0FpeVhhOFBHN0JZWVphaWwx?=
+ =?utf-8?B?Z2Z3UHRTSzdHRUdtRkhZMUlVRGtMMnJ2aEhlSFZGUFNCUDhkWDZNWnJ5eWEy?=
+ =?utf-8?B?dlRvVzlYckVVTWlUdUh2MDRJcmlzQ2FXMHhlL2Q1STU1VHAzcFdmZ1RvNmx5?=
+ =?utf-8?B?VDV0bEtXbCsyKzdBaXRDZU9WS0N0UlBHb29kY1VKRkpKMzlhcVBOeTVpVmJw?=
+ =?utf-8?B?a2FwVlJpUk9DODdRcHFPL1pwdXRtZmp3OElLTy9RZkNyQ3RBSkZSMi94bTl6?=
+ =?utf-8?B?SFlMbjVSU1JkZktRcFVhMWFaTE5CcTBHRGxuZjltQ3F2TFNIR21TTlptSm1O?=
+ =?utf-8?B?K21qVVBrbHJwR2NEZWdGTUE4Z00wY2VqQVd2S2oxbmVQRFhOVldqaVo0WC9a?=
+ =?utf-8?B?eW5mbEx1Z3VEN3BPajRYcEtSQkQxSlZjM0ovKzFTUXJhdWI2cXNFelk3NlBv?=
+ =?utf-8?B?K2N2ZEdidlBDVkc4SEptOCtXZXg4V2tWN1orQ2FkelRodGRGS05GWnBRN1Q5?=
+ =?utf-8?B?eVBEYVdlMENCMGZBVGJqbWE5eGlhbG9Od0FaOTROZXVWUGVtSkRrUXJzcmZt?=
+ =?utf-8?B?QjN6cUl6ZHp5K0Fjc3hxeFdpZjYzR2FBV3Vrc3pWSTBPR3UyN2wrVzhiT0xT?=
+ =?utf-8?B?aThRTW5ObTJ0ZE5CaWF2MGFuMzRiV2FvbjQvMlJBL2I5S0lFUmlnUWhmdFBa?=
+ =?utf-8?B?bUlvWTlJbmQrbWNoeEFxd3RXVmRSQkk3emxlMEVEZEU0NHd0eG8rOEdoNE5p?=
+ =?utf-8?B?VVplWnhRQ2Rmb2o4RFVFUlUrU2RGd081ZEJQTFZ1aW9QSS9XempyYVU5dC9X?=
+ =?utf-8?B?K0dRSEtMQklZWDFCS0FIdVg5YU8rV3R3K20wUEJPYmhGUUZxZGJsMnUrdmtR?=
+ =?utf-8?B?WFE2RFNTajFrVzdVM1BwaXlERjZEOWZBN3Nkd0FoSnRvNDBYTmpsaU9IRlBQ?=
+ =?utf-8?B?b2NNelVESWg4V0NnL01MWTcyTWRoOHZaYVdaWGt3RElya1dkSk5CNnVHSVlD?=
+ =?utf-8?B?SCt6dmpUNHVBbU93STdkdzNPNGRuMHNpdkdBRUJIbjZ5N0Vld0NZM2RkdVp1?=
+ =?utf-8?B?SjB3NDZqS2FYVUNITUtwVnlGazI4K1NmcGw5dTdkcVh1QXNDL0cxbENiaTVs?=
+ =?utf-8?B?QS8vaVhyNWZyTHM2Y1FTNHIvcWt0NFN5NVgvU3oxd2hvL0lFWkswVnpXeXdm?=
+ =?utf-8?B?ejBDU0hxK01Va3JlMnNENFJrSzZ6OC9MQk5LanhiODd3YWRiYyt5UW1STHlG?=
+ =?utf-8?B?cHdXMXhJTEt0SCtVMUszdzU1ZE9JaHZKMU1qWktabHFYTHZpbWlsVW9yV3lO?=
+ =?utf-8?B?K1IwN1FIRndyS1I3TndSTnFkRzFXY0IyMDlkaENhZDFTTTFlQVB1SFlmQ09R?=
+ =?utf-8?B?R0lYdTVFNHNpcXhvdERsRHRVT0wwaC9PSWpiemF4Yk45SGhqUDZhWGhZV00v?=
+ =?utf-8?B?SWdGQTQ5VmRScDZXbHdTZEpDeG1MVitwSXhSb3NGMEQyUlUxZnNZUkpLeUg5?=
+ =?utf-8?B?cHlOQ0RBUVZMc29MaG1wV09icnEwZGJZRENpQXdtZ3VoTTlpWDMvREZKNmN5?=
+ =?utf-8?B?aUEyUFpGVkV5RlF2MWplQT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YlVwMTRhNHVocmFpM2doN0c3Mk9YdUlvYWJhMmtCSmxyRStveUhQd0JLajdi?=
+ =?utf-8?B?a09jYWNrcENPWUxTbGs4eURyUWlETVFYOUVsc25BQis1U3dDRUtEWFpQejA2?=
+ =?utf-8?B?dlJabXhGVnBGRGVIZVRoT2RkbEk1U1dUUXhTZ29OYUVBNGxSMzFnRGFWbTRN?=
+ =?utf-8?B?R25OcFI5TU5pRE1pK2xrUUR3NzdUVTl1ZVkvaUZzMmJ6dGFtM0V4ZnFWaVlr?=
+ =?utf-8?B?UGgzZ1Bpb1lWbGZpR2NJQkNMVEJXdlEyMVlacnkyNTlEZUcwMmpsVVEzTmxh?=
+ =?utf-8?B?c0l0RWR2WHl6aXJqYTRpR3RZdkxIT3EvSjJXSy90TjNoQ1ArSzcrN1FDZ2Zz?=
+ =?utf-8?B?bmRMUW4zbWNteHBjbkNaZXMvY2o3R1pKOUJuNkhMbTN4REVZTm9PRVoxOENC?=
+ =?utf-8?B?UjRlUWNJMmZZd3crcXN4YjdSQmRaR0pjTURCaXdjbFZFRll5dHlVWmMyeUVE?=
+ =?utf-8?B?UDllVTJxRVB4aVVibStveE1MbkRjc2pIcFZwVFB1UE1HSlBQSGVEUG11d1F6?=
+ =?utf-8?B?REVHTExCSzI3ZTNncUZWWFlUanpJNXZZTjVkWVZYRGJpdGZYd3B2RXYxR3Rs?=
+ =?utf-8?B?Vitldk1SditsZG9PWmEyZlh1SFY1Nnkyalc5UUppWjNSSWdIZTNMRE9sZjVW?=
+ =?utf-8?B?emcyWC90TzNZcmprRHhzSHNiUjZBN0lGemlVcDFDb1pNQU5tREN3cmJ2T1dp?=
+ =?utf-8?B?QVZoN2dvaVF6UHRncnM3TEpMUzI5K0E3U2NsQ1daemVEVnRkMEJyRXd1cFBw?=
+ =?utf-8?B?cGQzbnkrNDNtOUplN1RsOHRpNmpBRS9nSEVqUE9UWTVhb2M5dEdYQVJjZkNv?=
+ =?utf-8?B?NmFoZWlFMDRaOTZHcUxyMCthb0xnM1drRHZiRUJPc1lNT2hHREM3bWNucktS?=
+ =?utf-8?B?UkpPWmo0NzdNSHEyNURFSzVxNlpQYXNKYk9VNnpnVUx2TjBmV2VUZXhVRkFw?=
+ =?utf-8?B?aVdZaXl4WERySFRIeVcvdWVxZ29pWDFmWWpTM2NPNzR2RGNzOGYxVXZ1aHp0?=
+ =?utf-8?B?YkNTeUdrVTI4aWFwVUxUUTJvclF4WXFOTUQ0NlJDR2tjcU5TNXFYNUZCQkVH?=
+ =?utf-8?B?eG1OdWR3Vm9kVnFGd3dvanh5V2xwVkZ6QTZibnArTVd5bVZMRkdta2VCaEFx?=
+ =?utf-8?B?dmdMd0hBamJXVytiUVJKU2s1WllrZEVKbFBJM2ZqNmsxNTZ5SC8xTGRrc1po?=
+ =?utf-8?B?bTdYS01zeVhWUVhVSzhHQ3Q3dG5hb2hYbFJWV0tKYjM5RVM2WUhISzFpNEox?=
+ =?utf-8?B?b1RyeWhEYVU5TzJxU0hmT1QvMVNZTDBjc3lHWnpVTVc0ZHZsc1RIUm5aSU94?=
+ =?utf-8?B?K3d0QUJrV2NGUjFiL0hsSjkrRGdyN1ZhemNoTloxRXZCTzFpeUhpbWMzcUo3?=
+ =?utf-8?B?aHl5Q1ZTNTU3dmhpSW1OcVZPUThuSlFOVHU0dnJFclZEOUVITE9uMFEwRit0?=
+ =?utf-8?B?UDZsK2RPNUFoTzgvMVgvejdQTGpvT2paWFdXTGlyT2h3S0E0amE3QnRFcHpo?=
+ =?utf-8?B?c3FNMUpZLytzdXNFRnlqQnBvV3N4ZUM5VmxlaWR0dXFINTFuVGYrUkVJNWR5?=
+ =?utf-8?B?OWpxVXYrZmpJSnN6UlVSTXF0d1htWU1zWCtVMkFscUd6bjNSWHZER3krc1Ar?=
+ =?utf-8?B?R1R2RTRYOVJNSkV1bFA4SmVPVzdiUll5dEVQalRGUEFkNi8veXFlWW01bmxq?=
+ =?utf-8?B?ZllmY1lZQ1NGMXRMNFR1bmVxTmVDdXJrSHFCOFdxTGV6WStEbzZBL1VjWjEw?=
+ =?utf-8?B?N2FrN0FDczkvbTJJeEszRkhEZm8zSDVLNVhmQUhUZHBSd3JlbjdpZUNSUHZU?=
+ =?utf-8?B?QVhDRFZYTlR0SUx1QjF6aXF2Q2pYUlFXKzBZOUg5eUhUYlNrRDBuUGJ2YU1m?=
+ =?utf-8?B?SUsvdGQ3bWtYcngrS1gzSk1kajhyNlEreVVZTnowS2NsZ1ZMS2xwTEQ0ZnA3?=
+ =?utf-8?B?MUhQK2pEdDNXUTN2Q2xlQmtEYUwwV2Y4TkJWNEJ4emFaNzZCeXpDblIrYVZi?=
+ =?utf-8?B?VGVRNFNOdkhYWDhnSTRTSzNORkV2bnFJOUhlTlJDWWFzZEZ1OU9RMVZSSGhj?=
+ =?utf-8?B?d01qUVRvMGhTa3RyV0p4dUJOTkdWeUwrTGNBRTI0VmwwYWdLdTVvcTVCOE9Q?=
+ =?utf-8?Q?E4nFLZZGHTgyGPegoHWy8Z96G?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2024 23:01:52.3004 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 343e8466-fdf1-431c-4093-08dccd3590d7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f406b06-d18c-4e3a-160f-08dccd39f7dc
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2024 23:33:23.8062 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001E9.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5839
-Received-SPF: permerror client-ip=40.107.92.89;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8srBzJE3iOMdpeZzG8sYZ0JIEM711yLNZXrSiUkRRjVXfJPrKo/lSU95Pt2s3NCkTo0rlJiihiU+QzsFtJxcMA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6598
+Received-SPF: permerror client-ip=2a01:111:f403:240a::616;
+ envelope-from=francisco.iglesias@amd.com;
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,52 +176,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Mon, Aug 26, 2024 at 08:49:26PM -0700, Doug Brown wrote:
+> Use QEMU's helper functions can_dlc2len() and can_len2dlc() for
+> translating between the raw DLC value and the SocketCAN length value.
+> This also has the side effect of correctly handling received CAN FD
+> frames with a DLC of 0-8, which was broken previously.
+> 
+> Signed-off-by: Doug Brown <doug@schmorgal.com>
 
-On behalf of the QEMU Team, I'd like to announce the availability of
-the QEMU 9.1.0 release. This release contains 2800+ commits from 263
-authors.
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
-You can grab the tarball from our download page here:
 
-  https://www.qemu.org/download/#source
-
-The full list of changes are available at:
-
-  https://wiki.qemu.org/ChangeLog/9.1
-
-Highlights include:
-
- * migration: compression offload support via Intel In-Memory Analytics
-   Accelerator (IAA) or User Space Accelerator Development Kit (UADK),
-   along with enhanced support for postcopy failure recovery
- * virtio: support for VIRTIO_F_NOTIFICATION_DATA, allowing guest drivers
-   to provide additional data as part of sending device notifications for
-   performance/debug purposes
- * guest-agent: support for guest-network-get-route command on linux,
-   guest-ssh-* commands on Windows, and enhanced CLI support for
-   configuring allowed/blocked commands
- * block: security fixes for QEMU NBD server and NBD TLS encryption
-
- * ARM: emulation support for FEAT_NMI, FEAT_CSV2_3, FEAT_ETS2,
-   FEAT_Spec_FPACC, FEAT_WFxT, FEAT_Debugv8p8 architecture features
- * ARM: nested/two-stage page table support for emulated SMMUv3
- * ARM: xilinx_zynq board support for cache controller and multiple CPUs,
-   and B-L475E-IOT01A board support for a DM163 display
- * LoongArch: support for directly booting an ELF kernel and for running
-   up to 256 vCPUs via extioi virt extension
- * LoongArch: enhanced debug/GDB support
- * RISC-V: support for version 1.13 of privileged architecture specification
- * RISC-V: support for Zve32x, Zve64x, Zimop, Zcmop, Zama16b, Zabha, Zawrs,
-   and Smcntrpmf extensions
- * RISC-V: enhanced debug/GDB support and general fixes
- * SPARC: emulation support for FMAF, IMA, VIS3, and VIS4 architecture
-   features
- * x86: KVM support for running AMD SEV-SNP guests
- * x86: CPU emulation support for Icelake-Server-v7, SapphireRapids-v3, and
-   SierraForest
-
- * and lots more...
-
-Thank you to everyone involved!
+> ---
+>  hw/net/can/xlnx-versal-canfd.c | 67 ++--------------------------------
+>  1 file changed, 4 insertions(+), 63 deletions(-)
+> 
+> diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+> index 5d7adf8740..589c21db69 100644
+> --- a/hw/net/can/xlnx-versal-canfd.c
+> +++ b/hw/net/can/xlnx-versal-canfd.c
+> @@ -678,8 +678,6 @@ REG32(RB_DW15_REGISTER_1, 0x4144)
+>      FIELD(RB_DW15_REGISTER_1, DATA_BYTES62, 8, 8)
+>      FIELD(RB_DW15_REGISTER_1, DATA_BYTES63, 0, 8)
+>  
+> -static uint8_t canfd_dlc_array[8] = {8, 12, 16, 20, 24, 32, 48, 64};
+> -
+>  static void canfd_update_irq(XlnxVersalCANFDState *s)
+>  {
+>      const bool irq = (s->regs[R_INTERRUPT_STATUS_REGISTER] &
+> @@ -897,59 +895,19 @@ static void regs2frame(XlnxVersalCANFDState *s, qemu_can_frame *frame,
+>      }
+>  
+>      if (FIELD_EX32(dlc_reg_val, TB0_DLC_REGISTER, FDF)) {
+> -        /*
+> -         * CANFD frame.
+> -         * Converting dlc(0 to 15) 4 Byte data to plain length(i.e. 0 to 64)
+> -         * 1 Byte data. This is done to make it work with SocketCAN.
+> -         * On actual CANFD frame, this value can't be more than 0xF.
+> -         * Conversion table for DLC to plain length:
+> -         *
+> -         *  DLC                        Plain Length
+> -         *  0 - 8                      0 - 8
+> -         *  9                          9 - 12
+> -         *  10                         13 - 16
+> -         *  11                         17 - 20
+> -         *  12                         21 - 24
+> -         *  13                         25 - 32
+> -         *  14                         33 - 48
+> -         *  15                         49 - 64
+> -         */
+> -
+>          frame->flags |= QEMU_CAN_FRMF_TYPE_FD;
+>  
+> -        if (dlc_value < 8) {
+> -            frame->can_dlc = dlc_value;
+> -        } else {
+> -            assert((dlc_value - 8) < ARRAY_SIZE(canfd_dlc_array));
+> -            frame->can_dlc = canfd_dlc_array[dlc_value - 8];
+> -        }
+> -
+>          if (FIELD_EX32(dlc_reg_val, TB0_DLC_REGISTER, BRS)) {
+>              frame->flags |= QEMU_CAN_FRMF_BRS;
+>          }
+>      } else {
+> -        /*
+> -         * FD Format bit not set that means it is a CAN Frame.
+> -         * Conversion table for classic CAN:
+> -         *
+> -         *  DLC                        Plain Length
+> -         *  0 - 7                      0 - 7
+> -         *  8 - 15                     8
+> -         */
+> -
+> -        if (dlc_value > 8) {
+> -            frame->can_dlc = 8;
+> -            qemu_log_mask(LOG_GUEST_ERROR, "Maximum DLC value for Classic CAN"
+> -                          " frame is 8. Only 8 byte data will be sent.\n");
+> -        } else {
+> -            frame->can_dlc = dlc_value;
+> -        }
+> -
+>          if (is_rtr) {
+>              frame->can_id |= QEMU_CAN_RTR_FLAG;
+>          }
+>      }
+>  
+> +    frame->can_dlc = can_dlc2len(dlc_value);
+> +
+>      for (j = 0; j < frame->can_dlc; j++) {
+>          val = 8 * (3 - i);
+>  
+> @@ -1007,7 +965,6 @@ static void store_rx_sequential(XlnxVersalCANFDState *s,
+>                                  bool rx_fifo_id, uint8_t filter_index)
+>  {
+>      int i;
+> -    bool is_canfd_frame;
+>      uint8_t dlc = frame->can_dlc;
+>      uint8_t rx_reg_num = 0;
+>      uint32_t dlc_reg_val = 0;
+> @@ -1053,17 +1010,10 @@ static void store_rx_sequential(XlnxVersalCANFDState *s,
+>  
+>          s->regs[store_location] = frame_to_reg_id(frame);
+>  
+> -        dlc = frame->can_dlc;
+> +        dlc_reg_val = FIELD_DP32(0, RB_DLC_REGISTER, DLC, can_len2dlc(dlc));
+>  
+>          if (frame->flags & QEMU_CAN_FRMF_TYPE_FD) {
+> -            is_canfd_frame = true;
+> -
+> -            /* Store dlc value in Xilinx specific format. */
+> -            for (i = 0; i < ARRAY_SIZE(canfd_dlc_array); i++) {
+> -                if (canfd_dlc_array[i] == frame->can_dlc) {
+> -                    dlc_reg_val = FIELD_DP32(0, RB_DLC_REGISTER, DLC, 8 + i);
+> -                }
+> -            }
+> +            dlc_reg_val |= FIELD_DP32(0, RB_DLC_REGISTER, FDF, 1);
+>  
+>              if (frame->flags & QEMU_CAN_FRMF_BRS) {
+>                  dlc_reg_val |= FIELD_DP32(0, RB_DLC_REGISTER, BRS, 1);
+> @@ -1071,17 +1021,8 @@ static void store_rx_sequential(XlnxVersalCANFDState *s,
+>              if (frame->flags & QEMU_CAN_FRMF_ESI) {
+>                  dlc_reg_val |= FIELD_DP32(0, RB_DLC_REGISTER, ESI, 1);
+>              }
+> -        } else {
+> -            is_canfd_frame = false;
+> -
+> -            if (frame->can_dlc > 8) {
+> -                dlc = 8;
+> -            }
+> -
+> -            dlc_reg_val = FIELD_DP32(0, RB_DLC_REGISTER, DLC, dlc);
+>          }
+>  
+> -        dlc_reg_val |= FIELD_DP32(0, RB_DLC_REGISTER, FDF, is_canfd_frame);
+>          dlc_reg_val |= FIELD_DP32(0, RB_DLC_REGISTER, TIMESTAMP, rx_timestamp);
+>          dlc_reg_val |= FIELD_DP32(0, RB_DLC_REGISTER, MATCHED_FILTER_INDEX,
+>                                    filter_index);
+> -- 
+> 2.34.1
+> 
 
