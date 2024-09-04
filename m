@@ -4,138 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC48CD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:05:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E90D8CD4849
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slms8-0000or-Nz; Wed, 04 Sep 2024 06:04:20 -0400
+	id 1slmsE-00012D-3A; Wed, 04 Sep 2024 06:04:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Santosh.Shukla@amd.com>)
- id 1slms4-0000jc-5X
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:04:16 -0400
-Received: from mail-dm6nam11on20630.outbound.protection.outlook.com
- ([2a01:111:f403:2415::630]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmsB-0000vC-Sj
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:04:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Santosh.Shukla@amd.com>)
- id 1slms2-00067A-27
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:04:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rroHRAyObnmrXukEzhBakA6VTefnRiIQ0CtZGzvgzsuUsWL3ETAqwDnrqo0ByK3ssw5/vzD5/rpMTNZ8n0H43XIWkfNfXRexMVTB6GJbhTf2wY6cyeLDXqzOhH9TU6ig43mrzqOprFhzkpbRs6vwqp5PICbX8lpe2aAAdWaoDgrsjK/v5wQipB3ralV0NG92erL6NUVisgM808vB0zYnIqKtE86A7gIrP9ab8TIL8ytUPswq3bf7w9ObT/P6kk5o7FI8brKA+nArbu3soxW5Ucj/PzskKKNYXSz1iCTAxNbktjc+GNHcxNq4gfKwAlgav/hvn+C533fr40S5VB7NuA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0DlHsow6pooE0FOeI388EBmvdjDgAOq2ToelbU4aCWg=;
- b=NwaCV2zInoMike7vEfUnNnmivm1Kq1zXzdeS1SMzRcKez5xDMZEw+tnsxa1RpYFiyMchKLpXlqvPsTjCKWxtkBdf5lCGxFTBpsVlxce5pWZdcI7z6Kvd+xFy+Z8GZLntBC0Y9Hr8Sr36iPuBA5NLdx/Q4FZsIlq7pVP4J0WQ1Va+KGrsuJH6huhmvbc01seCUtlpaAdVQl9HQ3Z4IydT/+zKzcJW/4+3A99O9rJ3qjc7vI8oDCh/HwkbBOIHs/YSsYHBkePFC6UkxDJZApIkXSg6AzBSj6p5nPxOvPRV6Hfc2gY/QjJyHZdkJMY+UMg34dTfwy3azu+Q5jO/mqq6GA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0DlHsow6pooE0FOeI388EBmvdjDgAOq2ToelbU4aCWg=;
- b=Oup1x2YtibMi6BkXAHSheWOhv/LEISPW8Gu8C3OUgyFIGpWAoUBlQdV24442LaMlWybhiJRO7l2xvgjc99MIgAalDOAldH6aqQavPw5LVMdz4TFP+V63S/LR9M642uvaDADwAwlTvdHEjwsnnum2Qsv1ll88As0f/OtVKVDThLg=
-Received: from BY3PR05CA0036.namprd05.prod.outlook.com (2603:10b6:a03:39b::11)
- by CYXPR12MB9428.namprd12.prod.outlook.com (2603:10b6:930:d5::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.28; Wed, 4 Sep
- 2024 10:04:05 +0000
-Received: from MWH0EPF000989E7.namprd02.prod.outlook.com
- (2603:10b6:a03:39b:cafe::4f) by BY3PR05CA0036.outlook.office365.com
- (2603:10b6:a03:39b::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.14 via Frontend
- Transport; Wed, 4 Sep 2024 10:04:04 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- MWH0EPF000989E7.mail.protection.outlook.com (10.167.241.134) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7918.13 via Frontend Transport; Wed, 4 Sep 2024 10:04:04 +0000
-Received: from volcano-ed17host-rhel.amd.com (10.180.168.240) by
- SATLEXMB03.amd.com (10.181.40.144) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 4 Sep 2024 05:04:03 -0500
-From: Santosh Shukla <santosh.shukla@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <pbonzini@redhat.com>, <joao.m.martins@oracle.com>,
- <Suravee.Suthikulpanit@amd.com>, <vasant.hegde@amd.com>,
- <mtosatti@redhat.com>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>
-Subject: [PATCH 4/5] amd_iommu: Send notification when invaldate interrupt
- entry cache
-Date: Wed, 4 Sep 2024 05:02:56 -0500
-Message-ID: <20240904100257.184851-5-santosh.shukla@amd.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20240904100257.184851-1-santosh.shukla@amd.com>
-References: <20240904100257.184851-1-santosh.shukla@amd.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slms8-00069D-N4
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:04:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725444257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Jjzop/srvHm0h25kmQhlzo0tw4k5Y3gFI8C0it+8WQM=;
+ b=ES7ccjbEto0rn/dQh0FF0yMgibMyBEUMz3Pp+T8s++Io8BGY2Zzj17lPwIQ+c4nnTg/Nbj
+ RuEuyRSVio0ZFp43rqCTmQXrMVIMRzpBCuL772cFwVc8loFOzsa3A5M4kCtdTTTx6HYmzf
+ 8rbWfIFxZgAFHTjaxQ5Kb8MrbTA85Rk=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-114-XlcTjHK8O5WrNJXKTsNdOQ-1; Wed, 04 Sep 2024 06:04:15 -0400
+X-MC-Unique: XlcTjHK8O5WrNJXKTsNdOQ-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3df3ced2691so3371666b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 03:04:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725444255; x=1726049055;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jjzop/srvHm0h25kmQhlzo0tw4k5Y3gFI8C0it+8WQM=;
+ b=jTPqCsJ5Ugc4j/htr46tKNOcyDrzjWQpfAQ2UFTSegRRgH1xgDx4kqjQazBDPG1hl2
+ cmTvOG50DIe6Y49hY/IX005EILrZWuVmp1TudPRCUtaxDIA5zv5qFesmigamBD/PsY36
+ IN0YJu+Yt70RmAE6mDUOoP+hFsD4J5fEEkaSiP3jykzg9Yh1Cjek1JTMyYx8SC7rjJ32
+ Zqo0xRfs7ubfKoV7MOkQG1SiG2L9nExmsLSmx0t8B604uyg+G9LIRfa8uKn6Y6atLUX3
+ joD4wYs/PRE9POezNlx6wfS5CdqGUh1pj7MUsqJsnMeVEHkTFjHCrhTLzsIO+eJrqzs+
+ JLKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXwcIIkbmf6qoW2sB/CAV9KFngFwM8y7cenWQQjnFleMfZ9TEUtPPb32S+oDyYsRjmRBIDmuhnxPHjK@nongnu.org
+X-Gm-Message-State: AOJu0YyCimsGKJ7Wj86ENLtczHkHLgvxGBvcVBuaz9S07tvRxTDyHfd/
+ 5iHsmhD1Lyf3fiIC7wZkuXuE9OHkaDOzcQGTbB8SYg4w/QmQxf6W1gpuecotc/RtX8xdMju4/y7
+ /ZTI9BlT48p3ADkUeJyFi3l+f6svazM7KzZmCQisYxtDjtnPtbud1
+X-Received: by 2002:a05:6808:11c1:b0:3db:331:9d41 with SMTP id
+ 5614622812f47-3df2211090emr13707770b6e.23.1725444255209; 
+ Wed, 04 Sep 2024 03:04:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxc9Jkhwe6TWFbW5BSZSDH6xW5+0MxZ/kFOXtBSqEY7ikm8EHSXafXqCyujeEuKaCH4CXdjw==
+X-Received: by 2002:a05:6808:11c1:b0:3db:331:9d41 with SMTP id
+ 5614622812f47-3df2211090emr13707735b6e.23.1725444254809; 
+ Wed, 04 Sep 2024 03:04:14 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
+ [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-45682c99509sm57395581cf.24.2024.09.04.03.04.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 03:04:14 -0700 (PDT)
+Message-ID: <b5330a1d-3a52-4894-93ce-99508788a901@redhat.com>
+Date: Wed, 4 Sep 2024 12:04:11 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB03.amd.com
- (10.181.40.144)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000989E7:EE_|CYXPR12MB9428:EE_
-X-MS-Office365-Filtering-Correlation-Id: ac321275-4ead-4ae5-109c-08dcccc8e873
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?mAJimC1wfJ3fQpjQQf1gF5AEP5n6PxqTx+8kuAR/8FGXwhdiXdM4arxXK3ok?=
- =?us-ascii?Q?Usog4f/V2VygTDLP1pvlURNpbHtxsSaPgROJJDaAWCzviDVWduF60x2cFFTC?=
- =?us-ascii?Q?9l2C7P45Ok01zS95JIzEHXBo+UMtBJi8FNavAOSyQm/N4GTmXO1n7Ao+/IM+?=
- =?us-ascii?Q?IfGLQl7M7YfqK4RtjGCGic+7eZvjbOOZi4bGmasboUN3yI676T7DIfFNfnH8?=
- =?us-ascii?Q?7OgPFr+d54G8aXZD8WeQmUGqF86N0N9HJ2RFjxQlvP/L1ztfF/zgsjmkh2Rx?=
- =?us-ascii?Q?Fg2xxyo/2PMJvHUxT1lw9Ww5dFskQgGAqZ3mbDoPSvf1GaJbyYBRtMc9tpUw?=
- =?us-ascii?Q?a133hIrPp+cXQsWB/SLIqP61UAw0Z7y7GpzXQpbMMsX+nDFOqnwQVYD/NWxW?=
- =?us-ascii?Q?tm5Vphyn2YXtkwlYoZ7d/8ri90MEpu5XQnALkYjwR4bKDCVotk2msR6F7dLx?=
- =?us-ascii?Q?9JL20ZlNPDtZ94nWSzMrtq05HbsaYr6w5zwgIJ6ZHmRaScr9XCSgyijgZSEf?=
- =?us-ascii?Q?25fs+R3LunCL/hdV3fSIzJ7UxhcrL1OuomS7/xFKVAmXAjCS5KQdbO+MnUXB?=
- =?us-ascii?Q?yfHsx1IjhSKIjpG2qeGgRTlhDOod1ui3bEwn/5kYl1zh0NKVlyW98qTgLjXG?=
- =?us-ascii?Q?H+kgXfTfVBB1xoLkFyoKfAxmTUzM3mt9SL34U8Pp1xCOo8hygcqF1ZsfIWrK?=
- =?us-ascii?Q?75lCKelAXZHWeJINZJ8gysbbxM/QZIlylFU4ijAXBg6TU850vHCeZIkbaKj4?=
- =?us-ascii?Q?8gOdcJccpXq4BSA8wRoAefmfAo2LDw9qJrIglO69N8BWC+CAJZzf7onMD463?=
- =?us-ascii?Q?lmqeTA8M4nA5xHRhLER99rRnNLOCkzDkZVr5HAZmO1nnOmiwKVI93OtidMqX?=
- =?us-ascii?Q?9/o5QI/IAyazRmtx8jjgtN/2VywzFrmjxtIV+oOPEjHzNuCviHOnu0Fyt6U4?=
- =?us-ascii?Q?pJH9OxrwVyEjrYeceL63UenAr77MNkMdWYOYMMPrS9CmaFdyoQoJaNwHh0pc?=
- =?us-ascii?Q?8NWr2lj62+WB9EMXdSxhAC3lBwhb6B55UjRA6c1RqIyAnGJ1hbGG3YP4D64L?=
- =?us-ascii?Q?uL5oCs9w/dM9AggToAmQtrOKrtRKFfCW7w2ndtjpvsut6kdTD6fwLY3xOaj9?=
- =?us-ascii?Q?FtNQnx4dMqTi+HzujrYwgLk+z7lbL1d81gTtoBFdDmC4vAsNf7CwsjMh5bhj?=
- =?us-ascii?Q?kpUcf5BUQuGV1L0Oyhzf7Ydcb1otviXLtVEI3j8gDDMjcQbtBb0xCt9ApXdp?=
- =?us-ascii?Q?hr7LCjA5RRj2/KtMfKCOM4H3HRDSh8pAn0UO/V91xaKXmdApyp1n1AcB6CBK?=
- =?us-ascii?Q?hO0cPFpOjNW/F9kzspXymIr23OU/3HLmG66L071PYJMz5oA62pyJAM3SKSby?=
- =?us-ascii?Q?9TmCXTgHjrA4l2r3+qZpWKarK/TXSswotaW9E0WxIqzcJY90gs0Sjc/0brTS?=
- =?us-ascii?Q?+R1Q9eczbN7y+1NTCFtDeN8c/cPnRjvn?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2024 10:04:04.3429 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ac321275-4ead-4ae5-109c-08dcccc8e873
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000989E7.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR12MB9428
-Received-SPF: permerror client-ip=2a01:111:f403:2415::630;
- envelope-from=Santosh.Shukla@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 30/53] hw/rtc: Remove twl92230 device
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+ <20240903160751.4100218-31-peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20240903160751.4100218-31-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,61 +147,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+On 03/09/2024 18.07, Peter Maydell wrote:
+> Remove the TWL92230 RTC device, which was used only by the n800 and n810.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   MAINTAINERS        |   1 -
+>   hw/rtc/twl92230.c  | 882 ---------------------------------------------
+>   hw/rtc/Kconfig     |   4 -
+>   hw/rtc/meson.build |   1 -
+>   4 files changed, 888 deletions(-)
+>   delete mode 100644 hw/rtc/twl92230.c
 
-In order to support AMD IOMMU interrupt remapping emulation with PCI
-pass-through devices, QEMU needs to notify VFIO when guest IOMMU driver
-updates and invalidate the guest interrupt remapping table (IRT), and
-communicate information so that the host IOMMU driver can update
-the shadowed interrupt remapping table in the host IOMMU.
-
-Therefore, send notification when guet IOMMU emulates the IRT invalidation
-commands.
-
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Santosh Shukla <santosh.shukla@amd.com>
----
- hw/i386/amd_iommu.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index ffe91dff3986..5acb40fb909c 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -431,6 +431,12 @@ static void amdvi_complete_ppr(AMDVIState *s, uint64_t *cmd)
-     trace_amdvi_ppr_exec();
- }
- 
-+static void amdvi_intremap_inval_notify_all(AMDVIState *s, bool global,
-+                               uint32_t index, uint32_t mask)
-+{
-+    x86_iommu_iec_notify_all(X86_IOMMU_DEVICE(s), global, index, mask);
-+}
-+
- static void amdvi_inval_all(AMDVIState *s, uint64_t *cmd)
- {
-     if (extract64(cmd[0], 0, 60) || cmd[1]) {
-@@ -438,6 +444,9 @@ static void amdvi_inval_all(AMDVIState *s, uint64_t *cmd)
-                                    s->cmdbuf + s->cmdbuf_head);
-     }
- 
-+    /* Notify global invalidation */
-+    amdvi_intremap_inval_notify_all(s, true, 0, 0);
-+
-     amdvi_iotlb_reset(s);
-     trace_amdvi_all_inval();
- }
-@@ -486,6 +495,9 @@ static void amdvi_inval_inttable(AMDVIState *s, uint64_t *cmd)
-         return;
-     }
- 
-+    /* Notify global invalidation */
-+    amdvi_intremap_inval_notify_all(s, true, 0, 0);
-+
-     trace_amdvi_intr_inval();
- }
- 
--- 
-2.43.5
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
