@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B4BCD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 836C4CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slo9Q-00026j-9A; Wed, 04 Sep 2024 07:26:16 -0400
+	id 1sloEp-0008LX-D1; Wed, 04 Sep 2024 07:31:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo9M-0001ci-W1
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:26:13 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sloEl-00086W-T3
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:31:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo9D-0004kq-1K
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:26:12 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sloEh-0008CL-Pz
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:31:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725449161;
+ s=mimecast20190719; t=1725449502;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=exP//E9i5wK2gHhGXlaYilKR5VvVnUFMPHblLY32rno=;
- b=dxOe9OO3OZ8YuHG7eBmcy78sMwsnSx1ShwGGG/+AFUILBmchgHDj789EoO/X1wbECyeA28
- tBfCySVSFmCRHMGnwoW+BSlh8AbhU3L7yHVFvl6OOdRAxTdfL3wxTKX6z0tcEaoWEDz3BI
- OT850gbiQ626iwN3WLXhUbu8Fb/qDQQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-PrQIcrxeMyCg09Ng8bdaoQ-1; Wed,
- 04 Sep 2024 07:18:49 -0400
-X-MC-Unique: PrQIcrxeMyCg09Ng8bdaoQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 066021955D59; Wed,  4 Sep 2024 11:18:45 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1688730001AB; Wed,  4 Sep 2024 11:18:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B976521E6828; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
- arei.gonglei@huawei.com, berrange@redhat.com, berto@igalia.com,
- borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com, den@openvz.org,
- eblake@redhat.com, eduardo@habkost.net, farman@linux.ibm.com,
- farosas@suse.de, hreitz@redhat.com, idryomov@gmail.com, iii@linux.ibm.com,
- jamin_lin@aspeedtech.com, jasowang@redhat.com, joel@jms.id.au,
- jsnow@redhat.com, kwolf@redhat.com, leetroy@gmail.com,
- marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
- michael.roth@amd.com, mst@redhat.com, mtosatti@redhat.com,
- nsg@linux.ibm.com, pasic@linux.ibm.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org,
- pizhenwei@bytedance.com, pl@dlhnet.de, richard.henderson@linaro.org,
- stefanha@redhat.com, steven_lee@aspeedtech.com, thuth@redhat.com,
- vsementsov@yandex-team.ru, wangyanan55@huawei.com,
- yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
- avihaih@nvidia.com
-Subject: [PATCH v2 10/19] qapi/crypto: Drop unwanted 'prefix'
-Date: Wed,  4 Sep 2024 13:18:27 +0200
-Message-ID: <20240904111836.3273842-11-armbru@redhat.com>
-In-Reply-To: <20240904111836.3273842-1-armbru@redhat.com>
-References: <20240904111836.3273842-1-armbru@redhat.com>
+ bh=XG3M556PV20dQp4j8vPrmj8CZGZ9XeBIePzlHOaHQEo=;
+ b=SfB23bcmnmwwHZCHOe3Zj7R9SiYlrMduqQ+vkQjhQmSKICgUX+MOQrDFcY1f2t/oE7YfOp
+ ZrLdc4PjK7sXNqnNcoNWuHeB2W8or96o02AA1fQiVtOGYcEHhz2Njt5+jDBZ2u94k4EEus
+ v9bGuB3z5AXB2ig2MNTQG29EvyKgdyI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-489-VGKkL8bYPJ6EWUXdo-eC4w-1; Wed, 04 Sep 2024 07:31:41 -0400
+X-MC-Unique: VGKkL8bYPJ6EWUXdo-eC4w-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-374c3402d93so2519323f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 04:31:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725449500; x=1726054300;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XG3M556PV20dQp4j8vPrmj8CZGZ9XeBIePzlHOaHQEo=;
+ b=uCKo8E8SbnhXsEpuEGI6b/AfJSCsIp4VQUIPxYqqOV/PhWA8S3QMuPxnE+vcUAupXK
+ SO8cia1KrAp5NqSuMfKjK0zlCJ36uM33bPUIJtDOo+1fRfQ081Sb3QN9Wr7sxjgKQ9wt
+ +iXxj/G3iCzyJmxDgQLq+z0jIVH3OjqxSjO9ldIilvGipGeYsP0BOKiqNvM6qTsXLoIQ
+ HCEFKCAxSPMETG9G2rZMQ/xkXmw2e+CXhXOrtEstTwcJpoTo+9ie0FGfVNTm7DFfj46Y
+ FykaMwZCMra6cuFwX3yBtws7pZb2lVUr5+7ZcsMt4FoIc8U+ozu+wPf2bvyXIfbgvMJn
+ p1iQ==
+X-Gm-Message-State: AOJu0YzPi+nndAQtUu1w2ED7zia0Zu8vcBh14WB4tDLljEzpTZkiM78K
+ OEH3PhEJsNLesZg/WoSn2kA9QWHs+FFPHynasA0fR37md4hj+v0OdDFInZZSD5TC60Lb6MPkIIY
+ ng+AYPyBUOt5t6+FWk69jnCU56JNXGS0fXkmuluH2vA1wl+b0Ifu6RvxlwhQXx9Tspk9bNFuK6r
+ uwM5J0mDIlDu11Mc8OLpuCZAX4N8k=
+X-Received: by 2002:adf:e9c4:0:b0:374:bad0:2b72 with SMTP id
+ ffacd0b85a97d-374bad02cdfmr8969725f8f.11.1725449500051; 
+ Wed, 04 Sep 2024 04:31:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE72927S52oUfXkRPQ9+OUTDQPiNdrYQEcZU9D5nINGmX7oomVNem6FKaWEDjeSn9eGUyN6tFyRtN/NGwk2XL0=
+X-Received: by 2002:adf:e9c4:0:b0:374:bad0:2b72 with SMTP id
+ ffacd0b85a97d-374bad02cdfmr8969705f8f.11.1725449499535; Wed, 04 Sep 2024
+ 04:31:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+References: <20240828-rust-pl011-v9-0-35579191f17c@linaro.org>
+In-Reply-To: <20240828-rust-pl011-v9-0-35579191f17c@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 4 Sep 2024 13:31:27 +0200
+Message-ID: <CABgObfbH6cmYz5tO9iVMmf3TAF2ZLqp8m2PzBKBRzoPbL4Jy1w@mail.gmail.com>
+Subject: Re: [PATCH RESEND v9 0/9] Add Rust build support,
+ ARM PL011 device impl
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Junjie Mao <junjie.mao@intel.com>, 
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,330 +108,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QAPI's 'prefix' feature can make the connection between enumeration
-type and its constants less than obvious.  It's best used with
-restraint.
+On Wed, Aug 28, 2024 at 6:12=E2=80=AFAM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+> - Addressed v8 review comment: removed rustfmt.toml symlink (Junjie Mao)
+> - Addressed v8 review comment: removed unused cstr files (Junjie Mao)
+> - Addressed v8 review comment: added HAVE_GLIB_WITH_ALIGNED_ALLOC config
+>   host def to check whether glib's aligned alloc functions are available =
+(Junjie Mao)
+> - qemu_api: Changed default alignment condition in allocator (alignment
+>   is always nonzero)
+> - qemu_api: Enabled allocator by default in builds
+> - pl011: fixed invalid cast of byte buffer to u32 in pl011_receive()
+>   leading to misaligned read
 
-QCryptoAkCipherKeyType has a 'prefix' that overrides the generated
-enumeration constants' prefix to QCRYPTO_AKCIPHER_KEY_TYPE.
+Looks generally good, the main sticky issue is the clang/libclang path
+consistency (but good job finding LIBCLANG_PATH by the way!).
 
-Drop it.  The prefix becomes QCRYPTO_AK_CIPHER_KEY_TYPE.
+As mentioned in the individual review, I would remove the allocator
+completely (and if you really wanted it, you should implement
+alloc_zeroed and realloc too because the default implementations in
+GlobalAlloc are inefficient).
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qapi/crypto.json                        |  1 -
- backends/cryptodev-builtin.c            |  4 ++--
- backends/cryptodev-lkcf.c               |  6 +++---
- tests/bench/benchmark-crypto-akcipher.c |  2 +-
- tests/unit/test-crypto-akcipher.c       | 28 ++++++++++++-------------
- crypto/akcipher-gcrypt.c.inc            |  8 +++----
- crypto/akcipher-nettle.c.inc            |  8 +++----
- crypto/rsakey-builtin.c.inc             |  4 ++--
- crypto/rsakey-nettle.c.inc              |  4 ++--
- 9 files changed, 32 insertions(+), 33 deletions(-)
+For the cross compilation patch, if you want you can include in v10
+what is at https://paste.debian.net/1328408/.
 
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index fb00c706b2..b5c25e7cd9 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -609,7 +609,6 @@
- # Since: 7.1
- ##
- { 'enum': 'QCryptoAkCipherKeyType',
--  'prefix': 'QCRYPTO_AKCIPHER_KEY_TYPE',
-   'data': ['public', 'private']}
- 
- ##
-diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-index 940104ee55..e95af9bb72 100644
---- a/backends/cryptodev-builtin.c
-+++ b/backends/cryptodev-builtin.c
-@@ -334,11 +334,11 @@ static int cryptodev_builtin_create_akcipher_session(
- 
-     switch (sess_info->keytype) {
-     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
--        type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC;
-+        type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC;
-         break;
- 
-     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
--        type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE;
-+        type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE;
-         break;
- 
-     default:
-diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
-index 45aba1ff67..e1ee11a158 100644
---- a/backends/cryptodev-lkcf.c
-+++ b/backends/cryptodev-lkcf.c
-@@ -322,7 +322,7 @@ static void cryptodev_lkcf_execute_task(CryptoDevLKCFTask *task)
-      * 2. generally, public key related compution is fast, just compute it with
-      * thread-pool.
-      */
--    if (session->keytype == QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE) {
-+    if (session->keytype == QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {
-         if (qcrypto_akcipher_export_p8info(&session->akcipher_opts,
-                                            session->key, session->keylen,
-                                            &p8info, &p8info_len,
-@@ -534,11 +534,11 @@ static int cryptodev_lkcf_create_asym_session(
- 
-     switch (sess_info->keytype) {
-     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
--        sess->keytype = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC;
-+        sess->keytype = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC;
-         break;
- 
-     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
--        sess->keytype = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE;
-+        sess->keytype = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE;
-         break;
- 
-     default:
-diff --git a/tests/bench/benchmark-crypto-akcipher.c b/tests/bench/benchmark-crypto-akcipher.c
-index 5e68cb0a1c..bbc29c9b12 100644
---- a/tests/bench/benchmark-crypto-akcipher.c
-+++ b/tests/bench/benchmark-crypto-akcipher.c
-@@ -28,7 +28,7 @@ static QCryptoAkCipher *create_rsa_akcipher(const uint8_t *priv_key,
-     opt.alg = QCRYPTO_AKCIPHER_ALG_RSA;
-     opt.u.rsa.padding_alg = padding;
-     opt.u.rsa.hash_alg = hash;
--    return qcrypto_akcipher_new(&opt, QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
-+    return qcrypto_akcipher_new(&opt, QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-                                 priv_key, keylen, &error_abort);
- }
- 
-diff --git a/tests/unit/test-crypto-akcipher.c b/tests/unit/test-crypto-akcipher.c
-index 4f1f4214dd..59bc6f1e69 100644
---- a/tests/unit/test-crypto-akcipher.c
-+++ b/tests/unit/test-crypto-akcipher.c
-@@ -692,7 +692,7 @@ struct QCryptoAkCipherTestData {
- static QCryptoRSAKeyTestData rsakey_test_data[] = {
-     {
-         .path = "/crypto/akcipher/rsakey-1024-public",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-         .key = rsa1024_public_key,
-         .keylen = sizeof(rsa1024_public_key),
-         .is_valid_key = true,
-@@ -700,7 +700,7 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-1024-private",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-         .key = rsa1024_private_key,
-         .keylen = sizeof(rsa1024_private_key),
-         .is_valid_key = true,
-@@ -708,7 +708,7 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-2048-public",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-         .key = rsa2048_public_key,
-         .keylen = sizeof(rsa2048_public_key),
-         .is_valid_key = true,
-@@ -716,7 +716,7 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-2048-private",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-         .key = rsa2048_private_key,
-         .keylen = sizeof(rsa2048_private_key),
-         .is_valid_key = true,
-@@ -724,56 +724,56 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-public-lack-elem",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-         .key = rsa_public_key_lack_element,
-         .keylen = sizeof(rsa_public_key_lack_element),
-         .is_valid_key = false,
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-private-lack-elem",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-         .key = rsa_private_key_lack_element,
-         .keylen = sizeof(rsa_private_key_lack_element),
-         .is_valid_key = false,
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-public-empty-elem",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-         .key = rsa_public_key_empty_element,
-         .keylen = sizeof(rsa_public_key_empty_element),
-         .is_valid_key = false,
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-private-empty-elem",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-         .key = rsa_private_key_empty_element,
-         .keylen = sizeof(rsa_private_key_empty_element),
-         .is_valid_key = false,
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-public-empty-key",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-         .key = NULL,
-         .keylen = 0,
-         .is_valid_key = false,
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-private-empty-key",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-         .key = NULL,
-         .keylen = 0,
-         .is_valid_key = false,
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-public-invalid-length-val",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-         .key = rsa_public_key_invalid_length_val,
-         .keylen = sizeof(rsa_public_key_invalid_length_val),
-         .is_valid_key = false,
-     },
-     {
-         .path = "/crypto/akcipher/rsakey-public-extra-elem",
--        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-         .key = rsa_public_key_extra_elem,
-         .keylen = sizeof(rsa_public_key_extra_elem),
-         .is_valid_key = false,
-@@ -885,12 +885,12 @@ static void test_akcipher(const void *opaque)
-         return;
-     }
-     pub_key = qcrypto_akcipher_new(&data->opt,
--                                   QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
-+                                   QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-                                    data->pub_key, data->pub_key_len,
-                                    &error_abort);
-     g_assert(pub_key != NULL);
-     priv_key = qcrypto_akcipher_new(&data->opt,
--                                    QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
-+                                    QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-                                     data->priv_key, data->priv_key_len,
-                                     &error_abort);
-     g_assert(priv_key != NULL);
-diff --git a/crypto/akcipher-gcrypt.c.inc b/crypto/akcipher-gcrypt.c.inc
-index abb1fb272e..e942d43421 100644
---- a/crypto/akcipher-gcrypt.c.inc
-+++ b/crypto/akcipher-gcrypt.c.inc
-@@ -85,7 +85,7 @@ static int qcrypto_gcrypt_parse_rsa_private_key(
-     const uint8_t *key, size_t keylen, Error **errp)
- {
-     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
--        QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
-+        QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
-     gcry_mpi_t n = NULL, e = NULL, d = NULL, p = NULL, q = NULL, u = NULL;
-     bool compute_mul_inv = false;
-     int ret = -1;
-@@ -178,7 +178,7 @@ static int qcrypto_gcrypt_parse_rsa_public_key(QCryptoGcryptRSA *rsa,
- {
- 
-     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
--        QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
-+        QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
-     gcry_mpi_t n = NULL, e = NULL;
-     int ret = -1;
-     gcry_error_t err;
-@@ -540,13 +540,13 @@ static QCryptoGcryptRSA *qcrypto_gcrypt_rsa_new(
-     rsa->akcipher.driver = &gcrypt_rsa;
- 
-     switch (type) {
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
-         if (qcrypto_gcrypt_parse_rsa_private_key(rsa, key, keylen, errp) != 0) {
-             goto error;
-         }
-         break;
- 
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
-         if (qcrypto_gcrypt_parse_rsa_public_key(rsa, key, keylen, errp) != 0) {
-             goto error;
-         }
-diff --git a/crypto/akcipher-nettle.c.inc b/crypto/akcipher-nettle.c.inc
-index 02699e6e6d..62ac8699c4 100644
---- a/crypto/akcipher-nettle.c.inc
-+++ b/crypto/akcipher-nettle.c.inc
-@@ -87,7 +87,7 @@ static int qcrypt_nettle_parse_rsa_private_key(QCryptoNettleRSA *rsa,
-                                                Error **errp)
- {
-     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
--        QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
-+        QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
- 
-     if (!rsa_key) {
-         return -1;
-@@ -137,7 +137,7 @@ static int qcrypt_nettle_parse_rsa_public_key(QCryptoNettleRSA *rsa,
-                                               Error **errp)
- {
-     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
--        QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
-+        QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
- 
-     if (!rsa_key) {
-         return -1;
-@@ -397,13 +397,13 @@ static QCryptoAkCipher *qcrypto_nettle_rsa_new(
-     rsa_private_key_init(&rsa->priv);
- 
-     switch (type) {
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
-         if (qcrypt_nettle_parse_rsa_private_key(rsa, key, keylen, errp) != 0) {
-             goto error;
-         }
-         break;
- 
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
-         if (qcrypt_nettle_parse_rsa_public_key(rsa, key, keylen, errp) != 0) {
-             goto error;
-         }
-diff --git a/crypto/rsakey-builtin.c.inc b/crypto/rsakey-builtin.c.inc
-index 46cc7afe87..6337b84c54 100644
---- a/crypto/rsakey-builtin.c.inc
-+++ b/crypto/rsakey-builtin.c.inc
-@@ -183,10 +183,10 @@ QCryptoAkCipherRSAKey *qcrypto_akcipher_rsakey_parse(
-     size_t keylen, Error **errp)
- {
-     switch (type) {
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
-         return qcrypto_builtin_rsa_private_key_parse(key, keylen, errp);
- 
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
-         return qcrypto_builtin_rsa_public_key_parse(key, keylen, errp);
- 
-     default:
-diff --git a/crypto/rsakey-nettle.c.inc b/crypto/rsakey-nettle.c.inc
-index cc49872e78..b7f34b0234 100644
---- a/crypto/rsakey-nettle.c.inc
-+++ b/crypto/rsakey-nettle.c.inc
-@@ -145,10 +145,10 @@ QCryptoAkCipherRSAKey *qcrypto_akcipher_rsakey_parse(
-     size_t keylen, Error **errp)
- {
-     switch (type) {
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
-         return qcrypto_nettle_rsa_private_key_parse(key, keylen, errp);
- 
--    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
-         return qcrypto_nettle_rsa_public_key_parse(key, keylen, errp);
- 
-     default:
--- 
-2.46.0
+Paolo
+
+> - Link to v8: https://lore.kernel.org/r/20240823-rust-pl011-v8-0-b9f5746b=
+daf3@linaro.org
+>
+> Changes in v8:
+> - Allow for compilation of more than one Rust-based component in Meson
+>   by compiling all Rust static libraries into one "root" library before
+>   linking it to each target emulation executable.
+> - Added a qemu_api_macros procedural macro library.
+> - (minor) Moved generated bindings.rs to qemu_api crate using meson's
+>   structured_source() instead of compiling it as a standalone crate
+>   which was unnecessary.
+> - (minor) Removed unnecessary rustc optimization/debug flags (should be h=
+andled
+>   by meson instead).
+> - (minor) Moved build scripts under scripts/rust/
+> - (minor) Fixed license issues
+>
+> Previous version was: <20240815-rust-pl011-v7-0-975135e98831@linaro.org>
+>
+> https://lore.kernel.org/qemu-devel/20240815-rust-pl011-v7-0-975135e98831@=
+linaro.org/
+>
+> Outstanding issues that are not blocking for merge are:
+>
+> - Cross-compilation for aarch64 is not possible out-of-the-box because of=
+ this bug:
+>   <https://github.com/rust-lang/rust/issues/125619> in llvm which when
+>   fixed, must be ported to upstream rust's llvm fork. Since the problem
+>   is an extraneous symbol we could strip it with objcopy -N|--strip-symbo=
+l
+>   Update since last version: Fix is in upstream llvm, we're awaiting for
+>   rust upstream to pick it up.
+>
+> ---
+> Manos Pitsidianakis (7):
+>       build-sys: Add rust feature option
+>       rust: add bindgen step as a meson dependency
+>       .gitattributes: add Rust diff and merge attributes
+>       meson.build: add HAVE_GLIB_WITH_ALIGNED_ALLOC flag
+>       rust: add crate to expose bindings and interfaces
+>       rust: add utility procedural macro crate
+>       rust: add PL011 device model
+>
+> Paolo Bonzini (2):
+>       Require meson version 1.5.0
+>       configure, meson: detect Rust toolchain
+>
+>  MAINTAINERS                                        |  21 +
+>  configure                                          |  50 +-
+>  meson.build                                        |  87 ++-
+>  rust/wrapper.h                                     |  39 ++
+>  .gitattributes                                     |   3 +
+>  Kconfig                                            |   1 +
+>  Kconfig.host                                       |   3 +
+>  hw/arm/Kconfig                                     |  33 +-
+>  meson_options.txt                                  |   3 +
+>  python/scripts/vendor.py                           |   4 +-
+>  python/wheels/meson-1.2.3-py3-none-any.whl         | Bin 964928 -> 0 byt=
+es
+>  python/wheels/meson-1.5.0-py3-none-any.whl         | Bin 0 -> 959846 byt=
+es
+>  pythondeps.toml                                    |   2 +-
+>  rust/.gitignore                                    |   3 +
+>  rust/Kconfig                                       |   1 +
+>  rust/hw/Kconfig                                    |   2 +
+>  rust/hw/char/Kconfig                               |   3 +
+>  rust/hw/char/meson.build                           |   1 +
+>  rust/hw/char/pl011/.gitignore                      |   2 +
+>  rust/hw/char/pl011/Cargo.lock                      | 134 +++++
+>  rust/hw/char/pl011/Cargo.toml                      |  26 +
+>  rust/hw/char/pl011/README.md                       |  31 ++
+>  rust/hw/char/pl011/meson.build                     |  26 +
+>  rust/hw/char/pl011/src/definitions.rs              |  20 +
+>  rust/hw/char/pl011/src/device.rs                   | 594 +++++++++++++++=
+++++++
+>  rust/hw/char/pl011/src/device_class.rs             |  59 ++
+>  rust/hw/char/pl011/src/lib.rs                      | 585 +++++++++++++++=
++++++
+>  rust/hw/char/pl011/src/memory_ops.rs               |  57 ++
+>  rust/hw/meson.build                                |   1 +
+>  rust/meson.build                                   |   4 +
+>  rust/qemu-api-macros/Cargo.lock                    |  47 ++
+>  rust/qemu-api-macros/Cargo.toml                    |  25 +
+>  rust/qemu-api-macros/README.md                     |   1 +
+>  rust/qemu-api-macros/meson.build                   |  25 +
+>  rust/qemu-api-macros/src/lib.rs                    |  43 ++
+>  rust/qemu-api/.gitignore                           |   2 +
+>  rust/qemu-api/Cargo.lock                           |   7 +
+>  rust/qemu-api/Cargo.toml                           |  26 +
+>  rust/qemu-api/README.md                            |  17 +
+>  rust/qemu-api/build.rs                             |  14 +
+>  rust/qemu-api/meson.build                          |  24 +
+>  rust/qemu-api/src/definitions.rs                   | 109 ++++
+>  rust/qemu-api/src/device_class.rs                  | 128 +++++
+>  rust/qemu-api/src/lib.rs                           | 154 ++++++
+>  rust/qemu-api/src/tests.rs                         |  49 ++
+>  rust/rustfmt.toml                                  |   7 +
+>  scripts/archive-source.sh                          |   5 +-
+>  scripts/make-release                               |   5 +-
+>  scripts/meson-buildoptions.sh                      |   3 +
+>  scripts/rust/rust_root_crate.sh                    |  13 +
+>  scripts/rust/rustc_args.py                         |  84 +++
+>  subprojects/.gitignore                             |  11 +
+>  subprojects/arbitrary-int-1-rs.wrap                |   7 +
+>  subprojects/bilge-0.2-rs.wrap                      |   7 +
+>  subprojects/bilge-impl-0.2-rs.wrap                 |   7 +
+>  subprojects/either-1-rs.wrap                       |   7 +
+>  subprojects/itertools-0.11-rs.wrap                 |   7 +
+>  .../packagefiles/arbitrary-int-1-rs/meson.build    |  19 +
+>  subprojects/packagefiles/bilge-0.2-rs/meson.build  |  29 +
+>  .../packagefiles/bilge-impl-0.2-rs/meson.build     |  45 ++
+>  subprojects/packagefiles/either-1-rs/meson.build   |  24 +
+>  .../packagefiles/itertools-0.11-rs/meson.build     |  30 ++
+>  .../packagefiles/proc-macro-error-1-rs/meson.build |  40 ++
+>  .../proc-macro-error-attr-1-rs/meson.build         |  32 ++
+>  .../packagefiles/proc-macro2-1-rs/meson.build      |  31 ++
+>  subprojects/packagefiles/quote-1-rs/meson.build    |  29 +
+>  subprojects/packagefiles/syn-2-rs/meson.build      |  40 ++
+>  .../packagefiles/unicode-ident-1-rs/meson.build    |  20 +
+>  subprojects/proc-macro-error-1-rs.wrap             |   7 +
+>  subprojects/proc-macro-error-attr-1-rs.wrap        |   7 +
+>  subprojects/proc-macro2-1-rs.wrap                  |   7 +
+>  subprojects/quote-1-rs.wrap                        |   7 +
+>  subprojects/syn-2-rs.wrap                          |   7 +
+>  subprojects/unicode-ident-1-rs.wrap                |   7 +
+>  tests/lcitool/mappings.yml                         |   2 +-
+>  75 files changed, 2991 insertions(+), 21 deletions(-)
+> ---
+> base-commit: a733f37aef3b7d1d33bfe2716af88cdfd67ba64e
+> change-id: 20240814-rust-pl011-v7
+>
+> Best regards,
+> --
+> =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
+=CE=B8=CE=AE=CF=84=CF=89
+>
 
 
