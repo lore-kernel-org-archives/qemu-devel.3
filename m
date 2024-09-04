@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BE0CD4849
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F0C3CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnRI-0003Id-2d; Wed, 04 Sep 2024 06:40:40 -0400
+	id 1slnQo-0001su-Mj; Wed, 04 Sep 2024 06:40:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRB-0002zO-Pb
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnQm-0001lg-BQ
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnR8-0000I7-Gh
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnQk-0000EA-Hp
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446422;
+ s=mimecast20190719; t=1725446405;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VwrIAdusZ5R1cvWJgX+2GK6Dmeq4vZd1j98HCLKEaFs=;
- b=ehBwsuI3hxF0EapGTA72BZdOYYbVtQiW9ogBubljp+TE9K4q55EO8uBugcjQ76C2l1ztTq
- qvGr1n2IAIsYrDWJHo9j9UsxesemdIMTQJaVxJP36TgzRYbZYS6113IoxgrN9pG88nU2hu
- /gy9+Sg4ReAsGMnlGsGkJi+8h0dqps8=
+ bh=AxiIghsuBv+oB91PfIdqqb1BiAQxhcqz1TejR2XIAtM=;
+ b=T7GBhv8EPO7lb8T57UESMcf0Su99wM7rzDUhg9IwMWN/g2bn+ikTOZiU5njUCkyfU7dwHQ
+ gWWTtcf5QUGLFWck8bpYKkNrXNwAIyol/nFmS/rrefWb7uZp7d1JAfPsxpbeGN0bTiMvHS
+ UwgNeAyGSrOmaDiO9eZXmKVJePAFDoY=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-LlvnokKcNCqBhYEeP4T-4A-1; Wed,
- 04 Sep 2024 06:40:19 -0400
-X-MC-Unique: LlvnokKcNCqBhYEeP4T-4A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-6HOV89fPMOWn6IKk60tVCA-1; Wed,
+ 04 Sep 2024 06:40:02 -0400
+X-MC-Unique: 6HOV89fPMOWn6IKk60tVCA-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73E8A1955D44; Wed,  4 Sep 2024 10:40:18 +0000 (UTC)
+ id CE0261944AAC; Wed,  4 Sep 2024 10:40:01 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 33C9A1955F44; Wed,  4 Sep 2024 10:40:15 +0000 (UTC)
+ id C2E66195605A; Wed,  4 Sep 2024 10:39:59 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 17/42] tests/functional: Convert some tests that download files
- via fetch_asset()
-Date: Wed,  4 Sep 2024 12:38:52 +0200
-Message-ID: <20240904103923.451847-18-thuth@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 11/42] tests/functional: Prepare the meson build system for the
+ functional tests
+Date: Wed,  4 Sep 2024 12:38:46 +0200
+Message-ID: <20240904103923.451847-12-thuth@redhat.com>
 In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
 References: <20240904103923.451847-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -83,538 +85,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we've got the Asset class with pre-caching, we can convert
-some Avocado tests that use fetch_asset() for downloading their
-required files.
+Provide a meson.build file for the upcoming python-based functional
+tests, and add some wrapper glue targets to the tests/Makefile.include
+file. We are going to use two "speed" modes for the functional tests:
+The "quick" tests can be run at any time (i.e. also during "make check"),
+while the "thorough" tests should only be run when running a
+"make check-functional" test run (since these tests might download
+additional assets from the internet).
 
-Message-ID: <20240830133841.142644-18-thuth@redhat.com>
+The changes to the meson.build files are partly based on an earlier
+patch by Ani Sinha.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240830133841.142644-12-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   | 10 ++--
- tests/avocado/machine_arm_n8x0.py             |  0
- tests/avocado/machine_mips_loongson3v.py      | 39 --------------
- tests/functional/meson.build                  | 26 ++++++++--
- .../test_avr_mega2560.py}                     | 22 ++++----
- .../test_loongarch64_virt.py}                 | 46 +++++++++--------
- tests/functional/test_mips64el_loongson3v.py  | 39 ++++++++++++++
- .../test_netdev_ethtool.py}                   | 51 +++++++------------
- .../ppc_405.py => functional/test_ppc_405.py} | 29 ++++++-----
- 9 files changed, 137 insertions(+), 125 deletions(-)
- mode change 100644 => 100755 tests/avocado/machine_arm_n8x0.py
- delete mode 100644 tests/avocado/machine_mips_loongson3v.py
- rename tests/{avocado/machine_avr6.py => functional/test_avr_mega2560.py} (72%)
- mode change 100644 => 100755
- rename tests/{avocado/machine_loongarch.py => functional/test_loongarch64_virt.py} (54%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_mips64el_loongson3v.py
- rename tests/{avocado/netdev-ethtool.py => functional/test_netdev_ethtool.py} (66%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_405.py => functional/test_ppc_405.py} (53%)
- mode change 100644 => 100755
+ tests/Makefile.include       | 11 +++++
+ tests/functional/meson.build | 81 ++++++++++++++++++++++++++++++++++++
+ tests/meson.build            |  1 +
+ 3 files changed, 93 insertions(+)
+ create mode 100644 tests/functional/meson.build
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4912f8d0da..172ccb084e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -222,7 +222,7 @@ S: Maintained
- F: docs/system/target-avr.rst
- F: gdb-xml/avr-cpu.xml
- F: target/avr/
--F: tests/avocado/machine_avr6.py
-+F: tests/functional/test_avr_mega2560.py
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index fbb1a4b211..66c8cc3123 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -9,6 +9,8 @@ check-help:
+ 	@echo "Individual test suites:"
+ 	@echo " $(MAKE) check-qtest-TARGET       Run qtest tests for given target"
+ 	@echo " $(MAKE) check-qtest              Run qtest tests"
++	@echo " $(MAKE) check-functional         Run python-based functional tests"
++	@echo " $(MAKE) check-functional-TARGET  Run functional tests for a given target"
+ 	@echo " $(MAKE) check-unit               Run qobject tests"
+ 	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
+ 	@echo " $(MAKE) check-block              Run block tests"
+@@ -152,6 +154,15 @@ check-acceptance-deprecated-warning:
  
- CRIS TCG CPUs
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-@@ -266,7 +266,7 @@ M: Song Gao <gaosong@loongson.cn>
- S: Maintained
- F: target/loongarch/
- F: tests/tcg/loongarch64/
--F: tests/avocado/machine_loongarch.py
-+F: tests/functional/test_loongarch64_virt.py
+ check-acceptance: check-acceptance-deprecated-warning | check-avocado
  
- M68K TCG CPUs
- M: Laurent Vivier <laurent@vivier.eu>
-@@ -1397,7 +1397,7 @@ F: hw/mips/loongson3_virt.c
- F: include/hw/intc/loongson_ipi_common.h
- F: include/hw/intc/loongson_ipi.h
- F: include/hw/intc/loongson_liointc.h
--F: tests/avocado/machine_mips_loongson3v.py
-+F: tests/functional/test_mips64el_loongson3v.py
++FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
++.PHONY: $(FUNCTIONAL_TARGETS)
++$(FUNCTIONAL_TARGETS):
++	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
++
++.PHONY: check-functional
++check-functional:
++	@$(MAKE) SPEED=thorough check-func check-func-quick
++
+ # Consolidated targets
  
- Boston
- M: Paul Burton <paulburton@kernel.org>
-@@ -1423,7 +1423,7 @@ PowerPC Machines
- L: qemu-ppc@nongnu.org
- S: Orphan
- F: hw/ppc/ppc405*
--F: tests/avocado/ppc_405.py
-+F: tests/functional/test_ppc_405.py
- 
- Bamboo
- L: qemu-ppc@nongnu.org
-@@ -2495,7 +2495,7 @@ R: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
- S: Maintained
- F: docs/system/devices/igb.rst
- F: hw/net/igb*
--F: tests/avocado/netdev-ethtool.py
-+F: tests/functional/test_netdev_ethtool.py
- F: tests/qtest/igb-test.c
- F: tests/qtest/libqos/igb.c
- 
-diff --git a/tests/avocado/machine_arm_n8x0.py b/tests/avocado/machine_arm_n8x0.py
-old mode 100644
-new mode 100755
-diff --git a/tests/avocado/machine_mips_loongson3v.py b/tests/avocado/machine_mips_loongson3v.py
-deleted file mode 100644
-index 5194cf18c9..0000000000
---- a/tests/avocado/machine_mips_loongson3v.py
-+++ /dev/null
-@@ -1,39 +0,0 @@
--# Functional tests for the Generic Loongson-3 Platform.
--#
--# Copyright (c) 2021 Jiaxun Yang <jiaxun.yang@flygoat.com>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or later.
--# See the COPYING file in the top-level directory.
--#
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--import os
--import time
--
--from avocado import skipUnless
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--
--class MipsLoongson3v(QemuSystemTest):
--    timeout = 60
--
--    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
--    def test_pmon_serial_console(self):
--        """
--        :avocado: tags=arch:mips64el
--        :avocado: tags=endian:little
--        :avocado: tags=machine:loongson3-virt
--        :avocado: tags=cpu:Loongson-3A1000
--        :avocado: tags=device:liointc
--        :avocado: tags=device:goldfish_rtc
--        """
--
--        pmon_hash = '7c8b45dd81ccfc55ff28f5aa267a41c3'
--        pmon_path = self.fetch_asset('https://github.com/loongson-community/pmon/'
--                                    'releases/download/20210112/pmon-3avirt.bin',
--                                     asset_hash=pmon_hash, algorithm='md5')
--
--        self.vm.set_console()
--        self.vm.add_args('-bios', pmon_path)
--        self.vm.launch()
--        wait_for_console_pattern(self, 'CPU GODSON3 BogoMIPS:')
+ .PHONY: check check-clean get-vm-images
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index df79775df3..88ec81a2e5 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -11,6 +11,7 @@ endif
- 
- # Timeouts for individual tests that can be slow e.g. with debugging enabled
- test_timeouts = {
-+  'netdev_ethtool' : 180,
- }
- 
- tests_generic_system = [
-@@ -19,16 +20,32 @@ tests_generic_system = [
-   'version',
- ]
- 
--tests_ppc_quick = [
--  'ppc_74xx',
--]
--
- tests_generic_linuxuser = [
- ]
- 
- tests_generic_bsduser = [
- ]
- 
-+tests_avr_system_thorough = [
-+  'avr_mega2560',
-+]
-+
-+tests_loongarch64_system_thorough = [
-+  'loongarch64_virt',
-+]
-+
-+tests_mips64el_system_thorough = [
-+  'mips64el_loongson3v',
-+]
-+
-+tests_ppc_system_quick = [
-+  'ppc_74xx',
-+]
-+
-+tests_ppc_system_thorough = [
-+  'ppc_405',
-+]
-+
- tests_x86_64_system_quick = [
-   'cpu_queries',
-   'mem_addr_space',
-@@ -37,6 +54,7 @@ tests_x86_64_system_quick = [
- ]
- 
- tests_x86_64_system_thorough = [
-+  'netdev_ethtool',
- ]
- 
- precache_all = []
-diff --git a/tests/avocado/machine_avr6.py b/tests/functional/test_avr_mega2560.py
-old mode 100644
-new mode 100755
-similarity index 72%
-rename from tests/avocado/machine_avr6.py
-rename to tests/functional/test_avr_mega2560.py
-index 5485db79c6..8e47b4200b
---- a/tests/avocado/machine_avr6.py
-+++ b/tests/functional/test_avr_mega2560.py
-@@ -1,3 +1,4 @@
-+#!/usr/bin/env python3
- #
- # QEMU AVR integration tests
- #
-@@ -19,26 +20,24 @@
- 
- import time
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest, Asset
- 
- class AVR6Machine(QemuSystemTest):
-     timeout = 5
- 
-+    ASSET_ROM = Asset(('https://github.com/seharris/qemu-avr-tests'
-+                       '/raw/36c3e67b8755dcf/free-rtos/Demo'
-+                       '/AVR_ATMega2560_GCC/demo.elf'),
-+                      'ee4833bd65fc69e84a79ed1c608affddbd499a60e63acf87d9113618401904e4')
-+
-     def test_freertos(self):
--        """
--        :avocado: tags=arch:avr
--        :avocado: tags=machine:arduino-mega-2560-v3
--        """
-         """
-         https://github.com/seharris/qemu-avr-tests/raw/master/free-rtos/Demo/AVR_ATMega2560_GCC/demo.elf
-         constantly prints out 'ABCDEFGHIJKLMNOPQRSTUVWXABCDEFGHIJKLMNOPQRSTUVWX'
-         """
--        rom_url = ('https://github.com/seharris/qemu-avr-tests'
--                   '/raw/36c3e67b8755dcf/free-rtos/Demo'
--                   '/AVR_ATMega2560_GCC/demo.elf')
--        rom_hash = '7eb521f511ca8f2622e0a3c5e8dd686efbb911d4'
--        rom_path = self.fetch_asset(rom_url, asset_hash=rom_hash)
-+        rom_path = self.ASSET_ROM.fetch()
- 
-+        self.set_machine('arduino-mega-2560-v3')
-         self.vm.add_args('-bios', rom_path)
-         self.vm.add_args('-nographic')
-         self.vm.launch()
-@@ -48,3 +47,6 @@ def test_freertos(self):
- 
-         self.assertIn('ABCDEFGHIJKLMNOPQRSTUVWXABCDEFGHIJKLMNOPQRSTUVWX',
-                 self.vm.get_log())
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/machine_loongarch.py b/tests/functional/test_loongarch64_virt.py
-old mode 100644
-new mode 100755
-similarity index 54%
-rename from tests/avocado/machine_loongarch.py
-rename to tests/functional/test_loongarch64_virt.py
-index 8de308f2d6..2b8baa2c2a
---- a/tests/avocado/machine_loongarch.py
-+++ b/tests/functional/test_loongarch64_virt.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # SPDX-License-Identifier: GPL-2.0-or-later
- #
- # LoongArch virt test.
-@@ -5,15 +7,28 @@
- # Copyright (c) 2023 Loongson Technology Corporation Limited
- #
- 
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command_and_wait_for_pattern
--from avocado_qemu import wait_for_console_pattern
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
- 
- class LoongArchMachine(QemuSystemTest):
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
- 
-     timeout = 120
- 
-+    ASSET_KERNEL = Asset(
-+        ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
-+         'releases/download/2024-05-30/vmlinuz.efi'),
-+        '08b88a45f48a5fd92260bae895be4e5175be2397481a6f7821b9f39b2965b79e')
-+    ASSET_INITRD = Asset(
-+        ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
-+         'releases/download/2024-05-30/ramdisk'),
-+        '03d6fb6f8ee64ecac961120a0bdacf741f17b3bee2141f17fa01908c8baf176a')
-+    ASSET_BIOS = Asset(
-+        ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
-+         'releases/download/2024-05-30/QEMU_EFI.fd'),
-+        '937c1e7815e2340150c194a9f8f0474259038a3d7b8845ed62cc08163c46bea1')
-+
-     def wait_for_console_pattern(self, success_message, vm=None):
-         wait_for_console_pattern(self, success_message,
-                                  failure_message='Kernel panic - not syncing',
-@@ -21,25 +36,11 @@ def wait_for_console_pattern(self, success_message, vm=None):
- 
-     def test_loongarch64_devices(self):
- 
--        """
--        :avocado: tags=arch:loongarch64
--        :avocado: tags=machine:virt
--        """
--
--        kernel_url = ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
--                      'releases/download/2024-05-30/vmlinuz.efi')
--        kernel_hash = '951b485b16e3788b6db03a3e1793c067009e31a2'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-+        self.set_machine('virt')
- 
--        initrd_url = ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
--                      'releases/download/2024-05-30/ramdisk')
--        initrd_hash = 'c67658d9b2a447ce7db2f73ba3d373c9b2b90ab2'
--        initrd_path = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
--
--        bios_url = ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
--                    'releases/download/2024-05-30/QEMU_EFI.fd')
--        bios_hash = ('f4d0966b5117d4cd82327c050dd668741046be69')
--        bios_path = self.fetch_asset(bios_url, asset_hash=bios_hash)
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+        bios_path = self.ASSET_BIOS.fetch()
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-@@ -56,3 +57,6 @@ def test_loongarch64_devices(self):
-         self.wait_for_console_pattern('Run /sbin/init as init process')
-         exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
-                                           'processor		: 3')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/functional/test_mips64el_loongson3v.py b/tests/functional/test_mips64el_loongson3v.py
-new file mode 100755
-index 0000000000..55d62928c7
+new file mode 100644
+index 0000000000..052d2e8781
 --- /dev/null
-+++ b/tests/functional/test_mips64el_loongson3v.py
-@@ -0,0 +1,39 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests for the Generic Loongson-3 Platform.
-+#
-+# Copyright (c) 2021 Jiaxun Yang <jiaxun.yang@flygoat.com>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or later.
-+# See the COPYING file in the top-level directory.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++++ b/tests/functional/meson.build
+@@ -0,0 +1,81 @@
++# QEMU functional tests:
++# Tests that are put in the 'quick' category are run by default during
++# 'make check'. Everything that should not be run during 'make check'
++# (e.g. tests that fetch assets from the internet) should be put into
++# the 'thorough' category instead.
 +
-+import os
-+import time
++# Most tests run too slow with TCI enabled, so skip the functional tests there
++if get_option('tcg_interpreter')
++  subdir_done()
++endif
 +
-+from unittest import skipUnless
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
++# Timeouts for individual tests that can be slow e.g. with debugging enabled
++test_timeouts = {
++}
 +
-+class MipsLoongson3v(QemuSystemTest):
-+    timeout = 60
++tests_generic_system = [
++]
 +
-+    ASSET_PMON = Asset(
-+        ('https://github.com/loongson-community/pmon/'
-+         'releases/download/20210112/pmon-3avirt.bin'),
-+        'fcdf6bb2cb7885a4a62f31fcb0d5e368bac7b6cea28f40c6dfa678af22fea20a')
++tests_generic_linuxuser = [
++]
 +
-+    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
-+    def test_pmon_serial_console(self):
-+        self.set_machine('loongson3-virt')
++tests_generic_bsduser = [
++]
 +
-+        pmon_path = self.ASSET_PMON.fetch()
++tests_x86_64_system_quick = [
++]
 +
-+        self.vm.set_console()
-+        self.vm.add_args('-bios', pmon_path)
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'CPU GODSON3 BogoMIPS:')
++tests_x86_64_system_thorough = [
++]
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/netdev-ethtool.py b/tests/functional/test_netdev_ethtool.py
-old mode 100644
-new mode 100755
-similarity index 66%
-rename from tests/avocado/netdev-ethtool.py
-rename to tests/functional/test_netdev_ethtool.py
-index 5f33288f81..d5b911c918
---- a/tests/avocado/netdev-ethtool.py
-+++ b/tests/functional/test_netdev_ethtool.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # ethtool tests for emulated network devices
- #
- # This test leverages ethtool's --test sequence to validate network
-@@ -5,39 +7,33 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-late
- 
--from avocado import skip
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
-+from unittest import skip
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
- 
- class NetDevEthtool(QemuSystemTest):
--    """
--    :avocado: tags=arch:x86_64
--    :avocado: tags=machine:q35
--    """
- 
-     # Runs in about 17s under KVM, 19s under TCG, 25s under GCOV
-     timeout = 45
- 
-     # Fetch assets from the netdev-ethtool subdir of my shared test
-     # images directory on fileserver.linaro.org.
--    def get_asset(self, name, sha1):
--        base_url = ('https://fileserver.linaro.org/s/'
--                    'kE4nCFLdQcoBF9t/download?'
--                    'path=%2Fnetdev-ethtool&files=' )
--        url = base_url + name
--        # use explicit name rather than failing to neatly parse the
--        # URL into a unique one
--        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
-+    ASSET_BASEURL = ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/'
-+                     'download?path=%2Fnetdev-ethtool&files=')
-+    ASSET_BZIMAGE = Asset(
-+        ASSET_BASEURL + "bzImage",
-+        "ed62ee06ea620b1035747f3f66a5e9fc5d3096b29f75562ada888b04cd1c4baf")
-+    ASSET_ROOTFS = Asset(
-+        ASSET_BASEURL + "rootfs.squashfs",
-+        "8f0207e3c4d40832ae73c1a927e42ca30ccb1e71f047acb6ddb161ba422934e6")
- 
-     def common_test_code(self, netdev, extra_args=None):
-+        self.set_machine('q35')
- 
-         # This custom kernel has drivers for all the supported network
-         # devices we can emulate in QEMU
--        kernel = self.get_asset("bzImage",
--                                "33469d7802732d5815226166581442395cb289e2")
--
--        rootfs = self.get_asset("rootfs.squashfs",
--                                "9793cea7021414ae844bda51f558bd6565b50cdc")
-+        kernel = self.ASSET_BZIMAGE.fetch()
-+        rootfs = self.ASSET_ROOTFS.fetch()
- 
-         append = 'printk.time=0 console=ttyS0 '
-         append += 'root=/dev/sr0 rootfstype=squashfs '
-@@ -68,15 +64,9 @@ def common_test_code(self, netdev, extra_args=None):
-         self.vm.kill()
- 
-     def test_igb(self):
--        """
--        :avocado: tags=device:igb
--        """
-         self.common_test_code("igb")
- 
-     def test_igb_nomsi(self):
--        """
--        :avocado: tags=device:igb
--        """
-         self.common_test_code("igb", "pci=nomsi")
- 
-     # It seems the other popular cards we model in QEMU currently fail
-@@ -88,14 +78,11 @@ def test_igb_nomsi(self):
- 
-     @skip("Incomplete reg 0x00178 support")
-     def test_e1000(self):
--        """
--        :avocado: tags=device:e1000
--        """
-         self.common_test_code("e1000")
- 
-     @skip("Incomplete reg 0x00178 support")
-     def test_i82550(self):
--        """
--        :avocado: tags=device:i82550
--        """
-         self.common_test_code("i82550")
++foreach speed : ['quick', 'thorough']
++  foreach dir : target_dirs
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/ppc_405.py b/tests/functional/test_ppc_405.py
-old mode 100644
-new mode 100755
-similarity index 53%
-rename from tests/avocado/ppc_405.py
-rename to tests/functional/test_ppc_405.py
-index 4e7e01aa76..9851c03ee9
---- a/tests/avocado/ppc_405.py
-+++ b/tests/functional/test_ppc_405.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Test that the U-Boot firmware boots on ppc 405 machines and check the console
- #
- # Copyright (c) 2021 Red Hat, Inc.
-@@ -5,20 +7,21 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from avocado.utils import archive
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado_qemu import exec_command_and_wait_for_pattern
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
- 
- class Ppc405Machine(QemuSystemTest):
- 
-     timeout = 90
- 
-+    ASSET_UBOOT = Asset(
-+        ('https://gitlab.com/huth/u-boot/-/raw/taihu-2021-10-09/'
-+         'u-boot-taihu.bin'),
-+        'a076bb6cdeaafa406330e51e074b66d8878d9036d67d4caa0137be03ee4c112c')
++    target_base = dir.split('-')[0]
 +
-     def do_test_ppc405(self):
--        uboot_url = ('https://gitlab.com/huth/u-boot/-/raw/'
--                     'taihu-2021-10-09/u-boot-taihu.bin')
--        uboot_hash = ('3208940e908a5edc7c03eab072c60f0dcfadc2ab');
--        file_path = self.fetch_asset(uboot_url, asset_hash=uboot_hash)
-+        file_path = self.ASSET_UBOOT.fetch()
-         self.vm.set_console(console_index=1)
-         self.vm.add_args('-bios', file_path)
-         self.vm.launch()
-@@ -26,11 +29,9 @@ def do_test_ppc405(self):
-         exec_command_and_wait_for_pattern(self, 'reset', 'AMCC PowerPC 405EP')
- 
-     def test_ppc_ref405ep(self):
--        """
--        :avocado: tags=arch:ppc
--        :avocado: tags=machine:ref405ep
--        :avocado: tags=cpu:405ep
--        :avocado: tags=accel:tcg
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('ref405ep')
-         self.do_test_ppc405()
++    if dir.endswith('-softmmu')
++      sysmode = 'system'
++      test_emulator = emulators['qemu-system-' + target_base]
++    elif dir.endswith('-linux-user')
++      sysmode = 'linuxuser'
++      test_emulator = emulators['qemu-' + target_base]
++    elif dir.endswith('-bsd-user')
++      sysmode = 'bsduser'
++      test_emulator = emulators['qemu-' + target_base]
++    else
++      continue
++    endif
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
++    if speed == 'quick'
++      suites = ['func-quick', 'func-' + target_base]
++      target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_quick', []) \
++                     + get_variable('tests_generic_' + sysmode)
++    else
++      suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
++      target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed, [])
++    endif
++
++    test_deps = roms
++    test_env = environment()
++    if have_tools
++      test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 'qemu-img')
++      test_deps += [qemu_img]
++    endif
++    test_env.set('QEMU_TEST_QEMU_BINARY', test_emulator.full_path())
++    test_env.set('QEMU_BUILD_ROOT', meson.project_build_root())
++    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
++                               meson.current_source_dir())
++
++    foreach test : target_tests
++      test('func-@0@/@1@'.format(target_base, test),
++           python,
++           depends: [test_deps, test_emulator, emulator_modules],
++           env: test_env,
++           args: [meson.current_source_dir() / 'test_' + test + '.py'],
++           protocol: 'tap',
++           timeout: test_timeouts.get(test, 60),
++           priority: test_timeouts.get(test, 60),
++           suite: suites)
++    endforeach
++  endforeach
++endforeach
+diff --git a/tests/meson.build b/tests/meson.build
+index 80dd3029cf..907a4c1c98 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -85,3 +85,4 @@ subdir('unit')
+ subdir('qapi-schema')
+ subdir('qtest')
+ subdir('migration')
++subdir('functional')
 -- 
 2.46.0
 
