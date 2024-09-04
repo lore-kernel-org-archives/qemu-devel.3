@@ -4,74 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0CFACD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F252ACD4847
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slo9H-00011Z-4R; Wed, 04 Sep 2024 07:26:07 -0400
+	id 1sloAX-00083P-1d; Wed, 04 Sep 2024 07:27:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo9F-0000vi-VU
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:26:06 -0400
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1sloAT-0007et-Er
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:27:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1slo9C-0004l7-Ft
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:26:05 -0400
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1sloAR-0005Wb-On
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:27:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725449161;
+ s=mimecast20190719; t=1725449238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Oj50cX47ZUUAPXZ4RaZWe5IBh9JPe1rg3vGEm4x1p00=;
- b=UmMzdU2lnuswo1fyG2nlKBvjkAfUTqYlZ/bbDPAK2QAmoWrTCYIUJmcjcWL2xOp/ITrT5t
- h4STr3LxcaPSCehKD1x6sYQZBlWNd5Lj53ZCi+kg534pel/oHWwUONxOkibOhn02mTZSBP
- n5v58aCKCCqxQbH8hrSAhqxDIfCFBYA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ in-reply-to:in-reply-to:references:references;
+ bh=8tl0jOTmEYYQnLxRltpzKo9bjguJw3uzb+RPW2huIZA=;
+ b=LpmnryBR+L08ffxSHz/mNIbROoqOM2K3N6xKhJSNmr3r6PyUsMGRlCCVqb/QNpKbQ4Z1VZ
+ ujPCNgCsIbE8n/5r7KbaXoSWuDKnq/6BonNpOgRFK22QZtV64KxwoVGqlTYb8hrbXlqSFT
+ nyaksOy2qHC5dEhEzqK29LuLHFpyznU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584--Z0rh6IuPzelXwf7F63SzA-1; Wed,
- 04 Sep 2024 07:18:51 -0400
-X-MC-Unique: -Z0rh6IuPzelXwf7F63SzA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-RHp8hd3uMReF3oNkiAvi5g-1; Wed,
+ 04 Sep 2024 07:21:10 -0400
+X-MC-Unique: RHp8hd3uMReF3oNkiAvi5g-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D65811953943; Wed,  4 Sep 2024 11:18:45 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D59801955D4F; Wed,  4 Sep 2024 11:21:09 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.45.242.24])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 977801956056; Wed,  4 Sep 2024 11:18:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8B3F221E6A28; Wed,  4 Sep 2024 13:18:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
- arei.gonglei@huawei.com, berrange@redhat.com, berto@igalia.com,
- borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com, den@openvz.org,
- eblake@redhat.com, eduardo@habkost.net, farman@linux.ibm.com,
- farosas@suse.de, hreitz@redhat.com, idryomov@gmail.com, iii@linux.ibm.com,
- jamin_lin@aspeedtech.com, jasowang@redhat.com, joel@jms.id.au,
- jsnow@redhat.com, kwolf@redhat.com, leetroy@gmail.com,
- marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
- michael.roth@amd.com, mst@redhat.com, mtosatti@redhat.com,
- nsg@linux.ibm.com, pasic@linux.ibm.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org,
- pizhenwei@bytedance.com, pl@dlhnet.de, richard.henderson@linaro.org,
- stefanha@redhat.com, steven_lee@aspeedtech.com, thuth@redhat.com,
- vsementsov@yandex-team.ru, wangyanan55@huawei.com,
- yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
- avihaih@nvidia.com
-Subject: [PATCH v2 00/19] qapi: Reduce use of 'prefix'
-Date: Wed,  4 Sep 2024 13:18:17 +0200
-Message-ID: <20240904111836.3273842-1-armbru@redhat.com>
+ id 112031956052; Wed,  4 Sep 2024 11:21:06 +0000 (UTC)
+Date: Wed, 4 Sep 2024 13:21:03 +0200
+From: Peter Krempa <pkrempa@redhat.com>
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org, Michal Privoznik <mprivozn@redhat.com>
+Subject: Re: [PATCH] chardev: introduce 'reconnect-ms' and deprecate
+ 'reconnect'
+Message-ID: <ZthCn1ze3oUXbR3K@angien.pipo.sk>
+References: <20240904051913.53148-1-d-tatianin@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240904051913.53148-1-d-tatianin@yandex-team.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -96,188 +87,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QAPI's 'prefix' feature can make the connection between enumeration
-type and its constants less than obvious.  It's best used with
-restraint.
+On Wed, Sep 04, 2024 at 08:19:13 +0300, Daniil Tatianin wrote:
+> The 'reconnect' option only allows to specify the time in seconds,
+> which is way too long for certain workflows.
+> 
+> We have a lightweight disk backend server, which takes about 20ms to
+> live update, but due to this limitation in QEMU, previously the guest
+> disk controller would hang for one second because it would take this
+> long for QEMU to reinitialize the socket connection.
+> 
+> Introduce a new option called 'reconnect-ms', which is the same as
+> 'reconnect', except the value is treated as milliseconds. These are
+> mutually exclusive and specifying both results in an error.
+> 
+> 'reconnect' is also deprecated by this commit to make it possible to
+> remove it in the future as to not keep two options that control the
+> same thing.
+> 
+> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> ---
 
-We use 'prefix' for a number of reasons:
+[...]
 
-* To override an ugly default.
+> diff --git a/qapi/char.json b/qapi/char.json
+> index ef58445cee..7f117438c6 100644
+> --- a/qapi/char.json
+> +++ b/qapi/char.json
+> @@ -273,7 +273,19 @@
+>  #
+>  # @reconnect: For a client socket, if a socket is disconnected, then
+>  #     attempt a reconnect after the given number of seconds.  Setting
+> -#     this to zero disables this function.  (default: 0) (Since: 2.2)
+> +#     this to zero disables this function.  The use of this member is
+> +#     deprecated, use @reconnect-ms instead. (default: 0) (Since: 2.2)
+> +#
+> +# @reconnect-ms: For a client socket, if a socket is disconnected,
+> +#     then attempt a reconnect after the given number of milliseconds.
+> +#     Setting this to zero disables this function.  This member is
+> +#     mutually exclusive with @reconnect.
+> +#     (default: 0) (Since: 9.2)
+> +#
+> +# Features:
+> +#
+> +# @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
+> +#     instead.
+>  #
+>  # Since: 1.4
+>  ##
+> @@ -287,7 +299,8 @@
+>              '*telnet': 'bool',
+>              '*tn3270': 'bool',
+>              '*websocket': 'bool',
+> -            '*reconnect': 'int' },
+> +            '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
+> +            '*reconnect-ms': 'int' },
+>    'base': 'ChardevCommon' }
 
-* To shorten the prefix.
+This is a little off-topic:
 
-* To work around name clashes.
+So I wanted to make libvirt use the new parameter to stay ahead
+deprecation. I've applied this patch to qemu, dumped capabilities and
+pretty much expected a bunch of test cases in libvirt fail as they'd be
+using a deprecated field as libvirt is supposed to validate everything.
 
-This series attacks the first two.  It additionally improves a number
-of ugly prefixes we don't override.
+And the test suite passed unexpectedly. I've dug further and noticed
+that for some reason libvirt doesn't still use JSON parameters for
+-chardev (which is the pre-requisite for validation).
 
-PATCH 01 improves the default prefix, and drops 'prefix' where it is
-now redundant.  The patch adds temporary 'prefix' to not change
-generated code.
+I've also noticed that at some point I attempted to convert it over
+witnessed by having an (unused) capability named QEMU_CAPS_CHARDEV_JSON
+that I've introduced.
 
-PATCH 02-08 revert the temporary 'prefix'.
+My questions are:
+1) Does '-chardev' accept JSON identical to 'chardev-add' QMP command?
 
-PATCH 10,17 drop 'prefix' where the default is now better.
+If yes:
+2) Since when can that be used? (What can I use as a witness)
+3) Are there any gotchas?
 
-PATCH 09,11-15,18,19 rename QAPI types, and drop their 'prefix'.  I'm
-prepared to adjust the renames according to maintainers' preference.
+I wonder this as I'd love to finish that out, but I really don't fancy
+digging into qemu to find a gotcha 3/4 of the way there.
 
-PATCH 16 renames a non-QAPI type for consistency.
+Anyways, as I've already stated, this patch is okay for libvirt, but I
+didn't review the implementation, thus, on behalf of libvirt:
 
-v2:
-* PATCH 01: Fix camel_to_upper() to avoid '__' and leading '_'.
-* PATCH 01+07: Actually add a 'prefix' to HmatLBMemoryHierarchy in
-  PATCH 01, as the commit message advertizes.  Remove it in PATCH 07,
-  and adjust the commit message.
-* PATCH 09: Keep pragma documentation-exceptions sorted.
-* PATCH 04+09+18: Fix commit message typos.
-* PATCH 19: New.
-
-Markus Armbruster (19):
-  qapi: Smarter camel_to_upper() to reduce need for 'prefix'
-  tests/qapi-schema: Drop temporary 'prefix'
-  qapi/block-core: Drop temporary 'prefix'
-  qapi/common: Drop temporary 'prefix'
-  qapi/crypto: Drop temporary 'prefix'
-  qapi/ebpf: Drop temporary 'prefix'
-  qapi/machine: Drop temporary 'prefix'
-  qapi/ui: Drop temporary 'prefix'
-  qapi/machine: Rename CpuS390* to S390Cpu*, and drop 'prefix'
-  qapi/crypto: Drop unwanted 'prefix'
-  qapi/crypto: Rename QCryptoHashAlgorithm to *Algo, and drop prefix
-  qapi/crypto: Rename QCryptoCipherAlgorithm to *Algo, and drop prefix
-  qapi/crypto: Rename QCryptoIVGenAlgorithm to *Algo, and drop prefix
-  qapi/crypto: Rename QCryptoAkCipherAlgorithm to *Algo, and drop prefix
-  qapi/crypto: Rename QCryptoRSAPaddingAlgorithm to *Algo, and drop
-    prefix
-  qapi/crypto: Rename QCryptoAFAlg to QCryptoAFAlgo
-  qapi/cryptodev: Drop unwanted 'prefix'
-  qapi/cryptodev: Rename QCryptodevBackendAlgType to *Algo, and drop
-    prefix
-  qapi/vfio: Rename VfioMigrationState to Qapi*, and drop prefix
-
- qapi/block-core.json                     |   4 +-
- qapi/crypto.json                         |  56 ++++------
- qapi/cryptodev.json                      |   7 +-
- qapi/machine-common.json                 |   5 +-
- qapi/machine-target.json                 |  11 +-
- qapi/machine.json                        |   9 +-
- qapi/migration.json                      |   1 +
- qapi/pragma.json                         |   6 +-
- qapi/ui.json                             |   1 +
- qapi/vfio.json                           |   9 +-
- crypto/afalgpriv.h                       |  14 +--
- crypto/akcipherpriv.h                    |   2 +-
- crypto/blockpriv.h                       |   6 +-
- crypto/cipherpriv.h                      |   2 +-
- crypto/hashpriv.h                        |   2 +-
- crypto/hmacpriv.h                        |   4 +-
- crypto/ivgenpriv.h                       |   6 +-
- include/crypto/afsplit.h                 |   8 +-
- include/crypto/block.h                   |   2 +-
- include/crypto/cipher.h                  |  18 ++--
- include/crypto/hash.h                    |  18 ++--
- include/crypto/hmac.h                    |   6 +-
- include/crypto/ivgen.h                   |  30 +++---
- include/crypto/pbkdf.h                   |  14 +--
- include/hw/qdev-properties-system.h      |   2 +-
- include/hw/s390x/cpu-topology.h          |   2 +-
- include/sysemu/cryptodev.h               |   2 +-
- target/s390x/cpu.h                       |   2 +-
- backends/cryptodev-builtin.c             |  52 ++++-----
- backends/cryptodev-lkcf.c                |  36 +++----
- backends/cryptodev-vhost-user.c          |   6 +-
- backends/cryptodev.c                     |  12 +--
- block.c                                  |   6 +-
- block/crypto.c                           |  10 +-
- block/parallels-ext.c                    |   2 +-
- block/qcow.c                             |   2 +-
- block/qcow2.c                            |  10 +-
- block/quorum.c                           |   4 +-
- block/rbd.c                              |   4 +-
- crypto/afalg.c                           |   8 +-
- crypto/afsplit.c                         |   6 +-
- crypto/akcipher.c                        |   2 +-
- crypto/block-luks.c                      | 128 +++++++++++------------
- crypto/block-qcow.c                      |   6 +-
- crypto/block.c                           |   8 +-
- crypto/cipher-afalg.c                    |  36 +++----
- crypto/cipher.c                          |  72 ++++++-------
- crypto/hash-afalg.c                      |  40 +++----
- crypto/hash-gcrypt.c                     |  20 ++--
- crypto/hash-glib.c                       |  20 ++--
- crypto/hash-gnutls.c                     |  20 ++--
- crypto/hash-nettle.c                     |  18 ++--
- crypto/hash.c                            |  30 +++---
- crypto/hmac-gcrypt.c                     |  22 ++--
- crypto/hmac-glib.c                       |  22 ++--
- crypto/hmac-gnutls.c                     |  22 ++--
- crypto/hmac-nettle.c                     |  22 ++--
- crypto/hmac.c                            |   2 +-
- crypto/ivgen.c                           |  18 ++--
- crypto/pbkdf-gcrypt.c                    |  36 +++----
- crypto/pbkdf-gnutls.c                    |  36 +++----
- crypto/pbkdf-nettle.c                    |  32 +++---
- crypto/pbkdf-stub.c                      |   4 +-
- crypto/pbkdf.c                           |   2 +-
- crypto/secret_common.c                   |   2 +-
- ebpf/ebpf_rss.c                          |   2 +-
- hw/core/numa.c                           |   4 +-
- hw/core/qdev-properties-system.c         |   6 +-
- hw/misc/aspeed_hace.c                    |  16 +--
- hw/pci-bridge/cxl_upstream.c             |   4 +-
- hw/s390x/cpu-topology.c                  |   6 +-
- hw/vfio/migration.c                      |   2 +-
- hw/vfio/pci.c                            |  10 +-
- hw/virtio/virtio-crypto.c                |  24 ++---
- io/channel-websock.c                     |   2 +-
- system/vl.c                              |   2 +-
- target/i386/sev.c                        |   6 +-
- tests/bench/benchmark-crypto-akcipher.c  |  28 ++---
- tests/bench/benchmark-crypto-cipher.c    |  22 ++--
- tests/bench/benchmark-crypto-hash.c      |  10 +-
- tests/bench/benchmark-crypto-hmac.c      |   6 +-
- tests/unit/test-crypto-afsplit.c         |  10 +-
- tests/unit/test-crypto-akcipher.c        |  54 +++++-----
- tests/unit/test-crypto-block.c           |  58 +++++-----
- tests/unit/test-crypto-cipher.c          |  66 ++++++------
- tests/unit/test-crypto-hash.c            |  42 ++++----
- tests/unit/test-crypto-hmac.c            |  16 +--
- tests/unit/test-crypto-ivgen.c           |  38 +++----
- tests/unit/test-crypto-pbkdf.c           |  44 ++++----
- tests/unit/test-qobject-input-visitor.c  |   4 +-
- tests/unit/test-qobject-output-visitor.c |   4 +-
- ui/dbus.c                                |   8 +-
- ui/egl-context.c                         |   2 +-
- ui/egl-headless.c                        |   2 +-
- ui/egl-helpers.c                         |  12 +--
- ui/gtk.c                                 |   4 +-
- ui/sdl2-gl.c                             |   8 +-
- ui/sdl2.c                                |   2 +-
- ui/spice-core.c                          |   2 +-
- ui/vnc.c                                 |   6 +-
- util/hbitmap.c                           |   2 +-
- crypto/akcipher-gcrypt.c.inc             |  44 ++++----
- crypto/akcipher-nettle.c.inc             |  56 +++++-----
- crypto/cipher-builtin.c.inc              |  18 ++--
- crypto/cipher-gcrypt.c.inc               |  56 +++++-----
- crypto/cipher-gnutls.c.inc               |  38 +++----
- crypto/cipher-nettle.c.inc               |  58 +++++-----
- crypto/rsakey-builtin.c.inc              |   4 +-
- crypto/rsakey-nettle.c.inc               |   4 +-
- scripts/qapi/common.py                   |  42 ++++----
- scripts/qapi/schema.py                   |   2 +-
- tests/qapi-schema/alternate-array.out    |   1 -
- tests/qapi-schema/comments.out           |   1 -
- tests/qapi-schema/doc-good.out           |   1 -
- tests/qapi-schema/empty.out              |   1 -
- tests/qapi-schema/include-repetition.out |   1 -
- tests/qapi-schema/include-simple.out     |   1 -
- tests/qapi-schema/indented-expr.out      |   1 -
- tests/qapi-schema/qapi-schema-test.out   |   1 -
- 119 files changed, 937 insertions(+), 954 deletions(-)
-
--- 
-2.46.0
+ACKed-by: Peter Krempa <pkrempa@redhat.com>
 
 
