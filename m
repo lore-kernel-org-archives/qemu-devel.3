@@ -4,91 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518DBCD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B90CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:02:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slltU-0003mx-7C; Wed, 04 Sep 2024 05:01:40 -0400
+	id 1slltW-0003qQ-EN; Wed, 04 Sep 2024 05:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leetroy@gmail.com>)
- id 1slltB-0003N3-KJ; Wed, 04 Sep 2024 05:01:23 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <leetroy@gmail.com>)
- id 1sllt8-0005fN-RW; Wed, 04 Sep 2024 05:01:20 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-715e64ea7d1so5353278b3a.0; 
- Wed, 04 Sep 2024 02:01:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725440476; x=1726045276; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ew8CZVkx/AZktCKaLycnTdWlbR++RhXgyH2pplM37P4=;
- b=hWyKfVmAjfEb87KrY6w5XyjMSCQg8Ryogbms25fIx9GMw9luRZy7F/iKpDc1vl/l5E
- WFSX/7GEjwrgM8wvL7DPyIiVC/oZ9kKX+ZZuXVm0695UDqAQonH4rQe3WQCpy/zLAB34
- pLUJkRlJuSWzItCyQB997V7QvKQ8VELmWyJmJZKHfF6qQdQUPQXJgSo202vRvCArlZqv
- 1USsW/uZmBGBiP2TCZeJyUJYtYj1p4C1GYjVLizWkB0TAS+EzFdKtYFNYeG7faO20pei
- MBj4+SafP5phMj8QeleghryfqMKg33s5z41BrasrCRy0Qp2saHQf+xSiudjsUDTySfHn
- B5Yg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slltL-0003Sn-7D
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:01:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slltH-0005hO-4X
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:01:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725440483;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=K2XXaIdhPHjbb6TzR2cGDsawD4ySEfa1b9U51D/iByI=;
+ b=SPRdxM5e6QR+dLHBQQo7WpJoDruvK1GX7uKZKvjPMEBYUVHftkYxFZL4T+siV6m552gAf+
+ gPll9HEhcijbVPZ/zVNe+fa4oflZ9LUIPIaK6SK2y8DTtohiaC8VmxxQ18rhGa1M3nTyUp
+ eWH4MkR1El15TT+OAhPOrnmvZ078DvE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-31-jECF0wIDOQmgAFAnzps0jg-1; Wed, 04 Sep 2024 05:01:21 -0400
+X-MC-Unique: jECF0wIDOQmgAFAnzps0jg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42c78767b90so37791395e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 02:01:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725440476; x=1726045276;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ew8CZVkx/AZktCKaLycnTdWlbR++RhXgyH2pplM37P4=;
- b=G/tFvaSCqBQVGVClEOGLe9hH3KUep51fC3h4ynFHaAC9L5Nwggm4oSyiRKiBPIKrnk
- W/UwOr5ayj4wsAbLaVDR8gtNkIidnyFK+zdtweUUW+3uPvdPJUWehOAMC0ERkxdGDyy9
- 61c0geSz6ggL7eqLMuY5nEyXbkG2fEXH/n94z+zyz4VYohJKC6jQ3g3pB+3S5YKzNdO/
- reC3j8r7mnWtIHuBKSZtWa0TCT8DP1yV29Ke1+ibbVARidGFZ71i8Z5z2neW5thI3MiQ
- 8eZu2l9o6NGhQGG2jEBHr2dkVaa2DlKLnqJXbUnkTIVR7PJGLv9kKnidyKLHQh54+rRO
- z3mw==
+ d=1e100.net; s=20230601; t=1725440480; x=1726045280;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K2XXaIdhPHjbb6TzR2cGDsawD4ySEfa1b9U51D/iByI=;
+ b=MXHpHSLdsozIJ3R4A0f5zqT+vWNjdg7NO5MjnIGP0Cx5XUVF61+m569IineFUDpBge
+ ModnfdUoOpCAgJbzsxA0CHpGhJZQksJtKNGw+X7Eehb07FKqmThsrQt+DVCngGjVPpRJ
+ WZb58zju9eitDCC4tfYVFyD6msumJlvOnDRBJpYmqvrdSG1de67EjsbmQtYJrL9ANI7l
+ TslIcJANTByL8+yt/Ggm7oS/RCiZFJiadndaLnIQPTkTUAGNR2SjWi47GyCTbrg24t8W
+ 4EBO0fMCFIVS1YBhOXwSAC4iMfU2sLm0k5UATUnY5i4Qpn9yUiOYPFoT+n3w3Xnaxsyr
+ 4RJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0V3hoNjeL13z1w8MJjVujjwYBEn8+IEa2Nldh2jtL9jpT2x9+rmbOAjn1uxQ4FXO5A36qLHZWzg==@nongnu.org,
- AJvYcCXMdC8V3AoqXOxLiFvdJfI0nTP4ZteQm03lznPqlTST8mm7OVGl8lBu+CTbtwlKxIkcpiUGNV8UBWQMvg==@nongnu.org
-X-Gm-Message-State: AOJu0YwMq/ByRaY+U58oODPDbMOOuiYfXrlOyrfuo8FHBrAs5vPVCQfv
- DTtY/H9yfzDFHzv2hVG3viUOoyEled8CFLKPF7opZ3yBm1fvdzqhjlhP6mGXdXYZC8s9/05fEkQ
- rdSZvUP3mBR/yGyLZSc0E1TB8Mtw=
-X-Google-Smtp-Source: AGHT+IEeDCG7K4yrAcfifSPdfxdZexdIeRQ8+Kxcczle2vMsamMNzpsgDqvCkP3ivFkfbaqO9ln4nbIv2/zzA6e2YYA=
-X-Received: by 2002:a05:6a21:6b0c:b0:1cc:9fa6:d3a5 with SMTP id
- adf61e73a8af0-1cecdee3cc1mr17286837637.10.1725440475842; Wed, 04 Sep 2024
- 02:01:15 -0700 (PDT)
+ AJvYcCXgIS9z+BGsgMDTFSbUXgsl91kTabzG8wo9SHVfCZae9Ey5ETFPI34Ofmp+jBE8DBthIjHKwZ9KOF3Q@nongnu.org
+X-Gm-Message-State: AOJu0Ywqdz995npzjp/uDZvJnDWS9B0gX9LFO9U/yZoMA53qHixtyiNL
+ PbUq2iRIzPtH2IubzlHluwBOhuTDYAaG7KrNmsJqpYBQIV1SXfkMyZiYBlSWOMSYMnPr8XU8Agm
+ +McZKUQ8mQD8dkT7XHsmCqz17bd9bws9CMgMz3S3hifgOJGMGdQb1XdpT4JVr
+X-Received: by 2002:a05:600c:4f4a:b0:427:9dad:e6ac with SMTP id
+ 5b1f17b1804b1-42c88108ad2mr50590075e9.34.1725440480605; 
+ Wed, 04 Sep 2024 02:01:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKbA4okOjJ/8cTE/kpSjJeUvHBwkvsMU8QEsNQuo4N9/aGpCIgeCzz0RphKL2hPmT3zAPYuA==
+X-Received: by 2002:a05:600c:4f4a:b0:427:9dad:e6ac with SMTP id
+ 5b1f17b1804b1-42c88108ad2mr50589835e9.34.1725440480048; 
+ Wed, 04 Sep 2024 02:01:20 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
+ [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-374cbbc8281sm7364924f8f.64.2024.09.04.02.01.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 02:01:19 -0700 (PDT)
+Message-ID: <5e863c70-0045-4739-bfcd-07832a1a1543@redhat.com>
+Date: Wed, 4 Sep 2024 11:01:18 +0200
 MIME-Version: 1.0
-References: <20240903083528.2182190-1-jamin_lin@aspeedtech.com>
- <00aac81e-ff43-4526-960c-782e27ae043f@kaod.org>
- <SI2PR06MB50418DD956AC152E4E0911CDFC9C2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <c418168b-eb5c-459c-85b1-c7766102e558@kaod.org>
-In-Reply-To: <c418168b-eb5c-459c-85b1-c7766102e558@kaod.org>
-From: Troy Lee <leetroy@gmail.com>
-Date: Wed, 4 Sep 2024 17:01:08 +0800
-Message-ID: <CAN9Jwz0cRRb308_ZOuwOsJsPLiKp3sugGJ-YzhvALv3-f+yaCQ@mail.gmail.com>
-Subject: Re: [SPAM] [PATCH v3 00/11] support I2C for AST2700
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Joel Stanley <joel@jms.id.au>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, 
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>, 
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=leetroy@gmail.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 25/53] hw/arm: Remove 'n800' and 'n810' machines
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+ <20240903160751.4100218-26-peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240903160751.4100218-26-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,50 +147,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi C=C3=A9dric,
+On 03/09/2024 18.07, Peter Maydell wrote:
+> Remove the 'n800' and 'n810' machine types, which modelled
+> Nokia internet tablets. These were deprecated in 9.0 and
+> so we can remove them for 9.2.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   MAINTAINERS                             |    3 -
+>   docs/system/arm/nseries.rst             |   33 -
+>   docs/system/target-arm.rst              |    1 -
+>   configs/devices/arm-softmmu/default.mak |    1 -
+>   hw/arm/nseries.c                        | 1473 -----------------------
+>   hw/arm/meson.build                      |    1 -
+>   tests/avocado/machine_arm_n8x0.py       |   49 -
+>   7 files changed, 1561 deletions(-)
+>   delete mode 100644 docs/system/arm/nseries.rst
+>   delete mode 100644 hw/arm/nseries.c
+>   delete mode 100644 tests/avocado/machine_arm_n8x0.py
 
-On Wed, Sep 4, 2024 at 3:29=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod.org>=
- wrote:
->
-> Hello Jamin,
->
-> > Just want you to know that I and Troy are working on the following task=
-s for AST2700.
-> > 1. Support boot from bootmcu(riscv32) instead of u-boot(Cortex-A35)
->
-> Oh nice. This is a good topic for heterogeneous machines !
+I think tests/qtest/libqos/arm-n800-machine.c should now get removed, too?
 
-The basic model for bootmcu(risc-v) is working now, but we're looking for a=
- way
-to integrate sram/mmio/dram together.  The ivshmem requires PCI, it might b=
-e
-too complicate for our use case.  There is an ivshmem-flat probably more
-sutiable for us.
+  Thomas
 
-[PATCH 0/4] Add ivshmem-flat device - Gustavo Romero (kernel.org)
-https://lore.kernel.org/qemu-devel/20231127052024.435743-1-gustavo.romero@l=
-inaro.org/
 
->
-> > 2. Support GPIO.
-> >
-> > After we finish above tasks, we will upstream QEMU and send our patches=
-.
->
->
-> There is also this issue we discussed privately on SPI write
-> transactions failing on the AST27000. It looked related to
-> aspeed_smc_do_snoop() but we don't have a good fix yet.
->
-> When time permits, could you please open a gitlab issue with
-> your findings and logs, so that we don't forget.
->
->
-> Thanks,
->
-> C.
->
->
-Thanks,
-Troy Lee
 
