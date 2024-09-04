@@ -4,92 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0B6CD4F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 20:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC0A4CD4F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 20:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slwt2-0003wY-9X; Wed, 04 Sep 2024 16:45:56 -0400
+	id 1slwyH-0008JP-1F; Wed, 04 Sep 2024 16:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1slwsu-0003rp-3o
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:45:52 -0400
-Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1slwsr-0005tY-Bx
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:45:47 -0400
-Received: by mail-vk1-xa2b.google.com with SMTP id
- 71dfb90a1353d-4fcfcdcb4acso32498e0c.0
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 13:45:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725482742; x=1726087542; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jtXdsMOg/xAj+P4pJWCCQy0FiEWmXvMewc4Pe9+UKPM=;
- b=hT4ArOsm+h1dVWSLJjweiOhRdgWNrLowolEUYkgqaO6m4XFLqj56LXL5hyMY/+SOPg
- /rsTyMKA4UzwNfJZSf4a5acZFgt1Ru3P0IEmMtNtmtbcS3yagJitJs/CYneOC0GCxDD8
- ArJ2JmY1P6S468oYkG2pAx2nRERg1SDbu0ftzzMx6ywp/ip4opLSAQvX54LXCrfcXvmT
- qIL7drjt06hs6dKlj4HzxowYG9bVMjyeyEMHtZaAihA8xqlbRTArg0zgfLImIj3wiORr
- 6qMcJCHS5wu5jkgTAADLVys3LKRotbBrqxD+JcckCvW8Fcft00yKKBoUckenf8HpX4lL
- UxrA==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwyD-0008Il-Hn
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:51:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwyB-0000Az-PN
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:51:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725483073;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=l22/Cn7yvVS4YgVx60y4wPoUGz4zZM3ZrcCaujxkh6o=;
+ b=UcZlAwO0Z9NYqXvegWepa2eJNkIR+VfQ7tGHr43JK1zBWKh2aBqJcpiiSYjENrbLKJQboX
+ Pa0d75+S6jHP9yWOAFAjENBv20ZgtSYOxa/avFXUfDPPMpNnWG9K7OAZKabKBXY0dLGqb4
+ M/Mk36CXwIpu8bkMBuLUBnPJtTkQDGU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-193-bZ8bE9IiMcyrY2CQRWtyBg-1; Wed, 04 Sep 2024 16:51:12 -0400
+X-MC-Unique: bZ8bE9IiMcyrY2CQRWtyBg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42c827c4d3aso10770315e9.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 13:51:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725482742; x=1726087542;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jtXdsMOg/xAj+P4pJWCCQy0FiEWmXvMewc4Pe9+UKPM=;
- b=HohrcleqdsofgsKXjHAm3EumACYmj63ZNMo3hr7d+OEJ5kCC5JwUSu8MqxCdq+tu+1
- 9NCcZr0vMs2AOXxiLTLdKhD3h5NXcqAMgSixqA38pa65f2WnsLilALMj8aVfMa8hEuTj
- Kz+eot8OFPO8hB+g2UvFwNh1AWiKh1BDPyvHzXAsbF3h9MWM4WPbYo+yRZNK1hKUvToA
- tWWiowYJaSM0iiW06UvCiyImtqtAhD/ILNBTCY5G3OWzEdB4A/Z8fjqG9VLSd1UI5ddB
- QWRFG7HZNZlUhz7TAJQdL/HSRIZ6J0SYlQesh8bK0H1aIqDj/pVu0dmk7XYJL6EDPN1w
- uw0A==
+ d=1e100.net; s=20230601; t=1725483071; x=1726087871;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:references:cc:to:from:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=l22/Cn7yvVS4YgVx60y4wPoUGz4zZM3ZrcCaujxkh6o=;
+ b=clybZJkuTV+aMO7Ov2/Hm3lFFsfAPmnsU9kCxfc/bnwi/PB/TEPNQOpWkfOJL29V9K
+ fxGOrItKAljnIg+pZRjR4oeOl/TQaXpOyfjDRRPw/lKxttLs6A9JmcuWl3oenZU/oBSf
+ 5/kGpId9O39t/WL+ZgvQzdQCIwnYubOe8pgZyiGaCE1ff5oWXIi9OO+XwPJG1vEqEIGv
+ CjqqC/VhQsLRi1k16szmktm5B+4yoNzcetCCzvsZIfD3ehxd5V/KKc0Ra2ngoLs4js6Z
+ VhOOgQoGhKnLEl18l7s4dy1ZHyHU52R7igtg78A4wOj5DZaDLhuxPy8b/gPqliHvAuP9
+ SDkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQmsO5SGRMrhKxL+2RdHxS9K4GgLheF8YgSquxz42FjQncNIKpdNcpJKhEk611oeGUh9zvh5+CUeKF@nongnu.org
-X-Gm-Message-State: AOJu0YzX0RD/kx+oSV1Sh4lUDvupzMeTpFNKtqa74mUIAUyGqs7tMuYH
- vumvsX3ux4OQm6FX4YO8XaCqlwppEf0BFFMTliXzEVZvxTWRrR3nFsNz8A/mLVQ/QNRmCCpI6De
- 6fNfEOK9GQ2gVnUpwSmiwXujQoYM=
-X-Google-Smtp-Source: AGHT+IEnK4hLTDJItBPxt0na8JniuEtSmuVxkBch89kuW5xdjtYo72cBMJzCO96FU27mBh+jncHfGbIw6XaMscja7Zc=
-X-Received: by 2002:a05:6122:1312:b0:4e4:e90f:6749 with SMTP id
- 71dfb90a1353d-500de23ed70mr8291817e0c.10.1725482741861; Wed, 04 Sep 2024
- 13:45:41 -0700 (PDT)
+ AJvYcCUomsJ6eDo350dlSA5JSf7G2kRYsnb28yHJ70JiZfkPlphcMmd0wEIlwB3frG2HfRb1CoD2RgrrwhqU@nongnu.org
+X-Gm-Message-State: AOJu0YwAXQ+yJi6NYPwV8pkTbILx21YFV3QlLYdvv7vC6DZ+ZlUFZRUw
+ qwhew7avCK8XKPlwED4e1+0C28LafEqEnMxx1j73trnN9wVgYRpUwcd8UnG0NzcLXtJ8gCtcxg5
+ aHwZ5ZOfbIDXDhmAJxsAtHicqkRpeakDmUHsYzod9V3+0wiAxWiMd
+X-Received: by 2002:adf:fa81:0:b0:371:8763:763c with SMTP id
+ ffacd0b85a97d-3776f92935dmr2744581f8f.33.1725483071575; 
+ Wed, 04 Sep 2024 13:51:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvJW3QLKYy3VOd4xFGAiJ7moKUOlxR7/dbUzmaglUw57uQtUz9ZV5knKU24NUtER5qVvoSlA==
+X-Received: by 2002:adf:fa81:0:b0:371:8763:763c with SMTP id
+ ffacd0b85a97d-3776f92935dmr2744569f8f.33.1725483070878; 
+ Wed, 04 Sep 2024 13:51:10 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c715:d00:e9a5:ae4b:9bdb:d992?
+ (p200300cbc7150d00e9a5ae4b9bdbd992.dip0.t-ipconnect.de.
+ [2003:cb:c715:d00:e9a5:ae4b:9bdb:d992])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ba6425811sm254319895e9.40.2024.09.04.13.51.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 13:51:10 -0700 (PDT)
+Message-ID: <9c82dcd3-1326-4b78-a928-2a01b5c56c4d@redhat.com>
+Date: Wed, 4 Sep 2024 22:51:09 +0200
 MIME-Version: 1.0
-References: <20240822150849.21759-1-dorjoychy111@gmail.com>
- <20240822150849.21759-6-dorjoychy111@gmail.com>
- <20240828122221-mutt-send-email-mst@kernel.org>
- <CAFfO_h5URpD4qnC5Cqh9tG49ijzRGpWqezdPDeaSMAOHnzFF9g@mail.gmail.com>
- <20240828151005-mutt-send-email-mst@kernel.org>
- <CAFfO_h66g138yVwufKY_C22Aiu8XctzyyjqsBYM4wdYN77JLuQ@mail.gmail.com>
- <20240903162013-mutt-send-email-mst@kernel.org>
- <CAFfO_h4B6jt7QvBBk-Axf9btCm6sg8hao_o+Q_4+X=+86H6Pcw@mail.gmail.com>
- <CAFfO_h4EnF5q0p2n4a4U2-gi+GxYfem0B6GKhOaJFOpDL48KFw@mail.gmail.com>
- <20240904162456-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240904162456-mutt-send-email-mst@kernel.org>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Thu, 5 Sep 2024 02:45:29 +0600
-Message-ID: <CAFfO_h4=8wudzoUmCjn23vuc0Bqj+rix876T2F324WJHM0yCMg@mail.gmail.com>
-Subject: Re: [PATCH v5 5/8] device/virtio-nsm: Support for Nitro Secure Module
- device
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, stefanha@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, 
- slp@redhat.com, Richard Henderson <richard.henderson@linaro.org>,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000e519d706215141f5"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
- envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa2b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] KVM: Dynamic sized kvm memslots array
+From: David Hildenbrand <david@redhat.com>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>
+References: <20240904191635.3045606-1-peterx@redhat.com>
+ <20240904191635.3045606-4-peterx@redhat.com>
+ <4ed8cec2-413a-4254-8804-55befbcd0d00@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <4ed8cec2-413a-4254-8804-55befbcd0d00@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,425 +156,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e519d706215141f5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 04.09.24 22:43, David Hildenbrand wrote:
+> On 04.09.24 21:16, Peter Xu wrote:
+>> Zhiyi reported an infinite loop issue in VFIO use case.  The cause of that
+>> was a separate discussion, however during that I found a regression of
+>> dirty sync slowness when profiling.
+>>
+>> Each KVMMemoryListerner maintains an array of kvm memslots.  Currently it's
+>> statically allocated to be the max supported by the kernel.  However after
+>> Linux commit 4fc096a99e ("KVM: Raise the maximum number of user memslots"),
+>> the max supported memslots reported now grows to some number large enough
+>> so that it may not be wise to always statically allocate with the max
+>> reported.
+>>
+>> What's worse, QEMU kvm code still walks all the allocated memslots entries
+>> to do any form of lookups.  It can drastically slow down all memslot
+>> operations because each of such loop can run over 32K times on the new
+>> kernels.
+>>
+>> Fix this issue by making the memslots to be allocated dynamically.
+> 
+> Wouldn't it be sufficient to limit the walk to the actually used slots?
 
-On Thu, Sep 5, 2024, 2:27 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+Ah, I remember that kvm_get_free_slot() is also rather inefficient 
+because we don't "close holes" when removing slots. So we would have to 
+walk up to the "highest slot ever used". Let me take a look at the patch.
 
-> On Thu, Sep 05, 2024 at 12:30:07AM +0600, Dorjoy Chowdhury wrote:
-> > On Wed, Sep 4, 2024 at 2:47=E2=80=AFAM Dorjoy Chowdhury <dorjoychy111@g=
-mail.com>
-> wrote:
-> > >
-> > >
-> > >
-> > > On Wed, Sep 4, 2024, 2:32 AM Michael S. Tsirkin <mst@redhat.com>
-> wrote:
-> > >>
-> > >> On Wed, Sep 04, 2024 at 01:58:15AM +0600, Dorjoy Chowdhury wrote:
-> > >> > On Thu, Aug 29, 2024 at 1:11=E2=80=AFAM Michael S. Tsirkin <mst@re=
-dhat.com>
-> wrote:
-> > >> > >
-> > >> > > On Thu, Aug 29, 2024 at 01:04:05AM +0600, Dorjoy Chowdhury wrote=
-:
-> > >> > > > On Thu, Aug 29, 2024 at 12:28=E2=80=AFAM Michael S. Tsirkin <
-> mst@redhat.com> wrote:
-> > >> > > > >
-> > >> > > > > On Thu, Aug 22, 2024 at 09:08:46PM +0600, Dorjoy Chowdhury
-> wrote:
-> > >> > > > > > Nitro Secure Module (NSM)[1] device is used in AWS Nitro
-> Enclaves[2]
-> > >> > > > > > for stripped down TPM functionality like cryptographic
-> attestation.
-> > >> > > > > > The requests to and responses from NSM device are CBOR[3]
-> encoded.
-> > >> > > > > >
-> > >> > > > > > This commit adds support for NSM device in QEMU. Although
-> related to
-> > >> > > > > > AWS Nitro Enclaves, the virito-nsm device is independent
-> and can be
-> > >> > > > > > used in other machine types as well. The libcbor[4] librar=
-y
-> has been
-> > >> > > > > > used for the CBOR encoding and decoding functionalities.
-> > >> > > > > >
-> > >> > > > > > [1]
-> https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
-> > >> > > > > > [2]
-> https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-> > >> > > > > > [3] http://cbor.io/
-> > >> > > > > > [4] https://libcbor.readthedocs.io/en/latest/
-> > >> > > > > >
-> > >> > > > > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > >> > > > > > ---
-> > >> > > > > >  MAINTAINERS                      |   10 +
-> > >> > > > > >  hw/virtio/Kconfig                |    5 +
-> > >> > > > > >  hw/virtio/cbor-helpers.c         |  326 ++++++
-> > >> > > > > >  hw/virtio/meson.build            |    6 +
-> > >> > > > > >  hw/virtio/virtio-nsm-pci.c       |   73 ++
-> > >> > > > > >  hw/virtio/virtio-nsm.c           | 1638
-> ++++++++++++++++++++++++++++++
-> > >> > > > > >  include/hw/virtio/cbor-helpers.h |   46 +
-> > >> > > > > >  include/hw/virtio/virtio-nsm.h   |   59 ++
-> > >> > > > > >  meson.build                      |    2 +
-> > >> > > > > >  9 files changed, 2165 insertions(+)
-> > >> > > >
-> > >> > > > [...]
-> > >> > > >
-> > >> > > > > > +static void handle_input(VirtIODevice *vdev, VirtQueue *v=
-q)
-> > >> > > > > > +{
-> > >> > > > > > +    g_autofree VirtQueueElement *out_elem =3D NULL;
-> > >> > > > > > +    g_autofree VirtQueueElement *in_elem =3D NULL;
-> > >> > > > > > +    VirtIONSM *vnsm =3D VIRTIO_NSM(vdev);
-> > >> > > > > > +    Error *err =3D NULL;
-> > >> > > > > > +
-> > >> > > > > > +    out_elem =3D virtqueue_pop(vq, sizeof(VirtQueueElemen=
-t));
-> > >> > > > > > +    if (!out_elem) {
-> > >> > > > > > +        /* nothing in virtqueue */
-> > >> > > > > > +        return;
-> > >> > > > > > +    }
-> > >> > > > > > +
-> > >> > > > > > +    if (out_elem->out_num !=3D 1) {
-> > >> > > > > > +        virtio_error(vdev, "Expected one request buffer
-> first in virtqueue");
-> > >> > > > > > +        goto cleanup;
-> > >> > > > > > +    }
-> > >> > > > >
-> > >> > > > > Seems to assume request in a single s/g element?
-> > >> > > > > We generally avoid this kind of thing.
-> > >> > > > >
-> > >> > > > > Applies equally elsewheree.
-> > >> > > > >
-> > >> > > >
-> > >> > > > Thank you for reviewing. I think I did it this way (first
-> virqueue_pop
-> > >> > > > gives out_elem with out_num =3D=3D 1 and the next virtqueue_po=
-p
-> gives
-> > >> > > > in_elem with in_num =3D=3D 1) after seeing what the virqueue
-> contains
-> > >> > > > (using printfs) when running in a VM and sending some NSM
-> requests and
-> > >> > > > I noticed the above. Can you give me a bit more details about
-> what
-> > >> > > > this should be like? Is there any existing virtio device code =
-I
-> can
-> > >> > > > look at for example?
-> > >> > > > Thanks!
-> > >> > >
-> > >> > >
-> > >> > > Use iov_to_buf / iov_from_buf
-> > >> > >
-> > >> > > there are many examples in the tree, I'd look for some recent
-> ones.
-> > >> > >
-> > >> >
-> > >> > I am a bit stuck at this and I would appreciate some help. I looke=
-d
-> at
-> > >> > other "iov_to_buf" and "iov_from_buf" examples in QEMU and in thos=
-e
-> I
-> > >> > see there are known request and response "structs" associated with
-> it.
-> > >> > But in the case of NSM, the request and responses can be arbitrary
-> > >> > CBOR objects i.e., no specific structs or lengths associated.
-> > >>
-> > >>
-> > >> take whatever you want to access, move it to a buffer with iov_to_bu=
-f
-> > >> then access the buffer.
-> > >>
-> > >> reverse is even easier. put in a buffer, copy with iov_from_buf.
-> > >
-> > >
-> > > I guess I will just need to copy the iov buffer (whatever the length
-> was in the out_elem's out buf) to another buffer using iov_to_buf and the=
-n
-> pass it to the processing function and then copy the response to the
-> in_elem's buffer using iov_from_buf, right? Wouldn't the copying be
-> redundant in this case as we could just instead pass the original buffers
-> (like the iov-s are passed right now) to the processing function?
-> > >
-> > >>
-> > >> > So I am
-> > >> > not sure using "iov_to_buf" / "iov_from_buf" makes sense here.
-> > >> > And about the request response being in a single s/g element, I
-> think
-> > >> > it's because of how the NSM driver is in drivers/misc/nsm.c (see
-> > >> > nsm_sendrecv_msg_locked function)in the linux kernel tree.
-> > >>
-> > >> yes but driver is free to change this.
-> > >> Isn't there a spec for this device to consult?
-> > >> Sending that to virtio tc will be needed before we add this to qemu.
-> > >
-> > >
-> > > I think this is the spec for this device (also mentioned in the commi=
-t
-> message of this patch)
-> > >
-> https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
-> > >
-> >
-> > Hi Michael. Did you get a chance to look at the NSM device spec above?
-> > I am not sure but from the description there I think the request
-> > response being in a single s/g element makes sense, right?
-> > So the
-> > current implementation of first checking out_elem with out_num =3D=3D 1
-> > and then an in_elem with in_num =3D=3D 1 should be correct. Please corr=
-ect
-> > me if I am wrong here and if I should change the implementation to
-> > something else.
->
-> This is not what the spec says. The spec says it's a single
-> buffer, and in virtio longo buffer can include any number of
-> s/g elements. how many - up to driver. device does not get
-> to decide.
->
+-- 
+Cheers,
 
-Understood. Thanks! I remember seeing other virtio device code in QEMU
-where only one element was popped from the queue (virtqueue_pop) and out_sg
-and in_sg were from that single popped element. But for NSM I saw that the
-first popped element didn't have any in_sg. Instead the second popped
-element had this. Can you give me some input on how to handle the in_sg?
-Right now I just assume that I need to get another element from the queue.
+David / dhildenb
 
-Regards,
-Dorjoy
-
---000000000000e519d706215141f5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Thu, Sep 5, 2024, 2:27 AM Michael S. Tsirkin &lt;<a=
- href=3D"mailto:mst@redhat.com">mst@redhat.com</a>&gt; wrote:<br></div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
-cc solid;padding-left:1ex">On Thu, Sep 05, 2024 at 12:30:07AM +0600, Dorjoy=
- Chowdhury wrote:<br>
-&gt; On Wed, Sep 4, 2024 at 2:47=E2=80=AFAM Dorjoy Chowdhury &lt;<a href=3D=
-"mailto:dorjoychy111@gmail.com" target=3D"_blank" rel=3D"noreferrer">dorjoy=
-chy111@gmail.com</a>&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt;<br>
-&gt; &gt;<br>
-&gt; &gt; On Wed, Sep 4, 2024, 2:32 AM Michael S. Tsirkin &lt;<a href=3D"ma=
-ilto:mst@redhat.com" target=3D"_blank" rel=3D"noreferrer">mst@redhat.com</a=
->&gt; wrote:<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; On Wed, Sep 04, 2024 at 01:58:15AM +0600, Dorjoy Chowdhury wr=
-ote:<br>
-&gt; &gt;&gt; &gt; On Thu, Aug 29, 2024 at 1:11=E2=80=AFAM Michael S. Tsirk=
-in &lt;<a href=3D"mailto:mst@redhat.com" target=3D"_blank" rel=3D"noreferre=
-r">mst@redhat.com</a>&gt; wrote:<br>
-&gt; &gt;&gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; On Thu, Aug 29, 2024 at 01:04:05AM +0600, Dorjoy Ch=
-owdhury wrote:<br>
-&gt; &gt;&gt; &gt; &gt; &gt; On Thu, Aug 29, 2024 at 12:28=E2=80=AFAM Micha=
-el S. Tsirkin &lt;<a href=3D"mailto:mst@redhat.com" target=3D"_blank" rel=
-=3D"noreferrer">mst@redhat.com</a>&gt; wrote:<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; On Thu, Aug 22, 2024 at 09:08:46PM +0600,=
- Dorjoy Chowdhury wrote:<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; Nitro Secure Module (NSM)[1] device =
-is used in AWS Nitro Enclaves[2]<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; for stripped down TPM functionality =
-like cryptographic attestation.<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; The requests to and responses from N=
-SM device are CBOR[3] encoded.<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; This commit adds support for NSM dev=
-ice in QEMU. Although related to<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; AWS Nitro Enclaves, the virito-nsm d=
-evice is independent and can be<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; used in other machine types as well.=
- The libcbor[4] library has been<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; used for the CBOR encoding and decod=
-ing functionalities.<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; [1] <a href=3D"https://lists.oasis-o=
-pen.org/archives/virtio-comment/202310/msg00387.html" rel=3D"noreferrer nor=
-eferrer" target=3D"_blank">https://lists.oasis-open.org/archives/virtio-com=
-ment/202310/msg00387.html</a><br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; [2] <a href=3D"https://docs.aws.amaz=
-on.com/enclaves/latest/user/nitro-enclave.html" rel=3D"noreferrer noreferre=
-r" target=3D"_blank">https://docs.aws.amazon.com/enclaves/latest/user/nitro=
--enclave.html</a><br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; [3] <a href=3D"http://cbor.io/" rel=
-=3D"noreferrer noreferrer" target=3D"_blank">http://cbor.io/</a><br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; [4] <a href=3D"https://libcbor.readt=
-hedocs.io/en/latest/" rel=3D"noreferrer noreferrer" target=3D"_blank">https=
-://libcbor.readthedocs.io/en/latest/</a><br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; Signed-off-by: Dorjoy Chowdhury &lt;=
-<a href=3D"mailto:dorjoychy111@gmail.com" target=3D"_blank" rel=3D"noreferr=
-er">dorjoychy111@gmail.com</a>&gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; ---<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A01=
-0 +<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/Kconfig=C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 5 +<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/cbor-helpers.c=C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 326 ++++++<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/meson.build=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 6 +<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/virtio-nsm-pci.c=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A073 ++<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 hw/virtio/virtio-nsm.c=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 1638 ++++++++++++++++++++++++++++++<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 include/hw/virtio/cbor-helpers=
-.h |=C2=A0 =C2=A046 +<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 include/hw/virtio/virtio-nsm.h=
-=C2=A0 =C2=A0|=C2=A0 =C2=A059 ++<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 meson.build=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =
-2 +<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 9 files changed, 2165 insertio=
-ns(+)<br>
-&gt; &gt;&gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; [...]<br>
-&gt; &gt;&gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +static void handle_input(VirtIODevi=
-ce *vdev, VirtQueue *vq)<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +{<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 g_autofree VirtQueueE=
-lement *out_elem =3D NULL;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 g_autofree VirtQueueE=
-lement *in_elem =3D NULL;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 VirtIONSM *vnsm =3D V=
-IRTIO_NSM(vdev);<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 Error *err =3D NULL;<=
-br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 out_elem =3D virtqueu=
-e_pop(vq, sizeof(VirtQueueElement));<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 if (!out_elem) {<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* noth=
-ing in virtqueue */<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;=
-<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 if (out_elem-&gt;out_=
-num !=3D 1) {<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 virtio_=
-error(vdev, &quot;Expected one request buffer first in virtqueue&quot;);<br=
->
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto cl=
-eanup;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; Seems to assume request in a single s/g e=
-lement?<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; We generally avoid this kind of thing.<br=
->
-&gt; &gt;&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt; Applies equally elsewheree.<br>
-&gt; &gt;&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; &gt; Thank you for reviewing. I think I did it this=
- way (first virqueue_pop<br>
-&gt; &gt;&gt; &gt; &gt; &gt; gives out_elem with out_num =3D=3D 1 and the n=
-ext virtqueue_pop gives<br>
-&gt; &gt;&gt; &gt; &gt; &gt; in_elem with in_num =3D=3D 1) after seeing wha=
-t the virqueue contains<br>
-&gt; &gt;&gt; &gt; &gt; &gt; (using printfs) when running in a VM and sendi=
-ng some NSM requests and<br>
-&gt; &gt;&gt; &gt; &gt; &gt; I noticed the above. Can you give me a bit mor=
-e details about what<br>
-&gt; &gt;&gt; &gt; &gt; &gt; this should be like? Is there any existing vir=
-tio device code I can<br>
-&gt; &gt;&gt; &gt; &gt; &gt; look at for example?<br>
-&gt; &gt;&gt; &gt; &gt; &gt; Thanks!<br>
-&gt; &gt;&gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; Use iov_to_buf / iov_from_buf<br>
-&gt; &gt;&gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt; &gt; there are many examples in the tree, I&#39;d look f=
-or some recent ones.<br>
-&gt; &gt;&gt; &gt; &gt;<br>
-&gt; &gt;&gt; &gt;<br>
-&gt; &gt;&gt; &gt; I am a bit stuck at this and I would appreciate some hel=
-p. I looked at<br>
-&gt; &gt;&gt; &gt; other &quot;iov_to_buf&quot; and &quot;iov_from_buf&quot=
-; examples in QEMU and in those I<br>
-&gt; &gt;&gt; &gt; see there are known request and response &quot;structs&q=
-uot; associated with it.<br>
-&gt; &gt;&gt; &gt; But in the case of NSM, the request and responses can be=
- arbitrary<br>
-&gt; &gt;&gt; &gt; CBOR objects i.e., no specific structs or lengths associ=
-ated.<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; take whatever you want to access, move it to a buffer with io=
-v_to_buf<br>
-&gt; &gt;&gt; then access the buffer.<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; reverse is even easier. put in a buffer, copy with iov_from_b=
-uf.<br>
-&gt; &gt;<br>
-&gt; &gt;<br>
-&gt; &gt; I guess I will just need to copy the iov buffer (whatever the len=
-gth was in the out_elem&#39;s out buf) to another buffer using iov_to_buf a=
-nd then pass it to the processing function and then copy the response to th=
-e in_elem&#39;s buffer using iov_from_buf, right? Wouldn&#39;t the copying =
-be redundant in this case as we could just instead pass the original buffer=
-s (like the iov-s are passed right now) to the processing function?<br>
-&gt; &gt;<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; &gt; So I am<br>
-&gt; &gt;&gt; &gt; not sure using &quot;iov_to_buf&quot; / &quot;iov_from_b=
-uf&quot; makes sense here.<br>
-&gt; &gt;&gt; &gt; And about the request response being in a single s/g ele=
-ment, I think<br>
-&gt; &gt;&gt; &gt; it&#39;s because of how the NSM driver is in drivers/mis=
-c/nsm.c (see<br>
-&gt; &gt;&gt; &gt; nsm_sendrecv_msg_locked function)in the linux kernel tre=
-e.<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; yes but driver is free to change this.<br>
-&gt; &gt;&gt; Isn&#39;t there a spec for this device to consult?<br>
-&gt; &gt;&gt; Sending that to virtio tc will be needed before we add this t=
-o qemu.<br>
-&gt; &gt;<br>
-&gt; &gt;<br>
-&gt; &gt; I think this is the spec for this device (also mentioned in the c=
-ommit message of this patch)<br>
-&gt; &gt; <a href=3D"https://lists.oasis-open.org/archives/virtio-comment/2=
-02310/msg00387.html" rel=3D"noreferrer noreferrer" target=3D"_blank">https:=
-//lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html</a><br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; Hi Michael. Did you get a chance to look at the NSM device spec above?=
-<br>
-&gt; I am not sure but from the description there I think the request<br>
-&gt; response being in a single s/g element makes sense, right?<br>
-&gt; So the<br>
-&gt; current implementation of first checking out_elem with out_num =3D=3D =
-1<br>
-&gt; and then an in_elem with in_num =3D=3D 1 should be correct. Please cor=
-rect<br>
-&gt; me if I am wrong here and if I should change the implementation to<br>
-&gt; something else.<br>
-<br>
-This is not what the spec says. The spec says it&#39;s a single<br>
-buffer, and in virtio longo buffer can include any number of<br>
-s/g elements. how many - up to driver. device does not get<br>
-to decide.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Understood. Thanks! I remember seeing other virtio device code in=
- QEMU where only one element was popped from the queue (virtqueue_pop) and =
-out_sg and in_sg were from that single popped element. But for NSM I saw th=
-at the first popped element didn&#39;t have any in_sg. Instead the second p=
-opped element had this. Can you give me some input on how to handle the in_=
-sg? Right now I just assume that I need to get another element from the que=
-ue.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Regards,</div><div d=
-ir=3D"auto">Dorjoy</div></div>
-
---000000000000e519d706215141f5--
 
