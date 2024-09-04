@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B90CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DABCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slltW-0003qQ-EN; Wed, 04 Sep 2024 05:01:42 -0400
+	id 1slm0S-0004Wn-Ow; Wed, 04 Sep 2024 05:08:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slltL-0003Sn-7D
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:01:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slm0K-0004Vi-NX
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:08:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slltH-0005hO-4X
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:01:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slm0H-0008H0-6y
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:08:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725440483;
+ s=mimecast20190719; t=1725440919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K2XXaIdhPHjbb6TzR2cGDsawD4ySEfa1b9U51D/iByI=;
- b=SPRdxM5e6QR+dLHBQQo7WpJoDruvK1GX7uKZKvjPMEBYUVHftkYxFZL4T+siV6m552gAf+
- gPll9HEhcijbVPZ/zVNe+fa4oflZ9LUIPIaK6SK2y8DTtohiaC8VmxxQ18rhGa1M3nTyUp
- eWH4MkR1El15TT+OAhPOrnmvZ078DvE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cx1VIch842EHOJauotcsmFvQ/p4ddC4bBmgsx/zUoqs=;
+ b=X/wNlJswl/kqrELX3dIUnNEulqO4ETDQyvxcqnyNmpv+vX8r1XEGDe7Igcz0zpDYZcUbti
+ o/JZ/LfEOHOfq0MXDgilCphnNAUJLg9jjHY5lz5u0aN0LaRiyxjEA43iwfxabCuSm5Z0Ds
+ nSM2YsY6sSiS4S8t32vL9tuzqyCK1w0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-jECF0wIDOQmgAFAnzps0jg-1; Wed, 04 Sep 2024 05:01:21 -0400
-X-MC-Unique: jECF0wIDOQmgAFAnzps0jg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42c78767b90so37791395e9.1
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 02:01:21 -0700 (PDT)
+ us-mta-547-4OXcr1xBOcqO3sF4tFxfAg-1; Wed, 04 Sep 2024 05:08:38 -0400
+X-MC-Unique: 4OXcr1xBOcqO3sF4tFxfAg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42c7b6358a6so5672885e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 02:08:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725440480; x=1726045280;
+ d=1e100.net; s=20230601; t=1725440917; x=1726045717;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K2XXaIdhPHjbb6TzR2cGDsawD4ySEfa1b9U51D/iByI=;
- b=MXHpHSLdsozIJ3R4A0f5zqT+vWNjdg7NO5MjnIGP0Cx5XUVF61+m569IineFUDpBge
- ModnfdUoOpCAgJbzsxA0CHpGhJZQksJtKNGw+X7Eehb07FKqmThsrQt+DVCngGjVPpRJ
- WZb58zju9eitDCC4tfYVFyD6msumJlvOnDRBJpYmqvrdSG1de67EjsbmQtYJrL9ANI7l
- TslIcJANTByL8+yt/Ggm7oS/RCiZFJiadndaLnIQPTkTUAGNR2SjWi47GyCTbrg24t8W
- 4EBO0fMCFIVS1YBhOXwSAC4iMfU2sLm0k5UATUnY5i4Qpn9yUiOYPFoT+n3w3Xnaxsyr
- 4RJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgIS9z+BGsgMDTFSbUXgsl91kTabzG8wo9SHVfCZae9Ey5ETFPI34Ofmp+jBE8DBthIjHKwZ9KOF3Q@nongnu.org
-X-Gm-Message-State: AOJu0Ywqdz995npzjp/uDZvJnDWS9B0gX9LFO9U/yZoMA53qHixtyiNL
- PbUq2iRIzPtH2IubzlHluwBOhuTDYAaG7KrNmsJqpYBQIV1SXfkMyZiYBlSWOMSYMnPr8XU8Agm
- +McZKUQ8mQD8dkT7XHsmCqz17bd9bws9CMgMz3S3hifgOJGMGdQb1XdpT4JVr
-X-Received: by 2002:a05:600c:4f4a:b0:427:9dad:e6ac with SMTP id
- 5b1f17b1804b1-42c88108ad2mr50590075e9.34.1725440480605; 
- Wed, 04 Sep 2024 02:01:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKbA4okOjJ/8cTE/kpSjJeUvHBwkvsMU8QEsNQuo4N9/aGpCIgeCzz0RphKL2hPmT3zAPYuA==
-X-Received: by 2002:a05:600c:4f4a:b0:427:9dad:e6ac with SMTP id
- 5b1f17b1804b1-42c88108ad2mr50589835e9.34.1725440480048; 
- Wed, 04 Sep 2024 02:01:20 -0700 (PDT)
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cx1VIch842EHOJauotcsmFvQ/p4ddC4bBmgsx/zUoqs=;
+ b=i982tw0jR1rOY69Fl3B/9/ZQpnj0vWQiy4VxQmieh/aUSmSL2XnqqJqzCUcVK97W31
+ BnEusdnC2hHE+AaZl7LEhOCAoiZujiM9p9gbYDxhjhv+mAiM2RjXzsODlXpOr7bz3tuO
+ KkicApjl2ljqXVp0Jjbt3aYnfChu4pSkbgfh/SeF4AX5Laub7yoHYfo5Zul9QAGTUTE9
+ ATWCm6oJqP1ZUil2BmUo0cUCDie+vvdpJ8sIenQ+kxWW/+oG568ry9S1pShSeAmahlXc
+ aZ1PqgfIaVxXIPTLGQOWNgfsH17AcSxcqES2VG7067recr2UdXODSZivRNy9EfcwfG0H
+ fbCQ==
+X-Gm-Message-State: AOJu0YzA5XEAquEQec9Q0fsTFoqt6Dm3pD7Ruip/G0nY9WcY/gnD5Ro8
+ LBHwd7hh7l7LaPZ8JUtFbxWqyk7cx3MJkrRqOJXT9XYsgJ/9plxzxeUtbZeJeNfj7ZFUP+HFAbP
+ UDJYDG5WrDBA9I77LtfJjE2Ij6Zl9QHJ0+4ndErKGosup/3HbyUnujPcNBiw8Q2r/BkHgHXJ+xl
+ 6IHDJMNJBF4qIRIbbM/Efn5wODFJl1s/YZ
+X-Received: by 2002:a05:6000:184f:b0:374:8f90:b78b with SMTP id
+ ffacd0b85a97d-37770c704c9mr1593410f8f.44.1725440917088; 
+ Wed, 04 Sep 2024 02:08:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE8kLOajB653B5hxLHInCkb+I3jlHizjr81peFuA87aDKW+mTrlsQc9G7h1Uz/e5mWRXmOHLg==
+X-Received: by 2002:a05:6000:184f:b0:374:8f90:b78b with SMTP id
+ ffacd0b85a97d-37770c704c9mr1593371f8f.44.1725440916419; 
+ Wed, 04 Sep 2024 02:08:36 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374cbbc8281sm7364924f8f.64.2024.09.04.02.01.19
+ ffacd0b85a97d-374c554f0c2sm9858742f8f.43.2024.09.04.02.08.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 02:01:19 -0700 (PDT)
-Message-ID: <5e863c70-0045-4739-bfcd-07832a1a1543@redhat.com>
-Date: Wed, 4 Sep 2024 11:01:18 +0200
+ Wed, 04 Sep 2024 02:08:35 -0700 (PDT)
+Message-ID: <991b81be-7728-44e6-9763-4e91434a9229@redhat.com>
+Date: Wed, 4 Sep 2024 11:08:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 25/53] hw/arm: Remove 'n800' and 'n810' machines
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <20240903160751.4100218-26-peter.maydell@linaro.org>
+Subject: Re: [PATCH v5 17/44] tests/functional: Convert some tests that
+ download files via fetch_asset()
 From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Daniel P . Berrange" <berrange@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240830133841.142644-1-thuth@redhat.com>
+ <20240830133841.142644-18-thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -118,7 +124,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240903160751.4100218-26-peter.maydell@linaro.org>
+In-Reply-To: <20240830133841.142644-18-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -131,7 +137,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,26 +153,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2024 18.07, Peter Maydell wrote:
-> Remove the 'n800' and 'n810' machine types, which modelled
-> Nokia internet tablets. These were deprecated in 9.0 and
-> so we can remove them for 9.2.
+On 30/08/2024 15.38, Thomas Huth wrote:
+> Now that we've got the Asset class with pre-caching, we can convert
+> some Avocado tests that use fetch_asset() for downloading their
+> required files.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   MAINTAINERS                             |    3 -
->   docs/system/arm/nseries.rst             |   33 -
->   docs/system/target-arm.rst              |    1 -
->   configs/devices/arm-softmmu/default.mak |    1 -
->   hw/arm/nseries.c                        | 1473 -----------------------
->   hw/arm/meson.build                      |    1 -
->   tests/avocado/machine_arm_n8x0.py       |   49 -
->   7 files changed, 1561 deletions(-)
->   delete mode 100644 docs/system/arm/nseries.rst
->   delete mode 100644 hw/arm/nseries.c
->   delete mode 100644 tests/avocado/machine_arm_n8x0.py
+>   MAINTAINERS                                   | 12 ++---
+>   tests/avocado/machine_mips_loongson3v.py      | 39 --------------
+>   tests/functional/meson.build                  | 30 +++++++++--
+>   .../test_arm_n8x0.py}                         | 36 ++++++-------
 
-I think tests/qtest/libqos/arm-n800-machine.c should now get removed, too?
+FWIW: I'm going to drop the arm_n8x0 part from this patch since Peter is 
+currently preparing for removing the n800 and n810 machines (and his series 
+removes this test:
+
+ 
+https://lore.kernel.org/qemu-devel/20240903160751.4100218-26-peter.maydell@linaro.org/
 
   Thomas
 
