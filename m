@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCBEDCD3431
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28EACD484A
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slpNE-0003gg-RK; Wed, 04 Sep 2024 08:44:36 -0400
+	id 1slpNi-0005YX-Qj; Wed, 04 Sep 2024 08:45:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpND-0003Z9-0E
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:35 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNh-0005TK-CA
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:05 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNB-0005SO-8l
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:34 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNf-0005fC-GR
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:05 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E86862191F;
- Wed,  4 Sep 2024 12:44:31 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 249902119F;
+ Wed,  4 Sep 2024 12:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453872; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453902; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qi/XzRa+1wsS1LuzhOV4ldJ/cldmkU5okDmZg2VwaI4=;
- b=yus6klPTXXznuJ2MXhCbRajMTwHH68uH14+Wr25BZ+/dYKm8I9X4RVWac44waVnDNaXDXe
- Yf6W8dVfHJgXxBUU7wnQI8my4A6cgIzyK0CC4UB4g96NUkx5InzWCp5fDkJsRz/STReaHO
- mfvUKEhFPP/KoqenlZRpaaHu5IksDFg=
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=XMff969g6afOWmqBsjWeDZFty1xZKxBNkjwTFYtJ0nS6JrpMLfTIijVsEFa5x1F9kfRijy
+ G5U3H19pDryumjlaIDh3TshascAva/A8CetXS/Ky6s7UD9SUftjSJVERSM9pyhknj7swJo
+ vhFzXUX8DfPVIJYf1dh0CwE1v1k7n30=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453872;
+ s=susede2_ed25519; t=1725453902;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qi/XzRa+1wsS1LuzhOV4ldJ/cldmkU5okDmZg2VwaI4=;
- b=cfysV+y+ZEWJIM+TVOBQIlT/OdX6MEt6wRdMgPF9XpN7C3EUmI5PwL5uv9FWUDCMUM/CDB
- GJdsKV4k8JrV5iCQ==
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=rbauHAKQC3L24MXik1jtczOUqdQ5rWJIWRg5RNjCTbJjNTx/+TOQL0oye9k5OV6YHWzqUX
+ whctu73vKP48oMAg==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453871; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453902; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qi/XzRa+1wsS1LuzhOV4ldJ/cldmkU5okDmZg2VwaI4=;
- b=NgVnCv3icurnoyRCy0fsyGgSIcPXu/jKge6Rq0l4NIe7Jlv+7V70QEVYwFhzaSdvuJxz+o
- /4X+wUFnsLSDiiuETs1nx3IXISNoSfUy/brEBaJv2xGQN6Ff2g88noeXDLOfUnF6IS3oLW
- VYEU9juZry7/Ua+qQVVKZvweQVBdKqU=
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=XMff969g6afOWmqBsjWeDZFty1xZKxBNkjwTFYtJ0nS6JrpMLfTIijVsEFa5x1F9kfRijy
+ G5U3H19pDryumjlaIDh3TshascAva/A8CetXS/Ky6s7UD9SUftjSJVERSM9pyhknj7swJo
+ vhFzXUX8DfPVIJYf1dh0CwE1v1k7n30=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453871;
+ s=susede2_ed25519; t=1725453902;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qi/XzRa+1wsS1LuzhOV4ldJ/cldmkU5okDmZg2VwaI4=;
- b=renisp8KyRitIJkL+WjV5ITllep5UcD6Fw5z2MFWOQcChjcuvJyHk1+Dh4xbbiRWbyxJm4
- GTPzoUEKGq5yTKAw==
+ bh=4Jr+HOGkMYcWF2YiEqUGvJYvmhhFs2+ydbQignoNGMA=;
+ b=rbauHAKQC3L24MXik1jtczOUqdQ5rWJIWRg5RNjCTbJjNTx/+TOQL0oye9k5OV6YHWzqUX
+ whctu73vKP48oMAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 88E41139D2;
- Wed,  4 Sep 2024 12:44:30 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F2ED9139D2;
+ Wed,  4 Sep 2024 12:45:00 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cKwBFC5W2GZuVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:30 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SLnaLUxW2GZuVQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:45:00 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 06/34] tests/qtest/migration-helpers: Fix
- migrate_get_socket_address() leak
-Date: Wed,  4 Sep 2024 09:43:49 -0300
-Message-Id: <20240904124417.14565-7-farosas@suse.de>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 24/34] migration/multifd: Allow multifd sync without flush
+Date: Wed,  4 Sep 2024 09:44:07 -0300
+Message-Id: <20240904124417.14565-25-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
 References: <20240904124417.14565-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.78 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.18)[-0.925];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.933];
+ MIME_GOOD(-0.10)[text/plain]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -120,104 +119,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Separate the multifd sync from flushing the client data to the
+channels. These two operations are closely related but not strictly
+necessary to be executed together.
 
-In migrate_get_socket_address() we leak the SocketAddressList:
- (cd build/asan && \
-  ASAN_OPTIONS="fast_unwind_on_malloc=0:strip_path_prefix=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../"
-  QTEST_QEMU_BINARY=./qemu-system-x86_64 \
-  ./tests/qtest/migration-test --tap -k -p /x86_64/migration/multifd/tcp/tls/psk/match )
+The multifd sync is intrinsic to how multifd works. The multiple
+channels operate independently and may finish IO out of order in
+relation to each other. This applies also between the source and
+destination QEMU.
 
-[...]
-Direct leak of 16 byte(s) in 1 object(s) allocated from:
-    #0 0x563d7f22f318 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/tests/qtest/migration-test+0x22f318) (BuildId: 2ad6282fb5d076c863ab87f41a345d46dc965ded)
-    #1 0x7f9de3b39c50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
-    #2 0x563d7f3a119c in qobject_input_start_list qapi/qobject-input-visitor.c:336:17
-    #3 0x563d7f390fbf in visit_start_list qapi/qapi-visit-core.c:80:10
-    #4 0x563d7f3882ef in visit_type_SocketAddressList /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qapi/qapi-visit-sockets.c:519:10
-    #5 0x563d7f3658c9 in migrate_get_socket_address tests/qtest/migration-helpers.c:97:5
-    #6 0x563d7f362e24 in migrate_get_connect_uri tests/qtest/migration-helpers.c:111:13
-    #7 0x563d7f362bb2 in migrate_qmp tests/qtest/migration-helpers.c:222:23
-    #8 0x563d7f3533cd in test_precopy_common tests/qtest/migration-test.c:1817:5
-    #9 0x563d7f34dc1c in test_multifd_tcp_tls_psk_match tests/qtest/migration-test.c:3185:5
-    #10 0x563d7f365337 in migration_test_wrapper tests/qtest/migration-helpers.c:458:5
+Flushing the data that is left in the client-owned data structures
+(e.g. MultiFDPages_t) prior to sync is usually the right thing to do,
+but that is particular to how the ram migration is implemented with
+several passes over dirty data.
 
-The code fishes out the SocketAddress from the list to return it, and the
-callers are freeing that, but nothing frees the list.
+Make these two routines separate, allowing future code to call the
+sync by itself if needed. This also allows the usage of
+multifd_ram_send to be isolated to ram code.
 
-Since this function is called in only two places, the simple fix is to
-make it return the SocketAddressList rather than just a SocketAddress,
-and then the callers can easily access the SocketAddress, and free
-the whole SocketAddressList when they're done.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration-helpers.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ migration/multifd.c | 13 +++++++++----
+ migration/multifd.h |  1 +
+ migration/ram.c     |  8 ++++----
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index 84f49db85e..7cbb9831e7 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -82,11 +82,10 @@ static QDict *SocketAddress_to_qdict(SocketAddress *addr)
-     return dict;
+diff --git a/migration/multifd.c b/migration/multifd.c
+index cb7a121eb0..ce08257706 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -914,11 +914,8 @@ static int multifd_zero_copy_flush(QIOChannel *c)
+     return ret;
  }
  
--static SocketAddress *migrate_get_socket_address(QTestState *who)
-+static SocketAddressList *migrate_get_socket_address(QTestState *who)
+-int multifd_send_sync_main(void)
++int multifd_ram_flush_and_sync(void)
  {
-     QDict *rsp;
-     SocketAddressList *addrs;
--    SocketAddress *addr;
-     Visitor *iv = NULL;
-     QObject *object;
+-    int i;
+-    bool flush_zero_copy;
+-
+     if (!migrate_multifd()) {
+         return 0;
+     }
+@@ -930,6 +927,14 @@ int multifd_send_sync_main(void)
+         }
+     }
  
-@@ -95,36 +94,35 @@ static SocketAddress *migrate_get_socket_address(QTestState *who)
++    return multifd_send_sync_main();
++}
++
++int multifd_send_sync_main(void)
++{
++    int i;
++    bool flush_zero_copy;
++
+     flush_zero_copy = migrate_zero_copy_send();
  
-     iv = qobject_input_visitor_new(object);
-     visit_type_SocketAddressList(iv, NULL, &addrs, &error_abort);
--    addr = addrs->value;
-     visit_free(iv);
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 5fa384d9af..00c872dfda 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -270,4 +270,5 @@ static inline uint32_t multifd_ram_page_count(void)
  
-     qobject_unref(rsp);
--    return addr;
-+    return addrs;
- }
+ void multifd_ram_save_setup(void);
+ void multifd_ram_save_cleanup(void);
++int multifd_ram_flush_and_sync(void);
+ #endif
+diff --git a/migration/ram.c b/migration/ram.c
+index 1815b2557b..67ca3d5d51 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1326,7 +1326,7 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
+                 (!migrate_multifd_flush_after_each_section() ||
+                  migrate_mapped_ram())) {
+                 QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
+-                int ret = multifd_send_sync_main();
++                int ret = multifd_ram_flush_and_sync();
+                 if (ret < 0) {
+                     return ret;
+                 }
+@@ -3066,7 +3066,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+     }
  
- static char *
- migrate_get_connect_uri(QTestState *who)
- {
--    SocketAddress *addrs;
-+    SocketAddressList *addrs;
-     char *connect_uri;
+     bql_unlock();
+-    ret = multifd_send_sync_main();
++    ret = multifd_ram_flush_and_sync();
+     bql_lock();
+     if (ret < 0) {
+         error_setg(errp, "%s: multifd synchronization failed", __func__);
+@@ -3213,7 +3213,7 @@ out:
+         && migration_is_setup_or_active()) {
+         if (migrate_multifd() && migrate_multifd_flush_after_each_section() &&
+             !migrate_mapped_ram()) {
+-            ret = multifd_send_sync_main();
++            ret = multifd_ram_flush_and_sync();
+             if (ret < 0) {
+                 return ret;
+             }
+@@ -3285,7 +3285,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+         }
+     }
  
-     addrs = migrate_get_socket_address(who);
--    connect_uri = SocketAddress_to_str(addrs);
-+    connect_uri = SocketAddress_to_str(addrs->value);
- 
--    qapi_free_SocketAddress(addrs);
-+    qapi_free_SocketAddressList(addrs);
-     return connect_uri;
- }
- 
- static QDict *
- migrate_get_connect_qdict(QTestState *who)
- {
--    SocketAddress *addrs;
-+    SocketAddressList *addrs;
-     QDict *connect_qdict;
- 
-     addrs = migrate_get_socket_address(who);
--    connect_qdict = SocketAddress_to_qdict(addrs);
-+    connect_qdict = SocketAddress_to_qdict(addrs->value);
- 
--    qapi_free_SocketAddress(addrs);
-+    qapi_free_SocketAddressList(addrs);
-     return connect_qdict;
- }
- 
+-    ret = multifd_send_sync_main();
++    ret = multifd_ram_flush_and_sync();
+     if (ret < 0) {
+         return ret;
+     }
 -- 
 2.35.3
 
