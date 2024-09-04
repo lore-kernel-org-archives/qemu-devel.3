@@ -4,83 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0937CD4F21
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:19:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F594CD4857
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsgA-0002fD-Kq; Wed, 04 Sep 2024 12:16:22 -0400
+	id 1slsi2-000549-9l; Wed, 04 Sep 2024 12:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsfs-0001MX-DR; Wed, 04 Sep 2024 12:16:05 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsfk-0002Hl-Or; Wed, 04 Sep 2024 12:16:03 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5334c4cc17fso9467101e87.2; 
- Wed, 04 Sep 2024 09:15:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725466552; x=1726071352; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9ixH95d7Al9xFTOStqh6VLaEXX0BKF8+hj7xVV9eDrA=;
- b=SsPHu8rMXr/nK+JhYHCWwyV5BR3vfMg6FVTsVqm7a+E4SL/bj1vRwyNszvYY0R0T3O
- j8WdDsiP1UiclsBLcAQPgkI5X0iF1t2+XtDAOGDPkYiegQQDJMJk1fR0gqanbLZIRjWx
- ik8Husbg3eRTZRrZq4D30Z6h+C4B4r4lCfwuUCI5m8BOHU08DwXv+pe+Ej1HR7pY5l2j
- 4n1bcfrJvJ4mSakZmXiKum0E2oszmmNpbmT3V7WInY/bY2tlMJkcjTbr8g1i85WiBIQJ
- /XHEDdVWm7pvn23bYk3azgx4M/0gW+iEp1HCK+QAR92BcmVenRLX0+4I4ZgwJZWLBi6X
- 5vxA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slshv-0004Yh-II
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:18:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slshu-0003T2-5t
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:18:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725466687;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MHBrLjpahhT9zdOwBSNzCLgHcj5d5PZc7PeoXAOahiw=;
+ b=GmqgckW4jOnLKMXV9+MmK/vXesXVoQpNSIiB4U/4s7T2GCMSy/Q+FOac22ff/DiRe2kOOG
+ E+G9bWMIbnlS7xHD8BRSpYklwBV36GddK120yni/QWkosxMYqvK2mQ52EFNNaa7MUbo+rB
+ ozXXs6pIF2HGHD2W3PjikRhtqN/cJPA=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-303-Tz0Fqgr6OC6O1H4DCt8D3w-1; Wed, 04 Sep 2024 12:18:06 -0400
+X-MC-Unique: Tz0Fqgr6OC6O1H4DCt8D3w-1
+Received: by mail-ot1-f70.google.com with SMTP id
+ 46e09a7af769-70f65141ea1so7474375a34.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:18:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725466552; x=1726071352;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9ixH95d7Al9xFTOStqh6VLaEXX0BKF8+hj7xVV9eDrA=;
- b=pPNP8UketspkLTHSs4UCf2SaCQNLcboiDAOIkxy7hoH44h+Mh7kfnBCHTjAGV3r/zw
- Q9Rfr+LkhW/2vthYL0ZNmULv1PYzaFxgMXCoiHqpUdcO8NsrXgbein/l0Ss0JdtpGpC7
- fEeUPNi/sjEkEfKYQLMyYJs9YUSP2MpCUFZIz/PPfLsLAU0WZzVRE/TJLviIA8RxW395
- bL8m3Whx8I3KE12x/OUYBWkXdcMEmHwjYXTdGA+sjO11g97l+7BaCwbtos52UXxNJY5I
- jyCGQPfiCUyb1H9ZQrfOGN3OjHlT7s9vujt2DjQ4koW8dbE06sqSqSECuRkjnkssQEn4
- Jqzg==
+ d=1e100.net; s=20230601; t=1725466686; x=1726071486;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MHBrLjpahhT9zdOwBSNzCLgHcj5d5PZc7PeoXAOahiw=;
+ b=slX6s+q74Kh2B6bTIjfA3Redb5l5GH6V+yGgwFwfO8crz7ybTXlPD7Spe+rCtqoLWb
+ 80iJV8tox3qRMlxcWtFToYhdoS3uVXXFMUwhWgqsgqy+0WZiwkPFMZC4WWKxyJNgQa36
+ JdDPuOvPKy0VRfAQt89fo0xMhCcIiIgxSgcLJDKC2gT0KrwYLkkGALexcHmVUkg9G6zp
+ Oo+WvsmghdGgPFjXQcNmWr67r2862cUcQmAEvRPtx19Zjv+udfyOrS5c55qMcKoMNgjU
+ F6F0cCCWECpSHoJn2JQl5oQLL1rUPFfkxa6TqplXSOuo3+agTb4NQ5EwxsFydmhYiqXm
+ S9Hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3woc1vVl8ldizunrGWM6TGq7t5t91hAkmnOVXRrmkdsYKexbkjgpsuUrhROpERx9jSbk2mVsOjg==@nongnu.org
-X-Gm-Message-State: AOJu0Yy/0ee7qAL25Yll2AlTEQot/901Hs+B1Qj5TOQ6o6EBB1K25SOT
- 7Qr8zDVG+X31QIhrVBjry+BKieLI/vTowaU/38jjuL7I0gAJMqjrgokVaOr7
-X-Google-Smtp-Source: AGHT+IG1JgHcK/HSPjvz/v7e/HA3h7W7yVxrlLa32XoSdRwuQdNw8Nv6kbTy/cV1UOn6hD+yiZ1CvQ==
-X-Received: by 2002:a05:6512:159e:b0:52e:7542:f469 with SMTP id
- 2adb3069b0e04-53546a56629mr12273709e87.0.1725466551489; 
- Wed, 04 Sep 2024 09:15:51 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-535692d9bf6sm176341e87.41.2024.09.04.09.15.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Sep 2024 09:15:50 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com,
- jason.andryuk@amd.com, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL v1 07/12] hw/arm: xenpvh: Break out a common PVH machine
-Date: Wed,  4 Sep 2024 18:15:31 +0200
-Message-ID: <20240904161537.664189-8-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240904161537.664189-1-edgar.iglesias@gmail.com>
-References: <20240904161537.664189-1-edgar.iglesias@gmail.com>
+ AJvYcCWcdqDRGFLOFfz1FtY3pXKp1BnASjKfORSAufkTAHV75hrslye+CYRe5akdH0XnuPGu8x8d9VGPgw1G@nongnu.org
+X-Gm-Message-State: AOJu0Yx/oSNEz6KvQyHKAtWgVLM4Cucc5gseVFv5Osym7IeWUA4z6oqN
+ X6Qj+77U9qQUIpdqG8vMO+pVcc/sNb6PMDATPtZ12gV8aHY/nsecJjrmRc4IQ6nBdeR4VxPgKxb
+ YhXPk113MXQc5FszxBovERQWtjMIKiiXSK+o8UZkE8ElujFryo7vU
+X-Received: by 2002:a05:6358:e4a9:b0:1ad:282:126d with SMTP id
+ e5c5f4694b2df-1b7ef6c80cfmr1834207555d.12.1725466685801; 
+ Wed, 04 Sep 2024 09:18:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEEK3FIsbrQDnxuzrC/EUK7yvqFwQg5QZ/OHLwmT7xVM2F73TyhemDB0twP3G4DH0EMm7h25w==
+X-Received: by 2002:a05:6358:e4a9:b0:1ad:282:126d with SMTP id
+ e5c5f4694b2df-1b7ef6c80cfmr1834204455d.12.1725466685465; 
+ Wed, 04 Sep 2024 09:18:05 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
+ [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c512ea989fsm15405706d6.146.2024.09.04.09.18.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 09:18:05 -0700 (PDT)
+Message-ID: <f5318ae8-71d2-44b9-943c-678f36d30479@redhat.com>
+Date: Wed, 4 Sep 2024 18:18:02 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/15] seccomp: Remove check for CRIS host
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
+References: <20240904143603.52934-1-philmd@linaro.org>
+ <20240904143603.52934-16-philmd@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240904143603.52934-16-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,657 +150,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On 04/09/2024 16.36, Philippe Mathieu-Daudé wrote:
+> As per the deprecation notice in commit c7bbef4023:
+> 
+>    The CRIS architecture was pulled from Linux in 4.17 and
+>    the compiler is no longer packaged in any distro [...].
+> 
+> It is now unlikely QEMU is build on CRIS host.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   system/qemu-seccomp.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
+> index 98ffce075c..a14a0c0635 100644
+> --- a/system/qemu-seccomp.c
+> +++ b/system/qemu-seccomp.c
+> @@ -50,7 +50,7 @@ const struct scmp_arg_cmp sched_setscheduler_arg[] = {
+>    * See 'NOTES' in 'man 2 clone' - s390 & cross have 'flags' in
+>    *  different position to other architectures
+>    */
+> -#if defined(HOST_S390X) || defined(HOST_S390) || defined(HOST_CRIS)
+> +#if defined(HOST_S390X) || defined(HOST_S390)
+>   #define CLONE_FLAGS_ARG 1
+>   #else
+>   #define CLONE_FLAGS_ARG 0
 
-Break out a common Xen PVH machine in preparation for
-adding a x86 Xen PVH machine.
-
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
----
- hw/arm/trace-events             |   5 -
- hw/arm/xen_arm.c                | 198 +++--------------------
- hw/xen/meson.build              |   1 +
- hw/xen/trace-events             |   4 +
- hw/xen/xen-pvh-common.c         | 275 ++++++++++++++++++++++++++++++++
- include/hw/xen/xen-pvh-common.h |  59 +++++++
- 6 files changed, 358 insertions(+), 184 deletions(-)
- create mode 100644 hw/xen/xen-pvh-common.c
- create mode 100644 include/hw/xen/xen-pvh-common.h
-
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index be6c8f720b..c64ad344bd 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -68,10 +68,5 @@ z2_aer915_send_too_long(int8_t msg) "message too long (%i bytes)"
- z2_aer915_send(uint8_t reg, uint8_t value) "reg %d value 0x%02x"
- z2_aer915_event(int8_t event, int8_t len) "i2c event =0x%x len=%d bytes"
- 
--# xen_arm.c
--xen_create_virtio_mmio_devices(int i, int irq, uint64_t base) "Created virtio-mmio device %d: irq %d base 0x%"PRIx64
--xen_init_ram(uint64_t machine_ram_size) "Initialized xen ram with size 0x%"PRIx64
--xen_enable_tpm(uint64_t addr) "Connected tpmdev at address 0x%"PRIx64
--
- # bcm2838.c
- bcm2838_gic_set_irq(int irq, int level) "gic irq:%d lvl:%d"
-diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-index f0868e7be5..04cb9855af 100644
---- a/hw/arm/xen_arm.c
-+++ b/hw/arm/xen_arm.c
-@@ -7,44 +7,12 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qapi/qapi-commands-migration.h"
--#include "qapi/visitor.h"
- #include "hw/boards.h"
--#include "hw/irq.h"
--#include "hw/sysbus.h"
--#include "sysemu/block-backend.h"
--#include "sysemu/tpm_backend.h"
- #include "sysemu/sysemu.h"
--#include "hw/xen/xen-hvm-common.h"
--#include "sysemu/tpm.h"
-+#include "hw/xen/xen-pvh-common.h"
- #include "hw/xen/arch_hvm.h"
--#include "trace.h"
- 
- #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
--OBJECT_DECLARE_SIMPLE_TYPE(XenArmState, XEN_ARM)
--
--static const MemoryListener xen_memory_listener = {
--    .region_add = xen_region_add,
--    .region_del = xen_region_del,
--    .log_start = NULL,
--    .log_stop = NULL,
--    .log_sync = NULL,
--    .log_global_start = NULL,
--    .log_global_stop = NULL,
--    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
--};
--
--struct XenArmState {
--    /*< private >*/
--    MachineState parent;
--
--    XenIOState *state;
--
--    struct {
--        uint64_t tpm_base_addr;
--    } cfg;
--};
--
--static MemoryRegion ram_lo, ram_hi;
- 
- /*
-  * VIRTIO_MMIO_DEV_SIZE is imported from tools/libs/light/libxl_arm.c under Xen
-@@ -57,147 +25,26 @@ static MemoryRegion ram_lo, ram_hi;
- #define NR_VIRTIO_MMIO_DEVICES   \
-    (GUEST_VIRTIO_MMIO_SPI_LAST - GUEST_VIRTIO_MMIO_SPI_FIRST)
- 
--static void xen_set_irq(void *opaque, int irq, int level)
--{
--    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
--        error_report("xendevicemodel_set_irq_level failed");
--    }
--}
--
--static void xen_create_virtio_mmio_devices(XenArmState *xam)
--{
--    int i;
--
--    for (i = 0; i < NR_VIRTIO_MMIO_DEVICES; i++) {
--        hwaddr base = GUEST_VIRTIO_MMIO_BASE + i * VIRTIO_MMIO_DEV_SIZE;
--        qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
--                                         GUEST_VIRTIO_MMIO_SPI_FIRST + i);
--
--        sysbus_create_simple("virtio-mmio", base, irq);
--
--        trace_xen_create_virtio_mmio_devices(i,
--                                             GUEST_VIRTIO_MMIO_SPI_FIRST + i,
--                                             base);
--    }
--}
--
--static void xen_init_ram(MachineState *machine)
-+static void xen_arm_instance_init(Object *obj)
- {
--    MemoryRegion *sysmem = get_system_memory();
--    ram_addr_t block_len, ram_size[GUEST_RAM_BANKS];
--
--    trace_xen_init_ram(machine->ram_size);
--    if (machine->ram_size <= GUEST_RAM0_SIZE) {
--        ram_size[0] = machine->ram_size;
--        ram_size[1] = 0;
--        block_len = GUEST_RAM0_BASE + ram_size[0];
--    } else {
--        ram_size[0] = GUEST_RAM0_SIZE;
--        ram_size[1] = machine->ram_size - GUEST_RAM0_SIZE;
--        block_len = GUEST_RAM1_BASE + ram_size[1];
--    }
-+    XenPVHMachineState *s = XEN_PVH_MACHINE(obj);
- 
--    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
--                           &error_fatal);
-+    /* Default values.  */
-+    s->cfg.ram_low = (MemMapEntry) { GUEST_RAM0_BASE, GUEST_RAM0_SIZE };
-+    s->cfg.ram_high = (MemMapEntry) { GUEST_RAM1_BASE, GUEST_RAM1_SIZE };
- 
--    memory_region_init_alias(&ram_lo, NULL, "xen.ram.lo", &xen_memory,
--                             GUEST_RAM0_BASE, ram_size[0]);
--    memory_region_add_subregion(sysmem, GUEST_RAM0_BASE, &ram_lo);
--    if (ram_size[1] > 0) {
--        memory_region_init_alias(&ram_hi, NULL, "xen.ram.hi", &xen_memory,
--                                 GUEST_RAM1_BASE, ram_size[1]);
--        memory_region_add_subregion(sysmem, GUEST_RAM1_BASE, &ram_hi);
--    }
--
--    /* Setup support for grants.  */
--    memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
--                           &error_fatal);
--    memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
-+    s->cfg.virtio_mmio_num = NR_VIRTIO_MMIO_DEVICES;
-+    s->cfg.virtio_mmio_irq_base = GUEST_VIRTIO_MMIO_SPI_FIRST;
-+    s->cfg.virtio_mmio = (MemMapEntry) { GUEST_VIRTIO_MMIO_BASE,
-+                                         VIRTIO_MMIO_DEV_SIZE };
- }
- 
--#ifdef CONFIG_TPM
--static void xen_enable_tpm(XenArmState *xam)
--{
--    Error *errp = NULL;
--    DeviceState *dev;
--    SysBusDevice *busdev;
--
--    TPMBackend *be = qemu_find_tpm_be("tpm0");
--    if (be == NULL) {
--        error_report("Couldn't find tmp0 backend");
--        return;
--    }
--    dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
--    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
--    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
--    busdev = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(busdev, &error_fatal);
--    sysbus_mmio_map(busdev, 0, xam->cfg.tpm_base_addr);
--
--    trace_xen_enable_tpm(xam->cfg.tpm_base_addr);
--}
--#endif
--
--static void xen_arm_init(MachineState *machine)
--{
--    XenArmState *xam = XEN_ARM(machine);
--
--    xam->state =  g_new0(XenIOState, 1);
--
--    if (machine->ram_size == 0) {
--        warn_report("%s: ram size not specified. QEMU machine started"
--                    " without IOREQ (no emulated devices including virtio)",
--                    MACHINE_CLASS(object_get_class(OBJECT(machine)))->desc);
--        return;
--    }
--
--    xen_init_ram(machine);
--
--    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
--
--    xen_create_virtio_mmio_devices(xam);
--
--#ifdef CONFIG_TPM
--    if (xam->cfg.tpm_base_addr) {
--        xen_enable_tpm(xam);
--    } else {
--        warn_report("tpm-base-addr is not provided. TPM will not be enabled");
--    }
--#endif
--}
--
--#ifdef CONFIG_TPM
--static void xen_arm_get_tpm_base_addr(Object *obj, Visitor *v,
--                                      const char *name, void *opaque,
--                                      Error **errp)
--{
--    XenArmState *xam = XEN_ARM(obj);
--    uint64_t value = xam->cfg.tpm_base_addr;
--
--    visit_type_uint64(v, name, &value, errp);
--}
--
--static void xen_arm_set_tpm_base_addr(Object *obj, Visitor *v,
--                                      const char *name, void *opaque,
--                                      Error **errp)
--{
--    XenArmState *xam = XEN_ARM(obj);
--    uint64_t value;
--
--    if (!visit_type_uint64(v, name, &value, errp)) {
--        return;
--    }
--
--    xam->cfg.tpm_base_addr = value;
--}
--#endif
--
- static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
- {
--
-+    XenPVHMachineClass *xpc = XEN_PVH_MACHINE_CLASS(oc);
-     MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Xen PVH ARM machine";
--    mc->init = xen_arm_init;
- 
-     /*
-      * mc->max_cpus holds the MAX value allowed in the -smp command-line opts.
-@@ -218,27 +65,20 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
-      * mc->max_cpus, QEMU will bail out with an error message.
-      */
-     mc->max_cpus = GUEST_MAX_VCPUS;
--    mc->default_machine_opts = "accel=xen";
--    /* Set explicitly here to make sure that real ram_size is passed */
--    mc->default_ram_size = 0;
- 
--#ifdef CONFIG_TPM
--    object_class_property_add(oc, "tpm-base-addr", "uint64_t",
--                              xen_arm_get_tpm_base_addr,
--                              xen_arm_set_tpm_base_addr,
--                              NULL, NULL);
--    object_class_property_set_description(oc, "tpm-base-addr",
--                                          "Set Base address for TPM device.");
-+    /* List of supported features known to work on PVH ARM.  */
-+    xpc->has_tpm = true;
-+    xpc->has_virtio_mmio = true;
- 
--    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
--#endif
-+    xen_pvh_class_setup_common_props(xpc);
- }
- 
- static const TypeInfo xen_arm_machine_type = {
-     .name = TYPE_XEN_ARM,
--    .parent = TYPE_MACHINE,
-+    .parent = TYPE_XEN_PVH_MACHINE,
-     .class_init = xen_arm_machine_class_init,
--    .instance_size = sizeof(XenArmState),
-+    .instance_size = sizeof(XenPVHMachineState),
-+    .instance_init = xen_arm_instance_init,
- };
- 
- static void xen_arm_machine_register_types(void)
-diff --git a/hw/xen/meson.build b/hw/xen/meson.build
-index d887fa9ba4..4a486e3673 100644
---- a/hw/xen/meson.build
-+++ b/hw/xen/meson.build
-@@ -15,6 +15,7 @@ xen_specific_ss = ss.source_set()
- xen_specific_ss.add(files(
-   'xen-mapcache.c',
-   'xen-hvm-common.c',
-+  'xen-pvh-common.c',
- ))
- if have_xen_pci_passthrough
-   xen_specific_ss.add(files(
-diff --git a/hw/xen/trace-events b/hw/xen/trace-events
-index d1b27f6c11..a07fe41c6d 100644
---- a/hw/xen/trace-events
-+++ b/hw/xen/trace-events
-@@ -64,6 +64,10 @@ destroy_hvm_domain_cannot_acquire_handle(void) "Cannot acquire xenctrl handle"
- destroy_hvm_domain_failed_action(const char *action, int sts, char *errno_s) "xc_domain_shutdown failed to issue %s, sts %d, %s"
- destroy_hvm_domain_action(int xen_domid, const char *action) "Issued domain %d %s"
- 
-+# xen-pvh-common.c
-+xen_create_virtio_mmio_devices(int i, int irq, uint64_t base) "Created virtio-mmio device %d: irq %d base 0x%"PRIx64
-+xen_enable_tpm(uint64_t addr) "Connected tpmdev at address 0x%"PRIx64
-+
- # xen-mapcache.c
- xen_map_cache(uint64_t phys_addr) "want 0x%"PRIx64
- xen_remap_bucket(uint64_t index) "index 0x%"PRIx64
-diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-new file mode 100644
-index 0000000000..880e8143d7
---- /dev/null
-+++ b/hw/xen/xen-pvh-common.c
-@@ -0,0 +1,275 @@
-+/*
-+ * QEMU Xen PVH machine - common code.
-+ *
-+ * Copyright (c) 2024 Advanced Micro Devices, Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qapi/error.h"
-+#include "qapi/visitor.h"
-+#include "hw/boards.h"
-+#include "hw/irq.h"
-+#include "hw/sysbus.h"
-+#include "sysemu/sysemu.h"
-+#include "sysemu/tpm.h"
-+#include "sysemu/tpm_backend.h"
-+#include "hw/xen/xen-pvh-common.h"
-+#include "trace.h"
-+
-+static const MemoryListener xen_memory_listener = {
-+    .region_add = xen_region_add,
-+    .region_del = xen_region_del,
-+    .log_start = NULL,
-+    .log_stop = NULL,
-+    .log_sync = NULL,
-+    .log_global_start = NULL,
-+    .log_global_stop = NULL,
-+    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
-+};
-+
-+static void xen_pvh_init_ram(XenPVHMachineState *s,
-+                             MemoryRegion *sysmem)
-+{
-+    MachineState *ms = MACHINE(s);
-+    ram_addr_t block_len, ram_size[2];
-+
-+    if (ms->ram_size <= s->cfg.ram_low.size) {
-+        ram_size[0] = ms->ram_size;
-+        ram_size[1] = 0;
-+        block_len = s->cfg.ram_low.base + ram_size[0];
-+    } else {
-+        ram_size[0] = s->cfg.ram_low.size;
-+        ram_size[1] = ms->ram_size - s->cfg.ram_low.size;
-+        block_len = s->cfg.ram_high.base + ram_size[1];
-+    }
-+
-+    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
-+                           &error_fatal);
-+
-+    memory_region_init_alias(&s->ram.low, NULL, "xen.ram.lo", &xen_memory,
-+                             s->cfg.ram_low.base, ram_size[0]);
-+    memory_region_add_subregion(sysmem, s->cfg.ram_low.base, &s->ram.low);
-+    if (ram_size[1] > 0) {
-+        memory_region_init_alias(&s->ram.high, NULL, "xen.ram.hi", &xen_memory,
-+                                 s->cfg.ram_high.base, ram_size[1]);
-+        memory_region_add_subregion(sysmem, s->cfg.ram_high.base, &s->ram.high);
-+    }
-+
-+    /* Setup support for grants.  */
-+    memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
-+                           &error_fatal);
-+    memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
-+}
-+
-+static void xen_set_irq(void *opaque, int irq, int level)
-+{
-+    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
-+        error_report("xendevicemodel_set_irq_level failed");
-+    }
-+}
-+
-+static void xen_create_virtio_mmio_devices(XenPVHMachineState *s)
-+{
-+    int i;
-+
-+    for (i = 0; i < s->cfg.virtio_mmio_num; i++) {
-+        hwaddr base = s->cfg.virtio_mmio.base + i * s->cfg.virtio_mmio.size;
-+        qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
-+                                         s->cfg.virtio_mmio_irq_base + i);
-+
-+        sysbus_create_simple("virtio-mmio", base, irq);
-+
-+        trace_xen_create_virtio_mmio_devices(i,
-+                                             s->cfg.virtio_mmio_irq_base + i,
-+                                             base);
-+    }
-+}
-+
-+#ifdef CONFIG_TPM
-+static void xen_enable_tpm(XenPVHMachineState *s)
-+{
-+    Error *errp = NULL;
-+    DeviceState *dev;
-+    SysBusDevice *busdev;
-+
-+    TPMBackend *be = qemu_find_tpm_be("tpm0");
-+    if (be == NULL) {
-+        error_report("Couldn't find tmp0 backend");
-+        return;
-+    }
-+    dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
-+    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
-+    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_mmio_map(busdev, 0, s->cfg.tpm.base);
-+
-+    trace_xen_enable_tpm(s->cfg.tpm.base);
-+}
-+#endif
-+
-+static void xen_pvh_init(MachineState *ms)
-+{
-+    XenPVHMachineState *s = XEN_PVH_MACHINE(ms);
-+    XenPVHMachineClass *xpc = XEN_PVH_MACHINE_GET_CLASS(s);
-+    MemoryRegion *sysmem = get_system_memory();
-+
-+    if (ms->ram_size == 0) {
-+        warn_report("%s: ram size not specified. QEMU machine started"
-+                    " without IOREQ (no emulated devices including virtio)",
-+                    MACHINE_CLASS(object_get_class(OBJECT(ms)))->desc);
-+        return;
-+    }
-+
-+    xen_pvh_init_ram(s, sysmem);
-+    xen_register_ioreq(&s->ioreq, ms->smp.max_cpus, &xen_memory_listener);
-+
-+    if (s->cfg.virtio_mmio_num) {
-+        xen_create_virtio_mmio_devices(s);
-+    }
-+
-+#ifdef CONFIG_TPM
-+    if (xpc->has_tpm) {
-+        if (s->cfg.tpm.base) {
-+            xen_enable_tpm(s);
-+        } else {
-+            warn_report("tpm-base-addr is not set. TPM will not be enabled");
-+        }
-+    }
-+#endif
-+
-+    /* Call the implementation specific init.  */
-+    if (xpc->init) {
-+        xpc->init(ms);
-+    }
-+}
-+
-+#define XEN_PVH_PROP_MEMMAP_SETTER(n, f)                                   \
-+static void xen_pvh_set_ ## n ## _ ## f(Object *obj, Visitor *v,           \
-+                                       const char *name, void *opaque,     \
-+                                       Error **errp)                       \
-+{                                                                          \
-+    XenPVHMachineState *xp = XEN_PVH_MACHINE(obj);                         \
-+    uint64_t value;                                                        \
-+                                                                           \
-+    if (!visit_type_size(v, name, &value, errp)) {                         \
-+        return;                                                            \
-+    }                                                                      \
-+    xp->cfg.n.f = value;                                                   \
-+}
-+
-+#define XEN_PVH_PROP_MEMMAP_GETTER(n, f)                                   \
-+static void xen_pvh_get_ ## n ## _ ## f(Object *obj, Visitor *v,           \
-+                                       const char *name, void *opaque,     \
-+                                       Error **errp)                       \
-+{                                                                          \
-+    XenPVHMachineState *xp = XEN_PVH_MACHINE(obj);                         \
-+    uint64_t value = xp->cfg.n.f;                                          \
-+                                                                           \
-+    visit_type_uint64(v, name, &value, errp);                              \
-+}
-+
-+#define XEN_PVH_PROP_MEMMAP_BASE(n)        \
-+    XEN_PVH_PROP_MEMMAP_SETTER(n, base)    \
-+    XEN_PVH_PROP_MEMMAP_GETTER(n, base)    \
-+
-+#define XEN_PVH_PROP_MEMMAP_SIZE(n)        \
-+    XEN_PVH_PROP_MEMMAP_SETTER(n, size)    \
-+    XEN_PVH_PROP_MEMMAP_GETTER(n, size)
-+
-+#define XEN_PVH_PROP_MEMMAP(n)             \
-+    XEN_PVH_PROP_MEMMAP_BASE(n)            \
-+    XEN_PVH_PROP_MEMMAP_SIZE(n)
-+
-+XEN_PVH_PROP_MEMMAP(ram_low)
-+XEN_PVH_PROP_MEMMAP(ram_high)
-+/* TPM only has a base-addr option.  */
-+XEN_PVH_PROP_MEMMAP_BASE(tpm)
-+XEN_PVH_PROP_MEMMAP(virtio_mmio)
-+
-+void xen_pvh_class_setup_common_props(XenPVHMachineClass *xpc)
-+{
-+    ObjectClass *oc = OBJECT_CLASS(xpc);
-+    MachineClass *mc = MACHINE_CLASS(xpc);
-+
-+#define OC_MEMMAP_PROP_BASE(c, prop_name, name)                           \
-+do {                                                                      \
-+    object_class_property_add(c, prop_name "-base", "uint64_t",           \
-+                              xen_pvh_get_ ## name ## _base,              \
-+                              xen_pvh_set_ ## name ## _base, NULL, NULL); \
-+    object_class_property_set_description(oc, prop_name "-base",          \
-+                              "Set base address for " prop_name);         \
-+} while (0)
-+
-+#define OC_MEMMAP_PROP_SIZE(c, prop_name, name)                           \
-+do {                                                                      \
-+    object_class_property_add(c, prop_name "-size", "uint64_t",           \
-+                              xen_pvh_get_ ## name ## _size,              \
-+                              xen_pvh_set_ ## name ## _size, NULL, NULL); \
-+    object_class_property_set_description(oc, prop_name "-size",          \
-+                              "Set memory range size for " prop_name);    \
-+} while (0)
-+
-+#define OC_MEMMAP_PROP(c, prop_name, name)                                \
-+do {                                                                      \
-+        OC_MEMMAP_PROP_BASE(c, prop_name, name);                          \
-+        OC_MEMMAP_PROP_SIZE(c, prop_name, name);                          \
-+} while (0)
-+
-+    /*
-+     * We provide memmap properties to allow Xen to move things to other
-+     * addresses for example when users need to accomodate the memory-map
-+     * for 1:1 mapped devices/memory.
-+     */
-+    OC_MEMMAP_PROP(oc, "ram-low", ram_low);
-+    OC_MEMMAP_PROP(oc, "ram-high", ram_high);
-+
-+    if (xpc->has_virtio_mmio) {
-+        OC_MEMMAP_PROP(oc, "virtio-mmio", virtio_mmio);
-+    }
-+
-+#ifdef CONFIG_TPM
-+    if (xpc->has_tpm) {
-+        object_class_property_add(oc, "tpm-base-addr", "uint64_t",
-+                                  xen_pvh_get_tpm_base,
-+                                  xen_pvh_set_tpm_base,
-+                                  NULL, NULL);
-+        object_class_property_set_description(oc, "tpm-base-addr",
-+                                  "Set Base address for TPM device.");
-+
-+        machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
-+    }
-+#endif
-+}
-+
-+static void xen_pvh_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->init = xen_pvh_init;
-+
-+    mc->desc = "Xen PVH machine";
-+    mc->max_cpus = 1;
-+    mc->default_machine_opts = "accel=xen";
-+    /* Set to zero to make sure that the real ram size is passed. */
-+    mc->default_ram_size = 0;
-+}
-+
-+static const TypeInfo xen_pvh_info = {
-+    .name = TYPE_XEN_PVH_MACHINE,
-+    .parent = TYPE_MACHINE,
-+    .abstract = true,
-+    .instance_size = sizeof(XenPVHMachineState),
-+    .class_size = sizeof(XenPVHMachineClass),
-+    .class_init = xen_pvh_class_init,
-+};
-+
-+static void xen_pvh_register_types(void)
-+{
-+    type_register_static(&xen_pvh_info);
-+}
-+
-+type_init(xen_pvh_register_types);
-diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
-new file mode 100644
-index 0000000000..77fd98b9fe
---- /dev/null
-+++ b/include/hw/xen/xen-pvh-common.h
-@@ -0,0 +1,59 @@
-+/*
-+ * QEMU Xen PVH machine - common code.
-+ *
-+ * Copyright (c) 2024 Advanced Micro Devices, Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef XEN_PVH_COMMON_H__
-+#define XEN_PVH_COMMON_H__
-+
-+#include <assert.h>
-+#include "hw/sysbus.h"
-+#include "hw/hw.h"
-+#include "hw/xen/xen-hvm-common.h"
-+#include "hw/pci-host/gpex.h"
-+
-+#define TYPE_XEN_PVH_MACHINE MACHINE_TYPE_NAME("xen-pvh-base")
-+OBJECT_DECLARE_TYPE(XenPVHMachineState, XenPVHMachineClass,
-+                    XEN_PVH_MACHINE)
-+
-+struct XenPVHMachineClass {
-+    MachineClass parent;
-+
-+    /* PVH implementation specific init.  */
-+    void (*init)(MachineState *state);
-+
-+    /*
-+     * Each implementation can optionally enable features that it
-+     * supports and are known to work.
-+     */
-+    bool has_tpm;
-+    bool has_virtio_mmio;
-+};
-+
-+struct XenPVHMachineState {
-+    /*< private >*/
-+    MachineState parent;
-+
-+    XenIOState ioreq;
-+
-+    struct {
-+        MemoryRegion low;
-+        MemoryRegion high;
-+    } ram;
-+
-+    struct {
-+        MemMapEntry ram_low, ram_high;
-+        MemMapEntry tpm;
-+
-+        /* Virtio-mmio */
-+        MemMapEntry virtio_mmio;
-+        uint32_t virtio_mmio_num;
-+        uint32_t virtio_mmio_irq_base;
-+    } cfg;
-+};
-+
-+void xen_pvh_class_setup_common_props(XenPVHMachineClass *xpc);
-+#endif
--- 
-2.43.0
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
