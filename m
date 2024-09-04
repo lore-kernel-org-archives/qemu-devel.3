@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD7CFCA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75199CD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 11:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slo3p-0002ZO-Jk; Wed, 04 Sep 2024 07:20:29 -0400
+	id 1slo6V-0005Ws-2H; Wed, 04 Sep 2024 07:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slo3e-0001uk-E8
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:20:18 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1slo6T-0005P2-36
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:23:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slo3c-0000Fz-0T
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:20:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=NTVJCIijo7BWTcZV3LqWQgRatoEsB1f2SVlshq4WQ9c=; b=PY6bsgFf5SeX/AZMxlk+xEdoN/
- sNo7uPc+whOE2zfOVP3bx+Qm/9blNQnDbilavFrTGlJU5upZQfm6zDRlgg7EXZBuj6G+vxhsCtQG1
- ++ucwyqBcXRPfUF5NHsGjJP+ShUFjs3tZ2PNPl1tBptfFHHsnGlxcJ57N5YVBR9R+S8MgtFBeD37V
- FSCcNZnUs9aYvnLQ77UQrTRsssQxImKx3irN9myha+qhl+undGIgEmhjV5RSReGIzwa0Y3HUAA4f/
- Vk1uq+FckskNk518P4fhLcfPrDVJTjHKEU2hqBufGI250Pp1JftXdVo4/URJvJX6GhSlqSKBJkxxx
- z+0Oq4sav95rVKh6PtCbDcArwdKauqsUKAJPTk+Dy7Ck/VV2BfO7OUZmMXQV5umbxCPXEnBL+d7LL
- sHEo5pQOEnYmnU1gS2NqwnW540+fKh+Rq215jgQmXCrkVu4nRLph7lklAnrzQp7VVifLc4oLxWpBz
- ZFI+vTwdDRGc3MsS9Xgi8VcB8ROjFTN+cwseyENrJxKVezzCCjwLkThGT2lU2wyvB0QbDA5FRgMRd
- jTT2GSjI3r4BmGDIjp8u/wj+CPnmFUnr7xAEENFWjXy0d5rRYRdWRvpFW+At0VrPTvSaM134drFlm
- VusYAhk7T+3io+hSPXhIaz7z0ZG/VD/rWKN/4iBBg=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1slo3O-0002n2-85; Wed, 04 Sep 2024 12:20:06 +0100
-Message-ID: <6317769b-2d90-4c72-a3fb-1de88f6dda6c@ilande.co.uk>
-Date: Wed, 4 Sep 2024 12:19:58 +0100
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1slo6P-00029m-Nd
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 07:23:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725448988;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PmylSsDXAxT+Pv/FJeIhD2/vlBnxT0mo79GWr7E19Pg=;
+ b=SwTkhtBnKv/qs7+QyDHkmNy1a0VBvXJMY1pj4O2/YTaQbs4nU+dWncFk5XjA/X/i9oFFBZ
+ +IgNnpZXwU+OizYcuISJ8wlrnD83xbxHG9JqvkXGJK0pshbeumbwzmnNZHO8rgTalvcZpi
+ RtojGY3TZvgfNlap8kmOeUN1hltI84s=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-25-MzgJqLTQPxe8c4A-Mxu0-w-1; Wed, 04 Sep 2024 07:20:22 -0400
+X-MC-Unique: MzgJqLTQPxe8c4A-Mxu0-w-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2d876431c4aso4676048a91.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 04:20:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725448821; x=1726053621;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PmylSsDXAxT+Pv/FJeIhD2/vlBnxT0mo79GWr7E19Pg=;
+ b=ffA8Y1e2M2CRs6jVt4AffGvv9u5yBFnm6unUZ0W81d36F9Rv9NNS/wCbaxraIGrCE/
+ uLgQLIoFCLdQGJ6pjw5sL0H1WpXqIuWB26Ii2HPOGzRXlrPGKPEUZFeRdFaeRdX+qZaU
+ sBObQxBtv5n5WJdu9xuzwqfKus5Lne2IoZwthlARrgzbyL+bu+DzinaMYi5bnwCt6xbQ
+ kn53N92rF5BH+3LK8KqK4nC764E7M/x7Mt997A0S1poGiE5oe7CD+D3xZ8M6l0PJYQgv
+ XpAOU4WnA69t++9RUA6iFcwk4w/+goLx8waHw9c7KKZ1qrCWGmAYL5hNWSlIajFBFb2A
+ Jpxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIy435aHgu3ZMhsIQSvII39q4qk8z3cihAjGsPZ4+/hIfT16FBwy/YRKA2Pjvdj4UtYo2/XT2F36ZH@nongnu.org
+X-Gm-Message-State: AOJu0Yx5lv9WGhQaNHrT4qt9hzwud48py0QD2MUA+DaIHSQxl23zejov
+ KGxLjydDd1ZeLu7UETArnydSgaL8WGmKOOlPbMR7b2BW7MgCQq9TCXqJOBQI4kD/NiRWWG+7/N9
+ ZGAjLRakWjByYesLw8+1ryYxSONsiaWnxb4MiA/NiHP7hdMI5iAuYkpbKfPyr8MTL+uzIL39EhP
+ br/Zjytgvza9c+Md8+40FzYcjmM6uC4GldchU=
+X-Received: by 2002:a17:90b:2250:b0:2d8:d849:37fc with SMTP id
+ 98e67ed59e1d1-2da62ccd704mr5362851a91.2.1725448821079; 
+ Wed, 04 Sep 2024 04:20:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEX4k3AHTao0rS2mfbMZjKWRk3V60sKJlxgYpILdIu5P75kOsTaCk+iyFBBKjSasEF/igy1rL7mLCLecg5geQ=
+X-Received: by 2002:a17:90b:2250:b0:2d8:d849:37fc with SMTP id
+ 98e67ed59e1d1-2da62ccd704mr5362823a91.2.1725448820638; Wed, 04 Sep 2024
+ 04:20:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- chauser@pullman.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org
-References: <20240904102301.175706-1-mark.cave-ayland@ilande.co.uk>
- <e828e000-664e-48af-ae33-6e323e28d167@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <e828e000-664e-48af-ae33-6e323e28d167@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3] escc: convert Sun mouse to use QemuInputHandler
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240628145710.1516121-1-aesteve@redhat.com>
+ <20240628145710.1516121-4-aesteve@redhat.com>
+ <20240711082538.GE563880@dynamic-pd01.res.v6.highway.a1.net>
+In-Reply-To: <20240711082538.GE563880@dynamic-pd01.res.v6.highway.a1.net>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Wed, 4 Sep 2024 13:20:09 +0200
+Message-ID: <CADSE00Js39MbwLxaN5F5kxDVnRcxa5KHjrA3R-nzRS4k5jtsLQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/5] vhost-user-dev: Add cache BAR
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ jasowang@redhat.com, david@redhat.com, slp@redhat.com,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000085bbd0621495cb7"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,195 +101,465 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/09/2024 11:53, Philippe Mathieu-Daudé wrote:
+--000000000000085bbd0621495cb7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On 4/9/24 12:23, Mark Cave-Ayland wrote:
->> Update the Sun mouse implementation to use QemuInputHandler instead of the
->> legacy qemu_add_mouse_event_handler() function.
->>
->> Note that this conversion adds extra sunmouse_* members to ESCCChannelState
->> but they are not added to the migration stream (similar to the Sun keyboard
->> members). If this were desired in future, the Sun devices should be split
->> into separate devices and added to the migration stream there instead.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> On v3 there is also an implicit:
-> Tested-by: Carl Hauser <chauser@pullman.com>
+On Thu, Jul 11, 2024 at 10:25=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.c=
+om>
+wrote:
 
-That's true, although I'm hesitant to add such a tag without a nod from the tester. 
-Carl, are you happy for me to add your Tested-by tag upon merge?
-
->> ---
->>   hw/char/escc.c         | 88 +++++++++++++++++++++++++++++++-----------
->>   include/hw/char/escc.h |  3 ++
->>   2 files changed, 69 insertions(+), 22 deletions(-)
->>
->> v3:
->> - Subtract the deltas in sunmouse_sync() instead of resetting them to zero
->>    which provides better tracking if the mouse movement exceeds the 8-bit
->>    delta limit of the MSC protocol
->>
->> - Add R-B tag from Richard
->>
->> v2:
->> - Only allow left, middle and right button events (use bit 7 which is always
->>    set in the first byte to indicate a valid event)
->>
->> - Remove zero entries from the bmap table as static entries should be
->>    zero anyway
->>
->>
->> diff --git a/hw/char/escc.c b/hw/char/escc.c
->> index d450d70eda..245a7b19d3 100644
->> --- a/hw/char/escc.c
->> +++ b/hw/char/escc.c
->> @@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
->>       s->rxint = s->txint = 0;
->>       s->rxint_under_svc = s->txint_under_svc = 0;
->>       s->e0_mode = s->led_mode = s->caps_lock_mode = s->num_lock_mode = 0;
->> +    s->sunmouse_dx = s->sunmouse_dy = s->sunmouse_buttons = 0;
->>       clear_queue(s);
->>   }
->> @@ -952,53 +953,96 @@ static void handle_kbd_command(ESCCChannelState *s, int val)
->>       }
->>   }
->> -static void sunmouse_event(void *opaque,
->> -                               int dx, int dy, int dz, int buttons_state)
->> +static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
->> +                                  InputEvent *evt)
->>   {
->> -    ESCCChannelState *s = opaque;
->> -    int ch;
->> +    ESCCChannelState *s = (ESCCChannelState *)dev;
->> +    InputMoveEvent *move;
->> +    InputBtnEvent *btn;
->> +    static const int bmap[INPUT_BUTTON__MAX] = {
->> +        [INPUT_BUTTON_LEFT]   = 0x4,
->> +        [INPUT_BUTTON_MIDDLE] = 0x2,
->> +        [INPUT_BUTTON_RIGHT]  = 0x1,
->> +    };
->> +
->> +    switch (evt->type) {
->> +    case INPUT_EVENT_KIND_REL:
->> +        move = evt->u.rel.data;
->> +        if (move->axis == INPUT_AXIS_X) {
->> +            s->sunmouse_dx += move->value;
->> +        } else if (move->axis == INPUT_AXIS_Y) {
->> +            s->sunmouse_dy -= move->value;
->> +        }
->> +        break;
->> -    trace_escc_sunmouse_event(dx, dy, buttons_state);
->> -    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
->> +    case INPUT_EVENT_KIND_BTN:
->> +        btn = evt->u.btn.data;
->> +        if (bmap[btn->button]) {
->> +            if (btn->down) {
->> +                s->sunmouse_buttons |= bmap[btn->button];
->> +            } else {
->> +                s->sunmouse_buttons &= ~bmap[btn->button];
->> +            }
->> +            /* Indicate we have a supported button event */
->> +            s->sunmouse_buttons |= 0x80;
->> +        }
->> +        break;
->> -    if (buttons_state & MOUSE_EVENT_LBUTTON) {
->> -        ch ^= 0x4;
->> -    }
->> -    if (buttons_state & MOUSE_EVENT_MBUTTON) {
->> -        ch ^= 0x2;
->> +    default:
->> +        /* keep gcc happy */
->> +        break;
->>       }
->> -    if (buttons_state & MOUSE_EVENT_RBUTTON) {
->> -        ch ^= 0x1;
->> +}
->> +
->> +static void sunmouse_sync(DeviceState *dev)
->> +{
->> +    ESCCChannelState *s = (ESCCChannelState *)dev;
->> +    int ch;
->> +
->> +    if (s->sunmouse_dx == 0 && s->sunmouse_dy == 0 &&
->> +        (s->sunmouse_buttons & 0x80) == 0) {
->> +            /* Nothing to do after button event filter */
->> +            return;
->>       }
->> +    /* Clear our button event flag */
->> +    s->sunmouse_buttons &= ~0x80;
->> +    trace_escc_sunmouse_event(s->sunmouse_dx, s->sunmouse_dy,
->> +                              s->sunmouse_buttons);
->> +    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
->> +    ch ^= s->sunmouse_buttons;
->>       put_queue(s, ch);
->> -    ch = dx;
->> -
->> +    ch = s->sunmouse_dx;
->>       if (ch > 127) {
->>           ch = 127;
->>       } else if (ch < -127) {
->>           ch = -127;
->>       }
->> -
->>       put_queue(s, ch & 0xff);
->> +    s->sunmouse_dx -= ch;
->> -    ch = -dy;
->> -
->> +    ch = s->sunmouse_dy;
->>       if (ch > 127) {
->>           ch = 127;
->>       } else if (ch < -127) {
->>           ch = -127;
->>       }
->> -
->>       put_queue(s, ch & 0xff);
->> +    s->sunmouse_dy -= ch;
->>       /* MSC protocol specifies two extra motion bytes */
->> -
->>       put_queue(s, 0);
->>       put_queue(s, 0);
->>   }
->> +static const QemuInputHandler sunmouse_handler = {
->> +    .name  = "QEMU Sun Mouse",
->> +    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
->> +    .event = sunmouse_handle_event,
->> +    .sync  = sunmouse_sync,
->> +};
->> +
->>   static void escc_init1(Object *obj)
->>   {
->>       ESCCState *s = ESCC(obj);
->> @@ -1036,8 +1080,8 @@ static void escc_realize(DeviceState *dev, Error **errp)
->>       }
->>       if (s->chn[0].type == escc_mouse) {
->> -        qemu_add_mouse_event_handler(sunmouse_event, &s->chn[0], 0,
->> -                                     "QEMU Sun Mouse");
->> +        s->chn[0].hs = qemu_input_handler_register((DeviceState *)(&s->chn[0]),
->> +                                                   &sunmouse_handler);
->>       }
->>       if (s->chn[1].type == escc_kbd) {
->>           s->chn[1].hs = qemu_input_handler_register((DeviceState *)(&s->chn[1]),
->> diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
->> index 5669a5b811..8c4c6a7730 100644
->> --- a/include/hw/char/escc.h
->> +++ b/include/hw/char/escc.h
->> @@ -46,6 +46,9 @@ typedef struct ESCCChannelState {
->>       uint8_t rx, tx;
->>       QemuInputHandlerState *hs;
->>       char *sunkbd_layout;
->> +    int sunmouse_dx;
->> +    int sunmouse_dy;
->> +    int sunmouse_buttons;
->>   } ESCCChannelState;
->>   struct ESCCState {
+> On Fri, Jun 28, 2024 at 04:57:08PM +0200, Albert Esteve wrote:
+> > Add a cache BAR in the vhost-user-device
+> > into which files can be directly mapped.
+> >
+> > The number, shmid, and size of the VIRTIO Shared
+> > Memory subregions is retrieved through a get_shmem_config
+> > message sent by the vhost-user-base module
+> > on the realize step, after virtio_init().
+> >
+> > By default, if VHOST_USER_PROTOCOL_F_SHMEM
+> > feature is not supported by the backend,
+> > there is no cache.
+> >
+> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+>
+> Michael: Please review vhost_user_device_pci_realize() below regarding
+> virtio-pci BAR layout. Thanks!
+>
+> > ---
+> >  hw/virtio/vhost-user-base.c       | 39 +++++++++++++++++++++++++++++--
+> >  hw/virtio/vhost-user-device-pci.c | 37 ++++++++++++++++++++++++++---
+> >  2 files changed, 71 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+> > index a83167191e..e47c568a55 100644
+> > --- a/hw/virtio/vhost-user-base.c
+> > +++ b/hw/virtio/vhost-user-base.c
+> > @@ -268,7 +268,9 @@ static void vub_device_realize(DeviceState *dev,
+> Error **errp)
+> >  {
+> >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> >      VHostUserBase *vub =3D VHOST_USER_BASE(dev);
+> > -    int ret;
+> > +    uint64_t memory_sizes[8];
+> > +    void *cache_ptr;
+> > +    int i, ret, nregions;
+> >
+> >      if (!vub->chardev.chr) {
+> >          error_setg(errp, "vhost-user-base: missing chardev");
+> > @@ -311,7 +313,7 @@ static void vub_device_realize(DeviceState *dev,
+> Error **errp)
+> >
+> >      /* Allocate queues */
+> >      vub->vqs =3D g_ptr_array_sized_new(vub->num_vqs);
+> > -    for (int i =3D 0; i < vub->num_vqs; i++) {
+> > +    for (i =3D 0; i < vub->num_vqs; i++) {
+> >          g_ptr_array_add(vub->vqs,
+> >                          virtio_add_queue(vdev, vub->vq_size,
+> >                                           vub_handle_output));
+> > @@ -328,6 +330,39 @@ static void vub_device_realize(DeviceState *dev,
+> Error **errp)
+> >          do_vhost_user_cleanup(vdev, vub);
+> >      }
+> >
+> > +    ret =3D
+> vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhost_dev,
+> > +                                                           &nregions,
+> > +                                                           memory_size=
+s,
+> > +                                                           errp);
+> > +
+> > +    if (ret < 0) {
+> > +        do_vhost_user_cleanup(vdev, vub);
+> > +    }
+> > +
+> > +    for (i =3D 0; i < nregions; i++) {
+> > +        if (memory_sizes[i]) {
+> > +            if (!is_power_of_2(memory_sizes[i]) ||
+> > +                memory_sizes[i] < qemu_real_host_page_size()) {
+>
+> Or just if (memory_sizes[i] % qemu_real_host_page_size() !=3D 0)?
 
 
-ATB,
+I like both options. The original is more explicit, your proposal is more
+concise.
+I will change it.
 
-Mark.
 
+>
+> > +                error_setg(errp, "Shared memory %d size must be a powe=
+r
+> of 2 "
+> > +                                 "no smaller than the page size", i);
+> > +                return;
+> > +            }
+> > +
+> > +            cache_ptr =3D mmap(NULL, memory_sizes[i], PROT_READ,
+>
+> Should this be PROT_NONE like in
+> vhost_user_backend_handle_shmem_unmap()?
+>
+
+Since this is supposed to be blank memory, I think you may be
+right. But I am not completely certain. I'll change it and check if
+everything works as expected on my side.
+
+
+>
+> > +                            MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+> > +            if (cache_ptr =3D=3D MAP_FAILED) {
+> > +                error_setg(errp, "Unable to mmap blank cache: %s",
+> > +                           strerror(errno));
+>
+> error_setg_errno() can be used here.
+>
+> > +                return;
+> > +            }
+> > +
+> > +            virtio_new_shmem_region(vdev);
+> > +            memory_region_init_ram_ptr(&vdev->shmem_list[i],
+> > +                                    OBJECT(vdev), "vub-shm-" + i,
+> > +                                    memory_sizes[i], cache_ptr);
+> > +        }
+> > +    }
+> > +
+> >      qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NUL=
+L,
+> >                               dev, NULL, true);
+> >  }
+> > diff --git a/hw/virtio/vhost-user-device-pci.c
+> b/hw/virtio/vhost-user-device-pci.c
+> > index efaf55d3dd..314bacfb7a 100644
+> > --- a/hw/virtio/vhost-user-device-pci.c
+> > +++ b/hw/virtio/vhost-user-device-pci.c
+> > @@ -8,14 +8,18 @@
+> >   */
+> >
+> >  #include "qemu/osdep.h"
+> > +#include "qapi/error.h"
+> >  #include "hw/qdev-properties.h"
+> >  #include "hw/virtio/vhost-user-base.h"
+> >  #include "hw/virtio/virtio-pci.h"
+> >
+> > +#define VIRTIO_DEVICE_PCI_CACHE_BAR 2
+> > +
+> >  struct VHostUserDevicePCI {
+> >      VirtIOPCIProxy parent_obj;
+> >
+> >      VHostUserBase vub;
+> > +    MemoryRegion cachebar;
+> >  };
+> >
+> >  #define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
+> > @@ -25,10 +29,37 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI,
+> VHOST_USER_DEVICE_PCI)
+> >  static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev,
+> Error **errp)
+> >  {
+> >      VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(vpci_dev);
+> > -    DeviceState *vdev =3D DEVICE(&dev->vub);
+> > -
+> > +    DeviceState *dev_state =3D DEVICE(&dev->vub);
+> > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev_state);
+> > +    uint64_t offset =3D 0, cache_size =3D 0;
+> > +    int i;
+> > +
+> >      vpci_dev->nvectors =3D 1;
+> > -    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
+> > +    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
+> > +
+> > +    for (i =3D 0; i < vdev->n_shmem_regions; i++) {
+> > +        if (vdev->shmem_list[i].size > UINT64_MAX - cache_size) {
+> > +            error_setg(errp, "Total shared memory required overflow");
+> > +            return;
+> > +        }
+> > +        cache_size =3D cache_size + vdev->shmem_list[i].size;
+> > +    }
+> > +    if (cache_size) {
+> > +        memory_region_init(&dev->cachebar, OBJECT(vpci_dev),
+> > +                           "vhost-device-pci-cachebar", cache_size);
+> > +        for (i =3D 0; i < vdev->n_shmem_regions; i++) {
+> > +            memory_region_add_subregion(&dev->cachebar, offset,
+> > +                                        &vdev->shmem_list[i]);
+> > +            virtio_pci_add_shm_cap(vpci_dev,
+> VIRTIO_DEVICE_PCI_CACHE_BAR,
+> > +                                   offset, vdev->shmem_list[i].size, i=
+);
+> > +            offset =3D offset + vdev->shmem_list[i].size;
+> > +        }
+> > +        pci_register_bar(&vpci_dev->pci_dev,
+> VIRTIO_DEVICE_PCI_CACHE_BAR,
+> > +                        PCI_BASE_ADDRESS_SPACE_MEMORY |
+> > +                        PCI_BASE_ADDRESS_MEM_PREFETCH |
+> > +                        PCI_BASE_ADDRESS_MEM_TYPE_64,
+> > +                        &dev->cachebar);
+> > +    }
+> >  }
+> >
+> >  static void vhost_user_device_pci_class_init(ObjectClass *klass, void
+> *data)
+> > --
+> > 2.45.2
+> >
+>
+
+--000000000000085bbd0621495cb7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr" class=3D"gmail_sign=
+ature"><div dir=3D"ltr"><br></div></div></div></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jul 11, 2024 at 10:25=
+=E2=80=AFAM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com">stef=
+anha@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
+ding-left:1ex">On Fri, Jun 28, 2024 at 04:57:08PM +0200, Albert Esteve wrot=
+e:<br>
+&gt; Add a cache BAR in the vhost-user-device<br>
+&gt; into which files can be directly mapped.<br>
+&gt; <br>
+&gt; The number, shmid, and size of the VIRTIO Shared<br>
+&gt; Memory subregions is retrieved through a get_shmem_config<br>
+&gt; message sent by the vhost-user-base module<br>
+&gt; on the realize step, after virtio_init().<br>
+&gt; <br>
+&gt; By default, if VHOST_USER_PROTOCOL_F_SHMEM<br>
+&gt; feature is not supported by the backend,<br>
+&gt; there is no cache.<br>
+&gt; <br>
+&gt; Signed-off-by: Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.com"=
+ target=3D"_blank">aesteve@redhat.com</a>&gt;<br>
+<br>
+Michael: Please review vhost_user_device_pci_realize() below regarding<br>
+virtio-pci BAR layout. Thanks!<br>
+<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/virtio/vhost-user-base.c=C2=A0 =C2=A0 =C2=A0 =C2=A0| 39 +++++=
+++++++++++++++++++++++++--<br>
+&gt;=C2=A0 hw/virtio/vhost-user-device-pci.c | 37 +++++++++++++++++++++++++=
++---<br>
+&gt;=C2=A0 2 files changed, 71 insertions(+), 5 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c=
+<br>
+&gt; index a83167191e..e47c568a55 100644<br>
+&gt; --- a/hw/virtio/vhost-user-base.c<br>
+&gt; +++ b/hw/virtio/vhost-user-base.c<br>
+&gt; @@ -268,7 +268,9 @@ static void vub_device_realize(DeviceState *dev, E=
+rror **errp)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 VHostUserBase *vub =3D VHOST_USER_BASE(dev);<br>
+&gt; -=C2=A0 =C2=A0 int ret;<br>
+&gt; +=C2=A0 =C2=A0 uint64_t memory_sizes[8];<br>
+&gt; +=C2=A0 =C2=A0 void *cache_ptr;<br>
+&gt; +=C2=A0 =C2=A0 int i, ret, nregions;<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (!vub-&gt;chardev.chr) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;vhost-user-ba=
+se: missing chardev&quot;);<br>
+&gt; @@ -311,7 +313,7 @@ static void vub_device_realize(DeviceState *dev, E=
+rror **errp)<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 /* Allocate queues */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 vub-&gt;vqs =3D g_ptr_array_sized_new(vub-&gt;num_=
+vqs);<br>
+&gt; -=C2=A0 =C2=A0 for (int i =3D 0; i &lt; vub-&gt;num_vqs; i++) {<br>
+&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; vub-&gt;num_vqs; i++) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_ptr_array_add(vub-&gt;vqs,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 virtio_add_queue(vdev, vub-&gt;vq_size,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0vub_handle_output));<br>
+&gt; @@ -328,6 +330,39 @@ static void vub_device_realize(DeviceState *dev, =
+Error **errp)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 do_vhost_user_cleanup(vdev, vub);<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; +=C2=A0 =C2=A0 ret =3D vub-&gt;vhost_dev.vhost_ops-&gt;vhost_get_shmem=
+_config(&amp;vub-&gt;vhost_dev,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;nreg=
+ions,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memory_si=
+zes,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0errp);<br=
+>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (ret &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 do_vhost_user_cleanup(vdev, vub);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; nregions; i++) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (memory_sizes[i]) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!is_power_of_2(memory_s=
+izes[i]) ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_sizes[=
+i] &lt; qemu_real_host_page_size()) {<br>
+<br>
+Or just if (memory_sizes[i] % qemu_real_host_page_size() !=3D 0)?</blockquo=
+te><div><br></div><div>I like both options. The original is more explicit, =
+your proposal is more concise.</div><div>I will change it.</div><div>=C2=A0=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(er=
+rp, &quot;Shared memory %d size must be a power of 2 &quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;no smaller than the =
+page size&quot;, i);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cache_ptr =3D mmap(NULL, me=
+mory_sizes[i], PROT_READ,<br>
+<br>
+Should this be PROT_NONE like in<br>
+vhost_user_backend_handle_shmem_unmap()?<br></blockquote><div><br></div><di=
+v>Since this is supposed=C2=A0to be blank memory, I think you may be</div><=
+div>right. But I am not completely certain. I&#39;ll change it and check if=
+</div><div>everything works as expected on my side.</div><div>=C2=A0</div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cache_ptr =3D=3D MAP_FA=
+ILED) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(er=
+rp, &quot;Unable to mmap blank cache: %s&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0strerror(errno));<br>
+<br>
+error_setg_errno() can be used here.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 virtio_new_shmem_region(vde=
+v);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_region_init_ram_ptr(=
+&amp;vdev-&gt;shmem_list[i],<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OBJECT(vdev), &quo=
+t;vub-shm-&quot; + i,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_sizes[i], c=
+ache_ptr);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 qemu_chr_fe_set_handlers(&amp;vub-&gt;chardev, NUL=
+L, NULL, vub_event, NULL,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev, NULL, true);<br>
+&gt;=C2=A0 }<br>
+&gt; diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-=
+device-pci.c<br>
+&gt; index efaf55d3dd..314bacfb7a 100644<br>
+&gt; --- a/hw/virtio/vhost-user-device-pci.c<br>
+&gt; +++ b/hw/virtio/vhost-user-device-pci.c<br>
+&gt; @@ -8,14 +8,18 @@<br>
+&gt;=C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 #include &quot;qemu/osdep.h&quot;<br>
+&gt; +#include &quot;qapi/error.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/qdev-properties.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/virtio/vhost-user-base.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/virtio/virtio-pci.h&quot;<br>
+&gt;=C2=A0 <br>
+&gt; +#define VIRTIO_DEVICE_PCI_CACHE_BAR 2<br>
+&gt; +<br>
+&gt;=C2=A0 struct VHostUserDevicePCI {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 VirtIOPCIProxy parent_obj;<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 VHostUserBase vub;<br>
+&gt; +=C2=A0 =C2=A0 MemoryRegion cachebar;<br>
+&gt;=C2=A0 };<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 #define TYPE_VHOST_USER_DEVICE_PCI &quot;vhost-user-device-pci-b=
+ase&quot;<br>
+&gt; @@ -25,10 +29,37 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHO=
+ST_USER_DEVICE_PCI)<br>
+&gt;=C2=A0 static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_d=
+ev, Error **errp)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(=
+vpci_dev);<br>
+&gt; -=C2=A0 =C2=A0 DeviceState *vdev =3D DEVICE(&amp;dev-&gt;vub);<br>
+&gt; -<br>
+&gt; +=C2=A0 =C2=A0 DeviceState *dev_state =3D DEVICE(&amp;dev-&gt;vub);<br=
+>
+&gt; +=C2=A0 =C2=A0 VirtIODevice *vdev =3D VIRTIO_DEVICE(dev_state);<br>
+&gt; +=C2=A0 =C2=A0 uint64_t offset =3D 0, cache_size =3D 0;<br>
+&gt; +=C2=A0 =C2=A0 int i;<br>
+&gt; +=C2=A0 =C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 vpci_dev-&gt;nvectors =3D 1;<br>
+&gt; -=C2=A0 =C2=A0 qdev_realize(vdev, BUS(&amp;vpci_dev-&gt;bus), errp);<b=
+r>
+&gt; +=C2=A0 =C2=A0 qdev_realize(dev_state, BUS(&amp;vpci_dev-&gt;bus), err=
+p);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; vdev-&gt;n_shmem_regions; i++) {<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (vdev-&gt;shmem_list[i].size &gt; UINT=
+64_MAX - cache_size) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Tota=
+l shared memory required overflow&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 cache_size =3D cache_size + vdev-&gt;shme=
+m_list[i].size;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 if (cache_size) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_region_init(&amp;dev-&gt;cachebar,=
+ OBJECT(vpci_dev),<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;vhost-device-pci-cachebar&quot;, cache_si=
+ze);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; vdev-&gt;n_shmem_reg=
+ions; i++) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_region_add_subregion=
+(&amp;dev-&gt;cachebar, offset,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp=
+;vdev-&gt;shmem_list[i]);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 virtio_pci_add_shm_cap(vpci=
+_dev, VIRTIO_DEVICE_PCI_CACHE_BAR,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0offset, vdev-&gt;sh=
+mem_list[i].size, i);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 offset =3D offset + vdev-&g=
+t;shmem_list[i].size;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 pci_register_bar(&amp;vpci_dev-&gt;pci_de=
+v, VIRTIO_DEVICE_PCI_CACHE_BAR,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 PCI_BASE_ADDRESS_SPACE_MEMORY |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 PCI_BASE_ADDRESS_MEM_PREFETCH |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 PCI_BASE_ADDRESS_MEM_TYPE_64,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 &amp;dev-&gt;cachebar);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 static void vhost_user_device_pci_class_init(ObjectClass *klass,=
+ void *data)<br>
+&gt; -- <br>
+&gt; 2.45.2<br>
+&gt; <br>
+</blockquote></div></div>
+
+--000000000000085bbd0621495cb7--
 
 
