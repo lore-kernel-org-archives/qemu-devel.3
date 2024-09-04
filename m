@@ -4,74 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A31CD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B555CD484A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sloxt-0005mW-EI; Wed, 04 Sep 2024 08:18:25 -0400
+	id 1sloyD-0006Ho-VU; Wed, 04 Sep 2024 08:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sloxp-0005lm-49
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:18:22 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sloxn-00032R-Gw
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:18:20 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c3c3b63135so581757a12.3
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 05:18:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725452297; x=1726057097; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6haIxqunDPo48CI/+2LsH2lpR7EwyF/jPInFjf8Gu90=;
- b=xYr+G0xdd2VLekKGR4JYXhoVSfOO3s+79cU4BtVqC5bZ+Esum15W0d4aHgrckCxg0Z
- XIgfJGQ2TNMXz7sjed+HVgnQPhUMgt+PXMmswTVyg2BKEn89vYoToRcwOu++wZNEZOsm
- TQV+AsT20HOM5tXftvt0h6Yoq+WY/wdMizXV01ZUcnS3g6ryKDUApSDZrPJUldfzN2Ie
- JWXs1MUBskQReKR/u+R+IhbEb+ZXoCzRFYIaWPI/1uET/+t1UHs9Le0XSE5VbIe+brlE
- C4ZtvcZQsIudtXXudqsgrrX7WGUku0SH+MXLECDQKr/TcM/TYwyhDcnu9EjK1tY0INja
- Tw+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725452297; x=1726057097;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6haIxqunDPo48CI/+2LsH2lpR7EwyF/jPInFjf8Gu90=;
- b=hZRWE5l8ctR0ZFd+wrGbj3K8rRU/sw4CbszR70RWFZU534OzsWLud+1qLq+vO9DzBU
- mjb0sOToOw8P5MjGBgbLKycXUt52C52ZLNqZdrbL+kD2LU9IrW4UEcSqus5iHBOMQNrd
- aIkxXO286o6bHc4BtoP9Vbg6VAURvReB3ni5cVV+lpqp8uymD2JhohY+Oqx4SP/X1KLs
- HjORgTcWtGCDLmWaYkDtrgBfPYcBwOeDfYsI8bzrMVFN+5po6aoZ18jJCIE2oCCaYs5Q
- CDfuo5Wn+0p3uVRBQG7TuxE6ena61iQNoItW3/zGnYUTtSsVMa8DOq+y4cRfIIM2ifhI
- 03zQ==
-X-Gm-Message-State: AOJu0Yw6ZZQnYPE9Ut0QL8OgQLLiWok19qm3mnuzxpCdGo01nN0OL9Fk
- cCUTGOQzgyCiVbnGuSmOZW5AUBa9r4M5bkGU5sP+HKWqrga21wUyWfdoFogja5dg98inDYtbjPI
- S7ODum0uPpnhURmOlC7gM8LgcfkfAdpAO3kUImirrDm/21Sjw
-X-Google-Smtp-Source: AGHT+IGTYwCiT96aaHuoBRu1+oNNsbzbhbVnfQh4sY5ZU2tT+WAlXc9+6rLzoZIKxUXg+pulgjyI0DNAEmjgyxuVBbI=
-X-Received: by 2002:a05:6402:40cf:b0:5be:fd66:edf3 with SMTP id
- 4fb4d7f45d1cf-5c2757dd0femr2940072a12.18.1725452296814; Wed, 04 Sep 2024
- 05:18:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sloyB-0006Ec-RL
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:18:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sloyA-00038V-3y
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:18:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725452321;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=korUTP+HCBQ6KCsSiUoKtmxBEXQeAeQ/fUEKPp+Syos=;
+ b=icLWnRYkuu378Opj9zzuHE8krz1fVo1D6w56Xma7eGYYg3TpzTcs5PdbPKq2fKzgsq+umu
+ erE4kbevPCpFUmlIFhYHmflqwwumMiTijN3GgdvvKN6Pmp1ocFwPPturFwMVTqjsF+h5TI
+ ReUWwKuNvC01fkkivPE94cV+JO/DzHw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-SOGPfLUGMfqFewYt7YJ0bw-1; Wed,
+ 04 Sep 2024 08:18:39 -0400
+X-MC-Unique: SOGPfLUGMfqFewYt7YJ0bw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22E751955F10; Wed,  4 Sep 2024 12:18:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D62B19560A3; Wed,  4 Sep 2024 12:18:13 +0000 (UTC)
+Date: Wed, 4 Sep 2024 13:18:10 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
+ andrew@codeconstruct.com.au, andrew@daynix.com,
+ arei.gonglei@huawei.com, berto@igalia.com,
+ borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
+ den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
+ farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
+ idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
+ jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com,
+ kwolf@redhat.com, leetroy@gmail.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
+ mtosatti@redhat.com, nsg@linux.ibm.com, pasic@linux.ibm.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
+ philmd@linaro.org, pizhenwei@bytedance.com, pl@dlhnet.de,
+ richard.henderson@linaro.org, stefanha@redhat.com,
+ steven_lee@aspeedtech.com, thuth@redhat.com,
+ vsementsov@yandex-team.ru, wangyanan55@huawei.com,
+ yuri.benditovich@daynix.com, zhao1.liu@intel.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ kvm@vger.kernel.org, avihaih@nvidia.com
+Subject: Re: [PATCH v2 01/19] qapi: Smarter camel_to_upper() to reduce need
+ for 'prefix'
+Message-ID: <ZthQAr7Mpd0utBD9@redhat.com>
+References: <20240904111836.3273842-1-armbru@redhat.com>
+ <20240904111836.3273842-2-armbru@redhat.com>
 MIME-Version: 1.0
-References: <1832886563.20496.1725444713946.JavaMail.zimbra@embedded-brains.de>
-In-Reply-To: <1832886563.20496.1725444713946.JavaMail.zimbra@embedded-brains.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 4 Sep 2024 13:18:05 +0100
-Message-ID: <CAFEAcA9dno-ZA6cSMr556-biNphdFHBhBXRZsavR43XajnTH2Q@mail.gmail.com>
-Subject: Re: Are floating-point exceptions usable on AArch64?
-To: Sebastian Huber <sebastian.huber@embedded-brains.de>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240904111836.3273842-2-armbru@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,36 +100,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Sept 2024 at 11:32, Sebastian Huber
-<sebastian.huber@embedded-brains.de> wrote:
-> I tried to provoke a division-by-zero exception on AArch64 using:
->
->     uint64_t value;
->     __asm__ volatile (
->       "mrs %0, FPCR\n"
->       "orr %0, %0, 0x200\n"
->       "msr FPCR, %0" :  "=&r" ( value ) : : "memory"
->     );
->     volatile double x = 0x0;
->     volatile double y = 0x0;
->     x /= y;
->
-> When I look with the debugger at $fpcr it still says 0x0
-> after the msr. Are floating-point exceptions usable on
-> AArch64 in general?
+On Wed, Sep 04, 2024 at 01:18:18PM +0200, Markus Armbruster wrote:
+> camel_to_upper() converts its argument from camel case to upper case
+> with '_' between words.  Used for generated enumeration constant
+> prefixes.
 
-Floating point exceptions, in the sense of "when the
-exception condition happens the cumulative exception bit
-in the FPSR is set", work. What you're trying to use here is what
-the architecture calls "trapped exception handling", where
-you set the DZE etc bits in the FPCR to get a CPU exception
-instead of it updating the FPSR bit. Those are architecturally
-optional, and QEMU's CPU implementation doesn't implement them.
-(Nor do most real hardware implementations AFAIK.)
 
-thanks
--- PMM
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Reviewed-by: Daniel P. Berrang?? <berrange@redhat.com>
+
+The accent in my name is getting mangled in this series.
+
+IIRC your mail client (git send-email ?) needs to be explicitly
+setting a chardset eg
+
+  Content-type: text/plain; charset=utf8
+
+so that mail clients & intermediate servers know how to interpret
+the 8bit data.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
