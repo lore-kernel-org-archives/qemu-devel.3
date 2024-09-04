@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B47CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 19:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 174BECD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 20:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slvUt-0005U7-Bp; Wed, 04 Sep 2024 15:16:55 -0400
+	id 1slwCu-0006zr-65; Wed, 04 Sep 2024 16:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1slvUn-0005JK-53
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 15:16:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1slvUj-0006Fs-4k
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 15:16:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725477404;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=htiOERVQZSVpBgxG52L0rxJgd9c/PMsBtt67QYsVGpA=;
- b=PjFYtXJ8Y9G3CLQiAZVyfaITnCNQ/cI2mm/6JYdjLiUPJmCrPGZ+pzgp9kyCTp3HjI+cYO
- dXbVQP8unmw7nj8YiJn2iTSBWiEEiKpQ1M0/uILI1weqL3H8kJ15v0mXdWzZmRe1ngGTMg
- oN74p+Gllxc/clSssJTjk+8E6YdOfSE=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-alEZp-mQNIivS8G93mIvzA-1; Wed, 04 Sep 2024 15:16:42 -0400
-X-MC-Unique: alEZp-mQNIivS8G93mIvzA-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7a8110f90ffso945449385a.3
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 12:16:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1slwCs-0006zN-SK
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:02:22 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1slwCr-0000y2-5A
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:02:22 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-5343617fdddso12118421e87.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 13:02:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725480138; x=1726084938; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7SJ4H/7ZpP9KlLxBtXH4dKpopY73KLAo2L1tAMTkFKU=;
+ b=VLDh3K/a6KtAliIMr0AY0/tLVaDBZ5RSn15FCR0rZ6u7DjJUupKi4301Oc3Yv1JpWW
+ k3C6sCtyUBThCIXZOhI/AsN9YJVUyss1tZ2ZIIEFSPNHizsIIUKFtPWCAGypVZ/qs59X
+ PKCpo9mqtqjuXZkW0b/wGe1Dwwi+Q0DeEnHwapBfEn3whhE/1BYivOawygW1qpiFwtdk
+ Bv1CO75+o2pZhuaS8Y09RwnGchQ3WDKJd0LJHR02D4P8yT0aVRpTkTS7hQdR/xpipwIK
+ jkWJsZ7PcXCL9KFHTILQkvzWLGQxRr97DZYd626BSjJapF/8hks0LPoI3pKFWsTdrBO5
+ ygHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725477401; x=1726082201;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=htiOERVQZSVpBgxG52L0rxJgd9c/PMsBtt67QYsVGpA=;
- b=egt8mDd7iT+lLnclEhkrTQ6BzAcwuqNsXC/oMew67/WJ6wSjb356onSPfSyzBbt3Fj
- 0CO8aIoujqkLMbMIO/eGht7keSZMcEwxv3UIYEy+8Jh7emvIMGW7ylMVKZLgMKJMCKrj
- OJbsD0l8XQbtHQr+HyR5RCoEG6/uCAkDk3ykK64D6FR52xj8089p7THScdO9opOtx0OB
- 5k9Q+vM4Ugqupio+YPjO6a2ML/gdSZiaOjMDpIzdhj//hC3YGq+a8+2J8kTTjtJPt5y+
- Fnzz9UQtQ6Kq/0rMrc1rR58s0iQb7MKDENAfLlTHYIfKSeFM/r7kRVVR3iz6HrWEV+Jm
- lnbQ==
-X-Gm-Message-State: AOJu0YyMYyAUeQwU4ljRlPND7QSZkJGzpAyAeUNgOwgqZiqP2YbhayzH
- 3g2yTbyaqh59I/3LR3R+Z/JKGDUQGhB5hOJkV7bTHtAC4KSO4BPjK5mcOoEL2EZ8rhX7mcGZDh4
- jGnCPn63859BkX1Eo8dg8FHcsNJG8Z8v+B/tiUDAty/e1Yeg0xhuW9vOx9WFjeH8uJpn1ZU7mvg
- XX0rSUO2Y5VE0WPvhE9+i7MAku+z9KKWjL+I0x
-X-Received: by 2002:a05:620a:29c5:b0:7a6:5c8e:10fe with SMTP id
- af79cd13be357-7a9788c4dfdmr836307385a.53.1725477401508; 
- Wed, 04 Sep 2024 12:16:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQ6ijjOg4HjKTFMjLjNRtUFwAoyuxzBPS94V2EU2+Db9ouTeytbQ16shUwbVc3oYYtJy0WGg==
-X-Received: by 2002:a05:620a:29c5:b0:7a6:5c8e:10fe with SMTP id
- af79cd13be357-7a9788c4dfdmr836304185a.53.1725477401068; 
- Wed, 04 Sep 2024 12:16:41 -0700 (PDT)
-Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a98ef250d2sm10260285a.15.2024.09.04.12.16.39
+ d=1e100.net; s=20230601; t=1725480138; x=1726084938;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7SJ4H/7ZpP9KlLxBtXH4dKpopY73KLAo2L1tAMTkFKU=;
+ b=i1mEHIwlHTeRfoRyBKzglhdL4ImERx3mmOJdDRw2G1+N65efxYAX05vl7KPmlW4jZE
+ tWfH2wxVPB10feTIhcDWWtA5diyPGshKmVxZhvVq9ITrNwJtJM6DIAwLtC0LA/6/RJR9
+ Osuj5g9nH9xPJEeFjFsqqfHNbC7uhbwwjLkjFvHNYe3ktwZxmEs9bnKmxyzYrT4OEpxv
+ 0Kujx5JFmDzQ8rFI0XnWdWKNiYuQ1a/itdqdzMF+8bu05Vlern+ymBRJf9cRU/PE0NQz
+ UhjyZ80Lz7uHbKmZ6JF70SJCZuN210NkuV+kzvqg5/hvQFkbCIcWOlpBPNWB8MKySR6H
+ bfJQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWOBSWsBaQcVE4DYPM4okT4K8YNWVz6BPY3WAyvucAtvzxZlzCgHTxC6reT0p314XwjjnUylJlnQ4q8@nongnu.org
+X-Gm-Message-State: AOJu0YxtYbmrc9Rtiacx1xcBa5JIi1QT3FL+r7IGs9h6pS8i1ULo+2LL
+ H4yQdT7wTBbfcGl7t3U2/PpfnafEht3nsFbBgiff9tb23WVaZGhimYWrcnV733w=
+X-Google-Smtp-Source: AGHT+IG8QOdR8GA46pYNWtiLPKAJdpaH2SmbNqJ2B4Xmnw9ypHBVyfxUJt7QA4sKjvORqZfh+dj/7g==
+X-Received: by 2002:a05:651c:4ca:b0:2f6:4f5f:96d7 with SMTP id
+ 38308e7fff4ca-2f64f5f9b5fmr45157501fa.37.1725480137284; 
+ Wed, 04 Sep 2024 13:02:17 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c3cc4a4f40sm292466a12.0.2024.09.04.13.02.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Sep 2024 12:16:40 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
- Prasad Pandit <ppandit@redhat.com>, Julia Suvorova <jusual@redhat.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Vitaly Kuznetsov <vkuznets@redhat.com>
-Subject: [PATCH 2/4] KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
-Date: Wed,  4 Sep 2024 15:16:33 -0400
-Message-ID: <20240904191635.3045606-3-peterx@redhat.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240904191635.3045606-1-peterx@redhat.com>
-References: <20240904191635.3045606-1-peterx@redhat.com>
+ Wed, 04 Sep 2024 13:02:16 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9EB745FA1C;
+ Wed,  4 Sep 2024 21:02:15 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Wainer dos Santos Moschetta
+ <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,
+ qemu-devel@nongnu.org,  Yotaro Nada <yotaro.nada@gmail.com>
+Subject: Re: [PATCH v3] contrib/plugins: Add a plugin to generate basic
+ block vectors
+In-Reply-To: <20240816-bb-v3-1-b9aa4a5c75c5@daynix.com> (Akihiko Odaki's
+ message of "Fri, 16 Aug 2024 15:05:35 +0900")
+References: <20240816-bb-v3-1-b9aa4a5c75c5@daynix.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Wed, 04 Sep 2024 21:02:15 +0100
+Message-ID: <87bk13tcfs.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, URI_DOTEDU=2 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,38 +107,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the default max nr_slots a macro, it's only used when KVM reports
-nothing.  Then we put all the rest macros together later soon.
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- accel/kvm/kvm-all.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> SimPoint is a widely used tool to find the ideal microarchitecture
+> simulation points so Valgrind[2] and Pin[3] support generating basic
+> block vectors for use with them. Let's add a corresponding plugin to
+> QEMU too.
+>
+> Note that this plugin has a different goal with tests/plugin/bb.c.
+>
+> This plugin creates a vector for each constant interval instead of
+> counting the execution of basic blocks for the entire run and able to
+> describe the change of execution behavior. Its output is also
+> syntactically simple and better suited for parsing, while the output of
+> tests/plugin/bb.c is more human-readable.
+>
+> [1] https://cseweb.ucsd.edu/~calder/simpoint/
+> [2] https://valgrind.org/docs/manual/bbv-manual.html
+> [3] https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a=
+-dynamic-binary-instrumentation-tool.html
+>
+> Signed-off-by: Yotaro Nada <yotaro.nada@gmail.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 991c389adc..e408dbb753 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -69,6 +69,9 @@
- #define KVM_GUESTDBG_BLOCKIRQ 0
- #endif
- 
-+/* Default max allowed memslots if kernel reported nothing */
-+#define  KVM_MEMSLOTS_NUM_MAX_DEFAULT                       32
-+
- struct KVMParkedVcpu {
-     unsigned long vcpu_id;
-     int kvm_fd;
-@@ -2458,7 +2461,7 @@ static int kvm_init(MachineState *ms)
- 
-     /* If unspecified, use the default value */
-     if (!s->nr_slots_max) {
--        s->nr_slots_max = 32;
-+        s->nr_slots_max = KVM_MEMSLOTS_NUM_MAX_DEFAULT;
-     }
- 
-     s->nr_as = kvm_check_extension(s, KVM_CAP_MULTI_ADDRESS_SPACE);
--- 
-2.45.0
+Queued to plugins/next, thanks.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
