@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66BD9CD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B93CD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slmxg-00016I-Rr; Wed, 04 Sep 2024 06:10:04 -0400
+	id 1slmyw-0006Iz-24; Wed, 04 Sep 2024 06:11:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmxe-0000yp-Mb
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:10:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmyq-00062e-SP
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:11:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmxc-0000vR-Tw
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:10:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slmyp-0001SD-EI
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:11:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725444600;
+ s=mimecast20190719; t=1725444674;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZFocta2AMIm3khqRDE4miFhFEcXhrEmdL3WSW5B47Js=;
- b=LR0WskRccF6wg+oYuluW/N8CoQc4UV2CWY/4oyFASfAZ3y5J+eh7QtrWrcuDLqxdra42kT
- v5iFxE60CAgXI77ovS/5SUp2JteyUiEAuWi+N6RfieP7IttUjMrw8QEpPFZIHYspBkla/u
- CUI1lAYlKIVZTDKdOVOBv3bVhff6ADs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2ZPdNciBE65ElgRIxJc7LxDi4AspYkkrfuaGnmXwUQE=;
+ b=bsKTI5CtT8AB9o7tAlk9tDyWxn6LQqXAtCA1HE3UjV+xWz+zjAuIc1qHSsby3w/GGwdYh9
+ H91GLx4CS0GMMFqh8RExVpzB58OigEBujwF5UXmI8vSw+PnshGBUtFUKuvc9ZUvrXylppA
+ W8DoPJ13XcykZMi5UCR/OhmCPBI2lTg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-219-5HTIJhSKN4Ky5KHqe0x6mg-1; Wed, 04 Sep 2024 06:09:59 -0400
-X-MC-Unique: 5HTIJhSKN4Ky5KHqe0x6mg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42c827c4d3aso6168015e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 03:09:58 -0700 (PDT)
+ us-mta-206-dIUJll4uOTqwxrlsMT4r8A-1; Wed, 04 Sep 2024 06:11:12 -0400
+X-MC-Unique: dIUJll4uOTqwxrlsMT4r8A-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3771b6da3ceso626563f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 03:11:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725444598; x=1726049398;
+ d=1e100.net; s=20230601; t=1725444671; x=1726049471;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZFocta2AMIm3khqRDE4miFhFEcXhrEmdL3WSW5B47Js=;
- b=spVzkTrDPl7AOyDs6nIe931CiU6I76j+xj07Fq7zNL0YM24ctwqiS7Id3LlFdfrS2L
- uXviLw2+wc1Krl+d1NgqFsViunz7iOXRdGQ53Ph0nXOe09aZ/6H6xK6vLvD4bFpdJvez
- XCov6abdp4BA/TzwAyTKvI/Mhmq6rDt9PF8LJUI1ZEFBuWGRi0lqy+XUj8xwLOtBFPR/
- sUB32P4hOm+5vfY8bE4RHL6gWORoKb10bsA3dzQ4BFIrBqxzSpSA4Yvh/wBH027oPBC8
- 1hlGko9T541JrV2qT4di3eqNjc8qXHkLgegLDtmb0jPS3YZnBG/Kiea5s8u15ecjXqlW
- CEtg==
+ bh=2ZPdNciBE65ElgRIxJc7LxDi4AspYkkrfuaGnmXwUQE=;
+ b=rXKu2KogXBfqsz3ljbbrDTPDtqRSUQS7wnrjU6FL6ewkGAeCQRlRvgVQK6/VCoNnks
+ IQXETFAbRaqiqT1UlHO8EYJNKtERk81WvV5VfffdRolXJtmOYh9+AflQ4/dJrQqfNg5a
+ 0Nbqw3iVE3QVapcT+Sn555pYS56cfKjQ8os/tzPfnCrdxxarItN6HG06ZeVrukYDixgP
+ S9dhNM3uzRxPT4C2gpDVDFIpp8pm6XlYuy4mqRB10IUCLPVEBxQ52+X1ZWy5mR0celsl
+ SM09OrrAXJvUoE9PMrDoZNjTMXqJqgJH4ilsjwvBw4CrWZl6GdRafS88R6CTJZYR0Hjm
+ X26Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWduOYHTwGGT08z1g+bBPR2VJLSWVu4ix8PBg0InrkElm0LudIQ2MtuDAyg+3Ko5z0tGlcOgM8IQgKp@nongnu.org
-X-Gm-Message-State: AOJu0YxLmaitKpmJHAorGHGpvWM4rQIxeAlz/jOeYwrSqXVBLbOBKEuw
- wTjxneejK3+Gt9shZxl7Zn3JxIHBUgSeReHXe4GrRF+GrEdR5RiuM1z7lZrTwXswwjYHvdPLwCu
- OqcbXgVcQaJhbUyHcCDH6E3QmUmyjaFf9b/6Og5dbcEeAa3jmw27C
-X-Received: by 2002:a05:600c:3b88:b0:429:991:dd71 with SMTP id
- 5b1f17b1804b1-42c954500b6mr13124115e9.11.1725444597832; 
- Wed, 04 Sep 2024 03:09:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAYJ0jWYdyqGguKeOt1GHeOG+aiOpAT0Xid3+CgpsWCBujjhn/d18bajUCRRvE7Ryw5iqVmg==
-X-Received: by 2002:a05:600c:3b88:b0:429:991:dd71 with SMTP id
- 5b1f17b1804b1-42c954500b6mr13123965e9.11.1725444597345; 
- Wed, 04 Sep 2024 03:09:57 -0700 (PDT)
+ AJvYcCVJgpIEd3tn23EdABbKigoQOO1ekb/TubiWSnX7DLDnec82Hois+eibq6nCc9Y87PN6t4+KJhZTN01e@nongnu.org
+X-Gm-Message-State: AOJu0YxFXBWtiYcjhB0rgoBjeejSOxg1ksQfO8d6hUPXrID/copIwRAk
+ dDK6oIJc4lF016LuXKML8U1xY5snIm8fjG2qnW5bK2+jxRXMrg/gkFur3SBsYrkeJoDY560dHej
+ ytAL8rRPq85abc48FSGeKsp0+c2xETrCDDgRBolfkCc54pTiipKje
+X-Received: by 2002:adf:f7c8:0:b0:374:c122:e8b8 with SMTP id
+ ffacd0b85a97d-374c122e9e6mr7834458f8f.11.1725444671511; 
+ Wed, 04 Sep 2024 03:11:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGZ+p3T1wy8Whbc/4XqrWvEzbLuf8AnkJPOzbk0/N/K3kkVPmftcN+7ehhkEYBCwCwC4Bet0w==
+X-Received: by 2002:adf:f7c8:0:b0:374:c122:e8b8 with SMTP id
+ ffacd0b85a97d-374c122e9e6mr7834435f8f.11.1725444670975; 
+ Wed, 04 Sep 2024 03:11:10 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ba641db07sm232629565e9.34.2024.09.04.03.09.56
+ ffacd0b85a97d-375f59f3d5esm4537053f8f.96.2024.09.04.03.11.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 03:09:57 -0700 (PDT)
-Message-ID: <5d11e69c-5a85-4a30-af61-aac6ff47ef4c@redhat.com>
-Date: Wed, 4 Sep 2024 12:09:55 +0200
+ Wed, 04 Sep 2024 03:11:10 -0700 (PDT)
+Message-ID: <c63302c2-be1d-498d-8d81-fce6d068e08b@redhat.com>
+Date: Wed, 4 Sep 2024 12:11:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 33/53] hw/usb: Remove tusb6010 USB controller
+Subject: Re: [PATCH for-9.2 34/53] hw/usb: Remove MUSB USB host controller
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <20240903160751.4100218-34-peter.maydell@linaro.org>
+ <20240903160751.4100218-35-peter.maydell@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -118,20 +118,20 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240903160751.4100218-34-peter.maydell@linaro.org>
+In-Reply-To: <20240903160751.4100218-35-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,16 +148,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/09/2024 18.07, Peter Maydell wrote:
-> The tusb6010 was only used by the n800/n810 machines, so it
-> can be removed now.
+> Remove the MUSB USB2.0 OTG-compliant USB host controller
+> device model. This was only used by the tusb6010 USB
+> controller in the n800/n810 machines.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/usb/tusb6010.c  | 850 ---------------------------------------------
->   hw/usb/Kconfig     |   4 -
->   hw/usb/meson.build |   1 -
->   3 files changed, 855 deletions(-)
->   delete mode 100644 hw/usb/tusb6010.c
+>   include/hw/usb/hcd-musb.h |   49 --
+>   hw/usb/hcd-musb.c         | 1553 -------------------------------------
+>   hw/usb/Kconfig            |    4 -
+>   hw/usb/meson.build        |    1 -
+>   4 files changed, 1607 deletions(-)
+>   delete mode 100644 include/hw/usb/hcd-musb.h
+>   delete mode 100644 hw/usb/hcd-musb.c
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
