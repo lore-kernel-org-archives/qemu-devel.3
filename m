@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21787CD37B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92860CD484D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slr87-0004qH-9g; Wed, 04 Sep 2024 10:37:07 -0400
+	id 1slr8E-0005cI-Ha; Wed, 04 Sep 2024 10:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr83-00049O-3U
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:03 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8C-0005RF-QN
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:12 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr80-0005I8-PV
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:02 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42bb8cf8abeso53780025e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:37:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8A-0005K7-Ch
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:12 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-374c1e5fe79so2804818f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725460619; x=1726065419; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725460628; x=1726065428; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QATXCSWWGHdSBzQvaSprIlh4JWEGmTrG5x4yh2kGEWY=;
- b=oLg17qHOsBnS6/kiFTD7pbql6gdU3Vn4QkwN8j9EwPRDI6xLTGTrsjd31HnUr9dzoH
- M8GHkmQaca/JcPc7aZVkG8BTXHVAiWkumwLW8n5D3MIpFeC4PY7gM4AO2t1z7c5NhGM/
- T+omKKXQ4DAz0FXKpNCVGuJNhdjUni9XJX/ihBY0aTbJ/EY70cw0c7KNG1BZ1vO6pP0F
- +iLW8VgvA+e7/MX9yQfeqFK5nZjL19heTyXRdNMVvneyDXLr/VZQePxhYcUQVgbNJQIz
- TlQTQ2XxexgLN/pszdQN1vJs1oZPpHy9F18KNXBU7POcfRYS60bJcV/b7ODH4i/0/AIG
- AXNw==
+ bh=SMqhDyW5QE8TfD14k61fEl5Bo8fbyrZNzqZaBAEhM1E=;
+ b=lNhYuTYB51lfiCJbC/SiEUDeUQefJelyM4KFHFKSmsVDp9vXIulNLNyfSfBqPH/UHS
+ uQK6dcPhLr+9ZL0ZheR05f5WFPS+zxmUuHdBv4ki7JzWh8dLyAHsB9R0cuwqrkfkE+rf
+ ZqxdxSREtzJxGes7XOZq37G6DDcQZ4ACEbdKozYmw0n0baYcu7KKyOJIeezTbpZPZs7W
+ FVhwsxxiO/Iq4uJElNDqKcuwcMJmVhARTYmXCL0BW71z0QVKQqKUkA2M2JVxhr2EjjN+
+ qp3wNEffxSGH+2lBUvFlSb1Cc5ykTkXn8Ti9u2ehxNpUQyuR4MV3VBC4a54fJGqkAyBN
+ QviQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725460619; x=1726065419;
+ d=1e100.net; s=20230601; t=1725460628; x=1726065428;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QATXCSWWGHdSBzQvaSprIlh4JWEGmTrG5x4yh2kGEWY=;
- b=KOWon+fqijKZoJEiQuDlv+7ePtuVgYqIzxxUNzL0cK4v+OezW9ljsOcgkSRk22+X1h
- mcGJprGRLCwEiX0Sox2NjZsxRwYBg15EbUtxnOmCONw9PfJoq/PonUR5ynUS9a8/KSnS
- h1d6BBuZUGb4bXGOVrTbDL6DJq08hlsp7TRJyffCZRoRLpAgxb3rdaDCD0aICZDps/uw
- 9p7L9i1Fmv3+oy8yXYTfB0ybCLT/IEq3hujxCGtC//i7tMd8YrQpv52rw3pQa7ruKtuu
- OwzsNXi506YIaUWWMWu14fsPpEPby6xW3neauMJftXe0PFggSSmQaBWlFixffMEksYHz
- /cLg==
+ bh=SMqhDyW5QE8TfD14k61fEl5Bo8fbyrZNzqZaBAEhM1E=;
+ b=TXAlVre9SCxZARCD1UUQJgjxtbqxh72hNfSWFK+kwMAggecJgidEzZGz4H6jE6XqU2
+ slDgfuoRfXYs1vmnXqvqYhl8LwNRF4Vu+X6eHsHuxrnAPTwre3HHYmLwRKlaRu2pJMsW
+ E2WCE7RJ9hGUrTr42D1xEMUkGXj0LX5PdspyrljSFbkDegE6qUdy+CUqG9BiNAd2jJlX
+ cc8X9pVlYHlLDJwTMIwfMTQeaRUOfBqJbQJpWoWaizwZFSbEWYVk5lzwXc3+5HKpX3Gt
+ 1A8vrdParDjhepGME1Qnywt714+hc6b6CUIbRrA6rxixIRgOlHDjDA/h+ZBeUX14tkkx
+ VdOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZ1QTERJO3ZW8YFZrp9asIoo5p3GVc/TORhavVSuPE8GmF5JJ/lugGuC52NFTMP1SNuMVpYV2L8CzU@nongnu.org
-X-Gm-Message-State: AOJu0Yx1NUljmWEv5qqfBVIWBbs82+luVASmSWb0k/LHbUtlMdVo3k0m
- mv1wdDaXkOvah5IygJfcm9LpITTS7OQPRg//rqzODOkypVxtabYsgwCVmUYaiQk=
-X-Google-Smtp-Source: AGHT+IEcMY9PKSiQjDp0jZledePbupNJiLnVbHwCeWQdrrfQRPsbwbY3EB5Ruj/XpP3I+xC9aELvYg==
-X-Received: by 2002:a05:600c:a4c:b0:428:17b6:bcf1 with SMTP id
- 5b1f17b1804b1-42c8de87c57mr35368185e9.22.1725460619342; 
- Wed, 04 Sep 2024 07:36:59 -0700 (PDT)
+ AJvYcCXMWUZFXlstr0uGc3dTz37APpA3tdXdHnk+847bn/7dpJe9O9eV7jmzkDOc2PyOf0cm5Gs53Lrmwcu1@nongnu.org
+X-Gm-Message-State: AOJu0YzGTF/d6guaGE0jg9wp6ARytf/yB7qsShVeJoxmPG9rFeNlh5Kc
+ W/aONTUXLRclWUqRNXtQ4iq3feB/OnKkKkuhYEL0UcXjGP0X34ycCpcaHPpjwzg=
+X-Google-Smtp-Source: AGHT+IFxcBnmAVU4Uxl26wyRMxn0skOlK29wBN/5QhKGSMOi8JYMLnFG8I/l8u3ANp5X0d31+JwAXw==
+X-Received: by 2002:adf:eac7:0:b0:374:cbe8:6f43 with SMTP id
+ ffacd0b85a97d-374cbe8703bmr6886443f8f.33.1725460628494; 
+ Wed, 04 Sep 2024 07:37:08 -0700 (PDT)
 Received: from localhost.localdomain (56.red-95-127-44.staticip.rima-tde.net.
  [95.127.44.56]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6e2737dsm205303145e9.29.2024.09.04.07.36.56
+ ffacd0b85a97d-3749ee9c692sm17103018f8f.53.2024.09.04.07.37.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Sep 2024 07:36:58 -0700 (PDT)
+ Wed, 04 Sep 2024 07:37:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
 	qemu-devel@nongnu.org
@@ -66,17 +66,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 05/15] hw/cris: Remove the axis-dev88 machine
-Date: Wed,  4 Sep 2024 16:35:53 +0200
-Message-ID: <20240904143603.52934-6-philmd@linaro.org>
+Subject: [PATCH v2 06/15] hw/cris: Remove image loader helper
+Date: Wed,  4 Sep 2024 16:35:54 +0200
+Message-ID: <20240904143603.52934-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240904143603.52934-1-philmd@linaro.org>
 References: <20240904143603.52934-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +99,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This machine was deprecated for the v9.0 release in commit
-c7bbef4023 ("docs: mark CRIS support as deprecated").
+No more CRIS machine uses cris_load_image(), remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                              |   3 +-
- configs/devices/cris-softmmu/default.mak |   3 -
- hw/cris/axis_dev88.c                     | 351 -----------------------
- hw/cris/Kconfig                          |   8 -
- hw/cris/meson.build                      |   1 -
- 5 files changed, 1 insertion(+), 365 deletions(-)
- delete mode 100644 hw/cris/axis_dev88.c
+ hw/cris/boot.h      |  16 -------
+ hw/cris/boot.c      | 102 --------------------------------------------
+ hw/cris/meson.build |   4 --
+ hw/meson.build      |   1 -
+ 4 files changed, 123 deletions(-)
+ delete mode 100644 hw/cris/boot.h
+ delete mode 100644 hw/cris/boot.c
+ delete mode 100644 hw/cris/meson.build
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 04a3e40dbc..7ff8a96137 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1210,10 +1210,9 @@ F: hw/avr/arduino.c
- 
- CRIS Machines
- -------------
--Axis Dev88
-+Etrax hardware
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
- S: Maintained
--F: hw/cris/axis_dev88.c
- F: hw/*/etraxfs_*.c
- 
- HP-PARISC Machines
-diff --git a/configs/devices/cris-softmmu/default.mak b/configs/devices/cris-softmmu/default.mak
-index ff73cd4084..3726699370 100644
---- a/configs/devices/cris-softmmu/default.mak
-+++ b/configs/devices/cris-softmmu/default.mak
-@@ -1,4 +1 @@
- # Default configuration for cris-softmmu
--
--# Boards are selected by default, uncomment to keep out of the build.
--# CONFIG_AXIS=n
-diff --git a/hw/cris/axis_dev88.c b/hw/cris/axis_dev88.c
+diff --git a/hw/cris/boot.h b/hw/cris/boot.h
 deleted file mode 100644
-index 5556634921..0000000000
---- a/hw/cris/axis_dev88.c
+index 9f1e0e340c..0000000000
+--- a/hw/cris/boot.h
 +++ /dev/null
-@@ -1,351 +0,0 @@
+@@ -1,16 +0,0 @@
+-#ifndef HW_CRIS_BOOT_H
+-#define HW_CRIS_BOOT_H
+-
+-struct cris_load_info
+-{
+-    const char *image_filename;
+-    const char *cmdline;
+-    int image_size;
+-    ram_addr_t ram_size;
+-
+-    hwaddr entry;
+-};
+-
+-void cris_load_image(CRISCPU *cpu, struct cris_load_info *li);
+-
+-#endif
+diff --git a/hw/cris/boot.c b/hw/cris/boot.c
+deleted file mode 100644
+index 9fa09cfd83..0000000000
+--- a/hw/cris/boot.c
++++ /dev/null
+@@ -1,102 +0,0 @@
 -/*
-- * QEMU model for the AXIS devboard 88.
+- * CRIS image loading.
 - *
-- * Copyright (c) 2009 Edgar E. Iglesias, Axis Communications AB.
+- * Copyright (c) 2010 Edgar E. Iglesias, Axis Communications AB.
 - *
 - * Permission is hereby granted, free of charge, to any person obtaining a copy
 - * of this software and associated documentation files (the "Software"), to deal
@@ -168,358 +165,105 @@ index 5556634921..0000000000
 - */
 -
 -#include "qemu/osdep.h"
--#include "qemu/units.h"
--#include "qapi/error.h"
 -#include "cpu.h"
--#include "hw/sysbus.h"
--#include "net/net.h"
--#include "hw/block/flash.h"
--#include "hw/boards.h"
--#include "hw/cris/etraxfs.h"
 -#include "hw/loader.h"
 -#include "elf.h"
 -#include "boot.h"
--#include "sysemu/qtest.h"
--#include "sysemu/sysemu.h"
+-#include "qemu/cutils.h"
+-#include "sysemu/reset.h"
 -
--#define D(x)
--#define DNAND(x)
--
--struct nand_state_t
+-static void main_cpu_reset(void *opaque)
 -{
--    DeviceState *nand;
--    MemoryRegion iomem;
--    unsigned int rdy:1;
--    unsigned int ale:1;
--    unsigned int cle:1;
--    unsigned int ce:1;
--};
+-    CRISCPU *cpu = opaque;
+-    CPUCRISState *env = &cpu->env;
+-    struct cris_load_info *li;
 -
--static struct nand_state_t nand_state;
--static uint64_t nand_read(void *opaque, hwaddr addr, unsigned size)
--{
--    struct nand_state_t *s = opaque;
--    uint32_t r;
--    int rdy;
+-    li = env->load_info;
 -
--    r = nand_getio(s->nand);
--    nand_getpins(s->nand, &rdy);
--    s->rdy = rdy;
+-    cpu_reset(CPU(cpu));
 -
--    DNAND(printf("%s addr=%x r=%x\n", __func__, addr, r));
--    return r;
--}
--
--static void
--nand_write(void *opaque, hwaddr addr, uint64_t value,
--           unsigned size)
--{
--    struct nand_state_t *s = opaque;
--    int rdy;
--
--    DNAND(printf("%s addr=%x v=%x\n", __func__, addr, (unsigned)value));
--    nand_setpins(s->nand, s->cle, s->ale, s->ce, 1, 0);
--    nand_setio(s->nand, value);
--    nand_getpins(s->nand, &rdy);
--    s->rdy = rdy;
--}
--
--static const MemoryRegionOps nand_ops = {
--    .read = nand_read,
--    .write = nand_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
--struct tempsensor_t
--{
--    unsigned int shiftreg;
--    unsigned int count;
--    enum {
--        ST_OUT, ST_IN, ST_Z
--    } state;
--
--    uint16_t regs[3];
--};
--
--static void tempsensor_clkedge(struct tempsensor_t *s,
--                               unsigned int clk, unsigned int data_in)
--{
--    D(printf("%s clk=%d state=%d sr=%x\n", __func__,
--             clk, s->state, s->shiftreg));
--    if (s->count == 0) {
--        s->count = 16;
--        s->state = ST_OUT;
+-    if (!li) {
+-        /* nothing more to do.  */
+-        return;
 -    }
--    switch (s->state) {
--        case ST_OUT:
--            /* Output reg is clocked at negedge.  */
--            if (!clk) {
--                s->count--;
--                s->shiftreg <<= 1;
--                if (s->count == 0) {
--                    s->shiftreg = 0;
--                    s->state = ST_IN;
--                    s->count = 16;
--                }
--            }
--            break;
--        case ST_Z:
--            if (clk) {
--                s->count--;
--                if (s->count == 0) {
--                    s->shiftreg = 0;
--                    s->state = ST_OUT;
--                    s->count = 16;
--                }
--            }
--            break;
--        case ST_IN:
--            /* Indata is sampled at posedge.  */
--            if (clk) {
--                s->count--;
--                s->shiftreg <<= 1;
--                s->shiftreg |= data_in & 1;
--                if (s->count == 0) {
--                    D(printf("%s cfgreg=%x\n", __func__, s->shiftreg));
--                    s->regs[0] = s->shiftreg;
--                    s->state = ST_OUT;
--                    s->count = 16;
 -
--                    if ((s->regs[0] & 0xff) == 0) {
--                        /* 25 degrees celsius.  */
--                        s->shiftreg = 0x0b9f;
--                    } else if ((s->regs[0] & 0xff) == 0xff) {
--                        /* Sensor ID, 0x8100 LM70.  */
--                        s->shiftreg = 0x8100;
--                    } else
--                        printf("Invalid tempsens state %x\n", s->regs[0]);
--                }
--            }
--            break;
+-    env->pc = li->entry;
+-
+-    if (li->image_filename) {
+-        env->regs[8] = 0x56902387; /* RAM boot magic.  */
+-        env->regs[9] = 0x40004000 + li->image_size;
+-    }
+-
+-    if (li->cmdline) {
+-        /* Let the kernel know we are modifying the cmdline.  */
+-        env->regs[10] = 0x87109563;
+-        env->regs[11] = 0x40000000;
 -    }
 -}
 -
--
--#define RW_PA_DOUT    0x00
--#define R_PA_DIN      0x01
--#define RW_PA_OE      0x02
--#define RW_PD_DOUT    0x10
--#define R_PD_DIN      0x11
--#define RW_PD_OE      0x12
--
--static struct gpio_state_t
+-static uint64_t translate_kernel_address(void *opaque, uint64_t addr)
 -{
--    MemoryRegion iomem;
--    struct nand_state_t *nand;
--    struct tempsensor_t tempsensor;
--    uint32_t regs[0x5c / 4];
--} gpio_state;
--
--static uint64_t gpio_read(void *opaque, hwaddr addr, unsigned size)
--{
--    struct gpio_state_t *s = opaque;
--    uint32_t r = 0;
--
--    addr >>= 2;
--    switch (addr)
--    {
--        case R_PA_DIN:
--            r = s->regs[RW_PA_DOUT] & s->regs[RW_PA_OE];
--
--            /* Encode pins from the nand.  */
--            r |= s->nand->rdy << 7;
--            break;
--        case R_PD_DIN:
--            r = s->regs[RW_PD_DOUT] & s->regs[RW_PD_OE];
--
--            /* Encode temp sensor pins.  */
--            r |= (!!(s->tempsensor.shiftreg & 0x10000)) << 4;
--            break;
--
--        default:
--            r = s->regs[addr];
--            break;
--    }
--    return r;
--    D(printf("%s %x=%x\n", __func__, addr, r));
+-    return addr - 0x80000000LL;
 -}
 -
--static void gpio_write(void *opaque, hwaddr addr, uint64_t value,
--                       unsigned size)
+-void cris_load_image(CRISCPU *cpu, struct cris_load_info *li)
 -{
--    struct gpio_state_t *s = opaque;
--    D(printf("%s %x=%x\n", __func__, addr, (unsigned)value));
+-    CPUCRISState *env = &cpu->env;
+-    uint64_t entry;
+-    int kcmdline_len;
+-    int image_size;
 -
--    addr >>= 2;
--    switch (addr)
--    {
--        case RW_PA_DOUT:
--            /* Decode nand pins.  */
--            s->nand->ale = !!(value & (1 << 6));
--            s->nand->cle = !!(value & (1 << 5));
--            s->nand->ce  = !!(value & (1 << 4));
--
--            s->regs[addr] = value;
--            break;
--
--        case RW_PD_DOUT:
--            /* Temp sensor clk.  */
--            if ((s->regs[addr] ^ value) & 2)
--                tempsensor_clkedge(&s->tempsensor, !!(value & 2),
--                                   !!(value & 16));
--            s->regs[addr] = value;
--            break;
--
--        default:
--            s->regs[addr] = value;
--            break;
--    }
--}
--
--static const MemoryRegionOps gpio_ops = {
--    .read = gpio_read,
--    .write = gpio_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--    .valid = {
--        .min_access_size = 4,
--        .max_access_size = 4,
--    },
--};
--
--#define INTMEM_SIZE (128 * KiB)
--
--static struct cris_load_info li;
--
--static
--void axisdev88_init(MachineState *machine)
--{
--    const char *kernel_filename = machine->kernel_filename;
--    const char *kernel_cmdline = machine->kernel_cmdline;
--    CRISCPU *cpu;
--    DeviceState *dev;
--    SysBusDevice *s;
--    DriveInfo *nand;
--    qemu_irq irq[30], nmi[2];
--    void *etraxfs_dmac;
--    struct etraxfs_dma_client *dma_eth;
--    int i;
--    MemoryRegion *address_space_mem = get_system_memory();
--    MemoryRegion *phys_intmem = g_new(MemoryRegion, 1);
--
--    /* init CPUs */
--    cpu = CRIS_CPU(cpu_create(machine->cpu_type));
--
--    memory_region_add_subregion(address_space_mem, 0x40000000, machine->ram);
--
--    /* The ETRAX-FS has 128Kb on chip ram, the docs refer to it as the 
--       internal memory.  */
--    memory_region_init_ram(phys_intmem, NULL, "axisdev88.chipram",
--                           INTMEM_SIZE, &error_fatal);
--    memory_region_add_subregion(address_space_mem, 0x38000000, phys_intmem);
--
--      /* Attach a NAND flash to CS1.  */
--    nand = drive_get(IF_MTD, 0, 0);
--    nand_state.nand = nand_init(nand ? blk_by_legacy_dinfo(nand) : NULL,
--                                NAND_MFR_STMICRO, 0x39);
--    memory_region_init_io(&nand_state.iomem, NULL, &nand_ops, &nand_state,
--                          "nand", 0x05000000);
--    memory_region_add_subregion(address_space_mem, 0x10000000,
--                                &nand_state.iomem);
--
--    gpio_state.nand = &nand_state;
--    memory_region_init_io(&gpio_state.iomem, NULL, &gpio_ops, &gpio_state,
--                          "gpio", 0x5c);
--    memory_region_add_subregion(address_space_mem, 0x3001a000,
--                                &gpio_state.iomem);
--
--
--    dev = qdev_new("etraxfs-pic");
--    s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
--    sysbus_mmio_map(s, 0, 0x3001c000);
--    sysbus_connect_irq(s, 0, qdev_get_gpio_in(DEVICE(cpu), CRIS_CPU_IRQ));
--    sysbus_connect_irq(s, 1, qdev_get_gpio_in(DEVICE(cpu), CRIS_CPU_NMI));
--    for (i = 0; i < 30; i++) {
--        irq[i] = qdev_get_gpio_in(dev, i);
--    }
--    nmi[0] = qdev_get_gpio_in(dev, 30);
--    nmi[1] = qdev_get_gpio_in(dev, 31);
--
--    etraxfs_dmac = etraxfs_dmac_init(0x30000000, 10);
--    for (i = 0; i < 10; i++) {
--        /* On ETRAX, odd numbered channels are inputs.  */
--        etraxfs_dmac_connect(etraxfs_dmac, i, irq + 7 + i, i & 1);
+-    env->load_info = li;
+-    /* Boots a kernel elf binary, os/linux-2.6/vmlinux from the axis 
+-       devboard SDK.  */
+-    image_size = load_elf(li->image_filename, NULL,
+-                          translate_kernel_address, NULL,
+-                          &entry, NULL, NULL, NULL, 0, EM_CRIS, 0, 0);
+-    li->entry = entry;
+-    if (image_size < 0) {
+-        /* Takes a kimage from the axis devboard SDK.  */
+-        image_size = load_image_targphys(li->image_filename, 0x40004000,
+-                                         li->ram_size);
+-        li->entry = 0x40004000;
 -    }
 -
--    /* Add the two ethernet blocks.  */
--    dma_eth = g_malloc0(sizeof dma_eth[0] * 4); /* Allocate 4 channels.  */
--
--    etraxfs_eth_init(0x30034000, 1, &dma_eth[0], &dma_eth[1]);
--    /* The DMA Connector block is missing, hardwire things for now.  */
--    etraxfs_dmac_connect_client(etraxfs_dmac, 0, &dma_eth[0]);
--    etraxfs_dmac_connect_client(etraxfs_dmac, 1, &dma_eth[1]);
--
--    if (qemu_find_nic_info("etraxfs-eth", true, "fseth")) {
--        etraxfs_eth_init(0x30036000, 2, &dma_eth[2], &dma_eth[3]);
--        etraxfs_dmac_connect_client(etraxfs_dmac, 6, &dma_eth[2]);
--        etraxfs_dmac_connect_client(etraxfs_dmac, 7, &dma_eth[3]);
--    }
--
--    /* 2 timers.  */
--    sysbus_create_varargs("etraxfs-timer", 0x3001e000, irq[0x1b], nmi[1], NULL);
--    sysbus_create_varargs("etraxfs-timer", 0x3005e000, irq[0x1b], nmi[1], NULL);
--
--    for (i = 0; i < 4; i++) {
--        etraxfs_ser_create(0x30026000 + i * 0x2000, irq[0x14 + i], serial_hd(i));
--    }
--
--    if (kernel_filename) {
--        li.image_filename = kernel_filename;
--        li.cmdline = kernel_cmdline;
--        li.ram_size = machine->ram_size;
--        cris_load_image(cpu, &li);
--    } else if (!qtest_enabled()) {
--        fprintf(stderr, "Kernel image must be specified\n");
+-    if (image_size < 0) {
+-        fprintf(stderr, "qemu: could not load kernel '%s'\n",
+-                li->image_filename);
 -        exit(1);
 -    }
+-
+-    if (li->cmdline && (kcmdline_len = strlen(li->cmdline))) {
+-        if (kcmdline_len > 256) {
+-            fprintf(stderr, "Too long CRIS kernel cmdline (max 256)\n");
+-            exit(1);
+-        }
+-        pstrcpy_targphys("cmdline", 0x40000000, 256, li->cmdline);
+-    }
+-    qemu_register_reset(main_cpu_reset, cpu);
 -}
--
--static void axisdev88_machine_init(MachineClass *mc)
--{
--    mc->desc = "AXIS devboard 88";
--    mc->init = axisdev88_init;
--    mc->is_default = true;
--    mc->default_cpu_type = CRIS_CPU_TYPE_NAME("crisv32");
--    mc->default_ram_id = "axisdev88.ram";
--}
--
--DEFINE_MACHINE("axis-dev88", axisdev88_machine_init)
-diff --git a/hw/cris/Kconfig b/hw/cris/Kconfig
-index 26c7eef743..3f0680cf09 100644
---- a/hw/cris/Kconfig
-+++ b/hw/cris/Kconfig
-@@ -1,11 +1,3 @@
--config AXIS
--    bool
--    default y
--    depends on CRIS
--    select ETRAXFS
--    select PFLASH_CFI02
--    select NAND
--
- config ETRAXFS
-    bool
-    select PTIMER
 diff --git a/hw/cris/meson.build b/hw/cris/meson.build
-index dc808a4e0f..dc43251667 100644
+deleted file mode 100644
+index dc43251667..0000000000
 --- a/hw/cris/meson.build
-+++ b/hw/cris/meson.build
-@@ -1,5 +1,4 @@
- cris_ss = ss.source_set()
- cris_ss.add(files('boot.c'))
--cris_ss.add(when: 'CONFIG_AXIS', if_true: files('axis_dev88.c'))
- 
- hw_arch += {'cris': cris_ss}
++++ /dev/null
+@@ -1,4 +0,0 @@
+-cris_ss = ss.source_set()
+-cris_ss.add(files('boot.c'))
+-
+-hw_arch += {'cris': cris_ss}
+diff --git a/hw/meson.build b/hw/meson.build
+index 1c6308fe95..e86badc541 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -48,7 +48,6 @@ subdir('fsi')
+ subdir('alpha')
+ subdir('arm')
+ subdir('avr')
+-subdir('cris')
+ subdir('hppa')
+ subdir('i386')
+ subdir('loongarch')
 -- 
 2.45.2
 
