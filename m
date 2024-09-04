@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B28CD4857
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3560CD4857
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsUT-0001Qt-3s; Wed, 04 Sep 2024 12:04:17 -0400
+	id 1slsWT-0001Ly-K4; Wed, 04 Sep 2024 12:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsUR-0001JZ-97
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:04:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsWG-0000ld-Ig
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:06:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsUP-00007M-C7
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:04:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slsWC-0000Wg-Gv
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:06:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725465851;
+ s=mimecast20190719; t=1725465963;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Zd9sQet5kwX9p6t3oeXtGoej+z1F6/fvYgHi5hUSZ5Q=;
- b=L6CHzptB8drT6p6dUjX5mpcJu+BrZdYVlaPdBVAb5oD5UAvb3jomQnujrxktv9STRiDRjp
- KpItUAFMtDDxcAILPnUlSL6W8jy+BkSK1FIq84ajnvC/er+55BNl2Zw0fHFAkw+fscnsEj
- x+n8zkc2evG1mzR0YGVR4yjutMH7WR4=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cYRBL65HgfLgLecOLRSc6WbhhpFJngZ8LrPtjgP0IBI=;
+ b=Dyt2k/o0Cnc9UdqJgOAp8JzCwsRxXRZluhC84SDIw6laQJRanGTjtNHjGyQPEoOWQN7i5v
+ tot20NBqHgH0ntsEPe01YFIKmtnTH9THIKucX9kr/IeJWr3meqwVrcGwhl9/Szg4JYrcH7
+ oJBbc0icmNnUU5ZYQW9TnfR6stYR9to=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-96-AlmAW4CdP6iwOpH3IoRD2w-1; Wed, 04 Sep 2024 12:04:09 -0400
-X-MC-Unique: AlmAW4CdP6iwOpH3IoRD2w-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6c353d32ea0so13715736d6.1
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:04:09 -0700 (PDT)
+ us-mta-115-ilB1icWmPH6geqCmhJdeSQ-1; Wed, 04 Sep 2024 12:06:02 -0400
+X-MC-Unique: ilB1icWmPH6geqCmhJdeSQ-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7a7fa52f708so901154385a.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:06:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725465849; x=1726070649;
+ d=1e100.net; s=20230601; t=1725465961; x=1726070761;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Zd9sQet5kwX9p6t3oeXtGoej+z1F6/fvYgHi5hUSZ5Q=;
- b=ih1pNbI87QDb0ndV7zqQEdbD5BAqaQIlb+9gdNJbZLy3o+so+OWGgE4DcsZdfaQJ3w
- Uj53GuK74ewKhmeo14+Tur/CwXB7uNVgGbOVCiEYrvRd/uEbvpb2SHm43OoDNZnanzlm
- lJqiaFSkGkvzrwrhc+IwNT+wPquos4w14wTTiH1grrQxzJ7/kpp8oPkZlBI6vPnqIaUh
- 1o4YmM+6VX9DNoIcQV+NN9MNFkycmm9mGP4JxTBDM4B8QYGp9NrerIonxdJM3da+wx/4
- V03ql+lTwm7545a8V+psaqsF5eiRvVy0xV3ibarrMUn2KAliHIhFxEoY4G9T0oqGrDE4
- MGYA==
+ bh=cYRBL65HgfLgLecOLRSc6WbhhpFJngZ8LrPtjgP0IBI=;
+ b=Nj4zIFSOr4j+awVbCcCnbqHFIp1wWcDwPX0Wz7+2gKUw1/t+fiUYPe/2/J1Z4MR+G2
+ yf6fe9zpV/fcdjDR8/VCGt6CqCSW3FfowP1FSufSVy3yJzcz1mNCEC/SR8a5/INhCuWH
+ MXVs+vjN2ZnAA2OeS05WqHGJ2xvRCTCYYONNsx1g1CHsPVFRhdsdD47ES5tN1iJqE3JF
+ dk4vP7SV9QumXa6V4VuZAoXwTj6i5MQPDzkEHGPAv5w+JTtJkMWs+eMfxKiSnTmdVxHs
+ HhplzhTudJABCniuyneSHw2dlTJzRxXCRLJTOtXmeGlWwV46yPY9mUmAazGz38xfD2Xg
+ 4GCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZSVFhS6jjmWSQpJRbLlrJvevgUzOqdo+8wF7nQDxS6xqBBoz4UvGQGc3stBvB0ffSihVCtx3xCP7g@nongnu.org
-X-Gm-Message-State: AOJu0Yz3SCIeF8tm1XyfSSLjsHh6eZJsaQw6azEHdJBWxA/6jONjSrkU
- mQcvUs3rAYG4picf+Q5rUdNNuPwHJmh97Yw6tSSrVcayYYe7FajDI/zT72tU+yEoSZTfX2AkjuS
- 1uXPZhNvonhdPiUCdsIpa79dQdsU+pUW66kR+BWr+YkwDHMaxT7X3
-X-Received: by 2002:a05:6214:448c:b0:6c5:1151:8cbe with SMTP id
- 6a1803df08f44-6c511518da3mr74083066d6.38.1725465849162; 
- Wed, 04 Sep 2024 09:04:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHG5DTJvtd9G4AZTbb2BSDdbcAOMp4rvx6RFVxa1HNUr6VVoaF5jSJ6ICSy0YaiE9TQ/GdofA==
-X-Received: by 2002:a05:6214:448c:b0:6c5:1151:8cbe with SMTP id
- 6a1803df08f44-6c511518da3mr74082506d6.38.1725465848720; 
- Wed, 04 Sep 2024 09:04:08 -0700 (PDT)
+ AJvYcCX+AXuNIshQAht3CVDzbE9IbP1jC8nG8EstJrBUt5eGZYrefhFefzh3dDQyiBlfSRrFGc0UXDUS6Y0S@nongnu.org
+X-Gm-Message-State: AOJu0YyXi615mNdG1xI1jmb7KZ4lJfxVWyw6qqXuKsKDIJ+Wh7FFNM6w
+ q9C9yL+CaSymtiSLaYSYaDhfTusAmK9dy+fylm0Fk9z8ZzkCdi2H5xnXUJE2HZXgfyYCHNl2fVK
+ UD4zoU/lSIZGkh2+ciXr6TgqBpu4WJTqU/9qEbeoX3gUB4iEbmbVa
+X-Received: by 2002:a05:620a:462a:b0:79e:ff1a:2359 with SMTP id
+ af79cd13be357-7a89322e30dmr1476192585a.14.1725465961645; 
+ Wed, 04 Sep 2024 09:06:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzvLZc5oxgiVJNYX8Jm7AUCPdoIaMZ+eKg3rLIfFLq89v3B6Vza9oDeV5qxOsVj2bt6r5gKQ==
+X-Received: by 2002:a05:620a:462a:b0:79e:ff1a:2359 with SMTP id
+ af79cd13be357-7a89322e30dmr1476187485a.14.1725465961312; 
+ Wed, 04 Sep 2024 09:06:01 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c36ebb1eaesm25617016d6.11.2024.09.04.09.04.06
+ af79cd13be357-7a806d881ecsm627056485a.132.2024.09.04.09.05.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 09:04:08 -0700 (PDT)
-Message-ID: <fd4a524e-4d6b-4c90-a7f8-6d2309b9cb62@redhat.com>
-Date: Wed, 4 Sep 2024 18:04:04 +0200
+ Wed, 04 Sep 2024 09:06:01 -0700 (PDT)
+Message-ID: <5c8aeb45-156a-4863-815c-251abf3e923b@redhat.com>
+Date: Wed, 4 Sep 2024 18:05:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/15] hw/net: Remove TYPE_ETRAX_FS_ETH device
+Subject: Re: [PATCH v2 10/15] hw/dma: Remove ETRAX_FS DMA device
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
  Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
 References: <20240904143603.52934-1-philmd@linaro.org>
- <20240904143603.52934-10-philmd@linaro.org>
+ <20240904143603.52934-11-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -122,17 +122,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240904143603.52934-10-philmd@linaro.org>
+In-Reply-To: <20240904143603.52934-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -151,17 +151,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/09/2024 16.35, Philippe Mathieu-Daudé wrote:
-> We just removed the single machine using it (axis-dev88).
+> We just removed the single machine calling etraxfs_dmac_init()
+> (the axis-dev88 machine).
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/cris/etraxfs.h |  36 --
->   hw/net/etraxfs_eth.c      | 688 --------------------------------------
->   hw/net/meson.build        |   1 -
->   hw/net/trace-events       |   5 -
->   4 files changed, 730 deletions(-)
->   delete mode 100644 include/hw/cris/etraxfs.h
->   delete mode 100644 hw/net/etraxfs_eth.c
+>   MAINTAINERS                         |   1 -
+>   include/hw/cris/etraxfs_dma.h       |  36 --
+>   hw/dma/etraxfs_dma.c                | 781 ----------------------------
+>   hw/dma/meson.build                  |   1 -
+>   scripts/coverity-scan/COMPONENTS.md |   2 +-
+>   5 files changed, 1 insertion(+), 820 deletions(-)
+>   delete mode 100644 include/hw/cris/etraxfs_dma.h
+>   delete mode 100644 hw/dma/etraxfs_dma.c
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
