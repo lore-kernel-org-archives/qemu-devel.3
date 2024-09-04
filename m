@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B0FCD4857
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB3B3CD4853
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsgH-0003Vt-C0; Wed, 04 Sep 2024 12:16:29 -0400
+	id 1slsg2-0001lE-6l; Wed, 04 Sep 2024 12:16:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsft-0001S2-Ok
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:16:08 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1slsff-0001DB-9h; Wed, 04 Sep 2024 12:15:51 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsfs-0002LA-0h
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:16:05 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2f025b94e07so65442411fa.0
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:16:03 -0700 (PDT)
+ id 1slsfa-0002GJ-B3; Wed, 04 Sep 2024 12:15:48 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-5353d0b7463so11546077e87.3; 
+ Wed, 04 Sep 2024 09:15:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725466561; x=1726071361; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725466544; x=1726071344; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KdxPAmDEdUAtpsJzqv9PT9FKB3N+OoRAOYXGitcO7RQ=;
- b=InIKDhJ1aZaWAoafHXCYpw50NcFXhIQ8xhnOrhYbBCLGqrEko8QsNWHGZYUBkDXedJ
- LmR7pYefDRAxmviTiwEcb8GoITODezQCN30/sDRHoY66hkDv/34N+issJ6X6+SkwbS8K
- yUFBrrr/UlRJ7CZ4iiCkZb274zARBQ1GACj1ySsEmY6z7XA5Gp/1HNGyo5nXNYWsRmJ5
- 76A4dvOoUNjoh0ruMcyOcI+tfzoGmSl6BnNZAhDwrIeC05jfGzY8GvXaTOXS6x1LzgDh
- VrEnar05OI7BF/TiOTIV/LzxybO9ALBC6Xud5qGPwTCXjU/Rv+ZSX1MtZ4QnlPMuDJ5J
- zafw==
+ bh=N6K1JnQDB3GxWbgLc2L3O0RRJjZo+EVTDK5d5nCO5jo=;
+ b=nVEi3m4VUT785Tn+uvYQSKtzm35qwqWTjSnRxTAzUU3ydvvIipPfR2pBF5+iwIE1hS
+ H9WSYUrPawi8VavgGzDm3butnsQC/5ohXS/hdaLarXDAqK2hV4jzZc+CmqHp9fa1MEQ8
+ JpBikQtSbErx031ZKwQnGFZb57Dr+wIeth+DB2hSON6vAHJrILcrezYFt/pG4T5ye0fk
+ alat4VWJRIY8QpY/dGUAFldNOgL/svDZFmJ42g0qkWX52nAu0DJR4qJ6LtUQ3bXaCcrX
+ uE3sYCxrt+QYUF8vtJGUn42mfvvwnVzX6kCC7cfEEWEYpC8sRvoaQrCI2YT6VROCYJaq
+ euHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725466561; x=1726071361;
+ d=1e100.net; s=20230601; t=1725466544; x=1726071344;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KdxPAmDEdUAtpsJzqv9PT9FKB3N+OoRAOYXGitcO7RQ=;
- b=TjIrdx7ZSwIpM5smYx2tkzFbRSnrMdHmvmrK40etGh7UCL5OoiMCZuPOjkNW+fag2S
- ipu4Zdx9eTafw4bn2BABphN6qTmbuJcIfu3csbdNyx6+1BWlCzoXqVdDuhGonsmKXRON
- ZDbOR84xVn/RB7LzoVcEjx6pZolxdynkhOonB4GwEIk4Mz8z/3+F8pl+6I2DtzDzXj/8
- LbJeVPrjmTUhrsqcFtil6ASPL4IvsUf1MrOj+c1u8GTfToZP5wQu8Ce0UUrvX7gV4/aA
- VXxPni9QoyuxtGzxMSrxivqE7C8LbhD1Ql7S5rSkHcRXhzhT/u0LH6lpa3P3Oi+OO1L6
- lTWA==
-X-Gm-Message-State: AOJu0Yz3Jn+G7gd7/Hr4t7TImmvjtBUphShdR3XjaAMVMlUx+rTL/Nt+
- uGWKFIxbkltVmvJzRWMOf5JbFKLZiGjWTdJQbRH6qmv4eg9jNwJibJjKYeS4
-X-Google-Smtp-Source: AGHT+IFAdjefLP0GVVZKIUrpFKMNdvV3ASjqYkfelwsocfjh9WpkL3JieubicWsRTNAejwGyS1Ovnw==
-X-Received: by 2002:a2e:460a:0:b0:2f6:4bed:9b44 with SMTP id
- 38308e7fff4ca-2f64bed9bf0mr27782561fa.47.1725466561028; 
- Wed, 04 Sep 2024 09:16:01 -0700 (PDT)
+ bh=N6K1JnQDB3GxWbgLc2L3O0RRJjZo+EVTDK5d5nCO5jo=;
+ b=BedZLwzMexR/Fu5sS/4KzJfBVrRTBecS7nVw4xW5ny6K64vB0lLC59y/2TTGW9W10s
+ 2gfiaXqG0dyXzijk3yJBWl578ioBPUmXW8pQSFUkNuDyXRkYxvQiz5SrApz/+4Iseoc1
+ LoWtsvFevaehTPUqLM8edWsd34JoWAjp51C//JS+je3cNsknyupHnwyeOYEKeDT9vPWz
+ cVi7DsV9L+gOTonyqBen7P7DO3rvhzpMjQXsyuxWo99ivRfJkvAxN4YEBLEngTirg20c
+ WJ3DH0jz1/iFeOtJXPCJLr9m5UleFP1ZrcfJy99eiULAfYoS2tk48lGPu0Hm1eeYAE4F
+ mymw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOv+bY8hprCUQRG0kSp5F3bsIuLzoN1crFMFM7gzn1v5NE+LqFiOs9C7/d9KS1hTw20C/c3cAnQw==@nongnu.org
+X-Gm-Message-State: AOJu0YwaevuiQjHMk182+jW8ibdmzlCbXjMJq1dEX1fPTiZJu5KERKq5
+ /IUdyBb6P3QZ0PUorNM/uOwnqt2DnERIHMqfpeKT0CoD13mdGsODQfHO7PeY
+X-Google-Smtp-Source: AGHT+IFom4VEXuZYnoDrA4HGURvL615ZNQmYPSqV45hP6uADwmwNAHyfJ2jP5ftIt03oSUiu6NVu1A==
+X-Received: by 2002:ac2:4e06:0:b0:533:483f:9562 with SMTP id
+ 2adb3069b0e04-53546bde03emr15776888e87.42.1725466543416; 
+ Wed, 04 Sep 2024 09:15:43 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2f66362f6ecsm321501fa.67.2024.09.04.09.15.59
+ 2adb3069b0e04-535692d9bf6sm176315e87.41.2024.09.04.09.15.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Sep 2024 09:15:59 -0700 (PDT)
+ Wed, 04 Sep 2024 09:15:42 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com,
  jason.andryuk@amd.com, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL v1 12/12] docs/system/i386: xenpvh: Add a basic description
-Date: Wed,  4 Sep 2024 18:15:36 +0200
-Message-ID: <20240904161537.664189-13-edgar.iglesias@gmail.com>
+ xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
+Subject: [PULL v1 02/12] hw/arm: xenpvh: Update file header to use SPDX
+Date: Wed,  4 Sep 2024 18:15:26 +0200
+Message-ID: <20240904161537.664189-3-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240904161537.664189-1-edgar.iglesias@gmail.com>
 References: <20240904161537.664189-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,94 +98,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
----
- MAINTAINERS                 |  1 +
- docs/system/i386/xenpvh.rst | 49 +++++++++++++++++++++++++++++++++++++
- docs/system/target-i386.rst |  1 +
- 3 files changed, 51 insertions(+)
- create mode 100644 docs/system/i386/xenpvh.rst
+Update file header to use SPDX and remove stray empty
+comment line.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c2fb0c2f42..c14ac014e2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -560,6 +560,7 @@ F: include/sysemu/xen.h
- F: include/sysemu/xen-mapcache.h
- F: stubs/xen-hw-stub.c
- F: docs/system/arm/xenpvh.rst
-+F: docs/system/i386/xenpvh.rst
+No functional changes.
+
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Acked-by: Stefano Stabellini <sstabellini@kernel.org>
+---
+ hw/arm/xen_arm.c | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
+
+diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
+index 6fad829ede..766a194fa1 100644
+--- a/hw/arm/xen_arm.c
++++ b/hw/arm/xen_arm.c
+@@ -1,24 +1,7 @@
+ /*
+  * QEMU ARM Xen PVH Machine
+  *
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
++ * SPDX-License-Identifier: MIT
+  */
  
- Guest CPU Cores (NVMM)
- ----------------------
-diff --git a/docs/system/i386/xenpvh.rst b/docs/system/i386/xenpvh.rst
-new file mode 100644
-index 0000000000..354250f073
---- /dev/null
-+++ b/docs/system/i386/xenpvh.rst
-@@ -0,0 +1,49 @@
-+Xen PVH machine (``xenpvh``)
-+=========================================
-+
-+Xen supports a spectrum of types of guests that vary in how they depend
-+on HW virtualization features, emulation models and paravirtualization.
-+PVH is a mode that uses HW virtualization features (like HVM) but tries
-+to avoid emulation models and instead use passthrough or
-+paravirtualized devices.
-+
-+QEMU can be used to provide PV virtio devices on an emulated PCIe controller.
-+That is the purpose of this minimal machine.
-+
-+Supported devices
-+-----------------
-+
-+The x86 Xen PVH QEMU machine provide the following devices:
-+
-+- RAM
-+- GPEX host bridge
-+- virtio-pci devices
-+
-+The idea is to only connect virtio-pci devices but in theory any compatible
-+PCI device model will work depending on Xen and guest support.
-+
-+Running
-+-------
-+
-+The Xen tools will typically construct a command-line and launch QEMU
-+for you when needed. But here's an example of what it can look like in
-+case you need to construct one manually:
-+
-+.. code-block:: console
-+
-+    qemu-system-i386 -xen-domid 3 -no-shutdown        \
-+      -chardev socket,id=libxl-cmd,path=/var/run/xen/qmp-libxl-3,server=on,wait=off \
-+      -mon chardev=libxl-cmd,mode=control             \
-+      -chardev socket,id=libxenstat-cmd,path=/var/run/xen/qmp-libxenstat-3,server=on,wait=off \
-+      -mon chardev=libxenstat-cmd,mode=control        \
-+      -nodefaults                                     \
-+      -no-user-config                                 \
-+      -xen-attach -name g0                            \
-+      -vnc none                                       \
-+      -display none                                   \
-+      -device virtio-net-pci,id=nic0,netdev=net0,mac=00:16:3e:5c:81:78 \
-+      -netdev type=tap,id=net0,ifname=vif3.0-emu,br=xenbr0,script=no,downscript=no \
-+      -smp 4,maxcpus=4                                \
-+      -nographic                                      \
-+      -machine xenpvh,ram-low-base=0,ram-low-size=2147483648,ram-high-base=4294967296,ram-high-size=2147483648,pci-ecam-base=824633720832,pci-ecam-size=268435456,pci-mmio-base=4026531840,pci-mmio-size=33554432,pci-mmio-high-base=824902156288,pci-mmio-high-size=68719476736 \
-+      -m 4096
-diff --git a/docs/system/target-i386.rst b/docs/system/target-i386.rst
-index 1b8a1f248a..23e84e3ba7 100644
---- a/docs/system/target-i386.rst
-+++ b/docs/system/target-i386.rst
-@@ -26,6 +26,7 @@ Architectural features
-    i386/cpu
-    i386/hyperv
-    i386/xen
-+   i386/xenpvh
-    i386/kvm-pv
-    i386/sgx
-    i386/amd-memory-encryption
+ #include "qemu/osdep.h"
 -- 
 2.43.0
 
