@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFCDCD4853
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 15:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D2B2CD4857
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 15:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slrtv-0001xV-O3; Wed, 04 Sep 2024 11:26:31 -0400
+	id 1slrwR-0001zD-Pq; Wed, 04 Sep 2024 11:29:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrtu-0001vz-DX
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:26:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrwQ-0001yi-Az
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:29:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrtt-0006H4-0Q
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:26:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrwO-0006RF-Rr
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:29:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725463587;
+ s=mimecast20190719; t=1725463744;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AasQubtj+1/+uCeYk57TBlUwJ33DTbByO0PDsGa4HmE=;
- b=I9hS2IRSJbMBJk1CLJwCC1ijkW8icuNLmiyw56Mva46+i1cX8ue3Qm6kYC/eYTglEUbhiD
- H/REfo9xFLLOyozV9CSD2PJTANi0aONUN8ySUNpfHnluLzfxI6z8Wzun6DovzHc7lNNUm/
- N+cTKjDVNnNjtFXlZ2m22D3CxXzjuk4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=D9kwBTMHyei/yhcikiH4yuyNaQF7krn7vA8sigE4UYg=;
+ b=e+b2LtCHDyNP6s+DcFXN1Prpjy9xJgNU1HkbVACE6JOuAH530b97ucQbKuWJVViyMd3/0M
+ fpyw5mz9nC9q0nr3JRuZZw5a5MjXQuq9J0+qXYjdLaJshO9bCnWvFh72YTQ0MZdLfUbRhz
+ 1qnoZe3KWyZN3TbGEj2qMQ4q+1Ri5LQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-F8qRvOXZMnGHxe922TRwbg-1; Wed, 04 Sep 2024 11:26:25 -0400
-X-MC-Unique: F8qRvOXZMnGHxe922TRwbg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-374c301db60so2354462f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 08:26:24 -0700 (PDT)
+ us-mta-27-IJvv3nq5NyGBl4UZtkEj7w-1; Wed, 04 Sep 2024 11:29:03 -0400
+X-MC-Unique: IJvv3nq5NyGBl4UZtkEj7w-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42bb9fa67d7so65535995e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 08:29:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725463584; x=1726068384;
+ d=1e100.net; s=20230601; t=1725463742; x=1726068542;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=AasQubtj+1/+uCeYk57TBlUwJ33DTbByO0PDsGa4HmE=;
- b=uH/rUudAOsTmmWrEV0ToRMmN7fSc+UiBEJcHPWseY2JwZbytqyJWUJMI0vDporgKpo
- wm9RCfTAIAD6ve+M5ZHLoqOuStFfw7ztQotEDHjRbeOSx+pyEehT173Q3lN1DDEjznmq
- 4EMjYP9l8vzfPPheboW80tNZfermVYkHJK1YVFCFWASS0Nr1JP/H8oU+h0EDK/vk4KbB
- yNpVfd5QJaX2K3nezbYs7S5jnbqt6kOl828AuaG9VMFErbjwIkD+GAsfBmlTlPOuxVOQ
- CwhDRP4hO8ykre879TwpBzTULyo1x6wyahy7REoe6+NV40pj80Nainwe1Uo+Anx5a2+q
- taaw==
+ bh=D9kwBTMHyei/yhcikiH4yuyNaQF7krn7vA8sigE4UYg=;
+ b=qg9DovtIO0CyMmVnMpOO+8oLayJOMUSAPZBUd3M7Z4aJ+nDhGf8KVQSzt1pn9ECYbC
+ iu7GozoRqKHoYM6gcew9B1DZtP+Y6cfXDHItvHer3AlIQxJFcwyi76Y8t1MgpvMYVvkl
+ Ljj6YOyXFpMusdWQ6MfAciljoCVnZpth+/1FGlUBG/MXi+5sXtJGadGOTty9MeWpIdDI
+ QVqYw6Ur+Q7a7WztrRUp1JDezuTGxTuBny0QhZdHKsfjzlt5OlV1UjXkXuG/w3DKbM66
+ a1D77SKWN3PlFcP9+G+aRqaAbcdxZ5mkqafYtfrsiW5UPmdFayq+FU51JWaalrrxrnQi
+ UPBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIhyrizciZICorKi8njtsdreTwsWhxiFL68FtMF3yX0glaLatgSy2wb0FTJEleT/AJLMAU5BBv47vH@nongnu.org
-X-Gm-Message-State: AOJu0YyVCuNs5eQ0W48ifXzYTd14TW3IwQzDpEmtV36bQPMO5kNIlQWf
- FXY5Qr9PTyhFuQ17hLZPyXNUKh9aEPfpdbGFMFOfniAzDFKpuNQUvj+isSeIPFlqkNsceUnnZ2Y
- L24nk+Rss0jsXLe4/oNv7hNcN//ICXqr/shZhiKa/2J70/tdCocRM
-X-Received: by 2002:a5d:42d0:0:b0:374:c07c:a49 with SMTP id
- ffacd0b85a97d-374c07c0cfamr8889014f8f.28.1725463583734; 
- Wed, 04 Sep 2024 08:26:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGh27GLxjFd40RKBvPiPQ7yf6vMWQKwQs10lX/oaJNfxI1UbniB2Ut5yiUgbXLGht5ekGzlmA==
-X-Received: by 2002:a5d:42d0:0:b0:374:c07c:a49 with SMTP id
- ffacd0b85a97d-374c07c0cfamr8888989f8f.28.1725463583130; 
- Wed, 04 Sep 2024 08:26:23 -0700 (PDT)
+ AJvYcCX2w7luVtCZaFhni0pnQ9yvMuNIOLYqOOkivsoAhNWS7dxxt1RfLmX8kssBTWYlOfzEPBy/oGdbmx+V@nongnu.org
+X-Gm-Message-State: AOJu0YztYkEIdaMCXLKp0+pb3tFHoxZx4PP+cGtqQo+t5CF88F/dME6A
+ o8m19b9kr8PFIFNDFTHjysgquzR6YAGH0g5zMbofY43a8yhBLR9NpT2MKd/wa7ObxZy0bvKWnyk
+ jdnVWS03dGShLct7Ft/o9yQTViKwICZIp+PM7TfmdMzKXqHy4EVex
+X-Received: by 2002:a05:600c:4684:b0:426:593c:9359 with SMTP id
+ 5b1f17b1804b1-42bb020bf2fmr218165575e9.32.1725463741737; 
+ Wed, 04 Sep 2024 08:29:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAz8SmjJ0x+rbr7WRLF6/9VRuJiluaro3MvfL2tXOFS/rRM0eOIN8ZJo9Eo4VzweZM2d/Mmg==
+X-Received: by 2002:a05:600c:4684:b0:426:593c:9359 with SMTP id
+ 5b1f17b1804b1-42bb020bf2fmr218165295e9.32.1725463741169; 
+ Wed, 04 Sep 2024 08:29:01 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374c1b0a62esm11833420f8f.47.2024.09.04.08.26.22
+ ffacd0b85a97d-374c6479514sm10112170f8f.93.2024.09.04.08.29.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 08:26:22 -0700 (PDT)
-Message-ID: <dd8d72e3-3b78-4981-9cb2-6d20a96fc985@redhat.com>
-Date: Wed, 4 Sep 2024 17:26:21 +0200
+ Wed, 04 Sep 2024 08:29:00 -0700 (PDT)
+Message-ID: <25f21752-fa7f-4144-94db-7783ff4adae3@redhat.com>
+Date: Wed, 4 Sep 2024 17:28:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/15] hw/cris: Remove the axis-dev88 machine
+Subject: Re: [PATCH v2 06/15] hw/cris: Remove image loader helper
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
  Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
 References: <20240904143603.52934-1-philmd@linaro.org>
- <20240904143603.52934-6-philmd@linaro.org>
+ <20240904143603.52934-7-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -122,7 +122,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240904143603.52934-6-philmd@linaro.org>
+In-Reply-To: <20240904143603.52934-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -151,19 +151,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/09/2024 16.35, Philippe Mathieu-Daudé wrote:
-> This machine was deprecated for the v9.0 release in commit
-> c7bbef4023 ("docs: mark CRIS support as deprecated").
+> No more CRIS machine uses cris_load_image(), remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   MAINTAINERS                              |   3 +-
->   configs/devices/cris-softmmu/default.mak |   3 -
->   hw/cris/axis_dev88.c                     | 351 -----------------------
->   hw/cris/Kconfig                          |   8 -
->   hw/cris/meson.build                      |   1 -
->   5 files changed, 1 insertion(+), 365 deletions(-)
->   delete mode 100644 hw/cris/axis_dev88.c
+>   hw/cris/boot.h      |  16 -------
+>   hw/cris/boot.c      | 102 --------------------------------------------
+>   hw/cris/meson.build |   4 --
+>   hw/meson.build      |   1 -
+>   4 files changed, 123 deletions(-)
+>   delete mode 100644 hw/cris/boot.h
+>   delete mode 100644 hw/cris/boot.c
+>   delete mode 100644 hw/cris/meson.build
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
 
