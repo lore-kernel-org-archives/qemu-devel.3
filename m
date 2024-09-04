@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C036ECD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8070FCD484A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slpNC-0003WP-AO; Wed, 04 Sep 2024 08:44:34 -0400
+	id 1slpNK-0003vR-0u; Wed, 04 Sep 2024 08:44:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNB-0003SQ-8Z
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:33 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNG-0003nc-Im
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:39 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpN9-0005Rm-JI
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:32 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNE-0005UF-Ri
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:38 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1EE961F38E;
- Wed,  4 Sep 2024 12:44:30 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 975242191F;
+ Wed,  4 Sep 2024 12:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453870; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453875; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GqaP/FCR+HWdzVs0QVMLDNAsRWxwmc3xCegKzUxtsN8=;
- b=Ava6dQEZiRDFXQSAJ+BEw20Uudp8LvvzCFGd0ZkIZVy+GwJJijHcrLhqHpnFKTGyXrG+Sm
- pGpDxygFhrNmylXu1VFMPkrXZuzMX9TMupCGDO/EwmFnfv5Zj/AphAc5AZDvIAHRSTC3pz
- +mR8XPfmPUzPnngJ7Es2KrPrARn2hH4=
+ bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
+ b=DiPaBbtUTqNfnjGuqq1myGEMZalXX1XMwhX5yTI+tb2EZ+S6sud4MAPwXCwO7cMo2c9EWA
+ maZWfLgP1m6cwhfpIRFKfHZrlv109yZ2W3QPgMYTifY7ajbDMXjGjFTvsY7Ixoq+rkzuVU
+ 7LFdrKcsxiXVuSH1cM+sXGeNnkE7iS8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453870;
+ s=susede2_ed25519; t=1725453875;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GqaP/FCR+HWdzVs0QVMLDNAsRWxwmc3xCegKzUxtsN8=;
- b=KYenGYCetC5k6R9d8w6qRLVX4Uv/FkN2E+Hj+jHiem+/3t6pyCk0t1IH0eF/J291+IKv3E
- wMY/Wgf18K4tj7BA==
-Authentication-Results: smtp-out2.suse.de;
+ bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
+ b=equoGoffzwq8gsW3/U3JVT6gbQ6alTCoq4qCUKAFT0kPDLe4w4DHa+q27O9G1ISLJ1NT0b
+ CEqZEiLY2/Gl0tDQ==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453870; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453875; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GqaP/FCR+HWdzVs0QVMLDNAsRWxwmc3xCegKzUxtsN8=;
- b=Ava6dQEZiRDFXQSAJ+BEw20Uudp8LvvzCFGd0ZkIZVy+GwJJijHcrLhqHpnFKTGyXrG+Sm
- pGpDxygFhrNmylXu1VFMPkrXZuzMX9TMupCGDO/EwmFnfv5Zj/AphAc5AZDvIAHRSTC3pz
- +mR8XPfmPUzPnngJ7Es2KrPrARn2hH4=
+ bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
+ b=DiPaBbtUTqNfnjGuqq1myGEMZalXX1XMwhX5yTI+tb2EZ+S6sud4MAPwXCwO7cMo2c9EWA
+ maZWfLgP1m6cwhfpIRFKfHZrlv109yZ2W3QPgMYTifY7ajbDMXjGjFTvsY7Ixoq+rkzuVU
+ 7LFdrKcsxiXVuSH1cM+sXGeNnkE7iS8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453870;
+ s=susede2_ed25519; t=1725453875;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GqaP/FCR+HWdzVs0QVMLDNAsRWxwmc3xCegKzUxtsN8=;
- b=KYenGYCetC5k6R9d8w6qRLVX4Uv/FkN2E+Hj+jHiem+/3t6pyCk0t1IH0eF/J291+IKv3E
- wMY/Wgf18K4tj7BA==
+ bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
+ b=equoGoffzwq8gsW3/U3JVT6gbQ6alTCoq4qCUKAFT0kPDLe4w4DHa+q27O9G1ISLJ1NT0b
+ CEqZEiLY2/Gl0tDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B38F5139D2;
- Wed,  4 Sep 2024 12:44:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 38BB0139D2;
+ Wed,  4 Sep 2024 12:44:34 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WBwxHixW2GZuVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6E4yADJW2GZuVQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:34 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 05/34] tests/qtest/migration-test: Fix leaks in
- calc_dirtyrate_ready()
-Date: Wed,  4 Sep 2024 09:43:48 -0300
-Message-Id: <20240904124417.14565-6-farosas@suse.de>
+Subject: [PULL 08/34] tests/unit/crypto-tls-x509-helpers: deinit privkey in
+ test_tls_cleanup
+Date: Wed,  4 Sep 2024 09:43:51 -0300
+Message-Id: <20240904124417.14565-9-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
 References: <20240904124417.14565-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.78 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.18)[-0.925];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.927];
  MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,linaro.org:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,linaro.org:email];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -122,55 +122,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In calc_dirtyrate_ready() we g_strdup() a string but then never free it:
+We create a gnutls_x509_privkey_t in test_tls_init(), but forget
+to deinit it in test_tls_cleanup(), resulting in leaks
+reported in hte migration test such as:
 
-Direct leak of 19 byte(s) in 2 object(s) allocated from:
-    #0 0x55ead613413e in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/tests/qtest/migration-test+0x22f13e) (BuildId: e7cd5c37b2987a1af682b43ee5240b98bb316737)
-    #1 0x7f7a13d39738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
-    #2 0x7f7a13d4e583 in g_strdup debian/build/deb/../../../glib/gstrfuncs.c:361:17
-    #3 0x55ead6266f48 in calc_dirtyrate_ready tests/qtest/migration-test.c:3409:14
-    #4 0x55ead62669fe in wait_for_calc_dirtyrate_complete tests/qtest/migration-test.c:3422:13
-    #5 0x55ead6253df7 in test_vcpu_dirty_limit tests/qtest/migration-test.c:3562:9
-    #6 0x55ead626a407 in migration_test_wrapper tests/qtest/migration-helpers.c:456:5
+Indirect leak of 8 byte(s) in 1 object(s) allocated from:
+    #0 0x55fa6d11c12e in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/tests/qtest/migration-test+0x22f12e) (BuildId: 852a267993587f557f50e5715f352f43720077ba)
+    #1 0x7f073982685d in __gmp_default_allocate (/lib/x86_64-linux-gnu/libgmp.so.10+0xa85d) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
+    #2 0x7f0739836193 in __gmpz_realloc (/lib/x86_64-linux-gnu/libgmp.so.10+0x1a193) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
+    #3 0x7f0739836594 in __gmpz_import (/lib/x86_64-linux-gnu/libgmp.so.10+0x1a594) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
+    #4 0x7f07398a91ed in nettle_mpz_set_str_256_u (/lib/x86_64-linux-gnu/libhogweed.so.6+0xb1ed) (BuildId: 3cc4a3474de72db89e9dcc93bfb95fe377f48c37)
+    #5 0x7f073a146a5a  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x131a5a) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #6 0x7f073a07192c  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x5c92c) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #7 0x7f073a078333  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x63333) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #8 0x7f073a0e8353  (/lib/x86_64-linux-gnu/libgnutls.so.30+0xd3353) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #9 0x7f073a0ef0ac in gnutls_x509_privkey_import (/lib/x86_64-linux-gnu/libgnutls.so.30+0xda0ac) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
+    #10 0x55fa6d2547e3 in test_tls_load_key tests/unit/crypto-tls-x509-helpers.c:99:11
+    #11 0x55fa6d25460c in test_tls_init tests/unit/crypto-tls-x509-helpers.c:128:15
+    #12 0x55fa6d2495c4 in test_migrate_tls_x509_start_common tests/qtest/migration-test.c:1044:5
+    #13 0x55fa6d24c23a in test_migrate_tls_x509_start_reject_anon_client tests/qtest/migration-test.c:1216:12
+    #14 0x55fa6d23fb40 in test_precopy_common tests/qtest/migration-test.c:1789:21
+    #15 0x55fa6d236b7c in test_precopy_tcp_tls_x509_reject_anon_client tests/qtest/migration-test.c:2614:5
 
-We also fail to unref the QMP rsp_return, so we leak that also.
+(Oddly, there is no reported leak in the x509 unit tests, even though
+those also use test_tls_init() and test_tls_cleanup().)
 
-Rather than duplicating the string, use the in-place value from
-the qdict, and then unref the qdict.
+Deinit the privkey in test_tls_cleanup().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration-test.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tests/unit/crypto-tls-x509-helpers.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index b775ffed81..97f99c1316 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -3318,15 +3318,18 @@ static QDict *query_vcpu_dirty_limit(QTestState *who)
- static bool calc_dirtyrate_ready(QTestState *who)
+diff --git a/tests/unit/crypto-tls-x509-helpers.c b/tests/unit/crypto-tls-x509-helpers.c
+index b316155d6a..2daecc416c 100644
+--- a/tests/unit/crypto-tls-x509-helpers.c
++++ b/tests/unit/crypto-tls-x509-helpers.c
+@@ -135,6 +135,7 @@ void test_tls_init(const char *keyfile)
+ void test_tls_cleanup(const char *keyfile)
  {
-     QDict *rsp_return;
--    gchar *status;
-+    const char *status;
-+    bool ready;
- 
-     rsp_return = query_dirty_rate(who);
-     g_assert(rsp_return);
- 
--    status = g_strdup(qdict_get_str(rsp_return, "status"));
-+    status = qdict_get_str(rsp_return, "status");
-     g_assert(status);
-+    ready = g_strcmp0(status, "measuring");
-+    qobject_unref(rsp_return);
- 
--    return g_strcmp0(status, "measuring");
-+    return ready;
+     asn1_delete_structure(&pkix_asn1);
++    gnutls_x509_privkey_deinit(privkey);
+     unlink(keyfile);
  }
  
- static void wait_for_calc_dirtyrate_complete(QTestState *who,
 -- 
 2.35.3
 
