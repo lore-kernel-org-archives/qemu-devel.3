@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D70CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 06:20:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E210CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 06:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sljNe-00064z-8g; Wed, 04 Sep 2024 02:20:38 -0400
+	id 1sljP7-0004na-Fq; Wed, 04 Sep 2024 02:22:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sljNS-0005So-6E
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 02:20:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sljP5-0004f2-2H
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 02:22:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sljNO-00005B-P8
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 02:20:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sljP3-0000Fb-Jl
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 02:22:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725430817;
+ s=mimecast20190719; t=1725430924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FidyWpsVQpxK5btuZPks2IXNNPiAalWPAjV39AYCG1o=;
- b=FCMrX74MQKWo0ALjF2CQgWese2ahm6OjZR5yoC+vUHtLBSQP5qCQd384Yfxnj+RFaNM/y8
- Iv2wBVjNHjTR04v60f7zntBoZqf+Phqudze9Wo0pGyrcvA9j2nP6mnUn2KU6FV9c/tbA5D
- cDfeRrUQuPJv+zHuGOXsmZ050Z2XrYM=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Aa6voGOs56jj1tk90WOTiKuyODXbPYgUmc1qmW0EYFU=;
+ b=XIlfEX/jHSKRGl0LlhrixdvfELNrqiBk6C+u0/T47ejdUuLDLTP7WWP//moG6aYkWeeXPT
+ GU+yys8Z6eisXLhBTEb2NNXOMQkG79oawCQJDiQ+ZDmlD5KltEUzM1NQx7yIKQQMziHTQl
+ mFW2cr10dZeINBfIUH3D5t8AZNOqkRM=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-182-8D9JV2xrNRu9LuP5gUJ8fw-1; Wed, 04 Sep 2024 02:20:15 -0400
-X-MC-Unique: 8D9JV2xrNRu9LuP5gUJ8fw-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a868403dbdeso470463366b.1
- for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 23:20:15 -0700 (PDT)
+ us-mta-635-Ve7Fk1NQMLK2o79M_PdKkw-1; Wed, 04 Sep 2024 02:22:02 -0400
+X-MC-Unique: Ve7Fk1NQMLK2o79M_PdKkw-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a8a1b72ddfaso137718266b.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Sep 2024 23:22:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725430814; x=1726035614;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FidyWpsVQpxK5btuZPks2IXNNPiAalWPAjV39AYCG1o=;
- b=vLLoFD1XKYHGD4RfdKReWlwIjPhQ1LSUI1yfL/3z9dNI1ReusV1RMJW/L6SWzAkurI
- vKZ6fUP6G6MFrY2XYYeBWr6RUhHJqZwMZIurcuMyu+UDL5haGU/VDa6z3CFgRuo5T7pl
- P8sle8XPZK5Ne0UKHKQ0ezWyfDR/BKCeJFy46BH7dBGS1vekTWly8wBC+P2jpOuomtvV
- zclOQGnrcQUKz44qmR6Y/ydundT5+Jbistff/cneiffeLBA9mlbNpQz+Zed0juynAYAY
- 4VdioKlZp3pQJbUhDL8PBlHZiVm/goo2eZe3KLf2H6ZlOSJOqhhH9Wl0NGSbojOGicQF
- VVtg==
-X-Gm-Message-State: AOJu0Yy9/VgGdvLPdq87/1TW7ZvKPfwMNM8VZZvwkKZH+V19nUGTDlTM
- m/9poIGJzKbkBqio+odWlLHDjW6nAbA351A9SALWOKcgNlyo0RNo+p92U96OSE0NpvIB5zBJ1cx
- cZw9yCJVDsNg0aqdEJj7MBy8tQKH/rjs3mUnpx2uo5Z/r1JswLAvp
-X-Received: by 2002:a17:907:7203:b0:a86:96f5:fa81 with SMTP id
- a640c23a62f3a-a897f920068mr1536289066b.32.1725430814341; 
- Tue, 03 Sep 2024 23:20:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEX08+F0G71yOvNsw6xeNSpLNSoj4iiyYrjLR5Rf65GdcT8Wg5RqLIqcc/jul+7+ghxM4vX3Q==
-X-Received: by 2002:a17:907:7203:b0:a86:96f5:fa81 with SMTP id
- a640c23a62f3a-a897f920068mr1536286666b.32.1725430813820; 
- Tue, 03 Sep 2024 23:20:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725430921; x=1726035721;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Aa6voGOs56jj1tk90WOTiKuyODXbPYgUmc1qmW0EYFU=;
+ b=hwpERjk5t6/+ZFYEJFTUzq22HV70XXDZwLg2Iwl5JxP9qh4NuHeYrp+u4fdSNNWOqe
+ pJlEWf/BKLxbz0to1t9/bsHI2nvInz4HjED4pEBS+1zKTWHVfxnjP2nub8yVj6cRm7Yy
+ Ao5h50V6JNTjEOaO1qqC2FQwxuf1Y1/jIpaBGQyN3EHTJzx4WLQe7uI3nq52iaFhE5jL
+ J18t+aTUDySJlGNrIpsFtah0r3Solf9RH3ltNopkxiLNT3ER1SaaHs66YUXfQGI8QHDq
+ dUAdreGwzGwYv7Mku6Fu7Y7sD6O5zydP8KPMFmB0h9Lf1UDCzqX1ifipQFsCwLczDiGb
+ wBxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXdngbXy+EMzGiVNMNArc7uqX3G8g+z5vx0lAEeGd6pilelhuX6nXtNsV68bEkVufc1gqxDi3Y9vla@nongnu.org
+X-Gm-Message-State: AOJu0YxjqfAiZuSSoY9ZlwTtEiDOyi6gGmzN80fzfnBEIm5NPsSyPhxC
+ 5STEVc8GRURriiRlVzimt9G57sg3OA6QVL6CZG9HzrPwLg+o7pPDjarwHacuzqcVdhos6XHjQMR
+ +TYqHX3Yz2GHnOmPuHXGMJymDFbxqaP+lpDoxam4G+Jt40uanr7fn
+X-Received: by 2002:a17:907:98b:b0:a88:b90b:bd5e with SMTP id
+ a640c23a62f3a-a89d8723fedmr927467766b.3.1725430921240; 
+ Tue, 03 Sep 2024 23:22:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBHkKwfgHMtYyVcw9S0CBzru5X6hKoQVor1Jc6gpiJFgBvccbKc2eqj/FVqYcLIkhShnYA5w==
+X-Received: by 2002:a17:907:98b:b0:a88:b90b:bd5e with SMTP id
+ a640c23a62f3a-a89d8723fedmr927465666b.3.1725430920715; 
+ Tue, 03 Sep 2024 23:22:00 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8a3e78a386sm52731566b.158.2024.09.03.23.20.13
+ a640c23a62f3a-a89891db022sm773393966b.146.2024.09.03.23.21.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2024 23:20:13 -0700 (PDT)
-Message-ID: <73ba8035-9fa6-440e-9ca9-0b6934525489@redhat.com>
-Date: Wed, 4 Sep 2024 08:20:12 +0200
+ Tue, 03 Sep 2024 23:22:00 -0700 (PDT)
+Message-ID: <46961e08-9d48-4086-8524-d7f50577c77c@redhat.com>
+Date: Wed, 4 Sep 2024 08:21:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/test_vnc: Reduce raciness in
- find_free_ports()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20240903143553.16877-1-philmd@linaro.org>
- <ZtciHTFGPtUlMKM_@redhat.com>
-Content-Language: en-US
+Subject: Re: [PATCH v2 01/11] hw/s390/ccw-device: Convert to three-phase reset
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nico Boehr <nrb@linux.ibm.com>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+References: <20240830145812.1967042-1-peter.maydell@linaro.org>
+ <20240830145812.1967042-2-peter.maydell@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -119,20 +125,20 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ZtciHTFGPtUlMKM_@redhat.com>
+In-Reply-To: <20240830145812.1967042-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,75 +154,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2024 16.50, Daniel P. Berrangé wrote:
-> On Tue, Sep 03, 2024 at 04:35:53PM +0200, Philippe Mathieu-Daudé wrote:
->> Pass the port range as argument. In order to reduce races
->> when looking for free ports, use a per-target per-process
->> base port (based on the target built-in hash).
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> Based-on: <20240830133841.142644-33-thuth@redhat.com>
->> ---
->>   tests/functional/test_vnc.py | 12 ++++++++----
->>   1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/tests/functional/test_vnc.py b/tests/functional/test_vnc.py
->> index b769d3b268..508db0709d 100755
->> --- a/tests/functional/test_vnc.py
->> +++ b/tests/functional/test_vnc.py
->> @@ -10,6 +10,7 @@
->>   # This work is licensed under the terms of the GNU GPL, version 2 or
->>   # later.  See the COPYING file in the top-level directory.
->>   
->> +import os
->>   import socket
->>   from typing import List
->>   
->> @@ -18,7 +19,6 @@
->>   
->>   VNC_ADDR = '127.0.0.1'
->>   VNC_PORT_START = 32768
->> -VNC_PORT_END = VNC_PORT_START + 1024
->>   
->>   
->>   def check_bind(port: int) -> bool:
->> @@ -41,9 +41,10 @@ def check_connect(port: int) -> bool:
->>       return True
->>   
->>   
->> -def find_free_ports(count: int) -> List[int]:
->> +# warning, racy function
->> +def find_free_ports(portrange, count: int) -> List[int]:
->>       result = []
->> -    for port in range(VNC_PORT_START, VNC_PORT_END):
->> +    for port in portrange:
->>           if check_bind(port):
->>               result.append(port)
->>               if len(result) >= count:
->> @@ -91,7 +92,10 @@ def test_change_password(self):
->>                       password='new_password')
->>   
->>       def test_change_listen(self):
->> -        a, b, c = find_free_ports(3)
->> +        per_arch_port_base = abs((os.getpid() + hash(self.arch)) % (10 ** 4))
->> +        port_start = VNC_PORT_START + per_arch_port_base
->> +        port_stop = port_start + 100
->> +        a, b, c = find_free_ports(range(port_start, port_stop), 3)
->>           self.assertFalse(check_connect(a))
->>           self.assertFalse(check_connect(b))
->>           self.assertFalse(check_connect(c))
+On 30/08/2024 16.58, Peter Maydell wrote:
+> Convert the TYPE_CCW_DEVICE to three-phase reset. This is a
+> device class which is subclassed, so it needs to be three-phase
+> before we can convert the subclass.
 > 
-> As your comment says, this is still racey, and its also not too
-> nice to read & understand this logic. How about we just make
-> test_vnc.py be serialized wrt itself ?
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/s390x/ccw-device.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 
-We'll likely have more tests that need a free port in the future... 
-tests/avocado/migration.py and tests/avocado/reverse_debugging.py use 
-find_free_ports(), too, so we should maybe think of a logic that avoids 
-clashes between different tests, too.
 
-  Thomas
-
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
