@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E7D8CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C76CD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnRJ-0003QA-0Y; Wed, 04 Sep 2024 06:40:41 -0400
+	id 1slnRv-00009E-Iu; Wed, 04 Sep 2024 06:41:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRE-00030T-2K
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRu-0008I7-1G
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRA-0000Id-RK
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRs-0000WO-3k
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446416;
+ s=mimecast20190719; t=1725446475;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gh+cDeRE78UtLzbgXbOE63Q9NFom8KmeCcIG3jBpAV0=;
- b=VBrrfhogo3rzdX1KuBLkBeprccQCZ16p9n+rv3yPjObmObBJjkmMGLHj75ac9egLtAV5vA
- PL6k1B3fY5L163KLxsr8fecbJB3cJOycvy9H51sa8Akno2XyLhmp4UhIKcD9DD7zCWqzHU
- vB8KptFxaC7sHpXCRfCZ0/rFpvKL2ck=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=NgEI39Qs9DU3kjmPOCenmvn7h8yOwX9VgJXU3ZAboG8=;
+ b=P55l8v8oQ5id77o5uHavl8cUtGZvnqng2B3KOHleCaoK+gw4J6/W70LDgITAQa/Wu6ELcM
+ raMtjtgQQ/tkMleTzS0BysuclWQH82XvE7JfbOd5jyZG2WEevGrj43tC39Am0gn50KcxAV
+ 3xdWxnvE3by3iMVznYaYFBF5lL3Rafw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-B7N-bKVbOYe2A0QeX2Megw-1; Wed,
- 04 Sep 2024 06:40:13 -0400
-X-MC-Unique: B7N-bKVbOYe2A0QeX2Megw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-57-OcCYYu_fPyq2ROJ-PFmICg-1; Wed,
+ 04 Sep 2024 06:41:14 -0400
+X-MC-Unique: OcCYYu_fPyq2ROJ-PFmICg-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA61919560A5; Wed,  4 Sep 2024 10:40:12 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2558D1955D45; Wed,  4 Sep 2024 10:41:13 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0CA0C195605A; Wed,  4 Sep 2024 10:40:10 +0000 (UTC)
+ id BAD2A1955F44; Wed,  4 Sep 2024 10:41:11 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 15/42] tests/functional: enable pre-emptive caching of assets
-Date: Wed,  4 Sep 2024 12:38:50 +0200
-Message-ID: <20240904103923.451847-16-thuth@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 39/42] docs/devel: Split testing docs from the build docs and
+ move to separate folder
+Date: Wed,  4 Sep 2024 12:39:14 +0200
+Message-ID: <20240904103923.451847-40-thuth@redhat.com>
 In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
 References: <20240904103923.451847-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -84,208 +83,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Building and testing are two separate topics, so let's split the testing
+into a separate category and move the related files into a separate folder.
 
-Many tests need to access assets stored on remote sites. We don't want
-to download these during test execution when run by meson, since this
-risks hitting test timeouts when data transfers are slow.
-
-Add support for pre-emptive caching of assets by setting the env var
-QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
-instead of running the test, the assets will be downloaded and saved
-to the cache, then the timestamp file created.
-
-A meson custom target is created as a dependency of each test suite
-to trigger the pre-emptive caching logic before the test runs.
-
-When run in caching mode, it will locate assets by looking for class
-level variables with a name prefix "ASSET_", and type "Asset".
-
-At the ninja level
-
-   ninja test --suite functional
-
-will speculatively download any assets that are not already cached,
-so it is advisable to set a timeout multiplier.
-
-   QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
-
-will fail the test if a required asset is not already cached
-
-   ninja precache-functional
-
-will download and cache all assets required by the functional
-tests
-
-At the make level, precaching is always done by
-
-   make check-functional
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Richard Henderson <richard.henderson@linaro.org>
-[thuth: Remove the duplicated "path = os.path.basename(...)" line]
-Message-ID: <20240830133841.142644-16-thuth@redhat.com>
+Message-ID: <20240830133841.142644-42-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/Makefile.include                 |  3 ++-
- tests/functional/meson.build           | 33 +++++++++++++++++++++++--
- tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
- tests/functional/qemu_test/testcase.py |  7 ++++++
- 4 files changed, 74 insertions(+), 3 deletions(-)
+ docs/devel/index-build.rst                      | 14 ++++----------
+ docs/devel/index.rst                            |  1 +
+ docs/devel/{ => testing}/acpi-bits.rst          |  0
+ docs/devel/{ => testing}/ci-definitions.rst.inc |  0
+ docs/devel/{ => testing}/ci-jobs.rst.inc        |  0
+ docs/devel/{ => testing}/ci-runners.rst.inc     |  0
+ docs/devel/{ => testing}/ci.rst                 |  0
+ docs/devel/{ => testing}/fuzzing.rst            |  0
+ docs/devel/testing/index.rst                    | 14 ++++++++++++++
+ docs/devel/{testing.rst => testing/main.rst}    |  0
+ docs/devel/{ => testing}/qgraph.rst             |  0
+ docs/devel/{ => testing}/qtest.rst              |  0
+ 12 files changed, 19 insertions(+), 10 deletions(-)
+ rename docs/devel/{ => testing}/acpi-bits.rst (100%)
+ rename docs/devel/{ => testing}/ci-definitions.rst.inc (100%)
+ rename docs/devel/{ => testing}/ci-jobs.rst.inc (100%)
+ rename docs/devel/{ => testing}/ci-runners.rst.inc (100%)
+ rename docs/devel/{ => testing}/ci.rst (100%)
+ rename docs/devel/{ => testing}/fuzzing.rst (100%)
+ create mode 100644 docs/devel/testing/index.rst
+ rename docs/devel/{testing.rst => testing/main.rst} (100%)
+ rename docs/devel/{ => testing}/qgraph.rst (100%)
+ rename docs/devel/{ => testing}/qtest.rst (100%)
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 66c8cc3123..010369bd3a 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -161,7 +161,8 @@ $(FUNCTIONAL_TARGETS):
+diff --git a/docs/devel/index-build.rst b/docs/devel/index-build.rst
+index 90b406ca0e..0023953be3 100644
+--- a/docs/devel/index-build.rst
++++ b/docs/devel/index-build.rst
+@@ -1,9 +1,8 @@
+-QEMU Build and Test System
+---------------------------
++QEMU Build System
++-----------------
  
- .PHONY: check-functional
- check-functional:
--	@$(MAKE) SPEED=thorough check-func check-func-quick
-+	@$(NINJA) precache-functional
-+	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
+-Details about how QEMU's build system works and how it is integrated
+-into our testing infrastructure. You will need to understand some of
+-the basics if you are adding new files and targets to the build.
++Details about how QEMU's build system works. You will need to understand
++some of the basics if you are adding new files and targets to the build.
  
- # Consolidated targets
+ .. toctree::
+    :maxdepth: 3
+@@ -11,10 +10,5 @@ the basics if you are adding new files and targets to the build.
+    build-system
+    kconfig
+    docs
+-   testing
+-   acpi-bits
+-   qtest
+-   ci
+    qapi-code-gen
+-   fuzzing
+    control-flow-integrity
+diff --git a/docs/devel/index.rst b/docs/devel/index.rst
+index abf60457c2..a53f1bfda5 100644
+--- a/docs/devel/index.rst
++++ b/docs/devel/index.rst
+@@ -31,6 +31,7 @@ the :ref:`tcg_internals`.
  
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index f1f344f860..df79775df3 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -39,6 +39,7 @@ tests_x86_64_system_quick = [
- tests_x86_64_system_thorough = [
- ]
- 
-+precache_all = []
- foreach speed : ['quick', 'thorough']
-   foreach dir : target_dirs
- 
-@@ -78,11 +79,35 @@ foreach speed : ['quick', 'thorough']
-                                meson.current_source_dir())
- 
-     foreach test : target_tests
--      test('func-@0@/@1@'.format(target_base, test),
-+      testname = '@0@-@1@'.format(target_base, test)
-+      testfile = 'test_' + test + '.py'
-+      testpath = meson.current_source_dir() / testfile
-+      teststamp = testname + '.tstamp'
-+      test_precache_env = environment()
-+      test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
-+      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-+                                          meson.current_source_dir())
-+      precache = custom_target('func-precache-' + testname,
-+                               output: teststamp,
-+                               command: [python, testpath],
-+                               depend_files: files(testpath),
-+                               build_by_default: false,
-+                               env: test_precache_env)
-+      precache_all += precache
+    index-process
+    index-build
++   testing/index
+    index-api
+    index-internals
+    index-tcg
+diff --git a/docs/devel/acpi-bits.rst b/docs/devel/testing/acpi-bits.rst
+similarity index 100%
+rename from docs/devel/acpi-bits.rst
+rename to docs/devel/testing/acpi-bits.rst
+diff --git a/docs/devel/ci-definitions.rst.inc b/docs/devel/testing/ci-definitions.rst.inc
+similarity index 100%
+rename from docs/devel/ci-definitions.rst.inc
+rename to docs/devel/testing/ci-definitions.rst.inc
+diff --git a/docs/devel/ci-jobs.rst.inc b/docs/devel/testing/ci-jobs.rst.inc
+similarity index 100%
+rename from docs/devel/ci-jobs.rst.inc
+rename to docs/devel/testing/ci-jobs.rst.inc
+diff --git a/docs/devel/ci-runners.rst.inc b/docs/devel/testing/ci-runners.rst.inc
+similarity index 100%
+rename from docs/devel/ci-runners.rst.inc
+rename to docs/devel/testing/ci-runners.rst.inc
+diff --git a/docs/devel/ci.rst b/docs/devel/testing/ci.rst
+similarity index 100%
+rename from docs/devel/ci.rst
+rename to docs/devel/testing/ci.rst
+diff --git a/docs/devel/fuzzing.rst b/docs/devel/testing/fuzzing.rst
+similarity index 100%
+rename from docs/devel/fuzzing.rst
+rename to docs/devel/testing/fuzzing.rst
+diff --git a/docs/devel/testing/index.rst b/docs/devel/testing/index.rst
+new file mode 100644
+index 0000000000..2711fd78b7
+--- /dev/null
++++ b/docs/devel/testing/index.rst
+@@ -0,0 +1,14 @@
++Testing QEMU
++------------
 +
-+      # Ideally we would add 'precache' to 'depends' here, such that
-+      # 'build_by_default: false' lets the pre-caching automatically
-+      # run immediately before the test runs. In practice this is
-+      # broken in meson, with it running the pre-caching in the normal
-+      # compile phase https://github.com/mesonbuild/meson/issues/2518
-+      # If the above bug ever gets fixed, when QEMU changes the min
-+      # meson version, add the 'depends' and remove the custom
-+      # 'run_target' logic below & in Makefile.include
-+      test('func-' + testname,
-            python,
-            depends: [test_deps, test_emulator, emulator_modules],
-            env: test_env,
--           args: [meson.current_source_dir() / 'test_' + test + '.py'],
-+           args: [testpath],
-            protocol: 'tap',
-            timeout: test_timeouts.get(test, 60),
-            priority: test_timeouts.get(test, 60),
-@@ -90,3 +115,7 @@ foreach speed : ['quick', 'thorough']
-     endforeach
-   endforeach
- endforeach
++Details about how to test QEMU and how it is integrated into our CI
++testing infrastructure.
 +
-+run_target('precache-functional',
-+           depends: precache_all,
-+           command: ['true'])
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index c0e675d847..b329ab7dbe 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -9,6 +9,8 @@
- import logging
- import os
- import subprocess
-+import sys
-+import unittest
- import urllib.request
- from pathlib import Path
- from shutil import copyfileobj
-@@ -62,6 +64,9 @@ def fetch(self):
-                            self.cache_file, self.url)
-             return str(self.cache_file)
- 
-+        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
-+            raise Exception("Asset cache is invalid and downloads disabled")
++.. toctree::
++   :maxdepth: 3
 +
-         self.log.info("Downloading %s to %s...", self.url, self.cache_file)
-         tmp_cache_file = self.cache_file.with_suffix(".download")
- 
-@@ -95,3 +100,32 @@ def fetch(self):
- 
-         self.log.info("Cached %s at %s" % (self.url, self.cache_file))
-         return str(self.cache_file)
-+
-+    def precache_test(test):
-+        log = logging.getLogger('qemu-test')
-+        log.setLevel(logging.DEBUG)
-+        handler = logging.StreamHandler(sys.stdout)
-+        handler.setLevel(logging.DEBUG)
-+        formatter = logging.Formatter(
-+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-+        handler.setFormatter(formatter)
-+        log.addHandler(handler)
-+        for name, asset in vars(test.__class__).items():
-+            if name.startswith("ASSET_") and type(asset) == Asset:
-+                log.info("Attempting to cache '%s'" % asset)
-+                asset.fetch()
-+        log.removeHandler(handler)
-+
-+    def precache_suite(suite):
-+        for test in suite:
-+            if isinstance(test, unittest.TestSuite):
-+                Asset.precache_suite(test)
-+            elif isinstance(test, unittest.TestCase):
-+                Asset.precache_test(test)
-+
-+    def precache_suites(path, cacheTstamp):
-+        loader = unittest.loader.defaultTestLoader
-+        tests = loader.loadTestsFromNames([path], None)
-+
-+        with open(cacheTstamp, "w") as fh:
-+            Asset.precache_suite(tests)
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index b2dd863c6e..18314be9d1 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -21,6 +21,7 @@
- from qemu.machine import QEMUMachine
- from qemu.utils import kvm_available, tcg_available
- 
-+from .asset import Asset
- from .cmd import run_cmd
- from .config import BUILD_DIR
- 
-@@ -58,6 +59,12 @@ def tearDown(self):
- 
-     def main():
-         path = os.path.basename(sys.argv[0])[:-3]
-+
-+        cache = os.environ.get("QEMU_TEST_PRECACHE", None)
-+        if cache is not None:
-+            Asset.precache_suites(path, cache)
-+            return
-+
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-                                    test_output_log = pycotap.LogMode.LogToError)
-         unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
++   main
++   qtest
++   acpi-bits
++   ci
++   fuzzing
+diff --git a/docs/devel/testing.rst b/docs/devel/testing/main.rst
+similarity index 100%
+rename from docs/devel/testing.rst
+rename to docs/devel/testing/main.rst
+diff --git a/docs/devel/qgraph.rst b/docs/devel/testing/qgraph.rst
+similarity index 100%
+rename from docs/devel/qgraph.rst
+rename to docs/devel/testing/qgraph.rst
+diff --git a/docs/devel/qtest.rst b/docs/devel/testing/qtest.rst
+similarity index 100%
+rename from docs/devel/qtest.rst
+rename to docs/devel/testing/qtest.rst
 -- 
 2.46.0
 
