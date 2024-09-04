@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E824CD484A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35872CD484D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slrEt-0007c6-Ql; Wed, 04 Sep 2024 10:44:07 -0400
+	id 1slrG2-0004NP-Cc; Wed, 04 Sep 2024 10:45:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrEg-0006eW-F6
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:43:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrFz-0004EQ-Sk
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:45:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrEc-0008Hz-9H
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:43:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrFy-0000UH-DK
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:45:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725461029;
+ s=mimecast20190719; t=1725461113;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nDkT4ARxbdc90WZNdZKDRQUYSsNegio38JEP0Ba0Dhw=;
- b=TI+hscUCeWKezyYHtVQ2DU9t3EZjUBzSfesLKgMnCIxEMENqF/7nmagWBzeJZVi7XpTUss
- cX3d0lBW83UzE1azoILiKiaEs24e04H07J0A18JP/aVp4XSQuHEJ37BqJdK8eRNa6lTbli
- Huf2bIzDFtGXgYCT8NcEM+SqpAynz8s=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VIkqfA8lBHf4AopnaMM2014D98u7ubmoKXjddsW6Lw4=;
+ b=QRfhmSgFHptXFIXbGr7DHAxViZFkNRgAU3axxqb4p10+IOzhBAHGfpAdq3wwoTUPcXfsrf
+ ghZB6KgTFFtmtcV04Ir/+8xC9FgdHIhLZK0aMJybzNm0i7zpDXHMKD8iCA7EBGb1dp33Hw
+ r7H2F98MrNx0PEIwVx54fUDfUyJ4iWQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-k1ooxuT0N9u4jXHahltS7A-1; Wed, 04 Sep 2024 10:43:48 -0400
-X-MC-Unique: k1ooxuT0N9u4jXHahltS7A-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-374c44e58a9so497534f8f.1
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:43:48 -0700 (PDT)
+ us-mta-43-zE6RpqR3McmgJwiwmMHbRQ-1; Wed, 04 Sep 2024 10:45:12 -0400
+X-MC-Unique: zE6RpqR3McmgJwiwmMHbRQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42c7aa6c13cso36470325e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:45:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725461027; x=1726065827;
+ d=1e100.net; s=20230601; t=1725461111; x=1726065911;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nDkT4ARxbdc90WZNdZKDRQUYSsNegio38JEP0Ba0Dhw=;
- b=X4g8lCQjY6wZGeBBYGjBnUjiLq80dQ9wx2AhGX8C6nLR65myLJ/f7YPtjwDMzte2E4
- +bjW6J5sSsM03SLkI5WIc03JcmHTeCIpLzA/RslPH/CozhkCn55Nh/7+thzHmjAV689j
- Jt0z+KiuQFF4C66YJf7SrFjlV+NKonZbwdQsMOr9cZiZazFw/R0tLb8GJyyEejAzV8Lm
- 1GiSBMQaEgwvbsvmfmwmBGIBCxhNKcm8OD4fQMU1mzJmoMbUX0L9QbJ2C/Sg2jY2OHtc
- g+kJsn2uS9zFoGCW0bkSPmVTD0R7iwrQjngyZoyR63/OwsHZnePYTEuaxjY0prVtXpc5
- Hg8w==
+ bh=VIkqfA8lBHf4AopnaMM2014D98u7ubmoKXjddsW6Lw4=;
+ b=VdHjOCh2TnZrhuxjyzqsdgDSbGQqVSzeEszu7JFMLy4MEBLmAgziaIY3jOr+53tYOJ
+ Umm2aG+bcT0ZVlSAIo0tH8NN9kEqLgqIe032DDF07Q/34EjsOa8iE+jYtBTlkR7AGeG2
+ xZk9OisBt5xYSHKTA3wEIR5FxM0Qvxw7FFK4AcDmb1MOKUwb7+EvTczT99rqOv3H7Zsm
+ Cuc36Y4PjMikzDBTSeacnjw/CkttmhkIazGSMGCH1GRT/p+ErelgH133uUCPbMwpRY4/
+ MH5mhnjJB+lwLat2MWsWCI0k1tZe8Gi1ytFwmyx56HUxVs6BWpDhgZfy0msk5o9rcGQw
+ eD4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfAW5hiFtO5YYZiSvnZCm3nMiT8fI85iPMN+j19+7OTB6laayXjQACPz/Kyk2uMerPQMNmzAHyxxPE@nongnu.org
-X-Gm-Message-State: AOJu0Yx2RuMwtfwLwOkM8wUORIOdICjEYUb4U9Vymc4zx9uslLFhhXva
- gXjkVhYUrLzA9vTc/SBBNA40oZZay7iNT/hFIAJyxK7YRxtEM9+k13VlS0im1NzMIygwlkJPvIT
- OvQcolkWoo4JaDrv+y/o8zR3F+lRAIsnXuJmuA+QjIs1f8tNt1wCE
-X-Received: by 2002:a05:6000:1369:b0:374:c40d:d437 with SMTP id
- ffacd0b85a97d-3776f452d1bmr1765361f8f.15.1725461027156; 
- Wed, 04 Sep 2024 07:43:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEamq5Cv23cyfH8kgBmdxAIl0wS1Hr6vnbOVjIlwHu49ul7vp/sxy+vKvzrwloR89GPBB9WSA==
-X-Received: by 2002:a05:6000:1369:b0:374:c40d:d437 with SMTP id
- ffacd0b85a97d-3776f452d1bmr1765343f8f.15.1725461026683; 
- Wed, 04 Sep 2024 07:43:46 -0700 (PDT)
+ AJvYcCWuumNLaUI2kMkOEzZgw9VRU/B/1xUB0h1zntWJWEK95BEfgGCqpBgucMUs43EilqucRr5d2BPPxpxL@nongnu.org
+X-Gm-Message-State: AOJu0YwQQ6QKdcuyolW8NoDlQj5Y1zBOfWrqOK2voYDL8UtXzTEV9MuF
+ hLua8N9WZeFLXUn26Xb8GlwFkr0VXCe51xhwk3n+sMA6pE7d2zg3JaicF7q/k4xr1p0zxV/0Vvr
+ ZPzTXd0JSMtBMMse/fMAAEhmmdOQl8U9hbHIRK/zhgrMSZIrwUMpl
+X-Received: by 2002:a05:600c:1e09:b0:425:7974:2266 with SMTP id
+ 5b1f17b1804b1-42bbb436e04mr117553225e9.24.1725461110931; 
+ Wed, 04 Sep 2024 07:45:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsTwZ8CCy1XGSgClKp6lweLJhQFxrBo9BZA5+yAEtXN/w4tiTWGSKnENx9JsLfsgY+rbPkyA==
+X-Received: by 2002:a05:600c:1e09:b0:425:7974:2266 with SMTP id
+ 5b1f17b1804b1-42bbb436e04mr117552975e9.24.1725461110350; 
+ Wed, 04 Sep 2024 07:45:10 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
  [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374c07eed5dsm11874591f8f.116.2024.09.04.07.43.45
+ 5b1f17b1804b1-42ba7b4271fsm240723155e9.29.2024.09.04.07.45.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 07:43:46 -0700 (PDT)
-Message-ID: <796b7630-d90c-47e3-90f5-24713fef8c39@redhat.com>
-Date: Wed, 4 Sep 2024 16:43:45 +0200
+ Wed, 04 Sep 2024 07:45:10 -0700 (PDT)
+Message-ID: <5d6532cc-11f1-4720-be62-a9ebde7f970a@redhat.com>
+Date: Wed, 4 Sep 2024 16:45:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/15] buildsys: Remove CRIS cross container
+Subject: Re: [PATCH v2 04/15] linux-user: Remove support for CRIS target
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
  Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
 References: <20240904143603.52934-1-philmd@linaro.org>
- <20240904143603.52934-4-philmd@linaro.org>
+ <20240904143603.52934-5-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -122,17 +122,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240904143603.52934-4-philmd@linaro.org>
+In-Reply-To: <20240904143603.52934-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -151,16 +151,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/09/2024 16.35, Philippe Mathieu-Daudé wrote:
-> We removed the cross compiled CRIS tests in the previous commit.
+> As per the deprecation notice in commit c7bbef4023:
+> 
+>    The CRIS architecture was pulled from Linux in 4.17 and
+>    the compiler is no longer packaged in any distro making
+>    it harder to run the `check-tcg` tests. Unless we can
+>    improve the testing situation there is a chance the code
+>    will bitrot without anyone noticing.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   configure                                         |  4 ----
->   .gitlab-ci.d/container-cross.yml                  |  5 -----
->   tests/docker/Makefile.include                     |  1 -
->   tests/docker/dockerfiles/fedora-cris-cross.docker | 14 --------------
->   4 files changed, 24 deletions(-)
->   delete mode 100644 tests/docker/dockerfiles/fedora-cris-cross.docker
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
