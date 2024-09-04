@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FAECD4857
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0FE8CD4853
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsgF-0003Ed-FO; Wed, 04 Sep 2024 12:16:27 -0400
+	id 1slsgC-0002n3-B7; Wed, 04 Sep 2024 12:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsfs-0001MW-CP
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:16:05 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ id 1slsfp-0001KE-MA; Wed, 04 Sep 2024 12:16:02 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsfo-0002Iu-Ux
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:16:03 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2f6514f23b6so19840701fa.1
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:15:58 -0700 (PDT)
+ id 1slsfh-0002HI-Ac; Wed, 04 Sep 2024 12:15:56 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2f43de7ad5eso84654511fa.1; 
+ Wed, 04 Sep 2024 09:15:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725466556; x=1726071356; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725466550; x=1726071350; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nn/Mzsj0J8g/Mphb+PXQ5WHUtYUEk9GjObY40SBe48s=;
- b=gs/+D+kn1rSN1TpO8g9irT931b5VT2m8X9ycKtMXeFUJhWsYqd+J9LLj+e6otwT6Zv
- NBkPCH6GJgYbhKDISzf7ZUlWBow5NoUpcm2/7Y6W40HOQMSy0YschLesljt+M0C+8dZp
- UsNL4vm9LjZ9cLnS3o4PPoL0uutuoJBsLCCajzlDmH5bml5PbKOliVpzvSrUyASJNzpI
- TJhuspCEMci4vdf/px69PYQtGiWM/tXA1snL/fK8HZMLt2XqbQALmtXtBURxOZTpcEZB
- TYCnTUQAtSCjPYEx4UNcEkAZpb1KG6Iupxq/01Xk19SgWswrBrQe92MdpBm8nSxqWhyK
- S+QA==
+ bh=Je23wvBBopidSll9UpAaH5rZwvVBAj7ARc0Pm2/k3kk=;
+ b=EaSZCcob7qJt9qOgcLnSE7h7yhWjnHcF8Jq2AyaqIVRNxQIGSBkNi36U0N45oKyIb0
+ 0bN6+GNKdL6K+10Ax8tbmyPoI53mBaUKUQ5eQW0S+3ewYF9NOKNAdsfdDNQgWcq0i57d
+ uH6cuP50laH6kyELlEDOyuiYB0ESAQlIPmT0y3M7dFCGpcqZrZWsV4bVNbIP0T5yXUq7
+ VNp0fNKcaXAmMUtNUDy7IOM09Jh9YNDFxPzCLBVieBEIxkTjzzgCj8l5YS+2WbpZzl/D
+ 9/HPi7+ocm1COP9i+0Dqt4xYZ6/S9IsbpzSeeE4keaX8ZWT/3XkmOMXo4sBIMDpqfz15
+ fFpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725466556; x=1726071356;
+ d=1e100.net; s=20230601; t=1725466550; x=1726071350;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nn/Mzsj0J8g/Mphb+PXQ5WHUtYUEk9GjObY40SBe48s=;
- b=dO+O0rs1+k4eH9GHGP2Gc8f0FwKr79A+A9dKU2HGEJBanBrxI2uJKCXNo/XH4aM+Wk
- FNUoeH/pgHlSvHuddxMvXx4oqEGOJ81/DTPgQP9mKvGuukC0mklRjbPRnVd2EbQThK6X
- GfUgCgOborOM+mgZIChQAxct0PaOp5KF8WsCR06FeakKo0vtRaDxS+wzTFFgfc/hGvxD
- JByM+j0uMW7NnApOKvbjUU9VBfhnwsXVN1sJZuNYKw0/a6v1Aw1lhPwgSwTVFPRLKSG5
- 23IAM/G+ur3CwgxfX/qNjkTozw/yoLvx31vHOb8d+shjziuRUirLYQ/RXXAp0rsCbCbD
- P9sg==
-X-Gm-Message-State: AOJu0YxbcstGQL/3jsRchnAk7PxgYrdg4JwUWyeENj5F1MZBVqSgGDrq
- 4MstrHPi7oggGnBPl8CEko7FK3lOVA2P5W126tnJQDPVFxCunynNoL6931C7
-X-Google-Smtp-Source: AGHT+IF6S1OoJeZCF42GJKo/qiy2ZeZ6a9HHHlUxboixNuGEbZq+dI0mGFAzSTpOvJ4LlUMQwdzjQw==
-X-Received: by 2002:a2e:bc19:0:b0:2f5:966:c22e with SMTP id
- 38308e7fff4ca-2f6105d74e3mr207636241fa.11.1725466555495; 
- Wed, 04 Sep 2024 09:15:55 -0700 (PDT)
+ bh=Je23wvBBopidSll9UpAaH5rZwvVBAj7ARc0Pm2/k3kk=;
+ b=J6b5Wyi18pNqHcVp7t2kKpTnRQP4KhrJaSWzbHNvIAL8nuXJDuGNtI1c9KdY6f4jyD
+ EfDX154U9Trr9uk1PymD0Kib19iIdRPkKLosBGELhFPPkP/hfUHWaSavEPNKuTyXZvyy
+ 6kD4xs1dzhrrA2gfrMv+Ji3RQqjb7wL4Ysh/Q3PwrCtSkpdrHbW7bqdR3DK9cVk5fStp
+ EnB/8o8/BdtmSQ8I1sQ4Z6UwqUmYQnus2DmT4tg2lPe3GGT4inIagcKQ3tqSIfET//Zy
+ xU3wy5CbGk+AgwmjtGB47PT/Ul583Uf5ydB16oWbq+uDesKsSKacke4E1qB77uW73Z6g
+ jgbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxOubxW//VAN9QJFCf78QipKiXZnIFm7LYHWyFBq7+meRQ0RUpiKbxeRhjZ0t/JtAXQEcBvWKv4w==@nongnu.org
+X-Gm-Message-State: AOJu0YxNC04sc2+/kGF/jPIf3n/FuNZ24ZUu2fdZhTlH8FCIwWgybsnr
+ JhojKNAYqj4M0IzS0lFtTfP9ljQjCImEPGsJz+cehKuKXsawp7IV66kyAJgl
+X-Google-Smtp-Source: AGHT+IFDpz1IZD0Qtgo2lbwg04ZmmoJdx9qSrR477CRxTjdjnUIVorw3NCNELME4Ae86vdZ9W6Lr1A==
+X-Received: by 2002:a05:6512:3da9:b0:530:ae4a:58d0 with SMTP id
+ 2adb3069b0e04-53546af3605mr12601930e87.8.1725466549784; 
+ Wed, 04 Sep 2024 09:15:49 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2f6151881dcsm26217611fa.124.2024.09.04.09.15.54
+ 2adb3069b0e04-535407ac380sm2378135e87.83.2024.09.04.09.15.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Sep 2024 09:15:54 -0700 (PDT)
+ Wed, 04 Sep 2024 09:15:48 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com,
  jason.andryuk@amd.com, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PULL v1 09/12] hw/arm: xenpvh: Reverse virtio-mmio creation order
-Date: Wed,  4 Sep 2024 18:15:33 +0200
-Message-ID: <20240904161537.664189-10-edgar.iglesias@gmail.com>
+ xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
+Subject: [PULL v1 06/12] hw/arm: xenpvh: Move stubbed functions to xen-stubs.c
+Date: Wed,  4 Sep 2024 18:15:30 +0200
+Message-ID: <20240904161537.664189-7-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240904161537.664189-1-edgar.iglesias@gmail.com>
 References: <20240904161537.664189-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,48 +98,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-We've been creating the virtio-mmio devices in forwards order
-but since the qbus lists prepend (rather than append) entries,
-the virtio busses end up with decreasing base address order.
-
-Xen enables virtio-mmio nodes in forwards order so there's been
-a missmatch. So far, we've been working around this with an
-out-of-tree patch to Xen.
-
-This reverses the order making sure the virtio busses end up
-ordered with increasing base addresses avoiding the need to
-patch Xen.
-
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Acked-by: Stefano Stabellini <sstabellini@kernel.org>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- hw/xen/xen-pvh-common.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ hw/arm/meson.build |  5 ++++-
+ hw/arm/xen-stubs.c | 32 ++++++++++++++++++++++++++++++++
+ hw/arm/xen_arm.c   | 20 --------------------
+ 3 files changed, 36 insertions(+), 21 deletions(-)
+ create mode 100644 hw/arm/xen-stubs.c
 
-diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-index 880e8143d7..295f920442 100644
---- a/hw/xen/xen-pvh-common.c
-+++ b/hw/xen/xen-pvh-common.c
-@@ -75,7 +75,18 @@ static void xen_create_virtio_mmio_devices(XenPVHMachineState *s)
- {
-     int i;
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 0c07ab522f..074612b40c 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -59,7 +59,10 @@ arm_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.
+ arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+ arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+ arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+-arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
++arm_ss.add(when: 'CONFIG_XEN', if_true: files(
++  'xen-stubs.c',
++  'xen_arm.c',
++))
  
--    for (i = 0; i < s->cfg.virtio_mmio_num; i++) {
-+    /*
-+     * We create the transports in reverse order. Since qbus_realize()
-+     * prepends (not appends) new child buses, the decrementing loop below will
-+     * create a list of virtio-mmio buses with increasing base addresses.
-+     *
-+     * When a -device option is processed from the command line,
-+     * qbus_find_recursive() picks the next free virtio-mmio bus in forwards
-+     * order.
-+     *
-+     * This is what the Xen tools expect.
-+     */
-+    for (i = s->cfg.virtio_mmio_num - 1; i >= 0; i--) {
-         hwaddr base = s->cfg.virtio_mmio.base + i * s->cfg.virtio_mmio.size;
-         qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
-                                          s->cfg.virtio_mmio_irq_base + i);
+ system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
+ system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
+diff --git a/hw/arm/xen-stubs.c b/hw/arm/xen-stubs.c
+new file mode 100644
+index 0000000000..4ac6a56a96
+--- /dev/null
++++ b/hw/arm/xen-stubs.c
+@@ -0,0 +1,32 @@
++/*
++ * Stubs for unimplemented Xen functions for ARM.
++ *
++ * SPDX-License-Identifier: MIT
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qapi/qapi-commands-migration.h"
++#include "hw/boards.h"
++#include "sysemu/sysemu.h"
++#include "hw/xen/xen-hvm-common.h"
++#include "hw/xen/arch_hvm.h"
++
++void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
++{
++    hw_error("Invalid ioreq type 0x%x\n", req->type);
++    return;
++}
++
++void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
++                         bool add)
++{
++}
++
++void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
++{
++}
++
++void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
++{
++}
+diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
+index 16b3f00992..f0868e7be5 100644
+--- a/hw/arm/xen_arm.c
++++ b/hw/arm/xen_arm.c
+@@ -115,26 +115,6 @@ static void xen_init_ram(MachineState *machine)
+     memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
+ }
+ 
+-void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
+-{
+-    hw_error("Invalid ioreq type 0x%x\n", req->type);
+-
+-    return;
+-}
+-
+-void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
+-                         bool add)
+-{
+-}
+-
+-void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
+-{
+-}
+-
+-void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
+-{
+-}
+-
+ #ifdef CONFIG_TPM
+ static void xen_enable_tpm(XenArmState *xam)
+ {
 -- 
 2.43.0
 
