@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7855CD37B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60461CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:15:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slqc4-00049b-DP; Wed, 04 Sep 2024 10:04:00 -0400
+	id 1slqmh-0005Ff-FY; Wed, 04 Sep 2024 10:14:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1slqc3-00048O-4N; Wed, 04 Sep 2024 10:03:59 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1slqc0-0000w2-L9; Wed, 04 Sep 2024 10:03:58 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WzPHc0Yt9z6K6Xv;
- Wed,  4 Sep 2024 21:59:24 +0800 (CST)
-Received: from lhrpeml100003.china.huawei.com (unknown [7.191.160.210])
- by mail.maildlp.com (Postfix) with ESMTPS id 907B5140682;
- Wed,  4 Sep 2024 22:03:48 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml100003.china.huawei.com (7.191.160.210) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 4 Sep 2024 15:03:48 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Wed, 4 Sep 2024 15:03:48 +0100
-To: Gustavo Romero <gustavo.romero@linaro.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "mst@redhat.com" <mst@redhat.com>
-CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
- <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
- <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
- "rafael@kernel.org" <rafael@kernel.org>, "borntraeger@linux.ibm.com"
- <borntraeger@linux.ibm.com>, "alex.bennee@linaro.org"
- <alex.bennee@linaro.org>, "npiggin@gmail.com" <npiggin@gmail.com>,
- "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, "linux@armlinux.org.uk"
- <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
- <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
- <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
- <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
- <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>, zhukeqian
- <zhukeqian1@huawei.com>, "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>, "jiakernel2@gmail.com"
- <jiakernel2@gmail.com>, "maobibo@loongson.cn" <maobibo@loongson.cn>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>, "shahuang@redhat.com"
- <shahuang@redhat.com>, "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm
- <linuxarm@huawei.com>
-Subject: RE: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8 Arch
-Thread-Topic: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8
- Arch
-Thread-Index: AQHaveq2F6TAeAWelEWGVYAetyN5RLI9hyQAgAqizhA=
-Date: Wed, 4 Sep 2024 14:03:48 +0000
-Message-ID: <f2ee74b843a34c848d555b479cbaa986@huawei.com>
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <9227bac3-aecd-fbde-3691-5e949373fad0@linaro.org>
-In-Reply-To: <9227bac3-aecd-fbde-3691-5e949373fad0@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.126.171.6]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <whendrik@google.com>)
+ id 1slqme-0005Ep-NB
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:14:56 -0400
+Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <whendrik@google.com>)
+ id 1slqmc-0004qX-S7
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:14:56 -0400
+Received: by mail-qt1-x82d.google.com with SMTP id
+ d75a77b69052e-4567deb9f9dso232571cf.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:14:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1725459292; x=1726064092; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NKnIcS+IRtAo+3bnUr1JiwvGweSl0v2Q2/wnp8l8V14=;
+ b=arSxg9Nzujp46gmV+l/KndFBd31X3zM5sazmnNkDIvigevpolzhLVtQfjfmKF6f/jp
+ Wqfmg/rd11rauX2y3hu4jrVXYn7sAj7xrw1rF81BcpTHLP3DnK8zq8i13bMcAuh0C+yH
+ 3Zk+uw5ylktoZ8ur/FAZh7Z+le2Z5EOmk8e9UER2JHAm0VsmJRlGu2ciz1Yt+7CjnCAs
+ +lcYQM2vm6d3TntQBpR/JYxXnYUpK72+45FaeFG4cK7+wSCbKmSys00Sa/aXn2/WHmiN
+ CNFLOKPlpcpoCe3HVBHJW4EbM5/IVWYduUP3ZH0c9NJy7TL5kcYORMLjwLtJ/n0NMhjv
+ WY8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725459292; x=1726064092;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NKnIcS+IRtAo+3bnUr1JiwvGweSl0v2Q2/wnp8l8V14=;
+ b=k11tGuhi/UqIHF2RD4CvFQKHGDcm+ncHOFj+TzM8BYiP3iRr6uDYns5ZtNo7AkaTB6
+ z4tfph+RoYK/xvzq04wibrjCEzDLTab93xVIJU6ZSRlK4zaWDd82I0vgNNCJv5lQKNtB
+ fCE8ZpI/kbdchM32l/O3kRv6Y1//nxTza+/p0baDVp6Me3e/JjPuwTmtvKQijaq3a037
+ vFCPTmB3aowxIQVqxHVq50bQtW0CO57UpGPaVGONA37RYA9yth+e1YPBuOlIndNM1kQg
+ 3HmZ2tFTztIDKbsGLsgILVhOBiG0xWWWbLb4s8kTjYRsx7M9bDx2CuSy82iuQ7GvaTcK
+ pY0g==
+X-Gm-Message-State: AOJu0YwifCFzatvhUVi90gJSuf6ryQyXZFQsZRaKWeEbDEUPzRDl/fdJ
+ e43xO1xptw8MnyhB+5uRrJblx3kYKbwmzHnQHas2wVY9U5tD10wTeiJnLTOF39OvV7jb3ZmxB1+
+ x/fL/gw4IQb1fqQHOUpTdwKcgWk+TuWuDiRyr
+X-Google-Smtp-Source: AGHT+IGy8G9yDeMs/+deVNmYRmenUj7Bgc6p/9DJnTp6fc7jaCwyI1CBuS36Ut/X6XQ+f6pBLte6e8FSu0ucS2pKH7I=
+X-Received: by 2002:a05:622a:90:b0:447:e3e3:77c1 with SMTP id
+ d75a77b69052e-457f7b1b7fdmr2757391cf.29.1725459292193; Wed, 04 Sep 2024
+ 07:14:52 -0700 (PDT)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240719162929.1197154-1-whendrik@google.com>
+ <20240719162929.1197154-2-whendrik@google.com>
+ <20240726112423.00005e5f@Huawei.com>
+In-Reply-To: <20240726112423.00005e5f@Huawei.com>
+From: =?UTF-8?Q?Hendrik_W=C3=BCthrich?= <whendrik@google.com>
+Date: Wed, 4 Sep 2024 16:14:40 +0200
+Message-ID: <CAEX-0Ws10ti8mdjjr=-a+UWvoGgGxo+xT472-swRhs7Xi6GjyQ@mail.gmail.com>
+Subject: Re: [PATCH v1 1/9] Add Intel RDT device to config.
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
+ marcel.apfelbaum@gmail.com, mst@redhat.com, pbonzini@redhat.com, 
+ peternewman@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
+ envelope-from=whendrik@google.com; helo=mail-qt1-x82d.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,52 +91,182 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgR3VzdGF2bywNCg0KPiAgRnJvbTogR3VzdGF2byBSb21lcm8gPGd1c3Rhdm8ucm9tZXJvQGxp
-bmFyby5vcmc+DQo+ICBTZW50OiBXZWRuZXNkYXksIEF1Z3VzdCAyOCwgMjAyNCA5OjM2IFBNDQo+
-ICBUbzogU2FsaWwgTWVodGEgPHNhbGlsLm1laHRhQGh1YXdlaS5jb20+OyBxZW11LWRldmVsQG5v
-bmdudS5vcmc7DQo+ICBxZW11LWFybUBub25nbnUub3JnOyBtc3RAcmVkaGF0LmNvbQ0KPiAgDQo+
-ICBIaSBTYWxpbCwNCj4gIA0KPiAgT24gNi8xMy8yNCA4OjM2IFBNLCBTYWxpbCBNZWh0YSB2aWEg
-d3JvdGU6DQo+ICA+IFBST0xPR1VFDQo+ICA+ID09PT09PT09DQo+ICA+DQo+ICA+IFRvIGFzc2lz
-dCBpbiByZXZpZXcgYW5kIHNldCB0aGUgcmlnaHQgZXhwZWN0YXRpb25zIGZyb20gdGhpcyBSRkMs
-DQo+ICA+IHBsZWFzZSBmaXJzdCByZWFkIHRoZSBzZWN0aW9ucyAqQVBQRU5ERUQgQVQgVEhFIEVO
-RCogb2YgdGhpcyBjb3Zlcg0KPiAgbGV0dGVyOg0KPiAgPg0KPiAgPiAxLiBJbXBvcnRhbnQgKkRJ
-U0NMQUlNRVIqIFtTZWN0aW9uIChYKV0gMi4gV29yayBwcmVzZW50ZWQgYXQNCj4gIEtWTUZvcnVt
-DQo+ICA+IENvbmZlcmVuY2UgKHNsaWRlcyBhdmFpbGFibGUpIFtTZWN0aW9uIChWKUZdIDMuIE9y
-Z2FuaXphdGlvbiBvZg0KPiAgPiBwYXRjaGVzIFtTZWN0aW9uIChYSSldIDQuIFJlZmVyZW5jZXMg
-W1NlY3Rpb24gKFhJSSldIDUuIERldGFpbGVkIFRPRE8NCj4gID4gbGlzdCBvZiBsZWZ0b3ZlciB3
-b3JrIG9yIHdvcmstaW4tcHJvZ3Jlc3MgW1NlY3Rpb24gKElYKV0NCj4gID4NCj4gID4gVGhlcmUg
-aGFzIGJlZW4gaW50ZXJlc3Qgc2hvd24gYnkgb3RoZXIgb3JnYW5pemF0aW9ucyBpbiBhZGFwdGlu
-ZyB0aGlzDQo+ICA+IHNlcmllcyBmb3IgdGhlaXIgYXJjaGl0ZWN0dXJlLiBIZW5jZSwgUkZDIFYy
-IFsyMV0gaGFzIGJlZW4gc3BsaXQgaW50bw0KPiAgPiBhcmNoaXRlY3R1cmUNCj4gID4gKmFnbm9z
-dGljKiBbMjJdIGFuZCAqc3BlY2lmaWMqIHBhdGNoIHNldHMuDQo+ICA+DQo+ICA+IFRoaXMgaXMg
-YW4gQVJNIGFyY2hpdGVjdHVyZS1zcGVjaWZpYyBwYXRjaCBzZXQgY2FydmVkIG91dCBvZiBSRkMg
-VjIuDQo+ICA+IFBsZWFzZSBjaGVjayBzZWN0aW9uIChYSSlCIGZvciBkZXRhaWxzIG9mIGFyY2hp
-dGVjdHVyZSBhZ25vc3RpYyBwYXRjaGVzLg0KPiAgPg0KPiAgPiBTRUNUSU9OUyBbSSAtIFhJSUld
-IGFyZSBhcyBmb2xsb3dzOg0KPiAgPg0KPiAgPiAoSSkgS2V5IENoYW5nZXMgW2RldGFpbHMgaW4g
-bGFzdCBzZWN0aW9uIChYSVYpXQ0KPiAgPiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09DQo+ICA+DQo+ICA+IFJGQyBWMiAtPiBSRkMgVjMNCj4gID4NCg0KWy4u
-Ll0NCg0KPiAgPg0KPiAgPiAoVkkpIENvbW1hbmRzIFVzZWQNCj4gID4gPT09PT09PT09PT09PT09
-PT09DQo+ICA+DQo+ICA+IEEuIFFlbXUgbGF1bmNoIGNvbW1hbmRzIHRvIGluaXQgdGhlIG1hY2hp
-bmU6DQo+ICA+DQo+ICA+ICAgICAgJCBxZW11LXN5c3RlbS1hYXJjaDY0IC0tZW5hYmxlLWt2bSAt
-bWFjaGluZSB2aXJ0LGdpYy12ZXJzaW9uPTMgXA0KPiAgPiAgICAgICAgLWNwdSBob3N0IC1zbXAg
-Y3B1cz00LG1heGNwdXM9NiBcDQo+ICA+ICAgICAgICAtbSAzMDBNIFwNCj4gID4gICAgICAgIC1r
-ZXJuZWwgSW1hZ2UgXA0KPiAgPiAgICAgICAgLWluaXRyZCByb290ZnMuY3Bpby5neiBcDQo+ICA+
-ICAgICAgICAtYXBwZW5kICJjb25zb2xlPXR0eUFNQTAgcm9vdD0vZGV2L3JhbSByZGluaXQ9L2lu
-aXQgbWF4Y3B1cz0yDQo+ICBhY3BpPWZvcmNlIiBcDQo+ICA+ICAgICAgICAtbm9ncmFwaGljIFwN
-Cj4gID4gICAgICAgIC1iaW9zIFFFTVVfRUZJLmZkIFwNCj4gID4NCj4gID4gQi4gSG90LSh1bilw
-bHVnIHJlbGF0ZWQgY29tbWFuZHM6DQo+ICA+DQo+ICA+ICAgICMgSG90cGx1ZyBhIGhvc3QgdkNQ
-VSAoYWNjZWw9a3ZtKToNCj4gID4gICAgICAkIGRldmljZV9hZGQgaG9zdC1hcm0tY3B1LGlkPWNv
-cmU0LGNvcmUtaWQ9NA0KPiAgPg0KPiAgPiAgICAjIEhvdHBsdWcgYSB2Q1BVIChhY2NlbD10Y2cp
-Og0KPiAgPiAgICAgICQgZGV2aWNlX2FkZCBjb3J0ZXgtYTU3LWFybS1jcHUsaWQ9Y29yZTQsY29y
-ZS1pZD00DQo+ICANCj4gIFNpbmNlIHN1cHBvcnQgZm9yIGhvdHBsdWcgaXMgZGlzYWJsZWQgb24g
-VENHLCByZW1vdmUgdGhlc2UgdHdvIGxpbmVzIGluIHY0DQo+ICBjb3ZlciBsZXR0ZXI/DQoNCg0K
-V2UgYXJlIGZpeGluZyB0aGF0IGFuZCBpdCBzaG91bGQgYmUgcGFydCBvZiBSRkMgVjQuDQoNCg0K
-VGhhbmtzDQpTYWxpbC4NCg0KDQo+ICANCj4gIA0KPiAgQ2hlZXJzLA0KPiAgR3VzdGF2bw0KPiAg
-DQo+ICA+ICAgICMgRGVsZXRlIHRoZSB2Q1BVOg0KPiAgPiAgICAgICQgZGV2aWNlX2RlbCBjb3Jl
-NA0KPiAgPg0KDQpbLi4uXQ0K
+On Fri, Jul 26, 2024 at 12:24=E2=80=AFPM Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
+>
+> On Fri, 19 Jul 2024 16:29:21 +0000
+> Hendrik Wuethrich <whendrik@google.com> wrote:
+>
+> > From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
+> >
+> > Change config to show RDT, add minimal code to the rdt.c module to make
+> > sure things still compile.
+> >
+> > Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
+>
+> Hi Hendrik
+>
+> Great to see emulation of this. Will be handy for testing
+> kernel changes etc.
+
+Hi Jonathan, thank you very much for the review, and very sorry
+for the late reply.
+
+> Not convinced it's worth a separate patch just to add stubs.
+> Why not at least bring some real code in with this?
+>
+> > ---
+> >  hw/i386/Kconfig       |  4 ++++
+> >  hw/i386/meson.build   |  1 +
+> >  hw/i386/rdt.c         | 49 +++++++++++++++++++++++++++++++++++++++++++
+> >  include/hw/i386/rdt.h | 12 +++++++++++
+> >  4 files changed, 66 insertions(+)
+> >  create mode 100644 hw/i386/rdt.c
+> >  create mode 100644 include/hw/i386/rdt.h
+> >
+> > diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> > index f4a33b6c08..4dd05ed6f2 100644
+> > --- a/hw/i386/Kconfig
+> > +++ b/hw/i386/Kconfig
+> > @@ -10,6 +10,9 @@ config SGX
+> >      bool
+> >      depends on KVM
+> >
+> > +config RDT
+> > +    bool
+> > +
+> >  config PC
+> >      bool
+> >      imply APPLESMC
+> > @@ -26,6 +29,7 @@ config PC
+> >      imply QXL
+> >      imply SEV
+> >      imply SGX
+> > +    imply RDT
+> >      imply TEST_DEVICES
+> >      imply TPM_CRB
+> >      imply TPM_TIS_ISA
+> > diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+> > index 03aad10df7..fdbf5962b5 100644
+> > --- a/hw/i386/meson.build
+> > +++ b/hw/i386/meson.build
+> > @@ -21,6 +21,7 @@ i386_ss.add(when: 'CONFIG_VMPORT', if_true: files('vm=
+port.c'))
+> >  i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+> >  i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+> >                                  if_false: files('sgx-stub.c'))
+> > +i386_ss.add(when: 'CONFIG_RDT', if_true: files('rdt.c'))
+> >
+> >  i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+> >  i386_ss.add(when: 'CONFIG_PC', if_true: files(
+> > diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
+> > new file mode 100644
+> > index 0000000000..0a5e95606b
+> > --- /dev/null
+> > +++ b/hw/i386/rdt.c
+>
+> License etc missing.
+>
+> > @@ -0,0 +1,49 @@
+> > +#include "qemu/osdep.h"
+> > +#include "hw/i386/rdt.h"
+> > +#include <stdint.h>
+> > +#include "hw/qdev-properties.h"
+> > +#include "qemu/typedefs.h"
+> > +#include "qom/object.h"
+> > +#include "target/i386/cpu.h"
+> > +#include "hw/isa/isa.h"
+>
+> Ordering seems a bit random.  I don't really mind what order
+> they are in but it is easier to pick an option so it
+> becomes obvious where to put things later.
+>
+> Also better to bring these in when they are needed so it
+> is obvious why they are here.
+>
+>
+> > +
+> > +#define TYPE_RDT "rdt"
+> > +
+> > +OBJECT_DECLARE_TYPE(RDTState, RDTStateClass, RDT);
+> > +
+> > +struct RDTState {
+> > +    ISADevice parent;
+> > +};
+> > +
+> > +struct RDTStateClass { };
+> I'd do
+> ...Class {
+> };
+>
+> As will reduce noise in later patches assuming this will have
+> content.
+>
+>
+> > +
+> > +OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
+> > +
+> > +static Property rdt_properties[] =3D {
+> > +    DEFINE_PROP_END_OF_LIST(),
+> > +};
+> > +
+> > +static void rdt_init(Object *obj)
+>
+> Not used?
+>
+> > +{
+> > +}
+> > +
+> > +static void rdt_realize(DeviceState *dev, Error **errp)
+> > +{
+> > +}
+> > +
+> > +static void rdt_finalize(Object *obj)
+> > +{
+> > +}
+>
+> Not used?
+
+Realize will be removed in V2 until needed. init and
+finalize are necessary to build the device, as far as I
+can tell.
+>
+> > +
+> > +static void rdt_class_init(ObjectClass *klass, void *data)
+> > +{
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +
+> > +    dc->hotpluggable =3D false;
+> > +    dc->desc =3D "RDT";
+> > +    dc->user_creatable =3D true;
+> > +    dc->realize =3D rdt_realize;
+> > +
+> > +    device_class_set_props(dc, rdt_properties);
+> > +}
+> > +
+> > diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
+> > new file mode 100644
+> > index 0000000000..45e34d3103
+> > --- /dev/null
+> > +++ b/include/hw/i386/rdt.h
+> > @@ -0,0 +1,12 @@
+> > +#ifndef HW_RDT_H
+> > +#define HW_RDT_H
+> > +
+> > +#include <stdbool.h>
+> > +#include <stdint.h>
+>
+> Not used so don't include them until needed.
+>
+> > +
+> > +typedef struct RDTState RDTState;
+> > +typedef struct RDTStateInstance RDTStateInstance;
+> > +typedef struct RDTMonitor RDTMonitor;
+> > +typedef struct RDTAllocation RDTAllocation;
+> > +
+> > +#endif
+>
 
