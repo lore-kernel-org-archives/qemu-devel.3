@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E09ACD4853
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1392CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsg2-0001nP-Dq; Wed, 04 Sep 2024 12:16:16 -0400
+	id 1slsgE-00030J-7A; Wed, 04 Sep 2024 12:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsfl-0001HK-2D; Wed, 04 Sep 2024 12:16:00 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ id 1slsfs-0001Mw-Km
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:16:07 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1slsff-0002Gw-IV; Wed, 04 Sep 2024 12:15:54 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2f504652853so76084761fa.0; 
- Wed, 04 Sep 2024 09:15:50 -0700 (PDT)
+ id 1slsfp-0002JB-3o
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 12:16:04 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-533463f6b16so1384163e87.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 09:16:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725466548; x=1726071348; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725466558; x=1726071358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4UdvH3BfQ7ZFjeKvJ3vJphtRrv7BJb81oMyMgddOC7g=;
- b=dVkcSJTymENuvCJiZWqJt189pJNDPJsJmrJUCNJtWWUvYhwlHaffmoCG2wmTYbnSc1
- ic0tak/DnK98hXk7Xwda9pk4Cgmbo1TT0xR0nH1HboMkDFY9QT1wQwYTda6Tar1Y1qIm
- oQLe4BN1DWQ7rqG4pukDuI4m1KOA2WWmL1EenWH6jrAuXO/U5nYu4scwVPY7axQTV4N/
- t0yvcVIyXPuBTl8ZCEGQ7Pm8jY24mftFX8ovgzN+W3VbTVKXEB7z7++xenoM8+QzmcvJ
- pOSpMeLXCpforkLiwJpjHK8ZLdqTRRBa7wjAjQV22XRkrPjEyccRod/nzYG5xCey82jk
- MNdQ==
+ bh=AhHuSPxpBNKwAgr3pqcWE8F4qfu6xeqGgbqjKgqrTwo=;
+ b=HjpM4fdI9THucjEYxNqoIQBPyLbe/dT5nlfGax4BGBscR4lxzULfn/JtbHNB3m3IzL
+ YfrXfz3VyzF7DlJcIYUPPbEaebDqzdMjsph3NO2XIW4iPc1uXpGwECXI+9toGpk0Xh33
+ vGZVqW9gibfxWrTkyjXB9Jkfm0FUq0lYfZPsU6mBDUOtlBFcMdLu06mjIZcvaJnW/1Rb
+ PsoniwHJ1ddiuv2QRPVLbp95NskV0SlCbWywvOeyJ283DoskAjgcL8JpH6wGdL0iXNhc
+ lc+IXLwfFIV1jlK1IPnJL6TjbyjQdYS258SxjO0LjyrzsO7+jLURBfOsMkZ/Q8wQVY3W
+ oCBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725466548; x=1726071348;
+ d=1e100.net; s=20230601; t=1725466558; x=1726071358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4UdvH3BfQ7ZFjeKvJ3vJphtRrv7BJb81oMyMgddOC7g=;
- b=MdEzsx9h9iN7BxcfZzLs5JVGcvvnTYpNf6UukIBU7q/XSz/T2Car/zX/7qw13ytoJk
- az9myM3TJnRM0xDEwtUTabgzzOb2A39LNwEzRyQfcO1+hHxKui3tKDepDoMUwFwqU5Wv
- lwtrxT5GJhAU9ZGA1nvjtxfrU8/FcVq+w4OPAYnsffnpSDrvt9L5s051jAGLwjvtPffi
- 8YALi54cU0jerYn2fgc1WI89ZgwxyfEhYDAOo7O2LNsicPcZqCF26DgALWNVrXls0XrH
- 0zTPD/0aiF4Ou8FpuZO9B4OV3rhla8JuwV0EtuCq8bTHFlFR/64hM9eNZxnakLA1DWpe
- 9+XQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBl763/D4wqZIMWLDIGrQoV+J2RSKaZDtQUp/sfEO7y/VXkzFnq4Y+ESaonV3DOhJYx2hcPSjL5Q==@nongnu.org
-X-Gm-Message-State: AOJu0Yz/5iEUUhM02jDOq/xDvHdXakouenZBedAM1GatKVVERqXsHhA/
- O/KzbS9RpuDbn462qPxve1MjcCnCKZVUXSAuNUI7BhBh+AT2f8EXCUHhKKGI
-X-Google-Smtp-Source: AGHT+IE45vRxHAq5eEpoyZwDxuEOBpO1l1yUi0y7mTpVkk1pHSrAlDEkmoWFTNi0vvfiboSA/TFkcA==
-X-Received: by 2002:a05:651c:1507:b0:2f5:104b:f2c with SMTP id
- 38308e7fff4ca-2f61e0b27f4mr114070401fa.39.1725466548140; 
- Wed, 04 Sep 2024 09:15:48 -0700 (PDT)
+ bh=AhHuSPxpBNKwAgr3pqcWE8F4qfu6xeqGgbqjKgqrTwo=;
+ b=w5VvcPVWa/+wcHaoj6x3ZPbiiAyc10FDG37XWixSdr9WOrrtv4v1ZMv/NFPNtwtNaJ
+ fR236GW1IQtlxSDldzcv397+slZQy156zxqAVfL5WHHDW/5NL60vDqeIz00Kr6DMHOkH
+ mtsPVwmJIa6F9tiqMaLtbUCyWzGa+gMmOHGOXspCzuozAmExHIyyTnR0kBTPurW3xXh5
+ 7klqk4O/VzXbzZsmgcbc446xIqX/ErqpxtPamzmWLXrJbeRT3mhteZ53XXNU/00vMb5Q
+ vl6m5HSAjQNiB7NAsrFGEPQpeW/HzQozIHeoeMcCEuZ0Rs8JJKHuyKu7Au7+phu3qE56
+ oENg==
+X-Gm-Message-State: AOJu0Ywep76egKxR8soqMHO92bhPf4QIZdzcYsqcuytKSpAIJek5dxc4
+ pd07IWkbMxsnQIa1Mluhox+n7JqP9YE59wvy/f0ly4/5Ib2taMbvL4/rnAaW
+X-Google-Smtp-Source: AGHT+IF1GFmSMfUcd/mUHwagfqt5mpNvfaEt+oYlqwsbk12notXPjCro2OfzhCpiGNq2eIcwaUFOhQ==
+X-Received: by 2002:a05:6512:1192:b0:52f:eb:aaca with SMTP id
+ 2adb3069b0e04-53565f22906mr2195749e87.32.1725466557827; 
+ Wed, 04 Sep 2024 09:15:57 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2f614ed192dsm26313971fa.7.2024.09.04.09.15.46
+ 2adb3069b0e04-53540841326sm2387308e87.197.2024.09.04.09.15.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Sep 2024 09:15:46 -0700 (PDT)
+ Wed, 04 Sep 2024 09:15:56 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com,
  jason.andryuk@amd.com, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: [PULL v1 05/12] hw/arm: xenpvh: Remove double-negation in warning
-Date: Wed,  4 Sep 2024 18:15:29 +0200
-Message-ID: <20240904161537.664189-6-edgar.iglesias@gmail.com>
+ xen-devel@lists.xenproject.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PULL v1 10/12] hw/xen: pvh-common: Add support for creating PCIe/GPEX
+Date: Wed,  4 Sep 2024 18:15:34 +0200
+Message-ID: <20240904161537.664189-11-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240904161537.664189-1-edgar.iglesias@gmail.com>
 References: <20240904161537.664189-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,25 +99,181 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
+Add support for optionally creating a PCIe/GPEX controller.
+
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- hw/arm/xen_arm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/xen/xen-pvh-common.c         | 76 +++++++++++++++++++++++++++++++++
+ include/hw/xen/xen-pvh-common.h | 29 +++++++++++++
+ 2 files changed, 105 insertions(+)
 
-diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-index fda65d0d8d..16b3f00992 100644
---- a/hw/arm/xen_arm.c
-+++ b/hw/arm/xen_arm.c
-@@ -165,7 +165,7 @@ static void xen_arm_init(MachineState *machine)
-     xam->state =  g_new0(XenIOState, 1);
+diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+index 295f920442..28d7168446 100644
+--- a/hw/xen/xen-pvh-common.c
++++ b/hw/xen/xen-pvh-common.c
+@@ -122,6 +122,64 @@ static void xen_enable_tpm(XenPVHMachineState *s)
+ }
+ #endif
  
-     if (machine->ram_size == 0) {
--        warn_report("%s non-zero ram size not specified. QEMU machine started"
-+        warn_report("%s: ram size not specified. QEMU machine started"
-                     " without IOREQ (no emulated devices including virtio)",
-                     MACHINE_CLASS(object_get_class(OBJECT(machine)))->desc);
-         return;
++/*
++ * We use the GPEX PCIe controller with its internal INTX PCI interrupt
++ * swizzling. This swizzling is emulated in QEMU and routes all INTX
++ * interrupts from endpoints down to only 4 INTX interrupts.
++ * See include/hw/pci/pci.h : pci_swizzle()
++ */
++static inline void xenpvh_gpex_init(XenPVHMachineState *s,
++                                    XenPVHMachineClass *xpc,
++                                    MemoryRegion *sysmem)
++{
++    MemoryRegion *ecam_reg;
++    MemoryRegion *mmio_reg;
++    DeviceState *dev;
++    int i;
++
++    object_initialize_child(OBJECT(s), "gpex", &s->pci.gpex,
++                            TYPE_GPEX_HOST);
++    dev = DEVICE(&s->pci.gpex);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
++    memory_region_add_subregion(sysmem, s->cfg.pci_ecam.base, ecam_reg);
++
++    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
++
++    if (s->cfg.pci_mmio.size) {
++        memory_region_init_alias(&s->pci.mmio_alias, OBJECT(dev), "pcie-mmio",
++                                 mmio_reg,
++                                 s->cfg.pci_mmio.base, s->cfg.pci_mmio.size);
++        memory_region_add_subregion(sysmem, s->cfg.pci_mmio.base,
++                                    &s->pci.mmio_alias);
++    }
++
++    if (s->cfg.pci_mmio_high.size) {
++        memory_region_init_alias(&s->pci.mmio_high_alias, OBJECT(dev),
++                "pcie-mmio-high",
++                mmio_reg, s->cfg.pci_mmio_high.base, s->cfg.pci_mmio_high.size);
++        memory_region_add_subregion(sysmem, s->cfg.pci_mmio_high.base,
++                &s->pci.mmio_high_alias);
++    }
++
++    /*
++     * PVH implementations with PCI enabled must provide set_pci_intx_irq()
++     * and optionally an implementation of set_pci_link_route().
++     */
++    assert(xpc->set_pci_intx_irq);
++
++    for (i = 0; i < GPEX_NUM_IRQS; i++) {
++        qemu_irq irq = qemu_allocate_irq(xpc->set_pci_intx_irq, s, i);
++
++        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
++        gpex_set_irq_num(GPEX_HOST(dev), i, s->cfg.pci_intx_irq_base + i);
++        if (xpc->set_pci_link_route) {
++            xpc->set_pci_link_route(i, s->cfg.pci_intx_irq_base + i);
++        }
++    }
++}
++
+ static void xen_pvh_init(MachineState *ms)
+ {
+     XenPVHMachineState *s = XEN_PVH_MACHINE(ms);
+@@ -152,6 +210,15 @@ static void xen_pvh_init(MachineState *ms)
+     }
+ #endif
+ 
++    /* Non-zero pci-ecam-size enables PCI.  */
++    if (s->cfg.pci_ecam.size) {
++        if (s->cfg.pci_ecam.size != 256 * MiB) {
++            error_report("pci-ecam-size only supports values 0 or 0x10000000");
++            exit(EXIT_FAILURE);
++        }
++        xenpvh_gpex_init(s, xpc, sysmem);
++    }
++
+     /* Call the implementation specific init.  */
+     if (xpc->init) {
+         xpc->init(ms);
+@@ -200,6 +267,9 @@ XEN_PVH_PROP_MEMMAP(ram_high)
+ /* TPM only has a base-addr option.  */
+ XEN_PVH_PROP_MEMMAP_BASE(tpm)
+ XEN_PVH_PROP_MEMMAP(virtio_mmio)
++XEN_PVH_PROP_MEMMAP(pci_ecam)
++XEN_PVH_PROP_MEMMAP(pci_mmio)
++XEN_PVH_PROP_MEMMAP(pci_mmio_high)
+ 
+ void xen_pvh_class_setup_common_props(XenPVHMachineClass *xpc)
+ {
+@@ -242,6 +312,12 @@ do {                                                                      \
+         OC_MEMMAP_PROP(oc, "virtio-mmio", virtio_mmio);
+     }
+ 
++    if (xpc->has_pci) {
++        OC_MEMMAP_PROP(oc, "pci-ecam", pci_ecam);
++        OC_MEMMAP_PROP(oc, "pci-mmio", pci_mmio);
++        OC_MEMMAP_PROP(oc, "pci-mmio-high", pci_mmio_high);
++    }
++
+ #ifdef CONFIG_TPM
+     if (xpc->has_tpm) {
+         object_class_property_add(oc, "tpm-base-addr", "uint64_t",
+diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
+index 77fd98b9fe..bc09eea936 100644
+--- a/include/hw/xen/xen-pvh-common.h
++++ b/include/hw/xen/xen-pvh-common.h
+@@ -25,10 +25,29 @@ struct XenPVHMachineClass {
+     /* PVH implementation specific init.  */
+     void (*init)(MachineState *state);
+ 
++    /*
++     * set_pci_intx_irq - Deliver INTX irqs to the guest.
++     *
++     * @opaque: pointer to XenPVHMachineState.
++     * @irq: IRQ after swizzling, between 0-3.
++     * @level: IRQ level.
++     */
++    void (*set_pci_intx_irq)(void *opaque, int irq, int level);
++
++    /*
++     * set_pci_link_route: - optional implementation call to setup
++     * routing between INTX IRQ (0 - 3) and GSI's.
++     *
++     * @line: line the INTx line (0 => A .. 3 => B)
++     * @irq: GSI
++     */
++    int (*set_pci_link_route)(uint8_t line, uint8_t irq);
++
+     /*
+      * Each implementation can optionally enable features that it
+      * supports and are known to work.
+      */
++    bool has_pci;
+     bool has_tpm;
+     bool has_virtio_mmio;
+ };
+@@ -44,6 +63,12 @@ struct XenPVHMachineState {
+         MemoryRegion high;
+     } ram;
+ 
++    struct {
++        GPEXHost gpex;
++        MemoryRegion mmio_alias;
++        MemoryRegion mmio_high_alias;
++    } pci;
++
+     struct {
+         MemMapEntry ram_low, ram_high;
+         MemMapEntry tpm;
+@@ -52,6 +77,10 @@ struct XenPVHMachineState {
+         MemMapEntry virtio_mmio;
+         uint32_t virtio_mmio_num;
+         uint32_t virtio_mmio_irq_base;
++
++        /* PCI */
++        MemMapEntry pci_ecam, pci_mmio, pci_mmio_high;
++        uint32_t pci_intx_irq_base;
+     } cfg;
+ };
+ 
 -- 
 2.43.0
 
