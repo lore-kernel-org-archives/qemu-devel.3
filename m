@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56EA5CD37B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD842CD37B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slr8N-0006mt-5W; Wed, 04 Sep 2024 10:37:23 -0400
+	id 1slr8X-0007yD-Ne; Wed, 04 Sep 2024 10:37:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8K-0006Q7-Kw
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:20 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8U-0007cm-Cn
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:30 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8I-0005NL-CZ
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:20 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-374c3400367so3001122f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:37:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slr8R-0005QY-3K
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:37:30 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42c79deb7c4so35727995e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725460637; x=1726065437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725460645; x=1726065445; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=reUYcFpvFqro4uRXjaKuE8NgjJEMV1ydTwCE7etUopg=;
- b=ohB9yeVE/IducidJroZnOyLMfhLoEd0yd9YGKWgkgtpr/jteDTa7K89OEkL/F0yIYa
- mLZ3NA3woPUPkEvAary4LS2uq2u11tRwB4MgnRphHJfRI7olppPn9DPtBAQ1FV+2ksis
- 8S1FpkQdbXQhywsnt1xJzqRcpMG2UBqlYdhc2gUAA7GKZ/tTy/ZirJLNzzIIdN8cghkW
- ZhDATFueonh/Mnae5Q6GNa0mq67xP+I4K5yoAZH4JJa1kqQErIaaVT9iJ3tqFTLi3NUl
- fxZ/rg41efjQSw6a1RPDXdfgXRwPcHNflcGozXHj5GWC65SBhNeBIRgzVJeg3i8VhCEd
- H3hw==
+ bh=I+MPGXfzpvD5ne4OXlgUgbB/n5ba4zDrGXsbjf3V6ZE=;
+ b=g8FaIRWtn27CKNQzQGMykLSfdCYrd874/lGHpFnzfMdoNnMQes9a0IiDDMxSVeGdZ9
+ lAIidEmllhMlwtRFlTjLq705fsdU/+QQXpa8aXUGHPLZrAzHJfUP2ZyGrlAcimTOUqou
+ TgTVa5ocNt3jv4JcrLQ4y0/sJDsKolroBcVELwarm/4YsoaZHa84kuof+aKH4WsRmBNc
+ QNm7VmE1ElrqhBFUEy59yBI2YPWJkyUFcMDHbijWV68F17Mh3rzLHrK5jjJ3vw1SzwrQ
+ e0DeUeabA45W3kr3TFJdPy8Rp7rzFY5nXzqObSN1+/KsEeT64HYLueYSjFZi9YnIBpbk
+ YotA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725460637; x=1726065437;
+ d=1e100.net; s=20230601; t=1725460645; x=1726065445;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=reUYcFpvFqro4uRXjaKuE8NgjJEMV1ydTwCE7etUopg=;
- b=QkpH4KHNWrajHUTrSYmBwzyzEoAMP+orqotLJqE0omdBVjogRC7HHML/fWkjwMuiAW
- RnbLu57zfuwFyB4nBStNDXdijqD9IT4S1cleJAxhyyzk9XPp5QuOqKeQLu5zQfzYBd4i
- a+XrMNKUeTKTtlYPCvpT222g2aRSLWmNt3FHL5loTNqJiGaH8nn16qFnKtRM/qDaLlBy
- Yo3g87TxEacSA8A+ev5FlUITeUg0lZBuBhejVp59WoEiZwylKk7rdDPc0fsh9tXd5BIZ
- IY8ZcohvoeIvPYMhC+RiyeAWB0LxiIVic+MP6BXiZh/gVQk1LOIRhAU8BUQhl6Lmx+ZR
- 9fsw==
+ bh=I+MPGXfzpvD5ne4OXlgUgbB/n5ba4zDrGXsbjf3V6ZE=;
+ b=PpjseAgFcZsgl7mrCmO5S8BCAhS/jpJoyFa7IUOhG0sj21go3rT21hPlqeCJAcIOWs
+ B62xwwPiP1SDS+cWdeU543PGZMbPUxTtRoN2E9PwTv9VAkXWCe+WQZeQ9n3Q4X1gchqS
+ 8+uwER4PydKAtYcpns0HWdkMqiWOyuefjUWuk8E7ZOKNc64f6MwABhwo6jvojsYgyXBP
+ qMYlaXDkLAd+h/3FmC5lCCEZ2YIfQpiIeGsH03KwwrzoRat7GxmhDflgl25lGslolDcE
+ v3Fi4bJmKwxAe6eVgUa81IC9GQAida98z+xJv8EKaK0kJ+MQqZS8VEAzWMERh+jzn6ZV
+ 9ULA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMSv5QUUEPtWnn8w5UygB46X/RT+I3rkq3etkH4oPszW2XqrKt0U8KR1fuKv+cFJ0kaN0q+mHDsGS2@nongnu.org
-X-Gm-Message-State: AOJu0YztswKJE/egNBS5sdcwgZJK1oedUbu3KtocFY4eIPGhE26nxPCC
- i/vh6NAYmxgjBcuTUIQpn5ZaG0vVGSyS/eokwuVbjNl/B4R9U3pS7Q5+F3VzxLk=
-X-Google-Smtp-Source: AGHT+IGezzOoyhGbkALsLB4HLP7xnCC/1WPV3TWPt9FIxISRPNuzTVhWLXF4ikuxokoMg0/mUTkZIw==
-X-Received: by 2002:a5d:6801:0:b0:374:c69b:5a24 with SMTP id
- ffacd0b85a97d-374c69b5b9amr9703472f8f.51.1725460636626; 
- Wed, 04 Sep 2024 07:37:16 -0700 (PDT)
+ AJvYcCUIB4JQKl3VeJ8FyIfV9dBjzB3dLKQ12PALxrFO/Mi5im3zfofOrgjDl4z1XWm2dbtChsG9s79CV9aS@nongnu.org
+X-Gm-Message-State: AOJu0Yw53jh3aMZlruOdZFhCe3gwQrAUI/wwmMGJbrHKaHv4AgYzqGOK
+ O8zJfsSlWyaN1748SKT3tH37y3N8hJRo+Om0Qypq8WTNC3695tIxriihr81EQWE=
+X-Google-Smtp-Source: AGHT+IGskY04Kd5WboG5/0Jgb8QPz96Km06iwn4PZxehXAJt6q3FEKKhidr+t35q0+p3p1kZD+4PVw==
+X-Received: by 2002:a05:600c:3b8f:b0:426:6320:226a with SMTP id
+ 5b1f17b1804b1-42c7b5a8f75mr106414285e9.15.1725460645158; 
+ Wed, 04 Sep 2024 07:37:25 -0700 (PDT)
 Received: from localhost.localdomain (56.red-95-127-44.staticip.rima-tde.net.
  [95.127.44.56]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374c0f6f4c4sm11715559f8f.44.2024.09.04.07.37.14
+ ffacd0b85a97d-374cd205ab0sm7568410f8f.87.2024.09.04.07.37.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Sep 2024 07:37:16 -0700 (PDT)
+ Wed, 04 Sep 2024 07:37:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
 	qemu-devel@nongnu.org
@@ -66,17 +66,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/15] hw/intc: Remove TYPE_ETRAX_FS_PIC device
-Date: Wed,  4 Sep 2024 16:35:55 +0200
-Message-ID: <20240904143603.52934-8-philmd@linaro.org>
+Subject: [PATCH v2 08/15] hw/char: Remove TYPE_ETRAX_FS_SERIAL device
+Date: Wed,  4 Sep 2024 16:35:56 +0200
+Message-ID: <20240904143603.52934-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240904143603.52934-1-philmd@linaro.org>
 References: <20240904143603.52934-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +103,55 @@ We just removed the single machine using it (axis-dev88).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/etraxfs_pic.c | 172 ------------------------------------------
- hw/intc/meson.build   |   1 -
- 2 files changed, 173 deletions(-)
- delete mode 100644 hw/intc/etraxfs_pic.c
+ include/hw/cris/etraxfs.h |  18 ---
+ hw/char/etraxfs_ser.c     | 267 --------------------------------------
+ hw/char/meson.build       |   1 -
+ 3 files changed, 286 deletions(-)
+ delete mode 100644 hw/char/etraxfs_ser.c
 
-diff --git a/hw/intc/etraxfs_pic.c b/hw/intc/etraxfs_pic.c
+diff --git a/include/hw/cris/etraxfs.h b/include/hw/cris/etraxfs.h
+index 012c4e9974..6d23f6f13f 100644
+--- a/include/hw/cris/etraxfs.h
++++ b/include/hw/cris/etraxfs.h
+@@ -27,28 +27,10 @@
+ 
+ #include "net/net.h"
+ #include "hw/cris/etraxfs_dma.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/sysbus.h"
+ #include "qapi/error.h"
+ 
+ DeviceState *etraxfs_eth_init(hwaddr base, int phyaddr,
+                               struct etraxfs_dma_client *dma_out,
+                               struct etraxfs_dma_client *dma_in);
+ 
+-static inline DeviceState *etraxfs_ser_create(hwaddr addr,
+-                                              qemu_irq irq,
+-                                              Chardev *chr)
+-{
+-    DeviceState *dev;
+-    SysBusDevice *s;
+-
+-    dev = qdev_new("etraxfs-serial");
+-    s = SYS_BUS_DEVICE(dev);
+-    qdev_prop_set_chr(dev, "chardev", chr);
+-    sysbus_realize_and_unref(s, &error_fatal);
+-    sysbus_mmio_map(s, 0, addr);
+-    sysbus_connect_irq(s, 0, irq);
+-    return dev;
+-}
+-
+ #endif
+diff --git a/hw/char/etraxfs_ser.c b/hw/char/etraxfs_ser.c
 deleted file mode 100644
-index bd37d1cca0..0000000000
---- a/hw/intc/etraxfs_pic.c
+index 8d6422dae4..0000000000
+--- a/hw/char/etraxfs_ser.c
 +++ /dev/null
-@@ -1,172 +0,0 @@
+@@ -1,267 +0,0 @@
 -/*
-- * QEMU ETRAX Interrupt Controller.
+- * QEMU ETRAX System Emulator
 - *
-- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
+- * Copyright (c) 2007 Edgar E. Iglesias, Axis Communications AB.
 - *
 - * Permission is hereby granted, free of charge, to any person obtaining a copy
 - * of this software and associated documentation files (the "Software"), to deal
@@ -139,89 +173,143 @@ index bd37d1cca0..0000000000
 - */
 -
 -#include "qemu/osdep.h"
--#include "hw/sysbus.h"
--#include "qemu/module.h"
 -#include "hw/irq.h"
 -#include "hw/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
+-#include "hw/sysbus.h"
+-#include "chardev/char-fe.h"
+-#include "qemu/log.h"
+-#include "qemu/module.h"
 -#include "qom/object.h"
 -
 -#define D(x)
 -
--#define R_RW_MASK   0
--#define R_R_VECT    1
--#define R_R_MASKED_VECT 2
--#define R_R_NMI     3
--#define R_R_GURU    4
--#define R_MAX       5
+-#define RW_TR_CTRL     (0x00 / 4)
+-#define RW_TR_DMA_EN   (0x04 / 4)
+-#define RW_REC_CTRL    (0x08 / 4)
+-#define RW_DOUT        (0x1c / 4)
+-#define RS_STAT_DIN    (0x20 / 4)
+-#define R_STAT_DIN     (0x24 / 4)
+-#define RW_INTR_MASK   (0x2c / 4)
+-#define RW_ACK_INTR    (0x30 / 4)
+-#define R_INTR         (0x34 / 4)
+-#define R_MASKED_INTR  (0x38 / 4)
+-#define R_MAX          (0x3c / 4)
 -
--#define TYPE_ETRAX_FS_PIC "etraxfs-pic"
--DECLARE_INSTANCE_CHECKER(struct etrax_pic, ETRAX_FS_PIC,
--                         TYPE_ETRAX_FS_PIC)
+-#define STAT_DAV     16
+-#define STAT_TR_IDLE 22
+-#define STAT_TR_RDY  24
 -
--struct etrax_pic
--{
+-#define TYPE_ETRAX_FS_SERIAL "etraxfs-serial"
+-typedef struct ETRAXSerial ETRAXSerial;
+-DECLARE_INSTANCE_CHECKER(ETRAXSerial, ETRAX_SERIAL,
+-                         TYPE_ETRAX_FS_SERIAL)
+-
+-struct ETRAXSerial {
 -    SysBusDevice parent_obj;
 -
 -    MemoryRegion mmio;
--    qemu_irq parent_irq;
--    qemu_irq parent_nmi;
+-    CharBackend chr;
+-    qemu_irq irq;
+-
+-    int pending_tx;
+-
+-    uint8_t rx_fifo[16];
+-    unsigned int rx_fifo_pos;
+-    unsigned int rx_fifo_len;
+-
+-    /* Control registers.  */
 -    uint32_t regs[R_MAX];
 -};
 -
--static void pic_update(struct etrax_pic *fs)
--{   
--    uint32_t vector = 0;
--    int i;
+-static void ser_update_irq(ETRAXSerial *s)
+-{
 -
--    fs->regs[R_R_MASKED_VECT] = fs->regs[R_R_VECT] & fs->regs[R_RW_MASK];
--
--    /* The ETRAX interrupt controller signals interrupts to the core
--       through an interrupt request wire and an irq vector bus. If 
--       multiple interrupts are simultaneously active it chooses vector 
--       0x30 and lets the sw choose the priorities.  */
--    if (fs->regs[R_R_MASKED_VECT]) {
--        uint32_t mv = fs->regs[R_R_MASKED_VECT];
--        for (i = 0; i < 31; i++) {
--            if (mv & 1) {
--                vector = 0x31 + i;
--                /* Check for multiple interrupts.  */
--                if (mv > 1)
--                    vector = 0x30;
--                break;
--            }
--            mv >>= 1;
--        }
+-    if (s->rx_fifo_len) {
+-        s->regs[R_INTR] |= 8;
+-    } else {
+-        s->regs[R_INTR] &= ~8;
 -    }
 -
--    qemu_set_irq(fs->parent_irq, vector);
+-    s->regs[R_MASKED_INTR] = s->regs[R_INTR] & s->regs[RW_INTR_MASK];
+-    qemu_set_irq(s->irq, !!s->regs[R_MASKED_INTR]);
 -}
 -
 -static uint64_t
--pic_read(void *opaque, hwaddr addr, unsigned int size)
+-ser_read(void *opaque, hwaddr addr, unsigned int size)
 -{
--    struct etrax_pic *fs = opaque;
--    uint32_t rval;
+-    ETRAXSerial *s = opaque;
+-    uint32_t r = 0;
 -
--    rval = fs->regs[addr >> 2];
--    D(printf("%s %x=%x\n", __func__, addr, rval));
--    return rval;
--}
--
--static void pic_write(void *opaque, hwaddr addr,
--                      uint64_t value, unsigned int size)
--{
--    struct etrax_pic *fs = opaque;
--    D(printf("%s addr=%x val=%x\n", __func__, addr, value));
--
--    if (addr == R_RW_MASK) {
--        fs->regs[R_RW_MASK] = value;
--        pic_update(fs);
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case R_STAT_DIN:
+-            r = s->rx_fifo[(s->rx_fifo_pos - s->rx_fifo_len) & 15];
+-            if (s->rx_fifo_len) {
+-                r |= 1 << STAT_DAV;
+-            }
+-            r |= 1 << STAT_TR_RDY;
+-            r |= 1 << STAT_TR_IDLE;
+-            break;
+-        case RS_STAT_DIN:
+-            r = s->rx_fifo[(s->rx_fifo_pos - s->rx_fifo_len) & 15];
+-            if (s->rx_fifo_len) {
+-                r |= 1 << STAT_DAV;
+-                s->rx_fifo_len--;
+-            }
+-            r |= 1 << STAT_TR_RDY;
+-            r |= 1 << STAT_TR_IDLE;
+-            break;
+-        default:
+-            r = s->regs[addr];
+-            D(qemu_log("%s " HWADDR_FMT_plx "=%x\n", __func__, addr, r));
+-            break;
 -    }
+-    return r;
 -}
 -
--static const MemoryRegionOps pic_ops = {
--    .read = pic_read,
--    .write = pic_write,
+-static void
+-ser_write(void *opaque, hwaddr addr,
+-          uint64_t val64, unsigned int size)
+-{
+-    ETRAXSerial *s = opaque;
+-    uint32_t value = val64;
+-    unsigned char ch = val64;
+-
+-    D(qemu_log("%s " HWADDR_FMT_plx "=%x\n",  __func__, addr, value));
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case RW_DOUT:
+-            /* XXX this blocks entire thread. Rewrite to use
+-             * qemu_chr_fe_write and background I/O callbacks */
+-            qemu_chr_fe_write_all(&s->chr, &ch, 1);
+-            s->regs[R_INTR] |= 3;
+-            s->pending_tx = 1;
+-            s->regs[addr] = value;
+-            break;
+-        case RW_ACK_INTR:
+-            if (s->pending_tx) {
+-                value &= ~1;
+-                s->pending_tx = 0;
+-                D(qemu_log("fixedup value=%x r_intr=%x\n",
+-                           value, s->regs[R_INTR]));
+-            }
+-            s->regs[addr] = value;
+-            s->regs[R_INTR] &= ~value;
+-            D(printf("r_intr=%x\n", s->regs[R_INTR]));
+-            break;
+-        default:
+-            s->regs[addr] = value;
+-            break;
+-    }
+-    ser_update_irq(s);
+-}
+-
+-static const MemoryRegionOps ser_ops = {
+-    .read = ser_read,
+-    .write = ser_write,
 -    .endianness = DEVICE_NATIVE_ENDIAN,
 -    .valid = {
 -        .min_access_size = 4,
@@ -229,75 +317,116 @@ index bd37d1cca0..0000000000
 -    }
 -};
 -
--static void nmi_handler(void *opaque, int irq, int level)
--{   
--    struct etrax_pic *fs = (void *)opaque;
--    uint32_t mask;
+-static Property etraxfs_ser_properties[] = {
+-    DEFINE_PROP_CHR("chardev", ETRAXSerial, chr),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
 -
--    mask = 1 << irq;
--    if (level)
--        fs->regs[R_R_NMI] |= mask;
--    else
--        fs->regs[R_R_NMI] &= ~mask;
--
--    qemu_set_irq(fs->parent_nmi, !!fs->regs[R_R_NMI]);
--}
--
--static void irq_handler(void *opaque, int irq, int level)
+-static void serial_receive(void *opaque, const uint8_t *buf, int size)
 -{
--    struct etrax_pic *fs = (void *)opaque;
+-    ETRAXSerial *s = opaque;
+-    int i;
 -
--    if (irq >= 30) {
--        nmi_handler(opaque, irq, level);
+-    /* Got a byte.  */
+-    if (s->rx_fifo_len >= 16) {
+-        D(qemu_log("WARNING: UART dropped char.\n"));
 -        return;
 -    }
 -
--    irq -= 1;
--    fs->regs[R_R_VECT] &= ~(1 << irq);
--    fs->regs[R_R_VECT] |= (!!level << irq);
--    pic_update(fs);
+-    for (i = 0; i < size; i++) { 
+-        s->rx_fifo[s->rx_fifo_pos] = buf[i];
+-        s->rx_fifo_pos++;
+-        s->rx_fifo_pos &= 15;
+-        s->rx_fifo_len++;
+-    }
+-
+-    ser_update_irq(s);
 -}
 -
--static void etraxfs_pic_init(Object *obj)
+-static int serial_can_receive(void *opaque)
 -{
--    DeviceState *dev = DEVICE(obj);
--    struct etrax_pic *s = ETRAX_FS_PIC(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-    ETRAXSerial *s = opaque;
 -
--    qdev_init_gpio_in(dev, irq_handler, 32);
--    sysbus_init_irq(sbd, &s->parent_irq);
--    sysbus_init_irq(sbd, &s->parent_nmi);
+-    /* Is the receiver enabled?  */
+-    if (!(s->regs[RW_REC_CTRL] & (1 << 3))) {
+-        return 0;
+-    }
 -
--    memory_region_init_io(&s->mmio, obj, &pic_ops, s,
--                          "etraxfs-pic", R_MAX * 4);
--    sysbus_init_mmio(sbd, &s->mmio);
+-    return sizeof(s->rx_fifo) - s->rx_fifo_len;
 -}
 -
--static const TypeInfo etraxfs_pic_info = {
--    .name          = TYPE_ETRAX_FS_PIC,
+-static void serial_event(void *opaque, QEMUChrEvent event)
+-{
+-
+-}
+-
+-static void etraxfs_ser_reset(DeviceState *d)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(d);
+-
+-    /* transmitter begins ready and idle.  */
+-    s->regs[RS_STAT_DIN] |= (1 << STAT_TR_RDY);
+-    s->regs[RS_STAT_DIN] |= (1 << STAT_TR_IDLE);
+-
+-    s->regs[RW_REC_CTRL] = 0x10000;
+-
+-}
+-
+-static void etraxfs_ser_init(Object *obj)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(obj);
+-    SysBusDevice *dev = SYS_BUS_DEVICE(obj);
+-
+-    sysbus_init_irq(dev, &s->irq);
+-    memory_region_init_io(&s->mmio, obj, &ser_ops, s,
+-                          "etraxfs-serial", R_MAX * 4);
+-    sysbus_init_mmio(dev, &s->mmio);
+-}
+-
+-static void etraxfs_ser_realize(DeviceState *dev, Error **errp)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(dev);
+-
+-    qemu_chr_fe_set_handlers(&s->chr,
+-                             serial_can_receive, serial_receive,
+-                             serial_event, NULL, s, NULL, true);
+-}
+-
+-static void etraxfs_ser_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    dc->reset = etraxfs_ser_reset;
+-    device_class_set_props(dc, etraxfs_ser_properties);
+-    dc->realize = etraxfs_ser_realize;
+-}
+-
+-static const TypeInfo etraxfs_ser_info = {
+-    .name          = TYPE_ETRAX_FS_SERIAL,
 -    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(struct etrax_pic),
--    .instance_init = etraxfs_pic_init,
+-    .instance_size = sizeof(ETRAXSerial),
+-    .instance_init = etraxfs_ser_init,
+-    .class_init    = etraxfs_ser_class_init,
 -};
 -
--static void etraxfs_pic_register_types(void)
+-static void etraxfs_serial_register_types(void)
 -{
--    type_register_static(&etraxfs_pic_info);
+-    type_register_static(&etraxfs_ser_info);
 -}
 -
--type_init(etraxfs_pic_register_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index f4d81eb8e4..6bfdc4eb33 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -15,7 +15,6 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
- system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
--system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
- system_ss.add(when: 'CONFIG_HEATHROW_PIC', if_true: files('heathrow_pic.c'))
+-type_init(etraxfs_serial_register_types)
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index e5b13b6958..a4c4c5ff0f 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -1,7 +1,6 @@
+ system_ss.add(when: 'CONFIG_CADENCE', if_true: files('cadence_uart.c'))
+ system_ss.add(when: 'CONFIG_CMSDK_APB_UART', if_true: files('cmsdk-apb-uart.c'))
+ system_ss.add(when: 'CONFIG_ESCC', if_true: files('escc.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_ser.c'))
+ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_apbuart.c'))
+ system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_uart.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_serial.c'))
 -- 
 2.45.2
 
