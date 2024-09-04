@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8986ACD484A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95156CD37B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slr3F-0002mW-Bb; Wed, 04 Sep 2024 10:32:13 -0400
+	id 1slr3Z-0004BH-Ae; Wed, 04 Sep 2024 10:32:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1slr2x-0001lJ-66; Wed, 04 Sep 2024 10:31:53 -0400
-Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
+ id 1slr3T-0003sk-3h; Wed, 04 Sep 2024 10:32:19 -0400
+Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1slr2t-0003tT-Vn; Wed, 04 Sep 2024 10:31:45 -0400
+ id 1slr3R-0003xg-3P; Wed, 04 Sep 2024 10:32:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1725460299; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=2iKtEc4DtzEu4r6Jphm1f0u3H5CKS2ONLfxHet/WOqs=;
- b=uhWW1P1z1utSArD9QAlc9clQbsHr61B9EINuDF8hWroxc702HSLZvxpmw6PyfwaeGZtAvpWubnNDoHGe6+7iROjjoQzzkKc/0KRVAjfCUSKKYq+pgOeVV+fc7lPRyUfh1q6THjoRdwB3tG8xgnC0ZBDwKpTHMGTDCeS2fG1oQdM=
+ t=1725460331; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=D40GaT1EAh5YF4VXXTre7aAcaUMpWWM0JcDER8SJKvI=;
+ b=fvq+e/kDo+lVsUEar3edX4gVPu/qevdhdOkjv6SFDfkV0I18w6BmE1JVBZm62Ptg/un1H+2upLB+Dfw3TuInwsCcB9MfUrA/ClDjyzifZHrf7Uj1wQN2FT1sCABCQWVnnL3ltNyV/20VbXsZ7TUai9eflFzRZFouyCXq+YatbhE=
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WEIASUT_1725460296) by smtp.aliyun-inc.com;
- Wed, 04 Sep 2024 22:31:38 +0800
+ fp:SMTPD_---0WEI2K85_1725460328) by smtp.aliyun-inc.com;
+ Wed, 04 Sep 2024 22:32:10 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  zhiwei_liu@linux.alibaba.com, richard.henderson@linaro.org,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Subject: [PATCH v3 06/14] tcg/riscv: Implement vector mov/dup{m/i}
-Date: Wed,  4 Sep 2024 22:27:31 +0800
-Message-Id: <20240904142739.854-7-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v3 07/14] tcg/riscv: Add support for basic vector opcodes
+Date: Wed,  4 Sep 2024 22:27:32 +0800
+Message-Id: <20240904142739.854-8-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
 References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.119;
+Received-SPF: pass client-ip=115.124.30.132;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-119.freemail.mail.aliyun.com
+ helo=out30-132.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,103 +70,112 @@ From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
 Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/riscv/tcg-target.c.inc | 53 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ tcg/riscv/tcg-target-con-set.h |  1 +
+ tcg/riscv/tcg-target.c.inc     | 46 ++++++++++++++++++++++++++++++++++
+ tcg/riscv/tcg-target.h         |  2 +-
+ 3 files changed, 48 insertions(+), 1 deletion(-)
 
+diff --git a/tcg/riscv/tcg-target-con-set.h b/tcg/riscv/tcg-target-con-set.h
+index d73a62b0f2..d4504122a2 100644
+--- a/tcg/riscv/tcg-target-con-set.h
++++ b/tcg/riscv/tcg-target-con-set.h
+@@ -23,3 +23,4 @@ C_O1_I4(r, r, rI, rM, rM)
+ C_O2_I4(r, r, rZ, rZ, rM, rM)
+ C_O0_I2(v, r)
+ C_O1_I1(v, r)
++C_O1_I1(v, v)
 diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index 4b1079fc6f..ddb0c8190c 100644
+index ddb0c8190c..c89d1a5dc9 100644
 --- a/tcg/riscv/tcg-target.c.inc
 +++ b/tcg/riscv/tcg-target.c.inc
-@@ -309,6 +309,12 @@ typedef enum {
-     OPC_VS2R_V = 0x2000027 | V_UNIT_STRIDE_WHOLE_REG | V_NF(1),
+@@ -310,6 +310,13 @@ typedef enum {
      OPC_VS4R_V = 0x2000027 | V_UNIT_STRIDE_WHOLE_REG | V_NF(3),
      OPC_VS8R_V = 0x2000027 | V_UNIT_STRIDE_WHOLE_REG | V_NF(7),
-+
-+    OPC_VMV_V_V = 0x5e000057 | V_OPIVV,
-+    OPC_VMV_V_I = 0x5e000057 | V_OPIVI,
-+    OPC_VMV_V_X = 0x5e000057 | V_OPIVX,
-+
-+    OPC_VMVNR_V = 0x9e000057 | V_OPIVI,
- } RISCVInsn;
  
- /*
-@@ -698,6 +704,21 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
-     case TCG_TYPE_I64:
-         tcg_out_opc_imm(s, OPC_ADDI, ret, arg, 0);
-         break;
-+    case TCG_TYPE_V64:
-+    case TCG_TYPE_V128:
-+    case TCG_TYPE_V256:
-+        {
-+            int nf = get_vec_type_bytes(type) / riscv_vlenb;
++    OPC_VADD_VV = 0x57 | V_OPIVV,
++    OPC_VSUB_VV = 0x8000057 | V_OPIVV,
++    OPC_VAND_VV = 0x24000057 | V_OPIVV,
++    OPC_VOR_VV = 0x28000057 | V_OPIVV,
++    OPC_VXOR_VV = 0x2c000057 | V_OPIVV,
++    OPC_VXOR_VI = 0x2c000057 | V_OPIVI,
 +
-+            if (nf != 0) {
-+                tcg_debug_assert(is_power_of_2(nf) && nf <= 8);
-+                tcg_out_opc_vi(s, OPC_VMVNR_V, ret, arg, nf - 1, true);
-+            } else {
-+                riscv_set_vec_config_vl(s, type);
-+                tcg_out_opc_vv(s, OPC_VMV_V_V, ret, TCG_REG_V0, arg, true);
-+            }
-+        }
+     OPC_VMV_V_V = 0x5e000057 | V_OPIVV,
+     OPC_VMV_V_I = 0x5e000057 | V_OPIVI,
+     OPC_VMV_V_X = 0x5e000057 | V_OPIVX,
+@@ -2291,6 +2298,30 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+     case INDEX_op_st_vec:
+         tcg_out_st(s, type, a0, a1, a2);
+         break;
++    case INDEX_op_add_vec:
++        riscv_set_vec_config_vl_vece(s, type, vece);
++        tcg_out_opc_vv(s, OPC_VADD_VV, a0, a1, a2, true);
 +        break;
++    case INDEX_op_sub_vec:
++        riscv_set_vec_config_vl_vece(s, type, vece);
++        tcg_out_opc_vv(s, OPC_VSUB_VV, a0, a1, a2, true);
++        break;
++    case INDEX_op_and_vec:
++        riscv_set_vec_config_vl(s, type);
++        tcg_out_opc_vv(s, OPC_VAND_VV, a0, a1, a2, true);
++        break;
++    case INDEX_op_or_vec:
++        riscv_set_vec_config_vl(s, type);
++        tcg_out_opc_vv(s, OPC_VOR_VV, a0, a1, a2, true);
++        break;
++    case INDEX_op_xor_vec:
++        riscv_set_vec_config_vl(s, type);
++        tcg_out_opc_vv(s, OPC_VXOR_VV, a0, a1, a2, true);
++        break;
++    case INDEX_op_not_vec:
++        riscv_set_vec_config_vl(s, type);
++        tcg_out_opc_vi(s, OPC_VXOR_VI, a0, a1, -1, true);
++        break;
+     case INDEX_op_mov_vec: /* Always emitted via tcg_out_mov.  */
+     case INDEX_op_dup_vec: /* Always emitted via tcg_out_dup_vec.  */
+     default:
+@@ -2310,6 +2341,13 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
+ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+ {
+     switch (opc) {
++    case INDEX_op_add_vec:
++    case INDEX_op_sub_vec:
++    case INDEX_op_and_vec:
++    case INDEX_op_or_vec:
++    case INDEX_op_xor_vec:
++    case INDEX_op_not_vec:
++        return 1;
+     default:
+         return 0;
+     }
+@@ -2460,6 +2498,14 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
+     case INDEX_op_dupm_vec:
+     case INDEX_op_ld_vec:
+         return C_O1_I1(v, r);
++    case INDEX_op_not_vec:
++        return C_O1_I1(v, v);
++    case INDEX_op_add_vec:
++    case INDEX_op_sub_vec:
++    case INDEX_op_and_vec:
++    case INDEX_op_or_vec:
++    case INDEX_op_xor_vec:
++        return C_O1_I2(v, v, v);
      default:
          g_assert_not_reached();
      }
-@@ -1106,6 +1127,33 @@ static void tcg_out_addsub2(TCGContext *s,
-     }
- }
- 
-+static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
-+                                   TCGReg dst, TCGReg src)
-+{
-+    riscv_set_vec_config_vl_vece(s, type, vece);
-+    tcg_out_opc_vx(s, OPC_VMV_V_X, dst, TCG_REG_V0, src, true);
-+    return true;
-+}
-+
-+static bool tcg_out_dupm_vec(TCGContext *s, TCGType type, unsigned vece,
-+                                    TCGReg dst, TCGReg base, intptr_t offset)
-+{
-+    tcg_out_ld(s, TCG_TYPE_REG, TCG_REG_TMP0, base, offset);
-+    return tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
-+}
-+
-+static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
-+                                    TCGReg dst, int64_t arg)
-+{
-+    if (arg < 16 && arg >= -16) {
-+        riscv_set_vec_config_vl_vece(s, type, vece);
-+        tcg_out_opc_vi(s, OPC_VMV_V_I, dst, TCG_REG_V0, arg, true);
-+        return;
-+    }
-+    tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, arg);
-+    tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
-+}
-+
- static const struct {
-     RISCVInsn op;
-     bool swap;
-@@ -2234,6 +2282,9 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-     a2 = args[2];
- 
-     switch (opc) {
-+    case INDEX_op_dupm_vec:
-+        tcg_out_dupm_vec(s, type, vece, a0, a1, a2);
-+        break;
-     case INDEX_op_ld_vec:
-         tcg_out_ld(s, type, a0, a1, a2);
-         break;
-@@ -2405,6 +2456,8 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
- 
-     case INDEX_op_st_vec:
-         return C_O0_I2(v, r);
-+    case INDEX_op_dup_vec:
-+    case INDEX_op_dupm_vec:
-     case INDEX_op_ld_vec:
-         return C_O1_I1(v, r);
-     default:
+diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
+index 12a7a37aaa..acb8dfdf16 100644
+--- a/tcg/riscv/tcg-target.h
++++ b/tcg/riscv/tcg-target.h
+@@ -151,7 +151,7 @@ typedef enum {
+ #define TCG_TARGET_HAS_nand_vec         0
+ #define TCG_TARGET_HAS_nor_vec          0
+ #define TCG_TARGET_HAS_eqv_vec          0
+-#define TCG_TARGET_HAS_not_vec          0
++#define TCG_TARGET_HAS_not_vec          1
+ #define TCG_TARGET_HAS_neg_vec          0
+ #define TCG_TARGET_HAS_abs_vec          0
+ #define TCG_TARGET_HAS_roti_vec         0
 -- 
 2.43.0
 
