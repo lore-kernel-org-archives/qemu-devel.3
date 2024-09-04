@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75217CD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4DEBCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnUn-00019u-Do; Wed, 04 Sep 2024 06:44:17 -0400
+	id 1slneD-0007uE-Jp; Wed, 04 Sep 2024 06:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1slnUf-0000hu-Bc
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:44:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1slnUb-0001pp-IA
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:44:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446644;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cDC0etd2SKJruRA72QwNhJqmvZ7shApjs+188SV92Gg=;
- b=WCeGo9bcXj/4Q681n3K/pCeIIxXgH56iGeWsLW+TqypNYYldH1jzbRVZPFECsSr2AKYfVq
- kuXt0F9w1gJQ9Ena36tr6d6/1bK+yRQzwg9iEZDEZ5YUHCMyj1tzO5kPSJ1qGZsFSCB24j
- g6k+xGH+waGN6klu3ph83j/VpGivpwg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-xuwXhF_FPBuVzeZtzKrsFg-1; Wed,
- 04 Sep 2024 06:37:50 -0400
-X-MC-Unique: xuwXhF_FPBuVzeZtzKrsFg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 906AD19560B5; Wed,  4 Sep 2024 10:37:48 +0000 (UTC)
-Received: from rh-jmarcin.redhat.com (unknown [10.45.225.176])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AF6B5195605A; Wed,  4 Sep 2024 10:37:46 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 1/4] reset: Use ResetType for qemu_devices_reset() and
- MachineClass::reset()
-Date: Wed,  4 Sep 2024 12:37:12 +0200
-Message-ID: <20240904103722.946194-2-jmarcin@redhat.com>
-In-Reply-To: <20240904103722.946194-1-jmarcin@redhat.com>
-References: <20240904103722.946194-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slneC-0007qW-BK
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:54:00 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1slne9-0005gF-V0
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:54:00 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42bb9d719d4so48873495e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 03:53:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725447236; x=1726052036; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LkE1rk4UOMoA8ya2rTLplkoALpKQ4Ru80s1qUNLPK9U=;
+ b=Oenk9QLopNWGRfYrkZVxyNUn/KdidvTte0/6Kw5TJXII/M8La6oglHD3bb3CSUqjyt
+ ExamQJ8CE8JnpOPV4yDtvqPmy6WOpXfx8GvMl6+VSXK3mWLEJha/VUGrY14JBazaTII5
+ SiMfRjiG4ACym/61nNDPZIjqUDl8r+eo61QSCcb/ogrOgA2BNa2UjyZvJf6pQOnVJzqW
+ ogfn+ZlgEqVqhbGQfedgXfHPxXd+OEV4c3b/JNmmtvYNVOW/aRO3gLZBU7fxXTMIZv5b
+ LHTSrRsQFD5GukdnwlT7BR51LacAWfv6TkUIaLjXbZCqGsSjbiCKzp6pF0IkF4f4AUbo
+ bsyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725447236; x=1726052036;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LkE1rk4UOMoA8ya2rTLplkoALpKQ4Ru80s1qUNLPK9U=;
+ b=rv6/nE3d5R/mxdmQPRvZPiC7elrunRNVrj7O2ocE+6Ip/rxHxjUVXfY3jnn4nFiHES
+ eARMmP3bhSwpkBkicljb7PBBnrFSwv0fY2QsiJJGQrOwGvZI+1lqOE+IHPNHJCDWQVO1
+ tZ1KkbxsQzGcCQT9S3LPdtDs99+pCeA+MQbI4P6s+hhHTPH3xmCUQzbNargkGYn4beIk
+ E+nELHACWhotvp+Yz33UiloSyNsG5vZ+IHUbB6ulXR164UPJO7LgQmgOKZ2VlIoUuUbt
+ hlstRsKMqgJ+Q1/MsZHgidYdGrciVMdmiPD4ylQTxY039tLq/jtF8KXdtlQhKLhE7Rbu
+ uOaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHnX5u7rcS35MZxY3sP/dZSplRn0vPOFTO3PuTQObsCIJV/RyD960IMwg08rejduyND/Q1bycnkzll@nongnu.org
+X-Gm-Message-State: AOJu0YzI3Ajoa4oTBuByFHR0oMLBEXmQzRCh8VeNsKNjSAhyQBGdngvi
+ CdJtWa778BdoJ73F4WoWmD+elx/UQJk2zXtvOrOHIDmXa+3xRsjTmCCrfV1aAaE=
+X-Google-Smtp-Source: AGHT+IHBGHLd7ULZeQJCpSgOOzBzud5WHYmhcXYp/NNDgyCrtYC36dfLNZF1ocCNqQhzD9fvUKt8pg==
+X-Received: by 2002:a05:6000:1865:b0:371:79f2:3d5c with SMTP id
+ ffacd0b85a97d-374eccc222cmr5838705f8f.31.1725447235779; 
+ Wed, 04 Sep 2024 03:53:55 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-374c15705easm11215289f8f.33.2024.09.04.03.53.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 03:53:54 -0700 (PDT)
+Message-ID: <e828e000-664e-48af-ae33-6e323e28d167@linaro.org>
+Date: Wed, 4 Sep 2024 12:53:53 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] escc: convert Sun mouse to use QemuInputHandler
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, chauser@pullman.com,
+ marcandre.lureau@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
+References: <20240904102301.175706-1-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240904102301.175706-1-mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,347 +95,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, both qemu_devices_reset() and MachineClass::reset() use
-ShutdownCause for the reason of the reset. However, the Resettable
-interface uses ResetState, so ShutdownCause needs to be translated to
-ResetType somewhere. Translating it qemu_devices_reset() makes adding
-new reset types harder, as they cannot always be matched to a single
-ShutdownCause here, and devices may need to check the ResetType to
-determine what to reset and if to reset at all.
+On 4/9/24 12:23, Mark Cave-Ayland wrote:
+> Update the Sun mouse implementation to use QemuInputHandler instead of the
+> legacy qemu_add_mouse_event_handler() function.
+> 
+> Note that this conversion adds extra sunmouse_* members to ESCCChannelState
+> but they are not added to the migration stream (similar to the Sun keyboard
+> members). If this were desired in future, the Sun devices should be split
+> into separate devices and added to the migration stream there instead.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-This patch moves this translation up in the call stack to
-qemu_system_reset() and updates all MachineClass children to use the
-ResetType instead.
+On v3 there is also an implicit:
+Tested-by: Carl Hauser <chauser@pullman.com>
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/aspeed.c            |  4 ++--
- hw/arm/mps2-tz.c           |  4 ++--
- hw/core/reset.c            |  5 +----
- hw/hppa/machine.c          |  4 ++--
- hw/i386/microvm.c          |  4 ++--
- hw/i386/pc.c               |  6 +++---
- hw/ppc/pegasos2.c          |  4 ++--
- hw/ppc/pnv.c               |  4 ++--
- hw/ppc/spapr.c             |  6 +++---
- hw/s390x/s390-virtio-ccw.c |  4 ++--
- include/hw/boards.h        |  3 ++-
- include/sysemu/reset.h     |  5 +++--
- system/runstate.c          | 13 +++++++++++--
- 13 files changed, 37 insertions(+), 29 deletions(-)
-
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index fd5603f7aa..cbca7685da 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1529,12 +1529,12 @@ static void aspeed_machine_bletchley_class_init(ObjectClass *oc, void *data)
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
--static void fby35_reset(MachineState *state, ShutdownCause reason)
-+static void fby35_reset(MachineState *state, ResetType type)
- {
-     AspeedMachineState *bmc = ASPEED_MACHINE(state);
-     AspeedGPIOState *gpio = &bmc->soc->gpio;
- 
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
- 
-     /* Board ID: 7 (Class-1, 4 slots) */
-     object_property_set_bool(OBJECT(gpio), "gpioV4", true, &error_fatal);
-diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
-index aec57c0d68..8edf57a66d 100644
---- a/hw/arm/mps2-tz.c
-+++ b/hw/arm/mps2-tz.c
-@@ -1254,7 +1254,7 @@ static void mps2_set_remap(Object *obj, const char *value, Error **errp)
-     }
- }
- 
--static void mps2_machine_reset(MachineState *machine, ShutdownCause reason)
-+static void mps2_machine_reset(MachineState *machine, ResetType type)
- {
-     MPS2TZMachineState *mms = MPS2TZ_MACHINE(machine);
- 
-@@ -1264,7 +1264,7 @@ static void mps2_machine_reset(MachineState *machine, ShutdownCause reason)
-      * reset see the correct mapping.
-      */
-     remap_memory(mms, mms->remap);
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
- }
- 
- static void mps2tz_class_init(ObjectClass *oc, void *data)
-diff --git a/hw/core/reset.c b/hw/core/reset.c
-index 58dfc8db3d..14a2639fbf 100644
---- a/hw/core/reset.c
-+++ b/hw/core/reset.c
-@@ -170,11 +170,8 @@ void qemu_unregister_resettable(Object *obj)
-     resettable_container_remove(get_root_reset_container(), obj);
- }
- 
--void qemu_devices_reset(ShutdownCause reason)
-+void qemu_devices_reset(ResetType type)
- {
--    ResetType type = (reason == SHUTDOWN_CAUSE_SNAPSHOT_LOAD) ?
--        RESET_TYPE_SNAPSHOT_LOAD : RESET_TYPE_COLD;
--
-     /* Reset the simulation */
-     resettable_reset(OBJECT(get_root_reset_container()), type);
- }
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 5d0a8739de..8259fe2e38 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -642,12 +642,12 @@ static void machine_HP_C3700_init(MachineState *machine)
-     machine_HP_common_init_tail(machine, pci_bus, translate);
- }
- 
--static void hppa_machine_reset(MachineState *ms, ShutdownCause reason)
-+static void hppa_machine_reset(MachineState *ms, ResetType type)
- {
-     unsigned int smp_cpus = ms->smp.cpus;
-     int i;
- 
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
- 
-     /* Start all CPUs at the firmware entry point.
-      *  Monarch CPU will initialize firmware, secondary CPUs
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 40edcee7af..8ae4dff7f2 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -462,7 +462,7 @@ static void microvm_machine_state_init(MachineState *machine)
-     microvm_devices_init(mms);
- }
- 
--static void microvm_machine_reset(MachineState *machine, ShutdownCause reason)
-+static void microvm_machine_reset(MachineState *machine, ResetType type)
- {
-     MicrovmMachineState *mms = MICROVM_MACHINE(machine);
-     CPUState *cs;
-@@ -475,7 +475,7 @@ static void microvm_machine_reset(MachineState *machine, ShutdownCause reason)
-         mms->kernel_cmdline_fixed = true;
-     }
- 
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
- 
-     CPU_FOREACH(cs) {
-         cpu = X86_CPU(cs);
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 7779c88a91..d5cf2309c9 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1706,12 +1706,12 @@ static void pc_machine_initfn(Object *obj)
-     qemu_add_machine_init_done_notifier(&pcms->machine_done);
- }
- 
--static void pc_machine_reset(MachineState *machine, ShutdownCause reason)
-+static void pc_machine_reset(MachineState *machine, ResetType type)
- {
-     CPUState *cs;
-     X86CPU *cpu;
- 
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
- 
-     /* Reset APIC after devices have been reset to cancel
-      * any changes that qemu_devices_reset() might have done.
-@@ -1726,7 +1726,7 @@ static void pc_machine_reset(MachineState *machine, ShutdownCause reason)
- static void pc_machine_wakeup(MachineState *machine)
- {
-     cpu_synchronize_all_states();
--    pc_machine_reset(machine, SHUTDOWN_CAUSE_NONE);
-+    pc_machine_reset(machine, RESET_TYPE_COLD);
-     cpu_synchronize_all_post_reset();
- }
- 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 9b0a6b70ab..8ff4a00c34 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -291,14 +291,14 @@ static void pegasos2_superio_write(uint8_t addr, uint8_t val)
-     cpu_physical_memory_write(PCI1_IO_BASE + 0x3f1, &val, 1);
- }
- 
--static void pegasos2_machine_reset(MachineState *machine, ShutdownCause reason)
-+static void pegasos2_machine_reset(MachineState *machine, ResetType type)
- {
-     Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
-     void *fdt;
-     uint64_t d[2];
-     int sz;
- 
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
-     if (!pm->vof) {
-         return; /* Firmware should set up machine so nothing to do */
-     }
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 3526852685..988fd55d88 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -709,13 +709,13 @@ static void pnv_powerdown_notify(Notifier *n, void *opaque)
-     }
- }
- 
--static void pnv_reset(MachineState *machine, ShutdownCause reason)
-+static void pnv_reset(MachineState *machine, ResetType type)
- {
-     PnvMachineState *pnv = PNV_MACHINE(machine);
-     IPMIBmc *bmc;
-     void *fdt;
- 
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
- 
-     /*
-      * The machine should provide by default an internal BMC simulator.
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 370d7c35d3..95dbb91ba0 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1725,7 +1725,7 @@ void spapr_check_mmu_mode(bool guest_radix)
-     }
- }
- 
--static void spapr_machine_reset(MachineState *machine, ShutdownCause reason)
-+static void spapr_machine_reset(MachineState *machine, ResetType type)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(machine);
-     PowerPCCPU *first_ppc_cpu;
-@@ -1733,7 +1733,7 @@ static void spapr_machine_reset(MachineState *machine, ShutdownCause reason)
-     void *fdt;
-     int rc;
- 
--    if (reason != SHUTDOWN_CAUSE_SNAPSHOT_LOAD) {
-+    if (type != RESET_TYPE_SNAPSHOT_LOAD) {
-         /*
-          * Record-replay snapshot load must not consume random, this was
-          * already replayed from initial machine reset.
-@@ -1762,7 +1762,7 @@ static void spapr_machine_reset(MachineState *machine, ShutdownCause reason)
-         spapr_setup_hpt(spapr);
-     }
- 
--    qemu_devices_reset(reason);
-+    qemu_devices_reset(type);
- 
-     spapr_ovec_cleanup(spapr->ov5_cas);
-     spapr->ov5_cas = spapr_ovec_new();
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index c483ff8064..3471abb58b 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -440,7 +440,7 @@ static void s390_pv_prepare_reset(S390CcwMachineState *ms)
-     s390_pv_prep_reset();
- }
- 
--static void s390_machine_reset(MachineState *machine, ShutdownCause reason)
-+static void s390_machine_reset(MachineState *machine, ResetType type)
- {
-     S390CcwMachineState *ms = S390_CCW_MACHINE(machine);
-     enum s390_reset reset_type;
-@@ -472,7 +472,7 @@ static void s390_machine_reset(MachineState *machine, ShutdownCause reason)
-          * Device reset includes CPU clear resets so this has to be
-          * done AFTER the unprotect call above.
-          */
--        qemu_devices_reset(reason);
-+        qemu_devices_reset(type);
-         s390_crypto_reset();
- 
-         /* configure and start the ipl CPU only */
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 48ff6d8b93..3e8a6986cd 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -10,6 +10,7 @@
- #include "qemu/module.h"
- #include "qom/object.h"
- #include "hw/core/cpu.h"
-+#include "hw/resettable.h"
- 
- #define TYPE_MACHINE_SUFFIX "-machine"
- 
-@@ -253,7 +254,7 @@ struct MachineClass {
-     const char *deprecation_reason;
- 
-     void (*init)(MachineState *state);
--    void (*reset)(MachineState *state, ShutdownCause reason);
-+    void (*reset)(MachineState *state, ResetType type);
-     void (*wakeup)(MachineState *state);
-     int (*kvm_type)(MachineState *machine, const char *arg);
- 
-diff --git a/include/sysemu/reset.h b/include/sysemu/reset.h
-index ae436044a9..0e297c0e02 100644
---- a/include/sysemu/reset.h
-+++ b/include/sysemu/reset.h
-@@ -27,6 +27,7 @@
- #ifndef QEMU_SYSEMU_RESET_H
- #define QEMU_SYSEMU_RESET_H
- 
-+#include "hw/resettable.h"
- #include "qapi/qapi-events-run-state.h"
- 
- typedef void QEMUResetHandler(void *opaque);
-@@ -110,7 +111,7 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque);
- 
- /**
-  * qemu_devices_reset: Perform a complete system reset
-- * @reason: reason for the reset
-+ * @reason: type of the reset
-  *
-  * This function performs the low-level work needed to do a complete reset
-  * of the system (calling all the callbacks registered with
-@@ -121,6 +122,6 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque);
-  * If you want to trigger a system reset from, for instance, a device
-  * model, don't use this function. Use qemu_system_reset_request().
-  */
--void qemu_devices_reset(ShutdownCause reason);
-+void qemu_devices_reset(ResetType type);
- 
- #endif
-diff --git a/system/runstate.c b/system/runstate.c
-index a0e2a5fd22..c2c9afa905 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -32,6 +32,7 @@
- #include "exec/cpu-common.h"
- #include "gdbstub/syscalls.h"
- #include "hw/boards.h"
-+#include "hw/resettable.h"
- #include "migration/misc.h"
- #include "migration/postcopy-ram.h"
- #include "monitor/monitor.h"
-@@ -507,15 +508,23 @@ static int qemu_debug_requested(void)
- void qemu_system_reset(ShutdownCause reason)
- {
-     MachineClass *mc;
-+    ResetType type;
- 
-     mc = current_machine ? MACHINE_GET_CLASS(current_machine) : NULL;
- 
-     cpu_synchronize_all_states();
- 
-+    switch (reason) {
-+    case SHUTDOWN_CAUSE_SNAPSHOT_LOAD:
-+        type = RESET_TYPE_SNAPSHOT_LOAD;
-+        break;
-+    default:
-+        type = RESET_TYPE_COLD;
-+    }
-     if (mc && mc->reset) {
--        mc->reset(current_machine, reason);
-+        mc->reset(current_machine, type);
-     } else {
--        qemu_devices_reset(reason);
-+        qemu_devices_reset(type);
-     }
-     switch (reason) {
-     case SHUTDOWN_CAUSE_NONE:
--- 
-2.46.0
+> ---
+>   hw/char/escc.c         | 88 +++++++++++++++++++++++++++++++-----------
+>   include/hw/char/escc.h |  3 ++
+>   2 files changed, 69 insertions(+), 22 deletions(-)
+> 
+> v3:
+> - Subtract the deltas in sunmouse_sync() instead of resetting them to zero
+>    which provides better tracking if the mouse movement exceeds the 8-bit
+>    delta limit of the MSC protocol
+> 
+> - Add R-B tag from Richard
+> 
+> v2:
+> - Only allow left, middle and right button events (use bit 7 which is always
+>    set in the first byte to indicate a valid event)
+> 
+> - Remove zero entries from the bmap table as static entries should be
+>    zero anyway
+> 
+> 
+> diff --git a/hw/char/escc.c b/hw/char/escc.c
+> index d450d70eda..245a7b19d3 100644
+> --- a/hw/char/escc.c
+> +++ b/hw/char/escc.c
+> @@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
+>       s->rxint = s->txint = 0;
+>       s->rxint_under_svc = s->txint_under_svc = 0;
+>       s->e0_mode = s->led_mode = s->caps_lock_mode = s->num_lock_mode = 0;
+> +    s->sunmouse_dx = s->sunmouse_dy = s->sunmouse_buttons = 0;
+>       clear_queue(s);
+>   }
+>   
+> @@ -952,53 +953,96 @@ static void handle_kbd_command(ESCCChannelState *s, int val)
+>       }
+>   }
+>   
+> -static void sunmouse_event(void *opaque,
+> -                               int dx, int dy, int dz, int buttons_state)
+> +static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
+> +                                  InputEvent *evt)
+>   {
+> -    ESCCChannelState *s = opaque;
+> -    int ch;
+> +    ESCCChannelState *s = (ESCCChannelState *)dev;
+> +    InputMoveEvent *move;
+> +    InputBtnEvent *btn;
+> +    static const int bmap[INPUT_BUTTON__MAX] = {
+> +        [INPUT_BUTTON_LEFT]   = 0x4,
+> +        [INPUT_BUTTON_MIDDLE] = 0x2,
+> +        [INPUT_BUTTON_RIGHT]  = 0x1,
+> +    };
+> +
+> +    switch (evt->type) {
+> +    case INPUT_EVENT_KIND_REL:
+> +        move = evt->u.rel.data;
+> +        if (move->axis == INPUT_AXIS_X) {
+> +            s->sunmouse_dx += move->value;
+> +        } else if (move->axis == INPUT_AXIS_Y) {
+> +            s->sunmouse_dy -= move->value;
+> +        }
+> +        break;
+>   
+> -    trace_escc_sunmouse_event(dx, dy, buttons_state);
+> -    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
+> +    case INPUT_EVENT_KIND_BTN:
+> +        btn = evt->u.btn.data;
+> +        if (bmap[btn->button]) {
+> +            if (btn->down) {
+> +                s->sunmouse_buttons |= bmap[btn->button];
+> +            } else {
+> +                s->sunmouse_buttons &= ~bmap[btn->button];
+> +            }
+> +            /* Indicate we have a supported button event */
+> +            s->sunmouse_buttons |= 0x80;
+> +        }
+> +        break;
+>   
+> -    if (buttons_state & MOUSE_EVENT_LBUTTON) {
+> -        ch ^= 0x4;
+> -    }
+> -    if (buttons_state & MOUSE_EVENT_MBUTTON) {
+> -        ch ^= 0x2;
+> +    default:
+> +        /* keep gcc happy */
+> +        break;
+>       }
+> -    if (buttons_state & MOUSE_EVENT_RBUTTON) {
+> -        ch ^= 0x1;
+> +}
+> +
+> +static void sunmouse_sync(DeviceState *dev)
+> +{
+> +    ESCCChannelState *s = (ESCCChannelState *)dev;
+> +    int ch;
+> +
+> +    if (s->sunmouse_dx == 0 && s->sunmouse_dy == 0 &&
+> +        (s->sunmouse_buttons & 0x80) == 0) {
+> +            /* Nothing to do after button event filter */
+> +            return;
+>       }
+>   
+> +    /* Clear our button event flag */
+> +    s->sunmouse_buttons &= ~0x80;
+> +    trace_escc_sunmouse_event(s->sunmouse_dx, s->sunmouse_dy,
+> +                              s->sunmouse_buttons);
+> +    ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
+> +    ch ^= s->sunmouse_buttons;
+>       put_queue(s, ch);
+>   
+> -    ch = dx;
+> -
+> +    ch = s->sunmouse_dx;
+>       if (ch > 127) {
+>           ch = 127;
+>       } else if (ch < -127) {
+>           ch = -127;
+>       }
+> -
+>       put_queue(s, ch & 0xff);
+> +    s->sunmouse_dx -= ch;
+>   
+> -    ch = -dy;
+> -
+> +    ch = s->sunmouse_dy;
+>       if (ch > 127) {
+>           ch = 127;
+>       } else if (ch < -127) {
+>           ch = -127;
+>       }
+> -
+>       put_queue(s, ch & 0xff);
+> +    s->sunmouse_dy -= ch;
+>   
+>       /* MSC protocol specifies two extra motion bytes */
+> -
+>       put_queue(s, 0);
+>       put_queue(s, 0);
+>   }
+>   
+> +static const QemuInputHandler sunmouse_handler = {
+> +    .name  = "QEMU Sun Mouse",
+> +    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
+> +    .event = sunmouse_handle_event,
+> +    .sync  = sunmouse_sync,
+> +};
+> +
+>   static void escc_init1(Object *obj)
+>   {
+>       ESCCState *s = ESCC(obj);
+> @@ -1036,8 +1080,8 @@ static void escc_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       if (s->chn[0].type == escc_mouse) {
+> -        qemu_add_mouse_event_handler(sunmouse_event, &s->chn[0], 0,
+> -                                     "QEMU Sun Mouse");
+> +        s->chn[0].hs = qemu_input_handler_register((DeviceState *)(&s->chn[0]),
+> +                                                   &sunmouse_handler);
+>       }
+>       if (s->chn[1].type == escc_kbd) {
+>           s->chn[1].hs = qemu_input_handler_register((DeviceState *)(&s->chn[1]),
+> diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
+> index 5669a5b811..8c4c6a7730 100644
+> --- a/include/hw/char/escc.h
+> +++ b/include/hw/char/escc.h
+> @@ -46,6 +46,9 @@ typedef struct ESCCChannelState {
+>       uint8_t rx, tx;
+>       QemuInputHandlerState *hs;
+>       char *sunkbd_layout;
+> +    int sunmouse_dx;
+> +    int sunmouse_dy;
+> +    int sunmouse_buttons;
+>   } ESCCChannelState;
+>   
+>   struct ESCCState {
 
 
