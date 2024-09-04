@@ -4,134 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A66CBCD3431
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 08:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4469CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sllmp-0005QZ-7f; Wed, 04 Sep 2024 04:54:50 -0400
+	id 1sllsY-0002QL-II; Wed, 04 Sep 2024 05:00:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sllmm-0005Os-I0
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 04:54:45 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sllsS-0002P1-ND
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:00:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sllmj-0003JY-Fa
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 04:54:43 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sllsQ-0005SP-IY
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:00:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725440079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1725440432;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Ezlc8vSu3I+vO523cpu1dgSC/pfyb/IcH/8lA1aUKeA=;
- b=FIX3+DDTFtB5sigq7WiSDdruq4HUb0c5Aw9FxF/LBIrzg9gajHuo1H8VwVdyJW0X8Oc8wk
- OehR0FeIJIhTE4GTiISvStyP+IrH3YdzTc3wnBYKCLYNbLdyViAngVjCIB5eh9Ss27U8q6
- URl50dYESa7fkmu5kyMzjXCDTbHBgiA=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-csPjl19tPQ-RzchG2VvGHQ-1; Wed, 04 Sep 2024 04:54:36 -0400
-X-MC-Unique: csPjl19tPQ-RzchG2VvGHQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a8698664af8so78969166b.0
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 01:54:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725440075; x=1726044875;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ezlc8vSu3I+vO523cpu1dgSC/pfyb/IcH/8lA1aUKeA=;
- b=Xv26hv+aArE3UCy8+IxVRHbCdbQHmEehDTOhCcVW/XiBGIBN9ToUP662o+IO8u9CPU
- X0OVjE2B569v6P2HI/Ct1KbPQtnMZBp3zQudG9tYUjXUZhfTEk+90HGo5/RJumoIh9wk
- weF0bjstyoreJl/10AUYbqvx7EwXw0sh4qs2FWHFtDqEVSFinYpNjmn0jNG1k2YQzlf2
- FyTRMrL+clcFFJrb5C/dmzx83bhs4eouGRKwO/MVn31P00R79ONKaDmCAJVVe80quHTZ
- v49U2S2cUT0p0uK5qBZhTwf4lPdIrBOJtbmfcJq0a0qrBETxOhScuDdMkTy/9A3vo8I8
- Od+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXx8XKkt/9OMYdXmLNHh4LEe8V2rQclZK4vxpT4G6b5zSKeEnnjYft6zdvLr/o78/eugDeDOo/9clQe@nongnu.org
-X-Gm-Message-State: AOJu0Yz4kic2GKNZ6h+Avwj8iJbaK0HGBJ4z5gJ76L5ryxAk8KzNNixC
- FdmnR21wns1ex8UELY0YJAgZnC/q3rWjn0vWMWrR6aLFixla2HdvrKNz5lBtFsStniHhRlRL+xO
- hUWbez6C3h2k7PL6Lg7CYMei4BV4zhQbK8jFKJSUxolhTNfzErfh8
-X-Received: by 2002:a17:907:2da2:b0:a83:849e:ea80 with SMTP id
- a640c23a62f3a-a8a43209d7amr130369566b.32.1725440075192; 
- Wed, 04 Sep 2024 01:54:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHh1biqwwpK6KvoKU67N3a6j/8ZI9v6jIq/pYVlfl8/7Q6XQSNF23DSpQhr2eSnlIJQBXksWg==
-X-Received: by 2002:a17:907:2da2:b0:a83:849e:ea80 with SMTP id
- a640c23a62f3a-a8a43209d7amr130367166b.32.1725440074599; 
- Wed, 04 Sep 2024 01:54:34 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
- [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8989213577sm785283566b.188.2024.09.04.01.54.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 01:54:34 -0700 (PDT)
-Message-ID: <d8eea4b3-e84c-4844-bae2-4a52ac1d3e7d@redhat.com>
-Date: Wed, 4 Sep 2024 10:54:32 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=nrq/5iF4+48nyfFkgVhnvKIV3GPVvD28oJEr6bNukhY=;
+ b=RsFTmPXY6hmbauWh4RZvh5Jl7YFdTERrIh+Lc/uuEsQSQRm28orsy+EAxzdu4KLD8IANGo
+ bvHtgkZShz/JPgodnnHLDTLOhokm/jtnJbiLryf5BPrYa4/cKG0V2DrF0HY4k8saz8kt89
+ WIgEIiR/KSWwn/fJDQJEs10kT9Csgrk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-SeQOiDo2N5-ZZmd52jGN_g-1; Wed,
+ 04 Sep 2024 05:00:28 -0400
+X-MC-Unique: SeQOiDo2N5-ZZmd52jGN_g-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2324F196CDF5; Wed,  4 Sep 2024 09:00:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D120A19560AA; Wed,  4 Sep 2024 09:00:24 +0000 (UTC)
+Date: Wed, 4 Sep 2024 10:00:19 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] tests/unit: always build the pbkdf crypto unit test
+Message-ID: <Ztgho-3qtdT0mSyT@redhat.com>
+References: <20240830110533.2544070-1-berrange@redhat.com>
+ <20240830110533.2544070-3-berrange@redhat.com>
+ <2d0ade1c-42db-49ce-85b1-9c73a34ef015@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 02/53] hw/input: Drop ADS7846 device
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <20240903160751.4100218-3-peter.maydell@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240903160751.4100218-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2d0ade1c-42db-49ce-85b1-9c73a34ef015@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,24 +86,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2024 18.07, Peter Maydell wrote:
-> The ADS7846 touchscreen controller device was used only by
-> the XScale-based PDA machine types. Now that they have been
-> removed, this device is not used in the tree and can be
-> deleted.
+On Mon, Sep 02, 2024 at 09:45:04PM +0200, Philippe Mathieu-Daudé wrote:
+> On 30/8/24 13:05, Daniel P. Berrangé wrote:
+> > The meson rules were excluding the pbkdf crypto test when gnutls was the
+> > crypto backend. It was then excluded again in #if statements in the test
+> > file.
+> > 
+> > Rather than update these conditions, remove them all, and use the result
+> > of the qcrypto_pbkdf_supports() function to determine whether to skip
+> > test registration.
+> > 
+> > Also add CONFIG_DARWIN to the remaining condition, since we have a way
+> > to measure CPU time on this platform since commit bf98afc75efedf1.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   tests/unit/meson.build         | 4 +---
+> >   tests/unit/test-crypto-pbkdf.c | 9 ++++++---
+> >   2 files changed, 7 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+> > index 490ab8182d..972d792883 100644
+> > --- a/tests/unit/meson.build
+> > +++ b/tests/unit/meson.build
+> > @@ -121,9 +121,7 @@ if have_block
+> >     if config_host_data.get('CONFIG_REPLICATION')
+> >       tests += {'test-replication': [testblock]}
+> >     endif
+> > -  if nettle.found() or gcrypt.found()
+> > -    tests += {'test-crypto-pbkdf': [io]}
+> > -  endif
+> > +  tests += {'test-crypto-pbkdf': [io]}
+> >   endif
+> >   if have_system
+> > diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkdf.c
+> > index 43c417f6b4..034bb02422 100644
+> > --- a/tests/unit/test-crypto-pbkdf.c
+> > +++ b/tests/unit/test-crypto-pbkdf.c
+> > @@ -25,8 +25,7 @@
+> >   #include <sys/resource.h>
+> >   #endif
+> > -#if ((defined(CONFIG_NETTLE) || defined(CONFIG_GCRYPT)) && \
+> > -     (defined(_WIN32) || defined(RUSAGE_THREAD)))
+> > +#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   MAINTAINERS          |   1 -
->   hw/input/ads7846.c   | 186 -------------------------------------------
->   hw/input/Kconfig     |   3 -
->   hw/input/meson.build |   1 -
->   4 files changed, 191 deletions(-)
->   delete mode 100644 hw/input/ads7846.c
+> Add CONFIG_DARWIN in a subsequent commit?
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Yes, classic trap. If you have "Also ..." in a commit message then you've
+just told yourself it should have been a separate commit :-)
+
+> 
+> >   #include "crypto/pbkdf.h"
+> >   typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
+> > @@ -422,13 +421,17 @@ int main(int argc, char **argv)
+> >       g_assert(qcrypto_init(NULL) == 0);
+> >       for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
+> > +        if (!qcrypto_pbkdf2_supports(test_data[i].hash)) {
+> > +            continue;
+> > +        }
+> > +
+> >           if (!test_data[i].slow ||
+> >               g_test_slow()) {
+> >               g_test_add_data_func(test_data[i].path, &test_data[i], test_pbkdf);
+> >           }
+> >       }
+> > -    if (g_test_slow()) {
+> > +    if (g_test_slow() && qcrypto_pbkdf2_supports(QCRYPTO_HASH_ALG_SHA256)) {
+> >           g_test_add_func("/crypt0/pbkdf/timing", test_pbkdf_timing);
+> 
+> While here, rename test_pbkdf_timing -> test_pbkdf_sha256_timing?
+
+Will do
+
+> 
+> >       }
+> 
+> Anyway,
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
