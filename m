@@ -4,71 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41905CD4847
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B91CD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnQj-0001a7-77; Wed, 04 Sep 2024 06:40:05 -0400
+	id 1slnRN-00040Q-DU; Wed, 04 Sep 2024 06:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnQh-0001Se-38
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1slnRI-0003KN-8p; Wed, 04 Sep 2024 06:40:40 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnQf-0008Qq-Cj
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446400;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eA70RjLMwjhSKYetHU4kGXKYbe96+LASEXjZNrX3yCc=;
- b=CfyWn6K5jtX4oAbKlhz+f1D7h1S6LBwp8oZcjWBThCXjKB7O2qIu9DSmAPTWmPvWNEfTru
- jGwAKzitb/lbtE/y8G1UHthuzpPSwoIBcjnizxjjwaO31VF/j+E7SMdA8ndY1kHeLJyIbJ
- 3uiOQF61v0uhW2WSqzOWk/wBIDVVIR0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-Kn-XUo0FPtGiGjNrPOBWNg-1; Wed,
- 04 Sep 2024 06:39:57 -0400
-X-MC-Unique: Kn-XUo0FPtGiGjNrPOBWNg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 982071954B16; Wed,  4 Sep 2024 10:39:56 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 32192195605A; Wed,  4 Sep 2024 10:39:53 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 09/42] tests/functional: Set up logging
-Date: Wed,  4 Sep 2024 12:38:44 +0200
-Message-ID: <20240904103923.451847-10-thuth@redhat.com>
-In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
-References: <20240904103923.451847-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1slnRE-0000HO-4l; Wed, 04 Sep 2024 06:40:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=q5vrSqwIdUHVmeZ5blcGcrtyUoI6ExqoUNdJbrXQlrI=; b=EkjLcihPptEioJ8CFCEv04PCHF
+ 9mT9m1azkrSZ9Byfvv4+IBuC2G7ScUY3Kk+DD5SqSQWKhPZdEBWNP83d2JFu2IsIq7QroZYRAcL7R
+ kYWukpKLdwpRZ+LH3fBk2rJo+sk8uqZjzhRQCaPILvSbkgowc9mN4oEYXLOV9zAWeAp4C4ErducxM
+ 7NPkM0RbXrlm+glMig1Bh2uxQMgTZqIPOauJ2LzAyRCTWcN2OMmtisCHCYi8gDXjpvlIZ+XGPgtZR
+ gqcqoJlgu6z+sFihs/hS6PwLUXznDGNzmu0MVNbZvtjXdIJkTufvO22J87KGX5BWv+jpygOHa6bRE
+ S4sppV9lkmqL7SpciE5U4hsu7OBi7ORTEEDv6HiOrGGfgxZq6QHvQ/yJuP2Wb6SQH0Lku2OnmEgiK
+ IWOEoZhBo5H339om45sfLA+Dt5GSVzcIjdu573Zqf8dLpyn3Bea5dcYVWDFBdI0W9O5u6vYfz93FI
+ f1acM7ZvAded9OCx6Xg3A+KaJ1pquD6xEHGqKmxQbFE4CGmdr8yDbwsLorHVyBUkF7NOM+JmchqCB
+ BTjCw8v6uWLAsXi22u7PuFBR9Kt+MfZowdJA/B1/pZoOoPHAyoYhKkFaLwZ+0dQPXUbv4vOAaOcDW
+ s7ZEq7QwIPNGNj22nCc1kEkiwPIix73tJfZcyua5Q=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ (helo=cheesecake.fritz.box)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1slnQo-0002Ly-Tb; Wed, 04 Sep 2024 11:40:15 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org,
+	qemu-ppc@nongnu.org,
+	hsp.cat7@gmail.com
+Date: Wed,  4 Sep 2024 11:40:07 +0100
+Message-Id: <20240904104007.177239-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH] adb-mouse: convert to use QemuInputHandler
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,74 +75,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create log files for each test separately, one file that contains
-the basic logging and one that contains the console output.
+Update the ADB mouse implementation to use QemuInputHandler instead of the
+legacy qemu_add_mouse_event_handler() function.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240830133841.142644-10-thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- tests/functional/qemu_test/testcase.py | 27 +++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ hw/input/adb-mouse.c | 56 ++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 46 insertions(+), 10 deletions(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 6905675778..b2dd863c6e 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -31,7 +31,8 @@ class QemuBaseTest(unittest.TestCase):
-     arch = None
+diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
+index 144a0ccce7..7aa36caf2f 100644
+--- a/hw/input/adb-mouse.c
++++ b/hw/input/adb-mouse.c
+@@ -38,6 +38,7 @@ struct MouseState {
+     ADBDevice parent_obj;
+     /*< private >*/
  
-     workdir = None
--    log = logging.getLogger('qemu-test')
-+    log = None
-+    logdir = None
++    QemuInputHandlerState *hs;
+     int buttons_state, last_buttons_state;
+     int dx, dy, dz;
+ };
+@@ -51,17 +52,52 @@ struct ADBMouseClass {
+     DeviceRealize parent_realize;
+ };
  
-     def setUp(self, bin_prefix):
-         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
-@@ -41,6 +42,20 @@ def setUp(self, bin_prefix):
-                                     self.id())
-         os.makedirs(self.workdir, exist_ok=True)
- 
-+        self.logdir = self.workdir
-+        self.log = logging.getLogger('qemu-test')
-+        self.log.setLevel(logging.DEBUG)
-+        self._log_fh = logging.FileHandler(os.path.join(self.logdir,
-+                                                        'base.log'), mode='w')
-+        self._log_fh.setLevel(logging.DEBUG)
-+        fileFormatter = logging.Formatter(
-+            '%(asctime)s - %(levelname)s: %(message)s')
-+        self._log_fh.setFormatter(fileFormatter)
-+        self.log.addHandler(self._log_fh)
+-static void adb_mouse_event(void *opaque,
+-                            int dx1, int dy1, int dz1, int buttons_state)
++#define ADB_MOUSE_BUTTON_LEFT   0x01
++#define ADB_MOUSE_BUTTON_RIGHT  0x02
 +
-+    def tearDown(self):
-+        self.log.removeHandler(self._log_fh)
++static void adb_mouse_handle_event(DeviceState *dev, QemuConsole *src,
++                                   InputEvent *evt)
+ {
+-    MouseState *s = opaque;
++    MouseState *s = (MouseState *)dev;
++    InputMoveEvent *move;
++    InputBtnEvent *btn;
++    static const int bmap[INPUT_BUTTON__MAX] = {
++        [INPUT_BUTTON_LEFT]   = ADB_MOUSE_BUTTON_LEFT,
++        [INPUT_BUTTON_RIGHT]  = ADB_MOUSE_BUTTON_RIGHT,
++    };
 +
-     def main():
-         path = os.path.basename(sys.argv[0])[:-3]
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-@@ -60,6 +75,15 @@ def setUp(self):
- 
-         super().setUp('qemu-system-')
- 
-+        console_log = logging.getLogger('console')
-+        console_log.setLevel(logging.DEBUG)
-+        self._console_log_fh = logging.FileHandler(os.path.join(self.workdir,
-+                                                   'console.log'), mode='w')
-+        self._console_log_fh.setLevel(logging.DEBUG)
-+        fileFormatter = logging.Formatter('%(asctime)s: %(message)s')
-+        self._console_log_fh.setFormatter(fileFormatter)
-+        console_log.addHandler(self._console_log_fh)
++    switch (evt->type) {
++    case INPUT_EVENT_KIND_REL:
++        move = evt->u.rel.data;
++        if (move->axis == INPUT_AXIS_X) {
++            s->dx += move->value;
++        } else if (move->axis == INPUT_AXIS_Y) {
++            s->dy += move->value;
++        }
++        break;
 +
-     def set_machine(self, machinename):
-         # TODO: We should use QMP to get the list of available machines
-         if not self._machinehelp:
-@@ -150,4 +174,5 @@ def set_vm_arg(self, arg, value):
-     def tearDown(self):
-         for vm in self._vms.values():
-             vm.shutdown()
-+        logging.getLogger('console').removeHandler(self._console_log_fh)
-         super().tearDown()
++    case INPUT_EVENT_KIND_BTN:
++        btn = evt->u.btn.data;
++        if (bmap[btn->button]) {
++            if (btn->down) {
++                s->buttons_state |= bmap[btn->button];
++            } else {
++                s->buttons_state &= ~bmap[btn->button];
++            }
++        }
++        break;
+ 
+-    s->dx += dx1;
+-    s->dy += dy1;
+-    s->dz += dz1;
+-    s->buttons_state = buttons_state;
++    default:
++        /* keep gcc happy */
++        break;
++    }
+ }
+ 
++static const QemuInputHandler adb_mouse_handler = {
++    .name  = "QEMU ADB Mouse",
++    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
++    .event = adb_mouse_handle_event,
++};
+ 
+ static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+ {
+@@ -94,10 +130,10 @@ static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+     dx &= 0x7f;
+     dy &= 0x7f;
+ 
+-    if (!(s->buttons_state & MOUSE_EVENT_LBUTTON)) {
++    if (!(s->buttons_state & ADB_MOUSE_BUTTON_LEFT)) {
+         dy |= 0x80;
+     }
+-    if (!(s->buttons_state & MOUSE_EVENT_RBUTTON)) {
++    if (!(s->buttons_state & ADB_MOUSE_BUTTON_RIGHT)) {
+         dx |= 0x80;
+     }
+ 
+@@ -236,7 +272,7 @@ static void adb_mouse_realizefn(DeviceState *dev, Error **errp)
+ 
+     amc->parent_realize(dev, errp);
+ 
+-    qemu_add_mouse_event_handler(adb_mouse_event, s, 0, "QEMU ADB Mouse");
++    s->hs = qemu_input_handler_register((DeviceState *)s, &adb_mouse_handler);
+ }
+ 
+ static void adb_mouse_initfn(Object *obj)
 -- 
-2.46.0
+2.39.2
 
 
