@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C6B2CD4F2E
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 20:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1876CCD4F30
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 20:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slwnc-0002Eo-TQ; Wed, 04 Sep 2024 16:40:21 -0400
+	id 1slwqh-00085S-Iw; Wed, 04 Sep 2024 16:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwna-00026V-MO
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:40:18 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwqg-00084h-9z
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:43:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwnZ-0004QB-BH
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:40:18 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1slwqe-00054w-QJ
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 16:43:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725482416;
+ s=mimecast20190719; t=1725482607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dzDIHu0wkHeoB8OBG+WbhZwJgpWc2N0N1XR9e4HOwsQ=;
- b=dpeAzwD4UQh2K7SioJDTWd6wjlTl9bsHPvFagZlkBgBfo6h1O6oocgaa5b6zZaeBi6OUML
- 0uwriv+6Lw2XJ0aQb6WoiMeUMl0LkbQKQw3Zu/TXkVkyFQRZBOd3RAUkkUq70qewsDvmEH
- qE1z9zOTMWouXxWvfFu57PsZZrGI5yE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XJZL0PH2QDX2pWVCs6gkxUbnscu7Og9gMCqDBBtI/EU=;
+ b=CyJT/V9DwQ4Lf3ufyerHZA3qKKizMWZDDwWYhEy+VSKS1v7pNU8bOnoMzayv4AgvFWx7Yj
+ GANTebqSRCrm0fAJ6eDGKsdvRwdM9WD271FKJ0bgCvrDrNrA97L2E3ekARfJcHZZujUSri
+ nO06+7YRGntSMiP0kYgbVEt18sNxoWw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-546-5lhkM8OAOnq7PKpPHLgA_g-1; Wed, 04 Sep 2024 16:40:14 -0400
-X-MC-Unique: 5lhkM8OAOnq7PKpPHLgA_g-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42bbff6a0aeso47736595e9.3
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 13:40:14 -0700 (PDT)
+ us-mta-100-yNlgNcRLMUes1_b1n1YcyQ-1; Wed, 04 Sep 2024 16:43:26 -0400
+X-MC-Unique: yNlgNcRLMUes1_b1n1YcyQ-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-428ea5b1479so14077595e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 13:43:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725482414; x=1726087214;
+ d=1e100.net; s=20230601; t=1725482605; x=1726087405;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=dzDIHu0wkHeoB8OBG+WbhZwJgpWc2N0N1XR9e4HOwsQ=;
- b=UzzkE3FVS5eN6tFyYBIRUUYkA2KZIaDHv2eKp8+leexBYAeD1nTeMPzg5+ZK5EpXje
- bA31sHk7oslq0P5o9QfPifFiPQsocmcVZuZbNiZV5cu1BpgGzvOGiHTx5BPd4nf/Ojx3
- 4RGyeYP4VaT7bd5fk4rzb06CwvKcfcRhKLSl6Cmtn7l4JoAbnwcoQwOfd+TyQ8F4kPeh
- pbuI2eNWW9G5DvuN4D3v4byWwotsDAWKFj8I8eE/TMfyMT031t6S2hGR08FiQyiJ10mD
- Nrg6VcWK/wOJVb5Q4DUHUHPQf7/+g73gXG7iJlpzJqJhfwYBoOL+d0hQYiRPPAw23Fip
- EPvQ==
+ bh=XJZL0PH2QDX2pWVCs6gkxUbnscu7Og9gMCqDBBtI/EU=;
+ b=rfVCOK8kqLXeDyqWNVNbfxYD7A+l6SV7KRW8rhb3e8txfxe4zXJ0uYhs1SBSb0LS7T
+ 9y09+pt0lIDH/L+mJIATkWPmHP/RX0Ka0Bpd7PHBJgrtRgHgbrrqoUijKaaIRzaKIxqR
+ /Smn7LUpJ2ggbJLUQ26BlUkw4r69gVSB3FvwXz+BELMEq2OIhOAa10tr7jy6U6mCVlBF
+ tS6oCkV822SLL9jNlMMCiog+rc+pMUWZs79VKZFZX3MNA7rd+2RAJzzuEiYags2bRNuQ
+ FiSQf0hDa880d+cAOY4HEsB+lUPUL1B9DkWBpDeKn2ozzxDGbGYDY4bjXSTQUVJ2LEKo
+ Kl9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCUpVQR2nqSqXSZ3LB3K+fTIrrPiIGkPupAmYdXdSJBa9Sr6y78ZqXmvp6rH4vvcn83Ns6kQEzdxbW@nongnu.org
-X-Gm-Message-State: AOJu0Yxb22fJYc5BfQkZ3DR+PPVxhVB3DChG53nTnAy/rQY3a62e1xZV
- qdTbYpaaWE5Cbq+/2vWeF8Wv91G1s7kgl97SLE8s/C6Wvg/6RX5NNkxGuA1xrXXj6fmIs4WHFoM
- gGD+iy6YZo3gywW/QgdpqecBqHq7UPBRkhOAoxPEJMhFOvhgR9ubm
-X-Received: by 2002:adf:e7c2:0:b0:374:c16d:6282 with SMTP id
- ffacd0b85a97d-376df0055c2mr3221251f8f.55.1725482413702; 
- Wed, 04 Sep 2024 13:40:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpTPXyMOhksh6rH73ChuS9sZDDw7lbsaGzewS3GFb1vUeATKz5ScpvxjdGS34VfUlldwFWjA==
-X-Received: by 2002:adf:e7c2:0:b0:374:c16d:6282 with SMTP id
- ffacd0b85a97d-376df0055c2mr3221242f8f.55.1725482413181; 
- Wed, 04 Sep 2024 13:40:13 -0700 (PDT)
+ AJvYcCVjPWNYMHhWgIEBsVipDh4oOZSUhmfsaWSp86Fyn8lJztjazLZcqO8WDPQwMM1vHfM8LdZ7gkkk9n9H@nongnu.org
+X-Gm-Message-State: AOJu0YySCatwgsusc3SxlXaZQjt4KqMFy8BEKwXREptlpDxJBsekhM48
+ bOQfBp47q366JwjWKl0vbhG69WF9O0VG3FCKmsqspcz6D6YkfxArmx7R1vaLpE0bF0sWNtbYAjm
+ Kt0o7fpuJE+QAkCBcmXVhMoMki2nn8c7h8Za0t9WOrqshE00vElGZ/8+6mFwLUsc=
+X-Received: by 2002:a05:600c:3b8e:b0:426:616e:db8d with SMTP id
+ 5b1f17b1804b1-42bb01b556bmr171307785e9.15.1725482605387; 
+ Wed, 04 Sep 2024 13:43:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGf4paYLgJ2xvrjZSFnv+Vy0Y7mnuixuEyrJEh0thYAAXTBW1E7qzA5ANIWC1GXW6bsWp8LKQ==
+X-Received: by 2002:a05:600c:3b8e:b0:426:616e:db8d with SMTP id
+ 5b1f17b1804b1-42bb01b556bmr171307605e9.15.1725482604739; 
+ Wed, 04 Sep 2024 13:43:24 -0700 (PDT)
 Received: from [192.168.3.141] (p4ff2399b.dip0.t-ipconnect.de. [79.242.57.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374c29aa150sm12029744f8f.101.2024.09.04.13.40.12
+ ffacd0b85a97d-3749ee71616sm17873950f8f.31.2024.09.04.13.43.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 13:40:12 -0700 (PDT)
-Message-ID: <21f07be3-72f2-4a6a-9366-36bf7912e94e@redhat.com>
-Date: Wed, 4 Sep 2024 22:40:12 +0200
+ Wed, 04 Sep 2024 13:43:24 -0700 (PDT)
+Message-ID: <4ed8cec2-413a-4254-8804-55befbcd0d00@redhat.com>
+Date: Wed, 4 Sep 2024 22:43:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] KVM: Rename KVMMemoryListener.nr_used_slots to
- nr_slots_used
+Subject: Re: [PATCH 3/4] KVM: Dynamic sized kvm memslots array
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  Julia Suvorova <jusual@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Vitaly Kuznetsov <vkuznets@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>
 References: <20240904191635.3045606-1-peterx@redhat.com>
- <20240904191635.3045606-5-peterx@redhat.com>
+ <20240904191635.3045606-4-peterx@redhat.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -125,7 +125,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240904191635.3045606-5-peterx@redhat.com>
+In-Reply-To: <20240904191635.3045606-4-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -154,12 +154,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04.09.24 21:16, Peter Xu wrote:
-> This will make all nr_slots counters to be named in the same manner.
+> Zhiyi reported an infinite loop issue in VFIO use case.  The cause of that
+> was a separate discussion, however during that I found a regression of
+> dirty sync slowness when profiling.
 > 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
+> Each KVMMemoryListerner maintains an array of kvm memslots.  Currently it's
+> statically allocated to be the max supported by the kernel.  However after
+> Linux commit 4fc096a99e ("KVM: Raise the maximum number of user memslots"),
+> the max supported memslots reported now grows to some number large enough
+> so that it may not be wise to always statically allocate with the max
+> reported.
+> 
+> What's worse, QEMU kvm code still walks all the allocated memslots entries
+> to do any form of lookups.  It can drastically slow down all memslot
+> operations because each of such loop can run over 32K times on the new
+> kernels.
+> 
+> Fix this issue by making the memslots to be allocated dynamically.
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Wouldn't it be sufficient to limit the walk to the actually used slots?
+
+I know, the large allocation might sound scary at first, but memory 
+overcommit+populate-on-demand should handle that, assuming nobody 
+touches the yet-unused slots.
 
 -- 
 Cheers,
