@@ -4,173 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400BACD4857
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 15:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EEDCD4853
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 16:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slsDI-0001KN-Hx; Wed, 04 Sep 2024 11:46:32 -0400
+	id 1slsQV-0007dn-QF; Wed, 04 Sep 2024 12:00:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1slsDD-0000zI-8G
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:46:27 -0400
-Received: from mail-co1nam11on2076.outbound.protection.outlook.com
- ([40.107.220.76] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1slsQO-0007Zy-Ko; Wed, 04 Sep 2024 12:00:05 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1slsDB-0001ze-1r
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:46:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xj8rG10Ci26rdP39olvjYe9rFqB8+4eORRt9Lrl7c+SyupB2lBnUSdVtvV+bEhM5K9FyXDBiEn5Susog7PGZvv+9/KBXBuCTSU9c9gmCMxYNWTzSxfCI691SKSN965i5vsepvbEdSmn76s/l5dQ87Uzt878MSXRw4cmskHLUzwPQ+qXu86vy4Bo+TSJjk2rKxHrhtBOj7wY5NbmEgsV235K2yTDb+2GsQDY2Lxuel1DdQY+dRrJDN0o9BC1gnqSKjk8m718LW+FpmYKiHWOC5eCXRyD27pw73yPJ+j9H1YknnduAWZteMq65kLFMOuSVKUzu4hD6qfwv9evE0Db5+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=soeQe5c2guEdMo3IUUrfSbpl+usLyo1cQ+nKJ9/X8Bk=;
- b=dHXQ5HPMRRuokFSEDfe3TtEZQG0v2yvCiV7X+zoa0A63fCLSf8AXkDIl+pjqAcHPnpgYv6Rr6WP7iP5Csg5jhfBtoFiAKQsR0ON6EuIbfJAS2SvDfLOVVggt+R9aKRSxFPSfPjNCMLGJMFk3LnbW/aUAA+DSiEDq1SjpMGaNB+BUgE65/7Q7ARgDAkN0nlOJMEVda4zMBUHsIW9TbNtg84VfRmyqLUFMa2tcULG2JTbJMauodPUD2kaSU6rtxkwfyq928ZB2bnHf3UMS9vN6nbrmJAWFpjXLjyoDIxhLRaWxOMC0RzJQRmeJ3clljB9n0vj9vNNifzWpCzbCsp9fyg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=soeQe5c2guEdMo3IUUrfSbpl+usLyo1cQ+nKJ9/X8Bk=;
- b=M0221bw6qxa7rQjdDcFhHwYW2N9HbgRZxnaE9GT9fZF4sWw82fBOyG41Y0aoBOanaDUHq1bdL8aJKOfotcM/AriDH5VqhCJOJ+TGB+u2rGQA14cCPjZaVXAI/sCnCAiOOg2yzkPeVUNHYP++tk9FI4yIb7D2XUJd6AhSQEtFHI7xsIqUS5ecIgjDrQHK0XjqJ4xTu8aGClQpe6w6u6Nzm37FMEjbUKeKRNWrYRwonGtD2rv2v5g23WNSvisQxOu7wa7brmUs+DfehiUH8acmBZ44irPsl8D6439TEvjMXcdnFmNUr6sSyUTw+snv8J1uY0vJOq6V5Nl/KBI9AlIvpQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by SJ0PR12MB6806.namprd12.prod.outlook.com (2603:10b6:a03:478::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.25; Wed, 4 Sep
- 2024 15:41:12 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91%5]) with mapi id 15.20.7918.024; Wed, 4 Sep 2024
- 15:41:12 +0000
-Message-ID: <95d10ed3-33ef-48a9-9684-3a8c402c5db9@nvidia.com>
-Date: Wed, 4 Sep 2024 18:41:03 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/11] vfio/migration: Implement VFIO migration
- protocol v2
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Juan Quintela <quintela@redhat.com>,
- "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Yishai Hadas <yishaih@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Maor Gottlieb <maorg@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- Tarun Gupta <targupta@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Zhiyi Guo <zhguo@redhat.com>
-References: <20230216143630.25610-1-avihaih@nvidia.com>
- <20230216143630.25610-9-avihaih@nvidia.com> <ZthZ1aW_JmO3V9dr@x1n>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1slsQL-00063U-Tj; Wed, 04 Sep 2024 12:00:04 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WzRsc2cHvz6K6TB;
+ Wed,  4 Sep 2024 23:55:32 +0800 (CST)
+Received: from lhrpeml500003.china.huawei.com (unknown [7.191.162.67])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5FD6E1400CD;
+ Wed,  4 Sep 2024 23:59:57 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml500003.china.huawei.com (7.191.162.67) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 4 Sep 2024 16:59:57 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Wed, 4 Sep 2024 16:59:57 +0100
+To: =?utf-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+CC: Gustavo Romero <gustavo.romero@linaro.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>, "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
+ <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
+ <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
+ <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
+ "rafael@kernel.org" <rafael@kernel.org>, "borntraeger@linux.ibm.com"
+ <borntraeger@linux.ibm.com>, "npiggin@gmail.com" <npiggin@gmail.com>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
+ <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>, zhukeqian
+ <zhukeqian1@huawei.com>, "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>, "jiakernel2@gmail.com"
+ <jiakernel2@gmail.com>, "maobibo@loongson.cn" <maobibo@loongson.cn>,
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>, "shahuang@redhat.com"
+ <shahuang@redhat.com>, "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm
+ <linuxarm@huawei.com>
+Subject: RE: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8 Arch
+Thread-Topic: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8
+ Arch
+Thread-Index: AQHaveq2F6TAeAWelEWGVYAetyN5RLI9hyQAgADxfM+ACbIgYIAAHI5lgAAAMjA=
+Date: Wed, 4 Sep 2024 15:59:56 +0000
+Message-ID: <923008d9b65d45eba4e4ae19fe62f79c@huawei.com>
+References: <20240613233639.202896-1-salil.mehta@huawei.com>
+ <9227bac3-aecd-fbde-3691-5e949373fad0@linaro.org>
+ <87bk1b3azm.fsf@draig.linaro.org>
+ <a874e995c188480fb08deac3ccf0cc2d@huawei.com>
+ <87o753tob3.fsf@draig.linaro.org>
+In-Reply-To: <87o753tob3.fsf@draig.linaro.org>
+Accept-Language: en-US
 Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <ZthZ1aW_JmO3V9dr@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0023.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2ae::13) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.126.171.6]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|SJ0PR12MB6806:EE_
-X-MS-Office365-Filtering-Correlation-Id: 62e2e0e5-2610-443a-2108-08dcccf800d3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WjRqblRTVjZiK25WYUt1czlEdTdYVVdSN1puMHJlVW1USnk5S1hNOFdYc05W?=
- =?utf-8?B?eTVVVHhvcXFFcHRrSEUyOXZMRHlPOVFmZDZ2aHJ5YWRGbDBSV3g0aXZPT0li?=
- =?utf-8?B?UUNTQXlQOWJDdkQ1YUltVmZMa0o1dGFyWlI1ZDRURnVLbnN0emFyVWg4US9o?=
- =?utf-8?B?ZnpPRkJJV2owMWRyaDBKTTFLK2tqWTlzVUJZMzhaY3FSNmRDRDBEZmlEZmpo?=
- =?utf-8?B?K2thVXdIeWN1d1dSbS9OcXFGTmVaYk1BaFk5N2doVTVPS1dVYTU3VlZFVFRw?=
- =?utf-8?B?LzR5eFJHUUM3aGhmY0lhSUpPbkNheWhpV3lVY1hQNEYyZDNWN20zTHkwbFN5?=
- =?utf-8?B?ZVRXek4vR1FlY1BYd2d0blowUmduYUNFVjZqemErWmkxWC82SHFuZzBmWXVU?=
- =?utf-8?B?M3Mxc1pENHNmdGFQekR6OHhnUlUweHZMTWtPdEsxV1AxREFXaE5wdlFYc3k0?=
- =?utf-8?B?bnJnWmJ6b2QxdlV1N0lKcnNJdVJaKzE2Vmw1YTQvVW9QRlIrZXpKZy82N3Z1?=
- =?utf-8?B?SU1DK0VMWi9qcFI4eWJCeDVnRjlwbmcrV1phVk90UzZOTnprSzREWitkaE9I?=
- =?utf-8?B?ZmwwRmt3cFVRdWxRL2VYdjhRZm1LTG5iTDZuODdGSVI0VVhFN21DZzN1VVZ4?=
- =?utf-8?B?M0U1YTlTOUx6eklYTU1XT0VieTBUTEhVNVBtaWx2M3VvVzRoT3BmekFtekIz?=
- =?utf-8?B?YVpDWXhnTEdncXk2cTJGVVZ4Zjh5WDdNWjZQU2JHRzJiLzNxYlVKM1RUanN2?=
- =?utf-8?B?R3JxYUNvTk9BMXRFalJoSTI2OVUwQm5PNFVNSXd0Vm5WcHV0Zm5PUlQzTkx6?=
- =?utf-8?B?ZzJzSkdldUdEVEJEN1oxL1poUHpBdW9CTC9VdmZHRWk3SXVPUURFNjQ5ZVJ1?=
- =?utf-8?B?Z2hyVVlYUzBLbVNRa1hBZTRMTXRWa3JTREtWVlRYNlQ4N2pJcVhGbWVQY3My?=
- =?utf-8?B?a3BERGpYL1kyT3pROGpuRlV5YXBXQkJ5RFB6MjNoQmREWXpRYUJkRVYreTgw?=
- =?utf-8?B?Z0hkZ054bWI5TXZtWFV1WnpjUWQzdXN4S0pBSmRXVkNYZDZMaDdZOEhxTnFS?=
- =?utf-8?B?SW9zMUx3UG44Vmt5ZjFQVXpwQktKTVYwcU5rWmdFS0UwQmcrbXdka1BpbGYx?=
- =?utf-8?B?RXlVSFUraHkwZHM4QnduaHUrRVQ0OUJWakI0cmMydURlK3RJdUJleTJVcTB5?=
- =?utf-8?B?ckoxYlB6eU5LbGo2N1Q2QUh4L3M1OEIydWFmckpHdkt0NUF3ZC9NZU43c3VF?=
- =?utf-8?B?aUFTdDU3RVJ1VVljMjdGN3lOQmh1dlJ6ZkluQVFBSkwyUWZpRmFaNVI3ckp2?=
- =?utf-8?B?ZEtJSGxXQ29tdUk5NGlaem0ranRNWldxeXc1Zk5UV25mdElES3JlMnlFbXNS?=
- =?utf-8?B?bDcxemdqNFVUWDhmd3V4YXFaY0hwQVZwcXpPRlVvVFdmY2Qzb2xsZnhyNUty?=
- =?utf-8?B?R09RNW95VXhxeVE3RWtzVCtyYWR4cldxVG5OT2s4bjVlS0NvcjZiRCsxMVVB?=
- =?utf-8?B?U3JGNmExMEx3emlBUGhSZTV6RUw0NXEwTWxBT1JHYitoa2JNUlBSY2lzOUlF?=
- =?utf-8?B?RE9SRnAyVGJubVdGRXdJeUVCbWlwUjNpNUlqeVI4elNITW1uQm9BaFA4NVNs?=
- =?utf-8?B?WlkrREVBSmtNNnFxbG9JOE9WNUlCeVRpS21FRmYrMDA4MXpWVWg5aWFIYTV5?=
- =?utf-8?B?MmwxeDB5Sk5PZ1hieVJsU1pjYi9CWmsyVkIyVUlGdll2SFF0OGxTek15UGpJ?=
- =?utf-8?B?L0NLOGV5OVVadDU1NU9uRk5WdW1PRnJabWFiM3FDc3VHbXkxNnk4M1ZEYmo0?=
- =?utf-8?B?UFc3RW1pNktRekhwVkFkZz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U1hNU1dwZ2hlNkZ5Yjc0dHlhNC81QjY1WXVCZ0M1T2VwNTNyR1h2WUNNS3Zy?=
- =?utf-8?B?UGZwbUJlWlR5dDl3dWNPcHdGbGJlZUVwYkRIZkswYlRoVmMwNGdNcW1Wa2ZC?=
- =?utf-8?B?WG9DaHZoZ3lGclJITFh4L1p6OWVheUNjOWtuS1lmczRlTkFGN2FWQ0FlWHNk?=
- =?utf-8?B?WjlXU1JWU2xvQjlCMTY3c1M3dW5OcG9ZeWYwUTYxRGtrcFZ4STdxNWgrT2p4?=
- =?utf-8?B?dzNyeFdaZzlaZFdoN0pncXdORWd3M0V5SzFyZTNVd1E4MFRMMnZwbHV6dGQr?=
- =?utf-8?B?UUR6MmVRUWVpK1NoSUYvRWNmZmMwcUlLVnNRcmViT0cvZy9BYWlRTzJ0ZHRB?=
- =?utf-8?B?eFhrT3h0UWVRMmsydCsrTE5mcTN5MllnbzV3WlVNSmNVREsvRzBhRU9uV1hM?=
- =?utf-8?B?VE56cDRZbnp5R3JDUmZVNlVqZ2ppTE5tVUhZeUxJbUtGNVl0dkVFb0IyU29x?=
- =?utf-8?B?a0xlbFJoZG9GVFB4K1VUc0I3dlQxdjhNNWRHOG9MbWhmZXNieUh2TnpnT01R?=
- =?utf-8?B?ZEhaRkhua2hKRHFPL094M0FIU2NiRjQ2RENyRTFKcTNPN1RUTUpwM1dMWDRZ?=
- =?utf-8?B?R3kyeDFoQ3p1MXYxZUdxWXFuTWk1NS9IeTk2Q2w1ckJjMklDektPUmpSWFQy?=
- =?utf-8?B?Y2NKcmRMV0FqWTFBRnVzZXVtRlNLdTFRUHU2NDFNV0dFbDRyYUg2YWEyY3Jj?=
- =?utf-8?B?VXZDL0hUNVhUTTlKYjdSOUMwQXk0Z3pYWmlVYVBFa3Y5blJGUUF1YW5vdmhH?=
- =?utf-8?B?VEpSL21oNmMzRU1DRlpacHJPd3FIK2lOZnIzTEU0NDcvdGhkR01Da0pxRW5N?=
- =?utf-8?B?RHgwRW5kSHJOUlhTb1VNOVBYZ3gvNVlBV1htQUtZT05raXl2cG5iNnhNRVFM?=
- =?utf-8?B?bDhmV3Vwc0luWU1ZdGZSL3IrcXR3THc5a1ZJTmZhYXJYZ3EvaVdEVm9yQWor?=
- =?utf-8?B?ejNRZlZCVXBqaGtSK20wdk1SNGJ4L3lRRmcwM20xazlIaTQwT0xZWmlGOEdj?=
- =?utf-8?B?eit6UGRNNm4wWFFseEdmNVlRUUJzRlN6ZlYyN1UvcDBtMWcwY0JCb3NoM0VH?=
- =?utf-8?B?MHVmSGRxT3JnenlxcXFmNWUzeTgyeEZ3bXVMcmo0R1daWUpvUk5mN1ZhK2JZ?=
- =?utf-8?B?cTBGNEcyUUpsTGNrYlFrcDI2Vm9UeGhQWGhrSW1uNlo1a1JTaGtCMHM0L2F3?=
- =?utf-8?B?R3ZoWEZ3ODVqQS9uRWtLajZxckpTZkRFWTBBcjFoUVdnWjNVb0h5KzZEZGtw?=
- =?utf-8?B?T29wWmVPclNWQjlZeFM2K3VNYUFhVVoxN3FqNU4rNm53dE4wM1grYnJIZVJq?=
- =?utf-8?B?S3dzWTkza1dqZ2M1VDE4RUxXdllZQzhaVm5Hb3lSNXZ5L0F1b1BwbloxVHB1?=
- =?utf-8?B?TEY2a2gwOUVYUHRwTUVUQURGdktJa2dqc0tLU2RvWXlwNUxHNUxMZlRoOUpN?=
- =?utf-8?B?dVowQ1oxZlNXMEFOMHFwOWdjQThaRHN6UXBqMlNNVk1idS9iNmg1K2JtbGtZ?=
- =?utf-8?B?NE42aHY2UzlLSHJiWi82UzlYaTdvbmlNWkd2dklWWW5FNVRWUmhJTmppQTZ4?=
- =?utf-8?B?b1FPUGpYc3N4ZHhEUjVuUm9DUWY1S21La1NCVnY3Z2M3NFQ0TUFhcjU2azIv?=
- =?utf-8?B?Y2d3WnduZ0Z6a2FuaThRZFJlYlgzWlhFTEFYeTN3TWxHMnlBNEtydjVmTDg5?=
- =?utf-8?B?TXQrbEdsWUlJdS9qS3poYUY0VGRsVVFrZXhaeFlYMDg3dElFVEM1NUJrU0tJ?=
- =?utf-8?B?eWViU2dONFBRUFk3RktmM25XSUhDU2t6ck5SVDZrT1I4Z05CR08xbjF2Z3lX?=
- =?utf-8?B?bkMzblBldDlCc0hrUkNvTkkzMjdJUjZYNFJwOUJjUnc0U25EV0RyZEZxOWtm?=
- =?utf-8?B?Q3Zxamlka0d5Unk1ZHh3V25OSnYvMnV5SDRFS09Yd2M2YVIzZ0srM3lxNXZC?=
- =?utf-8?B?dFlRUUoxcThHOTM4cFYvNExjcXI5Ni9TdENvdkk2TTJFOVdyV21sbWxUdGNX?=
- =?utf-8?B?MHR5YmpzeDBkdW0wQ0M1Y2xncktIenJyUVdUb0xFWkthb0xsaTlxQUZaelBk?=
- =?utf-8?B?TjlXWlA3ajM4aHFqaldidWIvbXlnUXVMWW02ZWRUT2VLcFB5N1FFMWdaL1RS?=
- =?utf-8?Q?AnJodLMfCmutHy9WILGOL6Ja5?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 62e2e0e5-2610-443a-2108-08dcccf800d3
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2024 15:41:12.0070 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: V33tv1Hbwe6jxplRMFbB/pNOYR+8QkhKzMj85KjpOxfUPzmbGQsj9OcFD8FrHonqaL7LxVZcpmF4zRlHhPEaeQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6806
-Received-SPF: softfail client-ip=40.107.220.76;
- envelope-from=avihaih@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -184,110 +101,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 04/09/2024 16:00, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> Hello, Avihai,
->
-> Reviving this thread just to discuss one issue below..
->
-> On Thu, Feb 16, 2023 at 04:36:27PM +0200, Avihai Horon wrote:
->> +/*
->> + * Migration size of VFIO devices can be as little as a few KBs or as big as
->> + * many GBs. This value should be big enough to cover the worst case.
->> + */
->> +#define VFIO_MIG_STOP_COPY_SIZE (100 * GiB)
->> +
->> +/*
->> + * Only exact function is implemented and not estimate function. The reason is
->> + * that during pre-copy phase of migration the estimate function is called
->> + * repeatedly while pending RAM size is over the threshold, thus migration
->> + * can't converge and querying the VFIO device pending data size is useless.
->> + */
->> +static void vfio_state_pending_exact(void *opaque, uint64_t *must_precopy,
->> +                                     uint64_t *can_postcopy)
->> +{
->> +    VFIODevice *vbasedev = opaque;
->> +    uint64_t stop_copy_size = VFIO_MIG_STOP_COPY_SIZE;
->> +
->> +    /*
->> +     * If getting pending migration size fails, VFIO_MIG_STOP_COPY_SIZE is
->> +     * reported so downtime limit won't be violated.
->> +     */
->> +    vfio_query_stop_copy_size(vbasedev, &stop_copy_size);
->> +    *must_precopy += stop_copy_size;
-> Is this the chunk of data only can be copied during VM stopped?  If so, I
-> wonder why it's reported as "must precopy" if we know precopy won't ever
-> move them..
-
-A VFIO device that doesn't support precopy will send this data only when 
-VM is stopped.
-A VFIO device that supports precopy may or may not send this data (or 
-part of it) during precopy, and it depends on the specific VFIO device.
-
-According to state_pending_{estimate,exact} documentation, must_precopy 
-is the amount of data that must be migrated before target starts, and 
-indeed this VFIO data must be migrated before target starts.
-
->
-> The issue is if with such reporting (and now in latest master branch we do
-> have the precopy size too, which was reported both in exact() and
-> estimate()), we can observe weird reports like this:
->
-> 23411@1725380798968696657 migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
-> 23411@1725380799050766000 migrate_pending_exact exact pending size 21038628864 (pre = 21038628864 post=0)
-> 23411@1725380799050896975 migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
-> 23411@1725380799138657103 migrate_pending_exact exact pending size 21040144384 (pre = 21040144384 post=0)
-> 23411@1725380799140166709 migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
-> 23411@1725380799217246861 migrate_pending_exact exact pending size 21038628864 (pre = 21038628864 post=0)
-> 23411@1725380799217384969 migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
-> 23411@1725380799305147722 migrate_pending_exact exact pending size 21039976448 (pre = 21039976448 post=0)
-> 23411@1725380799306639956 migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
-> 23411@1725380799385118245 migrate_pending_exact exact pending size 21038796800 (pre = 21038796800 post=0)
-> 23411@1725380799385709382 migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
->
-> So estimate() keeps reporting zero but the exact() reports much larger, and
-> it keeps spinning like this.  I think that's not how it was designed to be
-> used..
-
-It keeps spinning and migration doesn't converge?
-If so, configuring a higher downtime limit or the 
-avail-switchover-bandwidth parameter may solve it.
-
->
-> Does this stop copy size change for a VFIO device or not?
-
-It depends on the specific VFIO device.
-If the device supports precopy and all (or part) of its data is 
-precopy-able, then stopcopy size will change.
-Besides that, the amount of resources currently used by the VFIO device 
-can also affect the stopcopy size, and it may increase or decrease as 
-resources are created or destroyed.
-
-> IIUC, we may want some other mechanism to report stop copy size for a
-> device, rather than reporting it with the current exact()/estimate() api.
-> That's, per my undertanding, only used for iterable data, while
-> stop-copy-size may not fall into that category if so.
-
-The above situation is caused by the fact that VFIO data may not be 
-fully precopy-able (as opposed to RAM data).
-I don't think reporting the stop-copy-size in a different API will help 
-the above situation -- we would still have to take stop-copy-size into 
-account before converging, to not violate downtime.
-
-Thanks.
-
->
->> +
->> +    trace_vfio_state_pending_exact(vbasedev->name, *must_precopy, *can_postcopy,
->> +                                   stop_copy_size);
->> +}
-> --
-> Peter Xu
->
+SGkgQWxleCwNCg0KPiAgRnJvbTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3Jn
+Pg0KPiAgU2VudDogV2VkbmVzZGF5LCBTZXB0ZW1iZXIgNCwgMjAyNCA0OjQ2IFBNDQo+ICBUbzog
+U2FsaWwgTWVodGEgPHNhbGlsLm1laHRhQGh1YXdlaS5jb20+DQo+ICANCj4gIFNhbGlsIE1laHRh
+IDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPiB3cml0ZXM6DQo+ICANCj4gID4gSGkgQWxleCwNCj4g
+ID4NCj4gID4+ICAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiAgPj4gIEZyb206IEFsZXgg
+QmVubsOpZSA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4NCj4gID4+ICBTZW50OiBUaHVyc2RheSwg
+QXVndXN0IDI5LCAyMDI0IDExOjAwIEFNDQo+ICA+PiAgVG86IEd1c3Rhdm8gUm9tZXJvIDxndXN0
+YXZvLnJvbWVyb0BsaW5hcm8ub3JnPg0KPiAgPj4NCj4gID4+ICBHdXN0YXZvIFJvbWVybyA8Z3Vz
+dGF2by5yb21lcm9AbGluYXJvLm9yZz4gd3JpdGVzOg0KPiAgPj4NCj4gID4+ICA+IEhpIFNhbGls
+LA0KPiAgPj4gID4NCj4gID4+ICA+IE9uIDYvMTMvMjQgODozNiBQTSwgU2FsaWwgTWVodGEgdmlh
+IHdyb3RlOg0KPiAgPj4gIDxzbmlwPg0KPiAgPj4gID4+IChWSSkgQ29tbWFuZHMgVXNlZA0KPiAg
+Pj4gID4+ID09PT09PT09PT09PT09PT09PQ0KPiAgPj4gID4+IEEuIFFlbXUgbGF1bmNoIGNvbW1h
+bmRzIHRvIGluaXQgdGhlIG1hY2hpbmU6DQo+ICA+PiAgPj4gICAgICAkIHFlbXUtc3lzdGVtLWFh
+cmNoNjQgLS1lbmFibGUta3ZtIC1tYWNoaW5lIHZpcnQsZ2ljLXZlcnNpb249Mw0KPiAgXA0KPiAg
+Pj4gID4+ICAgICAgICAtY3B1IGhvc3QgLXNtcCBjcHVzPTQsbWF4Y3B1cz02IFwNCj4gID4+ICA+
+PiAgICAgICAgLW0gMzAwTSBcDQo+ICA+PiAgPj4gICAgICAgIC1rZXJuZWwgSW1hZ2UgXA0KPiAg
+Pj4gID4+ICAgICAgICAtaW5pdHJkIHJvb3Rmcy5jcGlvLmd6IFwNCj4gID4+ICA+PiAgICAgICAg
+LWFwcGVuZCAiY29uc29sZT10dHlBTUEwIHJvb3Q9L2Rldi9yYW0gcmRpbml0PS9pbml0DQo+ICBt
+YXhjcHVzPTINCj4gID4+ICBhY3BpPWZvcmNlIiBcDQo+ICA+PiAgPj4gICAgICAgIC1ub2dyYXBo
+aWMgXA0KPiAgPj4gID4+ICAgICAgICAtYmlvcyBRRU1VX0VGSS5mZCBcDQo+ICA+PiAgPj4gQi4g
+SG90LSh1bilwbHVnIHJlbGF0ZWQgY29tbWFuZHM6DQo+ICA+PiAgPj4gICAgIyBIb3RwbHVnIGEg
+aG9zdCB2Q1BVIChhY2NlbD1rdm0pOg0KPiAgPj4gID4+ICAgICAgJCBkZXZpY2VfYWRkIGhvc3Qt
+YXJtLWNwdSxpZD1jb3JlNCxjb3JlLWlkPTQNCj4gID4+ICA+PiAgICAjIEhvdHBsdWcgYSB2Q1BV
+IChhY2NlbD10Y2cpOg0KPiAgPj4gID4+ICAgICAgJCBkZXZpY2VfYWRkIGNvcnRleC1hNTctYXJt
+LWNwdSxpZD1jb3JlNCxjb3JlLWlkPTQNCj4gID4+ICA+DQo+ICA+PiAgPiBTaW5jZSBzdXBwb3J0
+IGZvciBob3RwbHVnIGlzIGRpc2FibGVkIG9uIFRDRywgcmVtb3ZlIHRoZXNlIHR3bw0KPiAgPj4g
+bGluZXMgID4gaW4gdjQgY292ZXIgbGV0dGVyPw0KPiAgPj4NCj4gID4+ICBXaHkgaXMgaXQgZGlz
+YWJsZWQgZm9yIFRDRz8gV2Ugc2hvdWxkIGFpbSBmb3IgVENHIGJlaW5nIGFzIGNsb3NlIHRvDQo+
+ICA+PiBLVk0gYXMgIHBvc3NpYmxlIGZvciBkZXZlbG9wZXJzIGV2ZW4gaWYgaXQgaXMgbm90IGEg
+cHJvZHVjdGlvbiBzb2x1dGlvbi4NCj4gID4NCj4gID4gQWdyZWVkIEluIHByaW5jaXBsZS4gWWVz
+LCB0aGF0IHdvdWxkIGJlIG9mIGhlbHAuDQo+ICA+DQo+ICA+DQo+ICA+IENvbnRleHQgd2h5IGl0
+IHdhcyBkaXNhYmxlZCBhbHRob3VnaCBtb3N0IGNvZGUgdG8gc3VwcG9ydCBUQ0cgZXhpc3Q6DQo+
+ICA+DQo+ICA+IEkgaGFkIHJlcG9ydGVkIGEgY3Jhc2ggaW4gdGhlIFJGQyBWMSAoSnVuZSAyMDIw
+KSBhYm91dCBUQ0dDb250ZXh0DQo+ICA+IGNvdW50ZXIgb3ZlcmZsb3cgYXNzZXJ0aW9uIGR1cmlu
+ZyByZXBlYXRlZCBob3QodW4pcGx1ZyBvcGVyYXRpb24uDQo+ICA+IE1pZ3VlbCBmcm9tIE9yYWNs
+ZSB3YXMgYWJsZSB0byByZXByb2R1Y2UgdGhpcyBwcm9ibGVtIGxhc3QgeWVhciBpbiBGZWINCj4g
+ID4gYW5kIGFsc28gc3VnZ2VzdGVkIGEgZml4IGJ1dCBoZSBsYXRlciBmb3VuZCBvdXQgaW4gaGlz
+IHRlc3RpbmcgdGhhdCB0aGVyZSB3YXMNCj4gIGEgcHJvYmxlbSBkdXJpbmcgbWlncmF0aW9uLg0K
+PiAgPg0KPiAgPiBSRkMgVjEgSnVuZSAyMDIwOg0KPiAgPiBodHRwczovL2xvcmUua2VybmVsLm9y
+Zy9xZW11LWRldmVsLzIwMjAwNjEzMjEzNjI5LjIxOTg0LTEtDQo+ICBzYWxpbC5tZWh0YUANCj4g
+ID4gaHVhd2VpLmNvbS8NCj4gID4gU2Nyb2xsIHRvIGJlbG93Og0KPiAgPiBbLi4uXQ0KPiAgPiBU
+SElOR1MgVE8gRE86DQo+ICA+ICAoKikgTWlncmF0aW9uIHN1cHBvcnQNCj4gID4gICgqKSBUQ0cv
+RW11bGF0aW9uIHN1cHBvcnQgaXMgbm90IHByb3BlciByaWdodCBub3cuIFdvcmtzIHRvIGEgY2Vy
+dGFpbg0KPiAgZXh0ZW50DQo+ICA+ICAgICAgYnV0IGlzIG5vdCBjb21wbGV0ZS4gZXNwZWNpYWxs
+eSB0aGUgdW5yZWFsaXplIHBhcnQgaW4gd2hpY2ggdGhlcmUgaXMgYQ0KPiAgPiAgICAgIG92ZXJm
+bG93IG9mIHRjZyBjb250ZXh0cy4gVGhlIGxhc3QgaXMgZHVlIHRvIHRoZSBmYWN0IHRjZyBtYWlu
+dGFpbnMgYQ0KPiAgPiAgICAgIGNvdW50IG9uIG51bWJlciBvZiBjb250ZXh0KHBlciB0aHJlYWQg
+aW5zdGFuY2UpIHNvIGFzIHdlIGhvdHBsdWcgdGhlDQo+ICB2Y3B1cw0KPiAgPiAgICAgIHRoaXMg
+Y291bnRlciBrZWVwcyBvbiBpbmNyZW1lbnRpbmcuIEJ1dCBkdXJpbmcgaG90LXVucGx1ZyB0aGUg
+Y291bnRlcg0KPiAgaXMNCj4gID4gICAgICBub3QgZGVjcmVtZW50ZWQuDQo+ICANCj4gIFJpZ2h0
+IHNvIHRoZSB0cmFuc2xhdGlvbiBjYWNoZSBpcyBzZWdtZW50ZWQgYnkgdkNQVSB0byBzdXBwb3J0
+IHBhcmFsbGVsIEpJVA0KPiAgb3BlcmF0aW9ucy4gVGhlIGVhc2llc3Qgc29sdXRpb24gd291bGQg
+YmUgdG8gZW5zdXJlIHdlIGRpbWVuc2lvbiBmb3IgdGhlDQo+ICBtYXhpbXVtIG51bWJlciBvZiB2
+Q1BVcywgd2hpY2ggaXQgc2hvdWxkIGFscmVhZHksIHNlZQ0KPiAgdGNnX2luaXRfbWFjaGluZSgp
+Og0KPiAgDQo+ICAgIHVuc2lnbmVkIG1heF9jcHVzID0gbXMtPnNtcC5tYXhfY3B1czsNCj4gICAg
+Li4uDQo+ICAgIHRjZ19pbml0KHMtPnRiX3NpemUgKiBNaUIsIHMtPnNwbGl0d3hfZW5hYmxlZCwg
+bWF4X2NwdXMpOw0KDQoNCkFncmVlZC4gV2UgaGF2ZSBkb25lIHRoYXQgYW5kIGhhdmUgYSBwYXRj
+aCBmb3IgdGhhdCBhcyB3ZWxsLiBCdXQgaXQgaXMgc3RpbGwNCmEgd29yay1pbi1wcm9ncmVzcyBh
+bmQgSSd2ZSBsb3N0IGNvbnRleHQgYSBiaXQuDQoNCmh0dHBzOi8vZ2l0aHViLmNvbS9zYWxpbC1t
+ZWh0YS9xZW11L2NvbW1pdC8xMDdjZjVjYTdjZjM3MTZiYzBmOGM2OGU5OGUxZGEzOTM5ZjQ0OWNl
+DQoNCkZvciBub3csIEkndmUgdmVyeSBxdWlja2x5IHRyaWVkIHRvIGVuYWJsZSBhbmQgcnVuIHRo
+ZSBUQ0cgdG8gZ2FpbiBiYWNrIHRoZSBjb250ZXh0Lg0KSSd2ZSBub3cgaGl0IGEgZGlmZmVyZW50
+IHByb2JsZW0gZHVyaW5nIFRDRyB2Q1BVIHVucmVhbGl6YXRpb24gcGhhc2UsIHdoaWxlDQpwdGhy
+ZWFkX2pvaW4oKSB3YWl0cyBvbiBoYWx0IGNvbmRpdGlvbiB2YXJpYWJsZSBmb3IgTVRUQ0cgdkNQ
+VSB0aHJlYWQgdG8gZXhpdCwNCnRoZXJlIGlzIGEgY3Jhc2ggc29tZXdoZXJlLiBMb29rIGxpa2Ug
+c29tZSByYWNlIGNvbmRpdGlvbi4gV2lsbCBkaWcgdGhpcyBmdXJ0aGVyLg0KIA0KDQpCZXN0IHJl
+Z2FyZHMNClNhbGlsLg0KDQo+ICA+IEAgRmViIDIwMjMsIFtMaW5hcm8tb3Blbi1kaXNjdXNzaW9u
+c10gUmU6IFFlbXUgVENHIHN1cHBvcnQgZm9yDQo+ICA+IHZpcnR1YWwtY3B1aG90cGx1Zy9vbmxp
+bmUtcG9saWN5DQo+ICA+DQo+ICA+IGh0dHBzOi8vb3AtbGlzdHMubGluYXJvLm9yZy9hcmNoaXZl
+cy9saXN0L2xpbmFyby1vcGVuLWRpc2N1c3Npb25zQG9wLWwNCj4gID4gaXN0cy5saW5hcm8ub3Jn
+L21lc3NhZ2UvR01ERlRFWkU2V1VVSTdMWkFZT1dMWEZIQVBYTENORDUvDQo+ICA+DQo+ICA+IExh
+c3Qgc3RhdHVzIHJlcG9ydGVkIGJ5IE1pZ3VlbCB3YXMgdGhhdCB0aGVyZSB3YXMgcHJvYmxlbSB3
+aXRoIHRoZSBUQ0cNCj4gID4gYW5kIGhlIGludGVuZGVkIHRvIGZpeCB0aGlzLiBIZSB3YXMgb24g
+cGF0ZXJuaXR5IGxlYXZlIHNvIEkgd2lsbCB0cnkgdG8gZ2F0aGVyDQo+ICB0aGUgZXhhY3Qgc3Rh
+dHVzIG9mIHRoZSBUQ0cgdG9kYXkuDQo+ICA+DQo+ICA+IFRoYW5rcw0KPiAgPiBTYWxpbA0KPiAg
+Pg0KPiAgPg0KPiAgPj4NCj4gID4+ICAtLQ0KPiAgPj4gIEFsZXggQmVubsOpZQ0KPiAgPj4gIFZp
+cnR1YWxpc2F0aW9uIFRlY2ggTGVhZCBAIExpbmFybw0KPiAgDQo+ICAtLQ0KPiAgQWxleCBCZW5u
+w6llDQo+ICBWaXJ0dWFsaXNhdGlvbiBUZWNoIExlYWQgQCBMaW5hcm8NCg==
 
