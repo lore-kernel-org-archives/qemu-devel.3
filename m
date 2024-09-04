@@ -4,57 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E77CD4849
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93AABCD484E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:42:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnRZ-0005gb-Vi; Wed, 04 Sep 2024 06:40:57 -0400
+	id 1slnQl-0001jL-OC; Wed, 04 Sep 2024 06:40:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRY-0005Wp-8o
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnQk-0001dK-1Q
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRW-0000PF-Ak
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnQi-0008Vw-BW
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446453;
+ s=mimecast20190719; t=1725446403;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5JQzJpzesH1N3A3aQsAKx+l2IijSmpbQecserzAcvts=;
- b=CTbX0qyBeLZjT87jjbLdeQseP7+apRYuWCcYQqaW62N4qNqS0vPB30qGEo3gPivEt3sqQ5
- YyDSmUpPuLNz32omeFxSZBkRO/2fmvv/hgw4BVm50RhR/grBx58VMl/0m0GtfxpP+kfJyx
- jYYTiD41NjntcJEfH4eQ+osvG1L7ut0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=x2lqg8+6goQHmWnh8VcvwKwtZ0YFPETjRtp82/rFUq8=;
+ b=Z3i7n+eW+qaGpRk3+1S487rP9+mQJxLTs89/0eLCWoo3RQ43N6wILB7myEjWs5pL3+hNj5
+ iAr0BLLT7wBahks6TSJ7ic7Vzgb4kU1PODQ9FESeoz1Q8TuA8PmgZfCOQo0d9P2iHqKxug
+ GYzlSRLEhdfQSwxmkwbnDJzSoi5bjjA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-gGQLOt8uMDK-th46dTJ_5w-1; Wed,
- 04 Sep 2024 06:40:52 -0400
-X-MC-Unique: gGQLOt8uMDK-th46dTJ_5w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-UwujD1z6PhC7nc51vMe1Mw-1; Wed,
+ 04 Sep 2024 06:40:00 -0400
+X-MC-Unique: UwujD1z6PhC7nc51vMe1Mw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21C4619560AE; Wed,  4 Sep 2024 10:40:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E1B819560B8; Wed,  4 Sep 2024 10:39:59 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C1421955F44; Wed,  4 Sep 2024 10:40:48 +0000 (UTC)
+ id 12533195605A; Wed,  4 Sep 2024 10:39:56 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 30/42] tests/functional: Convert the linux_initrd avocado test
- into a standalone test
-Date: Wed,  4 Sep 2024 12:39:05 +0200
-Message-ID: <20240904103923.451847-31-thuth@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 10/42] tests/Makefile.include: Increase the level of
+ indentation in the help text
+Date: Wed,  4 Sep 2024 12:38:45 +0200
+Message-ID: <20240904103923.451847-11-thuth@redhat.com>
 In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
 References: <20240904103923.451847-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -83,117 +86,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we're at it, update the SHA1 hashes to SHA256 hashes since
-SHA1 should not be used anymore nowadays.
+The next patch is going to add some entries that need more space between
+the command and the help text, so let's increase the indentation here
+first.
 
-Message-ID: <20240830133841.142644-32-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20240830133841.142644-11-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/meson.build                  |  1 +
- .../test_linux_initrd.py}                     | 37 +++++++++++--------
- 2 files changed, 22 insertions(+), 16 deletions(-)
- rename tests/{avocado/linux_initrd.py => functional/test_linux_initrd.py} (76%)
- mode change 100644 => 100755
+ tests/Makefile.include | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 3857630f58..2e34f4ddfd 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -102,6 +102,7 @@ tests_x86_64_system_quick = [
- 
- tests_x86_64_system_thorough = [
-   'acpi_bits',
-+  'linux_initrd',
-   'netdev_ethtool',
-   'virtio_gpu',
- ]
-diff --git a/tests/avocado/linux_initrd.py b/tests/functional/test_linux_initrd.py
-old mode 100644
-new mode 100755
-similarity index 76%
-rename from tests/avocado/linux_initrd.py
-rename to tests/functional/test_linux_initrd.py
-index 7f47b98ae7..c71a59d4c9
---- a/tests/avocado/linux_initrd.py
-+++ b/tests/functional/test_linux_initrd.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Linux initrd integration test.
- #
- # Copyright (c) 2018 Red Hat, Inc.
-@@ -12,20 +14,27 @@
- import logging
- import tempfile
- 
--from avocado_qemu import QemuSystemTest
--from avocado import skipUnless
-+from qemu_test import QemuSystemTest, Asset
-+from unittest import skipUnless
- 
- 
- class LinuxInitrd(QemuSystemTest):
-     """
-     Checks QEMU evaluates correctly the initrd file passed as -initrd option.
--
--    :avocado: tags=arch:x86_64
--    :avocado: tags=machine:pc
-     """
- 
-     timeout = 300
- 
-+    ASSET_F18_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/18/Fedora/x86_64/os/images/pxeboot/vmlinuz'),
-+        '1a27cb42559ce29237ac186699d063556ad69c8349d732bb1bd8d614e5a8cc2e')
-+
-+    ASSET_F28_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/28/Everything/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd05909c9d4a742a6fcc84dcc0361009e4611769619cc187a07107579a035f24e')
-+
-     def test_with_2gib_file_should_exit_error_msg_with_linux_v3_6(self):
-         """
-         Pretends to boot QEMU with an initrd file with size of 2GiB
-@@ -33,10 +42,8 @@ def test_with_2gib_file_should_exit_error_msg_with_linux_v3_6(self):
-         Fedora-18 shipped with linux-3.6 which have not supported xloadflags
-         cannot support more than 2GiB initrd.
-         """
--        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora/li'
--                      'nux/releases/18/Fedora/x86_64/os/images/pxeboot/vmlinuz')
--        kernel_hash = '41464f68efe42b9991250bed86c7081d2ccdbb21'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-+        self.set_machine('pc')
-+        kernel_path = self.ASSET_F18_KERNEL.fetch()
-         max_size = 2 * (1024 ** 3) - 1
- 
-         with tempfile.NamedTemporaryFile() as initrd:
-@@ -56,16 +63,11 @@ def test_with_2gib_file_should_exit_error_msg_with_linux_v3_6(self):
-     @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-     def test_with_2gib_file_should_work_with_linux_v4_16(self):
-         """
--        :avocado: tags=flaky
--
-         QEMU has supported up to 4 GiB initrd for recent kernel
-         Expect guest can reach 'Unpacking initramfs...'
-         """
--        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/28/Everything/x86_64/os/images/pxeboot/'
--                      'vmlinuz')
--        kernel_hash = '238e083e114c48200f80d889f7e32eeb2793e02a'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-+        self.set_machine('pc')
-+        kernel_path = self.ASSET_F28_KERNEL.fetch()
-         max_size = 2 * (1024 ** 3) + 1
- 
-         with tempfile.NamedTemporaryFile() as initrd:
-@@ -89,3 +91,6 @@ def test_with_2gib_file_should_work_with_linux_v4_16(self):
-                     break
-                 if 'Kernel panic - not syncing' in msg:
-                     self.fail("Kernel panic reached")
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 537804d101..fbb1a4b211 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -3,28 +3,28 @@
+ .PHONY: check-help
+ check-help:
+ 	@echo "Regression testing targets:"
+-	@echo " $(MAKE) check                  Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
+-	@echo " $(MAKE) bench                  Run speed tests"
++	@echo " $(MAKE) check                    Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
++	@echo " $(MAKE) bench                    Run speed tests"
+ 	@echo
+ 	@echo "Individual test suites:"
+-	@echo " $(MAKE) check-qtest-TARGET     Run qtest tests for given target"
+-	@echo " $(MAKE) check-qtest            Run qtest tests"
+-	@echo " $(MAKE) check-unit             Run qobject tests"
+-	@echo " $(MAKE) check-qapi-schema      Run QAPI schema tests"
+-	@echo " $(MAKE) check-block            Run block tests"
++	@echo " $(MAKE) check-qtest-TARGET       Run qtest tests for given target"
++	@echo " $(MAKE) check-qtest              Run qtest tests"
++	@echo " $(MAKE) check-unit               Run qobject tests"
++	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
++	@echo " $(MAKE) check-block              Run block tests"
+ ifneq ($(filter $(all-check-targets), check-softfloat),)
+-	@echo " $(MAKE) check-tcg              Run TCG tests"
+-	@echo " $(MAKE) check-softfloat        Run FPU emulation tests"
++	@echo " $(MAKE) check-tcg                Run TCG tests"
++	@echo " $(MAKE) check-softfloat          Run FPU emulation tests"
+ endif
+-	@echo " $(MAKE) check-avocado          Run avocado (integration) tests for currently configured targets"
++	@echo " $(MAKE) check-avocado            Run avocado (integration) tests for currently configured targets"
+ 	@echo
+-	@echo " $(MAKE) check-report.junit.xml Generates an aggregated XML test report"
+-	@echo " $(MAKE) check-venv             Creates a Python venv for tests"
+-	@echo " $(MAKE) check-clean            Clean the tests and related data"
++	@echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML test report"
++	@echo " $(MAKE) check-venv               Creates a Python venv for tests"
++	@echo " $(MAKE) check-clean              Clean the tests and related data"
+ 	@echo
+ 	@echo "The following are useful for CI builds"
+-	@echo " $(MAKE) check-build            Build most test binaries"
+-	@echo " $(MAKE) get-vm-images          Downloads all images used by avocado tests, according to configured targets (~350 MB each, 1.5 GB max)"
++	@echo " $(MAKE) check-build              Build most test binaries"
++	@echo " $(MAKE) get-vm-images            Downloads all images used by avocado tests, according to configured targets (~350 MB each, 1.5 GB max)"
+ 	@echo
+ 	@echo
+ 	@echo "The variable SPEED can be set to control the gtester speed setting."
 -- 
 2.46.0
 
