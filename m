@@ -4,76 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4469CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9EBCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 09:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sllsY-0002QL-II; Wed, 04 Sep 2024 05:00:42 -0400
+	id 1sllsi-0002aN-20; Wed, 04 Sep 2024 05:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sllsS-0002P1-ND
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:00:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sllsf-0002ZE-7c
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:00:49 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sllsQ-0005SP-IY
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:00:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725440432;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nrq/5iF4+48nyfFkgVhnvKIV3GPVvD28oJEr6bNukhY=;
- b=RsFTmPXY6hmbauWh4RZvh5Jl7YFdTERrIh+Lc/uuEsQSQRm28orsy+EAxzdu4KLD8IANGo
- bvHtgkZShz/JPgodnnHLDTLOhokm/jtnJbiLryf5BPrYa4/cKG0V2DrF0HY4k8saz8kt89
- WIgEIiR/KSWwn/fJDQJEs10kT9Csgrk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-SeQOiDo2N5-ZZmd52jGN_g-1; Wed,
- 04 Sep 2024 05:00:28 -0400
-X-MC-Unique: SeQOiDo2N5-ZZmd52jGN_g-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2324F196CDF5; Wed,  4 Sep 2024 09:00:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.53])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D120A19560AA; Wed,  4 Sep 2024 09:00:24 +0000 (UTC)
-Date: Wed, 4 Sep 2024 10:00:19 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] tests/unit: always build the pbkdf crypto unit test
-Message-ID: <Ztgho-3qtdT0mSyT@redhat.com>
-References: <20240830110533.2544070-1-berrange@redhat.com>
- <20240830110533.2544070-3-berrange@redhat.com>
- <2d0ade1c-42db-49ce-85b1-9c73a34ef015@linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sllsb-0005TE-Cv
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 05:00:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:8a3:0:640:33b5:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1560560B38;
+ Wed,  4 Sep 2024 12:00:37 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:4::1:25] (unknown [2a02:6b8:b081:4::1:25])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (smtpcorp/Yandex) with ESMTPSA id Y0Ye9Z0Ib4Y0-ul3WVJER; 
+ Wed, 04 Sep 2024 12:00:36 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1725440436;
+ bh=CruYvI7BY1TKFXXHGDhwUw9u2B3/p6xiekG4c4gye9U=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=sDFJlyJl5WiUQp6rO90kV3F8HUgOuaCc2gmR5pDpM1jm0DG2hnEjvHbL4Hq+9eldb
+ bBjKsy9O0qrT2W4Np1NAH5cAnDvxCodQDrBlC1/T0FDO3krGUY6zj1hVcYIb3dIkp2
+ YU8VO+f6+jTNUtHNpMKBAt/I4nN6JycJ462tVbZo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <9934b7ba-912f-435f-80e0-c70b272faf86@yandex-team.ru>
+Date: Wed, 4 Sep 2024 12:00:34 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2d0ade1c-42db-49ce-85b1-9c73a34ef015@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] chardev: introduce 'reconnect-ms' and deprecate
+ 'reconnect'
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org, Peter Krempa <pkrempa@redhat.com>,
+ Michal Privoznik <mprivozn@redhat.com>
+References: <20240904051913.53148-1-d-tatianin@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240904051913.53148-1-d-tatianin@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,94 +79,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 02, 2024 at 09:45:04PM +0200, Philippe Mathieu-Daudé wrote:
-> On 30/8/24 13:05, Daniel P. Berrangé wrote:
-> > The meson rules were excluding the pbkdf crypto test when gnutls was the
-> > crypto backend. It was then excluded again in #if statements in the test
-> > file.
-> > 
-> > Rather than update these conditions, remove them all, and use the result
-> > of the qcrypto_pbkdf_supports() function to determine whether to skip
-> > test registration.
-> > 
-> > Also add CONFIG_DARWIN to the remaining condition, since we have a way
-> > to measure CPU time on this platform since commit bf98afc75efedf1.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   tests/unit/meson.build         | 4 +---
-> >   tests/unit/test-crypto-pbkdf.c | 9 ++++++---
-> >   2 files changed, 7 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-> > index 490ab8182d..972d792883 100644
-> > --- a/tests/unit/meson.build
-> > +++ b/tests/unit/meson.build
-> > @@ -121,9 +121,7 @@ if have_block
-> >     if config_host_data.get('CONFIG_REPLICATION')
-> >       tests += {'test-replication': [testblock]}
-> >     endif
-> > -  if nettle.found() or gcrypt.found()
-> > -    tests += {'test-crypto-pbkdf': [io]}
-> > -  endif
-> > +  tests += {'test-crypto-pbkdf': [io]}
-> >   endif
-> >   if have_system
-> > diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkdf.c
-> > index 43c417f6b4..034bb02422 100644
-> > --- a/tests/unit/test-crypto-pbkdf.c
-> > +++ b/tests/unit/test-crypto-pbkdf.c
-> > @@ -25,8 +25,7 @@
-> >   #include <sys/resource.h>
-> >   #endif
-> > -#if ((defined(CONFIG_NETTLE) || defined(CONFIG_GCRYPT)) && \
-> > -     (defined(_WIN32) || defined(RUSAGE_THREAD)))
-> > +#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
+On 04.09.24 08:19, Daniil Tatianin wrote:
+> The 'reconnect' option only allows to specify the time in seconds,
+> which is way too long for certain workflows.
 > 
-> Add CONFIG_DARWIN in a subsequent commit?
+> We have a lightweight disk backend server, which takes about 20ms to
+> live update, but due to this limitation in QEMU, previously the guest
+> disk controller would hang for one second because it would take this
+> long for QEMU to reinitialize the socket connection.
+> 
+> Introduce a new option called 'reconnect-ms', which is the same as
+> 'reconnect', except the value is treated as milliseconds. These are
+> mutually exclusive and specifying both results in an error.
+> 
+> 'reconnect' is also deprecated by this commit to make it possible to
+> remove it in the future as to not keep two options that control the
+> same thing.
+> 
+> Signed-off-by: Daniil Tatianin<d-tatianin@yandex-team.ru>
 
-Yes, classic trap. If you have "Also ..." in a commit message then you've
-just told yourself it should have been a separate commit :-)
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-> 
-> >   #include "crypto/pbkdf.h"
-> >   typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
-> > @@ -422,13 +421,17 @@ int main(int argc, char **argv)
-> >       g_assert(qcrypto_init(NULL) == 0);
-> >       for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
-> > +        if (!qcrypto_pbkdf2_supports(test_data[i].hash)) {
-> > +            continue;
-> > +        }
-> > +
-> >           if (!test_data[i].slow ||
-> >               g_test_slow()) {
-> >               g_test_add_data_func(test_data[i].path, &test_data[i], test_pbkdf);
-> >           }
-> >       }
-> > -    if (g_test_slow()) {
-> > +    if (g_test_slow() && qcrypto_pbkdf2_supports(QCRYPTO_HASH_ALG_SHA256)) {
-> >           g_test_add_func("/crypt0/pbkdf/timing", test_pbkdf_timing);
-> 
-> While here, rename test_pbkdf_timing -> test_pbkdf_sha256_timing?
-
-Will do
-
-> 
-> >       }
-> 
-> Anyway,
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Best regards,
+Vladimir
 
 
