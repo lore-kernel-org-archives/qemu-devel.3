@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47889CD4849
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE73CD4847
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnSM-00039P-L5; Wed, 04 Sep 2024 06:41:48 -0400
+	id 1slnRu-0008M8-Gy; Wed, 04 Sep 2024 06:41:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnS5-0001dg-4k
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRr-0007uM-UF
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnS0-0000XW-Sz
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRq-0000W1-2x
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446483;
+ s=mimecast20190719; t=1725446473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9DjJZLsM1SW96btkXFiEujxgXUOLt8kWHTpsdh1PvGY=;
- b=JFY1CuUMqE4JMM0a9UV6R+1m7qiZv4ujWuuNWYT/XNa6B44Dx3k+OOdb+4fteU6WQFUWQW
- 6IqvTlfNAMRKeipB/SFIUdfqLL8gbd0TJ8JtMYthlc2eZCR4/VSQmZuq97vIXSpxTXY2K2
- wIWHWghjLDUBInpW+//B4mo1fbIWR6Q=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=CH4MkjRBYGGPf0NMqwTSo/1Rwfz9dGhJNxJDCZQhe+M=;
+ b=R2KR0SFUBcfxN8ijCvNJui2qr1VHyJ4QPh8XU38r7gztTBQbrIJH0uZIk7d/IC0Z2OKNQZ
+ kaOdH0kHyysDEUpa0AWuJOGq2j9IMO2r1PtL9vGnCfmmtOTAI7yAypCJu9kRMrCf10MQ/S
+ Hk5MRTlo+0igCvUl86U+7ukpCmCMEUA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-G6QRXO5iMRWMc2qg0TRVog-1; Wed,
- 04 Sep 2024 06:41:21 -0400
-X-MC-Unique: G6QRXO5iMRWMc2qg0TRVog-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-HlY6OwzFNrmuUbOpBAoeaQ-1; Wed,
+ 04 Sep 2024 06:41:12 -0400
+X-MC-Unique: HlY6OwzFNrmuUbOpBAoeaQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 531691955D50; Wed,  4 Sep 2024 10:41:20 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 157A71954209; Wed,  4 Sep 2024 10:41:11 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A403B1955F44; Wed,  4 Sep 2024 10:41:18 +0000 (UTC)
+ id 34128195605A; Wed,  4 Sep 2024 10:41:08 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 42/42] docs/devel/testing: Add documentation for functional
- tests
-Date: Wed,  4 Sep 2024 12:39:17 +0200
-Message-ID: <20240904103923.451847-43-thuth@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 38/42] gitlab-ci: Add "check-functional" to the build tests
+Date: Wed,  4 Sep 2024 12:39:13 +0200
+Message-ID: <20240904103923.451847-39-thuth@redhat.com>
 In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
 References: <20240904103923.451847-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -67,8 +69,7 @@ X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- WEIRD_QUOTING=0.001 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,398 +85,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the new functional testing framework. The text is originally
-based on the Avocado documentation, but heavily modified to match the
-new framework.
+Now that we converted many tests from the "check-avocado" test suite
+to the "check-functional" test suite, we should make sure that these
+also get tested in the CI.
 
-Message-ID: <20240830133841.142644-45-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240830133841.142644-41-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/testing/functional.rst | 338 ++++++++++++++++++++++++++++++
- docs/devel/testing/index.rst      |   1 +
- docs/devel/testing/main.rst       |  12 ++
- 3 files changed, 351 insertions(+)
- create mode 100644 docs/devel/testing/functional.rst
+ .gitlab-ci.d/buildtest-template.yml | 14 +++++--
+ .gitlab-ci.d/buildtest.yml          | 60 ++++++++++++++---------------
+ 2 files changed, 41 insertions(+), 33 deletions(-)
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-new file mode 100644
-index 0000000000..bf6f1bb81e
---- /dev/null
-+++ b/docs/devel/testing/functional.rst
-@@ -0,0 +1,338 @@
-+.. _checkfunctional-ref:
-+
-+Functional testing with Python
-+==============================
-+
-+The ``tests/functional`` directory hosts functional tests written in
-+Python. They are usually higher level tests, and may interact with
-+external resources and with various guest operating systems.
-+The functional tests have initially evolved from the Avocado tests, so there
-+is a lot of similarity to those tests here (see :ref:`checkavocado-ref` for
-+details about the Avocado tests).
-+
-+The tests should be written in the style of the Python `unittest`_ framework,
-+using stdio for the TAP protocol. The folder ``tests/functional/qemu_test``
-+provides classes (e.g. the ``QemuBaseTest``, ``QemuUserTest`` and the
-+``QemuSystemTest`` classes) and utility functions that help to get your test
-+into the right shape, e.g. by replacing the 'stdout' python object to redirect
-+the normal output of your test to stderr instead.
-+
-+Note that if you don't use one of the QemuBaseTest based classes for your
-+test, or if you spawn subprocesses from your test, you have to make sure
-+that there is no TAP-incompatible output written to stdio, e.g. either by
-+prefixing every line with a "# " to mark the output as a TAP comment, or
-+e.g. by capturing the stdout output of subprocesses (redirecting it to
-+stderr is OK).
-+
-+Tests based on ``qemu_test.QemuSystemTest`` can easily:
-+
-+ * Customize the command line arguments given to the convenience
-+   ``self.vm`` attribute (a QEMUMachine instance)
-+
-+ * Interact with the QEMU monitor, send QMP commands and check
-+   their results
-+
-+ * Interact with the guest OS, using the convenience console device
-+   (which may be useful to assert the effectiveness and correctness of
-+   command line arguments or QMP commands)
-+
-+ * Download (and cache) remote data files, such as firmware and kernel
-+   images
-+
-+Running tests
-+-------------
-+
-+You can run the functional tests simply by executing:
-+
-+.. code::
-+
-+  make check-functional
-+
-+It is also possible to run tests for a certain target only, for example
-+the following line will only run the tests for the x86_64 target:
-+
-+.. code::
-+
-+  make check-functional-x86_64
-+
-+To run a single test file without the meson test runner, you can also
-+execute the file directly by specifying two environment variables first,
-+the PYTHONPATH that has to include the python folder and the tests/functional
-+folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
-+to the QEMU binary that should be used for the test, for example::
-+
-+  $ export PYTHONPATH=../python:../tests/functional
-+  $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
-+  $ python3 ../tests/functional/test_file.py
-+
-+Overview
-+--------
-+
-+The ``tests/functional/qemu_test`` directory provides the ``qemu_test``
-+Python module, containing the ``qemu_test.QemuSystemTest`` class.
-+Here is a simple usage example:
-+
-+.. code::
-+
-+  #!/usr/bin/env python3
-+
-+  from qemu_test import QemuSystemTest
-+
-+  class Version(QemuSystemTest):
-+
-+      def test_qmp_human_info_version(self):
-+          self.vm.launch()
-+          res = self.vm.cmd('human-monitor-command',
-+                            command_line='info version')
-+          self.assertRegex(res, r'^(\d+\.\d+\.\d)')
-+
-+  if __name__ == '__main__':
-+      QemuSystemTest.main()
-+
-+By providing the "hash bang" line at the beginning of the script, marking
-+the file as executable and by calling into QemuSystemTest.main(), the test
-+can also be run stand-alone, without a test runner. OTOH when run via a test
-+runner, the QemuSystemTest.main() function takes care of running the test
-+functions in the right fassion (e.g. with TAP output that is required by the
-+meson test runner).
-+
-+The ``qemu_test.QemuSystemTest`` base test class
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The ``qemu_test.QemuSystemTest`` class has a number of characteristics
-+that are worth being mentioned.
-+
-+First of all, it attempts to give each test a ready to use QEMUMachine
-+instance, available at ``self.vm``.  Because many tests will tweak the
-+QEMU command line, launching the QEMUMachine (by using ``self.vm.launch()``)
-+is left to the test writer.
-+
-+The base test class has also support for tests with more than one
-+QEMUMachine. The way to get machines is through the ``self.get_vm()``
-+method which will return a QEMUMachine instance. The ``self.get_vm()``
-+method accepts arguments that will be passed to the QEMUMachine creation
-+and also an optional ``name`` attribute so you can identify a specific
-+machine and get it more than once through the tests methods. A simple
-+and hypothetical example follows:
-+
-+.. code::
-+
-+  from qemu_test import QemuSystemTest
-+
-+  class MultipleMachines(QemuSystemTest):
-+      def test_multiple_machines(self):
-+          first_machine = self.get_vm()
-+          second_machine = self.get_vm()
-+          self.get_vm(name='third_machine').launch()
-+
-+          first_machine.launch()
-+          second_machine.launch()
-+
-+          first_res = first_machine.cmd(
-+              'human-monitor-command',
-+              command_line='info version')
-+
-+          second_res = second_machine.cmd(
-+              'human-monitor-command',
-+              command_line='info version')
-+
-+          third_res = self.get_vm(name='third_machine').cmd(
-+              'human-monitor-command',
-+              command_line='info version')
-+
-+          self.assertEqual(first_res, second_res, third_res)
-+
-+At test "tear down", ``qemu_test.QemuSystemTest`` handles all the QEMUMachines
-+shutdown.
-+
-+QEMUMachine
-+-----------
-+
-+The QEMUMachine API is already widely used in the Python iotests,
-+device-crash-test and other Python scripts.  It's a wrapper around the
-+execution of a QEMU binary, giving its users:
-+
-+ * the ability to set command line arguments to be given to the QEMU
-+   binary
-+
-+ * a ready to use QMP connection and interface, which can be used to
-+   send commands and inspect its results, as well as asynchronous
-+   events
-+
-+ * convenience methods to set commonly used command line arguments in
-+   a more succinct and intuitive way
-+
-+QEMU binary selection
-+^^^^^^^^^^^^^^^^^^^^^
-+
-+The QEMU binary used for the ``self.vm`` QEMUMachine instance will
-+primarily depend on the value of the ``qemu_bin`` class attribute.
-+If it is not explicitly set by the test code, its default value will
-+be the result the QEMU_TEST_QEMU_BINARY environment variable.
-+
-+Attribute reference
-+-------------------
-+
-+QemuBaseTest
-+^^^^^^^^^^^^
-+
-+The following attributes are available on any ``qemu_test.QemuBaseTest``
-+instance.
-+
-+arch
-+""""
-+
-+The target architecture of the QEMU binary.
-+
-+Tests are also free to use this attribute value, for their own needs.
-+A test may, for instance, use this value when selecting the architecture
-+of a kernel or disk image to boot a VM with.
-+
-+qemu_bin
-+""""""""
-+
-+The preserved value of the ``QEMU_TEST_QEMU_BINARY`` environment
-+variable.
-+
-+QemuUserTest
-+^^^^^^^^^^^^
-+
-+The QemuUserTest class can be used for running an executable via the
-+usermode emulation binaries.
-+
-+QemuSystemTest
-+^^^^^^^^^^^^^^
-+
-+The QemuSystemTest class can be used for running tests via one of the
-+qemu-system-* binaries.
-+
-+vm
-+""
-+
-+A QEMUMachine instance, initially configured according to the given
-+``qemu_bin`` parameter.
-+
-+cpu
-+"""
-+
-+The cpu model that will be set to all QEMUMachine instances created
-+by the test.
-+
-+machine
-+"""""""
-+
-+The machine type that will be set to all QEMUMachine instances created
-+by the test. By using the set_machine() function of the QemuSystemTest
-+class to set this attribute, you can automatically check whether the
-+machine is available to skip the test in case it is not built into the
-+QEMU binary.
-+
-+Asset handling
-+--------------
-+
-+Many functional tests download assets (e.g. Linux kernels, initrds,
-+firmware images, etc.) from the internet to be able to run tests with
-+them. This imposes additional challenges to the test framework.
-+
-+First there is the the problem that some people might not have an
-+unconstrained internet connection, so such tests should not be run by
-+default when running ``make check``. To accomplish this situation,
-+the tests that download files should only be added to the "thorough"
-+speed mode in the meson.build file, while the "quick" speed mode is
-+fine for functional tests that can be run without downloading files.
-+``make check`` then only runs the quick functional tests along with
-+the other quick tests from the other test suites. If you choose to
-+run only run ``make check-functional``, the "thorough" tests will be
-+executed, too. And to run all functional tests along with the others,
-+you can use something like::
-+
-+  make -j$(nproc) check SPEED=thorough
-+
-+The second problem with downloading files from the internet are time
-+constraints. The time for downloading files should not be taken into
-+account when the test is running and the timeout of the test is ticking
-+(since downloading can be very slow, depending on the network bandwidth).
-+This problem is solved by downloading the assets ahead of time, before
-+the tests are run. This pre-caching is done with the qemu_test.Asset
-+class. To use it in your test, declare an asset in your test class with
-+its URL and SHA256 checksum like this::
-+
-+    ASSET_somename = (
-+        ('https://www.qemu.org/assets/images/qemu_head_200.png'),
-+        '34b74cad46ea28a2966c1d04e102510daf1fd73e6582b6b74523940d5da029dd')
-+
-+In your test function, you can then get the file name of the cached
-+asset like this::
-+
-+    def test_function(self):
-+        file_path = self.ASSET_somename.fetch()
-+
-+The pre-caching will be done automatically when running
-+``make check-functional`` (but not when running e.g.
-+``make check-functional-<target>``). In case you just want to download
-+the assets without running the tests, you can do so by running::
-+
-+    make precache-functional
-+
-+The cache is populated in the ``~/.cache/qemu/download`` directory by
-+default, but the location can be changed by setting the
-+``QEMU_TEST_CACHE_DIR`` environment variable.
-+
-+Skipping tests
-+--------------
-+
-+Since the test framework is based on the common Python unittest framework,
-+you can use the usual Python decorators which allow for easily skipping
-+tests running under certain conditions, for example, on the lack of a binary
-+on the test system or when the running environment is a CI system. For further
-+information about those decorators, please refer to:
-+
-+  https://docs.python.org/3/library/unittest.html#skipping-tests-and-expected-failures
-+
-+While the conditions for skipping tests are often specifics of each one, there
-+are recurring scenarios identified by the QEMU developers and the use of
-+environment variables became a kind of standard way to enable/disable tests.
-+
-+Here is a list of the most used variables:
-+
-+QEMU_TEST_ALLOW_LARGE_STORAGE
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+Tests which are going to fetch or produce assets considered *large* are not
-+going to run unless that ``QEMU_TEST_ALLOW_LARGE_STORAGE=1`` is exported on
-+the environment.
-+
-+The definition of *large* is a bit arbitrary here, but it usually means an
-+asset which occupies at least 1GB of size on disk when uncompressed.
-+
-+QEMU_TEST_ALLOW_UNTRUSTED_CODE
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+There are tests which will boot a kernel image or firmware that can be
-+considered not safe to run on the developer's workstation, thus they are
-+skipped by default. The definition of *not safe* is also arbitrary but
-+usually it means a blob which either its source or build process aren't
-+public available.
-+
-+You should export ``QEMU_TEST_ALLOW_UNTRUSTED_CODE=1`` on the environment in
-+order to allow tests which make use of those kind of assets.
-+
-+QEMU_TEST_FLAKY_TESTS
-+^^^^^^^^^^^^^^^^^^^^^
-+Some tests are not working reliably and thus are disabled by default.
-+This includes tests that don't run reliably on GitLab's CI which
-+usually expose real issues that are rarely seen on developer machines
-+due to the constraints of the CI environment. If you encounter a
-+similar situation then raise a bug and then mark the test as shown on
-+the code snippet below:
-+
-+.. code::
-+
-+  # See https://gitlab.com/qemu-project/qemu/-/issues/nnnn
-+  @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-+  def test(self):
-+      do_something()
-+
-+Tests should not live in this state forever and should either be fixed
-+or eventually removed.
-+
-+
-+.. _unittest: https://docs.python.org/3/library/unittest.html
-diff --git a/docs/devel/testing/index.rst b/docs/devel/testing/index.rst
-index cdf7ba1f8b..45eb4a7181 100644
---- a/docs/devel/testing/index.rst
-+++ b/docs/devel/testing/index.rst
-@@ -9,6 +9,7 @@ testing infrastructure.
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 844c26623d..5f2fc7e6f4 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -59,6 +59,10 @@
+     - cd build
+     - find . -type f -exec touch {} +
+     # Avoid recompiling by hiding ninja with NINJA=":"
++    # We also have to pre-cache the functional tests manually in this case
++    - if [ "x${QEMU_TEST_CACHE_DIR}" != "x" ]; then
++        $MAKE precache-functional ;
++      fi
+     - $MAKE NINJA=":" $MAKE_CHECK_ARGS
  
-    main
-    qtest
-+   functional
-    avocado
-    acpi-bits
-    ci
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 39b965ecf6..e9921a4b10 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -862,6 +862,18 @@ supported. To start the fuzzer, run
- Alternatively, some command different from ``qemu-img info`` can be tested, by
- changing the ``-c`` option.
+ .native_test_job_template:
+@@ -72,12 +76,13 @@
+     reports:
+       junit: build/meson-logs/testlog.junit.xml
  
-+Functional tests using Python
-+-----------------------------
-+
-+The ``tests/functional`` directory hosts functional tests written in
-+Python. You can run the functional tests simply by executing:
-+
-+.. code::
-+
-+  make check-functional
-+
-+See :ref:`checkfunctional-ref` for more details.
-+
- Integration tests using the Avocado Framework
- ---------------------------------------------
+-.avocado_test_job_template:
++.functional_test_job_template:
+   extends: .common_test_job_template
+   cache:
+     key: "${CI_JOB_NAME}-cache"
+     paths:
+       - ${CI_PROJECT_DIR}/avocado-cache
++      - ${CI_PROJECT_DIR}/functional-cache
+     policy: pull-push
+   artifacts:
+     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+@@ -86,6 +91,7 @@
+     paths:
+       - build/tests/results/latest/results.xml
+       - build/tests/results/latest/test-results
++      - build/tests/functional/*/*/*.log
+     reports:
+       junit: build/tests/results/latest/results.xml
+   before_script:
+@@ -96,11 +102,13 @@
+     - echo -e '[job.output.testlogs]\nstatuses = ["FAIL", "INTERRUPT"]'
+            >> ~/.config/avocado/avocado.conf
+     - if [ -d ${CI_PROJECT_DIR}/avocado-cache ]; then
+-        du -chs ${CI_PROJECT_DIR}/avocado-cache ;
++        du -chs ${CI_PROJECT_DIR}/*-cache ;
+       fi
+     - export AVOCADO_ALLOW_UNTRUSTED_CODE=1
++    - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
++    - export QEMU_TEST_CACHE_DIR=${CI_PROJECT_DIR}/functional-cache
+   after_script:
+     - cd build
+-    - du -chs ${CI_PROJECT_DIR}/avocado-cache
++    - du -chs ${CI_PROJECT_DIR}/*-cache
+   variables:
+     QEMU_JOB_AVOCADO: 1
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index aa32782405..1d2afae996 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -22,14 +22,14 @@ check-system-alpine:
+     IMAGE: alpine
+     MAKE_CHECK_ARGS: check-unit check-qtest
  
+-avocado-system-alpine:
+-  extends: .avocado_test_job_template
++functional-system-alpine:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-system-alpine
+       artifacts: true
+   variables:
+     IMAGE: alpine
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+     AVOCADO_TAGS: arch:avr arch:loongarch64 arch:mips64 arch:mipsel
+ 
+ build-system-ubuntu:
+@@ -53,14 +53,14 @@ check-system-ubuntu:
+     IMAGE: ubuntu2204
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-system-ubuntu:
+-  extends: .avocado_test_job_template
++functional-system-ubuntu:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-system-ubuntu
+       artifacts: true
+   variables:
+     IMAGE: ubuntu2204
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+     AVOCADO_TAGS: arch:alpha arch:microblazeel arch:mips64el
+ 
+ build-system-debian:
+@@ -85,14 +85,14 @@ check-system-debian:
+     IMAGE: debian
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-system-debian:
+-  extends: .avocado_test_job_template
++functional-system-debian:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-system-debian
+       artifacts: true
+   variables:
+     IMAGE: debian
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+     AVOCADO_TAGS: arch:arm arch:i386 arch:riscv64 arch:sh4 arch:sparc arch:xtensa
+ 
+ crash-test-debian:
+@@ -129,14 +129,14 @@ check-system-fedora:
+     IMAGE: fedora
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-system-fedora:
+-  extends: .avocado_test_job_template
++functional-system-fedora:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-system-fedora
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+     AVOCADO_TAGS: arch:microblaze arch:mips arch:xtensa arch:m68k
+       arch:riscv32 arch:ppc arch:sparc64
+ 
+@@ -243,14 +243,14 @@ check-system-centos:
+     IMAGE: centos9
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-system-centos:
+-  extends: .avocado_test_job_template
++functional-system-centos:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-system-centos
+       artifacts: true
+   variables:
+     IMAGE: centos9
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+     AVOCADO_TAGS: arch:ppc64 arch:or1k arch:s390x arch:x86_64 arch:rx
+       arch:sh4
+ 
+@@ -274,14 +274,14 @@ check-system-opensuse:
+     IMAGE: opensuse-leap
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-system-opensuse:
+-  extends: .avocado_test_job_template
++functional-system-opensuse:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-system-opensuse
+       artifacts: true
+   variables:
+     IMAGE: opensuse-leap
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+     AVOCADO_TAGS: arch:s390x arch:x86_64 arch:aarch64
+ 
+ #
+@@ -302,15 +302,15 @@ build-system-flaky:
+       ppc64-softmmu rx-softmmu s390x-softmmu sh4-softmmu x86_64-softmmu
+     MAKE_CHECK_ARGS: check-build
+ 
+-avocado-system-flaky:
+-  extends: .avocado_test_job_template
++functional-system-flaky:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-system-flaky
+       artifacts: true
+   allow_failure: true
+   variables:
+     IMAGE: debian
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+     QEMU_JOB_OPTIONAL: 1
+     QEMU_TEST_FLAKY_TESTS: 1
+     AVOCADO_TAGS: flaky
+@@ -485,14 +485,14 @@ check-cfi-aarch64:
+     IMAGE: fedora
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-cfi-aarch64:
+-  extends: .avocado_test_job_template
++functional-cfi-aarch64:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-cfi-aarch64
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+ 
+ build-cfi-ppc64-s390x:
+   extends:
+@@ -523,14 +523,14 @@ check-cfi-ppc64-s390x:
+     IMAGE: fedora
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-cfi-ppc64-s390x:
+-  extends: .avocado_test_job_template
++functional-cfi-ppc64-s390x:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-cfi-ppc64-s390x
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+ 
+ build-cfi-x86_64:
+   extends:
+@@ -557,14 +557,14 @@ check-cfi-x86_64:
+     IMAGE: fedora
+     MAKE_CHECK_ARGS: check
+ 
+-avocado-cfi-x86_64:
+-  extends: .avocado_test_job_template
++functional-cfi-x86_64:
++  extends: .functional_test_job_template
+   needs:
+     - job: build-cfi-x86_64
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado
++    MAKE_CHECK_ARGS: check-avocado check-functional
+ 
+ tsan-build:
+   extends: .native_build_job_template
 -- 
 2.46.0
 
