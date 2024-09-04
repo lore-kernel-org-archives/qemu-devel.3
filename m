@@ -4,177 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 437F8CA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 07:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A014ACA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 07:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slkYM-0006FI-Hr; Wed, 04 Sep 2024 03:35:46 -0400
+	id 1slkto-0004pE-FR; Wed, 04 Sep 2024 03:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1slkYK-0006Df-5x; Wed, 04 Sep 2024 03:35:44 -0400
-Received: from mail-tyzapc01on20719.outbound.protection.outlook.com
- ([2a01:111:f403:2011::719]
- helo=APC01-TYZ-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1)
+ (envelope-from <prvs=6977069e45=ian.brockbank@cirrus.com>)
+ id 1slktm-0004gR-0p; Wed, 04 Sep 2024 03:57:54 -0400
+Received: from mx0b-001ae601.pphosted.com ([67.231.152.168])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1slkYE-0001uq-QP; Wed, 04 Sep 2024 03:35:43 -0400
+ (Exim 4.90_1)
+ (envelope-from <prvs=6977069e45=ian.brockbank@cirrus.com>)
+ id 1slkti-0001zF-TY; Wed, 04 Sep 2024 03:57:53 -0400
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+ by mx0b-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4844fbG8002298;
+ Wed, 4 Sep 2024 02:57:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ PODMain02222019; bh=keL40RyiKyWwncL6n3aEPebK1zebybk7AnSipqpHt/g=; b=
+ Y24BtL1DyiaURzVz24rAdNREUnb87RUyaMgyKCa8fR50DI16M7F6T9BjS2W6LeWD
+ lL6u9g0tffIIHvhPHtmJB4LotKenADHKcDnq34noT/ybXHuwTt2n8pGY2KwbjjRQ
+ QLgr3HcgolPe/zKj17IMGm2uCqkG4v/aqGnX1kSTeVrKuKRbVKZpB0NEYRwa5I0a
+ wHsls1DoSZyfTL5UD1Fp2/Da/4O4TWBp70hWAfFcR8Y1WxlDzAjOlmGlXqXEInPX
+ nHoRR22M+oLVpcl7X/yiEPbrZzGmLErWN1bI2bYksjFSR8hl5tRedQe7VduQb+sH
+ t/L3lYTevrZFIdYIsFpZ6Q==
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2101.outbound.protection.outlook.com [104.47.58.101])
+ by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 41bykkc7g3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Sep 2024 02:57:36 -0500 (CDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xkYMAjWS7mZldpEyXVP8j8uAER0ytcw8kDCohKt/duwrZk6tvW+py8+QndAQbCKqLql8x0h7EEduQqPS10g0+WZrSTsUX+lpVbraFCwfjuo1UjnURx9JXzcE9ZFDvaXSwCWxt6Ue6Ai4BIcLaAXO1HyGamSawdjs+/c9E2DEl+4fnzUR8dNh25kPbkCCKTQ/LoThDdlFCrnd7CuqbbQ//jXzNbiaWQgfmv7N5ENAIgHPn1nWUWrvhYx6DeqXxAca+guaQnVUE3aUADASoKiNOv2S+EhvqkI+cCvQPDc23HowhfT8foPwK11qyxR5diwQOSg6gv9ISi82jBy13d+oww==
+ b=YblNvDhvLpDMUiAQAsjKDEXuDjwL/nobHmCUzcIQaH7uGcYrVAky4pZeaAU0gzF0JTMD7DR7j/ZXk1Fi0b6NlcSAyXH08Krn0A0EgrjqlGzLfLirI0wr4jlZm5By4b/gB5eiIlrCTFmwdEni7x7iu5tU3uigcxmtSoG9e8SCwNVZJHPQeWu7HtDpsoqzBt71PjYyrKGxFYjypEzJidTg/TkP02gv57uwcV+8GqM9RUFqjM3QPz0yW97WUaXgu556PV7V0kZCcWwSUkNK2DHaMZbgcd4Th80c4rXY5gwvmtJ1MJZjayNPFWyTja9K9xfNvtxQSbtLOLIkkWB+TXKTNg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4l0boDy7ZVKS+EsaniTP0lHK+B1Cc3jbrfRefXd4WBg=;
- b=wXlPlhfUOwj+PhBYQqS8bECz/uVtWKizyfS60HRL5nuTYJatjYvPAPPbFCG/3qgcQGt6AQCU/0G9Jcrl7vAoWyWxIyAYzfp4cxtETmbHU5Oct83SJKzz8EIKTlgFej5RbqQ7qHPyoAKWNmix1cJOZzfHolM42qhw5JmxgnJoFr/xfx5JznYLg0RUI3ihzmsZNTvlLhaMeLdQfAPv7W6b5DkTuxyVg43oHhlJ+dLSY7RRKqKNwgAAfzBRHe5SErSewJN/NKwgcdYK1dXMEG1iIBb/Lk7aKVTUMNaSeqM/wnIH/TBgSl19d4zyjDf+EEq8UUkGKnymBTiHFNugJPt3Ww==
+ bh=keL40RyiKyWwncL6n3aEPebK1zebybk7AnSipqpHt/g=;
+ b=hpxF/AYb+mRpm4737g7lKX3GLO65Lj65QzBvfKEUr+fqc3GA7EvbIp8r/g5YfGerxhawHN+OUAncg+/Iik4h5TCEJCSFcCpxkFme4EpnaUoseTUV1OaVdMMrNh3LK8i56utceuyIlMSmsS6wdLuAmNQ45ICIEdYd6A1xF/K4byypkLGFp0DZKrH9Ie9/EBfphcgnOHyo2Lufqb4mraNnVLsLrZC2lHojZID/1fkkDJlfrNh2IJa6H6zzBYXs9XmOYizbf/7dIeAhpujkiqadPgbe9ye3/Qlxm9jPxP4IRLHl5QQ8SmnSuvE9V87QqEKD1vcOfoL8iDyUWIXbbWCL9A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
+ smtp.mailfrom=cirrus.com; dmarc=pass action=none header.from=cirrus.com;
+ dkim=pass header.d=cirrus.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4l0boDy7ZVKS+EsaniTP0lHK+B1Cc3jbrfRefXd4WBg=;
- b=mf/wlsKZY5pE+SV5bg86XPP7wGDUYsIhIvrTCyJCriDOgs43xbRr34AuxLQeTCuRBsR0J8j2jY1euGk2hejpQ3ouxQHwR3l20Zc3bS3fiH/iKp05MX92BtZepBKhIAzftZlnCDEZAkPCiCE91eCFxpK+Uykx6TTr7g33idP0nfJ2aQXm9Xr5aiOnYpAg7UuNS+PRP+VTv0Jc7FGno7xlJMeKkAMRD2ThRdbaeH8BK9m574H7231zTrDCzKPX2F0uLeXoMsxpQ0JPcwsZXKJJs4u/TTQZrc8DTe6moUhvT2t75l+3cVnesIBi8QF1mHikb8w3lzre/5qpyn6mHqKeug==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- KL1PR06MB6091.apcprd06.prod.outlook.com (2603:1096:820:d5::16) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7918.27; Wed, 4 Sep 2024 07:35:26 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.7918.020; Wed, 4 Sep 2024
- 07:35:26 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Cleber Rosa <crosa@redhat.com>,
- =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Wainer dos
- Santos Moschetta <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
- here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
- <yunlin.tang@aspeedtech.com>
-Subject: RE: [SPAM] [PATCH v3 00/11] support I2C for AST2700
-Thread-Topic: [SPAM] [PATCH v3 00/11] support I2C for AST2700
-Thread-Index: AQHa/dxA7Q2YMqG9Y0mc3Ke+FSE3BLJGGq4AgACzhRCAAG5FAIAAAOUQ
-Date: Wed, 4 Sep 2024 07:35:26 +0000
-Message-ID: <SI2PR06MB50412AF41EFDEBB0938E7F97FC9C2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20240903083528.2182190-1-jamin_lin@aspeedtech.com>
- <00aac81e-ff43-4526-960c-782e27ae043f@kaod.org>
- <SI2PR06MB50418DD956AC152E4E0911CDFC9C2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <c418168b-eb5c-459c-85b1-c7766102e558@kaod.org>
-In-Reply-To: <c418168b-eb5c-459c-85b1-c7766102e558@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
+ bh=keL40RyiKyWwncL6n3aEPebK1zebybk7AnSipqpHt/g=;
+ b=rTHtZOV43zDDtKdVfHSc9bEPRtq+HZmGw09leG9sGPJ/TVCDP6jJibYTmlMC2+XowLU1O2chm+wwIBlIx04tOwbQ00Z08avEY9DQiGGrHAmCxl2Ys6Wi8ycQ8gQHakuRuNwH/brAjYIbgpYQR7m5kluHzikqfYAdes2QvQe+wNI=
+Received: from PH0PR19MB5193.namprd19.prod.outlook.com (2603:10b6:510:96::22)
+ by IA3PR19MB8764.namprd19.prod.outlook.com (2603:10b6:208:50d::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.27; Wed, 4 Sep
+ 2024 07:57:33 +0000
+Received: from PH0PR19MB5193.namprd19.prod.outlook.com
+ ([fe80::7e57:c9bd:575b:48cf]) by PH0PR19MB5193.namprd19.prod.outlook.com
+ ([fe80::7e57:c9bd:575b:48cf%5]) with mapi id 15.20.7918.020; Wed, 4 Sep 2024
+ 07:57:33 +0000
+From: Ian Brockbank <Ian.Brockbank@cirrus.com>
+To: Ian Brockbank <Ian.Brockbank@cirrus.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>
+CC: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
+ <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, "dan.smathers@seagate.com"
+ <dan.smathers@seagate.com>, "jefro@linuxfoundation.org"
+ <jefro@linuxfoundation.org>
+Subject: RE: [PATCH 00/11 v2] RISC-V: support CLIC v0.9 specification
+Thread-Topic: [PATCH 00/11 v2] RISC-V: support CLIC v0.9 specification
+Thread-Index: AQHa8lH45zAlJuNth0K5eV40yxlqCrJHWUxg
+Date: Wed, 4 Sep 2024 07:57:33 +0000
+Message-ID: <PH0PR19MB5193900DA565F0D0D90D627B809C2@PH0PR19MB5193.namprd19.prod.outlook.com>
+References: <https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00234.html>
+ <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
+In-Reply-To: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|KL1PR06MB6091:EE_
-x-ms-office365-filtering-correlation-id: 8e403229-7320-4542-5e39-08dcccb424e3
+x-ms-traffictypediagnostic: PH0PR19MB5193:EE_|IA3PR19MB8764:EE_
+x-ms-office365-filtering-correlation-id: 105daacd-3e4e-4b87-042d-08dcccb73ba7
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|921020|38070700018|217643003; 
-x-microsoft-antispam-message-info: =?utf-8?B?dHZXYUZobUxHTzVpVzNCbFVOWk9xYmhpeFBCRHVDQjBHalNLUnBzeW9MaDZt?=
- =?utf-8?B?ek5vWi9DNFJRWEdZMkxJR1V5WXhHVlo0c1E5TDRGMDFKSnBDVVhrdHBmNzIy?=
- =?utf-8?B?MG9zVGtSczVIbzRXUWFZVzYzN2xzMnMrTHBHRURpdnNjQjdKQWpzWHdqeXpr?=
- =?utf-8?B?cHZ5eC9Db0RicVhQcWxiZXBUMlpZS3JISG13WFJDMGFKMTNKSlp3Q1NTTTI3?=
- =?utf-8?B?Qm1NUXM0N3JFNVhnZWNMeDZQUHFEaGExQzVpbnptR09yMVc1azM0aVY4dm8z?=
- =?utf-8?B?djdQUm40L3FoQUJuWXl0YXVKQjJDNHZiSXd6SHRVb1JMSUtWaWplbjA5N0ty?=
- =?utf-8?B?Qkx0dHlldWRqRVpmQi8vVHdnR2hnWmRBSzcvQ3VXQm5VdUtwb0pJbktTRlBX?=
- =?utf-8?B?WHFHQ1o2Y3dVQVc1QVlRZ3ZVakhJRGxyWUI1WTA0ZVZtQ3NRRmlVNGcyRmQz?=
- =?utf-8?B?ckxkYmlrWG53MDBYSlNYY3lKdExobDdqdlI1QlFwNkhRYjQvTmxhUVR6em9E?=
- =?utf-8?B?SnJ0a3U5a0kwU0ZFZkZZNzVXVlZ2bmRTUFhGZjh6VEdZZWQweDF3Rlp6Zk0y?=
- =?utf-8?B?L0tiWHNaL2NXd0IwSzBMT1NOV3p5RC9Id3hIYTNMc1RJVFpTcXN3MEVzcjJB?=
- =?utf-8?B?VTUzZTN4ejB5MGhDSWRSZHRjVWw5L3Q2Q0Ywc2I4K21Td3E5YjV6UWxJOWhj?=
- =?utf-8?B?N3RLQ25ybkJLMG1RbG01SGJ2T1lmbTZsS1JFK0NGWVA2c0dHTEUzUVMvZGY1?=
- =?utf-8?B?ZkM5M0E4WFJadldoTmJoRklsV3U1L1loUHVTVjR6MGVPK2swTDdmdHh1VW9u?=
- =?utf-8?B?bTJsSzUxQnltRnIvcUpvVDBoazJmbDVXY01pVFJMRWJ6M0RsUldkdDJQQVNC?=
- =?utf-8?B?a2NtSy9XVUJGaCttd2J3SWFQcnUxWU5nMXlyT0hBbHdtWXZKTUNKaTBTbjQv?=
- =?utf-8?B?ektabnIrS0VzbTI4MG9ITE1zcWdvc3FuMkNlbHpCclFsK3libFFyRTdiRUpo?=
- =?utf-8?B?RHhyN3N3UnlVbVgvS3h2clpJdFllMTFkeXMyQXdjYk02MUxvSkpnZERuaTVt?=
- =?utf-8?B?Y1hzeGJGSWdGKzlvVHVaSjJMNmlUVVZXeUdzVGFvcjREYWpsbzNlM3FRbUpX?=
- =?utf-8?B?Uytxa0RVT0JoSklJZE1BRjBsR1NTUktGcGRxM1dFdnlaRUdBN3hpT3FvUVRy?=
- =?utf-8?B?MHFDZ082Vk02UHhYTjMvMVp3U2lXZXRwR1FxY25STkhqRXRpb3pEODdWdGh0?=
- =?utf-8?B?emFFSWxWbVh0cU56dEo2amwwNHRoZFN2dXBTTjZKSi9PN0ZwZXoxMDhvTWEz?=
- =?utf-8?B?RXhNSVppeUNOYTB5OXdCQUdIMHBURWZUbUN3ajNJeEMrdXZzZEx1MW1OcjJj?=
- =?utf-8?B?dGJyNWhCSGVVc3ZXZ2Nib0FvS0IvN1l0d3EyWXF3TDRwYldyYTZOMlZWMCt6?=
- =?utf-8?B?TzFYVFRaTmdrcFhkbncyWUozRnE4N0JZbks1dE83WEpBR3dOSk1UTTRIYmRX?=
- =?utf-8?B?UERqRUl1NjY0TVg0ZXZrZVpoT2VUUy9UU0s0YnU0bEw1eGROcEhUaGZZeGFZ?=
- =?utf-8?B?TWdDU0REZ1I5a2x4QUc3QjVXOGhWb01iS1prWFFpTHNlL1ZtdWxDV2pOL04w?=
- =?utf-8?B?bkQ0TzRUQnlTME1XOUsyWmppaTJ0Qlk0aWxzbmFObjduTHV3NzdwUFhrYnlv?=
- =?utf-8?B?bENtQnVwNlJDZDFXdEQ2TytGUGwvMjZ6MlJqb0I0bEprSG9na3MvcjVSVVZJ?=
- =?utf-8?B?YUtDcFhJYXFoakxDQzJzekx0L3FVMUJsUndUQlhVNGZMMjBMWHhObUJ3VnJM?=
- =?utf-8?B?a3M0Y2FkNjYvWkIreDlTcHcyM2w5dlFhMDBPNUZYOThOeXgwNC81bCtDQUtP?=
- =?utf-8?B?NWp6cTdQZ1ptWkRZNkFlZE96czM5bmRlZE9CQ0F2eVpDTGo2Z25NcnU3QTc5?=
- =?utf-8?Q?RZir0XOgQ59Y/6OAtCWJjNxCD1FIN37d?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(921020)(38070700018)(217643003);
- DIR:OUT; SFP:1102; 
+ ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?JG/d5NyfnEY0VoK2VCQIJLNBZ6xv2/0KZetsmGYo1qPoswZQVmLSLRliURBF?=
+ =?us-ascii?Q?LlD3iDlYoeKu5JuIdajo50pT0VJIWXr0T2QfnvXyIqkArfMPwv9o6UHPJHzB?=
+ =?us-ascii?Q?xzJp1Pe2Lh3oXY2aGOD9xpcgUf++4JnYYYWG7EbQzNNnm45VlphhiM+BkOH1?=
+ =?us-ascii?Q?2MA5/wjWMz3e48La1GQ6txh/BwTsGSFsyNWS8pCW8KV7jUZdXGiFvPokKduZ?=
+ =?us-ascii?Q?xVeBKTrsgj0pKrpMq3Y7QDuky8SyOXjDcxkthdMz7+Jr9xbN2Uq+ZXorJiSI?=
+ =?us-ascii?Q?wTd0zEGaq4qzSltRFIlTjww3Zv80XozHMchwdTDVnvKyYwlmw395fDwKOj6J?=
+ =?us-ascii?Q?pyM6gG6GNCfEpRYAuNagRV8IyQWNXUMU1afcY2QnRQ1jYPlFHhiEhCJdCEca?=
+ =?us-ascii?Q?fMcjWTaLw4SUw9BLSTiYhpp+ZY0TiXwLZBEcts8MS8153exTXG9EmCe6YJkL?=
+ =?us-ascii?Q?4mcqvfeNEl0A7JmhFsmPR0RCG251g15Jk9xNn/0p7GkJGpqTzs1/ZboK9BZd?=
+ =?us-ascii?Q?cRfT2c3jfYK/HTpGxv3faMDIZBLCkk3+UZOhGVCxRNWBFNzct+gZwlB4fsJA?=
+ =?us-ascii?Q?jojDqIXIuGWN7Q70i64VoFlYcwKn6S3wd6IehpR6JXB60itACZY9C56K55o9?=
+ =?us-ascii?Q?kiIwbsHl0Sp3KeQZ8SHJJyPqAq3z0kavFWXtsd35VCaBaF3EjmhELj1gXWWa?=
+ =?us-ascii?Q?LhfxpTdec/wgW5AAqbD6+BlHXUalql0UzaQWJ2Vhcl6nrvcVZ3gJYrrcU1XR?=
+ =?us-ascii?Q?HurRyIy2YrHjwODBLROEcpy2Jonh5bl5I9kTbRYxYiblnMqCMiW4MaWHSCiB?=
+ =?us-ascii?Q?FekY+xU4CtyE8s18Ahe1jOsD9HR/nCi5/J3QivjHy7H5gbrQaFOJ9BoPFNBX?=
+ =?us-ascii?Q?Kf6fKFCJ3cscRDmKi+vGTVCS0Z6S20js/9D4OOlvfFva7N2m6efsfuQoYP4a?=
+ =?us-ascii?Q?0q3kQUajF8geblR8c1KCXnx6iSnU5ziLKaRV3AB/gOia3wxXzlKcHNe5fZP9?=
+ =?us-ascii?Q?rm2l4+JtsUt7nJRbz2sRVPIoSx3yloZz+pGSIcIQLrAtT5MAEOqEJHHe8umY?=
+ =?us-ascii?Q?GlLfv21f/yVG6StkTO5n1PvHRVrjodJ5WcDSe8HiW71xucUceEEDD9tE1OG3?=
+ =?us-ascii?Q?x5FTnMW9qUXUrqKoFMqTGDtHFv+Q0IET+IBd39QXyJlaWAk6ARHwSK7MKRx1?=
+ =?us-ascii?Q?+PqGFEy/aSJVuc+70tTp9W70obhUxdWeR9vY8QSvgSKEZj8FhUvtdI9x5pJc?=
+ =?us-ascii?Q?MhCLSvsjiPd5TkF2RDI8juGyYS12SnM0x3HE9Jdp1ExeN58ffYEZvPUCWgDQ?=
+ =?us-ascii?Q?XYMH79W5Hp1KixYtiQanV5tPzdQeO5fJWRaPNg/+6VROzihRiWzm6oo/lWd1?=
+ =?us-ascii?Q?fNwiPTk=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR19MB5193.namprd19.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
+ SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZkI5RjZHd1lRejFkMWRkb2Fhc1RjcVVqRzJNRE1NUldGbTRJVUhJdzBJWnpt?=
- =?utf-8?B?TlRyRnZnVW9JZFd5eEJWSm9tY1AvZEdIZ0grc0RHdE0wdGgwUk0xeENPQUJl?=
- =?utf-8?B?ZUtPTkZhdnVaV0tPQ1B0NjZ1aUpNV3NoZGE3WFNtZEtKNXJPcnIwMWVtMkJT?=
- =?utf-8?B?dXZlQVIxeSsrYlEvVmdodlpzbSs0U1V1ay9RZ3VhNFJWUzlHMnQyenIzd3BR?=
- =?utf-8?B?V080M3hsa2lxK3h6ZjlVWlExUnU1Z1UxTnkzZXNxaVhkbUxvQlpTR21qVTlV?=
- =?utf-8?B?NXBrZE1DdGdocmxxaHVnZ0ZWb2dKVTFJb0U1YU5NVW4ydG5pM0dKRS9Ib29E?=
- =?utf-8?B?eHRFQmJKZDl5cW16R2VGU0xPYlQ2M081N0RaZDdGK1cvMytYek1MVG5ielRQ?=
- =?utf-8?B?WktYRnJlaGg5NHMwQWpEcGxnaDQ0Y2NQVDkraGFSREhFVC92YXpUZFRqZWJu?=
- =?utf-8?B?V3dlYm9WNm9YSEFPMHdDbDkxdzhLWm1LY1JNa1VuUHdteHZVRTlrQlVSeDVF?=
- =?utf-8?B?Q1RkSkxFeDEwSmZrcWpRMHdJNEJ6WW01cjVmazcvdWs4WnVCSVBJK1FIRGs1?=
- =?utf-8?B?aDJEVkhGYkNpWkNodUxUWDhoRTJ6dXF1Vy85Y1BqMkFNYll0NlpYOHhTT0Np?=
- =?utf-8?B?cldwbXhWdTFzMWxQV25TS0NaMGlpYXBubUdMMWhGR3BNVUJBTU5XOGZXbHVl?=
- =?utf-8?B?TjJPUEZtRlRHOVdZeU0xWktITWZ2aFJ3SHgreGxZUjFBTEpSTnVXVnZsZkti?=
- =?utf-8?B?QVhPSC94T1MvZnpvY2QrSW14SS9QQTlUMTJPUnpPdGJVV2V1ZE5zYU0vTXRU?=
- =?utf-8?B?cjB5d1FoM3JibFZDWmhDR1dFcm1la0Q1d0RWcHd3QkNJVmVlbTJwUGpKMTQ5?=
- =?utf-8?B?NCthUEs5Z3ZER1kzS2p4NS9NalJwV1hGNkl2YmlkVVJCU2dpMkFFMWJyWnVN?=
- =?utf-8?B?RmZ1MmlKOUVRK3VkVitLU3VBbU51KzNGeDhCNVNhenRTTU1EOGhlcWJJbzVh?=
- =?utf-8?B?MGp2QURqaHJnMjlKZmp2a25UNmZqVmdjZ2tBMmZhcmVPbHY3R29JUU9zYWJ4?=
- =?utf-8?B?TmhRVHpzYnEyQ0VQMWxPck5LYVNwcVRWT1VDbjByZEovZzI2T2lZWVFJdEhu?=
- =?utf-8?B?SEtYYWRwYW1ITk44TVl2NzVmVy9WMlFZNEtBaHJlN2xaMGRQUlVPOWNwM0dj?=
- =?utf-8?B?M3k2MVZwRDVadVJxalpqN2tUTllLOG1CcTNkSGZxR0NuQkVHQXlmNGVMRnp6?=
- =?utf-8?B?SW8vUVJScUVJWG1vV3dUVlI5ei9tOUhzRFdmVnl6QS9KaGc4UGJNY1NYY0tl?=
- =?utf-8?B?N1BDU0JERzFCaWFUKzZuYytOMTJvemZ6U0VnaXA0QURLQXBUbFg4RkJqOVJz?=
- =?utf-8?B?UGY3aHZDWDVFeXRkeEtSdnVNdDVRdDAzMG05UTBMZFJJYkhzZHhCTWFjaTR1?=
- =?utf-8?B?dnR5UTY2R0xVODd2ZFlLM2ZmSWVRQ1ZCU3pMRzU5dW0weVZiMUU3aGNNTmNW?=
- =?utf-8?B?RG1XYS9TYTR6TUc2ckdUaUZYdFNFZE5WREhlbUZ0dkVZNE5zQldzbk9ERG50?=
- =?utf-8?B?MWFPNFJ0eldsSHpucVRxdWVHOHBKL2tjZ1d6Mml2OE50RHFZcDBFNWRSQWlG?=
- =?utf-8?B?dGdQM0hvR1RYOEw5SDJjNEk4bmxMLzBxRU0yb1Rsc0JYdDlsdlJTVlFOWWM1?=
- =?utf-8?B?R01DZXd2a0NEdUd3Vjd4SEN6enJQMGxPWXlGMWZiNlovWmhFaUZ3N0llQVhG?=
- =?utf-8?B?TnAxT2VtYmhON0tXY01OcGJxUkxRMjdSTm91clZEM0h5ZFBpVmlSS0J6REhh?=
- =?utf-8?B?UmNmdWgxeFZ4TXhTcXlabUdSN09jbzRMNERJcHdzQ1pCSmJjYitpdmdZWU12?=
- =?utf-8?B?UklBeTBsa2tqak1tdU8yN1hvSi9YNzBEcDE5VDhvbTRLKy9CRHVmQk9rZzBq?=
- =?utf-8?B?cHZxb3oyUlExM2dROWppdU5mdHk2TDh2ZlVtUUg5aTh4Nll6aG41alkrL0JJ?=
- =?utf-8?B?MUxhRzhpeUYrNENwVWpzUVN0VVJVV0VTOVhWN05NYmZ3VXlyUlFRdnloMGh2?=
- =?utf-8?B?K01ob09LVWRPVkZ4N2o4UXpiKzQySFlLbG5ReENWU3VNZUhjYlVkKzloWTZC?=
- =?utf-8?Q?xH5dQpdwNdKUKkuPyhiGrN42Y?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?JRn3fnRy4o+pfhHX9wGDtuINj9qv/W7xDA3NBS5GH9i5WdrvTAd6zkZa1Dld?=
+ =?us-ascii?Q?QqhjQBCgPA+Fa+q9Ul+Ln78QhIbs1cvKr1n7W4s1jrN6lMpC+CMLcyTWD2hN?=
+ =?us-ascii?Q?SdGs1tWTq0+hczE9RUH7f278wP3tkkiMcfc9wXIC9dEHEPTvSf78cq7XkLxb?=
+ =?us-ascii?Q?zW7n/bpXaXt5ql2klSbEZre3pNhTOZVhqO3Y09UTwMOnuLbptOXimLuPEtLf?=
+ =?us-ascii?Q?1TFIAdeInwY475pHX7J2o9Ov8B1uuQ336pcT47K1jLawl+iw2tvHFfMoX85R?=
+ =?us-ascii?Q?P6Cffv86XPnsV5SIAJkNDKpT2m6eAev3d8+YIXmgucrUs+n2OvQUPpglVNAh?=
+ =?us-ascii?Q?81r1Wo3hvqs6iIoFrtJ78i1P5EW7UoGBHnBOhUrKAyjn7PBwlpiUb+MqLWvU?=
+ =?us-ascii?Q?BPU0B+4+cCyCh5MmxL4+Q7nTFfABVg2Lx2zFkNNK6NVEx2IuHldbd8xlVkCH?=
+ =?us-ascii?Q?0drQQl46+TphSGjkLlT1i2B0cEO7EJFoQjmJ3kUSQOzvqFuXsNkE+VprnNrs?=
+ =?us-ascii?Q?cOaxYpTGgAIO1T7Xd/7MutbyjtH4DTqTNt2JukXjOtz6ZkkKNdI5fzxi0/Hz?=
+ =?us-ascii?Q?SsR2enjM4DjDnDIkkW2a7H/jOJyfGvRWbqhfVuA6aeOqb6ThukjeuzKxmYa5?=
+ =?us-ascii?Q?mRq28tr1Nzhh8uFUzvX2SIRr6sY25qYiCuZ7lFlNce0hwQYdOF0g0Nq13vlz?=
+ =?us-ascii?Q?E7b817dvT1AYz7ArZa2U//PElihIXkNStJXwCeb/cKQHqhYgcmR97RISIl0j?=
+ =?us-ascii?Q?2py9CKq8zAgqb8X1QmtJhXcj3MnQmh/xJs8GIaqXvIxBaSJfIhkyapaoB1wg?=
+ =?us-ascii?Q?eWuXygIK0jGwBwihjdT3Z5r53juSoo5eBCFO+RS+Cn1TitkbaTsILthGxJR/?=
+ =?us-ascii?Q?9LSFz1fonCuZEZ/rhFPR/DtCCH1o3uVfj2lrOPJEU7aVnkXeFUq2+VyzuySo?=
+ =?us-ascii?Q?0lKcy8PnttEw4HV3MlBcEXL2D5D/XQr7lNwt3hcXtscm+rj8i5pz1IMvAgcF?=
+ =?us-ascii?Q?Hdl5N1RUNDgEw1y8T10Z1JO2r1WEadqd/ZQ7CD73N6kOaNQcuQ7mSrCrFWDi?=
+ =?us-ascii?Q?8YdU1Mkt4+TYw3OnNM7lNTAhgCk4e1KwwZoXgZqrBSFnv+SFtlm3KAffLxqY?=
+ =?us-ascii?Q?RwWRNv1KS1oyMo8NuRvr0cmPcNZ0C63wCKADOf4IOsZgvnNGyfLli1xilRv5?=
+ =?us-ascii?Q?0TiLCh35m27mfdRXtvpHorAKPUnZy53U6/EbiOl3iUUReFmpeAUJiGD6Dkzz?=
+ =?us-ascii?Q?qZpaeHMFnsisdcmileDZu3ZylriuD03FVwNjwkUMfzLTsiEPrZ9RtyJz5III?=
+ =?us-ascii?Q?TSUZ1fVkB4Hc9Bpczb6+dZZifkKO+IyA+rCXDmGSSuFTTYRXle9F8S/memuT?=
+ =?us-ascii?Q?pRd29ve4Q881QWu+h39NA+SuuwkrzpcrEqiMZcPzNiM93YrItduYqxdKtZSs?=
+ =?us-ascii?Q?yWHyl+q6mIJTgnVFqNNxYXov3+tECOm+hephZ5kXmRJuc9tgzrduazjD6ZIM?=
+ =?us-ascii?Q?kVD8NVb7p68tNjtQ+784cJUgGmozX6T+nBqRZsxwrorO2avMT8WLDhx8FA3/?=
+ =?us-ascii?Q?eEKtCAl2Wgm0p6HPsR6iAm4zUhA1H6n42AjZHJDC?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
+X-OriginatorOrg: cirrus.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8e403229-7320-4542-5e39-08dcccb424e3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Sep 2024 07:35:26.4289 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR19MB5193.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 105daacd-3e4e-4b87-042d-08dcccb73ba7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Sep 2024 07:57:33.1061 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-id: bec09025-e5bc-40d1-a355-8e955c307de8
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5FRYgZT+3rNhamBeDF1BV5EdXCCjO8dgxSRoXoCfYyKx0TekcUG1kmHUUDrFuHchb2m6dni7yrqGN17CQYgaW210QcW6k9EOeqiKF3msHak=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6091
-Received-SPF: pass client-ip=2a01:111:f403:2011::719;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=APC01-TYZ-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-CrossTenant-userprincipalname: PX43Vu/BA3zvTToRBNK4voYmVwVOFtFUwSK5JbqD8GjdhsOL3yFpDAunfhEOa5jAMuLlT5YHd/BsjEIgN+Pf0T2fubPxVLsmKceowOwApmY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR19MB8764
+X-Proofpoint-GUID: Ud_3bRqoOAPozf1hQpJ0Y1fY1o0353mp
+X-Proofpoint-ORIG-GUID: Ud_3bRqoOAPozf1hQpJ0Y1fY1o0353mp
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=67.231.152.168;
+ envelope-from=prvs=6977069e45=ian.brockbank@cirrus.com;
+ helo=mx0b-001ae601.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -190,20 +188,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLCANCg0KPiBTdWJqZWN0OiBSZTogW1NQQU1dIFtQQVRDSCB2MyAwMC8xMV0gc3Vw
-cG9ydCBJMkMgZm9yIEFTVDI3MDANCj4gDQo+IEhlbGxvIEphbWluLA0KPiANCj4gPiBKdXN0IHdh
-bnQgeW91IHRvIGtub3cgdGhhdCBJIGFuZCBUcm95IGFyZSB3b3JraW5nIG9uIHRoZSBmb2xsb3dp
-bmcgdGFza3MgZm9yDQo+IEFTVDI3MDAuDQo+ID4gMS4gU3VwcG9ydCBib290IGZyb20gYm9vdG1j
-dShyaXNjdjMyKSBpbnN0ZWFkIG9mIHUtYm9vdChDb3J0ZXgtQTM1KQ0KPiANCj4gT2ggbmljZS4g
-VGhpcyBpcyBhIGdvb2QgdG9waWMgZm9yIGhldGVyb2dlbmVvdXMgbWFjaGluZXMgIQ0KPiANCj4g
-PiAyLiBTdXBwb3J0IEdQSU8uDQo+ID4NCj4gPiBBZnRlciB3ZSBmaW5pc2ggYWJvdmUgdGFza3Ms
-IHdlIHdpbGwgdXBzdHJlYW0gUUVNVSBhbmQgc2VuZCBvdXIgcGF0Y2hlcy4NCj4gDQo+IA0KPiBU
-aGVyZSBpcyBhbHNvIHRoaXMgaXNzdWUgd2UgZGlzY3Vzc2VkIHByaXZhdGVseSBvbiBTUEkgd3Jp
-dGUgdHJhbnNhY3Rpb25zIGZhaWxpbmcNCj4gb24gdGhlIEFTVDI3MDAwLiBJdCBsb29rZWQgcmVs
-YXRlZCB0bw0KPiBhc3BlZWRfc21jX2RvX3Nub29wKCkgYnV0IHdlIGRvbid0IGhhdmUgYSBnb29k
-IGZpeCB5ZXQuDQo+IA0KPiBXaGVuIHRpbWUgcGVybWl0cywgY291bGQgeW91IHBsZWFzZSBvcGVu
-IGEgZ2l0bGFiIGlzc3VlIHdpdGggeW91ciBmaW5kaW5ncw0KPiBhbmQgbG9ncywgc28gdGhhdCB3
-ZSBkb24ndCBmb3JnZXQuDQo+IA0KVGhhbmtzIGZvciByZW1pbmRpbmcuDQoNCk9rYXkuIEkgd2ls
-bCBvcGVuIGFuIGlzc3VlIGhlcmUsIGh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2plY3QvcWVt
-dS8tL2lzc3Vlcw0KVGhhbmtzLUphbWluDQo+IA0KPiBUaGFua3MsDQo+IA0KPiBDLg0KPiANCg0K
+Hi All,
+
+Has anyone had time to look at this patch set yet? Is there anything I can =
+do to help?
+
+This implements https://wiki.riscv.org/display/HOME/Fast+Interrupts+TG, bri=
+nging the draft implementation listed on that page (almost) up to date with=
+ v0.9-draft-20240314. The implementation has been verified to match the Cir=
+rus Logic silicon (PRV_M only), which is based upon the Pulp implementation=
+ [4] as of June 2023.
+
+How can I help move this forward to get it merged into the mainline?
+
+Thank you,
+
+Ian Brockbank C.Eng.
+Senior Staff Software Engineer
+Cirrus Logic | cirrus.com | t: +44 131 272 7145 | m: +44 7554 008061 |@badg=
+ertaming
+
+
+> -----Original Message-----
+> From: Ian Brockbank <Ian.Brockbank@cirrus.com>
+> Sent: Monday, August 19, 2024 5:02 PM
+> To: qemu-devel@nongnu.org; qemu-riscv@nongnu.org
+> Cc: Palmer Dabbelt <palmer@dabbelt.com>; Alistair Francis
+> <alistair.francis@wdc.com>; Bin Meng <bmeng.cn@gmail.com>; Weiwei Li
+> <liwei1518@gmail.com>; Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com>; Liu Zhiwei <zhiwei_liu@linux.alibaba.com>;
+> Ian Brockbank <Ian.Brockbank@cirrus.com>
+> Subject: [PATCH 00/11 v2] RISC-V: support CLIC v0.9 specification
+>
+> [Resubmission now the merge is correct]
+>
+> This patch set gives an implementation of "RISC-V Core-Local Interrupt
+> Controller(CLIC) Version 0.9-draft-20240314". It comes from [1], where
+> you can find the pdf format or the source code.
+>
+> This is based on the implementation from 2021 by Liu Zhiwei [3], who took
+> over the job from Michael Clark, who gave the first implementation of
+> clic-v0.7 specification [2]. I believe this implementation addresses all
+> the comments in Liu Zhiwei's RFC patch thread.
+>
+> This implementation follows the CLIC 0.9-stable draft at 14 March 2024,
+> with the following exceptions and implementation details:
+>  - the CLIC control registers are memory-mapped as per earlier drafts (in
+>    particular version 0.9-draft, 20 June 2023)
+>  - the indirect CSR control in 0.9-stable is not implemented
+>  - the vector table can be either handler addresses (as per the spec)
+>    or a jump table where each entry is processed as an instruction,
+>    selectable with version number v0.9-jmp
+>  - each hart is assigned its own CLIC block
+>  - if PRV_S and/or PRV_M are supported, they are currently assumed to
+> follow
+>    the PRV_M registers; a subsequent update will address this
+>  - support for PRV_S and PRV_M is selectable at CLIC instantiation
+>  - PRV_S and PRV_U registers are currently separate from PRV_M; a
+> subsequent
+>    update will turn them into filtered views onto the PRV_M registers
+>  - each hart is assigned its own CLIC block
+>  - support for PRV_S and PRV_M is selectable at CLIC instantiation by
+>    passing in a base address for the given modes; a base address of 0 is
+>    treated as not supported
+>  - PRV_S and PRV_U registers are mapped  onto the PRV_M controls with
+>    appropriate filtering for the access mode
+>  - the RISCV virt machine has been updated to allow CLIC emulation by
+>    passing "machine=3Dvirt,clic=3Don" on the command line; various other
+>    parameters have been added to allow finer control of the CLIC behavior
+>
+> The implementation (in jump-table mode) has been verified to match the
+> Cirrus Logic silicon (PRV_M only), which is based upon the Pulp
+> implementation [4] as of June 2023.
+>
+> The implementation also includes a selection of qtests designed to verify
+> operation in all possible combinations of PRV_M, PRV_S and PRV_U.
+>
+> [1] specification website: https://github.com/riscv/riscv-fast-interrupt.
+> [2] Michael Clark origin work:
+> https://github.com/sifive/riscv-qemu/tree/sifive-clic.
+> [3] RFC Patch submission by Liu Zhiwei:
+> https://lists.gnu.org/archive/html/qemu-devel/2021-04/msg01417.html
+> [4] Pulp implementation of CLIC: https://github.com/pulp-platform/clic
+>
+> Ian Brockbank (11):
+>     target/riscv: Add CLIC CSR mintstatus
+>     target/riscv: Update CSR xintthresh in CLIC mode
+>     hw/intc: Add CLIC device
+>     target/riscv: Update CSR xie in CLIC mode
+>     target/riscv: Update CSR xip in CLIC mode
+>     target/riscv: Update CSR xtvec in CLIC mode
+>     target/riscv: Update CSR xnxti in CLIC mode
+>     target/riscv: Update interrupt handling in CLIC mode
+>     target/riscv: Update interrupt return in CLIC mode
+>     hw/riscv: add CLIC into virt machine
+>     tests: add riscv clic qtest case and a function in qtest
+
+This message may contain privileged and/or confidential information. If it =
+appears you received this message in error, please notify us by reply email=
+ and then delete the message. Thank you.
+
+Cirrus Logic International (UK) Ltd and Cirrus Logic International Semicond=
+uctor Ltd are companies registered in Scotland, with registered numbers SC0=
+89839 and SC495735 respectively. Our registered office is at 7B Nightingale=
+ Way, Quartermile, Edinburgh, EH3 9EG, UK.
 
