@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9A8CD4847
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998FFCA0ED3
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sln2V-0004Kq-Bn; Wed, 04 Sep 2024 06:15:03 -0400
+	id 1sln2X-0004Y4-7x; Wed, 04 Sep 2024 06:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2K-0003nZ-Sz
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:14:54 -0400
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2M-0003uN-M2
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:14:55 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2I-0002i0-Te
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:14:52 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1sln2L-0002iw-26
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:14:54 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id A333BA433EA;
- Wed,  4 Sep 2024 10:14:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F023C4CEC2;
- Wed,  4 Sep 2024 10:14:47 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 9F50B5C56EA;
+ Wed,  4 Sep 2024 10:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F230C4CEC2;
+ Wed,  4 Sep 2024 10:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1725444888;
- bh=UC+3IEx5gs1MfUJ8Bog5XUNNG27DXXhGPJ5UOUWDZiY=;
- h=From:To:Cc:Subject:Date:From;
- b=V0o1yAz93xI+EopXxOPex6oCBgc8DA+Nud2Exxp6m+jDm/mTtB1y8gV/9fMqRIjQv
- unn4Hh3GwdiRN2Cnr9BpqYcmJ6dCt3Y3s8Wz+fRi5UFfnZDVK9Fh2T/S3a4TcJsm5U
- xlY/H04RtstfI4CbZKx25NXpmOFW4miFQpAOysUacWREX/9mLHerx6pvYDswO9ZyvB
- G5ymVrr8TTkWIVbDURL0YHAotpLkshO+FZP0lwSaHDnFNmIslqaxFJSOslq6z+nMtb
- NOGCjhd/X+Kz9rixzIZDItXoNFgu7U0w7O50N4R48C4AzOMi1C5uHcAFKSWuXi4EM9
- fTno6Ktoc/imw==
+ s=k20201202; t=1725444891;
+ bh=9l+qCXYoMaahzPy0jmL22EU3kbNbb8JoG9AUupuLTvU=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=IOpuXQ1xaRGFk2oFreTa51a9qtpfL9BHABBGVdYD+Ihd3DjbGLA/Ii2YF8H7/qyCj
+ w8VtiUn8SBfvZ1eokVO4zJuc9/iZOrqHZ3bZ52NN5yW7JLeSrIpi4xmnTXwu17kxlF
+ 3NqZTtmx1GymOpqmM3v8l01Zt4mnK3fR1kQ1dlmANNS+lLcjo3EACiP7L3PuwX9NGV
+ DDIkpitTsjG1FjxjFQJFcgjQhz43SeVmuCCchFHt8exWEJj+FMqIuPoljUZVCI6JTZ
+ YvZULAqMhRapHmtX+xwYR10DSMwvRfGuB/bW6BeEER4f3bRHyLyxq1G3RLgdvEWPM5
+ Qc9XocRUuO4/Q==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: deller@gmx.de
-Subject: [PULL 0/2] Hppa v9.1 fixes patches
-Date: Wed,  4 Sep 2024 12:14:43 +0200
-Message-ID: <20240904101445.4127-1-deller@kernel.org>
+Subject: [PULL 2/2] target/hppa: Fix random 32-bit linux-user crashes
+Date: Wed,  4 Sep 2024 12:14:45 +0200
+Message-ID: <20240904101445.4127-3-deller@kernel.org>
 X-Mailer: git-send-email 2.46.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240904101445.4127-1-deller@kernel.org>
+References: <20240904101445.4127-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
- helo=nyc.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,39 +71,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The following changes since commit fd1952d814da738ed107e05583b3e02ac11e88ff:
+The linux-user hppa target crashes randomly for me since commit
+081a0ed188d8 ("target/hppa: Do not mask in copy_iaoq_entry").
 
-  Update version for v9.1.0 release (2024-09-03 09:18:26 -0700)
+That commit dropped the masking of the IAOQ addresses while copying them
+from other registers and instead keeps them with all 64 bits up until
+the full gva is formed with the help of hppa_form_gva_psw().
 
-are available in the Git repository at:
+So, when running in linux-user mode on an emulated 64-bit CPU, we need
+to mask to a 32-bit address space at the very end in hppa_form_gva_psw()
+if the PSW-W flag isn't set (which is the case for linux-user on hppa).
 
-  https://github.com/hdeller/qemu-hppa.git tags/hppa-v9.1-fixes-pull-request
+Fixes: 081a0ed188d8 ("target/hppa: Do not mask in copy_iaoq_entry")
+Cc: qemu-stable@nongnu.org # v9.1+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/hppa/cpu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-for you to fetch changes up to d33d3adb573794903380e03e767e06470514cefe:
-
-  target/hppa: Fix random 32-bit linux-user crashes (2024-09-03 22:08:22 +0200)
-
-----------------------------------------------------------------
-hppa target fixes
-
-Two important patches for the hppa target which missed qemu-v9.1:
-- One fix for random linux-user crashes
-- One fix for random issues due to loosing the division V-bit
-  during delivery of hardware interrupts. This triggers all sorts
-  of random faults when running in system mode.
-
-Helge
-
-----------------------------------------------------------------
-
-Helge Deller (2):
-  target/hppa: Fix PSW V-bit packaging in cpu_hppa_get for hppa64
-  target/hppa: Fix random 32-bit linux-user crashes
-
- target/hppa/cpu.h    | 4 ++--
- target/hppa/helper.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 5478b183dc..43074d80bf 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -319,7 +319,7 @@ static inline target_ulong hppa_form_gva_psw(target_ulong psw, uint64_t spc,
+                                              target_ulong off)
+ {
+ #ifdef CONFIG_USER_ONLY
+-    return off;
++    return off & gva_offset_mask(psw);
+ #else
+     return spc | (off & gva_offset_mask(psw));
+ #endif
 -- 
 2.46.0
 
