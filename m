@@ -4,57 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B092CD4857
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 15:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFCDCD4853
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 15:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slrtm-0001dN-TU; Wed, 04 Sep 2024 11:26:22 -0400
+	id 1slrtv-0001xV-O3; Wed, 04 Sep 2024 11:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1slrti-0001bC-2O; Wed, 04 Sep 2024 11:26:19 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrtu-0001vz-DX
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:26:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1slrtf-0006FM-5I; Wed, 04 Sep 2024 11:26:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1725463566; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
- bh=YFVzdlBcISTW5f+IlB4+ZoCNpWUmK1nhHX9vVW8deBs=;
- b=gKC38CpeAbMYe/U/twilH0Jwt41imcCU2eetmsaTMP6ILG7y8t+RFbVDzIzNbtSMHZfr/zVk/SxTH3zn2veKlV20Xvq61oeMqcUbTuedGU3n5167/zowqQt7bk3PiNS+SgLk2H68SGTmOgP/utwXpdopnyvkISLhO7k8ZX//UxE=
-Received: from 30.251.160.182(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WEIAef8_1725463564) by smtp.aliyun-inc.com;
- Wed, 04 Sep 2024 23:26:06 +0800
-Content-Type: multipart/alternative;
- boundary="------------QG0ZpmxfaGqLM0th5Y2Baedl"
-Message-ID: <141dbbff-55f6-4628-9701-554b0d32440d@linux.alibaba.com>
-Date: Wed, 4 Sep 2024 23:25:20 +0800
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrtt-0006H4-0Q
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 11:26:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725463587;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AasQubtj+1/+uCeYk57TBlUwJ33DTbByO0PDsGa4HmE=;
+ b=I9hS2IRSJbMBJk1CLJwCC1ijkW8icuNLmiyw56Mva46+i1cX8ue3Qm6kYC/eYTglEUbhiD
+ H/REfo9xFLLOyozV9CSD2PJTANi0aONUN8ySUNpfHnluLzfxI6z8Wzun6DovzHc7lNNUm/
+ N+cTKjDVNnNjtFXlZ2m22D3CxXzjuk4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-127-F8qRvOXZMnGHxe922TRwbg-1; Wed, 04 Sep 2024 11:26:25 -0400
+X-MC-Unique: F8qRvOXZMnGHxe922TRwbg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-374c301db60so2354462f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 08:26:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725463584; x=1726068384;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AasQubtj+1/+uCeYk57TBlUwJ33DTbByO0PDsGa4HmE=;
+ b=uH/rUudAOsTmmWrEV0ToRMmN7fSc+UiBEJcHPWseY2JwZbytqyJWUJMI0vDporgKpo
+ wm9RCfTAIAD6ve+M5ZHLoqOuStFfw7ztQotEDHjRbeOSx+pyEehT173Q3lN1DDEjznmq
+ 4EMjYP9l8vzfPPheboW80tNZfermVYkHJK1YVFCFWASS0Nr1JP/H8oU+h0EDK/vk4KbB
+ yNpVfd5QJaX2K3nezbYs7S5jnbqt6kOl828AuaG9VMFErbjwIkD+GAsfBmlTlPOuxVOQ
+ CwhDRP4hO8ykre879TwpBzTULyo1x6wyahy7REoe6+NV40pj80Nainwe1Uo+Anx5a2+q
+ taaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIhyrizciZICorKi8njtsdreTwsWhxiFL68FtMF3yX0glaLatgSy2wb0FTJEleT/AJLMAU5BBv47vH@nongnu.org
+X-Gm-Message-State: AOJu0YyVCuNs5eQ0W48ifXzYTd14TW3IwQzDpEmtV36bQPMO5kNIlQWf
+ FXY5Qr9PTyhFuQ17hLZPyXNUKh9aEPfpdbGFMFOfniAzDFKpuNQUvj+isSeIPFlqkNsceUnnZ2Y
+ L24nk+Rss0jsXLe4/oNv7hNcN//ICXqr/shZhiKa/2J70/tdCocRM
+X-Received: by 2002:a5d:42d0:0:b0:374:c07c:a49 with SMTP id
+ ffacd0b85a97d-374c07c0cfamr8889014f8f.28.1725463583734; 
+ Wed, 04 Sep 2024 08:26:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGh27GLxjFd40RKBvPiPQ7yf6vMWQKwQs10lX/oaJNfxI1UbniB2Ut5yiUgbXLGht5ekGzlmA==
+X-Received: by 2002:a5d:42d0:0:b0:374:c07c:a49 with SMTP id
+ ffacd0b85a97d-374c07c0cfamr8888989f8f.28.1725463583130; 
+ Wed, 04 Sep 2024 08:26:23 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
+ [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-374c1b0a62esm11833420f8f.47.2024.09.04.08.26.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Sep 2024 08:26:22 -0700 (PDT)
+Message-ID: <dd8d72e3-3b78-4981-9cb2-6d20a96fc985@redhat.com>
+Date: Wed, 4 Sep 2024 17:26:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/14] tcg/riscv: Implement vector roti/v/x shi ops
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240830061607.1940-1-zhiwei_liu@linux.alibaba.com>
- <20240830061607.1940-14-zhiwei_liu@linux.alibaba.com>
- <97873524-9e47-44c4-b34a-a27e9833b0e1@linaro.org>
+Subject: Re: [PATCH v2 05/15] hw/cris: Remove the axis-dev88 machine
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
+References: <20240904143603.52934-1-philmd@linaro.org>
+ <20240904143603.52934-6-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <97873524-9e47-44c4-b34a-a27e9833b0e1@linaro.org>
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001,
- USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240904143603.52934-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,347 +150,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------QG0ZpmxfaGqLM0th5Y2Baedl
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On 04/09/2024 16.35, Philippe Mathieu-Daudé wrote:
+> This machine was deprecated for the v9.0 release in commit
+> c7bbef4023 ("docs: mark CRIS support as deprecated").
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   MAINTAINERS                              |   3 +-
+>   configs/devices/cris-softmmu/default.mak |   3 -
+>   hw/cris/axis_dev88.c                     | 351 -----------------------
+>   hw/cris/Kconfig                          |   8 -
+>   hw/cris/meson.build                      |   1 -
+>   5 files changed, 1 insertion(+), 365 deletions(-)
+>   delete mode 100644 hw/cris/axis_dev88.c
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-On 2024/9/3 23:15, Richard Henderson wrote:
-> On 8/29/24 23:16, LIU Zhiwei wrote:
->> @@ -2589,6 +2605,69 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType 
->> type, unsigned vece,
->>               }
->>           }
->>           break;
->> +    case INDEX_op_shli_vec:
->> +        if (a2 > 31) {
->> +            tcg_gen_shls_vec(vece, v0, v1, tcg_constant_i32(a2));
->> +        } else {
->> +            vec_gen_3(INDEX_op_rvv_shli_vec, type, vece, 
->> tcgv_vec_arg(v0),
->> +                      tcgv_vec_arg(v1), a2);
->> +        }
->> +        break;
->> +    case INDEX_op_shri_vec:
->> +        if (a2 > 31) {
->> +            tcg_gen_shrs_vec(vece, v0, v1, tcg_constant_i32(a2));
->> +        } else {
->> +            vec_gen_3(INDEX_op_rvv_shri_vec, type, vece, 
->> tcgv_vec_arg(v0),
->> +                      tcgv_vec_arg(v1), a2);
->> +        }
->> +        break;
->> +    case INDEX_op_sari_vec:
->> +        if (a2 > 31) {
->> +            tcg_gen_sars_vec(vece, v0, v1, tcg_constant_i32(a2));
->> +        } else {
->> +            vec_gen_3(INDEX_op_rvv_sari_vec, type, vece, 
->> tcgv_vec_arg(v0),
->> +                      tcgv_vec_arg(v1), a2);
->> +        }
->> +        break;
->> +    case INDEX_op_rotli_vec:
->> +        t1 = tcg_temp_new_vec(type);
->> +        tcg_gen_shli_vec(vece, t1, v1, a2);
->> +        tcg_gen_shri_vec(vece, v0, v1, (8 << vece) - a2);
->> +        tcg_gen_or_vec(vece, v0, v0, t1);
->> +        tcg_temp_free_vec(t1);
->> +        break;
->> +    case INDEX_op_rotls_vec:
->> +        t1 = tcg_temp_new_vec(type);
->> +        t2 = tcg_temp_new_i32();
->> +        tcg_gen_neg_i32(t2, temp_tcgv_i32(arg_temp(a2)));
->> +        tcg_gen_shrs_vec(vece, v0, v1, t2);
->> +        tcg_gen_shls_vec(vece, t1, v1, temp_tcgv_i32(arg_temp(a2)));
->> +        tcg_gen_or_vec(vece, v0, v0, t1);
->> +        tcg_temp_free_vec(t1);
->> +        tcg_temp_free_i32(t2);
->> +        break;
->
-> I'm trying to work out how much benefit there is here of expanding 
-> these early, as opposed to simply using TCG_REG_TMP0 when the 
-> immediate doesn't fit,
-
-We find for rotli,  it just copied code from the implementation of 
-INDEX_op_shli_vec and INDEX_op_shri_vec if we don't expand it.
-
-   case INDEX_op_rotli_vec:
-         if (a2 > 31) {
-             tcg_out_opc_imm(s, OPC_ADDI, TCG_REG_TMP0, TCG_REG_ZERO, a2);
-             tcg_out_opc_vx(s, OPC_VSLL_VX, TCG_REG_V0, a1, TCG_REG_TMP0, true);
-         } else {
-             tcg_out_opc_vi(s, OPC_VSLL_VI, TCG_REG_V0, a1, a2, true);
-         }
-
-         if ((8 << vece) - a2) > 31) {
-             tcg_out_opc_imm(s, OPC_ADDI, TCG_REG_TMP0, TCG_REG_ZERO, 8 << vece) - a2);
-             tcg_out_opc_vx(s, OPC_VSRL_VX, a0, a1, TCG_REG_TMP0, true);
-         } else {
-             tcg_out_opc_vi(s, OPC_VSRL_VI, a0, a1, 8 << vece) - a2, true);
-         }
-         tcg_out_opc_vv(s, OPC_VOR_VV, a0, a0, TCG_REG_V0, true);
-         break;
-
-Thus, I prefer to expand it early, at least for rotli_vec.
-
-Thanks,
-Zhiwei
-
-> or for rotls_vec negation.
->
->> +    case INDEX_op_rotlv_vec:
->> +        v2 = temp_tcgv_vec(arg_temp(a2));
->> +        t1 = tcg_temp_new_vec(type);
->> +        tcg_gen_neg_vec(vece, t1, v2);
->> +        vec_gen_3(INDEX_op_shrv_vec, type, vece, tcgv_vec_arg(t1),
->> +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
->> +        vec_gen_3(INDEX_op_shlv_vec, type, vece, tcgv_vec_arg(v0),
->> +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
->> +        tcg_gen_or_vec(vece, v0, v0, t1);
->> +        tcg_temp_free_vec(t1);
->> +        break;
->> +    case INDEX_op_rotrv_vec:
->> +        v2 = temp_tcgv_vec(arg_temp(a2));
->> +        t1 = tcg_temp_new_vec(type);
->> +        tcg_gen_neg_vec(vece, t1, v2);
->> +        vec_gen_3(INDEX_op_shlv_vec, type, vece, tcgv_vec_arg(t1),
->> +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
->> +        vec_gen_3(INDEX_op_shrv_vec, type, vece, tcgv_vec_arg(v0),
->> +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
->> +        tcg_gen_or_vec(vece, v0, v0, t1);
->> +        tcg_temp_free_vec(t1);
->> +        break;
->
-> And here we can use TCG_REG_V0 as the temporary, both for negation and 
-> shift intermediate.
->
->     vrsub_vi  V0, a2, 0
->     vshlv_vv  V0, a1, V0
->     vshrv_vv  a0, a1, a2
->     vor_vv    a0, a0, V0
->
->
-> r~
---------------QG0ZpmxfaGqLM0th5Y2Baedl
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 2024/9/3 23:15, Richard Henderson
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:97873524-9e47-44c4-b34a-a27e9833b0e1@linaro.org">On
-      8/29/24 23:16, LIU Zhiwei wrote:
-      <br>
-      <blockquote type="cite">@@ -2589,6 +2605,69 @@ void
-        tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
-        <br>
-                      }
-        <br>
-                  }
-        <br>
-                  break;
-        <br>
-        +    case INDEX_op_shli_vec:
-        <br>
-        +        if (a2 &gt; 31) {
-        <br>
-        +            tcg_gen_shls_vec(vece, v0, v1,
-        tcg_constant_i32(a2));
-        <br>
-        +        } else {
-        <br>
-        +            vec_gen_3(INDEX_op_rvv_shli_vec, type, vece,
-        tcgv_vec_arg(v0),
-        <br>
-        +                      tcgv_vec_arg(v1), a2);
-        <br>
-        +        }
-        <br>
-        +        break;
-        <br>
-        +    case INDEX_op_shri_vec:
-        <br>
-        +        if (a2 &gt; 31) {
-        <br>
-        +            tcg_gen_shrs_vec(vece, v0, v1,
-        tcg_constant_i32(a2));
-        <br>
-        +        } else {
-        <br>
-        +            vec_gen_3(INDEX_op_rvv_shri_vec, type, vece,
-        tcgv_vec_arg(v0),
-        <br>
-        +                      tcgv_vec_arg(v1), a2);
-        <br>
-        +        }
-        <br>
-        +        break;
-        <br>
-        +    case INDEX_op_sari_vec:
-        <br>
-        +        if (a2 &gt; 31) {
-        <br>
-        +            tcg_gen_sars_vec(vece, v0, v1,
-        tcg_constant_i32(a2));
-        <br>
-        +        } else {
-        <br>
-        +            vec_gen_3(INDEX_op_rvv_sari_vec, type, vece,
-        tcgv_vec_arg(v0),
-        <br>
-        +                      tcgv_vec_arg(v1), a2);
-        <br>
-        +        }
-        <br>
-        +        break;
-        <br>
-        +    case INDEX_op_rotli_vec:
-        <br>
-        +        t1 = tcg_temp_new_vec(type);
-        <br>
-        +        tcg_gen_shli_vec(vece, t1, v1, a2);
-        <br>
-        +        tcg_gen_shri_vec(vece, v0, v1, (8 &lt;&lt; vece) - a2);
-        <br>
-        +        tcg_gen_or_vec(vece, v0, v0, t1);
-        <br>
-        +        tcg_temp_free_vec(t1);
-        <br>
-        +        break;
-        <br>
-        +    case INDEX_op_rotls_vec:
-        <br>
-        +        t1 = tcg_temp_new_vec(type);
-        <br>
-        +        t2 = tcg_temp_new_i32();
-        <br>
-        +        tcg_gen_neg_i32(t2, temp_tcgv_i32(arg_temp(a2)));
-        <br>
-        +        tcg_gen_shrs_vec(vece, v0, v1, t2);
-        <br>
-        +        tcg_gen_shls_vec(vece, t1, v1,
-        temp_tcgv_i32(arg_temp(a2)));
-        <br>
-        +        tcg_gen_or_vec(vece, v0, v0, t1);
-        <br>
-        +        tcg_temp_free_vec(t1);
-        <br>
-        +        tcg_temp_free_i32(t2);
-        <br>
-        +        break;
-        <br>
-      </blockquote>
-      <br>
-      I'm trying to work out how much benefit there is here of expanding
-      these early, as opposed to simply using TCG_REG_TMP0 when the
-      immediate doesn't fit,</blockquote>
-    <p>We find for rotli,  it just copied code from the implementation
-      of INDEX_op_shli_vec and INDEX_op_shri_vec if we don't expand it.<br>
-    </p>
-    <pre>  case INDEX_op_rotli_vec:
-        if (a2 &gt; 31) {
-            tcg_out_opc_imm(s, OPC_ADDI, TCG_REG_TMP0, TCG_REG_ZERO, a2);
-            tcg_out_opc_vx(s, OPC_VSLL_VX, TCG_REG_V0, a1, TCG_REG_TMP0, true);
-        } else {
-            tcg_out_opc_vi(s, OPC_VSLL_VI, TCG_REG_V0, a1, a2, true);
-        }
-
-        if ((8 &lt;&lt; vece) - a2) &gt; 31) {
-            tcg_out_opc_imm(s, OPC_ADDI, TCG_REG_TMP0, TCG_REG_ZERO, 8 &lt;&lt; vece) - a2);
-            tcg_out_opc_vx(s, OPC_VSRL_VX, a0, a1, TCG_REG_TMP0, true);
-        } else {
-            tcg_out_opc_vi(s, OPC_VSRL_VI, a0, a1, 8 &lt;&lt; vece) - a2, true);
-        }
-        tcg_out_opc_vv(s, OPC_VOR_VV, a0, a0, TCG_REG_V0, true);
-        break;</pre>
-    <p>Thus, I prefer to expand it early, at least for rotli_vec.</p>
-    <p>Thanks,<br>
-      Zhiwei<br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:97873524-9e47-44c4-b34a-a27e9833b0e1@linaro.org"> or for
-      rotls_vec negation.
-      <br>
-      <br>
-      <blockquote type="cite">+    case INDEX_op_rotlv_vec:
-        <br>
-        +        v2 = temp_tcgv_vec(arg_temp(a2));
-        <br>
-        +        t1 = tcg_temp_new_vec(type);
-        <br>
-        +        tcg_gen_neg_vec(vece, t1, v2);
-        <br>
-        +        vec_gen_3(INDEX_op_shrv_vec, type, vece,
-        tcgv_vec_arg(t1),
-        <br>
-        +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
-        <br>
-        +        vec_gen_3(INDEX_op_shlv_vec, type, vece,
-        tcgv_vec_arg(v0),
-        <br>
-        +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
-        <br>
-        +        tcg_gen_or_vec(vece, v0, v0, t1);
-        <br>
-        +        tcg_temp_free_vec(t1);
-        <br>
-        +        break;
-        <br>
-        +    case INDEX_op_rotrv_vec:
-        <br>
-        +        v2 = temp_tcgv_vec(arg_temp(a2));
-        <br>
-        +        t1 = tcg_temp_new_vec(type);
-        <br>
-        +        tcg_gen_neg_vec(vece, t1, v2);
-        <br>
-        +        vec_gen_3(INDEX_op_shlv_vec, type, vece,
-        tcgv_vec_arg(t1),
-        <br>
-        +                  tcgv_vec_arg(v1), tcgv_vec_arg(t1));
-        <br>
-        +        vec_gen_3(INDEX_op_shrv_vec, type, vece,
-        tcgv_vec_arg(v0),
-        <br>
-        +                  tcgv_vec_arg(v1), tcgv_vec_arg(v2));
-        <br>
-        +        tcg_gen_or_vec(vece, v0, v0, t1);
-        <br>
-        +        tcg_temp_free_vec(t1);
-        <br>
-        +        break;
-        <br>
-      </blockquote>
-      <br>
-      And here we can use TCG_REG_V0 as the temporary, both for negation
-      and shift intermediate.
-      <br>
-      <br>
-          vrsub_vi  V0, a2, 0
-      <br>
-          vshlv_vv  V0, a1, V0
-      <br>
-          vshrv_vv  a0, a1, a2
-      <br>
-          vor_vv    a0, a0, V0
-      <br>
-      <br>
-      <br>
-      r~
-      <br>
-    </blockquote>
-  </body>
-</html>
-
---------------QG0ZpmxfaGqLM0th5Y2Baedl--
 
