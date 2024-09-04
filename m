@@ -4,119 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8822CD484A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F98CD484A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 14:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slrBu-0002IF-0y; Wed, 04 Sep 2024 10:41:02 -0400
+	id 1slrCR-0004yi-B2; Wed, 04 Sep 2024 10:41:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1slrBs-0002D8-Oa
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:41:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrCO-0004fp-66
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:41:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1slrBr-0007MN-3k
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:41:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slrCL-0007jk-Lv
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 10:41:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725460858;
+ s=mimecast20190719; t=1725460888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=c7P1uzDN/52FPeGB3kibgn6TFI+vrxiSWk93tGyE0ZQ=;
- b=DiZooLsMWUfx/LbZjGiCNIHIMR7OkX5/QYUvXXcFZVAByy5Doc81MNRJ2eppR9rLUKdPFo
- cu2eD3seKGcsdmt7VWgJA5yQk+iC/CUVMFSlOxdKlQ8vY+3a+6fSZtX5cbfS0cXdX8eXBK
- 6oqGLEJQaDVnVTZAlk0/vBS1fqXg43M=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AmaJgsrG02MIPWLM8397qkUTQ6KMNXAC2MVuMNFCE+U=;
+ b=YGDjaoHrgGXjhzyYstCkNZ/K3oKww9mQxmUKfN+RfbgQubijCRgaYEeiwgUowYMeExamZg
+ PTPY8n1aWFa+9K2jhNlsPZxjQjuyYUFcJRhwFCm1DLI3izsZSwdoADoRo9PU2siEI4tOZN
+ /C9UIpXsGeY5FO3Hl31ozbuDoXdjSPg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-434-LXQrdWsmOMmoUagHufmVfg-1; Wed, 04 Sep 2024 10:40:56 -0400
-X-MC-Unique: LXQrdWsmOMmoUagHufmVfg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a8685464a7dso488862466b.1
- for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:40:56 -0700 (PDT)
+ us-mta-454-zKUhzBn5MMq5DBibdiRaDQ-1; Wed, 04 Sep 2024 10:41:26 -0400
+X-MC-Unique: zKUhzBn5MMq5DBibdiRaDQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42bb9fa67c5so12606775e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 07:41:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725460855; x=1726065655;
+ d=1e100.net; s=20230601; t=1725460885; x=1726065685;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=c7P1uzDN/52FPeGB3kibgn6TFI+vrxiSWk93tGyE0ZQ=;
- b=t8Y1HnhEbHEplXMPFshdHFkjczUPNVEt+klV1+gRVJwgtQBB1RnlhzxDw7hPRIYrfz
- VXDa2nkE8rz+a67rAU4QzcdooV4boyBLD8MToghEz+ac2Csb1qy+xapjWQ42NFOrMrT4
- TnLAQRk8ZV9xB/qWFhTkc8HmV2MocxOUmh9i09VnU5BT55h7lOakOBwrffgjd1PQej+J
- jmPYiNqKBx5R2eQ9jT0xOXuRIrAAc+NqOG3jvABT5Y3yjH8KpaI/PlFMNlx5qYhWyV22
- GxfazxlJWzuuN+aPsLhINT3ivYcBtaA7OD/KZqdlxTWuKeUztYwX7MKMCvPifuOmYuW3
- mU/g==
-X-Gm-Message-State: AOJu0YzA8MOqWdZN1WuJQAcwR84+Q6WZCWz6DUMwkdyzUjOybTC3ek9n
- /IXt7J1FoEVOY36swGPGX90yEX61z2nNv4vC9rrmdSpcmHxvQBa63N1jOfqENs5tVojmKI7CnEw
- eLC3niRg+1sLnMXKUFdHYqFSjaJfF2Cf0EUJua4RswMdxDdjXUCW02SSL+DNs/5E=
-X-Received: by 2002:a17:907:980c:b0:a86:8f57:7de0 with SMTP id
- a640c23a62f3a-a89a37aa9famr1263777066b.49.1725460854200; 
- Wed, 04 Sep 2024 07:40:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEaEYOuQxOteVzM57N7XhVK7OXzgSmNZoT/RmeoY23r/b0B5LA9GAOUC+Ys6m2igKLexS4wmQ==
-X-Received: by 2002:a17:907:980c:b0:a86:8f57:7de0 with SMTP id
- a640c23a62f3a-a89a37aa9famr1263774266b.49.1725460853594; 
- Wed, 04 Sep 2024 07:40:53 -0700 (PDT)
-Received: from [192.168.10.3] ([151.95.101.29])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-a8a61fbaef4sm1187166b.27.2024.09.04.07.40.52
+ bh=AmaJgsrG02MIPWLM8397qkUTQ6KMNXAC2MVuMNFCE+U=;
+ b=kOsEhnhoF7g7vh9O8fGPMd4zjtwGgJTzlqtkBSM2ORzX06ATF1+1WzcEouQVd/6ps+
+ WI0+hV0S+FkqSZSKYfa6a/JEILpLtAQ4PNTZ5Hgen0o78oSuXFP+D3202Gx9T/mN9hNe
+ MlmFHn0dQgDS+w9JeEJwoolzmW1K8PxkzJ/ecYZbXZHh4ZYNT1cIOGJuY17pUKYvmDkI
+ Gb7P0hODT6EVqWkAYMu6yPus4Y3gvO7TDGtIM/OAEWgzm5VzyISScF3z/XGtDLvTvWua
+ DpxVZZ1SajmpF1NNIYahiQudO7OcY3DXZLKqP1Ms7qxvThOj3yBaiyoaZoas+/alqI4A
+ fWvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUtRFG7ACxT/SJTbapwzjjajinpXcRy1JYMbvpDePIkIQkZsnwSoJ0CsiTg8Jd1n8c5d1tf8eXImLr2@nongnu.org
+X-Gm-Message-State: AOJu0YyqZmk5AyFRk+LH6FTYWHfaphIiPs8fFeH9rE5IYcX/Fsq0ofBt
+ lNFw9dqXZlC6c6Dkn716TUh7618bhFJmSoG0WVExOoWLZAis/p3K7nPSYOAisSt3Q5DFeVErfGD
+ JPWUn7+xUCCYsRqOwYGH3dvocaN+hXZFAZKJy14tD/KhpEN5PQwkW
+X-Received: by 2002:a05:600c:a06:b0:42a:a6d2:3270 with SMTP id
+ 5b1f17b1804b1-42bb01c0f9fmr158164845e9.21.1725460885641; 
+ Wed, 04 Sep 2024 07:41:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoCJ3lVVLkVyWV4Yv3DYBHLQ+n/STT4Y6rPYUXggEyvDeRkjPW1UdB3kpKEmyWt083qd/x/Q==
+X-Received: by 2002:a05:600c:a06:b0:42a:a6d2:3270 with SMTP id
+ 5b1f17b1804b1-42bb01c0f9fmr158164655e9.21.1725460885115; 
+ Wed, 04 Sep 2024 07:41:25 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-176-181.web.vodafone.de.
+ [109.43.176.181]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bbdda3958sm173823525e9.26.2024.09.04.07.41.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Sep 2024 07:40:53 -0700 (PDT)
-Message-ID: <29c4518e-4442-4638-a35f-8ad21f07b37d@redhat.com>
-Date: Wed, 4 Sep 2024 16:40:47 +0200
+ Wed, 04 Sep 2024 07:41:24 -0700 (PDT)
+Message-ID: <bd761eb0-7623-44b8-a0dd-d2e1613eec88@redhat.com>
+Date: Wed, 4 Sep 2024 16:41:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/9] target/i386: Misc cleanup on KVM PV defs, outdated
- comments and error handling
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org
-References: <20240716161015.263031-1-zhao1.liu@intel.com>
- <ZthkvhgLMfEfXCZ8@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 02/15] tests/tcg: Remove CRIS bare test files
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Peter Maydell <peter.maydell@linaro.org>, devel@lists.libvirt.org
+References: <20240904143603.52934-1-philmd@linaro.org>
+ <20240904143603.52934-3-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <ZthkvhgLMfEfXCZ8@intel.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240904143603.52934-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -141,80 +150,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/24 15:46, Zhao Liu wrote:
-> Hi Paolo,
+On 04/09/2024 16.35, Philippe Mathieu-Daudé wrote:
+> We are going to remove the CRIS target.
 > 
-> Just a kindly ping.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   MAINTAINERS                           |   1 -
+>   tests/tcg/cris/bare/sys.c             |  63 -------
+>   scripts/probe-gdb-support.py          |   1 -
+>   tests/tcg/cris/.gdbinit               |  11 --
+>   tests/tcg/cris/Makefile.target        |  62 -------
+>   tests/tcg/cris/README                 |   1 -
+>   tests/tcg/cris/bare/check_addcv17.s   |  65 -------
+>   tests/tcg/cris/bare/check_addi.s      |  57 ------
+>   tests/tcg/cris/bare/check_addiv32.s   |  62 -------
+>   tests/tcg/cris/bare/check_addm.s      |  96 ----------
+>   tests/tcg/cris/bare/check_addq.s      |  47 -----
+>   tests/tcg/cris/bare/check_addr.s      |  96 ----------
+>   tests/tcg/cris/bare/check_addxc.s     |  91 ---------
+>   tests/tcg/cris/bare/check_addxm.s     | 106 -----------
+>   tests/tcg/cris/bare/check_addxr.s     |  96 ----------
+>   tests/tcg/cris/bare/check_andc.s      |  80 --------
+>   tests/tcg/cris/bare/check_andm.s      |  90 ---------
+>   tests/tcg/cris/bare/check_andq.s      |  46 -----
+>   tests/tcg/cris/bare/check_andr.s      |  95 ----------
+>   tests/tcg/cris/bare/check_asr.s       | 230 -----------------------
+>   tests/tcg/cris/bare/check_ba.s        |  93 ----------
+>   tests/tcg/cris/bare/check_bas.s       | 102 ----------
+>   tests/tcg/cris/bare/check_bcc.s       | 197 --------------------
+>   tests/tcg/cris/bare/check_boundc.s    | 101 ----------
+>   tests/tcg/cris/bare/check_boundr.s    | 125 -------------
+>   tests/tcg/cris/bare/check_btst.s      |  96 ----------
+>   tests/tcg/cris/bare/check_clearfv32.s |  19 --
+>   tests/tcg/cris/bare/check_clrjmp1.s   |  36 ----
+>   tests/tcg/cris/bare/check_cmp-2.s     |  15 --
+>   tests/tcg/cris/bare/check_cmpc.s      |  86 ---------
+>   tests/tcg/cris/bare/check_cmpm.s      |  96 ----------
+>   tests/tcg/cris/bare/check_cmpq.s      |  75 --------
+>   tests/tcg/cris/bare/check_cmpr.s      | 102 ----------
+>   tests/tcg/cris/bare/check_cmpxc.s     |  92 ---------
+>   tests/tcg/cris/bare/check_cmpxm.s     | 106 -----------
+>   tests/tcg/cris/bare/check_dstep.s     |  42 -----
+>   tests/tcg/cris/bare/check_jsr.s       |  85 ---------
+>   tests/tcg/cris/bare/check_lapc.s      |  78 --------
+>   tests/tcg/cris/bare/check_lsl.s       | 217 ----------------------
+>   tests/tcg/cris/bare/check_lsr.s       | 218 ----------------------
+>   tests/tcg/cris/bare/check_mcp.s       |  49 -----
+>   tests/tcg/cris/bare/check_movdelsr1.s |  33 ----
+>   tests/tcg/cris/bare/check_movecr.s    |  37 ----
+>   tests/tcg/cris/bare/check_movei.s     |  50 -----
+>   tests/tcg/cris/bare/check_movemr.s    |  78 --------
+>   tests/tcg/cris/bare/check_movemrv32.s |  96 ----------
+>   tests/tcg/cris/bare/check_mover.s     |  28 ---
+>   tests/tcg/cris/bare/check_moverm.s    |  45 -----
+>   tests/tcg/cris/bare/check_movmp.s     | 131 -------------
+>   tests/tcg/cris/bare/check_movpmv32.s  |  35 ----
+>   tests/tcg/cris/bare/check_movpr.s     |  28 ---
+>   tests/tcg/cris/bare/check_movprv32.s  |  21 ---
+>   tests/tcg/cris/bare/check_movscr.s    |  29 ---
+>   tests/tcg/cris/bare/check_movsm.s     |  44 -----
+>   tests/tcg/cris/bare/check_movsr.s     |  46 -----
+>   tests/tcg/cris/bare/check_movucr.s    |  33 ----
+>   tests/tcg/cris/bare/check_movum.s     |  40 ----
+>   tests/tcg/cris/bare/check_movur.s     |  45 -----
+>   tests/tcg/cris/bare/check_mulv32.s    |  51 -----
+>   tests/tcg/cris/bare/check_mulx.s      | 257 --------------------------
+>   tests/tcg/cris/bare/check_neg.s       | 104 -----------
+>   tests/tcg/cris/bare/check_not.s       |  31 ----
+>   tests/tcg/cris/bare/check_orc.s       |  71 -------
+>   tests/tcg/cris/bare/check_orm.s       |  75 --------
+>   tests/tcg/cris/bare/check_orq.s       |  41 ----
+>   tests/tcg/cris/bare/check_orr.s       |  84 ---------
+>   tests/tcg/cris/bare/check_ret.s       |  25 ---
+>   tests/tcg/cris/bare/check_scc.s       |  95 ----------
+>   tests/tcg/cris/bare/check_subc.s      |  87 ---------
+>   tests/tcg/cris/bare/check_subm.s      |  96 ----------
+>   tests/tcg/cris/bare/check_subq.s      |  52 ------
+>   tests/tcg/cris/bare/check_subr.s      | 102 ----------
+>   tests/tcg/cris/bare/check_xarith.s    |  72 --------
+>   tests/tcg/cris/bare/crt.s             |  13 --
+>   tests/tcg/cris/bare/testutils.inc     | 117 ------------
+>   75 files changed, 5618 deletions(-)
 
-It's on my list now that 9.1 has been released.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-Paolo
-
-> 
-> Thanks,
-> Zhao
-> 
-> On Wed, Jul 17, 2024 at 12:10:06AM +0800, Zhao Liu wrote:
->> Date: Wed, 17 Jul 2024 00:10:06 +0800
->> From: Zhao Liu <zhao1.liu@intel.com>
->> Subject: [PATCH v4 0/9] target/i386: Misc cleanup on KVM PV defs, outdated
->>   comments and error handling
->> X-Mailer: git-send-email 2.34.1
->>
->> Hi,
->>
->> This is my v4 cleanup series. Compared with v3 [1],
->>   * Returned kvm_vm_ioctl() directly in kvm_install_msr_filters().
->>   * Added a patch (patch 9) to clean up ARRAY_SIZE(msr_handlers).
->>
->>
->> Background and Introduction
->> ===========================
->>
->> This series picks cleanup from my previous kvmclock [2] (as other
->> renaming attempts were temporarily put on hold).
->>
->> In addition, this series also include the cleanup on a historically
->> workaround, recent comment of coco interface [3] and error handling
->> corner cases in kvm_arch_init().
->>
->> Avoiding the fragmentation of these misc cleanups, I consolidated them
->> all in one series and was able to tackle them in one go!
->>
->> [1]: https://lore.kernel.org/qemu-devel/20240715044955.3954304-1-zhao1.liu@intel.com/T/
->> [2]: https://lore.kernel.org/qemu-devel/20240329101954.3954987-1-zhao1.liu@linux.intel.com/
->> [3]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
->>
->> Thanks and Best Regards,
->> Zhao
->> ---
->> Zhao Liu (9):
->>    target/i386/kvm: Add feature bit definitions for KVM CPUID
->>    target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
->>      MSR_KVM_SYSTEM_TIME definitions
->>    target/i386/kvm: Only save/load kvmclock MSRs when kvmclock enabled
->>    target/i386/kvm: Save/load MSRs of kvmclock2
->>      (KVM_FEATURE_CLOCKSOURCE2)
->>    target/i386/kvm: Drop workaround for KVM_X86_DISABLE_EXITS_HTL typo
->>    target/i386/confidential-guest: Fix comment of
->>      x86_confidential_guest_kvm_type()
->>    target/i386/kvm: Clean up return values of MSR filter related
->>      functions
->>    target/i386/kvm: Clean up error handling in kvm_arch_init()
->>    target/i386/kvm: Replace ARRAY_SIZE(msr_handlers) with
->>      KVM_MSR_FILTER_MAX_RANGES
->>
->>   hw/i386/kvm/clock.c              |   5 +-
->>   target/i386/confidential-guest.h |   2 +-
->>   target/i386/cpu.h                |  25 +++++++
->>   target/i386/kvm/kvm.c            | 113 +++++++++++++++++--------------
->>   target/i386/kvm/kvm_i386.h       |   4 +-
->>   5 files changed, 92 insertions(+), 57 deletions(-)
->>
->> -- 
->> 2.34.1
->>
-> 
-> 
 
 
