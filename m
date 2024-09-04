@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BBECD37B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEDACD37B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:48:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slpNg-0005R0-MT; Wed, 04 Sep 2024 08:45:04 -0400
+	id 1slpP8-00030B-2i; Wed, 04 Sep 2024 08:46:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNg-0005Oc-1N
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:04 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1slpNy-0006n8-9t; Wed, 04 Sep 2024 08:45:22 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNd-0005eR-TF
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:03 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1slpNw-0005uU-93; Wed, 04 Sep 2024 08:45:22 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 88096219AE;
- Wed,  4 Sep 2024 12:45:00 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1996E219AE;
+ Wed,  4 Sep 2024 12:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453918; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
- b=HR4v3PxkH0s8+eS21lczadfjUDOhktr3ESG+wkxyRj5uZdBI4h96K7OtBEjooDbR3RYB7f
- 2qXxDcFAvVkzSFsqfNJ4vL1MZPa66b28Vrxe+cQ8lVT4ahWX3IUkqMesocBfUjCMEakdy0
- 4fv8kj20UrdV08WydIQ6Y6bQKMc3WRQ=
+ bh=FsP7vs9wLXy+/Qf4dErPzeH4vBCbn1FKP69bjd7sNkE=;
+ b=0zr1qR8k9vAiHLBRnhCLjZFrHjgQB7KK0qVJo2EhicPJyO2axUqGf9ADDvbyc19E3LW0mZ
+ je4L55RyGyXoVyAbcS8B2ToSfFNOeCPQHeIQpmCm63FFkOCA180GtvOX/2cAShZZuDzlpm
+ LBMZLVH29kCxdWW2gK2ZLRhIcOCEntM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453900;
+ s=susede2_ed25519; t=1725453918;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
- b=WJpMTK51+co9ql/V+3o0AE8ChjTQnOVA2LspLb8+1nvNmf0w/uvvgFLGVB2OjzZz2FWiY4
- S9If3oOwt53FVMCg==
+ bh=FsP7vs9wLXy+/Qf4dErPzeH4vBCbn1FKP69bjd7sNkE=;
+ b=/NzjHL2Rc4zco/UGgV/b+Vk1kct8dx4yeDOHUZns2P2wGnzPu9vRIkwurR7LTJkOwV0mTH
+ 87QWtb5k/ttc73BA==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453918; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
- b=HR4v3PxkH0s8+eS21lczadfjUDOhktr3ESG+wkxyRj5uZdBI4h96K7OtBEjooDbR3RYB7f
- 2qXxDcFAvVkzSFsqfNJ4vL1MZPa66b28Vrxe+cQ8lVT4ahWX3IUkqMesocBfUjCMEakdy0
- 4fv8kj20UrdV08WydIQ6Y6bQKMc3WRQ=
+ bh=FsP7vs9wLXy+/Qf4dErPzeH4vBCbn1FKP69bjd7sNkE=;
+ b=0zr1qR8k9vAiHLBRnhCLjZFrHjgQB7KK0qVJo2EhicPJyO2axUqGf9ADDvbyc19E3LW0mZ
+ je4L55RyGyXoVyAbcS8B2ToSfFNOeCPQHeIQpmCm63FFkOCA180GtvOX/2cAShZZuDzlpm
+ LBMZLVH29kCxdWW2gK2ZLRhIcOCEntM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453900;
+ s=susede2_ed25519; t=1725453918;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5ku2Yclsnnj7YP7PuEDeeWjtItuKjNrIIAnBEqjVWMI=;
- b=WJpMTK51+co9ql/V+3o0AE8ChjTQnOVA2LspLb8+1nvNmf0w/uvvgFLGVB2OjzZz2FWiY4
- S9If3oOwt53FVMCg==
+ bh=FsP7vs9wLXy+/Qf4dErPzeH4vBCbn1FKP69bjd7sNkE=;
+ b=/NzjHL2Rc4zco/UGgV/b+Vk1kct8dx4yeDOHUZns2P2wGnzPu9vRIkwurR7LTJkOwV0mTH
+ 87QWtb5k/ttc73BA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 62FFD139D2;
- Wed,  4 Sep 2024 12:44:59 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3F629139D2;
+ Wed,  4 Sep 2024 12:45:16 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0PCsCktW2GZuVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:59 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AAD0AVxW2GZuVQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:45:16 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 23/34] migration/multifd: Replace multifd_send_state->pages
- with client data
-Date: Wed,  4 Sep 2024 09:44:06 -0300
-Message-Id: <20240904124417.14565-24-farosas@suse.de>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Arman Nabiev <nabiev.arman13@gmail.com>, qemu-stable@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 33/34] target/ppc: Fix migration of CPUs with TLB_EMB TLB type
+Date: Wed,  4 Sep 2024 09:44:16 -0300
+Message-Id: <20240904124417.14565-34-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
 References: <20240904124417.14565-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.935];
- MIME_GOOD(-0.10)[text/plain]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[];
+X-Spamd-Result: default: False [0.20 / 50.00]; MID_CONTAINS_FROM(1.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ BAYES_HAM(-0.00)[41.71%]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TAGGED_RCPT(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:email,suse.de:mid];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[redhat.com,linaro.org,gmail.com,nongnu.org];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -120,254 +124,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Multifd currently has a simple scheduling mechanism that distributes
-work to the various channels by keeping storage space within each
-channel and an extra space that is given to the client. Each time the
-client fills the space with data and calls into multifd, that space is
-given to the next idle channel and a free storage space is taken from
-the channel and given to client for the next iteration.
+From: Arman Nabiev <nabiev.arman13@gmail.com>
 
-This means we always need (#multifd_channels + 1) memory slots to
-operate multifd.
+In vmstate_tlbemb a cut-and-paste error meant we gave
+this vmstate subsection the same "cpu/tlb6xx" name as
+the vmstate_tlb6xx subsection. This breaks migration load
+for any CPU using the TLB_EMB CPU type, because when we
+see the "tlb6xx" name in the incoming data we try to
+interpret it as a vmstate_tlb6xx subsection, which it
+isn't the right format for:
 
-This is fine, except that the presence of this one extra memory slot
-doesn't allow different types of payloads to be processed at the same
-time in different channels, i.e. the data type of
-multifd_send_state->pages needs to be the same as p->pages.
+ $ qemu-system-ppc -drive
+ if=none,format=qcow2,file=/home/petmay01/test-images/virt/dummy.qcow2
+ -monitor stdio -M bamboo
+ QEMU 9.0.92 monitor - type 'help' for more information
+ (qemu) savevm foo
+ (qemu) loadvm foo
+ Missing section footer for cpu
+ Error: Error -22 while loading VM state
 
-For each new data type different from MultiFDPage_t that is to be
-handled, this logic would need to be duplicated by adding new fields
-to multifd_send_state, to the channels and to multifd_send_pages().
+Correct the incorrect vmstate section name. Since migration
+for these CPU types was completely broken before, we don't
+need to care that this is a migration compatibility break.
 
-Fix this situation by moving the extra slot into the client and using
-only the generic type MultiFDSendData in the multifd core.
+This affects the PPC 405, 440, 460 and e200 CPU families.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2522
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Arman Nabiev <nabiev.arman13@gmail.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c | 79 ++++++++++++++++++++++++++-------------------
- migration/multifd.h |  3 ++
- migration/ram.c     |  2 ++
- 3 files changed, 50 insertions(+), 34 deletions(-)
+ target/ppc/machine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 3a164c124d..cb7a121eb0 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -49,7 +49,6 @@ typedef struct {
- 
- struct {
-     MultiFDSendParams *params;
--    MultiFDSendData *data;
-     /*
-      * Global number of generated multifd packets.
-      *
-@@ -97,6 +96,8 @@ struct {
-     MultiFDMethods *ops;
- } *multifd_recv_state;
- 
-+static MultiFDSendData *multifd_ram_send;
-+
- static size_t multifd_ram_payload_size(void)
- {
-     uint32_t n = multifd_ram_page_count();
-@@ -130,6 +131,17 @@ static MultiFDSendData *multifd_send_data_alloc(void)
-     return g_malloc0(size_minus_payload + max_payload_size);
+diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+index 731dd8df35..d433fd45fc 100644
+--- a/target/ppc/machine.c
++++ b/target/ppc/machine.c
+@@ -621,7 +621,7 @@ static bool tlbemb_needed(void *opaque)
  }
  
-+void multifd_ram_save_setup(void)
-+{
-+    multifd_ram_send = multifd_send_data_alloc();
-+}
-+
-+void multifd_ram_save_cleanup(void)
-+{
-+    g_free(multifd_ram_send);
-+    multifd_ram_send = NULL;
-+}
-+
- static bool multifd_use_packets(void)
- {
-     return !migrate_mapped_ram();
-@@ -610,25 +622,20 @@ static void multifd_send_kick_main(MultiFDSendParams *p)
- }
- 
- /*
-- * How we use multifd_send_state->pages and channel->pages?
-+ * multifd_send() works by exchanging the MultiFDSendData object
-+ * provided by the caller with an unused MultiFDSendData object from
-+ * the next channel that is found to be idle.
-  *
-- * We create a pages for each channel, and a main one.  Each time that
-- * we need to send a batch of pages we interchange the ones between
-- * multifd_send_state and the channel that is sending it.  There are
-- * two reasons for that:
-- *    - to not have to do so many mallocs during migration
-- *    - to make easier to know what to free at the end of migration
-+ * The channel owns the data until it finishes transmitting and the
-+ * caller owns the empty object until it fills it with data and calls
-+ * this function again. No locking necessary.
-  *
-- * This way we always know who is the owner of each "pages" struct,
-- * and we don't need any locking.  It belongs to the migration thread
-- * or to the channel thread.  Switching is safe because the migration
-- * thread is using the channel mutex when changing it, and the channel
-- * have to had finish with its own, otherwise pending_job can't be
-- * false.
-+ * Switching is safe because both the migration thread and the channel
-+ * thread have barriers in place to serialize access.
-  *
-  * Returns true if succeed, false otherwise.
-  */
--static bool multifd_send_pages(void)
-+static bool multifd_send(MultiFDSendData **send_data)
- {
-     int i;
-     static int next_channel;
-@@ -669,11 +676,16 @@ static bool multifd_send_pages(void)
-      */
-     smp_mb_acquire();
- 
--    assert(!p->data->u.ram.num);
-+    assert(multifd_payload_empty(p->data));
- 
--    tmp = multifd_send_state->data;
--    multifd_send_state->data = p->data;
-+    /*
-+     * Swap the pointers. The channel gets the client data for
-+     * transferring and the client gets back an unused data slot.
-+     */
-+    tmp = *send_data;
-+    *send_data = p->data;
-     p->data = tmp;
-+
-     /*
-      * Making sure p->data is setup before marking pending_job=true. Pairs
-      * with the qatomic_load_acquire() in multifd_send_thread().
-@@ -705,7 +717,12 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
-     MultiFDPages_t *pages;
- 
- retry:
--    pages = &multifd_send_state->data->u.ram;
-+    pages = &multifd_ram_send->u.ram;
-+
-+    if (multifd_payload_empty(multifd_ram_send)) {
-+        multifd_pages_reset(pages);
-+        multifd_set_payload_type(multifd_ram_send, MULTIFD_PAYLOAD_RAM);
-+    }
- 
-     /* If the queue is empty, we can already enqueue now */
-     if (multifd_queue_empty(pages)) {
-@@ -723,7 +740,7 @@ retry:
-      * After flush, always retry.
-      */
-     if (pages->block != block || multifd_queue_full(pages)) {
--        if (!multifd_send_pages()) {
-+        if (!multifd_send(&multifd_ram_send)) {
-             return false;
-         }
-         goto retry;
-@@ -853,8 +870,6 @@ static void multifd_send_cleanup_state(void)
-     qemu_sem_destroy(&multifd_send_state->channels_ready);
-     g_free(multifd_send_state->params);
-     multifd_send_state->params = NULL;
--    g_free(multifd_send_state->data);
--    multifd_send_state->data = NULL;
-     g_free(multifd_send_state);
-     multifd_send_state = NULL;
- }
-@@ -903,15 +918,14 @@ int multifd_send_sync_main(void)
- {
-     int i;
-     bool flush_zero_copy;
--    MultiFDPages_t *pages;
- 
-     if (!migrate_multifd()) {
-         return 0;
-     }
--    pages = &multifd_send_state->data->u.ram;
--    if (pages->num) {
--        if (!multifd_send_pages()) {
--            error_report("%s: multifd_send_pages fail", __func__);
-+
-+    if (!multifd_payload_empty(multifd_ram_send)) {
-+        if (!multifd_send(&multifd_ram_send)) {
-+            error_report("%s: multifd_send fail", __func__);
-             return -1;
-         }
-     }
-@@ -985,13 +999,11 @@ static void *multifd_send_thread(void *opaque)
- 
-         /*
-          * Read pending_job flag before p->data.  Pairs with the
--         * qatomic_store_release() in multifd_send_pages().
-+         * qatomic_store_release() in multifd_send().
-          */
-         if (qatomic_load_acquire(&p->pending_job)) {
--            MultiFDPages_t *pages = &p->data->u.ram;
--
-             p->iovs_num = 0;
--            assert(pages->num);
-+            assert(!multifd_payload_empty(p->data));
- 
-             ret = multifd_send_state->ops->send_prepare(p, &local_err);
-             if (ret != 0) {
-@@ -1014,13 +1026,13 @@ static void *multifd_send_thread(void *opaque)
-             stat64_add(&mig_stats.multifd_bytes,
-                        p->next_packet_size + p->packet_len);
- 
--            multifd_pages_reset(pages);
-             p->next_packet_size = 0;
-+            multifd_set_payload_type(p->data, MULTIFD_PAYLOAD_NONE);
- 
-             /*
-              * Making sure p->data is published before saying "we're
-              * free".  Pairs with the smp_mb_acquire() in
--             * multifd_send_pages().
-+             * multifd_send().
-              */
-             qatomic_store_release(&p->pending_job, false);
-         } else {
-@@ -1212,7 +1224,6 @@ bool multifd_send_setup(void)
-     thread_count = migrate_multifd_channels();
-     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
-     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
--    multifd_send_state->data = multifd_send_data_alloc();
-     qemu_sem_init(&multifd_send_state->channels_created, 0);
-     qemu_sem_init(&multifd_send_state->channels_ready, 0);
-     qatomic_set(&multifd_send_state->exiting, 0);
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 9175104aea..5fa384d9af 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -267,4 +267,7 @@ static inline uint32_t multifd_ram_page_count(void)
- {
-     return MULTIFD_PACKET_SIZE / qemu_target_page_size();
- }
-+
-+void multifd_ram_save_setup(void);
-+void multifd_ram_save_cleanup(void);
- #endif
-diff --git a/migration/ram.c b/migration/ram.c
-index edec1a2d07..1815b2557b 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2387,6 +2387,7 @@ static void ram_save_cleanup(void *opaque)
-     ram_bitmaps_destroy();
- 
-     xbzrle_cleanup();
-+    multifd_ram_save_cleanup();
-     ram_state_cleanup(rsp);
-     g_free(migration_ops);
-     migration_ops = NULL;
-@@ -3058,6 +3059,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
-     migration_ops = g_malloc0(sizeof(MigrationOps));
- 
-     if (migrate_multifd()) {
-+        multifd_ram_save_setup();
-         migration_ops->ram_save_target_page = ram_save_target_page_multifd;
-     } else {
-         migration_ops->ram_save_target_page = ram_save_target_page_legacy;
+ static const VMStateDescription vmstate_tlbemb = {
+-    .name = "cpu/tlb6xx",
++    .name = "cpu/tlbemb",
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .needed = tlbemb_needed,
 -- 
 2.35.3
 
