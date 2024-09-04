@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A0ECD484B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7585BCA0ED3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnRP-0004FT-5d; Wed, 04 Sep 2024 06:40:47 -0400
+	id 1slnRj-0006tf-Qr; Wed, 04 Sep 2024 06:41:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRN-000445-KG
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRi-0006iN-LF
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRL-0000LU-HN
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRf-0000TI-Vw
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:41:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446442;
+ s=mimecast20190719; t=1725446463;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v9lUhlwmmGx7wKs+jjceiAFrC/JioYt5A/Uj0iFNjfI=;
- b=E8tLI9Hjc+Ng0yEe8PciMLIMZBvzjfZxNoSJjfxzMgRtRMXEb0xEsrxc8mkaK/L3q5T5Ij
- Q2UAGm0SXHduF78Zw+ViYzhebwoE+fG55TtRYhyqnqOadEfXWQjTl40wfMEbG2ljcyub64
- cHA6y9IQR+QtCecxR6ularEyY36cE9k=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+H2zAIaCvXqycK9RY55+UERYhbxvdqjfeqsuSJFsjxs=;
+ b=QFZ6FlWGlnfapCEM/5fGxPnNHI7gw1VhvLgXfj5TP5QDhoOqaE9hdoOZa4zU4E6ijUE+Z+
+ QcNtns0/dvrnkcgjfhWNCCxCZ1kCWawbEnyEIJHDcmKjzQXuNRofieFo5BaC6N0mxETmQw
+ 92reQV5SAee9mqx8g78uwhA4y74a3VM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-471-lzD2LAQzOnulhTccFRbq2Q-1; Wed,
- 04 Sep 2024 06:40:39 -0400
-X-MC-Unique: lzD2LAQzOnulhTccFRbq2Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-Y0kW9bHPMG69-DOACNWL7Q-1; Wed,
+ 04 Sep 2024 06:40:57 -0400
+X-MC-Unique: Y0kW9bHPMG69-DOACNWL7Q-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29EDA1955F40; Wed,  4 Sep 2024 10:40:38 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E7451955D45; Wed,  4 Sep 2024 10:40:56 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2DA83195605A; Wed,  4 Sep 2024 10:40:35 +0000 (UTC)
+ id 598E3195605A; Wed,  4 Sep 2024 10:40:54 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 25/42] tests/functional: Convert the ppc_amiga avocado test
- into a standalone test
-Date: Wed,  4 Sep 2024 12:39:00 +0200
-Message-ID: <20240904103923.451847-26-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Subject: [PULL 32/42] tests/functional: Convert Aarch64 SBSA-Ref avocado tests
+Date: Wed,  4 Sep 2024 12:39:07 +0200
+Message-ID: <20240904103923.451847-33-thuth@redhat.com>
 In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
 References: <20240904103923.451847-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,137 +85,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the Python standard zipfile module instead of avocado.utils for
-extracting the ZIP file that we download here, and use the standard
-subprocess module for running the "tail" command.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240830133841.142644-27-thuth@redhat.com>
+Straight forward conversion. Since SBSA_FLASH files are not
+tarballs, use lzma_uncompress() method.
+
+Avocado used to set a timeout of 11 tests * 180s = 1980s.
+Hopefully 600s should be sufficient.
+
+Running on macOS Sonoma / Apple silicon M1:
+
+  $ QEMU_TEST_TIMEOUT_EXPECTED=1 make check-functional-aarch64 V=1
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max              OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_off    OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_alpine_linux_neoverse_n1      OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_edk2_firmware                 OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_cortex_a57          OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max                 OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_impdef    OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_max_pauth_off       OK
+  ▶ 1/5 test_aarch64_sbsaref.Aarch64SbsarefMachine.test_sbsaref_openbsd73_neoverse_n1         OK
+  1/5 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_sbsaref        OK   241.79s  11 subtests passed
+  ...
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240823131614.10269-1-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Message-ID: <20240830133841.142644-35-thuth@redhat.com>
+[thuth: remove remaining Avocado tags]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                        |  1 +
- tests/avocado/ppc_amiga.py         | 38 --------------------------
- tests/functional/meson.build       |  1 +
- tests/functional/test_ppc_amiga.py | 43 ++++++++++++++++++++++++++++++
- 4 files changed, 45 insertions(+), 38 deletions(-)
- delete mode 100644 tests/avocado/ppc_amiga.py
- create mode 100755 tests/functional/test_ppc_amiga.py
+ MAINTAINERS                                   |   2 +-
+ tests/functional/meson.build                  |   5 +
+ .../test_aarch64_sbsaref.py}                  | 148 ++++++------------
+ 3 files changed, 55 insertions(+), 100 deletions(-)
+ rename tests/{avocado/machine_aarch64_sbsaref.py => functional/test_aarch64_sbsaref.py} (55%)
+ mode change 100644 => 100755
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index cb55ead291..ee291e6d55 100644
+index a0b7e68c62..edd8e03a42 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1596,6 +1596,7 @@ S: Maintained
- F: hw/ppc/amigaone.c
- F: hw/pci-host/articia.c
- F: include/hw/pci-host/articia.h
-+F: tests/functional/test_ppc_amiga.py
+@@ -970,7 +970,7 @@ F: hw/misc/sbsa_ec.c
+ F: hw/watchdog/sbsa_gwdt.c
+ F: include/hw/watchdog/sbsa_gwdt.h
+ F: docs/system/arm/sbsa.rst
+-F: tests/avocado/machine_aarch64_sbsaref.py
++F: tests/functional/test_aarch64_sbsaref.py
  
- Virtual Open Firmware (VOF)
- M: Alexey Kardashevskiy <aik@ozlabs.ru>
-diff --git a/tests/avocado/ppc_amiga.py b/tests/avocado/ppc_amiga.py
-deleted file mode 100644
-index b6f866f91d..0000000000
---- a/tests/avocado/ppc_amiga.py
-+++ /dev/null
-@@ -1,38 +0,0 @@
--# Test AmigaNG boards
--#
--# Copyright (c) 2023 BALATON Zoltan
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--from avocado.utils import archive
--from avocado.utils import process
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--
--class AmigaOneMachine(QemuSystemTest):
--
--    timeout = 90
--
--    def test_ppc_amigaone(self):
--        """
--        :avocado: tags=arch:ppc
--        :avocado: tags=machine:amigaone
--        :avocado: tags=device:articia
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        tar_name = 'A1Firmware_Floppy_05-Mar-2005.zip'
--        tar_url = ('https://www.hyperion-entertainment.com/index.php/'
--                   'downloads?view=download&format=raw&file=25')
--        tar_hash = 'c52e59bc73e31d8bcc3cc2106778f7ac84f6c755'
--        zip_file = self.fetch_asset(tar_name, locations=tar_url,
--                                    asset_hash=tar_hash)
--        archive.extract(zip_file, self.workdir)
--        cmd = f"tail -c 524288 {self.workdir}/floppy_edition/updater.image >{self.workdir}/u-boot-amigaone.bin"
--        process.run(cmd, shell=True)
--
--        self.vm.set_console()
--        self.vm.add_args('-bios', self.workdir + '/u-boot-amigaone.bin')
--        self.vm.launch()
--        wait_for_console_pattern(self, 'FLASH:')
+ Sharp SL-5500 (Collie) PDA
+ M: Peter Maydell <peter.maydell@linaro.org>
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 38aaa03a58..f0f0cbd500 100644
+index 7abd998e3c..b59cd4468f 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -61,6 +61,7 @@ tests_ppc_system_quick = [
- tests_ppc_system_thorough = [
-   'ppc_405',
-   'ppc_40p',
-+  'ppc_amiga',
-   'ppc_bamboo',
-   'ppc_mpc8544ds',
-   'ppc_virtex_ml507',
-diff --git a/tests/functional/test_ppc_amiga.py b/tests/functional/test_ppc_amiga.py
-new file mode 100755
-index 0000000000..b793b5c432
---- /dev/null
-+++ b/tests/functional/test_ppc_amiga.py
-@@ -0,0 +1,43 @@
+@@ -11,6 +11,7 @@ endif
+ 
+ # Timeouts for individual tests that can be slow e.g. with debugging enabled
+ test_timeouts = {
++  'aarch64_sbsaref' : 600,
+   'acpi_bits' : 240,
+   'netdev_ethtool' : 180,
+   'ppc_40p' : 240,
+@@ -32,6 +33,10 @@ tests_generic_linuxuser = [
+ tests_generic_bsduser = [
+ ]
+ 
++tests_aarch64_system_thorough = [
++  'aarch64_sbsaref',
++]
++
+ tests_arm_system_thorough = [
+   'arm_canona1100',
+   'arm_integratorcp',
+diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
+old mode 100644
+new mode 100755
+similarity index 55%
+rename from tests/avocado/machine_aarch64_sbsaref.py
+rename to tests/functional/test_aarch64_sbsaref.py
+index f8bf40c192..f31c2a60b6
+--- a/tests/avocado/machine_aarch64_sbsaref.py
++++ b/tests/functional/test_aarch64_sbsaref.py
+@@ -1,3 +1,5 @@
 +#!/usr/bin/env python3
 +#
-+# Test AmigaNG boards
-+#
-+# Copyright (c) 2023 BALATON Zoltan
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import subprocess
-+
+ # Functional test that boots a Linux kernel and checks the console
+ #
+ # SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
+@@ -8,26 +10,31 @@
+ 
+ import os
+ 
+-from avocado import skipUnless
+-from avocado.utils import archive
+-
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado_qemu import interrupt_interactive_console_until_pattern
 +from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern, run_cmd
-+from zipfile import ZipFile
++from qemu_test import wait_for_console_pattern
++from qemu_test import interrupt_interactive_console_until_pattern
++from qemu_test.utils import lzma_uncompress
++from unittest import skipUnless
+ 
+ 
+ class Aarch64SbsarefMachine(QemuSystemTest):
+     """
+-    :avocado: tags=arch:aarch64
+-    :avocado: tags=machine:sbsa-ref
+-    :avocado: tags=accel:tcg
+-
+     As firmware runs at a higher privilege level than the hypervisor we
+     can only run these tests under TCG emulation.
+     """
+ 
+     timeout = 180
+ 
++    ASSET_FLASH0 = Asset(
++        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
++         '20240619-148232/edk2/SBSA_FLASH0.fd.xz'),
++        '0c954842a590988f526984de22e21ae0ab9cb351a0c99a8a58e928f0c7359cf7')
 +
-+class AmigaOneMachine(QemuSystemTest):
++    ASSET_FLASH1 = Asset(
++        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
++         '20240619-148232/edk2/SBSA_FLASH1.fd.xz'),
++        'c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee')
 +
-+    timeout = 90
+     def fetch_firmware(self):
+         """
+         Flash volumes generated using:
+@@ -44,47 +51,31 @@ def fetch_firmware(self):
+         """
+ 
+         # Secure BootRom (TF-A code)
+-        fs0_xz_url = (
+-            "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
+-            "20240619-148232/edk2/SBSA_FLASH0.fd.xz"
+-        )
+-        fs0_xz_hash = "0c954842a590988f526984de22e21ae0ab9cb351a0c99a8a58e928f0c7359cf7"
+-        tar_xz_path = self.fetch_asset(fs0_xz_url, asset_hash=fs0_xz_hash,
+-                                      algorithm='sha256')
+-        archive.extract(tar_xz_path, self.workdir)
++        fs0_xz_path = self.ASSET_FLASH0.fetch()
+         fs0_path = os.path.join(self.workdir, "SBSA_FLASH0.fd")
++        lzma_uncompress(fs0_xz_path, fs0_path)
+ 
+         # Non-secure rom (UEFI and EFI variables)
+-        fs1_xz_url = (
+-            "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
+-            "20240619-148232/edk2/SBSA_FLASH1.fd.xz"
+-        )
+-        fs1_xz_hash = "c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee"
+-        tar_xz_path = self.fetch_asset(fs1_xz_url, asset_hash=fs1_xz_hash,
+-                                      algorithm='sha256')
+-        archive.extract(tar_xz_path, self.workdir)
++        fs1_xz_path = self.ASSET_FLASH1.fetch()
+         fs1_path = os.path.join(self.workdir, "SBSA_FLASH1.fd")
++        lzma_uncompress(fs1_xz_path, fs1_path)
+ 
+         for path in [fs0_path, fs1_path]:
+             with open(path, "ab+") as fd:
+                 fd.truncate(256 << 20)  # Expand volumes to 256MiB
+ 
++        self.set_machine('sbsa-ref')
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-drive",
+-            f"if=pflash,file={fs0_path},format=raw",
+-            "-drive",
+-            f"if=pflash,file={fs1_path},format=raw",
+-            "-machine",
+-            "sbsa-ref",
++            "-drive", f"if=pflash,file={fs0_path},format=raw",
++            "-drive", f"if=pflash,file={fs1_path},format=raw",
+         )
+ 
+     def test_sbsaref_edk2_firmware(self):
+-        """
+-        :avocado: tags=cpu:cortex-a57
+-        """
+ 
+         self.fetch_firmware()
 +
-+    ASSET_IMAGE = Asset(
-+        ('https://www.hyperion-entertainment.com/index.php/'
-+         'downloads?view=download&format=raw&file=25'),
-+        '8ff39330ba47d4f64de4ee8fd6809e9c010a9ef17fe51e95c3c1d53437cb481f')
++        self.vm.add_args('-cpu', 'cortex-a57')
+         self.vm.launch()
+ 
+         # TF-A boot sequence:
+@@ -110,87 +101,62 @@ def test_sbsaref_edk2_firmware(self):
+         wait_for_console_pattern(self, "UEFI firmware (version 1.0")
+         interrupt_interactive_console_until_pattern(self, "QEMU SBSA-REF Machine")
+ 
 +
-+    def test_ppc_amigaone(self):
-+        self.require_accelerator("tcg")
-+        self.set_machine('amigaone')
-+        tar_name = 'A1Firmware_Floppy_05-Mar-2005.zip'
-+        zip_file = self.ASSET_IMAGE.fetch()
-+        with ZipFile(zip_file, 'r') as zf:
-+            zf.extractall(path=self.workdir)
-+        bios_fh = open(self.workdir + "/u-boot-amigaone.bin", "wb")
-+        subprocess.run(['tail', '-c', '524288',
-+                        self.workdir + "/floppy_edition/updater.image"],
-+                        stdout=bios_fh)
++    ASSET_ALPINE_ISO = Asset(
++        ('https://dl-cdn.alpinelinux.org/'
++         'alpine/v3.17/releases/aarch64/alpine-standard-3.17.2-aarch64.iso'),
++        '5a36304ecf039292082d92b48152a9ec21009d3a62f459de623e19c4bd9dc027')
 +
-+        self.vm.set_console()
-+        self.vm.add_args('-bios', self.workdir + '/u-boot-amigaone.bin')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'FLASH:')
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+     # Other test profiles should use more minimal boots
+     def boot_alpine_linux(self, cpu):
+         self.fetch_firmware()
+ 
+-        iso_url = (
+-            "https://dl-cdn.alpinelinux.org/"
+-            "alpine/v3.17/releases/aarch64/alpine-standard-3.17.2-aarch64.iso"
+-        )
+-
+-        iso_hash = "5a36304ecf039292082d92b48152a9ec21009d3a62f459de623e19c4bd9dc027"
+-        iso_path = self.fetch_asset(iso_url, algorithm="sha256", asset_hash=iso_hash)
++        iso_path = self.ASSET_ALPINE_ISO.fetch()
+ 
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-cpu",
+-            cpu,
+-            "-drive",
+-            f"file={iso_path},media=cdrom,format=raw",
++            "-cpu", cpu,
++            "-drive", f"file={iso_path},media=cdrom,format=raw",
+         )
+ 
+         self.vm.launch()
+         wait_for_console_pattern(self, "Welcome to Alpine Linux 3.17")
+ 
+     def test_sbsaref_alpine_linux_cortex_a57(self):
+-        """
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("cortex-a57")
+ 
+     def test_sbsaref_alpine_linux_neoverse_n1(self):
+-        """
+-        :avocado: tags=cpu:neoverse-n1
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("neoverse-n1")
+ 
+     def test_sbsaref_alpine_linux_max_pauth_off(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("max,pauth=off")
+ 
+     def test_sbsaref_alpine_linux_max_pauth_impdef(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("max,pauth-impdef=on")
+ 
+-    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+     def test_sbsaref_alpine_linux_max(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:linux
+-        """
+         self.boot_alpine_linux("max")
+ 
+ 
++    ASSET_OPENBSD_ISO = Asset(
++        ('https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img'),
++        '7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5')
++
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+     # Other test profiles should use more minimal boots
+     def boot_openbsd73(self, cpu):
+         self.fetch_firmware()
+ 
+-        img_url = (
+-            "https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img"
+-        )
+-
+-        img_hash = "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5"
+-        img_path = self.fetch_asset(img_url, algorithm="sha256", asset_hash=img_hash)
++        img_path = self.ASSET_OPENBSD_ISO.fetch()
+ 
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-cpu",
+-            cpu,
+-            "-drive",
+-            f"file={img_path},format=raw,snapshot=on",
++            "-cpu", cpu,
++            "-drive", f"file={img_path},format=raw,snapshot=on",
+         )
+ 
+         self.vm.launch()
+@@ -199,38 +165,22 @@ def boot_openbsd73(self, cpu):
+                                  " 7.3 installation program.")
+ 
+     def test_sbsaref_openbsd73_cortex_a57(self):
+-        """
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("cortex-a57")
+ 
+     def test_sbsaref_openbsd73_neoverse_n1(self):
+-        """
+-        :avocado: tags=cpu:neoverse-n1
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("neoverse-n1")
+ 
+     def test_sbsaref_openbsd73_max_pauth_off(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("max,pauth=off")
+ 
+-    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+     def test_sbsaref_openbsd73_max_pauth_impdef(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("max,pauth-impdef=on")
+ 
+-    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+     def test_sbsaref_openbsd73_max(self):
+-        """
+-        :avocado: tags=cpu:max
+-        :avocado: tags=os:openbsd
+-        """
+         self.boot_openbsd73("max")
++
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
