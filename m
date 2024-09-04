@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C61BCA0ED3
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C763CCD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 10:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slnUk-0000wh-Sf; Wed, 04 Sep 2024 06:44:16 -0400
+	id 1slnRN-00040H-DI; Wed, 04 Sep 2024 06:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1slnUc-0000Ue-BM
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:44:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRG-0003Av-TO
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1slnUa-0001pV-Bl
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:44:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1slnRD-0000JE-J3
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 06:40:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725446643;
+ s=mimecast20190719; t=1725446434;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=6HgcdvGspNzOVc7Q5mw90hMWp2IUOCxo3jYRCQQgg08=;
- b=TDebQe699/ajbrSmqznCviVKrFaD0UGgVl6nZE7SG4Ii0Z9i9OaIFZfhoShNuOfjOzojwa
- V5mQjv4vRCCkDxSdOuTV2qDoCf9OPnsKb9KhkyY/knqIP/t/Avp2ZKNaaqEjqcs0+GkoGr
- WgKi/RTNdTEHtmUD7ZUeqrtFHrH7yps=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L7+9G9J1HMF5PQuYeNwEa8IF2ct+txUWxNksvH1klOc=;
+ b=bCXFmmHID3fsfPHEnaSExzVEahx3IsUW39hyjD8gwXjdO2Bv/h6b/y59tjvAXch5MQ0Us1
+ BBO2SuAQZyqwbkgHP6ldk83gynXcADV6Oc1qXm6wWN/UiEq53iy0ql8LZBNxubA2hULhBf
+ p72F7lFADp72Bb+TgH7o5ly9pAfMIIk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-_OWnXxw4Mz-5G1c6gIXYQQ-1; Wed,
- 04 Sep 2024 06:37:41 -0400
-X-MC-Unique: _OWnXxw4Mz-5G1c6gIXYQQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-_NBm42gvMva1Ln28fb77mw-1; Wed,
+ 04 Sep 2024 06:40:33 -0400
+X-MC-Unique: _NBm42gvMva1Ln28fb77mw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDEAE19560AB; Wed,  4 Sep 2024 10:37:39 +0000 (UTC)
-Received: from rh-jmarcin.redhat.com (unknown [10.45.225.176])
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B713B1956088; Wed,  4 Sep 2024 10:40:32 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.48])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DF140195605A; Wed,  4 Sep 2024 10:37:37 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
+ id 17B5F195605A; Wed,  4 Sep 2024 10:40:30 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 0/4] virtio-mem: Implement support for suspend+wake-up with
- plugged memory
-Date: Wed,  4 Sep 2024 12:37:11 +0200
-Message-ID: <20240904103722.946194-1-jmarcin@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 23/42] tests/functional: Convert the virtio_gpu avocado test
+ into a standalone test
+Date: Wed,  4 Sep 2024 12:38:58 +0200
+Message-ID: <20240904103923.451847-24-thuth@redhat.com>
+In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
+References: <20240904103923.451847-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
 X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
@@ -82,66 +85,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the virtio-mem device would unplug all the memory with any
-reset request, including when the machine wakes up from a suspended
-state (deep sleep). This would lead to a loss of the contents of the
-guest memory and therefore is disabled by the virtio-mem Linux Kernel
-driver unless the VIRTIO_MEM_F_PERSISTENT_SUSPEND virtio feature is
-exposed. [1]
+Nothing thrilling in here, it's just a straight forward conversion.
 
-To make deep sleep with virtio-mem possible, we need to differentiate
-cold start reset from wake-up reset. The first patch updates
-qemu_system_reset() and MachineClass children to accept ResetType
-instead of ShutdownCause, which then could be passed down the device
-tree. The second patch then introduces the new reset type for the
-wake-up event and updates the i386 wake-up method (only architecture
-using the explicit wake-up method).
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240830133841.142644-25-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/meson.build                  |  1 +
+ .../test_virtio_gpu.py}                       | 64 +++++++++----------
+ 2 files changed, 30 insertions(+), 35 deletions(-)
+ rename tests/{avocado/virtio-gpu.py => functional/test_virtio_gpu.py} (73%)
+ mode change 100644 => 100755
 
-The third patch replaces LegacyReset with the Resettable interface in
-virtio-mem, so the memory device can access the reset type in the hold
-phase. The last patch of the series implements the final support in the
-hold phase of the virtio-mem reset callback and exposes
-VIRTIO_MEM_F_PERSISTENT_SUSPEND to the kernel.
-
-[1]: https://lore.kernel.org/all/20240318120645.105664-1-david@redhat.com/
-
-v3:
-- Updated RESET_TYPE_WAKEUP documentation so it is more clear when reset
-  could occur and when reset type should be used, thanks to Peter and
-  David for feedback
-
-v2:
-- Removed unnecessary include directive changes
-- Updated RESET_TYPE_WAKEUP documentation
-- Removed unnecessary interface from VirtIOMEMClass type info
-
-Juraj Marcin (4):
-  reset: Use ResetType for qemu_devices_reset() and
-    MachineClass::reset()
-  reset: Add RESET_TYPE_WAKEUP
-  virtio-mem: Use new Resettable framework instead of LegacyReset
-  virtio-mem: Add support for suspend+wake-up with plugged memory
-
- docs/devel/reset.rst           | 11 ++++++++
- hw/arm/aspeed.c                |  4 +--
- hw/arm/mps2-tz.c               |  4 +--
- hw/core/reset.c                |  5 +---
- hw/hppa/machine.c              |  4 +--
- hw/i386/microvm.c              |  4 +--
- hw/i386/pc.c                   |  6 ++---
- hw/ppc/pegasos2.c              |  4 +--
- hw/ppc/pnv.c                   |  4 +--
- hw/ppc/spapr.c                 |  6 ++---
- hw/s390x/s390-virtio-ccw.c     |  4 +--
- hw/virtio/virtio-mem.c         | 48 ++++++++++++++++++++++++----------
- hw/virtio/virtio-qmp.c         |  3 +++
- include/hw/boards.h            |  3 ++-
- include/hw/resettable.h        |  2 ++
- include/hw/virtio/virtio-mem.h |  4 +++
- include/sysemu/reset.h         |  5 ++--
- system/runstate.c              | 13 +++++++--
- 18 files changed, 91 insertions(+), 43 deletions(-)
-
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index b721b6ec44..8e4ea9cff7 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -79,6 +79,7 @@ tests_x86_64_system_quick = [
+ 
+ tests_x86_64_system_thorough = [
+   'netdev_ethtool',
++  'virtio_gpu',
+ ]
+ 
+ precache_all = []
+diff --git a/tests/avocado/virtio-gpu.py b/tests/functional/test_virtio_gpu.py
+old mode 100644
+new mode 100755
+similarity index 73%
+rename from tests/avocado/virtio-gpu.py
+rename to tests/functional/test_virtio_gpu.py
+index 6091f614a4..441cbdcf2d
+--- a/tests/avocado/virtio-gpu.py
++++ b/tests/functional/test_virtio_gpu.py
+@@ -1,14 +1,16 @@
++#!/usr/bin/env python3
++#
+ # virtio-gpu tests
+ #
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+ 
+-from avocado_qemu import BUILD_DIR
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado_qemu import exec_command_and_wait_for_pattern
+-from avocado_qemu import is_readable_executable_file
++from qemu_test import BUILD_DIR
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern
++from qemu_test import is_readable_executable_file
+ 
+ from qemu.utils import kvm_available
+ 
+@@ -28,25 +30,18 @@ def pick_default_vug_bin():
+ 
+ 
+ class VirtioGPUx86(QemuSystemTest):
+-    """
+-    :avocado: tags=virtio-gpu
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=cpu:host
+-    """
+ 
+     KERNEL_COMMAND_LINE = "printk.time=0 console=ttyS0 rdinit=/bin/bash"
+-    KERNEL_URL = (
+-        "https://archives.fedoraproject.org/pub/archive/fedora"
+-        "/linux/releases/33/Everything/x86_64/os/images"
+-        "/pxeboot/vmlinuz"
+-    )
+-    KERNEL_HASH = '1433cfe3f2ffaa44de4ecfb57ec25dc2399cdecf'
+-    INITRD_URL = (
+-        "https://archives.fedoraproject.org/pub/archive/fedora"
+-        "/linux/releases/33/Everything/x86_64/os/images"
+-        "/pxeboot/initrd.img"
+-    )
+-    INITRD_HASH = 'c828d68a027b53e5220536585efe03412332c2d9'
++    ASSET_KERNEL = Asset(
++        ("https://archives.fedoraproject.org/pub/archive/fedora"
++         "/linux/releases/33/Everything/x86_64/os/images"
++         "/pxeboot/vmlinuz"),
++        '2dc5fb5cfe9ac278fa45640f3602d9b7a08cc189ed63fd9b162b07073e4df397')
++    ASSET_INITRD = Asset(
++        ("https://archives.fedoraproject.org/pub/archive/fedora"
++         "/linux/releases/33/Everything/x86_64/os/images"
++         "/pxeboot/initrd.img"),
++        'c49b97f893a5349e4883452178763e402bdc5caa8845b226a2d1329b5f356045')
+ 
+     def wait_for_console_pattern(self, success_message, vm=None):
+         wait_for_console_pattern(
+@@ -57,16 +52,14 @@ def wait_for_console_pattern(self, success_message, vm=None):
+         )
+ 
+     def test_virtio_vga_virgl(self):
+-        """
+-        :avocado: tags=device:virtio-vga-gl
+-        """
+         # FIXME: should check presence of virtio, virgl etc
+         self.require_accelerator('kvm')
+ 
+-        kernel_path = self.fetch_asset(self.KERNEL_URL, self.KERNEL_HASH)
+-        initrd_path = self.fetch_asset(self.INITRD_URL, self.INITRD_HASH)
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
+ 
+         self.vm.set_console()
++        self.vm.add_args("-cpu", "host")
+         self.vm.add_args("-m", "2G")
+         self.vm.add_args("-machine", "pc,accel=kvm")
+         self.vm.add_args("-device", "virtio-vga-gl")
+@@ -83,7 +76,7 @@ def test_virtio_vga_virgl(self):
+             self.vm.launch()
+         except:
+             # TODO: probably fails because we are missing the VirGL features
+-            self.cancel("VirGL not enabled?")
++            self.skipTest("VirGL not enabled?")
+ 
+         self.wait_for_console_pattern("as init process")
+         exec_command_and_wait_for_pattern(
+@@ -92,18 +85,15 @@ def test_virtio_vga_virgl(self):
+         self.wait_for_console_pattern("features: +virgl +edid")
+ 
+     def test_vhost_user_vga_virgl(self):
+-        """
+-        :avocado: tags=device:vhost-user-vga
+-        """
+         # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
+         self.require_accelerator('kvm')
+ 
+         vug = pick_default_vug_bin()
+         if not vug:
+-            self.cancel("Could not find vhost-user-gpu")
++            self.skipTest("Could not find vhost-user-gpu")
+ 
+-        kernel_path = self.fetch_asset(self.KERNEL_URL, self.KERNEL_HASH)
+-        initrd_path = self.fetch_asset(self.INITRD_URL, self.INITRD_HASH)
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
+ 
+         # Create socketpair to connect proxy and remote processes
+         qemu_sock, vug_sock = socket.socketpair(
+@@ -129,6 +119,7 @@ def test_vhost_user_vga_virgl(self):
+         )
+ 
+         self.vm.set_console()
++        self.vm.add_args("-cpu", "host")
+         self.vm.add_args("-m", "2G")
+         self.vm.add_args("-object", "memory-backend-memfd,id=mem,size=2G")
+         self.vm.add_args("-machine", "pc,memory-backend=mem,accel=kvm")
+@@ -147,7 +138,7 @@ def test_vhost_user_vga_virgl(self):
+             self.vm.launch()
+         except:
+             # TODO: probably fails because we are missing the VirGL features
+-            self.cancel("VirGL not enabled?")
++            self.skipTest("VirGL not enabled?")
+         self.wait_for_console_pattern("as init process")
+         exec_command_and_wait_for_pattern(self, "/usr/sbin/modprobe virtio_gpu",
+                                           "features: +virgl +edid")
+@@ -155,3 +146,6 @@ def test_vhost_user_vga_virgl(self):
+         qemu_sock.close()
+         vugp.terminate()
+         vugp.wait()
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.46.0
 
