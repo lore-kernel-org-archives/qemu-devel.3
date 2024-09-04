@@ -4,107 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8070FCD484A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE03DCD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:47:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slpNK-0003vR-0u; Wed, 04 Sep 2024 08:44:42 -0400
+	id 1slpNA-0003OI-7y; Wed, 04 Sep 2024 08:44:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNG-0003nc-Im
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:39 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpN8-0003Ha-Hg
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:30 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNE-0005UF-Ri
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:38 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpN6-0005QW-Rn
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:30 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 975242191F;
- Wed,  4 Sep 2024 12:44:35 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6DFE6219FF;
+ Wed,  4 Sep 2024 12:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453875; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453867; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
- b=DiPaBbtUTqNfnjGuqq1myGEMZalXX1XMwhX5yTI+tb2EZ+S6sud4MAPwXCwO7cMo2c9EWA
- maZWfLgP1m6cwhfpIRFKfHZrlv109yZ2W3QPgMYTifY7ajbDMXjGjFTvsY7Ixoq+rkzuVU
- 7LFdrKcsxiXVuSH1cM+sXGeNnkE7iS8=
+ bh=h8BaQiVelmckmlwaMiq3JJV9tWP+l6Wiavo1PrlqEfw=;
+ b=TXMwhzjc6XjAnKmQWevCL9x7gsVm2nJkZ1mPlNnuL/Bb9LxhPkfpZuMU65r0gTUyZ2Y0/J
+ CASTTx1emWxVelEFKYTM578Nknr3Gf5Ila9et4HWYATmZI3zIaXAUDKRrUJGEemJ7iYkPr
+ 1OMACx+ai6KHXNgvZxZSX31aMiAICwI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453875;
+ s=susede2_ed25519; t=1725453867;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
- b=equoGoffzwq8gsW3/U3JVT6gbQ6alTCoq4qCUKAFT0kPDLe4w4DHa+q27O9G1ISLJ1NT0b
- CEqZEiLY2/Gl0tDQ==
+ bh=h8BaQiVelmckmlwaMiq3JJV9tWP+l6Wiavo1PrlqEfw=;
+ b=w9HCwqbdpgXzirw/4eef7ZeqXWDvkeyTr+YhJ16IfQje4C1sORCwwlnK7PXAluEii7A2yu
+ 1I74HcJlADDIrhDQ==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sHloRYph;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="slt3SS/x"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453875; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453866; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
- b=DiPaBbtUTqNfnjGuqq1myGEMZalXX1XMwhX5yTI+tb2EZ+S6sud4MAPwXCwO7cMo2c9EWA
- maZWfLgP1m6cwhfpIRFKfHZrlv109yZ2W3QPgMYTifY7ajbDMXjGjFTvsY7Ixoq+rkzuVU
- 7LFdrKcsxiXVuSH1cM+sXGeNnkE7iS8=
+ bh=h8BaQiVelmckmlwaMiq3JJV9tWP+l6Wiavo1PrlqEfw=;
+ b=sHloRYphbcPcSKqiucih/yLSUL36w/BhSkj2ll+Drz7CYdY+4s17bctErs09S4Y1g0sGnr
+ h/payUctl4j0P6CQF99VFJVa8DK8q0qrvXPFpOMBRkvBkyjWV3UAV7IxvVHSamU8xGeAa1
+ V9N8SrRPC9me3WSqvbFybnxgIazJH7k=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453875;
+ s=susede2_ed25519; t=1725453866;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BhCq7dKgVbsaeLH4ffCexHZniHpgK/O1LsShezIDRYo=;
- b=equoGoffzwq8gsW3/U3JVT6gbQ6alTCoq4qCUKAFT0kPDLe4w4DHa+q27O9G1ISLJ1NT0b
- CEqZEiLY2/Gl0tDQ==
+ bh=h8BaQiVelmckmlwaMiq3JJV9tWP+l6Wiavo1PrlqEfw=;
+ b=slt3SS/xGT0eN2SRZjmTlV1Id1gj9yhgikuZce9b9GxLfQl9OB50J6XXm+UzW0MkGzbRlw
+ yikVVqlXrEycq4BQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 38BB0139D2;
- Wed,  4 Sep 2024 12:44:34 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10AF0139D2;
+ Wed,  4 Sep 2024 12:44:24 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 6E4yADJW2GZuVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:34 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qL0SMihW2GZuVQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:24 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 08/34] tests/unit/crypto-tls-x509-helpers: deinit privkey in
- test_tls_cleanup
-Date: Wed,  4 Sep 2024 09:43:51 -0300
-Message-Id: <20240904124417.14565-9-farosas@suse.de>
+Subject: [PULL 03/34] tests/qtest/migration-test: Fix bootfile cleanup handling
+Date: Wed,  4 Sep 2024 09:43:46 -0300
+Message-Id: <20240904124417.14565-4-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
 References: <20240904124417.14565-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.927];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+X-Rspamd-Queue-Id: 6DFE6219FF
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,linaro.org:email];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,linaro.org:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,52 +129,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-We create a gnutls_x509_privkey_t in test_tls_init(), but forget
-to deinit it in test_tls_cleanup(), resulting in leaks
-reported in hte migration test such as:
+If you invoke the migration-test binary in such a way that it doesn't run
+any tests, then we never call bootfile_create(), and at the end of
+main() bootfile_delete() will try to unlink(NULL), which is not valid.
+This can happen if for instance you tell the test binary to run a
+subset of tests that turns out to be empty, like this:
 
-Indirect leak of 8 byte(s) in 1 object(s) allocated from:
-    #0 0x55fa6d11c12e in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/tests/qtest/migration-test+0x22f12e) (BuildId: 852a267993587f557f50e5715f352f43720077ba)
-    #1 0x7f073982685d in __gmp_default_allocate (/lib/x86_64-linux-gnu/libgmp.so.10+0xa85d) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
-    #2 0x7f0739836193 in __gmpz_realloc (/lib/x86_64-linux-gnu/libgmp.so.10+0x1a193) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
-    #3 0x7f0739836594 in __gmpz_import (/lib/x86_64-linux-gnu/libgmp.so.10+0x1a594) (BuildId: f110719303ddbea25a5e89ff730fec520eed67b0)
-    #4 0x7f07398a91ed in nettle_mpz_set_str_256_u (/lib/x86_64-linux-gnu/libhogweed.so.6+0xb1ed) (BuildId: 3cc4a3474de72db89e9dcc93bfb95fe377f48c37)
-    #5 0x7f073a146a5a  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x131a5a) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
-    #6 0x7f073a07192c  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x5c92c) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
-    #7 0x7f073a078333  (/lib/x86_64-linux-gnu/libgnutls.so.30+0x63333) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
-    #8 0x7f073a0e8353  (/lib/x86_64-linux-gnu/libgnutls.so.30+0xd3353) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
-    #9 0x7f073a0ef0ac in gnutls_x509_privkey_import (/lib/x86_64-linux-gnu/libgnutls.so.30+0xda0ac) (BuildId: 97b8f99f392f1fd37b969a7164bcea884e23649b)
-    #10 0x55fa6d2547e3 in test_tls_load_key tests/unit/crypto-tls-x509-helpers.c:99:11
-    #11 0x55fa6d25460c in test_tls_init tests/unit/crypto-tls-x509-helpers.c:128:15
-    #12 0x55fa6d2495c4 in test_migrate_tls_x509_start_common tests/qtest/migration-test.c:1044:5
-    #13 0x55fa6d24c23a in test_migrate_tls_x509_start_reject_anon_client tests/qtest/migration-test.c:1216:12
-    #14 0x55fa6d23fb40 in test_precopy_common tests/qtest/migration-test.c:1789:21
-    #15 0x55fa6d236b7c in test_precopy_tcp_tls_x509_reject_anon_client tests/qtest/migration-test.c:2614:5
+ (cd build/asan && QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --tap -k -p bang)
+ # random seed: R02S6501b289ff8ced4231ba452c3a87bc6f
+ # Skipping test: userfaultfd not available
+ 1..0
+ ../../tests/qtest/migration-test.c:182:12: runtime error: null pointer passed as argument 1, which is declared to never be null
+ /usr/include/unistd.h:858:48: note: nonnull attribute specified here
 
-(Oddly, there is no reported leak in the x509 unit tests, even though
-those also use test_tls_init() and test_tls_cleanup().)
-
-Deinit the privkey in test_tls_cleanup().
+Handle this by making bootfile_delete() not needing to do anything
+because bootfile_create() was never called.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
+[fixed conflict with aee07f2563]
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/unit/crypto-tls-x509-helpers.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/qtest/migration-test.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/unit/crypto-tls-x509-helpers.c b/tests/unit/crypto-tls-x509-helpers.c
-index b316155d6a..2daecc416c 100644
---- a/tests/unit/crypto-tls-x509-helpers.c
-+++ b/tests/unit/crypto-tls-x509-helpers.c
-@@ -135,6 +135,7 @@ void test_tls_init(const char *keyfile)
- void test_tls_cleanup(const char *keyfile)
- {
-     asn1_delete_structure(&pkix_asn1);
-+    gnutls_x509_privkey_deinit(privkey);
-     unlink(keyfile);
- }
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 334b63cbaa..37ef99c980 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -145,6 +145,9 @@ static char *bootpath;
  
+ static void bootfile_delete(void)
+ {
++    if (!bootpath) {
++        return;
++    }
+     unlink(bootpath);
+     g_free(bootpath);
+     bootpath = NULL;
+@@ -156,10 +159,7 @@ static void bootfile_create(char *dir, bool suspend_me)
+     unsigned char *content;
+     size_t len;
+ 
+-    if (bootpath) {
+-        bootfile_delete();
+-    }
+-
++    bootfile_delete();
+     bootpath = g_strdup_printf("%s/bootsect", dir);
+     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
+         /* the assembled x86 boot sector should be exactly one sector large */
 -- 
 2.35.3
 
