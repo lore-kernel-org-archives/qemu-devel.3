@@ -4,98 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73293CD37B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80913CD3431
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Sep 2024 12:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1slpNW-0004l5-3e; Wed, 04 Sep 2024 08:44:54 -0400
+	id 1slpNl-0005gM-7H; Wed, 04 Sep 2024 08:45:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNR-0004Rv-59
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:49 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNk-0005dK-3m
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:08 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNP-0005Xc-EB
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:44:48 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1slpNh-0005nm-36
+ for qemu-devel@nongnu.org; Wed, 04 Sep 2024 08:45:07 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DFCE21F7BE;
- Wed,  4 Sep 2024 12:44:45 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B4F74219FF;
+ Wed,  4 Sep 2024 12:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453885; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453903; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=nimcgAKY6tPK3qc2f2LmV7IH1OHISwreKoqbXE0qn7rc2zJnRdMsc9ZlgtmBLqZkiqZ0qf
- fIACoTYoGxH7EnS4Zc++SYugvMqfyMLgFoX2CQqcJzY3GnntKL1HFSqK5HwKprIGAcxAQ6
- MYFCmsecXgtlzLGH6v4vtJwoIKis80U=
+ bh=3N/cbFy0MXlrNeVqrxMB3+ZmXakOnSm1XJUUwoNWCgA=;
+ b=uY88279U6+4+YTWuFsm+1ZZ8XszLQXQz8Sk1lpa6mzksVYfLCzXbdcQ0IwKPpSiJlwULen
+ WLCh2KGCJhkI1gD1T+dnEBgGHULbiwgb7C+AjRpEkziY+KnVOgFw0Vb/3KuGlwCjfrIvH5
+ p4AdVdIm6Go6qQmVxpdgKjvD26HsUmY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453885;
+ s=susede2_ed25519; t=1725453903;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=innLr/fG+mvKW1GiZwTzcGlL8MCItbZrybFXYaRQq3R50WIfpNFY0JGLGVvzvyM+Vhs2Jw
- bTLRvn2+c812l2Bg==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ bh=3N/cbFy0MXlrNeVqrxMB3+ZmXakOnSm1XJUUwoNWCgA=;
+ b=mX16B1to8im6PZ0+uGC9aszx5HnI+AlboA/8+M8f+Gd3ChLJXK+jwfUAjfD0KgOqDAU1IB
+ MXRSdlrJALFyb+Cw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=uY88279U;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mX16B1to
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725453885; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1725453903; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=nimcgAKY6tPK3qc2f2LmV7IH1OHISwreKoqbXE0qn7rc2zJnRdMsc9ZlgtmBLqZkiqZ0qf
- fIACoTYoGxH7EnS4Zc++SYugvMqfyMLgFoX2CQqcJzY3GnntKL1HFSqK5HwKprIGAcxAQ6
- MYFCmsecXgtlzLGH6v4vtJwoIKis80U=
+ bh=3N/cbFy0MXlrNeVqrxMB3+ZmXakOnSm1XJUUwoNWCgA=;
+ b=uY88279U6+4+YTWuFsm+1ZZ8XszLQXQz8Sk1lpa6mzksVYfLCzXbdcQ0IwKPpSiJlwULen
+ WLCh2KGCJhkI1gD1T+dnEBgGHULbiwgb7C+AjRpEkziY+KnVOgFw0Vb/3KuGlwCjfrIvH5
+ p4AdVdIm6Go6qQmVxpdgKjvD26HsUmY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725453885;
+ s=susede2_ed25519; t=1725453903;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0HSli6qqhvsrwlkZtUULc7TpZRojqiByjP50yocx8g=;
- b=innLr/fG+mvKW1GiZwTzcGlL8MCItbZrybFXYaRQq3R50WIfpNFY0JGLGVvzvyM+Vhs2Jw
- bTLRvn2+c812l2Bg==
+ bh=3N/cbFy0MXlrNeVqrxMB3+ZmXakOnSm1XJUUwoNWCgA=;
+ b=mX16B1to8im6PZ0+uGC9aszx5HnI+AlboA/8+M8f+Gd3ChLJXK+jwfUAjfD0KgOqDAU1IB
+ MXRSdlrJALFyb+Cw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B855B139D2;
- Wed,  4 Sep 2024 12:44:44 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8ED8C139D2;
+ Wed,  4 Sep 2024 12:45:02 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uMyIHzxW2GZuVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:44:44 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EJ9oFU5W2GZuVQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Sep 2024 12:45:02 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 14/34] migration/multifd: Remove pages->allocated
-Date: Wed,  4 Sep 2024 09:43:57 -0300
-Message-Id: <20240904124417.14565-15-farosas@suse.de>
+Subject: [PULL 25/34] migration/multifd: Standardize on multifd ops names
+Date: Wed,  4 Sep 2024 09:44:08 -0300
+Message-Id: <20240904124417.14565-26-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
 References: <20240904124417.14565-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.926];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+X-Rspamd-Queue-Id: B4F74219FF
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -118,68 +127,618 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This value never changes and is always the same as page_count. We
-don't need a copy of it per-channel plus one in the extra slot. Remove
-it.
+Add the multifd_ prefix to all functions and remove the useless
+docstrings.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c | 6 ++----
- migration/multifd.h | 2 --
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ migration/multifd-qpl.c  | 57 ----------------------------
+ migration/multifd-uadk.c | 55 ---------------------------
+ migration/multifd-zlib.c | 81 ++++++----------------------------------
+ migration/multifd-zstd.c | 81 ++++++----------------------------------
+ migration/multifd.c      | 78 ++++++--------------------------------
+ 5 files changed, 36 insertions(+), 316 deletions(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 3dfed8a005..30e5c687d3 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -396,7 +396,6 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
- {
-     MultiFDPages_t *pages = g_new0(MultiFDPages_t, 1);
- 
--    pages->allocated = n;
-     pages->offset = g_new0(ram_addr_t, n);
- 
-     return pages;
-@@ -405,7 +404,6 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
- static void multifd_pages_clear(MultiFDPages_t *pages)
- {
-     multifd_pages_reset(pages);
--    pages->allocated = 0;
-     g_free(pages->offset);
-     pages->offset = NULL;
-     g_free(pages);
-@@ -420,7 +418,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-     int i;
- 
-     packet->flags = cpu_to_be32(p->flags);
--    packet->pages_alloc = cpu_to_be32(pages->allocated);
-+    packet->pages_alloc = cpu_to_be32(multifd_ram_page_count());
-     packet->normal_pages = cpu_to_be32(pages->normal_num);
-     packet->zero_pages = cpu_to_be32(zero_num);
-     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-@@ -651,7 +649,7 @@ static inline bool multifd_queue_empty(MultiFDPages_t *pages)
- 
- static inline bool multifd_queue_full(MultiFDPages_t *pages)
- {
--    return pages->num == pages->allocated;
-+    return pages->num == multifd_ram_page_count();
+diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
+index 21153f1987..75041a4c4d 100644
+--- a/migration/multifd-qpl.c
++++ b/migration/multifd-qpl.c
+@@ -220,16 +220,6 @@ static void multifd_qpl_deinit(QplData *qpl)
+     }
  }
  
- static inline void multifd_enqueue(MultiFDPages_t *pages, ram_addr_t offset)
-diff --git a/migration/multifd.h b/migration/multifd.h
-index a2bba23af9..660a9882c2 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -76,8 +76,6 @@ typedef struct {
-     uint32_t num;
-     /* number of normal pages */
-     uint32_t normal_num;
--    /* number of allocated pages */
--    uint32_t allocated;
-     /* offset of each page */
-     ram_addr_t *offset;
-     RAMBlock *block;
+-/**
+- * multifd_qpl_send_setup: set up send side
+- *
+- * Set up the channel with QPL compression.
+- *
+- * Returns 0 on success or -1 on error
+- *
+- * @p: Params for the channel being used
+- * @errp: pointer to an error
+- */
+ static int multifd_qpl_send_setup(MultiFDSendParams *p, Error **errp)
+ {
+     QplData *qpl;
+@@ -251,14 +241,6 @@ static int multifd_qpl_send_setup(MultiFDSendParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * multifd_qpl_send_cleanup: clean up send side
+- *
+- * Close the channel and free memory.
+- *
+- * @p: Params for the channel being used
+- * @errp: pointer to an error
+- */
+ static void multifd_qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
+ {
+     multifd_qpl_deinit(p->compress_data);
+@@ -487,17 +469,6 @@ static void multifd_qpl_compress_pages(MultiFDSendParams *p)
+     }
+ }
+ 
+-/**
+- * multifd_qpl_send_prepare: prepare data to be able to send
+- *
+- * Create a compressed buffer with all the pages that we are going to
+- * send.
+- *
+- * Returns 0 on success or -1 on error
+- *
+- * @p: Params for the channel being used
+- * @errp: pointer to an error
+- */
+ static int multifd_qpl_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+     QplData *qpl = p->compress_data;
+@@ -523,16 +494,6 @@ out:
+     return 0;
+ }
+ 
+-/**
+- * multifd_qpl_recv_setup: set up receive side
+- *
+- * Create the compressed channel and buffer.
+- *
+- * Returns 0 on success or -1 on error
+- *
+- * @p: Params for the channel being used
+- * @errp: pointer to an error
+- */
+ static int multifd_qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
+ {
+     QplData *qpl;
+@@ -547,13 +508,6 @@ static int multifd_qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * multifd_qpl_recv_cleanup: set up receive side
+- *
+- * Close the channel and free memory.
+- *
+- * @p: Params for the channel being used
+- */
+ static void multifd_qpl_recv_cleanup(MultiFDRecvParams *p)
+ {
+     multifd_qpl_deinit(p->compress_data);
+@@ -694,17 +648,6 @@ static int multifd_qpl_decompress_pages(MultiFDRecvParams *p, Error **errp)
+     }
+     return 0;
+ }
+-/**
+- * multifd_qpl_recv: read the data from the channel into actual pages
+- *
+- * Read the compressed buffer, and uncompress it into the actual
+- * pages.
+- *
+- * Returns 0 on success or -1 on error
+- *
+- * @p: Params for the channel being used
+- * @errp: pointer to an error
+- */
+ static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
+ {
+     QplData *qpl = p->compress_data;
+diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
+index 9d99807af5..db2549f59b 100644
+--- a/migration/multifd-uadk.c
++++ b/migration/multifd-uadk.c
+@@ -103,14 +103,6 @@ static void multifd_uadk_uninit_sess(struct wd_data *wd)
+     g_free(wd);
+ }
+ 
+-/**
+- * multifd_uadk_send_setup: setup send side
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+ static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
+ {
+     struct wd_data *wd;
+@@ -134,14 +126,6 @@ static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * multifd_uadk_send_cleanup: cleanup send side
+- *
+- * Close the channel and return memory.
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+ static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
+ {
+     struct wd_data *wd = p->compress_data;
+@@ -159,17 +143,6 @@ static inline void prepare_next_iov(MultiFDSendParams *p, void *base,
+     p->iovs_num++;
+ }
+ 
+-/**
+- * multifd_uadk_send_prepare: prepare data to be able to send
+- *
+- * Create a compressed buffer with all the pages that we are going to
+- * send.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+     struct wd_data *uadk_data = p->compress_data;
+@@ -229,16 +202,6 @@ out:
+     return 0;
+ }
+ 
+-/**
+- * multifd_uadk_recv_setup: setup receive side
+- *
+- * Create the compressed channel and buffer.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+ static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
+ {
+     struct wd_data *wd;
+@@ -253,13 +216,6 @@ static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * multifd_uadk_recv_cleanup: cleanup receive side
+- *
+- * Close the channel and return memory.
+- *
+- * @p: Params for the channel that we are using
+- */
+ static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
+ {
+     struct wd_data *wd = p->compress_data;
+@@ -268,17 +224,6 @@ static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
+     p->compress_data = NULL;
+ }
+ 
+-/**
+- * multifd_uadk_recv: read the data from the channel into actual pages
+- *
+- * Read the compressed buffer, and uncompress it into the actual
+- * pages.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
+ {
+     struct wd_data *uadk_data = p->compress_data;
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 66517c1067..6787538762 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -34,17 +34,7 @@ struct zlib_data {
+ 
+ /* Multifd zlib compression */
+ 
+-/**
+- * zlib_send_setup: setup send side
+- *
+- * Setup each channel with zlib compression.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zlib_send_setup(MultiFDSendParams *p, Error **errp)
++static int multifd_zlib_send_setup(MultiFDSendParams *p, Error **errp)
+ {
+     struct zlib_data *z = g_new0(struct zlib_data, 1);
+     z_stream *zs = &z->zs;
+@@ -86,15 +76,7 @@ err_free_z:
+     return -1;
+ }
+ 
+-/**
+- * zlib_send_cleanup: cleanup send side
+- *
+- * Close the channel and return memory.
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
++static void multifd_zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
+ {
+     struct zlib_data *z = p->compress_data;
+ 
+@@ -110,18 +92,7 @@ static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
+     p->iov = NULL;
+ }
+ 
+-/**
+- * zlib_send_prepare: prepare date to be able to send
+- *
+- * Create a compressed buffer with all the pages that we are going to
+- * send.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zlib_send_prepare(MultiFDSendParams *p, Error **errp)
++static int multifd_zlib_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+     MultiFDPages_t *pages = &p->data->u.ram;
+     struct zlib_data *z = p->compress_data;
+@@ -189,17 +160,7 @@ out:
+     return 0;
+ }
+ 
+-/**
+- * zlib_recv_setup: setup receive side
+- *
+- * Create the compressed channel and buffer.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zlib_recv_setup(MultiFDRecvParams *p, Error **errp)
++static int multifd_zlib_recv_setup(MultiFDRecvParams *p, Error **errp)
+ {
+     struct zlib_data *z = g_new0(struct zlib_data, 1);
+     z_stream *zs = &z->zs;
+@@ -225,14 +186,7 @@ static int zlib_recv_setup(MultiFDRecvParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * zlib_recv_cleanup: setup receive side
+- *
+- * For no compression this function does nothing.
+- *
+- * @p: Params for the channel that we are using
+- */
+-static void zlib_recv_cleanup(MultiFDRecvParams *p)
++static void multifd_zlib_recv_cleanup(MultiFDRecvParams *p)
+ {
+     struct zlib_data *z = p->compress_data;
+ 
+@@ -243,18 +197,7 @@ static void zlib_recv_cleanup(MultiFDRecvParams *p)
+     p->compress_data = NULL;
+ }
+ 
+-/**
+- * zlib_recv: read the data from the channel into actual pages
+- *
+- * Read the compressed buffer, and uncompress it into the actual
+- * pages.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zlib_recv(MultiFDRecvParams *p, Error **errp)
++static int multifd_zlib_recv(MultiFDRecvParams *p, Error **errp)
+ {
+     struct zlib_data *z = p->compress_data;
+     z_stream *zs = &z->zs;
+@@ -335,12 +278,12 @@ static int zlib_recv(MultiFDRecvParams *p, Error **errp)
+ }
+ 
+ static MultiFDMethods multifd_zlib_ops = {
+-    .send_setup = zlib_send_setup,
+-    .send_cleanup = zlib_send_cleanup,
+-    .send_prepare = zlib_send_prepare,
+-    .recv_setup = zlib_recv_setup,
+-    .recv_cleanup = zlib_recv_cleanup,
+-    .recv = zlib_recv
++    .send_setup = multifd_zlib_send_setup,
++    .send_cleanup = multifd_zlib_send_cleanup,
++    .send_prepare = multifd_zlib_send_prepare,
++    .recv_setup = multifd_zlib_recv_setup,
++    .recv_cleanup = multifd_zlib_recv_cleanup,
++    .recv = multifd_zlib_recv
+ };
+ 
+ static void multifd_zlib_register(void)
+diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+index 04ac711cf4..1576b1e2ad 100644
+--- a/migration/multifd-zstd.c
++++ b/migration/multifd-zstd.c
+@@ -37,17 +37,7 @@ struct zstd_data {
+ 
+ /* Multifd zstd compression */
+ 
+-/**
+- * zstd_send_setup: setup send side
+- *
+- * Setup each channel with zstd compression.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
++static int multifd_zstd_send_setup(MultiFDSendParams *p, Error **errp)
+ {
+     struct zstd_data *z = g_new0(struct zstd_data, 1);
+     int res;
+@@ -83,15 +73,7 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * zstd_send_cleanup: cleanup send side
+- *
+- * Close the channel and return memory.
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
++static void multifd_zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
+ {
+     struct zstd_data *z = p->compress_data;
+ 
+@@ -106,18 +88,7 @@ static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
+     p->iov = NULL;
+ }
+ 
+-/**
+- * zstd_send_prepare: prepare date to be able to send
+- *
+- * Create a compressed buffer with all the pages that we are going to
+- * send.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zstd_send_prepare(MultiFDSendParams *p, Error **errp)
++static int multifd_zstd_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+     MultiFDPages_t *pages = &p->data->u.ram;
+     struct zstd_data *z = p->compress_data;
+@@ -176,17 +147,7 @@ out:
+     return 0;
+ }
+ 
+-/**
+- * zstd_recv_setup: setup receive side
+- *
+- * Create the compressed channel and buffer.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zstd_recv_setup(MultiFDRecvParams *p, Error **errp)
++static int multifd_zstd_recv_setup(MultiFDRecvParams *p, Error **errp)
+ {
+     struct zstd_data *z = g_new0(struct zstd_data, 1);
+     int ret;
+@@ -220,14 +181,7 @@ static int zstd_recv_setup(MultiFDRecvParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * zstd_recv_cleanup: setup receive side
+- *
+- * For no compression this function does nothing.
+- *
+- * @p: Params for the channel that we are using
+- */
+-static void zstd_recv_cleanup(MultiFDRecvParams *p)
++static void multifd_zstd_recv_cleanup(MultiFDRecvParams *p)
+ {
+     struct zstd_data *z = p->compress_data;
+ 
+@@ -239,18 +193,7 @@ static void zstd_recv_cleanup(MultiFDRecvParams *p)
+     p->compress_data = NULL;
+ }
+ 
+-/**
+- * zstd_recv: read the data from the channel into actual pages
+- *
+- * Read the compressed buffer, and uncompress it into the actual
+- * pages.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int zstd_recv(MultiFDRecvParams *p, Error **errp)
++static int multifd_zstd_recv(MultiFDRecvParams *p, Error **errp)
+ {
+     uint32_t in_size = p->next_packet_size;
+     uint32_t out_size = 0;
+@@ -323,12 +266,12 @@ static int zstd_recv(MultiFDRecvParams *p, Error **errp)
+ }
+ 
+ static MultiFDMethods multifd_zstd_ops = {
+-    .send_setup = zstd_send_setup,
+-    .send_cleanup = zstd_send_cleanup,
+-    .send_prepare = zstd_send_prepare,
+-    .recv_setup = zstd_recv_setup,
+-    .recv_cleanup = zstd_recv_cleanup,
+-    .recv = zstd_recv
++    .send_setup = multifd_zstd_send_setup,
++    .send_cleanup = multifd_zstd_send_cleanup,
++    .send_prepare = multifd_zstd_send_prepare,
++    .recv_setup = multifd_zstd_recv_setup,
++    .recv_cleanup = multifd_zstd_recv_cleanup,
++    .recv = multifd_zstd_recv
+ };
+ 
+ static void multifd_zstd_register(void)
+diff --git a/migration/multifd.c b/migration/multifd.c
+index ce08257706..9f40bb2f16 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -167,15 +167,7 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
+     }
+ }
+ 
+-/* Multifd without compression */
+-
+-/**
+- * nocomp_send_setup: setup send side
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
++static int multifd_nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+ {
+     uint32_t page_count = multifd_ram_page_count();
+ 
+@@ -193,15 +185,7 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * nocomp_send_cleanup: cleanup send side
+- *
+- * For no compression this function does nothing.
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
++static void multifd_nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
+ {
+     g_free(p->iov);
+     p->iov = NULL;
+@@ -222,18 +206,7 @@ static void multifd_send_prepare_iovs(MultiFDSendParams *p)
+     p->next_packet_size = pages->normal_num * page_size;
+ }
+ 
+-/**
+- * nocomp_send_prepare: prepare date to be able to send
+- *
+- * For no compression we just have to calculate the size of the
+- * packet.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
++static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+     bool use_zero_copy_send = migrate_zero_copy_send();
+     int ret;
+@@ -272,46 +245,19 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * nocomp_recv_setup: setup receive side
+- *
+- * For no compression this function does nothing.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
++static int multifd_nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
+ {
+     p->iov = g_new0(struct iovec, multifd_ram_page_count());
+     return 0;
+ }
+ 
+-/**
+- * nocomp_recv_cleanup: setup receive side
+- *
+- * For no compression this function does nothing.
+- *
+- * @p: Params for the channel that we are using
+- */
+-static void nocomp_recv_cleanup(MultiFDRecvParams *p)
++static void multifd_nocomp_recv_cleanup(MultiFDRecvParams *p)
+ {
+     g_free(p->iov);
+     p->iov = NULL;
+ }
+ 
+-/**
+- * nocomp_recv: read the data from the channel
+- *
+- * For no compression we just need to read things into the correct place.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
++static int multifd_nocomp_recv(MultiFDRecvParams *p, Error **errp)
+ {
+     uint32_t flags;
+ 
+@@ -342,12 +288,12 @@ static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
+ }
+ 
+ static MultiFDMethods multifd_nocomp_ops = {
+-    .send_setup = nocomp_send_setup,
+-    .send_cleanup = nocomp_send_cleanup,
+-    .send_prepare = nocomp_send_prepare,
+-    .recv_setup = nocomp_recv_setup,
+-    .recv_cleanup = nocomp_recv_cleanup,
+-    .recv = nocomp_recv
++    .send_setup = multifd_nocomp_send_setup,
++    .send_cleanup = multifd_nocomp_send_cleanup,
++    .send_prepare = multifd_nocomp_send_prepare,
++    .recv_setup = multifd_nocomp_recv_setup,
++    .recv_cleanup = multifd_nocomp_recv_cleanup,
++    .recv = multifd_nocomp_recv
+ };
+ 
+ static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {
 -- 
 2.35.3
 
