@@ -4,102 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B17C2CD5BA6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:52:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE578CD5BA6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smA5V-00051W-75; Thu, 05 Sep 2024 06:51:41 -0400
+	id 1smA6Q-0007gv-Et; Thu, 05 Sep 2024 06:52:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1smA5S-00050P-M7; Thu, 05 Sep 2024 06:51:39 -0400
-Received: from fhigh6-smtp.messagingengine.com ([103.168.172.157])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smA6L-0007TE-F9
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:52:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1smA5P-0004MO-Tb; Thu, 05 Sep 2024 06:51:38 -0400
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal
- [10.202.2.42])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 7B0F41140264;
- Thu,  5 Sep 2024 06:51:32 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Thu, 05 Sep 2024 06:51:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1725533492; x=
- 1725619892; bh=uWKtHDer+es6lWlPEMo6JoZv96ivRF1hBZProol2ork=; b=t
- TDam6Jkvp0uEK55Ss2AV41nmVC3Ak7KrG5ykS6h98vOrAyrLkl6fL3ntw68SOikJ
- OGUj1HgrAVfT6HK1hc/uk9U2B8v0FIMO7zXF8MixRh8oMZd5Tc9X5658r8c700nd
- o2GQyFkiM0TvS1pzsgSwe+IpB7jiWENJydZfxIBP4fXLkN7/g3EItcbquLJFwv7M
- AeNQIHG7hLMGcVmhLO1M6D7HEdYLSgWfbX7SqgUTVW6ElnzPMat2G6yiaoQi8KHh
- EGJ3HIRlvid4yXxO6g9x3A60XfAJY7Xln2ibHwh/pyJLhJeaOVJB3kmc78Xw0ETj
- A4SYq/0Sdq31tiZJoc/Dg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1725533492; x=1725619892; bh=uWKtHDer+es6lWlPEMo6JoZv96iv
- RF1hBZProol2ork=; b=m4dRRC7M9CDYMRRhXYoMRKrFdi3EyuvkFUbIURO62R3A
- WN5c9BHdOrhJBJ8fzct/tJrQ0EMpZr99t3hC5y7mbCFsa66cvaZml+QhD7HCJBUZ
- 61iatk6vt3im6r9nW3WYvUtekFC5gNbtfhWeFgGaP3qz3NGLUirveQREPtgmoNlz
- wEkMULxWKaPP5UsYkxPlCRz7BOSrJu3+gqaAUFkYldD6zQl7knYlMrDyK61AZPTN
- rT8WLfxq9O3IiN83Q2EGEWQunRasRSUPJOJIiZpLaHo2+PEIFovJHwnmFsMbNDjh
- 8+ioQ1weZbN39iDkdkfGfUoBDHQtcI44ghg0LYvmLw==
-X-ME-Sender: <xms:M43ZZnlBFD-7Q0fqBBZnAVxA4NitomxlmwPRnpOtsPtz0PT2KVNJmA>
- <xme:M43ZZq2y9J8hp8iNcZ-KSnhlII18f8x4fx-EWHLyzBfV-ctP8J3ubrL8Qvcf-v4JR
- xzAwbfFvC-6SQDEqlI>
-X-ME-Received: <xmr:M43ZZtrZk6gXsRgl2W-9fBLfco1LSW8foq1Lex6yGY58KqmbRYzw0XKbtnD7_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgfeefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtjeen
- ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
- gukheqnecuggftrfgrthhtvghrnhepveejtdejteevfefhffehiedvffdvudelvdeigfek
- feevledtieetffehgeeggfdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
- ohepudeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehluhgthhgrnhhgqhhird
- duvdefsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdgslhhotghk
- sehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnh
- hurdhorhhgpdhrtghpthhtohepkhifohhlfhesrhgvughhrghtrdgtohhmpdhrtghpthht
- ohephhhrvghithiisehrvgguhhgrthdrtghomhdprhgtphhtthhopehsthgvfhgrnhhhrg
- esrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrmhesvghuphhhohhnrdhnvghtpdhr
- tghpthhtoheprhhonhhnihgvshgrhhhlsggvrhhgsehgmhgrihhlrdgtohhmpdhrtghpth
- htohepphgsohhniihinhhisehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:M43ZZvkJicIk1Lm2NWCqKdJkLzoIc_-ivgskfY0v67M8iL1Mznl25w>
- <xmx:M43ZZl25Hk82lX0f0O08iQsbbm8S7aHTSE_xkLQhRCGDgZjMh4_jmw>
- <xmx:M43ZZusWQVPf8D2iPxbsYCkHb1GWLGWhbD8wk7mGNZ_qG8UF_aH8sw>
- <xmx:M43ZZpV1j0r0K69Y70wQkOEqNdAbOXNZch8pcE62rjCpv34hcBfj6Q>
- <xmx:NI3ZZmFRw3XtNVYvkkx-S5Fo2wFNN_Asn8qSN7o_KnS07pKB2w9hXkKr>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Sep 2024 06:51:30 -0400 (EDT)
-Date: Thu, 5 Sep 2024 12:51:29 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Changqi Lu <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
- kbusch@kernel.org, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, k.jensen@samsung.com
-Subject: Re: [PATCH v10 09/10] hw/nvme: add reservation protocal command
-Message-ID: <ZtmNMeCwomjvXY0i@AALNPWKJENSEN.aal.scsc.local>
-References: <20240829084214.50548-1-luchangqi.123@bytedance.com>
- <20240829084214.50548-10-luchangqi.123@bytedance.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smA6J-0004Tm-RO
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:52:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725533550;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=B0mF0zGVDkmtou1ClNE8WVX2yLIgSaMVCuaiAAkLbOc=;
+ b=DPpDg+DSiWVBL4t7wCpaKqOO+VigKtvPzlGkVm5uaGEwya4s+C6oi3nvw1Dy2mwLJRjCaX
+ g2rlLTFjGcwA5kPvCFyhjOnDd8ZWcSiSnSIhtozR69+UL6jAYX827HpzZFGQBm/31y4EfK
+ PwXIhke0JaoCMYm9OlxLWP/+Ka3Vu4w=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-D3Mqkbb4Pf6QKJvg0YlWOg-1; Thu, 05 Sep 2024 06:52:29 -0400
+X-MC-Unique: D3Mqkbb4Pf6QKJvg0YlWOg-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7a1d06f8e78so103722185a.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 03:52:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725533548; x=1726138348;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B0mF0zGVDkmtou1ClNE8WVX2yLIgSaMVCuaiAAkLbOc=;
+ b=cafLxstaRgul+FBfELmEt0wYCeXM+Nd2wlP/klzlQsK/EWAwtLee/OeFgtMGvJ5If1
+ ix4nbhxERrK5511bYOjFBT5BCwhxqRWMm9OncpBTfOFuQo/SIf1eul6rXHP8t9I/ZI4d
+ sZdBdZDv0/7tY/uueGw/vVe7M86jEU3tzyxXzPYmzfF+EbUYgU4a/CqRfLElOBLnaplp
+ W0Ych4uU0kHS4gUlmlEpDhuOMzsS+8zpfJx6ettL2AVg5vNNkzc0HwrhUixDLmoEUOSt
+ 3zItNw8OG/xVH8Wc0mUt/HaQu8j2ISXx35exuYPtwx8BmbhDtnyoVYq+RPmcryVBKdpl
+ M44Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW6ygBd3uvWdgwmocBJtyYPzeDueW1pUxtgH3gGk9kstTcYLau0cG+2b2pMg9jAs38+K1hqt3BBeGri@nongnu.org
+X-Gm-Message-State: AOJu0Ywxk8M2LGsw/loqHaR43MKIksHA73x2K1I3frkGOCtI4t+kVOPv
+ krvJ3OPg8ag9SsHbk7W+vdPiJ1Ip/2/Sed/bJGn+8xHAEfTlVQ6+q6yhdsapRO1czfpbik3S9vO
+ 8Qv+dA1MKusfC0g35t3AoZOZzEHII0s23QWybZi52JefCAOnHN8Q0
+X-Received: by 2002:a05:620a:4448:b0:7a7:fef9:f608 with SMTP id
+ af79cd13be357-7a80426b4bbmr2552667085a.52.1725533548560; 
+ Thu, 05 Sep 2024 03:52:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHehFEqRCCfH+BRtyuj8KZH6ZM1WIBTJ//JQD7WbutMYx49wVX77gEQxjT/geQsO8O/ZOgekg==
+X-Received: by 2002:a05:620a:4448:b0:7a7:fef9:f608 with SMTP id
+ af79cd13be357-7a80426b4bbmr2552664885a.52.1725533548164; 
+ Thu, 05 Sep 2024 03:52:28 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-42-243-216.web.vodafone.de.
+ [109.42.243.216]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a98f00fcb1sm63932885a.120.2024.09.05.03.52.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Sep 2024 03:52:27 -0700 (PDT)
+Message-ID: <881fcbd7-d78f-4b42-b1e7-f4321cc9dc2a@redhat.com>
+Date: Thu, 5 Sep 2024 12:52:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240829084214.50548-10-luchangqi.123@bytedance.com>
-Received-SPF: pass client-ip=103.168.172.157; envelope-from=its@irrelevant.dk;
- helo=fhigh6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/qtest/meson.build: Add more CONFIG switches checks
+ for the x86 tests
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Laurent Vivier <lvivier@redhat.com>
+References: <20240904082116.209260-1-thuth@redhat.com>
+ <37254a58-3f76-4c12-a2ae-0f2259e8bf9f@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <37254a58-3f76-4c12-a2ae-0f2259e8bf9f@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,89 +148,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Aug 29 16:42, Changqi Lu wrote:
-> Add reservation acquire, reservation register,
-> reservation release and reservation report commands
-> in the nvme device layer.
+On 05/09/2024 10.28, Paolo Bonzini wrote:
+> On 9/4/24 10:21, Thomas Huth wrote:
+>> When configuring QEMU with "--without-default-devices", currently a lot
+>> of the x86 qtests are failing since they silently assume that a certain
+>> device or the i440fx pc machine is available. Add more checks for CONFIG
+>> switches here to not run those tests in case the corresponding device is
+>> not available.
 > 
-> By introducing these commands, this enables the nvme
-> device to perform reservation-related tasks, including
-> querying keys, querying reservation status, registering
-> reservation keys, initiating and releasing reservations,
-> as well as clearing and preempting reservations held by
-> other keys.
+> Is this enough to fix this:
 > 
-> These commands are crucial for management and control of
-> shared storage resources in a persistent manner.
-> Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-> Acked-by: Klaus Jensen <k.jensen@samsung.com>
-> ---
->  hw/nvme/ctrl.c       | 330 +++++++++++++++++++++++++++++++++++++++++++
->  hw/nvme/nvme.h       |   4 +
->  include/block/nvme.h |  37 +++++
->  3 files changed, 371 insertions(+)
+> # Check our reduced build configurations
+> # requires libfdt: aarch64, arm, loongarch64, microblaze, microblazeel,
+> #   or1k, ppc64, riscv32, riscv64, rx
+> # fails qtest without boards: i386, x86_64
+> build-without-defaults:
 > 
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index ad212de723..1f8a5659c9 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -1747,6 +1755,13 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
->      case NVME_CMD_READ:
->          status = NVME_UNRECOVERED_READ;
->          break;
-> +    case NVME_CMD_RESV_REPORT:
-> +        if (ret == -ENOTSUP) {
-> +            status = NVME_INVALID_OPCODE;
-> +        } else {
-> +            status = NVME_UNRECOVERED_READ;
-> +        }
-> +        break;
->      case NVME_CMD_FLUSH:
->      case NVME_CMD_WRITE:
->      case NVME_CMD_WRITE_ZEROES:
-> @@ -1754,6 +1769,15 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
->      case NVME_CMD_COPY:
->          status = NVME_WRITE_FAULT;
->          break;
-> +    case NVME_CMD_RESV_REGISTER:
-> +    case NVME_CMD_RESV_ACQUIRE:
-> +    case NVME_CMD_RESV_RELEASE:
-> +        if (ret == -ENOTSUP) {
-> +            status = NVME_INVALID_OPCODE;
-> +        } else {
-> +            status = NVME_WRITE_FAULT;
-> +        }
-> +        break;
->      default:
->          status = NVME_INTERNAL_DEV_ERROR;
->          break;
+> and add i386-softmmu/x86_64-softmmu to build-without-defaults?
 
-This wasn't exactly what I had in mind ;) See below.
+Yes, together with some other patches that I sent to the list in the past 
+days, this seems to work now:
 
-> @@ -2692,6 +2716,304 @@ static uint16_t nvme_verify(NvmeCtrl *n, NvmeRequest *req)
->      return NVME_NO_COMPLETE;
->  }
->  
-> +typedef struct NvmeKeyInfo {
-> +    uint64_t cr_key;
-> +    uint64_t nr_key;
-> +} NvmeKeyInfo;
-> +
-> +static uint16_t nvme_resv_register(NvmeCtrl *n, NvmeRequest *req)
-> +{
-> +    int ret;
-> +    NvmeKeyInfo key_info;
-> +    NvmeNamespace *ns = req->ns;
-> +    uint32_t cdw10 = le32_to_cpu(req->cmd.cdw10);
-> +    bool ignore_key = cdw10 >> 3 & 0x1;
-> +    uint8_t action = cdw10 & 0x7;
-> +    uint8_t ptpl = cdw10 >> 30 & 0x3;
-> +    bool aptpl;
-> +
+  https://gitlab.com/thuth/qemu/-/jobs/7751500808#L5050
 
-Here, check ns->id_ns.rescap for reservations support and return
-NVME_INVALID_OPCODE. There is no need to call the block layer otherwise.
+I just had to discover that I messed up this patch here (forgot to squash 
+some other changes). I'll make a proper series out of the patches and send 
+them out together again, including a patch to enable x86 in the 
+build-without-defaults job.
 
-Same for the below commands.
+  Thomas
+
 
