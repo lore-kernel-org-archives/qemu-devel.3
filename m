@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B29ACD5BA2
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 09:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F49CD5BA2
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 09:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm91a-0008Ol-Si; Thu, 05 Sep 2024 05:43:34 -0400
+	id 1sm97A-0004q7-DU; Thu, 05 Sep 2024 05:49:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sm91Y-0008Ni-Ui
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 05:43:32 -0400
+ id 1sm978-0004pa-BF
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 05:49:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sm91W-0004iN-Ah
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 05:43:32 -0400
+ id 1sm976-0006KO-RD
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 05:49:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725529408;
+ s=mimecast20190719; t=1725529755;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=XoruUiZtnqwjix1nRp+rt3Ip66D/yTVzkjSRh9uAUrs=;
- b=cFjAsYJFL6UpVcH24MUI+lBDoocFnABKWUwSCBdt3+RhByTzznrp0VIUWcVe9+UGePzhsC
- aMzMhhjlo5zEbd7Kau2mEJ8Z9FX+WOarma1geC+axdquxer18JKwIo4eCGc6cSpghyLTZ9
- vT/kGaXS8t1NuW1WyAquEEsYqVWjOeE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=OivPxGIHHhykoH10i0ADJzQwQgX6yrBwT3TD5PLf6pY=;
+ b=SumyY2RQtPi3lrp++gHTqTE4hIF1hjzvhl1Xzn9l6TlF2wxSJIZ6zq/MzCGYmCLktWoZ7j
+ w9/fApPxzNbuB62Jbog4T0+7vh37lfB0AsxDCTsEsfzrnpyYj4Nf1/rDtwfCyOpofRkkSh
+ kF6qIj/A9cC+qs5tEn27eeR9vR9J0II=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-c5TQrZLRM3KO3YOWdgrJUg-1; Thu,
- 05 Sep 2024 05:43:25 -0400
-X-MC-Unique: c5TQrZLRM3KO3YOWdgrJUg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-iXqbsuG6PFG7yBpn8-XTwg-1; Thu,
+ 05 Sep 2024 05:49:13 -0400
+X-MC-Unique: iXqbsuG6PFG7yBpn8-XTwg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7B7E1956069; Thu,  5 Sep 2024 09:43:23 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 962BA19560A2; Thu,  5 Sep 2024 09:49:11 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.53])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C936B1956052; Thu,  5 Sep 2024 09:43:20 +0000 (UTC)
-Date: Thu, 5 Sep 2024 10:43:17 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87136195608A; Thu,  5 Sep 2024 09:49:08 +0000 (UTC)
+Date: Thu, 5 Sep 2024 10:49:04 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+To: Peter Xu <peterx@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
  Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
 Subject: Re: [PATCH V2 00/11] Live update: cpr-exec
-Message-ID: <Ztl9NRnELy82n3-R@redhat.com>
-References: <Zru4AaTmBIAGnyDr@x1n>
- <46b63356-9602-4fa2-9d31-186f5f85151f@oracle.com>
+Message-ID: <Ztl-kEs3pebSF4aP@redhat.com>
+References: <46b63356-9602-4fa2-9d31-186f5f85151f@oracle.com>
  <Zr9q4muKZmYCf9mv@x1n> <Zr9tYsmy8j2t8fq0@redhat.com>
  <Zr9xcmUfkYAWnXH-@x1n> <Zr93oOn9J5JLs2Rn@redhat.com>
  <Zr97ms6Ur9HH_EXG@x1n>
  <d45761d3-6bee-42ac-9752-1192b3bae6ef@oracle.com>
  <ZsYzIN5pM9Ad_DYn@x1n>
  <e1284027-6860-460c-8f3c-5b9c34e2c351@oracle.com>
+ <Ztjd9nsrqgjfYTz1@x1n>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e1284027-6860-460c-8f3c-5b9c34e2c351@oracle.com>
+In-Reply-To: <Ztjd9nsrqgjfYTz1@x1n>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
@@ -96,74 +96,55 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 04, 2024 at 04:58:14PM -0400, Steven Sistare wrote:
-> On 8/21/2024 2:34 PM, Peter Xu wrote:
-> > On Fri, Aug 16, 2024 at 01:09:23PM -0400, Steven Sistare wrote:
+On Wed, Sep 04, 2024 at 06:23:50PM -0400, Peter Xu wrote:
+> On Wed, Sep 04, 2024 at 04:58:14PM -0400, Steven Sistare wrote:
+> > On 8/21/2024 2:34 PM, Peter Xu wrote:
+> > > On Fri, Aug 16, 2024 at 01:09:23PM -0400, Steven Sistare wrote:
+> > > > On 8/16/2024 12:17 PM, Peter Xu wrote:
+> > > What I read so far from Dan is that cpr-transfer seems to be also preferred
+> > > from Libvirt POV:
 > > > 
-> > > libvirt starts qemu with the -sandbox spawn=deny option which blocks fork, exec,
-> > > and change namespace operations.  I have a patch in my workspace to be submitted
-> > > later called "seccomp: fine-grained control of fork, exec, and namespace" that allows
-> > > libvirt to block fork and namespace but allow exec.
+> > >    https://lore.kernel.org/r/Zr9-IvoRkGjre4CI@redhat.com
+> > > 
+> > > Did I read it right?
 > > 
-> > The question is whether that would be accepted, and it also gives me the
-> > feeling that even if it's accepted, it might limit the use cases that cpr
-> > can apply to.
+> > I read that as: cpr-transfer is a viable option for libvirt.  I don't hear him
+> > excluding the possibility of cpr-exec.
 > 
-> This is more acceptable for libvirt running in a container (such as under kubevirt)
-> with a limited set of binaries in /bin that could be exec'd.  In that case allowing
-> exec is more reasonable.
-
-Running inside a container does protect the host to a significant
-degree. I'd say it is still important, however, to protect the
-control plane (libvirt's daemons & kubevirt's agent) from the QEMU
-process being managed, and in that case it still looks pretty
-compelling to deny exec.
-
-> > What I read so far from Dan is that cpr-transfer seems to be also preferred
-> > from Libvirt POV:
+> I preferred not having two solution because if they work the same problem
+> out, then it potentially means one of them might be leftover at some point,
+> unless they suite different needs.  But I don't feel strongly, especially
+> if cpr-exec is light if cpr-transfer is there.
+> 
 > > 
-> >    https://lore.kernel.org/r/Zr9-IvoRkGjre4CI@redhat.com
+> > I agree that "Dan the libvirt expert prefers cpr-transfer" is a good reason to
+> > provide cpr-transfer.  Which I will do.
 > > 
-> > Did I read it right?
+> > So does "Steve the OCI expert prefers cpr-exec" carry equal weight, for also
+> > providing cpr-exec?
 > 
-> I read that as: cpr-transfer is a viable option for libvirt.  I don't hear him
-> excluding the possibility of cpr-exec.
+> As an open source project, Libvirt using it means the feature can be
+> actively used and tested.  When e.g. there's a new feature replacing CPR we
+> know when we can obsolete the old CPR, no matter -exec or -transfer.
 > 
-> I agree that "Dan the libvirt expert prefers cpr-transfer" is a good reason to
-> provide cpr-transfer.  Which I will do.
+> Close sourced projects can also be great itself but naturally are less
+> important in open source communities IMHO due to not accessible to anyone
+> in the community.  E.g., we never know when an close sourced project
+> abandoned a feature, then QEMU can carry over that feature forever without
+> knowing who's using it.
 
-Both approaches have significant challenges for integration, but my general
-preference is towards a solution that doesn't require undermining our security
-protections.
+In terms of closed source projects, effectively they don't exist from a
+QEMU maintainer's POV. Our deprecation & removal policy is designed so
+that we don't need to think about who is using stuff.
 
-When starting a VM we have no knowledge of whether a user may want to use
-CPR at a later date. We're not going to disable the seccomp sandbox by
-default, so that means cpr-exec would not be viable in a default VM
-deployment.
+When QEMU deprecates something, any users (whether open source or closed
+source) have 2 releases in which to notice this, and make a request that
+we cancel the deprecation, or change their code.
 
-Admins could choose to modify /etc/libvirt/qemu.conf to turn off seccomp,
-but I'm very much not in favour of introducing a feature that requires
-them todo this. It would be a first in libvirt, as everything else we
-support is possible to use with seccomp enabled. The seccomp opt-out is
-essentially just there as an emergency escape hatch, not as something we
-want used in production.
-
-> We are at an impasse on this series.  To make forward progress, I am willing to
-> reorder the patches, and re-submit cpr-transfer as the first mode, so we can
-> review and pull that.  I will submit cpr-exec as a follow on and we can resume
-> our arguments then.
-
-Considering the end result, are there CPR usage scenarios that are possible
-with cpr-exec, that can't be achieved with cpr-transfer ?
-
-Supporting two ways to doing the same thing is increasing the maint burden
-for QEMU maintainers, as well as downstream testing engineers who have to
-validate this functionality. So unless there's compelling need to support
-both cpr-transfer and cpr-exec, it'd be nice to standardize on just one of
-them.
-
-cpr-transfer does look like its probably more viable, even with its own
-challenges wrt resources being opened twice.
+Libvirt is special in the sense that we'll CC libvirt mailing list on
+changes to the deprecated.rst file, and we'll often not propose
+deprecations in the first place if we know libvirt is using it, since
+we can ask libvirt quite easily & libvirt people pay attention to QEMU.
 
 With regards,
 Daniel
