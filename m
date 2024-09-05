@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F49CD5BA2
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 09:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C397CCD5BA8
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm97A-0004q7-DU; Thu, 05 Sep 2024 05:49:20 -0400
+	id 1sm9hr-0001xZ-Ic; Thu, 05 Sep 2024 06:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sm978-0004pa-BF
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 05:49:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sm976-0006KO-RD
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 05:49:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725529755;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=OivPxGIHHhykoH10i0ADJzQwQgX6yrBwT3TD5PLf6pY=;
- b=SumyY2RQtPi3lrp++gHTqTE4hIF1hjzvhl1Xzn9l6TlF2wxSJIZ6zq/MzCGYmCLktWoZ7j
- w9/fApPxzNbuB62Jbog4T0+7vh37lfB0AsxDCTsEsfzrnpyYj4Nf1/rDtwfCyOpofRkkSh
- kF6qIj/A9cC+qs5tEn27eeR9vR9J0II=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-iXqbsuG6PFG7yBpn8-XTwg-1; Thu,
- 05 Sep 2024 05:49:13 -0400
-X-MC-Unique: iXqbsuG6PFG7yBpn8-XTwg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 962BA19560A2; Thu,  5 Sep 2024 09:49:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.53])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87136195608A; Thu,  5 Sep 2024 09:49:08 +0000 (UTC)
-Date: Thu, 5 Sep 2024 10:49:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 00/11] Live update: cpr-exec
-Message-ID: <Ztl-kEs3pebSF4aP@redhat.com>
-References: <46b63356-9602-4fa2-9d31-186f5f85151f@oracle.com>
- <Zr9q4muKZmYCf9mv@x1n> <Zr9tYsmy8j2t8fq0@redhat.com>
- <Zr9xcmUfkYAWnXH-@x1n> <Zr93oOn9J5JLs2Rn@redhat.com>
- <Zr97ms6Ur9HH_EXG@x1n>
- <d45761d3-6bee-42ac-9752-1192b3bae6ef@oracle.com>
- <ZsYzIN5pM9Ad_DYn@x1n>
- <e1284027-6860-460c-8f3c-5b9c34e2c351@oracle.com>
- <Ztjd9nsrqgjfYTz1@x1n>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sm9hq-0001wk-A4
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:27:14 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sm9ho-0007I2-Dj
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:27:14 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2f4f24263acso11123841fa.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 03:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725532030; x=1726136830; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+B1EfBOMHYHAZB5h4exHvi88VPzs2y2vW7dtloYIbbo=;
+ b=ZUGigbrg6NEfyf3P/qjI3cB/m8lnIZMkFWM2AnRLLRWXYSdTUjcobD8tz44sXN6VZE
+ bhrPWVRY+qSL/+60N332AdldS9BKA0neA4QrIedvWiitfc/fMYITyEe2Nx/YqX5miQzX
+ Hgrq0spUhvS3+Bb1q2jf0IflYbS7WRJnrNAUgqBhvVWTRAaMV9+VxhVD+p1KjTN8Ufp9
+ gMrZ6Lpx4jElYk0O63XCIuZnUxYbbgkw8dce7i+XsscSezjjGegEijxwctVAXSljrQII
+ LQrIz3fNcsC3btbrpW5E4TqwAiETaZntZBbiLwQ7t3UndPGx5v3deWMUQi3OK/R4ZLIg
+ bLIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725532030; x=1726136830;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+B1EfBOMHYHAZB5h4exHvi88VPzs2y2vW7dtloYIbbo=;
+ b=QqkwOXNXHU0FoQTtepn4xdBSnikyx4fTxwuFDVDcIQQQMRhzJentA7c76RTA7xwQp1
+ 1hL1CgEabgX7RiH+u2Z1UO4daIy/24NlN9IEzlIuHvWgdYTbANYkL4+pya1jqXoCm1Xh
+ Hs1DYv67QRV1HM7m+kW2WkPsJjB+x9DUA3iRcI81KDvN07WKZK8iwKxDErM88S1fN4tq
+ nH8LqO8GeLLJdt1Olm5iEjNo/OHZW4h7RWyvQmZxhlP4SgTNANSlc2mo0BeHNGiYVc6S
+ XJdHKZj2ZWwt3whgpnium4IewtyZe7VbgYBnIJwI3pC5BH44slrVp5pj8d5Ax5/OrVCn
+ feIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQ0u6z8Jt7QfLWdLyzSHRlAggxOWleVq/CxtE57aDN/PeHIWLm1PIATg0Up1ncR6WTkn3uqJ0K6ABm@nongnu.org
+X-Gm-Message-State: AOJu0YwHyc+rb86eHTTtX65s2CO5+Qf+wHB5emqtc0F7IYUbK2sJ9U26
+ V40MDtRp05terQxgHH8rFuoTvXl2NMIO5sA7LDVMLfnBOPWcaJBgZBi9FqU4RKiFM6S3r1IxhS6
+ KNBFjjs/5+w2eKeqVaubWr8CZbSmpUGkjqkAQtA==
+X-Google-Smtp-Source: AGHT+IGFNv5Pr9qXTFDQI3NWo0SORws1NQn8oojf2UHchdVf07R6HrdguAyncGOzAd0CeL2oK/iWYoHSoBghkfQmj5o=
+X-Received: by 2002:a05:651c:220e:b0:2f3:e2fd:aae0 with SMTP id
+ 38308e7fff4ca-2f6105c4b9cmr227483211fa.6.1725532029849; Thu, 05 Sep 2024
+ 03:27:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Ztjd9nsrqgjfYTz1@x1n>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240904101445.4127-1-deller@kernel.org>
+In-Reply-To: <20240904101445.4127-1-deller@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Sep 2024 11:26:59 +0100
+Message-ID: <CAFEAcA_jdPn=8tT_oBDfyiBwKpMuwOWfj-if5xzJ1oQ2XH=gDA@mail.gmail.com>
+Subject: Re: [PULL 0/2] Hppa v9.1 fixes patches
+To: deller@kernel.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ deller@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,65 +87,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 04, 2024 at 06:23:50PM -0400, Peter Xu wrote:
-> On Wed, Sep 04, 2024 at 04:58:14PM -0400, Steven Sistare wrote:
-> > On 8/21/2024 2:34 PM, Peter Xu wrote:
-> > > On Fri, Aug 16, 2024 at 01:09:23PM -0400, Steven Sistare wrote:
-> > > > On 8/16/2024 12:17 PM, Peter Xu wrote:
-> > > What I read so far from Dan is that cpr-transfer seems to be also preferred
-> > > from Libvirt POV:
-> > > 
-> > >    https://lore.kernel.org/r/Zr9-IvoRkGjre4CI@redhat.com
-> > > 
-> > > Did I read it right?
-> > 
-> > I read that as: cpr-transfer is a viable option for libvirt.  I don't hear him
-> > excluding the possibility of cpr-exec.
-> 
-> I preferred not having two solution because if they work the same problem
-> out, then it potentially means one of them might be leftover at some point,
-> unless they suite different needs.  But I don't feel strongly, especially
-> if cpr-exec is light if cpr-transfer is there.
-> 
-> > 
-> > I agree that "Dan the libvirt expert prefers cpr-transfer" is a good reason to
-> > provide cpr-transfer.  Which I will do.
-> > 
-> > So does "Steve the OCI expert prefers cpr-exec" carry equal weight, for also
-> > providing cpr-exec?
-> 
-> As an open source project, Libvirt using it means the feature can be
-> actively used and tested.  When e.g. there's a new feature replacing CPR we
-> know when we can obsolete the old CPR, no matter -exec or -transfer.
-> 
-> Close sourced projects can also be great itself but naturally are less
-> important in open source communities IMHO due to not accessible to anyone
-> in the community.  E.g., we never know when an close sourced project
-> abandoned a feature, then QEMU can carry over that feature forever without
-> knowing who's using it.
+On Wed, 4 Sept 2024 at 11:14, <deller@kernel.org> wrote:
+>
+> From: Helge Deller <deller@gmx.de>
+>
+> The following changes since commit fd1952d814da738ed107e05583b3e02ac11e88ff:
+>
+>   Update version for v9.1.0 release (2024-09-03 09:18:26 -0700)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/hdeller/qemu-hppa.git tags/hppa-v9.1-fixes-pull-request
+>
+> for you to fetch changes up to d33d3adb573794903380e03e767e06470514cefe:
+>
+>   target/hppa: Fix random 32-bit linux-user crashes (2024-09-03 22:08:22 +0200)
+>
+> ----------------------------------------------------------------
+> hppa target fixes
+>
+> Two important patches for the hppa target which missed qemu-v9.1:
+> - One fix for random linux-user crashes
+> - One fix for random issues due to loosing the division V-bit
+>   during delivery of hardware interrupts. This triggers all sorts
+>   of random faults when running in system mode.
+>
+> Helge
+>
 
-In terms of closed source projects, effectively they don't exist from a
-QEMU maintainer's POV. Our deprecation & removal policy is designed so
-that we don't need to think about who is using stuff.
+Applied, thanks.
 
-When QEMU deprecates something, any users (whether open source or closed
-source) have 2 releases in which to notice this, and make a request that
-we cancel the deprecation, or change their code.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
-Libvirt is special in the sense that we'll CC libvirt mailing list on
-changes to the deprecated.rst file, and we'll often not propose
-deprecations in the first place if we know libvirt is using it, since
-we can ask libvirt quite easily & libvirt people pay attention to QEMU.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
