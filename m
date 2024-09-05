@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF44CD6E56
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 16:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DE9CD6E56
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 16:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smFm5-0007rI-Eb; Thu, 05 Sep 2024 12:56:01 -0400
+	id 1smFm7-0007zM-I1; Thu, 05 Sep 2024 12:56:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smFm3-0007q2-G6
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:55:59 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1smFm4-0007r5-K2
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:56:01 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smFm1-00055I-W8
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:55:59 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-42c7b5b2d01so10868185e9.3
+ id 1smFm2-00055P-93
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:56:00 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42bb6d3e260so8815795e9.1
  for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 09:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725555356; x=1726160156; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TqCQOWtX6gr9Wrl2yH2SPZFSZsUhuq+Hl9Sn5uRRLVU=;
- b=kMAmlKar1eVgUIUhGjd+a/W4jq7i0jE9CXyY1Lo5oQtK9YcJtOq9lRvsEzrtQvYHE1
- c3MuORmVj1fLlYqLOajyTI/yyqRnWI5BZ7iyvc3fBeXOk8W4jCizidcigShske63ejxJ
- sKMe/03+r6VwkiutOcd34NUbKlkok2O0Uetv2gM9oZwUcQ8fsMj8EsP0eTU/9SO5xlTc
- pIV5kCA3wQyHyo5IdRts5vkB7cWIuc/E/odj15c8PnduFE8C51SRqOm1MO34Fu3lcRDt
- X2qS9TlleQVlVbryyU2sjOuhEkaADJcaKwn6GJqO0ytjGByjzLp2sqO/zj5AudlBKsuN
- K8zw==
+ d=linaro.org; s=google; t=1725555357; x=1726160157; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E7FHPmOQWKyZgNpvo90Rwc4wX0dTz+RaJ8RO/pqd3yM=;
+ b=EojgtlxHSM4Lkm51niss8SJ2IRUCkAnVqTlzTpvE83cUZ3SKL22jzOQ5yq8xvWlV63
+ YtMgdzbFwqaYmfIFUT2/YB7oa+bD+mH7bZlsiEdpcW2e1Jx2vVhY0E+PVBRpO8x7IkB1
+ dfgz8WPohhrBQHgrI+ZNSjS7ruGk0aB1BDMeg2Bn80BnDYtlwtnTq2xrzWtLHxr8QXC3
+ tk+VPDuruFxWfJx77MeWe3h+IXtioeNHlqWXZDvFwekcxsNPwcUNAtOCqlN140p11GL3
+ NMPi02ICCksVp+grG/pYKyKg2/Ae5eYnaf8Wo5LjtBXloEc2wPrU8iIO4RTZAsFZ4GwB
+ 7mJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725555356; x=1726160156;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TqCQOWtX6gr9Wrl2yH2SPZFSZsUhuq+Hl9Sn5uRRLVU=;
- b=Guk+lkNEAwMtlWBvFpd85tN/bBPQ5MaLVbKaKsSuzulnDp5BM0I/5QTh8LkUK35U6i
- Kiqhb+PSH/lANO8d8fSyDCVgApOGIlqjiMFDSImY/Ck06s05LsvEZMtcmXwkG+/DdjsJ
- KI1ndPtUtS2sE4jx3dz7VVzXU4Pe1rr2Tz5EVUu+wwgC6sHwi65RPFZKD3X6BcP3JxYf
- vjtdIBNVj2lu9xNINSiop7dHmmXEv+4cJPIoleqP0oneI50OKZSQqNT1s9wVE22sYbDj
- iR/loh5Y3tBc4UXVGawTmCxICck0ckrWJExjEVFLZPOB5iHy8C3uzhBlcZTjRjTo32xA
- WLSA==
-X-Gm-Message-State: AOJu0Yz7SR3dPnC6ixhl2BJ7ctsHXWHrbVA4Kkw+NstteLg80SgrQHrs
- sLYy4PfnzJpGqBDRgNd7POF4L7bHO6OwL4Zk0ySBmRZ4ieBxWy3Z5VnXmV7TQjCQLFjbMzbzVhG
- F
-X-Google-Smtp-Source: AGHT+IFCuJhKbHlGeubDlhg7C+XEmj5er7sr1Rxfxj2qbo+ZBjerPbbLfq7q+bTK4bVXaQpb09u7mw==
-X-Received: by 2002:a05:600c:1994:b0:426:5269:982c with SMTP id
- 5b1f17b1804b1-42c9a38b28bmr28840665e9.28.1725555355802; 
- Thu, 05 Sep 2024 09:55:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725555357; x=1726160157;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=E7FHPmOQWKyZgNpvo90Rwc4wX0dTz+RaJ8RO/pqd3yM=;
+ b=kghZEd2lV7DwSXk4s5FIP4CAlEXdx+ciuV7Xho27Wl/lyNa2mGXy/KCt214xJ5JB42
+ pkwwl2Nof4evWmLf6NoplgG6d77pixnJp92SA++YfZvfvU5dQEHEnutgYUUEjcVOX+UK
+ xUgDbChhWMZZLJsJT6K9dR8CVCFSn9GJewL1ZUDGV2B5JNXZMrSeP1quueQWIH+Dds11
+ tpQeEOLDqRa2YAmAnbdQKFtyL60bVI/gxPN4vR/B7EWK7RwneckFaOD0YDSy37K3TvZN
+ lw3YMphQ6R+nvG1+od6YhuqB2B8NB/dYupunqURScCMrgAMz3jjCvVB4ek1K7GGD55s7
+ IXwQ==
+X-Gm-Message-State: AOJu0YzO8xn7wCooXyol3zf3xUtqiuStAxjfHhb8r9lQ0KrfA3OIu6iJ
+ J+bmtJvODb6EcTCd+D6eCNYr4HwBiGS6zkJJh+/XSoVZ74XqpBJ93XpXrSJ4xczqb0Dj4oirRcZ
+ j
+X-Google-Smtp-Source: AGHT+IFqSIoDShQw+aHJY3AhLkPZ1ZS6Ams0m/8qg1iAM163Jfskoj5W6V/fhSJVpaMt/fWmccQf1A==
+X-Received: by 2002:a05:600c:34c6:b0:426:6921:e3e5 with SMTP id
+ 5b1f17b1804b1-42bdc64e47fmr130888515e9.24.1725555356697; 
+ Thu, 05 Sep 2024 09:55:56 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bbd1eee1bsm206914925e9.9.2024.09.05.09.55.55
+ 5b1f17b1804b1-42bbd1eee1bsm206914925e9.9.2024.09.05.09.55.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 09:55:55 -0700 (PDT)
+ Thu, 05 Sep 2024 09:55:56 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 0/2] tests/qtest: Fix problems running with make
- vm-build-openbsd
-Date: Thu,  5 Sep 2024 17:55:52 +0100
-Message-Id: <20240905165554.320577-1-peter.maydell@linaro.org>
+Subject: [PATCH 2/2] tests/qtest: Bump timeout on ahci-test
+Date: Thu,  5 Sep 2024 17:55:54 +0100
+Message-Id: <20240905165554.320577-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240905165554.320577-1-peter.maydell@linaro.org>
+References: <20240905165554.320577-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,26 +94,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I noticed that 'make vm-build-openbsd' had bitrotted a bit:
- * two tests for the stm32l4x5 forgot a qtest_quit(), which meant
-   they would pass all their subtests but then timeout because the
-   underlying QEMU process never exited
- * the ahci-test timeout was a bit aggressive
+On my OpenBSD VM test system, the ahci-test sometimes hits its 60 second
+timeout. It has 75 subtests and allowing at least two seconds per
+subtest seems reasonable. Bump it to 150s.
 
-This patchset fixes these.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/qtest/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-thanks
--- PMM
-
-Peter Maydell (2):
-  tests/qtest: Add missing qtest_quit() to stm32 tests
-  tests/qtest: Bump timeout on ahci-test
-
- tests/qtest/dm163-test.c           | 2 ++
- tests/qtest/stm32l4x5_usart-test.c | 2 ++
- tests/qtest/meson.build            | 1 +
- 3 files changed, 5 insertions(+)
-
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 2f0d3ef0809..fc852f3d8ba 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -1,4 +1,5 @@
+ slow_qtests = {
++  'ahci-test': 150,
+   'aspeed_smc-test': 360,
+   'bios-tables-test' : 910,
+   'cdrom-test' : 610,
 -- 
 2.34.1
 
