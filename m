@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88DA8CD4F59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 07:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC25CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 07:40:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm74x-0006BM-FB; Thu, 05 Sep 2024 03:38:55 -0400
+	id 1sm74v-00063P-AT; Thu, 05 Sep 2024 03:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sm74v-00065B-FF; Thu, 05 Sep 2024 03:38:53 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1sm74s-0005xv-7x; Thu, 05 Sep 2024 03:38:50 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sm74t-0001f1-6A; Thu, 05 Sep 2024 03:38:52 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2f64cc05564so4710241fa.2; 
- Thu, 05 Sep 2024 00:38:49 -0700 (PDT)
+ id 1sm74q-0001d7-C9; Thu, 05 Sep 2024 03:38:50 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2f50ca18a13so5339211fa.1; 
+ Thu, 05 Sep 2024 00:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725521927; x=1726126727; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pGdI/U/PjWTM08E05dTtCVP/LnbVSGVkfN+LQ9L0LVw=;
- b=crWBHnd/oKPMhk6QiwT4HJvpe1McJRBoj9+tLCogwh+j/RC82MIOjEEPIFTyESqCQR
- aeoSbkJvrl3Dd94d+R/7VILY31dcjjclhNScI57mmDSSr2eQxhopWtQSFVFzZmKJkNa4
- tNI2QOjd9UIemeGuv0eFr1hrkW4CjcCOMrzfdMJOxTAYXphZwiBoETCTugkxVzeibJuP
- XqUXSssE74S0TtSNguV3HDqbh2ncfzFkO6xK+HBvpk2NT8kgwpWIKm8OA20JpqnGpAf1
- uwDTSh7cO8wK9CQ97VFf8nx03FNXaoUwybHFvpfBfXknHFt8VBqklTA8UfDdr42JXPOY
- N/Qw==
+ d=gmail.com; s=20230601; t=1725521924; x=1726126724; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3hJCn67cTUCpVwgmEIKrSd2Kdb4ezcdEcinf9XDw6Uw=;
+ b=BmRNx684DKHuGAN7Dj53UtG3HdyEiuYTRpqN2c5TeEiShbuTN8dUJhGQQQP8uxAB61
+ SnF7BraGLYOZk/wM/V4rSQ7u2pd4fM7Lr6G0rTrtq+H8DwRwFQcM0tT9iKLas45i7yRJ
+ S+Uq1hZgcqh34Lpa+7rGeaU4QgymWpOjBnFNNx35NIQa01KgS6P+VU/1mjdvQiOjoAus
+ FWenOXaHVlgvg/iInNsu9RahTQGizStHh3mUBiXwov37cQNmjQ8gl63pz8q3+bXzfun/
+ v9R97nxYYSqpSgbCvkPw0p4rZy10OTbmeJaols1Ocs170q3b+TUmVn1SwqXPfFvLvUuz
+ plag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725521927; x=1726126727;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pGdI/U/PjWTM08E05dTtCVP/LnbVSGVkfN+LQ9L0LVw=;
- b=M26ZLil3CCZHF/ENhsRpCrb1XGhUt8DjF1E9uSIFfQnofFCFIzF9zgxWiJEiyZgSXg
- kdSzsabz1/w/kUnIMrVvV92RMAJGImUWdXKlEZYWbNXdpx9F8i2qWGp2CTHfYzEuh5Sg
- P8O1D0e8som+Wqqrw/qfPmygT43rdVw7HFYRsYl5G5o3w10BzzdDkQFLlXfUFcW8Msu4
- mIXnwg3Mw04vFvqxDiKM4AfgnfBDYRrLdK73uukrCkk8sfrzrtz+HKLzd1Rka55Xo9st
- doBS0vqvlNVwIUhZaml3rNvwGsa6faEpDXOS+wTUnfTADQU2P16ma/eRxrNo5L48gc32
- rFlg==
+ d=1e100.net; s=20230601; t=1725521924; x=1726126724;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3hJCn67cTUCpVwgmEIKrSd2Kdb4ezcdEcinf9XDw6Uw=;
+ b=azJvslL1Q6qXovaJv0m36BtMmorpQj+gYhHBLrjTG4YL4smO4bxkwBgMEZj+jxrYFB
+ lA+TqN8kBq3Zb/XqD4uEum4brxfCuSesVl2kE1Vm6ydaNGi0mV6tkuDLo3nZyaARbE8J
+ HrjgOT5ZoWNOs+tlA7wlAyBrleyAc412oSp4paIS6fCj7HJavw1wlBkZxcbniSFeJgI8
+ nLbU6vKYlLHZFyLQv/EXhXoD4iVgT7AzY8PJzDiQCPBr6QZgmWR4vRE6DQfABQhiYyir
+ be8ViaHD+RtvgTsILoEk4GOrYnBukhn9u82TVoctcps7gyRwjYQCWPWX8k25XCEU2bA/
+ yXPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPTomG4klL9vZ/DciusBUmRKYV0FocFE7pZW3y0LM3baaPnYvV4GzJXfgE5WOHyLfQaKK+PvuQu8g=@nongnu.org,
- AJvYcCW2RgK10/kCz0QHdh4ivvC302RTSEuf3QbqWJLbQVrlsZLFvJLGMtcc2wQMUPEXyyKzS++jhA+uBg==@nongnu.org,
- AJvYcCWaaBx7Cwb0d18hIg6U8Mqk2ANFX3clYXHlP+x/qoLIBW78WFRuzd9yX/c/9yXq5Kx4n8cKNBdPDn/3Nw==@nongnu.org
-X-Gm-Message-State: AOJu0Yy9vpYY0AunxXYCB/XJFkU3teethcZ3GskDEAx9jUtrSJ2DEvql
- 2gvagEym8y6steKhl95cE9JdXlBZJIVN3Vx/81A1szmYZ5CTHYRWGF46pA==
-X-Google-Smtp-Source: AGHT+IGgEFBkQcOtXpcPKd32RTXqUWrbNNNC+OpEYWxLDHh2krJ8Kaw7pn+bMwSg+7DTis0TkT0V/w==
-X-Received: by 2002:a2e:be09:0:b0:2f6:5c64:ccc3 with SMTP id
- 38308e7fff4ca-2f65c64d01cmr27008101fa.16.1725521927105; 
- Thu, 05 Sep 2024 00:38:47 -0700 (PDT)
+ AJvYcCUHGsToIVzxJDY07waMv9nIVs/o+orFEh38xczt96NhKcjxXuBPPWblhdrvQ0w+K2/lKY/zhDlo9BAkVA==@nongnu.org,
+ AJvYcCVsCfR2C5cy2vJO2oIp3UOaYPhcZJSJqLq0Adp2rStyFqz4XWCgROpPBpZF79KJ2ZBiU8iSi/fqNYM=@nongnu.org,
+ AJvYcCXiUcstNZL7KmGjzDm5frX3V+eOrPq3EdJPCeY6b6Mhr9bQrbJJ+0BU0HAFmRU7do2CzX0VIQa02A==@nongnu.org
+X-Gm-Message-State: AOJu0YxVhtQjYILxKaUpfvwlL7x7pc9UyzskKHgMHMKzBdxwilVYeMng
+ qqgXNF85v1gqBL62Sj4r9CXwtbEZdC9v92gZck5RXJ9b3Ndx1fLz0EHwDg==
+X-Google-Smtp-Source: AGHT+IETYJT5S9DS58zZp1cMjFHdamAN5etleNMklxPlfU0tDL3v9EoKnQETPmwktbHWJtJqe11Pmg==
+X-Received: by 2002:a05:651c:b13:b0:2f1:6cb1:44c0 with SMTP id
+ 38308e7fff4ca-2f61038c633mr176590001fa.6.1725521923294; 
+ Thu, 05 Sep 2024 00:38:43 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-092-224-047-179.92.224.pool.telefonica.de. [92.224.47.179])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3cc5689d9sm848755a12.43.2024.09.05.00.38.45
+ 4fb4d7f45d1cf-5c3cc5689d9sm848755a12.43.2024.09.05.00.38.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 00:38:46 -0700 (PDT)
+ Thu, 05 Sep 2024 00:38:42 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Helge Deller <deller@gmx.de>,
@@ -99,16 +98,15 @@ Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 2/3] hw/char/serial.h: Extract serial-isa.h
-Date: Thu,  5 Sep 2024 09:38:31 +0200
-Message-ID: <20240905073832.16222-3-shentey@gmail.com>
+Subject: [PATCH v2 0/3] Serial device cleanup
+Date: Thu,  5 Sep 2024 09:38:29 +0200
+Message-ID: <20240905073832.16222-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240905073832.16222-1-shentey@gmail.com>
-References: <20240905073832.16222-1-shentey@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=shentey@gmail.com; helo=mail-lj1-x232.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=shentey@gmail.com; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,197 +129,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The includes where updated based on compile errors. Now, the inclusion of the
-header roughly matches Kconfig dependencies:
-
-  # grep -r -e "select SERIAL_ISA"
-  hw/ppc/Kconfig:    select SERIAL_ISA
-  hw/isa/Kconfig:    select SERIAL_ISA
-  hw/sparc64/Kconfig:    select SERIAL_ISA
-  hw/i386/Kconfig:    select SERIAL_ISA
-  hw/i386/Kconfig:    select SERIAL_ISA # for serial_hds_isa_init()
-
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- include/hw/char/serial-isa.h | 38 ++++++++++++++++++++++++++++++++++++
- include/hw/char/serial.h     |  9 ---------
- hw/char/serial-isa.c         |  1 +
- hw/i386/microvm-dt.c         |  2 +-
- hw/i386/microvm.c            |  2 +-
- hw/i386/pc.c                 |  2 +-
- hw/isa/isa-superio.c         |  2 +-
- hw/isa/vt82c686.c            |  2 +-
- hw/ppc/pnv.c                 |  2 +-
- hw/sparc64/sun4u.c           |  1 +
- 10 files changed, 46 insertions(+), 15 deletions(-)
- create mode 100644 include/hw/char/serial-isa.h
-
-diff --git a/include/hw/char/serial-isa.h b/include/hw/char/serial-isa.h
-new file mode 100644
-index 0000000000..8517afa128
---- /dev/null
-+++ b/include/hw/char/serial-isa.h
-@@ -0,0 +1,38 @@
-+/*
-+ * QEMU ISA 16550A UART emulation
-+ *
-+ * Copyright (c) 2003-2004 Fabrice Bellard
-+ * Copyright (c) 2008 Citrix Systems, Inc.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#ifndef HW_SERIAL_ISA_H
-+#define HW_SERIAL_ISA_H
-+
-+#include "hw/isa/isa.h"
-+
-+#define MAX_ISA_SERIAL_PORTS 4
-+
-+#define TYPE_ISA_SERIAL "isa-serial"
-+void serial_hds_isa_init(ISABus *bus, int from, int to);
-+void isa_serial_set_iobase(ISADevice *serial, hwaddr iobase);
-+void isa_serial_set_enabled(ISADevice *serial, bool enabled);
-+
-+#endif
-diff --git a/include/hw/char/serial.h b/include/hw/char/serial.h
-index 6e14099ee7..fca32a532b 100644
---- a/include/hw/char/serial.h
-+++ b/include/hw/char/serial.h
-@@ -106,13 +106,4 @@ SerialMM *serial_mm_init(MemoryRegion *address_space,
-                          qemu_irq irq, int baudbase,
-                          Chardev *chr, enum device_endian end);
- 
--/* serial-isa.c */
--
--#define MAX_ISA_SERIAL_PORTS 4
--
--#define TYPE_ISA_SERIAL "isa-serial"
--void serial_hds_isa_init(ISABus *bus, int from, int to);
--void isa_serial_set_iobase(ISADevice *serial, hwaddr iobase);
--void isa_serial_set_enabled(ISADevice *serial, bool enabled);
--
- #endif
-diff --git a/hw/char/serial-isa.c b/hw/char/serial-isa.c
-index 329b352b9a..b562ec9d37 100644
---- a/hw/char/serial-isa.c
-+++ b/hw/char/serial-isa.c
-@@ -29,6 +29,7 @@
- #include "sysemu/sysemu.h"
- #include "hw/acpi/acpi_aml_interface.h"
- #include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "hw/isa/isa.h"
- #include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
-diff --git a/hw/i386/microvm-dt.c b/hw/i386/microvm-dt.c
-index b3049e4f9f..fc5db6ed7f 100644
---- a/hw/i386/microvm-dt.c
-+++ b/hw/i386/microvm-dt.c
-@@ -34,7 +34,7 @@
- #include "qemu/cutils.h"
- #include "qapi/error.h"
- #include "sysemu/device_tree.h"
--#include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "hw/i386/fw_cfg.h"
- #include "hw/rtc/mc146818rtc.h"
- #include "hw/sysbus.h"
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 40edcee7af..05c882669c 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -39,7 +39,7 @@
- #include "hw/intc/i8259.h"
- #include "hw/timer/i8254.h"
- #include "hw/rtc/mc146818rtc.h"
--#include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "hw/display/ramfb.h"
- #include "hw/i386/topology.h"
- #include "hw/i386/e820_memory_layout.h"
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 7779c88a91..8de5fa3b55 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -25,7 +25,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "hw/i386/pc.h"
--#include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "hw/char/parallel.h"
- #include "hw/hyperv/hv-balloon.h"
- #include "hw/i386/fw_cfg.h"
-diff --git a/hw/isa/isa-superio.c b/hw/isa/isa-superio.c
-index a8c8c58ef7..cff756e791 100644
---- a/hw/isa/isa-superio.c
-+++ b/hw/isa/isa-superio.c
-@@ -22,7 +22,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/input/i8042.h"
- #include "hw/char/parallel-isa.h"
--#include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "trace.h"
- 
- static void isa_superio_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-index 505b44c4e6..1aa5c9613f 100644
---- a/hw/isa/vt82c686.c
-+++ b/hw/isa/vt82c686.c
-@@ -17,7 +17,7 @@
- #include "hw/isa/vt82c686.h"
- #include "hw/block/fdc.h"
- #include "hw/char/parallel-isa.h"
--#include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "hw/pci/pci.h"
- #include "hw/qdev-properties.h"
- #include "hw/ide/pci.h"
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 3526852685..ffc3f2bca0 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -53,7 +53,7 @@
- #include "hw/ppc/pnv_pnor.h"
- 
- #include "hw/isa/isa.h"
--#include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "hw/rtc/mc146818rtc.h"
- 
- #include <libfdt.h>
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 4ece1ac1ff..a839abbf5d 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -35,6 +35,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/pci-host/sabre.h"
- #include "hw/char/serial.h"
-+#include "hw/char/serial-isa.h"
- #include "hw/char/parallel-isa.h"
- #include "hw/rtc/m48t59.h"
- #include "migration/vmstate.h"
--- 
-2.46.0
-
+This series extracts TYPE_SERIAL_MM into its own module and introduces a=0D
+dedicated header for TYPE_SERIAL_ISA. The result is that no board directly=
+=0D
+depends on CONFIG_SERIAL or includes hw/char/serial.h any more.=0D
+=0D
+The first two patches are only paritally reviewed and would benefit from a =
+few=0D
+more R-b tags. Since the changes are mostly mechanical this may be "boring"=
+.=0D
+=0D
+v2:=0D
+* Rebase onto master which eliminates patch "hw/ppc/Kconfig: Add missing=0D
+  SERIAL_ISA dependency to POWERNV machine" from the series (already applie=
+d)=0D
+* Drop patch "hw/char/serial: Remove unused funtion" (Zoltan)=0D
+* Add Mark's R-b and Andrew's T-b tags=0D
+=0D
+Bernhard Beschow (3):=0D
+  hw: Remove unused inclusion of hw/char/serial.h=0D
+  hw/char/serial.h: Extract serial-isa.h=0D
+  hw/char: Extract serial-mm=0D
+=0D
+ include/hw/arm/aspeed_soc.h         |   2 +-=0D
+ include/hw/char/mchp_pfsoc_mmuart.h |   2 +-=0D
+ include/hw/char/serial-isa.h        |  38 +++++++=0D
+ include/hw/char/serial-mm.h         |  52 +++++++++=0D
+ include/hw/char/serial.h            |  28 -----=0D
+ hw/arm/allwinner-a10.c              |   2 +-=0D
+ hw/arm/allwinner-h3.c               |   2 +-=0D
+ hw/arm/allwinner-r40.c              |   2 +-=0D
+ hw/arm/aspeed_ast2400.c             |   2 +-=0D
+ hw/arm/aspeed_soc_common.c          |   2 +-=0D
+ hw/arm/kzm.c                        |   2 +-=0D
+ hw/arm/msf2-soc.c                   |   2 +-=0D
+ hw/arm/musicpal.c                   |   2 +-=0D
+ hw/arm/npcm7xx.c                    |   2 +-=0D
+ hw/arm/pxa2xx.c                     |   2 +-=0D
+ hw/char/omap_uart.c                 |   2 +-=0D
+ hw/char/riscv_htif.c                |   1 -=0D
+ hw/char/serial-isa.c                |   1 +=0D
+ hw/char/serial-mm.c                 | 157 ++++++++++++++++++++++++++++=0D
+ hw/char/serial.c                    | 126 ----------------------=0D
+ hw/display/sm501.c                  |   2 +-=0D
+ hw/hppa/machine.c                   |   2 +-=0D
+ hw/i386/microvm-dt.c                |   2 +-=0D
+ hw/i386/microvm.c                   |   2 +-=0D
+ hw/i386/pc.c                        |   2 +-=0D
+ hw/isa/isa-superio.c                |   2 +-=0D
+ hw/isa/vt82c686.c                   |   2 +-=0D
+ hw/loongarch/virt.c                 |   2 +-=0D
+ hw/microblaze/petalogix_ml605_mmu.c |   2 +-=0D
+ hw/mips/boston.c                    |   2 +-=0D
+ hw/mips/jazz.c                      |   2 +-=0D
+ hw/mips/loongson3_virt.c            |   2 +-=0D
+ hw/mips/malta.c                     |   2 +-=0D
+ hw/mips/mipssim.c                   |   2 +-=0D
+ hw/openrisc/openrisc_sim.c          |   2 +-=0D
+ hw/openrisc/virt.c                  |   2 +-=0D
+ hw/ppc/e500.c                       |   2 +-=0D
+ hw/ppc/pnv.c                        |   2 +-=0D
+ hw/ppc/ppc405_uc.c                  |   2 +-=0D
+ hw/ppc/ppc440_bamboo.c              |   2 +-=0D
+ hw/ppc/prep.c                       |   1 -=0D
+ hw/ppc/sam460ex.c                   |   2 +-=0D
+ hw/ppc/virtex_ml507.c               |   2 +-=0D
+ hw/riscv/sifive_e.c                 |   1 -=0D
+ hw/riscv/sifive_u.c                 |   1 -=0D
+ hw/riscv/virt.c                     |   2 +-=0D
+ hw/sparc64/niagara.c                |   2 +-=0D
+ hw/sparc64/sun4u.c                  |   3 +-=0D
+ hw/xtensa/xtfpga.c                  |   2 +-=0D
+ hw/arm/Kconfig                      |  20 ++--=0D
+ hw/char/Kconfig                     |   4 +=0D
+ hw/char/meson.build                 |   1 +=0D
+ hw/display/Kconfig                  |   2 +-=0D
+ hw/hppa/Kconfig                     |   2 +-=0D
+ hw/loongarch/Kconfig                |   2 +-=0D
+ hw/microblaze/Kconfig               |   2 +-=0D
+ hw/mips/Kconfig                     |  10 +-=0D
+ hw/openrisc/Kconfig                 |   4 +-=0D
+ hw/ppc/Kconfig                      |  10 +-=0D
+ hw/riscv/Kconfig                    |   2 +-=0D
+ hw/sparc64/Kconfig                  |   1 +=0D
+ hw/xtensa/Kconfig                   |   2 +-=0D
+ 62 files changed, 322 insertions(+), 225 deletions(-)=0D
+ create mode 100644 include/hw/char/serial-isa.h=0D
+ create mode 100644 include/hw/char/serial-mm.h=0D
+ create mode 100644 hw/char/serial-mm.c=0D
+=0D
+-- =0D
+2.46.0=0D
+=0D
 
