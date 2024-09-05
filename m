@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE316CD5BC4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133C2CD5BC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smC79-0001ne-C4; Thu, 05 Sep 2024 09:01:31 -0400
+	id 1smC7B-0001vx-Hr; Thu, 05 Sep 2024 09:01:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC6x-00015k-VQ
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:20 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1smC70-0001GU-Pb
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:22 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC6q-0001j5-WE
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:18 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42c7b5b2d01so7678845e9.3
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:01:07 -0700 (PDT)
+ id 1smC6v-0001m3-OF
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:22 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-374bfc395a5so458848f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725541266; x=1726146066; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725541276; x=1726146076; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UEvZ92Ysmoac5/8gCPMIYUSdZILiX6VcaOGkdAF88AA=;
- b=PNbvC6MDlIV1Dv0o9BFrGOwsVaaLGFI8ixLHUaGJgeiB42XxcMahXkGbH6mwbODK2T
- Pd/xbMQ/c9uc7yuJwS+/OhjMiocqsSsZflMg/nYjkL2gMpjSNMOUY13z9EPO76r3eUSv
- jFJiIoD7YrZyzogdIsumvN2GH6owcggzfNo8OKxkufjfj6M2hQnVMzeUp0a7yMHnnu+W
- Bvr0HXK7f/OjqzUxeVNXxWtznj+pgHeCDmTywCI51xtstIXpelBTQMZmq9OyuQFAjhrf
- D3ulv7B0vlWas1Nn1QeeVGQfnxudmSVJz6jKmvQr/qbpCxjU6hA668dAvKUIlZCTRkMH
- QS/g==
+ :reply-to; bh=MbgnugOLDPgGJXXw23NZotuiUGw5cYgIj0uJ8JeImbY=;
+ b=fwk9QPEf+7cBAefPDlyUKeDlQzCZENbwFNeb5eX8hpsS067V4/E30ye+eJeOUfr4Xi
+ rzecvHebYgkOVPZWKzKkdI5p4aWX9keKZ9xnD+IKcSE5o6aSCCXikvdOwA9wDZjxYv0b
+ frZaXclhwm24chhJ13yK4iRnIM7+3ho++LQf3dvqfcj3Qavu5O5mkv+NpsejDu1W4Iye
+ p4wibtBIOwcbbCRVh9O1Ri9e3iCCP/uShNJo5mlraLBfrcEMVIU4ap9Jo3XQnLp3GoUy
+ Uy3YRGsTqAY/3k2f8JoJo69rrOB/KtgqF6pPG3Ykw2ZfbdqiwRDfGvH91E5fGOP7r+vv
+ bUoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725541266; x=1726146066;
+ d=1e100.net; s=20230601; t=1725541276; x=1726146076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UEvZ92Ysmoac5/8gCPMIYUSdZILiX6VcaOGkdAF88AA=;
- b=InN2IHRVpCKBion0BiBswqM+OONmy3USBDu93pJGkK6pP+wsnlgQ+JQIU3IH6APEFO
- Z0UtiLKkRR7VdxZSVBbadAKpdRh+4q5yglwBurPNa4DBdcwlxZCpi1XNBzm03gldGxQR
- RoKwIaeRounRtE7R6JKGKCPShne+sYR7UixChau5YMLt8byKmyiYiZ8DMn+qbIgmgckK
- hpj72TGHsjZJ1d14usQHZgv6jG21ImcW1X0FzpF4vSPQzkVRqEIT9ARlnk3/TnuEEze9
- dMIip4tyC4uowL9epc3dxE7MZkekz8DDrmq+rqbxt/wv3/RJBU9K4kOaGnEJ1bvNV3bp
- sLDQ==
-X-Gm-Message-State: AOJu0Yz3IWtyb07Lq3D+Y+AxTPZHF0MIEgK2Fq2YgXJlqwJuqFOO0oWK
- UVRmksz8eE6bKM0UzgAK/FTVjcoe1z9zTr42pkopMIT9LF53y4BkpAignWFbiAcqIoTdEBqqfsu
- /
-X-Google-Smtp-Source: AGHT+IHYDOjQI8NoP9J8J4y2vVy9IYtSu5jtwcqETA+fBl+aMM8nizQClnQ5dFzooNdp/yZhFPEDig==
-X-Received: by 2002:a05:600c:3b29:b0:426:593c:9359 with SMTP id
- 5b1f17b1804b1-42c9a3938f6mr22208325e9.32.1725541266080; 
- Thu, 05 Sep 2024 06:01:06 -0700 (PDT)
+ bh=MbgnugOLDPgGJXXw23NZotuiUGw5cYgIj0uJ8JeImbY=;
+ b=DMPCpHPeY8blcGY+wh2Z509X6ar+HKGg8LMNsCBI23JlVuIuDzwYlhyPf7VYCDfb7k
+ cP+61QeZIBQtsqYHWUSnZtL84sk/+E7/ra0LQ2dvIg7FJxf+Zc2BLxfXjIMmOMD1m0tD
+ osCnF8Cl3C+xQeUWALN00s07xUQ5rIQ03A1TlyioaG6LeIWpvPU30SK8Dku3Cxnl/Jie
+ Ot16FAUmb0iYgISq8K9LiQJ0ZoKSrtzRU3fBNvUdFFOPrR3Zn8qVXlcbtXm/x/u/ENHm
+ 2hgVkZfq7/1krO2DgznV9NjAH08Bh3eAMsunuFJfBVVZhdh4HdiuD5AGi804i1QKf7eL
+ qv5A==
+X-Gm-Message-State: AOJu0Yy+izuwb7UcVZ+tyFUnOxpLDGm74cV8LsrRcTO9xnXMN2501cJ2
+ wUn6wtAxbznJ1lwdFAMJ6WeXtTBmZM9JbJJFecRNc6thm/3XWDA22DzpmJfwumZGveKRAT5P/jl
+ 5
+X-Google-Smtp-Source: AGHT+IGqMvomBVLGcTYSubyTEBTtvVWuiIhejUMFbjid5TTfdhPtu2KzcrSLVB6VQin4kHutTF/4/A==
+X-Received: by 2002:a5d:6a07:0:b0:374:be24:a81b with SMTP id
+ ffacd0b85a97d-37799e69a84mr3883581f8f.7.1725541275254; 
+ Thu, 05 Sep 2024 06:01:15 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6e355dfsm232251365e9.46.2024.09.05.06.01.05
+ 5b1f17b1804b1-42bb6e355dfsm232251365e9.46.2024.09.05.06.01.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 06:01:05 -0700 (PDT)
+ Thu, 05 Sep 2024 06:01:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/25] target/arm: Pass env pointer through to gvec_bfdot_idx
- helper
-Date: Thu,  5 Sep 2024 14:00:39 +0100
-Message-Id: <20240905130100.298768-5-peter.maydell@linaro.org>
+Subject: [PULL 19/25] hm/nvram/xlnx-versal-efuse-ctrl: Call
+ register_finalize_block
+Date: Thu,  5 Sep 2024 14:00:54 +0100
+Message-Id: <20240905130100.298768-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240905130100.298768-1-peter.maydell@linaro.org>
 References: <20240905130100.298768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,116 +94,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the env pointer through to the gvec_bfdot_idx helper,
-so we can use it to add support for FEAT_EBF16.
+The TYPE_XLNX_VERSAL_EFUSE_CTRL device creates a register block with
+register_init_block32() in its instance_init method; we must
+therefore destroy it in our instance_finalize method to avoid a leak
+in the QOM introspection "init-inspect-finalize" lifecycle:
+
+Direct leak of 304 byte(s) in 1 object(s) allocated from:
+    #0 0x55f222b5b9d8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-aarch64+0x294e9d8) (BuildId: 420
+43d49e1139e3f3071b1f22fac1e3e7249c9a6)
+    #1 0x7fbb10669c50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
+    #2 0x55f222f90c5d in register_init_block hw/core/register.c:248:34
+    #3 0x55f222f916be in register_init_block32 hw/core/register.c:299:12
+    #4 0x55f223bbdd15 in efuse_ctrl_init hw/nvram/xlnx-versal-efuse-ctrl.c:718:9
+    #5 0x55f225b23391 in object_init_with_type qom/object.c:420:9
+    #6 0x55f225b0a66b in object_initialize_with_type qom/object.c:562:5
+    #7 0x55f225b0bf0d in object_new_with_type qom/object.c:782:5
+    #8 0x55f225b0bfe1 in object_new qom/object.c:797:12
+    #9 0x55f226309e0d in qmp_device_list_properties qom/qom-qmp-cmds.c:144:11
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-id: 20240822162127.705879-7-peter.maydell@linaro.org
 ---
- target/arm/helper.h             |  4 ++--
- target/arm/tcg/translate-a64.c  | 11 ++++++++++-
- target/arm/tcg/translate-neon.c |  4 ++--
- target/arm/tcg/translate-sve.c  |  8 +++++++-
- target/arm/tcg/vec_helper.c     |  2 +-
- 5 files changed, 22 insertions(+), 7 deletions(-)
+ include/hw/nvram/xlnx-versal-efuse.h | 1 +
+ hw/nvram/xlnx-versal-efuse-ctrl.c    | 6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index 4466e796cb0..e197b5b1d2c 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -1029,8 +1029,8 @@ DEF_HELPER_FLAGS_5(gvec_usmmla_b, TCG_CALL_NO_RWG,
+diff --git a/include/hw/nvram/xlnx-versal-efuse.h b/include/hw/nvram/xlnx-versal-efuse.h
+index 86e2261b9a3..afa4f4f9960 100644
+--- a/include/hw/nvram/xlnx-versal-efuse.h
++++ b/include/hw/nvram/xlnx-versal-efuse.h
+@@ -44,6 +44,7 @@ struct XlnxVersalEFuseCtrl {
+     void *extra_pg0_lock_spec;      /* Opaque property */
+     uint32_t extra_pg0_lock_n16;
  
- DEF_HELPER_FLAGS_6(gvec_bfdot, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, env, i32)
--DEF_HELPER_FLAGS_5(gvec_bfdot_idx, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_6(gvec_bfdot_idx, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, env, i32)
- 
- DEF_HELPER_FLAGS_5(gvec_bfmmla, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 3813c75895b..c7876513c72 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -6410,13 +6410,22 @@ static bool do_dot_vector_idx(DisasContext *s, arg_qrrx_e *a,
-     return true;
- }
- 
-+static bool do_dot_vector_idx_env(DisasContext *s, arg_qrrx_e *a,
-+                                  gen_helper_gvec_4_ptr *fn)
-+{
-+    if (fp_access_check(s)) {
-+        gen_gvec_op4_env(s, a->q, a->rd, a->rn, a->rm, a->rd, a->idx, fn);
-+    }
-+    return true;
-+}
-+
- TRANS_FEAT(SDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_sdot_idx_b)
- TRANS_FEAT(UDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_udot_idx_b)
- TRANS_FEAT(SUDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
-            gen_helper_gvec_sudot_idx_b)
- TRANS_FEAT(USDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
-            gen_helper_gvec_usdot_idx_b)
--TRANS_FEAT(BFDOT_vi, aa64_bf16, do_dot_vector_idx, a,
-+TRANS_FEAT(BFDOT_vi, aa64_bf16, do_dot_vector_idx_env, a,
-            gen_helper_gvec_bfdot_idx)
- 
- static bool trans_BFMLAL_vi(DisasContext *s, arg_qrrx_e *a)
-diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
-index 454380f01d7..7de157c539c 100644
---- a/target/arm/tcg/translate-neon.c
-+++ b/target/arm/tcg/translate-neon.c
-@@ -391,8 +391,8 @@ static bool trans_VDOT_b16_scal(DisasContext *s, arg_VDOT_b16_scal *a)
-     if (!dc_isar_feature(aa32_bf16, s)) {
-         return false;
-     }
--    return do_neon_ddda(s, a->q * 6, a->vd, a->vn, a->vm, a->index,
--                        gen_helper_gvec_bfdot_idx);
-+    return do_neon_ddda_env(s, a->q * 6, a->vd, a->vn, a->vm, a->index,
-+                            gen_helper_gvec_bfdot_idx);
- }
- 
- static bool trans_VFML_scalar(DisasContext *s, arg_VFML_scalar *a)
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index e1dd6617e8b..eb77c943c8f 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -265,6 +265,12 @@ static bool gen_gvec_env_arg_zzzz(DisasContext *s, gen_helper_gvec_4_ptr *fn,
-     return gen_gvec_env_zzzz(s, fn, a->rd, a->rn, a->rm, a->ra, data);
- }
- 
-+static bool gen_gvec_env_arg_zzxz(DisasContext *s, gen_helper_gvec_4_ptr *fn,
-+                                  arg_rrxr_esz *a)
-+{
-+    return gen_gvec_env_zzzz(s, fn, a->rd, a->rn, a->rm, a->ra, a->index);
-+}
-+
- /* Invoke an out-of-line helper on 4 Zregs, 1 Preg, plus fpst. */
- static bool gen_gvec_fpst_zzzzp(DisasContext *s, gen_helper_gvec_5_ptr *fn,
-                                 int rd, int rn, int rm, int ra, int pg,
-@@ -7128,7 +7134,7 @@ TRANS_FEAT_NONSTREAMING(UMMLA, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
- 
- TRANS_FEAT(BFDOT_zzzz, aa64_sve_bf16, gen_gvec_env_arg_zzzz,
-            gen_helper_gvec_bfdot, a, 0)
--TRANS_FEAT(BFDOT_zzxz, aa64_sve_bf16, gen_gvec_ool_arg_zzxz,
-+TRANS_FEAT(BFDOT_zzxz, aa64_sve_bf16, gen_gvec_env_arg_zzxz,
-            gen_helper_gvec_bfdot_idx, a)
- 
- TRANS_FEAT_NONSTREAMING(BFMMLA, aa64_sve_bf16, gen_gvec_ool_arg_zzzz,
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index 01b36fdd786..a2c62a86d84 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -2828,7 +2828,7 @@ void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va,
- }
- 
- void HELPER(gvec_bfdot_idx)(void *vd, void *vn, void *vm,
--                            void *va, uint32_t desc)
-+                            void *va, CPUARMState *env, uint32_t desc)
++    RegisterInfoArray *reg_array;
+     uint32_t regs[XLNX_VERSAL_EFUSE_CTRL_R_MAX];
+     RegisterInfo regs_info[XLNX_VERSAL_EFUSE_CTRL_R_MAX];
+ };
+diff --git a/hw/nvram/xlnx-versal-efuse-ctrl.c b/hw/nvram/xlnx-versal-efuse-ctrl.c
+index def6fe3302b..8252a5cabe0 100644
+--- a/hw/nvram/xlnx-versal-efuse-ctrl.c
++++ b/hw/nvram/xlnx-versal-efuse-ctrl.c
+@@ -712,9 +712,8 @@ static void efuse_ctrl_init(Object *obj)
  {
-     intptr_t i, j, opr_sz = simd_oprsz(desc);
-     intptr_t index = simd_data(desc);
+     XlnxVersalEFuseCtrl *s = XLNX_VERSAL_EFUSE_CTRL(obj);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-    RegisterInfoArray *reg_array;
+ 
+-    reg_array =
++    s->reg_array =
+         register_init_block32(DEVICE(obj), efuse_ctrl_regs_info,
+                               ARRAY_SIZE(efuse_ctrl_regs_info),
+                               s->regs_info, s->regs,
+@@ -722,7 +721,7 @@ static void efuse_ctrl_init(Object *obj)
+                               XLNX_VERSAL_EFUSE_CTRL_ERR_DEBUG,
+                               R_MAX * 4);
+ 
+-    sysbus_init_mmio(sbd, &reg_array->mem);
++    sysbus_init_mmio(sbd, &s->reg_array->mem);
+     sysbus_init_irq(sbd, &s->irq_efuse_imr);
+ }
+ 
+@@ -730,6 +729,7 @@ static void efuse_ctrl_finalize(Object *obj)
+ {
+     XlnxVersalEFuseCtrl *s = XLNX_VERSAL_EFUSE_CTRL(obj);
+ 
++    register_finalize_block(s->reg_array);
+     g_free(s->extra_pg0_lock_spec);
+ }
+ 
 -- 
 2.34.1
 
