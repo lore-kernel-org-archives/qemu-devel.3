@@ -4,143 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F26ECD4F59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 08:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52EE3CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 08:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm7pL-00070e-GE; Thu, 05 Sep 2024 04:26:51 -0400
+	id 1sm7py-0008HF-8C; Thu, 05 Sep 2024 04:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sm7pJ-0006xl-C5; Thu, 05 Sep 2024 04:26:49 -0400
-Received: from mail-dm6nam12on20628.outbound.protection.outlook.com
- ([2a01:111:f403:2417::628]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sm7pH-0003Xm-Bd; Thu, 05 Sep 2024 04:26:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VYGQ6ReJPZsi6eyWordK8Bu9zOKt1Ijx+sx1Da2/450KxnmOsJPlXHERRY4lcdQHjXZVad9mueajoz+soYWXOY2NQl9xDwVa4tsQvb7xs8w6PTSElaua1Dr0KOi8kUnrXxbqn+w6OBt+S9Ye8kdw5/FPk0kFUpE6UARXO1QL7bSIbxXA6tbvo+RB9pr2I5Ckd590/RJwA5txk/EZxhLHpgzIT8mnfedyinjOAzIfafgZudk8szlE107bX62ARpEVu0A5VyNQ5cInFRDyPJYGgjTf6hGX8WaPxA8tdoAqTFjPCB1iSwrvRVs0um43y4eWlbHvot8cWby7n0RXvwl5OQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ino4c6XilnX2r5FZscsc9yDkaCdph6P7VwgpopXA+dM=;
- b=mIZy9W/SOoaSTz78o0VrzvjZLrXw+3tK29XzxhuZvnQQMeAD6Uac3+qoL1NU/mbHmIYY+pMz/ZFXqeM+p7B2h0A/XbSU8oC+Cr5ajJSMK2YEqy9Sl0jp5EkU9vuun4FldD8kRv09FwaR1B7Pmpx5BN9izQyvMPLmbE0/jel8ThQQfq7O0iwWOAC+mN7f9ZmpiH/DT1BsLmJXKPNb536dAMOrT8n8h+mLaVInwIGCtOEcw7nbjIBeicIWpBc90aIFXTEyHu4KlkMDczwOODNVs/+rtFTqC1XZZTGAaEeHsoQCsPUgKFO9WZ4+DKLxqfKxpHDp1DJuSfjrrNZWx+c4cA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ino4c6XilnX2r5FZscsc9yDkaCdph6P7VwgpopXA+dM=;
- b=M0kqQIBzRgm+yDMakOy4+mC1Cyiz4rWDPZZyU6pBBekAXk9wEwC5iYkG0wCgGSR43KyirnFqIPV44novm8Be1pLGItHz3+vQdxXYtId/s8jmKPPjKrvuRuKABwtbtSHx1JBmwKvmalGznXzQebz/rqmHI2Z0tiwUntkv6+v3jeoMkij289SB9vTW4D1VHFP+6mljBQMlkJk+1PRP7eQAwUiGNsSDDIMdSb52m4CGXhwOXlbKJvbgKAfgqhuWvJHIJatQJRhODRrzzQ8dM4OTeirywz/NT9GhrPhyvXaijnxIoplPM7qJ93OxLTJ4CFiN7BjmFiA5X9r4ye2wCRFYQw==
-Received: from BN9PR03CA0181.namprd03.prod.outlook.com (2603:10b6:408:f9::6)
- by PH0PR12MB7957.namprd12.prod.outlook.com (2603:10b6:510:281::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.25; Thu, 5 Sep
- 2024 08:26:37 +0000
-Received: from BL6PEPF0001AB71.namprd02.prod.outlook.com
- (2603:10b6:408:f9:cafe::e6) by BN9PR03CA0181.outlook.office365.com
- (2603:10b6:408:f9::6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.14 via Frontend
- Transport; Thu, 5 Sep 2024 08:26:37 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BL6PEPF0001AB71.mail.protection.outlook.com (10.167.242.164) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7918.13 via Frontend Transport; Thu, 5 Sep 2024 08:26:37 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 5 Sep 2024
- 01:26:22 -0700
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 5 Sep 2024 01:26:22 -0700
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.126.190.180)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Thu, 5 Sep 2024 01:26:21 -0700
-Date: Thu, 5 Sep 2024 01:26:20 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh <smostafa@google.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Peter Maydell
- <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>, "Jean-Philippe
- Brucker" <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>,
- "Michael Shavit" <mshavit@google.com>, Andrea Bolognani
- <abologna@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu
- <peterx@redhat.com>
-Subject: nested-smmuv3 topic, Sep 2024
-Message-ID: <ZtlrLJzZqpnUrZQf@Asurada-Nvidia>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sm7pw-0008DX-Lz
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 04:27:28 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sm7pu-0003a2-2T
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 04:27:28 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxGJpia9lmWCkrAA--.46096S3;
+ Thu, 05 Sep 2024 16:27:15 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front2 (Coremail) with SMTP id qciowMDx7sVga9lmyKgGAA--.19005S3;
+ Thu, 05 Sep 2024 16:27:12 +0800 (CST)
+Subject: Re: [PATCH 5/5] target/loongarch/tcg: Add hardware page table walker
+ support
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: maobibo@loongson.cn, philmd@linaro.org
+References: <20240729013939.1807982-1-gaosong@loongson.cn>
+ <20240729013939.1807982-6-gaosong@loongson.cn>
+ <87ca1589-089a-4ebb-90dd-21780897da98@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <0cc6072a-d251-5d59-73e5-9009856e06a0@loongson.cn>
+Date: Thu, 5 Sep 2024 16:27:42 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB71:EE_|PH0PR12MB7957:EE_
-X-MS-Office365-Filtering-Correlation-Id: 93dcd5a1-917d-4a9a-003b-08dccd8475b5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|7416014|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?AlvNLplG9pJo+S/r4BWvUfX4Q3wPDptxy8WUvVOCYVx0nJ79cBNAOAtnU37A?=
- =?us-ascii?Q?tNKrWRSxnF7AGSIUjq5arNEA12bIP5o0SfIzfEIxgZaxQPt14HUEbmHW37Pz?=
- =?us-ascii?Q?oMEuY/sBbJkmyXl+i1dHG/ewdDd8yzeV1K9UoGoQdZCHWkFXoFnX6DepjNqL?=
- =?us-ascii?Q?xXYNq6ONWu21TBlsbGcnJccHJTLPMkjovwfu7CR95ir4zisYWRxWQCM9Cmx5?=
- =?us-ascii?Q?OhpO8L18tnBCc9O0UkgLmNVoCexJ3Fvv1SCrj3u79svtMt0wMcNYnvE3FgGS?=
- =?us-ascii?Q?6uUOfw+L8PyhvEhC1EMVV/4vlr2iV2ue66/EBwuR6jor9Hse8W34Jg4Cxbm0?=
- =?us-ascii?Q?Gb7R3asEL/w76oQ9FghXITa1dClP9C/XEohRTouxLga97SwCM/CcbfbLUlFD?=
- =?us-ascii?Q?Q/HvbfkD0/2E8V/Mpe151Yq5z0cIafBiWfi249sUBAnPGo0UI7X2MxJXCrC2?=
- =?us-ascii?Q?rRazMyqPhN0cW5OIcMr2Jz/cMURm1QOJAMsW8on2ha4d8tX91p3HAw7jcXQl?=
- =?us-ascii?Q?H3uHJhhfWhQFPrfRKGHUq332+LdWyUfyMXu1oDqB1c6GTUmCmaWb3R54yT1x?=
- =?us-ascii?Q?8xErVe8DORbU5iY3M/a6Q7Kg7Z6uIztlw4UQBz62ZP6BDUrtYspvZ90EJVEZ?=
- =?us-ascii?Q?FR9Hu5vBQ6We9XU0V48VMjqqGo3cyl9PdZNkrs7Bmv7vdQv3x+VgMDpoGPnR?=
- =?us-ascii?Q?MbuzYORzPrWfHTeBDCgnhT2iXHVVclzTZyqfqn6o6WbuXIyGi05H8It9+Mul?=
- =?us-ascii?Q?BDv034CDfXAtLMroWOS7Ku5qoInlZjspwXuduX2R73inAyXNG5V7u4qRsuXv?=
- =?us-ascii?Q?vDn/Fae9PlRZk4xCyL3s4mzQg6CfDq+drteGg559Cf76cvaVKz74L1HObFIk?=
- =?us-ascii?Q?/LAg9RGIHqcCbLxCN7JzgkOcHzPrQCDwvpyMtsby+aBdqeUCOwQ/hq1lEQ4e?=
- =?us-ascii?Q?sofyy9XyUFEZk8bRJuikqDAZoVZJWZfKWTbllZPR+GlRvPlBs+dOOrGIey2p?=
- =?us-ascii?Q?xsK2VV1UFiSXjjSgUd2Q5wtgLn07yEL5u9+Io/8nxbt46SjnT4m+K6M/rJfZ?=
- =?us-ascii?Q?fF9+YonpK9m5NseVNBz8efq8WBqZrYO6VW+QxlzehBR36m1Etmf6kOjt7vqt?=
- =?us-ascii?Q?kDqlVyZxMImEHgXdLieLmacBfN6pIox++C3j/yCEy961mfVKToIzbQK7XJxu?=
- =?us-ascii?Q?/AtCCTjFjeAH9D2ZSc1txvHTSbuzokoy4GNevbPVPix5gJwi8nl63phYXIW7?=
- =?us-ascii?Q?x6AuQKDncehGJ5VeIOm+d9zByzgyC9cZ1bHho1TonP9Sam1eYOLyO0B/+zK3?=
- =?us-ascii?Q?eQtYzieSvh9O1SISQCmult4M+kQB7sz1s7xoHLBlrqzvH+V2PIXxsijA06dQ?=
- =?us-ascii?Q?KdvqRAYz7bgmDBTVsBiqWmnx+qbUwl9aOG3czMl82fgkzLau1FP67gdlaIjU?=
- =?us-ascii?Q?Cd7NoUOuCSyVVPbW5Aezy9WnJItrXpjH?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(7416014)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2024 08:26:37.2066 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 93dcd5a1-917d-4a9a-003b-08dccd8475b5
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB71.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7957
-Received-SPF: softfail client-ip=2a01:111:f403:2417::628;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+In-Reply-To: <87ca1589-089a-4ebb-90dd-21780897da98@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qciowMDx7sVga9lmyKgGAA--.19005S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxtr4rKrykWw18GFy8Zw4DWrX_yoWxGr1Dpr
+ 18Jr4UJryUJr1rJr1UJr1UJFyUZr1UJw1UJF18XF1jyr17Jr1jqr1UXr1qgr1UJr48Jw1U
+ JF1UXr1UZr1UJrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1Ek
+ sDUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.993,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,61 +84,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+在 2024/7/29 上午11:57, Richard Henderson 写道:
+> On 7/29/24 11:39, Song Gao wrote:
+>>       /* Mapped address */
+>> -    return loongarch_map_address(env, physical, prot, address,
+>> -                                 access_type, mmu_idx);
+>> +    ret = loongarch_map_address(env, physical, prot, address,
+>> +                                access_type, mmu_idx);
+>> +#ifdef CONFIG_TCG
+>> +    if (!FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW)) {
+>> +        return ret;
+>> +    }
+>> +
+>> +    if (!FIELD_EX32(env->CSR_PWCH, CSR_PWCH, HPTW_EN)) {
+>> +        return ret;
+>> +    }
+>> +
+>> +    if (do_page_walk(env, address, access_type, ret)) {
+>
+> When called from loongarch_cpu_get_phys_page_debug, you do not want ...
+>
+>> +        index = get_random_tlb_index(env, tlbehi, ps);
+>> +        invalidate_tlb(env, index);
+>> +        do_fill_tlb_entry(env, vppn, entrylo0, entrylo1, index, ps);
+>
+> ... to modify the TLB.  This will cause gdbstub to modify the 
+> behaviour of the guest, which you do not want.
+>
+Hi,  sorry for the late reply.  I'm very busy recently.
 
-Hope I didn't miss anybody who is related to the topic. Please,
-feel free to add!
+How about adding a variable to determine if tlb needs to be modified?
+like this:
 
-<--- Background --->
-As some of you know, there is an ongoing effort for nested-smmuv3
-support in QEMU on ARM, working with the kernel IOMMUFD uAPIs:
-[Nesting for vSTE]
-https://lore.kernel.org/linux-iommu/0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com/
-[Nesting for invalidations]
-https://lore.kernel.org/linux-iommu/cover.1724776335.git.nicolinc@nvidia.com/
+@@ -248,7 +250,7 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState 
+*cs, vaddr addr)
+      int prot;
 
-The kernel patches are still under review. Jason and I are hoping
-them to get merged at next cycle for v6.13, which means the QEMU
-patches might start a review process as early as Nov/Dec?
+      if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
+-                             cpu_mmu_index(cs, false)) != 0) {
++                             cpu_mmu_index(cs, false) != 0, false)) {
+          return -1;
+      }
 
-That being said, I think we are way behind the point that patches
-can get reviewed: most of the QEMU patches on my branches weren't
-touched very often, but merely updated to the latest kernel uAPIs
-for verification. So, I feel this might be a good point to gather
-folks together to discuss about the possible timeline and ask for
-help. I think this would potentially help folks who are going to
-attend the KVM forum (or LPC) to carry out a discussion. (Sorry,
-I won't make it due to some conflict..)
+[..]
 
-<-- Task Breakdown --->
-I previously sent a RFCv1 series collecting comments/suggestions,
-for multi-vSMMU instance design in ARM Virt code:
-https://lore.kernel.org/qemu-devel/cover.1719361174.git.nicolinc@nvidia.com/
-(And thanks again for all the inputs!)
+@@ -233,9 +233,11 @@ int get_physical_address(CPULoongArchState *env, 
+hwaddr *physical,
+          return ret;
+      }
 
-The main takeaway from the discussion is to
-1) Turn the vSMMU module into a pluggable one, like intel-iommu
-2) Move the per-SMMU pxb bus and device auto-assign into libvirt
+-    if (do_page_walk(env, address, access_type, ret)) {
+-        ret = loongarch_map_address(env, physical, prot, address,
+-                                    access_type, mmu_idx);
++    if (do_page_walk(env, address, access_type, ret, physical, 
+is_modify)) {
++       if (is_modify) {
++            ret = loongarch_map_address(env, physical, prot, address,
++                                        access_type, mmu_idx);
++        }
+      }
 
-Apart from the multi-vSMMU thing, there's basic nesting series:
-0) Keep updating to the latest kernel uAPIs to support nesting
+  bool do_page_walk(CPULoongArchState *env, vaddr address,
+-                  MMUAccessType access_type, int tlb_error)
++                  MMUAccessType access_type, int tlb_error,
++                  hwaddr *physical, bool is_modify)
+  {
+      CPUState *cs = env_cpu(env);
+      target_ulong base, ps, tmp0, tmp1, ptindex, ptoffset, entry;
+@@ -705,9 +706,21 @@ bool do_page_walk(CPULoongArchState *env, vaddr 
+address,
+          entrylo1 = tmp1;
+          tlbehi = address & (TARGET_PAGE_MASK << 1);
+          vppn = FIELD_EX64(tlbehi, CSR_TLBEHI_64, VPPN);
+-        index = get_random_tlb_index(env, tlbehi, ps);
+-        invalidate_tlb(env, index);
+-        do_fill_tlb_entry(env, vppn, entrylo0, entrylo1, index, ps);
++
++        if (is_modify) {
++            index = get_random_tlb_index(env, tlbehi, ps);
++            invalidate_tlb(env, index);
++            do_fill_tlb_entry(env, vppn, entrylo0, entrylo1, index, ps);
++        } else {
++            uint64_t tlb_entry, tlb_ppn;
++            uint8_t n;
++            n = (address >> ps) & 0x1;
++
++            tlb_entry = n ? entrylo1 : entrylo0;
++            tlb_ppn = FIELD_EX64(tlb_entry, TLBENTRY_64, PPN);
++            tlb_ppn = tlb_ppn & ~(((0x1UL << (ps - 12)) -1));
++            *physical = (tlb_ppn << R_TLBENTRY_64_PPN_SHIFT) | (address 
+& MAKE_64BIT_MASK(0, ps));
++        }
+          ret = true;
+          break;
 
-I was trying to do all these three, but apparently too ambitious.
-The kernel side of work is still taking a lot of my bandwidth. So
-far I had almost-zero progress on task (1) and completely-zero on
-task (2).
+>> +        entry = ldq_phys(cs->as, tmp0) & TARGET_PHYS_MASK;
+>> +
+>> +        if (entry == 0) {
+>> +            return ret;
+>> +        }
+>> +
+>> +        /* Check entry, and do tlb modify. */
+>> +        if ((tlb_error == TLBRET_INVALID) &&
+>> +            (access_type == MMU_DATA_LOAD ||
+>> +             access_type == MMU_INST_FETCH )) {
+>> +            if (!(FIELD_EX64(entry, TLBENTRY, PRESENT))) {
+>> +                break;
+>> +            }
+>> +            entry = FIELD_DP64(entry, TLBENTRY, V, 1);
+>> +        } else if ((tlb_error == TLBRET_INVALID) &&
+>> +                   access_type == MMU_DATA_STORE) {
+>> +            if (!((FIELD_EX64(entry, TLBENTRY, PRESENT) &&
+>> +                  (FIELD_EX64(entry, TLBENTRY, WRITE))))){
+>> +                break;
+>> +            }
+>> +            entry = FIELD_DP64(entry, TLBENTRY, V, 1);
+>> +            entry = FIELD_DP64(entry, TLBENTRY, D, 1);
+>> +        } else if (tlb_error ==  TLBRET_DIRTY) {
+>> +            if (!(FIELD_EX64(entry, TLBENTRY, WRITE))) {
+>> +                break;
+>> +            }
+>> +            entry = FIELD_DP64(entry, TLBENTRY, D, 1);
+>> +            entry = FIELD_DP64(entry, TLBENTRY, V, 1);
+>> +        }
+>> +        stq_phys(cs->as, tmp0, entry);
+>
+> You certainly want to use a compare and swap here, restarting if the 
+> compare fails.
+>
+Sorry ,  I don't understand here, could you explain it in detail?
 
-<-- Help Needed --->
-So, I'm wondering if anyone(s) might have some extra bandwidth in
-the following months helping these two tasks, either of which can
-be a standalone project I think.
+Thanks.
+Song Gao
+>
+> r~
 
-For task (0), I think I can keep updating the uAPI part, although
-it'd need some help for reviews, which I was hoping to occur after
-Intel sends the QEMU nesting backend patches. Once we know how big
-the rework is going to be, we may need to borrow some help at that
-point once again..
-
-Thank you
-Nicolin
 
