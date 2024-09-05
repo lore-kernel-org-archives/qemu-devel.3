@@ -4,60 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 405C9CD5BA8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B71CD5BA6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm9zk-0004qh-BG; Thu, 05 Sep 2024 06:45:44 -0400
+	id 1smA0j-000790-IT; Thu, 05 Sep 2024 06:46:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sm9zi-0004nF-Lf
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:45:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1smA0Q-0006x2-P3
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:46:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sm9zh-0002z6-1y
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:45:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1smA0P-00034F-6v
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:46:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725533138;
+ s=mimecast20190719; t=1725533184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GVQgQXQd/MGbPcK6zLvM1PFE6E4vu2DtG5Zece/4l+c=;
- b=cEIlNajwZ3TW7EdMK1viitOj6IXZvajz+aiDg/OmpBXzGdICnSJ23mVTvvMihbUh7XB2aA
- VpYKZecME1d4ZbGV1+VVCb4njoSY4uN0QpiMCivcGFDDVMOgx1N9YKEKejQSsnlJ7x4k7E
- SEndcTrR6SsazlyCWbsO+685LAC4QlE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=bp4M2laNKUwP1YDqaDjQoMyDdPY9nWAqFy9ZUYf+0rk=;
+ b=e9Rdr7VXQ55CCC5+JuF3n8Q8aOYBshZqgWF5yfMsdjBTwCYTBY5XOBptaW6umwiLfkkj1E
+ rUTmf7873ho2iTNWvrdfZXqwbItGOoVy6/h0VjNbH09Ee5nB1tWHibFcD7SlFtcLaNNPD6
+ 2VNByvSpqBHB9iGGqC7E791sL3Bd9ik=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-Pb9J2GIJPtOh2iJ5kCMV5w-1; Thu,
- 05 Sep 2024 06:45:36 -0400
-X-MC-Unique: Pb9J2GIJPtOh2iJ5kCMV5w-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-2U0FCtyoOXWvn-0Dnuj1dQ-1; Thu,
+ 05 Sep 2024 06:46:19 -0400
+X-MC-Unique: 2U0FCtyoOXWvn-0Dnuj1dQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D25FE195604F; Thu,  5 Sep 2024 10:45:33 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E4C3F1953954; Thu,  5 Sep 2024 10:46:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 393663000236; Thu,  5 Sep 2024 10:45:33 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 398921956086; Thu,  5 Sep 2024 10:46:16 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1C68621E6A28; Thu,  5 Sep 2024 12:45:31 +0200 (CEST)
+ id 50FF521E6A28; Thu,  5 Sep 2024 12:46:14 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: zhenwei pi <pizhenwei@bytedance.com>
-Cc: eblake@redhat.com,  qemu-devel@nongnu.org,  arei.gonglei@huawei.com
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: zhenwei pi <pizhenwei@bytedance.com>,  eblake@redhat.com,
+ qemu-devel@nongnu.org,  arei.gonglei@huawei.com
 Subject: Re: [PATCH] qapi: Document QCryptodevBackendServiceType
-In-Reply-To: <20240812014252.1398754-1-pizhenwei@bytedance.com> (zhenwei pi's
- message of "Mon, 12 Aug 2024 09:42:52 +0800")
+In-Reply-To: <6d6d5d2c-3696-45eb-b9ba-fb5a754fefba@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 12 Aug 2024 08:14:35
+ +0200")
 References: <20240812014252.1398754-1-pizhenwei@bytedance.com>
-Date: Thu, 05 Sep 2024 12:45:31 +0200
-Message-ID: <87y1462xbo.fsf@pond.sub.org>
+ <6d6d5d2c-3696-45eb-b9ba-fb5a754fefba@linaro.org>
+Date: Thu, 05 Sep 2024 12:46:14 +0200
+Message-ID: <87tteu2xah.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
@@ -83,44 +88,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-zhenwei pi <pizhenwei@bytedance.com> writes:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> QCryptodevBackendServiceType was introduced by
-> bc304a6442e (cryptodev: Introduce server type in QAPI). However there
-> is a lack of member description. Thanks to Markus for pointing out
-> this.
+> On 12/8/24 03:42, zhenwei pi wrote:
+>> QCryptodevBackendServiceType was introduced by
+>> bc304a6442e (cryptodev: Introduce server type in QAPI). However there
+>> is a lack of member description. Thanks to Markus for pointing out
+>> this.
+>> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+>> ---
+>>   qapi/cryptodev.json | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>> diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
+>> index 68289f4984..9622c6d92b 100644
+>> --- a/qapi/cryptodev.json
+>> +++ b/qapi/cryptodev.json
+>> @@ -28,6 +28,16 @@
+>>   #
+>>   # The supported service types of a crypto device.
+>>   #
+>> +# @cipher: Symmetric Key Cipher service
+>> +#
+>> +# @hash: Hash service
+>> +#
+>> +# @mac: Message Authentication Codes service
+>> +#
+>> +# @aead: Authenticated Encryption with Associated Data service
+>> +#
+>> +# @akcipher: Asymmetric Key Cipher service
 >
-> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-> ---
->  qapi/cryptodev.json | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
-> index 68289f4984..9622c6d92b 100644
-> --- a/qapi/cryptodev.json
-> +++ b/qapi/cryptodev.json
-> @@ -28,6 +28,16 @@
->  #
->  # The supported service types of a crypto device.
->  #
-> +# @cipher: Symmetric Key Cipher service
-> +#
-> +# @hash: Hash service
-> +#
-> +# @mac: Message Authentication Codes service
-> +#
-> +# @aead: Authenticated Encryption with Associated Data service
-> +#
-> +# @akcipher: Asymmetric Key Cipher service
-> +#
->  # Since: 8.0
->  ##
->  { 'enum': 'QCryptodevBackendServiceType',
+> Can we drop all trailing "service"s?
 
-Missing: removal of QCryptodevBackendServiceType from pragma
-documentation-exceptions.  Happy to do that in my tree.
+No opinion myself.  Eric, what do you think?
 
-Apart from that
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>> +#
+>>   # Since: 8.0
+>>   ##
+>>   { 'enum': 'QCryptodevBackendServiceType',
 
 
