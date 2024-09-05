@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87638CD5BA9
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 11:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0186CD5BAA
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 11:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smAZt-0000D1-L2; Thu, 05 Sep 2024 07:23:05 -0400
+	id 1smAZq-0008Qh-CI; Thu, 05 Sep 2024 07:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3kZTZZggKCl4SDAJ9NEGCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--whendrik.bounces.google.com>)
- id 1smAZq-0008Qx-D2
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:23:02 -0400
-Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
+ <3hpTZZggKClMH2z8yC3519916z.x97Bz7F-yzGz689818F.9C1@flex--whendrik.bounces.google.com>)
+ id 1smAZf-0008Eu-EQ
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:22:51 -0400
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3kZTZZggKCl4SDAJ9NEGCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--whendrik.bounces.google.com>)
- id 1smAZn-0002zM-N1
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:23:02 -0400
-Received: by mail-yb1-xb49.google.com with SMTP id
- 3f1490d57ef6-e03623b24ddso1851150276.1
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 04:22:59 -0700 (PDT)
+ <3hpTZZggKClMH2z8yC3519916z.x97Bz7F-yzGz689818F.9C1@flex--whendrik.bounces.google.com>)
+ id 1smAZd-0002xE-EZ
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:22:51 -0400
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-e17bb508bb9so1963061276.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 04:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1725535378; x=1726140178; darn=nongnu.org;
+ d=google.com; s=20230601; t=1725535367; x=1726140167; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=ObfI1qjsjD3CazvP1CUjFiKi6o6xv4BVYTjj0LflWMA=;
- b=vWJ48TdY1OjyE9YKcSAcu38SswQf9ya2kPHbRtAQ/6S7L6vqi7nWhn43bpgZVrELp/
- a9/iEQCzcSsn18vBOe4DXXaaT7nM3Znbj3p2xk3m4Y1FMWdOiovPvirlE0mU5z+3yEW8
- JX6IMBsmh0yBJ+J1AnJHnNcTSu1yPmn9jczhrL6G6Kmp2EBCWOG1G3LLagdwTXol0YiW
- NraRzJFQLWiDgEqwJGZtCmsrs6x9s4tcI5Pp10IDhm1j2I1opHZPIZFu14xbpO2r4zXo
- cL7MbTq9iTR5KJOj8/QgB4Jeo9wpHGgoVRnsBBSgrJlj4mSCR1Cv1vLIALnaUnOVm3O4
- DwAA==
+ :reply-to; bh=WFONln33w8RztWsDe8hthoqY7bBuV5gzQ95yPuNFG3Q=;
+ b=hWVYq0igro+Z6wWhG9MSjUEYdLZrwOnmCZ9JPPurLNmLBgtJ244wl9TwTsiA9oQeY+
+ C5easSEUuWYSNopZvJVdLOj3gI6QYYqELwSOAnhAqun4ue3GJtqKMRx4BxEuJkTHzcKX
+ s0Shr1A/xovTpGeWNA5nCP05QuGD3pcFd6eFh/kT2qMjT6oeMDqw76aGlAEc5/SP5pqS
+ lFcIJ0RHyX4Z0nrjxV4ofKpb4GW83ZMlLtpFz8exxn28zlWqfC1JIbhX+8fZTfYwAgPD
+ U5uhvigUs5REYnQiMTXA1w5FMM+QVLJscXI3Jv3TDc8HuN9MzTTjqcpolLEpjsXPrWsU
+ OuoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725535378; x=1726140178;
+ d=1e100.net; s=20230601; t=1725535367; x=1726140167;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=ObfI1qjsjD3CazvP1CUjFiKi6o6xv4BVYTjj0LflWMA=;
- b=RnJj+o+ygFJIf3kk7s5qbZF0ZwiDTHUHnei6EYVFZE1HEkLK0APlNFk2QOc5uR7E8s
- wrOm8BRQbjeo9XIMTDFJgc2Sjab8via7JzmmCkUetkn5IAQEfLIBxeUdE/BbOGzreZgo
- bXOZe4DdQUjD4w5gndXGrYnu2Irt5JdT3TNnA8VThIJCoyqtWd9TWKWnROIonpOytDr8
- 9m5ItPT4B3tw0dzIaah2+myL1bJTGYtPlJZQZh89JZFAMgDdfGJKroeyjAJlLRMwiGbz
- l1IE/OOtWQ2JYMcx8sUq+GmKEDtyDAiXTagewzvNE7yL/7P7O/8NyJNo3NdFF1VMzhyR
- SS/w==
-X-Gm-Message-State: AOJu0YyeaPSw5eG8udJbQrU1s02fYD8TEg5b7iWbqoU3C727EwRHvDp0
- CkXHm+iDrCmUzHgHJAdqqTQDfHX7HyL08zQpXm16XLz4ZXCvlGYMbXEpoSJ33q+EG8YVzZSDuCU
- jtbxefkctM3MaHmiosCh3CUc5HKZwtF2Nj5d2uEbHP5eO5qWb48uDVk49SKQSzLG3d+58sgs19E
- HOhq+beao4n4YQPTeXUfTSwt2COS7HkYNhIJR35+vThg==
-X-Google-Smtp-Source: AGHT+IFCDzMleyBHegtwLc/Sjf0wVNg6dVmQOx3JGgoGiKLObTOLdyrqPdxxbG0xvKHxjJudBH+fR3dgthXW7A==
+ bh=WFONln33w8RztWsDe8hthoqY7bBuV5gzQ95yPuNFG3Q=;
+ b=vi8vvZ54il8Jli7KB2FrkdKZhHDinnsTAQkTgwXgKOYTcE/FEZ06ZbCHaMcb2RK5MI
+ 6b31xbAqktIL7SX85Ij3+JL7HFRn3tMrXeBTi83FzFaQPmUVmJzVEaoe3KgQeVA4SaMp
+ HuoblS2lpQCTgqV7EpwyzGTe81r8f+kY0RLCMxsNvmHXxOqPVRowPAwM8optKVEWvO96
+ TFzE+pzmpiRmPzxUA2dyHTSzYPR7uV5vh8ZUCOZm3Ue/1koaVlna3ASt4mFmRuR0Mbwk
+ IsosFTP6/NBSTCuOxeAaDDG1F/V/C5pKekcrvzQx7sXawm7BK2zZTt8NumweN+zdP6/k
+ cbsA==
+X-Gm-Message-State: AOJu0Yy1bYlgZ+aCMEkiLPs/IVR26OLsrTvo0BhEGzHSO8DTdd2+YM+R
+ Jrux9kuU81AitFtMgQNjtnnXWAxA2wu7MJCLiolb/cbsQWIyZiL6SuerxaC9Fe5zsQTDP1Sziqr
+ GLUqJNVw5HjrHqwnbkRcy7MGQ5vwFIgv1ok5/AENraM2Y1Z3vrPWRhMUQkJquTiIg8UnJgIOyg1
+ o6bnOMvwu6xQYXsv5XaBH+eAv1kEGlyo8GmWGA1Hj3Ag==
+X-Google-Smtp-Source: AGHT+IHHgE/p+v3ZgUFP4oOLPGTTSGhaG1an7WqKnEeO7eru4aSFbDwnNJhuymW4SII74UqDldsGt+b+Dfc6ug==
 X-Received: from whendrik-specialist-workstation.c.googlers.com
  ([fda3:e722:ac3:cc00:130:7cd9:ac11:98f1]) (user=whendrik job=sendgmr) by
- 2002:a25:c4c2:0:b0:e1a:6eac:3d0f with SMTP id
- 3f1490d57ef6-e1a7a1b67e6mr99025276.8.1725535377649; 
- Thu, 05 Sep 2024 04:22:57 -0700 (PDT)
-Date: Thu,  5 Sep 2024 11:22:35 +0000
+ 2002:a5b:1:0:b0:e17:8e4f:981a with SMTP id
+ 3f1490d57ef6-e1a7a3d0178mr944904276.11.1725535366854; 
+ Thu, 05 Sep 2024 04:22:46 -0700 (PDT)
+Date: Thu,  5 Sep 2024 11:22:30 +0000
 In-Reply-To: <20240905112237.3586972-1-whendrik@google.com>
 Mime-Version: 1.0
 References: <20240905112237.3586972-1-whendrik@google.com>
 X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
-Message-ID: <20240905112237.3586972-7-whendrik@google.com>
-Subject: [PATCH v2 6/8] i386: Add RDT feature flags.
+Message-ID: <20240905112237.3586972-2-whendrik@google.com>
+Subject: [PATCH v2 1/8] i386: Add Intel RDT device and State to config.
 From: Hendrik Wuethrich <whendrik@google.com>
 To: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, eduardo@habkost.net, 
  richard.henderson@linaro.org, marcel.apfelbaum@gmail.com, mst@redhat.com, 
@@ -73,9 +73,9 @@ Cc: peternewman@google.com,
  "=?UTF-8?q?=E2=80=AAHendrik=20W=C3=BCthrich?=" <whendrik@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
- envelope-from=3kZTZZggKCl4SDAJ9NEGCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--whendrik.bounces.google.com;
- helo=mail-yb1-xb49.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=3hpTZZggKClMH2z8yC3519916z.x97Bz7F-yzGz689818F.9C1@flex--whendrik.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -101,96 +101,205 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
 
-Add RDT features to feature word / TCG.
+Change config to show RDT, add minimal code to the rdt.c module to make
+sure things still compile.
 
 Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
 ---
- target/i386/cpu.c | 30 ++++++++++++++++++++++++++++--
- target/i386/cpu.h |  2 ++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+ hw/i386/Kconfig       |  4 ++
+ hw/i386/meson.build   |  1 +
+ hw/i386/rdt.c         | 96 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/i386/rdt.h | 25 +++++++++++
+ target/i386/cpu.h     |  3 ++
+ 5 files changed, 129 insertions(+)
+ create mode 100644 hw/i386/rdt.c
+ create mode 100644 include/hw/i386/rdt.h
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index a5c4e3c463..36e19bfa8c 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -864,7 +864,8 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendo=
-r1,
-           CPUID_7_0_EBX_CLFLUSHOPT |            \
-           CPUID_7_0_EBX_CLWB | CPUID_7_0_EBX_MPX | CPUID_7_0_EBX_FSGSBASE =
-| \
-           CPUID_7_0_EBX_ERMS | CPUID_7_0_EBX_AVX2 | CPUID_7_0_EBX_RDSEED |=
- \
--          CPUID_7_0_EBX_SHA_NI | CPUID_7_0_EBX_KERNEL_FEATURES)
-+          CPUID_7_0_EBX_SHA_NI | CPUID_7_0_EBX_KERNEL_FEATURES | \
-+          CPUID_7_0_EBX_PQM | CPUID_7_0_EBX_PQE)
-           /* missing:
-           CPUID_7_0_EBX_HLE
-           CPUID_7_0_EBX_INVPCID, CPUID_7_0_EBX_RTM */
-@@ -900,6 +901,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendo=
-r1,
- #define TCG_SGX_12_0_EAX_FEATURES 0
- #define TCG_SGX_12_0_EBX_FEATURES 0
- #define TCG_SGX_12_1_EAX_FEATURES 0
-+#define TCG_RDT_15_0_EDX_FEATURES CPUID_15_0_EDX_L3
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index f4a33b6c08..4dd05ed6f2 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -10,6 +10,9 @@ config SGX
+     bool
+     depends on KVM
 =20
- #if defined CONFIG_USER_ONLY
- #define CPUID_8000_0008_EBX_KERNEL_FEATURES (CPUID_8000_0008_EBX_IBPB | \
-@@ -1057,7 +1059,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] =3D =
-{
-             "fsgsbase", "tsc-adjust", "sgx", "bmi1",
-             "hle", "avx2", NULL, "smep",
-             "bmi2", "erms", "invpcid", "rtm",
--            NULL, NULL, "mpx", NULL,
-+            "rdt-m", NULL, "mpx", "rdt-a",
-             "avx512f", "avx512dq", "rdseed", "adx",
-             "smap", "avx512ifma", "pcommit", "clflushopt",
-             "clwb", "intel-pt", "avx512pf", "avx512er",
-@@ -1607,6 +1609,30 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] =3D=
- {
-         },
-         .tcg_features =3D TCG_SGX_12_1_EAX_FEATURES,
-     },
++config RDT
++    bool
 +
-+    [FEAT_RDT_10_0_EBX] =3D {
-+        .type =3D CPUID_FEATURE_WORD,
-+        .feat_names =3D {
-+            NULL, "l3-cat", "l2-cat", "mba"
-+        },
-+        .cpuid =3D {
-+            .eax =3D 0x10,
-+            .needs_ecx =3D true, .ecx =3D 0,
-+            .reg =3D R_EBX,
-+        }
-+    },
-+    [FEAT_RDT_15_0_EDX] =3D {
-+        .type =3D CPUID_FEATURE_WORD,
-+        .feat_names =3D {
-+            [1] =3D "l3-cmt"
-+        },
-+        .cpuid =3D {
-+            .eax =3D 0xf,
-+            .needs_ecx =3D true, .ecx =3D 0,
-+            .reg =3D R_EDX,
-+        },
-+        .tcg_features =3D TCG_RDT_15_0_EDX_FEATURES,
-+    },
- };
+ config PC
+     bool
+     imply APPLESMC
+@@ -26,6 +29,7 @@ config PC
+     imply QXL
+     imply SEV
+     imply SGX
++    imply RDT
+     imply TEST_DEVICES
+     imply TPM_CRB
+     imply TPM_TIS_ISA
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index 03aad10df7..fdbf5962b5 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -21,6 +21,7 @@ i386_ss.add(when: 'CONFIG_VMPORT', if_true: files('vmport=
+.c'))
+ i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+ i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+                                 if_false: files('sgx-stub.c'))
++i386_ss.add(when: 'CONFIG_RDT', if_true: files('rdt.c'))
 =20
- typedef struct FeatureMask {
+ i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
+new file mode 100644
+index 0000000000..934f7fbf75
+--- /dev/null
++++ b/hw/i386/rdt.c
+@@ -0,0 +1,96 @@
++/*
++ * Intel Resource Director Technology (RDT).
++ *
++ * Copyright 2024 Google LLC
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful, but WIT=
+HOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
++ * for more details.
++ */
++
++#include "hw/i386/rdt.h"
++#include "qemu/osdep.h" /* Needs to be included before isa.h* /
++#include "hw/isa/isa.h"
++#include "hw/qdev-properties.h"
++#include "qom/object.h"
++
++/* Max counts for allocation masks or CBMs. In other words, the size of re=
+spective MSRs*/
++#define RDT_MAX_L3_MASK_COUNT      128
++#define RDT_MAX_L2_MASK_COUNT      48
++#define RDT_MAX_MBA_THRTL_COUNT    31
++
++#define TYPE_RDT "rdt"
++#define RDT_NUM_RMID_PROP "rmids"
++
++OBJECT_DECLARE_TYPE(RDTState, RDTStateClass, RDT);
++
++struct RDTMonitor {
++    uint64_t count_local;
++    uint64_t count_remote;
++    uint64_t count_l3;
++};
++
++struct RDTAllocation {
++    uint32_t active_cos;
++};
++
++struct RDTStatePerCore {
++    uint32_t active_rmid;
++    GArray *monitors;
++
++    /*Parent RDTState*/
++    RDTState *rdtstate;
++};
++
++/*One instance of RDT-internal state to be shared by all cores*/
++struct RDTState {
++    ISADevice parent;
++
++    /*Max amount of RMIDs*/
++    uint32_t rmids;
++
++    /*Per core state*/
++    RDTStatePerCore *rdtInstances;
++    RDTAllocation *allocations;
++
++    /*RDT Allocation bitmask MSRs*/
++    uint32_t msr_L3_ia32_mask_n[RDT_MAX_L3_MASK_COUNT];
++    uint32_t msr_L2_ia32_mask_n[RDT_MAX_L2_MASK_COUNT];
++    uint32_t ia32_L2_qos_ext_bw_thrtl_n[RDT_MAX_MBA_THRTL_COUNT];
++};
++
++struct RDTStateClass {
++};
++
++OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
++
++static Property rdt_properties[] =3D {
++    DEFINE_PROP_UINT32(RDT_NUM_RMID_PROP, RDTState, rmids, 256),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void rdt_init(Object *obj)
++{
++}
++
++static void rdt_finalize(Object *obj)
++{
++}
++
++static void rdt_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc =3D DEVICE_CLASS(klass);
++
++    dc->hotpluggable =3D false;
++    dc->desc =3D "RDT";
++    dc->user_creatable =3D true;
++
++    device_class_set_props(dc, rdt_properties);
++}
++
+diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
+new file mode 100644
+index 0000000000..a21d95b265
+--- /dev/null
++++ b/include/hw/i386/rdt.h
+@@ -0,0 +1,25 @@
++/*
++ * Intel Resource Director Technology (RDT).
++ *
++ * Copyright 2024 Google LLC
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful, but WIT=
+HOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
++ * for more details.
++ */
++
++#ifndef HW_RDT_H
++#define HW_RDT_H
++
++typedef struct RDTState RDTState;
++typedef struct RDTStatePerCore RDTStatePerCore;
++typedef struct RDTMonitor RDTMonitor;
++typedef struct RDTAllocation RDTAllocation;
++
++#endif
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 14c1d7d66b..99a5288061 100644
+index 1e121acef5..a2941f98eb 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -673,7 +673,9 @@ typedef enum FeatureWord {
-     FEAT_XSAVE_XSS_HI,     /* CPUID[EAX=3D0xd,ECX=3D1].EDX */
-     FEAT_7_1_EDX,       /* CPUID[EAX=3D7,ECX=3D1].EDX */
-     FEAT_7_2_EDX,       /* CPUID[EAX=3D7,ECX=3D2].EDX */
-+    FEAT_RDT_15_0_EBX,  /* CPUID[EAX=3D0xf,ECX=3D0].EBX (RDT CMT/MBM) */
-     FEAT_RDT_15_0_EDX,  /* CPUID[EAX=3D0xf,ECX=3D0].EDX (RDT CMT/MBM) */
-+    FEAT_RDT_10_0_EBX,  /* CPUID[EAX=3D0x10,ECX=3D0].EBX (RDT CAT/MBA) */
-     FEATURE_WORDS,
- } FeatureWord;
+@@ -2143,6 +2143,9 @@ struct ArchCPU {
+     struct MemoryRegion *cpu_as_root, *cpu_as_mem, *smram;
+     Notifier machine_done;
 =20
++    /* Help the RDT MSRs find the RDT device */
++    struct RDTStatePerCore *rdt;
++
+     struct kvm_msrs *kvm_msr_buf;
+=20
+     int32_t node_id; /* NUMA node this CPU belongs to */
 --=20
 2.46.0.469.g59c65b2a67-goog
 
