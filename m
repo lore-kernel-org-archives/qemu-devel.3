@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A853CD5BCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D9BCD5BC9
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smENY-0003HQ-Mv; Thu, 05 Sep 2024 11:26:36 -0400
+	id 1smEOD-0004Rs-Rk; Thu, 05 Sep 2024 11:27:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smENX-0003Gx-I5
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:26:35 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1smEOC-0004KI-5I
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:27:16 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smENV-00066a-Qd
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:26:35 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5bf01bdaff0so1044743a12.3
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 08:26:32 -0700 (PDT)
+ id 1smEOA-0006Bz-Jf
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:27:15 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2f51b67e16dso11214511fa.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 08:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725549991; x=1726154791; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725550033; x=1726154833; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P0WTXR1MqRJMiI6tvGrXZd7AqrTXg1FmhDa5FZ+T+Xo=;
- b=vyi69HjkOk08KQV04kauBl20EnBhKuRtwbb4ufhFdx/7wss/4qLsvAth1bJ0Ckp27m
- 9uhCtTqe4vyYi1HqfxoMnK+GCekbNBsjQM04jDIWjwkRjaWugahBfILzEEDDnUSvxMiO
- Wlj8YVR+ddplV1z38GBonmtbEwILGEo6QcDMfiKbZAr9DEvHG7itJ4eLwdQh0ijeKZ4y
- uc6pvsbckyPIK6IxUzafXk9DiQ+5nIzitjoBocTUU/khJPpvgz48l7NzFb/otqYCbYMe
- Yj9qKESZcPO5y1YLYOv/Pi+7Czv58IZPGqGf3Ow1jjP9ZwMBbokeVwKfP2FqGyI1Ybrd
- iELQ==
+ bh=tXahTLAYlsj1yDnt7fXtBg+nwUlBAm4L5aEnBZ7qjqs=;
+ b=pzsZCnJmsOb70577jbX8Xkm4tC04t3SqW6xOVQl5pZ3537tsOMJIbsgFaf6NMFSSRE
+ ps/eFR0akQa8ywa7cdl6Z+b0+7C1IM5MgYDH/m5fNGQmgu2zQzph89TL8X6BWwSUthu3
+ XXUVRRarVuVcQkipoMjozd08UdF9r6CGBElEaMOWanJDvhq7/Mi1/w3xEc+Tn4O9j0I8
+ IZUb8jrcrm+Xtwrf/sY3MDVLDriOY3VTvFxCZES9KD8mw31w+BZmj72y7Cn+1MKBo66d
+ w74pvg21pHliSO1ebSImJi82qgEseVHEuh0nxBYPuak2WtRdwiWz5rHwb+d0++IgP059
+ AeXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725549991; x=1726154791;
+ d=1e100.net; s=20230601; t=1725550033; x=1726154833;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P0WTXR1MqRJMiI6tvGrXZd7AqrTXg1FmhDa5FZ+T+Xo=;
- b=xO3IB7RtVdH6qeASSCAaJlJ+fhC2lmIPvdEm9OsjDjC3IxzA31MrLhKTRLJ6y3EPwH
- OVxpEdBIMeaxvSJ9kxSBSYKiOzEKmuq7nmfG6t/XXIytFoXSvVWphXe5eHoCcXNaUduk
- nywvHdVHPqlV8m8ESALGt8y2ByBhSBIbaxa6G776FNt/YOvaV2YD8mAeOrgMTH5vAaAC
- 8/Xl01p3aQX/Ij0JRfaiAMM2G0FWDVo37Hmt8EaOE/X+H8crPswQi0vFJLmMYC2NPiG/
- bGuNHDQjHD/z7lmgRkNq1KMONUANjh6JuMTEhC19Kvi0WDkublkk0KmLB+1HOaiqHXkk
- QADg==
-X-Gm-Message-State: AOJu0Yxfk6gWopIH+bR9RjKwwHgnOgtwITZrc9q+UGyMpGsxgL0OSLmf
- az3ki2bm9U6hKx/crT2pkcRECp8cYOXcbbWhZqDk72Rv/6nGFW5tQYco0GO8Rqg=
-X-Google-Smtp-Source: AGHT+IHuxb+ac6LVd6ayJGG/KwWUVC1Ps5UrRkh3iVXOA5VbE5lEwTi9HekuBP26cmGXIZb5YJ8zfw==
-X-Received: by 2002:a05:6402:13d6:b0:5be:e01c:6b5c with SMTP id
- 4fb4d7f45d1cf-5c21ed2ffdbmr19062633a12.4.1725549991355; 
- Thu, 05 Sep 2024 08:26:31 -0700 (PDT)
+ bh=tXahTLAYlsj1yDnt7fXtBg+nwUlBAm4L5aEnBZ7qjqs=;
+ b=VYAOVXuFIIjVvNZ+f80Kry+fdRVu7ZQsZKr0MXr0YB/NVacm4jqgBFMFdXjrlDYivj
+ ZjvCefni6+7JrhFCL3B3Xg01p1vGzZEF32U4oUPhoGrXzm+qoXWiWK/Gthe3Ck/sCIWd
+ oTIhh3f7ohmMWpYEJnNWu+VxVvaSDnrrj/2y77CDgVdCi6CHlMoHdHjXDbahb7KE7tJg
+ uJeA6ARLqcDo+qWZ/jM3dX6p+ySV+J5FgRFKXN/ryT/3IFO/k5Wbj4tSv7dI7g8TN02H
+ 8lCy5zIHfd78pbdSQ96gmmX58FBbt4BSLoPP9dwyASYExSzjcCZa+W8qEq3z4sD0ZBg7
+ NHdw==
+X-Gm-Message-State: AOJu0YzqtsOLuUmTD3dsE4U8F8b1noKZ8We2VBRILv43dKGoWaz0SQUq
+ QdqrZOY1/WRejbJbqy33BBo4Gh2zj+gYz9sqUizDMTcfLhhWyg/o3Ef/BbbzfFg=
+X-Google-Smtp-Source: AGHT+IEM0T5uvpcYpf6SGZUwlOtyGRMRe57XF5xU31d2kZYEy5Vqp0Dh8WwlrDhpk1Nm2Usnrx0dbw==
+X-Received: by 2002:a05:651c:221a:b0:2f0:1f06:2b43 with SMTP id
+ 38308e7fff4ca-2f64d570aeemr60148671fa.41.1725550032042; 
+ Thu, 05 Sep 2024 08:27:12 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3cc56bb3dsm1352163a12.45.2024.09.05.08.26.30
+ 4fb4d7f45d1cf-5c3cc6a5a40sm1346091a12.87.2024.09.05.08.27.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 08:26:30 -0700 (PDT)
+ Thu, 05 Sep 2024 08:27:11 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BEA405F8BA;
- Thu,  5 Sep 2024 16:26:29 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id B9DB55F8BA;
+ Thu,  5 Sep 2024 16:27:10 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Pierrick
- Bouvier <pierrick.bouvier@linaro.org>,  Mahmoud Mandour
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
  <ma.mandourr@gmail.com>
-Subject: Re: [PATCH 0/1] plugins: add API to read guest CPU memory from hwaddr
-In-Reply-To: <20240828063224.291503-1-rowanbhart@gmail.com> (Rowan Hart's
- message of "Tue, 27 Aug 2024 23:32:23 -0700")
-References: <20240828063224.291503-1-rowanbhart@gmail.com>
+Subject: Re: [PATCH v3 0/2] plugins: add plugin API to read guest memory
+In-Reply-To: <20240827215329.248434-1-rowanbhart@gmail.com> (Rowan Hart's
+ message of "Tue, 27 Aug 2024 14:53:27 -0700")
+References: <20240827215329.248434-1-rowanbhart@gmail.com>
 User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Thu, 05 Sep 2024 16:26:29 +0100
-Message-ID: <87y146ruje.fsf@draig.linaro.org>
+Date: Thu, 05 Sep 2024 16:27:10 +0100
+Message-ID: <87tteurui9.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,51 +101,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Rowan Hart <rowanbhart@gmail.com> writes:
 
-> This patch adds a single API function which allows reading from a guest
-> CPU physical address.
+> This patch adds one API function to the QEMU plugin API
 >
-> I don't know of a good way to add a self-contained test for this feature
-> to tests/tcg/plugins, but I did come up with a small test case to
-> demonstrate the functionality using peiyuanix/riscv-os:
+> bool qemu_plugin_read_memory_vaddr(vaddr, GByteArray *, size_t);
+>
+> The API allows reading memory from an arbitrary guest virtual
+> address, which is useful for many things but the motivating examples
+> are:
 
-We have bare metal system tests (hello and memory) for i386, alpha,
-loongarch64, aarch64 and arm. If you fancy having a go at implementing a
-boot.S for riscv64 that would be super helpful for the check-tcg tests
-as a whole.
-
-See:
-
-  tests/tcg/i386/system/boot.S
-  tests/tcg/alpha/system/boot.S
-  tests/tcg/loongarch64/system/boot.S
-  tests/tcg/aarch64/system/boot.S
-  tests/tcg/x86_64/system/boot.S
-  tests/tcg/arm/system/boot.S
-
-for what is needed (basically a MMU-enabled flat memory map and some
-sort of emit char helper, probably using semihosting in this case)
-
->
-> First, grab and build the firmware code:
->
-> curl -o firmware.S https://raw.githubusercontent.com/peiyuanix/riscv-os/m=
-ain/03-Bare-Metal-Hello-RISC-V/firmware.s
-> curl -o firmware.x https://raw.githubusercontent.com/peiyuanix/riscv-os/m=
-ain/03-Bare-Metal-Hello-RISC-V/firmware.ld
-> riscv64-linux-gnu-as firmware.S -o firmware.o
-> riscv64-linux-gnu-ld -T firmware.x -o firmare firmware.o
-> riscv64-linux-gnu-objcopy -O binary -S firmware firmware.bin
->
-> Next, grab and build the plugin (just dumps from phys address on first
-> instruction executed):
->
-> curl -o dump-riscv-firmware.c https://gist.githubusercontent.com/novafaci=
-ng/5abc08052fab671a0fb26547810b4c55/raw/33772d614d6e36eae30e3405af34f149d7c=
-c608b/dump-riscv-firmware.c
-> gcc -rdynamic -shared -fPIC -Iinclude/qemu $(pkg-config --cflags --libs g=
-lib-2.0) -o libdump-riscv-firmware.so dump-riscv-firmware.c
->
-<snip>
+Queued to plugins/next with a minor tweak to the cpu_memory_rw_debug
+call.
 
 --=20
 Alex Benn=C3=A9e
