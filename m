@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39219CD5BCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A853CD5BCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smEIz-0006fH-I7; Thu, 05 Sep 2024 11:21:54 -0400
+	id 1smENY-0003HQ-Mv; Thu, 05 Sep 2024 11:26:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smEIl-0006da-1w
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:21:39 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1smENX-0003Gx-I5
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:26:35 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smEIf-00042i-Tb
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:21:38 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a86e5e9ff05so118040066b.1
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 08:21:31 -0700 (PDT)
+ id 1smENV-00066a-Qd
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:26:35 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5bf01bdaff0so1044743a12.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 08:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725549690; x=1726154490; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725549991; x=1726154791; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2Ruk8uDCg94aLcQDEDJB4tG2U7xiG8gbzV1EDfl1dHU=;
- b=AnqrqWpc2zDgsD2AA7gCtw7kyxBQa4quotqsjPq04cW4+Hs2gz9kxodYJffS2jJ7H2
- zlFVtrNB/V34joOEFjmHc4kT4wC+lPHd8ZW9VNrqzeb2VO8bZqowTYe/ODu4fjquGKpc
- wAwRu+9lQpvlfUsDw52ofI2D+Xu+IcoYNTKAjhpOE1+gnaNyJeaf61w7l8TLkeI5DfLX
- 4+BeFiNxoXxU8sgiE5CqDaCLuuhd7k7R/IKqp12vIaT4MT3JZtStOB9FcK7wz5ouf2iv
- Jy1TEgePHTm2JhVfVBimuMjeyUXEFVOPz3pe2eqZCe8U2Y7A1k7D5m3LMwfKMDedrEWX
- IKXA==
+ bh=P0WTXR1MqRJMiI6tvGrXZd7AqrTXg1FmhDa5FZ+T+Xo=;
+ b=vyi69HjkOk08KQV04kauBl20EnBhKuRtwbb4ufhFdx/7wss/4qLsvAth1bJ0Ckp27m
+ 9uhCtTqe4vyYi1HqfxoMnK+GCekbNBsjQM04jDIWjwkRjaWugahBfILzEEDDnUSvxMiO
+ Wlj8YVR+ddplV1z38GBonmtbEwILGEo6QcDMfiKbZAr9DEvHG7itJ4eLwdQh0ijeKZ4y
+ uc6pvsbckyPIK6IxUzafXk9DiQ+5nIzitjoBocTUU/khJPpvgz48l7NzFb/otqYCbYMe
+ Yj9qKESZcPO5y1YLYOv/Pi+7Czv58IZPGqGf3Ow1jjP9ZwMBbokeVwKfP2FqGyI1Ybrd
+ iELQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725549690; x=1726154490;
+ d=1e100.net; s=20230601; t=1725549991; x=1726154791;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2Ruk8uDCg94aLcQDEDJB4tG2U7xiG8gbzV1EDfl1dHU=;
- b=n/rLS1EO6e3O5bYn2oeOJnX5QqI8TTFEGljzkK/S2kB82iKZGomBGS6DZD5j6czTdX
- aeNXli58v0LnTM0g6SRUclEBtBQAcUUvON/166ZU4QxxwPGqQos2HayAkQy6jhzqheJ1
- oFi4ouS0ojNucV3VbPsq/1YD7TAe2MoObwEnDA7qsQFesCeKfGncd7w4qVRDLuj8G0vr
- Rx1VkafPrBKvKPdnrlhTRqqoJmC887lDDpCkYg8iXYjHBLedcjZii68j2VQkHZ2PZ+37
- wJEzR7mnKCS2mJRd5AmlUdViknGV6kJ0VAyRM1DDKbNLS9siUL+HvbZoYwoK7KCHKHoG
- o7zw==
-X-Gm-Message-State: AOJu0YxrQGR+j2MxbPOD5EE9uecpPPg5qetCzHB4OgRqwhbacKudIOhh
- 3FL+jGETIGe5ha6ZfM6gxV/sfTY0x92m5njEntUx9tDO2tnS5+8y+/6tr5V/Dzc=
-X-Google-Smtp-Source: AGHT+IHEbHMK1hamNaMsrnUBE9h4fgOlCYwXce6/PUql3sNFiAaWtAXADMpCgcJgFTLHHeOOzfIXBw==
-X-Received: by 2002:a17:907:97d4:b0:a86:aded:b09c with SMTP id
- a640c23a62f3a-a8a32fe141cmr707373166b.60.1725549689703; 
- Thu, 05 Sep 2024 08:21:29 -0700 (PDT)
+ bh=P0WTXR1MqRJMiI6tvGrXZd7AqrTXg1FmhDa5FZ+T+Xo=;
+ b=xO3IB7RtVdH6qeASSCAaJlJ+fhC2lmIPvdEm9OsjDjC3IxzA31MrLhKTRLJ6y3EPwH
+ OVxpEdBIMeaxvSJ9kxSBSYKiOzEKmuq7nmfG6t/XXIytFoXSvVWphXe5eHoCcXNaUduk
+ nywvHdVHPqlV8m8ESALGt8y2ByBhSBIbaxa6G776FNt/YOvaV2YD8mAeOrgMTH5vAaAC
+ 8/Xl01p3aQX/Ij0JRfaiAMM2G0FWDVo37Hmt8EaOE/X+H8crPswQi0vFJLmMYC2NPiG/
+ bGuNHDQjHD/z7lmgRkNq1KMONUANjh6JuMTEhC19Kvi0WDkublkk0KmLB+1HOaiqHXkk
+ QADg==
+X-Gm-Message-State: AOJu0Yxfk6gWopIH+bR9RjKwwHgnOgtwITZrc9q+UGyMpGsxgL0OSLmf
+ az3ki2bm9U6hKx/crT2pkcRECp8cYOXcbbWhZqDk72Rv/6nGFW5tQYco0GO8Rqg=
+X-Google-Smtp-Source: AGHT+IHuxb+ac6LVd6ayJGG/KwWUVC1Ps5UrRkh3iVXOA5VbE5lEwTi9HekuBP26cmGXIZb5YJ8zfw==
+X-Received: by 2002:a05:6402:13d6:b0:5be:e01c:6b5c with SMTP id
+ 4fb4d7f45d1cf-5c21ed2ffdbmr19062633a12.4.1725549991355; 
+ Thu, 05 Sep 2024 08:26:31 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8a80f6d29fsm14482566b.95.2024.09.05.08.21.28
+ 4fb4d7f45d1cf-5c3cc56bb3dsm1352163a12.45.2024.09.05.08.26.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 08:21:28 -0700 (PDT)
+ Thu, 05 Sep 2024 08:26:30 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C35E85F8BA;
- Thu,  5 Sep 2024 16:21:27 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id BEA405F8BA;
+ Thu,  5 Sep 2024 16:26:29 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao Liu
- <zhao1.liu@intel.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Yanan
- Wang <wangyanan55@huawei.com>,  Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v7 0/6] plugins: access values during a memory read/write
-In-Reply-To: <20240724194708.1843704-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Wed, 24 Jul 2024 12:47:02 -0700")
-References: <20240724194708.1843704-1-pierrick.bouvier@linaro.org>
+To: Rowan Hart <rowanbhart@gmail.com>
+Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>
+Subject: Re: [PATCH 0/1] plugins: add API to read guest CPU memory from hwaddr
+In-Reply-To: <20240828063224.291503-1-rowanbhart@gmail.com> (Rowan Hart's
+ message of "Tue, 27 Aug 2024 23:32:23 -0700")
+References: <20240828063224.291503-1-rowanbhart@gmail.com>
 User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Thu, 05 Sep 2024 16:21:27 +0100
-Message-ID: <8734met9c8.fsf@draig.linaro.org>
+Date: Thu, 05 Sep 2024 16:26:29 +0100
+Message-ID: <87y146ruje.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Rowan Hart <rowanbhart@gmail.com> writes:
 
-> This series allows plugins to know which value is read/written during a m=
-emory
-> access.
+> This patch adds a single API function which allows reading from a guest
+> CPU physical address.
 >
-> For every memory access, we know copy this value before calling mem callb=
-acks,
-> and those can query it using new API function:
-> - qemu_plugin_mem_get_value
+> I don't know of a good way to add a self-contained test for this feature
+> to tests/tcg/plugins, but I did come up with a small test case to
+> demonstrate the functionality using peiyuanix/riscv-os:
 
-Queued to patches 1-5 to plugins/next, thanks.
+We have bare metal system tests (hello and memory) for i386, alpha,
+loongarch64, aarch64 and arm. If you fancy having a go at implementing a
+boot.S for riscv64 that would be super helpful for the check-tcg tests
+as a whole.
 
-You can send the re-spun version of 6 once the review comments have been
-done.
+See:
+
+  tests/tcg/i386/system/boot.S
+  tests/tcg/alpha/system/boot.S
+  tests/tcg/loongarch64/system/boot.S
+  tests/tcg/aarch64/system/boot.S
+  tests/tcg/x86_64/system/boot.S
+  tests/tcg/arm/system/boot.S
+
+for what is needed (basically a MMU-enabled flat memory map and some
+sort of emit char helper, probably using semihosting in this case)
+
+>
+> First, grab and build the firmware code:
+>
+> curl -o firmware.S https://raw.githubusercontent.com/peiyuanix/riscv-os/m=
+ain/03-Bare-Metal-Hello-RISC-V/firmware.s
+> curl -o firmware.x https://raw.githubusercontent.com/peiyuanix/riscv-os/m=
+ain/03-Bare-Metal-Hello-RISC-V/firmware.ld
+> riscv64-linux-gnu-as firmware.S -o firmware.o
+> riscv64-linux-gnu-ld -T firmware.x -o firmare firmware.o
+> riscv64-linux-gnu-objcopy -O binary -S firmware firmware.bin
+>
+> Next, grab and build the plugin (just dumps from phys address on first
+> instruction executed):
+>
+> curl -o dump-riscv-firmware.c https://gist.githubusercontent.com/novafaci=
+ng/5abc08052fab671a0fb26547810b4c55/raw/33772d614d6e36eae30e3405af34f149d7c=
+c608b/dump-riscv-firmware.c
+> gcc -rdynamic -shared -fPIC -Iinclude/qemu $(pkg-config --cflags --libs g=
+lib-2.0) -o libdump-riscv-firmware.so dump-riscv-firmware.c
+>
+<snip>
 
 --=20
 Alex Benn=C3=A9e
