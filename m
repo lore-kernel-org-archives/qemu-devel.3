@@ -4,76 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7307DCD5BB8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11107CD5BB8
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smI0y-0004vl-54; Thu, 05 Sep 2024 15:19:32 -0400
+	id 1smI1P-0006qK-7i; Thu, 05 Sep 2024 15:20:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1smI0H-0002AP-L9
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:18:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1smI1D-00066X-KD
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:19:48 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1smI0F-0000kA-VU
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:18:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725563926;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=anrY+uT3YvPP5XVRLMw+m17A/UoXs8U2tG0VlgGZmQs=;
- b=GaZKlBZjWEdu03fcqnL3TVpcwxBLkGUHKlwhhrNNocjlKJmLKmI+RFiYJxk3Qxqt6kIKsN
- MxTiZkU1NwYrmwqlxoql0pyAgtBwztfkt7C198v8FV+8cs350nu+kU04MBzQ5zgQlvFn4A
- 59IvxUa6ISbVNT8KOFNinQHodF+zmqo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-ZwlrAh75MQGYcEgoMIwrFw-1; Thu,
- 05 Sep 2024 15:18:43 -0400
-X-MC-Unique: ZwlrAh75MQGYcEgoMIwrFw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1BAB11977021; Thu,  5 Sep 2024 19:18:42 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.181])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CFB801956086; Thu,  5 Sep 2024 19:18:40 +0000 (UTC)
-Date: Thu, 5 Sep 2024 15:18:39 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, david@redhat.com,
- slp@redhat.com, Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [RFC PATCH v2 5/5] vhost_user: Implement mem_read/mem_write
- handlers
-Message-ID: <20240905191839.GG1922502@fedora>
-References: <20240628145710.1516121-1-aesteve@redhat.com>
- <20240628145710.1516121-6-aesteve@redhat.com>
- <20240711085533.GG563880@dynamic-pd01.res.v6.highway.a1.net>
- <CADSE00L=U4jmEvosaSt=a2EQ654kfh4cKzNLQFpFXX==pHZ0Hg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1smI1B-0000uA-1M
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:19:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
+ Content-Type; bh=t+og4Y0w/JtOJuhpadAI2GAHSgewgHY7hWcudVSC4zM=; b=m+R7wQBszg9B
+ 7oD+LlwudctedCWu9a41si7AOuZ6+rFnDgV/tDwC6v67Dq3qW94rFhRhATmW/siOSoVJ+WKZuPGAk
+ I1wW9XZZf79P/tq/cWRWpWBphYo0GzuWPtHFCA+sA6Wq8lGA4tz7JEMm6a/RBK5VV+ZuxRwP/Quvy
+ DV4rLfegxKDtajrRvAQlNRBazUjHhqf/pWHouv9wf4bOwdVCFPM1viWlmdfcS1lZy5PfBnye1R00k
+ tHpHz2lTB9BmsNtpyR/NmG5u04sA399ev5x7A+QnbDvAidlqBKMPUuu1SxuMAiCaR+gBFyu1ilHtZ
+ PbXo+mb3V5kgKFNpoPDsLA==;
+Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=iris.sw.ru)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <den@openvz.org>) id 1smHyf-001HNM-0l;
+ Thu, 05 Sep 2024 21:19:40 +0200
+To: qemu-devel@nongnu.org
+Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 1/1] system: improve migration debug
+Date: Thu,  5 Sep 2024 21:19:41 +0200
+Message-Id: <20240905191941.310592-1-den@openvz.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="ProaZxhGQc1nxrDs"
-Content-Disposition: inline
-In-Reply-To: <CADSE00L=U4jmEvosaSt=a2EQ654kfh4cKzNLQFpFXX==pHZ0Hg@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=130.117.225.111; envelope-from=den@openvz.org;
+ helo=relay.virtuozzo.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,137 +59,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Denis V. Lunev" <den@openvz.org>
+From:  "Denis V. Lunev" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Right now migration_throttle() tracepoint lacks very important
+important information, i.e. no one could easily say how much the guest
+is throttled. This makes difficult to debug guest quality of service
+during migration.
 
---ProaZxhGQc1nxrDs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch adds one more tracepoint into cpu_throttle_set() which is
+actually doing this job.
 
-On Wed, Sep 04, 2024 at 03:01:06PM +0200, Albert Esteve wrote:
-> On Thu, Jul 11, 2024 at 10:55=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat=
-=2Ecom>
-> wrote:
->=20
-> > On Fri, Jun 28, 2024 at 04:57:10PM +0200, Albert Esteve wrote:
-> > > Implement function handlers for memory read and write
-> > > operations.
-> > >
-> > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> > > ---
-> > >  hw/virtio/vhost-user.c | 34 ++++++++++++++++++++++++++++++----
-> > >  1 file changed, 30 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> > > index 18cacb2d68..79becbc87b 100644
-> > > --- a/hw/virtio/vhost-user.c
-> > > +++ b/hw/virtio/vhost-user.c
-> > > @@ -1884,16 +1884,42 @@ static int
-> > >  vhost_user_backend_handle_mem_read(struct vhost_dev *dev,
-> > >                                     VhostUserMemRWMsg *mem_rw)
-> > >  {
-> > > -    /* TODO */
-> > > -    return -EPERM;
-> > > +    ram_addr_t offset;
-> > > +    int fd;
-> > > +    MemoryRegion *mr;
-> > > +
-> > > +    mr =3D vhost_user_get_mr_data(mem_rw->guest_address, &offset, &f=
-d);
-> > > +
-> > > +    if (!mr) {
-> > > +        error_report("Failed to get memory region with address %"
-> > PRIx64,
-> > > +                     mem_rw->guest_address);
-> > > +        return -EFAULT;
-> > > +    }
-> > > +
-> > > +    memcpy(mem_rw->data, memory_region_get_ram_ptr(mr) + offset,
-> > mem_rw->size);
-> >
-> > Don't try to write this from scratch. Use address_space_read/write(). It
-> > supports corner cases like crossing MemoryRegions.
-> >
->=20
-> I am having issues getting the address space from the vhost_dev struct to
-> feed
-> address_spave_read/write() function with the first parameter. But I found
-> mr->ops.
-> Would something like this perhaps be enough?
->=20
-> ```
->     mr->ops->read_with_attrs(mr->opaque, mem_rw->guest_address,
->                              &mem_rw->data, mem_rw->size,
->                              MEMTXATTRS_UNSPECIFIED);
-> ```
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Peter Xu <peterx@redhat.com>
+CC: Fabiano Rosas <farosas@suse.de>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+---
+Changes from v1:
+- adding tracepoint directly to cpu_throttle_set() as suggested by Peter
 
-You can use dev->vdev->dma_as to get the AddressSpace for
-address_space_read/write():
+ system/cpu-throttle.c | 3 +++
+ system/trace-events   | 3 +++
+ 2 files changed, 6 insertions(+)
 
-  struct vhost_dev {
-      VirtIODevice *vdev;
- =20
-  struct VirtIODevice
-  {
-      ...
-      AddressSpace *dma_as;
-
->=20
->=20
-> >
-> > > +
-> > > +    return 0;
-> > >  }
-> > >
-> > >  static int
-> > >  vhost_user_backend_handle_mem_write(struct vhost_dev *dev,
-> > >                                     VhostUserMemRWMsg *mem_rw)
-> > >  {
-> > > -    /* TODO */
-> > > -    return -EPERM;
-> > > +    ram_addr_t offset;
-> > > +    int fd;
-> > > +    MemoryRegion *mr;
-> > > +
-> > > +    mr =3D vhost_user_get_mr_data(mem_rw->guest_address, &offset, &f=
-d);
-> > > +
-> > > +    if (!mr) {
-> > > +        error_report("Failed to get memory region with address %"
-> > PRIx64,
-> > > +                     mem_rw->guest_address);
-> > > +        return -EFAULT;
-> > > +    }
-> > > +
-> > > +    memcpy(memory_region_get_ram_ptr(mr) + offset, mem_rw->data,
-> > mem_rw->size);
-> > > +
-> > > +    return 0;
-> > >  }
-> > >
-> > >  static void close_backend_channel(struct vhost_user *u)
-> > > --
-> > > 2.45.2
-> > >
-> >
-
---ProaZxhGQc1nxrDs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmbaBA8ACgkQnKSrs4Gr
-c8iUyggAgiMuGg+r0c092l+qZl5TS1t+2lAyfx/uQ2RAMwXxN9vdKd9DSybjseJ9
-GXO/FSAKz7+ZLZhf4i6NR7It13c2qxZdksOxVrOMidGJ0lBC/YaB5TVbH/IHedtU
-kdmoynnCDHh5ocEiLBCiAujwvbFmYBwUeJ4Ku7brjc+o8rjXHsEL+mRr4ZVSNr+q
-w9pST5ftkEWZA59nYN68TF7pZuDZQgQsqoU4yJxEvEkYQ+7zfBDapJTlwofnsSme
-XJE4812+2rNPyKDBeY1uGqSxXJRYRQuH12nbBo0E0duDmcw3F+EAKggsRKHTY1rX
-knqfTpfNNOy/B8GgQCr6BNd6Du6M6w==
-=+Bdx
------END PGP SIGNATURE-----
-
---ProaZxhGQc1nxrDs--
+diff --git a/system/cpu-throttle.c b/system/cpu-throttle.c
+index c951a6c65e..7632dc6143 100644
+--- a/system/cpu-throttle.c
++++ b/system/cpu-throttle.c
+@@ -28,6 +28,7 @@
+ #include "qemu/main-loop.h"
+ #include "sysemu/cpus.h"
+ #include "sysemu/cpu-throttle.h"
++#include "trace.h"
+ 
+ /* vcpu throttling controls */
+ static QEMUTimer *throttle_timer;
+@@ -95,6 +96,8 @@ void cpu_throttle_set(int new_throttle_pct)
+      */
+     bool throttle_active = cpu_throttle_active();
+ 
++    trace_cpu_throttle_set(new_throttle_pct);
++
+     /* Ensure throttle percentage is within valid range */
+     new_throttle_pct = MIN(new_throttle_pct, CPU_THROTTLE_PCT_MAX);
+     new_throttle_pct = MAX(new_throttle_pct, CPU_THROTTLE_PCT_MIN);
+diff --git a/system/trace-events b/system/trace-events
+index 2ed1d59b1f..074d001e90 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -44,3 +44,6 @@ dirtylimit_state_finalize(void)
+ dirtylimit_throttle_pct(int cpu_index, uint64_t pct, int64_t time_us) "CPU[%d] throttle percent: %" PRIu64 ", throttle adjust time %"PRIi64 " us"
+ dirtylimit_set_vcpu(int cpu_index, uint64_t quota) "CPU[%d] set dirty page rate limit %"PRIu64
+ dirtylimit_vcpu_execute(int cpu_index, int64_t sleep_time_us) "CPU[%d] sleep %"PRIi64 " us"
++
++# cpu-throttle.c
++cpu_throttle_set(int new_throttle_pct)  "set guest CPU throttled by %d%%"
+-- 
+2.40.1
 
 
