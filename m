@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5336DCD5BC9
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4953BCD5BCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smEjZ-0007uM-Tm; Thu, 05 Sep 2024 11:49:21 -0400
+	id 1smEnX-0005Hd-1K; Thu, 05 Sep 2024 11:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org>)
- id 1smEjX-0007t4-FH
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:49:19 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1smEnV-0005Cp-28
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:53:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org>)
- id 1smEjV-0001gu-N8
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:49:19 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 626805C5AA7;
- Thu,  5 Sep 2024 15:49:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD28DC4CEC3;
- Thu,  5 Sep 2024 15:49:14 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="T0D1KC8K"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1725551353;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1smEnT-0002Xe-15
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:53:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725551601;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y9alZaA1iGbbSl0V0o0b0DcMUnIMAn+ALqOkMYnPTg8=;
- b=T0D1KC8KiV5xQk0WlzDUEewZmyeLGjX7jY9bG1Tf9qJlUfehSpCnazrHHO7dkcf0HfUeve
- nMOPv0ZiFLfuKyFnW06E9EQPK+ZAWdDqdjYFnOjUEYFIdhyegmAIgQl0KeZRexFH5ViALR
- NIKK+l+agTp73yHWdgvFxI4A64qcWFk=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id fc6e8a35
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 5 Sep 2024 15:49:12 +0000 (UTC)
-Date: Thu, 5 Sep 2024 17:49:11 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: maobibo <maobibo@loongson.cn>
-Cc: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
- loongarch@lists.linux.dev, qemu-devel@nongnu.org, xry111@xry111.site
-Subject: Re: qemu direct kernel boot on LoongArch
-Message-ID: <ZtnS9_xoPrXCWWln@zx2c4.com>
-References: <1738d60a-df3a-4102-b1da-d16a29b6e06a@t-8ch.de>
- <49432aed-3ed7-2f07-7f65-311faef96197@loongson.cn>
- <ZtkhtxcJUK-JediY@zx2c4.com>
- <f50c4868-7c2e-1ede-ab19-c67ea0acaab3@loongson.cn>
- <CAHmME9rRJjJ5tHf_xtprkHtWz-ButOOZXVo=E9y8qSyQ-qu6ew@mail.gmail.com>
- <ccc7db47-d065-4e78-bf67-c4e8855c9be4@t-8ch.de>
- <95da2e9e-0905-ad61-6bf9-c2636f2cc5f1@loongson.cn>
- <ZtnGMdFRpTAVPnym@zx2c4.com>
+ bh=Hqig8UZwoFRun80npWMliKvC3xyZmWTJfXhf0UJHq7A=;
+ b=PyMJaYjpjPbQDZ6jFT3gzP+UD5JCTPfNqdh7fHIIrCTBt9JZuXVyeuWdwx53GGntmob7c0
+ BLoolq1yuMrwPFhCd5TFbtR94EDjXkwpgFko3ZIj7hWDmbC7pWQrc346tCLtIy9b1BLaoL
+ xtQm7nKFSvwt5ES6BEMBBN/cbpX9XTI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-VzmbyGjNOseYY_54WVDn5A-1; Thu,
+ 05 Sep 2024 11:53:14 -0400
+X-MC-Unique: VzmbyGjNOseYY_54WVDn5A-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 188CF1955BF8; Thu,  5 Sep 2024 15:53:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4424E3000236; Thu,  5 Sep 2024 15:52:39 +0000 (UTC)
+Date: Thu, 5 Sep 2024 16:52:36 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
+ andrew@codeconstruct.com.au, andrew@daynix.com,
+ arei.gonglei@huawei.com, berto@igalia.com,
+ borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
+ den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
+ farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
+ idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
+ jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com,
+ kwolf@redhat.com, leetroy@gmail.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
+ mtosatti@redhat.com, nsg@linux.ibm.com, pasic@linux.ibm.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
+ philmd@linaro.org, pizhenwei@bytedance.com, pl@dlhnet.de,
+ richard.henderson@linaro.org, stefanha@redhat.com,
+ steven_lee@aspeedtech.com, thuth@redhat.com,
+ vsementsov@yandex-team.ru, wangyanan55@huawei.com,
+ yuri.benditovich@daynix.com, zhao1.liu@intel.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ kvm@vger.kernel.org, avihaih@nvidia.com
+Subject: Re: [PATCH v2 01/19] qapi: Smarter camel_to_upper() to reduce need
+ for 'prefix'
+Message-ID: <ZtnTxNFmgJlaeLZy@redhat.com>
+References: <20240904111836.3273842-1-armbru@redhat.com>
+ <20240904111836.3273842-2-armbru@redhat.com>
+ <ZthQAr7Mpd0utBD9@redhat.com> <87o75263pq.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZtnGMdFRpTAVPnym@zx2c4.com>
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -67
-X-Spam_score: -6.8
-X-Spam_bar: ------
-X-Spam_report: (-6.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <87o75263pq.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,36 +104,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 05, 2024 at 04:54:41PM +0200, Jason A. Donenfeld wrote:
-> On Thu, Sep 05, 2024 at 02:11:32PM +0800, maobibo wrote:
-> > 
-> > 
-> > On 2024/9/5 下午1:25, Thomas Weißschuh wrote:
-> > > On 2024-09-05 06:04:12+0000, Jason A. Donenfeld wrote:
-> > >> On Thu, Sep 5, 2024 at 5:45 AM maobibo <maobibo@loongson.cn> wrote:
-> > >>>
-> > >>> Jason,
-> > >>>
-> > >>> With the latest qemu 9.1 version, elf format booting is supported.
-> > >>
-> > >> Thanks, I just figured this out too, about 4 minutes ago. Excellent.
-> > >> And the 1G minimum ram limit is gone too.
-> > >>
-> > >> Now working on how to trigger resets.
-> > > 
-> > > With "reset" do you mean normal (non-panic) system shutdown/poweroff?
-> > > Since QEMU 9.1 and a recent kernel you can use the pvpanic device for
-> > > that in a cross-architecture way.
-> > LoongArch uses acpi GED device to reboot machine. Now there is no FDT 
-> > table description and FDT driver for acpi GED device :(
+On Thu, Sep 05, 2024 at 07:59:13AM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> So you mean that QEMU exposes it via ACPI, but not via FDT, and the
-> kernel doesn't know how to recognize it, even with ACPI?
+> > On Wed, Sep 04, 2024 at 01:18:18PM +0200, Markus Armbruster wrote:
+> >> camel_to_upper() converts its argument from camel case to upper case
+> >> with '_' between words.  Used for generated enumeration constant
+> >> prefixes.
+> >
+> >
+> >> 
+> >> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> >> Reviewed-by: Daniel P. Berrang?? <berrange@redhat.com>
+> >
+> > The accent in my name is getting mangled in this series.
+> 
+> Uh-oh!
+> 
+> Checking...  Hmm.  It's correct in git, correct in output of
+> git-format-patch, correct in the copy I got from git-send-email --bcc
+> armbru via localhost MTA, and the copy I got from --to
+> qemu-devel@nongnu.org, correct in lore.kernel.org[*], correct in an mbox
+> downloaded from patchew.
+> 
+> Could the culprit be on your side?
 
-Ahh, it looks like QEMU exposes it via ACPI, but ACPI is broken (?) when
-booting directly from ELF. So it needs to be exposed via FDT instead? Or
-ACPI needs to be fixed with direct ELF boot?
+I compared my received mail vs the mbox archive on nongnu.org for
+qemu-devel.
+
+In both cases the actual mail body seems to be valid UTF-8 and is
+identical. The message in the nongnu.org archive, however, has
+
+  Content-Type: text/plain; charset=UTF-8
+
+while the copy I got in my inbox has merely
+
+  Content-Type: text/plain
+
+What I can't determine is whether your original sent message
+had "charset=UTF-8" which then got stripped by redhat's incoming
+mail server, or whether your original lacked 'charset=UTF8' and
+it got added by mailman when saving the message to the mbox archives ?
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
