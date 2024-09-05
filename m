@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 355F3CD5BA6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 405C9CD5BA8
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm9yA-0006Mu-5h; Thu, 05 Sep 2024 06:44:06 -0400
+	id 1sm9zk-0004qh-BG; Thu, 05 Sep 2024 06:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9y4-000677-95
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:44:00 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9y2-0002Xb-IN
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:43:59 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42c7856ed66so4511785e9.3
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 03:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725533037; x=1726137837; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WrbQqfUY48kCO6crhKAl4HYo3Clzej3RS2nXxen4eb8=;
- b=aXM1JEJcNdNDG3mDGd1dOkpfVmpw+ZzLhuXe0SnhR5ikkGf8f89bXqPY+nzFWClcoD
- dEjp58J6f6MJXBxqKVBdHwXqIt4GGu8BiEPApc2GTyCrtL0w5OFkvLqZUiAe3xnDdBLi
- IrfB2vE8nD08C7bDvesup1irY5fHwlxdqkBz/2stwjfzaYuv7VLOkBYRB59uxylEW1H/
- +BrM95z4D9G3VlqUyM6hm4FCXE78VhmCE197r+1zX/0Mk5obr0zHx0IUM8nUnLQLH/xu
- ntz7y4nVPMojdCg0BpxDqMypm1STpomHwE7yf1lSGLUPoB3J0WZxv6FK9es63c67lqyY
- dpgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725533037; x=1726137837;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WrbQqfUY48kCO6crhKAl4HYo3Clzej3RS2nXxen4eb8=;
- b=pDdIoMAtek07jy/wCu/TMjn04+vlAYVzidOWa5NUPhnL2XX0c7Ik8Vq0iQYkHFGaFu
- IEfEO0WDebRj7J9LVOaw45g0puM+cpevdFYxlPL76vON7KfzXwCxItXfXGH1MoxIgKno
- VY5VTi/n6RCP04sgJtb2lP764KR3j5nNg4dSXcJjjs7AEaJgHSr+yzZmP7Mu45PqLVtS
- X7nwmbPdG/D8CjSYMY4Jzlly1ouw2oQ8PbrHscy9NueYGMVqapHGJEGAf9coeHLJCPT7
- fSfWffRvLp9GB3gqF6tpv4SPTvs7ouTdVY59WM2vQ6CTMFpcgjAdLBYiFXJKg55MjyhZ
- rPVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZ+RVbOpVYYNeKOsv861hD2OSMaOGDOYCVTU6BOKjoYZja/O0MKpIDJ3vYw0G1y0EGsFyVy6MG8sr1@nongnu.org
-X-Gm-Message-State: AOJu0Yx0QAUv7NOzed9kybrIh9DBU4d+88H30StX+e71a93unR1Y9fyM
- n4pBLWRDOpIm9f0c12Lrz0VQfsgEIknwp03tT2cpkX+pJ0ZnaF7A6/nEFW3N/3I=
-X-Google-Smtp-Source: AGHT+IGGz6f3sv6y5YyJ0jOk1jDJSOGkuNdHh5x7ql5M78ncuftSceqpxH1uPI3aXH6xiHEnyBiuzw==
-X-Received: by 2002:a05:600c:3145:b0:426:593c:9361 with SMTP id
- 5b1f17b1804b1-42bb27a9c67mr157945585e9.26.1725533036761; 
- Thu, 05 Sep 2024 03:43:56 -0700 (PDT)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6df0a4dsm227837155e9.12.2024.09.05.03.43.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Sep 2024 03:43:56 -0700 (PDT)
-Message-ID: <ef8680d6-3a74-46e0-9bc9-d5d12c9ee88c@linaro.org>
-Date: Thu, 5 Sep 2024 12:43:54 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sm9zi-0004nF-Lf
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:45:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sm9zh-0002z6-1y
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:45:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725533138;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GVQgQXQd/MGbPcK6zLvM1PFE6E4vu2DtG5Zece/4l+c=;
+ b=cEIlNajwZ3TW7EdMK1viitOj6IXZvajz+aiDg/OmpBXzGdICnSJ23mVTvvMihbUh7XB2aA
+ VpYKZecME1d4ZbGV1+VVCb4njoSY4uN0QpiMCivcGFDDVMOgx1N9YKEKejQSsnlJ7x4k7E
+ SEndcTrR6SsazlyCWbsO+685LAC4QlE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-Pb9J2GIJPtOh2iJ5kCMV5w-1; Thu,
+ 05 Sep 2024 06:45:36 -0400
+X-MC-Unique: Pb9J2GIJPtOh2iJ5kCMV5w-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D25FE195604F; Thu,  5 Sep 2024 10:45:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 393663000236; Thu,  5 Sep 2024 10:45:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1C68621E6A28; Thu,  5 Sep 2024 12:45:31 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: zhenwei pi <pizhenwei@bytedance.com>
+Cc: eblake@redhat.com,  qemu-devel@nongnu.org,  arei.gonglei@huawei.com
+Subject: Re: [PATCH] qapi: Document QCryptodevBackendServiceType
+In-Reply-To: <20240812014252.1398754-1-pizhenwei@bytedance.com> (zhenwei pi's
+ message of "Mon, 12 Aug 2024 09:42:52 +0800")
+References: <20240812014252.1398754-1-pizhenwei@bytedance.com>
+Date: Thu, 05 Sep 2024 12:45:31 +0200
+Message-ID: <87y1462xbo.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/15] seccomp: Remove check for CRIS host
-To: Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- devel@lists.libvirt.org
-References: <20240904143603.52934-1-philmd@linaro.org>
- <20240904143603.52934-16-philmd@linaro.org>
- <c254b667-2a47-4e6d-9a3e-79318ffa6792@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c254b667-2a47-4e6d-9a3e-79318ffa6792@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,41 +83,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/24 09:48, Paolo Bonzini wrote:
-> On 9/4/24 16:36, Philippe Mathieu-Daudé wrote:
->> As per the deprecation notice in commit c7bbef4023:
->>
->>    The CRIS architecture was pulled from Linux in 4.17 and
->>    the compiler is no longer packaged in any distro [...].
->>
->> It is now unlikely QEMU is build on CRIS host.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   system/qemu-seccomp.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
->> index 98ffce075c..a14a0c0635 100644
->> --- a/system/qemu-seccomp.c
->> +++ b/system/qemu-seccomp.c
->> @@ -50,7 +50,7 @@ const struct scmp_arg_cmp sched_setscheduler_arg[] = {
->>    * See 'NOTES' in 'man 2 clone' - s390 & cross have 'flags' in
->>    *  different position to other architectures
-> 
-> Small nit, "cross" is a misspelling of "cris" so
-> 
-> s/& cross //
+zhenwei pi <pizhenwei@bytedance.com> writes:
 
-Funny :)
+> QCryptodevBackendServiceType was introduced by
+> bc304a6442e (cryptodev: Introduce server type in QAPI). However there
+> is a lack of member description. Thanks to Markus for pointing out
+> this.
+>
+> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+> ---
+>  qapi/cryptodev.json | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
+> index 68289f4984..9622c6d92b 100644
+> --- a/qapi/cryptodev.json
+> +++ b/qapi/cryptodev.json
+> @@ -28,6 +28,16 @@
+>  #
+>  # The supported service types of a crypto device.
+>  #
+> +# @cipher: Symmetric Key Cipher service
+> +#
+> +# @hash: Hash service
+> +#
+> +# @mac: Message Authentication Codes service
+> +#
+> +# @aead: Authenticated Encryption with Associated Data service
+> +#
+> +# @akcipher: Asymmetric Key Cipher service
+> +#
+>  # Since: 8.0
+>  ##
+>  { 'enum': 'QCryptodevBackendServiceType',
 
-> 
-> No need to repost, of course.
+Missing: removal of QCryptodevBackendServiceType from pragma
+documentation-exceptions.  Happy to do that in my tree.
 
-I'll correct, thanks.
-
-> 
-> Paolo
+Apart from that
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
