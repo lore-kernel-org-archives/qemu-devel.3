@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C085ECD5BB8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D279CD5BB8
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:55:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smIYG-0005IB-11; Thu, 05 Sep 2024 15:53:57 -0400
+	id 1smIZT-0000UX-1k; Thu, 05 Sep 2024 15:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smIYA-0005HB-Gv
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:53:51 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1smIZS-0000Qi-9S
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:55:10 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smIY8-00052A-Uc
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:53:50 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c3d209da98so1574227a12.1
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 12:53:48 -0700 (PDT)
+ id 1smIZQ-0005Fb-AQ
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:55:10 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2f4f505118fso13734201fa.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 12:55:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725566026; x=1726170826; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725566106; x=1726170906; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+Nb2gsgSCazn1/c2pURQrPKaprz5UmqgtIOgW9CkTpM=;
- b=oXxYDP5Hs2DvCzJjMGN7s1ELaj8JGWD8xEBWEonjdnOxU3zReT83hFF7ewdhmZzFVV
- f2IYnZYa315nvgPv/tbGP3nA+iXucKWIJtfNKAIIc2jKxL6BVX4oXQEUlCMrgfN3D0CE
- kk7BXqWaaytAawGwMunWg2oxH9WtNsXfrHmTPY+HgWFWYCAiHIARh6Q05C+xbndPQT/K
- mkCdxN5bSp9Os99cigveH2SkWwfBYeCXdRE0YYxIukkcYR2wtHsKOa2w60uy9EDpackq
- +1UYagJXOM8fWqoHlL38XHigcj3PirtJLj0f1iZIYjy7XkHoGMI4xtbXGF5HvZ3fLiy5
- 1PPg==
+ bh=HdMMiM8FBhh+JZDi5gOlvhIrUAb12USwbXo7UrbyQMY=;
+ b=Mekype8TvqdKmkclwnlXGIQ313ToMUJrrUR60Esaw0izZEZEpt7cVPoWCZ7V1+d77M
+ d+bHmGz5+T3ayELDY96oPa6CqkbLftAFERL3FK6iReoZjzYthtgd2goZ88zUAO/Les5B
+ +Kymhoz+zFzcx0fG5HqNQN6kfDHZolRsbjcfaUZ9hGBWTdsvHbV1eMcfKOh7bvIHKo5H
+ LpixfGNvVMbJgpSkbegpH3eIRAWKmcwE/n4JlhSv6MmGUgiGtTgT/Aa69sg3chQwN/td
+ SVXxkwzCWGm9BJMw4BmLr1x98CbWOcrJeN6R/DKfK6CnH+/p+EfKVki0OmfLZy1mfocK
+ D64Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725566026; x=1726170826;
+ d=1e100.net; s=20230601; t=1725566106; x=1726170906;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+Nb2gsgSCazn1/c2pURQrPKaprz5UmqgtIOgW9CkTpM=;
- b=Mq5Q2gjVn/cqyToJ57Ik9tNZgJBqVLHJz9LfdEp6mDaoiUklmnWFUUjEEDTzgntbdH
- CoZeHQSrUlqZbOLkr4yV8U9Kcom9+g/o8FQiS7joeGM1UKTFTJe3BQ1pGuEf47zdVTsu
- FKUIQc82aIYxswRUChBLY6BDOnEfTKX2JvN9OvHsnl0xTTKjeBzVpBzzBogt8U+RR5AR
- kVdMns7zii40vZaBtELsa+8LIqlPUNyoDLMApss2wmuniT++x4JhKU4dqdEIhg+nwQyf
- +0fcNnnvYZFrJlELEcYNDxho8DiOiLtViUXSz2c9YYJMV66c66wqp/CwlcG7Z3ZBg8MT
- rxXA==
-X-Gm-Message-State: AOJu0Yyv9xrRN9HqnSrf3VOlW8C1wRcm3jYY5fjEenCerribCoAL5X4s
- xZkVG1AX6UID6HepK9weUhbIqjg3IMXCB4irT6TggnJMX5IO+vpVFTIxScjaYNw7+hk3LGtsiVM
- 0a1df0ALLcsmdgERYDFsMaiOfKgHeqcrhWCPwaw==
-X-Google-Smtp-Source: AGHT+IFb1V2AHBfQkeV/xGQQ9k7ryhd2VakZ4YP8/rHTas5ipkVsHGvmy9oe00geIP/WzmmM6lVbQUdPe/wA5DEddFM=
-X-Received: by 2002:a05:6402:2089:b0:5c3:cc1c:4d9c with SMTP id
- 4fb4d7f45d1cf-5c3cc1c4dbdmr5450500a12.18.1725566026209; Thu, 05 Sep 2024
- 12:53:46 -0700 (PDT)
+ bh=HdMMiM8FBhh+JZDi5gOlvhIrUAb12USwbXo7UrbyQMY=;
+ b=UqSIn5CPLvgwfhyIch0/1flUStwIt3/9H9JdgDMUWnHg924Pa1SWcUWwdgaolb/FdV
+ RvWrKUn5Yi718L4/YlDu7zZdt/RISambGl7mbmZSONDzKKM7G/uFuTzjWivLAPxBNYIU
+ 49mQlaAUBs7S0tNPZkBVJm2pxEIUtH158LcR7HI7o3ZIOhRZTv/3yubrctKRg0fhZ1HZ
+ eao5nP4G34TQHrdBHIkm4fsYrrYqG224M+8ip9RlY1OsCedrrDFwhhr5M+wH/ZxSvkrL
+ C8xEw4dTdpG/ir2TkqBR/0KnI9JqokuBcE5bmKJxsKhebirRi61WddqLYk+KjkfA+qcy
+ nuxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXn3mjsncX7xykwvV3nQjwiJWe/aIeE0uzutg87knSfHc+XRGpR0NCwqHjCbdPUjqMXZNIY9tYbswq4@nongnu.org
+X-Gm-Message-State: AOJu0Yxaov+zEmlW/cpOeEBP4wz8hUixVlQWShc0HyenNXE5VTOefE0L
+ dtQ5r+mkgncY/TeTxtgqV+0jmOVOl/+v78+ODWTkg8JpQif1icL1CpRufCODvUdbkmIDmknd2CS
+ EJx/n7zjVY4bzzXAoouKa8V/xUJ9z3UotJUvAgg==
+X-Google-Smtp-Source: AGHT+IGKHPLif6iGkLbpMT268nMPXYNr7V4IYAqMbgrvMjLUZas7GrkEMbhMqIU87joTeo71H+4n6o6BvipxvZTApt4=
+X-Received: by 2002:a05:651c:550:b0:2ef:1d8d:2201 with SMTP id
+ 38308e7fff4ca-2f751ef7db4mr1532331fa.23.1725566106180; Thu, 05 Sep 2024
+ 12:55:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240905191434.694440-1-thuth@redhat.com>
- <20240905191434.694440-8-thuth@redhat.com>
-In-Reply-To: <20240905191434.694440-8-thuth@redhat.com>
+References: <20240905185445.8179-1-farosas@suse.de> <ZtoEvvdDO_3PsfDz@x1n>
+ <87ttetlwsb.fsf@suse.de>
+In-Reply-To: <87ttetlwsb.fsf@suse.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Sep 2024 20:53:35 +0100
-Message-ID: <CAFEAcA8NqfTdHhCJo8QzPy=EJQYKm=9dCC41UN4K_2pqeXifqA@mail.gmail.com>
-Subject: Re: [PATCH 7/8] Revert "target/riscv: Restrict semihosting to TCG"
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-riscv@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Thu, 5 Sep 2024 20:54:55 +0100
+Message-ID: <CAFEAcA-1SWDYAsz_icPEXGOcbs0N0Aafn9cv69KASK8uPW6OrQ@mail.gmail.com>
+Subject: Re: [PATCH] ci: migration: Don't run python tests in the compat job
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,45 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Sept 2024 at 20:16, Thomas Huth <thuth@redhat.com> wrote:
+On Thu, 5 Sept 2024 at 20:34, Fabiano Rosas <farosas@suse.de> wrote:
 >
-> This reverts commit 10425887ba54241be1ce97f8935fc320332b531c.
+> Peter Xu <peterx@redhat.com> writes:
 >
-> Using "imply" instead of "select" is causing a build failure:
+> > On Thu, Sep 05, 2024 at 03:54:45PM -0300, Fabiano Rosas wrote:
+> >> The vmstate-checker-script test has a bug that makes it flaky. It was
+> >> also committed by mistake and will be removed.
+> >>
+> >> Since the migration-compat job takes the tests from the build-previous
+> >> job instead of the current HEAD, neither a fix or a removal of the
+> >> test will take effect for this release.
+> >>
+> >> Disable the faulty/undesirable test by taking advantage that it only
+> >> runs if the PYTHON environment variable is set. This also disables the
+> >> analyze-migration-script test, but this is fine because that test
+> >> doesn't have migration compatibility implications.
+> >>
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> >
+> > We should still merge your previous pull, right?  Looks like that's the
+> > easiest indeed.
 >
->  /usr/bin/ld: libqemu-riscv32-softmmu.a.p/target_riscv_cpu_helper.c.o: in function `riscv_cpu_do_interrupt':
->  .../qemu/target/riscv/cpu_helper.c:1678:(.text+0x2214): undefined reference to `do_common_semihosting'
->
-> Thus revert to fix the build.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  target/riscv/Kconfig | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
-> index c332616d36..5f30df22f2 100644
-> --- a/target/riscv/Kconfig
-> +++ b/target/riscv/Kconfig
-> @@ -1,9 +1,9 @@
->  config RISCV32
->      bool
-> -    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
-> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
->      select DEVICE_TREE # needed by boot.c
->
->  config RISCV64
->      bool
-> -    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
-> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
->      select DEVICE_TREE # needed by boot.c
+> As I mentioned there, that pull is not to blame for this situation, so
+> my recommendation is to merge. However, there is still the suppression
+> of the deprecation messages that Peter asked about. I'll send a series
+> for that in a moment, but it requires qtest changes and probably a lot
+> of discussion.
 
-This will break the intended "we don't need semihosting if
-this is a KVM-only compile", though. Can we fix the
-build problem use see with
- "select ARM_COMPATIBLE_SEMIHOSTING if TCG"
+Looking at logs for other things I've merged, those deprecation
+messages are already upstream. So I'm OK with giving your
+pullreq as it stands another attempt at a merge.
 
-?
-
+thanks
 -- PMM
 
