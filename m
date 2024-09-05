@@ -4,106 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F275CD5BC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15690CD5BC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smC8k-000167-KH; Thu, 05 Sep 2024 09:03:10 -0400
+	id 1smC74-0001UG-Gm; Thu, 05 Sep 2024 09:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC8Y-0008Sk-Aj
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:03:00 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1smC6v-00010j-Q6
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:17 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC8W-0002AJ-8y
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:02:57 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5c25554ec1eso864796a12.1
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:02:54 -0700 (PDT)
+ id 1smC6s-0001kO-7k
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:17 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-427fc97a88cso5996405e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:01:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725541373; x=1726146173; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cwnn1XgdkvGh9rrbYATl2uNkRA38AcvdqPQRMxn7g48=;
- b=WRfOay2wMQJenotypXcyg2Gpe1aXiatUqdmh4H6sWRzY6fWXlxeS4/lcFl9slQxaOU
- lTns+BOnirL+45/V2Qw4Kugtcef61tT2qovsgMZt3ssE/UJJnvYRKG9icy7eLaONP9mN
- EiIytphFAZWHBwRATCw3Ct2ANUaubVgT+VWtaRt8ZwAPbV8za7d5T2tjz8wvn+GI2Uv+
- OV4wdmGuiG3/J+rBFDGNzcl/8dvq8D8ZKX/uIVi/lxVHmKu8y9WQQi2mJw6E0fAxgTx3
- /oGmwAw6uE+dgd/Ehp++VPNYxdm7uRlP8w3lW48ZPALSSDNoBg9sm5wPreZkkKfsVuWN
- tr6A==
+ d=linaro.org; s=google; t=1725541272; x=1726146072; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=/1zEM1x6OVqIhqR0ynhG68F5R1rKfetSPpPKrgmLcWE=;
+ b=Vo8NTsrLVRGPN/5ista5TiplIwnOm195CBK5hXTku/488R1FpF/OU6RbGhBEWjNTl2
+ J7xzVOBg8Dtqfh8ZJZWQzKqYbX/mef0Gy7sl75ueuqnvs94Urjwze3tscIgA2TxRahyf
+ lYpKJcNrWcF7/UJ+qvWnCGFZFXy7+f/u+/VN3X4PyupmlwAczvvaZtrejtQ7NjM4R69Y
+ HDaLQtOLLt0PZ4PzKq8F7wLU8XA4xbjFKDwldOezTBKbuGcjFv4te/HVt6Ph9i8Mzvpd
+ 9229EufOP/ECNsyIuYRGg+LTSgRb7fuvXAu6LY68W86QF7zewHS9+kvO5WqjslvNGnBM
+ FXoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725541373; x=1726146173;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1725541272; x=1726146072;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cwnn1XgdkvGh9rrbYATl2uNkRA38AcvdqPQRMxn7g48=;
- b=YVS1aUkY7ktlkaIHMHjsLPhGduzoV/RqEEH1x8N8pYRafv+gmaFQ8oACLnODfi2pbv
- RLbK4espokGkMWzprIbzIdMyXLLUaqXynSBIBCBrsdfkVGCc6yEcWTsG7cuVBAduD1wJ
- Y7428lm5Psc/F25PKenlQwhruhy0H5Rg2Ok376osmIhy7HkTvrgFG0r38qN9cjwnh9Un
- EU0XHJJfWHFu03HLoLpDNxI1TSeHP6OypXKO4cPrxF7uQU+mJ/SnnO4EeJwkJumQtf7D
- brphFcg4KajPYyo/3iEfa7UbIooEgzeAtQ+ztPyTcQfNdEXGX0t++QpYA0+zfFr9KvBN
- tJeA==
-X-Gm-Message-State: AOJu0YylGm1u+MIDo/ff/E/urGM8EqNzqCF9n1rX8RK97WG95lpONhTI
- Ucrb4Kx3SX9cpSTAhLRZ/ROYKflsjn4dHcGbxAa/Uoavoh/jgGBHYXJ/CPpZo9ukq7zogDJuBfu
- Ie+KAyGFPRNPHx9TLcG9Whphji258Pjp1TdGsfg==
-X-Google-Smtp-Source: AGHT+IHuk5vVn71M07bqWrqA5LQ4xwYNrAysM+fssQLHDk77ddSciZL9cQ0oxyggV7o0rjmlGJLhfVkO+BwZMpolwms=
-X-Received: by 2002:a05:6402:1eca:b0:5c3:d8fd:9a3b with SMTP id
- 4fb4d7f45d1cf-5c3d8fd9c58mr246637a12.28.1725541372714; Thu, 05 Sep 2024
- 06:02:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240905073832.16222-1-shentey@gmail.com>
- <20240905073832.16222-4-shentey@gmail.com>
- <08360075-385e-4083-8dea-5e2275d02834@linaro.org>
-In-Reply-To: <08360075-385e-4083-8dea-5e2275d02834@linaro.org>
+ bh=/1zEM1x6OVqIhqR0ynhG68F5R1rKfetSPpPKrgmLcWE=;
+ b=iT55Qgi4np1s1UEid9bgfHoIyqSYvi3lUAvKgxiSVkC7q5XDkYF4jYRPCBpbExIjiW
+ IyWhNAxYTavFtZEbSLy4FKLID0vRzDO/LmEbd8PKao7XkOY73GMB7TN1I/kwYu4lQAQA
+ BrzEXL3a5WFR7kzU4wQgokOWkznYAcMKMS/M6aQcpAePIuLfX2RcAZQIlJCiQSVpWCJz
+ 9F4s7qa5axy44b3+H4ecUSgxb/7J86VIbTQp8kkogB2HLwx4Wq7+HCfTzTiH1YVBV+s+
+ 6vvv2Pf1bF39z87s54KMTuVEteNELb7E2JzyR9KeC7PPTrucl/s6AAmauSeurHPaQC9/
+ yBiA==
+X-Gm-Message-State: AOJu0Yye2EPSAafHTvaob6tJwYtu0l49v5wnXmXF0Q/scX2f7jZXPbzr
+ GqsWeMjcGGwgH4udeTpwr/QKOU2i3oPuOseSXBch1W7YWdXbH+MdMsY5lYVWD+qETvj86BEIQeL
+ v
+X-Google-Smtp-Source: AGHT+IHR9nfitc3xMkWd6+4bWjNXxjmK4Y1jlpLloUow3joUSGeXv4I27i7HKafEFno2xhwUYcrTdg==
+X-Received: by 2002:a05:600c:4509:b0:426:6153:5318 with SMTP id
+ 5b1f17b1804b1-42c9545f8bamr39624475e9.19.1725541271976; 
+ Thu, 05 Sep 2024 06:01:11 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bb6e355dfsm232251365e9.46.2024.09.05.06.01.11
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Sep 2024 06:01:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Sep 2024 14:02:40 +0100
-Message-ID: <CAFEAcA_x6zwG+V-E_Lzr_3njQ2W5PN5=BXVNnOT11K3jMxTC5w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] hw/char: Extract serial-mm
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- Helge Deller <deller@gmx.de>, Song Gao <gaosong@loongson.cn>,
- Stafford Horne <shorne@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Joel Stanley <joel@jms.id.au>, Troy Lee <leetroy@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
- qemu-riscv@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Hao Wu <wuhaotsh@google.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Alistair Francis <Alistair.Francis@wdc.com>,
- Beniamino Galvani <b.galvani@gmail.com>, 
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Tyrone Ting <kfting@nuvoton.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org, 
- Sergio Lopez <slp@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
- qemu-ppc@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Jia Liu <proljc@gmail.com>, 
- Huacai Chen <chenhuacai@kernel.org>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Niek Linnenbank <nieklinnenbank@gmail.com>, Paul Burton <paulburton@kernel.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Bernhard Beschow <shentey@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 13/25] hw/arm/sbsa-ref: Use two-stage SMMU
+Date: Thu,  5 Sep 2024 14:00:48 +0100
+Message-Id: <20240905130100.298768-14-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240905130100.298768-1-peter.maydell@linaro.org>
+References: <20240905130100.298768-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,14 +94,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Sept 2024 at 12:13, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
-> Could we start recommend to also add SPDX tags for new files committed
-> to the repository? They are clearer than mis-copy/pasted license with
-> typos and can be parsed by tools.
+Now that our SMMU model supports enabling both stages of translation
+at once, we can enable this in the sbsa-ref board.  Existing guest
+code that only programs stage 1 and doesn't care about stage 2 should
+continue to run with the same behaviour, but guests that do want to
+do nested SMMU configurations can now do so.
 
-This is probably worth a discussion in a separate thread, not
-buried in a comment on a refactoring patchset :-)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Message-id: 20240816161350.3706332-5-peter.maydell@linaro.org
+---
+ hw/arm/sbsa-ref.c | 1 +
+ 1 file changed, 1 insertion(+)
 
--- PMM
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index ae37a923015..396abe9c1bd 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -621,6 +621,7 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
+ 
+     dev = qdev_new(TYPE_ARM_SMMUV3);
+ 
++    object_property_set_str(OBJECT(dev), "stage", "nested", &error_abort);
+     object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+                              &error_abort);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-- 
+2.34.1
+
 
