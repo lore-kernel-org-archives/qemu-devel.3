@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0C9CD5BA6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 355F3CD5BA6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm9x2-0004sk-MI; Thu, 05 Sep 2024 06:42:56 -0400
+	id 1sm9yA-0006Mu-5h; Thu, 05 Sep 2024 06:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9x1-0004sH-JB
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:42:55 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9y4-000677-95
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:44:00 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9wz-0002Pg-Qv
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:42:55 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-6d9f0cf5ae3so6938797b3.0
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 03:42:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9y2-0002Xb-IN
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:43:59 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42c7856ed66so4511785e9.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 03:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725532972; x=1726137772; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OGJxMImfEmD/8RUCmiXS9l8UScU1SKHCMiHAY6H8suM=;
- b=F0qECiw+stt0VHEvLUBy87uJjFStLkTR6fHdAchaB8iuthlcI14xImFXQCU79dD4wv
- aEREk+2VG8rpO+wDl7RDFjHBQVE8bCKtiQlTiFmruQVq6IdR93L6pa6Ynin9//65SIy7
- AjCMOGDDUCiPCFUuxs4stLPu9D7pMy05DPO7umu1+gyhGQ+YJbRfRxfyAuPzidjK38g5
- //KVTPqs6vPpszzHXG0s3497T/OBKY10dpRS+friRXiXx1o2ZRwMBQR4t6KzL36S9IbQ
- rT94l234nmrBOpgSlLA0Rwvp9smElWmPX4TKD7J+7q/XSnUktflFAVdZA2PsgEObPgaW
- N9wQ==
+ d=linaro.org; s=google; t=1725533037; x=1726137837; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WrbQqfUY48kCO6crhKAl4HYo3Clzej3RS2nXxen4eb8=;
+ b=aXM1JEJcNdNDG3mDGd1dOkpfVmpw+ZzLhuXe0SnhR5ikkGf8f89bXqPY+nzFWClcoD
+ dEjp58J6f6MJXBxqKVBdHwXqIt4GGu8BiEPApc2GTyCrtL0w5OFkvLqZUiAe3xnDdBLi
+ IrfB2vE8nD08C7bDvesup1irY5fHwlxdqkBz/2stwjfzaYuv7VLOkBYRB59uxylEW1H/
+ +BrM95z4D9G3VlqUyM6hm4FCXE78VhmCE197r+1zX/0Mk5obr0zHx0IUM8nUnLQLH/xu
+ ntz7y4nVPMojdCg0BpxDqMypm1STpomHwE7yf1lSGLUPoB3J0WZxv6FK9es63c67lqyY
+ dpgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725532972; x=1726137772;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1725533037; x=1726137837;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OGJxMImfEmD/8RUCmiXS9l8UScU1SKHCMiHAY6H8suM=;
- b=wDNP6GqZww3n8Eg5SLhwAUN015AvCZWlkd9e3iuG4VZBhAwk6pj3SIW3BAUQHH2mAk
- U+VS5ljaBuRZMu6mTdwWuzq1+2QhjBYnk8HxfFvmMw6fjMFPvVHLMa8wn7D3lpmf9H31
- erjUGoWddUlaeuj30AlSz7Ts4QKzPOWcBW1Qmb15IRTGVwMXA/MM8nbx4InlHzsFeSBY
- 8K2lHwsxBKlr5Qb/TCADSA0lpjgp2QI8gNnOdm1if10dUa6nrS3Axkk7T6kJ2jvW1z6S
- MXcPBngxVjGPVIXykPiD+bmvoVrK7NPBnZ3XwE6KBaruLbwqGuN2jZTkmQ01nQkrXKuO
- KB1A==
+ bh=WrbQqfUY48kCO6crhKAl4HYo3Clzej3RS2nXxen4eb8=;
+ b=pDdIoMAtek07jy/wCu/TMjn04+vlAYVzidOWa5NUPhnL2XX0c7Ik8Vq0iQYkHFGaFu
+ IEfEO0WDebRj7J9LVOaw45g0puM+cpevdFYxlPL76vON7KfzXwCxItXfXGH1MoxIgKno
+ VY5VTi/n6RCP04sgJtb2lP764KR3j5nNg4dSXcJjjs7AEaJgHSr+yzZmP7Mu45PqLVtS
+ X7nwmbPdG/D8CjSYMY4Jzlly1ouw2oQ8PbrHscy9NueYGMVqapHGJEGAf9coeHLJCPT7
+ fSfWffRvLp9GB3gqF6tpv4SPTvs7ouTdVY59WM2vQ6CTMFpcgjAdLBYiFXJKg55MjyhZ
+ rPVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVplLckn+UDeEljb+YJUYDzoEyg8W0+v/57WHAk8LDYSEbT/wBH2dwlVJJoQnaJ+7I9o41RYuW6wS7s@nongnu.org
-X-Gm-Message-State: AOJu0YyRtdMu9EEuWmf8RHGhl0w/utKHfQmQikO3oIYyq5eJz8zSel8W
- FwTtIMbtpCyHm61DGngx4mV9SuOL/eR2jxnDyEIYK4Cuwqp0UUeYxZ6oePLwuTs=
-X-Google-Smtp-Source: AGHT+IEdGN2cUyIHDOMiY3hcl0iQKkMRJGCro5F6Ns9PgdIA55Im5hU2Bg7o3Dj4xfhj7hk/ZLqElg==
-X-Received: by 2002:a05:690c:6503:b0:6d7:f32:7376 with SMTP id
- 00721157ae682-6d70f3275f4mr166847087b3.40.1725532972337; 
- Thu, 05 Sep 2024 03:42:52 -0700 (PDT)
+ AJvYcCVZ+RVbOpVYYNeKOsv861hD2OSMaOGDOYCVTU6BOKjoYZja/O0MKpIDJ3vYw0G1y0EGsFyVy6MG8sr1@nongnu.org
+X-Gm-Message-State: AOJu0Yx0QAUv7NOzed9kybrIh9DBU4d+88H30StX+e71a93unR1Y9fyM
+ n4pBLWRDOpIm9f0c12Lrz0VQfsgEIknwp03tT2cpkX+pJ0ZnaF7A6/nEFW3N/3I=
+X-Google-Smtp-Source: AGHT+IGGz6f3sv6y5YyJ0jOk1jDJSOGkuNdHh5x7ql5M78ncuftSceqpxH1uPI3aXH6xiHEnyBiuzw==
+X-Received: by 2002:a05:600c:3145:b0:426:593c:9361 with SMTP id
+ 5b1f17b1804b1-42bb27a9c67mr157945585e9.26.1725533036761; 
+ Thu, 05 Sep 2024 03:43:56 -0700 (PDT)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-6db2bea5c3csm5682807b3.5.2024.09.05.03.42.51
+ 5b1f17b1804b1-42bb6df0a4dsm227837155e9.12.2024.09.05.03.43.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Sep 2024 03:42:51 -0700 (PDT)
-Message-ID: <c24f9c04-b794-4a67-9e99-4a6f0ed217d1@linaro.org>
-Date: Thu, 5 Sep 2024 12:42:49 +0200
+ Thu, 05 Sep 2024 03:43:56 -0700 (PDT)
+Message-ID: <ef8680d6-3a74-46e0-9bc9-d5d12c9ee88c@linaro.org>
+Date: Thu, 5 Sep 2024 12:43:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/15] disas: Remove CRIS disassembler
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 15/15] seccomp: Remove check for CRIS host
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ devel@lists.libvirt.org
 References: <20240904143603.52934-1-philmd@linaro.org>
- <20240904143603.52934-15-philmd@linaro.org>
- <a88452bd-eb61-43a3-a557-0e552ab3bb27@linaro.org>
+ <20240904143603.52934-16-philmd@linaro.org>
+ <c254b667-2a47-4e6d-9a3e-79318ffa6792@redhat.com>
 Content-Language: en-US
-Cc: Thomas Huth <thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <a88452bd-eb61-43a3-a557-0e552ab3bb27@linaro.org>
+In-Reply-To: <c254b667-2a47-4e6d-9a3e-79318ffa6792@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=philmd@linaro.org; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,53 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/24 03:30, Richard Henderson wrote:
-> On 9/4/24 07:36, Philippe Mathieu-Daudé wrote:
->> --- a/include/disas/dis-asm.h
->> +++ b/include/disas/dis-asm.h
->> @@ -232,10 +232,6 @@ enum bfd_architecture
->>   #define bfd_mach_avrxmega5  105
->>   #define bfd_mach_avrxmega6  106
->>   #define bfd_mach_avrxmega7  107
->> -  bfd_arch_cris,       /* Axis CRIS */
->> -#define bfd_mach_cris_v0_v10   255
->> -#define bfd_mach_cris_v32      32
->> -#define bfd_mach_cris_v10_v32  1032
->>     bfd_arch_microblaze, /* Xilinx MicroBlaze.  */
->>     bfd_arch_moxie,      /* The Moxie core.  */
->>     bfd_arch_ia64,      /* HP/Intel ia64 */
->> @@ -448,8 +444,6 @@ int print_insn_w65              (bfd_vma, 
->> disassemble_info*);
->>  int print_insn_d10v             (bfd_vma, disassemble_info*);
->>  int print_insn_v850             (bfd_vma, disassemble_info*);
->>  int print_insn_tic30            (bfd_vma, disassemble_info*);
->> -int print_insn_crisv32          (bfd_vma, disassemble_info*);
->> -int print_insn_crisv10          (bfd_vma, disassemble_info*);
->>  int print_insn_microblaze       (bfd_vma, disassemble_info*);
->>  int print_insn_ia64             (bfd_vma, disassemble_info*);
->>  int print_insn_xtensa           (bfd_vma, disassemble_info*);
+On 5/9/24 09:48, Paolo Bonzini wrote:
+> On 9/4/24 16:36, Philippe Mathieu-Daudé wrote:
+>> As per the deprecation notice in commit c7bbef4023:
+>>
+>>    The CRIS architecture was pulled from Linux in 4.17 and
+>>    the compiler is no longer packaged in any distro [...].
+>>
+>> It is now unlikely QEMU is build on CRIS host.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   system/qemu-seccomp.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
+>> index 98ffce075c..a14a0c0635 100644
+>> --- a/system/qemu-seccomp.c
+>> +++ b/system/qemu-seccomp.c
+>> @@ -50,7 +50,7 @@ const struct scmp_arg_cmp sched_setscheduler_arg[] = {
+>>    * See 'NOTES' in 'man 2 clone' - s390 & cross have 'flags' in
+>>    *  different position to other architectures
 > 
+> Small nit, "cross" is a misspelling of "cris" so
 > 
-> This is probably worth leaving alone, since it's all imported.
-> There is lots of other stuff in there (even in these hunks)
-> that is not relevant to qemu.
+> s/& cross //
 
-This is no more an import, see addition in commit
-aae1746c72 ("target/loongarch: Add disassembler")
-and removals in 9992f57978..333f944c15 6c3014858c:
+Funny :)
 
-. 6c3014858c target/nios2: Remove the deprecated Nios II target
-. 9992f57978 disas: Remove old libopcode s390 disassembler
-. 333f944c15 disas: Remove old libopcode ppc disassembler
-. 457248a54c disas: Remove old libopcode i386 disassembler
-. 82f96346e1 disas: Remove old libopcode arm disassembler
+> 
+> No need to repost, of course.
 
-I don't mind discarding this patch, but I'd like to know
-how we can be consistent with this file and the future
-removals.
+I'll correct, thanks.
 
-Thanks,
-
-Phil.
+> 
+> Paolo
 
 
