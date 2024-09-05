@@ -4,70 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C397CCD5BA8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B34CD5BA6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 10:33:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm9hr-0001xZ-Ic; Thu, 05 Sep 2024 06:27:15 -0400
+	id 1sm9nO-0007fS-U6; Thu, 05 Sep 2024 06:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sm9hq-0001wk-A4
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:27:14 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9nK-0007aA-4a
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:32:55 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sm9ho-0007I2-Dj
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:27:14 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2f4f24263acso11123841fa.0
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 03:27:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sm9nI-0008Jn-BK
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 06:32:53 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3780c8d689aso341513f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 03:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725532030; x=1726136830; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+B1EfBOMHYHAZB5h4exHvi88VPzs2y2vW7dtloYIbbo=;
- b=ZUGigbrg6NEfyf3P/qjI3cB/m8lnIZMkFWM2AnRLLRWXYSdTUjcobD8tz44sXN6VZE
- bhrPWVRY+qSL/+60N332AdldS9BKA0neA4QrIedvWiitfc/fMYITyEe2Nx/YqX5miQzX
- Hgrq0spUhvS3+Bb1q2jf0IflYbS7WRJnrNAUgqBhvVWTRAaMV9+VxhVD+p1KjTN8Ufp9
- gMrZ6Lpx4jElYk0O63XCIuZnUxYbbgkw8dce7i+XsscSezjjGegEijxwctVAXSljrQII
- LQrIz3fNcsC3btbrpW5E4TqwAiETaZntZBbiLwQ7t3UndPGx5v3deWMUQi3OK/R4ZLIg
- bLIA==
+ d=linaro.org; s=google; t=1725532370; x=1726137170; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=F6EGgNhkf2SvpOkiCN+f8Mfsh5nGUdrGGf3OpXtqt2A=;
+ b=cd3wy2E8eS+Qt8wPKOUEFIt9/V5O7LLPmL9szkA0kBSvRN+jtARIkJ37WQLHZhbyEU
+ pvS8W5QN3Rdk2MwztUO/FlGqqk6DMi0bYPBHfyrgAByGO0Gj6bL4SHV+aH5y7NrnKcIv
+ fnxCdxROiXuDK+SIyGuxZuIb5jI0IyJXwkOZu5lhC9vFjnM4uE1HgyQgKeJqJPxHBTmp
+ MpnWz5KJ3i0SxprrNxzuoGqsM4SoRHXbn4a7MCt6VYRUicds6V4pYyFd13z6TuYna/uI
+ lIZswzprfCJTD/PB7a4/jYW/8i/QYadUC8+uozie+gVYTojsriv+nZMuZTqBrz+ws3/H
+ +/sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725532030; x=1726136830;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+B1EfBOMHYHAZB5h4exHvi88VPzs2y2vW7dtloYIbbo=;
- b=QqkwOXNXHU0FoQTtepn4xdBSnikyx4fTxwuFDVDcIQQQMRhzJentA7c76RTA7xwQp1
- 1hL1CgEabgX7RiH+u2Z1UO4daIy/24NlN9IEzlIuHvWgdYTbANYkL4+pya1jqXoCm1Xh
- Hs1DYv67QRV1HM7m+kW2WkPsJjB+x9DUA3iRcI81KDvN07WKZK8iwKxDErM88S1fN4tq
- nH8LqO8GeLLJdt1Olm5iEjNo/OHZW4h7RWyvQmZxhlP4SgTNANSlc2mo0BeHNGiYVc6S
- XJdHKZj2ZWwt3whgpnium4IewtyZe7VbgYBnIJwI3pC5BH44slrVp5pj8d5Ax5/OrVCn
- feIA==
+ d=1e100.net; s=20230601; t=1725532370; x=1726137170;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F6EGgNhkf2SvpOkiCN+f8Mfsh5nGUdrGGf3OpXtqt2A=;
+ b=jXXiafOhVZHZfXzbihs8U8pVEnQWYuuLg69VA0lBTJD8rdwFfqDYWwFrmh1C1RsMZ8
+ P4KocXlVfKf384QuFKRUdnhbFw65siHJnNGwNpneVtLWWoBl1LoIoRotZJYELNBTaWP8
+ qCrj/l1XUg6BUzoWSeO87cjcIhg28Rnk37O2IkqVH6Gmr+aKWIsdXqpDmxKMv7rbyl2l
+ d9ODG6Ro8/ANwXuZeMhb8Tgo7JpC0BcQLckoMpA5pBKBaQkpTGp7sBtuFIuWh4vygpJN
+ fk6O1UjYlT40oq27IfyQ9IxoAdBrG4g5R82CXLh5kafJ4Wyu9RZebawe+Tn0hE9qZiTF
+ Z74g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQ0u6z8Jt7QfLWdLyzSHRlAggxOWleVq/CxtE57aDN/PeHIWLm1PIATg0Up1ncR6WTkn3uqJ0K6ABm@nongnu.org
-X-Gm-Message-State: AOJu0YwHyc+rb86eHTTtX65s2CO5+Qf+wHB5emqtc0F7IYUbK2sJ9U26
- V40MDtRp05terQxgHH8rFuoTvXl2NMIO5sA7LDVMLfnBOPWcaJBgZBi9FqU4RKiFM6S3r1IxhS6
- KNBFjjs/5+w2eKeqVaubWr8CZbSmpUGkjqkAQtA==
-X-Google-Smtp-Source: AGHT+IGFNv5Pr9qXTFDQI3NWo0SORws1NQn8oojf2UHchdVf07R6HrdguAyncGOzAd0CeL2oK/iWYoHSoBghkfQmj5o=
-X-Received: by 2002:a05:651c:220e:b0:2f3:e2fd:aae0 with SMTP id
- 38308e7fff4ca-2f6105c4b9cmr227483211fa.6.1725532029849; Thu, 05 Sep 2024
- 03:27:09 -0700 (PDT)
+ AJvYcCWOdIGs+2+vo0gjOcnuEuTCv40OwcFn08HqDnbr8uDD1BuatNz1mYHL584APGyYBqHosfvRTSuVeiGs@nongnu.org
+X-Gm-Message-State: AOJu0Yx7I1gv16iFUOuP17gwwJWe/9yGR67bPAwAb8DpfPULLqEJ9VVN
+ iJEmvWNhnAXUgdgYR1Tx3Ch3PgS3J0gRgTLNYlx5QQvtYN2b26u4SsJRmihOMos=
+X-Google-Smtp-Source: AGHT+IHuzamxZsbFiatvvrer5EG8JC34WiJYZFfdhQfEgfnRN7h1SavfSr0FrzfHewo/5WPCyax9bg==
+X-Received: by 2002:adf:fa51:0:b0:374:c1a9:b97b with SMTP id
+ ffacd0b85a97d-376dcc8b8e5mr4696895f8f.8.1725532369959; 
+ Thu, 05 Sep 2024 03:32:49 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bb6e33b41sm228930315e9.40.2024.09.05.03.32.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Sep 2024 03:32:49 -0700 (PDT)
+Message-ID: <297a595b-bbfa-47f8-a958-04d0140579af@linaro.org>
+Date: Thu, 5 Sep 2024 12:32:48 +0200
 MIME-Version: 1.0
-References: <20240904101445.4127-1-deller@kernel.org>
-In-Reply-To: <20240904101445.4127-1-deller@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Sep 2024 11:26:59 +0100
-Message-ID: <CAFEAcA_jdPn=8tT_oBDfyiBwKpMuwOWfj-if5xzJ1oQ2XH=gDA@mail.gmail.com>
-Subject: Re: [PULL 0/2] Hppa v9.1 fixes patches
-To: deller@kernel.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- deller@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x236.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] target/loongarch: Add a new cpu_type la664
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, maobibo@loongson.cn
+References: <20240729013939.1807982-1-gaosong@loongson.cn>
+ <20240729013939.1807982-2-gaosong@loongson.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240729013939.1807982-2-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,38 +96,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Sept 2024 at 11:14, <deller@kernel.org> wrote:
->
-> From: Helge Deller <deller@gmx.de>
->
-> The following changes since commit fd1952d814da738ed107e05583b3e02ac11e88ff:
->
->   Update version for v9.1.0 release (2024-09-03 09:18:26 -0700)
->
-> are available in the Git repository at:
->
->   https://github.com/hdeller/qemu-hppa.git tags/hppa-v9.1-fixes-pull-request
->
-> for you to fetch changes up to d33d3adb573794903380e03e767e06470514cefe:
->
->   target/hppa: Fix random 32-bit linux-user crashes (2024-09-03 22:08:22 +0200)
->
-> ----------------------------------------------------------------
-> hppa target fixes
->
-> Two important patches for the hppa target which missed qemu-v9.1:
-> - One fix for random linux-user crashes
-> - One fix for random issues due to loosing the division V-bit
->   during delivery of hardware interrupts. This triggers all sorts
->   of random faults when running in system mode.
->
-> Helge
->
+Hi,
 
-Applied, thanks.
+On 29/7/24 03:39, Song Gao wrote:
+> Add a new LoongArch cpu type la664. The la664 has many new features,
+> such as new atomic instructions, hardware page table walk, etc.
+> We will implement them later.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/cpu.c | 48 +++++++++++++++++++++++++++++++-----------
+>   1 file changed, 36 insertions(+), 12 deletions(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
 
--- PMM
+> +static void loongarch_la664_initfn(Object *obj)
+> +{
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+> +    CPULoongArchState *env = &cpu->env;
+> +    int i;
+> +
+> +    for (i = 0; i < 21; i++) {
+
+In order to remove the '21' magic value, can we use:
+
+       for (unsigned i = 0; i < ARRAY_SIZE(env->cpucfg); i++) {
+
+> +        env->cpucfg[i] = 0x0;
+> +    }
+> +
+> +    cpu->dtb_compatible = "loongarch,Loongson-3A6000";
+> +    env->cpucfg[0] = 0x14d000; /* PRID */
+> +
+> +    loongarch_common_initfn(env, obj);
+> +}
+> +
+> +static void loongarch_la464_initfn(Object *obj)
+> +{
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+> +    CPULoongArchState *env = &cpu->env;
+> +    int i;
+> +
+> +    for (i = 0; i < 21; i++) {
+
+Ditto.
+
+> +        env->cpucfg[i] = 0x0;
+> +    }
+> +
+> +    cpu->dtb_compatible = "loongarch,Loongson-3A5000";
+> +    env->cpucfg[0] = 0x14c010;  /* PRID */
+> +
+> +    loongarch_common_initfn(env, obj);
+> +}
+
 
