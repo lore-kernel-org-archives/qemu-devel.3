@@ -4,85 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52537CD4F59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 07:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3B8CD4F5F
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 07:40:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm6fT-0004eh-Gl; Thu, 05 Sep 2024 03:12:35 -0400
+	id 1sm74w-00068A-2u; Thu, 05 Sep 2024 03:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sm6fS-0004dj-24
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 03:12:34 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sm74s-0005yA-Ja; Thu, 05 Sep 2024 03:38:50 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sm6fQ-0004YD-Eu
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 03:12:33 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2d89229ac81so327457a91.0
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 00:12:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sm74q-0001dD-Ut; Thu, 05 Sep 2024 03:38:50 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5c245c62362so614837a12.0; 
+ Thu, 05 Sep 2024 00:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725520351; x=1726125151; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gOoqPJ1a4zZI7BzNUw33JsARdorD+42DRWxVBZI+SFc=;
- b=FBxFWQtMTxm8n4Q7wQYzMJQF0flr0ykiHroL4CHAeBDrFifIUVH8NAOi0HESKZcqzK
- G6paLGQL+2pAjMPR6TQU7gubDULKf/yF07zE5+lEJMIUJVOmEnWwAwT+OhqlX6WnR4Dz
- FN9fFiEx+wA95wgPOcPJ+GtqPIF+Nm1+lJTZCntwvHn4T3w1Oj2v5PMOOvH6KMmi668Q
- czEX2MR6BeRV4bQ3OdN8H3UjKrE/Vriu6ATZYSwl54g5k9l5UrSy+gee5+KRwz9O84Ig
- ubkI4zn8T6nAouj43S/uqzmsEthHbPTczXAfuVN+mhv6H4UE3QDGqgGN8AWkoTlKW4dZ
- 0ciQ==
+ d=gmail.com; s=20230601; t=1725521926; x=1726126726; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yqq2+yKTgR47E2vybbP031KgJCA7S1tzDqwG9g6AEdw=;
+ b=C/K0/TVsRSefv324SyjkaXVtPtG/7madbzi7vKcceeH8SQEE+Nh4qSpTAmMmZmt8VS
+ CcKHV2eladhC9EcKuVarj7ib4yq5mzIMccdDtE4v/AyuGHHlaUS59Dh57JK8tfpARpNN
+ 8OyjvuY3HAYMPTCpOmNcbrQVf36dhHPhjOPJxWj04ThtvxwbxkCi7pgNRO9tp5eeHA5a
+ HZw/X44dCNXb/7R4vPa9MtsAE7VBIxfM0N6NOleNN0zGz2cuVyMRlRGDm6qM1gJI36tF
+ sja2LO4ADzpMI41g3n1rnKqVfDV0L4ZyfaY2gll+kO7aa4XmeQ0MsWmKEfzbOeKs+AiN
+ xVDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725520351; x=1726125151;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gOoqPJ1a4zZI7BzNUw33JsARdorD+42DRWxVBZI+SFc=;
- b=TXLN+lhNCvBqdB/MJMuIzVAFQuEuIfHJUpiBBCV68tKNnitSj4FUZSiJ2UBsGXhK6Y
- nHDaLEx+pywc+AUGAnH4g1HL6AXYgw30Xb9MteGv/ITASxBuWbUYH32U+CzRHWzOXGgT
- DhLLM+kzKMZWvBZif8d/XGByuNPUz1hrJefPBqvH/q0IvjUDlC20Sk6RnE9Q3SMXItEe
- bPduYulfQRzUOwqtZGRcxFtHzWn1yM22HrOG7nb7qgbgthZHYht2QvuJfMzcZfBPaYVw
- x/2YlKj64nxSgPAji7ME2YBO1QPDi1jiOuecEV0bpBjnrBfF23ROctobbg7m1G/tybZJ
- ub1w==
+ d=1e100.net; s=20230601; t=1725521926; x=1726126726;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yqq2+yKTgR47E2vybbP031KgJCA7S1tzDqwG9g6AEdw=;
+ b=pv9hgBz6wQHHfvvmAWt6ik6FTbqcOxrc3+OUxjRhHUdnhSpaCUd4Jgt/Lb6T7U+DPr
+ 8O9lbxxbaEzPq4mgmr+timktk95LJaars//XnQ47gx2u/dSyeKUqCKLrNxnIpYIYxewI
+ uLm3DrslABMoxemCezwlVTeosrMY3+qoLnu60Re69jrYyfCko6nS92e2WIDFLjmQ/hx6
+ Sc2bDy9nO90Mv+nC7LnDVttv8tuKOwzfIvVoAu4aOPQSh6UhSouvbdTl0rafknUzFm7l
+ 0/lTStZ27PeIuXtJ5z7yf91aXt9f2OvD6YLenBvjxIeC1ZzLyU87cUENZGPo/dfRkO0a
+ ctiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMIE34dSWu1ZQNIoRqt57jS0gH5P2iakKRmHj+G8CESnty4IrKdDxf1m1WNNi3oN4LVfEFJhedcNlf@nongnu.org
-X-Gm-Message-State: AOJu0YzIGZivbx7BledIaULbHpCqimc8nlKxgghCp1RxzlkqjgvhtGMP
- aDi3d22b+h/CBozdMW+I7wF1LCTxsBPwoYnP75YnEAaw25h1BiJmmMflETB47do=
-X-Google-Smtp-Source: AGHT+IG+d4pz0kS7bfVku0/TWRhOM0wdN9c3LLaCni1ZfWPhPZFPdlmgU1ajKgRey5G8wuaViifCcA==
-X-Received: by 2002:a17:90b:1802:b0:2d3:cc31:5fdc with SMTP id
- 98e67ed59e1d1-2da7482c200mr8238174a91.5.1725520350495; 
- Thu, 05 Sep 2024 00:12:30 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ AJvYcCUMMAzbqipcSX9DWGj7Kxv1l/iNmgnuqeCqhjULs53q65kpgblyhFBuxmKDjaSQh1H9zx8/QFfAjQ==@nongnu.org,
+ AJvYcCWNXt5zkqpLE30Q8R+vK4Q4cGK8CXQtNbjyCxlQpmdjMILbh06Fxtr2qOhFWqWrk/ZNulz8xCaQC+F60Q==@nongnu.org,
+ AJvYcCWR+Apfa32LNXJxlkO3xbCLDW+n9aNqSNEXtJoufZC+mZu05i8wBD8wY+8UsXIO1++XI/+gwNBw8xY=@nongnu.org
+X-Gm-Message-State: AOJu0Yw49CBPmGuQfzZLXxFGIE/1yKH4stGVhmAnSGHkUXDXR7UhZ6+G
+ gODznTkAEEx82tRmuv98N00nZV4bHkLXXhFPrhJD3bP95LQtWEQtRBaYXg==
+X-Google-Smtp-Source: AGHT+IGT5d6gd/YfLzTes1ORJwZO7X3RLzyDLESDRFf6RFDXzNE4MDUJIMJknj/KsCHjLK80WGZ3RQ==
+X-Received: by 2002:a05:6402:50ca:b0:5c2:6e61:fa74 with SMTP id
+ 4fb4d7f45d1cf-5c2757ce907mr4739436a12.4.1725521925341; 
+ Thu, 05 Sep 2024 00:38:45 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-092-224-047-179.92.224.pool.telefonica.de. [92.224.47.179])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2da509e97e3sm6099854a91.19.2024.09.05.00.12.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Sep 2024 00:12:29 -0700 (PDT)
-Message-ID: <9d40d3f4-731d-478f-81ba-1c380ef9d0ae@linaro.org>
-Date: Thu, 5 Sep 2024 00:12:28 -0700
+ 4fb4d7f45d1cf-5c3cc5689d9sm848755a12.43.2024.09.05.00.38.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Sep 2024 00:38:44 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Helge Deller <deller@gmx.de>,
+ Song Gao <gaosong@loongson.cn>, Stafford Horne <shorne@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Joel Stanley <joel@jms.id.au>, Troy Lee <leetroy@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-riscv@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hao Wu <wuhaotsh@google.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Tyrone Ting <kfting@nuvoton.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org,
+ Sergio Lopez <slp@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
+ qemu-ppc@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Jia Liu <proljc@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Paul Burton <paulburton@kernel.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v2 1/3] hw: Remove unused inclusion of hw/char/serial.h
+Date: Thu,  5 Sep 2024 09:38:30 +0200
+Message-ID: <20240905073832.16222-2-shentey@gmail.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240905073832.16222-1-shentey@gmail.com>
+References: <20240905073832.16222-1-shentey@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/14] tcg/riscv: Implement vector cmp ops
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
- <20240904142739.854-9-zhiwei_liu@linux.alibaba.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240904142739.854-9-zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,50 +131,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/24 07:27, LIU Zhiwei wrote:
-> @@ -2322,6 +2411,51 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
->           riscv_set_vec_config_vl(s, type);
->           tcg_out_opc_vi(s, OPC_VXOR_VI, a0, a1, -1, true);
->           break;
-> +    case INDEX_op_cmpsel_vec:
-> +        TCGArg a3, a4;
-> +        int c3, c4;
-> +        TCGCond cond;
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/char/riscv_htif.c | 1 -
+ hw/ppc/prep.c        | 1 -
+ hw/riscv/sifive_e.c  | 1 -
+ hw/riscv/sifive_u.c  | 1 -
+ 4 files changed, 4 deletions(-)
 
-While I suppose this compiles, it's not great to have new variables added randomly within 
-a switch.  At minimum, add { } around the block, but consider breaking out a separate 
-tcg_out_cmpsel function, akin to tcg_out_movcond et al.
+diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+index 9bef60def1..54fd55c3e6 100644
+--- a/hw/char/riscv_htif.c
++++ b/hw/char/riscv_htif.c
+@@ -24,7 +24,6 @@
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+ #include "hw/char/riscv_htif.h"
+-#include "hw/char/serial.h"
+ #include "chardev/char.h"
+ #include "chardev/char-fe.h"
+ #include "qemu/timer.h"
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index 4eb5477069..fb58c312ac 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -25,7 +25,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/rtc/m48t59.h"
+-#include "hw/char/serial.h"
+ #include "hw/block/fdc.h"
+ #include "net/net.h"
+ #include "hw/isa/isa.h"
+diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+index 87d9602383..5a1959f2a9 100644
+--- a/hw/riscv/sifive_e.c
++++ b/hw/riscv/sifive_e.c
+@@ -35,7 +35,6 @@
+ #include "hw/boards.h"
+ #include "hw/loader.h"
+ #include "hw/sysbus.h"
+-#include "hw/char/serial.h"
+ #include "hw/misc/unimp.h"
+ #include "target/riscv/cpu.h"
+ #include "hw/riscv/riscv_hart.h"
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index af5f923f54..efc8443c84 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -43,7 +43,6 @@
+ #include "hw/irq.h"
+ #include "hw/loader.h"
+ #include "hw/sysbus.h"
+-#include "hw/char/serial.h"
+ #include "hw/cpu/cluster.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/sd/sd.h"
+-- 
+2.46.0
 
-> @@ -2332,10 +2466,27 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
->   void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
->                          TCGArg a0, ...)
->   {
-> +    va_list va;
-> +    TCGv_vec v0, v1;
-> +    TCGArg a2, a3;
-> +
-> +    va_start(va, a0);
-> +    v0 = temp_tcgv_vec(arg_temp(a0));
-> +    v1 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
-> +    a2 = va_arg(va, TCGArg);
-> +
->       switch (opc) {
-> +    case INDEX_op_cmp_vec:
-> +        a3 = va_arg(va, TCGArg);
-> +        vec_gen_6(INDEX_op_cmpsel_vec, type, vece, tcgv_vec_arg(v0),
-> +                    tcgv_vec_arg(v1), a2,
-> +                    tcgv_i64_arg(tcg_constant_i64(-1)),
-> +                    tcgv_i64_arg(tcg_constant_i64(0)), a3);
-> +        break;
->       default:
->           g_assert_not_reached();
->       }
-> +    va_end(va);
->   }
-
-Better to use "TCGArg a0, a1".  Converting through arg_tmp + temp_tcgv_vec to v0/v1 and 
-then undoing that with tcgv_vec_arg is confusing.
-
-
-r~
 
