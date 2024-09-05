@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62827CD5BC5
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FCCCD5BC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smC73-0001P7-3I; Thu, 05 Sep 2024 09:01:25 -0400
+	id 1smC6v-0000zC-TP; Thu, 05 Sep 2024 09:01:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC6u-0000yE-06
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:16 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1smC6s-0000xe-Td
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:15 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC6p-0001ih-7d
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:15 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-374c84dcc90so478706f8f.1
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:01:05 -0700 (PDT)
+ id 1smC6p-0001j1-4j
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:14 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-374ba78f192so415275f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725541264; x=1726146064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725541266; x=1726146066; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=o6faGe6s53I53gCyvQfJrfuPm0tizhkfFDlXo8UUwQY=;
- b=u4MxKlgYM8vWWEqX9vQQRDkMIS0plTaa1GQCQrWvwyl98QWlZFVOvCIP2vhYYCffRt
- DmJTtueblZr9mSbA4//qhY5B2nwLC3Y0s4nD+HmOZp49jqhKn8RxEnhdqY4gLhgq8esE
- CrZWi45/dAc1Jtv1+PgIumIJNo/cBvLg8G7wL4GsfLUOvwN38H4tHhNSUM6pZqT049Dz
- LbNnwlnlzg31EVKp993TQ7iI8CpqoA37Tq2JBeQL/MhlFwc9KH1GeOId32ldJBH83X7v
- Sf672SYVpV1LIlv0QQXme89hJmH3XHIjJRcXT6onrnA3IMEUGcSEYwk3obIwWM1FwhxI
- WORg==
+ :reply-to; bh=h0CxkySph+MQbg69T6EA+5mDqJ97s/mpfxkBm+Lr8aM=;
+ b=sNQ09RaoHnQ0hozn6P7MxQ6QgGgdLagAzkUj33h2la/MHtmNy5pwxkVeARrzsaw71i
+ ZpJ/vibk+soiUeSvGE6YM1y0z7AMxY7ZM3+LHhRkOfJ0RmVmO48jd2lrYAO5R5KxxDf2
+ xM/IdElzQ0OkhqOpGD6OHXJEm6mlsD+/2b7egfWTqnCa+q1uU1M3bfNr2BxJnXB6eFtY
+ wqnCyP5G7vktMpj3wYkeDKehgaXjOpn1DtcqiG66AU4HUkGdKMybBrLNHa1TyRL0bMBu
+ 6ofQjxItshqRNbBiBxKYDcjZiChyljcf8yQixPX7wTD1XX7WKqTLXLkkG0kyCYz29vHe
+ keqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725541264; x=1726146064;
+ d=1e100.net; s=20230601; t=1725541266; x=1726146066;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o6faGe6s53I53gCyvQfJrfuPm0tizhkfFDlXo8UUwQY=;
- b=faBq8IwdsPOwZRdOjCWhVvbbbad1cnG4NILTzfA/qpB3wcGIWNeBoBEAORYJ56Rci5
- ei/Uyp0JQ4mkbkYnoi+IBd927gxgXxji6gmJMSPgtrxZriuAhPIpx0vHP5+iwK/V0ovM
- fCoSVArv16so2HdcCjWK+ugfAg/TrJppRy/IlFWF/rPlGPqAd9orvAzZ/TnVQfCOPFMJ
- OLO7MYvrlfTdq9Ih7DvmwiEgcPWLpcMXRnPd+RHBJgweyBqk5jRPXyK4ABae3Z1nD9Zl
- syjcwUGRYD74BRlNnVxNLivwa4HCMZnpt2gDF/E6rU69uXASMKJMfxbdzeh7AjOGR9Tj
- f3kA==
-X-Gm-Message-State: AOJu0YxcGUP5RYDluDz83TN6JoRDkDJBMBS8jc5hZo8j0efw8Ie+iIaH
- xgq/ErS2h0B+N4xBdOF1bGxN4fSnihnsKFQPuMHfwflViyz7MxY8rM6Xn2JEl5tKgmmvREQr1Uq
- +
-X-Google-Smtp-Source: AGHT+IFKHrbmeDOu6dc3CyftqWRnX3pyvdOWCWvmPaU766CoCYsIE6qH/k7DtbOLULbw0f8nrtxW0w==
-X-Received: by 2002:a5d:58e6:0:b0:374:c6b8:50c3 with SMTP id
- ffacd0b85a97d-3776f92941fmr4434862f8f.32.1725541263906; 
- Thu, 05 Sep 2024 06:01:03 -0700 (PDT)
+ bh=h0CxkySph+MQbg69T6EA+5mDqJ97s/mpfxkBm+Lr8aM=;
+ b=AAMHZGZMJ7mxhRgpZZcKQfKNvBe1Uqzjl9oKrJH6OuMhhEEIfxRFWwcMoir9mHcPqE
+ YPNH548IXCLQ8O4od+ZYcTN+Z5KMoYwjLKzppxjVNDsMI8D4ORDp4D6zlYMhr0XlH4Gp
+ mkgAvhlZe/JiTKjV3qFTRop25F/x/XHw+YtjRhqU1elMP+K3UWpbdbkCaPxxhr0ht0n+
+ b3S4UwP3CN4C72Sfjbnpd9Y369ROLkHoej3Rd+kNwNtKrdbroOuVUn/HLDKAHz3EbtFc
+ nh/bbNv4UmdCW1yDutdSZah3yAAppRMx/u15+QSEvSkBaEFfmuk67WdWsgwBAryuW6WZ
+ fz1g==
+X-Gm-Message-State: AOJu0YwI6GmFdDu0VV9ZLJ+fIo9jJmUV++wtJ1S9GTD48kt8EAyIvxmE
+ baS8lZlO32WlojuH4IuNUvo+CHG7DgFw/abzt43wE7BFYhTK5WlK7W/5pulAPWFxAjVO1otzyEo
+ 4
+X-Google-Smtp-Source: AGHT+IGVR5Oa94oVAN2kNuQgrWtMKxCYR5LOjzZyEtXRkMcqswQSkVWku0rXKKtgCxDRn0RH0Tg6UA==
+X-Received: by 2002:adf:f0cf:0:b0:374:b9a7:5ed6 with SMTP id
+ ffacd0b85a97d-376dd15a94bmr5454621f8f.22.1725541265306; 
+ Thu, 05 Sep 2024 06:01:05 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6e355dfsm232251365e9.46.2024.09.05.06.01.03
+ 5b1f17b1804b1-42bb6e355dfsm232251365e9.46.2024.09.05.06.01.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 06:01:03 -0700 (PDT)
+ Thu, 05 Sep 2024 06:01:04 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/25] target/arm: Allow setting the FPCR.EBF bit for FEAT_EBF16
-Date: Thu,  5 Sep 2024 14:00:36 +0100
-Message-Id: <20240905130100.298768-2-peter.maydell@linaro.org>
+Subject: [PULL 03/25] target/arm: Pass env pointer through to gvec_bfdot helper
+Date: Thu,  5 Sep 2024 14:00:38 +0100
+Message-Id: <20240905130100.298768-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240905130100.298768-1-peter.maydell@linaro.org>
 References: <20240905130100.298768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,79 +93,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_EBF16 adds one new bit to the FPCR floating point control
-register.  Allow this bit to be read and written when the ID
-registers indicate the presence of the feature.
-
-Note that because this new bit is not in FPSCR_FPCR_MASK the bit is
-not visible in the AArch32 FPSCR, and FPSCR writes do not affect it.
+Pass the env pointer through to the gvec_bfdot helper,
+so we can use it to add support for FEAT_EBF16.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h | 5 +++++
- target/arm/cpu.h          | 1 +
- target/arm/vfp_helper.c   | 8 ++++++--
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ target/arm/helper.h             |  4 ++--
+ target/arm/tcg/translate-a64.c  | 27 ++++++++++++++++++++++++-
+ target/arm/tcg/translate-neon.c | 35 +++++++++++++++++++++++++++++++--
+ target/arm/tcg/translate-sve.c  | 15 +++++++++++++-
+ target/arm/tcg/vec_helper.c     |  3 ++-
+ 5 files changed, 77 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index c59ca104fe1..cfb82c23cad 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -556,6 +556,11 @@ static inline bool isar_feature_aa64_bf16(const ARMISARegisters *id)
-     return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, BF16) != 0;
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index 970d059dec5..4466e796cb0 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -1027,8 +1027,8 @@ DEF_HELPER_FLAGS_5(gvec_ummla_b, TCG_CALL_NO_RWG,
+ DEF_HELPER_FLAGS_5(gvec_usmmla_b, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+ 
+-DEF_HELPER_FLAGS_5(gvec_bfdot, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_6(gvec_bfdot, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_5(gvec_bfdot_idx, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+ 
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 4684e7eb6ea..3813c75895b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -735,6 +735,22 @@ static void gen_gvec_op4_ool(DisasContext *s, bool is_q, int rd, int rn,
+                        is_q ? 16 : 8, vec_full_reg_size(s), data, fn);
  }
  
-+static inline bool isar_feature_aa64_ebf16(const ARMISARegisters *id)
++/*
++ * Expand a 4-operand operation using an out-of-line helper that takes
++ * a pointer to the CPU env.
++ */
++static void gen_gvec_op4_env(DisasContext *s, bool is_q, int rd, int rn,
++                             int rm, int ra, int data,
++                             gen_helper_gvec_4_ptr *fn)
 +{
-+    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, BF16) > 1;
++    tcg_gen_gvec_4_ptr(vec_full_reg_offset(s, rd),
++                       vec_full_reg_offset(s, rn),
++                       vec_full_reg_offset(s, rm),
++                       vec_full_reg_offset(s, ra),
++                       tcg_env,
++                       is_q ? 16 : 8, vec_full_reg_size(s), data, fn);
 +}
 +
- static inline bool isar_feature_aa64_rcpc_8_3(const ARMISARegisters *id)
- {
-     return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, LRCPC) != 0;
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 9a3fd595621..f065756c5c7 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1707,6 +1707,7 @@ void vfp_set_fpscr(CPUARMState *env, uint32_t val);
- #define FPCR_OFE    (1 << 10)   /* Overflow exception trap enable */
- #define FPCR_UFE    (1 << 11)   /* Underflow exception trap enable */
- #define FPCR_IXE    (1 << 12)   /* Inexact exception trap enable */
-+#define FPCR_EBF    (1 << 13)   /* Extended BFloat16 behaviors */
- #define FPCR_IDE    (1 << 15)   /* Input Denormal exception trap enable */
- #define FPCR_LEN_MASK (7 << 16) /* LEN, A-profile only */
- #define FPCR_FZ16   (1 << 19)   /* ARMv8.2+, FP16 flush-to-zero */
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index b3698da8ca7..203d37303bd 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -254,6 +254,10 @@ static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
-         val &= ~FPCR_FZ16;
-     }
+ /*
+  * Expand a 4-operand + fpstatus pointer + simd data value operation using
+  * an out-of-line helper.
+@@ -5608,10 +5624,19 @@ static bool do_dot_vector(DisasContext *s, arg_qrrr_e *a,
+     return true;
+ }
  
-+    if (!cpu_isar_feature(aa64_ebf16, cpu)) {
-+        val &= ~FPCR_EBF;
++static bool do_dot_vector_env(DisasContext *s, arg_qrrr_e *a,
++                              gen_helper_gvec_4_ptr *fn)
++{
++    if (fp_access_check(s)) {
++        gen_gvec_op4_env(s, a->q, a->rd, a->rn, a->rm, a->rd, 0, fn);
++    }
++    return true;
++}
++
+ TRANS_FEAT(SDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_sdot_b)
+ TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_b)
+ TRANS_FEAT(USDOT_v, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usdot_b)
+-TRANS_FEAT(BFDOT_v, aa64_bf16, do_dot_vector, a, gen_helper_gvec_bfdot)
++TRANS_FEAT(BFDOT_v, aa64_bf16, do_dot_vector_env, a, gen_helper_gvec_bfdot)
+ TRANS_FEAT(BFMMLA, aa64_bf16, do_dot_vector, a, gen_helper_gvec_bfmmla)
+ TRANS_FEAT(SMMLA, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_smmla_b)
+ TRANS_FEAT(UMMLA, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_ummla_b)
+diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
+index 915c9e56db5..454380f01d7 100644
+--- a/target/arm/tcg/translate-neon.c
++++ b/target/arm/tcg/translate-neon.c
+@@ -148,6 +148,37 @@ static bool do_neon_ddda(DisasContext *s, int q, int vd, int vn, int vm,
+     return true;
+ }
+ 
++static bool do_neon_ddda_env(DisasContext *s, int q, int vd, int vn, int vm,
++                             int data, gen_helper_gvec_4_ptr *fn_gvec)
++{
++    /* UNDEF accesses to D16-D31 if they don't exist. */
++    if (((vd | vn | vm) & 0x10) && !dc_isar_feature(aa32_simd_r32, s)) {
++        return false;
 +    }
 +
-     vfp_set_fpcr_to_host(env, val, mask);
- 
-     if (mask & (FPCR_LEN_MASK | FPCR_STRIDE_MASK)) {
-@@ -278,12 +282,12 @@ static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
-      * We don't implement trapped exception handling, so the
-      * trap enable bits, IDE|IXE|UFE|OFE|DZE|IOE are all RAZ/WI (not RES0!)
-      *
--     * The FPCR bits we keep in vfp.fpcr are AHP, DN, FZ, RMode
-+     * The FPCR bits we keep in vfp.fpcr are AHP, DN, FZ, RMode, EBF
-      * and FZ16. Len, Stride and LTPSIZE we just handled. Store those bits
-      * there, and zero any of the other FPCR bits and the RES0 and RAZ/WI
-      * bits.
-      */
--    val &= FPCR_AHP | FPCR_DN | FPCR_FZ | FPCR_RMODE_MASK | FPCR_FZ16;
-+    val &= FPCR_AHP | FPCR_DN | FPCR_FZ | FPCR_RMODE_MASK | FPCR_FZ16 | FPCR_EBF;
-     env->vfp.fpcr &= ~mask;
-     env->vfp.fpcr |= val;
++    /*
++     * UNDEF accesses to odd registers for each bit of Q.
++     * Q will be 0b111 for all Q-reg instructions, otherwise
++     * when we have mixed Q- and D-reg inputs.
++     */
++    if (((vd & 1) * 4 | (vn & 1) * 2 | (vm & 1)) & q) {
++        return false;
++    }
++
++    if (!vfp_access_check(s)) {
++        return true;
++    }
++
++    int opr_sz = q ? 16 : 8;
++    tcg_gen_gvec_4_ptr(vfp_reg_offset(1, vd),
++                       vfp_reg_offset(1, vn),
++                       vfp_reg_offset(1, vm),
++                       vfp_reg_offset(1, vd),
++                       tcg_env,
++                       opr_sz, opr_sz, data, fn_gvec);
++    return true;
++}
++
+ static bool do_neon_ddda_fpst(DisasContext *s, int q, int vd, int vn, int vm,
+                               int data, ARMFPStatusFlavour fp_flavour,
+                               gen_helper_gvec_4_ptr *fn_gvec_ptr)
+@@ -266,8 +297,8 @@ static bool trans_VDOT_b16(DisasContext *s, arg_VDOT_b16 *a)
+     if (!dc_isar_feature(aa32_bf16, s)) {
+         return false;
+     }
+-    return do_neon_ddda(s, a->q * 7, a->vd, a->vn, a->vm, 0,
+-                        gen_helper_gvec_bfdot);
++    return do_neon_ddda_env(s, a->q * 7, a->vd, a->vn, a->vm, 0,
++                            gen_helper_gvec_bfdot);
  }
+ 
+ static bool trans_VFML(DisasContext *s, arg_VFML *a)
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index a72c2620960..e1dd6617e8b 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -252,6 +252,19 @@ static bool gen_gvec_fpst_zzzz(DisasContext *s, gen_helper_gvec_4_ptr *fn,
+     return ret;
+ }
+ 
++static bool gen_gvec_env_zzzz(DisasContext *s, gen_helper_gvec_4_ptr *fn,
++                              int rd, int rn, int rm, int ra,
++                              int data)
++{
++    return gen_gvec_ptr_zzzz(s, fn, rd, rn, rm, ra, data, tcg_env);
++}
++
++static bool gen_gvec_env_arg_zzzz(DisasContext *s, gen_helper_gvec_4_ptr *fn,
++                                  arg_rrrr_esz *a, int data)
++{
++    return gen_gvec_env_zzzz(s, fn, a->rd, a->rn, a->rm, a->ra, data);
++}
++
+ /* Invoke an out-of-line helper on 4 Zregs, 1 Preg, plus fpst. */
+ static bool gen_gvec_fpst_zzzzp(DisasContext *s, gen_helper_gvec_5_ptr *fn,
+                                 int rd, int rn, int rm, int ra, int pg,
+@@ -7113,7 +7126,7 @@ TRANS_FEAT_NONSTREAMING(USMMLA, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
+ TRANS_FEAT_NONSTREAMING(UMMLA, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
+                         gen_helper_gvec_ummla_b, a, 0)
+ 
+-TRANS_FEAT(BFDOT_zzzz, aa64_sve_bf16, gen_gvec_ool_arg_zzzz,
++TRANS_FEAT(BFDOT_zzzz, aa64_sve_bf16, gen_gvec_env_arg_zzzz,
+            gen_helper_gvec_bfdot, a, 0)
+ TRANS_FEAT(BFDOT_zzxz, aa64_sve_bf16, gen_gvec_ool_arg_zzxz,
+            gen_helper_gvec_bfdot_idx, a)
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 98604d170fd..01b36fdd786 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2814,7 +2814,8 @@ float32 bfdotadd(float32 sum, uint32_t e1, uint32_t e2)
+     return t1;
+ }
+ 
+-void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va, uint32_t desc)
++void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va,
++                        CPUARMState *env, uint32_t desc)
+ {
+     intptr_t i, opr_sz = simd_oprsz(desc);
+     float32 *d = vd, *a = va;
 -- 
 2.34.1
 
