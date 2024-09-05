@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 654B7CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 11:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 745B0CD5BAA
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 11:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smAZq-0008PZ-3Q; Thu, 05 Sep 2024 07:23:02 -0400
+	id 1smAZr-0008TM-1k; Thu, 05 Sep 2024 07:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3iJTZZggKClUJ41A0E573BB381.zB9D19H-01I18ABA3AH.BE3@flex--whendrik.bounces.google.com>)
- id 1smAZk-0008HU-21
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:22:56 -0400
-Received: from mail-wm1-x34a.google.com ([2a00:1450:4864:20::34a])
+ <3i5TZZggKClgM74D3H8A6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--whendrik.bounces.google.com>)
+ id 1smAZl-0008KC-IO
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:23:00 -0400
+Received: from mail-wm1-x349.google.com ([2a00:1450:4864:20::349])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3iJTZZggKClUJ41A0E573BB381.zB9D19H-01I18ABA3AH.BE3@flex--whendrik.bounces.google.com>)
- id 1smAZh-0002xh-RD
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:22:55 -0400
-Received: by mail-wm1-x34a.google.com with SMTP id
- 5b1f17b1804b1-428ea5b1479so5057795e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 04:22:50 -0700 (PDT)
+ <3i5TZZggKClgM74D3H8A6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--whendrik.bounces.google.com>)
+ id 1smAZi-0002yB-IA
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:22:57 -0400
+Received: by mail-wm1-x349.google.com with SMTP id
+ 5b1f17b1804b1-42c80412dc1so5769525e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 04:22:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1725535369; x=1726140169; darn=nongnu.org;
+ d=google.com; s=20230601; t=1725535371; x=1726140171; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=adQIItV2Bd4wpCPsRoA7kna0L5g0qP2kQ/G7mcrHEY8=;
- b=oaNLpMa0dd4cUyh+1mQbdLhi/p5zPWtNX/TpMwqBklQbHEuSdj4gwvpUB5PiNIqnTe
- DVk5ak7wc+MixDoBB/oa5VGY78RTDT67JIqctCCdz917ZA4U8fUdpfO4woK6uzv1sjXQ
- Je8a2aXUjy1IQiCZpFVBjAJyqrjmJ/PC1HPaiwOG/ZWWr/xxAxsEC6F546YP6m7T57bz
- yf6V8cifBFgJd1XZmCgX3vtWT6QDA9+rgc6bzOlIAAdC+obHVpu6s2Ovg4rn8PKbKPON
- gtnpQSlTVsedUzUjFqJxOhriTyJPHw7/46nk8FOn9N/239Z+g8kc1QQmT5SuDVbmRMCP
- F+CQ==
+ :reply-to; bh=lFaNWg8OWFczEyq2WHl6zYa8BiQZim1ugNOx63N6xVc=;
+ b=O7OPOD7zWqtW63IP4Iz3suheIY9UL3wiMlO9+AM+3S6xW5pYsOIXzzeKo0tHnYBgA8
+ KvK9mHbfUUv50hxDdi0a7+wrPkfLdjbiv6uByxKC8bw0vMyxWtoJSMEF0osUlODQwYdM
+ nmFQ+nB3x6KePBqWGJ0w5qhr6clTo+TgI0RtpbSWs7FFazvTQ93Wh0E30x3P8sbUuW50
+ sfqbYgwq87S3Pm4+nWAC3e4cjYGfxs/lf6idxfu5RBJIuae6nKzi3vmIEXvvKEn+xAkH
+ VzhYotOjcLC999ny89aDHicJVX1vkcqfv0omnXegeoY4Mr3OmE4eBxUCsKw7VxQM3maE
+ 7Yww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725535369; x=1726140169;
+ d=1e100.net; s=20230601; t=1725535371; x=1726140171;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=adQIItV2Bd4wpCPsRoA7kna0L5g0qP2kQ/G7mcrHEY8=;
- b=i/bKNSCa9nVLlTIgVE7hLkvVwj20ookTnb0UwsJ5NOMcW8Mv93wVRZuC2wHI+KlYSO
- V9gT1uLsAoKng2MKP6rCO2Pop1ILDKCtphLgiRU+pydXX0iACAaroPAxJwNc/4mo6HRt
- va/DDTztxEHOtuy127ThizzhkuI0S/GVAXMfQerWCQdH1cd9Jb4i6HcXGjtPKie611t6
- bTgqOkTaZDRZeb/VY3DS7BWlTqX4PTBu31RYCYHH2jBmP6mcqgGa1Ps0bWItLW2fgu5C
- ilDocdcl+kHc9I6vAKwGSrCKhS+NOfcVh185iB7egvc8L408We9yVnCKtJ8/aMfOqLG6
- FsIw==
-X-Gm-Message-State: AOJu0YyZBy7JbMX3J992oTGVNBWEuUjCPRQkeUA8j1A4KHqAApjey50+
- 2IsGm1eIU42Vf0Ssv+WvJT33/ahYSkP5KY/sqpanROUgjGKNBJxd1U4jxy4pr88Ugh8MpNibBQq
- gq1hUBsVgG3nPxAYyCVNeEPE/Ni1y0m+W/ucVNM2vVIXVTV3kRL1hGp5q2LL0TigP7nOQR2DV8u
- Yz5YrFTSZJ+rFSuegZR//fjpuONkXo8/iz34Ib5jmTfg==
-X-Google-Smtp-Source: AGHT+IEaDUZLVXxp1TJ0G0UGU5ZqHYGZNTMxVFURQxuTNATCDysB9TInrmx8xEad+QB8vg9S34gFODTW+JRPeQ==
+ bh=lFaNWg8OWFczEyq2WHl6zYa8BiQZim1ugNOx63N6xVc=;
+ b=a8w29vlpXKQHZs0RbuooiHJrDzBVjVaHTB6ZBoPCwr3dtqyeL6v/laaxmawKg7rXs4
+ ieyu9ujTYsYexhqP+xlf5BNGEjMMdi8sWjjnv27v/1FHtVoDk3MfvFHiLUbxQdRn5HEw
+ c7SIwoyUtenx8B6XinhUqx6MIPBbwbTBfVh1b8SagfpO9MHYVVBm14l9bFuZwS8uFPH+
+ Z4y/i0vYivy5J5W6XRNF8sagYAMTrjNiFIaMyfFK/yOiUL+ROgEdhn6MW52pGw1WhXNL
+ Omiq6PuxjG2syTEoXKFIX9rIr1GYFGiSr3F4FXNB9CA3My/e2o3rcxY60qnvxSe04awt
+ yWcQ==
+X-Gm-Message-State: AOJu0Yzeo8NLnROwQndZ/FZqRdev2Y3fLmSGKngiriWrlu3D+NQwnvZn
+ Y0smgBe4yNjWiuQqoG7ZI+QFm9d1rB5Uo13ilWpUJezCEEEukoViuu7nO2GE0fosOnSrVm1jiBL
+ eRykFvuE4VatucVee/7g6PVi0EVKVnhGfD5NzTSeJfBEYsH5vkdeTRz1ZKGdhzldXCQOdYU5dR9
+ L9CVMCtucGWYzyihVNxduda/mQpFi9freoiUbrtdyEzQ==
+X-Google-Smtp-Source: AGHT+IE9PM3K8A/rfhGKcerdF03Vl+fPELu1Yj80Mt8JhiPeDAXc6RQEz6Zwv3oaiunPrlVRlUyd51T8EZRbfQ==
 X-Received: from whendrik-specialist-workstation.c.googlers.com
  ([fda3:e722:ac3:cc00:130:7cd9:ac11:98f1]) (user=whendrik job=sendgmr) by
- 2002:a05:600c:997:b0:42a:b897:826f with SMTP id
- 5b1f17b1804b1-42bbb436477mr506185e9.5.1725535368898; 
- Thu, 05 Sep 2024 04:22:48 -0700 (PDT)
-Date: Thu,  5 Sep 2024 11:22:31 +0000
+ 2002:adf:ee52:0:b0:374:bd06:7ea3 with SMTP id
+ ffacd0b85a97d-374bd067f89mr24038f8f.2.1725535371198; 
+ Thu, 05 Sep 2024 04:22:51 -0700 (PDT)
+Date: Thu,  5 Sep 2024 11:22:32 +0000
 In-Reply-To: <20240905112237.3586972-1-whendrik@google.com>
 Mime-Version: 1.0
 References: <20240905112237.3586972-1-whendrik@google.com>
 X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
-Message-ID: <20240905112237.3586972-3-whendrik@google.com>
-Subject: [PATCH v2 2/8] i386: Add init and realize functionality for RDT
- device.
+Message-ID: <20240905112237.3586972-4-whendrik@google.com>
+Subject: [PATCH v2 3/8] i386: Add RDT functionality
 From: Hendrik Wuethrich <whendrik@google.com>
 To: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, eduardo@habkost.net, 
  richard.henderson@linaro.org, marcel.apfelbaum@gmail.com, mst@redhat.com, 
@@ -74,9 +73,9 @@ Cc: peternewman@google.com,
  "=?UTF-8?q?=E2=80=AAHendrik=20W=C3=BCthrich?=" <whendrik@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::34a;
- envelope-from=3iJTZZggKClUJ41A0E573BB381.zB9D19H-01I18ABA3AH.BE3@flex--whendrik.bounces.google.com;
- helo=mail-wm1-x34a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::349;
+ envelope-from=3i5TZZggKClgM74D3H8A6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--whendrik.bounces.google.com;
+ helo=mail-wm1-x349.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -102,75 +101,202 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
 
-Add code to initialize all necessary state for the RDT device.
+Add RDT code to Associate CLOSID with RMID / set RMID for monitoring,
+write COS, and read monitoring data. This patch does not add code for
+the guest to interact through these things with MSRs, only the actual
+ability for the RDT device to do them.
 
 Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
 ---
- hw/i386/rdt.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ hw/i386/rdt.c         | 124 ++++++++++++++++++++++++++++++++++++++++++
+ include/hw/i386/rdt.h |  16 ++++++
+ 2 files changed, 140 insertions(+)
 
 diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
-index 934f7fbf75..c395ab91a9 100644
+index c395ab91a9..288f1fd107 100644
 --- a/hw/i386/rdt.c
 +++ b/hw/i386/rdt.c
-@@ -19,6 +19,7 @@
- #include "hw/isa/isa.h"
- #include "hw/qdev-properties.h"
+@@ -21,6 +21,11 @@
  #include "qom/object.h"
-+#include "target/i386/cpu.h"
+ #include "target/i386/cpu.h"
 =20
++/* RDT Monitoring Event Codes */
++#define RDT_EVENT_L3_OCCUPANCY 1
++#define RDT_EVENT_L3_REMOTE_BW 2
++#define RDT_EVENT_L3_LOCAL_BW 3
++
  /* Max counts for allocation masks or CBMs. In other words, the size of re=
 spective MSRs*/
  #define RDT_MAX_L3_MASK_COUNT      128
-@@ -79,8 +80,36 @@ static void rdt_init(Object *obj)
- {
- }
+ #define RDT_MAX_L2_MASK_COUNT      48
+@@ -29,6 +34,9 @@
+ #define TYPE_RDT "rdt"
+ #define RDT_NUM_RMID_PROP "rmids"
 =20
-+static void rdt_realize(DeviceState *dev, Error **errp)
++#define QM_CTR_ERROR        (1ULL << 63)
++#define QM_CTR_UNAVAILABLE  (1ULL << 62)
++
+ OBJECT_DECLARE_TYPE(RDTState, RDTStateClass, RDT);
+=20
+ struct RDTMonitor {
+@@ -69,6 +77,122 @@ struct RDTState {
+ struct RDTStateClass {
+ };
+=20
++bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc) {
++    X86CPU *cpu =3D X86_CPU(current_cpu);
++    RDTStatePerCore *rdt =3D cpu->rdt;
++    RDTAllocation *alloc;
++
++    uint32_t cos_id =3D (msr_ia32_pqr_assoc & 0xffff0000) >> 16;
++    uint32_t rmid =3D msr_ia32_pqr_assoc & 0xffff;
++
++    if (cos_id > RDT_MAX_L3_MASK_COUNT || cos_id > RDT_MAX_L2_MASK_COUNT |=
+|
++    cos_id > RDT_MAX_MBA_THRTL_COUNT || rmid > rdt_max_rmid(rdt)) {
++        return false;
++    }
++
++    rdt->active_rmid =3D rmid;
++
++    alloc =3D &rdt->rdtstate->allocations[rmid];
++
++    alloc->active_cos =3D cos_id;
++
++    return true;
++}
++
++uint32_t rdt_read_l3_mask(uint32_t pos)
 +{
-+    CPUState *cs =3D first_cpu;
-+    RDTState *rdtDev =3D RDT(dev);
++    X86CPU *cpu =3D X86_CPU(current_cpu);
++    RDTStatePerCore *rdt =3D cpu->rdt;
 +
-+    rdtDev->rdtInstances =3D g_malloc(sizeof(RDTStatePerCore) * cs->nr_cor=
-es);
++    uint32_t val =3D rdt->rdtstate->msr_L3_ia32_mask_n[pos];
++    return val;
++}
++
++uint32_t rdt_read_l2_mask(uint32_t pos)
++{
++    X86CPU *cpu =3D X86_CPU(current_cpu);
++    RDTStatePerCore *rdt =3D cpu->rdt;
++
++    uint32_t val =3D rdt->rdtstate->msr_L2_ia32_mask_n[pos];
++    return val;
++}
++
++uint32_t rdt_read_mba_thrtl(uint32_t pos)
++{
++    X86CPU *cpu =3D X86_CPU(current_cpu);
++    RDTStatePerCore *rdt =3D cpu->rdt;
++
++    uint32_t val =3D rdt->rdtstate->ia32_L2_qos_ext_bw_thrtl_n[pos];
++    return val;
++}
++
++void rdt_write_msr_l3_mask(uint32_t pos, uint32_t val) {
++    X86CPU *cpu =3D X86_CPU(current_cpu);
++    RDTStatePerCore *rdt =3D cpu->rdt;
++
++    rdt->rdtstate->msr_L3_ia32_mask_n[pos] =3D val;
++}
++
++void rdt_write_msr_l2_mask(uint32_t pos, uint32_t val) {
++    X86CPU *cpu =3D X86_CPU(current_cpu);
++    RDTStatePerCore *rdt =3D cpu->rdt;
++
++    rdt->rdtstate->msr_L2_ia32_mask_n[pos] =3D val;
++}
++
++void rdt_write_mba_thrtl(uint32_t pos, uint32_t val) {
++    X86CPU *cpu =3D X86_CPU(current_cpu);
++    RDTStatePerCore *rdt =3D cpu->rdt;
++
++    rdt->rdtstate->ia32_L2_qos_ext_bw_thrtl_n[pos] =3D val;
++}
++
++uint32_t rdt_max_rmid(RDTStatePerCore *rdt)
++{
++    RDTState *rdtdev =3D rdt->rdtstate;
++    return rdtdev->rmids - 1;
++}
++
++uint64_t rdt_read_event_count(RDTStatePerCore *rdtInstance, uint32_t rmid,=
+ uint32_t event_id)
++{
++    CPUState *cs;
++    RDTMonitor *mon;
++    RDTState *rdt =3D rdtInstance->rdtstate;
++
++    uint32_t count_l3 =3D 0;
++    uint32_t count_local =3D 0;
++    uint32_t count_remote =3D 0;
++
++    if (!rdt) {
++        return 0;
++    }
++
 +    CPU_FOREACH(cs) {
-+        RDTStatePerCore *rdt =3D &rdtDev->rdtInstances[cs->cpu_index];
-+        X86CPU *cpu =3D X86_CPU(cs);
++        rdtInstance =3D &rdt->rdtInstances[cs->cpu_index];
++        if (rmid >=3D rdtInstance->monitors->len) {
++            return QM_CTR_ERROR;
++        }
++        mon =3D &g_array_index(rdtInstance->monitors, RDTMonitor, rmid);
++        count_l3 +=3D mon->count_l3;
++        count_local +=3D mon->count_local;
++        count_remote +=3D mon->count_remote;
++    }
 +
-+        rdt->rdtstate =3D rdtDev;
-+        cpu->rdt =3D rdt;
-+
-+        rdt->monitors =3D g_malloc(sizeof(RDTMonitor) * rdtDev->rmids);
-+        rdt->rdtstate->allocations =3D g_malloc(sizeof(RDTAllocation) * rd=
-tDev->rmids);
++    switch (event_id) {
++        case RDT_EVENT_L3_OCCUPANCY:
++            return count_l3 =3D=3D 0 ? QM_CTR_UNAVAILABLE : count_l3;
++            break;
++        case RDT_EVENT_L3_REMOTE_BW:
++            return count_remote =3D=3D 0 ? QM_CTR_UNAVAILABLE : count_remo=
+te;
++            break;
++        case RDT_EVENT_L3_LOCAL_BW:
++            return count_local =3D=3D 0 ? QM_CTR_UNAVAILABLE : count_local=
+;
++            break;
++        default:
++            return QM_CTR_ERROR;
 +    }
 +}
 +
- static void rdt_finalize(Object *obj)
- {
-+    CPUState *cs;
-+    RDTState *rdt =3D RDT(obj);
-+
-+    CPU_FOREACH(cs) {
-+        RDTStatePerCore *rdtInstance =3D &rdt->rdtInstances[cs->cpu_index]=
-;
-+        g_free(rdtInstance->monitors);
-+        g_free(rdtInstance->rdtstate->allocations);
-+    }
-+
-+    g_free(rdt->rdtInstances);
- }
+ OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
 =20
- static void rdt_class_init(ObjectClass *klass, void *data)
-@@ -90,6 +119,7 @@ static void rdt_class_init(ObjectClass *klass, void *dat=
-a)
-     dc->hotpluggable =3D false;
-     dc->desc =3D "RDT";
-     dc->user_creatable =3D true;
-+    dc->realize =3D rdt_realize;
+ static Property rdt_properties[] =3D {
+diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
+index a21d95b265..14b1c64b72 100644
+--- a/include/hw/i386/rdt.h
++++ b/include/hw/i386/rdt.h
+@@ -17,9 +17,25 @@
+ #ifndef HW_RDT_H
+ #define HW_RDT_H
 =20
-     device_class_set_props(dc, rdt_properties);
- }
++#include <stdbool.h>
++#include <stdint.h>
++
+ typedef struct RDTState RDTState;
+ typedef struct RDTStatePerCore RDTStatePerCore;
+ typedef struct RDTMonitor RDTMonitor;
+ typedef struct RDTAllocation RDTAllocation;
+=20
++bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc);
++
++void rdt_write_msr_l3_mask(uint32_t pos, uint32_t val);
++void rdt_write_msr_l2_mask(uint32_t pos, uint32_t val);
++void rdt_write_mba_thrtl(uint32_t pos, uint32_t val);
++
++uint32_t rdt_read_l3_mask(uint32_t pos);
++uint32_t rdt_read_l2_mask(uint32_t pos);
++uint32_t rdt_read_mba_thrtl(uint32_t pos);
++
++uint64_t rdt_read_event_count(RDTStatePerCore *rdt, uint32_t rmid, uint32_=
+t event_id);
++uint32_t rdt_max_rmid(RDTStatePerCore *rdt);
++
+ #endif
 --=20
 2.46.0.469.g59c65b2a67-goog
 
