@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 898B4CD5BAE
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 11:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06F1CD5BB6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 11:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smB1m-00052u-5m; Thu, 05 Sep 2024 07:51:54 -0400
+	id 1smB2d-00075v-Gu; Thu, 05 Sep 2024 07:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smB1l-000524-Bh
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:51:53 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smB2U-0006uC-KJ
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:52:43 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smB1j-0001w6-Pt
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:51:53 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42bb885f97eso10217555e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 04:51:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smB2S-000220-2q
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 07:52:37 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42c7bc97423so6917665e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 04:52:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725537110; x=1726141910; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725537153; x=1726141953; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=g1RPH4G/jecz5xS6t1MJvinb0vzJwHEK/hgmd7/HqFI=;
- b=jGwQzRFy5/ndF9EcFBMnRlVXOKLCnuGqRh1bH3CJ8Dz6LfrQlzhJ4ugBkR0WRRWJUT
- mkEjoBQ/rw7R/0E9uUIimUKSLW6auwVvn1g13AP46NGeNcdYsN3EluuwlHozeQuK+YXw
- y0HlKGo57W4PcgBpUiIYQjQ2AyzPFhzZDUgImmTa86+vP0M3+QhPvaRDFuLqs8+tuYre
- gX+zXigJ8sRuRcIVnsP9cLadg1V2Vq9T5SxksBPPNSJNFwRfQQPgSGT6KWDt9C5mylKy
- mfHPBe/gvxgLiNlQOX4mbOVEp1L1mchPyX3RjO/W/NquKRagmvui8j20yMr6c4v5+aM1
- lS1w==
+ bh=7T//60NGXw2YF4AoxiwDSZ7IGD32GmFjqE/qhKsrZB0=;
+ b=u7DtZJCJcU0KgfQBsFcE/gq/6r0rw+HVK7WUY3iOgAzQF/DZQ+Cqi7CJ/1ZLlS2ekr
+ 4kpiC6wQCSJ5wgVkcl58QpahfYI4pWBXi4ut/o62c1+ESz56QG/JT4D4ziowVZXHWtls
+ rLY/FbB8uKCfMs4acz4lbZW/zgFisz3bil78r9NpyNwEripUJaMsPlx/m3aa4ahFUR65
+ sFUapOq5FlzP/2w+I4IMu+x0P7mGrTyeywz4yqu0MNFAivIWhOEWuCS2dlNh3sorsSfW
+ 1R2iLmEmBzArU6kgCTKb0BrjKXO5pWgI3LEf/stwsnUQkUOn69xu57tPKwkn2U7vZLIL
+ sI9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725537110; x=1726141910;
+ d=1e100.net; s=20230601; t=1725537153; x=1726141953;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g1RPH4G/jecz5xS6t1MJvinb0vzJwHEK/hgmd7/HqFI=;
- b=uxt+XtPPFXLGh1NT6Z1266E8ouQ0WLnhuhaHaWd1uU/2qR/j1/FrTc106KUe3FiMrC
- fUNdjaebZcIVpLFlCk9Y45IYaPkW45GL/u3BDNcp+7KB14q5LaXxAO/dg5DOBABt+ALo
- 39qi+tp6hmoTw4xmrgWtTcUvQd1tKCM4AbDPD79/faPOdy3Jnpz83mOIAuhS8WaBjmD6
- SV3bF4N/9UFfKXPC52P+vfKEK7bAkeRboYNF05obJLuejle/5JQI/iCifuPx/ZupxUPh
- C+/fRUefuZZEC84IPmH1voGcPEGA8ZKp5XZYwFTaOTBi8ENn7kdWsvyIwPFS1ByDXHO+
- GVqg==
+ bh=7T//60NGXw2YF4AoxiwDSZ7IGD32GmFjqE/qhKsrZB0=;
+ b=Bo0Vt0T2/IYXUqKA6SS/3WCd7FJAeNXGICjzbTVHB8JqAwQx/JukzaejNL50tBw+Sp
+ hFtr2D5VIKEn58mWVab6dhOlAfMvWUPpUOFfo9nGKyKs1p+f6a/XLW3DNVOtNGH6BqJV
+ C4ClaaVrMmavIcV6+v/gJk6Fj3G4+at+HtquiNZ39LYaGp0vzMg/WrLmnaz2/q/rhYUI
+ VG/M/m8d+NAQH7vy8bXAGNLOL2Zcp6w/Z0lQgj5CYveYk4fBekfQkk7wM8e3XEaupsNX
+ v7Hptya3aAC2aG7SDQ/8LOtAvcTn76Bm7zXEwa60LzkGRIXtdkR2jKRBbmiteYjscCg6
+ 1dEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMRGZcb9uN+kPR8IuAMkwEQk/7hXqCJlYIEoLDXCwwH4rUgmuuZDACqkeTUm6VQh7241tE6K0LrPq7@nongnu.org
-X-Gm-Message-State: AOJu0YxIYUIB0iqrqixkP0vGRCMICdBSxsE/BiyUWvW7YWTjqmEPiZPs
- WLVP8NLMZ4/1i1sc0F+ypxKffJU7i+o4IISh2DW5xlkB5MGXBL2uw1sY2i6s4/0hiEeeZzN+/YS
- Bt9w=
-X-Google-Smtp-Source: AGHT+IGQ+aEWbV5NtpydZupddDjyS/pdH1ZqvZ5Ae3h7iIBrGB9ykiUu4UfXGiGOiazr2rGJ2Xlbsw==
-X-Received: by 2002:a5d:4601:0:b0:374:bf6b:101c with SMTP id
- ffacd0b85a97d-3779999f893mr3152625f8f.7.1725537110008; 
- Thu, 05 Sep 2024 04:51:50 -0700 (PDT)
+ AJvYcCU4dYEUnK7zPsTcj68tZ5f/2CzKg2sOyxT1ZjLikWR/gDb1+uVlexCl+o/fZ9WMTCHW8K1hjJqmsX6i@nongnu.org
+X-Gm-Message-State: AOJu0Yxs19os+QYs4wLe4y4c2Eh2LHKHq6mcKOF5AG6qcCl2kx6goFBV
+ BCBAWoxR0O45a7nvxHzI+S2idBtFL9H/xTqqBDpEY939cZXgcSaCLFELPX2LoNU=
+X-Google-Smtp-Source: AGHT+IEAMwzNFLlOaXDmdJVFyb+11mEDABSv2XUAOEyk12pHtonmMp7FjWZccl0kBG+tMDIRkD1ByQ==
+X-Received: by 2002:a05:600c:4fc2:b0:426:545b:ec00 with SMTP id
+ 5b1f17b1804b1-42c9a36dad7mr18013395e9.19.1725537153399; 
+ Thu, 05 Sep 2024 04:52:33 -0700 (PDT)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ba639643esm272244215e9.1.2024.09.05.04.51.49
+ ffacd0b85a97d-374d1dd1e76sm8234487f8f.113.2024.09.05.04.52.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Sep 2024 04:51:49 -0700 (PDT)
-Message-ID: <97d6e91a-d0ba-4fe9-915c-891c6175e073@linaro.org>
-Date: Thu, 5 Sep 2024 13:51:48 +0200
+ Thu, 05 Sep 2024 04:52:32 -0700 (PDT)
+Message-ID: <11fc4dfa-5f2f-4d9b-8085-9bf8129538ae@linaro.org>
+Date: Thu, 5 Sep 2024 13:52:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 10/53] hw/arm: Remove 'mainstone' machine
+Subject: Re: [PATCH for-9.2 11/53] hw/misc: Remove MAINSTONE_FPGA device
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <20240903160751.4100218-11-peter.maydell@linaro.org>
+ <20240903160751.4100218-12-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240903160751.4100218-11-peter.maydell@linaro.org>
+In-Reply-To: <20240903160751.4100218-12-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,21 +97,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/9/24 18:07, Peter Maydell wrote:
-> The 'mainstone' machine has been deprecated since 9.0, and
-> so we can remove it for the 9.2 release.
+> The MAINSTONE_FPGA device was used only by the 'mainstone' machine
+> type, so we can remove it now.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   MAINTAINERS                             |   2 -
->   docs/system/arm/mainstone.rst           |  25 ----
->   docs/system/target-arm.rst              |   1 -
->   configs/devices/arm-softmmu/default.mak |   1 -
->   hw/arm/mainstone.c                      | 175 ------------------------
->   hw/arm/Kconfig                          |   8 --
->   hw/arm/meson.build                      |   1 -
->   7 files changed, 213 deletions(-)
->   delete mode 100644 docs/system/arm/mainstone.rst
->   delete mode 100644 hw/arm/mainstone.c
+>   MAINTAINERS         |   1 -
+>   hw/misc/mst_fpga.c  | 269 --------------------------------------------
+>   hw/misc/meson.build |   1 -
+>   3 files changed, 271 deletions(-)
+>   delete mode 100644 hw/misc/mst_fpga.c
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
