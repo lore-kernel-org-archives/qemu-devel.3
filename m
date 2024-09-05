@@ -4,48 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348F9CD5BDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 16:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A72F5CD5BDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 16:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smFi5-0003QC-TM; Thu, 05 Sep 2024 12:51:53 -0400
+	id 1smFm6-0007vB-Qb; Thu, 05 Sep 2024 12:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1smFi4-0003Pi-Ga
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:51:52 -0400
-Received: from relay.virtuozzo.com ([130.117.225.111])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1smFi2-0004bx-IR
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:51:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=Ox3bMJGVpaVktzb8HL9Y9cIdN7npq8hS7ZW48c9sLsg=; b=VXmUFmTG1AQC
- vZ8AhXyM/hwZMeKADEX87FfHrVsakXejVnmuu6QkhcCkDvWytpFrchy3ekjdxZ1sxqRqsCZSATqzO
- i67upWjqUFRa9lUCPLB9jh+tNQLwvGf9X/8WwkkdJ2gM6SAuouuXEUwlhVsso87qUEfCA8+7oQO7d
- x+1Ty2gdQ6O2sNgjNd4Yo6okYMoDe22GXwYJ6Y9WovhXkC15oKmZyJj2VT81l5gq1UEDYgyPUpM0b
- oUDFr/e0gjYRki1iIVyMjQd5hcgShGQwKqN1WLASP0eHmWU3oaagMud9iW+GtQo0eUXa83yCYSzTn
- dNMLfoH1q06kWdF3lFLhKA==;
-Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=iris.sw.ru)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1smFfX-001Fc7-08;
- Thu, 05 Sep 2024 18:51:46 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smFm3-0007q3-I3
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:55:59 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smFm1-00055K-SI
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:55:59 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-42bbdf7f860so8683835e9.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 09:55:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725555356; x=1726160156; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wAtNArR9zOSaOvNZbf13ag6ySe0y5WueK3TgAb9/DZ4=;
+ b=YV89FRseITk7VUKmUFwzNHtbsGtxQ2sQqJhEFpj3hCuVrbMO3aVIQYnpltdCG2UuZG
+ 3fdfI0QE1briH9yN9hTqRyLQw+o5kVPiZ5w4xehI6aeRxizSnoAEvj90lRZYllBEA/e8
+ bFfV+c7Gw6KYUnVGB7R/hacs/ghfnsWz6neFPHhu5M14Gl5ZCmvlKNAyF5MuvsY5hj+Y
+ MBS/PJY/sDZw/JhEN9Aq5wqxvpnAxywAdrGXC9W6Nu9REwq4ZT/O8C/LdHZ2GBHS95S4
+ yHjJaog8+U9kDtPphi72M6oh+ZlAg/BfWcHDhPUGqS4Bx81+R567y6E38ZXwH/6fKP9T
+ Tt3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725555356; x=1726160156;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wAtNArR9zOSaOvNZbf13ag6ySe0y5WueK3TgAb9/DZ4=;
+ b=VSB4ZfskY2ZFAD0i5rQpIOJB44f+T+2eKIcchmnl3SGa+KQPI5uvQ4D6qtL9KmDZsA
+ iDA5RSi3nsQ6St7PObXCp417cgVxJf1djE1MUYOBYlh/Z84gg7p8U+kQmUJQMGYifeT+
+ Fzo8KNz0euTzwWobC2YBvfFTKYO4O6aakIxNYl79momlFE7p6wNmlve3jUziO91RI3kv
+ yOYjnwCBagFBgFobFPLQ4CiY/mJSiFBiUc5IRK3/CJMhryxTc2iDKd+NOT6HKKmNLTis
+ L5oY/6LHIA/9YwOJAEzzeLN+xv5rT7kil3/SpWD13P6S6dX3kMS984ohpTVc9POmcYh+
+ OcPg==
+X-Gm-Message-State: AOJu0YxY4dJo1H9+owLyX9XvMLCFZmFhck+AMCa4/Wqw1DNP4w/luBIZ
+ uHPctJfF/QvgVfA/k4ArN9bqYarhJ5BtKMiSoC/ldTJpHxuvac8P0YYmqOZZara9ALGDoSO9F3q
+ v
+X-Google-Smtp-Source: AGHT+IGAUBiKxfeO8XOfhAHqckj9nH2rCl29pMTApWdg+eVmU09FSAd9IQNfcuiNoxSR4dhxDO4Ysg==
+X-Received: by 2002:a05:600c:4ece:b0:426:6b85:bafb with SMTP id
+ 5b1f17b1804b1-42bb01bfc60mr184341295e9.20.1725555356239; 
+ Thu, 05 Sep 2024 09:55:56 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42bbd1eee1bsm206914925e9.9.2024.09.05.09.55.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Sep 2024 09:55:56 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 1/1] migration: improve migration_throttle tracepoint
-Date: Thu,  5 Sep 2024 18:51:46 +0200
-Message-Id: <20240905165146.293586-1-den@openvz.org>
-X-Mailer: git-send-email 2.40.1
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 1/2] tests/qtest: Add missing qtest_quit() to stm32 tests
+Date: Thu,  5 Sep 2024 17:55:53 +0100
+Message-Id: <20240905165554.320577-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240905165554.320577-1-peter.maydell@linaro.org>
+References: <20240905165554.320577-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=130.117.225.111; envelope-from=den@openvz.org;
- helo=relay.virtuozzo.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -59,80 +92,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Denis V. Lunev" <den@openvz.org>
-From:  "Denis V. Lunev" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Right now this tracepoint is just saying that the guest has been
-throttled, but this is not that good for debugging purposes. We should
-also know how much the guest is throttled in order to understand
-consequences for the guest behaviour.
+In the dm163-test and stm32l4x5_usart-test, a couple of subtests are
+missing the qtest_quit() call.  The effect of this is that on hosts
+other than Linux and FreeBSD the test will timeout after executing
+all the tests:
 
-The patch moves the tracepoint from migration_trigger_throttle() to
-mig_throttle_guest_down() where this information is really available.
-This is not a problem as mig_throttle_guest_down() is called in the
-only one place.
+242/845 qemu:qtest+qtest-arm / qtest-arm/dm163-test                               TIMEOUT         60.04s   3 subtests passed
+100/845 qemu:qtest+qtest-arm / qtest-arm/stm32l4x5_usart-test                     TIMEOUT        600.02s   5 subtests passed
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Peter Xu <peterx@redhat.com>
-CC: Fabiano Rosas <farosas@suse.de>
+This happens because the qemu-system-arm binary which the test
+starts does not exit, and because it shares the stdout with the
+test binary, the overall meson test harness thinks the test is
+still running. On Linux and FreeBSD we have an extra safety net
+set up in qtest_spawn_qemu() which kills off any QEMU binary that
+ends up without a parent. This is intended for the case where
+QEMU crashed and didn't respond to a SIGTERM or polite request
+to quit, but it also sidestepped the problem in this case.
+However, OpenBSD doesn't have a PDEATHSIG equivalent, so we
+see the timeouts when running a 'make vm-build-openbsd' run.
+
+Add the missing qtest_quit() calls.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- migration/ram.c        | 9 ++++++---
- migration/trace-events | 2 +-
- 2 files changed, 7 insertions(+), 4 deletions(-)
+Many thanks to Dan Berrangé for diagnosing the cause of this hang...
+Dan also suggested on IRC that we should support g_autoptr for
+the QTestState, so you don't need to manually qtest_quit(). But
+for the immediate fix, I just add the missing calls.
+---
+ tests/qtest/dm163-test.c           | 2 ++
+ tests/qtest/stm32l4x5_usart-test.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index edec1a2d07..e587f11120 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -548,9 +548,11 @@ static void mig_throttle_guest_down(uint64_t bytes_dirty_period,
-     uint64_t throttle_now = cpu_throttle_get_percentage();
-     uint64_t cpu_now, cpu_ideal, throttle_inc;
- 
-+    int new_throttle_pct;
+diff --git a/tests/qtest/dm163-test.c b/tests/qtest/dm163-test.c
+index 3161c9208d8..4c8e654af29 100644
+--- a/tests/qtest/dm163-test.c
++++ b/tests/qtest/dm163-test.c
+@@ -182,6 +182,8 @@ static void test_dm163_gpio_connection(void)
+     g_assert_false(qtest_get_irq(qts, LAT_B));
+     g_assert_false(qtest_get_irq(qts, SELBK));
+     g_assert_false(qtest_get_irq(qts, RST_B));
 +
-     /* We have not started throttling yet. Let's start it. */
-     if (!cpu_throttle_active()) {
--        cpu_throttle_set(pct_initial);
-+        new_throttle_pct = pct_initial;
-     } else {
-         /* Throttling already on, just increase the rate */
-         if (!pct_tailslow) {
-@@ -563,8 +565,10 @@ static void mig_throttle_guest_down(uint64_t bytes_dirty_period,
-                         bytes_dirty_period);
-             throttle_inc = MIN(cpu_now - cpu_ideal, pct_increment);
-         }
--        cpu_throttle_set(MIN(throttle_now + throttle_inc, pct_max));
-+        new_throttle_pct = MIN(throttle_now + throttle_inc, pct_max);
-     }
-+    trace_migration_throttle(new_throttle_pct);
-+    cpu_throttle_set(new_throttle_pct);
++    qtest_quit(qts);
  }
  
- void mig_throttle_counter_reset(void)
-@@ -1032,7 +1036,6 @@ static void migration_trigger_throttle(RAMState *rs)
-         (++rs->dirty_rate_high_cnt >= 2)) {
-         rs->dirty_rate_high_cnt = 0;
-         if (migrate_auto_converge()) {
--            trace_migration_throttle();
-             mig_throttle_guest_down(bytes_dirty_period,
-                                     bytes_dirty_threshold);
-         } else if (migrate_dirty_limit()) {
-diff --git a/migration/trace-events b/migration/trace-events
-index 0b7c3324fb..099c828535 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -95,7 +95,7 @@ get_queued_page_not_dirty(const char *block_name, uint64_t tmp_offset, unsigned
- migration_bitmap_sync_start(void) ""
- migration_bitmap_sync_end(uint64_t dirty_pages) "dirty_pages %" PRIu64
- migration_bitmap_clear_dirty(char *str, uint64_t start, uint64_t size, unsigned long page) "rb %s start 0x%"PRIx64" size 0x%"PRIx64" page 0x%lx"
--migration_throttle(void) ""
-+migration_throttle(int new_throttle_pct)  "guest CPU throttled by %d%%"
- migration_dirty_limit_guest(int64_t dirtyrate) "guest dirty page rate limit %" PRIi64 " MB/s"
- ram_discard_range(const char *rbname, uint64_t start, size_t len) "%s: start: %" PRIx64 " %zx"
- ram_load_loop(const char *rbname, uint64_t addr, int flags, void *host) "%s: addr: 0x%" PRIx64 " flags: 0x%x host: %p"
+ int main(int argc, char **argv)
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+index 89025182331..c175ff3064f 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -202,6 +202,8 @@ static void test_write_read(void)
+     qtest_writel(qts, USART1_BASE_ADDR + A_TDR, 0xFFFFFFFF);
+     const uint32_t tdr = qtest_readl(qts, USART1_BASE_ADDR + A_TDR);
+     g_assert_cmpuint(tdr, ==, 0x000001FF);
++
++    qtest_quit(qts);
+ }
+ 
+ static void test_receive_char(void)
 -- 
-2.40.1
+2.34.1
 
 
