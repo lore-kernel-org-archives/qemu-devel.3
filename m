@@ -4,70 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5699CD4848
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 03:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B90CD4F20
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 04:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sm3RF-0007r6-AQ; Wed, 04 Sep 2024 23:45:41 -0400
+	id 1sm3jZ-0006tp-Ul; Thu, 05 Sep 2024 00:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sm3RC-0007q3-Qh
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 23:45:38 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sm3RA-0001ah-9n
- for qemu-devel@nongnu.org; Wed, 04 Sep 2024 23:45:38 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxPJtWKdlmCvcqAA--.57423S3;
- Thu, 05 Sep 2024 11:45:27 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front2 (Coremail) with SMTP id qciowMBxjcVTKdlmrHwGAA--.18343S3;
- Thu, 05 Sep 2024 11:45:25 +0800 (CST)
-Subject: Re: qemu direct kernel boot on LoongArch
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: =?UTF-8?Q?Thomas_Wei=c3=9fschuh?= <thomas@t-8ch.de>,
- loongarch@lists.linux.dev, qemu-devel@nongnu.org, xry111@xry111.site
+ (Exim 4.90_1)
+ (envelope-from <SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org>)
+ id 1sm3jW-0006t0-2U
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 00:04:34 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org>)
+ id 1sm3jU-0005HO-3m
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 00:04:33 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 7A7C65C56D5
+ for <qemu-devel@nongnu.org>; Thu,  5 Sep 2024 04:04:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B9DC4CEC4
+ for <qemu-devel@nongnu.org>; Thu,  5 Sep 2024 04:04:28 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="TF+gB9r1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1725509066;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9ZB0L6AWt7O9GuRKjd5K56lW5NclLlgV1CnS7q2mFX0=;
+ b=TF+gB9r115jyMpsXVMSXC5wqInJva1W2AiKsVWea+6lovbwX1NSXjBj8uxLd1qIoiMht+9
+ 2Xj3paLzXgYXOPAVa/cpnmu/xndS/s8H2GbqwgwB/PQb8UETLR1pJDrWulcjNEV43hhzXx
+ ODUSKn5RptXjPvgK6jr02D+fKgCzFgs=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 93e44d92
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO) for <qemu-devel@nongnu.org>;
+ Thu, 5 Sep 2024 04:04:25 +0000 (UTC)
+Received: by mail-oo1-f52.google.com with SMTP id
+ 006d021491bc7-5e172cc6d97so194929eaf.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Sep 2024 21:04:25 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUF/9dzuJ3hcXykIxMWKfUac9nPlq/7CZyP/ppg+ck5TbPREW92zwshnihoFnW1+1NIOZQuIVg8UcPS@nongnu.org
+X-Gm-Message-State: AOJu0YydJuqCF+H4n5RoPPtI/6AikZhTYJ/NFs3KxJ1sMNxexcdjjMtT
+ FcEiUE38QPqth4UtxIVbUZLxhNlpB+82lzbZDEQ6P1BIG5RzKQze37VALcQc5mZE3gEYsb6wDLU
+ ZS12MV1tSR3c2H0qf+AgJbN68IJs=
+X-Google-Smtp-Source: AGHT+IH0uCXUX5MCw6rQIPaEcR+5fLGNzoZXnn2ucPF8FOINUA4RpYGLiwuWhv8QOKXb/m9D5ymBA6tEsLCzP5Bc23s=
+X-Received: by 2002:a05:6870:a925:b0:260:e713:ae8b with SMTP id
+ 586e51a60fabf-2779010da2dmr24968052fac.20.1725509064626; Wed, 04 Sep 2024
+ 21:04:24 -0700 (PDT)
+MIME-Version: 1.0
 References: <1738d60a-df3a-4102-b1da-d16a29b6e06a@t-8ch.de>
  <49432aed-3ed7-2f07-7f65-311faef96197@loongson.cn>
  <ZtkhtxcJUK-JediY@zx2c4.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <f50c4868-7c2e-1ede-ab19-c67ea0acaab3@loongson.cn>
-Date: Thu, 5 Sep 2024 11:45:23 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <ZtkhtxcJUK-JediY@zx2c4.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qciowMBxjcVTKdlmrHwGAA--.18343S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7Wr13WF48Zry8KF4xXr13GFX_yoWDGrX_ur
- na9F1DZ398Ar1UKwn8KFy5Jrnxtr1Yq34kt348Xw4kua48AF4kJ3Z5ur9Fq3saqFyxArZx
- uw15ArnFvryYgosvyTuYvTs0mTUanT9S1TB71UUUUjUqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbfkYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr1j6F4UJwAaw2AFwI0_Jrv_JF1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0c
- Ia020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_
- Jw1lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrw
- CYjI0SjxkI62AI1cAE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j
- 6r4UMxCIbckI1I0E14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwV
- AFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv2
- 0xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4
- v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AK
- xVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7fMaUUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.993,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ <f50c4868-7c2e-1ede-ab19-c67ea0acaab3@loongson.cn>
+In-Reply-To: <f50c4868-7c2e-1ede-ab19-c67ea0acaab3@loongson.cn>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 5 Sep 2024 06:04:12 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rRJjJ5tHf_xtprkHtWz-ButOOZXVo=E9y8qSyQ-qu6ew@mail.gmail.com>
+Message-ID: <CAHmME9rRJjJ5tHf_xtprkHtWz-ButOOZXVo=E9y8qSyQ-qu6ew@mail.gmail.com>
+Subject: Re: qemu direct kernel boot on LoongArch
+To: maobibo <maobibo@loongson.cn>
+Cc: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>, 
+ loongarch@lists.linux.dev, qemu-devel@nongnu.org, xry111@xry111.site
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,34 +96,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jason,
+On Thu, Sep 5, 2024 at 5:45=E2=80=AFAM maobibo <maobibo@loongson.cn> wrote:
+>
+> Jason,
+>
+> With the latest qemu 9.1 version, elf format booting is supported.
 
-With the latest qemu 9.1 version, elf format booting is supported. Qemu 
-9.0 does not support it still, here is example command line.
+Thanks, I just figured this out too, about 4 minutes ago. Excellent.
+And the 1G minimum ram limit is gone too.
 
-./qemu-system-loongarch64  -m 4G -smp 2 --cpu la464 --machine virt 
--serial stdio   -monitor telnet:localhost:4495,server,nowait -kernel 
-/root/linux_larch/vmlinux -initrd ramdisk  -append "root=/dev/ram 
-rdinit=/sbin/init console=ttyS0,115200" --nographic
+Now working on how to trigger resets.
 
-Regards
-Bibo Mao
-
-On 2024/9/5 上午11:12, Jason A. Donenfeld wrote:
-> On Tue, Oct 10, 2023 at 09:12:46AM +0800, maobibo wrote:
->> Thomas,
->>
->> Thanks for reporting this issue.
->>
->> It is the problem of QEMU for LoongArch system, QEMU does not support
->> booting vmlinux with elf format without UEFI bios now. We will add
->> support to boot vmlinux directly on QEMU LoongArch side.
-> 
-> I ran into this same issue when trying to boot my test kernel for
-> Ruoyao's recent vDSO getrandom work. Is this something that was ever
-> addressed on the QEMU side?
-> 
-> Jason
-> 
-
+Jason
 
