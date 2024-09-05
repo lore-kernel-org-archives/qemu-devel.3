@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 415F6CD5BB8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E3A4CE7A94
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:59:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smIca-00088Y-2n; Thu, 05 Sep 2024 15:58:24 -0400
+	id 1smIcV-0007SE-OV; Thu, 05 Sep 2024 15:58:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1smIcY-0007no-3e
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:58:22 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1smIcT-0007FE-C5
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:58:17 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1smIcU-0005SC-Or
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:58:21 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-20543fdb7acso10319085ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 12:58:18 -0700 (PDT)
+ id 1smIcQ-0005Rm-EI
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:58:17 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-6c5bcb8e8edso929962a12.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 12:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725566297; x=1726171097; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725566293; x=1726171093; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TPD1++3Ru/bEAjnX03jCVbPiPc0WT+1zyJFlql9oWJ8=;
- b=YzMteVdI/fu/5Fndb7cmMY8UDD4JoVh0zDyyHbDQv1p4pPVDCEaXq5mTLbsgROOUbO
- w6ocnfgjhMq8OtxVDo4TnBCX80BDjtO4EXmBOawplTu99b9S+hzGaBiGemFdsBgXF62H
- vkMCSWKRfGzS9u+HqfxpVJL29mF3DEaCEFifmw+ptPQ1h1wZcBbpgHGFJm088VSdbs3r
- wkHadXrTKsi12C3p12ccZcohb0N11i4CaAJHb4og7sy1w4m5jINtH2E8vLEREAZ3T6KB
- /apkgjKKbm7mShic0QFFxVm7WPkAzX5Wzrfj+pAlPkn9KEae6VI/MCi1bCZOe/P+ElnU
- kwEg==
+ bh=hhMjTsQKStT+/SjSYAuvmvPjXZgsrUDCW4DUN02r8L0=;
+ b=dJsRXjMAEhHp8XfSKRMBn31IrsBmTT6QePZzCqvlAyC3WMDR7UM6JkHN4qt987qrw8
+ HVzzuRhcfD8MrsXmLyA8bQYNIMBRhg8zKfrNKVQpV2dXshJI1lwDs0P+lW3X/ooau0q7
+ +i1h7xG5BrJkfTtlNDB8nWYgpY3eBzqDXmd68gR4mHsm7/aOYCq/a8+6A8HpZQIiMVnb
+ IS6yTwQFG0XOVDk59hnfNJpRLa6/ih34RcGGe2xvPQdfmBYZE2bVi8eoaYjAfm+Y6wNA
+ tuN67QIl/BTDVH0UphAoQ7IuOHF9iYyDXGTCqfmATWptjBzi3eBBawcV2JwV8HLrIU0d
+ aRuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725566297; x=1726171097;
+ d=1e100.net; s=20230601; t=1725566293; x=1726171093;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TPD1++3Ru/bEAjnX03jCVbPiPc0WT+1zyJFlql9oWJ8=;
- b=X9HKfAqcMZfjN9i3P5eSV27CCTCcvhLWPj/oFe9PlzcRlIwRU4g0JA0qz4mWgkfu4J
- mBqjRbtmt1vCHJ6baHlRn9O6Z3wqQw5oN/s/1PIhgSd1ht6FibN6qbhUftKgzB371kEB
- gk76y3JZ0Ya/ZrfH0J82OaUC4U53nCACwQMc1CSqPUYwdyFZkBv/dIh1/8WoIKaMBEJy
- bRy+auPINuD5pfr/1bDXy/FN8mC096EgHhj3TsKkpjret/hwKd2xWTPntPKj9hquUTkw
- HqsJVDToJ9CserhPvkhrHSVTYCgFjX/u1sLk+HIV23ZtP8o2XZfzy6J3QqBhPRp6IT4j
- 7y0Q==
-X-Gm-Message-State: AOJu0Yx2O/7yDzJmCfTs1SykqSjpzAGsd1N37yr8vXDAIowJDYqBX24t
- tbsln//v9gBtffoFFxVj5NaA89OYLSoCf5PMi235r/hnyB/ebVzb7g4ZpA==
-X-Google-Smtp-Source: AGHT+IEFDS9U9vYY/C2UVOyMw2M83tTkLPzMwFLROOhWB5NttxLPA/t18+6usWkpZaOqDtQ/4/PDkQ==
-X-Received: by 2002:a17:902:a516:b0:1fb:2bed:6418 with SMTP id
- d9443c01a7336-206f065a8d7mr1673185ad.57.1725566296660; 
- Thu, 05 Sep 2024 12:58:16 -0700 (PDT)
+ bh=hhMjTsQKStT+/SjSYAuvmvPjXZgsrUDCW4DUN02r8L0=;
+ b=Dt5f0KxCOk2SqJlRWdchbnb7ELHB93GxUU0VqrVkyu/0Oh1m5wW3iIrNzahr7yLyKK
+ a9wkvnb5dBRgJevSGaY4wBsOz4+9UXrU6Bwgc3fWiDK425d7J+Ty3dB3eKmvRV2CJUYE
+ UZ+kIMt807YVJ/Mlgb+3WJT89o5UfFgDmEklYxQ5RTiA+xpIK4I8L3FPWe9ogU2/qPXH
+ Qyyh7F3+Xbj3nRXRUrfWFq1yFjt2gjXf5nhER1lKL15nNMrBms1hWJ7uC4fKz854jTJx
+ sThetvcTKnRMQfMJlJyR2z7xDVEXL91bdfsA2ggP+KKRdLEg8R0ve64GociT/OX82VHB
+ 7LHQ==
+X-Gm-Message-State: AOJu0Yz4Z5P29+SvDnpWwPuPrzqiTEyT0t9XJanf3gn48+NstjDRz8Wi
+ C4+4cSUA5GEkMXEHsmdv5CeAR5C9SFurH1wNxlyeFEsNbVzeD+FtlrMPWg==
+X-Google-Smtp-Source: AGHT+IGQEXDmZXvp872iB16qvAQGzz29Mnt1mlnWDSrPl2Q9d0Xx8qy5hCaTYleLNQHXwOW+ZNfLcw==
+X-Received: by 2002:a17:903:230a:b0:206:c486:4c33 with SMTP id
+ d9443c01a7336-206f0522330mr2409635ad.30.1725566292496; 
+ Thu, 05 Sep 2024 12:58:12 -0700 (PDT)
 Received: from localhost.localdomain ([103.103.35.145])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-206aea5554dsm32031355ad.235.2024.09.05.12.58.12
+ d9443c01a7336-206aea5554dsm32031355ad.235.2024.09.05.12.58.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 12:58:16 -0700 (PDT)
+ Thu, 05 Sep 2024 12:58:12 -0700 (PDT)
 From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
  slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v6 7/8] machine/nitro-enclave: New machine type for AWS Nitro
- Enclaves
-Date: Fri,  6 Sep 2024 01:57:34 +0600
-Message-Id: <20240905195735.16911-8-dorjoychy111@gmail.com>
+Subject: [PATCH v6 6/8] hw/core: Add Enclave Image Format (EIF) related helpers
+Date: Fri,  6 Sep 2024 01:57:33 +0600
+Message-Id: <20240905195735.16911-7-dorjoychy111@gmail.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240905195735.16911-1-dorjoychy111@gmail.com>
 References: <20240905195735.16911-1-dorjoychy111@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=dorjoychy111@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -98,304 +97,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AWS nitro enclaves[1] is an Amazon EC2[2] feature that allows creating
-isolated execution environments, called enclaves, from Amazon EC2
-instances which are used for processing highly sensitive data. Enclaves
-have no persistent storage and no external networking. The enclave VMs
-are based on the Firecracker microvm with a vhost-vsock device for
-communication with the parent EC2 instance that spawned it and a Nitro
-Secure Module (NSM) device for cryptographic attestation. The parent
-instance VM always has CID 3 while the enclave VM gets a dynamic CID.
+An EIF (Enclave Image Format)[1] file is used to boot an AWS nitro
+enclave[2] virtual machine. The EIF file contains the necessary kernel,
+cmdline, ramdisk(s) sections to boot.
 
-An EIF (Enclave Image Format)[3] file is used to boot an AWS nitro enclave
-virtual machine. This commit adds support for AWS nitro enclave emulation
-using a new machine type option '-M nitro-enclave'. This new machine type
-is based on the 'microvm' machine type, similar to how real nitro enclave
-VMs are based on Firecracker microvm. For nitro-enclave to boot from an
-EIF file, the kernel and ramdisk(s) are extracted into a temporary kernel
-and a temporary initrd file which are then hooked into the regular x86
-boot mechanism along with the extracted cmdline. The EIF file path should
-be provided using the '-kernel' QEMU option.
+Some helper functions have been introduced for extracting the necessary
+sections from an EIF file and then writing them to temporary files as
+well as computing SHA384 hashes from the section data. These will be
+used in the following commit to add support for nitro-enclave machine
+type in QEMU.
 
-In QEMU, the vsock emulation for nitro enclave is added using vhost-user-
-vsock as opposed to vhost-vsock. vhost-vsock doesn't support sibling VM
-communication which is needed for nitro enclaves. So for the vsock
-communication to CID 3 to work, another process that does the vsock
-emulation in  userspace must be run, for example, vhost-device-vsock[4]
-from rust-vmm, with necessary vsock communication support in another
-guest VM with CID 3. Using vhost-user-vsock also enables the possibility
-to implement some proxying support in the vhost-user-vsock daemon that
-will forward all the packets to the host machine instead of CID 3 so
-that users of nitro-enclave can run the necessary applications in their
-host machine instead of running another whole VM with CID 3. The following
-mandatory nitro-enclave machine option has been added related to the
-vhost-user-vsock device.
-  - 'vsock': The chardev id from the '-chardev' option for the
-vhost-user-vsock device.
+The files added in this commit are not compiled yet but will be added
+to the hw/core/meson.build file in the following commit where
+CONFIG_NITRO_ENCLAVE will be introduced.
 
-AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device which
-has been added using the virtio-nsm device added in a previous commit.
-In Nitro Enclaves, all the PCRs start in a known zero state and the first
-16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and PCR8
-contain the SHA384 hashes related to the EIF file used to boot the VM
-for validation. The following optional nitro-enclave machine options
-have been added related to the NSM device.
-  - 'id': Enclave identifier, reflected in the module-id of the NSM
-device. If not provided, a default id will be set.
-  - 'parent-role': Parent instance IAM role ARN, reflected in PCR3
-of the NSM device.
-  - 'parent-id': Parent instance identifier, reflected in PCR4 of the
-NSM device.
-
-[1] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-[2] https://aws.amazon.com/ec2/
-[3] https://github.com/aws/aws-nitro-enclaves-image-format
-[4] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
+[1] https://github.com/aws/aws-nitro-enclaves-image-format
+[2] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
 
 Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 ---
- MAINTAINERS                              |   2 +
- backends/hostmem-memfd.c                 |   2 -
- configs/devices/i386-softmmu/default.mak |   1 +
- hw/core/machine.c                        |  71 ++---
- hw/core/meson.build                      |   3 +
- hw/i386/Kconfig                          |   6 +
- hw/i386/meson.build                      |   3 +
- hw/i386/microvm.c                        |   6 +-
- hw/i386/nitro_enclave.c                  | 355 +++++++++++++++++++++++
- include/hw/boards.h                      |   2 +
- include/hw/i386/microvm.h                |   2 +
- include/hw/i386/nitro_enclave.h          |  62 ++++
- include/sysemu/hostmem.h                 |   2 +
- 13 files changed, 481 insertions(+), 36 deletions(-)
- create mode 100644 hw/i386/nitro_enclave.c
- create mode 100644 include/hw/i386/nitro_enclave.h
+ MAINTAINERS   |   7 +
+ hw/core/eif.c | 719 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ hw/core/eif.h |  22 ++
+ 3 files changed, 748 insertions(+)
+ create mode 100644 hw/core/eif.c
+ create mode 100644 hw/core/eif.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index ead98e645a..e06aa4a5d7 100644
+index b371c24747..ead98e645a 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1885,6 +1885,8 @@ M: Dorjoy Chowdhury <dorjoychy111@gmail.com>
- S: Maintained
- F: hw/core/eif.c
- F: hw/core/eif.h
-+F: hw/i386/nitro_enclave.c
-+F: include/hw/i386/nitro_enclave.h
+@@ -1879,6 +1879,13 @@ F: hw/i386/microvm.c
+ F: include/hw/i386/microvm.h
+ F: pc-bios/bios-microvm.bin
  
++nitro-enclave
++M: Alexander Graf <graf@amazon.com>
++M: Dorjoy Chowdhury <dorjoychy111@gmail.com>
++S: Maintained
++F: hw/core/eif.c
++F: hw/core/eif.h
++
  Machine core
  M: Eduardo Habkost <eduardo@habkost.net>
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 6a3c89a12b..9f890a813e 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -18,8 +18,6 @@
- #include "qapi/error.h"
- #include "qom/object.h"
- 
--#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
--
- OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
- 
- 
-diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
-index 448e3e3b1b..4faf2f0315 100644
---- a/configs/devices/i386-softmmu/default.mak
-+++ b/configs/devices/i386-softmmu/default.mak
-@@ -29,3 +29,4 @@
- # CONFIG_I440FX=n
- # CONFIG_Q35=n
- # CONFIG_MICROVM=n
-+# CONFIG_NITRO_ENCLAVE=n
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 27dcda0248..b4662b2795 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -998,6 +998,39 @@ void machine_add_audiodev_property(MachineClass *mc)
-                                           "Audiodev to use for default machine devices");
- }
- 
-+static bool create_default_memdev(MachineState *ms, const char *path,
-+                                  Error **errp)
-+{
-+    Object *obj;
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-+    bool r = false;
-+
-+    obj = object_new(path ? TYPE_MEMORY_BACKEND_FILE : TYPE_MEMORY_BACKEND_RAM);
-+    if (path) {
-+        if (!object_property_set_str(obj, "mem-path", path, errp)) {
-+            goto out;
-+        }
-+    }
-+    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
-+        goto out;
-+    }
-+    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
-+                              obj);
-+    /* Ensure backend's memory region name is equal to mc->default_ram_id */
-+    if (!object_property_set_bool(obj, "x-use-canonical-path-for-ramblock-id",
-+                             false, errp)) {
-+        goto out;
-+    }
-+    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
-+        goto out;
-+    }
-+    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
-+
-+out:
-+    object_unref(obj);
-+    return r;
-+}
-+
- static void machine_class_init(ObjectClass *oc, void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -1017,6 +1050,8 @@ static void machine_class_init(ObjectClass *oc, void *data)
-      */
-     mc->numa_mem_align_shift = 23;
- 
-+    mc->create_default_memdev = create_default_memdev;
-+
-     object_class_property_add_str(oc, "kernel",
-         machine_get_kernel, machine_set_kernel);
-     object_class_property_set_description(oc, "kernel",
-@@ -1410,38 +1445,6 @@ MemoryRegion *machine_consume_memdev(MachineState *machine,
-     return ret;
- }
- 
--static bool create_default_memdev(MachineState *ms, const char *path, Error **errp)
--{
--    Object *obj;
--    MachineClass *mc = MACHINE_GET_CLASS(ms);
--    bool r = false;
--
--    obj = object_new(path ? TYPE_MEMORY_BACKEND_FILE : TYPE_MEMORY_BACKEND_RAM);
--    if (path) {
--        if (!object_property_set_str(obj, "mem-path", path, errp)) {
--            goto out;
--        }
--    }
--    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
--        goto out;
--    }
--    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
--                              obj);
--    /* Ensure backend's memory region name is equal to mc->default_ram_id */
--    if (!object_property_set_bool(obj, "x-use-canonical-path-for-ramblock-id",
--                             false, errp)) {
--        goto out;
--    }
--    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
--        goto out;
--    }
--    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
--
--out:
--    object_unref(obj);
--    return r;
--}
--
- const char *machine_class_default_cpu_type(MachineClass *mc)
- {
-     if (mc->valid_cpu_types && !mc->valid_cpu_types[1]) {
-@@ -1545,7 +1548,9 @@ void machine_run_board_init(MachineState *machine, const char *mem_path, Error *
-                 machine_class->default_ram_id);
-             return;
-         }
--        if (!create_default_memdev(current_machine, mem_path, errp)) {
-+
-+        if (!machine_class->create_default_memdev(current_machine, mem_path,
-+                                                  errp)) {
-             return;
-         }
-     }
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index a3d9bab9f4..5437a94490 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -24,6 +24,9 @@ system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
- system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
- system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
-+if libcbor.found() and gnutls.found()
-+  system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c'), zlib, libcbor, gnutls])
-+endif
- 
- system_ss.add(files(
-   'cpu-sysemu.c',
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index f4a33b6c08..63271bf915 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -129,6 +129,12 @@ config MICROVM
-     select USB_XHCI_SYSBUS
-     select I8254
- 
-+config NITRO_ENCLAVE
-+    default y
-+    depends on MICROVM
-+    select VHOST_USER_VSOCK
-+    select VIRTIO_NSM
-+
- config X86_IOMMU
-     bool
-     depends on PC
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index 03aad10df7..1ddd7a83be 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -15,6 +15,9 @@ i386_ss.add(when: 'CONFIG_AMD_IOMMU', if_true: files('amd_iommu.c'),
-                                       if_false: files('amd_iommu-stub.c'))
- i386_ss.add(when: 'CONFIG_I440FX', if_true: files('pc_piix.c'))
- i386_ss.add(when: 'CONFIG_MICROVM', if_true: files('x86-common.c', 'microvm.c', 'acpi-microvm.c', 'microvm-dt.c'))
-+if libcbor.found() and gnutls.found()
-+  i386_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: files('nitro_enclave.c'))
-+endif
- i386_ss.add(when: 'CONFIG_Q35', if_true: files('pc_q35.c'))
- i386_ss.add(when: 'CONFIG_VMMOUSE', if_true: files('vmmouse.c'))
- i386_ss.add(when: 'CONFIG_VMPORT', if_true: files('vmport.c'))
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 40edcee7af..869c177642 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -283,6 +283,7 @@ static void microvm_devices_init(MicrovmMachineState *mms)
- 
- static void microvm_memory_init(MicrovmMachineState *mms)
- {
-+    MicrovmMachineClass *mmc = MICROVM_MACHINE_GET_CLASS(mms);
-     MachineState *machine = MACHINE(mms);
-     X86MachineState *x86ms = X86_MACHINE(mms);
-     MemoryRegion *ram_below_4g, *ram_above_4g;
-@@ -328,7 +329,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
-     rom_set_fw(fw_cfg);
- 
-     if (machine->kernel_filename != NULL) {
--        x86_load_linux(x86ms, fw_cfg, 0, true);
-+        mmc->x86_load_linux(x86ms, fw_cfg, 0, true);
-     }
- 
-     if (mms->option_roms) {
-@@ -637,9 +638,12 @@ GlobalProperty microvm_properties[] = {
- static void microvm_class_init(ObjectClass *oc, void *data)
- {
-     X86MachineClass *x86mc = X86_MACHINE_CLASS(oc);
-+    MicrovmMachineClass *mmc = MICROVM_MACHINE_CLASS(oc);
-     MachineClass *mc = MACHINE_CLASS(oc);
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
- 
-+    mmc->x86_load_linux = x86_load_linux;
-+
-     mc->init = microvm_machine_state_init;
- 
-     mc->family = "microvm_i386";
-diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
+ M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+diff --git a/hw/core/eif.c b/hw/core/eif.c
 new file mode 100644
-index 0000000000..7dbeee530f
+index 0000000000..2e0759e18c
 --- /dev/null
-+++ b/hw/i386/nitro_enclave.c
-@@ -0,0 +1,355 @@
++++ b/hw/core/eif.c
+@@ -0,0 +1,719 @@
 +/*
-+ * AWS nitro-enclave machine
++ * EIF (Enclave Image Format) related helpers
 + *
 + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
 + *
@@ -405,384 +158,722 @@ index 0000000000..7dbeee530f
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
++#include "qemu/bswap.h"
 +#include "qapi/error.h"
-+#include "qom/object_interfaces.h"
++#include "crypto/hash.h"
++#include "crypto/x509-utils.h"
++#include <zlib.h> /* for crc32 */
++#include <cbor.h>
 +
-+#include "chardev/char.h"
-+#include "hw/sysbus.h"
 +#include "hw/core/eif.h"
-+#include "hw/i386/x86.h"
-+#include "hw/i386/microvm.h"
-+#include "hw/i386/nitro_enclave.h"
-+#include "hw/virtio/virtio-mmio.h"
-+#include "hw/virtio/virtio-nsm.h"
-+#include "hw/virtio/vhost-user-vsock.h"
-+#include "sysemu/hostmem.h"
 +
-+static BusState *find_free_virtio_mmio_bus(void)
++#define MAX_SECTIONS 32
++
++/* members are ordered according to field order in .eif file */
++typedef struct EifHeader {
++    uint8_t  magic[4]; /* must be .eif in ascii i.e., [46, 101, 105, 102] */
++    uint16_t version;
++    uint16_t flags;
++    uint64_t default_memory;
++    uint64_t default_cpus;
++    uint16_t reserved;
++    uint16_t section_cnt;
++    uint64_t section_offsets[MAX_SECTIONS];
++    uint64_t section_sizes[MAX_SECTIONS];
++    uint32_t unused;
++    uint32_t eif_crc32;
++} QEMU_PACKED EifHeader;
++
++/* members are ordered according to field order in .eif file */
++typedef struct EifSectionHeader {
++    /*
++     * 0 = invalid, 1 = kernel, 2 = cmdline, 3 = ramdisk, 4 = signature,
++     * 5 = metadata
++     */
++    uint16_t section_type;
++    uint16_t flags;
++    uint64_t section_size;
++} QEMU_PACKED EifSectionHeader;
++
++enum EifSectionTypes {
++    EIF_SECTION_INVALID = 0,
++    EIF_SECTION_KERNEL = 1,
++    EIF_SECTION_CMDLINE = 2,
++    EIF_SECTION_RAMDISK = 3,
++    EIF_SECTION_SIGNATURE = 4,
++    EIF_SECTION_METADATA = 5,
++    EIF_SECTION_MAX = 6,
++};
++
++static const char *section_type_to_string(uint16_t type)
 +{
-+    BusChild *kid;
-+    BusState *bus = sysbus_get_default();
++    const char *str;
++    switch (type) {
++    case EIF_SECTION_INVALID:
++        str = "invalid";
++        break;
++    case EIF_SECTION_KERNEL:
++        str = "kernel";
++        break;
++    case EIF_SECTION_CMDLINE:
++        str = "cmdline";
++        break;
++    case EIF_SECTION_RAMDISK:
++        str = "ramdisk";
++        break;
++    case EIF_SECTION_SIGNATURE:
++        str = "signature";
++        break;
++    case EIF_SECTION_METADATA:
++        str = "metadata";
++        break;
++    default:
++        str = "unknown";
++        break;
++    }
 +
-+    QTAILQ_FOREACH(kid, &bus->children, sibling) {
-+        DeviceState *dev = kid->child;
-+        if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MMIO)) {
-+            VirtIOMMIOProxy *mmio = VIRTIO_MMIO(OBJECT(dev));
-+            VirtioBusState *mmio_virtio_bus = &mmio->bus;
-+            BusState *mmio_bus = &mmio_virtio_bus->parent_obj;
-+            if (QTAILQ_EMPTY(&mmio_bus->children)) {
-+                return mmio_bus;
++    return str;
++}
++
++static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
++                            Error **errp)
++{
++    size_t got;
++    size_t header_size = sizeof(*header);
++
++    got = fread(header, 1, header_size, f);
++    if (got != header_size) {
++        error_setg(errp, "Failed to read EIF header");
++        return false;
++    }
++
++    if (memcmp(header->magic, ".eif", 4) != 0) {
++        error_setg(errp, "Invalid EIF image. Magic mismatch.");
++        return false;
++    }
++
++    /* Exclude header->eif_crc32 field from CRC calculation */
++    *crc = crc32(*crc, (uint8_t *)header, header_size - 4);
++
++    header->version = be16_to_cpu(header->version);
++    header->flags = be16_to_cpu(header->flags);
++    header->default_memory = be64_to_cpu(header->default_memory);
++    header->default_cpus = be64_to_cpu(header->default_cpus);
++    header->reserved = be16_to_cpu(header->reserved);
++    header->section_cnt = be16_to_cpu(header->section_cnt);
++
++    for (int i = 0; i < MAX_SECTIONS; ++i) {
++        header->section_offsets[i] = be64_to_cpu(header->section_offsets[i]);
++    }
++
++    for (int i = 0; i < MAX_SECTIONS; ++i) {
++        header->section_sizes[i] = be64_to_cpu(header->section_sizes[i]);
++    }
++
++    header->unused = be32_to_cpu(header->unused);
++    header->eif_crc32 = be32_to_cpu(header->eif_crc32);
++    return true;
++}
++
++static bool read_eif_section_header(FILE *f, EifSectionHeader *section_header,
++                                    uint32_t *crc, Error **errp)
++{
++    size_t got;
++    size_t section_header_size = sizeof(*section_header);
++
++    got = fread(section_header, 1, section_header_size, f);
++    if (got != section_header_size) {
++        error_setg(errp, "Failed to read EIF section header");
++        return false;
++    }
++
++    *crc = crc32(*crc, (uint8_t *)section_header, section_header_size);
++
++    section_header->section_type = be16_to_cpu(section_header->section_type);
++    section_header->flags = be16_to_cpu(section_header->flags);
++    section_header->section_size = be64_to_cpu(section_header->section_size);
++    return true;
++}
++
++/*
++ * Upon success, the caller is responsible for unlinking and freeing *tmp_path.
++ */
++static bool get_tmp_file(const char *template, char **tmp_path, Error **errp)
++{
++    int tmp_fd;
++
++    *tmp_path = NULL;
++    tmp_fd = g_file_open_tmp(template, tmp_path, NULL);
++    if (tmp_fd < 0 || *tmp_path == NULL) {
++        error_setg(errp, "Failed to create temporary file for template %s",
++                   template);
++        return false;
++    }
++
++    close(tmp_fd);
++    return true;
++}
++
++static void safe_fclose(FILE *f)
++{
++    if (f) {
++        fclose(f);
++    }
++}
++
++static void safe_unlink(char *f)
++{
++    if (f) {
++        unlink(f);
++    }
++}
++
++/*
++ * Upon success, the caller is reponsible for unlinking and freeing *kernel_path
++ */
++static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
++                            uint8_t *kernel, uint32_t *crc, Error **errp)
++{
++    size_t got;
++    FILE *tmp_file = NULL;
++
++    *kernel_path = NULL;
++    if (!get_tmp_file("eif-kernel-XXXXXX", kernel_path, errp)) {
++        goto cleanup;
++    }
++
++    tmp_file = fopen(*kernel_path, "wb");
++    if (tmp_file == NULL) {
++        error_setg_errno(errp, errno, "Failed to open temporary file %s",
++                         *kernel_path);
++        goto cleanup;
++    }
++
++    got = fread(kernel, 1, size, f);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF kernel section data");
++        goto cleanup;
++    }
++
++    got = fwrite(kernel, 1, size, tmp_file);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to write EIF kernel section data to temporary"
++                   " file");
++        goto cleanup;
++    }
++
++    *crc = crc32(*crc, kernel, size);
++    fclose(tmp_file);
++
++    return true;
++
++ cleanup:
++    safe_fclose(tmp_file);
++
++    safe_unlink(*kernel_path);
++    g_free(*kernel_path);
++    *kernel_path = NULL;
++
++    return false;
++}
++
++static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
++                             uint32_t *crc, Error **errp)
++{
++    size_t got = fread(cmdline, 1, size, f);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF cmdline section data");
++        return false;
++    }
++
++    *crc = crc32(*crc, (uint8_t *)cmdline, size);
++    return true;
++}
++
++static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
++                             uint8_t *ramdisk, uint32_t *crc, Error **errp)
++{
++    size_t got;
++
++    got = fread(ramdisk, 1, size, eif);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF ramdisk section data");
++        return false;
++    }
++
++    got = fwrite(ramdisk, 1, size, initrd);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to write EIF ramdisk data to temporary file");
++        return false;
++    }
++
++    *crc = crc32(*crc, ramdisk, size);
++    return true;
++}
++
++static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
++                                             uint8_t *sha384,
++                                             uint32_t *crc,
++                                             Error **errp)
++{
++    size_t got;
++    g_autofree uint8_t *sig = NULL;
++    g_autofree uint8_t *cert = NULL;
++    cbor_item_t *item = NULL;
++    cbor_item_t *pcr0 = NULL;
++    size_t len;
++    size_t hash_len = QCRYPTO_HASH_DIGEST_LEN_SHA384;
++    struct cbor_pair *pair;
++    struct cbor_load_result result;
++    bool ret = false;
++
++    sig = g_malloc(size);
++    got = fread(sig, 1, size, eif);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF signature section data");
++        goto cleanup;
++    }
++
++    *crc = crc32(*crc, sig, size);
++
++    item = cbor_load(sig, size, &result);
++    if (!item || result.error.code != CBOR_ERR_NONE) {
++        error_setg(errp, "Failed to load signature section data as CBOR");
++        goto cleanup;
++    }
++    if (!cbor_isa_array(item) || cbor_array_size(item) < 1) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    pcr0 = cbor_array_get(item, 0);
++    if (!pcr0) {
++        error_setg(errp, "Failed to get PCR0 signature");
++        goto cleanup;
++    }
++    if (!cbor_isa_map(pcr0) || cbor_map_size(pcr0) != 2) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    pair = cbor_map_handle(pcr0);
++    if (!cbor_isa_string(pair->key) || cbor_string_length(pair->key) != 19 ||
++        memcmp(cbor_string_handle(pair->key), "signing_certificate", 19) != 0) {
++        error_setg(errp, "Invalid signautre CBOR");
++        goto cleanup;
++    }
++    if (!cbor_isa_array(pair->value)) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    len = cbor_array_size(pair->value);
++    if (len == 0) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    cert = g_malloc(len);
++    for (int i = 0; i < len; ++i) {
++        cbor_item_t *tmp = cbor_array_get(pair->value, i);
++        if (!tmp) {
++            error_setg(errp, "Invalid signature CBOR");
++            goto cleanup;
++        }
++        if (!cbor_isa_uint(tmp) || cbor_int_get_width(tmp) != CBOR_INT_8) {
++            cbor_decref(&tmp);
++            error_setg(errp, "Invalid signature CBOR");
++            goto cleanup;
++        }
++        cert[i] = cbor_get_uint8(tmp);
++        cbor_decref(&tmp);
++    }
++
++    if (qcrypto_get_x509_cert_fingerprint(cert, len, QCRYPTO_HASH_ALG_SHA384,
++                                          sha384, &hash_len, errp)) {
++        goto cleanup;
++    }
++
++    ret = true;
++
++ cleanup:
++    if (pcr0) {
++        cbor_decref(&pcr0);
++    }
++    if (item) {
++        cbor_decref(&item);
++    }
++    return ret;
++}
++
++/* Expects file to have offset 0 before this function is called */
++static long get_file_size(FILE *f, Error **errp)
++{
++    long size;
++
++    if (fseek(f, 0, SEEK_END) != 0) {
++        error_setg_errno(errp, errno, "Failed to seek to the end of file");
++        return -1;
++    }
++
++    size = ftell(f);
++    if (size == -1) {
++        error_setg_errno(errp, errno, "Failed to get offset");
++        return -1;
++    }
++
++    if (fseek(f, 0, SEEK_SET) != 0) {
++        error_setg_errno(errp, errno, "Failed to seek back to the start");
++        return -1;
++    }
++
++    return size;
++}
++
++static bool get_SHA384_digest(GList *list, uint8_t *digest, Error **errp)
++{
++    size_t digest_len = QCRYPTO_HASH_DIGEST_LEN_SHA384;
++    size_t list_len = g_list_length(list);
++    struct iovec *iovec_list = g_new0(struct iovec, list_len);
++    bool ret = true;
++    GList *l;
++    int i;
++
++    for (i = 0, l = list; l != NULL; l = l->next, i++) {
++        iovec_list[i] = *(struct iovec *) l->data;
++    }
++
++    if (qcrypto_hash_bytesv(QCRYPTO_HASH_ALG_SHA384, iovec_list, list_len,
++                            &digest, &digest_len, errp) < 0) {
++        ret = false;
++    }
++
++    g_free(iovec_list);
++    return ret;
++}
++
++static void free_iovec(struct iovec *iov)
++{
++    if (iov) {
++        g_free(iov->iov_base);
++        g_free(iov);
++    }
++}
++
++/*
++ * Upon success, the caller is reponsible for unlinking and freeing
++ * *kernel_path, *initrd_path and freeing *cmdline.
++ */
++bool read_eif_file(const char *eif_path, const char *machine_initrd,
++                   char **kernel_path, char **initrd_path, char **cmdline,
++                   uint8_t *image_sha384, uint8_t *bootstrap_sha384,
++                   uint8_t *app_sha384, uint8_t *fingerprint_sha384,
++                   bool *signature_found, Error **errp)
++{
++    FILE *f = NULL;
++    FILE *machine_initrd_f = NULL;
++    FILE *initrd_path_f = NULL;
++    long machine_initrd_size;
++    uint32_t crc = 0;
++    EifHeader eif_header;
++    bool seen_sections[EIF_SECTION_MAX] = {false};
++    /* kernel + ramdisks + cmdline sha384 hash */
++    GList *iov_PCR0 = NULL;
++    /* kernel + boot ramdisk + cmdline sha384 hash */
++    GList *iov_PCR1 = NULL;
++    /* application ramdisk(s) hash */
++    GList *iov_PCR2 = NULL;
++    uint8_t *ptr = NULL;
++    struct iovec *iov_ptr = NULL;
++
++    *signature_found = false;
++    *kernel_path = *initrd_path = *cmdline = NULL;
++
++    f = fopen(eif_path, "rb");
++    if (f == NULL) {
++        error_setg_errno(errp, errno, "Failed to open %s", eif_path);
++        goto cleanup;
++    }
++
++    if (!read_eif_header(f, &eif_header, &crc, errp)) {
++        goto cleanup;
++    }
++
++    if (eif_header.version < 4) {
++        error_setg(errp, "Expected EIF version 4 or greater");
++        goto cleanup;
++    }
++
++    if (eif_header.flags != 0) {
++        error_setg(errp, "Expected EIF flags to be 0");
++        goto cleanup;
++    }
++
++    if (eif_header.section_cnt > MAX_SECTIONS) {
++        error_setg(errp, "EIF header section count must not be greater than "
++                   "%d but found %d", MAX_SECTIONS, eif_header.section_cnt);
++        goto cleanup;
++    }
++
++    for (int i = 0; i < eif_header.section_cnt; ++i) {
++        EifSectionHeader hdr;
++        uint16_t section_type;
++
++        if (fseek(f, eif_header.section_offsets[i], SEEK_SET) != 0) {
++            error_setg_errno(errp, errno, "Failed to offset to %lu in EIF file",
++                             eif_header.section_offsets[i]);
++            goto cleanup;
++        }
++
++        if (!read_eif_section_header(f, &hdr, &crc, errp)) {
++            goto cleanup;
++        }
++
++        if (hdr.flags != 0) {
++            error_setg(errp, "Expected EIF section header flags to be 0");
++            goto cleanup;
++        }
++
++        if (eif_header.section_sizes[i] != hdr.section_size) {
++            error_setg(errp, "EIF section size mismatch between header and "
++                       "section header: header %lu, section header %lu",
++                       eif_header.section_sizes[i],
++                       hdr.section_size);
++            goto cleanup;
++        }
++
++        section_type = hdr.section_type;
++
++        switch (section_type) {
++        case EIF_SECTION_KERNEL:
++            if (seen_sections[EIF_SECTION_KERNEL]) {
++                error_setg(errp, "Invalid EIF image. More than 1 kernel "
++                           "section");
++                goto cleanup;
 +            }
++
++            ptr = g_malloc(hdr.section_size);
++
++            iov_ptr = g_malloc(sizeof(struct iovec));
++            iov_ptr->iov_base = ptr;
++            iov_ptr->iov_len = hdr.section_size;
++
++            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++            iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
++
++            if (!read_eif_kernel(f, hdr.section_size, kernel_path, ptr, &crc,
++                                 errp)) {
++                goto cleanup;
++            }
++
++            break;
++        case EIF_SECTION_CMDLINE:
++        {
++            uint64_t size;
++            uint8_t *cmdline_copy;
++            if (seen_sections[EIF_SECTION_CMDLINE]) {
++                error_setg(errp, "Invalid EIF image. More than 1 cmdline "
++                           "section");
++                goto cleanup;
++            }
++            size = hdr.section_size;
++            *cmdline = g_malloc(size + 1);
++            if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
++                goto cleanup;
++            }
++            (*cmdline)[size] = '\0';
++
++            /*
++             * We make a copy of '*cmdline' for putting it in iovecs so that
++             * we can easily free all the iovec entries later as we cannot
++             * free '*cmdline' which is used by the caller.
++             */
++            cmdline_copy = g_memdup2(*cmdline, size);
++
++            iov_ptr = g_malloc(sizeof(struct iovec));
++            iov_ptr->iov_base = cmdline_copy;
++            iov_ptr->iov_len = size;
++
++            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++            iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
++            break;
++        }
++        case EIF_SECTION_RAMDISK:
++        {
++            if (!seen_sections[EIF_SECTION_RAMDISK]) {
++                /*
++                 * If this is the first time we are seeing a ramdisk section,
++                 * we need to create the initrd temporary file.
++                 */
++                if (!get_tmp_file("eif-initrd-XXXXXX", initrd_path, errp)) {
++                    goto cleanup;
++                }
++                initrd_path_f = fopen(*initrd_path, "wb");
++                if (initrd_path_f == NULL) {
++                    error_setg_errno(errp, errno, "Failed to open file %s",
++                                     *initrd_path);
++                    goto cleanup;
++                }
++            }
++
++            ptr = g_malloc(hdr.section_size);
++
++            iov_ptr = g_malloc(sizeof(struct iovec));
++            iov_ptr->iov_base = ptr;
++            iov_ptr->iov_len = hdr.section_size;
++
++            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++            /*
++             * If it's the first ramdisk, we need to hash it into bootstrap
++             * i.e., iov_PCR1, otherwise we need to hash it into app i.e.,
++             * iov_PCR2.
++             */
++            if (!seen_sections[EIF_SECTION_RAMDISK]) {
++                iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
++            } else {
++                iov_PCR2 = g_list_append(iov_PCR2, iov_ptr);
++            }
++
++            if (!read_eif_ramdisk(f, initrd_path_f, hdr.section_size, ptr,
++                                  &crc, errp)) {
++                goto cleanup;
++            }
++
++            break;
++        }
++        case EIF_SECTION_SIGNATURE:
++            *signature_found = true;
++            if (!get_signature_fingerprint_sha384(f, hdr.section_size,
++                                                  fingerprint_sha384, &crc,
++                                                  errp)) {
++                goto cleanup;
++            }
++            break;
++        default:
++            /* other sections including invalid or unknown sections */
++        {
++            uint8_t *buf;
++            size_t got;
++            uint64_t size = hdr.section_size;
++            buf = g_malloc(size);
++            got = fread(buf, 1, size, f);
++            if ((uint64_t) got != size) {
++                g_free(buf);
++                error_setg(errp, "Failed to read EIF %s section data",
++                           section_type_to_string(section_type));
++                goto cleanup;
++            }
++            crc = crc32(crc, buf, size);
++            g_free(buf);
++            break;
++        }
++        }
++
++        if (section_type < EIF_SECTION_MAX) {
++            seen_sections[section_type] = true;
 +        }
 +    }
 +
-+    return NULL;
-+}
-+
-+static void vhost_user_vsock_init(NitroEnclaveMachineState *nems)
-+{
-+    DeviceState *dev = qdev_new(TYPE_VHOST_USER_VSOCK);
-+    VHostUserVSock *vsock = VHOST_USER_VSOCK(dev);
-+    BusState *bus;
-+
-+    if (!nems->vsock) {
-+        error_report("A valid chardev id for vhost-user-vsock device must be "
-+                     "provided using the 'vsock' machine option");
-+        exit(1);
++    if (!seen_sections[EIF_SECTION_KERNEL]) {
++        error_setg(errp, "Invalid EIF image. No kernel section.");
++        goto cleanup;
++    }
++    if (!seen_sections[EIF_SECTION_CMDLINE]) {
++        error_setg(errp, "Invalid EIF image. No cmdline section.");
++        goto cleanup;
++    }
++    if (!seen_sections[EIF_SECTION_RAMDISK]) {
++        error_setg(errp, "Invalid EIF image. No ramdisk section.");
++        goto cleanup;
 +    }
 +
-+    bus = find_free_virtio_mmio_bus();
-+    if (!bus) {
-+        error_report("Failed to find bus for vhost-user-vsock device");
-+        exit(1);
++    if (eif_header.eif_crc32 != crc) {
++        error_setg(errp, "CRC mismatch. Expected %u but header has %u.",
++                   crc, eif_header.eif_crc32);
++        goto cleanup;
 +    }
-+
-+    Chardev *chardev = qemu_chr_find(nems->vsock);
-+    if (!chardev) {
-+        error_report("Failed to find chardev with id %s", nems->vsock);
-+        exit(1);
-+    }
-+
-+    vsock->conf.chardev.chr = chardev;
-+
-+    qdev_realize_and_unref(dev, bus, &error_fatal);
-+}
-+
-+static void virtio_nsm_init(NitroEnclaveMachineState *nems)
-+{
-+    DeviceState *dev = qdev_new(TYPE_VIRTIO_NSM);
-+    VirtIONSM *vnsm = VIRTIO_NSM(dev);
-+    BusState *bus = find_free_virtio_mmio_bus();
-+
-+    if (!bus) {
-+        error_report("Failed to find bus for virtio-nsm device.");
-+        exit(1);
-+    }
-+
-+    qdev_prop_set_string(dev, "module-id", nems->id);
-+
-+    qdev_realize_and_unref(dev, bus, &error_fatal);
-+    nems->vnsm = vnsm;
-+}
-+
-+static void nitro_enclave_devices_init(NitroEnclaveMachineState *nems)
-+{
-+    vhost_user_vsock_init(nems);
-+    virtio_nsm_init(nems);
-+}
-+
-+static void nitro_enclave_machine_state_init(MachineState *machine)
-+{
-+    NitroEnclaveMachineClass *ne_class =
-+        NITRO_ENCLAVE_MACHINE_GET_CLASS(machine);
-+    NitroEnclaveMachineState *ne_state = NITRO_ENCLAVE_MACHINE(machine);
-+
-+    ne_class->parent_init(machine);
-+    nitro_enclave_devices_init(ne_state);
-+}
-+
-+static void nitro_enclave_machine_reset(MachineState *machine,
-+                                        ShutdownCause reason)
-+{
-+    NitroEnclaveMachineClass *ne_class =
-+        NITRO_ENCLAVE_MACHINE_GET_CLASS(machine);
-+    NitroEnclaveMachineState *ne_state = NITRO_ENCLAVE_MACHINE(machine);
-+
-+    ne_class->parent_reset(machine, reason);
-+
-+    memset(ne_state->vnsm->pcrs, 0, sizeof(ne_state->vnsm->pcrs));
-+
-+    /* PCR0 */
-+    ne_state->vnsm->extend_pcr(ne_state->vnsm, 0, ne_state->image_sha384,
-+                               QCRYPTO_HASH_DIGEST_LEN_SHA384);
-+    /* PCR1 */
-+    ne_state->vnsm->extend_pcr(ne_state->vnsm, 1, ne_state->bootstrap_sha384,
-+                               QCRYPTO_HASH_DIGEST_LEN_SHA384);
-+    /* PCR2 */
-+    ne_state->vnsm->extend_pcr(ne_state->vnsm, 2, ne_state->app_sha384,
-+                               QCRYPTO_HASH_DIGEST_LEN_SHA384);
-+    /* PCR3 */
-+    if (ne_state->parent_role) {
-+        ne_state->vnsm->extend_pcr(ne_state->vnsm, 3,
-+                                   (uint8_t *) ne_state->parent_role,
-+                                   strlen(ne_state->parent_role));
-+    }
-+    /* PCR4 */
-+    if (ne_state->parent_id) {
-+        ne_state->vnsm->extend_pcr(ne_state->vnsm, 4,
-+                                   (uint8_t *) ne_state->parent_id,
-+                                   strlen(ne_state->parent_id));
-+    }
-+    /* PCR8 */
-+    if (ne_state->signature_found) {
-+        ne_state->vnsm->extend_pcr(ne_state->vnsm, 8,
-+                                   ne_state->fingerprint_sha384,
-+                                   QCRYPTO_HASH_DIGEST_LEN_SHA384);
-+    }
-+
-+    /* First 16 PCRs are locked from boot and reserved for nitro enclave */
-+    for (int i = 0; i < 16; ++i) {
-+        ne_state->vnsm->lock_pcr(ne_state->vnsm, i);
-+    }
-+}
-+
-+static void nitro_enclave_machine_initfn(Object *obj)
-+{
-+    MicrovmMachineState *mms = MICROVM_MACHINE(obj);
-+    X86MachineState *x86ms = X86_MACHINE(obj);
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    nems->id = g_strdup("i-234-enc5678");
-+
-+    /* AWS nitro enclaves have PCIE and ACPI disabled */
-+    mms->pcie = ON_OFF_AUTO_OFF;
-+    x86ms->acpi = ON_OFF_AUTO_OFF;
-+}
-+
-+static void x86_load_eif(X86MachineState *x86ms, FWCfgState *fw_cfg,
-+                         int acpi_data_size, bool pvh_enabled)
-+{
-+    Error *err = NULL;
-+    char *eif_kernel, *eif_initrd, *eif_cmdline;
-+    MachineState *machine = MACHINE(x86ms);
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(x86ms);
-+
-+    if (!read_eif_file(machine->kernel_filename, machine->initrd_filename,
-+                       &eif_kernel, &eif_initrd, &eif_cmdline,
-+                       nems->image_sha384, nems->bootstrap_sha384,
-+                       nems->app_sha384, nems->fingerprint_sha384,
-+                       &(nems->signature_found), &err)) {
-+        error_report_err(err);
-+        exit(1);
-+    }
-+
-+    g_free(machine->kernel_filename);
-+    machine->kernel_filename = eif_kernel;
-+    g_free(machine->initrd_filename);
-+    machine->initrd_filename = eif_initrd;
 +
 +    /*
-+     * If kernel cmdline argument was provided, let's concatenate it to the
-+     * extracted EIF kernel cmdline.
++     * Let's append the initrd file from "-initrd" option if any. Although
++     * we pass the crc pointer to read_eif_ramdisk, it is not useful anymore.
++     * We have already done the crc mismatch check above this code.
 +     */
-+    if (machine->kernel_cmdline != NULL) {
-+        char *cmd = g_strdup_printf("%s %s", eif_cmdline,
-+                                    machine->kernel_cmdline);
-+        g_free(eif_cmdline);
-+        g_free(machine->kernel_cmdline);
-+        machine->kernel_cmdline = cmd;
-+    } else {
-+        machine->kernel_cmdline = eif_cmdline;
++    if (machine_initrd) {
++        machine_initrd_f = fopen(machine_initrd, "rb");
++        if (machine_initrd_f == NULL) {
++            error_setg_errno(errp, errno, "Failed to open initrd file %s",
++                             machine_initrd);
++            goto cleanup;
++        }
++
++        machine_initrd_size = get_file_size(machine_initrd_f, errp);
++        if (machine_initrd_size == -1) {
++            goto cleanup;
++        }
++
++        ptr = g_malloc(machine_initrd_size);
++
++        iov_ptr = g_malloc(sizeof(struct iovec));
++        iov_ptr->iov_base = ptr;
++        iov_ptr->iov_len = machine_initrd_size;
++
++        iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++        iov_PCR2 = g_list_append(iov_PCR2, iov_ptr);
++
++        if (!read_eif_ramdisk(machine_initrd_f, initrd_path_f,
++                              machine_initrd_size, ptr, &crc, errp)) {
++            goto cleanup;
++        }
 +    }
 +
-+    x86_load_linux(x86ms, fw_cfg, 0, true);
-+
-+    unlink(machine->kernel_filename);
-+    unlink(machine->initrd_filename);
-+    return;
-+}
-+
-+static bool create_memfd_backend(MachineState *ms, const char *path,
-+                                 Error **errp)
-+{
-+    Object *obj;
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-+    bool r = false;
-+
-+    obj = object_new(TYPE_MEMORY_BACKEND_MEMFD);
-+    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
-+        goto out;
++    if (!get_SHA384_digest(iov_PCR0, image_sha384, errp)) {
++        goto cleanup;
 +    }
-+    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
-+                              obj);
-+
-+    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
-+        goto out;
++    if (!get_SHA384_digest(iov_PCR1, bootstrap_sha384, errp)) {
++        goto cleanup;
 +    }
-+    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
++    if (!get_SHA384_digest(iov_PCR2, app_sha384, errp)) {
++        goto cleanup;
++    }
 +
-+out:
-+    object_unref(obj);
-+    return r;
++    /*
++     * We only need to free iov_PCR0 entries because iov_PCR1 and
++     * iov_PCR2 iovec entries are subsets of iov_PCR0 iovec entries.
++     */
++    g_list_free_full(iov_PCR0, (GDestroyNotify) free_iovec);
++    g_list_free(iov_PCR1);
++    g_list_free(iov_PCR2);
++    fclose(f);
++    fclose(initrd_path_f);
++    safe_fclose(machine_initrd_f);
++    return true;
++
++ cleanup:
++    g_list_free_full(iov_PCR0, (GDestroyNotify) free_iovec);
++    g_list_free(iov_PCR1);
++    g_list_free(iov_PCR2);
++
++    safe_fclose(f);
++    safe_fclose(initrd_path_f);
++    safe_fclose(machine_initrd_f);
++
++    safe_unlink(*kernel_path);
++    g_free(*kernel_path);
++    *kernel_path = NULL;
++
++    safe_unlink(*initrd_path);
++    g_free(*initrd_path);
++    *initrd_path = NULL;
++
++    g_free(*cmdline);
++    *cmdline = NULL;
++
++    return false;
 +}
-+
-+static char *nitro_enclave_get_vsock_chardev_id(Object *obj, Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    return g_strdup(nems->vsock);
-+}
-+
-+static void nitro_enclave_set_vsock_chardev_id(Object *obj, const char *value,
-+                                               Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    g_free(nems->vsock);
-+    nems->vsock = g_strdup(value);
-+}
-+
-+static char *nitro_enclave_get_id(Object *obj, Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    return g_strdup(nems->id);
-+}
-+
-+static void nitro_enclave_set_id(Object *obj, const char *value,
-+                                            Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    g_free(nems->id);
-+    nems->id = g_strdup(value);
-+}
-+
-+static char *nitro_enclave_get_parent_role(Object *obj, Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    return g_strdup(nems->parent_role);
-+}
-+
-+static void nitro_enclave_set_parent_role(Object *obj, const char *value,
-+                                          Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    g_free(nems->parent_role);
-+    nems->parent_role = g_strdup(value);
-+}
-+
-+static char *nitro_enclave_get_parent_id(Object *obj, Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    return g_strdup(nems->parent_id);
-+}
-+
-+static void nitro_enclave_set_parent_id(Object *obj, const char *value,
-+                                        Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    g_free(nems->parent_id);
-+    nems->parent_id = g_strdup(value);
-+}
-+
-+static void nitro_enclave_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    MicrovmMachineClass *mmc = MICROVM_MACHINE_CLASS(oc);
-+    NitroEnclaveMachineClass *nemc = NITRO_ENCLAVE_MACHINE_CLASS(oc);
-+
-+    mmc->x86_load_linux = x86_load_eif;
-+
-+    mc->family = "nitro_enclave_i386";
-+    mc->desc = "AWS Nitro Enclave";
-+
-+    nemc->parent_init = mc->init;
-+    mc->init = nitro_enclave_machine_state_init;
-+
-+    nemc->parent_reset = mc->reset;
-+    mc->reset = nitro_enclave_machine_reset;
-+
-+    mc->create_default_memdev = create_memfd_backend;
-+
-+    object_class_property_add_str(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
-+                                  nitro_enclave_get_vsock_chardev_id,
-+                                  nitro_enclave_set_vsock_chardev_id);
-+    object_class_property_set_description(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
-+                                          "Set chardev id for vhost-user-vsock "
-+                                          "device");
-+
-+    object_class_property_add_str(oc, NITRO_ENCLAVE_ID, nitro_enclave_get_id,
-+                                  nitro_enclave_set_id);
-+    object_class_property_set_description(oc, NITRO_ENCLAVE_ID,
-+                                          "Set enclave identifier");
-+
-+    object_class_property_add_str(oc, NITRO_ENCLAVE_PARENT_ROLE,
-+                                  nitro_enclave_get_parent_role,
-+                                  nitro_enclave_set_parent_role);
-+    object_class_property_set_description(oc, NITRO_ENCLAVE_PARENT_ROLE,
-+                                          "Set parent instance IAM role ARN");
-+
-+    object_class_property_add_str(oc, NITRO_ENCLAVE_PARENT_ID,
-+                                  nitro_enclave_get_parent_id,
-+                                  nitro_enclave_set_parent_id);
-+    object_class_property_set_description(oc, NITRO_ENCLAVE_PARENT_ID,
-+                                          "Set parent instance identifier");
-+}
-+
-+static const TypeInfo nitro_enclave_machine_info = {
-+    .name          = TYPE_NITRO_ENCLAVE_MACHINE,
-+    .parent        = TYPE_MICROVM_MACHINE,
-+    .instance_size = sizeof(NitroEnclaveMachineState),
-+    .instance_init = nitro_enclave_machine_initfn,
-+    .class_size    = sizeof(NitroEnclaveMachineClass),
-+    .class_init    = nitro_enclave_class_init,
-+};
-+
-+static void nitro_enclave_machine_init(void)
-+{
-+    type_register_static(&nitro_enclave_machine_info);
-+}
-+type_init(nitro_enclave_machine_init);
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 48ff6d8b93..c268e7f005 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -308,6 +308,8 @@ struct MachineClass {
-     int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
-     ram_addr_t (*fixup_ram_size)(ram_addr_t size);
-     uint64_t smbios_memory_device_size;
-+    bool (*create_default_memdev)(MachineState *ms, const char *path,
-+                                  Error **errp);
- };
- 
- /**
-diff --git a/include/hw/i386/microvm.h b/include/hw/i386/microvm.h
-index fad97a891d..b9ac34a3ef 100644
---- a/include/hw/i386/microvm.h
-+++ b/include/hw/i386/microvm.h
-@@ -78,6 +78,8 @@ struct MicrovmMachineClass {
-     X86MachineClass parent;
-     HotplugHandler *(*orig_hotplug_handler)(MachineState *machine,
-                                            DeviceState *dev);
-+    void (*x86_load_linux)(X86MachineState *x86ms, FWCfgState *fw_cfg,
-+                        int acpi_data_size, bool pvh_enabled);
- };
- 
- struct MicrovmMachineState {
-diff --git a/include/hw/i386/nitro_enclave.h b/include/hw/i386/nitro_enclave.h
+diff --git a/hw/core/eif.h b/hw/core/eif.h
 new file mode 100644
-index 0000000000..687c88cb54
+index 0000000000..fed3cb5514
 --- /dev/null
-+++ b/include/hw/i386/nitro_enclave.h
-@@ -0,0 +1,62 @@
++++ b/hw/core/eif.h
+@@ -0,0 +1,22 @@
 +/*
-+ * AWS nitro-enclave machine
++ * EIF (Enclave Image Format) related helpers
 + *
 + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
 + *
@@ -791,71 +882,18 @@ index 0000000000..687c88cb54
 + * top-level directory.
 + */
 +
-+#ifndef HW_I386_NITRO_ENCLAVE_H
-+#define HW_I386_NITRO_ENCLAVE_H
++#ifndef HW_CORE_EIF_H
++#define HW_CORE_EIF_H
 +
-+#include "crypto/hash.h"
-+#include "hw/i386/microvm.h"
-+#include "qom/object.h"
-+#include "hw/virtio/virtio-nsm.h"
-+
-+/* Machine type options */
-+#define NITRO_ENCLAVE_VSOCK_CHARDEV_ID "vsock"
-+#define NITRO_ENCLAVE_ID    "id"
-+#define NITRO_ENCLAVE_PARENT_ROLE "parent-role"
-+#define NITRO_ENCLAVE_PARENT_ID "parent-id"
-+
-+struct NitroEnclaveMachineClass {
-+    MicrovmMachineClass parent;
-+
-+    void (*parent_init)(MachineState *state);
-+    void (*parent_reset)(MachineState *machine, ShutdownCause reason);
-+};
-+
-+struct NitroEnclaveMachineState {
-+    MicrovmMachineState parent;
-+
-+    /* Machine type options */
-+    char *vsock;
-+    /* Enclave identifier */
-+    char *id;
-+    /* Parent instance IAM role ARN */
-+    char *parent_role;
-+    /* Parent instance identifier */
-+    char *parent_id;
-+
-+    /* Machine state */
-+    VirtIONSM *vnsm;
-+
-+    /* kernel + ramdisks + cmdline sha384 hash */
-+    uint8_t image_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
-+    /* kernel + boot ramdisk + cmdline sha384 hash */
-+    uint8_t bootstrap_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
-+    /* application ramdisk(s) hash */
-+    uint8_t app_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
-+    /* certificate fingerprint hash */
-+    uint8_t fingerprint_sha384[QCRYPTO_HASH_DIGEST_LEN_SHA384];
-+    bool signature_found;
-+};
-+
-+#define TYPE_NITRO_ENCLAVE_MACHINE MACHINE_TYPE_NAME("nitro-enclave")
-+OBJECT_DECLARE_TYPE(NitroEnclaveMachineState, NitroEnclaveMachineClass,
-+                    NITRO_ENCLAVE_MACHINE)
++bool read_eif_file(const char *eif_path, const char *machine_initrd,
++                   char **kernel_path, char **initrd_path,
++                   char **kernel_cmdline, uint8_t *image_sha384,
++                   uint8_t *bootstrap_sha384, uint8_t *app_sha384,
++                   uint8_t *fingerprint_sha384, bool *signature_found,
++                   Error **errp);
 +
 +#endif
-diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
-index de47ae59e4..67f45abe39 100644
---- a/include/sysemu/hostmem.h
-+++ b/include/sysemu/hostmem.h
-@@ -39,6 +39,8 @@ OBJECT_DECLARE_TYPE(HostMemoryBackend, HostMemoryBackendClass,
-  */
- #define TYPE_MEMORY_BACKEND_FILE "memory-backend-file"
- 
-+#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
 +
- 
- /**
-  * HostMemoryBackendClass:
 -- 
 2.39.2
 
