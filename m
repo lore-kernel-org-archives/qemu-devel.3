@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDEF2CD5BC4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62827CD5BC5
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 13:03:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smC71-0001KV-Tx; Thu, 05 Sep 2024 09:01:23 -0400
+	id 1smC73-0001P7-3I; Thu, 05 Sep 2024 09:01:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC6v-00010k-R7
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:17 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1smC6u-0000yE-06
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:16 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smC6s-0001kU-7e
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:17 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42bbdf7f860so6198025e9.3
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:01:13 -0700 (PDT)
+ id 1smC6p-0001ih-7d
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 09:01:15 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-374c84dcc90so478706f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 06:01:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725541272; x=1726146072; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725541264; x=1726146064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Vp6jqJWQJM20UmlkjdFnqB0qa1tAd5oRc0QPjbGe4sk=;
- b=bC14IM1xtgss8rbVyCknxyQtHv/ns0JpGtO3sm7gT5rnWH+gjfhCDtRpVsruZkYn15
- mEjxNMnjc80+iaK1pwJXcedStcIGusU0UFV8aP31KKOfq25rrZGMi9NtevCRFn+USQ3l
- fltNyqOUtbH1YYIIy9jJy5qOsLPpX1aDBh5/u/TvN7JaPFviz4KmMmtQgPdwHyLfP/jR
- Bl2jFYIIgHu0VPduWalka5BzPsDA+MBf0eyJN3cNmcX40DJgqf+6eYDbpLbanfirk3z9
- a9YkkUbXJiHJeOtAjqkd2ZTUp5NbwjHMMsWeJjMLggqPRDp1zcganSKFVRQkpM0hdTQ0
- 4pLQ==
+ :reply-to; bh=o6faGe6s53I53gCyvQfJrfuPm0tizhkfFDlXo8UUwQY=;
+ b=u4MxKlgYM8vWWEqX9vQQRDkMIS0plTaa1GQCQrWvwyl98QWlZFVOvCIP2vhYYCffRt
+ DmJTtueblZr9mSbA4//qhY5B2nwLC3Y0s4nD+HmOZp49jqhKn8RxEnhdqY4gLhgq8esE
+ CrZWi45/dAc1Jtv1+PgIumIJNo/cBvLg8G7wL4GsfLUOvwN38H4tHhNSUM6pZqT049Dz
+ LbNnwlnlzg31EVKp993TQ7iI8CpqoA37Tq2JBeQL/MhlFwc9KH1GeOId32ldJBH83X7v
+ Sf672SYVpV1LIlv0QQXme89hJmH3XHIjJRcXT6onrnA3IMEUGcSEYwk3obIwWM1FwhxI
+ WORg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725541272; x=1726146072;
+ d=1e100.net; s=20230601; t=1725541264; x=1726146064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Vp6jqJWQJM20UmlkjdFnqB0qa1tAd5oRc0QPjbGe4sk=;
- b=GicmiCdwfs+YR3YLjpb2M4zJP1+2Hnp0NwavqEojidZL9w95C2cv0s68XUyJE+salB
- 3QRSGFwUvnpP1tFhxHYElzHvItbSu0ziwrTDAQlmi0QurztlBzARPqbib477dBcRthxI
- /0izOpBeIBEJ6ASZH9kGewgh2b92EHuu5T7cGM6Klpv26LDX/WaxdOM9DyIKI/wdpgQW
- lbdp6cQUT0NWw56qx9QrnFyKAfAKENAITonBZlryok+cu9uF6MZzB4iRNLmeLM4jS5wI
- L7yjVp3Eq4/gcZc6VXPuZHK/HrsvQVPuDErcNdQf1LtTDIvdwzTWFcDd7C6R1Wv0ugdM
- 6t+Q==
-X-Gm-Message-State: AOJu0Yzd3Y8v+tkL2+U6Qdy4sC3rwvrLjq1xt1U46LsiOLb7jSDLWl5b
- KYQBEUqmVNujBwXd7TSR8uG2W+jkUCi3GzxzQYfvgcBR4u16IGSQg0OaQ+JMrEWr+ZVXobyLPd+
- 1
-X-Google-Smtp-Source: AGHT+IE1BejZOEQ7nuUIRc09DkQ9Z6FxKrluUHdn227Q+M23daOPJvIJHHne+mQHhhDVLsyMe91oaA==
-X-Received: by 2002:a05:600c:1389:b0:426:6326:4cec with SMTP id
- 5b1f17b1804b1-42bb01e6befmr169492095e9.29.1725541272463; 
- Thu, 05 Sep 2024 06:01:12 -0700 (PDT)
+ bh=o6faGe6s53I53gCyvQfJrfuPm0tizhkfFDlXo8UUwQY=;
+ b=faBq8IwdsPOwZRdOjCWhVvbbbad1cnG4NILTzfA/qpB3wcGIWNeBoBEAORYJ56Rci5
+ ei/Uyp0JQ4mkbkYnoi+IBd927gxgXxji6gmJMSPgtrxZriuAhPIpx0vHP5+iwK/V0ovM
+ fCoSVArv16so2HdcCjWK+ugfAg/TrJppRy/IlFWF/rPlGPqAd9orvAzZ/TnVQfCOPFMJ
+ OLO7MYvrlfTdq9Ih7DvmwiEgcPWLpcMXRnPd+RHBJgweyBqk5jRPXyK4ABae3Z1nD9Zl
+ syjcwUGRYD74BRlNnVxNLivwa4HCMZnpt2gDF/E6rU69uXASMKJMfxbdzeh7AjOGR9Tj
+ f3kA==
+X-Gm-Message-State: AOJu0YxcGUP5RYDluDz83TN6JoRDkDJBMBS8jc5hZo8j0efw8Ie+iIaH
+ xgq/ErS2h0B+N4xBdOF1bGxN4fSnihnsKFQPuMHfwflViyz7MxY8rM6Xn2JEl5tKgmmvREQr1Uq
+ +
+X-Google-Smtp-Source: AGHT+IFKHrbmeDOu6dc3CyftqWRnX3pyvdOWCWvmPaU766CoCYsIE6qH/k7DtbOLULbw0f8nrtxW0w==
+X-Received: by 2002:a5d:58e6:0:b0:374:c6b8:50c3 with SMTP id
+ ffacd0b85a97d-3776f92941fmr4434862f8f.32.1725541263906; 
+ Thu, 05 Sep 2024 06:01:03 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42bb6e355dfsm232251365e9.46.2024.09.05.06.01.12
+ 5b1f17b1804b1-42bb6e355dfsm232251365e9.46.2024.09.05.06.01.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 06:01:12 -0700 (PDT)
+ Thu, 05 Sep 2024 06:01:03 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/25] hw/misc/xlnx-versal-cfu: destroy fifo in finalize
-Date: Thu,  5 Sep 2024 14:00:49 +0100
-Message-Id: <20240905130100.298768-15-peter.maydell@linaro.org>
+Subject: [PULL 01/25] target/arm: Allow setting the FPCR.EBF bit for FEAT_EBF16
+Date: Thu,  5 Sep 2024 14:00:36 +0100
+Message-Id: <20240905130100.298768-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240905130100.298768-1-peter.maydell@linaro.org>
 References: <20240905130100.298768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,58 +93,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the TYPE_XNLX_VERSAL_CFU_FDRO device creates a FIFO in its
-instance_init method, we must destroy the FIFO in instance_finalize
-to avoid a memory leak for the QOM introspection
-"instantiate-examine-finalize" cycle:
+FEAT_EBF16 adds one new bit to the FPCR floating point control
+register.  Allow this bit to be read and written when the ID
+registers indicate the presence of the feature.
 
-Direct leak of 8192 byte(s) in 1 object(s) allocated from:
-    #0 0x55ec89eae7ee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-aarch64+0x294d7ee) (BuildId: 6d508874816cc47d17c8dd775e8f809ae520e8cb)
-    #1 0x7f697018f738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
-    #2 0x55ec8d98d98d in fifo8_create util/fifo8.c:27:18
-    #3 0x55ec8aa2a624 in fifo32_create /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/fifo32.h:35:5
-    #4 0x55ec8aa2a33c in cfu_fdro_init hw/misc/xlnx-versal-cfu.c:397:5
-    #5 0x55ec8ce75da1 in object_init_with_type qom/object.c:420:9
-    #6 0x55ec8ce5d07b in object_initialize_with_type qom/object.c:562:5
-    #7 0x55ec8ce5e91d in object_new_with_type qom/object.c:782:5
-    #8 0x55ec8ce5e9f1 in object_new qom/object.c:797:12
-    #9 0x55ec8d65c81d in qmp_device_list_properties qom/qom-qmp-cmds.c:144:11
+Note that because this new bit is not in FPSCR_FPCR_MASK the bit is
+not visible in the AArch32 FPSCR, and FPSCR writes do not affect it.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-id: 20240822162127.705879-2-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/misc/xlnx-versal-cfu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ target/arm/cpu-features.h | 5 +++++
+ target/arm/cpu.h          | 1 +
+ target/arm/vfp_helper.c   | 8 ++++++--
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/hw/misc/xlnx-versal-cfu.c b/hw/misc/xlnx-versal-cfu.c
-index 6bb82e51c15..2284b407eab 100644
---- a/hw/misc/xlnx-versal-cfu.c
-+++ b/hw/misc/xlnx-versal-cfu.c
-@@ -397,6 +397,13 @@ static void cfu_fdro_init(Object *obj)
-     fifo32_create(&s->fdro_data, 8 * KiB / sizeof(uint32_t));
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index c59ca104fe1..cfb82c23cad 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -556,6 +556,11 @@ static inline bool isar_feature_aa64_bf16(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, BF16) != 0;
  }
  
-+static void cfu_fdro_finalize(Object *obj)
++static inline bool isar_feature_aa64_ebf16(const ARMISARegisters *id)
 +{
-+    XlnxVersalCFUFDRO *s = XLNX_VERSAL_CFU_FDRO(obj);
-+
-+    fifo32_destroy(&s->fdro_data);
++    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, BF16) > 1;
 +}
 +
- static void cfu_fdro_reset_enter(Object *obj, ResetType type)
+ static inline bool isar_feature_aa64_rcpc_8_3(const ARMISARegisters *id)
  {
-     XlnxVersalCFUFDRO *s = XLNX_VERSAL_CFU_FDRO(obj);
-@@ -539,6 +546,7 @@ static const TypeInfo cfu_fdro_info = {
-     .instance_size = sizeof(XlnxVersalCFUFDRO),
-     .class_init    = cfu_fdro_class_init,
-     .instance_init = cfu_fdro_init,
-+    .instance_finalize = cfu_fdro_finalize,
-     .interfaces = (InterfaceInfo[]) {
-         { TYPE_XLNX_CFI_IF },
-         { }
+     return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, LRCPC) != 0;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 9a3fd595621..f065756c5c7 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1707,6 +1707,7 @@ void vfp_set_fpscr(CPUARMState *env, uint32_t val);
+ #define FPCR_OFE    (1 << 10)   /* Overflow exception trap enable */
+ #define FPCR_UFE    (1 << 11)   /* Underflow exception trap enable */
+ #define FPCR_IXE    (1 << 12)   /* Inexact exception trap enable */
++#define FPCR_EBF    (1 << 13)   /* Extended BFloat16 behaviors */
+ #define FPCR_IDE    (1 << 15)   /* Input Denormal exception trap enable */
+ #define FPCR_LEN_MASK (7 << 16) /* LEN, A-profile only */
+ #define FPCR_FZ16   (1 << 19)   /* ARMv8.2+, FP16 flush-to-zero */
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index b3698da8ca7..203d37303bd 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -254,6 +254,10 @@ static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
+         val &= ~FPCR_FZ16;
+     }
+ 
++    if (!cpu_isar_feature(aa64_ebf16, cpu)) {
++        val &= ~FPCR_EBF;
++    }
++
+     vfp_set_fpcr_to_host(env, val, mask);
+ 
+     if (mask & (FPCR_LEN_MASK | FPCR_STRIDE_MASK)) {
+@@ -278,12 +282,12 @@ static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
+      * We don't implement trapped exception handling, so the
+      * trap enable bits, IDE|IXE|UFE|OFE|DZE|IOE are all RAZ/WI (not RES0!)
+      *
+-     * The FPCR bits we keep in vfp.fpcr are AHP, DN, FZ, RMode
++     * The FPCR bits we keep in vfp.fpcr are AHP, DN, FZ, RMode, EBF
+      * and FZ16. Len, Stride and LTPSIZE we just handled. Store those bits
+      * there, and zero any of the other FPCR bits and the RES0 and RAZ/WI
+      * bits.
+      */
+-    val &= FPCR_AHP | FPCR_DN | FPCR_FZ | FPCR_RMODE_MASK | FPCR_FZ16;
++    val &= FPCR_AHP | FPCR_DN | FPCR_FZ | FPCR_RMODE_MASK | FPCR_FZ16 | FPCR_EBF;
+     env->vfp.fpcr &= ~mask;
+     env->vfp.fpcr |= val;
+ }
 -- 
 2.34.1
 
