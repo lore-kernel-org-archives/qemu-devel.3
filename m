@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA293CE7A91
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F08CD5BB8
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 19:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smIcJ-0006Z9-HE; Thu, 05 Sep 2024 15:58:07 -0400
+	id 1smIcM-0006fY-7O; Thu, 05 Sep 2024 15:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1smIcD-0006Bc-7s
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smIcE-0006DV-Ad
  for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:58:02 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1smIc8-0005Q2-Sw
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:58:00 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-20570b42f24so16611985ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 12:57:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smIcB-0005QO-Nr
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 15:58:02 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c255e3c327so1379270a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 12:57:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725566272; x=1726171072; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1725566278; x=1726171078; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J8mnf11fqMhOJ0HRRJgNLp3sCX2YE0q+64B/TUz3Pt8=;
- b=auhXSGLMF2v8csBs6j44cXCeozDbJ8ewJr4PWgWkQcygM8vmAuRAQ+AAIOsuF5qhoO
- jah7829DMkCCrv4jijvJ8/AlwJ4/Mxsbp3O9tdcvjdQSCwdiAyq8YpR+/Xjn8gjhfVQ1
- 0gMriHSLCJStvr6JNayGFt3prQWYkHmG5xbvlwas76sSwK4655kUEufJmH+WDpIhBIJn
- V625HKRej1+0dXY+RT0o8zO66qZHj6StH9Zz/qbjPrR0uHEatASjdiYvLP41qC+a2qJy
- Df/ordbCGlT9i9+QNhslKeSnIXZlMvRTsIWLRJxoLLP8lMV6wD07xvzDwKecUp1f00ab
- VTyA==
+ bh=lYfrfHS9RtigmYutpmVoHsixfgUjRDK8Puz2pHNo5FI=;
+ b=U/cIgRw97COS8oUEocIosulUhB7bBK4XfKY1JCE2Gz8anqqgkcxCyvLSBFlryXtjYf
+ n5gRk/Sw3fOae+JrMS545Epd7BFGHrMC/dXLCY7OLaiY5gBtySW4+dvee3NXww+dQReT
+ xTbKI6JfcOA7tFm3U4vrGA5eSpHlWPuce2U+9+4nJ2wmCpAxnAVlUcV2VfgRgm+Y01xz
+ tFCO4qZ3vasaOB79FYgKeYTpsc+tS/QDXPnPUiP/xNG//TZC71GQsFqUy9ophLYI78Zv
+ DsL5oJiiHiBN4OdbxM7wsGQFiMMeCHLVmR6Ud4mzL6F6XQEiBER63rbiL6klJj7DZcDl
+ L7pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725566272; x=1726171072;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1725566278; x=1726171078;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=J8mnf11fqMhOJ0HRRJgNLp3sCX2YE0q+64B/TUz3Pt8=;
- b=GuawkBIA5JnwEsr72wIQ0aQQeMRhQq3Kcx2lUKTDvCkLOkqGT6BUhUqeiCKNPUy4j8
- y73sPybe0BYdD3QtUQCGrk6z4cyu9+eiXWtJ3xisRFJjH1Q3jaxO5ki15VuVaxqeZ2IT
- pBgerBdEJrjNnRgMxtIYXbt0gwBVH1PCzB/QOT4UF9lDuPsoQH4Tc4hSRFoWZNsdz+5/
- btrEp6UGAVaELeWNkk0IVdaR11Vg0BptGDeQKGZle53FY8YosTKYEFeN4EmDvdKFypgT
- a8vyr8+PqdL2/rn7IB8Alsgsf1FxEMWqkrskHREvm9KSmZi+Xkj7rWLZvUNb7fWXXEon
- DJjA==
-X-Gm-Message-State: AOJu0YyAaGgZfRFyIpSkLo0bL4v1mDLjA8K5ODqHcLGC15LqwKJ4w3Ev
- oFBnwGhhGxuc3WZ/wZCQr3ydC9PclJoFn2x7XtSug9p+xviErHymhvBkhA==
-X-Google-Smtp-Source: AGHT+IFgj0KrRHswL9j3aMxQ3AeikWLoriDiEUYI7hXra1UrJnBFxerhRYkYvgzbJcdGjYh2BGvHdg==
-X-Received: by 2002:a17:902:e950:b0:205:60d2:106b with SMTP id
- d9443c01a7336-206f054fe2cmr2493765ad.34.1725566271741; 
- Thu, 05 Sep 2024 12:57:51 -0700 (PDT)
-Received: from localhost.localdomain ([103.103.35.145])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-206aea5554dsm32031355ad.235.2024.09.05.12.57.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 12:57:51 -0700 (PDT)
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
- slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
- philmd@linaro.org
-Subject: [PATCH v6 1/8] crypto: Define macros for hash algorithm digest lengths
-Date: Fri,  6 Sep 2024 01:57:28 +0600
-Message-Id: <20240905195735.16911-2-dorjoychy111@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240905195735.16911-1-dorjoychy111@gmail.com>
-References: <20240905195735.16911-1-dorjoychy111@gmail.com>
+ bh=lYfrfHS9RtigmYutpmVoHsixfgUjRDK8Puz2pHNo5FI=;
+ b=FM4VLPPykjPtPrLT+ngBxNucODEG1kv0nEtT2jQjTeVExbXGQ4wDGuSF1GaJRvmEnJ
+ kFoN4pS2E/fODihNpbRhrC/Mx+ycD+R7WLJNUU2nRzef7QTtQIj251wWQYnNXeY90D1Q
+ 9uBfiFsMmh9o+/COYwQfwgna0pMJdhxKvZs6D423K6xWVfcBQbp/2jBhY8zhGrlnMGda
+ 8FlOvuIUwaFTmFnoOvwGLOb3v3nnfgq+dNMz9/mXctXM+jBrHLmmfohqiTFUqqHJif6q
+ +N+0XQbiBBkJSJO4Z8leGr3NxU1XOXDgI8jfndzTDdHDYp1yqY+6W1rG1Hk4RuYpjDak
+ r1Ow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUe5lqGF5mtLMtpCyA86AMGMMN+XPimMROZgJD375PYIRbM7GqmLti5lgOiePV5f/E5crxwZ2ac9Yyd@nongnu.org
+X-Gm-Message-State: AOJu0Yxm9PfD0SDH/NB8Mmk8HSXrk8qHDO5MGzmcTY8xOORMAZCYZdrI
+ AzLJjJf1kHQ8bjYA9AoIkneEd7kQsuVWtwS45O9t67Xkyd51oT5Ji9qWfCCYCtl1NibGveH2Wfz
+ jptRkUvcsgKiOTX0vg/YOsit1i/XYODh8tv+r9g==
+X-Google-Smtp-Source: AGHT+IGrWR5JOyJ/Raoykx96VXJhDX1H4HFUlBfuZtF+caWfKSra0Y9jp6VN4gIjU0mGmwtLozHOYgt4uw6kZMLAwzQ=
+X-Received: by 2002:a05:6402:50c6:b0:5c2:1043:b3e1 with SMTP id
+ 4fb4d7f45d1cf-5c3dc7993e8mr70420a12.18.1725566277937; Thu, 05 Sep 2024
+ 12:57:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dorjoychy111@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240905150702.2484-1-mps@arvanta.net>
+ <aca89438-a7c0-4cd9-9668-2917a04ec779@linaro.org>
+In-Reply-To: <aca89438-a7c0-4cd9-9668-2917a04ec779@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Sep 2024 20:57:46 +0100
+Message-ID: <CAFEAcA8yaVZHToNyU3D7nPX37RAqLWW9zxPD6TuSHk5PVaCM3g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] util/util/cpuinfo-riscv.c: fix riscv64 build on
+ musl libc
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: =?UTF-8?Q?Milan_P=2E_Stani=C4=87?= <mps@arvanta.net>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,58 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
----
- crypto/hash.c         | 14 +++++++-------
- include/crypto/hash.h |  8 ++++++++
- 2 files changed, 15 insertions(+), 7 deletions(-)
+On Thu, 5 Sept 2024 at 20:44, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 9/5/24 08:06, Milan P. Stani=C4=87 wrote:
+> > build fails on musl libc (alpine linux) with this error:
+> >
+> > ../util/cpuinfo-riscv.c: In function 'cpuinfo_init':
+> > ../util/cpuinfo-riscv.c:63:21: error: '__NR_riscv_hwprobe' undeclared (=
+first use in this function); did you mean 'riscv_hwprobe'?
+> >     63 |         if (syscall(__NR_riscv_hwprobe, &pair, 1, 0, NULL, 0) =
+=3D=3D 0
+> >        |                     ^~~~~~~~~~~~~~~~~~
+> >        |                     riscv_hwprobe
+> > ../util/cpuinfo-riscv.c:63:21: note: each undeclared identifier is repo=
+rted only once for each function it appears in
+> > ninja: subcommand failed
+> >
+> > add '#include "asm/unistd.h"' to util/cpuinfo-riscv.c fixes build
+> >
+> > Signed-off-by: Milan P. Stani=C4=87 <mps@arvanta.net>
+> > ---
+> >   util/cpuinfo-riscv.c | 1 +
+> >   1 file changed, 1 insertion(+)
+> >
+> > diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
+> > index 497ce12680..8cacc67645 100644
+> > --- a/util/cpuinfo-riscv.c
+> > +++ b/util/cpuinfo-riscv.c
+> > @@ -9,6 +9,7 @@
+> >   #ifdef CONFIG_ASM_HWPROBE_H
+> >   #include <asm/hwprobe.h>
+> >   #include <sys/syscall.h>
+> > +#include <asm/unistd.h>
+>
+> I suppose this is ok, but...
+>
+> For some reason musl processes asm/unistd.h at build-time to produce <bit=
+s/syscall.h>,
+> which is included by <sys/syscall.h>.  This will be "fixed" the next time=
+ musl is rebuilt
+> against current kernel headers.
 
-diff --git a/crypto/hash.c b/crypto/hash.c
-index b0f8228bdc..8087f5dae6 100644
---- a/crypto/hash.c
-+++ b/crypto/hash.c
-@@ -23,13 +23,13 @@
- #include "hashpriv.h"
- 
- static size_t qcrypto_hash_alg_size[QCRYPTO_HASH_ALG__MAX] = {
--    [QCRYPTO_HASH_ALG_MD5] = 16,
--    [QCRYPTO_HASH_ALG_SHA1] = 20,
--    [QCRYPTO_HASH_ALG_SHA224] = 28,
--    [QCRYPTO_HASH_ALG_SHA256] = 32,
--    [QCRYPTO_HASH_ALG_SHA384] = 48,
--    [QCRYPTO_HASH_ALG_SHA512] = 64,
--    [QCRYPTO_HASH_ALG_RIPEMD160] = 20,
-+    [QCRYPTO_HASH_ALG_MD5]       = QCRYPTO_HASH_DIGEST_LEN_MD5,
-+    [QCRYPTO_HASH_ALG_SHA1]      = QCRYPTO_HASH_DIGEST_LEN_SHA1,
-+    [QCRYPTO_HASH_ALG_SHA224]    = QCRYPTO_HASH_DIGEST_LEN_SHA224,
-+    [QCRYPTO_HASH_ALG_SHA256]    = QCRYPTO_HASH_DIGEST_LEN_SHA256,
-+    [QCRYPTO_HASH_ALG_SHA384]    = QCRYPTO_HASH_DIGEST_LEN_SHA384,
-+    [QCRYPTO_HASH_ALG_SHA512]    = QCRYPTO_HASH_DIGEST_LEN_SHA512,
-+    [QCRYPTO_HASH_ALG_RIPEMD160] = QCRYPTO_HASH_DIGEST_LEN_RIPEMD160,
- };
- 
- size_t qcrypto_hash_digest_len(QCryptoHashAlgorithm alg)
-diff --git a/include/crypto/hash.h b/include/crypto/hash.h
-index 54d87aa2a1..a113cc3b04 100644
---- a/include/crypto/hash.h
-+++ b/include/crypto/hash.h
-@@ -23,6 +23,14 @@
- 
- #include "qapi/qapi-types-crypto.h"
- 
-+#define QCRYPTO_HASH_DIGEST_LEN_MD5       16
-+#define QCRYPTO_HASH_DIGEST_LEN_SHA1      20
-+#define QCRYPTO_HASH_DIGEST_LEN_SHA224    28
-+#define QCRYPTO_HASH_DIGEST_LEN_SHA256    32
-+#define QCRYPTO_HASH_DIGEST_LEN_SHA384    48
-+#define QCRYPTO_HASH_DIGEST_LEN_SHA512    64
-+#define QCRYPTO_HASH_DIGEST_LEN_RIPEMD160 20
-+
- /* See also "QCryptoHashAlgorithm" defined in qapi/crypto.json */
- 
- /**
--- 
-2.39.2
+It matches how we include asm/unistd.h in memfd.c so
+we can get __NR_memfd_create, so it seems OK to me.
+We ought to be able to build against older musl too, not
+just those which are up-to-date with their kernel headers.
 
+-- PMM
 
