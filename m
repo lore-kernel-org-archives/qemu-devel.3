@@ -4,171 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D63CD5BDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 16:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8893EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 16:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smFcW-0007BN-96; Thu, 05 Sep 2024 12:46:08 -0400
+	id 1smFeY-0006G6-HP; Thu, 05 Sep 2024 12:48:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1smFcO-0007AY-Oe
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:46:02 -0400
-Received: from mail-dm6nam11on20611.outbound.protection.outlook.com
- ([2a01:111:f403:2415::611]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1smFeN-0006Eu-6y
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:48:04 -0400
+Received: from mail-mw2nam04on20626.outbound.protection.outlook.com
+ ([2a01:111:f403:240a::626]
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1smFcM-0003r8-C5
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:46:00 -0400
+ id 1smFeK-000423-Pl
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 12:48:02 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XKx1gakV0x54P3OHB6pKhzRHAp6QGiam+zTg0WRY6Jn1drfM2y65RNsuZlzoT/XiwrQR3OMIW9qbtWGAbAi61SJp7WYTxedNuFKt12Z4pS8sYL+Z9Z4knINxYYaX/U6EDn/uC8WXiH0mboLSbln4IawW27BJCvR+8NaZmpgPtsRMTBTsj4HOO6LEfLBOqo/grPGnc7TOD1rP6AS2KZ6VbJ2lrEoj/4FjmBQdWtnNJZudqonbH4pJxSHdGb6s7pLY6FTvBL8wHs7ZHemj87zjQuia8D7NNLeabHu5v+r7scKr1m6XyuAcLUbCdeyA734vitmToqvcBeCBGHl2HVM5Pw==
+ b=fYLRKBRUJc1G2EUu0PRuyGb81Nqi7CJ1rHAks0PnYEBfCmVa6UflKcJ84uC7xwrQJzxcHGturpzvwbKOMgeaLvJ3NQjyHwGRV4UjX9xmf55ZubFVidTBLycA6XGI8DynsqtPN61kYPFq/8QVSEqWlIptu8L1KAmx3FBUkvusbycajnHftk0SKwgN6oLw84Ci0VzDcD4H82mIEiHHR8X3gh5YA/O49aiPzo7AdTgCj6YX0tjC41ls+Kb074VqQPHOHXZQizLIFOLuojuvq+3rb2ppdwaZkRVkihaei5KGy4a6Xg2ZL6gmFYPU0646LIZmkyMMIHGU/JAiflBZn/iYIw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bFpyRhM1ga+InxajELql2sgx5DyFOUeKrGPg9EFJdmo=;
- b=EfHfMR1cLJZwXskzRBJC6PhfZCB3emjYQdD36ySJGNazJe+3+PukUdHpsDO04dz6zmQt6nZlWILOJQMEMM/xWahPYx2pZPagtcf/QE18p1YYYwlH37cMasfKYbWg1KKgY0SPcMaVlpUr8Mi1IpfS9i1ThXMaFCoZq+ZRIzg+DiHMnqvPfJZvw6yOuG1gL2Wd2b0TgFGCtbwfJKU4t70bzAJCaboxBM9m57YBBVcpez/ioPueXUA2RC0AGRhjipX/+nhscPnedi2u47tpZ06OAiLx7dVZZzfHQ8+rXhXyHd/X5eay8fHslWzJ9dcMEIUrCULDY6eUlcF5XSq4u+9BuA==
+ bh=CTnF4z+pxcYYoVztiw67Q5yIco6DPDt9NLv/gbKPKYc=;
+ b=h/z/K+3EETVOpsOsSaegaxMzmdzsuYG8ygIrThTgoCwjR/7cg4ZOLb/higdrsrDYbNij6WRQujHm8Ma67+2QBGU1ChH5LQMN+OuStboLFI5XWIFlG5rHT2+aBz4/9uc+uOOs37k5OLr3FPYufd+EaAxhlWbRDMtfG7YjNlGNaGHaO8jfJoi6AW+Uv9V6Vx/tMP3VykFD9hndqhlw5qld/UDcz1t4tMeh9/euvAiToM2xLAWRjBSKbiSbK/DVvRbJICkL6DIQ6yzHiY+RBkn4wj77UFYTkgjLcneAyQm2iXbhDLBm7SYNkNjeRT7t9C8Afp2ZR0DsE6IV6XA1A2ONeQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bFpyRhM1ga+InxajELql2sgx5DyFOUeKrGPg9EFJdmo=;
- b=Ko2oL3DoToU2KCzIGroSALWxyILIGBjKi1/N8FQ6OGGbqlT5cN+2pb4f6lifoWv2gf86agfRnlBqujkFRu+Ewd6384kW8GSDxZ1rOQqqpC8wzHP1Ow0dddjhDQ50nNTfjcwKllH9MRSD70fovzYHGbm68jCZfXc+txxm51JqvYObStzvDKBHQuVw7nkTkS03X3kXzgSnk/foUvC9pGu2svbKQ0ec9rCrw2+nNFMSOsHnTvGQy7oYwdBmB35m6ZDhCjMDnYNCwtCxsk4fj/dC4WCXYT92ntto+aU0Ofi6lJHXf/3wE7AJL0k/JOMumvY0vNchpPC3kRENUxF4TryNpg==
+ bh=CTnF4z+pxcYYoVztiw67Q5yIco6DPDt9NLv/gbKPKYc=;
+ b=HdFSEa5ywrMwr0I5WCxwU9omApSlAUJuxrdRZ64cQWHA8HRXVXWroWhkbf+e0NdzK87TbAN/uzY+y/JDIiL4q4t4mjb3MmAZlvIezOFudAxhdr+l/Mz54frrCuiJir8IJBBtgJ0V2S3bBqOylEIgYmNXm49Q3d534AGRbc/pp3LDYwVzeH6UURvhNuUffSMSaOSqHU3xd8kKzq/7cpO13ItCtwXvV4aGCD1toyRDlClMvFeFN9wxajiKN5B3/AEoQd0zzYqWRsNS1ij/oVYNpt24gEPFpjIoB10guxO2guzlZmTZHHjJY6Tm//eeQJn3Sz2pVlR/tZomJ+u7EF2zLQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by SJ2PR12MB8846.namprd12.prod.outlook.com (2603:10b6:a03:549::20) with
+ by BL1PR12MB5948.namprd12.prod.outlook.com (2603:10b6:208:39b::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.26; Thu, 5 Sep
- 2024 16:45:52 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.27; Thu, 5 Sep
+ 2024 16:47:53 +0000
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::e2a0:b00b:806b:dc91%5]) with mapi id 15.20.7918.024; Thu, 5 Sep 2024
- 16:45:52 +0000
-Message-ID: <22f013dc-6c47-4902-9b28-08e916c3cf54@nvidia.com>
-Date: Thu, 5 Sep 2024 19:45:43 +0300
+ 16:47:53 +0000
+Message-ID: <2a9d1c5d-6453-4b33-99cd-824f0002e305@nvidia.com>
+Date: Thu, 5 Sep 2024 19:47:45 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/11] vfio/migration: Implement VFIO migration
- protocol v2
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Juan Quintela <quintela@redhat.com>,
- "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Subject: Re: [PATCH v2 09/17] migration/multifd: Device state transfer support
+ - receive side
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Yishai Hadas <yishaih@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Maor Gottlieb <maorg@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- Tarun Gupta <targupta@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Zhiyi Guo <zhguo@redhat.com>
-References: <20230216143630.25610-1-avihaih@nvidia.com>
- <20230216143630.25610-9-avihaih@nvidia.com> <ZthZ1aW_JmO3V9dr@x1n>
- <95d10ed3-33ef-48a9-9684-3a8c402c5db9@nvidia.com> <ZtiHzQHJ4PgWc21e@x1n>
- <b8807171-567b-4e21-af83-bc2f6dbbf606@nvidia.com> <ZtnLhW-2eo8hA7bQ@x1n>
- <812e89c4-35d8-4fc0-ac10-ec36d57f215c@nvidia.com> <ZtnbD69EeXhR6FFc@x1n>
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <84141182083a8417c25b4d82a9c4b6228b22ac67.1724701542.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US
 From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <ZtnbD69EeXhR6FFc@x1n>
+In-Reply-To: <84141182083a8417c25b4d82a9c4b6228b22ac67.1724701542.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LNXP265CA0056.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:5d::20) To DM6PR12MB5549.namprd12.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P265CA0107.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:2c3::12) To DM6PR12MB5549.namprd12.prod.outlook.com
  (2603:10b6:5:209::13)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|SJ2PR12MB8846:EE_
-X-MS-Office365-Filtering-Correlation-Id: c471375b-3255-4dd1-fc96-08dccdca33f3
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|BL1PR12MB5948:EE_
+X-MS-Office365-Filtering-Correlation-Id: baf4a9bc-a859-4869-5d42-08dccdca7b58
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dEZZd3RlV3hCakRRdENTTnE5c2Z5dzdCaE1wWXE2VVFzc3VzYWJUendIS292?=
- =?utf-8?B?ZHhOMTRLa3hXNmdDcWQ4SzUvTkRsdjVYLzdScTNXbWlvdjkwb2hwTnRyTFhV?=
- =?utf-8?B?c25nQ0NFZnRQeXN6Mi9WOXVLQ2drL0YrUVViTVF0aEFmWHNxTTJrTmdubWhr?=
- =?utf-8?B?SVNyWmxBYnpnSFNTRk1oVkNoUFNhTDBBN1NwMnAvNmY5YnUwaEhnQjlSVkM5?=
- =?utf-8?B?RkFVYitNdmZDVnRjQ09hQmlkNHBsY05pVjZoOXR0UG9kd3hMYXR3bVc3Nmd2?=
- =?utf-8?B?Q08vaDA0MGtSS2hpWWgyYjZ1OHZUaFZpWFpmSDB6NmFSdk9mdnpZYVZjOUFV?=
- =?utf-8?B?cUNIcjJOWVlZVTlEKy9JWkZzWHZMM0xJMmtIYWtDSEpzalJWNXA2T3Q0QWQ3?=
- =?utf-8?B?OFVJOUhLbmZidEZLK3k0ZkVsY1lZM1lmeEpTRlcvRkJseVdmY01iNHJpSkJF?=
- =?utf-8?B?aTcvZ1RUSWZHc2M4eWpHOTZkYXR5Z3NSQXFNMFZEOThrU0hoMmo5M2tyRjc5?=
- =?utf-8?B?WSt6eUJkSk5iRlR1UmFjZU51QkhKR2ZWQk9rQTloK0I0TmQ1Y21IV2FBMzVw?=
- =?utf-8?B?TGs5MmJBbXUrUkV6T1VONzlIdkZTaFdYbVI2ek16RHQ3THBaam9BckJwL1h5?=
- =?utf-8?B?UnFDZ2sxcjM1UGNOWTFRMnpNKzdzc2VVYy8zR3B4YkoycldjamZFK0RhYlJ3?=
- =?utf-8?B?dzdFNXh3ZmNwbzVXSXBHZnZIRmxXQWthMm1QanV6cFhaaDlUaEh6QjR5dlhY?=
- =?utf-8?B?SEVicXJVOXE3SytJT3gwajdUWGdhRFZIMEtwVmg3Q3ZTR2kxSXVMOStya0tv?=
- =?utf-8?B?L2FUOG91cWtnSS9ROGFBcDQzMVVTbVpPcmRVQUJYR2VDVVBpZS9XZ0RlYjJj?=
- =?utf-8?B?b01UVVdsb3BTV2ZKZ2Y0WVprdWgvajdPeDFJUmRQNlZuY00zem1LcUsyYVZX?=
- =?utf-8?B?Y2hoMVRyeUw5TXJlTWpTRWVZVFBrek1iWHhRdDFZM1h3YVJsd1hzaUpEUHU1?=
- =?utf-8?B?MisyZUp2empPbzdqMzg4MzRpT0VDZDVhZlZZV2gyVTh0R3pKSmVOOHJDNEtE?=
- =?utf-8?B?azMxRnNod05XVWluemFFRms0a0JLR3daN0xNV2tkc2orODZrZDExQndTbzNi?=
- =?utf-8?B?cHp4OEZ3anU0c1B4ZEJtQXRmUVE4aFl3Q2g4alNLT211ejhzUEZJME1JUCtM?=
- =?utf-8?B?M1lMNkJpOGhCWGQ4NThmY0pTM1FGWldWMTlnYjh5TzhIQ3Qwdk9sd0dkTnQz?=
- =?utf-8?B?VmJKcmRQbkVoWHBVM0lTazhPVitrQWVNN3ZQN0s3U3ZuTkE3VHNmU3d6V2JE?=
- =?utf-8?B?TjRWbEpGWGdtVTlLUys3SWtKY3hnSW5tV3MrdWRwQ2pDUG1nSmp0Y1NkNzJO?=
- =?utf-8?B?aFhVN0xPMThaSFI5Ung5R2VVNldMekllZ2l5SFk1SjYrSFYyUFpJdXpUYWdH?=
- =?utf-8?B?dVRza1J4MWFUZFh1aGFaTWV5NFQvaDRYMFdlUFFHL3NJUmN6ZkcvOHZWMnFH?=
- =?utf-8?B?UGVEMnd3cXBEVWtaTld2bXcrWmxLTldZVnY5emQrZW5uTlJNVWNTT0FxN2w4?=
- =?utf-8?B?cnFnK0RUNWYxQjUyeHh0cFFBRS9FTDVRaUsveTBnVVo5VTlQb0d6cU1tR3NJ?=
- =?utf-8?B?dkErbkYwcmJHZFVqTk1BbVhQMlVMbG5qdEsrV3pQT2pwc0FyWmVmeFhYWGtR?=
- =?utf-8?B?MWNvN291VUlWUEVlMFoyNjJjTy9iR1hndG5LKzBsRkxwTTNaNHd4NTZWOVlU?=
- =?utf-8?B?MExsS0RMbXIzc2V0YjVwcTRjT2tOOTVVa3ZsTTdEc0VKQjQ3Q1pjUGJlUndR?=
- =?utf-8?B?blpNQ0I1dTA1ekRCcDR2dz09?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?N1VZcms2dkJyOW1IaVBRVlRKTGh5enNnM3JsUTBxR1dmL0JiTDRCS1cyUjdq?=
+ =?utf-8?B?bTMvM0drZmdzZWtvN1RSeVBKc3JhYzJmczQvRFNKeFkraDRUQlBYZ2NMNGdG?=
+ =?utf-8?B?eXg1NlJxc1VSa3ZKMkM4clBtcEowNENCUVZ3eGRNdWxDMFdBcllxTlp5cUdJ?=
+ =?utf-8?B?YkRPM1BucjZvQ1UxTWJFODBEa0ovMU1DWVcwdVlRbGdqNUFid09JQU1EN0xp?=
+ =?utf-8?B?SkdpeVozWVNJSmx2eXpHYU1CSWlMcUFTdiswRG9rTnVZdVQzSGhiYWZQZnVm?=
+ =?utf-8?B?aDdrM2ZjSUJaTGExbWlyWmVpRkdNTFpQTlo2M29QQy9HSERUYTltSmFDQ3E3?=
+ =?utf-8?B?YVdWSUFrMjFQUkRnamkzdkNQTHFJdnNTTkExaFNKZjUySmFMRi9yM3BqY0NM?=
+ =?utf-8?B?VmhiZ21GVythTzJmVUFwNGN0TnFVblJrSzJ3OGI5Qmp4WnQ1OFJzQ0grdHdY?=
+ =?utf-8?B?N3pISTN4YURHZHpZT0FNV2ZLRC9ZT0kwa1VNbHFFRDJLbEFQWnRlRlRTbGN3?=
+ =?utf-8?B?MVZxT2VDRHF4YTRNWkhrVzQ0ckZ5OVRiSjErVmo3dm1KamkrL2h0MjdXdVoy?=
+ =?utf-8?B?L0NwQzcvRC9QWEk4eXM3cFBWejJmQVpRSkpXMm52SzVRaDI4dkxIdDBwbDVC?=
+ =?utf-8?B?aHdUdVYyRWVGM2MyZ1FBdVVORW5sSW0zTzVOQnJHenZKeThhMFE3TVVXRkdX?=
+ =?utf-8?B?bzJhbzJZOUtjWGwxeU9vaWJ4OXNHNWQxZFNBNUhQRSt6Y3I0L2Z5Vm5ycG5x?=
+ =?utf-8?B?cXFKUG1kWUl1am9NN2xna0ZZQmx6WVVCU2dqd1hVNHYrN0IyZWxjcWlQanlx?=
+ =?utf-8?B?Qk9RZTVyeGVKaVg0YW15NEdrUW9sckFzWEs3Vk9xb1RoWHVtRngxdFJ5OHRJ?=
+ =?utf-8?B?dWJoWDhWRm1xUXIzeWQ5aGNtb0txWnI0cnVjVGoxS0JCbUtoUHRicG94Tkls?=
+ =?utf-8?B?QmtXcjJPaitXY2hBbE5kdDlKaEZtUzZTOVovYXh6eVFSbTk0bUJtZkJBVHgx?=
+ =?utf-8?B?bFUrRlNSVFhKdG9DS0pubmlFTmluM3ZTdlB2SW9wTzBMM1FxdDdkT0tEa2sz?=
+ =?utf-8?B?SnJCejFULy9vQnJXR1lNak5vYkZFTGFPdWtoK3pSM0ZtaTRLNkJOZFM2aDNx?=
+ =?utf-8?B?TCtab2FFWUF3bHY2UWduUlA0dWRNSkR5NTZqUUhnbzBaMk9mRms1UG8xbnEv?=
+ =?utf-8?B?QkMxbVBpR1RUSG1TYUh1WHluMFRPNEt4K3diMGVuVzZUV3ZQejVxUXh4RkI4?=
+ =?utf-8?B?YWprdHVFQzBMK0JLelErU1loa1ZMd1BSaWo2YkVGcW9QZUVPZXpoYmZIUlp2?=
+ =?utf-8?B?TDRka000NUNDemJRQzVycWRRbk5LWDBOdTFGNmczLzBZaUplREJLMlR2WTJk?=
+ =?utf-8?B?am5ZWG81S3MzQVczOXdFZDVKZkg5S29qbGRKcmJXY0pWSGJiVGxib1VwMGdT?=
+ =?utf-8?B?dHZGMXRGTmVUdWZQQnpRMXVPbDVsV0NRRkU0aU1JaVZPQm84cTgwbDYydndy?=
+ =?utf-8?B?RFVrSiszNE41bHBTWUxZM1h3WXpZN3E0OThMdUVTeDJMMDJFM0hrTnp1TFV5?=
+ =?utf-8?B?dFJqU0lqMktOTHAvemsxMURWU3lqbVRCTjM1aFJtTmhBMXVKTzdacExmNE92?=
+ =?utf-8?B?WVBkaXpVMWR6a0dZelNoKzlGRVpEVTdjb0lkVHBXd25qYnd5Z2ZDWjk2bThJ?=
+ =?utf-8?B?eS85UTA1eDhvNXJqbVRhQXhLaHllQjdVNDF4dXdMUTFKRm8vTjZpblFHZDZw?=
+ =?utf-8?B?aXQ0NEVRamdBZUtjTzdIYVg3VHBZMVBzY0dwN1I5VDFheU5OMDN0TDFBUldH?=
+ =?utf-8?B?OFpUR2x3OUxJcUNjUmMwQT09?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(7416014)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N08wVnVOdFpUWUZEdFFSVzNXZG1zWUZ5NERPRW5uaU9ZUzNpcU13VC9ySGlr?=
- =?utf-8?B?MU9KeU5DNFg1UmJlbGJIaG1RQ3hmeXBiQTlQdDZHWkUxbTFnTWlzUkZrQ1ZI?=
- =?utf-8?B?QnQ3NjdnVmEwV0txQ1B5c0dzNjNqU1hiV3R5WUpLS0U0R3lLSXk0THZ6YXdT?=
- =?utf-8?B?Zm1TV0xtbWlLRWVMUXVBU2pwc3BvSUdKa0FCN1NZR1FlQ1ExNlNVWmRza2g4?=
- =?utf-8?B?elc4RTJ2YlJrNmhaaUJzUzMxdnBsVXJ4ak5aZm1ZRTFKWXpGaHpucU1zUE8v?=
- =?utf-8?B?V2p1ZHl0Sm51MDA0YWhNY1F1dGRsaDU3c3M1V2ZmNXlqK2FwWTVlYmR6WWha?=
- =?utf-8?B?SUZHMlpmSmE0RWhtdCtjU1BoR0lGQ1JUU25PcnBBUnhmWXJPVFpWYWdsZVBh?=
- =?utf-8?B?ZnpCRDVDYksrelI4ek5ubVNwVGIxYlh0Z0dXUjRyalRzeWI2VTVYcVg1L3Bw?=
- =?utf-8?B?cGFKTUdjbWtVbEJFK0JZbElLdHVNWEMvNDdxdkdTTGVWZHY5MEI0Y2VRVEIv?=
- =?utf-8?B?Y1ZSMWV5V25Qdlc5Q05Cdy9QcVBiazZFVTA2d0V4UDlvekdMQWdmbTYxQXRx?=
- =?utf-8?B?SG82Y2ZtK2VBOEFDWFlBSXJiaXBJYkgzencwZmQ1aFRoVncvblBRblMwWnNB?=
- =?utf-8?B?cm9VbVlwbVloVHY4TVpYdGZVUC9sMUZ0bk9UbUZqZXV2bFAxN3pkTUNPZDVP?=
- =?utf-8?B?TWp2UTVHQUQ2MElkZkJPMm51Wnl6M2VJK0ZmTlVuakV1MmVleWp3NXNvRWZq?=
- =?utf-8?B?L0xhR1IwajJqbEtqWms0NDBjQnd4eDUrNUdCaGJhUzZTS252MVlCS2x0TjVZ?=
- =?utf-8?B?cGVhZXlnSE91dzZoLzNFdGc4Wm1EaVdaMEJXV0gvejg0amNIU1RjL0c2Nmdm?=
- =?utf-8?B?RnJqRzZNV0Q5aDRFbG5EMk1lWmJ6VEtnYmVQSktQNUlEMGF2K05Yc1d5eWNR?=
- =?utf-8?B?WnNtN2ZtK3lRRFFyTnBiVmk0cjVwV2dNWk5BSGtST2ttcTlLSG00Y1A2QWxQ?=
- =?utf-8?B?NmthNFBiNGZGOG5jMWxQOWhCM2wvcVllS3BPdWk4cDdkWis4TTB2UFd0L2tx?=
- =?utf-8?B?RXZCNzFoMS8zQ0h1T3cwNTVKYWNPdEVpdHVORFo5RjdYRVJVK3F6eTJLcW9h?=
- =?utf-8?B?NlgwS2w1T0oxak5HM1JNdlBHS1BtZGdlZ3RBN2ZKWXpPZEdGNHVCR0l5Q3FQ?=
- =?utf-8?B?NHpIYmFWMzJMM0VoeGg0K2hWczlIeXRmN2Q2SGx4ejB4SXc0Y3NrZU5jd29F?=
- =?utf-8?B?Q3ZoWWRpWkFXK216SDVVc1dMQ0ErQ1RoSmtXRGFHTkQwY3RjZjd6SUlUSG1n?=
- =?utf-8?B?aU01WUU3Wml4eXJhbVF2UmFnRlJ2ZFArSWtUSWJ3N2pqMnpSdWIvQU4xQlo4?=
- =?utf-8?B?SDZHTTJjSm5NWStJMjdwYVNKalBsT1dwZEVFSGZBUXhWNXU5alJPV1cyM21l?=
- =?utf-8?B?VS9WOG1ZYXdRbXVUd1NDREJPLzRDVnBpZlFSd2lOTHBKM0p6NHBvUjBndG1U?=
- =?utf-8?B?bkM0RStLNW9XZWo0Y3VjcHZybGIxYkZxUWNDNkNzZ1JMa2VBcHdsckJYV1dm?=
- =?utf-8?B?MWFlYm1TRFQrUHVLR0JHVGJ1b0FleTdML08wSElROUpSVVZUN1BkanplTkF3?=
- =?utf-8?B?Q3NGU2g4UmRjNlEvamNqc2FjZWNnbThVR0dHcmRNWk9vbHpRQXorNkJpeStI?=
- =?utf-8?B?a0hnZ0dSSTEvNEdlb0NxZlo5ZFcvWnZpbDdoZG45U1c4V2g3enhlWUtEUXpw?=
- =?utf-8?B?Wmt4OERYTEFCSHlkN1g0eC9jZC9pM3IrdUxWU1I4bk91TWszVEFTZEhmanBl?=
- =?utf-8?B?RzZ0cjBXTmdIcmxBT2plc3VXOWVDNjhtYVozNzBDRnpxY1h6WTJ6Tllld1Yv?=
- =?utf-8?B?TUVmZVdQKzVzN0kxVEJnbmJqUzFlZ2FqVHI2cUZYZXd4VDdEQWY4ODJqd1dw?=
- =?utf-8?B?ck9Bc0thN2dQdmRCdDdRcUt4cEFxTmpzdFdzUGhzWnMrZ1VyOE9uZ01PYjE3?=
- =?utf-8?B?anBhRTlFS1RMbWJVcmZpSWZXRGJEdVBqNTVnMnVhMHlpNG9SdjdwWlNBMERO?=
- =?utf-8?B?ODN3SStNeERqb1pwNDU3MjViaGdwNzFlODZ1WHZhSjRtUFNOMkZ0WmZFOXBs?=
- =?utf-8?Q?uNkaMYUT7xTgyFSwKCgirYpuE?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YXRwRnd2dXV0V2laMy9NMndGcGh0SS9FNjF2aHpjQytzOXN5anAvQ25wbmhq?=
+ =?utf-8?B?TzZFQXZWckt3Ujd5aDNMUUY0SThRdnpaWXIyOHluYWlUeTg4NzBUaWZvWWtw?=
+ =?utf-8?B?eE9qclJScERIRGc1TnNFbVRiUG91Q1NOQkltKzJsbDZXMHFMQW5yUEJSa05w?=
+ =?utf-8?B?K3JIMFhIT0FoTWdnb28zMWsvUGJGOUxNZ1lXa2hBb3VvQlpLbElyZlUzYytW?=
+ =?utf-8?B?NkZFck82QUovckREUCtHb3ByYTQ4U1RjcXZ3UEdXWkhtenNoQVMzMzhRUzRW?=
+ =?utf-8?B?Y1d1Z0sydGJIdncwZTQ5MXZuUWJMeUNGM1Z4OGpJbXhHNmZlY2NZWXkzWUJR?=
+ =?utf-8?B?NnNQZWg5SEthbmhWUVZCZFhqeU9ETFpNdHQ5V1BxblVRL21ObWIxSm5nYm9y?=
+ =?utf-8?B?OW83dm9RaGVzQ0RpMnNkbStiU2ZmTHNaNEo1Z3dpWjhHR1VQa0tHRlE4MEov?=
+ =?utf-8?B?R1F1Vi9ncTVFR2h6aFZVQ0lNTGpwVzUzYzY0YXZ3MStOMy93cEg2ZDNjK2Zx?=
+ =?utf-8?B?cm45N2FXTFFLK0N2N2piZXhFWk1vWm9Ja2JJZmxhc0Zlcy9OZnhoVi9ZMlhC?=
+ =?utf-8?B?eEhSK0xOazUydDdzZytsU0ZhYmZjWkliYkVFMHEzU2s1eUdnR0dNSDVBM1Jn?=
+ =?utf-8?B?WDBTUTlHbytBM0tXWGVMbXpvalFSTTF6RzJJL245U3JnL3RuOHNMeUEwUTJ4?=
+ =?utf-8?B?WEEycm9MaXUxeEJkTGE2RWtIRzlNdGlNOWNBTi81UG1yVi8rODN5SHF3S1k4?=
+ =?utf-8?B?Y1BXRzVEL3ByZVJ6ZTJSc1djckFjY1FiRmxPYWVRY3dWZFdCOVJLMXBGem5l?=
+ =?utf-8?B?Nit4VGY2RDMzUGlHMzJSOUk4Sm9jTFhuZVlpam9Oc2V1WVk3Vk5VNVAwZnp0?=
+ =?utf-8?B?TlBXWk9sNWc5YmdnWDJXeitoY1hBRlcvVjJ0U1Q5dldoM3UzdndxTWk3Z29s?=
+ =?utf-8?B?eFdBc0RRY2hJc2ZWRXpPdTdQMVB6WDlrWXY2aDV5YmNlc0JYMG9DeVhzRGlB?=
+ =?utf-8?B?UVlmRldxU0NZT25yT0p2RWJhV3g2S1plUHdCWmo1YjBFdHY5MGtZcys2MVpm?=
+ =?utf-8?B?TTA5bHVQWWNveDNZZ3BoUm5wWkM5b3B4bjVaZ2pacFBiUGg2QWxmeW4wNTJh?=
+ =?utf-8?B?bW83eVV6Nk1ZNi9wK1UwdGJuSTdjTldDV2g3NGsrbHpuKzdBbjZuNjF2d1NC?=
+ =?utf-8?B?cWRQb1B3Mkg1am9JSWVMVWlUOXB6YzZ2VzJJSFY3aGswZ0M2L1NhWDRXN0xH?=
+ =?utf-8?B?NUI5QmlFQXZTRUI2ZzRPTHpNMzNKc1hKa3RWc2g4YmE4MjF2cG8vUjlPSTBL?=
+ =?utf-8?B?L0pqQnJxaXdJR1JsakxUMnJTNWFhWkNXUVR5RXlxN1RwNlQ5eDhWWCtpK1NS?=
+ =?utf-8?B?eWRTemxYRjVKK0xBcHpHd0xHWko5bHgzTXBSUjdCb1hkY2xQZURYM2lKYW1R?=
+ =?utf-8?B?YTJUNE1KUG52ZGNUcUNiSkpUcXpRSXpnSkRrT0JYZVFRVVpPZDcxakJuMGEv?=
+ =?utf-8?B?ekZjVjJ1ek00dnFxR2Q5bXN0d1EwWkdaZmkwLzEyWTFIclVZMjg0elVTaHhW?=
+ =?utf-8?B?MnJWVEN3enhWcjFFWG9xNXlINDd6Q2dYZ2Z5UmVKcDBlVk9rOGkrQ2YyMDR2?=
+ =?utf-8?B?cFZXMHpPeWl5ZEJBdHY2YkpyOExvV2ZhTTB3N0s1ZUlHVllacjVYd0dWZkV3?=
+ =?utf-8?B?c05rQUdlRFhaU2JMOTV6UHlxZTJoODRoSWNzSll3UWdxdFJ1MHVldjcvVDl5?=
+ =?utf-8?B?emdwd2VVbmw2RURrUDhKMG9qTWsvanQrVDFxTVZpT0d3RUUzVjJKcmx6OW1U?=
+ =?utf-8?B?Q291bkEzekQxaXd2Skt3NXBUVlE5cGdITGdoZTRqTzBMd3hITmhDbEcwbDd5?=
+ =?utf-8?B?a3hDQUJRWERJUzBuZkRSRTFJWEVmNy9ya0RGbjhLaVQ4bjRlSDFOWmdmUjVN?=
+ =?utf-8?B?ZndrMUFGR3FpSTZCYnM2MmI1ZDU3MzVUeXZFS1c1cXphdzdVeXpBRURsTFpW?=
+ =?utf-8?B?bFExRzMvcStDcnpEbHpqaFdZdUljcEdXNVdNZGtPTXJ3OHNKQ29UTWlYc2R1?=
+ =?utf-8?B?U0tIL0JiTWFFR2V1TXprOEowQlAvaE5DcG1FVTM0MEtTaUhtak1PVllaL3dI?=
+ =?utf-8?Q?Xs5wSxp1TKGUiHVYCVoGK1/SL?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c471375b-3255-4dd1-fc96-08dccdca33f3
+X-MS-Exchange-CrossTenant-Network-Message-Id: baf4a9bc-a859-4869-5d42-08dccdca7b58
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2024 16:45:52.4823 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2024 16:47:53.8101 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P6D+MtPdJcJ0xvkQUtwORSVltTI5+UNi8FAHqDIo5aEq3rMhviBBBp4wexEfT8PEiMg/aGejrZ9IaaFwiNhqbQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8846
-Received-SPF: softfail client-ip=2a01:111:f403:2415::611;
+X-MS-Exchange-CrossTenant-UserPrincipalName: VpxuHCZKr9PHmFpEVMOCKlgMV6qI02137itFTLHMtO3+X9q8/izi4Vl6wfTVRCxbX3rrx4FS4/15b0Uunj9s7g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5948
+Received-SPF: softfail client-ip=2a01:111:f403:240a::626;
  envelope-from=avihaih@nvidia.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -192,54 +184,335 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 05/09/2024 19:23, Peter Xu wrote:
+On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
 > External email: Use caution opening links or attachments
 >
 >
-> On Thu, Sep 05, 2024 at 07:07:28PM +0300, Avihai Horon wrote:
->>> So I wonder why stop-size can change from a driver, and whether that can be
->>> reported in a more predictable fashion.  Otherwise I see little point in
->>> providing both stop-size and precopy-size, otherwise we'll always add them
->>> up into VFIO's total pending-size.  The line on provision which data falls
->>> into which bucket doesn't seem to be clear to me.
->> Stopcopy-size is reported by VFIO_DEVICE_FEATURE_MIG_DATA_SIZE ioctl, which
->> states that this is "[...] the estimated data length that will be required
->> to complete stop copy".
->> So by this definition, stopcopy-size can change during precopy (it can also
->> change if device resources are created or destroyed).
->>
->> Precopy-size is reported by VFIO_MIG_GET_PRECOPY_INFO ioctl, which states
->> that this is "[...] estimates of data available from the device during the
->> PRE_COPY states".
->>
->> Maybe the confusion was caused by this line in vfio_state_pending_exact():
->>      *must_precopy += migration->precopy_init_size +
->> migration->precopy_dirty_size;
->>
->> Which I think should be removed, as stopcopy-size should already cover
->> precopy data.
-> Would you please help double check on the kernel drivers' side?  If that's
-> true I agree that should be dropped.
-
-Sure.
-
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >
-> Does it also mean then that the currently reported stop-size - precopy-size
-> will be very close to the constant non-iterable data size?
+> Add a basic support for receiving device state via multifd channels -
+> channels that are shared with RAM transfers.
+>
+> To differentiate between a device state and a RAM packet the packet
+> header is read first.
+>
+> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
+> packet header either device state (MultiFDPacketDeviceState_t) or RAM
+> data (existing MultiFDPacket_t) is then read.
+>
+> The received device state data is provided to
+> qemu_loadvm_load_state_buffer() function for processing in the
+> device's load_state_buffer handler.
+>
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>   migration/multifd.c | 127 +++++++++++++++++++++++++++++++++++++-------
+>   migration/multifd.h |  31 ++++++++++-
+>   2 files changed, 138 insertions(+), 20 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index b06a9fab500e..d5a8e5a9c9b5 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -21,6 +21,7 @@
+>   #include "file.h"
+>   #include "migration.h"
+>   #include "migration-stats.h"
+> +#include "savevm.h"
+>   #include "socket.h"
+>   #include "tls.h"
+>   #include "qemu-file.h"
+> @@ -209,10 +210,10 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+>
+>       memset(packet, 0, p->packet_len);
+>
+> -    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+> -    packet->version = cpu_to_be32(MULTIFD_VERSION);
+> +    packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
+> +    packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
+>
+> -    packet->flags = cpu_to_be32(p->flags);
+> +    packet->hdr.flags = cpu_to_be32(p->flags);
+>       packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+>
+>       packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
+> @@ -228,31 +229,49 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+>                               p->flags, p->next_packet_size);
+>   }
+>
+> -static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+> +static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
+> +                                             MultiFDPacketHdr_t *hdr,
+> +                                             Error **errp)
+>   {
+> -    MultiFDPacket_t *packet = p->packet;
+> -    int ret = 0;
+> -
+> -    packet->magic = be32_to_cpu(packet->magic);
+> -    if (packet->magic != MULTIFD_MAGIC) {
+> +    hdr->magic = be32_to_cpu(hdr->magic);
+> +    if (hdr->magic != MULTIFD_MAGIC) {
+>           error_setg(errp, "multifd: received packet "
+>                      "magic %x and expected magic %x",
+> -                   packet->magic, MULTIFD_MAGIC);
+> +                   hdr->magic, MULTIFD_MAGIC);
+>           return -1;
+>       }
+>
+> -    packet->version = be32_to_cpu(packet->version);
+> -    if (packet->version != MULTIFD_VERSION) {
+> +    hdr->version = be32_to_cpu(hdr->version);
+> +    if (hdr->version != MULTIFD_VERSION) {
+>           error_setg(errp, "multifd: received packet "
+>                      "version %u and expected version %u",
+> -                   packet->version, MULTIFD_VERSION);
+> +                   hdr->version, MULTIFD_VERSION);
+>           return -1;
+>       }
+>
+> -    p->flags = be32_to_cpu(packet->flags);
+> +    p->flags = be32_to_cpu(hdr->flags);
+> +
+> +    return 0;
+> +}
+> +
+> +static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
+> +                                                   Error **errp)
+> +{
+> +    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
+> +
+> +    packet->instance_id = be32_to_cpu(packet->instance_id);
+> +    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+> +
+> +    return 0;
+> +}
+> +
+> +static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    MultiFDPacket_t *packet = p->packet;
+> +    int ret = 0;
+> +
+>       p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+>       p->packet_num = be64_to_cpu(packet->packet_num);
+> -    p->packets_recved++;
+>
+>       if (!(p->flags & MULTIFD_FLAG_SYNC)) {
+>           ret = multifd_ram_unfill_packet(p, errp);
+> @@ -264,6 +283,19 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>       return ret;
+>   }
+>
+> +static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    p->packets_recved++;
+> +
+> +    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
+> +        return multifd_recv_unfill_packet_device_state(p, errp);
+> +    } else {
+> +        return multifd_recv_unfill_packet_ram(p, errp);
+> +    }
+> +
+> +    g_assert_not_reached();
 
-It's not constant, while the VM is running it can change.
+We can drop the assert and the "else":
+if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
+     return multifd_recv_unfill_packet_device_state(p, errp);
+}
+
+return multifd_recv_unfill_packet_ram(p, errp);
+
+> +}
+> +
+>   static bool multifd_send_should_exit(void)
+>   {
+>       return qatomic_read(&multifd_send_state->exiting);
+> @@ -1014,6 +1046,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
+>       p->packet_len = 0;
+>       g_free(p->packet);
+>       p->packet = NULL;
+> +    g_clear_pointer(&p->packet_dev_state, g_free);
+>       g_free(p->normal);
+>       p->normal = NULL;
+>       g_free(p->zero);
+> @@ -1126,8 +1159,13 @@ static void *multifd_recv_thread(void *opaque)
+>       rcu_register_thread();
+>
+>       while (true) {
+> +        MultiFDPacketHdr_t hdr;
+>           uint32_t flags = 0;
+> +        bool is_device_state = false;
+>           bool has_data = false;
+> +        uint8_t *pkt_buf;
+> +        size_t pkt_len;
+> +
+>           p->normal_num = 0;
+>
+>           if (use_packets) {
+> @@ -1135,8 +1173,28 @@ static void *multifd_recv_thread(void *opaque)
+>                   break;
+>               }
+>
+> -            ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
+> -                                           p->packet_len, &local_err);
+> +            ret = qio_channel_read_all_eof(p->c, (void *)&hdr,
+> +                                           sizeof(hdr), &local_err);
+> +            if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
+> +                break;
+> +            }
+> +
+> +            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
+> +            if (ret) {
+> +                break;
+> +            }
+> +
+> +            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
+> +            if (is_device_state) {
+> +                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
+> +                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
+> +            } else {
+> +                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
+> +                pkt_len = p->packet_len - sizeof(hdr);
+> +            }
+> +
+> +            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
+> +                                           &local_err);
+>               if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
+>                   break;
+>               }
+> @@ -1181,8 +1239,33 @@ static void *multifd_recv_thread(void *opaque)
+>               has_data = !!p->data->size;
+>           }
+>
+> -        if (has_data) {
+> -            ret = multifd_recv_state->ops->recv(p, &local_err);
+> +        if (!is_device_state) {
+> +            if (has_data) {
+> +                ret = multifd_recv_state->ops->recv(p, &local_err);
+> +                if (ret != 0) {
+> +                    break;
+> +                }
+> +            }
+> +        } else {
+> +            g_autofree char *idstr = NULL;
+> +            g_autofree char *dev_state_buf = NULL;
+> +
+> +            assert(use_packets);
+> +
+> +            if (p->next_packet_size > 0) {
+> +                dev_state_buf = g_malloc(p->next_packet_size);
+> +
+> +                ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, &local_err);
+> +                if (ret != 0) {
+> +                    break;
+> +                }
+> +            }
+> +
+> +            idstr = g_strndup(p->packet_dev_state->idstr, sizeof(p->packet_dev_state->idstr));
+> +            ret = qemu_loadvm_load_state_buffer(idstr,
+> +                                                p->packet_dev_state->instance_id,
+> +                                                dev_state_buf, p->next_packet_size,
+> +                                                &local_err);
+>               if (ret != 0) {
+>                   break;
+>               }
+> @@ -1190,6 +1273,11 @@ static void *multifd_recv_thread(void *opaque)
+>
+>           if (use_packets) {
+>               if (flags & MULTIFD_FLAG_SYNC) {
+> +                if (is_device_state) {
+> +                    error_setg(&local_err, "multifd: received SYNC device state packet");
+> +                    break;
+> +                }
+> +
+>                   qemu_sem_post(&multifd_recv_state->sem_sync);
+>                   qemu_sem_wait(&p->sem_sync);
+>               }
+> @@ -1258,6 +1346,7 @@ int multifd_recv_setup(Error **errp)
+>               p->packet_len = sizeof(MultiFDPacket_t)
+>                   + sizeof(uint64_t) * page_count;
+>               p->packet = g_malloc0(p->packet_len);
+> +            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
+>           }
+>           p->name = g_strdup_printf("mig/dst/recv_%d", i);
+>           p->normal = g_new0(ram_addr_t, page_count);
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index a3e35196d179..a8f3e4838c01 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -45,6 +45,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
+>   #define MULTIFD_FLAG_QPL (4 << 1)
+>   #define MULTIFD_FLAG_UADK (8 << 1)
+>
+> +/*
+> + * If set it means that this packet contains device state
+> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
+> + */
+> +#define MULTIFD_FLAG_DEVICE_STATE (1 << 4)
+> +
+>   /* This value needs to be a multiple of qemu_target_page_size() */
+>   #define MULTIFD_PACKET_SIZE (512 * 1024)
+>
+> @@ -52,6 +58,11 @@ typedef struct {
+>       uint32_t magic;
+>       uint32_t version;
+>       uint32_t flags;
+> +} __attribute__((packed)) MultiFDPacketHdr_t;
+
+Maybe split this patch into two: one that adds the packet header concept 
+and another that adds the new device packet?
+
+> +
+> +typedef struct {
+> +    MultiFDPacketHdr_t hdr;
+> +
+>       /* maximum number of allocated pages */
+>       uint32_t pages_alloc;
+>       /* non zero pages */
+> @@ -72,6 +83,16 @@ typedef struct {
+>       uint64_t offset[];
+>   } __attribute__((packed)) MultiFDPacket_t;
+>
+> +typedef struct {
+> +    MultiFDPacketHdr_t hdr;
+> +
+> +    char idstr[256] QEMU_NONSTRING;
+
+idstr should be null terminated, or am I missing something?
 
 Thanks.
 
->    If so, is it
-> cache-able?  It doesn't need to be 100% accurate as the ioctls are not
-> atomic, but still if it's mostly usable (again, will need you all to help
-> justify that..) as that then it looks like we have some way to report that
-> without the concern you raised before.
+> +    uint32_t instance_id;
+> +
+> +    /* size of the next packet that contains the actual data */
+> +    uint32_t next_packet_size;
+> +} __attribute__((packed)) MultiFDPacketDeviceState_t;
+> +
+>   typedef struct {
+>       /* number of used pages */
+>       uint32_t num;
+> @@ -89,6 +110,13 @@ struct MultiFDRecvData {
+>       off_t file_offset;
+>   };
 >
-> Thanks,
+> +typedef struct {
+> +    char *idstr;
+> +    uint32_t instance_id;
+> +    char *buf;
+> +    size_t buf_len;
+> +} MultiFDDeviceState_t;
+> +
+>   typedef enum {
+>       MULTIFD_PAYLOAD_NONE,
+>       MULTIFD_PAYLOAD_RAM,
+> @@ -204,8 +232,9 @@ typedef struct {
 >
-> --
-> Peter Xu
+>       /* thread local variables. No locking required */
 >
+> -    /* pointer to the packet */
+> +    /* pointers to the possible packet types */
+>       MultiFDPacket_t *packet;
+> +    MultiFDPacketDeviceState_t *packet_dev_state;
+>       /* size of the next packet that contains pages */
+>       uint32_t next_packet_size;
+>       /* packets received through this channel */
 
