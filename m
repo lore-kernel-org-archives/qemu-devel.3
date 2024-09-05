@@ -4,86 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D9BCD5BC9
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8EBBCD5BCC
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 15:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smEOD-0004Rs-Rk; Thu, 05 Sep 2024 11:27:17 -0400
+	id 1smEUH-0004Rt-16; Thu, 05 Sep 2024 11:33:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smEOC-0004KI-5I
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:27:16 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smEOA-0006Bz-Jf
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:27:15 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2f51b67e16dso11214511fa.3
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 08:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725550033; x=1726154833; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tXahTLAYlsj1yDnt7fXtBg+nwUlBAm4L5aEnBZ7qjqs=;
- b=pzsZCnJmsOb70577jbX8Xkm4tC04t3SqW6xOVQl5pZ3537tsOMJIbsgFaf6NMFSSRE
- ps/eFR0akQa8ywa7cdl6Z+b0+7C1IM5MgYDH/m5fNGQmgu2zQzph89TL8X6BWwSUthu3
- XXUVRRarVuVcQkipoMjozd08UdF9r6CGBElEaMOWanJDvhq7/Mi1/w3xEc+Tn4O9j0I8
- IZUb8jrcrm+Xtwrf/sY3MDVLDriOY3VTvFxCZES9KD8mw31w+BZmj72y7Cn+1MKBo66d
- w74pvg21pHliSO1ebSImJi82qgEseVHEuh0nxBYPuak2WtRdwiWz5rHwb+d0++IgP059
- AeXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725550033; x=1726154833;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tXahTLAYlsj1yDnt7fXtBg+nwUlBAm4L5aEnBZ7qjqs=;
- b=VYAOVXuFIIjVvNZ+f80Kry+fdRVu7ZQsZKr0MXr0YB/NVacm4jqgBFMFdXjrlDYivj
- ZjvCefni6+7JrhFCL3B3Xg01p1vGzZEF32U4oUPhoGrXzm+qoXWiWK/Gthe3Ck/sCIWd
- oTIhh3f7ohmMWpYEJnNWu+VxVvaSDnrrj/2y77CDgVdCi6CHlMoHdHjXDbahb7KE7tJg
- uJeA6ARLqcDo+qWZ/jM3dX6p+ySV+J5FgRFKXN/ryT/3IFO/k5Wbj4tSv7dI7g8TN02H
- 8lCy5zIHfd78pbdSQ96gmmX58FBbt4BSLoPP9dwyASYExSzjcCZa+W8qEq3z4sD0ZBg7
- NHdw==
-X-Gm-Message-State: AOJu0YzqtsOLuUmTD3dsE4U8F8b1noKZ8We2VBRILv43dKGoWaz0SQUq
- QdqrZOY1/WRejbJbqy33BBo4Gh2zj+gYz9sqUizDMTcfLhhWyg/o3Ef/BbbzfFg=
-X-Google-Smtp-Source: AGHT+IEM0T5uvpcYpf6SGZUwlOtyGRMRe57XF5xU31d2kZYEy5Vqp0Dh8WwlrDhpk1Nm2Usnrx0dbw==
-X-Received: by 2002:a05:651c:221a:b0:2f0:1f06:2b43 with SMTP id
- 38308e7fff4ca-2f64d570aeemr60148671fa.41.1725550032042; 
- Thu, 05 Sep 2024 08:27:12 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3cc6a5a40sm1346091a12.87.2024.09.05.08.27.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Sep 2024 08:27:11 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B9DB55F8BA;
- Thu,  5 Sep 2024 16:27:10 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>
-Subject: Re: [PATCH v3 0/2] plugins: add plugin API to read guest memory
-In-Reply-To: <20240827215329.248434-1-rowanbhart@gmail.com> (Rowan Hart's
- message of "Tue, 27 Aug 2024 14:53:27 -0700")
-References: <20240827215329.248434-1-rowanbhart@gmail.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Thu, 05 Sep 2024 16:27:10 +0100
-Message-ID: <87tteurui9.fsf@draig.linaro.org>
+ (Exim 4.90_1)
+ (envelope-from <SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org>)
+ id 1smEUE-0004RN-UI
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:33:30 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org>)
+ id 1smEUD-0007BW-8j
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 11:33:30 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 7FE5FA43FC7;
+ Thu,  5 Sep 2024 15:33:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FA9C4CEC3;
+ Thu,  5 Sep 2024 15:33:26 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="bWw30yip"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1725550405;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=vv5plqd3K6cDeYPYJezVDbij64Zd5z2QhUKwGLG38AE=;
+ b=bWw30yip41IOAuT3PdVYwLeGr5Bgfblwybo2+FnY/5dLFfP34EIDMT5W9pzQ4xZ+w0XBgJ
+ UQLfBXmg1lW7sKtTRBkRfAOGu5/UVkj8ZYlwos/ysYOOkmcdwdDUc2TyMtabXO50xIYxSL
+ PmQVXi3rmsLESXqGnIjvurVAWWW3RhY=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 065ef099
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 5 Sep 2024 15:33:24 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: gaosong@loongson.cn, jiaxun.yang@flygoat.com, qemu-devel@nongnu.org,
+ thomas@t-8ch.de, xry111@xry111.site, maobibo@loongson.cn
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH] hw/loongarch: virt: pass random seed to fdt
+Date: Thu,  5 Sep 2024 17:33:16 +0200
+Message-ID: <20240905153316.2038769-1-Jason@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=147.75.193.91;
+ envelope-from=SRS0=ehJl=QD=zx2c4.com=Jason@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,20 +76,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rowan Hart <rowanbhart@gmail.com> writes:
+If the FDT contains /chosen/rng-seed, then the Linux RNG will use it to
+initialize early. Set this using the usual guest random number
+generation function.
 
-> This patch adds one API function to the QEMU plugin API
->
-> bool qemu_plugin_read_memory_vaddr(vaddr, GByteArray *, size_t);
->
-> The API allows reading memory from an arbitrary guest virtual
-> address, which is useful for many things but the motivating examples
-> are:
+This is the same procedure that's done in b91b6b5a2c ("hw/microblaze:
+pass random seed to fdt"), e4b4f0b71c ("hw/riscv: virt: pass random seed
+to fdt"), c6fe3e6b4c ("hw/openrisc: virt: pass random seed to fdt"),
+67f7e426e5 ("hw/i386: pass RNG seed via setup_data entry"), c287941a4d
+("hw/rx: pass random seed to fdt"), 5e19cc68fb ("hw/mips: boston: pass
+random seed to fdt"), 6b23a67916 ("hw/nios2: virt: pass random seed to fdt")
+c4b075318e ("hw/ppc: pass random seed to fdt"), and 5242876f37
+("hw/arm/virt: dt: add rng-seed property").
 
-Queued to plugins/next with a minor tweak to the cpu_memory_rw_debug
-call.
+These earlier commits later were amended to rerandomize the RNG seed on
+snapshot load, but the LoongArch code somehow already does that, despite
+not having this patch here, presumably due to some lucky copy and
+pasting.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ hw/loongarch/virt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 29040422aa..0f0b7df205 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -48,6 +48,7 @@
+ #include "hw/block/flash.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "qemu/error-report.h"
++#include "qemu/guest-random.h"
+ 
+ static bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+ {
+@@ -303,6 +304,7 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+ static void create_fdt(LoongArchVirtMachineState *lvms)
+ {
+     MachineState *ms = MACHINE(lvms);
++    uint8_t rng_seed[32];
+ 
+     ms->fdt = create_device_tree(&lvms->fdt_size);
+     if (!ms->fdt) {
+@@ -316,6 +318,10 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+     qemu_fdt_setprop_cell(ms->fdt, "/", "#address-cells", 0x2);
+     qemu_fdt_setprop_cell(ms->fdt, "/", "#size-cells", 0x2);
+     qemu_fdt_add_subnode(ms->fdt, "/chosen");
++
++    /* Pass seed to RNG */
++    qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
++    qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed", rng_seed, sizeof(rng_seed));
+ }
+ 
+ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+-- 
+2.46.0
+
 
