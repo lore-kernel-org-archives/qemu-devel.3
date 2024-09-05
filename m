@@ -4,70 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A465CD5BB6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 12:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B47CD5BB6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 12:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smBBp-0003rF-W3; Thu, 05 Sep 2024 08:02:18 -0400
+	id 1smBFo-0001UH-OE; Thu, 05 Sep 2024 08:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smBBn-0003pn-PN
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 08:02:15 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1smBFn-0001Sm-79
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 08:06:23 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smBBl-0004Cm-Sp
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 08:02:15 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2f4f2868783so8306351fa.2
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 05:02:13 -0700 (PDT)
+ id 1smBFl-0005dr-Iz
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 08:06:22 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3d87dd4c3so84987a12.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 05:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725537732; x=1726142532; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725537977; x=1726142777; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z17vQgwnKU+6Bc+7yReaghb2hi/P0ToLQSFYem2vrHA=;
- b=gKTjIRn7BhRquA3onT78mrsChVUsaR+cXFTC1ri4Y/wkDDAy+s26B5Fj4BCnCvYEDS
- NMSzmvyeeGgn8JJ9RizgpQ+tRbtafa89UkNP3Z35YH4CfYmLmVFtSsbC9gZIOm6oV/dF
- Yn+/4W6cm/KQTdfeIMtbLgrDMV8CIX+q153XwsOQmcQo5g5tqFkj1oCzhNScMV6EFRhM
- jyiu70kBGyvZTEZnFYBrCjHq3b82V1jv2can3auFyCoMXkL1EDQESxCanIxo2GLR5t5S
- zgueG/GqWktByRKSgXYcIyk+A/gZVsk+/3VLDtsQYWgalPHQF/5abfDWo/a+vmuAgfRm
- eKNA==
+ bh=+mcNceJvk1zALDkqACdXnBSGvNBQ2uKqYYEnQOzlNC4=;
+ b=ZoPk6zfkqoNm03I1xXZmojkIA/Wwcn+MMT3eMnjidPP1HGaeSCGcQ0BPrCz4rXBQaa
+ /4N1qL2kIY+yszPvvsJDqVvWPNXu2z5qOrZeIO0pmmmwSHN21eMrlcJs2uJVVzhZ65wG
+ YCai/CJYPIl1LkKmOdd6a3PD4dyVSmrqE73OBiNwv9M7i5sFthi3UkNmpp6Rk2ts7GXL
+ NszLbr3z77gDTyl6GT56pK1nDIlQDBMh+6+0YrpDuQDsWm0L9gyr9ZYWpUsnXb89DNHT
+ jEV+6qiPy33PSOXrnu8aD820CW8W4kovs1zR6GJM4ht/TPq5vmnhPEUYxGEqEknlPBqG
+ p0Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725537732; x=1726142532;
+ d=1e100.net; s=20230601; t=1725537977; x=1726142777;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z17vQgwnKU+6Bc+7yReaghb2hi/P0ToLQSFYem2vrHA=;
- b=VceKwgPQ9nhG98ncK/LErLVYH9pZWcaHbt5gasfgNQXnaG0412lTdp3JjlGQISqQJK
- Lfz4l0GCLrLet5wsNj8q+/Jxz7a8QVeb3FqcTjwzwYauoz0dbenmTTHFWy4A6V4EmYp0
- njGNl9bWNB/aPrvrs9HBFDY1QgU7IC7Tsn346TvQW89KVSeK6DsoNEEcjeNII5WnBInD
- 4iZNKDmKAjRQLkMWxGlPktowSnEvBq6FVF5B0qpFgTw3W9Mt5/j1oExjo0nJ7E8/FfIi
- ZmT1llwgc92Xvvv9r/PAEcMWKvyUILEqliv0iGx2HlDHbIxhHzePteltK8cdw+qwViW3
- u6ew==
-X-Gm-Message-State: AOJu0YzPB7OzqcGizKv1lhErC5yISsxy1YPNNG7pg5OXKHP6QDg8imty
- jJKhf6n6tmHJAyWA9n4WQ0vaAbPRlv1MJP26bNO3DmflkOaFqdA9o8M/NaqEPK9cpkUIB3IDIca
- vN6eUoig1Ld/qLif43bnoXXpdhpaOKqmhCdK3rQ==
-X-Google-Smtp-Source: AGHT+IEyILPzCwbaSdBt4kBRkHXbQOEe7A3XovNDX8ZNrYiba9t/kKqA17AYH+2SWUOUWXGUhC2ZuuXsMcaD3S4qcqk=
-X-Received: by 2002:a2e:be21:0:b0:2f0:25dc:1894 with SMTP id
- 38308e7fff4ca-2f61e025818mr158600731fa.2.1725537731600; Thu, 05 Sep 2024
- 05:02:11 -0700 (PDT)
+ bh=+mcNceJvk1zALDkqACdXnBSGvNBQ2uKqYYEnQOzlNC4=;
+ b=NoA/Xr5dfnLxmZFWZ0V7uDg2Ymp3WFArHVSJYLKnop0794mKYYkE5ZVXJQWMCGAXak
+ mSgnVrjizbHlEc1ZyZueI1svplE/pqwa17AqfAsGyxzrSfdpRW9X6GFSaoz8S9tiRKIU
+ IYnEOe4/gOZElftrz413xg+pEwoV4YXAlmxWgO2iMfifmK7Jzv/aUfsl9lsgKxDyh32z
+ QIY6vzQNfxgBIG6UxlLDU4Fz34zCv2oTLgZDftf/DDDB39QkPnQbOPLEWnoTcMZoeHnd
+ kUzAsuYty6x2DGdIfRltJfNvtS94dr5IpjtXmkFdmc41DECNImKbDuPpM3V1fhCZURhY
+ d6UQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhbCQMawxeHrFaUbXZD667oIomB5iO+GRGFz5SkhcxoQvirciTT96nG5XL/LVItPgT3W+G3bQnIEgw@nongnu.org
+X-Gm-Message-State: AOJu0YzCDik3QOT2mBZWRxyQ2yNqbFzatWQwDdle9xZSoGShnsv0Jfwt
+ /YsUTjECL8gWycy9OIKi8QPxdSJiC+JoPohATcQ+AtMUUZ6EiUoaSLCHi+fIO/y2wxSISEgifoO
+ iP4cfrPJbuySEol+kQpObTJ1oQXZ/+yLlZ5SNZpgVTwHIi7mX
+X-Google-Smtp-Source: AGHT+IGdmcLyKgvuRzNCg4QqdmOaIvDbVcGQw6HYE9H04cy39Mm2Gq/dO2kVooQOXkxOXhGoLiVlxT+ck6OoWLT8MBA=
+X-Received: by 2002:a05:6402:1ed3:b0:5c2:5d34:a45a with SMTP id
+ 4fb4d7f45d1cf-5c3cd773f0bmr2232843a12.2.1725537977288; Thu, 05 Sep 2024
+ 05:06:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240904124417.14565-1-farosas@suse.de>
-In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+ <762867ba-8980-44f6-a9a6-5e766bc6a60b@redhat.com>
+ <CAFEAcA-uTqq9Ke4pS59aQ_9t7KObRxff8DN_rY-2JkfSCQkASQ@mail.gmail.com>
+ <CABgObfY--e1h=fEC=7TxA9eaHog1N4V4+3oEm+W_RSKEEUSU4w@mail.gmail.com>
+In-Reply-To: <CABgObfY--e1h=fEC=7TxA9eaHog1N4V4+3oEm+W_RSKEEUSU4w@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Sep 2024 13:01:59 +0100
-Message-ID: <CAFEAcA80bmCt0YmkCaocDn56OSwPLTO4ZZG+n4PXHi6K_z+Xng@mail.gmail.com>
-Subject: Re: [PULL 00/34] Migration patches for 2024-09-04
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
+Date: Thu, 5 Sep 2024 13:06:06 +0100
+Message-ID: <CAFEAcA_TJ9A1MTOXhrwAHf7+g1bj0sg5utTHxnzCKF70TkC2Wg@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,102 +94,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Sept 2024 at 13:49, Fabiano Rosas <farosas@suse.de> wrote:
+On Tue, 3 Sept 2024 at 18:15, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> The following changes since commit e638d685ec2a0700fb9529cbd1b2823ac4120c=
-53:
+> On Tue, Sep 3, 2024 at 7:04=E2=80=AFPM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+> > The PXA display device doesn't pass anything through to the guest,
+> > by the way -- it just draws the pixels in the guest framebuffer
+> > in a different place in the UI window. As the FIXME comment in
+> > pxa2xx_lcd.c notes, this should really have been done in common
+> > code, not in a specific display driver.
 >
->   Open 9.2 development tree (2024-09-03 09:18:43 -0700)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/farosas/qemu.git tags/migration-20240904-pull-reques=
-t
->
-> for you to fetch changes up to d41c9896f49076d1eaaa32214bd2296bd36d866c:
->
->   tests/qtest/migration: Add a check for the availability of the "pc" mac=
-hine (2024-09-03 16:24:37 -0300)
->
-> ----------------------------------------------------------------
-> Migration pull request
->
-> - Steve's cleanup of unused variable
-> - Peter Maydell's fixes for several leaks in migration-test
-> - Fabiano's flexibilization of multifd data structures for device
->   state migration
-> - Arman Nabiev's fix for ppc e500 migration
-> - Thomas' fix for migration-test vs. --without-default-devices
+> spitz also passes it through SPITZ_GPIO_SWB ("Tablet mode"), though
+> it's incomplete because it should have treated 180 the same as 0.
 
-Hi. This generates a bunch of new warning messages when running
-"make check":
+Whoops, yes -- by the time I got to grepping the sources for
+uses of the graphic_rotate variable I'd already deleted
+the spitz.c source file, so I missed that :-)
 
-105/845 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test
-           OK             256.17s   51
- subtests passed
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95
-stderr:
-warning: fd: migration to a file is deprecated. Use file: instead.
-warning: fd: migration to a file is deprecated. Use file: instead.
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95
+> > As we both note, the UI input layer part *is* generic code so it
+> > will do the rotation regardless of whether the display device is
+> > also rotating the guest output. But that seems to me more of
+> > an accident than an intentional feature.
+>
+> Yes, it is, though it *is* working. On the other hand I doubt anyone
+> is using it. Since we have in the past removed single options like
+> -alt-grab, whoever needs it can resurrect the code from git and add
+> the options to -display. They can also add rotation of the output as a
+> separate knob from rotation of the input.
 
-Can you investigate or suppress these, please?
-
-I also see a complaint from the migration-compat-x86_64 job:
-https://gitlab.com/qemu-project/qemu/-/jobs/7752621835
-
-Traceback (most recent call last):
-File "/builds/qemu-project/qemu/build-previous/scripts/vmstate-static-check=
-er.py",
-line 438, in <module>
-sys.exit(main())
-^^^^^^
-File "/builds/qemu-project/qemu/build-previous/scripts/vmstate-static-check=
-er.py",
-line 395, in main
-dest_data =3D json.load(args.dest)
-^^^^^^^^^^^^^^^^^^^^
-File "/usr/lib64/python3.11/json/__init__.py", line 293, in load
-return loads(fp.read(),
-^^^^^^^^^^^^^^^^
-File "/usr/lib64/python3.11/json/__init__.py", line 346, in loads
-return _default_decoder.decode(s)
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-File "/usr/lib64/python3.11/json/decoder.py", line 337, in decode
-obj, end =3D self.raw_decode(s, idx=3D_w(s, 0).end())
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-File "/usr/lib64/python3.11/json/decoder.py", line 353, in raw_decode
-obj, end =3D self.scan_once(s, idx)
-^^^^^^^^^^^^^^^^^^^^^^
-json.decoder.JSONDecodeError: Unterminated string starting at: line
-5085 column 7 (char 131064)
-# Failed to run vmstate-static-checker.py
-not ok 3 /x86_64/migration/vmstate-checker-script
-Bail out!
-
-I think this is probably a pre-existing failure, as
-I also saw it on the previous pullreq:
-https://gitlab.com/qemu-project/qemu/-/jobs/7751785881
-
-But since this is a migration pullreq, could you have a look?
+Yeah, I agree. I'll reroll this particular patch separately
+from the rest and include a paragraph for removed-features.rst
+specifically documenting that -portrait and -rotate have gone
+away and why.
 
 thanks
 -- PMM
