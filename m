@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A7DCE7AA6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Sep 2024 23:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7B3CE7AA6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 00:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smMBX-0000ch-OD; Thu, 05 Sep 2024 19:46:43 -0400
+	id 1smMo1-00046F-5X; Thu, 05 Sep 2024 20:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smMBW-0000bn-1c; Thu, 05 Sep 2024 19:46:42 -0400
-Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
+ id 1smMny-00043N-Lt
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 20:26:27 -0400
+Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smMBU-0003fT-89; Thu, 05 Sep 2024 19:46:41 -0400
-Received: by mail-ua1-x92a.google.com with SMTP id
- a1e0cc1a2514c-846d536254fso404059241.1; 
- Thu, 05 Sep 2024 16:46:39 -0700 (PDT)
+ id 1smMnx-0001dC-3S
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 20:26:26 -0400
+Received: by mail-vs1-xe2b.google.com with SMTP id
+ ada2fe7eead31-49bc42bec6dso448525137.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 17:26:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725579999; x=1726184799; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725582384; x=1726187184; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j1FT70JgR5k0fMIt3cRyRiAuGMZMVFzdSs5qW3TiPRM=;
- b=BC2EyyVRNfH8wopUvyYJpnQneZVuNYWKmM3SWQ25JyOcHHR8IdDZlQ+cQz863OKQs0
- o1mMuCgz6Wvxo2Z6v0vlCR9TczVtidCeNlmvO421W3cYuM0rX2Q8r26eK7oAkh0pYitA
- PwLaFyLqu8E1bran/DNyhiAdAzoi2/sbpWYR13Yv5HLvF/sc/1b5ufxBEQm84GH/TNUP
- D5JSQZVR3394Uh0mwEFz/vQNLPRPc25VyA73bFk8zsutZa47xfoqV/3jGY5+SE4PTCXr
- HdVqpyNK3gj99jy7mdYF+uj9jItBwBE+qkM6tDNZTKO6A53dALU8U4Hoe/GDxxAIWRK6
- t83w==
+ bh=ogDSlmXA/CPYUsN3fdN98mZzfZE0/vc4+zkoRTrQbDo=;
+ b=WAzADRej4NRInZ7u5iRUp1vifiCM+HKWsnxLu8fevy7+pO28GjOnZzb675L2xF2CLl
+ +FtVq5Fzn7M39MJQTL+JVw5IVnXbS+63/jRaWJSaOQ3OZRL2haIkiDClj+fIVHDxw7uA
+ qZUzKm1HFy1Ex3Do6S3oRLq0xZHJK+qUm/b90DggSttcEMfUaiTnVfJPJ1Dnag9lNSuf
+ g25wqvrrLF/IU9Xnn/7p/wTqJLDMzvpyHItrvXjQ+dho97HwWRg4+QQioRRSMW854sMI
+ FTwddqnHivyO0cy6UXr1QtOVhcle6DnUwF+l+eOKaADarXhtdy83UFnmX/4XQI6nV7eL
+ hIIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725579999; x=1726184799;
+ d=1e100.net; s=20230601; t=1725582384; x=1726187184;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j1FT70JgR5k0fMIt3cRyRiAuGMZMVFzdSs5qW3TiPRM=;
- b=RJPYBNV6JTzEAt/+pxSnrpOsM4OfcVL0lNLHp5ecDP/XJOn8iZ7pJp5TPGxFDT9u2+
- J+vzRRhtQVc+ltGxLOA9BqWsRb47UlFqwQx8KK/u0o7F06CQ3g3IzY3tOHDmqlp6mv7g
- 1kKUvTGcJmUQSfQJSoxcih/9dTOjSu4YlKNTHMmWvRm9CLf3vjSdqqzkdCnsA6hhMkim
- 1EmbowiU+PLhiBD0FYAX0PHe6zRIyKOBb4RzQjXbUdRcHqqBgSxk5Zoba6Kx8bZIrE+B
- KcC+3XEsU2SbgQC4rLq6TWo3/+8RbbXi+ybKSg3bDtvWl+GcvZdTbckLAuqE1KJPL6mN
- Qyqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/hE1KT+z2cheuO0MG0+vYSPcZQeoYo9BEF9UIz/xmezyStxIvYZAjcABWTVEvPNCX0s4QZW+NJwqN@nongnu.org
-X-Gm-Message-State: AOJu0YyBHEY758iOQ85Gj8wdxjv86P0KI1czlSQOfLftOl7+ftoWEjf4
- RXEdI0fs33H0Gk0t5sAcb/P3i4UWE+P1gIbz0pfc28KtTr/bojTypIMZVuzqJa49gWIHon2KGO5
- R4h0Kv2glXvFJR3RE2r/3l7IwuBugP70R
-X-Google-Smtp-Source: AGHT+IHeEVUp2sJ1pes3HwxUhE05xuvxEkMG8/jhy26XDvS2me9IIo6wYfFQ8vk+XFS+rYZebiH9VkRSSokxcWSk694=
-X-Received: by 2002:a05:6102:32cd:b0:493:f097:e5b7 with SMTP id
- ada2fe7eead31-49bde130e3dmr1226872137.1.1725579998569; Thu, 05 Sep 2024
- 16:46:38 -0700 (PDT)
+ bh=ogDSlmXA/CPYUsN3fdN98mZzfZE0/vc4+zkoRTrQbDo=;
+ b=c7praDrtVndoaSHOoC11EOIztJGPoWN6IE7smp4ElCDoHkfB47oJfD5Nke4sk8f9KJ
+ Mks75mA6Oo71lAG8lpyHLiFR7SGRsHA4J2X9mlVRh77L26kaqnUYCdfb4f7e7oJTBHqj
+ DmoTlsWwUGDF/i3GYDGTCdMpxNgdQZxrsgFre3qhh1PMpzH8y+itbRwP92RHBEOfspDY
+ jTKw9KWpiVddsWlAAw+cBjiiDrZue+WN2uOOwa5mTsThPdj+hYZQlyqtQExZDmqM+pR/
+ V6WeuL5FdBPr1BFQ8vCAvF/HZxdl3iz8iVC6UVIQMQ6nBq5wUXA5OBqnpvJC5/jljBaL
+ hzoQ==
+X-Gm-Message-State: AOJu0YwSY/xdyXAHV9wZvdngx/3oLgCy0OQJiBidapclctA9e+apBTlx
+ M7YJL0GHw+z3he43oJHbr2zlEJ10xFB7LxUt79Bk9dCpFbx7UIhpEHe6P/OqI4YBVDfMm3B0liL
+ KU9g2pu8+8JIZEWbfS4BnuBfK298=
+X-Google-Smtp-Source: AGHT+IGeF8qzzmqtkXb0rJ/JDuOFg1KWMLHcLC2viIxCHgF3bR9QPu5Z6sgDX8rZzO8bqCPqNfW62AhNXVLquumkUlQ=
+X-Received: by 2002:a05:6102:4194:b0:48f:dfb8:77aa with SMTP id
+ ada2fe7eead31-49bde1af558mr1361506137.17.1725582383884; Thu, 05 Sep 2024
+ 17:26:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
+References: <20240828095243.90491-1-itachis@FreeBSD.org>
+ <20240828095243.90491-3-itachis@FreeBSD.org>
+In-Reply-To: <20240828095243.90491-3-itachis@FreeBSD.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 09:46:12 +1000
-Message-ID: <CAKmqyKNerLvtkWFCP=VR=86Ewcg+iPUMTVfgtzYDYGopyEFHfQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/14] Add support for vector
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
- bmeng.cn@gmail.com, richard.henderson@linaro.org, 
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Date: Fri, 6 Sep 2024 10:25:57 +1000
+Message-ID: <CAKmqyKMVmF1cXpwca+P2DgYSQ7-Vrny3LO6++2wgKPTrmFeNVQ@mail.gmail.com>
+Subject: Re: [PATCH v4 02/17] bsd-user: Add RISC-V CPU execution loop and
+ syscall handling
+To: Ajeet Singh <itachis6234@gmail.com>
+Cc: qemu-devel@nongnu.org, Mark Corbin <mark@dibsco.co.uk>,
+ Warner Losh <imp@bsdimp.com>, 
+ Ajeet Singh <itachis@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>,
+ Kyle Evans <kevans@freebsd.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,86 +96,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 5, 2024 at 12:29=E2=80=AFAM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
+On Wed, Aug 28, 2024 at 7:53=E2=80=AFPM Ajeet Singh <itachis6234@gmail.com>=
+ wrote:
 >
-> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> From: Mark Corbin <mark@dibsco.co.uk>
+>
+> Implemented the RISC-V CPU execution loop, including handling various
+> exceptions and system calls. The loop continuously executes CPU
+> instructions,processes exceptions, and handles system calls by invoking
+> FreeBSD syscall handlers.
+>
+> Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+> Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+> Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
+> Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  bsd-user/riscv/target_arch_cpu.h | 94 ++++++++++++++++++++++++++++++++
+>  1 file changed, 94 insertions(+)
+>
+> diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arc=
+h_cpu.h
+> index e17c910ae9..ba589909e2 100644
+> --- a/bsd-user/riscv/target_arch_cpu.h
+> +++ b/bsd-user/riscv/target_arch_cpu.h
+> @@ -36,4 +36,98 @@ static inline void target_cpu_init(CPURISCVState *env,
+>      env->pc =3D regs->sepc;
+>  }
+>
+> +static inline void target_cpu_loop(CPURISCVState *env)
+> +{
+> +    CPUState *cs =3D env_cpu(env);
+> +    int trapnr;
+> +    abi_long ret;
+> +    unsigned int syscall_num;
+> +    int32_t signo, code;
+> +
+> +    for (;;) {
+> +        cpu_exec_start(cs);
+> +        trapnr =3D cpu_exec(cs);
+> +        cpu_exec_end(cs);
+> +        process_queued_cpu_work(cs);
+> +
+> +        signo =3D 0;
+> +
+> +        switch (trapnr) {
+> +        case EXCP_INTERRUPT:
+> +            /* just indicate that signals should be handled asap */
+> +            break;
+> +        case EXCP_ATOMIC:
+> +            cpu_exec_step_atomic(cs);
+> +            break;
+> +        case RISCV_EXCP_U_ECALL:
+> +            syscall_num =3D env->gpr[xT0];
+> +            env->pc +=3D TARGET_INSN_SIZE;
+> +            /* Compare to cpu_fetch_syscall_args() in riscv/riscv/trap.c=
+ */
+> +            if (TARGET_FREEBSD_NR___syscall =3D=3D syscall_num ||
+> +                TARGET_FREEBSD_NR_syscall =3D=3D syscall_num) {
+> +                ret =3D do_freebsd_syscall(env,
+> +                                         env->gpr[xA0],
+> +                                         env->gpr[xA1],
+> +                                         env->gpr[xA2],
+> +                                         env->gpr[xA3],
+> +                                         env->gpr[xA4],
+> +                                         env->gpr[xA5],
+> +                                         env->gpr[xA6],
+> +                                         env->gpr[xA7],
+> +                                         0);
+> +            } else {
+> +                ret =3D do_freebsd_syscall(env,
+> +                                         syscall_num,
+> +                                         env->gpr[xA0],
+> +                                         env->gpr[xA1],
+> +                                         env->gpr[xA2],
+> +                                         env->gpr[xA3],
+> +                                         env->gpr[xA4],
+> +                                         env->gpr[xA5],
+> +                                         env->gpr[xA6],
+> +                                         env->gpr[xA7]
 
-Can you please mention RISC-V in the cover letter title. Otherwise
-it's not obvious that this is RISC-V specific
+There is trailing white space on these lines and in a few other
+patches in this series.
+
+Can you run ./scripts/checkpatch.pl against the changes and then send
+a v5 with the issues addressed
 
 Alistair
 
->
-> This patch set introduces support for the RISC-V vector extension
-> in TCG backend for RISC-V targets.
->
-> v3:
->   1. Use the .insn form in cpuinfo probing.
->
->   2. Use reserved_regs to constrain the register group index instead of u=
-sing constrain.
->
->   3. Avoid using macros to implement functions whenever possible.
->
->   4. Rename vtypei to vtype.
->
->   5. Move the __thread prev_vtype variable to TCGContext.
->
->   6. Support fractional LMUL setting, but since MF2 has a minimum ELEN of=
- 32,
->     restrict fractional LMUL to cases where SEW < 64.
->
->   7. Handle vector load/store imm12 split in a different function.
->
->   8. Remove compare vx and implement INDEX_op_cmpsel_vec for INDEX_op_cmp=
-_vec in a more concise way.
->
->   9. Move the implementation of shi_vec from tcg_expand_vec_op to tcg_out=
-_vec_op.
->
->   10. Address some formatting issues.
->
-> v2:
->   https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00679.html
->
-> v1:
->   https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00205.html
->
-> Swung0x48 (1):
->   tcg/riscv: Add basic support for vector
->
-> TANG Tiancheng (13):
->   tcg/op-gvec: Fix iteration step in 32-bit operation
->   util: Add RISC-V vector extension probe in cpuinfo
->   tcg/riscv: Add riscv vset{i}vli support
->   tcg/riscv: Implement vector load/store
->   tcg/riscv: Implement vector mov/dup{m/i}
->   tcg/riscv: Add support for basic vector opcodes
->   tcg/riscv: Implement vector cmp ops
->   tcg/riscv: Implement vector neg ops
->   tcg/riscv: Implement vector sat/mul ops
->   tcg/riscv: Implement vector min/max ops
->   tcg/riscv: Implement vector shs/v ops
->   tcg/riscv: Implement vector roti/v/x shi ops
->   tcg/riscv: Enable native vector support for TCG host
->
->  host/include/riscv/host/cpuinfo.h |    3 +
->  include/tcg/tcg.h                 |    3 +
->  tcg/riscv/tcg-target-con-set.h    |    7 +
->  tcg/riscv/tcg-target-con-str.h    |    3 +
->  tcg/riscv/tcg-target.c.inc        | 1047 ++++++++++++++++++++++++++---
->  tcg/riscv/tcg-target.h            |   80 ++-
->  tcg/riscv/tcg-target.opc.h        |   12 +
->  tcg/tcg-internal.h                |    2 +
->  tcg/tcg-op-gvec.c                 |    2 +-
->  tcg/tcg-op-vec.c                  |    2 +-
->  util/cpuinfo-riscv.c              |   26 +-
->  11 files changed, 1062 insertions(+), 125 deletions(-)
->  create mode 100644 tcg/riscv/tcg-target.opc.h
->
+> +                    );
+> +            }
+> +
+> +            /*
+> +             * Compare to cpu_set_syscall_retval() in
+> +             * riscv/riscv/vm_machdep.c
+> +             */
+> +            if (ret >=3D 0) {
+> +                env->gpr[xA0] =3D ret;
+> +                env->gpr[xT0] =3D 0;
+> +            } else if (ret =3D=3D -TARGET_ERESTART) {
+> +                env->pc -=3D TARGET_INSN_SIZE;
+> +            } else if (ret !=3D -TARGET_EJUSTRETURN) {
+> +                env->gpr[xA0] =3D -ret;
+> +                env->gpr[xT0] =3D 1;
+> +            }
+> +            break;
+> +        case RISCV_EXCP_ILLEGAL_INST:
+> +            signo =3D TARGET_SIGILL;
+> +            code =3D TARGET_ILL_ILLOPC;
+> +            break;
+> +        case RISCV_EXCP_BREAKPOINT:
+> +            signo =3D TARGET_SIGTRAP;
+> +            code =3D TARGET_TRAP_BRKPT;
+> +            break;
+> +        case EXCP_DEBUG:
+> +            signo =3D TARGET_SIGTRAP;
+> +            code =3D TARGET_TRAP_BRKPT;
+> +            break;
+> +        default:
+> +            fprintf(stderr, "qemu: unhandled CPU exception "
+> +                "0x%x - aborting\n", trapnr);
+> +            cpu_dump_state(cs, stderr, 0);
+> +            abort();
+> +        }
+> +
+> +        if (signo) {
+> +            force_sig_fault(signo, code, env->pc);
+> +        }
+> +
+> +        process_pending_signals(env);
+> +    }
+> +}
+> +
+>  #endif /* TARGET_ARCH_CPU_H */
 > --
-> 2.43.0
+> 2.34.1
 >
 >
 
