@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4E3CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A3DCE7AE0
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSwB-0005tp-RK; Fri, 06 Sep 2024 02:59:20 -0400
+	id 1smSsv-0000ai-Kx; Fri, 06 Sep 2024 02:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvK-0007rK-Ke; Fri, 06 Sep 2024 02:58:27 -0400
+ id 1smSsr-0000EA-IJ; Fri, 06 Sep 2024 02:55:53 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvI-0003cA-OQ; Fri, 06 Sep 2024 02:58:26 -0400
+ id 1smSso-0003I0-N8; Fri, 06 Sep 2024 02:55:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6A6838C25F;
- Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A9C438C245;
+ Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 33D19133417;
- Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43657 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:30 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 668351333FD;
+ Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
+Received: (nullmailer pid 43424 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jianzhou Yue <JianZhou.Yue@verisilicon.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 42/53] hw/core/ptimer: fix timer zero period condition
- for freq > 1GHz
-Date: Fri,  6 Sep 2024 09:54:12 +0300
-Message-Id: <20240906065429.42415-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 16/53] hw/virtio: Fix the de-initialization of
+ vhost-user devices
+Date: Fri,  6 Sep 2024 09:53:46 +0300
+Message-Id: <20240906065429.42415-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -62,95 +63,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jianzhou Yue <JianZhou.Yue@verisilicon.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The real period is zero when both period and period_frac are zero.
-Check the method ptimer_set_freq, if freq is larger than 1000 MHz,
-the period is zero, but the period_frac is not, in this case, the
-ptimer will work but the current code incorrectly recognizes that
-the ptimer is disabled.
+The unrealize functions of the various vhost-user devices are
+calling the corresponding vhost_*_set_status() functions with a
+status of 0 to shut down the device correctly.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2306
-Signed-off-by: JianZhou Yue <JianZhou.Yue@verisilicon.com>
-Message-id: 3DA024AEA8B57545AF1B3CAA37077D0FB75E82C8@SHASXM03.verisilicon.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 446e5e8b4515e9a7be69ef6a29852975289bb6f0)
+Now these vhost_*_set_status() functions all follow this scheme:
+
+    bool should_start = virtio_device_should_start(vdev, status);
+
+    if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+        return;
+    }
+
+    if (should_start) {
+        /* ... do the initialization stuff ... */
+    } else {
+        /* ... do the cleanup stuff ... */
+    }
+
+The problem here is virtio_device_should_start(vdev, 0) currently
+always returns "true" since it internally only looks at vdev->started
+instead of looking at the "status" parameter. Thus once the device
+got started once, virtio_device_should_start() always returns true
+and thus the vhost_*_set_status() functions return early, without
+ever doing any clean-up when being called with status == 0. This
+causes e.g. problems when trying to hot-plug and hot-unplug a vhost
+user devices multiple times since the de-initialization step is
+completely skipped during the unplug operation.
+
+This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
+vm_running check to virtio_device_started") which replaced
+
+ should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
+
+with
+
+ should_start = virtio_device_started(vdev, status);
+
+which later got replaced by virtio_device_should_start(). This blocked
+the possibility to set should_start to false in case the status flag
+VIRTIO_CONFIG_S_DRIVER_OK was not set.
+
+Fix it by adjusting the virtio_device_should_start() function to
+only consider the status flag instead of vdev->started. Since this
+function is only used in the various vhost_*_set_status() functions
+for exactly the same purpose, it should be fine to fix it in this
+central place there without any risk to change the behavior of other
+code.
+
+Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
+Buglink: https://issues.redhat.com/browse/RHEL-40708
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240618121958.88673-1-thuth@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit d72479b11797c28893e1e3fc565497a9cae5ca16)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
-index e03165febf..7177ecfab0 100644
---- a/hw/core/ptimer.c
-+++ b/hw/core/ptimer.c
-@@ -83,7 +83,7 @@ static void ptimer_reload(ptimer_state *s, int delta_adjust)
-         delta = s->delta = s->limit;
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 7d5ffdc145..2eafad17b8 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -470,9 +470,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
+  * @vdev - the VirtIO device
+  * @status - the devices status bits
+  *
+- * This is similar to virtio_device_started() but also encapsulates a
+- * check on the VM status which would prevent a device starting
+- * anyway.
++ * This is similar to virtio_device_started() but ignores vdev->started
++ * and also encapsulates a check on the VM status which would prevent a
++ * device from starting anyway.
+  */
+ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
+ {
+@@ -480,7 +480,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
+         return false;
      }
  
--    if (s->period == 0) {
-+    if (s->period == 0 && s->period_frac == 0) {
-         if (!qtest_enabled()) {
-             fprintf(stderr, "Timer with period zero, disabling\n");
-         }
-@@ -309,7 +309,7 @@ void ptimer_run(ptimer_state *s, int oneshot)
- 
-     assert(s->in_transaction);
- 
--    if (was_disabled && s->period == 0) {
-+    if (was_disabled && s->period == 0 && s->period_frac == 0) {
-         if (!qtest_enabled()) {
-             fprintf(stderr, "Timer with period zero, disabling\n");
-         }
-diff --git a/tests/unit/ptimer-test.c b/tests/unit/ptimer-test.c
-index 04b5f4e3d0..08240594bb 100644
---- a/tests/unit/ptimer-test.c
-+++ b/tests/unit/ptimer-test.c
-@@ -763,6 +763,33 @@ static void check_oneshot_with_load_0(gconstpointer arg)
-     ptimer_free(ptimer);
+-    return virtio_device_started(vdev, status);
++    return status & VIRTIO_CONFIG_S_DRIVER_OK;
  }
  
-+static void check_freq_more_than_1000M(gconstpointer arg)
-+{
-+    const uint8_t *policy = arg;
-+    ptimer_state *ptimer = ptimer_init(ptimer_trigger, NULL, *policy);
-+    bool no_round_down = (*policy & PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
-+
-+    triggered = false;
-+
-+    ptimer_transaction_begin(ptimer);
-+    ptimer_set_freq(ptimer, 2000000000);
-+    ptimer_set_limit(ptimer, 8, 1);
-+    ptimer_run(ptimer, 1);
-+    ptimer_transaction_commit(ptimer);
-+
-+    qemu_clock_step(3);
-+
-+    g_assert_cmpuint(ptimer_get_count(ptimer), ==, no_round_down ? 3 : 2);
-+    g_assert_false(triggered);
-+
-+    qemu_clock_step(1);
-+
-+    g_assert_cmpuint(ptimer_get_count(ptimer), ==, 0);
-+    g_assert_true(triggered);
-+
-+    ptimer_free(ptimer);
-+}
-+
- static void add_ptimer_tests(uint8_t policy)
- {
-     char policy_name[256] = "";
-@@ -857,6 +884,12 @@ static void add_ptimer_tests(uint8_t policy)
-                               policy_name),
-         g_memdup2(&policy, 1), check_oneshot_with_load_0, g_free);
-     g_free(tmp);
-+
-+    g_test_add_data_func_full(
-+        tmp = g_strdup_printf("/ptimer/freq_more_than_1000M policy=%s",
-+                              policy_name),
-+        g_memdup2(&policy, 1), check_freq_more_than_1000M, g_free);
-+    g_free(tmp);
- }
- 
- static void add_all_ptimer_policies_comb_tests(void)
+ static inline void virtio_set_started(VirtIODevice *vdev, bool started)
 -- 
 2.39.2
 
