@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23E0CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA721CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSsq-0008Kc-0v; Fri, 06 Sep 2024 02:55:52 -0400
+	id 1smSsw-0000ok-St; Fri, 06 Sep 2024 02:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsN-0006mH-3c; Fri, 06 Sep 2024 02:55:25 -0400
+ id 1smSsv-0000Y2-3N; Fri, 06 Sep 2024 02:55:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsL-0003HJ-Ec; Fri, 06 Sep 2024 02:55:22 -0400
+ id 1smSss-0003Lk-V4; Fri, 06 Sep 2024 02:55:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6C1E38C242;
+ by isrv.corpit.ru (Postfix) with ESMTP id CE2558C247;
  Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 3579E1333FA;
+ by tsrv.corpit.ru (Postfix) with SMTP id 94C8C1333FF;
  Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
-Received: (nullmailer pid 43394 invoked by uid 1000);
+Received: (nullmailer pid 43441 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, songziming <s.ziming@hotmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 13/53] chardev/char-win-stdio.c: restore old console
- mode
-Date: Fri,  6 Sep 2024 09:53:43 +0300
-Message-Id: <20240906065429.42415-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Frederik=20van=20H=C3=B6vell?= <frederik@fvhovell.nl>,
+ Cryptjar <cryptjar@junk.studio>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 18/53] hw/char/bcm2835_aux: Fix assert when receive
+ FIFO fills up
+Date: Fri,  6 Sep 2024 09:53:48 +0300
+Message-Id: <20240906065429.42415-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -64,51 +66,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: songziming <s.ziming@hotmail.com>
+From: Frederik van Hövell <frederik@fvhovell.nl>
 
-If I use `-serial stdio` on Windows, after QEMU exits, the terminal
-could not handle arrow keys and tab any more. Because stdio backend
-on Windows sets console mode to virtual terminal input when starts,
-but does not restore the old mode when finalize.
+When a bare-metal application on the raspi3 board reads the
+AUX_MU_STAT_REG MMIO register while the device's buffer is
+at full receive FIFO capacity
+(i.e. `s->read_count == BCM2835_AUX_RX_FIFO_LEN`) the
+assertion `assert(s->read_count < BCM2835_AUX_RX_FIFO_LEN)`
+fails.
 
-This small patch saves the old console mode and set it back.
-
-Signed-off-by: Ziming Song <s.ziming@hotmail.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
-(cherry picked from commit 903cc9e1173e0778caa50871e8275c898770c690)
+Reported-by: Cryptjar <cryptjar@junk.studio>
+Suggested-by: Cryptjar <cryptjar@junk.studio>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/459
+Signed-off-by: Frederik van Hövell <frederik@fvhovell.nl>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[PMM: commit message tweaks]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 546d574b11e02bfd5b15cdf1564842c14516dfab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-index 1a18999e78..13325ca967 100644
---- a/chardev/char-win-stdio.c
-+++ b/chardev/char-win-stdio.c
-@@ -33,6 +33,7 @@
- struct WinStdioChardev {
-     Chardev parent;
-     HANDLE  hStdIn;
-+    DWORD   dwOldMode;
-     HANDLE  hInputReadyEvent;
-     HANDLE  hInputDoneEvent;
-     HANDLE  hInputThread;
-@@ -159,6 +160,7 @@ static void qemu_chr_open_stdio(Chardev *chr,
-     }
- 
-     is_console = GetConsoleMode(stdio->hStdIn, &dwMode) != 0;
-+    stdio->dwOldMode = dwMode;
- 
-     if (is_console) {
-         if (qemu_add_wait_object(stdio->hStdIn,
-@@ -221,6 +223,9 @@ static void char_win_stdio_finalize(Object *obj)
- {
-     WinStdioChardev *stdio = WIN_STDIO_CHARDEV(obj);
- 
-+    if (stdio->hStdIn != INVALID_HANDLE_VALUE) {
-+        SetConsoleMode(stdio->hStdIn, stdio->dwOldMode);
-+    }
-     if (stdio->hInputReadyEvent != INVALID_HANDLE_VALUE) {
-         CloseHandle(stdio->hInputReadyEvent);
-     }
+diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
+index 96410b1ff8..0f1b28547e 100644
+--- a/hw/char/bcm2835_aux.c
++++ b/hw/char/bcm2835_aux.c
+@@ -138,7 +138,7 @@ static uint64_t bcm2835_aux_read(void *opaque, hwaddr offset, unsigned size)
+         res = 0x30e; /* space in the output buffer, empty tx fifo, idle tx/rx */
+         if (s->read_count > 0) {
+             res |= 0x1; /* data in input buffer */
+-            assert(s->read_count < BCM2835_AUX_RX_FIFO_LEN);
++            assert(s->read_count <= BCM2835_AUX_RX_FIFO_LEN);
+             res |= ((uint32_t)s->read_count) << 16; /* rx fifo fill level */
+         }
+         return res;
 -- 
 2.39.2
 
