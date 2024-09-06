@@ -4,39 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F91CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941D2CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:03:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSw3-0004ja-PA; Fri, 06 Sep 2024 02:59:12 -0400
+	id 1smSw7-00059b-N0; Fri, 06 Sep 2024 02:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvl-0001tC-2N; Fri, 06 Sep 2024 02:58:55 -0400
+ id 1smSvK-0007qY-Eu; Fri, 06 Sep 2024 02:58:26 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvi-0003lD-W2; Fri, 06 Sep 2024 02:58:52 -0400
+ id 1smSvI-0003hh-Ov; Fri, 06 Sep 2024 02:58:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B976C8C264;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7B6778C260;
  Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 82D1113341C;
+ by tsrv.corpit.ru (Postfix) with SMTP id 4254D133418;
  Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43691 invoked by uid 1000);
+Received: (nullmailer pid 43662 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:31 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alyssa Ross <hi@alyssa.is>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 47/53] target/hexagon: don't look for static glib
-Date: Fri,  6 Sep 2024 09:54:17 +0300
-Message-Id: <20240906065429.42415-47-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 43/53] block/blkio: use FUA flag on write zeroes only
+ if supported
+Date: Fri,  6 Sep 2024 09:54:13 +0300
+Message-Id: <20240906065429.42415-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,43 +65,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alyssa Ross <hi@alyssa.is>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-When cross compiling QEMU configured with --static, I've been getting
-configure errors like the following:
+libblkio supports BLKIO_REQ_FUA with write zeros requests only since
+version 1.4.0, so let's inform the block layer that the blkio driver
+supports it only in this case. Otherwise we can have runtime errors
+as reported in https://issues.redhat.com/browse/RHEL-32878
 
-    Build-time dependency glib-2.0 found: NO
-
-    ../target/hexagon/meson.build:303:15: ERROR: Dependency lookup for glib-2.0 with method 'pkgconfig' failed: Could not generate libs for glib-2.0:
-    Package libpcre2-8 was not found in the pkg-config search path.
-    Perhaps you should add the directory containing `libpcre2-8.pc'
-    to the PKG_CONFIG_PATH environment variable
-    Package 'libpcre2-8', required by 'glib-2.0', not found
-
-This happens because --static sets the prefer_static Meson option, but
-my build machine doesn't have a static libpcre2.  I don't think it
-makes sense to insist that native dependencies are static, just
-because I want the non-native QEMU binaries to be static.
-
-Signed-off-by: Alyssa Ross <hi@alyssa.is>
-Link: https://lore.kernel.org/r/20240805104921.4035256-1-hi@alyssa.is
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit fe68cc0923ebfa0c12e4176f61ec9b363a07a73a)
+Fixes: fd66dbd424 ("blkio: add libblkio block driver")
+Cc: qemu-stable@nongnu.org
+Buglink: https://issues.redhat.com/browse/RHEL-32878
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240808080545.40744-1-sgarzare@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 547c4e50929ec6c091d9c16a7b280e829b12b463)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index da8e608d00..436217f25a 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -188,7 +188,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
-         arguments: ['@INPUT@', '--defines=@OUTPUT1@', '--output=@OUTPUT0@']
-     )
+diff --git a/block/blkio.c b/block/blkio.c
+index bc2f21784c..adbb69fc49 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -896,8 +896,10 @@ static int blkio_file_open(BlockDriverState *bs, QDict *options, int flags,
+     }
  
--    glib_dep = dependency('glib-2.0', native: true)
-+    glib_dep = dependency('glib-2.0', native: true, static: false)
+     bs->supported_write_flags = BDRV_REQ_FUA | BDRV_REQ_REGISTERED_BUF;
+-    bs->supported_zero_flags = BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP |
+-                               BDRV_REQ_NO_FALLBACK;
++    bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK;
++#ifdef CONFIG_BLKIO_WRITE_ZEROS_FUA
++    bs->supported_zero_flags |= BDRV_REQ_FUA;
++#endif
  
-     idef_parser = executable(
-         'idef-parser',
+     qemu_mutex_init(&s->blkio_lock);
+     qemu_co_mutex_init(&s->bounce_lock);
+diff --git a/meson.build b/meson.build
+index 6c77d9687d..79de6f7fc8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2118,6 +2118,8 @@ config_host_data.set('CONFIG_BLKIO', blkio.found())
+ if blkio.found()
+   config_host_data.set('CONFIG_BLKIO_VHOST_VDPA_FD',
+                        blkio.version().version_compare('>=1.3.0'))
++  config_host_data.set('CONFIG_BLKIO_WRITE_ZEROS_FUA',
++                       blkio.version().version_compare('>=1.4.0'))
+ endif
+ config_host_data.set('CONFIG_CURL', curl.found())
+ config_host_data.set('CONFIG_CURSES', curses.found())
 -- 
 2.39.2
 
