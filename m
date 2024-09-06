@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F2FCE7AE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7186CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smTaA-0003aR-EC; Fri, 06 Sep 2024 03:40:38 -0400
+	id 1smTcO-00072H-2b; Fri, 06 Sep 2024 03:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1smTa4-00035o-RI
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:40:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1smTcM-0006vU-KK
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:42:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1smTa3-000124-2P
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:40:32 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1smTcL-0001D3-6Q
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:42:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725608429;
+ s=mimecast20190719; t=1725608572;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Wp/BkZaC5QjmOD1SZUnZwwD/jhWo/H+MSiUHmr0p7ac=;
- b=dSEhf3Xz1R5Jn6zYlZB4o9Vz7j8227lh6Nzqq1C8lyQPN67ne8KIhfBdbjFVbWqW9+eJIm
- LK2XQuuCHVgLPddwwoEVCNMUtr1HRi531dVBPeBC6rvA0H7rXByoqxym1i1bR/FCklhtuH
- irDAisB4YfhzFQA+tUaSUhNvCoxyofg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=osURwv5fGnpO1eusluS7Vha4mmSkUGCuMM/wFdejXqk=;
+ b=LWTH4kMQAjdVugEzvedwEeW9rXGvYAp3xZJ/8M2Sj/n4bYXo5N4I8YITsrdZi1q37owlaK
+ iYaZQt3HrzHDRb8VDkaFBvScLFcUQOaavknELS5xm5Ko4AC8vwnHK0lWa1wWkjz17l1ejC
+ dHHc3reA47lLtERYtWxfjNUlUVyw3FA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-prbBrbPNMuSSdvBmEC10eQ-1; Fri, 06 Sep 2024 03:40:27 -0400
-X-MC-Unique: prbBrbPNMuSSdvBmEC10eQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-377a26a5684so904065f8f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 00:40:27 -0700 (PDT)
+ us-mta-695-r8IXKoyiMg-9nHx6KXcuFg-1; Fri, 06 Sep 2024 03:42:50 -0400
+X-MC-Unique: r8IXKoyiMg-9nHx6KXcuFg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42c7936e4ebso13532415e9.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 00:42:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725608426; x=1726213226;
+ d=1e100.net; s=20230601; t=1725608569; x=1726213369;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
+ :content-language:references:cc:to:from:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=Wp/BkZaC5QjmOD1SZUnZwwD/jhWo/H+MSiUHmr0p7ac=;
- b=KkVYOXNs+K9esbzZH41rsJccCBBDUqsy8fPDtKBaJbCjjUlrQzAm+F27zjTAZDFdtf
- pQzfllbvCw60wGSUqFEvoER562xO0J0xR/WFra/ovpG+pnWw9GaSk7Ak1wAD+zBIfMyn
- 23HfQf0z3ajLJ9RAm4ZH+l4RvHbBLrrecQ63RD/kJSHgBuBweqVfcgNm84K1C2vsLwiV
- m02wvG5b+YeFiV4h3GkWyIS3PNp9TXYKy85Nn4rWKCWA/DZx18PLwmffnM4kfxh9yoFb
- vP/9S2zmuBrHk9a25zGjj6B/km7CH4sJSfzeT0T/5GJo7TT7xo1c9ekj65PWpU7JVdWT
- AT8w==
+ bh=osURwv5fGnpO1eusluS7Vha4mmSkUGCuMM/wFdejXqk=;
+ b=Ia/NjSv9XOLI/S7vZHjm0NsABsR6e/GhkglpLpvdIm4r7oyRPMcihhsVfd9Hgqws83
+ mt13997KmCSnK1Tth9wEsd2JzDpAqatUNg41Qfr1SA1nab/sQRMUZeat8Wyi6sW8IJRG
+ cxYzZis6Lxp04bHYpCHoCXq60hLHwLC5RMH97n5tikiH0AeOhiVIdlfK03oNLlQTaVAD
+ QvqIRpzv75e44o7NYYYfJFd7X6o1nYU1fX2lO5TcDohaaEUJIl0A8M6aWSSTdCdyqwgE
+ h9MZ3AqH8gHmajrzGBtKXD3lqAJSZOcXqofN15i0++UtWMdtdu/pY9NhtXDx+8mYtFyo
+ qO2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW58jB2l/srUKJZLLqqND8beN+H/r7ZyJrLy4ADaxGLcsp1R3oI1hXNHKtXGevDletVc1O0BiQxo0Ii@nongnu.org
-X-Gm-Message-State: AOJu0Yx8uF34DAR6E6gx64NP5gKE1C2U3Kujm8homZC4elGVRL0mPuex
- ceWJfrqHPXmYRvwY3hp2sSKTJwvOviwBLlaxoKIJUeIleM1FUeoFUUytkwuguHTNeyEMNJRS722
- yr+2Z61xdq1DT8oaIlR/FJ3h0yyp6tKncy7/P4T4Gluwj/Tl+rQ2h
-X-Received: by 2002:adf:f584:0:b0:371:c518:6f54 with SMTP id
- ffacd0b85a97d-378895d4f82mr948138f8f.29.1725608426118; 
- Fri, 06 Sep 2024 00:40:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzyCwCfFMJoUkvxQ6P+ObFK1wL9lo6bGafvhcxuvSc+s7D4+Rqp5b4dETmrZiROw0odl0fPQ==
-X-Received: by 2002:adf:f584:0:b0:371:c518:6f54 with SMTP id
- ffacd0b85a97d-378895d4f82mr948104f8f.29.1725608424891; 
- Fri, 06 Sep 2024 00:40:24 -0700 (PDT)
+ AJvYcCVA/y2AFUEkJQIekDzm9aJmac7g8mVdvEmhqbmIkkQhtrkeH32wra8/1FwlrC/uGHVpPB5+S8nGptIk@nongnu.org
+X-Gm-Message-State: AOJu0YwFUQSM5vOe8mFWseW2ECUDL2KnkGzDWUu/CgZHn88t7M5Itzew
+ KeiTt3TiXQcfKaOZKiobz6beZwIisLjxGgcoIZjRrC3JepGDu8tDc90Faen8U+zcRlKsViHkmMr
+ ILshsJBpCgebo0BZo78Mgx7oxPt1HTo17p2fq4vgE1s/lQ1yztgVK
+X-Received: by 2002:a05:600c:4f8d:b0:428:2e9:6573 with SMTP id
+ 5b1f17b1804b1-42c9f98a2a8mr12083005e9.17.1725608569310; 
+ Fri, 06 Sep 2024 00:42:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUzN2I62v/qZd4uAZtaQmu4XQV8j9/HhYNw4hxSSO9i9O87nsBLb/mFidE85ZvMVkSD5m4Mw==
+X-Received: by 2002:a05:600c:4f8d:b0:428:2e9:6573 with SMTP id
+ 5b1f17b1804b1-42c9f98a2a8mr12082765e9.17.1725608568658; 
+ Fri, 06 Sep 2024 00:42:48 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c70d:5900:804e:d067:935d:cec9?
  (p200300cbc70d5900804ed067935dcec9.dip0.t-ipconnect.de.
  [2003:cb:c70d:5900:804e:d067:935d:cec9])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374ca94e002sm12651677f8f.72.2024.09.06.00.40.24
+ 5b1f17b1804b1-42ca06005bbsm11310955e9.30.2024.09.06.00.42.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 00:40:24 -0700 (PDT)
-Message-ID: <be6dfcb4-b1a4-4dff-a08b-e79e303960dd@redhat.com>
-Date: Fri, 6 Sep 2024 09:40:23 +0200
+ Fri, 06 Sep 2024 00:42:48 -0700 (PDT)
+Message-ID: <ed2d5cd5-95fa-40b4-9413-b818b63eee32@redhat.com>
+Date: Fri, 6 Sep 2024 09:42:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] virtio: kconfig: memory devices are PCI only
+From: David Hildenbrand <david@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
 References: <20240906073737.493254-1-pbonzini@redhat.com>
-From: David Hildenbrand <david@redhat.com>
+ <be6dfcb4-b1a4-4dff-a08b-e79e303960dd@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -123,17 +124,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240906073737.493254-1-pbonzini@redhat.com>
+In-Reply-To: <be6dfcb4-b1a4-4dff-a08b-e79e303960dd@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -151,65 +152,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.09.24 09:37, Paolo Bonzini wrote:
-> Virtio memory devices rely on PCI BARs to expose the contents of memory.
-> Because of this they cannot be used with virtio-mmio or virtio-ccw.  In fact
-
-Guess what I am working on at this very the moment ;)
-
-> the code that is common to virtio-mem and virtio-pmem, which is in
-> hw/virtio/virtio-md-pci.c, is only included if CONFIG_VIRTIO_PCI is
-> set.  Reproduce the same condition in the Kconfig file.
+>> Cc: David Hildenbrand <david@redhat.com>
+>> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>    hw/virtio/Kconfig | 5 +++--
+>>    1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+>> index aa63ff7fd41..7c554d230d8 100644
+>> --- a/hw/virtio/Kconfig
+>> +++ b/hw/virtio/Kconfig
+>> @@ -37,6 +37,7 @@ config VIRTIO_CRYPTO
+>>    
+>>    config VIRTIO_MD
+>>        bool
+>> +    depends on VIRTIO_PCI
+>>        select MEM_DEVICE
+>>    
+>>    config VIRTIO_PMEM_SUPPORTED
+>> @@ -45,7 +46,7 @@ config VIRTIO_PMEM_SUPPORTED
+>>    config VIRTIO_PMEM
+>>        bool
+>>        default y
+>> -    depends on VIRTIO
+>> +    depends on VIRTIO_PCI
 > 
-> Without this patch it is possible to create a configuration with
-> CONFIG_VIRTIO_PCI=n and CONFIG_VIRTIO_MEM=y, but that causes a
-> compilation failure.
+> depends on VIRTIO_MD ?
 
-Right.
-
-> 
-> Cc: David Hildenbrand <david@redhat.com>
-> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/virtio/Kconfig | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-> index aa63ff7fd41..7c554d230d8 100644
-> --- a/hw/virtio/Kconfig
-> +++ b/hw/virtio/Kconfig
-> @@ -37,6 +37,7 @@ config VIRTIO_CRYPTO
->   
->   config VIRTIO_MD
->       bool
-> +    depends on VIRTIO_PCI
->       select MEM_DEVICE
->   
->   config VIRTIO_PMEM_SUPPORTED
-> @@ -45,7 +46,7 @@ config VIRTIO_PMEM_SUPPORTED
->   config VIRTIO_PMEM
->       bool
->       default y
-> -    depends on VIRTIO
-> +    depends on VIRTIO_PCI
-
-depends on VIRTIO_MD ?
-
->       depends on VIRTIO_PMEM_SUPPORTED
->       select VIRTIO_MD
->   
-> @@ -55,7 +56,7 @@ config VIRTIO_MEM_SUPPORTED
->   config VIRTIO_MEM
->       bool
->       default y
-> -    depends on VIRTIO
-> +    depends on VIRTIO_PCI
-
-Same here.
-
-With CCW support, I can unlock VIRTIO_MD and VIRTIO_MEM_SUPPORTED and it 
-should fly.
+(of course, removing the "select VIRTIO_MD")
 
 -- 
 Cheers,
