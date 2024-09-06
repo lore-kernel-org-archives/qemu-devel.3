@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22F3CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F91CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWyc-0004C7-1d; Fri, 06 Sep 2024 07:18:06 -0400
+	id 1smWxt-0000nR-ND; Fri, 06 Sep 2024 07:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWxk-0000Dc-6o; Fri, 06 Sep 2024 07:17:16 -0400
+ id 1smWxC-0006bn-C5; Fri, 06 Sep 2024 07:16:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWxi-0008AH-Eb; Fri, 06 Sep 2024 07:17:11 -0400
+ id 1smWx9-00086r-RK; Fri, 06 Sep 2024 07:16:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 54FE08C49C;
- Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E44EB8C494;
+ Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 61FB2133705;
- Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
-Received: (nullmailer pid 353684 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id E416C1336FE;
+ Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
+Received: (nullmailer pid 353660 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Amjad Alsharafi <amjadsharafi10@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 43/69] vvfat: Fix wrong checks for cluster mappings
- invariant
-Date: Fri,  6 Sep 2024 14:12:52 +0300
-Message-Id: <20240906111324.353230-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Jim Fehlig <jfehlig@suse.com>, Peter Xu <peterx@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 36/69] migration/multifd: Fix multifd_send_setup
+ cleanup when channel creation fails
+Date: Fri,  6 Sep 2024 14:12:45 +0300
+Message-Id: <20240906111324.353230-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -62,66 +63,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-How this `abort` was intended to check for was:
-- if the `mapping->first_mapping_index` is not the same as
-  `first_mapping_index`, which **should** happen only in one case,
-  when we are handling the first mapping, in that case
-  `mapping->first_mapping_index == -1`, in all other cases, the other
-  mappings after the first should have the condition `true`.
-- From above, we know that this is the first mapping, so if the offset
-  is not `0`, then abort, since this is an invalid state.
+When a channel fails to create, the code currently just returns. This
+is wrong for two reasons:
 
-The issue was that `first_mapping_index` is not set if we are
-checking from the middle, the variable `first_mapping_index` is
-only set if we passed through the check `cluster_was_modified` with the
-first mapping, and in the same function call we checked the other
-mappings.
+1) Channel n+1 will not get to initialize it's semaphores, leading to
+   an assert when terminate_threads tries to post to it:
 
-One approach is to go into the loop even if `cluster_was_modified`
-is not true so that we will be able to set `first_mapping_index` for the
-first mapping, but since `first_mapping_index` is only used here,
-another approach is to just check manually for the
-`mapping->first_mapping_index != -1` since we know that this is the
-value for the only entry where `offset == 0` (i.e. first mapping).
+ qemu-system-x86_64: ../util/qemu-thread-posix.c:92:
+ qemu_mutex_lock_impl: Assertion `mutex->initialized' failed.
 
-Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <b0fbca3ee208c565885838f6a7deeaeb23f4f9c2.1721470238.git.amjadsharafi10@gmail.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit f60a6f7e17bf2a2a0f0a08265ac9b077fce42858)
+2) (theoretical) If channel n-1 already started creation it will
+   defeat the purpose of the channels_created logic which is in place
+   to avoid migrate_fd_cleanup() to run while channels are still being
+   created.
+
+   This cannot really happen today because the current failure cases
+   for multifd_new_send_channel_create() are all synchronous,
+   resulting from qio_channel_file_new_path() getting a bad
+   filename. This would hit all channels equally.
+
+   But I don't want to set a trap for future people, so have all
+   channels try to create (even if failing), and only fail after the
+   channels_created semaphore has been posted.
+
+While here, remove the error_report_err call. There's one already at
+migrate_fd_cleanup later on.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Jim Fehlig <jfehlig@suse.com>
+Fixes: b7b03eb614 ("migration/multifd: Add outgoing QIOChannelFile support")
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 0bd5b9284fa94a6242a0d27a46380d93e753488b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 247b232608..b63ac5d045 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -1880,7 +1880,6 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 2802afe79d..fa55586f89 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1145,7 +1145,6 @@ static bool multifd_new_send_channel_create(gpointer opaque, Error **errp)
+ bool multifd_send_setup(void)
+ {
+     MigrationState *s = migrate_get_current();
+-    Error *local_err = NULL;
+     int thread_count, ret = 0;
+     uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
+     bool use_packets = multifd_use_packets();
+@@ -1166,6 +1165,7 @@ bool multifd_send_setup(void)
  
-     uint32_t cluster_num = begin_of_direntry(direntry);
-     uint32_t offset = 0;
--    int first_mapping_index = -1;
-     mapping_t* mapping = NULL;
-     const char* basename2 = NULL;
+     for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
++        Error *local_err = NULL;
  
-@@ -1942,14 +1941,9 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+         qemu_sem_init(&p->sem, 0);
+         qemu_sem_init(&p->sem_sync, 0);
+@@ -1190,7 +1190,8 @@ bool multifd_send_setup(void)
+         p->write_flags = 0;
  
-                         if (strcmp(basename, basename2))
-                             copy_it = 1;
--                        first_mapping_index = array_index(&(s->mapping), mapping);
--                    }
+         if (!multifd_new_send_channel_create(p, &local_err)) {
+-            return false;
++            migrate_set_error(s, local_err);
++            ret = -1;
+         }
+     }
+ 
+@@ -1203,24 +1204,27 @@ bool multifd_send_setup(void)
+         qemu_sem_wait(&multifd_send_state->channels_created);
+     }
+ 
++    if (ret) {
++        goto err;
++    }
++
+     for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
++        Error *local_err = NULL;
+ 
+         ret = multifd_send_state->ops->send_setup(p, &local_err);
+         if (ret) {
+-            break;
++            migrate_set_error(s, local_err);
++            goto err;
+         }
+     }
+ 
+-    if (ret) {
+-        migrate_set_error(s, local_err);
+-        error_report_err(local_err);
+-        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+-                          MIGRATION_STATUS_FAILED);
+-        return false;
+-    }
 -
--                    if (mapping->first_mapping_index != first_mapping_index
--                            && mapping->info.file.offset > 0) {
--                        abort();
--                        copy_it = 1;
-                     }
-+                    assert(mapping->first_mapping_index == -1
-+                            || mapping->info.file.offset > 0);
+     return true;
++
++err:
++    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
++                      MIGRATION_STATUS_FAILED);
++    return false;
+ }
  
-                     /* need to write out? */
-                     if (!was_modified && is_file(direntry)) {
+ bool multifd_recv(void)
 -- 
 2.39.2
 
