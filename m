@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5963CCE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58816CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWvD-0004fN-5E; Fri, 06 Sep 2024 07:14:35 -0400
+	id 1smWxI-0006yK-Hf; Fri, 06 Sep 2024 07:16:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWvC-0004bF-7I; Fri, 06 Sep 2024 07:14:34 -0400
+ id 1smWwF-0001yM-6W; Fri, 06 Sep 2024 07:15:45 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWvA-0007jd-JM; Fri, 06 Sep 2024 07:14:33 -0400
+ id 1smWwC-0007zO-Vh; Fri, 06 Sep 2024 07:15:38 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 701DB8C47F;
- Fri,  6 Sep 2024 14:12:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4548B8C48A;
+ Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7CCEF1336E9;
- Fri,  6 Sep 2024 14:13:25 +0300 (MSK)
-Received: (nullmailer pid 353588 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 51F411336F4;
+ Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
+Received: (nullmailer pid 353624 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, songziming <s.ziming@hotmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 15/69] chardev/char-win-stdio.c: restore old console
- mode
-Date: Fri,  6 Sep 2024 14:12:24 +0300
-Message-Id: <20240906111324.353230-15-mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 26/69] target/arm: Fix UMOPA/UMOPS of 16-bit values
+Date: Fri,  6 Sep 2024 14:12:35 +0300
+Message-Id: <20240906111324.353230-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, THIS_AD=1.099,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,51 +62,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: songziming <s.ziming@hotmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-If I use `-serial stdio` on Windows, after QEMU exits, the terminal
-could not handle arrow keys and tab any more. Because stdio backend
-on Windows sets console mode to virtual terminal input when starts,
-but does not restore the old mode when finalize.
+The UMOPA/UMOPS instructions are supposed to multiply unsigned 8 or
+16 bit elements and accumulate the products into a 64-bit element.
+In the Arm ARM pseudocode, this is done with the usual
+infinite-precision signed arithmetic.  However our implementation
+doesn't quite get it right, because in the DEF_IMOP_64() macro we do:
+  sum += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);
 
-This small patch saves the old console mode and set it back.
+where NTYPE and MTYPE are uint16_t or int16_t.  In the uint16_t case,
+the C usual arithmetic conversions mean the values are converted to
+"int" type and the multiply is done as a 32-bit multiply.  This means
+that if the inputs are, for example, 0xffff and 0xffff then the
+result is 0xFFFE0001 as an int, which is then promoted to uint64_t
+for the accumulation into sum; this promotion incorrectly sign
+extends the multiply.
 
-Signed-off-by: Ziming Song <s.ziming@hotmail.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
-(cherry picked from commit 903cc9e1173e0778caa50871e8275c898770c690)
+Avoid the incorrect sign extension by casting to int64_t before
+the multiply, so we do the multiply as 64-bit signed arithmetic,
+which is a type large enough that the multiply can never
+overflow into the sign bit.
+
+(The equivalent 8-bit operations in DEF_IMOP_32() are fine, because
+the 8-bit multiplies can never overflow into the sign bit of a
+32-bit integer.)
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2372
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240722172957.1041231-3-peter.maydell@linaro.org
+(cherry picked from commit ea3f5a90f036734522e9af3bffd77e69e9f47355)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-index 1a18999e78..13325ca967 100644
---- a/chardev/char-win-stdio.c
-+++ b/chardev/char-win-stdio.c
-@@ -33,6 +33,7 @@
- struct WinStdioChardev {
-     Chardev parent;
-     HANDLE  hStdIn;
-+    DWORD   dwOldMode;
-     HANDLE  hInputReadyEvent;
-     HANDLE  hInputDoneEvent;
-     HANDLE  hInputThread;
-@@ -159,6 +160,7 @@ static void qemu_chr_open_stdio(Chardev *chr,
-     }
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 5a6dd76489..f9001f5213 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -1146,10 +1146,10 @@ static uint64_t NAME(uint64_t n, uint64_t m, uint64_t a, uint8_t p, bool neg) \
+     uint64_t sum = 0;                                                       \
+     /* Apply P to N as a mask, making the inactive elements 0. */           \
+     n &= expand_pred_h(p);                                                  \
+-    sum += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                               \
+-    sum += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                             \
+-    sum += (NTYPE)(n >> 32) * (MTYPE)(m >> 32);                             \
+-    sum += (NTYPE)(n >> 48) * (MTYPE)(m >> 48);                             \
++    sum += (int64_t)(NTYPE)(n >> 0) * (MTYPE)(m >> 0);                      \
++    sum += (int64_t)(NTYPE)(n >> 16) * (MTYPE)(m >> 16);                    \
++    sum += (int64_t)(NTYPE)(n >> 32) * (MTYPE)(m >> 32);                    \
++    sum += (int64_t)(NTYPE)(n >> 48) * (MTYPE)(m >> 48);                    \
+     return neg ? a - sum : a + sum;                                         \
+ }
  
-     is_console = GetConsoleMode(stdio->hStdIn, &dwMode) != 0;
-+    stdio->dwOldMode = dwMode;
- 
-     if (is_console) {
-         if (qemu_add_wait_object(stdio->hStdIn,
-@@ -221,6 +223,9 @@ static void char_win_stdio_finalize(Object *obj)
- {
-     WinStdioChardev *stdio = WIN_STDIO_CHARDEV(obj);
- 
-+    if (stdio->hStdIn != INVALID_HANDLE_VALUE) {
-+        SetConsoleMode(stdio->hStdIn, stdio->dwOldMode);
-+    }
-     if (stdio->hInputReadyEvent != INVALID_HANDLE_VALUE) {
-         CloseHandle(stdio->hInputReadyEvent);
-     }
 -- 
 2.39.2
 
