@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 139F7CE7AE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C0CBCE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSw4-0004qg-Ix; Fri, 06 Sep 2024 02:59:12 -0400
+	id 1smSuR-0002eS-2a; Fri, 06 Sep 2024 02:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvH-0007YL-E1; Fri, 06 Sep 2024 02:58:24 -0400
+ id 1smSto-0008PZ-MM; Fri, 06 Sep 2024 02:56:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvF-0003bg-L8; Fri, 06 Sep 2024 02:58:23 -0400
+ id 1smStm-0003TC-7S; Fri, 06 Sep 2024 02:56:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5BB908C25E;
- Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6BD0F8C250;
+ Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 24002133416;
- Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43653 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 33B94133408;
+ Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
+Received: (nullmailer pid 43529 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 41/53] nbd/server: CVE-2024-7409: Avoid use-after-free
- when closing server
-Date: Fri,  6 Sep 2024 09:54:11 +0300
-Message-Id: <20240906065429.42415-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 27/53] target/arm: Handle denormals correctly for FMOPA
+ (widening)
+Date: Fri,  6 Sep 2024 09:53:57 +0300
+Message-Id: <20240906065429.42415-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -63,88 +63,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Commit 3e7ef738 plugged the use-after-free of the global nbd_server
-object, but overlooked a use-after-free of nbd_server->listener.
-Although this race is harder to hit, notice that our shutdown path
-first drops the reference count of nbd_server->listener, then triggers
-actions that can result in a pending client reaching the
-nbd_blockdev_client_closed() callback, which in turn calls
-qio_net_listener_set_client_func on a potentially stale object.
+The FMOPA (widening) SME instruction takes pairs of half-precision
+floating point values, widens them to single-precision, does a
+two-way dot product and accumulates the results into a
+single-precision destination.  We don't quite correctly handle the
+FPCR bits FZ and FZ16 which control flushing of denormal inputs and
+outputs.  This is because at the moment we pass a single float_status
+value to the helper function, which then uses that configuration for
+all the fp operations it does.  However, because the inputs to this
+operation are float16 and the outputs are float32 we need to use the
+fp_status_f16 for the float16 input widening but the normal fp_status
+for everything else.  Otherwise we will apply the flushing control
+FPCR.FZ16 to the 32-bit output rather than the FPCR.FZ control, and
+incorrectly flush a denormal output to zero when we should not (or
+vice-versa).
 
-If we know we don't want any more clients to connect, and have already
-told the listener socket to shut down, then we should not be trying to
-update the listener socket's associated function.
+(In commit 207d30b5fdb5b we tried to fix the FZ handling but
+didn't get it right, switching from "use FPCR.FZ for everything" to
+"use FPCR.FZ16 for everything".)
+(Mjt: it is commit 4975f9fc4ea3 in stable-8.2)
 
-Reproducer:
+Pass the CPU env to the sme_fmopa_h helper instead of an fp_status
+pointer, and have the helper pass an extra fp_status into the
+f16_dotadd() function so that we can use the right status for the
+right parts of this operation.
 
-> #!/usr/bin/python3
->
-> import os
-> from threading import Thread
->
-> def start_stop():
->     while 1:
->         os.system('virsh qemu-monitor-command VM \'{"execute": "nbd-server-start",
-+"arguments":{"addr":{"type":"unix","data":{"path":"/tmp/nbd-sock"}}}}\'')
->         os.system('virsh qemu-monitor-command VM \'{"execute": "nbd-server-stop"}\'')
->
-> def nbd_list():
->     while 1:
->         os.system('/path/to/build/qemu-nbd -L -k /tmp/nbd-sock')
->
-> def test():
->     sst = Thread(target=start_stop)
->     sst.start()
->     nlt = Thread(target=nbd_list)
->     nlt.start()
->
->     sst.join()
->     nlt.join()
->
-> test()
-
-Fixes: CVE-2024-7409
-Fixes: 3e7ef738c8 ("nbd/server: CVE-2024-7409: Close stray clients at server-stop")
-CC: qemu-stable@nongnu.org
-Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240822143617.800419-2-eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 3874f5f73c441c52f1c699c848d463b0eda01e4c)
+Cc: qemu-stable@nongnu.org
+Fixes: 207d30b5fdb5 ("target/arm: Use FPST_F16 for SME FMOPA (widening)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2373
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 55f9f4ee018c5ccea81d8c8c586756d7711ae46f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index f73409ae49..b36f41b7c5 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -92,10 +92,13 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
+index 27eef49a11..d22bf9d21b 100644
+--- a/target/arm/tcg/helper-sme.h
++++ b/target/arm/tcg/helper-sme.h
+@@ -121,7 +121,7 @@ DEF_HELPER_FLAGS_5(sme_addha_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sme_addva_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
  
- static void nbd_update_server_watch(NBDServerData *s)
- {
--    if (!s->max_connections || s->connections < s->max_connections) {
--        qio_net_listener_set_client_func(s->listener, nbd_accept, NULL, NULL);
--    } else {
--        qio_net_listener_set_client_func(s->listener, NULL, NULL, NULL);
-+    if (s->listener) {
-+        if (!s->max_connections || s->connections < s->max_connections) {
-+            qio_net_listener_set_client_func(s->listener, nbd_accept, NULL,
-+                                             NULL);
-+        } else {
-+            qio_net_listener_set_client_func(s->listener, NULL, NULL, NULL);
-+        }
-     }
+ DEF_HELPER_FLAGS_7(sme_fmopa_h, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index f9001f5213..3906bb51c0 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -976,12 +976,23 @@ static inline uint32_t f16mop_adj_pair(uint32_t pair, uint32_t pg, uint32_t neg)
  }
  
-@@ -113,6 +116,7 @@ static void nbd_server_free(NBDServerData *server)
+ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
+-                          float_status *s_std, float_status *s_odd)
++                          float_status *s_f16, float_status *s_std,
++                          float_status *s_odd)
+ {
+-    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_std);
+-    float64 e1c = float16_to_float64(e1 >> 16, true, s_std);
+-    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_std);
+-    float64 e2c = float16_to_float64(e2 >> 16, true, s_std);
++    /*
++     * We need three different float_status for different parts of this
++     * operation:
++     *  - the input conversion of the float16 values must use the
++     *    f16-specific float_status, so that the FPCR.FZ16 control is applied
++     *  - operations on float32 including the final accumulation must use
++     *    the normal float_status, so that FPCR.FZ is applied
++     *  - we have pre-set-up copy of s_std which is set to round-to-odd,
++     *    for the multiply (see below)
++     */
++    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_f16);
++    float64 e1c = float16_to_float64(e1 >> 16, true, s_f16);
++    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_f16);
++    float64 e2c = float16_to_float64(e2 >> 16, true, s_f16);
+     float64 t64;
+     float32 t32;
+ 
+@@ -1003,20 +1014,23 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
+ }
+ 
+ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, void *vst, uint32_t desc)
++                         void *vpm, CPUARMState *env, uint32_t desc)
+ {
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+     uint32_t neg = simd_data(desc) * 0x80008000u;
+     uint16_t *pn = vpn, *pm = vpm;
+-    float_status fpst_odd, fpst_std;
++    float_status fpst_odd, fpst_std, fpst_f16;
+ 
+     /*
+-     * Make a copy of float_status because this operation does not
+-     * update the cumulative fp exception status.  It also produces
+-     * default nans.  Make a second copy with round-to-odd -- see above.
++     * Make copies of fp_status and fp_status_f16, because this operation
++     * does not update the cumulative fp exception status.  It also
++     * produces default NaNs. We also need a second copy of fp_status with
++     * round-to-odd -- see above.
       */
-     qio_net_listener_disconnect(server->listener);
-     object_unref(OBJECT(server->listener));
-+    server->listener = NULL;
-     QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
-         qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
-                              NULL);
+-    fpst_std = *(float_status *)vst;
++    fpst_f16 = env->vfp.fp_status_f16;
++    fpst_std = env->vfp.fp_status;
+     set_default_nan_mode(true, &fpst_std);
++    set_default_nan_mode(true, &fpst_f16);
+     fpst_odd = fpst_std;
+     set_float_rounding_mode(float_round_to_odd, &fpst_odd);
+ 
+@@ -1036,7 +1050,8 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+                         uint32_t m = *(uint32_t *)(vzm + H1_4(col));
+ 
+                         m = f16mop_adj_pair(m, pcol, 0);
+-                        *a = f16_dotadd(*a, n, m, &fpst_std, &fpst_odd);
++                        *a = f16_dotadd(*a, n, m,
++                                        &fpst_f16, &fpst_std, &fpst_odd);
+                     }
+                     col += 4;
+                     pcol >>= 4;
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index a50a419af2..ae42ddef7b 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -334,8 +334,29 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
+     return true;
+ }
+ 
+-TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
+-           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
++static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
++                           gen_helper_gvec_5_ptr *fn)
++{
++    int svl = streaming_vec_reg_size(s);
++    uint32_t desc = simd_desc(svl, svl, a->sub);
++    TCGv_ptr za, zn, zm, pn, pm;
++
++    if (!sme_smza_enabled_check(s)) {
++        return true;
++    }
++
++    za = get_tile(s, esz, a->zad);
++    zn = vec_full_reg_ptr(s, a->zn);
++    zm = vec_full_reg_ptr(s, a->zm);
++    pn = pred_full_reg_ptr(s, a->pn);
++    pm = pred_full_reg_ptr(s, a->pm);
++
++    fn(za, zn, zm, pn, pm, tcg_env, tcg_constant_i32(desc));
++    return true;
++}
++
++TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
++           MO_32, gen_helper_sme_fmopa_h)
+ TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
+            MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
+ TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
 -- 
 2.39.2
 
