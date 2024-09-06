@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417DDC54FC6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF0C1CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRNc-0006nR-Uk; Fri, 06 Sep 2024 01:19:33 -0400
+	id 1smRNt-00013m-9p; Fri, 06 Sep 2024 01:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRND-0004VL-Nb; Fri, 06 Sep 2024 01:19:09 -0400
+ id 1smRNq-0000WI-1S; Fri, 06 Sep 2024 01:19:46 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRNB-0008GX-OS; Fri, 06 Sep 2024 01:19:07 -0400
+ id 1smRNn-0008Mk-Vm; Fri, 06 Sep 2024 01:19:45 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 01FCE8C132;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7144A8C139;
  Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A69F7133377;
- Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
-Received: (nullmailer pid 10473 invoked by uid 1000);
- Fri, 06 Sep 2024 05:16:33 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 1F41313337E;
+ Fri,  6 Sep 2024 08:16:36 +0300 (MSK)
+Received: (nullmailer pid 10495 invoked by uid 1000);
+ Fri, 06 Sep 2024 05:16:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Amjad Alsharafi <amjadsharafi10@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 29/40] vvfat: Fix reading files with non-continuous
- clusters
-Date: Fri,  6 Sep 2024 08:16:17 +0300
-Message-Id: <20240906051633.10288-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 36/40] block/blkio: use FUA flag on write zeroes only
+ if supported
+Date: Fri,  6 Sep 2024 08:16:24 +0300
+Message-Id: <20240906051633.10288-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,47 +65,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-When reading with `read_cluster` we get the `mapping` with
-`find_mapping_for_cluster` and then we call `open_file` for this
-mapping.
-The issue appear when its the same file, but a second cluster that is
-not immediately after it, imagine clusters `500 -> 503`, this will give
-us 2 mappings one has the range `500..501` and another `503..504`, both
-point to the same file, but different offsets.
+libblkio supports BLKIO_REQ_FUA with write zeros requests only since
+version 1.4.0, so let's inform the block layer that the blkio driver
+supports it only in this case. Otherwise we can have runtime errors
+as reported in https://issues.redhat.com/browse/RHEL-32878
 
-When we don't open the file since the path is the same, we won't assign
-`s->current_mapping` and thus accessing way out of bound of the file.
-
-From our example above, after `open_file` (that didn't open anything) we
-will get the offset into the file with
-`s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
-give us `0x2000 * (504-500)`, which is out of bound for this mapping and
-will produce some issues.
-
-Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
-Message-ID: <1f3ea115779abab62ba32c788073cdc99f9ad5dd.1721470238.git.amjadsharafi10@gmail.com>
-[kwolf: Simplified the patch based on Amjad's analysis and input]
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 5eed3db336506b529b927ba221fe0d836e5b8819)
+Fixes: fd66dbd424 ("blkio: add libblkio block driver")
+Cc: qemu-stable@nongnu.org
+Buglink: https://issues.redhat.com/browse/RHEL-32878
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240808080545.40744-1-sgarzare@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 547c4e50929ec6c091d9c16a7b280e829b12b463)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: meson.build fixup for the lack of
+ v8.0.0-1489-g98b126f5e3 "qapi: add '@fdset' feature for BlockdevOptionsVirtioBlkVhostVdpa")
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 1adcc6040f..eb844c3134 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -1368,8 +1368,9 @@ static int open_file(BDRVVVFATState* s,mapping_t* mapping)
-             return -1;
-         vvfat_close_current_file(s);
-         s->current_fd = fd;
--        s->current_mapping = mapping;
+diff --git a/block/blkio.c b/block/blkio.c
+index cb66160268..1fd47c434c 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -808,8 +808,10 @@ static int blkio_file_open(BlockDriverState *bs, QDict *options, int flags,
      }
-+
-+    s->current_mapping = mapping;
-     return 0;
- }
  
+     bs->supported_write_flags = BDRV_REQ_FUA | BDRV_REQ_REGISTERED_BUF;
+-    bs->supported_zero_flags = BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP |
+-                               BDRV_REQ_NO_FALLBACK;
++    bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK;
++#ifdef CONFIG_BLKIO_WRITE_ZEROS_FUA
++    bs->supported_zero_flags |= BDRV_REQ_FUA;
++#endif
+ 
+     qemu_mutex_init(&s->blkio_lock);
+     qemu_co_mutex_init(&s->bounce_lock);
+diff --git a/meson.build b/meson.build
+index 787f91855e..16dc9627e0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1831,6 +1831,10 @@ config_host_data.set('CONFIG_LZO', lzo.found())
+ config_host_data.set('CONFIG_MPATH', mpathpersist.found())
+ config_host_data.set('CONFIG_MPATH_NEW_API', mpathpersist_new_api)
+ config_host_data.set('CONFIG_BLKIO', blkio.found())
++if blkio.found()
++  config_host_data.set('CONFIG_BLKIO_WRITE_ZEROS_FUA',
++                       blkio.version().version_compare('>=1.4.0'))
++endif
+ config_host_data.set('CONFIG_CURL', curl.found())
+ config_host_data.set('CONFIG_CURSES', curses.found())
+ config_host_data.set('CONFIG_GBM', gbm.found())
 -- 
 2.39.2
 
