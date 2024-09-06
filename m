@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5D2CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AF1CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWz6-00087Q-A9; Fri, 06 Sep 2024 07:18:36 -0400
+	id 1smX0q-0005oI-3E; Fri, 06 Sep 2024 07:20:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWz2-0007j1-Mm; Fri, 06 Sep 2024 07:18:32 -0400
+ id 1smX0P-0003ph-9r; Fri, 06 Sep 2024 07:20:01 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWz0-0008Em-Kz; Fri, 06 Sep 2024 07:18:32 -0400
+ id 1smX0N-0008NG-Nk; Fri, 06 Sep 2024 07:19:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0AA098C4A7;
+ by isrv.corpit.ru (Postfix) with ESMTP id E7DEB8C4B5;
  Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 179B5133710;
+ by tsrv.corpit.ru (Postfix) with SMTP id F378213371E;
  Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353722 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:24 -0000
+Received: (nullmailer pid 353769 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:25 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 54/69] target/i386: Do not apply REX to MMX operands
-Date: Fri,  6 Sep 2024 14:13:03 +0300
-Message-Id: <20240906111324.353230-54-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 68/69] hw/audio/virtio-snd: fix invalid param check
+Date: Fri,  6 Sep 2024 14:13:17 +0300
+Message-Id: <20240906111324.353230-68-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,33 +64,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Volker Rümelin <vr_qemu@t-online.de>
 
-Cc: qemu-stable@nongnu.org
-Fixes: b3e22b2318a ("target/i386: add core of new i386 decoder")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2495
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240812025844.58956-2-richard.henderson@linaro.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 416f2b16c02c618c0f233372ebfe343f9ee667d4)
+Commit 9b6083465f ("virtio-snd: check for invalid param shift
+operands") tries to prevent invalid parameters specified by the
+guest. However, the code is not correct.
+
+Change the code so that the parameters format and rate, which are
+a bit numbers, are compared with the bit size of the data type.
+
+Fixes: 9b6083465f ("virtio-snd: check for invalid param shift operands")
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+Message-Id: <20240802071805.7123-1-vr_qemu@t-online.de>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 7d14471a121878602cb4e748c4707f9ab9a9e3e2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 2ca874b59d..27e1666f5d 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1272,7 +1272,10 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-             op->unit = X86_OP_SSE;
-         }
-     get_reg:
--        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
-+        op->n = ((get_modrm(s, env) >> 3) & 7);
-+        if (op->unit != X86_OP_MMX) {
-+            op->n |= REX_R(s);
-+        }
-         break;
- 
-     case X86_TYPE_E:  /* ALU modrm operand */
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 2b80072b04..95f55a02f1 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -282,12 +282,12 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+         error_report("Number of channels is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (BIT(params->format) > sizeof(supported_formats) ||
++    if (params->format >= sizeof(supported_formats) * BITS_PER_BYTE ||
+         !(supported_formats & BIT(params->format))) {
+         error_report("Stream format is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (BIT(params->rate) > sizeof(supported_rates) ||
++    if (params->rate >= sizeof(supported_rates) * BITS_PER_BYTE ||
+         !(supported_rates & BIT(params->rate))) {
+         error_report("Stream rate is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
 -- 
 2.39.2
 
