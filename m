@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A3DCE7AE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2012BCE7AE4
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSsv-0000ai-Kx; Fri, 06 Sep 2024 02:55:57 -0400
+	id 1smSwH-0006PZ-1u; Fri, 06 Sep 2024 02:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsr-0000EA-IJ; Fri, 06 Sep 2024 02:55:53 -0400
+ id 1smSvN-0008CL-HX; Fri, 06 Sep 2024 02:58:30 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSso-0003I0-N8; Fri, 06 Sep 2024 02:55:53 -0400
+ id 1smSvL-0003iJ-Sr; Fri, 06 Sep 2024 02:58:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A9C438C245;
- Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8A8848C261;
+ Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 668351333FD;
- Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
-Received: (nullmailer pid 43424 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:29 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 53C55133419;
+ Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
+Received: (nullmailer pid 43670 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:31 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 16/53] hw/virtio: Fix the de-initialization of
- vhost-user devices
-Date: Fri,  6 Sep 2024 09:53:46 +0300
-Message-Id: <20240906065429.42415-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 44/53] target/i386: Do not apply REX to MMX operands
+Date: Fri,  6 Sep 2024 09:54:14 +0300
+Message-Id: <20240906065429.42415-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -63,92 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The unrealize functions of the various vhost-user devices are
-calling the corresponding vhost_*_set_status() functions with a
-status of 0 to shut down the device correctly.
-
-Now these vhost_*_set_status() functions all follow this scheme:
-
-    bool should_start = virtio_device_should_start(vdev, status);
-
-    if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
-        return;
-    }
-
-    if (should_start) {
-        /* ... do the initialization stuff ... */
-    } else {
-        /* ... do the cleanup stuff ... */
-    }
-
-The problem here is virtio_device_should_start(vdev, 0) currently
-always returns "true" since it internally only looks at vdev->started
-instead of looking at the "status" parameter. Thus once the device
-got started once, virtio_device_should_start() always returns true
-and thus the vhost_*_set_status() functions return early, without
-ever doing any clean-up when being called with status == 0. This
-causes e.g. problems when trying to hot-plug and hot-unplug a vhost
-user devices multiple times since the de-initialization step is
-completely skipped during the unplug operation.
-
-This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
-vm_running check to virtio_device_started") which replaced
-
- should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
-
-with
-
- should_start = virtio_device_started(vdev, status);
-
-which later got replaced by virtio_device_should_start(). This blocked
-the possibility to set should_start to false in case the status flag
-VIRTIO_CONFIG_S_DRIVER_OK was not set.
-
-Fix it by adjusting the virtio_device_should_start() function to
-only consider the status flag instead of vdev->started. Since this
-function is only used in the various vhost_*_set_status() functions
-for exactly the same purpose, it should be fine to fix it in this
-central place there without any risk to change the behavior of other
-code.
-
-Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
-Buglink: https://issues.redhat.com/browse/RHEL-40708
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240618121958.88673-1-thuth@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit d72479b11797c28893e1e3fc565497a9cae5ca16)
+Cc: qemu-stable@nongnu.org
+Fixes: b3e22b2318a ("target/i386: add core of new i386 decoder")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2495
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240812025844.58956-2-richard.henderson@linaro.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 416f2b16c02c618c0f233372ebfe343f9ee667d4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 7d5ffdc145..2eafad17b8 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -470,9 +470,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
-  * @vdev - the VirtIO device
-  * @status - the devices status bits
-  *
-- * This is similar to virtio_device_started() but also encapsulates a
-- * check on the VM status which would prevent a device starting
-- * anyway.
-+ * This is similar to virtio_device_started() but ignores vdev->started
-+ * and also encapsulates a check on the VM status which would prevent a
-+ * device from starting anyway.
-  */
- static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
- {
-@@ -480,7 +480,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
-         return false;
-     }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index ffd3a42688..852579eef5 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1237,7 +1237,10 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+             op->unit = X86_OP_SSE;
+         }
+     get_reg:
+-        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
++        op->n = ((get_modrm(s, env) >> 3) & 7);
++        if (op->unit != X86_OP_MMX) {
++            op->n |= REX_R(s);
++        }
+         break;
  
--    return virtio_device_started(vdev, status);
-+    return status & VIRTIO_CONFIG_S_DRIVER_OK;
- }
- 
- static inline void virtio_set_started(VirtIODevice *vdev, bool started)
+     case X86_TYPE_E:  /* ALU modrm operand */
 -- 
 2.39.2
 
