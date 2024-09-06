@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8D1CE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE290CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSvx-0003JX-K9; Fri, 06 Sep 2024 02:59:05 -0400
+	id 1smSvx-0003Ge-8a; Fri, 06 Sep 2024 02:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvh-0001Zd-H1; Fri, 06 Sep 2024 02:58:53 -0400
+ id 1smSux-0005nr-A9; Fri, 06 Sep 2024 02:58:03 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvf-0003iM-Ui; Fri, 06 Sep 2024 02:58:49 -0400
+ id 1smSuu-0003bW-Na; Fri, 06 Sep 2024 02:58:02 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 995388C262;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4BE238C25D;
  Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 633B713341A;
+ by tsrv.corpit.ru (Postfix) with SMTP id 12BC6133415;
  Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43681 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:31 -0000
+Received: (nullmailer pid 43646 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 45/53] target/arm: Clear high SVE elements in
- handle_vec_simd_wshli
-Date: Fri,  6 Sep 2024 09:54:15 +0300
-Message-Id: <20240906065429.42415-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 40/53] nbd/server: CVE-2024-7409: Close stray clients
+ at server-stop
+Date: Fri,  6 Sep 2024 09:54:10 +0300
+Message-Id: <20240906065429.42415-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,31 +65,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Eric Blake <eblake@redhat.com>
 
-AdvSIMD instructions are supposed to zero bits beyond 128.
-Affects SSHLL, USHLL, SSHLL2, USHLL2.
+A malicious client can attempt to connect to an NBD server, and then
+intentionally delay progress in the handshake, including if it does
+not know the TLS secrets.  Although the previous two patches reduce
+this behavior by capping the default max-connections parameter and
+killing slow clients, they did not eliminate the possibility of a
+client waiting to close the socket until after the QMP nbd-server-stop
+command is executed, at which point qemu would SEGV when trying to
+dereference the NULL nbd_server global which is no longer present.
+This amounts to a denial of service attack.  Worse, if another NBD
+server is started before the malicious client disconnects, I cannot
+rule out additional adverse effects when the old client interferes
+with the connection count of the new server (although the most likely
+is a crash due to an assertion failure when checking
+nbd_server->connections > 0).
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240717060903.205098-15-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 8e0c9a9efa21a16190cbac288e414bbf1d80f639)
+For environments without this patch, the CVE can be mitigated by
+ensuring (such as via a firewall) that only trusted clients can
+connect to an NBD server.  Note that using frameworks like libvirt
+that ensure that TLS is used and that nbd-server-stop is not executed
+while any trusted clients are still connected will only help if there
+is also no possibility for an untrusted client to open a connection
+but then stall on the NBD handshake.
+
+Given the previous patches, it would be possible to guarantee that no
+clients remain connected by having nbd-server-stop sleep for longer
+than the default handshake deadline before finally freeing the global
+nbd_server object, but that could make QMP non-responsive for a long
+time.  So intead, this patch fixes the problem by tracking all client
+sockets opened while the server is running, and forcefully closing any
+such sockets remaining without a completed handshake at the time of
+nbd-server-stop, then waiting until the coroutines servicing those
+sockets notice the state change.  nbd-server-stop now has a second
+AIO_WAIT_WHILE_UNLOCKED (the first is indirectly through the
+blk_exp_close_all_type() that disconnects all clients that completed
+handshakes), but forced socket shutdown is enough to progress the
+coroutines and quickly tear down all clients before the server is
+freed, thus finally fixing the CVE.
+
+This patch relies heavily on the fact that nbd/server.c guarantees
+that it only calls nbd_blockdev_client_closed() from the main loop
+(see the assertion in nbd_client_put() and the hoops used in
+nbd_client_put_nonzero() to achieve that); if we did not have that
+guarantee, we would also need a mutex protecting our accesses of the
+list of connections to survive re-entrancy from independent iothreads.
+
+Although I did not actually try to test old builds, it looks like this
+problem has existed since at least commit 862172f45c (v2.12.0, 2017) -
+even back when that patch started using a QIONetListener to handle
+listening on multiple sockets, nbd_server_free() was already unaware
+that the nbd_blockdev_client_closed callback can be reached later by a
+client thread that has not completed handshakes (and therefore the
+client's socket never got added to the list closed in
+nbd_export_close_all), despite that patch intentionally tearing down
+the QIONetListener to prevent new clients.
+
+Reported-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Fixes: CVE-2024-7409
+CC: qemu-stable@nongnu.org
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20240807174943.771624-14-eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 3e7ef738c8462c45043a1d39f702a0990406a3b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 2fccd836b7..5beac07b60 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -10141,6 +10141,7 @@ static void handle_vec_simd_wshli(DisasContext *s, bool is_q, bool is_u,
-         tcg_gen_shli_i64(tcg_rd, tcg_rd, shift);
-         write_vec_element(s, tcg_rd, rd, i, size + 1);
-     }
-+    clear_vec_high(s, true, rd);
+diff --git a/blockdev-nbd.c b/blockdev-nbd.c
+index 24ba5382db..f73409ae49 100644
+--- a/blockdev-nbd.c
++++ b/blockdev-nbd.c
+@@ -21,12 +21,18 @@
+ #include "io/channel-socket.h"
+ #include "io/net-listener.h"
+ 
++typedef struct NBDConn {
++    QIOChannelSocket *cioc;
++    QLIST_ENTRY(NBDConn) next;
++} NBDConn;
++
+ typedef struct NBDServerData {
+     QIONetListener *listener;
+     QCryptoTLSCreds *tlscreds;
+     char *tlsauthz;
+     uint32_t max_connections;
+     uint32_t connections;
++    QLIST_HEAD(, NBDConn) conns;
+ } NBDServerData;
+ 
+ static NBDServerData *nbd_server;
+@@ -51,6 +57,14 @@ int nbd_server_max_connections(void)
+ 
+ static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
+ {
++    NBDConn *conn = nbd_client_owner(client);
++
++    assert(qemu_in_main_thread() && nbd_server);
++
++    object_unref(OBJECT(conn->cioc));
++    QLIST_REMOVE(conn, next);
++    g_free(conn);
++
+     nbd_client_put(client);
+     assert(nbd_server->connections > 0);
+     nbd_server->connections--;
+@@ -60,14 +74,20 @@ static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
+ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+                        gpointer opaque)
+ {
++    NBDConn *conn = g_new0(NBDConn, 1);
++
++    assert(qemu_in_main_thread() && nbd_server);
+     nbd_server->connections++;
++    object_ref(OBJECT(cioc));
++    conn->cioc = cioc;
++    QLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
+     nbd_update_server_watch(nbd_server);
+ 
+     qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
+     /* TODO - expose handshake timeout as QMP option */
+     nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
+                    nbd_server->tlscreds, nbd_server->tlsauthz,
+-                   nbd_blockdev_client_closed, NULL);
++                   nbd_blockdev_client_closed, conn);
  }
  
- /* SHRN/RSHRN - Shift right with narrowing (and potential rounding) */
+ static void nbd_update_server_watch(NBDServerData *s)
+@@ -81,12 +101,25 @@ static void nbd_update_server_watch(NBDServerData *s)
+ 
+ static void nbd_server_free(NBDServerData *server)
+ {
++    NBDConn *conn, *tmp;
++
+     if (!server) {
+         return;
+     }
+ 
++    /*
++     * Forcefully close the listener socket, and any clients that have
++     * not yet disconnected on their own.
++     */
+     qio_net_listener_disconnect(server->listener);
+     object_unref(OBJECT(server->listener));
++    QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
++        qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
++                             NULL);
++    }
++
++    AIO_WAIT_WHILE_UNLOCKED(NULL, server->connections > 0);
++
+     if (server->tlscreds) {
+         object_unref(OBJECT(server->tlscreds));
+     }
 -- 
 2.39.2
 
