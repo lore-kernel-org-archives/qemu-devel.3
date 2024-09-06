@@ -4,81 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F7AE6FE3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3735E6FE43
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smdN6-00021Q-29; Fri, 06 Sep 2024 14:07:49 -0400
+	id 1smdM6-0008C0-G3; Fri, 06 Sep 2024 14:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smdMn-0001br-Jr
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:32 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smdMl-000562-Kw
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:29 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-375e5c12042so1207868f8f.3
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 11:07:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725646045; x=1726250845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+YGETogEe7QHs3kpO72TeOLSF1g7K/mh6DUXFGQKYAw=;
- b=DAuB+IaGYs3ggEL+OBmHAVbosnorfVHiUShC/Gxdaf0DuN2mTDeUAxoBeMX7jmm9aN
- JniQM7sy8Vl/ZsAGl2spDobcRz6bX7BK/84lgutyELfvGYaRcAByiVYZkc47OjhCAqkc
- q0+LpP03NXLkjw3lbClMU6UjOtvMzRezQ2B70/HPov/z9siGEKSQS0RvgPCQBP+INxeZ
- +DpUSZdSxT6QD1hNa1KRjhAlFne1WZ8zkqhjizg05ImVa30+1mLhqS0C+8hvzDdKC2p5
- t8tbussIvCHD0KcBCHjxnZXmfNvVNUVriqRaNIcA8tV2h1cOR4IZhdDusz+tL9tKH2lR
- +RRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725646045; x=1726250845;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+YGETogEe7QHs3kpO72TeOLSF1g7K/mh6DUXFGQKYAw=;
- b=KBBp9yzHPtBR/p4DDQGcjyRX8/Y6W8Ct4qJfL/0W0b1/p5uBkDbAcwm6SSs+9yZf6o
- iPAJI9WuntHuwBPXs0Azcw/kOhmh/C0hans63dxXjNylNyPInFMVr0d/Zud9ZQgULbra
- 544lX/FyrmqLP95Pk2clJ45WKGsL0g+yRSb3ytg8QpiQ+tCQzCGXbE+cjEBFzcZdP6Wv
- Y9PySfIp7ZDA9vpg6eNTWaMW388jdO67wJkC750yZiCbPXHUCEOKqpOk/RYU1/FrdoZV
- 1o7MFgsBHwHscWfV5AcfOIFXZ8ZGsyYWRR5IudSIMUj6DfQBPozaq948UowUZfosj0wS
- CXlw==
-X-Gm-Message-State: AOJu0YwdTlN1vXFkir3VIiIWVq7EOPbdGSojMuIERcSQcCVe8sabLOD+
- rCfnKqzRMDnlTdicRQIYeEmGKqud37pJz/JdTfARpCNO7xYlc1y2M0nqhKv7PCf62ZcF4OaoflW
- o
-X-Google-Smtp-Source: AGHT+IFp2ilXsxNvxEZsdHpkJ/fDpgF42CqfeZNxh6JvToyu3Lllv3J9sgTftN0ADOzQPqzKdojynQ==
-X-Received: by 2002:adf:cd8b:0:b0:374:ba7b:42b5 with SMTP id
- ffacd0b85a97d-378895db877mr2565719f8f.24.1725646045319; 
- Fri, 06 Sep 2024 11:07:25 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37891657a2csm441860f8f.95.2024.09.06.11.07.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 11:07:24 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdLs-0007ma-EP
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdLp-00053o-Jg
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725645989;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ji84iv9XBJKYjEg7xYMJZg1LQX8VnwwUmA7czsLEGX8=;
+ b=hwJzwMWhppqrNvEiH9sDz0A6n1FPYAxaxBMCgWxK2YwtO1W6OSNPBzwOaszkeqv/z7fKDh
+ mWSGDjPcYYPELQCrC3WuOd2O9JWZr5we/NUCbX/zAHQd5EH3hg0fwZwifa5hTxlnrbDiCB
+ d5tOaJBnS/EIFXZ73MnDWW6lUgLv7A4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-540--OPRPHQjPD6smKOd9JS_YQ-1; Fri,
+ 06 Sep 2024 14:06:27 -0400
+X-MC-Unique: -OPRPHQjPD6smKOd9JS_YQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A83921977009; Fri,  6 Sep 2024 18:06:26 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.70])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2815C19560AA; Fri,  6 Sep 2024 18:06:23 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] gitlab-ci: Force 'make check' single-threaded for
- cross-i686-tci
-Date: Fri,  6 Sep 2024 19:07:21 +0100
-Message-Id: <20240906180723.503855-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Daniel P . Berrange" <berrange@redhat.com>
+Subject: [PATCH 10/14] tests/functional: Convert Aarch64 Raspi3 avocado tests
+Date: Fri,  6 Sep 2024 20:05:45 +0200
+Message-ID: <20240906180549.792832-11-thuth@redhat.com>
+In-Reply-To: <20240906180549.792832-1-thuth@redhat.com>
+References: <20240906180549.792832-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,39 +83,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CI job cross-i686-tci has been persistently flaky for what seems
-like years now. Stefan Weil had a look and his conclusion was that
-this happens because we run too many tests in parallel, and so
-sometimes they starve each other of CPU and time out:
-https://lore.kernel.org/qemu-devel/9692cfcb-ef59-4cec-8452-8bfb859e8a6c@weilnetz.de/
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-To test this theory, force the cross-i686-tci job to run only
-one test at a time. 'meson test' has a handy environment
-variable to let us set the parallelism. Unfortunately meson
-prioritises the command line '--num-processes' argument over
-the environment variable if they are both set, so to make
-this work we need to adjust our mtest2make script to not
-set --num-processes if the MESON_TESTTHREADS envariable is set.
+Straight forward conversion. Update the SHA1 hashes to SHA256
+hashes since SHA1 should not be used anymore nowadays.
 
-I don't know if this will fix the flakiness, but it seems worth
-a try. If it works, we might want to consider whether we should
-do something similar across the board -- at the moment we
-always use a parallelism of num-cpus + 1, because we use the
-same amount of parallelism that we do for the compile step.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240826221058.75126-4-philmd@linaro.org>
+[thuth: Use the LinuxKernelTest class]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS                             |  1 +
+ tests/avocado/boot_linux_console.py     | 23 --------------
+ tests/functional/meson.build            |  1 +
+ tests/functional/test_aarch64_raspi3.py | 41 +++++++++++++++++++++++++
+ 4 files changed, 43 insertions(+), 23 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_raspi3.py
 
-thanks
--- PMM
-
-Peter Maydell (2):
-  scripts/mtest2make: Honour MESON_TESTTHREADS if it is set
-  .gitlab-ci.d/crossbuilds.yml: Force 'make check' single threaded for
-    cross-i686-tci
-
- .gitlab-ci.d/crossbuilds.yml | 3 +++
- scripts/mtest2make.py        | 4 ++++
- 2 files changed, 7 insertions(+)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index eaf71bb976..4e5a6d71b8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -912,6 +912,7 @@ F: include/hw/arm/rasp*
+ F: include/hw/*/bcm283*
+ F: docs/system/arm/raspi.rst
+ F: tests/functional/test_arm_raspi2.py
++F: tests/functional/test_aarch64_raspi3.py
+ 
+ Real View
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index 827a286429..e4caf34379 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -979,29 +979,6 @@ def test_arm_orangepi_uboot_netbsd9(self):
+         # Wait for user-space
+         wait_for_console_pattern(self, 'Starting root file system check')
+ 
+-    def test_aarch64_raspi3_atf(self):
+-        """
+-        :avocado: tags=accel:tcg
+-        :avocado: tags=arch:aarch64
+-        :avocado: tags=machine:raspi3b
+-        :avocado: tags=cpu:cortex-a53
+-        :avocado: tags=device:pl011
+-        :avocado: tags=atf
+-        """
+-        zip_url = ('https://github.com/pbatard/RPi3/releases/download/'
+-                   'v1.15/RPi3_UEFI_Firmware_v1.15.zip')
+-        zip_hash = '74b3bd0de92683cadb14e008a7575e1d0c3cafb9'
+-        zip_path = self.fetch_asset(zip_url, asset_hash=zip_hash)
+-
+-        archive.extract(zip_path, self.workdir)
+-        efi_fd = os.path.join(self.workdir, 'RPI_EFI.fd')
+-
+-        self.vm.set_console(console_index=1)
+-        self.vm.add_args('-nodefaults',
+-                         '-device', 'loader,file=%s,force-raw=true' % efi_fd)
+-        self.vm.launch()
+-        self.wait_for_console_pattern('version UEFI Firmware v1.15')
+-
+     def test_alpha_clipper(self):
+         """
+         :avocado: tags=arch:alpha
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index ff3fe7981e..35eebbe9b9 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -35,6 +35,7 @@ tests_generic_bsduser = [
+ ]
+ 
+ tests_aarch64_system_thorough = [
++  'aarch64_raspi3',
+   'aarch64_sbsaref',
+   'aarch64_virt',
+ ]
+diff --git a/tests/functional/test_aarch64_raspi3.py b/tests/functional/test_aarch64_raspi3.py
+new file mode 100755
+index 0000000000..369f95a3d9
+--- /dev/null
++++ b/tests/functional/test_aarch64_raspi3.py
+@@ -0,0 +1,41 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel on a Raspberry Pi machine
++# and checks the console
++#
++# Copyright (c) 2020 Philippe Mathieu-Daudé <f4bug@amsat.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++from zipfile import ZipFile
++
++from qemu_test import LinuxKernelTest, Asset
++
++
++class Aarch64Raspi3Machine(LinuxKernelTest):
++
++    ASSET_RPI3_UEFI = Asset(
++        ('https://github.com/pbatard/RPi3/releases/download/'
++         'v1.15/RPi3_UEFI_Firmware_v1.15.zip'),
++        '8cff2e979560048b4c84921f41a91893240b9fb71a88f0b5c5d6c8edd994bd5b')
++
++    def test_aarch64_raspi3_atf(self):
++        efi_name = 'RPI_EFI.fd'
++        zip_path = self.ASSET_RPI3_UEFI.fetch()
++
++        with ZipFile(zip_path, 'r') as zf:
++                     zf.extract(efi_name, path=self.workdir)
++        efi_fd = os.path.join(self.workdir, efi_name)
++
++        self.set_machine('raspi3b')
++        self.vm.set_console(console_index=1)
++        self.vm.add_args('-cpu', 'cortex-a53',
++                         '-nodefaults',
++                         '-device', f'loader,file={efi_fd},force-raw=true')
++        self.vm.launch()
++        self.wait_for_console_pattern('version UEFI Firmware v1.15')
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
-2.34.1
+2.46.0
 
 
