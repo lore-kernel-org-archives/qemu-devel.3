@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67930CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ABF3CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSss-0000M8-QY; Fri, 06 Sep 2024 02:55:54 -0400
+	id 1smSry-0004yY-Qr; Fri, 06 Sep 2024 02:54:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsn-0008FM-Hn; Fri, 06 Sep 2024 02:55:50 -0400
+ id 1smSrx-0004rH-0X; Fri, 06 Sep 2024 02:54:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsl-0003Hk-1D; Fri, 06 Sep 2024 02:55:48 -0400
+ id 1smSrv-00031u-AY; Fri, 06 Sep 2024 02:54:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E57F8C244;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2CDA48C23E;
  Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 569901333FC;
- Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
-Received: (nullmailer pid 43414 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id E82DE1333F6;
+ Fri,  6 Sep 2024 09:54:29 +0300 (MSK)
+Received: (nullmailer pid 43361 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zheyu Ma <zheyuma97@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 15/53] util/async.c: Forbid negative min/max in
- aio_context_set_thread_pool_params()
-Date: Fri,  6 Sep 2024 09:53:45 +0300
-Message-Id: <20240906065429.42415-15-mjt@tls.msk.ru>
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 09/53] virtio-snd: add max size bounds check in input cb
+Date: Fri,  6 Sep 2024 09:53:39 +0300
+Message-Id: <20240906065429.42415-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -64,41 +65,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-aio_context_set_thread_pool_params() takes two int64_t arguments to
-set the minimum and maximum number of threads in the pool.  We do
-some bounds checking on these, but we don't catch the case where the
-inputs are negative.  This means that later in the function when we
-assign these inputs to the AioContext::thread_pool_min and
-::thread_pool_max fields, which are of type int, the values might
-overflow the smaller type.
+When reading input audio in the virtio-snd input callback,
+virtio_snd_pcm_in_cb(), we do not check whether the iov can actually fit
+the data buffer. This is because we use the buffer->size field as a
+total-so-far accumulator instead of byte-size-left like in TX buffers.
 
-A negative number of threads is meaningless, so make
-aio_context_set_thread_pool_params() return an error if either min or
-max are negative.
+This triggers an out of bounds write if the size of the virtio queue
+element is equal to virtio_snd_pcm_status, which makes the available
+space for audio data zero. This commit adds a check for reaching the
+maximum buffer size before attempting any writes.
 
-Resolves: Coverity CID 1547605
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2427
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <virtio-snd-fuzz-2427-fix-v1-manos.pitsidianakis@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240723150927.1396456-1-peter.maydell@linaro.org
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 851495571d14fe2226c52b9d423f88a4f5460836)
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 98e77e3dd8dd6e7aa9a7dffa60f49c8c8a49d4e3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/util/async.c b/util/async.c
-index 8f90ddc304..86d2910481 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -758,7 +758,7 @@ void aio_context_set_thread_pool_params(AioContext *ctx, int64_t min,
-                                         int64_t max, Error **errp)
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 092ba2302b..4d15fe0e31 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -1261,7 +1261,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
  {
+     VirtIOSoundPCMStream *stream = data;
+     VirtIOSoundPCMBuffer *buffer;
+-    size_t size;
++    size_t size, max_size;
  
--    if (min > max || !max || min > INT_MAX || max > INT_MAX) {
-+    if (min > max || max <= 0 || min < 0 || min > INT_MAX || max > INT_MAX) {
-         error_setg(errp, "bad thread-pool-min/thread-pool-max values");
-         return;
-     }
+     WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
+         while (!QSIMPLEQ_EMPTY(&stream->queue)) {
+@@ -1275,7 +1275,12 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
+                 continue;
+             }
+ 
++            max_size = iov_size(buffer->elem->in_sg, buffer->elem->in_num);
+             for (;;) {
++                if (buffer->size >= max_size) {
++                    return_rx_buffer(stream, buffer);
++                    break;
++                }
+                 size = AUD_read(stream->voice.in,
+                         buffer->data + buffer->size,
+                         MIN(available, (stream->params.period_bytes -
 -- 
 2.39.2
 
