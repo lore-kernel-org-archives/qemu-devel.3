@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78002CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE390C54FC6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRNt-000145-BL; Fri, 06 Sep 2024 01:19:49 -0400
+	id 1smRLv-00060m-O7; Fri, 06 Sep 2024 01:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRNi-0007r4-Jm; Fri, 06 Sep 2024 01:19:38 -0400
+ id 1smRLR-00042Q-Fw; Fri, 06 Sep 2024 01:17:20 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRNg-0008I5-9h; Fri, 06 Sep 2024 01:19:38 -0400
+ id 1smRLN-0007v4-Um; Fri, 06 Sep 2024 01:17:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2370B8C134;
- Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DA9648C11F;
+ Fri,  6 Sep 2024 08:15:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C5369133379;
- Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
-Received: (nullmailer pid 10480 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 7E75B133365;
+ Fri,  6 Sep 2024 08:16:34 +0300 (MSK)
+Received: (nullmailer pid 10417 invoked by uid 1000);
  Fri, 06 Sep 2024 05:16:33 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 31/40] nbd/server: Plumb in new args to
- nbd_client_add()
-Date: Fri,  6 Sep 2024 08:16:19 +0300
-Message-Id: <20240906051633.10288-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 11/40] hw/virtio: Fix the de-initialization of
+ vhost-user devices
+Date: Fri,  6 Sep 2024 08:15:59 +0300
+Message-Id: <20240906051633.10288-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,155 +63,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Upcoming patches to fix a CVE need to track an opaque pointer passed
-in by the owner of a client object, as well as request for a time
-limit on how fast negotiation must complete.  Prepare for that by
-changing the signature of nbd_client_new() and adding an accessor to
-get at the opaque pointer, although for now the two servers
-(qemu-nbd.c and blockdev-nbd.c) do not change behavior even though
-they pass in a new default timeout value.
+The unrealize functions of the various vhost-user devices are
+calling the corresponding vhost_*_set_status() functions with a
+status of 0 to shut down the device correctly.
 
-Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240807174943.771624-11-eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[eblake: s/LIMIT/MAX_SECS/ as suggested by Dan]
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit fb1c2aaa981e0a2fa6362c9985f1296b74f055ac)
+Now these vhost_*_set_status() functions all follow this scheme:
+
+    bool should_start = virtio_device_should_start(vdev, status);
+
+    if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+        return;
+    }
+
+    if (should_start) {
+        /* ... do the initialization stuff ... */
+    } else {
+        /* ... do the cleanup stuff ... */
+    }
+
+The problem here is virtio_device_should_start(vdev, 0) currently
+always returns "true" since it internally only looks at vdev->started
+instead of looking at the "status" parameter. Thus once the device
+got started once, virtio_device_should_start() always returns true
+and thus the vhost_*_set_status() functions return early, without
+ever doing any clean-up when being called with status == 0. This
+causes e.g. problems when trying to hot-plug and hot-unplug a vhost
+user devices multiple times since the de-initialization step is
+completely skipped during the unplug operation.
+
+This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
+vm_running check to virtio_device_started") which replaced
+
+ should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
+
+with
+
+ should_start = virtio_device_started(vdev, status);
+
+which later got replaced by virtio_device_should_start(). This blocked
+the possibility to set should_start to false in case the status flag
+VIRTIO_CONFIG_S_DRIVER_OK was not set.
+
+Fix it by adjusting the virtio_device_should_start() function to
+only consider the status flag instead of vdev->started. Since this
+function is only used in the various vhost_*_set_status() functions
+for exactly the same purpose, it should be fine to fix it in this
+central place there without any risk to change the behavior of other
+code.
+
+Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
+Buglink: https://issues.redhat.com/browse/RHEL-40708
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240618121958.88673-1-thuth@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit d72479b11797c28893e1e3fc565497a9cae5ca16)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 012256bb02..bf02ddc1e0 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -64,8 +64,10 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
-     nbd_update_server_watch(nbd_server);
- 
-     qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
--    nbd_client_new(cioc, nbd_server->tlscreds, nbd_server->tlsauthz,
--                   nbd_blockdev_client_closed);
-+    /* TODO - expose handshake timeout as QMP option */
-+    nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
-+                   nbd_server->tlscreds, nbd_server->tlsauthz,
-+                   nbd_blockdev_client_closed, NULL);
- }
- 
- static void nbd_update_server_watch(NBDServerData *s)
-diff --git a/include/block/nbd.h b/include/block/nbd.h
-index 4ede3b2bd0..3392a5c319 100644
---- a/include/block/nbd.h
-+++ b/include/block/nbd.h
-@@ -27,6 +27,12 @@
- 
- extern const BlockExportDriver blk_exp_nbd;
- 
-+/*
-+ * NBD_DEFAULT_HANDSHAKE_MAX_SECS: Number of seconds in which client must
-+ * succeed at NBD_OPT_GO before being forcefully dropped as too slow.
-+ */
-+#define NBD_DEFAULT_HANDSHAKE_MAX_SECS 10
-+
- /* Handshake phase structs - this struct is passed on the wire */
- 
- struct NBDOption {
-@@ -338,9 +344,12 @@ AioContext *nbd_export_aio_context(NBDExport *exp);
- NBDExport *nbd_export_find(const char *name);
- 
- void nbd_client_new(QIOChannelSocket *sioc,
-+                    uint32_t handshake_max_secs,
-                     QCryptoTLSCreds *tlscreds,
-                     const char *tlsauthz,
--                    void (*close_fn)(NBDClient *, bool));
-+                    void (*close_fn)(NBDClient *, bool),
-+                    void *owner);
-+void *nbd_client_owner(NBDClient *client);
- void nbd_client_get(NBDClient *client);
- void nbd_client_put(NBDClient *client);
- 
-diff --git a/nbd/server.c b/nbd/server.c
-index 74edb2815b..431e543b47 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -120,10 +120,12 @@ typedef struct NBDExportMetaContexts {
- struct NBDClient {
-     int refcount;
-     void (*close_fn)(NBDClient *client, bool negotiated);
-+    void *owner;
- 
-     NBDExport *exp;
-     QCryptoTLSCreds *tlscreds;
-     char *tlsauthz;
-+    uint32_t handshake_max_secs;
-     QIOChannelSocket *sioc; /* The underlying data channel */
-     QIOChannel *ioc; /* The current I/O channel which may differ (eg TLS) */
- 
-@@ -2755,6 +2757,7 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
- 
-     qemu_co_mutex_init(&client->send_lock);
- 
-+    /* TODO - utilize client->handshake_max_secs */
-     if (nbd_negotiate(client, &local_err)) {
-         if (local_err) {
-             error_report_err(local_err);
-@@ -2767,14 +2770,17 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
- }
- 
- /*
-- * Create a new client listener using the given channel @sioc.
-+ * Create a new client listener using the given channel @sioc and @owner.
-  * Begin servicing it in a coroutine.  When the connection closes, call
-- * @close_fn with an indication of whether the client completed negotiation.
-+ * @close_fn with an indication of whether the client completed negotiation
-+ * within @handshake_max_secs seconds (0 for unbounded).
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index c1a7c9bd3b..aa7f7d3dd6 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -425,9 +425,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
+  * @vdev - the VirtIO device
+  * @status - the devices status bits
+  *
+- * This is similar to virtio_device_started() but also encapsulates a
+- * check on the VM status which would prevent a device starting
+- * anyway.
++ * This is similar to virtio_device_started() but ignores vdev->started
++ * and also encapsulates a check on the VM status which would prevent a
++ * device from starting anyway.
   */
- void nbd_client_new(QIOChannelSocket *sioc,
-+                    uint32_t handshake_max_secs,
-                     QCryptoTLSCreds *tlscreds,
-                     const char *tlsauthz,
--                    void (*close_fn)(NBDClient *, bool))
-+                    void (*close_fn)(NBDClient *, bool),
-+                    void *owner)
+ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
  {
-     NBDClient *client;
-     Coroutine *co;
-@@ -2786,12 +2792,20 @@ void nbd_client_new(QIOChannelSocket *sioc,
-         object_ref(OBJECT(client->tlscreds));
+@@ -435,7 +435,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
+         return false;
      }
-     client->tlsauthz = g_strdup(tlsauthz);
-+    client->handshake_max_secs = handshake_max_secs;
-     client->sioc = sioc;
-     object_ref(OBJECT(client->sioc));
-     client->ioc = QIO_CHANNEL(sioc);
-     object_ref(OBJECT(client->ioc));
-     client->close_fn = close_fn;
-+    client->owner = owner;
  
-     co = qemu_coroutine_create(nbd_co_client_start, client);
-     qemu_coroutine_enter(co);
- }
-+
-+void *
-+nbd_client_owner(NBDClient *client)
-+{
-+    return client->owner;
-+}
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index f71f5125d8..16b220bdad 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -369,7 +369,9 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
- 
-     nb_fds++;
-     nbd_update_server_watch();
--    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed);
-+    /* TODO - expose handshake timeout as command line option */
-+    nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
-+                   tlscreds, tlsauthz, nbd_client_closed, NULL);
+-    return virtio_device_started(vdev, status);
++    return status & VIRTIO_CONFIG_S_DRIVER_OK;
  }
  
- static void nbd_update_server_watch(void)
+ static inline void virtio_set_started(VirtIODevice *vdev, bool started)
 -- 
 2.39.2
 
