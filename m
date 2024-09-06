@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D35FBCD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC8ACD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWxY-0007pt-53; Fri, 06 Sep 2024 07:17:00 -0400
+	id 1smWxM-0007DG-PU; Fri, 06 Sep 2024 07:16:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWwF-0001yL-2s; Fri, 06 Sep 2024 07:15:45 -0400
+ id 1smWwj-0004Kp-NB; Fri, 06 Sep 2024 07:16:12 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWwB-0007zB-KJ; Fri, 06 Sep 2024 07:15:38 -0400
+ id 1smWwg-00081R-Vh; Fri, 06 Sep 2024 07:16:09 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3700E8C489;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8B1808C48F;
  Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 43F501336F3;
+ by tsrv.corpit.ru (Postfix) with SMTP id 980FB1336F9;
  Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
-Received: (nullmailer pid 353621 invoked by uid 1000);
+Received: (nullmailer pid 353643 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 25/69] target/arm: Don't assert for 128-bit tile
- accesses when SVL is 128
-Date: Fri,  6 Sep 2024 14:12:34 +0300
-Message-Id: <20240906111324.353230-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Marco Palumbi <Marco.Palumbi@tii.ae>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 31/69] hw/arm/mps2-tz.c: fix RX/TX interrupts order
+Date: Fri,  6 Sep 2024 14:12:40 +0300
+Message-Id: <20240906111324.353230-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -63,56 +61,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Marco Palumbi <Marco.Palumbi@tii.ae>
 
-For an instruction which accesses a 128-bit element tile when
-the SVL is also 128 (for example MOV z0.Q, p0/M, ZA0H.Q[w0,0]),
-we will assert in get_tile_rowcol():
-
-qemu-system-aarch64: ../../tcg/tcg-op.c:926: tcg_gen_deposit_z_i32: Assertion `len > 0' failed.
-
-This happens because we calculate
-    len = ctz32(streaming_vec_reg_size(s)) - esz;$
-but if the SVL and the element size are the same len is 0, and
-the deposit operation asserts.
-
-In this case the ZA storage contains exactly one 128 bit
-element ZA tile, and the horizontal or vertical slice is just
-that tile. This means that regardless of the index value in
-the Ws register, we always access that tile. (In pseudocode terms,
-we calculate (index + offset) MOD 1, which is 0.)
-
-Special case the len == 0 case to avoid hitting the assertion
-in tcg_gen_deposit_z_i32().
+The order of the RX and TX interrupts are swapped.
+This commit fixes the order as per the following documents:
+ * https://developer.arm.com/documentation/dai0505/latest/
+ * https://developer.arm.com/documentation/dai0521/latest/
+ * https://developer.arm.com/documentation/dai0524/latest/
+ * https://developer.arm.com/documentation/dai0547/latest/
 
 Cc: qemu-stable@nongnu.org
+Signed-off-by: Marco Palumbi <Marco.Palumbi@tii.ae>
+Message-id: 20240730073123.72992-1-marco@palumbi.it
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240722172957.1041231-2-peter.maydell@linaro.org
-(cherry picked from commit 56f1c0db928aae0b83fd91c89ddb226b137e2b21)
+(cherry picked from commit 5a558be93ad628e5bed6e0ee062870f49251725c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 185a8a917b..a50a419af2 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -49,7 +49,15 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
-     /* Prepare a power-of-two modulo via extraction of @len bits. */
-     len = ctz32(streaming_vec_reg_size(s)) - esz;
- 
--    if (vertical) {
-+    if (!len) {
-+        /*
-+         * SVL is 128 and the element size is 128. There is exactly
-+         * one 128x128 tile in the ZA storage, and so we calculate
-+         * (Rs + imm) MOD 1, which is always 0. We need to special case
-+         * this because TCG doesn't allow deposit ops with len 0.
-+         */
-+        tcg_gen_movi_i32(tmp, 0);
-+    } else if (vertical) {
-         /*
-          * Compute the byte offset of the index within the tile:
-          *     (index % (svl / size)) * size
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index a2d18afd79..aec57c0d68 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -435,7 +435,7 @@ static MemoryRegion *make_uart(MPS2TZMachineState *mms, void *opaque,
+                                const char *name, hwaddr size,
+                                const int *irqs, const PPCExtraData *extradata)
+ {
+-    /* The irq[] array is tx, rx, combined, in that order */
++    /* The irq[] array is rx, tx, combined, in that order */
+     MPS2TZMachineClass *mmc = MPS2TZ_MACHINE_GET_CLASS(mms);
+     CMSDKAPBUART *uart = opaque;
+     int i = uart - &mms->uart[0];
+@@ -447,8 +447,8 @@ static MemoryRegion *make_uart(MPS2TZMachineState *mms, void *opaque,
+     qdev_prop_set_uint32(DEVICE(uart), "pclk-frq", mmc->apb_periph_frq);
+     sysbus_realize(SYS_BUS_DEVICE(uart), &error_fatal);
+     s = SYS_BUS_DEVICE(uart);
+-    sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[0]));
+-    sysbus_connect_irq(s, 1, get_sse_irq_in(mms, irqs[1]));
++    sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[1]));
++    sysbus_connect_irq(s, 1, get_sse_irq_in(mms, irqs[0]));
+     sysbus_connect_irq(s, 2, qdev_get_gpio_in(orgate_dev, i * 2));
+     sysbus_connect_irq(s, 3, qdev_get_gpio_in(orgate_dev, i * 2 + 1));
+     sysbus_connect_irq(s, 4, get_sse_irq_in(mms, irqs[2]));
 -- 
 2.39.2
 
