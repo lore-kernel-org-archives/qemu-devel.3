@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E298DCE7B17
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 13:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D56CE7B17
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 13:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smZKx-0006pc-BV; Fri, 06 Sep 2024 09:49:19 -0400
+	id 1smZMI-0001oY-3y; Fri, 06 Sep 2024 09:50:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smZKv-0006o6-Fi
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:49:17 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1smZKt-0002Lj-Pw
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:49:17 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c241feb80dso6076598a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 06:49:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725630554; x=1726235354; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gC0ptLVRSdsg6xiI82CowBgQaBgNyGgi5EBpVv1ToGk=;
- b=lLLmE1qvOoW7iNwfQsUDHdnz9YkRZAgs2fHZP/OyafFoO7UmvNccLymZV5F37kDPiM
- iZQtBT4fzSYXtTAphot4GfiUpndSaYOvvGhOzdg/32Y74SmsvGzUbwxFHX/LHekLID+j
- lwFoWtFmwiG1vnjaZ69AZEXvYFP0mFWEBBDovXG9YlHbifmeThM9cmR/3ZrwCiJ0Rs6h
- Ok1K9QSNNeFT2nEY43Hr87AS99gXkyKcMz/RcKj6DH3lMm1HHuuXzeK4FWUYadUQTw9D
- cYFxZLD7pfauT/+dVZLOvLvL4vOvh1xa4edXdLOVBi8U4DP1tkroOaeIVos0RCIcRPzy
- e8Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725630554; x=1726235354;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gC0ptLVRSdsg6xiI82CowBgQaBgNyGgi5EBpVv1ToGk=;
- b=VI8Br9g4j573uwiZI1ZvqrfYaWsxdOoNuvyiHmUUSUgH2XIWddaIIB93NJKi+cVAV4
- rd94qlU9EYkbr/RcnlvOIeFajnNOb6QfSY7b4V5wl/6EEugtS7lHnoa3MipubjJRyiWt
- UOBCV+jEb0WX6mAqR1CoEpTOQDWPMH5jLHjv3MQaopDxai9J2hCZUduxhKHB21q14Bwc
- 3JC26UbTFwbZygg0PqkHzQtqahKQoLeuk/1VjDgOy6USe4ACsMs7wR9MdWFnK69BbQ02
- AKasoeuPAi8s6sQ0oyAdGCOHcpzR7YcoLaxmVvxWBrHDIFfu+0mjC+oezQM9q4sBKS7P
- cUgA==
-X-Gm-Message-State: AOJu0YyHC+9L0ZwHHIwJVvifrs0XZs6dLWLOFh2u1wQFkUOYsr+YsT70
- edsS55pXb7kd3C+Kfh2MQz/+ZWfKW44QitDpvb5rMgOyuLghFvYsHauaXKgioJ8=
-X-Google-Smtp-Source: AGHT+IGKv+GMbozsnCsJ/tFb7fyc62PMjrOMcDtxDv9nEbQtlf4y16pW/eRnOb/rTc6lvRfevwoTig==
-X-Received: by 2002:a05:6402:84d:b0:5c2:5248:a929 with SMTP id
- 4fb4d7f45d1cf-5c3db976252mr3308396a12.7.1725630553147; 
- Fri, 06 Sep 2024 06:49:13 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3cc56d686sm2466217a12.56.2024.09.06.06.49.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 06:49:12 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9502E5F754;
- Fri,  6 Sep 2024 14:49:11 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
- philmd@linaro.org,  peter.maydell@linaro.org
-Subject: Re: [PATCH v3 3/4] tests/guest-debug: Support passing arguments to
- the GDB test script
-In-Reply-To: <20240825145208.46774-4-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Sun, 25 Aug 2024 14:52:07 +0000")
-References: <20240825145208.46774-1-gustavo.romero@linaro.org>
- <20240825145208.46774-4-gustavo.romero@linaro.org>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Fri, 06 Sep 2024 14:49:11 +0100
-Message-ID: <87plpgsxig.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1smZMF-0001ep-GG
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:50:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1smZMB-0002bh-US
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:50:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725630632;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=d4MsmNKS/7EZf8XIEgHQlb2WF1zbBHv4I5sZjk66ijc=;
+ b=Urfd0LSb+u72JsHbRuNp2Icm64Ojzt12t3vPawy85lfZUGE4Hdrcf2498LYJDUz46KMWbl
+ WfKxiLjKN6MTxL5OqgGA8OfnT5LqDLt7wBGaAiJ574a6ILlnKm3wiSE3AhxfVOBKLs8IlM
+ BMKAYpw3a5EJiu/78L/Ji+1EStJKt/E=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-LinJ26L_NByRo5yvP771wA-1; Fri,
+ 06 Sep 2024 09:50:29 -0400
+X-MC-Unique: LinJ26L_NByRo5yvP771wA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 191E219560A5; Fri,  6 Sep 2024 13:50:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.57])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B5883000236; Fri,  6 Sep 2024 13:50:21 +0000 (UTC)
+Date: Fri, 6 Sep 2024 14:50:18 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de,
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org
+Subject: Re: [PATCH v6 3/8] crypto: Introduce x509 utils
+Message-ID: <ZtsImlL43_dzUTp9@redhat.com>
+References: <20240905195735.16911-1-dorjoychy111@gmail.com>
+ <20240905195735.16911-4-dorjoychy111@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+In-Reply-To: <20240905195735.16911-4-dorjoychy111@gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,39 +84,127 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
+On Fri, Sep 06, 2024 at 01:57:30AM +0600, Dorjoy Chowdhury wrote:
+> An utility function for getting fingerprint from X.509 certificate
+> has been introduced. Implementation only provided using gnutls.
+> 
+> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> ---
+>  crypto/meson.build          |  4 ++
+>  crypto/x509-utils.c         | 75 +++++++++++++++++++++++++++++++++++++
+>  include/crypto/x509-utils.h | 22 +++++++++++
+>  3 files changed, 101 insertions(+)
+>  create mode 100644 crypto/x509-utils.c
+>  create mode 100644 include/crypto/x509-utils.h
 
-> This commit adds support for passing arguments to the GDB test scripts
-> so it's possible to parse the args in an "argparse way" in the test
-> scripts launched by the runner. The arguments should be preceded by --
-> when passed to the runner. For example, passing "--help" arg to the
-> GDB_TEST_SCRIPT:
->
-> run-test.py [...] --test <GDB_TEST_SCRIPT> -- --help
->
-> The test script should not use the argparse module directly but import
-> arg_parser from test_gdbstub module. arg_parser then can be used just
-> like the argparse.ArgumentParser class:
->
-> from test_gdbstub import arg_parser
->
-> p =3D arg_parser(prog=3D"test-mytest.py", description=3D"My test.")
-> p.add_argument("--vowel", help=3D"Select vowel",
->                required=3DTrue, choices=3D['a','e','i','o','u'])
-> [...]
->
-> The arg_parser allows a smooth and informative exit if, for instance,
-> the caller of the runner script passes an invalid argument or misses a
-> required argument by the test script.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+> +                                      QCryptoHashAlgorithm alg,
+> +                                      uint8_t *result,
+> +                                      size_t *resultlen,
+> +                                      Error **errp)
+> +{
+> +    int ret;
+> +    gnutls_x509_crt_t crt;
+> +    gnutls_datum_t datum = {.data = cert, .size = size};
+> +
+> +    if (alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
+> +        error_setg(errp, "Unknown hash algorithm");
+> +        return -1;
+> +    }
+> +
+> +    if (result == NULL) {
+> +        error_setg(errp, "No valid buffer given");
+> +        return -1;
+> +    }
+> +
+> +    gnutls_x509_crt_init(&crt);
+> +
+> +    if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) != 0) {
+> +        error_setg(errp, "Failed to import certificate");
+> +        goto cleanup;
+> +    }
+> +
+> +    ret = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
+> +    if (*resultlen < ret) {
+> +        error_setg(errp,
+> +                   "Result buffer size %zu is smaller than hash %d",
+> +                   *resultlen, ret);
+> +        goto cleanup;
+> +    }
+> +
+> +    if (gnutls_x509_crt_get_fingerprint(crt,
+> +                                        qcrypto_to_gnutls_hash_alg_map[alg],
+> +                                        result, resultlen) != 0) {
+> +        error_setg(errp, "Failed to get fingerprint from certificate");
+> +        goto cleanup;
+> +    }
+> +
+> +    return 0;
+> +
+> + cleanup:
+> +    gnutls_x509_crt_deinit(crt);
+> +    return -1;
+> +}
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+This fails to call gnutls_x509_crt_deinit in the success path.
+
+I'm going to squash in the following change:
+
+
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 593eb8968b..6e157af76b 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -31,7 +31,8 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+                                       size_t *resultlen,
+                                       Error **errp)
+ {
+-    int ret;
++    int ret = -1;
++    int hlen;
+     gnutls_x509_crt_t crt;
+     gnutls_datum_t datum = {.data = cert, .size = size};
+ 
+@@ -52,11 +53,11 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+         goto cleanup;
+     }
+ 
+-    ret = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
+-    if (*resultlen < ret) {
++    hlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
++    if (*resultlen < hlen) {
+         error_setg(errp,
+                    "Result buffer size %zu is smaller than hash %d",
+-                   *resultlen, ret);
++                   *resultlen, hlen);
+         goto cleanup;
+     }
+ 
+@@ -67,9 +68,9 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+         goto cleanup;
+     }
+ 
+-    return 0;
++    ret = 0;
+ 
+  cleanup:
+     gnutls_x509_crt_deinit(crt);
+-    return -1;
++    return ret;
+ }
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
