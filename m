@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9F3CE7AA6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 03:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72AD7CE7AA5
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 03:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smPHq-00026U-Nu; Thu, 05 Sep 2024 23:05:26 -0400
+	id 1smPWZ-0008KP-7M; Thu, 05 Sep 2024 23:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smPHn-00024o-T0; Thu, 05 Sep 2024 23:05:24 -0400
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
+ id 1smPWY-0008JW-GV; Thu, 05 Sep 2024 23:20:38 -0400
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smPHm-0004nM-14; Thu, 05 Sep 2024 23:05:23 -0400
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-49bd7809c84so326525137.0; 
- Thu, 05 Sep 2024 20:05:21 -0700 (PDT)
+ id 1smPWW-0008B3-TH; Thu, 05 Sep 2024 23:20:38 -0400
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-846c59979efso418101241.3; 
+ Thu, 05 Sep 2024 20:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725591920; x=1726196720; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725592835; x=1726197635; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1aKzJA8OaDtOIISihwxrfK7yuJ6NsKR5Mbzl7WnMAnk=;
- b=RW470e9Klgpm/kgeM5X4Pq0gWTgqs4bDqxZ7Ju8hrWzZg6Mku6L9hLUKqRDMLcXPKB
- xTbJ1bNUZMhwF/W2I1GJbwWTwfsLyXPh1FTBghSLiS0615W0l3ou25pGSyc2YpN+V51l
- aHqNZ7lfvaPLSEqYmYcBvFYMlCMKl4z6qd02CSszYRIgthLVC8H9jt3QRQzM/o2vqI2b
- XKh8t4NqIc0pOxWcKjG6q4weRjfy2zZFpGpo+poKKkXS00Fk1Gw73dITnyslr3XK55to
- 1/AdNqvEmaxCjj3PnJGRwyABadequLwM5BZ+kWy295lQ/rL4BE+0T95cFLxjDFZ9sazc
- pufg==
+ bh=yvU0x8fvjSXyCzU6F17kKTphGIL2eCV8KdiHo2GurjY=;
+ b=IK0vTjUGkjflvN1pIVA4QQ50G3VRQCcDx93DdupKef4b97wDac1oGAAPKRVr9Si6VT
+ IXXqO03YE/WC580kUfyyY+Y+wVgLo8Rru+Un5ZM3ZBYH5HTUmiGBBWM/EONKDVyrVebF
+ /FEDyjpuTZT1ZGerNkzKHDqZ4+r+gawj2VhSDWnySWS+xGLEisrzQn9p4aN/VAWv/Ph4
+ Ap97Q28/DFTTO8gwbTblvXBYXWXKYvCgxSzN9Llr13w/9HMTh2I7CIySHUUlAKuo7jB9
+ NeAkfP4n4DByATl1uE35ll4PUsRhFErbBF6BS34yTMsl/QkOkkoQGD28Nn7KTv9mqhKC
+ puHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725591920; x=1726196720;
+ d=1e100.net; s=20230601; t=1725592835; x=1726197635;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1aKzJA8OaDtOIISihwxrfK7yuJ6NsKR5Mbzl7WnMAnk=;
- b=AKlKp87tORHG7G02/w4pBcOORXv0Ocylzrnwic98MVj68bMomjQiXTNMZ/YbCHM7nN
- /EGh9iUXIwo5Jdg/w9sFKo20BCVIAb3Do4I/t9Q1w1kDwY/AWb72cKYQMs7nsMTsNNNi
- 1KTEewP9bAVxjBKKXFICv6qedesPMj7vdUAqJZ7MurCeoTtgVBHB5PQMVKuCQH43GwAj
- SPe1+Q/JWrxKPOFrKGa9hQds87UtlaFNRBIUir/mYz01DqLndiUoa2Qmtz+yFEOwHsfw
- SE5+aVFtEboOeuME43OxIUcOeZwogpXahi4a0N4ouF4dJWPvYRik+rc+uPx21XImI3x2
- 624g==
+ bh=yvU0x8fvjSXyCzU6F17kKTphGIL2eCV8KdiHo2GurjY=;
+ b=Ungr8gCo93HM9J94gHv8tEyDvv9ztY/mUU6FCa+rDfvscuWhM2F7DgOl8jtTUdPwjX
+ Rfvu4iokb0Vt8gF0ni7c8Vw3/qC5GBFWRKgxhpE0i42vN5rLWtoQtTz44aS5UcLhUFFN
+ z36nxEvg1JAsAhWkso1kGdymS0uf2L4+HDUTy7oo7Boq/s1n/3+ZUxOplVuiPvP0DPG5
+ qoyCySix+MIpaMrnMvutwCmhAoNNGRmqspx0k73NkR1jLob6FQ2BEeJ4JVudPYS1SP6V
+ uj226728NbOw7O05e1G1xDXb3cYayI6Dq25XIQu2L/RJJhqiE8Pn3e+goc3PGtD6sdhZ
+ Qcbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzifSm7uhdqx65s//JzUQm9cm4z7hGR5P7D6KcIQk7oPhuiC7RtWm6ajbI74a/PwiywUvzCoGyqGsT@nongnu.org
-X-Gm-Message-State: AOJu0YybYzfj2k2IlCTrvC3Q/z6cLLN6umX0/CywXAqHduw2y9ZqvXSa
- O37ryuwRuSFhOSNwsAZEpZ2XU0jlglldVjb/gRYrzM7gxYN92wNv2oxI3AnGgRH4Mo9t2QJObbU
- BwCTjJ363iPK7oIozVAqY+YJKYhdDAwib
-X-Google-Smtp-Source: AGHT+IFGNkY0JSAJdP5FpI+GaDsEXrL47nof15Z8pbX863LxmLGRxJ3ilC3s+lCvZFK2l8mO7fTVphy+xtD/sTmD6Go=
-X-Received: by 2002:a05:6102:e11:b0:493:b719:efb9 with SMTP id
- ada2fe7eead31-49bde1779c9mr1635524137.9.1725591920473; Thu, 05 Sep 2024
- 20:05:20 -0700 (PDT)
+ AJvYcCXuBitYDcU8klOUatZxCVBujVWpKE2/olyiykWQ3JXZ/aKNAW3O934tZrDX+3mfPrKZbCipNRown8/8@nongnu.org
+X-Gm-Message-State: AOJu0Yz6NlbWZS/RBoDtFMFMlc3h/NBoKc0ubbHMBaod5CaVqGE31kus
+ 73oH/bW8ydafUvpUy9Aev/j7nxE/lsJsznplZ9ycHdV3KIK4WC4xNdjkwatpBOAQJuDos9MgB61
+ t0UHTFoR2pvxYgJa/Aj6FrWqGVW4=
+X-Google-Smtp-Source: AGHT+IHM85rHpmK+vPpOx48eLAY5MeAqfyI+CXmY2CvLGBiM4xeqrx/X377XJ9/XFeIHrjbEm7Y6yChfIDc76MUENjs=
+X-Received: by 2002:a05:6102:1622:b0:49b:d5f8:236 with SMTP id
+ ada2fe7eead31-49bde31cc6emr1248132137.24.1725592834914; Thu, 05 Sep 2024
+ 20:20:34 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
- <20240819160742.27586-3-Ian.Brockbank@cirrus.com>
- <CAKmqyKP6DTHq=6Tv3F7DPzjiyXdJhUdr0isNokZPCFgstQV4gQ@mail.gmail.com>
-In-Reply-To: <CAKmqyKP6DTHq=6Tv3F7DPzjiyXdJhUdr0isNokZPCFgstQV4gQ@mail.gmail.com>
+ <20240819160742.27586-8-Ian.Brockbank@cirrus.com>
+ <CAKmqyKN+emnjxdCdX9_kBEqZoo4OtdJeSearxEB3o-Ak374tQw@mail.gmail.com>
+In-Reply-To: <CAKmqyKN+emnjxdCdX9_kBEqZoo4OtdJeSearxEB3o-Ak374tQw@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 13:04:54 +1000
-Message-ID: <CAKmqyKPrz2544MFpORh==F-63M5pMMbsWcjNipOSozMeTB7G5Q@mail.gmail.com>
-Subject: Re: [PATCH 01/11 v2] target/riscv: Add CLIC CSR mintstatus
+Date: Fri, 6 Sep 2024 13:20:09 +1000
+Message-ID: <CAKmqyKPxm+LFxqTUP1AfqDsNjEs66JfhQi2WBNsABOq-+x=d3A@mail.gmail.com>
+Subject: Re: [PATCH 04/11 v2] target/riscv: Update CSR xie in CLIC mode
 To: Ian Brockbank <Ian.Brockbank@cirrus.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -73,8 +73,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  LIU Zhiwei <zhiwei_liu@c-sky.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,108 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 6, 2024 at 12:44=E2=80=AFPM Alistair Francis <alistair23@gmail.=
+On Fri, Sep 6, 2024 at 12:58=E2=80=AFPM Alistair Francis <alistair23@gmail.=
 com> wrote:
 >
-> On Tue, Aug 20, 2024 at 2:11=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirr=
+> On Tue, Aug 20, 2024 at 2:15=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirr=
 us.com> wrote:
 > >
 > > From: Ian Brockbank <ian.brockbank@cirrus.com>
 > >
-> > CSR mintstatus holds the active interrupt level for each supported
-> > privilege mode. sintstatus, and user, uintstatus, provide restricted
-> > views of mintstatus.
+> > The xie CSR appears hardwired to zero in CLIC mode, replaced by separat=
+e
+> > memory-mapped interrupt enables (clicintie[i]). Writes to xie will be
+> > ignored and will not trap (i.e., no access faults).
 > >
-> > Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
 > > Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
->
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Whoops! Scratch that
-
->
+> > Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
 > > ---
-> >  target/riscv/cpu.h      |  3 +++
-> >  target/riscv/cpu_bits.h | 11 +++++++++++
-> >  target/riscv/csr.c      | 31 +++++++++++++++++++++++++++++++
-> >  3 files changed, 45 insertions(+)
+> >  target/riscv/csr.c | 34 ++++++++++++++++++++++------------
+> >  1 file changed, 22 insertions(+), 12 deletions(-)
 > >
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 1619c3acb6..95303f50d3 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -259,6 +259,7 @@ struct CPUArchState {
-> >      bool software_seip;
-> >
-> >      uint64_t miclaim;
-> > +    uint64_t mintstatus; /* clic-spec */
-> >
-> >      uint64_t mie;
-> >      uint64_t mideleg;
-> > @@ -461,6 +462,8 @@ struct CPUArchState {
-> >      QEMUTimer *vstimer; /* Internal timer for VS-mode interrupt */
-> >      bool vstime_irq;
-> >
-> > +    void *clic;       /* clic interrupt controller */
-> > +
-> >      hwaddr kernel_addr;
-> >      hwaddr fdt_addr;
-> >
-> > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> > index 32b068f18a..2e65495b54 100644
-> > --- a/target/riscv/cpu_bits.h
-> > +++ b/target/riscv/cpu_bits.h
-> > @@ -165,6 +165,7 @@
-> >  #define CSR_MCAUSE          0x342
-> >  #define CSR_MTVAL           0x343
-> >  #define CSR_MIP             0x344
-> > +#define CSR_MINTSTATUS      0xfb1 /* clic-spec-draft */
-> >
-> >  /* Machine-Level Window to Indirectly Accessed Registers (AIA) */
-> >  #define CSR_MISELECT        0x350
-> > @@ -206,6 +207,7 @@
-> >  #define CSR_SCAUSE          0x142
-> >  #define CSR_STVAL           0x143
-> >  #define CSR_SIP             0x144
-> > +#define CSR_SINTSTATUS      0xdb1 /* clic-spec-draft */
-> >
-> >  /* Sstc supervisor CSRs */
-> >  #define CSR_STIMECMP        0x14D
-> > @@ -733,6 +735,15 @@ typedef enum RISCVException {
-> >  #define SIP_SEIP                           MIP_SEIP
-> >  #define SIP_LCOFIP                         MIP_LCOFIP
-> >
-> > +/* mintstatus */
-> > +#define MINTSTATUS_MIL                     0xff000000 /* mil[31:24] */
-> > +#define MINTSTATUS_SIL                     0x0000ff00 /* sil[15:8] */
-> > +#define MINTSTATUS_UIL                     0x000000ff /* uil[7:0] */
-> > +
-> > +/* sintstatus */
-> > +#define SINTSTATUS_SIL                     0x0000ff00 /* sil[15:8] */
-> > +#define SINTSTATUS_UIL                     0x000000ff /* uil[7:0] */
-> > +
-> >  /* MIE masks */
-> >  #define MIE_SEIE                           (1 << IRQ_S_EXT)
-> >  #define MIE_UEIE                           (1 << IRQ_U_EXT)
 > > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> > index ea3560342c..f9ed7b9079 100644
+> > index 9c824c0d8f..a5978e0929 100644
 > > --- a/target/riscv/csr.c
 > > +++ b/target/riscv/csr.c
-> > @@ -578,6 +578,16 @@ static RISCVException debug(CPURISCVState *env, in=
-t csrno)
+> > @@ -30,6 +30,10 @@
+> >  #include "qemu/guest-random.h"
+> >  #include "qapi/error.h"
 > >
-> >      return RISCV_EXCP_ILLEGAL_INST;
-> >  }
-> > +
-> > +static int clic(CPURISCVState *env, int csrno)
-> > +{
-> > +    if (env->clic) {
+> > +#if !defined(CONFIG_USER_ONLY)
+> > +#include "hw/intc/riscv_clic.h"
+> > +#endif
+>
+> This doesn't seem like the way to go
 
-This isn't enough. There are smclic (M-mode) and ssclic (S-mode)
-extensions that need to be checked against here to access the CSRs.
+Urgh! Ok, it's trickier than that.
 
-At the end of the series they can then be exposed as CPU properties
-(which the virt machine can enable when required)
+I think ideally we don't want to pull in a bunch of CLIC stuff, just
+the bare minimum.
+
+It's probably better to implement the CLIC functions for CSR access in
+the target/riscv directory instead of in hw/intc
+
+Also, to make it easier to review it would be great to add the
+functions when they are used. Then patch 3 will be smaller and the
+other patches easier to see what is being added
 
 Alistair
 
