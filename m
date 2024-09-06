@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29CACE7B1C
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808E4CE7B1C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sma4d-0005IP-MA; Fri, 06 Sep 2024 10:36:31 -0400
+	id 1sma72-0007DB-LM; Fri, 06 Sep 2024 10:39:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sma4Z-00050j-2M
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:36:27 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1sma6z-00071M-Ka
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:38:57 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sma4W-0007XI-NK
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:36:26 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c3cdbe4728so2266688a12.2
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 07:36:23 -0700 (PDT)
+ id 1sma6y-0007i4-2l
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:38:57 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3cdbe4728so2269951a12.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 07:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725633382; x=1726238182; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725633534; x=1726238334; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ogD1vTWNLkn3DUJWNYKKaFiFPRQDvOm/h8bvm2fWXXU=;
- b=rqZmWzP+GACrDdMKW7yF4JdB3ic8FA8hS0kwZ4y4bwp2PcoA3vvxbsWZ6FrEMwgD0y
- IWfmWpiTa7PNGEOxrRoDuo4+4f0N5S6zaTKRRa8l/1Qx33lpCtwER9u3xvfo0/VnpoY8
- 21YmOLPDTUf7rbMjv/SQdxLrvPNePRJDqYjfOjLMYvR/q6mj/dPwlFGmsfkZo93gSRxY
- +X9J/YWum6mH5IHuR++LXt9rO/yrArcyaLEC1KZpeSTeMMVfmola1as/YOJQ9tYU8hzM
- 5B3EfpKrbwDvASbdRLezyYdmTKWjxSd7s5reu1J24KqJVxileA6fffAs11B/aTmNfpFU
- x0kw==
+ bh=UpT+1Xnzg67oQCE2zwOfiRC59zjDxX5+2pJE4iperas=;
+ b=uchWggHJp6jIPU1qRD0idjsBOdl6DRNXRRi2pdFZdrjIhk8UuTdgZYj9FK2lE01gkS
+ Y3dw46f8bjZ3XfdOjKdCuEn1uP+jtdHcHfdw5b/a9CWzbFKgXHwWeemnb8RKZBxRl1e1
+ yRAibAQ6AEx91FFF4uVusYjPlEUiYGVFVpKuVY488sbGmbQExK0zzvZL6V06wu9KFRZ3
+ +8OrvsGGnokN04IVWCA/nv4/YEM9mb4gpROMs+Ugtq2uba+6ACcM2LTOBqKe/LnZQ55a
+ QEOofzP8lVhDC2BNlc1XJFy7g/873ntgsWZ12CNljFgasdFld5jKMbBPK4TTe/4hdjwK
+ 6nOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725633382; x=1726238182;
+ d=1e100.net; s=20230601; t=1725633534; x=1726238334;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ogD1vTWNLkn3DUJWNYKKaFiFPRQDvOm/h8bvm2fWXXU=;
- b=BqA1mLdyTFPJGfGwXwy7kxq7MOCOUbegoMMhYDcOKzok+hs4+FleR0yxAoc4xEW8BK
- 9X2+qDdXYKGBqokuc5dKYa6BM97YxMUFWk0r1S4P5HwBoBAqriSRGJ+nIXd3zcjK35f6
- dxjsyesm4t2R6oGj/uTeS0jBPSFK9aUMz/+cCyUlpUawD294fDqpkb56OZV7U+4tjOb4
- OmJB7kFXt9aiby3dH4BD4bzerIVTliGIEL02jQb2mFWqDWQNY+foQSgj8Ox+LzK3Gxnq
- m5v+KZmvzuKv7+/D7FSA8Ps9cUtL0JgUi7Y+m1eVcxByhJuSd7ybIg3ygfOfpbzow8mL
- YPhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsC2JxKevsP1kmM5fxgYEXl2HUueBclhVkGj0MShkBmJipxnq5A4MQX8U90zXENWARi+rOu3S5+sF8@nongnu.org
-X-Gm-Message-State: AOJu0Yz+uF1FvVWO7Gjt4tVdUunq47q1cyPELcf3f8HWBShAMnU7AmG+
- 1z/Oir1Oq+fHnw2P4fgvJAqMou6Mt7PnHFfeWPN+Km6r5vj4gaCnuWhnR8yxuqic4bD77AaW/6o
- 4kXHcCigjBOVQFbB+Jxb3To/dmeWgk5suuseDtg==
-X-Google-Smtp-Source: AGHT+IFWaa63AId9T1hsYVwFROL2/Kb3Dtu1tCwDKMPJqH85b2WMNRSx8Tc2PeAa6ZGtG/j28DnU4MwV6IULFENYfbc=
-X-Received: by 2002:a05:6402:40cf:b0:5c3:cc7d:c2a0 with SMTP id
- 4fb4d7f45d1cf-5c3cc7dc63dmr4275679a12.0.1725633381957; Fri, 06 Sep 2024
- 07:36:21 -0700 (PDT)
+ bh=UpT+1Xnzg67oQCE2zwOfiRC59zjDxX5+2pJE4iperas=;
+ b=pu4oLjzVck04CHMyyOn+ptnx1CMjOYn0S8CIwUPt/Ol3x6BGGiagTcFKSQ73FYRcXz
+ wjCb84ghrhHkykhtyJHfZeCORS7HVM4qVI0kJvuthuQOUyrVb05Py73MNFIcJCBi0fNK
+ cKtT+lhD3hTotDQLH1jSeUfrYIRNP8xp9wKuxthCPw9V5jrxh2O0muFZWunLV36n+6wL
+ 81/pZ1XCdKZ52vd01XMssrdRYJYpbZenjFgD8Tp/6WrHEN9465WAohlHsIJTl0EFsDl5
+ zIBZ0C6PFztQvsylOyx6D1iw3mzoDnfuNYwLSXiRWx32iiBcDGs3mfLHOyBJOuEx1QHQ
+ qDqw==
+X-Gm-Message-State: AOJu0YzxWlD3q8iy43kyhdcFiNJzFTBuXMhWepFx9ajcb9ANbxXkxHIN
+ PUnq+M0Hc38U/mMVhCsIrwi8A0gd4OvYYWWjhj8ApPZhed9c3UXuxod7upTy4GaOT40TTlnZl1Q
+ w8/VJNEz/GNxW3hx+uLUK5EdgeMOopbyX0Whzomp8jls1qKSt
+X-Google-Smtp-Source: AGHT+IF0euAg4r9ZhgE/+eDjdxNk+aBhyuYm6RXFENTmtKsciPtnkEp9ohthQAp0mpSI167JMRfaSRVoC5MB5YpOfwI=
+X-Received: by 2002:a05:6402:5109:b0:5c3:c4d9:5e18 with SMTP id
+ 4fb4d7f45d1cf-5c3c4d95fa5mr4233013a12.38.1725633534170; Fri, 06 Sep 2024
+ 07:38:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240827034927.66659-1-doug@schmorgal.com>
-In-Reply-To: <20240827034927.66659-1-doug@schmorgal.com>
+References: <20240830145812.1967042-1-peter.maydell@linaro.org>
+In-Reply-To: <20240830145812.1967042-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Sep 2024 15:36:10 +0100
-Message-ID: <CAFEAcA_KEMTT8i8EhnYOgGCeGEEn093N2UF5kiFJ-YZFD3XSLw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] hw/net/can/xlnx-versal-canfd: Miscellaneous fixes
-To: Doug Brown <doug@schmorgal.com>
-Cc: Francisco Iglesias <francisco.iglesias@amd.com>,
- Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
- qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>
+Date: Fri, 6 Sep 2024 15:38:43 +0100
+Message-ID: <CAFEAcA_pHTRTDwH0dG3QAKx3x9xdJgG5xtrwo5diV6QgBqf+8Q@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] s390: Convert virtio-ccw, cpu to three-phase
+ reset, and followup cleanup
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nico Boehr <nrb@linux.ibm.com>, 
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,51 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Aug 2024 at 04:51, Doug Brown <doug@schmorgal.com> wrote:
+On Fri, 30 Aug 2024 at 15:58, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> This series fixes several problems I ran into while trying to simulate
-> the AMD/Xilinx Versal CANFD controller in the xlnx-versal-virt machine
-> using Xilinx's v6.6_LTS_2024.1 kernel. With all of these patches
-> applied, everything works correctly alongside actual CAN devices.
+> The main aim of this patchseries is to remove the two remaining uses
+> of device_class_set_parent_reset() in the tree, which are virtio-ccw
+> and the s390 CPU class. Doing that lets us do some followup cleanup.
+> (The diffstat looks alarming but is almost all coccinelle automated
+> changes.)
+>
+> Changes v1->v2:
+>  * new patch 1 to convert hw/s390/ccw-device
+>    (fixes bug discovered via s390 CI testing in v1)
+>  * a couple of patches are already upstream
+>  * in the target/s390 cpu patch, fix sigp_cpu_reset() to use
+>    RESET_TYPE_S390_CPU_NORMAL
+>  * new patches 10, 11 which take advantage of the new function
+>    device_class_set_legacy_reset() to allow us to replace the
+>    generic Resettable transitional_function machinery with a
+>    simple wrapper that adapts from the API of the hold method
+>    to the one used by the legacy reset method
+>
+> Patches 1, 10, 11 need review. I believe that patch 1 should have
+> fixed the intermittent s390 issue we found with v1 of the patchset,
+> but if you could run these through the s390 CI again I'd
+> appreciate it.
 
-Couple of Qs for the Xilinx/AMD folks:
- (1) do you intend to review patch 7 of this series? That's
-     the one unreviewed one and it could use a look from
-     somebody familiar with how the versal canfd h/w works.
-     If you don't I propose to apply this series as-is next week.
- (2) it sounds like Vikram Garhwal's AMD email is bouncing --
-     do you want to nominate somebody else to take his place
-     as co-maintainer/reviewer of CAN bus stuff?
-     If not, we can just drop his lines from MAINTAINERS.
+I'm going to apply this series to my target-arm.next queue.
 
-> - IRQs were accidentally not being delivered due to having a level other
->   than 1. The IRQ count in /proc/interrupts in Linux was stuck at 0.
-> - Incoming CAN FD frames were being treated as non-FD.
-> - The CAN IDs were garbled in both RX and TX directions.
-> - The ESI and BRS flags were not being handled.
-> - The byte ordering was wrong in the data in both directions.
-> - Incoming CAN FD frames with DLC = 1-7 weren't handled correctly.
-> - The FIFO read_index and store_index wrapping logic was incorrect.
->
-> I don't have any actual Versal hardware to compare behavior against, but
-> with these changes, it plays nicely with SocketCAN on the host system.
->
-> Changes in v2:
-> - Added handling of ESI and BRS flags, ensured frame->flags is initialized
-> - Switched to use common can_dlc2len() and can_len2dlc() functions
-> - Added fix for FIFO wrapping problems I observed during stress testing
->
-> Doug Brown (7):
->   hw/net/can/xlnx-versal-canfd: Fix interrupt level
->   hw/net/can/xlnx-versal-canfd: Fix CAN FD flag check
->   hw/net/can/xlnx-versal-canfd: Translate CAN ID registers
->   hw/net/can/xlnx-versal-canfd: Handle flags correctly
->   hw/net/can/xlnx-versal-canfd: Fix byte ordering
->   hw/net/can/xlnx-versal-canfd: Simplify DLC conversions
->   hw/net/can/xlnx-versal-canfd: Fix FIFO issues
->
->  hw/net/can/xlnx-versal-canfd.c | 173 ++++++++++++++-------------------
->  1 file changed, 72 insertions(+), 101 deletions(-)
+Let me know if you need more time to CI/test/whatever it on
+the s390 side before it goes upstream.
 
 thanks
 -- PMM
