@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC8DCE7AA6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 00:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E98CE7AA5
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 00:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smMrE-00007z-IN; Thu, 05 Sep 2024 20:29:48 -0400
+	id 1smMz7-0005qK-65; Thu, 05 Sep 2024 20:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smMr7-000068-H6; Thu, 05 Sep 2024 20:29:42 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1smMz5-0005pF-Ha; Thu, 05 Sep 2024 20:37:55 -0400
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smMr5-0001ob-TQ; Thu, 05 Sep 2024 20:29:41 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-500fcf0b32fso406392e0c.1; 
- Thu, 05 Sep 2024 17:29:38 -0700 (PDT)
+ id 1smMz3-0002pd-L9; Thu, 05 Sep 2024 20:37:55 -0400
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-846c4ec2694so396496241.2; 
+ Thu, 05 Sep 2024 17:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725582577; x=1726187377; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725583072; x=1726187872; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X7vAtmon/mL88bSIJ+XyyXpK/UiBVfFfyxQejcp03sA=;
- b=DrayNzFJZZJdtd8aEiNZfateF4d4h1+AwqOS9ZtSggqYetmrexBrrfm4Q0OTHH6kgD
- neN98kXsfcFXxj+RBZrAlVKgE1JSSQi2oOMHfZoM9+0C100DXQCOmkhAMvrbCtuJg7DP
- MsN+vmioh2m3nS73hhVIp8zRvqC/7h4DOi/mFcIPYxlfzjtU8/zgQLWQPRXw3YDvd2KT
- F9kRFdFEX8FEf8D+9NWwNgKKar4TiRnnGRgmmZ1lnTOIyZB+rrwelTO9QSmNZFhgVreV
- LnwVu5T9HCp1AzBvnGnR78T+eZtW40rNag1IChtlIcKmJJrXK1fl0aY34cohmWW4CbCJ
- qMUQ==
+ bh=3+xNjAn91Ueo4S583R+CIb7sndFPRhjqXF34qAaLuSg=;
+ b=D+XJiD8iXM6x7/ydo7DeMcuY6wymrVJ49cYySybOFweOWmj8GMh3exHPa2TlDCGASR
+ BfeZ8z0aYQ8RAfzfwCu8U/ZBMu0G5TVkpZu15xXjaBzx6hl1jzFLL+KvW8PbovCKr1DR
+ PD4yfDDu/gJGty5LJFw5SGgLVWp+8lQcI3EjcIZ578xhOJRNUJ2K8WYGFpQEVGbXT7B+
+ UhLbQbujrSonwF4a20gwGR/2YH8TtG1HXUdIRLBfHTw2yCIhRlKK839EjzLAPzfzzF0J
+ V0rBpSZqn29eQx4spOjFJdFB6RtNAfcBvh/5KsP4xg94AkmoCJZf8W6f1hYqRlzCNnbv
+ VHSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725582577; x=1726187377;
+ d=1e100.net; s=20230601; t=1725583072; x=1726187872;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X7vAtmon/mL88bSIJ+XyyXpK/UiBVfFfyxQejcp03sA=;
- b=AmO/FHvKMtp76um7hh6FX/QzTh6ZTozdODmN2/xVGtmC7/wMNvaNcCCoXNTLsd//BT
- 73NHULc08hP7A1syB7cNoDoNHX8VGjCmtyWyKqj0qVYET3c5kZsLiIy313HIERJOld5v
- /mtiCi0Ywn+Kiv9CSDQFkE5OqGTOhpoQ4vzPYsDceb8t+vL+RU5YVH7eixdw3BJ9qt1R
- pzKKFqgVCtoIjBh9cqnWib0RV3z2lC/tDzObFm6YUcWa0YUrpcbRdIYDuskeTUcdF9Zg
- cesyBBiGw3pa5uvMifdZsx1Fw6ti+6s5ZUZ4kVJhofHsc8/OEVNL7MrQMdpocAZAC1Dm
- YRhA==
+ bh=3+xNjAn91Ueo4S583R+CIb7sndFPRhjqXF34qAaLuSg=;
+ b=NVFoR0HLXDFP2llgfNKMXYLUX744bk4tzwlTwOssT/NnJwwe2UBD7bNqJDvtZ8QBFw
+ csg+QIqAbdL98CVww/nrym6gS6Ab+76iJytHEEBj1m7O90AV+oGkdL/9rJGhR8VBRSwC
+ q2Cb6WV9Lk7m0C/ePl4hHIc1MxVpzuS/eifHDHaYcQnFIxBinyLjWO8BF8sWFDbzqNwA
+ U6OcnoNnSp4795iNm/oQU3hguH6r01bkkFAgGxV94NM+VUVsDv/2Crdl/iG/l8EzVaHh
+ uDSuJv7WwsDzAC0NApT75donPTdyyFi+ULSc4Uqg1r7iMYUTF6A8qlsMclBtxhTjpR+H
+ 6Nkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYt8TouSXAZP4UgyhaRK8x8kcLK8KP9Uim9xaJLDN2/aMc8nOJ27f6a/7A3p/UH5v/2rEx2Xsour8C@nongnu.org
-X-Gm-Message-State: AOJu0Yyb00XMlvADEZHJkFwocjiL8I9/S677aB8ioxDwx0cGyBaRqFYV
- Gh1hafVl8A+bsAK2A/qk9Zlk110SlYudrWfAMplm0QtJRlCPOpt7kUTNB7BzIhdzqgr8ESqcXEg
- pYZi+BG6m4UvHznaFIEqWeOsJCTk=
-X-Google-Smtp-Source: AGHT+IG9FdAr4kPRL+7odJr26vCQ9oMmD2EQZvaprkcUUCwd/x5TvUyVLWJkj2qegZixUKM3Pinl92UJEJvYU2Ix44I=
-X-Received: by 2002:a05:6122:3295:b0:4fe:bce9:8f4f with SMTP id
- 71dfb90a1353d-502143c98a9mr918973e0c.9.1725582577095; Thu, 05 Sep 2024
- 17:29:37 -0700 (PDT)
+ AJvYcCV81iwmtDX5VCzUf1NVk1TvpIt8qMpV4DkgQPlUdQOf2gLwTXMrlcOEAYbSxctq2F8ckOTiDSuz9odC@nongnu.org
+X-Gm-Message-State: AOJu0YzHdD+fn4ISMC1Zyr78XFDUYR8HRpLsLAMnPXCoaCTdkTgpxnCz
+ qQmbCkozpKsZqzDssShxyHVStOkdhR++j9OPBbxqmdmAWuUbk6WyUjkcxrW8d3hgutBdULiRnBV
+ IpGmH6bT4YHSVbEisBkN/Lum3rG8=
+X-Google-Smtp-Source: AGHT+IFEfvhQqrjl1bsmWGFyZgfAVdgmonoqOEiHT4mayW00syDWf7RbFBjYKchcXhayO4ALKvfHMayYYA8PTS+Mvm8=
+X-Received: by 2002:a05:6102:370e:b0:48f:e111:4ee1 with SMTP id
+ ada2fe7eead31-49bde2f487cmr1319655137.28.1725583071631; Thu, 05 Sep 2024
+ 17:37:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240826024657.262553-1-alvinga@andestech.com>
- <20240826024657.262553-3-alvinga@andestech.com>
-In-Reply-To: <20240826024657.262553-3-alvinga@andestech.com>
+References: <20240902071358.1061693-1-tommy.wu@sifive.com>
+In-Reply-To: <20240902071358.1061693-1-tommy.wu@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 10:29:11 +1000
-Message-ID: <CAKmqyKOV=Acs4M0Yo-kQCJkJci7rZkgMb7nUe8Bxfvmry_gc+w@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] target/riscv: Add textra matching condition for
- the triggers
-To: Alvin Chang <alvinga@andestech.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com
+Date: Fri, 6 Sep 2024 10:37:25 +1000
+Message-ID: <CAKmqyKPEsmYUYN0-tbQCpx84qoZSWy3pFrVt9vmhoV1UMSAO3w@mail.gmail.com>
+Subject: Re: [PATCH v6 0/5] target/riscv: Add Smrnmi support.
+To: Tommy Wu <tommy.wu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, frank.chang@sifive.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
+ liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,117 +92,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 26, 2024 at 12:48=E2=80=AFPM Alvin Chang via <qemu-devel@nongnu=
-.org> wrote:
+On Mon, Sep 2, 2024 at 5:14=E2=80=AFPM Tommy Wu <tommy.wu@sifive.com> wrote=
+:
+>
+> This patchset added support for Smrnmi Extension in RISC-V.
 
-Your From is still wrong
+Thanks!
 
->
-> According to RISC-V Debug specification, the optional textra32 and
-> textra64 trigger CSRs can be used to configure additional matching
-> conditions for the triggers. For example, if the textra.MHSELECT field
-> is set to 4 (mcontext), this trigger will only match or fire if the low
-> bits of mcontext/hcontext equal textra.MHVALUE field.
->
-> This commit adds the aforementioned matching condition as common trigger
-> matching conditions. Currently, the only legal values of textra.MHSELECT
-> are 0 (ignore) and 4 (mcontext). When textra.MHSELECT is 0, we pass the
-> checking. When textra.MHSELECT is 4, we compare textra.MHVALUE with
-> mcontext CSR. The remaining fields, such as textra.SBYTEMASK,
-> textra.SVALUE, and textra.SSELECT, are hardwired to zero for now. Thus,
-> we skip checking them here.
->
-> Signed-off-by: Alvin Chang <alvinga@andestech.com>
-> ---
->  target/riscv/debug.c | 45 +++++++++++++++++++++++++++++++++++++++++++-
->  target/riscv/debug.h |  3 +++
->  2 files changed, 47 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index d6b4a06144..c79b51af30 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -364,11 +364,54 @@ static bool trigger_priv_match(CPURISCVState *env, =
-trigger_type_t type,
->      return false;
->  }
->
-> +static bool trigger_textra_match(CPURISCVState *env, trigger_type_t type=
-,
-> +                                 int trigger_index)
-> +{
-> +    target_ulong textra =3D env->tdata3[trigger_index];
-> +    target_ulong mhvalue, mhselect;
-> +
-> +    if (type < TRIGGER_TYPE_AD_MATCH || type > TRIGGER_TYPE_AD_MATCH6) {
-> +        /* textra checking is only applicable when type is 2, 3, 4, 5, o=
-r 6 */
-> +        return true;
+Can you please include a link to the exact spec version used for this?
 
-Shouldn't this be false?
+We have had issues where there are multiple conflicting ratified
+versions of a spec, so we are trying to be explicit in the cover
+letter about exactly what version is supported
+
+The exact commit from `src/rnmi.adoc` or ideally a tagged release of
+the spec would be great
 
 Alistair
 
-> +    }
-> +
-> +    switch (riscv_cpu_mxl(env)) {
-> +    case MXL_RV32:
-> +        mhvalue  =3D get_field(textra, TEXTRA32_MHVALUE);
-> +        mhselect =3D get_field(textra, TEXTRA32_MHSELECT);
-> +        break;
-> +    case MXL_RV64:
-> +    case MXL_RV128:
-> +        mhvalue  =3D get_field(textra, TEXTRA64_MHVALUE);
-> +        mhselect =3D get_field(textra, TEXTRA64_MHSELECT);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    /* Check mhvalue and mhselect. */
-> +    switch (mhselect) {
-> +    case MHSELECT_IGNORE:
-> +        break;
-> +    case MHSELECT_MCONTEXT:
-> +        /* Match if the low bits of mcontext/hcontext equal mhvalue. */
-> +        if (mhvalue !=3D env->mcontext) {
-> +            return false;
-> +        }
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  /* Common matching conditions for all types of the triggers. */
->  static bool trigger_common_match(CPURISCVState *env, trigger_type_t type=
+>
+> There are four new CSRs and one new instruction added to allow NMI to be
+> resumable in RISC-V, which are:
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>   * mnscratch (0x740)
+>   * mnepc     (0x741)
+>   * mncause   (0x742)
+>   * mnstatus  (0x744)
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>   * mnret: To return from RNMI interrupt/exception handler.
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> RNMI also has higher priority than any other interrupts or exceptions
+> and cannot be disabled by software.
+>
+> RNMI may be used to route to other devices such as Bus Error Unit or
+> Watchdog Timer in the future.
+>
+> The interrupt/exception trap handler addresses of RNMI are
+> implementation defined.
+>
+> If anyone wants to test the patches, we can use the customized OpenSBI[1]=
 ,
->                                   int trigger_index)
->  {
-> -    return trigger_priv_match(env, type, trigger_index);
-> +    return trigger_priv_match(env, type, trigger_index) &&
-> +           trigger_textra_match(env, type, trigger_index);
->  }
+> and the customized QEMU[2].
 >
->  /* type 2 trigger */
-> diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-> index c347863578..f76b8f944a 100644
-> --- a/target/riscv/debug.h
-> +++ b/target/riscv/debug.h
-> @@ -131,6 +131,9 @@ enum {
->  #define ITRIGGER_VU           BIT(25)
->  #define ITRIGGER_VS           BIT(26)
+> We implemented a PoC RNMI trap handler in the customized OpenSBI.
+> In the customized QEMU, we use the Smrnmi patches and the patch from
+> Damien Hedde[3]. The patch from Damien Hedde can be used to inject
+> the RNMI signal with the qmp command.
 >
-> +#define MHSELECT_IGNORE       0
-> +#define MHSELECT_MCONTEXT     4
-> +
->  bool tdata_available(CPURISCVState *env, int tdata_index);
+> [1] https://github.com/TommyWu-fdgkhdkgh/opensbi/tree/dev/twu/master
+> [2] https://github.com/TommyWu-fdgkhdkgh/qemu/tree/dev/twu/master
+> [3] https://lists.gnu.org/archive/html/qemu-devel/2019-06/msg06232.html
 >
->  target_ulong tselect_csr_read(CPURISCVState *env);
+> Test commands :
+> $ ./build/qemu-system-riscv64 -M virt -cpu rv64,smrnmi=3Dtrue,
+> rnmi-interrupt-vector=3D{Offset of the RNMI handler in the customized
+> OpenSBI.} -m 4G -smp 2 -serial mon:stdio -serial null -nographic
+> -bios fw_jump.elf -kernel Image -initrd rootfs.cpio
+> -qmp unix:/tmp/qmp-sock,server,wait=3Doff
+>
+> Use qmp command to inject the RNMI interrupt.
+> $ ./scripts/qmp/qmp-shell /tmp/qmp-sock
+> (QEMU)  gpio-set path=3D/machine/soc0/harts[0] gpio=3Driscv.cpu.rnmi
+> number=3D0 value=3Dtrue
+>
+> (QEMU)  gpio-set path=3D/machine/soc0/harts[0] gpio=3Driscv.cpu.rnmi
+> number=3D0 value=3Dfalse
+>
+> Changelog:
+>
+> v6
+>   * Delete the redundant code in `riscv_cpu_do_interrupt`.
+>   ( Thank Alvin for the suggestion. )
+>   * Split the shared code in `helper_mret` and `helper_mnret` into a
+>     helper function `check_ret_from_m_mode`.
+>   ( Thank Alistair for the suggestion. )
+>
+> v5
+>   * Move the patch that adds the Smrnmi extension to the last patch.
+>   ( Thank Alistair for the suggestion. )
+>   * Implement an M-mode software PoC for this with implemented handlers.
+>   ( Thank Andrew Jones for the suggestion. )
+>   * Add a commit message to all patches of the series.
+>   ( Thank Andrew Jones for the suggestion. )
+>
+> v4
+>   * Fix some coding style issues.
+>   ( Thank Daniel for the suggestions. )
+>
+> v3
+>   * Update to the newest version of Smrnmi extension specification.
+>
+> v2
+>   * split up the series into more commits for convenience of review.
+>   * add missing rnmi_irqvec and rnmi_excpvec properties to riscv_harts.
+>
+> Tommy Wu (5):
+>   target/riscv: Add `ext_smrnmi` in the RISCVCPUConfig.
+>   target/riscv: Handle Smrnmi interrupt and exception.
+>   target/riscv: Add Smrnmi CSRs.
+>   target/riscv: Add Smrnmi mnret instruction.
+>   target/riscv: Add Smrnmi cpu extension.
+>
+>  hw/riscv/riscv_hart.c                         | 18 ++++
+>  include/hw/riscv/riscv_hart.h                 |  4 +
+>  target/riscv/cpu.c                            | 18 ++++
+>  target/riscv/cpu.h                            | 10 +++
+>  target/riscv/cpu_bits.h                       | 23 ++++++
+>  target/riscv/cpu_cfg.h                        |  1 +
+>  target/riscv/cpu_helper.c                     | 80 ++++++++++++++++--
+>  target/riscv/csr.c                            | 82 +++++++++++++++++++
+>  target/riscv/helper.h                         |  1 +
+>  target/riscv/insn32.decode                    |  3 +
+>  .../riscv/insn_trans/trans_privileged.c.inc   | 12 +++
+>  target/riscv/op_helper.c                      | 49 +++++++++--
+>  12 files changed, 291 insertions(+), 10 deletions(-)
+>
 > --
-> 2.34.1
->
+> 2.39.3
 >
 
