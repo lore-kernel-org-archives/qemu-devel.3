@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B4FCE7B02
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BA5CE7B04
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWuQ-00015F-NR; Fri, 06 Sep 2024 07:13:46 -0400
+	id 1smWuC-00008c-VI; Fri, 06 Sep 2024 07:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuN-0000ss-Ju; Fri, 06 Sep 2024 07:13:43 -0400
+ id 1smWuB-00006V-2q; Fri, 06 Sep 2024 07:13:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuL-0007hP-VJ; Fri, 06 Sep 2024 07:13:43 -0400
+ id 1smWu9-0007eM-4Q; Fri, 06 Sep 2024 07:13:30 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 03A068C478;
- Fri,  6 Sep 2024 14:12:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8894A8C471;
+ Fri,  6 Sep 2024 14:12:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 100D21336E2;
- Fri,  6 Sep 2024 14:13:25 +0300 (MSK)
-Received: (nullmailer pid 353566 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 9434E1336DB;
+ Fri,  6 Sep 2024 14:13:24 +0300 (MSK)
+Received: (nullmailer pid 353541 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 08/69] hvf: arm: Do not advance PC when raising an
- exception
-Date: Fri,  6 Sep 2024 14:12:17 +0300
-Message-Id: <20240906111324.353230-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Sven Schnelle <svens@stackframe.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 01/69] hw/scsi/lsi53c895a: bump instruction limit in
+ scripts processing to fix regression
+Date: Fri,  6 Sep 2024 14:12:10 +0300
+Message-Id: <20240906111324.353230-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -62,33 +63,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-hvf did not advance PC when raising an exception for most unhandled
-system registers, but it mistakenly advanced PC when raising an
-exception for GICv3 registers.
+Commit 9876359990 ("hw/scsi/lsi53c895a: add timer to scripts
+processing") reduced the maximum allowed instruction count by
+a factor of 100 all the way down to 100.
+
+This causes the "Check Point R81.20 Gaia" appliance [0] to fail to
+boot after fully finishing the installation via the appliance's web
+interface (there is already one reboot before that).
+
+With a limit of 150, the appliance still fails to boot, while with a
+limit of 200, it works. Bump to 500 to fix the regression and be on
+the safe side.
+
+Originally reported in the Proxmox community forum[1].
+
+[0]: https://support.checkpoint.com/results/download/124397
+[1]: https://forum.proxmox.com/threads/149772/post-683459
 
 Cc: qemu-stable@nongnu.org
-Fixes: a2260983c655 ("hvf: arm: Add support for GICv3")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-id: 20240716-pmu-v3-4-8c7c1858a227@daynix.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 30a1690f2402e6c1582d5b3ebcf7940bfe2fad4b)
+Fixes: 9876359990 ("hw/scsi/lsi53c895a: add timer to scripts processing")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Acked-by: Sven Schnelle <svens@stackframe.org>
+Link: https://lore.kernel.org/r/20240715131403.223239-1-f.ebner@proxmox.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit a4975023fb13cf229bd59c9ceec1b8cbdc5b9a20)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index ee657f455b..ddf49087ec 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1277,6 +1277,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint32_t rt)
-         /* Call the TCG sysreg handler. This is only safe for GICv3 regs. */
-         if (!hvf_sysreg_read_cp(cpu, reg, &val)) {
-             hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
-+            return 1;
-         }
-         break;
-     case SYSREG_DBGBVR0_EL1:
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index eb9828dd5e..f1935e5328 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -188,7 +188,7 @@ static const char *names[] = {
+ #define LSI_TAG_VALID     (1 << 16)
+ 
+ /* Maximum instructions to process. */
+-#define LSI_MAX_INSN    100
++#define LSI_MAX_INSN    500
+ 
+ typedef struct lsi_request {
+     SCSIRequest *req;
 -- 
 2.39.2
 
