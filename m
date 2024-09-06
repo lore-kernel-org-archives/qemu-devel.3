@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F3CCE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89523CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWyi-0004zl-Jx; Fri, 06 Sep 2024 07:18:13 -0400
+	id 1smWz8-000071-NY; Fri, 06 Sep 2024 07:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWy8-0001nQ-NA; Fri, 06 Sep 2024 07:17:36 -0400
+ id 1smWz4-0007wo-3j; Fri, 06 Sep 2024 07:18:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWy5-0008BX-Ui; Fri, 06 Sep 2024 07:17:35 -0400
+ id 1smWz1-0008GE-S0; Fri, 06 Sep 2024 07:18:33 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8495F8C49F;
- Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 18DF88C4A8;
+ Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8EF6B133708;
- Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
-Received: (nullmailer pid 353695 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 257CC133711;
+ Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
+Received: (nullmailer pid 353726 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 46/69] nbd/server: Plumb in new args to nbd_client_add()
-Date: Fri,  6 Sep 2024 14:12:55 +0300
-Message-Id: <20240906111324.353230-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 55/69] target/arm: Clear high SVE elements in
+ handle_vec_simd_wshli
+Date: Fri,  6 Sep 2024 14:13:04 +0300
+Message-Id: <20240906111324.353230-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,158 +62,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Upcoming patches to fix a CVE need to track an opaque pointer passed
-in by the owner of a client object, as well as request for a time
-limit on how fast negotiation must complete.  Prepare for that by
-changing the signature of nbd_client_new() and adding an accessor to
-get at the opaque pointer, although for now the two servers
-(qemu-nbd.c and blockdev-nbd.c) do not change behavior even though
-they pass in a new default timeout value.
+AdvSIMD instructions are supposed to zero bits beyond 128.
+Affects SSHLL, USHLL, SSHLL2, USHLL2.
 
-Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240807174943.771624-11-eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[eblake: s/LIMIT/MAX_SECS/ as suggested by Dan]
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit fb1c2aaa981e0a2fa6362c9985f1296b74f055ac)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240717060903.205098-15-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 8e0c9a9efa21a16190cbac288e414bbf1d80f639)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 213012435f..267a1de903 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -64,8 +64,10 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
-     nbd_update_server_watch(nbd_server);
- 
-     qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
--    nbd_client_new(cioc, nbd_server->tlscreds, nbd_server->tlsauthz,
--                   nbd_blockdev_client_closed);
-+    /* TODO - expose handshake timeout as QMP option */
-+    nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
-+                   nbd_server->tlscreds, nbd_server->tlsauthz,
-+                   nbd_blockdev_client_closed, NULL);
- }
- 
- static void nbd_update_server_watch(NBDServerData *s)
-diff --git a/include/block/nbd.h b/include/block/nbd.h
-index 4e7bd6342f..1d4d65922d 100644
---- a/include/block/nbd.h
-+++ b/include/block/nbd.h
-@@ -33,6 +33,12 @@ typedef struct NBDMetaContexts NBDMetaContexts;
- 
- extern const BlockExportDriver blk_exp_nbd;
- 
-+/*
-+ * NBD_DEFAULT_HANDSHAKE_MAX_SECS: Number of seconds in which client must
-+ * succeed at NBD_OPT_GO before being forcefully dropped as too slow.
-+ */
-+#define NBD_DEFAULT_HANDSHAKE_MAX_SECS 10
-+
- /* Handshake phase structs - this struct is passed on the wire */
- 
- typedef struct NBDOption {
-@@ -403,9 +409,12 @@ AioContext *nbd_export_aio_context(NBDExport *exp);
- NBDExport *nbd_export_find(const char *name);
- 
- void nbd_client_new(QIOChannelSocket *sioc,
-+                    uint32_t handshake_max_secs,
-                     QCryptoTLSCreds *tlscreds,
-                     const char *tlsauthz,
--                    void (*close_fn)(NBDClient *, bool));
-+                    void (*close_fn)(NBDClient *, bool),
-+                    void *owner);
-+void *nbd_client_owner(NBDClient *client);
- void nbd_client_get(NBDClient *client);
- void nbd_client_put(NBDClient *client);
- 
-diff --git a/nbd/server.c b/nbd/server.c
-index 892797bb11..e50012499f 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -124,12 +124,14 @@ struct NBDMetaContexts {
- struct NBDClient {
-     int refcount; /* atomic */
-     void (*close_fn)(NBDClient *client, bool negotiated);
-+    void *owner;
- 
-     QemuMutex lock;
- 
-     NBDExport *exp;
-     QCryptoTLSCreds *tlscreds;
-     char *tlsauthz;
-+    uint32_t handshake_max_secs;
-     QIOChannelSocket *sioc; /* The underlying data channel */
-     QIOChannel *ioc; /* The current I/O channel which may differ (eg TLS) */
- 
-@@ -3191,6 +3193,7 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
- 
-     qemu_co_mutex_init(&client->send_lock);
- 
-+    /* TODO - utilize client->handshake_max_secs */
-     if (nbd_negotiate(client, &local_err)) {
-         if (local_err) {
-             error_report_err(local_err);
-@@ -3205,14 +3208,17 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
- }
- 
- /*
-- * Create a new client listener using the given channel @sioc.
-+ * Create a new client listener using the given channel @sioc and @owner.
-  * Begin servicing it in a coroutine.  When the connection closes, call
-- * @close_fn with an indication of whether the client completed negotiation.
-+ * @close_fn with an indication of whether the client completed negotiation
-+ * within @handshake_max_secs seconds (0 for unbounded).
-  */
- void nbd_client_new(QIOChannelSocket *sioc,
-+                    uint32_t handshake_max_secs,
-                     QCryptoTLSCreds *tlscreds,
-                     const char *tlsauthz,
--                    void (*close_fn)(NBDClient *, bool))
-+                    void (*close_fn)(NBDClient *, bool),
-+                    void *owner)
- {
-     NBDClient *client;
-     Coroutine *co;
-@@ -3225,13 +3231,21 @@ void nbd_client_new(QIOChannelSocket *sioc,
-         object_ref(OBJECT(client->tlscreds));
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 922a16e5d4..7d620ef109 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10263,6 +10263,7 @@ static void handle_vec_simd_wshli(DisasContext *s, bool is_q, bool is_u,
+         tcg_gen_shli_i64(tcg_rd, tcg_rd, shift);
+         write_vec_element(s, tcg_rd, rd, i, size + 1);
      }
-     client->tlsauthz = g_strdup(tlsauthz);
-+    client->handshake_max_secs = handshake_max_secs;
-     client->sioc = sioc;
-     qio_channel_set_delay(QIO_CHANNEL(sioc), false);
-     object_ref(OBJECT(client->sioc));
-     client->ioc = QIO_CHANNEL(sioc);
-     object_ref(OBJECT(client->ioc));
-     client->close_fn = close_fn;
-+    client->owner = owner;
- 
-     co = qemu_coroutine_create(nbd_co_client_start, client);
-     qemu_coroutine_enter(co);
- }
-+
-+void *
-+nbd_client_owner(NBDClient *client)
-+{
-+    return client->owner;
-+}
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index d7b3ccab21..48e2fa5858 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -390,7 +390,9 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
- 
-     nb_fds++;
-     nbd_update_server_watch();
--    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed);
-+    /* TODO - expose handshake timeout as command line option */
-+    nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
-+                   tlscreds, tlsauthz, nbd_client_closed, NULL);
++    clear_vec_high(s, true, rd);
  }
  
- static void nbd_update_server_watch(void)
+ /* SHRN/RSHRN - Shift right with narrowing (and potential rounding) */
 -- 
 2.39.2
 
