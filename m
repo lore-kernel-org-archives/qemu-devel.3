@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A30CE7AFB
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 10:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D231CE7B01
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 10:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWfc-0002vP-4p; Fri, 06 Sep 2024 06:58:28 -0400
+	id 1smWfo-0003FP-9p; Fri, 06 Sep 2024 06:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1smWfR-0002ny-Nk; Fri, 06 Sep 2024 06:58:21 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1smWfR-0002o1-Pa; Fri, 06 Sep 2024 06:58:21 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1smWfP-000632-BX; Fri, 06 Sep 2024 06:58:17 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-20551eeba95so18781445ad.2; 
- Fri, 06 Sep 2024 03:58:04 -0700 (PDT)
+ id 1smWfP-00063G-AN; Fri, 06 Sep 2024 06:58:17 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2055a3f80a4so14716895ad.2; 
+ Fri, 06 Sep 2024 03:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725620282; x=1726225082; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iv3NPBfrsDrOuzW2KxeWVOC8agmIsHnTyZ00QhL/KpE=;
- b=NF21oeA+ngD4dIUQyP8Tayj/e4No2/+29owc1TO9AJEe7gxLVc+7wvFOs76XsBPfD1
- 5juDJHutz8JepRlCKvbJ0RNiUUXK+ucf0I4ntbWahiPWBEslnfm6r9eOu+zvb73DT4SP
- ZcuF24b5vYEX/hOZxPKDrVM8PRaPlRX+ROW8HjVDFOC5bqixZSYSD8V70UE7C/oaccdN
- 9FPqUfj6VaH+rUbXC779Sm4fOJbWjecY6geemTVOaWFpLst12oe6pvMNGzO7FGszvoxx
- Me2+EHogtBdQmOqH7Nu3n0GyJN7fpifqh59+4C1hKoTjwlw+J2g9zRctc/zjVArtBjPw
- Qj6A==
+ d=gmail.com; s=20230601; t=1725620286; x=1726225086; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SLN3uUD+x3NX+Z9x06IutEforArgUnqlFafVmqXGbqY=;
+ b=KdaDgWz7nvM2rSJy1Cik07cK/J3nAo80kZThz9GXBUUgJZ3wWyDQys16EjyyUAHs2g
+ khNFgn3VylbQ8e3QxwCEtA1p56EdJEizUaWaHHxh+3ecdns9Akfat7aoBIPBFdRJ9xho
+ 9u1ciaMDY8eibE/MnYrnD7e5rnaGb42XjICRvWzDkNtMy6XWCX4fohOIUcB54X8864Si
+ hN0TKoy64HFE3QxnWmUbNsZfi0qxfgKQc5Ajn1GyS9EBNEp90d64bF0weleHf1DQYWnE
+ CpSo+HbalLAj+TUEt2S64wiwDIi1r+YbHZob3NcFfucuKznPJKyevo3SruoJS6vlC+07
+ R0uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725620282; x=1726225082;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iv3NPBfrsDrOuzW2KxeWVOC8agmIsHnTyZ00QhL/KpE=;
- b=jUziWw1qos2E91W4MkCArwVqFGd41pC4gykCzcfCkQeeeHdWPs+Q7gTSYNIuwtyfQh
- mm+1ny9EUF0H7NepHEHaqnIBwKTw7XVj9IixaWPJ8vvzKQu0oIaJW1mAXISpsMbklna1
- 1/aA9luk9oOyx934mDI2XhlyRO3UU/9sF2nXR+FSSwTJjOzVHUs9lM5cAvXDmAYyTB5i
- 6yk+C9F3mjuCM7/KO9efUrCYCKkaMygfYtE8QCxroQdLIdcq3EDdHcLt7rRfNG79nppz
- cxlGt6+6mpqQaJdxEzL76eXo7WMMfG/Tu5JBJahLTaDpim47UdUPV7+yX9p94yX/VkCB
- trOQ==
+ d=1e100.net; s=20230601; t=1725620286; x=1726225086;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SLN3uUD+x3NX+Z9x06IutEforArgUnqlFafVmqXGbqY=;
+ b=gV4rd+RwKVFtSnfufVPfh9HEYqzYjj1GPQ+rD3LGem1KOuk9FXk7pI6flqWfsPFF1m
+ xJP1OT6OhiSqwLOom6y0o9xX1MtW30wYPFtpXqYUnEovvL8uw5rUY7Rzp8Mbd8u5Kwzn
+ vxnhSPTd6wD0hwbSK/bciLMc6Kiu1h/aiU0fqSIGVcaZIjuKcp7Db0LQfUg/iRfdsBjf
+ ytB6QgXsaWfb5EQTNLE5dNh0prT2XPn61drxFuSoUJb6DJQw1Y4qTRFGg5HD7khF5wNA
+ v7yx9hRaXY9oiguIMveDbo/Ql8WwuqQBiqEtWeRhAHMmLz4AYp5L8TGOa8cJb7FOsivO
+ 3zDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8+hq0Zbjuu/xPhJDCwfifwShRcPY9EIMhjPatYd1DAsH7pIgMC8ZFwLHiCR+IO6tFi2PBEScR0pwm@nongnu.org
-X-Gm-Message-State: AOJu0YwPmPBZ6Tp9Cqmqtx4XziuheVnmW8gAMl4jnS2GCX+ytbXHhYAC
- U/I7dts33M3N0Li6JkFuMAD6zRL2Xi5F9tCYLfveSq72hshTZ39KbHunew==
-X-Google-Smtp-Source: AGHT+IEXD84s6322HOR9c5J69r1zLPVQ3uDHb/mFKyfjymGxCzgVvhcjsX/1tRXPaW7uuYltsE1Y7g==
-X-Received: by 2002:a17:903:98f:b0:206:a87c:2864 with SMTP id
- d9443c01a7336-206f05f6704mr22382175ad.42.1725620282502; 
- Fri, 06 Sep 2024 03:58:02 -0700 (PDT)
+ AJvYcCXCBwKgKYdMa39Pl0E/pJpbrr1NxzfwovsNTFje1Bfykklgl4wzHnPhJja716PWnSqZH+I7U0ShJSlz@nongnu.org
+X-Gm-Message-State: AOJu0Ywy01CCPAstMAv5cOe40lVyDAQLNstQDRqZy81U0c9otVcTL6NT
+ YmxIHjMsmlU7+lk5YR0F/oiSy7nvf8HQPOjGf+5RoCkTtTbsuI6cZ1xwZQ==
+X-Google-Smtp-Source: AGHT+IHkrm6xcHaE5isttG7ua/IY1cgm+p72/9EtWuvEhivUtz/vo+fM8gaKYk84/9/5kFe6CosKuA==
+X-Received: by 2002:a17:903:2406:b0:202:51ca:9831 with SMTP id
+ d9443c01a7336-206f0654f3bmr25019505ad.49.1725620285621; 
+ Fri, 06 Sep 2024 03:58:05 -0700 (PDT)
 Received: from jeuk-MS-7D42.. ([175.119.5.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-206aea67bc6sm41134575ad.258.2024.09.06.03.57.59
+ d9443c01a7336-206aea67bc6sm41134575ad.258.2024.09.06.03.58.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 03:58:02 -0700 (PDT)
+ Fri, 06 Sep 2024 03:58:05 -0700 (PDT)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 To: qemu-devel@nongnu.org,
 	peter.maydell@linaro.org
 Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
- jeuk20.kim@samsung.com, j-young.choi@samsung.com, jeongyuchan0629@gmail.com
-Subject: [PULL 0/5] ufs queue
-Date: Fri,  6 Sep 2024 19:57:37 +0900
-Message-Id: <cover.1725619134.git.jeuk20.kim@samsung.com>
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com,
+ jeongyuchan0629@gmail.com, Kyoungrul Kim <k831.kim@samsung.com>,
+ Minwoo Im <minwoo.im@samsung.com>
+Subject: [PULL 1/5] hw/ufs: add basic info of query response upiu
+Date: Fri,  6 Sep 2024 19:57:38 +0900
+Message-Id: <de2cc4078240f8b745a7caeed461b02f2577e2d2.1725619134.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1725619134.git.jeuk20.kim@samsung.com>
+References: <cover.1725619134.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,39 +97,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Kyoungrul Kim <k831.kim@samsung.com>
 
-The following changes since commit 7b87a25f49a301d3377f3e71e0b4a62540c6f6e4:
+Modify to fill the opcode, idn, index, selector information of
+all Query Response UPIU. because attr and flag operation of query
+response upiu need these information too.
 
-  Merge tag 'edgar/xen-queue-2024-09-04.for-upstream' of https://gitlab.com/edgar.iglesias/qemu into staging (2024-09-05 13:02:26 +0100)
+Signed-off-by: KyoungrulKim <k831.kim@samsung.com>
+Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+---
+ hw/ufs/ufs.c | 13 +++++++++----
+ hw/ufs/ufs.h |  1 +
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-are available in the Git repository at:
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 945a0ea127..ce2c96aeea 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -851,6 +851,14 @@ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
+     req->rsp_upiu.header.data_segment_length = cpu_to_be16(data_segment_length);
+ }
+ 
++void ufs_build_query_response(UfsRequest *req)
++{
++    req->rsp_upiu.qr.opcode = req->req_upiu.qr.opcode;
++    req->rsp_upiu.qr.idn = req->req_upiu.qr.idn;
++    req->rsp_upiu.qr.index = req->req_upiu.qr.index;
++    req->rsp_upiu.qr.selector = req->req_upiu.qr.selector;
++}
++
+ static UfsReqResult ufs_exec_scsi_cmd(UfsRequest *req)
+ {
+     UfsHc *u = req->hc;
+@@ -1327,10 +1335,6 @@ static QueryRespCode ufs_read_desc(UfsRequest *req)
+     if (length > req->rsp_upiu.qr.data[0]) {
+         length = req->rsp_upiu.qr.data[0];
+     }
+-    req->rsp_upiu.qr.opcode = req->req_upiu.qr.opcode;
+-    req->rsp_upiu.qr.idn = req->req_upiu.qr.idn;
+-    req->rsp_upiu.qr.index = req->req_upiu.qr.index;
+-    req->rsp_upiu.qr.selector = req->req_upiu.qr.selector;
+     req->rsp_upiu.qr.length = cpu_to_be16(length);
+ 
+     return status;
+@@ -1411,6 +1415,7 @@ static UfsReqResult ufs_exec_query_cmd(UfsRequest *req)
+     data_segment_length = be16_to_cpu(req->rsp_upiu.qr.length);
+     ufs_build_upiu_header(req, UFS_UPIU_TRANSACTION_QUERY_RSP, 0, status, 0,
+                           data_segment_length);
++    ufs_build_query_response(req);
+ 
+     if (status != UFS_QUERY_RESULT_SUCCESS) {
+         return UFS_REQUEST_FAIL;
+diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+index 6c9382cbc4..4bcc41f53a 100644
+--- a/hw/ufs/ufs.h
++++ b/hw/ufs/ufs.h
+@@ -228,6 +228,7 @@ static inline bool is_wlun(uint8_t lun)
+ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
+                            uint8_t response, uint8_t scsi_status,
+                            uint16_t data_segment_length);
++void ufs_build_query_response(UfsRequest *req);
+ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result);
+ void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
+ #endif /* HW_UFS_UFS_H */
+-- 
+2.34.1
 
-  https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20240906
-
-for you to fetch changes up to 9fe8e2c68ad99e503a11390b868a7dad846e7a0d:
-
-  hw/ufs: ufs descriptor read test implemented (2024-09-06 18:04:16 +0900)
-
-----------------------------------------------------------------
-ufs queue
-
-- Add basic info of query response upiu
-- Add more qtests for the ufs query request
-
-----------------------------------------------------------------
-Kyoungrul Kim (1):
-      hw/ufs: add basic info of query response upiu
-
-Yoochan Jeong (4):
-      hw/ufs: minor bug fixes related to ufs-test
-      hw/ufs: ufs flag read/write test implemented
-      hw/ufs: ufs attribute read/write test implemented
-      hw/ufs: ufs descriptor read test implemented
-
- hw/ufs/ufs.c           |  32 +++--
- hw/ufs/ufs.h           |   1 +
- include/block/ufs.h    |   6 +
- tests/qtest/ufs-test.c | 384 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 4 files changed, 410 insertions(+), 13 deletions(-)
 
