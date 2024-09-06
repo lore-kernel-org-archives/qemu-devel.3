@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E278E6FE3D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:08:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75816E6FE41
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smdM5-00089t-Vz; Fri, 06 Sep 2024 14:06:46 -0400
+	id 1smdMa-0000vd-ID; Fri, 06 Sep 2024 14:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdLp-0007ln-EQ
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdMY-0000nv-D2
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdLf-00053G-VS
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdMR-00054y-AY
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725645978;
+ s=mimecast20190719; t=1725645999;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I2yEw6cjsGyajKSi9WPDKJoFBZrjbwJhne0l+vD0hmc=;
- b=dDr3ZeAEId/sqvGcs+DlSMFOEjSEMVWP2c+5v95+4P0YKJoRdSwE3kUl+L2AH2UVE2DG5m
- 6Ajt61qk5ID+PoQrRquIv92saCu/krOuhvcvlFeWTtxQGfPOj9A8afbvm9u79oGPbjTe0n
- r01yG37bXHEenBY7ieGQurWmGKAcAiU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GntpAht59yV/R8tQt+YIxckQaTpkDbmEj51XFzA1VAA=;
+ b=You5Rc4BOdeBx+UvUyTD5LqwtFe1Bf7KVt1hQvqpJDCevxG9PnkdvWqPD2M+tMDTeE4gfz
+ 5YBv45tt5EBIoFwzaI8faX2mS6ueKcoNjbni2rF7Y3BGsE/oyB2RWj+L7zmgL86lanTmYd
+ c4MDqD1HZHQUT4AmCJeCRc/JeghtPoY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-G-oPAQQ-PiG03SyGjj38Tg-1; Fri,
- 06 Sep 2024 14:06:15 -0400
-X-MC-Unique: G-oPAQQ-PiG03SyGjj38Tg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-pldUc-tLMFuWnCetuhTiyQ-1; Fri,
+ 06 Sep 2024 14:06:38 -0400
+X-MC-Unique: pldUc-tLMFuWnCetuhTiyQ-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2674F1953948; Fri,  6 Sep 2024 18:06:14 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79DC91955DC8; Fri,  6 Sep 2024 18:06:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.70])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CD97E19560AA; Fri,  6 Sep 2024 18:06:11 +0000 (UTC)
+ id 6D79919560AA; Fri,  6 Sep 2024 18:06:34 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH 06/14] tests/functional: Convert mips32el Malta YAMON avocado
- test
-Date: Fri,  6 Sep 2024 20:05:41 +0200
-Message-ID: <20240906180549.792832-7-thuth@redhat.com>
+Subject: [PATCH 14/14] tests/functional: Convert the or1k-sim Avocado test
+Date: Fri,  6 Sep 2024 20:05:49 +0200
+Message-ID: <20240906180549.792832-15-thuth@redhat.com>
 In-Reply-To: <20240906180549.792832-1-thuth@redhat.com>
 References: <20240906180549.792832-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -84,228 +82,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+We've got to do_test_advcal_2018() here now that the test resides
+in a separate file. Also switch back to the original URL (since
+the site did not vanish as originally expected) and update the
+hashsum to use SHA256.
 
-Straight forward conversion using the Python standard zipfile
-module instead of avocado.utils package. Update the SHA1 hashes
-to SHA256 hashes since SHA1 should not be used anymore nowadays.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240827094905.80648-6-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                             |  2 +-
- tests/avocado/machine_mips_malta.py     | 54 -------------------------
- tests/functional/meson.build            |  4 ++
- tests/functional/test_mips64el_malta.py | 16 ++++----
- tests/functional/test_mipsel_malta.py   | 47 +++++++++++++++++++++
- 5 files changed, 61 insertions(+), 62 deletions(-)
- delete mode 100644 tests/avocado/machine_mips_malta.py
- create mode 100755 tests/functional/test_mipsel_malta.py
+ tests/avocado/boot_linux_console.py |  8 --------
+ tests/functional/meson.build        |  4 ++++
+ tests/functional/test_or1k_sim.py   | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+), 8 deletions(-)
+ create mode 100755 tests/functional/test_or1k_sim.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7aa17574aa..2d3d90289f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1370,7 +1370,7 @@ F: hw/mips/malta.c
- F: hw/pci-host/gt64120.c
- F: include/hw/southbridge/piix.h
- F: tests/avocado/linux_ssh_mips_malta.py
--F: tests/avocado/machine_mips_malta.py
-+F: tests/functional/test_mipsel_malta.py
- F: tests/functional/test_mips64el_malta.py
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index db72bd1b5e..6c50284986 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -927,14 +927,6 @@ def test_arm_ast2600_debian(self):
+         self.wait_for_console_pattern("SMP: Total of 2 processors activated")
+         self.wait_for_console_pattern("No filesystem could mount root")
  
- Mipssim
-diff --git a/tests/avocado/machine_mips_malta.py b/tests/avocado/machine_mips_malta.py
-deleted file mode 100644
-index 05c64e18c4..0000000000
---- a/tests/avocado/machine_mips_malta.py
-+++ /dev/null
-@@ -1,54 +0,0 @@
--# Functional tests for the MIPS Malta board
--#
--# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or later.
--# See the COPYING file in the top-level directory.
--#
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--import os
--
--from avocado.utils import archive
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import interrupt_interactive_console_until_pattern
--from avocado_qemu import wait_for_console_pattern
--
--
--class MaltaMachine(QemuSystemTest):
--
--    def do_test_yamon(self):
--        rom_url = ('https://s3-eu-west-1.amazonaws.com/'
--                   'downloads-mips/mips-downloads/'
--                   'YAMON/yamon-bin-02.22.zip')
--        rom_hash = '8da7ecddbc5312704b8b324341ee238189bde480'
--        zip_path = self.fetch_asset(rom_url, asset_hash=rom_hash)
--
--        archive.extract(zip_path, self.workdir)
--        yamon_path = os.path.join(self.workdir, 'yamon-02.22.bin')
--
--        self.vm.set_console()
--        self.vm.add_args('-bios', yamon_path)
--        self.vm.launch()
--
--        prompt =  'YAMON>'
--        pattern = 'YAMON ROM Monitor'
--        interrupt_interactive_console_until_pattern(self, pattern, prompt)
--        wait_for_console_pattern(self, prompt)
--        self.vm.shutdown()
--
--    def test_mipsel_malta_yamon(self):
+-    def test_or1k_sim(self):
 -        """
--        :avocado: tags=arch:mipsel
--        :avocado: tags=machine:malta
--        :avocado: tags=endian:little
+-        :avocado: tags=arch:or1k
+-        :avocado: tags=machine:or1k-sim
 -        """
--        self.do_test_yamon()
+-        tar_hash = '20334cdaf386108c530ff0badaecc955693027dd'
+-        self.do_test_advcal_2018('20', tar_hash, 'vmlinux')
 -
--    def test_mips64el_malta_yamon(self):
--        """
--        :avocado: tags=arch:mips64el
--        :avocado: tags=machine:malta
--        :avocado: tags=endian:little
--        """
--        self.do_test_yamon()
+     def test_ppc64_e500(self):
+         """
+         :avocado: tags=arch:ppc64
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 9baf903e39..daee61ec3c 100644
+index 8f9694244f..68a7570119 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -69,6 +69,10 @@ tests_microblazeel_system_thorough = [
-   'microblazeel_s3adsp1800'
+@@ -94,6 +94,10 @@ tests_mips64el_system_thorough = [
+   'mips64el_malta',
  ]
  
-+tests_mipsel_system_thorough = [
-+  'mipsel_malta',
++tests_or1k_system_quick = [
++  'or1k_sim',
 +]
 +
- tests_mips64el_system_quick = [
-   'mips64el_fuloong2e',
+ tests_ppc_system_quick = [
+   'ppc_74xx',
  ]
-diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
-index 1be93d7ff0..6c6355b131 100755
---- a/tests/functional/test_mips64el_malta.py
-+++ b/tests/functional/test_mips64el_malta.py
-@@ -30,7 +30,7 @@
-     CV2_AVAILABLE = False
- 
- 
--class MaltaMachineConsole(QemuSystemTest):
-+class MaltaMachineConsole(LinuxKernelTest):
- 
-     ASSET_KERNEL_2_63_2 = Asset(
-         ('http://snapshot.debian.org/archive/debian/'
-@@ -52,17 +52,17 @@ def test_mips64el_malta(self):
-             ch-common-tasks.html#s-common-official
-         """
-         deb_path = self.ASSET_KERNEL_2_63_2.fetch()
--        kernel_path = extract_from_deb(deb_path, self.workdir,
--                                       '/boot/vmlinux-2.6.32-5-5kc-malta')
-+        kernel_path = self.extract_from_deb(deb_path,
-+                                            '/boot/vmlinux-2.6.32-5-5kc-malta')
- 
-         self.set_machine('malta')
-         self.vm.set_console()
--        kernel_command_line = KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-         self.vm.add_args('-kernel', kernel_path,
-                          '-append', kernel_command_line)
-         self.vm.launch()
-         console_pattern = 'Kernel command line: %s' % kernel_command_line
--        linux_kernel_wait_for_pattern(self, console_pattern)
-+        self.wait_for_console_pattern(console_pattern)
- 
-     ASSET_KERNEL_3_19_3 = Asset(
-         ('https://github.com/philmd/qemu-testing-blob/'
-@@ -85,7 +85,7 @@ def test_mips64el_malta_5KEc_cpio(self):
- 
-         self.set_machine('malta')
-         self.vm.set_console()
--        kernel_command_line = (KERNEL_COMMON_COMMAND_LINE
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
-                                + 'console=ttyS0 console=tty '
-                                + 'rdinit=/sbin/init noreboot')
-         self.vm.add_args('-cpu', '5KEc',
-@@ -94,7 +94,7 @@ def test_mips64el_malta_5KEc_cpio(self):
-                          '-append', kernel_command_line,
-                          '-no-reboot')
-         self.vm.launch()
--        linux_kernel_wait_for_pattern(self, 'Boot successful.')
-+        self.wait_for_console_pattern('Boot successful.')
- 
-         exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
-                                                 'MIPS 5KE')
-@@ -180,5 +180,7 @@ def test_mips_malta_i6400_framebuffer_logo_8cores(self):
-         self.do_test_i6400_framebuffer_logo(8)
- 
- 
-+from test_mipsel_malta import MaltaMachineYAMON
-+
- if __name__ == '__main__':
-     LinuxKernelTest.main()
-diff --git a/tests/functional/test_mipsel_malta.py b/tests/functional/test_mipsel_malta.py
+diff --git a/tests/functional/test_or1k_sim.py b/tests/functional/test_or1k_sim.py
 new file mode 100755
-index 0000000000..f31f96b012
+index 0000000000..aa2a1f08d2
 --- /dev/null
-+++ b/tests/functional/test_mipsel_malta.py
-@@ -0,0 +1,47 @@
++++ b/tests/functional/test_or1k_sim.py
+@@ -0,0 +1,29 @@
 +#!/usr/bin/env python3
 +#
-+# Functional tests for the little-endian 32-bit MIPS Malta board
-+#
-+# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or later.
-+# See the COPYING file in the top-level directory.
++# Functional test that boots a Linux kernel on an OpenRISC-1000 SIM machine
++# and checks the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
 +import os
 +
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import interrupt_interactive_console_until_pattern
-+from qemu_test import wait_for_console_pattern
-+from zipfile import ZipFile
++from qemu_test import LinuxKernelTest, Asset
++from qemu_test.utils import archive_extract
 +
++class OpenRISC1kSimTest(LinuxKernelTest):
 +
-+class MaltaMachineYAMON(QemuSystemTest):
++    ASSET_DAY20 = Asset(
++        'https://www.qemu-advent-calendar.org/2018/download/day20.tar.xz',
++        'ff9d7dd7c6bdba325bd85ee85c02db61ff653e129558aeffe6aff55bffb6763a')
 +
-+    ASSET_YAMON_ROM = Asset(
-+        ('https://s3-eu-west-1.amazonaws.com/downloads-mips/mips-downloads/'
-+         'YAMON/yamon-bin-02.22.zip'),
-+        'eef86f0eed0ef554f041dcd47b87eebea0e6f9f1184ed31f7e9e8b4a803860ab')
-+
-+    def test_mipsel_malta_yamon(self):
-+        yamon_bin = 'yamon-02.22.bin'
-+        zip_path = self.ASSET_YAMON_ROM.fetch()
-+        with ZipFile(zip_path, 'r') as zf:
-+            zf.extract(yamon_bin, path=self.workdir)
-+        yamon_path = os.path.join(self.workdir, yamon_bin)
-+
-+        self.set_machine('malta')
++    def test_or1k_sim(self):
++        self.set_machine('or1k-sim')
++        file_path = self.ASSET_DAY20.fetch()
++        archive_extract(file_path, self.workdir)
 +        self.vm.set_console()
-+        self.vm.add_args('-bios', yamon_path)
++        self.vm.add_args('-kernel', self.workdir + '/day20/vmlinux')
 +        self.vm.launch()
-+
-+        prompt =  'YAMON>'
-+        pattern = 'YAMON ROM Monitor'
-+        interrupt_interactive_console_until_pattern(self, pattern, prompt)
-+        wait_for_console_pattern(self, prompt)
-+        self.vm.shutdown()
-+
++        self.wait_for_console_pattern('QEMU advent calendar')
 +
 +if __name__ == '__main__':
-+    QemuSystemTest.main()
++    LinuxKernelTest.main()
 -- 
 2.46.0
 
