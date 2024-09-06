@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A964CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F45CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWxN-0007HT-E5; Fri, 06 Sep 2024 07:16:49 -0400
+	id 1smWw5-0000q3-JD; Fri, 06 Sep 2024 07:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWwk-0004O3-HN; Fri, 06 Sep 2024 07:16:14 -0400
+ id 1smWvl-0000Cq-NO; Fri, 06 Sep 2024 07:15:11 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWwi-00083J-Ei; Fri, 06 Sep 2024 07:16:10 -0400
+ id 1smWvh-0007lb-Sq; Fri, 06 Sep 2024 07:15:08 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9A76C8C490;
- Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E26BB8C485;
+ Fri,  6 Sep 2024 14:12:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A61131336FA;
- Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
-Received: (nullmailer pid 353647 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id E202F1336EF;
+ Fri,  6 Sep 2024 14:13:25 +0300 (MSK)
+Received: (nullmailer pid 353607 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 32/69] target/arm: Handle denormals correctly for FMOPA
- (widening)
-Date: Fri,  6 Sep 2024 14:12:41 +0300
-Message-Id: <20240906111324.353230-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 21/69] hw/virtio: Fix the de-initialization of
+ vhost-user devices
+Date: Fri,  6 Sep 2024 14:12:30 +0300
+Message-Id: <20240906111324.353230-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -63,163 +63,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-The FMOPA (widening) SME instruction takes pairs of half-precision
-floating point values, widens them to single-precision, does a
-two-way dot product and accumulates the results into a
-single-precision destination.  We don't quite correctly handle the
-FPCR bits FZ and FZ16 which control flushing of denormal inputs and
-outputs.  This is because at the moment we pass a single float_status
-value to the helper function, which then uses that configuration for
-all the fp operations it does.  However, because the inputs to this
-operation are float16 and the outputs are float32 we need to use the
-fp_status_f16 for the float16 input widening but the normal fp_status
-for everything else.  Otherwise we will apply the flushing control
-FPCR.FZ16 to the 32-bit output rather than the FPCR.FZ control, and
-incorrectly flush a denormal output to zero when we should not (or
-vice-versa).
+The unrealize functions of the various vhost-user devices are
+calling the corresponding vhost_*_set_status() functions with a
+status of 0 to shut down the device correctly.
 
-(In commit 207d30b5fdb5b we tried to fix the FZ handling but
-didn't get it right, switching from "use FPCR.FZ for everything" to
-"use FPCR.FZ16 for everything".)
-(Mjt: it is commit 43929c818c4b in stable-9.0)
+Now these vhost_*_set_status() functions all follow this scheme:
 
-Pass the CPU env to the sme_fmopa_h helper instead of an fp_status
-pointer, and have the helper pass an extra fp_status into the
-f16_dotadd() function so that we can use the right status for the
-right parts of this operation.
+    bool should_start = virtio_device_should_start(vdev, status);
 
-Cc: qemu-stable@nongnu.org
-Fixes: 207d30b5fdb5 ("target/arm: Use FPST_F16 for SME FMOPA (widening)")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2373
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 55f9f4ee018c5ccea81d8c8c586756d7711ae46f)
+    if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+        return;
+    }
+
+    if (should_start) {
+        /* ... do the initialization stuff ... */
+    } else {
+        /* ... do the cleanup stuff ... */
+    }
+
+The problem here is virtio_device_should_start(vdev, 0) currently
+always returns "true" since it internally only looks at vdev->started
+instead of looking at the "status" parameter. Thus once the device
+got started once, virtio_device_should_start() always returns true
+and thus the vhost_*_set_status() functions return early, without
+ever doing any clean-up when being called with status == 0. This
+causes e.g. problems when trying to hot-plug and hot-unplug a vhost
+user devices multiple times since the de-initialization step is
+completely skipped during the unplug operation.
+
+This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
+vm_running check to virtio_device_started") which replaced
+
+ should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
+
+with
+
+ should_start = virtio_device_started(vdev, status);
+
+which later got replaced by virtio_device_should_start(). This blocked
+the possibility to set should_start to false in case the status flag
+VIRTIO_CONFIG_S_DRIVER_OK was not set.
+
+Fix it by adjusting the virtio_device_should_start() function to
+only consider the status flag instead of vdev->started. Since this
+function is only used in the various vhost_*_set_status() functions
+for exactly the same purpose, it should be fine to fix it in this
+central place there without any risk to change the behavior of other
+code.
+
+Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
+Buglink: https://issues.redhat.com/browse/RHEL-40708
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240618121958.88673-1-thuth@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit d72479b11797c28893e1e3fc565497a9cae5ca16)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
-index 27eef49a11..d22bf9d21b 100644
---- a/target/arm/tcg/helper-sme.h
-+++ b/target/arm/tcg/helper-sme.h
-@@ -121,7 +121,7 @@ DEF_HELPER_FLAGS_5(sme_addha_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sme_addva_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- 
- DEF_HELPER_FLAGS_7(sme_fmopa_h, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index f9001f5213..3906bb51c0 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -976,12 +976,23 @@ static inline uint32_t f16mop_adj_pair(uint32_t pair, uint32_t pg, uint32_t neg)
- }
- 
- static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
--                          float_status *s_std, float_status *s_odd)
-+                          float_status *s_f16, float_status *s_std,
-+                          float_status *s_odd)
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 7d5ffdc145..2eafad17b8 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -470,9 +470,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
+  * @vdev - the VirtIO device
+  * @status - the devices status bits
+  *
+- * This is similar to virtio_device_started() but also encapsulates a
+- * check on the VM status which would prevent a device starting
+- * anyway.
++ * This is similar to virtio_device_started() but ignores vdev->started
++ * and also encapsulates a check on the VM status which would prevent a
++ * device from starting anyway.
+  */
+ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
  {
--    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_std);
--    float64 e1c = float16_to_float64(e1 >> 16, true, s_std);
--    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_std);
--    float64 e2c = float16_to_float64(e2 >> 16, true, s_std);
-+    /*
-+     * We need three different float_status for different parts of this
-+     * operation:
-+     *  - the input conversion of the float16 values must use the
-+     *    f16-specific float_status, so that the FPCR.FZ16 control is applied
-+     *  - operations on float32 including the final accumulation must use
-+     *    the normal float_status, so that FPCR.FZ is applied
-+     *  - we have pre-set-up copy of s_std which is set to round-to-odd,
-+     *    for the multiply (see below)
-+     */
-+    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_f16);
-+    float64 e1c = float16_to_float64(e1 >> 16, true, s_f16);
-+    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_f16);
-+    float64 e2c = float16_to_float64(e2 >> 16, true, s_f16);
-     float64 t64;
-     float32 t32;
+@@ -480,7 +480,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
+         return false;
+     }
  
-@@ -1003,20 +1014,23 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
+-    return virtio_device_started(vdev, status);
++    return status & VIRTIO_CONFIG_S_DRIVER_OK;
  }
  
- void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
--                         void *vpm, void *vst, uint32_t desc)
-+                         void *vpm, CPUARMState *env, uint32_t desc)
- {
-     intptr_t row, col, oprsz = simd_maxsz(desc);
-     uint32_t neg = simd_data(desc) * 0x80008000u;
-     uint16_t *pn = vpn, *pm = vpm;
--    float_status fpst_odd, fpst_std;
-+    float_status fpst_odd, fpst_std, fpst_f16;
- 
-     /*
--     * Make a copy of float_status because this operation does not
--     * update the cumulative fp exception status.  It also produces
--     * default nans.  Make a second copy with round-to-odd -- see above.
-+     * Make copies of fp_status and fp_status_f16, because this operation
-+     * does not update the cumulative fp exception status.  It also
-+     * produces default NaNs. We also need a second copy of fp_status with
-+     * round-to-odd -- see above.
-      */
--    fpst_std = *(float_status *)vst;
-+    fpst_f16 = env->vfp.fp_status_f16;
-+    fpst_std = env->vfp.fp_status;
-     set_default_nan_mode(true, &fpst_std);
-+    set_default_nan_mode(true, &fpst_f16);
-     fpst_odd = fpst_std;
-     set_float_rounding_mode(float_round_to_odd, &fpst_odd);
- 
-@@ -1036,7 +1050,8 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
-                         uint32_t m = *(uint32_t *)(vzm + H1_4(col));
- 
-                         m = f16mop_adj_pair(m, pcol, 0);
--                        *a = f16_dotadd(*a, n, m, &fpst_std, &fpst_odd);
-+                        *a = f16_dotadd(*a, n, m,
-+                                        &fpst_f16, &fpst_std, &fpst_odd);
-                     }
-                     col += 4;
-                     pcol >>= 4;
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index a50a419af2..ae42ddef7b 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -334,8 +334,29 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
-     return true;
- }
- 
--TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
--           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
-+static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
-+                           gen_helper_gvec_5_ptr *fn)
-+{
-+    int svl = streaming_vec_reg_size(s);
-+    uint32_t desc = simd_desc(svl, svl, a->sub);
-+    TCGv_ptr za, zn, zm, pn, pm;
-+
-+    if (!sme_smza_enabled_check(s)) {
-+        return true;
-+    }
-+
-+    za = get_tile(s, esz, a->zad);
-+    zn = vec_full_reg_ptr(s, a->zn);
-+    zm = vec_full_reg_ptr(s, a->zm);
-+    pn = pred_full_reg_ptr(s, a->pn);
-+    pm = pred_full_reg_ptr(s, a->pm);
-+
-+    fn(za, zn, zm, pn, pm, tcg_env, tcg_constant_i32(desc));
-+    return true;
-+}
-+
-+TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
-+           MO_32, gen_helper_sme_fmopa_h)
- TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
-            MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
- TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
+ static inline void virtio_set_started(VirtIODevice *vdev, bool started)
 -- 
 2.39.2
 
