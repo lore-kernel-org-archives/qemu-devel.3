@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C0CCE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27142CE7AE0
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSrn-0004DM-KL; Fri, 06 Sep 2024 02:54:47 -0400
+	id 1smSrk-00041f-SQ; Fri, 06 Sep 2024 02:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSrm-00049W-Ie; Fri, 06 Sep 2024 02:54:46 -0400
+ id 1smSrj-0003zq-6R; Fri, 06 Sep 2024 02:54:43 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSrk-0002ys-OT; Fri, 06 Sep 2024 02:54:46 -0400
+ id 1smSrg-0002xc-Nb; Fri, 06 Sep 2024 02:54:42 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AC8778C237;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9C32E8C236;
  Fri,  6 Sep 2024 09:53:11 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 747101333EF;
+ by tsrv.corpit.ru (Postfix) with SMTP id 623501333EE;
  Fri,  6 Sep 2024 09:54:29 +0300 (MSK)
-Received: (nullmailer pid 43311 invoked by uid 1000);
+Received: (nullmailer pid 43303 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ John G Johnson <john.g.johnson@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>, John Snow <jsnow@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 02/53] target/arm: Fix handling of LDAPR/STLR with
- negative offset
-Date: Fri,  6 Sep 2024 09:53:32 +0300
-Message-Id: <20240906065429.42415-2-mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 01/53] qapi/qom: Document feature unstable of
+ @x-vfio-user-server
+Date: Fri,  6 Sep 2024 09:53:31 +0300
+Message-Id: <20240906065429.42415-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,40 +65,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Markus Armbruster <armbru@redhat.com>
 
-When we converted the LDAPR/STLR instructions to decodetree we
-accidentally introduced a regression where the offset is negative.
-The 9-bit immediate field is signed, and the old hand decoder
-correctly used sextract32() to get it out of the insn word,
-but the ldapr_stlr_i pattern in the decode file used "imm:9"
-instead of "imm:s9", so it treated the field as unsigned.
+Commit 8f9a9259d32c added ObjectType member @x-vfio-user-server with
+feature unstable, but neglected to explain why it is unstable.  Do
+that now.
 
-Fix the pattern to treat the field as a signed immediate.
-
+Fixes: 8f9a9259d32c (vfio-user: define vfio-user-server object)
+Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Cc: John G Johnson <john.g.johnson@oracle.com>
+Cc: Jagannathan Raman <jag.raman@oracle.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 2521b6073b7 ("target/arm: Convert LDAPR/STLR (imm) to decodetree")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2419
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240709134504.3500007-2-peter.maydell@linaro.org
-(cherry picked from commit 5669d26ec614b3f4c56cf1489b9095ed327938b1)
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20240703095310.1242102-1-armbru@redhat.com>
+Reviewed-by: John Snow <jsnow@redhat.com>
+[Indentation fixed]
+(cherry picked from commit 3becc939081097ccfed6968771f33d65ce8551eb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 8a20dce3c8..6cc29a4bce 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -467,7 +467,7 @@ LDAPR           sz:2 111 0 00 1 0 1 11111 1100 00 rn:5 rt:5
- LDRA            11 111 0 00 m:1 . 1 ......... w:1 1 rn:5 rt:5 imm=%ldra_imm
- 
- &ldapr_stlr_i   rn rt imm sz sign ext
--@ldapr_stlr_i   .. ...... .. . imm:9 .. rn:5 rt:5 &ldapr_stlr_i
-+@ldapr_stlr_i   .. ...... .. . imm:s9 .. rn:5 rt:5 &ldapr_stlr_i
- STLR_i          sz:2 011001 00 0 ......... 00 ..... ..... @ldapr_stlr_i sign=0 ext=0
- LDAPR_i         sz:2 011001 01 0 ......... 00 ..... ..... @ldapr_stlr_i sign=0 ext=0
- LDAPR_i         00 011001 10 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext=0 sz=0
+diff --git a/qapi/qom.json b/qapi/qom.json
+index c53ef978ff..1e7e97f8f1 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -905,7 +905,8 @@
+ #
+ # Features:
+ #
+-# @unstable: Member @x-remote-object is experimental.
++# @unstable: Members @x-remote-object and @x-vfio-user-server are
++#     experimental.
+ #
+ # Since: 6.0
+ ##
 -- 
 2.39.2
 
