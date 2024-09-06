@@ -4,66 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CDCE6FE22
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 15:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F52E6FE27
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 15:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smaep-0001Vq-Hg; Fri, 06 Sep 2024 11:13:55 -0400
+	id 1smavf-0000li-Ck; Fri, 06 Sep 2024 11:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smaeo-0001SV-KV
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:13:54 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1smavY-0000k2-KE
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:31:14 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smaem-0003zn-Tf
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:13:54 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5c25554ec1eso2357447a12.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 08:13:52 -0700 (PDT)
+ id 1smavU-0005sb-R7
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:31:12 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3cdbe4728so2337698a12.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 08:31:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725635631; x=1726240431; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jMNxfUcWPto3gHqfRBWq1thLRFYKqIOeb27j8OpohW8=;
- b=QNeCODmKZhfFgHmHB0eH16d9eRF5UI6jia62d5mj6Yet9rsk9s+EmJayFSAGoOKpLD
- eIOlplJ3TNut26Lx1aMi8eVOa+7nZ36NfRQJbIq6S574FBqVZtqxYB7Vd3U/fI+aXHrU
- I80TF6YUJIHPFMer4Lb4DLrsPhaHVBEw3mWguxA5lwbPn2phRI8shR1bdCMX/OklHsvN
- 8Y6dLZ6tUafwAuxSO6x3+5gG0C48WIjsjUBg2TDnFHm/E8hyRfsexJWLwF71AUUDmjNB
- e/asx6q7oBYYrlN8UHU20jcvjKg7ISJ0w5ElXRm3/X+IaKYRm9jC6JjFsUh0V8FdTjB0
- e6Og==
+ d=linaro.org; s=google; t=1725636667; x=1726241467; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FSMFPCKRM72gF/O6rl0xrBVl8EAYOMwC35frHo9+pq8=;
+ b=F7Ng0//8CFWv+HaQSb8+6q7U6FAebDtB/OpSHH+eqN3wb7B5WwDnpsfwArYTbD+U7D
+ 1yqsmr6N1AtwN+GdGc1kiSOdMDqgOSEMLiwsQVYQRo+EdnC3P2gWw3URCWXnpR3AkUPY
+ oDlzfJOLDpr7QKUg4xQ6dRJ1bzeqBRxbxhlWtyc5EliiZ5CCVYa8pSa4EHt1/Hvwzy58
+ uDy/kNijPvkx2DP1XeoANwKoZ+KtsIt02nY4bUHUfuLJJ62PEU87/O3qs2JmuZRw+eXi
+ YbUb3/PdBZLhKisvrSgFdXZInAwWz168MQcPjSvxTCqSFXwqRdcjSJi+DFI1qriM2bfx
+ hLgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725635631; x=1726240431;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jMNxfUcWPto3gHqfRBWq1thLRFYKqIOeb27j8OpohW8=;
- b=HWzoictqXbQ15i/FvcLf7RrBnEwm1bM04cMKgI4iAC5WWUr0AvdpzKTMjylgaiLrOc
- fT6hnxXlG3gPHPTKx7cDANHJI3QOaism/n93VhqoaZfeg8PNjkSaMHKips3LdVMb/NXq
- oarg9mFOsnsdCT3uTr3nwNbwtvXD5rrMTLrBbBpZAXvWyfgd7gpPg7BnkePm0cgHwrf0
- F2DKOjss57dL25M2FNk60mt/+G/DG12I5qfwxMCzMC/nRlXVrTYVo9mNizVCOSIdPpVL
- SfkdfGYAMAaW8h60yIdMbAt38L6opiMcY7M2G9AQnKyJTcU90iyTOryh6VXYmj4Qd0WH
- Sm1A==
-X-Gm-Message-State: AOJu0Yy50a7b1sN2R8yn9/2Tl955qYwFhBO3MtwYKSA0a1gVArcb6sRA
- dRAK6yBorGrvitF+gTG73/xjWYs5VU/Mkl+iMYq2K+Y0rOqFkkKfNptGAzGE5VUpLxGW6M/RoC0
- x+JyMl/A44FcWWrgR5Z4y2gLMs1ZDbWszk6uafdWd5r3o7cLo
-X-Google-Smtp-Source: AGHT+IF+Lwz38lv7Czqwav9YoZQERaoviqN2qMQQcnCW8tPW8xloO9sV1YrrjYciRwcP8QrXunrubuv59PnkqdTn0Ck=
-X-Received: by 2002:a05:6402:278d:b0:5c2:e888:4cd3 with SMTP id
- 4fb4d7f45d1cf-5c2e8884e31mr5984002a12.35.1725635631077; Fri, 06 Sep 2024
- 08:13:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725636667; x=1726241467;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FSMFPCKRM72gF/O6rl0xrBVl8EAYOMwC35frHo9+pq8=;
+ b=XiyxpBXKsLroXSvLK9wajdODjz0ECg9a2XkR7QYPTWvKrrdr/i3Gog1r57H2mAomtl
+ GZ6qi3SSwkveuCXz5aZ8NNoHApL5spvf64Wwl86I3KqS3phE2Yy7JHGOjSiDjhvvZDA+
+ /jex/dxaZZK6OCOsxK8L4uIBiA9W52e+Wp52DN/dMqGePu1TIJEsgrBmffMMyTSUV3fl
+ 0Wm2YXrpUNBmQRhCD2UVqambJlLE+f6Aujj0AjFMwkuu6ggmR3tDY3a9T3S8pVef/4cl
+ oGWv2gCehgPJirfaQFb6dzrFFipUonX0Spll2fmdHep1NEPAgzf2kJUQ48BzqdNOzs2Y
+ qhRA==
+X-Gm-Message-State: AOJu0YwXPXZhFTEItB1+wKxPLs+92itG02y0FCcAhKN4QfA80nDuVxg5
+ qugMa0QwzMuMeGOhlUOd6E6ISXZArAP9/qx5Cbk02PcO15hdnZdmjiIXrhMLiY6NSB42tc41s+0
+ WrjB2YdXUCCe6JeZXTb6Llja37Bl4u1VXNgg8sA==
+X-Google-Smtp-Source: AGHT+IGzvcmGdHP8XRe3SG7oQwYiJouXPzPErWZehCySPGqr3CmZmFQTVpIpAyRSho7W+qLCrgCe0SnSQ0ffq6GmTH8=
+X-Received: by 2002:a05:6402:5246:b0:5c3:5423:3d10 with SMTP id
+ 4fb4d7f45d1cf-5c354233f35mr6627677a12.5.1725636666944; Fri, 06 Sep 2024
+ 08:31:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240819144303.37852-1-peter.maydell@linaro.org>
-In-Reply-To: <20240819144303.37852-1-peter.maydell@linaro.org>
+References: <20240828111552.93482-1-danny_canter@apple.com>
+ <20240828111552.93482-2-danny_canter@apple.com>
+In-Reply-To: <20240828111552.93482-2-danny_canter@apple.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Sep 2024 16:13:40 +0100
-Message-ID: <CAFEAcA8jCC=gkwc=dJxu8yhpM7=udGGf8dMDp12h0vwE1PuX1Q@mail.gmail.com>
-Subject: Re: [PATCH] docs/system/cpu-hotplug: Update example's
- socket-id/core-id
-To: qemu-devel@nongnu.org
+Date: Fri, 6 Sep 2024 16:30:56 +0100
+Message-ID: <CAFEAcA9MWgPaJvPpvaQwRApa8NoKpUo-ozzBmKuPGREbkUhyUw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] hw/boards: Add hvf_get_physical_address_range to
+ MachineClass
+To: Danny Canter <danny_canter@apple.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, dirty@apple.com, 
+ rbolshakov@ddn.com, agraf@csgraf.de, pbonzini@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com, 
+ zhao1.liu@intel.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -86,152 +93,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Aug 2024 at 15:43, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Wed, 28 Aug 2024 at 12:16, Danny Canter <danny_canter@apple.com> wrote:
 >
-> At some point the way we allocate socket-id and core-id to CPUs
-> by default changed; update the example of how to do CPU hotplug
-> and unplug so the example commands work again. The differences
-> in the sample input and output are:
->  * the second CPU is now socket-id=0 core-id=1,
->    not socket-id=1 core-id=0
->  * the order of fields from the qmp_shell is different (it seems
->    to now always be in alphabetical order)
+> This addition will be necessary for some HVF related work to follow.
+> For HVF on ARM there exists a set of APIs in macOS 13 to be able to
+> adjust the IPA size for a given VM. This is useful as by default HVF
+> uses 36 bits as the IPA size, so to support guests with > 64GB of RAM
+> we'll need to reach for this.
 >
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I noticed this while I was playing around with vcpu hotplug trying to
-> demonstrate a memory leak I want to fix...
+> To have all the info necessary to carry this out however, we need some
+> plumbing to be able to grab the memory map and compute the highest GPA
+> prior to creating the VM. This is almost exactly like what kvm_type is
+> used for on ARM today, and is also what this will be used for. We will
+> compute the highest GPA and find what IPA size we'd need to satisfy this,
+> and if it's valid (macOS today caps at 40b) we'll set this to be the IPA
+> size in coming patches. This new method is only needed (today at least)
+> on ARM, and obviously only for HVF/macOS, so admittedly it is much less
+> generic than kvm_type today, but it seemed a somewhat sane way to get
+> the information we need from the memmap at VM creation time.
+>
+> Signed-off-by: Danny Canter <danny_canter@apple.com>
 
-Ping for review on this one, please?
+> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+> index 01fc5e6562..fa7a0f6b98 100644
+> --- a/hw/i386/x86.c
+> +++ b/hw/i386/x86.c
+> @@ -382,6 +382,8 @@ static void x86_machine_class_init(ObjectClass *oc, void *data)
+>      mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
+>      mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
+>      mc->kvm_type = x86_kvm_type;
+> +    /* Not needed for x86 */
+> +    mc->hvf_get_physical_address_range = NULL;
+>      x86mc->save_tsc_khz = true;
+>      x86mc->fwcfg_dma_enabled = true;
+>      nc->nmi_monitor_handler = x86_nmi;
+
+We guarantee that object and class structs are zero-initialized,
+so we don't need to explicitly set this field to NULL.
+
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
-
-
->
->  docs/system/cpu-hotplug.rst | 54 ++++++++++++++++++-------------------
->  1 file changed, 26 insertions(+), 28 deletions(-)
->
-> diff --git a/docs/system/cpu-hotplug.rst b/docs/system/cpu-hotplug.rst
-> index 015ce2b6ec3..443ff226b90 100644
-> --- a/docs/system/cpu-hotplug.rst
-> +++ b/docs/system/cpu-hotplug.rst
-> @@ -33,23 +33,23 @@ vCPU hotplug
->        {
->            "return": [
->                {
-> -                  "type": "IvyBridge-IBRS-x86_64-cpu",
-> -                  "vcpus-count": 1,
->                    "props": {
-> -                      "socket-id": 1,
-> -                      "core-id": 0,
-> +                      "core-id": 1,
-> +                      "socket-id": 0,
->                        "thread-id": 0
-> -                  }
-> +                  },
-> +                  "type": "IvyBridge-IBRS-x86_64-cpu",
-> +                  "vcpus-count": 1
->                },
->                {
-> +                  "props": {
-> +                      "core-id": 0,
-> +                      "socket-id": 0,
-> +                      "thread-id": 0
-> +                  },
->                    "qom-path": "/machine/unattached/device[0]",
->                    "type": "IvyBridge-IBRS-x86_64-cpu",
-> -                  "vcpus-count": 1,
-> -                  "props": {
-> -                      "socket-id": 0,
-> -                      "core-id": 0,
-> -                      "thread-id": 0
-> -                  }
-> +                  "vcpus-count": 1
->                }
->            ]
->        }
-> @@ -58,18 +58,18 @@ vCPU hotplug
->  (4) The ``query-hotpluggable-cpus`` command returns an object for CPUs
->      that are present (containing a "qom-path" member) or which may be
->      hot-plugged (no "qom-path" member).  From its output in step (3), we
-> -    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0,
-> -    while hot-plugging a CPU into socket 1 requires passing the listed
-> +    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0 core 0,
-> +    while hot-plugging a CPU into socket 0 core 1 requires passing the listed
->      properties to QMP ``device_add``::
->
->        (QEMU) device_add id=cpu-2 driver=IvyBridge-IBRS-x86_64-cpu socket-id=1 core-id=0 thread-id=0
->        {
->            "execute": "device_add",
->            "arguments": {
-> -              "socket-id": 1,
-> +              "core-id": 1,
->                "driver": "IvyBridge-IBRS-x86_64-cpu",
->                "id": "cpu-2",
-> -              "core-id": 0,
-> +              "socket-id": 0,
->                "thread-id": 0
->            }
->        }
-> @@ -83,34 +83,32 @@ vCPU hotplug
->
->        (QEMU) query-cpus-fast
->        {
-> -          "execute": "query-cpus-fast",
->            "arguments": {}
-> +          "execute": "query-cpus-fast",
->        }
->        {
->            "return": [
->                {
-> -                  "qom-path": "/machine/unattached/device[0]",
-> -                  "target": "x86_64",
-> -                  "thread-id": 11534,
->                    "cpu-index": 0,
->                    "props": {
-> -                      "socket-id": 0,
->                        "core-id": 0,
-> +                      "socket-id": 0,
->                        "thread-id": 0
->                    },
-> -                  "arch": "x86"
-> +                  "qom-path": "/machine/unattached/device[0]",
-> +                  "target": "x86_64",
-> +                  "thread-id": 28957
->                },
->                {
-> -                  "qom-path": "/machine/peripheral/cpu-2",
-> -                  "target": "x86_64",
-> -                  "thread-id": 12106,
->                    "cpu-index": 1,
->                    "props": {
-> -                      "socket-id": 1,
-> -                      "core-id": 0,
-> +                      "core-id": 1,
-> +                      "socket-id": 0,
->                        "thread-id": 0
->                    },
-> -                  "arch": "x86"
-> +                  "qom-path": "/machine/peripheral/cpu-2",
-> +                  "target": "x86_64",
-> +                  "thread-id": 29095
->                }
->            ]
->        }
-> @@ -123,10 +121,10 @@ From the 'qmp-shell', invoke the QMP ``device_del`` command::
->
->        (QEMU) device_del id=cpu-2
->        {
-> -          "execute": "device_del",
->            "arguments": {
->                "id": "cpu-2"
->            }
-> +          "execute": "device_del",
->        }
->        {
->            "return": {}
-> --
-> 2.34.1
->
 
