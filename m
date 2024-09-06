@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7A2CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69097CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWym-0005lh-Fl; Fri, 06 Sep 2024 07:18:16 -0400
+	id 1smWwm-0003oR-TQ; Fri, 06 Sep 2024 07:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWyf-0004Tv-3N; Fri, 06 Sep 2024 07:18:09 -0400
+ id 1smWvr-0000Mt-IA; Fri, 06 Sep 2024 07:15:16 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWyd-0008EL-3H; Fri, 06 Sep 2024 07:18:08 -0400
+ id 1smWvp-0007yu-Ki; Fri, 06 Sep 2024 07:15:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E067A8C4A5;
- Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 28D968C488;
+ Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id ED5EF13370E;
- Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
-Received: (nullmailer pid 353715 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 295FA1336F2;
+ Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
+Received: (nullmailer pid 353618 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jianzhou Yue <JianZhou.Yue@verisilicon.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 52/69] hw/core/ptimer: fix timer zero period condition
- for freq > 1GHz
-Date: Fri,  6 Sep 2024 14:13:01 +0300
-Message-Id: <20240906111324.353230-52-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 24/69] hw/misc/bcm2835_property: Fix handling of
+ FRAMEBUFFER_SET_PALETTE
+Date: Fri,  6 Sep 2024 14:12:33 +0300
+Message-Id: <20240906111324.353230-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,95 +64,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jianzhou Yue <JianZhou.Yue@verisilicon.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The real period is zero when both period and period_frac are zero.
-Check the method ptimer_set_freq, if freq is larger than 1000 MHz,
-the period is zero, but the period_frac is not, in this case, the
-ptimer will work but the current code incorrectly recognizes that
-the ptimer is disabled.
+The documentation of the "Set palette" mailbox property at
+https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#set-palette
+says it has the form:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2306
-Signed-off-by: JianZhou Yue <JianZhou.Yue@verisilicon.com>
-Message-id: 3DA024AEA8B57545AF1B3CAA37077D0FB75E82C8@SHASXM03.verisilicon.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+    Length: 24..1032
+    Value:
+        u32: offset: first palette index to set (0-255)
+        u32: length: number of palette entries to set (1-256)
+        u32...: RGBA palette values (offset to offset+length-1)
+
+We get this wrong in a couple of ways:
+ * we aren't checking the offset and length are in range, so the guest
+   can make us spin for a long time by providing a large length
+ * the bounds check on our loop is wrong: we should iterate through
+   'length' palette entries, not 'length - offset' entries
+
+Fix the loop to implement the bounds checks and get the loop
+condition right. In the process, make the variables local to
+this switch case, rather than function-global, so it's clearer
+what type they are when reading the code.
+
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 446e5e8b4515e9a7be69ef6a29852975289bb6f0)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240723131029.1159908-2-peter.maydell@linaro.org
+(cherry picked from commit 0892fffc2abaadfb5d8b79bb0250ae1794862560)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fix due to lack of
+ v9.0.0-1812-g5d5f1b60916a "hw/misc: Implement mailbox properties for customer OTP and device specific private keys"
+ also remove now-unused local `n' variable which gets removed in the next change in this file,
+ v9.0.0-2720-g32f1c201eedf "hw/misc/bcm2835_property: Avoid overflow in OTP access properties")
 
-diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
-index b1517592c6..1d8964d804 100644
---- a/hw/core/ptimer.c
-+++ b/hw/core/ptimer.c
-@@ -83,7 +83,7 @@ static void ptimer_reload(ptimer_state *s, int delta_adjust)
-         delta = s->delta = s->limit;
-     }
+diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
+index bdd9a6bbce..faa489491c 100644
+--- a/hw/misc/bcm2835_property.c
++++ b/hw/misc/bcm2835_property.c
+@@ -30,8 +30,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+     uint32_t tot_len;
+     size_t resplen;
+     uint32_t tmp;
+-    int n;
+-    uint32_t offset, length, color;
  
--    if (s->period == 0) {
-+    if (s->period == 0 && s->period_frac == 0) {
-         if (!qtest_enabled()) {
-             fprintf(stderr, "Timer with period zero, disabling\n");
-         }
-@@ -309,7 +309,7 @@ void ptimer_run(ptimer_state *s, int oneshot)
- 
-     assert(s->in_transaction);
- 
--    if (was_disabled && s->period == 0) {
-+    if (was_disabled && s->period == 0 && s->period_frac == 0) {
-         if (!qtest_enabled()) {
-             fprintf(stderr, "Timer with period zero, disabling\n");
-         }
-diff --git a/tests/unit/ptimer-test.c b/tests/unit/ptimer-test.c
-index 04b5f4e3d0..08240594bb 100644
---- a/tests/unit/ptimer-test.c
-+++ b/tests/unit/ptimer-test.c
-@@ -763,6 +763,33 @@ static void check_oneshot_with_load_0(gconstpointer arg)
-     ptimer_free(ptimer);
- }
- 
-+static void check_freq_more_than_1000M(gconstpointer arg)
-+{
-+    const uint8_t *policy = arg;
-+    ptimer_state *ptimer = ptimer_init(ptimer_trigger, NULL, *policy);
-+    bool no_round_down = (*policy & PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
+     /*
+      * Copy the current state of the framebuffer config; we will update
+@@ -273,19 +271,25 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+             resplen = 16;
+             break;
+         case RPI_FWREQ_FRAMEBUFFER_SET_PALETTE:
+-            offset = ldl_le_phys(&s->dma_as, value + 12);
+-            length = ldl_le_phys(&s->dma_as, value + 16);
+-            n = 0;
+-            while (n < length - offset) {
+-                color = ldl_le_phys(&s->dma_as, value + 20 + (n << 2));
+-                stl_le_phys(&s->dma_as,
+-                            s->fbdev->vcram_base + ((offset + n) << 2), color);
+-                n++;
++        {
++            uint32_t offset = ldl_le_phys(&s->dma_as, value + 12);
++            uint32_t length = ldl_le_phys(&s->dma_as, value + 16);
++            int resp;
 +
-+    triggered = false;
-+
-+    ptimer_transaction_begin(ptimer);
-+    ptimer_set_freq(ptimer, 2000000000);
-+    ptimer_set_limit(ptimer, 8, 1);
-+    ptimer_run(ptimer, 1);
-+    ptimer_transaction_commit(ptimer);
-+
-+    qemu_clock_step(3);
-+
-+    g_assert_cmpuint(ptimer_get_count(ptimer), ==, no_round_down ? 3 : 2);
-+    g_assert_false(triggered);
-+
-+    qemu_clock_step(1);
-+
-+    g_assert_cmpuint(ptimer_get_count(ptimer), ==, 0);
-+    g_assert_true(triggered);
-+
-+    ptimer_free(ptimer);
-+}
-+
- static void add_ptimer_tests(uint8_t policy)
- {
-     char policy_name[256] = "";
-@@ -857,6 +884,12 @@ static void add_ptimer_tests(uint8_t policy)
-                               policy_name),
-         g_memdup2(&policy, 1), check_oneshot_with_load_0, g_free);
-     g_free(tmp);
-+
-+    g_test_add_data_func_full(
-+        tmp = g_strdup_printf("/ptimer/freq_more_than_1000M policy=%s",
-+                              policy_name),
-+        g_memdup2(&policy, 1), check_freq_more_than_1000M, g_free);
-+    g_free(tmp);
- }
- 
- static void add_all_ptimer_policies_comb_tests(void)
++            if (offset > 255 || length < 1 || length > 256) {
++                resp = 1; /* invalid request */
++            } else {
++                for (uint32_t e = 0; e < length; e++) {
++                    uint32_t color = ldl_le_phys(&s->dma_as, value + 20 + (e << 2));
++                    stl_le_phys(&s->dma_as,
++                                s->fbdev->vcram_base + ((offset + e) << 2), color);
++                }
++                resp = 0;
+             }
+-            stl_le_phys(&s->dma_as, value + 12, 0);
++            stl_le_phys(&s->dma_as, value + 12, resp);
+             resplen = 4;
+             break;
+-
++        }
+         case RPI_FWREQ_FRAMEBUFFER_GET_NUM_DISPLAYS:
+             stl_le_phys(&s->dma_as, value + 12, 1);
+             resplen = 4;
 -- 
 2.39.2
 
