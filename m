@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72AD7CE7AA5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 03:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7596CE7AAE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 03:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smPWZ-0008KP-7M; Thu, 05 Sep 2024 23:20:39 -0400
+	id 1smPzP-00005L-DL; Thu, 05 Sep 2024 23:50:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smPWY-0008JW-GV; Thu, 05 Sep 2024 23:20:38 -0400
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ id 1smPzK-0008Tc-Dx; Thu, 05 Sep 2024 23:50:23 -0400
+Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smPWW-0008B3-TH; Thu, 05 Sep 2024 23:20:38 -0400
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-846c59979efso418101241.3; 
- Thu, 05 Sep 2024 20:20:36 -0700 (PDT)
+ id 1smPzI-0008UB-96; Thu, 05 Sep 2024 23:50:22 -0400
+Received: by mail-vs1-xe2d.google.com with SMTP id
+ ada2fe7eead31-49bc13c3a47so631909137.3; 
+ Thu, 05 Sep 2024 20:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725592835; x=1726197635; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725594618; x=1726199418; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yvU0x8fvjSXyCzU6F17kKTphGIL2eCV8KdiHo2GurjY=;
- b=IK0vTjUGkjflvN1pIVA4QQ50G3VRQCcDx93DdupKef4b97wDac1oGAAPKRVr9Si6VT
- IXXqO03YE/WC580kUfyyY+Y+wVgLo8Rru+Un5ZM3ZBYH5HTUmiGBBWM/EONKDVyrVebF
- /FEDyjpuTZT1ZGerNkzKHDqZ4+r+gawj2VhSDWnySWS+xGLEisrzQn9p4aN/VAWv/Ph4
- Ap97Q28/DFTTO8gwbTblvXBYXWXKYvCgxSzN9Llr13w/9HMTh2I7CIySHUUlAKuo7jB9
- NeAkfP4n4DByATl1uE35ll4PUsRhFErbBF6BS34yTMsl/QkOkkoQGD28Nn7KTv9mqhKC
- puHw==
+ bh=oR5cKyMepejgGxA1gcCjJbiA+gpjBXhWwD3ZQNqOKYI=;
+ b=EF33//PYen0tbSh9J3kS7hObmpyw5hzfRRZUS2KPo0gzpkUi+c3NGWSJWH2S7q4nh/
+ iioo2CZbgtK+TYk0q5zp/e+BhSPQTZOwbvRuNnRUZTCtR6mbb0yG3kOtcESi89mr1VK0
+ 3TLy7tLh2t/KVuab5y0b4MH71tyZwJfoos73onVpTdwgFKJlwD4+zYzi8xoLhZilhqSM
+ hNCBB6HveMQ4564ZcxcpH6qjfWeiOUU7OB8ElimUexEyWo3D0Il9Cff335gX5Z8PhWEt
+ TyZz96UoJauTl+UkTfZMZuGa0xjxmhRo2HL715Yx5Z+xH66VptB/Sd44oPXgpNESFmZ2
+ yCdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725592835; x=1726197635;
+ d=1e100.net; s=20230601; t=1725594618; x=1726199418;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yvU0x8fvjSXyCzU6F17kKTphGIL2eCV8KdiHo2GurjY=;
- b=Ungr8gCo93HM9J94gHv8tEyDvv9ztY/mUU6FCa+rDfvscuWhM2F7DgOl8jtTUdPwjX
- Rfvu4iokb0Vt8gF0ni7c8Vw3/qC5GBFWRKgxhpE0i42vN5rLWtoQtTz44aS5UcLhUFFN
- z36nxEvg1JAsAhWkso1kGdymS0uf2L4+HDUTy7oo7Boq/s1n/3+ZUxOplVuiPvP0DPG5
- qoyCySix+MIpaMrnMvutwCmhAoNNGRmqspx0k73NkR1jLob6FQ2BEeJ4JVudPYS1SP6V
- uj226728NbOw7O05e1G1xDXb3cYayI6Dq25XIQu2L/RJJhqiE8Pn3e+goc3PGtD6sdhZ
- Qcbg==
+ bh=oR5cKyMepejgGxA1gcCjJbiA+gpjBXhWwD3ZQNqOKYI=;
+ b=iD3XjP2c4a+T6VKIl/ZXRhaYPE9ZhmLiirmWtkoKB3KS9hC9QOXs/hly9ZVR+MGpuv
+ QERWWtnvSujw5N9j2aX6Q1yPeKtpCCrfANkQ/1zvmFQP4jef2o/A/XCn+ysKNZOFMgP6
+ jqWzkwhCLGlLiEp2X9bfmIO99BFOU+tfBY2m4tzJHR3WIuI+1MuQxySHUVVwgeeJsjhk
+ Qq377ChPF1GExFNNIt2Mtl7J7tzFf4Q0aEywrwWViadO7/eLnItU7/YOOYJcWaBjBdMV
+ aWH/W8Y0UKnZLkXw2q6O2f+wGjLdqz9Dg8pWYaZgAv/JHkO430kki8VgA6ex8Jq2QZRm
+ EXYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuBitYDcU8klOUatZxCVBujVWpKE2/olyiykWQ3JXZ/aKNAW3O934tZrDX+3mfPrKZbCipNRown8/8@nongnu.org
-X-Gm-Message-State: AOJu0Yz6NlbWZS/RBoDtFMFMlc3h/NBoKc0ubbHMBaod5CaVqGE31kus
- 73oH/bW8ydafUvpUy9Aev/j7nxE/lsJsznplZ9ycHdV3KIK4WC4xNdjkwatpBOAQJuDos9MgB61
- t0UHTFoR2pvxYgJa/Aj6FrWqGVW4=
-X-Google-Smtp-Source: AGHT+IHM85rHpmK+vPpOx48eLAY5MeAqfyI+CXmY2CvLGBiM4xeqrx/X377XJ9/XFeIHrjbEm7Y6yChfIDc76MUENjs=
-X-Received: by 2002:a05:6102:1622:b0:49b:d5f8:236 with SMTP id
- ada2fe7eead31-49bde31cc6emr1248132137.24.1725592834914; Thu, 05 Sep 2024
- 20:20:34 -0700 (PDT)
+ AJvYcCU9S3oCj11gHxkgJGb2lDyZMzfhBF1ORoGhJet754J8DhkVBuGCkMBIXsV/2aVSVPbzhL7CcHQyMeuz@nongnu.org
+X-Gm-Message-State: AOJu0YwzOZC6XYtNeRRiANqtIIZoShg2w769L61V4YtnhtXXmP3L/auw
+ Jhm8FfUjNZdGQwb1GE9murgfPs1JPQ+VcRtW2IHNanidzsF/sh31XQFhFTfWogpYVsMqEH6XOxh
+ VuMz7QO3Bj3JhJ5DqDwkpPsL+lt8=
+X-Google-Smtp-Source: AGHT+IExKpjXRt9iApk5GWemc5ZSgM/lmQOvbp2G+95vVUu0LGn1eCW4zzZmJlbTMp9QzNKs2Q9zhTISBVfPIr/BqT0=
+X-Received: by 2002:a05:6102:3750:b0:493:d325:4d71 with SMTP id
+ ada2fe7eead31-49bde195c4emr1562626137.9.1725594618585; Thu, 05 Sep 2024
+ 20:50:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
- <20240819160742.27586-8-Ian.Brockbank@cirrus.com>
- <CAKmqyKN+emnjxdCdX9_kBEqZoo4OtdJeSearxEB3o-Ak374tQw@mail.gmail.com>
-In-Reply-To: <CAKmqyKN+emnjxdCdX9_kBEqZoo4OtdJeSearxEB3o-Ak374tQw@mail.gmail.com>
+ <20240819160742.27586-12-Ian.Brockbank@cirrus.com>
+In-Reply-To: <20240819160742.27586-12-Ian.Brockbank@cirrus.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 13:20:09 +1000
-Message-ID: <CAKmqyKPxm+LFxqTUP1AfqDsNjEs66JfhQi2WBNsABOq-+x=d3A@mail.gmail.com>
-Subject: Re: [PATCH 04/11 v2] target/riscv: Update CSR xie in CLIC mode
+Date: Fri, 6 Sep 2024 13:49:52 +1000
+Message-ID: <CAKmqyKNQaPbOtrhQCx+fAnzZzjSyHn=RC9KLJu4rj4kAsp857g@mail.gmail.com>
+Subject: Re: [PATCH 08/11 v2] target/riscv: Update interrupt handling in CLIC
+ mode
 To: Ian Brockbank <Ian.Brockbank@cirrus.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -73,8 +73,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  LIU Zhiwei <zhiwei_liu@c-sky.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,50 +98,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 6, 2024 at 12:58=E2=80=AFPM Alistair Francis <alistair23@gmail.=
-com> wrote:
+On Tue, Aug 20, 2024 at 2:14=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirrus=
+.com> wrote:
 >
-> On Tue, Aug 20, 2024 at 2:15=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirr=
-us.com> wrote:
-> >
-> > From: Ian Brockbank <ian.brockbank@cirrus.com>
-> >
-> > The xie CSR appears hardwired to zero in CLIC mode, replaced by separat=
-e
-> > memory-mapped interrupt enables (clicintie[i]). Writes to xie will be
-> > ignored and will not trap (i.e., no access faults).
-> >
-> > Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
-> > Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
-> > ---
-> >  target/riscv/csr.c | 34 ++++++++++++++++++++++------------
-> >  1 file changed, 22 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> > index 9c824c0d8f..a5978e0929 100644
-> > --- a/target/riscv/csr.c
-> > +++ b/target/riscv/csr.c
-> > @@ -30,6 +30,10 @@
-> >  #include "qemu/guest-random.h"
-> >  #include "qapi/error.h"
-> >
-> > +#if !defined(CONFIG_USER_ONLY)
-> > +#include "hw/intc/riscv_clic.h"
-> > +#endif
+> From: Ian Brockbank <ian.brockbank@cirrus.com>
 >
-> This doesn't seem like the way to go
+> Decode CLIC interrupt information from exccode, includes interrupt
+> privilege mode, interrupt level, and irq number.
+>
+> Then update CSRs xcause, xstatus, xepc, xintstatus and jump to
+> correct PC according to the CLIC specification.
+>
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
+> Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
+> ---
+>  target/riscv/cpu_helper.c | 129 +++++++++++++++++++++++++++++++++++---
+>  1 file changed, 119 insertions(+), 10 deletions(-)
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 395a1d9140..944afb68d2 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -24,6 +24,7 @@
+>  #include "internals.h"
+>  #include "pmu.h"
+>  #include "exec/exec-all.h"
+> +#include "exec/cpu_ldst.h"
+>  #include "exec/page-protection.h"
+>  #include "instmap.h"
+>  #include "tcg/tcg-op.h"
+> @@ -33,6 +34,7 @@
+>  #include "cpu_bits.h"
+>  #include "debug.h"
+>  #include "tcg/oversized-guest.h"
+> +#include "hw/intc/riscv_clic.h"
+>
+>  int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+>  {
+> @@ -428,6 +430,20 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
+>                                      (irqs | irqs_f_vs), env->hviprio);
+>  }
+>
+> +static int riscv_cpu_local_irq_mode_enabled(CPURISCVState *env, int mode=
+)
+> +{
+> +    switch (mode) {
+> +    case PRV_M:
+> +        return env->priv < PRV_M ||
+> +            (env->priv =3D=3D PRV_M && get_field(env->mstatus, MSTATUS_M=
+IE));
+> +    case PRV_S:
+> +        return env->priv < PRV_S ||
+> +            (env->priv =3D=3D PRV_S && get_field(env->mstatus, MSTATUS_S=
+IE));
+> +    default:
+> +        return false;
+> +    }
+> +}
+> +
+>  static int riscv_cpu_local_irq_pending(CPURISCVState *env)
+>  {
+>      uint64_t irqs, pending, mie, hsie, vsie, irqs_f, irqs_f_vs;
+> @@ -506,6 +522,18 @@ bool riscv_cpu_exec_interrupt(CPUState *cs, int inte=
+rrupt_request)
+>              return true;
+>          }
+>      }
+> +    if (interrupt_request & CPU_INTERRUPT_CLIC) {
+> +        RISCVCPU *cpu =3D RISCV_CPU(cs);
+> +        CPURISCVState *env =3D &cpu->env;
+> +        int mode =3D get_field(env->exccode, RISCV_EXCP_CLIC_MODE);
+> +        int enabled =3D riscv_cpu_local_irq_mode_enabled(env, mode);
+> +        if (enabled) {
+> +            cs->exception_index =3D RISCV_EXCP_CLIC | env->exccode;
+> +            cs->interrupt_request =3D cs->interrupt_request & ~CPU_INTER=
+RUPT_CLIC;
+> +            riscv_cpu_do_interrupt(cs);
+> +            return true;
+> +        }
+> +    }
+>      return false;
+>  }
+>
+> @@ -1641,6 +1669,60 @@ static target_ulong riscv_transformed_insn(CPURISC=
+VState *env,
+>      return xinsn;
+>  }
+>
+> +static target_ulong riscv_intr_pc(CPURISCVState *env, target_ulong tvec,
+> +                                  target_ulong tvt, bool async,
+> +                                  int cause, int mode)
+> +{
+> +    int mode1 =3D tvec & XTVEC_MODE;
+> +    int mode2 =3D tvec & XTVEC_FULL_MODE;
+> +
 
-Urgh! Ok, it's trickier than that.
+This is going to need extension checks
 
-I think ideally we don't want to pull in a bunch of CLIC stuff, just
-the bare minimum.
+> +    if (!async) {
+> +        return tvec & XTVEC_OBASE;
+> +    }
+> +    /* bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 2 >=3D rese=
+rved */
+> +    switch (mode1) {
+> +    case XTVEC_CLINT_DIRECT:
+> +        return tvec & XTVEC_OBASE;
+> +    case XTVEC_CLINT_VECTORED:
+> +        return (tvec & XTVEC_OBASE) + cause * 4;
+> +    default:
+> +        if (env->clic && (mode2 =3D=3D XTVEC_CLIC)) {
+> +            /* Non-vectored, clicintattr[i].shv =3D 0 || cliccfg.nvbits =
+=3D 0 */
+> +            if (!riscv_clic_shv_interrupt(env->clic, cause)) {
+> +                /* NBASE =3D mtvec[XLEN-1:6]<<6 */
+> +                return tvec & XTVEC_NBASE;
+> +            } else {
+> +                /*
+> +                 * pc :=3D M[TBASE + XLEN/8 * exccode)] & ~1,
+> +                 * TBASE =3D mtvt[XLEN-1:6]<<6
+> +                 */
+> +                int size =3D TARGET_LONG_BITS / 8;
+> +                target_ulong tbase =3D (tvt & XTVEC_NBASE) + size * caus=
+e;
+> +                void *host =3D tlb_vaddr_to_host(env, tbase, MMU_DATA_LO=
+AD, mode);
 
-It's probably better to implement the CLIC functions for CSR access in
-the target/riscv directory instead of in hw/intc
+This doesn't look right.
 
-Also, to make it easier to review it would be great to add the
-functions when they are used. Then patch 3 will be smaller and the
-other patches easier to see what is being added
+I think you want cpu_ l*_mmuidx_ra(). That will raise an exception on
+an access failure
+
+> +                if (host !=3D NULL) {
+> +                    target_ulong new_pc =3D tbase;
+> +                    if (!riscv_clic_use_jump_table(env->clic)) {
+> +                        /*
+> +                         * Standard CLIC: the vector entry is a function=
+ pointer
+> +                         * so look up the destination.
+> +                         */
+> +                        new_pc =3D ldn_p(host, size);
+> +                        host =3D tlb_vaddr_to_host(env, new_pc,
+> +                                                 MMU_INST_FETCH, mode);
+
+At xtvt is the base address of a table of pointers, you also then want
+to call cpu_ l*_mmuidx_ra() a second time and that value should be
+returned as the next PC
+
+> +                    }
+> +                    if (host) {
+> +                        return new_pc;
+> +                    }
+> +                }
+> +                qemu_log_mask(LOG_GUEST_ERROR,
+> +                              "CLIC: load trap handler error!\n");
+> +                exit(1);
+
+Don't allow the guest to exit. Print a guest error and keep going
 
 Alistair
 
