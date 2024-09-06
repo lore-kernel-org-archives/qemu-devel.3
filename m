@@ -4,109 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2AEDCE7B1D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D9FCE7B1D
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smaA6-0001on-1M; Fri, 06 Sep 2024 10:42:10 -0400
+	id 1smaFy-00077G-JG; Fri, 06 Sep 2024 10:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1smaA3-0001nk-In
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:42:07 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smaFx-00076T-0S
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:48:13 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1smaA1-00085B-Kp
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:42:07 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 43F3321ACE;
- Fri,  6 Sep 2024 14:42:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725633723; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=igsyrWmp+9i+v/K0qwU7lQN3ORS3xzs2qIrYkk1Oe3w=;
- b=D09BfYDCMU5Q1Wj4hK34EkCqbaQORVuejRAzCkxL+9qMA1PZMoDb3l62NFMvjV9kHL0SFy
- 4MsgW7re338o0VbtcBzMSkUkEIjywS9wwanpsz8OI27t5CZyZszK9MA/L73VnF2CraVIqu
- jaNjHuGtydva8VGGinp4L2y2REgDLos=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725633723;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=igsyrWmp+9i+v/K0qwU7lQN3ORS3xzs2qIrYkk1Oe3w=;
- b=cJinv8O5K34SffR5vuz61Gt6kEyzZbRoMvKYgEdY/+Jk8qCDNVkqytL6mR4tUvwvuojAAf
- 9Xi9XaYA6twBH9DQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725633723; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=igsyrWmp+9i+v/K0qwU7lQN3ORS3xzs2qIrYkk1Oe3w=;
- b=D09BfYDCMU5Q1Wj4hK34EkCqbaQORVuejRAzCkxL+9qMA1PZMoDb3l62NFMvjV9kHL0SFy
- 4MsgW7re338o0VbtcBzMSkUkEIjywS9wwanpsz8OI27t5CZyZszK9MA/L73VnF2CraVIqu
- jaNjHuGtydva8VGGinp4L2y2REgDLos=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725633723;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=igsyrWmp+9i+v/K0qwU7lQN3ORS3xzs2qIrYkk1Oe3w=;
- b=cJinv8O5K34SffR5vuz61Gt6kEyzZbRoMvKYgEdY/+Jk8qCDNVkqytL6mR4tUvwvuojAAf
- 9Xi9XaYA6twBH9DQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BE84E136A8;
- Fri,  6 Sep 2024 14:42:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id rhVtIboU22YJOgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Sep 2024 14:42:02 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>, =?utf-8?Q?Daniel_P=2E_Berran?=
- =?utf-8?Q?g=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, Peter Xu
- <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC PATCH 0/2] qtest: Log verbosity changes
-In-Reply-To: <CAFEAcA-naWfN5sLSJ3uS6VjC3HWvyaGqAk0=B_iqTYgtJOH+ow@mail.gmail.com>
-References: <20240905210328.25393-1-farosas@suse.de>
- <95d9509b-d9a5-467a-860a-91bcd4baae1f@redhat.com>
- <Ztq5068xW640qeuD@redhat.com>
- <CAFEAcA-naWfN5sLSJ3uS6VjC3HWvyaGqAk0=B_iqTYgtJOH+ow@mail.gmail.com>
-Date: Fri, 06 Sep 2024 11:42:00 -0300
-Message-ID: <87r09wlu87.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smaFv-0000VQ-5F
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:48:12 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-42c2e50ec13so16735165e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 07:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725634089; x=1726238889; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gcZNcPexkcBoySjOqRROGeohrvWqNqmcuMeW6mDz/bg=;
+ b=vBTmC36GAeXl674gggO/42/ONc7H+MTYzMs4ojS9DT/8O3WgO600b1+QnkffzlbZu9
+ uKDy1yAozzuq0od6HsFW1QB1+GDjZrqCnwkyMrO02Zki6zNmO8qAZ03RCxz4UUI/B4F9
+ ghZL3B1jGggYFKbpErUKkM1yvFWsfFEfPIKt7E8wcICMBUjS6I07b073KcRQdV2z+z0Z
+ ACGvddoCio5rV4wnoT49GwVhfO5XhJ8olXGvX0IZ5t3Y3Ff/DlGIkE3pRL4mhosE3Qjn
+ QGW+hl76b3dwzbdoUxxI1etKBr23WbcqQl8FPaSF9d572QUAqI05MzrNokZ5gkPGs6+O
+ Xi7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725634089; x=1726238889;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gcZNcPexkcBoySjOqRROGeohrvWqNqmcuMeW6mDz/bg=;
+ b=vxY+t3SQdcVF5BZHHIReFYIhpH7MdR9ZW5b8Yj5OyjOXqeYnIyynSMdxPYHuEog90F
+ fvmmtl6jFDRFCBSkFzg0I+2rXYOgidGKSkcjO2xp3wPgIowJqKxnv+PG2S2VCAnnWQDc
+ eNhyj59dn6AyfPMDoy6JGfmqHKPZrdpeNuneu3gBZI5j7WkQB2YleKfc5wyjR8bCTxuB
+ YN0fvkweqOBFbwywaOiL9kOt5I3lrr7qz6JRdQoQ1kB6xzJ9hAev5lH6BZUAEgVD4fZO
+ C9HB7S5Y4xaY2cdk30jFLySjDGSwv68UJ2bHgKAcmHyg92BAWkdMEZ3vTc2Nr/xFCCWq
+ 7sIA==
+X-Gm-Message-State: AOJu0YyE0b+xfVvwrG1YE1mTG3pCuSj2i42zB4UApgqxwy6bjPtPtWiW
+ 1GGzpqzjroWGoxipfOJTat7EQ293UjHAqAkPNITLMLcgBiZ7zfiEOmSdv7OMxsM=
+X-Google-Smtp-Source: AGHT+IEKtlXdi0Gmm15P+N7f6fmBmWyElRjMVRZDJx07qdoqt++o+hY3otUP5YzTRl4kfblYO3Cglg==
+X-Received: by 2002:adf:ed0b:0:b0:374:c1c5:859e with SMTP id
+ ffacd0b85a97d-3788967e478mr2024702f8f.42.1725634089171; 
+ Fri, 06 Sep 2024 07:48:09 -0700 (PDT)
+Received: from [192.168.254.175] (110.170.88.92.rev.sfr.net. [92.88.170.110])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3789160d85asm89011f8f.34.2024.09.06.07.48.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Sep 2024 07:48:08 -0700 (PDT)
+Message-ID: <fbba1d59-1f06-4bfc-944a-ce76499c4de3@linaro.org>
+Date: Fri, 6 Sep 2024 16:48:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,linaro.org:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/8] crypto: Introduce x509 utils
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de,
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
+ marcel.apfelbaum@gmail.com
+References: <20240905195735.16911-1-dorjoychy111@gmail.com>
+ <20240905195735.16911-4-dorjoychy111@gmail.com> <ZtsImlL43_dzUTp9@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZtsImlL43_dzUTp9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,118 +98,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Fri, 6 Sept 2024 at 09:14, Daniel P. Berrang=C3=A9 <berrange@redhat.co=
-m> wrote:
+On 6/9/24 15:50, Daniel P. Berrangé wrote:
+> On Fri, Sep 06, 2024 at 01:57:30AM +0600, Dorjoy Chowdhury wrote:
+>> An utility function for getting fingerprint from X.509 certificate
+>> has been introduced. Implementation only provided using gnutls.
 >>
->> On Fri, Sep 06, 2024 at 08:16:31AM +0200, Thomas Huth wrote:
->> > On 05/09/2024 23.03, Fabiano Rosas wrote:
->> > > Hi,
->> > >
->> > > This series silences QEMU stderr unless the QTEST_LOG variable is set
->> > > and silences -qtest-log unless both QTEST_LOG and gtest's --verbose
->> > > flag is passed.
->> > >
->> > > This was motivated by Peter Maydell's ask to suppress deprecation
->> > > warn_report messages from the migration-tests and by my own
->> > > frustration over noisy output from qtest.
->
-> This isn't what I want, though -- what I want is that a
-> qtest run should not print "warning:" messages for things
-> that we expect to happen when we run that test. I *do* want
-> warnings for things that we do not expect to happen when
-> we run the test.
->
->> > Not sure whether we want to ignore stderr by default... we might also =
-miss
->> > important warnings or error messages that way...?
->>
->> I would prefer if our tests were quiet by default, and just printed
->> clear pass/fail notices without extraneous fluff. Having an opt-in
->> to see full messages from stderr feels good enough for debugging cases
->> where you need more info from a particular test.
->
-> I find it is not uncommon that something fails and
-> you don't necessarily have the option to re-run it with
-> the "give me the error message this time" flag turn on.
-> CI is just the most obvious example; other kinds of
-> intermittent failure can be similar.
->
->> Probably we should set verbose mode in CI though, since it is tedious
->> to re-run CI on failure to gather more info
->>
->> > If you just want to suppress one certain warning, I think it's maybe b=
-est to
->> > fence it with "if (!qtest_enabled()) { ... }" on the QEMU side - at le=
-ast
->> > that's what we did in similar cases a couple of times, IIRC.
->>
->> We're got a surprisingly large mumber of if(qtest_enabled()) conditions
->> in the code. I can't help feeling this is a bad idea in the long term,
->> as its making us take different codepaths when testing from production.
->
-> What I want from CI and from tests in general:
->  * if something fails, I want all the information
->  * if something unexpected happens I want the warning even
->    if the test passes (this is why I grep the logs for
->    "warning:" in the first place -- it is to catch the case
->    of "something went wrong but it didn't result in QEMU or
->    the test case exiting with a failure status")
->  * if something is expected, it should be silent
->
-> That means there's a class of messages where we want to warn
-> the user that they're doing something that might not be what
-> they intended or which is deprecated and will go away soon,
-> but where we do not want to "warn" in the test logging because
-> the test is deliberately setting up that oddball corner case.
->
-> It might be useful to have a look at where we're using
-> if (qtest_enabled()) to see if we can make some subcategories
-> avoid the explicit if(), e.g. by having a warn_deprecated(...)
-> and hide the "don't print if qtest" inside the function.
->
+>> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+>> ---
+>>   crypto/meson.build          |  4 ++
+>>   crypto/x509-utils.c         | 75 +++++++++++++++++++++++++++++++++++++
+>>   include/crypto/x509-utils.h | 22 +++++++++++
+>>   3 files changed, 101 insertions(+)
+>>   create mode 100644 crypto/x509-utils.c
+>>   create mode 100644 include/crypto/x509-utils.h
+> 
+> 
+>> +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>> +                                      QCryptoHashAlgorithm alg,
+>> +                                      uint8_t *result,
+>> +                                      size_t *resultlen,
+>> +                                      Error **errp)
+>> +{
+>> +    int ret;
+>> +    gnutls_x509_crt_t crt;
+>> +    gnutls_datum_t datum = {.data = cert, .size = size};
+>> +
+>> +    if (alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
+>> +        error_setg(errp, "Unknown hash algorithm");
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (result == NULL) {
+>> +        error_setg(errp, "No valid buffer given");
+>> +        return -1;
+>> +    }
+>> +
+>> +    gnutls_x509_crt_init(&crt);
+>> +
+>> +    if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) != 0) {
+>> +        error_setg(errp, "Failed to import certificate");
+>> +        goto cleanup;
+>> +    }
+>> +
+>> +    ret = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
+>> +    if (*resultlen < ret) {
+>> +        error_setg(errp,
+>> +                   "Result buffer size %zu is smaller than hash %d",
+>> +                   *resultlen, ret);
+>> +        goto cleanup;
+>> +    }
+>> +
+>> +    if (gnutls_x509_crt_get_fingerprint(crt,
+>> +                                        qcrypto_to_gnutls_hash_alg_map[alg],
+>> +                                        result, resultlen) != 0) {
+>> +        error_setg(errp, "Failed to get fingerprint from certificate");
+>> +        goto cleanup;
+>> +    }
+>> +
+>> +    return 0;
+>> +
+>> + cleanup:
+>> +    gnutls_x509_crt_deinit(crt);
+>> +    return -1;
+>> +}
+> 
+> This fails to call gnutls_x509_crt_deinit in the success path.
+> 
+> I'm going to squash in the following change:
+> 
+> 
+> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+> index 593eb8968b..6e157af76b 100644
+> --- a/crypto/x509-utils.c
+> +++ b/crypto/x509-utils.c
+> @@ -31,7 +31,8 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>                                         size_t *resultlen,
+>                                         Error **errp)
+>   {
+> -    int ret;
+> +    int ret = -1;
+> +    int hlen;
+>       gnutls_x509_crt_t crt;
+>       gnutls_datum_t datum = {.data = cert, .size = size};
+>   
+> @@ -52,11 +53,11 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>           goto cleanup;
+>       }
+>   
+> -    ret = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
+> -    if (*resultlen < ret) {
+> +    hlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
+> +    if (*resultlen < hlen) {
+>           error_setg(errp,
+>                      "Result buffer size %zu is smaller than hash %d",
+> -                   *resultlen, ret);
+> +                   *resultlen, hlen);
+>           goto cleanup;
+>       }
+>   
+> @@ -67,9 +68,9 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>           goto cleanup;
+>       }
+>   
+> -    return 0;
+> +    ret = 0;
+>   
+>    cleanup:
+>       gnutls_x509_crt_deinit(crt);
+> -    return -1;
+> +    return ret;
+>   }
 
-I could add error/warn variants that are noop in case qtest is
-enabled. It would, however, lead to this pattern which is discouraged by
-the error.h documentation (+Cc Markus for advice):
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-before:
-    if (!dinfo && !qtest_enabled()) {
-        error_report("A flash image must be given with the "
-                     "'pflash' parameter");
-        exit(1);
-    }
-
-after:
-    if (!dinfo) {
-        error_report_noqtest(&error_fatal,
-                             "A flash image must be given with the "
-                             "'pflash' parameter");
-    }
-
-For both error/warn, we'd reduce the amount of qtest_enabled() to only
-the special cases not related to printing. We'd remove ~35/83 instances,
-not counting the 7 printfs.
-
-> Some categories as a starter:
->  * some board models will error-and-exit if the user
->    didn't provide any guest code (eg no -kernel option),
->    like hw/m68k/an5206.c. When we're running with the
->    qtest accelerator it's fine and expected that there's
->    no guest code loaded because we'll never run any guest code
->  * in some places (eg target/arm/cpu.c) we treat qtest as
->    another accelerator type, so we might say
->    if (tcg_enabled() || qtest_enabled()) to mean "not
->    hvf or kvm"
->  * sometimes we print a deprecation message only if
->    not qtest, eg hw/core/numa.c or hw/core/machine.c
->  * the clock related code needs to be qtest aware because
->    under qtest it's the qtest protocol that advances the
->    clock
->  * sometimes we warn about possible user error if not
->    qtest, eg hw/ppc/pnv.c or target/mips/cpu.c
->
-> thanks
-> -- PMM
 
