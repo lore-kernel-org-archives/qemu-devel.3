@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A66CE7B10
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 13:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E298DCE7B17
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 13:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smZ1t-0004IT-7j; Fri, 06 Sep 2024 09:29:37 -0400
+	id 1smZKx-0006pc-BV; Fri, 06 Sep 2024 09:49:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1smZ1j-0003oB-2M
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:29:28 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1smZKv-0006o6-Fi
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:49:17 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1smZ1h-0008O0-FO
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:29:26 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2d87a1f0791so1432638a91.2
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 06:29:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1smZKt-0002Lj-Pw
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 09:49:17 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5c241feb80dso6076598a12.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 06:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725629363; x=1726234163; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1725630554; x=1726235354; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MJiwXDwz+nyTyxWqXsY+0vn8Yh51cYsH0PxbsAp2eNI=;
- b=KTWAdBNt4HZ+8bFQEQ/LL+UtH1nTig3OYtpfmG5cwPFnDhYPWnAM9tRxKGXD4O7wCH
- IPQVC6z9FLX5moqSZx4HCIM84FMwyfn8uJKjq9txNSj9aNWrgpN2PO8mh3Mw/IAtllOE
- zAoOOuOT3jj5d+przxloQprFb4lKuYpVeRaDNZvWm9Dusc2e2rFbWvf7kFpVlHZ8iN1b
- LOfTjZK2IeimeKUqcENNnLybDe+kO0OOQs5YluhDXkvivOgIzpHrEbr6Ey0ZmWpeX5td
- P8FkKhfSFoEqOKofQfeQCrRqYOcbKWu1o9zECylg+VSAGLde8baWAT4uxsmkePZgQXL5
- sU5Q==
+ bh=gC0ptLVRSdsg6xiI82CowBgQaBgNyGgi5EBpVv1ToGk=;
+ b=lLLmE1qvOoW7iNwfQsUDHdnz9YkRZAgs2fHZP/OyafFoO7UmvNccLymZV5F37kDPiM
+ iZQtBT4fzSYXtTAphot4GfiUpndSaYOvvGhOzdg/32Y74SmsvGzUbwxFHX/LHekLID+j
+ lwFoWtFmwiG1vnjaZ69AZEXvYFP0mFWEBBDovXG9YlHbifmeThM9cmR/3ZrwCiJ0Rs6h
+ Ok1K9QSNNeFT2nEY43Hr87AS99gXkyKcMz/RcKj6DH3lMm1HHuuXzeK4FWUYadUQTw9D
+ cYFxZLD7pfauT/+dVZLOvLvL4vOvh1xa4edXdLOVBi8U4DP1tkroOaeIVos0RCIcRPzy
+ e8Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725629363; x=1726234163;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1725630554; x=1726235354;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MJiwXDwz+nyTyxWqXsY+0vn8Yh51cYsH0PxbsAp2eNI=;
- b=qd4H1qtR6dDJs1Znd3glx+lU4RuFuSmFJMXxcDE2NMQEzzJKKDLiog2b1P2WXzObgE
- vS5FzFzn+1O08hU6SJU16bpNL0EWd0BD69TsIUD0AnRJj6ltl05F2rjmt7/elCeuue7R
- D/eC6arPVMDkWLJ86dBBS+L2nw7tRU3tBxgCBGztgO9qdfj0G8rCFpib1p1nVzYKcF/s
- CYABjscy6ItXsWWcKf+hCHDUXFtpvGGQtA+TdRDv+prv/qhhA75YN8IIRUtIht75edtW
- eW5KShE2vQT9aJ67QhBPoVYx/i7GCgda04MZ1ssiZqDgnzJVjGvGCuDGrTukLSwFPRXM
- q/ww==
-X-Gm-Message-State: AOJu0YynHl4vE/q3xUGjsqQtH0hHjMMK16GD4X81obmOgZqaoiUex5bD
- Ss0h9mCIifTJ31Rf5eIDnzT1Kjrd7+bpG5Qv9NFpSgEXPp+Yzy/uE35XpQ==
-X-Google-Smtp-Source: AGHT+IHXUM4+mIx95aGi23jUKm5KMGhSUMSXBUuTM3Ra51fhTBXzNCLZU9OG+34RyUZGq46D8Fh6BQ==
-X-Received: by 2002:a17:90b:390f:b0:2d3:de40:d767 with SMTP id
- 98e67ed59e1d1-2dad5022ae7mr3156645a91.24.1725629363074; 
- Fri, 06 Sep 2024 06:29:23 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2dadc03d1f5sm1520384a91.26.2024.09.06.06.29.22
+ bh=gC0ptLVRSdsg6xiI82CowBgQaBgNyGgi5EBpVv1ToGk=;
+ b=VI8Br9g4j573uwiZI1ZvqrfYaWsxdOoNuvyiHmUUSUgH2XIWddaIIB93NJKi+cVAV4
+ rd94qlU9EYkbr/RcnlvOIeFajnNOb6QfSY7b4V5wl/6EEugtS7lHnoa3MipubjJRyiWt
+ UOBCV+jEb0WX6mAqR1CoEpTOQDWPMH5jLHjv3MQaopDxai9J2hCZUduxhKHB21q14Bwc
+ 3JC26UbTFwbZygg0PqkHzQtqahKQoLeuk/1VjDgOy6USe4ACsMs7wR9MdWFnK69BbQ02
+ AKasoeuPAi8s6sQ0oyAdGCOHcpzR7YcoLaxmVvxWBrHDIFfu+0mjC+oezQM9q4sBKS7P
+ cUgA==
+X-Gm-Message-State: AOJu0YyHC+9L0ZwHHIwJVvifrs0XZs6dLWLOFh2u1wQFkUOYsr+YsT70
+ edsS55pXb7kd3C+Kfh2MQz/+ZWfKW44QitDpvb5rMgOyuLghFvYsHauaXKgioJ8=
+X-Google-Smtp-Source: AGHT+IGKv+GMbozsnCsJ/tFb7fyc62PMjrOMcDtxDv9nEbQtlf4y16pW/eRnOb/rTc6lvRfevwoTig==
+X-Received: by 2002:a05:6402:84d:b0:5c2:5248:a929 with SMTP id
+ 4fb4d7f45d1cf-5c3db976252mr3308396a12.7.1725630553147; 
+ Fri, 06 Sep 2024 06:49:13 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c3cc56d686sm2466217a12.56.2024.09.06.06.49.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 06:29:22 -0700 (PDT)
-From: Guenter Roeck <linux@roeck-us.net>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 3/3] tmp105: Lower 4 bit of limit registers are always 0
-Date: Fri,  6 Sep 2024 06:29:12 -0700
-Message-ID: <20240906132912.3826089-4-linux@roeck-us.net>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240906132912.3826089-1-linux@roeck-us.net>
-References: <20240906132912.3826089-1-linux@roeck-us.net>
+ Fri, 06 Sep 2024 06:49:12 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9502E5F754;
+ Fri,  6 Sep 2024 14:49:11 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
+ philmd@linaro.org,  peter.maydell@linaro.org
+Subject: Re: [PATCH v3 3/4] tests/guest-debug: Support passing arguments to
+ the GDB test script
+In-Reply-To: <20240825145208.46774-4-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Sun, 25 Aug 2024 14:52:07 +0000")
+References: <20240825145208.46774-1-gustavo.romero@linaro.org>
+ <20240825145208.46774-4-gustavo.romero@linaro.org>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Fri, 06 Sep 2024 14:49:11 +0100
+Message-ID: <87plpgsxig.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=groeck7@gmail.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,30 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Per datasheet, "HIGH AND LOW LIMIT REGISTERS", the lower 4 bit
-of the limit registers are unused and always report 0.
-The lower 4 bit should not be used for temperature comparisons,
-so mask the unused bits before storing the limits.
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
----
- hw/sensor/tmp105.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> This commit adds support for passing arguments to the GDB test scripts
+> so it's possible to parse the args in an "argparse way" in the test
+> scripts launched by the runner. The arguments should be preceded by --
+> when passed to the runner. For example, passing "--help" arg to the
+> GDB_TEST_SCRIPT:
+>
+> run-test.py [...] --test <GDB_TEST_SCRIPT> -- --help
+>
+> The test script should not use the argparse module directly but import
+> arg_parser from test_gdbstub module. arg_parser then can be used just
+> like the argparse.ArgumentParser class:
+>
+> from test_gdbstub import arg_parser
+>
+> p =3D arg_parser(prog=3D"test-mytest.py", description=3D"My test.")
+> p.add_argument("--vowel", help=3D"Select vowel",
+>                required=3DTrue, choices=3D['a','e','i','o','u'])
+> [...]
+>
+> The arg_parser allows a smooth and informative exit if, for instance,
+> the caller of the runner script passes an invalid argument or misses a
+> required argument by the test script.
+>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 
-diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index 22728798f7..5fd30f8d50 100644
---- a/hw/sensor/tmp105.c
-+++ b/hw/sensor/tmp105.c
-@@ -166,7 +166,7 @@ static void tmp105_write(TMP105State *s)
-     case TMP105_REG_T_HIGH:
-         if (s->len >= 3)
-             s->limit[s->pointer & 1] = (int16_t)
--                    ((((uint16_t) s->buf[0]) << 8) | s->buf[1]);
-+                    ((((uint16_t) s->buf[0]) << 8) | (s->buf[1] & 0xf0));
-         tmp105_alarm_update(s);
-         break;
-     }
--- 
-2.45.2
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
