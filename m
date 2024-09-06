@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAC4CE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14069CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSwQ-0007d2-94; Fri, 06 Sep 2024 02:59:34 -0400
+	id 1smSvz-0003qp-TJ; Fri, 06 Sep 2024 02:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvp-00028m-GK; Fri, 06 Sep 2024 02:58:58 -0400
+ id 1smSvl-0001t8-20; Fri, 06 Sep 2024 02:58:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvn-0003lk-BF; Fri, 06 Sep 2024 02:58:57 -0400
+ id 1smSvi-0003jm-TG; Fri, 06 Sep 2024 02:58:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D91888C266;
+ by isrv.corpit.ru (Postfix) with ESMTP id AAB5A8C263;
  Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A02E913341E;
+ by tsrv.corpit.ru (Postfix) with SMTP id 71C5D13341B;
  Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43704 invoked by uid 1000);
+Received: (nullmailer pid 43688 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:31 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 49/53] crypto/tlscredspsk: Free username on finalize
-Date: Fri,  6 Sep 2024 09:54:19 +0300
-Message-Id: <20240906065429.42415-49-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
+ Claudio Fontana <cfontana@suse.de>, "Denis V . Lunev" <den@openvz.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 46/53] module: Prevent crash by resetting local_err in
+ module_load_qom_all()
+Date: Fri,  6 Sep 2024 09:54:16 +0300
+Message-Id: <20240906065429.42415-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,71 +63,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
-When the creds->username property is set we allocate memory
-for it in qcrypto_tls_creds_psk_prop_set_username(), but
-we never free this when the QCryptoTLSCredsPSK is destroyed.
-Free the memory in finalize.
+Set local_err to NULL after it has been freed in error_report_err(). This
+avoids triggering assert(*errp == NULL) failure in error_setv() when
+local_err is reused in the loop.
 
-This fixes a LeakSanitizer complaint in migration-test:
-
-$ (cd build/asan; ASAN_OPTIONS="fast_unwind_on_malloc=0" QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --tap -k -p /x86_64/migration/precopy/unix/tls/psk)
-
-=================================================================
-==3867512==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x5624e5c99dee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218edee) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-    #1 0x7fb199ae9738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
-    #2 0x7fb199afe583 in g_strdup debian/build/deb/../../../glib/gstrfuncs.c:361:17
-    #3 0x5624e82ea919 in qcrypto_tls_creds_psk_prop_set_username /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../crypto/tlscredspsk.c:255:23
-    #4 0x5624e812c6b5 in property_set_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:2277:5
-    #5 0x5624e8125ce5 in object_property_set /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:1463:5
-    #6 0x5624e8136e7c in object_set_properties_from_qdict /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:55:14
-    #7 0x5624e81372d2 in user_creatable_add_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:112:5
-    #8 0x5624e8137964 in user_creatable_add_qapi /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:157:11
-    #9 0x5624e891ba3c in qmp_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/qom-qmp-cmds.c:227:5
-    #10 0x5624e8af9118 in qmp_marshal_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qapi/qapi-commands-qom.c:337:5
-    #11 0x5624e8bd1d49 in do_qmp_dispatch_bh /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qapi/qmp-dispatch.c:128:5
-    #12 0x5624e8cb2531 in aio_bh_call /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:171:5
-    #13 0x5624e8cb340c in aio_bh_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:218:13
-    #14 0x5624e8c0be98 in aio_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/aio-posix.c:423:5
-    #15 0x5624e8cba3ce in aio_ctx_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:360:5
-    #16 0x7fb199ae0d3a in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
-    #17 0x7fb199ae0d3a in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
-    #18 0x5624e8cbe1d9 in glib_pollfds_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:287:9
-    #19 0x5624e8cbcb13 in os_host_main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:310:5
-    #20 0x5624e8cbc6dc in main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:589:11
-    #21 0x5624e6f3f917 in qemu_main_loop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/runstate.c:801:9
-    #22 0x5624e893379c in qemu_default_main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:37:14
-    #23 0x5624e89337e7 in main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:48:12
-    #24 0x7fb197972d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #25 0x7fb197972e3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #26 0x5624e5c16fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-
-SUMMARY: AddressSanitizer: 5 byte(s) leaked in 1 allocation(s).
-
+Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Reviewed-by: Claudio Fontana <cfontana@suse.de>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Link: https://lore.kernel.org/r/20240809121340.992049-2-alexander.ivanov@virtuozzo.com
+[Do the same by moving the declaration instead. - Paolo]
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240819145021.38524-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 87e012f29f2e47dcd8c385ff8bb8188f9e06d4ea)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 940d802b24e63650e0eacad3714e2ce171cba17c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
-index 546cad1c5a..0d6b71a37c 100644
---- a/crypto/tlscredspsk.c
-+++ b/crypto/tlscredspsk.c
-@@ -243,6 +243,7 @@ qcrypto_tls_creds_psk_finalize(Object *obj)
-     QCryptoTLSCredsPSK *creds = QCRYPTO_TLS_CREDS_PSK(obj);
+diff --git a/util/module.c b/util/module.c
+index 32e263163c..3eb0f06df1 100644
+--- a/util/module.c
++++ b/util/module.c
+@@ -354,13 +354,13 @@ int module_load_qom(const char *type, Error **errp)
+ void module_load_qom_all(void)
+ {
+     const QemuModinfo *modinfo;
+-    Error *local_err = NULL;
  
-     qcrypto_tls_creds_psk_unload(creds);
-+    g_free(creds->username);
- }
+     if (module_loaded_qom_all) {
+         return;
+     }
  
- static void
+     for (modinfo = module_info; modinfo->name != NULL; modinfo++) {
++        Error *local_err = NULL;
+         if (!modinfo->objs) {
+             continue;
+         }
 -- 
 2.39.2
 
