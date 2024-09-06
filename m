@@ -4,36 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF5FCE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A979CCE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSrm-00047V-83; Fri, 06 Sep 2024 02:54:46 -0400
+	id 1smSrz-00053t-W7; Fri, 06 Sep 2024 02:55:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSrj-00040M-GI; Fri, 06 Sep 2024 02:54:43 -0400
+ id 1smSry-0004ys-Oe; Fri, 06 Sep 2024 02:54:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSrg-0002xd-Ne; Fri, 06 Sep 2024 02:54:43 -0400
+ id 1smSrx-00032s-1S; Fri, 06 Sep 2024 02:54:58 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8FA0E8C235;
- Fri,  6 Sep 2024 09:53:11 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3DCF28C23F;
+ Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5453C1333ED;
- Fri,  6 Sep 2024 09:54:29 +0300 (MSK)
-Received: (nullmailer pid 43294 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 050F51333F7;
+ Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
+Received: (nullmailer pid 43368 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 00/53] Patch Round-up for stable 8.2.7,
- freeze on 2024-09-16
-Date: Fri,  6 Sep 2024 09:53:30 +0300
-Message-Id: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zheyu Ma <zheyuma97@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 10/53] virtio-snd: check for invalid param shift
+ operands
+Date: Fri,  6 Sep 2024 09:53:40 +0300
+Message-Id: <20240906065429.42415-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
+References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,133 +66,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm extending support for qemu 8.2 series for a little longer,
-in a way how 7.2 series is handled, - let's see how it works.
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-The following patches are queued for QEMU stable v8.2.7:
+When setting the parameters of a PCM stream, we compute the bit flag
+with the format and rate values as shift operand to check if they are
+set in supported_formats and supported_rates.
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2
+If the guest provides a format/rate value which when shifting 1 results
+in a value bigger than the number of bits in
+supported_formats/supported_rates, we must report an error.
 
-Patch freeze is 2024-09-16, and the release is planned for 2024-09-18:
+Previously, this ended up triggering the not reached assertions later
+when converting to internal QEMU values.
 
-  https://wiki.qemu.org/Planning/8.2
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2416
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <virtio-snd-fuzz-2416-fix-v1-manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 9b6083465fb8311f2410615f8303a41f580a2a20)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 4d15fe0e31..f0e7349c8a 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -282,11 +282,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+         error_report("Number of channels is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (!(supported_formats & BIT(params->format))) {
++    if (BIT(params->format) > sizeof(supported_formats) ||
++        !(supported_formats & BIT(params->format))) {
+         error_report("Stream format is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (!(supported_rates & BIT(params->rate))) {
++    if (BIT(params->rate) > sizeof(supported_rates) ||
++        !(supported_rates & BIT(params->rate))) {
+         error_report("Stream rate is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-- 
+2.39.2
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01 3becc9390810 Markus Armbruster:
-   qapi/qom: Document feature unstable of @x-vfio-user-server
-02 5669d26ec614 Peter Maydell:
-   target/arm: Fix handling of LDAPR/STLR with negative offset
-03 25489b521b61 Peter Maydell:
-   target/arm: LDAPR should honour SCTLR_ELx.nAA
-04 31d93fedf41c Daniyal Khan:
-   target/arm: Use float_status copy in sme_fmopa_s
-05 207d30b5fdb5 Richard Henderson:
-   target/arm: Use FPST_F16 for SME FMOPA (widening)
-06 30a1690f2402 Akihiko Odaki:
-   hvf: arm: Do not advance PC when raising an exception
-07 c510fe78f1b7 Zheyu Ma:
-   hw/nvme: fix memory leak in nvme_dsm
-08 a207d5f87d66 Zhao Liu:
-   hw/cxl/cxl-host: Fix segmentation fault when getting cxl-fmw property
-09 98e77e3dd8dd Manos Pitsidianakis:
-   virtio-snd: add max size bounds check in input cb
-10 9b6083465fb8 Manos Pitsidianakis:
-   virtio-snd: check for invalid param shift operands
-11 a3c8d7e38550 Clément Mathieu--Drif:
-   intel_iommu: fix FRCD construction macro
-12 13be929aff80 Paolo Bonzini:
-   target/i386: do not crash if microvm guest uses SGX CPUID leaves
-13 903cc9e1173e songziming:
-   chardev/char-win-stdio.c: restore old console mode
-14 2465c89fb983 Bibo Mao:
-   hw/intc/loongson_ipi: Access memory in little endian
-15 851495571d14 Peter Maydell:
-   util/async.c: Forbid negative min/max in 
-   aio_context_set_thread_pool_params()
-16 d72479b11797 Thomas Huth:
-   hw/virtio: Fix the de-initialization of vhost-user devices
-17 83340193b991 Richard Henderson:
-   target/rx: Use target_ulong for address in LI
-18 546d574b11e0 Frederik van Hövell:
-   hw/char/bcm2835_aux: Fix assert when receive FIFO fills up
-19 0892fffc2aba Peter Maydell:
-   hw/misc/bcm2835_property: Fix handling of FRAMEBUFFER_SET_PALETTE
-20 56f1c0db928a Peter Maydell:
-   target/arm: Don't assert for 128-bit tile accesses when SVL is 128
-21 ea3f5a90f036 Peter Maydell:
-   target/arm: Fix UMOPA/UMOPS of 16-bit values
-22 76916dfa89e8 Peter Maydell:
-   target/arm: Avoid shifts by -1 in tszimm_shr() and tszimm_shl()
-23 f573ac059ed0 Peter Maydell:
-   target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if EL2 is not enabled
-24 48e5b5f994bc Peter Maydell:
-   docs/sphinx/depfile.py: Handle env.doc2path() returning a Path not a str
-25 9a45b0761628 Peter Maydell:
-   hw/i386/amd_iommu: Don't leak memory in amdvi_update_iotlb()
-26 5a558be93ad6 Marco Palumbi:
-   hw/arm/mps2-tz.c: fix RX/TX interrupts order
-27 55f9f4ee018c Peter Maydell:
-   target/arm: Handle denormals correctly for FMOPA (widening)
-28 f1595ceb9aad Akihiko Odaki:
-   virtio-net: Ensure queue index fits with RSS
-29 f937309fbdbb thomas:
-   virtio-net: Fix network stall at the host side waiting for kick
-30 ac63755b2001 Richard Henderson:
-   target/i386: Fix VSIB decode
-31 ed5a159c3de4 Philippe Mathieu-Daudé:
-   hw/sd/sdhci: Reset @data_count index on invalid ADMA transfers
-32 b881cf00c99e Amjad Alsharafi:
-   vvfat: Fix bug in writing to middle of file
-33 21b25a0e466a Amjad Alsharafi:
-   vvfat: Fix usage of `info.file.offset`
-34 f60a6f7e17bf Amjad Alsharafi:
-   vvfat: Fix wrong checks for cluster mappings invariant
-35 5eed3db33650 Amjad Alsharafi:
-   vvfat: Fix reading files with non-continuous clusters
-36 c8f60bfb4345 Amjad Alsharafi:
-   iotests: Add `vvfat` tests
-37 fb1c2aaa981e Eric Blake:
-   nbd/server: Plumb in new args to nbd_client_add()
-38 c8a76dbd90c2 Eric Blake:
-   nbd/server: CVE-2024-7409: Cap default max-connections to 100
-39 b9b72cb3ce15 Eric Blake:
-   nbd/server: CVE-2024-7409: Drop non-negotiating clients
-40 3e7ef738c846 Eric Blake:
-   nbd/server: CVE-2024-7409: Close stray clients at server-stop
-41 3874f5f73c44 Eric Blake:
-   nbd/server: CVE-2024-7409: Avoid use-after-free when closing server
-42 446e5e8b4515 Jianzhou Yue:
-   hw/core/ptimer: fix timer zero period condition for freq > 1GHz
-43 547c4e50929e Stefano Garzarella:
-   block/blkio: use FUA flag on write zeroes only if supported
-44 416f2b16c02c Richard Henderson:
-   target/i386: Do not apply REX to MMX operands
-45 8e0c9a9efa21 Richard Henderson:
-   target/arm: Clear high SVE elements in handle_vec_simd_wshli
-46 940d802b24e6 Alexander Ivanov:
-   module: Prevent crash by resetting local_err in module_load_qom_all()
-47 fe68cc0923eb Alyssa Ross:
-   target/hexagon: don't look for static glib
-48 12d36294a2d9 Richard Henderson:
-   target/sparc: Restrict STQF to sparcv9
-49 87e012f29f2e Peter Maydell:
-   crypto/tlscredspsk: Free username on finalize
-50 6a22121c4f25 Klaus Jensen:
-   hw/nvme: fix leak of uninitialized memory in io_mgmt_recv
-51 a8e63ff289d1 Cindy Lu:
-   virtio-pci: Fix the use of an uninitialized irqfd
-52 7d14471a1218 Volker Rümelin:
-   hw/audio/virtio-snd: fix invalid param check
-53 ead5078cf1a5 Helge Deller:
-   target/hppa: Fix PSW V-bit packaging in cpu_hppa_get for hppa64
 
