@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518A9CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF116CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smX0i-0004i6-MH; Fri, 06 Sep 2024 07:20:18 -0400
+	id 1smWy3-0001Qi-9v; Fri, 06 Sep 2024 07:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smX0P-0003pF-5t; Fri, 06 Sep 2024 07:20:01 -0400
+ id 1smWxE-0006hc-SS; Fri, 06 Sep 2024 07:16:41 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smX0L-0008My-FX; Fri, 06 Sep 2024 07:19:56 -0400
+ id 1smWxD-00087R-2p; Fri, 06 Sep 2024 07:16:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D8A0F8C4B4;
- Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F23638C495;
+ Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E557D13371D;
- Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353765 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:25 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 0AEEF1336FF;
+ Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
+Received: (nullmailer pid 353664 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 67/69] Revert "replay: stop us hanging in
- rr_wait_io_event"
-Date: Fri,  6 Sep 2024 14:13:16 +0300
-Message-Id: <20240906111324.353230-67-mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 37/69] linux-user/elfload: Fix pr_pid values in core
+ files
+Date: Fri,  6 Sep 2024 14:12:46 +0300
+Message-Id: <20240906111324.353230-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,92 +63,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
+Analyzing qemu-produced core dumps of multi-threaded apps runs into:
 
-That commit causes reverse_debugging.py test failures, and does
-not seem to solve the root cause of the problem x86-64 still
-hangs in record/replay tests.
+    (gdb) info threads
+      [...]
+      21   Thread 0x3ff83cc0740 (LWP 9295) warning: Couldn't find general-purpose registers in core file.
+    <unavailable> in ?? ()
 
-The problem with short-cutting the iowait that was taken during
-record phase is that related events will not get consumed at the
-same points (e.g., reading the clock).
+The reason is that all pr_pid values are the same, because the same
+TaskState is used for all CPUs when generating NT_PRSTATUS notes.
 
-A hang with zero icount always seems to be a symptom of an earlier
-problem that has caused the recording to become out of synch with
-the execution and consumption of events by replay.
+Fix by using TaskStates associated with individual CPUs.
 
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Message-Id: <20240813050638.446172-6-npiggin@gmail.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240813202329.1237572-14-alex.bennee@linaro.org>
-(cherry picked from commit 94962ff00d09674047aed896e87ba09736cd6941)
+Cc: qemu-stable@nongnu.org
+Fixes: 243c47066253 ("linux-user/elfload: Write corefile elf header in one block")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240801202340.21845-1-iii@linux.ibm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 5b0c2742c839376b7e03c4654914aaec6a8a7b09)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2524
 
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 894e73e52c..a942442a33 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -109,7 +109,7 @@ static void rr_wait_io_event(void)
- {
-     CPUState *cpu;
- 
--    while (all_cpu_threads_idle() && replay_can_wait()) {
-+    while (all_cpu_threads_idle()) {
-         rr_stop_kick_timer();
-         qemu_cond_wait_bql(first_cpu->halt_cond);
-     }
-diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
-index f229b2109c..8102fa54f0 100644
---- a/include/sysemu/replay.h
-+++ b/include/sysemu/replay.h
-@@ -73,11 +73,6 @@ int replay_get_instructions(void);
- /*! Updates instructions counter in replay mode. */
- void replay_account_executed_instructions(void);
- 
--/**
-- * replay_can_wait: check if we should pause for wait-io
-- */
--bool replay_can_wait(void);
--
- /* Processing clocks and other time sources */
- 
- /*! Save the specified clock */
-diff --git a/replay/replay.c b/replay/replay.c
-index a2c576c16e..325e275756 100644
---- a/replay/replay.c
-+++ b/replay/replay.c
-@@ -449,27 +449,6 @@ void replay_start(void)
-     replay_enable_events();
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 60cf55b36c..0e00683dd2 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -4175,8 +4175,7 @@ static void fill_elf_note_phdr(struct elf_phdr *phdr, size_t sz, off_t offset)
+     bswap_phdr(phdr, 1);
  }
  
--/*
-- * For none/record the answer is yes.
-- */
--bool replay_can_wait(void)
--{
--    if (replay_mode == REPLAY_MODE_PLAY) {
--        /*
--         * For playback we shouldn't ever be at a point we wait. If
--         * the instruction count has reached zero and we have an
--         * unconsumed event we should go around again and consume it.
--         */
--        if (replay_state.instruction_count == 0 && replay_state.has_unread_data) {
--            return false;
--        } else {
--            replay_sync_error("Playback shouldn't have to iowait");
--        }
--    }
--    return true;
--}
--
--
- void replay_finish(void)
+-static void fill_prstatus_note(void *data, const TaskState *ts,
+-                               CPUState *cpu, int signr)
++static void fill_prstatus_note(void *data, CPUState *cpu, int signr)
  {
-     if (replay_mode == REPLAY_MODE_NONE) {
+     /*
+      * Because note memory is only aligned to 4, and target_elf_prstatus
+@@ -4186,7 +4185,7 @@ static void fill_prstatus_note(void *data, const TaskState *ts,
+     struct target_elf_prstatus prstatus = {
+         .pr_info.si_signo = signr,
+         .pr_cursig = signr,
+-        .pr_pid = ts->ts_tid,
++        .pr_pid = get_task_state(cpu)->ts_tid,
+         .pr_ppid = getppid(),
+         .pr_pgrp = getpgrp(),
+         .pr_sid = getsid(0),
+@@ -4501,8 +4500,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+         CPU_FOREACH(cpu_iter) {
+             dptr = fill_note(&hptr, NT_PRSTATUS, "CORE",
+                              sizeof(struct target_elf_prstatus));
+-            fill_prstatus_note(dptr, ts, cpu_iter,
+-                               cpu_iter == cpu ? signr : 0);
++            fill_prstatus_note(dptr, cpu_iter, cpu_iter == cpu ? signr : 0);
+         }
+ 
+         if (dump_write(fd, header, data_offset) < 0) {
 -- 
 2.39.2
 
