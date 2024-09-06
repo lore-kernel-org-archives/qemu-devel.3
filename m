@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A06CE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8D1CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:06:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSwN-00079P-47; Fri, 06 Sep 2024 02:59:31 -0400
+	id 1smSvx-0003JX-K9; Fri, 06 Sep 2024 02:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSwD-000675-CK; Fri, 06 Sep 2024 02:59:22 -0400
+ id 1smSvh-0001Zd-H1; Fri, 06 Sep 2024 02:58:53 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSwB-0003mi-2Y; Fri, 06 Sep 2024 02:59:20 -0400
+ id 1smSvf-0003iM-Ui; Fri, 06 Sep 2024 02:58:49 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0FCF38C268;
- Fri,  6 Sep 2024 09:53:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 995388C262;
+ Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C038E133420;
+ by tsrv.corpit.ru (Postfix) with SMTP id 633B713341A;
  Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43715 invoked by uid 1000);
+Received: (nullmailer pid 43681 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:31 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Cindy Lu <lulu@redhat.com>,
- Jason Wang <jasowang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 51/53] virtio-pci: Fix the use of an uninitialized irqfd
-Date: Fri,  6 Sep 2024 09:54:21 +0300
-Message-Id: <20240906065429.42415-51-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 45/53] target/arm: Clear high SVE elements in
+ handle_vec_simd_wshli
+Date: Fri,  6 Sep 2024 09:54:15 +0300
+Message-Id: <20240906065429.42415-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -62,77 +62,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cindy Lu <lulu@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The crash was reported in MAC OS and NixOS, here is the link for this bug
-https://gitlab.com/qemu-project/qemu/-/issues/2334
-https://gitlab.com/qemu-project/qemu/-/issues/2321
+AdvSIMD instructions are supposed to zero bits beyond 128.
+Affects SSHLL, USHLL, SSHLL2, USHLL2.
 
-In this bug, they are using the virtio_input device. The guest notifier was
-not supported for this device, The function virtio_pci_set_guest_notifiers()
-was not called, and the vector_irqfd was not initialized.
-
-So the fix is adding the check for vector_irqfd in virtio_pci_get_notifier()
-
-The function virtio_pci_get_notifier() can be used in various devices.
-It could also be called when VIRTIO_CONFIG_S_DRIVER_OK is not set. In this situation,
-the vector_irqfd being NULL is acceptable. We can allow the device continue to boot
-
-If the vector_irqfd still hasn't been initialized after VIRTIO_CONFIG_S_DRIVER_OK
-is set, it means that the function set_guest_notifiers was not called before the
-driver started. This indicates that the device is not using the notifier.
-At this point, we will let the check fail.
-
-This fix is verified in vyatta,MacOS,NixOS,fedora system.
-
-The bt tree for this bug is:
-Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-[Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-817         if (irqfd->users == 0) {
-(gdb) thread apply all bt
-...
-Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
-0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
-2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497
-3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/system/memory.c:573
-4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528
-5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qemu-9.0.0/system/physmem.c:2713
-6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743
-7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
-8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/physmem.c:2894
-9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/physmem.c:2904
-10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
-11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
-12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-thread-posix.c:541
-13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
-14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
-
-Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Cindy Lu <lulu@redhat.com>
-Message-Id: <20240806093715.65105-1-lulu@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit a8e63ff289d137197ad7a701a587cc432872d798)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240717060903.205098-15-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 8e0c9a9efa21a16190cbac288e414bbf1d80f639)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 453861605e..1323e128e9 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-     VirtQueue *vq;
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 2fccd836b7..5beac07b60 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10141,6 +10141,7 @@ static void handle_vec_simd_wshli(DisasContext *s, bool is_q, bool is_u,
+         tcg_gen_shli_i64(tcg_rd, tcg_rd, shift);
+         write_vec_element(s, tcg_rd, rd, i, size + 1);
+     }
++    clear_vec_high(s, true, rd);
+ }
  
-+    if (!proxy->vector_irqfd && vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)
-+        return -1;
-+
-     if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
-         *n = virtio_config_get_guest_notifier(vdev);
-         *vector = vdev->config_vector;
+ /* SHRN/RSHRN - Shift right with narrowing (and potential rounding) */
 -- 
 2.39.2
 
