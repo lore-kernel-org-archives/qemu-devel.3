@@ -4,44 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03311CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B97CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSsr-0000Bs-EM; Fri, 06 Sep 2024 02:55:53 -0400
+	id 1smSto-0008KL-8e; Fri, 06 Sep 2024 02:56:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsQ-00070k-RT; Fri, 06 Sep 2024 02:55:28 -0400
+ id 1smStm-0008Cl-VT; Fri, 06 Sep 2024 02:56:51 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsN-0003HW-BN; Fri, 06 Sep 2024 02:55:25 -0400
+ id 1smStk-0003Qh-LK; Fri, 06 Sep 2024 02:56:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7EA898C243;
- Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B6BA8C24F;
+ Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4422A1333FB;
- Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
-Received: (nullmailer pid 43405 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:29 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 2485F133407;
+ Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
+Received: (nullmailer pid 43517 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 14/53] hw/intc/loongson_ipi: Access memory in little
- endian
-Date: Fri,  6 Sep 2024 09:53:44 +0300
-Message-Id: <20240906065429.42415-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Marco Palumbi <Marco.Palumbi@tii.ae>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 26/53] hw/arm/mps2-tz.c: fix RX/TX interrupts order
+Date: Fri,  6 Sep 2024 09:53:56 +0300
+Message-Id: <20240906065429.42415-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,66 +61,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Marco Palumbi <Marco.Palumbi@tii.ae>
 
-Loongson IPI is only available in little-endian,
-so use that to access the guest memory (in case
-we run on a big-endian host).
+The order of the RX and TX interrupts are swapped.
+This commit fixes the order as per the following documents:
+ * https://developer.arm.com/documentation/dai0505/latest/
+ * https://developer.arm.com/documentation/dai0521/latest/
+ * https://developer.arm.com/documentation/dai0524/latest/
+ * https://developer.arm.com/documentation/dai0547/latest/
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Fixes: f6783e3438 ("hw/loongarch: Add LoongArch ipi interrupt support")
-[PMD: Extracted from bigger commit, added commit description]
-Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Tested-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Message-Id: <20240718133312.10324-3-philmd@linaro.org>
-(cherry picked from commit 2465c89fb983eed670007742bd68c7d91b6d6f85)
+Signed-off-by: Marco Palumbi <Marco.Palumbi@tii.ae>
+Message-id: 20240730073123.72992-1-marco@palumbi.it
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 5a558be93ad628e5bed6e0ee062870f49251725c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: fixups for 8.2, for lack of:
- v9.0.0-583-g91d0b151de4c "hw/intc/loongson_ipi: Implement IOCSR address space for MIPS"
- v9.0.0-582-gb4a12dfc2132 "hw/intc/loongarch_ipi: Rename as loongson_ipi"
- v8.2.0-545-gfdd6ee0b7653 "hw/intc/loongarch_ipi: Use MemTxAttrs interface for ipi ops")
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index 67858b521c..55da9ca7f9 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -12,6 +12,7 @@
- #include "qapi/error.h"
- #include "qemu/log.h"
- #include "exec/address-spaces.h"
-+#include "exec/memory.h"
- #include "hw/loongarch/virt.h"
- #include "migration/vmstate.h"
- #include "target/loongarch/internals.h"
-@@ -61,8 +62,8 @@ static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr)
-      * if the mask is 0, we need not to do anything.
-      */
-     if ((val >> 27) & 0xf) {
--        data = address_space_ldl(&env->address_space_iocsr, addr,
--                                 MEMTXATTRS_UNSPECIFIED, NULL);
-+        data = address_space_ldl_le(&env->address_space_iocsr, addr,
-+                                    MEMTXATTRS_UNSPECIFIED, NULL);
-         for (i = 0; i < 4; i++) {
-             /* get mask for byte writing */
-             if (val & (0x1 << (27 + i))) {
-@@ -73,8 +74,8 @@ static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr)
- 
-     data &= mask;
-     data |= (val >> 32) & ~mask;
--    address_space_stl(&env->address_space_iocsr, addr,
--                      data, MEMTXATTRS_UNSPECIFIED, NULL);
-+    address_space_stl_le(&env->address_space_iocsr, addr,
-+                         data, MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
- static int archid_cmp(const void *a, const void *b)
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index 668db5ed61..9d9c263ef8 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -435,7 +435,7 @@ static MemoryRegion *make_uart(MPS2TZMachineState *mms, void *opaque,
+                                const char *name, hwaddr size,
+                                const int *irqs, const PPCExtraData *extradata)
+ {
+-    /* The irq[] array is tx, rx, combined, in that order */
++    /* The irq[] array is rx, tx, combined, in that order */
+     MPS2TZMachineClass *mmc = MPS2TZ_MACHINE_GET_CLASS(mms);
+     CMSDKAPBUART *uart = opaque;
+     int i = uart - &mms->uart[0];
+@@ -447,8 +447,8 @@ static MemoryRegion *make_uart(MPS2TZMachineState *mms, void *opaque,
+     qdev_prop_set_uint32(DEVICE(uart), "pclk-frq", mmc->apb_periph_frq);
+     sysbus_realize(SYS_BUS_DEVICE(uart), &error_fatal);
+     s = SYS_BUS_DEVICE(uart);
+-    sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[0]));
+-    sysbus_connect_irq(s, 1, get_sse_irq_in(mms, irqs[1]));
++    sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[1]));
++    sysbus_connect_irq(s, 1, get_sse_irq_in(mms, irqs[0]));
+     sysbus_connect_irq(s, 2, qdev_get_gpio_in(orgate_dev, i * 2));
+     sysbus_connect_irq(s, 3, qdev_get_gpio_in(orgate_dev, i * 2 + 1));
+     sysbus_connect_irq(s, 4, get_sse_irq_in(mms, irqs[2]));
 -- 
 2.39.2
 
