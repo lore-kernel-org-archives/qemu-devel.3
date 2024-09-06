@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65889C54FC6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFAA2CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smROo-0005p1-84; Fri, 06 Sep 2024 01:20:48 -0400
+	id 1smRMO-0000CE-Hp; Fri, 06 Sep 2024 01:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smROO-0004RO-V8; Fri, 06 Sep 2024 01:20:26 -0400
+ id 1smRMM-0008V9-Tn; Fri, 06 Sep 2024 01:18:14 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smROB-0008NS-0b; Fri, 06 Sep 2024 01:20:08 -0400
+ id 1smRMK-00088f-VI; Fri, 06 Sep 2024 01:18:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7F4318C13A;
- Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 800608C129;
+ Fri,  6 Sep 2024 08:15:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2FAE413337F;
- Fri,  6 Sep 2024 08:16:36 +0300 (MSK)
-Received: (nullmailer pid 10498 invoked by uid 1000);
- Fri, 06 Sep 2024 05:16:34 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 301AE13336F;
+ Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
+Received: (nullmailer pid 10448 invoked by uid 1000);
+ Fri, 06 Sep 2024 05:16:33 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 37/40] target/i386: Do not apply REX to MMX operands
-Date: Fri,  6 Sep 2024 08:16:25 +0300
-Message-Id: <20240906051633.10288-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Marco Palumbi <Marco.Palumbi@tii.ae>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 21/40] hw/arm/mps2-tz.c: fix RX/TX interrupts order
+Date: Fri,  6 Sep 2024 08:16:09 +0300
+Message-Id: <20240906051633.10288-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
@@ -61,33 +61,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Marco Palumbi <Marco.Palumbi@tii.ae>
+
+The order of the RX and TX interrupts are swapped.
+This commit fixes the order as per the following documents:
+ * https://developer.arm.com/documentation/dai0505/latest/
+ * https://developer.arm.com/documentation/dai0521/latest/
+ * https://developer.arm.com/documentation/dai0524/latest/
+ * https://developer.arm.com/documentation/dai0547/latest/
 
 Cc: qemu-stable@nongnu.org
-Fixes: b3e22b2318a ("target/i386: add core of new i386 decoder")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2495
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240812025844.58956-2-richard.henderson@linaro.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 416f2b16c02c618c0f233372ebfe343f9ee667d4)
+Signed-off-by: Marco Palumbi <Marco.Palumbi@tii.ae>
+Message-id: 20240730073123.72992-1-marco@palumbi.it
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 5a558be93ad628e5bed6e0ee062870f49251725c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 1dfc368456..88de92ed16 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1176,7 +1176,10 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-             op->unit = X86_OP_SSE;
-         }
-     get_reg:
--        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
-+        op->n = ((get_modrm(s, env) >> 3) & 7);
-+        if (op->unit != X86_OP_MMX) {
-+            op->n |= REX_R(s);
-+        }
-         break;
- 
-     case X86_TYPE_E:  /* ALU modrm operand */
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index 284c09c91d..334cd836c3 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -427,7 +427,7 @@ static MemoryRegion *make_uart(MPS2TZMachineState *mms, void *opaque,
+                                const char *name, hwaddr size,
+                                const int *irqs, const PPCExtraData *extradata)
+ {
+-    /* The irq[] array is tx, rx, combined, in that order */
++    /* The irq[] array is rx, tx, combined, in that order */
+     MPS2TZMachineClass *mmc = MPS2TZ_MACHINE_GET_CLASS(mms);
+     CMSDKAPBUART *uart = opaque;
+     int i = uart - &mms->uart[0];
+@@ -439,8 +439,8 @@ static MemoryRegion *make_uart(MPS2TZMachineState *mms, void *opaque,
+     qdev_prop_set_uint32(DEVICE(uart), "pclk-frq", mmc->apb_periph_frq);
+     sysbus_realize(SYS_BUS_DEVICE(uart), &error_fatal);
+     s = SYS_BUS_DEVICE(uart);
+-    sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[0]));
+-    sysbus_connect_irq(s, 1, get_sse_irq_in(mms, irqs[1]));
++    sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[1]));
++    sysbus_connect_irq(s, 1, get_sse_irq_in(mms, irqs[0]));
+     sysbus_connect_irq(s, 2, qdev_get_gpio_in(orgate_dev, i * 2));
+     sysbus_connect_irq(s, 3, qdev_get_gpio_in(orgate_dev, i * 2 + 1));
+     sysbus_connect_irq(s, 4, get_sse_irq_in(mms, irqs[2]));
 -- 
 2.39.2
 
