@@ -4,87 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E57ACCE7AE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 08:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F7A6CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 08:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smU07-000610-Hx; Fri, 06 Sep 2024 04:07:27 -0400
+	id 1smU2K-0006mB-SV; Fri, 06 Sep 2024 04:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smU03-0005ka-Kk
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:07:23 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smU01-0003c2-VD
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:07:23 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-374c1963cb6so950952f8f.3
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 01:07:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725610040; x=1726214840; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=U2wVYjS7ZmFCucWKH2cbBK1L4EEhniDtrrrNI3gUKCM=;
- b=kx7M/T6XllLpqpvmcijUCn29p+e8B1TGqLr5/Fs20ZHLgUViDEnwvPWLCD9tmIAMRG
- o2b7s35dZElJWvgJ8iUj8zpHPHnh4QGDvUHpRXg4JccNv8XiIDcGVI2JNbIvq1LGu174
- kdE9fl0qg9yHgInztXe4zXT6vG2eZrD6optLe6Vp25cYUpyzGjXHt1wdmlr3DvsZUsHN
- CFGEqh/Uj30TuReiGTjCtEV1EQhDkzbx4V04/lW0dFqEkbkOnu5ykrMr2LljbvmdgXRq
- afPUn94StiNg7Ld/zNYyyDaWOIHPckkQYMksXynuF8GHFfvk+/ERkDb//l7vHk2EsDB2
- Nfvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725610040; x=1726214840;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U2wVYjS7ZmFCucWKH2cbBK1L4EEhniDtrrrNI3gUKCM=;
- b=GwK4j9uteGqDmAy41cxQt9KVV9SJoz+yX/kNwoXW/cPW3A6POwb4OleC1FsXuiI+vK
- Cl1iUL1/xVlKOYz1u6k0opT+qiS7Hn164RIlMKb8y7BdqfxVD7JZyS4WGgdGhe+QnRgk
- In6MVNFR+fVM/Dit6Xqu+omB91S7elD8nJypwqCuEAK7NnKwirvJaxcN5Il1/UDu6+QA
- mmft4zO95X1y1zWnE75fPQ5za18rInItOK1yzEZfJJ2A3U+FKPf3Ckgr/MdtataWqz3A
- iL/62jOTGi+WSusVD0mkEeErEu8ZovZaahOzdxRt64GW3wWRFU3WGru+33KPrfrJ1Q4A
- rYlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/5sRbgfG31n0qFFlk4unG/xxrN9I4Ai3kcEdDpyztI4vLZk01pmyBUG2SCNVZ4NjvMiC1YKEP6iws@nongnu.org
-X-Gm-Message-State: AOJu0Yy/EbPk7J2R3ukn74h3VoXjPWJaYHq+tb0ULAQb2FsBEAub7YP2
- 4fRVsAAw0sCdIinSsuct2orfA6bH/U0gZ2WLwRFQSNh7eFjBAHxhdgwCY4MNPBw=
-X-Google-Smtp-Source: AGHT+IFG79A7lTa3NcAr9MqobgUsVzJJRoe1RYWvuybLGv88O7NoXAwM4ydS9VAbatyav127T5ZWWw==
-X-Received: by 2002:a5d:46ca:0:b0:377:9867:9028 with SMTP id
- ffacd0b85a97d-3788967aaffmr954106f8f.44.1725610039730; 
- Fri, 06 Sep 2024 01:07:19 -0700 (PDT)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42c9bb7a46csm43493215e9.1.2024.09.06.01.07.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 01:07:19 -0700 (PDT)
-Message-ID: <0ae3ccda-0147-4f6a-8042-956a693ad740@linaro.org>
-Date: Fri, 6 Sep 2024 10:07:18 +0200
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smU2J-0006fI-Cw
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:09:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smU2H-0003k5-Pp
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:09:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725610181;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=UdsHvkk9ppEXG8A/csUZZXDmgn72ZAWraeWPPDTibUk=;
+ b=WwHBXksGogKGnM8O18Y5uH0b48ko5aRAOauvseW6VYau74czwvtWgNIF7CQ3n6hA7x3tkL
+ UUgvxhb1kT9SoDB1ZwrCOGgOPL7l+wGDoEzSAwfz98/Qnibvq+nlxs0b8tOlPoot3DILas
+ fxpaETVWZoUxBUWp4cfCws4YF7dlbSc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-xvQB7eWUMQyTBNQGzC9GDg-1; Fri,
+ 06 Sep 2024 04:09:36 -0400
+X-MC-Unique: xvQB7eWUMQyTBNQGzC9GDg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5ECDE19560B2; Fri,  6 Sep 2024 08:09:34 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.70])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8802B19560AA; Fri,  6 Sep 2024 08:09:30 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>
+Cc: Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/riscv/cpu_helper: Fix linking problem with semihosting
+ disabled
+Date: Fri,  6 Sep 2024 10:09:28 +0200
+Message-ID: <20240906080928.710051-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] tests/qtest/boot-order-test: Make the machine name
- mandatory in this test
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-riscv@nongnu.org
-References: <20240905191434.694440-1-thuth@redhat.com>
- <20240905191434.694440-4-thuth@redhat.com>
- <639f1017-4e74-4fdc-89a6-6aeca6c0737c@linaro.org>
- <d4e13631-e468-4bd1-81e7-bb3bf8e2d495@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d4e13631-e468-4bd1-81e7-bb3bf8e2d495@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,49 +84,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 10:04, Thomas Huth wrote:
-> On 06/09/2024 09.59, Philippe Mathieu-Daudé wrote:
->> Hi Thomas,
->>
->> On 5/9/24 21:14, Thomas Huth wrote:
->>> Let's make sure that we always pass a machine name to the 
->>> test_boot_orders()
->>> function, so we can check whether the machine is available in the binary
->>> and skip the test in case it is not included in the build.
->>>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   tests/qtest/boot-order-test.c | 4 ++--
->>>   1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/tests/qtest/boot-order-test.c 
->>> b/tests/qtest/boot-order-test.c
->>> index 8f2b6ef05a..c67b8cfe16 100644
->>> --- a/tests/qtest/boot-order-test.c
->>> +++ b/tests/qtest/boot-order-test.c
->>> @@ -31,7 +31,7 @@ static void test_a_boot_order(const char *machine,
->>>       uint64_t actual;
->>>       QTestState *qts;
->>> -    if (machine && !qtest_has_machine(machine)) {
->>> +    if (!qtest_has_machine(machine)) {
->>
->> Should we defer the NULL check to qtest_has_machine_with_env()?
->> It uses g_str_equal() which is described as:
->>
->>    Note that this function is primarily meant as a hash table
->>    comparison function. For a general-purpose, NULL-safe string
->>    comparison function, see g_strcmp0().
->>
->> Better switch to g_strcmp0() in qtest_has_machine_with_env()?
-> 
-> What would be the intended meaning of the function when it is called 
-> with "NULL" ? Use the default machine? Skip the test? ... I think it is 
-> rather an error to call it with NULL, so it's OK if the test crashes 
-> here since it should never happen?
+When QEMU has been configured with "--without-default-devices", the build
+is currently failing with:
 
-Right.
+ /usr/bin/ld: libqemu-riscv32-softmmu.a.p/target_riscv_cpu_helper.c.o:
+  in function `riscv_cpu_do_interrupt':
+ .../qemu/target/riscv/cpu_helper.c:1678:(.text+0x2214): undefined
+  reference to `do_common_semihosting'
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Avoid calling into do_common_semihosting() if the corresponding Kconfig
+switch has not been set.
 
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ target/riscv/cpu_helper.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 395a1d9140..c7a6569e2d 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -34,6 +34,10 @@
+ #include "debug.h"
+ #include "tcg/oversized-guest.h"
+ 
++#ifndef CONFIG_USER_ONLY
++#include CONFIG_DEVICES
++#endif
++
+ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+ {
+ #ifdef CONFIG_USER_ONLY
+@@ -1674,10 +1678,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     if (!async) {
+         /* set tval to badaddr for traps with address information */
+         switch (cause) {
++#ifdef CONFIG_ARM_COMPATIBLE_SEMIHOSTING
+         case RISCV_EXCP_SEMIHOST:
+             do_common_semihosting(cs);
+             env->pc += 4;
+             return;
++#endif
+         case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
+         case RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT:
+         case RISCV_EXCP_LOAD_ADDR_MIS:
+-- 
+2.46.0
 
 
