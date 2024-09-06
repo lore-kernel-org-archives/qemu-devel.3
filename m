@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BA3E6FE4B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 22:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DBB0E6FE4B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 22:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smhT3-0000yH-F7; Fri, 06 Sep 2024 18:30:13 -0400
+	id 1smhr5-0006VB-0W; Fri, 06 Sep 2024 18:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1smhSz-0000us-S3
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 18:30:10 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ (Exim 4.90_1) (envelope-from
+ <3P4jbZgYKCvotqswgjiqqing.eqosgow-fgxgnpqpipw.qti@flex--roqueh.bounces.google.com>)
+ id 1smhr3-0006US-3Y
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 18:55:01 -0400
+Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1smhSx-0003VN-PK
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 18:30:09 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-6d4f1d9951fso24157867b3.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 15:30:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3P4jbZgYKCvotqswgjiqqing.eqosgow-fgxgnpqpipw.qti@flex--roqueh.bounces.google.com>)
+ id 1smhr0-0005U5-TF
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 18:55:00 -0400
+Received: by mail-yb1-xb49.google.com with SMTP id
+ 3f1490d57ef6-e1cf5a262a1so8414588276.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 15:54:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1725661804; x=1726266604; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LiHJplFRuRTOgNl77UncVfOiERQri7ijfay5XLXszKk=;
- b=XeOsDPi3yCdobUdTuJfrsBZUDCDlpqSSdeKwUFE4q474Pal+Jt9ersKT4JiZsPaNy5
- hfU7W/WcUZLFOrjQXGIyDCaVmELDtC44dsVF3tkeCS09Qq4R6nwM1m68KiEfTUWD7xOi
- jhhaQumXroXVpr2FfDzMOCXGDFur36eMnnF5rx56qKU8/kAQ2G7tjXOKt94i+FE9J6mq
- FyLMa1knTZ/j8j9XTyN2H68YrjeVxAytq8/pZ7TfK8NqyB0GsSAfOlUbs9R59RccpSlb
- P+2FgRunRmZRiSs64rhhblQ4mSJgXAzGozmxRbS9yJkwK44WEoHytMNvhhhuP03yG5vY
- b6iA==
+ d=google.com; s=20230601; t=1725663295; x=1726268095; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=AwojNUoY0aU9tblvHDHyAL86NnP9nOmBqsuPGBwQUvQ=;
+ b=oTOaIlr47cZxC2dJsaNxn1bb65vamH7vE1IW4j6xse/RlpsUzsvb14NuhYvWT18To/
+ yAgaSJKkkLeY30j/UKDwKt6HSrNwt3ZLfWQ4L74/NzHHl4+XAQOvC3DcyXL3xXY/YP/J
+ 0ftfRz79vw1TOc8iW+2Qu2+OS3z+tSUxY8I7d4n8ALmSo77TZQeDNfEqVVlaBBoGlrQR
+ beEXgYWtH6lgh071vsBUX1E+DYyY5Dz2Uz27A/KfyP7EE2NtCdR3ry9l4Rf4SUpWM6pn
+ 9Wnx20ahoOaeAVx7Jbz0DsH0zQ9P0RC8IEKvWOgluAWIYH10cR7E967sr+FtL8XRILAc
+ MIAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725661804; x=1726266604;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LiHJplFRuRTOgNl77UncVfOiERQri7ijfay5XLXszKk=;
- b=KTpNDR3jZlKcKPjLc2SiCe/9PFnQ9ss5OVug4fBN5ioUUoAVewoNMkmaC0G5psTbgp
- Vq1Yl2OgGrHHmwj2AVzGKqVySbMqPd0U1v0ke8tnnC6n5BI47CXreAljC1d5k8EV1Tyj
- UHUA4k3assvk4dN1Ll31ycQcKrtJ6XCqMdAVcTphpyyEg57wqUBf0git2P7tJQVqCp10
- A4mpoAbDtRnorhqEhgsrXky64dAeNENAfsEK2i0AVxZxN8GyZZeveXUrLpkSzCwvZbb4
- 2NZ3SH7G51tS0AI8bK5N7E1EvpkyFUoa6VuS2U0GdAWgYLg42BBuiymPtYnIYFZz8eXo
- 2OpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLHoctnipK5NLaHBPZHsmjvCfkHn1vwjsC87zCielqaonPevUfL7S8kgfkSj50uDQsUwuuU9fA4Lnz@nongnu.org
-X-Gm-Message-State: AOJu0YwvQ/m41L5aKyQW3uo6Vr+WB6nmwHKJlGkFDgFmiZW3Y3yCw/SX
- RbIuKjmN72GjqcVmgB36VIIlbquZ+oqhgcsHWfI/Un//5st7JKpi15abPh3qiBFRu/hlQs79qyM
- OJ/Fm9cdXVIzbUJLrTxHk1ZPsw/XuEsPuo2qyyA==
-X-Google-Smtp-Source: AGHT+IFsidNPJCkcUbHw+7sLAugoqK9hBdH/9613YmIlgXe/HkCRRzd4Aj5df/bQo7J7290IAxwgsOG6Xol1gwrPfpk=
-X-Received: by 2002:a05:690c:6202:b0:6ad:9550:7617 with SMTP id
- 00721157ae682-6db4516c9c0mr59757547b3.32.1725661804338; Fri, 06 Sep 2024
- 15:30:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240711215244.19237-1-yichen.wang@bytedance.com>
- <20240711215244.19237-9-yichen.wang@bytedance.com>
- <CAHObMVZ1rifLMe-6R_Lttu_aOWDPvqv29sa6p_gz_7HROn00Tg@mail.gmail.com>
- <87y1603n21.fsf@suse.de> <87ed7iyhci.fsf@pond.sub.org>
-In-Reply-To: <87ed7iyhci.fsf@pond.sub.org>
-From: Yichen Wang <yichen.wang@bytedance.com>
-Date: Fri, 6 Sep 2024 15:29:53 -0700
-Message-ID: <CAHObMVYuo8qtXgPhZqR6+pb6yVjjUAJTiW=urU+84iW4NPRpsw@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v5 08/13] migration/multifd: Add new
- migration option for multifd DSA offloading.
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-devel@nongnu.org, 
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>, 
- Shivam Kumar <shivam.kumar1@nutanix.com>, 
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+ d=1e100.net; s=20230601; t=1725663295; x=1726268095;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AwojNUoY0aU9tblvHDHyAL86NnP9nOmBqsuPGBwQUvQ=;
+ b=fmCCf2jHtYCAPFdsEIjOHVquoP6/9Y2/9ylecdzpEzIbejnS4molEdf9D67tfgE6Jp
+ X7idA6xjmRzT6bg2wERIXloqKAuopU3tkduli7f7WGflQgpyma2Smo9vjJwS85Y1apTN
+ IJW6irObDfEihLTab3kRVc8CpRCURUDEuua9N0wzaxi2FlfOafKzhOUI8eJe2pCGaU6H
+ 3v24XgXItDW0tFHjrJ5f8wcELc1KlMrShCtH2aShFBlU7Pli/q/DMZkWj6oHCCpfyBhq
+ pETFeL3kyjKucphwgkncDDH5kv82D8TE3Jic/1UgQtxhiOfx/mNOhw7AL36panyz136U
+ q0Ag==
+X-Gm-Message-State: AOJu0YxNdDW8kmbAxK1gtzEawJitorjERuBMU9qct6nZ4fOQo599K+DB
+ qOuPB6+o4iqAguZAnmEQmBtP7kkNW+QwjRd6js/cQtfQQv75OBKearSuw1oeDP0ec2YS9zFl/+A
+ qhQ==
+X-Google-Smtp-Source: AGHT+IHNrT6JN31GqTvPcoFibSkfpzIPkdNiz8n4+C0RLanLqm22m8sw2UHJg9i4YizJz32GeuKHqG+YGBk=
+X-Received: from roqueh-desktop.svl.corp.google.com
+ ([2620:15c:2a3:200:81f3:7a35:4574:5dc])
+ (user=roqueh job=sendgmr) by 2002:a05:6902:2d43:b0:e11:593b:b8e7 with SMTP id
+ 3f1490d57ef6-e1d3463e2d7mr15735276.3.1725663295040; Fri, 06 Sep 2024 15:54:55
+ -0700 (PDT)
+Date: Fri,  6 Sep 2024 15:54:49 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
+Message-ID: <20240906225451.1039718-1-roqueh@google.com>
+Subject: [PATCH 0/2] Fix for multi-process gdbstub breakpoints
+From: Roque Arcudia Hernandez <roqueh@google.com>
+To: richard.henderson@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org, 
+ philmd@linaro.org, slongfield@google.com, komlodi@google.com
+Cc: qemu-devel@nongnu.org, Roque Arcudia Hernandez <roqueh@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=yichen.wang@bytedance.com; helo=mail-yw1-x1133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
+ envelope-from=3P4jbZgYKCvotqswgjiqqing.eqosgow-fgxgnpqpipw.qti@flex--roqueh.bounces.google.com;
+ helo=mail-yb1-xb49.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,107 +92,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 24, 2024 at 7:50=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Fabiano Rosas <farosas@suse.de> writes:
->
-> > Yichen Wang <yichen.wang@bytedance.com> writes:
-> >
-> >> On Thu, Jul 11, 2024 at 2:53=E2=80=AFPM Yichen Wang <yichen.wang@byted=
-ance.com> wrote:
-> >>
-> >>> diff --git a/migration/options.c b/migration/options.c
-> >>> index 645f55003d..f839493016 100644
-> >>> --- a/migration/options.c
-> >>> +++ b/migration/options.c
-> >>> @@ -29,6 +29,7 @@
-> >>>  #include "ram.h"
-> >>>  #include "options.h"
-> >>>  #include "sysemu/kvm.h"
-> >>> +#include <cpuid.h>
-> >>>
-> >>>  /* Maximum migrate downtime set to 2000 seconds */
-> >>>  #define MAX_MIGRATE_DOWNTIME_SECONDS 2000
-> >>> @@ -162,6 +163,10 @@ Property migration_properties[] =3D {
-> >>>      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", Migration=
-State,
-> >>>                         parameters.zero_page_detection,
-> >>>                         ZERO_PAGE_DETECTION_MULTIFD),
-> >>> +    /* DEFINE_PROP_ARRAY("dsa-accel-path", MigrationState, x, */
-> >>> +    /*                    parameters.dsa_accel_path, qdev_prop_strin=
-g, char *), */
-> >
-> > This is mostly correct, I think, you just need to create a field in
-> > MigrationState to keep the length (instead of x). However, I found out
-> > just now that this only works with QMP. Let me ask for other's
-> > opinions...
-> >
-> >>> +    /* DEFINE_PROP_STRING("dsa-accel-path", MigrationState, */
-> >>> +    /*                    parameters.dsa_accel_path), */
-> >>>
-> >>>      /* Migration capabilities */
-> >>>      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-> >>
-> >> I changed the dsa-accel-path to be a ['str'], i.e. strList* in C.
-> >> However, I am having a hard time about how to define the proper
-> >> properties here. I don't know what MACRO to use and I can't find good
-> >> examples... Need some guidance about how to proceed. Basically I will
-> >> need this to pass something like '-global
-> >> migration.dsa-accel-path=3D"/dev/dsa/wq0.0"' in cmdline, or
-> >> "migrate_set_parameter dsa-accel-path" in QEMU CLI. Don't know how to
-> >> pass strList there.
-> >>
-> >> Thanks very much!
-> >
-> > @Daniel, @Markus, any idea here?
-> >
-> > If I'm reading this commit[1] right, it seems we decided to disallow
-> > passing of arrays without JSON, which affects -global on the
-> > command-line and HMP.
-> >
-> > 1- b06f8b500d (qdev: Rework array properties based on list visitor,
-> > 2023-11-09)
-> >
-> > QMP shell:
-> > (QEMU) migrate-set-parameters dsa-accel-path=3D['a','b']
-> > {"return": {}}
-> >
-> > HMP:
-> > (qemu) migrate_set_parameter dsa-accel-path "['a','b']"
-> > qemu-system-x86_64: ../qapi/string-input-visitor.c:343: parse_type_str:
-> > Assertion `siv->lm =3D=3D LM_NONE' failed.
->
-> HMP migrate_set_parameter doesn't support JSON.  It uses the string
-> input visitor to parse the value, which can only do lists of integers.
->
-> The string visitors have been thorns in my side since forever.
->
-> > Any recommendation? I believe all migration parameters so far can be se=
-t
-> > via those means, I don't think we can allow only this one to be
-> > QMP-only.
-> >
-> > Or am I just missing something?
->
-> I don't think the string input visitor can be compatibly extended to
-> arbitrary lists.
->
-> We could replace HMP migrate_set_parameter by migrate_set_parameters.
-> The new command parses its single argument into a struct
-> MigrateSetParameters with keyval_parse(),
-> qobject_input_visitor_new_keyval(), and
-> visit_type_MigrateSetParameters().
->
+This patch series modifies the gdbstub to address a bug running a
+multi cluster machine in QEMU using TCG. The machine where the
+problem was seen had several clusters of CPUs with similar
+architectures and similar memory layout all working with physical
+addresses. It was discovered under gdb debugging that a breakpoint
+targeting one cluster misfired on the wrong cluster quite frequently
+with no possible workaround since gdb was also unaware of any
+breakpoint in that cluster and simply reported SIGTRAP.
 
-I tried Fabiano's suggestion, and put a unit32_t in MigrateState data
-structure. I got exactly the same: "qemu-system-x86_64.dsa:
-../../../qapi/string-input-visitor.c:343: parse_type_str: Assertion
-`siv->lm =3D=3D LM_NONE' failed.". Steve's patch is more to be a read-only
-field from HMP, so probably I can't do that. Markus's suggestion seems
-to be too heavy for the patch and I took a quick glance and it doesn't
-seem to be easy to do.
+The sequence that discovered the bug adds N inferiors and adds a
+breakpoint on inferior N. Then after continuing an unrelated thread
+stops the execution when its PC hits the same address of the break
+targeting a different inferior.
 
-So should we revert to the old "str" format instead of strList? Or how
-should I proceed here?
+target extended-remote :1234
+add-inferior
+inferior 2
+attach 2
+...
+add-inferior
+inferior N
+attach N
+add-symbol-file /path/to/foo.elf
+break foo
+> Breakpoint 1 at 0xf00add
+info break
+> Num     Type           Disp Enb Address    What
+> 1       breakpoint     keep y   0x00f00add in foo
+>                                            at foo.c:1234 inf N
+continue
+> Continuing.
+>
+> Thread 2.1 received signal SIGTRAP, Trace/breakpoint trap.
+> [Switching to Thread 2.2]
+> 0xf00add in ?? ()
+
+The main problem is the current implementation of
+'tcg_insert_breakpoint' and 'tcg_remove_breakpoint' insert and remove
+breakpoints to all the CPUs in the system regardless of what the
+remote gdb protocol implements.
+
+If we look at the current source code of GDB we can see that the
+function 'remote_target::insert_breakpoint' in file gdb/remote.c has
+the intention to select the process ID of the inferior where the
+break was inserted.
+
+int
+remote_target::insert_breakpoint (struct gdbarch *gdbarch,
+                                  struct bp_target_info *bp_tgt)
+{
+...
+  /* Make sure the remote is pointing at the right process, if
+     necessary.  */
+  if (!gdbarch_has_global_breakpoints (current_inferior ()->arch ()))
+    set_general_process ();
+...
+}
+
+https:sourceware.org/git/?p=binutils-gdb.git;a=blob;f=gdb/remote.c;h=2c3988cb5075655e8a799d1cc5d4760ad8ed426e;hb=HEAD#l11023
+
+This would not happen when we input the 'break' in gdb but it is
+deferred until the time we execute the 'continue' command. Because we
+might be currently selecting an inferior that is not the one where we
+previously set the breakpoint, the remote gdb has to make sure we
+move the focus to the process ID of the inferior where we inserted
+the break.
+
+In the previous example this will translate to something like:
+
+HgpN.M
+Z0,00f00add,4
+
+Another thing that is wrong with the current implementation (and it
+affects both TCG and KVM mode) is that the remote gdb protocol uses
+'Hg' and not 'Hc' to select the process. Functions
+'gdb_breakpoint_insert' and 'gdb_breakpoint_remove' receive wrongly
+'gdbserver_state.c_cpu' instead of 'gdbserver_state.g_cpu'.
+
+This is supported by the documentation of 'H op thread-id' where op =
+'c' is reserved to the step and continue:
+
+https:sourceware.org/gdb/current/onlinedocs/gdb.html/Packets.html
+
+And it can be verified that the function 'set_general_process' in the
+previous code snippet will eventually call
+'remote_target::set_general_thread' and not
+'remote_target::set_continue_thread' if it needs to change focus.
+
+A third scenario that has to be taken into account is the case of a
+break on a specific thread, for instance the sequence:
+
+inferior 1
+break bar thread 1.3
+break bar thread 1.4
+
+The remote protocol expects the gdbstub to apply the break to the
+process ID of inferior 1 and considers the specific thread-id as a
+breakpoint condition (not too different from a 'break if').
+
+In this case the packet exchange may look like:
+
+Hgp1.1
+Z0,00ba2add,4
+
+There wouldn't be an independent set of packets for 'Hgp1.3' and
+'Hgp1.4'.
+
+In the gdb source code, the handling of the specific thread-id
+happens during breakpoint evaluation in function
+'bpstat_check_breakpoint_conditions' of file gdb/breakpoint.c
+
+https:sourceware.org/git/?p=binutils-gdb.git;a=blob;f=gdb/breakpoint.c;h=17bd627f867cf3d4dc81322ed1919ba40cbb237d;hb=HEAD#l5550
+
+The proposed fix inserts or removes a breakpoint to all the cpus
+sharing the same process ID as the one selected with the latest
+received 'Hg' packet.
+
+Roque Arcudia Hernandez (2):
+  gdbstub: Fix wrong CPUState pointer in breakpoint functions
+  gdbstub: Apply breakpoints only to the selected PID
+
+ accel/tcg/tcg-accel-ops.c | 15 +++++++++++++++
+ gdbstub/gdbstub.c         | 11 ++++++++---
+ include/exec/gdbstub.h    | 15 +++++++++++++++
+ 3 files changed, 38 insertions(+), 3 deletions(-)
+
+-- 
+2.46.0.469.g59c65b2a67-goog
+
 
