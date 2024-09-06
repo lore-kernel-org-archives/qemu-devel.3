@@ -4,54 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD711CE7B1D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4ACCE7B1E
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smaHZ-0002wc-MA; Fri, 06 Sep 2024 10:49:53 -0400
+	id 1smaNj-0000H4-Fx; Fri, 06 Sep 2024 10:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ncBN=QE=kaod.org=clg@ozlabs.org>)
- id 1smaHX-0002vL-SZ; Fri, 06 Sep 2024 10:49:51 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1)
+ (envelope-from <SRS0=v4Y+=QE=zx2c4.com=Jason@kernel.org>)
+ id 1smaNg-0000GQ-1s
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:56:12 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ncBN=QE=kaod.org=clg@ozlabs.org>)
- id 1smaHU-0000lm-Uc; Fri, 06 Sep 2024 10:49:51 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X0fJl6RCMz4wy9;
- Sat,  7 Sep 2024 00:49:43 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X0fJJ6TD7z4wnw;
- Sat,  7 Sep 2024 00:49:20 +1000 (AEST)
-Message-ID: <36c9b2b5-5a19-4713-8e27-112ae4b83bc4@kaod.org>
-Date: Fri, 6 Sep 2024 16:49:17 +0200
+ (Exim 4.90_1)
+ (envelope-from <SRS0=v4Y+=QE=zx2c4.com=Jason@kernel.org>)
+ id 1smaNZ-0001mH-Ji
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:56:09 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 0E9D6A43595;
+ Fri,  6 Sep 2024 14:55:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D28C4CEC4;
+ Fri,  6 Sep 2024 14:56:02 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="XI42mrDW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1725634561;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=LGnZDMfJU884B2YPkVPeudaYSKIzukkErVdTwkER1r8=;
+ b=XI42mrDWgxG4+GGrNaLclZ2jvIdN/SsSWelDdUSEcxWg9YzPEpcOHm0WjKDOgicpF2pDpA
+ TsS2lgB67NhGC6sFXtfK7jf5eEBsf2DKHrX47sqk3TAKK/Dza38SIoSin+lVEIVuBwIeJN
+ 8k+F9hSQ5ezexArMKhJCdYEpO5SZSnI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 82d7cc8d
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Fri, 6 Sep 2024 14:56:01 +0000 (UTC)
+Date: Fri, 6 Sep 2024 16:55:58 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: maobibo <maobibo@loongson.cn>, gaosong@loongson.cn,
+ jiaxun.yang@flygoat.com, qemu-devel@nongnu.org, thomas@t-8ch.de,
+ xry111@xry111.site, loongarch@lists.linux.dev,
+ linux-kernel@vger.kernel.org, Jinyang He <hejinyang@loongson.cn>,
+ Tiezhu Yang <yangtiezhu@loongson.cn>
+Subject: LoongArch without CONFIG_ACPI and CONFIG_EFI
+Message-ID: <ZtsX_tcEuOjktUl9@zx2c4.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed: Add support for IBM Bonnell
-To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-References: <20240906123505.3818154-1-linux@roeck-us.net>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240906123505.3818154-1-linux@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=ncBN=QE=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=SRS0=v4Y+=QE=zx2c4.com=Jason@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,155 +78,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Joel,
+Hi,
 
-Would have access to a Bonnell BMC ? To get the HW strapping
-register values.
+It appears that as of QEMU 9.1, it's possible to boot LoongArch machines
+that don't provide EFI or ACPI.
 
-On 9/6/24 14:35, Guenter Roeck wrote:
-> Introduce support for the IBM Bonnell BMC.
-> 
-> Use Rainier machine information for HW strapping and other machine details
-> since the actual hardware configuration is unknown. I2C device
-> instantiation is based on the devicetree file in the upstream Linux kernel.
-> 
-> Major difference to Rainier is that the Bonnell devicetree file
-> instantiates a TPM. It is therefore possible to test TPM functionality
-> without having to instantiate the TPM manually from the Linux command
-> line.
-> 
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> ---
->   hw/arm/aspeed.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 87 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index fd5603f7aa..4f833c5708 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -865,6 +865,70 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
->       create_pca9552(soc, 15, 0x60);
->   }
->   
-> +static void bonnell_bmc_i2c_init(AspeedMachineState *bmc)
-> +{
-> +    AspeedSoCState *soc = bmc->soc;
-> +    I2CBus *bus;
-> +
-> +    bus = aspeed_i2c_get_bus(&soc->i2c, 0);
-> +
-> +    at24c_eeprom_init(bus, 0x51, 8 * KiB);      /* atmel,24c64 */
-> +    /* tca9554@11:20 */
-> +    i2c_slave_create_simple(bus, "pca9554", 0x20);
+Would you consider removing the `select ACPI` and `select EFI` from the
+arch Kconfig, so that kernels built for this minimal QEMU environment
+can be a bit leaner and quicker to build?
 
-
-The other machine tend to simply do :
-
-   i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "pca9554", 0x20);
-
-But that's fine.
-
-> +
-> +    /* ucd90160@2:64 */
-> +
-> +    /* fsg032@3:5a */
-> +    /* fsg032@3:5b */
-> +
-> +    bus = aspeed_i2c_get_bus(&soc->i2c, 7);
-> +
-> +    /* si7020@7:40 */
-> +
-> +    /* Bonnell expects a TMP275 but a TMP105 is compatible */
-> +    i2c_slave_create_simple(bus, TYPE_TMP105, 0x48);
-> +    at24c_eeprom_init(bus, 0x50, 8 * KiB);      /* atmel,24c64 */
-> +    at24c_eeprom_init(bus, 0x51, 8 * KiB);      /* atmel,24c64 */
-> +    i2c_slave_create_simple(bus, "max31785", 0x52);
-> +
-> +    /* pca9551; assume/hope pca9552 is compatible enough */
-> +    create_pca9552(soc, 7, 0x60);
-> +
-> +    /* ibm,op-panel@7:62 */
-> +    /* dps310@7:76 */
-> +
-> +    bus = aspeed_i2c_get_bus(&soc->i2c, 8);
-> +
-> +    /* rx8900@8:32 */
-> +
-> +    /* Bonnell expects a TMP275 but a TMP105 is compatible */
-> +    i2c_slave_create_simple(bus, TYPE_TMP105, 0x48);
-> +    at24c_eeprom_init(bus, 0x51, 16 * KiB);      /* atmel,24c128 */
-> +
-> +    /* pca9551@8:60 */
-> +    create_pca9552(soc, 8, 0x60);
-> +
-> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4c);
-> +
-> +    bus = aspeed_i2c_get_bus(&soc->i2c, 11);
-> +
-> +    /* tca9554@11:20 */
-> +    i2c_slave_create_simple(bus, "pca9554", 0x20);
-> +    i2c_slave_create_simple(bus, "tmp423", 0x4c);
-> +    /* pca9849@11:75 */
-> +    i2c_slave_create_simple(bus, "pca9546", 0x75);
-> +
-> +    /* npct75x@12:2e (tpm) */
-> +
-> +    /* atmel,24c64 */
-> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 12), 0x50, 8 * KiB);
-> +
-> +    /* atmel,24c64 */
-> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 13), 0x50, 8 * KiB);
-> +    /* pca9551@13:60 */
-> +    create_pca9552(soc, 13, 0x60);
-> +}
-> +
->   static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
->                                    I2CBus **channels)
->   {
-> @@ -1488,6 +1552,25 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
->       aspeed_machine_ast2600_class_emmc_init(oc);
->   };
->   
-> +static void aspeed_machine_bonnell_class_init(ObjectClass *oc, void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-> +
-> +    mc->desc       = "IBM Bonnell BMC (Cortex-A7)";
-> +    amc->soc_name  = "ast2600-a3";
-> +    amc->hw_strap1 = RAINIER_BMC_HW_STRAP1;
-> +    amc->hw_strap2 = RAINIER_BMC_HW_STRAP2;
-> +    amc->fmc_model = "mx66l1g45g";
-> +    amc->spi_model = "mx66l1g45g";
-> +    amc->num_cs    = 2;
-> +    amc->macs_mask  = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-> +    amc->i2c_init  = bonnell_bmc_i2c_init;
-> +    mc->default_ram_size = 1 * GiB;
-> +    aspeed_machine_class_init_cpus_defaults(mc);
-> +    aspeed_machine_ast2600_class_emmc_init(oc);
-> +};
-> +
->   #define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
->   
->   static void aspeed_machine_fuji_class_init(ObjectClass *oc, void *data)
-> @@ -1776,6 +1859,10 @@ static const TypeInfo aspeed_machine_types[] = {
->           .name          = MACHINE_TYPE_NAME("rainier-bmc"),
->           .parent        = TYPE_ASPEED_MACHINE,
->           .class_init    = aspeed_machine_rainier_class_init,
-> +    }, {
-> +        .name          = MACHINE_TYPE_NAME("bonnell-bmc"),
-> +        .parent        = TYPE_ASPEED_MACHINE,
-> +        .class_init    = aspeed_machine_bonnell_class_init,
->       }, {
->           .name          = MACHINE_TYPE_NAME("fuji-bmc"),
->           .parent        = TYPE_ASPEED_MACHINE,
-
-
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-
-Thanks,
-
-C.
-
-
+Jason
 
