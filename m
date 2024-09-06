@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3DDE6FE3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE08E6FE43
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smdMD-0000Ce-7q; Fri, 06 Sep 2024 14:06:53 -0400
+	id 1smdMr-00018o-Oy; Fri, 06 Sep 2024 14:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdMA-0008Qx-WA
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdMY-0000np-CC
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdLx-00054X-LP
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdMC-00054Z-MX
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1725645997;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I6jV3tqGtzk8WPiGBs2msACgTOdI92jMf8jJgjqnmhQ=;
- b=bl//8Rmjjgcs4iyRad9VZqRbGgwNiLR499E/0BWybCCQaJlahiFrPC3g8E0L3k2X/JYI5J
- gToQYxKTMRiWH1nJ7i6VMW4tGVN1Mz1eoaCSaQCOmTqHJ3Zg43IGAcI4F6y4HMbIl6BqDf
- mHoXOPrsSVJDVv9vrht+vsQMzE5BlmA=
+ bh=ZVfJX2VD3EM2pB8QgslbJHPpyyVLozFMmyJS3H/4hs4=;
+ b=C7XotGr7B6j3IlzPSYWXxPkR422LE07GhsdGdVB524ARzpWLSgC0vuFGIQZz8uMynFkHEt
+ UXAWuX9eaw0LrP7Th0KvvTO9gGxRN+y7972dnEInj9jyO4gcAiAINUWCYNBTKrckfI5Ev6
+ xkH8HSc2OdNuQziMV/i0oulY+I5z0Lg=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-aU1qQoXCOACTQRN-7h6I0w-1; Fri,
- 06 Sep 2024 14:06:35 -0400
-X-MC-Unique: aU1qQoXCOACTQRN-7h6I0w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-Mw4Y-aS2MeiQKiS1ySmKJw-1; Fri,
+ 06 Sep 2024 14:06:33 -0400
+X-MC-Unique: Mw4Y-aS2MeiQKiS1ySmKJw-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B54CC19560B0; Fri,  6 Sep 2024 18:06:34 +0000 (UTC)
+ id 3A56D19560AD; Fri,  6 Sep 2024 18:06:32 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.70])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D513319560AA; Fri,  6 Sep 2024 18:06:32 +0000 (UTC)
+ id 88BA619560AA; Fri,  6 Sep 2024 18:06:30 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH 13/14] tests/functional: Convert the m68k MCF5208EVB Avocado
- test
-Date: Fri,  6 Sep 2024 20:05:48 +0200
-Message-ID: <20240906180549.792832-14-thuth@redhat.com>
+Subject: [PATCH 12/14] tests/functional: Convert the Alpha Clipper Avocado test
+Date: Fri,  6 Sep 2024 20:05:47 +0200
+Message-ID: <20240906180549.792832-13-thuth@redhat.com>
 In-Reply-To: <20240906180549.792832-1-thuth@redhat.com>
 References: <20240906180549.792832-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,59 +82,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We've got to do_test_advcal_2018() here now that the test resides
-in a separate file. Also switch back to the original URL (since
-the site did not vanish as originally expected) and update the
-hashsum to use SHA256.
+Straight forward conversion, just switch to SHA256 hashsum now.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/boot_linux_console.py      |  8 -------
- tests/functional/meson.build             |  1 +
- tests/functional/test_m68k_mcf5208evb.py | 29 ++++++++++++++++++++++++
- 3 files changed, 30 insertions(+), 8 deletions(-)
- create mode 100755 tests/functional/test_m68k_mcf5208evb.py
+ tests/avocado/boot_linux_console.py    | 21 --------------
+ tests/functional/meson.build           |  4 +++
+ tests/functional/test_alpha_clipper.py | 38 ++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 21 deletions(-)
+ create mode 100755 tests/functional/test_alpha_clipper.py
 
 diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 75aab90320..db72bd1b5e 100644
+index a8eac44d9f..75aab90320 100644
 --- a/tests/avocado/boot_linux_console.py
 +++ b/tests/avocado/boot_linux_console.py
-@@ -927,14 +927,6 @@ def test_arm_ast2600_debian(self):
-         self.wait_for_console_pattern("SMP: Total of 2 processors activated")
-         self.wait_for_console_pattern("No filesystem could mount root")
+@@ -882,27 +882,6 @@ def test_arm_orangepi_uboot_netbsd9(self):
+         # Wait for user-space
+         wait_for_console_pattern(self, 'Starting root file system check')
  
--    def test_m68k_mcf5208evb(self):
+-    def test_alpha_clipper(self):
 -        """
--        :avocado: tags=arch:m68k
--        :avocado: tags=machine:mcf5208evb
+-        :avocado: tags=arch:alpha
+-        :avocado: tags=machine:clipper
 -        """
--        tar_hash = 'ac688fd00561a2b6ce1359f9ff6aa2b98c9a570c'
--        self.do_test_advcal_2018('07', tar_hash, 'sanity-clause.elf')
+-        kernel_url = ('http://archive.debian.org/debian/dists/lenny/main/'
+-                      'installer-alpha/20090123lenny10/images/cdrom/vmlinuz')
+-        kernel_hash = '3a943149335529e2ed3e74d0d787b85fb5671ba3'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
 -
-     def test_or1k_sim(self):
-         """
-         :avocado: tags=arch:or1k
+-        uncompressed_kernel = archive.uncompress(kernel_path, self.workdir)
+-
+-        self.vm.set_console()
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        self.vm.add_args('-nodefaults',
+-                         '-kernel', uncompressed_kernel,
+-                         '-append', kernel_command_line)
+-        self.vm.launch()
+-        console_pattern = 'Kernel command line: %s' % kernel_command_line
+-        self.wait_for_console_pattern(console_pattern)
+-
+     def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
+         tar_url = ('https://qemu-advcal.gitlab.io'
+                    '/qac-best-of-multiarch/download/day' + day + '.tar.xz')
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index e1903132a1..8f9694244f 100644
+index a79083b0f9..e1903132a1 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -64,6 +64,7 @@ tests_loongarch64_system_thorough = [
+@@ -41,6 +41,10 @@ tests_aarch64_system_thorough = [
+   'aarch64_virt',
  ]
  
- tests_m68k_system_thorough = [
-+  'm68k_mcf5208evb',
-   'm68k_nextcube',
-   'm68k_q800',
- ]
-diff --git a/tests/functional/test_m68k_mcf5208evb.py b/tests/functional/test_m68k_mcf5208evb.py
++tests_alpha_system_thorough = [
++  'alpha_clipper',
++]
++
+ tests_arm_system_thorough = [
+   'arm_canona1100',
+   'arm_integratorcp',
+diff --git a/tests/functional/test_alpha_clipper.py b/tests/functional/test_alpha_clipper.py
 new file mode 100755
-index 0000000000..869ccc88df
+index 0000000000..c1fbf0e395
 --- /dev/null
-+++ b/tests/functional/test_m68k_mcf5208evb.py
-@@ -0,0 +1,29 @@
++++ b/tests/functional/test_alpha_clipper.py
+@@ -0,0 +1,38 @@
 +#!/usr/bin/env python3
 +#
-+# Functional test that boots a Linux kernel on an MCF5208EVB machine
++# Functional test that boots a Linux kernel on an Alpha Clipper machine
 +# and checks the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
@@ -143,22 +155,31 @@ index 0000000000..869ccc88df
 +import os
 +
 +from qemu_test import LinuxKernelTest, Asset
-+from qemu_test.utils import archive_extract
++from qemu_test.utils import gzip_uncompress
 +
-+class Mcf5208EvbTest(LinuxKernelTest):
 +
-+    ASSET_DAY07 = Asset(
-+        'https://www.qemu-advent-calendar.org/2018/download/day07.tar.xz',
-+        '753c2f3837126b7c6ba92d0b1e0b156e8a2c5131d2d576bb0b9a763fae73c08a')
++class AlphaClipperTest(LinuxKernelTest):
 +
-+    def test_m68k_mcf5208evb(self):
-+        self.set_machine('mcf5208evb')
-+        file_path = self.ASSET_DAY07.fetch()
-+        archive_extract(file_path, self.workdir)
++    ASSET_KERNEL = Asset(
++        ('http://archive.debian.org/debian/dists/lenny/main/'
++         'installer-alpha/20090123lenny10/images/cdrom/vmlinuz'),
++        '34f53da3fa32212e4f00b03cb944b2ad81c06bc8faaf9b7193b2e544ceeca576')
++
++    def test_alpha_clipper(self):
++        self.set_machine('clipper')
++        kernel_path = self.ASSET_KERNEL.fetch()
++
++        uncompressed_kernel = os.path.join(self.workdir, 'vmlinux')
++        gzip_uncompress(kernel_path, uncompressed_kernel)
++
 +        self.vm.set_console()
-+        self.vm.add_args('-kernel', self.workdir + '/day07/sanity-clause.elf')
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        self.vm.add_args('-nodefaults',
++                         '-kernel', uncompressed_kernel,
++                         '-append', kernel_command_line)
 +        self.vm.launch()
-+        self.wait_for_console_pattern('QEMU advent calendar')
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        self.wait_for_console_pattern(console_pattern)
 +
 +if __name__ == '__main__':
 +    LinuxKernelTest.main()
