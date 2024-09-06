@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE3CCE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4E3CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSuQ-0002Td-FV; Fri, 06 Sep 2024 02:57:30 -0400
+	id 1smSwB-0005tp-RK; Fri, 06 Sep 2024 02:59:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSuD-0001nS-HY; Fri, 06 Sep 2024 02:57:20 -0400
+ id 1smSvK-0007rK-Ke; Fri, 06 Sep 2024 02:58:27 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSuB-0003UN-J8; Fri, 06 Sep 2024 02:57:17 -0400
+ id 1smSvI-0003cA-OQ; Fri, 06 Sep 2024 02:58:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9E43E8C253;
- Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A6838C25F;
+ Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6696213340B;
- Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
-Received: (nullmailer pid 43562 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 33D19133417;
+ Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
+Received: (nullmailer pid 43657 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 30/53] target/i386: Fix VSIB decode
-Date: Fri,  6 Sep 2024 09:54:00 +0300
-Message-Id: <20240906065429.42415-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jianzhou Yue <JianZhou.Yue@verisilicon.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 42/53] hw/core/ptimer: fix timer zero period condition
+ for freq > 1GHz
+Date: Fri,  6 Sep 2024 09:54:12 +0300
+Message-Id: <20240906065429.42415-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -61,135 +62,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Jianzhou Yue <JianZhou.Yue@verisilicon.com>
 
-With normal SIB, index == 4 indicates no index.
-With VSIB, there is no exception for VR4/VR12.
+The real period is zero when both period and period_frac are zero.
+Check the method ptimer_set_freq, if freq is larger than 1000 MHz,
+the period is zero, but the period_frac is not, in this case, the
+ptimer will work but the current code incorrectly recognizes that
+the ptimer is disabled.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2474
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240805003130.1421051-3-richard.henderson@linaro.org
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit ac63755b20013ec6a3d2aef4538d37dc90bc3d10)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2306
+Signed-off-by: JianZhou Yue <JianZhou.Yue@verisilicon.com>
+Message-id: 3DA024AEA8B57545AF1B3CAA37077D0FB75E82C8@SHASXM03.verisilicon.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 446e5e8b4515e9a7be69ef6a29852975289bb6f0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: modify the change to pre-new-decoder introduced past qemu 9.0)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 73aa2c42b7..ffd3a42688 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1102,7 +1102,8 @@ static int decode_modrm(DisasContext *s, CPUX86State *env, X86DecodedInsn *decod
-     } else {
-         op->has_ea = true;
-         op->n = -1;
--        decode->mem = gen_lea_modrm_0(env, s, get_modrm(s, env));
-+        decode->mem = gen_lea_modrm_0(env, s, modrm,
-+                                      decode->e.vex_class == 12);
+diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
+index e03165febf..7177ecfab0 100644
+--- a/hw/core/ptimer.c
++++ b/hw/core/ptimer.c
+@@ -83,7 +83,7 @@ static void ptimer_reload(ptimer_state *s, int delta_adjust)
+         delta = s->delta = s->limit;
      }
-     return modrm;
- }
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 716a747df7..157348273e 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2159,7 +2159,7 @@ typedef struct AddressParts {
- } AddressParts;
  
- static AddressParts gen_lea_modrm_0(CPUX86State *env, DisasContext *s,
--                                    int modrm)
-+                                    int modrm, bool is_vsib)
- {
-     int def_seg, base, index, scale, mod, rm;
-     target_long disp;
-@@ -2188,7 +2188,7 @@ static AddressParts gen_lea_modrm_0(CPUX86State *env, DisasContext *s,
-             int code = x86_ldub_code(env, s);
-             scale = (code >> 6) & 3;
-             index = ((code >> 3) & 7) | REX_X(s);
--            if (index == 4) {
-+            if (index == 4 && !is_vsib) {
-                 index = -1;  /* no index */
-             }
-             base = (code & 7) | REX_B(s);
-@@ -2318,21 +2318,21 @@ static TCGv gen_lea_modrm_1(DisasContext *s, AddressParts a, bool is_vsib)
+-    if (s->period == 0) {
++    if (s->period == 0 && s->period_frac == 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+@@ -309,7 +309,7 @@ void ptimer_run(ptimer_state *s, int oneshot)
  
- static void gen_lea_modrm(CPUX86State *env, DisasContext *s, int modrm)
- {
--    AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+    AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-     TCGv ea = gen_lea_modrm_1(s, a, false);
-     gen_lea_v_seg(s, s->aflag, ea, a.def_seg, s->override);
+     assert(s->in_transaction);
+ 
+-    if (was_disabled && s->period == 0) {
++    if (was_disabled && s->period == 0 && s->period_frac == 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+diff --git a/tests/unit/ptimer-test.c b/tests/unit/ptimer-test.c
+index 04b5f4e3d0..08240594bb 100644
+--- a/tests/unit/ptimer-test.c
++++ b/tests/unit/ptimer-test.c
+@@ -763,6 +763,33 @@ static void check_oneshot_with_load_0(gconstpointer arg)
+     ptimer_free(ptimer);
  }
  
- static void gen_nop_modrm(CPUX86State *env, DisasContext *s, int modrm)
++static void check_freq_more_than_1000M(gconstpointer arg)
++{
++    const uint8_t *policy = arg;
++    ptimer_state *ptimer = ptimer_init(ptimer_trigger, NULL, *policy);
++    bool no_round_down = (*policy & PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
++
++    triggered = false;
++
++    ptimer_transaction_begin(ptimer);
++    ptimer_set_freq(ptimer, 2000000000);
++    ptimer_set_limit(ptimer, 8, 1);
++    ptimer_run(ptimer, 1);
++    ptimer_transaction_commit(ptimer);
++
++    qemu_clock_step(3);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), ==, no_round_down ? 3 : 2);
++    g_assert_false(triggered);
++
++    qemu_clock_step(1);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), ==, 0);
++    g_assert_true(triggered);
++
++    ptimer_free(ptimer);
++}
++
+ static void add_ptimer_tests(uint8_t policy)
  {
--    (void)gen_lea_modrm_0(env, s, modrm);
-+    (void)gen_lea_modrm_0(env, s, modrm, false);
+     char policy_name[256] = "";
+@@ -857,6 +884,12 @@ static void add_ptimer_tests(uint8_t policy)
+                               policy_name),
+         g_memdup2(&policy, 1), check_oneshot_with_load_0, g_free);
+     g_free(tmp);
++
++    g_test_add_data_func_full(
++        tmp = g_strdup_printf("/ptimer/freq_more_than_1000M policy=%s",
++                              policy_name),
++        g_memdup2(&policy, 1), check_freq_more_than_1000M, g_free);
++    g_free(tmp);
  }
  
- /* Used for BNDCL, BNDCU, BNDCN.  */
- static void gen_bndck(CPUX86State *env, DisasContext *s, int modrm,
-                       TCGCond cond, TCGv_i64 bndv)
- {
--    AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+    AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-     TCGv ea = gen_lea_modrm_1(s, a, false);
- 
-     tcg_gen_extu_tl_i64(s->tmp1_i64, ea);
-@@ -4156,7 +4156,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-             goto illegal_op;
-         reg = ((modrm >> 3) & 7) | REX_R(s);
-         {
--            AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+            AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-             TCGv ea = gen_lea_modrm_1(s, a, false);
-             gen_lea_v_seg(s, s->aflag, ea, -1, -1);
-             gen_op_mov_reg_v(s, dflag, reg, s->A0);
-@@ -4378,7 +4378,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-             op = ((b & 7) << 3) | ((modrm >> 3) & 7);
-             if (mod != 3) {
-                 /* memory op */
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 TCGv ea = gen_lea_modrm_1(s, a, false);
-                 TCGv last_addr = tcg_temp_new();
-                 bool update_fdp = true;
-@@ -5322,7 +5322,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-         rm = (modrm & 7) | REX_B(s);
-         gen_op_mov_v_reg(s, MO_32, s->T1, reg);
-         if (mod != 3) {
--            AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+            AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-             /* specific case: we need to add a displacement */
-             gen_exts(ot, s->T1);
-             tcg_gen_sari_tl(s->tmp0, s->T1, 3 + ot);
-@@ -6318,7 +6318,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-                 }
-             } else if (mod != 3) {
-                 /* bndldx */
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 if (reg >= 4
-                     || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
-@@ -6362,7 +6362,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 if (a.base >= 0) {
-                     tcg_gen_extu_tl_i64(cpu_bndl[reg], cpu_regs[a.base]);
-                     if (!CODE64(s)) {
-@@ -6423,7 +6423,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-                 }
-             } else if (mod != 3) {
-                 /* bndstx */
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 if (reg >= 4
-                     || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
+ static void add_all_ptimer_policies_comb_tests(void)
 -- 
 2.39.2
 
