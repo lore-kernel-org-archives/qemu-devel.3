@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987A6CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72485CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWuO-0000yE-VP; Fri, 06 Sep 2024 07:13:45 -0400
+	id 1smWuJ-0000ZR-Lb; Fri, 06 Sep 2024 07:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuL-0000hB-2f; Fri, 06 Sep 2024 07:13:41 -0400
+ id 1smWuH-0000Sl-Ep; Fri, 06 Sep 2024 07:13:37 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuJ-0007gp-AY; Fri, 06 Sep 2024 07:13:40 -0400
+ id 1smWuF-0007ft-LE; Fri, 06 Sep 2024 07:13:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E96E88C477;
+ by isrv.corpit.ru (Postfix) with ESMTP id C6FC58C475;
  Fri,  6 Sep 2024 14:12:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id F3B981336E1;
+ by tsrv.corpit.ru (Postfix) with SMTP id D3D3E1336DF;
  Fri,  6 Sep 2024 14:13:24 +0300 (MSK)
-Received: (nullmailer pid 353561 invoked by uid 1000);
+Received: (nullmailer pid 353555 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Daniyal Khan <danikhan632@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 07/69] target/arm: Use FPST_F16 for SME FMOPA (widening)
-Date: Fri,  6 Sep 2024 14:12:16 +0300
-Message-Id: <20240906111324.353230-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 05/69] target/arm: LDAPR should honour SCTLR_ELx.nAA
+Date: Fri,  6 Sep 2024 14:12:14 +0300
+Message-Id: <20240906111324.353230-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,59 +62,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-This operation has float16 inputs and thus must use
-the FZ16 control not the FZ control.
+In commit c1a1f80518d360b when we added the FEAT_LSE2 relaxations to
+the alignment requirements for atomic and ordered loads and stores,
+we didn't quite get it right for LDAPR/LDAPRH/LDAPRB with no
+immediate offset.  These instructions were handled in the old decoder
+as part of disas_ldst_atomic(), but unlike all the other insns that
+function decoded (LDADD, LDCLR, etc) these insns are "ordered", not
+"atomic", so they should be using check_ordered_align() rather than
+check_atomic_align().  Commit c1a1f80518d360b used
+check_atomic_align() regardless for everything in
+disas_ldst_atomic().  We then carried that incorrect check over in
+the decodetree conversion, where LDAPR/LDAPRH/LDAPRB are now handled
+by trans_LDAPR().
+
+The effect is that when FEAT_LSE2 is implemented, these instructions
+don't honour the SCTLR_ELx.nAA bit and will generate alignment
+faults when they should not.
+
+(The LDAPR insns with an immediate offset were in disas_ldst_ldapr_stlr()
+and then in trans_LDAPR_i() and trans_STLR_i(), and have always used
+the correct check_ordered_align().)
+
+Use check_ordered_align() in trans_LDAPR().
 
 Cc: qemu-stable@nongnu.org
-Fixes: 3916841ac75 ("target/arm: Implement FMOPA, FMOPS (widening)")
-Reported-by: Daniyal Khan <danikhan632@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20240717060149.204788-3-richard.henderson@linaro.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2374
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Fixes: c1a1f80518d360b ("target/arm: Relax ordered/atomic alignment checks for LSE2")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 207d30b5fdb5b45a36f26eefcf52fe2c1714dd4f)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240709134504.3500007-3-peter.maydell@linaro.org
+(cherry picked from commit 25489b521b61b874c4c6583956db0012a3674e3a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 46c7fce8b4..185a8a917b 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -304,6 +304,7 @@ static bool do_outprod(DisasContext *s, arg_op *a, MemOp esz,
- }
- 
- static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
-+                            ARMFPStatusFlavour e_fpst,
-                             gen_helper_gvec_5_ptr *fn)
- {
-     int svl = streaming_vec_reg_size(s);
-@@ -319,15 +320,18 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
-     zm = vec_full_reg_ptr(s, a->zm);
-     pn = pred_full_reg_ptr(s, a->pn);
-     pm = pred_full_reg_ptr(s, a->pm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(e_fpst);
- 
-     fn(za, zn, zm, pn, pm, fpst, tcg_constant_i32(desc));
-     return true;
- }
- 
--TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_h)
--TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_s)
--TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a, MO_64, gen_helper_sme_fmopa_d)
-+TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
-+           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
-+TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
-+           MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
-+TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
-+           MO_64, FPST_FPCR, gen_helper_sme_fmopa_d)
- 
- /* TODO: FEAT_EBF16 */
- TRANS_FEAT(BFMOPA, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_bfmopa)
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 2666d52711..922a16e5d4 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -3428,7 +3428,7 @@ static bool trans_LDAPR(DisasContext *s, arg_LDAPR *a)
+     if (a->rn == 31) {
+         gen_check_sp_alignment(s);
+     }
+-    mop = check_atomic_align(s, a->rn, a->sz);
++    mop = check_ordered_align(s, a->rn, 0, false, a->sz);
+     clean_addr = gen_mte_check1(s, cpu_reg_sp(s, a->rn), false,
+                                 a->rn != 31, mop);
+     /*
 -- 
 2.39.2
 
