@@ -4,44 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D1CCE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7594CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWup-0002p1-TR; Fri, 06 Sep 2024 07:14:12 -0400
+	id 1smWyf-0004Sq-DV; Fri, 06 Sep 2024 07:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWun-0002hC-Sz; Fri, 06 Sep 2024 07:14:09 -0400
+ id 1smWy4-0001YL-Kp; Fri, 06 Sep 2024 07:17:32 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWum-0007iW-7y; Fri, 06 Sep 2024 07:14:09 -0400
+ id 1smWy2-0008AN-V0; Fri, 06 Sep 2024 07:17:32 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 434448C47C;
- Fri,  6 Sep 2024 14:12:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 631CE8C49D;
+ Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4E1501336E6;
- Fri,  6 Sep 2024 14:13:25 +0300 (MSK)
-Received: (nullmailer pid 353579 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 700CD133706;
+ Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
+Received: (nullmailer pid 353687 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 12/69] virtio-snd: check for invalid param shift
- operands
-Date: Fri,  6 Sep 2024 14:12:21 +0300
-Message-Id: <20240906111324.353230-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Amjad Alsharafi <amjadsharafi10@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 44/69] vvfat: Fix reading files with non-continuous
+ clusters
+Date: Fri,  6 Sep 2024 14:12:53 +0300
+Message-Id: <20240906111324.353230-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,49 +62,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
 
-When setting the parameters of a PCM stream, we compute the bit flag
-with the format and rate values as shift operand to check if they are
-set in supported_formats and supported_rates.
+When reading with `read_cluster` we get the `mapping` with
+`find_mapping_for_cluster` and then we call `open_file` for this
+mapping.
+The issue appear when its the same file, but a second cluster that is
+not immediately after it, imagine clusters `500 -> 503`, this will give
+us 2 mappings one has the range `500..501` and another `503..504`, both
+point to the same file, but different offsets.
 
-If the guest provides a format/rate value which when shifting 1 results
-in a value bigger than the number of bits in
-supported_formats/supported_rates, we must report an error.
+When we don't open the file since the path is the same, we won't assign
+`s->current_mapping` and thus accessing way out of bound of the file.
 
-Previously, this ended up triggering the not reached assertions later
-when converting to internal QEMU values.
+From our example above, after `open_file` (that didn't open anything) we
+will get the offset into the file with
+`s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
+give us `0x2000 * (504-500)`, which is out of bound for this mapping and
+will produce some issues.
 
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2416
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <virtio-snd-fuzz-2416-fix-v1-manos.pitsidianakis@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 9b6083465fb8311f2410615f8303a41f580a2a20)
+Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+Message-ID: <1f3ea115779abab62ba32c788073cdc99f9ad5dd.1721470238.git.amjadsharafi10@gmail.com>
+[kwolf: Simplified the patch based on Amjad's analysis and input]
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 5eed3db336506b529b927ba221fe0d836e5b8819)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 541f0797ac..2b80072b04 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -282,11 +282,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
-         error_report("Number of channels is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+diff --git a/block/vvfat.c b/block/vvfat.c
+index b63ac5d045..213d7989e4 100644
+--- a/block/vvfat.c
++++ b/block/vvfat.c
+@@ -1369,8 +1369,9 @@ static int open_file(BDRVVVFATState* s,mapping_t* mapping)
+             return -1;
+         vvfat_close_current_file(s);
+         s->current_fd = fd;
+-        s->current_mapping = mapping;
      }
--    if (!(supported_formats & BIT(params->format))) {
-+    if (BIT(params->format) > sizeof(supported_formats) ||
-+        !(supported_formats & BIT(params->format))) {
-         error_report("Stream format is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
--    if (!(supported_rates & BIT(params->rate))) {
-+    if (BIT(params->rate) > sizeof(supported_rates) ||
-+        !(supported_rates & BIT(params->rate))) {
-         error_report("Stream rate is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
++
++    s->current_mapping = mapping;
+     return 0;
+ }
+ 
 -- 
 2.39.2
 
