@@ -4,44 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976F9CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20482CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWvM-0005P8-9m; Fri, 06 Sep 2024 07:14:44 -0400
+	id 1smWuH-0000Rd-PX; Fri, 06 Sep 2024 07:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWvF-0004tA-Ka; Fri, 06 Sep 2024 07:14:37 -0400
+ id 1smWuE-0000El-7B; Fri, 06 Sep 2024 07:13:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWvC-0007jq-Kd; Fri, 06 Sep 2024 07:14:36 -0400
+ id 1smWuC-0007f6-DD; Fri, 06 Sep 2024 07:13:33 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 820F78C480;
- Fri,  6 Sep 2024 14:12:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 97D968C472;
+ Fri,  6 Sep 2024 14:12:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8B3EB1336EA;
- Fri,  6 Sep 2024 14:13:25 +0300 (MSK)
-Received: (nullmailer pid 353592 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id A38F31336DC;
+ Fri,  6 Sep 2024 14:13:24 +0300 (MSK)
+Received: (nullmailer pid 353545 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 16/69] hw/intc/loongson_ipi: Access memory in little
- endian
-Date: Fri,  6 Sep 2024 14:12:25 +0300
-Message-Id: <20240906111324.353230-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 02/69] scsi: fix regression and honor bootindex again
+ for legacy drives
+Date: Fri,  6 Sep 2024 14:12:11 +0300
+Message-Id: <20240906111324.353230-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,65 +63,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-Loongson IPI is only available in little-endian,
-so use that to access the guest memory (in case
-we run on a big-endian host).
+Commit 3089637461 ("scsi: Don't ignore most usb-storage properties")
+removed the call to object_property_set_int() and thus the 'set'
+method for the bootindex property was also not called anymore. Here
+that method is device_set_bootindex() (as configured by
+scsi_dev_instance_init() -> device_add_bootindex_property()) which as
+a side effect registers the device via add_boot_device_path().
+
+As reported by a downstream user [0], the bootindex property did not
+have the desired effect anymore for legacy drives. Fix the regression
+by explicitly calling the add_boot_device_path() function after
+checking that the bootindex is not yet used (to avoid
+add_boot_device_path() calling exit()).
+
+[0]: https://forum.proxmox.com/threads/149772/post-679433
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Fixes: f6783e3438 ("hw/loongarch: Add LoongArch ipi interrupt support")
-[PMD: Extracted from bigger commit, added commit description]
-Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Tested-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Message-Id: <20240718133312.10324-3-philmd@linaro.org>
-(cherry picked from commit 2465c89fb983eed670007742bd68c7d91b6d6f85)
+Fixes: 3089637461 ("scsi: Don't ignore most usb-storage properties")
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Link: https://lore.kernel.org/r/20240710152529.1737407-1-f.ebner@proxmox.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 57a8a80d1a5b28797b21d30bfc60601945820e51)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: fixups for 9.0, for lack of:
- v9.0.0-583-g91d0b151de4c "hw/intc/loongson_ipi: Implement IOCSR address space for MIPS"
- v9.0.0-582-gb4a12dfc2132 "hw/intc/loongarch_ipi: Rename as loongson_ipi")
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index a184112b09..521731342c 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -13,6 +13,7 @@
- #include "qapi/error.h"
- #include "qemu/log.h"
- #include "exec/address-spaces.h"
-+#include "exec/memory.h"
- #include "hw/loongarch/virt.h"
- #include "migration/vmstate.h"
- #include "target/loongarch/internals.h"
-@@ -66,8 +67,8 @@ static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr,
-      * if the mask is 0, we need not to do anything.
-      */
-     if ((val >> 27) & 0xf) {
--        data = address_space_ldl(env->address_space_iocsr, addr,
--                                 attrs, NULL);
-+        data = address_space_ldl_le(env->address_space_iocsr, addr,
-+                                    attrs, NULL);
-         for (i = 0; i < 4; i++) {
-             /* get mask for byte writing */
-             if (val & (0x1 << (27 + i))) {
-@@ -78,8 +79,8 @@ static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr,
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index 9e40b0c920..53eff5dd3d 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -384,6 +384,7 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
+     DeviceState *dev;
+     SCSIDevice *s;
+     DriveInfo *dinfo;
++    Error *local_err = NULL;
  
-     data &= mask;
-     data |= (val >> 32) & ~mask;
--    address_space_stl(env->address_space_iocsr, addr,
--                      data, attrs, NULL);
-+    address_space_stl_le(env->address_space_iocsr, addr,
-+                         data, attrs, NULL);
- }
+     if (blk_is_sg(blk)) {
+         driver = "scsi-generic";
+@@ -403,6 +404,14 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
+     s = SCSI_DEVICE(dev);
+     s->conf = *conf;
  
- static int archid_cmp(const void *a, const void *b)
++    check_boot_index(conf->bootindex, &local_err);
++    if (local_err) {
++        object_unparent(OBJECT(dev));
++        error_propagate(errp, local_err);
++        return NULL;
++    }
++    add_boot_device_path(conf->bootindex, dev, NULL);
++
+     qdev_prop_set_uint32(dev, "scsi-id", unit);
+     if (object_property_find(OBJECT(dev), "removable")) {
+         qdev_prop_set_bit(dev, "removable", removable);
 -- 
 2.39.2
 
