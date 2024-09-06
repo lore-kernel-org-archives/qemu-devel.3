@@ -4,67 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2946CE7B1B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8670CE7B1B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sma0D-0003SB-OT; Fri, 06 Sep 2024 10:31:57 -0400
+	id 1sma2E-000119-AF; Fri, 06 Sep 2024 10:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=v4Y+=QE=zx2c4.com=Jason@kernel.org>)
- id 1sma0A-0003JR-VM
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:31:54 -0400
-Received: from nyc.source.kernel.org ([147.75.193.91])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=v4Y+=QE=zx2c4.com=Jason@kernel.org>)
- id 1sma08-0006vF-NP
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:31:54 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 2882CA44F03;
- Fri,  6 Sep 2024 14:31:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF86C4CEC4;
- Fri,  6 Sep 2024 14:31:50 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Kb2hYy6b"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1725633108;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+m/xcUrqoGeYJyA5iaaBLXqz4yO+IarVXArwdG15pUg=;
- b=Kb2hYy6bGTbjdoOzS6zmKvpXj175ORmebI3lYg/nT1FIh1xIuqgS1MFuuyxg5b0LNMuVUW
- Q+aV4zKZsv7zs7PVG8W7i+FU18tRKwm5qOiK/n+c+hrVwn0DtSLO/mXg29bif/IQ7pIz1v
- QnUroEBPGWyWs+c2lsZdG1RuH+IoAQY=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0c86453e
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 6 Sep 2024 14:31:48 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: maobibo <maobibo@loongson.cn>, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com, qemu-devel@nongnu.org, thomas@t-8ch.de,
- xry111@xry111.site
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH v2] hw/loongarch: virt: support up to 4 serial ports
-Date: Fri,  6 Sep 2024 16:31:05 +0200
-Message-ID: <20240906143146.2553953-1-Jason@zx2c4.com>
-In-Reply-To: <ZtsR9nQkKjfHDYAe@zx2c4.com>
-References: <ZtsR9nQkKjfHDYAe@zx2c4.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sma2C-0000ur-Pk
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:34:00 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sma29-00074A-Mz
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:34:00 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-206aee40676so19263015ad.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 07:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725633236; x=1726238036; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9zMNWTemNt+XMGFhIvLfgSfk7j8P7fZjmzkPpuiAszc=;
+ b=Kt/gluZCo6EjDiAkP4HM01yYgJoP++VglR1iEiZFGncnUi5N22lmypNWPYQG0NsiF7
+ Dvt2HoaLCxuYknPg2vuQsevMscALG3vOh9ICb5GdYbxIn5Mwl0Y1UcnD04atyKEQJ3ky
+ qj/vBQsVwKsX1pB3K9CZbAM0ObZ2kstuFkSMcyi5BdDBsc3SLZKIUH14euUnZwWHyVnC
+ 8C0KZsB3H3iBBVDxIi0+t69eLB3yZsU/gUw/jdCjbWeNLA9NWEarcZewDx9ZSgQBIut8
+ SFRB9PtfzRkObKDmNVaJAcIW2LoDHeNA+oe5n8XSly0E08haaf4gZGdsJb4C4xdoxpx2
+ 3H1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725633236; x=1726238036;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9zMNWTemNt+XMGFhIvLfgSfk7j8P7fZjmzkPpuiAszc=;
+ b=M0Jmz1BoYQC6BbDakvdhmNlHReigZR5O34rqrmqUqajY6eR0u2ovZJFC2oiawdTsFq
+ 8XJVYC2f6FVKdtaPgNE78wWeERe3J6DRxlWTQtioh8E47lOEq0MD9vAeGQpU3kKv350C
+ WqltTRiDMP4stLoTVeyN53smGfIvpi2hnWW23iNhiDT3ajvg6tV2rFj1WjRlspO6sK1R
+ PhK0xfG73+z1xItHrdWvUq6/zYeScCQjgSWSIJP3FgSgZQOuSaqP0H2ecPMfjE1s/yPf
+ Ngt/gXXDBIVjQKeSKsS9duI5OmGBShL2k8op4Qb3qe0Pp+qjamGpQ7sGSFcM1xKBNQSK
+ ptSA==
+X-Gm-Message-State: AOJu0Yx+oK2QayGP0OIb8INDB997wyNoz0Zv5FlvURvVqh0A0NI/nRBp
+ Ro69/HBvJrwW8Cw0ugdjn0xKYSWGLJnI6BR9ZQqdQ9ZfUDTrJJWaosSJ5Keila396tzjOgiPiX7
+ b
+X-Google-Smtp-Source: AGHT+IH8gbWemzgFZ5dRwfRABpQhdukRal21e9TYAaEQInC03y5rtghaN17FqPBskNDlZYUq7U73AQ==
+X-Received: by 2002:a17:902:d4c6:b0:1fa:1dd8:947a with SMTP id
+ d9443c01a7336-207070004d8mr410645ad.46.1725633236072; 
+ Fri, 06 Sep 2024 07:33:56 -0700 (PDT)
+Received: from amd.. ([2804:7f0:b401:42a1:3e7c:3fff:fe7a:e83b])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-206ae913cf1sm43844425ad.28.2024.09.06.07.33.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Sep 2024 07:33:55 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org
+Cc: peter.maydell@linaro.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH v4 4/5] tests/tcg/aarch64: Improve linker script organization
+Date: Fri,  6 Sep 2024 14:33:15 +0000
+Message-Id: <20240906143316.657436-5-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240906143316.657436-1-gustavo.romero@linaro.org>
+References: <20240906143316.657436-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91;
- envelope-from=SRS0=v4Y+=QE=zx2c4.com=Jason@kernel.org;
- helo=nyc.source.kernel.org
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,164 +96,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to support additional channels of communication using
-`-serial`, add several serial ports, up to the standard 4 generally
-supported by the 8250 driver.
+Improve kernel.ld linker script organization by using MEMORY command.
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
-As I don't use ACPI, I haven't tested the ACPI part of this, which
-Maobibo wrote.
+ tests/tcg/aarch64/system/kernel.ld | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
- hw/loongarch/acpi-build.c  | 23 +++++++++++++++--------
- hw/loongarch/virt.c        | 24 ++++++++++++++----------
- include/hw/pci-host/ls7a.h |  9 +++++----
- 3 files changed, 34 insertions(+), 22 deletions(-)
-
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index 2638f87434..2750c6e858 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -31,6 +31,7 @@
+diff --git a/tests/tcg/aarch64/system/kernel.ld b/tests/tcg/aarch64/system/kernel.ld
+index 7b3a76dcbf..5f39258d32 100644
+--- a/tests/tcg/aarch64/system/kernel.ld
++++ b/tests/tcg/aarch64/system/kernel.ld
+@@ -1,23 +1,23 @@
+ ENTRY(__start)
  
- #include "hw/acpi/generic_event_device.h"
- #include "hw/pci-host/gpex.h"
-+#include "sysemu/sysemu.h"
- #include "sysemu/tpm.h"
- #include "hw/platform-bus.h"
- #include "hw/acpi/aml-build.h"
-@@ -252,23 +253,27 @@ struct AcpiBuildState {
-     MemoryRegion *linker_mr;
- } AcpiBuildState;
- 
--static void build_uart_device_aml(Aml *table)
-+static void build_uart_device_aml(Aml *table, int index)
- {
-     Aml *dev;
-     Aml *crs;
-     Aml *pkg0, *pkg1, *pkg2;
--    uint32_t uart_irq = VIRT_UART_IRQ;
--
--    Aml *scope = aml_scope("_SB");
--    dev = aml_device("COMA");
-+    Aml *scope;
-+    uint32_t uart_irq;
-+    uint64_t base;
+-SECTIONS
+-{
+-    /* virt machine, RAM starts at 1gb */
+-    . = (1 << 30);
++MEMORY {
++    /* On virt machine RAM starts at 1 GiB. */
 +
-+    uart_irq = VIRT_UART_IRQ + index;
-+    base = VIRT_UART_BASE + index * VIRT_UART_SIZE;
-+    scope = aml_scope("_SB");
-+    dev = aml_device("COM%d", VIRT_UART_COUNT - 1 - index);
-     aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
--    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(VIRT_UART_COUNT - 1 - index)));
-     aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
-     crs = aml_resource_template();
-     aml_append(crs,
-         aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
-                          AML_NON_CACHEABLE, AML_READ_WRITE,
--                         0, VIRT_UART_BASE, VIRT_UART_BASE + VIRT_UART_SIZE - 1,
-+                         0, base, base + VIRT_UART_SIZE - 1,
-                          0, VIRT_UART_SIZE));
-     aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
-                                   AML_SHARED, &uart_irq, 1));
-@@ -401,6 +406,7 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
- static void
- build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
- {
-+    int i;
-     Aml *dsdt, *scope, *pkg;
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
-     AcpiTable table = { .sig = "DSDT", .rev = 1, .oem_id = lvms->oem_id,
-@@ -408,7 +414,8 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
- 
-     acpi_table_begin(&table, table_data);
-     dsdt = init_aml_allocator();
--    build_uart_device_aml(dsdt);
-+    for (i = 0; i < VIRT_UART_COUNT; ++i)
-+        build_uart_device_aml(dsdt, i);
-     build_pci_device_aml(dsdt, lvms);
-     build_la_ged_aml(dsdt, machine);
-     build_flash_aml(dsdt, lvms);
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 4151fc5e0c..6e8608874c 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -319,10 +319,10 @@ static void fdt_add_ged_reset(LoongArchVirtMachineState *lvms)
- }
- 
- static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
--                              uint32_t *pch_pic_phandle)
-+                              uint32_t *pch_pic_phandle, hwaddr base,
-+                              int irq, bool chosen)
- {
-     char *nodename;
--    hwaddr base = VIRT_UART_BASE;
-     hwaddr size = VIRT_UART_SIZE;
-     MachineState *ms = MACHINE(lvms);
- 
-@@ -331,9 +331,9 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
-     qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "ns16550a");
-     qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0x0, base, 0x0, size);
-     qemu_fdt_setprop_cell(ms->fdt, nodename, "clock-frequency", 100000000);
--    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
--    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
--                           VIRT_UART_IRQ - VIRT_GSI_BASE, 0x4);
-+    if (chosen)
-+        qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
-     qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
-                           *pch_pic_phandle);
-     g_free(nodename);
-@@ -750,11 +750,15 @@ static void virt_devices_init(DeviceState *pch_pic,
-     /* Add pcie node */
-     fdt_add_pcie_node(lvms, pch_pic_phandle, pch_msi_phandle);
- 
--    serial_mm_init(get_system_memory(), VIRT_UART_BASE, 0,
--                   qdev_get_gpio_in(pch_pic,
--                                    VIRT_UART_IRQ - VIRT_GSI_BASE),
--                   115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
--    fdt_add_uart_node(lvms, pch_pic_phandle);
-+    for (i = 0; i < VIRT_UART_COUNT; ++i) {
-+        hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
-+        int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
-+        serial_mm_init(get_system_memory(), base, 0,
-+                       qdev_get_gpio_in(pch_pic, irq),
-+                       115200, serial_hd(VIRT_UART_COUNT - 1 - i),
-+                       DEVICE_LITTLE_ENDIAN);
-+        fdt_add_uart_node(lvms, pch_pic_phandle, base, irq, i == VIRT_UART_COUNT - 1 - i);
-+    }
- 
-     /* Network init */
-     pci_init_nic_devices(pci_bus, mc->default_nic);
-diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
-index cd7c9ec7bc..79d4ea8501 100644
---- a/include/hw/pci-host/ls7a.h
-+++ b/include/hw/pci-host/ls7a.h
-@@ -36,17 +36,18 @@
- #define VIRT_PCH_PIC_IRQ_NUM     32
- #define VIRT_GSI_BASE            64
- #define VIRT_DEVICE_IRQS         16
-+#define VIRT_UART_COUNT          4
- #define VIRT_UART_IRQ            (VIRT_GSI_BASE + 2)
- #define VIRT_UART_BASE           0x1fe001e0
--#define VIRT_UART_SIZE           0X100
--#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 3)
-+#define VIRT_UART_SIZE           0x100
-+#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 6)
- #define VIRT_MISC_REG_BASE       (VIRT_PCH_REG_BASE + 0x00080000)
- #define VIRT_RTC_REG_BASE        (VIRT_MISC_REG_BASE + 0x00050100)
- #define VIRT_RTC_LEN             0x100
--#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 4)
-+#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 7)
- 
- #define VIRT_PLATFORM_BUS_BASEADDRESS   0x16000000
- #define VIRT_PLATFORM_BUS_SIZE          0x2000000
- #define VIRT_PLATFORM_BUS_NUM_IRQS      2
--#define VIRT_PLATFORM_BUS_IRQ           (VIRT_GSI_BASE + 5)
-+#define VIRT_PLATFORM_BUS_IRQ           (VIRT_GSI_BASE + 8)
- #endif
++    /* Align text and rodata to the 1st 2 MiB chunk. */
++    TXT (rx) : ORIGIN = 1 << 30, LENGTH = 2M
++    /* Align r/w data to the 2nd 2 MiB chunk. */
++    DAT (rw) : ORIGIN = (1 << 30) + 2M, LENGTH = 2M
++}
++
++SECTIONS {
+     .text : {
+         *(.text)
+-    }
+-    .rodata : {
+         *(.rodata)
+-    }
+-    /* align r/w section to next 2mb */
+-    . = ALIGN(1 << 21);
++    } >TXT
+     .data : {
+         *(.data)
+-    }
+-    .bss : {
+         *(.bss)
+-    }
++    } >DAT
+     /DISCARD/ : {
+         *(.ARM.attributes)
+     }
 -- 
-2.46.0
+2.34.1
 
 
