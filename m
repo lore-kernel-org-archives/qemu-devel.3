@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AF1CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75579CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smX0q-0005oI-3E; Fri, 06 Sep 2024 07:20:24 -0400
+	id 1smWyj-00050c-2f; Fri, 06 Sep 2024 07:18:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smX0P-0003ph-9r; Fri, 06 Sep 2024 07:20:01 -0400
+ id 1smWyc-0004Hg-W9; Fri, 06 Sep 2024 07:18:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smX0N-0008NG-Nk; Fri, 06 Sep 2024 07:19:57 -0400
+ id 1smWyb-0008E7-91; Fri, 06 Sep 2024 07:18:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E7DEB8C4B5;
- Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D25B88C4A4;
+ Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id F378213371E;
- Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353769 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:25 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id DE60413370D;
+ Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
+Received: (nullmailer pid 353712 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 68/69] hw/audio/virtio-snd: fix invalid param check
-Date: Fri,  6 Sep 2024 14:13:17 +0300
-Message-Id: <20240906111324.353230-68-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, David Woodhouse <dwmw@amazon.co.uk>,
+ Hans <sungdgdhtryrt@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Jason Wang <jasowang@redhat.com>
+Subject: [Stable-9.0.3 51/69] net: Fix '-net nic,
+ model=' for non-help arguments
+Date: Fri,  6 Sep 2024 14:13:00 +0300
+Message-Id: <20240906111324.353230-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,43 +63,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-Commit 9b6083465f ("virtio-snd: check for invalid param shift
-operands") tries to prevent invalid parameters specified by the
-guest. However, the code is not correct.
+Oops, don't *delete* the model option when checking for 'help'.
 
-Change the code so that the parameters format and rate, which are
-a bit numbers, are compared with the bit size of the data type.
-
-Fixes: 9b6083465f ("virtio-snd: check for invalid param shift operands")
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Message-Id: <20240802071805.7123-1-vr_qemu@t-online.de>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 7d14471a121878602cb4e748c4707f9ab9a9e3e2)
+Fixes: 64f75f57f9d2 ("net: Reinstate '-net nic, model=help' output as documented in man page")
+Reported-by: Hans <sungdgdhtryrt@gmail.com>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit fa62cb989a9146c82f8f172715042852f5d36200)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 2b80072b04..95f55a02f1 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -282,12 +282,12 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
-         error_report("Number of channels is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
--    if (BIT(params->format) > sizeof(supported_formats) ||
-+    if (params->format >= sizeof(supported_formats) * BITS_PER_BYTE ||
-         !(supported_formats & BIT(params->format))) {
-         error_report("Stream format is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
--    if (BIT(params->rate) > sizeof(supported_rates) ||
-+    if (params->rate >= sizeof(supported_rates) * BITS_PER_BYTE ||
-         !(supported_rates & BIT(params->rate))) {
-         error_report("Stream rate is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+diff --git a/net/net.c b/net/net.c
+index e6ca2529bb..897bb936cf 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -1748,7 +1748,7 @@ void net_check_clients(void)
+ 
+ static int net_init_client(void *dummy, QemuOpts *opts, Error **errp)
+ {
+-    const char *model = qemu_opt_get_del(opts, "model");
++    const char *model = qemu_opt_get(opts, "model");
+ 
+     if (is_nic_model_help_option(model)) {
+         return 0;
 -- 
 2.39.2
 
