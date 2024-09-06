@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BC5CE7AFD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 10:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11FECE7AFB
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 10:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smVsm-0007Lb-LU; Fri, 06 Sep 2024 06:08:00 -0400
+	id 1smVuX-0003Ob-Of; Fri, 06 Sep 2024 06:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smVsk-0007KR-AU
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 06:07:58 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smVuU-0003LI-Pv
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 06:09:47 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smVsi-0000vD-Po
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 06:07:58 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-42bbd16fca8so15816565e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 03:07:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smVuT-00011Q-9K
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 06:09:46 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3787ddbd5a2so967977f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 03:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725617275; x=1726222075; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725617383; x=1726222183; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4hLhURe7hMu+xY3oYD9DJQCph9l0rVooUFMHoQ48oNU=;
- b=VA0U51KqMSNKppJBjinE8mL36R27K0GKd2zbhPfgZ9jZNwNZSGRD4BkHLDS7wRx1Db
- 5li87Vty8NcwcOqLz+twnjc4D//QOO0I4hoedDpQFOOBKOEF94XngQ604kvMUDYBMDGE
- +vuBdMH0pcL/5vLPuF3+1CWS7RsTKqw8v9Dkq2ky+7d/I+tVRkM5SZW7FjQI8Cmnqker
- HIg8MoM0R/S0dawyuG6AANBheVZ0x9MTtJPvxB9GKmJoerS2c+QI4GKpnptu9+poRXsL
- 7uoZlmgeuuhmYA5arlLvd9zNiz+zSOl8lOnwgA2wn7/5lM2epx6AAbgVw9k5uWveiFhP
- xOAg==
+ bh=809sxjCqIdzpogNlBhfUNGeDFJ7H93zc3rl0vI9KzlM=;
+ b=RqvFWVjvYcfb4vdK+4XQCBbRweNZdqvUwe/FewJq7GxI6IYFXKRhgWbFCb4QHCZfi2
+ 1X3IwxhTj6Eebp+/Q/ZbEervYByejh9Tt8i1dQFTRro/TK0xOqe26zrByfJ4p8uHh7SX
+ 6W2B13y8LPO8mXX3mgvLAaS7TuGeddheyb27djdAeYikEGXAFnaUnaE8vqfNcgDoK2QS
+ 0GvcziySr0i+rKWRygRvkrwJgOsrgzMCXBZM8G/WbmWDavxufJGdMmE6mQFPMfek034E
+ Wh6C9QDjc8yFChBlCMoSOAxv+YultIzbcGqa4xQlURKc80ThWJ2nl8Ksja85K9PShFrM
+ gXsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725617275; x=1726222075;
+ d=1e100.net; s=20230601; t=1725617383; x=1726222183;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4hLhURe7hMu+xY3oYD9DJQCph9l0rVooUFMHoQ48oNU=;
- b=McIcg4SrSC31ZHQj4BPLaXF1/pH0EoVjwdbkkFumSlFXQNHHimWfpAWyuZgTapvF/S
- Fgt5GDSJLYIpYGScLpF52o1u/uTL8/pH2brNJ0G+jkXO/NbUTBvHbnrWUqyD/mTVEQP0
- 4i2bjQZJZQtg+JFvxpqEqkcQx+hGV/GI7RIgVFElMQDeceTSh1pC3VYIpFlLbTLC0keH
- coQMaUt//0MAeyIWXHMtAj0TrC0QOlNDWIfiHDBvQvyrIpOi6koMSQX2eBNNi3a0R9Fb
- 9NK8kfZe0l0WJUcnc5rd96KqOblEMhKajhxqV59JV0ItmlmwZ0rMvF1fyDkRWDbbS5pY
- W7rw==
+ bh=809sxjCqIdzpogNlBhfUNGeDFJ7H93zc3rl0vI9KzlM=;
+ b=rN0LqGojjE/oJpIfPgx5PGpeBYFR6urtyCBk9N4yBRzMGNt6IQGvdWYbbIfIagIRUz
+ MZrWMDgnstjpRGLRD5tHFG7XX3Lq3zrqxwHglMypwO0srT9aWVyty2UH+pDpBDwzhV8K
+ CwUXHa9K/Gk2MZ6c9s3hC6FT6TBR0071fkd7qi5oXk4fhSthqbTcSQxT5ZMz70DIUMHi
+ 8Bn9prPKzHoVpDdtXxKl9AoCdkULVHa159o99CsdVmsBdOL64XtKVZjEsqDb1qkks6FK
+ 90s/WLrs0HYrHVd35p468sEw758oUMZQg/C7xc4llHwSjH+jskyVHbYQU5wVhh/P4ZYp
+ 9KaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTq2snjL9wv4UQSjHZONlvtEEpNBFcCN5MbQ+f2OpbK4q/LJAoMXqK1crCYgHVXBPJJ7afW9MZzxFi@nongnu.org
-X-Gm-Message-State: AOJu0Yy5diSex51i96O1FHhmI1HDjw89uxANYPwLRSKBeGxNZY9rHwke
- jpdMfkrmgvOLtMZ1QKRUI/U6w4Uy9jsqb0I0LNUB3Xgg5XiBpWpuZq3gxznn5Ho=
-X-Google-Smtp-Source: AGHT+IF42dEGueS3D0PBWYprZlwdq8o0rlukCrTq+TIp7DZI9L6eVuSvH3lCH+WCCTsLRq3qHRyhGQ==
-X-Received: by 2002:a05:600c:3516:b0:426:5269:983a with SMTP id
- 5b1f17b1804b1-42c9f984be6mr14627895e9.8.1725617274777; 
- Fri, 06 Sep 2024 03:07:54 -0700 (PDT)
+ AJvYcCVN7rCwWGDbZk13vh++pKyk8V0qGb42QifE0ON1WLcHi7w0CuDlgFkMUXUl/noUZjLUqqwIn8PkoU1S@nongnu.org
+X-Gm-Message-State: AOJu0YxpHPwh2sokU8P8QTnqNUItK3QonJvc8W12DudsrZe6lOIHyvcb
+ RPMcvKaLI0e/rkuNAGOx5p16wGDu52MVmvfeY05AD+SUOpBJC5D8baVjrWFAf3k=
+X-Google-Smtp-Source: AGHT+IHCDDEudDrf/gNBJuoE0xDST9XDpPu+NwPzo9PLpS+xG8PoggJJE4TJghCXONSQGm4Pn2yvrA==
+X-Received: by 2002:adf:e982:0:b0:371:88b9:256d with SMTP id
+ ffacd0b85a97d-378895c4a31mr1330614f8f.6.1725617383356; 
+ Fri, 06 Sep 2024 03:09:43 -0700 (PDT)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ca05c6b1dsm15331325e9.1.2024.09.06.03.07.53
+ 5b1f17b1804b1-42ca0606917sm15316975e9.39.2024.09.06.03.09.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 03:07:54 -0700 (PDT)
-Message-ID: <d20ad8b3-3f6e-4458-bc5f-bef17385b4b3@linaro.org>
-Date: Fri, 6 Sep 2024 12:07:53 +0200
+ Fri, 06 Sep 2024 03:09:42 -0700 (PDT)
+Message-ID: <658d7d65-04c6-4da2-a741-6e2635590fce@linaro.org>
+Date: Fri, 6 Sep 2024 12:09:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] ebpf: add formal error reporting to all APIs
+Subject: Re: [PATCH v2 5/7] hw/net: report errors from failing to use eBPF RSS
+ FDs
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
 References: <20240905181330.3657590-1-berrange@redhat.com>
- <20240905181330.3657590-5-berrange@redhat.com>
+ <20240905181330.3657590-6-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240905181330.3657590-5-berrange@redhat.com>
+In-Reply-To: <20240905181330.3657590-6-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,20 +101,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/9/24 20:13, Daniel P. Berrangé wrote:
-> The eBPF code is currently reporting error messages through trace
-> events. Trace events are fine for debugging, but they are not to be
-> considered the primary error reporting mechanism, as their output
-> is inaccessible to callers.
-> 
-> This adds an "Error **errp" parameter to all methods which have
-> important error scenarios to report to the caller.
+> If the user/mgmt app passed in a set of pre-opened FDs for eBPF RSS,
+> then it is expecting QEMU to use them. Any failure to do so must be
+> considered a fatal error and propagated back up the stack, otherwise
+> deployment mistakes will not be detectable in a prompt manner. When
+> not using pre-opened FDs, then eBPF RSS is tried on a "best effort"
+> basis only and thus fallback to software RSS is valid.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   ebpf/ebpf_rss.c     | 59 ++++++++++++++++++++++++++++++++++++---------
->   ebpf/ebpf_rss.h     | 10 +++++---
->   hw/net/virtio-net.c |  7 +++---
->   3 files changed, 59 insertions(+), 17 deletions(-)
+>   hw/net/virtio-net.c | 41 +++++++++++++++++++++++++++++------------
+>   1 file changed, 29 insertions(+), 12 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
