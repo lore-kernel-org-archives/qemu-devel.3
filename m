@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB3A4CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A964CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:20:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWzw-0008Jz-LN; Fri, 06 Sep 2024 07:19:28 -0400
+	id 1smWxN-0007HT-E5; Fri, 06 Sep 2024 07:16:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWzu-000842-Dd; Fri, 06 Sep 2024 07:19:26 -0400
+ id 1smWwk-0004O3-HN; Fri, 06 Sep 2024 07:16:14 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWzs-0008KK-Cq; Fri, 06 Sep 2024 07:19:26 -0400
+ id 1smWwi-00083J-Ei; Fri, 06 Sep 2024 07:16:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 83C2D8C4AF;
- Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A76C8C490;
+ Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8E84E133718;
- Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353748 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:25 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id A61131336FA;
+ Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
+Received: (nullmailer pid 353647 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 62/69] crypto/tlscredspsk: Free username on finalize
-Date: Fri,  6 Sep 2024 14:13:11 +0300
-Message-Id: <20240906111324.353230-62-mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 32/69] target/arm: Handle denormals correctly for FMOPA
+ (widening)
+Date: Fri,  6 Sep 2024 14:12:41 +0300
+Message-Id: <20240906111324.353230-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,69 +65,161 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-When the creds->username property is set we allocate memory
-for it in qcrypto_tls_creds_psk_prop_set_username(), but
-we never free this when the QCryptoTLSCredsPSK is destroyed.
-Free the memory in finalize.
+The FMOPA (widening) SME instruction takes pairs of half-precision
+floating point values, widens them to single-precision, does a
+two-way dot product and accumulates the results into a
+single-precision destination.  We don't quite correctly handle the
+FPCR bits FZ and FZ16 which control flushing of denormal inputs and
+outputs.  This is because at the moment we pass a single float_status
+value to the helper function, which then uses that configuration for
+all the fp operations it does.  However, because the inputs to this
+operation are float16 and the outputs are float32 we need to use the
+fp_status_f16 for the float16 input widening but the normal fp_status
+for everything else.  Otherwise we will apply the flushing control
+FPCR.FZ16 to the 32-bit output rather than the FPCR.FZ control, and
+incorrectly flush a denormal output to zero when we should not (or
+vice-versa).
 
-This fixes a LeakSanitizer complaint in migration-test:
+(In commit 207d30b5fdb5b we tried to fix the FZ handling but
+didn't get it right, switching from "use FPCR.FZ for everything" to
+"use FPCR.FZ16 for everything".)
+(Mjt: it is commit 43929c818c4b in stable-9.0)
 
-$ (cd build/asan; ASAN_OPTIONS="fast_unwind_on_malloc=0" QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --tap -k -p /x86_64/migration/precopy/unix/tls/psk)
-
-=================================================================
-==3867512==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x5624e5c99dee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218edee) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-    #1 0x7fb199ae9738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
-    #2 0x7fb199afe583 in g_strdup debian/build/deb/../../../glib/gstrfuncs.c:361:17
-    #3 0x5624e82ea919 in qcrypto_tls_creds_psk_prop_set_username /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../crypto/tlscredspsk.c:255:23
-    #4 0x5624e812c6b5 in property_set_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:2277:5
-    #5 0x5624e8125ce5 in object_property_set /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:1463:5
-    #6 0x5624e8136e7c in object_set_properties_from_qdict /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:55:14
-    #7 0x5624e81372d2 in user_creatable_add_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:112:5
-    #8 0x5624e8137964 in user_creatable_add_qapi /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:157:11
-    #9 0x5624e891ba3c in qmp_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/qom-qmp-cmds.c:227:5
-    #10 0x5624e8af9118 in qmp_marshal_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qapi/qapi-commands-qom.c:337:5
-    #11 0x5624e8bd1d49 in do_qmp_dispatch_bh /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qapi/qmp-dispatch.c:128:5
-    #12 0x5624e8cb2531 in aio_bh_call /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:171:5
-    #13 0x5624e8cb340c in aio_bh_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:218:13
-    #14 0x5624e8c0be98 in aio_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/aio-posix.c:423:5
-    #15 0x5624e8cba3ce in aio_ctx_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:360:5
-    #16 0x7fb199ae0d3a in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
-    #17 0x7fb199ae0d3a in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
-    #18 0x5624e8cbe1d9 in glib_pollfds_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:287:9
-    #19 0x5624e8cbcb13 in os_host_main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:310:5
-    #20 0x5624e8cbc6dc in main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:589:11
-    #21 0x5624e6f3f917 in qemu_main_loop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/runstate.c:801:9
-    #22 0x5624e893379c in qemu_default_main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:37:14
-    #23 0x5624e89337e7 in main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:48:12
-    #24 0x7fb197972d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #25 0x7fb197972e3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #26 0x5624e5c16fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-
-SUMMARY: AddressSanitizer: 5 byte(s) leaked in 1 allocation(s).
+Pass the CPU env to the sme_fmopa_h helper instead of an fp_status
+pointer, and have the helper pass an extra fp_status into the
+f16_dotadd() function so that we can use the right status for the
+right parts of this operation.
 
 Cc: qemu-stable@nongnu.org
+Fixes: 207d30b5fdb5 ("target/arm: Use FPST_F16 for SME FMOPA (widening)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2373
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240819145021.38524-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 87e012f29f2e47dcd8c385ff8bb8188f9e06d4ea)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 55f9f4ee018c5ccea81d8c8c586756d7711ae46f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
-index 546cad1c5a..0d6b71a37c 100644
---- a/crypto/tlscredspsk.c
-+++ b/crypto/tlscredspsk.c
-@@ -243,6 +243,7 @@ qcrypto_tls_creds_psk_finalize(Object *obj)
-     QCryptoTLSCredsPSK *creds = QCRYPTO_TLS_CREDS_PSK(obj);
+diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
+index 27eef49a11..d22bf9d21b 100644
+--- a/target/arm/tcg/helper-sme.h
++++ b/target/arm/tcg/helper-sme.h
+@@ -121,7 +121,7 @@ DEF_HELPER_FLAGS_5(sme_addha_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sme_addva_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
  
-     qcrypto_tls_creds_psk_unload(creds);
-+    g_free(creds->username);
+ DEF_HELPER_FLAGS_7(sme_fmopa_h, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index f9001f5213..3906bb51c0 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -976,12 +976,23 @@ static inline uint32_t f16mop_adj_pair(uint32_t pair, uint32_t pg, uint32_t neg)
  }
  
- static void
+ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
+-                          float_status *s_std, float_status *s_odd)
++                          float_status *s_f16, float_status *s_std,
++                          float_status *s_odd)
+ {
+-    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_std);
+-    float64 e1c = float16_to_float64(e1 >> 16, true, s_std);
+-    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_std);
+-    float64 e2c = float16_to_float64(e2 >> 16, true, s_std);
++    /*
++     * We need three different float_status for different parts of this
++     * operation:
++     *  - the input conversion of the float16 values must use the
++     *    f16-specific float_status, so that the FPCR.FZ16 control is applied
++     *  - operations on float32 including the final accumulation must use
++     *    the normal float_status, so that FPCR.FZ is applied
++     *  - we have pre-set-up copy of s_std which is set to round-to-odd,
++     *    for the multiply (see below)
++     */
++    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_f16);
++    float64 e1c = float16_to_float64(e1 >> 16, true, s_f16);
++    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_f16);
++    float64 e2c = float16_to_float64(e2 >> 16, true, s_f16);
+     float64 t64;
+     float32 t32;
+ 
+@@ -1003,20 +1014,23 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
+ }
+ 
+ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, void *vst, uint32_t desc)
++                         void *vpm, CPUARMState *env, uint32_t desc)
+ {
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+     uint32_t neg = simd_data(desc) * 0x80008000u;
+     uint16_t *pn = vpn, *pm = vpm;
+-    float_status fpst_odd, fpst_std;
++    float_status fpst_odd, fpst_std, fpst_f16;
+ 
+     /*
+-     * Make a copy of float_status because this operation does not
+-     * update the cumulative fp exception status.  It also produces
+-     * default nans.  Make a second copy with round-to-odd -- see above.
++     * Make copies of fp_status and fp_status_f16, because this operation
++     * does not update the cumulative fp exception status.  It also
++     * produces default NaNs. We also need a second copy of fp_status with
++     * round-to-odd -- see above.
+      */
+-    fpst_std = *(float_status *)vst;
++    fpst_f16 = env->vfp.fp_status_f16;
++    fpst_std = env->vfp.fp_status;
+     set_default_nan_mode(true, &fpst_std);
++    set_default_nan_mode(true, &fpst_f16);
+     fpst_odd = fpst_std;
+     set_float_rounding_mode(float_round_to_odd, &fpst_odd);
+ 
+@@ -1036,7 +1050,8 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+                         uint32_t m = *(uint32_t *)(vzm + H1_4(col));
+ 
+                         m = f16mop_adj_pair(m, pcol, 0);
+-                        *a = f16_dotadd(*a, n, m, &fpst_std, &fpst_odd);
++                        *a = f16_dotadd(*a, n, m,
++                                        &fpst_f16, &fpst_std, &fpst_odd);
+                     }
+                     col += 4;
+                     pcol >>= 4;
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index a50a419af2..ae42ddef7b 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -334,8 +334,29 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
+     return true;
+ }
+ 
+-TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
+-           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
++static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
++                           gen_helper_gvec_5_ptr *fn)
++{
++    int svl = streaming_vec_reg_size(s);
++    uint32_t desc = simd_desc(svl, svl, a->sub);
++    TCGv_ptr za, zn, zm, pn, pm;
++
++    if (!sme_smza_enabled_check(s)) {
++        return true;
++    }
++
++    za = get_tile(s, esz, a->zad);
++    zn = vec_full_reg_ptr(s, a->zn);
++    zm = vec_full_reg_ptr(s, a->zm);
++    pn = pred_full_reg_ptr(s, a->pn);
++    pm = pred_full_reg_ptr(s, a->pm);
++
++    fn(za, zn, zm, pn, pm, tcg_env, tcg_constant_i32(desc));
++    return true;
++}
++
++TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
++           MO_32, gen_helper_sme_fmopa_h)
+ TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
+            MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
+ TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
 -- 
 2.39.2
 
