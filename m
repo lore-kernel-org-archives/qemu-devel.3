@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B027ECE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06806CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSsy-00014y-LW; Fri, 06 Sep 2024 02:56:00 -0400
+	id 1smSt1-0001YW-CU; Fri, 06 Sep 2024 02:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsv-0000aY-Dk; Fri, 06 Sep 2024 02:55:57 -0400
+ id 1smSsy-000155-KR; Fri, 06 Sep 2024 02:56:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSst-0003Lt-AZ; Fri, 06 Sep 2024 02:55:56 -0400
+ id 1smSsw-0003MZ-Pk; Fri, 06 Sep 2024 02:56:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E81168C248;
- Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 029678C249;
+ Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A6424133400;
+ by tsrv.corpit.ru (Postfix) with SMTP id C0248133401;
  Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
-Received: (nullmailer pid 43447 invoked by uid 1000);
+Received: (nullmailer pid 43463 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 19/53] hw/misc/bcm2835_property: Fix handling of
- FRAMEBUFFER_SET_PALETTE
-Date: Fri,  6 Sep 2024 09:53:49 +0300
-Message-Id: <20240906065429.42415-19-mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 20/53] target/arm: Don't assert for 128-bit tile
+ accesses when SVL is 128
+Date: Fri,  6 Sep 2024 09:53:50 +0300
+Message-Id: <20240906065429.42415-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,86 +65,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The documentation of the "Set palette" mailbox property at
-https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#set-palette
-says it has the form:
+For an instruction which accesses a 128-bit element tile when
+the SVL is also 128 (for example MOV z0.Q, p0/M, ZA0H.Q[w0,0]),
+we will assert in get_tile_rowcol():
 
-    Length: 24..1032
-    Value:
-        u32: offset: first palette index to set (0-255)
-        u32: length: number of palette entries to set (1-256)
-        u32...: RGBA palette values (offset to offset+length-1)
+qemu-system-aarch64: ../../tcg/tcg-op.c:926: tcg_gen_deposit_z_i32: Assertion `len > 0' failed.
 
-We get this wrong in a couple of ways:
- * we aren't checking the offset and length are in range, so the guest
-   can make us spin for a long time by providing a large length
- * the bounds check on our loop is wrong: we should iterate through
-   'length' palette entries, not 'length - offset' entries
+This happens because we calculate
+    len = ctz32(streaming_vec_reg_size(s)) - esz;$
+but if the SVL and the element size are the same len is 0, and
+the deposit operation asserts.
 
-Fix the loop to implement the bounds checks and get the loop
-condition right. In the process, make the variables local to
-this switch case, rather than function-global, so it's clearer
-what type they are when reading the code.
+In this case the ZA storage contains exactly one 128 bit
+element ZA tile, and the horizontal or vertical slice is just
+that tile. This means that regardless of the index value in
+the Ws register, we always access that tile. (In pseudocode terms,
+we calculate (index + offset) MOD 1, which is 0.)
+
+Special case the len == 0 case to avoid hitting the assertion
+in tcg_gen_deposit_z_i32().
 
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240723131029.1159908-2-peter.maydell@linaro.org
-(cherry picked from commit 0892fffc2abaadfb5d8b79bb0250ae1794862560)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240722172957.1041231-2-peter.maydell@linaro.org
+(cherry picked from commit 56f1c0db928aae0b83fd91c89ddb226b137e2b21)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix due to lack of
- v9.0.0-1812-g5d5f1b60916a "hw/misc: Implement mailbox properties for customer OTP and device specific private keys"
- also remove now-unused local `n' variable which gets removed in the next change in this file,
- v9.0.0-2720-g32f1c201eedf "hw/misc/bcm2835_property: Avoid overflow in OTP access properties")
 
-diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
-index ff55a4e2cd..87876f9a58 100644
---- a/hw/misc/bcm2835_property.c
-+++ b/hw/misc/bcm2835_property.c
-@@ -28,8 +28,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-     uint32_t tot_len;
-     size_t resplen;
-     uint32_t tmp;
--    int n;
--    uint32_t offset, length, color;
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 185a8a917b..a50a419af2 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -49,7 +49,15 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     /* Prepare a power-of-two modulo via extraction of @len bits. */
+     len = ctz32(streaming_vec_reg_size(s)) - esz;
  
-     /*
-      * Copy the current state of the framebuffer config; we will update
-@@ -264,18 +262,25 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-             resplen = 16;
-             break;
-         case RPI_FWREQ_FRAMEBUFFER_SET_PALETTE:
--            offset = ldl_le_phys(&s->dma_as, value + 12);
--            length = ldl_le_phys(&s->dma_as, value + 16);
--            n = 0;
--            while (n < length - offset) {
--                color = ldl_le_phys(&s->dma_as, value + 20 + (n << 2));
--                stl_le_phys(&s->dma_as,
--                            s->fbdev->vcram_base + ((offset + n) << 2), color);
--                n++;
-+        {
-+            uint32_t offset = ldl_le_phys(&s->dma_as, value + 12);
-+            uint32_t length = ldl_le_phys(&s->dma_as, value + 16);
-+            int resp;
-+
-+            if (offset > 255 || length < 1 || length > 256) {
-+                resp = 1; /* invalid request */
-+            } else {
-+                for (uint32_t e = 0; e < length; e++) {
-+                    uint32_t color = ldl_le_phys(&s->dma_as, value + 20 + (e << 2));
-+                    stl_le_phys(&s->dma_as,
-+                                s->fbdev->vcram_base + ((offset + e) << 2), color);
-+                }
-+                resp = 0;
-             }
--            stl_le_phys(&s->dma_as, value + 12, 0);
-+            stl_le_phys(&s->dma_as, value + 12, resp);
-             resplen = 4;
-             break;
-+        }
-         case RPI_FWREQ_FRAMEBUFFER_GET_NUM_DISPLAYS:
-             stl_le_phys(&s->dma_as, value + 12, 1);
-             resplen = 4;
+-    if (vertical) {
++    if (!len) {
++        /*
++         * SVL is 128 and the element size is 128. There is exactly
++         * one 128x128 tile in the ZA storage, and so we calculate
++         * (Rs + imm) MOD 1, which is always 0. We need to special case
++         * this because TCG doesn't allow deposit ops with len 0.
++         */
++        tcg_gen_movi_i32(tmp, 0);
++    } else if (vertical) {
+         /*
+          * Compute the byte offset of the index within the tile:
+          *     (index % (svl / size)) * size
 -- 
 2.39.2
 
