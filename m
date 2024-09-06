@@ -4,36 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB97CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03311CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSw3-0004gF-HF; Fri, 06 Sep 2024 02:59:11 -0400
+	id 1smSsr-0000Bs-EM; Fri, 06 Sep 2024 02:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvo-00026J-SU; Fri, 06 Sep 2024 02:58:57 -0400
+ id 1smSsQ-00070k-RT; Fri, 06 Sep 2024 02:55:28 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvn-0003lj-BG; Fri, 06 Sep 2024 02:58:56 -0400
+ id 1smSsN-0003HW-BN; Fri, 06 Sep 2024 02:55:25 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C7F908C265;
- Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7EA898C243;
+ Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 91B3413341D;
- Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43697 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:31 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 4422A1333FB;
+ Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
+Received: (nullmailer pid 43405 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 48/53] target/sparc: Restrict STQF to sparcv9
-Date: Fri,  6 Sep 2024 09:54:18 +0300
-Message-Id: <20240906065429.42415-48-mjt@tls.msk.ru>
+ Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 14/53] hw/intc/loongson_ipi: Access memory in little
+ endian
+Date: Fri,  6 Sep 2024 09:53:44 +0300
+Message-Id: <20240906065429.42415-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -63,45 +66,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Bibo Mao <maobibo@loongson.cn>
 
-Prior to sparcv9, the same encoding was STDFQ.
+Loongson IPI is only available in little-endian,
+so use that to access the guest memory (in case
+we run on a big-endian host).
 
 Cc: qemu-stable@nongnu.org
-Fixes: 06c060d9e5b ("target/sparc: Move simple fp load/store to decodetree")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240816072311.353234-2-richard.henderson@linaro.org>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Fixes: f6783e3438 ("hw/loongarch: Add LoongArch ipi interrupt support")
+[PMD: Extracted from bigger commit, added commit description]
+Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 12d36294a2d978faf893101862118d1ac1815e85)
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Tested-by: Bibo Mao <maobibo@loongson.cn>
+Acked-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Message-Id: <20240718133312.10324-3-philmd@linaro.org>
+(cherry picked from commit 2465c89fb983eed670007742bd68c7d91b6d6f85)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: fixups for 8.2, for lack of:
+ v9.0.0-583-g91d0b151de4c "hw/intc/loongson_ipi: Implement IOCSR address space for MIPS"
+ v9.0.0-582-gb4a12dfc2132 "hw/intc/loongarch_ipi: Rename as loongson_ipi"
+ v8.2.0-545-gfdd6ee0b7653 "hw/intc/loongarch_ipi: Use MemTxAttrs interface for ipi ops")
 
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index e2d8a07dc4..d2b29de084 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -484,7 +484,7 @@ STF         11 ..... 100100 ..... . .............          @r_r_ri_na
- STFSR       11 00000 100101 ..... . .............          @n_r_ri
- STXFSR      11 00001 100101 ..... . .............          @n_r_ri
- {
--  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na
-+  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na # v9
-   STDFQ     11 ----- 100110 ----- - -------------
+diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+index 67858b521c..55da9ca7f9 100644
+--- a/hw/intc/loongarch_ipi.c
++++ b/hw/intc/loongarch_ipi.c
+@@ -12,6 +12,7 @@
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+ #include "exec/address-spaces.h"
++#include "exec/memory.h"
+ #include "hw/loongarch/virt.h"
+ #include "migration/vmstate.h"
+ #include "target/loongarch/internals.h"
+@@ -61,8 +62,8 @@ static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr)
+      * if the mask is 0, we need not to do anything.
+      */
+     if ((val >> 27) & 0xf) {
+-        data = address_space_ldl(&env->address_space_iocsr, addr,
+-                                 MEMTXATTRS_UNSPECIFIED, NULL);
++        data = address_space_ldl_le(&env->address_space_iocsr, addr,
++                                    MEMTXATTRS_UNSPECIFIED, NULL);
+         for (i = 0; i < 4; i++) {
+             /* get mask for byte writing */
+             if (val & (0x1 << (27 + i))) {
+@@ -73,8 +74,8 @@ static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr)
+ 
+     data &= mask;
+     data |= (val >> 32) & ~mask;
+-    address_space_stl(&env->address_space_iocsr, addr,
+-                      data, MEMTXATTRS_UNSPECIFIED, NULL);
++    address_space_stl_le(&env->address_space_iocsr, addr,
++                         data, MEMTXATTRS_UNSPECIFIED, NULL);
  }
- STDF        11 ..... 100111 ..... . .............          @d_r_ri_na
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 7058b6c2a4..94350aa588 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -4362,7 +4362,7 @@ static bool do_st_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
  
- TRANS(STF, ALL, do_st_fpr, a, MO_32)
- TRANS(STDF, ALL, do_st_fpr, a, MO_64)
--TRANS(STQF, ALL, do_st_fpr, a, MO_128)
-+TRANS(STQF, 64, do_st_fpr, a, MO_128)
- 
- TRANS(STFA, 64, do_st_fpr, a, MO_32)
- TRANS(STDFA, 64, do_st_fpr, a, MO_64)
+ static int archid_cmp(const void *a, const void *b)
 -- 
 2.39.2
 
