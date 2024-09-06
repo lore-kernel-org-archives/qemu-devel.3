@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44489CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23E0CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSrt-0004d3-Jo; Fri, 06 Sep 2024 02:54:53 -0400
+	id 1smSsq-0008Kc-0v; Fri, 06 Sep 2024 02:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSrq-0004RK-NO; Fri, 06 Sep 2024 02:54:50 -0400
+ id 1smSsN-0006mH-3c; Fri, 06 Sep 2024 02:55:25 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSro-000307-UY; Fri, 06 Sep 2024 02:54:50 -0400
+ id 1smSsL-0003HJ-Ec; Fri, 06 Sep 2024 02:55:22 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E028B8C23A;
- Fri,  6 Sep 2024 09:53:11 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6C1E38C242;
+ Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A6BD91333F2;
- Fri,  6 Sep 2024 09:54:29 +0300 (MSK)
-Received: (nullmailer pid 43335 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 3579E1333FA;
+ Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
+Received: (nullmailer pid 43394 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Daniyal Khan <danikhan632@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 05/53] target/arm: Use FPST_F16 for SME FMOPA (widening)
-Date: Fri,  6 Sep 2024 09:53:35 +0300
-Message-Id: <20240906065429.42415-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, songziming <s.ziming@hotmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 13/53] chardev/char-win-stdio.c: restore old console
+ mode
+Date: Fri,  6 Sep 2024 09:53:43 +0300
+Message-Id: <20240906065429.42415-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -64,59 +64,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: songziming <s.ziming@hotmail.com>
 
-This operation has float16 inputs and thus must use
-the FZ16 control not the FZ control.
+If I use `-serial stdio` on Windows, after QEMU exits, the terminal
+could not handle arrow keys and tab any more. Because stdio backend
+on Windows sets console mode to virtual terminal input when starts,
+but does not restore the old mode when finalize.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 3916841ac75 ("target/arm: Implement FMOPA, FMOPS (widening)")
-Reported-by: Daniyal Khan <danikhan632@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20240717060149.204788-3-richard.henderson@linaro.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2374
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 207d30b5fdb5b45a36f26eefcf52fe2c1714dd4f)
+This small patch saves the old console mode and set it back.
+
+Signed-off-by: Ziming Song <s.ziming@hotmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
+(cherry picked from commit 903cc9e1173e0778caa50871e8275c898770c690)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 46c7fce8b4..185a8a917b 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -304,6 +304,7 @@ static bool do_outprod(DisasContext *s, arg_op *a, MemOp esz,
- }
+diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
+index 1a18999e78..13325ca967 100644
+--- a/chardev/char-win-stdio.c
++++ b/chardev/char-win-stdio.c
+@@ -33,6 +33,7 @@
+ struct WinStdioChardev {
+     Chardev parent;
+     HANDLE  hStdIn;
++    DWORD   dwOldMode;
+     HANDLE  hInputReadyEvent;
+     HANDLE  hInputDoneEvent;
+     HANDLE  hInputThread;
+@@ -159,6 +160,7 @@ static void qemu_chr_open_stdio(Chardev *chr,
+     }
  
- static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
-+                            ARMFPStatusFlavour e_fpst,
-                             gen_helper_gvec_5_ptr *fn)
+     is_console = GetConsoleMode(stdio->hStdIn, &dwMode) != 0;
++    stdio->dwOldMode = dwMode;
+ 
+     if (is_console) {
+         if (qemu_add_wait_object(stdio->hStdIn,
+@@ -221,6 +223,9 @@ static void char_win_stdio_finalize(Object *obj)
  {
-     int svl = streaming_vec_reg_size(s);
-@@ -319,15 +320,18 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
-     zm = vec_full_reg_ptr(s, a->zm);
-     pn = pred_full_reg_ptr(s, a->pn);
-     pm = pred_full_reg_ptr(s, a->pm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(e_fpst);
+     WinStdioChardev *stdio = WIN_STDIO_CHARDEV(obj);
  
-     fn(za, zn, zm, pn, pm, fpst, tcg_constant_i32(desc));
-     return true;
- }
- 
--TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_h)
--TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_s)
--TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a, MO_64, gen_helper_sme_fmopa_d)
-+TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
-+           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
-+TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
-+           MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
-+TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
-+           MO_64, FPST_FPCR, gen_helper_sme_fmopa_d)
- 
- /* TODO: FEAT_EBF16 */
- TRANS_FEAT(BFMOPA, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_bfmopa)
++    if (stdio->hStdIn != INVALID_HANDLE_VALUE) {
++        SetConsoleMode(stdio->hStdIn, stdio->dwOldMode);
++    }
+     if (stdio->hInputReadyEvent != INVALID_HANDLE_VALUE) {
+         CloseHandle(stdio->hInputReadyEvent);
+     }
 -- 
 2.39.2
 
