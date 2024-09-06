@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F12CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE3CCE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSrv-0004ki-Fa; Fri, 06 Sep 2024 02:54:55 -0400
+	id 1smSuQ-0002Td-FV; Fri, 06 Sep 2024 02:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSru-0004fA-0t; Fri, 06 Sep 2024 02:54:54 -0400
+ id 1smSuD-0001nS-HY; Fri, 06 Sep 2024 02:57:20 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSrs-00030q-CN; Fri, 06 Sep 2024 02:54:53 -0400
+ id 1smSuB-0003UN-J8; Fri, 06 Sep 2024 02:57:17 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 098638C23C;
- Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9E43E8C253;
+ Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C6EE71333F4;
- Fri,  6 Sep 2024 09:54:29 +0300 (MSK)
-Received: (nullmailer pid 43347 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:29 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 6696213340B;
+ Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
+Received: (nullmailer pid 43562 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 07/53] hw/nvme: fix memory leak in nvme_dsm
-Date: Fri,  6 Sep 2024 09:53:37 +0300
-Message-Id: <20240906065429.42415-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 30/53] target/i386: Fix VSIB decode
+Date: Fri,  6 Sep 2024 09:54:00 +0300
+Message-Id: <20240906065429.42415-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -61,45 +61,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zheyu Ma <zheyuma97@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The allocated memory to hold LBA ranges leaks in the nvme_dsm function. This
-happens because the allocated memory for iocb->range is not freed in all
-error handling paths.
+With normal SIB, index == 4 indicates no index.
+With VSIB, there is no exception for VR4/VR12.
 
-Fix this by adding a free to ensure that the allocated memory is properly freed.
-
-ASAN log:
-==3075137==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 480 byte(s) in 6 object(s) allocated from:
-    #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
-    #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
-    #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
-    #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
-    #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
-    #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2474
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240805003130.1421051-3-richard.henderson@linaro.org
 Cc: qemu-stable@nongnu.org
-Fixes: d7d1474fd85d ("hw/nvme: reimplement dsm to allow cancellation")
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit c510fe78f1b7c966524489d6ba752107423b20c8)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit ac63755b20013ec6a3d2aef4538d37dc90bc3d10)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: modify the change to pre-new-decoder introduced past qemu 9.0)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 2aa0aecfab..1fa117fdff 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -2592,6 +2592,7 @@ next:
- done:
-     iocb->aiocb = NULL;
-     iocb->common.cb(iocb->common.opaque, iocb->ret);
-+    g_free(iocb->range);
-     qemu_aio_unref(iocb);
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 73aa2c42b7..ffd3a42688 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1102,7 +1102,8 @@ static int decode_modrm(DisasContext *s, CPUX86State *env, X86DecodedInsn *decod
+     } else {
+         op->has_ea = true;
+         op->n = -1;
+-        decode->mem = gen_lea_modrm_0(env, s, get_modrm(s, env));
++        decode->mem = gen_lea_modrm_0(env, s, modrm,
++                                      decode->e.vex_class == 12);
+     }
+     return modrm;
+ }
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 716a747df7..157348273e 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2159,7 +2159,7 @@ typedef struct AddressParts {
+ } AddressParts;
+ 
+ static AddressParts gen_lea_modrm_0(CPUX86State *env, DisasContext *s,
+-                                    int modrm)
++                                    int modrm, bool is_vsib)
+ {
+     int def_seg, base, index, scale, mod, rm;
+     target_long disp;
+@@ -2188,7 +2188,7 @@ static AddressParts gen_lea_modrm_0(CPUX86State *env, DisasContext *s,
+             int code = x86_ldub_code(env, s);
+             scale = (code >> 6) & 3;
+             index = ((code >> 3) & 7) | REX_X(s);
+-            if (index == 4) {
++            if (index == 4 && !is_vsib) {
+                 index = -1;  /* no index */
+             }
+             base = (code & 7) | REX_B(s);
+@@ -2318,21 +2318,21 @@ static TCGv gen_lea_modrm_1(DisasContext *s, AddressParts a, bool is_vsib)
+ 
+ static void gen_lea_modrm(CPUX86State *env, DisasContext *s, int modrm)
+ {
+-    AddressParts a = gen_lea_modrm_0(env, s, modrm);
++    AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+     TCGv ea = gen_lea_modrm_1(s, a, false);
+     gen_lea_v_seg(s, s->aflag, ea, a.def_seg, s->override);
  }
  
+ static void gen_nop_modrm(CPUX86State *env, DisasContext *s, int modrm)
+ {
+-    (void)gen_lea_modrm_0(env, s, modrm);
++    (void)gen_lea_modrm_0(env, s, modrm, false);
+ }
+ 
+ /* Used for BNDCL, BNDCU, BNDCN.  */
+ static void gen_bndck(CPUX86State *env, DisasContext *s, int modrm,
+                       TCGCond cond, TCGv_i64 bndv)
+ {
+-    AddressParts a = gen_lea_modrm_0(env, s, modrm);
++    AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+     TCGv ea = gen_lea_modrm_1(s, a, false);
+ 
+     tcg_gen_extu_tl_i64(s->tmp1_i64, ea);
+@@ -4156,7 +4156,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+             goto illegal_op;
+         reg = ((modrm >> 3) & 7) | REX_R(s);
+         {
+-            AddressParts a = gen_lea_modrm_0(env, s, modrm);
++            AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+             TCGv ea = gen_lea_modrm_1(s, a, false);
+             gen_lea_v_seg(s, s->aflag, ea, -1, -1);
+             gen_op_mov_reg_v(s, dflag, reg, s->A0);
+@@ -4378,7 +4378,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+             op = ((b & 7) << 3) | ((modrm >> 3) & 7);
+             if (mod != 3) {
+                 /* memory op */
+-                AddressParts a = gen_lea_modrm_0(env, s, modrm);
++                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+                 TCGv ea = gen_lea_modrm_1(s, a, false);
+                 TCGv last_addr = tcg_temp_new();
+                 bool update_fdp = true;
+@@ -5322,7 +5322,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+         rm = (modrm & 7) | REX_B(s);
+         gen_op_mov_v_reg(s, MO_32, s->T1, reg);
+         if (mod != 3) {
+-            AddressParts a = gen_lea_modrm_0(env, s, modrm);
++            AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+             /* specific case: we need to add a displacement */
+             gen_exts(ot, s->T1);
+             tcg_gen_sari_tl(s->tmp0, s->T1, 3 + ot);
+@@ -6318,7 +6318,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+                 }
+             } else if (mod != 3) {
+                 /* bndldx */
+-                AddressParts a = gen_lea_modrm_0(env, s, modrm);
++                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+                 if (reg >= 4
+                     || (prefixes & PREFIX_LOCK)
+                     || s->aflag == MO_16
+@@ -6362,7 +6362,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+                     || s->aflag == MO_16) {
+                     goto illegal_op;
+                 }
+-                AddressParts a = gen_lea_modrm_0(env, s, modrm);
++                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+                 if (a.base >= 0) {
+                     tcg_gen_extu_tl_i64(cpu_bndl[reg], cpu_regs[a.base]);
+                     if (!CODE64(s)) {
+@@ -6423,7 +6423,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+                 }
+             } else if (mod != 3) {
+                 /* bndstx */
+-                AddressParts a = gen_lea_modrm_0(env, s, modrm);
++                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
+                 if (reg >= 4
+                     || (prefixes & PREFIX_LOCK)
+                     || s->aflag == MO_16
 -- 
 2.39.2
 
