@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF0C1CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D413CE7AB2
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRNt-00013m-9p; Fri, 06 Sep 2024 01:19:49 -0400
+	id 1smRLt-0005ob-Ge; Fri, 06 Sep 2024 01:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRNq-0000WI-1S; Fri, 06 Sep 2024 01:19:46 -0400
+ id 1smRLQ-00041n-Qi; Fri, 06 Sep 2024 01:17:20 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRNn-0008Mk-Vm; Fri, 06 Sep 2024 01:19:45 -0400
+ id 1smRLN-0007v5-Ul; Fri, 06 Sep 2024 01:17:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7144A8C139;
- Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E86A88C120;
+ Fri,  6 Sep 2024 08:15:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1F41313337E;
- Fri,  6 Sep 2024 08:16:36 +0300 (MSK)
-Received: (nullmailer pid 10495 invoked by uid 1000);
- Fri, 06 Sep 2024 05:16:34 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 98C67133366;
+ Fri,  6 Sep 2024 08:16:34 +0300 (MSK)
+Received: (nullmailer pid 10420 invoked by uid 1000);
+ Fri, 06 Sep 2024 05:16:33 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 36/40] block/blkio: use FUA flag on write zeroes only
- if supported
-Date: Fri,  6 Sep 2024 08:16:24 +0300
-Message-Id: <20240906051633.10288-36-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 12/40] target/rx: Use target_ulong for address in LI
+Date: Fri,  6 Sep 2024 08:16:00 +0300
+Message-Id: <20240906051633.10288-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,58 +61,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-libblkio supports BLKIO_REQ_FUA with write zeros requests only since
-version 1.4.0, so let's inform the block layer that the blkio driver
-supports it only in this case. Otherwise we can have runtime errors
-as reported in https://issues.redhat.com/browse/RHEL-32878
+Using int32_t meant that the address was sign-extended to uint64_t
+when passing to translator_ld*, triggering an assert.
 
-Fixes: fd66dbd424 ("blkio: add libblkio block driver")
-Cc: qemu-stable@nongnu.org
-Buglink: https://issues.redhat.com/browse/RHEL-32878
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240808080545.40744-1-sgarzare@redhat.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 547c4e50929ec6c091d9c16a7b280e829b12b463)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2453
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 83340193b991e7a974f117baa86a04db1fd835a9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: meson.build fixup for the lack of
- v8.0.0-1489-g98b126f5e3 "qapi: add '@fdset' feature for BlockdevOptionsVirtioBlkVhostVdpa")
 
-diff --git a/block/blkio.c b/block/blkio.c
-index cb66160268..1fd47c434c 100644
---- a/block/blkio.c
-+++ b/block/blkio.c
-@@ -808,8 +808,10 @@ static int blkio_file_open(BlockDriverState *bs, QDict *options, int flags,
-     }
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 87a3f54adb..4233622c4e 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -83,7 +83,8 @@ static uint32_t decode_load_bytes(DisasContext *ctx, uint32_t insn,
  
-     bs->supported_write_flags = BDRV_REQ_FUA | BDRV_REQ_REGISTERED_BUF;
--    bs->supported_zero_flags = BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP |
--                               BDRV_REQ_NO_FALLBACK;
-+    bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK;
-+#ifdef CONFIG_BLKIO_WRITE_ZEROS_FUA
-+    bs->supported_zero_flags |= BDRV_REQ_FUA;
-+#endif
+ static uint32_t li(DisasContext *ctx, int sz)
+ {
+-    int32_t tmp, addr;
++    target_ulong addr;
++    uint32_t tmp;
+     CPURXState *env = ctx->env;
+     addr = ctx->base.pc_next;
  
-     qemu_mutex_init(&s->blkio_lock);
-     qemu_co_mutex_init(&s->bounce_lock);
-diff --git a/meson.build b/meson.build
-index 787f91855e..16dc9627e0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1831,6 +1831,10 @@ config_host_data.set('CONFIG_LZO', lzo.found())
- config_host_data.set('CONFIG_MPATH', mpathpersist.found())
- config_host_data.set('CONFIG_MPATH_NEW_API', mpathpersist_new_api)
- config_host_data.set('CONFIG_BLKIO', blkio.found())
-+if blkio.found()
-+  config_host_data.set('CONFIG_BLKIO_WRITE_ZEROS_FUA',
-+                       blkio.version().version_compare('>=1.4.0'))
-+endif
- config_host_data.set('CONFIG_CURL', curl.found())
- config_host_data.set('CONFIG_CURSES', curses.found())
- config_host_data.set('CONFIG_GBM', gbm.found())
 -- 
 2.39.2
 
