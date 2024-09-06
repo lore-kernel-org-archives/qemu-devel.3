@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB507CE7AE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE99CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smStm-00081h-3z; Fri, 06 Sep 2024 02:56:50 -0400
+	id 1smStO-0004HT-7q; Fri, 06 Sep 2024 02:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smStj-0007Zq-BR; Fri, 06 Sep 2024 02:56:47 -0400
+ id 1smStM-0003yi-0V; Fri, 06 Sep 2024 02:56:24 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSth-0003Q5-Iq; Fri, 06 Sep 2024 02:56:47 -0400
+ id 1smStK-0003PX-8g; Fri, 06 Sep 2024 02:56:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4C5A68C24E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2EC6E8C24C;
  Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 15D7D133406;
- Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
-Received: (nullmailer pid 43510 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id EC46B133404;
+ Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
+Received: (nullmailer pid 43491 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 25/53] hw/i386/amd_iommu: Don't leak memory in
- amdvi_update_iotlb()
-Date: Fri,  6 Sep 2024 09:53:55 +0300
-Message-Id: <20240906065429.42415-25-mjt@tls.msk.ru>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 23/53] target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN
+ if EL2 is not enabled
+Date: Fri,  6 Sep 2024 09:53:53 +0300
+Message-Id: <20240906065429.42415-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -64,45 +65,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In amdvi_update_iotlb() we will only put a new entry in the hash
-table if to_cache.perm is not IOMMU_NONE.  However we allocate the
-memory for the new AMDVIIOTLBEntry and for the hash table key
-regardless.  This means that in the IOMMU_NONE case we will leak the
-memory we alloacted.
+When determining the current vector length, the SMCR_EL2.LEN and
+SVCR_EL2.LEN settings should only be considered if EL2 is enabled
+(compare the pseudocode CurrentSVL and CurrentNSVL which call
+EL2Enabled()).
 
-Move the allocations into the if() to the point where we know we're
-going to add the item to the hash table.
+We were checking against ARM_FEATURE_EL2 rather than calling
+arm_is_el2_enabled(), which meant that we would look at
+SMCR_EL2/SVCR_EL2 when in Secure EL1 or Secure EL0 even if Secure EL2
+was not enabled.
+
+Use the correct check in sve_vqm1_for_el_sm().
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2452
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20240731170019.3590563-1-peter.maydell@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 9a45b0761628cc59267b3283a85d15294464ac31)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240722172957.1041231-5-peter.maydell@linaro.org
+(cherry picked from commit f573ac059ed060234fcef4299fae9e500d357c33)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 4203144da9..12742b1433 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -346,12 +346,12 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
-                                uint64_t gpa, IOMMUTLBEntry to_cache,
-                                uint16_t domid)
- {
--    AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
--    uint64_t *key = g_new(uint64_t, 1);
--    uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
--
-     /* don't cache erroneous translations */
-     if (to_cache.perm != IOMMU_NONE) {
-+        AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
-+        uint64_t *key = g_new(uint64_t, 1);
-+        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
-+
-         trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
-                 PCI_FUNC(devid), gpa, to_cache.translated_addr);
- 
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ca2c6e9732..9ff266a235 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6860,7 +6860,7 @@ uint32_t sve_vqm1_for_el_sm(CPUARMState *env, int el, bool sm)
+     if (el <= 1 && !el_is_in_host(env, el)) {
+         len = MIN(len, 0xf & (uint32_t)cr[1]);
+     }
+-    if (el <= 2 && arm_feature(env, ARM_FEATURE_EL2)) {
++    if (el <= 2 && arm_is_el2_enabled(env)) {
+         len = MIN(len, 0xf & (uint32_t)cr[2]);
+     }
+     if (arm_feature(env, ARM_FEATURE_EL3)) {
 -- 
 2.39.2
 
