@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69915CE7AA5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 03:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9F3CE7AA6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 03:05:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smPFR-00051O-PA; Thu, 05 Sep 2024 23:02:59 -0400
+	id 1smPHq-00026U-Nu; Thu, 05 Sep 2024 23:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smPFJ-00050I-Dl; Thu, 05 Sep 2024 23:02:50 -0400
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ id 1smPHn-00024o-T0; Thu, 05 Sep 2024 23:05:24 -0400
+Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smPFH-00043q-Gn; Thu, 05 Sep 2024 23:02:49 -0400
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-50108b3749aso461457e0c.2; 
- Thu, 05 Sep 2024 20:02:46 -0700 (PDT)
+ id 1smPHm-0004nM-14; Thu, 05 Sep 2024 23:05:23 -0400
+Received: by mail-vs1-xe34.google.com with SMTP id
+ ada2fe7eead31-49bd7809c84so326525137.0; 
+ Thu, 05 Sep 2024 20:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725591766; x=1726196566; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725591920; x=1726196720; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hNSclVpTiR8Njj8/kD+KfBtRX2a2WbWdcqVJozq4MLw=;
- b=C5HU4VgzYGeOxrZbZEqWJ812oYsBNEp/Zs7EDMOrAuz8GbJeHVnziut1nc2+PM4nVZ
- bR9JPpDQqsd9Gg6epwPDveMQLeCiQ5B0JDOVZ0xejHC1nEyAhAwDzUp3JydoL5ZaoIab
- vqF3HH796Z4oVyDFryUSZJBMrS3+kifG/S4WqpH+BQrAYdEqSF4zcKbkXQIJM8tXKO08
- kZTcyJr8yaWCRL0T4lvxUdT/fZcHunuCGFaaK5bt8dAABnkS69x312HB2YHxoErHMNOL
- 9qVvopH7MSrCLekeR0qW7erivwGO4RmZGW01r00lNBCq7zHaEcX136o0iMdK2s/6nnFh
- tegg==
+ bh=1aKzJA8OaDtOIISihwxrfK7yuJ6NsKR5Mbzl7WnMAnk=;
+ b=RW470e9Klgpm/kgeM5X4Pq0gWTgqs4bDqxZ7Ju8hrWzZg6Mku6L9hLUKqRDMLcXPKB
+ xTbJ1bNUZMhwF/W2I1GJbwWTwfsLyXPh1FTBghSLiS0615W0l3ou25pGSyc2YpN+V51l
+ aHqNZ7lfvaPLSEqYmYcBvFYMlCMKl4z6qd02CSszYRIgthLVC8H9jt3QRQzM/o2vqI2b
+ XKh8t4NqIc0pOxWcKjG6q4weRjfy2zZFpGpo+poKKkXS00Fk1Gw73dITnyslr3XK55to
+ 1/AdNqvEmaxCjj3PnJGRwyABadequLwM5BZ+kWy295lQ/rL4BE+0T95cFLxjDFZ9sazc
+ pufg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725591766; x=1726196566;
+ d=1e100.net; s=20230601; t=1725591920; x=1726196720;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hNSclVpTiR8Njj8/kD+KfBtRX2a2WbWdcqVJozq4MLw=;
- b=WhZRXJUOrYWwFijbwHByGXRGZIXJiG5Bw6GVSnb4TAKKV6CQTT5PtqpYVI0kEYLAxO
- lhYLS80E9rfbtI+L3pGoIyzK4V4t4Nf1iMRi8WC07Skvl4whtsx7HNNMRGrbtQUb4NTC
- Dkz8uMXTrsOjl7XCLsE/ECZAJSIwW5FClU1wcBpzPs6nlhcMG/cSgVYuEGu5lU8T/cZa
- tnMzGr0PL1guSFFR/eikiVnCTiuSIJ8wMPNcwYwf8s6gF5kd08xER3CrXjqjXZMzwYD7
- Wh6/Tfvvv/qlbHjnS5znOQbdGoMIzWXhKbxQR1k0Bv2Q4YndC6uasQjXg9mclT2jYeDk
- IM+w==
+ bh=1aKzJA8OaDtOIISihwxrfK7yuJ6NsKR5Mbzl7WnMAnk=;
+ b=AKlKp87tORHG7G02/w4pBcOORXv0Ocylzrnwic98MVj68bMomjQiXTNMZ/YbCHM7nN
+ /EGh9iUXIwo5Jdg/w9sFKo20BCVIAb3Do4I/t9Q1w1kDwY/AWb72cKYQMs7nsMTsNNNi
+ 1KTEewP9bAVxjBKKXFICv6qedesPMj7vdUAqJZ7MurCeoTtgVBHB5PQMVKuCQH43GwAj
+ SPe1+Q/JWrxKPOFrKGa9hQds87UtlaFNRBIUir/mYz01DqLndiUoa2Qmtz+yFEOwHsfw
+ SE5+aVFtEboOeuME43OxIUcOeZwogpXahi4a0N4ouF4dJWPvYRik+rc+uPx21XImI3x2
+ 624g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBRXkCn35TlLu/OmHT8vsdXfnwe7OsrAjZh+MYWGuW3/FF/l0w7mykGM7O27ArQXdtShOlG8EZ4eWW@nongnu.org
-X-Gm-Message-State: AOJu0YxDgnimjeiJkPUYO8B7dgqX6acg0KbrUGdLttr+XiLyCfqP6Gzs
- AqQ140rU3D8HVNMEpKNdCm4zdAKbmUkq1cNm67u+nysNSXBiHkG6dmkgFVSETueU5fTj7DAErhb
- Y8ybslXipRfSNvWhY3M3+k8jcpyRDwtnG
-X-Google-Smtp-Source: AGHT+IEvYtFVyoDBKaZ8e8MNPaJevMjv1a5wBXXUzNfZrZaYzUvvK6lX0I+hx/JEDTUK0uaPjIBM+oBWEZJqzQj571M=
-X-Received: by 2002:a05:6122:92a:b0:4f6:a7f7:164d with SMTP id
- 71dfb90a1353d-50221423548mr1402187e0c.8.1725591765766; Thu, 05 Sep 2024
- 20:02:45 -0700 (PDT)
+ AJvYcCUzifSm7uhdqx65s//JzUQm9cm4z7hGR5P7D6KcIQk7oPhuiC7RtWm6ajbI74a/PwiywUvzCoGyqGsT@nongnu.org
+X-Gm-Message-State: AOJu0YybYzfj2k2IlCTrvC3Q/z6cLLN6umX0/CywXAqHduw2y9ZqvXSa
+ O37ryuwRuSFhOSNwsAZEpZ2XU0jlglldVjb/gRYrzM7gxYN92wNv2oxI3AnGgRH4Mo9t2QJObbU
+ BwCTjJ363iPK7oIozVAqY+YJKYhdDAwib
+X-Google-Smtp-Source: AGHT+IFGNkY0JSAJdP5FpI+GaDsEXrL47nof15Z8pbX863LxmLGRxJ3ilC3s+lCvZFK2l8mO7fTVphy+xtD/sTmD6Go=
+X-Received: by 2002:a05:6102:e11:b0:493:b719:efb9 with SMTP id
+ ada2fe7eead31-49bde1779c9mr1635524137.9.1725591920473; Thu, 05 Sep 2024
+ 20:05:20 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
- <20240819160742.27586-10-Ian.Brockbank@cirrus.com>
-In-Reply-To: <20240819160742.27586-10-Ian.Brockbank@cirrus.com>
+ <20240819160742.27586-3-Ian.Brockbank@cirrus.com>
+ <CAKmqyKP6DTHq=6Tv3F7DPzjiyXdJhUdr0isNokZPCFgstQV4gQ@mail.gmail.com>
+In-Reply-To: <CAKmqyKP6DTHq=6Tv3F7DPzjiyXdJhUdr0isNokZPCFgstQV4gQ@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 13:02:19 +1000
-Message-ID: <CAKmqyKMZhGKTDv5g1HxUTz-Ry9BGa4wptvZaGQATWJ+TqA5wGA@mail.gmail.com>
-Subject: Re: [PATCH 06/11 v2] target/riscv: Update CSR xtvec in CLIC mode
+Date: Fri, 6 Sep 2024 13:04:54 +1000
+Message-ID: <CAKmqyKPrz2544MFpORh==F-63M5pMMbsWcjNipOSozMeTB7G5Q@mail.gmail.com>
+Subject: Re: [PATCH 01/11 v2] target/riscv: Add CLIC CSR mintstatus
 To: Ian Brockbank <Ian.Brockbank@cirrus.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -72,8 +73,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  LIU Zhiwei <zhiwei_liu@c-sky.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,205 +98,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 20, 2024 at 2:15=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirrus=
-.com> wrote:
+On Fri, Sep 6, 2024 at 12:44=E2=80=AFPM Alistair Francis <alistair23@gmail.=
+com> wrote:
 >
-> From: Ian Brockbank <ian.brockbank@cirrus.com>
+> On Tue, Aug 20, 2024 at 2:11=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirr=
+us.com> wrote:
+> >
+> > From: Ian Brockbank <ian.brockbank@cirrus.com>
+> >
+> > CSR mintstatus holds the active interrupt level for each supported
+> > privilege mode. sintstatus, and user, uintstatus, provide restricted
+> > views of mintstatus.
+> >
+> > Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
+> > Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
 >
-> The new CLIC interrupt-handling mode is encoded as a new state in the
-> existing WARL xtvec register, where the low two bits of are 11.
->
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
-> Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
-> ---
->  target/riscv/cpu.h      |  2 ++
->  target/riscv/cpu_bits.h |  2 ++
->  target/riscv/csr.c      | 63 ++++++++++++++++++++++++++++++++++++++---
->  3 files changed, 63 insertions(+), 4 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 12aa8cf6b1..05a014db03 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -283,11 +283,13 @@ struct CPUArchState {
->      target_ulong medeleg;
->
->      target_ulong stvec;
-> +    target_ulong stvt; /* clic-spec */
->      target_ulong sepc;
->      target_ulong scause;
->      target_ulong sintthresh; /* clic-spec */
->
->      target_ulong mtvec;
-> +    target_ulong mtvt; /* clic-spec */
->      target_ulong mepc;
->      target_ulong mcause;
->      target_ulong mtval;  /* since: priv-1.10.0 */
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 0ed44ec0a8..279a6f889b 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -153,6 +153,7 @@
->  #define CSR_MIE             0x304
->  #define CSR_MTVEC           0x305
->  #define CSR_MCOUNTEREN      0x306
-> +#define CSR_MTVT            0x307 /* clic-spec-draft */
->
->  /* 32-bit only */
->  #define CSR_MSTATUSH        0x310
-> @@ -192,6 +193,7 @@
->  #define CSR_SIE             0x104
->  #define CSR_STVEC           0x105
->  #define CSR_SCOUNTEREN      0x106
-> +#define CSR_STVT            0x107 /* clic-spec-draft */
->
->  /* Supervisor Configuration CSRs */
->  #define CSR_SENVCFG         0x10A
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 276ef7856e..be0071fd25 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2170,9 +2170,23 @@ static RISCVException read_mtvec(CPURISCVState *en=
-v, int csrno,
->  static RISCVException write_mtvec(CPURISCVState *env, int csrno,
->                                    target_ulong val)
->  {
-> -    /* bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 2 >=3D rese=
-rved */
-> -    if ((val & 3) < 2) {
-> +    /*
-> +     * bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 3 =3D CLIC,
-> +     * others reserved
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-You aren't checking if the CLIC extension (smclic) is enabled though.
+Whoops! Scratch that
 
-You need to guard these changes with a smclic extension check
+>
+> > ---
+> >  target/riscv/cpu.h      |  3 +++
+> >  target/riscv/cpu_bits.h | 11 +++++++++++
+> >  target/riscv/csr.c      | 31 +++++++++++++++++++++++++++++++
+> >  3 files changed, 45 insertions(+)
+> >
+> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > index 1619c3acb6..95303f50d3 100644
+> > --- a/target/riscv/cpu.h
+> > +++ b/target/riscv/cpu.h
+> > @@ -259,6 +259,7 @@ struct CPUArchState {
+> >      bool software_seip;
+> >
+> >      uint64_t miclaim;
+> > +    uint64_t mintstatus; /* clic-spec */
+> >
+> >      uint64_t mie;
+> >      uint64_t mideleg;
+> > @@ -461,6 +462,8 @@ struct CPUArchState {
+> >      QEMUTimer *vstimer; /* Internal timer for VS-mode interrupt */
+> >      bool vstime_irq;
+> >
+> > +    void *clic;       /* clic interrupt controller */
+> > +
+> >      hwaddr kernel_addr;
+> >      hwaddr fdt_addr;
+> >
+> > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> > index 32b068f18a..2e65495b54 100644
+> > --- a/target/riscv/cpu_bits.h
+> > +++ b/target/riscv/cpu_bits.h
+> > @@ -165,6 +165,7 @@
+> >  #define CSR_MCAUSE          0x342
+> >  #define CSR_MTVAL           0x343
+> >  #define CSR_MIP             0x344
+> > +#define CSR_MINTSTATUS      0xfb1 /* clic-spec-draft */
+> >
+> >  /* Machine-Level Window to Indirectly Accessed Registers (AIA) */
+> >  #define CSR_MISELECT        0x350
+> > @@ -206,6 +207,7 @@
+> >  #define CSR_SCAUSE          0x142
+> >  #define CSR_STVAL           0x143
+> >  #define CSR_SIP             0x144
+> > +#define CSR_SINTSTATUS      0xdb1 /* clic-spec-draft */
+> >
+> >  /* Sstc supervisor CSRs */
+> >  #define CSR_STIMECMP        0x14D
+> > @@ -733,6 +735,15 @@ typedef enum RISCVException {
+> >  #define SIP_SEIP                           MIP_SEIP
+> >  #define SIP_LCOFIP                         MIP_LCOFIP
+> >
+> > +/* mintstatus */
+> > +#define MINTSTATUS_MIL                     0xff000000 /* mil[31:24] */
+> > +#define MINTSTATUS_SIL                     0x0000ff00 /* sil[15:8] */
+> > +#define MINTSTATUS_UIL                     0x000000ff /* uil[7:0] */
+> > +
+> > +/* sintstatus */
+> > +#define SINTSTATUS_SIL                     0x0000ff00 /* sil[15:8] */
+> > +#define SINTSTATUS_UIL                     0x000000ff /* uil[7:0] */
+> > +
+> >  /* MIE masks */
+> >  #define MIE_SEIE                           (1 << IRQ_S_EXT)
+> >  #define MIE_UEIE                           (1 << IRQ_U_EXT)
+> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> > index ea3560342c..f9ed7b9079 100644
+> > --- a/target/riscv/csr.c
+> > +++ b/target/riscv/csr.c
+> > @@ -578,6 +578,16 @@ static RISCVException debug(CPURISCVState *env, in=
+t csrno)
+> >
+> >      return RISCV_EXCP_ILLEGAL_INST;
+> >  }
+> > +
+> > +static int clic(CPURISCVState *env, int csrno)
+> > +{
+> > +    if (env->clic) {
+
+This isn't enough. There are smclic (M-mode) and ssclic (S-mode)
+extensions that need to be checked against here to access the CSRs.
+
+At the end of the series they can then be exposed as CPU properties
+(which the virt machine can enable when required)
 
 Alistair
-
-> +     */
-> +    target_ulong mode =3D get_field(val, XTVEC_MODE);
-> +    target_ulong fullmode =3D val & XTVEC_FULL_MODE;
-> +    if (mode <=3D XTVEC_CLINT_VECTORED) {
->          env->mtvec =3D val;
-> +    } else if (XTVEC_CLIC =3D=3D fullmode && env->clic) {
-> +        /*
-> +         * CLIC mode hardwires xtvec bits 2-5 to zero.
-> +         * Layout:
-> +         *   XLEN-1:6   base (WARL)
-> +         *   5:2        submode (WARL)  - 0000 for CLIC
-> +         *   1:0        mode (WARL)     - 11 for CLIC
-> +         */
-> +        env->mtvec =3D (val & XTVEC_NBASE) | XTVEC_CLIC;
->      } else {
->          qemu_log_mask(LOG_UNIMP, "CSR_MTVEC: reserved mode not supported=
-\n");
->      }
-> @@ -2271,6 +2285,18 @@ static RISCVException write_mcounteren(CPURISCVSta=
-te *env, int csrno,
->      return RISCV_EXCP_NONE;
->  }
->
-> +static int read_mtvt(CPURISCVState *env, int csrno, target_ulong *val)
-> +{
-> +    *val =3D env->mtvt;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static int write_mtvt(CPURISCVState *env, int csrno, target_ulong val)
-> +{
-> +    env->mtvt =3D val & XTVEC_NBASE;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
->  /* Machine Trap Handling */
->  static RISCVException read_mscratch_i128(CPURISCVState *env, int csrno,
->                                           Int128 *val)
-> @@ -3122,9 +3148,24 @@ static RISCVException read_stvec(CPURISCVState *en=
-v, int csrno,
->  static RISCVException write_stvec(CPURISCVState *env, int csrno,
->                                    target_ulong val)
->  {
-> -    /* bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 2 >=3D rese=
-rved */
-> -    if ((val & 3) < 2) {
-> +    /*
-> +     * bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 3 =3D CLIC,
-> +     * others reserved
-> +     */
-> +    target_ulong mode =3D val & XTVEC_MODE;
-> +    target_ulong fullmode =3D val & XTVEC_FULL_MODE;
-> +    if (mode <=3D XTVEC_CLINT_VECTORED) {
->          env->stvec =3D val;
-> +    } else if (XTVEC_CLIC =3D=3D fullmode && env->clic) {
-> +        /*
-> +         * If only CLIC mode is supported, writes to bit 1 are also igno=
-red and
-> +         * it is always set to one. CLIC mode hardwires xtvec bits 2-5 t=
-o zero.
-> +         * Layout:
-> +         *   XLEN-1:6   base (WARL)
-> +         *   5:2        submode (WARL)  - 0000 for CLIC
-> +         *   1:0        mode (WARL)     - 11 for CLIC
-> +         */
-> +        env->stvec =3D (val & XTVEC_NBASE) | XTVEC_CLIC;
->      } else {
->          qemu_log_mask(LOG_UNIMP, "CSR_STVEC: reserved mode not supported=
-\n");
->      }
-> @@ -3149,6 +3190,18 @@ static RISCVException write_scounteren(CPURISCVSta=
-te *env, int csrno,
->      return RISCV_EXCP_NONE;
->  }
->
-> +static int read_stvt(CPURISCVState *env, int csrno, target_ulong *val)
-> +{
-> +    *val =3D env->stvt;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static int write_stvt(CPURISCVState *env, int csrno, target_ulong val)
-> +{
-> +    env->stvt =3D val & XTVEC_NBASE;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
->  /* Supervisor Trap Handling */
->  static RISCVException read_sscratch_i128(CPURISCVState *env, int csrno,
->                                           Int128 *val)
-> @@ -5666,11 +5719,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D =
-{
->                               write_mhpmcounterh                         =
-},
->
->      /* Machine Mode Core Level Interrupt Controller */
-> +    [CSR_MTVT]           =3D { "mtvt",       clic,  read_mtvt, write_mtv=
-t },
->      [CSR_MINTSTATUS]     =3D { "mintstatus", clic,  read_mintstatus     =
-  },
->      [CSR_MINTTHRESH]     =3D { "mintthresh", clic,  read_mintthresh,
->                               write_mintthresh },
->
->      /* Supervisor Mode Core Level Interrupt Controller */
-> +    [CSR_STVT]           =3D { "stvt",       clic,  read_stvt, write_stv=
-t },
->      [CSR_SINTSTATUS]     =3D { "sintstatus", clic,  read_sintstatus     =
-  },
->      [CSR_SINTTHRESH]     =3D { "sintthresh", clic,  read_sintthresh,
->                               write_sintthresh },
-> --
-> 2.46.0.windows.1
-> This message and any attachments may contain privileged and confidential =
-information that is intended solely for the person(s) to whom it is address=
-ed. If you are not an intended recipient you must not: read; copy; distribu=
-te; discuss; take any action in or make any reliance upon the contents of t=
-his message; nor open or read any attachment. If you have received this mes=
-sage in error, please notify us as soon as possible on the following teleph=
-one number and destroy this message including any attachments. Thank you. C=
-irrus Logic International (UK) Ltd and Cirrus Logic International Semicondu=
-ctor Ltd are companies registered in Scotland, with registered numbers SC08=
-9839 and SC495735 respectively. Our registered office is at 7B Nightingale =
-Way, Quartermile, Edinburgh, EH3 9EG, UK. Tel: +44 (0)131 272 7000. www.cir=
-rus.com
->
 
