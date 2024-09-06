@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F43CE7AE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4794CE7AE7
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smTlq-0005Cj-Jf; Fri, 06 Sep 2024 03:52:42 -0400
+	id 1smTo2-0006Wk-V6; Fri, 06 Sep 2024 03:54:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smTln-00054T-7A
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:52:39 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smTo0-0006OS-KY
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:54:56 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smTlh-0002C8-Pt
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:52:38 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-42bb6d3e260so13470355e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 00:52:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smTnz-0002NY-3b
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 03:54:56 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-42bb885f97eso15401875e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 00:54:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725609152; x=1726213952; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725609291; x=1726214091; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ClePY4IQ5rPUwpHz7dHr0W3g8ssgg0mpOFw2rTkYyMQ=;
- b=KB2wwCLjxCG3KxC+aIvG53v8PpKPT4bK7ZzgbDc50DFJbqJzPFdFNOSbw6oP4nAFbT
- sCg8txhV5dpnT7q3jWLuQslj3BxuQS1iF+wK9BAeA/W7yQWqskeXVR6Sv5oCBUuVfvdl
- /IvbmrgowjO/Z6iquCOmihawMYzaw0LkUUza801uuPPcd/VBSQqBTxPoyI3UcuDQu0Vs
- blfqITCiHTkuqWNBmgPYmXNYFwubMJmiIWX1JUseo/eD8RZvvVkZ8++WgISDo+DzE3x+
- XPNkqu8zGYL86XXAK4zC+IDTwZvMqVlEe6NXlyayA+1K77aFlBxLrW1Ey/CsjWVbKca2
- DLCQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KCgIxjhAzS/8fVclyI0j42g3a/wD1pY2eNjLsYPd8pE=;
+ b=geHXhUrO3Zx574zu9aBpffMcws4c20UPWPAKVUJV5vOtLxFsMWEMgQWTSKB1oDxPy8
+ SSeXBkAtuo9jvqOiMqms67wdq7fMshZcruRe749vpiGE3FhO1KjxhOtlMigCTVMBhspw
+ MR4DIIl/wMG/6Qho334ILSnZxK68NGi/hzn5soSMGfiE9QIswYowL7si7rknCtCCu1F8
+ Hvu0wEU4FNs1AIlI72lUP5MrsO6pRaShDzuPfVyTzh6noodKJjVZCRyybAxS7rVud0bK
+ ABdUccj5/bNVv5tEKkvTTUNfbDPuUL2TfRw6KuEXROml14ic51/UAfeUoMEmb8g+mdWg
+ MX0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725609152; x=1726213952;
+ d=1e100.net; s=20230601; t=1725609292; x=1726214092;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ClePY4IQ5rPUwpHz7dHr0W3g8ssgg0mpOFw2rTkYyMQ=;
- b=URLwiWRgCMeZtD6Y8T3M/YCl3QP3sDsASj9RNGiH/Pq9gPpkzfprmJ3ZWI+o5EyYOt
- upMz+1F/ySMaKgAxOWdJoaG4bxU7m3GGUYcQdS+O6LZQmac1ELJqzC7tTOoH8PKiPF+e
- 9qq/IGDWQ3I/A6ILGIU3MKwSsoZ5U4BXQKGcTfwSKZU/EIm6hSJPHsMYPdvguCaIX6m9
- KWdqUr27Y+2vjbd4kAXz4R5xq0LoDm2T63rB6JXHnaRi4hm10Cra/RCgqp1LqmS6Xd5n
- tDDF9NWOw3kErtuy668QS7b5Pq0fp2DrCJYpg1w67pm7y5RmssASo9xB5/JCXjqZFyOe
- 096A==
+ bh=KCgIxjhAzS/8fVclyI0j42g3a/wD1pY2eNjLsYPd8pE=;
+ b=PHhU4qUWbddBIlK0i22cH14koOxNuFZSn8wrcf9Nj5YTpeTfqrO1PeEWll/5UvnCCo
+ vYItM61mfbEwSH2f+HpdzQ+u+hpaqL9yXFPtBpCwgBvnYKPzPEHgVRDbW9vojbrIj03q
+ CkagiV+Z7TSBGAQHUGtV3Ovvovhhm+gpfZG8TY6RPtwlNN4GWKgEk4LODQ9rtzHTxcLY
+ T1kdj7BiONyNwNjIIzvh+nsnNpAd8ZyqpTMewEEvSNgw430JvJoZbQOyWXrvYOQHLyQX
+ gozsjvGFUs5hgjvJOW6IVJkRP2OLz+aTz4cioIOke/nwDVEvwDseLRzixufLmIcL3BoS
+ eUYw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhKDANngo67BmPA+i/7tWODjCPONetKgpHqvR5FLkLgjoOg4UdG/OBvz2xWG/C5sOIAtTMudUxiZgG@nongnu.org
-X-Gm-Message-State: AOJu0YzZwrO1q72SGWnUOOvUa0UGcn9uu5HiCfzp1tmbLUmnuHkUPulW
- /hMD9ZhuGLld/jyjfLJlOxPfk1a6P6h0w7JJYLSbNrs0lb6W7yN8947evq3xXO8=
-X-Google-Smtp-Source: AGHT+IF4gXGW9V72fd2O6Nc/wRjuRRV3lmh7xDcz5bAQNNJbWLtWNK47nkJlH7dKVcYR9WRTOG7htg==
-X-Received: by 2002:a05:600c:1c13:b0:427:985b:178b with SMTP id
- 5b1f17b1804b1-42c9f98a3a3mr11887515e9.16.1725609151941; 
- Fri, 06 Sep 2024 00:52:31 -0700 (PDT)
+ AJvYcCWrMEfjgIGXyTHI9IuIWX6jhLxdbOU10x7B0LhwpIPwlgJg/iTA1/0DQBMI5/Z7RMbYmRpOJrNW/qF5@nongnu.org
+X-Gm-Message-State: AOJu0YxQ7VNhcq+5SGPtsTsFj0lbSBa5TEAWaQbX8nSV/5Q0Rp9LeTnT
+ ab31xfnPIzbJMrl3/c+WhyEym9DjQdIdYqiYlQuGAcJ5/R32VegOZgiS/McRsyg=
+X-Google-Smtp-Source: AGHT+IFq6bvcJqDrmFtDpifWQiGzOi7DPCSItdIGgLxNKkdjrF8FfJS5Q16wum2au4p8TA5nBq/59g==
+X-Received: by 2002:a05:600c:1d19:b0:42a:a749:e6 with SMTP id
+ 5b1f17b1804b1-42c9f4cb3f3mr10639765e9.10.1725609291496; 
+ Fri, 06 Sep 2024 00:54:51 -0700 (PDT)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-374c0f6f4c4sm15710764f8f.44.2024.09.06.00.52.31
+ 5b1f17b1804b1-42ca05f9ac2sm11598965e9.47.2024.09.06.00.54.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 00:52:31 -0700 (PDT)
-Message-ID: <96a96a7a-f3d9-4d0b-9a32-52d13134a74d@linaro.org>
-Date: Fri, 6 Sep 2024 09:52:30 +0200
+ Fri, 06 Sep 2024 00:54:51 -0700 (PDT)
+Message-ID: <36e626bb-d685-4580-a287-337945434f18@linaro.org>
+Date: Fri, 6 Sep 2024 09:54:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] minikconf: print error entirely on stderr
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240906073328.492089-1-pbonzini@redhat.com>
+Subject: Re: [PATCH] hw/i386: define _AS_LATEST() macros for machine types
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20240905182106.3663665-1-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240906073328.492089-1-pbonzini@redhat.com>
+In-Reply-To: <20240905182106.3663665-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,16 +99,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 09:33, Paolo Bonzini wrote:
-> While debugging an invalid configuration, I noticed that the clauses debug
-> ends up on stderr but the header ("The following clauses were found..."
-> ends up on stdout.  This makes the contents of meson-logs/meson-log.txt
-> a bit confusing.
+On 5/9/24 20:21, Daniel P. Berrangé wrote:
+> Follow the other architecture targets by adding extra macros for
+> defining a versioned machine type as the latest. This reduces the
+> size of the changes when introducing new machine types at the start
+> of each release cycle.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   scripts/minikconf.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/i386/pc_piix.c    | 11 +++++------
+>   hw/i386/pc_q35.c     | 11 ++++++-----
+>   include/hw/i386/pc.h |  4 +++-
+>   3 files changed, 14 insertions(+), 12 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
