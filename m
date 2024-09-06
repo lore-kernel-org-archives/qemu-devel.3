@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427A4E6FE3D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B103E6FE3D
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smdLX-00070n-Ly; Fri, 06 Sep 2024 14:06:11 -0400
+	id 1smdN9-0002Fy-Nv; Fri, 06 Sep 2024 14:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdLV-0006uN-Su
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdLR-00052J-6O
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:06:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725645961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+R7nUk9czIJ+acFQjzkhzcQFsY3Y8gEbUu2Em0NVezs=;
- b=fSsngOjEIQnflWYMRMXoGDktrDBNVybreLxHUIiG1LUmpXUrAfsGeCfLxr698aVoiNlEjB
- VuS8vjbaPQst7yr7Z1zzf0MGSsyBZCq6dzPB3V9De+/I/yxLrfk/ZT1r/M5hqyXVDZOjoZ
- qHCuCW2TkRBbnHbbnAa5E6Grxk7D87U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-345-gNhZjY71Mq-GLAWXj2LhTw-1; Fri,
- 06 Sep 2024 14:06:00 -0400
-X-MC-Unique: gNhZjY71Mq-GLAWXj2LhTw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8A78196CDF1; Fri,  6 Sep 2024 18:05:58 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.70])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D737019560AA; Fri,  6 Sep 2024 18:05:55 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smdMp-0001id-2o
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:34 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smdMm-000563-S2
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:30 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-374c1e5fe79so1429262f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 11:07:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725646046; x=1726250846; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eLZYP9oZiGwTAwn0IB4n2i9sG23m9F19T+BjlVlZE4E=;
+ b=wet083Pls+8muELKY+MIOyL6uy73mETXvfXhwOJcY9tZ81T0nRpFRf1WbxLdaHCyKI
+ LQH0JwNrYBaicEMR5NfaYT0r33boKcKlJO+rIi2uOh1DB/AkOaqIq+R5K30iRgX+RHG2
+ HcgtROxEsS2X4dscarBgzLl0wk4gDxfnHDpJPqUdmuej+u3Ftadf866X4QXuv7f+rTZ4
+ whd5zbPES0T3MN8DnY+Fy61XivdCY22S7ZqREgw41B60eGUAgPX60aNiaCSdE3cgR02A
+ CZKH4zWyDrdieyr1sNlCAgtYqluOzEtqnDBsEUrVJ4ka5GjWWcjhiomQwsLpoOAyhAHA
+ VXSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725646046; x=1726250846;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eLZYP9oZiGwTAwn0IB4n2i9sG23m9F19T+BjlVlZE4E=;
+ b=bp8edsoUO83Q4/36SCHBUIvqu8flfZyjOGJAQcZasojW7JJhFmiTU+YGEY44Vk5BfI
+ Dmay/0DD900zPo23zzxsAuV3qNCmVusNZzJ0dUvEmDA27AhPSxkHzS6W3MfVlVZQbWYB
+ J9QXtdNTkgGWCDD5CTKYP8I3RxfPwXDmNdfTcHb6ZAvpkrmMO7gI6ad0jAGPM84W/W8v
+ LUUMt6ZFVl8bC0Kqa5T6Azb/eaOdQtAZq6hrk5ZWb3hpFNHGGPHeaB8pWp8PVx+bolO0
+ vLFx6f7vFDzzafDJxDe5iR2lILaaV5Lr1o9AnIOQwOa0v2I0d6uELoh0hBnT3NW3QJqI
+ Gb/Q==
+X-Gm-Message-State: AOJu0YyhyPm33BuSDtSz5wUWi6rFiEF5z926oFqbgIePOK7TNF7U838x
+ yvcH7QyhumhxFCF4S5RLuOb/uKnsTfCOLD5lJzBlNnmPGsq2ZNtTMh4J/SC4W+JgWqNlHBTqpVa
+ k
+X-Google-Smtp-Source: AGHT+IHKxxfmuyRYrzAbbqwdvP8qJJywc8TRmzIDsG5zXC4SlzSiHCC3r10Eet92VRHABwOeR8jFZw==
+X-Received: by 2002:a5d:670a:0:b0:374:c61a:69b8 with SMTP id
+ ffacd0b85a97d-378895c9439mr2267106f8f.15.1725646046005; 
+ Fri, 06 Sep 2024 11:07:26 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37891657a2csm441860f8f.95.2024.09.06.11.07.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Sep 2024 11:07:25 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH 01/14] tests/functional: Add the LinuxKernelTest for testing
- the Linux boot process
-Date: Fri,  6 Sep 2024 20:05:36 +0200
-Message-ID: <20240906180549.792832-2-thuth@redhat.com>
-In-Reply-To: <20240906180549.792832-1-thuth@redhat.com>
-References: <20240906180549.792832-1-thuth@redhat.com>
+Subject: [PATCH 1/2] scripts/mtest2make: Honour MESON_TESTTHREADS if it is set
+Date: Fri,  6 Sep 2024 19:07:22 +0100
+Message-Id: <20240906180723.503855-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240906180723.503855-1-peter.maydell@linaro.org>
+References: <20240906180723.503855-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,74 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Copy the LinuxKernelTest from tests/acceptance/boot_linux_console.py
-to be able to convert the related tests to the functional test framework
-in the following patches.
+'meson test' has two ways to set how many tests to run in parallel:
+ * the command line --num-processes option
+ * the environment variable MESON_TESTTHREADS
+If both are given, then it prefers the command line option over
+the environment variable.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+This is an unfortunate order of precedence, because it's frequently
+handy to be able to override the default by setting an environment
+variable at the top level of a build or CI invocation.  Fortunately,
+we can flip the order for our purposes, because we always invoke
+'meson test' indirectly.
+
+We currently invoke 'meson test' passing it a --num-processes
+argument based on whatever the '-j' option to make was.  Adjust the
+logic in mtest2make so that if MESON_TESTTHREADS is set then we
+honour that, and don't override it.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/functional/qemu_test/__init__.py    |  1 +
- tests/functional/qemu_test/linuxkernel.py | 41 +++++++++++++++++++++++
- 2 files changed, 42 insertions(+)
- create mode 100644 tests/functional/qemu_test/linuxkernel.py
+ scripts/mtest2make.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index f33282efe8..67f87be9c4 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -12,3 +12,4 @@
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
-+from .linuxkernel import LinuxKernelTest
-diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
-new file mode 100644
-index 0000000000..fdd5307629
---- /dev/null
-+++ b/tests/functional/qemu_test/linuxkernel.py
-@@ -0,0 +1,41 @@
-+# Test class for testing the boot process of a Linux kernel
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import os
-+
-+from .testcase import QemuSystemTest
-+from .cmd import run_cmd, wait_for_console_pattern
-+from .utils import archive_extract
-+
-+class LinuxKernelTest(QemuSystemTest):
-+    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-+
-+    def wait_for_console_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(self, success_message,
-+                                 failure_message='Kernel panic - not syncing',
-+                                 vm=vm)
-+
-+    def extract_from_deb(self, deb_path, path):
-+        """
-+        Extracts a file from a deb package into the test workdir
-+
-+        :param deb_path: path to the deb archive
-+        :param path: path within the deb archive of the file to be extracted
-+        :returns: path of the extracted file
-+        """
-+        cwd = os.getcwd()
-+        os.chdir(self.workdir)
-+        (stdout, stderr, ret) = run_cmd(['ar', 't', deb_path])
-+        file_path = stdout.split()[2]
-+        run_cmd(['ar', 'x', deb_path, file_path])
-+        archive_extract(file_path, self.workdir)
-+        os.chdir(cwd)
-+        # Return complete path to extracted file.  Because callers to
-+        # extract_from_deb() specify 'path' with a leading slash, it is
-+        # necessary to use os.path.relpath() as otherwise os.path.join()
-+        # interprets it as an absolute path and drops the self.workdir part.
-+        return os.path.normpath(os.path.join(self.workdir,
-+                                             os.path.relpath(path, '/')))
-+
+diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+index eb01a05ddbd..6de0044134c 100644
+--- a/scripts/mtest2make.py
++++ b/scripts/mtest2make.py
+@@ -32,7 +32,11 @@ def names(self, base):
+ ifneq ($(SPEED), quick)
+ .mtestargs += --setup $(SPEED)
+ endif
++# If the user set MESON_TESTTHREADS then don't override that preference by
++# passing --num-processes to 'meson test'
++ifeq ($(MESON_TESTTHREADS),)
+ .mtestargs += $(subst -j,--num-processes , $(filter-out -j, $(lastword -j1 $(filter -j%, $(MAKEFLAGS)))))
++endif
+ 
+ .check.mtestargs = $(MTESTARGS) $(.mtestargs) $(if $(V),--verbose,--print-errorlogs)
+ .bench.mtestargs = $(MTESTARGS) $(.mtestargs) --benchmark --verbose''')
 -- 
-2.46.0
+2.34.1
 
 
