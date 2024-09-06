@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B98BCE7B05
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7045BCE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWzV-0004WX-GO; Fri, 06 Sep 2024 07:19:01 -0400
+	id 1smWyP-0002lR-Fh; Fri, 06 Sep 2024 07:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWzT-0004Hs-Ae; Fri, 06 Sep 2024 07:18:59 -0400
+ id 1smWxh-0008U8-DF; Fri, 06 Sep 2024 07:17:10 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWzR-0008HN-GZ; Fri, 06 Sep 2024 07:18:59 -0400
+ id 1smWxf-0008A1-NJ; Fri, 06 Sep 2024 07:17:09 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 48D398C4AB;
- Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 470B18C49B;
+ Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 53332133714;
- Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353735 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 53F22133704;
+ Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
+Received: (nullmailer pid 353681 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
- Claudio Fontana <cfontana@suse.de>, "Denis V . Lunev" <den@openvz.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 58/69] module: Prevent crash by resetting local_err in
- module_load_qom_all()
-Date: Fri,  6 Sep 2024 14:13:07 +0300
-Message-Id: <20240906111324.353230-58-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Amjad Alsharafi <amjadsharafi10@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 42/69] vvfat: Fix usage of `info.file.offset`
+Date: Fri,  6 Sep 2024 14:12:51 +0300
+Message-Id: <20240906111324.353230-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -63,40 +61,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
 
-Set local_err to NULL after it has been freed in error_report_err(). This
-avoids triggering assert(*errp == NULL) failure in error_setv() when
-local_err is reused in the loop.
+The field is marked as "the offset in the file (in clusters)", but it
+was being used like this
+`cluster_size*(nums)+mapping->info.file.offset`, which is incorrect.
 
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Claudio Fontana <cfontana@suse.de>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Link: https://lore.kernel.org/r/20240809121340.992049-2-alexander.ivanov@virtuozzo.com
-[Do the same by moving the declaration instead. - Paolo]
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 940d802b24e63650e0eacad3714e2ce171cba17c)
+Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <72f19a7903886dda1aa78bcae0e17702ee939262.1721470238.git.amjadsharafi10@gmail.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 21b25a0e466a5bba0a45600bb8100ab564202ed1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/util/module.c b/util/module.c
-index 32e263163c..3eb0f06df1 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -354,13 +354,13 @@ int module_load_qom(const char *type, Error **errp)
- void module_load_qom_all(void)
- {
-     const QemuModinfo *modinfo;
--    Error *local_err = NULL;
+diff --git a/block/vvfat.c b/block/vvfat.c
+index 19da009a5b..247b232608 100644
+--- a/block/vvfat.c
++++ b/block/vvfat.c
+@@ -1408,7 +1408,9 @@ read_cluster_directory:
  
-     if (module_loaded_qom_all) {
-         return;
-     }
+         assert(s->current_fd);
  
-     for (modinfo = module_info; modinfo->name != NULL; modinfo++) {
-+        Error *local_err = NULL;
-         if (!modinfo->objs) {
-             continue;
+-        offset=s->cluster_size*(cluster_num-s->current_mapping->begin)+s->current_mapping->info.file.offset;
++        offset = s->cluster_size *
++            ((cluster_num - s->current_mapping->begin)
++            + s->current_mapping->info.file.offset);
+         if(lseek(s->current_fd, offset, SEEK_SET)!=offset)
+             return -3;
+         s->cluster=s->cluster_buffer;
+@@ -1929,8 +1931,9 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+                         (mapping->mode & MODE_DIRECTORY) == 0) {
+ 
+                     /* was modified in qcow */
+-                    if (offset != mapping->info.file.offset + s->cluster_size
+-                            * (cluster_num - mapping->begin)) {
++                    if (offset != s->cluster_size
++                            * ((cluster_num - mapping->begin)
++                            + mapping->info.file.offset)) {
+                         /* offset of this cluster in file chain has changed */
+                         abort();
+                         copy_it = 1;
+@@ -2404,7 +2407,7 @@ static int commit_mappings(BDRVVVFATState* s,
+                         (mapping->end - mapping->begin);
+             } else
+                 next_mapping->info.file.offset = mapping->info.file.offset +
+-                        mapping->end - mapping->begin;
++                        (mapping->end - mapping->begin);
+ 
+             mapping = next_mapping;
          }
 -- 
 2.39.2
