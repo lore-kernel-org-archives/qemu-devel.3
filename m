@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD66CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:20:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF28C54FC6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRNH-0004UU-V0; Fri, 06 Sep 2024 01:19:15 -0400
+	id 1smRPJ-0008Vj-PM; Fri, 06 Sep 2024 01:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRMi-00021F-6j; Fri, 06 Sep 2024 01:18:40 -0400
+ id 1smROY-000577-CZ; Fri, 06 Sep 2024 01:20:30 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRMf-00088x-Tm; Fri, 06 Sep 2024 01:18:35 -0400
+ id 1smROV-0000CM-AK; Fri, 06 Sep 2024 01:20:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F1198C12B;
- Fri,  6 Sep 2024 08:15:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ADD208C13D;
+ Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 3E20C133370;
- Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
-Received: (nullmailer pid 10451 invoked by uid 1000);
- Fri, 06 Sep 2024 05:16:33 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 5E5A0133382;
+ Fri,  6 Sep 2024 08:16:36 +0300 (MSK)
+Received: (nullmailer pid 10508 invoked by uid 1000);
+ Fri, 06 Sep 2024 05:16:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 22/40] target/arm: Handle denormals correctly for
- FMOPA (widening)
-Date: Fri,  6 Sep 2024 08:16:10 +0300
-Message-Id: <20240906051633.10288-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jianzhou Yue <JianZhou.Yue@verisilicon.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 40/40] hw/core/ptimer: fix timer zero period condition
+ for freq > 1GHz
+Date: Fri,  6 Sep 2024 08:16:28 +0300
+Message-Id: <20240906051633.10288-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
@@ -63,165 +62,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Jianzhou Yue <JianZhou.Yue@verisilicon.com>
 
-The FMOPA (widening) SME instruction takes pairs of half-precision
-floating point values, widens them to single-precision, does a
-two-way dot product and accumulates the results into a
-single-precision destination.  We don't quite correctly handle the
-FPCR bits FZ and FZ16 which control flushing of denormal inputs and
-outputs.  This is because at the moment we pass a single float_status
-value to the helper function, which then uses that configuration for
-all the fp operations it does.  However, because the inputs to this
-operation are float16 and the outputs are float32 we need to use the
-fp_status_f16 for the float16 input widening but the normal fp_status
-for everything else.  Otherwise we will apply the flushing control
-FPCR.FZ16 to the 32-bit output rather than the FPCR.FZ control, and
-incorrectly flush a denormal output to zero when we should not (or
-vice-versa).
+The real period is zero when both period and period_frac are zero.
+Check the method ptimer_set_freq, if freq is larger than 1000 MHz,
+the period is zero, but the period_frac is not, in this case, the
+ptimer will work but the current code incorrectly recognizes that
+the ptimer is disabled.
 
-(In commit 207d30b5fdb5b we tried to fix the FZ handling but
-didn't get it right, switching from "use FPCR.FZ for everything" to
-"use FPCR.FZ16 for everything".)
-(Mjt: it is commit d5373d7bdbee in stable-7.2)
-
-Pass the CPU env to the sme_fmopa_h helper instead of an fp_status
-pointer, and have the helper pass an extra fp_status into the
-f16_dotadd() function so that we can use the right status for the
-right parts of this operation.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 207d30b5fdb5 ("target/arm: Use FPST_F16 for SME FMOPA (widening)")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2373
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2306
+Signed-off-by: JianZhou Yue <JianZhou.Yue@verisilicon.com>
+Message-id: 3DA024AEA8B57545AF1B3CAA37077D0FB75E82C8@SHASXM03.verisilicon.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 55f9f4ee018c5ccea81d8c8c586756d7711ae46f)
+(cherry picked from commit 446e5e8b4515e9a7be69ef6a29852975289bb6f0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: s/tcg_env/cpu_env/ due to missingv
- 8.1.0-1189-gad75a51e84af "tcg: Rename cpu_env to tcg_env")
 
-diff --git a/target/arm/helper-sme.h b/target/arm/helper-sme.h
-index d2d544a696..d33fbcd8fd 100644
---- a/target/arm/helper-sme.h
-+++ b/target/arm/helper-sme.h
-@@ -122,7 +122,7 @@ DEF_HELPER_FLAGS_5(sme_addha_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sme_addva_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
+index eb5ba1aff7..f1f8109385 100644
+--- a/hw/core/ptimer.c
++++ b/hw/core/ptimer.c
+@@ -83,7 +83,7 @@ static void ptimer_reload(ptimer_state *s, int delta_adjust)
+         delta = s->delta = s->limit;
+     }
  
- DEF_HELPER_FLAGS_7(sme_fmopa_h, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
-diff --git a/target/arm/sme_helper.c b/target/arm/sme_helper.c
-index f12f3288fd..98a4840970 100644
---- a/target/arm/sme_helper.c
-+++ b/target/arm/sme_helper.c
-@@ -1009,12 +1009,23 @@ static inline uint32_t f16mop_adj_pair(uint32_t pair, uint32_t pg, uint32_t neg)
+-    if (s->period == 0) {
++    if (s->period == 0 && s->period_frac == 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+@@ -309,7 +309,7 @@ void ptimer_run(ptimer_state *s, int oneshot)
+ 
+     assert(s->in_transaction);
+ 
+-    if (was_disabled && s->period == 0) {
++    if (was_disabled && s->period == 0 && s->period_frac == 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+diff --git a/tests/unit/ptimer-test.c b/tests/unit/ptimer-test.c
+index 04b5f4e3d0..08240594bb 100644
+--- a/tests/unit/ptimer-test.c
++++ b/tests/unit/ptimer-test.c
+@@ -763,6 +763,33 @@ static void check_oneshot_with_load_0(gconstpointer arg)
+     ptimer_free(ptimer);
  }
  
- static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
--                          float_status *s_std, float_status *s_odd)
-+                          float_status *s_f16, float_status *s_std,
-+                          float_status *s_odd)
- {
--    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_std);
--    float64 e1c = float16_to_float64(e1 >> 16, true, s_std);
--    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_std);
--    float64 e2c = float16_to_float64(e2 >> 16, true, s_std);
-+    /*
-+     * We need three different float_status for different parts of this
-+     * operation:
-+     *  - the input conversion of the float16 values must use the
-+     *    f16-specific float_status, so that the FPCR.FZ16 control is applied
-+     *  - operations on float32 including the final accumulation must use
-+     *    the normal float_status, so that FPCR.FZ is applied
-+     *  - we have pre-set-up copy of s_std which is set to round-to-odd,
-+     *    for the multiply (see below)
-+     */
-+    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_f16);
-+    float64 e1c = float16_to_float64(e1 >> 16, true, s_f16);
-+    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_f16);
-+    float64 e2c = float16_to_float64(e2 >> 16, true, s_f16);
-     float64 t64;
-     float32 t32;
- 
-@@ -1036,20 +1047,23 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
- }
- 
- void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
--                         void *vpm, void *vst, uint32_t desc)
-+                         void *vpm, CPUARMState *env, uint32_t desc)
- {
-     intptr_t row, col, oprsz = simd_maxsz(desc);
-     uint32_t neg = simd_data(desc) * 0x80008000u;
-     uint16_t *pn = vpn, *pm = vpm;
--    float_status fpst_odd, fpst_std;
-+    float_status fpst_odd, fpst_std, fpst_f16;
- 
-     /*
--     * Make a copy of float_status because this operation does not
--     * update the cumulative fp exception status.  It also produces
--     * default nans.  Make a second copy with round-to-odd -- see above.
-+     * Make copies of fp_status and fp_status_f16, because this operation
-+     * does not update the cumulative fp exception status.  It also
-+     * produces default NaNs. We also need a second copy of fp_status with
-+     * round-to-odd -- see above.
-      */
--    fpst_std = *(float_status *)vst;
-+    fpst_f16 = env->vfp.fp_status_f16;
-+    fpst_std = env->vfp.fp_status;
-     set_default_nan_mode(true, &fpst_std);
-+    set_default_nan_mode(true, &fpst_f16);
-     fpst_odd = fpst_std;
-     set_float_rounding_mode(float_round_to_odd, &fpst_odd);
- 
-@@ -1069,7 +1083,8 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
-                         uint32_t m = *(uint32_t *)(vzm + H1_4(col));
- 
-                         m = f16mop_adj_pair(m, pcol, 0);
--                        *a = f16_dotadd(*a, n, m, &fpst_std, &fpst_odd);
-+                        *a = f16_dotadd(*a, n, m,
-+                                        &fpst_f16, &fpst_std, &fpst_odd);
-                     }
-                     col += 4;
-                     pcol >>= 4;
-diff --git a/target/arm/translate-sme.c b/target/arm/translate-sme.c
-index 0fcd4ad950..c864bd016c 100644
---- a/target/arm/translate-sme.c
-+++ b/target/arm/translate-sme.c
-@@ -376,8 +376,29 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
-     return true;
- }
- 
--TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
--           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
-+static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
-+                           gen_helper_gvec_5_ptr *fn)
++static void check_freq_more_than_1000M(gconstpointer arg)
 +{
-+    int svl = streaming_vec_reg_size(s);
-+    uint32_t desc = simd_desc(svl, svl, a->sub);
-+    TCGv_ptr za, zn, zm, pn, pm;
++    const uint8_t *policy = arg;
++    ptimer_state *ptimer = ptimer_init(ptimer_trigger, NULL, *policy);
++    bool no_round_down = (*policy & PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
 +
-+    if (!sme_smza_enabled_check(s)) {
-+        return true;
-+    }
++    triggered = false;
 +
-+    za = get_tile(s, esz, a->zad);
-+    zn = vec_full_reg_ptr(s, a->zn);
-+    zm = vec_full_reg_ptr(s, a->zm);
-+    pn = pred_full_reg_ptr(s, a->pn);
-+    pm = pred_full_reg_ptr(s, a->pm);
++    ptimer_transaction_begin(ptimer);
++    ptimer_set_freq(ptimer, 2000000000);
++    ptimer_set_limit(ptimer, 8, 1);
++    ptimer_run(ptimer, 1);
++    ptimer_transaction_commit(ptimer);
 +
-+    fn(za, zn, zm, pn, pm, cpu_env, tcg_constant_i32(desc));
-+    return true;
++    qemu_clock_step(3);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), ==, no_round_down ? 3 : 2);
++    g_assert_false(triggered);
++
++    qemu_clock_step(1);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), ==, 0);
++    g_assert_true(triggered);
++
++    ptimer_free(ptimer);
 +}
 +
-+TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
-+           MO_32, gen_helper_sme_fmopa_h)
- TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
-            MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
- TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
+ static void add_ptimer_tests(uint8_t policy)
+ {
+     char policy_name[256] = "";
+@@ -857,6 +884,12 @@ static void add_ptimer_tests(uint8_t policy)
+                               policy_name),
+         g_memdup2(&policy, 1), check_oneshot_with_load_0, g_free);
+     g_free(tmp);
++
++    g_test_add_data_func_full(
++        tmp = g_strdup_printf("/ptimer/freq_more_than_1000M policy=%s",
++                              policy_name),
++        g_memdup2(&policy, 1), check_freq_more_than_1000M, g_free);
++    g_free(tmp);
+ }
+ 
+ static void add_all_ptimer_policies_comb_tests(void)
 -- 
 2.39.2
 
