@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A979CCE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B027ECE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSrz-00053t-W7; Fri, 06 Sep 2024 02:55:00 -0400
+	id 1smSsy-00014y-LW; Fri, 06 Sep 2024 02:56:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSry-0004ys-Oe; Fri, 06 Sep 2024 02:54:58 -0400
+ id 1smSsv-0000aY-Dk; Fri, 06 Sep 2024 02:55:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSrx-00032s-1S; Fri, 06 Sep 2024 02:54:58 -0400
+ id 1smSst-0003Lt-AZ; Fri, 06 Sep 2024 02:55:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3DCF28C23F;
+ by isrv.corpit.ru (Postfix) with ESMTP id E81168C248;
  Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 050F51333F7;
+ by tsrv.corpit.ru (Postfix) with SMTP id A6424133400;
  Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
-Received: (nullmailer pid 43368 invoked by uid 1000);
+Received: (nullmailer pid 43447 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 10/53] virtio-snd: check for invalid param shift
- operands
-Date: Fri,  6 Sep 2024 09:53:40 +0300
-Message-Id: <20240906065429.42415-10-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 19/53] hw/misc/bcm2835_property: Fix handling of
+ FRAMEBUFFER_SET_PALETTE
+Date: Fri,  6 Sep 2024 09:53:49 +0300
+Message-Id: <20240906065429.42415-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -66,49 +64,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-When setting the parameters of a PCM stream, we compute the bit flag
-with the format and rate values as shift operand to check if they are
-set in supported_formats and supported_rates.
+The documentation of the "Set palette" mailbox property at
+https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#set-palette
+says it has the form:
 
-If the guest provides a format/rate value which when shifting 1 results
-in a value bigger than the number of bits in
-supported_formats/supported_rates, we must report an error.
+    Length: 24..1032
+    Value:
+        u32: offset: first palette index to set (0-255)
+        u32: length: number of palette entries to set (1-256)
+        u32...: RGBA palette values (offset to offset+length-1)
 
-Previously, this ended up triggering the not reached assertions later
-when converting to internal QEMU values.
+We get this wrong in a couple of ways:
+ * we aren't checking the offset and length are in range, so the guest
+   can make us spin for a long time by providing a large length
+ * the bounds check on our loop is wrong: we should iterate through
+   'length' palette entries, not 'length - offset' entries
 
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2416
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <virtio-snd-fuzz-2416-fix-v1-manos.pitsidianakis@linaro.org>
+Fix the loop to implement the bounds checks and get the loop
+condition right. In the process, make the variables local to
+this switch case, rather than function-global, so it's clearer
+what type they are when reading the code.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 9b6083465fb8311f2410615f8303a41f580a2a20)
+Message-id: 20240723131029.1159908-2-peter.maydell@linaro.org
+(cherry picked from commit 0892fffc2abaadfb5d8b79bb0250ae1794862560)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fix due to lack of
+ v9.0.0-1812-g5d5f1b60916a "hw/misc: Implement mailbox properties for customer OTP and device specific private keys"
+ also remove now-unused local `n' variable which gets removed in the next change in this file,
+ v9.0.0-2720-g32f1c201eedf "hw/misc/bcm2835_property: Avoid overflow in OTP access properties")
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 4d15fe0e31..f0e7349c8a 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -282,11 +282,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
-         error_report("Number of channels is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
--    if (!(supported_formats & BIT(params->format))) {
-+    if (BIT(params->format) > sizeof(supported_formats) ||
-+        !(supported_formats & BIT(params->format))) {
-         error_report("Stream format is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
--    if (!(supported_rates & BIT(params->rate))) {
-+    if (BIT(params->rate) > sizeof(supported_rates) ||
-+        !(supported_rates & BIT(params->rate))) {
-         error_report("Stream rate is not supported.");
-         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-     }
+diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
+index ff55a4e2cd..87876f9a58 100644
+--- a/hw/misc/bcm2835_property.c
++++ b/hw/misc/bcm2835_property.c
+@@ -28,8 +28,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+     uint32_t tot_len;
+     size_t resplen;
+     uint32_t tmp;
+-    int n;
+-    uint32_t offset, length, color;
+ 
+     /*
+      * Copy the current state of the framebuffer config; we will update
+@@ -264,18 +262,25 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+             resplen = 16;
+             break;
+         case RPI_FWREQ_FRAMEBUFFER_SET_PALETTE:
+-            offset = ldl_le_phys(&s->dma_as, value + 12);
+-            length = ldl_le_phys(&s->dma_as, value + 16);
+-            n = 0;
+-            while (n < length - offset) {
+-                color = ldl_le_phys(&s->dma_as, value + 20 + (n << 2));
+-                stl_le_phys(&s->dma_as,
+-                            s->fbdev->vcram_base + ((offset + n) << 2), color);
+-                n++;
++        {
++            uint32_t offset = ldl_le_phys(&s->dma_as, value + 12);
++            uint32_t length = ldl_le_phys(&s->dma_as, value + 16);
++            int resp;
++
++            if (offset > 255 || length < 1 || length > 256) {
++                resp = 1; /* invalid request */
++            } else {
++                for (uint32_t e = 0; e < length; e++) {
++                    uint32_t color = ldl_le_phys(&s->dma_as, value + 20 + (e << 2));
++                    stl_le_phys(&s->dma_as,
++                                s->fbdev->vcram_base + ((offset + e) << 2), color);
++                }
++                resp = 0;
+             }
+-            stl_le_phys(&s->dma_as, value + 12, 0);
++            stl_le_phys(&s->dma_as, value + 12, resp);
+             resplen = 4;
+             break;
++        }
+         case RPI_FWREQ_FRAMEBUFFER_GET_NUM_DISPLAYS:
+             stl_le_phys(&s->dma_as, value + 12, 1);
+             resplen = 4;
 -- 
 2.39.2
 
