@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20482CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD1CCE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWuH-0000Rd-PX; Fri, 06 Sep 2024 07:13:37 -0400
+	id 1smWxG-0006nj-SZ; Fri, 06 Sep 2024 07:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuE-0000El-7B; Fri, 06 Sep 2024 07:13:34 -0400
+ id 1smWwg-000485-IG; Fri, 06 Sep 2024 07:16:10 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuC-0007f6-DD; Fri, 06 Sep 2024 07:13:33 -0400
+ id 1smWwd-00081D-T0; Fri, 06 Sep 2024 07:16:05 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 97D968C472;
- Fri,  6 Sep 2024 14:12:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D2A48C48E;
+ Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A38F31336DC;
- Fri,  6 Sep 2024 14:13:24 +0300 (MSK)
-Received: (nullmailer pid 353545 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 8A1C81336F8;
+ Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
+Received: (nullmailer pid 353640 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 02/69] scsi: fix regression and honor bootindex again
- for legacy drives
-Date: Fri,  6 Sep 2024 14:12:11 +0300
-Message-Id: <20240906111324.353230-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 30/69] hw/i386/amd_iommu: Don't leak memory in
+ amdvi_update_iotlb()
+Date: Fri,  6 Sep 2024 14:12:39 +0300
+Message-Id: <20240906111324.353230-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -63,59 +62,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Commit 3089637461 ("scsi: Don't ignore most usb-storage properties")
-removed the call to object_property_set_int() and thus the 'set'
-method for the bootindex property was also not called anymore. Here
-that method is device_set_bootindex() (as configured by
-scsi_dev_instance_init() -> device_add_bootindex_property()) which as
-a side effect registers the device via add_boot_device_path().
+In amdvi_update_iotlb() we will only put a new entry in the hash
+table if to_cache.perm is not IOMMU_NONE.  However we allocate the
+memory for the new AMDVIIOTLBEntry and for the hash table key
+regardless.  This means that in the IOMMU_NONE case we will leak the
+memory we alloacted.
 
-As reported by a downstream user [0], the bootindex property did not
-have the desired effect anymore for legacy drives. Fix the regression
-by explicitly calling the add_boot_device_path() function after
-checking that the bootindex is not yet used (to avoid
-add_boot_device_path() calling exit()).
-
-[0]: https://forum.proxmox.com/threads/149772/post-679433
+Move the allocations into the if() to the point where we know we're
+going to add the item to the hash table.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 3089637461 ("scsi: Don't ignore most usb-storage properties")
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Link: https://lore.kernel.org/r/20240710152529.1737407-1-f.ebner@proxmox.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 57a8a80d1a5b28797b21d30bfc60601945820e51)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2452
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20240731170019.3590563-1-peter.maydell@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 9a45b0761628cc59267b3283a85d15294464ac31)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 9e40b0c920..53eff5dd3d 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -384,6 +384,7 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
-     DeviceState *dev;
-     SCSIDevice *s;
-     DriveInfo *dinfo;
-+    Error *local_err = NULL;
- 
-     if (blk_is_sg(blk)) {
-         driver = "scsi-generic";
-@@ -403,6 +404,14 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
-     s = SCSI_DEVICE(dev);
-     s->conf = *conf;
- 
-+    check_boot_index(conf->bootindex, &local_err);
-+    if (local_err) {
-+        object_unparent(OBJECT(dev));
-+        error_propagate(errp, local_err);
-+        return NULL;
-+    }
-+    add_boot_device_path(conf->bootindex, dev, NULL);
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 6d4fde72f9..87643d2891 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -357,12 +357,12 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
+                                uint64_t gpa, IOMMUTLBEntry to_cache,
+                                uint16_t domid)
+ {
+-    AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
+-    uint64_t *key = g_new(uint64_t, 1);
+-    uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
+-
+     /* don't cache erroneous translations */
+     if (to_cache.perm != IOMMU_NONE) {
++        AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
++        uint64_t *key = g_new(uint64_t, 1);
++        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
 +
-     qdev_prop_set_uint32(dev, "scsi-id", unit);
-     if (object_property_find(OBJECT(dev), "removable")) {
-         qdev_prop_set_bit(dev, "removable", removable);
+         trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
+                 PCI_FUNC(devid), gpa, to_cache.translated_addr);
+ 
 -- 
 2.39.2
 
