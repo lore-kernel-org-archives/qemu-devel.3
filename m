@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 723D6CE7AA5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 01:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B24CE7AA6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 01:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smNmg-0001A7-NT; Thu, 05 Sep 2024 21:29:10 -0400
+	id 1smO7X-00019Y-Lr; Thu, 05 Sep 2024 21:50:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smNme-00019Z-OY
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 21:29:09 -0400
-Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1smO7U-00018O-D6
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 21:50:40 -0400
+Received: from mail-ot1-x342.google.com ([2607:f8b0:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smNmd-0001wu-5d
- for qemu-devel@nongnu.org; Thu, 05 Sep 2024 21:29:08 -0400
-Received: by mail-vs1-xe32.google.com with SMTP id
- ada2fe7eead31-49bd6c284bcso296621137.2
- for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 18:29:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1smO7S-0004UQ-M2
+ for qemu-devel@nongnu.org; Thu, 05 Sep 2024 21:50:40 -0400
+Received: by mail-ot1-x342.google.com with SMTP id
+ 46e09a7af769-710c2dcdfc8so910597a34.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Sep 2024 18:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725586146; x=1726190946; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1725587436; x=1726192236; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x71ZqPWDKjM2kAThk+8aKjSw0auMnnz159sB53b4/ic=;
- b=AxKy+lIe1KhYEy1bSEF51sWI5M6M4LmVJbzhQ6+pDMMLwIUl2Uyqvm4EnPFHWFj9wu
- nwWfMtP0C6ggMWZLJVn38EzYeW1c9yGYw085r9Yy4JtA2H5bnJpxz5CvEc/qjG5Ta/Lx
- SxQVTxbxGtATt4BNqlAqPSwThvCGk8kg6WxZEDt/PxSUJLCav2FTT4dJLTdIwO7sG/Yd
- rcFJyPSLUs++YeiHRmjiGI95B+uN1dPNlxh0ey4xWUyp/votJ9iOjBTbg4DoOJyM4ZEN
- iD7kpgU/5E365DrWESWZHt/M1UNvGbEejADOEiEn9fVZlGKPFEts82YfDdlIXgqfXxWY
- 6pkg==
+ bh=ekO+TXU11f47zYLvkFUHveU90jVjQGsBAp8Y0J30cvk=;
+ b=kRrXBR0tq7uHInuOuzpJBV6eVxdbrAaFL/q3aK0KCNmVR/eFPk5PDzRZSYdfjyhn6Z
+ TTx+KT/YymoziA/yGF0IcttpA5opAumVdlpJlV2n0zBAGcyyKJW7gXPWbSmOK2BGTn29
+ Kov3JSsmEe1ZOoRiB4EGKU1HEChaxz/wN25tpryCIXWFSt2z8vLVtNGozLN/MYOO0ve8
+ sF7QBG+porrGUknQoJ+kAk4OI7DBdqen4kx2hAXr1ZlUHA9IZ/OdB1olukI8T7ZQu2fj
+ iZS7pRqrFZedaLhRO05pNVBJNEJJlgtYOIN9UlXOkcshtcz6JoY32apRVVpcipTO/zCl
+ ja5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725586146; x=1726190946;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1725587436; x=1726192236;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x71ZqPWDKjM2kAThk+8aKjSw0auMnnz159sB53b4/ic=;
- b=dmKrW0Qd4hwj0zVLoUKINOLVPxN4tPT5PA1NczUpQhquwoWM+6ykVVDUPwVqE7GN1X
- c1gPgnOtdSHButP8pACjPDTn9ZVVpg0kdrCAMOsF6PfRoU6a7ZtSV44SfkDtNvup6DSB
- nlsgHfVYjeLiKbDjuE8Mg7AMeDWFJx4Z43Eu0+d6b4Gb9hCfXJz+wIKWu24pAk+kcdq+
- XKuJHTsV/hrxkGv4GJYr3jJ1IDBTJIikUQBY7r+YynQoV7lpdb2GveMvJ+tWiqfKS8pn
- 5CFEbn/uaTXaEpLiU//c1RxRO6YrmYj1GE8gsBupGqDMdFthN4uvztyoK135fTpSoa4c
- y0fg==
-X-Gm-Message-State: AOJu0Yymuasp52Ee7Uljg8VL12X8CmAIk/duj7Xb6Aqa5LWlnmplrT6Q
- GJ92gB1hJuCloWyUeclMS4WOyqNUZo8wGzXm4O5SSIBvZ0UbZKFH+vjxAMg0z0D8a3yX4Wg7Et7
- vtXfNT58V7xQL3zZo8ZWbeygkm6E=
-X-Google-Smtp-Source: AGHT+IGHY3dMPX3jl8QKP+CjyV0+GbGnHVNPNqy3l5+Ks7wPs2hKJvRI5zPVjBeaIAlieFmH8p2cLLeVwkyd/nI+pxo=
-X-Received: by 2002:a05:6102:4412:b0:493:9781:11a7 with SMTP id
- ada2fe7eead31-49bde13d6aamr1272510137.1.1725586146002; Thu, 05 Sep 2024
- 18:29:06 -0700 (PDT)
+ bh=ekO+TXU11f47zYLvkFUHveU90jVjQGsBAp8Y0J30cvk=;
+ b=jr5/aQN6RzcdmlKFnnGtW1DQz5CXtgVToZkJuqEind12+9UWgQjvKKofS2T+F/l9eb
+ WDFifZY4GK5VOF4TJ4VcGUkE8lpUPLGUi+/zaeHQaZsHqm8Mt6M6Mz3JxnmP+cTmTQ5c
+ yqdjf20lTAGRusJ4z24MAra4nvffSbnXqFG8IpHYajvltsi3VB5flUYW0yTLNcNelsUJ
+ O8Dj4n9cvqztQN4DBbr6IKmYmS0csbuHihaene2lxG3nXMx6c0zuwRtNFzomBvi34wni
+ abCshuQyGFv0iBs1Us64Lz+RC+dVdp/3xXKb+16yC9G8MLQO+nMvv2Rj1aSMOuU8ZcdO
+ IrbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnomYIYYYvBLYXLDE8+o8ECDs1f0lsDpTw2YxAiGOtnU9fliX8aY3hHd9NxDS2dq2SNHywPhaKa+cK@nongnu.org
+X-Gm-Message-State: AOJu0YwY3UIPA5o/AFnX7qylUGN+chFdJr6wUQEKDl9ehDe19uecdyt7
+ p6KF3YBZgtUsBG2GfvzmwTvMfGOOhbayQ7sssMcTvuezyw/NgxK+
+X-Google-Smtp-Source: AGHT+IH4Ahp6JgE+cyt45Wk8AxAtJ+04bPzh2f10Cv6nV2v3XRsqG7/wOdtJowji7Hzl522iTVYbkg==
+X-Received: by 2002:a05:6358:724f:b0:1b8:3635:f1c2 with SMTP id
+ e5c5f4694b2df-1b83635f7ebmr154767155d.7.1725587435658; 
+ Thu, 05 Sep 2024 18:50:35 -0700 (PDT)
+Received: from localhost.localdomain ([39.144.190.92])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7d4fbd8da85sm3999940a12.37.2024.09.05.18.50.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Sep 2024 18:50:35 -0700 (PDT)
+From: luzhixing12345 <luzhixing12345@gmail.com>
+To: sgarzare@redhat.com
+Cc: luzhixing12345@gmail.com,
+	mst@redhat.com,
+	qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user: add NEED_REPLY flag
+Date: Fri,  6 Sep 2024 09:50:26 +0800
+Message-Id: <20240906015026.17138-1-luzhixing12345@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <gtpj4yn3kkvawrjlcdq7zrg7bsfe2wlt2x5eh3pfmiygzkoxtc@pyak5vt5ap3a>
+References: <gtpj4yn3kkvawrjlcdq7zrg7bsfe2wlt2x5eh3pfmiygzkoxtc@pyak5vt5ap3a>
 MIME-Version: 1.0
-References: <20240905150702.2484-1-mps@arvanta.net>
-In-Reply-To: <20240905150702.2484-1-mps@arvanta.net>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 11:28:39 +1000
-Message-ID: <CAKmqyKPwZPS0N29ANk0LEMoUHaNCH4z3cBE0OzjhCvuBA8AanQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] util/util/cpuinfo-riscv.c: fix riscv64 build on
- musl libc
-To: =?UTF-8?Q?Milan_P=2E_Stani=C4=87?= <mps@arvanta.net>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::342;
+ envelope-from=luzhixing12345@gmail.com; helo=mail-ot1-x342.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -91,50 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 6, 2024 at 1:08=E2=80=AFAM Milan P. Stani=C4=87 <mps@arvanta.ne=
-t> wrote:
->
-> build fails on musl libc (alpine linux) with this error:
->
-> ../util/cpuinfo-riscv.c: In function 'cpuinfo_init':
-> ../util/cpuinfo-riscv.c:63:21: error: '__NR_riscv_hwprobe' undeclared (fi=
-rst use in this function); did you mean 'riscv_hwprobe'?
->    63 |         if (syscall(__NR_riscv_hwprobe, &pair, 1, 0, NULL, 0) =3D=
-=3D 0
->       |                     ^~~~~~~~~~~~~~~~~~
->       |                     riscv_hwprobe
-> ../util/cpuinfo-riscv.c:63:21: note: each undeclared identifier is report=
-ed only once for each function it appears in
-> ninja: subcommand failed
->
-> add '#include "asm/unistd.h"' to util/cpuinfo-riscv.c fixes build
->
-> Signed-off-by: Milan P. Stani=C4=87 <mps@arvanta.net>
+Signed-off-by: luzhixing12345 <luzhixing12345@gmail.com>
 
-Thanks!
+>On Mon, Aug 12, 2024 at 12:53:19PM GMT, 陆知行 wrote:
+>>Hi, can someone review this patch?
+>>I find requests which call  vhost_user_get_u64 does not set NEED_REPLY flag
+>
+>Can you provide an example to trigger this issue?
+>
+>Also, with this change all calls to vhost_user_get_u64() will set that 
+>flag, is that following the vhost-user user specification?
 
-Applied to riscv-to-apply.next
+It will not trigger a bug.
 
-Alistair
+For each function that calls vhost_user_get_u64() like vhost_user_get_features/vhost_user_get_status, if you set a breakpoint in gdb at subprojects/libvhost-user/libvhost-user.c/vu_dispatch and you will find that
 
-> ---
->  util/cpuinfo-riscv.c | 1 +
->  1 file changed, 1 insertion(+)
+```
+bool
+vu_dispatch(VuDev *dev)
+{
+    // ...
+    need_reply = vmsg.flags & VHOST_USER_NEED_REPLY_MASK; // 0
+
+    reply_requested = vu_process_message(dev, &vmsg);     // 1
+    // ...
+}
+
+vhost-user protocol doc list some requests that need reply like VHOST_USER_GET_FEATURES/VHOST_USER_GET_PROTOCOL_FEATURES, the flag should be set with NEED_REPLY_MASK.
+
+The current code does not raise an error because in libvhost-user(vu_process_message) it will not check this flag and always choose whether or not reply based on the request type.   
+
+So this patch fills the flag and make sure need_reply to 1 for the requests that need reply.
+
+>Please use `scripts/checkpatch.pl` before sending patches, this one for 
+>example is missing SoB.
 >
-> diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-> index 497ce12680..8cacc67645 100644
-> --- a/util/cpuinfo-riscv.c
-> +++ b/util/cpuinfo-riscv.c
-> @@ -9,6 +9,7 @@
->  #ifdef CONFIG_ASM_HWPROBE_H
->  #include <asm/hwprobe.h>
->  #include <sys/syscall.h>
-> +#include <asm/unistd.h>
->  #endif
+>Thanks,
+>Stefano
 >
->  unsigned cpuinfo;
-> --
-> 2.46.0
->
->
+>>
+>>luzhixing12345 <luzhixing12345@gmail.com> 于2024年8月4日周日 23:50写道:
+>>
+>>> Front-end message requests which need reply should set NEED_REPLY_MASK
+>>> in flag, and response from slave need clear NEED_REPLY_MASK flag.
+>>>
+>>> ---
+>>>  hw/virtio/vhost-user.c                    | 2 +-
+>>>  subprojects/libvhost-user/libvhost-user.c | 1 +
+>>>  2 files changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>>> index 00561daa06..edf2271e0a 100644
+>>> --- a/hw/virtio/vhost-user.c
+>>> +++ b/hw/virtio/vhost-user.c
+>>> @@ -1082,7 +1082,7 @@ static int vhost_user_get_u64(struct vhost_dev *dev,
+>>> int request, uint64_t *u64)
+>>>      int ret;
+>>>      VhostUserMsg msg = {
+>>>          .hdr.request = request,
+>>> -        .hdr.flags = VHOST_USER_VERSION,
+>>> +        .hdr.flags = VHOST_USER_VERSION | VHOST_USER_NEED_REPLY_MASK,
+>>>      };
+>>>
+>>>      if (vhost_user_per_device_request(request) && dev->vq_index != 0) {
+>>> diff --git a/subprojects/libvhost-user/libvhost-user.c
+>>> b/subprojects/libvhost-user/libvhost-user.c
+>>> index 9c630c2170..40f665bd7f 100644
+>>> --- a/subprojects/libvhost-user/libvhost-user.c
+>>> +++ b/subprojects/libvhost-user/libvhost-user.c
+>>> @@ -667,6 +667,7 @@ vu_send_reply(VuDev *dev, int conn_fd, VhostUserMsg
+>>> *vmsg)
+>>>  {
+>>>      /* Set the version in the flags when sending the reply */
+>>>      vmsg->flags &= ~VHOST_USER_VERSION_MASK;
+>>> +    vmsg->flags &= ~VHOST_USER_NEED_REPLY_MASK;
+>>>      vmsg->flags |= VHOST_USER_VERSION;
+>>>      vmsg->flags |= VHOST_USER_REPLY_MASK;
+>>>
+>>> --
+>>> 2.34.1
+>>>
+>>>
 
