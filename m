@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22EA3CE7AA8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 02:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691CECE7AA6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 02:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smP1s-0000Fp-8Z; Thu, 05 Sep 2024 22:48:56 -0400
+	id 1smP5a-00058w-Oo; Thu, 05 Sep 2024 22:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smP1q-0000Ew-Pn; Thu, 05 Sep 2024 22:48:54 -0400
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ id 1smP5Y-00057W-6O; Thu, 05 Sep 2024 22:52:44 -0400
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smP1o-00028L-W0; Thu, 05 Sep 2024 22:48:54 -0400
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-501204753c4so668963e0c.0; 
- Thu, 05 Sep 2024 19:48:52 -0700 (PDT)
+ id 1smP5W-0002ai-Bo; Thu, 05 Sep 2024 22:52:43 -0400
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-49a6d056fa3so554826137.0; 
+ Thu, 05 Sep 2024 19:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725590931; x=1726195731; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725591160; x=1726195960; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qOpwlhpvXEBD98tTikoysVl9mR0TnrKp4Ktf0QQh3f0=;
- b=cJJCWDAaW/cyh7j2tKv0ygBwWh3H9L1heuR76wGQY8Ch+j4JSl37oWv8J3V1tnyaEr
- QcIgwV88x/RsIvQEdDtTu5UNVDV3xZJomXhJjN04yoB9sWTWBKujiDhdFD6GRMGnkFVx
- coajpsGrulKx7UhS1yw08ot+E5aN9hBxgoi+3Zgmd3WsidME8tYOixXgDBdMAVLhc7v8
- fSHFAEgY5nxC6TJmE2/mc23jWni4lQI5RFZ+sU2urxAp1XAhl3kvazwIt6/n55NWEhXk
- AfIRBunxb/T4VfzHrNXcj9BqWSF+4SnIhiHpCuFEn6XR8ScBRG/u6p9wheOmUNtuHx9S
- k3aw==
+ bh=prmMmOT7mp9g8Kdm6I/q6iMcs26Jayp8brLYGhemFyw=;
+ b=Ds3OL3mJ5yaICF1mQliG4ghAs9mf/SuZBfKISDjfFRDYLQAqtcCsQyuFhuHxE/ldQN
+ OJTqa2ZyalPmr2THO5BHsdkj8WcQCvc/NTgNecRpzgChFJ+nGCqDfV3L8OO1Y4uGoKX2
+ Z7PFZv7kDP7a0SAcl2HJWxUx53oEtdkI71TJTFL9oVda2Kw/1lHlpTgTlzSi6fsd9jEp
+ py94ibCfTN7Zu0NEIOZ9cp0Lo48qJVlsh1t7LGfosr2YoOaoSKCfRZs6BxojB5I3Xfi4
+ ejrpQEnZm8XyGw7Bk19dGozSPhWTDbTj5zx9CRE2lMhNviOJRcuRrhfwpEPPrhYPRRhS
+ bgdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725590931; x=1726195731;
+ d=1e100.net; s=20230601; t=1725591160; x=1726195960;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qOpwlhpvXEBD98tTikoysVl9mR0TnrKp4Ktf0QQh3f0=;
- b=whPxasO4+29f4nbF3AUz7foQQGRsMS+T3t0nvyEnzCePLwLye2IRG8OWJ/Drfh4Sut
- hpa1j4r0YDUYdpJ537atPN/NN/2pGLiEf4l73BQ20cGbQB4c968nNnFajmboYQxsQE/e
- kyTjS1cfyDhdPfDkAFvjorZJPp5HIpdhGFnOk15iONPUAhnq1ye/DyBGLchuePA9sH72
- OLbHeGcsRYQp1aypjQb8L30UWaS5P1mzP/wCnXYQUNA1Hp0IMlqw4sI6PyO5yehcMoU4
- 38Y3UfEw/nqb+wtdC9zcUfikO2GQfjJWYiXvySmkrKtVM/dUXvxM11iT8keCggY6p1IM
- gerQ==
+ bh=prmMmOT7mp9g8Kdm6I/q6iMcs26Jayp8brLYGhemFyw=;
+ b=caFFGK7Km4spLpQMA6ydt1Iha1/JFm+nU4emXrDmyRW+zEOG3ptM3kD20Px7/PTwNz
+ fJjmcHTh9buscaeKQ99q2apG1D1MLV96uiGb95eZE1CHr6PuxT3L2GRkmRh86LNryk3w
+ kczC7OrtuNYyZoK7g5d/JwagVvzVQlnFC1S0uueof+vIyxV8ZYl264XCPhnRRVp5eesH
+ 3dZday8aQwPDLAnPvu5ClIzf3ACGFsY8/OKMNV2Du6MHqGusSLmZ6DY3DZmUcSNUpyB6
+ o0bFtZwv/guKt4bgHVgSl4RtkRcDhM8q80Rt9SJreIYfxevB0kFVIiMJYhA/QKc/gmof
+ 1pdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWN4V1/e9HI2ZJlWaJeewNmjii0Ira8/9DUdVsS9eksN8WyfHA1ujY2iHYPpuqnqjHcCVh6tuebkNhS@nongnu.org
-X-Gm-Message-State: AOJu0YwZ2NwL9R4d0X0r7bBu/23YjC4Ik3yuGNUKJ7AC3MGVThve8Ah1
- 9NPCuYJv2gHDxn7yHCHZhZLN56j+cMNerQovc3haAZyOG0gX5/Ft9RRKeeEJUxl6j+Q/NEJ9/KX
- zS7EjRD+W/GzKfLr/ObG0JYUEPfI=
-X-Google-Smtp-Source: AGHT+IGCQuQLcQ+gt/wvQf3GW1ZzQkOCkA18p8JRYT+ibDT5p5iHqCUdeTg6jgO7w+lSjNofp4apEmtA6ytD2ZD0ZaQ=
-X-Received: by 2002:a05:6122:46a8:b0:4fc:eda5:6369 with SMTP id
- 71dfb90a1353d-5019d45570cmr1394405e0c.3.1725590931397; Thu, 05 Sep 2024
- 19:48:51 -0700 (PDT)
+ AJvYcCUhnS51s/zQBWMuN823cms6nOELeJr80yUBEnx3uqEOmV0J9YzxWop47TMjbAW4UIfOTp4rFJTkTU47@nongnu.org
+X-Gm-Message-State: AOJu0YwA4ErFFU5ILme4fH9ZcTFeroUAtxXquoir+Xx7igscSI+BJt7c
+ l1vd7q5lFbsmV9HOnrSlkjXSzCbHP1ApLK/FOFuodjNrJkhlcNgzN96JRS4p/S2snD8fOGkvLs2
+ xmS3b17i62FCNSKQb8UvZ3kepO6teDA==
+X-Google-Smtp-Source: AGHT+IHT2zG1Gr7NaJLob5I6fP9bN+JTq2PghzwmnE9+2+CsNHf/Rq0EV7fbn9feo1ZV0XjvBf+/X6OmK/QcLlVq9eA=
+X-Received: by 2002:a05:6102:d90:b0:498:d1a3:dea8 with SMTP id
+ ada2fe7eead31-49bde25fffdmr1409146137.21.1725591160151; Thu, 05 Sep 2024
+ 19:52:40 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
-In-Reply-To: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
+ <20240819160742.27586-5-Ian.Brockbank@cirrus.com>
+In-Reply-To: <20240819160742.27586-5-Ian.Brockbank@cirrus.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 12:48:25 +1000
-Message-ID: <CAKmqyKO1eS4dp0dVzY5wg5Z_KtjwRUWEZAxGeZj90+2rbAJ0Ag@mail.gmail.com>
-Subject: Re: [PATCH 00/11 v2] RISC-V: support CLIC v0.9 specification
+Date: Fri, 6 Sep 2024 12:52:14 +1000
+Message-ID: <CAKmqyKNtwGGT0LivxRn1Zmy0W8z9htNBBjpQmvP_Cik32vo0mw@mail.gmail.com>
+Subject: Re: [PATCH 02/11 v2] target/riscv: Update CSR xintthresh in CLIC mode
 To: Ian Brockbank <Ian.Brockbank@cirrus.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ LIU Zhiwei <zhiwei_liu@c-sky.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,89 +97,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 20, 2024 at 2:08=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirrus=
+On Tue, Aug 20, 2024 at 2:11=E2=80=AFAM Ian Brockbank <Ian.Brockbank@cirrus=
 .com> wrote:
 >
-> [Resubmission now the merge is correct]
+> From: Ian Brockbank <ian.brockbank@cirrus.com>
 >
-> This patch set gives an implementation of "RISC-V Core-Local Interrupt
-> Controller(CLIC) Version 0.9-draft-20210217". It comes from [1], where
-> you can find the pdf format or the source code.
-
-Can you please point to the *exact* spec that is used (see below)
-
+> The interrupt-level threshold (xintthresh) CSR holds an 8-bit field
+> for the threshold level of the associated privilege mode.
 >
-> This is based on the implementation from 2021 by Liu Zhiwei [3], who took
-> over the job from Michael Clark, who gave the first implementation of
-> clic-v0.7 specification [2]. I believe this implementation addresses all
-> the comments in Liu Zhiwei's RFC patch thread.
+> For horizontal interrupts, only the ones with higher interrupt levels
+> than the threshold level are allowed to preempt.
 >
-> This implementation follows the CLIC 0.9-stable draft at 14 March 2024,
-> with the following exceptions and implementation details:
+> Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
+> ---
+>  target/riscv/cpu.h      |  2 ++
+>  target/riscv/cpu_bits.h |  2 ++
+>  target/riscv/csr.c      | 28 ++++++++++++++++++++++++++++
+>  3 files changed, 32 insertions(+)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 95303f50d3..9b5f36ad0a 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -260,6 +260,7 @@ struct CPUArchState {
+>
+>      uint64_t miclaim;
+>      uint64_t mintstatus; /* clic-spec */
+> +    target_ulong mintthresh; /* clic-spec */
+>
+>      uint64_t mie;
+>      uint64_t mideleg;
+> @@ -283,6 +284,7 @@ struct CPUArchState {
+>      target_ulong stvec;
+>      target_ulong sepc;
+>      target_ulong scause;
+> +    target_ulong sintthresh; /* clic-spec */
+>
+>      target_ulong mtvec;
+>      target_ulong mepc;
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index 2e65495b54..ad45402370 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -166,6 +166,7 @@
+>  #define CSR_MTVAL           0x343
+>  #define CSR_MIP             0x344
+>  #define CSR_MINTSTATUS      0xfb1 /* clic-spec-draft */
+> +#define CSR_MINTTHRESH      0x347 /* clic-spec-draft */
+>
+>  /* Machine-Level Window to Indirectly Accessed Registers (AIA) */
+>  #define CSR_MISELECT        0x350
+> @@ -208,6 +209,7 @@
+>  #define CSR_STVAL           0x143
+>  #define CSR_SIP             0x144
+>  #define CSR_SINTSTATUS      0xdb1 /* clic-spec-draft */
+> +#define CSR_SINTTHRESH      0x147 /* clic-spec-draft */
+>
+>  /* Sstc supervisor CSRs */
+>  #define CSR_STIMECMP        0x14D
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index f9ed7b9079..9c824c0d8f 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2903,6 +2903,18 @@ static int read_mintstatus(CPURISCVState *env, int=
+ csrno, target_ulong *val)
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> +static int read_mintthresh(CPURISCVState *env, int csrno, target_ulong *=
+val)
+> +{
+> +    *val =3D env->mintthresh;
+> +    return 0;
+> +}
+> +
+> +static int write_mintthresh(CPURISCVState *env, int csrno, target_ulong =
+val)
+> +{
+> +    env->mintthresh =3D val;
 
-I don't follow, the 0.9 spec was released in June
-
-https://github.com/riscv/riscv-fast-interrupt/releases/tag/v0.9
-
->  - the CLIC control registers are memory-mapped as per earlier drafts (in
->    particular version 0.9-draft, 20 June 2023)
-
-So it's different to the 0.9 spec?
-
->  - the indirect CSR control in 0.9-stable is not implemented
->  - the vector table can be either handler addresses (as per the spec)
->    or a jump table where each entry is processed as an instruction,
->    selectable with version number v0.9-jmp
-
-We only want to support what is in the spec
+We should be clearing the upper bits on a write
 
 Alistair
 
->  - each hart is assigned its own CLIC block
->  - if PRV_S and/or PRV_M are supported, they are currently assumed to fol=
-low
->    the PRV_M registers; a subsequent update will address this
->  - support for PRV_S and PRV_M is selectable at CLIC instantiation
->  - PRV_S and PRV_U registers are currently separate from PRV_M; a subsequ=
-ent
->    update will turn them into filtered views onto the PRV_M registers
->  - each hart is assigned its own CLIC block
->  - support for PRV_S and PRV_M is selectable at CLIC instantiation by
->    passing in a base address for the given modes; a base address of 0 is
->    treated as not supported
->  - PRV_S and PRV_U registers are mapped  onto the PRV_M controls with
->    appropriate filtering for the access mode
->  - the RISCV virt machine has been updated to allow CLIC emulation by
->    passing "machine=3Dvirt,clic=3Don" on the command line; various other
->    parameters have been added to allow finer control of the CLIC behavior
+> +    return 0;
+> +}
+> +
+>  /* Supervisor Trap Setup */
+>  static RISCVException read_sstatus_i128(CPURISCVState *env, int csrno,
+>                                          Int128 *val)
+> @@ -3322,6 +3334,18 @@ static int read_sintstatus(CPURISCVState *env, int=
+ csrno, target_ulong *val)
+>      return RISCV_EXCP_NONE;
+>  }
 >
-> The implementation (in jump-table mode) has been verified to match the
-> Cirrus Logic silicon (PRV_M only), which is based upon the Pulp
-> implementation [4] as of June 2023.
+> +static int read_sintthresh(CPURISCVState *env, int csrno, target_ulong *=
+val)
+> +{
+> +    *val =3D env->sintthresh;
+> +    return 0;
+> +}
+> +
+> +static int write_sintthresh(CPURISCVState *env, int csrno, target_ulong =
+val)
+> +{
+> +    env->sintthresh =3D val;
+> +    return 0;
+> +}
+> +
+>  /* Supervisor Protection and Translation */
+>  static RISCVException read_satp(CPURISCVState *env, int csrno,
+>                                  target_ulong *val)
+> @@ -5621,9 +5645,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
 >
-> The implementation also includes a selection of qtests designed to verify
-> operation in all possible combinations of PRV_M, PRV_S and PRV_U.
+>      /* Machine Mode Core Level Interrupt Controller */
+>      [CSR_MINTSTATUS]     =3D { "mintstatus", clic,  read_mintstatus     =
+  },
+> +    [CSR_MINTTHRESH]     =3D { "mintthresh", clic,  read_mintthresh,
+> +                             write_mintthresh },
 >
-> [1] specification website: https://github.com/riscv/riscv-fast-interrupt.
-> [2] Michael Clark origin work:
-> https://github.com/sifive/riscv-qemu/tree/sifive-clic.
-> [3] RFC Patch submission by Liu Zhiwei:
-> https://lists.gnu.org/archive/html/qemu-devel/2021-04/msg01417.html
-> [4] Pulp implementation of CLIC: https://github.com/pulp-platform/clic
+>      /* Supervisor Mode Core Level Interrupt Controller */
+>      [CSR_SINTSTATUS]     =3D { "sintstatus", clic,  read_sintstatus     =
+  },
+> +    [CSR_SINTTHRESH]     =3D { "sintthresh", clic,  read_sintthresh,
+> +                             write_sintthresh },
 >
-> Ian Brockbank (11):
->     target/riscv: Add CLIC CSR mintstatus
->     target/riscv: Update CSR xintthresh in CLIC mode
->     hw/intc: Add CLIC device
->     target/riscv: Update CSR xie in CLIC mode
->     target/riscv: Update CSR xip in CLIC mode
->     target/riscv: Update CSR xtvec in CLIC mode
->     target/riscv: Update CSR xnxti in CLIC mode
->     target/riscv: Update interrupt handling in CLIC mode
->     target/riscv: Update interrupt return in CLIC mode
->     hw/riscv: add CLIC into virt machine
->     tests: add riscv clic qtest case and a function in qtest
->
+>      [CSR_SCOUNTOVF]      =3D { "scountovf", sscofpmf,  read_scountovf,
+>                               .min_priv_ver =3D PRIV_VERSION_1_12_0 },
+> --
+> 2.46.0.windows.1
 > This message and any attachments may contain privileged and confidential =
 information that is intended solely for the person(s) to whom it is address=
 ed. If you are not an intended recipient you must not: read; copy; distribu=
