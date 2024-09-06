@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CCBCD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62401CE7B04
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smX03-0001HA-Qh; Fri, 06 Sep 2024 07:19:35 -0400
+	id 1smX01-0000oB-DR; Fri, 06 Sep 2024 07:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smX02-000143-8k; Fri, 06 Sep 2024 07:19:34 -0400
+ id 1smWzy-0000Jp-LS; Fri, 06 Sep 2024 07:19:30 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smX00-0008Mg-68; Fri, 06 Sep 2024 07:19:33 -0400
+ id 1smWzw-0008Lz-CY; Fri, 06 Sep 2024 07:19:30 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CA3EE8C4B3;
+ by isrv.corpit.ru (Postfix) with ESMTP id ACB5C8C4B1;
  Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D71F813371C;
+ by tsrv.corpit.ru (Postfix) with SMTP id ACC7813371A;
  Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353762 invoked by uid 1000);
+Received: (nullmailer pid 353756 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:25 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Cindy Lu <lulu@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 66/69] linux-user: Handle short reads in mmap_h_gt_g
-Date: Fri,  6 Sep 2024 14:13:15 +0300
-Message-Id: <20240906111324.353230-66-mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 64/69] virtio-pci: Fix the use of an uninitialized irqfd
+Date: Fri,  6 Sep 2024 14:13:13 +0300
+Message-Id: <20240906111324.353230-64-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,93 +62,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Cindy Lu <lulu@redhat.com>
 
-In particular, if an image has a large bss, we can hit
-EOF before reading all host_len bytes of the mapping.
+The crash was reported in MAC OS and NixOS, here is the link for this bug
+https://gitlab.com/qemu-project/qemu/-/issues/2334
+https://gitlab.com/qemu-project/qemu/-/issues/2321
 
-Create a helper, mmap_pread to handle the job for both
-the larger block in mmap_h_gt_g itself, as well as the
-smaller block in mmap_frag.
+In this bug, they are using the virtio_input device. The guest notifier was
+not supported for this device, The function virtio_pci_set_guest_notifiers()
+was not called, and the vector_irqfd was not initialized.
 
+So the fix is adding the check for vector_irqfd in virtio_pci_get_notifier()
+
+The function virtio_pci_get_notifier() can be used in various devices.
+It could also be called when VIRTIO_CONFIG_S_DRIVER_OK is not set. In this situation,
+the vector_irqfd being NULL is acceptable. We can allow the device continue to boot
+
+If the vector_irqfd still hasn't been initialized after VIRTIO_CONFIG_S_DRIVER_OK
+is set, it means that the function set_guest_notifiers was not called before the
+driver started. This indicates that the device is not using the notifier.
+At this point, we will let the check fail.
+
+This fix is verified in vyatta,MacOS,NixOS,fedora system.
+
+The bt tree for this bug is:
+Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
+817         if (irqfd->users == 0) {
+(gdb) thread apply all bt
+...
+Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
+0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
+1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
+2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497
+3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/system/memory.c:573
+4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528
+5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qemu-9.0.0/system/physmem.c:2713
+6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743
+7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
+8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/physmem.c:2894
+9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/physmem.c:2904
+10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
+11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
+12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-thread-posix.c:541
+13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
+14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
+
+Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
 Cc: qemu-stable@nongnu.org
-Fixes: eb5027ac618 ("linux-user: Split out mmap_h_gt_g")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2504
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240820050848.165253-2-richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit a4ad4a9d98f7fbde806f07da21e69f39e134cdf1)
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+Message-Id: <20240806093715.65105-1-lulu@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit a8e63ff289d137197ad7a701a587cc432872d798)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 2a11d921ab..9e94f36ba2 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -282,6 +282,40 @@ static int do_munmap(void *addr, size_t len)
-     return munmap(addr, len);
- }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index e04218a9fb..389bab003f 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+     VirtQueue *vq;
  
-+/*
-+ * Perform a pread on behalf of target_mmap.  We can reach EOF, we can be
-+ * interrupted by signals, and in general there's no good error return path.
-+ * If @zero, zero the rest of the block at EOF.
-+ * Return true on success.
-+ */
-+static bool mmap_pread(int fd, void *p, size_t len, off_t offset, bool zero)
-+{
-+    while (1) {
-+        ssize_t r = pread(fd, p, len, offset);
++    if (!proxy->vector_irqfd && vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)
++        return -1;
 +
-+        if (likely(r == len)) {
-+            /* Complete */
-+            return true;
-+        }
-+        if (r == 0) {
-+            /* EOF */
-+            if (zero) {
-+                memset(p, 0, len);
-+            }
-+            return true;
-+        }
-+        if (r > 0) {
-+            /* Short read */
-+            p += r;
-+            len -= r;
-+            offset += r;
-+        } else if (errno != EINTR) {
-+            /* Error */
-+            return false;
-+        }
-+    }
-+}
-+
- /*
-  * Map an incomplete host page.
-  *
-@@ -356,10 +390,9 @@ static bool mmap_frag(abi_ulong real_start, abi_ulong start, abi_ulong last,
-     /* Read or zero the new guest pages. */
-     if (flags & MAP_ANONYMOUS) {
-         memset(g2h_untagged(start), 0, last - start + 1);
--    } else {
--        if (pread(fd, g2h_untagged(start), last - start + 1, offset) == -1) {
--            return false;
--        }
-+    } else if (!mmap_pread(fd, g2h_untagged(start), last - start + 1,
-+                           offset, true)) {
-+        return false;
-     }
- 
-     /* Put final protection */
-@@ -852,8 +885,7 @@ static abi_long mmap_h_gt_g(abi_ulong start, abi_ulong len,
-     }
- 
-     if (misaligned_offset) {
--        /* TODO: The read could be short. */
--        if (pread(fd, p, host_len, offset + real_start - start) != host_len) {
-+        if (!mmap_pread(fd, p, host_len, offset + real_start - start, false)) {
-             do_munmap(p, host_len);
-             return -1;
-         }
+     if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
+         *n = virtio_config_get_guest_notifier(vdev);
+         *vector = vdev->config_vector;
 -- 
 2.39.2
 
