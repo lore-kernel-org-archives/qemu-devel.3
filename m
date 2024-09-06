@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE91E6FE22
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 15:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CDCE6FE22
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 15:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smadr-0006wE-AW; Fri, 06 Sep 2024 11:12:55 -0400
+	id 1smaep-0001Vq-Hg; Fri, 06 Sep 2024 11:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smadp-0006vh-V4
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:12:53 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1smaeo-0001SV-KV
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:13:54 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smado-0003x7-8m
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:12:53 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c245c62362so2801677a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 08:12:51 -0700 (PDT)
+ id 1smaem-0003zn-Tf
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:13:54 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5c25554ec1eso2357447a12.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 08:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725635570; x=1726240370; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0iwq1bWaUcXeg/UBUdG+FMEh4Trl9yIhDB5gZW5lKWI=;
- b=Ru1PgNu5u/X0k2+/vB6kAMk3ax4MyQ3bipMSV2GKJ5IAZQAN6MmZl2htdDLHIwMds/
- ym1jeE5AykZB6PMOydpKRaCHWuzshJTd9WegT+oyAi6ik4hn2l5gZOMsXmudF6jsPZfa
- RA6yAogTKwkfK/2yN75vNIliQ//FduoZKs0zJLIaQcLsBQQT5IbwxPbpux1MOOKrYf14
- vPfJWccDyVJXYP98lP0Bdg1H0SOrak27Xu9uGD2bMosul8iW4ptFyCvKHq7vJ14j9yqY
- ewac0TCzwPH5qsTj6tlF4WYSAdVUZBZdNXttwABB/oAJLefSi17Ve9u1OYQExSPv4XWg
- APVQ==
+ d=linaro.org; s=google; t=1725635631; x=1726240431; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jMNxfUcWPto3gHqfRBWq1thLRFYKqIOeb27j8OpohW8=;
+ b=QNeCODmKZhfFgHmHB0eH16d9eRF5UI6jia62d5mj6Yet9rsk9s+EmJayFSAGoOKpLD
+ eIOlplJ3TNut26Lx1aMi8eVOa+7nZ36NfRQJbIq6S574FBqVZtqxYB7Vd3U/fI+aXHrU
+ I80TF6YUJIHPFMer4Lb4DLrsPhaHVBEw3mWguxA5lwbPn2phRI8shR1bdCMX/OklHsvN
+ 8Y6dLZ6tUafwAuxSO6x3+5gG0C48WIjsjUBg2TDnFHm/E8hyRfsexJWLwF71AUUDmjNB
+ e/asx6q7oBYYrlN8UHU20jcvjKg7ISJ0w5ElXRm3/X+IaKYRm9jC6JjFsUh0V8FdTjB0
+ e6Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725635570; x=1726240370;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0iwq1bWaUcXeg/UBUdG+FMEh4Trl9yIhDB5gZW5lKWI=;
- b=mH2TyN1znNN4ukDy74GQQOqk/Or63rivcyLPbICViLw3GCWP41xsdAvZDRWE8thuY2
- bjodkLLHpr21tjoxZ0mnXkTIO8QuapHP/Umx/BJLVUiyoOj9pek0alycHwJIpz8wB6a+
- WTUyCuJIbMO9VfCr9QHVsM13imZiudDYdlFEoY7lwhby4/F43lp6IUOW7spsXQrDbu1+
- s7bgRoqemnJmSMxak35HQqQz58dm4wQ3sCcbpta7J8nSABtdhM8NDE57j5qKgFPChluR
- d7sAQj2xzVL0PamjhjDoNSRfAOiJFfh1iS5g75MeBe3+iO1fDzXh0dDG33rChoAFKYwG
- nauw==
-X-Gm-Message-State: AOJu0YyOIRHddjR8IyX6koCBUCo+PQXh9PCbvbDGW03XZhC6nPZOzEZM
- Qg+kVJs9kzIv8h4xj43enwQm+JWWsCQQ1M+t2SPbI5IwRPerbgHPsZJqJnleQkD9kg2QZSSXSLt
- T2LHZyy9HCIcgdtpdY1ZsgDOTIFAGkPx31aqYvPCBQhOyVdg7
-X-Google-Smtp-Source: AGHT+IEzy5g4GrbMAxjFCGK53Rj9IDXdDmH8SDqZ6v9bKbffNznkJc3U1QA6637uLWdFFS91Q/2ZtAaG5EepfR7lCEU=
-X-Received: by 2002:a05:6402:210f:b0:5c2:6a7a:5795 with SMTP id
- 4fb4d7f45d1cf-5c3dc784aefmr2404169a12.6.1725635570315; Fri, 06 Sep 2024
- 08:12:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725635631; x=1726240431;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jMNxfUcWPto3gHqfRBWq1thLRFYKqIOeb27j8OpohW8=;
+ b=HWzoictqXbQ15i/FvcLf7RrBnEwm1bM04cMKgI4iAC5WWUr0AvdpzKTMjylgaiLrOc
+ fT6hnxXlG3gPHPTKx7cDANHJI3QOaism/n93VhqoaZfeg8PNjkSaMHKips3LdVMb/NXq
+ oarg9mFOsnsdCT3uTr3nwNbwtvXD5rrMTLrBbBpZAXvWyfgd7gpPg7BnkePm0cgHwrf0
+ F2DKOjss57dL25M2FNk60mt/+G/DG12I5qfwxMCzMC/nRlXVrTYVo9mNizVCOSIdPpVL
+ SfkdfGYAMAaW8h60yIdMbAt38L6opiMcY7M2G9AQnKyJTcU90iyTOryh6VXYmj4Qd0WH
+ Sm1A==
+X-Gm-Message-State: AOJu0Yy50a7b1sN2R8yn9/2Tl955qYwFhBO3MtwYKSA0a1gVArcb6sRA
+ dRAK6yBorGrvitF+gTG73/xjWYs5VU/Mkl+iMYq2K+Y0rOqFkkKfNptGAzGE5VUpLxGW6M/RoC0
+ x+JyMl/A44FcWWrgR5Z4y2gLMs1ZDbWszk6uafdWd5r3o7cLo
+X-Google-Smtp-Source: AGHT+IF+Lwz38lv7Czqwav9YoZQERaoviqN2qMQQcnCW8tPW8xloO9sV1YrrjYciRwcP8QrXunrubuv59PnkqdTn0Ck=
+X-Received: by 2002:a05:6402:278d:b0:5c2:e888:4cd3 with SMTP id
+ 4fb4d7f45d1cf-5c2e8884e31mr5984002a12.35.1725635631077; Fri, 06 Sep 2024
+ 08:13:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240816132212.3602106-1-peter.maydell@linaro.org>
-In-Reply-To: <20240816132212.3602106-1-peter.maydell@linaro.org>
+References: <20240819144303.37852-1-peter.maydell@linaro.org>
+In-Reply-To: <20240819144303.37852-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Sep 2024 16:12:39 +0100
-Message-ID: <CAFEAcA8XwbB89sNKPJpFRXcFb1esUpRMaeue8e=Wepvpmr9PHw@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 0/7] docs/devel: Convert txt files to rST
+Date: Fri, 6 Sep 2024 16:13:40 +0100
+Message-ID: <CAFEAcA8jCC=gkwc=dJxu8yhpM7=udGGf8dMDp12h0vwE1PuX1Q@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/cpu-hotplug: Update example's
+ socket-id/core-id
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,74 +86,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping for review on these docs conversions, please?
+On Mon, 19 Aug 2024 at 15:43, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> At some point the way we allocate socket-id and core-id to CPUs
+> by default changed; update the example of how to do CPU hotplug
+> and unplug so the example commands work again. The differences
+> in the sample input and output are:
+>  * the second CPU is now socket-id=0 core-id=1,
+>    not socket-id=1 core-id=0
+>  * the order of fields from the qmp_shell is different (it seems
+>    to now always be in alphabetical order)
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I noticed this while I was playing around with vcpu hotplug trying to
+> demonstrate a memory leak I want to fix...
+
+Ping for review on this one, please?
 
 thanks
 -- PMM
 
-On Fri, 16 Aug 2024 at 14:22, Peter Maydell <peter.maydell@linaro.org> wrote:
+
 >
-> This patchset converts a collection of the remaining txt files in
-> docs/devel to rST format. At this point in the release cycle
-> I'm targeting 9.2 for these.
+>  docs/system/cpu-hotplug.rst | 54 ++++++++++++++++++-------------------
+>  1 file changed, 26 insertions(+), 28 deletions(-)
 >
-> Patches 1-5 are simple conversions.  In patch 6 I move the
-> QemuLockCnt APIs to their own header file; this is so that we can
-> include the kernel-doc generated APIs in lockcnt.rst (since
-> kernel-doc works on a per-file basis).
+> diff --git a/docs/system/cpu-hotplug.rst b/docs/system/cpu-hotplug.rst
+> index 015ce2b6ec3..443ff226b90 100644
+> --- a/docs/system/cpu-hotplug.rst
+> +++ b/docs/system/cpu-hotplug.rst
+> @@ -33,23 +33,23 @@ vCPU hotplug
+>        {
+>            "return": [
+>                {
+> -                  "type": "IvyBridge-IBRS-x86_64-cpu",
+> -                  "vcpus-count": 1,
+>                    "props": {
+> -                      "socket-id": 1,
+> -                      "core-id": 0,
+> +                      "core-id": 1,
+> +                      "socket-id": 0,
+>                        "thread-id": 0
+> -                  }
+> +                  },
+> +                  "type": "IvyBridge-IBRS-x86_64-cpu",
+> +                  "vcpus-count": 1
+>                },
+>                {
+> +                  "props": {
+> +                      "core-id": 0,
+> +                      "socket-id": 0,
+> +                      "thread-id": 0
+> +                  },
+>                    "qom-path": "/machine/unattached/device[0]",
+>                    "type": "IvyBridge-IBRS-x86_64-cpu",
+> -                  "vcpus-count": 1,
+> -                  "props": {
+> -                      "socket-id": 0,
+> -                      "core-id": 0,
+> -                      "thread-id": 0
+> -                  }
+> +                  "vcpus-count": 1
+>                }
+>            ]
+>        }
+> @@ -58,18 +58,18 @@ vCPU hotplug
+>  (4) The ``query-hotpluggable-cpus`` command returns an object for CPUs
+>      that are present (containing a "qom-path" member) or which may be
+>      hot-plugged (no "qom-path" member).  From its output in step (3), we
+> -    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0,
+> -    while hot-plugging a CPU into socket 1 requires passing the listed
+> +    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0 core 0,
+> +    while hot-plugging a CPU into socket 0 core 1 requires passing the listed
+>      properties to QMP ``device_add``::
 >
-> Paolo: can you confirm that you mean GPLv2-or-later for the lockcnt
-> code?  There's no explicit license comment in either util/lockcnt.c
-> or include/qemu/thread.h.
+>        (QEMU) device_add id=cpu-2 driver=IvyBridge-IBRS-x86_64-cpu socket-id=1 core-id=0 thread-id=0
+>        {
+>            "execute": "device_add",
+>            "arguments": {
+> -              "socket-id": 1,
+> +              "core-id": 1,
+>                "driver": "IvyBridge-IBRS-x86_64-cpu",
+>                "id": "cpu-2",
+> -              "core-id": 0,
+> +              "socket-id": 0,
+>                "thread-id": 0
+>            }
+>        }
+> @@ -83,34 +83,32 @@ vCPU hotplug
 >
-> (There's one .txt file left in docs/devel after this, but I don't
-> think it's very useful so I propose to delete it and will send a
-> separate patch for that.)
+>        (QEMU) query-cpus-fast
+>        {
+> -          "execute": "query-cpus-fast",
+>            "arguments": {}
+> +          "execute": "query-cpus-fast",
+>        }
+>        {
+>            "return": [
+>                {
+> -                  "qom-path": "/machine/unattached/device[0]",
+> -                  "target": "x86_64",
+> -                  "thread-id": 11534,
+>                    "cpu-index": 0,
+>                    "props": {
+> -                      "socket-id": 0,
+>                        "core-id": 0,
+> +                      "socket-id": 0,
+>                        "thread-id": 0
+>                    },
+> -                  "arch": "x86"
+> +                  "qom-path": "/machine/unattached/device[0]",
+> +                  "target": "x86_64",
+> +                  "thread-id": 28957
+>                },
+>                {
+> -                  "qom-path": "/machine/peripheral/cpu-2",
+> -                  "target": "x86_64",
+> -                  "thread-id": 12106,
+>                    "cpu-index": 1,
+>                    "props": {
+> -                      "socket-id": 1,
+> -                      "core-id": 0,
+> +                      "core-id": 1,
+> +                      "socket-id": 0,
+>                        "thread-id": 0
+>                    },
+> -                  "arch": "x86"
+> +                  "qom-path": "/machine/peripheral/cpu-2",
+> +                  "target": "x86_64",
+> +                  "thread-id": 29095
+>                }
+>            ]
+>        }
+> @@ -123,10 +121,10 @@ From the 'qmp-shell', invoke the QMP ``device_del`` command::
 >
-> thanks
-> -- PMM
->
-> Peter Maydell (7):
->   docs/devel/blkdebug: Convert to rST format
->   docs/devel/blkverify: Convert to rST format
->   docs/devel/lockcnt: Convert to rST format
->   docs/devel/multiple-iothreads: Convert to rST format
->   docs/devel/rcu: Convert to rST format
->   include: Move QemuLockCnt APIs to their own header
->   docs/devel/lockcnt: Include kernel-doc API documentation
->
->  MAINTAINERS                                 |   8 +-
->  docs/devel/blkdebug.rst                     | 177 ++++++++++++++++++++
->  docs/devel/blkdebug.txt                     | 162 ------------------
->  docs/devel/{blkverify.txt => blkverify.rst} |  30 ++--
->  docs/devel/index-api.rst                    |   1 +
->  docs/devel/index-build.rst                  |   2 +
->  docs/devel/index-internals.rst              |   2 +
->  docs/devel/{lockcnt.txt => lockcnt.rst}     |  89 +++++-----
->  docs/devel/multiple-iothreads.rst           | 139 +++++++++++++++
->  docs/devel/multiple-iothreads.txt           | 130 --------------
->  docs/devel/{rcu.txt => rcu.rst}             | 172 +++++++++----------
->  include/block/aio.h                         |   1 +
->  include/hw/core/cpu.h                       |   1 +
->  include/qemu/lockcnt.h                      | 130 ++++++++++++++
->  include/qemu/thread.h                       | 111 ------------
->  accel/accel-blocker.c                       |   1 +
->  hw/core/cpu-common.c                        |   1 +
->  util/aio-posix.c                            |   1 +
->  util/aio-win32.c                            |   1 +
->  util/async.c                                |   1 +
->  util/fdmon-epoll.c                          |   1 +
->  util/lockcnt.c                              |   1 +
->  22 files changed, 608 insertions(+), 554 deletions(-)
->  create mode 100644 docs/devel/blkdebug.rst
->  delete mode 100644 docs/devel/blkdebug.txt
->  rename docs/devel/{blkverify.txt => blkverify.rst} (77%)
->  rename docs/devel/{lockcnt.txt => lockcnt.rst} (75%)
->  create mode 100644 docs/devel/multiple-iothreads.rst
->  delete mode 100644 docs/devel/multiple-iothreads.txt
->  rename docs/devel/{rcu.txt => rcu.rst} (73%)
->  create mode 100644 include/qemu/lockcnt.h
->
+>        (QEMU) device_del id=cpu-2
+>        {
+> -          "execute": "device_del",
+>            "arguments": {
+>                "id": "cpu-2"
+>            }
+> +          "execute": "device_del",
+>        }
+>        {
+>            "return": {}
 > --
 > 2.34.1
+>
 
