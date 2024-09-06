@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E0BFE6FE2F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 15:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0707AE6FE2F
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 15:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smbCr-0007jP-Ln; Fri, 06 Sep 2024 11:49:05 -0400
+	id 1smbDA-00088c-Ur; Fri, 06 Sep 2024 11:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smbCp-0007hj-2v
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:49:03 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smbD8-000880-Kf
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:49:22 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smbCn-00089l-EF
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:49:02 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a8d0d82e76aso46127766b.3
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 08:49:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smbD6-0008Aa-SK
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 11:49:22 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5c255e3c327so2347984a12.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 08:49:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725637739; x=1726242539; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MxAu4x+k4FD4cpo7duQeRbaaZCQNcHX5481JGrp14OY=;
- b=aA4hmR95VfGR8CLylY131uFV24NUgyTCN4ks5LliX3q0puhl33yj113KY0Nb8Xc5zA
- JQgcStu9ppUfnd3nneFBAVkiyiXHWhqQz4Sbya40YcX2FaNRACcTPVbqsTWtYnKDh6IJ
- Yns3tkoJqk0pw4ha0prrbhA7yYY1EH7MT1an2gc7wg90qQzUizIXETTK22sKbKIEUva8
- 41dG5/dLXD+HsP/7e75XsOLdWFRGcz4xntdS2ZMwz753WVmApmkqOnVxiy2GrqHzj29Z
- NQUUPKrfi+8b9NO6UZKtwfPZf5NgpXgRWz9rH2fsa+t5umQlOqaHcNzqDeEYT8vLbwfZ
- Mmcg==
+ d=linaro.org; s=google; t=1725637759; x=1726242559; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ub8tZ79/fRaGRCH8Xhob5KBKMKk2ELdx+VDpRNkwtNw=;
+ b=vI8mI/FNZEN7vNeyqLFQo5ITlF1dolcsFGJgd7T6c7ZJpn3YeESjM17iGFLK/XL402
+ jgLLyBApU2EoTji5gifvH9FYvcrLUzBmQx6dRgMyxEXR7C7DfbI51+0Jx2EexgNgvE0y
+ vSsMRiYBSybV8ARwHE9DBVelhF00ZFYWc99ZO2E2wU2QrmDAqPvRfJbgiPxUtqYV0uJd
+ AzX/KwtAChBs6tTY1HlzvLQwhODl2kvdLHHaj6r1+l2+DdhU995Fsud730/veAux+auG
+ hsR5aCwSLUITf/neJhveItjJDeodNzM8XkCpnK1+mp1WTuZkNYdLIJF76h9q7dJs0Gv7
+ /d3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725637739; x=1726242539;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MxAu4x+k4FD4cpo7duQeRbaaZCQNcHX5481JGrp14OY=;
- b=EHLqm/0o4maAMfup+23iNML0aAb+qEh/n6P2YnAg8H9+6sdNwIy+IG2SPA3izuLQRR
- w2Yfs5FGYN4E1nL+Q8x9zVYCfBQjYT5kDUnn+LMSKzQ0lGEdI5o+aXw8vx0Yk8Au9yjB
- Vk+i9RKsLjjsqlmHTDnzIuftdFlQJLdGRe/10vg18BnrPGVxJnOh7Ec+e75FzTrcLgvm
- 9QvDiZw5uxkgZs9U5idGa3nKDUtnhleP4QngPo6GlLbZVw1mDO7afb2yy/xZaGYzbqXn
- RMykp4613C6U2NRdxQsl5v1RHnmkA5bqHuhLTGfE507yYUfB1v+A3qNDBLbtDIaLwL6Z
- n8mg==
+ d=1e100.net; s=20230601; t=1725637759; x=1726242559;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ub8tZ79/fRaGRCH8Xhob5KBKMKk2ELdx+VDpRNkwtNw=;
+ b=NiX+mBpRE9wBujqyhooHRFpQwpmfmhunJ8ZT0OHO/lOErdjUZ4DjSeI1QnB+V9GkaH
+ 01O4240dj8FPIchTolLGIR9bUtzI7Tbn4arZEXQbVa7b4pv3viaopW7j6/ZBtU6/4YUb
+ 6KnmE8VkTpbdHaPjy+kPFKyvXFMrIhUf+PMAmtNG3AyStytojA7uI50UkF0wg1ikULsK
+ bk9BjkV83f6oDDE+XA8I/fSjVBMF+lYA/UqdXGMALqb9PKq0BvAXwHbUdPKJR2oMiMXF
+ LYbKodFom6g2x7/sfHzkcBagAXWBeCbvNDOVjcd/TWDV233XYOyi0p5dj39d+wJj0THg
+ 4dSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5AmcN0BjwCdlUKE/vCjtynmR1YuN3MGmHI7+0Ho2zhAsxEt9oGB/hjDuDBRwOj93tOWIjicO/l9+l@nongnu.org
-X-Gm-Message-State: AOJu0YybmN8Ic9WcEppM3g3iUvAwvNIoK6mPPzNWnaHpqCOGzYqlCWaE
- AD6hj4dgXcptVvHRJerqZNrFbcz/zFYQEtiCMvhjTyBDkfU3ladharqlusCs8Cc=
-X-Google-Smtp-Source: AGHT+IHT/hoSFIX1Qt4UGJCJkcoIyoz5Jmn0PYCYOGFP2cz26IA5wwYyyMkxWjThMpYyP6pq+Gdu6w==
-X-Received: by 2002:a17:907:7d8e:b0:a86:a6ee:7dad with SMTP id
- a640c23a62f3a-a897fa6edabmr1912982066b.52.1725637739162; 
- Fri, 06 Sep 2024 08:48:59 -0700 (PDT)
-Received: from [192.168.254.175] (225.13.23.93.rev.sfr.net. [93.23.13.225])
+ AJvYcCU5fUYCA2jaDWu+mkMouIHBGJBCa2isvNgiPpjO45O1PduJFgf0EMwpg7O6ZJTqwQ2bzyJTxznXFecW@nongnu.org
+X-Gm-Message-State: AOJu0YwQZt5nAZgOi8ufx/dHSPNeW4G92+YtcOpBB9p7dXjUDcSnDA4w
+ 7VMD2o1ameft0ZXKC3HHhr1SX7NArZf+125/otfo3EeI0dHsmAJbp7WtlT/9UbQ=
+X-Google-Smtp-Source: AGHT+IF4eGPfOBxwsUAKqlT46HgHb7uaSlU6vBDPuV3cz03+JF21Ql9B6TLmNjRhk4uM7WCG3oLxMA==
+X-Received: by 2002:a05:6402:348d:b0:5c2:4740:939d with SMTP id
+ 4fb4d7f45d1cf-5c3dc7baf09mr2029890a12.26.1725637759197; 
+ Fri, 06 Sep 2024 08:49:19 -0700 (PDT)
+Received: from localhost.localdomain (225.13.23.93.rev.sfr.net. [93.23.13.225])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d0c776239sm45105166b.64.2024.09.06.08.48.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 08:48:58 -0700 (PDT)
-Message-ID: <4fefc5cc-9181-4fdc-92ce-01603f2d4f88@linaro.org>
-Date: Fri, 6 Sep 2024 17:48:57 +0200
+ 4fb4d7f45d1cf-5c3cc529241sm2571799a12.11.2024.09.06.08.49.18
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 06 Sep 2024 08:49:18 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Guenter Roeck <linux@roeck-us.net>,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH v2 1/5] hw/sensor/tmp105: Coding style fixes
+Date: Fri,  6 Sep 2024 17:49:07 +0200
+Message-ID: <20240906154911.86803-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240906154911.86803-1-philmd@linaro.org>
+References: <20240906154911.86803-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] tmp105: OS (one-shot) bit in configuration register
- always returns 0
-To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240906132912.3826089-1-linux@roeck-us.net>
- <20240906132912.3826089-3-linux@roeck-us.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240906132912.3826089-3-linux@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,33 +96,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Guenter,
+From: Guenter Roeck <linux@roeck-us.net>
 
-On 6/9/24 15:29, Guenter Roeck wrote:
-> Per datasheet, "ONE-SHOT (OS)", the OS bit always returns 0 when reading
-> the configuration register.
-> 
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> ---
->   hw/sensor/tmp105.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-> index 77fbf2f8d3..22728798f7 100644
-> --- a/hw/sensor/tmp105.c
-> +++ b/hw/sensor/tmp105.c
-> @@ -133,7 +133,7 @@ static void tmp105_read(TMP105State *s)
->           break;
->   
->       case TMP105_REG_CONFIG:
-> -        s->buf[s->len++] = s->config;
-> +        s->buf[s->len++] = s->config & 0x7f;
+Coding style asks for no space between variable and "++". The next patch
+in this series will change one of those assignments. Instead of changing
+just one with that patch, change all of them for consistency.
 
-LGTM but I'll post an alternative v2 clearing the bit in
-the WRITE path.
+While at it, also fix other coding style problems reported by checkpatch.
 
->           break;
->   
->       case TMP105_REG_T_LOW:
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sensor/tmp105.c | 44 ++++++++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
+
+diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
+index a8730d0b7f..ad97c9684c 100644
+--- a/hw/sensor/tmp105.c
++++ b/hw/sensor/tmp105.c
+@@ -29,16 +29,17 @@
+ 
+ static void tmp105_interrupt_update(TMP105State *s)
+ {
+-    qemu_set_irq(s->pin, s->alarm ^ ((~s->config >> 2) & 1));	/* POL */
++    qemu_set_irq(s->pin, s->alarm ^ ((~s->config >> 2) & 1));   /* POL */
+ }
+ 
+ static void tmp105_alarm_update(TMP105State *s)
+ {
+-    if ((s->config >> 0) & 1) {					/* SD */
+-        if ((s->config >> 7) & 1)				/* OS */
+-            s->config &= ~(1 << 7);				/* OS */
+-        else
++    if ((s->config >> 0) & 1) {                                 /* SD */
++        if ((s->config >> 7) & 1) {                             /* OS */
++            s->config &= ~(1 << 7);                             /* OS */
++        } else {
+             return;
++        }
+     }
+ 
+     if (s->config >> 1 & 1) {
+@@ -89,7 +90,8 @@ static void tmp105_get_temperature(Object *obj, Visitor *v, const char *name,
+     visit_type_int(v, name, &value, errp);
+ }
+ 
+-/* Units are 0.001 centigrades relative to 0 C.  s->temperature is 8.8
++/*
++ * Units are 0.001 centigrades relative to 0 C.  s->temperature is 8.8
+  * fixed point, so units are 1/256 centigrades.  A simple ratio will do.
+  */
+ static void tmp105_set_temperature(Object *obj, Visitor *v, const char *name,
+@@ -118,30 +120,30 @@ static void tmp105_read(TMP105State *s)
+ {
+     s->len = 0;
+ 
+-    if ((s->config >> 1) & 1) {					/* TM */
++    if ((s->config >> 1) & 1) {                                 /* TM */
+         s->alarm = 0;
+         tmp105_interrupt_update(s);
+     }
+ 
+     switch (s->pointer & 3) {
+     case TMP105_REG_TEMPERATURE:
+-        s->buf[s->len ++] = (((uint16_t) s->temperature) >> 8);
+-        s->buf[s->len ++] = (((uint16_t) s->temperature) >> 0) &
+-                (0xf0 << ((~s->config >> 5) & 3));		/* R */
++        s->buf[s->len++] = (((uint16_t) s->temperature) >> 8);
++        s->buf[s->len++] = (((uint16_t) s->temperature) >> 0) &
++                (0xf0 << ((~s->config >> 5) & 3));              /* R */
+         break;
+ 
+     case TMP105_REG_CONFIG:
+-        s->buf[s->len ++] = s->config;
++        s->buf[s->len++] = s->config;
+         break;
+ 
+     case TMP105_REG_T_LOW:
+-        s->buf[s->len ++] = ((uint16_t) s->limit[0]) >> 8;
+-        s->buf[s->len ++] = ((uint16_t) s->limit[0]) >> 0;
++        s->buf[s->len++] = ((uint16_t) s->limit[0]) >> 8;
++        s->buf[s->len++] = ((uint16_t) s->limit[0]) >> 0;
+         break;
+ 
+     case TMP105_REG_T_HIGH:
+-        s->buf[s->len ++] = ((uint16_t) s->limit[1]) >> 8;
+-        s->buf[s->len ++] = ((uint16_t) s->limit[1]) >> 0;
++        s->buf[s->len++] = ((uint16_t) s->limit[1]) >> 8;
++        s->buf[s->len++] = ((uint16_t) s->limit[1]) >> 0;
+         break;
+     }
+ }
+@@ -153,18 +155,20 @@ static void tmp105_write(TMP105State *s)
+         break;
+ 
+     case TMP105_REG_CONFIG:
+-        if (s->buf[0] & ~s->config & (1 << 0))			/* SD */
++        if (s->buf[0] & ~s->config & (1 << 0)) {                /* SD */
+             printf("%s: TMP105 shutdown\n", __func__);
++        }
+         s->config = s->buf[0];
+-        s->faults = tmp105_faultq[(s->config >> 3) & 3];	/* F */
++        s->faults = tmp105_faultq[(s->config >> 3) & 3];        /* F */
+         tmp105_alarm_update(s);
+         break;
+ 
+     case TMP105_REG_T_LOW:
+     case TMP105_REG_T_HIGH:
+-        if (s->len >= 3)
++        if (s->len >= 3) {
+             s->limit[s->pointer & 1] = (int16_t)
+                     ((((uint16_t) s->buf[0]) << 8) | s->buf[1]);
++        }
+         tmp105_alarm_update(s);
+         break;
+     }
+@@ -175,7 +179,7 @@ static uint8_t tmp105_rx(I2CSlave *i2c)
+     TMP105State *s = TMP105(i2c);
+ 
+     if (s->len < 2) {
+-        return s->buf[s->len ++];
++        return s->buf[s->len++];
+     } else {
+         return 0xff;
+     }
+@@ -215,7 +219,7 @@ static int tmp105_post_load(void *opaque, int version_id)
+ {
+     TMP105State *s = opaque;
+ 
+-    s->faults = tmp105_faultq[(s->config >> 3) & 3];		/* F */
++    s->faults = tmp105_faultq[(s->config >> 3) & 3];            /* F */
+ 
+     tmp105_interrupt_update(s);
+     return 0;
+-- 
+2.45.2
 
 
