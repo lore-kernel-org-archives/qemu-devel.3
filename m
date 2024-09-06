@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3557ACE7B04
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 542DFCE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:15:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWuT-0001MS-PU; Fri, 06 Sep 2024 07:13:49 -0400
+	id 1smWwS-0002d2-Jl; Fri, 06 Sep 2024 07:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuO-0000v7-3k; Fri, 06 Sep 2024 07:13:44 -0400
+ id 1smWvp-0000Hz-Bk; Fri, 06 Sep 2024 07:15:16 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWuM-0007hX-En; Fri, 06 Sep 2024 07:13:43 -0400
+ id 1smWvl-0007yG-PF; Fri, 06 Sep 2024 07:15:11 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 115B38C479;
+ by isrv.corpit.ru (Postfix) with ESMTP id F09C48C486;
  Fri,  6 Sep 2024 14:12:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1E4CD1336E3;
- Fri,  6 Sep 2024 14:13:25 +0300 (MSK)
-Received: (nullmailer pid 353569 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 095171336F0;
+ Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
+Received: (nullmailer pid 353610 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 09/69] hw/nvme: fix memory leak in nvme_dsm
-Date: Fri,  6 Sep 2024 14:12:18 +0300
-Message-Id: <20240906111324.353230-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 22/69] target/rx: Use target_ulong for address in LI
+Date: Fri,  6 Sep 2024 14:12:31 +0300
+Message-Id: <20240906111324.353230-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -61,44 +61,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zheyu Ma <zheyuma97@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The allocated memory to hold LBA ranges leaks in the nvme_dsm function. This
-happens because the allocated memory for iocb->range is not freed in all
-error handling paths.
+Using int32_t meant that the address was sign-extended to uint64_t
+when passing to translator_ld*, triggering an assert.
 
-Fix this by adding a free to ensure that the allocated memory is properly freed.
-
-ASAN log:
-==3075137==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 480 byte(s) in 6 object(s) allocated from:
-    #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
-    #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
-    #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
-    #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
-    #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
-    #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
-
-Cc: qemu-stable@nongnu.org
-Fixes: d7d1474fd85d ("hw/nvme: reimplement dsm to allow cancellation")
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit c510fe78f1b7c966524489d6ba752107423b20c8)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2453
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 83340193b991e7a974f117baa86a04db1fd835a9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e89f9f7808..652116085e 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -2592,6 +2592,7 @@ next:
- done:
-     iocb->aiocb = NULL;
-     iocb->common.cb(iocb->common.opaque, iocb->ret);
-+    g_free(iocb->range);
-     qemu_aio_unref(iocb);
- }
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index f6e9e0ec90..30d30770ac 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -86,7 +86,8 @@ static uint32_t decode_load_bytes(DisasContext *ctx, uint32_t insn,
+ 
+ static uint32_t li(DisasContext *ctx, int sz)
+ {
+-    int32_t tmp, addr;
++    target_ulong addr;
++    uint32_t tmp;
+     CPURXState *env = ctx->env;
+     addr = ctx->base.pc_next;
  
 -- 
 2.39.2
