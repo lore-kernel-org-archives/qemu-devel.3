@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55807C54FC6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD66CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRMx-00033q-RP; Fri, 06 Sep 2024 01:18:53 -0400
+	id 1smRNH-0004UU-V0; Fri, 06 Sep 2024 01:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRMl-0002Et-PH; Fri, 06 Sep 2024 01:18:40 -0400
+ id 1smRMi-00021F-6j; Fri, 06 Sep 2024 01:18:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRMj-0008Cg-KE; Fri, 06 Sep 2024 01:18:39 -0400
+ id 1smRMf-00088x-Tm; Fri, 06 Sep 2024 01:18:35 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFEB18C12D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8F1198C12B;
  Fri,  6 Sep 2024 08:15:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5D872133372;
+ by tsrv.corpit.ru (Postfix) with SMTP id 3E20C133370;
  Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
-Received: (nullmailer pid 10458 invoked by uid 1000);
+Received: (nullmailer pid 10451 invoked by uid 1000);
  Fri, 06 Sep 2024 05:16:33 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, thomas <east.moutain.yang@gmail.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 24/40] virtio-net: Fix network stall at the host side
- waiting for kick
-Date: Fri,  6 Sep 2024 08:16:12 +0300
-Message-Id: <20240906051633.10288-24-mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 22/40] target/arm: Handle denormals correctly for
+ FMOPA (widening)
+Date: Fri,  6 Sep 2024 08:16:10 +0300
+Message-Id: <20240906051633.10288-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
@@ -63,334 +63,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: thomas <east.moutain.yang@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Patch 06b12970174 ("virtio-net: fix network stall under load")
-added double-check to test whether the available buffer size
-can satisfy the request or not, in case the guest has added
-some buffers to the avail ring simultaneously after the first
-check. It will be lucky if the available buffer size becomes
-okay after the double-check, then the host can send the packet
-to the guest. If the buffer size still can't satisfy the request,
-even if the guest has added some buffers, viritio-net would
-stall at the host side forever.
+The FMOPA (widening) SME instruction takes pairs of half-precision
+floating point values, widens them to single-precision, does a
+two-way dot product and accumulates the results into a
+single-precision destination.  We don't quite correctly handle the
+FPCR bits FZ and FZ16 which control flushing of denormal inputs and
+outputs.  This is because at the moment we pass a single float_status
+value to the helper function, which then uses that configuration for
+all the fp operations it does.  However, because the inputs to this
+operation are float16 and the outputs are float32 we need to use the
+fp_status_f16 for the float16 input widening but the normal fp_status
+for everything else.  Otherwise we will apply the flushing control
+FPCR.FZ16 to the 32-bit output rather than the FPCR.FZ control, and
+incorrectly flush a denormal output to zero when we should not (or
+vice-versa).
 
-The patch enables notification and checks whether the guest has
-added some buffers since last check of available buffers when
-the available buffers are insufficient. If no buffer is added,
-return false, else recheck the available buffers in the loop.
-If the available buffers are sufficient, disable notification
-and return true.
+(In commit 207d30b5fdb5b we tried to fix the FZ handling but
+didn't get it right, switching from "use FPCR.FZ for everything" to
+"use FPCR.FZ16 for everything".)
+(Mjt: it is commit d5373d7bdbee in stable-7.2)
 
-Changes:
-1. Change the return type of virtqueue_get_avail_bytes() from void
-   to int, it returns an opaque that represents the shadow_avail_idx
-   of the virtqueue on success, else -1 on error.
-2. Add a new API: virtio_queue_enable_notification_and_check(),
-   it takes an opaque as input arg which is returned from
-   virtqueue_get_avail_bytes(). It enables notification firstly,
-   then checks whether the guest has added some buffers since
-   last check of available buffers or not by virtio_queue_poll(),
-   return ture if yes.
+Pass the CPU env to the sme_fmopa_h helper instead of an fp_status
+pointer, and have the helper pass an extra fp_status into the
+f16_dotadd() function so that we can use the right status for the
+right parts of this operation.
 
-The patch also reverts patch "06b12970174".
-
-The case below can reproduce the stall.
-
-                                       Guest 0
-                                     +--------+
-                                     | iperf  |
-                    ---------------> | server |
-         Host       |                +--------+
-       +--------+   |                    ...
-       | iperf  |----
-       | client |----                  Guest n
-       +--------+   |                +--------+
-                    |                | iperf  |
-                    ---------------> | server |
-                                     +--------+
-
-Boot many guests from qemu with virtio network:
- qemu ... -netdev tap,id=net_x \
-    -device virtio-net-pci-non-transitional,\
-    iommu_platform=on,mac=xx:xx:xx:xx:xx:xx,netdev=net_x
-
-Each guest acts as iperf server with commands below:
- iperf3 -s -D -i 10 -p 8001
- iperf3 -s -D -i 10 -p 8002
-
-The host as iperf client:
- iperf3 -c guest_IP -p 8001 -i 30 -w 256k -P 20 -t 40000
- iperf3 -c guest_IP -p 8002 -i 30 -w 256k -P 20 -t 40000
-
-After some time, the host loses connection to the guest,
-the guest can send packet to the host, but can't receive
-packet from the host.
-
-It's more likely to happen if SWIOTLB is enabled in the guest,
-allocating and freeing bounce buffer takes some CPU ticks,
-copying from/to bounce buffer takes more CPU ticks, compared
-with that there is no bounce buffer in the guest.
-Once the rate of producing packets from the host approximates
-the rate of receiveing packets in the guest, the guest would
-loop in NAPI.
-
-         receive packets    ---
-               |             |
-               v             |
-           free buf      virtnet_poll
-               |             |
-               v             |
-     add buf to avail ring  ---
-               |
-               |  need kick the host?
-               |  NAPI continues
-               v
-         receive packets    ---
-               |             |
-               v             |
-           free buf      virtnet_poll
-               |             |
-               v             |
-     add buf to avail ring  ---
-               |
-               v
-              ...           ...
-
-On the other hand, the host fetches free buf from avail
-ring, if the buf in the avail ring is not enough, the
-host notifies the guest the event by writing the avail
-idx read from avail ring to the event idx of used ring,
-then the host goes to sleep, waiting for the kick signal
-from the guest.
-
-Once the guest finds the host is waiting for kick singal
-(in virtqueue_kick_prepare_split()), it kicks the host.
-
-The host may stall forever at the sequences below:
-
-         Host                        Guest
-     ------------                 -----------
- fetch buf, send packet           receive packet ---
-         ...                          ...         |
- fetch buf, send packet             add buf       |
-         ...                        add buf   virtnet_poll
-    buf not enough      avail idx-> add buf       |
-    read avail idx                  add buf       |
-                                    add buf      ---
-                                  receive packet ---
-    write event idx                   ...         |
-    wait for kick                   add buf   virtnet_poll
-                                      ...         |
-                                                 ---
-                                 no more packet, exit NAPI
-
-In the first loop of NAPI above, indicated in the range of
-virtnet_poll above, the host is sending packets while the
-guest is receiving packets and adding buffers.
- step 1: The buf is not enough, for example, a big packet
-         needs 5 buf, but the available buf count is 3.
-         The host read current avail idx.
- step 2: The guest adds some buf, then checks whether the
-         host is waiting for kick signal, not at this time.
-         The used ring is not empty, the guest continues
-         the second loop of NAPI.
- step 3: The host writes the avail idx read from avail
-         ring to used ring as event idx via
-         virtio_queue_set_notification(q->rx_vq, 1).
- step 4: At the end of the second loop of NAPI, recheck
-         whether kick is needed, as the event idx in the
-         used ring written by the host is beyound the
-         range of kick condition, the guest will not
-         send kick signal to the host.
-
-Fixes: 06b12970174 ("virtio-net: fix network stall under load")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Wencheng Yang <east.moutain.yang@gmail.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit f937309fbdbb48c354220a3e7110c202ae4aa7fa)
+Fixes: 207d30b5fdb5 ("target/arm: Use FPST_F16 for SME FMOPA (widening)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2373
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 55f9f4ee018c5ccea81d8c8c586756d7711ae46f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup in include/hw/virtio/virtio.h)
+(Mjt: s/tcg_env/cpu_env/ due to missingv
+ 8.1.0-1189-gad75a51e84af "tcg: Rename cpu_env to tcg_env")
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index ebee5db1bc..925a5c319e 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1597,24 +1597,28 @@ static bool virtio_net_can_receive(NetClientState *nc)
+diff --git a/target/arm/helper-sme.h b/target/arm/helper-sme.h
+index d2d544a696..d33fbcd8fd 100644
+--- a/target/arm/helper-sme.h
++++ b/target/arm/helper-sme.h
+@@ -122,7 +122,7 @@ DEF_HELPER_FLAGS_5(sme_addha_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sme_addva_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
  
- static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
+ DEF_HELPER_FLAGS_7(sme_fmopa_h, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
+diff --git a/target/arm/sme_helper.c b/target/arm/sme_helper.c
+index f12f3288fd..98a4840970 100644
+--- a/target/arm/sme_helper.c
++++ b/target/arm/sme_helper.c
+@@ -1009,12 +1009,23 @@ static inline uint32_t f16mop_adj_pair(uint32_t pair, uint32_t pg, uint32_t neg)
+ }
+ 
+ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
+-                          float_status *s_std, float_status *s_odd)
++                          float_status *s_f16, float_status *s_std,
++                          float_status *s_odd)
  {
-+    int opaque;
-+    unsigned int in_bytes;
-     VirtIONet *n = q->n;
--    if (virtio_queue_empty(q->rx_vq) ||
--        (n->mergeable_rx_bufs &&
--         !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
--        virtio_queue_set_notification(q->rx_vq, 1);
--
--        /* To avoid a race condition where the guest has made some buffers
--         * available after the above check but before notification was
--         * enabled, check for available buffers again.
--         */
--        if (virtio_queue_empty(q->rx_vq) ||
--            (n->mergeable_rx_bufs &&
--             !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
-+
-+    while (virtio_queue_empty(q->rx_vq) || n->mergeable_rx_bufs) {
-+        opaque = virtqueue_get_avail_bytes(q->rx_vq, &in_bytes, NULL,
-+                                           bufsize, 0);
-+        /* Buffer is enough, disable notifiaction */
-+        if (bufsize <= in_bytes) {
-+            break;
-+        }
-+
-+        if (virtio_queue_enable_notification_and_check(q->rx_vq, opaque)) {
-+            /* Guest has added some buffers, try again */
-+            continue;
-+        } else {
-             return 0;
-         }
-     }
+-    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_std);
+-    float64 e1c = float16_to_float64(e1 >> 16, true, s_std);
+-    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_std);
+-    float64 e2c = float16_to_float64(e2 >> 16, true, s_std);
++    /*
++     * We need three different float_status for different parts of this
++     * operation:
++     *  - the input conversion of the float16 values must use the
++     *    f16-specific float_status, so that the FPCR.FZ16 control is applied
++     *  - operations on float32 including the final accumulation must use
++     *    the normal float_status, so that FPCR.FZ is applied
++     *  - we have pre-set-up copy of s_std which is set to round-to-odd,
++     *    for the multiply (see below)
++     */
++    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_f16);
++    float64 e1c = float16_to_float64(e1 >> 16, true, s_f16);
++    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_f16);
++    float64 e2c = float16_to_float64(e2 >> 16, true, s_f16);
+     float64 t64;
+     float32 t32;
  
-     virtio_queue_set_notification(q->rx_vq, 0);
-+
-     return 1;
+@@ -1036,20 +1047,23 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
  }
  
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 1227e3d692..d0d13f4766 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1153,6 +1153,60 @@ int virtio_queue_empty(VirtQueue *vq)
-     }
- }
- 
-+static bool virtio_queue_split_poll(VirtQueue *vq, unsigned shadow_idx)
-+{
-+    if (unlikely(!vq->vring.avail)) {
-+        return false;
-+    }
-+
-+    return (uint16_t)shadow_idx != vring_avail_idx(vq);
-+}
-+
-+static bool virtio_queue_packed_poll(VirtQueue *vq, unsigned shadow_idx)
-+{
-+    VRingPackedDesc desc;
-+    VRingMemoryRegionCaches *caches;
-+
-+    if (unlikely(!vq->vring.desc)) {
-+        return false;
-+    }
-+
-+    caches = vring_get_region_caches(vq);
-+    if (!caches) {
-+        return false;
-+    }
-+
-+    vring_packed_desc_read(vq->vdev, &desc, &caches->desc,
-+                           shadow_idx, true);
-+
-+    return is_desc_avail(desc.flags, vq->shadow_avail_wrap_counter);
-+}
-+
-+static bool virtio_queue_poll(VirtQueue *vq, unsigned shadow_idx)
-+{
-+    if (virtio_device_disabled(vq->vdev)) {
-+        return false;
-+    }
-+
-+    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-+        return virtio_queue_packed_poll(vq, shadow_idx);
-+    } else {
-+        return virtio_queue_split_poll(vq, shadow_idx);
-+    }
-+}
-+
-+bool virtio_queue_enable_notification_and_check(VirtQueue *vq,
-+                                                int opaque)
-+{
-+    virtio_queue_set_notification(vq, 1);
-+
-+    if (opaque >= 0) {
-+        return virtio_queue_poll(vq, (unsigned)opaque);
-+    } else {
-+        return false;
-+    }
-+}
-+
- static void virtqueue_unmap_sg(VirtQueue *vq, const VirtQueueElement *elem,
-                                unsigned int len)
+ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, void *vst, uint32_t desc)
++                         void *vpm, CPUARMState *env, uint32_t desc)
  {
-@@ -1727,9 +1781,9 @@ err:
-     goto done;
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+     uint32_t neg = simd_data(desc) * 0x80008000u;
+     uint16_t *pn = vpn, *pm = vpm;
+-    float_status fpst_odd, fpst_std;
++    float_status fpst_odd, fpst_std, fpst_f16;
+ 
+     /*
+-     * Make a copy of float_status because this operation does not
+-     * update the cumulative fp exception status.  It also produces
+-     * default nans.  Make a second copy with round-to-odd -- see above.
++     * Make copies of fp_status and fp_status_f16, because this operation
++     * does not update the cumulative fp exception status.  It also
++     * produces default NaNs. We also need a second copy of fp_status with
++     * round-to-odd -- see above.
+      */
+-    fpst_std = *(float_status *)vst;
++    fpst_f16 = env->vfp.fp_status_f16;
++    fpst_std = env->vfp.fp_status;
+     set_default_nan_mode(true, &fpst_std);
++    set_default_nan_mode(true, &fpst_f16);
+     fpst_odd = fpst_std;
+     set_float_rounding_mode(float_round_to_odd, &fpst_odd);
+ 
+@@ -1069,7 +1083,8 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+                         uint32_t m = *(uint32_t *)(vzm + H1_4(col));
+ 
+                         m = f16mop_adj_pair(m, pcol, 0);
+-                        *a = f16_dotadd(*a, n, m, &fpst_std, &fpst_odd);
++                        *a = f16_dotadd(*a, n, m,
++                                        &fpst_f16, &fpst_std, &fpst_odd);
+                     }
+                     col += 4;
+                     pcol >>= 4;
+diff --git a/target/arm/translate-sme.c b/target/arm/translate-sme.c
+index 0fcd4ad950..c864bd016c 100644
+--- a/target/arm/translate-sme.c
++++ b/target/arm/translate-sme.c
+@@ -376,8 +376,29 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
+     return true;
  }
  
--void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
--                               unsigned int *out_bytes,
--                               unsigned max_in_bytes, unsigned max_out_bytes)
-+int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
-+                              unsigned int *out_bytes, unsigned max_in_bytes,
-+                              unsigned max_out_bytes)
- {
-     uint16_t desc_size;
-     VRingMemoryRegionCaches *caches;
-@@ -1762,7 +1816,7 @@ void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
-                                         caches);
-     }
- 
--    return;
-+    return (int)vq->shadow_avail_idx;
- err:
-     if (in_bytes) {
-         *in_bytes = 0;
-@@ -1770,6 +1824,8 @@ err:
-     if (out_bytes) {
-         *out_bytes = 0;
-     }
+-TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
+-           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
++static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
++                           gen_helper_gvec_5_ptr *fn)
++{
++    int svl = streaming_vec_reg_size(s);
++    uint32_t desc = simd_desc(svl, svl, a->sub);
++    TCGv_ptr za, zn, zm, pn, pm;
 +
-+    return -1;
- }
- 
- int virtqueue_avail_bytes(VirtQueue *vq, unsigned int in_bytes,
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index aa7f7d3dd6..ab3eb182f4 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -237,9 +237,13 @@ void qemu_put_virtqueue_element(VirtIODevice *vdev, QEMUFile *f,
-                                 VirtQueueElement *elem);
- int virtqueue_avail_bytes(VirtQueue *vq, unsigned int in_bytes,
-                           unsigned int out_bytes);
--void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
--                               unsigned int *out_bytes,
--                               unsigned max_in_bytes, unsigned max_out_bytes);
-+/**
-+ * Return <0 on error or an opaque >=0 to pass to
-+ * virtio_queue_enable_notification_and_check on success.
-+ */
-+int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
-+                              unsigned int *out_bytes, unsigned max_in_bytes,
-+                              unsigned max_out_bytes);
- 
- void virtio_notify_irqfd(VirtIODevice *vdev, VirtQueue *vq);
- void virtio_notify(VirtIODevice *vdev, VirtQueue *vq);
-@@ -266,6 +270,15 @@ int virtio_queue_ready(VirtQueue *vq);
- 
- int virtio_queue_empty(VirtQueue *vq);
- 
-+/**
-+ * Enable notification and check whether guest has added some
-+ * buffers since last call to virtqueue_get_avail_bytes.
-+ *
-+ * @opaque: value returned from virtqueue_get_avail_bytes
-+ */
-+bool virtio_queue_enable_notification_and_check(VirtQueue *vq,
-+                                                int opaque);
++    if (!sme_smza_enabled_check(s)) {
++        return true;
++    }
 +
- /* Host binding interface.  */
- 
- uint32_t virtio_config_readb(VirtIODevice *vdev, uint32_t addr);
++    za = get_tile(s, esz, a->zad);
++    zn = vec_full_reg_ptr(s, a->zn);
++    zm = vec_full_reg_ptr(s, a->zm);
++    pn = pred_full_reg_ptr(s, a->pn);
++    pm = pred_full_reg_ptr(s, a->pm);
++
++    fn(za, zn, zm, pn, pm, cpu_env, tcg_constant_i32(desc));
++    return true;
++}
++
++TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
++           MO_32, gen_helper_sme_fmopa_h)
+ TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
+            MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
+ TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
 -- 
 2.39.2
 
