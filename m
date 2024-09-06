@@ -4,156 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5033FE6FE46
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1FDE6FE46
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 20:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sme7K-0004Y0-UA; Fri, 06 Sep 2024 14:55:34 -0400
+	id 1smfV2-0000t7-PX; Fri, 06 Sep 2024 16:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sme7C-0004UE-EI; Fri, 06 Sep 2024 14:55:27 -0400
-Received: from mail-dm6nam10on20625.outbound.protection.outlook.com
- ([2a01:111:f400:7e88::625]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sme78-0001JT-Nf; Fri, 06 Sep 2024 14:55:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pSJNy2in4FYip/A1VqtqRGYqoFfL7mQr4dO/S6XEjH+ikezTClSZ7bzG3nt8Om0YorMz4hArOPeaiLpwOQh9YX2FjGuBkGCbyS9IVjSJZxXjhAIc2UL+sWNkHVB7IrcxA+m9SC6YLj7yA5nwblqk/YMP1aSawW7WATtUHUz3OQfE7F0RFBo/zPqan+7HJrsMfrx+Gy+L8OmygUr658PbRrI5xq3E7Zq7pjmUSZ8z1yjx+KlXPIN+jk/HW8EJ0tPhsyyZrJm4d6a/O4xqWIxg9sViN9/AKrMnH3rS12N+D9hTfLBQXBouaK9LUq7qgZYKkPFVsgF1tTGCunDHeETZRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TEutcluOSJOBQzLSnkCqcud17Kmdv89rV32zuZH4b0s=;
- b=vGyZFX6IHhKgh2rqNN+Yks5buV5JxpaHfq+Zulz+qUPFCbdd+qM8KPrxC/Dr2cFshHUmy6pRFFx5U6JEyHny37Cgl890WB68Jt+BFSyw59Y1DDyuxmeSMGc0LOstIRge6CFds4Vqjz7VkWrS7NMpKm9FVApt2ka67wCQ2TvRDIw/T5punQOWNfC77A+BREmkaa1u3trcrhqhtO4838N27p4MIXCVhpuSX8bZI+Fodo7KbQMimXxo+vhSJDiEuYNDZgdKJQB6GYr5z2L/ou9Js9yptnlP68i76Ap4uTfN4ndJ2QvfUpE9TfO0iASpGAXuIkHgjMzbhUK8ea1igi1WcA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=google.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TEutcluOSJOBQzLSnkCqcud17Kmdv89rV32zuZH4b0s=;
- b=enTKmrc3+D3NzeXg3EP6OsKCVCRSsq+s8Lahh5J+ryXq1+5E8dp/vz9JBXuCyLAlerv7ksP4SnyWH57GmHCBQxC3vKjBGQFl1ucrAOyiXeqj+0pdbJ2cinCI5YopqWJjAucneq6ULTv6E3uaKdwwDLn5lduQLg8iI1kwQtPxiHFxgXuzrrRCSy3uZLi6309126c7FA/Xk7b9IyazE0Y1g3Bw2BMcMjdIgPa9JSad859Fj4MfrOnvmrRgEVZbPdrJJrokzVQPpz1VYDXMV4DyhYpJMeYAvthfdc8er3HJazQkSUn/B0Fe1piZ1JbDSKKXQXHZdQGBMFoV8LgupOUg4Q==
-Received: from BY3PR05CA0035.namprd05.prod.outlook.com (2603:10b6:a03:39b::10)
- by PH7PR12MB7841.namprd12.prod.outlook.com (2603:10b6:510:273::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.25; Fri, 6 Sep
- 2024 18:54:52 +0000
-Received: from SJ1PEPF00001CE6.namprd03.prod.outlook.com
- (2603:10b6:a03:39b:cafe::cb) by BY3PR05CA0035.outlook.office365.com
- (2603:10b6:a03:39b::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.17 via Frontend
- Transport; Fri, 6 Sep 2024 18:54:52 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ1PEPF00001CE6.mail.protection.outlook.com (10.167.242.22) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7918.13 via Frontend Transport; Fri, 6 Sep 2024 18:54:52 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 6 Sep 2024
- 11:54:38 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 6 Sep 2024
- 11:54:38 -0700
-Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.129.68.10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Fri, 6 Sep 2024 11:54:35 -0700
-Date: Fri, 6 Sep 2024 11:54:33 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Mostafa Saleh <smostafa@google.com>
-CC: Eric Auger <eric.auger@redhat.com>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Jason
- Gunthorpe" <jgg@nvidia.com>, Jean-Philippe Brucker
- <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, Michael Shavit
- <mshavit@google.com>, "Andrea Bolognani" <abologna@redhat.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, "Peter Xu" <peterx@redhat.com>
-Subject: Re: nested-smmuv3 topic, Sep 2024
-Message-ID: <ZttP6WDbrjwG46HJ@nvidia.com>
-References: <ZtlrLJzZqpnUrZQf@Asurada-Nvidia>
- <ZtrsjoCvwZFYFEjS@google.com>
+ (Exim 4.90_1) (envelope-from <tjeznach@rivosinc.com>)
+ id 1smfV1-0000rB-2A
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 16:24:07 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tjeznach@rivosinc.com>)
+ id 1smfUz-0000QO-41
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 16:24:06 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7d4ed6158bcso1906975a12.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 13:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1725654243; x=1726259043;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AX79wnx6dRXtMeJe0s8GrSGb+R1ctuDzrWj8yIejzpA=;
+ b=ha6hd5Iac6HCmLXVOu453Jvw1oW+B6dheMw7RRboHJl/3z+JuUbszl7iio3kTCNrNr
+ vVaeuzrN3TDcskVrHElL3VZFeC6J5k4Bg8uZzoNw0fp7QOLBDHxA8kvENS+QPybKl2xf
+ smJK399dytnFetonPXEeeS4UdYc9EZBjh41jsuiElQDApABUNnYn+/wQTv2dGDUFPInR
+ ZcdyAbXrhA9JTutwlitLI8PLhzIlFCBD5QSrdhBBqx8kXlRibdL6MuQAUYfb4j0unUhB
+ HeEzdwgBzJId/cqrTxVaxeQBItXbwTVATVriP5IdmDPrqQft6U2+2HQvy3zQhx3pEQzp
+ ub4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725654243; x=1726259043;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AX79wnx6dRXtMeJe0s8GrSGb+R1ctuDzrWj8yIejzpA=;
+ b=by28wkLzDjwZxdF6T7Tfqrckc4Td9dQsKY3sX2ZzVrwwRIB+oln2dZ5MFQ+KSIL9AS
+ u1QEDcC95EH1hyhKHGszsjhzeSk364JpqGvcIjh0TQAlbhXUJmqEOrI0dfSUyvC4iGE+
+ Ke3v5lxayzCGM9saEo1C5wUTtS6CazmFNQRHJY5wWDnN6XdPf2P7PxRcXOPjhvaG9mv1
+ Ay0sC+X/UG/hOuaZZB7OJlaeDMDAsi/oRc8fU55aqzHXbQreehvPLjBrRDNW+Gs76TW5
+ O2Fmk4XGJrYnmqnaM1mwa5Qmayg7fpkci5i9a/wkb8XYxw0l4ekK0h0O78w1R2/8mBJ6
+ NBpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIa9/1Hk4GB0FbgDZzaiTmQRyLob0dO3/9PM+KRsFLYho3dQ3LSJYFa2QAFjcXyUTT3FFkz7bb2pb9@nongnu.org
+X-Gm-Message-State: AOJu0YzxQl7NCR2Meas4WntknpI65t572uPy1cgIs7uT7/YAy8eCiWrD
+ QjRgqUcEknwzXnJiy9R73G3wbvz5mM04ZK1V3fGzQNEehgrRm7AwgdVvnFaElEw=
+X-Google-Smtp-Source: AGHT+IF+2ZT2/j9xELWPvuUiEnd7zF6Uh6O6bIhTJXSQxhkkjjfEqIqbfqUc2Ca9vzs1xmbtgB+2Og==
+X-Received: by 2002:a17:90b:388f:b0:2c8:647:1600 with SMTP id
+ 98e67ed59e1d1-2dad4efde2dmr4253482a91.9.1725654242507; 
+ Fri, 06 Sep 2024 13:24:02 -0700 (PDT)
+Received: from tjeznach.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2dadc127c5bsm2027119a91.52.2024.09.06.13.24.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Sep 2024 13:24:02 -0700 (PDT)
+From: Tomasz Jeznach <tjeznach@rivosinc.com>
+To: Anup Patel <anup.patel@wdc.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Tomasz Jeznach <tjeznach@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] hw/intc: riscv-imsic: Fix interrupt state updates.
+Date: Fri,  6 Sep 2024 13:23:13 -0700
+Message-Id: <a7604e4d61068ca4d384ae2a1377e1521d4d0235.1725651699.git.tjeznach@rivosinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZtrsjoCvwZFYFEjS@google.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE6:EE_|PH7PR12MB7841:EE_
-X-MS-Office365-Filtering-Correlation-Id: a9f856bb-fe39-4710-01a9-08dccea563ec
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|7416014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VnVYK3BNbC9Oa09kaVkvdWxNZFl0NkxYVUZVTGVEdUpuZzR2WUIxZVlaMVFu?=
- =?utf-8?B?VmNYTkRKSUZOS3hGZTFxTDVWbzZWWXpWVzFxUjNYdzdVVUx5djh4bzRyay90?=
- =?utf-8?B?Ull3eHEvK01ZNlNnanRPRERPcmtUeXIvM2V6K3hZR0o0VnN1S2FMRXhkYU1y?=
- =?utf-8?B?eDUwbkdUeks4MkhacjdSdVJRMTIvdE9DN3lWeWFjZlhXeWlGbk5KbzRncUZM?=
- =?utf-8?B?N3dNWkRCeHBTVDRxSkhQbC9uQWJsYVBqSVo5N2d0ckhBNTN0T2ZNVzhVN0tl?=
- =?utf-8?B?eStIZ1dFeTVZQ0d0TVliMllla2s1RThLWlorWmV1b0FvRjArdFo5Z0ZkVERl?=
- =?utf-8?B?TEp4VDVIRm5yRjJqblpGWnN2Q0l5bVZzQWxEajg5OElRaVNCQWNydHdRSm9S?=
- =?utf-8?B?V0ZER1FOd3FtdWdDZVBTdWJuYWN1S0RtWGZzVEtzYXltL0RnelYyc1I2Zk1r?=
- =?utf-8?B?VkJ5SWFHWjAzWWI3bVpZOTNXMkFGN0h4TXU5MS9YM2RZdmdlWFUrUWV2cnhm?=
- =?utf-8?B?eHBVZ3g3S2dRZW5HaWtVMUJxOXJUaWlLZTg4WjYva2s3Qi9HdDErTEVzSkRi?=
- =?utf-8?B?OFFaUzRVQnl2eFR1dWlpNXpaNVFWNTF3LzJSOWhpbm5ROVZUelJIejRZUHVE?=
- =?utf-8?B?RkVFSUI1Yzl1c3g2dGFtQUs5TWJRNnpxVWNIZ0tscnFjRHV0c2hXSHdhZHFQ?=
- =?utf-8?B?YzJqNWNMTXFJRE9UOFpLMnY0NGZYbDBpemsvS2I1M3dSdTUzdmhsd3d0azJj?=
- =?utf-8?B?Y0tGdTJpWDBHN2svV1QvTE9COTlJRkpYdnNDckJZd25XTkZ2V0RkSnIzN3pB?=
- =?utf-8?B?QjJIcW0ybzhFTUFOTUZqVEw3UEVmY0dSZ0MrN1NwNFNFcTNKYW91dEdIbnpQ?=
- =?utf-8?B?WmhLT09XMm5WN1hUNUNvbXZsN2ZFY0t0dnRyWGFWUlVFNHJLZHF5ZzdpUGdP?=
- =?utf-8?B?WVJaWHBUTVJZVUhaVnpBLytxNllHT0dHaENXRDdmRGJPN2t2SUVrOU5ZV01q?=
- =?utf-8?B?YlZ2N1NPaXBObFozdC9GUFZlcnNHT0JYdFF6ZUFtKzdCb3RvNm82Mmx2UGg0?=
- =?utf-8?B?eVlQVnE0QmhZMExZRGtmZjZ3S0RxeWYwcDl5aE11dkVUTWpETU1LaklxSmJp?=
- =?utf-8?B?aW5DaVNQNXk1Q0dEQnRtd2JRMEEybC9Gc0tDRVA2L0dzeFV1bmxURjhkZDhR?=
- =?utf-8?B?a1hVNmFQbFVsV0dYWlBXdVBQVUVZQndiVllVMDZKdm5ySzVveUp6SXFKSXFP?=
- =?utf-8?B?N2RDTTRwZVczb1Y3S2JLZ1RicTFORXczV0h3cmhwa3AxR2dVNmhoR1lXK2Zk?=
- =?utf-8?B?dUNtV3FhcU8rM1JXWm1XVmsvU0I5QVgwODR1VmJrQnVpSTlOdHovUTlkamx6?=
- =?utf-8?B?cnI4VlEzbFdGWGVBN0k3S3JZc2thYXRvUFhCUHZzcUpGZW15b3A3eE5sZ1NZ?=
- =?utf-8?B?eFNQNkFaK2Jqb3doR2taczZSQTNHM1JjeFE0Q1NjVm42SkUzQUhDdHJOL1po?=
- =?utf-8?B?cEpWY2F6ZEN6MWdYMCtheFFvNFlyUGFzYlNmRVN6dXdDWm4vdHdRWHBQOFpv?=
- =?utf-8?B?NzBxMU9lLzVIZVV3ZXFmT2ZKMVFpNHlCRW5xRDVnRVpCYno2R1JYVlJjM0lp?=
- =?utf-8?B?S0ErUDFqT1cyVGFQcVBOdmVqZHY2Y0NnS0t5ZXl0TSs3Z2doTWlNVE13YWNF?=
- =?utf-8?B?ZGJNUTJFcVZuWHl2clNCK1JRZndiU29ld3YyR0RxNVdpL3BQM24xeFpJa3RH?=
- =?utf-8?B?MGMvZDZINXRZVmdKbGdEbHNxT2dNZ0NXbHpsVmY0bUpYUnNOSHJScUZoOEx4?=
- =?utf-8?B?S3UvQjZCSTNnVFVnYXBxYllXbDY5bkVuYkg1SnRYTENnemNZK0pwRTVvZWRl?=
- =?utf-8?B?aENXTnpobXhDZW9vSUVITlQ4Mzd4Z3RSZGxtTGkxejVKRFlyTXR3MysxOTZ0?=
- =?utf-8?Q?/N9o4LSOHhAqP2a4Eqb+X9pfRvA087QV?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(7416014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2024 18:54:52.0636 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a9f856bb-fe39-4710-01a9-08dccea563ec
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CE6.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7841
-Received-SPF: softfail client-ip=2a01:111:f400:7e88::625;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=tjeznach@rivosinc.com; helo=mail-pg1-x52b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,25 +98,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
+The IMSIC state variable eistate[] is modified by CSR instructions
+within a range dedicated to the local CPU and by MMIO writes from any CPU.
+Access to eistate from MMIO accessors is protected by the BQL, but
+read-modify-write (RMW) sequences from CSRRW do not acquire the BQL,
+making the RMW sequence vulnerable to a race condition with MMIO access
+from a remote CPU.
 
-On Fri, Sep 06, 2024 at 11:50:38AM +0000, Mostafa Saleh wrote:
+This race can manifest as missing IPI or MSI in multi-CPU systems, eg:
 
-> > <-- Help Needed --->
-> > So, I'm wondering if anyone(s) might have some extra bandwidth in
-> > the following months helping these two tasks, either of which can
-> > be a standalone project I think.
-> 
-> I don’t have plans to work on qemu in the next months, most of my
-> upstream focus will be on pKVM SMMUv3 support[1] in Linux which might
-> overlap with some of the vSMMU work but in the kernel side.
+[   43.008092] watchdog: BUG: soft lockup - CPU#2 stuck for 27s! [kworker/u19:1:52]
+[   43.011723] CPU: 2 UID: 0 PID: 52 Comm: kworker/u19:1 Not tainted 6.11.0-rc6
+[   43.013070] Workqueue: events_unbound deferred_probe_work_func
+[   43.018776] [<ffffffff800b4a86>] smp_call_function_many_cond+0x190/0x5c2
+[   43.019205] [<ffffffff800b4f28>] on_each_cpu_cond_mask+0x20/0x32
+[   43.019447] [<ffffffff8001069a>] __flush_tlb_range+0xf2/0x190
+[   43.019683] [<ffffffff80010914>] flush_tlb_kernel_range+0x20/0x28
 
-Oh, that's a big work. I'll keep that under my radar.
+The interrupt line raise/lower sequence was changed to prevent a race
+between the evaluation of the eistate and the execution of the qemu_irq
+raise/lower, ensuring that the interrupt line is not incorrectly
+deactivated based on a stale topei check result. To avoid holding BQL
+all modifications of eistate are converted to atomic operations.
 
-> Otherwise, I’d be happy to review patches.
+Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+---
+ hw/intc/riscv_imsic.c | 50 +++++++++++++++++++++++++++----------------
+ 1 file changed, 32 insertions(+), 18 deletions(-)
 
-That'd be helpful indeed!
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index b90f0d731d..9ef65d4012 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -55,7 +55,7 @@ static uint32_t riscv_imsic_topei(RISCVIMSICState *imsic, uint32_t page)
+                (imsic->eithreshold[page] <= imsic->num_irqs)) ?
+                imsic->eithreshold[page] : imsic->num_irqs;
+     for (i = 1; i < max_irq; i++) {
+-        if ((imsic->eistate[base + i] & IMSIC_EISTATE_ENPEND) ==
++        if ((qatomic_read(&imsic->eistate[base + i]) & IMSIC_EISTATE_ENPEND) ==
+                 IMSIC_EISTATE_ENPEND) {
+             return (i << IMSIC_TOPEI_IID_SHIFT) | i;
+         }
+@@ -66,10 +66,24 @@ static uint32_t riscv_imsic_topei(RISCVIMSICState *imsic, uint32_t page)
+ 
+ static void riscv_imsic_update(RISCVIMSICState *imsic, uint32_t page)
+ {
++    uint32_t base = page * imsic->num_irqs;
++
++    /*
++     * Lower the interrupt line if necessary, then evaluate the current
++     * IMSIC state.
++     * This sequence ensures that any race between evaluating the eistate and
++     * updating the interrupt line will not result in an incorrectly
++     * deactivated connected CPU IRQ line.
++     * If multiple interrupts are pending, this sequence functions identically
++     * to qemu_irq_pulse.
++     */
++
++    if (qatomic_fetch_and(&imsic->eistate[base], ~IMSIC_EISTATE_ENPEND)) {
++        qemu_irq_lower(imsic->external_irqs[page]);
++    }
+     if (imsic->eidelivery[page] && riscv_imsic_topei(imsic, page)) {
+         qemu_irq_raise(imsic->external_irqs[page]);
+-    } else {
+-        qemu_irq_lower(imsic->external_irqs[page]);
++        qatomic_or(&imsic->eistate[base], IMSIC_EISTATE_ENPEND);
+     }
+ }
+ 
+@@ -125,12 +139,11 @@ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+         topei >>= IMSIC_TOPEI_IID_SHIFT;
+         base = page * imsic->num_irqs;
+         if (topei) {
+-            imsic->eistate[base + topei] &= ~IMSIC_EISTATE_PENDING;
++            qatomic_and(&imsic->eistate[base + topei], ~IMSIC_EISTATE_PENDING);
+         }
+-
+-        riscv_imsic_update(imsic, page);
+     }
+ 
++    riscv_imsic_update(imsic, page);
+     return 0;
+ }
+ 
+@@ -139,7 +152,7 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+                                uint32_t num, bool pend, target_ulong *val,
+                                target_ulong new_val, target_ulong wr_mask)
+ {
+-    uint32_t i, base;
++    uint32_t i, base, prev;
+     target_ulong mask;
+     uint32_t state = (pend) ? IMSIC_EISTATE_PENDING : IMSIC_EISTATE_ENABLED;
+ 
+@@ -157,10 +170,6 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+ 
+     if (val) {
+         *val = 0;
+-        for (i = 0; i < xlen; i++) {
+-            mask = (target_ulong)1 << i;
+-            *val |= (imsic->eistate[base + i] & state) ? mask : 0;
+-        }
+     }
+ 
+     for (i = 0; i < xlen; i++) {
+@@ -172,10 +181,15 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+         mask = (target_ulong)1 << i;
+         if (wr_mask & mask) {
+             if (new_val & mask) {
+-                imsic->eistate[base + i] |= state;
++                prev = qatomic_fetch_or(&imsic->eistate[base + i], state);
+             } else {
+-                imsic->eistate[base + i] &= ~state;
++                prev = qatomic_fetch_and(&imsic->eistate[base + i], ~state);
+             }
++        } else {
++            prev = qatomic_read(&imsic->eistate[base + i]);
++        }
++        if (val && (prev & state)) {
++            *val |= mask;
+         }
+     }
+ 
+@@ -302,14 +316,14 @@ static void riscv_imsic_write(void *opaque, hwaddr addr, uint64_t value,
+     page = addr >> IMSIC_MMIO_PAGE_SHIFT;
+     if ((addr & (IMSIC_MMIO_PAGE_SZ - 1)) == IMSIC_MMIO_PAGE_LE) {
+         if (value && (value < imsic->num_irqs)) {
+-            imsic->eistate[(page * imsic->num_irqs) + value] |=
+-                                                    IMSIC_EISTATE_PENDING;
++            qatomic_or(&imsic->eistate[(page * imsic->num_irqs) + value],
++                       IMSIC_EISTATE_PENDING);
++
++            /* Update CPU external interrupt status */
++            riscv_imsic_update(imsic, page);
+         }
+     }
+ 
+-    /* Update CPU external interrupt status */
+-    riscv_imsic_update(imsic, page);
+-
+     return;
+ 
+ err:
 
-Thanks
-Nicolin
+base-commit: fd1952d814da738ed107e05583b3e02ac11e88ff
+-- 
+2.34.1
+
 
