@@ -4,84 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D9FCE7B1D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD711CE7B1D
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smaFy-00077G-JG; Fri, 06 Sep 2024 10:48:14 -0400
+	id 1smaHZ-0002wc-MA; Fri, 06 Sep 2024 10:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smaFx-00076T-0S
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:48:13 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smaFv-0000VQ-5F
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:48:12 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-42c2e50ec13so16735165e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 07:48:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725634089; x=1726238889; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gcZNcPexkcBoySjOqRROGeohrvWqNqmcuMeW6mDz/bg=;
- b=vBTmC36GAeXl674gggO/42/ONc7H+MTYzMs4ojS9DT/8O3WgO600b1+QnkffzlbZu9
- uKDy1yAozzuq0od6HsFW1QB1+GDjZrqCnwkyMrO02Zki6zNmO8qAZ03RCxz4UUI/B4F9
- ghZL3B1jGggYFKbpErUKkM1yvFWsfFEfPIKt7E8wcICMBUjS6I07b073KcRQdV2z+z0Z
- ACGvddoCio5rV4wnoT49GwVhfO5XhJ8olXGvX0IZ5t3Y3Ff/DlGIkE3pRL4mhosE3Qjn
- QGW+hl76b3dwzbdoUxxI1etKBr23WbcqQl8FPaSF9d572QUAqI05MzrNokZ5gkPGs6+O
- Xi7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725634089; x=1726238889;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gcZNcPexkcBoySjOqRROGeohrvWqNqmcuMeW6mDz/bg=;
- b=vxY+t3SQdcVF5BZHHIReFYIhpH7MdR9ZW5b8Yj5OyjOXqeYnIyynSMdxPYHuEog90F
- fvmmtl6jFDRFCBSkFzg0I+2rXYOgidGKSkcjO2xp3wPgIowJqKxnv+PG2S2VCAnnWQDc
- eNhyj59dn6AyfPMDoy6JGfmqHKPZrdpeNuneu3gBZI5j7WkQB2YleKfc5wyjR8bCTxuB
- YN0fvkweqOBFbwywaOiL9kOt5I3lrr7qz6JRdQoQ1kB6xzJ9hAev5lH6BZUAEgVD4fZO
- C9HB7S5Y4xaY2cdk30jFLySjDGSwv68UJ2bHgKAcmHyg92BAWkdMEZ3vTc2Nr/xFCCWq
- 7sIA==
-X-Gm-Message-State: AOJu0YyE0b+xfVvwrG1YE1mTG3pCuSj2i42zB4UApgqxwy6bjPtPtWiW
- 1GGzpqzjroWGoxipfOJTat7EQ293UjHAqAkPNITLMLcgBiZ7zfiEOmSdv7OMxsM=
-X-Google-Smtp-Source: AGHT+IEKtlXdi0Gmm15P+N7f6fmBmWyElRjMVRZDJx07qdoqt++o+hY3otUP5YzTRl4kfblYO3Cglg==
-X-Received: by 2002:adf:ed0b:0:b0:374:c1c5:859e with SMTP id
- ffacd0b85a97d-3788967e478mr2024702f8f.42.1725634089171; 
- Fri, 06 Sep 2024 07:48:09 -0700 (PDT)
-Received: from [192.168.254.175] (110.170.88.92.rev.sfr.net. [92.88.170.110])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3789160d85asm89011f8f.34.2024.09.06.07.48.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 07:48:08 -0700 (PDT)
-Message-ID: <fbba1d59-1f06-4bfc-944a-ce76499c4de3@linaro.org>
-Date: Fri, 6 Sep 2024 16:48:03 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=ncBN=QE=kaod.org=clg@ozlabs.org>)
+ id 1smaHX-0002vL-SZ; Fri, 06 Sep 2024 10:49:51 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=ncBN=QE=kaod.org=clg@ozlabs.org>)
+ id 1smaHU-0000lm-Uc; Fri, 06 Sep 2024 10:49:51 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4X0fJl6RCMz4wy9;
+ Sat,  7 Sep 2024 00:49:43 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4X0fJJ6TD7z4wnw;
+ Sat,  7 Sep 2024 00:49:20 +1000 (AEST)
+Message-ID: <36c9b2b5-5a19-4713-8e27-112ae4b83bc4@kaod.org>
+Date: Fri, 6 Sep 2024 16:49:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/8] crypto: Introduce x509 utils
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de,
- stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
- marcel.apfelbaum@gmail.com
-References: <20240905195735.16911-1-dorjoychy111@gmail.com>
- <20240905195735.16911-4-dorjoychy111@gmail.com> <ZtsImlL43_dzUTp9@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZtsImlL43_dzUTp9@redhat.com>
+Subject: Re: [PATCH] aspeed: Add support for IBM Bonnell
+To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20240906123505.3818154-1-linux@roeck-us.net>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240906123505.3818154-1-linux@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=ncBN=QE=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,117 +67,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 15:50, Daniel P. Berrangé wrote:
-> On Fri, Sep 06, 2024 at 01:57:30AM +0600, Dorjoy Chowdhury wrote:
->> An utility function for getting fingerprint from X.509 certificate
->> has been introduced. Implementation only provided using gnutls.
->>
->> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
->> ---
->>   crypto/meson.build          |  4 ++
->>   crypto/x509-utils.c         | 75 +++++++++++++++++++++++++++++++++++++
->>   include/crypto/x509-utils.h | 22 +++++++++++
->>   3 files changed, 101 insertions(+)
->>   create mode 100644 crypto/x509-utils.c
->>   create mode 100644 include/crypto/x509-utils.h
-> 
-> 
->> +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
->> +                                      QCryptoHashAlgorithm alg,
->> +                                      uint8_t *result,
->> +                                      size_t *resultlen,
->> +                                      Error **errp)
->> +{
->> +    int ret;
->> +    gnutls_x509_crt_t crt;
->> +    gnutls_datum_t datum = {.data = cert, .size = size};
->> +
->> +    if (alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
->> +        error_setg(errp, "Unknown hash algorithm");
->> +        return -1;
->> +    }
->> +
->> +    if (result == NULL) {
->> +        error_setg(errp, "No valid buffer given");
->> +        return -1;
->> +    }
->> +
->> +    gnutls_x509_crt_init(&crt);
->> +
->> +    if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) != 0) {
->> +        error_setg(errp, "Failed to import certificate");
->> +        goto cleanup;
->> +    }
->> +
->> +    ret = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
->> +    if (*resultlen < ret) {
->> +        error_setg(errp,
->> +                   "Result buffer size %zu is smaller than hash %d",
->> +                   *resultlen, ret);
->> +        goto cleanup;
->> +    }
->> +
->> +    if (gnutls_x509_crt_get_fingerprint(crt,
->> +                                        qcrypto_to_gnutls_hash_alg_map[alg],
->> +                                        result, resultlen) != 0) {
->> +        error_setg(errp, "Failed to get fingerprint from certificate");
->> +        goto cleanup;
->> +    }
->> +
->> +    return 0;
->> +
->> + cleanup:
->> +    gnutls_x509_crt_deinit(crt);
->> +    return -1;
->> +}
-> 
-> This fails to call gnutls_x509_crt_deinit in the success path.
-> 
-> I'm going to squash in the following change:
-> 
-> 
-> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-> index 593eb8968b..6e157af76b 100644
-> --- a/crypto/x509-utils.c
-> +++ b/crypto/x509-utils.c
-> @@ -31,7 +31,8 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
->                                         size_t *resultlen,
->                                         Error **errp)
->   {
-> -    int ret;
-> +    int ret = -1;
-> +    int hlen;
->       gnutls_x509_crt_t crt;
->       gnutls_datum_t datum = {.data = cert, .size = size};
->   
-> @@ -52,11 +53,11 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
->           goto cleanup;
->       }
->   
-> -    ret = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
-> -    if (*resultlen < ret) {
-> +    hlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
-> +    if (*resultlen < hlen) {
->           error_setg(errp,
->                      "Result buffer size %zu is smaller than hash %d",
-> -                   *resultlen, ret);
-> +                   *resultlen, hlen);
->           goto cleanup;
->       }
->   
-> @@ -67,9 +68,9 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
->           goto cleanup;
->       }
->   
-> -    return 0;
-> +    ret = 0;
->   
->    cleanup:
->       gnutls_x509_crt_deinit(crt);
-> -    return -1;
-> +    return ret;
->   }
+Joel,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Would have access to a Bonnell BMC ? To get the HW strapping
+register values.
+
+On 9/6/24 14:35, Guenter Roeck wrote:
+> Introduce support for the IBM Bonnell BMC.
+> 
+> Use Rainier machine information for HW strapping and other machine details
+> since the actual hardware configuration is unknown. I2C device
+> instantiation is based on the devicetree file in the upstream Linux kernel.
+> 
+> Major difference to Rainier is that the Bonnell devicetree file
+> instantiates a TPM. It is therefore possible to test TPM functionality
+> without having to instantiate the TPM manually from the Linux command
+> line.
+> 
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> ---
+>   hw/arm/aspeed.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 87 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index fd5603f7aa..4f833c5708 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -865,6 +865,70 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+>       create_pca9552(soc, 15, 0x60);
+>   }
+>   
+> +static void bonnell_bmc_i2c_init(AspeedMachineState *bmc)
+> +{
+> +    AspeedSoCState *soc = bmc->soc;
+> +    I2CBus *bus;
+> +
+> +    bus = aspeed_i2c_get_bus(&soc->i2c, 0);
+> +
+> +    at24c_eeprom_init(bus, 0x51, 8 * KiB);      /* atmel,24c64 */
+> +    /* tca9554@11:20 */
+> +    i2c_slave_create_simple(bus, "pca9554", 0x20);
+
+
+The other machine tend to simply do :
+
+   i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "pca9554", 0x20);
+
+But that's fine.
+
+> +
+> +    /* ucd90160@2:64 */
+> +
+> +    /* fsg032@3:5a */
+> +    /* fsg032@3:5b */
+> +
+> +    bus = aspeed_i2c_get_bus(&soc->i2c, 7);
+> +
+> +    /* si7020@7:40 */
+> +
+> +    /* Bonnell expects a TMP275 but a TMP105 is compatible */
+> +    i2c_slave_create_simple(bus, TYPE_TMP105, 0x48);
+> +    at24c_eeprom_init(bus, 0x50, 8 * KiB);      /* atmel,24c64 */
+> +    at24c_eeprom_init(bus, 0x51, 8 * KiB);      /* atmel,24c64 */
+> +    i2c_slave_create_simple(bus, "max31785", 0x52);
+> +
+> +    /* pca9551; assume/hope pca9552 is compatible enough */
+> +    create_pca9552(soc, 7, 0x60);
+> +
+> +    /* ibm,op-panel@7:62 */
+> +    /* dps310@7:76 */
+> +
+> +    bus = aspeed_i2c_get_bus(&soc->i2c, 8);
+> +
+> +    /* rx8900@8:32 */
+> +
+> +    /* Bonnell expects a TMP275 but a TMP105 is compatible */
+> +    i2c_slave_create_simple(bus, TYPE_TMP105, 0x48);
+> +    at24c_eeprom_init(bus, 0x51, 16 * KiB);      /* atmel,24c128 */
+> +
+> +    /* pca9551@8:60 */
+> +    create_pca9552(soc, 8, 0x60);
+> +
+> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4c);
+> +
+> +    bus = aspeed_i2c_get_bus(&soc->i2c, 11);
+> +
+> +    /* tca9554@11:20 */
+> +    i2c_slave_create_simple(bus, "pca9554", 0x20);
+> +    i2c_slave_create_simple(bus, "tmp423", 0x4c);
+> +    /* pca9849@11:75 */
+> +    i2c_slave_create_simple(bus, "pca9546", 0x75);
+> +
+> +    /* npct75x@12:2e (tpm) */
+> +
+> +    /* atmel,24c64 */
+> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 12), 0x50, 8 * KiB);
+> +
+> +    /* atmel,24c64 */
+> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 13), 0x50, 8 * KiB);
+> +    /* pca9551@13:60 */
+> +    create_pca9552(soc, 13, 0x60);
+> +}
+> +
+>   static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
+>                                    I2CBus **channels)
+>   {
+> @@ -1488,6 +1552,25 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
+>       aspeed_machine_ast2600_class_emmc_init(oc);
+>   };
+>   
+> +static void aspeed_machine_bonnell_class_init(ObjectClass *oc, void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> +
+> +    mc->desc       = "IBM Bonnell BMC (Cortex-A7)";
+> +    amc->soc_name  = "ast2600-a3";
+> +    amc->hw_strap1 = RAINIER_BMC_HW_STRAP1;
+> +    amc->hw_strap2 = RAINIER_BMC_HW_STRAP2;
+> +    amc->fmc_model = "mx66l1g45g";
+> +    amc->spi_model = "mx66l1g45g";
+> +    amc->num_cs    = 2;
+> +    amc->macs_mask  = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+> +    amc->i2c_init  = bonnell_bmc_i2c_init;
+> +    mc->default_ram_size = 1 * GiB;
+> +    aspeed_machine_class_init_cpus_defaults(mc);
+> +    aspeed_machine_ast2600_class_emmc_init(oc);
+> +};
+> +
+>   #define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+>   
+>   static void aspeed_machine_fuji_class_init(ObjectClass *oc, void *data)
+> @@ -1776,6 +1859,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("rainier-bmc"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+>           .class_init    = aspeed_machine_rainier_class_init,
+> +    }, {
+> +        .name          = MACHINE_TYPE_NAME("bonnell-bmc"),
+> +        .parent        = TYPE_ASPEED_MACHINE,
+> +        .class_init    = aspeed_machine_bonnell_class_init,
+>       }, {
+>           .name          = MACHINE_TYPE_NAME("fuji-bmc"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+
+
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Thanks,
+
+C.
+
 
 
