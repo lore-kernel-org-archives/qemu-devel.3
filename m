@@ -4,63 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C99E6FE49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 23:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39E9CE7B04
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 01:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smhxj-0004XO-Ua; Fri, 06 Sep 2024 19:01:55 -0400
+	id 1smjyn-0001vG-21; Fri, 06 Sep 2024 21:11:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1smhxh-0004W9-G1; Fri, 06 Sep 2024 19:01:53 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1smhxg-0006KF-3o; Fri, 06 Sep 2024 19:01:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:In-Reply-To:References;
- bh=BuackiRRFpiul8JpQIgc3NloghbBeK8/ch+QD7HUeb4=; b=Xmszhb7Cv/dUtNftKh332eX0uk
- 2ybfEPKZjqXj5AAZYA/fPZOQ67RC4n1+f9jWKNvqX7z+5CtB7ZnxNQHWJIJzLwlKm7RJd9HyA7zPC
- dT90nqqzH3uRE++Xhxlrrux3esNF05+K8plp8o7zlsQitByPwKvFwnBcfeDa4Bak8yX827eTYMapV
- czmtwOS7fJsZk/iXM36eIU3AzweL9Wg/SDBylk8pyoEtWffNXnrtC1evG1PE3zeWwuFkhtJiWPFgN
- T6M1CGqUTYl+AD9NTKuajAnPd/skZDSCCr0g6kdm/tXbIPKW8zP8boiiIDmYt3xAIFZ+7WsV6Kke7
- +wj+aFqt8GOMnaGqU92zy0msvusO0gRneE67bNJieQDNfgXuZOKZOzlD09pOcmWPXBEdnTQcy/sty
- 5nKhnMTL9+yACJi84TFRLAyN9yw80/d1QCs4Wph6ET2mLqnGcaMB5qPo5jbB+9qjEF+XNxapZsDFO
- 5Mq/lFlUhJtCXzgRxr5r1+ztkNtE+afUXk/yYcAL405JGrop4n+N3EAy5xkH0aPIUdQ+odWJ2/VCA
- +X/DNvP37oTQ2xqVeRw9M68ElvysRRIwLdxcBsWpCgVw6JY+bYtH0RnVaKDuTwllPc3X3a/rl3f69
- T0vwVYyst7aIQSaTVzBS88IeNuFWu1qTAY5SNLL1s=;
-Received: from [2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1smhxU-000Cbp-3m; Sat, 07 Sep 2024 00:01:44 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: hpoussin@reactos.org, arikalo@gmail.com, philmd@linaro.org,
- jiaxun.yang@flygoat.com, dwmw@amazon.co.uk, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-Date: Sat,  7 Sep 2024 00:01:38 +0100
-Message-Id: <20240906230138.335995-1-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <kennethadammiller@gmail.com>)
+ id 1smirj-0008JX-LO
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 19:59:49 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kennethadammiller@gmail.com>)
+ id 1smird-0002Fr-Hx
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 19:59:44 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2f025b94e07so22739821fa.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 16:59:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1725667172; x=1726271972; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=FwisAysJi+CBFxFHWNk+FgNN5eCdLrXwQGcO6PlI9CY=;
+ b=asF8QoWPT9r2b4+44HxPZyUL39a8l3zdBEFm4MOMUffO4nynMG/GhHkJrmtRHw9wcm
+ q9Rp27tOjbM2bq2P5AUpRnku1jF9pW8kNYJyOxCTNs/yLlFSqxBaojmVP+zzgYWDf8E1
+ H/ed2ZMjImP23cy/nRv4qDmAVLsVlFA0pOHHr1AmDAObxmoPm1qOR32N025JBienzut0
+ dF88qNWpXhHsfLJNwVsV/FHxRVuVaUFCICcgsBDE9AEiqlPzcCryJ0QopWFkKBPm796i
+ l930XUEO5pbvL29xCg7rB2b8zxnqkA5XM0OPtoyTD+Q5PUOTnZTs7cMKwTvk54OJV4ht
+ 2L8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725667172; x=1726271972;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FwisAysJi+CBFxFHWNk+FgNN5eCdLrXwQGcO6PlI9CY=;
+ b=D4Ne4QcTvbEPF9YN/Ro656rH9fMjCdoJl7iwM35eE8mvNM4UbExzJywAMP7P2BrpE9
+ /Q/i069BTAT1wPDYUJcZvFus7GPQ/xWVTNfIV9mKvwkNfmd1CDZC5e4e40ByOGjfnU2m
+ jMFYcJWBWLRKI3cxNWyOpXwPmpPa6Dba6fJFJLLL0fIS81yUJCa0qXboyJUtq8XiVoPj
+ 1NcK9NFKbN6e6epvSuPLyqB2nkwWeiDvffN4DWEyYKmhRnPer9dG3Fj/KLFCISkuk6Aj
+ EDF2OW9cz4/L9XlkvNUnlgTHt5rEUToS/AXTzNPKfgeMrP7wNzrxkoFMapsrFF+xZBFA
+ kYDg==
+X-Gm-Message-State: AOJu0YwaWTOgYe8faQo5y3jRjKdCqOQq2dQ5DGyOU6v7IMamUBH4tPNr
+ 8vGLkZqkm0W4diaGIepdiC9E6xTo2zLZHF5qKgIo0noF3DYJbiiLYmLYS5XCNLrnX0M++obSB14
+ TC5s5HAVGVXzY377f/0hsZ/Hji4g/rzNr
+X-Google-Smtp-Source: AGHT+IE0ttRgbzsH37AnW1bi2QrZjx7nqYxzOIw5BzXJS53Lx5eNEGXIUsqhCsJMV60cx7QTbBpeHlwnSco626K31Oo=
+X-Received: by 2002:a2e:b8c7:0:b0:2f7:4fac:f695 with SMTP id
+ 38308e7fff4ca-2f75230c835mr34575101fa.14.1725667172075; Fri, 06 Sep 2024
+ 16:59:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH] hw/mips/jazz: fix typo in in-built NIC alias
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+From: Kenneth Adam Miller <kennethadammiller@gmail.com>
+Date: Fri, 6 Sep 2024 17:59:21 -0600
+Message-ID: <CAK7rcp8YkeRisKBTfV0nenk6WvsG2Vwsqnm+=B=KD6rHuSqfog@mail.gmail.com>
+Subject: Build failure due to xen
+To: QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000cad1d006217c32c0"
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=kennethadammiller@gmail.com; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 06 Sep 2024 21:09:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,29 +84,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit e104edbb9d ("hw/mips/jazz: use qemu_find_nic_info()") contained a typo
-in the NIC alias which caused initialisation of the in-built dp83932 NIC to fail
-when using the normal -nic user,model=dp83932 command line.
+--000000000000cad1d006217c32c0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/mips/jazz.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hello,
 
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index 1bc17e69d3..0d44e19707 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -128,7 +128,7 @@ static void mips_jazz_init_net(IOMMUMemoryRegion *rc4030_dma_mr,
-     uint8_t *prom;
-     NICInfo *nd;
- 
--    nd = qemu_find_nic_info("dp8393x", true, "dp82932");
-+    nd = qemu_find_nic_info("dp8393x", true, "dp83932");
-     if (!nd) {
-         return;
-     }
--- 
-2.39.2
+I'm on commit bd80b59 and my host is:
+$lsb_release -s
+...
+Description: Pop!_OS 20.04 LTS
+Release: 20.04In file included from
+...
 
+I get a compile error:
+
+...
+/home/kennethadammiller/workspace/vm_escape/qemu/include/hw/xen/xen_backend=
+.h:4,
+                 from
+/home/kennethadammiller/workspace/vm_escape/qemu/hw/block/xen_disk.c:39:
+/home/kennethadammiller/workspace/vm_escape/qemu/include/hw/xen/xen_common.=
+h:111:9:
+error: unknown type name =E2=80=98xc_evtchn=E2=80=99
+  111 | typedef xc_evtchn *XenEvtchn;
+      |         ^~~~~~~~~
+/home/kennethadammiller/workspace/vm_escape/qemu/include/hw/xen/xen_common.=
+h:112:9:
+error: unknown type name =E2=80=98xc_gnttab=E2=80=99
+  112 | typedef xc_gnttab *XenGnttab;
+      |         ^~~~~~~~~
+...
+
+I don't know what to do to make sure this builds.
+
+--000000000000cad1d006217c32c0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hello,</div><div><br></div><div>I&#39;m on commit=C2=
+=A0bd80b59 and my host is:=C2=A0=C2=A0</div><div>$lsb_release -s=C2=A0</div=
+><div>...</div><div>Description:	Pop!_OS 20.04 LTS</div>Release:	20.04In fi=
+le included from=C2=A0<div>...</div><div><br></div><div>I get a compile err=
+or:</div><div><br></div><div>...</div><div>/home/kennethadammiller/workspac=
+e/vm_escape/qemu/include/hw/xen/xen_backend.h:4,<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0from /home/kennethadammiller/works=
+pace/vm_escape/qemu/hw/block/xen_disk.c:39:<br>/home/kennethadammiller/work=
+space/vm_escape/qemu/include/hw/xen/xen_common.h:111:9: error: unknown type=
+ name =E2=80=98xc_evtchn=E2=80=99<br>=C2=A0 111 | typedef xc_evtchn *XenEvt=
+chn;<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~<br>/ho=
+me/kennethadammiller/workspace/vm_escape/qemu/include/hw/xen/xen_common.h:1=
+12:9: error: unknown type name =E2=80=98xc_gnttab=E2=80=99<br>=C2=A0 112 | =
+typedef xc_gnttab *XenGnttab;<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 ^~~~~~~~~<br></div><div>...</div><div><br></div><div>I don&#39;t=
+ know what to do to make sure this builds.</div></div>
+
+--000000000000cad1d006217c32c0--
 
