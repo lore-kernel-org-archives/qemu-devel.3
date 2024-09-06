@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8EFCE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 12:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E801CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 12:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smY2V-0001Yu-Ty; Fri, 06 Sep 2024 08:26:11 -0400
+	id 1smY6z-0006l9-HM; Fri, 06 Sep 2024 08:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1smY2J-0000o4-SR; Fri, 06 Sep 2024 08:26:01 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1smY2H-00023m-Kx; Fri, 06 Sep 2024 08:25:59 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-718d79fb6f7so564817b3a.3; 
- Fri, 06 Sep 2024 05:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725625555; x=1726230355; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GbQ46H6zsgGVOuoM37E/78s+2ytMVMhlJsHBTOeVrp8=;
- b=OZcFcs9uS+yImDhsBr9FzzAo+TB39qfQh+06nFjoFOsSx/W1RTSxdckjTVcHcXCnnq
- btBWLi5EfRbXKWJSAZzuVICAzbpY5eY0BXojyXVOQAbhFZEStflw3Xju1sK3kOrnQyFC
- ebqu98jYx2KNO9RU0142ZzXzhL0h9fyFwPFTvhTMqeZgSwVoUiWi+vnPcfEqYTQGXlL4
- B2aWCFwauMUy9xQsDs1AVUFMyV6u5Aq1Qu/q3zB71VwhvBPGr8qbWeCgK5XxPwUoMq2Q
- kMiJwYQjMf5cBpbTvqBEAGXybOzxbCllfl4Dl4Ti2z8j7eViGm2ehzcrRZTEcRJNegKJ
- 4+Aw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1smY6k-0006GI-Is
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:30:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1smY6d-0002hE-R4
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:30:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725625822;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cYUuhUoOFprz5gXEjqcpnsQ4XnXl828/b8BDAMd70/c=;
+ b=goa00OSqPGgU0oYgk6Iep4yGiLgDe+0VBmt1qk0xMHdHs2cW/DCKwSJmXF8I80RbFn9xf2
+ 2jSVUx2FeTXS9ptkxr9ZQSqcbhpVk0x6eZJrwQXHFU1pIUIhdKZbFuJAgV3L/s34RftLTd
+ cPFBw15kklvexldYfAQxFCa8GF/ieyk=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-LL-ZKp7gPIuyhxbnh0VfDA-1; Fri, 06 Sep 2024 08:30:21 -0400
+X-MC-Unique: LL-ZKp7gPIuyhxbnh0VfDA-1
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-70f657cc663so1818252a34.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 05:30:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725625555; x=1726230355;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GbQ46H6zsgGVOuoM37E/78s+2ytMVMhlJsHBTOeVrp8=;
- b=qdnyNiTo6VJqTGmebRLSS9lnany35/8wxxgq75wqT00sdBI1kPA1tgxYwC5Z2aM7SN
- BoxbShOxFMEU6413/g9lLmcvtty+mkzdE4TfuaJhp5Vf5dci+6DxHqHY1ZDhxQp9gT+2
- 27rpEXvXeIxLQSH1qS2G3F2XGNwvtgo0TdJbAgccf9aTkcjq8RjFFo8RDDdrzlS4dd2i
- c2QrxOaNYVnpgurygBuol8a8/+hC3me+VvUDIai9ZH7/Rc/6NBGcrJo0NTMsMr77gjuR
- kXwfiYpPiEgctZTkAtuXCeQdpIDaIs4RlnehwAnc2hAwQHc53VOToEIbcANoCfviq1Jc
- 1f/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXW05sPwQhE99IOXjT3AO2lVayBOyP/q3EGqNEeQF4k0XJTcXnVp+eMBdfUph5FV6MrFVRQ0j2DIg==@nongnu.org
-X-Gm-Message-State: AOJu0YxaRPcuMVhOlkJes7WabmAWq1e44/Xv1Ze3oBIrLG9O2ieS8aYx
- ntxkm0vS5fi7E7XmsAh6cNe1x1WoC7H2BX4AeczIP1W4pBjKzwZ9DdFVFw==
-X-Google-Smtp-Source: AGHT+IFZILNMHRc2Hn3IeRNT4SC27kJrha7ZVbbZ5Q7cPNsvtLzshWu2OuZlVJyPO/xp4YwLnMpMzg==
-X-Received: by 2002:a05:6a00:9194:b0:717:8dd1:c309 with SMTP id
- d2e1a72fcca58-718d5e1d033mr2413268b3a.9.1725625555302; 
- Fri, 06 Sep 2024 05:25:55 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7d50f75678bsm2066515a12.22.2024.09.06.05.25.54
+ d=1e100.net; s=20230601; t=1725625821; x=1726230621;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cYUuhUoOFprz5gXEjqcpnsQ4XnXl828/b8BDAMd70/c=;
+ b=dKyANYZrt/KTRcJrb2hSPeGS+gULyR4IVxwdMfCN51wjVXbiD9wXqBYKZxYZBmYri0
+ is4BkbKnseBXvxWoMcAYvSMqzUEskUwBeHojVgRVlfEUxXN8eNxZEek05L/jmqk781FF
+ vPs0k1PRmHalxrnulqdJ27dWqiSvhjGor7QLgf4ipM7cTl1bdcPjeyp/xlUS7fHtMUEp
+ fE5ao8TTp1kZBxH5823EAIDr0JnwTdPL8eJ7sUz141WMrDJG+kwEvRXck8bmku5o1X9W
+ 4NdBwSZoZBgJ79ei/l12vcZ0ph4aetZccvs8vtlZ+fG40yZNIWIgEMru8oTOW+NZJllH
+ 8EYw==
+X-Gm-Message-State: AOJu0YxM0oFbju8AmDSi058rTfc5ERMa2KUIuCSeALk8o0ATB15J5eKN
+ x09CSZzjjgc7GTQnEl2o1kFPfgAHgaLpl7MpnpVkQf2sX9NBNJvf5oN4UkV/evgNF9DvWiyDUCb
+ mletNfZaXOamAhw6Kwt5sd1DPoWswRbdPHI1qfYMS8q/dcTPR20ag
+X-Received: by 2002:a05:6830:2c0b:b0:710:cce7:5bbd with SMTP id
+ 46e09a7af769-710cce75ee5mr1768497a34.0.1725625820637; 
+ Fri, 06 Sep 2024 05:30:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFLeys1HL4MJZpomj+S749SEpU+sAFPYtae3Yu5aiTrGFQFaAmM1F3xm2flB4ItUIxYaaTPfg==
+X-Received: by 2002:a05:6830:2c0b:b0:710:cce7:5bbd with SMTP id
+ 46e09a7af769-710cce75ee5mr1768473a34.0.1725625820274; 
+ Fri, 06 Sep 2024 05:30:20 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c5202de5b8sm16085986d6.69.2024.09.06.05.30.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 05:25:54 -0700 (PDT)
-From: Guenter Roeck <linux@roeck-us.net>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, BALATON Zoltan <balaton@eik.bme.hu>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Guenter Roeck <linux@roeck-us.net>
-Subject: [RFC PATCH 5/8] usb/uhci: Add support for usb-uhci-sysbus
-Date: Fri,  6 Sep 2024 05:25:39 -0700
-Message-ID: <20240906122542.3808997-6-linux@roeck-us.net>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240906122542.3808997-1-linux@roeck-us.net>
-References: <20240906122542.3808997-1-linux@roeck-us.net>
+ Fri, 06 Sep 2024 05:30:19 -0700 (PDT)
+Date: Fri, 6 Sep 2024 08:30:18 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Zhiyi Guo <zhguo@redhat.com>
+Subject: Re: [PATCH v2 1/4] KVM: Dynamic sized kvm memslots array
+Message-ID: <Ztr12p5CR9C6a2y3@x1n>
+References: <20240904223510.3519358-1-peterx@redhat.com>
+ <20240904223510.3519358-2-peterx@redhat.com>
+ <CAC2qdxCW=ddmK1TLC4Agh4cGnMV60BKNpN_Nrrz-KuPbDfh-ew@mail.gmail.com>
+ <ZtnVfXataavOoQp0@x1n>
+ <CAC2qdxDDzmt-v4WL6HxUQDL=Dt-X2qmaVEp4FTFSKGABLfUG=Q@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+In-Reply-To: <CAC2qdxDDzmt-v4WL6HxUQDL=Dt-X2qmaVEp4FTFSKGABLfUG=Q@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,192 +108,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
----
- hw/arm/Kconfig           |   1 +
- hw/usb/Kconfig           |   4 ++
- hw/usb/hcd-uhci-sysbus.c | 100 +++++++++++++++++++++++++++++++++++++++
- hw/usb/hcd-uhci-sysbus.h |  23 +++++++++
- hw/usb/meson.build       |   1 +
- 5 files changed, 129 insertions(+)
- create mode 100644 hw/usb/hcd-uhci-sysbus.c
- create mode 100644 hw/usb/hcd-uhci-sysbus.h
+On Fri, Sep 06, 2024 at 12:54:37PM +0200, Juraj Marcin wrote:
+> Hi Peter,
+> 
+> On Thu, Sep 5, 2024 at 6:00 PM Peter Xu <peterx@redhat.com> wrote:
+> >
+> > On Thu, Sep 05, 2024 at 05:32:46PM +0200, Juraj Marcin wrote:
+> > > Hi Peter,
+> >
+> > Hi, Juraj,
+> >
+> > [...]
+> >
+> > > >  unsigned int kvm_get_max_memslots(void)
+> > > >  {
+> > > >      KVMState *s = KVM_STATE(current_accel());
+> > > > @@ -193,15 +247,20 @@ unsigned int kvm_get_free_memslots(void)
+> > > >  /* Called with KVMMemoryListener.slots_lock held */
+> > > >  static KVMSlot *kvm_get_free_slot(KVMMemoryListener *kml)
+> > > >  {
+> > > > -    KVMState *s = kvm_state;
+> > > >      int i;
+> > > >
+> > > > -    for (i = 0; i < s->nr_slots; i++) {
+> > > > +retry:
+> > > > +    for (i = 0; i < kml->nr_slots_allocated; i++) {
+> > > >          if (kml->slots[i].memory_size == 0) {
+> > > >              return &kml->slots[i];
+> > > >          }
+> > > >      }
+> > > >
+> > > > +    /* If no free slots, try to grow first by doubling */
+> > > > +    if (kvm_slots_double(kml)) {
+> > > > +        goto retry;
+> > >
+> > > At this point we know all previously allocated slots were used and
+> > > there should be a free slot just after the last used slot (at the
+> > > start of the region zeroed in the grow function). Wouldn't it be
+> > > faster to return it here right away, instead of iterating through
+> > > slots that should still be used again?
+> >
+> > Good question.
+> >
+> > One trivial concern is we'll then have assumption on how kvm_slots_double()
+> > behaves, e.g., it must not move anything around inside, and we need to know
+> 
+> > that it touches nr_slots_allocated so we need to cache it.  The outcome
+> > looks like this:
+> >
+> > ===8<===
+> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> > index 020fd16ab8..7429fe87a8 100644
+> > --- a/accel/kvm/kvm-all.c
+> > +++ b/accel/kvm/kvm-all.c
+> > @@ -249,9 +249,9 @@ unsigned int kvm_get_free_memslots(void)
+> >  /* Called with KVMMemoryListener.slots_lock held */
+> >  static KVMSlot *kvm_get_free_slot(KVMMemoryListener *kml)
+> >  {
+> > +    unsigned int n;
+> >      int i;
+> >
+> > -retry:
+> >      for (i = 0; i < kml->nr_slots_allocated; i++) {
+> >          if (kml->slots[i].memory_size == 0) {
+> >              return &kml->slots[i];
+> > @@ -259,8 +259,13 @@ retry:
+> >      }
+> >
+> >      /* If no free slots, try to grow first by doubling */
+> > +    n = kml->nr_slots_allocated;
+> >      if (kvm_slots_double(kml)) {
+> > -        goto retry;
+> > +        /*
+> > +         * If succeed, we must have n used slots, then followed by n free
+> > +         * slots.
+> > +         */
+> > +        return &kml->slots[n];
+> >      }
+> >
+> >      return NULL;
+> > ===8<===
+> >
+> > It's still good to get rid of "goto", and faster indeed.  Though I wished
+> > we don't need those assumptions, as cons.
+> >
+> > One thing to mention that I expect this is extremely slow path, where I
+> > don't expect to even be reached in major uses of QEMU, and when reached
+> > should be only once or limited few times per VM life cycle.  The re-walks
+> > here shouldn't be a perf concern IMHO, because when it's a concern we'll
+> > hit it much more frequently elsewhere... many other hotter paths around.
+> >
+> > So far it looks slightly more readable to me to keep the old way, but I'm
+> > ok either way.  What do you think?
+> 
+> I agree that it requires this assumption of not moving slots around,
+> but I think it's intuitive to assume it when it comes to
+> doubling/increasing the size of an array, realloc() and g_renew() also
+> don't shuffle existing elements.
+> 
+> In addition, there already is such an assumption. If slots were moved
+> around, pointers returned by `return &kml->slots[i];` wouldn't point
+> to the same slot structure after doubling.
+> 
+> However, I realized there's also another problem with this return
+> statement. g_renew() could have moved the whole array to a new
+> address, making all the previously returned pointers invalid. This
+> could be solved by either adding another layer of indirection, so the
+> function returns a pointer to a single slot structure that never moves
+> and the array contains pointers to these structures, or the slots need
+> to be always accessed through an up-to-date pointer to the array,
+> probably from another structure or through a getter function. With the
+> first approach, pointers in the array could shuffle, but with the
+> second one, the index of a slot must not change during the lifetime of
+> the slot, keeping the assumption correct.
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 1ad60da7aa..8b1253fae5 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -606,6 +606,7 @@ config ASPEED_SOC
-     select PMBUS
-     select MAX31785
-     select FSI_APB2OPB_ASPEED
-+    select USB_UHCI_SYSBUS
- 
- config MPS2
-     bool
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index 7d034738ce..fe5375050c 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -11,6 +11,10 @@ config USB_UHCI_PCI
-     depends on PCI
-     select USB_UHCI
- 
-+config USB_UHCI_SYSBUS
-+    bool
-+    select USB_UHCI
-+
- config USB_OHCI
-     bool
-     select USB
-diff --git a/hw/usb/hcd-uhci-sysbus.c b/hw/usb/hcd-uhci-sysbus.c
-new file mode 100644
-index 0000000000..6f2428cc15
---- /dev/null
-+++ b/hw/usb/hcd-uhci-sysbus.c
-@@ -0,0 +1,100 @@
-+/*
-+ * QEMU USB UHCI Emulation
-+ * Copyright (c) 2006 Openedhand Ltd.
-+ * Copyright (c) 2010 CodeSourcery
-+ * Copyright (c) 2024 Red Hat, Inc.
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/irq.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "qemu/timer.h"
-+#include "hw/usb.h"
-+#include "migration/vmstate.h"
-+#include "hw/sysbus.h"
-+#include "hw/qdev-dma.h"
-+#include "hw/qdev-properties.h"
-+#include "trace.h"
-+#include "hcd-uhci.h"
-+#include "hcd-uhci-sysbus.h"
-+
-+static void uhci_sysbus_reset(UHCIState *uhci)
-+{
-+    uhci_state_reset(uhci);
-+}
-+
-+static void uhci_sysbus_realize(DeviceState *dev, Error **errp)
-+{
-+    UHCISysBusState *s = SYSBUS_UHCI(dev);
-+    UHCIState *uhci = &s->uhci;
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    Error *err = NULL;
-+
-+    uhci->masterbus = s->masterbus;
-+    uhci->firstport = s->firstport;
-+    uhci->maxframes = s->maxframes;
-+    uhci->frame_bandwidth = s->frame_bandwidth;
-+    uhci->as = &address_space_memory;
-+    uhci->uhci_reset = uhci_sysbus_reset;
-+
-+    usb_uhci_init(uhci, dev, &err);
-+
-+    if (err) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+    sysbus_init_irq(sbd, &uhci->irq);
-+    sysbus_init_mmio(sbd, &uhci->mem);
-+}
-+
-+static void uhci_sysbus_reset_sysbus(DeviceState *dev)
-+{
-+    UHCISysBusState *s = SYSBUS_UHCI(dev);
-+    UHCIState *uhci = &s->uhci;
-+
-+    uhci_sysbus_reset(uhci);
-+}
-+
-+static Property uhci_sysbus_properties[] = {
-+    DEFINE_PROP_STRING("masterbus", UHCISysBusState, masterbus),
-+    DEFINE_PROP_UINT32("firstport", UHCISysBusState, firstport, 0),
-+    DEFINE_PROP_UINT32("bandwidth", UHCISysBusState, frame_bandwidth, 1280),
-+    DEFINE_PROP_UINT32("maxframes", UHCISysBusState, maxframes, 128),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void uhci_sysbus_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = uhci_sysbus_realize;
-+    set_bit(DEVICE_CATEGORY_USB, dc->categories);
-+    dc->desc = "UHCI USB Controller";
-+    device_class_set_props(dc, uhci_sysbus_properties);
-+    dc->reset = uhci_sysbus_reset_sysbus;
-+}
-+
-+static const TypeInfo uhci_sysbus_types[] = {
-+    {
-+        .name          = TYPE_SYSBUS_UHCI,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(UHCISysBusState),
-+        .class_init    = uhci_sysbus_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(uhci_sysbus_types);
-diff --git a/hw/usb/hcd-uhci-sysbus.h b/hw/usb/hcd-uhci-sysbus.h
-new file mode 100644
-index 0000000000..c491b9fc92
---- /dev/null
-+++ b/hw/usb/hcd-uhci-sysbus.h
-@@ -0,0 +1,23 @@
-+#ifndef HW_USB_HCD_UHCI_SYSBUS_H
-+#define HW_USB_HCD_UHCI_SYSBUS_H
-+
-+#include "hcd-uhci.h"
-+
-+#define TYPE_SYSBUS_UHCI "sysbus-uhci"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(UHCISysBusState, SYSBUS_UHCI)
-+
-+struct UHCISysBusState {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
-+    /*< public >*/
-+    UHCIState uhci;
-+
-+    char *masterbus;
-+    uint32_t firstport;
-+    uint32_t frame_bandwidth;
-+    uint32_t maxframes;
-+    uint32_t num_ports;
-+};
-+
-+#endif /* HW_USB_HCD_UHCI_SYSBUS_H */
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index a41b54ac02..b0dd4b5169 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -14,6 +14,7 @@ system_ss.add(when: 'CONFIG_USB', if_true: files(
- # usb host adapters
- system_ss.add(when: 'CONFIG_USB_UHCI', if_true: files('hcd-uhci.c'))
- system_ss.add(when: 'CONFIG_USB_UHCI_PCI', if_true: files('hcd-uhci-pci.c'))
-+system_ss.add(when: 'CONFIG_USB_UHCI_SYSBUS', if_true: files('hcd-uhci-sysbus.c'))
- system_ss.add(when: 'CONFIG_USB_OHCI', if_true: files('hcd-ohci.c'))
- system_ss.add(when: 'CONFIG_USB_OHCI_PCI', if_true: files('hcd-ohci-pci.c'))
- system_ss.add(when: 'CONFIG_USB_OHCI_SYSBUS', if_true: files('hcd-ohci-sysbus.c'))
+Note that all access to kvm slots are protected by kvm_slots_lock() which
+is currently a mutex (aka, non-RCU), and we can't cache slot yet so far
+because we don't know whether there's concurrent update.
+
+Thanks,
+
 -- 
-2.45.2
+Peter Xu
 
 
