@@ -4,78 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89620C54FC6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78002CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRQY-0008E2-Vq; Fri, 06 Sep 2024 01:22:35 -0400
+	id 1smRNt-000145-BL; Fri, 06 Sep 2024 01:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smRQN-0007dc-9A; Fri, 06 Sep 2024 01:22:24 -0400
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1smRQL-0000SJ-HJ; Fri, 06 Sep 2024 01:22:23 -0400
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-49bcfbc732eso537103137.3; 
- Thu, 05 Sep 2024 22:22:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725600140; x=1726204940; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Lb9CyT2Mz/f/J9Y1XlwA6FFJMUqTNefZ6WHuzpE919c=;
- b=Zag6cGifePbveW40s61pux+2VEF+ioWWoGHOd/fa+xxzDcq7LnHOEDB/bo7N5VevbX
- hlTjS/kmDQ9yctiWndfKs5QiI4hW1FmJ1DJnlOBovgIG2lC+nn8lNBHRjnZxshVNiI2S
- c0x5+s86VMT56uV+0PQaYpYJvh2edZ5OSy0g5potRaY3VSz7JaTlHHU0T5cIwwUE7DVN
- 9C3gf86R6BtI4q1Cw9QiBbMpimPPI1bsHHKFa3+LsEqkGOf4kbKSFVdrrxhSp/oIX9KD
- CigeZu+/C5gfWfE4oStKIfbLQ4boBigSAbDeGhFd1fPSxAGYewK7ELppCA0C3YmY3pcz
- 2sUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725600140; x=1726204940;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Lb9CyT2Mz/f/J9Y1XlwA6FFJMUqTNefZ6WHuzpE919c=;
- b=mm1Z28Zv0i/+YkoxrqBoooZ+UQa/juayjBUQgnhzbg678P5JGth2OujnDfRvOd4JbO
- vZbqBz5RFM52KjpQbR/kbUmf3zZBO/0SA4CYv2qLrmRmWYYKoSrGrblaL9azNA5u5/rJ
- 3l5yG99eu6Ymz2N1T+qIramH8bwqT5l25OdcLczKnRojGJCqMerkCd9453H8ihF95xNo
- 03dR8mFvgym9/QzPM9wddJNEj62jQR/E/owdFZUd4LNEC9VWXPqMEU46G2NcCsOiI3Ir
- /boWJpv8A9NVStfIUhcizuJqfxeOgllUgtOHw3uP+0oDSUsAwiiQpv6EF/HrPGjjl9V4
- fqZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXaSBKsSGZPkCJNG/DWGvDT1vjLSWJGwKI5zJ9cLIK2buiJy1FzpJX1ato31jkdhp1++1X+0rdNn/+n@nongnu.org
-X-Gm-Message-State: AOJu0Yz3gZTFJL+SfT+a93kKbYnJSY1s5i+b0VZpkegXP6eR76K/i55T
- 0E1JhwTdrhnt8jDJmYBhjdYrqHaNeP5hqa2HBwBNmguBMmjxTmzvcF6hqeebrw988eAw8DNGeMT
- UhfmSaggmG0S3pIQtx2SQ7WjhCRE=
-X-Google-Smtp-Source: AGHT+IGK4te7aGaVonw84FO7O/F3aH8alWcJ86rOgHcUYmuj6zaXVrowSpLrqySHMDCat1t7Se+cgXeU+Dtz7UlWiE0=
-X-Received: by 2002:a05:6102:2ad5:b0:498:e517:70dd with SMTP id
- ada2fe7eead31-49bde1a0100mr1583951137.12.1725600140047; Thu, 05 Sep 2024
- 22:22:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1smRNi-0007r4-Jm; Fri, 06 Sep 2024 01:19:38 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1smRNg-0008I5-9h; Fri, 06 Sep 2024 01:19:38 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2370B8C134;
+ Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id C5369133379;
+ Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
+Received: (nullmailer pid 10480 invoked by uid 1000);
+ Fri, 06 Sep 2024 05:16:33 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 31/40] nbd/server: Plumb in new args to
+ nbd_client_add()
+Date: Fri,  6 Sep 2024 08:16:19 +0300
+Message-Id: <20240906051633.10288-31-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
+References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 MIME-Version: 1.0
-References: <20240903201633.93182-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240903201633.93182-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 6 Sep 2024 15:21:54 +1000
-Message-ID: <CAKmqyKNeFdp0ruZ7GZK-+T9RZD=zY67HDzsC=x-FrLRaiYwycA@mail.gmail.com>
-Subject: Re: [PATCH v7 00/12] riscv: QEMU RISC-V IOMMU Support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,109 +65,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 4, 2024 at 6:17=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> In this new version the only significant code change was made in patch
-> 3, where we're no longer modifying the host address with the translated
-> address. The remaining of the changes consist in adding more in-code
-> docs (a.k.a comments) on the design choices made in the emulation.
->
-> The docs were also changed to mention that, to test this emulation,
-> we're using the following kernel:
->
-> https://github.com/ventanamicro/linux/tree/dev-upstream
->
-> it is based on the latest kernel support posted by Tomasz with
-> additional features like VFIO passthrough and irqbypass. Users can use
-> this kernel for testing, if they want, until the kernel upstream support
-> is more feature completed. At that point we'll remove this Ventana Micro
-> github repo from the docs and point to the upstream kernel.
->
-> Patches based on alistair/riscv-to-apply.next.
->
-> All patches reviewed/acked.
->
-> Changes from v6:
-> - patch 2:
->   - align RISCV_IOMMU_REG_ICVEC macro value 0x02F8
-> - patch 3:
->   - do not modify the host address with the translated (guest) address in
->     riscv_iommu_msi_write(), RISCV_IOMMU_MSI_PTE_M_BASIC case
->   - added a comment explaining the need for the IOVA =3D=3D GPA check
-> - patch 8:
->   - added a comment explaining the design decision to not cache identity-=
-mapped
->     translations in riscv_iommu_translate()
-> - patch 12:
->   - added extra info about how the IOMMU emulation is being tested and
->     which kernel branch users can try it out
-> - v6 link: https://lore.kernel.org/qemu-riscv/20240801154334.1009852-1-db=
-arboza@ventanamicro.com/
->
->
-> Daniel Henrique Barboza (4):
->   pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU device
->   test/qtest: add riscv-iommu-pci tests
->   qtest/riscv-iommu-test: add init queues test
->   docs/specs: add riscv-iommu
->
-> Tomasz Jeznach (8):
->   exec/memtxattr: add process identifier to the transaction attributes
->   hw/riscv: add riscv-iommu-bits.h
->   hw/riscv: add RISC-V IOMMU base emulation
->   hw/riscv: add riscv-iommu-pci reference device
->   hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
->   hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
->   hw/riscv/riscv-iommu: add ATS support
->   hw/riscv/riscv-iommu: add DBG support
+From: Eric Blake <eblake@redhat.com>
 
-Thanks!
+Upcoming patches to fix a CVE need to track an opaque pointer passed
+in by the owner of a client object, as well as request for a time
+limit on how fast negotiation must complete.  Prepare for that by
+changing the signature of nbd_client_new() and adding an accessor to
+get at the opaque pointer, although for now the two servers
+(qemu-nbd.c and blockdev-nbd.c) do not change behavior even though
+they pass in a new default timeout value.
 
-Applied to riscv-to-apply.next
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20240807174943.771624-11-eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[eblake: s/LIMIT/MAX_SECS/ as suggested by Dan]
+Signed-off-by: Eric Blake <eblake@redhat.com>
+(cherry picked from commit fb1c2aaa981e0a2fa6362c9985f1296b74f055ac)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Alistair
+diff --git a/blockdev-nbd.c b/blockdev-nbd.c
+index 012256bb02..bf02ddc1e0 100644
+--- a/blockdev-nbd.c
++++ b/blockdev-nbd.c
+@@ -64,8 +64,10 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+     nbd_update_server_watch(nbd_server);
+ 
+     qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
+-    nbd_client_new(cioc, nbd_server->tlscreds, nbd_server->tlsauthz,
+-                   nbd_blockdev_client_closed);
++    /* TODO - expose handshake timeout as QMP option */
++    nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
++                   nbd_server->tlscreds, nbd_server->tlsauthz,
++                   nbd_blockdev_client_closed, NULL);
+ }
+ 
+ static void nbd_update_server_watch(NBDServerData *s)
+diff --git a/include/block/nbd.h b/include/block/nbd.h
+index 4ede3b2bd0..3392a5c319 100644
+--- a/include/block/nbd.h
++++ b/include/block/nbd.h
+@@ -27,6 +27,12 @@
+ 
+ extern const BlockExportDriver blk_exp_nbd;
+ 
++/*
++ * NBD_DEFAULT_HANDSHAKE_MAX_SECS: Number of seconds in which client must
++ * succeed at NBD_OPT_GO before being forcefully dropped as too slow.
++ */
++#define NBD_DEFAULT_HANDSHAKE_MAX_SECS 10
++
+ /* Handshake phase structs - this struct is passed on the wire */
+ 
+ struct NBDOption {
+@@ -338,9 +344,12 @@ AioContext *nbd_export_aio_context(NBDExport *exp);
+ NBDExport *nbd_export_find(const char *name);
+ 
+ void nbd_client_new(QIOChannelSocket *sioc,
++                    uint32_t handshake_max_secs,
+                     QCryptoTLSCreds *tlscreds,
+                     const char *tlsauthz,
+-                    void (*close_fn)(NBDClient *, bool));
++                    void (*close_fn)(NBDClient *, bool),
++                    void *owner);
++void *nbd_client_owner(NBDClient *client);
+ void nbd_client_get(NBDClient *client);
+ void nbd_client_put(NBDClient *client);
+ 
+diff --git a/nbd/server.c b/nbd/server.c
+index 74edb2815b..431e543b47 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -120,10 +120,12 @@ typedef struct NBDExportMetaContexts {
+ struct NBDClient {
+     int refcount;
+     void (*close_fn)(NBDClient *client, bool negotiated);
++    void *owner;
+ 
+     NBDExport *exp;
+     QCryptoTLSCreds *tlscreds;
+     char *tlsauthz;
++    uint32_t handshake_max_secs;
+     QIOChannelSocket *sioc; /* The underlying data channel */
+     QIOChannel *ioc; /* The current I/O channel which may differ (eg TLS) */
+ 
+@@ -2755,6 +2757,7 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
+ 
+     qemu_co_mutex_init(&client->send_lock);
+ 
++    /* TODO - utilize client->handshake_max_secs */
+     if (nbd_negotiate(client, &local_err)) {
+         if (local_err) {
+             error_report_err(local_err);
+@@ -2767,14 +2770,17 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
+ }
+ 
+ /*
+- * Create a new client listener using the given channel @sioc.
++ * Create a new client listener using the given channel @sioc and @owner.
+  * Begin servicing it in a coroutine.  When the connection closes, call
+- * @close_fn with an indication of whether the client completed negotiation.
++ * @close_fn with an indication of whether the client completed negotiation
++ * within @handshake_max_secs seconds (0 for unbounded).
+  */
+ void nbd_client_new(QIOChannelSocket *sioc,
++                    uint32_t handshake_max_secs,
+                     QCryptoTLSCreds *tlscreds,
+                     const char *tlsauthz,
+-                    void (*close_fn)(NBDClient *, bool))
++                    void (*close_fn)(NBDClient *, bool),
++                    void *owner)
+ {
+     NBDClient *client;
+     Coroutine *co;
+@@ -2786,12 +2792,20 @@ void nbd_client_new(QIOChannelSocket *sioc,
+         object_ref(OBJECT(client->tlscreds));
+     }
+     client->tlsauthz = g_strdup(tlsauthz);
++    client->handshake_max_secs = handshake_max_secs;
+     client->sioc = sioc;
+     object_ref(OBJECT(client->sioc));
+     client->ioc = QIO_CHANNEL(sioc);
+     object_ref(OBJECT(client->ioc));
+     client->close_fn = close_fn;
++    client->owner = owner;
+ 
+     co = qemu_coroutine_create(nbd_co_client_start, client);
+     qemu_coroutine_enter(co);
+ }
++
++void *
++nbd_client_owner(NBDClient *client)
++{
++    return client->owner;
++}
+diff --git a/qemu-nbd.c b/qemu-nbd.c
+index f71f5125d8..16b220bdad 100644
+--- a/qemu-nbd.c
++++ b/qemu-nbd.c
+@@ -369,7 +369,9 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+ 
+     nb_fds++;
+     nbd_update_server_watch();
+-    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed);
++    /* TODO - expose handshake timeout as command line option */
++    nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
++                   tlscreds, tlsauthz, nbd_client_closed, NULL);
+ }
+ 
+ static void nbd_update_server_watch(void)
+-- 
+2.39.2
 
->
->  docs/specs/index.rst             |    1 +
->  docs/specs/pci-ids.rst           |    2 +
->  docs/specs/riscv-iommu.rst       |   90 ++
->  docs/system/riscv/virt.rst       |   13 +
->  hw/riscv/Kconfig                 |    4 +
->  hw/riscv/meson.build             |    1 +
->  hw/riscv/riscv-iommu-bits.h      |  421 ++++++
->  hw/riscv/riscv-iommu-pci.c       |  202 +++
->  hw/riscv/riscv-iommu.c           | 2431 ++++++++++++++++++++++++++++++
->  hw/riscv/riscv-iommu.h           |  149 ++
->  hw/riscv/trace-events            |   17 +
->  hw/riscv/trace.h                 |    1 +
->  hw/riscv/virt.c                  |   33 +-
->  include/exec/memattrs.h          |    5 +
->  include/hw/pci/pci.h             |    1 +
->  include/hw/riscv/iommu.h         |   36 +
->  meson.build                      |    1 +
->  tests/qtest/libqos/meson.build   |    4 +
->  tests/qtest/libqos/riscv-iommu.c |   76 +
->  tests/qtest/libqos/riscv-iommu.h |  101 ++
->  tests/qtest/meson.build          |    1 +
->  tests/qtest/riscv-iommu-test.c   |  220 +++
->  22 files changed, 3809 insertions(+), 1 deletion(-)
->  create mode 100644 docs/specs/riscv-iommu.rst
->  create mode 100644 hw/riscv/riscv-iommu-bits.h
->  create mode 100644 hw/riscv/riscv-iommu-pci.c
->  create mode 100644 hw/riscv/riscv-iommu.c
->  create mode 100644 hw/riscv/riscv-iommu.h
->  create mode 100644 hw/riscv/trace-events
->  create mode 100644 hw/riscv/trace.h
->  create mode 100644 include/hw/riscv/iommu.h
->  create mode 100644 tests/qtest/libqos/riscv-iommu.c
->  create mode 100644 tests/qtest/libqos/riscv-iommu.h
->  create mode 100644 tests/qtest/riscv-iommu-test.c
->
-> --
-> 2.45.2
->
->
 
