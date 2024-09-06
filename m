@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DAFCD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE1BCD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:19:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRLs-0005V5-Lo; Fri, 06 Sep 2024 01:17:45 -0400
+	id 1smRLu-0005tA-BJ; Fri, 06 Sep 2024 01:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRLp-0005Nt-4N; Fri, 06 Sep 2024 01:17:41 -0400
+ id 1smRL6-0003va-8W; Fri, 06 Sep 2024 01:17:01 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRLm-0007wr-U9; Fri, 06 Sep 2024 01:17:40 -0400
+ id 1smRL3-0007l0-OS; Fri, 06 Sep 2024 01:16:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1EF8E8C122;
- Fri,  6 Sep 2024 08:15:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 61F638C118;
+ Fri,  6 Sep 2024 08:15:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B7447133368;
+ by tsrv.corpit.ru (Postfix) with SMTP id 1260B13335E;
  Fri,  6 Sep 2024 08:16:34 +0300 (MSK)
-Received: (nullmailer pid 10427 invoked by uid 1000);
+Received: (nullmailer pid 10396 invoked by uid 1000);
  Fri, 06 Sep 2024 05:16:33 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 14/40] hw/misc/bcm2835_property: Fix handling of
- FRAMEBUFFER_SET_PALETTE
-Date: Fri,  6 Sep 2024 08:16:02 +0300
-Message-Id: <20240906051633.10288-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 04/40] hw/nvme: fix memory leak in nvme_dsm
+Date: Fri,  6 Sep 2024 08:15:52 +0300
+Message-Id: <20240906051633.10288-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,89 +61,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Zheyu Ma <zheyuma97@gmail.com>
 
-The documentation of the "Set palette" mailbox property at
-https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#set-palette
-says it has the form:
+The allocated memory to hold LBA ranges leaks in the nvme_dsm function. This
+happens because the allocated memory for iocb->range is not freed in all
+error handling paths.
 
-    Length: 24..1032
-    Value:
-        u32: offset: first palette index to set (0-255)
-        u32: length: number of palette entries to set (1-256)
-        u32...: RGBA palette values (offset to offset+length-1)
+Fix this by adding a free to ensure that the allocated memory is properly freed.
 
-We get this wrong in a couple of ways:
- * we aren't checking the offset and length are in range, so the guest
-   can make us spin for a long time by providing a large length
- * the bounds check on our loop is wrong: we should iterate through
-   'length' palette entries, not 'length - offset' entries
+ASAN log:
+==3075137==ERROR: LeakSanitizer: detected memory leaks
 
-Fix the loop to implement the bounds checks and get the loop
-condition right. In the process, make the variables local to
-this switch case, rather than function-global, so it's clearer
-what type they are when reading the code.
+Direct leak of 480 byte(s) in 6 object(s) allocated from:
+    #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
+    #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
+    #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
+    #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
+    #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
+    #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240723131029.1159908-2-peter.maydell@linaro.org
-(cherry picked from commit 0892fffc2abaadfb5d8b79bb0250ae1794862560)
+Fixes: d7d1474fd85d ("hw/nvme: reimplement dsm to allow cancellation")
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit c510fe78f1b7c966524489d6ba752107423b20c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix due to lack of
- v9.0.0-1812-g5d5f1b60916a "hw/misc: Implement mailbox properties for customer OTP and device specific private keys"
- v8.0.0-1924-g251918266666 "hw/misc/bcm2835_property: Use 'raspberrypi-fw-defs.h' definitions"
- also remove now-unused local `n' variable which gets removed in the next change in this file,
- v9.0.0-2720-g32f1c201eedf "hw/misc/bcm2835_property: Avoid overflow in OTP access properties")
 
-diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
-index de056ea2df..c7834d3fc7 100644
---- a/hw/misc/bcm2835_property.c
-+++ b/hw/misc/bcm2835_property.c
-@@ -26,8 +26,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-     uint32_t tot_len;
-     size_t resplen;
-     uint32_t tmp;
--    int n;
--    uint32_t offset, length, color;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 027d67f10b..ed56ad40b3 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -2465,6 +2465,7 @@ next:
+ done:
+     iocb->aiocb = NULL;
+     iocb->common.cb(iocb->common.opaque, iocb->ret);
++    g_free(iocb->range);
+     qemu_aio_unref(iocb);
+ }
  
-     /*
-      * Copy the current state of the framebuffer config; we will update
-@@ -258,18 +256,25 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-             resplen = 16;
-             break;
-         case 0x0004800b: /* Set palette */
--            offset = ldl_le_phys(&s->dma_as, value + 12);
--            length = ldl_le_phys(&s->dma_as, value + 16);
--            n = 0;
--            while (n < length - offset) {
--                color = ldl_le_phys(&s->dma_as, value + 20 + (n << 2));
--                stl_le_phys(&s->dma_as,
--                            s->fbdev->vcram_base + ((offset + n) << 2), color);
--                n++;
-+        {
-+            uint32_t offset = ldl_le_phys(&s->dma_as, value + 12);
-+            uint32_t length = ldl_le_phys(&s->dma_as, value + 16);
-+            int resp;
-+
-+            if (offset > 255 || length < 1 || length > 256) {
-+                resp = 1; /* invalid request */
-+            } else {
-+                for (uint32_t e = 0; e < length; e++) {
-+                    uint32_t color = ldl_le_phys(&s->dma_as, value + 20 + (e << 2));
-+                    stl_le_phys(&s->dma_as,
-+                                s->fbdev->vcram_base + ((offset + e) << 2), color);
-+                }
-+                resp = 0;
-             }
--            stl_le_phys(&s->dma_as, value + 12, 0);
-+            stl_le_phys(&s->dma_as, value + 12, resp);
-             resplen = 4;
-             break;
-+        }
-         case 0x00040013: /* Get number of displays */
-             stl_le_phys(&s->dma_as, value + 12, 1);
-             resplen = 4;
 -- 
 2.39.2
 
