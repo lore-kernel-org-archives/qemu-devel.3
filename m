@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC82CE7AFD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 09:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9520DCE7AFD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 09:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smVeR-0003co-Si; Fri, 06 Sep 2024 05:53:11 -0400
+	id 1smViq-0000oL-M5; Fri, 06 Sep 2024 05:57:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smVeP-0003bW-Pl
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 05:53:09 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smVeN-0007xF-Iy
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 05:53:09 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2f50966c478so20382341fa.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 02:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725616385; x=1726221185; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=45UsHCmEIrmow2+eba/n9N2V/RM7GtjWHVVzWNQ9rAg=;
- b=DDJw9CpwATYeImjKuxIpm3T5ltfkpfU1gfQfGkYRpoghXwLjsb1JUjU8sNXi39FdZ0
- lCUDDdBxNPpIi3HMnpsnR2PAOa9coLTIOO+HIQUkyMoRHE5d0saR7I5YaN7EVtewmz9A
- nh3G+hBktnkiJXly6vn3F2Bek3SeEBN2I0gar7IX7mwDE+I8UH7mIJ3oO/9X7HRL+Ch4
- LJNZxWN5Ua53eMRpJ4xhJwAeawSmDjyc5WFKjmP+aayroKZ3BdpWszCSA+8d6uOnMCC3
- 3rVBzATgp+35njZMrKQ5tMHbr1nS1yE5DflgSpR9ov10hAMPRaTxUnDpauXPnN63qfEI
- emaA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1smVip-0000np-Hd
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 05:57:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1smVio-0008NZ-6V
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 05:57:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725616660;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eTqqVe7zIbnGoQTlV5mLCL+KZjIwAcPxV+dUBkbDwO8=;
+ b=ES5bVSvbLFNhi+/Fad84coB5WPruVidT08EMSgHyrocudWaQWsRD4x3OloJ9vro58pXabI
+ Kfv0tOjylVSim+T1paue2Vndgqf7TxwvCSwRy6YreacOHaMVGKKDBYzsgd5JFcJN4166ZX
+ pAqMQ7wP3q7B9DoN6uh47x0YsTngAYg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-384-0FJB8NhFOoKVu_2yq92ymA-1; Fri, 06 Sep 2024 05:57:38 -0400
+X-MC-Unique: 0FJB8NhFOoKVu_2yq92ymA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42c80412dc1so14670445e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 02:57:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725616385; x=1726221185;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=45UsHCmEIrmow2+eba/n9N2V/RM7GtjWHVVzWNQ9rAg=;
- b=GOGwpV4god5tjy8k1Id33Yz25zBhFFGVkpWSmgh7qQPM/9fzPq2C8DwgYwMds9xbu+
- dtDI5NSBPyrtUf00NdbH4rLvtNOmNj2ea/h6mzpeO0svTHfL4FzqTooWXFuf6JvsEvAz
- tADDE93zG2kpSh/kABQqhwm7mMMzVfa6hd+EafnPXp/edVZAaIlTz2j2S1T7KJK0FI4A
- xO9Ynzqf++IdpwcHiqvfQjQat41hGwq7S7X8INu3SKrZpJh6vAnSQmc4bAxtuk7Ose4J
- pa44EyARTNuTZiLkOTsx8xOcjerYxYOf5XlVny/9nzM+wK21wiPl1fiyHCIqH/ML2w1/
- JnVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9I1zktgTt1XOHnmpYLy0hx/nqZ1bEdA6wY1v9x6UWpe1nPT4LyORiK3P96JdE7rYVOX5lUZxOaXGU@nongnu.org
-X-Gm-Message-State: AOJu0YyKDzbM0MBoe3mNbrqFOijTE+EFAgQtrTy9EA5MM+vS6cVQpKoY
- 1gClJF4zvXUo5LrkA92v84OqpnEKf/tTzT7I+Nh8X31iUjqdCZLz71C2cFDjNrLfwyRpw6SORn9
- IUU2eHzUv/ucm7TLgp2SoHbIWjXwOs1+FLyv7a6rcXS4Kn7eZ
-X-Google-Smtp-Source: AGHT+IHym2a37pPFDcQ5ggqTKVvXDkIJ0/uAHq/L6UYE7IK6jow51UQPqPGyhUey6gTyJaMSKKkfgDyyLCi1o4QQHP8=
-X-Received: by 2002:a05:651c:1504:b0:2f7:52c5:b33 with SMTP id
- 38308e7fff4ca-2f752c50c86mr10968091fa.39.1725616385011; Fri, 06 Sep 2024
- 02:53:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725616657; x=1726221457;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eTqqVe7zIbnGoQTlV5mLCL+KZjIwAcPxV+dUBkbDwO8=;
+ b=VzyAYwnwFyhVFlnYhlOqQ76pH04duRbIfTTiGG8CYOXdb9c/yRj35DP4KJtrFG9/5F
+ /1A2qMS+vAot+Y0TKu8LVyjlo2L3AXCzAn6/01bfy9NAnY2LA5pdZHYiiMuwFnWbSNsz
+ z8OPVTvqbCoHiXfRB1FwoDJ3sZipUjKCHmLxurg8pHE7Ke0B6NfnHQ83M0NDdyt0smlT
+ 6fzJ0RmJTWWeTHGv/Z6reFrj8GGNLZ/CewQPfaWWQkD2zU/wauJlUz2AfAWYq8MYsJgT
+ SqdqPejkkTSFMimuQvZ/eVDxLb5Ksn/rDTPCyPHITmV/z3RQ0apP0ncLiI0YaLNs0EeA
+ PmUA==
+X-Gm-Message-State: AOJu0YztPrLxsbOd+Be46wt823lpABuIzLUKGGQ9lIEas9t0xHr9OqMb
+ S/8w0D5X+PkVgvl0uKcRW0jakS60rvazDrV0p/kCxCz9xHxI2d/0B0St/vKNSbNkYLnInc49NDR
+ 2RQVLPPmcGmJiTezftR3+ZnIO+ebi4Fo+HmBR+8aBYecX06EPv3YjR/pXONW/s2c=
+X-Received: by 2002:a05:600c:4f82:b0:426:5b3a:96c with SMTP id
+ 5b1f17b1804b1-42c9f9d66famr13839775e9.28.1725616657295; 
+ Fri, 06 Sep 2024 02:57:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoaS4bNmOCN92Os95z0wuzD7qfiP9VNnx+svGprP+CRLZcJe3c97BsKVzde4sygK9EW6Yj3A==
+X-Received: by 2002:a05:600c:4f82:b0:426:5b3a:96c with SMTP id
+ 5b1f17b1804b1-42c9f9d66famr13839555e9.28.1725616656685; 
+ Fri, 06 Sep 2024 02:57:36 -0700 (PDT)
+Received: from redhat.com ([155.133.17.165]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42c9a5e82dasm49145045e9.0.2024.09.06.02.57.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Sep 2024 02:57:36 -0700 (PDT)
+Date: Fri, 6 Sep 2024 05:57:23 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Andrew Melnychenko <andrew@daynix.com>
+Subject: Re: [PATCH v2 0/7] Report fatal errors from failure with pre-opened
+ eBPF RSS FDs
+Message-ID: <20240906055711-mutt-send-email-mst@kernel.org>
+References: <20240905181330.3657590-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20240905210328.25393-1-farosas@suse.de>
- <95d9509b-d9a5-467a-860a-91bcd4baae1f@redhat.com>
- <Ztq5068xW640qeuD@redhat.com>
-In-Reply-To: <Ztq5068xW640qeuD@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Sep 2024 10:52:53 +0100
-Message-ID: <CAFEAcA-naWfN5sLSJ3uS6VjC3HWvyaGqAk0=B_iqTYgtJOH+ow@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] qtest: Log verbosity changes
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240905181330.3657590-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,93 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Sept 2024 at 09:14, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Fri, Sep 06, 2024 at 08:16:31AM +0200, Thomas Huth wrote:
-> > On 05/09/2024 23.03, Fabiano Rosas wrote:
-> > > Hi,
-> > >
-> > > This series silences QEMU stderr unless the QTEST_LOG variable is set
-> > > and silences -qtest-log unless both QTEST_LOG and gtest's --verbose
-> > > flag is passed.
-> > >
-> > > This was motivated by Peter Maydell's ask to suppress deprecation
-> > > warn_report messages from the migration-tests and by my own
-> > > frustration over noisy output from qtest.
+On Thu, Sep 05, 2024 at 07:13:23PM +0100, Daniel P. Berrangé wrote:
+> The virtio-net code for eBPF RSS is still ignoring errors when
+> failing to load the eBPF RSS program passed in by the mgmt app
+> via pre-opened FDs.
+> 
+> This series re-factors the eBPF common code so that it actually
+> reports using "Error" objects. Then it makes virtio-net treat
+> a failure to load pre-opened FDs as a fatal problem. When doing
+> speculative opening of eBPF FDs, QEMU merely prints a warning,
+> and allows the software fallback to continue.
+> 
+> Trace event coverage is significantly expanded to make this all
+> much more debuggable too.
 
-This isn't what I want, though -- what I want is that a
-qtest run should not print "warning:" messages for things
-that we expect to happen when we run that test. I *do* want
-warnings for things that we do not expect to happen when
-we run the test.
 
-> > Not sure whether we want to ignore stderr by default... we might also m=
-iss
-> > important warnings or error messages that way...?
->
-> I would prefer if our tests were quiet by default, and just printed
-> clear pass/fail notices without extraneous fluff. Having an opt-in
-> to see full messages from stderr feels good enough for debugging cases
-> where you need more info from a particular test.
+looks good
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-I find it is not uncommon that something fails and
-you don't necessarily have the option to re-run it with
-the "give me the error message this time" flag turn on.
-CI is just the most obvious example; other kinds of
-intermittent failure can be similar.
+Jason's tree.
 
-> Probably we should set verbose mode in CI though, since it is tedious
-> to re-run CI on failure to gather more info
->
-> > If you just want to suppress one certain warning, I think it's maybe be=
-st to
-> > fence it with "if (!qtest_enabled()) { ... }" on the QEMU side - at lea=
-st
-> > that's what we did in similar cases a couple of times, IIRC.
->
-> We're got a surprisingly large mumber of if(qtest_enabled()) conditions
-> in the code. I can't help feeling this is a bad idea in the long term,
-> as its making us take different codepaths when testing from production.
+> Changed in v2:
+> 
+>  - Split 'ebpf_error' probe into multiple probes
+> 
+> Daniel P. Berrangé (7):
+>   hw/net: fix typo s/epbf/ebpf/ in virtio-net
+>   ebpf: drop redundant parameter checks in static methods
+>   ebpf: improve error trace events
+>   ebpf: add formal error reporting to all APIs
+>   hw/net: report errors from failing to use eBPF RSS FDs
+>   ebpf: improve trace event coverage to all key operations
+>   hw/net: improve tracing of eBPF RSS setup
+> 
+>  ebpf/ebpf_rss.c     | 118 ++++++++++++++++++++++++++++----------------
+>  ebpf/ebpf_rss.h     |  10 ++--
+>  ebpf/trace-events   |   8 ++-
+>  hw/net/trace-events |   8 +--
+>  hw/net/virtio-net.c |  63 +++++++++++++++--------
+>  5 files changed, 137 insertions(+), 70 deletions(-)
+> 
+> -- 
+> 2.45.2
 
-What I want from CI and from tests in general:
- * if something fails, I want all the information
- * if something unexpected happens I want the warning even
-   if the test passes (this is why I grep the logs for
-   "warning:" in the first place -- it is to catch the case
-   of "something went wrong but it didn't result in QEMU or
-   the test case exiting with a failure status")
- * if something is expected, it should be silent
-
-That means there's a class of messages where we want to warn
-the user that they're doing something that might not be what
-they intended or which is deprecated and will go away soon,
-but where we do not want to "warn" in the test logging because
-the test is deliberately setting up that oddball corner case.
-
-It might be useful to have a look at where we're using
-if (qtest_enabled()) to see if we can make some subcategories
-avoid the explicit if(), e.g. by having a warn_deprecated(...)
-and hide the "don't print if qtest" inside the function.
-
-Some categories as a starter:
- * some board models will error-and-exit if the user
-   didn't provide any guest code (eg no -kernel option),
-   like hw/m68k/an5206.c. When we're running with the
-   qtest accelerator it's fine and expected that there's
-   no guest code loaded because we'll never run any guest code
- * in some places (eg target/arm/cpu.c) we treat qtest as
-   another accelerator type, so we might say
-   if (tcg_enabled() || qtest_enabled()) to mean "not
-   hvf or kvm"
- * sometimes we print a deprecation message only if
-   not qtest, eg hw/core/numa.c or hw/core/machine.c
- * the clock related code needs to be qtest aware because
-   under qtest it's the qtest protocol that advances the
-   clock
- * sometimes we warn about possible user error if not
-   qtest, eg hw/ppc/pnv.c or target/mips/cpu.c
-
-thanks
--- PMM
 
