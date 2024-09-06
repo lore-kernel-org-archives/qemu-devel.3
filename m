@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F6ACE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83744CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSwH-0006Qy-3U; Fri, 06 Sep 2024 02:59:25 -0400
+	id 1smSvG-00078h-GP; Fri, 06 Sep 2024 02:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSwC-0005zn-1B; Fri, 06 Sep 2024 02:59:20 -0400
+ id 1smSuK-0001xx-HL; Fri, 06 Sep 2024 02:57:27 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSwA-0003mY-8z; Fri, 06 Sep 2024 02:59:19 -0400
+ id 1smSuI-0003Wv-Ef; Fri, 06 Sep 2024 02:57:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E81CC8C267;
- Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CC24E8C256;
+ Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B185C13341F;
- Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43710 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:31 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 9588513340E;
+ Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
+Received: (nullmailer pid 43596 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Yutaro Shimizu <shimizu@cyberdefense.jp>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 50/53] hw/nvme: fix leak of uninitialized memory in
- io_mgmt_recv
-Date: Fri,  6 Sep 2024 09:54:20 +0300
-Message-Id: <20240906065429.42415-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Amjad Alsharafi <amjadsharafi10@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 33/53] vvfat: Fix usage of `info.file.offset`
+Date: Fri,  6 Sep 2024 09:54:03 +0300
+Message-Id: <20240906065429.42415-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -62,31 +61,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
 
-Yutaro Shimizu from the Cyber Defense Institute discovered a bug in the
-NVMe emulation that leaks contents of an uninitialized heap buffer if
-subsystem and FDP emulation are enabled.
+The field is marked as "the offset in the file (in clusters)", but it
+was being used like this
+`cluster_size*(nums)+mapping->info.file.offset`, which is incorrect.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Yutaro Shimizu <shimizu@cyberdefense.jp>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 6a22121c4f25b181e99479f65958ecde65da1c92)
+Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <72f19a7903886dda1aa78bcae0e17702ee939262.1721470238.git.amjadsharafi10@gmail.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 21b25a0e466a5bba0a45600bb8100ab564202ed1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 1fa117fdff..ca54c250b2 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -4302,7 +4302,7 @@ static uint16_t nvme_io_mgmt_recv_ruhs(NvmeCtrl *n, NvmeRequest *req,
+diff --git a/block/vvfat.c b/block/vvfat.c
+index 19da009a5b..247b232608 100644
+--- a/block/vvfat.c
++++ b/block/vvfat.c
+@@ -1408,7 +1408,9 @@ read_cluster_directory:
  
-     nruhsd = ns->fdp.nphs * endgrp->fdp.nrg;
-     trans_len = sizeof(NvmeRuhStatus) + nruhsd * sizeof(NvmeRuhStatusDescr);
--    buf = g_malloc(trans_len);
-+    buf = g_malloc0(trans_len);
+         assert(s->current_fd);
  
-     trans_len = MIN(trans_len, len);
+-        offset=s->cluster_size*(cluster_num-s->current_mapping->begin)+s->current_mapping->info.file.offset;
++        offset = s->cluster_size *
++            ((cluster_num - s->current_mapping->begin)
++            + s->current_mapping->info.file.offset);
+         if(lseek(s->current_fd, offset, SEEK_SET)!=offset)
+             return -3;
+         s->cluster=s->cluster_buffer;
+@@ -1929,8 +1931,9 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+                         (mapping->mode & MODE_DIRECTORY) == 0) {
  
+                     /* was modified in qcow */
+-                    if (offset != mapping->info.file.offset + s->cluster_size
+-                            * (cluster_num - mapping->begin)) {
++                    if (offset != s->cluster_size
++                            * ((cluster_num - mapping->begin)
++                            + mapping->info.file.offset)) {
+                         /* offset of this cluster in file chain has changed */
+                         abort();
+                         copy_it = 1;
+@@ -2404,7 +2407,7 @@ static int commit_mappings(BDRVVVFATState* s,
+                         (mapping->end - mapping->begin);
+             } else
+                 next_mapping->info.file.offset = mapping->info.file.offset +
+-                        mapping->end - mapping->begin;
++                        (mapping->end - mapping->begin);
+ 
+             mapping = next_mapping;
+         }
 -- 
 2.39.2
 
