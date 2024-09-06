@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05ECC54FC6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:20:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A79C54FC6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRNH-0004Kf-6G; Fri, 06 Sep 2024 01:19:12 -0400
+	id 1smRNn-0008Qj-CD; Fri, 06 Sep 2024 01:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRMn-0002Nh-76; Fri, 06 Sep 2024 01:18:42 -0400
+ id 1smRNN-0005HO-W7; Fri, 06 Sep 2024 01:19:19 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRMl-0008D3-EG; Fri, 06 Sep 2024 01:18:40 -0400
+ id 1smRNM-0008I8-1C; Fri, 06 Sep 2024 01:19:17 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BECD18C12E;
- Fri,  6 Sep 2024 08:15:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 322EC8C135;
+ Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6E2A7133373;
+ by tsrv.corpit.ru (Postfix) with SMTP id D5A5E13337A;
  Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
-Received: (nullmailer pid 10461 invoked by uid 1000);
+Received: (nullmailer pid 10483 invoked by uid 1000);
  Fri, 06 Sep 2024 05:16:33 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 25/40] hw/sd/sdhci: Reset @data_count index on invalid
- ADMA transfers
-Date: Fri,  6 Sep 2024 08:16:13 +0300
-Message-Id: <20240906051633.10288-25-mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 32/40] nbd/server: CVE-2024-7409: Cap default
+ max-connections to 100
+Date: Fri,  6 Sep 2024 08:16:20 +0300
+Message-Id: <20240906051633.10288-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
@@ -66,34 +64,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Eric Blake <eblake@redhat.com>
 
-We neglected to clear the @data_count index on ADMA error,
-allowing to trigger assertion in sdhci_read_dataport() or
-sdhci_write_dataport().
+Allowing an unlimited number of clients to any web service is a recipe
+for a rudimentary denial of service attack: the client merely needs to
+open lots of sockets without closing them, until qemu no longer has
+any more fds available to allocate.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2455
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240730092138.32443-4-philmd@linaro.org>
-(cherry picked from commit ed5a159c3de48a581f46de4c8c02b4b295e6c52d)
+For qemu-nbd, we default to allowing only 1 connection unless more are
+explicitly asked for (-e or --shared); this was historically picked as
+a nice default (without an explicit -t, a non-persistent qemu-nbd goes
+away after a client disconnects, without needing any additional
+follow-up commands), and we are not going to change that interface now
+(besides, someday we want to point people towards qemu-storage-daemon
+instead of qemu-nbd).
+
+But for qemu proper, and the newer qemu-storage-daemon, the QMP
+nbd-server-start command has historically had a default of unlimited
+number of connections, in part because unlike qemu-nbd it is
+inherently persistent until nbd-server-stop.  Allowing multiple client
+sockets is particularly useful for clients that can take advantage of
+MULTI_CONN (creating parallel sockets to increase throughput),
+although known clients that do so (such as libnbd's nbdcopy) typically
+use only 8 or 16 connections (the benefits of scaling diminish once
+more sockets are competing for kernel attention).  Picking a number
+large enough for typical use cases, but not unlimited, makes it
+slightly harder for a malicious client to perform a denial of service
+merely by opening lots of connections withot progressing through the
+handshake.
+
+This change does not eliminate CVE-2024-7409 on its own, but reduces
+the chance for fd exhaustion or unlimited memory usage as an attack
+surface.  On the other hand, by itself, it makes it more obvious that
+with a finite limit, we have the problem of an unauthenticated client
+holding 100 fds opened as a way to block out a legitimate client from
+being able to connect; thus, later patches will further add timeouts
+to reject clients that are not making progress.
+
+This is an INTENTIONAL change in behavior, and will break any client
+of nbd-server-start that was not passing an explicit max-connections
+parameter, yet expects more than 100 simultaneous connections.  We are
+not aware of any such client (as stated above, most clients aware of
+MULTI_CONN get by just fine on 8 or 16 connections, and probably cope
+with later connections failing by relying on the earlier connections;
+libvirt has not yet been passing max-connections, but generally
+creates NBD servers with the intent for a single client for the sake
+of live storage migration; meanwhile, the KubeSAN project anticipates
+a large cluster sharing multiple clients [up to 8 per node, and up to
+100 nodes in a cluster], but it currently uses qemu-nbd with an
+explicit --shared=0 rather than qemu-storage-daemon with
+nbd-server-start).
+
+We considered using a deprecation period (declare that omitting
+max-parameters is deprecated, and make it mandatory in 3 releases -
+then we don't need to pick an arbitrary default); that has zero risk
+of breaking any apps that accidentally depended on more than 100
+connections, and where such breakage might not be noticed under unit
+testing but only under the larger loads of production usage.  But it
+does not close the denial-of-service hole until far into the future,
+and requires all apps to change to add the parameter even if 100 was
+good enough.  It also has a drawback that any app (like libvirt) that
+is accidentally relying on an unlimited default should seriously
+consider their own CVE now, at which point they are going to change to
+pass explicit max-connections sooner than waiting for 3 qemu releases.
+Finally, if our changed default breaks an app, that app can always
+pass in an explicit max-parameters with a larger value.
+
+It is also intentional that the HMP interface to nbd-server-start is
+not changed to expose max-connections (any client needing to fine-tune
+things should be using QMP).
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20240807174943.771624-12-eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[ericb: Expand commit message to summarize Dan's argument for why we
+break corner-case back-compat behavior without a deprecation period]
+Signed-off-by: Eric Blake <eblake@redhat.com>
+(cherry picked from commit c8a76dbd90c2f48df89b75bef74917f90a59b623)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: minor fixups in qapi/block-export.json)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index abd503d168..c4a9b5956d 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -846,6 +846,7 @@ static void sdhci_do_adma(SDHCIState *s)
-                 }
-             }
-             if (res != MEMTX_OK) {
-+                s->data_count = 0;
-                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
-                     trace_sdhci_error("Set ADMA error flag");
-                     s->errintsts |= SDHC_EIS_ADMAERR;
+diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+index cf21b5e40a..d564d8d234 100644
+--- a/block/monitor/block-hmp-cmds.c
++++ b/block/monitor/block-hmp-cmds.c
+@@ -413,7 +413,8 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
+         goto exit;
+     }
+ 
+-    nbd_server_start(addr, NULL, NULL, 0, &local_err);
++    nbd_server_start(addr, NULL, NULL, NBD_DEFAULT_MAX_CONNECTIONS,
++                     &local_err);
+     qapi_free_SocketAddress(addr);
+     if (local_err != NULL) {
+         goto exit;
+diff --git a/blockdev-nbd.c b/blockdev-nbd.c
+index bf02ddc1e0..b357ae9bf1 100644
+--- a/blockdev-nbd.c
++++ b/blockdev-nbd.c
+@@ -170,6 +170,10 @@ void nbd_server_start(SocketAddress *addr, const char *tls_creds,
+ 
+ void nbd_server_start_options(NbdServerOptions *arg, Error **errp)
+ {
++    if (!arg->has_max_connections) {
++        arg->max_connections = NBD_DEFAULT_MAX_CONNECTIONS;
++    }
++
+     nbd_server_start(arg->addr, arg->tls_creds, arg->tls_authz,
+                      arg->max_connections, errp);
+ }
+@@ -182,6 +186,10 @@ void qmp_nbd_server_start(SocketAddressLegacy *addr,
+ {
+     SocketAddress *addr_flat = socket_address_flatten(addr);
+ 
++    if (!has_max_connections) {
++        max_connections = NBD_DEFAULT_MAX_CONNECTIONS;
++    }
++
+     nbd_server_start(addr_flat, tls_creds, tls_authz, max_connections, errp);
+     qapi_free_SocketAddress(addr_flat);
+ }
+diff --git a/include/block/nbd.h b/include/block/nbd.h
+index 3392a5c319..88be104e31 100644
+--- a/include/block/nbd.h
++++ b/include/block/nbd.h
+@@ -33,6 +33,13 @@ extern const BlockExportDriver blk_exp_nbd;
+  */
+ #define NBD_DEFAULT_HANDSHAKE_MAX_SECS 10
+ 
++/*
++ * NBD_DEFAULT_MAX_CONNECTIONS: Number of client sockets to allow at
++ * once; must be large enough to allow a MULTI_CONN-aware client like
++ * nbdcopy to create its typical number of 8-16 sockets.
++ */
++#define NBD_DEFAULT_MAX_CONNECTIONS 100
++
+ /* Handshake phase structs - this struct is passed on the wire */
+ 
+ struct NBDOption {
+diff --git a/qapi/block-export.json b/qapi/block-export.json
+index 4627bbc4e6..67d2337f91 100644
+--- a/qapi/block-export.json
++++ b/qapi/block-export.json
+@@ -24,7 +24,7 @@
+ # @max-connections: The maximum number of connections to allow at the same
+ #                   time, 0 for unlimited. Setting this to 1 also stops
+ #                   the server from advertising multiple client support
+-#                   (since 5.2; default: 0)
++#                   (since 5.2; default: 100)
+ #
+ # Since: 4.2
+ ##
+@@ -55,7 +55,7 @@
+ # @max-connections: The maximum number of connections to allow at the same
+ #                   time, 0 for unlimited. Setting this to 1 also stops
+ #                   the server from advertising multiple client support
+-#                   (since 5.2; default: 0).
++#                   (since 5.2; default: 100).
+ #
+ # Returns: error if the server is already running.
+ #
 -- 
 2.39.2
 
