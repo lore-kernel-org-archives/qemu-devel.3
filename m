@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941D2CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F6ACE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSw7-00059b-N0; Fri, 06 Sep 2024 02:59:15 -0400
+	id 1smSwH-0006Qy-3U; Fri, 06 Sep 2024 02:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvK-0007qY-Eu; Fri, 06 Sep 2024 02:58:26 -0400
+ id 1smSwC-0005zn-1B; Fri, 06 Sep 2024 02:59:20 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvI-0003hh-Ov; Fri, 06 Sep 2024 02:58:26 -0400
+ id 1smSwA-0003mY-8z; Fri, 06 Sep 2024 02:59:19 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7B6778C260;
+ by isrv.corpit.ru (Postfix) with ESMTP id E81CC8C267;
  Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4254D133418;
+ by tsrv.corpit.ru (Postfix) with SMTP id B185C13341F;
  Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43662 invoked by uid 1000);
+Received: (nullmailer pid 43710 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:31 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 43/53] block/blkio: use FUA flag on write zeroes only
- if supported
-Date: Fri,  6 Sep 2024 09:54:13 +0300
-Message-Id: <20240906065429.42415-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Yutaro Shimizu <shimizu@cyberdefense.jp>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 50/53] hw/nvme: fix leak of uninitialized memory in
+ io_mgmt_recv
+Date: Fri,  6 Sep 2024 09:54:20 +0300
+Message-Id: <20240906065429.42415-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,54 +62,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-libblkio supports BLKIO_REQ_FUA with write zeros requests only since
-version 1.4.0, so let's inform the block layer that the blkio driver
-supports it only in this case. Otherwise we can have runtime errors
-as reported in https://issues.redhat.com/browse/RHEL-32878
+Yutaro Shimizu from the Cyber Defense Institute discovered a bug in the
+NVMe emulation that leaks contents of an uninitialized heap buffer if
+subsystem and FDP emulation are enabled.
 
-Fixes: fd66dbd424 ("blkio: add libblkio block driver")
 Cc: qemu-stable@nongnu.org
-Buglink: https://issues.redhat.com/browse/RHEL-32878
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240808080545.40744-1-sgarzare@redhat.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 547c4e50929ec6c091d9c16a7b280e829b12b463)
+Reported-by: Yutaro Shimizu <shimizu@cyberdefense.jp>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 6a22121c4f25b181e99479f65958ecde65da1c92)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/blkio.c b/block/blkio.c
-index bc2f21784c..adbb69fc49 100644
---- a/block/blkio.c
-+++ b/block/blkio.c
-@@ -896,8 +896,10 @@ static int blkio_file_open(BlockDriverState *bs, QDict *options, int flags,
-     }
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 1fa117fdff..ca54c250b2 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4302,7 +4302,7 @@ static uint16_t nvme_io_mgmt_recv_ruhs(NvmeCtrl *n, NvmeRequest *req,
  
-     bs->supported_write_flags = BDRV_REQ_FUA | BDRV_REQ_REGISTERED_BUF;
--    bs->supported_zero_flags = BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP |
--                               BDRV_REQ_NO_FALLBACK;
-+    bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK;
-+#ifdef CONFIG_BLKIO_WRITE_ZEROS_FUA
-+    bs->supported_zero_flags |= BDRV_REQ_FUA;
-+#endif
+     nruhsd = ns->fdp.nphs * endgrp->fdp.nrg;
+     trans_len = sizeof(NvmeRuhStatus) + nruhsd * sizeof(NvmeRuhStatusDescr);
+-    buf = g_malloc(trans_len);
++    buf = g_malloc0(trans_len);
  
-     qemu_mutex_init(&s->blkio_lock);
-     qemu_co_mutex_init(&s->bounce_lock);
-diff --git a/meson.build b/meson.build
-index 6c77d9687d..79de6f7fc8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2118,6 +2118,8 @@ config_host_data.set('CONFIG_BLKIO', blkio.found())
- if blkio.found()
-   config_host_data.set('CONFIG_BLKIO_VHOST_VDPA_FD',
-                        blkio.version().version_compare('>=1.3.0'))
-+  config_host_data.set('CONFIG_BLKIO_WRITE_ZEROS_FUA',
-+                       blkio.version().version_compare('>=1.4.0'))
- endif
- config_host_data.set('CONFIG_CURL', curl.found())
- config_host_data.set('CONFIG_CURSES', curses.found())
+     trans_len = MIN(trans_len, len);
+ 
 -- 
 2.39.2
 
