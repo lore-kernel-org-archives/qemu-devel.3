@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED90ACE7AE2
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 08:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2833ACE7AE6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 08:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smU8y-0000M9-9k; Fri, 06 Sep 2024 04:16:36 -0400
+	id 1smUBc-00038t-O2; Fri, 06 Sep 2024 04:19:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smU8u-00006G-ES
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:16:32 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smU8s-0004np-EY
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:16:32 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42bb7298bdeso17737105e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 01:16:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725610588; x=1726215388; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NkESefyHeyR0NV5fkglDv3/YD8P6jaBiVeA38wMXhUM=;
- b=Ia3TBgMrpPeCKq5yR4Wj0wQ3JnL2HgS8xNZF0zkNg1HCK6w0RTDjkZ57AAUMAa5XAf
- MTtje9rvbihs59D+wULrXfloBh5d1fyhnCZbPEBYladDa4aRNk5iHq1lW+VUW2PaiG3/
- ZbfOzzvENtn7Rs8aeXQtq7so+XKrBXBj1mrs1/kifABZvm3PiFdBjtpJ0XBlSOoc8x48
- GA0DPlqh/uSrsFJ6cSgW0cuLnasVimNXQcoBCmYr3+ywdNBhyw6W5oqVwwKywPgRiNUJ
- WXDki6a0G24ePJfWztGI3X9MIqRqBeYTDVJ0roe0kSPtQi+NYoF1TX592TvcobwydZdP
- IRdg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1smUBa-0002zY-2p
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:19:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1smUBY-00055f-Ih
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 04:19:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725610754;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l+1rLl3MrSbQBC41PzVhy1iDmWn1l5eF4j/Pf/s0ZaI=;
+ b=gtH59aNPrRw+FyEIHaBYgwKwxAXSt8LJEf2Z4ByUczad6h7t8L4pqQh52247sEC7zwto4h
+ sSM77jNqs9J4tQy6QblZUgqbD0w2eBILfEWNQ0YrdLih7NMFkev7YWQSyjmVQ1FdeiUht3
+ treM5SbM3IeSDGmW/R7r+DmljWcIEs4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-319-Hz6nBaNxOmWAzN9f_GikGw-1; Fri, 06 Sep 2024 04:19:13 -0400
+X-MC-Unique: Hz6nBaNxOmWAzN9f_GikGw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-374ba33b2d2so993313f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 01:19:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725610588; x=1726215388;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NkESefyHeyR0NV5fkglDv3/YD8P6jaBiVeA38wMXhUM=;
- b=qtwFfS8OOAEKbtUCihkNjwLFO+SqcZi3RDsV2IAZNz6m6idltBH9f2XOTRQbMCJPFf
- 0pJLKghRmuJwAWzMc4wb3FdNYet493n18wejriFVRXPhe/rzHj2eZo/zLDWf/HUscOen
- WnGRHmsfPnv5492RH9cGZ96LK71TnVWN7LTZtWbV/+OZvoyRxXsC0XpqcGL/ZZxit3pm
- 4+yOyqfBCEd2aZ8XjOBVROxDcWVTk4pI5oypYKn7x/fU/QEngB0HtMKO/DdIO1fb2Zip
- Q0Vr8YBYFcPYVzSTmQjI7n8erHSz4irrNAelm8uzTwlDtERjF7jK48eJvYQoYWSNrPj1
- UHbA==
-X-Gm-Message-State: AOJu0YxJEzMaCees2AlzTLiJBCjhWAty3yEpE2XTUU7DDKCNB3TUpidp
- 2tDvpf8XvCjfOYu468sh3xuUInL7vRn3JzcRB1Lgz0DnL7cahyJdhRdtPpXgVbE=
-X-Google-Smtp-Source: AGHT+IG34yFbyAMwKQjo3hPHr5LPFCtGX+q+MxtBRjASEbr39vycMZ8RHw7cN9QuBPoyRw+Y/YKkXg==
-X-Received: by 2002:a05:600c:3c8b:b0:426:5e1c:1ac2 with SMTP id
- 5b1f17b1804b1-42c9f985156mr13759415e9.8.1725610588352; 
- Fri, 06 Sep 2024 01:16:28 -0700 (PDT)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ca05c6facsm12257045e9.9.2024.09.06.01.16.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 01:16:27 -0700 (PDT)
-Message-ID: <37328055-a88b-42ae-9d6a-59b0e6507f62@linaro.org>
-Date: Fri, 6 Sep 2024 10:16:27 +0200
+ d=1e100.net; s=20230601; t=1725610751; x=1726215551;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=l+1rLl3MrSbQBC41PzVhy1iDmWn1l5eF4j/Pf/s0ZaI=;
+ b=P7z+EQ1V1MRkJII4RP4GdD+97VP6D57uudoSi4z9Q2lgE7/FkTgQsaOMMJF3wwTWcq
+ wiezPvEcRoxymh+3coJsOFCjH9o9iMh21Jacvkf4iZ7wPRmSjJ6xiJq2K3cE3y10cpYw
+ Xj5MDDHlhAyPd010rlD4/qsIdUILhiwlOvqAZ5pLRCYYvRF2KoftSvm/XZGj8rfuOc49
+ AowuQs5z893P8XkRsnvw0X9M/f40oxnzAdr1n2uCMEx5lBHL48ork4JReYiR/D0lwgyt
+ hXc/tzD78QvldYEeMf0ulKLuegrqdx25yW08sGhlnp0enXy3Z8/WFOXJAw7HnOrY8IpR
+ OCLg==
+X-Gm-Message-State: AOJu0Yx0CKhL7b5baNpc+L+ia/nD35vpiZQ8gfYckKxMFKEL9udDRj91
+ wHpEunHXqUm4VkbGVbBkQYOyjAVXMzWs7d4vb4EYYqbqskIUKVM51vbU5MoDloiClC+6FqcFgtc
+ 6ETs2HCmT2n71zzkAP+bMDP75542j+vDDF206C1y/IjL4hGl3NEgcqoQnEIYlbwAe9moPCcbZrs
+ tEI1eynKSKXrrvI/nNfCXaZWn48U2WC2dw9SrJrosj
+X-Received: by 2002:adf:f88c:0:b0:36b:a2bb:b374 with SMTP id
+ ffacd0b85a97d-378896c81bfmr1137910f8f.52.1725610751313; 
+ Fri, 06 Sep 2024 01:19:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtgyP92uytpbE9rw1tLjLq0SXKCE5ymEC94qkcvGd6eTG0Ke8yoWJLW2gDWyTNehehoCDnr5GELhUzse5PjiA=
+X-Received: by 2002:adf:f88c:0:b0:36b:a2bb:b374 with SMTP id
+ ffacd0b85a97d-378896c81bfmr1137894f8f.52.1725610750785; Fri, 06 Sep 2024
+ 01:19:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] Revert "target/riscv: Restrict semihosting to TCG"
-To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-riscv@nongnu.org
-References: <20240905191434.694440-1-thuth@redhat.com>
- <20240905191434.694440-8-thuth@redhat.com>
- <CAFEAcA8NqfTdHhCJo8QzPy=EJQYKm=9dCC41UN4K_2pqeXifqA@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA8NqfTdHhCJo8QzPy=EJQYKm=9dCC41UN4K_2pqeXifqA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240906073737.493254-1-pbonzini@redhat.com>
+ <be6dfcb4-b1a4-4dff-a08b-e79e303960dd@redhat.com>
+In-Reply-To: <be6dfcb4-b1a4-4dff-a08b-e79e303960dd@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 6 Sep 2024 10:18:59 +0200
+Message-ID: <CABgObfYbnsfxVHHTWkHU-eWFHMMCv-80OzqvLBrbznHpzD2+BQ@mail.gmail.com>
+Subject: Re: [PATCH] virtio: kconfig: memory devices are PCI only
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,56 +98,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/24 21:53, Peter Maydell wrote:
-> On Thu, 5 Sept 2024 at 20:16, Thomas Huth <thuth@redhat.com> wrote:
->>
->> This reverts commit 10425887ba54241be1ce97f8935fc320332b531c.
->>
->> Using "imply" instead of "select" is causing a build failure:
+On Fri, Sep 6, 2024 at 9:40=E2=80=AFAM David Hildenbrand <david@redhat.com>=
+ wrote:
+> On 06.09.24 09:37, Paolo Bonzini wrote:
+> > Virtio memory devices rely on PCI BARs to expose the contents of memory=
+.
+> > Because of this they cannot be used with virtio-mmio or virtio-ccw.  In=
+ fact
+>
+> Guess what I am working on at this very the moment ;)
 
-(please mention ./configure arguments besides --without-default-devices)
+Ok, then hardcoding VIRTIO_PCI is not nice.
 
->>
->>   /usr/bin/ld: libqemu-riscv32-softmmu.a.p/target_riscv_cpu_helper.c.o: in function `riscv_cpu_do_interrupt':
->>   .../qemu/target/riscv/cpu_helper.c:1678:(.text+0x2214): undefined reference to `do_common_semihosting'
->>
->> Thus revert to fix the build.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   target/riscv/Kconfig | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
->> index c332616d36..5f30df22f2 100644
->> --- a/target/riscv/Kconfig
->> +++ b/target/riscv/Kconfig
->> @@ -1,9 +1,9 @@
->>   config RISCV32
->>       bool
->> -    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
->> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
->>       select DEVICE_TREE # needed by boot.c
->>
->>   config RISCV64
->>       bool
->> -    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
->> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
->>       select DEVICE_TREE # needed by boot.c
-> 
-> This will break the intended "we don't need semihosting if
-> this is a KVM-only compile", though. Can we fix the
-> build problem use see with
->   "select ARM_COMPATIBLE_SEMIHOSTING if TCG"
+> > @@ -45,7 +46,7 @@ config VIRTIO_PMEM_SUPPORTED
+> >   config VIRTIO_PMEM
+> >       bool
+> >       default y
+> > -    depends on VIRTIO
+> > +    depends on VIRTIO_PCI
+>
+> depends on VIRTIO_MD ?
 
-We had this discussion with Paolo in
-https://lore.kernel.org/qemu-devel/CABgObfbvjG9bBgCwM-kL+YhjhMw1qLnQdQToCEkKW+V3trskoA@mail.gmail.com/
-Not sure this is as easy as it looks...
+No, because VIRTIO_MD is "default n" (and anyway you don't want to
+enable it by hand in the --without-default-devices case).
 
-I feel the riscv part could be fixed by a respin of:
-https://lore.kernel.org/qemu-devel/20230711121453.59138-1-philmd@linaro.org/
-where semihosting is restricted to TCG and isn't an issue
-anymore for other accelerators such KVM.
+But something like this could be a good alternative if you plan to
+support virtio-ccw as well:
 
-Let me have a try.
+diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+index aa63ff7fd41..253e7d3f90a 100644
+--- a/hw/virtio/Kconfig
++++ b/hw/virtio/Kconfig
+@@ -16,6 +16,7 @@ config VIRTIO_PCI
+     default y if PCI_DEVICES
+     depends on PCI
+     select VIRTIO
++    select VIRTIO_MD_SUPPORTED
+
+ config VIRTIO_MMIO
+     bool
+@@ -35,8 +36,14 @@ config VIRTIO_CRYPTO
+     default y
+     depends on VIRTIO
+
++# not all virtio transports support memory devices; if none does,
++# no need to include the code
++config VIRTIO_MD_SUPPORTED
++    bool
++
+ config VIRTIO_MD
+     bool
++    depends on VIRTIO_MD_SUPPORTED
+     select MEM_DEVICE
+
+ config VIRTIO_PMEM_SUPPORTED
+@@ -46,6 +51,7 @@ config VIRTIO_PMEM
+     bool
+     default y
+     depends on VIRTIO
++    depends on VIRTIO_MD_SUPPORTED
+     depends on VIRTIO_PMEM_SUPPORTED
+     select VIRTIO_MD
+
+@@ -57,6 +63,7 @@ config VIRTIO_MEM
+     default y
+     depends on VIRTIO
+     depends on LINUX
++    depends on VIRTIO_MD_SUPPORTED
+     depends on VIRTIO_MEM_SUPPORTED
+     select VIRTIO_MD
+
+
+and then you just need to select VIRTIO_MD_SUPPORTED from VIRTIO_CCW.
+In the case of PCI there is some board support code as well, which is
+why VIRTIO_{MEM,PMEM}_SUPPORTED is selected from "config PC", but
+perhaps in the s390 code you can select those three from VIRTIO_CCW as
+well.
+
+If this looks good I'll send it as v2.
+
+Thanks,
+
+Paolo
+
 
