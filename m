@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69097CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FFDCE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWwm-0003oR-TQ; Fri, 06 Sep 2024 07:16:17 -0400
+	id 1smWy3-0001R4-A2; Fri, 06 Sep 2024 07:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWvr-0000Mt-IA; Fri, 06 Sep 2024 07:15:16 -0400
+ id 1smWwo-0004f0-Pj; Fri, 06 Sep 2024 07:16:19 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWvp-0007yu-Ki; Fri, 06 Sep 2024 07:15:15 -0400
+ id 1smWwl-00083a-BO; Fri, 06 Sep 2024 07:16:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 28D968C488;
+ by isrv.corpit.ru (Postfix) with ESMTP id AAC3C8C491;
  Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 295FA1336F2;
+ by tsrv.corpit.ru (Postfix) with SMTP id B532F1336FB;
  Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
-Received: (nullmailer pid 353618 invoked by uid 1000);
+Received: (nullmailer pid 353651 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 24/69] hw/misc/bcm2835_property: Fix handling of
- FRAMEBUFFER_SET_PALETTE
-Date: Fri,  6 Sep 2024 14:12:33 +0300
-Message-Id: <20240906111324.353230-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Zhibin Hu <huzhibin5@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 33/69] virtio-net: Ensure queue index fits with RSS
+Date: Fri,  6 Sep 2024 14:12:42 +0300
+Message-Id: <20240906111324.353230-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,89 +62,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The documentation of the "Set palette" mailbox property at
-https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#set-palette
-says it has the form:
+Ensure the queue index points to a valid queue when software RSS
+enabled. The new calculation matches with the behavior of Linux's TAP
+device with the RSS eBPF program.
 
-    Length: 24..1032
-    Value:
-        u32: offset: first palette index to set (0-255)
-        u32: length: number of palette entries to set (1-256)
-        u32...: RGBA palette values (offset to offset+length-1)
-
-We get this wrong in a couple of ways:
- * we aren't checking the offset and length are in range, so the guest
-   can make us spin for a long time by providing a large length
- * the bounds check on our loop is wrong: we should iterate through
-   'length' palette entries, not 'length - offset' entries
-
-Fix the loop to implement the bounds checks and get the loop
-condition right. In the process, make the variables local to
-this switch case, rather than function-global, so it's clearer
-what type they are when reading the code.
-
+Fixes: 4474e37a5b3a ("virtio-net: implement RX RSS processing")
+Reported-by: Zhibin Hu <huzhibin5@huawei.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240723131029.1159908-2-peter.maydell@linaro.org
-(cherry picked from commit 0892fffc2abaadfb5d8b79bb0250ae1794862560)
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit f1595ceb9aad36a6c1da95bcb77ab9509b38822d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix due to lack of
- v9.0.0-1812-g5d5f1b60916a "hw/misc: Implement mailbox properties for customer OTP and device specific private keys"
- also remove now-unused local `n' variable which gets removed in the next change in this file,
- v9.0.0-2720-g32f1c201eedf "hw/misc/bcm2835_property: Avoid overflow in OTP access properties")
+Fixes: CVE-2024-6505
 
-diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
-index bdd9a6bbce..faa489491c 100644
---- a/hw/misc/bcm2835_property.c
-+++ b/hw/misc/bcm2835_property.c
-@@ -30,8 +30,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-     uint32_t tot_len;
-     size_t resplen;
-     uint32_t tmp;
--    int n;
--    uint32_t offset, length, color;
- 
-     /*
-      * Copy the current state of the framebuffer config; we will update
-@@ -273,19 +271,25 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-             resplen = 16;
-             break;
-         case RPI_FWREQ_FRAMEBUFFER_SET_PALETTE:
--            offset = ldl_le_phys(&s->dma_as, value + 12);
--            length = ldl_le_phys(&s->dma_as, value + 16);
--            n = 0;
--            while (n < length - offset) {
--                color = ldl_le_phys(&s->dma_as, value + 20 + (n << 2));
--                stl_le_phys(&s->dma_as,
--                            s->fbdev->vcram_base + ((offset + n) << 2), color);
--                n++;
-+        {
-+            uint32_t offset = ldl_le_phys(&s->dma_as, value + 12);
-+            uint32_t length = ldl_le_phys(&s->dma_as, value + 16);
-+            int resp;
-+
-+            if (offset > 255 || length < 1 || length > 256) {
-+                resp = 1; /* invalid request */
-+            } else {
-+                for (uint32_t e = 0; e < length; e++) {
-+                    uint32_t color = ldl_le_phys(&s->dma_as, value + 20 + (e << 2));
-+                    stl_le_phys(&s->dma_as,
-+                                s->fbdev->vcram_base + ((offset + e) << 2), color);
-+                }
-+                resp = 0;
-             }
--            stl_le_phys(&s->dma_as, value + 12, 0);
-+            stl_le_phys(&s->dma_as, value + 12, resp);
-             resplen = 4;
-             break;
--
-+        }
-         case RPI_FWREQ_FRAMEBUFFER_GET_NUM_DISPLAYS:
-             stl_le_phys(&s->dma_as, value + 12, 1);
-             resplen = 4;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 3644bfd91b..f48588638d 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1949,7 +1949,8 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+     if (!no_rss && n->rss_data.enabled && n->rss_data.enabled_software_rss) {
+         int index = virtio_net_process_rss(nc, buf, size);
+         if (index >= 0) {
+-            NetClientState *nc2 = qemu_get_subqueue(n->nic, index);
++            NetClientState *nc2 =
++                qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+             return virtio_net_receive_rcu(nc2, buf, size, true);
+         }
+     }
 -- 
 2.39.2
 
