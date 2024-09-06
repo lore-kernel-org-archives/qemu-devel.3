@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E801CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 12:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4416BCE7B05
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 12:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smY6z-0006l9-HM; Fri, 06 Sep 2024 08:30:49 -0400
+	id 1smYBJ-0001Ku-0j; Fri, 06 Sep 2024 08:35:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1smY6k-0006GI-Is
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:30:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1smY6d-0002hE-R4
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:30:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725625822;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cYUuhUoOFprz5gXEjqcpnsQ4XnXl828/b8BDAMd70/c=;
- b=goa00OSqPGgU0oYgk6Iep4yGiLgDe+0VBmt1qk0xMHdHs2cW/DCKwSJmXF8I80RbFn9xf2
- 2jSVUx2FeTXS9ptkxr9ZQSqcbhpVk0x6eZJrwQXHFU1pIUIhdKZbFuJAgV3L/s34RftLTd
- cPFBw15kklvexldYfAQxFCa8GF/ieyk=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-LL-ZKp7gPIuyhxbnh0VfDA-1; Fri, 06 Sep 2024 08:30:21 -0400
-X-MC-Unique: LL-ZKp7gPIuyhxbnh0VfDA-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-70f657cc663so1818252a34.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 05:30:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1smYBG-0001Dn-IW; Fri, 06 Sep 2024 08:35:14 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1smYBE-00034y-BF; Fri, 06 Sep 2024 08:35:14 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7178cab62e6so1683277b3a.2; 
+ Fri, 06 Sep 2024 05:35:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1725626110; x=1726230910; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=GVVkZzwkzUs6gDsLPFI57UR7P7EQchhmcx5HHq82jrU=;
+ b=JDBnhZua/dhTB9pp+7lJ60skLsF7np1MqOR/Ql3D6Pa4IKi2EuQOzjdHX17++X92ou
+ CffblhqV0J5UROMcepsO6dC0jasV/LJFNij5OiW8V4Wjgs1MO7WBViKzn+1A+ORpc29B
+ p1rts6HYD+3njgQ01oL3s8gF54JNTulFhKzWQ2+iyWiJiXWlK70GBRcSdr0V748tSgKs
+ W2S7rFGZmCie5gCWJ5aGJAvxTF2BgUdaMPYSqe5tbagrFObZzRhuTu0XLlT0tuKXGuWD
+ pfu4UFJpxNKQqPtwEXxRiM3FP6k2eNqGHy68Hkup61rdFXJRcrCL9DsQ4ySFbIwrQgN5
+ 6xGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725625821; x=1726230621;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cYUuhUoOFprz5gXEjqcpnsQ4XnXl828/b8BDAMd70/c=;
- b=dKyANYZrt/KTRcJrb2hSPeGS+gULyR4IVxwdMfCN51wjVXbiD9wXqBYKZxYZBmYri0
- is4BkbKnseBXvxWoMcAYvSMqzUEskUwBeHojVgRVlfEUxXN8eNxZEek05L/jmqk781FF
- vPs0k1PRmHalxrnulqdJ27dWqiSvhjGor7QLgf4ipM7cTl1bdcPjeyp/xlUS7fHtMUEp
- fE5ao8TTp1kZBxH5823EAIDr0JnwTdPL8eJ7sUz141WMrDJG+kwEvRXck8bmku5o1X9W
- 4NdBwSZoZBgJ79ei/l12vcZ0ph4aetZccvs8vtlZ+fG40yZNIWIgEMru8oTOW+NZJllH
- 8EYw==
-X-Gm-Message-State: AOJu0YxM0oFbju8AmDSi058rTfc5ERMa2KUIuCSeALk8o0ATB15J5eKN
- x09CSZzjjgc7GTQnEl2o1kFPfgAHgaLpl7MpnpVkQf2sX9NBNJvf5oN4UkV/evgNF9DvWiyDUCb
- mletNfZaXOamAhw6Kwt5sd1DPoWswRbdPHI1qfYMS8q/dcTPR20ag
-X-Received: by 2002:a05:6830:2c0b:b0:710:cce7:5bbd with SMTP id
- 46e09a7af769-710cce75ee5mr1768497a34.0.1725625820637; 
- Fri, 06 Sep 2024 05:30:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLeys1HL4MJZpomj+S749SEpU+sAFPYtae3Yu5aiTrGFQFaAmM1F3xm2flB4ItUIxYaaTPfg==
-X-Received: by 2002:a05:6830:2c0b:b0:710:cce7:5bbd with SMTP id
- 46e09a7af769-710cce75ee5mr1768473a34.0.1725625820274; 
- Fri, 06 Sep 2024 05:30:20 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c5202de5b8sm16085986d6.69.2024.09.06.05.30.18
+ d=1e100.net; s=20230601; t=1725626110; x=1726230910;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GVVkZzwkzUs6gDsLPFI57UR7P7EQchhmcx5HHq82jrU=;
+ b=HHofnF8K333QXNTcQLBkx1Dh42rpa1mKCwXQcdrDcKKtYBjfiEYSr2VX4UZsg3oHDp
+ 36i74NZMM+n0VH3kmpeFY0DVO/yVvFLJu3D0VcbI2STVxuqjdLiets0dgDOg1FDiHW1A
+ ym3CRv0vmvOq7eW7KhXDOkv2avYLLoDRFpVr9HqzSuinY9t7ulkGvfOrejnGgaOjNOyG
+ 3LReo6rgw4JqVk4bfzlT9KuL6dWweiuZ9Png1rupbfdU46NtQCfjsjLKKELIGcPdqUW/
+ wNUmlChN4jKlYcIx4XRtUnF/XPn+4D4Txn2pCGVUiiVe8wQE6dVzu+kr5ahIOokXFroN
+ Lisw==
+X-Gm-Message-State: AOJu0Yxqax5y+vl29ZB2rx+FtLn2fW/pGRie6S4qbIsaqDwbEPGouxVC
+ S9vgg4JYs0o8Phu6oZSWa6g3ApYggDea1WNRudWaUEwUK5HuADcXIxwKuA==
+X-Google-Smtp-Source: AGHT+IG+ez/S7sie8I4z5jm6kjIKglE83ER2bLoIMR9Os13gsHEJVCs2E5YP0ioCDJaTpxp+DhPazA==
+X-Received: by 2002:a05:6a00:6f6a:b0:70e:8d38:2845 with SMTP id
+ d2e1a72fcca58-718d5ded075mr2603514b3a.1.1725626109738; 
+ Fri, 06 Sep 2024 05:35:09 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-717785b4b4bsm4752170b3a.199.2024.09.06.05.35.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 05:30:19 -0700 (PDT)
-Date: Fri, 6 Sep 2024 08:30:18 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>, Zhiyi Guo <zhguo@redhat.com>
-Subject: Re: [PATCH v2 1/4] KVM: Dynamic sized kvm memslots array
-Message-ID: <Ztr12p5CR9C6a2y3@x1n>
-References: <20240904223510.3519358-1-peterx@redhat.com>
- <20240904223510.3519358-2-peterx@redhat.com>
- <CAC2qdxCW=ddmK1TLC4Agh4cGnMV60BKNpN_Nrrz-KuPbDfh-ew@mail.gmail.com>
- <ZtnVfXataavOoQp0@x1n>
- <CAC2qdxDDzmt-v4WL6HxUQDL=Dt-X2qmaVEp4FTFSKGABLfUG=Q@mail.gmail.com>
+ Fri, 06 Sep 2024 05:35:09 -0700 (PDT)
+From: Guenter Roeck <linux@roeck-us.net>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH] aspeed: Add support for IBM Bonnell
+Date: Fri,  6 Sep 2024 05:35:05 -0700
+Message-ID: <20240906123505.3818154-1-linux@roeck-us.net>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAC2qdxDDzmt-v4WL6HxUQDL=Dt-X2qmaVEp4FTFSKGABLfUG=Q@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,127 +95,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 06, 2024 at 12:54:37PM +0200, Juraj Marcin wrote:
-> Hi Peter,
-> 
-> On Thu, Sep 5, 2024 at 6:00 PM Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Thu, Sep 05, 2024 at 05:32:46PM +0200, Juraj Marcin wrote:
-> > > Hi Peter,
-> >
-> > Hi, Juraj,
-> >
-> > [...]
-> >
-> > > >  unsigned int kvm_get_max_memslots(void)
-> > > >  {
-> > > >      KVMState *s = KVM_STATE(current_accel());
-> > > > @@ -193,15 +247,20 @@ unsigned int kvm_get_free_memslots(void)
-> > > >  /* Called with KVMMemoryListener.slots_lock held */
-> > > >  static KVMSlot *kvm_get_free_slot(KVMMemoryListener *kml)
-> > > >  {
-> > > > -    KVMState *s = kvm_state;
-> > > >      int i;
-> > > >
-> > > > -    for (i = 0; i < s->nr_slots; i++) {
-> > > > +retry:
-> > > > +    for (i = 0; i < kml->nr_slots_allocated; i++) {
-> > > >          if (kml->slots[i].memory_size == 0) {
-> > > >              return &kml->slots[i];
-> > > >          }
-> > > >      }
-> > > >
-> > > > +    /* If no free slots, try to grow first by doubling */
-> > > > +    if (kvm_slots_double(kml)) {
-> > > > +        goto retry;
-> > >
-> > > At this point we know all previously allocated slots were used and
-> > > there should be a free slot just after the last used slot (at the
-> > > start of the region zeroed in the grow function). Wouldn't it be
-> > > faster to return it here right away, instead of iterating through
-> > > slots that should still be used again?
-> >
-> > Good question.
-> >
-> > One trivial concern is we'll then have assumption on how kvm_slots_double()
-> > behaves, e.g., it must not move anything around inside, and we need to know
-> 
-> > that it touches nr_slots_allocated so we need to cache it.  The outcome
-> > looks like this:
-> >
-> > ===8<===
-> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> > index 020fd16ab8..7429fe87a8 100644
-> > --- a/accel/kvm/kvm-all.c
-> > +++ b/accel/kvm/kvm-all.c
-> > @@ -249,9 +249,9 @@ unsigned int kvm_get_free_memslots(void)
-> >  /* Called with KVMMemoryListener.slots_lock held */
-> >  static KVMSlot *kvm_get_free_slot(KVMMemoryListener *kml)
-> >  {
-> > +    unsigned int n;
-> >      int i;
-> >
-> > -retry:
-> >      for (i = 0; i < kml->nr_slots_allocated; i++) {
-> >          if (kml->slots[i].memory_size == 0) {
-> >              return &kml->slots[i];
-> > @@ -259,8 +259,13 @@ retry:
-> >      }
-> >
-> >      /* If no free slots, try to grow first by doubling */
-> > +    n = kml->nr_slots_allocated;
-> >      if (kvm_slots_double(kml)) {
-> > -        goto retry;
-> > +        /*
-> > +         * If succeed, we must have n used slots, then followed by n free
-> > +         * slots.
-> > +         */
-> > +        return &kml->slots[n];
-> >      }
-> >
-> >      return NULL;
-> > ===8<===
-> >
-> > It's still good to get rid of "goto", and faster indeed.  Though I wished
-> > we don't need those assumptions, as cons.
-> >
-> > One thing to mention that I expect this is extremely slow path, where I
-> > don't expect to even be reached in major uses of QEMU, and when reached
-> > should be only once or limited few times per VM life cycle.  The re-walks
-> > here shouldn't be a perf concern IMHO, because when it's a concern we'll
-> > hit it much more frequently elsewhere... many other hotter paths around.
-> >
-> > So far it looks slightly more readable to me to keep the old way, but I'm
-> > ok either way.  What do you think?
-> 
-> I agree that it requires this assumption of not moving slots around,
-> but I think it's intuitive to assume it when it comes to
-> doubling/increasing the size of an array, realloc() and g_renew() also
-> don't shuffle existing elements.
-> 
-> In addition, there already is such an assumption. If slots were moved
-> around, pointers returned by `return &kml->slots[i];` wouldn't point
-> to the same slot structure after doubling.
-> 
-> However, I realized there's also another problem with this return
-> statement. g_renew() could have moved the whole array to a new
-> address, making all the previously returned pointers invalid. This
-> could be solved by either adding another layer of indirection, so the
-> function returns a pointer to a single slot structure that never moves
-> and the array contains pointers to these structures, or the slots need
-> to be always accessed through an up-to-date pointer to the array,
-> probably from another structure or through a getter function. With the
-> first approach, pointers in the array could shuffle, but with the
-> second one, the index of a slot must not change during the lifetime of
-> the slot, keeping the assumption correct.
+Introduce support for the IBM Bonnell BMC.
 
-Note that all access to kvm slots are protected by kvm_slots_lock() which
-is currently a mutex (aka, non-RCU), and we can't cache slot yet so far
-because we don't know whether there's concurrent update.
+Use Rainier machine information for HW strapping and other machine details
+since the actual hardware configuration is unknown. I2C device
+instantiation is based on the devicetree file in the upstream Linux kernel.
 
-Thanks,
+Major difference to Rainier is that the Bonnell devicetree file
+instantiates a TPM. It is therefore possible to test TPM functionality
+without having to instantiate the TPM manually from the Linux command
+line.
 
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+---
+ hw/arm/aspeed.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 87 insertions(+)
+
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index fd5603f7aa..4f833c5708 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -865,6 +865,70 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+     create_pca9552(soc, 15, 0x60);
+ }
+ 
++static void bonnell_bmc_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++    I2CBus *bus;
++
++    bus = aspeed_i2c_get_bus(&soc->i2c, 0);
++
++    at24c_eeprom_init(bus, 0x51, 8 * KiB);      /* atmel,24c64 */
++    /* tca9554@11:20 */
++    i2c_slave_create_simple(bus, "pca9554", 0x20);
++
++    /* ucd90160@2:64 */
++
++    /* fsg032@3:5a */
++    /* fsg032@3:5b */
++
++    bus = aspeed_i2c_get_bus(&soc->i2c, 7);
++
++    /* si7020@7:40 */
++
++    /* Bonnell expects a TMP275 but a TMP105 is compatible */
++    i2c_slave_create_simple(bus, TYPE_TMP105, 0x48);
++    at24c_eeprom_init(bus, 0x50, 8 * KiB);      /* atmel,24c64 */
++    at24c_eeprom_init(bus, 0x51, 8 * KiB);      /* atmel,24c64 */
++    i2c_slave_create_simple(bus, "max31785", 0x52);
++
++    /* pca9551; assume/hope pca9552 is compatible enough */
++    create_pca9552(soc, 7, 0x60);
++
++    /* ibm,op-panel@7:62 */
++    /* dps310@7:76 */
++
++    bus = aspeed_i2c_get_bus(&soc->i2c, 8);
++
++    /* rx8900@8:32 */
++
++    /* Bonnell expects a TMP275 but a TMP105 is compatible */
++    i2c_slave_create_simple(bus, TYPE_TMP105, 0x48);
++    at24c_eeprom_init(bus, 0x51, 16 * KiB);      /* atmel,24c128 */
++
++    /* pca9551@8:60 */
++    create_pca9552(soc, 8, 0x60);
++
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4c);
++
++    bus = aspeed_i2c_get_bus(&soc->i2c, 11);
++
++    /* tca9554@11:20 */
++    i2c_slave_create_simple(bus, "pca9554", 0x20);
++    i2c_slave_create_simple(bus, "tmp423", 0x4c);
++    /* pca9849@11:75 */
++    i2c_slave_create_simple(bus, "pca9546", 0x75);
++
++    /* npct75x@12:2e (tpm) */
++
++    /* atmel,24c64 */
++    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 12), 0x50, 8 * KiB);
++
++    /* atmel,24c64 */
++    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 13), 0x50, 8 * KiB);
++    /* pca9551@13:60 */
++    create_pca9552(soc, 13, 0x60);
++}
++
+ static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
+                                  I2CBus **channels)
+ {
+@@ -1488,6 +1552,25 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
+     aspeed_machine_ast2600_class_emmc_init(oc);
+ };
+ 
++static void aspeed_machine_bonnell_class_init(ObjectClass *oc, void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc       = "IBM Bonnell BMC (Cortex-A7)";
++    amc->soc_name  = "ast2600-a3";
++    amc->hw_strap1 = RAINIER_BMC_HW_STRAP1;
++    amc->hw_strap2 = RAINIER_BMC_HW_STRAP2;
++    amc->fmc_model = "mx66l1g45g";
++    amc->spi_model = "mx66l1g45g";
++    amc->num_cs    = 2;
++    amc->macs_mask  = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
++    amc->i2c_init  = bonnell_bmc_i2c_init;
++    mc->default_ram_size = 1 * GiB;
++    aspeed_machine_class_init_cpus_defaults(mc);
++    aspeed_machine_ast2600_class_emmc_init(oc);
++};
++
+ #define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+ 
+ static void aspeed_machine_fuji_class_init(ObjectClass *oc, void *data)
+@@ -1776,6 +1859,10 @@ static const TypeInfo aspeed_machine_types[] = {
+         .name          = MACHINE_TYPE_NAME("rainier-bmc"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_rainier_class_init,
++    }, {
++        .name          = MACHINE_TYPE_NAME("bonnell-bmc"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_bonnell_class_init,
+     }, {
+         .name          = MACHINE_TYPE_NAME("fuji-bmc"),
+         .parent        = TYPE_ASPEED_MACHINE,
 -- 
-Peter Xu
+2.45.2
 
 
