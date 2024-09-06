@@ -4,134 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0A66E6FE3D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8014EE6FE43
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:43:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smdW1-0001FC-Ri; Fri, 06 Sep 2024 14:17:01 -0400
+	id 1smduQ-0003x6-Ew; Fri, 06 Sep 2024 14:42:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1smdVy-00012Q-GW
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:16:58 -0400
-Received: from mail-dm6nam11on20629.outbound.protection.outlook.com
- ([2a01:111:f403:2415::629]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1smduO-0003vI-Gk; Fri, 06 Sep 2024 14:42:12 -0400
+Received: from mail-mw2nam12on20625.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::625]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1smdVw-00064a-GX
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:16:58 -0400
+ id 1smduM-0008Rn-F9; Fri, 06 Sep 2024 14:42:12 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aB7Fbxik2f/iuj9+m2+IJfzE0o3aj4/fw7fVUhqGww9TH9oQd/4TzZm25NS7EhSYVx2z80VU33RgnsQcDI/HEgGwnlmS8wo/FlfcXD0QlJ2f60gXU1klr1IrkR8othLgY0dKJzkW9iKkPZ3owq7op30QZXrxMzjxjE7W3UkKTBc7bTj+tpfY15XsKqnMtlsQAQzew1HNBjfiJEsfP4h7dn5fKMTnNcEy3IElFSliPxpzYQV0aGAQuf17UhUAch57E2qUSxd+CicsepCX4W+ZHQPa9ryCtC/oXUzwG+FWzlOJiSssl46d8vq7/Duot9jI/aZ41IYC7VgeKk9chjnVPA==
+ b=t4Sqm1SvaS/mwKk4SLtUXdaO9TIsdGing4zpK1k83AEoU5mXrdMPc/nCxthOy616MAENxRI1qzgF8XkEUXOFBMif1Reu6zCRDCn3qm5nMCmAvHyf89mQ+EhMQO645BqgfHl+UiOqWz31DjF45V3Wo/5FZxDMpxxh924ewG1VjttrvmnltLeO7XbRd1mwdCKJaKsTLLYYg6p+lczPmEFLLwzDCsG/k23RZvhC1j/S/4KbICUm9hfofHBgcACiBxZq2Z0Mz0BTp0vkZxY8EvTIPRq3uYSFXify4x/7x9dle69Jj4fzfQPZLCTltSTfYQ/9wKU4DFGPG0WiGp1kCdRycg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E2yfYDD/PvXd3jwbAkeU48dr/Ao21OQQENEUdj6cI20=;
- b=hw+mRjU4+CXABciRWmsOXjgbES5s7evJE6Zr714E9dMAOZ3VXmtyZiKPL2Sa3M5V2/KNnnt7a7/yp/yBPX38bqtlb4tLBOE9OfmjdMf9xU5ydCwxQUUl0jxQXCWtAcA1NInHGn/ALYB+qyi2tccwHuocrmoupOMOcwpmx0e+6AMaYDYrHH21aa+VJPkQAW58YXyVw0+jzpsUo/av0i9sgJYGiR58VVb/9uPE0yvAp1X0EWrtX6HcdExe5MJU1c2YVBfsKhv708xNnu/kUjVIxQyl+lBHG8LVC1h290UogjHEu+pz42xC0X2u9qr4LZ5BZJ8/vcgMWcuvm49eVJO4zQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
+ bh=CIWx4sH7s9E9LQwT5BLC4svBBACoKvvDyI7IovgloVI=;
+ b=p1uPmu0zfTQxdfRHNOM3Ivhw8M5SGZJGK72Puk9FdsKM5vZZffcFZzvB5z2imo2NrZsdzGqJrbiJtDGGnoYifrmdpWHtKueGD8eIOgszfn41/sbMsCPypDQjJ6aQLehIxMlQuUuKbA8H1FOrSme4v7XxI2RHhiEgPDy+GZwL+rqh6jsMqELWjWS2qywy3x6FUg0hdY+0/7PqYH72LNGxpFRDGQC2WZqFpI2x545Lv7+dMzQ5/U4897MlvkKXMJlX1R/9FlSvh549nGsnSSWIZoD6zIxcQeKxiuzgXu1e8XLRospTGzBp4XJ9Sp26pMOtpzn+t6SnJvrXVVZLbzSMhg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E2yfYDD/PvXd3jwbAkeU48dr/Ao21OQQENEUdj6cI20=;
- b=W9VAMwaQ0/cYXR32+JPuGmBQ+IU+Kk4G+78hhSY2gAPu4ONMdbBQAIn70EVvs5k0r8aTibTIg3DnQBGlXRQZq1S6tI3ljxo89jRgbSkgHrP/aJsoTt3xrG/4xaRB52g1ruKp1h8cTTAcYJRWdcvtGyreKyPnKqY+EffeVrC0j7Y=
-Received: from CH0PR07CA0030.namprd07.prod.outlook.com (2603:10b6:610:32::35)
- by PH0PR12MB8797.namprd12.prod.outlook.com (2603:10b6:510:28d::12)
+ bh=CIWx4sH7s9E9LQwT5BLC4svBBACoKvvDyI7IovgloVI=;
+ b=ZyPCkgyGQoRmv3I0KNwNL+Ye3Qmo7y7KKrn+7On2CJe25XVJgVn4cwDYiaYU75jtSpso3dWfkgZ6zM9rIOSaZAOp0DQSUPfgssMvJtBhrRJCtOaSinEZ1EYQ49JuZ/BPYpusTDPVFGJpHOi72sCPLuQE0SWR9xv3bOMVWRnolas=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
+ by SJ1PR12MB6148.namprd12.prod.outlook.com (2603:10b6:a03:459::8)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.24; Fri, 6 Sep
- 2024 18:16:49 +0000
-Received: from DS1PEPF00017097.namprd05.prod.outlook.com
- (2603:10b6:610:32:cafe::9b) by CH0PR07CA0030.outlook.office365.com
- (2603:10b6:610:32::35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.27 via Frontend
- Transport; Fri, 6 Sep 2024 18:16:48 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- DS1PEPF00017097.mail.protection.outlook.com (10.167.18.101) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7918.13 via Frontend Transport; Fri, 6 Sep 2024 18:16:48 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 6 Sep
- 2024 13:16:47 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 6 Sep
- 2024 13:16:47 -0500
-Received: from xse-figlesia-l2.xilinx.com (10.180.168.240) by
- SATLEXMB04.amd.com (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39
- via Frontend Transport; Fri, 6 Sep 2024 13:16:46 -0500
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.25; Fri, 6 Sep
+ 2024 18:42:04 +0000
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b%6]) with mapi id 15.20.7918.024; Fri, 6 Sep 2024
+ 18:42:04 +0000
+Date: Fri, 6 Sep 2024 20:41:52 +0200
 From: Francisco Iglesias <francisco.iglesias@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <frasse.iglesias@gmail.com>, <alistair@alistair23.me>,
- <edgar.iglesias@gmail.com>, <peter.maydell@linaro.org>,
- <pisa@cmp.felk.cvut.cz>
-Subject: [PATCH v1 0/3] CAN & Xilinx OSPI maintainer updates 
-Date: Fri, 6 Sep 2024 20:16:42 +0200
-Message-ID: <20240906181645.40359-1-francisco.iglesias@amd.com>
-X-Mailer: git-send-email 2.34.1
+To: Shiva sagar Myana <Shivasagar.Myana@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, alistair@alistair23.me,
+ peter.maydell@linaro.org, sai.pavan.boddu@amd.com
+Subject: Re: [PATCH v2 1/1] m25p80: Add SFDP table for mt35xu01g flash
+Message-ID: <ZttM8FP06oTasA05@xse-figlesia-l2.amd.com>
+References: <20240829120117.616861-1-Shivasagar.Myana@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240829120117.616861-1-Shivasagar.Myana@amd.com>
+X-ClientProxiedBy: LO3P123CA0001.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:ba::6) To SJ2PR12MB8739.namprd12.prod.outlook.com
+ (2603:10b6:a03:549::10)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: None (SATLEXMB05.amd.com: francisco.iglesias@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF00017097:EE_|PH0PR12MB8797:EE_
-X-MS-Office365-Filtering-Correlation-Id: 852a4616-71a4-4c2d-4a6a-08dccea012be
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|SJ1PR12MB6148:EE_
+X-MS-Office365-Filtering-Correlation-Id: 431aaa53-b2c5-4179-f3b0-08dccea39a4c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700013|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?r0zPpjqu2sKMnXcu28bL37Oh0vWnzXvg7gcwYY46imvlHkd2+DrGfOTiwvcU?=
- =?us-ascii?Q?WVoDxJog2a0tSdJEyLujoAA7X9M7ia9QaLF204IAXeNsFbekIrKCHLPSoGb0?=
- =?us-ascii?Q?fXoa1gQyVsZcHxT0DwnP6iD4jBjjJe0ZM5BR8qCocaFcyp2aWd2KddfqpedN?=
- =?us-ascii?Q?2RZIUWGtRA7sqWZuSDFSNj4nRkq5sYtIy0H7tgsYJ3NNKi7WhhlZTpMh2iDn?=
- =?us-ascii?Q?E4LyAq+L128OP6ibGG8uoxokBo4paJp9qlfZlOMNFgemvuvhHLRoQSFqi76k?=
- =?us-ascii?Q?fwh/PBgzWPXnQyxdOcC2nYrRG2nO27rTNn4QF5ElRzpIQiZ1IjN7U5HVcvMk?=
- =?us-ascii?Q?ldVwgc0QqdvoL3pPlMPFqWjz3HJKOJbYrmGnlSzwWRu7xqdV9C6Nc5B2Y/Nt?=
- =?us-ascii?Q?gS7d/x2ZubZ6rDyrwziR3AT2wachifc5A3oGrthEdYbXEJUIlz0AvUXJ1jyW?=
- =?us-ascii?Q?0+E80OxfxZT/02raWwY91NEHCnw1Am4SX10EaeDJjW2QBGujtENvND/Ke7vC?=
- =?us-ascii?Q?5+BmidY6BwKkefScslxdpPPV5N2xjgXKwhVSQZ7FjCv2R83y5UzwEs0AVnag?=
- =?us-ascii?Q?7CdonCP6Q91xJHFtzh1C7aTmOTD0z4P6TYnNrPcJAJx20guK4fFobMPhBw3d?=
- =?us-ascii?Q?OsqZvqkQn7Dxc3PUCuVGC3j6lNab9G2eR397DJy1MKBiC6LSAtndaoP+/dAP?=
- =?us-ascii?Q?M9gi/xh8FmmbODzpH9H08FtA+X1jjbu7qf9gIqxGcMtbtro3wizws0mLX6J7?=
- =?us-ascii?Q?9+RWEeG4yGC1Xh64apXulEFwavyDvXP7eykjt2tkrXmXksfoEF0eYhRHrNeQ?=
- =?us-ascii?Q?1pHR7vLwCm8VZfUyV8bYkJh7/7sPLzcCUrPN5VSndW79po0HlnOkAdCYtpfm?=
- =?us-ascii?Q?a1GOQ322VVOEowQTnmGBaiekJ881Ns/Cf4Wp4anae08poi3sEU1YpVcsKILi?=
- =?us-ascii?Q?pgQwjohXV8GKVUgkGpRZxMREw88fhj5KilzUjSaiAianRQbqr9posrvezSga?=
- =?us-ascii?Q?HUhkGqhTOCxVs2jad/56JL1KiE4O7sm/il6TGuk6yoqnkXtGcpdAkDXrH+3X?=
- =?us-ascii?Q?6gMlFiijYkL8Gsq+pdtNimSxf/D7Tdwi0cfSEIh4sNDb7ZLCP+zUmL4x12nd?=
- =?us-ascii?Q?zq5ezuZu70YSHl5ZghwKbjOwJo9SgkKt/y1hTUhaa7ulUik6C3C6YJsJXl66?=
- =?us-ascii?Q?pj/J+H5h/MpMPVcfoLZUkEdiDvAwbhFrL+26Yn3O6xWBqwrCMbeRR+vNUMcb?=
- =?us-ascii?Q?kXXf1y8iAGi6/GxetYgu/WwTWhJCMRbkUYXgiwGdah9j2uOX+MOnQKyBzDcg?=
- =?us-ascii?Q?5wc/z6Bbe1HMqtBgnQAO/XC1FqfubnVLtfrgp65D+iHyci4gGsh6jnGJjNmI?=
- =?us-ascii?Q?yMvSXIuQmSoD0y79X6dGXj/NuDftCw0pOF6jAcQ//+JfV5IOjgM3AbZsocHe?=
- =?us-ascii?Q?ywPSaXzNbmhDZXON3SwKqHm25PcNtvBm?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(36860700013)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?M1lZTUpKL2NHbHJTQjE4L2YwckRockFjMlR0WWM5TFlTeGduZmdkWkg2WE1D?=
+ =?utf-8?B?ejVabmVMYXV1M3Q4V0VQN044NmtnbWZvTUpTbFdocjdCV1N3Snp2MG90aFpP?=
+ =?utf-8?B?VHBPQXVaVGRZbjcwa3lQcGl5VFZ6dExhdGFJQ21OY2NKR3dsSXZzRWZweWRC?=
+ =?utf-8?B?bzZDU2lUS1N4L3JmSVJ4NldBcVlxejZjMGNPeFhXUUJmMW02S1NRd1VrdURN?=
+ =?utf-8?B?eGVuT3grTGNwQTVwMU5KT0tKemtEM1hqWTBseWNEbkYrRzI3U09tSHFzajl6?=
+ =?utf-8?B?a3J1ZkxnaDd6S3B2SjBZZEJZeUsxck5pcWFRM1F1ZEZML2RJbHpBRWVVZEJU?=
+ =?utf-8?B?ME9vYUhGd09DRWdBMWVnQTh4Tm03T2Yxald4M1lJanM1Mk1TWTNjWnY0ZXY1?=
+ =?utf-8?B?aXFPNS80QTdJZVM0VlUybFUwYUgzNzB1V0l0S0ovZ0lKTGdYSFFGdFA4Qkxm?=
+ =?utf-8?B?NTlOUEFMcjdMV3JvY0lTTTgxTUFkN2J0YnlRZVRLU0srOEVtNjlFV0dLYUdp?=
+ =?utf-8?B?OHFkWHdpZjBDUmx5N2NNd3o1cEJtNENicEd4MWJrM0NYbHdkNnAwRzhXVWhE?=
+ =?utf-8?B?QmdGQUdxc2dLWWFyQjJ1bE1DUDlPblNPZ2dKaWtqWGp1NHNWanZYM2V2R0ps?=
+ =?utf-8?B?T2llcnB3M1duaHB5NTVwZkF5cEFCaVlBeFNjaG90cUU1M2ZpK0Rjd0p3SStW?=
+ =?utf-8?B?a2pVdnIvenMwSVoxUHB2dXNvMmlvbkNxUVozSTZJdE9nbzhPQlRRMmJkNDZN?=
+ =?utf-8?B?eWttREFMQnRhdXVXdksrZGFEM1loT05vdFZqTTBKNzJLQzFZRmVSNllYSFZ6?=
+ =?utf-8?B?M083blRxMG9xVHFvdkUzWElHVTNzd0FVR1FTU3ZBNkE2QXhqemlRQUV5MXRR?=
+ =?utf-8?B?ZWh0SjBoV0tHNlRzYjQxcFYxZFJxdUdlOGdISG1KSXlrZVh2TDdIcWtRWlh5?=
+ =?utf-8?B?WENVNmxYeWw0amdxckFBYVpkRjhpTDR4NWx4ZGtKa2pMeW02cERWbzRYWlhy?=
+ =?utf-8?B?RzVhbjg1SDVNRmdYRHg2YnpaQit1K0prb2U1ejJVU2VLUGZsdFY4aU9Qb1Bm?=
+ =?utf-8?B?eW5mQzJFeGZQNktNRHQvL1pRUVNNUkVmenpHU3JpV1lMSzllalBhZmVMVWZs?=
+ =?utf-8?B?WVNnRTZsT2pEY0JjN0NnbEJYaE1YUHpRQ0QvbE9QNUVYNFdqVEw3QmsxaURy?=
+ =?utf-8?B?N0JkVU1abkZJSXFwOGMrbUg5SXEwWlo4Snd0T0hPNk9ieDFsMldyM3F4RVJw?=
+ =?utf-8?B?SXk0UzFMdHQzdUFJUmhUMktTVi9DVElsOS9KNkFXNTlXSmF2ajlrMVo4bWRv?=
+ =?utf-8?B?MzZoVks0Z2tpR1haOWNBSldWRkVxZ29Ba1U3MWF4MjY0QzNsbjdTeVhHVnQ3?=
+ =?utf-8?B?citGS3dWalZsWllnNlJXU0lsVEpsZzhHR2FMN3cwWlkvM2NybmhRMnExY2xO?=
+ =?utf-8?B?eFhFa3RXUXVTK0ZQUUkvSXNGZ1J2WkxtOEhJNU9TSUlXMHNnY3o3eUFLTmxP?=
+ =?utf-8?B?OXRaUXJibEE0bGpIUFkzcU9VOUc4UTFhYTZwYXZodk5oUDUzNit0eGVUNlUx?=
+ =?utf-8?B?bmZuOXhjdkZSZGFOclVDT1RiZ1hTWVBiQXR2dDVPQ013VlZTVmdCMit3VXA3?=
+ =?utf-8?B?SG1kWUp6aGM4M0trQzk3dnR0dFRXNkRsa0dHQ0xhQ2N6M243enE3RFM2U2M5?=
+ =?utf-8?B?WTFDbVR1L3Z1c2lrOXFYLzdBQnNuOFZmd3k0QTVQMnpJM3RTTWphY2MveFdt?=
+ =?utf-8?B?K0h0MmJ5VmxXYTliK2tma3dSRmorbGRaeW4vV3hRaUNsc1ozY2hnczlDbkR0?=
+ =?utf-8?B?TWFwUHNxaWtrZzFoSTl1UT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RGdoVEZUS2hVblpKZ3VtS2ZQcnhsSGMrUkd1S1JsT2s2MUxybU9rTGptWHI1?=
+ =?utf-8?B?QUpvUlpldGNrNFlkdXFZNFVPbVNJdEtHVjl4N1g2NFZabmE5SU5DZ2VMK0tr?=
+ =?utf-8?B?M3pSektrcEZOUDZKdDgzNUVDdHNYWGl2N0NqWm5KWXBwOFYzcm1CMHFXcFA1?=
+ =?utf-8?B?U0pKVVYvN05udWlzcTBaMDJhTEZjMlJzS3pkSW9CM0hBRzd0UXlTNHhWdVMr?=
+ =?utf-8?B?aUUyQllsZmRkaXZuSm5QcXQ1UVYrY2MyMC9QbC94blZWK2ZPZjk2bTZpcDBs?=
+ =?utf-8?B?M1NmR0oyakY0aXF4QWtEUjZTTDFmVDMvUVFmSUlsOGhkL0ZMSVhHVW1CV3Jv?=
+ =?utf-8?B?S25zOU1iSFdNZDE2SnlXV016NWZqYytVcWdvQmVLUEtScUVuKzJQdGl1ZHFW?=
+ =?utf-8?B?N0dzNXhFMHhYNjQ1Z0xZMm1wRWFkTGxTMTFjU2ZYUUpDSUJhc3JvRkdEcktI?=
+ =?utf-8?B?OWEyUmZPeTNNZWNuRGFoSldNbVB6bmlseTJxTkJhMlYxYitVOFlmNGp6TkpE?=
+ =?utf-8?B?L3ZLYlZDUDNQUG1GeHdMUDBMNGNEQUUrNlBzYTlZaHVwUXc1V29naXBsUGN6?=
+ =?utf-8?B?SFRaNUQxVkhjZUQzay9UNm1mS2x3dncyYWZsUVRXRVlwbVN4TFVSVkF4RUQv?=
+ =?utf-8?B?eVVpR01PLzRuckY5NnZXUUZZaG0zTjFIVUlnZjJWdlFUYVloVVlhNURQNXA4?=
+ =?utf-8?B?ajh1NW50M0VKUXBCVVZ6NFRTdTltTThVWkZWK04zVjI1Rm45RHllaGVyUFpQ?=
+ =?utf-8?B?aHZqdzFvYzY4VmVIeThaUTVBTmd3eENJVjVnd09PdEdwQWp0cWJyNzdqS0Fo?=
+ =?utf-8?B?WFNQYkRrUkVCTzhFak9uMXo2SDIrYStkb0tuZUFJVmtDb2xrbi9EZzN6Qndi?=
+ =?utf-8?B?eFpWUC8zeURBemQvZzFTOEJxZEFVandRS25HMmRSMTlPQ0JBSUNHb3NML0hn?=
+ =?utf-8?B?Vkd5NXBhb2NmQVh0TW1KTjhaVnJEZGRsU29YNllJM2hQUlJjNW1mNTZNTHUw?=
+ =?utf-8?B?eTh0NjhSWmN6MWFIZzR2emI1MW1uTFNZUVhUQ2NnT3liYkQ2VThSeDBzclVJ?=
+ =?utf-8?B?ZEFWV0FRU1hXYnQ4UWswMm5IM05lNFVaaEx5ZTdRUEJHeTRSclRMSU9xM3Yz?=
+ =?utf-8?B?YVcxejNzVmVZMEd3UUk2a045MFNOQXBiWnZ6NGpaYzZobkpWRjVJVlZ2T1gx?=
+ =?utf-8?B?dXl6dzVlZzhObzhaaVJ6SisyYXpQMlVLYm9XbW1YbUVXalBYU3RXSjFHNGhQ?=
+ =?utf-8?B?dWV0aGp5NUNFTWh4WGhPUnA3MjZBOHo3MXRnWml1TDc1VmNwTzZaTUtyZGZX?=
+ =?utf-8?B?aEZoR1hKZTdDa3RJbFhqc3RTYjd2YytuRUJwWlJWa1F1US9UYUYvVWhURTRj?=
+ =?utf-8?B?ZCtDelM5QlRteDNFeUpTYjVrbHZxajRDVnNBa0Z4S3JCNWNackhPZ1BWcVZp?=
+ =?utf-8?B?UEhWbHJYMng1T0xSOWJhZHZBYUw1N0xPRW12ZkpkVUt5YkFQaURvZjB5Ymx4?=
+ =?utf-8?B?SDFFSVd1NHVQTUQxWEZBVkd3eHUxYzNBdGJnMHlJUDhJYlczbFp0Z3k0dFN1?=
+ =?utf-8?B?b3hIV2tZRWRqcGZmdU54Zi9RaDZOREhOMDRWZmwwa2xPZXVaWGFUeWJTK0ZF?=
+ =?utf-8?B?LzVjWWIxWHRQTDNwQ1JnV0dFRjdQb0xCRUFETno4bEcwTVZURUN0VHV4MEV0?=
+ =?utf-8?B?ZU1hMjl1TU5ORmcrbDQvSEtnTE8raDFRQUsrcEk3azZETmpFSjcxWEt3alFw?=
+ =?utf-8?B?QStWQ3dGM2s2SE9wL1d5RlJRZ3Z5QjVXdTRxUGRZdkV2TnRuZUVwREFMUUdP?=
+ =?utf-8?B?ZGVTTldtZUdpNnYxWjF5LzFqcjdMdmMvWFVnUk5tVE1wT0VOdUVxeE96em84?=
+ =?utf-8?B?Qk04MlhjMHpJZEc3aEF2S3JObXhWa1Nxa3FNYWwvQjJXS3ZHOHRxY1BOZVFE?=
+ =?utf-8?B?ZndCcE1sdXREQVJrTlEzVkJML0JFd3ZXaGhYbkxEYkREVWJMRDNwenNMVWN1?=
+ =?utf-8?B?QmxTOGdTNUM3cDZDek1DRFJPKzVQeXc5aVNONDBhaFhzT01WcDdHWWlOVllQ?=
+ =?utf-8?B?eHFocHJIZkZRSEpzMnlaUE5YR0xIRFhxN1k1OVpoNHBXR3FXdWNkUVFvWXgy?=
+ =?utf-8?Q?Dtml6L387ljYLQ4vA/c/aJ2OJ?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2024 18:16:48.2599 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 852a4616-71a4-4c2d-4a6a-08dccea012be
+X-MS-Exchange-CrossTenant-Network-Message-Id: 431aaa53-b2c5-4179-f3b0-08dccea39a4c
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2024 18:42:04.6186 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017097.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8797
-Received-SPF: permerror client-ip=2a01:111:f403:2415::629;
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Sr23kY4OSo9j2fBhl54z+7JjeJxr1vEfpoKfwfZyRqbb8tgg1xw7hfwKJOsUS225dKdg7XZ8CYvUrghwCY6bwg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6148
+Received-SPF: permerror client-ip=2a01:111:f403:200a::625;
  envelope-from=francisco.iglesias@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -154,27 +172,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+On Thu, Aug 29, 2024 at 05:31:17PM +0530, Shiva sagar Myana wrote:
+> Add the SFDP table for the Micron Xccela mt35xu01g flash.
+> 
+> Signed-off-by: Shiva sagar Myana <Shivasagar.Myana@amd.com>
 
-I'm not in possesion of Vikram's new email address at his new job, because of
-this the first patch in the series suggest's to remove Vikram as maintainer for
-the Xilinx CAN models and also the CAN bus subsystem. The second patch in the
-series updates my email address to the amd.com one on the Xilinx Versal
-OSPI maintaintership section. In the third I volunteer to replace Vikram as
-maintainer for the CAN bus subsystem. 
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
-Best regards,
-Francisco
-
-Francisco Iglesias (3):
-  MAINTAINERS: Remove Vikram Garhwal as maintainer
-  MAINTAINERS: Update Xilinx Versal OSPI maintainer's email address
-  MAINTAINERS: Add my-self as CAN maintainer
-
- MAINTAINERS | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
--- 
-2.34.1
-
+> ---
+> V1->V2: Change subject and commit message
+> 
+>  hw/block/m25p80.c      |  3 ++-
+>  hw/block/m25p80_sfdp.c | 37 +++++++++++++++++++++++++++++++++++++
+>  hw/block/m25p80_sfdp.h |  1 +
+>  3 files changed, 40 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> index 0b94af3653..23290edfe4 100644
+> --- a/hw/block/m25p80.c
+> +++ b/hw/block/m25p80.c
+> @@ -266,7 +266,8 @@ static const FlashPartInfo known_devices[] = {
+>      { INFO("n25q512ax3",  0x20ba20,  0x1000,  64 << 10, 1024, ER_4K) },
+>      { INFO("mt25ql512ab", 0x20ba20, 0x1044, 64 << 10, 1024, ER_4K | ER_32K) },
+>      { INFO_STACKED("mt35xu01g", 0x2c5b1b, 0x104100, 128 << 10, 1024,
+> -                   ER_4K | ER_32K, 2) },
+> +                   ER_4K | ER_32K, 2),
+> +                   .sfdp_read = m25p80_sfdp_mt35xu01g },
+>      { INFO_STACKED("mt35xu02gbba", 0x2c5b1c, 0x104100, 128 << 10, 2048,
+>                     ER_4K | ER_32K, 4),
+>                     .sfdp_read = m25p80_sfdp_mt35xu02g },
+> diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
+> index 6ee2cfaf11..82d84cc21f 100644
+> --- a/hw/block/m25p80_sfdp.c
+> +++ b/hw/block/m25p80_sfdp.c
+> @@ -57,6 +57,43 @@ static const uint8_t sfdp_n25q256a[] = {
+>  };
+>  define_sfdp_read(n25q256a);
+>  
+> +static const uint8_t sfdp_mt35xu01g[] = {
+> +    0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
+> +    0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
+> +    0x84, 0x00, 0x01, 0x02, 0x80, 0x00, 0x00, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xe5, 0x20, 0x8a, 0xff, 0xff, 0xff, 0xff, 0x3f,
+> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+> +    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
+> +    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x11, 0xd8,
+> +    0x0f, 0x52, 0x00, 0x00, 0x24, 0x5a, 0x99, 0x00,
+> +    0x8b, 0x8e, 0x03, 0xe1, 0xac, 0x01, 0x27, 0x38,
+> +    0x7a, 0x75, 0x7a, 0x75, 0xfb, 0xbd, 0xd5, 0x5c,
+> +    0x00, 0x00, 0x70, 0xff, 0x81, 0xb0, 0x38, 0x36,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0x43, 0x0e, 0xff, 0xff, 0x21, 0xdc, 0x5c, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +};
+> +
+> +define_sfdp_read(mt35xu01g);
+> +
+>  static const uint8_t sfdp_mt35xu02g[] = {
+>      0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
+>      0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
+> diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
+> index 1733b56950..89c2d8f72d 100644
+> --- a/hw/block/m25p80_sfdp.h
+> +++ b/hw/block/m25p80_sfdp.h
+> @@ -16,6 +16,7 @@
+>  #define M25P80_SFDP_MAX_SIZE  (1 << 24)
+>  
+>  uint8_t m25p80_sfdp_n25q256a(uint32_t addr);
+> +uint8_t m25p80_sfdp_mt35xu01g(uint32_t addr);
+>  uint8_t m25p80_sfdp_mt35xu02g(uint32_t addr);
+>  
+>  uint8_t m25p80_sfdp_mx25l25635e(uint32_t addr);
+> -- 
+> 2.34.1
+> 
 
