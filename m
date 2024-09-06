@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3632FCD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518A9CE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWxO-0007L3-Ng; Fri, 06 Sep 2024 07:16:50 -0400
+	id 1smX0i-0004i6-MH; Fri, 06 Sep 2024 07:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWwI-0001yV-Af; Fri, 06 Sep 2024 07:15:45 -0400
+ id 1smX0P-0003pF-5t; Fri, 06 Sep 2024 07:20:01 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWwG-00080o-Hj; Fri, 06 Sep 2024 07:15:42 -0400
+ id 1smX0L-0008My-FX; Fri, 06 Sep 2024 07:19:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 532E98C48B;
- Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D8A0F8C4B4;
+ Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 602371336F5;
- Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
-Received: (nullmailer pid 353630 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:24 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id E557D13371D;
+ Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
+Received: (nullmailer pid 353765 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:25 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 27/69] target/arm: Avoid shifts by -1 in tszimm_shr()
- and tszimm_shl()
-Date: Fri,  6 Sep 2024 14:12:36 +0300
-Message-Id: <20240906111324.353230-27-mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 67/69] Revert "replay: stop us hanging in
+ rr_wait_io_event"
+Date: Fri,  6 Sep 2024 14:13:16 +0300
+Message-Id: <20240906111324.353230-67-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,61 +64,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-The function tszimm_esz() returns a shift amount, or possibly -1 in
-certain cases that correspond to unallocated encodings in the
-instruction set.  We catch these later in the trans_ functions
-(generally with an "a-esz < 0" check), but before we do the
-decodetree-generated code will also call tszimm_shr() or tszimm_sl(),
-which will use the tszimm_esz() return value as a shift count without
-checking that it is not negative, which is undefined behaviour.
+This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
 
-Avoid the UB by checking the return value in tszimm_shr() and
-tszimm_shl().
+That commit causes reverse_debugging.py test failures, and does
+not seem to solve the root cause of the problem x86-64 still
+hangs in record/replay tests.
 
-Cc: qemu-stable@nongnu.org
-Resolves: Coverity CID 1547617, 1547694
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240722172957.1041231-4-peter.maydell@linaro.org
-(cherry picked from commit 76916dfa89e8900639c1055c07a295c06628a0bc)
+The problem with short-cutting the iowait that was taken during
+record phase is that related events will not get consumed at the
+same points (e.g., reading the clock).
+
+A hang with zero icount always seems to be a symptom of an earlier
+problem that has caused the recording to become out of synch with
+the execution and consumption of events by replay.
+
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Message-Id: <20240813050638.446172-6-npiggin@gmail.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240813202329.1237572-14-alex.bennee@linaro.org>
+(cherry picked from commit 94962ff00d09674047aed896e87ba09736cd6941)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2524
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index ada05aa530..466a19c25a 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -50,13 +50,27 @@ static int tszimm_esz(DisasContext *s, int x)
- 
- static int tszimm_shr(DisasContext *s, int x)
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 894e73e52c..a942442a33 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -109,7 +109,7 @@ static void rr_wait_io_event(void)
  {
--    return (16 << tszimm_esz(s, x)) - x;
-+    /*
-+     * We won't use the tszimm_shr() value if tszimm_esz() returns -1 (the
-+     * trans function will check for esz < 0), so we can return any
-+     * value we like from here in that case as long as we avoid UB.
-+     */
-+    int esz = tszimm_esz(s, x);
-+    if (esz < 0) {
-+        return esz;
-+    }
-+    return (16 << esz) - x;
+     CPUState *cpu;
+ 
+-    while (all_cpu_threads_idle() && replay_can_wait()) {
++    while (all_cpu_threads_idle()) {
+         rr_stop_kick_timer();
+         qemu_cond_wait_bql(first_cpu->halt_cond);
+     }
+diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
+index f229b2109c..8102fa54f0 100644
+--- a/include/sysemu/replay.h
++++ b/include/sysemu/replay.h
+@@ -73,11 +73,6 @@ int replay_get_instructions(void);
+ /*! Updates instructions counter in replay mode. */
+ void replay_account_executed_instructions(void);
+ 
+-/**
+- * replay_can_wait: check if we should pause for wait-io
+- */
+-bool replay_can_wait(void);
+-
+ /* Processing clocks and other time sources */
+ 
+ /*! Save the specified clock */
+diff --git a/replay/replay.c b/replay/replay.c
+index a2c576c16e..325e275756 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -449,27 +449,6 @@ void replay_start(void)
+     replay_enable_events();
  }
  
- /* See e.g. LSL (immediate, predicated).  */
- static int tszimm_shl(DisasContext *s, int x)
+-/*
+- * For none/record the answer is yes.
+- */
+-bool replay_can_wait(void)
+-{
+-    if (replay_mode == REPLAY_MODE_PLAY) {
+-        /*
+-         * For playback we shouldn't ever be at a point we wait. If
+-         * the instruction count has reached zero and we have an
+-         * unconsumed event we should go around again and consume it.
+-         */
+-        if (replay_state.instruction_count == 0 && replay_state.has_unread_data) {
+-            return false;
+-        } else {
+-            replay_sync_error("Playback shouldn't have to iowait");
+-        }
+-    }
+-    return true;
+-}
+-
+-
+ void replay_finish(void)
  {
--    return x - (8 << tszimm_esz(s, x));
-+    /* As with tszimm_shr(), value will be unused if esz < 0 */
-+    int esz = tszimm_esz(s, x);
-+    if (esz < 0) {
-+        return esz;
-+    }
-+    return x - (8 << esz);
- }
- 
- /* The SH bit is in bit 8.  Extract the low 8 and shift.  */
+     if (replay_mode == REPLAY_MODE_NONE) {
 -- 
 2.39.2
 
