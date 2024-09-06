@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E55CE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F12CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSug-0003d8-4r; Fri, 06 Sep 2024 02:57:48 -0400
+	id 1smSrv-0004ki-Fa; Fri, 06 Sep 2024 02:54:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSuI-0001sk-DC; Fri, 06 Sep 2024 02:57:24 -0400
+ id 1smSru-0004fA-0t; Fri, 06 Sep 2024 02:54:54 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSuF-0003Wb-0F; Fri, 06 Sep 2024 02:57:21 -0400
+ id 1smSrs-00030q-CN; Fri, 06 Sep 2024 02:54:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD4F98C255;
- Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 098638C23C;
+ Fri,  6 Sep 2024 09:53:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 868F113340D;
- Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
-Received: (nullmailer pid 43588 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:30 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id C6EE71333F4;
+ Fri,  6 Sep 2024 09:54:29 +0300 (MSK)
+Received: (nullmailer pid 43347 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Amjad Alsharafi <amjadsharafi10@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 32/53] vvfat: Fix bug in writing to middle of file
-Date: Fri,  6 Sep 2024 09:54:02 +0300
-Message-Id: <20240906065429.42415-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 07/53] hw/nvme: fix memory leak in nvme_dsm
+Date: Fri,  6 Sep 2024 09:53:37 +0300
+Message-Id: <20240906065429.42415-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -61,39 +61,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+From: Zheyu Ma <zheyuma97@gmail.com>
 
-Before this commit, the behavior when calling `commit_one_file` for
-example with `offset=0x2000` (second cluster), what will happen is that
-we won't fetch the next cluster from the fat, and instead use the first
-cluster for the read operation.
+The allocated memory to hold LBA ranges leaks in the nvme_dsm function. This
+happens because the allocated memory for iocb->range is not freed in all
+error handling paths.
 
-This is due to off-by-one error here, where `i=0x2000 !< offset=0x2000`,
-thus not fetching the next cluster.
+Fix this by adding a free to ensure that the allocated memory is properly freed.
 
-Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Tested-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <b97c1e1f1bc2f776061ae914f95d799d124fcd73.1721470238.git.amjadsharafi10@gmail.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit b881cf00c99e03bc8a3648581f97736ff275b18b)
+ASAN log:
+==3075137==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 480 byte(s) in 6 object(s) allocated from:
+    #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
+    #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
+    #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
+    #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
+    #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
+    #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
+
+Cc: qemu-stable@nongnu.org
+Fixes: d7d1474fd85d ("hw/nvme: reimplement dsm to allow cancellation")
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit c510fe78f1b7c966524489d6ba752107423b20c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 9d050ba3ae..19da009a5b 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -2525,8 +2525,9 @@ commit_one_file(BDRVVVFATState* s, int dir_index, uint32_t offset)
-         return -1;
-     }
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 2aa0aecfab..1fa117fdff 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -2592,6 +2592,7 @@ next:
+ done:
+     iocb->aiocb = NULL;
+     iocb->common.cb(iocb->common.opaque, iocb->ret);
++    g_free(iocb->range);
+     qemu_aio_unref(iocb);
+ }
  
--    for (i = s->cluster_size; i < offset; i += s->cluster_size)
-+    for (i = 0; i < offset; i += s->cluster_size) {
-         c = modified_fat_get(s, c);
-+    }
- 
-     fd = qemu_open_old(mapping->path, O_RDWR | O_CREAT | O_BINARY, 0666);
-     if (fd < 0) {
 -- 
 2.39.2
 
