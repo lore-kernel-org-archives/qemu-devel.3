@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C7BCE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0BA4CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWy9-0001iD-Jx; Fri, 06 Sep 2024 07:17:37 -0400
+	id 1smWze-0005Th-Mf; Fri, 06 Sep 2024 07:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWxF-0006lc-Mz; Fri, 06 Sep 2024 07:16:41 -0400
+ id 1smWzZ-0004uW-8N; Fri, 06 Sep 2024 07:19:05 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWxD-00087X-Cj; Fri, 06 Sep 2024 07:16:41 -0400
+ id 1smWzX-0008KB-Hd; Fri, 06 Sep 2024 07:19:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0D4728C496;
- Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 735588C4AE;
+ Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 18F50133700;
- Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
-Received: (nullmailer pid 353667 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:24 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 806FA133717;
+ Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
+Received: (nullmailer pid 353745 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:25 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 38/69] target/i386: Fix VSIB decode
-Date: Fri,  6 Sep 2024 14:12:47 +0300
-Message-Id: <20240906111324.353230-38-mjt@tls.msk.ru>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 61/69] target/sparc: Restrict STQF to sparcv9
+Date: Fri,  6 Sep 2024 14:13:10 +0300
+Message-Id: <20240906111324.353230-61-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,133 +65,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-With normal SIB, index == 4 indicates no index.
-With VSIB, there is no exception for VR4/VR12.
+Prior to sparcv9, the same encoding was STDFQ.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2474
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240805003130.1421051-3-richard.henderson@linaro.org
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit ac63755b20013ec6a3d2aef4538d37dc90bc3d10)
+Fixes: 06c060d9e5b ("target/sparc: Move simple fp load/store to decodetree")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240816072311.353234-2-richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 12d36294a2d978faf893101862118d1ac1815e85)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: modify the change to pre-new-decoder introduced past qemu 9.0)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 4209d59ca8..2ca874b59d 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1135,7 +1135,8 @@ static int decode_modrm(DisasContext *s, CPUX86State *env, X86DecodedInsn *decod
-     } else {
-         op->has_ea = true;
-         op->n = -1;
--        decode->mem = gen_lea_modrm_0(env, s, get_modrm(s, env));
-+        decode->mem = gen_lea_modrm_0(env, s, modrm,
-+                                      decode->e.vex_class == 12);
-     }
-     return modrm;
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index e2d8a07dc4..d2b29de084 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -484,7 +484,7 @@ STF         11 ..... 100100 ..... . .............          @r_r_ri_na
+ STFSR       11 00000 100101 ..... . .............          @n_r_ri
+ STXFSR      11 00001 100101 ..... . .............          @n_r_ri
+ {
+-  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na
++  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na # v9
+   STDFQ     11 ----- 100110 ----- - -------------
  }
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 26ed900f34..e2e3b3d7c3 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2187,7 +2187,7 @@ typedef struct AddressParts {
- } AddressParts;
+ STDF        11 ..... 100111 ..... . .............          @d_r_ri_na
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 99c6f3cc72..9d5d0ae47c 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -4151,7 +4151,7 @@ static bool do_st_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
  
- static AddressParts gen_lea_modrm_0(CPUX86State *env, DisasContext *s,
--                                    int modrm)
-+                                    int modrm, bool is_vsib)
- {
-     int def_seg, base, index, scale, mod, rm;
-     target_long disp;
-@@ -2216,7 +2216,7 @@ static AddressParts gen_lea_modrm_0(CPUX86State *env, DisasContext *s,
-             int code = x86_ldub_code(env, s);
-             scale = (code >> 6) & 3;
-             index = ((code >> 3) & 7) | REX_X(s);
--            if (index == 4) {
-+            if (index == 4 && !is_vsib) {
-                 index = -1;  /* no index */
-             }
-             base = (code & 7) | REX_B(s);
-@@ -2346,21 +2346,21 @@ static TCGv gen_lea_modrm_1(DisasContext *s, AddressParts a, bool is_vsib)
+ TRANS(STF, ALL, do_st_fpr, a, MO_32)
+ TRANS(STDF, ALL, do_st_fpr, a, MO_64)
+-TRANS(STQF, ALL, do_st_fpr, a, MO_128)
++TRANS(STQF, 64, do_st_fpr, a, MO_128)
  
- static void gen_lea_modrm(CPUX86State *env, DisasContext *s, int modrm)
- {
--    AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+    AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-     TCGv ea = gen_lea_modrm_1(s, a, false);
-     gen_lea_v_seg(s, s->aflag, ea, a.def_seg, s->override);
- }
- 
- static void gen_nop_modrm(CPUX86State *env, DisasContext *s, int modrm)
- {
--    (void)gen_lea_modrm_0(env, s, modrm);
-+    (void)gen_lea_modrm_0(env, s, modrm, false);
- }
- 
- /* Used for BNDCL, BNDCU, BNDCN.  */
- static void gen_bndck(CPUX86State *env, DisasContext *s, int modrm,
-                       TCGCond cond, TCGv_i64 bndv)
- {
--    AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+    AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-     TCGv ea = gen_lea_modrm_1(s, a, false);
- 
-     tcg_gen_extu_tl_i64(s->tmp1_i64, ea);
-@@ -4179,7 +4179,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-             goto illegal_op;
-         reg = ((modrm >> 3) & 7) | REX_R(s);
-         {
--            AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+            AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-             TCGv ea = gen_lea_modrm_1(s, a, false);
-             gen_lea_v_seg(s, s->aflag, ea, -1, -1);
-             gen_op_mov_reg_v(s, dflag, reg, s->A0);
-@@ -4400,7 +4400,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-             op = ((b & 7) << 3) | ((modrm >> 3) & 7);
-             if (mod != 3) {
-                 /* memory op */
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 TCGv ea = gen_lea_modrm_1(s, a, false);
-                 TCGv last_addr = tcg_temp_new();
-                 bool update_fdp = true;
-@@ -5348,7 +5348,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-         rm = (modrm & 7) | REX_B(s);
-         gen_op_mov_v_reg(s, MO_32, s->T1, reg);
-         if (mod != 3) {
--            AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+            AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-             /* specific case: we need to add a displacement */
-             gen_exts(ot, s->T1);
-             tcg_gen_sari_tl(s->tmp0, s->T1, 3 + ot);
-@@ -6343,7 +6343,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-                 }
-             } else if (mod != 3) {
-                 /* bndldx */
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 if (reg >= 4
-                     || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
-@@ -6387,7 +6387,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 if (a.base >= 0) {
-                     tcg_gen_extu_tl_i64(cpu_bndl[reg], cpu_regs[a.base]);
-                     if (!CODE64(s)) {
-@@ -6448,7 +6448,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-                 }
-             } else if (mod != 3) {
-                 /* bndstx */
--                AddressParts a = gen_lea_modrm_0(env, s, modrm);
-+                AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
-                 if (reg >= 4
-                     || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
+ TRANS(STFA, 64, do_st_fpr, a, MO_32)
+ TRANS(STDFA, 64, do_st_fpr, a, MO_64)
 -- 
 2.39.2
 
