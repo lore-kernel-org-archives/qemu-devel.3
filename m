@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E87BACD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2133ACE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWz3-0007hL-DJ; Fri, 06 Sep 2024 07:18:33 -0400
+	id 1smX03-0001CP-BG; Fri, 06 Sep 2024 07:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWz0-0007Pk-Fg; Fri, 06 Sep 2024 07:18:30 -0400
+ id 1smX00-0000a6-1i; Fri, 06 Sep 2024 07:19:32 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWyy-0008Eb-FH; Fri, 06 Sep 2024 07:18:30 -0400
+ id 1smWzx-0008MG-TK; Fri, 06 Sep 2024 07:19:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F0C1F8C4A6;
- Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BC3018C4B2;
+ Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 0733C13370F;
+ by tsrv.corpit.ru (Postfix) with SMTP id C7C8713371B;
  Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353719 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:24 -0000
+Received: (nullmailer pid 353759 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:25 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 53/69] block/blkio: use FUA flag on write zeroes only
- if supported
-Date: Fri,  6 Sep 2024 14:13:02 +0300
-Message-Id: <20240906111324.353230-53-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 65/69] migration/multifd: Free MultiFDRecvParams::data
+Date: Fri,  6 Sep 2024 14:13:14 +0300
+Message-Id: <20240906111324.353230-65-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,54 +61,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-libblkio supports BLKIO_REQ_FUA with write zeros requests only since
-version 1.4.0, so let's inform the block layer that the blkio driver
-supports it only in this case. Otherwise we can have runtime errors
-as reported in https://issues.redhat.com/browse/RHEL-32878
+In multifd_recv_setup() we allocate (among other things)
+ * a MultiFDRecvData struct to multifd_recv_state::data
+ * a MultiFDRecvData struct to each multfd_recv_state->params[i].data
 
-Fixes: fd66dbd424 ("blkio: add libblkio block driver")
+(Then during execution we might swap these pointers around.)
+
+But in multifd_recv_cleanup() we free multifd_recv_state->data
+in multifd_recv_cleanup_state() but we don't ever free the
+multifd_recv_state->params[i].data. This results in a memory
+leak reported by LeakSanitizer:
+
+(cd build/asan && \
+   ASAN_OPTIONS="fast_unwind_on_malloc=0:strip_path_prefix=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../" \
+   QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+   ./tests/qtest/migration-test --tap -k -p /x86_64/migration/multifd/file/mapped-ram )
+[...]
+Direct leak of 72 byte(s) in 3 object(s) allocated from:
+    #0 0x561cc0afcfd8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218efd8) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
+    #1 0x7f89d37acc50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
+    #2 0x561cc1e9c83c in multifd_recv_setup migration/multifd.c:1606:19
+    #3 0x561cc1e68618 in migration_ioc_process_incoming migration/migration.c:972:9
+    #4 0x561cc1e3ac59 in migration_channel_process_incoming migration/channel.c:45:9
+    #5 0x561cc1e4fa0b in file_accept_incoming_migration migration/file.c:132:5
+    #6 0x561cc30f2c0c in qio_channel_fd_source_dispatch io/channel-watch.c:84:12
+    #7 0x7f89d37a3c43 in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
+    #8 0x7f89d37a3c43 in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
+    #9 0x561cc3b21659 in glib_pollfds_poll util/main-loop.c:287:9
+    #10 0x561cc3b1ff93 in os_host_main_loop_wait util/main-loop.c:310:5
+    #11 0x561cc3b1fb5c in main_loop_wait util/main-loop.c:589:11
+    #12 0x561cc1da2917 in qemu_main_loop system/runstate.c:801:9
+    #13 0x561cc3796c1c in qemu_default_main system/main.c:37:14
+    #14 0x561cc3796c67 in main system/main.c:48:12
+    #15 0x7f89d163bd8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #16 0x7f89d163be3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #17 0x561cc0a79fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
+
+Direct leak of 24 byte(s) in 1 object(s) allocated from:
+    #0 0x561cc0afcfd8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218efd8) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
+    #1 0x7f89d37acc50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
+    #2 0x561cc1e9bed9 in multifd_recv_setup migration/multifd.c:1588:32
+    #3 0x561cc1e68618 in migration_ioc_process_incoming migration/migration.c:972:9
+    #4 0x561cc1e3ac59 in migration_channel_process_incoming migration/channel.c:45:9
+    #5 0x561cc1e4fa0b in file_accept_incoming_migration migration/file.c:132:5
+    #6 0x561cc30f2c0c in qio_channel_fd_source_dispatch io/channel-watch.c:84:12
+    #7 0x7f89d37a3c43 in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
+    #8 0x7f89d37a3c43 in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
+    #9 0x561cc3b21659 in glib_pollfds_poll util/main-loop.c:287:9
+    #10 0x561cc3b1ff93 in os_host_main_loop_wait util/main-loop.c:310:5
+    #11 0x561cc3b1fb5c in main_loop_wait util/main-loop.c:589:11
+    #12 0x561cc1da2917 in qemu_main_loop system/runstate.c:801:9
+    #13 0x561cc3796c1c in qemu_default_main system/main.c:37:14
+    #14 0x561cc3796c67 in main system/main.c:48:12
+    #15 0x7f89d163bd8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #16 0x7f89d163be3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #17 0x561cc0a79fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
+
+SUMMARY: AddressSanitizer: 96 byte(s) leaked in 4 allocation(s).
+
+Free the params[i].data too.
+
 Cc: qemu-stable@nongnu.org
-Buglink: https://issues.redhat.com/browse/RHEL-32878
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240808080545.40744-1-sgarzare@redhat.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 547c4e50929ec6c091d9c16a7b280e829b12b463)
+Fixes: d117ed0699d41 ("migration/multifd: Allow receiving pages without packets")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 4c107870e8b2ba3951ee0c46123f1c3b5d3a19d3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/blkio.c b/block/blkio.c
-index 882e1c297b..52ac94527f 100644
---- a/block/blkio.c
-+++ b/block/blkio.c
-@@ -899,8 +899,10 @@ static int blkio_file_open(BlockDriverState *bs, QDict *options, int flags,
-     }
- 
-     bs->supported_write_flags = BDRV_REQ_FUA | BDRV_REQ_REGISTERED_BUF;
--    bs->supported_zero_flags = BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP |
--                               BDRV_REQ_NO_FALLBACK;
-+    bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK;
-+#ifdef CONFIG_BLKIO_WRITE_ZEROS_FUA
-+    bs->supported_zero_flags |= BDRV_REQ_FUA;
-+#endif
- 
-     qemu_mutex_init(&s->blkio_lock);
-     qemu_co_mutex_init(&s->bounce_lock);
-diff --git a/meson.build b/meson.build
-index 91a0aa64c6..7a56772136 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2211,6 +2211,8 @@ config_host_data.set('CONFIG_BLKIO', blkio.found())
- if blkio.found()
-   config_host_data.set('CONFIG_BLKIO_VHOST_VDPA_FD',
-                        blkio.version().version_compare('>=1.3.0'))
-+  config_host_data.set('CONFIG_BLKIO_WRITE_ZEROS_FUA',
-+                       blkio.version().version_compare('>=1.4.0'))
- endif
- config_host_data.set('CONFIG_CURL', curl.found())
- config_host_data.set('CONFIG_CURSES', curses.found())
+diff --git a/migration/multifd.c b/migration/multifd.c
+index fa55586f89..ac3742343f 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1351,6 +1351,8 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
+     qemu_mutex_destroy(&p->mutex);
+     qemu_sem_destroy(&p->sem_sync);
+     qemu_sem_destroy(&p->sem);
++    g_free(p->data);
++    p->data = NULL;
+     g_free(p->name);
+     p->name = NULL;
+     p->packet_len = 0;
 -- 
 2.39.2
 
