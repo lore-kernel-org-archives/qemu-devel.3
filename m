@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62401CE7B04
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7A2CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smX01-0000oB-DR; Fri, 06 Sep 2024 07:19:33 -0400
+	id 1smWym-0005lh-Fl; Fri, 06 Sep 2024 07:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWzy-0000Jp-LS; Fri, 06 Sep 2024 07:19:30 -0400
+ id 1smWyf-0004Tv-3N; Fri, 06 Sep 2024 07:18:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWzw-0008Lz-CY; Fri, 06 Sep 2024 07:19:30 -0400
+ id 1smWyd-0008EL-3H; Fri, 06 Sep 2024 07:18:08 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ACB5C8C4B1;
- Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E067A8C4A5;
+ Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id ACC7813371A;
- Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353756 invoked by uid 1000);
- Fri, 06 Sep 2024 11:13:25 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id ED5EF13370E;
+ Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
+Received: (nullmailer pid 353715 invoked by uid 1000);
+ Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Cindy Lu <lulu@redhat.com>,
- Jason Wang <jasowang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 64/69] virtio-pci: Fix the use of an uninitialized irqfd
-Date: Fri,  6 Sep 2024 14:13:13 +0300
-Message-Id: <20240906111324.353230-64-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jianzhou Yue <JianZhou.Yue@verisilicon.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 52/69] hw/core/ptimer: fix timer zero period condition
+ for freq > 1GHz
+Date: Fri,  6 Sep 2024 14:13:01 +0300
+Message-Id: <20240906111324.353230-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -62,77 +62,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cindy Lu <lulu@redhat.com>
+From: Jianzhou Yue <JianZhou.Yue@verisilicon.com>
 
-The crash was reported in MAC OS and NixOS, here is the link for this bug
-https://gitlab.com/qemu-project/qemu/-/issues/2334
-https://gitlab.com/qemu-project/qemu/-/issues/2321
+The real period is zero when both period and period_frac are zero.
+Check the method ptimer_set_freq, if freq is larger than 1000 MHz,
+the period is zero, but the period_frac is not, in this case, the
+ptimer will work but the current code incorrectly recognizes that
+the ptimer is disabled.
 
-In this bug, they are using the virtio_input device. The guest notifier was
-not supported for this device, The function virtio_pci_set_guest_notifiers()
-was not called, and the vector_irqfd was not initialized.
-
-So the fix is adding the check for vector_irqfd in virtio_pci_get_notifier()
-
-The function virtio_pci_get_notifier() can be used in various devices.
-It could also be called when VIRTIO_CONFIG_S_DRIVER_OK is not set. In this situation,
-the vector_irqfd being NULL is acceptable. We can allow the device continue to boot
-
-If the vector_irqfd still hasn't been initialized after VIRTIO_CONFIG_S_DRIVER_OK
-is set, it means that the function set_guest_notifiers was not called before the
-driver started. This indicates that the device is not using the notifier.
-At this point, we will let the check fail.
-
-This fix is verified in vyatta,MacOS,NixOS,fedora system.
-
-The bt tree for this bug is:
-Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-[Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-817         if (irqfd->users == 0) {
-(gdb) thread apply all bt
-...
-Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
-0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
-2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497
-3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/system/memory.c:573
-4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528
-5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qemu-9.0.0/system/physmem.c:2713
-6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743
-7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
-8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/physmem.c:2894
-9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/physmem.c:2904
-10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
-11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
-12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-thread-posix.c:541
-13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
-14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
-
-Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Cindy Lu <lulu@redhat.com>
-Message-Id: <20240806093715.65105-1-lulu@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit a8e63ff289d137197ad7a701a587cc432872d798)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2306
+Signed-off-by: JianZhou Yue <JianZhou.Yue@verisilicon.com>
+Message-id: 3DA024AEA8B57545AF1B3CAA37077D0FB75E82C8@SHASXM03.verisilicon.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 446e5e8b4515e9a7be69ef6a29852975289bb6f0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index e04218a9fb..389bab003f 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-     VirtQueue *vq;
+diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
+index b1517592c6..1d8964d804 100644
+--- a/hw/core/ptimer.c
++++ b/hw/core/ptimer.c
+@@ -83,7 +83,7 @@ static void ptimer_reload(ptimer_state *s, int delta_adjust)
+         delta = s->delta = s->limit;
+     }
  
-+    if (!proxy->vector_irqfd && vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)
-+        return -1;
+-    if (s->period == 0) {
++    if (s->period == 0 && s->period_frac == 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+@@ -309,7 +309,7 @@ void ptimer_run(ptimer_state *s, int oneshot)
+ 
+     assert(s->in_transaction);
+ 
+-    if (was_disabled && s->period == 0) {
++    if (was_disabled && s->period == 0 && s->period_frac == 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+diff --git a/tests/unit/ptimer-test.c b/tests/unit/ptimer-test.c
+index 04b5f4e3d0..08240594bb 100644
+--- a/tests/unit/ptimer-test.c
++++ b/tests/unit/ptimer-test.c
+@@ -763,6 +763,33 @@ static void check_oneshot_with_load_0(gconstpointer arg)
+     ptimer_free(ptimer);
+ }
+ 
++static void check_freq_more_than_1000M(gconstpointer arg)
++{
++    const uint8_t *policy = arg;
++    ptimer_state *ptimer = ptimer_init(ptimer_trigger, NULL, *policy);
++    bool no_round_down = (*policy & PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
 +
-     if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
-         *n = virtio_config_get_guest_notifier(vdev);
-         *vector = vdev->config_vector;
++    triggered = false;
++
++    ptimer_transaction_begin(ptimer);
++    ptimer_set_freq(ptimer, 2000000000);
++    ptimer_set_limit(ptimer, 8, 1);
++    ptimer_run(ptimer, 1);
++    ptimer_transaction_commit(ptimer);
++
++    qemu_clock_step(3);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), ==, no_round_down ? 3 : 2);
++    g_assert_false(triggered);
++
++    qemu_clock_step(1);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), ==, 0);
++    g_assert_true(triggered);
++
++    ptimer_free(ptimer);
++}
++
+ static void add_ptimer_tests(uint8_t policy)
+ {
+     char policy_name[256] = "";
+@@ -857,6 +884,12 @@ static void add_ptimer_tests(uint8_t policy)
+                               policy_name),
+         g_memdup2(&policy, 1), check_oneshot_with_load_0, g_free);
+     g_free(tmp);
++
++    g_test_add_data_func_full(
++        tmp = g_strdup_printf("/ptimer/freq_more_than_1000M policy=%s",
++                              policy_name),
++        g_memdup2(&policy, 1), check_freq_more_than_1000M, g_free);
++    g_free(tmp);
+ }
+ 
+ static void add_all_ptimer_policies_comb_tests(void)
 -- 
 2.39.2
 
