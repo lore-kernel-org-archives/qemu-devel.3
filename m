@@ -4,69 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE08E6FE43
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F7AE6FE3D
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 18:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smdMr-00018o-Oy; Fri, 06 Sep 2024 14:07:38 -0400
+	id 1smdN6-00021Q-29; Fri, 06 Sep 2024 14:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdMY-0000np-CC
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1smdMC-00054Z-MX
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725645997;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZVfJX2VD3EM2pB8QgslbJHPpyyVLozFMmyJS3H/4hs4=;
- b=C7XotGr7B6j3IlzPSYWXxPkR422LE07GhsdGdVB524ARzpWLSgC0vuFGIQZz8uMynFkHEt
- UXAWuX9eaw0LrP7Th0KvvTO9gGxRN+y7972dnEInj9jyO4gcAiAINUWCYNBTKrckfI5Ev6
- xkH8HSc2OdNuQziMV/i0oulY+I5z0Lg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-Mw4Y-aS2MeiQKiS1ySmKJw-1; Fri,
- 06 Sep 2024 14:06:33 -0400
-X-MC-Unique: Mw4Y-aS2MeiQKiS1ySmKJw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A56D19560AD; Fri,  6 Sep 2024 18:06:32 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.70])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 88BA619560AA; Fri,  6 Sep 2024 18:06:30 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smdMn-0001br-Jr
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:32 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smdMl-000562-Kw
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 14:07:29 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-375e5c12042so1207868f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 11:07:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725646045; x=1726250845; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+YGETogEe7QHs3kpO72TeOLSF1g7K/mh6DUXFGQKYAw=;
+ b=DAuB+IaGYs3ggEL+OBmHAVbosnorfVHiUShC/Gxdaf0DuN2mTDeUAxoBeMX7jmm9aN
+ JniQM7sy8Vl/ZsAGl2spDobcRz6bX7BK/84lgutyELfvGYaRcAByiVYZkc47OjhCAqkc
+ q0+LpP03NXLkjw3lbClMU6UjOtvMzRezQ2B70/HPov/z9siGEKSQS0RvgPCQBP+INxeZ
+ +DpUSZdSxT6QD1hNa1KRjhAlFne1WZ8zkqhjizg05ImVa30+1mLhqS0C+8hvzDdKC2p5
+ t8tbussIvCHD0KcBCHjxnZXmfNvVNUVriqRaNIcA8tV2h1cOR4IZhdDusz+tL9tKH2lR
+ +RRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725646045; x=1726250845;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+YGETogEe7QHs3kpO72TeOLSF1g7K/mh6DUXFGQKYAw=;
+ b=KBBp9yzHPtBR/p4DDQGcjyRX8/Y6W8Ct4qJfL/0W0b1/p5uBkDbAcwm6SSs+9yZf6o
+ iPAJI9WuntHuwBPXs0Azcw/kOhmh/C0hans63dxXjNylNyPInFMVr0d/Zud9ZQgULbra
+ 544lX/FyrmqLP95Pk2clJ45WKGsL0g+yRSb3ytg8QpiQ+tCQzCGXbE+cjEBFzcZdP6Wv
+ Y9PySfIp7ZDA9vpg6eNTWaMW388jdO67wJkC750yZiCbPXHUCEOKqpOk/RYU1/FrdoZV
+ 1o7MFgsBHwHscWfV5AcfOIFXZ8ZGsyYWRR5IudSIMUj6DfQBPozaq948UowUZfosj0wS
+ CXlw==
+X-Gm-Message-State: AOJu0YwdTlN1vXFkir3VIiIWVq7EOPbdGSojMuIERcSQcCVe8sabLOD+
+ rCfnKqzRMDnlTdicRQIYeEmGKqud37pJz/JdTfARpCNO7xYlc1y2M0nqhKv7PCf62ZcF4OaoflW
+ o
+X-Google-Smtp-Source: AGHT+IFp2ilXsxNvxEZsdHpkJ/fDpgF42CqfeZNxh6JvToyu3Lllv3J9sgTftN0ADOzQPqzKdojynQ==
+X-Received: by 2002:adf:cd8b:0:b0:374:ba7b:42b5 with SMTP id
+ ffacd0b85a97d-378895db877mr2565719f8f.24.1725646045319; 
+ Fri, 06 Sep 2024 11:07:25 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37891657a2csm441860f8f.95.2024.09.06.11.07.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Sep 2024 11:07:24 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH 12/14] tests/functional: Convert the Alpha Clipper Avocado test
-Date: Fri,  6 Sep 2024 20:05:47 +0200
-Message-ID: <20240906180549.792832-13-thuth@redhat.com>
-In-Reply-To: <20240906180549.792832-1-thuth@redhat.com>
-References: <20240906180549.792832-1-thuth@redhat.com>
+Subject: [PATCH 0/2] gitlab-ci: Force 'make check' single-threaded for
+ cross-i686-tci
+Date: Fri,  6 Sep 2024 19:07:21 +0100
+Message-Id: <20240906180723.503855-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,108 +94,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Straight forward conversion, just switch to SHA256 hashsum now.
+The CI job cross-i686-tci has been persistently flaky for what seems
+like years now. Stefan Weil had a look and his conclusion was that
+this happens because we run too many tests in parallel, and so
+sometimes they starve each other of CPU and time out:
+https://lore.kernel.org/qemu-devel/9692cfcb-ef59-4cec-8452-8bfb859e8a6c@weilnetz.de/
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/avocado/boot_linux_console.py    | 21 --------------
- tests/functional/meson.build           |  4 +++
- tests/functional/test_alpha_clipper.py | 38 ++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 21 deletions(-)
- create mode 100755 tests/functional/test_alpha_clipper.py
+To test this theory, force the cross-i686-tci job to run only
+one test at a time. 'meson test' has a handy environment
+variable to let us set the parallelism. Unfortunately meson
+prioritises the command line '--num-processes' argument over
+the environment variable if they are both set, so to make
+this work we need to adjust our mtest2make script to not
+set --num-processes if the MESON_TESTTHREADS envariable is set.
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index a8eac44d9f..75aab90320 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -882,27 +882,6 @@ def test_arm_orangepi_uboot_netbsd9(self):
-         # Wait for user-space
-         wait_for_console_pattern(self, 'Starting root file system check')
- 
--    def test_alpha_clipper(self):
--        """
--        :avocado: tags=arch:alpha
--        :avocado: tags=machine:clipper
--        """
--        kernel_url = ('http://archive.debian.org/debian/dists/lenny/main/'
--                      'installer-alpha/20090123lenny10/images/cdrom/vmlinuz')
--        kernel_hash = '3a943149335529e2ed3e74d0d787b85fb5671ba3'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--
--        uncompressed_kernel = archive.uncompress(kernel_path, self.workdir)
--
--        self.vm.set_console()
--        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
--        self.vm.add_args('-nodefaults',
--                         '-kernel', uncompressed_kernel,
--                         '-append', kernel_command_line)
--        self.vm.launch()
--        console_pattern = 'Kernel command line: %s' % kernel_command_line
--        self.wait_for_console_pattern(console_pattern)
--
-     def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
-         tar_url = ('https://qemu-advcal.gitlab.io'
-                    '/qac-best-of-multiarch/download/day' + day + '.tar.xz')
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index a79083b0f9..e1903132a1 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -41,6 +41,10 @@ tests_aarch64_system_thorough = [
-   'aarch64_virt',
- ]
- 
-+tests_alpha_system_thorough = [
-+  'alpha_clipper',
-+]
-+
- tests_arm_system_thorough = [
-   'arm_canona1100',
-   'arm_integratorcp',
-diff --git a/tests/functional/test_alpha_clipper.py b/tests/functional/test_alpha_clipper.py
-new file mode 100755
-index 0000000000..c1fbf0e395
---- /dev/null
-+++ b/tests/functional/test_alpha_clipper.py
-@@ -0,0 +1,38 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on an Alpha Clipper machine
-+# and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+
-+from qemu_test import LinuxKernelTest, Asset
-+from qemu_test.utils import gzip_uncompress
-+
-+
-+class AlphaClipperTest(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('http://archive.debian.org/debian/dists/lenny/main/'
-+         'installer-alpha/20090123lenny10/images/cdrom/vmlinuz'),
-+        '34f53da3fa32212e4f00b03cb944b2ad81c06bc8faaf9b7193b2e544ceeca576')
-+
-+    def test_alpha_clipper(self):
-+        self.set_machine('clipper')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+
-+        uncompressed_kernel = os.path.join(self.workdir, 'vmlinux')
-+        gzip_uncompress(kernel_path, uncompressed_kernel)
-+
-+        self.vm.set_console()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-+        self.vm.add_args('-nodefaults',
-+                         '-kernel', uncompressed_kernel,
-+                         '-append', kernel_command_line)
-+        self.vm.launch()
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        self.wait_for_console_pattern(console_pattern)
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+I don't know if this will fix the flakiness, but it seems worth
+a try. If it works, we might want to consider whether we should
+do something similar across the board -- at the moment we
+always use a parallelism of num-cpus + 1, because we use the
+same amount of parallelism that we do for the compile step.
+
+thanks
+-- PMM
+
+Peter Maydell (2):
+  scripts/mtest2make: Honour MESON_TESTTHREADS if it is set
+  .gitlab-ci.d/crossbuilds.yml: Force 'make check' single threaded for
+    cross-i686-tci
+
+ .gitlab-ci.d/crossbuilds.yml | 3 +++
+ scripts/mtest2make.py        | 4 ++++
+ 2 files changed, 7 insertions(+)
+
 -- 
-2.46.0
+2.34.1
 
 
