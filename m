@@ -4,68 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29715CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB431CD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smXCw-0000Lk-Ks; Fri, 06 Sep 2024 07:32:54 -0400
+	id 1smXLY-0001RK-An; Fri, 06 Sep 2024 07:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smXCu-0000E5-JT
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 07:32:52 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smXL5-0000HS-3X
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 07:41:25 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smXCs-0001kw-7e
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 07:32:51 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c275491c61so2147916a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 04:32:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smXL0-0004w9-Ub
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 07:41:17 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2f74e613a10so25956901fa.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 04:41:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725622367; x=1726227167; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hi2SjrygMmK2WNFx8XgAzH5BKkoeBwqtydW1vzokC/U=;
- b=ugeMHwEWyBjvEohBzOn/h+NG3FWihNJ3p+0o0QtIEgy9fZAhthD2NeNZZHZ6K54gyK
- UrmTHTarTy3AcpicCmyd5fXkfJtl3CEpz6coPh4vOkJAzA0LuBi41f+1LLsUFVhT+XSL
- d51Stys5NNvRvmgYtIGcCHemOfFM926u75wJacFiq35zmMye4BzIQJHZxbVaS4HqgKgz
- betYI4iNt6Zg4bXMfhohr/fmhlyXI99ub+pqHFQMRpepCcwRoo6Eo8wYZGZIqH+hbCrU
- efLj0TJ4zXM0WWraejeeDzY5hn/M+cJx37gwZMlnwxEueGf2gS2skOhfj8G0Mj+KH9js
- QymA==
+ d=linaro.org; s=google; t=1725622872; x=1726227672; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gGKs7C9mcSQcGwX3xGGulcF7nGyBOSbrr4Eqg9oP/1A=;
+ b=i5nOfVX2YBKfg7wCTa67OICEPC5rzVJK3R35Cqke3BPg4afCCJtOLloHGsrZpUJr0y
+ CPFmmdPNDSfaQEB7/ari4EiOQ+xh+4gzQdalr4ZhJK/uqZn+F6VSfTsoCktg/uzEUrv5
+ rlsiH4SzKiA3zgnqURmXaEIvxGpBv93zzFgUqJytGKuEFIaih3tBU5SlHSQsAmw0ovP1
+ PXY+/OnqWdm9MrlXEGJ2OPa9T6pzgDGMbwAP4LosVvA0eHY5xExZp/+/e9XfVxo0W988
+ V2QDZma5gjGDP647XLOysgsV70KukjtGwc5YZezTrRIe+hZ78S7UJQ1Pu9IAYPQ7SP0s
+ FNwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725622367; x=1726227167;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hi2SjrygMmK2WNFx8XgAzH5BKkoeBwqtydW1vzokC/U=;
- b=WFjB+GhGlgA37u7pGKJdO9By+kJtHbavP8Xo7AMyq/0bBxHQHqQvFZ6GSzTDGGZM5e
- nCfVjURnd9EPhXpKvtRR5mysI8Oszw1zuSGLZIP66AmBXE1nKUawszPrUO3U8aoJGZJ+
- rNy+LEI1M0fASdImO2rMYx9qDDK3dH0lz69AyZhIfN7i1UrRRM7vp41y7QgZ7RxiwaoA
- wPRGlMTopED8B1GwQEyoSKyyJ41nKitXOzuWZjDDhrmy5WCsrewBVsvnf48dGNpP1SvP
- BHXfVRwb4zX0h3qP4Wbm2lQ8F8+ENTwXC+OENVa1rOOyqkqH1V3UZ19AQXVufNvHyMsh
- qvzw==
-X-Gm-Message-State: AOJu0YxqBx2fwHepxvg/u/uHLNUXOQcI3KAkaVVEzXMEVoFn+8FK4kLr
- SwyplVwIjsekFUj7OYPRTsuNjMNAyBBz/XsODwqqNzKDHw6yfJTp7uPO9lah1NpMjKmy2VJXYz9
- VMnWyEZM6dfGWG0ZWEXGTZ+K0cgR8qZgJLpn9/A==
-X-Google-Smtp-Source: AGHT+IEY9b59tbUHZODvIDqx4CBZS1oAFWKD9/gETxBTItpsj98Q2wbfTTp1zV75Mv3MKVPMAVx4U/Ks30lHLQZfpsI=
-X-Received: by 2002:a05:6402:3592:b0:5c0:ad65:ebfa with SMTP id
- 4fb4d7f45d1cf-5c21ec58f5emr20031635a12.0.1725622367304; Fri, 06 Sep 2024
- 04:32:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725622872; x=1726227672;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gGKs7C9mcSQcGwX3xGGulcF7nGyBOSbrr4Eqg9oP/1A=;
+ b=JpHbbj+tzxTl+2KTdIgZgkwezXL3JQ/JYRvIp9DLZ9/ymhBwoBZ/UMhAKWW0NZ0g5a
+ DyDcl84lMKK1TAiFNfCf8llFJkb5BdiWFvsjPhcBhOTv56rY6OUK/yP3mH2AMoZhliVE
+ Tni6+4UdXJtASd+u/D9L8sbIdrHxfUl10NXDdCOy7njvR0hIDnCWC9nncGM4egD3dc1I
+ EUczt1dq49x7djvt5/DUPw62Rb0VKifomvzn/Jk8rzCRH3s8oJiaHhby4F5/RWkqF3gd
+ sKRdvaLWUMmOs6KBwGN4jHdoUu4UXU/+TCkrDKKQo1Pf2Xu5SaCBp06wkDNBi3YIpZKX
+ bV8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmmw2m6AfnrR3NTAZc8QhjqD7vIthGpWOPmogdjBAq19zowQE/4LtjgulRzKTQFVtR8TrS8KLO79Sf@nongnu.org
+X-Gm-Message-State: AOJu0YwpasLGz/oF8R2MD2JNFFLYGNlZ15TA3jz3Rx7Y/YBjk/V0rD4E
+ ol7gO2NvTYnw+k8iuzD8C9AuLri2Osfu6jJCxO2/iTRcb/6O7N7Wvwy2OgwVeck=
+X-Google-Smtp-Source: AGHT+IHgqzH0S6PmQluD4eRTlb1tvmnPc8Y5EaMd8d4Ee/8jic4xSN75lSiH2WBTLfCMIwiL9J7jDw==
+X-Received: by 2002:a05:6512:1149:b0:533:324a:9df6 with SMTP id
+ 2adb3069b0e04-536587ba955mr1925043e87.29.1725622872199; 
+ Fri, 06 Sep 2024 04:41:12 -0700 (PDT)
+Received: from [192.168.55.118] ([80.215.236.92])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8a72490a33sm203899166b.192.2024.09.06.04.40.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Sep 2024 04:41:11 -0700 (PDT)
+Message-ID: <e6093a09-078d-4412-85d6-8727477ddf40@linaro.org>
+Date: Fri, 6 Sep 2024 13:40:50 +0200
 MIME-Version: 1.0
-References: <20240904103923.451847-1-thuth@redhat.com>
-In-Reply-To: <20240904103923.451847-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Sep 2024 12:32:35 +0100
-Message-ID: <CAFEAcA-Rq+BbZeDABM-fRD7Jhj_4bbP8axgkmm+h1Oj-CPR_rA@mail.gmail.com>
-Subject: Re: [PULL 00/42] Introduce new functional test framework
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] hw/sh4: Remove the deprecated SHIX machine
+To: Samuel Tardieu <sam@rfc1149.net>, qemu-devel@nongnu.org
+Cc: devel@lists.libvirt.org, Magnus Damm <magnus.damm@gmail.com>,
+ qemu-block@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>
+References: <20240903153959.18392-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240903153959.18392-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,33 +96,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Sept 2024 at 11:40, Thomas Huth <thuth@redhat.com> wrote:
->
->  Hi!
->
-> The following changes since commit e638d685ec2a0700fb9529cbd1b2823ac4120c53:
->
->   Open 9.2 development tree (2024-09-03 09:18:43 -0700)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-04
->
-> for you to fetch changes up to c3e24cff2b27d63ac4b56ac6d38ef1ae3a27d92f:
->
->   docs/devel/testing: Add documentation for functional tests (2024-09-04 12:28:00 +0200)
->
-> ----------------------------------------------------------------
-> * Bump Avocado to version 103
-> * Introduce new functional test framework for Python-based tests
-> * Convert many Avocado tests to the new functional test framework
->
+On 3/9/24 17:39, Philippe Mathieu-Daudé wrote:
+> Remove the deprecated SH4 SHIX machine, along
+> with the TC58128 NAND EEPROM.
+> 
+> Philippe Mathieu-Daudé (3):
+>    hw/sh4: Remove the deprecated SHIX machine
+>    hw/block: Remove TC58128 NAND EEPROM
+>    hw/sh4: Remove sh7750_register_io_device() helper
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
-
--- PMM
+Series queued, thanks.
 
