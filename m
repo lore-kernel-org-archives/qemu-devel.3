@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B2ECD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4DCCE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWyf-0004Uy-S7; Fri, 06 Sep 2024 07:18:09 -0400
+	id 1smWyF-00029d-3u; Fri, 06 Sep 2024 07:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWyE-0002Dz-5k; Fri, 06 Sep 2024 07:17:42 -0400
+ id 1smWxB-0006ah-6q; Fri, 06 Sep 2024 07:16:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWyC-0008CT-95; Fri, 06 Sep 2024 07:17:41 -0400
+ id 1smWx6-00083o-1M; Fri, 06 Sep 2024 07:16:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A3A4D8C4A1;
- Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BB49C8C492;
+ Fri,  6 Sep 2024 14:12:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id AE99413370A;
- Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
-Received: (nullmailer pid 353702 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id C5BDC1336FC;
+ Fri,  6 Sep 2024 14:13:26 +0300 (MSK)
+Received: (nullmailer pid 353654 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, thomas <east.moutain.yang@gmail.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 48/69] nbd/server: CVE-2024-7409: Drop non-negotiating
- clients
-Date: Fri,  6 Sep 2024 14:12:57 +0300
-Message-Id: <20240906111324.353230-48-mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 34/69] virtio-net: Fix network stall at the host side
+ waiting for kick
+Date: Fri,  6 Sep 2024 14:12:43 +0300
+Message-Id: <20240906111324.353230-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,119 +63,336 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: thomas <east.moutain.yang@gmail.com>
 
-A client that opens a socket but does not negotiate is merely hogging
-qemu's resources (an open fd and a small amount of memory); and a
-malicious client that can access the port where NBD is listening can
-attempt a denial of service attack by intentionally opening and
-abandoning lots of unfinished connections.  The previous patch put a
-default bound on the number of such ongoing connections, but once that
-limit is hit, no more clients can connect (including legitimate ones).
-The solution is to insist that clients complete handshake within a
-reasonable time limit, defaulting to 10 seconds.  A client that has
-not successfully completed NBD_OPT_GO by then (including the case of
-where the client didn't know TLS credentials to even reach the point
-of NBD_OPT_GO) is wasting our time and does not deserve to stay
-connected.  Later patches will allow fine-tuning the limit away from
-the default value (including disabling it for doing integration
-testing of the handshake process itself).
+Patch 06b12970174 ("virtio-net: fix network stall under load")
+added double-check to test whether the available buffer size
+can satisfy the request or not, in case the guest has added
+some buffers to the avail ring simultaneously after the first
+check. It will be lucky if the available buffer size becomes
+okay after the double-check, then the host can send the packet
+to the guest. If the buffer size still can't satisfy the request,
+even if the guest has added some buffers, viritio-net would
+stall at the host side forever.
 
-Note that this patch in isolation actually makes it more likely to see
-qemu SEGV after nbd-server-stop, as any client socket still connected
-when the server shuts down will now be closed after 10 seconds rather
-than at the client's whims.  That will be addressed in the next patch.
+The patch enables notification and checks whether the guest has
+added some buffers since last check of available buffers when
+the available buffers are insufficient. If no buffer is added,
+return false, else recheck the available buffers in the loop.
+If the available buffers are sufficient, disable notification
+and return true.
 
-For a demo of this patch in action:
-$ qemu-nbd -f raw -r -t -e 10 file &
-$ nbdsh --opt-mode -c '
-H = list()
-for i in range(20):
-  print(i)
-  H.insert(i, nbd.NBD())
-  H[i].set_opt_mode(True)
-  H[i].connect_uri("nbd://localhost")
-'
-$ kill $!
+Changes:
+1. Change the return type of virtqueue_get_avail_bytes() from void
+   to int, it returns an opaque that represents the shadow_avail_idx
+   of the virtqueue on success, else -1 on error.
+2. Add a new API: virtio_queue_enable_notification_and_check(),
+   it takes an opaque as input arg which is returned from
+   virtqueue_get_avail_bytes(). It enables notification firstly,
+   then checks whether the guest has added some buffers since
+   last check of available buffers or not by virtio_queue_poll(),
+   return ture if yes.
 
-where later connections get to start progressing once earlier ones are
-forcefully dropped for taking too long, rather than hanging.
+The patch also reverts patch "06b12970174".
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240807174943.771624-13-eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[eblake: rebase to changes earlier in series, reduce scope of timer]
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit b9b72cb3ce15b693148bd09cef7e50110566d8a0)
+The case below can reproduce the stall.
+
+                                       Guest 0
+                                     +--------+
+                                     | iperf  |
+                    ---------------> | server |
+         Host       |                +--------+
+       +--------+   |                    ...
+       | iperf  |----
+       | client |----                  Guest n
+       +--------+   |                +--------+
+                    |                | iperf  |
+                    ---------------> | server |
+                                     +--------+
+
+Boot many guests from qemu with virtio network:
+ qemu ... -netdev tap,id=net_x \
+    -device virtio-net-pci-non-transitional,\
+    iommu_platform=on,mac=xx:xx:xx:xx:xx:xx,netdev=net_x
+
+Each guest acts as iperf server with commands below:
+ iperf3 -s -D -i 10 -p 8001
+ iperf3 -s -D -i 10 -p 8002
+
+The host as iperf client:
+ iperf3 -c guest_IP -p 8001 -i 30 -w 256k -P 20 -t 40000
+ iperf3 -c guest_IP -p 8002 -i 30 -w 256k -P 20 -t 40000
+
+After some time, the host loses connection to the guest,
+the guest can send packet to the host, but can't receive
+packet from the host.
+
+It's more likely to happen if SWIOTLB is enabled in the guest,
+allocating and freeing bounce buffer takes some CPU ticks,
+copying from/to bounce buffer takes more CPU ticks, compared
+with that there is no bounce buffer in the guest.
+Once the rate of producing packets from the host approximates
+the rate of receiveing packets in the guest, the guest would
+loop in NAPI.
+
+         receive packets    ---
+               |             |
+               v             |
+           free buf      virtnet_poll
+               |             |
+               v             |
+     add buf to avail ring  ---
+               |
+               |  need kick the host?
+               |  NAPI continues
+               v
+         receive packets    ---
+               |             |
+               v             |
+           free buf      virtnet_poll
+               |             |
+               v             |
+     add buf to avail ring  ---
+               |
+               v
+              ...           ...
+
+On the other hand, the host fetches free buf from avail
+ring, if the buf in the avail ring is not enough, the
+host notifies the guest the event by writing the avail
+idx read from avail ring to the event idx of used ring,
+then the host goes to sleep, waiting for the kick signal
+from the guest.
+
+Once the guest finds the host is waiting for kick singal
+(in virtqueue_kick_prepare_split()), it kicks the host.
+
+The host may stall forever at the sequences below:
+
+         Host                        Guest
+     ------------                 -----------
+ fetch buf, send packet           receive packet ---
+         ...                          ...         |
+ fetch buf, send packet             add buf       |
+         ...                        add buf   virtnet_poll
+    buf not enough      avail idx-> add buf       |
+    read avail idx                  add buf       |
+                                    add buf      ---
+                                  receive packet ---
+    write event idx                   ...         |
+    wait for kick                   add buf   virtnet_poll
+                                      ...         |
+                                                 ---
+                                 no more packet, exit NAPI
+
+In the first loop of NAPI above, indicated in the range of
+virtnet_poll above, the host is sending packets while the
+guest is receiving packets and adding buffers.
+ step 1: The buf is not enough, for example, a big packet
+         needs 5 buf, but the available buf count is 3.
+         The host read current avail idx.
+ step 2: The guest adds some buf, then checks whether the
+         host is waiting for kick signal, not at this time.
+         The used ring is not empty, the guest continues
+         the second loop of NAPI.
+ step 3: The host writes the avail idx read from avail
+         ring to used ring as event idx via
+         virtio_queue_set_notification(q->rx_vq, 1).
+ step 4: At the end of the second loop of NAPI, recheck
+         whether kick is needed, as the event idx in the
+         used ring written by the host is beyound the
+         range of kick condition, the guest will not
+         send kick signal to the host.
+
+Fixes: 06b12970174 ("virtio-net: fix network stall under load")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Wencheng Yang <east.moutain.yang@gmail.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit f937309fbdbb48c354220a3e7110c202ae4aa7fa)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fixup in include/hw/virtio/virtio.h)
 
-diff --git a/nbd/server.c b/nbd/server.c
-index e50012499f..39285cc971 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -3186,22 +3186,48 @@ static void nbd_client_receive_next_request(NBDClient *client)
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index f48588638d..d4b979d343 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1680,24 +1680,28 @@ static bool virtio_net_can_receive(NetClientState *nc)
+ 
+ static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
+ {
++    int opaque;
++    unsigned int in_bytes;
+     VirtIONet *n = q->n;
+-    if (virtio_queue_empty(q->rx_vq) ||
+-        (n->mergeable_rx_bufs &&
+-         !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
+-        virtio_queue_set_notification(q->rx_vq, 1);
+-
+-        /* To avoid a race condition where the guest has made some buffers
+-         * available after the above check but before notification was
+-         * enabled, check for available buffers again.
+-         */
+-        if (virtio_queue_empty(q->rx_vq) ||
+-            (n->mergeable_rx_bufs &&
+-             !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
++
++    while (virtio_queue_empty(q->rx_vq) || n->mergeable_rx_bufs) {
++        opaque = virtqueue_get_avail_bytes(q->rx_vq, &in_bytes, NULL,
++                                           bufsize, 0);
++        /* Buffer is enough, disable notifiaction */
++        if (bufsize <= in_bytes) {
++            break;
++        }
++
++        if (virtio_queue_enable_notification_and_check(q->rx_vq, opaque)) {
++            /* Guest has added some buffers, try again */
++            continue;
++        } else {
+             return 0;
+         }
+     }
+ 
+     virtio_queue_set_notification(q->rx_vq, 0);
++
+     return 1;
+ }
+ 
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index fd2dfe3a6b..08fba6b2d8 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -743,6 +743,60 @@ int virtio_queue_empty(VirtQueue *vq)
      }
  }
  
-+static void nbd_handshake_timer_cb(void *opaque)
++static bool virtio_queue_split_poll(VirtQueue *vq, unsigned shadow_idx)
 +{
-+    QIOChannel *ioc = opaque;
-+
-+    trace_nbd_handshake_timer_cb();
-+    qio_channel_shutdown(ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
-+}
-+
- static coroutine_fn void nbd_co_client_start(void *opaque)
- {
-     NBDClient *client = opaque;
-     Error *local_err = NULL;
-+    QEMUTimer *handshake_timer = NULL;
- 
-     qemu_co_mutex_init(&client->send_lock);
- 
--    /* TODO - utilize client->handshake_max_secs */
-+    /*
-+     * Create a timer to bound the time spent in negotiation. If the
-+     * timer expires, it is likely nbd_negotiate will fail because the
-+     * socket was shutdown.
-+     */
-+    if (client->handshake_max_secs > 0) {
-+        handshake_timer = aio_timer_new(qemu_get_aio_context(),
-+                                        QEMU_CLOCK_REALTIME,
-+                                        SCALE_NS,
-+                                        nbd_handshake_timer_cb,
-+                                        client->sioc);
-+        timer_mod(handshake_timer,
-+                  qemu_clock_get_ns(QEMU_CLOCK_REALTIME) +
-+                  client->handshake_max_secs * NANOSECONDS_PER_SECOND);
++    if (unlikely(!vq->vring.avail)) {
++        return false;
 +    }
 +
-     if (nbd_negotiate(client, &local_err)) {
-         if (local_err) {
-             error_report_err(local_err);
-         }
-+        timer_free(handshake_timer);
-         client_close(client, false);
-         return;
++    return (uint16_t)shadow_idx != vring_avail_idx(vq);
++}
++
++static bool virtio_queue_packed_poll(VirtQueue *vq, unsigned shadow_idx)
++{
++    VRingPackedDesc desc;
++    VRingMemoryRegionCaches *caches;
++
++    if (unlikely(!vq->vring.desc)) {
++        return false;
++    }
++
++    caches = vring_get_region_caches(vq);
++    if (!caches) {
++        return false;
++    }
++
++    vring_packed_desc_read(vq->vdev, &desc, &caches->desc,
++                           shadow_idx, true);
++
++    return is_desc_avail(desc.flags, vq->shadow_avail_wrap_counter);
++}
++
++static bool virtio_queue_poll(VirtQueue *vq, unsigned shadow_idx)
++{
++    if (virtio_device_disabled(vq->vdev)) {
++        return false;
++    }
++
++    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
++        return virtio_queue_packed_poll(vq, shadow_idx);
++    } else {
++        return virtio_queue_split_poll(vq, shadow_idx);
++    }
++}
++
++bool virtio_queue_enable_notification_and_check(VirtQueue *vq,
++                                                int opaque)
++{
++    virtio_queue_set_notification(vq, 1);
++
++    if (opaque >= 0) {
++        return virtio_queue_poll(vq, (unsigned)opaque);
++    } else {
++        return false;
++    }
++}
++
+ static void virtqueue_unmap_sg(VirtQueue *vq, const VirtQueueElement *elem,
+                                unsigned int len)
+ {
+@@ -1330,9 +1384,9 @@ err:
+     goto done;
+ }
+ 
+-void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+-                               unsigned int *out_bytes,
+-                               unsigned max_in_bytes, unsigned max_out_bytes)
++int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
++                              unsigned int *out_bytes, unsigned max_in_bytes,
++                              unsigned max_out_bytes)
+ {
+     uint16_t desc_size;
+     VRingMemoryRegionCaches *caches;
+@@ -1365,7 +1419,7 @@ void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+                                         caches);
      }
  
-+    timer_free(handshake_timer);
-     WITH_QEMU_LOCK_GUARD(&client->lock) {
-         nbd_client_receive_next_request(client);
+-    return;
++    return (int)vq->shadow_avail_idx;
+ err:
+     if (in_bytes) {
+         *in_bytes = 0;
+@@ -1373,6 +1427,8 @@ err:
+     if (out_bytes) {
+         *out_bytes = 0;
      }
-diff --git a/nbd/trace-events b/nbd/trace-events
-index 00ae3216a1..cbd0a4ab7e 100644
---- a/nbd/trace-events
-+++ b/nbd/trace-events
-@@ -76,6 +76,7 @@ nbd_co_receive_request_payload_received(uint64_t cookie, uint64_t len) "Payload
- nbd_co_receive_ext_payload_compliance(uint64_t from, uint64_t len) "client sent non-compliant write without payload flag: from=0x%" PRIx64 ", len=0x%" PRIx64
- nbd_co_receive_align_compliance(const char *op, uint64_t from, uint64_t len, uint32_t align) "client sent non-compliant unaligned %s request: from=0x%" PRIx64 ", len=0x%" PRIx64 ", align=0x%" PRIx32
- nbd_trip(void) "Reading request"
-+nbd_handshake_timer_cb(void) "client took too long to negotiate"
++
++    return -1;
+ }
  
- # client-connection.c
- nbd_connect_thread_sleep(uint64_t timeout) "timeout %" PRIu64
+ int virtqueue_avail_bytes(VirtQueue *vq, unsigned int in_bytes,
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 2eafad17b8..8b4da92889 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -271,9 +271,13 @@ void qemu_put_virtqueue_element(VirtIODevice *vdev, QEMUFile *f,
+                                 VirtQueueElement *elem);
+ int virtqueue_avail_bytes(VirtQueue *vq, unsigned int in_bytes,
+                           unsigned int out_bytes);
+-void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+-                               unsigned int *out_bytes,
+-                               unsigned max_in_bytes, unsigned max_out_bytes);
++/**
++ * Return <0 on error or an opaque >=0 to pass to
++ * virtio_queue_enable_notification_and_check on success.
++ */
++int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
++                              unsigned int *out_bytes, unsigned max_in_bytes,
++                              unsigned max_out_bytes);
+ 
+ void virtio_notify_irqfd(VirtIODevice *vdev, VirtQueue *vq);
+ void virtio_notify(VirtIODevice *vdev, VirtQueue *vq);
+@@ -307,6 +311,17 @@ int virtio_queue_ready(VirtQueue *vq);
+ 
+ int virtio_queue_empty(VirtQueue *vq);
+ 
++/**
++ * Enable notification and check whether guest has added some
++ * buffers since last call to virtqueue_get_avail_bytes.
++ *
++ * @opaque: value returned from virtqueue_get_avail_bytes
++ */
++bool virtio_queue_enable_notification_and_check(VirtQueue *vq,
++                                                int opaque);
++
++void virtio_queue_set_shadow_avail_idx(VirtQueue *vq, uint16_t idx);
++
+ /* Host binding interface.  */
+ 
+ uint32_t virtio_config_readb(VirtIODevice *vdev, uint32_t addr);
 -- 
 2.39.2
 
