@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F40CE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D1CCE7B02
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smWyY-0003st-1w; Fri, 06 Sep 2024 07:18:02 -0400
+	id 1smWup-0002p1-TR; Fri, 06 Sep 2024 07:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWxd-0008HU-FY; Fri, 06 Sep 2024 07:17:05 -0400
+ id 1smWun-0002hC-Sz; Fri, 06 Sep 2024 07:14:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWxb-00088E-CX; Fri, 06 Sep 2024 07:17:05 -0400
+ id 1smWum-0007iW-7y; Fri, 06 Sep 2024 07:14:09 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2AEA88C499;
- Fri,  6 Sep 2024 14:12:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 434448C47C;
+ Fri,  6 Sep 2024 14:12:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 36B03133702;
- Fri,  6 Sep 2024 14:13:27 +0300 (MSK)
-Received: (nullmailer pid 353674 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4E1501336E6;
+ Fri,  6 Sep 2024 14:13:25 +0300 (MSK)
+Received: (nullmailer pid 353579 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Zheyu Ma <zheyuma97@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 40/69] hw/sd/sdhci: Reset @data_count index on invalid
- ADMA transfers
-Date: Fri,  6 Sep 2024 14:12:49 +0300
-Message-Id: <20240906111324.353230-40-mjt@tls.msk.ru>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 12/69] virtio-snd: check for invalid param shift
+ operands
+Date: Fri,  6 Sep 2024 14:12:21 +0300
+Message-Id: <20240906111324.353230-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
@@ -66,34 +66,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-We neglected to clear the @data_count index on ADMA error,
-allowing to trigger assertion in sdhci_read_dataport() or
-sdhci_write_dataport().
+When setting the parameters of a PCM stream, we compute the bit flag
+with the format and rate values as shift operand to check if they are
+set in supported_formats and supported_rates.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
+If the guest provides a format/rate value which when shifting 1 results
+in a value bigger than the number of bits in
+supported_formats/supported_rates, we must report an error.
+
+Previously, this ended up triggering the not reached assertions later
+when converting to internal QEMU values.
+
 Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2455
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240730092138.32443-4-philmd@linaro.org>
-(cherry picked from commit ed5a159c3de48a581f46de4c8c02b4b295e6c52d)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2416
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <virtio-snd-fuzz-2416-fix-v1-manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 9b6083465fb8311f2410615f8303a41f580a2a20)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 27673e1c70..8c5eab1b83 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -846,6 +846,7 @@ static void sdhci_do_adma(SDHCIState *s)
-                 }
-             }
-             if (res != MEMTX_OK) {
-+                s->data_count = 0;
-                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
-                     trace_sdhci_error("Set ADMA error flag");
-                     s->errintsts |= SDHC_EIS_ADMAERR;
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 541f0797ac..2b80072b04 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -282,11 +282,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+         error_report("Number of channels is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (!(supported_formats & BIT(params->format))) {
++    if (BIT(params->format) > sizeof(supported_formats) ||
++        !(supported_formats & BIT(params->format))) {
+         error_report("Stream format is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (!(supported_rates & BIT(params->rate))) {
++    if (BIT(params->rate) > sizeof(supported_rates) ||
++        !(supported_rates & BIT(params->rate))) {
+         error_report("Stream rate is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
 -- 
 2.39.2
 
