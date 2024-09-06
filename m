@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A37DCE7AA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 12:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D60CE7B03
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 12:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smYQn-0005hg-1p; Fri, 06 Sep 2024 08:51:17 -0400
+	id 1smYWj-0001lt-TJ; Fri, 06 Sep 2024 08:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smYQk-0005gw-KH
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:51:14 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1smYWi-0001kq-5e
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:57:24 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smYQi-0004NV-Sn
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:51:14 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2f50ca18a13so23549901fa.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 05:51:11 -0700 (PDT)
+ id 1smYWg-00054G-9j
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 08:57:23 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-374b5f27cf2so1225859f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 05:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725627069; x=1726231869; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Yy9M8YrCRKPXItLf3DDsQ2VqeEa4BokE+4+DkGvRqSE=;
- b=hGB6o9p/rfZZMSyO+ZBUxmWk4BtQ2Med4Eic9r2HvFe93Rn1j7nmXNff24MJQ6rwbW
- vbKGRSLYBxf5KAd8fs3fMaQugYdCigOqpIAhg8Z8n+2u3XuqsWI7kmjOsx3gSiIqsN9+
- pBUjtp5UzIWaOuzHzIanQkOrWUdzXRAEtBBY5RElHiyiW5pH/wa4O31TOtmQa13ffzrx
- VB5xfj14XAwotSR6kT0fECRPmuGBTmbxuJXASFnRNqbUbp/e5lBSvWR444FliExDlqJd
- NNP3unRKz7zQ3CGZV1xuI15T7rXFJkrR7Cn/hEqZ171SnKa+U1SD3dJliy0LLWtxSTbL
- BJww==
+ d=linaro.org; s=google; t=1725627440; x=1726232240; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dr1mYRKilzzw/sd76xNkLIy1xkFKMn1OHBewhCWyrWI=;
+ b=EbZti+yLQbZUFnUoyYvpuoQWt7SNkfQfvEv3cv+cLbv5Wr41/0CL1FD1sdHq6XLQl6
+ aNu0Zo7EY7qt9BnmbhHE7IIX51JNmsnFSL9oTr7ughL/9dL4hCpWVAk7e3t3KYvHpMTu
+ FzONozOc1Sfbh01ouCC+E4t44XY5yyI1U7Qt/80z503nZ19bxtHCD0fzusW7Sd2Hdp1C
+ 3/9smSC6Jprbvd2e4B7ugaC6YfA+5m2GMK86JDy8fwlHXBvQ3yind9+Ho0AaDQMDH0zo
+ JOCh2G8T5pieo1UCJR5xiQE9+UHjfgc6uk3rOXOGHot/gywexsU997V1Ndd1VCAB5yt2
+ 9/wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725627069; x=1726231869;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Yy9M8YrCRKPXItLf3DDsQ2VqeEa4BokE+4+DkGvRqSE=;
- b=Nzs/FczQdhBuWoMRXKI9L/jPSX1tnFil7fWc2ZyMziCeXMHG6FAdK9enUBIg7PYiqI
- XsffzUC3keVrsojYkOGpSab53ciFjFyjV+T+kHTxuTJX9CLf0wfqi5smOk1E4Ae/uXcn
- 7WFV1EkxpJgcDpZD5ie/6CQqSMdFBHEeXrdxSPCIuDRNcSiZs+kJ0cKEgWr8M1OjpqPl
- YEYUhbpUT2C6YZpcPKyrAk6m5GV7SSVYJQMwKXw0Jm/lTROG7FIi01X5AcRUgrT/0d+k
- hAa/JoVTv+vu659whzmEAe5HNl31BFZlghAaPfdd9NJ6IPElyC9O8x8qMMaZ/WhWvHsS
- u4/w==
-X-Gm-Message-State: AOJu0YyuSTvXl94ZLMCc4qDAm8sozRzNOzmYhA3FwPtQJKD0kx0cWHho
- +JhrK3+V1naL+OMhJLEORhW9nl0SfvEYhUFAVolIXqYpyLwLZ/RwFfoyyxGZZXnHxGMdM6THL3F
- 4MXCtBvTI73xYF7WV0QytSFJxKsYJzeAPISpdQKL5nYMoRjQV
-X-Google-Smtp-Source: AGHT+IFna5xMgUJ4K/6OgCsayBYv+yzNEH9w0QE53f3lc/NHIdBmbsIbHLxCDAkcMGafJ6DYBneJnYhYabMKUWToTZA=
-X-Received: by 2002:a2e:6109:0:b0:2f3:ec80:92a6 with SMTP id
- 38308e7fff4ca-2f61054aaa5mr147162221fa.46.1725627068728; Fri, 06 Sep 2024
- 05:51:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725627440; x=1726232240;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Dr1mYRKilzzw/sd76xNkLIy1xkFKMn1OHBewhCWyrWI=;
+ b=lk1gJo/irXqYUwD5hhIaR3f62r0JRxUH2J5irz6dM5XuPS/fmyjFj9OUBcCzZI4D/W
+ cPkJIl345h+YYsmLjNt2PDZymG3IcHys4gPgFZlVv0vCAwNLYGljQoaZNrbb1fZl+CT8
+ KemXoJCD3E+EvxcOhLiYwVPukTSdH+nQjGNDMHeEcwVc25eDU9N6DydfDe1zUbGBCp7e
+ RUB+QcOv9vKSnBysym3j/D/gZh2yZLRKTYcw3Q4f5Wb5oGLqpYTcG7OX1Jf3TU/Wlqjv
+ W0O2ZSENAd74oY0FgMEuWhu9THL6w+la9OCrqQkCJptQcHCxAagCMeP4GI6TCt/ESjp8
+ mOkw==
+X-Gm-Message-State: AOJu0Yzz8jjPWsxU7NHkakzU6moFiY8DK0b4TIBs1GQmAlGuUDSCQNWt
+ jvFRS1w/NtsuyYCuSxDvJa/nkNdmTFMQavLSDr4Ga5P1abyL3kVKYJg5VO14tO3Yy9a4/XUvASv
+ kPL0acouEJ8RiOPzYqQtzQ5drGJsJL8pod2SfKw==
+X-Google-Smtp-Source: AGHT+IHrX6X/RGHO3bk/t0W+Trm4/XBZE2yqrWrz/xTI19RZx7tOdaCCDhL2G48jzNa3e/jM6YDpflZ1pXSuo47ih5Y=
+X-Received: by 2002:a05:6000:184b:b0:374:c949:836d with SMTP id
+ ffacd0b85a97d-374c949851cmr16159593f8f.37.1725627440370; Fri, 06 Sep 2024
+ 05:57:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240902123038.1135412-1-jan.kloetzke@kernkonzept.com>
-In-Reply-To: <20240902123038.1135412-1-jan.kloetzke@kernkonzept.com>
+References: <20240904124417.14565-1-farosas@suse.de>
+In-Reply-To: <20240904124417.14565-1-farosas@suse.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Sep 2024 13:50:57 +0100
-Message-ID: <CAFEAcA-tK24wCPKZwig1iDPSOiHKqZMU4WH99ZZEG-awveEvag@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gic: fix spurious level triggered interrupts
-To: =?UTF-8?B?SmFuIEtsw7Z0emtl?= <jan.kloetzke@kernkonzept.com>
-Cc: qemu-devel@nongnu.org
+Date: Fri, 6 Sep 2024 13:57:09 +0100
+Message-ID: <CAFEAcA-DGK9EtGt6-m53HBN93P=dv=-Wbo=hiJSc8kooN-kNyA@mail.gmail.com>
+Subject: Re: [PULL 00/34] Migration patches for 2024-09-04
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,46 +88,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Sept 2024 at 13:32, Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.co=
-m> wrote:
+On Wed, 4 Sept 2024 at 13:49, Fabiano Rosas <farosas@suse.de> wrote:
 >
-> Level triggered interrupts are pending when either the interrupt line
-> is asserted or the interrupt was made pending by a GICD_ISPENDRn write.
-> Making a level triggered interrupt pending by software persists until
-> either the interrupt is acknowledged or cleared by writing
-> GICD_ICPENDRn. As long as the interrupt line is asserted, the interrupt
-> is pending in any case.
+> The following changes since commit e638d685ec2a0700fb9529cbd1b2823ac4120c53:
 >
-> This logic is transparently implemented in gic_test_pending(). The
-> function combines the "pending" irq_state flag (used for edge triggered
-> interrupts and software requests) and the line status (tracked in the
-> "level" field). Now, writing GICD_ISENABLERn incorrectly set the
-> pending flag if the line of a level triggered interrupt was asserted.
-> This keeps the interrupt pending even if the line is de-asserted after
-> some time.
+>   Open 9.2 development tree (2024-09-03 09:18:43 -0700)
 >
-> Fix this by simply removing the code. The pending status is fully
-> handled by gic_test_pending() and does not need any special treatment
-> when enabling the level interrupt.
+> are available in the Git repository at:
 >
-> Signed-off-by: Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.com>
+>   https://gitlab.com/farosas/qemu.git tags/migration-20240904-pull-request
+>
+> for you to fetch changes up to d41c9896f49076d1eaaa32214bd2296bd36d866c:
+>
+>   tests/qtest/migration: Add a check for the availability of the "pc" machine (2024-09-03 16:24:37 -0300)
+>
+> ----------------------------------------------------------------
+> Migration pull request
+>
+> - Steve's cleanup of unused variable
+> - Peter Maydell's fixes for several leaks in migration-test
+> - Fabiano's flexibilization of multifd data structures for device
+>   state migration
+> - Arman Nabiev's fix for ppc e500 migration
+> - Thomas' fix for migration-test vs. --without-default-devices
+>
 
-Thanks for this patch. I agree that this is wrong for the
-GICv2 -- I think this is a bit we missed in commit 8d999995e45c
-back in 2013 where we fixed most other places that were not
-correctly making this distinction of "pending because of
-ISPENDR write" and "pending because level triggered and
-line is held high".
 
-However I think for consistency with that commit, we should
-retain the current behaviour here for the s->revision =3D=3D REV_11MPCORE
-case. (This is basically saying "we don't really know exactly
-how the 11MPCore GIC behaved and we don't much care to try to
-find out, so leave it alone", which is the stance we were
-already taking in 2013...) In particular, notice that
-gic_test_pending() only does the "pending if level triggered
-and held high" logic for the not-REV_11MPCORE case.
+Applied, thanks.
 
-thanks
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
 -- PMM
 
