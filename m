@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14069CE7AB9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 408B3CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:02:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSvz-0003qp-TJ; Fri, 06 Sep 2024 02:59:08 -0400
+	id 1smSuK-0001fQ-3S; Fri, 06 Sep 2024 02:57:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvl-0001t8-20; Fri, 06 Sep 2024 02:58:55 -0400
+ id 1smStq-0000AZ-4W; Fri, 06 Sep 2024 02:56:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSvi-0003jm-TG; Fri, 06 Sep 2024 02:58:52 -0400
+ id 1smSto-0003Tj-Cs; Fri, 06 Sep 2024 02:56:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AAB5A8C263;
- Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D3698C251;
+ Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 71C5D13341B;
- Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
-Received: (nullmailer pid 43688 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:31 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 44122133409;
+ Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
+Received: (nullmailer pid 43544 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:30 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
- Claudio Fontana <cfontana@suse.de>, "Denis V . Lunev" <den@openvz.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 46/53] module: Prevent crash by resetting local_err in
- module_load_qom_all()
-Date: Fri,  6 Sep 2024 09:54:16 +0300
-Message-Id: <20240906065429.42415-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Zhibin Hu <huzhibin5@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 28/53] virtio-net: Ensure queue index fits with RSS
+Date: Fri,  6 Sep 2024 09:53:58 +0300
+Message-Id: <20240906065429.42415-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -63,41 +62,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Set local_err to NULL after it has been freed in error_report_err(). This
-avoids triggering assert(*errp == NULL) failure in error_setv() when
-local_err is reused in the loop.
+Ensure the queue index points to a valid queue when software RSS
+enabled. The new calculation matches with the behavior of Linux's TAP
+device with the RSS eBPF program.
 
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Claudio Fontana <cfontana@suse.de>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Link: https://lore.kernel.org/r/20240809121340.992049-2-alexander.ivanov@virtuozzo.com
-[Do the same by moving the declaration instead. - Paolo]
+Fixes: 4474e37a5b3a ("virtio-net: implement RX RSS processing")
+Reported-by: Zhibin Hu <huzhibin5@huawei.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 940d802b24e63650e0eacad3714e2ce171cba17c)
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit f1595ceb9aad36a6c1da95bcb77ab9509b38822d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Fixes: CVE-2024-6505
 
-diff --git a/util/module.c b/util/module.c
-index 32e263163c..3eb0f06df1 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -354,13 +354,13 @@ int module_load_qom(const char *type, Error **errp)
- void module_load_qom_all(void)
- {
-     const QemuModinfo *modinfo;
--    Error *local_err = NULL;
- 
-     if (module_loaded_qom_all) {
-         return;
-     }
- 
-     for (modinfo = module_info; modinfo->name != NULL; modinfo++) {
-+        Error *local_err = NULL;
-         if (!modinfo->objs) {
-             continue;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 0467b3bd8a..f84cff43aa 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1909,7 +1909,8 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+     if (!no_rss && n->rss_data.enabled && n->rss_data.enabled_software_rss) {
+         int index = virtio_net_process_rss(nc, buf, size);
+         if (index >= 0) {
+-            NetClientState *nc2 = qemu_get_subqueue(n->nic, index);
++            NetClientState *nc2 =
++                qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+             return virtio_net_receive_rcu(nc2, buf, size, true);
          }
+     }
 -- 
 2.39.2
 
