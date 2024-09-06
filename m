@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417E4CD5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65889C54FC6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 05:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smRNs-0000yJ-Rc; Fri, 06 Sep 2024 01:19:49 -0400
+	id 1smROo-0005p1-84; Fri, 06 Sep 2024 01:20:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRNl-0008Kg-TZ; Fri, 06 Sep 2024 01:19:42 -0400
+ id 1smROO-0004RO-V8; Fri, 06 Sep 2024 01:20:26 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smRNj-0008Ik-BO; Fri, 06 Sep 2024 01:19:41 -0400
+ id 1smROB-0008NS-0b; Fri, 06 Sep 2024 01:20:08 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 414B98C136;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7F4318C13A;
  Fri,  6 Sep 2024 08:15:18 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E470313337B;
- Fri,  6 Sep 2024 08:16:35 +0300 (MSK)
-Received: (nullmailer pid 10486 invoked by uid 1000);
- Fri, 06 Sep 2024 05:16:33 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 2FAE413337F;
+ Fri,  6 Sep 2024 08:16:36 +0300 (MSK)
+Received: (nullmailer pid 10498 invoked by uid 1000);
+ Fri, 06 Sep 2024 05:16:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 33/40] nbd/server: CVE-2024-7409: Drop non-negotiating
- clients
-Date: Fri,  6 Sep 2024 08:16:21 +0300
-Message-Id: <20240906051633.10288-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 37/40] target/i386: Do not apply REX to MMX operands
+Date: Fri,  6 Sep 2024 08:16:25 +0300
+Message-Id: <20240906051633.10288-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240906080824@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,120 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-A client that opens a socket but does not negotiate is merely hogging
-qemu's resources (an open fd and a small amount of memory); and a
-malicious client that can access the port where NBD is listening can
-attempt a denial of service attack by intentionally opening and
-abandoning lots of unfinished connections.  The previous patch put a
-default bound on the number of such ongoing connections, but once that
-limit is hit, no more clients can connect (including legitimate ones).
-The solution is to insist that clients complete handshake within a
-reasonable time limit, defaulting to 10 seconds.  A client that has
-not successfully completed NBD_OPT_GO by then (including the case of
-where the client didn't know TLS credentials to even reach the point
-of NBD_OPT_GO) is wasting our time and does not deserve to stay
-connected.  Later patches will allow fine-tuning the limit away from
-the default value (including disabling it for doing integration
-testing of the handshake process itself).
-
-Note that this patch in isolation actually makes it more likely to see
-qemu SEGV after nbd-server-stop, as any client socket still connected
-when the server shuts down will now be closed after 10 seconds rather
-than at the client's whims.  That will be addressed in the next patch.
-
-For a demo of this patch in action:
-$ qemu-nbd -f raw -r -t -e 10 file &
-$ nbdsh --opt-mode -c '
-H = list()
-for i in range(20):
-  print(i)
-  H.insert(i, nbd.NBD())
-  H[i].set_opt_mode(True)
-  H[i].connect_uri("nbd://localhost")
-'
-$ kill $!
-
-where later connections get to start progressing once earlier ones are
-forcefully dropped for taking too long, rather than hanging.
-
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240807174943.771624-13-eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[eblake: rebase to changes earlier in series, reduce scope of timer]
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit b9b72cb3ce15b693148bd09cef7e50110566d8a0)
+Cc: qemu-stable@nongnu.org
+Fixes: b3e22b2318a ("target/i386: add core of new i386 decoder")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2495
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240812025844.58956-2-richard.henderson@linaro.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 416f2b16c02c618c0f233372ebfe343f9ee667d4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup in nbd/server.c: lack of WITH_QEMU_LOCK_GUARD in 7.2)
 
-diff --git a/nbd/server.c b/nbd/server.c
-index 431e543b47..bfa8d47dad 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -2750,22 +2750,48 @@ static void nbd_client_receive_next_request(NBDClient *client)
-     }
- }
- 
-+static void nbd_handshake_timer_cb(void *opaque)
-+{
-+    QIOChannel *ioc = opaque;
-+
-+    trace_nbd_handshake_timer_cb();
-+    qio_channel_shutdown(ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
-+}
-+
- static coroutine_fn void nbd_co_client_start(void *opaque)
- {
-     NBDClient *client = opaque;
-     Error *local_err = NULL;
-+    QEMUTimer *handshake_timer = NULL;
- 
-     qemu_co_mutex_init(&client->send_lock);
- 
--    /* TODO - utilize client->handshake_max_secs */
-+    /*
-+     * Create a timer to bound the time spent in negotiation. If the
-+     * timer expires, it is likely nbd_negotiate will fail because the
-+     * socket was shutdown.
-+     */
-+    if (client->handshake_max_secs > 0) {
-+        handshake_timer = aio_timer_new(qemu_get_aio_context(),
-+                                        QEMU_CLOCK_REALTIME,
-+                                        SCALE_NS,
-+                                        nbd_handshake_timer_cb,
-+                                        client->sioc);
-+        timer_mod(handshake_timer,
-+                  qemu_clock_get_ns(QEMU_CLOCK_REALTIME) +
-+                  client->handshake_max_secs * NANOSECONDS_PER_SECOND);
-+    }
-+
-     if (nbd_negotiate(client, &local_err)) {
-         if (local_err) {
-             error_report_err(local_err);
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 1dfc368456..88de92ed16 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1176,7 +1176,10 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+             op->unit = X86_OP_SSE;
          }
-+        timer_free(handshake_timer);
-         client_close(client, false);
-         return;
-     }
+     get_reg:
+-        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
++        op->n = ((get_modrm(s, env) >> 3) & 7);
++        if (op->unit != X86_OP_MMX) {
++            op->n |= REX_R(s);
++        }
+         break;
  
-+    timer_free(handshake_timer);
-     nbd_client_receive_next_request(client);
- }
- 
-diff --git a/nbd/trace-events b/nbd/trace-events
-index b7032ca277..675f880fa1 100644
---- a/nbd/trace-events
-+++ b/nbd/trace-events
-@@ -73,6 +73,7 @@ nbd_co_receive_request_decode_type(uint64_t handle, uint16_t type, const char *n
- nbd_co_receive_request_payload_received(uint64_t handle, uint32_t len) "Payload received: handle = %" PRIu64 ", len = %" PRIu32
- nbd_co_receive_align_compliance(const char *op, uint64_t from, uint32_t len, uint32_t align) "client sent non-compliant unaligned %s request: from=0x%" PRIx64 ", len=0x%" PRIx32 ", align=0x%" PRIx32
- nbd_trip(void) "Reading request"
-+nbd_handshake_timer_cb(void) "client took too long to negotiate"
- 
- # client-connection.c
- nbd_connect_thread_sleep(uint64_t timeout) "timeout %" PRIu64
+     case X86_TYPE_E:  /* ALU modrm operand */
 -- 
 2.39.2
 
