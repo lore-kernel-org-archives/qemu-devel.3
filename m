@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2133ACE7B02
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CCBCD5BDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 11:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smX03-0001CP-BG; Fri, 06 Sep 2024 07:19:35 -0400
+	id 1smX03-0001HA-Qh; Fri, 06 Sep 2024 07:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smX00-0000a6-1i; Fri, 06 Sep 2024 07:19:32 -0400
+ id 1smX02-000143-8k; Fri, 06 Sep 2024 07:19:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smWzx-0008MG-TK; Fri, 06 Sep 2024 07:19:31 -0400
+ id 1smX00-0008Mg-68; Fri, 06 Sep 2024 07:19:33 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BC3018C4B2;
+ by isrv.corpit.ru (Postfix) with ESMTP id CA3EE8C4B3;
  Fri,  6 Sep 2024 14:12:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C7C8713371B;
+ by tsrv.corpit.ru (Postfix) with SMTP id D71F813371C;
  Fri,  6 Sep 2024 14:13:28 +0300 (MSK)
-Received: (nullmailer pid 353759 invoked by uid 1000);
+Received: (nullmailer pid 353762 invoked by uid 1000);
  Fri, 06 Sep 2024 11:13:25 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 65/69] migration/multifd: Free MultiFDRecvParams::data
-Date: Fri,  6 Sep 2024 14:13:14 +0300
-Message-Id: <20240906111324.353230-65-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 66/69] linux-user: Handle short reads in mmap_h_gt_g
+Date: Fri,  6 Sep 2024 14:13:15 +0300
+Message-Id: <20240906111324.353230-66-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240906141259@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,89 +63,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In multifd_recv_setup() we allocate (among other things)
- * a MultiFDRecvData struct to multifd_recv_state::data
- * a MultiFDRecvData struct to each multfd_recv_state->params[i].data
+In particular, if an image has a large bss, we can hit
+EOF before reading all host_len bytes of the mapping.
 
-(Then during execution we might swap these pointers around.)
-
-But in multifd_recv_cleanup() we free multifd_recv_state->data
-in multifd_recv_cleanup_state() but we don't ever free the
-multifd_recv_state->params[i].data. This results in a memory
-leak reported by LeakSanitizer:
-
-(cd build/asan && \
-   ASAN_OPTIONS="fast_unwind_on_malloc=0:strip_path_prefix=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../" \
-   QTEST_QEMU_BINARY=./qemu-system-x86_64 \
-   ./tests/qtest/migration-test --tap -k -p /x86_64/migration/multifd/file/mapped-ram )
-[...]
-Direct leak of 72 byte(s) in 3 object(s) allocated from:
-    #0 0x561cc0afcfd8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218efd8) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
-    #1 0x7f89d37acc50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
-    #2 0x561cc1e9c83c in multifd_recv_setup migration/multifd.c:1606:19
-    #3 0x561cc1e68618 in migration_ioc_process_incoming migration/migration.c:972:9
-    #4 0x561cc1e3ac59 in migration_channel_process_incoming migration/channel.c:45:9
-    #5 0x561cc1e4fa0b in file_accept_incoming_migration migration/file.c:132:5
-    #6 0x561cc30f2c0c in qio_channel_fd_source_dispatch io/channel-watch.c:84:12
-    #7 0x7f89d37a3c43 in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
-    #8 0x7f89d37a3c43 in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
-    #9 0x561cc3b21659 in glib_pollfds_poll util/main-loop.c:287:9
-    #10 0x561cc3b1ff93 in os_host_main_loop_wait util/main-loop.c:310:5
-    #11 0x561cc3b1fb5c in main_loop_wait util/main-loop.c:589:11
-    #12 0x561cc1da2917 in qemu_main_loop system/runstate.c:801:9
-    #13 0x561cc3796c1c in qemu_default_main system/main.c:37:14
-    #14 0x561cc3796c67 in main system/main.c:48:12
-    #15 0x7f89d163bd8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #16 0x7f89d163be3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #17 0x561cc0a79fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
-
-Direct leak of 24 byte(s) in 1 object(s) allocated from:
-    #0 0x561cc0afcfd8 in __interceptor_calloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218efd8) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
-    #1 0x7f89d37acc50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
-    #2 0x561cc1e9bed9 in multifd_recv_setup migration/multifd.c:1588:32
-    #3 0x561cc1e68618 in migration_ioc_process_incoming migration/migration.c:972:9
-    #4 0x561cc1e3ac59 in migration_channel_process_incoming migration/channel.c:45:9
-    #5 0x561cc1e4fa0b in file_accept_incoming_migration migration/file.c:132:5
-    #6 0x561cc30f2c0c in qio_channel_fd_source_dispatch io/channel-watch.c:84:12
-    #7 0x7f89d37a3c43 in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
-    #8 0x7f89d37a3c43 in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
-    #9 0x561cc3b21659 in glib_pollfds_poll util/main-loop.c:287:9
-    #10 0x561cc3b1ff93 in os_host_main_loop_wait util/main-loop.c:310:5
-    #11 0x561cc3b1fb5c in main_loop_wait util/main-loop.c:589:11
-    #12 0x561cc1da2917 in qemu_main_loop system/runstate.c:801:9
-    #13 0x561cc3796c1c in qemu_default_main system/main.c:37:14
-    #14 0x561cc3796c67 in main system/main.c:48:12
-    #15 0x7f89d163bd8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #16 0x7f89d163be3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #17 0x561cc0a79fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: be72e086d4e47b172b0a72779972213fd9916466)
-
-SUMMARY: AddressSanitizer: 96 byte(s) leaked in 4 allocation(s).
-
-Free the params[i].data too.
+Create a helper, mmap_pread to handle the job for both
+the larger block in mmap_h_gt_g itself, as well as the
+smaller block in mmap_frag.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d117ed0699d41 ("migration/multifd: Allow receiving pages without packets")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 4c107870e8b2ba3951ee0c46123f1c3b5d3a19d3)
+Fixes: eb5027ac618 ("linux-user: Split out mmap_h_gt_g")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2504
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240820050848.165253-2-richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit a4ad4a9d98f7fbde806f07da21e69f39e134cdf1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index fa55586f89..ac3742343f 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -1351,6 +1351,8 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-     qemu_mutex_destroy(&p->mutex);
-     qemu_sem_destroy(&p->sem_sync);
-     qemu_sem_destroy(&p->sem);
-+    g_free(p->data);
-+    p->data = NULL;
-     g_free(p->name);
-     p->name = NULL;
-     p->packet_len = 0;
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 2a11d921ab..9e94f36ba2 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -282,6 +282,40 @@ static int do_munmap(void *addr, size_t len)
+     return munmap(addr, len);
+ }
+ 
++/*
++ * Perform a pread on behalf of target_mmap.  We can reach EOF, we can be
++ * interrupted by signals, and in general there's no good error return path.
++ * If @zero, zero the rest of the block at EOF.
++ * Return true on success.
++ */
++static bool mmap_pread(int fd, void *p, size_t len, off_t offset, bool zero)
++{
++    while (1) {
++        ssize_t r = pread(fd, p, len, offset);
++
++        if (likely(r == len)) {
++            /* Complete */
++            return true;
++        }
++        if (r == 0) {
++            /* EOF */
++            if (zero) {
++                memset(p, 0, len);
++            }
++            return true;
++        }
++        if (r > 0) {
++            /* Short read */
++            p += r;
++            len -= r;
++            offset += r;
++        } else if (errno != EINTR) {
++            /* Error */
++            return false;
++        }
++    }
++}
++
+ /*
+  * Map an incomplete host page.
+  *
+@@ -356,10 +390,9 @@ static bool mmap_frag(abi_ulong real_start, abi_ulong start, abi_ulong last,
+     /* Read or zero the new guest pages. */
+     if (flags & MAP_ANONYMOUS) {
+         memset(g2h_untagged(start), 0, last - start + 1);
+-    } else {
+-        if (pread(fd, g2h_untagged(start), last - start + 1, offset) == -1) {
+-            return false;
+-        }
++    } else if (!mmap_pread(fd, g2h_untagged(start), last - start + 1,
++                           offset, true)) {
++        return false;
+     }
+ 
+     /* Put final protection */
+@@ -852,8 +885,7 @@ static abi_long mmap_h_gt_g(abi_ulong start, abi_ulong len,
+     }
+ 
+     if (misaligned_offset) {
+-        /* TODO: The read could be short. */
+-        if (pread(fd, p, host_len, offset + real_start - start) != host_len) {
++        if (!mmap_pread(fd, p, host_len, offset + real_start - start, false)) {
+             do_munmap(p, host_len);
+             return -1;
+         }
 -- 
 2.39.2
 
