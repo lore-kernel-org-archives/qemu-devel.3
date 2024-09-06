@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06806CE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44489CE7AB9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 06:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSt1-0001YW-CU; Fri, 06 Sep 2024 02:56:04 -0400
+	id 1smSrt-0004d3-Jo; Fri, 06 Sep 2024 02:54:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsy-000155-KR; Fri, 06 Sep 2024 02:56:00 -0400
+ id 1smSrq-0004RK-NO; Fri, 06 Sep 2024 02:54:50 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSsw-0003MZ-Pk; Fri, 06 Sep 2024 02:56:00 -0400
+ id 1smSro-000307-UY; Fri, 06 Sep 2024 02:54:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 029678C249;
- Fri,  6 Sep 2024 09:53:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E028B8C23A;
+ Fri,  6 Sep 2024 09:53:11 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C0248133401;
- Fri,  6 Sep 2024 09:54:30 +0300 (MSK)
-Received: (nullmailer pid 43463 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id A6BD91333F2;
+ Fri,  6 Sep 2024 09:54:29 +0300 (MSK)
+Received: (nullmailer pid 43335 invoked by uid 1000);
  Fri, 06 Sep 2024 06:54:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 20/53] target/arm: Don't assert for 128-bit tile
- accesses when SVL is 128
-Date: Fri,  6 Sep 2024 09:53:50 +0300
-Message-Id: <20240906065429.42415-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Daniyal Khan <danikhan632@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 05/53] target/arm: Use FPST_F16 for SME FMOPA (widening)
+Date: Fri,  6 Sep 2024 09:53:35 +0300
+Message-Id: <20240906065429.42415-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,56 +64,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-For an instruction which accesses a 128-bit element tile when
-the SVL is also 128 (for example MOV z0.Q, p0/M, ZA0H.Q[w0,0]),
-we will assert in get_tile_rowcol():
-
-qemu-system-aarch64: ../../tcg/tcg-op.c:926: tcg_gen_deposit_z_i32: Assertion `len > 0' failed.
-
-This happens because we calculate
-    len = ctz32(streaming_vec_reg_size(s)) - esz;$
-but if the SVL and the element size are the same len is 0, and
-the deposit operation asserts.
-
-In this case the ZA storage contains exactly one 128 bit
-element ZA tile, and the horizontal or vertical slice is just
-that tile. This means that regardless of the index value in
-the Ws register, we always access that tile. (In pseudocode terms,
-we calculate (index + offset) MOD 1, which is 0.)
-
-Special case the len == 0 case to avoid hitting the assertion
-in tcg_gen_deposit_z_i32().
+This operation has float16 inputs and thus must use
+the FZ16 control not the FZ control.
 
 Cc: qemu-stable@nongnu.org
+Fixes: 3916841ac75 ("target/arm: Implement FMOPA, FMOPS (widening)")
+Reported-by: Daniyal Khan <danikhan632@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20240717060149.204788-3-richard.henderson@linaro.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2374
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240722172957.1041231-2-peter.maydell@linaro.org
-(cherry picked from commit 56f1c0db928aae0b83fd91c89ddb226b137e2b21)
+(cherry picked from commit 207d30b5fdb5b45a36f26eefcf52fe2c1714dd4f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 185a8a917b..a50a419af2 100644
+index 46c7fce8b4..185a8a917b 100644
 --- a/target/arm/tcg/translate-sme.c
 +++ b/target/arm/tcg/translate-sme.c
-@@ -49,7 +49,15 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
-     /* Prepare a power-of-two modulo via extraction of @len bits. */
-     len = ctz32(streaming_vec_reg_size(s)) - esz;
+@@ -304,6 +304,7 @@ static bool do_outprod(DisasContext *s, arg_op *a, MemOp esz,
+ }
  
--    if (vertical) {
-+    if (!len) {
-+        /*
-+         * SVL is 128 and the element size is 128. There is exactly
-+         * one 128x128 tile in the ZA storage, and so we calculate
-+         * (Rs + imm) MOD 1, which is always 0. We need to special case
-+         * this because TCG doesn't allow deposit ops with len 0.
-+         */
-+        tcg_gen_movi_i32(tmp, 0);
-+    } else if (vertical) {
-         /*
-          * Compute the byte offset of the index within the tile:
-          *     (index % (svl / size)) * size
+ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
++                            ARMFPStatusFlavour e_fpst,
+                             gen_helper_gvec_5_ptr *fn)
+ {
+     int svl = streaming_vec_reg_size(s);
+@@ -319,15 +320,18 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
+     zm = vec_full_reg_ptr(s, a->zm);
+     pn = pred_full_reg_ptr(s, a->pn);
+     pm = pred_full_reg_ptr(s, a->pm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(e_fpst);
+ 
+     fn(za, zn, zm, pn, pm, fpst, tcg_constant_i32(desc));
+     return true;
+ }
+ 
+-TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_h)
+-TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_s)
+-TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a, MO_64, gen_helper_sme_fmopa_d)
++TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
++           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
++TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
++           MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
++TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
++           MO_64, FPST_FPCR, gen_helper_sme_fmopa_d)
+ 
+ /* TODO: FEAT_EBF16 */
+ TRANS_FEAT(BFMOPA, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_bfmopa)
 -- 
 2.39.2
 
