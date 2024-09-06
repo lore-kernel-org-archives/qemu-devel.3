@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B5ECE7AB8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAC4CE7AB8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 07:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smSvz-0003q5-PZ; Fri, 06 Sep 2024 02:59:07 -0400
+	id 1smSwQ-0007d2-94; Fri, 06 Sep 2024 02:59:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSut-0005R5-8C; Fri, 06 Sep 2024 02:58:00 -0400
+ id 1smSvp-00028m-GK; Fri, 06 Sep 2024 02:58:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smSup-0003af-Nr; Fri, 06 Sep 2024 02:57:58 -0400
+ id 1smSvn-0003lk-BF; Fri, 06 Sep 2024 02:58:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2AA148C25B;
+ by isrv.corpit.ru (Postfix) with ESMTP id D91888C266;
  Fri,  6 Sep 2024 09:53:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E6AEE133413;
- Fri,  6 Sep 2024 09:54:31 +0300 (MSK)
-Received: (nullmailer pid 43632 invoked by uid 1000);
- Fri, 06 Sep 2024 06:54:30 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id A02E913341E;
+ Fri,  6 Sep 2024 09:54:32 +0300 (MSK)
+Received: (nullmailer pid 43704 invoked by uid 1000);
+ Fri, 06 Sep 2024 06:54:31 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 38/53] nbd/server: CVE-2024-7409: Cap default
- max-connections to 100
-Date: Fri,  6 Sep 2024 09:54:08 +0300
-Message-Id: <20240906065429.42415-38-mjt@tls.msk.ru>
+Subject: [Stable-8.2.7 49/53] crypto/tlscredspsk: Free username on finalize
+Date: Fri,  6 Sep 2024 09:54:19 +0300
+Message-Id: <20240906065429.42415-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
 References: <qemu-stable-8.2.7-20240906080902@cover.tls.msk.ru>
@@ -64,166 +64,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Allowing an unlimited number of clients to any web service is a recipe
-for a rudimentary denial of service attack: the client merely needs to
-open lots of sockets without closing them, until qemu no longer has
-any more fds available to allocate.
+When the creds->username property is set we allocate memory
+for it in qcrypto_tls_creds_psk_prop_set_username(), but
+we never free this when the QCryptoTLSCredsPSK is destroyed.
+Free the memory in finalize.
 
-For qemu-nbd, we default to allowing only 1 connection unless more are
-explicitly asked for (-e or --shared); this was historically picked as
-a nice default (without an explicit -t, a non-persistent qemu-nbd goes
-away after a client disconnects, without needing any additional
-follow-up commands), and we are not going to change that interface now
-(besides, someday we want to point people towards qemu-storage-daemon
-instead of qemu-nbd).
+This fixes a LeakSanitizer complaint in migration-test:
 
-But for qemu proper, and the newer qemu-storage-daemon, the QMP
-nbd-server-start command has historically had a default of unlimited
-number of connections, in part because unlike qemu-nbd it is
-inherently persistent until nbd-server-stop.  Allowing multiple client
-sockets is particularly useful for clients that can take advantage of
-MULTI_CONN (creating parallel sockets to increase throughput),
-although known clients that do so (such as libnbd's nbdcopy) typically
-use only 8 or 16 connections (the benefits of scaling diminish once
-more sockets are competing for kernel attention).  Picking a number
-large enough for typical use cases, but not unlimited, makes it
-slightly harder for a malicious client to perform a denial of service
-merely by opening lots of connections withot progressing through the
-handshake.
+$ (cd build/asan; ASAN_OPTIONS="fast_unwind_on_malloc=0" QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --tap -k -p /x86_64/migration/precopy/unix/tls/psk)
 
-This change does not eliminate CVE-2024-7409 on its own, but reduces
-the chance for fd exhaustion or unlimited memory usage as an attack
-surface.  On the other hand, by itself, it makes it more obvious that
-with a finite limit, we have the problem of an unauthenticated client
-holding 100 fds opened as a way to block out a legitimate client from
-being able to connect; thus, later patches will further add timeouts
-to reject clients that are not making progress.
+=================================================================
+==3867512==ERROR: LeakSanitizer: detected memory leaks
 
-This is an INTENTIONAL change in behavior, and will break any client
-of nbd-server-start that was not passing an explicit max-connections
-parameter, yet expects more than 100 simultaneous connections.  We are
-not aware of any such client (as stated above, most clients aware of
-MULTI_CONN get by just fine on 8 or 16 connections, and probably cope
-with later connections failing by relying on the earlier connections;
-libvirt has not yet been passing max-connections, but generally
-creates NBD servers with the intent for a single client for the sake
-of live storage migration; meanwhile, the KubeSAN project anticipates
-a large cluster sharing multiple clients [up to 8 per node, and up to
-100 nodes in a cluster], but it currently uses qemu-nbd with an
-explicit --shared=0 rather than qemu-storage-daemon with
-nbd-server-start).
+Direct leak of 5 byte(s) in 1 object(s) allocated from:
+    #0 0x5624e5c99dee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218edee) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
+    #1 0x7fb199ae9738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
+    #2 0x7fb199afe583 in g_strdup debian/build/deb/../../../glib/gstrfuncs.c:361:17
+    #3 0x5624e82ea919 in qcrypto_tls_creds_psk_prop_set_username /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../crypto/tlscredspsk.c:255:23
+    #4 0x5624e812c6b5 in property_set_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:2277:5
+    #5 0x5624e8125ce5 in object_property_set /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:1463:5
+    #6 0x5624e8136e7c in object_set_properties_from_qdict /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:55:14
+    #7 0x5624e81372d2 in user_creatable_add_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:112:5
+    #8 0x5624e8137964 in user_creatable_add_qapi /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:157:11
+    #9 0x5624e891ba3c in qmp_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/qom-qmp-cmds.c:227:5
+    #10 0x5624e8af9118 in qmp_marshal_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qapi/qapi-commands-qom.c:337:5
+    #11 0x5624e8bd1d49 in do_qmp_dispatch_bh /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qapi/qmp-dispatch.c:128:5
+    #12 0x5624e8cb2531 in aio_bh_call /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:171:5
+    #13 0x5624e8cb340c in aio_bh_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:218:13
+    #14 0x5624e8c0be98 in aio_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/aio-posix.c:423:5
+    #15 0x5624e8cba3ce in aio_ctx_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:360:5
+    #16 0x7fb199ae0d3a in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
+    #17 0x7fb199ae0d3a in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
+    #18 0x5624e8cbe1d9 in glib_pollfds_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:287:9
+    #19 0x5624e8cbcb13 in os_host_main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:310:5
+    #20 0x5624e8cbc6dc in main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:589:11
+    #21 0x5624e6f3f917 in qemu_main_loop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/runstate.c:801:9
+    #22 0x5624e893379c in qemu_default_main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:37:14
+    #23 0x5624e89337e7 in main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:48:12
+    #24 0x7fb197972d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #25 0x7fb197972e3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #26 0x5624e5c16fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
 
-We considered using a deprecation period (declare that omitting
-max-parameters is deprecated, and make it mandatory in 3 releases -
-then we don't need to pick an arbitrary default); that has zero risk
-of breaking any apps that accidentally depended on more than 100
-connections, and where such breakage might not be noticed under unit
-testing but only under the larger loads of production usage.  But it
-does not close the denial-of-service hole until far into the future,
-and requires all apps to change to add the parameter even if 100 was
-good enough.  It also has a drawback that any app (like libvirt) that
-is accidentally relying on an unlimited default should seriously
-consider their own CVE now, at which point they are going to change to
-pass explicit max-connections sooner than waiting for 3 qemu releases.
-Finally, if our changed default breaks an app, that app can always
-pass in an explicit max-parameters with a larger value.
+SUMMARY: AddressSanitizer: 5 byte(s) leaked in 1 allocation(s).
 
-It is also intentional that the HMP interface to nbd-server-start is
-not changed to expose max-connections (any client needing to fine-tune
-things should be using QMP).
-
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240807174943.771624-12-eblake@redhat.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[ericb: Expand commit message to summarize Dan's argument for why we
-break corner-case back-compat behavior without a deprecation period]
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit c8a76dbd90c2f48df89b75bef74917f90a59b623)
+Message-ID: <20240819145021.38524-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 87e012f29f2e47dcd8c385ff8bb8188f9e06d4ea)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index c729cbf1eb..78a6975852 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -415,7 +415,8 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
-         goto exit;
-     }
+diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
+index 546cad1c5a..0d6b71a37c 100644
+--- a/crypto/tlscredspsk.c
++++ b/crypto/tlscredspsk.c
+@@ -243,6 +243,7 @@ qcrypto_tls_creds_psk_finalize(Object *obj)
+     QCryptoTLSCredsPSK *creds = QCRYPTO_TLS_CREDS_PSK(obj);
  
--    nbd_server_start(addr, NULL, NULL, 0, &local_err);
-+    nbd_server_start(addr, NULL, NULL, NBD_DEFAULT_MAX_CONNECTIONS,
-+                     &local_err);
-     qapi_free_SocketAddress(addr);
-     if (local_err != NULL) {
-         goto exit;
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 267a1de903..24ba5382db 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -170,6 +170,10 @@ void nbd_server_start(SocketAddress *addr, const char *tls_creds,
- 
- void nbd_server_start_options(NbdServerOptions *arg, Error **errp)
- {
-+    if (!arg->has_max_connections) {
-+        arg->max_connections = NBD_DEFAULT_MAX_CONNECTIONS;
-+    }
-+
-     nbd_server_start(arg->addr, arg->tls_creds, arg->tls_authz,
-                      arg->max_connections, errp);
+     qcrypto_tls_creds_psk_unload(creds);
++    g_free(creds->username);
  }
-@@ -182,6 +186,10 @@ void qmp_nbd_server_start(SocketAddressLegacy *addr,
- {
-     SocketAddress *addr_flat = socket_address_flatten(addr);
  
-+    if (!has_max_connections) {
-+        max_connections = NBD_DEFAULT_MAX_CONNECTIONS;
-+    }
-+
-     nbd_server_start(addr_flat, tls_creds, tls_authz, max_connections, errp);
-     qapi_free_SocketAddress(addr_flat);
- }
-diff --git a/include/block/nbd.h b/include/block/nbd.h
-index 1d4d65922d..d4f8b21aec 100644
---- a/include/block/nbd.h
-+++ b/include/block/nbd.h
-@@ -39,6 +39,13 @@ extern const BlockExportDriver blk_exp_nbd;
-  */
- #define NBD_DEFAULT_HANDSHAKE_MAX_SECS 10
- 
-+/*
-+ * NBD_DEFAULT_MAX_CONNECTIONS: Number of client sockets to allow at
-+ * once; must be large enough to allow a MULTI_CONN-aware client like
-+ * nbdcopy to create its typical number of 8-16 sockets.
-+ */
-+#define NBD_DEFAULT_MAX_CONNECTIONS 100
-+
- /* Handshake phase structs - this struct is passed on the wire */
- 
- typedef struct NBDOption {
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 7874a49ba7..1d255d77e3 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -28,7 +28,7 @@
- # @max-connections: The maximum number of connections to allow at the
- #     same time, 0 for unlimited.  Setting this to 1 also stops the
- #     server from advertising multiple client support (since 5.2;
--#     default: 0)
-+#     default: 100)
- #
- # Since: 4.2
- ##
-@@ -63,7 +63,7 @@
- # @max-connections: The maximum number of connections to allow at the
- #     same time, 0 for unlimited.  Setting this to 1 also stops the
- #     server from advertising multiple client support (since 5.2;
--#     default: 0).
-+#     default: 100).
- #
- # Returns: error if the server is already running.
- #
+ static void
 -- 
 2.39.2
 
