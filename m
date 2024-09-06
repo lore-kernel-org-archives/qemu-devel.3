@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D926CCE7B1C
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32DDCE7B1C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Sep 2024 14:34:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sma24-0000Ml-E4; Fri, 06 Sep 2024 10:33:52 -0400
+	id 1sma25-0000Rj-LP; Fri, 06 Sep 2024 10:33:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sma22-0000Ls-8n
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:33:50 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1sma24-0000Mn-EW
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:33:52 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sma20-00072w-EN
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:33:50 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2068acc8b98so19088995ad.3
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 07:33:47 -0700 (PDT)
+ id 1sma22-00073F-Mf
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 10:33:52 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-206b9455460so17389095ad.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 07:33:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725633226; x=1726238026; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KALXkPBTxGDivGnQNyPwRC48F/CKpmU8ry/zplz06X0=;
- b=WQX5ip4be6JTokNNtXAr65elSuNv5UgIJKjT04F3rr6+vf19BoT+8R1ARjWjbVvC8P
- RYswxPQEUbTPXv/X1Hb5A0BWN5wUwU1Bn56/9T31Xzv0u60gPww0h3IMno0TRNarxYTG
- agrr7DIT6EVqp1CmF561j25FQWQ8zbffmMsem4zWpzcPIjx+HHSjfHRpeAzreP+8Ozxa
- 2qWTwMipbiQPJQqFuU+YYX63Ps/DZvAKNlIV+C4InT/UxQ6spaHhow5TumE6pK4NlkYD
- IjEh+xUA8aDwZcHtMiBzrODd4qpE6RZ/zbgjIz0++TB4JzLC+I1nEVlUNXnlUWILDGkN
- zePg==
+ d=linaro.org; s=google; t=1725633229; x=1726238029; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jMYYkx/opjLXIlYN94qCm43SuWEXEBRd8nT29zGh3do=;
+ b=NoCXtYndMT0kzc+U8GvdI4139C6RDwXjWWW4IV7n14KTChkHGH3KREy/xWcnc5eaNU
+ Td/ewdx743XB7txjn2QCexZzpqznxHcSZev4S05If+KRwpiuKJqTLHZ3rSpRlMjYtAqI
+ hmpFIewirP/EKbiVSgwU65yYNTscUd13ob8uags2/4OmogLltXKycV1rnHzRscJpkVXA
+ E0y/xbxCU0/8c8hG2lxnsrFs6NLwevf4adrIX0QuZZSye537wg61L9q+5ipNxqSORI1Q
+ zrcR32TXj20KY9AnRdzHKh7oAuOckF1JyoEZfuNZeBk47U2OyhXuGTPVhwZxDSFFjvNN
+ 8hHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725633226; x=1726238026;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KALXkPBTxGDivGnQNyPwRC48F/CKpmU8ry/zplz06X0=;
- b=TqLU5a1iZPM6GH5DhCoww52yxMcCc/mi+8/8LiNUq+kB/h8PnwYgR1hisnMZ69H/Jm
- OIos7yvZInJmWMQs82M3cZh3CrZi/IBu660VDnpQFCZbHvOl4Yv0heZXn81LAKvxH4J9
- cCiydNx1DFzwLTYG/Y6lt6cTxNQ56nZ9UGtzP7YDvughQRNUusvuq6xcgCmIQNFmGOY1
- 7c5J/Y9ZROqrlZaZd5RoWa+5aLZ7XzCv8LM3sZ9RumvC/srB2WMgxgr0jZYRU/kXFvBC
- jk1Gb+GT6zHsJwHIy0w/A/r7UUZbZTMh1K7AW7bWHLUBoJjEwRcW1DXrFOOVxWaTM+D9
- 7uIw==
-X-Gm-Message-State: AOJu0Yy6/ntTIrw6CsvPlopcUyW9XHl1XDF9bFjBNi3J8+at7jrdfoEY
- eeCI0+/vNUdTHSVvP01xdPbQNeQKsI7fCGzO37aW5OCIGjRz2KtTf50eoa/pqVoaCi4DpqP4Tbb
- a
-X-Google-Smtp-Source: AGHT+IF85gMz0CJusqrJfNBOsYauNPSXJCMqSplkpUly6GK5IE3pPsbuBj+XKeURLTYvWAAtt9P2uA==
-X-Received: by 2002:a17:902:da88:b0:205:8407:631d with SMTP id
- d9443c01a7336-20584076603mr164499205ad.13.1725633226172; 
- Fri, 06 Sep 2024 07:33:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725633229; x=1726238029;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jMYYkx/opjLXIlYN94qCm43SuWEXEBRd8nT29zGh3do=;
+ b=wG20wWjWW+ZQCN7gxcVTkLmlSBnybllKCPQJEaFnZ5GJgPWZNk01DmJOMGrfC+57dn
+ S4TaU+58TI7VFBYR9cSs98VUFUGwbHIiOM25xp1zRUCCnMiIdztqEav7EqtgHhgxP6F0
+ 87aJ9UBvyFSYhoXGIvHQrNy+uNCKsZuUDFVzChkM1WMD/np0xrwbrKwoWHHw8WdZa1Fv
+ 9kZYTN6Z3ZVuLVrd+aYX2MSUib66d089Q/+wzQJuMJDCF9X35rOPNRwECDbVTrApHpCW
+ 1xlaXqU0UaiLpvTjHfv3GEznCLXxyU0lc/YTcs/25T9mqCXOuzDT2jSqrMfUpAmDPpwW
+ Qzfg==
+X-Gm-Message-State: AOJu0YzVu1ztGFag9vlrsBMRTblxa1fcct5mZCs/tFNusOZ3bXSB1Ae+
+ kQKA5wr5B2rCYzEQHqeyIx+XKMzgn716f/MoiclI2HNYSp+VtZvg/QIMKrkhMSWsiX4e6YhBxe1
+ L
+X-Google-Smtp-Source: AGHT+IEjhs2YapdOhibgn+FXYzTbNwU8R8TnoLmdzqAcgutgIjlYFK6nBCrRiVOE56yZrouC+gQ9+Q==
+X-Received: by 2002:a17:902:f54d:b0:206:b618:1d96 with SMTP id
+ d9443c01a7336-206ee75720fmr41868055ad.0.1725633228918; 
+ Fri, 06 Sep 2024 07:33:48 -0700 (PDT)
 Received: from amd.. ([2804:7f0:b401:42a1:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-206ae913cf1sm43844425ad.28.2024.09.06.07.33.44
+ d9443c01a7336-206ae913cf1sm43844425ad.28.2024.09.06.07.33.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 07:33:45 -0700 (PDT)
+ Fri, 06 Sep 2024 07:33:48 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  richard.henderson@linaro.org
 Cc: peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v4 0/5] gdbstub: Add support for MTE in system mode
-Date: Fri,  6 Sep 2024 14:33:11 +0000
-Message-Id: <20240906143316.657436-1-gustavo.romero@linaro.org>
+Subject: [PATCH v4 1/5] gdbstub: Use specific MMU index when probing MTE
+ addresses
+Date: Fri,  6 Sep 2024 14:33:12 +0000
+Message-Id: <20240906143316.657436-2-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240906143316.657436-1-gustavo.romero@linaro.org>
+References: <20240906143316.657436-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,83 +97,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset makes handle_q_memtag, handle_q_isaddresstagged, and
-handle_Q_memtag stubs build for system mode, allowing all GDB
-'memory-tag' subcommands to work with QEMU gdbstub on aarch64 system
-mode, resolving:
+Use cpu_mmu_index() to determine the specific translation regime (MMU
+index) before probing addresses using allocation_tag_mem_probe().
 
-https://gitlab.com/qemu-project/qemu/-/issues/620
+Currently, the MMU index is hardcoded to 0 and only works for user mode.
+By obtaining the specific MMU index according to the translation regime,
+future use of the stubs relying on allocation_tag_mem_probe in other
+regimes will be possible, like in EL1.
 
-For running the tests, a GDB that supports MTE for baremetal targets is
-necessary. This support has just landed GDB's master branch.
+This commit also changes the ptr_size value passed to
+allocation_tag_mem_probe() from 8 to 1. The ptr_size parameter actually
+represents the number of bytes in the memory access (which can be as
+small as 1 byte), rather than the number of bits used in the address
+space pointed to by ptr.
 
-GDB can be built and installed into a /tmp directory in a simple way:
-after cloning GDB's master branch, inside a build directory, configure
-GDB and build it:
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/gdbstub64.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
- $ git clone --depth 1 https://sourceware.org/git/binutils-gdb.git --branch master gdb_master && cd gdb_master
- $ mkdir build && cd build
- $ ../configure --disable-binutils --disable-ld --disable-gold --disable-gas --disable-sim --disable-gprof --disable-gprofng --with-python=python3 --enable-libctf --enable-unit-tests --prefix=/tmp/gdb --with-additional-debug-dirs=/usr/lib/debug --enable-targets=all
- $ make -j 32
- $ make install
-
-Configure QEMU, specifying where GDB is installed. For example:
-
- $ cd build
- $ ../configure --target-list=aarch64-linux-user,aarch64-softmmu --disable-docs --gdb=/tmp/gdb/bin/gdb
- $ make -j 32
- $ cd..
-
-And finally run the MTE gdbstub tests for QEMU system mode:
-
- $ make -C build -j 32 run-tcg-tests-aarch64-softmmu
-
-v2:
- - Use of cpu_mmu_index() instead of arm_mmu_idx() (Richard's review)
- - Converted mte.c test to mte.S
- - Set tcr_el1, mair_el1, and sctlr_el1 in mte.S instead of in boot.S
-   (Richard's review) 
- - Allowed use of argparse in test scripts to get passed arguments from
-   run-test.py (Alex's review)
- - Fixed test output to be stored in run-gdbstub-mte.out instead of
-   printed to stdout
- - Added detection of GDB supporting MTE in baremetal
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 5221381cc8..85a19c14c7 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -435,6 +435,7 @@ static void handle_q_memtag(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
  
-v3:
- - No need of ARM_MMU_IDX_COREIDX_MASK with cpu_mmu_index()
-   (Richard's review)
- - Define a symbol for mte_page instead of a whole section
-   (Richard's review)
-
-v4:
- - Better representation for MiB using M suffix in linker script
-   (Phil's review)
- - Improve linker script organization (Richard's review)
-
-
-Cheers,
-Gustavo
-
-Gustavo Romero (5):
-  gdbstub: Use specific MMU index when probing MTE addresses
-  gdbstub: Add support for MTE in system mode
-  tests/guest-debug: Support passing arguments to the GDB test script
-  tests/tcg/aarch64: Improve linker script organization
-  tests/tcg/aarch64: Extend MTE gdbstub tests to system mode
-
- configure                                 |   5 +
- target/arm/gdbstub64.c                    |  21 +++--
- tests/guest-debug/run-test.py             |   6 ++
- tests/guest-debug/test_gdbstub.py         |   5 +
- tests/tcg/aarch64/Makefile.softmmu-target |  49 +++++++++-
- tests/tcg/aarch64/Makefile.target         |   3 +-
- tests/tcg/aarch64/gdbstub/test-mte.py     |  71 +++++++++-----
- tests/tcg/aarch64/system/boot.S           |  11 +++
- tests/tcg/aarch64/system/kernel.ld        |  33 ++++---
- tests/tcg/aarch64/system/mte.S            | 109 ++++++++++++++++++++++
- 10 files changed, 266 insertions(+), 47 deletions(-)
- create mode 100644 tests/tcg/aarch64/system/mte.S
-
+     uint64_t addr = gdb_get_cmd_param(params, 0)->val_ull;
+     uint64_t len = gdb_get_cmd_param(params, 1)->val_ul;
+@@ -458,8 +459,10 @@ static void handle_q_memtag(GArray *params, void *user_ctx)
+         gdb_put_packet("E03");
+     }
+ 
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
+     /* Note that tags are packed here (2 tags packed in one byte). */
+-    tags = allocation_tag_mem_probe(env, 0, addr, MMU_DATA_LOAD, 8 /* 64-bit */,
++    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
+                                     MMU_DATA_LOAD, true, 0);
+     if (!tags) {
+         /* Address is not in a tagged region. */
+@@ -478,13 +481,16 @@ static void handle_q_isaddresstagged(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
+ 
+     uint64_t addr = gdb_get_cmd_param(params, 0)->val_ull;
+ 
+     uint8_t *tags;
+     const char *reply;
+ 
+-    tags = allocation_tag_mem_probe(env, 0, addr, MMU_DATA_LOAD, 8 /* 64-bit */,
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
++    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
+                                     MMU_DATA_LOAD, true, 0);
+     reply = tags ? "01" : "00";
+ 
+@@ -495,6 +501,7 @@ static void handle_Q_memtag(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
+ 
+     uint64_t start_addr = gdb_get_cmd_param(params, 0)->val_ull;
+     uint64_t len = gdb_get_cmd_param(params, 1)->val_ul;
+@@ -527,8 +534,10 @@ static void handle_Q_memtag(GArray *params, void *user_ctx)
+      * Get all tags in the page starting from the tag of the start address.
+      * Note that there are two tags packed into a single byte here.
+      */
+-    tags = allocation_tag_mem_probe(env, 0, start_addr, MMU_DATA_STORE,
+-                                    8 /* 64-bit */, MMU_DATA_STORE, true, 0);
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
++    tags = allocation_tag_mem_probe(env, mmu_index, start_addr, MMU_DATA_STORE,
++                                    1, MMU_DATA_STORE, true, 0);
+     if (!tags) {
+         /* Address is not in a tagged region. */
+         gdb_put_packet("E04");
 -- 
 2.34.1
 
