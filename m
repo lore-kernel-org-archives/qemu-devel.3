@@ -4,76 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5633FE6FE4C
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 13:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA37EB64C5
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 14:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smvZR-0001tf-PI; Sat, 07 Sep 2024 09:33:45 -0400
+	id 1smwWw-0005pE-F1; Sat, 07 Sep 2024 10:35:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smvZQ-0001sB-Sw
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 09:33:44 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smvZP-0004J8-6P
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 09:33:44 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2f3eabcd293so33439551fa.2
- for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 06:33:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725716020; x=1726320820; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WKe16QE24W+UCLCHr9tZ5xCVWKX6T3uhPk6K6l7AHac=;
- b=s6SCeATnNwBZO9ZaNyqa1lGUOMndYY7USydocC4MaroYGb0ZXTr+8RcjAaKCq62HrM
- YvdJFe/yU8kvvbYq4JtI4epOVC9yZrcW8gBXBAhL5Uiz7tgWp5X4WnBeZA6UCcJdOeP/
- U2PCfi3HXUPNz6ocLft0na16NmNNXEnqe3knC138WfZb5Jy7bP8GiVoAqel+gosyfSiJ
- bZzxVcKT2cNZsMhFxIOcQuSZhK8guFfr+88oEDfH/fuciMmjEFZFYBzlZuRYTdy9FWK6
- ezKPeaEPkxfBI11ZBn62bI8eJt/Blz+gpbzhz+PGPwiN6VqkMzjyYIJxY12E2Hp7Lwti
- 1CZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725716020; x=1726320820;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WKe16QE24W+UCLCHr9tZ5xCVWKX6T3uhPk6K6l7AHac=;
- b=vzFJ8Il0B59u56PYQ9T3/YBD6RCtSBhOvdJxU31rcAkT/tG8KhaYjIT5yqdDRP+2w7
- 5pnwEAfgQ/1HZGRCxTskf8ewcRcA8TNLq00MY9jhM9YmMUy9/lGNb1ZsW3FqeiiWhnMV
- ZBA0pQdGLu0JJIrfezj4/8j4HP8EwfxbXv0Pb4mPbuDoQYYYPt1pO0CnY05OTK7cTGji
- OyOrQ2kKjod/IG9NgXUUWFre/nC/7LXUGiYY8VW4jYvWKiU2REXGokggDvHPvsaSYY26
- 0A29pWxW7zdnPYPBXrEBrJYBjSY4n9QfUHomyakuiXTu1G2iPG5xvewkArGuqtMsO7nx
- Lxcw==
-X-Gm-Message-State: AOJu0YxPJ4/tftNoXCcc2Y7syhKAhCIriG/FgZ4jEK/8iz4OEXBeeOn+
- bfOjp1gRlt/wRN0boz8w9gj6HLam0zpRKw4OnQDtkC2IDdL/zmCwA1OSVJOsZKRd5IkSGi4BA/W
- C4/tNYj4MCf57IfPKEQTXko3/ESnzCjQjQ8NEUw==
-X-Google-Smtp-Source: AGHT+IFXJpiPAgjji3s8tPLsqTrW3KRo8MJMMfV2PoWAwTmMzJRJnegMex7+dEy0rhpOqKYuTuCsH+FolWU1kyUTjaI=
-X-Received: by 2002:a05:651c:20c:b0:2f3:ee44:c6de with SMTP id
- 38308e7fff4ca-2f751f2b7ebmr33913441fa.27.1725716019639; Sat, 07 Sep 2024
- 06:33:39 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <SRS0=+fej=QF=zx2c4.com=Jason@kernel.org>)
+ id 1smwWs-0005nU-Pc
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 10:35:10 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <SRS0=+fej=QF=zx2c4.com=Jason@kernel.org>)
+ id 1smwWq-0002gA-JC
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 10:35:10 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 776DDA403F9;
+ Sat,  7 Sep 2024 14:34:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C1EC4CEC2;
+ Sat,  7 Sep 2024 14:35:05 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="mOGOlVHo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1725719703;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SBM0qQzGVNkTJC77WZSEDfU5A49pdh9S9UwZ/o03Hvg=;
+ b=mOGOlVHo89oY4zowydYOBoxLZY6w1O0tuADexz8dTBbVvts/r4pjDLjo/fADNhFIqtfwlR
+ fMbmq0cW3McM3jx98bljeO9y9vEbVGYc2Dx4F4a/2cKIQ3mNV3Vk0sGu/EBGFADqPp8O1c
+ EC2K+5J/REPbIKTmrZ3CXBo7CqWb/oQ=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d37f45ee
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Sat, 7 Sep 2024 14:35:02 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: maobibo <maobibo@loongson.cn>, gaosong@loongson.cn,
+ jiaxun.yang@flygoat.com, qemu-devel@nongnu.org, thomas@t-8ch.de,
+ xry111@xry111.site
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH v3] hw/loongarch: virt: support up to 4 serial ports
+Date: Sat,  7 Sep 2024 16:34:39 +0200
+Message-ID: <20240907143439.2792924-1-Jason@zx2c4.com>
+In-Reply-To: <20240906143146.2553953-1-Jason@zx2c4.com>
+References: <20240906143146.2553953-1-Jason@zx2c4.com>
 MIME-Version: 1.0
-References: <20240907065918.376217-1-mjt@tls.msk.ru>
-In-Reply-To: <20240907065918.376217-1-mjt@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 7 Sep 2024 14:33:28 +0100
-Message-ID: <CAFEAcA9b=du71rY9dA3VpJwbxiv2rYuvyuBmmKAJCetFvhhf+Q@mail.gmail.com>
-Subject: Re: [PATCH trivial] linux-user/syscall.c: replace function pointer
- with a helper macro for fcntl/flock case
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=SRS0=+fej=QF=zx2c4.com=Jason@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,111 +79,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 7 Sept 2024 at 08:00, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> There's a slight difference in fcntl locking handling on arm and others:
-> arm has 2 variants of struct flock argument handling, with and without eabi.
-> For this reason, we currently take address of the conversion function into
-> a variable, and for arm without eabi case, assign a different conversion
-> function to this pointer.  All functions are declared as inline, - and for
-> an inline function, it is not clear how one can have an address of it at
-> all.
+In order to support additional channels of communication using
+`-serial`, add several serial ports, up to the standard 4 generally
+supported by the 8250 driver.
 
-There's no problem with this. "inline" is just a hint to the compiler
-to say "this is probably better inlined where you can". For the case
-where we take the address of a function, that's a case where it can't
-be inlined. But other places where the function is called directly can be
-inlined without problems. For functions where are only ever used via
-function pointers, the "inline" annotation is a bit pointless and we could
-remove it; arguably for other cases we could also remove it and let
-the compiler make the call about inline vs not. As it happens the kernel
-is not inclined to inline these functions even if we ask for it, probably
-because they're too big for that to be a good idea.
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ hw/loongarch/acpi-build.c  | 23 +++++++++++++++--------
+ hw/loongarch/virt.c        | 23 +++++++++++++----------
+ include/hw/pci-host/ls7a.h |  9 +++++----
+ 3 files changed, 33 insertions(+), 22 deletions(-)
 
-> Instead of using a function pointer, use a macro, defined differently for
-> arm (with arithmetic if based on eabi presence) and for all other targets
-> (using regular argument conversion function directly).
->
-> While at it, replace tabs with spaces in nearby code.
->
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  linux-user/syscall.c | 26 +++++++++++++++-----------
->  1 file changed, 15 insertions(+), 11 deletions(-)
->
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index d418e2864a..786623d395 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -6880,9 +6880,6 @@ static inline abi_long copy_to_user_flock(abi_ulong target_flock_addr,
->      return 0;
->  }
->
-> -typedef abi_long from_flock64_fn(struct flock *fl, abi_ulong target_addr);
-> -typedef abi_long to_flock64_fn(abi_ulong target_addr, const struct flock *fl);
-> -
->  #if defined(TARGET_ARM) && TARGET_ABI_BITS == 32
->  struct target_oabi_flock64 {
->      abi_short l_type;
-> @@ -12402,14 +12399,19 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->      {
->          int cmd;
->          struct flock fl;
-> -        from_flock64_fn *copyfrom = copy_from_user_flock64;
-> -        to_flock64_fn *copyto = copy_to_user_flock64;
->
->  #ifdef TARGET_ARM
-> -        if (!cpu_env->eabi) {
-> -            copyfrom = copy_from_user_oabi_flock64;
-> -            copyto = copy_to_user_oabi_flock64;
-> -        }
-> +# define copyfrom(fl, arg) \
-> +           (cpu_env->eabi ? \
-> +             copy_from_user_flock64(fl, arg) : \
-> +             copy_from_user_oabi_flock64(fl, arg))
-> +# define copyto(arg, fl) \
-> +           (cpu_env->eabi ? \
-> +             copy_to_user_flock64(arg, fl) : \
-> +             copy_to_user_oabi_flock64(arg, fl))
-> +#else
-> +# define copyfrom copy_from_user_flock64
-> +# define copyto copy_to_user_flock64
->  #endif
+diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+index 3912c8d307..459d2b5f84 100644
+--- a/hw/loongarch/acpi-build.c
++++ b/hw/loongarch/acpi-build.c
+@@ -31,6 +31,7 @@
+ 
+ #include "hw/acpi/generic_event_device.h"
+ #include "hw/pci-host/gpex.h"
++#include "sysemu/sysemu.h"
+ #include "sysemu/tpm.h"
+ #include "hw/platform-bus.h"
+ #include "hw/acpi/aml-build.h"
+@@ -290,23 +291,27 @@ struct AcpiBuildState {
+     MemoryRegion *linker_mr;
+ } AcpiBuildState;
+ 
+-static void build_uart_device_aml(Aml *table)
++static void build_uart_device_aml(Aml *table, int index)
+ {
+     Aml *dev;
+     Aml *crs;
+     Aml *pkg0, *pkg1, *pkg2;
+-    uint32_t uart_irq = VIRT_UART_IRQ;
+-
+-    Aml *scope = aml_scope("_SB");
+-    dev = aml_device("COMA");
++    Aml *scope;
++    uint32_t uart_irq;
++    uint64_t base;
++
++    uart_irq = VIRT_UART_IRQ + index;
++    base = VIRT_UART_BASE + index * VIRT_UART_SIZE;
++    scope = aml_scope("_SB");
++    dev = aml_device("COM%d", index);
+     aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
+-    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
++    aml_append(dev, aml_name_decl("_UID", aml_int(index)));
+     aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
+     crs = aml_resource_template();
+     aml_append(crs,
+         aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
+                          AML_NON_CACHEABLE, AML_READ_WRITE,
+-                         0, VIRT_UART_BASE, VIRT_UART_BASE + VIRT_UART_SIZE - 1,
++                         0, base, base + VIRT_UART_SIZE - 1,
+                          0, VIRT_UART_SIZE));
+     aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
+                                   AML_SHARED, &uart_irq, 1));
+@@ -439,6 +444,7 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
+ static void
+ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+ {
++    int i;
+     Aml *dsdt, *scope, *pkg;
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
+     AcpiTable table = { .sig = "DSDT", .rev = 1, .oem_id = lvms->oem_id,
+@@ -446,7 +452,8 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+ 
+     acpi_table_begin(&table, table_data);
+     dsdt = init_aml_allocator();
+-    build_uart_device_aml(dsdt);
++    for (i = VIRT_UART_COUNT; i --> 0;)
++        build_uart_device_aml(dsdt, i);
+     build_pci_device_aml(dsdt, lvms);
+     build_la_ged_aml(dsdt, machine);
+     build_flash_aml(dsdt, lvms);
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 4151fc5e0c..b9bd88d3f4 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -319,10 +319,10 @@ static void fdt_add_ged_reset(LoongArchVirtMachineState *lvms)
+ }
+ 
+ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+-                              uint32_t *pch_pic_phandle)
++                              uint32_t *pch_pic_phandle, hwaddr base,
++                              int irq, bool chosen)
+ {
+     char *nodename;
+-    hwaddr base = VIRT_UART_BASE;
+     hwaddr size = VIRT_UART_SIZE;
+     MachineState *ms = MACHINE(lvms);
+ 
+@@ -331,9 +331,9 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+     qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "ns16550a");
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0x0, base, 0x0, size);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "clock-frequency", 100000000);
+-    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+-    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                           VIRT_UART_IRQ - VIRT_GSI_BASE, 0x4);
++    if (chosen)
++        qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+                           *pch_pic_phandle);
+     g_free(nodename);
+@@ -750,11 +750,14 @@ static void virt_devices_init(DeviceState *pch_pic,
+     /* Add pcie node */
+     fdt_add_pcie_node(lvms, pch_pic_phandle, pch_msi_phandle);
+ 
+-    serial_mm_init(get_system_memory(), VIRT_UART_BASE, 0,
+-                   qdev_get_gpio_in(pch_pic,
+-                                    VIRT_UART_IRQ - VIRT_GSI_BASE),
+-                   115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+-    fdt_add_uart_node(lvms, pch_pic_phandle);
++    for (i = VIRT_UART_COUNT; i --> 0;) {
++        hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
++        int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
++        serial_mm_init(get_system_memory(), base, 0,
++                       qdev_get_gpio_in(pch_pic, irq),
++                       115200, serial_hd(i), DEVICE_LITTLE_ENDIAN);
++        fdt_add_uart_node(lvms, pch_pic_phandle, base, irq, i == 0);
++    }
+ 
+     /* Network init */
+     pci_init_nic_devices(pci_bus, mc->default_nic);
+diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
+index cd7c9ec7bc..79d4ea8501 100644
+--- a/include/hw/pci-host/ls7a.h
++++ b/include/hw/pci-host/ls7a.h
+@@ -36,17 +36,18 @@
+ #define VIRT_PCH_PIC_IRQ_NUM     32
+ #define VIRT_GSI_BASE            64
+ #define VIRT_DEVICE_IRQS         16
++#define VIRT_UART_COUNT          4
+ #define VIRT_UART_IRQ            (VIRT_GSI_BASE + 2)
+ #define VIRT_UART_BASE           0x1fe001e0
+-#define VIRT_UART_SIZE           0X100
+-#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 3)
++#define VIRT_UART_SIZE           0x100
++#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 6)
+ #define VIRT_MISC_REG_BASE       (VIRT_PCH_REG_BASE + 0x00080000)
+ #define VIRT_RTC_REG_BASE        (VIRT_MISC_REG_BASE + 0x00050100)
+ #define VIRT_RTC_LEN             0x100
+-#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 4)
++#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 7)
+ 
+ #define VIRT_PLATFORM_BUS_BASEADDRESS   0x16000000
+ #define VIRT_PLATFORM_BUS_SIZE          0x2000000
+ #define VIRT_PLATFORM_BUS_NUM_IRQS      2
+-#define VIRT_PLATFORM_BUS_IRQ           (VIRT_GSI_BASE + 5)
++#define VIRT_PLATFORM_BUS_IRQ           (VIRT_GSI_BASE + 8)
+ #endif
+-- 
+2.46.0
 
-This seems to me to be less readable than the current code.
-Unless there's a specific performance issue with what we have
-(which seems unlikely for flock), I would prefer not to
-macroify things like this.
-
-Looking at the generated code, for the non-arm cases the
-compiler is smart enough to turn the call into a direct
-call to copy_from_user_flock64 already.
-
->          cmd = target_to_host_fcntl_cmd(arg2);
-> @@ -12427,7 +12429,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->              if (ret == 0) {
->                  ret = copyto(arg3, &fl);
->              }
-> -           break;
-> +            break;
->
->          case TARGET_F_SETLK64:
->          case TARGET_F_SETLKW64:
-> @@ -12436,10 +12438,12 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->                  break;
->              }
->              ret = get_errno(safe_fcntl(arg1, cmd, &fl));
-> -           break;
-> +            break;
->          default:
->              ret = do_fcntl(arg1, arg2, arg3);
->              break;
-> +#undef copyfrom
-> +#undef copyto
->          }
->          return ret;
->      }
-
-thanks
--- PMM
 
