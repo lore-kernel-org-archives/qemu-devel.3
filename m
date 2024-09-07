@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037D6CD4846
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 03:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB18E6FE4D
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 03:20:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smlzN-000398-Ld; Fri, 06 Sep 2024 23:19:53 -0400
+	id 1smlzL-00031C-O2; Fri, 06 Sep 2024 23:19:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1smlzH-0002xk-CH
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:19:47 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1smlzF-0002wj-GT
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:19:45 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1smlzF-0004qf-EH
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:19:46 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2053a0bd0a6so29768375ad.3
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 20:19:44 -0700 (PDT)
+ id 1smlzA-0004qO-Va
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:19:43 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2021c08b95cso29383835ad.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 20:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725679183; x=1726283983; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qoqI+GcSD10KH5RTtszxpTTAXwPzAPqtWGKQJfPieeI=;
- b=Pz7cBylT0LyCPEbwPSoqXDdVS+m/RaIYfcLC69kCqj5zjBqSOvUnzV6WUHt2gds0Fg
- Tw1MV0OaqkOuWBBOqcVdpeHrBr2wKraWshGLy/Kz11ahOX24u0edB9wuS5VtY6T4mkjd
- wDNsiQStNB/ALVpAgKsnIUbb1NAh+ReJcMhCb7lcd+K496fm2SK1VT7QW8o1mKkogK8o
- Z1g3ZZHqxXglnb6hBuLExO1TE1YEfocffY5PDj4ibDSdGfkK7dnJQZ6g5oqxLnbJBmoR
- jMuk4hfkQ81Je8PKcwg5YYv1sKuNeJ9NABX0zEyejo6eflkV2b/0Yq23R1oHdCIUTPE3
- JQlw==
+ d=gmail.com; s=20230601; t=1725679177; x=1726283977; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3tMqY8rCxLTkE8ayemTC/1nbep0EmXZkXPq/OsTmB1Y=;
+ b=OceazGu6oHsXI417EaSgzTjS2yd0HQMRzZ06Nayl/hZ3JU2pQzdxZ6u+uFxs8aaY2B
+ OyC+Lg7AZdbclWxnBgDfegBCnDFQXK+SGDlb6wZh+LzuJzFNQoEdMYhfq8BhDbgkBeSb
+ wPnmqBObkkHYCvXyZCQ6kaZw3bn0ZyHMzhqR0L6fTIs2h1SXKivM/Pf2LGy8NOfghzxz
+ rP+zP2+hBzNTfCess74llifJ4W55DdSi1540FsEe/+qhHq02PmfF19DTYYq8FQhy6xEF
+ vrWXgyqOmdDQSMDcKRbHNaPqgUe/TCo3UzQvOc1kCxxZpSlMM+FWby8JoT06nWLXXxf7
+ 003g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725679183; x=1726283983;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qoqI+GcSD10KH5RTtszxpTTAXwPzAPqtWGKQJfPieeI=;
- b=Fd6J5mFzEUeSLqayiUJhKj3vivncd0qvKtl1EbHAqzCl2TFIdsQvjLZuUSoV3b0JVO
- rfj5iJ0m2LiNykI9jKnxp6h77wEyHmXbMr6rL7VYo1q7IBaL0e9idbhacm1g2LAF/fAQ
- YNcqNkLgdRT1K28iq5gzt8nl/JUssiNRWv2uObs8z5K9/Nmt019gCLeK/IQ76Hl4oOxB
- IORKsk9k+1EO9xUcXflPSL4WvFRHktTP0RvYCWKsr2waWd+FRnH2u9+WaFn4qye+0pdg
- +9vt+DNTvMEyh0p+0/Iaa1vb4MjTmAS/omUvRFFOcbTRp0kp2R42wigPq59Hi/A+Ol6/
- eoBA==
-X-Gm-Message-State: AOJu0YwhC+M3Bom0woOxg38+cjJJo0QZQg8g0QTLD/TfYfHOV36axYN7
- eGfUGB7cEqMbAeoq9aEx29B6/X/crPtVtnhMAuzA4FhJxc2hMiYqkR3eJo9H
-X-Google-Smtp-Source: AGHT+IEN+8AFlk71jBgNBcQtyEne8mptmnoBTjCRvrYTgw+a/DUOd2itX5oFmhdYiHSTHrsEQZeniw==
-X-Received: by 2002:a17:902:e550:b0:1fd:9a23:90cc with SMTP id
- d9443c01a7336-206f052e09bmr52678905ad.26.1725679182823; 
- Fri, 06 Sep 2024 20:19:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725679177; x=1726283977;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3tMqY8rCxLTkE8ayemTC/1nbep0EmXZkXPq/OsTmB1Y=;
+ b=PYyx5HyE9kguc7kqMlDRj00xt5alwmfiJu0MMwPYor833H9Zqjkx1/hIf533cxPOqL
+ egibgTqqq+Xvd1IfnTMnyVRmCaanB/NhHuJmIWhf9E4D8IuQbsBbVKnerULy13OQZrfu
+ Hnzz9qfEs8rk3LGQU+q6IOrA9FEktLhAdjW/kHJ3vGj3xPgR3JiljQmDK7/DL4lEG9di
+ cYkYpbg0/GSt5IxSEIXyxmKRiVrXQDQyVKfOiaBOBq9yUjRvSAqmk/60eW16X3Y8Rp0G
+ PTjal9BBCj/TKcr87fpqG6wfzanOFs8O+i9N6LZvMTOe4/edUxAjc7imxAjLDZXcc4Hj
+ OcdA==
+X-Gm-Message-State: AOJu0YxtCEviPTZ+nNrjZZMKg0fCO3tlm1JvTdlGPw7YxttMmLcpA8Mq
+ M++7tC6OxEUFq5ICy9oebP+4EgzAcsr0XIHf+VaqBe1LxQXHNW7VzsFxlg==
+X-Google-Smtp-Source: AGHT+IH5Jptvbn9XplNjJ9u0aamR8JJy5OL+mAW8b5pMPPnF4+krZNoEpBXJv4s1dQJUMcmWVesCrQ==
+X-Received: by 2002:a17:903:283:b0:205:656d:5f46 with SMTP id
+ d9443c01a7336-206b8461b10mr192565515ad.28.1725679176918; 
+ Fri, 06 Sep 2024 20:19:36 -0700 (PDT)
 Received: from localhost.localdomain (115-64-160-35.tpgi.com.au.
  [115.64.160.35]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f1d4c6sm1703745ad.187.2024.09.06.20.19.40
+ d9443c01a7336-20710f1d4c6sm1703745ad.187.2024.09.06.20.19.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 20:19:42 -0700 (PDT)
+ Fri, 06 Sep 2024 20:19:36 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
- Kyle Evans <kevans@FreeBSD.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 02/17] bsd-user: Add RISC-V CPU execution loop and syscall
- handling
-Date: Sat,  7 Sep 2024 13:19:12 +1000
-Message-Id: <20240907031927.1908-3-itachis@FreeBSD.org>
+ Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH v5 00/17] bsd-user: Comprehensive RISCV Support
+Date: Sat,  7 Sep 2024 13:19:10 +1000
+Message-Id: <20240907031927.1908-1-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240907031927.1908-1-itachis@FreeBSD.org>
-References: <20240907031927.1908-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=itachis6234@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=itachis6234@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,125 +93,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+Key Changes Compared to Version 4:
+Minor formatting changes
 
-Implemented the RISC-V CPU execution loop, including handling various
-exceptions and system calls. The loop continuously executes CPU
-instructions,processes exceptions, and handles system calls by invoking
-FreeBSD syscall handlers.
+Mark Corbin (15):
+  bsd-user: Implement RISC-V CPU initialization and main loop
+  bsd-user: Add RISC-V CPU execution loop and syscall handling
+  bsd-user: Implement RISC-V CPU register cloning and reset functions
+  bsd-user: Implement RISC-V TLS register setup
+  bsd-user: Add RISC-V ELF definitions and hardware capability detection
+  bsd-user: Define RISC-V register structures and register copying
+  bsd-user: Add RISC-V signal trampoline setup function
+  bsd-user: Implement RISC-V sysarch system call emulation
+  bsd-user: Add RISC-V thread setup and initialization support
+  bsd-user: Define RISC-V VM parameters and helper functions
+  bsd-user: Define RISC-V system call structures and constants
+  bsd-user: Define RISC-V signal handling structures and constants
+  bsd-user: Implement RISC-V signal trampoline setup functions
+  bsd-user: Implement 'get_mcontext' for RISC-V
+  bsd-user: Implement set_mcontext and get_ucontext_sigreturn for RISCV
 
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
-Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- bsd-user/riscv/target_arch_cpu.h | 94 ++++++++++++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
+Warner Losh (2):
+  bsd-user: Add generic RISC-V64 target definitions
+  bsd-user: Add RISC-V 64-bit Target Configuration and Debug XML Files
 
-diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
-index e17c910ae9..ea2a8d1ace 100644
---- a/bsd-user/riscv/target_arch_cpu.h
-+++ b/bsd-user/riscv/target_arch_cpu.h
-@@ -36,4 +36,98 @@ static inline void target_cpu_init(CPURISCVState *env,
-     env->pc = regs->sepc;
- }
- 
-+static inline void target_cpu_loop(CPURISCVState *env)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int trapnr;
-+    abi_long ret;
-+    unsigned int syscall_num;
-+    int32_t signo, code;
-+
-+    for (;;) {
-+        cpu_exec_start(cs);
-+        trapnr = cpu_exec(cs);
-+        cpu_exec_end(cs);
-+        process_queued_cpu_work(cs);
-+
-+        signo = 0;
-+
-+        switch (trapnr) {
-+        case EXCP_INTERRUPT:
-+            /* just indicate that signals should be handled asap */
-+            break;
-+        case EXCP_ATOMIC:
-+            cpu_exec_step_atomic(cs);
-+            break;
-+        case RISCV_EXCP_U_ECALL:
-+            syscall_num = env->gpr[xT0];
-+            env->pc += TARGET_INSN_SIZE;
-+            /* Compare to cpu_fetch_syscall_args() in riscv/riscv/trap.c */
-+            if (TARGET_FREEBSD_NR___syscall == syscall_num ||
-+                TARGET_FREEBSD_NR_syscall == syscall_num) {
-+                ret = do_freebsd_syscall(env,
-+                                         env->gpr[xA0],
-+                                         env->gpr[xA1],
-+                                         env->gpr[xA2],
-+                                         env->gpr[xA3],
-+                                         env->gpr[xA4],
-+                                         env->gpr[xA5],
-+                                         env->gpr[xA6],
-+                                         env->gpr[xA7],
-+                                         0);
-+            } else {
-+                ret = do_freebsd_syscall(env,
-+                                         syscall_num,
-+                                         env->gpr[xA0],
-+                                         env->gpr[xA1],
-+                                         env->gpr[xA2],
-+                                         env->gpr[xA3],
-+                                         env->gpr[xA4],
-+                                         env->gpr[xA5],
-+                                         env->gpr[xA6],
-+                                         env->gpr[xA7]
-+                    );
-+            }
-+
-+            /*
-+             * Compare to cpu_set_syscall_retval() in
-+             * riscv/riscv/vm_machdep.c
-+             */
-+            if (ret >= 0) {
-+                env->gpr[xA0] = ret;
-+                env->gpr[xT0] = 0;
-+            } else if (ret == -TARGET_ERESTART) {
-+                env->pc -= TARGET_INSN_SIZE;
-+            } else if (ret != -TARGET_EJUSTRETURN) {
-+                env->gpr[xA0] = -ret;
-+                env->gpr[xT0] = 1;
-+            }
-+            break;
-+        case RISCV_EXCP_ILLEGAL_INST:
-+            signo = TARGET_SIGILL;
-+            code = TARGET_ILL_ILLOPC;
-+            break;
-+        case RISCV_EXCP_BREAKPOINT:
-+            signo = TARGET_SIGTRAP;
-+            code = TARGET_TRAP_BRKPT;
-+            break;
-+        case EXCP_DEBUG:
-+            signo = TARGET_SIGTRAP;
-+            code = TARGET_TRAP_BRKPT;
-+            break;
-+        default:
-+            fprintf(stderr, "qemu: unhandled CPU exception "
-+                "0x%x - aborting\n", trapnr);
-+            cpu_dump_state(cs, stderr, 0);
-+            abort();
-+        }
-+
-+        if (signo) {
-+            force_sig_fault(signo, code, env->pc);
-+        }
-+
-+        process_pending_signals(env);
-+    }
-+}
-+
- #endif /* TARGET_ARCH_CPU_H */
+ bsd-user/riscv/signal.c               | 170 ++++++++++++++++++++++++++
+ bsd-user/riscv/target.h               |  20 +++
+ bsd-user/riscv/target_arch.h          |  27 ++++
+ bsd-user/riscv/target_arch_cpu.c      |  29 +++++
+ bsd-user/riscv/target_arch_cpu.h      | 147 ++++++++++++++++++++++
+ bsd-user/riscv/target_arch_elf.h      |  42 +++++++
+ bsd-user/riscv/target_arch_reg.h      |  88 +++++++++++++
+ bsd-user/riscv/target_arch_signal.h   |  75 ++++++++++++
+ bsd-user/riscv/target_arch_sigtramp.h |  42 +++++++
+ bsd-user/riscv/target_arch_sysarch.h  |  41 +++++++
+ bsd-user/riscv/target_arch_thread.h   |  47 +++++++
+ bsd-user/riscv/target_arch_vmparam.h  |  53 ++++++++
+ bsd-user/riscv/target_syscall.h       |  38 ++++++
+ configs/targets/riscv64-bsd-user.mak  |   4 +
+ 14 files changed, 823 insertions(+)
+ create mode 100644 bsd-user/riscv/signal.c
+ create mode 100644 bsd-user/riscv/target.h
+ create mode 100644 bsd-user/riscv/target_arch.h
+ create mode 100644 bsd-user/riscv/target_arch_cpu.c
+ create mode 100644 bsd-user/riscv/target_arch_cpu.h
+ create mode 100644 bsd-user/riscv/target_arch_elf.h
+ create mode 100644 bsd-user/riscv/target_arch_reg.h
+ create mode 100644 bsd-user/riscv/target_arch_signal.h
+ create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
+ create mode 100644 bsd-user/riscv/target_arch_sysarch.h
+ create mode 100644 bsd-user/riscv/target_arch_thread.h
+ create mode 100644 bsd-user/riscv/target_arch_vmparam.h
+ create mode 100644 bsd-user/riscv/target_syscall.h
+ create mode 100644 configs/targets/riscv64-bsd-user.mak
+
 -- 
 2.34.1
 
