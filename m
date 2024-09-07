@@ -4,88 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DFCE6FE4C
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 13:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5633FE6FE4C
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 13:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smvT9-000501-Nh; Sat, 07 Sep 2024 09:27:15 -0400
+	id 1smvZR-0001tf-PI; Sat, 07 Sep 2024 09:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1smvT8-0004yt-42; Sat, 07 Sep 2024 09:27:14 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1smvT6-0003g1-AS; Sat, 07 Sep 2024 09:27:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=IotkzAljVAcCglNUgbdKyKjHmvrps/QohU3NiamGhvY=; b=sZLE6iFXyluupqqwTF3O2MQ+yz
- GlXp+TLTaHJsi0fTO0HkpGQaUHoGR+LaTepfbtJpHIDOjIjRmIpi+TYuH2i6XnvNaqRIhHQVhTyDX
- i5RV5xSUaZFNktb1IwBH0cRYoIGQE8SLkrIntev4sj52uWJIX1/KUpNx+wyVITtpCVfD0+ozoL80w
- asCCICnjGNWj535CYFY8H7W2rA9V2tLSjIH6Os2BAiEpXRjPXxFd6NBL3Pg2FHCpZgyi6Kxm3vBEf
- Nc966kxieLPwqzGH5LiviHYcI/le2bolsjyuQrkjQj/h1Mrj6EtpNwj5VTCDfvIdYhf9mvdFzXaQt
- Z24OCc1A9+nLCp1bEeN60UXkKg4jvi6w9N/vBxmMHBTfjuFRKLK03nFeY82y5bHNIo9qes3pXzmp4
- oY4gCiFXMPHkW6fkazcVLiOycgACnlL2T6FJXNY5EST3RPW9hie3XSdzUmv2x35yEGEEBg2ytTlgx
- QCWdvzqBPW+DL4oA05pgnRNKkFqNGDVIOkmee5vsQsDSsKj26EFd4lFelffmD2UB7zzbYExEbLXlf
- ZgbkYkaq3dacdDVaN5x0MaUTkPDAEXFJ/bH6c8D40k1BoeBii8/io5m/Q5Pq3/JC1jhzrwhkdQ/ns
- uRjDDGpGtaBHAz3meUpZqRQ4Vc2c1wFrCnGpFwPHE=;
-Received: from [2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1smvSx-0004FY-Hg; Sat, 07 Sep 2024 14:27:07 +0100
-Message-ID: <fa03b234-1759-4759-ad55-0f5b31af02f1@ilande.co.uk>
-Date: Sat, 7 Sep 2024 14:27:00 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smvZQ-0001sB-Sw
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 09:33:44 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1smvZP-0004J8-6P
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 09:33:44 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2f3eabcd293so33439551fa.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 06:33:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725716020; x=1726320820; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=WKe16QE24W+UCLCHr9tZ5xCVWKX6T3uhPk6K6l7AHac=;
+ b=s6SCeATnNwBZO9ZaNyqa1lGUOMndYY7USydocC4MaroYGb0ZXTr+8RcjAaKCq62HrM
+ YvdJFe/yU8kvvbYq4JtI4epOVC9yZrcW8gBXBAhL5Uiz7tgWp5X4WnBeZA6UCcJdOeP/
+ U2PCfi3HXUPNz6ocLft0na16NmNNXEnqe3knC138WfZb5Jy7bP8GiVoAqel+gosyfSiJ
+ bZzxVcKT2cNZsMhFxIOcQuSZhK8guFfr+88oEDfH/fuciMmjEFZFYBzlZuRYTdy9FWK6
+ ezKPeaEPkxfBI11ZBn62bI8eJt/Blz+gpbzhz+PGPwiN6VqkMzjyYIJxY12E2Hp7Lwti
+ 1CZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725716020; x=1726320820;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WKe16QE24W+UCLCHr9tZ5xCVWKX6T3uhPk6K6l7AHac=;
+ b=vzFJ8Il0B59u56PYQ9T3/YBD6RCtSBhOvdJxU31rcAkT/tG8KhaYjIT5yqdDRP+2w7
+ 5pnwEAfgQ/1HZGRCxTskf8ewcRcA8TNLq00MY9jhM9YmMUy9/lGNb1ZsW3FqeiiWhnMV
+ ZBA0pQdGLu0JJIrfezj4/8j4HP8EwfxbXv0Pb4mPbuDoQYYYPt1pO0CnY05OTK7cTGji
+ OyOrQ2kKjod/IG9NgXUUWFre/nC/7LXUGiYY8VW4jYvWKiU2REXGokggDvHPvsaSYY26
+ 0A29pWxW7zdnPYPBXrEBrJYBjSY4n9QfUHomyakuiXTu1G2iPG5xvewkArGuqtMsO7nx
+ Lxcw==
+X-Gm-Message-State: AOJu0YxPJ4/tftNoXCcc2Y7syhKAhCIriG/FgZ4jEK/8iz4OEXBeeOn+
+ bfOjp1gRlt/wRN0boz8w9gj6HLam0zpRKw4OnQDtkC2IDdL/zmCwA1OSVJOsZKRd5IkSGi4BA/W
+ C4/tNYj4MCf57IfPKEQTXko3/ESnzCjQjQ8NEUw==
+X-Google-Smtp-Source: AGHT+IFXJpiPAgjji3s8tPLsqTrW3KRo8MJMMfV2PoWAwTmMzJRJnegMex7+dEy0rhpOqKYuTuCsH+FolWU1kyUTjaI=
+X-Received: by 2002:a05:651c:20c:b0:2f3:ee44:c6de with SMTP id
+ 38308e7fff4ca-2f751f2b7ebmr33913441fa.27.1725716019639; Sat, 07 Sep 2024
+ 06:33:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, hsp.cat7@gmail.com
-References: <20240904104007.177239-1-mark.cave-ayland@ilande.co.uk>
- <5f68f72e-9449-4cf3-82df-47c912b2c0c3@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <5f68f72e-9449-4cf3-82df-47c912b2c0c3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] adb-mouse: convert to use QemuInputHandler
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+References: <20240907065918.376217-1-mjt@tls.msk.ru>
+In-Reply-To: <20240907065918.376217-1-mjt@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 7 Sep 2024 14:33:28 +0100
+Message-ID: <CAFEAcA9b=du71rY9dA3VpJwbxiv2rYuvyuBmmKAJCetFvhhf+Q@mail.gmail.com>
+Subject: Re: [PATCH trivial] linux-user/syscall.c: replace function pointer
+ with a helper macro for fcntl/flock case
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,130 +89,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/09/2024 06:40, Philippe Mathieu-Daudé wrote:
+On Sat, 7 Sept 2024 at 08:00, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> There's a slight difference in fcntl locking handling on arm and others:
+> arm has 2 variants of struct flock argument handling, with and without eabi.
+> For this reason, we currently take address of the conversion function into
+> a variable, and for arm without eabi case, assign a different conversion
+> function to this pointer.  All functions are declared as inline, - and for
+> an inline function, it is not clear how one can have an address of it at
+> all.
 
-> Hi Mark,
-> 
-> On 4/9/24 12:40, Mark Cave-Ayland wrote:
->> Update the ADB mouse implementation to use QemuInputHandler instead of the
->> legacy qemu_add_mouse_event_handler() function.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/input/adb-mouse.c | 56 ++++++++++++++++++++++++++++++++++++--------
->>   1 file changed, 46 insertions(+), 10 deletions(-)
->>
->> diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
->> index 144a0ccce7..7aa36caf2f 100644
->> --- a/hw/input/adb-mouse.c
->> +++ b/hw/input/adb-mouse.c
->> @@ -38,6 +38,7 @@ struct MouseState {
->>       ADBDevice parent_obj;
->>       /*< private >*/
->> +    QemuInputHandlerState *hs;
->>       int buttons_state, last_buttons_state;
->>       int dx, dy, dz;
->>   };
->> @@ -51,17 +52,52 @@ struct ADBMouseClass {
->>       DeviceRealize parent_realize;
->>   };
->> -static void adb_mouse_event(void *opaque,
->> -                            int dx1, int dy1, int dz1, int buttons_state)
->> +#define ADB_MOUSE_BUTTON_LEFT   0x01
->> +#define ADB_MOUSE_BUTTON_RIGHT  0x02
->> +
->> +static void adb_mouse_handle_event(DeviceState *dev, QemuConsole *src,
->> +                                   InputEvent *evt)
->>   {
->> -    MouseState *s = opaque;
->> +    MouseState *s = (MouseState *)dev;
->> +    InputMoveEvent *move;
->> +    InputBtnEvent *btn;
->> +    static const int bmap[INPUT_BUTTON__MAX] = {
->> +        [INPUT_BUTTON_LEFT]   = ADB_MOUSE_BUTTON_LEFT,
->> +        [INPUT_BUTTON_RIGHT]  = ADB_MOUSE_BUTTON_RIGHT,
->> +    };
->> +
->> +    switch (evt->type) {
->> +    case INPUT_EVENT_KIND_REL:
->> +        move = evt->u.rel.data;
->> +        if (move->axis == INPUT_AXIS_X) {
->> +            s->dx += move->value;
->> +        } else if (move->axis == INPUT_AXIS_Y) {
->> +            s->dy += move->value;
->> +        }
->> +        break;
->> +
->> +    case INPUT_EVENT_KIND_BTN:
->> +        btn = evt->u.btn.data;
->> +        if (bmap[btn->button]) {
->> +            if (btn->down) {
->> +                s->buttons_state |= bmap[btn->button];
->> +            } else {
->> +                s->buttons_state &= ~bmap[btn->button];
->> +            }
->> +        }
->> +        break;
->> -    s->dx += dx1;
->> -    s->dy += dy1;
->> -    s->dz += dz1;
->> -    s->buttons_state = buttons_state;
->> +    default:
->> +        /* keep gcc happy */
->> +        break;
->> +    }
->>   }
->> +static const QemuInputHandler adb_mouse_handler = {
->> +    .name  = "QEMU ADB Mouse",
->> +    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
->> +    .event = adb_mouse_handle_event,
-> 
-> Don't we need adb_mouse_handle_sync()?
+There's no problem with this. "inline" is just a hint to the compiler
+to say "this is probably better inlined where you can". For the case
+where we take the address of a function, that's a case where it can't
+be inlined. But other places where the function is called directly can be
+inlined without problems. For functions where are only ever used via
+function pointers, the "inline" annotation is a bit pointless and we could
+remove it; arguably for other cases we could also remove it and let
+the compiler make the call about inline vs not. As it happens the kernel
+is not inclined to inline these functions even if we ask for it, probably
+because they're too big for that to be a good idea.
 
-I'm not convinced that implementing .sync would work well here, since unlike e.g. 
-PS/2 where async mouse events are sent over the serial port, an ADB mouse is 
-constantly polled by the host via the adb_mouse_poll() callback.
+> Instead of using a function pointer, use a macro, defined differently for
+> arm (with arithmetic if based on eabi presence) and for all other targets
+> (using regular argument conversion function directly).
+>
+> While at it, replace tabs with spaces in nearby code.
+>
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>  linux-user/syscall.c | 26 +++++++++++++++-----------
+>  1 file changed, 15 insertions(+), 11 deletions(-)
+>
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index d418e2864a..786623d395 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -6880,9 +6880,6 @@ static inline abi_long copy_to_user_flock(abi_ulong target_flock_addr,
+>      return 0;
+>  }
+>
+> -typedef abi_long from_flock64_fn(struct flock *fl, abi_ulong target_addr);
+> -typedef abi_long to_flock64_fn(abi_ulong target_addr, const struct flock *fl);
+> -
+>  #if defined(TARGET_ARM) && TARGET_ABI_BITS == 32
+>  struct target_oabi_flock64 {
+>      abi_short l_type;
+> @@ -12402,14 +12399,19 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>      {
+>          int cmd;
+>          struct flock fl;
+> -        from_flock64_fn *copyfrom = copy_from_user_flock64;
+> -        to_flock64_fn *copyto = copy_to_user_flock64;
+>
+>  #ifdef TARGET_ARM
+> -        if (!cpu_env->eabi) {
+> -            copyfrom = copy_from_user_oabi_flock64;
+> -            copyto = copy_to_user_oabi_flock64;
+> -        }
+> +# define copyfrom(fl, arg) \
+> +           (cpu_env->eabi ? \
+> +             copy_from_user_flock64(fl, arg) : \
+> +             copy_from_user_oabi_flock64(fl, arg))
+> +# define copyto(arg, fl) \
+> +           (cpu_env->eabi ? \
+> +             copy_to_user_flock64(arg, fl) : \
+> +             copy_to_user_oabi_flock64(arg, fl))
+> +#else
+> +# define copyfrom copy_from_user_flock64
+> +# define copyto copy_to_user_flock64
+>  #endif
 
-You may be able to add a .sync function that generates the next set of mouse 
-coordinates to be returned by adb_mouse_poll(), but then you still have to wait for 
-the next ADB packet to be sent back to the host which feels like it would introduce 
-extra latency.
+This seems to me to be less readable than the current code.
+Unless there's a specific performance issue with what we have
+(which seems unlikely for flock), I would prefer not to
+macroify things like this.
 
->> +};
->>   static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
->>   {
->> @@ -94,10 +130,10 @@ static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
->>       dx &= 0x7f;
->>       dy &= 0x7f;
->> -    if (!(s->buttons_state & MOUSE_EVENT_LBUTTON)) {
->> +    if (!(s->buttons_state & ADB_MOUSE_BUTTON_LEFT)) {
->>           dy |= 0x80;
->>       }
->> -    if (!(s->buttons_state & MOUSE_EVENT_RBUTTON)) {
->> +    if (!(s->buttons_state & ADB_MOUSE_BUTTON_RIGHT)) {
->>           dx |= 0x80;
->>       }
->> @@ -236,7 +272,7 @@ static void adb_mouse_realizefn(DeviceState *dev, Error **errp)
->>       amc->parent_realize(dev, errp);
->> -    qemu_add_mouse_event_handler(adb_mouse_event, s, 0, "QEMU ADB Mouse");
->> +    s->hs = qemu_input_handler_register((DeviceState *)s, &adb_mouse_handler);
-> 
-> Simply:
-> 
->         s->hs = qemu_input_handler_register(dev, &adb_mouse_handler);
+Looking at the generated code, for the non-arm cases the
+compiler is smart enough to turn the call into a direct
+call to copy_from_user_flock64 already.
 
-Ah yes, that should work here.
+>          cmd = target_to_host_fcntl_cmd(arg2);
+> @@ -12427,7 +12429,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>              if (ret == 0) {
+>                  ret = copyto(arg3, &fl);
+>              }
+> -           break;
+> +            break;
+>
+>          case TARGET_F_SETLK64:
+>          case TARGET_F_SETLKW64:
+> @@ -12436,10 +12438,12 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>                  break;
+>              }
+>              ret = get_errno(safe_fcntl(arg1, cmd, &fl));
+> -           break;
+> +            break;
+>          default:
+>              ret = do_fcntl(arg1, arg2, arg3);
+>              break;
+> +#undef copyfrom
+> +#undef copyto
+>          }
+>          return ret;
+>      }
 
->>   }
->>   static void adb_mouse_initfn(Object *obj)
-> 
-> Waiting for clarification on QemuInputHandler::sync, otherwise LGTM.
-
-Hopefully explained above :)  I'll send a v2 later this evening.
-
-
-ATB,
-
-Mark.
-
+thanks
+-- PMM
 
