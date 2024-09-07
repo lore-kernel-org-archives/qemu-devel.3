@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226C3E6FE47
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 04:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97CB7CD4846
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 04:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smmo7-0002OV-Uc; Sat, 07 Sep 2024 00:12:19 -0400
+	id 1smn5v-0002bD-RM; Sat, 07 Sep 2024 00:30:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smmo6-0002K8-Su
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:12:18 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smn5o-0002Zu-Gq
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:30:36 -0400
 Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smmo5-0001aN-BV
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:12:18 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smn5l-0003Mr-KL
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:30:35 -0400
 Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c3d87dd4c3so1215674a12.3
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 21:12:16 -0700 (PDT)
+ 4fb4d7f45d1cf-5c275491c61so3108378a12.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 21:30:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725682336; x=1726287136; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725683431; x=1726288231; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=x1rd35nP80P8OV6CwJyy/DbEGPiv8k4bpO1n/8T8PyM=;
- b=kZDTLbvHX4eUr21mrMzMK036lp16fuz+CzRVochbTlTnfwD5pKwnDAcQu1W4WRIv8c
- WCz+G4b9Q1TJLSd1oZS3XTWgsCrAuU1C8hpHyi/zmVLmIwEAUMGIAQKUn+GxsO/YsJim
- ocFkUjMPAGCF0x/zIJIkfzVne4ZoJg76A2e4+26fwmZLQU/0SIPMVAAGHh+a4pHrNlw8
- UTvGce3+Bhyl4OHJzQHfU6FUGpN++/MOWbJKy7CZ34K3KDw+mTK/flrzS/75Ce+5oZSh
- DkkAQ7bR8ZYRqMXkdbCpprFfZXY2j+maPOixR51UvUWTbSFuUX+gy1ePZC8hgahqmWiM
- Mgbw==
+ bh=H8urHTUDPxg2O+w/UGEXJLBeOIkK22ZkTRM4FrHyVIk=;
+ b=jWmmDV5iSA5VT1rqlFYWobHcTSg+iG0BE8DA3laGpBM8Jsi35aEkKVnyvTzwiM17my
+ dAXjuQ5hcRCcAAsf5iecr4+n1MwJhAE19wOeP21wMVHWIDUYUZvKKIFeeu+e3Zwdn0ao
+ 4Q4Iq8ol6vdiL5JfaRbssYULXyt5ODb+caub/3w9i59oYMJpx5LXW2lJ+/SbLcLVZj9U
+ 2FKiNp624t6bVdY8rh4WMXIOzZh2PIhxhZibXTCGjT3ZRGli+uQ1PsKTGXGSrwtzLxss
+ TX+p0cyoGa56E2JOP7VXFDWJeJXOtYSHo8rm0gMC/5CylSNHxSx32rzFgqx6VDM38vRD
+ r5Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725682336; x=1726287136;
+ d=1e100.net; s=20230601; t=1725683431; x=1726288231;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x1rd35nP80P8OV6CwJyy/DbEGPiv8k4bpO1n/8T8PyM=;
- b=gn+jFr2mf07y3pwuNVmFd52W+vs29RXJcvtWqzsAX3GYBuUHf+zdVp5SsnoeX/+2aI
- /FbfU+3kzDkuD6t6BMiPVdCJmkNicE1jgYGcJFDlFyEwdJ0zAPLmhAUlFX9BuEch0udF
- CjZNHMN6PWvTTEwkogcGIdD2TF28xDL9LPLnltUiCDuOMtPHW4DahaxXysLk2XkEj3CY
- GKWYuRhUzw0W5HMczP/6FrcmUhKgK4PmeukGzcLXK8hOI+/XNYypk0uedhlcqpj+hCyI
- ViCPkp0XMRHKjXCxtsZROSItn16fiUkjGDK7TQQNbt+i5bwdeYqM6FIRtSm1oTjHeo5a
- saWA==
+ bh=H8urHTUDPxg2O+w/UGEXJLBeOIkK22ZkTRM4FrHyVIk=;
+ b=IsdZEA6ekIfJUAkt14eCN7bhCnhqxf4Gy/dVwCUphknpXOv7WDWBUNUAdObd+Mzl5y
+ T3gBtKPrUWVu7xYS4nQbHoPmpmWHwoavOX4nVXTg+VH43V7EQe9j1EHhE/tf9ZHi4+1v
+ tvVmDfqQQqB7Qv4Z7bpstJTezqSczceQgyyXgwdi6f9adMB1EQZzK+rWkLGTNkI5XiBL
+ qc/cXua1uor7TGiREOLpfL22Hm/qQBd4PDyIfzbOr5bGVjtDJfJ/LddDAONcjKHzWgti
+ 1aYsL4K68oRN8pTZDGsgDUsav+CBlLfOX/49oe+R4lVoNtc3RDYkhX+hWuwoa4sJClq4
+ zoUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMOUZ6kU979gcaoDp6Ds3PAA0/mdRtYkstQGRDMPn/oIQNqZsfn1jxbnB3+9ZosSfv+KVUfu1DZQMt@nongnu.org
-X-Gm-Message-State: AOJu0YwpGsQa6tBXrIR5iqIWeN7SQLyg5PNtZWa0zBDTrSt3ASGDJvHF
- BB732muHtg6MRIrbwoe65bU+4aZDjneqoq1kes8aTVZT6CDMVZxsWRC3PzZJK14=
-X-Google-Smtp-Source: AGHT+IHhx4xo1nqyQBNPsxYmxNXpU4Wq+/YN30GrvNhtD0hbY6E6FUPzY2yVD04+/zszUfzD+JdmZw==
-X-Received: by 2002:a05:6402:4402:b0:5c2:6e61:fa87 with SMTP id
- 4fb4d7f45d1cf-5c3dc7b7ed2mr4225748a12.23.1725682335620; 
- Fri, 06 Sep 2024 21:12:15 -0700 (PDT)
+ AJvYcCWvSzB9jH2Vw2LcL8OXovyMaowQlYKmUmiPXN6uIyDPKt23EFwTCjIvpTm4QhVlLYfb3CRyRdY9ri4n@nongnu.org
+X-Gm-Message-State: AOJu0YzteYFz+vQnX6A0vEga0jcbYhQRN0qcTTo0xtJLs0sCHBEbpXo2
+ vzbG/DNwpNfVtx+1ObQ/7Kbb2U4AJrkcfrPur3mYWkApErFkPVojMFJPiZwLi6Q=
+X-Google-Smtp-Source: AGHT+IFMmy/LB9S5B9ZlfwnZrPwp1ww9Y6I++N10tphcOJ5qHcfUvMrrnAPSOaT+9wvSGGxX2p7Quw==
+X-Received: by 2002:a05:6402:35c1:b0:5c2:4ad9:6d9f with SMTP id
+ 4fb4d7f45d1cf-5c3e953355dmr1255013a12.1.1725683431038; 
+ Fri, 06 Sep 2024 21:30:31 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.197.174])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd41ce2sm205766a12.19.2024.09.06.21.12.14
+ 4fb4d7f45d1cf-5c3ebd467a7sm216947a12.28.2024.09.06.21.30.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 21:12:15 -0700 (PDT)
-Message-ID: <bb42c045-e8be-4a84-8937-df01098868ed@linaro.org>
-Date: Sat, 7 Sep 2024 06:12:13 +0200
+ Fri, 06 Sep 2024 21:30:30 -0700 (PDT)
+Message-ID: <b78183d3-108e-4db7-8738-e952c50b3d80@linaro.org>
+Date: Sat, 7 Sep 2024 06:30:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] hw/sensor/tmp105: Lower 4 bit of limit registers
- are always 0
-To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240906154911.86803-1-philmd@linaro.org>
- <20240906154911.86803-6-philmd@linaro.org>
+Subject: Re: [PATCH 12/14] tests/functional: Convert the Alpha Clipper Avocado
+ test
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Daniel P . Berrange" <berrange@redhat.com>
+References: <20240906180549.792832-1-thuth@redhat.com>
+ <20240906180549.792832-13-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240906154911.86803-6-philmd@linaro.org>
+In-Reply-To: <20240906180549.792832-13-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::533;
@@ -97,36 +98,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 17:49, Philippe Mathieu-Daudé wrote:
-> From: Guenter Roeck <linux@roeck-us.net>
+On 6/9/24 20:05, Thomas Huth wrote:
+> Straight forward conversion, just switch to SHA256 hashsum now.
 > 
-> Per datasheet, "HIGH AND LOW LIMIT REGISTERS", the lower 4 bit
-> of the limit registers are unused and always report 0.
-> The lower 4 bit should not be used for temperature comparisons,
-> so mask the unused bits before storing the limits.
-> 
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   hw/sensor/tmp105.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-> index f5101af919..9d7b911f59 100644
-> --- a/hw/sensor/tmp105.c
-> +++ b/hw/sensor/tmp105.c
-> @@ -171,7 +171,7 @@ static void tmp105_write(TMP105State *s)
->       case TMP105_REG_T_HIGH:
->           if (s->len >= 3) {
->               s->limit[s->pointer & 1] = (int16_t)
-> -                    ((((uint16_t) s->buf[0]) << 8) | s->buf[1]);
-> +                    ((((uint16_t) s->buf[0]) << 8) | (s->buf[1] & 0xf0));
->           }
->           tmp105_alarm_update(s, false);
->           break;
+>   tests/avocado/boot_linux_console.py    | 21 --------------
+>   tests/functional/meson.build           |  4 +++
+>   tests/functional/test_alpha_clipper.py | 38 ++++++++++++++++++++++++++
+>   3 files changed, 42 insertions(+), 21 deletions(-)
+>   create mode 100755 tests/functional/test_alpha_clipper.py
+
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
