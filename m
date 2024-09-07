@@ -4,69 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10EB1EB64C8
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 14:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3752EB64CA
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 17:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smwt8-0008Jz-Jg; Sat, 07 Sep 2024 10:58:11 -0400
+	id 1smzN8-0001Ow-G1; Sat, 07 Sep 2024 13:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=+fej=QF=zx2c4.com=Jason@kernel.org>)
- id 1smwt4-0008Iz-PI
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 10:58:07 -0400
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1smzN7-0001Nh-2Y; Sat, 07 Sep 2024 13:37:17 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=+fej=QF=zx2c4.com=Jason@kernel.org>)
- id 1smwt1-00057O-3l
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 10:58:06 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 85E6CA40579;
- Sat,  7 Sep 2024 14:57:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96847C4CEC2;
- Sat,  7 Sep 2024 14:58:00 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="L60Fnpa3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1725721078;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LSD6+mki2epGYXGToONt7y5oDVfMZkl3ywv+6yHPnsY=;
- b=L60Fnpa3OLoPXSY4qhHyho1/2uRhbogZAETAIwb7mOd0eZQCS7TmnzSbUuk6DUxi4DLsqg
- 901wxUV7YaXyZV8rT+NmJasKEHtP5AW/KrWCe5Pi5g2Gxbfk6mwuT0ocL2hBxZcJZ1a2VK
- Nqn380oWk2QfAMHTeu247HONO2X9CC4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d6aaf330
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Sat, 7 Sep 2024 14:57:58 +0000 (UTC)
-Date: Sat, 7 Sep 2024 16:57:56 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: maobibo <maobibo@loongson.cn>
-Cc: gaosong@loongson.cn, jiaxun.yang@flygoat.com, qemu-devel@nongnu.org,
- thomas@t-8ch.de, xry111@xry111.site
-Subject: Re: [PATCH v2] hw/loongarch: virt: support up to 4 serial ports
-Message-ID: <Ztxp9BxTAyao6cb7@zx2c4.com>
-References: <ZtsR9nQkKjfHDYAe@zx2c4.com>
- <20240906143146.2553953-1-Jason@zx2c4.com>
- <50f6e8e8-2030-0c4a-7659-5c902b1e0906@loongson.cn>
- <Ztxm3YFqC-PlN94K@zx2c4.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1smzN5-0007Oi-F0; Sat, 07 Sep 2024 13:37:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=y32hDeHIx2MSyq+pJpIRIVwTPGTxdxD6zMhxVDTtKvY=; b=A5TWJxmhbCdJS06F8Xq/t0qVuK
+ h0PvD9nzUOnxreEju6B9EyV1JjoYVjI3s9myleq/ZGDV3UUwq4Iw6164kE9quouHOTFsfKDHGpHXW
+ a7t8PqRMOLJI5YfkimBBm4gy6PnjuVdBAPdsMHqBnG5Y7nzFBGr4hDaVhI/C2xOnANZW4kVCq3zzg
+ Aex9vDGBRoUGEYFEJkJXrldkU8hJzROHunMIQuRCsmYxeTnFRUFUqtND2iI6SfCcBgxSB7x8TrScI
+ 58GH2SSsqOF75LgHW8wU1730jlgoqsGT83//6gkfveDJ8XRTbijNSR0zUr9kggRjsapIuUJifgudq
+ HVfCtgkQClgUzffviiKQFST1825eKZ0CCmCfls8LR6YcFX3fQX8gKU99PLoQUCpL21RwK+IOQhu+j
+ NiX40f6vSLYVP/9SX9/y9mhcUAwCrbYHKAtE/W//Dq2GjOhpHNxf5qqvBLBTvRJyEWC2V3Jaq5cbL
+ E9x9iWv9UGCxgqYesK4hgwQ9kvvzw1r/SA87EJUTON1Atquvoj8PhwW010LUDe3DdWO3hkDkxagh1
+ vpr65ICtCuP8NWPTE5GBKDWNSgG0FBad05sVg4L1gHi6n59B05f4N+RnDRIhnbrYiN+Hi3r5B6bBc
+ rcFKtNwYVwMKFCQoma38Dl+YBAfYTMg8j0PRcXmUI=;
+Received: from [2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1smzMx-0005vf-9u; Sat, 07 Sep 2024 18:37:11 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org,
+	qemu-ppc@nongnu.org,
+	hsp.cat7@gmail.com
+Date: Sat,  7 Sep 2024 18:37:00 +0100
+Message-Id: <20240907173700.348818-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Ztxm3YFqC-PlN94K@zx2c4.com>
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=SRS0=+fej=QF=zx2c4.com=Jason@kernel.org;
- helo=nyc.source.kernel.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH v2] adb-mouse: convert to use QemuInputHandler
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,41 +75,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 07, 2024 at 04:44:45PM +0200, Jason A. Donenfeld wrote:
-> On Sat, Sep 07, 2024 at 11:37:09AM +0800, maobibo wrote:
-> > Hi Jason,
-> > 
-> > It works well with ELF kernel, however it fails to boot with UEFI BIOS. 
-> > Maybe it is problem of UEFI BIOS, can we create UART in reverse order? 
-> > so that it can work well on both ELF kernel and UEFI BIOS.
-> > 
-> > Also for develops they usually use as earlycon with command line 
-> > -serial stdio --append "... earlycon=uart,mmio,0x1fe001e0", this 
-> > requires to uart with address 0x1fe001e0 as the first serial port.
-> > 
-> > Just small code base your patch like this:
-> > 
-> > -    for (i = 0; i < VIRT_UART_COUNT; ++i) {
-> > +    for (i = VIRT_UART_COUNT - 1; i >= 0; i--) {
-> >           hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
-> >           int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
-> >           serial_mm_init(get_system_memory(), base, 0,
-> >                          qdev_get_gpio_in(pch_pic, irq),
-> > -                       115200, serial_hd(VIRT_UART_COUNT - 1 - i),
-> > +                       115200, serial_hd(i),
-> >                          DEVICE_LITTLE_ENDIAN);
-> > -        fdt_add_uart_node(lvms, pch_pic_phandle, base, irq, i == 
-> > VIRT_UART_COUNT - 1 - i);
-> > +        fdt_add_uart_node(lvms, pch_pic_phandle, base, irq, i == 0);
-> >       }
-> 
-> Fixed: https://lore.kernel.org/all/20240907143439.2792924-1-Jason@zx2c4.com/
+Update the ADB mouse implementation to use QemuInputHandler instead of the
+legacy qemu_add_mouse_event_handler() function.
 
-By the way, I don't know who is picking patches into which development
-tree from the list, but this is starting to be kind of a lot of patches,
-so I've queued them all up here:
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+---
+ hw/input/adb-mouse.c | 56 ++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 46 insertions(+), 10 deletions(-)
 
-   https://git.zx2c4.com/qemu/log/?h=loongarch64
+v2:
+- Rebase onto master
 
-In case that makes it easier for whoever the maintainer is to pick them.
+- Replace (DeviceState *)s with dev in adb_mouse_realize() as suggested by
+  Phil
+
+
+diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
+index 144a0ccce7..c0e0282fee 100644
+--- a/hw/input/adb-mouse.c
++++ b/hw/input/adb-mouse.c
+@@ -38,6 +38,7 @@ struct MouseState {
+     ADBDevice parent_obj;
+     /*< private >*/
+ 
++    QemuInputHandlerState *hs;
+     int buttons_state, last_buttons_state;
+     int dx, dy, dz;
+ };
+@@ -51,17 +52,52 @@ struct ADBMouseClass {
+     DeviceRealize parent_realize;
+ };
+ 
+-static void adb_mouse_event(void *opaque,
+-                            int dx1, int dy1, int dz1, int buttons_state)
++#define ADB_MOUSE_BUTTON_LEFT   0x01
++#define ADB_MOUSE_BUTTON_RIGHT  0x02
++
++static void adb_mouse_handle_event(DeviceState *dev, QemuConsole *src,
++                                   InputEvent *evt)
+ {
+-    MouseState *s = opaque;
++    MouseState *s = (MouseState *)dev;
++    InputMoveEvent *move;
++    InputBtnEvent *btn;
++    static const int bmap[INPUT_BUTTON__MAX] = {
++        [INPUT_BUTTON_LEFT]   = ADB_MOUSE_BUTTON_LEFT,
++        [INPUT_BUTTON_RIGHT]  = ADB_MOUSE_BUTTON_RIGHT,
++    };
++
++    switch (evt->type) {
++    case INPUT_EVENT_KIND_REL:
++        move = evt->u.rel.data;
++        if (move->axis == INPUT_AXIS_X) {
++            s->dx += move->value;
++        } else if (move->axis == INPUT_AXIS_Y) {
++            s->dy += move->value;
++        }
++        break;
++
++    case INPUT_EVENT_KIND_BTN:
++        btn = evt->u.btn.data;
++        if (bmap[btn->button]) {
++            if (btn->down) {
++                s->buttons_state |= bmap[btn->button];
++            } else {
++                s->buttons_state &= ~bmap[btn->button];
++            }
++        }
++        break;
+ 
+-    s->dx += dx1;
+-    s->dy += dy1;
+-    s->dz += dz1;
+-    s->buttons_state = buttons_state;
++    default:
++        /* keep gcc happy */
++        break;
++    }
+ }
+ 
++static const QemuInputHandler adb_mouse_handler = {
++    .name  = "QEMU ADB Mouse",
++    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
++    .event = adb_mouse_handle_event,
++};
+ 
+ static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+ {
+@@ -94,10 +130,10 @@ static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+     dx &= 0x7f;
+     dy &= 0x7f;
+ 
+-    if (!(s->buttons_state & MOUSE_EVENT_LBUTTON)) {
++    if (!(s->buttons_state & ADB_MOUSE_BUTTON_LEFT)) {
+         dy |= 0x80;
+     }
+-    if (!(s->buttons_state & MOUSE_EVENT_RBUTTON)) {
++    if (!(s->buttons_state & ADB_MOUSE_BUTTON_RIGHT)) {
+         dx |= 0x80;
+     }
+ 
+@@ -236,7 +272,7 @@ static void adb_mouse_realizefn(DeviceState *dev, Error **errp)
+ 
+     amc->parent_realize(dev, errp);
+ 
+-    qemu_add_mouse_event_handler(adb_mouse_event, s, 0, "QEMU ADB Mouse");
++    s->hs = qemu_input_handler_register(dev, &adb_mouse_handler);
+ }
+ 
+ static void adb_mouse_initfn(Object *obj)
+-- 
+2.39.2
+
 
