@@ -4,71 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D169FECE56F
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 21:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68338ECE56F
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 21:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sn2rA-0000Yr-Ng; Sat, 07 Sep 2024 17:20:34 -0400
+	id 1sn3G1-0007m9-Ql; Sat, 07 Sep 2024 17:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kennethadammiller@gmail.com>)
- id 1sn2r5-0000YF-RS
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 17:20:27 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1sn3G0-0007le-I9
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 17:46:12 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kennethadammiller@gmail.com>)
- id 1sn2r3-0004bt-V9
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 17:20:27 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2f762de00fbso948851fa.2
- for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 14:20:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1sn3Fw-0006am-GQ
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 17:46:11 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2d87f34a650so2143864a91.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 14:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725744024; x=1726348824; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=egdYHOrY8zJOY4e8DhyBJJ0bzy8tKCfbBnhryO95qpg=;
- b=npfrpf5IbL8NB8Q4djzSD9bJOqWaerUezMt9nAbITyh+5bSRTZ5mdORvbRhGKHX0Xy
- drIHxyR1PCA7Bbeh2p6tLfRB0nECbLkQZDv6pjog74elRm/jy7gFcP4COlK7W0M7lLdw
- hxeE+Gwe2Q6m5DTgbNZOPaogP8m6FicWmE6qnO8mqG3oOI74tSPEQNus0fTX5BoSuNOV
- UQSnanrrDK2YUSECe3+qEQ/zwGMAy7O/ReHMFRZs4nerpA7BKfVB8mV15RF+KzjHflG7
- w4AURy6+MtkjMDQA7VRwxov4GC8QkkxkcxbF0od8f9awjKck8PSpe7UcktL0VQrpNbeo
- BIwA==
+ d=gmail.com; s=20230601; t=1725745566; x=1726350366; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tsZ1skBJYv0lTXgXWfwzxn7N+kD9w6DoeE5PWN/73iM=;
+ b=GIvaAinqZQuw2o5POyo80+w28LdUfsW6FOoICWMhmWIvmrUwVc3W0zMbtBY8Hvw3gd
+ Bp5OdRQx4rFN35MC4J6TsyUKrquwHWIpVwkRnoiaAwGPKphCrOD3XqSA+tNRa5Wv+roF
+ I23jfkLDH7+CLeSf5QwKDJE/qvMrEMg+CnP6JDlMlGfUIs/FqmiZALyP3N/UeTuPEtyV
+ sSJgMt7ShaQAxCtk+nkDJiPjXBNZ1nApNHYhuFdE2De1EP/ud9ogyyAK2den3vL8op3r
+ Y7xnc2MNww0WFfilM4gMLVB1xoB9Zl0QKpcgCY3YwJveBqty8Uv5/dWN9lXNHNZbfd26
+ SXZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725744024; x=1726348824;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=egdYHOrY8zJOY4e8DhyBJJ0bzy8tKCfbBnhryO95qpg=;
- b=NyOsW3G4mN4Ptd3ehCN6cjTHwXTsMzWFq26zes9yNSJsqzsX1bVKct8kSWFJbmOpf2
- xKw511NimtO+Fxxbhoh2Pp5frTDSHRr7wRWN79UEeF/Bor4lKPEZI0h4htuggjFKlRxv
- vcLVzYLhKG2n11EgSFCKXKyXfw1M/UpO/gLZ6LxUPFM1k8b0cEEAEjj4385xJBwvHJn1
- qzI5NJ7Ocbjwr39rWnsXb/koIBqC1MGZf9B07qTewBcqRaA+RBvSdvXFIA9ptg7eY0Zd
- X4fXUk+Gsc9eHKhksPFGFogQEHJ34ep0op4Mvmr2vfL2W8nVNIJkp2wI2425HFyohxtP
- 0y9w==
-X-Gm-Message-State: AOJu0YxA1s5/zUEOwvR33ULGkLSUPFwkDcq8szmfsc+vmQLh18WEjBVN
- E2FWo3CpDe2R2yDRNXfFF2uX/0I4+JGLZZh41eYge0ZvkaiNcWGEWuGIPunGJR3mP9NdcHgRS/T
- Mo3nFnvlcCsMR5FN1ILaauzmnRTtW0W14
-X-Google-Smtp-Source: AGHT+IGdTpFy3R4DfXG5oRXcXQsq5KaRT0Sp3YxFMBLyDkWioSR6MANU/XKfCP0UsdI9KY+bXcDcZF67AcmIC2Arrfc=
-X-Received: by 2002:a2e:6119:0:b0:2f7:4e8c:9c11 with SMTP id
- 38308e7fff4ca-2f751ea793emr45267051fa.1.1725744023322; Sat, 07 Sep 2024
- 14:20:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725745566; x=1726350366;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tsZ1skBJYv0lTXgXWfwzxn7N+kD9w6DoeE5PWN/73iM=;
+ b=UHrRr3CcXZ2zK0MSr06wxDdes+niuINrtCJ8rLuXug2Hc4ArC06uynI4oedviJebBs
+ NSjKZcUZmI9cYm7kFmwao5bLPlMvfAGocSs8NF9k48vptg3VFyPocdyE4lN1RMdqe1q8
+ rdPvtT0t0EGtFwop+fEaPOpTkqrNwqneuEyfa4xNhQKobh4r4lUCDa7q6mlNgBg6nmga
+ 4eEPBkCMcAI9b6tytQs9fyZbnhzL91rmBcT06BEVy4O5Jn3eOUiTJPXWdOOOHTDphF7V
+ JuLCZJET0lexRxCq23ltsum366ycnNCzzcTfSdfqPQN5dFD3Bd8wcnwReJrhUPuWQoBn
+ oLPA==
+X-Gm-Message-State: AOJu0Yyjjj0AccI3sRZ0t2rK8Bl2aU7UaSCllw8Lxya0wn2EtU6opsv1
+ cBMjlQ8gytkaKZMSKj5QAsX420kahBFbuRHNNspfIq5cf193rMD24kJ6f/ASA6E=
+X-Google-Smtp-Source: AGHT+IFUNwN7dzm3tUpyBTwB7N+TIiIC5DsIKFJD0hbJOhlCTG4djjY+r+7kx1zcqEE9Y7nwTF6l8w==
+X-Received: by 2002:a17:90b:2247:b0:2da:6e46:ad48 with SMTP id
+ 98e67ed59e1d1-2dad4f0e439mr10101471a91.1.1725745566014; 
+ Sat, 07 Sep 2024 14:46:06 -0700 (PDT)
+Received: from jacob-pop23u.lan ([2600:1700:88b2:a50:2c86:7da2:dc34:a97f])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2db04966aa5sm1721116a91.37.2024.09.07.14.46.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 07 Sep 2024 14:46:05 -0700 (PDT)
+From: Jacob Abrams <satur9nine@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, peter.maydell@linaro.org,
+ Jacob Abrams <satur9nine@gmail.com>
+Subject: [PATCH v2] hw/char/stm32l4x5_usart.c: Fix ACK and min access size
+Date: Sat,  7 Sep 2024 14:45:39 -0700
+Message-ID: <20240907214602.96920-1-satur9nine@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <CAK7rcp_qUmp7k6dqo62KqNpAuNgVznWiCxgBrhf4V7PT5=YDhQ@mail.gmail.com>
-In-Reply-To: <CAK7rcp_qUmp7k6dqo62KqNpAuNgVznWiCxgBrhf4V7PT5=YDhQ@mail.gmail.com>
-From: Kenneth Adam Miller <kennethadammiller@gmail.com>
-Date: Sat, 7 Sep 2024 15:20:12 -0600
-Message-ID: <CAK7rcp-jQAx3Qr_OntcTeNhfM_nzyoOiLDvSpPj=__FfxhSrcw@mail.gmail.com>
-Subject: Re: How to run qemu
-To: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000007bc84806218e1797"
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=kennethadammiller@gmail.com; helo=mail-lj1-x236.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=satur9nine@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,114 +91,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007bc84806218e1797
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+These changes allow the official STM32L4xx HAL UART driver to function
+properly with the b-l475e-iot01a machine.
 
-I found this:
-https://qemu-project.gitlab.io/qemu/system/linuxboot.html
-and this:
-https://nickdesaulniers.github.io/blog/2018/10/24/booting-a-custom-linux-ke=
-rnel-in-qemu-and-debugging-it-with-gdb/
+Modifying USART_CR1 TE bit should alter USART_ISR TEACK bit, and
+likewise for RE and REACK bit.
 
-So I now have serial output. But I still need to know how to put a binary
-in the image so I can run it.
+USART registers may be accessed via 16-bit instructions.
 
-I made it a few steps further:
+Reseting USART_CR1 UE bit should restore ISR to default value.
 
-./qemu//bin/debug/native/qemu-system-x86_64 -enable-kvm -m 2048 -display
-vnc=3D:89 \
-        -netdev user,id=3Dt0, -device rtl8139,netdev=3Dt0,id=3Dnic0 \
-        -netdev user,id=3Dt1, -device pcnet,netdev=3Dt1,id=3Dnic1 \
-        -L ./qemu/pc-bios \
-        -nographic \
-        -append "console=3DttyS0 nokaslr" \
-        -initrd ramdisk.img \
-        -boot c -kernel $HOME/workspace/kvmctf-6.1.74/bzImage/bzImage
+Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and write")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
+Signed-off-by: Jacob Abrams <satur9nine@gmail.com>
+---
+Changes since version 1:
+ - Add qtest_quit to end of new test
 
-On Sat, Sep 7, 2024 at 2:58=E2=80=AFPM Kenneth Adam Miller <
-kennethadammiller@gmail.com> wrote:
+ hw/char/stm32l4x5_usart.c          | 29 ++++++++++++++++++---
+ tests/qtest/stm32l4x5_usart-test.c | 41 +++++++++++++++++++++++++++++-
+ 2 files changed, 66 insertions(+), 4 deletions(-)
 
-> Hello,
->
-> I've got qemu built and now I need to figure out how to run it with what
-> I've got. I have a vmlinux and a bzImage that I want to serve as the kern=
-el
-> that QEMU runs with, and a single binary, let's just call it
-> literally `program`, that I want to issue a command to run once QEMU boot=
-s
-> with the kernel.
->
-> I tried to figure out how to run the QEMU on my own, and made it as far a=
-s
-> this:
->
-> ./qemu//bin/debug/native/qemu-system-x86_64 -enable-kvm -m 2048 -display
-> vnc=3D:89 \
->         -netdev user,id=3Dt0, -device rtl8139,netdev=3Dt0,id=3Dnic0 \
->         -netdev user,id=3Dt1, -device pcnet,netdev=3Dt1,id=3Dnic1 \
->         -L ./qemu/pc-bios \
->         -boot c -kernel $HOME/workspace/kvmctf-6.1.74/bzImage/bzImage
->
-> It runs, but there isn't any output to the screen to show it booting, and
-> QEMU runs the processor hard indefinitely. I need to be able to see
-> standard output and to be able to type into the console to enter the
-> command, and I don't know how to get it to or why it isn't showing that
-> already. Also, once that is working, I need a way to put `program` into t=
-he
-> QEMU session so that it can be run. Can someone help me? I think I need t=
-o
-> make an img file that can boot but I don't really know how to do that
-> either.
->
+diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+index fc5dcac0c4..859fc6236a 100644
+--- a/hw/char/stm32l4x5_usart.c
++++ b/hw/char/stm32l4x5_usart.c
+@@ -154,6 +154,28 @@ REG32(RDR, 0x24)
+ REG32(TDR, 0x28)
+     FIELD(TDR, TDR, 0, 9)
+ 
++#define ISR_RESET_VALUE (0x020000C0)
++
++static void stm32l4x5_update_isr(Stm32l4x5UsartBaseState *s)
++{
++    if (!(s->cr1 & R_CR1_UE_MASK)) {
++        s->isr = ISR_RESET_VALUE;
++        return;
++    }
++
++    if (s->cr1 & R_CR1_TE_MASK) {
++        s->isr |= R_ISR_TEACK_MASK;
++    } else {
++        s->isr &= ~R_ISR_TEACK_MASK;
++    }
++
++    if (s->cr1 & R_CR1_RE_MASK) {
++        s->isr |= R_ISR_REACK_MASK;
++    } else {
++        s->isr &= ~R_ISR_REACK_MASK;
++    }
++}
++
+ static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
+ {
+     if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))        ||
+@@ -367,7 +389,7 @@ static void stm32l4x5_usart_base_reset_hold(Object *obj, ResetType type)
+     s->brr = 0x00000000;
+     s->gtpr = 0x00000000;
+     s->rtor = 0x00000000;
+-    s->isr = 0x020000C0;
++    s->isr = ISR_RESET_VALUE;
+     s->rdr = 0x00000000;
+     s->tdr = 0x00000000;
+ 
+@@ -456,6 +478,7 @@ static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
+     case A_CR1:
+         s->cr1 = value;
+         stm32l4x5_update_params(s);
++        stm32l4x5_update_isr(s);
+         stm32l4x5_update_irq(s);
+         return;
+     case A_CR2:
+@@ -508,12 +531,12 @@ static const MemoryRegionOps stm32l4x5_usart_base_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+     .valid = {
+         .max_access_size = 4,
+-        .min_access_size = 4,
++        .min_access_size = 2,
+         .unaligned = false
+     },
+     .impl = {
+         .max_access_size = 4,
+-        .min_access_size = 4,
++        .min_access_size = 2,
+         .unaligned = false
+     },
+ };
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+index c175ff3064..018a8a62bf 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -36,6 +36,8 @@ REG32(GTPR, 0x10)
+ REG32(RTOR, 0x14)
+ REG32(RQR, 0x18)
+ REG32(ISR, 0x1C)
++    FIELD(ISR, REACK, 22, 1)
++    FIELD(ISR, TEACK, 21, 1)
+     FIELD(ISR, TXE, 7, 1)
+     FIELD(ISR, RXNE, 5, 1)
+     FIELD(ISR, ORE, 3, 1)
+@@ -191,7 +193,7 @@ static void init_uart(QTestState *qts)
+ 
+     /* Enable the transmitter, the receiver and the USART. */
+     qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
+-        R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
++        cr1 | R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
+ }
+ 
+ static void test_write_read(void)
+@@ -203,6 +205,11 @@ static void test_write_read(void)
+     const uint32_t tdr = qtest_readl(qts, USART1_BASE_ADDR + A_TDR);
+     g_assert_cmpuint(tdr, ==, 0x000001FF);
+ 
++    /* Official STM HAL uses uint16_t for TDR */
++    qtest_writew(qts, USART1_BASE_ADDR + A_TDR, 0xFFFF);
++    const uint16_t tdr16 = qtest_readw(qts, USART1_BASE_ADDR + A_TDR);
++    g_assert_cmpuint(tdr16, ==, 0x000001FF);
++
+     qtest_quit(qts);
+ }
+ 
+@@ -298,6 +305,37 @@ static void test_send_str(void)
+     qtest_quit(qts);
+ }
+ 
++static void test_ack(void)
++{
++    uint32_t cr1;
++    uint32_t isr;
++    QTestState *qts = qtest_init("-M b-l475e-iot01a");
++
++    init_uart(qts);
++
++    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
++
++    /* Disable the transmitter and receiver. */
++    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
++        cr1 & ~(R_CR1_RE_MASK | R_CR1_TE_MASK));
++
++    /* Test ISR ACK for transmitter and receiver disabled */
++    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
++    g_assert_false(isr & R_ISR_TEACK_MASK);
++    g_assert_false(isr & R_ISR_REACK_MASK);
++
++    /* Enable the transmitter and receiver. */
++    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
++        cr1 | (R_CR1_RE_MASK | R_CR1_TE_MASK));
++
++    /* Test ISR ACK for transmitter and receiver disabled */
++    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
++    g_assert_true(isr & R_ISR_TEACK_MASK);
++    g_assert_true(isr & R_ISR_REACK_MASK);
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char **argv)
+ {
+     int ret;
+@@ -310,6 +348,7 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
+     qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
+     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
++    qtest_add_func("stm32l4x5/usart/ack", test_ack);
+     ret = g_test_run();
+ 
+     return ret;
+-- 
+2.43.0
 
---0000000000007bc84806218e1797
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I found this:<div><a href=3D"https://qemu-project.gitlab.i=
-o/qemu/system/linuxboot.html">https://qemu-project.gitlab.io/qemu/system/li=
-nuxboot.html</a><br></div><div>and this:</div><div><a href=3D"https://nickd=
-esaulniers.github.io/blog/2018/10/24/booting-a-custom-linux-kernel-in-qemu-=
-and-debugging-it-with-gdb/">https://nickdesaulniers.github.io/blog/2018/10/=
-24/booting-a-custom-linux-kernel-in-qemu-and-debugging-it-with-gdb/</a><br>=
-</div><div><br></div><div>So I now have serial output. But I still need to =
-know how to put a binary in the image so I can run it.</div><div><br></div>=
-<div>I made it a few steps further:</div><div><br></div><div>./qemu//bin/de=
-bug/native/qemu-system-x86_64 -enable-kvm -m 2048 -display vnc=3D:89 \<br>=
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 -netdev user,id=3Dt0, -device rtl8139,netdev=3D=
-t0,id=3Dnic0 \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -netdev user,id=3Dt1, -device=
- pcnet,netdev=3Dt1,id=3Dnic1 \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -L ./qemu/pc-=
-bios \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -nographic \<br>=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 -append &quot;console=3DttyS0 nokaslr&quot; \<br>=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 -initrd ramdisk.img \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -boot c -ke=
-rnel $HOME/workspace/kvmctf-6.1.74/bzImage/bzImage<br></div></div><br><div =
-class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Sep 7, =
-2024 at 2:58=E2=80=AFPM Kenneth Adam Miller &lt;<a href=3D"mailto:kennethad=
-ammiller@gmail.com">kennethadammiller@gmail.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hello,=C2=
-=A0<div><br></div><div>I&#39;ve got qemu built and now I need to figure out=
- how to run it with what I&#39;ve got. I have a vmlinux and a bzImage that =
-I want to serve as the kernel that QEMU runs with, and a single binary, let=
-&#39;s just call it literally=C2=A0`program`, that I want to issue a comman=
-d to run once QEMU boots with the kernel.</div><div><br></div><div>I tried =
-to figure out how to run the QEMU on my own, and made it as far as this:</d=
-iv><div><br></div><div>./qemu//bin/debug/native/qemu-system-x86_64 -enable-=
-kvm -m 2048 -display vnc=3D:89 \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -netdev use=
-r,id=3Dt0, -device rtl8139,netdev=3Dt0,id=3Dnic0 \<br>=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 -netdev user,id=3Dt1, -device pcnet,netdev=3Dt1,id=3Dnic1 \<br>=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 -L ./qemu/pc-bios \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- -boot c -kernel $HOME/workspace/kvmctf-6.1.74/bzImage/bzImage<br></div><di=
-v><br></div><div>It runs, but there isn&#39;t any output to the screen to s=
-how it booting, and QEMU runs the processor hard indefinitely. I need to be=
- able to see standard output and to be able to type into the console to ent=
-er the command, and I don&#39;t know how to get it to or why it isn&#39;t s=
-howing that already. Also, once that is working, I need a way to put `progr=
-am` into the QEMU session so that it can be run. Can someone help me? I thi=
-nk I need to make an img=C2=A0file that can boot but I don&#39;t really kno=
-w how to do that either.</div></div>
-</blockquote></div>
-
---0000000000007bc84806218e1797--
 
