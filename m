@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6746FE6FE47
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 03:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451E5E6FE47
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 03:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smm3F-0005kd-TO; Fri, 06 Sep 2024 23:23:54 -0400
+	id 1smm1l-000776-LK; Fri, 06 Sep 2024 23:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1smlzv-00045Y-W1
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:20:31 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1smlzZ-0003UB-2s
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:20:07 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1smlzs-00056R-Rf
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:20:27 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2068bee21d8so28855175ad.2
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 20:20:22 -0700 (PDT)
+ id 1smlzX-0004tR-5k
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 23:20:04 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-718d79fb6f7so1269130b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 20:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725679222; x=1726284022; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725679201; x=1726284001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yaqkhcr8XXVjz3AUT5s3kLltD+ErMtVDTb6FVMqoohs=;
- b=HMzZB1a2akFzQ7pwRMTRFaghctca1ea3oHSxSjsKvfsKU7CAPUhUe6kiUABzVPROUY
- Y09fgsngMfOeqFw+9eY4OymiRecHAILdnmIZG+R9adGjV5So05pJW9Pgb6PAdXQb0Bv8
- 6NioB3N3fSuMWhgrPcuZ0viyh8zy4S4zskzm0vtge/xNnV9vivzfQPhu+l2I+2S65/5O
- i0Ui43mOcRxjZGG930XQpq9CjmUGR6pguBsLJBTFGGDAqhr+6tIe3jA/0FguXcDqiKt1
- QZKH/DlDrqZlx6tMc8YLIkohWpHmSsXqCH31MROgEYH7Hqn5+C7abj8LpC8BkSYMC0y2
- TDsg==
+ bh=UhgZSr77cs856626csVUMKafDNElH2DCETLtbp74JlY=;
+ b=HIt7zlN9TwX9VNSZ9iXBxdku/wKcv5F1kBa+W/S7XJ2HScD1GAVNo9UMCvO+GK7ii/
+ BgMN0rhiXbHZ4gJ44YgX8hhBuQ5VyeeKYsLdR9skOCoYqhbQuupGQuxoLVsdmBI7PxGr
+ 3fVVjXwEYsPPVusITgkuG3TGJ+1fly86VWWAjm0y6PSVIHlz09uLegmq02fv8l2X9H85
+ NSEskOTJIXp3c9FeDnHb5x9zyPsUpPoS6K3r8pjoLo5DFW/0kcZ8NNWNiDVGg2i7htY2
+ CW0ki/tUoWBLUfDX87twgMRcDJ9bO0jKDYw/UOVB5iXmqVqHCd9axrxXy6GSAiTcAvLu
+ G7KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725679222; x=1726284022;
+ d=1e100.net; s=20230601; t=1725679201; x=1726284001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yaqkhcr8XXVjz3AUT5s3kLltD+ErMtVDTb6FVMqoohs=;
- b=upLE1VfZyT8o4nKx5uf6/lVSPdAM5ivgcq/JyZoyanxqDGGjU/oXdKEivMGXSipZme
- 5gE3Xf07pgVXeGrdorNCqVgIEbAjCYj8UARDWiE2UWMhyxByUzNa6NdrmFV/TfM3mw0V
- 3Ffk3VhG+3H2Twbwhv/jZ4qV4CwlJUoxCZ9r1sYCyE6AWdl0eCR2n7gl7S2dGMsTv4Rg
- TlYvaEZpSJTn9ZgOCTKR67TSKcUKpLoRpXKJ/HBBadEDgDNO1QrVaV4joWMEGBufzPo2
- MFBOLAci4r1VDa5tBdM+8FQFeGFDwSltq42ayj/eWN6qZVVsBdXGGFkxE4wLUyxM293x
- d4CQ==
-X-Gm-Message-State: AOJu0YxtlvK/Q97c/Q2hsgkwWpVxb9lUZhMCA4xqs9DDKrmiEtmjYAAE
- /vU62vNOhTlVk5T0ZZFeXydNlGb6VMO4tjZzqH8bD7O1iQuHua8nE7LBlA==
-X-Google-Smtp-Source: AGHT+IGUyBMcYb40djbR1sequ/+q/0Qj6iSvwbWh0IgiybVrIVuR4iceyYyDAU85+GDriSos2Bc5dA==
-X-Received: by 2002:a17:902:db12:b0:207:1570:13e8 with SMTP id
- d9443c01a7336-207157015e5mr377305ad.12.1725679221530; 
- Fri, 06 Sep 2024 20:20:21 -0700 (PDT)
+ bh=UhgZSr77cs856626csVUMKafDNElH2DCETLtbp74JlY=;
+ b=vxEv1EBEE+J0XdLr1QahdGN2zHN4RjXmc6dbFtVoJOTJwc9ztXuLeTXkGFRLn1jkmU
+ NPq5e4jm1y4cRLA0r8E/fArbGP1AEDoG+sX4LCqgFvD70KaNtLOwJ4SitlkgWFtnIzKg
+ ZdrmmXVF6/BbwjIKPWTvZTz/Y1WT1f193ucCmpHVoLPQFDDc6lVjU+SWeb0y3QbOU5pp
+ HTrhIJXyxNrPV4p7uebGiDLcf3F1Rk9IwFNHvnP/Dm/CR11tZQLKiUz+bobOedWFGDOV
+ OwiLcFBuORT9A6vFrSsVkxKIh/f2KH/DrE76o4TmpJHMGKPvlkNjzrPjkYXWm3j7LkfW
+ oedQ==
+X-Gm-Message-State: AOJu0Yw43o4iXttaqwJyRtLNhtjfhf7xm6JRItknf8lr48h7I5feVo5Z
+ +o9kgJNIKHFsG3hNYHys3IjYr6kzWNFAHMW/fksnl0hHf2eEHD9dQCF0/HSb
+X-Google-Smtp-Source: AGHT+IFGXLjjbfflLgm8LWYWRQa6AWQPNCfY9vh9gNK/nUCaaPDtT5MSQTeQ/dgnSlrxLYw5NuQHRA==
+X-Received: by 2002:a05:6a20:2d23:b0:1cf:2ba0:c36d with SMTP id
+ adf61e73a8af0-1cf2ba0c374mr1142481637.3.1725679201242; 
+ Fri, 06 Sep 2024 20:20:01 -0700 (PDT)
 Received: from localhost.localdomain (115-64-160-35.tpgi.com.au.
  [115.64.160.35]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f1d4c6sm1703745ad.187.2024.09.06.20.20.19
+ d9443c01a7336-20710f1d4c6sm1703745ad.187.2024.09.06.20.19.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Sep 2024 20:20:21 -0700 (PDT)
+ Fri, 06 Sep 2024 20:20:01 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>,
+ Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
+ Kyle Evans <kevans@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 17/17] bsd-user: Add RISC-V 64-bit Target Configuration and
- Debug XML Files
-Date: Sat,  7 Sep 2024 13:19:27 +1000
-Message-Id: <20240907031927.1908-18-itachis@FreeBSD.org>
+Subject: [PATCH v5 09/17] bsd-user: Add RISC-V thread setup and initialization
+ support
+Date: Sat,  7 Sep 2024 13:19:19 +1000
+Message-Id: <20240907031927.1908-10-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240907031927.1908-1-itachis@FreeBSD.org>
 References: <20240907031927.1908-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=itachis6234@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,28 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Warner Losh <imp@bsdimp.com>
+From: Mark Corbin <mark@dibsco.co.uk>
 
-Added configuration for RISC-V 64-bit target to the build system.
+Implemented functions for setting up and initializing threads in the
+RISC-V architecture.
+The 'target_thread_set_upcall' function sets up the stack pointer,
+program counter, and function argument for new threads.
+The 'target_thread_init' function initializes thread registers based on
+the provided image information.
 
-Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
+Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- configs/targets/riscv64-bsd-user.mak | 4 ++++
- 1 file changed, 4 insertions(+)
- create mode 100644 configs/targets/riscv64-bsd-user.mak
+ bsd-user/riscv/target_arch_thread.h | 47 +++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_thread.h
 
-diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
+diff --git a/bsd-user/riscv/target_arch_thread.h b/bsd-user/riscv/target_arch_thread.h
 new file mode 100644
-index 0000000000..191c2c483f
+index 0000000000..95cd0b6ad7
 --- /dev/null
-+++ b/configs/targets/riscv64-bsd-user.mak
-@@ -0,0 +1,4 @@
-+TARGET_ARCH=riscv64
-+TARGET_BASE_ARCH=riscv
-+TARGET_ABI_DIR=riscv
-+TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
++++ b/bsd-user/riscv/target_arch_thread.h
+@@ -0,0 +1,47 @@
++/*
++ *  RISC-V thread support
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_THREAD_H
++#define TARGET_ARCH_THREAD_H
++
++/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */
++static inline void target_thread_set_upcall(CPURISCVState *regs,
++    abi_ulong entry, abi_ulong arg, abi_ulong stack_base,
++    abi_ulong stack_size)
++{
++    abi_ulong sp;
++
++    sp = ROUND_DOWN(stack_base + stack_size, 16);
++
++    regs->gpr[xSP] = sp;
++    regs->pc = entry;
++    regs->gpr[xA0] = arg;
++}
++
++/* Compare with exec_setregs() in riscv/riscv/machdep.c */
++static inline void target_thread_init(struct target_pt_regs *regs,
++    struct image_info *infop)
++{
++    regs->sepc = infop->entry;
++    regs->regs[xRA] = infop->entry;
++    regs->regs[xA0] = infop->start_stack;
++    regs->regs[xSP] = ROUND_DOWN(infop->start_stack, 16);
++}
++
++#endif /* TARGET_ARCH_THREAD_H */
 -- 
 2.34.1
 
