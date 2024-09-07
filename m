@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FC8E6FE4D
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 07:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC16FE6FE4D
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 07:10:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smpWI-0005Pc-9K; Sat, 07 Sep 2024 03:06:06 -0400
+	id 1smpZx-0001am-B8; Sat, 07 Sep 2024 03:09:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smpWG-0005OO-UG; Sat, 07 Sep 2024 03:06:04 -0400
+ id 1smpZu-0001Zi-Ss; Sat, 07 Sep 2024 03:09:51 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smpWF-0003r4-Ac; Sat, 07 Sep 2024 03:06:04 -0400
+ id 1smpZt-00045L-BU; Sat, 07 Sep 2024 03:09:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 69AA08C89D;
- Sat,  7 Sep 2024 10:04:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7C2A58C8A1;
+ Sat,  7 Sep 2024 10:08:26 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B240A133D45;
- Sat,  7 Sep 2024 10:06:01 +0300 (MSK)
-Message-ID: <47015caa-c4ee-45e2-9c73-9c6f5f7815f7@tls.msk.ru>
-Date: Sat, 7 Sep 2024 10:06:01 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id C525A133D4A;
+ Sat,  7 Sep 2024 10:09:45 +0300 (MSK)
+Message-ID: <b65adf00-28db-42bf-b5ed-708f36b52730@tls.msk.ru>
+Date: Sat, 7 Sep 2024 10:09:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest/fuzz/virtio_net_fuzz.c: fix
- virtio_net_fuzz_multi
-To: Dmitry Frolov <frolov@swemel.ru>, alxndr@bu.edu
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, sdl.qemu@linuxtesting.org
-References: <20240523102813.396750-2-frolov@swemel.ru>
-Content-Language: en-US, ru-RU
+Subject: Re: [PATCH] fix SSE2/SSSE3 feature detection in tcg/decode-new.c.inc
 From: Michael Tokarev <mjt@tls.msk.ru>
+To: Frank Mehnert <frank.mehnert@kernkonzept.com>, qemu-trivial@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ QEMU Developers <qemu-devel@nongnu.org>
+References: <2975380.e9J7NaK4W3@noys4>
+ <b6696d8e-19c7-4d14-80d0-85b92e398a34@tls.msk.ru>
+Content-Language: en-US, ru-RU
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
  bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
@@ -59,9 +62,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240523102813.396750-2-frolov@swemel.ru>
+In-Reply-To: <b6696d8e-19c7-4d14-80d0-85b92e398a34@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -85,14 +88,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.05.2024 13:28, Dmitry Frolov wrote:
-> If QTestState was already CLOSED due to error, calling qtest_clock_step()
-> afterwards makes no sense and only raises false-crash with message:
-> "assertion timer != NULL failed".
+17.06.2024 15:51, Michael Tokarev wrote:
+> Adding Cc's.
 
-So, can we have any Reviewed-by tags here? :)
+A friendly ping?  This patch does not apply directly currently, but
+the change is still relevant (I can fix context at apply time).
+
+Before it can be applied to trivial-patches tree I'd love to have
+some Reviewed-by tag(s).  Or drop it :)
+
+This change is sitting here since May-24.
 
 Thanks,
 
 /mjt
+
+> 29.05.2024 16:53, Frank Mehnert wrote:
+>> The correct bitmask is cpuid_features rather than cpuid_ext_features.
+>> ---
+>>   target/i386/tcg/decode-new.c.inc | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+>> index 27dc1bb146..0ec849b003 100644
+>> --- a/target/i386/tcg/decode-new.c.inc
+>> +++ b/target/i386/tcg/decode-new.c.inc
+>> @@ -2041,9 +2041,9 @@ static bool has_cpuid_feature(DisasContext *s, X86CPUIDFeature cpuid)
+>>       case X86_FEAT_PCLMULQDQ:
+>>           return (s->cpuid_ext_features & CPUID_EXT_PCLMULQDQ);
+>>       case X86_FEAT_SSE:
+>> -        return (s->cpuid_ext_features & CPUID_SSE);
+>> +        return (s->cpuid_features & CPUID_SSE);
+>>       case X86_FEAT_SSE2:
+>> -        return (s->cpuid_ext_features & CPUID_SSE2);
+>> +        return (s->cpuid_features & CPUID_SSE2);
+>>       case X86_FEAT_SSE3:
+>>           return (s->cpuid_ext_features & CPUID_EXT_SSE3);
+>>       case X86_FEAT_SSSE3:
+
 
