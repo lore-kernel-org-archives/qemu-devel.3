@@ -4,78 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68338ECE56F
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 21:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54923ECE578
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 23:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sn3G1-0007m9-Ql; Sat, 07 Sep 2024 17:46:13 -0400
+	id 1sn4fM-0003eo-VV; Sat, 07 Sep 2024 19:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
- id 1sn3G0-0007le-I9
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 17:46:12 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sn4fG-0003dM-KU; Sat, 07 Sep 2024 19:16:22 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
- id 1sn3Fw-0006am-GQ
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 17:46:11 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2d87f34a650so2143864a91.1
- for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 14:46:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sn4fE-0005z8-OB; Sat, 07 Sep 2024 19:16:22 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42cae4eb026so7675935e9.0; 
+ Sat, 07 Sep 2024 16:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725745566; x=1726350366; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tsZ1skBJYv0lTXgXWfwzxn7N+kD9w6DoeE5PWN/73iM=;
- b=GIvaAinqZQuw2o5POyo80+w28LdUfsW6FOoICWMhmWIvmrUwVc3W0zMbtBY8Hvw3gd
- Bp5OdRQx4rFN35MC4J6TsyUKrquwHWIpVwkRnoiaAwGPKphCrOD3XqSA+tNRa5Wv+roF
- I23jfkLDH7+CLeSf5QwKDJE/qvMrEMg+CnP6JDlMlGfUIs/FqmiZALyP3N/UeTuPEtyV
- sSJgMt7ShaQAxCtk+nkDJiPjXBNZ1nApNHYhuFdE2De1EP/ud9ogyyAK2den3vL8op3r
- Y7xnc2MNww0WFfilM4gMLVB1xoB9Zl0QKpcgCY3YwJveBqty8Uv5/dWN9lXNHNZbfd26
- SXZg==
+ d=gmail.com; s=20230601; t=1725750977; x=1726355777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zdUYCB5+/YQr+E0TUUm0Dw5lCY94glCNJFdQX81xI9k=;
+ b=Mvuu6oXuRC7EzrlvkiILtI0CMltGgvsfWoZdMtgDdhgwKs1Vt9g2zkwwu0N4S9rpjb
+ Qtz96QlK4FYgA/QdHm/L5v1sXOd2lqbMYUAGdYrv+nGKIspAHZNcfFytkL0TUJAxd0r6
+ my/G+rG2wKOR2Y+1FZoOyHa6IBZcqzilup/nfISl3T+iaiCEp/Wk2LNHNpQ9mSL79ACi
+ FAhohXCVB1mXgstjS7K8610NhF8pLLp2sW8tr9Ug3HDQ23m0ef6uULtH+8ktFhEO8a4G
+ 0xEuGbj2m+C7VBd3WRiiqfyD8eKrMfgVTs25qP4Sa3MWm4ZaKYX6Xvuipm3qVnNl98IU
+ TIdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725745566; x=1726350366;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tsZ1skBJYv0lTXgXWfwzxn7N+kD9w6DoeE5PWN/73iM=;
- b=UHrRr3CcXZ2zK0MSr06wxDdes+niuINrtCJ8rLuXug2Hc4ArC06uynI4oedviJebBs
- NSjKZcUZmI9cYm7kFmwao5bLPlMvfAGocSs8NF9k48vptg3VFyPocdyE4lN1RMdqe1q8
- rdPvtT0t0EGtFwop+fEaPOpTkqrNwqneuEyfa4xNhQKobh4r4lUCDa7q6mlNgBg6nmga
- 4eEPBkCMcAI9b6tytQs9fyZbnhzL91rmBcT06BEVy4O5Jn3eOUiTJPXWdOOOHTDphF7V
- JuLCZJET0lexRxCq23ltsum366ycnNCzzcTfSdfqPQN5dFD3Bd8wcnwReJrhUPuWQoBn
- oLPA==
-X-Gm-Message-State: AOJu0Yyjjj0AccI3sRZ0t2rK8Bl2aU7UaSCllw8Lxya0wn2EtU6opsv1
- cBMjlQ8gytkaKZMSKj5QAsX420kahBFbuRHNNspfIq5cf193rMD24kJ6f/ASA6E=
-X-Google-Smtp-Source: AGHT+IFUNwN7dzm3tUpyBTwB7N+TIiIC5DsIKFJD0hbJOhlCTG4djjY+r+7kx1zcqEE9Y7nwTF6l8w==
-X-Received: by 2002:a17:90b:2247:b0:2da:6e46:ad48 with SMTP id
- 98e67ed59e1d1-2dad4f0e439mr10101471a91.1.1725745566014; 
- Sat, 07 Sep 2024 14:46:06 -0700 (PDT)
-Received: from jacob-pop23u.lan ([2600:1700:88b2:a50:2c86:7da2:dc34:a97f])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2db04966aa5sm1721116a91.37.2024.09.07.14.46.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Sep 2024 14:46:05 -0700 (PDT)
-From: Jacob Abrams <satur9nine@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, peter.maydell@linaro.org,
- Jacob Abrams <satur9nine@gmail.com>
-Subject: [PATCH v2] hw/char/stm32l4x5_usart.c: Fix ACK and min access size
-Date: Sat,  7 Sep 2024 14:45:39 -0700
-Message-ID: <20240907214602.96920-1-satur9nine@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1725750977; x=1726355777;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zdUYCB5+/YQr+E0TUUm0Dw5lCY94glCNJFdQX81xI9k=;
+ b=JoCOWjFyb0nzk8cLTppyUa6flp3ooTTL30TCjX1knfW0888eOlr4c3eDXppMlFIl2L
+ MnnqfXi44fN+oi7MlPE8jxe48NIbCyaaxjGAJLtxokHtiAiM+/HjN0kSlHcyAsYEVlHL
+ z3fmXym8E9clChQo8bzD1DXQcV6n3QNT2mLLcZxQpcqwCnWAomske7T/anZI3dJHFp/U
+ n0/fsiLO44i22+wuDUMlgEDxmZ+b2JCCuuOF63FkGNTBK5Yx/V7BLcWCC1OD4Dh3DUR1
+ N0aNz8WnhOkaEDPZwILVe+KuEy2N8sOO/a0WvcVVtfle9JH0dgIAPTjcWn0jso003FMi
+ 0j2Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUKDZyJLMZJ/kFb98En2eKkcwqKOweef1rgUYM/fjVxVqjGdLnGXvlT6DTQDARNvp9+l9t5J8yXLIsR4g==@nongnu.org,
+ AJvYcCVkhZelyoLsmY0ZTA8RhQrSXhHtRl2vtO7vQ7rehgnwB87B2cnSZfUXa19+VduZcIiXdZXKNm+xIJo=@nongnu.org,
+ AJvYcCWRcKDrMIWmZHaH+zjas89qkJyMc81ivHT0ipP780VOOhcK3oUoOEYQReBjbzuwkgGuPUwk/DatvQ==@nongnu.org
+X-Gm-Message-State: AOJu0YzfzJNvZRwBokcJvsIwk9rx7+KThMcbRwAMRYC7UGZsq9Ri3Z65
+ JO0uqbe7AVFiNgCJ1y1c2TXJwwH9cPQItlDoq2SysBfu8RR0kGIR
+X-Google-Smtp-Source: AGHT+IE3oPNtsLmeGhxgrRyUZTn7JO4U9vNi6p0bkRLny2KBsyBv3JWF4YxIrSRIE4hfdXOaUBgWJQ==
+X-Received: by 2002:a5d:5452:0:b0:374:c0cc:a1fb with SMTP id
+ ffacd0b85a97d-378896573fbmr4733165f8f.39.1725750977217; 
+ Sat, 07 Sep 2024 16:16:17 -0700 (PDT)
+Received: from [127.0.0.1] ([185.238.219.7]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37895675bc9sm2223140f8f.56.2024.09.07.16.16.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Sep 2024 16:16:16 -0700 (PDT)
+Date: Sat, 07 Sep 2024 17:33:47 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Helge Deller <deller@gmx.de>, Song Gao <gaosong@loongson.cn>,
+ Stafford Horne <shorne@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Joel Stanley <joel@jms.id.au>, Troy Lee <leetroy@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-riscv@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hao Wu <wuhaotsh@google.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ =?ISO-8859-1?Q?Fr=E9d=E9ric_Barrat?= <fbarrat@linux.ibm.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Tyrone Ting <kfting@nuvoton.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org,
+ Sergio Lopez <slp@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
+ qemu-ppc@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ =?ISO-8859-1?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Jia Liu <proljc@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Paul Burton <paulburton@kernel.org>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v2 3/3] hw/char: Extract serial-mm
+In-Reply-To: <b80ddcfd-bd02-8ebd-315f-285c533aaf81@eik.bme.hu>
+References: <20240905073832.16222-1-shentey@gmail.com>
+ <20240905073832.16222-4-shentey@gmail.com>
+ <b80ddcfd-bd02-8ebd-315f-285c533aaf81@eik.bme.hu>
+Message-ID: <859EB9E2-9101-4F01-AF40-B8A2E8FF1783@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=satur9nine@gmail.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: 28
+X-Spam_score: 2.8
+X-Spam_bar: ++
+X-Spam_report: (2.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,173 +133,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These changes allow the official STM32L4xx HAL UART driver to function
-properly with the b-l475e-iot01a machine.
 
-Modifying USART_CR1 TE bit should alter USART_ISR TEACK bit, and
-likewise for RE and REACK bit.
 
-USART registers may be accessed via 16-bit instructions.
+Am 5=2E September 2024 12:26:35 UTC schrieb BALATON Zoltan <balaton@eik=2E=
+bme=2Ehu>:
+>On Thu, 5 Sep 2024, Bernhard Beschow wrote:
+>> hw/char/serial currently contains the implementation of both TYPE_SERIA=
+L and
+>> TYPE_SERIAL_MM=2E According to serial_class_init(), TYPE_SERIAL is an i=
+nternal
+>> class while TYPE_SERIAL_MM is used by numerous machine types directly=
+=2E Let's
+>> move the latter into its own module which makes the dependencies more o=
+bvious
+>> and the code more tidy=2E
+>>=20
+>> The includes and the dependencies have been converted mechanically exce=
+pt in the
+>> hw/char directories which were updated manually=2E The result was compi=
+le-tested=2E
+>> Now, only hw/char makes direct use of TYPE_SERIAL:
+>>=20
+>>  # grep -r -e "select SERIAL" | grep -v SERIAL_
+>>  hw/char/Kconfig:    select SERIAL
+>>  hw/char/Kconfig:    select SERIAL
+>>  hw/char/Kconfig:    select SERIAL
+>>  hw/char/Kconfig:    select SERIAL
+>>  hw/char/Kconfig:    select SERIAL
+>>=20
+>>  # grep -r -e "/serial\\=2Eh"
+>>  include/hw/char/serial-mm=2Eh:#include "hw/char/serial=2Eh"
+>>  hw/char/serial-pci-multi=2Ec:#include "hw/char/serial=2Eh"
+>>  hw/char/serial=2Ec:#include "hw/char/serial=2Eh"
+>>  hw/char/serial-isa=2Ec:#include "hw/char/serial=2Eh"
+>>  hw/char/serial-pci=2Ec:#include "hw/char/serial=2Eh"
+>>=20
+>> Tested-by: Andrew Jeffery <andrew@codeconstruct=2Ecom=2Eau>
+>> Reviewed-by: Mark Cave-Ayland <mark=2Ecave-ayland@ilande=2Eco=2Euk>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>> include/hw/arm/aspeed_soc=2Eh         |   2 +-
+>> include/hw/char/mchp_pfsoc_mmuart=2Eh |   2 +-
+>> include/hw/char/serial-mm=2Eh         |  52 +++++++++
+>> include/hw/char/serial=2Eh            |  19 ----
+>> hw/arm/allwinner-a10=2Ec              |   2 +-
+>> hw/arm/allwinner-h3=2Ec               |   2 +-
+>> hw/arm/allwinner-r40=2Ec              |   2 +-
+>> hw/arm/aspeed_ast2400=2Ec             |   2 +-
+>> hw/arm/aspeed_soc_common=2Ec          |   2 +-
+>> hw/arm/kzm=2Ec                        |   2 +-
+>> hw/arm/msf2-soc=2Ec                   |   2 +-
+>> hw/arm/musicpal=2Ec                   |   2 +-
+>> hw/arm/npcm7xx=2Ec                    |   2 +-
+>> hw/arm/pxa2xx=2Ec                     |   2 +-
+>> hw/char/omap_uart=2Ec                 |   2 +-
+>> hw/char/serial-mm=2Ec                 | 157 +++++++++++++++++++++++++++=
++
+>> hw/char/serial=2Ec                    | 126 ----------------------
+>> hw/display/sm501=2Ec                  |   2 +-
+>> hw/hppa/machine=2Ec                   |   2 +-
+>> hw/loongarch/virt=2Ec                 |   2 +-
+>> hw/microblaze/petalogix_ml605_mmu=2Ec |   2 +-
+>> hw/mips/boston=2Ec                    |   2 +-
+>> hw/mips/jazz=2Ec                      |   2 +-
+>> hw/mips/loongson3_virt=2Ec            |   2 +-
+>> hw/mips/malta=2Ec                     |   2 +-
+>> hw/mips/mipssim=2Ec                   |   2 +-
+>> hw/openrisc/openrisc_sim=2Ec          |   2 +-
+>> hw/openrisc/virt=2Ec                  |   2 +-
+>> hw/ppc/e500=2Ec                       |   2 +-
+>> hw/ppc/ppc405_uc=2Ec                  |   2 +-
+>> hw/ppc/ppc440_bamboo=2Ec              |   2 +-
+>> hw/ppc/sam460ex=2Ec                   |   2 +-
+>> hw/ppc/virtex_ml507=2Ec               |   2 +-
+>> hw/riscv/virt=2Ec                     |   2 +-
+>> hw/sparc64/niagara=2Ec                |   2 +-
+>> hw/sparc64/sun4u=2Ec                  |   2 +-
+>> hw/xtensa/xtfpga=2Ec                  |   2 +-
+>> hw/arm/Kconfig                      |  20 ++--
+>> hw/char/Kconfig                     |   4 +
+>> hw/char/meson=2Ebuild                 |   1 +
+>> hw/display/Kconfig                  |   2 +-
+>> hw/hppa/Kconfig                     |   2 +-
+>> hw/loongarch/Kconfig                |   2 +-
+>> hw/microblaze/Kconfig               |   2 +-
+>> hw/mips/Kconfig                     |  10 +-
+>> hw/openrisc/Kconfig                 |   4 +-
+>> hw/ppc/Kconfig                      |  10 +-
+>> hw/riscv/Kconfig                    |   2 +-
+>> hw/sparc64/Kconfig                  |   1 +
+>> hw/xtensa/Kconfig                   |   2 +-
+>> 50 files changed, 276 insertions(+), 206 deletions(-)
+>> create mode 100644 include/hw/char/serial-mm=2Eh
+>> create mode 100644 hw/char/serial-mm=2Ec
+>>=20
+>> diff --git a/include/hw/arm/aspeed_soc=2Eh b/include/hw/arm/aspeed_soc=
+=2Eh
+>> index 624d489e0d=2E=2E689f52dae8 100644
+>> --- a/include/hw/arm/aspeed_soc=2Eh
+>> +++ b/include/hw/arm/aspeed_soc=2Eh
+>> @@ -39,7 +39,7 @@
+>> #include "hw/misc/unimp=2Eh"
+>> #include "hw/misc/aspeed_peci=2Eh"
+>> #include "hw/fsi/aspeed_apb2opb=2Eh"
+>> -#include "hw/char/serial=2Eh"
+>> +#include "hw/char/serial-mm=2Eh"
+>> #include "hw/intc/arm_gicv3=2Eh"
+>>=20
+>> #define ASPEED_SPIS_NUM  2
+>> diff --git a/include/hw/char/mchp_pfsoc_mmuart=2Eh b/include/hw/char/mc=
+hp_pfsoc_mmuart=2Eh
+>> index b0e14ca355=2E=2Ea7b8b1b08b 100644
+>> --- a/include/hw/char/mchp_pfsoc_mmuart=2Eh
+>> +++ b/include/hw/char/mchp_pfsoc_mmuart=2Eh
+>> @@ -29,7 +29,7 @@
+>> #define HW_MCHP_PFSOC_MMUART_H
+>>=20
+>> #include "hw/sysbus=2Eh"
+>> -#include "hw/char/serial=2Eh"
+>> +#include "hw/char/serial-mm=2Eh"
+>>=20
+>> #define MCHP_PFSOC_MMUART_REG_COUNT 13
+>>=20
+>> diff --git a/include/hw/char/serial-mm=2Eh b/include/hw/char/serial-mm=
+=2Eh
+>> new file mode 100644
+>> index 0000000000=2E=2E62a8489d69
+>> --- /dev/null
+>> +++ b/include/hw/char/serial-mm=2Eh
+>> @@ -0,0 +1,52 @@
+>> +/*
+>> + * QEMU 16550A UART emulation
+>
+>This is now only "memory mapped 16550A compatible UART emulation" or some=
+thing like that, the actual 16550A emulation is in serial=2Ec where this wa=
+s moved from=2E Maybe worth making it clear in this comment and in serial-m=
+m=2Ec as well=2E
 
-Reseting USART_CR1 UE bit should restore ISR to default value.
+I'll send a v3 then=2E
 
-Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and write")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
-Signed-off-by: Jacob Abrams <satur9nine@gmail.com>
----
-Changes since version 1:
- - Add qtest_quit to end of new test
+Best regards,
+Bernhard
 
- hw/char/stm32l4x5_usart.c          | 29 ++++++++++++++++++---
- tests/qtest/stm32l4x5_usart-test.c | 41 +++++++++++++++++++++++++++++-
- 2 files changed, 66 insertions(+), 4 deletions(-)
-
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index fc5dcac0c4..859fc6236a 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -154,6 +154,28 @@ REG32(RDR, 0x24)
- REG32(TDR, 0x28)
-     FIELD(TDR, TDR, 0, 9)
- 
-+#define ISR_RESET_VALUE (0x020000C0)
-+
-+static void stm32l4x5_update_isr(Stm32l4x5UsartBaseState *s)
-+{
-+    if (!(s->cr1 & R_CR1_UE_MASK)) {
-+        s->isr = ISR_RESET_VALUE;
-+        return;
-+    }
-+
-+    if (s->cr1 & R_CR1_TE_MASK) {
-+        s->isr |= R_ISR_TEACK_MASK;
-+    } else {
-+        s->isr &= ~R_ISR_TEACK_MASK;
-+    }
-+
-+    if (s->cr1 & R_CR1_RE_MASK) {
-+        s->isr |= R_ISR_REACK_MASK;
-+    } else {
-+        s->isr &= ~R_ISR_REACK_MASK;
-+    }
-+}
-+
- static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
- {
-     if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))        ||
-@@ -367,7 +389,7 @@ static void stm32l4x5_usart_base_reset_hold(Object *obj, ResetType type)
-     s->brr = 0x00000000;
-     s->gtpr = 0x00000000;
-     s->rtor = 0x00000000;
--    s->isr = 0x020000C0;
-+    s->isr = ISR_RESET_VALUE;
-     s->rdr = 0x00000000;
-     s->tdr = 0x00000000;
- 
-@@ -456,6 +478,7 @@ static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
-     case A_CR1:
-         s->cr1 = value;
-         stm32l4x5_update_params(s);
-+        stm32l4x5_update_isr(s);
-         stm32l4x5_update_irq(s);
-         return;
-     case A_CR2:
-@@ -508,12 +531,12 @@ static const MemoryRegionOps stm32l4x5_usart_base_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-         .max_access_size = 4,
--        .min_access_size = 4,
-+        .min_access_size = 2,
-         .unaligned = false
-     },
-     .impl = {
-         .max_access_size = 4,
--        .min_access_size = 4,
-+        .min_access_size = 2,
-         .unaligned = false
-     },
- };
-diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
-index c175ff3064..018a8a62bf 100644
---- a/tests/qtest/stm32l4x5_usart-test.c
-+++ b/tests/qtest/stm32l4x5_usart-test.c
-@@ -36,6 +36,8 @@ REG32(GTPR, 0x10)
- REG32(RTOR, 0x14)
- REG32(RQR, 0x18)
- REG32(ISR, 0x1C)
-+    FIELD(ISR, REACK, 22, 1)
-+    FIELD(ISR, TEACK, 21, 1)
-     FIELD(ISR, TXE, 7, 1)
-     FIELD(ISR, RXNE, 5, 1)
-     FIELD(ISR, ORE, 3, 1)
-@@ -191,7 +193,7 @@ static void init_uart(QTestState *qts)
- 
-     /* Enable the transmitter, the receiver and the USART. */
-     qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
--        R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
-+        cr1 | R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
- }
- 
- static void test_write_read(void)
-@@ -203,6 +205,11 @@ static void test_write_read(void)
-     const uint32_t tdr = qtest_readl(qts, USART1_BASE_ADDR + A_TDR);
-     g_assert_cmpuint(tdr, ==, 0x000001FF);
- 
-+    /* Official STM HAL uses uint16_t for TDR */
-+    qtest_writew(qts, USART1_BASE_ADDR + A_TDR, 0xFFFF);
-+    const uint16_t tdr16 = qtest_readw(qts, USART1_BASE_ADDR + A_TDR);
-+    g_assert_cmpuint(tdr16, ==, 0x000001FF);
-+
-     qtest_quit(qts);
- }
- 
-@@ -298,6 +305,37 @@ static void test_send_str(void)
-     qtest_quit(qts);
- }
- 
-+static void test_ack(void)
-+{
-+    uint32_t cr1;
-+    uint32_t isr;
-+    QTestState *qts = qtest_init("-M b-l475e-iot01a");
-+
-+    init_uart(qts);
-+
-+    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
-+
-+    /* Disable the transmitter and receiver. */
-+    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
-+        cr1 & ~(R_CR1_RE_MASK | R_CR1_TE_MASK));
-+
-+    /* Test ISR ACK for transmitter and receiver disabled */
-+    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
-+    g_assert_false(isr & R_ISR_TEACK_MASK);
-+    g_assert_false(isr & R_ISR_REACK_MASK);
-+
-+    /* Enable the transmitter and receiver. */
-+    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
-+        cr1 | (R_CR1_RE_MASK | R_CR1_TE_MASK));
-+
-+    /* Test ISR ACK for transmitter and receiver disabled */
-+    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
-+    g_assert_true(isr & R_ISR_TEACK_MASK);
-+    g_assert_true(isr & R_ISR_REACK_MASK);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     int ret;
-@@ -310,6 +348,7 @@ int main(int argc, char **argv)
-     qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
-     qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
-     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
-+    qtest_add_func("stm32l4x5/usart/ack", test_ack);
-     ret = g_test_run();
- 
-     return ret;
--- 
-2.43.0
-
+>
+>Regards,
+>BALATON Zoltan
 
