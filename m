@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 654B7E6FE4D
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 07:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FC8E6FE4D
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 07:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smpTN-0000LD-NH; Sat, 07 Sep 2024 03:03:07 -0400
+	id 1smpWI-0005Pc-9K; Sat, 07 Sep 2024 03:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smpTJ-0000Jd-Ng; Sat, 07 Sep 2024 03:03:01 -0400
+ id 1smpWG-0005OO-UG; Sat, 07 Sep 2024 03:06:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smpTG-0003ML-K9; Sat, 07 Sep 2024 03:03:00 -0400
+ id 1smpWF-0003r4-Ac; Sat, 07 Sep 2024 03:06:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 60D438C89A;
- Sat,  7 Sep 2024 10:01:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 69AA08C89D;
+ Sat,  7 Sep 2024 10:04:42 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A82F2133D3E;
- Sat,  7 Sep 2024 10:02:56 +0300 (MSK)
-Message-ID: <92e69fe8-f8f7-4457-94aa-38724e85c648@tls.msk.ru>
-Date: Sat, 7 Sep 2024 10:02:56 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id B240A133D45;
+ Sat,  7 Sep 2024 10:06:01 +0300 (MSK)
+Message-ID: <47015caa-c4ee-45e2-9c73-9c6f5f7815f7@tls.msk.ru>
+Date: Sat, 7 Sep 2024 10:06:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc: fix incorrect spelling of PowerMac
-To: Tejas Vipin <tejasvipin76@gmail.com>, mark.cave-ayland@ilande.co.uk
-Cc: qemu-trivial@nongnu.org, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20240805070150.369824-1-tejasvipin76@gmail.com>
+Subject: Re: [PATCH] tests/qtest/fuzz/virtio_net_fuzz.c: fix
+ virtio_net_fuzz_multi
+To: Dmitry Frolov <frolov@swemel.ru>, alxndr@bu.edu
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, sdl.qemu@linuxtesting.org
+References: <20240523102813.396750-2-frolov@swemel.ru>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -58,7 +59,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240805070150.369824-1-tejasvipin76@gmail.com>
+In-Reply-To: <20240523102813.396750-2-frolov@swemel.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -84,11 +85,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-05.08.2024 10:01, Tejas Vipin wrote:
-> PowerMac is spelled as PowerMAC (Media Access Control) in some places.
-> This is misleading.
+23.05.2024 13:28, Dmitry Frolov wrote:
+> If QTestState was already CLOSED due to error, calling qtest_clock_step()
+> afterwards makes no sense and only raises false-crash with message:
+> "assertion timer != NULL failed".
 
-Applied to my trivial-patches tree, thanks!
+So, can we have any Reviewed-by tags here? :)
+
+Thanks,
 
 /mjt
 
