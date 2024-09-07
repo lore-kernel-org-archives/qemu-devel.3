@@ -4,62 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC692E6FE4C
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 13:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DFCE6FE4C
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 13:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smvMG-0007Gk-Qw; Sat, 07 Sep 2024 09:20:08 -0400
+	id 1smvT9-000501-Nh; Sat, 07 Sep 2024 09:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.mehnert@kernkonzept.com>)
- id 1smpwz-0006nk-5B; Sat, 07 Sep 2024 03:33:41 -0400
-Received: from serv1.kernkonzept.com ([2a01:4f8:1c1c:b490::2]
- helo=mx.kernkonzept.com)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1smvT8-0004yt-42; Sat, 07 Sep 2024 09:27:14 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.mehnert@kernkonzept.com>)
- id 1smpwt-00077V-5U; Sat, 07 Sep 2024 03:33:39 -0400
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1smvT6-0003g1-AS; Sat, 07 Sep 2024 09:27:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=kernkonzept.com; s=mx1; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Reply-To:Content-ID:Content-Description;
- bh=6/FwPM5bHlbD6wQC2ifk50MOQ3o56tBV3d6y22g/1yg=; b=A4X9ZLggt1uPJVMTjEJYhO951z
- km1+6zvZ8nyPlxBUu7WXOCPL8mvLKLrejMC7SVGn2gOtBXEp/JBvwnsbuh2l5mscNpTTmz+UVAQwg
- zN9MpGmuHauUjRfZZaPopu9b86nS6qeWV2KTatfipSBpzV46NxewsIfQ1Op+FqTOV8hY8fb1ecZLb
- rdr4karKGyWS94sFvLbcWHsXsHVbBvull8LKlxi5phtUqn+YlqDTdFDsULDIlKGgf/8pB4HT3HByS
- EzoCFwhL2Klv2eGbI7YkKWL38GYltAmqYq1UXNrInU7PDL1DhM9+grBepcM7Dvhrk7nj5CKhVY2PY
- KXNu6ecQ==;
-Received: from p5089ba45.dip0.t-ipconnect.de ([80.137.186.69]
- helo=noys4.localnet) by mx.kernkonzept.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
- id 1smpwm-00Ag4L-1S; Sat, 07 Sep 2024 09:33:28 +0200
-From: Frank Mehnert <frank.mehnert@kernkonzept.com>
-To: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] fix SSE2/SSSE3 feature detection in tcg/decode-new.c.inc
-Date: Sat, 07 Sep 2024 09:33:22 +0200
-Message-ID: <12670861.O9o76ZdvQC@noys4>
-Organization: Kernkonzept
-In-Reply-To: <b65adf00-28db-42bf-b5ed-708f36b52730@tls.msk.ru>
-References: <2975380.e9J7NaK4W3@noys4>
- <b6696d8e-19c7-4d14-80d0-85b92e398a34@tls.msk.ru>
- <b65adf00-28db-42bf-b5ed-708f36b52730@tls.msk.ru>
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=IotkzAljVAcCglNUgbdKyKjHmvrps/QohU3NiamGhvY=; b=sZLE6iFXyluupqqwTF3O2MQ+yz
+ GlXp+TLTaHJsi0fTO0HkpGQaUHoGR+LaTepfbtJpHIDOjIjRmIpi+TYuH2i6XnvNaqRIhHQVhTyDX
+ i5RV5xSUaZFNktb1IwBH0cRYoIGQE8SLkrIntev4sj52uWJIX1/KUpNx+wyVITtpCVfD0+ozoL80w
+ asCCICnjGNWj535CYFY8H7W2rA9V2tLSjIH6Os2BAiEpXRjPXxFd6NBL3Pg2FHCpZgyi6Kxm3vBEf
+ Nc966kxieLPwqzGH5LiviHYcI/le2bolsjyuQrkjQj/h1Mrj6EtpNwj5VTCDfvIdYhf9mvdFzXaQt
+ Z24OCc1A9+nLCp1bEeN60UXkKg4jvi6w9N/vBxmMHBTfjuFRKLK03nFeY82y5bHNIo9qes3pXzmp4
+ oY4gCiFXMPHkW6fkazcVLiOycgACnlL2T6FJXNY5EST3RPW9hie3XSdzUmv2x35yEGEEBg2ytTlgx
+ QCWdvzqBPW+DL4oA05pgnRNKkFqNGDVIOkmee5vsQsDSsKj26EFd4lFelffmD2UB7zzbYExEbLXlf
+ ZgbkYkaq3dacdDVaN5x0MaUTkPDAEXFJ/bH6c8D40k1BoeBii8/io5m/Q5Pq3/JC1jhzrwhkdQ/ns
+ uRjDDGpGtaBHAz3meUpZqRQ4Vc2c1wFrCnGpFwPHE=;
+Received: from [2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1smvSx-0004FY-Hg; Sat, 07 Sep 2024 14:27:07 +0100
+Message-ID: <fa03b234-1759-4759-ad55-0f5b31af02f1@ilande.co.uk>
+Date: Sat, 7 Sep 2024 14:27:00 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-Received-SPF: pass client-ip=2a01:4f8:1c1c:b490::2;
- envelope-from=frank.mehnert@kernkonzept.com; helo=mx.kernkonzept.com
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, hsp.cat7@gmail.com
+References: <20240904104007.177239-1-mark.cave-ayland@ilande.co.uk>
+ <5f68f72e-9449-4cf3-82df-47c912b2c0c3@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <5f68f72e-9449-4cf3-82df-47c912b2c0c3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:1400:c2c8:7829:48cd:7400
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] adb-mouse: convert to use QemuInputHandler
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 07 Sep 2024 09:20:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,72 +102,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+On 07/09/2024 06:40, Philippe Mathieu-Daudé wrote:
 
-the patch is no longer required. The fix was applied with
+> Hi Mark,
+> 
+> On 4/9/24 12:40, Mark Cave-Ayland wrote:
+>> Update the ADB mouse implementation to use QemuInputHandler instead of the
+>> legacy qemu_add_mouse_event_handler() function.
+>>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/input/adb-mouse.c | 56 ++++++++++++++++++++++++++++++++++++--------
+>>   1 file changed, 46 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
+>> index 144a0ccce7..7aa36caf2f 100644
+>> --- a/hw/input/adb-mouse.c
+>> +++ b/hw/input/adb-mouse.c
+>> @@ -38,6 +38,7 @@ struct MouseState {
+>>       ADBDevice parent_obj;
+>>       /*< private >*/
+>> +    QemuInputHandlerState *hs;
+>>       int buttons_state, last_buttons_state;
+>>       int dx, dy, dz;
+>>   };
+>> @@ -51,17 +52,52 @@ struct ADBMouseClass {
+>>       DeviceRealize parent_realize;
+>>   };
+>> -static void adb_mouse_event(void *opaque,
+>> -                            int dx1, int dy1, int dz1, int buttons_state)
+>> +#define ADB_MOUSE_BUTTON_LEFT   0x01
+>> +#define ADB_MOUSE_BUTTON_RIGHT  0x02
+>> +
+>> +static void adb_mouse_handle_event(DeviceState *dev, QemuConsole *src,
+>> +                                   InputEvent *evt)
+>>   {
+>> -    MouseState *s = opaque;
+>> +    MouseState *s = (MouseState *)dev;
+>> +    InputMoveEvent *move;
+>> +    InputBtnEvent *btn;
+>> +    static const int bmap[INPUT_BUTTON__MAX] = {
+>> +        [INPUT_BUTTON_LEFT]   = ADB_MOUSE_BUTTON_LEFT,
+>> +        [INPUT_BUTTON_RIGHT]  = ADB_MOUSE_BUTTON_RIGHT,
+>> +    };
+>> +
+>> +    switch (evt->type) {
+>> +    case INPUT_EVENT_KIND_REL:
+>> +        move = evt->u.rel.data;
+>> +        if (move->axis == INPUT_AXIS_X) {
+>> +            s->dx += move->value;
+>> +        } else if (move->axis == INPUT_AXIS_Y) {
+>> +            s->dy += move->value;
+>> +        }
+>> +        break;
+>> +
+>> +    case INPUT_EVENT_KIND_BTN:
+>> +        btn = evt->u.btn.data;
+>> +        if (bmap[btn->button]) {
+>> +            if (btn->down) {
+>> +                s->buttons_state |= bmap[btn->button];
+>> +            } else {
+>> +                s->buttons_state &= ~bmap[btn->button];
+>> +            }
+>> +        }
+>> +        break;
+>> -    s->dx += dx1;
+>> -    s->dy += dy1;
+>> -    s->dz += dz1;
+>> -    s->buttons_state = buttons_state;
+>> +    default:
+>> +        /* keep gcc happy */
+>> +        break;
+>> +    }
+>>   }
+>> +static const QemuInputHandler adb_mouse_handler = {
+>> +    .name  = "QEMU ADB Mouse",
+>> +    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
+>> +    .event = adb_mouse_handle_event,
+> 
+> Don't we need adb_mouse_handle_sync()?
 
-  da7c95920d027dbb00c6879c1da0216b19509191
+I'm not convinced that implementing .sync would work well here, since unlike e.g. 
+PS/2 where async mouse events are sent over the serial port, an ADB mouse is 
+constantly polled by the host via the adb_mouse_poll() callback.
 
-I don't know if this was done independent of my proposal or not, but
-anyway, I'm satisfied :-)
+You may be able to add a .sync function that generates the next set of mouse 
+coordinates to be returned by adb_mouse_poll(), but then you still have to wait for 
+the next ADB packet to be sent back to the host which feels like it would introduce 
+extra latency.
 
-Thanks!
+>> +};
+>>   static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+>>   {
+>> @@ -94,10 +130,10 @@ static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+>>       dx &= 0x7f;
+>>       dy &= 0x7f;
+>> -    if (!(s->buttons_state & MOUSE_EVENT_LBUTTON)) {
+>> +    if (!(s->buttons_state & ADB_MOUSE_BUTTON_LEFT)) {
+>>           dy |= 0x80;
+>>       }
+>> -    if (!(s->buttons_state & MOUSE_EVENT_RBUTTON)) {
+>> +    if (!(s->buttons_state & ADB_MOUSE_BUTTON_RIGHT)) {
+>>           dx |= 0x80;
+>>       }
+>> @@ -236,7 +272,7 @@ static void adb_mouse_realizefn(DeviceState *dev, Error **errp)
+>>       amc->parent_realize(dev, errp);
+>> -    qemu_add_mouse_event_handler(adb_mouse_event, s, 0, "QEMU ADB Mouse");
+>> +    s->hs = qemu_input_handler_register((DeviceState *)s, &adb_mouse_handler);
+> 
+> Simply:
+> 
+>         s->hs = qemu_input_handler_register(dev, &adb_mouse_handler);
 
-=46rank
+Ah yes, that should work here.
 
-[1] https://github.com/qemu/qemu/commit/da7c95920d027dbb00c6879c1da0216b195=
-09191
+>>   }
+>>   static void adb_mouse_initfn(Object *obj)
+> 
+> Waiting for clarification on QemuInputHandler::sync, otherwise LGTM.
 
-
-On Samstag, 7. September 2024 09:09:45 CEST Michael Tokarev wrote:
-> 17.06.2024 15:51, Michael Tokarev wrote:
-> > Adding Cc's.
->=20
-> A friendly ping?  This patch does not apply directly currently, but
-> the change is still relevant (I can fix context at apply time).
->=20
-> Before it can be applied to trivial-patches tree I'd love to have
-> some Reviewed-by tag(s).  Or drop it :)
->=20
-> This change is sitting here since May-24.
->=20
-> Thanks,
->=20
-> /mjt
->=20
-> > 29.05.2024 16:53, Frank Mehnert wrote:
-> >> The correct bitmask is cpuid_features rather than cpuid_ext_features.
-> >> ---
-> >>   target/i386/tcg/decode-new.c.inc | 4 ++--
-> >>   1 file changed, 2 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode=
-=2Dnew.c.inc
-> >> index 27dc1bb146..0ec849b003 100644
-> >> --- a/target/i386/tcg/decode-new.c.inc
-> >> +++ b/target/i386/tcg/decode-new.c.inc
-> >> @@ -2041,9 +2041,9 @@ static bool has_cpuid_feature(DisasContext *s, X=
-86CPUIDFeature cpuid)
-> >>       case X86_FEAT_PCLMULQDQ:
-> >>           return (s->cpuid_ext_features & CPUID_EXT_PCLMULQDQ);
-> >>       case X86_FEAT_SSE:
-> >> -        return (s->cpuid_ext_features & CPUID_SSE);
-> >> +        return (s->cpuid_features & CPUID_SSE);
-> >>       case X86_FEAT_SSE2:
-> >> -        return (s->cpuid_ext_features & CPUID_SSE2);
-> >> +        return (s->cpuid_features & CPUID_SSE2);
-> >>       case X86_FEAT_SSE3:
-> >>           return (s->cpuid_ext_features & CPUID_EXT_SSE3);
-> >>       case X86_FEAT_SSSE3:
->=20
->=20
+Hopefully explained above :)  I'll send a v2 later this evening.
 
 
-=2D-=20
-Dr.-Ing. Frank Mehnert, frank.mehnert@kernkonzept.com, +49-351-41 883 224
+ATB,
 
-Kernkonzept GmbH.  Sitz: Dresden.  Amtsgericht Dresden, HRB 31129.
-Gesch=E4ftsf=FChrer: Dr.-Ing. Michael Hohmuth
-
+Mark.
 
 
