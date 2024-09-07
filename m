@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D00E6FE47
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 05:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2B0E6FE47
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 05:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smnpV-0002Ts-1Q; Sat, 07 Sep 2024 01:17:49 -0400
+	id 1smoBT-0003qe-VO; Sat, 07 Sep 2024 01:40:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnpT-0002N1-9L
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:17:47 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smoBQ-0003mh-TK
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:40:30 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnpR-0007xJ-J1
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:17:46 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-53653ff0251so3016210e87.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 22:17:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smoBP-00021G-23
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:40:28 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a868b739cd9so366799966b.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 22:40:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725686263; x=1726291063; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725687625; x=1726292425; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5GawoGSl8V2d+Jms7j0s70XrmBmctMYkgbOnt6UI6qo=;
- b=oFXBg9GtyvV2X74neviZcC/opz4L7ioe/dpU9lq9A74h7HCRsmOZ0Em8fOxVM0/vdG
- IL1VIw8REvfpVUEpNSRvWjQiRa1ZEok3dZT12eAyarggClMBO2pV8jVrzb6U7AojNVi4
- vcMDnXFRoTMU14tKiyGZwnmdhs3X6By6zLXQkt/vd7XauTsG0dLbCsUk7WvmKIA7l537
- dr320IrIXv+73rh/d2XJlKK/w90PHHrFKTCDHRSfKxHhYXQQ8m+upjpDApeeox05/zYG
- aDwgoTkV3pEBKiBVdY6R950ILonr4LIRyTDiDsMjtGEM10IJ4Qr0kkR8Nq8y6snhEV8I
- aGJw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=o0OuCxyszczRrq80gO832nF9eNuehHHXzctHFJxUhlI=;
+ b=Le2T8hda77PH7BrPcnqsVZUGx6t/R2b03ZcvMS9xvsd+Nz+lTPohsCAGIT0s8ypEOH
+ gPCPK6CyD0VEEwMB42QU5KBykAvFk9A2cuN1kKtnY+rfxOfgT1xsIi/ZbtnpV11Tavlx
+ kGJx5+qS77Q8LSdmRfMltgxiuJ5iSENZBMCjNiPyJMbRPpnFMe0mkSQBjxGjvQgGbS+s
+ B1aysF7i2JaHLpohWDgNPrfTYrr0hK6uXtNxs3mAKf4/H5JO+C0GaAueJ9YLPkw6RdeN
+ 2rWgguAqdLOlSrfVssCqcfxaEERPmCZCpIYZmttcjQyVFNBPZH31xWM1WtsW6qkweX2r
+ LtVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725686263; x=1726291063;
+ d=1e100.net; s=20230601; t=1725687625; x=1726292425;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5GawoGSl8V2d+Jms7j0s70XrmBmctMYkgbOnt6UI6qo=;
- b=mooaabos8JCnTtgsrO5ScCg62vj3LsGJgc/DRjk2VHzdD+FGwA9JCoZY8MHP6a67KV
- L8Tj70C64ukNncTBZ9SPac5vtIhvvGc+opLNgw+WOfcyC2aFLpDynlRT4vEM/1+cnHny
- C4V685vnGJaSO1+0UhxouZkwiSNhomjIUJmVGL2Dwp1/nxe2HWswDnXoOjU44YjqHqjT
- Lw2JJz0HbePbpzlclKdJCbNVtvvpxBx29k5jOPnqpjsnxqtxnPCLNiw0WIeGBk1A06kv
- gAudM+znuoTyEvgmzG8sTMt6ltVdQ9kfsLdaLizyaJNTeNYR+U8V9jd6fl97aLmw+qxk
- Aerg==
+ bh=o0OuCxyszczRrq80gO832nF9eNuehHHXzctHFJxUhlI=;
+ b=WFiRpUy1wwtypCEcgKDy/6IXD6DY0IaaTXdtIfOJvr2Ej24Kqcd1m0NxXdvs75lI6x
+ bLMo8nI/42pm75MY0zSbg77jI8fkPmUehhVT0m18/SWoLf9Y0agVOhhxKrcmjtVHYIgS
+ 89ONDnzSnGAHI5iFvmJwIYAdQnbRrGt/d4Vg8TzTMAODcVP10Yofc1vWzi+YY6+ko2q9
+ rhDkk5Tdkxc2Q2AtYxhVoBCNo488K0YufNcfY8p1iHrTq6M5uuh/zEqNwGRDf9MW/hd0
+ 2rJO0vk518gsDvdJzwxPfEfkZGbIZufDNTDFDEovB6tuktEhkES2pZ0xpIXRHNn7XIB1
+ 59KQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXu6pX8I91yHSBbVfskvabyAiCfBG75xTBIquAfQjMA983pZfDs4tZlX94u4oUheGIowHAM3WkWO44C@nongnu.org
-X-Gm-Message-State: AOJu0YxNl6vrqXmESGWu9utgEfQYQHDiFjFtwHr+eoHrQ7819II2eKRF
- kSpbV1B/l12kM1MlZ4AAWCJE3AcXMPf14Kt5UFD40fCFVZpaPNWasJEVAdLyTEs=
-X-Google-Smtp-Source: AGHT+IF1SnAar4fvKBvbMzwSDykoYFAqUO0AQcosGBAaCaBsWkqjwGINhi1gxQOfn4o3IGp8IRmr9g==
-X-Received: by 2002:a05:6512:3b99:b0:52e:be49:9d32 with SMTP id
- 2adb3069b0e04-53658812aaemr2903008e87.47.1725686263338; 
- Fri, 06 Sep 2024 22:17:43 -0700 (PDT)
+ AJvYcCURHzg2Dr36AdGzk5Rvq0+ORWUdk/JU/NyDsoPVOMSoLHwQcK1g14cY6yJjanj6AZXt0oN4t9ZEUMLz@nongnu.org
+X-Gm-Message-State: AOJu0YwoQ52qdWY9VNsXtOhswo43KYgrzlHFKf8s+MM5utCpxCt5Kn2o
+ mvJ0HpcUAAq/wvW4bmGZVLwbHvOPws+Ok+w+ryu8l2wRQlrF34kIB0HSAqM916I=
+X-Google-Smtp-Source: AGHT+IGU2XkpfLokMkh7N5Uj4RW/KboqdOaJgebaT/AnIpySJd1o38jXbwqmq7rSwt9usnI1ZOBDrA==
+X-Received: by 2002:a17:907:60c8:b0:a86:a41c:29b with SMTP id
+ a640c23a62f3a-a8d1bf76062mr166718966b.8.1725687625067; 
+ Fri, 06 Sep 2024 22:40:25 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.197.174])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c726f8sm28773866b.121.2024.09.06.22.17.42
+ a640c23a62f3a-a8d25c6126esm30212766b.120.2024.09.06.22.40.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 22:17:42 -0700 (PDT)
-Message-ID: <aabb36c9-a486-433b-b117-2a15d77169e9@linaro.org>
-Date: Sat, 7 Sep 2024 07:17:41 +0200
+ Fri, 06 Sep 2024 22:40:24 -0700 (PDT)
+Message-ID: <5f68f72e-9449-4cf3-82df-47c912b2c0c3@linaro.org>
+Date: Sat, 7 Sep 2024 07:40:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] tests/unit: Slightly expand FIFO8 tests
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
-Cc: Octavian Purdila <tavip@google.com>
-References: <20240906132909.78886-1-philmd@linaro.org>
- <cdcff9bc-64f7-4198-8af0-a3b61c780547@ilande.co.uk>
+Subject: Re: [PATCH] adb-mouse: convert to use QemuInputHandler
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, hsp.cat7@gmail.com
+References: <20240904104007.177239-1-mark.cave-ayland@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cdcff9bc-64f7-4198-8af0-a3b61c780547@ilande.co.uk>
+In-Reply-To: <20240904104007.177239-1-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,19 +95,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 23:11, Mark Cave-Ayland wrote:
+Hi Mark,
 
->> Philippe Mathieu-Daudé (3):
->>    tests/unit: Strengthen FIFO8 tests
->>    tests/unit: Expand test_fifo8_peek_buf_wrap() coverage
->>    tests/unit: Comment FIFO8 tests
->>
->>   tests/unit/test-fifo.c | 209 +++++++++++++++++++++++++++++++++++++++--
->>   1 file changed, 201 insertions(+), 8 deletions(-)
+On 4/9/24 12:40, Mark Cave-Ayland wrote:
+> Update the ADB mouse implementation to use QemuInputHandler instead of the
+> legacy qemu_add_mouse_event_handler() function.
 > 
-> This is great! Thanks for taking the time to review the Fifo8 patches in 
-> enough detail to be able to produce the ASCII art :)
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>   hw/input/adb-mouse.c | 56 ++++++++++++++++++++++++++++++++++++--------
+>   1 file changed, 46 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
+> index 144a0ccce7..7aa36caf2f 100644
+> --- a/hw/input/adb-mouse.c
+> +++ b/hw/input/adb-mouse.c
+> @@ -38,6 +38,7 @@ struct MouseState {
+>       ADBDevice parent_obj;
+>       /*< private >*/
+>   
+> +    QemuInputHandlerState *hs;
+>       int buttons_state, last_buttons_state;
+>       int dx, dy, dz;
+>   };
+> @@ -51,17 +52,52 @@ struct ADBMouseClass {
+>       DeviceRealize parent_realize;
+>   };
+>   
+> -static void adb_mouse_event(void *opaque,
+> -                            int dx1, int dy1, int dz1, int buttons_state)
+> +#define ADB_MOUSE_BUTTON_LEFT   0x01
+> +#define ADB_MOUSE_BUTTON_RIGHT  0x02
+> +
+> +static void adb_mouse_handle_event(DeviceState *dev, QemuConsole *src,
+> +                                   InputEvent *evt)
+>   {
+> -    MouseState *s = opaque;
+> +    MouseState *s = (MouseState *)dev;
+> +    InputMoveEvent *move;
+> +    InputBtnEvent *btn;
+> +    static const int bmap[INPUT_BUTTON__MAX] = {
+> +        [INPUT_BUTTON_LEFT]   = ADB_MOUSE_BUTTON_LEFT,
+> +        [INPUT_BUTTON_RIGHT]  = ADB_MOUSE_BUTTON_RIGHT,
+> +    };
+> +
+> +    switch (evt->type) {
+> +    case INPUT_EVENT_KIND_REL:
+> +        move = evt->u.rel.data;
+> +        if (move->axis == INPUT_AXIS_X) {
+> +            s->dx += move->value;
+> +        } else if (move->axis == INPUT_AXIS_Y) {
+> +            s->dy += move->value;
+> +        }
+> +        break;
+> +
+> +    case INPUT_EVENT_KIND_BTN:
+> +        btn = evt->u.btn.data;
+> +        if (bmap[btn->button]) {
+> +            if (btn->down) {
+> +                s->buttons_state |= bmap[btn->button];
+> +            } else {
+> +                s->buttons_state &= ~bmap[btn->button];
+> +            }
+> +        }
+> +        break;
+>   
+> -    s->dx += dx1;
+> -    s->dy += dy1;
+> -    s->dz += dz1;
+> -    s->buttons_state = buttons_state;
+> +    default:
+> +        /* keep gcc happy */
+> +        break;
+> +    }
+>   }
+>   
+> +static const QemuInputHandler adb_mouse_handler = {
+> +    .name  = "QEMU ADB Mouse",
+> +    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
+> +    .event = adb_mouse_handle_event,
 
-Series queued, thanks!
+Don't we need adb_mouse_handle_sync()?
 
+> +};
+>   
+>   static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+>   {
+> @@ -94,10 +130,10 @@ static int adb_mouse_poll(ADBDevice *d, uint8_t *obuf)
+>       dx &= 0x7f;
+>       dy &= 0x7f;
+>   
+> -    if (!(s->buttons_state & MOUSE_EVENT_LBUTTON)) {
+> +    if (!(s->buttons_state & ADB_MOUSE_BUTTON_LEFT)) {
+>           dy |= 0x80;
+>       }
+> -    if (!(s->buttons_state & MOUSE_EVENT_RBUTTON)) {
+> +    if (!(s->buttons_state & ADB_MOUSE_BUTTON_RIGHT)) {
+>           dx |= 0x80;
+>       }
+>   
+> @@ -236,7 +272,7 @@ static void adb_mouse_realizefn(DeviceState *dev, Error **errp)
+>   
+>       amc->parent_realize(dev, errp);
+>   
+> -    qemu_add_mouse_event_handler(adb_mouse_event, s, 0, "QEMU ADB Mouse");
+> +    s->hs = qemu_input_handler_register((DeviceState *)s, &adb_mouse_handler);
+
+Simply:
+
+        s->hs = qemu_input_handler_register(dev, &adb_mouse_handler);
+
+>   }
+>   
+>   static void adb_mouse_initfn(Object *obj)
+
+Waiting for clarification on QemuInputHandler::sync, otherwise LGTM.
+
+Regards,
+
+Phil.
 
