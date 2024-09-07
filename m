@@ -4,74 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF5EE71080
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 12:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC692E6FE4C
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 13:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smuHw-00012w-D9; Sat, 07 Sep 2024 08:11:36 -0400
+	id 1smvMG-0007Gk-Qw; Sat, 07 Sep 2024 09:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smuHt-00011K-Rx; Sat, 07 Sep 2024 08:11:33 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <frank.mehnert@kernkonzept.com>)
+ id 1smpwz-0006nk-5B; Sat, 07 Sep 2024 03:33:41 -0400
+Received: from serv1.kernkonzept.com ([2a01:4f8:1c1c:b490::2]
+ helo=mx.kernkonzept.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1smuHr-0004NR-WB; Sat, 07 Sep 2024 08:11:33 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2A25D8CA3C;
- Sat,  7 Sep 2024 15:11:26 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 663571366CA;
- Sat,  7 Sep 2024 15:11:26 +0300 (MSK)
-Message-ID: <147e295a-7886-49bf-8f37-e603df8b2bf8@tls.msk.ru>
-Date: Sat, 7 Sep 2024 15:11:26 +0300
+ (Exim 4.90_1) (envelope-from <frank.mehnert@kernkonzept.com>)
+ id 1smpwt-00077V-5U; Sat, 07 Sep 2024 03:33:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=kernkonzept.com; s=mx1; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Reply-To:Content-ID:Content-Description;
+ bh=6/FwPM5bHlbD6wQC2ifk50MOQ3o56tBV3d6y22g/1yg=; b=A4X9ZLggt1uPJVMTjEJYhO951z
+ km1+6zvZ8nyPlxBUu7WXOCPL8mvLKLrejMC7SVGn2gOtBXEp/JBvwnsbuh2l5mscNpTTmz+UVAQwg
+ zN9MpGmuHauUjRfZZaPopu9b86nS6qeWV2KTatfipSBpzV46NxewsIfQ1Op+FqTOV8hY8fb1ecZLb
+ rdr4karKGyWS94sFvLbcWHsXsHVbBvull8LKlxi5phtUqn+YlqDTdFDsULDIlKGgf/8pB4HT3HByS
+ EzoCFwhL2Klv2eGbI7YkKWL38GYltAmqYq1UXNrInU7PDL1DhM9+grBepcM7Dvhrk7nj5CKhVY2PY
+ KXNu6ecQ==;
+Received: from p5089ba45.dip0.t-ipconnect.de ([80.137.186.69]
+ helo=noys4.localnet) by mx.kernkonzept.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
+ id 1smpwm-00Ag4L-1S; Sat, 07 Sep 2024 09:33:28 +0200
+From: Frank Mehnert <frank.mehnert@kernkonzept.com>
+To: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] fix SSE2/SSSE3 feature detection in tcg/decode-new.c.inc
+Date: Sat, 07 Sep 2024 09:33:22 +0200
+Message-ID: <12670861.O9o76ZdvQC@noys4>
+Organization: Kernkonzept
+In-Reply-To: <b65adf00-28db-42bf-b5ed-708f36b52730@tls.msk.ru>
+References: <2975380.e9J7NaK4W3@noys4>
+ <b6696d8e-19c7-4d14-80d0-85b92e398a34@tls.msk.ru>
+ <b65adf00-28db-42bf-b5ed-708f36b52730@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/mips/jazz: fix typo in in-built NIC alias
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, hpoussin@reactos.org,
- arikalo@gmail.com, philmd@linaro.org, jiaxun.yang@flygoat.com,
- dwmw@amazon.co.uk, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240906230138.335995-1-mark.cave-ayland@ilande.co.uk>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240906230138.335995-1-mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+Received-SPF: pass client-ip=2a01:4f8:1c1c:b490::2;
+ envelope-from=frank.mehnert@kernkonzept.com; helo=mx.kernkonzept.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 07 Sep 2024 09:20:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,20 +74,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-07.09.2024 02:01, Mark Cave-Ayland wrote:
-> Commit e104edbb9d ("hw/mips/jazz: use qemu_find_nic_info()") contained a typo
-> in the NIC alias which caused initialisation of the in-built dp83932 NIC to fail
-> when using the normal -nic user,model=dp83932 command line.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Hi Michael,
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+the patch is no longer required. The fix was applied with
 
-This is a fun one indeed :)
+  da7c95920d027dbb00c6879c1da0216b19509191
 
-I picked this one up to qemu-trivial tree, if no one picks it before.
+I don't know if this was done independent of my proposal or not, but
+anyway, I'm satisfied :-)
 
-Thanks,
+Thanks!
 
-/mjt
+=46rank
+
+[1] https://github.com/qemu/qemu/commit/da7c95920d027dbb00c6879c1da0216b195=
+09191
+
+
+On Samstag, 7. September 2024 09:09:45 CEST Michael Tokarev wrote:
+> 17.06.2024 15:51, Michael Tokarev wrote:
+> > Adding Cc's.
+>=20
+> A friendly ping?  This patch does not apply directly currently, but
+> the change is still relevant (I can fix context at apply time).
+>=20
+> Before it can be applied to trivial-patches tree I'd love to have
+> some Reviewed-by tag(s).  Or drop it :)
+>=20
+> This change is sitting here since May-24.
+>=20
+> Thanks,
+>=20
+> /mjt
+>=20
+> > 29.05.2024 16:53, Frank Mehnert wrote:
+> >> The correct bitmask is cpuid_features rather than cpuid_ext_features.
+> >> ---
+> >>   target/i386/tcg/decode-new.c.inc | 4 ++--
+> >>   1 file changed, 2 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode=
+=2Dnew.c.inc
+> >> index 27dc1bb146..0ec849b003 100644
+> >> --- a/target/i386/tcg/decode-new.c.inc
+> >> +++ b/target/i386/tcg/decode-new.c.inc
+> >> @@ -2041,9 +2041,9 @@ static bool has_cpuid_feature(DisasContext *s, X=
+86CPUIDFeature cpuid)
+> >>       case X86_FEAT_PCLMULQDQ:
+> >>           return (s->cpuid_ext_features & CPUID_EXT_PCLMULQDQ);
+> >>       case X86_FEAT_SSE:
+> >> -        return (s->cpuid_ext_features & CPUID_SSE);
+> >> +        return (s->cpuid_features & CPUID_SSE);
+> >>       case X86_FEAT_SSE2:
+> >> -        return (s->cpuid_ext_features & CPUID_SSE2);
+> >> +        return (s->cpuid_features & CPUID_SSE2);
+> >>       case X86_FEAT_SSE3:
+> >>           return (s->cpuid_ext_features & CPUID_EXT_SSE3);
+> >>       case X86_FEAT_SSSE3:
+>=20
+>=20
+
+
+=2D-=20
+Dr.-Ing. Frank Mehnert, frank.mehnert@kernkonzept.com, +49-351-41 883 224
+
+Kernkonzept GmbH.  Sitz: Dresden.  Amtsgericht Dresden, HRB 31129.
+Gesch=E4ftsf=FChrer: Dr.-Ing. Michael Hohmuth
+
+
 
