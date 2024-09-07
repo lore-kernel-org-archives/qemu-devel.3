@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A87F7CD4846
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 05:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D01FE6FE47
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 05:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smoDn-0001ho-6B; Sat, 07 Sep 2024 01:42:55 -0400
+	id 1smoF2-0005Ec-Qw; Sat, 07 Sep 2024 01:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smoDd-0001gD-Eg
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:42:46 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smoF0-000591-Le
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:44:10 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smoDb-0002AP-Fn
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:42:44 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-53653682246so3125389e87.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 22:42:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smoEy-0002Ev-UU
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:44:10 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-535be093a43so3416530e87.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 22:44:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725687761; x=1726292561; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725687847; x=1726292647; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KFjm31zxVUtyMnrBstriW1QpXq5N5Ttm/vOf+zHfiyI=;
- b=HNjCu0eqllZ2viRDcKoDwbX8zutjEPJgOG7uKrJHJq1sVYnQCXpI82Tc/ZgiUSW2PX
- SjpMEtHETNmuUBxsVz/3piy+Ox9a7m8A+I2KNs7MP3J6U2Es0XAj9Xy5YuV8IAiX0mIQ
- EaBbAyUm9Rulltfbq9rL8NCzjw1zvXTVySVjXgLnAklm9M3R7buSjeQq21DDFq2CUsJZ
- UxF/cXwWPWl38kY4VFfgu3VUETnIBNjKY3GLZX3TiNgoKwMTPoYJokIsZ7U/yfu16C8b
- w+iAuqT72ebQ0R/i+cBD1151Oyf0Y6Q+Ae8/93hS1lhcao3JDI7Jb+7O1ggbJcslF+lx
- gQCw==
+ bh=k+Zlek4apZ4VyrT45AYjtL63X8tbo9Es2cXYzekzebk=;
+ b=uxv+6vuNHkZMMEffFHmwC00gEHXo98t5rCgIDI3pUTlVDin5kf8tF80ze24RafvJFk
+ unnYbnU6mTY/EHjH25CHXE988OCZa10M7RNANc8o8Kru3ofm8kFRspCQlI9+wyE5L8ds
+ 0os+7UxoYB/5xmSlecF3cCRdmyFdemd65WiB19j+WFtJcMNFuCQn+jki2w+qZ+GWGxoe
+ /tjWhL4t9NgPybBqChwAw4zm4Hsyd7nyKtGJw+9krFXHyG+yYj/WQGCrbLzp4UgVUO6l
+ NLnG8KA7SMM1nPhfNIZOYAOe85qEfJbscgZZ8i4NKsUNo0eOdcQx/lOY/Ak8yYBmA5oc
+ 9JrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725687761; x=1726292561;
+ d=1e100.net; s=20230601; t=1725687847; x=1726292647;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KFjm31zxVUtyMnrBstriW1QpXq5N5Ttm/vOf+zHfiyI=;
- b=D2Uw0l++4wxKDftTm5WbHF1WXgWgKF5p6QVQe4oKbL8VC3K8JE2OKyDp5z6EWEL78O
- nxj93k9QmLKzjIrTlWi6i847z1r4mjXFW2CHWDqyvCiglmi+qgdE1JnTvwV8zXjRCjkb
- OJTc80aeacUSFf85ObdeLxhXzIkUJF1A8tfZyCkE2E+8tQHhSw+XEUdBZgEIosgxP75X
- oplEa4oHuJ3eDstKOmIB6dPN6wc3evgWf0DkhTXUQWMW6IfBn+5xlRmry4ESQtHgTLR4
- Y/BsvreWSk+V0WHKVHwsQwYbJtDFzT1PWT2fyULF0IbgMNI7GXMXHLSSy1WkPpseFfty
- R84g==
-X-Gm-Message-State: AOJu0Yx2yHZi/40KAL2qtNxFhIs7335rw+Dam1XANBCSQQWFKr7FFUTc
- Yqv5XIDYYxeBqdDbv98rUKxXWkMztoqU1xqf98R4al1bAJ5JLIjq2h7hMTGQYHxfHhNYU1iKuWY
- t23k=
-X-Google-Smtp-Source: AGHT+IG4szxEuFEnj1JbmFqSaixYx8jYJ6hjM2N7d7136XMPwQj+BkVf1PCau+asWQDA+KIkKixyJQ==
-X-Received: by 2002:a05:6512:1092:b0:535:6992:f2cb with SMTP id
- 2adb3069b0e04-536587ef18amr2653625e87.42.1725687760640; 
- Fri, 06 Sep 2024 22:42:40 -0700 (PDT)
+ bh=k+Zlek4apZ4VyrT45AYjtL63X8tbo9Es2cXYzekzebk=;
+ b=bhwerCFmaVUKXpJwwxpbApY/mlguTRSCMx7P60mk8AW9MTDyA3WMcVxAM8dyWr6ton
+ aqFLVbzAy55Tnsv7HBqoGHFTOqGEmuxzeYAnEOh9EeLO2XlxlLHQfcxhUt+7Jm70nGaf
+ RmYpiyOuyIIxbulvKSarlvrtlihB54DH9g+G3u8Kh/G0/Vw7SbBTJH1nki05pBOROYF3
+ 1Xw3rxLXkoZCxJg+noxG1OwcwSkeyQY+oZu6BKgVGhsE1Qa7lT7wzdP9GVG9qaPIraG2
+ fuO7Srw2SwvELMcuXPmA6k9zKxY40dGc7etoVXVoDL7d1qCLRtLsY9+5+PDohw6YTG4T
+ xBPw==
+X-Gm-Message-State: AOJu0YxExhv71/yYYWnAEfdW9zTVrk8sDuvXinqj3B+vJS0p4GBr3EMy
+ CtECHDYaOu/RUG4l/DoMFxdbTSFaEAaLR0z4blxr47BrVwPlQmUWZgf+8D8toX8=
+X-Google-Smtp-Source: AGHT+IFwyCW2haS6QRJMdF1KIVJT3B2v9h/v5GazZd5F+zU8yk3ZjX0hJ/JrASex8KaqH+aSGwSz8Q==
+X-Received: by 2002:a05:6512:39c8:b0:535:6cef:ffb8 with SMTP id
+ 2adb3069b0e04-5365881366emr2873684e87.54.1725687847027; 
+ Fri, 06 Sep 2024 22:44:07 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.197.174])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25979fa3sm30595166b.71.2024.09.06.22.42.39
+ a640c23a62f3a-a8d25ced20csm30698766b.172.2024.09.06.22.44.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 22:42:40 -0700 (PDT)
-Message-ID: <4bc83012-3b9c-4b99-8b6b-65f041652540@linaro.org>
-Date: Sat, 7 Sep 2024 07:42:38 +0200
+ Fri, 06 Sep 2024 22:44:06 -0700 (PDT)
+Message-ID: <bcc9a7e8-6257-47d1-94d6-767ab3f1e786@linaro.org>
+Date: Sat, 7 Sep 2024 07:44:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/16] hw/char/pl011: Implement TX (async) FIFO to
- avoid blocking the main loop
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-arm@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Tong Ho <tong.ho@amd.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240719181041.49545-1-philmd@linaro.org>
+Subject: Re: [PATCH] hw/audio/virtio-sound: fix heap buffer overflow
+To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240901130112.8242-1-vr_qemu@t-online.de>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240719181041.49545-1-philmd@linaro.org>
+In-Reply-To: <20240901130112.8242-1-vr_qemu@t-online.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,27 +95,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On 1/9/24 15:01, Volker Rümelin wrote:
+> Currently, the guest may write to the device configuration space,
+> whereas the virtio sound device specification in chapter 5.14.4
+> clearly states that the fields in the device configuration space
+> are driver-read-only.
+> 
+> Remove the set_config function from the virtio_snd class.
+> 
+> This also prevents a heap buffer overflow. See QEMU issue #2296.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2296
+> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+> ---
+>   hw/audio/trace-events |  1 -
+>   hw/audio/virtio-snd.c | 24 ------------------------
+>   2 files changed, 25 deletions(-)
 
-On 19/7/24 20:10, Philippe Mathieu-Daudé wrote:
-
-> Philippe Mathieu-Daudé (16):
-
->    hw/char/pl011: Remove unused 'readbuff' field
->    hw/char/pl011: Move pl011_put_fifo() earlier
->    hw/char/pl011: Move pl011_loopback_enabled|tx() around
->    hw/char/pl011: Split RX/TX path of pl011_reset_fifo()
->    hw/char/pl011: Extract pl011_write_txdata() from pl011_write()
->    hw/char/pl011: Extract pl011_read_rxdata() from pl011_read()
->    hw/char/pl011: Warn when using disabled transmitter
-
->    hw/char/pl011: Rename RX FIFO methods
-
-
-If you don't mind I'll queue the reviewed 2-8 & 11 to ease my workflow,
-before respining the next version.
-
-Thanks,
-
-Phil.
+Patch queued, thanks.
 
