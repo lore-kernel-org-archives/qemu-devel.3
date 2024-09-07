@@ -4,82 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8CABCE7B04
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 01:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199B2CE7B04
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 02:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smkd7-0006CC-1D; Fri, 06 Sep 2024 21:52:53 -0400
+	id 1smlP8-00079Q-DR; Fri, 06 Sep 2024 22:42:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1smkam-0005Ow-Jx
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 21:50:36 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1smkaH-0004Si-R5
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 21:50:20 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-718d8d6af8fso1136719b3a.3
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 18:49:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725673785; x=1726278585; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=U5aD6fmWQmIyy90Qib8S21Mealy/Cen9vHpo/8MXhOM=;
- b=SIfiFa2mBnKjMg2qU+HPEAo0u+ijFGSPEa4aliD2rlY1OejylqsgS0aJiDPS7mixcg
- 3LLv1E4p6D9BB4ZmI00wEtfjGfQEpZbJJAFlJ8oWqBJ3/vz6MJ1tnwDCLS3Mvzie2o0o
- 3tV1JUrzyzOFXyhhg3QyvsyJZ969F1qUzZGoR7gUHaCJ6JtAMhk1eRSwuEEiRjv2QNEY
- UjQMZ19nG2Oxdn4pvEHte8uSl2lqis+9eavFJEbaicvLsLD9xl/ef1FvWHWvZIvnW3iC
- Chlrgx7w3iGg/vREC1hVuPde2whWcObfoM9ghka4Zi94P1Y+umtAbrkhWxZ9BM8yMzln
- JnEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725673785; x=1726278585;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U5aD6fmWQmIyy90Qib8S21Mealy/Cen9vHpo/8MXhOM=;
- b=l0uy10ON8FZLjAQzNiW83+84KrTPiapRz1hdOckgoA2PDRZC8NL/+n2iM1wC2uZSpG
- zLJ9oDxFh/Ap0btqWvjlOuCTBTMin218Ern2sNt36rM05Wn/FvhsSMG4lFyzjbMF+3ZD
- A1C7zr8N2IsQL+W2lNcotOddchjnzsxLEgs0OuAkXQP+8KrXq4EVPrytUd686Cj18M9T
- 7SCHr3Drf5BSes247pNQwId9sxw9ezI9QVk43yfKPX2raKLq4XM7eIPedR9ey/PeYTCG
- SXwOHu3EMo2/qVZJ2mIf2u/k8LkftKyYWeIkGSTNCgdrGzp38+zAU/23uEcOQAnyMQXC
- Mzsg==
-X-Gm-Message-State: AOJu0Yy31ZBC5e0+IntzN7vRnVEC60bhQCxOAPW76Lf6vptWSGpn+XV4
- z500RRZBsk+YUa9VziVHq+tC3NJU6WsWgneP/IA6OUX0E9rOi78pvN51h99R+Kk=
-X-Google-Smtp-Source: AGHT+IGnvG1ZxgtYOqrPT5Mep7YkW6vgp77NXT8XOTX/TOdH13NTf0B3YMU2hTVi5bwo/4LjiimzyA==
-X-Received: by 2002:a05:6a00:2d90:b0:717:8ece:2f8b with SMTP id
- d2e1a72fcca58-718e3fe6a8bmr1608538b3a.17.1725673784794; 
- Fri, 06 Sep 2024 18:49:44 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::27bd? ([2604:3d08:9384:1d00::27bd])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7d825ab12b8sm92629a12.83.2024.09.06.18.49.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 18:49:44 -0700 (PDT)
-Message-ID: <68171cdb-8dd9-4d80-85de-457e84e17d65@linaro.org>
-Date: Fri, 6 Sep 2024 18:49:42 -0700
+ (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1smlMr-0006uP-ND
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 22:40:16 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1smlMo-000127-PH
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 22:40:05 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4871pDm5014818;
+ Sat, 7 Sep 2024 02:39:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=9AB4zNOMtmFA45y0KPMVPF
+ nzvGBNszj1XYJAue1bA4U=; b=bJWEY9uslpDzHUb7KceMGbz3YdbjloHsBluhGC
+ GM3mYkvDE0AekdEvcyb3N+oP/Vo8MygDdyWNqVJ+qJWyVviSol80oRrFbsg14fJR
+ Lc0LsjXwZdpnGKArLeyvmCAKOKbbbikR6WyLpVZUuGkbeYRgcLWD+rl+PZvRx5u+
+ I0IuXFSwv2FJQ6thSzrSaFxOCqVpD96qWQr7HWDmxV9fu5oeNOLlR9YS2BbfOjP6
+ kz3mmIx0KPirc6mxTQqFepw0H+2ks6ELZ/eAhzFqKgwXySF2rYOCbRunMNh3ifVT
+ JPSZSzO/z63RB8SthRUdZnLeeBsXu+4ErTHwZQdP/ZZ+HRmQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gdhd01m3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 07 Sep 2024 02:39:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4872dqqR031759
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 7 Sep 2024 02:39:52 GMT
+Received: from hu-bcain-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 6 Sep 2024 19:39:52 -0700
+From: Brian Cain <bcain@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <alex.bennee@linaro.org>, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH] tests/tcg/multiarch: Define _LARGEFILE64_SOURCE
+Date: Fri, 6 Sep 2024 19:39:24 -0700
+Message-ID: <20240907023924.1394728-1-bcain@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/6] plugins: access values during a memory read/write
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
- Zhao Liu <zhao1.liu@intel.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240724194708.1843704-1-pierrick.bouvier@linaro.org>
- <8734met9c8.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <8734met9c8.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: 51xZ-2wu4yIBnhYC7ai8-ufkXA_k7Vki
+X-Proofpoint-GUID: 51xZ-2wu4yIBnhYC7ai8-ufkXA_k7Vki
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0
+ impostorscore=0 phishscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=823
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409070019
+Received-SPF: pass client-ip=205.220.168.131; envelope-from=bcain@quicinc.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gOS81LzI0IDA4OjIxLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+IFBpZXJyaWNrIEJvdXZp
-ZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4gd3JpdGVzOg0KPiANCj4+IFRoaXMg
-c2VyaWVzIGFsbG93cyBwbHVnaW5zIHRvIGtub3cgd2hpY2ggdmFsdWUgaXMgcmVhZC93cml0
-dGVuIGR1cmluZyBhIG1lbW9yeQ0KPj4gYWNjZXNzLg0KPj4NCj4+IEZvciBldmVyeSBtZW1v
-cnkgYWNjZXNzLCB3ZSBrbm93IGNvcHkgdGhpcyB2YWx1ZSBiZWZvcmUgY2FsbGluZyBtZW0g
-Y2FsbGJhY2tzLA0KPj4gYW5kIHRob3NlIGNhbiBxdWVyeSBpdCB1c2luZyBuZXcgQVBJIGZ1
-bmN0aW9uOg0KPj4gLSBxZW11X3BsdWdpbl9tZW1fZ2V0X3ZhbHVlDQo+IA0KPiBRdWV1ZWQg
-dG8gcGF0Y2hlcyAxLTUgdG8gcGx1Z2lucy9uZXh0LCB0aGFua3MuDQo+IA0KPiBZb3UgY2Fu
-IHNlbmQgdGhlIHJlLXNwdW4gdmVyc2lvbiBvZiA2IG9uY2UgdGhlIHJldmlldyBjb21tZW50
-cyBoYXZlIGJlZW4NCj4gZG9uZS4NCj4gDQoNClRoYW5rcyBBbGV4LA0KDQpyaWdodCBub3cs
-IG15IHRyeSB0byBtYWtlIGNoZWNrLXRjZyBhcmUgYmxvY2tlZCB3aXRoIHRoZSBjcm9zcyAN
-CmNvbnRhaW5lcnMgd2hvIGRvbid0IGNvbXBpbGUsIHNvIEknbGwgd2FpdCBmb3IgdGhpcyB0
-byBiZSByZXNvbHZlZC4NCkkgc3RpbGwgd29uZGVyIGlmIGhhdmluZyBhIHNpbXBsZSBhYXJj
-aDY0L3g2NCB0ZXN0IGlzIG5vdCBlbm91Z2gsIGFuZCANCmNvdmVyaW5nIDk5LjklIG9mIHRo
-ZSBidWcgd2UgY291bGQgaW50cm9kdWNlIGluIHRoZSBmdXR1cmUgb24gdGhpcy4NCg==
+With newer clang builds (19.x), there's a warning for implicit function
+declarations and it rejects linux-test.c.
+
+glibc/musl's readdir64() declaration in dirent is guarded by
+_LARGEFILE64_SOURCE, so we'll define it to fix the warning.
+
+      BUILD   hexagon-linux-user guest-tests
+    /local/mnt/workspace/upstream/toolchain_for_hexagon/qemu/tests/tcg/multiarch/linux/linux-test.c:189:14: error: call to undeclared function 'readdir64'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+      189 |         de = readdir64(dir);
+          |              ^
+
+Signed-off-by: Brian Cain <bcain@quicinc.com>
+---
+ tests/tcg/multiarch/linux/linux-test.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
+index 64f57cb287..4e0e862ad9 100644
+--- a/tests/tcg/multiarch/linux/linux-test.c
++++ b/tests/tcg/multiarch/linux/linux-test.c
+@@ -17,6 +17,7 @@
+  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
+ #define _GNU_SOURCE
++#define _LARGEFILE64_SOURCE
+ #include <stdarg.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+-- 
+2.34.1
+
 
