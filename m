@@ -4,74 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 560F6CE7B04
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 01:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8CABCE7B04
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 01:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smkZ3-0003qb-7w; Fri, 06 Sep 2024 21:48:37 -0400
+	id 1smkd7-0006CC-1D; Fri, 06 Sep 2024 21:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1smkYV-0003j1-8r
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 21:48:07 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1smkYR-0004Ol-KI
- for qemu-devel@nongnu.org; Fri, 06 Sep 2024 21:48:01 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 518165C013A
- for <qemu-devel@nongnu.org>; Sat,  7 Sep 2024 01:47:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F5CC4CECA
- for <qemu-devel@nongnu.org>; Sat,  7 Sep 2024 01:47:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1725673672;
- bh=KaK41JPOiwkTi9ta791J8wS37yAgctFiFMaLNuuZ/y0=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=ja7P/h1Rik8bso2VeBsPNO38kUZ0kWeIIQcLp+37wbHG6PfM0cQJxvklf5lJXOmHw
- K1zK90HEKY7dn9Ms3pOy/zrdxWWNJW18Kz82/vtVy2G0suYAtQ3QMGBxKdoA8QzxK8
- 1ZzvkK7u6n9zLz5pnvkNMBN2XpOyjMe7/TIvEshNaDAc1NAd5HL1VxfbWRnM9nYmL+
- FnLRwRwdBZUxvHsJxzzG57l+RvUX8Avk1XrsDDH4EPirCwSrWmpKTvsshwT1aW4PCk
- 8qs9bYkZuREQYydjqWbGxGjM0mMZT24j71lcxPGzn5urSLpG+/cnSCEc9FxjOTU69C
- +Ija1Qd0zJCzQ==
-Received: by mail-lj1-f175.google.com with SMTP id
- 38308e7fff4ca-2f75a81b6d5so2919851fa.1
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 18:47:52 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCURCC+zP+iFfZufxna/o2oau+O//lVJQZt5kJqFsCPvZIp8K/HjHfzM+rAd5OkfCFi8X4FygMsRDn7G@nongnu.org
-X-Gm-Message-State: AOJu0YyXHyTiHcp34xsOVfJKDJbQkV9F3KwCmJNtxlUMpLPD7zGl1he1
- v5j1ZQ9uNP6sNnVablkJnqyLBUn4L+KkbPGDhijroMprDPz8OUyticZGTGEp9jsQ8CDVCjob03v
- Ln0QOL/qJpI48te3QZEX3KIhaIaY=
-X-Google-Smtp-Source: AGHT+IEAbN9Eqzj7/94jpm3ZQGTLWu4waEvFkSByhRyNjqTPy8Lz34CNrAmcTOD6tEPOYyD0XNKDboxR4rC3W+hfagk=
-X-Received: by 2002:a2e:a983:0:b0:2f6:63d1:166e with SMTP id
- 38308e7fff4ca-2f751eaee26mr34366321fa.3.1725673670870; Fri, 06 Sep 2024
- 18:47:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1smkam-0005Ow-Jx
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 21:50:36 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1smkaH-0004Si-R5
+ for qemu-devel@nongnu.org; Fri, 06 Sep 2024 21:50:20 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-718d8d6af8fso1136719b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 18:49:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725673785; x=1726278585; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U5aD6fmWQmIyy90Qib8S21Mealy/Cen9vHpo/8MXhOM=;
+ b=SIfiFa2mBnKjMg2qU+HPEAo0u+ijFGSPEa4aliD2rlY1OejylqsgS0aJiDPS7mixcg
+ 3LLv1E4p6D9BB4ZmI00wEtfjGfQEpZbJJAFlJ8oWqBJ3/vz6MJ1tnwDCLS3Mvzie2o0o
+ 3tV1JUrzyzOFXyhhg3QyvsyJZ969F1qUzZGoR7gUHaCJ6JtAMhk1eRSwuEEiRjv2QNEY
+ UjQMZ19nG2Oxdn4pvEHte8uSl2lqis+9eavFJEbaicvLsLD9xl/ef1FvWHWvZIvnW3iC
+ Chlrgx7w3iGg/vREC1hVuPde2whWcObfoM9ghka4Zi94P1Y+umtAbrkhWxZ9BM8yMzln
+ JnEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725673785; x=1726278585;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U5aD6fmWQmIyy90Qib8S21Mealy/Cen9vHpo/8MXhOM=;
+ b=l0uy10ON8FZLjAQzNiW83+84KrTPiapRz1hdOckgoA2PDRZC8NL/+n2iM1wC2uZSpG
+ zLJ9oDxFh/Ap0btqWvjlOuCTBTMin218Ern2sNt36rM05Wn/FvhsSMG4lFyzjbMF+3ZD
+ A1C7zr8N2IsQL+W2lNcotOddchjnzsxLEgs0OuAkXQP+8KrXq4EVPrytUd686Cj18M9T
+ 7SCHr3Drf5BSes247pNQwId9sxw9ezI9QVk43yfKPX2raKLq4XM7eIPedR9ey/PeYTCG
+ SXwOHu3EMo2/qVZJ2mIf2u/k8LkftKyYWeIkGSTNCgdrGzp38+zAU/23uEcOQAnyMQXC
+ Mzsg==
+X-Gm-Message-State: AOJu0Yy31ZBC5e0+IntzN7vRnVEC60bhQCxOAPW76Lf6vptWSGpn+XV4
+ z500RRZBsk+YUa9VziVHq+tC3NJU6WsWgneP/IA6OUX0E9rOi78pvN51h99R+Kk=
+X-Google-Smtp-Source: AGHT+IGnvG1ZxgtYOqrPT5Mep7YkW6vgp77NXT8XOTX/TOdH13NTf0B3YMU2hTVi5bwo/4LjiimzyA==
+X-Received: by 2002:a05:6a00:2d90:b0:717:8ece:2f8b with SMTP id
+ d2e1a72fcca58-718e3fe6a8bmr1608538b3a.17.1725673784794; 
+ Fri, 06 Sep 2024 18:49:44 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::27bd? ([2604:3d08:9384:1d00::27bd])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7d825ab12b8sm92629a12.83.2024.09.06.18.49.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Sep 2024 18:49:44 -0700 (PDT)
+Message-ID: <68171cdb-8dd9-4d80-85de-457e84e17d65@linaro.org>
+Date: Fri, 6 Sep 2024 18:49:42 -0700
 MIME-Version: 1.0
-References: <ZtsX_tcEuOjktUl9@zx2c4.com>
- <84a8ee9c-7781-c474-c394-d1498dc00050@loongson.cn>
-In-Reply-To: <84a8ee9c-7781-c474-c394-d1498dc00050@loongson.cn>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Sat, 7 Sep 2024 09:47:38 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H5CbyemhjoYLXqW3pLPtp4Ne3wcOZXzv2k5=jJCpi3rfg@mail.gmail.com>
-Message-ID: <CAAhV-H5CbyemhjoYLXqW3pLPtp4Ne3wcOZXzv2k5=jJCpi3rfg@mail.gmail.com>
-Subject: Re: LoongArch without CONFIG_ACPI and CONFIG_EFI
-To: maobibo <maobibo@loongson.cn>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com, 
- qemu-devel@nongnu.org, thomas@t-8ch.de, xry111@xry111.site, 
- loongarch@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Jinyang He <hejinyang@loongson.cn>, Tiezhu Yang <yangtiezhu@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=chenhuacai@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/6] plugins: access values during a memory read/write
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240724194708.1843704-1-pierrick.bouvier@linaro.org>
+ <8734met9c8.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <8734met9c8.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,27 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 7, 2024 at 9:44=E2=80=AFAM maobibo <maobibo@loongson.cn> wrote:
->
-> Add huacai who is maintainer of Loongarch Linux kernel.
->
-> On 2024/9/6 =E4=B8=8B=E5=8D=8810:55, Jason A. Donenfeld wrote:
-> > Hi,
-> >
-> > It appears that as of QEMU 9.1, it's possible to boot LoongArch machine=
-s
-> > that don't provide EFI or ACPI.
-> >
-> > Would you consider removing the `select ACPI` and `select EFI` from the
-> > arch Kconfig, so that kernels built for this minimal QEMU environment
-> > can be a bit leaner and quicker to build?
-Very difficult, at least removing EFI is difficult. Even if booting to
-a FDT environment, we still get information from EFI now.
-
-Huacai
-
-> >
-> > Jason
-> >
->
+T24gOS81LzI0IDA4OjIxLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+IFBpZXJyaWNrIEJvdXZp
+ZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4gd3JpdGVzOg0KPiANCj4+IFRoaXMg
+c2VyaWVzIGFsbG93cyBwbHVnaW5zIHRvIGtub3cgd2hpY2ggdmFsdWUgaXMgcmVhZC93cml0
+dGVuIGR1cmluZyBhIG1lbW9yeQ0KPj4gYWNjZXNzLg0KPj4NCj4+IEZvciBldmVyeSBtZW1v
+cnkgYWNjZXNzLCB3ZSBrbm93IGNvcHkgdGhpcyB2YWx1ZSBiZWZvcmUgY2FsbGluZyBtZW0g
+Y2FsbGJhY2tzLA0KPj4gYW5kIHRob3NlIGNhbiBxdWVyeSBpdCB1c2luZyBuZXcgQVBJIGZ1
+bmN0aW9uOg0KPj4gLSBxZW11X3BsdWdpbl9tZW1fZ2V0X3ZhbHVlDQo+IA0KPiBRdWV1ZWQg
+dG8gcGF0Y2hlcyAxLTUgdG8gcGx1Z2lucy9uZXh0LCB0aGFua3MuDQo+IA0KPiBZb3UgY2Fu
+IHNlbmQgdGhlIHJlLXNwdW4gdmVyc2lvbiBvZiA2IG9uY2UgdGhlIHJldmlldyBjb21tZW50
+cyBoYXZlIGJlZW4NCj4gZG9uZS4NCj4gDQoNClRoYW5rcyBBbGV4LA0KDQpyaWdodCBub3cs
+IG15IHRyeSB0byBtYWtlIGNoZWNrLXRjZyBhcmUgYmxvY2tlZCB3aXRoIHRoZSBjcm9zcyAN
+CmNvbnRhaW5lcnMgd2hvIGRvbid0IGNvbXBpbGUsIHNvIEknbGwgd2FpdCBmb3IgdGhpcyB0
+byBiZSByZXNvbHZlZC4NCkkgc3RpbGwgd29uZGVyIGlmIGhhdmluZyBhIHNpbXBsZSBhYXJj
+aDY0L3g2NCB0ZXN0IGlzIG5vdCBlbm91Z2gsIGFuZCANCmNvdmVyaW5nIDk5LjklIG9mIHRo
+ZSBidWcgd2UgY291bGQgaW50cm9kdWNlIGluIHRoZSBmdXR1cmUgb24gdGhpcy4NCg==
 
