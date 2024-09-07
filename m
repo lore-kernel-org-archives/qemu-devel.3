@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFC4CD4846
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 04:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC3AE6FE47
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 04:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smnIp-0004Ry-U0; Sat, 07 Sep 2024 00:44:03 -0400
+	id 1smnPo-0000aJ-8n; Sat, 07 Sep 2024 00:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnIn-0004Qw-S5
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:44:01 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnPm-0000Zj-QU
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:51:14 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnIm-0004PC-E8
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:44:01 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-374ba74e9b6so1927809f8f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 21:43:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnPl-0005Ts-4O
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:51:14 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a89c8db505bso360566066b.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 21:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725684238; x=1726289038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725684671; x=1726289471; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y2hiM8GracFUilXI+Yij0hwHyNHNLCbALyTvEyY0qhY=;
- b=joOxecJSoYi9LDHgkQZJrepKesvruYByGhCOF0Qj9tsyeB/Z/NShhkQytRljI9yCc3
- 6lp1zQ48U1Oa5S9Cqgbn5hFjEagdrIR02aFpEJqWN64dGi3DNyvnokWWb8KueEL12hiW
- dDL56vNxfRXkdOphVgsrBGFx84YJ9qNTztp6XcDqYI941mokQH3r5qnmXhjqoRkGeFco
- J4TrynT+kXATO+8uzgfqmLHkpVg6hPwdZnEoAsygbqZnx/TTZCndxyQWZcu5JR9LPDiE
- avBdCgZF6rYqU/IgIPIdKCgy27MiI71FWqVtmBENTSVS8z2ee5Fj5aFIvm9zOnNS4cT4
- 6p9w==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=10XIhpDYlQu0+93AnyPoFf9zsekjxr6uAe061b2gcVg=;
+ b=BLyX/FKQAQz4qL5hPqOQug3ysYevlxYNMPcK7O8wDoBOJo9faAmFnVJSUOK/5OfAcm
+ D0uVPakM4xVc9WrHnsFH+Tr7Ot46buIfNz3yjk/KRBVbXvr/b7oNV459wLus6HQ9/y0b
+ YRkMTKbwm+1qjrRtpsS1ugymFzFKt/UjV1LUjLoQIZi1YdjJypnN0rbPsag8BLspKPKG
+ RKXAtaU3yRtdYQ5/jbOUUEei/z5FyUsB2vN4CZocVsp+7cCdGOV1vaGqfc7rWs2zYERH
+ GAyohhODuJK5KrxPZ82MsFg5dw5hoPBl4SziPd8+YugqEQogignI1lmFXLBtcpfVRD/T
+ HZjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725684238; x=1726289038;
+ d=1e100.net; s=20230601; t=1725684671; x=1726289471;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y2hiM8GracFUilXI+Yij0hwHyNHNLCbALyTvEyY0qhY=;
- b=kub9ueORbrlR7iWYLyKehfSiUQlRilR1jfhO68pbTOBqNpfGKLat7kum8iPDX9zqVt
- NBf4Y0aoSusbtxxrpVrD46mVpj+auxMl9OHpdfroJv34JnGc/BYU1hnC6PDqSIECcmpM
- bMfvdJXTil5dZtFP8EbnGriL+ab2HNdzBmXYScfURSBV8QmK/OvU/DVRbtjtbOY0GzwA
- FedKVad2eweuHTp1115ZkUUWymfEFOF8q6Iw9+45Llzq40hK7r9PWCnddbqs6bex5oep
- gNOQCoft7VYfefKAVgbDLA5Hu4ZJ72W145KGbjHJ5QXlRtYvkOp5d9g09KPH++4kBeqZ
- p8Pg==
+ bh=10XIhpDYlQu0+93AnyPoFf9zsekjxr6uAe061b2gcVg=;
+ b=t0uZ9vs2padDiKq5YAt7ZUar4GI5cOa2aUDmBApMLuTY8bC7KNZKpby6fwrLM78ALE
+ 132hh9NUs+4422+72nKcIxYDkyTonePmh+eNdOi2pciBobNK4Sodyf2gIgOeNYrqolUv
+ fmQkp43xfn9ggW9pvEEVl249DRUeFLEBidc2rO9gXdHs0O7k/QAZmcLmS6ry3yi07qZ2
+ 2w4nvQVXmhPakJLSqp5vlRQ0gXeO+bHyx2Et9NTMbcIIy0NmXsvt8ZkY3fBdF2HbXV5v
+ VNYVYfK+8lqtjQU81PusHo1EPJBayjN5/AAdWO7JsfXja8N+IWhb0XmfQuQgA1QD5koa
+ HYSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDQh+CbqZYd857Be3MZtDbkRAq/aLLQnUwutZSna88C/YHX9Mx4lNGLhkyh+6dIEmdqrKLkKMe/069@nongnu.org
-X-Gm-Message-State: AOJu0YwDribFuxsCB0ZqqeIFrlbUUmhIuZ4VZKtelB7yIgfhyfpjfhz+
- q/PzjZYC06QZdWNwOzjij/k0zsz8TfNVQhlJCNpNDL1XBR72AlYvOfqip8oFjnk=
-X-Google-Smtp-Source: AGHT+IFSJbcOKcFNy8hQSpMxbVDr3ZDjiLpyvVINd33Ay5I4tmHynaiB8L+suvPDaGrWeQaDzS9uFA==
-X-Received: by 2002:adf:fa0e:0:b0:374:c1c5:43ca with SMTP id
- ffacd0b85a97d-378922b76a7mr783163f8f.32.1725684238305; 
- Fri, 06 Sep 2024 21:43:58 -0700 (PDT)
+ AJvYcCXyX2DVp2Q3Ps5FoZf+ZN5IlkWkD99FuR5OV2VXL/+JqwN4N2K6enBMJr0oyFcDIvqhtMPKPMGtnMvq@nongnu.org
+X-Gm-Message-State: AOJu0YxtAPV7sBK9WUfbTtfZKNBXH5auFC084EtQyDIO9oaj7vlPlIUs
+ DVEiZAMXaOmJ+7LSROGsaYvwQLGhuUe/YfAHPPvMYVqyitIi0ki+4ry3l+NbHRQ=
+X-Google-Smtp-Source: AGHT+IH0bYyj6TP+7eaeKsy5JiKbK/thYPktyQrfsHxLOeHVq6uAiTXiQOMloYWank2X/B2JjzGnpw==
+X-Received: by 2002:a17:907:25ca:b0:a86:8196:e04d with SMTP id
+ a640c23a62f3a-a8a88669353mr419144766b.39.1725684671071; 
+ Fri, 06 Sep 2024 21:51:11 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.197.174])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25cefa24sm26478466b.178.2024.09.06.21.43.57
+ a640c23a62f3a-a8d25979fa3sm26972066b.71.2024.09.06.21.51.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 21:43:57 -0700 (PDT)
-Message-ID: <4af7d311-923a-40ed-b179-105cfd850ac7@linaro.org>
-Date: Sat, 7 Sep 2024 06:43:56 +0200
+ Fri, 06 Sep 2024 21:51:10 -0700 (PDT)
+Message-ID: <2945e4bc-d271-4e9f-8c49-95b95e3eb199@linaro.org>
+Date: Sat, 7 Sep 2024 06:51:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] tests/functional: Add the LinuxKernelTest for
- testing the Linux boot process
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>
-References: <20240906180549.792832-1-thuth@redhat.com>
- <20240906180549.792832-2-thuth@redhat.com>
+Subject: Re: [PATCH 0/9] fifo8: add fifo8_peek(), fifo8_peek_buf() and tests
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alistair.Francis@wdc.com, tavip@google.com, qemu-devel@nongnu.org
+References: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
+ <c9fb3811-fb75-44fd-a177-7ed67d43d55a@linaro.org>
+ <beb00701-7ad4-4575-87ec-ae641c4a07b1@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240906180549.792832-2-thuth@redhat.com>
+In-Reply-To: <beb00701-7ad4-4575-87ec-ae641c4a07b1@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,39 +97,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 20:05, Thomas Huth wrote:
-> Copy the LinuxKernelTest from tests/acceptance/boot_linux_console.py
-> to be able to convert the related tests to the functional test framework
-> in the following patches.
+On 6/9/24 22:51, Mark Cave-Ayland wrote:
+> On 06/09/2024 14:14, Philippe Mathieu-Daudé wrote:
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/qemu_test/__init__.py    |  1 +
->   tests/functional/qemu_test/linuxkernel.py | 41 +++++++++++++++++++++++
->   2 files changed, 42 insertions(+)
->   create mode 100644 tests/functional/qemu_test/linuxkernel.py
+>> Hi Mark,
 
+>> I'm OK to queue it but took some notes while reviewing:
+>> https://lore.kernel.org/qemu-devel/20240906131217.78159-1-philmd@linaro.org/
+>> If you can have a look, I'll queue both together.
+> 
+> Thanks Phil!
+> 
+> I've just spotted a few minor issues with the series which I've just 
+> replied to: would you like me to send a v2, or is it easier just for you 
+> to correct them yourself?
 
-> +++ b/tests/functional/qemu_test/linuxkernel.py
-> @@ -0,0 +1,41 @@
-> +# Test class for testing the boot process of a Linux kernel
-
-> +class LinuxKernelTest(QemuSystemTest):
-
-> +    def extract_from_deb(self, deb_path, path):
-> +        """
-> +        Extracts a file from a deb package into the test workdir
-> +
-> +        :param deb_path: path to the deb archive
-> +        :param path: path within the deb archive of the file to be extracted
-> +        :returns: path of the extracted file
-> +        """
-
-I originally put this one in qemu_test.utils thinking we could have
-a non-Linux test using Debian artifacts. Probably over-engineering,
-besides we can move that later, so:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Fixed locally (and wrapped to 72 columns), thanks!
 
 
