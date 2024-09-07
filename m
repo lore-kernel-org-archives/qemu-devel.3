@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ABF1E71080
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 10:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E84E6FE55
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 11:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smswH-0004pn-81; Sat, 07 Sep 2024 06:45:09 -0400
+	id 1smtBs-0003Kl-Kn; Sat, 07 Sep 2024 07:01:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smswF-0004oW-Il
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 06:45:07 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1smtBq-0003He-Hw
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 07:01:14 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1smswD-0003VP-Qz
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 06:45:07 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5c3ca32974fso3370469a12.3
- for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 03:45:05 -0700 (PDT)
+ id 1smtBo-0005Q8-Ic
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 07:01:14 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5becfd14353so2753039a12.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 04:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725705904; x=1726310704; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725706871; x=1726311671; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1Xd3PKFM4efJH5S3QVxyi570ahY/mrT7a1uh8NV/TyA=;
- b=Jzj/24lQjP1rUYmjt2uxr48xoGgb+qccejJJ2zkNQUr1+APum4m4aOmfOhk9AknZHd
- VtMZ9N7YkZhNDM2mwW/XnmNR4DqgKAz1DuIsnigj5QlmGrAHHy5ENLMB6m6LnqssLCKe
- VZ5rtgZL8cuYSF+eBz6dzLz+labuc6x+Kxbc+kgc/IpA+65uxvqO8bAWQqdPjyjDyewG
- 4xpG5IQZKN1mDn5wrIlX5vTpEteK+V//XgfbLBROheVgiySMjJXsyBPgzGB4RIwKbKkc
- H49RkLtFkXcvDwkNi2YD3QNyBMAUqKV9eFrvljhDAZ2b1ewjotJGvx1XtQJi5nLZMvDi
- SUNw==
+ bh=+A/mzqRtw+C1SBNAwF92ovawb7dXjIfen4Dta0fCigQ=;
+ b=E8QgfdG06aC0zbChylfoWb0u0aPL6P5deU0HzY7yopianPA5/xQxbQNeoJcnAbZwKg
+ HZdNba8dokIznV+iEtrD+yRTaqa+V3/e47G70sR/YTpXP/uGp09xkKZVJIbdtWK1/58L
+ 663RsMxU/6L3c+7T/TOTdOw+ChlLpsSeEgmI59OZWDh0s5eqfqmWDrS/EEi+K287L6je
+ d6jDB6pcNFlKQkm10RvlnChUVkP59ACy8vItc/7VbbyKSW1IgxeYESsQnXIjXMXUdpB0
+ 4zZWrOnXrEDNC0Qup7YEhLcq2crQuxaQhsuwXODzJjaB3BF0NzzuQSs4p0Sli8N72mCe
+ FYOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725705904; x=1726310704;
+ d=1e100.net; s=20230601; t=1725706871; x=1726311671;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1Xd3PKFM4efJH5S3QVxyi570ahY/mrT7a1uh8NV/TyA=;
- b=r5R03yP8qKzRdOM5DwthdWkG+QWazOAZJ3vmJTRcRqqiLhLlHpzD0OxrAFjs9a9pYV
- wh4FAxH4LUayQPZgE2fX1VM9NGcp8bk7+YSVxfXY8VbvPbnF4JXFly7/zFTDsUWLgMGE
- zRWT7jQW8jIgc4nDLnC3iZaM+qikWTgIynGub+nIWOnOms5Z4PIG4PjfBx3iDHhWuqP0
- jj2Pldh6jfFIPQd1tcsX7ThAmrpnjW52WZ9hhsW8ROt2ikcM7m/rg2cbz1F1yw3UBADC
- zcVEDulIwNRoLLPUNxREzzQi+DJA9cF0HSl+ve7AlfzL5sFF3YLgw4Vn2ud6rx2xqPR/
- MyTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXG4Hp0MeEGuwYajQvf+svcoErXm0aS+Px2tdSaXWVldTgAAVnIUFcBLmUq8NuTcESpR5+TZEINT/UF@nongnu.org
-X-Gm-Message-State: AOJu0YzbwTbOZVCivaoexQc1EH1UsKaz+AZHQfqvrXTiq41IbO1j1RjV
- 0W0+TKTYzIP0hGh5/mTvUrbdAoyxnZiWWde3S9DE7hJyaqP2S3zBfynpS3s5O0mpxsfZFZBWi36
- eNURx8AL6okx6LSSYiLQnncWdy/OpoX4o1gm9uw==
-X-Google-Smtp-Source: AGHT+IGVYzt4HDwKfd5EVKapl8NVnEWZYNlMLclQPYbXOJCOmj95G+QguoGK2CaxMaRhFtbcDvBrB/Ok5e/aDv06Vr0=
-X-Received: by 2002:a05:6402:5205:b0:5c3:d251:e4a8 with SMTP id
- 4fb4d7f45d1cf-5c3dc78c320mr3945328a12.8.1725705903794; Sat, 07 Sep 2024
- 03:45:03 -0700 (PDT)
+ bh=+A/mzqRtw+C1SBNAwF92ovawb7dXjIfen4Dta0fCigQ=;
+ b=ZBRJuAgDxGQG6UDhogWP4LD+zDUpJMseUArVVhjtyVKro8lN01HNHukfdJIzBxaYvA
+ xTUcA0P+x+noN5ATTqpVH68XdDRbzXgzYEOU2KEHNjj2wXIWr7iNcQ+NfIjYNVdVrHBw
+ PXJEQ1VbzCtJylU9YM4xaZwqvEKGXChvn4wqeRd6kjhOF2fdt4lmpjs5OmnciBIG37wC
+ xZNf/yyJNet1RsPn7UI5R71Qe+9K7/N3caYgdOOEcTiTqXkVNF63dob15HIFN4WynaMB
+ 9g+jsojrQjEBE+4kEo1Gdtuk3VxA+tjj4Vc2JTIKlgvygw29c2SZj4sUNKfINFXyCgs3
+ Sl8Q==
+X-Gm-Message-State: AOJu0YyDnoQdlWKQWkV/RlmgoVlw0+qWGkHvS28CKv2UyoFS/bX/y4NV
+ mRRXtYjrYO0XKtuAqYleCA7yr1I6wNUv9bJDYbgY8v6oGBLEjjq/Vkjlq3eThuYvuwE/2xYH8wD
+ FXkpi3hHc6KukdMlBxMH2fqYoI2SyfJxzXH9Pbg==
+X-Google-Smtp-Source: AGHT+IHDdYPAtbNCIgyuR83dP08HGnmE2ntrtoogKlIHNmB98AC+wzQrPU8GFE9Suy0h4ZTcgrS9xioKnsk/M+P5UGc=
+X-Received: by 2002:a05:6402:2345:b0:5c3:cd1a:144c with SMTP id
+ 4fb4d7f45d1cf-5c3eac276a8mr1031245a12.32.1725706870742; Sat, 07 Sep 2024
+ 04:01:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAK7rcp8YkeRisKBTfV0nenk6WvsG2Vwsqnm+=B=KD6rHuSqfog@mail.gmail.com>
- <bc2ab18b-0e26-40c5-af01-98616fcddb2e@tls.msk.ru>
-In-Reply-To: <bc2ab18b-0e26-40c5-af01-98616fcddb2e@tls.msk.ru>
+References: <cover.1725619134.git.jeuk20.kim@samsung.com>
+In-Reply-To: <cover.1725619134.git.jeuk20.kim@samsung.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 7 Sep 2024 11:44:53 +0100
-Message-ID: <CAFEAcA_-nV6zVq5Qo6XoF3gtnLNHaHBbMWJZOsUyrg_U=-fJDg@mail.gmail.com>
-Subject: Re: Build failure due to xen
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Kenneth Adam Miller <kennethadammiller@gmail.com>,
- QEMU Developers <qemu-devel@nongnu.org>
+Date: Sat, 7 Sep 2024 12:00:59 +0100
+Message-ID: <CAFEAcA-HwrgaLZas6gSKQY=Qw7_VLMj1NKbX1U659Rfi2qbPiQ@mail.gmail.com>
+Subject: Re: [PULL 0/5] ufs queue
+To: Jeuk Kim <jeuk20.kim@gmail.com>
+Cc: qemu-devel@nongnu.org, fam@euphon.net, pbonzini@redhat.com, 
+ qemu-block@nongnu.org, jeuk20.kim@samsung.com, j-young.choi@samsung.com, 
+ jeongyuchan0629@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,41 +89,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 7 Sept 2024 at 07:39, Michael Tokarev <mjt@tls.msk.ru> wrote:
+On Fri, 6 Sept 2024 at 11:58, Jeuk Kim <jeuk20.kim@gmail.com> wrote:
 >
-> 07.09.2024 02:59, Kenneth Adam Miller wrote:
-> > Hello,
-> >
-> > I'm on commit bd80b59 and my host is:
+> From: Jeuk Kim <jeuk20.kim@samsung.com>
 >
-> $ git desc bd80b59
-> v2.4.0-rc3-9-gbd80b5963f
+> The following changes since commit 7b87a25f49a301d3377f3e71e0b4a62540c6f6e4:
 >
-> Date:   Mon Aug 3 11:44:07 2015 +0100
+>   Merge tag 'edgar/xen-queue-2024-09-04.for-upstream' of https://gitlab.com/edgar.iglesias/qemu into staging (2024-09-05 13:02:26 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20240906
+>
+> for you to fetch changes up to 9fe8e2c68ad99e503a11390b868a7dad846e7a0d:
+>
+>   hw/ufs: ufs descriptor read test implemented (2024-09-06 18:04:16 +0900)
+>
+> ----------------------------------------------------------------
+> ufs queue
+>
+> - Add basic info of query response upiu
+> - Add more qtests for the ufs query request
+>
+> ----------------------------------------------------------------
+> Kyoungrul Kim (1):
+>       hw/ufs: add basic info of query response upiu
+>
+> Yoochan Jeong (4):
+>       hw/ufs: minor bug fixes related to ufs-test
+>       hw/ufs: ufs flag read/write test implemented
+>       hw/ufs: ufs attribute read/write test implemented
+>       hw/ufs: ufs descriptor read test implemented
 
-Wow, that is very old. So the answer, in order of preference, is:
 
-(1) don't try to build such an ancient QEMU version: use
-    recent QEMU instead.
-(2) build on (a container of) whatever the contemporary Linux
-    distro version of the time would have been: QEMU at that
-    time built on Linux of that time, so it's the mismatch
-    between new host (system headers, compiler, etc) and old
-    QEMU that is causing problems.
-(3) if you must try to build ancient QEMU on a modern host,
-    then you are going to run into a pile of more or less
-    annoying compilation errors, and you're on your own in
-    figuring out how to fix them. Some strategies:
-     - if the issue is in part of QEMU you don't care about
-       then use a configure --disable-foo option to just
-       not try to compile that feature/etc. e.g. here if you
-       don't care about Xen support then disable it.
-     - look through QEMU's commit log and the mailing lists
-       for the compile message -- often the fix will have
-       been made in some later QEMU and you could backport it
-     - otherwise you'll just have to figure out and address
-       whatever the incompatibility is.
+Applied, thanks.
 
-thanks
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
 -- PMM
 
