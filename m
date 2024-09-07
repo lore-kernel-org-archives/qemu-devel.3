@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC3AE6FE47
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 04:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD80CD4846
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 05:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smnPo-0000aJ-8n; Sat, 07 Sep 2024 00:51:16 -0400
+	id 1smnoJ-0008Ah-AA; Sat, 07 Sep 2024 01:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnPm-0000Zj-QU
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:51:14 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnoH-0008AD-NI
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:16:33 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnPl-0005Ts-4O
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:51:14 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a89c8db505bso360566066b.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 21:51:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smnoF-0007vb-T6
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 01:16:33 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-374c6187b6eso1528710f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 22:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725684671; x=1726289471; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725686189; x=1726290989; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=10XIhpDYlQu0+93AnyPoFf9zsekjxr6uAe061b2gcVg=;
- b=BLyX/FKQAQz4qL5hPqOQug3ysYevlxYNMPcK7O8wDoBOJo9faAmFnVJSUOK/5OfAcm
- D0uVPakM4xVc9WrHnsFH+Tr7Ot46buIfNz3yjk/KRBVbXvr/b7oNV459wLus6HQ9/y0b
- YRkMTKbwm+1qjrRtpsS1ugymFzFKt/UjV1LUjLoQIZi1YdjJypnN0rbPsag8BLspKPKG
- RKXAtaU3yRtdYQ5/jbOUUEei/z5FyUsB2vN4CZocVsp+7cCdGOV1vaGqfc7rWs2zYERH
- GAyohhODuJK5KrxPZ82MsFg5dw5hoPBl4SziPd8+YugqEQogignI1lmFXLBtcpfVRD/T
- HZjQ==
+ bh=G+Reo3JPGTpw0VlFUCvaXA+sF/OpZMFOwWYFO6iN5vI=;
+ b=xPwvNluJAeN7mVvU2L+HWyqaPy3ypQspQlgxHzGXEktArmQkfrBt3tnE3S+8OhznyA
+ c8cFvompVAMphZ8EHvpwaYE/1U8SRvLctqpiC/HUY+R5MyuD9NxBggY4+S8/e3KyNW1J
+ 1Y7t6ukYyyazV1fA5a+pCADrQBVggJnd93TQlWvqAWM+4rQvX0aC1BF9sxtV1uBohrJ/
+ 1sXZhTD6J8otiKA1sr4rhYP1Q9vce9iwjSHoIvRFYsQrS84eKeWP86JqWnvMcOTN8pEm
+ a7bye8K3LAqiLYvNedzJQrql7/z23Aqai0EHLlYul9OyUDkNV2dNUwD0z6oqjxM1bLLM
+ 9Eiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725684671; x=1726289471;
+ d=1e100.net; s=20230601; t=1725686189; x=1726290989;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=10XIhpDYlQu0+93AnyPoFf9zsekjxr6uAe061b2gcVg=;
- b=t0uZ9vs2padDiKq5YAt7ZUar4GI5cOa2aUDmBApMLuTY8bC7KNZKpby6fwrLM78ALE
- 132hh9NUs+4422+72nKcIxYDkyTonePmh+eNdOi2pciBobNK4Sodyf2gIgOeNYrqolUv
- fmQkp43xfn9ggW9pvEEVl249DRUeFLEBidc2rO9gXdHs0O7k/QAZmcLmS6ry3yi07qZ2
- 2w4nvQVXmhPakJLSqp5vlRQ0gXeO+bHyx2Et9NTMbcIIy0NmXsvt8ZkY3fBdF2HbXV5v
- VNYVYfK+8lqtjQU81PusHo1EPJBayjN5/AAdWO7JsfXja8N+IWhb0XmfQuQgA1QD5koa
- HYSg==
+ bh=G+Reo3JPGTpw0VlFUCvaXA+sF/OpZMFOwWYFO6iN5vI=;
+ b=aq1ggBZn5/4Kqeon+Ah2l7yyzaGDxMVGSRjX5aD9y19K4+639FfpVy3cZfsblms6I8
+ ZPQKshRdgl9OfKnBChDcuwa8nCC9WUjaXS5GgesrQu3oob8CuzhSQEmO7VAFlqQ0muXt
+ xs0ucFNdqrFjUy+vgQxRLRXqjbwtxY0MFKE/7v0ldMisN9VhX5EybuyeyHF64qkRYNVF
+ cj0DjKBuNFVn5dGvdkwBPNset+EUSLzrkAgNOu7p68P5jymyLq0PvfpoFNSHJMACXZt0
+ JsTLs6NIb1MNZJmf83Q9cvOLoI5ZEkRt2H5QfQJCv/EUqMbJXsE0tgFIo0TwSqsLOHyV
+ IL1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXyX2DVp2Q3Ps5FoZf+ZN5IlkWkD99FuR5OV2VXL/+JqwN4N2K6enBMJr0oyFcDIvqhtMPKPMGtnMvq@nongnu.org
-X-Gm-Message-State: AOJu0YxtAPV7sBK9WUfbTtfZKNBXH5auFC084EtQyDIO9oaj7vlPlIUs
- DVEiZAMXaOmJ+7LSROGsaYvwQLGhuUe/YfAHPPvMYVqyitIi0ki+4ry3l+NbHRQ=
-X-Google-Smtp-Source: AGHT+IH0bYyj6TP+7eaeKsy5JiKbK/thYPktyQrfsHxLOeHVq6uAiTXiQOMloYWank2X/B2JjzGnpw==
-X-Received: by 2002:a17:907:25ca:b0:a86:8196:e04d with SMTP id
- a640c23a62f3a-a8a88669353mr419144766b.39.1725684671071; 
- Fri, 06 Sep 2024 21:51:11 -0700 (PDT)
+ AJvYcCUQtVNYicj/5rgGTr8uWzmUAEgsReREoz9f44OCyGYUlEP7ZiBNaj6bGhEau3Uza/iQM407215isGWR@nongnu.org
+X-Gm-Message-State: AOJu0Yzw+iuBYq0bqktQS/oEbnajsDQLRTfZN3f1gcUr+SuZn8zFQmJ4
+ 4W9ZVZH4HGGSie7oi+vt+l52QAHJGWpHfJ4QCO1LI7ZclD64DAkh9eQOBY5kplo=
+X-Google-Smtp-Source: AGHT+IFG+TMWwOFkXmzgV5coF0eUGx0rWYvOpJPEqormIPeAn9OrVmYrvnDu70+yXnbKdplY/uynag==
+X-Received: by 2002:a5d:46ca:0:b0:377:9867:9028 with SMTP id
+ ffacd0b85a97d-3788967aaffmr2781898f8f.44.1725686188741; 
+ Fri, 06 Sep 2024 22:16:28 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.197.174])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25979fa3sm26972066b.71.2024.09.06.21.51.09
+ a640c23a62f3a-a8d25835abbsm29122966b.9.2024.09.06.22.16.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 21:51:10 -0700 (PDT)
-Message-ID: <2945e4bc-d271-4e9f-8c49-95b95e3eb199@linaro.org>
-Date: Sat, 7 Sep 2024 06:51:08 +0200
+ Fri, 06 Sep 2024 22:16:28 -0700 (PDT)
+Message-ID: <be2b7849-6e38-414a-9812-f91454d63300@linaro.org>
+Date: Sat, 7 Sep 2024 07:16:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] fifo8: add fifo8_peek(), fifo8_peek_buf() and tests
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alistair.Francis@wdc.com, tavip@google.com, qemu-devel@nongnu.org
-References: <20240828122258.928947-1-mark.cave-ayland@ilande.co.uk>
- <c9fb3811-fb75-44fd-a177-7ed67d43d55a@linaro.org>
- <beb00701-7ad4-4575-87ec-ae641c4a07b1@ilande.co.uk>
+Subject: Re: [PATCH v3] escc: convert Sun mouse to use QemuInputHandler
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, chauser@pullman.com,
+ marcandre.lureau@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
+References: <20240904102301.175706-1-mark.cave-ayland@ilande.co.uk>
+ <e828e000-664e-48af-ae33-6e323e28d167@linaro.org>
+ <6317769b-2d90-4c72-a3fb-1de88f6dda6c@ilande.co.uk>
+ <77003778-0917-4326-ba95-3034316263c9@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <beb00701-7ad4-4575-87ec-ae641c4a07b1@ilande.co.uk>
+In-Reply-To: <77003778-0917-4326-ba95-3034316263c9@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,21 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 22:51, Mark Cave-Ayland wrote:
-> On 06/09/2024 14:14, Philippe Mathieu-Daudé wrote:
+On 6/9/24 22:55, Mark Cave-Ayland wrote:
+> On 04/09/2024 12:19, Mark Cave-Ayland wrote:
 > 
->> Hi Mark,
+>> On 04/09/2024 11:53, Philippe Mathieu-Daudé wrote:
+>>
+>>> On 4/9/24 12:23, Mark Cave-Ayland wrote:
+>>>> Update the Sun mouse implementation to use QemuInputHandler instead 
+>>>> of the
+>>>> legacy qemu_add_mouse_event_handler() function.
+>>>>
+>>>> Note that this conversion adds extra sunmouse_* members to 
+>>>> ESCCChannelState
+>>>> but they are not added to the migration stream (similar to the Sun 
+>>>> keyboard
+>>>> members). If this were desired in future, the Sun devices should be 
+>>>> split
+>>>> into separate devices and added to the migration stream there instead.
+>>>>
+>>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
+>>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>>
+>>> On v3 there is also an implicit:
+>>> Tested-by: Carl Hauser <chauser@pullman.com>
+>>
+>> That's true, although I'm hesitant to add such a tag without a nod 
+>> from the tester. Carl, are you happy for me to add your Tested-by tag 
+>> upon merge?
+> 
+> I've received confirmation off-list that Carl is happy with the above 
+> tag, so we're good to add it to the final merged version. Phil, are you 
+> able to queue this in your next PR or would you prefer me to send a 
+> separate PR instead?
 
->> I'm OK to queue it but took some notes while reviewing:
->> https://lore.kernel.org/qemu-devel/20240906131217.78159-1-philmd@linaro.org/
->> If you can have a look, I'll queue both together.
-> 
-> Thanks Phil!
-> 
-> I've just spotted a few minor issues with the series which I've just 
-> replied to: would you like me to send a v2, or is it easier just for you 
-> to correct them yourself?
+Patch queued, thanks!
 
-Fixed locally (and wrapped to 72 columns), thanks!
+>>>> ---
+>>>>   hw/char/escc.c         | 88 
+>>>> +++++++++++++++++++++++++++++++-----------
+>>>>   include/hw/char/escc.h |  3 ++
+>>>>   2 files changed, 69 insertions(+), 22 deletions(-)
 
 
