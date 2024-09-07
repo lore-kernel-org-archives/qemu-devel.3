@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97CB7CD4846
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 04:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 462EAE6FE47
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 04:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1smn5v-0002bD-RM; Sat, 07 Sep 2024 00:30:43 -0400
+	id 1smn7n-0006ql-Mz; Sat, 07 Sep 2024 00:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smn5o-0002Zu-Gq
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:30:36 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smn7j-0006qC-6t
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:32:35 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smn5l-0003Mr-KL
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:30:35 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c275491c61so3108378a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 21:30:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1smn7h-0003RX-GU
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 00:32:34 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5365d3f9d34so545305e87.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Sep 2024 21:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725683431; x=1726288231; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725683551; x=1726288351; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=H8urHTUDPxg2O+w/UGEXJLBeOIkK22ZkTRM4FrHyVIk=;
- b=jWmmDV5iSA5VT1rqlFYWobHcTSg+iG0BE8DA3laGpBM8Jsi35aEkKVnyvTzwiM17my
- dAXjuQ5hcRCcAAsf5iecr4+n1MwJhAE19wOeP21wMVHWIDUYUZvKKIFeeu+e3Zwdn0ao
- 4Q4Iq8ol6vdiL5JfaRbssYULXyt5ODb+caub/3w9i59oYMJpx5LXW2lJ+/SbLcLVZj9U
- 2FKiNp624t6bVdY8rh4WMXIOzZh2PIhxhZibXTCGjT3ZRGli+uQ1PsKTGXGSrwtzLxss
- TX+p0cyoGa56E2JOP7VXFDWJeJXOtYSHo8rm0gMC/5CylSNHxSx32rzFgqx6VDM38vRD
- r5Bg==
+ bh=DIuSzv0OGHzrN+96EehocPc8uBtRjMgwgdKoTzGuq/4=;
+ b=z1fHr1dXVwkoE1RVNH44q2a+E0s7wkJ83hqPqcnamDVfP/CmngIQbdN+xs2InKB+3B
+ ngIHTj25Bv+oyHTlFoKQyNYVtNVDYcIOmN0PGO/AGElqw2QLygiJ64/TPJiW/8kDgNRc
+ YnuJNUqacRN6YxffBEFFYjuHltQ9XWIgy/4dcmlCQP+wwp3N0japKBEv6TsfB3A/cuW9
+ DpzDjPBkSsI25frt4bC+kmD6b4lsDNA7/21cUQe/N9OlJ08qLZwbiLG58+3Nv6mfdGmR
+ ajDl0BtFm6o721YVR/g5Ka1X1GE6Y1dpmeEc1Qs5AELBmKrWykE2e0atAeblpf9SeQEh
+ hf7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725683431; x=1726288231;
+ d=1e100.net; s=20230601; t=1725683551; x=1726288351;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H8urHTUDPxg2O+w/UGEXJLBeOIkK22ZkTRM4FrHyVIk=;
- b=IsdZEA6ekIfJUAkt14eCN7bhCnhqxf4Gy/dVwCUphknpXOv7WDWBUNUAdObd+Mzl5y
- T3gBtKPrUWVu7xYS4nQbHoPmpmWHwoavOX4nVXTg+VH43V7EQe9j1EHhE/tf9ZHi4+1v
- tvVmDfqQQqB7Qv4Z7bpstJTezqSczceQgyyXgwdi6f9adMB1EQZzK+rWkLGTNkI5XiBL
- qc/cXua1uor7TGiREOLpfL22Hm/qQBd4PDyIfzbOr5bGVjtDJfJ/LddDAONcjKHzWgti
- 1aYsL4K68oRN8pTZDGsgDUsav+CBlLfOX/49oe+R4lVoNtc3RDYkhX+hWuwoa4sJClq4
- zoUg==
+ bh=DIuSzv0OGHzrN+96EehocPc8uBtRjMgwgdKoTzGuq/4=;
+ b=k3EqwxfmECzJC0yXWd3xpLKFyGyCNm7hVVRmzrZy8bK/Sf+s2UqHbFZpadziBJBVqG
+ EqIVc9Q9IWtMP4d2ip3EtNzeLVb9/LmwNUXc7XBqk8DacsX5N5+IA6MG2jw0X6t3mMh2
+ v047fBYBOmijtPSETYAQWoZb5L5WQbGXoUaNnQdkomvjXmzThJj1AEeOhl9Jkc6D42Rk
+ KhEmrSxT+1Qe4TGcCPgGQnNdrGtJhiaEhKclVhcWMBXENg3Mr3M9YE2pmKATvIsPPJyu
+ D8IyOA7JoM/KjPYB+MRa8MmdmB43NW/08OtN1bSVrl9yVb869RDfejIEirUg6hAQhj07
+ qN5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvSzB9jH2Vw2LcL8OXovyMaowQlYKmUmiPXN6uIyDPKt23EFwTCjIvpTm4QhVlLYfb3CRyRdY9ri4n@nongnu.org
-X-Gm-Message-State: AOJu0YzteYFz+vQnX6A0vEga0jcbYhQRN0qcTTo0xtJLs0sCHBEbpXo2
- vzbG/DNwpNfVtx+1ObQ/7Kbb2U4AJrkcfrPur3mYWkApErFkPVojMFJPiZwLi6Q=
-X-Google-Smtp-Source: AGHT+IFMmy/LB9S5B9ZlfwnZrPwp1ww9Y6I++N10tphcOJ5qHcfUvMrrnAPSOaT+9wvSGGxX2p7Quw==
-X-Received: by 2002:a05:6402:35c1:b0:5c2:4ad9:6d9f with SMTP id
- 4fb4d7f45d1cf-5c3e953355dmr1255013a12.1.1725683431038; 
- Fri, 06 Sep 2024 21:30:31 -0700 (PDT)
+ AJvYcCVTqmXtLEQBcy+b8beXGavXjnHty8kHEqtATfvLrC4OIekiawQFwOMVJyEA0/SGp4b0H6K80FhtERW1@nongnu.org
+X-Gm-Message-State: AOJu0Yz1VGMkmAAuECawjr6pYBIs4ZzbI2hp8NCywTXtemf2XK0lXLJ3
+ euK9k9yn1Pu0p5rXWp86pC/9pZ+2oxsX9q7+c6TRxI4bcdYe7uBY9yEiuwc30gk=
+X-Google-Smtp-Source: AGHT+IFt+BB6opDDyIOwYrDPY+PNusqrrWLtiOp6x+zTXieurcHQZOrUA6eKTXVKPoS8OK2kV4hLEA==
+X-Received: by 2002:a05:6512:239a:b0:535:698e:6e2e with SMTP id
+ 2adb3069b0e04-536587ada57mr2303339e87.18.1725683550645; 
+ Fri, 06 Sep 2024 21:32:30 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.197.174])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd467a7sm216947a12.28.2024.09.06.21.30.29
+ a640c23a62f3a-a8d25d5dc97sm25269666b.212.2024.09.06.21.32.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Sep 2024 21:30:30 -0700 (PDT)
-Message-ID: <b78183d3-108e-4db7-8738-e952c50b3d80@linaro.org>
-Date: Sat, 7 Sep 2024 06:30:28 +0200
+ Fri, 06 Sep 2024 21:32:29 -0700 (PDT)
+Message-ID: <e0ac63e5-a5d4-4e5b-b67e-2652c804b5b7@linaro.org>
+Date: Sat, 7 Sep 2024 06:32:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/14] tests/functional: Convert the Alpha Clipper Avocado
- test
+Subject: Re: [PATCH 13/14] tests/functional: Convert the m68k MCF5208EVB
+ Avocado test
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
 References: <20240906180549.792832-1-thuth@redhat.com>
- <20240906180549.792832-13-thuth@redhat.com>
+ <20240906180549.792832-14-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240906180549.792832-13-thuth@redhat.com>
+In-Reply-To: <20240906180549.792832-14-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,15 +99,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/9/24 20:05, Thomas Huth wrote:
-> Straight forward conversion, just switch to SHA256 hashsum now.
+> We've got to do_test_advcal_2018() here now that the test resides
+> in a separate file. Also switch back to the original URL (since
+> the site did not vanish as originally expected) and update the
+> hashsum to use SHA256.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   tests/avocado/boot_linux_console.py    | 21 --------------
->   tests/functional/meson.build           |  4 +++
->   tests/functional/test_alpha_clipper.py | 38 ++++++++++++++++++++++++++
->   3 files changed, 42 insertions(+), 21 deletions(-)
->   create mode 100755 tests/functional/test_alpha_clipper.py
+>   tests/avocado/boot_linux_console.py      |  8 -------
+>   tests/functional/meson.build             |  1 +
+>   tests/functional/test_m68k_mcf5208evb.py | 29 ++++++++++++++++++++++++
+>   3 files changed, 30 insertions(+), 8 deletions(-)
+>   create mode 100755 tests/functional/test_m68k_mcf5208evb.py
 
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
