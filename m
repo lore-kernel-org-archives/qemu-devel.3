@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4340AECE569
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 20:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F693ECE56F
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Sep 2024 20:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sn21I-0006iS-Pl; Sat, 07 Sep 2024 16:26:56 -0400
+	id 1sn2SG-0004sW-33; Sat, 07 Sep 2024 16:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
- id 1sn21G-0006fS-DU
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 16:26:54 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <kennethadammiller@gmail.com>)
+ id 1sn2SE-0004s0-C3
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 16:54:46 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
- id 1sn21E-0007X3-Az
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 16:26:54 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-20570b42f24so39262715ad.1
- for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 13:26:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kennethadammiller@gmail.com>)
+ id 1sn2SC-00022W-G2
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 16:54:46 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2f761cfa5d8so2239731fa.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 13:54:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725740810; x=1726345610; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FzpWUX+Pg6MNBiDTwYTTvjDU/EemCmQbzdxBamC8uRQ=;
- b=TNfwZDGP/lwgV2JuSskKQb7KHcd1YE8jztDfienlS5+jkhWZz8aSpTTuEDhmL2DGVP
- Nk8MluC6gJHUThS4qN/SEZOtaKMv+GLOFYHK0r8QiS1J5OkL1fzkjvgnw/gNcU4crmc+
- tf6neyM+agHiCapsjmtmMqEspqULwfVJL+VamAycZILsACWr2NyNs2QbUfjH3DfQ8dzl
- WRD8z52ze+ncD8LP8J+D6Uf6SU1xfBFbMqTRewoxXvuGKjtfL+b1SZdIYnP8FR9+Gc8m
- +RFlnyjluMgHaJpv3jDzyWkBGk63HrFQram+uaxAGW5LDsKZ3/OWYhY5D1imx6nq9A4K
- n/gQ==
+ d=gmail.com; s=20230601; t=1725742482; x=1726347282; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=q2oSzy5zJ2Di+yknjnoFl8CnTzeLtLP8vcCHeBw9Oh8=;
+ b=C6D6xzMoD4UKGQ+QdybpHIxOXHfQcLziGB22QJXZYiil5cYl7J8YumRcOItwYd5Y3u
+ /pDLk6VSQ9GSdXHDb+nByvF+qTTNgozRq5/VpkhyU5T+zGhZJjYBVlpnkAIUi8K3NAj+
+ TY4oi8pvj1x3gwh+dOcxzWkuIodpd9KGuo0N7vs7In2k5ZtGnxsz7sZhjpJConieYKLp
+ sSPP1mlI3k7o1oUyAEohFoLp7RhVWIZoHqm2S0hlZdoDRUJBkXZp+PwAXww5EkA2pdar
+ 7DiTZXndhKep7ymc9yQ8Lu2ZES6Oa3p6qxmcr4hLCX0oSxfCkMzDoxUxvK3JfZAnyxOf
+ Kc1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725740810; x=1726345610;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FzpWUX+Pg6MNBiDTwYTTvjDU/EemCmQbzdxBamC8uRQ=;
- b=CaykhF5Wy4P1MJ4ffcEefbWGD5nzVmYrkkcwb/icV/leAwr8+tAG9IJPwNybfHD4aA
- iSy0U1B/nbA6raYbNAW/8HB5bxYxxw+AM8t8q4TQyuoEHhm4QURg6PUL4/Ht/fax9EGY
- hNL4wo32x3gtNAwyWO8X6Qd6KGaU4WufgSoIAQUjLw2gkAx0r7j+2WcjDuIgmaFElV+Y
- b6v6hDH77aPsubAPPlzifgiLga795ny+ELhAdmJmR+uvlkw5AcohWtrUxGXWZ/iJ6v8R
- MyKJ0BGpCIFf3w0pf6hJnM8ngtoWQz4xasbUiRzwkkouUIBhYrc3QwKBMJ1vm2c6CI3X
- A3dg==
-X-Gm-Message-State: AOJu0YxJHtiRl9LykPvOjSsAG3wLEEs31hhCsbQL2E1aHSkPzMicuemd
- dadhRywLrCOHN+hmedw59Rg6aIduRU3ZLXNj2hpYX8MwEW3qCi/mRVOZnJFz
-X-Google-Smtp-Source: AGHT+IEU+LmXS7H27vhtvdFwbo/Y7+Vo6xzK+DOtVHFRsAG/Txn8MrhecURB/em/B42TtLwJTKR7zg==
-X-Received: by 2002:a17:902:d4c9:b0:205:6f3c:4a65 with SMTP id
- d9443c01a7336-206f04c76a0mr72083505ad.2.1725740809872; 
- Sat, 07 Sep 2024 13:26:49 -0700 (PDT)
-Received: from ?IPV6:2600:1700:88b2:a50:2c86:7da2:dc34:a97f?
- ([2600:1700:88b2:a50:2c86:7da2:dc34:a97f])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710e33a22sm11824475ad.98.2024.09.07.13.26.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Sep 2024 13:26:49 -0700 (PDT)
-Message-ID: <d561777d-2c7a-4561-8840-4bca363d28e8@gmail.com>
-Date: Sat, 7 Sep 2024 13:26:48 -0700
+ d=1e100.net; s=20230601; t=1725742482; x=1726347282;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q2oSzy5zJ2Di+yknjnoFl8CnTzeLtLP8vcCHeBw9Oh8=;
+ b=vuvWbhcKYPPXvyvftOlvQZD0x1Ttuif4GkSJLzoawEYGZ2vlq28iTNkXT8kZGZg9WM
+ buO9d62dNWUmwsuO8NAz2t1eCbeVYiJQAxTNS3xPJfssGwwqJ0V/LUephiInusvOzSRR
+ mspEpiX7F0vrdgsYLHy0S/Pdo6hM4NH+eV/Wbo1ZfCSY7PccvEvwALuVts6nJYqKeqDQ
+ EZrS9kyD+Kc4s1Dc6FtGJIPcSgBJZOCdAvLT0sr2s32xUJCIy7zbTfco3f3XCwDcwicb
+ 7UuVmu7BJ6muHOpOKdA3+UNX11iROAUKp0sCeUFpH7JIMM3XceYqw0KFY3MVamaC7cjg
+ Kwkg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8uwi2KpmUlwbYQFF1nWAdq1rLHAEDeWHUewZQmRw+vB/aFF9LP/AOC5o7cP5N8Y52Y69mj2WANIOt@nongnu.org
+X-Gm-Message-State: AOJu0Yw32wwWOrbFikAS0/9oqFg1q3Q3kak4FLqbGi5RPyNq5q3kmytb
+ eWNpOPrznloPW+fA4+wQ6Li/WeIJ2kCv1SHE+dxsq39wl7xUqbkBshgSGdSg8c8/7RjNoOW+Nkz
+ OdoLcB7BiP9OKBQuZ/Ao84gFxMa4=
+X-Google-Smtp-Source: AGHT+IERYgoGLjz1pD0Kize5Ji249TiRqZA4JIxAPqGez35NFq5KKSJ3FyMWPzDJP75vd6oCAcke4UEV2w5hzJBjZlo=
+X-Received: by 2002:a2e:b893:0:b0:2ef:2e90:29f9 with SMTP id
+ 38308e7fff4ca-2f751ee1e18mr46943411fa.17.1725742481874; Sat, 07 Sep 2024
+ 13:54:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char/stm32l4x5_usart.c: Fix ACK and min access size
+References: <CAK7rcp8YkeRisKBTfV0nenk6WvsG2Vwsqnm+=B=KD6rHuSqfog@mail.gmail.com>
+ <bc2ab18b-0e26-40c5-af01-98616fcddb2e@tls.msk.ru>
+ <CAFEAcA_-nV6zVq5Qo6XoF3gtnLNHaHBbMWJZOsUyrg_U=-fJDg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_-nV6zVq5Qo6XoF3gtnLNHaHBbMWJZOsUyrg_U=-fJDg@mail.gmail.com>
+From: Kenneth Adam Miller <kennethadammiller@gmail.com>
+Date: Sat, 7 Sep 2024 14:54:30 -0600
+Message-ID: <CAK7rcp8-ZJ8q=iR_6jBntVacdq5Erjxap5b=GgQQvAD1i4sxRQ@mail.gmail.com>
+Subject: Re: Build failure due to xen
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org
-References: <20240902061944.526873-1-satur9nine@gmail.com>
- <CAFEAcA9wP7f_yPYNJmaTDe1bB8cPifErAGpjtsNPKsR0s_65Sg@mail.gmail.com>
-Content-Language: en-US
-From: Jacob Abrams <satur9nine@gmail.com>
-In-Reply-To: <CAFEAcA9wP7f_yPYNJmaTDe1bB8cPifErAGpjtsNPKsR0s_65Sg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=satur9nine@gmail.com; helo=mail-pl1-x62d.google.com
+Cc: Michael Tokarev <mjt@tls.msk.ru>, QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000009b2ae806218dbbf4"
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=kennethadammiller@gmail.com; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,222 +91,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/6/24 09:12, Peter Maydell wrote:
-> On Mon, 2 Sept 2024 at 14:38, Jacob Abrams <satur9nine@gmail.com> wrote:
->>
->> These changes allow the official STM32L4xx HAL UART driver to function
->> properly with the b-l475e-iot01a machine.
->>
->> Modifying USART_CR1 TE bit should alter USART_ISR TEACK bit, and
->> likewise for RE and REACK bit.
->>
->> USART registers may be accessed via 16-bit instructions.
->>
->> Reseting USART_CR1 UE bit should restore ISR to default value.
->>
->> Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and write")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
->> Signed-off-by: Jacob Abrams <satur9nine@gmail.com>
-> 
-> Thanks for this patch. I have one question below, and one
-> minor nit.
-> 
->> ---
->>  hw/char/stm32l4x5_usart.c          | 29 +++++++++++++++++++---
->>  tests/qtest/stm32l4x5_usart-test.c | 39 +++++++++++++++++++++++++++++-
->>  2 files changed, 64 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
->> index fc5dcac0c4..859fc6236a 100644
->> --- a/hw/char/stm32l4x5_usart.c
->> +++ b/hw/char/stm32l4x5_usart.c
->> @@ -154,6 +154,28 @@ REG32(RDR, 0x24)
->>  REG32(TDR, 0x28)
->>      FIELD(TDR, TDR, 0, 9)
->>
->> +#define ISR_RESET_VALUE (0x020000C0)
->> +
->> +static void stm32l4x5_update_isr(Stm32l4x5UsartBaseState *s)
->> +{
->> +    if (!(s->cr1 & R_CR1_UE_MASK)) {
->> +        s->isr = ISR_RESET_VALUE;
->> +        return;
->> +    }
->> +
->> +    if (s->cr1 & R_CR1_TE_MASK) {
->> +        s->isr |= R_ISR_TEACK_MASK;
->> +    } else {
->> +        s->isr &= ~R_ISR_TEACK_MASK;
->> +    }
->> +
->> +    if (s->cr1 & R_CR1_RE_MASK) {
->> +        s->isr |= R_ISR_REACK_MASK;
->> +    } else {
->> +        s->isr &= ~R_ISR_REACK_MASK;
->> +    }
->> +}
-> 
-> Should we be doing these things based on the value of
-> the CR1 bits (as this code does), or instead do them
-> when the bit changes from 0 to 1 (or 1 to 0)?
-> The wording in the datasheet seems unclear to me; my
-> impression is that hardware designers often like to
-> do these things on transitions rather than level based,
-> but of course you can design h/w both ways...
-> 
-> I guess it could be tested on real hardware:
->  * write CR1.TE = 1
->  * wait for ISR.TEACK = 1
->  * write ISR.TEACK = 0
->  * write CR1.TE = 1 (i.e. write again to the register
->    without changing its value)
->  * does ISR.TEACK go to 1 again, or does it stay 0?
-> 
+--0000000000009b2ae806218dbbf4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Per RM0351 all bits in the ISR register are read-only by software, so we cannot test writing ISR.TEACK on a physical chip, the write would be ignored. Precise description in RM0351 is "This bit is set/reset by hardware, when the Transmit Enable value is taken into account by the USART." Based on this I think it is safe to assume that ISR.TEACK should always reflect the value of CR1.TE, though in real hardware it would take some microseconds for TEACK to be updated after TE is changed.
+I got this to build following option 2 listed and it built with ubuntu
+18.04.
 
->> +
->>  static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
->>  {
->>      if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))        ||
->> @@ -367,7 +389,7 @@ static void stm32l4x5_usart_base_reset_hold(Object *obj, ResetType type)
->>      s->brr = 0x00000000;
->>      s->gtpr = 0x00000000;
->>      s->rtor = 0x00000000;
->> -    s->isr = 0x020000C0;
->> +    s->isr = ISR_RESET_VALUE;
->>      s->rdr = 0x00000000;
->>      s->tdr = 0x00000000;
->>
->> @@ -456,6 +478,7 @@ static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
->>      case A_CR1:
->>          s->cr1 = value;
->>          stm32l4x5_update_params(s);
->> +        stm32l4x5_update_isr(s);
->>          stm32l4x5_update_irq(s);
->>          return;
->>      case A_CR2:
->> @@ -508,12 +531,12 @@ static const MemoryRegionOps stm32l4x5_usart_base_ops = {
->>      .endianness = DEVICE_NATIVE_ENDIAN,
->>      .valid = {
->>          .max_access_size = 4,
->> -        .min_access_size = 4,
->> +        .min_access_size = 2,
->>          .unaligned = false
->>      },
->>      .impl = {
->>          .max_access_size = 4,
->> -        .min_access_size = 4,
->> +        .min_access_size = 2,
->>          .unaligned = false
->>      },
-> 
-> The effect of these is that a 16-bit write not aligned
-> to a (4-aligned) register offset will generate a GUEST_ERROR
-> logged message, and a 16-bit write aligned to a 4-aligned
-> register offset will write the value zero-extended to 32 bits.
-> That seems reasonable to me.
-> 
+On Sat, Sep 7, 2024 at 4:45=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
+org>
+wrote:
 
-OK sounds good
-
->>  };
->> diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
->> index 8902518233..ef886074c0 100644
->> --- a/tests/qtest/stm32l4x5_usart-test.c
->> +++ b/tests/qtest/stm32l4x5_usart-test.c
->> @@ -36,6 +36,8 @@ REG32(GTPR, 0x10)
->>  REG32(RTOR, 0x14)
->>  REG32(RQR, 0x18)
->>  REG32(ISR, 0x1C)
->> +    FIELD(ISR, REACK, 22, 1)
->> +    FIELD(ISR, TEACK, 21, 1)
->>      FIELD(ISR, TXE, 7, 1)
->>      FIELD(ISR, RXNE, 5, 1)
->>      FIELD(ISR, ORE, 3, 1)
->> @@ -191,7 +193,7 @@ static void init_uart(QTestState *qts)
->>
->>      /* Enable the transmitter, the receiver and the USART. */
->>      qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
->> -        R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
->> +        cr1 | R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
->>  }
->>
->>  static void test_write_read(void)
->> @@ -202,6 +204,11 @@ static void test_write_read(void)
->>      qtest_writel(qts, USART1_BASE_ADDR + A_TDR, 0xFFFFFFFF);
->>      const uint32_t tdr = qtest_readl(qts, USART1_BASE_ADDR + A_TDR);
->>      g_assert_cmpuint(tdr, ==, 0x000001FF);
->> +
->> +    /* Official STM HAL uses uint16_t for TDR */
->> +    qtest_writew(qts, USART1_BASE_ADDR + A_TDR, 0xFFFF);
->> +    const uint16_t tdr16 = qtest_readw(qts, USART1_BASE_ADDR + A_TDR);
->> +    g_assert_cmpuint(tdr16, ==, 0x000001FF);
->>  }
->>
->>  static void test_receive_char(void)
->> @@ -296,6 +303,35 @@ static void test_send_str(void)
->>      qtest_quit(qts);
->>  }
->>
->> +static void test_ack(void)
->> +{
->> +    uint32_t cr1;
->> +    uint32_t isr;
->> +    QTestState *qts = qtest_init("-M b-l475e-iot01a");
->> +
->> +    init_uart(qts);
->> +
->> +    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
->> +
->> +    /* Disable the transmitter and receiver. */
->> +    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
->> +        cr1 & ~(R_CR1_RE_MASK | R_CR1_TE_MASK));
->> +
->> +    /* Test ISR ACK for transmitter and receiver disabled */
->> +    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
->> +    g_assert_false(isr & R_ISR_TEACK_MASK);
->> +    g_assert_false(isr & R_ISR_REACK_MASK);
->> +
->> +    /* Enable the transmitter and receiver. */
->> +    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
->> +        cr1 | (R_CR1_RE_MASK | R_CR1_TE_MASK));
->> +
->> +    /* Test ISR ACK for transmitter and receiver disabled */
->> +    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
->> +    g_assert_true(isr & R_ISR_TEACK_MASK);
->> +    g_assert_true(isr & R_ISR_REACK_MASK);
-> 
-> This is missing a
->        qtest_quit(qts);
-> at the end of the function. Without it, on non-Linux
-> hosts the QEMU process-under-tests will not be properly
-> killed. We were also missing one at the end of
-> test_write_read() in this file, which we just fixed
-> this week in commit d1e8bea9c9c186.
-> 
-
-Thanks I will submit a v2 patch with this corrected.
-
->> +}
->> +
->>  int main(int argc, char **argv)
->>  {
->>      int ret;
->> @@ -308,6 +344,7 @@ int main(int argc, char **argv)
->>      qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
->>      qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
->>      qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
->> +    qtest_add_func("stm32l4x5/usart/ack", test_ack);
->>      ret = g_test_run();
->>
->>      return ret;
->> --
->> 2.43.0
-> 
+> On Sat, 7 Sept 2024 at 07:39, Michael Tokarev <mjt@tls.msk.ru> wrote:
+> >
+> > 07.09.2024 02:59, Kenneth Adam Miller wrote:
+> > > Hello,
+> > >
+> > > I'm on commit bd80b59 and my host is:
+> >
+> > $ git desc bd80b59
+> > v2.4.0-rc3-9-gbd80b5963f
+> >
+> > Date:   Mon Aug 3 11:44:07 2015 +0100
+>
+> Wow, that is very old. So the answer, in order of preference, is:
+>
+> (1) don't try to build such an ancient QEMU version: use
+>     recent QEMU instead.
+> (2) build on (a container of) whatever the contemporary Linux
+>     distro version of the time would have been: QEMU at that
+>     time built on Linux of that time, so it's the mismatch
+>     between new host (system headers, compiler, etc) and old
+>     QEMU that is causing problems.
+> (3) if you must try to build ancient QEMU on a modern host,
+>     then you are going to run into a pile of more or less
+>     annoying compilation errors, and you're on your own in
+>     figuring out how to fix them. Some strategies:
+>      - if the issue is in part of QEMU you don't care about
+>        then use a configure --disable-foo option to just
+>        not try to compile that feature/etc. e.g. here if you
+>        don't care about Xen support then disable it.
+>      - look through QEMU's commit log and the mailing lists
+>        for the compile message -- often the fix will have
+>        been made in some later QEMU and you could backport it
+>      - otherwise you'll just have to figure out and address
+>        whatever the incompatibility is.
+>
 > thanks
 > -- PMM
+>
 
-regards
--- Jacob Abrams
+--0000000000009b2ae806218dbbf4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I got this to build following option 2 listed and it built=
+ with ubuntu 18.04.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
+ass=3D"gmail_attr">On Sat, Sep 7, 2024 at 4:45=E2=80=AFAM Peter Maydell &lt=
+;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&g=
+t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Sat=
+, 7 Sept 2024 at 07:39, Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.r=
+u" target=3D"_blank">mjt@tls.msk.ru</a>&gt; wrote:<br>
+&gt;<br>
+&gt; 07.09.2024 02:59, Kenneth Adam Miller wrote:<br>
+&gt; &gt; Hello,<br>
+&gt; &gt;<br>
+&gt; &gt; I&#39;m on commit bd80b59 and my host is:<br>
+&gt;<br>
+&gt; $ git desc bd80b59<br>
+&gt; v2.4.0-rc3-9-gbd80b5963f<br>
+&gt;<br>
+&gt; Date:=C2=A0 =C2=A0Mon Aug 3 11:44:07 2015 +0100<br>
+<br>
+Wow, that is very old. So the answer, in order of preference, is:<br>
+<br>
+(1) don&#39;t try to build such an ancient QEMU version: use<br>
+=C2=A0 =C2=A0 recent QEMU instead.<br>
+(2) build on (a container of) whatever the contemporary Linux<br>
+=C2=A0 =C2=A0 distro version of the time would have been: QEMU at that<br>
+=C2=A0 =C2=A0 time built on Linux of that time, so it&#39;s the mismatch<br=
+>
+=C2=A0 =C2=A0 between new host (system headers, compiler, etc) and old<br>
+=C2=A0 =C2=A0 QEMU that is causing problems.<br>
+(3) if you must try to build ancient QEMU on a modern host,<br>
+=C2=A0 =C2=A0 then you are going to run into a pile of more or less<br>
+=C2=A0 =C2=A0 annoying compilation errors, and you&#39;re on your own in<br=
+>
+=C2=A0 =C2=A0 figuring out how to fix them. Some strategies:<br>
+=C2=A0 =C2=A0 =C2=A0- if the issue is in part of QEMU you don&#39;t care ab=
+out<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0then use a configure --disable-foo option to jus=
+t<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0not try to compile that feature/etc. e.g. here i=
+f you<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0don&#39;t care about Xen support then disable it=
+.<br>
+=C2=A0 =C2=A0 =C2=A0- look through QEMU&#39;s commit log and the mailing li=
+sts<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0for the compile message -- often the fix will ha=
+ve<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0been made in some later QEMU and you could backp=
+ort it<br>
+=C2=A0 =C2=A0 =C2=A0- otherwise you&#39;ll just have to figure out and addr=
+ess<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0whatever the incompatibility is.<br>
+<br>
+thanks<br>
+-- PMM<br>
+</blockquote></div>
+
+--0000000000009b2ae806218dbbf4--
 
