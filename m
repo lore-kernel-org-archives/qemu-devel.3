@@ -4,51 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88002E6FE49
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 06:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE9CE6FE49
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 07:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snBfm-0007A2-Sr; Sun, 08 Sep 2024 02:45:22 -0400
+	id 1snC9m-0006bs-QQ; Sun, 08 Sep 2024 03:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laster@dlaster.com>)
- id 1sn8Pu-0002ad-1H
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 23:16:46 -0400
-Received: from [50.198.229.123] (helo=mail.dlaster.com)
- by eggs.gnu.org with esmtps (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <laster@dlaster.com>)
- id 1sn8Pq-0000qh-Ct
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 23:16:44 -0400
-Received: from [127.0.0.1] (IDENT:1000@malaika.dlaster.com [172.16.0.37])
- by mail.dlaster.com (8.14.3/8.14.3) with ESMTP id 48839S7f011895;
- Sat, 7 Sep 2024 23:09:28 -0400
-Subject: Re: How to run qemu
-To: Kenneth Adam Miller <kennethadammiller@gmail.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-References: <CAK7rcp_qUmp7k6dqo62KqNpAuNgVznWiCxgBrhf4V7PT5=YDhQ@mail.gmail.com>
-From: Donald R Laster Jr <laster@dlaster.com>
-Organization: Personal Mail
-Message-ID: <c9856d31-c88d-7593-c457-f88c6463063c@dlaster.com>
-Date: Sat, 7 Sep 2024 23:09:27 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Firefox/91.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1snC9l-0006aM-4X; Sun, 08 Sep 2024 03:16:21 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1snC9j-0000Lp-3w; Sun, 08 Sep 2024 03:16:20 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6DEAA8CC3E;
+ Sun,  8 Sep 2024 10:16:04 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id B35AE1374D6;
+ Sun,  8 Sep 2024 10:16:05 +0300 (MSK)
+Received: (nullmailer pid 430447 invoked by uid 1000);
+ Sun, 08 Sep 2024 07:16:05 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH trvivial] linux-user/syscall.c: replace function pointers for
+ flock64 fcntl with macros
+Date: Sun,  8 Sep 2024 10:16:00 +0300
+Message-Id: <20240908071600.430410-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-In-Reply-To: <CAK7rcp_qUmp7k6dqo62KqNpAuNgVznWiCxgBrhf4V7PT5=YDhQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 50.198.229.123 (failed)
-Received-SPF: pass client-ip=50.198.229.123; envelope-from=laster@dlaster.com;
- helo=mail.dlaster.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.946,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 08 Sep 2024 02:45:17 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,25 +60,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ken,
+For 32bit ARM fcntl64 syscall there are 2 possible argument types,
+depending on cpu_env->eabi.  For other architectures, it is plain
+struct flock64 in all cases.  In order to solve this, old code
+used to take address of the conversion function and and run it
+through this pointer.  Instead, introduce 2 helper macros for
+the flock64 conversion, and define them in the same block where
+the oabi conversion functions are defined, and use these
+helpers directly in the actual code, making each part more
+self-contained and easier to read.
 
-   Lookup starting the gvncviewer tool after you start the virtual machine.  To get the display for the VMs I run gvncviewer and sometimes spicec.
+Also add comment to the block of code which itroduces the oabi
+conversion functions.
 
-   Don
+Note also there was an inconsistency in the old code: different
+the differences in single place we eliminate this difference.
 
-Kenneth Adam Miller wrote on 9/7/24 4:58 PM:
-> Hello,
-> 
-> I've got qemu built and now I need to figure out how to run it with what I've got. I have a vmlinux and a bzImage that I want to serve as the kernel that QEMU runs with, and a single binary, let's just call it literally `program`, that I want to issue a command to run once QEMU boots with the kernel.
-> 
-> I tried to figure out how to run the QEMU on my own, and made it as far as this:
-> 
-> ./qemu//bin/debug/native/qemu-system-x86_64 -enable-kvm -m 2048 -display vnc=:89 \
->          -netdev user,id=t0, -device rtl8139,netdev=t0,id=nic0 \
->          -netdev user,id=t1, -device pcnet,netdev=t1,id=nic1 \
->          -L ./qemu/pc-bios \
->          -boot c -kernel $HOME/workspace/kvmctf-6.1.74/bzImage/bzImage
-> 
-> It runs, but there isn't any output to the screen to show it booting, and QEMU runs the processor hard indefinitely. I need to be able to see standard output and to be able to type into the console to enter the command, and I don't know how to get it to or why it isn't showing that already. Also, once that is working, I need a way to put `program` into the QEMU session so that it can be run. Can someone help me? I think I need to make an img file that can boot but I don't really know how to do that either.
+While at it, replace tabs with spaces in nearby code.
+
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ linux-user/syscall.c | 40 +++++++++++++++++++++++-----------------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
+
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d418e2864a..03250316df 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6880,10 +6880,12 @@ static inline abi_long copy_to_user_flock(abi_ulong target_flock_addr,
+     return 0;
+ }
+ 
+-typedef abi_long from_flock64_fn(struct flock *fl, abi_ulong target_addr);
+-typedef abi_long to_flock64_fn(abi_ulong target_addr, const struct flock *fl);
+-
+ #if defined(TARGET_ARM) && TARGET_ABI_BITS == 32
++/*
++ * For 32bit arm flock64 syscall there are 2 variants of target_flock
++ * depending on eabi
++ */
++
+ struct target_oabi_flock64 {
+     abi_short l_type;
+     abi_short l_whence;
+@@ -6935,6 +6937,19 @@ static inline abi_long copy_to_user_oabi_flock64(abi_ulong target_flock_addr,
+     unlock_user_struct(target_fl, target_flock_addr, 1);
+     return 0;
+ }
++
++#define copy_from_user_flock64_2abi(cpu_env, fl, target_flock_addr) \
++          (cpu_env->eabi ? copy_from_user_flock64(fl, target_flock_addr) : \
++                           copy_from_user_oabi_flock64(fl, target_flock_addr))
++#define copy_to_user_flock64_2abi(cpu_env, target_flock_addr, fl) \
++          (cpu_env->eabi ? copy_to_user_flock64(target_flock_addr, fl) \
++                           copy_to_user_oabi_flock64(target_flock_addr, fl))
++#else
++
++#define copy_from_user_flock64_2abi(cpu_env, fl, target_flock_addr) \
++            copy_from_user_flock64(fl, target_flock_addr)
++#define copy_to_user_flock64_2abi(cpu_env, target_flock_addr, fl) \
++            copy_to_user_flock64(target_flock_addr, fl)
+ #endif
+ 
+ static inline abi_long copy_from_user_flock64(struct flock *fl,
+@@ -12402,15 +12417,6 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     {
+         int cmd;
+         struct flock fl;
+-        from_flock64_fn *copyfrom = copy_from_user_flock64;
+-        to_flock64_fn *copyto = copy_to_user_flock64;
+-
+-#ifdef TARGET_ARM
+-        if (!cpu_env->eabi) {
+-            copyfrom = copy_from_user_oabi_flock64;
+-            copyto = copy_to_user_oabi_flock64;
+-        }
+-#endif
+ 
+         cmd = target_to_host_fcntl_cmd(arg2);
+         if (cmd == -TARGET_EINVAL) {
+@@ -12419,24 +12425,24 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+ 
+         switch(arg2) {
+         case TARGET_F_GETLK64:
+-            ret = copyfrom(&fl, arg3);
++            ret = copy_from_user_flock64_2abi(cpu_env, &fl, arg3);
+             if (ret) {
+                 break;
+             }
+             ret = get_errno(safe_fcntl(arg1, cmd, &fl));
+             if (ret == 0) {
+-                ret = copyto(arg3, &fl);
++                ret = copy_to_user_flock64_2abi(cpu_env, arg3, &fl);
+             }
+-	    break;
++            break;
+ 
+         case TARGET_F_SETLK64:
+         case TARGET_F_SETLKW64:
+-            ret = copyfrom(&fl, arg3);
++            ret = copy_from_user_flock64_2abi(cpu_env, &fl, arg3);
+             if (ret) {
+                 break;
+             }
+             ret = get_errno(safe_fcntl(arg1, cmd, &fl));
+-	    break;
++            break;
+         default:
+             ret = do_fcntl(arg1, arg2, arg3);
+             break;
+-- 
+2.39.2
 
 
