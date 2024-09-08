@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D79ECE579
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C2DECE577
 	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 02:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sn7dW-0003MN-2Z; Sat, 07 Sep 2024 22:26:46 -0400
+	id 1sn7dW-0003Pv-QX; Sat, 07 Sep 2024 22:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sn7dQ-0002v1-IB
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 22:26:40 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1sn7dU-0003GG-QB
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 22:26:44 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sn7dO-0004yz-8W
- for qemu-devel@nongnu.org; Sat, 07 Sep 2024 22:26:40 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7d4f85766f0so2617798a12.2
- for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 19:26:37 -0700 (PDT)
+ id 1sn7dT-00051L-A6
+ for qemu-devel@nongnu.org; Sat, 07 Sep 2024 22:26:44 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2da4ea59658so2358911a91.0
+ for <qemu-devel@nongnu.org>; Sat, 07 Sep 2024 19:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725762397; x=1726367197; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725762402; x=1726367202; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N9N2cgqqLVwUjXchNHwMUTNObW7o0Ba49NXy9nXuu1w=;
- b=A3YSkF5LCUtbANmlNWdSzkrxozk0t/9aPzRUop+r7habCs23kqMDXIQ/KjYy/3UnDG
- 4BOsjS7aSvZgYuvnHOXZ7Lr0qxLKK2meTW/E4FiBq36FMWM8QjYKPXTDPml8tH7BQWkB
- YAo+pipgS2/lQS3fgAJUbX3WAhvmugjq9bJs472NGLOSn8oDzuqjKm0ts0CkQQKeXRLP
- Fw8Wi0yLiQZRnqWxLrDdQ/X6z6k3KGUdNeYDNdd8ZtdoVFwfC4eo6UwRnsZteUbRaTr/
- uszV1abY+/1dj/pB/hYyCDScVh3G8d25JiDMio/tiKU1X8WLN9O2oYfmirESh0O8ME9J
- 2h3A==
+ bh=tk0wGAYaA1BFCH8Bi5mZsOhd6+SwTodI8yFR1/zj/XA=;
+ b=rbW7uDKULEpLP6dC06hrDi0HpQ81gLwoLSWkjtetpgxdmt1DscLfXomdHdUUOpgwfH
+ uMZGSrWrV9Frayz8Pzp29GUY9ZRqwciIFe3fO5a03VmrgwUK9zp1Sg2sC/muIHZJ1Qfy
+ 4K0eFCQ6Ls5fm/O5xAjW+3hpCfpaApgyxdElTSXfzIHYamnXBvFituCLjDj93b8V9nmk
+ /eUeEv9ZQFeii5bdNLtY+xVKEymenwUhLbPeKHpldwP0oMF0C4Hulz7NaUaUlksdVrgZ
+ e7BuSnajTCCwJTVCbqtHkV+km3hTxBcTDxrhWo9tuqKrwJiN1ORNH+Gsjmiabwh1nstJ
+ teWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725762397; x=1726367197;
+ d=1e100.net; s=20230601; t=1725762402; x=1726367202;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N9N2cgqqLVwUjXchNHwMUTNObW7o0Ba49NXy9nXuu1w=;
- b=FCkDQ8n1a8efRju9wdMv5oFUAfxryI9nentvfQf6uxjEaXVsCqVENK8BS7xDpBDpwf
- hH9GaFAgW1Gcr1N4byOieUPAlyx/DBS8dtYdIftmd8NZLX3f0KPBE/Z19LnIUG6sa+wp
- PxBvMPxnVpJY3/JNZuW9JhPe2nVo6mx8wiGzYrs6B30OvJOVugvyLgv2ZHHLtOKAC4VS
- vvFxL/Syt4+evaxdoEcwYaRQ09D4kHNnQiLfnb/qx3FQw1yc2bVH58qswAledz6hNtNk
- yPw/AXGBlR27V6dfM57pwz4O39TK+wHM7tvO1jq0Kxlb8CGbmhb7Bq/xTqoM+bjZh5Rp
- n6Uw==
-X-Gm-Message-State: AOJu0YzScca6AHgPNHk2GO3DJoeWLiXhSM7ULpxr11HW9UPwUAWv6JRo
- YLtP5Nez2LlAwk4If1RYtfiH2LrUD0NrdGXV4X6HR2KZkbtsGRnKQ/DmmtC3vIaB22CXcIRmofd
- 2
-X-Google-Smtp-Source: AGHT+IEVn1e16lyfZmdOzxxWo89HzA40Sh2xcZsMYkbIHkpK0/0awh42QGPlK3rwhHrRppx1MsFTTw==
-X-Received: by 2002:a05:6a20:d510:b0:1ce:d418:a45c with SMTP id
- adf61e73a8af0-1cf2a0fcd7cmr4092480637.50.1725762396531; 
- Sat, 07 Sep 2024 19:26:36 -0700 (PDT)
+ bh=tk0wGAYaA1BFCH8Bi5mZsOhd6+SwTodI8yFR1/zj/XA=;
+ b=YwA7KSQi5QTS0zXyCG4zdcuFJuh5S6cx2J7Mj/mRL1Dj2r9jMKWWSKHX8hyNFczmcB
+ 9QWLLm2d2O3v7YILECll9M7f3z/83v8b8YvbL8R+NTwRo3EBhNspOzfK9mm0FZS58a2j
+ IvfcV4FOznVWpw4rhZg0F3dPxlbajAFyDn5oL+DNlbcVChzbjoSgpbNCI4V2lWAy18pj
+ up8CfZBHvFmmFqU5btZWvdbFHGJ6e/nPtEdSonaYvVjYKG39jhnOaVCA+Ct3fCGPEBa2
+ UhLnDR2wIx6QgEClOC2IrCRB0Vf2zXY43oiOGhHmO+0oTlAzmreSjhFOnzJK4azE0dpN
+ x4hA==
+X-Gm-Message-State: AOJu0YzKj36WTP63K4muhUvqAd2GN5oRyhpuLmXD3yxeGGhV9+fOdFot
+ bod1dA8YbcRJO8owFT3R2es2mcl4xWUr8ZNH1C+MABY8OztxS4x1Lp3lYUteA1WuAY2+6fH20zC
+ 7
+X-Google-Smtp-Source: AGHT+IHuXrKEZmk4TmwHjWsaZ7xwLfaUeqxpeG8iHvFUHwUiJQDQposs4PvIWELoMupL25ZCASBalQ==
+X-Received: by 2002:a17:90a:ee87:b0:2c8:858:7035 with SMTP id
+ 98e67ed59e1d1-2dad50cbcb1mr7287239a91.25.1725762401715; 
+ Sat, 07 Sep 2024 19:26:41 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2dadbfe46d4sm4084019a91.1.2024.09.07.19.26.35
+ 98e67ed59e1d1-2dadbfe46d4sm4084019a91.1.2024.09.07.19.26.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Sep 2024 19:26:36 -0700 (PDT)
+ Sat, 07 Sep 2024 19:26:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: zhiwei_liu@linux.alibaba.com, tangtiancheng.ttc@alibaba-inc.com,
  liwei1518@gmail.com, bmeng.cn@gmail.com
-Subject: [PATCH 02/12] tcg: Export vec_gen_6
-Date: Sat,  7 Sep 2024 19:26:22 -0700
-Message-ID: <20240908022632.459477-3-richard.henderson@linaro.org>
+Subject: [PATCH 07/12] tcg/optimize: Optimize cmp_vec and cmpsel_vec
+Date: Sat,  7 Sep 2024 19:26:27 -0700
+Message-ID: <20240908022632.459477-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240908022632.459477-1-richard.henderson@linaro.org>
 References: <20240908022632.459477-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,42 +95,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add declaration to tcg-internal.h, making it available for
-use from tcg backend vector expanders.
+Place immediate values second in the comparison.
+Place destination matches first in the true/false values.
+All of this mirrors what we do for integer setcond and movcond.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg-internal.h | 2 ++
- tcg/tcg-op-vec.c   | 4 ++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ tcg/optimize.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
-index 9b0d982f65..52103f4164 100644
---- a/tcg/tcg-internal.h
-+++ b/tcg/tcg-internal.h
-@@ -102,5 +102,7 @@ void tcg_gen_op6(TCGOpcode, TCGArg, TCGArg, TCGArg, TCGArg, TCGArg, TCGArg);
- void vec_gen_2(TCGOpcode, TCGType, unsigned, TCGArg, TCGArg);
- void vec_gen_3(TCGOpcode, TCGType, unsigned, TCGArg, TCGArg, TCGArg);
- void vec_gen_4(TCGOpcode, TCGType, unsigned, TCGArg, TCGArg, TCGArg, TCGArg);
-+void vec_gen_6(TCGOpcode opc, TCGType type, unsigned vece, TCGArg r,
-+               TCGArg a, TCGArg b, TCGArg c, TCGArg d, TCGArg e);
- 
- #endif /* TCG_INTERNAL_H */
-diff --git a/tcg/tcg-op-vec.c b/tcg/tcg-op-vec.c
-index 84af210bc0..d4bb4aee74 100644
---- a/tcg/tcg-op-vec.c
-+++ b/tcg/tcg-op-vec.c
-@@ -172,8 +172,8 @@ void vec_gen_4(TCGOpcode opc, TCGType type, unsigned vece,
-     op->args[3] = c;
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index cf311790e0..f11f576fd4 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2422,6 +2422,36 @@ static bool fold_setcond2(OptContext *ctx, TCGOp *op)
+     return tcg_opt_gen_movi(ctx, op, op->args[0], i);
  }
  
--static void vec_gen_6(TCGOpcode opc, TCGType type, unsigned vece, TCGArg r,
--                      TCGArg a, TCGArg b, TCGArg c, TCGArg d, TCGArg e)
-+void vec_gen_6(TCGOpcode opc, TCGType type, unsigned vece, TCGArg r,
-+               TCGArg a, TCGArg b, TCGArg c, TCGArg d, TCGArg e)
++static bool fold_cmp_vec(OptContext *ctx, TCGOp *op)
++{
++    /* Canonicalize the comparison to put immediate second. */
++    if (swap_commutative(NO_DEST, &op->args[1], &op->args[2])) {
++        op->args[3] = tcg_swap_cond(op->args[3]);
++    }
++    return false;
++}
++
++static bool fold_cmpsel_vec(OptContext *ctx, TCGOp *op)
++{
++    /* If true and false values are the same, eliminate the cmp. */
++    if (args_are_copies(op->args[3], op->args[4])) {
++        return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[3]);
++    }
++
++    /* Canonicalize the comparison to put immediate second. */
++    if (swap_commutative(NO_DEST, &op->args[1], &op->args[2])) {
++        op->args[5] = tcg_swap_cond(op->args[5]);
++    }
++    /*
++     * Canonicalize the "false" input reg to match the destination,
++     * so that the tcg backend can implement "move if true".
++     */
++    if (swap_commutative(op->args[0], &op->args[4], &op->args[3])) {
++        op->args[5] = tcg_invert_cond(op->args[5]);
++    }
++    return false;
++}
++
+ static bool fold_sextract(OptContext *ctx, TCGOp *op)
  {
-     TCGOp *op = tcg_emit_op(opc, 6);
-     TCGOP_VECL(op) = type - TCG_TYPE_V64;
+     uint64_t z_mask, s_mask, s_mask_old;
+@@ -2928,6 +2958,12 @@ void tcg_optimize(TCGContext *s)
+         case INDEX_op_setcond2_i32:
+             done = fold_setcond2(&ctx, op);
+             break;
++        case INDEX_op_cmp_vec:
++            done = fold_cmp_vec(&ctx, op);
++            break;
++        case INDEX_op_cmpsel_vec:
++            done = fold_cmpsel_vec(&ctx, op);
++            break;
+         CASE_OP_32_64(sextract):
+             done = fold_sextract(&ctx, op);
+             break;
 -- 
 2.43.0
 
