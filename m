@@ -4,67 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B0D1E6FE49
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 13:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 877E8CD4F4C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 14:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snHhu-0002x2-2a; Sun, 08 Sep 2024 09:11:58 -0400
+	id 1snJEz-0003NJ-Bu; Sun, 08 Sep 2024 10:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1snHhp-0002qq-W3
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 09:11:54 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50])
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1snJEx-0003LE-1N
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 10:50:11 -0400
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1snHho-0000fj-B2
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 09:11:53 -0400
-Received: by mail-ed1-f50.google.com with SMTP id
- 4fb4d7f45d1cf-5c3d209db94so3604846a12.3
- for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 06:11:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1snJEu-0000vO-SS
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 10:50:10 -0400
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-718e482930bso610474b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 07:50:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1725807006; x=1726411806; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d5CnO/x0oOXPL/SoN/NpTJhdBlurm8tsfZcJa2N4+gc=;
+ b=a3WPZdya8fPUEE9FE/aWYPJL+wxzbXfl0MT54a6nKd0oTqjnR6dYQltFxKTaq8MIO7
+ LgcueCSX2DQAqoUVPhl6FZhf+cSqd2IM0I/TXLr8vFL/FNRPDR1sCcE+83MKm6Iku4du
+ idMxSzjKyeLEH1Wqw/t+XUy1ZwWUmTt+tLrJNgX3SM6xgI1NXVNeYueM1CbFyx7UmkLR
+ BCcFFvCeZOrER9f5RAPePxU2V18bSkSZMNjAhKPQiSAf3kuXF8b+97OQlsFrY7huHAS6
+ YM7grKLNWrx/kKbHYKvuoumby1KZnwYwqj7IkXoWv0PXfpI+faYkNDs9P36HKudvBlE0
+ 5S2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725801111; x=1726405911;
+ d=1e100.net; s=20230601; t=1725807006; x=1726411806;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ptL0ygfbb0Laz2aJR63ekKAa+9PX2hwP/FjTByTmNXI=;
- b=SGtVCfbCc0IelJvShjTpu/by4xCjUHsJ13ItZPEMvw2C5W7tived9+qro4f4l0FBji
- tQhzZIFIBuYlvUfB3pS5je30UXtR4QyxyLPFoMSGyrHF6Hjw3VIyAtyyhuzjcNnZIlsi
- +CB1/IAMNoUOS92L+h5Y6YczNA2s0Q/2X9nMpB6ktHaJ1VBg5ZRdGUZtimgOywzPzaJZ
- iUPFIYOuOQzIBVsOgqwZIc+4wn20hn8bLoso6Qz7qs8iLDIPKId10Dk99Pp5xEhMrMeM
- 7Kw9AD3Yff+nMwQhnYNmRB9NEU3dg2IBKo07U2q8qvkEHY1o/D6HN8BXbY5dbIO6UJm7
- tpoA==
-X-Gm-Message-State: AOJu0Yyaiu+P9Jlih+TR9nbL+wwtxeqUGQtQIUjegfQ9lK3U+fJe2+HL
- yZSVZGEvuKVcgRr4CDmV/TJZv+ATi0otqEU0HH75LndlK6j2qS+58YOohO8q
-X-Google-Smtp-Source: AGHT+IE29iaW9jVzRL4gxAAlRo3vTYxwb2tHL9YGl/VYnjKOHDTz1P7dSsFKQRKJ6a66ubBxPhmh2g==
-X-Received: by 2002:a17:906:c14c:b0:a86:894e:cd09 with SMTP id
- a640c23a62f3a-a8d1bf75f35mr677789066b.9.1725801110787; 
- Sun, 08 Sep 2024 06:11:50 -0700 (PDT)
-Received: from fedora.. (ip-109-43-115-52.web.vodafone.de. [109.43.115.52])
+ bh=d5CnO/x0oOXPL/SoN/NpTJhdBlurm8tsfZcJa2N4+gc=;
+ b=hDoNmSHQ5W+4kJsKVbgrVqIEjp/Zt08+vutn/vzm2V+nJyMnBD/O/oi6eGw79sLqw/
+ 7xt7ZvljMIvOfIf0n63bCuqpsqwgSv/0HAuZSvYcfM/1ZQvxQRdn0tkK+E3CTC72ho8p
+ r9sMhJCa1zdZGXPf+im/XZykdJzbBnHITei8ZZc7b2WcijlViL3mnHxDukKhvKXWN+5Q
+ U4OPWU2M9iWEh7fV+U/UignbGkl/YQpVN8qdsUR0EnDQYpgJBR9k50GCHl0cZ1znDsvA
+ dtZ4VHrUqDycs7vCFxokrbzH13qsxHAwak8y3EqNe0x4JoNrMug7gmlS/UK4ePNiST34
+ ogpg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvb9m3NBJiXG8OYViWgVMYlO0cWjUh1RbqUYZ6eQCRVAHsnSDiV3Q4D75WWUXn4n2vMIk+QZXyBPJO@nongnu.org
+X-Gm-Message-State: AOJu0YzGNr5MM2AQHs7nR+FncbnJy5+BR7kIEIZOtV/YjeC2uBUnSpUb
+ y5t6xgw0cSJHazoHqIw1fqlt6GlUop9UXqXeg8Lk+xzWGigmVgj4
+X-Google-Smtp-Source: AGHT+IFEd3H1KC6Fw2VGUYomEiqt0Dn6nl0UprryswEvEiD9STdiP3wqq56PsKE6ujRmHMft8hfQZg==
+X-Received: by 2002:a05:6a00:2282:b0:718:e188:fdf1 with SMTP id
+ d2e1a72fcca58-718e188fef0mr9313967b3a.20.1725807006288; 
+ Sun, 08 Sep 2024 07:50:06 -0700 (PDT)
+Received: from localhost.localdomain ([39.144.194.96])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd5212asm1842418a12.57.2024.09.08.06.11.49
+ d2e1a72fcca58-718e5896d08sm2215766b3a.17.2024.09.08.07.50.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Sep 2024 06:11:50 -0700 (PDT)
-From: Thomas Huth <huth@tuxfamily.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 3/3] hw/nubus/nubus-device: Range check 'slot' property
-Date: Sun,  8 Sep 2024 15:11:28 +0200
-Message-ID: <20240908131128.19384-4-huth@tuxfamily.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240908131128.19384-1-huth@tuxfamily.org>
-References: <20240908131128.19384-1-huth@tuxfamily.org>
+ Sun, 08 Sep 2024 07:50:05 -0700 (PDT)
+From: luzhixing12345 <luzhixing12345@gmail.com>
+To: mst@redhat.com
+Cc: luzhixing12345@gmail.com,
+	qemu-devel@nongnu.org,
+	sgarzare@redhat.com
+Subject: [PATCH] docs: fix vhost-user protocol doc
+Date: Sun,  8 Sep 2024 22:49:54 +0800
+Message-Id: <20240908144954.20003-1-luzhixing12345@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240906042749-mutt-send-email-mst@kernel.org>
+References: <20240906042749-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.208.50; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f50.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=luzhixing12345@gmail.com; helo=mail-pf1-x443.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,45 +99,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+>On Fri, Sep 06, 2024 at 10:10:45AM +0800, luzhixing12345 wrote:
+>> Hi, can someone help review this patch?
+>> 
+>> Signed-off-by: luzhixing12345 <luzhixing12345@gmail.com>
+>
+>You got comments Aug 5, pls address them.
 
-The TYPE_NUBUS_DEVICE class lets the user specify the nubus slot
-using an int32 "slot" QOM property.  Its realize method doesn't do
-any range checking on this value, which Coverity notices by way of
-the possibility that 'nd->slot * NUBUS_SUPER_SLOT_SIZE' might
-overflow the 32-bit arithmetic it is using.
+ok, the comments are addressed.
 
-Constrain the slot value to be less than NUBUS_SLOT_NB (16).
+>On Sun, Aug 04, 2024 at 01:04:20PM GMT, luzhixing12345 wrote:
+>>add a ref link to Memory region description
+>>
+>>add extra type(64 bits) to Log description structure fields
+>>
+>>fix 's to 's
+>>
+>>---
+>> docs/interop/vhost-user.rst | 22 +++++++++++++---------
+>> 1 file changed, 13 insertions(+), 9 deletions(-)
+>
+>Please run `scripts/checkpatch.pl` before sending.
+>
+>S-o-b missing here.
+>
+>>
+>>diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>>index d8419fd2f1..e34b305bd9 100644
+>>--- a/docs/interop/vhost-user.rst
+>>+++ b/docs/interop/vhost-user.rst
+>>@@ -167,6 +167,8 @@ A vring address description
+>> Note that a ring address is an IOVA if ``VIRTIO_F_IOMMU_PLATFORM`` has
+>> been negotiated. Otherwise it is a user address.
+>>
+>>+.. _memory_region_description:
+>>+
+>> Memory region description
+>> ^^^^^^^^^^^^^^^^^^^^^^^^^
+>>
+>>@@ -180,7 +182,7 @@ Memory region description
+>>
+>> :user address: a 64-bit user address
+>>
+>>-:mmap offset: 64-bit offset where region starts in the mapped memory
+>>+:mmap offset: a 64-bit offset where region starts in the mapped memory
+>>
+>> When the ``VHOST_USER_PROTOCOL_F_XEN_MMAP`` protocol feature has been
+>> successfully negotiated, the memory region description contains two extra
+>>@@ -190,7 +192,7 @@ fields at the end.
+>> | guest address | size | user address | mmap offset | xen mmap flags | domid |
+>> +---------------+------+--------------+-------------+----------------+-------+
+>>
+>>-:xen mmap flags: 32-bit bit field
+>>+:xen mmap flags: a 32-bit bit field
+>>
+>> - Bit 0 is set for Xen foreign memory mapping.
+>> - Bit 1 is set for Xen grant memory mapping.
+>>@@ -211,6 +213,8 @@ Single memory region description
+>>
+>> :padding: 64-bit
+>>
+>>+:region: :ref:`Memory region description <memory_region_description>`
+>>+
+>> A region is represented by Memory region description.
+>
+>Should we merge this line with the one added?
 
-Resolves: Coverity CID 1464070
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20240830173452.2086140-4-peter.maydell@linaro.org>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Thomas Huth <huth@tuxfamily.org>
+Desciptions about memory regions are merged into one line.
+
+>>
+>> Multiple Memory regions description
+>
+>Should we extend also the Multiple Memory region description?
+
+Yes, this patch adds a ref link to it.
+
+>>@@ -233,9 +237,9 @@ Log description
+>> | log size | log offset |
+>> +----------+------------+
+>>
+>>-:log size: size of area used for logging
+>>+:log size: a 64-bit size of area used for logging
+>>
+>>-:log offset: offset from start of supplied file descriptor where
+>>+:log offset: a 64-bit offset from start of supplied file descriptor where
+>>              logging starts (i.e. where guest address 0 would be
+>>              logged)
+>>
+>>@@ -382,7 +386,7 @@ the kernel implementation.
+>>
+>> The communication consists of the *front-end* sending message requests and
+>> the *back-end* sending message replies. Most of the requests don't require
+>>-replies. Here is a list of the ones that do:
+>>+replies, except for the following requests:
+>>
+>> * ``VHOST_USER_GET_FEATURES``
+>> * ``VHOST_USER_GET_PROTOCOL_FEATURES``
+>>@@ -1239,11 +1243,11 @@ Front-end message types
+>>   (*a vring descriptor index for split virtqueues* vs. *vring descriptor
+>>   indices for packed virtqueues*).
+>>
+>>-  When and as long as all of a device's vrings are stopped, it is
+>>+  When and as long as all of a device's vrings are stopped, it is
+>>   *suspended*, see :ref:`Suspended device state
+>>   <suspended_device_state>`.
+>>
+>>-  The request payload's *num* field is currently reserved and must be
+>>+  The request payload's *num* field is currently reserved and must be
+>>   set to 0.
+>>
+>> ``VHOST_USER_SET_VRING_KICK``
+>>@@ -1662,7 +1666,7 @@ Front-end message types
+>>   :reply payload: ``u64``
+>>
+>>   Front-end and back-end negotiate a channel over which to transfer the
+>>-  back-end's internal state during migration.  Either side (front-end or
+>>+  back-end's internal state during migration.  Either side (front-end or
+>>   back-end) may create the channel.  The nature of this channel is not
+>>   restricted or defined in this document, but whichever side creates it
+>>   must create a file descriptor that is provided to the respectively
+>>@@ -1714,7 +1718,7 @@ Front-end message types
+>>   :request payload: N/A
+>>   :reply payload: ``u64``
+>>
+>>-  After transferring the back-end's internal state during migration (see
+>>+  After transferring the back-end's internal state during migration (see
+>>   the :ref:`Migrating back-end state <migrating_backend_state>`
+>>   section), check whether the back-end was able to successfully fully
+>>   process the state.
+>>-- 
+>>2.34.1
+>>
+
+Signed-off-by: luzhixing12345 <luzhixing12345@gmail.com>
 ---
- hw/nubus/nubus-device.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ docs/interop/vhost-user.rst | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/hw/nubus/nubus-device.c b/hw/nubus/nubus-device.c
-index be4cb24696..26fbcf29a2 100644
---- a/hw/nubus/nubus-device.c
-+++ b/hw/nubus/nubus-device.c
-@@ -35,6 +35,13 @@ static void nubus_device_realize(DeviceState *dev, Error **errp)
-     uint8_t *rom_ptr;
-     int ret;
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index d8419fd2f1..2e50f2ddfa 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -167,6 +167,8 @@ A vring address description
+ Note that a ring address is an IOVA if ``VIRTIO_F_IOMMU_PLATFORM`` has
+ been negotiated. Otherwise it is a user address.
  
-+    if (nd->slot < 0 || nd->slot >= NUBUS_SLOT_NB) {
-+        error_setg(errp,
-+                   "'slot' value %d out of range (must be between 0 and %d)",
-+                   nd->slot, NUBUS_SLOT_NB - 1);
-+        return;
-+    }
++.. _memory_region_description:
 +
-     /* Super */
-     slot_offset = nd->slot * NUBUS_SUPER_SLOT_SIZE;
+ Memory region description
+ ^^^^^^^^^^^^^^^^^^^^^^^^^
  
+@@ -180,7 +182,7 @@ Memory region description
+ 
+ :user address: a 64-bit user address
+ 
+-:mmap offset: 64-bit offset where region starts in the mapped memory
++:mmap offset: a 64-bit offset where region starts in the mapped memory
+ 
+ When the ``VHOST_USER_PROTOCOL_F_XEN_MMAP`` protocol feature has been
+ successfully negotiated, the memory region description contains two extra
+@@ -190,7 +192,7 @@ fields at the end.
+ | guest address | size | user address | mmap offset | xen mmap flags | domid |
+ +---------------+------+--------------+-------------+----------------+-------+
+ 
+-:xen mmap flags: 32-bit bit field
++:xen mmap flags: a 32-bit bit field
+ 
+ - Bit 0 is set for Xen foreign memory mapping.
+ - Bit 1 is set for Xen grant memory mapping.
+@@ -211,7 +213,7 @@ Single memory region description
+ 
+ :padding: 64-bit
+ 
+-A region is represented by Memory region description.
++:region: region is represented by :ref:`Memory region description <memory_region_description>`.
+ 
+ Multiple Memory regions description
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+@@ -224,7 +226,7 @@ Multiple Memory regions description
+ 
+ :padding: 32-bit
+ 
+-A region is represented by Memory region description.
++:regions: regions field contains 8 regions of type :ref:`Memory region description <memory_region_description>`.
+ 
+ Log description
+ ^^^^^^^^^^^^^^^
+@@ -233,9 +235,9 @@ Log description
+ | log size | log offset |
+ +----------+------------+
+ 
+-:log size: size of area used for logging
++:log size: a 64-bit size of area used for logging
+ 
+-:log offset: offset from start of supplied file descriptor where
++:log offset: a 64-bit offset from start of supplied file descriptor where
+              logging starts (i.e. where guest address 0 would be
+              logged)
+ 
+@@ -382,7 +384,7 @@ the kernel implementation.
+ 
+ The communication consists of the *front-end* sending message requests and
+ the *back-end* sending message replies. Most of the requests don't require
+-replies. Here is a list of the ones that do:
++replies, except for the following requests:
+ 
+ * ``VHOST_USER_GET_FEATURES``
+ * ``VHOST_USER_GET_PROTOCOL_FEATURES``
+@@ -1239,11 +1241,11 @@ Front-end message types
+   (*a vring descriptor index for split virtqueues* vs. *vring descriptor
+   indices for packed virtqueues*).
+ 
+-  When and as long as all of a device’s vrings are stopped, it is
++  When and as long as all of a device's vrings are stopped, it is
+   *suspended*, see :ref:`Suspended device state
+   <suspended_device_state>`.
+ 
+-  The request payload’s *num* field is currently reserved and must be
++  The request payload's *num* field is currently reserved and must be
+   set to 0.
+ 
+ ``VHOST_USER_SET_VRING_KICK``
+@@ -1662,7 +1664,7 @@ Front-end message types
+   :reply payload: ``u64``
+ 
+   Front-end and back-end negotiate a channel over which to transfer the
+-  back-end’s internal state during migration.  Either side (front-end or
++  back-end's internal state during migration.  Either side (front-end or
+   back-end) may create the channel.  The nature of this channel is not
+   restricted or defined in this document, but whichever side creates it
+   must create a file descriptor that is provided to the respectively
+@@ -1714,7 +1716,7 @@ Front-end message types
+   :request payload: N/A
+   :reply payload: ``u64``
+ 
+-  After transferring the back-end’s internal state during migration (see
++  After transferring the back-end's internal state during migration (see
+   the :ref:`Migrating back-end state <migrating_backend_state>`
+   section), check whether the back-end was able to successfully fully
+   process the state.
 -- 
-2.46.0
+2.34.1
 
 
