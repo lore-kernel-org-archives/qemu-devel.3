@@ -4,67 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0DFCD4F4C
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 07:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B2EBCD4F4C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 08:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snCLd-0003YU-Kz; Sun, 08 Sep 2024 03:28:37 -0400
+	id 1snDeE-0007I9-9m; Sun, 08 Sep 2024 04:51:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jkurape@gmail.com>) id 1snCLb-0003Y1-Rx
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 03:28:35 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1snDeC-0007H7-OG
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 04:51:52 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jkurape@gmail.com>) id 1snCLa-0001OE-9a
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 03:28:35 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-6d5a4615a56so30688477b3.0
- for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 00:28:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1snDeA-0000ox-Tn
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 04:51:52 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-374c3eef39eso1862019f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 01:51:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725780511; x=1726385311; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ d=linaro.org; s=google; t=1725785507; x=1726390307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=2psCH6/rql/g5qpA/7EEVHbdZyUvlGDkFB1uESR72PA=;
- b=J4QhnVyk5Kn2ETiwakVLh8pDUrRWXUTk2u9P6J6OAYI5noBtI5lbFYFqRaztxfAqCJ
- oM59j4nM47DvQPmalCGvb9v0Npxb6UIjXRUe38T7IV1YVeiYeYlGvqnDoXk4zY9RI0Ex
- 5fBRRXfpDuFXj1OHkJZn1CtUBkirOJxetRpldLYUZWMIZCWhtx7ZBBKa7lheMl6CGpO0
- qZJhknwMkl5r2YgC2+UrCeoWOkuFfeCKdf022Cn6X/la0vNkmkxgcsM/6k+Ub/tNweWq
- gF65u3SHhrZgR8wxjHefo5tqSkboPh3l97+NDBVBKEAF75v9VUC64I+7/JOQXG35uJnv
- QBSw==
+ bh=jLMKTiCDW7cz9kLRx8DicQHXeXl6MiRGRqAavwHZXuQ=;
+ b=bpNb9V9Z2FlvH9Jgb1UGrZyaKP1pb5AtkmG2TdirJjXa0J5Mcp3B3sw8LGLCi3l1l9
+ sD2vgbxkvUA2MYdt967HjVLeUPc7mPNNb751BYb1g6ap5FKqrfmx+XwT/6yARrXE5C5k
+ YRVEoUCNqrqrTpgyczuq6jqpqNlVYm0SjE06jYcZZRgRDFUTbnMy3iNym9bNYUcnu8pU
+ GAtaZvU62bOtQGhSBALOZDr9+5+PRqwKF/T05ElhKbFY5b1GGN/tnyaZx8JrtH7010ki
+ am+CpGU1W80QExnutM/0bd2RuAczREL84tVS/0mM4xBL2vpkm8GSzr3ZT+jtGNk0cAIc
+ KiQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725780511; x=1726385311;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ d=1e100.net; s=20230601; t=1725785507; x=1726390307;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2psCH6/rql/g5qpA/7EEVHbdZyUvlGDkFB1uESR72PA=;
- b=uUZOSppCcBTflQP9UXFEYubxYXEnGhn7IjHeoWE+azi8TnQwVI1KXdyGkjFAJ0DKWd
- kYrU16w8KF15q9ZAi7QX1AVddYDLSBLaPROfoveUg/MPTaV6JcJZHPQtzyLSbsf1PWzJ
- UwiXntSmLdFttdrD2cOqLubIUV6IsIShI9ctUBk2afluhR+K0yyjfzjolzwgUVC7OO10
- y6icIky87D9hoXRNFbvgzRydTrFzV4s9EhpmLLONzY9RnrcmfXjevNGAcU2F2hZWMRwN
- VVGG2p34pj5XItz1n7eRdGTbLO3rsWEDNICQI0OpbI0IiM3E3XwVDFsMq+R5En3y9rN2
- kD1Q==
-X-Gm-Message-State: AOJu0YzVCgrlXS/V15nV66fzfqtV7YIa8FpHQ3Et1Xj5IfldPJVQUsqy
- TJfyCKRqnnHUzAclQ1PMT46w03DCC4EjJRxsrGEnW6nr5IDikhdVONXgTPROXJm7AntLZhEHHlT
- 15XT7TfWLfk7R37oxFkK40mXpmFRg2+QeeeYW
-X-Google-Smtp-Source: AGHT+IEEyyX6UdDvrkzpdh9RL0qcir3akw/FczWcgkEY6a+ioBnDMk3E11DMzfcvX1ZQDtmcV9GV0HFIQOZIGeod3tw=
-X-Received: by 2002:a05:690c:f0f:b0:648:baba:542f with SMTP id
- 00721157ae682-6db44a5d7acmr77373747b3.0.1725780510752; Sun, 08 Sep 2024
- 00:28:30 -0700 (PDT)
+ bh=jLMKTiCDW7cz9kLRx8DicQHXeXl6MiRGRqAavwHZXuQ=;
+ b=fYAIm+f6zutY0BZ1MQhDp++tTMCo935avQCCApWLyWzoxS7OcU7BwnmkxM8B+rQyKp
+ j2WUgvD3EolIpJAwwCqXJrv4cnfsBGZU8BoBxD1Jt/WhsHqN8/yLYrFSCwSkjQ++FKid
+ q2a3qAYWkmakPffO4Ox7m6TmzHZgPJ86edZRWAZSkQn6ARQhYYYio2l4gdKWO4AQYx6I
+ kI3AD6oAIZrYCWZPzWFohwmAyAtuXr0+abw58mKRU/Oiifd8nKfv5wpLtjKpgeIYrQ40
+ mu0lhfpMS5YsjcsYgCdjY57Gmq487HcWkwxGuD/ejJMoUqPViBHi5iq5oi3CJ9xgnYmw
+ siWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWM6GZFuM/dB03hjN6OGI7pZooUFsSSjc6erMxFnGS4VNAi8E4C6cSYKZhvvvh0onx1HCZPfQmF5g7b@nongnu.org
+X-Gm-Message-State: AOJu0Yx2gC4se7zzTtvm3nQ0kpp/cuj9y79kvUzKI6hDUotvTkEwTFFV
+ Ow25zhEX69IXj3zJ46yFAwzZ+v+/Z5ey4PmLdL22LIocdApTpe5RbUFDuWptO7s=
+X-Google-Smtp-Source: AGHT+IEI9musqmjvQB1sCYe970DFty0tcH+flOQyXcWC+FjbeEzeiVrg80BdB0lUONhNIg7g6L1GXA==
+X-Received: by 2002:adf:fe82:0:b0:367:8f81:fa09 with SMTP id
+ ffacd0b85a97d-37889674bdemr4299668f8f.47.1725785506447; 
+ Sun, 08 Sep 2024 01:51:46 -0700 (PDT)
+Received: from meli-email.org (adsl-42.37.6.2.tellas.gr. [37.6.2.42])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378956650fdsm2949972f8f.25.2024.09.08.01.51.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 08 Sep 2024 01:51:46 -0700 (PDT)
+Date: Sun, 08 Sep 2024 11:44:14 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Joseph Kurape <jkurape@gmail.com>, qemu-devel@nongnu.org
+Cc: 
+Subject: Re: Contributing to Qemu
+User-Agent: meli 0.8.7
+References: <CALcAbx6pnqwB2TRJMOGu10ZkY-6STOJX81ZGeUNarfXwV+fPvQ@mail.gmail.com>
+In-Reply-To: <CALcAbx6pnqwB2TRJMOGu10ZkY-6STOJX81ZGeUNarfXwV+fPvQ@mail.gmail.com>
+Message-ID: <jhkm8.uh7rl3q19uua@linaro.org>
 MIME-Version: 1.0
-From: Joseph Kurape <jkurape@gmail.com>
-Date: Sun, 8 Sep 2024 08:28:18 +0100
-Message-ID: <CALcAbx6pnqwB2TRJMOGu10ZkY-6STOJX81ZGeUNarfXwV+fPvQ@mail.gmail.com>
-Subject: Contributing to Qemu
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004dcbe406219696ea"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=jkurape@gmail.com; helo=mail-yw1-x1131.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,37 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004dcbe406219696ea
-Content-Type: text/plain; charset="UTF-8"
+On Sun, 08 Sep 2024 10:28, Joseph Kurape <jkurape@gmail.com> wrote:
+>Hello,
+>
+>I'm new to open-source, but I've learned C and Python.
+>
+>I've read the 'Getting Started' guide, but aside from signing up for the
+>mailing list and getting the source code, it doesn't provide much direction
+>for beginners.
+>
+>I'm looking for somewhere I can contribute. Could any maintainer suggest
+>any issue they need fixing or offer general directions on the best way to
+>get started?
 
-Hello,
+Hello Joseph!
 
-I'm new to open-source, but I've learned C and Python.
+First, the bad news: QEMU is a sophisticated and complicated project, 
+and I would not recommend it as the first foray of serious programming 
+to most people. But the good news is, it is still possible to contribute 
+without being an expert simply because QEMU is composed of many 
+different things.
 
-I've read the 'Getting Started' guide, but aside from signing up for the
-mailing list and getting the source code, it doesn't provide much direction
-for beginners.
+The usual advice is to take a look at the issues labelled as 
+"Bite-Sized" on our Issue tracker:
 
-I'm looking for somewhere I can contribute. Could any maintainer suggest
-any issue they need fixing or offer general directions on the best way to
-get started?
+https://gitlab.com/qemu-project/qemu/-/issues/?sort=created_date&state=opened&label_name%5B%5D=Bite+Sized&first_page_size=50
 
-- JK
+Take your time looking at each of them and you can choose something that 
+looks approachable to you.
 
---0000000000004dcbe406219696ea
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Note: I see that in many issues people say they want to contribute and 
+ask for the issue to be assigned to them- no need to do that! Focus on 
+writing down your solution and sending it to the list while following 
+the "submitting a patch" docs: 
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html
 
-<div dir=3D"auto"><div dir=3D"auto">Hello,=C2=A0</div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">I&#39;m new to open-source, but I&#39;ve learned C=
- and Python.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto">I&#39=
-;ve read the &#39;Getting Started&#39; guide, but aside from signing up for=
- the mailing list and getting the source code, it doesn&#39;t provide much =
-direction for beginners.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D=
-"auto">I&#39;m looking for somewhere I can contribute. Could any maintainer=
- suggest any issue they need fixing or offer general directions on the best=
- way to get started?</div><div dir=3D"auto"><br></div><div dir=3D"auto">- J=
-K</div></div>
+If you have any kind of technical question you should ask on IRC, if you 
+happen on any developer being online at the same time as you, or on the 
+list. Do not ask people in private because not only will less people see 
+your question, but most QEMU maintainers only pay attention to the 
+mailing list for QEMU related discussion.
 
---0000000000004dcbe406219696ea--
+If you have any more questions feel free to ask!
+
+
 
