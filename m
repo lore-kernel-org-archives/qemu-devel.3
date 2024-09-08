@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C56CD4F4C
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 20:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD52ECD4F4C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 21:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snOyE-0000Ns-Gv; Sun, 08 Sep 2024 16:57:18 -0400
+	id 1snP1O-0004gt-Ip; Sun, 08 Sep 2024 17:00:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snOyC-0000NN-VK
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 16:57:16 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1snP1H-0004gA-Sg
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 17:00:31 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snOyB-0006YT-4z
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 16:57:16 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-206b9455460so29598545ad.0
- for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 13:57:14 -0700 (PDT)
+ id 1snP1G-0006uy-Dl
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 17:00:27 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7178cab62e6so3267902b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 14:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725829033; x=1726433833; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725829225; x=1726434025; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lOnxo3WPcdlSAN8Byyn41aZrldl+bFA8fK0Eo3Pj9uA=;
- b=EPAcnXOxVAGQWKbil7HDWzuCwBXGb/nLClMVlslF7xpob8A3Lij3l11U2qsIvT8T+K
- NNSLiYK0zIXyNbD6xRYnlOL84VG7rR5JR6p6fxGPkODpqxDTbfb9cNwyerLYRipuzeKS
- foMXfrUCttABOWA9YE6CQMmlOUJAdQXQztemV0JN/udAZd+CpwxpdLjQsdGXz6IeX+ii
- exZ42xtX3LYdBvIq7t61ezFAPOpxGjBvDdzXlKYZ2ZEMmlvf2ESPUFa4GFrfh6id/BsQ
- xeTjgG4y3uUbsw4Ihs1u5cBs/0U33+Bh8U5D2mDT+dVLfC7uKWFiNIDeZ/UvxSA5w91R
- B5qw==
+ bh=bYcXw7KAFe701pdxJkA3FIMYRwY2CTccFo9bn1ngbYY=;
+ b=jtUDsgIWgBahaSYEc6CrrERTnWZpKoUFETVDd4NthE5OsJCI9QnG2J1qLLEa/X84FZ
+ Ra3ECkOjBrOpkOOTg5DvIH4wWBOlUW4tHkp+InEM5zaLtS5ETxPMlL9TPNjG/vmpt3vu
+ N0yDoJlOQ5+Yj2EmBIO3p6jy6MGo37Xq7P/CjXdV/6PLcUcCUzo+fpNWSY3XLWP+n8wy
+ NKmPwath2V542m5+fJ5L3tVtF9Wg2Nxc3JIk83zhggtxOwHjc4YV8m+Qf0U0/w89btUQ
+ KKEVLR3vBAA81E5AB4JNBQ13OjudPWkeZUBCg4sKhGOWmsitMsaPyVp5R3kBPPhT4fi9
+ psrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725829033; x=1726433833;
+ d=1e100.net; s=20230601; t=1725829225; x=1726434025;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lOnxo3WPcdlSAN8Byyn41aZrldl+bFA8fK0Eo3Pj9uA=;
- b=gSqlEq0/5A9zp25HxVHtWvUEQUWhR+vFAMjk8QR+YWKXgjgUzHmHmH/Zds7oHKeXmJ
- AqKW1Uo2GandvoLvySwaeMkhe2wxfrJ8V1FoA9g6DRA8OfrwF50bNmFeFBDha0xUhHS+
- AH4JJKk60zmIWByrYVvELvLB4r86dMvrc2stGJHefPSNQ5JkWUEeMqSLHhzXpdkldpYT
- UHIueSMtQ0WSN8NpCijbVT/D5lcxYZIcds9QA/t1clwMDrwxzzmcG3vVeGylEaeV42vQ
- 546l9i7VRTKU27OnzpmALpmPYNXhhpzq+HcIdISILz2hDKBmqCj6jiuWQOlEB9aGXY/X
- dZwA==
-X-Gm-Message-State: AOJu0YwHqCj3aHJH59FnWMK8/J4abJNc2cEh+1uEw0wbsEV0dSGy9eoO
- dgxrwlmVHUQOTZzOZb0pOOTbzHDOrq7HA8gH0nzuOAoqSW4ghYrwKHN+FahbaDk=
-X-Google-Smtp-Source: AGHT+IHHDsqVBkD1TbzQzWUwFXBmF1sJRLlH/Uj6hsjTJiEitipW7zmL31FhqwLe6k5hu6orDcTwZg==
-X-Received: by 2002:a17:902:d501:b0:205:76c1:3742 with SMTP id
- d9443c01a7336-206ee92559dmr122548225ad.3.1725829033060; 
- Sun, 08 Sep 2024 13:57:13 -0700 (PDT)
+ bh=bYcXw7KAFe701pdxJkA3FIMYRwY2CTccFo9bn1ngbYY=;
+ b=asLO04pmS5CAVDsDLa1kepjEX8IApy7BAYC8U6NtItEEyqpBiYe7PE0iAfTyKAcC97
+ 9ZRUCf4grbPi1S+Du6o1+wepP5j5l9v5QVQsrD+o0XqeNVa9/9EriALWzqg+HigHZd9I
+ d+FnhQk61Esi44nqa6zPyJ1wUDu1UgljTwUxscAr02tfeElZUo212bQ1+bTKwgF/0ig3
+ ds6M4gOpsw0MxWUqEike0FwWc4NQy0TP/WBxJ/8ZTXzLdskEvBSgzN9v3upxnhx3A5Nr
+ LMqndG4IL2GF9SOHAMqOh9a2Pd7CEpXBT5x/6en3AP/JnSCK9bWrbIjxpK9LRgi9pDlW
+ oDbg==
+X-Gm-Message-State: AOJu0YwZI3+zDxLDpyqhpUNl3RWUyU2/uWfnddSPI++Qvicsv3HwZkXR
+ HES6iflBm5eAgDvoYAv5js1yP8DFeRkBb0m7Ln8VF1M9Ku4iuDUp+2GwDgegFUk=
+X-Google-Smtp-Source: AGHT+IHG/T66D/FCup5Ahf/BJXpUM6uIkYt/g+Zy4LLHYUuJyE5c60FEzvNUKJyjV99wsr2T2XauiA==
+X-Received: by 2002:a05:6a00:244e:b0:70d:2b95:d9c0 with SMTP id
+ d2e1a72fcca58-718d5e55d73mr13914923b3a.14.1725829224814; 
+ Sun, 08 Sep 2024 14:00:24 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f222a2sm22943065ad.203.2024.09.08.13.57.12
+ d2e1a72fcca58-718e58c68dfsm2372925b3a.81.2024.09.08.14.00.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Sep 2024 13:57:12 -0700 (PDT)
-Message-ID: <a1ac975f-6d79-43bd-8c2e-68a2fbb9c3b2@linaro.org>
-Date: Sun, 8 Sep 2024 13:57:10 -0700
+ Sun, 08 Sep 2024 14:00:24 -0700 (PDT)
+Message-ID: <d1798b81-d288-4345-a8d9-639db461c8aa@linaro.org>
+Date: Sun, 8 Sep 2024 14:00:22 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] target/i386/gdbstub: Factor out gdb_get_reg() and
- gdb_write_reg()
+Subject: Re: [PATCH 4/5] target/i386/gdbstub: Expose orig_ax
 To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>, 
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
 References: <20240802095942.34565-1-iii@linux.ibm.com>
- <20240802095942.34565-4-iii@linux.ibm.com>
+ <20240802095942.34565-5-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802095942.34565-4-iii@linux.ibm.com>
+In-Reply-To: <20240802095942.34565-5-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,54 +100,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/2/24 02:59, Ilya Leoshkevich wrote:
-> @@ -248,6 +253,22 @@ static int x86_cpu_gdb_load_seg(X86CPU *cpu, X86Seg sreg, uint8_t *mem_buf)
->       return 4;
->   }
->   
-> +static int gdb_write_reg(CPUX86State *env, uint8_t *mem_buf, target_ulong *val)
-> +{
-> +    if (TARGET_LONG_BITS == 64) {
-> +        if (env->hflags & HF_CS64_MASK) {
-> +            *val = ldq_p(mem_buf);
-> +        } else {
-> +            *val = ldq_p(mem_buf) & 0xffffffffUL;
-> +        }
-> +        return 8;
-> +    } else {
-> +        *val &= ~0xffffffffUL;
-> +        *val |= (uint32_t)ldl_p(mem_buf);
-> +        return 4;
-> +    }
-> +}
-> +
->   int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->   {
->       X86CPU *cpu = X86_CPU(cs);
-> @@ -288,18 +309,7 @@ int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->       } else {
->           switch (n) {
->           case IDX_IP_REG:
-> -            if (TARGET_LONG_BITS == 64) {
-> -                if (env->hflags & HF_CS64_MASK) {
-> -                    env->eip = ldq_p(mem_buf);
-> -                } else {
-> -                    env->eip = ldq_p(mem_buf) & 0xffffffffUL;
-> -                }
-> -                return 8;
-> -            } else {
-> -                env->eip &= ~0xffffffffUL;
-> -                env->eip |= (uint32_t)ldl_p(mem_buf);
-> -                return 4;
-> -            }
-> +            return gdb_write_reg(env, mem_buf, &env->eip);
+> Copy XML files describing orig_ax from GDB and glue them with
+> CPUX86State.orig_ax.
+> 
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> ---
+>   configs/targets/i386-linux-user.mak   |  2 +-
+>   configs/targets/x86_64-linux-user.mak |  2 +-
+>   gdb-xml/i386-32bit-linux.xml          | 11 ++++++
+>   gdb-xml/i386-64bit-linux.xml          | 11 ++++++
+>   target/i386/cpu.c                     |  1 +
+>   target/i386/cpu.h                     |  1 +
+>   target/i386/gdbstub.c                 | 51 +++++++++++++++++++++++++++
+>   7 files changed, 77 insertions(+), 2 deletions(-)
+>   create mode 100644 gdb-xml/i386-32bit-linux.xml
+>   create mode 100644 gdb-xml/i386-64bit-linux.xml
 
-Existing bug, but the insert in the !(TARGET_LONG_BITS == 64) case is silly.
-Because TARGET_LONG_BITS == 32, target_ulong eip is 32-bits, so the "insert" doesn't 
-really insert anything.
-
-Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
