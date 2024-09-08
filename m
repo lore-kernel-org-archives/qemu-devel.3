@@ -4,36 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D331FE6FE49
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 13:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F3DE6FE49
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 13:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snHWY-0000jx-QZ; Sun, 08 Sep 2024 09:00:15 -0400
+	id 1snHZH-0005N3-Vk; Sun, 08 Sep 2024 09:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1snHWW-0000h1-0o
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 09:00:12 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1snHZG-0005L9-9T; Sun, 08 Sep 2024 09:03:02 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1snHWU-0007ib-2v
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 09:00:11 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1snHZE-0007xo-Iw; Sun, 08 Sep 2024 09:03:02 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 967BE8CCC0;
- Sun,  8 Sep 2024 16:00:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 418208CCC2;
+ Sun,  8 Sep 2024 16:02:56 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 76943137660;
- Sun,  8 Sep 2024 16:00:07 +0300 (MSK)
-Message-ID: <26667ae9-1e7b-4733-9a48-3a647c306c0b@tls.msk.ru>
-Date: Sun, 8 Sep 2024 16:00:07 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 19235137662;
+ Sun,  8 Sep 2024 16:02:58 +0300 (MSK)
+Message-ID: <30eaba83-21d5-4ae9-8f1f-1fbb39d8fbe1@tls.msk.ru>
+Date: Sun, 8 Sep 2024 16:02:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Build failure due to xen
-Cc: Kenneth Adam Miller <kennethadammiller@gmail.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-References: <CAK7rcp8YkeRisKBTfV0nenk6WvsG2Vwsqnm+=B=KD6rHuSqfog@mail.gmail.com>
- <bc2ab18b-0e26-40c5-af01-98616fcddb2e@tls.msk.ru>
- <CAFEAcA_-nV6zVq5Qo6XoF3gtnLNHaHBbMWJZOsUyrg_U=-fJDg@mail.gmail.com>
+Subject: Re: [PATCH] gitlab: fix logic for changing docker tag on stable
+ branches
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-staging@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>, qemu-stable <qemu-stable@nongnu.org>
+References: <20240906140958.84755-1-berrange@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -60,17 +64,16 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CAFEAcA_-nV6zVq5Qo6XoF3gtnLNHaHBbMWJZOsUyrg_U=-fJDg@mail.gmail.com>
+In-Reply-To: <20240906140958.84755-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -58
-X-Spam_score: -5.9
-X-Spam_bar: -----
-X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, MISSING_HEADERS=1.021,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,48 +89,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-07.09.2024 13:44, Peter Maydell:
-> On Sat, 7 Sept 2024 at 07:39, Michael Tokarev <mjt@tls.msk.ru> wrote:
->>
->> 07.09.2024 02:59, Kenneth Adam Miller wrote:
->>> Hello,
->>>
->>> I'm on commit bd80b59 and my host is:
->>
->> $ git desc bd80b59
->> v2.4.0-rc3-9-gbd80b5963f
->>
->> Date:   Mon Aug 3 11:44:07 2015 +0100
+06.09.2024 17:09, Daniel P. Berrangé wrote:
+> This fixes:
 > 
-> Wow, that is very old. So the answer, in order of preference, is:
+>    commit e28112d00703abd136e2411d23931f4f891c9244
+>    Author: Daniel P. Berrangé <berrange@redhat.com>
+>    Date:   Thu Jun 8 17:40:16 2023 +0100
 > 
-> (1) don't try to build such an ancient QEMU version: use
->      recent QEMU instead.
-> (2) build on (a container of) whatever the contemporary Linux
->      distro version of the time would have been: QEMU at that
->      time built on Linux of that time, so it's the mismatch
->      between new host (system headers, compiler, etc) and old
->      QEMU that is causing problems.
-> (3) if you must try to build ancient QEMU on a modern host,
->      then you are going to run into a pile of more or less
->      annoying compilation errors, and you're on your own in
->      figuring out how to fix them. Some strategies:
->       - if the issue is in part of QEMU you don't care about
->         then use a configure --disable-foo option to just
->         not try to compile that feature/etc. e.g. here if you
->         don't care about Xen support then disable it.
->       - look through QEMU's commit log and the mailing lists
->         for the compile message -- often the fix will have
->         been made in some later QEMU and you could backport it
->       - otherwise you'll just have to figure out and address
->         whatever the incompatibility is.
+>      gitlab: stable staging branches publish containers in a separate tag
+> 
+> Due to a copy+paste mistake, that commit included "QEMU_JOB_SKIPPED"
+> in the final rule that was meant to be a 'catch all' for staging
+> branches.
+> 
+> As a result stable branches are still splattering dockers from the
+> primary development branch.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-There's also
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Tested-by: Michael Tokarev <mjt@tls.msk.ru>
 
-  (4) --disable-xen
+And obviously I'll pick this one up for qemu-stable.
 
-I guess.  FWIW.
+I can pick this up through the trivial tree - it seems to be trivial
+enough :)
+
+Thank you very much Daniel!
 
 /mjt
+
+> ---
+> 
+> This should be pulled into all stable branches that have the above
+> mentioned commit content present.
+> 
+>   .gitlab-ci.d/base.yml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+> index bf3d8efab6..25b88aaa06 100644
+> --- a/.gitlab-ci.d/base.yml
+> +++ b/.gitlab-ci.d/base.yml
+> @@ -128,7 +128,7 @@ variables:
+>         when: manual
+>   
+>       # Jobs can run if any jobs they depend on were successful
+> -    - if: '$QEMU_JOB_SKIPPED && $CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_BRANCH =~ /staging-[[:digit:]]+\.[[:digit:]]/'
+> +    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_BRANCH =~ /staging-[[:digit:]]+\.[[:digit:]]/'
+>         when: on_success
+>         variables:
+>           QEMU_CI_CONTAINER_TAG: $CI_COMMIT_REF_SLUG
+
 
 
