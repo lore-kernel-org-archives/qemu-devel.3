@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99245ECE589
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 21:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ABFBECE58A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 21:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snlf4-0000OK-62; Mon, 09 Sep 2024 17:11:02 -0400
+	id 1snlfW-0002LJ-LB; Mon, 09 Sep 2024 17:11:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1snlf1-0000L3-Ij; Mon, 09 Sep 2024 17:10:59 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1snlfL-0001Y4-V4; Mon, 09 Sep 2024 17:11:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1snley-00024u-UU; Mon, 09 Sep 2024 17:10:59 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 489CcM8v014165;
- Mon, 9 Sep 2024 21:10:51 GMT
+ id 1snlfG-00028M-66; Mon, 09 Sep 2024 17:11:19 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 489JUBw8007077;
+ Mon, 9 Sep 2024 21:11:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version:content-type
- :content-transfer-encoding; s=pp1; bh=ROqeBY2dyQO0oLMvXjqZZSR+gd
- 5rWtRn91TnIGzhMa0=; b=WJb+ePD2yWJ1XMLx0Ekd97eNMgnyYsfrCCzExyVxRL
- efFEjHsX23ZX5QCkWtnwzBlEMcf/sO6BVxNaNNmNIjfZ0raEfblvQtC8Amk1oAwl
- P1i8SLtpm3Uoco795ZAEo3nPJQ2MdId2V0TjV8vfR7aRjQCk8kjclu+sas35kdxL
- Ya25ZUU6mAieLpTdLLvDaezi/7LwGbgP/bVuGD1OL4AhkrPGhNfrK4V+5v+jCfFy
- 99nVTf+VqppDamz/Zo2utIyTb2LgC/pj9j26gEsCKNzHBUg0TXQTa+eeLY4kVyWo
- bUp0V16akzLmXcYNJJByeYfFQIrw0qYr/9fe5lwWN/qg==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=/zxLeQYtcXKa6
+ aHE78g886OsQB0jd+Mva5dkBaT1Sag=; b=T/lw0/GjBDv186O6VcibS7L0KVIXu
+ O2NLDU2RLr6qkZqoyqxkJwK1jZjQbipf5/0dPD8+4tcLrrcJl/mfuSO75rcC+4FZ
+ o9bXbJ2AynC0DpCHgqPy6atC9yzhOOFrjy98pRXtAhoYfJuM1hqAZOrQ81Giaqx6
+ uoMVYqR+aHFlQkXuWxIMFVvzGVdeG08Ar7WqYv9mQSzuC93ZUazcF5/xkzclD4qY
+ OJIpoCDokj2Mp8AXvjYBk7F9P/DGRq2xPFcsc4CEcl4vsj0+5qcYytZw0/2jLTUN
+ FQ6B/G/zPqSQuf0eO64rSANrsn//zyC6BDJ1seWP7OK5Amqx8pQ4rzAfg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gd8kc35x-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegwm1gu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 21:10:51 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 489LAp4D032643;
- Mon, 9 Sep 2024 21:10:51 GMT
+ Mon, 09 Sep 2024 21:11:04 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 489LB4C8020989;
+ Mon, 9 Sep 2024 21:11:04 GMT
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gd8kc35w-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegwm1gt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 21:10:51 +0000 (GMT)
+ Mon, 09 Sep 2024 21:11:04 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 489IGd0d003122;
- Mon, 9 Sep 2024 21:10:50 GMT
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 489IGd0e003122;
+ Mon, 9 Sep 2024 21:11:03 GMT
 Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h15trgsc-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h15trgt4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 21:10:50 +0000
+ Mon, 09 Sep 2024 21:11:03 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
  by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 489LAkCq54133100
+ 489LB0IM52166952
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Sep 2024 21:10:47 GMT
+ Mon, 9 Sep 2024 21:11:00 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DFA6A20049;
- Mon,  9 Sep 2024 21:10:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1BD132004D;
+ Mon,  9 Sep 2024 21:11:00 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B1A3520040;
- Mon,  9 Sep 2024 21:10:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E3DCB20040;
+ Mon,  9 Sep 2024 21:10:58 +0000 (GMT)
 Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
  by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Sep 2024 21:10:45 +0000 (GMT)
+ Mon,  9 Sep 2024 21:10:58 +0000 (GMT)
 From: Michael Kowal <kowal@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
  npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH v2 00/14] XIVE2 changes for TIMA operations
-Date: Mon,  9 Sep 2024 16:10:24 -0500
-Message-Id: <20240909211038.27440-1-kowal@linux.ibm.com>
+Subject: [PATCH v2 09/14] ppc/xive2: Change context/ring specific functions to
+ be generic
+Date: Mon,  9 Sep 2024 16:10:33 -0500
+Message-Id: <20240909211038.27440-10-kowal@linux.ibm.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240909211038.27440-1-kowal@linux.ibm.com>
+References: <20240909211038.27440-1-kowal@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=yes
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: U9vMbntb55qeLj8wDXNY5b-yMwbhKtU6
-X-Proofpoint-ORIG-GUID: n9TJCOFeHIEe6Sl1lfswjlqM4cEzgCBI
+X-Proofpoint-GUID: t_ThiL39oCRwPPGYhIll_jDma9GmHRb5
+X-Proofpoint-ORIG-GUID: MjfNA0tLSB3UdPeIObgKYzlfr_6CB79b
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-09_10,2024-09-09_02,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 suspectscore=0 clxscore=1015 phishscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=693 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ phishscore=0 mlxlogscore=767
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409090166
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -111,79 +113,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In XIVE Gen 2 there are many operations that were not modeled and are
-needed for PowerVM.  These changes are associated with the following Thread
-Interrupt Management Area subjects:
- - OS context
- - Thread context
- - Pulling contexts to 'cache lines'
- - Pool targets
- - Enhaced trace data for XIVE Gen2
+Some the functions that have been created are specific to a ring or context. Some
+of these same functions are being changed to operate on any ring/context. This  will
+simplify the next patch sets that are adding additional ring/context operations.
 
-version 2:
-- use dma_memory_write() instead of cpu_physical_memory_write()
-- use ternery operator in NVG/NVC pnv_xive2_vst_read/write()
-- removed xive2_nvgc_set_backlog() until it is needed
-- re-defined word 2 valid bits since it is the same in each Reporting
-- provided better fix for possible NSR operation overflow
-- moved changes for operations that can occur on ring, in a new patch set (10/13)
-- version 1 reviewed-by tags:
-$b4 am 20240801203008.11224-1-kowal@linux.ibm.com
-Analyzing 35 messages in the thread
-Analyzing 0 code-review messages
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 ---
-  [PATCH 1/13] pnv/xive: TIMA patch sets pre-req alignment and formatting changes
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 2/13] pnv/xive2: Define OGEN field in the TIMA
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 3/13] ppc/xive2: Support TIMA "Pull OS Context to Odd Thread Reporting Line"
-  [PATCH 4/13] pnv/xive2: Support for "OS LGS Push" TIMA operation
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 5/13] ppc/xive2: Dump more NVP state with 'info pic'
-  [PATCH 6/13] ppc/xive2: Dump the VP-group and crowd tables with 'info pic'
-  [PATCH 7/13] ppc/xive2: Allow 1-byte write of Target field in TIMA
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 8/13] ppc/xive2: Support "Pull Thread Context to Register" operation
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 9/13] ppc/xive2: Support "Pull Thread Context to Odd Thread Reporting Line"
-  [PATCH 10/13] pnv/xive: Add special handling for pool targets
-  [PATCH 11/13] pnv/xive: Update PIPR when updating CPPR
-  [PATCH 12/13] pnv/xive2: TIMA support for 8-byte OS context push for PHYP
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 13/13] pnv/xive2: TIMA CI ops using alternative offsets or byte lengths
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
+ include/hw/ppc/xive.h |  2 +-
+ hw/intc/xive.c        |  6 ++--
+ hw/intc/xive2.c       | 77 ++++++++++++++++++++++++++++---------------
+ 3 files changed, 55 insertions(+), 30 deletions(-)
 
-
-Frederic Barrat (4):
-  pnv/xive2: Define OGEN field in the TIMA
-  ppc/xive2: Support TIMA "Pull OS Context to Odd Thread Reporting Line"
-  ppc/xive2: Dump more NVP state with 'info pic'
-  ppc/xive2: Dump the VP-group and crowd tables with 'info pic'
-
-Glenn Miles (7):
-  pnv/xive2: Support for "OS LGS Push" TIMA operation
-  ppc/xive2: Allow 1-byte write of Target field in TIMA
-  ppc/xive2: Support "Pull Thread Context to Register" operation
-  ppc/xive2: Support "Pull Thread Context to Odd Thread Reporting Line"
-  pnv/xive: Add special handling for pool targets
-  pnv/xive: Update PIPR when updating CPPR
-  pnv/xive2: TIMA support for 8-byte OS context push for PHYP
-
-Michael Kowal (3):
-  pnv/xive: TIMA patch sets pre-req alignment and formatting changes
-  ppc/xive2: Change context/ring specific functions to be generic
-  pnv/xive2: TIMA CI ops using alternative offsets or byte lengths
-
- include/hw/ppc/xive.h       |   2 +-
- include/hw/ppc/xive2.h      |  18 ++
- include/hw/ppc/xive2_regs.h |  25 ++-
- include/hw/ppc/xive_regs.h  |  45 +++--
- hw/intc/pnv_xive2.c         |  44 ++++-
- hw/intc/xive.c              | 201 ++++++++++++++++++-----
- hw/intc/xive2.c             | 317 ++++++++++++++++++++++++++++++------
- 7 files changed, 537 insertions(+), 115 deletions(-)
-
---
+diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+index 28c181faa2..31242f0406 100644
+--- a/include/hw/ppc/xive.h
++++ b/include/hw/ppc/xive.h
+@@ -533,7 +533,7 @@ Object *xive_tctx_create(Object *cpu, XivePresenter *xptr, Error **errp);
+ void xive_tctx_reset(XiveTCTX *tctx);
+ void xive_tctx_destroy(XiveTCTX *tctx);
+ void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb);
+-void xive_tctx_reset_os_signal(XiveTCTX *tctx);
++void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
+ 
+ /*
+  * KVM XIVE device helpers
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 5b66a3aec5..f1d007d9a6 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -114,7 +114,7 @@ static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
+     }
+ }
+ 
+-void xive_tctx_reset_os_signal(XiveTCTX *tctx)
++void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
+ {
+     /*
+      * Lower the External interrupt. Used when pulling an OS
+@@ -122,7 +122,7 @@ void xive_tctx_reset_os_signal(XiveTCTX *tctx)
+      * context. It should be raised again when re-pushing the OS
+      * context.
+      */
+-    qemu_irq_lower(xive_tctx_output(tctx, TM_QW1_OS));
++    qemu_irq_lower(xive_tctx_output(tctx, ring));
+ }
+ 
+ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+@@ -424,7 +424,7 @@ static uint64_t xive_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+     qw1w2_new = xive_set_field32(TM_QW1W2_VO, qw1w2, 0);
+     xive_tctx_set_os_cam(tctx, qw1w2_new);
+ 
+-    xive_tctx_reset_os_signal(tctx);
++    xive_tctx_reset_signal(tctx, TM_QW1_OS);
+     return qw1w2;
+ }
+ 
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 8d3d69a0db..38a4b0ff68 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -270,13 +270,14 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
+  *     the NVP by changing the H bit while the context is enabled
+  */
+ 
+-static void xive2_tctx_save_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+-                                   uint8_t nvp_blk, uint32_t nvp_idx)
++static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
++                                uint8_t nvp_blk, uint32_t nvp_idx,
++                                uint8_t ring)
+ {
+     CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+     uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+     Xive2Nvp nvp;
+-    uint8_t *regs = &tctx->regs[TM_QW1_OS];
++    uint8_t *regs = &tctx->regs[ring];
+ 
+     if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
+@@ -321,13 +322,13 @@ static void xive2_tctx_save_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+     xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 1);
+ }
+ 
+-static void xive2_os_cam_decode(uint32_t cam, uint8_t *nvp_blk,
+-                                uint32_t *nvp_idx, bool *vo, bool *ho)
++static void xive2_cam_decode(uint32_t cam, uint8_t *nvp_blk,
++                             uint32_t *nvp_idx, bool *valid, bool *hw)
+ {
+     *nvp_blk = xive2_nvp_blk(cam);
+     *nvp_idx = xive2_nvp_idx(cam);
+-    *vo = !!(cam & TM2_QW1W2_VO);
+-    *ho = !!(cam & TM2_QW1W2_HO);
++    *valid = !!(cam & TM2_QW1W2_VO);
++    *hw = !!(cam & TM2_QW1W2_HO);
+ }
+ 
+ 
+@@ -351,37 +352,54 @@ static uint32_t xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
+     return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
+ }
+ 
+-uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+-                              hwaddr offset, unsigned size)
++static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
++                                  hwaddr offset, unsigned size, uint8_t ring)
+ {
+     Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+-    uint32_t qw1w2 = xive_tctx_word2(&tctx->regs[TM_QW1_OS]);
+-    uint32_t qw1w2_new;
+-    uint32_t cam = be32_to_cpu(qw1w2);
++    uint32_t target_ringw2 = xive_tctx_word2(&tctx->regs[ring]);
++    uint32_t cam = be32_to_cpu(target_ringw2);
+     uint8_t nvp_blk;
+     uint32_t nvp_idx;
+-    bool vo;
++    uint8_t cur_ring;
++    bool valid;
+     bool do_save;
+ 
+-    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_save);
++    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &valid, &do_save);
+ 
+-    if (!vo) {
++    if (!valid) {
+         qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid NVP %x/%x !?\n",
+                       nvp_blk, nvp_idx);
+     }
+ 
+-    /* Invalidate CAM line */
+-    qw1w2_new = xive_set_field32(TM2_QW1W2_VO, qw1w2, 0);
+-    memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2_new, 4);
++    /* Invalidate CAM line of requested ring and all lower rings */
++    for (cur_ring = TM_QW0_USER; cur_ring <= ring;
++         cur_ring += XIVE_TM_RING_SIZE) {
++        uint32_t ringw2 = xive_tctx_word2(&tctx->regs[cur_ring]);
++        uint32_t ringw2_new = xive_set_field32(TM2_QW1W2_VO, ringw2, 0);
++        memcpy(&tctx->regs[cur_ring + TM_WORD2], &ringw2_new, 4);
++    }
+ 
+     if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
+-        xive2_tctx_save_os_ctx(xrtr, tctx, nvp_blk, nvp_idx);
++        xive2_tctx_save_ctx(xrtr, tctx, nvp_blk, nvp_idx, ring);
+     }
+ 
+-    xive_tctx_reset_os_signal(tctx);
+-    return qw1w2;
++    /*
++     * Lower external interrupt line of requested ring and below except for
++     * USER, which doesn't exist.
++     */
++    for (cur_ring = TM_QW1_OS; cur_ring <= ring;
++         cur_ring += XIVE_TM_RING_SIZE) {
++        xive_tctx_reset_signal(tctx, cur_ring);
++    }
++    return target_ringw2;
+ }
+ 
++uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
++                              hwaddr offset, unsigned size)
++{
++    return xive2_tm_pull_ctx(xptr, tctx, offset, size, TM_QW1_OS);
++ }
++
+ #define REPORT_LINE_GEN1_SIZE       16
+ 
+ static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
+@@ -424,8 +442,9 @@ static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
+     }
+ }
+ 
+-void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+-                             hwaddr offset, uint64_t value, unsigned size)
++static void xive2_tm_pull_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
++                                 hwaddr offset, uint64_t value,
++                                 unsigned size, uint8_t ring)
+ {
+     Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+     uint32_t hw_cam, nvp_idx, xive2_cfg, reserved;
+@@ -473,8 +492,14 @@ void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+         assert(result == MEMTX_OK);
+     }
+ 
+-    /* the rest is similar to pull OS context to registers */
+-    xive2_tm_pull_os_ctx(xptr, tctx, offset, size);
++    /* the rest is similar to pull context to registers */
++    xive2_tm_pull_ctx(xptr, tctx, offset, size, ring);
++}
++
++void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
++                             hwaddr offset, uint64_t value, unsigned size)
++{
++    xive2_tm_pull_ctx_ol(xptr, tctx, offset, value, size, TM_QW1_OS);
+ }
+ 
+ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+@@ -573,7 +598,7 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+     bool vo;
+     bool do_restore;
+ 
+-    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
++    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
+ 
+     /* First update the thead context */
+     memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2, 4);
+-- 
 2.43.0
 
 
