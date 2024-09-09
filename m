@@ -4,140 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA260ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042BDECE57A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sng2E-0001Im-HN; Mon, 09 Sep 2024 11:10:34 -0400
+	id 1sng3T-0004i5-Fi; Mon, 09 Sep 2024 11:11:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1sng29-0001EF-Jf; Mon, 09 Sep 2024 11:10:29 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1sng27-0000XK-JS; Mon, 09 Sep 2024 11:10:29 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2d86f713557so2910015a91.2; 
- Mon, 09 Sep 2024 08:10:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725894625; x=1726499425; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=U1+vlid6UHCsrNdIiEYfIUROmFerL4//2tz/VNqUp5o=;
- b=aP3I91sMVHOVKQJ9jzoXD7gYM95NU9dOgifbfIVvVmg3ZuLdrjM3mYEpHfjubRdgcy
- rsEP46qS3JGw4BOstNsnvAJfP/Qiw+Gn3mLyKNo/i822kPJzhDBZoxfCuAk6loJGmVjj
- Qs5B3pnESP0FSQgLlW1DKkLn9IWkl4sca79k3MNUvXP7mybiC/d/7kBnxahHuabT1aaw
- Ertnz+FqMTOcE/XP5uzXYuhheCiew1mpo6hHdyHl3wbmeBf34DXxCjg7410fbZnF1P2b
- D87KsdwNAGExt5s+AlG0cABx6VkRytrXgPi49nPf4pux08/9q8zTR7ijLygzS1VlSMos
- E5wA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sng3P-0004X5-Dg
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:11:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sng3N-0000fa-Nw
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:11:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725894702;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=t5lZdaoZoX9fM7sYQIgcpeQqv7PokUUvIv2qkRsyBHg=;
+ b=evQymNC6NG86F4/ZucAXsJImPnQj1hj6DuBCdaQygmdKaOe8/Tjg2f2AKCQ+FbxzyoEfJN
+ +WXmPD+eJMqmJV2Idecge5sTazrnXD6Z4+FtqU6/GmSkXZDnkUmlmTc5pT+0JbsUpBVC6B
+ Kj0oAwsCAJ/tPaLdoq5wjlNmFrQ2Kwc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-503-JsrE8dTpOf2ym4Rl51KMuA-1; Mon, 09 Sep 2024 11:11:41 -0400
+X-MC-Unique: JsrE8dTpOf2ym4Rl51KMuA-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6c366dfd540so57993506d6.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:11:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725894625; x=1726499425;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1725894701; x=1726499501;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U1+vlid6UHCsrNdIiEYfIUROmFerL4//2tz/VNqUp5o=;
- b=u7BeiSGBiOTwCmKf9swAtuMS4AgFvso8h5tefuSnR/0zYx2N2aFoW9NwdQixBZxe/I
- EZTe8YZjQUKe3MoAa6L4yZ8v4BfmNLA8bM/VjeGNqbeUdAFkSsCbQdqnwu3lZOtPIgAt
- Y+cjs9y4o3FYum+G3bCJVCC84srbXQSSi1JyqMBBPzSqjV/6HHQVhJC6r3eB0PHO3nDj
- xlX6QwtDRCqCq8iylatgPjJLnU3iPx9PZbdJ4H/nNonYh5zi/GSnUhzdDR4OFdojdbkp
- sx9h+uTh9Hupke/GFLnx2A8mxD/wq4jxlyFf6RuKPYoKWLiaX7BKXwt4SyYTOWpPQ5lD
- Lnig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVfjV2oP/JWm39jwiFv6MHhPsGmXcg0Hxzc8VzTkwOCxt9B6c1ZAfN9mb8mUOrsSG1BMuTRFq+juDmjoQ==@nongnu.org,
- AJvYcCVnhXyDdBw5Ham69CUiF4XGCcTJttcyoqomKJkmLBdSLB5SAQVbdb5QY0LC/0R7ua/B0YGV4mw9FA==@nongnu.org
-X-Gm-Message-State: AOJu0YyqLqVgZyYSrPbkSzBQjh9aM8Q3bcezYYVOcnnn67fpJUrfax92
- nbV3loHKE+Y3LtM42CQPY6cbuBANYHTq4bSEZxjq05RMRwCUzjw5
-X-Google-Smtp-Source: AGHT+IGVshV9jOQKy31HA1EWyUItRWXJ7LnwP14zhvXb+6Nvysh4TpP5Oe+v090jiAGAXuGY9lsfEw==
-X-Received: by 2002:a17:90a:12ce:b0:2d8:8eee:ccab with SMTP id
- 98e67ed59e1d1-2dad50140c9mr13773889a91.22.1725894625337; 
- Mon, 09 Sep 2024 08:10:25 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2db043c4107sm4688377a91.28.2024.09.09.08.10.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 08:10:24 -0700 (PDT)
-Message-ID: <b9b2d800-38d6-4fa6-9ac3-9604fb6f9ff2@roeck-us.net>
-Date: Mon, 9 Sep 2024 08:10:23 -0700
+ bh=t5lZdaoZoX9fM7sYQIgcpeQqv7PokUUvIv2qkRsyBHg=;
+ b=tk2PicyocflV8vOeKKt7698vzRgeOLIkMitQD+FggOuAhlzAE2AyuOasMEPMKsfslP
+ 5orU1+N5nYECT9QG+C0XH5iPtlX1CQ0ojTi0QWhyqx+E7Dg9CFAGpTdje+M0jqkdGEPh
+ o4uMvlheQAqKvDgCSnhcve/3/+p9l8xhMP5jQ0yJBLtLgAf+3+ORiakmdk0AxMwL/dEb
+ GGKminO2Cl98BU8rX78IvKCTy3z5GbzMnGSP6Fl6x1hk5J2ZKiWkmoQtlyH4LVT6ucI8
+ Z90CGbI0G1BSPNvhgkzbFG0VA03hvyaAnM2CiynO7x02OGUkfx2VoDroocgHA0fSN1DJ
+ iyPQ==
+X-Gm-Message-State: AOJu0YyYWvqYViOpUjRIJKYLzbcMVfW2R8WcjjlutLwnVJ/6huKcK2q5
+ 5If+hRhfdxZrLDwe5Kzr82xjvOViOR5YgIfmVLXXIN9RqV6i3ZR3Z0k448jhwafkUCn8b3QZ6sz
+ mWumxKQg14EuJOMn7bq1U53eOn19GkQnBltdiiuHNMz9GDnR6cemz
+X-Received: by 2002:a05:6214:3186:b0:6c3:6bfc:77ba with SMTP id
+ 6a1803df08f44-6c528507144mr139762796d6.30.1725894700756; 
+ Mon, 09 Sep 2024 08:11:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6IPc4ZhwHmXhAOxoQyob5MLBk1erIPIWqi5BgulNTpsyXLvzMm8mA7rFYKfeKDs8Zow3tbQ==
+X-Received: by 2002:a05:6214:3186:b0:6c3:6bfc:77ba with SMTP id
+ 6a1803df08f44-6c528507144mr139762336d6.30.1725894700326; 
+ Mon, 09 Sep 2024 08:11:40 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c534787497sm21513796d6.140.2024.09.09.08.11.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Sep 2024 08:11:38 -0700 (PDT)
+Date: Mon, 9 Sep 2024 11:11:36 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Juan Quintela <quintela@redhat.com>,
+ "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Yishai Hadas <yishaih@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ Maor Gottlieb <maorg@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
+ Tarun Gupta <targupta@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, Zhiyi Guo <zhguo@redhat.com>
+Subject: Re: [PATCH v11 08/11] vfio/migration: Implement VFIO migration
+ protocol v2
+Message-ID: <Zt8QKPZiw6BXgh-5@x1n>
+References: <ZthZ1aW_JmO3V9dr@x1n>
+ <95d10ed3-33ef-48a9-9684-3a8c402c5db9@nvidia.com>
+ <ZtiHzQHJ4PgWc21e@x1n>
+ <b8807171-567b-4e21-af83-bc2f6dbbf606@nvidia.com>
+ <ZtnLhW-2eo8hA7bQ@x1n>
+ <812e89c4-35d8-4fc0-ac10-ec36d57f215c@nvidia.com>
+ <ZtnbD69EeXhR6FFc@x1n>
+ <22f013dc-6c47-4902-9b28-08e916c3cf54@nvidia.com>
+ <Ztn5CcxhzYR-SFfE@x1n>
+ <c4eebbbd-00aa-4893-90f8-e6faeb08db90@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] aspeed: Deprecate the tacoma-bmc machine
-To: Joel Stanley <joel@jms.id.au>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240625070830.492251-1-clg@redhat.com>
- <4e04f930-e7af-4084-99a8-2a3139e2bf43@roeck-us.net>
- <5fb7342b-fa67-4cb2-b6fd-2241b7b76d03@redhat.com>
- <f70cb39f-3567-4322-b1c4-1bc5991d91fa@roeck-us.net>
- <8d1fd867-647b-4827-a2b2-a239618a7743@redhat.com>
- <014b83a8-d733-442b-ba33-a24c35e46f3f@roeck-us.net>
- <bdb443f9-376e-4d4e-8c06-9ba0c5482c5e@redhat.com>
- <09457da7-e692-4d9f-92b8-361f14b7a1c2@roeck-us.net>
- <CACPK8XfqOE-GJWgUwC+Kh5r9nT2Jo42R2zdka54sURDiR70j5A@mail.gmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <CACPK8XfqOE-GJWgUwC+Kh5r9nT2Jo42R2zdka54sURDiR70j5A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=groeck7@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c4eebbbd-00aa-4893-90f8-e6faeb08db90@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,38 +118,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 04:20, Joel Stanley wrote:
-> On Sat, 31 Aug 2024 at 05:41, Guenter Roeck <linux@roeck-us.net> wrote:
->>
->> On Fri, Aug 30, 2024 at 10:09:25AM +0200, Cédric Le Goater wrote:
->>> Hello,
->>>
->>>
->>>>>> I solved the problem by adding support for IBM Bonnell (which instantiates
->>>>>> the TPM chip through its devicetree file, similar to tacoma-bmc) to my local
->>>>>> copy of qemu.
->>>>>
->>>>> Hmm, did you copy the rainier-bmc machine definition ?
->>>>>
->>>> For aspeed_machine_bonnell_class_init(), pretty much yes, since I don't know
->>>> the actual hardware. For I2C initialization I used the devicetree file.
->>>> You can find the patch in the master-local or v9.1.0-local branches
->>>> of my qemu clone at https://github.com/groeck/qemu if you are interested.
->>>
->>> Oh nice ! Let's merge the IBM Bonnell machine. We can ask IBM to help fixing
->>> the definitions (strapping). Enabling the PCA9554 is good to have too.
+On Mon, Sep 09, 2024 at 03:52:39PM +0300, Avihai Horon wrote:
 > 
-> Instead of adding Bonnell to qemu, could we use the Rainier machine? I
-> know the kernel device tree removed the i2c tpm, but there's no harm
-> in it being present in the qemu machine.
+> On 05/09/2024 21:31, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > On Thu, Sep 05, 2024 at 07:45:43PM +0300, Avihai Horon wrote:
+> > > > Does it also mean then that the currently reported stop-size - precopy-size
+> > > > will be very close to the constant non-iterable data size?
+> > > It's not constant, while the VM is running it can change.
+> > I wonder how heavy is VFIO_DEVICE_FEATURE_MIG_DATA_SIZE ioctl.
+> > 
+> > I just gave it a quick shot with a busy VM migrating and estimate() is
+> > invoked only every ~100ms.
+> > 
+> > VFIO might be different, but I wonder whether we can fetch stop-size in
+> > estimate() somehow, so it's still a pretty fast estimate() meanwhile we
+> > avoid the rest of exact() calls (which are destined to be useless without
+> > VFIO).
+> > 
+> > IIUC so far the estimate()/exact() was because ram sync is heavy when
+> > exact().  When idle it's 80+ms now for 32G VM with current master (which
+> > has a bug and I'm fixing it up [1]..), even if after the fix it's 3ms (I
+> > think both numbers contain dirty bitmap sync for both vfio and kvm).  So in
+> > that case maybe we can still try fetching stop-size only for both
+> > estimate() and exact(), but only sync bitmap in exact().
 > 
-> The bonnell device tree should boot fine on the rainier machine for
-> your purposes.
-> 
+> IIUC, the end goal is to prevent migration thread spinning uselessly in
+> pre-copy in such scenarios, right?
+> If eventually we do call get stop-copy-size in estimate(), we will move the
+> spinning from "exact() -> estimate() -> exact() -> estimate() ..." to
+> "estimate() -> estimate() -> ...".
+> If so, what benefit would we get from this? We only move the useless work to
+> other place.
 
-Yes, I confirmed that works. Ok, I'll do that.
+We can avoid exact() calls invoked for other vmstate handlers, e.g. RAM,
+which can be much heavier and can require BQL during the slow process,
+which can further block more vcpu operations during migration.
+
+And as mentioned previously, VFIO is, AFAIK, the only handler that provide
+different definitions of estimate() and exact(), which can be confusing,
+and it's against the "estimate() is the fast-path" logic.
+
+But I agree it's not fundamentally changing much..
+
+> Shouldn't we directly go for the non precopy-able vs precopy-able report
+> that you suggested?
+
+Yep, I just thought the previous one would be much easier to achieve.  And
+as you said, VFIO is still pretty special that the user will need manual
+involvements anyway to specify e.g. very large downtimes, so this condition
+shouldn't be a major case to happen.  Said that, if you have a solid idea
+on this please feel free to go ahead directly with a complete solution.
 
 Thanks,
-Guenter
+
+-- 
+Peter Xu
 
 
