@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199FAECE584
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB18AECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniC4-0005Mc-Ki; Mon, 09 Sep 2024 13:28:52 -0400
+	id 1sniC2-000568-GE; Mon, 09 Sep 2024 13:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBz-0004zq-Li
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:48 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sniBt-0004Wg-19
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:41 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBx-000643-9o
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:47 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20543fdb7acso31749265ad.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:44 -0700 (PDT)
+ id 1sniBr-00062X-BJ
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:40 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2053525bd90so39040705ad.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725902924; x=1726507724; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725902918; x=1726507718; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IVrsW+o3FMgR3VpWI1k5gdQknpFqVu925X71ufmaWs0=;
- b=N2vxc4UUsy+T8XRSG/OH953qawfbJ36AN+SDxOihMj1uEwXqbxz1J4tcii+KrElJgR
- i3sRFYL4h2WuNGos3lYZLtyijREeuEyYsRcE0x7SGytm/rIz4aNm3p/exGDxC3kHud4c
- PHov+sSja3kiJ91iAIWS0sphdmYgOl9AYP5tw2EIsAlVhzn0+dxzVVd3+Akx9b24XJ7H
- 7HLiPwK435rGCIrEKZo9B8nw5aUjyynf+14zuNPJNYX+GABNUJ00e7ydxbNZo58KfAuO
- 0+pLgtksRUXDjgtmfgaGyrqe0ga5vHZlPXaoTVesCg/DlkXxrkvS+KItTvxE5MmXgrtx
- 4jgw==
+ bh=lpkHGNCwIxJL+Ub/QiAiuLzqpRZVFPeNdY4siUkENhs=;
+ b=j4hb8TAi9+bJigYJk00fNg4f6+y4T3Fh5UPrc20BiT3KqcHhGKGDeZg5EidgKyiuVZ
+ JmSYJHH+lBx+llt3BtvE72VMHjUywj0i21IGy4NhGMrMqVJJefChswvqGSEzfo7h4lGU
+ MZsFCvT1aLKrUTz6596YkOZdzK/by8b4E0PChwCL3KHRbFTiEauK09nFsmigLxCvJIVG
+ xRtUB714vCeGG/ZMIMlRYbM/IIIN0qvQJlqvwkqz42pyQ3dxfg0Y/7Vm0PdkHPIkC+/P
+ 99gb2xnGQ4+D0Rz97QKHX99B6Vt70vcnNwp/+hRCWxH2BiPFH5dbeNOqrhkdNHCgeuI7
+ OddA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725902924; x=1726507724;
+ d=1e100.net; s=20230601; t=1725902918; x=1726507718;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IVrsW+o3FMgR3VpWI1k5gdQknpFqVu925X71ufmaWs0=;
- b=wnMfgpOhM/ZGNT3C5VVJekYnhCZFzR3gslyr1UVtblw2DYshHbjBA7ygpHAcNyVRCh
- epDvWWT4kQbJk4cuXs5AKUii/4ObRM3hq5MahaDMP9yNV9rG9U5loCoIQ9O4fLNtjkvK
- Fe67knW3UUO2paPgAQ5yCJFVPiWySpKYC07Q3UZqnZyNt3X+GaTd6BdUbuLQDmXAs27F
- WA2xnNKtHXHeETI0AlcnUwNw/Srznfd4iXnqj1w6d7qn9aXY/gtwsVRjZSOjBERyIg+d
- 2sNW7+ItiitFv2xmCAxn7PsIlb4HMe5nLh0PNVj9Z9Xpdz+y/mZ5uhwMT8ZGEr9WWSc+
- f0Sw==
-X-Gm-Message-State: AOJu0YxbLfQzORWYLjRJEuPJJMcabH6cMphhrs2mfhi3/XKwedwwLjlj
- qNn5QL6q+kkrWLVOmAUakbDFEKtbWNJ/3qWImZW0zQ/7xWVOce9oMV0AC+iP8YWyvufYin0W0uX
- S
-X-Google-Smtp-Source: AGHT+IFXJD+ataaLMgV8niKGD6kVjHer/7ZL6KW5ck7HBUMsTeusaXbauvHUQ1Eko1QZAqgH5KqG2A==
-X-Received: by 2002:a17:903:22d0:b0:206:cbf0:3089 with SMTP id
- d9443c01a7336-206f062366emr118764175ad.54.1725902924060; 
- Mon, 09 Sep 2024 10:28:44 -0700 (PDT)
+ bh=lpkHGNCwIxJL+Ub/QiAiuLzqpRZVFPeNdY4siUkENhs=;
+ b=Yasq7uoY8QJnMGR6xKvbKwQDQhNH6RwWgPiqUNMs2MClUQ1IyWKXuamrjhBag8EbDe
+ uaXFN5ZkdNPjg8snMxpR2sDtWTCc/AqGcSVWCyCp8DLs3rGtRmrlufWkOXWzkCUoXm0r
+ S/5RrnpgVY/t07amKBZWtgwmhiFeTiBKHFxVyTMbQOyQfPSGjohHJnozR4UPwO//4IS4
+ xqo/aXczZ3HRMyFkwIwXss4fh/ssorozHath8LCQnTqMwtvGVUTQahP1bL64L8WQsdmg
+ mCQPERDf6SCL1lI4ry5Eh/Ov4Uuiian8xkyTeyKHpos1uCTa0//xME9MAI0pk1hJl1pr
+ yZHg==
+X-Gm-Message-State: AOJu0Yy7pfURkexHGaOJLen0sQ1U7t4HhnUO4EmYDYPpvAXGRROQUEMo
+ TJ4giU74OnPRYjh0ORFNuDgo6yJitqy6LLZprJAHqTYBzyKrQ212o5Eiphw1Da77K+DP6hzS866
+ C
+X-Google-Smtp-Source: AGHT+IG6z4i3ZswPz9L/LasGNmG98wVEzGJZPUvqPvqotrUqrvJIdIjBExWA5qeH+XP+9Rpisi2uOQ==
+X-Received: by 2002:a17:902:f550:b0:206:b250:1e1 with SMTP id
+ d9443c01a7336-206f05f6425mr143626225ad.45.1725902918039; 
+ Mon, 09 Sep 2024 10:28:38 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.43
+ d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 10:28:43 -0700 (PDT)
+ Mon, 09 Sep 2024 10:28:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	daniel@0x0f.com
-Subject: [PATCH v3 21/26] target/m68k: Merge gen_load_fp, gen_load_mode_fp
-Date: Mon,  9 Sep 2024 10:28:18 -0700
-Message-ID: <20240909172823.649837-22-richard.henderson@linaro.org>
+Subject: [PATCH v3 14/26] target/m68k: Remove env argument to gen_lea_indexed
+Date: Mon,  9 Sep 2024 10:28:11 -0700
+Message-ID: <20240909172823.649837-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240909172823.649837-1-richard.henderson@linaro.org>
 References: <20240909172823.649837-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,151 +95,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enables the exceptions raised by the actual load
-to be reflected as a failure.
+Use the env pointer in DisasContext.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 104 ++++++++++++++++++++--------------------
- 1 file changed, 51 insertions(+), 53 deletions(-)
+ target/m68k/translate.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index df886ed062..e966d2c929 100644
+index 2c0852ac3a..78a9358416 100644
 --- a/target/m68k/translate.c
 +++ b/target/m68k/translate.c
-@@ -901,53 +901,6 @@ static void gen_fp_move(TCGv_ptr dest, TCGv_ptr src)
-     tcg_gen_st_i64(t64, dest, offsetof(FPReg, l.lower));
- }
- 
--static void gen_load_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
--                        int index)
--{
--    TCGv tmp;
--    TCGv_i64 t64;
--
--    t64 = tcg_temp_new_i64();
--    tmp = tcg_temp_new();
--    switch (opsize) {
--    case OS_BYTE:
--    case OS_WORD:
--    case OS_LONG:
--        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
--        gen_helper_exts32(tcg_env, fp, tmp);
--        break;
--    case OS_SINGLE:
--        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
--        gen_helper_extf32(tcg_env, fp, tmp);
--        break;
--    case OS_DOUBLE:
--        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
--        gen_helper_extf64(tcg_env, fp, t64);
--        break;
--    case OS_EXTENDED:
--        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
--            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
--            break;
--        }
--        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
--        tcg_gen_shri_i32(tmp, tmp, 16);
--        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
--        tcg_gen_addi_i32(tmp, addr, 4);
--        tcg_gen_qemu_ld_i64(t64, tmp, index, MO_TEUQ);
--        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
--        break;
--    case OS_PACKED:
--        /*
--         * unimplemented data type on 68040/ColdFire
--         * FIXME if needed for another FPU
--         */
--        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
- static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
-                          int index)
+@@ -391,7 +391,7 @@ static TCGv gen_addr_index(DisasContext *s, uint16_t ext, TCGv tmp)
+  * Handle a base + index + displacement effective address.
+  * A NULL_QREG base means pc-relative.
+  */
+-static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
++static TCGv gen_lea_indexed(DisasContext *s, TCGv base)
  {
-@@ -995,8 +948,8 @@ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
-     }
- }
+     uint32_t offset;
+     uint16_t ext;
+@@ -400,7 +400,7 @@ static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
+     uint32_t bd, od;
  
--static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
--                             TCGv_ptr fp, int index)
-+static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
-+                        TCGv_ptr fp, int index)
- {
-     int mode = extract32(insn, 3, 3);
-     int reg0 = REG(insn, 0);
-@@ -1083,10 +1036,55 @@ static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
-             gen_addr_fault(s);
-             return false;
-         }
--        gen_load_fp(s, opsize, addr, fp, index);
--        return true;
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-     }
--    g_assert_not_reached();
-+
-+    switch (opsize) {
-+    case OS_BYTE:
-+    case OS_WORD:
-+    case OS_LONG:
-+        tmp = tcg_temp_new();
-+        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
-+        gen_helper_exts32(tcg_env, fp, tmp);
-+        break;
-+    case OS_SINGLE:
-+        tmp = tcg_temp_new();
-+        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
-+        gen_helper_extf32(tcg_env, fp, tmp);
-+        break;
-+    case OS_DOUBLE:
-+        t64 = tcg_temp_new_i64();
-+        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
-+        gen_helper_extf64(tcg_env, fp, t64);
-+        break;
-+    case OS_EXTENDED:
-+        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
-+            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
-+            return false;
-+        }
-+        tmp = tcg_temp_new();
-+        t64 = tcg_temp_new_i64();
-+        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
-+        tcg_gen_addi_i32(addr, addr, 4);
-+        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
-+        tcg_gen_shri_i32(tmp, tmp, 16);
-+        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
-+        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
-+        break;
-+    case OS_PACKED:
-+        /*
-+         * unimplemented data type on 68040/ColdFire
-+         * FIXME if needed for another FPU
-+         */
-+        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
-+        return false;
-+    default:
-+        g_assert_not_reached();
-+    }
-+    return true;
- }
+     offset = s->pc;
+-    ext = read_im16(env, s);
++    ext = read_im16(s->env, s);
  
- static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
-@@ -4911,7 +4909,7 @@ DISAS_INSN(fpu)
-         /* Source effective address.  */
-         opsize = ext_opsize(ext, 10);
-         cpu_src = gen_fp_result_ptr();
--        if (!gen_load_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-+        if (!gen_load_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-             return;
-         }
-     } else {
+     if ((ext & 0x800) == 0 && !m68k_feature(s->env, M68K_FEATURE_WORD_INDEX))
+         return NULL_QREG;
+@@ -418,9 +418,9 @@ static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
+         if ((ext & 0x30) > 0x10) {
+             /* base displacement */
+             if ((ext & 0x30) == 0x20) {
+-                bd = (int16_t)read_im16(env, s);
++                bd = (int16_t)read_im16(s->env, s);
+             } else {
+-                bd = read_im32(env, s);
++                bd = read_im32(s->env, s);
+             }
+         } else {
+             bd = 0;
+@@ -466,9 +466,9 @@ static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
+             if ((ext & 3) > 1) {
+                 /* outer displacement */
+                 if ((ext & 3) == 2) {
+-                    od = (int16_t)read_im16(env, s);
++                    od = (int16_t)read_im16(s->env, s);
+                 } else {
+-                    od = read_im32(env, s);
++                    od = read_im32(s->env, s);
+                 }
+             } else {
+                 od = 0;
+@@ -737,7 +737,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
+         return addr;
+     case 6: /* Indirect index + displacement.  */
+         reg = get_areg(s, reg0);
+-        return gen_lea_indexed(env, s, reg);
++        return gen_lea_indexed(s, reg);
+     case 7: /* Other */
+         switch (reg0) {
+         case 0: /* Absolute short.  */
+@@ -751,7 +751,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
+             offset += (int16_t)read_im16(env, s);
+             break;
+         case 3: /* pc index+displacement.  */
+-            return gen_lea_indexed(env, s, NULL_QREG);
++            return gen_lea_indexed(s, NULL_QREG);
+         case 4: /* Immediate.  */
+         default:
+             return NULL_QREG;
 -- 
 2.43.0
 
