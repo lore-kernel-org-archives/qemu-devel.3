@@ -4,93 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E09EECE588
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 20:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D45ECE589
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 20:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snktF-0006rB-Qx; Mon, 09 Sep 2024 16:21:37 -0400
+	id 1snlE7-0002DI-Kw; Mon, 09 Sep 2024 16:43:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1snksr-0006I0-VH
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:21:16 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1snlE1-0002CL-Kt
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:43:05 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1snksq-00068K-1d
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:21:13 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a8d24f98215so323465566b.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 13:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725913270; x=1726518070; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1BBs8mEf0frx4XAjeAFD6LpelCAjKEi9KMRvkj565QE=;
- b=WBpXiPkL4SOR+CxubX3Ey4HEVfYxhGQRYIN7GlQLP5bhLFa6M2CPnlZ7pQ/r9zr9NQ
- ZKPlG4dFqqgDp+Cj6ua0bJIvSOC+iIe+DsL35R4PBUR7ifyJEYGVWPNTmQOdZit4ws6+
- Ct5r3yQ78oqz1tP+FDo7igmhesq8NBd3zMZApA1U6ALkrmaJXl1OMnxnEL/KPs8bsi09
- pf8ZzOm6ahRfRNeCB8DIzYYsd1Wi7HhHLPq7kuEK/QUOxMcBDYIxnqIsxzI4PucqAZIV
- 2dRpNtGrZ3D/yilB6rF9jDzybsnTWMzTAM1WkT/p2DhK3IV046Q7x8tCG6jWTfoty8DU
- BocA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725913270; x=1726518070;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1BBs8mEf0frx4XAjeAFD6LpelCAjKEi9KMRvkj565QE=;
- b=bb56LYOBHh7XQns6Vhys1MizellzJH0EnRGu0rR02avTuR4vpSvI00lCmUPA5VigeP
- Lf/obeRWMoDNptXVxhiDsSXY0hIunWZ35M4DdiGARGw/bF3Xb6RgEG+enL1JWmNh0YR6
- 8BX+jkVOBJbxiRRn4NnBjAkqkUSoMR7RpnHIrul0konPjvy1K7wfeJhshyuO7qmy8GRt
- xeStKqq7T8yYrmyEUj38bGmXcSIyTM4cUhQW60t03KwApBr3dOYl7amxnl1no7jC6OLb
- So0XWJp8mTHyR/mY5qy3pbzQOwrHCRZLILtYd2l8wmf4Cf6YIG+9yqTVhj+IIavg3lUJ
- fJvQ==
-X-Gm-Message-State: AOJu0YxQo9h2dVSuVsVyA+7S3YsEXmJJNAhEyPHgnOQ8zWme8Cyn7HyQ
- i6RIXrnuLlNmrYSY106ghqU4oW0TCQZnUj76YGCqCzNVlp1Pk5+byOwfrG0vWOM=
-X-Google-Smtp-Source: AGHT+IHb/FHzZhpFk8cFslppED4J9EEKIoyLsRU4wjedY9T4IzEjChCAZY4yDRdXHEFhGuDf92UcrA==
-X-Received: by 2002:a17:907:2da3:b0:a8a:8dd1:b2d1 with SMTP id
- a640c23a62f3a-a8d248a6127mr560856966b.55.1725913269616; 
- Mon, 09 Sep 2024 13:21:09 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25d5ddc0sm380658766b.188.2024.09.09.13.21.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 13:21:09 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4E3B05F879;
- Mon,  9 Sep 2024 21:21:08 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao Liu
- <zhao1.liu@intel.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Yanan
- Wang <wangyanan55@huawei.com>,  Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v7 0/6] plugins: access values during a memory read/write
-In-Reply-To: <cc597a6b-1ac5-464e-9e39-85e36bd0023c@linaro.org> (Pierrick
- Bouvier's message of "Mon, 9 Sep 2024 12:04:23 -0700")
-References: <20240724194708.1843704-1-pierrick.bouvier@linaro.org>
- <8734met9c8.fsf@draig.linaro.org>
- <68171cdb-8dd9-4d80-85de-457e84e17d65@linaro.org>
- <87h6apxi2d.fsf@draig.linaro.org>
- <cc597a6b-1ac5-464e-9e39-85e36bd0023c@linaro.org>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 09 Sep 2024 21:21:08 +0100
-Message-ID: <874j6oy3wr.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1snlDz-00085L-4I
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:43:04 -0400
+Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id 016B7DA0552;
+ Mon,  9 Sep 2024 22:42:59 +0200 (CEST)
+Authentication-Results: mail.v2201612906741603.powersrv.de; dkim=none;
+ dmarc=fail reason="No valid SPF, No valid DKIM" header.from=weilnetz.de
+ (policy=none); 
+ spf=softfail (mail.v2201612906741603.powersrv.de: 188.68.58.204 is neither
+ permitted nor denied by domain of stefan@weilnetz.de)
+ smtp.mailfrom=stefan@weilnetz.de
+Received: by qemu.weilnetz.de (Postfix, from userid 1000)
+ id 862AD460030; Mon,  9 Sep 2024 22:42:58 +0200 (CEST)
+To: Zhang Chen <chen.zhang@intel.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH] Fix calculation of minimum in colo_compare_tcp
+Date: Mon,  9 Sep 2024 22:42:54 +0200
+Message-Id: <20240909204254.1446800-1-sw@weilnetz.de>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 016B7DA0552
+X-Spamd-Bar: ++
+X-Spamd-Result: default: False [2.50 / 14.00]; VIOLATED_DIRECT_SPF(3.50)[];
+ BAYES_HAM(-3.00)[99.99%]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ FORGED_SENDER(0.30)[sw@weilnetz.de,stefan@weilnetz.de];
+ RCVD_NO_TLS_LAST(0.10)[];
+ DMARC_POLICY_SOFTFAIL(0.10)[weilnetz.de : No valid SPF, No valid
+ DKIM,quarantine,sampled_out]; MIME_GOOD(-0.10)[text/plain];
+ ONCE_RECEIVED(0.10)[]; MIME_TRACE(0.00)[0:+];
+ ASN(0.00)[asn:197540, ipnet:188.68.56.0/22, country:DE];
+ RCVD_COUNT_ONE(0.00)[1]; TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[weilnetz.de:mid,weilnetz.de:email];
+ R_DKIM_NA(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5];
+ FROM_NEQ_ENVFROM(0.00)[sw@weilnetz.de,stefan@weilnetz.de];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; R_SPF_SOFTFAIL(0.00)[~all];
+ ARC_NA(0.00)[]
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,73 +81,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+GitHub's CodeQL reports a critical error which is fixed by using the MIN macro:
 
-> On 9/9/24 03:00, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>=20
->>> On 9/5/24 08:21, Alex Benn=C3=A9e wrote:
->>>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>>>
->>>>> This series allows plugins to know which value is read/written during=
- a memory
->>>>> access.
->>>>>
->>>>> For every memory access, we know copy this value before calling mem c=
-allbacks,
->>>>> and those can query it using new API function:
->>>>> - qemu_plugin_mem_get_value
->>>> Queued to patches 1-5 to plugins/next, thanks.
->>>> You can send the re-spun version of 6 once the review comments have
->>>> been
->>>> done.
->>>>
->>>
->>> Thanks Alex,
->>>
->>> right now, my try to make check-tcg are blocked with the cross
->>> containers who don't compile, so I'll wait for this to be resolved.
->> Which ones?
->
-> docker-image-debian-mips64el-cross
-> docker-image-debian-mipsel-cross
-> (about broken packages).
+    Unsigned difference expression compared to zero
 
-I have fixes for mipsel at least when I post my series.
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+---
+ net/colo-compare.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
->
-> I saw something mentioning this recently on the mailing list, so not
-> sure what would be our solution to this (ignoring?)
->
->>=20
->>> I still wonder if having a simple aarch64/x64 test is not enough, and
->>> covering 99.9% of the bug we could introduce in the future on this.
->> Have you measured the code coverage of the test?
->>=20
->
-> Nope, but all the code changed is tcg-generic, so testing this on all
-> arch does not bring benefit in terms of coverage.
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index c4ad0ab71f..39f90c4065 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -412,8 +412,7 @@ static void colo_compare_tcp(CompareState *s, Connection *conn)
+      * can ensure that the packet's payload is acknowledged by
+      * primary and secondary.
+     */
+-    uint32_t min_ack = conn->pack - conn->sack > 0 ?
+-                       conn->sack : conn->pack;
++    uint32_t min_ack = MIN(conn->pack, conn->sack);
+ 
+ pri:
+     if (g_queue_is_empty(&conn->primary_list)) {
+-- 
+2.39.3 (Apple Git-146)
 
-Would that it were so simple. Quite often which bits of the generic TCG
-code get exercised depends on the guest architecture using it. I'm not
-saying we have to go over and above to enable fiddly architectures but we
-should at least understand if the reason they fail is down to them or
-core code.
-
-> So by focusing on the "all arch" aspect, we just test tcg
-> implementation itself, instead of the plugins part.
->
-> The problems we identified so far is compilation flags specific per
-> arch, and specific flags to emit words instruction. It does not seem
-> related to what we really want to test here.
-
-I'm also investigating why arm-softmmu seems to be seeing more accesses
-than it should have from the test.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
