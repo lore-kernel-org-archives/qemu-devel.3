@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB11EECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C38ECE584
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniBu-0004bK-3x; Mon, 09 Sep 2024 13:28:42 -0400
+	id 1sniBt-0004Zc-O3; Mon, 09 Sep 2024 13:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBq-0004KU-0H
+ id 1sniBq-0004KT-0E
  for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:38 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBo-00061d-I2
+ id 1sniBo-00061x-II
  for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:37 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2054feabfc3so40721075ad.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:35 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20573eb852aso37509185ad.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725902914; x=1726507714; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725902915; x=1726507715; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nMzYtP5qPR90CaUOV42z01PghnM+kK6Tb+IUF2wbyXM=;
- b=esy2v8V5svuvQzcIuIPCHSE3NxxeoHmlVq18Hab/3avNUUzr20n4edghvUDChEMKpO
- M9y8CjdN9jxDZTyHf7yqzfYZcPWdpVlifU+2XtKU4jqwsO1did4iettZuGiI/12yEHgR
- DMwbubYZaha2dSZOL2cAuqT2Hwg6X1WpigSnqpjROFK81RQQ1jUfyiaoE0l6Da12nDWv
- br14O9dqosCI1ED1aBZdijtOS1UJY+nesbVGa+4oEhgvFjD0RUFOnyOgoe93eEdKicCL
- X6H2hmI+HCEnqHQaKOrNmTmhB5H+CW1KZriQHfXN6/TS0p2HgJTODavzQ4IpXmvf8kfa
- x9GA==
+ bh=O70g17U7QTZMh9A6OBR0gUxSJFLq6gbdNh3PzLTWO+8=;
+ b=XJfX72BOnZDvpdkOjVvwtixCu2RjnYr0hyEagJ5PESrDK8IaqBU+oskCF0emzMCc67
+ 1qnkF5Iwi1+/BrePJWTNlbXeTugRdfZxO5BR1jCnu8ZaT99pk+ZMUMeCHtwfGCTUVb/c
+ tfeduLZ54KXwGh4VEPRFrDxg2XEO434zTr5iMuhMR2R5QVnMoO0FJbptEyYCmqFLkPoK
+ 6XCtBCWh4gLFYB9jF8o2kCkZS32MyRefHgIRHwax4bSlB+AQS51A/sALPL2vVBfvT/5R
+ cQ33UjjZDormuAP1k1rNJl7nIUP8XUwQ/aaTeKX4+szCPK3/6/WO4I70dn18hZEM8raO
+ sCfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725902914; x=1726507714;
+ d=1e100.net; s=20230601; t=1725902915; x=1726507715;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nMzYtP5qPR90CaUOV42z01PghnM+kK6Tb+IUF2wbyXM=;
- b=m3IJbkbcorQyWh7kkwm5U/Wpvoc7L9rTnF7h5NqKeF564lNqw8yYjN9TYUYdndWc/z
- KnW9OfjVCSe0taUUmNJ4boWfucW2nm9MG37ATMjIUQINwd4U2bLSRPIgcbFRQTdvCrBd
- lBQ86VykhwkFoXErW8wiDE35X7kYT2ynEEGzADmJgUVQadZsprw0kLRF7aWIYXzVy016
- VdVSDhkzuugKVqjvhbFYwhs2FMjeK/Aah6M3kgrAW0ihTlVx7SGcKOuZFzkM36sqgUvJ
- 21ALim12T9toHVFbuUWm3cnjNnjivfzAJCLsyjEWFv5OBPuqRanlrWPCqlyVcNvf/ips
- 59Cw==
-X-Gm-Message-State: AOJu0YwnFW/PPbSa1/wO1QeJptZ8SWMnVdjlubSHYgq96GmLxDQYkE6/
- twt0Pbzlbw9V100tWUNImwwpwXxroDuifcBg9Xz1pqcgQEMOVXb0q9uy3ZzqoYF00DLe3WvlZaj
- 7
-X-Google-Smtp-Source: AGHT+IHkQWSNjDG76X+iNhNTeq3VIgw7vwCklQJK53In0ek7LJfiEk2XGiRa6r/n6KVTaDQuAJJ+kA==
-X-Received: by 2002:a17:902:d551:b0:1fd:9c2d:2f27 with SMTP id
- d9443c01a7336-206f05428e1mr162715015ad.24.1725902914299; 
- Mon, 09 Sep 2024 10:28:34 -0700 (PDT)
+ bh=O70g17U7QTZMh9A6OBR0gUxSJFLq6gbdNh3PzLTWO+8=;
+ b=waC6tUT/nmPorw4hXl3Ld3voIXa/2q1vL+OgaWHCAsr2TbBnrnuPlBYJBZ7z3321gA
+ ddTUk7bRbuUdPD0aTJxF2M1pVe0XMOwCxkvJZVsACwxDFdy9r9ZoTeJmTXXrNi8eJuor
+ fn7lhNNEzMz72Y4nUmotKQJh2WkP/8b6S/X8vCqhPyCd7OIw8Wqw2ZQRpmOrPrJKWpQJ
+ LYB2cB+X72a+9qfYdpZCU4ybjSuk1i/qUDeScf8cyDY5x78OsSTWycc3lXr8Sfn5Jcn0
+ +o6XxNjLSxeNUKrLcrVI/O3Qp1m8TTJZeYg2UzuDzdXgFJ7VuEx4/nDmpnhMG1BQZlx2
+ 6bgA==
+X-Gm-Message-State: AOJu0YxVzqYEJ5Vi62Te49T2Ogn3raHHW0WP4mAqcaXIrWl/sGDHJBui
+ M9hPnM9P6C8cQx66fSw5LcDRJJDoLksEEDgIjbN1knR4qaMSqnt3hh5IoswdFJLSSl3X/gUmG0w
+ 5
+X-Google-Smtp-Source: AGHT+IFF4r7ci+UPnOhF698Nl9NC8NlKKa7yzFG9PasqkouSMVuWSzX0kCS0/Vaya8xAhnrPgiWyJw==
+X-Received: by 2002:a17:903:94e:b0:207:3a4c:8c6f with SMTP id
+ d9443c01a7336-20743c512ddmr6133845ad.29.1725902915147; 
+ Mon, 09 Sep 2024 10:28:35 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.33
+ d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 10:28:33 -0700 (PDT)
+ Mon, 09 Sep 2024 10:28:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	daniel@0x0f.com
-Subject: [PATCH v3 10/26] target/m68k: Use g_assert_not_reached in
- gen_lea_mode and gen_ea_mode
-Date: Mon,  9 Sep 2024 10:28:07 -0700
-Message-ID: <20240909172823.649837-11-richard.henderson@linaro.org>
+Subject: [PATCH v3 11/26] target/m68k: Use OS_UNSIZED in LEA, PEA, JMP
+Date: Mon,  9 Sep 2024 10:28:08 -0700
+Message-ID: <20240909172823.649837-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240909172823.649837-1-richard.henderson@linaro.org>
 References: <20240909172823.649837-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +95,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mode argument is extracted from 3 bits, and all cases are covered.
+For LEA and PEA, while the manual says "size = (long)", it also says
+that the pre-decrement and post-increment addressing modes are illegal.
+For JMP, the manual says "unsized".  OS_UNSIZED is the way to signal
+gen_lea_mode to reject those addressing modes.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ target/m68k/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 1ba1220b21..71dfa6d9a2 100644
+index 71dfa6d9a2..c94ed8d463 100644
 --- a/target/m68k/translate.c
 +++ b/target/m68k/translate.c
-@@ -767,8 +767,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
-         tcg_gen_movi_i32(tmp, offset);
-         return tmp;
-     }
--    /* Should never happen.  */
--    return NULL_QREG;
-+    g_assert_not_reached();
- }
+@@ -2560,7 +2560,7 @@ DISAS_INSN(lea)
+     TCGv tmp;
  
- static TCGv gen_lea(CPUM68KState *env, DisasContext *s, uint16_t insn,
-@@ -892,8 +891,7 @@ static TCGv gen_ea_mode(CPUM68KState *env, DisasContext *s, int mode, int reg0,
-             return NULL_QREG;
-         }
-     }
--    /* Should never happen.  */
--    return NULL_QREG;
-+    g_assert_not_reached();
- }
+     reg = AREG(insn, 9);
+-    tmp = gen_lea(env, s, insn, OS_LONG);
++    tmp = gen_lea(env, s, insn, OS_UNSIZED);
+     if (IS_NULL_QREG(tmp)) {
+         gen_addr_fault(s);
+         return;
+@@ -2657,7 +2657,7 @@ DISAS_INSN(pea)
+ {
+     TCGv tmp;
  
- static TCGv_ptr gen_fp_ptr(int freg)
+-    tmp = gen_lea(env, s, insn, OS_LONG);
++    tmp = gen_lea(env, s, insn, OS_UNSIZED);
+     if (IS_NULL_QREG(tmp)) {
+         gen_addr_fault(s);
+         return;
+@@ -2908,7 +2908,7 @@ DISAS_INSN(jump)
+      * Load the target address first to ensure correct exception
+      * behavior.
+      */
+-    tmp = gen_lea(env, s, insn, OS_LONG);
++    tmp = gen_lea(env, s, insn, OS_UNSIZED);
+     if (IS_NULL_QREG(tmp)) {
+         gen_addr_fault(s);
+         return;
 -- 
 2.43.0
 
