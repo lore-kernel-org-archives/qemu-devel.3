@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51ACFCD4F4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 02:39:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9BDEB64DE
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 02:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snUJ0-00007o-U9; Sun, 08 Sep 2024 22:39:06 -0400
+	id 1snULi-0004n4-TM; Sun, 08 Sep 2024 22:41:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snUIq-0008UM-R8; Sun, 08 Sep 2024 22:38:59 -0400
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
+ id 1snULh-0004mL-MP; Sun, 08 Sep 2024 22:41:53 -0400
+Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snUIp-0003iB-7d; Sun, 08 Sep 2024 22:38:56 -0400
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-846bdc20098so794072241.3; 
- Sun, 08 Sep 2024 19:38:54 -0700 (PDT)
+ id 1snULg-000487-1z; Sun, 08 Sep 2024 22:41:53 -0400
+Received: by mail-vs1-xe2a.google.com with SMTP id
+ ada2fe7eead31-49bd2b37fe9so1051125137.1; 
+ Sun, 08 Sep 2024 19:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725849534; x=1726454334; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725849710; x=1726454510; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q9sHyq1Tc0mqXugtuU1NXOCaNYDGK9Wxh3+vNCk8aIY=;
- b=fkG3/F6H3RgBVFpYPRUBymJbida9/SVBFqk5rNWLGoygCCK7FAoSvVx1AD+0GJ1gXm
- oLnYzAdKLNI+f0JxXID4FYevrepcbhsBVfYATAA6GhIgo0/AuIDFIFw+vh6VKWdL/dM3
- iOMvZWdghe1mFKee0eILl8fqxCEPif0wgrmRLx//sgvHdK+8CHFOyKLGyMY0RUr9E5km
- FJtJL+o3zPQ3srS6BewCnQDSihC7NP/UJOsciCjjaxl5DaxiIibvVyRzTh39G0rHq3ZG
- F2r2fi/QXG5Vz9eyv5avuHB7YitvMxmk3MC4Jhv3oMvgWWdt1PZJNk0Q/+XBaU2gNMf3
- 9W4w==
+ bh=dekAywsmz0QxDkv5aiMdCboXNfTP72iK79Nqk365/+4=;
+ b=VFzidogIOpwSmJbgpQjgi1k0jDKWOiaAkRDF3rjSp7R1FssZk/n4YVsSuXxKUFGVHJ
+ NfiR1AM/U9XZgGhjkfyqn7fmhKSuasQYOCKEoomQHhfiNFPPkrChmra9S3Yy9wys2t+G
+ y8hjstGFXadxtMBWP3IjgBEKPpjSVIr+Tb7y8EKrEiKc/ogrY7HKRLeC9HN9id6uEguX
+ 2A08MINMDl4jGu0PY08E9CVMchHLTwbw24ow2Xqmi2il2MNt9bdUhndUGqfZl36R8SIe
+ aToUz2I51fYehsp0zQHjk5UAHyfWpFehgiJTEWhOtC8CmA1tqP5pTNtHleAAjmBH6VQy
+ LI8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725849534; x=1726454334;
+ d=1e100.net; s=20230601; t=1725849710; x=1726454510;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q9sHyq1Tc0mqXugtuU1NXOCaNYDGK9Wxh3+vNCk8aIY=;
- b=Z1ow65VVUZ3di1QtiIvfN9EQdsSstNF/VupzesbE34atnH7HFSa4uQ/4vDB1GKHxE/
- gCqR68dZoF2+aaJMY3YIoSeAYZvSPi+qU2GXcSUDOjj26dI6DaTHLlyJUFOJSOIAFxex
- 5jKam2QCy9yaaq8QaJ16olQSNeH/n2ced9V2AV6CPxjW+iqCexJbxEaVK69rPVJ/zpgK
- WlqhWTnqchzefjZ7NccNvfnRYuMwTb3dd/4EKTyBxiO/ySQRq1IjGCw8nTwYlEJGLyYu
- CGPljziUSrqudO0jC7oVanhS5L3MYOZaA6nMI4iaIvpndJZNVlR9yd3+rN+rfJkh/M5K
- klLQ==
+ bh=dekAywsmz0QxDkv5aiMdCboXNfTP72iK79Nqk365/+4=;
+ b=GUOEdYDGbXwNp9tL6GpTHEF/96oxjBiKbgKuhjWHqmqrewx+U6lmZUvD2Rz/uju9o1
+ gNr3FdJd7h3inPHIZoZn8QkI6jFzMooa1ltItknWCZixU/pqqjHXEr2MNWR0Rg8iycTN
+ paSAbs3SUrI8rHbct/DYCNleiClM5K3OPZU6uv17FeiWXH0kBjQeKdk5X+UP2WdYd2Em
+ gJWQHvaeL079H3DMOAYZ0IRNyv6kR326WvgtoccBk8ynkCGMetOYVpKTgIeXlPhzICoc
+ jjG5Dol7dtKTrZ+ayRNoyM+kscbdl9e16apAbNpk54oxVzauCGqPSg6c1VlCvO5hdMQH
+ Pb8w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQ4AquOfkCbyRYknMd7bk4DKTUAZ1BK8BmQaYzSKQlr/ioTO+HGqF8mwbodZIINAsyKl4cwVD6me4G+A==@nongnu.org,
- AJvYcCX3KJwb678E2DSTa3AtITBL20ykm0E0icjhxxCKlwFMa6ZEgEM6znZNNvBSIdij2TlYgyJXxo4pwaVt@nongnu.org
-X-Gm-Message-State: AOJu0YwqEYOD2/3pFKarYXuxZm/z4n2g0MHHU/P4huyw39GMlEOKdBSV
- bsRP89d2MVe0j2361TyvvpkEX7RNsS94bAvIckDki5yk+KBKjit6MxRV8fki9d/7R1PkPnLU9Fd
- ZtXJgPAfVQsSDzrCPNuXGsR9NTs0=
-X-Google-Smtp-Source: AGHT+IHexhQDuX0/lT8f0qdwBngy4JFMlMVqZvIeZKEahyi8vextoBQ+W9FS1UiNC9QaFZNqXH4dptDliZkykF8mE0I=
-X-Received: by 2002:a67:f9d6:0:b0:49b:d061:d6f with SMTP id
- ada2fe7eead31-49bde268077mr9147307137.18.1725849533574; Sun, 08 Sep 2024
- 19:38:53 -0700 (PDT)
+ AJvYcCW/t8Z7Lh7ZOcP3O0Jb2O3sHikyRojBkTIramNbK6PPyEcTNhtkZJXQMwrU0DcJ0fyJY6HSOTKcIE50@nongnu.org
+X-Gm-Message-State: AOJu0YyVqJbji5sNAGgBnYtfNLiC/maD6ATIwFEfKEiYso0KEZkye4sr
+ wELVelMSu12PrylMwkCgM8T4bZMWheNDJPedMqSEcjaeKRzxhd+5KrCfL2KJWgtwW1G95W2IkTq
+ KiArzbJ51a6SrqXVoVeQNK+llTVw=
+X-Google-Smtp-Source: AGHT+IFb+FYP4QjelpeJ9KfjgD+ph+AxtolbxntZ6VFIYrtJ/s2swiIX7GI2wFe6jhS3CXDgJFE2Kv6RzGPdfV9ZB0w=
+X-Received: by 2002:a05:6102:c8d:b0:498:cbd8:288 with SMTP id
+ ada2fe7eead31-49bde25dbbbmr7760829137.20.1725849709981; Sun, 08 Sep 2024
+ 19:41:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240813071355.310710-2-ajones@ventanamicro.com>
- <aa7facef-acda-4846-98d5-2f7584515035@linaro.org>
- <20240813-e2c6dc0e68f76be576c72996@orel>
- <3f1accd0-33b8-4656-944f-f6637ee315b9@linaro.org>
- <20240813-94c16c9efc943fe891ba7724@orel>
-In-Reply-To: <20240813-94c16c9efc943fe891ba7724@orel>
+References: <20240816160743.220374-4-ajones@ventanamicro.com>
+ <20240816160743.220374-6-ajones@ventanamicro.com>
+ <CAKmqyKOXS+Fmb1Jxzwh3fAkeKi5eXQZ+JKkc3H77XjKrrKXe-Q@mail.gmail.com>
+ <20240819-2773526929f81da7a462d10a@orel>
+In-Reply-To: <20240819-2773526929f81da7a462d10a@orel>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Sep 2024 12:38:27 +1000
-Message-ID: <CAKmqyKNsxFTyjQM=F5b9VfeZ3GQyLB2UaD36v=2nmtYbu5DdjA@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv32: Fix masking of physical address
+Date: Mon, 9 Sep 2024 12:41:24 +1000
+Message-ID: <CAKmqyKNKY3VmnQfwLcshFpDnnaw+1VwwWBSkpUWKiwDsaUM43w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/riscv/virt: Introduce strict-dt
 To: Andrew Jones <ajones@ventanamicro.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
- zong.li@sifive.com, liwei1518@gmail.com, cwshu@andestech.com, 
- dbarboza@ventanamicro.com
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com, 
+ Anup Patel <apatel@ventanamicro.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,79 +95,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 8:24=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
+On Mon, Aug 19, 2024 at 5:50=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
 om> wrote:
 >
-> On Tue, Aug 13, 2024 at 10:21:13AM GMT, Philippe Mathieu-Daud=C3=A9 wrote=
-:
-> > On 13/8/24 10:00, Andrew Jones wrote:
-> > > On Tue, Aug 13, 2024 at 05:43:07PM GMT, Richard Henderson wrote:
-> > > > On 8/13/24 17:13, Andrew Jones wrote:
-> > > > > C doesn't extend the sign bit for unsigned types since there isn'=
-t a
-> > > > > sign bit to extend. This means a promotion of a u32 to a u64 resu=
-lts
-> > > > > in the upper 32 bits of the u64 being zero. If that result is the=
-n
-> > > > > used as a mask on another u64 the upper 32 bits will be cleared. =
-rv32
-> > > > > physical addresses may be up to 34 bits wide, so we don't want to
-> > > > > clear the high bits while page aligning the address. The fix is t=
-o
-> > > > > revert to using target_long, since a signed type will get extende=
-d.
-> > > > >
-> > > > > Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depe=
-nds on PMP entries.")
-> > > > > Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> > > > > ---
-> > > > >    target/riscv/cpu_helper.c | 2 +-
-> > > > >    1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > >
-> > > > > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.=
-c
-> > > > > index 395a1d914061..dfef1b20d1e8 100644
-> > > > > --- a/target/riscv/cpu_helper.c
-> > > > > +++ b/target/riscv/cpu_helper.c
-> > > > > @@ -1323,7 +1323,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr=
- address, int size,
-> > > > >        int ret =3D TRANSLATE_FAIL;
-> > > > >        int mode =3D mmuidx_priv(mmu_idx);
-> > > > >        /* default TLB page size */
-> > > > > -    target_ulong tlb_size =3D TARGET_PAGE_SIZE;
-> > > > > +    target_long tlb_size =3D TARGET_PAGE_SIZE;
-> > > >
-> > > > If rv32 physical addresses are 34 bits, then you probably didn't wa=
-nt target_*long at all.
+> On Mon, Aug 19, 2024 at 11:19:18AM GMT, Alistair Francis wrote:
+> > On Sat, Aug 17, 2024 at 2:08=E2=80=AFAM Andrew Jones <ajones@ventanamic=
+ro.com> wrote:
 > > >
-> > > Yes, just using hwaddr for everything that only touches physical addr=
-esses
-> > > would probably be best, but, ifaict, it's pretty common to use target=
-_long
-> > > for masks used on both virtual and physical addresses (TARGET_PAGE_MA=
-SK,
-> > > for example). This 'tlb_size' variable is used on both as well.
+> > > Older firmwares and OS kernels which use deprecated device tree
+> > > properties or are missing support for new properties may not be
+> > > tolerant of fully compliant device trees. When divergence to the
+> > > bindings specifications is harmless for new firmwares and OS kernels
+> > > which are compliant, then it's probably better to also continue
+> > > supporting the old firmwares and OS kernels by generating
+> > > non-compliant device trees. The '#msi-cells=3D<0>' property of the
+> > > imsic is one such property. Generating that property doesn't provide
+> > > anything necessary (no '#msi-cells' property or an '#msi-cells'
+> > > property with a value of zero mean the same thing) but it does
+> > > cause PCI devices to fail to find the MSI controller on Linux and,
+> > > for that reason, riscv virt doesn't currently generate it despite
+> > > that putting the DT out of compliance. For users that want a
+> > > compliant DT and know their software supports it, introduce a machine
+> > > property 'strict-dt' to do so. We also drop the one redundant
+> > > property that uses a deprecated name when strict-dt is enabled.
+> > >
+> > > Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+> > > ---
+> > >  docs/system/riscv/virt.rst | 11 ++++++++++
+> > >  hw/riscv/virt.c            | 43 ++++++++++++++++++++++++++++++------=
+--
+> > >  include/hw/riscv/virt.h    |  1 +
+> > >  3 files changed, 46 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+> > > index 9a06f95a3444..f08d0a053051 100644
+> > > --- a/docs/system/riscv/virt.rst
+> > > +++ b/docs/system/riscv/virt.rst
+> > > @@ -116,6 +116,17 @@ The following machine-specific options are suppo=
+rted:
+> > >    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not spe=
+cified,
+> > >    the default number of per-HART VS-level AIA IMSIC pages is 0.
+> > >
+> > > +- strict-dt=3D[on|off]
 > >
-> > Then maybe you want vaddr ("exec/vaddr.h"):
+> > Hmm... I don't love the idea of having yet another command line option.
 > >
-> > /**
-> >  * vaddr:
-> >  * Type wide enough to contain any #target_ulong virtual address.
-> >  */
-> >
+> > Does this really buy us a lot? Eventually we should deprecate the
+> > invalid DT bindings anyway
 >
-> I think hwaddr would fit better in this case since riscv32 virtual
-> addresses are 32-bit, but I see vaddr is a u64, so it would work too. I
-> personally don't mind changing the type of tlb_size to hwaddr, but I went
-> with target_long in this patch since that's what it was originally and
-> masking with a signed long mask appears to be a common pattern in QEMU.
+> I agree we should deprecate the invalid DT usage, with the goal of only
+> generating DTs that make the validator happy. I'm not sure how long that
+> deprecation period should be, though. It may need to be a while since
+> we'll need to decide when we've waited long enough to no longer care
+> about older kernels. In the meantime, we won't be making the validator
+> happy and may get bug reports due to that. With strct-dt we can just
+> direct people in that direction. Also, I wouldn't be surprised if
+> something else like this comes along some day, which is why I tried to
+> make the option as generic as possible. Finally, the 'if (strict_dt)'
+> self-documents to some extent. Otherwise we'll need to add comments
+> around explaining why we're diverging from the specs. Although we should
+> probably do that anyway, i.e. I should have put a comment on the
+> 'if (strict-dt) then #msi-cells' explaining why it's under strict-dt.
+> If we want strict-dt, then I'll send a v2 doing that. If we don't want
+> strict-dt then I'll send a v2 with just a comment explaining why
+> #msi-cells was left out.
 
-hwaddr seems like the right approach here
+I think go without strict-dt and add a comment.
+
+In the future if we decide we really want to keep the validator happy
+then we can version the virt machine and use the older machine for
+backwards compatible kernels
 
 Alistair
 
 >
 > Thanks,
 > drew
->
 
