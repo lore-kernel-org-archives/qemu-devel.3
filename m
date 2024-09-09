@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 831CBECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 935D4ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sni8z-0007M3-Jx; Mon, 09 Sep 2024 13:25:41 -0400
+	id 1sniBk-0003zi-Un; Mon, 09 Sep 2024 13:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sni8x-0007LA-Lw
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:25:39 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sniBk-0003wy-47
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:32 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sni8v-0005sS-Vo
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:25:39 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2f029e9c9cfso62355541fa.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:25:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sniBi-00060S-Ah
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:31 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-206b9455460so37857495ad.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725902735; x=1726507535; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2QJFqvmVgOo0PF4qWFgpFcH+z+LPlJIUOsg1OJnLygU=;
- b=cjl8KSRm9n7SVUcmdQuOMpyJAyca3xY+ZqjqCAu4kE2ZA94xAljUppPCgeBZbF6ENq
- LwPg9Ieq12ALYYNcK6FnrFwzv9YbPco3Pwg+oNGdx03R9r5rLV0dbgSq6zCvnuAmyjTx
- EBLr82UFYvGLczrsKJKkTJTPyktmwBfBD20kBREahiSmAH7+7x9ZALm7EGP44jnZVcLY
- pSft+l+9z/5idE/lkQbrFj1Fj92/KemQvCNx/ho9JuYJ6ajh4TvBFO9rjbthrUeTe+/N
- 9gudpjWzeu6xhVHzxAmxJ9IjxrKWOy/gA92he80cwG02G1VJoyZKzvj3T1pmrMqujOWl
- TLvA==
+ d=linaro.org; s=google; t=1725902908; x=1726507708; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mkNkUmASmGlQUKASb8Xt5tpAkjJXSsZCepHO/OHmg6s=;
+ b=iOeC9XdHTj42iMFoy6elbuRoyHCS2X1MID2dyUdSfFEhMfy/hTW8jGapA1yR+dBeq9
+ LU9mbsocot/96OMAFncKLIjDkzVTbcUmOYkRWKIs66jgGqM2vMU3ejf7AVPfzOBo8xua
+ zV2eDrBUlu6gB4v62lVVUcrTBf62H1Xv1cJuTg9nzIwtJYhnxvKCUf8NVQYqTITvlUC+
+ cBV06B0QepECLvrK+q3ODw5v+WuBgzVI8IRk+eBy715CgSrQxXymoG2m8D7EcN3Ymp5i
+ pbBF/FNcaGYxsw9K5qD1tSon8Otk2UsOhYRB5Gm75XqZLMMtzV7ifD9/45gzQEuS+Xak
+ Z1AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725902735; x=1726507535;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2QJFqvmVgOo0PF4qWFgpFcH+z+LPlJIUOsg1OJnLygU=;
- b=uqBcgyRgprZB0NwskZ4lmm8SN6BS/cc/mL447RgyFGNalTHVAaReZYs9//wKATnkO5
- SYt373RD2cDvi1UlhHgyas/9+mTT+LRwzJN2fbdjfqJv+hunTDURrQi2twOp8LcltU9P
- VPCZZKY8LSVCNc03sl0+XgJ+rW+QhyE1oR7aHzHY5u8bxrqczy6SgHp9BMjAftdTbo+3
- 7bLoR2/wFJbndlMkWHFJhvkMDobxyj/1JIOkkoi2p/4//qJ1I6PHM8tQ+hLVqqdB2f0M
- +85RnDtiaOV+iidmdCrGkuet9AF1j6QUbBxq9KAjsqF3l3E8sKmMt/wdzJY6un+2coqH
- uotA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXGhb3O9O8nRKe+WZZNKpJRLpmgxvInuoQwTs+Oq9J14lPdzNv5/zXK8CKOOono2VU8/VLzbcJDmNn/@nongnu.org
-X-Gm-Message-State: AOJu0YwV/sgD45LE4mYd0JcQp7QHnIc2L9WyUSFZmUfnH/+0GFCq/t2s
- 2WpccK/sPuywoEEsT5gL2x5ok01/SdyLZ/U37gw3A/a7VW2HXsihYuptANyNcAA=
-X-Google-Smtp-Source: AGHT+IHIWfmp4ruS9y97lc6VmC/ZM1pwRPQTJxlfAEjUrE885ZpUMhjRI2qMdQfNsZf9Kj0aTHGCIw==
-X-Received: by 2002:a05:6512:3a84:b0:530:dfab:9315 with SMTP id
- 2adb3069b0e04-536587a67b6mr8043914e87.10.1725902735150; 
- Mon, 09 Sep 2024 10:25:35 -0700 (PDT)
-Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
- [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25835d31sm369665166b.10.2024.09.09.10.25.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 10:25:34 -0700 (PDT)
-Message-ID: <3d622822-b4a9-49b1-950e-8f33b6532d8f@linaro.org>
-Date: Mon, 9 Sep 2024 19:25:32 +0200
+ d=1e100.net; s=20230601; t=1725902908; x=1726507708;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mkNkUmASmGlQUKASb8Xt5tpAkjJXSsZCepHO/OHmg6s=;
+ b=e58GjBRtTbRg63mIlpS0/MKictf8iQJBRIc5E8hk0mkTWRojsvabRJecjUp2EJTTJi
+ xpLwIyIuDptQ1Nvh+Frq4wkCeRS8E1fmeU6Pwu+wimjjtADLbEBLL+j3hFtsJDZJblXb
+ ooOVaY0WXk9Xqel0WUEftgAqACH2t4Ic+TWV57bOR+wbDiukPbhcWoJWHlvLhStB4KN6
+ MQJYqg9KWXz04L+3Dchi1ru1WLhyy/ZlPj06fl/7rpsuWu88SLAduptcZ70IZMIxZHP5
+ U4s1ey3m1fS8L3B88rB92tErXomGVJuwZQXTpnvouQmWAlUv/9OwD4sqU2TrSrHbsRB3
+ 8IyA==
+X-Gm-Message-State: AOJu0YzMOk3Et7uMh1E9/kgf86eZlEc5QzoKHf2iH3dC+5Q/Q4y9MUlP
+ vTbjDOddqn4mB4hHcCn4pJSAFdOOtDzWsrOSMlYlbbBWaRBCawKeu3TLFKCsR4CUBp+puGxAyUV
+ k
+X-Google-Smtp-Source: AGHT+IFEWcYT1q+Re60GDlswQuMQ+LIcKzkI/hHCx6J5QYB2GczdtTbOVWuD/KdfnRPJG6dCHbUMsQ==
+X-Received: by 2002:a17:902:db06:b0:205:5c06:39e6 with SMTP id
+ d9443c01a7336-207433d94e9mr5368675ad.0.1725902908140; 
+ Mon, 09 Sep 2024 10:28:28 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Sep 2024 10:28:27 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: laurent@vivier.eu,
+	daniel@0x0f.com
+Subject: [PATCH v3 03/26] target/m68k: Restore fp rounding mode on vm load
+Date: Mon,  9 Sep 2024 10:28:00 -0700
+Message-ID: <20240909172823.649837-4-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240909172823.649837-1-richard.henderson@linaro.org>
+References: <20240909172823.649837-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Guenter Roeck <linux@roeck-us.net>
-References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <fabedae0-d748-4a9d-b802-14d15f3cd44a@linaro.org>
- <CAFEAcA9z9Mf52pOVCHv_Y1hvPPWt7Me5CDcxYS_cXvj7OFDuSw@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9z9Mf52pOVCHv_Y1hvPPWt7Me5CDcxYS_cXvj7OFDuSw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,74 +95,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Call cpu_m68k_set_fpcr to make sure softfloat internals
+are up-to-date with the restored FPCR.
 
-On 9/9/24 15:44, Peter Maydell wrote:
-> On Mon, 9 Sept 2024 at 14:41, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Hi,
->>
->> On 3/9/24 18:06, Peter Maydell wrote:
->>> This patchset removes the various Arm machines which we deprecated
->>> for the 9.0 release and are therefore allowed to remove for the 9.2
->>> release:
->>>    akita, borzoi, cheetah, connex, mainstone, n800, n810,
->>>    spitz, terrier, tosa, verdex, z2
->>
->>> The series includes removal of some code which while not strictly
->>> specific to these machines was in practice used only by them:
->>>    * the OneNAND flash memory device
->>>    * the PCMCIA subsystem
->>>    * the MUSB USB2.0 OTG USB controller chip (hcd-musb)
->>
->>> thanks
->>> -- PMM
->>>
->>> Peter Maydell (53):
->>>     hw/input: Drop ADS7846 device
->>>     hw/adc: Remove MAX111X device
->>>     hw/gpio: Remove MAX7310 device
->>>     hw/input: Remove tsc2005 touchscreen controller
->>>     hw/input: Remove tsc210x device
->>>     hw/rtc: Remove twl92230 device
->>>     hw/input: Remove lm832x device
->>>     hw/usb: Remove tusb6010 USB controller
->>>     hw/usb: Remove MUSB USB host controller
->>
->> Some of these devices are user-creatable and only rely on a bus
->> (not a particular removed machine), so could potentially be used
->> on other maintained machines which expose a similar bus.
-> 
-> Which ones in particular? Almost all of them are sysbus.
-> At least one of them that I looked at (lm832x) is an I2C
-> device but it also requires the board to wire up a GPIO line
-> and to call a specific C function to inject key events, so it's
-> not actually generally usable.
-> 
->> We don't have in-tree (tests/) examples, but I wonder if it is OK
->> to remove them without first explicitly deprecating them in
->> docs/about/deprecated.rst. I wouldn't surprise users when 9.2 is
->> release. Maybe this isn't an issue, but I prefer to mention it
->> now to be sure.
-> 
-> I think this is unlikely to be a problem, but if you have
-> a specific device you think might be a problem we can
-> look at whether it seems likely (e.g. whether a web search
-> turns up users using it in odd ways).
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/m68k/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I don't have specific example and am happy to remove these
-legacy devices.
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 1d49f4cb23..4d70cd50b4 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -402,6 +402,7 @@ static int fpu_post_load(void *opaque, int version)
+ {
+     M68kCPU *s = opaque;
+ 
++    cpu_m68k_set_fpcr(&s->env, s->env.fpcr);
+     cpu_m68k_set_fpsr(&s->env, s->env.fpsr);
+     return 0;
+ }
+-- 
+2.43.0
 
-I'm wondering more generically about removing user-creatable &
-on-bus devices, when explicit use is removed (deprecated board
-removed), but we can still use them elsewhere. IMHO for clarity
-in the future we should list them in deprecated.rst along with
-some lines like "this device is explicitly used by the FOO machine which
-is being deprecated; if you want to keep them, provide test cases".
-
-(To be clear, I'm not asking we do that for this devices set.)
-
-Regards,
-
-Phil.
 
