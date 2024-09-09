@@ -4,121 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C93A1ECE589
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 21:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3633ECE589
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 21:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snmLc-0001fq-0U; Mon, 09 Sep 2024 17:55:00 -0400
+	id 1snmNz-0006jQ-8a; Mon, 09 Sep 2024 17:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1snmLX-0001cy-0y
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 17:54:55 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snmNx-0006ir-DF
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 17:57:25 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1snmLV-0006jp-2w
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 17:54:54 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C743B1F7E8;
- Mon,  9 Sep 2024 21:54:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725918891; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=C8U/FH3QP1N25Ma0EM1Oxc7l/mPd9m9svY0s8/JMFnM=;
- b=nrNmLLy/nNTvym8DHDV6dOUm7Xboq8L6EXk7YH7aj/r7gkpnw6ufUdwCcyzSTWEijiaKMk
- TxRLXLvITZ4P3sVejS+YRNNc91d7fzffO4NGkVnbJ7jOkeTNFBqkVsnkvVs9hoDUvT43TL
- HNi08iCqE/fUvNHeA1ComHoRV+KLwQA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725918891;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=C8U/FH3QP1N25Ma0EM1Oxc7l/mPd9m9svY0s8/JMFnM=;
- b=317Hr72065gm0YMXkOL+k/8nMezBbA3Q6DuxtBkOQQe4uESVjJhhQCTVYZwByaBvZNAL/H
- Df26pmi4ziLpXXBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ExjiHw1i;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=u6ZDAYk9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725918889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=C8U/FH3QP1N25Ma0EM1Oxc7l/mPd9m9svY0s8/JMFnM=;
- b=ExjiHw1iWsTom3R0esOVb3hJH/TsOIm8ZZz6m5ecreEgUVqIzE2t7EaDLcdHxrmg6hGrLq
- HyiOe4vtzTY0SWX/mOzi7ybdm/oFshpMLMYpGyN8AW1ZW+AlsRe5yJrGHjIPSDu4Pf+tIn
- fHtxSJwfkL1Gyn36+HBBh/5ybGGTo1E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725918889;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=C8U/FH3QP1N25Ma0EM1Oxc7l/mPd9m9svY0s8/JMFnM=;
- b=u6ZDAYk9dpv02hknxiJ7FjKbkZygTUk/cz+aUHOVwX2CPe7KRFIy7Xa9yrIdJxZj9E1Jvk
- DB56+wwIFNAcGIDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4C74713312;
- Mon,  9 Sep 2024 21:54:49 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id q8tUBalu32bdEwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 09 Sep 2024 21:54:49 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, David
- Hildenbrand <david@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
- responsive CPU throttle
-In-Reply-To: <Zt8H6pC2yQ2DD7DV@x1n>
-References: <cover.1725889277.git.yong.huang@smartx.com>
- <96eeea4efd3417212d6e2639bc118b90d4dcf926.1725889277.git.yong.huang@smartx.com>
- <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
- <Zt8H6pC2yQ2DD7DV@x1n>
-Date: Mon, 09 Sep 2024 18:54:46 -0300
-Message-ID: <87frq8lcgp.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snmNv-00070e-Cv
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 17:57:25 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a8d60e23b33so175895966b.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 14:57:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725919041; x=1726523841; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=O3Oc0+hnWHYXtdc/4P9coG+NayW6+nuSmFZnKTnpRFE=;
+ b=y64MKii/FBRWZ83hrBtn8G0UBEOfGUR9/WNf4FwpllRdkKq4x7Jj0qYCgQyzm7cZrv
+ lCOiak7+u2mB/Lznzhhia3YOGjwonOuGQbmz7PmkzcEZEBj/YuwyIrl9/7FP4BesJh64
+ gWbnv0JBO8+3CkILdtPzf9JfDUgAGOl+swM4X2OySdi0ebXBLuMDggc5tGAWrLbxIZLu
+ juk48ujFnU8zre8bPc1QjWroJHO3QSWX5dap06FQozCccsQ/8syqKJ356xv9RjRmtLlz
+ QY0siL9DQQsm2JHEu+fdsV/zJhQcBFURmyUSf9nVHhJRUQ9SwViYdHIn53mLWnqakrNm
+ fs/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725919041; x=1726523841;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=O3Oc0+hnWHYXtdc/4P9coG+NayW6+nuSmFZnKTnpRFE=;
+ b=g2XVRp48kobZRawimwYB8fwsgKxGBJIOD+rJvAi0EqAL2mHA0T0KENTl3yVxOu3wvV
+ LPHT2/2Zbhl1fkGQ/8hnUZEVtQLH9xiPwbBMEXTyoMmqMmvPbmgBzmgixbqiCzWvKehz
+ wEpB+D8UdcC1NGeiINfoH+IMglrA10gQt0C4h/Mil4ZGTizkR7Qy4Q6LCr3QR122WDei
+ AJipJUjsnklsbVxFfe8W6mcTkc/8pVfCKW51cHDsioBjevwgridwbZCY4btHhXThxOB1
+ OWnBlNGv2es99t6HQZUneJzP4dyQWq9RIYfT6X+WMjaepqMT8XY2mVqWXaJ6NOSC2zU6
+ 6oKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4K/oMf4hHEvAM1w26ZCARNI03Tzp6eokccoOFkWBDhWeHchYD1ZpEMOL2UN0V91VC5hZIC/4MKqJ2@nongnu.org
+X-Gm-Message-State: AOJu0YxIuhrG2X6WzLRsEouilZxOQ6PUK3KBOKtDPqxdfwRJc7ca7K+K
+ aCSkFb5X8rb/t31eRI7/Dj8+ULYyzOWdmywhCFZ/3IUub/LMX8o7phXtwIbfMD8=
+X-Google-Smtp-Source: AGHT+IHNIvbuHmFSE3B4rNJNonbhDuHpH+PO1rHS0jXix/2ajAuSqSR1Aa2k/vHjg8TG2FNnXWIXbQ==
+X-Received: by 2002:a17:906:dc8c:b0:a77:d52c:c42d with SMTP id
+ a640c23a62f3a-a8a885bdfccmr1118726966b.13.1725919041135; 
+ Mon, 09 Sep 2024 14:57:21 -0700 (PDT)
+Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
+ [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25c61185sm392131066b.100.2024.09.09.14.57.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Sep 2024 14:57:20 -0700 (PDT)
+Message-ID: <9f258eaf-70c6-4737-ba24-8f3470269dda@linaro.org>
+Date: Mon, 9 Sep 2024 23:57:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: C743B1F7E8
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_SEVEN(0.00)[9]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, smartx.com:email, suse.de:dkim, suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/5] target/sparc: Add FSR_QNE to tb_flags
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk, chauser@pullman.com
+References: <20240909180712.651651-1-richard.henderson@linaro.org>
+ <20240909180712.651651-4-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240909180712.651651-4-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,104 +96,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 9/9/24 20:07, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/sparc/cpu.h       |  8 +++++++-
+>   target/sparc/translate.c | 10 +++++++---
+>   2 files changed, 14 insertions(+), 4 deletions(-)
 
-> On Mon, Sep 09, 2024 at 03:02:57PM +0100, Peter Maydell wrote:
->> On Mon, 9 Sept 2024 at 14:51, Hyman Huang <yong.huang@smartx.com> wrote:
->> >
->> > Despite the fact that the responsive CPU throttle is enabled,
->> > the dirty sync count may not always increase because this is
->> > an optimization that might not happen in any situation.
->> >
->> > This test case just making sure it doesn't interfere with any
->> > current functionality.
->> >
->> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
->> 
->> tests/qtest/migration-test already runs 75 different
->> subtests, takes up a massive chunk of our "make check"
->> time, and is very commonly a "times out" test on some
->> of our CI jobs. It runs on five different guest CPU
->> architectures, each one of which takes between 2 and
->> 5 minutes to complete the full migration-test.
->> 
->> Do we really need to make it even bigger?
->
-> I'll try to find some time in the next few weeks looking into this to see
-> whether we can further shrink migration test times after previous attemps
-> from Dan.  At least a low hanging fruit is we should indeed put some more
-> tests into g_test_slow(), and this new test could also be a candidate (then
-> we can run "-m slow" for migration PRs only).
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I think we could (using -m slow or any other method) separate tests
-that are generic enough that every CI run should benefit from them
-vs. tests that are only useful once someone starts touching migration
-code. I'd say very few in the former category and most of them in the
-latter.
-
-For an idea of where migration bugs lie, I took a look at what was
-fixed since 2022:
-
-# bugs | device/subsystem/arch
-----------------------------------
-    54 | migration
-    10 | vfio
-     6 | ppc
-     3 | virtio-gpu
-     2 | pcie_sriov, tpm_emulator,
-          vdpa, virtio-rng-pci
-     1 | arm, block, gpio, lasi,
-          pci, s390, scsi-disk,
-          virtio-mem, TCG
-
-From these, ignoring the migration bugs, the migration-tests cover some
-of: arm, ppc, s390, TCG. The device_opts[1] patch hasn't merged yet, but
-once it is, then virtio-gpu would be covered and we could investigate
-adding some of the others.
-
-For actual migration code issues:
-
-# bugs | (sub)subsystem | kind
-----------------------------------------------
-    13 | multifd        | correctness/races
-     8 | ram            | correctness
-     8 | rdma:          | general programming
-     7 | qmp            | new api bugs
-     5 | postcopy       | races
-     4 | file:          | leaks
-     3 | return path    | races
-     3 | fd_cleanup     | races
-     2 | savevm, aio/coroutines
-     1 | xbzrle, colo, dirtyrate, exec:,
-          windows, iochannel, qemufile,
-          arch (ppc64le)
-
-Here, the migration-tests cover well: multifd, ram, qmp, postcopy,
-file, rp, fd_cleanup, iochannel, qemufile, xbzrle.
-
-My suggestion is we run per arch:
-
-"/precopy/tcp/plain"
-"/precopy/tcp/tls/psk/match",
-"/postcopy/plain"
-"/postcopy/preempt/plain"
-"/postcopy/preempt/recovery/plain"
-"/multifd/tcp/plain/cancel"
-"/multifd/tcp/uri/plain/none"
-
-and x86 gets extra:
-
-"/precopy/unix/suspend/live"
-"/precopy/unix/suspend/notlive"
-"/dirty_ring"
-
-(the other dirty_* tests are too slow)
-
-All the rest go behind a knob that people touching migration code will
-enable.
-
-wdyt?
-
-1- allows adding devices to QEMU cmdline for migration-test
-https://lore.kernel.org/r/20240523201922.28007-4-farosas@suse.de
 
