@@ -4,97 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2372DECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF143ECE57A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:01:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snfod-0007U5-2e; Mon, 09 Sep 2024 10:56:31 -0400
+	id 1snftB-0002QB-5m; Mon, 09 Sep 2024 11:01:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfoZ-00078G-Kf
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:56:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfoY-0007Kc-8x
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:56:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725893785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1snftA-0002MY-4e
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:01:12 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1snft8-0007wS-EC
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:01:11 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9D01F1F7C4;
+ Mon,  9 Sep 2024 15:01:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725894065; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BuxrjxHGQTYa+u1Cw9dei7iRdM/WtZ08bIlmaNCMj08=;
- b=HZyE54FPjAW3HN8Z7gdr2INf75eDsOdZc9Yho/+7+4vCmueu6URQ6l6obR+deGxPsPcmwr
- yi+n1katNkdacMow5WEaoTeVUuLq+uUFyzIf1fwKnQqbpww2Cy1QSs+haJhZdZFaBtQZaG
- uIFdIyOQKhyILYj+qKZd3eJ+6gfBON8=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-341-_4K64KqgMzOqHsVQDaJmVQ-1; Mon, 09 Sep 2024 10:56:24 -0400
-X-MC-Unique: _4K64KqgMzOqHsVQDaJmVQ-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-7092fa5079eso3681141a34.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:56:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725893783; x=1726498583;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BuxrjxHGQTYa+u1Cw9dei7iRdM/WtZ08bIlmaNCMj08=;
- b=mwenDxrK0nP5KZ5QVOEwddaY2czNDtiP2QQ1zNoRPSx+7lzYDezDO64zaCBQQ1S0MV
- qPXZkORQjWaRFi7peDzpjyNTg6jl/rAK6LnUPgqL+EY1MFFPNXL6rEf8bsyOBTe2v2F5
- zkPBSl35x0IiqJBGFFQyBzsySB7bPBkf9NxXCVh9LbZQ5Cy08kSl5iFpFwRaN6wxNLm+
- dRWUgthYAFWH7NT8AaFMTui7PEMw9SQX/SWaoEhGp4mWpWcWc1GWSR++uuuxw/M/fBXO
- YuAILyvqh+Tbg4NWwLhu+gBBJPSd70YlRgMOVXoh5ccEd8cgvs5SypJxIeiAMCG6UUp5
- H4hA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUprcUWyQ4b0mff68FFxBnK/ieW1Dy6RSgzhJ3CjmO2J9U+F7FOO+EJ7GDUg39Cd+0K6nuy0odtsAaj@nongnu.org
-X-Gm-Message-State: AOJu0Yz1EUh69y1t0EXx80RKi+fajcNn/xxZjbAB3nXor2ClJFChekpI
- Cetu2eR8WIPdepA3VG1GRkbd/EwDjdO8sPdWjOKmiQ3Wp+riPpU9Vfcv2bOutqhzQ/QR/I8qAO8
- kmX2RCtAetluQS4+MS/DwaOOajT6MK3KPMJ4S+jqyT5OjjCBJTuyfP6ya5462sCk=
-X-Received: by 2002:a05:6830:2d83:b0:710:db4f:8efd with SMTP id
- 46e09a7af769-710db4f9120mr3627986a34.21.1725893783610; 
- Mon, 09 Sep 2024 07:56:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdSRsTKXUhnMGuJ+2I1MrhtXfyGuMAZ/BfquaG4fN9wh7xvdjOHKToS73c18rB960UMQBESQ==
-X-Received: by 2002:a05:6830:2d83:b0:710:db4f:8efd with SMTP id
- 46e09a7af769-710db4f9120mr3627959a34.21.1725893783275; 
- Mon, 09 Sep 2024 07:56:23 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-45822e8ba52sm20936421cf.38.2024.09.09.07.56.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 07:56:22 -0700 (PDT)
-Date: Mon, 9 Sep 2024 10:56:20 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yichen Wang <yichen.wang@bytedance.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- Xiaoning Ding <xiaoning.ding@bytedance.com>
-Subject: Re: [PATCH v9 0/5] Implement QATzip compression method
-Message-ID: <Zt8MlDBb5Kfn6v12@x1n>
-References: <20240830232722.58272-1-yichen.wang@bytedance.com>
+ bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
+ b=Zv2P/UNQalLCciEC0eCsxq6tKVZt/aoXGOQQeWQtTUvBcsWjRCaGXGAq5F3ZyqIoE+gx++
+ 225E4CVKdZtHYywD0u7oX6M8Ndb7t/5wjTy97DqZabqgp/cYPTzBzuqYTvD33wQKtGr94T
+ ZcDKbBZSWkr72P8Z9ZI6Bl0e8h0OCCI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725894065;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
+ b=yAr//1LtqTVax+xWaQV9QSUmMXXe55pO/k3YUeATkPxn3FD92VGIdNdaopiBpzGFoIhDBJ
+ Ipeh3hYyfdcJNbBg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=NN+CuCPq;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5okRIek5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725894064; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
+ b=NN+CuCPqtgzFM1Rx5ueakhZuNdYkY+empX5dAvU/VaiYtOFvqeV5W1pMctK5y/8ZDmN0uB
+ 2rOnys3cHj+/BA3TFfLVCiA2Kxz8P6KX7k8biO6RNJFR4WvG+MTYB7qIt5ZestkEYNCCp7
+ k+CNAaeGmQjpwJpA1RhFLsCkYeTGi+g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725894064;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
+ b=5okRIek54h+VGWR6wU3GGIBQjHrxfbByz+WvKax463YZ6tD3K8+CWtCBG8thvwqSLOy0TN
+ xl6xl8FeYTweoeBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 27A2713A3A;
+ Mon,  9 Sep 2024 15:01:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id krh4N68N32Z4DgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 09 Sep 2024 15:01:03 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PULL 27/34] migration/multifd: Move nocomp code into
+ multifd-nocomp.c
+In-Reply-To: <CAFEAcA_F2qrSAacY=V5Hez1qFGuNW0-XqL2LQ=Y_UKYuHEJWhw@mail.gmail.com>
+References: <20240904124417.14565-1-farosas@suse.de>
+ <20240904124417.14565-28-farosas@suse.de>
+ <CAFEAcA_F2qrSAacY=V5Hez1qFGuNW0-XqL2LQ=Y_UKYuHEJWhw@mail.gmail.com>
+Date: Mon, 09 Sep 2024 12:01:01 -0300
+Message-ID: <87ikv4lvma.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240830232722.58272-1-yichen.wang@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 9D01F1F7C4
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,linaro.org:email,suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,14 +127,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 30, 2024 at 04:27:17PM -0700, Yichen Wang wrote:
-> v9:
-> - Rebase changes on top of cec99171931ea79215c79661d33423ac84e63b6e;
-> - Address comments and add Review-by in commit messages; 
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-queued, thanks.
+> On Wed, 4 Sept 2024 at 13:48, Fabiano Rosas <farosas@suse.de> wrote:
+>>
+>> In preparation for adding new payload types to multifd, move most of
+>> the no-compression code into multifd-nocomp.c. Let's try to keep a
+>> semblance of layering by not mixing general multifd control flow with
+>> the details of transmitting pages of ram.
+>>
+>> There are still some pieces leftover, namely the p->normal, p->zero,
+>> etc variables that we use for zero page tracking and the packet
+>> allocation which is heavily dependent on the ram code.
+>>
+>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> I know Coverity has only flagged this up because the
+> code has moved, but it seems like a good place to ask
+> the question:
+>
+>> +void multifd_ram_fill_packet(MultiFDSendParams *p)
+>> +{
+>> +    MultiFDPacket_t *packet = p->packet;
+>> +    MultiFDPages_t *pages = &p->data->u.ram;
+>> +    uint32_t zero_num = pages->num - pages->normal_num;
+>> +
+>> +    packet->pages_alloc = cpu_to_be32(multifd_ram_page_count());
+>> +    packet->normal_pages = cpu_to_be32(pages->normal_num);
+>> +    packet->zero_pages = cpu_to_be32(zero_num);
+>> +
+>> +    if (pages->block) {
+>> +        strncpy(packet->ramblock, pages->block->idstr, 256);
+>
+> Coverity points out that when we fill in the RAMBlock::idstr
+> here, if packet->ramblock is not NUL terminated then we won't
+> NUL-terminate idstr either (CID 1560071).
+>
+> Is this really what is intended?
 
--- 
-Peter Xu
+This is probably an oversight, although the migration destination
+truncates it before reading:
 
+    /* make sure that ramblock is 0 terminated */
+    packet->ramblock[255] = 0;
+    p->block = qemu_ram_block_by_name(packet->ramblock);
+
+If we ever start reading packet->ramblock on the source side in the
+future, then there might be a problem.
+
+>
+> Perhaps
+>          pstrncpy(packet->ramblock, sizeof(packet->ramblock),
+>                   pages->block->idstr);
+>
+> would be better?
+
+Yep, thanks. I'll send a patch.
+
+>
+> (pstrncpy will always NUL-terminate, and won't pointlessly
+> zero-fill the space after the string in the destination.)
+>
+>> +    }
+>> +
+>> +    for (int i = 0; i < pages->num; i++) {
+>> +        /* there are architectures where ram_addr_t is 32 bit */
+>> +        uint64_t temp = pages->offset[i];
+>> +
+>> +        packet->offset[i] = cpu_to_be64(temp);
+>> +    }
+>> +
+>> +    trace_multifd_send_ram_fill(p->id, pages->normal_num,
+>> +                                zero_num);
+>> +}
+>
+> thanks
+> -- PMM
 
