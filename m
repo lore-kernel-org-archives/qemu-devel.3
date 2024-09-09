@@ -4,81 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BC8ECE57A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 13:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E418DECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 13:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snehV-0007WM-Tf; Mon, 09 Sep 2024 09:45:06 -0400
+	id 1snejZ-000496-2p; Mon, 09 Sep 2024 09:47:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snehU-0007U2-4D
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:45:04 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snehS-0008CD-DT
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:45:03 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5bf01bdaff0so4643735a12.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 06:45:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725889500; x=1726494300; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xn+xmoYP5US6IfexkDCT57DCA13gg0SPirYcMV2icSY=;
- b=BdWBEJViVGohwNXAG45uUKICbDo6+xgeXFodAWIAsKKYN2rONMreRH3Es5v9zLXJUh
- EtlzOLj4fgX8GtKa0aE/+ZRc7AMidpYwnJpjJ65bjyR17aqfxYhgH6oNqaiIBtDGjDeI
- wJCb90CAAIp/Y+bAgYCgFtysemJY0GIxUiVedC07sG8ejT9+RvIuiuH2EmOkaeBJuQmh
- Gtz9gtSyObvxUlEyeeqMClGzWSzY8PW5LicNq4bg2CmGRcdQNpgFU6cyGHxHuYC7gkPV
- 5yMl0JKvBg7WuXbxTFcCfZjwvDI+MnBDzqXm8Q5sfhCOZobiBedwRDpAEJs0CzOr4aPM
- yTLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725889500; x=1726494300;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xn+xmoYP5US6IfexkDCT57DCA13gg0SPirYcMV2icSY=;
- b=YLpJOTjG5SMH4YOXBIaf7wP7HswYnw0yl00EAQWnTZ/LWLjOUQXMOh76g0k/S+GwFm
- d7BckJ1dmQDcjetCJtNpLgzc/KXXcnRI7mFedn/RI3cAKrZ2oTF6z6W88JDJP1uzBGC7
- rxqr7CG4xzwxr5XXJkHLZEKyLLAVymM3BMImt77dH8oQbZ/f3rvVLhSOBlobxtuZRsH7
- qvKRypskGuzRzORmNewanF0GhvC2IHbDS7lYdXH0n0J9Xnr+WxiOZr0swLO9e/kKoJ15
- ZgAWiEWrKW87FwyuBgsjEX5KAEP+2gD67EG4HRSZ4XDX+G1CoNMdeVg9BLqVSn78Bbzu
- bpoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbcvp2ti9faSFL4Qc2Kwje3hlKH9j5mIJ+onSO7dSUY0cMzaO8USNNIjm0fggS52vPig9uoe5BYC2y@nongnu.org
-X-Gm-Message-State: AOJu0YzCaQLPbiQ3b+caCZnKoQE7krZ/pH/m69NTz2bdckrObRUBt6nM
- MF3MOeckGXwlz4vEWaMiS/Dybv3GQE+Uv3njHEGPeswSstIOg2OleSLmcvooU++wMmcmGr5oj7H
- CNCr6pmdQhxi2DzOA1ffog3TAVpuv1EOzDgEDnw==
-X-Google-Smtp-Source: AGHT+IGUqPUd0TvT6mdDqXTJpb2MDfETwiKXx+ew9lxaQY1qD9TYiy+w1/cX9RCmujrr/uXt/q0wfPuGAbW5CpXBfN4=
-X-Received: by 2002:a05:6402:380b:b0:5c2:43bd:8ce8 with SMTP id
- 4fb4d7f45d1cf-5c3eac0970dmr4957569a12.21.1725889500412; Mon, 09 Sep 2024
- 06:45:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <fabedae0-d748-4a9d-b802-14d15f3cd44a@linaro.org>
-In-Reply-To: <fabedae0-d748-4a9d-b802-14d15f3cd44a@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Sep 2024 14:44:49 +0100
-Message-ID: <CAFEAcA9z9Mf52pOVCHv_Y1hvPPWt7Me5CDcxYS_cXvj7OFDuSw@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Guenter Roeck <linux@roeck-us.net>
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1snejY-000481-0I; Mon, 09 Sep 2024 09:47:12 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1snejV-0008Ty-OQ; Mon, 09 Sep 2024 09:47:11 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4899roPY009441;
+ Mon, 9 Sep 2024 13:47:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ UX5LxD75F5V6f+mThubcVR13u+fc7BXAvExsBS4dra0=; b=NtvKuTmk/l7oUa8g
+ nzg4cyhde3szPIkeRQ8DmCido7Ns6iKtpb9swvcW3DoxKsfQY9Y9rKZkKCToFP5Y
+ Xy6VCtH4v0ZRPEoe92ul130gkE2PJDggGz/DEhcz7HQDx32Cn0g4gRUqpWpqNZeb
+ wK7ukIw9yD0rEprWBvCJTvILKlQhh/hMh9x/f4LaOI0I6bCO2paUPB6if/jsL1G4
+ RqkNuU2e3UHinDeRKzcQ9O+/q4t00PF1KVMsUcXsip8g+7ySRyyysYaiLRIP73jj
+ jwp1SmlXLSrBRrZsPLet2lFpzbsZi7vdkn4BMMaazMlZj/RrMWwRopgDf8FSxYT4
+ c11gTw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41geba24eh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Sep 2024 13:47:04 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 489Dl4HW031606;
+ Mon, 9 Sep 2024 13:47:04 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41geba24ec-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Sep 2024 13:47:04 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 489Ce5gB013458;
+ Mon, 9 Sep 2024 13:47:03 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h3ckxcbd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Sep 2024 13:47:03 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 489Dl01u42795374
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Sep 2024 13:47:00 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E5A7520043;
+ Mon,  9 Sep 2024 13:46:59 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 917B020040;
+ Mon,  9 Sep 2024 13:46:59 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.152.224.238])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Sep 2024 13:46:59 +0000 (GMT)
+Message-ID: <a5f652ee4c6563cc10daf650fdaff34d738f2da1.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 00/11] s390: Convert virtio-ccw, cpu to three-phase
+ reset, and followup cleanup
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, David Hildenbrand <david@redhat.com>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Nico Boehr <nrb@linux.ibm.com>
+Date: Mon, 09 Sep 2024 15:47:01 +0200
+In-Reply-To: <CAFEAcA_pHTRTDwH0dG3QAKx3x9xdJgG5xtrwo5diV6QgBqf+8Q@mail.gmail.com>
+References: <20240830145812.1967042-1-peter.maydell@linaro.org>
+ <CAFEAcA_pHTRTDwH0dG3QAKx3x9xdJgG5xtrwo5diV6QgBqf+8Q@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: D8SBDzhJmhCtQo-oAbzuFB_dToNGECdq
+X-Proofpoint-GUID: O7FRnRloHwR952wnnsPk2SkCf637EqA2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-09_06,2024-09-09_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ mlxscore=0 mlxlogscore=876 impostorscore=0 clxscore=1015 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409090109
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,59 +121,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Sept 2024 at 14:41, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi,
->
-> On 3/9/24 18:06, Peter Maydell wrote:
-> > This patchset removes the various Arm machines which we deprecated
-> > for the 9.0 release and are therefore allowed to remove for the 9.2
-> > release:
-> >   akita, borzoi, cheetah, connex, mainstone, n800, n810,
-> >   spitz, terrier, tosa, verdex, z2
->
-> > The series includes removal of some code which while not strictly
-> > specific to these machines was in practice used only by them:
-> >   * the OneNAND flash memory device
-> >   * the PCMCIA subsystem
-> >   * the MUSB USB2.0 OTG USB controller chip (hcd-musb)
->
-> > thanks
-> > -- PMM
-> >
-> > Peter Maydell (53):
-> >    hw/input: Drop ADS7846 device
-> >    hw/adc: Remove MAX111X device
-> >    hw/gpio: Remove MAX7310 device
-> >    hw/input: Remove tsc2005 touchscreen controller
-> >    hw/input: Remove tsc210x device
-> >    hw/rtc: Remove twl92230 device
-> >    hw/input: Remove lm832x device
-> >    hw/usb: Remove tusb6010 USB controller
-> >    hw/usb: Remove MUSB USB host controller
->
-> Some of these devices are user-creatable and only rely on a bus
-> (not a particular removed machine), so could potentially be used
-> on other maintained machines which expose a similar bus.
+On Fri, 2024-09-06 at 15:38 +0100, Peter Maydell wrote:
+> On Fri, 30 Aug 2024 at 15:58, Peter Maydell <peter.maydell@linaro.org> wr=
+ote:
+> >=20
+> > The main aim of this patchseries is to remove the two remaining uses
+> > of device_class_set_parent_reset() in the tree, which are virtio-ccw
+> > and the s390 CPU class. Doing that lets us do some followup cleanup.
+> > (The diffstat looks alarming but is almost all coccinelle automated
+> > changes.)
+> >=20
+> > Changes v1->v2:
+> >  * new patch 1 to convert hw/s390/ccw-device
+> >    (fixes bug discovered via s390 CI testing in v1)
+> >  * a couple of patches are already upstream
+> >  * in the target/s390 cpu patch, fix sigp_cpu_reset() to use
+> >    RESET_TYPE_S390_CPU_NORMAL
+> >  * new patches 10, 11 which take advantage of the new function
+> >    device_class_set_legacy_reset() to allow us to replace the
+> >    generic Resettable transitional_function machinery with a
+> >    simple wrapper that adapts from the API of the hold method
+> >    to the one used by the legacy reset method
+> >=20
+> > Patches 1, 10, 11 need review. I believe that patch 1 should have
+> > fixed the intermittent s390 issue we found with v1 of the patchset,
+> > but if you could run these through the s390 CI again I'd
+> > appreciate it.
+>=20
+> I'm going to apply this series to my target-arm.next queue.
+>=20
+> Let me know if you need more time to CI/test/whatever it on
+> the s390 side before it goes upstream.
 
-Which ones in particular? Almost all of them are sysbus.
-At least one of them that I looked at (lm832x) is an I2C
-device but it also requires the board to wire up a GPIO line
-and to call a specific C function to inject key events, so it's
-not actually generally usable.
+CI looks good.
+>=20
+> thanks
+> -- PMM
 
-> We don't have in-tree (tests/) examples, but I wonder if it is OK
-> to remove them without first explicitly deprecating them in
-> docs/about/deprecated.rst. I wouldn't surprise users when 9.2 is
-> release. Maybe this isn't an issue, but I prefer to mention it
-> now to be sure.
-
-I think this is unlikely to be a problem, but if you have
-a specific device you think might be a problem we can
-look at whether it seems likely (e.g. whether a web search
-turns up users using it in odd ways).
-
-thanks
--- PMM
 
