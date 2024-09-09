@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F057FECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1309BECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snill-0003GR-NQ; Mon, 09 Sep 2024 14:05:45 -0400
+	id 1snilQ-0001n2-C8; Mon, 09 Sep 2024 14:05:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1snild-0002g5-0k
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:43 -0400
+ id 1snilP-0001iv-C2
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:23 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1snila-0001l3-8m
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:35 -0400
+ id 1snilN-0001k5-Nu
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:23 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1snilQ-0006Ql-LI; Mon, 09 Sep 2024 20:05:24 +0200
-Message-ID: <01f12db2-a6e8-4301-ad8c-22b82f823047@maciej.szmigiero.name>
-Date: Mon, 9 Sep 2024 20:05:19 +0200
+ id 1snilF-0006QK-6W; Mon, 09 Sep 2024 20:05:13 +0200
+Message-ID: <a8367aa9-8e69-4de5-99cb-5041ac901e92@maciej.szmigiero.name>
+Date: Mon, 9 Sep 2024 20:05:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/17] migration: Add qemu_loadvm_load_state_buffer()
- and its handler
+Subject: Re: [PATCH v2 06/17] migration: Add
+ save_live_complete_precopy_{begin,end} handlers
 To: Avihai Horon <avihaih@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Peter Xu <peterx@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <fe14c841e40e294c05f8dae966e94cc12b3e5473.1724701542.git.maciej.szmigiero@oracle.com>
- <3478eec4-df27-46ec-94ad-924d7dd3e5ab@nvidia.com>
+ <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
+ <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <3478eec4-df27-46ec-94ad-924d7dd3e5ab@nvidia.com>
+In-Reply-To: <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=37.28.154.113;
@@ -108,7 +108,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5.09.2024 16:15, Avihai Horon wrote:
+On 5.09.2024 15:45, Avihai Horon wrote:
 > 
 > On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
 >> External email: Use caution opening links or attachments
@@ -116,88 +116,74 @@ On 5.09.2024 16:15, Avihai Horon wrote:
 >>
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> qemu_loadvm_load_state_buffer() and its load_state_buffer
->> SaveVMHandler allow providing device state buffer to explicitly
->> specified device via its idstr and instance id.
+>> These SaveVMHandlers help device provide its own asynchronous
+>> transmission of the remaining data at the end of a precopy phase.
+>>
+>> In this use case the save_live_complete_precopy_begin handler might
+>> be used to mark the stream boundary before proceeding with asynchronous
+>> transmission of the remaining data while the
+>> save_live_complete_precopy_end handler might be used to mark the
+>> stream boundary after performing the asynchronous transmission.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >> ---
->>   include/migration/register.h | 15 +++++++++++++++
->>   migration/savevm.c           | 25 +++++++++++++++++++++++++
->>   migration/savevm.h           |  3 +++
->>   3 files changed, 43 insertions(+)
+>>   include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
+>>   migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
+>>   2 files changed, 71 insertions(+)
 >>
 >> diff --git a/include/migration/register.h b/include/migration/register.h
->> index 9de123252edf..4a578f140713 100644
+>> index f60e797894e5..9de123252edf 100644
 >> --- a/include/migration/register.h
 >> +++ b/include/migration/register.h
->> @@ -263,6 +263,21 @@ typedef struct SaveVMHandlers {
+>> @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
 >>        */
->>       int (*load_state)(QEMUFile *f, void *opaque, int version_id);
+>>       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
 >>
 >> +    /**
->> +     * @load_state_buffer
+>> +     * @save_live_complete_precopy_begin
 >> +     *
->> +     * Load device state buffer provided to qemu_loadvm_load_state_buffer().
+>> +     * Called at the end of a precopy phase, before all
+>> +     * @save_live_complete_precopy handlers and before launching
+>> +     * all @save_live_complete_precopy_thread threads.
+>> +     * The handler might, for example, mark the stream boundary before
+>> +     * proceeding with asynchronous transmission of the remaining data via
+>> +     * @save_live_complete_precopy_thread.
+>> +     * When postcopy is enabled, devices that support postcopy will skip this step.
 >> +     *
+>> +     * @f: QEMUFile where the handler can synchronously send data before returning
+>> +     * @idstr: this device section idstr
+>> +     * @instance_id: this device section instance_id
 >> +     * @opaque: data pointer passed to register_savevm_live()
->> +     * @data: the data buffer to load
->> +     * @data_size: the data length in buffer
->> +     * @errp: pointer to Error*, to store an error if it happens.
 >> +     *
 >> +     * Returns zero to indicate success and negative for error
 >> +     */
->> +    int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
->> +                             Error **errp);
+>> +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
+>> +                                            char *idstr, uint32_t instance_id,
+>> +                                            void *opaque);
+>> +    /**
+>> +     * @save_live_complete_precopy_end
+>> +     *
+>> +     * Called at the end of a precopy phase, after @save_live_complete_precopy
+>> +     * handlers and after all @save_live_complete_precopy_thread threads have
+>> +     * finished. When postcopy is enabled, devices that support postcopy will
+>> +     * skip this step.
+>> +     *
+>> +     * @f: QEMUFile where the handler can synchronously send data before returning
+>> +     * @opaque: data pointer passed to register_savevm_live()
+>> +     *
+>> +     * Returns zero to indicate success and negative for error
+>> +     */
+>> +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
 > 
-> Nit: Maybe rename data to buf and data_size to len to be consistent with qemu_loadvm_load_state_buffer()?
+> Is this handler necessary now that migration core is responsible for the threads and joins them? I don't see VFIO implementing it later on.
 
-Will do.
+It's not 100% necessary for the current implementation but preserved
+for future usage and code consistency with the "_begin" handler
+(which IS necessary).
 
->> +
->>       /**
->>        * @load_setup
->>        *
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index d43acbbf20cf..3fde5ca8c26b 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -3101,6 +3101,31 @@ int qemu_loadvm_approve_switchover(void)
->>       return migrate_send_rp_switchover_ack(mis);
->>   }
->>
->> +int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
->> +                                  char *buf, size_t len, Error **errp)
->> +{
->> +    SaveStateEntry *se;
->> +
->> +    se = find_se(idstr, instance_id);
->> +    if (!se) {
->> +        error_setg(errp, "Unknown idstr %s or instance id %u for load state buffer",
->> +                   idstr, instance_id);
->> +        return -1;
->> +    }
->> +
->> +    if (!se->ops || !se->ops->load_state_buffer) {
->> +        error_setg(errp, "idstr %s / instance %u has no load state buffer operation",
->> +                   idstr, instance_id);
->> +        return -1;
->> +    }
->> +
->> +    if (se->ops->load_state_buffer(se->opaque, buf, len, errp) != 0) {
->> +        return -1;
->> +    }
->> +
->> +    return 0;
-> 
-> Nit: this can be simplified to:
-> return se->ops->load_state_buffer(se->opaque, buf, len, errp);
-You're right - will change it so.
-  
 > Thanks.
 
 Thanks,
 Maciej
-
 
 
