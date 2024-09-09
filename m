@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 319D7ECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 054C0ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snigI-0003rK-Iq; Mon, 09 Sep 2024 14:00:06 -0400
+	id 1sniiy-0007fl-Jr; Mon, 09 Sep 2024 14:02:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snigG-0003jh-N4
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:00:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snigE-0000vw-J3
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:00:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725904800;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YDdwWW6Jkk0Ed6C5UBpLGKTL2I5BSw0eBfiDuau65DU=;
- b=KHOph1YHa5A9QK54M0NeZky9XKz0jposwwYLRuYHzxt45nUvgzdD5DqDvEzciUvFa5CQ6D
- ysSJlZH3qxVSpZc/y/Lojpwo0IeqBp3LsPJPqkBQ11RXmhfQLh7Vt2Xob2tlrlA9Pl1Ycg
- eX/6WINcfHFeQSpsKfyMGhLqy3wNIFg=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-7dTCrvfxMCGWM39-Xlsyog-1; Mon, 09 Sep 2024 13:59:56 -0400
-X-MC-Unique: 7dTCrvfxMCGWM39-Xlsyog-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7a99fdae7bbso468591685a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:59:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniiq-00079w-OZ
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:02:46 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniio-0001Kg-UG
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:02:44 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-52f01b8738dso3189205e87.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 11:02:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725904961; x=1726509761; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ekos1C05kXz4BX7E2oaErKrr3DrBSiu9SoQ/HQodfdI=;
+ b=yrJ2vzA6bEv+gNIJOpKfG+q9Phr8K/0y4+qGeLN43CYU5O0Q7FAN86NygWxsK3zehD
+ 0+DkLAM+Wa70/5NwCwiCrM7AaSzaMslcnFYg0OvGrYkgB8vTOZtTscKOFwFQAab4XQif
+ asGpBRXWJ9XO7Ew/LZFJsSAmihf7cLEIFFWKQJw0pw03sFXc7R7mXFS94R1ys/7b7r+t
+ s+a3yDNkltjhSo8EP9DCxE1u2Ik/skLTov6Yt2UW9YFqkoIEUao5Ics3aHHAh9rqnAK5
+ 52mF47ICeuqLxHcMPqrhdUL6m7Uvv32/R4J+z1qR9AqrlxDb0Wfajzf5+BOMHPLJ61KZ
+ LHlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725904796; x=1726509596;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YDdwWW6Jkk0Ed6C5UBpLGKTL2I5BSw0eBfiDuau65DU=;
- b=rPM265G8hV3r3RvaWLhXs/FVu+7+5jXxnQ6yuf+uAt1z0L6+HhAb21sye/R5sKWiVA
- dSFsSwgaWeKmTjIZcL9mVBh9eZI+vJ5owazkXOJr5tzFCuHD7HM5zRZgqw/PPYaf7xm4
- YiTho6x7phym11maexU0/LPKYUGKYBA5ZKJp2EHino1ky6Ro0+/gQpMBUEHx3HYL8nuW
- t6NcmcTGkJ2JwWdm3AwpX2ceE3MSlBlqDsoDOMCd0KN9jvQaeP3/JdbqwSuxz3CcIOb0
- P391mD6wramHxJFGdadX2x+pwABBApRw8bGnxkOt0S7WXyliPL6tSmHDN9vphOGikkEx
- VBQA==
+ d=1e100.net; s=20230601; t=1725904961; x=1726509761;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ekos1C05kXz4BX7E2oaErKrr3DrBSiu9SoQ/HQodfdI=;
+ b=QBJQieoQZt30TtRsStcJE4s1TjDn6ZmTdtFdowVVKfqczDJw2+xy1MoFGm0d2KmhgB
+ PvgjLjtm2h88rz1nzy5x5ij0iMNL5l4nVociKAMtwowPSuGalK24Rx4Xi1Ix4dZkEoWZ
+ PQQeLCs8Hmwm4Vjos1hSDgxlhfy2nI+GKg+fD1H13HsBYuoLaG988Pb4lsWUKH3P07DO
+ pKYu2hXbYNKvfFflCy6BB3oElPlTHf7lEY+J73SVU5W8/VF3/5/noDAx6jec0puD//Z2
+ hPAAV4W1KZfbBC6F4+gdTk4ZrzJbMHm8ov9imH+zDtKMZhA4hJrw/yosIBFwzSZH6wTX
+ CB3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdcxo7EVxh8iJr6jNb3i+oM7NNjkrMp4orm9jex+KOq2ES+PoRdqBFX3z91eCJKkdZZ0W8eMHwMWiZ@nongnu.org
-X-Gm-Message-State: AOJu0YwfTkvzLZ3syC+pPj+bjpmWeDZ6Jpny/1ZBelrc14r6rDEwnqDx
- yz2Su8jkKx5y9FPYwyp4BSXo2vKTMHHPL0a4k2p7zhNBCX4owwJhm6yMQRJpyxNZfgm4cH+7fX4
- iKQJ/mfZADuI/wI4yvLj6kA2BGipc+Iwmq+ycSCsaHgkUL54yelkI
-X-Received: by 2002:a05:620a:3910:b0:7a5:27e:8814 with SMTP id
- af79cd13be357-7a99735e5afmr1444205685a.44.1725904796290; 
- Mon, 09 Sep 2024 10:59:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCmGOJRjHk1pXrskVbJFmyknudOXgHX6haiBC1zMDIHDsib7IGNUCOnpsH81v/8ARVw1BpcA==
-X-Received: by 2002:a05:620a:3910:b0:7a5:27e:8814 with SMTP id
- af79cd13be357-7a99735e5afmr1444201885a.44.1725904795965; 
- Mon, 09 Sep 2024 10:59:55 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a9a7969043sm237868685a.44.2024.09.09.10.59.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 10:59:55 -0700 (PDT)
-Date: Mon, 9 Sep 2024 13:59:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 06/17] migration: Add
- save_live_complete_precopy_{begin,end} handlers
-Message-ID: <Zt83mWWlMomX4mRD@x1n>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
- <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
+ AJvYcCWp+x3mlzDJdSXyOWu02SkabVG56FutPa6s0an4YswOnOPcyKje3oLYkqnBaW3gazl8EcDf3hv2q059@nongnu.org
+X-Gm-Message-State: AOJu0Yw2rV8Wsi2l1q6BcbqYbd33Chc+yuVqoGeaoe1E4m9eroJF08E5
+ 1ZYk1yC1HuNVkNsqJlOd6G8nacGrclSjzVtF14widB3vcuvEBjHiqnP6M2j4OOU=
+X-Google-Smtp-Source: AGHT+IFmQMgkLcEagoxRF5u7xWo+9/xAnhtNSbfpVfEZHL2CpDMqE4lYVM134ARsDrKcD/upR61flg==
+X-Received: by 2002:a05:6512:104f:b0:533:482f:afb7 with SMTP id
+ 2adb3069b0e04-536587fce37mr7659606e87.39.1725904960615; 
+ Mon, 09 Sep 2024 11:02:40 -0700 (PDT)
+Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
+ [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25c74286sm371479966b.123.2024.09.09.11.02.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Sep 2024 11:02:38 -0700 (PDT)
+Message-ID: <f7f03006-9c7e-41a1-a683-db19378928b4@linaro.org>
+Date: Mon, 9 Sep 2024 20:02:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 40/53] hw/intc: Remove omap2-intc device
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+ <20240903160751.4100218-41-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240903160751.4100218-41-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,95 +96,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 05, 2024 at 04:45:48PM +0300, Avihai Horon wrote:
+On 3/9/24 18:07, Peter Maydell wrote:
+> Remove the OMAP2 specific code from omap_intc.c.
 > 
-> On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
-> > External email: Use caution opening links or attachments
-> > 
-> > 
-> > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > 
-> > These SaveVMHandlers help device provide its own asynchronous
-> > transmission of the remaining data at the end of a precopy phase.
-> > 
-> > In this use case the save_live_complete_precopy_begin handler might
-> > be used to mark the stream boundary before proceeding with asynchronous
-> > transmission of the remaining data while the
-> > save_live_complete_precopy_end handler might be used to mark the
-> > stream boundary after performing the asynchronous transmission.
-> > 
-> > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> > ---
-> >   include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
-> >   migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
-> >   2 files changed, 71 insertions(+)
-> > 
-> > diff --git a/include/migration/register.h b/include/migration/register.h
-> > index f60e797894e5..9de123252edf 100644
-> > --- a/include/migration/register.h
-> > +++ b/include/migration/register.h
-> > @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
-> >        */
-> >       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
-> > 
-> > +    /**
-> > +     * @save_live_complete_precopy_begin
-> > +     *
-> > +     * Called at the end of a precopy phase, before all
-> > +     * @save_live_complete_precopy handlers and before launching
-> > +     * all @save_live_complete_precopy_thread threads.
-> > +     * The handler might, for example, mark the stream boundary before
-> > +     * proceeding with asynchronous transmission of the remaining data via
-> > +     * @save_live_complete_precopy_thread.
-> > +     * When postcopy is enabled, devices that support postcopy will skip this step.
-> > +     *
-> > +     * @f: QEMUFile where the handler can synchronously send data before returning
-> > +     * @idstr: this device section idstr
-> > +     * @instance_id: this device section instance_id
-> > +     * @opaque: data pointer passed to register_savevm_live()
-> > +     *
-> > +     * Returns zero to indicate success and negative for error
-> > +     */
-> > +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
-> > +                                            char *idstr, uint32_t instance_id,
-> > +                                            void *opaque);
-> > +    /**
-> > +     * @save_live_complete_precopy_end
-> > +     *
-> > +     * Called at the end of a precopy phase, after @save_live_complete_precopy
-> > +     * handlers and after all @save_live_complete_precopy_thread threads have
-> > +     * finished. When postcopy is enabled, devices that support postcopy will
-> > +     * skip this step.
-> > +     *
-> > +     * @f: QEMUFile where the handler can synchronously send data before returning
-> > +     * @opaque: data pointer passed to register_savevm_live()
-> > +     *
-> > +     * Returns zero to indicate success and negative for error
-> > +     */
-> > +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
-> 
-> Is this handler necessary now that migration core is responsible for the
-> threads and joins them? I don't see VFIO implementing it later on.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/intc/omap_intc.c | 276 --------------------------------------------
+>   1 file changed, 276 deletions(-)
 
-Right, I spot the same thing.
 
-This series added three hooks: begin, end, precopy_thread.
+> -static const TypeInfo omap2_intc_info = {
+> -    .name          = "omap2-intc",
+> -    .parent        = TYPE_OMAP_INTC,
+> -    .instance_init = omap2_intc_init,
+> -    .class_init    = omap2_intc_class_init,
+> -};
+> -
+>   static const TypeInfo omap_intc_type_info = {
+>       .name          = TYPE_OMAP_INTC,
+>       .parent        = TYPE_SYS_BUS_DEVICE,
+> @@ -684,7 +409,6 @@ static void omap_intc_register_types(void)
+>   {
+>       type_register_static(&omap_intc_type_info);
+>       type_register_static(&omap_intc_info);
+> -    type_register_static(&omap2_intc_info);
+>   }
+>   
+>   type_init(omap_intc_register_types)
 
-What I think is it only needs one, which is precopy_async.  My vague memory
-was that was what we used to discuss too, so that when migration precopy
-flushes the final round of iterable data, it does:
+I'd squash in the same commit the abstract parent removal:
 
-  (1) loop over all complete_precopy_async() and enqueue the tasks if
-      existed into the migration worker pool.  Then,
+-- >8 --
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index 67bb83dff5..43a1a9ebe7 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -68,7 +68,7 @@ int64_t omap_clk_getrate(omap_clk clk);
+  void omap_clk_reparent(omap_clk clk, omap_clk parent);
 
-  (2) loop over all complete_precopy() like before.
+  /* omap_intc.c */
+-#define TYPE_OMAP_INTC "common-omap-intc"
++#define TYPE_OMAP_INTC "omap-intc"
+  typedef struct OMAPIntcState OMAPIntcState;
+  DECLARE_INSTANCE_CHECKER(OMAPIntcState, OMAP_INTC, TYPE_OMAP_INTC)
 
-Optionally, we can enforce one vmstate handler only provides either
-complete_precopy_async() or complete_precopy().  In this case VFIO can
-update the two hooks during setup() by detecting multifd && !mapped_ram &&
-nocomp.
+diff --git a/hw/intc/omap_intc.c b/hw/intc/omap_intc.c
+index c14b22d381..f4f5f8455b 100644
+--- a/hw/intc/omap_intc.c
++++ b/hw/intc/omap_intc.c
+@@ -392,22 +392,15 @@ static void omap_intc_class_init(ObjectClass 
+*klass, void *data)
+  }
 
--- 
-Peter Xu
+  static const TypeInfo omap_intc_info = {
+-    .name          = "omap-intc",
+-    .parent        = TYPE_OMAP_INTC,
++    .name          = TYPE_OMAP_INTC,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(OMAPIntcState),
+      .instance_init = omap_intc_init,
+      .class_init    = omap_intc_class_init,
+  };
+
+-static const TypeInfo omap_intc_type_info = {
+-    .name          = TYPE_OMAP_INTC,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(OMAPIntcState),
+-    .abstract      = true,
+-};
+-
+  static void omap_intc_register_types(void)
+  {
+-    type_register_static(&omap_intc_type_info);
+      type_register_static(&omap_intc_info);
+  }
+
+---
+
+But this can be done on top, so:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
