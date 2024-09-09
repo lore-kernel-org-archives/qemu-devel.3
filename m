@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3121EECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76726ECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniQz-0005wN-PA; Mon, 09 Sep 2024 13:44:17 -0400
+	id 1sniR8-0006bE-RD; Mon, 09 Sep 2024 13:44:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniQx-0005mE-Gz
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:44:15 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniR7-0006SC-2m
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:44:25 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniQv-0007Wl-Th
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:44:15 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a7a843bef98so247052666b.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:44:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniR5-0007XS-IL
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:44:24 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a8d6ac24a3bso110468566b.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725903851; x=1726508651; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725903862; x=1726508662; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PKnXHUv6SmKw+WE9nhTwKSMjER1Cln1ig5Dty4aaU8I=;
- b=O2n6YR4jumDi2VmqyPjQWbJoyEUfOn7qXj246hmXU4noqOQEtqigZRzgbrE4Zn6USd
- LnZrufuRch0WI5fUxrPGTZJQPpHl+mG7nOIXyQ9Lei7CvcL3Urrs2ixEo1bUZeA2xn7T
- XWs04yTTPUay/0w7pVD8H7Di1kjjDAkyZZSCxtBJ7sgO4LOOvMIv0j+gVAvPIkAR0XvS
- 68HxiNVglkNjMmmo+6M4nP5zfBJPuTfxPVZ30QoYbsyhhdS3hHA173hIZhmm2NOp2mp+
- rMhiDF79r/KbFUodYAveJQar2NdjrNAUz76UmkalYdRxyODhgzddcPyIC24JDUltGWYF
- dPAQ==
+ bh=WhADs7iqvEaAUaomqK5YQAls8lc0vQdbI/JzKzXPc4Y=;
+ b=NOOgB1rEZ2HnjqtbF5Cmur8ShSLlb6CNkcNAJUhlda2qfihxFkdmsT9UWZDG7QTjAU
+ DyR+sWpusYUWSAs/zAYThOy5nkf7CEsouYWjHZZuV8CaKBnGcU2N6usfgT1ZsSow9Nrm
+ 0rLPOLpGMIZq35k5yi8bldytYcg1QP1QO+rdSvRWDKcu7k8LP5qF2s6po6LkmeRcuOuO
+ c7y7oG4wgHAdaA8p/m/sl3aKtxWPVA+Ck7wqQIpLXp6M0w3eqm1gSsgpWokAAZ5CnYC7
+ oNkFLb4E9rI7Y70tOsoJmnf0IjsEzQUMroiQhKepiW3YqauXvU7P0i3ItL/BIMPOAx2c
+ wwog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725903851; x=1726508651;
+ d=1e100.net; s=20230601; t=1725903862; x=1726508662;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PKnXHUv6SmKw+WE9nhTwKSMjER1Cln1ig5Dty4aaU8I=;
- b=QAjfNHBV8Hake1yZ5OCchrP/ZgCNgEPdOfBUzlMUvAEzYckv+SSFqgfJXC16Aq8J5W
- FeXrXm6CAKemrVX6948RQzC3QdefmrkQNi+cDRCC/HeZlScrHChZx7EeyM7ze/w75xXO
- mrl2EAvlBRqy0sWqLCk+N06q9BANMOksHAHKtLthTf+pabnstmld/B44wOQd+vGSn2nr
- qvgtANOJzkwko4Ud28c5mD/xVOLgaNddAOne/OSGTP+E73vnbwt6Fl5rYJDJvamh7vJa
- Q840Zf/DlCOWdDOkHVgBn1RRL4RIRsscr3hCCKUgwurQjKkBNZXjM3D9DurvP4Hi8Nck
- /nmQ==
+ bh=WhADs7iqvEaAUaomqK5YQAls8lc0vQdbI/JzKzXPc4Y=;
+ b=fNnnoCDL4I9V3H12pvgn7W8ZIjqSfjGqYjX7q7xvJNhBBduRZvMyW/tsZtQqWghAHK
+ i5GDl8lTjtmRgl3MaPQZwvoCYdy7MKEmsxW4DGohLjCDTiccTP8XQHN8CKfu3E2Y4GRN
+ sfY6Ux//bNgR6I5vvIIRDYGmEXyDWx6BygFt+cLOr613Ct+/MldQ1t5I+IUmURMeB/4t
+ KyVTPOBhjtaYLOttlQGNIR2+EBB0UVrICnhhpwCi+Aft4/A3IccfRByI7f0HB0Uk/e+M
+ rnhO2B7UriQ8WIPBhK2P43+dbIXfsy0BHF4mBglxaniurwS4LfMUBfmB9v5LGFYju5rk
+ jMIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7yTJormivxgfKCI1WNUeL8Z7Up5sekc/mokK7bp3R6k/dW0mnxbCkClI855fX+kv47qg5FUnkfun4@nongnu.org
-X-Gm-Message-State: AOJu0YzXyU1231ZDhAdKQvkfkI23vKIwFjQ4fHA8H5Km5BQ7ufXX7KlC
- l62mNUz3Lvwl4kbdksrRRv0lRsFv4Hlh+kY+M9ESLpHXwBQIU2YhNeRI5dXeXXM=
-X-Google-Smtp-Source: AGHT+IExw11VCLjE/wCFrJKUpXTiSQUrV9xrGTrdceaBTqw4pVT02teuRzzb4CMugagTTs7//vrpQg==
-X-Received: by 2002:a17:906:eec7:b0:a88:b90b:bd5e with SMTP id
- a640c23a62f3a-a8a885be339mr904307266b.3.1725903850957; 
- Mon, 09 Sep 2024 10:44:10 -0700 (PDT)
+ AJvYcCUlaq6vTXjnvpPisy1k4fWKu4KK9hXQlZQ+/mMoUROVXEEZSN2DMuagRYbfGRhr2DDq7vvmXEQMIYve@nongnu.org
+X-Gm-Message-State: AOJu0YxbXJnXN9KlPOR+Hymr3j9iABI26zSYiGZrOuwsLmx59PmFauXF
+ 8rx+T+H3hrczkBIzSAO+jWMiRGNqOO5TzaEyw9yPzFHao4dwasResh6QiVqKfkxlSI7g0GGm6m1
+ T
+X-Google-Smtp-Source: AGHT+IFnQ43mmnw0IOReTjbUx5/21BQqvOCFjGB9dEY8Rvx8tn+JOmG1HvOauZ4J4kxqodVWykMQtA==
+X-Received: by 2002:a17:907:7f86:b0:a8d:4cec:fcec with SMTP id
+ a640c23a62f3a-a8d731a734bmr53428766b.26.1725903862039; 
+ Mon, 09 Sep 2024 10:44:22 -0700 (PDT)
 Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
  [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25d5dc8csm368569766b.206.2024.09.09.10.44.09
+ a640c23a62f3a-a8d25952c01sm370880566b.64.2024.09.09.10.44.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 10:44:10 -0700 (PDT)
-Message-ID: <0f704f5b-461b-4c9f-8d03-7baae8845cb2@linaro.org>
-Date: Mon, 9 Sep 2024 19:44:08 +0200
+ Mon, 09 Sep 2024 10:44:21 -0700 (PDT)
+Message-ID: <5546695f-a746-41aa-aea0-a39a61a27936@linaro.org>
+Date: Mon, 9 Sep 2024 19:44:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 13/53] hw/arm: Remove STRONGARM->PXA2XX dependency
+Subject: Re: [PATCH for-9.2 14/53] hw/timer/pxa2xx_timer: Remove use of pxa.h
+ header
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <20240903160751.4100218-14-peter.maydell@linaro.org>
+ <20240903160751.4100218-15-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240903160751.4100218-14-peter.maydell@linaro.org>
+In-Reply-To: <20240903160751.4100218-15-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,19 +99,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/9/24 18:07, Peter Maydell wrote:
-> Currently the STRONGARM KConfig symbol pulls in PXA2XX. Since we've now
-> removed all the true uses of PXA2XX, we'd like to remove the PXA2XX
-> symbol too. To permit that, make STRONGARM directly select the things
-> it truly depends on:
->   * pxa25x-timer
->   * SSI
+> pxa2xx_timer includes pxa.h, but it doesn't actually make
+> use of any of the #defines, function prototypes or structs
+> defined there. Remove the unnecessary include (we will
+> shortly be removing the whole header file).
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/arm/Kconfig       | 4 +++-
->   hw/timer/Kconfig     | 3 +++
->   hw/timer/meson.build | 2 +-
->   3 files changed, 7 insertions(+), 2 deletions(-)
+>   hw/timer/pxa2xx_timer.c | 1 -
+>   1 file changed, 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
