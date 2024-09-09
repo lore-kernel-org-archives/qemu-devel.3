@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87BD3E6FE49
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 07:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 895B9E6FE49
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 07:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snYnF-0003sG-Kr; Mon, 09 Sep 2024 03:26:37 -0400
+	id 1snYxH-00013f-Pr; Mon, 09 Sep 2024 03:36:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1snYnE-0003rl-Bo
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:26:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1snYnC-000224-Dk
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:26:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725866790;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M+ud1BzBgPkV+8qCLrmMgUkHgtjUhjMYmKC8rYictp0=;
- b=WFBbn1omis11t1bBaPHNAvQRsHPhoweuq21wek5KFd2C0RJO5EQi3IxmsEEWsad8wajWGg
- RczLqLYPmCSTQYEw9Ptx3HElWK0z3jQawc0lfsMT94MCHPD+ulu3nsGI3f/hKfnmQMi309
- GKW7i2RI+nWH8L9eRsjHr0SR6IkQ5RY=
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-321-ZLMXxh8kODOiP8KLIuLWuA-1; Mon, 09 Sep 2024 03:26:27 -0400
-X-MC-Unique: ZLMXxh8kODOiP8KLIuLWuA-1
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-49bdf2d6643so1247548137.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 00:26:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1snYxG-00012s-ST
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:36:58 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1snYxE-00036H-Q0
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:36:58 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-201d5af11a4so41272295ad.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 00:36:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1725867415; x=1726472215;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UsAKdHV2ZXVU0rXq6wBM2YcbxoOvYr3F9XGHWXUqLRI=;
+ b=va5RffeQ3lto23scp9O7qJtj83TiVwtnFSFyG0GlYfR6frpq5S0xJteEHI8/XzWqdC
+ hIpRKS+7yhvjXOHKsN/yFFKOQfajgDJiZYlB2x/Lyti3TxA4c8GXh8Pk6aDPYZ7j/ogI
+ l7VGK3UohqPNj6hw/nkNuCPoz/l0VnhLCMoOhnMfcWsT8x5uDLW5wCSg/YYuwWgNVJ8H
+ b356g/ufkZZFR6+qIuSqBJdq46utivb2F1K9be4ejCvHV+aI0fp+bTUfl85JrPt60zdf
+ TKk12cNnuX8Tk6klUueHNZzyaTyaTYTy3auPX50smz6a2MtlzKPFWPD1Ao8XkGuOh6Ge
+ 8T2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725866786; x=1726471586;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M+ud1BzBgPkV+8qCLrmMgUkHgtjUhjMYmKC8rYictp0=;
- b=rIo7uhIU4AzmiUkAJnwwDGYRxpxIqLuT/p6m8fL9CfyB3vq6pkVsRHI9YQ900GWqHi
- lHs6vdSIPD7Kgchr1M3Y6TzZN/jXtPqcVKRs9uOAleraulzERggMgOD+KM73YRkVcIuL
- fUf9RtqiLAYRqL44jkj7BDmejkFphwwpiTMeAM8B88uGZ+tJdkJpmKOmh6v/DxNeSvnt
- Z4rNIXUetZVn11pQh+kwxaoD1qJucSW+bI181ZPe829EGNVRWQoHJNfx30rTPuv+Em7c
- 7/l6ggA2O911W4Y8lcnZ73g4IsVQQLNIrfoakJJFQaUPY9nfNJ8lcHbuBLh6vVnRPc8q
- v3eg==
+ d=1e100.net; s=20230601; t=1725867415; x=1726472215;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UsAKdHV2ZXVU0rXq6wBM2YcbxoOvYr3F9XGHWXUqLRI=;
+ b=V/S3Ak4hus3bJsKlahf15O+35bePePseP9UeJS7As0dpnb67cObSzmPN8cCO8o8mMR
+ UN/LVDP7I1w4QATTGf47GYZX1+FffbaIet9fO+YWaYuaUOpuqN/0XX0tx4KOvvkPC5zn
+ RARLSQffODoEPANYTii/9pLqTCLFToFf5kX41xxDUwOwxETycBOjpyclXFNy7TMMr+oK
+ pI+EFQo0tKWi9qvvcFem38oNrmYr4dK0LyXcGeeCNdziwKs1KBZAvr5xbGQQekRPeX6N
+ ftYx8Dl32vujix/ImcUnkzFON+GS/wqc1AB8tKS1fzxcjimtDta9Rzf2bFURxR84Fic0
+ Djgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwNSGI5/aOnEtqGcUq9lpWdmU/K3+wkLRC1zPhhs/TQisgf0NOdDA6a1USiwKi2KKl9Pduv+PBWkBj@nongnu.org
-X-Gm-Message-State: AOJu0Yw1M7Wk+9ho+PMBhitrreoEWhML7P9dsPfXDl1wP2kYFYtXMm2G
- FFjCSPhdnf7o/g4Z0WTFGQEAD6UzPZVjzfiJFExBZ/cHdAvc26ydN2vXqjihyH/sIH7HiHF9I5Z
- VHSEJ6eWPmePaetfxN46mJbm1oGATNPISP3gEh+LOPZsROJshqwE3fkiYlBmoMrrW/18XZ/YMju
- SKFCxeZuM7aMH0fbEfFkFaWsVmweg=
-X-Received: by 2002:a05:6102:941:b0:497:50c0:a6cb with SMTP id
- ada2fe7eead31-49bde262e6emr10464235137.19.1725866786211; 
- Mon, 09 Sep 2024 00:26:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyzjjC6vcNvX6cvObHARFiyMElrw8HkKcNJ/o9IHdjTAurn4RtN7kbitfavrNEq4lVL7mHnFcL0P3N8Agqryo=
-X-Received: by 2002:a05:6102:941:b0:497:50c0:a6cb with SMTP id
- ada2fe7eead31-49bde262e6emr10464214137.19.1725866785806; Mon, 09 Sep 2024
- 00:26:25 -0700 (PDT)
+ AJvYcCXbIWCdXq48FMWWVzxIDIkLPDRixhfX4Rb6WTQ5ceCNte0VIFQoPx/OUUDfFTEOmuVjZOsT65iZAHe2@nongnu.org
+X-Gm-Message-State: AOJu0YxfjAl80VpOFpNcrXDj+cAxpX6DeJk+62grV2LMoAbfPwFi+17y
+ ZcNdP7KivM5O86+6iiclC6Akh2khHvptan139GfzEuauPl5+TCK96qxwbsYj+Pw=
+X-Google-Smtp-Source: AGHT+IFj1R5f2uiuspkuS6RaLbYOcMiJZnNM8Iu6cbvLYVEIjJcSNXRQYr08L1cInI1nEQ4MdvDy4A==
+X-Received: by 2002:a17:902:ec84:b0:206:aac4:b844 with SMTP id
+ d9443c01a7336-206f04c9142mr139708355ad.6.1725867414873; 
+ Mon, 09 Sep 2024 00:36:54 -0700 (PDT)
+Received: from [157.82.201.226] ([157.82.201.226])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20710f342edsm28667145ad.286.2024.09.09.00.36.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Sep 2024 00:36:54 -0700 (PDT)
+Message-ID: <dab54af1-cf9d-401c-a11f-657334b52d5a@daynix.com>
+Date: Mon, 9 Sep 2024 16:36:50 +0900
 MIME-Version: 1.0
-References: <ae9b2c56-dab2-4b8f-bb5e-2087e9ccaa92@t-online.de>
- <20240909061552.6122-1-vr_qemu@t-online.de>
-In-Reply-To: <20240909061552.6122-1-vr_qemu@t-online.de>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 9 Sep 2024 11:26:14 +0400
-Message-ID: <CAMxuvay4vRm6ZYQoUx=cmD5mr-8-qR4Z4iLEJ6-f0m2eUSbdOg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ui/sdl2: reenable the SDL2 Windows keyboard hook
- procedure
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-Cc: Stefan Weil <sw@weilnetz.de>, Howard Spoelstra <hsp.cat7@gmail.com>, 
- Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block: support locking on change medium
+To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+References: <20240909015847.40377-1-j@getutm.app>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240909015847.40377-1-j@getutm.app>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::629;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,188 +103,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Mon, Sep 9, 2024 at 10:22=E2=80=AFAM Volker R=C3=BCmelin <vr_qemu@t-onli=
-ne.de> wrote:
->
-> Windows only:
->
-> The libSDL2 Windows message loop needs the libSDL2 Windows low
-> level keyboard hook procedure to grab the left and right Windows
-> keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
->
-> Because the QEMU Windows keyboard hook procedure is still needed
-> to filter out the special left Control key event for every Alt Gr
-> key event, it's important to install the two keyboard hook
-> procedures in the following order. First the SDL2 procedure, then
-> the QEMU procedure.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
-> Tested-by: Howard Spoelstra <hsp.cat7@gmail.com>
-> Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online.de>
+On 2024/09/09 10:58, Joelle van Dyne wrote:
+> New optional argument for 'blockdev-change-medium' QAPI command to allow
+> the caller to specify if they wish to enable file locking.
+> 
+> Signed-off-by: Joelle van Dyne <j@getutm.app>
 > ---
->  ui/sdl2.c           | 53 ++++++++++++++++++++++++++++++---------------
->  ui/win32-kbd-hook.c |  3 +++
->  2 files changed, 38 insertions(+), 18 deletions(-)
->
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index 98ed974371..ac37c173a1 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -42,6 +42,7 @@ static SDL_Surface *guest_sprite_surface;
->  static int gui_grab; /* if true, all keyboard/mouse events are grabbed *=
-/
->  static bool alt_grab;
->  static bool ctrl_grab;
-> +static bool win32_kbd_grab;
->
->  static int gui_saved_grab;
->  static int gui_fullscreen;
-> @@ -202,6 +203,19 @@ static void sdl_update_caption(struct sdl2_console *=
-scon)
->      }
->  }
->
-> +static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
-> +{
-> +#ifdef CONFIG_WIN32
-> +    SDL_SysWMinfo info;
+>   qapi/block.json                | 23 ++++++++++++++++++++++-
+>   block/monitor/block-hmp-cmds.c |  2 +-
+>   block/qapi-sysemu.c            | 22 ++++++++++++++++++++++
+>   ui/cocoa.m                     |  1 +
+>   4 files changed, 46 insertions(+), 2 deletions(-)
+> 
+> diff --git a/qapi/block.json b/qapi/block.json
+> index e66666f5c6..35e8e2e191 100644
+> --- a/qapi/block.json
+> +++ b/qapi/block.json
+> @@ -309,6 +309,23 @@
+>   { 'enum': 'BlockdevChangeReadOnlyMode',
+>     'data': ['retain', 'read-only', 'read-write'] }
+>   
+> +##
+> +# @BlockdevChangeFileLockingMode:
+> +#
+> +# Specifies the new locking mode of a file image passed to the
+> +# @blockdev-change-medium command.
+> +#
+> +# @auto: Use locking if API is available
+> +#
+> +# @off: Disable file image locking
+> +#
+> +# @on: Enable file image locking
+> +#
+> +# Since: 9.2
+> +##
+> +{ 'enum': 'BlockdevChangeFileLockingMode',
+> +  'data': ['auto', 'off', 'on'] }
+
+You can use OnOffAuto type instead of defining your own.
+
 > +
-> +    SDL_VERSION(&info.version);
-> +    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
-> +        return info.info.win.window;
+>   ##
+>   # @blockdev-change-medium:
+>   #
+> @@ -330,6 +347,9 @@
+>   # @read-only-mode: change the read-only mode of the device; defaults
+>   #     to 'retain'
+>   #
+> +# @file-locking-mode: change the locking mode of the file image; defaults
+> +#     to 'auto' (since: 9.2)
+> +#
+>   # @force: if false (the default), an eject request through
+>   #     blockdev-open-tray will be sent to the guest if it has locked
+>   #     the tray (and the tray will not be opened immediately); if true,
+> @@ -378,7 +398,8 @@
+>               'filename': 'str',
+>               '*format': 'str',
+>               '*force': 'bool',
+> -            '*read-only-mode': 'BlockdevChangeReadOnlyMode' } }
+> +            '*read-only-mode': 'BlockdevChangeReadOnlyMode',
+> +            '*file-locking-mode': 'BlockdevChangeFileLockingMode' } }
+>   
+>   ##
+>   # @DEVICE_TRAY_MOVED:
+> diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+> index bdf2eb50b6..ff64020a80 100644
+> --- a/block/monitor/block-hmp-cmds.c
+> +++ b/block/monitor/block-hmp-cmds.c
+> @@ -1007,5 +1007,5 @@ void hmp_change_medium(Monitor *mon, const char *device, const char *target,
+>       }
+>   
+>       qmp_blockdev_change_medium(device, NULL, target, arg, true, force,
+> -                               !!read_only, read_only_mode, errp);
+> +                               !!read_only, read_only_mode, false, 0, errp);
+>   }
+> diff --git a/block/qapi-sysemu.c b/block/qapi-sysemu.c
+> index e4282631d2..8064bdfb3a 100644
+> --- a/block/qapi-sysemu.c
+> +++ b/block/qapi-sysemu.c
+> @@ -311,6 +311,8 @@ void qmp_blockdev_change_medium(const char *device,
+>                                   bool has_force, bool force,
+>                                   bool has_read_only,
+>                                   BlockdevChangeReadOnlyMode read_only,
+> +                                bool has_file_locking_mode,
+> +                                BlockdevChangeFileLockingMode file_locking_mode,
+>                                   Error **errp)
+>   {
+>       BlockBackend *blk;
+> @@ -362,6 +364,26 @@ void qmp_blockdev_change_medium(const char *device,
+>           qdict_put_str(options, "driver", format);
+>       }
+>   
+> +    if (!has_file_locking_mode) {
+> +        file_locking_mode = BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO;
 > +    }
-> +#endif
-> +    return NULL;
-> +}
 > +
->  static void sdl_hide_cursor(struct sdl2_console *scon)
->  {
->      if (scon->opts->has_show_cursor && scon->opts->show_cursor) {
-> @@ -259,9 +273,16 @@ static void sdl_grab_start(struct sdl2_console *scon=
-)
->      } else {
->          sdl_hide_cursor(scon);
->      }
-> +    /*
-> +     * Windows: To ensure that QEMU's low level keyboard hook procedure =
-is
-> +     * called before SDL2's, the QEMU procedure must first be removed an=
-d
-> +     * then the SDL2 and QEMU procedures must be installed in this order=
-.
-> +     */
-> +    win32_kbd_set_window(NULL);
->      SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
-> +    win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
->      gui_grab =3D 1;
-> -    win32_kbd_set_grab(true);
-> +    win32_kbd_set_grab(win32_kbd_grab);
->      sdl_update_caption(scon);
->  }
->
-> @@ -370,19 +391,6 @@ static int get_mod_state(void)
->      }
->  }
->
-> -static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
-> -{
-> -#ifdef CONFIG_WIN32
-> -    SDL_SysWMinfo info;
-> -
-> -    SDL_VERSION(&info.version);
-> -    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
-> -        return info.info.win.window;
-> -    }
-> -#endif
-> -    return NULL;
-> -}
-> -
->  static void handle_keydown(SDL_Event *ev)
->  {
->      int win;
-> @@ -605,7 +613,7 @@ static void handle_windowevent(SDL_Event *ev)
->          sdl2_redraw(scon);
->          break;
->      case SDL_WINDOWEVENT_FOCUS_GAINED:
-> -        win32_kbd_set_grab(gui_grab);
-> +        win32_kbd_set_grab(win32_kbd_grab && gui_grab);
->          if (qemu_console_is_graphic(scon->dcl.con)) {
->              win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
->          }
-> @@ -849,6 +857,7 @@ static void sdl2_display_init(DisplayState *ds, Displ=
-ayOptions *o)
->      uint8_t data =3D 0;
->      int i;
->      SDL_SysWMinfo info;
-> +    SDL_version ver;
->      SDL_Surface *icon =3D NULL;
->      char *dir;
->
-> @@ -866,10 +875,7 @@ static void sdl2_display_init(DisplayState *ds, Disp=
-layOptions *o)
->  #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available sin=
-ce SDL 2.0.8 */
->      SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
->  #endif
-> -#ifndef CONFIG_WIN32
-> -    /* QEMU uses its own low level keyboard hook procedure on Windows */
->      SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
-> -#endif
->  #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
->      SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
->  #endif
-> @@ -877,6 +883,17 @@ static void sdl2_display_init(DisplayState *ds, Disp=
-layOptions *o)
->      SDL_EnableScreenSaver();
->      memset(&info, 0, sizeof(info));
->      SDL_VERSION(&info.version);
-> +    /*
-> +     * Since version 2.16.0 under Windows, SDL2 has its own low level
-> +     * keyboard hook procedure to grab the keyboard. The remaining task =
-of
-> +     * QEMU's low level keyboard hook procedure is to filter out the spe=
-cial
-> +     * left Control up/down key event for every Alt Gr key event on keyb=
-oards
-> +     * with an international layout.
-> +     */
-> +    SDL_GetVersion(&ver);
-> +    if (ver.major =3D=3D 2 && ver.minor < 16) {
-> +        win32_kbd_grab =3D true;
+> +    switch (file_locking_mode) {
+> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO:
+> +        break;
+> +
+> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_OFF:
+> +        qdict_put_str(options, "file.locking", "off");
+> +        break;
+> +
+> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_ON:
+> +        qdict_put_str(options, "file.locking", "on");
+> +        break;
+> +
+> +    default:
+> +        abort();
 > +    }
->
+> +
+>       medium_bs = bdrv_open(filename, NULL, options, bdrv_flags, errp);
+>   
+>       if (!medium_bs) {
+> diff --git a/ui/cocoa.m b/ui/cocoa.m
+> index 4c2dd33532..6e73c6e13e 100644
+> --- a/ui/cocoa.m
+> +++ b/ui/cocoa.m
+> @@ -1611,6 +1611,7 @@ - (void)changeDeviceMedia:(id)sender
+>                                          "raw",
+>                                          true, false,
+>                                          false, 0,
+> +                                       false, 0,
 
-Note: there is no 2.16 release. They jumped from 2.0.22 to 2.24 (see
-https://github.com/libsdl-org/SDL/releases/tag/release-2.24.0)
+This change is irrelevant.
 
-The windows hook was indeed added in 2.0.16, released on Aug 10, 2021.
-
-Given the distribution nature of the Windows binaries, I think we
-could simply depend on a much recent version without worrying about
-compatibility with < 2.0.16. This would help reduce the potential
-combinations of versions and bugs reports.
-
->      gui_fullscreen =3D o->has_full_screen && o->full_screen;
->
-> diff --git a/ui/win32-kbd-hook.c b/ui/win32-kbd-hook.c
-> index 1ac237db9e..39d42134a2 100644
-> --- a/ui/win32-kbd-hook.c
-> +++ b/ui/win32-kbd-hook.c
-> @@ -91,6 +91,9 @@ void win32_kbd_set_window(void *hwnd)
->              win32_unhook_notifier.notify =3D keyboard_hook_unhook;
->              qemu_add_exit_notifier(&win32_unhook_notifier);
->          }
-> +    } else if (!hwnd && win32_keyboard_hook) {
-> +        keyboard_hook_unhook(&win32_unhook_notifier, NULL);
-> +        qemu_remove_exit_notifier(&win32_unhook_notifier);
->      }
->
->      win32_window =3D hwnd;
-> --
-> 2.35.3
->
-
+Regards,
+Akihiko Odaki
 
