@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6979EECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E30ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sngLn-0003Zd-7r; Mon, 09 Sep 2024 11:30:47 -0400
+	id 1sngQC-0008Js-Rn; Mon, 09 Sep 2024 11:35:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sngLl-0003X4-6h
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:30:45 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1sngQB-0008JH-2C
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:35:19 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sngLj-0002o0-Lu
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:30:44 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5c3c30e663fso5157779a12.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:30:43 -0700 (PDT)
+ id 1sngQ9-0003Dr-CR
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:35:18 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2f760f7e25bso16184261fa.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725895841; x=1726500641; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725896115; x=1726500915; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7QBAlAMX/7CLmi7XQQ6kE3/liMSEhNPziZhOZBa96JI=;
- b=XNP8Y9ldfGHN9FgJAeswnVy/gbamiaXizyDB1KYDRnhZ32TSybHeldjuqyeNGZMGaK
- LMX+JJmog5LPXlDKrW5RjhRqwm3jjwXeJeFSSkRwsIDJ2LI1BAz0H5nYva9oeObAIS5a
- kMJVcGefmM/lDBXlw7H6SO1fjsrIrWeWVMaOFdW1P9+4TR0GKrq/OYkDdNcvwX6IFozC
- HooM28ELLf8JhnMSlLK9nJ8FPkbpp7frxv26LnLuX30bHPPRS9n7OYnbGg5jm+cJpMNz
- oiOo9rNp5g7AT2uTepUEPKnBr3KVmNkUEFh8Q20PoE978+UwuJKG8l7j2az58kQq0b++
- cy2Q==
+ bh=GxfKZP8Ad2FL8b3Zz2/iX/CT1VxdkYPkw7K654YdQMk=;
+ b=fR0UokHp78qDbDGYFRh8GXdJm+jVH4tDo3s/9WwX+tdPEvpGti9DB97+PLi5crvFXN
+ 6BbcJQnPEloMyRd0jfYZh1/DU0jtWrz0X4vLV2EthgAGiIdba4WF6Hgewocsnrg9ZqXv
+ qB0FE108/0mHW0skuKX6Gbh1OkGFWwLZAl7MNSoGT4ppjcWb1QMcswJYtSBqRC4DEO7j
+ NvxW8qdP+MubLYieqtN466wmYF4rFxWtbP42/1s0OWmM8ux8ISLs7zHtvPQBEp3HPt22
+ m2obU2KP3piwr1eB9RuKKtmcdARSCr/AxF0UTA3Axnohxt9Lj6iNNf5N4kBmv6anTC1e
+ Ndiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725895841; x=1726500641;
+ d=1e100.net; s=20230601; t=1725896115; x=1726500915;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7QBAlAMX/7CLmi7XQQ6kE3/liMSEhNPziZhOZBa96JI=;
- b=qXrithEl8V+7DCGJkBFFFoJQfNoYVxXne9OdbBFO/qsRo4q+IJ2FU92UUvF5sNJpd8
- xuvz8TXzbDyv/a5u6COr9wFZ+C33J7k8oPsv7gd0FxhahxCOFUBqmoeZUBkeSlbkwG6j
- mPy5kc3BTcr8hgfCiUFQ3FP5/wVEur9fjS1twD0y+0iEFuO2AHZpifMuSw8hwN1F9krY
- ulKZ5YGUXlQDWSzqmk0hDeOxikItH9wlBCtRb01yu3sEaeyLIfuM16fYd7eYw92+EGLm
- AyYb5uDsT5Bob1zS5iol5JftdWFBR/JUCdccKfq7/uoMMhRd2QGAdkPZuBfkG27T4Ae4
- zgEg==
-X-Gm-Message-State: AOJu0YwKS3zCquRlFTkKpQrzViMCtFqINKkbxoGoBXrVH3U1oPvp1EEx
- gEuabxbBIbVkvRbGF9arIW+2YITfnX1Lq92gZfWxHKc33G0Uzf5fqb0txCS+E/JQmgk7bJbS0YR
- HSNh24RYE8XlpfSiwA8PfSl+XflJbIo+gsE4JCw==
-X-Google-Smtp-Source: AGHT+IFhBCM4zWO18qtU7Q+BuHe9XhyXy16DFJff3N/fJdaR84aD/OAS2fOqcKBg6RtBW++OPz8C451IkFWVjWT/LQ0=
-X-Received: by 2002:a05:6402:4312:b0:5c2:18fd:8a27 with SMTP id
- 4fb4d7f45d1cf-5c3dc7b8016mr8604304a12.25.1725895841446; Mon, 09 Sep 2024
- 08:30:41 -0700 (PDT)
+ bh=GxfKZP8Ad2FL8b3Zz2/iX/CT1VxdkYPkw7K654YdQMk=;
+ b=CqADqN6Ef5L2nYC/vQeIVWx1Qv38and30u164ruQgKGpY39ClS20ShvwNexu549oQm
+ HuLpj1Is/KXRW3gZEAG6Qti/DZ4JjewTXujytsfOnkBwWgH+y6ExAY4wNHgtMVJvd1PD
+ 3VpuC9nsUwov06X7rIlB6B+AScdOIC24GgkIpIbHhfpmN5kJRUhktwLjLO06WhfiMLI7
+ czyhnG12Sm38RScRyYC50dKOGGt+m9/7lqMdjAKtBxk0ZpJxaYb6Oi7f6V38n5dtgbrr
+ pUhAQm0BJ5uspC7CHwAxP1BjC+ZHFAWIgYP/ekc1LYM3tVjawGHnGjtg1Mz71VxVuoyg
+ MgjQ==
+X-Gm-Message-State: AOJu0YykTIx+mslEzlYUYiVLc7cfSoCXwwswcm49L61S0+X1BxDUq6o5
+ qK6aYIecxCKGn8MpPqF2pFg+b5XgoHqviMWDYoVffihkUgMN+6FUUyhM/5hW6aNReaVTW6MiItk
+ c+1/HFDY882VnLLFNmiEbIWrW51r+gOfFuqXARQ==
+X-Google-Smtp-Source: AGHT+IGlhkC8G3tq8kD39qWek5YouLgD0KnA+wlHGmq4p9wadY2tVtnott5enignH3VYFSHK1lbL8Rn5O+DAXxcPk9c=
+X-Received: by 2002:a2e:b8c7:0:b0:2ef:20ae:d111 with SMTP id
+ 38308e7fff4ca-2f752209e68mr73037761fa.6.1725896115266; Mon, 09 Sep 2024
+ 08:35:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240903200446.25921-1-philmd@linaro.org>
- <20240903200446.25921-2-philmd@linaro.org>
-In-Reply-To: <20240903200446.25921-2-philmd@linaro.org>
+References: <20240909133921.1141067-1-peter.maydell@linaro.org>
+ <87cylcyhp3.fsf@draig.linaro.org>
+In-Reply-To: <87cylcyhp3.fsf@draig.linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Sep 2024 16:30:29 +0100
-Message-ID: <CAFEAcA_Yfcjuz+3KfiKPDY2aVU1OuJ3B-9q9F82-fGCS9PTi+Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/sd: Remove legacy sd_set_cb()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
+Date: Mon, 9 Sep 2024 16:34:56 +0100
+Message-ID: <CAFEAcA_+FGsrR8CY_chzyk6+RAsM91HYUnNK4oR+uEXwAbAV4A@mail.gmail.com>
+Subject: Re: [RFC PATCH] tests/qtest: Don't parallelize migration-test
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,53 +91,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 21:04, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Mon, 9 Sept 2024 at 16:23, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+> I guess one question is are we getting value from all the extra
+> migration tests? There certainly seem to be some sub-tests that are
+> slower than the others and I assume testing a small delta on the tests
+> before it.
 >
-> sd_set_cb() was only used by omap2_mmc_init() which
-> got recently removed. Time to remove it. For historical
-> background on the me_no_qdev_me_kill_mammoth_with_rocks
-> kludge, see commit 007d1dbf72 ("sd: Hide the qdev-but-not-quite
-> thing created by sd_init()").
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/hw/sd/sdcard_legacy.h |  1 -
->  hw/sd/sd.c                    | 30 ++++--------------------------
->  2 files changed, 4 insertions(+), 27 deletions(-)
->
-> diff --git a/include/hw/sd/sdcard_legacy.h b/include/hw/sd/sdcard_legacy.=
-h
-> index 0dc3889555..a121232560 100644
-> --- a/include/hw/sd/sdcard_legacy.h
-> +++ b/include/hw/sd/sdcard_legacy.h
-> @@ -36,7 +36,6 @@ SDState *sd_init(BlockBackend *blk, bool is_spi);
->  int sd_do_command(SDState *card, SDRequest *request, uint8_t *response);
->  void sd_write_byte(SDState *card, uint8_t value);
->  uint8_t sd_read_byte(SDState *card);
-> -void sd_set_cb(SDState *card, qemu_irq readonly, qemu_irq insert);
->
->  /* sd_enable should not be used -- it is only used on the nseries boards=
-,
->   * where it is part of a broken implementation of the MMC card slot swit=
-ch
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index a140a32ccd..8a30c61ce0 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -112,10 +112,6 @@ typedef struct SDProto {
->  struct SDState {
->      DeviceState parent_obj;
->
-> -    /* If true, created by sd_init() for a non-qdevified caller */
-> -    /* TODO purge them with fire */
-> -    bool me_no_qdev_me_kill_mammoth_with_rocks;
-> -
+> On s390x it seems the native test runs pretty much to the same time as
+> the other TCG guests. Do we exercise any extra migration code by running
+> tests for every architecture as opposed to one KVM/native hyp and one
+> TCG one?
 
-Should we also remove the sd_init() function in this patch
-(or patchset)? It was only used by the omap-mmc, and it's
-because we have no uses of it that we can get rid of this kludge.
+s390 is an interesting one because Christian pointed out that
+although it has "KVM" support, we're actually running on a
+VM under z/VM, and so when we run a CI test under "-accel KVM"
+that's actually nested-KVM and its effects on the host CPU's
+TLB could be such that it's actually worse than using TCG...
 
-thanks
 -- PMM
 
