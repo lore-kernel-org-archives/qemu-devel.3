@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92CF2ECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08ABEECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniC5-0005QW-6g; Mon, 09 Sep 2024 13:28:53 -0400
+	id 1sniBr-0004Oz-39; Mon, 09 Sep 2024 13:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniC0-00051q-7y
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:48 -0400
+ id 1sniBn-00049x-Dv
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:35 -0400
 Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBy-00064D-Eh
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:47 -0400
+ id 1sniBk-00060y-9i
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:34 -0400
 Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2055136b612so55185945ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:46 -0700 (PDT)
+ d9443c01a7336-2059112f0a7so42399455ad.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725902925; x=1726507725; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725902911; x=1726507711; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OgSS4vpluCfU+sZVifaIEPstx7ZGy8wKpnske9+/2+o=;
- b=XQg+f6Hb59TBBnna97CzjZIZMmHN4O3Go+eORgObPo3gDToOZr94tegIQvamxG5daB
- v0jWrqoQEps0BxRcQKeaIGNa72jhkqNahBaA9t/V7m033zz5emcIkT8f02ZLpDiX0/x8
- eWiwJOcpNUUeUeE9od52WExxpXyp//8fLdG8VVBHrKUR5bUr7AnftCnXZNEnOKNLp76B
- CrmI5arAHMM4JeK7zz1EhyrHcRiFd9cJTW7qbbBn84615A4rKNmkb5gJaAKSPxwBLkzH
- yJFozI7aELZKBzzXVuYNqeWRslXmtB8XEmHEbyA6wcxVnzLFQK84PM5Ucc+YcmzpRZlL
- pqTQ==
+ bh=WmJ2ujIulBhjcVgZsB5TPEctVhmiUOFaoVw5hh6PLPo=;
+ b=sXw8XCPHxp8fCP95ccOtH2DAEmnfFvLkh6xs2iCbnVzua9RpWopesDxfPvGeOQrrzo
+ yBhsUza5/wQ0bpYCdlY75x1tHj4F212R8Mb51/xLlpJRmoh+lKMCh89BGSoEYEqG+75S
+ wRmvRwSDhRx3H2lefwu2h3hmJ8aFH9l1/GGMGd8+zNtLD8y/iduI7/UbEdrKWWUqN9Jq
+ EISj+1mV/+KMOEcMkUr9mTfS0rCaonldEq0Op5SdxACbwGB3Tc2hwS+Qy9lwTTlF6ewz
+ tG0Ku5sLhsYhPul9owpkYtHixgZkl5DKdsxJoeY0iUZJlYNYNTnC67WE89x3Q1GglrD6
+ cv0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725902925; x=1726507725;
+ d=1e100.net; s=20230601; t=1725902911; x=1726507711;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OgSS4vpluCfU+sZVifaIEPstx7ZGy8wKpnske9+/2+o=;
- b=CjAr+2Fp5XZlzdB+K8V2TyRWc0RiGa/WY3K0VOVAgobyKMdXNxa2lV026X6VAZHR3W
- p29kr61W5FlIzBCOn7Mto/qnydbl6bg1deyUElOlb3nHO713n2Ck8N9CSUWCrQWJOVm3
- 0S3rXqGqdIXDzpFdRZP+EfnTTGu4Nmy/7YJaCWa59clRfUY8VkOb/zrAMKtLdZrOFPIw
- cSsXWcii3Go1xwawCpSsg1j5bgyDFFgzWQAZF4kdv+UjFb6cOXeEzAalNCsQVc5uHmvu
- LDHqhiUIk6a3+IpwUtMLXk3SUEPuGW3Q2glyEsgImBme5Cs2LUzNRiUowmfgMxGkXu/F
- 5Grg==
-X-Gm-Message-State: AOJu0YzRB8sjw5n2yEwYJMewIy7W/+h4N6phbLAzmMnao40A14BEbixT
- aEFtyQ2yVlOglobJ8GuVNh3c68jITxowjZTuImSkbDmrwV+kClhEyGNWIbNbVxjBQ6aLrgsdokm
- I
-X-Google-Smtp-Source: AGHT+IHpEWdxNXtr9X4V/qQH5insJ1EKmTQxp9MTzAtV/2gNza20aNTFkKk7AERHB/vj12KRNphi7w==
-X-Received: by 2002:a17:902:e5ca:b0:202:60e:7700 with SMTP id
- d9443c01a7336-206f04c9985mr200281375ad.7.1725902925094; 
- Mon, 09 Sep 2024 10:28:45 -0700 (PDT)
+ bh=WmJ2ujIulBhjcVgZsB5TPEctVhmiUOFaoVw5hh6PLPo=;
+ b=Bs6PYGJnnfVJtcrzZbplpeVi1fjqMik4qeI0C0iFSA4HBCf4hC252kM/lnkIkVoB9z
+ VXnVYkjnTSrj5z2g/QHGnB8NKde1jpePSqdL/AUTEEtZR2zXcGOURPWLoKZQNElHozI4
+ OxQHpIur41pDS5eTKKgRJZpg36u4vLGCtHpUImL4pC8A46s14e4mMMXM8r4idFeNyQl6
+ ++EoFdc3aaDHnvNpvWSmyf8bEjoG7jD3JFCVUeawou3I4gIgkZJu9WasGMDR8+GfZluF
+ K8HyMDexq+NM6/msXy19qK2Vzn62ZFFR0u6aEN4LD6ARAENBdZaDnMn0Tx3JzC3R65e/
+ mbeQ==
+X-Gm-Message-State: AOJu0YybYSgFD6bX+6IPFKN3w4UFYZeK6NXoYxCp+cQOsGmXyD5IXl6R
+ sg8Vyhd5QPNhbDDJCrEE9azwxDMF6MGAmCgwoBtJv0CZpSdlj28arzpQ3aoy3CnV96D4hbO7Ogf
+ z
+X-Google-Smtp-Source: AGHT+IF1azunkvH0BNPYGkFZHoRgQxQXkT7bM8Kzgvrvgru03JfjdrMXwu7SYF4a6qYVsXHpxPj+FQ==
+X-Received: by 2002:a17:902:db04:b0:205:9112:efc7 with SMTP id
+ d9443c01a7336-20706f6ed71mr89466625ad.30.1725902910977; 
+ Mon, 09 Sep 2024 10:28:30 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.44
+ d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 10:28:44 -0700 (PDT)
+ Mon, 09 Sep 2024 10:28:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	daniel@0x0f.com
-Subject: [PATCH v3 22/26] target/m68k: Merge gen_store_fp, gen_store_mode_fp
-Date: Mon,  9 Sep 2024 10:28:19 -0700
-Message-ID: <20240909172823.649837-23-richard.henderson@linaro.org>
+Subject: [PATCH v3 06/26] softfloat: Set QEMU_NO_HARDFLOAT for m68k
+Date: Mon,  9 Sep 2024 10:28:03 -0700
+Message-ID: <20240909172823.649837-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240909172823.649837-1-richard.henderson@linaro.org>
 References: <20240909172823.649837-1-richard.henderson@linaro.org>
@@ -95,157 +95,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enables the exceptions raised by the actual store
-to be reflected as a failure.
+Like ppc, m68k needs the complete set of exception flags for each
+instruction, which means that float_flag_inexact will never be set
+before each instruction.  Thus the hardfloat path will not be used,
+so we improve things by compiling it out.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 107 ++++++++++++++++++++--------------------
- 1 file changed, 53 insertions(+), 54 deletions(-)
+ fpu/softfloat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index e966d2c929..9b1d39d7df 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -901,53 +901,6 @@ static void gen_fp_move(TCGv_ptr dest, TCGv_ptr src)
-     tcg_gen_st_i64(t64, dest, offsetof(FPReg, l.lower));
- }
- 
--static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
--                         int index)
--{
--    TCGv tmp;
--    TCGv_i64 t64;
--
--    t64 = tcg_temp_new_i64();
--    tmp = tcg_temp_new();
--    switch (opsize) {
--    case OS_BYTE:
--    case OS_WORD:
--    case OS_LONG:
--        gen_helper_reds32(tmp, tcg_env, fp);
--        tcg_gen_qemu_st_tl(tmp, addr, index, opsize | MO_TE);
--        break;
--    case OS_SINGLE:
--        gen_helper_redf32(tmp, tcg_env, fp);
--        tcg_gen_qemu_st_tl(tmp, addr, index, MO_TEUL);
--        break;
--    case OS_DOUBLE:
--        gen_helper_redf64(t64, tcg_env, fp);
--        tcg_gen_qemu_st_i64(t64, addr, index, MO_TEUQ);
--        break;
--    case OS_EXTENDED:
--        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
--            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
--            break;
--        }
--        tcg_gen_ld16u_i32(tmp, fp, offsetof(FPReg, l.upper));
--        tcg_gen_shli_i32(tmp, tmp, 16);
--        tcg_gen_qemu_st_i32(tmp, addr, index, MO_TEUL);
--        tcg_gen_addi_i32(tmp, addr, 4);
--        tcg_gen_ld_i64(t64, fp, offsetof(FPReg, l.lower));
--        tcg_gen_qemu_st_i64(t64, tmp, index, MO_TEUQ);
--        break;
--    case OS_PACKED:
--        /*
--         * unimplemented data type on 68040/ColdFire
--         * FIXME if needed for another FPU
--         */
--        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
- static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
-                         TCGv_ptr fp, int index)
- {
-@@ -1087,12 +1040,13 @@ static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
-     return true;
- }
- 
--static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
--                              TCGv_ptr fp, int index)
-+static bool gen_store_fp(DisasContext *s, uint16_t insn, int opsize,
-+                         TCGv_ptr fp, int index)
- {
-     int mode = extract32(insn, 3, 3);
-     int reg0 = REG(insn, 0);
--    TCGv reg, addr;
-+    TCGv reg, addr, tmp;
-+    TCGv_i64 t64;
- 
-     switch (mode) {
-     case 0: /* Data register direct.  */
-@@ -1126,10 +1080,55 @@ static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
-             gen_addr_fault(s);
-             return false;
-         }
--        gen_store_fp(s, opsize, addr, fp, index);
--        return true;
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-     }
--    g_assert_not_reached();
-+
-+    switch (opsize) {
-+    case OS_BYTE:
-+    case OS_WORD:
-+    case OS_LONG:
-+        tmp = tcg_temp_new();
-+        gen_helper_reds32(tmp, tcg_env, fp);
-+        tcg_gen_qemu_st_tl(tmp, addr, index, opsize | MO_TE);
-+        break;
-+    case OS_SINGLE:
-+        tmp = tcg_temp_new();
-+        gen_helper_redf32(tmp, tcg_env, fp);
-+        tcg_gen_qemu_st_tl(tmp, addr, index, MO_TEUL);
-+        break;
-+    case OS_DOUBLE:
-+        t64 = tcg_temp_new_i64();
-+        gen_helper_redf64(t64, tcg_env, fp);
-+        tcg_gen_qemu_st_i64(t64, addr, index, MO_TEUQ);
-+        break;
-+    case OS_EXTENDED:
-+        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
-+            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
-+            return false;
-+        }
-+        tmp = tcg_temp_new();
-+        t64 = tcg_temp_new_i64();
-+        tcg_gen_ld16u_i32(tmp, fp, offsetof(FPReg, l.upper));
-+        tcg_gen_shli_i32(tmp, tmp, 16);
-+        tcg_gen_qemu_st_i32(tmp, addr, index, MO_TEUL);
-+        tcg_gen_addi_i32(addr, addr, 4);
-+        tcg_gen_ld_i64(t64, fp, offsetof(FPReg, l.lower));
-+        tcg_gen_qemu_st_i64(t64, addr, index, MO_TEUQ);
-+        break;
-+    case OS_PACKED:
-+        /*
-+         * unimplemented data type on 68040/ColdFire
-+         * FIXME if needed for another FPU
-+         */
-+        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
-+        return false;
-+    default:
-+        g_assert_not_reached();
-+    }
-+    return true;
- }
- 
- typedef struct {
-@@ -4889,7 +4888,7 @@ DISAS_INSN(fpu)
-     case 3: /* fmove out */
-         cpu_src = gen_fp_ptr(REG(ext, 7));
-         opsize = ext_opsize(ext, 10);
--        if (gen_store_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-+        if (gen_store_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-             gen_helper_update_fpsr(tcg_env, cpu_src);
-         }
-         return;
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index 027a8e576d..0e4ff874e4 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -220,7 +220,7 @@ GEN_INPUT_FLUSH3(float64_input_flush3, float64)
+  * the use of hardfloat, since hardfloat relies on the inexact flag being
+  * already set.
+  */
+-#if defined(TARGET_PPC) || defined(__FAST_MATH__)
++#if defined(TARGET_M68K) || defined(TARGET_PPC) || defined(__FAST_MATH__)
+ # if defined(__FAST_MATH__)
+ #  warning disabling hardfloat due to -ffast-math: hardfloat requires an exact \
+     IEEE implementation
 -- 
 2.43.0
 
