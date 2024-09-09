@@ -4,78 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129C4ECE577
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Sep 2024 23:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFEF5CD4F4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 01:24:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snRkn-00049F-4R; Sun, 08 Sep 2024 19:55:37 -0400
+	id 1snT7h-0000W5-GU; Sun, 08 Sep 2024 21:23:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snRkl-00048l-9n
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 19:55:35 -0400
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snRkj-0005QJ-LU
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 19:55:35 -0400
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-502b6e2a0acso717915e0c.2
- for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 16:55:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725839732; x=1726444532; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=09pm0Zwpxm8pIl1GG8Z0cY7g4QQ1XlAb2cIFWsFNrps=;
- b=OHA+Oe5jiZRfOuHla/xpkQC3Mo1OmMXVPtohSpNjlV5zLG2uPULSLcoTtPyKXcyrej
- 2ctFlnv9YGevuzEdlvty0MxdvbVho4rIrU4CLhyCuYp/fMugi6wdGb7Zkp/8pNVHsUI1
- oAUyMccSb+syB31RPCx63GgeuudjMuM7EaokWEBnAG3z0k+uMxP7aC/QPafPsUvf5Ykv
- J1zWVmnVJk5IZGllUpGyK8oVIBTtEHD4PLjeBDeQE4kLwjKXcFrptnhJS7HQQR0opx4V
- e6NKE0gvxrANCrimx/u9regNIr/FQDHrhJYvf/uZmJEFX0JdVclhdey4OLJRF9Z6B3AZ
- HahQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725839732; x=1726444532;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=09pm0Zwpxm8pIl1GG8Z0cY7g4QQ1XlAb2cIFWsFNrps=;
- b=QLbPGG05UZaJfthfwGUSwNZg5N+r48sp86Id38oujZGJ4qNMcLZ9Ds84T8qAI3KSxk
- 9E9dBRjJolBgtNE6szogjKdRlWGRi9NhMeuJN/R2yEy49BGrvb+mGVP3d0mQkDJI3N+n
- ZFAiWygvEUS5GJKF3rmEvOFjdvc/EtJPNpwB/m27yZXCihIjJBddXw/nkpcyAoyi8v78
- PZjTbMpweTVSRjb/ERuGIxL7Lxa37OjjjI9lwR7UaGAZyY9yU5fWmwigmJccU1T/wYF6
- VodUu/sO1KenNCW5fco7sJwpFtk4YGFFnJs2LNfZeIzbKCR5OzLA/CBQb/a5nEj0qGGD
- 59Kg==
-X-Gm-Message-State: AOJu0YxG9VN4Rh6RGdKUMFcGP9OkPI4ujJdgicnPzccAQgiJQD/LHE26
- PAjue/iLiMYozcJ52AdceoqqyoN4caLcfWg/bBkdH6oUmUBS7xsdfF1INgwcYHDV01zUUEW6M5B
- pbZqBILD1RdYj1fUwK0ZGKnqFrz0=
-X-Google-Smtp-Source: AGHT+IGq/Fr0V1LUVnGbHjRgGHuP5HCFfHIw7MEu3q6v96IPRuGMtIEG+qh56Rqz+VnWQOo8nMbRQBEAJM418Si83/4=
-X-Received: by 2002:a05:6122:4d1a:b0:502:b3a9:f40b with SMTP id
- 71dfb90a1353d-502b3a9f4ffmr9419487e0c.7.1725839731488; Sun, 08 Sep 2024
- 16:55:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1snT7d-0000VG-Qf
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 21:23:17 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1snT7b-0004z0-4O
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 21:23:17 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Dxlej0Td5mbFsCAA--.4393S3;
+ Mon, 09 Sep 2024 09:23:00 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front2 (Coremail) with SMTP id qciowMAxU+TxTd5mlhkCAA--.9681S3;
+ Mon, 09 Sep 2024 09:22:59 +0800 (CST)
+Subject: Re: [PATCH v3] hw/loongarch: virt: support up to 4 serial ports
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, gaosong@loongson.cn,
+ jiaxun.yang@flygoat.com, qemu-devel@nongnu.org, thomas@t-8ch.de,
+ xry111@xry111.site
+References: <20240906143146.2553953-1-Jason@zx2c4.com>
+ <20240907143439.2792924-1-Jason@zx2c4.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <8af05876-53cc-cf74-1ebf-ba29dd154862@loongson.cn>
+Date: Mon, 9 Sep 2024 09:22:56 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240907031927.1908-1-itachis@FreeBSD.org>
-In-Reply-To: <20240907031927.1908-1-itachis@FreeBSD.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Sep 2024 09:55:05 +1000
-Message-ID: <CAKmqyKN7E8jfAdJ9ym2cOTRuUEiNsCVqR+fKEhTB9rPSQP1Yjg@mail.gmail.com>
-Subject: Re: [PATCH v5 00/17] bsd-user: Comprehensive RISCV Support
-To: Ajeet Singh <itachis6234@gmail.com>
-Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
- Mark Corbin <mark@dibsco.co.uk>, Ajeet Singh <itachis@freebsd.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20240907143439.2792924-1-Jason@zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qciowMAxU+TxTd5mlhkCAA--.9681S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3JrWDJw43GrW3Zw15Cr1ktFc_yoWxXFWkpF
+ WDCFnavr4UWr13WrySv3W5WF47Jrs7Cay29w47GrW0kFykWr1IqrW0k39xtryUA395JFWY
+ vFyqq3sF93W2qrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.046,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,72 +82,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 7, 2024 at 1:25=E2=80=AFPM Ajeet Singh <itachis6234@gmail.com> =
-wrote:
->
-> Key Changes Compared to Version 4:
-> Minor formatting changes
->
-> Mark Corbin (15):
->   bsd-user: Implement RISC-V CPU initialization and main loop
->   bsd-user: Add RISC-V CPU execution loop and syscall handling
->   bsd-user: Implement RISC-V CPU register cloning and reset functions
->   bsd-user: Implement RISC-V TLS register setup
->   bsd-user: Add RISC-V ELF definitions and hardware capability detection
->   bsd-user: Define RISC-V register structures and register copying
->   bsd-user: Add RISC-V signal trampoline setup function
->   bsd-user: Implement RISC-V sysarch system call emulation
->   bsd-user: Add RISC-V thread setup and initialization support
->   bsd-user: Define RISC-V VM parameters and helper functions
->   bsd-user: Define RISC-V system call structures and constants
->   bsd-user: Define RISC-V signal handling structures and constants
->   bsd-user: Implement RISC-V signal trampoline setup functions
->   bsd-user: Implement 'get_mcontext' for RISC-V
->   bsd-user: Implement set_mcontext and get_ucontext_sigreturn for RISCV
->
-> Warner Losh (2):
->   bsd-user: Add generic RISC-V64 target definitions
->   bsd-user: Add RISC-V 64-bit Target Configuration and Debug XML Files
->
->  bsd-user/riscv/signal.c               | 170 ++++++++++++++++++++++++++
->  bsd-user/riscv/target.h               |  20 +++
->  bsd-user/riscv/target_arch.h          |  27 ++++
->  bsd-user/riscv/target_arch_cpu.c      |  29 +++++
->  bsd-user/riscv/target_arch_cpu.h      | 147 ++++++++++++++++++++++
->  bsd-user/riscv/target_arch_elf.h      |  42 +++++++
->  bsd-user/riscv/target_arch_reg.h      |  88 +++++++++++++
->  bsd-user/riscv/target_arch_signal.h   |  75 ++++++++++++
->  bsd-user/riscv/target_arch_sigtramp.h |  42 +++++++
->  bsd-user/riscv/target_arch_sysarch.h  |  41 +++++++
->  bsd-user/riscv/target_arch_thread.h   |  47 +++++++
->  bsd-user/riscv/target_arch_vmparam.h  |  53 ++++++++
->  bsd-user/riscv/target_syscall.h       |  38 ++++++
->  configs/targets/riscv64-bsd-user.mak  |   4 +
->  14 files changed, 823 insertions(+)
->  create mode 100644 bsd-user/riscv/signal.c
->  create mode 100644 bsd-user/riscv/target.h
->  create mode 100644 bsd-user/riscv/target_arch.h
->  create mode 100644 bsd-user/riscv/target_arch_cpu.c
->  create mode 100644 bsd-user/riscv/target_arch_cpu.h
->  create mode 100644 bsd-user/riscv/target_arch_elf.h
->  create mode 100644 bsd-user/riscv/target_arch_reg.h
->  create mode 100644 bsd-user/riscv/target_arch_signal.h
->  create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
->  create mode 100644 bsd-user/riscv/target_arch_sysarch.h
->  create mode 100644 bsd-user/riscv/target_arch_thread.h
->  create mode 100644 bsd-user/riscv/target_arch_vmparam.h
->  create mode 100644 bsd-user/riscv/target_syscall.h
->  create mode 100644 configs/targets/riscv64-bsd-user.mak
 
-Thanks!
 
-Applied to riscv-to-apply.next
+On 2024/9/7 下午10:34, Jason A. Donenfeld wrote:
+> In order to support additional channels of communication using
+> `-serial`, add several serial ports, up to the standard 4 generally
+> supported by the 8250 driver.
+> 
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> ---
+>   hw/loongarch/acpi-build.c  | 23 +++++++++++++++--------
+>   hw/loongarch/virt.c        | 23 +++++++++++++----------
+>   include/hw/pci-host/ls7a.h |  9 +++++----
+>   3 files changed, 33 insertions(+), 22 deletions(-)
+> 
+> diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+> index 3912c8d307..459d2b5f84 100644
+> --- a/hw/loongarch/acpi-build.c
+> +++ b/hw/loongarch/acpi-build.c
+> @@ -31,6 +31,7 @@
+>   
+>   #include "hw/acpi/generic_event_device.h"
+>   #include "hw/pci-host/gpex.h"
+> +#include "sysemu/sysemu.h"
+>   #include "sysemu/tpm.h"
+>   #include "hw/platform-bus.h"
+>   #include "hw/acpi/aml-build.h"
+> @@ -290,23 +291,27 @@ struct AcpiBuildState {
+>       MemoryRegion *linker_mr;
+>   } AcpiBuildState;
+>   
+> -static void build_uart_device_aml(Aml *table)
+> +static void build_uart_device_aml(Aml *table, int index)
+>   {
+>       Aml *dev;
+>       Aml *crs;
+>       Aml *pkg0, *pkg1, *pkg2;
+> -    uint32_t uart_irq = VIRT_UART_IRQ;
+> -
+> -    Aml *scope = aml_scope("_SB");
+> -    dev = aml_device("COMA");
+> +    Aml *scope;
+> +    uint32_t uart_irq;
+> +    uint64_t base;
+> +
+> +    uart_irq = VIRT_UART_IRQ + index;
+> +    base = VIRT_UART_BASE + index * VIRT_UART_SIZE;
+> +    scope = aml_scope("_SB");
+> +    dev = aml_device("COM%d", index);
+>       aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
+> -    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(index)));
+>       aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
+>       crs = aml_resource_template();
+>       aml_append(crs,
+>           aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
+>                            AML_NON_CACHEABLE, AML_READ_WRITE,
+> -                         0, VIRT_UART_BASE, VIRT_UART_BASE + VIRT_UART_SIZE - 1,
+> +                         0, base, base + VIRT_UART_SIZE - 1,
+>                            0, VIRT_UART_SIZE));
+>       aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
+>                                     AML_SHARED, &uart_irq, 1));
+> @@ -439,6 +444,7 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
+>   static void
+>   build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>   {
+> +    int i;
+>       Aml *dsdt, *scope, *pkg;
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
+>       AcpiTable table = { .sig = "DSDT", .rev = 1, .oem_id = lvms->oem_id,
+> @@ -446,7 +452,8 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>   
+>       acpi_table_begin(&table, table_data);
+>       dsdt = init_aml_allocator();
+> -    build_uart_device_aml(dsdt);
+> +    for (i = VIRT_UART_COUNT; i --> 0;)
+> +        build_uart_device_aml(dsdt, i);
+>       build_pci_device_aml(dsdt, lvms);
+>       build_la_ged_aml(dsdt, machine);
+>       build_flash_aml(dsdt, lvms);
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 4151fc5e0c..b9bd88d3f4 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -319,10 +319,10 @@ static void fdt_add_ged_reset(LoongArchVirtMachineState *lvms)
+>   }
+>   
+>   static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+> -                              uint32_t *pch_pic_phandle)
+> +                              uint32_t *pch_pic_phandle, hwaddr base,
+> +                              int irq, bool chosen)
+>   {
+>       char *nodename;
+> -    hwaddr base = VIRT_UART_BASE;
+>       hwaddr size = VIRT_UART_SIZE;
+>       MachineState *ms = MACHINE(lvms);
+>   
+> @@ -331,9 +331,9 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+>       qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "ns16550a");
+>       qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0x0, base, 0x0, size);
+>       qemu_fdt_setprop_cell(ms->fdt, nodename, "clock-frequency", 100000000);
+> -    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+> -    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+> -                           VIRT_UART_IRQ - VIRT_GSI_BASE, 0x4);
+> +    if (chosen)
+> +        qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
+>       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+>                             *pch_pic_phandle);
+>       g_free(nodename);
+> @@ -750,11 +750,14 @@ static void virt_devices_init(DeviceState *pch_pic,
+>       /* Add pcie node */
+>       fdt_add_pcie_node(lvms, pch_pic_phandle, pch_msi_phandle);
+>   
+> -    serial_mm_init(get_system_memory(), VIRT_UART_BASE, 0,
+> -                   qdev_get_gpio_in(pch_pic,
+> -                                    VIRT_UART_IRQ - VIRT_GSI_BASE),
+> -                   115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+> -    fdt_add_uart_node(lvms, pch_pic_phandle);
+> +    for (i = VIRT_UART_COUNT; i --> 0;) {
+> +        hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
+> +        int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
+> +        serial_mm_init(get_system_memory(), base, 0,
+> +                       qdev_get_gpio_in(pch_pic, irq),
+> +                       115200, serial_hd(i), DEVICE_LITTLE_ENDIAN);
+> +        fdt_add_uart_node(lvms, pch_pic_phandle, base, irq, i == 0);
+> +    }
+>   
+>       /* Network init */
+>       pci_init_nic_devices(pci_bus, mc->default_nic);
+> diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
+> index cd7c9ec7bc..79d4ea8501 100644
+> --- a/include/hw/pci-host/ls7a.h
+> +++ b/include/hw/pci-host/ls7a.h
+> @@ -36,17 +36,18 @@
+>   #define VIRT_PCH_PIC_IRQ_NUM     32
+>   #define VIRT_GSI_BASE            64
+>   #define VIRT_DEVICE_IRQS         16
+> +#define VIRT_UART_COUNT          4
+>   #define VIRT_UART_IRQ            (VIRT_GSI_BASE + 2)
+>   #define VIRT_UART_BASE           0x1fe001e0
+> -#define VIRT_UART_SIZE           0X100
+> -#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 3)
+> +#define VIRT_UART_SIZE           0x100
+> +#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 6)
+>   #define VIRT_MISC_REG_BASE       (VIRT_PCH_REG_BASE + 0x00080000)
+>   #define VIRT_RTC_REG_BASE        (VIRT_MISC_REG_BASE + 0x00050100)
+>   #define VIRT_RTC_LEN             0x100
+> -#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 4)
+> +#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 7)
+>   
+>   #define VIRT_PLATFORM_BUS_BASEADDRESS   0x16000000
+>   #define VIRT_PLATFORM_BUS_SIZE          0x2000000
+>   #define VIRT_PLATFORM_BUS_NUM_IRQS      2
+> -#define VIRT_PLATFORM_BUS_IRQ           (VIRT_GSI_BASE + 5)
+> +#define VIRT_PLATFORM_BUS_IRQ           (VIRT_GSI_BASE + 8)
+>   #endif
+> 
+Tested-by: Bibo Mao <maobibo@loongson.cn>
 
-Alistair
-
->
-> --
-> 2.34.1
->
->
 
