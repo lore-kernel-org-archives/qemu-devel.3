@@ -4,90 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 895B9E6FE49
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 07:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D30CE7AB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 07:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snYxH-00013f-Pr; Mon, 09 Sep 2024 03:36:59 -0400
+	id 1snZ8t-000718-FT; Mon, 09 Sep 2024 03:48:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1snYxG-00012s-ST
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:36:58 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1snYxE-00036H-Q0
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:36:58 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-201d5af11a4so41272295ad.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 00:36:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1725867415; x=1726472215;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UsAKdHV2ZXVU0rXq6wBM2YcbxoOvYr3F9XGHWXUqLRI=;
- b=va5RffeQ3lto23scp9O7qJtj83TiVwtnFSFyG0GlYfR6frpq5S0xJteEHI8/XzWqdC
- hIpRKS+7yhvjXOHKsN/yFFKOQfajgDJiZYlB2x/Lyti3TxA4c8GXh8Pk6aDPYZ7j/ogI
- l7VGK3UohqPNj6hw/nkNuCPoz/l0VnhLCMoOhnMfcWsT8x5uDLW5wCSg/YYuwWgNVJ8H
- b356g/ufkZZFR6+qIuSqBJdq46utivb2F1K9be4ejCvHV+aI0fp+bTUfl85JrPt60zdf
- TKk12cNnuX8Tk6klUueHNZzyaTyaTYTy3auPX50smz6a2MtlzKPFWPD1Ao8XkGuOh6Ge
- 8T2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725867415; x=1726472215;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UsAKdHV2ZXVU0rXq6wBM2YcbxoOvYr3F9XGHWXUqLRI=;
- b=V/S3Ak4hus3bJsKlahf15O+35bePePseP9UeJS7As0dpnb67cObSzmPN8cCO8o8mMR
- UN/LVDP7I1w4QATTGf47GYZX1+FffbaIet9fO+YWaYuaUOpuqN/0XX0tx4KOvvkPC5zn
- RARLSQffODoEPANYTii/9pLqTCLFToFf5kX41xxDUwOwxETycBOjpyclXFNy7TMMr+oK
- pI+EFQo0tKWi9qvvcFem38oNrmYr4dK0LyXcGeeCNdziwKs1KBZAvr5xbGQQekRPeX6N
- ftYx8Dl32vujix/ImcUnkzFON+GS/wqc1AB8tKS1fzxcjimtDta9Rzf2bFURxR84Fic0
- Djgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbIWCdXq48FMWWVzxIDIkLPDRixhfX4Rb6WTQ5ceCNte0VIFQoPx/OUUDfFTEOmuVjZOsT65iZAHe2@nongnu.org
-X-Gm-Message-State: AOJu0YxfjAl80VpOFpNcrXDj+cAxpX6DeJk+62grV2LMoAbfPwFi+17y
- ZcNdP7KivM5O86+6iiclC6Akh2khHvptan139GfzEuauPl5+TCK96qxwbsYj+Pw=
-X-Google-Smtp-Source: AGHT+IFj1R5f2uiuspkuS6RaLbYOcMiJZnNM8Iu6cbvLYVEIjJcSNXRQYr08L1cInI1nEQ4MdvDy4A==
-X-Received: by 2002:a17:902:ec84:b0:206:aac4:b844 with SMTP id
- d9443c01a7336-206f04c9142mr139708355ad.6.1725867414873; 
- Mon, 09 Sep 2024 00:36:54 -0700 (PDT)
-Received: from [157.82.201.226] ([157.82.201.226])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f342edsm28667145ad.286.2024.09.09.00.36.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 00:36:54 -0700 (PDT)
-Message-ID: <dab54af1-cf9d-401c-a11f-657334b52d5a@daynix.com>
-Date: Mon, 9 Sep 2024 16:36:50 +0900
+ (Exim 4.90_1) (envelope-from <SRS0=Li2i=QH=kaod.org=clg@ozlabs.org>)
+ id 1snZ8p-0006qZ-G9; Mon, 09 Sep 2024 03:48:55 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=Li2i=QH=kaod.org=clg@ozlabs.org>)
+ id 1snZ8n-00044d-Gq; Mon, 09 Sep 2024 03:48:55 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4X2Jqk5nFzz4x11;
+ Mon,  9 Sep 2024 17:48:50 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4X2Jqd3FLYz4wb0;
+ Mon,  9 Sep 2024 17:48:45 +1000 (AEST)
+Message-ID: <d2e07e85-97a0-4151-9349-3f989cdafad2@kaod.org>
+Date: Mon, 9 Sep 2024 09:48:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: support locking on change medium
-To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+Subject: Re: [RFC PATCH 2/8] usb/uhci: Introduce and use register defines
+To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
+Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ BALATON Zoltan <balaton@eik.bme.hu>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-References: <20240909015847.40377-1-j@getutm.app>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240909015847.40377-1-j@getutm.app>
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
+References: <20240906122542.3808997-1-linux@roeck-us.net>
+ <20240906122542.3808997-3-linux@roeck-us.net>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240906122542.3808997-3-linux@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=Li2i=QH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,132 +72,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/09/09 10:58, Joelle van Dyne wrote:
-> New optional argument for 'blockdev-change-medium' QAPI command to allow
-> the caller to specify if they wish to enable file locking.
+On 9/6/24 14:25, Guenter Roeck wrote:
+> Introduce defines for UHCI registers to simplify adding register access
+> in subsequent patches of the series.
 > 
-> Signed-off-by: Joelle van Dyne <j@getutm.app>
+> No functional change.
+> 
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->   qapi/block.json                | 23 ++++++++++++++++++++++-
->   block/monitor/block-hmp-cmds.c |  2 +-
->   block/qapi-sysemu.c            | 22 ++++++++++++++++++++++
->   ui/cocoa.m                     |  1 +
->   4 files changed, 46 insertions(+), 2 deletions(-)
+>   hw/usb/hcd-uhci.c          | 32 ++++++++++++++++----------------
+>   include/hw/usb/uhci-regs.h | 11 +++++++++++
+>   2 files changed, 27 insertions(+), 16 deletions(-)
 > 
-> diff --git a/qapi/block.json b/qapi/block.json
-> index e66666f5c6..35e8e2e191 100644
-> --- a/qapi/block.json
-> +++ b/qapi/block.json
-> @@ -309,6 +309,23 @@
->   { 'enum': 'BlockdevChangeReadOnlyMode',
->     'data': ['retain', 'read-only', 'read-write'] }
+> diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+> index dfcc3e05c0..8bc163f688 100644
+> --- a/hw/usb/hcd-uhci.c
+> +++ b/hw/usb/hcd-uhci.c
+> @@ -389,7 +389,7 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+>       trace_usb_uhci_mmio_writew(addr, val);
 >   
-> +##
-> +# @BlockdevChangeFileLockingMode:
-> +#
-> +# Specifies the new locking mode of a file image passed to the
-> +# @blockdev-change-medium command.
-> +#
-> +# @auto: Use locking if API is available
-> +#
-> +# @off: Disable file image locking
-> +#
-> +# @on: Enable file image locking
-> +#
-> +# Since: 9.2
-> +##
-> +{ 'enum': 'BlockdevChangeFileLockingMode',
-> +  'data': ['auto', 'off', 'on'] }
+>       switch (addr) {
+> -    case 0x00:
+> +    case UHCI_USBCMD:
+>           if ((val & UHCI_CMD_RS) && !(s->cmd & UHCI_CMD_RS)) {
+>               /* start frame processing */
+>               trace_usb_uhci_schedule_start();
+> @@ -424,7 +424,7 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+>               }
+>           }
+>           break;
+> -    case 0x02:
+> +    case UHCI_USBSTS:
+>           s->status &= ~val;
+>           /*
+>            * XXX: the chip spec is not coherent, so we add a hidden
+> @@ -435,27 +435,27 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+>           }
+>           uhci_update_irq(s);
+>           break;
+> -    case 0x04:
+> +    case UHCI_USBINTR:
+>           s->intr = val;
+>           uhci_update_irq(s);
+>           break;
+> -    case 0x06:
+> +    case UHCI_USBFRNUM:
+>           if (s->status & UHCI_STS_HCHALTED) {
+>               s->frnum = val & 0x7ff;
+>           }
+>           break;
+> -    case 0x08:
+> +    case UHCI_USBFLBASEADD:
+>           s->fl_base_addr &= 0xffff0000;
+>           s->fl_base_addr |= val & ~0xfff;
+>           break;
+> -    case 0x0a:
+> +    case UHCI_USBFLBASEADD + 2:
+>           s->fl_base_addr &= 0x0000ffff;
+>           s->fl_base_addr |= (val << 16);
+>           break;
+> -    case 0x0c:
+> +    case UHCI_USBSOF:
+>           s->sof_timing = val & 0xff;
+>           break;
+> -    case 0x10 ... 0x1f:
+> +    case UHCI_USBPORTSC1 ... UHCI_USBPORTSC4:
+>           {
+>               UHCIPort *port;
+>               USBDevice *dev;
+> @@ -493,28 +493,28 @@ static uint64_t uhci_port_read(void *opaque, hwaddr addr, unsigned size)
+>       uint32_t val;
+>   
+>       switch (addr) {
+> -    case 0x00:
+> +    case UHCI_USBCMD:
+>           val = s->cmd;
+>           break;
+> -    case 0x02:
+> +    case UHCI_USBSTS:
+>           val = s->status;
+>           break;
+> -    case 0x04:
+> +    case UHCI_USBINTR:
+>           val = s->intr;
+>           break;
+> -    case 0x06:
+> +    case UHCI_USBFRNUM:
+>           val = s->frnum;
+>           break;
+> -    case 0x08:
+> +    case UHCI_USBFLBASEADD:
+>           val = s->fl_base_addr & 0xffff;
+>           break;
+> -    case 0x0a:
+> +    case UHCI_USBFLBASEADD + 2:
+>           val = (s->fl_base_addr >> 16) & 0xffff;
+>           break;
+> -    case 0x0c:
+> +    case UHCI_USBSOF:
+>           val = s->sof_timing;
+>           break;
+> -    case 0x10 ... 0x1f:
+> +    case UHCI_USBPORTSC1 ... UHCI_USBPORTSC4:
+>           {
+>               UHCIPort *port;
+>               int n;
+> diff --git a/include/hw/usb/uhci-regs.h b/include/hw/usb/uhci-regs.h
+> index fd45d29db0..5b81714e5c 100644
+> --- a/include/hw/usb/uhci-regs.h
+> +++ b/include/hw/usb/uhci-regs.h
+> @@ -1,6 +1,17 @@
+>   #ifndef HW_USB_UHCI_REGS_H
+>   #define HW_USB_UHCI_REGS_H
+>   
+> +#define UHCI_USBCMD       0
+> +#define UHCI_USBSTS       2
+> +#define UHCI_USBINTR      4
+> +#define UHCI_USBFRNUM     6
+> +#define UHCI_USBFLBASEADD 8
+> +#define UHCI_USBSOF       0x0c
+> +#define UHCI_USBPORTSC1   0x10
+> +#define UHCI_USBPORTSC2   0x12
+> +#define UHCI_USBPORTSC3   0x14
+> +#define UHCI_USBPORTSC4   0x16
+> +
+>   #define UHCI_CMD_FGR      (1 << 4)
+>   #define UHCI_CMD_EGSM     (1 << 3)
+>   #define UHCI_CMD_GRESET   (1 << 2)
 
-You can use OnOffAuto type instead of defining your own.
-
-> +
->   ##
->   # @blockdev-change-medium:
->   #
-> @@ -330,6 +347,9 @@
->   # @read-only-mode: change the read-only mode of the device; defaults
->   #     to 'retain'
->   #
-> +# @file-locking-mode: change the locking mode of the file image; defaults
-> +#     to 'auto' (since: 9.2)
-> +#
->   # @force: if false (the default), an eject request through
->   #     blockdev-open-tray will be sent to the guest if it has locked
->   #     the tray (and the tray will not be opened immediately); if true,
-> @@ -378,7 +398,8 @@
->               'filename': 'str',
->               '*format': 'str',
->               '*force': 'bool',
-> -            '*read-only-mode': 'BlockdevChangeReadOnlyMode' } }
-> +            '*read-only-mode': 'BlockdevChangeReadOnlyMode',
-> +            '*file-locking-mode': 'BlockdevChangeFileLockingMode' } }
->   
->   ##
->   # @DEVICE_TRAY_MOVED:
-> diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-> index bdf2eb50b6..ff64020a80 100644
-> --- a/block/monitor/block-hmp-cmds.c
-> +++ b/block/monitor/block-hmp-cmds.c
-> @@ -1007,5 +1007,5 @@ void hmp_change_medium(Monitor *mon, const char *device, const char *target,
->       }
->   
->       qmp_blockdev_change_medium(device, NULL, target, arg, true, force,
-> -                               !!read_only, read_only_mode, errp);
-> +                               !!read_only, read_only_mode, false, 0, errp);
->   }
-> diff --git a/block/qapi-sysemu.c b/block/qapi-sysemu.c
-> index e4282631d2..8064bdfb3a 100644
-> --- a/block/qapi-sysemu.c
-> +++ b/block/qapi-sysemu.c
-> @@ -311,6 +311,8 @@ void qmp_blockdev_change_medium(const char *device,
->                                   bool has_force, bool force,
->                                   bool has_read_only,
->                                   BlockdevChangeReadOnlyMode read_only,
-> +                                bool has_file_locking_mode,
-> +                                BlockdevChangeFileLockingMode file_locking_mode,
->                                   Error **errp)
->   {
->       BlockBackend *blk;
-> @@ -362,6 +364,26 @@ void qmp_blockdev_change_medium(const char *device,
->           qdict_put_str(options, "driver", format);
->       }
->   
-> +    if (!has_file_locking_mode) {
-> +        file_locking_mode = BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO;
-> +    }
-> +
-> +    switch (file_locking_mode) {
-> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO:
-> +        break;
-> +
-> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_OFF:
-> +        qdict_put_str(options, "file.locking", "off");
-> +        break;
-> +
-> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_ON:
-> +        qdict_put_str(options, "file.locking", "on");
-> +        break;
-> +
-> +    default:
-> +        abort();
-> +    }
-> +
->       medium_bs = bdrv_open(filename, NULL, options, bdrv_flags, errp);
->   
->       if (!medium_bs) {
-> diff --git a/ui/cocoa.m b/ui/cocoa.m
-> index 4c2dd33532..6e73c6e13e 100644
-> --- a/ui/cocoa.m
-> +++ b/ui/cocoa.m
-> @@ -1611,6 +1611,7 @@ - (void)changeDeviceMedia:(id)sender
->                                          "raw",
->                                          true, false,
->                                          false, 0,
-> +                                       false, 0,
-
-This change is irrelevant.
-
-Regards,
-Akihiko Odaki
 
