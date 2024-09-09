@@ -4,108 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F147ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93AEECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sng4I-0008Hw-JI; Mon, 09 Sep 2024 11:12:42 -0400
+	id 1sngEj-0000vo-LJ; Mon, 09 Sep 2024 11:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sng4G-0008B9-Tl; Mon, 09 Sep 2024 11:12:40 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sng4E-0000uC-Dg; Mon, 09 Sep 2024 11:12:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1725894759; x=1757430759;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=OsmWfy9/jM7Y8SvKhoiJatJA7t9PpOrU8ixthkRiaSA=;
- b=bwGzs4u9Ps69jfuCkwcL0veUeMRAE1YGXkuw8k2Dmlpzxm8jworWfCiI
- E6dvwpB866qAIeONklsQz1fGZCBrhKlITEOy/4scQJBPpjNLsN8qDPufR
- 5+s3FDYeU5fK/TZVel0tl66jNdrbFXPgsBBtkCtorjUPsuiLKWyVcCZLk
- s2mqpGTy6Yys4xSAoDU/HUm7KXzaguH1DEm9dp6QSK5jzAL80k5o0J0Cm
- /mSRd7JBGZWy3X1R2wBzIw47E4v/d8uiZC+kUVLtExlsAiyBVkhh65x5g
- gM9VyStNUn6Epw/EAlLRwzFHkXyM6pdsZZwEpvwbPOZFyNF5dBxs3Frjw w==;
-X-CSE-ConnectionGUID: YvsSOn7hSrWqbFBP4BFEqA==
-X-CSE-MsgGUID: 27ejjkqLQPO4alhQn1DNug==
-X-IronPort-AV: E=McAfee;i="6700,10204,11190"; a="47118321"
-X-IronPort-AV: E=Sophos;i="6.10,214,1719903600"; d="scan'208";a="47118321"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2024 08:12:33 -0700
-X-CSE-ConnectionGUID: e4fSfRdoRLOxMd5nb7V/nw==
-X-CSE-MsgGUID: JHBQ9hB6SkuuWTp2ZI+N7Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,214,1719903600"; d="scan'208";a="66673173"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 09 Sep 2024 08:12:24 -0700
-Date: Mon, 9 Sep 2024 23:28:25 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: Gavin Shan <gshan@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "mst@redhat.com" <mst@redhat.com>, "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
- "david@redhat.com" <david@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "will@kernel.org" <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "rafael@kernel.org" <rafael@kernel.org>,
- "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "npiggin@gmail.com" <npiggin@gmail.com>,
- "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
- "miguel.luis@oracle.com" <miguel.luis@oracle.com>,
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>,
- "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
- "maobibo@loongson.cn" <maobibo@loongson.cn>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>,
- Linuxarm <linuxarm@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
- {socket,cluster,core,thread}-id property
-Message-ID: <Zt8UGd9YRANnBPVT@intel.com>
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-2-salil.mehta@huawei.com>
- <11e627ef-d75e-4114-9b93-14d80ec0526b@redhat.com>
- <c889781d3eb048d19bae4ceff8646a4e@huawei.com>
- <Zthx3dQInrcgly6+@intel.com>
- <9376341923d94a2bbd8d24f4f6844585@huawei.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sngEh-0000vD-Jv
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:23:27 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sngEf-0001uY-VI
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:23:27 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2f75428b9f8so31352881fa.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:23:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725895403; x=1726500203; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4EIe4pPMHVgje/Lw6Piu7SzRHQ8YUVHHDv2iQqiwNHc=;
+ b=q7wN6UvkyBxWFwxH8IPq+WZaVoQ8nbgqJD5kW1gIjahQl2OGp3wGzzp0b7GwO1vrpH
+ 8J2JxZysq22acl9f/uTGa29QX2hJy1yT1AljP7e0OjjFm6OXsp838CwdZ6CWhsSuZZ1o
+ LWCcB7oo1dcs/AnfKSA/RF+IHRFirLlKBk7Y7kL110r1XOBvSjS8gLQ5p04Mr3U0a08U
+ RRU1gKvZytobR2b+Lqn1ulJw1DCZVYDZTkqSNZZh4bo6+QEEbg7AtTeS4Y7RwRcscL6D
+ pwYmvDyYcZCuAbp6VHxukZqEVavzqtvpaksLzC1fisgvxWXkRDfFPXnQfmISBGYfFVoQ
+ d+MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725895403; x=1726500203;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4EIe4pPMHVgje/Lw6Piu7SzRHQ8YUVHHDv2iQqiwNHc=;
+ b=mz0RBqqpopKMmDucykbripoQbvAPXr+MkfDUHXy9JjHtxQdvCo+Vga2cd/c64gFw+h
+ n0ZdvH909G7JBhXZPX2Q14trxpNTF/w6w4W9UMsvj6FxOXnEov9ylJ5+RlQ9aU9VQKvP
+ 8gs3zapJgnIdrdavKDNfe+0VL8XomRZv+iyPlNLq6xu6gntEh1wL3xfy3u5oBp7A/mga
+ +lM6cjPIoGnFLgA1j8APGfhaFGrG7tg6kWk445JQOXHlw50U8wQ8d/flLn3FnAD5jEsN
+ vUFrp+SpULizWCpxWOjm3V6WSUqIww7xGgRcmg0dVIuUIo1GUA//ClbVIYuZcSJZ+m3f
+ 7Etg==
+X-Gm-Message-State: AOJu0YyfT2sbFSD5gbxrBkmZ5lSwaWVeVdsHBP5HXNIrGxHLjm0qO/UQ
+ yPdmNcz2viiTg1CjIsSNn1Gc9ykfmztpEJi3nwUBDLZh1nPvbdXXzp4M5WPR4y4=
+X-Google-Smtp-Source: AGHT+IGpMehKXqX7VOk9yqZmP5T/VWuXUklvyIDZTX20CoUrAwVaMOYDmoZiguNA4OROCCg1rvvzMQ==
+X-Received: by 2002:a2e:b8c2:0:b0:2f7:562d:cb5b with SMTP id
+ 38308e7fff4ca-2f75a96da1cmr64854961fa.7.1725895402237; 
+ Mon, 09 Sep 2024 08:23:22 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d2583c20bsm353509866b.22.2024.09.09.08.23.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Sep 2024 08:23:21 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CC9EF5F75D;
+ Mon,  9 Sep 2024 16:23:20 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [RFC PATCH] tests/qtest: Don't parallelize migration-test
+In-Reply-To: <20240909133921.1141067-1-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Mon, 9 Sep 2024 14:39:21 +0100")
+References: <20240909133921.1141067-1-peter.maydell@linaro.org>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Mon, 09 Sep 2024 16:23:20 +0100
+Message-ID: <87cylcyhp3.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9376341923d94a2bbd8d24f4f6844585@huawei.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,129 +98,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 04, 2024 at 05:37:21PM +0000, Salil Mehta wrote:
-> Date: Wed, 4 Sep 2024 17:37:21 +0000
-> From: Salil Mehta <salil.mehta@huawei.com>
-> Subject: RE: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
->  {socket,cluster,core,thread}-id property
-> 
-> Hi Zhao,
-> 
-> >  From: zhao1.liu@intel.com <zhao1.liu@intel.com>
-> >  Sent: Wednesday, September 4, 2024 3:43 PM
-> >  To: Salil Mehta <salil.mehta@huawei.com>
-> >  
-> >  Hi Salil,
-> >  
-> >  On Mon, Aug 19, 2024 at 11:53:52AM +0000, Salil Mehta wrote:
-> >  > Date: Mon, 19 Aug 2024 11:53:52 +0000
-> >  > From: Salil Mehta <salil.mehta@huawei.com>
-> >  > Subject: RE: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
-> >  > {socket,cluster,core,thread}-id property
-> >  
-> >  [snip]
-> >  
-> >  > >  > NULL); @@ -2708,6 +2716,7 @@ static const CPUArchIdList
-> >  > > *virt_possible_cpu_arch_ids(MachineState *ms)
-> >  > >  >   {
-> >  > >  >       int n;
-> >  > >  >       unsigned int max_cpus = ms->smp.max_cpus;
-> >  > >  > +    unsigned int smp_threads = ms->smp.threads;
-> >  > >  >       VirtMachineState *vms = VIRT_MACHINE(ms);
-> >  > >  >       MachineClass *mc = MACHINE_GET_CLASS(vms);
-> >  > >  >
-> >  > >  > @@ -2721,6 +2730,7 @@ static const CPUArchIdList
-> >  > > *virt_possible_cpu_arch_ids(MachineState *ms)
-> >  > >  >       ms->possible_cpus->len = max_cpus;
-> >  > >  >       for (n = 0; n < ms->possible_cpus->len; n++) {
-> >  > >  >           ms->possible_cpus->cpus[n].type = ms->cpu_type;
-> >  > >  > +        ms->possible_cpus->cpus[n].vcpus_count = smp_threads;
-> >  > >  >           ms->possible_cpus->cpus[n].arch_id =
-> >  > >  >               virt_cpu_mp_affinity(vms, n);
-> >  > >  >
-> >  > >
-> >  > >  Why @vcpus_count is initialized to @smp_threads? it needs to be
-> >  > > documented in the commit log.
-> >  >
-> >  >
-> >  > Because every thread internally amounts to a vCPU in QOM and which is
-> >  > in 1:1 relationship with KVM vCPU. AFAIK, QOM does not strictly
-> >  > follows any architecture. Once you start to get into details of
-> >  > threads there are many aspects of shared resources one will have to
-> >  > consider and these can vary across different implementations of
-> >  architecture.
-> >  
-> >  For SPAPR CPU, the granularity of >possible_cpus->cpus[] is "core", and for
-> >  x86, it's "thread" granularity.
-> 
-> 
-> We have threads per-core at microarchitecture level in ARM as well. But each
-> thread appears like a vCPU to OS and AFAICS there are no special attributes
-> attached to it. SMT can be enabled/disabled at firmware and should get
-> reflected in the configuration accordingly i.e. value of *threads-per-core* 
-> changes between 1 and 'N'.  This means 'vcpus_count' has to reflect the
-> correct configuration. But I think threads lack proper representation
-> in Qemu QOM.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-In topology related part, SMT (of x86) usually represents the logical
-processor level. And thread has the same meaning. To change these
-meanings is also possible, but I think it should be based on the actual
-use case. we can consider the complexity of the implementation when
-there is a need.
-
-> In Qemu, each vCPU reflects an execution context (which gets uniquely mapped
-> to KVM vCPU). AFAICS, we only have *CPUState* (Struct ArchCPU) as a placeholder
-> for this execution context and there is no *ThreadState* (derived out of
-> Struct CPUState). Hence, we've  to map all the threads as QOM vCPUs. This means
-> the array of present or possible CPUs represented by 'struct CPUArchIdList' contains
-> all execution contexts which actually might be vCPU or a thread. Hence, usage of
-> *vcpus_count* seems quite superficial to me frankly.
+> The migration-test is a long-running test whose subtests all launch
+> at least two QEMU processes.  This means that if for example the host
+> has 4 CPUs then 'make check' defaults to a parallelism of 5, and if
+> we launch 5 migration-tests in parallel then we will be running 10
+> QEMU instances on a 4 CPU system.  If the system is not very fast
+> then the test can spuriously time out because the different tests are
+> all stealing CPU from each other.  This seems to particularly be a
+> problem on our S390 CI job and the cross-i686-tci CI job.
 >
-> Also, AFAICS, KVM does not have the concept of the threads and only has
-> KVM vCPUs, but you are still allowed to specify the topology with sockets, dies,
-> clusters, cores, threads in most architectures.  
- 
-There are some uses for topology, such as it affects scheduling behavior,
-and it affects feature emulation, etc.
-  
-> >  And smp.threads means how many threads in one core, so for x86, the
-> >  vcpus_count of a "thread" is 1, and for spapr, the vcpus_count of a "core"
-> >  equals to smp.threads.
-> 
-> 
-> Sure, but does the KVM specifies this? 
+> Force meson to run migration-test non-parallel, so there is never any
+> other test running at the same time as it.  This will slow down
+> overall test execution time somewhat, but hopefully make our CI less
+> flaky.
+>
+> The downside is that because each migration-test instance runs for
+> between 2 and 5 minutes and we run it for five architectures this
+> significantly increases the runtime.  For an all-architectures build
+> on my local machine 'make check -j8' goes from
+>
+>  real    8m19.127s
+>  user    31m47.534s
+>  sys     19m42.650s
+>
+> to
+>
+>  real    20m31.218s
+>  user    32m48.712s
+>  sys     19m52.133s
+>
+> more than doubling the wallclock runtime.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Also, looking at these figures we spend a *lot* of our overall
+> 'make check' time on migration-test. Do we really need to do
+> that much for every architecture?
 
-At least as you said, KVM (for x86) doesn't consider higher-level topologies
-at the moment, but that's not to say that it won't in the future, as certain
-registers do have topology dependencies.
+I guess one question is are we getting value from all the extra
+migration tests? There certainly seem to be some sub-tests that are
+slower than the others and I assume testing a small delta on the tests
+before it.
 
-> and how does these threads map to the QOM vCPU objects or execution context?
+On s390x it seems the native test runs pretty much to the same time as
+the other TCG guests. Do we exercise any extra migration code by running
+tests for every architecture as opposed to one KVM/native hyp and one
+TCG one?
 
-Each CPU object will create a (software) thread, you can refer the
-function "kvm_start_vcpu_thread(CPUState *cpu)", which will be called
-when CPU object realizes.
-
-> AFAICS there is nothing but 'CPUState'
-> which will be made part of the  possible vCPU list 'struct CPUArchIdList'.
- 
-As I said, an example is spapr ("spapr_possible_cpu_arch_ids()"), which
-maps possible_cpu to core object. However, this is a very specific
-example, and like Igor's slides said, I understand it's an architectural
-requirement.
-
-> >  
-> >  IIUC, your granularity is still "thread", so that this filed should be 1.
-> 
-> 
-> Well, again we need more discussion on this. I've stated my concerns against
-> doing this. User should be allowed to create virtual topology which will
-> include 'threads' as one of the parameter.
-> 
-
-I don't seem to understand...There is a ¡°threads¡± parameter in -smp, does
-this not satisfy your use case?
-
-Regards,
-Zhao
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
