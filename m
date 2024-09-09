@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10BD9ECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59419ECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snimB-0005ij-HW; Mon, 09 Sep 2024 14:06:11 -0400
+	id 1snilt-0003mY-9r; Mon, 09 Sep 2024 14:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1snim9-0005WW-83
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:06:09 -0400
+ id 1snilq-0003d8-TX
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:50 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1snim7-0001n5-2t
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:06:08 -0400
+ id 1snilp-0001lz-01
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:50 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1snily-0006RX-6l; Mon, 09 Sep 2024 20:05:58 +0200
-Message-ID: <c042036e-ff01-4adf-b9a6-090660887a2e@maciej.szmigiero.name>
-Date: Mon, 9 Sep 2024 20:05:52 +0200
+ id 1snilg-0006RE-Ur; Mon, 09 Sep 2024 20:05:40 +0200
+Message-ID: <4a4d4429-84a5-4ca0-be87-db6354405eb5@maciej.szmigiero.name>
+Date: Mon, 9 Sep 2024 20:05:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/17] migration/multifd: Device state transfer support
- - receive side
+Subject: Re: [PATCH v2 08/17] migration: Add load_finish handler and
+ associated functions
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
@@ -38,8 +38,8 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <84141182083a8417c25b4d82a9c4b6228b22ac67.1724701542.git.maciej.szmigiero@oracle.com>
- <2a9d1c5d-6453-4b33-99cd-824f0002e305@nvidia.com>
+ <1a7599896decdbae61cee385739dc0badc9b4364.1724701542.git.maciej.szmigiero@oracle.com>
+ <ec2b1687-5e53-4c1c-b1a5-24c38512daa0@nvidia.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <2a9d1c5d-6453-4b33-99cd-824f0002e305@nvidia.com>
+In-Reply-To: <ec2b1687-5e53-4c1c-b1a5-24c38512daa0@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=37.28.154.113;
@@ -108,7 +108,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5.09.2024 18:47, Avihai Horon wrote:
+On 5.09.2024 17:13, Avihai Horon wrote:
 > 
 > On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
 >> External email: Use caution opening links or attachments
@@ -116,196 +116,171 @@ On 5.09.2024 18:47, Avihai Horon wrote:
 >>
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> Add a basic support for receiving device state via multifd channels -
->> channels that are shared with RAM transfers.
+>> load_finish SaveVMHandler allows migration code to poll whether
+>> a device-specific asynchronous device state loading operation had finished.
 >>
->> To differentiate between a device state and a RAM packet the packet
->> header is read first.
->>
->> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
->> packet header either device state (MultiFDPacketDeviceState_t) or RAM
->> data (existing MultiFDPacket_t) is then read.
->>
->> The received device state data is provided to
->> qemu_loadvm_load_state_buffer() function for processing in the
->> device's load_state_buffer handler.
+>> In order to avoid calling this handler needlessly the device is supposed
+>> to notify the migration code of its possible readiness via a call to
+>> qemu_loadvm_load_finish_ready_broadcast() while holding
+>> qemu_loadvm_load_finish_ready_lock.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >> ---
->>   migration/multifd.c | 127 +++++++++++++++++++++++++++++++++++++-------
->>   migration/multifd.h |  31 ++++++++++-
->>   2 files changed, 138 insertions(+), 20 deletions(-)
+>>   include/migration/register.h | 21 +++++++++++++++
+>>   migration/migration.c        |  6 +++++
+>>   migration/migration.h        |  3 +++
+>>   migration/savevm.c           | 52 ++++++++++++++++++++++++++++++++++++
+>>   migration/savevm.h           |  4 +++
+>>   5 files changed, 86 insertions(+)
 >>
->> diff --git a/migration/multifd.c b/migration/multifd.c
->> index b06a9fab500e..d5a8e5a9c9b5 100644
->> --- a/migration/multifd.c
->> +++ b/migration/multifd.c
->> @@ -21,6 +21,7 @@
->>   #include "file.h"
->>   #include "migration.h"
->>   #include "migration-stats.h"
->> +#include "savevm.h"
->>   #include "socket.h"
->>   #include "tls.h"
->>   #include "qemu-file.h"
->> @@ -209,10 +210,10 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+>> diff --git a/include/migration/register.h b/include/migration/register.h
+>> index 4a578f140713..44d8cf5192ae 100644
+>> --- a/include/migration/register.h
+>> +++ b/include/migration/register.h
+>> @@ -278,6 +278,27 @@ typedef struct SaveVMHandlers {
+>>       int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
+>>                                Error **errp);
 >>
->>       memset(packet, 0, p->packet_len);
+>> +    /**
+>> +     * @load_finish
+>> +     *
+>> +     * Poll whether all asynchronous device state loading had finished.
+>> +     * Not called on the load failure path.
+>> +     *
+>> +     * Called while holding the qemu_loadvm_load_finish_ready_lock.
+>> +     *
+>> +     * If this method signals "not ready" then it might not be called
+>> +     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
+>> +     * while holding qemu_loadvm_load_finish_ready_lock.
+>> +     *
+>> +     * @opaque: data pointer passed to register_savevm_live()
+>> +     * @is_finished: whether the loading had finished (output parameter)
+>> +     * @errp: pointer to Error*, to store an error if it happens.
+>> +     *
+>> +     * Returns zero to indicate success and negative for error
+>> +     * It's not an error that the loading still hasn't finished.
+>> +     */
+>> +    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+>> +
+>>       /**
+>>        * @load_setup
+>>        *
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 3dea06d57732..d61e7b055e07 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -259,6 +259,9 @@ void migration_object_init(void)
 >>
->> -    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
->> -    packet->version = cpu_to_be32(MULTIFD_VERSION);
->> +    packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
->> +    packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
+>>       current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
 >>
->> -    packet->flags = cpu_to_be32(p->flags);
->> +    packet->hdr.flags = cpu_to_be32(p->flags);
->>       packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+>> +    qemu_mutex_init(&current_incoming->load_finish_ready_mutex);
+>> +    qemu_cond_init(&current_incoming->load_finish_ready_cond);
+>> +
+>>       migration_object_check(current_migration, &error_fatal);
 >>
->>       packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
->> @@ -228,31 +229,49 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
->>                               p->flags, p->next_packet_size);
->>   }
->>
->> -static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->> +static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
->> +                                             MultiFDPacketHdr_t *hdr,
->> +                                             Error **errp)
->>   {
->> -    MultiFDPacket_t *packet = p->packet;
->> -    int ret = 0;
->> -
->> -    packet->magic = be32_to_cpu(packet->magic);
->> -    if (packet->magic != MULTIFD_MAGIC) {
->> +    hdr->magic = be32_to_cpu(hdr->magic);
->> +    if (hdr->magic != MULTIFD_MAGIC) {
->>           error_setg(errp, "multifd: received packet "
->>                      "magic %x and expected magic %x",
->> -                   packet->magic, MULTIFD_MAGIC);
->> +                   hdr->magic, MULTIFD_MAGIC);
->>           return -1;
+>>       ram_mig_init();
+>> @@ -410,6 +413,9 @@ void migration_incoming_state_destroy(void)
+>>           mis->postcopy_qemufile_dst = NULL;
 >>       }
 >>
->> -    packet->version = be32_to_cpu(packet->version);
->> -    if (packet->version != MULTIFD_VERSION) {
->> +    hdr->version = be32_to_cpu(hdr->version);
->> +    if (hdr->version != MULTIFD_VERSION) {
->>           error_setg(errp, "multifd: received packet "
->>                      "version %u and expected version %u",
->> -                   packet->version, MULTIFD_VERSION);
->> +                   hdr->version, MULTIFD_VERSION);
->>           return -1;
->>       }
->>
->> -    p->flags = be32_to_cpu(packet->flags);
->> +    p->flags = be32_to_cpu(hdr->flags);
+>> +    qemu_mutex_destroy(&mis->load_finish_ready_mutex);
+>> +    qemu_cond_destroy(&mis->load_finish_ready_cond);
 >> +
->> +    return 0;
->> +}
->> +
->> +static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
->> +                                                   Error **errp)
->> +{
->> +    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
->> +
->> +    packet->instance_id = be32_to_cpu(packet->instance_id);
->> +    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
->> +
->> +    return 0;
->> +}
->> +
->> +static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
->> +{
->> +    MultiFDPacket_t *packet = p->packet;
->> +    int ret = 0;
->> +
->>       p->next_packet_size = be32_to_cpu(packet->next_packet_size);
->>       p->packet_num = be64_to_cpu(packet->packet_num);
->> -    p->packets_recved++;
->>
->>       if (!(p->flags & MULTIFD_FLAG_SYNC)) {
->>           ret = multifd_ram_unfill_packet(p, errp);
->> @@ -264,6 +283,19 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->>       return ret;
+>>       yank_unregister_instance(MIGRATION_YANK_INSTANCE);
 >>   }
 >>
->> +static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->> +{
->> +    p->packets_recved++;
+>> diff --git a/migration/migration.h b/migration/migration.h
+>> index 38aa1402d516..4e2443e6c8ec 100644
+>> --- a/migration/migration.h
+>> +++ b/migration/migration.h
+>> @@ -230,6 +230,9 @@ struct MigrationIncomingState {
+>>
+>>       /* Do exit on incoming migration failure */
+>>       bool exit_on_error;
 >> +
->> +    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
->> +        return multifd_recv_unfill_packet_device_state(p, errp);
->> +    } else {
->> +        return multifd_recv_unfill_packet_ram(p, errp);
+>> +    QemuCond load_finish_ready_cond;
+>> +    QemuMutex load_finish_ready_mutex;
+>>   };
+>>
+>>   MigrationIncomingState *migration_incoming_get_current(void);
+>> diff --git a/migration/savevm.c b/migration/savevm.c
+>> index 3fde5ca8c26b..33c9200d1e78 100644
+>> --- a/migration/savevm.c
+>> +++ b/migration/savevm.c
+>> @@ -3022,6 +3022,37 @@ int qemu_loadvm_state(QEMUFile *f)
+>>           return ret;
+>>       }
+>>
+>> +    qemu_loadvm_load_finish_ready_lock();
+>> +    while (!ret) { /* Don't call load_finish() handlers on the load failure path */
+>> +        bool all_ready = true;
+> 
+> Nit: Maybe rename all_ready to all_finished to be consistent with load_finish() terminology? Same for this_ready.
+
+Will rename it accordingly.
+
+>> +        SaveStateEntry *se = NULL;
+>> +
+>> +        QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+>> +            bool this_ready;
+>> +
+>> +            if (!se->ops || !se->ops->load_finish) {
+>> +                continue;
+>> +            }
+>> +
+>> +            ret = se->ops->load_finish(se->opaque, &this_ready, &local_err);
+>> +            if (ret) {
+>> +                error_report_err(local_err);
+>> +
+>> +                qemu_loadvm_load_finish_ready_unlock();
+>> +                return -EINVAL;
+>> +            } else if (!this_ready) {
+>> +                all_ready = false;
+>> +            }
+>> +        }
+>> +
+>> +        if (all_ready) {
+>> +            break;
+>> +        }
+>> +
+>> +        qemu_cond_wait(&mis->load_finish_ready_cond, &mis->load_finish_ready_mutex);
 >> +    }
+>> +    qemu_loadvm_load_finish_ready_unlock();
 >> +
->> +    g_assert_not_reached();
-> 
-> We can drop the assert and the "else":
-> if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
->      return multifd_recv_unfill_packet_device_state(p, errp);
-> }
-> 
-> return multifd_recv_unfill_packet_ram(p, errp);
-
-Ack.
-
+>>       if (ret == 0) {
+>>           ret = qemu_file_get_error(f);
+>>       }
+>> @@ -3126,6 +3157,27 @@ int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
+>>       return 0;
+>>   }
+>>
+>> +void qemu_loadvm_load_finish_ready_lock(void)
+>> +{
+>> +    MigrationIncomingState *mis = migration_incoming_get_current();
+>> +
+>> +    qemu_mutex_lock(&mis->load_finish_ready_mutex);
 >> +}
 >> +
->>   static bool multifd_send_should_exit(void)
->>   {
->>       return qatomic_read(&multifd_send_state->exiting);
->> diff --git a/migration/multifd.h b/migration/multifd.h
->> index a3e35196d179..a8f3e4838c01 100644
->> --- a/migration/multifd.h
->> +++ b/migration/multifd.h
->> @@ -45,6 +45,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
->>   #define MULTIFD_FLAG_QPL (4 << 1)
->>   #define MULTIFD_FLAG_UADK (8 << 1)
->>
->> +/*
->> + * If set it means that this packet contains device state
->> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
->> + */
->> +#define MULTIFD_FLAG_DEVICE_STATE (1 << 4)
+>> +void qemu_loadvm_load_finish_ready_unlock(void)
+>> +{
+>> +    MigrationIncomingState *mis = migration_incoming_get_current();
 >> +
->>   /* This value needs to be a multiple of qemu_target_page_size() */
->>   #define MULTIFD_PACKET_SIZE (512 * 1024)
->>
->> @@ -52,6 +58,11 @@ typedef struct {
->>       uint32_t magic;
->>       uint32_t version;
->>       uint32_t flags;
->> +} __attribute__((packed)) MultiFDPacketHdr_t;
+>> +    qemu_mutex_unlock(&mis->load_finish_ready_mutex);
+>> +}
+>> +
+>> +void qemu_loadvm_load_finish_ready_broadcast(void)
+>> +{
+>> +    MigrationIncomingState *mis = migration_incoming_get_current();
+>> +
+>> +    qemu_cond_broadcast(&mis->load_finish_ready_cond);
 > 
-> Maybe split this patch into two: one that adds the packet header concept and another that adds the new device packet?
+> Do we need a broadcast? isn't signal enough as we only have one waiter thread?
 
-Can do.
-
->> +
->> +typedef struct {
->> +    MultiFDPacketHdr_t hdr;
->> +
->>       /* maximum number of allocated pages */
->>       uint32_t pages_alloc;
->>       /* non zero pages */
->> @@ -72,6 +83,16 @@ typedef struct {
->>       uint64_t offset[];
->>   } __attribute__((packed)) MultiFDPacket_t;
->>
->> +typedef struct {
->> +    MultiFDPacketHdr_t hdr;
->> +
->> +    char idstr[256] QEMU_NONSTRING;
-> 
-> idstr should be null terminated, or am I missing something?
-
-There's no need to always NULL-terminate a constant-size field,
-since the strncpy() already stops at the field size, so we can
-gain another byte for actual string use this way.
-
-RAM block idstr also uses the same "trick":
-> void multifd_ram_fill_packet(MultiFDSendParams *p):
-> strncpy(packet->ramblock, pages->block->idstr, 256);
+Currently, there's just one waiter but looking at the relatively small
+implementation difference between pthread_cond_signal() and
+pthread_cond_broadcast() I'm not sure whether it is worth changing it
+it to _signal() and not having a possibility of signalling multiple
+waiters upfront.
 
 > Thanks.
 
