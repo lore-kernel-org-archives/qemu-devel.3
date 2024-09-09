@@ -4,93 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B9EEB64DE
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 02:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B53DCD4F4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 02:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snTuK-0006lD-PY; Sun, 08 Sep 2024 22:13:36 -0400
+	id 1snU0n-00072q-2u; Sun, 08 Sep 2024 22:20:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snTuJ-0006kD-M5; Sun, 08 Sep 2024 22:13:35 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snTuH-0001MX-VH; Sun, 08 Sep 2024 22:13:35 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-718da0821cbso1891078b3a.0; 
- Sun, 08 Sep 2024 19:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725848012; x=1726452812; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KsWFRdYWdBaST8wvMPQrZTKJI/aAOCM7Gcb6EQnnHW0=;
- b=fp/I4hxbwHYB0yref/vM8j8PFDTwuTCDxD084PL5zqsjwyUkQor2kXxTL6oyOpJSd5
- fkVA58CIHzi2v4XYTA1hPQ1i/Y+yHwDV8QGrqXxfz2Xn326Byns8W/mWEo/u9exV7pWd
- /RxEQybHKlxQA+XpridAJKVvZqDYAq8IfofMX+BQV2JrQLxvWUpZyLt0MnK9ydy7EhB0
- i0EgAK13dEX0NZodfMbLDdH7H2lvfrS+UvfrnFSgcSTmyGg2xkErU6DQvODws+G6OSZ8
- bTWo90qyy1dd0UWGwAGCxlxHutfOXz+5BO8rrOiCO+CH8aXMaBV5IXEsOUbku6Tl7mCO
- UYSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725848012; x=1726452812;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KsWFRdYWdBaST8wvMPQrZTKJI/aAOCM7Gcb6EQnnHW0=;
- b=Pog8wuujTLIbOk6GLwx8/ADdrboSVyZIhaYmAaPW2kMclbKI+G4BuBgaBSttGGjBNr
- TdbdV6rUN8GPSjLHL1+9H2+BLjjPX6UcY6pL+EUDw1mnMiQLxYP1JYPVoFRpaxNkk21T
- Lg+AG6N6scZB629VlncLGWrNi1NRzVyMz5ifssTXDV4ZOZ9o6qub2vUG07m6985GBSyG
- KOAkML8eh6dv8EfzCMA6bi+i0gK5klWY+Z75i5C8qVcX2TptXdTijtFFcKuyvgJpKDuY
- JD64SW5eCT+9w+syATtbQbgIgMAVj3NbvK6Iw8aiBJ05VCnedwhNYKdNDcgH028Bye83
- YDcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcZ94SYwLvSG2v0lpXJDfTfQcrGmovooQ1ggRVv2+31nXUnrdh2ODucnbAATSPpqQk+kv956teJ3hs@nongnu.org,
- AJvYcCWeM/K4YfUL0PhRs4lo/umA7+M5S0WUEyKWLrwmo+KYXRVF8yJNMqbN+KLOxmXG3OG/ahu6KBLSfwjgVA==@nongnu.org
-X-Gm-Message-State: AOJu0YxxshQ5NlPMoL1wKstJXhDdRc/NufxKFdIybz/jt/tjh9hf2H1W
- VtDguTwQiL6AQ9UCUrRw5+pnlHSCUBk0uV9t/dLPjIzd6PRlKRF8
-X-Google-Smtp-Source: AGHT+IH9xuG0htxZ1C7TbpVaozzZ/Alh/YT/2G4WBIFBzExcL5hmH0GOeqZfjTKEsoj2iKTGO15V+g==
-X-Received: by 2002:a05:6a20:271d:b0:1cf:2d2f:34fa with SMTP id
- adf61e73a8af0-1cf2d2f365emr7292964637.25.1725848012201; 
- Sun, 08 Sep 2024 19:13:32 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-718e58c68d3sm2528155b3a.84.2024.09.08.19.13.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Sep 2024 19:13:31 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: alex.bennee@linaro.org,
-	qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Cc: dbarboza@ventanamicro.com, palmer@dabbelt.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, alistair23@gmail.com,
- Bin Meng <bmeng.cn@gmail.com>, liwei1518@gmail.com,
- Alistair Francis <Alistair.Francis@wdc.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- atishp@rivosinc.com, Alistair Francis <alistair.francis@wdc.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 1/2] hw/char: riscv_htif: Use blocking qemu_chr_fe_write_all
-Date: Mon,  9 Sep 2024 12:13:16 +1000
-Message-ID: <20240909021317.58192-2-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240909021317.58192-1-alistair.francis@wdc.com>
-References: <20240909021317.58192-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1snU0k-00072F-HX
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 22:20:14 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1snU0h-00024w-Nl
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 22:20:14 -0400
+Received: from loongson.cn (unknown [10.20.42.17])
+ by gateway (Coremail) with SMTP id _____8AxbepTW95mhWcCAA--.5707S3;
+ Mon, 09 Sep 2024 10:20:03 +0800 (CST)
+Received: from [10.20.42.17] (unknown [10.20.42.17])
+ by front1 (Coremail) with SMTP id qMiowMDx_9dSW95mLAgCAA--.12255S3;
+ Mon, 09 Sep 2024 10:20:03 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch: Remove default enable with VIRTIO_VGA device
+To: Bibo Mao <maobibo@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20240823073050.2619484-1-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <12848a4f-212b-f29f-c181-d967c294ad86@loongson.cn>
+Date: Mon, 9 Sep 2024 10:19:58 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20240823073050.2619484-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: qMiowMDx_9dSW95mLAgCAA--.12255S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7GrW8urWftFWkKr1UZr13Awc_yoWkGwb_Wa
+ s2vw1rWFW5Ar9ruwnYv3yrJw15Wan7WF1fAFWDXw4kX34aqw1fXa17C3sIvF1jq3yUuan8
+ ZrW0qrsYkrySkosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbxkYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
+ JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
+ 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8I38UUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-3.046, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,54 +81,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current approach of using qemu_chr_fe_write() and ignoring the
-return values results in dropped characters [1]. Ideally we want to
-report FIFO status to the guest, but the HTIF isn't a real UART, so we
-don't really have a way to do that.
 
-Instead let's just use qemu_chr_fe_write_all() so at least we don't drop
-characters.
 
-1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+ÔÚ 2024/8/23 ÏÂÎç3:30, Bibo Mao Ð´µÀ:
+> For virtio VGA deivce libvirt will select VIRTIO_VGA firstly rather than
+> VIRTIO_GPU, VIRTIO_VGA device supports frame buffer however it requires
+> legacy VGA compatible support. Frame buffer area 0xa0000 -- 0xc0000
+> conflicts with low memory area 0 -- 0x10000000.
+> 
+> Here remove default support for VIRTIO_VGA device, VIRTIO_GPU is prefered
+> on LoongArch system. For frame buffer video card support, standard VGA can
+> be used.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/loongarch/Kconfig | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- hw/char/riscv_htif.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index 9bef60def1..d40b542948 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -218,7 +218,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-                     tswap64(syscall[3]) == HTIF_CONSOLE_CMD_PUTC) {
-                     uint8_t ch;
-                     cpu_physical_memory_read(tswap64(syscall[2]), &ch, 1);
--                    qemu_chr_fe_write(&s->chr, &ch, 1);
-+                    /*
-+                     * XXX this blocks entire thread. Rewrite to use
-+                     * qemu_chr_fe_write and background I/O callbacks
-+                     */
-+                    qemu_chr_fe_write_all(&s->chr, &ch, 1);
-                     resp = 0x100 | (uint8_t)payload;
-                 } else {
-                     qemu_log_mask(LOG_UNIMP,
-@@ -237,7 +241,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-             return;
-         } else if (cmd == HTIF_CONSOLE_CMD_PUTC) {
-             uint8_t ch = (uint8_t)payload;
--            qemu_chr_fe_write(&s->chr, &ch, 1);
-+            /*
-+             * XXX this blocks entire thread. Rewrite to use
-+             * qemu_chr_fe_write and background I/O callbacks
-+             */
-+            qemu_chr_fe_write_all(&s->chr, &ch, 1);
-             resp = 0x100 | (uint8_t)payload;
-         } else {
-             qemu_log("HTIF device %d: unknown command\n", device);
--- 
-2.46.0
+Thanks
+Song Gao
+> diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
+> index 0de713a439..9c69170968 100644
+> --- a/hw/loongarch/Kconfig
+> +++ b/hw/loongarch/Kconfig
+> @@ -5,7 +5,6 @@ config LOONGARCH_VIRT
+>       select DEVICE_TREE
+>       select PCI
+>       select PCI_EXPRESS_GENERIC_BRIDGE
+> -    imply VIRTIO_VGA
+>       imply PCI_DEVICES
+>       imply NVDIMM
+>       imply TPM_TIS_SYSBUS
+> 
+> base-commit: 407f9a4b121eb65166375c410e14d7b704bc1106
+> 
 
 
