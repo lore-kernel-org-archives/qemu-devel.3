@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C4DECE587
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF9F3ECE588
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 20:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snkjw-0008Vg-2N; Mon, 09 Sep 2024 16:12:00 -0400
+	id 1snkk8-0000tb-HO; Mon, 09 Sep 2024 16:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkju-0008QW-Pp
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:11:58 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkk7-0000nu-2c
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:12:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkjs-0004zn-Hf
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:11:58 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkk4-00053V-JV
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:12:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725912715;
+ s=mimecast20190719; t=1725912727;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fBQjFfFzHVzxG0I3N5y9yf1md/tdpjRtkmvTgUYzVGI=;
- b=H4g07S1D2CxCZT1A429vAGGrv+obXMV0xz05/Mf7I8HiVbVV8zOxrjf1g0BR5yjfsOPDLD
- 9EIf5TGueXXJo7a8OgLhE2GG/H0CFfauGYPBjFLkI0dHy/7hDrZd9fGqhVm1D8OIW6zob5
- NmzJuqBKZFtrbiEm8yw/qW0AZ0w+uHo=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Gp9q23FGsWBNBV5XuIUFLE2Uwzbt24RL4MjU9ohmxj4=;
+ b=Mg2FBGMPTmgTadPOXMRL1mdl8CYbELf1MTYeSjHedR4o4pYB9pLVII5MJJt12O6iHVieRT
+ NjJNtkAn3z7IOH9uFlfjZ37DQTfVJ1xnhunSgyPwbTA9/Auj6QOfumyYPWa2z5h0as4lxY
+ aHT2fCV1m8OosqckE/PaFQ8uVZUXYvY=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-59-IXDKOEhjOWG97pt3NoZ_6g-1; Mon, 09 Sep 2024 16:11:53 -0400
-X-MC-Unique: IXDKOEhjOWG97pt3NoZ_6g-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4582493b3f7so33478571cf.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 13:11:52 -0700 (PDT)
+ us-mta-481-kXbs6j1sNgq2FxoFYwu8SA-1; Mon, 09 Sep 2024 16:12:06 -0400
+X-MC-Unique: kXbs6j1sNgq2FxoFYwu8SA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4581253bd26so45577061cf.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 13:12:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725912712; x=1726517512;
+ d=1e100.net; s=20230601; t=1725912725; x=1726517525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fBQjFfFzHVzxG0I3N5y9yf1md/tdpjRtkmvTgUYzVGI=;
- b=a/H46KFvZgE8sIOeIoaQCFcV/UHQjCZh7yNba66lA6WVOw1oH/ptbc20rMj+b7Phwk
- G4qeeKYSML0Dw1gOy0m+DXC0tnDGz+bmyZ61fwNYt6ykwMUof3rzPGgabgNrI/P+iIH9
- MVLAUaM8Mm2doeYjEFS42J53606Ru32dWI3HmVzQcjWa4OPS/iAb0SnRrZv0nZejO+OQ
- IaW840nSbEz4nlwkWlr5v4mkjGn9rhh501r6VKo1ZvzHN1agYo9295hQtjA7azRbDEHj
- xToatCyhhegbYdbQXIyqrr1sOsZ7VYtvpMZmwiZzUnJIoBV/P+7P7sZdSOEa4CguwAwe
- YWgQ==
-X-Gm-Message-State: AOJu0YzsCDhn4p4iCAxAgT691g56UuseQolllVKR3ggfMBhspkWkOfMV
- URpu5aYHsAsHraFzQVtmA2IwL/vdeS1j8e1COSlIZpWfNJ+Png1FSrqUmsvDiG0tCrO5/v8RJAc
- hR134WolhuSHXG4DJ7mMbGTs+FYzWlvG59heiytS8jp/gwdXfSC2Z6LJ+FaxPRblvnsgOGMVaBV
- HaZYu1qE88XLjSHs+LgLNWT0+mbAc4M1BTRg==
-X-Received: by 2002:a05:622a:198e:b0:458:2a05:6b71 with SMTP id
- d75a77b69052e-4582a056d83mr77020211cf.44.1725912711972; 
- Mon, 09 Sep 2024 13:11:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvJyf1WHaTw38FN7uUbFJR+Ockz72jyW878REbF7+6/sbDtbcD9uu/LfV2N0imB9FMGfr8PA==
-X-Received: by 2002:a05:622a:198e:b0:458:2a05:6b71 with SMTP id
- d75a77b69052e-4582a056d83mr77019761cf.44.1725912711415; 
- Mon, 09 Sep 2024 13:11:51 -0700 (PDT)
+ bh=Gp9q23FGsWBNBV5XuIUFLE2Uwzbt24RL4MjU9ohmxj4=;
+ b=CvecA09r0saZQ+ANeyk6TAP+XCs0mXAe7MSHGuOIlA956IaI4Q7tGuqxNtYP2UdYAc
+ Yz4Dw/MvvNAqLpcxUjeugzeLp4QtDCLR6ka/JZINFLAM2G5VOuL0himWoQzTnR2YUf7X
+ juIOyoZ8uxsPJdi0vNX2RyWBuaJ4LyhW/bm7Y15maPGVdrQFy7ZkwqV/jKqixQdZqTtj
+ ckHfg3oSasx04GogS8n2ybsshQd7YykiAq6iN6lRVMyH83ErrC0pIMsghoNV2l+xAtXM
+ SDXZU/ur05nS9D1PmwF6FOg8lYBRgx4aP0LNIdVXw8sFxgwmUZtSJl89U+FXR0X5d+jk
+ bXiw==
+X-Gm-Message-State: AOJu0YwmQUXUq3AQy0VKOCt6H5lA/aRqMFOpJNlgo1DcASsv6sAaWJPq
+ L8OE0rEYRUgNKnMOGQWoIU1UAuCP5PGbDUwNP1Hyt6M90PLxkGYkwmfZsbXO1XYUotFPmD0WRS4
+ Amk82b/89TW7vb+saFDWdNioWaw1jzCeCZhk80hOf8K/lrsOuYNFgXsD+9TiPeokW6T6tXCuOnb
+ BHArchy0aEALBlmSp5iJXaMgvzOp/9WFC6uQ==
+X-Received: by 2002:ac8:7dc6:0:b0:458:3324:fff1 with SMTP id
+ d75a77b69052e-458332502bcmr63956481cf.48.1725912725315; 
+ Mon, 09 Sep 2024 13:12:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVrdtBovLGoHqDbqIKXvA5FQz+4LuoaZsSoQDE6npIXDr2JlwI1WIaxF3SG2JpihBeeU9UfA==
+X-Received: by 2002:ac8:7dc6:0:b0:458:3324:fff1 with SMTP id
+ d75a77b69052e-458332502bcmr63955771cf.48.1725912724764; 
+ Mon, 09 Sep 2024 13:12:04 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-45822f93978sm22838561cf.83.2024.09.09.13.11.49
+ d75a77b69052e-45822f93978sm22838561cf.83.2024.09.09.13.12.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 13:11:50 -0700 (PDT)
+ Mon, 09 Sep 2024 13:12:03 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Mattias Nissler <mnissler@rivosinc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/9] softmmu: Support concurrent bounce buffers
-Date: Mon,  9 Sep 2024 16:11:39 -0400
-Message-ID: <20240909201147.3761639-2-peterx@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Bryan Zhang <bryan.zhang@bytedance.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>, Hao Xiang <hao.xiang@linux.dev>,
+ Yichen Wang <yichen.wang@bytedance.com>
+Subject: [PULL 7/9] migration: Introduce 'qatzip' compression method
+Date: Mon,  9 Sep 2024 16:11:45 -0400
+Message-ID: <20240909201147.3761639-8-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240909201147.3761639-1-peterx@redhat.com>
 References: <20240909201147.3761639-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -102,284 +103,497 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mattias Nissler <mnissler@rivosinc.com>
+From: Bryan Zhang <bryan.zhang@bytedance.com>
 
-When DMA memory can't be directly accessed, as is the case when
-running the device model in a separate process without shareable DMA
-file descriptors, bounce buffering is used.
+Adds support for 'qatzip' as an option for the multifd compression
+method parameter, and implements using QAT for 'qatzip' compression and
+decompression.
 
-It is not uncommon for device models to request mapping of several DMA
-regions at the same time. Examples include:
- * net devices, e.g. when transmitting a packet that is split across
-   several TX descriptors (observed with igb)
- * USB host controllers, when handling a packet with multiple data TRBs
-   (observed with xhci)
-
-Previously, qemu only provided a single bounce buffer per AddressSpace
-and would fail DMA map requests while the buffer was already in use. In
-turn, this would cause DMA failures that ultimately manifest as hardware
-errors from the guest perspective.
-
-This change allocates DMA bounce buffers dynamically instead of
-supporting only a single buffer. Thus, multiple DMA mappings work
-correctly also when RAM can't be mmap()-ed.
-
-The total bounce buffer allocation size is limited individually for each
-AddressSpace. The default limit is 4096 bytes, matching the previous
-maximum buffer size. A new x-max-bounce-buffer-size parameter is
-provided to configure the limit for PCI devices.
-
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20240819135455.2957406-1-mnissler@rivosinc.com
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+Link: https://lore.kernel.org/r/20240830232722.58272-5-yichen.wang@bytedance.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/exec/memory.h       | 14 +++----
- include/hw/pci/pci_device.h |  3 ++
- hw/pci/pci.c                |  8 ++++
- system/memory.c             |  5 ++-
- system/physmem.c            | 82 ++++++++++++++++++++++++++-----------
- 5 files changed, 76 insertions(+), 36 deletions(-)
+ qapi/migration.json              |   3 +
+ migration/multifd.h              |   5 +-
+ hw/core/qdev-properties-system.c |   2 +-
+ migration/multifd-qatzip.c       | 394 +++++++++++++++++++++++++++++++
+ migration/meson.build            |   1 +
+ 5 files changed, 402 insertions(+), 3 deletions(-)
+ create mode 100644 migration/multifd-qatzip.c
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 296fd068c0..e5e865d1a9 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1084,13 +1084,7 @@ typedef struct AddressSpaceMapClient {
-     QLIST_ENTRY(AddressSpaceMapClient) link;
- } AddressSpaceMapClient;
+diff --git a/qapi/migration.json b/qapi/migration.json
+index f4c27426c8..f1b7103dc8 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -561,6 +561,8 @@
+ #
+ # @zstd: use zstd compression method.
+ #
++# @qatzip: use qatzip compression method.  (Since 9.2)
++#
+ # @qpl: use qpl compression method.  Query Processing Library(qpl) is
+ #     based on the deflate compression algorithm and use the Intel
+ #     In-Memory Analytics Accelerator(IAA) accelerated compression and
+@@ -573,6 +575,7 @@
+ { 'enum': 'MultiFDCompression',
+   'data': [ 'none', 'zlib',
+             { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
++            { 'name': 'qatzip', 'if': 'CONFIG_QATZIP'},
+             { 'name': 'qpl', 'if': 'CONFIG_QPL' },
+             { 'name': 'uadk', 'if': 'CONFIG_UADK' } ] }
  
--typedef struct {
--    MemoryRegion *mr;
--    void *buffer;
--    hwaddr addr;
--    hwaddr len;
--    bool in_use;
--} BounceBuffer;
-+#define DEFAULT_MAX_BOUNCE_BUFFER_SIZE (4096)
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 3bb96e9558..50d58c0c9c 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -36,14 +36,15 @@ MultiFDRecvData *multifd_get_recv_data(void);
+ /* Multifd Compression flags */
+ #define MULTIFD_FLAG_SYNC (1 << 0)
  
- /**
-  * struct AddressSpace: describes a mapping of addresses to #MemoryRegion objects
-@@ -1110,8 +1104,10 @@ struct AddressSpace {
-     QTAILQ_HEAD(, MemoryListener) listeners;
-     QTAILQ_ENTRY(AddressSpace) address_spaces_link;
+-/* We reserve 4 bits for compression methods */
+-#define MULTIFD_FLAG_COMPRESSION_MASK (0xf << 1)
++/* We reserve 5 bits for compression methods */
++#define MULTIFD_FLAG_COMPRESSION_MASK (0x1f << 1)
+ /* we need to be compatible. Before compression value was 0 */
+ #define MULTIFD_FLAG_NOCOMP (0 << 1)
+ #define MULTIFD_FLAG_ZLIB (1 << 1)
+ #define MULTIFD_FLAG_ZSTD (2 << 1)
+ #define MULTIFD_FLAG_QPL (4 << 1)
+ #define MULTIFD_FLAG_UADK (8 << 1)
++#define MULTIFD_FLAG_QATZIP (16 << 1)
  
--    /* Bounce buffer to use for this address space. */
--    BounceBuffer bounce;
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    size_t max_bounce_buffer_size;
-+    /* Total size of bounce buffers currently allocated, atomically accessed */
-+    size_t bounce_buffer_size;
-     /* List of callbacks to invoke when buffers free up */
-     QemuMutex map_client_list_lock;
-     QLIST_HEAD(, AddressSpaceMapClient) map_client_list;
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 15694f2489..91df40f989 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -167,6 +167,9 @@ struct PCIDevice {
-     /* ID of standby device in net_failover pair */
-     char *failover_pair_id;
-     uint32_t acpi_index;
-+
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    uint32_t max_bounce_buffer_size;
- };
- 
- static inline int pci_intx(PCIDevice *pci_dev)
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index fab86d0567..d2caf3ee8b 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -85,6 +85,8 @@ static Property pci_props[] = {
-                     QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
-     DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
-                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-+    DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
-+                     max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-@@ -1204,6 +1206,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-                        "bus master container", UINT64_MAX);
-     address_space_init(&pci_dev->bus_master_as,
-                        &pci_dev->bus_master_container_region, pci_dev->name);
-+    pci_dev->bus_master_as.max_bounce_buffer_size =
-+        pci_dev->max_bounce_buffer_size;
- 
-     if (phase_check(PHASE_MACHINE_READY)) {
-         pci_init_bus_master(pci_dev);
-@@ -2633,6 +2637,10 @@ static void pci_device_class_init(ObjectClass *klass, void *data)
-     k->unrealize = pci_qdev_unrealize;
-     k->bus_type = TYPE_PCI_BUS;
-     device_class_set_props(k, pci_props);
-+    object_class_property_set_description(
-+        klass, "x-max-bounce-buffer-size",
-+        "Maximum buffer size allocated for bounce buffers used for mapped "
-+        "access to indirect DMA memory");
- }
- 
- static void pci_device_class_base_init(ObjectClass *klass, void *data)
-diff --git a/system/memory.c b/system/memory.c
-index 5e6eb459d5..f6f6fee6d8 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3148,7 +3148,8 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
-     as->ioeventfds = NULL;
-     QTAILQ_INIT(&as->listeners);
-     QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
--    as->bounce.in_use = false;
-+    as->max_bounce_buffer_size = DEFAULT_MAX_BOUNCE_BUFFER_SIZE;
-+    as->bounce_buffer_size = 0;
-     qemu_mutex_init(&as->map_client_list_lock);
-     QLIST_INIT(&as->map_client_list);
-     as->name = g_strdup(name ? name : "anonymous");
-@@ -3158,7 +3159,7 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
- 
- static void do_address_space_destroy(AddressSpace *as)
- {
--    assert(!qatomic_read(&as->bounce.in_use));
-+    assert(qatomic_read(&as->bounce_buffer_size) == 0);
-     assert(QLIST_EMPTY(&as->map_client_list));
-     qemu_mutex_destroy(&as->map_client_list_lock);
- 
-diff --git a/system/physmem.c b/system/physmem.c
-index 94600a33ec..971bfa0855 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3095,6 +3095,20 @@ void cpu_flush_icache_range(hwaddr start, hwaddr len)
-                                      NULL, len, FLUSH_CACHE);
- }
- 
+ /* This value needs to be a multiple of qemu_target_page_size() */
+ #define MULTIFD_PACKET_SIZE (512 * 1024)
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index f13350b4fb..a56fbf728d 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -659,7 +659,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+ const PropertyInfo qdev_prop_multifd_compression = {
+     .name = "MultiFDCompression",
+     .description = "multifd_compression values, "
+-                   "none/zlib/zstd/qpl/uadk",
++                   "none/zlib/zstd/qpl/uadk/qatzip",
+     .enum_table = &MultiFDCompression_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
+new file mode 100644
+index 0000000000..3c787ed879
+--- /dev/null
++++ b/migration/multifd-qatzip.c
+@@ -0,0 +1,394 @@
 +/*
-+ * A magic value stored in the first 8 bytes of the bounce buffer struct. Used
-+ * to detect illegal pointers passed to address_space_unmap.
++ * Multifd QATzip compression implementation
++ *
++ * Copyright (c) Bytedance
++ *
++ * Authors:
++ *  Bryan Zhang <bryan.zhang@bytedance.com>
++ *  Hao Xiang <hao.xiang@bytedance.com>
++ *  Yichen Wang <yichen.wang@bytedance.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + */
-+#define BOUNCE_BUFFER_MAGIC 0xb4017ceb4ffe12ed
++
++#include "qemu/osdep.h"
++#include "exec/ramblock.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qapi/qapi-types-migration.h"
++#include "options.h"
++#include "multifd.h"
++#include <qatzip.h>
 +
 +typedef struct {
-+    uint64_t magic;
-+    MemoryRegion *mr;
-+    hwaddr addr;
-+    size_t len;
-+    uint8_t buffer[];
-+} BounceBuffer;
++    /*
++     * Unique session for use with QATzip API
++     */
++    QzSession_T sess;
 +
- static void
- address_space_unregister_map_client_do(AddressSpaceMapClient *client)
- {
-@@ -3120,9 +3134,9 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
-     QEMU_LOCK_GUARD(&as->map_client_list_lock);
-     client->bh = bh;
-     QLIST_INSERT_HEAD(&as->map_client_list, client, link);
--    /* Write map_client_list before reading in_use.  */
-+    /* Write map_client_list before reading bounce_buffer_size. */
-     smp_mb();
--    if (!qatomic_read(&as->bounce.in_use)) {
-+    if (qatomic_read(&as->bounce_buffer_size) < as->max_bounce_buffer_size) {
-         address_space_notify_map_clients_locked(as);
-     }
- }
-@@ -3251,28 +3265,40 @@ void *address_space_map(AddressSpace *as,
-     mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
- 
-     if (!memory_access_is_direct(mr, is_write)) {
--        if (qatomic_xchg(&as->bounce.in_use, true)) {
-+        size_t used = qatomic_read(&as->bounce_buffer_size);
-+        for (;;) {
-+            hwaddr alloc = MIN(as->max_bounce_buffer_size - used, l);
-+            size_t new_size = used + alloc;
-+            size_t actual =
-+                qatomic_cmpxchg(&as->bounce_buffer_size, used, new_size);
-+            if (actual == used) {
-+                l = alloc;
-+                break;
-+            }
-+            used = actual;
-+        }
++    /*
++     * For compression: Buffer for pages to compress
++     * For decompression: Buffer for data to decompress
++     */
++    uint8_t *in_buf;
++    uint32_t in_len;
 +
-+        if (l == 0) {
-             *plen = 0;
-             return NULL;
-         }
--        /* Avoid unbounded allocations */
--        l = MIN(l, TARGET_PAGE_SIZE);
--        as->bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
--        as->bounce.addr = addr;
--        as->bounce.len = l;
- 
-+        BounceBuffer *bounce = g_malloc0(l + sizeof(BounceBuffer));
-+        bounce->magic = BOUNCE_BUFFER_MAGIC;
-         memory_region_ref(mr);
--        as->bounce.mr = mr;
-+        bounce->mr = mr;
-+        bounce->addr = addr;
-+        bounce->len = l;
++    /*
++     * For compression: Output buffer of compressed data
++     * For decompression: Output buffer of decompressed data
++     */
++    uint8_t *out_buf;
++    uint32_t out_len;
++} QatzipData;
 +
-         if (!is_write) {
-             flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
--                          as->bounce.buffer, l);
-+                          bounce->buffer, l);
-         }
- 
-         *plen = l;
--        return as->bounce.buffer;
-+        return bounce->buffer;
-     }
- 
--
-     memory_region_ref(mr);
-     *plen = flatview_extend_translation(fv, addr, len, mr, xlat,
-                                         l, is_write, attrs);
-@@ -3287,12 +3313,11 @@ void *address_space_map(AddressSpace *as,
- void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-                          bool is_write, hwaddr access_len)
- {
--    if (buffer != as->bounce.buffer) {
--        MemoryRegion *mr;
--        ram_addr_t addr1;
-+    MemoryRegion *mr;
-+    ram_addr_t addr1;
- 
--        mr = memory_region_from_host(buffer, &addr1);
--        assert(mr != NULL);
-+    mr = memory_region_from_host(buffer, &addr1);
-+    if (mr != NULL) {
-         if (is_write) {
-             invalidate_and_set_dirty(mr, addr1, access_len);
-         }
-@@ -3302,15 +3327,22 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-         memory_region_unref(mr);
-         return;
-     }
++/**
++ * qatzip_send_setup: Set up QATzip session and private buffers.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_send_setup(MultiFDSendParams *p, Error **errp)
++{
++    QatzipData *q;
++    QzSessionParamsDeflate_T params;
++    const char *err_msg;
++    int ret;
 +
++    q = g_new0(QatzipData, 1);
++    p->compress_data = q;
++    /* We need one extra place for the packet header */
++    p->iov = g_new0(struct iovec, 2);
 +
-+    BounceBuffer *bounce = container_of(buffer, BounceBuffer, buffer);
-+    assert(bounce->magic == BOUNCE_BUFFER_MAGIC);
-+
-     if (is_write) {
--        address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
--                            as->bounce.buffer, access_len);
--    }
--    qemu_vfree(as->bounce.buffer);
--    as->bounce.buffer = NULL;
--    memory_region_unref(as->bounce.mr);
--    /* Clear in_use before reading map_client_list.  */
--    qatomic_set_mb(&as->bounce.in_use, false);
-+        address_space_write(as, bounce->addr, MEMTXATTRS_UNSPECIFIED,
-+                            bounce->buffer, access_len);
++    /*
++     * Initialize QAT device with software fallback by default. This allows
++     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
++     */
++    ret = qzInit(&q->sess, true);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        err_msg = "qzInit failed";
++        goto err;
 +    }
 +
-+    qatomic_sub(&as->bounce_buffer_size, bounce->len);
-+    bounce->magic = ~BOUNCE_BUFFER_MAGIC;
-+    memory_region_unref(bounce->mr);
-+    g_free(bounce);
-+    /* Write bounce_buffer_size before reading map_client_list. */
-+    smp_mb();
-     address_space_notify_map_clients(as);
- }
++    ret = qzGetDefaultsDeflate(&params);
++    if (ret != QZ_OK) {
++        err_msg = "qzGetDefaultsDeflate failed";
++        goto err;
++    }
++
++    /* Make sure to use configured QATzip compression level. */
++    params.common_params.comp_lvl = migrate_multifd_qatzip_level();
++    ret = qzSetupSessionDeflate(&q->sess, &params);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        err_msg = "qzSetupSessionDeflate failed";
++        goto err;
++    }
++
++    if (MULTIFD_PACKET_SIZE > UINT32_MAX) {
++        err_msg = "packet size too large for QAT";
++        goto err;
++    }
++
++    q->in_len = MULTIFD_PACKET_SIZE;
++    /*
++     * PINNED_MEM is an enum from qatzip headers, which means to use
++     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
++     * is not available or software fallback is used, the malloc flag needs to
++     * be set as COMMON_MEM.
++     */
++    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
++    if (!q->in_buf) {
++        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
++        if (!q->in_buf) {
++            err_msg = "qzMalloc failed";
++            goto err;
++        }
++    }
++
++    q->out_len = qzMaxCompressedLength(MULTIFD_PACKET_SIZE, &q->sess);
++    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
++    if (!q->out_buf) {
++        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
++        if (!q->out_buf) {
++            err_msg = "qzMalloc failed";
++            goto err;
++        }
++    }
++
++    return 0;
++
++err:
++    error_setg(errp, "multifd %u: [sender] %s", p->id, err_msg);
++    return -1;
++}
++
++/**
++ * qatzip_send_cleanup: Tear down QATzip session and release private buffers.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     None
++ */
++static void qatzip_send_cleanup(MultiFDSendParams *p, Error **errp)
++{
++    QatzipData *q = p->compress_data;
++
++    if (q) {
++        if (q->in_buf) {
++            qzFree(q->in_buf);
++        }
++        if (q->out_buf) {
++            qzFree(q->out_buf);
++        }
++        (void)qzTeardownSession(&q->sess);
++        (void)qzClose(&q->sess);
++        g_free(q);
++    }
++
++    g_free(p->iov);
++    p->iov = NULL;
++    p->compress_data = NULL;
++}
++
++/**
++ * qatzip_send_prepare: Compress pages and update IO channel info.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_send_prepare(MultiFDSendParams *p, Error **errp)
++{
++    MultiFDPages_t *pages = p->pages;
++    QatzipData *q = p->compress_data;
++    int ret;
++    unsigned int in_len, out_len;
++
++    if (!multifd_send_prepare_common(p)) {
++        goto out;
++    }
++
++    /*
++     * Unlike other multifd compression implementations, we use a non-streaming
++     * API and place all the data into one buffer, rather than sending each
++     * page to the compression API at a time. Based on initial benchmarks, the
++     * non-streaming API outperforms the streaming API. Plus, the logic in QEMU
++     * is friendly to using the non-streaming API anyway. If either of these
++     * statements becomes no longer true, we can revisit adding a streaming
++     * implementation.
++     */
++    for (int i = 0; i < pages->normal_num; i++) {
++        memcpy(q->in_buf + (i * p->page_size),
++               pages->block->host + pages->offset[i],
++               p->page_size);
++    }
++
++    in_len = pages->normal_num * p->page_size;
++    if (in_len > q->in_len) {
++        error_setg(errp, "multifd %u: unexpectedly large input", p->id);
++        return -1;
++    }
++    out_len = q->out_len;
++
++    ret = qzCompress(&q->sess, q->in_buf, &in_len, q->out_buf, &out_len, 1);
++    if (ret != QZ_OK) {
++        error_setg(errp, "multifd %u: QATzip returned %d instead of QZ_OK",
++                   p->id, ret);
++        return -1;
++    }
++    if (in_len != pages->normal_num * p->page_size) {
++        error_setg(errp, "multifd %u: QATzip failed to compress all input",
++                   p->id);
++        return -1;
++    }
++
++    p->iov[p->iovs_num].iov_base = q->out_buf;
++    p->iov[p->iovs_num].iov_len = out_len;
++    p->iovs_num++;
++    p->next_packet_size = out_len;
++
++out:
++    p->flags |= MULTIFD_FLAG_QATZIP;
++    multifd_send_fill_packet(p);
++    return 0;
++}
++
++/**
++ * qatzip_recv_setup: Set up QATzip session and allocate private buffers.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_recv_setup(MultiFDRecvParams *p, Error **errp)
++{
++    QatzipData *q;
++    QzSessionParamsDeflate_T params;
++    const char *err_msg;
++    int ret;
++
++    q = g_new0(QatzipData, 1);
++    p->compress_data = q;
++
++    /*
++     * Initialize QAT device with software fallback by default. This allows
++     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
++     */
++    ret = qzInit(&q->sess, true);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        err_msg = "qzInit failed";
++        goto err;
++    }
++
++    ret = qzGetDefaultsDeflate(&params);
++    if (ret != QZ_OK) {
++        err_msg = "qzGetDefaultsDeflate failed";
++        goto err;
++    }
++
++    ret = qzSetupSessionDeflate(&q->sess, &params);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        err_msg = "qzSetupSessionDeflate failed";
++        goto err;
++    }
++
++    /*
++     * Reserve extra spaces for the incoming packets. Current implementation
++     * doesn't send uncompressed pages in case the compression gets too big.
++     */
++    q->in_len = MULTIFD_PACKET_SIZE * 2;
++    /*
++     * PINNED_MEM is an enum from qatzip headers, which means to use
++     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
++     * is not available or software fallback is used, the malloc flag needs to
++     * be set as COMMON_MEM.
++     */
++    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
++    if (!q->in_buf) {
++        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
++        if (!q->in_buf) {
++            err_msg = "qzMalloc failed";
++            goto err;
++        }
++    }
++
++    q->out_len = MULTIFD_PACKET_SIZE;
++    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
++    if (!q->out_buf) {
++        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
++        if (!q->out_buf) {
++            err_msg = "qzMalloc failed";
++            goto err;
++        }
++    }
++
++    return 0;
++
++err:
++    error_setg(errp, "multifd %u: [receiver] %s", p->id, err_msg);
++    return -1;
++}
++
++/**
++ * qatzip_recv_cleanup: Tear down QATzip session and release private buffers.
++ *
++ * @param p    Multifd channel params
++ * @return     None
++ */
++static void qatzip_recv_cleanup(MultiFDRecvParams *p)
++{
++    QatzipData *q = p->compress_data;
++
++    if (q) {
++        if (q->in_buf) {
++            qzFree(q->in_buf);
++        }
++        if (q->out_buf) {
++            qzFree(q->out_buf);
++        }
++        (void)qzTeardownSession(&q->sess);
++        (void)qzClose(&q->sess);
++        g_free(q);
++    }
++    p->compress_data = NULL;
++}
++
++
++/**
++ * qatzip_recv: Decompress pages and copy them to the appropriate
++ * locations.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
++{
++    QatzipData *q = p->compress_data;
++    int ret;
++    unsigned int in_len, out_len;
++    uint32_t in_size = p->next_packet_size;
++    uint32_t expected_size = p->normal_num * p->page_size;
++    uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
++
++    if (in_size > q->in_len) {
++        error_setg(errp, "multifd %u: received unexpectedly large packet",
++                   p->id);
++        return -1;
++    }
++
++    if (flags != MULTIFD_FLAG_QATZIP) {
++        error_setg(errp, "multifd %u: flags received %x flags expected %x",
++                   p->id, flags, MULTIFD_FLAG_QATZIP);
++        return -1;
++    }
++
++    multifd_recv_zero_page_process(p);
++    if (!p->normal_num) {
++        assert(in_size == 0);
++        return 0;
++    }
++
++    ret = qio_channel_read_all(p->c, (void *)q->in_buf, in_size, errp);
++    if (ret != 0) {
++        return ret;
++    }
++
++    in_len = in_size;
++    out_len = q->out_len;
++    ret = qzDecompress(&q->sess, q->in_buf, &in_len, q->out_buf, &out_len);
++    if (ret != QZ_OK) {
++        error_setg(errp, "multifd %u: qzDecompress failed", p->id);
++        return -1;
++    }
++    if (out_len != expected_size) {
++        error_setg(errp, "multifd %u: packet size received %u size expected %u",
++                   p->id, out_len, expected_size);
++        return -1;
++    }
++
++    /* Copy each page to its appropriate location. */
++    for (int i = 0; i < p->normal_num; i++) {
++        memcpy(p->host + p->normal[i],
++               q->out_buf + p->page_size * i,
++               p->page_size);
++    }
++    return 0;
++}
++
++static MultiFDMethods multifd_qatzip_ops = {
++    .send_setup = qatzip_send_setup,
++    .send_cleanup = qatzip_send_cleanup,
++    .send_prepare = qatzip_send_prepare,
++    .recv_setup = qatzip_recv_setup,
++    .recv_cleanup = qatzip_recv_cleanup,
++    .recv = qatzip_recv
++};
++
++static void multifd_qatzip_register(void)
++{
++    multifd_register_ops(MULTIFD_COMPRESSION_QATZIP, &multifd_qatzip_ops);
++}
++
++migration_init(multifd_qatzip_register);
+diff --git a/migration/meson.build b/migration/meson.build
+index 77f3abf08e..66d3de86f0 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -42,6 +42,7 @@ system_ss.add(when: rdma, if_true: files('rdma.c'))
+ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+ system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+ system_ss.add(when: uadk, if_true: files('multifd-uadk.c'))
++system_ss.add(when: qatzip, if_true: files('multifd-qatzip.c'))
  
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+                 if_true: files('ram.c',
 -- 
 2.45.0
 
