@@ -4,114 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF143ECE57A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C477BECE581
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:03:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snftB-0002QB-5m; Mon, 09 Sep 2024 11:01:13 -0400
+	id 1snfuV-0008D2-V3; Mon, 09 Sep 2024 11:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1snftA-0002MY-4e
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:01:12 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1snfuT-00083E-GE
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:02:34 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1snft8-0007wS-EC
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:01:11 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 9D01F1F7C4;
- Mon,  9 Sep 2024 15:01:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725894065; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
- b=Zv2P/UNQalLCciEC0eCsxq6tKVZt/aoXGOQQeWQtTUvBcsWjRCaGXGAq5F3ZyqIoE+gx++
- 225E4CVKdZtHYywD0u7oX6M8Ndb7t/5wjTy97DqZabqgp/cYPTzBzuqYTvD33wQKtGr94T
- ZcDKbBZSWkr72P8Z9ZI6Bl0e8h0OCCI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725894065;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
- b=yAr//1LtqTVax+xWaQV9QSUmMXXe55pO/k3YUeATkPxn3FD92VGIdNdaopiBpzGFoIhDBJ
- Ipeh3hYyfdcJNbBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=NN+CuCPq;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5okRIek5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1725894064; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
- b=NN+CuCPqtgzFM1Rx5ueakhZuNdYkY+empX5dAvU/VaiYtOFvqeV5W1pMctK5y/8ZDmN0uB
- 2rOnys3cHj+/BA3TFfLVCiA2Kxz8P6KX7k8biO6RNJFR4WvG+MTYB7qIt5ZestkEYNCCp7
- k+CNAaeGmQjpwJpA1RhFLsCkYeTGi+g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1725894064;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dJHXYhTTKkd1YrOR3Rivyx+fjr+ep6jv9VIVL4ZxNo8=;
- b=5okRIek54h+VGWR6wU3GGIBQjHrxfbByz+WvKax463YZ6tD3K8+CWtCBG8thvwqSLOy0TN
- xl6xl8FeYTweoeBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 27A2713A3A;
- Mon,  9 Sep 2024 15:01:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id krh4N68N32Z4DgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 09 Sep 2024 15:01:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PULL 27/34] migration/multifd: Move nocomp code into
- multifd-nocomp.c
-In-Reply-To: <CAFEAcA_F2qrSAacY=V5Hez1qFGuNW0-XqL2LQ=Y_UKYuHEJWhw@mail.gmail.com>
-References: <20240904124417.14565-1-farosas@suse.de>
- <20240904124417.14565-28-farosas@suse.de>
- <CAFEAcA_F2qrSAacY=V5Hez1qFGuNW0-XqL2LQ=Y_UKYuHEJWhw@mail.gmail.com>
-Date: Mon, 09 Sep 2024 12:01:01 -0300
-Message-ID: <87ikv4lvma.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1snfuR-00085Q-QX
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:02:33 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5c26311c6f0so5325876a12.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:02:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725894150; x=1726498950; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZRxlPrd/Ybys2LWD3ZftF27GtODdIWt5LgtCjZSmnPs=;
+ b=WWmi9SsKovpn0JcietSM3wAY2ekhDfEScG4Tssc46EMU8sxTdBJSM0D1NocY+/qpzP
+ znCWT0bbWcjzE8j8/hfUAkqiw7IyGQCZ85NBvcVcKqlUmubk3BWeZH2c7vN3NNi3nlfL
+ tlFDvCzjfE2Gna54fgJwHSoF3U3y/QN1dTFnHfepegP9VdCKkesS2DmlUiF3myBtinyl
+ BTP+QIdCO6d8B+s+G+zD+a7nU4+NoibHJrfBs0vDdkm8k55S3DkkM1OlKyiQb7Jsom0W
+ CENnDckGZnmUqZAoLRFPpmSaEf6Nlh2kjhwpzmTkmqmZf1ilSmH+TKm33T7dA3fBpdKg
+ GwYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725894150; x=1726498950;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZRxlPrd/Ybys2LWD3ZftF27GtODdIWt5LgtCjZSmnPs=;
+ b=KuPD46ZWJVlwVCBNnJ7X5Pq0wLONN/qiRfe5DHZsudbvxHDLEgWqf307v2JyYi27ye
+ kJoHv6L0p8ZXnmL+1c3mIUVRCdQURUWMdguzzz1JA5iunH73eVp28RJsPCPD/mxiurbH
+ SSRrPZ/ixwr0+EQyNG8XSfs4mL4dXe/2yoMy4Re/X23UroJPgeDfogKFR7a2eFHnWSWQ
+ +RIs0qrovDQSJzETm/du/BZUJmuR5KxkysSP/r1DIa7lmkGV7CZhRK2z8txx9autZrel
+ /mIpScnlpMGqqiRoEAbJrBJ8UIi8ye2FKBylCIjoaDDEN1OtYTw4oIkynhBucFfh02Ie
+ E2Eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXaX4t/5bG2cyQbO6YjkF6jxK5TcGp0/ByD10jHWoGxGs8+C1H4RhT8tZO/586hhQ8F0L4SKXnE3AaG@nongnu.org
+X-Gm-Message-State: AOJu0Yw1wGwXIVVzmbblqKKANi8E7gxRXzS9JHTEkByZdl46Kwuu91bL
+ tLaFUA4lQoN2Ogs0nZJUltBqASgyc4GqpT9wYPz5lNpVFO/imYETP+YONBysnXylbPV+1LhXk+2
+ ybVJMGp81/jEQEd2tnoqTaROD++DfaOZINPIM7A==
+X-Google-Smtp-Source: AGHT+IEGEaTPuE8V0gN590ux3qVAvH/IFNSzzCMBYGYkd/A0pGaYdlGMCUocAeQ3m0fkHkXbQdtqigmdU2u+vf75GJ8=
+X-Received: by 2002:a05:6402:234e:b0:5af:30d9:e2b6 with SMTP id
+ 4fb4d7f45d1cf-5c3dc7bb1acmr7542748a12.23.1725894149848; Mon, 09 Sep 2024
+ 08:02:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 9D01F1F7C4
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,linaro.org:email,suse.de:email,suse.de:dkim,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+ <fabedae0-d748-4a9d-b802-14d15f3cd44a@linaro.org>
+ <3f4ce380-0c0b-48ad-9752-c72f5aeac754@roeck-us.net>
+In-Reply-To: <3f4ce380-0c0b-48ad-9752-c72f5aeac754@roeck-us.net>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Sep 2024 16:02:18 +0100
+Message-ID: <CAFEAcA_ETkWY=AaPWti8KwO0awdxWqkO4CLAwxaGVr+i4yFz-Q@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,81 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Mon, 9 Sept 2024 at 15:55, Guenter Roeck <linux@roeck-us.net> wrote:
+>
+> On 9/9/24 06:40, Philippe Mathieu-Daud=C3=A9 wrote:
+> > Hi,
+> >
+> > On 3/9/24 18:06, Peter Maydell wrote:
+> >> This patchset removes the various Arm machines which we deprecated
+> >> for the 9.0 release and are therefore allowed to remove for the 9.2
+> >> release:
+> >>   akita, borzoi, cheetah, connex, mainstone, n800, n810,
+> >>   spitz, terrier, tosa, verdex, z2
+> >
+> >> The series includes removal of some code which while not strictly
+> >> specific to these machines was in practice used only by them:
+> >>   * the OneNAND flash memory device
+> >>   * the PCMCIA subsystem
+> >>   * the MUSB USB2.0 OTG USB controller chip (hcd-musb)
+> >
+> >> thanks
+> >> -- PMM
+> >>
+> >> Peter Maydell (53):
+> >>    hw/input: Drop ADS7846 device
+> >>    hw/adc: Remove MAX111X device
+> >>    hw/gpio: Remove MAX7310 device
+>
+> max7310 is a gpio controller which is at least somewhat compatible
+> to pca953x. It is used on imx6qdl-sabreauto, and also instantiated
+> by Linux with the INT3491 ACPI ID.
+>
+> Is there real pressure to remove support for such devices ?
 
-> On Wed, 4 Sept 2024 at 13:48, Fabiano Rosas <farosas@suse.de> wrote:
->>
->> In preparation for adding new payload types to multifd, move most of
->> the no-compression code into multifd-nocomp.c. Let's try to keep a
->> semblance of layering by not mixing general multifd control flow with
->> the details of transmitting pages of ram.
->>
->> There are still some pieces leftover, namely the p->normal, p->zero,
->> etc variables that we use for zero page tracking and the packet
->> allocation which is heavily dependent on the ram code.
->>
->> Reviewed-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> I know Coverity has only flagged this up because the
-> code has moved, but it seems like a good place to ask
-> the question:
->
->> +void multifd_ram_fill_packet(MultiFDSendParams *p)
->> +{
->> +    MultiFDPacket_t *packet = p->packet;
->> +    MultiFDPages_t *pages = &p->data->u.ram;
->> +    uint32_t zero_num = pages->num - pages->normal_num;
->> +
->> +    packet->pages_alloc = cpu_to_be32(multifd_ram_page_count());
->> +    packet->normal_pages = cpu_to_be32(pages->normal_num);
->> +    packet->zero_pages = cpu_to_be32(zero_num);
->> +
->> +    if (pages->block) {
->> +        strncpy(packet->ramblock, pages->block->idstr, 256);
->
-> Coverity points out that when we fill in the RAMBlock::idstr
-> here, if packet->ramblock is not NUL terminated then we won't
-> NUL-terminate idstr either (CID 1560071).
->
-> Is this really what is intended?
+"git grep" says the only place we use our max7310 device is
+on the "spitz" board. The point of removing all those
+elderly Arm boards is that all this code is ancient and
+unmaintained. If we were using this device on the imx6
+boards I would have kept it, but we aren't. I don't want
+to keep old, unmaintained, untested, dead code in the tree.
+If anybody does want to use it on some board in future
+they can always pull it out of the git history (and
+check whether it needs work to bring it up to modern
+standards, and write some tests for it...)
 
-This is probably an oversight, although the migration destination
-truncates it before reading:
-
-    /* make sure that ramblock is 0 terminated */
-    packet->ramblock[255] = 0;
-    p->block = qemu_ram_block_by_name(packet->ramblock);
-
-If we ever start reading packet->ramblock on the source side in the
-future, then there might be a problem.
-
->
-> Perhaps
->          pstrncpy(packet->ramblock, sizeof(packet->ramblock),
->                   pages->block->idstr);
->
-> would be better?
-
-Yep, thanks. I'll send a patch.
-
->
-> (pstrncpy will always NUL-terminate, and won't pointlessly
-> zero-fill the space after the string in the destination.)
->
->> +    }
->> +
->> +    for (int i = 0; i < pages->num; i++) {
->> +        /* there are architectures where ram_addr_t is 32 bit */
->> +        uint64_t temp = pages->offset[i];
->> +
->> +        packet->offset[i] = cpu_to_be64(temp);
->> +    }
->> +
->> +    trace_multifd_send_ram_fill(p->id, pages->normal_num,
->> +                                zero_num);
->> +}
->
-> thanks
-> -- PMM
+thanks
+-- PMM
 
