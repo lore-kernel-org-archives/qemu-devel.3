@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33046ECE581
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 23:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680D5ECE58E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 23:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snnxH-00081u-Ar; Mon, 09 Sep 2024 19:37:59 -0400
+	id 1sno9o-0005n3-0B; Mon, 09 Sep 2024 19:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snnxG-00081P-13
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 19:37:58 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1sno9m-0005lv-4C
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 19:50:54 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snnxE-0007O7-Ev
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 19:37:57 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-7cd967d8234so3167161a12.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 16:37:55 -0700 (PDT)
+ id 1sno9k-0000Jz-IF
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 19:50:53 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7d4f9e39c55so3356531a12.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 16:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725925074; x=1726529874; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=DW6LJyx2dNgZ272uxAiT3haCOmUNz68fwaZEhVW14rw=;
- b=zH9LSuw2pcnC9NZbaETXM1TSOTlLbAWREuZF73TLtcFCBi7CFzjOdGgBZ1k9PqvgDc
- woZnNaAd0oPBNhdJ2hgsQAUJxHtW1Hx38aCM3m0Iaz6n2N0BwcDY05ai41j1CgEpt2wC
- kQTL1M/lSiMYQJXSPlq3+XFTwYxPI3GdfTY660/iJNx34Jy6dCc2WuWlsqIrat6o3S7Q
- qg15CyxbLXH3m+JRsShPY2mp9FLm0il6odKG5zDnMaoQ+jzn/OY7fKAyfbosi+iB4vlP
- DVtnZqIHsl1l+EP/GCwUFsv7vw4r68HZCBYixlZfOA7v6meb+DPnOvDp9iYpAh/ce8ZN
- eOpw==
+ d=linaro.org; s=google; t=1725925851; x=1726530651; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CZVpjkj2Y/vYHyzMRd/29Btnyk0KW0BXqZmjm7W+rJ8=;
+ b=PRsHfuc+n7bUHVkRtwhxVdSO9JWIVFdLES60Y+TCM36fHbTpLfIAv13/0zkLIrPY/N
+ Q+P6ONZWEosIbahmfWbyCFlqDHAfQWnBdHdyfyNtzGMplS8MNA/dmZMW7sXk8RVHQUm8
+ Llk9PJGyglxFp3L1x+Kb118tjPl6BzfbhV7+cjK4xDaCM7sLEE/HmZlJ1pvR5PtJtecV
+ mjvg6XdDrDsuQBJVn6vW3tUa9+Tp8TPYkHPypVMvEuW2F7tCKXua2blLuqPgfU0gp1mk
+ XioH9en/WekBg3C9FDj7WXeQ98V11udGyIGfPLH4NBPwrZWgbxgkHj/cWzfImg75+Y0A
+ 0zGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725925074; x=1726529874;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1725925851; x=1726530651;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DW6LJyx2dNgZ272uxAiT3haCOmUNz68fwaZEhVW14rw=;
- b=FPp64YVv3E12Yo7qJ3CTibvg7Xz58jJKDmwldEjKYSvDNVINdbVOkjPW+3jkFDcsJy
- U6rL4KJnxvHNcytBts/B852/7TGQEcc9VHvNLoUy42BEcx0Qv0eJY9Ke4wJB7vfrTHPw
- 2IGlxH472mG0IRgdyb9uhib0T6En6zbabYyvHfw6Mf/CD5TfvSHryennpHbnWgfI1ng2
- KSVHVVl+dh50l8x199x40845z1loQxrYAmUXURY9y/YGIQnwhDGSk2eGToYrHCsDhqYV
- 2af/LmbM0DnjKnEuhUYBIBPeJX1567k1gZtEnfsiEK6/xJOZpPSCQlIqld4FfErXWzIo
- 1ZEQ==
-X-Gm-Message-State: AOJu0YxFB2B8PV6P4BGjYxQp+M3U/mD3yfddJcYwsnvVeokvIM/TShpm
- QhnskSZ40PNjuDF/E9tFOnhUPrR04IrhzRQYrBKGhvceUBojMzYYxVTmmi66x81fqnt3FBMCklZ
- +
-X-Google-Smtp-Source: AGHT+IG3cWPIuVu0JSQABh2JXmkvC78xI0/RxaaoNAfH4314wIkiMJmw3CeHKU5z+JUGRyLXwT+XCA==
-X-Received: by 2002:a05:6a20:a61c:b0:1cf:2438:c9de with SMTP id
- adf61e73a8af0-1cf2438cb04mr8021853637.21.1725925074195; 
- Mon, 09 Sep 2024 16:37:54 -0700 (PDT)
+ bh=CZVpjkj2Y/vYHyzMRd/29Btnyk0KW0BXqZmjm7W+rJ8=;
+ b=mT2Oul6TlFLzfUn7s3+7Rb2e5z/SChJrO/96TZ4dvk85+a/K9u0RMhdxOind9vyXvm
+ KLkjHsFr2cHmnhSBTyRib55M2GvLUX4Zou6p4tjhoq7iDPfyJNmXAjOBPrAhcEQYW1Ie
+ yTav2TNg1QyVp1UBiFwD4imJGYBbBwZA6mwJOUZjZidUKEWKlwi1dbw/9guSQWAFzVR9
+ WCowA8B7K9iqwlKfToT/whhq6l2M7izz2jQN/rCQ4j7QuN8ZKq2v/T+uYMFET3M9nf8Q
+ sad/TymRzjvPYCnXdhZHzovniSjRapkucmvPrfvpEFMvg8BOMlfAs8Md6mIma03I64+6
+ 8wEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWddoYzyuzyDDAMShecJut5mm/bG2Ud6FNdz+DH5hoCBzutMlY634zDeMKQ7+MfPH7iU4PeIREI4h8b@nongnu.org
+X-Gm-Message-State: AOJu0Yy3jkIhz5+UvdHUjs9XNFgMfBy/WB1kKMFQjmI3etWzTc9j8xQa
+ yZIicHbbuWW8rWLjF3dviE7xyt8QoYtavfTyI6rrKUYRTQM8oWayGPFDp1iSPBw=
+X-Google-Smtp-Source: AGHT+IHt7bikpLTrwKldTNp7gkaGUJgtK6tPX9uzjgXPa5KIaEw/0XnwrvEwRVrSZNlnq3LHeEM73g==
+X-Received: by 2002:a17:90b:3cd0:b0:2d8:e524:797b with SMTP id
+ 98e67ed59e1d1-2daffa7e131mr11189273a91.18.1725925850649; 
+ Mon, 09 Sep 2024 16:50:50 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-719090b0286sm265120b3a.146.2024.09.09.16.37.53
+ 98e67ed59e1d1-2dadc07681asm7185326a91.33.2024.09.09.16.50.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 16:37:53 -0700 (PDT)
-Message-ID: <50aea887-5d7b-4bc7-835a-0e332288901d@linaro.org>
-Date: Mon, 9 Sep 2024 16:37:52 -0700
+ Mon, 09 Sep 2024 16:50:50 -0700 (PDT)
+Message-ID: <9aac4861-b9b6-444a-b0fd-db03f21b1343@linaro.org>
+Date: Mon, 9 Sep 2024 16:50:48 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/12] tcg: Improve support for cmpsel_vec
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: zhiwei_liu@linux.alibaba.com, tangtiancheng.ttc@alibaba-inc.com,
- liwei1518@gmail.com, bmeng.cn@gmail.com
-References: <20240908022632.459477-1-richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 06/10 2/4] target/s390x: Use deposit to set psw_mask in
+ save_link_info
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20240605215739.4758-7-richard.henderson@linaro.org>
+ <20240909231910.14428-2-philmd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20240908022632.459477-1-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240909231910.14428-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,14 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/7/24 19:26, Richard Henderson wrote:
-> In order for that to happen, the tcg/i386 backend must be changed
-> so that it does not rely upon choices that it made during early
-> expansion, before optimization changes things.
+On 9/9/24 16:19, Philippe Mathieu-Daudé wrote:
+> From: Richard Henderson <richard.henderson@linaro.org>
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-ID: <20240605215739.4758-7-richard.henderson@linaro.org>
+> [PMD: Split patch, part 2/4]
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/tcg/translate.c | 12 ++++++++----
+>   1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+> index faa6d37c8e..53ec817e29 100644
+> --- a/target/s390x/tcg/translate.c
+> +++ b/target/s390x/tcg/translate.c
+> @@ -1417,6 +1417,7 @@ static DisasJumpType op_bas(DisasContext *s, DisasOps *o)
+>   
+>   static void save_link_info(DisasContext *s, DisasOps *o)
+>   {
+> +    TCGv_i64 t1;
+>       TCGv_i64 t2;
+>   
+>       if (s->base.tb->flags & (FLAG_MASK_32 | FLAG_MASK_64)) {
+> @@ -1425,14 +1426,17 @@ static void save_link_info(DisasContext *s, DisasOps *o)
+>       }
+>   
+>       gen_op_calc_cc(s);
+> +    t1 = tcg_temp_new_i64();
+>       t2 = tcg_temp_new_i64();
+> +
+>       tcg_gen_andi_i64(o->out, o->out, 0xffffffff00000000ull);
+> +
+> +    /* Shift program mask into place, garbage outside of [27:24]. */
+> +    tcg_gen_shri_i64(t1, psw_mask, 16);
+> +    /* Deposit pc to replace garbage bits below program mask. */
+>       gen_psw_addr_disp(s, t2, s->ilen);
+> -    tcg_gen_or_i64(o->out, o->out, t2);
+> +    tcg_gen_deposit_i64(o->out, t1, t2, 0, 24);
 
-FYI, tcg/ppc and tcg/s390x need similar changes.
-But that doesn't affect review of the other patches.
+This is incorrect, as you've lost the high 32-bits of out.
 
 
 r~
+
+
+>       tcg_gen_ori_i64(o->out, o->out, (s->ilen / 2) << 30);
+> -    tcg_gen_shri_i64(t2, psw_mask, 16);
+> -    tcg_gen_andi_i64(t2, t2, 0x0f000000);
+> -    tcg_gen_or_i64(o->out, o->out, t2);
+>       tcg_gen_extu_i32_i64(t2, cc_op);
+>       tcg_gen_shli_i64(t2, t2, 28);
+>       tcg_gen_or_i64(o->out, o->out, t2);
+
 
