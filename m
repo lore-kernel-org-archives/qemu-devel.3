@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB929ECE57A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D95ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sngaW-0005XD-QY; Mon, 09 Sep 2024 11:46:00 -0400
+	id 1sngbG-0000sc-EF; Mon, 09 Sep 2024 11:46:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sngaV-0005UR-Pm
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:45:59 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1sngbF-0000pg-LA
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:46:45 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sngaU-0004MN-4h
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:45:59 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-718d8d6af8fso2616950b3a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:45:57 -0700 (PDT)
+ id 1sngbE-0004Pn-3A
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:46:45 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-717911ef035so3487600b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725896756; x=1726501556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725896802; x=1726501602; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RPaPLDSnMdnWanyjgDUo/IlvPiH1qii27WhbIBd+65s=;
- b=mUwXHkpootxfHb3NKtaQ401rnIwNILlJA9jne8ds1Kz/yoBjdudH91g17lUFYkY57f
- xN89qBw6q5l0ZQWhvmSS737aj+4jEbz2WFcgJJeuXl9MdOo+lgN0rCKN3Nzps2mruB8U
- 7RSjQTF9RJt08ym1Rlz7gGq1kH2iTlC1XpASjbTeyVFHP41SsjmA/Gj9PawxbLpOdllD
- y7GsZUwWPLFCwWXt/h09e1I522f+7lP9p3INW34pTA0NcNJc7UP0bH+qWA4fe+E8fIIQ
- 4VT7IDA5H8jRmY1yeekmyLKVnD1IJigUU0Kt8zEcA198gB7vkg5wsQgsUWhMVu/hF40J
- XUdA==
+ bh=quVd7PvWgaRhlBSJNDXFPD4W++YWwtHNUiT+1RsmpJI=;
+ b=ue3nuu4/F4i8pk4OIvyXCHAD5iYd/PkqKNrQ3bMlCigckQ4jbhSbg2uZIBFAbKGO3x
+ fJs5qWPwBqciwdPXxyEa0dHlj1ymxCYJbUFEq9qwWCImb7TiwLHqmTGkXrsTXHZ/Nzyr
+ 760dGljqqGOZPrIY0nS6jQ50rtIKJcpCWsc7UBxTpINI+/zInKv3KA8+a4YROVG3TzRn
+ dxnnN0d8llybPgaUqGfKUVuVFNxYXaqOyoPSY4eYfcllqJZrh6Ki+rnA2BN4kC+4wJPv
+ j20LKvG/vauR8JHCGgQc/lUF/RhHOJ33hdbGot1/FifjXvAjjO4Z65ybDn/qBogeqMOj
+ +jZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725896756; x=1726501556;
+ d=1e100.net; s=20230601; t=1725896802; x=1726501602;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RPaPLDSnMdnWanyjgDUo/IlvPiH1qii27WhbIBd+65s=;
- b=Onl4Mvxfk5XaK6pIjGJncsd2fnObMk054fWo42Ld083PFEZ7E/9b6mbocHETZAE/GM
- JJGdj+bDAA9MCjz27lsoohqh133lOu64+qnxuNlBQYXIQP72q/JJnBVL2OwwpOT3j+fp
- fJhZ3uAj6DVYEk8JE6pS+/phZ6yEB6wh4dNU9FHb7ZogJOyPjLFsbE4FgofAOJwu3aMh
- 9+pk1o71T1A6+VZsX3ZBnlzdhJ9zDes8AFsQMhkMKDAxumFmBX+zOztvD6jtgBCCtETi
- 7OAqrOzHHp0gnRb2y1pqYM2rMD5MqnWKkAt8lwvFlL0dDRkpDuw2CNKmWqLjbnCaKBWt
- AXgw==
+ bh=quVd7PvWgaRhlBSJNDXFPD4W++YWwtHNUiT+1RsmpJI=;
+ b=NwmiOSmXG10hPULgehLBKDOAeYNQOwRqk6vHUs40880sxmGTdJTUyWtKXCVCensIbZ
+ HPTGMNWxryOM+J6hl/S00E4tcfl09ZbKxp1lXcUNudLQhg85Fm42IAoEMKfNJv4V+EI+
+ ci/oCsTC56jOl2jSr003rDenafA1N+wf9Z8UZvqSARdJveB5RnTUgsCYsaDEnGzG2J1E
+ Rm8JmhrAKqzYA5AfbosF7B05x7/4vpyfa00Dzl/P66DSw1V/2C8Ua27qD3HRuUOzliJY
+ el8DcPP5SnniXdXO0uyA044tpSIw3Av8A25ZKtW3YMfHeXZwA9tfzBuKwr+xz8IshrWe
+ UP2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXS1B3FkCWrZ6JSvtXOdZAfOXJxST/SPfT3gDqAwyJWwQP4h9PQ25A4uCJsujhf5aUmEBQqpygjP8du@nongnu.org
-X-Gm-Message-State: AOJu0YwnVGsnusQcHmllL9dquQmxcrd5mVu4Rt/kaPKbq52SRhwYTamm
- 1eaNqQW4jXxAJkSjS+NV7EmgVyjh6yyBaji8Xn5arUln4Bd0jRgZv1ra5h0Klxc=
-X-Google-Smtp-Source: AGHT+IF6Qku9cCk9Cc8kyEt1IF0ZwgGVSDBF1x4yN09v2dsOxlvVNO80AMjVRoU/od43e+RvU9hwqg==
-X-Received: by 2002:a05:6a00:4b51:b0:714:1e28:da95 with SMTP id
- d2e1a72fcca58-718e3fbe921mr13720553b3a.7.1725896756000; 
- Mon, 09 Sep 2024 08:45:56 -0700 (PDT)
+ AJvYcCXskz2VDRjZ4LWAAf43Vyr9CgHTnFD/FwAZa14OROsjgHmu6Iv2vZeYTgtRQ9nt0aGU9zZ/O6eDOXjm@nongnu.org
+X-Gm-Message-State: AOJu0Yz21UxQHiSX+ZZ0Ss/L4dxQP8rGdmMelJrzfK5FWYxM1MZy2e4W
+ AXE4yRbMxZgM6vBk/SvdKPAwjWSY9P2cDmennkN7e8Xnt2RaL+uPtmwns9bxJqM=
+X-Google-Smtp-Source: AGHT+IEQjKFQVTiYcNR3XMZRvI9PXzA48uGY07R8mCSQ1FGBbHG6nqM/5uPIfmJmVFMTuHpA08GJvQ==
+X-Received: by 2002:a05:6a20:d80c:b0:1cf:2843:f798 with SMTP id
+ adf61e73a8af0-1cf2843f932mr8706977637.47.1725896802303; 
+ Mon, 09 Sep 2024 08:46:42 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-718e5968a09sm3673287b3a.117.2024.09.09.08.45.55
+ d2e1a72fcca58-718e5990bf2sm3676380b3a.195.2024.09.09.08.46.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 08:45:55 -0700 (PDT)
-Message-ID: <0475550c-53c4-4166-bb04-1ff21f5d11b9@linaro.org>
-Date: Mon, 9 Sep 2024 08:45:52 -0700
+ Mon, 09 Sep 2024 08:46:41 -0700 (PDT)
+Message-ID: <80b90332-58dd-4ba6-95b6-171790239d80@linaro.org>
+Date: Mon, 9 Sep 2024 08:46:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/14] util: Add RISC-V vector extension probe in
- cpuinfo
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
- <20240904142739.854-3-zhiwei_liu@linux.alibaba.com>
- <286685da-74e3-401a-afe4-fed0831fd97c@linaro.org>
- <5fc48f87-b233-40b9-a0e1-4de920d97957@linux.alibaba.com>
+Subject: Re: [PATCH v2] target/riscv32: Fix masking of physical address
+To: Andrew Jones <ajones@ventanamicro.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
+ zong.li@sifive.com, liwei1518@gmail.com, cwshu@andestech.com,
+ dbarboza@ventanamicro.com, philmd@linaro.org
+References: <20240909083241.43836-2-ajones@ventanamicro.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <5fc48f87-b233-40b9-a0e1-4de920d97957@linux.alibaba.com>
+In-Reply-To: <20240909083241.43836-2-ajones@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +100,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 00:18, LIU Zhiwei wrote:
+On 9/9/24 01:32, Andrew Jones wrote:
+> C doesn't extend the sign bit for unsigned types since there isn't a
+> sign bit to extend. This means a promotion of a u32 to a u64 results
+> in the upper 32 bits of the u64 being zero. If that result is then
+> used as a mask on another u64 the upper 32 bits will be cleared. rv32
+> physical addresses may be up to 34 bits wide, so we don't want to
+> clear the high bits while page aligning the address. The fix is to
+> use hwaddr for the mask, which, even on rv32, is 64-bits wide.
 > 
-> On 2024/9/5 11:34, Richard Henderson wrote:
->> On 9/4/24 07:27, LIU Zhiwei wrote:
->>> +    if (info & CPUINFO_ZVE64X) {
->>> +        /*
->>> +         * Get vlenb for Vector: vsetvli rd, x0, e64.
->>> +         * VLMAX = LMUL * VLEN / SEW.
->>> +         * The "vsetvli rd, x0, e64" means "LMUL = 1, SEW = 64, rd = VLMAX",
->>> +         * so "vlenb = VLMAX * 64 / 8".
->>> +         */
->>> +        unsigned long vlmax = 0;
->>> +        asm volatile(".insn i 0x57, 7, %0, zero, (3 << 3)" : "=r"(vlmax));
->>> +        if (vlmax) {
->>> +            riscv_vlenb = vlmax * 8;
->>> +            assert(riscv_vlen >= 64 && !(riscv_vlen & (riscv_vlen - 1)));
->>> +        } else {
->>> +            info &= ~CPUINFO_ZVE64X;
->>> +        }
->>> +    }
->>
->> Surely this does not compile, since the riscv_vlen referenced in the assert does not exist.
-> riscv_vlen is macro about riscv_vlenb. I think you miss it.
-
-I did miss the macro.  But there's also no need for it to exist.
-
->>
->> That said, I've done some experimentation and I believe there is a further 
->> simplification to be had in instead saving log2(vlenb).
->>
->>     if (info & CPUINFO_ZVE64X) {
->>         /*
->>          * We are guaranteed by RVV-1.0 that VLEN is a power of 2.
->>          * We are guaranteed by Zve64x that VLEN >= 64, and that
->>          * EEW of {8,16,32,64} are supported.
->>          *
->>          * Cache VLEN in a convenient form.
->>          */
->>         unsigned long vlenb;
->>         asm("csrr %0, vlenb" : "=r"(vlenb));
+> Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on PMP entries.")
+> Signed-off-by: Andrew Jones<ajones@ventanamicro.com>
+> ---
+> -v2: Switch from signed long to hwaddr
 > 
-> Should we use the .insn format here? Maybe we are having a compiler doesn't support vector.
+>   target/riscv/cpu_helper.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-Neither gcc nor clang requires V be enabled at compile time in order to access the CSR.
-It does seem like a mistake, but I'm happy to use it.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
