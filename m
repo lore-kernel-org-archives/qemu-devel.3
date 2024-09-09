@@ -4,67 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED095CD4F4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 02:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0128BEB64DE
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 02:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snU6s-0003IC-M0; Sun, 08 Sep 2024 22:26:34 -0400
+	id 1snUCh-0007sf-F6; Sun, 08 Sep 2024 22:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1snU6n-0003HL-2A
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 22:26:29 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1snU6k-0002aF-Ql
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 22:26:28 -0400
-Received: from loongson.cn (unknown [10.20.42.17])
- by gateway (Coremail) with SMTP id _____8AxrurOXN5mZ2gCAA--.6189S3;
- Mon, 09 Sep 2024 10:26:22 +0800 (CST)
-Received: from [10.20.42.17] (unknown [10.20.42.17])
- by front1 (Coremail) with SMTP id qMiowMDxcNbJXN5mQwkCAA--.11012S3;
- Mon, 09 Sep 2024 10:26:19 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch/kvm: Add vCPU reset function
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240822022827.2273534-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <85f99133-f688-4765-9e4b-d610cc1ad2bd@loongson.cn>
-Date: Mon, 9 Sep 2024 10:26:13 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1snUCg-0007ri-3G; Sun, 08 Sep 2024 22:32:34 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1snUCe-0003CP-D3; Sun, 08 Sep 2024 22:32:33 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-5012778824eso871930e0c.2; 
+ Sun, 08 Sep 2024 19:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1725849150; x=1726453950; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YxDo2NbMl5xVS+RlRP3XB1wj/izTn7qjmhfx+s6CTJo=;
+ b=NXkDhgXxSEjS1kLNJXrESmyWyd45m/j8RY4F3vN+0gHd43d3cwxrctaTa1n2aCFIkx
+ 2Lt0vvcWFmqKFnVIAnt7S9BFfNyff85Dtyc3U2HcZj2o3NxgnPm8ETrWaD6LUmVOxXI0
+ XBKRVZB3jD/Dgwcy8QFClobr1ejbeQwzc3Hcj4wF2SyMC3ilXzMngHULbTnIouMT8Cuc
+ aNniD1uPmVe7jt2esXU6uFvStfO9NmGS+e/VtysrqzbyumFDVZ9zSFCgG96vil4bjO9M
+ RuHmFvmdAuTIYYI1x/prQH1lJRD/3XlTxhuK0JBmnjSorXdf/UfjazjT8c0aBvNSLuj6
+ IPyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725849150; x=1726453950;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YxDo2NbMl5xVS+RlRP3XB1wj/izTn7qjmhfx+s6CTJo=;
+ b=nALGr7RgQ2eAms2bwFRsacllSSax2zYqMVDuOKotbM+Aa6FC3Qcdf9RcyqYJsH5hFQ
+ dEkmVaoYiescJAJRTsOhz5Bn0ZfLqylX/J1P6qRVO1kMG2wVvmAXNOf6sMOXMl0vW03I
+ M5PLeWZn065sZo17STh6yNLRyJ0eMWoW8I+YYhXZpUzF7ytNBdlDq9lzUXBHQU1EtiuG
+ ovF+D6HC8zN445qoutBcYXnRAxrqYHZovIChKS5c7nSfkj33xtM+mvcpPWNKBxZ4ktiP
+ hTWZWf6dL7GEgybxgBTcG0VntmBCcv/IDjOL9eub+WtK7YqR9Q0BHN1zQ6w68DInsD5p
+ y7eA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEo2mgN77116K+VZES4YOsaz0g/vsG6Q83zJw6F/XWbzQ4SVg55Tjuiv+4RJmwaECX9rvzCeI1bB3d@nongnu.org
+X-Gm-Message-State: AOJu0Yy6iEHm0jpdN0HgOqB7uykdL5iy1pkrf0Gb496cOZ0ckcy934Dv
+ YpUFQMfJr7D5Dh80a3/ocAzeIzFK4jo3u1ga6F1lCS7BnDY3s0acg99RYYz4r9Owq+uCOFx+30W
+ rznjlzvAqSPnYyOmQELov+hPRCeM=
+X-Google-Smtp-Source: AGHT+IE++334V6F6KORjl4SiPBdT+/S6jI54eRESD5i1VHosSSpqpwZ9km9EYLiYXXgtSgUV4163bXjZ0hMxgktFp2w=
+X-Received: by 2002:a05:6122:2a12:b0:4eb:499a:2453 with SMTP id
+ 71dfb90a1353d-502143ca0bamr7280593e0c.8.1725849150058; Sun, 08 Sep 2024
+ 19:32:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20240822022827.2273534-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxcNbJXN5mQwkCAA--.11012S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJryUAryDXw1kJF17JF1rXwc_yoW8ur47pF
- W7uFn8KF4rJrZrJas7Z398ur1DZr43GrsFvaySq3ykCrs8try8XF1kt39FgFn8A3y8WFyS
- qr1fCw1jvFWxX3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JV
- WxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU7pnQ
- UUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-3.046, SPF_HELO_NONE=0.001,
+References: <20240808081948.25837-1-yongxuan.wang@sifive.com>
+In-Reply-To: <20240808081948.25837-1-yongxuan.wang@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 9 Sep 2024 12:32:04 +1000
+Message-ID: <CAKmqyKOh9dwx8+oESM5gMmuX8UY7M5-Q5oS=+EuKMR=mk3M-3Q@mail.gmail.com>
+Subject: Re: [PATCH 1/1] hw/intc/riscv_aplic: Check and update pending when
+ write sourcecfg
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,67 +97,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Aug 8, 2024 at 6:21=E2=80=AFPM Yong-Xuan Wang <yongxuan.wang@sifive=
+.com> wrote:
+>
+> The section 4.5.2 of the RISC-V AIA specification says that any write
+> to a sourcecfg register of an APLIC might (or might not) cause the
+> corresponding interrupt-pending bit to be set to one if the rectified
+> input value is high (=3D 1) under the new source mode.
+>
+> If an interrupt is asserted before the driver configs its interrupt
+> type to APLIC, it's pending bit will not be set except a relevant
+> write to a setip or setipnum register. When we write the interrupt
+> type to sourcecfg register, if the APLIC device doesn't check
+> rectified input value and update the pending bit, this interrupt
+> might never becomes pending.
+>
+> For APLIC.m, we can manully set pending by setip or setipnum
+> registers in driver. But for APLIC.w, the pending status totally
+> depends on the rectified input value, we can't control the pending
+> status via mmio registers. In this case, hw should check and update
+> pending status for us when writing sourcecfg registers.
+>
+> Update QEMU emulation to handle "pre-existing" interrupts.
+>
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-ÔÚ 2024/8/22 ÉÏÎç10:28, Bibo Mao Ð´µÀ:
-> KVM provides interface KVM_REG_LOONGARCH_VCPU_RESET to reset vCPU,
-> it can be used to clear internal state about kvm kernel. vCPU reset
-> function is added here for kvm mode.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   target/loongarch/cpu.c               | 2 +-
->   target/loongarch/kvm/kvm.c           | 5 ++++-
->   target/loongarch/kvm/kvm_loongarch.h | 2 +-
->   3 files changed, 6 insertions(+), 3 deletions(-)
-> 
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-
-Thanks
-Song Gao
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index 5e85b9dbef..6a5f856bd6 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -563,7 +563,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->       memset(env->tlb, 0, sizeof(env->tlb));
->   #endif
->       if (kvm_enabled()) {
-> -        kvm_arch_reset_vcpu(env);
-> +        kvm_arch_reset_vcpu(cs);
->       }
->   #endif
->   
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index e1be6a6959..4786cd5efa 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -476,9 +476,12 @@ static int kvm_loongarch_put_regs_fp(CPUState *cs)
->       return ret;
->   }
->   
-> -void kvm_arch_reset_vcpu(CPULoongArchState *env)
-> +void kvm_arch_reset_vcpu(CPUState *cs)
->   {
-> +    CPULoongArchState *env = cpu_env(cs);
+>  hw/intc/riscv_aplic.c | 49 +++++++++++++++++++++++++++----------------
+>  1 file changed, 31 insertions(+), 18 deletions(-)
+>
+> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> index 32edd6d07bb3..2a9ac76ce92e 100644
+> --- a/hw/intc/riscv_aplic.c
+> +++ b/hw/intc/riscv_aplic.c
+> @@ -159,31 +159,41 @@ static bool is_kvm_aia(bool msimode)
+>      return kvm_irqchip_in_kernel() && msimode;
+>  }
+>
+> +static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
+> +                                          uint32_t irq)
+> +{
+> +    uint32_t sourcecfg, sm, raw_input, irq_inverted;
 > +
->       env->mp_state = KVM_MP_STATE_RUNNABLE;
-> +    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
->   }
->   
->   static int kvm_loongarch_get_mpstate(CPUState *cs)
-> diff --git a/target/loongarch/kvm/kvm_loongarch.h b/target/loongarch/kvm/kvm_loongarch.h
-> index d945b6bb82..1051a341ec 100644
-> --- a/target/loongarch/kvm/kvm_loongarch.h
-> +++ b/target/loongarch/kvm/kvm_loongarch.h
-> @@ -11,6 +11,6 @@
->   #define QEMU_KVM_LOONGARCH_H
->   
->   int  kvm_loongarch_set_interrupt(LoongArchCPU *cpu, int irq, int level);
-> -void kvm_arch_reset_vcpu(CPULoongArchState *env);
-> +void kvm_arch_reset_vcpu(CPUState *cs);
->   
->   #endif
-> 
+> +    if (!irq || aplic->num_irqs <=3D irq) {
+> +        return false;
+> +    }
+> +
+> +    sourcecfg =3D aplic->sourcecfg[irq];
+> +    if (sourcecfg & APLIC_SOURCECFG_D) {
+> +        return false;
+> +    }
+> +
+> +    sm =3D sourcecfg & APLIC_SOURCECFG_SM_MASK;
+> +    if (sm =3D=3D APLIC_SOURCECFG_SM_INACTIVE) {
+> +        return false;
+> +    }
+> +
+> +    raw_input =3D (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
+> +    irq_inverted =3D (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW ||
+> +                    sm =3D=3D APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
+> +    return !!(raw_input ^ irq_inverted);
+> +}
+> +
+>  static uint32_t riscv_aplic_read_input_word(RISCVAPLICState *aplic,
+>                                              uint32_t word)
+>  {
+> -    uint32_t i, irq, sourcecfg, sm, raw_input, irq_inverted, ret =3D 0;
+> +    uint32_t i, irq, rectified_val, ret =3D 0;
+>
+>      for (i =3D 0; i < 32; i++) {
+>          irq =3D word * 32 + i;
+> -        if (!irq || aplic->num_irqs <=3D irq) {
+> -            continue;
+> -        }
+> -
+> -        sourcecfg =3D aplic->sourcecfg[irq];
+> -        if (sourcecfg & APLIC_SOURCECFG_D) {
+> -            continue;
+> -        }
+> -
+> -        sm =3D sourcecfg & APLIC_SOURCECFG_SM_MASK;
+> -        if (sm =3D=3D APLIC_SOURCECFG_SM_INACTIVE) {
+> -            continue;
+> -        }
+>
+> -        raw_input =3D (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
+> -        irq_inverted =3D (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW ||
+> -                        sm =3D=3D APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
+> -        ret |=3D (raw_input ^ irq_inverted) << i;
+> +        rectified_val =3D riscv_aplic_irq_rectified_val(aplic, irq);
+> +        ret |=3D rectified_val << i;
+>      }
+>
+>      return ret;
+> @@ -702,6 +712,9 @@ static void riscv_aplic_write(void *opaque, hwaddr ad=
+dr, uint64_t value,
+>              (aplic->sourcecfg[irq] =3D=3D 0)) {
+>              riscv_aplic_set_pending_raw(aplic, irq, false);
+>              riscv_aplic_set_enabled_raw(aplic, irq, false);
+> +        } else {
+> +            if (riscv_aplic_irq_rectified_val(aplic, irq))
+> +                riscv_aplic_set_pending_raw(aplic, irq, true);
 
+You need curly braces for the if statement. You can run checkpatch.pl
+to catch issues like this
+
+Alistair
+
+>          }
+>      } else if (aplic->mmode && aplic->msimode &&
+>                 (addr =3D=3D APLIC_MMSICFGADDR)) {
+> --
+> 2.17.1
+>
+>
 
