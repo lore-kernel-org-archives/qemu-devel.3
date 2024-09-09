@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93AEECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D007ECE57A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sngEj-0000vo-LJ; Mon, 09 Sep 2024 11:23:29 -0400
+	id 1sngHh-000712-WC; Mon, 09 Sep 2024 11:26:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sngEh-0000vD-Jv
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:23:27 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sngHh-0006z9-6V
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:26:33 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sngEf-0001uY-VI
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:23:27 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2f75428b9f8so31352881fa.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:23:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sngHf-0002PD-Id
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:26:32 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3ed267a7bso2106144a12.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725895403; x=1726500203; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1725895589; x=1726500389; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4EIe4pPMHVgje/Lw6Piu7SzRHQ8YUVHHDv2iQqiwNHc=;
- b=q7wN6UvkyBxWFwxH8IPq+WZaVoQ8nbgqJD5kW1gIjahQl2OGp3wGzzp0b7GwO1vrpH
- 8J2JxZysq22acl9f/uTGa29QX2hJy1yT1AljP7e0OjjFm6OXsp838CwdZ6CWhsSuZZ1o
- LWCcB7oo1dcs/AnfKSA/RF+IHRFirLlKBk7Y7kL110r1XOBvSjS8gLQ5p04Mr3U0a08U
- RRU1gKvZytobR2b+Lqn1ulJw1DCZVYDZTkqSNZZh4bo6+QEEbg7AtTeS4Y7RwRcscL6D
- pwYmvDyYcZCuAbp6VHxukZqEVavzqtvpaksLzC1fisgvxWXkRDfFPXnQfmISBGYfFVoQ
- d+MQ==
+ bh=AIwxvFUgMGuu28vVE0Ra3a1C77yW6FX4mD9Ilj46Ccw=;
+ b=iBeX7i0i+RmNApg7a16WNpqlabf88LynOhYDysgkvfcgIMN79Q/6MVJ6Xdjdb7PJAn
+ XW2r2A6Y7fNpwULmXmUSz/5fAjnNrDarlnBtxw81qFOewT1JXQAXrggKou4Jxrm3JXRL
+ dkrzYbbK6XS3ShmquMLFgrdCV1p+MoWgYpmzrBTzbDPMJ6njrRzBno3NqFRwG5AnimC8
+ vkGsocJiZevGbjJTZbuA5Q28FvtBIgff5i1Ogfj82tL34oL1K4AE9YE0ifb4ywOP1B7V
+ y4Fwd5BDLw8A16vc4XKLdfsrUTZiw1NnOBThWIbSRS5CnxiZ3RxhUo/8NkEdeVHoBmRk
+ hNnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725895403; x=1726500203;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4EIe4pPMHVgje/Lw6Piu7SzRHQ8YUVHHDv2iQqiwNHc=;
- b=mz0RBqqpopKMmDucykbripoQbvAPXr+MkfDUHXy9JjHtxQdvCo+Vga2cd/c64gFw+h
- n0ZdvH909G7JBhXZPX2Q14trxpNTF/w6w4W9UMsvj6FxOXnEov9ylJ5+RlQ9aU9VQKvP
- 8gs3zapJgnIdrdavKDNfe+0VL8XomRZv+iyPlNLq6xu6gntEh1wL3xfy3u5oBp7A/mga
- +lM6cjPIoGnFLgA1j8APGfhaFGrG7tg6kWk445JQOXHlw50U8wQ8d/flLn3FnAD5jEsN
- vUFrp+SpULizWCpxWOjm3V6WSUqIww7xGgRcmg0dVIuUIo1GUA//ClbVIYuZcSJZ+m3f
- 7Etg==
-X-Gm-Message-State: AOJu0YyfT2sbFSD5gbxrBkmZ5lSwaWVeVdsHBP5HXNIrGxHLjm0qO/UQ
- yPdmNcz2viiTg1CjIsSNn1Gc9ykfmztpEJi3nwUBDLZh1nPvbdXXzp4M5WPR4y4=
-X-Google-Smtp-Source: AGHT+IGpMehKXqX7VOk9yqZmP5T/VWuXUklvyIDZTX20CoUrAwVaMOYDmoZiguNA4OROCCg1rvvzMQ==
-X-Received: by 2002:a2e:b8c2:0:b0:2f7:562d:cb5b with SMTP id
- 38308e7fff4ca-2f75a96da1cmr64854961fa.7.1725895402237; 
- Mon, 09 Sep 2024 08:23:22 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d2583c20bsm353509866b.22.2024.09.09.08.23.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 08:23:21 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CC9EF5F75D;
- Mon,  9 Sep 2024 16:23:20 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [RFC PATCH] tests/qtest: Don't parallelize migration-test
-In-Reply-To: <20240909133921.1141067-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Mon, 9 Sep 2024 14:39:21 +0100")
-References: <20240909133921.1141067-1-peter.maydell@linaro.org>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 09 Sep 2024 16:23:20 +0100
-Message-ID: <87cylcyhp3.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1725895589; x=1726500389;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AIwxvFUgMGuu28vVE0Ra3a1C77yW6FX4mD9Ilj46Ccw=;
+ b=pTDUA0iYBOmbCuVevo03ViZva+uHeUdF8dX/z7AOSZyOEfWeZo2RGDu4IFVPKBMxYx
+ /j0+/pLU8I/WeDj4B6Geq7iQCt9aEFGNiR/hT39+LSkYFPLlqF5IFhlGWdZVexfx+0Ns
+ hOdxAOuG960CeL9RS6ZxVFXX2weWNj18gHVCT5sp0EDnilinb84Q2ykORIX3tqojsnts
+ JEACGrRDHfOn3HWBtbod8P9JUorKet7vdFvyITTV3DxkJsdWiqN+cDfsukdF6V6+zXxP
+ 3vwKPe4BydLOzFswy2gvFHvKAwM2yB+4xpCocZ2p9d5S+OB/NTbMLx3+ilWPVsUHcPpj
+ h4pA==
+X-Gm-Message-State: AOJu0YyY/kNOJAcrEX0nvMYghfM8yuFwt9eIKfnKhRNex1xfk2iHEcIi
+ GjmYORE6I0qIMaRQUQ4pzQXLsdBZkt1hTWypjXu0m+FgJlD9XLQk2WBxutzZDUa8C26m0HVJps1
+ C0yP2AQxgOE+s5IPJF7ZgLfzbz1FAd7LgyRZAeg==
+X-Google-Smtp-Source: AGHT+IGjj3fZ6W7hH5BOzg2QETg26mmXbEquhYY4SevzzjKoZGXTtaocJ16plCb5knHNP3KdaxmOrE4aewHHLbD3Pf4=
+X-Received: by 2002:a05:6402:210f:b0:5be:eaf1:807d with SMTP id
+ 4fb4d7f45d1cf-5c3dc7c6ac3mr8334951a12.29.1725895589281; Mon, 09 Sep 2024
+ 08:26:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240903200446.25921-1-philmd@linaro.org>
+ <20240903200446.25921-3-philmd@linaro.org>
+In-Reply-To: <20240903200446.25921-3-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Sep 2024 16:26:17 +0100
+Message-ID: <CAFEAcA-Ny03OHMHFKu8kSbPSJsiJRqR+qmhDOg6jsM9HtT6FCw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/sd: Remove legacy sd_enable()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x229.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,56 +91,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Tue, 3 Sept 2024 at 21:04, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> sd_enable() was only used by omap_mmc_enable() which
+> got recently removed. Time to remove it.
+>
+> Since the SDState::enable boolean is now always %true,
+> we can remove it and simplify.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-> The migration-test is a long-running test whose subtests all launch
-> at least two QEMU processes.  This means that if for example the host
-> has 4 CPUs then 'make check' defaults to a parallelism of 5, and if
-> we launch 5 migration-tests in parallel then we will be running 10
-> QEMU instances on a 4 CPU system.  If the system is not very fast
-> then the test can spuriously time out because the different tests are
-> all stealing CPU from each other.  This seems to particularly be a
-> problem on our S390 CI job and the cross-i686-tci CI job.
+> @@ -2328,7 +2327,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+>  {
+>      int i;
 >
-> Force meson to run migration-test non-parallel, so there is never any
-> other test running at the same time as it.  This will slow down
-> overall test execution time somewhat, but hopefully make our CI less
-> flaky.
+> -    if (!sd->blk || !blk_is_inserted(sd->blk) || !sd->enable)
+> +    if (!sd->blk || !blk_is_inserted(sd->blk))
+>          return;
 >
-> The downside is that because each migration-test instance runs for
-> between 2 and 5 minutes and we run it for five architectures this
-> significantly increases the runtime.  For an all-architectures build
-> on my local machine 'make check -j8' goes from
+>      if (sd->state !=3D sd_receivingdata_state) {
+> @@ -2460,7 +2459,7 @@ uint8_t sd_read_byte(SDState *sd)
+>      uint8_t ret;
+>      uint32_t io_len;
 >
->  real    8m19.127s
->  user    31m47.534s
->  sys     19m42.650s
+> -    if (!sd->blk || !blk_is_inserted(sd->blk) || !sd->enable)
+> +    if (!sd->blk || !blk_is_inserted(sd->blk))
+>          return dummy_byte;
 >
-> to
->
->  real    20m31.218s
->  user    32m48.712s
->  sys     19m52.133s
->
-> more than doubling the wallclock runtime.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Also, looking at these figures we spend a *lot* of our overall
-> 'make check' time on migration-test. Do we really need to do
-> that much for every architecture?
+>      if (sd->state !=3D sd_sendingdata_state) {
 
-I guess one question is are we getting value from all the extra
-migration tests? There certainly seem to be some sub-tests that are
-slower than the others and I assume testing a small delta on the tests
-before it.
+Maybe add the { } that coding style wants to these if()s
+since we're editing them anyway?
 
-On s390x it seems the native test runs pretty much to the same time as
-the other TCG guests. Do we exercise any extra migration code by running
-tests for every architecture as opposed to one KVM/native hyp and one
-TCG one?
+Either way,
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
