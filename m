@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82761ECE587
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD69ECE588
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 20:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snkk9-0000vm-37; Mon, 09 Sep 2024 16:12:13 -0400
+	id 1snkjt-0008LQ-EP; Mon, 09 Sep 2024 16:11:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkk7-0000qU-OQ
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:12:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkjr-0008Kt-Lg
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:11:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkk5-00053m-RI
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:12:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkjp-0004yp-UW
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 16:11:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725912729;
+ s=mimecast20190719; t=1725912712;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=22RXMR5DYkLZTisVq+tQn5/56hW2wP8HWKKqqEW05PY=;
- b=KyvoPDdA9byNFNd03uMEeaDKIqTwgdX0sVZHJQZKoOmEYqQyHnG0KdqbnB8pppspAuRHDs
- Wpuc+r10sreALWxg7Dtcitq8mkgVNhpin/7f5GTNVF8ZrsSG2LY065LjDn4obpiFWr15nB
- iDoE4hsXPTyh+Bc2CdR9LYHqQLfHOFM=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=dyIZbyaaDW6HJxSc1eD7cm8S/fscDqlC4iLVh1JeHfw=;
+ b=Z24kqFK4opEkIgGeNOrhTTYvCE68FATB4J+OXfiKAsw61/LkHpLqXdlKvFWXjnHa8G8PSk
+ hRQ1NnucBkgoiz4ue4e8LMBoI+NEfPzSqepgGveCFlXpR9DbbWMprGB0d7OnsmXxKTQr6q
+ yB4tqeMrPgqUrcZHkw6jMN7cTutHGQ0=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-sL8NK-VOMXagUV75VWrK8Q-1; Mon, 09 Sep 2024 16:12:08 -0400
-X-MC-Unique: sL8NK-VOMXagUV75VWrK8Q-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4581efb73d3so45295861cf.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 13:12:08 -0700 (PDT)
+ us-mta-509-8L0mNsC1NxOI5CP1uAQflA-1; Mon, 09 Sep 2024 16:11:51 -0400
+X-MC-Unique: 8L0mNsC1NxOI5CP1uAQflA-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4582493b3f7so33477751cf.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 13:11:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725912727; x=1726517527;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=22RXMR5DYkLZTisVq+tQn5/56hW2wP8HWKKqqEW05PY=;
- b=tZcuGapDq5waxJjN9BYZpHB6tYUVr3mi99YCFxmFg4+UF6ZmAH/KbvU+MvkUq65igB
- KDUjg01beE4AnCjDH84tXy9GDetLZWvxVF93nXn7ks3MJ4MRYXNJi9cz8jhQsAEj4m17
- y4f2ZKZSz9OLU/GevifMRW4m5RXvcZXLY8vOQjNexr2pMmTpWY57hpyB+F80KPnSdZkl
- J881que5P7Oq7O5IISYOBJWRfFAcqDr5ZezThTEB4djLPEs82XfmM2UDPUZYYaWwwXII
- GCpp9+X3JkY4aOPp9e6HnIsOizarf34E6g/xqRLBqWcBNMZ+5/jMMjEaV5zDbpiEVGP7
- KVgQ==
-X-Gm-Message-State: AOJu0YySLctxZGuQGPkDLeYkjHFYbSwONeecWom/oMIqI5Ludt/fYuWO
- f2rMfcbs51WjD2dxZ7MnVoj4KIAbf414nY/ubUgfqfCSCnpuBewy9H9ot5dnu6XeprE+3cBSmkl
- hQSmghvoKhfRiFRfLIGvRHCZQIsXbN+7Ql7Azgjm2rK6cHLG3PJZuYrWmbvstuIvq2a2QuPRBwe
- w1igMQWbBk0oRdpmx5xXI7THL9MvFkdAr/vQ==
-X-Received: by 2002:a05:622a:11c5:b0:457:c7b7:a26a with SMTP id
- d75a77b69052e-4580c67e50dmr156436451cf.8.1725912727176; 
- Mon, 09 Sep 2024 13:12:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBNpc8PcW4Yu0Lh/xWDwHoJDT+rJRljxeQdI++FcsHcIXY5TJY3pvkGUpq48Lnpx+I4HXX/Q==
-X-Received: by 2002:a05:622a:11c5:b0:457:c7b7:a26a with SMTP id
- d75a77b69052e-4580c67e50dmr156436021cf.8.1725912726766; 
- Mon, 09 Sep 2024 13:12:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725912710; x=1726517510;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dyIZbyaaDW6HJxSc1eD7cm8S/fscDqlC4iLVh1JeHfw=;
+ b=L8Vx6TAhw8P7W+LWS1cIondVNqYuJwo5Dlaifz/va0O62j0o3M9JW+3xiySvJ9a39H
+ GN3JksD4hOo/H8t67knkLoPd36sJVOeubhl206usLyAxbaVfpNEw1uXCQU8Ig1fBF0F1
+ NB13IAprKaBT3JRRxpG7K8REpAsS3IFaKXXui1TKd/g8kS2K2JUXN3jKE7GdDhIzJITS
+ gtoPYA68ukDNyGWKtcFhqcO3JT769xGs/F4zKRp7E5qw4FCX535vlzTzAoIOWOMJg1kj
+ l45O6vg/V8L9B6c09bgRvpgw3guZRl5bywzEc8HMZFQEcZLiEXw4N1LfNMxTRIQUpQNY
+ ZhuQ==
+X-Gm-Message-State: AOJu0YyCVDS0m6tb3mmZZBxzGEIyZkz6uXX472LgceV+EQaGhMimi/mz
+ 1mcjcKxDVieZ06wZ2DgGoN+oMRCAx+DjUlAS/fm54e1r4fB7SdpOcG7iwxIDRtUKl47Zz3N1WJW
+ MGTmkT1YnUgvYQC+vn2hufZERH+SS4P+j02uGLV1fCsI/eU0m4S1OUAr/xyqzAdiz3WR7ENuITW
+ XaQW2vBGRTbWzauBWvzOduFIPVaQPyiAsJOg==
+X-Received: by 2002:ac8:5a0e:0:b0:456:8ee8:f5ed with SMTP id
+ d75a77b69052e-4580c78def9mr157850621cf.48.1725912709977; 
+ Mon, 09 Sep 2024 13:11:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkmCTKfHYe5vw9BlAykJFcDh+mJorwEpGA6vMr3kxOV296uMB2eINE6ub/hwIa233o8pW9MA==
+X-Received: by 2002:ac8:5a0e:0:b0:456:8ee8:f5ed with SMTP id
+ d75a77b69052e-4580c78def9mr157850191cf.48.1725912709545; 
+ Mon, 09 Sep 2024 13:11:49 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-45822f93978sm22838561cf.83.2024.09.09.13.12.04
+ d75a77b69052e-45822f93978sm22838561cf.83.2024.09.09.13.11.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 13:12:05 -0700 (PDT)
+ Mon, 09 Sep 2024 13:11:49 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Bryan Zhang <bryan.zhang@bytedance.com>,
- Hao Xiang <hao.xiang@linux.dev>, Yichen Wang <yichen.wang@bytedance.com>
-Subject: [PULL 8/9] tests/migration: Add integration test for 'qatzip'
- compression method
-Date: Mon,  9 Sep 2024 16:11:46 -0400
-Message-ID: <20240909201147.3761639-9-peterx@redhat.com>
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 0/9] Migration 20240909 patches
+Date: Mon,  9 Sep 2024 16:11:38 -0400
+Message-ID: <20240909201147.3761639-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240909201147.3761639-1-peterx@redhat.com>
-References: <20240909201147.3761639-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,72 +98,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bryan Zhang <bryan.zhang@bytedance.com>
+The following changes since commit f2aee60305a1e40374b2fc1093e4d04404e780ee:
 
-Adds an integration test for 'qatzip'.
+  Merge tag 'pull-request-2024-09-08' of https://gitlab.com/huth/qemu into staging (2024-09-09 10:47:24 +0100)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
-Link: https://lore.kernel.org/r/20240830232722.58272-6-yichen.wang@bytedance.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- tests/qtest/migration-test.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+are available in the Git repository at:
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 9d08101643..d6768d5d71 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2920,6 +2920,18 @@ test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
- }
- #endif /* CONFIG_ZSTD */
- 
-+#ifdef CONFIG_QATZIP
-+static void *
-+test_migrate_precopy_tcp_multifd_qatzip_start(QTestState *from,
-+                                              QTestState *to)
-+{
-+    migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
-+    migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
-+
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "qatzip");
-+}
-+#endif
-+
- #ifdef CONFIG_QPL
- static void *
- test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
-@@ -3017,6 +3029,17 @@ static void test_multifd_tcp_zstd(void)
- }
- #endif
- 
-+#ifdef CONFIG_QATZIP
-+static void test_multifd_tcp_qatzip(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_qatzip_start,
-+    };
-+    test_precopy_common(&args);
-+}
-+#endif
-+
- #ifdef CONFIG_QPL
- static void test_multifd_tcp_qpl(void)
- {
-@@ -3922,6 +3945,10 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/multifd/tcp/plain/zstd",
-                        test_multifd_tcp_zstd);
- #endif
-+#ifdef CONFIG_QATZIP
-+    migration_test_add("/migration/multifd/tcp/plain/qatzip",
-+                test_multifd_tcp_qatzip);
-+#endif
- #ifdef CONFIG_QPL
-     migration_test_add("/migration/multifd/tcp/plain/qpl",
-                        test_multifd_tcp_qpl);
+  https://gitlab.com/peterx/qemu.git tags/migration-20240909-pull-request
+
+for you to fetch changes up to 89bccecdda253c9a1a38921cf9266a4f9655c88c:
+
+  system: improve migration debug (2024-09-09 10:55:40 -0400)
+
+----------------------------------------------------------------
+Migration pull request for 9.2
+
+- Mattias's patch to support concurrent bounce buffers for PCI devices
+- David's memory leak fix in dirty_memory_extend()
+- Fabiano's CI fix to disable vmstate-static-checker test in compat tests
+- Denis's patch that adds one more trace point for cpu throttle changes
+- Yichen's multifd qatzip compressor support
+
+----------------------------------------------------------------
+
+Bryan Zhang (4):
+  meson: Introduce 'qatzip' feature to the build system
+  migration: Add migration parameters for QATzip
+  migration: Introduce 'qatzip' compression method
+  tests/migration: Add integration test for 'qatzip' compression method
+
+David Hildenbrand (1):
+  softmmu/physmem: fix memory leak in dirty_memory_extend()
+
+Denis V. Lunev (1):
+  system: improve migration debug
+
+Fabiano Rosas (1):
+  ci: migration: Don't run python tests in the compat job
+
+Mattias Nissler (1):
+  softmmu: Support concurrent bounce buffers
+
+Yuan Liu (1):
+  docs/migration: add qatzip compression feature
+
+ docs/devel/migration/features.rst           |   1 +
+ docs/devel/migration/qatzip-compression.rst | 165 ++++++++
+ meson.build                                 |  10 +
+ qapi/migration.json                         |  21 ++
+ include/exec/memory.h                       |  14 +-
+ include/exec/ramlist.h                      |   1 +
+ include/hw/pci/pci_device.h                 |   3 +
+ migration/multifd.h                         |   5 +-
+ migration/options.h                         |   1 +
+ hw/core/qdev-properties-system.c            |   2 +-
+ hw/pci/pci.c                                |   8 +
+ migration/migration-hmp-cmds.c              |   4 +
+ migration/multifd-qatzip.c                  | 394 ++++++++++++++++++++
+ migration/options.c                         |  34 ++
+ system/cpu-throttle.c                       |   3 +
+ system/memory.c                             |   5 +-
+ system/physmem.c                            | 117 +++---
+ tests/qtest/migration-test.c                |  27 ++
+ .gitlab-ci.d/buildtest.yml                  |   8 +
+ meson_options.txt                           |   2 +
+ migration/meson.build                       |   1 +
+ scripts/meson-buildoptions.sh               |   3 +
+ system/trace-events                         |   3 +
+ 23 files changed, 767 insertions(+), 65 deletions(-)
+ create mode 100644 docs/devel/migration/qatzip-compression.rst
+ create mode 100644 migration/multifd-qatzip.c
+
 -- 
 2.45.0
 
