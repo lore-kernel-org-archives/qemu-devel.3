@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21F1ECE57A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 10:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA6FECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 10:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snbYS-0007O4-Ud; Mon, 09 Sep 2024 06:23:32 -0400
+	id 1snbYL-00078u-MS; Mon, 09 Sep 2024 06:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snbYR-0007Ls-6M
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:23:31 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snbYK-00077w-Nl
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:23:24 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snbYO-0001XV-Jq
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:23:30 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a8a837cec81so162844966b.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 03:23:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snbYI-0001Wm-Os
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:23:24 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5c245c62362so5570133a12.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 03:23:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725877407; x=1726482207; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725877401; x=1726482201; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
  bh=J/HMTZVwB52D14P1e7i1YYF4JF97NTzpew1Q+6Ef6Q8=;
- b=zqZLgOH87QHglCvnyhLKt844tfDGthOEv+ZOL+rmXz7uZ7TjUnO8G44S4R2X3P3s5u
- xk3CpGrqc1A2IIafKA/3jngdG1DufFp4spJtO78g//l5h6kwy98kqqWab8DaeIdr9afk
- 8JJHe9VsA/FF+4MYeUKm8HZQNTJLtgOrLSl7mpXfRqejnozWfV8tUtTSkNgLwZJ7jQ4Y
- WhGoJg5J3vUa5mtlqdwxY+Jp4+Rs4Sg0AnuQGkBgYG57VVIttXBu6Ob3Eigts0RDrYxT
- zhybma1T+kkbgPIen3GaDWqmFSxaATpF8q3mzizPNr0Ep2O2RhVq0SI+oN+ZEO/PfvDm
- rwMw==
+ b=JoSMAZvFjjh13w5DY9Z9Ymn2pE28vkAFYWzcYnB28ixj1fvE593Fr5cvtOpjp+BNuj
+ O8McXF0ZoN1Bhlpl00aKlBwQwTB5mnVwEPM7UhVnJe4UuvXtCB6EA8CE9eQnw5NSO3BT
+ a2ig7dbyk0nPnImaHf1tsO5WlYLoKf07U6HlL/khoJeGQ7ROy90clZobgwOdeuUF4Mfz
+ 90eWZdWvxO9Ueq7+UALTS+YbdjJvz/lgYyeU9aKjJOa0FR2phdT3KPuXZ7rQXIepK6p4
+ haBu/Sl7ot13snhU2kL/uULoh79FAEQjv/cji2zacf0h4gw9j1a9oH1xQb9gkIHoIHCe
+ aRHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725877407; x=1726482207;
+ d=1e100.net; s=20230601; t=1725877401; x=1726482201;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
  bh=J/HMTZVwB52D14P1e7i1YYF4JF97NTzpew1Q+6Ef6Q8=;
- b=FYjJWazFxlesOPjPl6Oh/KiRNAWyAQMbnw+ECzGKzrGv9A1cYChkzBmVj8jy2xoiRM
- pGwqdnEHmC5/KYqEVVeI078woNQ6dQQThwXr+w1TvniX2h5Efo98Nd+KrcoMSLIjQ7ny
- I5XRV7hlJf4r5UPqTjQRdA9lfOUDbOcfm5YdfPLBLyS6WSx172Iju05wpQq1MF9AC7wv
- SwNFfxlC4wzjpP/IOhSv9nXzHokaHzxl9usm8AWy65AaNCEBRFY0oee8QMDeW8ckw2e2
- qGWHmX4GyKzpKFNhzR5CAQyS6/2KOlcnN99W0XoSzQwHkqNiCBWISVoBDGk99rURkCm+
- z/cw==
+ b=TTofov2BO+lDQRaEzddcSlqseQozJ+IasD0MtvptJCgY7BfVo63cRjk7/cKAFSDphi
+ lI20bxA+Vq3LylVz8SLvGpWAaW6NxjfO7WPljMQ8Pc8jRpJ51FtFI2KIojNDugqDp1am
+ /zNLrzbA/aW8XmQXO5d4Sqkgo31Rz5TCfxAIdbOUrAWY6Z1SMkNNn5+oqw710J5J/GMv
+ rFvH2P+uiQq0xckSIx83KoTDEI6O1QDTjs5MmJTY/CzbX/+TyxU0Wy8Z2xx7dg4s63Jo
+ I7ZPM8Q2N1VjxlJVj2bSGpg3g6YGzuqQwRwcrJWTFWLUb9BipGa2CfLNpeudMkuvMoka
+ DSgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7alFvYUIidN13cCdEWDh5QRGT8NZJicRt4E7NSLoATKEWxrmHQnnjjnW6JOTbx84iO0hKFHBoROXx@nongnu.org
-X-Gm-Message-State: AOJu0YyrARq8WgdGOpYhaKzPTKHJfwV1oNJUSH0ld83yg+2kQB57RreW
- 1D1wwN/S7PTfUywwHUX6d9FanrmYMYXalRFs9dce1zQMtzx0RtIaOvyhL8FxSSQ=
-X-Google-Smtp-Source: AGHT+IFeD3IsteqIZ3fXrHoA6vSkZVSnTaDqr9VxEIH+qylMif9A+byw+v3dv6pfZumBRloPB9edMg==
-X-Received: by 2002:a05:6402:1e93:b0:5be:d687:9e6c with SMTP id
- 4fb4d7f45d1cf-5c3dc7c9dbbmr7796531a12.36.1725877406935; 
- Mon, 09 Sep 2024 03:23:26 -0700 (PDT)
+ AJvYcCVxCQZw0sCSDA60EDtMvnathM75EgR84VinVV4Xhzh4+z34f5jXhbqGErLMefAxSdjYcaL9I3NLiAiZ@nongnu.org
+X-Gm-Message-State: AOJu0YyYZStndFnCZZKt/w3BIQ4Ie7I9ISnxSceOin1vLGLEBezuurqF
+ 0ezx79JMNipZWAUE/Ux5GB4QjSyrLrr19ym+1DpgRzHeIHNN6pIab1Q6tPb/ilY=
+X-Google-Smtp-Source: AGHT+IE6de0mXBeVNxd7cWjpTavK1imW/dVqoylXXEVX4zHY9NqI/8H2HXpLDOmda1W1ru2m4c808Q==
+X-Received: by 2002:a05:6402:518b:b0:5bf:f1:908 with SMTP id
+ 4fb4d7f45d1cf-5c3dc7bd6e3mr8145717a12.24.1725877400385; 
+ Mon, 09 Sep 2024 03:23:20 -0700 (PDT)
 Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
  [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd41bb2sm2821100a12.14.2024.09.09.03.23.24
+ 4fb4d7f45d1cf-5c3ebd41bd4sm2823942a12.11.2024.09.09.03.23.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 03:23:26 -0700 (PDT)
-Message-ID: <67c12d0c-30ca-48df-982d-807ec5fb6817@linaro.org>
-Date: Mon, 9 Sep 2024 12:23:23 +0200
+ Mon, 09 Sep 2024 03:23:19 -0700 (PDT)
+Message-ID: <3ef8aa99-86b3-4c2d-8914-b4a59a2066ac@linaro.org>
+Date: Mon, 9 Sep 2024 12:23:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 2/2] hw/char: sifive_uart: Print uart characters async
@@ -71,6 +71,7 @@ Cc: dbarboza@ventanamicro.com, palmer@dabbelt.com,
  liwei1518@gmail.com, Alistair Francis <Alistair.Francis@wdc.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  atishp@rivosinc.com, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 References: <20240909021317.58192-1-alistair.francis@wdc.com>
  <20240909021317.58192-3-alistair.francis@wdc.com>
@@ -79,8 +80,8 @@ From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20240909021317.58192-3-alistair.francis@wdc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
