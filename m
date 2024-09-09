@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1493ECE57E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 22:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F83AECE589
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 22:23:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snmmB-0004sI-2N; Mon, 09 Sep 2024 18:22:27 -0400
+	id 1snmmh-00071g-3x; Mon, 09 Sep 2024 18:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snmm4-0004mw-25
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 18:22:20 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snmmf-0006vj-Jy
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 18:22:57 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snmm2-0000Vg-Bc
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 18:22:19 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a8d3e662791so133986266b.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 15:22:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snmmc-0000Ys-Ss
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 18:22:57 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3d209da98so507008a12.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 15:22:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725920536; x=1726525336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725920572; x=1726525372; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BhmLtNxKnRykV0PGmm1TkF6YvHoD2/t9qGUTEXRjJ7w=;
- b=gK6GXBRYv9oj+ySlg5v0pHYcWB13I7oz0y9u0ae1g8cPC2MkuXhbtTwu30/dLpfLIB
- osM6TaCjz3hG4eOH1MHIId5x4Tz7Bg1G+cnW2lbr7lB6uKPCPtwEUTzhjPVbyUyf+ADm
- VCji8+DWo9zDobo87L/69Qn2jDhUpCwDqLvTrRRpQhZHlki1p9D2Mv474bnce7S2rK5o
- oiEn8vfa6O4PbAHca+eywACSBU51oqD+ptEgjaibj9Gz6kFe66nGeFOPP9q9owoPD+CK
- ZnPFz/Kg3mp1IlvaM4Cz3yL2hP8goKWAUn1eqZFZu53OypEdmPDPz1nQMQOYlPRFeyPV
- z9fw==
+ bh=kXhmf0sJOO+szpAUdv4/KyunbfGxi+YgK3pdDbxI5AU=;
+ b=Sip1UWLcy+mgU9YE3qSdaqIQvSXFeoHNQU9vmBlvTdVfPrA1ZJiNm1JXSgtZD9ZKWF
+ MXXxnzP4hE62EETU96KZS4jNjHc0a85QizPbpT6hwKH9tZexrywhEILM591/Zu2GnR8q
+ XJGQbRyY9GH2JTy77Ps/6OKNo+UHpgUsUsRuQq0kFpN1kHG2sRIAPQUUWjYnxlPM7N8T
+ BDnfh84HjwwO2NW6Kc6i6k4y15iIfOatDja9qNkXFqEUEzABMGzZZacIA6q7NhOWhBSq
+ QXHVe/pIyZbuyuV3pKYmVeCXS4FhJ8rmvYvOelifgFQZL6VeZqiNcly+IiTaKZUJOBI7
+ 8x1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725920536; x=1726525336;
+ d=1e100.net; s=20230601; t=1725920572; x=1726525372;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BhmLtNxKnRykV0PGmm1TkF6YvHoD2/t9qGUTEXRjJ7w=;
- b=EsCrVQxq9FjslWx9iNe9y+GxOlDY84opYSAEl5R4ZanjXoXkgNL1AHOJqV5yIk1a3G
- RNGYkwNlF0axEcJF+xyaJ67iOEVX2+MIzvFKeVlmFYXsHT02KHZdYzH11C6CDxiCAWvP
- FjQLUxBZjC2rP8PiWPEH3GmmlgtlnS5IwpSP9fCFtW+zqyUKWDBRiPOAta3cID2cnni0
- 2ucRlwpwWdWXCzbDaDJvO7IpD+5X+8oyDYxHBONtBMgUId+2DXRIp0/Q2rllvBjLdteF
- 1zihXu+76rjVcjcShmcglaSjuJyhc2xuC/rGW3RN6/qxwF2wsZx4/O6va1VM3yAtK+qR
- QNMQ==
+ bh=kXhmf0sJOO+szpAUdv4/KyunbfGxi+YgK3pdDbxI5AU=;
+ b=t6Gqc+S78LLXlmlCh0YAU4ht7EfT9zRNNTfaERqu9VYxIObDT8JTGynYAZphMzgdHo
+ k9AexzLSgkqW6TBpY0hkSs/xkjwiyzqL6ZzgD3uX5xKcj2HgS8idBYDHViEmMz96KUh5
+ TYVnOH+2qe9VQx/GU/yiJjp+2YRCfOudKOWO1ajavQ2vRXunQ0xvjbiCq/uBRaaD2+EC
+ /wL20efRCBA952u1t7J9ili7zGZwwLUuhfye14aCy7rRL9u1SjjkaiQ+Yyfr1rF34lXx
+ dXn2SGHuSi3ujrLGKs1/GmTqMvCCoMqmaZzKnIAJLdMY0dFSeLritFyLUOtNG1nQB2Uk
+ e0ow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeuBcbuoDlidDJYPjcI0LjrRcOXJ9tVs0zGhUxX1hz404J3dfdJQUEl6BLBDDT8wQptJx7QJ25LnpV@nongnu.org
-X-Gm-Message-State: AOJu0YwldlowY32btbCQRuI2l1aPRNdde3h5BAY5RIvhAXqvXeBme5Xl
- L7Fxu22RkfRqql6Kb+P8HzK0ETvu9MtjN0kJhTNLzxLT2O2BsjtCP4itie1cOlk=
-X-Google-Smtp-Source: AGHT+IFrLV8IScbEcWmeiiFfJ/cfCH6CGYMxg7dyzZ5NLEYGFBPHXzB6aDqs6FkvU/OFeTIBJEsNtA==
-X-Received: by 2002:a05:6402:40d4:b0:5c3:d0e1:9f81 with SMTP id
- 4fb4d7f45d1cf-5c3dc77ab97mr13050687a12.7.1725920536454; 
- Mon, 09 Sep 2024 15:22:16 -0700 (PDT)
+ AJvYcCUh1y0zhuKrSBnat1Ri9qheV82oIoYoyAB5cS3F5gokLUsIH8uDyJulzJpgSxf1UQ1eIZ1vcVBHsx7g@nongnu.org
+X-Gm-Message-State: AOJu0YzyjmFwXVOKZwlGnOLYhU8QMt+lyfXFQ33MLx9m7Izqf7KmHXCQ
+ c9eC+rDy07UgrFQYtmJ9pFSsrZCqxAWqnxE1RfSD/+1YW66Cg7aD8Ki/kvOfQcSntik7279QHhg
+ v
+X-Google-Smtp-Source: AGHT+IGud8gpI2eCX9J1Rsdpz/rlGvXdOLjNP46ubyWa+v4+Z7e9U+rYNzHUyYWkyWOazY9wcuKnGQ==
+X-Received: by 2002:a05:6402:5106:b0:5c2:6c75:4359 with SMTP id
+ 4fb4d7f45d1cf-5c4015e70b2mr1334477a12.9.1725920571782; 
+ Mon, 09 Sep 2024 15:22:51 -0700 (PDT)
 Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
  [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd424dasm3501807a12.9.2024.09.09.15.22.15
+ 4fb4d7f45d1cf-5c3ebd41d46sm3481348a12.12.2024.09.09.15.22.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 15:22:15 -0700 (PDT)
-Message-ID: <2a247cb4-2a57-40b5-a65a-b0766caa5c98@linaro.org>
-Date: Tue, 10 Sep 2024 00:22:13 +0200
+ Mon, 09 Sep 2024 15:22:51 -0700 (PDT)
+Message-ID: <3b62b084-9783-4c08-b7a2-6b7d91c5b5b8@linaro.org>
+Date: Tue, 10 Sep 2024 00:22:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/29] target/arm: Use tcg_gen_extract2_i64 for EXT
+Subject: Re: [PATCH v2 06/29] target/arm: Convert EXT to decodetree
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 References: <20240909162240.647173-1-richard.henderson@linaro.org>
- <20240909162240.647173-6-richard.henderson@linaro.org>
+ <20240909162240.647173-7-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240909162240.647173-6-richard.henderson@linaro.org>
+In-Reply-To: <20240909162240.647173-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,16 +98,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/9/24 18:22, Richard Henderson wrote:
-> The extract2 tcg op performs the same operation
-> as the do_ext64 function.
 
-I remember this one:
-https://lore.kernel.org/qemu-devel/60f76a76-709a-4f32-974c-c771a724d443@linaro.org/
+Pre-reviewed:
+https://lore.kernel.org/qemu-devel/10eb7805-6de3-45ec-8d2a-f5af5f63545b@linaro.org/
 
 > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/arm/tcg/translate-a64.c | 23 +++--------------------
->   1 file changed, 3 insertions(+), 20 deletions(-)
+>   target/arm/tcg/translate-a64.c | 121 +++++++++++++--------------------
+>   target/arm/tcg/a64.decode      |   5 ++
+>   2 files changed, 53 insertions(+), 73 deletions(-)
 
 
