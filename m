@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9800FECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95956ECE57A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snfcc-00038Y-J1; Mon, 09 Sep 2024 10:44:06 -0400
+	id 1snfgj-0000L7-J8; Mon, 09 Sep 2024 10:48:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1snfca-00032y-E6
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:44:04 -0400
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1snfge-0000HZ-8E
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:48:17 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1snfcX-00062R-Mt
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:44:04 -0400
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-26fda13f898so2774843fac.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:44:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1snfgb-0006OL-6z
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:48:14 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-4582fa01090so253011cf.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1725893040; x=1726497840;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qpFZNBJAG/hzFbvreOVozM4YhJsJSBZDFa0KK//dxPk=;
- b=RHsem83Bx3+0tg05lBR4Y7zOjQ0f274N9wxkUj8EALp7UqIlc6zfL68DmnfKFRP6hE
- y9THh3973B1RO5l5rG5TBip9EmH7xv0bseM52KWc7yl4SwbRWffxAzn34ZdB3Eq7zGcJ
- FzI39GatsPDoquAtBQx6f3EEgQxPS1kayH9A4dWWkMkgVGkQNQaVLHBxSh6kWVGxmvde
- XgZtDhnXGGy78VUNOHFaysMsW3gQncm5bev/N/IchJ7CVOnZDOXTs3P7Q8BqFxrxYOMB
- rRKxAmCDNhe6bOkN3H/bpxUZnVJV7WOQjqw4GZIk5DcRMjamhdAqKISqxLwhf5I0FyOK
- BtYg==
+ d=google.com; s=20230601; t=1725893291; x=1726498091; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rGNP4q2nB3w8H/b4HNTZaFQMm7t5KWa7zgpotIiQbAk=;
+ b=hJrkU1Jt5joq7RNCZXj0QDLKGagfNrfbSuY2Z+m8N54DtEdpgkR+h2ml5H1H1jrHpz
+ qxoCx9HsvHjJHGj8qlIMpFlq/jBBfWKByJpOdjnk52z/eod//QSLzZliBiT8A9fq/kVO
+ Y4EMwO4CG5525ByF8mh4xLgMzAm2GXh68JV0NtDfD/XgS494O1xbAadF6eWRQ7EQiHz4
+ ieMlGC4LSi6PkCHEvOAJBa5Wg327P7gXlziBEGfHDWglsw1JO8IFrRFvjfEQVBvPlVln
+ mJCqW+ScBdOaqVVSFDUTA9wT+e4lRg8gMYBBN1KjFB5jqedhaxiPUphP0cC9D9uT/Ko3
+ O6rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725893040; x=1726497840;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qpFZNBJAG/hzFbvreOVozM4YhJsJSBZDFa0KK//dxPk=;
- b=PeQC2+hHv/1WXf1OvMRRHKoIVhwSeNLgyl1aga5vYOEApiE+1i0tiuvL36xa/qb7xj
- 40YQFJWqqO924gjMBXWwu5aUe06uAchQY+1QaUhQEr2NmbDtp2Uf5Jo2q7hQWh4tWNsP
- T/twXzZlfGqZInvkhkSFKoVB/aifgOeiKjSw59HA1/lxv5YgZ2RhxDskThrRbSfBxCVa
- BND5iS3dpUYiEfnc/GCFIPa2nXiu2P4MzLrUHjVwxC1O4groi2wvbDRNnyIfWZFD8eqf
- Q+iSU+1wCjkxzofSYWkoVNN1Y/T7agKZ40RKDlXTs4FemTuIUQ4ok7oQnnoKjNArvlUW
- NZEA==
-X-Gm-Message-State: AOJu0YxTyqGGmX9NETpttaOBh7dsNi2Pvx/Q0I/gXAWCztxEKChRunXc
- u7o/pY6EbL3woJvBf+6iQY1rp0afR4onZWbrZ69Fz3YvH3YzoimhT7XVN5VrVyzTn/3KVy6VMdY
- iQE0L4zCAO9XK626CwCz3Rxz/7OWf0W9OLaWkRw==
-X-Google-Smtp-Source: AGHT+IHEhzXejhFmJPvKWXDUJAyXq3XVM6CI6X/tU0+iJCMh1inHhnd8N07JBWdEQAK2yRzkJtUS6fsZSbcyOtgUsyo=
-X-Received: by 2002:a05:6870:a406:b0:277:e286:88f5 with SMTP id
- 586e51a60fabf-27b82e59afbmr13556845fac.20.1725893038958; Mon, 09 Sep 2024
- 07:43:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725893291; x=1726498091;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rGNP4q2nB3w8H/b4HNTZaFQMm7t5KWa7zgpotIiQbAk=;
+ b=NoKBX2M+gCCA8Ek1SIoaxP39fS2a8GTODB7VnvfQlO93PfBAkmFuA1Kw1u/2Zf5iMS
+ 579utYeyTmXQ33q35/lX4LaJZQCz5QemjlALVhfCiW12WIAMT0i9PGsREcSJChGuykXH
+ RfM13xWQdPmGnUR/bNg2m/2gR3oGOlOyQlDRDXkm34FbJN85w7D7qRQj5vOKVBVgn5XR
+ SBTgTqwlBIx+ZeWVKK36159TfHquQXbnsE685TdBbYo9SLta/H3UZjXzpRsgMGnitenv
+ O0Lzl8ChKPvk2I4KFrm3jFTabjIBK3o1+sxugDdyusGbLcREofIMCsHcZqh4aD5R0/bk
+ lbcg==
+X-Gm-Message-State: AOJu0Yw/0Yo1oqSUrj/lKZOT3YOtgZSm6ikBDTqfhh2+700Sp0JXVEHf
+ FUqTN+vdY+i0djouxVhwaQfPLDOZaLrj0Sz17hxZzFEMflTU+q45Vll2jSPr59u3n19cpztO18a
+ 0YV9yj6J6aM3HPh0C+EHTnt4y2T8w1y13gPk2
+X-Google-Smtp-Source: AGHT+IHsv66qtxo6utfhzqkQhos2AYVzWEUR/qpv1Mt7ZkkYtBP5opyX45h15Wnr8BfZHJqYotxZ2w6j/4n4aywu1PQ=
+X-Received: by 2002:a05:622a:2d1:b0:447:f3ae:383b with SMTP id
+ d75a77b69052e-458214affa9mr4662971cf.19.1725893291050; Mon, 09 Sep 2024
+ 07:48:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1725889277.git.yong.huang@smartx.com>
- <96eeea4efd3417212d6e2639bc118b90d4dcf926.1725889277.git.yong.huang@smartx.com>
- <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
-In-Reply-To: <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Mon, 9 Sep 2024 22:43:42 +0800
-Message-ID: <CAK9dgmYe7vKSh6sNRPBSf+H+OOXF4QT0Q5RX8QNmsQkKj64TRw@mail.gmail.com>
-Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
- responsive CPU throttle
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000008206c20621b0c99e"
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=yong.huang@smartx.com; helo=mail-oa1-x31.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <447984db-8c52-c911-d7bd-6616edaaefa5@hisilicon.com>
+In-Reply-To: <447984db-8c52-c911-d7bd-6616edaaefa5@hisilicon.com>
+From: Mostafa Saleh <smostafa@google.com>
+Date: Mon, 9 Sep 2024 15:47:59 +0100
+Message-ID: <CAFgf54oTQqTJKxqD5U2i+jrTqHQQS=0zSkYiJjoWs5MOmaz5gg@mail.gmail.com>
+Subject: Re: [Bug Report] smmuv3 event 0x10 report when running virtio-blk-pci
+To: Zhou Wang <wangzhou1@hisilicon.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=smostafa@google.com; helo=mail-qt1-x830.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,109 +91,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008206c20621b0c99e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Zhou,
 
-On Mon, Sep 9, 2024 at 10:03=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org>
-wrote:
-
-> On Mon, 9 Sept 2024 at 14:51, Hyman Huang <yong.huang@smartx.com> wrote:
-> >
-> > Despite the fact that the responsive CPU throttle is enabled,
-> > the dirty sync count may not always increase because this is
-> > an optimization that might not happen in any situation.
-> >
-> > This test case just making sure it doesn't interfere with any
-> > current functionality.
-> >
-> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+On Mon, Sep 9, 2024 at 3:22=E2=80=AFPM Zhou Wang via <qemu-devel@nongnu.org=
+> wrote:
 >
-> tests/qtest/migration-test already runs 75 different
-> subtests, takes up a massive chunk of our "make check"
-> time, and is very commonly a "times out" test on some
-> of our CI jobs. It runs on five different guest CPU
-> architectures, each one of which takes between 2 and
-> 5 minutes to complete the full migration-test.
+> Hi All,
 >
-> Do we really need to make it even bigger?
+> When I tested mainline qemu(commit 7b87a25f49), it reports smmuv3 event 0=
+x10
+> during kernel booting up.
+>
+> qemu command which I use is as below:
+>
+> qemu-system-aarch64 -machine virt,kernel_irqchip=3Don,gic-version=3D3,iom=
+mu=3Dsmmuv3 \
+> -kernel Image -initrd minifs.cpio.gz \
+> -enable-kvm -net none -nographic -m 3G -smp 6 -cpu host \
+> -append 'rdinit=3Dinit console=3DttyAMA0 ealycon=3Dpl0ll,0x90000000 maxcp=
+us=3D3' \
+> -device pcie-root-port,port=3D0x8,chassis=3D0,id=3Dpci.0,bus=3Dpcie.0,mul=
+tifunction=3Don,addr=3D0x2 \
+> -device pcie-root-port,port=3D0x9,chassis=3D1,id=3Dpci.1,bus=3Dpcie.0,add=
+r=3D0x2.0x1 \
+> -device virtio-blk-pci,drive=3Ddrive0,id=3Dvirtblk0,num-queues=3D8,packed=
+=3Don,bus=3Dpci.1 \
+> -drive file=3D/home/boot.img,if=3Dnone,id=3Ddrive0,format=3Draw
+>
+> smmuv3 event 0x10 log:
+> [...]
+> [    1.962656] virtio-pci 0000:02:00.0: Adding to iommu group 0
+> [    1.963150] virtio-pci 0000:02:00.0: enabling device (0000 -> 0002)
+> [    1.964707] virtio_blk virtio0: 6/0/0 default/read/poll queues
+> [    1.965759] virtio_blk virtio0: [vda] 2097152 512-byte logical blocks =
+(1.07 GB/1.00 GiB)
+> [    1.966934] arm-smmu-v3 9050000.smmuv3: event 0x10 received:
+> [    1.967442] input: gpio-keys as /devices/platform/gpio-keys/input/inpu=
+t0
+> [    1.967478] arm-smmu-v3 9050000.smmuv3:      0x0000020000000010
+> [    1.968381] clk: Disabling unused clocks
+> [    1.968677] arm-smmu-v3 9050000.smmuv3:      0x0000020000000000
+> [    1.968990] PM: genpd: Disabling unused power domains
+> [    1.969424] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+> [    1.969814] ALSA device list:
+> [    1.970240] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+> [    1.970471]   No soundcards found.
+> [    1.970902] arm-smmu-v3 9050000.smmuv3: event 0x10 received:
+> [    1.971600] arm-smmu-v3 9050000.smmuv3:      0x0000020000000010
+> [    1.971601] arm-smmu-v3 9050000.smmuv3:      0x0000020000000000
+> [    1.971601] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+> [    1.971602] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+> [    1.971606] arm-smmu-v3 9050000.smmuv3: event 0x10 received:
+> [    1.971607] arm-smmu-v3 9050000.smmuv3:      0x0000020000000010
+> [    1.974202] arm-smmu-v3 9050000.smmuv3:      0x0000020000000000
+> [    1.974634] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+> [    1.975005] Freeing unused kernel memory: 10112K
+> [    1.975062] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+> [    1.975442] Run init as init process
+>
+> Another information is that if "maxcpus=3D3" is removed from the kernel c=
+ommand line,
+> it will be OK.
 >
 
-No, I don't insist on that; the cpu-responsive-throttle
-parameter may also be enabled on the existing
-migrate_auto_converge test case by default.
+That's interesting, not sure how that would be related.
 
-Thank for the comment.
-
-Yong.
-
-
->
-> thanks
-> -- PMM
+> I am not sure if there is a bug about vsmmu. It will be very appreciated =
+if anyone
+> know this issue or can take a look at it.
 >
 
+Can you please provide logs with adding "-d trace:smmu*" to qemu invocation=
+.
 
---=20
-Best regards
+Also if possible, can you please provide which Linux kernel version
+you are using, I will see if I can repro.
 
---0000000000008206c20621b0c99e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks,
+Mostafa
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Sep 9, 202=
-4 at 10:03=E2=80=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@lin=
-aro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;bo=
-rder-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">=
-On Mon, 9 Sept 2024 at 14:51, Hyman Huang &lt;<a href=3D"mailto:yong.huang@=
-smartx.com" target=3D"_blank">yong.huang@smartx.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Despite the fact that the responsive CPU throttle is enabled,<br>
-&gt; the dirty sync count may not always increase because this is<br>
-&gt; an optimization that might not happen in any situation.<br>
-&gt;<br>
-&gt; This test case just making sure it doesn&#39;t interfere with any<br>
-&gt; current functionality.<br>
-&gt;<br>
-&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
-" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-<br>
-tests/qtest/migration-test already runs 75 different<br>
-subtests, takes up a massive chunk of our &quot;make check&quot;<br>
-time, and is very commonly a &quot;times out&quot; test on some<br>
-of our CI jobs. It runs on five different guest CPU<br>
-architectures, each one of which takes between 2 and<br>
-5 minutes to complete the full migration-test.<br>
-<br>
-Do we really need to make it even bigger?<br></blockquote><div><br></div><d=
-iv><div class=3D"gmail_default"><font face=3D"comic sans ms, sans-serif"><s=
-pan style=3D"color:rgb(0,0,0)">No, I don&#39;t insist on that; the cpu-resp=
-onsive-throttle</span></font></div><div class=3D"gmail_default"><font face=
-=3D"comic sans ms, sans-serif"><span style=3D"color:rgb(0,0,0)">parameter m=
-ay also be enabled on the existing</span></font></div><div class=3D"gmail_d=
-efault"><font face=3D"comic sans ms, sans-serif"><span style=3D"color:rgb(0=
-,0,0)">migrate_auto_converge test case by default.</span></font><br></div><=
-/div><div class=3D"gmail_default"><font face=3D"comic sans ms, sans-serif">=
-<span style=3D"color:rgb(0,0,0)"><br></span></font></div><div class=3D"gmai=
-l_default"><font face=3D"comic sans ms, sans-serif"><span style=3D"color:rg=
-b(0,0,0)">Thank for the comment.</span></font></div><div class=3D"gmail_def=
-ault"><font face=3D"comic sans ms, sans-serif"><span style=3D"color:rgb(0,0=
-,0)"><br></span></font></div><div class=3D"gmail_default"><font face=3D"com=
-ic sans ms, sans-serif"><span style=3D"color:rgb(0,0,0)">Yong.</span></font=
-></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-=
-color:rgb(204,204,204);padding-left:1ex">
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
-</div></div></div>
-
---0000000000008206c20621b0c99e--
+> Thanks,
+> Zhou
+>
+>
+>
 
