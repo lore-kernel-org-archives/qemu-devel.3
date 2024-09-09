@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2211CE7AB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 06:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD3AE6FE49
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 06:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snXgz-0004Nz-Sb; Mon, 09 Sep 2024 02:16:05 -0400
+	id 1snXgy-0004H6-8K; Mon, 09 Sep 2024 02:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
- id 1snXgv-0004FR-VI
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 02:16:01 -0400
+ id 1snXgw-0004FS-0m
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 02:16:02 -0400
 Received: from mailout07.t-online.de ([194.25.134.83])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
- id 1snXgt-0003T0-TV
+ id 1snXgu-0003T9-CB
  for qemu-devel@nongnu.org; Mon, 09 Sep 2024 02:16:01 -0400
-Received: from fwd79.aul.t-online.de (fwd79.aul.t-online.de [10.223.144.105])
- by mailout07.t-online.de (Postfix) with SMTP id 9E7489788;
- Mon,  9 Sep 2024 08:15:53 +0200 (CEST)
-Received: from linpower.localnet ([93.236.144.183]) by fwd79.t-online.de
+Received: from fwd71.aul.t-online.de (fwd71.aul.t-online.de [10.223.144.97])
+ by mailout07.t-online.de (Postfix) with SMTP id AB9F738DC;
+ Mon,  9 Sep 2024 08:15:58 +0200 (CEST)
+Received: from linpower.localnet ([93.236.144.183]) by fwd71.t-online.de
  with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
- esmtp id 1snXgn-2648G10; Mon, 9 Sep 2024 08:15:53 +0200
+ esmtp id 1snXgr-0s6EZV0; Mon, 9 Sep 2024 08:15:57 +0200
 Received: by linpower.localnet (Postfix, from userid 1000)
- id D78AA2001CD; Mon,  9 Sep 2024 08:15:52 +0200 (CEST)
+ id DC322200442; Mon,  9 Sep 2024 08:15:52 +0200 (CEST)
 From: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
 To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Stefan Weil <sw@weilnetz.de>
 Cc: Howard Spoelstra <hsp.cat7@gmail.com>,
  Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Subject: [PATCH 1/3] ui/sdl2: reenable the SDL2 Windows keyboard hook procedure
-Date: Mon,  9 Sep 2024 08:15:50 +0200
-Message-Id: <20240909061552.6122-1-vr_qemu@t-online.de>
+Subject: [PATCH 3/3] ui/sdl2: ignore GUI keys in SDL_TEXTINPUT handler
+Date: Mon,  9 Sep 2024 08:15:52 +0200
+Message-Id: <20240909061552.6122-3-vr_qemu@t-online.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <ae9b2c56-dab2-4b8f-bb5e-2087e9ccaa92@t-online.de>
 References: <ae9b2c56-dab2-4b8f-bb5e-2087e9ccaa92@t-online.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1725862553-C17F05C5-241EE4EB/0/0 CLEAN NORMAL
-X-TOI-MSGID: d0bfdf8f-8f1d-4f78-bf43-e0f6ce2fc0bd
+X-TOI-EXPURGATEID: 150726::1725862558-4E7F241D-0244F0DC/0/0 CLEAN NORMAL
+X-TOI-MSGID: 9d54a0aa-9e48-48e4-869c-87dc911b8714
 Received-SPF: pass client-ip=194.25.134.83;
  envelope-from=volker.ruemelin@t-online.de; helo=mailout07.t-online.de
 X-Spam_score_int: -18
@@ -67,157 +67,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Windows only:
+Ignore GUI keys for SDL_TEXTINPUT events, just like GUI keys are
+ignored for SDL_KEYDOWN events. This prevents unintended text input
+in a text console when hiding the text console with the GUI keys.
 
-The libSDL2 Windows message loop needs the libSDL2 Windows low
-level keyboard hook procedure to grab the left and right Windows
-keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
+The SDL_TEXTINPUT event always comes after the SDL_KEYDOWN event.
+See libsdl-org/SDL issue #1659.
 
-Because the QEMU Windows keyboard hook procedure is still needed
-to filter out the special left Control key event for every Alt Gr
-key event, it's important to install the two keyboard hook
-procedures in the following order. First the SDL2 procedure, then
-the QEMU procedure.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
 Tested-by: Howard Spoelstra <hsp.cat7@gmail.com>
 Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
 ---
- ui/sdl2.c           | 53 ++++++++++++++++++++++++++++++---------------
- ui/win32-kbd-hook.c |  3 +++
- 2 files changed, 38 insertions(+), 18 deletions(-)
+ include/ui/sdl2.h |  1 +
+ ui/sdl2.c         | 17 +++++++++--------
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
+diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
+index 6907115809..dbe6e3d973 100644
+--- a/include/ui/sdl2.h
++++ b/include/ui/sdl2.h
+@@ -42,6 +42,7 @@ struct sdl2_console {
+     int updates;
+     int idle_counter;
+     int ignore_hotkeys;
++    bool gui_keysym;
+     SDL_GLContext winctx;
+     QKbdState *kbd;
+ #ifdef CONFIG_OPENGL
 diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 98ed974371..ac37c173a1 100644
+index 9d9a9362cb..cb1acd4499 100644
 --- a/ui/sdl2.c
 +++ b/ui/sdl2.c
-@@ -42,6 +42,7 @@ static SDL_Surface *guest_sprite_surface;
- static int gui_grab; /* if true, all keyboard/mouse events are grabbed */
- static bool alt_grab;
- static bool ctrl_grab;
-+static bool win32_kbd_grab;
- 
- static int gui_saved_grab;
- static int gui_fullscreen;
-@@ -202,6 +203,19 @@ static void sdl_update_caption(struct sdl2_console *scon)
-     }
- }
- 
-+static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
-+{
-+#ifdef CONFIG_WIN32
-+    SDL_SysWMinfo info;
-+
-+    SDL_VERSION(&info.version);
-+    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
-+        return info.info.win.window;
-+    }
-+#endif
-+    return NULL;
-+}
-+
- static void sdl_hide_cursor(struct sdl2_console *scon)
- {
-     if (scon->opts->has_show_cursor && scon->opts->show_cursor) {
-@@ -259,9 +273,16 @@ static void sdl_grab_start(struct sdl2_console *scon)
-     } else {
-         sdl_hide_cursor(scon);
-     }
-+    /*
-+     * Windows: To ensure that QEMU's low level keyboard hook procedure is
-+     * called before SDL2's, the QEMU procedure must first be removed and
-+     * then the SDL2 and QEMU procedures must be installed in this order.
-+     */
-+    win32_kbd_set_window(NULL);
-     SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
-+    win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
-     gui_grab = 1;
--    win32_kbd_set_grab(true);
-+    win32_kbd_set_grab(win32_kbd_grab);
-     sdl_update_caption(scon);
- }
- 
-@@ -370,19 +391,6 @@ static int get_mod_state(void)
-     }
- }
- 
--static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
--{
--#ifdef CONFIG_WIN32
--    SDL_SysWMinfo info;
--
--    SDL_VERSION(&info.version);
--    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
--        return info.info.win.window;
--    }
--#endif
--    return NULL;
--}
--
- static void handle_keydown(SDL_Event *ev)
- {
+@@ -396,12 +396,13 @@ static void handle_keydown(SDL_Event *ev)
      int win;
-@@ -605,7 +613,7 @@ static void handle_windowevent(SDL_Event *ev)
-         sdl2_redraw(scon);
-         break;
-     case SDL_WINDOWEVENT_FOCUS_GAINED:
--        win32_kbd_set_grab(gui_grab);
-+        win32_kbd_set_grab(win32_kbd_grab && gui_grab);
-         if (qemu_console_is_graphic(scon->dcl.con)) {
-             win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
-         }
-@@ -849,6 +857,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-     uint8_t data = 0;
-     int i;
-     SDL_SysWMinfo info;
-+    SDL_version ver;
-     SDL_Surface *icon = NULL;
-     char *dir;
+     struct sdl2_console *scon = get_scon_from_window(ev->key.windowID);
+     int gui_key_modifier_pressed = get_mod_state();
+-    int gui_keysym = 0;
  
-@@ -866,10 +875,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available since SDL 2.0.8 */
-     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
- #endif
--#ifndef CONFIG_WIN32
--    /* QEMU uses its own low level keyboard hook procedure on Windows */
-     SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
--#endif
- #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
-     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
- #endif
-@@ -877,6 +883,17 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-     SDL_EnableScreenSaver();
-     memset(&info, 0, sizeof(info));
-     SDL_VERSION(&info.version);
-+    /*
-+     * Since version 2.16.0 under Windows, SDL2 has its own low level
-+     * keyboard hook procedure to grab the keyboard. The remaining task of
-+     * QEMU's low level keyboard hook procedure is to filter out the special
-+     * left Control up/down key event for every Alt Gr key event on keyboards
-+     * with an international layout.
-+     */
-+    SDL_GetVersion(&ver);
-+    if (ver.major == 2 && ver.minor < 16) {
-+        win32_kbd_grab = true;
-+    }
- 
-     gui_fullscreen = o->has_full_screen && o->full_screen;
- 
-diff --git a/ui/win32-kbd-hook.c b/ui/win32-kbd-hook.c
-index 1ac237db9e..39d42134a2 100644
---- a/ui/win32-kbd-hook.c
-+++ b/ui/win32-kbd-hook.c
-@@ -91,6 +91,9 @@ void win32_kbd_set_window(void *hwnd)
-             win32_unhook_notifier.notify = keyboard_hook_unhook;
-             qemu_add_exit_notifier(&win32_unhook_notifier);
-         }
-+    } else if (!hwnd && win32_keyboard_hook) {
-+        keyboard_hook_unhook(&win32_unhook_notifier, NULL);
-+        qemu_remove_exit_notifier(&win32_unhook_notifier);
+     if (!scon) {
+         return;
      }
  
-     win32_window = hwnd;
++    scon->gui_keysym = false;
++
+     if (!scon->ignore_hotkeys && gui_key_modifier_pressed && !ev->key.repeat) {
+         switch (ev->key.keysym.scancode) {
+         case SDL_SCANCODE_2:
+@@ -427,15 +428,15 @@ static void handle_keydown(SDL_Event *ev)
+                     }
+                 }
+                 sdl2_release_modifiers(scon);
+-                gui_keysym = 1;
++                scon->gui_keysym = true;
+             }
+             break;
+         case SDL_SCANCODE_F:
+             toggle_full_screen(scon);
+-            gui_keysym = 1;
++            scon->gui_keysym = true;
+             break;
+         case SDL_SCANCODE_G:
+-            gui_keysym = 1;
++            scon->gui_keysym = true;
+             if (!gui_grab) {
+                 sdl_grab_start(scon);
+             } else if (!gui_fullscreen) {
+@@ -448,7 +449,7 @@ static void handle_keydown(SDL_Event *ev)
+                 /* re-create scon->texture */
+                 sdl2_2d_switch(&scon->dcl, scon->surface);
+             }
+-            gui_keysym = 1;
++            scon->gui_keysym = true;
+             break;
+ #if 0
+         case SDL_SCANCODE_KP_PLUS:
+@@ -467,14 +468,14 @@ static void handle_keydown(SDL_Event *ev)
+                         __func__, width, height);
+                 sdl_scale(scon, width, height);
+                 sdl2_redraw(scon);
+-                gui_keysym = 1;
++                scon->gui_keysym = true;
+             }
+ #endif
+         default:
+             break;
+         }
+     }
+-    if (!gui_keysym) {
++    if (!scon->gui_keysym) {
+         sdl2_process_key(scon, &ev->key);
+     }
+ }
+@@ -500,7 +501,7 @@ static void handle_textinput(SDL_Event *ev)
+         return;
+     }
+ 
+-    if (QEMU_IS_TEXT_CONSOLE(con)) {
++    if (!scon->gui_keysym && QEMU_IS_TEXT_CONSOLE(con)) {
+         qemu_text_console_put_string(QEMU_TEXT_CONSOLE(con), ev->text.text, strlen(ev->text.text));
+     }
+ }
 -- 
 2.35.3
 
