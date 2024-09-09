@@ -4,82 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4416EECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B207ECE585
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:34:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniw7-0002Kg-78; Mon, 09 Sep 2024 14:16:29 -0400
+	id 1snjCN-0007hY-L7; Mon, 09 Sep 2024 14:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snivz-0001tl-4A
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:16:19 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snivu-0002oG-Gu
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:16:18 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5c3ed267a7bso2311713a12.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 11:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725905773; x=1726510573; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VDcXcsdeFEjrXienQpg6mBkczDT4wivM5vmM2cMi1Kk=;
- b=i6Qew7dDg5N5H3RJ2sw6WLh2ssZgKUNPCwxtHC4Yu2lT0DnJvCis0iVVd34FIOBffE
- zk5fFYuBd9wVsCJhRm165FhD21++3G/YLNzKHHbVLccYIwKjcOvB5LtvQTZACqtLOW1K
- iNUPHbY3ZUV+9o1SZ/BQH/vb8FO0oVQe7bG4BtTp2QodcLUsg/tCOy0jM9oadtQsMCF6
- lTzgeBW1Yktje6MlGkubYohkweuIKCUTC9O1ZbNaAMdP1lRf6q3i1SKe/W+3Fg60T+MM
- 55cpkkNgvjoHnnsGL7/AAos4vUgj5yvRwJ/16VYlAb7nUCpQ1arPq9fJOesPVOdh4Jxl
- 4z+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725905773; x=1726510573;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VDcXcsdeFEjrXienQpg6mBkczDT4wivM5vmM2cMi1Kk=;
- b=IiRjRfofReS1ERqKWNFABhnJi0iuFp/1qfn8g/+xCM7Lqcspd7ei4nd5Dw07Kjwds4
- bWWqnOoHM9bUrByH5sDSe3E5MByaAVy30NuQyCCdU4/cvEMNgS2TPar6hMR7No2goSwy
- cmtHZWvh1HYbLRSCzGiBn4uM3lPDXLHFziBQgiROR25s6ApaY03/ZpiNRhj9o5uLzQA7
- biFVs+0ZcUZuo7f85yHYtL/zwu0mlaE9PEceER7DfQTiYmNKvnPiGUTa6y+kOOmZSwrD
- l8F1gA00vW6qu3GWxkSLgT3HsNUL07FDvd/PR4GK8hQutLNSVvxYZU60HN0HbK2E7i97
- EXcA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBZqac+fVGhj0TdZK94oH9RtCMKLnzRsfC/Oe13UhynLFzcMeT/a8lR8XQ6RD/XxLCAoO5kXvMP1vi@nongnu.org
-X-Gm-Message-State: AOJu0YwaDo+KtZ9EaWy/Vy0VmLm8kzQIZDCkR2vJ9xb1UtPGjA+K7Qer
- zp2us+ZeSdaL90AMs12eGBWmaZtGbIL6goDneuhd/jLswN7V4QaVvPoRqFwDhWm1SoMphq77SuW
- jNKyndB6Ydeq5CTT749vynaxXtAk/IEyVRhq0gA==
-X-Google-Smtp-Source: AGHT+IEjfpze4KYQMINrno7rGzgOez0J4+Z75yTraUfeFlndfTFQMFwUEkxFDcSV3ht70+dhkRJEAHQXfZhdjUOohnw=
-X-Received: by 2002:a05:6402:3903:b0:5be:fdc0:e704 with SMTP id
- 4fb4d7f45d1cf-5c3dc79323dmr7951048a12.10.1725905772817; Mon, 09 Sep 2024
- 11:16:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1snjCD-0007gG-WA
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:33:06 -0400
+Received: from vps-vb.mhejs.net ([37.28.154.113])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1snjCA-0004NX-Ts
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:33:05 -0400
+Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mail@maciej.szmigiero.name>)
+ id 1snjBz-0006a7-8R; Mon, 09 Sep 2024 20:32:51 +0200
+Message-ID: <fa64bf51-7fec-454b-b204-f92f5d06f731@maciej.szmigiero.name>
+Date: Mon, 9 Sep 2024 20:32:45 +0200
 MIME-Version: 1.0
-References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <fabedae0-d748-4a9d-b802-14d15f3cd44a@linaro.org>
- <CAFEAcA9z9Mf52pOVCHv_Y1hvPPWt7Me5CDcxYS_cXvj7OFDuSw@mail.gmail.com>
- <3d622822-b4a9-49b1-950e-8f33b6532d8f@linaro.org>
-In-Reply-To: <3d622822-b4a9-49b1-950e-8f33b6532d8f@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Sep 2024 19:16:01 +0100
-Message-ID: <CAFEAcA-osC-uuC+6+vskYVSEXfqmzbEFUFfgFAwxzQkju1i9Sw@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Guenter Roeck <linux@roeck-us.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/17] migration: Add
+ save_live_complete_precopy_{begin,end} handlers
+To: Peter Xu <peterx@redhat.com>, Avihai Horon <avihaih@nvidia.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
+ <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com> <Zt83mWWlMomX4mRD@x1n>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <Zt83mWWlMomX4mRD@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=37.28.154.113;
+ envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,78 +108,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Sept 2024 at 18:25, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi Peter,
->
-> On 9/9/24 15:44, Peter Maydell wrote:
-> > On Mon, 9 Sept 2024 at 14:41, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
-> >>
-> >> Hi,
-> >>
-> >> On 3/9/24 18:06, Peter Maydell wrote:
-> >>> This patchset removes the various Arm machines which we deprecated
-> >>> for the 9.0 release and are therefore allowed to remove for the 9.2
-> >>> release:
-> >>>    akita, borzoi, cheetah, connex, mainstone, n800, n810,
-> >>>    spitz, terrier, tosa, verdex, z2
-> >>
-> >>> The series includes removal of some code which while not strictly
-> >>> specific to these machines was in practice used only by them:
-> >>>    * the OneNAND flash memory device
-> >>>    * the PCMCIA subsystem
-> >>>    * the MUSB USB2.0 OTG USB controller chip (hcd-musb)
-> >>
-> >>> thanks
-> >>> -- PMM
-> >>>
-> >>> Peter Maydell (53):
-> >>>     hw/input: Drop ADS7846 device
-> >>>     hw/adc: Remove MAX111X device
-> >>>     hw/gpio: Remove MAX7310 device
-> >>>     hw/input: Remove tsc2005 touchscreen controller
-> >>>     hw/input: Remove tsc210x device
-> >>>     hw/rtc: Remove twl92230 device
-> >>>     hw/input: Remove lm832x device
-> >>>     hw/usb: Remove tusb6010 USB controller
-> >>>     hw/usb: Remove MUSB USB host controller
-> >>
-> >> Some of these devices are user-creatable and only rely on a bus
-> >> (not a particular removed machine), so could potentially be used
-> >> on other maintained machines which expose a similar bus.
-> >
-> > Which ones in particular? Almost all of them are sysbus.
-> > At least one of them that I looked at (lm832x) is an I2C
-> > device but it also requires the board to wire up a GPIO line
-> > and to call a specific C function to inject key events, so it's
-> > not actually generally usable.
-> >
-> >> We don't have in-tree (tests/) examples, but I wonder if it is OK
-> >> to remove them without first explicitly deprecating them in
-> >> docs/about/deprecated.rst. I wouldn't surprise users when 9.2 is
-> >> release. Maybe this isn't an issue, but I prefer to mention it
-> >> now to be sure.
-> >
-> > I think this is unlikely to be a problem, but if you have
-> > a specific device you think might be a problem we can
-> > look at whether it seems likely (e.g. whether a web search
-> > turns up users using it in odd ways).
->
-> I don't have specific example and am happy to remove these
-> legacy devices.
->
-> I'm wondering more generically about removing user-creatable &
-> on-bus devices, when explicit use is removed (deprecated board
-> removed), but we can still use them elsewhere. IMHO for clarity
-> in the future we should list them in deprecated.rst along with
-> some lines like "this device is explicitly used by the FOO machine which
-> is being deprecated; if you want to keep them, provide test cases".
+On 9.09.2024 19:59, Peter Xu wrote:
+> On Thu, Sep 05, 2024 at 04:45:48PM +0300, Avihai Horon wrote:
+>>
+>> On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> These SaveVMHandlers help device provide its own asynchronous
+>>> transmission of the remaining data at the end of a precopy phase.
+>>>
+>>> In this use case the save_live_complete_precopy_begin handler might
+>>> be used to mark the stream boundary before proceeding with asynchronous
+>>> transmission of the remaining data while the
+>>> save_live_complete_precopy_end handler might be used to mark the
+>>> stream boundary after performing the asynchronous transmission.
+>>>
+>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>> ---
+>>>    include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
+>>>    migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
+>>>    2 files changed, 71 insertions(+)
+>>>
+>>> diff --git a/include/migration/register.h b/include/migration/register.h
+>>> index f60e797894e5..9de123252edf 100644
+>>> --- a/include/migration/register.h
+>>> +++ b/include/migration/register.h
+>>> @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
+>>>         */
+>>>        int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+>>>
+>>> +    /**
+>>> +     * @save_live_complete_precopy_begin
+>>> +     *
+>>> +     * Called at the end of a precopy phase, before all
+>>> +     * @save_live_complete_precopy handlers and before launching
+>>> +     * all @save_live_complete_precopy_thread threads.
+>>> +     * The handler might, for example, mark the stream boundary before
+>>> +     * proceeding with asynchronous transmission of the remaining data via
+>>> +     * @save_live_complete_precopy_thread.
+>>> +     * When postcopy is enabled, devices that support postcopy will skip this step.
+>>> +     *
+>>> +     * @f: QEMUFile where the handler can synchronously send data before returning
+>>> +     * @idstr: this device section idstr
+>>> +     * @instance_id: this device section instance_id
+>>> +     * @opaque: data pointer passed to register_savevm_live()
+>>> +     *
+>>> +     * Returns zero to indicate success and negative for error
+>>> +     */
+>>> +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
+>>> +                                            char *idstr, uint32_t instance_id,
+>>> +                                            void *opaque);
+>>> +    /**
+>>> +     * @save_live_complete_precopy_end
+>>> +     *
+>>> +     * Called at the end of a precopy phase, after @save_live_complete_precopy
+>>> +     * handlers and after all @save_live_complete_precopy_thread threads have
+>>> +     * finished. When postcopy is enabled, devices that support postcopy will
+>>> +     * skip this step.
+>>> +     *
+>>> +     * @f: QEMUFile where the handler can synchronously send data before returning
+>>> +     * @opaque: data pointer passed to register_savevm_live()
+>>> +     *
+>>> +     * Returns zero to indicate success and negative for error
+>>> +     */
+>>> +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
+>>
+>> Is this handler necessary now that migration core is responsible for the
+>> threads and joins them? I don't see VFIO implementing it later on.
+> 
+> Right, I spot the same thing.
+> 
+> This series added three hooks: begin, end, precopy_thread.
+> 
+> What I think is it only needs one, which is precopy_async.  My vague memory
+> was that was what we used to discuss too, so that when migration precopy
+> flushes the final round of iterable data, it does:
+> 
+>    (1) loop over all complete_precopy_async() and enqueue the tasks if
+>        existed into the migration worker pool.  Then,
+> 
+>    (2) loop over all complete_precopy() like before.
+> 
+> Optionally, we can enforce one vmstate handler only provides either
+> complete_precopy_async() or complete_precopy().  In this case VFIO can
+> update the two hooks during setup() by detecting multifd && !mapped_ram &&
+> nocomp.
+> 
 
-Yes, I think that would be a good idea going forward. I didn't
-realise in this case that some of the boards used devices that
-were i2c or whatever and at least nominally usable elsewhere.
+The "_begin" hook is still necessary to mark the end of the device state
+sent via the main migration stream (during the phase VM is still running)
+since we can't start loading the multifd sent device state until all of
+that earlier data finishes loading first.
 
--- PMM
+We shouldn't send that boundary marker in .save_live_complete_precopy
+either since it would meant unnecessary waiting for other devices
+(not necessary VFIO ones) .save_live_complete_precopy bulk data.
+
+And VFIO SaveVMHandlers are shared for all VFIO devices (and const) so
+we can't really change them at runtime.
+
+Thanks,
+Maciej
+
 
