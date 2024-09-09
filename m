@@ -4,86 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66ABECE57A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 10:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CF9ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 10:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snbH4-0004bV-OL; Mon, 09 Sep 2024 06:05:34 -0400
+	id 1snbJC-0000nD-Ju; Mon, 09 Sep 2024 06:07:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1snbGu-0004YZ-Ff
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:05:26 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1snbJA-0000mj-Q1
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:07:44 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1snbGs-00088G-Pn
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:05:24 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a8d100e9ce0so326990466b.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 03:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725876320; x=1726481120; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=UDW7Y/FkHlm7foc3nBKUG2Quqbrny0XbGq22zLlogVQ=;
- b=r64LMMAArInyrGT4P3In8+PQT5dUvYv4vBoP1bBvfLvnaSsfpqS49kxOmFoOVOidnx
- NBCfCuXaOzqNesbF05WhI5UfDEeg9TlP3T6zSdG89jioIuEMN06XUmyfzK5OXIoIQb/7
- cwzenLquzo7FpqFXqyBtx7mnMU61jtV8/p53Exgy3xjr9pkx8+tezcVChssdmPcFTY/k
- 72wUBWuBRvVFKFm2OjIgK55UhUcTej2BqNBl0w92fkmjqItQsaY1HvjhB/e2PVeE4n+X
- NUK6IX0Xaq/7i8HiUYav77pdGLRmjY6z7iYXjgDAvqO8beSo/0fbEzUI4156WdAAZp4+
- ETVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725876320; x=1726481120;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UDW7Y/FkHlm7foc3nBKUG2Quqbrny0XbGq22zLlogVQ=;
- b=fEDttgJvpkG1KMGnX23ih9Qnm9dI0zu+LqfLsEiOLRpOJNlhqcbseddTvucx+BSEGO
- h0QkAaSdPA7WyqkB7uFLFWPJ1xK348DHcJjX7C8tjv70g5TOotAyKNvdRwNF0MeG7N/n
- TQsMF0IklaEfa4gGyFhh0vbGYVNTHNt8G79MPMegl5aQG+ZRvqbX4Ef59Fcep4xc+sL9
- 2gNbgqNmjIlFdPsqlEuJjswY4wavR2eLR0N1P6hu0T8/HeUZ59DH7iyASK1MAXWTb/Fg
- IDABePDuXLWji9FnB+gnDW/oxi+SG0pGS6Glm/Ohq6D0YBwAfeHGD1rwbJyXy7+t9uYt
- VP/Q==
-X-Gm-Message-State: AOJu0Yy0WGizDKhHw3sTEES74/CIOaal1B/UF1+D7AttgIFhqHhuIksW
- 529W9aKnlGUngV3GBnilH0hIJi+pApxJLOZ1IXGY/e/6EXr6Cxj3m4LIhqOgFpI=
-X-Google-Smtp-Source: AGHT+IE6lyWp5zqxevMPsQzugYFaDvJXsjA+BJH/vPHmgVDm/0MzkLQWUx6FwpKR8cMYtv9YXiHHPg==
-X-Received: by 2002:a17:907:801:b0:a77:b4e3:4fca with SMTP id
- a640c23a62f3a-a8a885bfbe1mr1131892566b.9.1725876319229; 
- Mon, 09 Sep 2024 03:05:19 -0700 (PDT)
-Received: from [192.168.200.25] (83.11.24.101.ipv4.supernova.orange.pl.
- [83.11.24.101]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c61258sm317749066b.116.2024.09.09.03.05.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 03:05:18 -0700 (PDT)
-Message-ID: <e632758d-893f-4a44-b081-9fdd92c19548@linaro.org>
-Date: Mon, 9 Sep 2024 12:05:17 +0200
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1snbJ9-0008MI-4m
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 06:07:44 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C39C31F7AB;
+ Mon,  9 Sep 2024 10:07:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725876458; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AQbKFzQ0eUVaNRLx9qiwWOV82ics6dT90utmYiEvO7Q=;
+ b=W+obvUBwjM58ZKxgB1Em1GvWT5bzepnYDC/8qzI+ckCTtahs3OuvfKQSpCdENLvX23FIlW
+ VyJHJoGRloR4WW50CYLsckkGhVb6JhYn6Cm1RZ9mXiExV5q+g6g7twk5YPebzQM89UhMJF
+ uIbFhwi5Ngm54cSQRLze8piapudI56I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725876458;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AQbKFzQ0eUVaNRLx9qiwWOV82ics6dT90utmYiEvO7Q=;
+ b=6aGv5oD1i57o+W74wk9kQXzRDHMEo0un3MG4nVzud6hcfBX9Lk3os2RnZZ3/6B7AMEKnEK
+ y6dpMpT2yBuTnfDg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1725876458; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AQbKFzQ0eUVaNRLx9qiwWOV82ics6dT90utmYiEvO7Q=;
+ b=W+obvUBwjM58ZKxgB1Em1GvWT5bzepnYDC/8qzI+ckCTtahs3OuvfKQSpCdENLvX23FIlW
+ VyJHJoGRloR4WW50CYLsckkGhVb6JhYn6Cm1RZ9mXiExV5q+g6g7twk5YPebzQM89UhMJF
+ uIbFhwi5Ngm54cSQRLze8piapudI56I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1725876458;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AQbKFzQ0eUVaNRLx9qiwWOV82ics6dT90utmYiEvO7Q=;
+ b=6aGv5oD1i57o+W74wk9kQXzRDHMEo0un3MG4nVzud6hcfBX9Lk3os2RnZZ3/6B7AMEKnEK
+ y6dpMpT2yBuTnfDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9067213312;
+ Mon,  9 Sep 2024 10:07:38 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ura0IerI3mYxEQAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Mon, 09 Sep 2024 10:07:38 +0000
+Message-ID: <0cbe47a3-5572-4f74-b2ba-69abd8d3b448@suse.de>
+Date: Mon, 9 Sep 2024 12:07:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] hw/arm/sbsa-ref: Enable CXL Host Bridge by pxb-cxl
-To: Yuquan Wang <wangyuquan1236@phytium.com.cn>, Jonathan.Cameron@Huawei.com, 
- quic_llindhol@quicinc.com, peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
- chenbaozi@phytium.com.cn, wangyinfeng@phytium.com.cn, shuyiqi@phytium.com.cn
-References: <20240830041557.600607-1-wangyuquan1236@phytium.com.cn>
- <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB
-Organization: Linaro
-In-Reply-To: <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH] Remove unnecessary code in the interface
+ accel_system_init_ops_interfaces
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, philmd@linaro.org,
+ alistair.francis@wdc.com, pbonzini@redhat.com, qemu-devel@nongnu.org
+References: <20240909031736.1881-1-andrew.yuan@jaguarmicro.com>
+ <e93d6ed4-8fe2-434b-9d84-997bae44847f@ventanamicro.com>
+Content-Language: en-US
+From: Claudio Fontana <cfontana@suse.de>
+In-Reply-To: <e93d6ed4-8fe2-434b-9d84-997bae44847f@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=cfontana@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,19 +121,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.08.2024 06:15, Yuquan Wang wrote:
-> The memory layout places 1M space for 16 host bridge register regions
-> in the sbsa-ref memmap. In addition, this creates a default pxb-cxl
-> (bus_nr=0xfe) bridge with one cxl-rp on sbsa-ref.
+On 9/9/24 11:54, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 9/9/24 12:17 AM, Andrew.Yuan wrote:
+>> The code 'ops = ACCEL_OPS_CLASS(module_object_class_by_name(ops_name));' is unnecessary;
+>>
+>> And, the following code :
+>> 1.has the same functionality;
+>> 2.includes error checking;
+>>
+>> Signed-off-by: Andrew.Yuan <andrew.yuan@jaguarmicro.com>
+>> ---
+>>   accel/accel-system.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/accel/accel-system.c b/accel/accel-system.c
+>> index f6c947dd82..5d502c8fd8 100644
+>> --- a/accel/accel-system.c
+>> +++ b/accel/accel-system.c
+>> @@ -73,7 +73,7 @@ void accel_system_init_ops_interfaces(AccelClass *ac)
+>>       g_assert(ac_name != NULL);
+>>   
+>>       ops_name = g_strdup_printf("%s" ACCEL_OPS_SUFFIX, ac_name);
+>> -    ops = ACCEL_OPS_CLASS(module_object_class_by_name(ops_name));
+>> +
+> 
+> The code you're changing was added by 5141e9a23f ("accel: abort if we fail to
+> load the accelerator plugin") and I think this repetition is intended. If I have
+> to guess (first time looking at this code), ACCEL_OPS_CLASS() is creating the class
+> type QOM functions that the the second module_object_class_by_name() relies on to
+> catch the module load error the commit is trying to address.
+> 
+> I'm CCing Claudio to get a better idea of the intention here. At the very least we
+> should add a code comment explaining the reasoning behind initing 'ops' two times
+> in a row and so on.
+> 
+> 
+> Thanks,
+> 
+> Daniel
 
-With this patchset applied I no longer can add pcie devices to sbsa-ref.
+Hi Daniel, just to signal that I've seen this message and will get to it when I am back to work later this week.
 
--device nvme,serial=deadbeef,bus=root_port_for_nvme1,drive=hdd
--drive file=disks/full-debian.hddimg,format=raw,id=hdd,if=none
+Ciao,
 
-Normally this adds NVME as pcie device but now it probably ends on 
-pxb-cxl bus instead.
+Claudio
 
-Also please bump platform_version.minor and document adding CXL in 
-docs/system/arm/sbsa.rst file.
+> 
+>>       oc = module_object_class_by_name(ops_name);
+>>       if (!oc) {
+>>           error_report("fatal: could not load module for type '%s'", ops_name);
+
 
