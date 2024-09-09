@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E094ECE58A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 21:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33921ECE58A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 21:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snlfT-00024R-1j; Mon, 09 Sep 2024 17:11:27 -0400
+	id 1snlxo-0005yH-Ie; Mon, 09 Sep 2024 17:30:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1snlfM-0001bj-Rl; Mon, 09 Sep 2024 17:11:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snlxn-0005xa-Fg
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 17:30:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1snlfL-00029D-89; Mon, 09 Sep 2024 17:11:20 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 489AwxQ2012431;
- Mon, 9 Sep 2024 21:11:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=+blF6B1cKfi5z
- 4fI90QzkCrCDtxnSNjpzrGDY5pD8us=; b=XXcnWihuB+/OnhIKAlESVjTGVIA+Q
- g0ogaMf8uhFAU/CyiUt0f9UkfMcy9CyQgCFApYGVH17rL/o5RhUuKUT0wdT8uiEB
- 7JlGeH8iIZJOlZKLwA6TcGS0K4XxcHjtgbFTmRwtGwFmg6v/hw//vMwyeRsFqNpn
- 0XQqwSTh8S7D04ZDklABwGfhZo2elzn3PHZmY8OYrQYsclU8owda6jQV/NSrMRSM
- Z8GeHNrFGumZNLQ/ZJi0I5NzYWfyhS09zQz+6JSKoPX+mo/qFnmfOPj3VPRC0qmM
- qndzAvA7Y5cVJv5o1Ilv2yRlKpMb5XHbnFpecGicU/7CxzxnVbb+SVaBg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gejac1wt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 21:11:09 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 489LB9oh009048;
- Mon, 9 Sep 2024 21:11:09 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gejac1wr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 21:11:08 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 489Kwr0X027333;
- Mon, 9 Sep 2024 21:11:08 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h3v2yyap-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 21:11:08 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 489LB4O721430696
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Sep 2024 21:11:04 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7C7E620040;
- Mon,  9 Sep 2024 21:11:04 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5022C20049;
- Mon,  9 Sep 2024 21:11:03 +0000 (GMT)
-Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Sep 2024 21:11:03 +0000 (GMT)
-From: Michael Kowal <kowal@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
- npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH v2 12/14] pnv/xive: Update PIPR when updating CPPR
-Date: Mon,  9 Sep 2024 16:10:36 -0500
-Message-Id: <20240909211038.27440-13-kowal@linux.ibm.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20240909211038.27440-1-kowal@linux.ibm.com>
-References: <20240909211038.27440-1-kowal@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snlxl-0004QN-JJ
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 17:30:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725917419;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lgV63vA7puC+VcliaXWMAbNn3/pczEaAaNvUhihvjMg=;
+ b=eSWiNLZBgKmlyVyZl8YTKhmJBNC6tu1p2kdna1SSG21Ilulbti4jjVLFliUPwytIKrh4CA
+ aidZjoJksueg1p9zh4U0pEqYRnXRRYGT0kTqRV0kxgh0Dk1UiKvzenDQYzvQ2bt6+P9Ie8
+ O2B81HJnut17kZ9thp07Gz1Wx/geH4w=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-DILpyT3HOIGoN84hxMpyZQ-1; Mon, 09 Sep 2024 17:30:18 -0400
+X-MC-Unique: DILpyT3HOIGoN84hxMpyZQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7a9a653c6cdso439303985a.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 14:30:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725917418; x=1726522218;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lgV63vA7puC+VcliaXWMAbNn3/pczEaAaNvUhihvjMg=;
+ b=O53C7GhZXvX84328Nq9tr2PQojcl2AmtmwD2IigvZAHB8cstoggRvhbH1mUk7/oTS5
+ fQdFqUovoxHzTmIkTyHHA5WvHCtIaBSyCimajA4MOUaWFQBqMk2vnlw6tv6Qb0uDw7Um
+ JAZ8qEB2rxMKmUy396gO4smPZ1t83WSx9hM1ShKn0lbtZUNebDroWY95BHaa+8J/awDt
+ oJb5oDZVcm50UIBqvURUhbrADXZOlC1ESu3sXc52wIoqBEWC7pxjn6Gxd3VOZvwzn0xS
+ 0jokGdESpUoPFtyX8zxB18Vgpb7e8THMBCdBiBUCpnw3+zUaZW0By6rEebBcJsC8NBfZ
+ cJKg==
+X-Gm-Message-State: AOJu0YxB+3AcuDrMWoFVmufmZinT1yKcxUZqnU2w29g0reAWqKVX6UU4
+ V92+m4SVRa5D9rS5vXrfX6TSXkZg/o/8yuZ7jt9PhxHOz8977akqpkgt1N2pNMyiVtSYi/Tgkzp
+ WoJNUpekJn71a1JDU1DNp8JBaTGjfAmzssb2riJ+5+BZ0sz3zVrGm
+X-Received: by 2002:a05:620a:3916:b0:7a2:e2e:31c6 with SMTP id
+ af79cd13be357-7a9bf988bebmr165164785a.21.1725917417689; 
+ Mon, 09 Sep 2024 14:30:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHts6tzaB1GdzaF5V2VVLx9ZuMtbE8H2lLn1liS6yZFZVGf0Djz0x3ELN+LDO9Pxdjl7iQ9Zw==
+X-Received: by 2002:a05:620a:3916:b0:7a2:e2e:31c6 with SMTP id
+ af79cd13be357-7a9bf988bebmr165160885a.21.1725917417312; 
+ Mon, 09 Sep 2024 14:30:17 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a9a79456a1sm254780785a.22.2024.09.09.14.30.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Sep 2024 14:30:16 -0700 (PDT)
+Date: Mon, 9 Sep 2024 17:30:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Hyman Huang <yong.huang@smartx.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH RESEND RFC 03/10] qapi/migration: Introduce periodic CPU
+ throttling parameters
+Message-ID: <Zt9o5r1ZWOxnjctC@x1n>
+References: <cover.1725891841.git.yong.huang@smartx.com>
+ <0bbcdfd86f35830e0a398220663aac5afd8b7e1e.1725891841.git.yong.huang@smartx.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: hL0sZ_T0hjaBliPlA_f6XDIIYq-yJGaH
-X-Proofpoint-GUID: oyzNoMjKzKdAX8MeCCQTKf2xzbwEjOc6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-09_10,2024-09-09_02,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- phishscore=0 mlxlogscore=835 spamscore=0 impostorscore=0 adultscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409090166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0bbcdfd86f35830e0a398220663aac5afd8b7e1e.1725891841.git.yong.huang@smartx.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,83 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.ibm.com>
+On Mon, Sep 09, 2024 at 10:25:36PM +0800, Hyman Huang wrote:
+> To activate the periodic CPU throttleing feature, introduce
+> the cpu-periodic-throttle.
+> 
+> To control the frequency of throttling, introduce the
+> cpu-periodic-throttle-interval.
+> 
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 
-Current code was updating the PIPR inside the xive_tctx_accept() function
-instead of the xive_tctx_set_cppr function, which is where the HW would
-have it updated.
+Considering that I would still suggest postcopy over auto-converge, IMO we
+should be cautious on adding more QMP interfaces on top of auto-converge,
+because that means more maintenance burden everywhere.. and it's against
+our goal to provide, hopefully, one solution for the long term for
+convergence issues.
 
-Moved the update to the xive_tctx_set_cppr function which required
-additional support for pool interrupts.
+Postcopy has a major issue with VFIO, but auto converge isn't anything
+better from that regard.. as we can't yet throttle a device so far anyway.
+Throttling of DMA probably means DMA faults, then postcopy might be doable
+too.  Meanwhile we're looking at working out 1G postcopy at some point.
 
-Fixes: cdd4de68edb6 ("ppc/xive: notify the CPU when the interrupt priority is more privileged")
-Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
----
- hw/intc/xive.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+So I wonder whether we can make any further optmization for auto-converge
+(if we still really want that..) to be at least transparent, so that they
+get auto enabled on new machine types.  If we really want some knobs to
+control, we can still expose via -global migration.x-* parameters, but then
+they'll be all debug tunables only, perhaps that can at least reduce
+burdens to QMP maintainers and Libvirt side.
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 5c5c3a2dd6..738eaf624d 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -89,7 +89,6 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
- 
-         /* Reset the pending buffer bit */
-         alt_regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
--        regs[TM_PIPR] = ipb_to_pipr(alt_regs[TM_IPB]);
- 
-         /* Drop Exception bit */
-         regs[TM_NSR] &= ~mask;
-@@ -143,6 +142,8 @@ void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
- static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
- {
-     uint8_t *regs = &tctx->regs[ring];
-+    uint8_t pipr_min;
-+    uint8_t ring_min;
- 
-     trace_xive_tctx_set_cppr(tctx->cs->cpu_index, ring,
-                              regs[TM_IPB], regs[TM_PIPR],
-@@ -154,8 +155,37 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
- 
-     tctx->regs[ring + TM_CPPR] = cppr;
- 
-+    /*
-+     * Recompute the PIPR based on local pending interrupts.  The PHYS
-+     * ring must take the minimum of both the PHYS and POOL PIPR values.
-+     */
-+    pipr_min = ipb_to_pipr(regs[TM_IPB]);
-+    ring_min = ring;
-+
-+    /* PHYS updates also depend on POOL values */
-+    if (ring == TM_QW3_HV_PHYS) {
-+        uint8_t *pool_regs = &tctx->regs[TM_QW2_HV_POOL];
-+
-+        /* POOL values only matter if POOL ctx is valid */
-+        if (pool_regs[TM_WORD2] & 0x80) {
-+
-+            uint8_t pool_pipr = ipb_to_pipr(pool_regs[TM_IPB]);
-+
-+            /*
-+             * Determine highest priority interrupt and
-+             * remember which ring has it.
-+             */
-+            if (pool_pipr < pipr_min) {
-+                pipr_min = pool_pipr;
-+                ring_min = TM_QW2_HV_POOL;
-+            }
-+        }
-+    }
-+
-+    regs[TM_PIPR] = pipr_min;
-+
-     /* CPPR has changed, check if we need to raise a pending exception */
--    xive_tctx_notify(tctx, ring);
-+    xive_tctx_notify(tctx, ring_min);
- }
- 
- void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb)
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
