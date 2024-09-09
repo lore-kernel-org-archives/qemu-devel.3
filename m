@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1309BECE577
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 520F2ECE57B
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snilQ-0001n2-C8; Mon, 09 Sep 2024 14:05:24 -0400
+	id 1snilP-0001hp-FS; Mon, 09 Sep 2024 14:05:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1snilP-0001iv-C2
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:23 -0400
+ id 1snilN-0001bE-Qu
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:21 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1snilN-0001k5-Nu
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:23 -0400
+ id 1snilL-0001i4-Rn
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:05:21 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1snilF-0006QK-6W; Mon, 09 Sep 2024 20:05:13 +0200
-Message-ID: <a8367aa9-8e69-4de5-99cb-5041ac901e92@maciej.szmigiero.name>
-Date: Mon, 9 Sep 2024 20:05:07 +0200
+ id 1snil2-0006Q4-HK; Mon, 09 Sep 2024 20:05:00 +0200
+Message-ID: <57835a25-10f9-4484-bd20-9e4e90a590e9@maciej.szmigiero.name>
+Date: Mon, 9 Sep 2024 20:04:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/17] migration: Add
- save_live_complete_precopy_{begin,end} handlers
+Subject: Re: [PATCH v2 01/17] vfio/migration: Add
+ save_{iterate,complete_precopy}_started trace events
 To: Avihai Horon <avihaih@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
- <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
+ <3c43bf662842e579c0009dfc5135024e45166987.1724701542.git.maciej.szmigiero@oracle.com>
+ <8ec6abeb-25ee-417e-9f3f-d0f27ec4f370@nvidia.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
+In-Reply-To: <8ec6abeb-25ee-417e-9f3f-d0f27ec4f370@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=37.28.154.113;
@@ -108,7 +108,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5.09.2024 15:45, Avihai Horon wrote:
+On 5.09.2024 15:08, Avihai Horon wrote:
+> Hi Maciej,
 > 
 > On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
 >> External email: Use caution opening links or attachments
@@ -116,71 +117,106 @@ On 5.09.2024 15:45, Avihai Horon wrote:
 >>
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> These SaveVMHandlers help device provide its own asynchronous
->> transmission of the remaining data at the end of a precopy phase.
+>> This way both the start and end points of migrating a particular VFIO
+>> device are known.
 >>
->> In this use case the save_live_complete_precopy_begin handler might
->> be used to mark the stream boundary before proceeding with asynchronous
->> transmission of the remaining data while the
->> save_live_complete_precopy_end handler might be used to mark the
->> stream boundary after performing the asynchronous transmission.
+>> Add also a vfio_save_iterate_empty_hit trace event so it is known when
+>> there's no more data to send for that device.
+> 
+> Out of curiosity, what are these traces used for?
+
+Just for benchmarking, collecting these data makes it easier to
+reason where possible bottlenecks may be.
+
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >> ---
->>   include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
->>   migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
->>   2 files changed, 71 insertions(+)
+>>   hw/vfio/migration.c           | 13 +++++++++++++
+>>   hw/vfio/trace-events          |  3 +++
+>>   include/hw/vfio/vfio-common.h |  3 +++
+>>   3 files changed, 19 insertions(+)
 >>
->> diff --git a/include/migration/register.h b/include/migration/register.h
->> index f60e797894e5..9de123252edf 100644
->> --- a/include/migration/register.h
->> +++ b/include/migration/register.h
->> @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
->>        */
->>       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>> index 262d42a46e58..24679d8c5034 100644
+>> --- a/hw/vfio/migration.c
+>> +++ b/hw/vfio/migration.c
+>> @@ -472,6 +472,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>           return -ENOMEM;
+>>       }
 >>
->> +    /**
->> +     * @save_live_complete_precopy_begin
->> +     *
->> +     * Called at the end of a precopy phase, before all
->> +     * @save_live_complete_precopy handlers and before launching
->> +     * all @save_live_complete_precopy_thread threads.
->> +     * The handler might, for example, mark the stream boundary before
->> +     * proceeding with asynchronous transmission of the remaining data via
->> +     * @save_live_complete_precopy_thread.
->> +     * When postcopy is enabled, devices that support postcopy will skip this step.
->> +     *
->> +     * @f: QEMUFile where the handler can synchronously send data before returning
->> +     * @idstr: this device section idstr
->> +     * @instance_id: this device section instance_id
->> +     * @opaque: data pointer passed to register_savevm_live()
->> +     *
->> +     * Returns zero to indicate success and negative for error
->> +     */
->> +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
->> +                                            char *idstr, uint32_t instance_id,
->> +                                            void *opaque);
->> +    /**
->> +     * @save_live_complete_precopy_end
->> +     *
->> +     * Called at the end of a precopy phase, after @save_live_complete_precopy
->> +     * handlers and after all @save_live_complete_precopy_thread threads have
->> +     * finished. When postcopy is enabled, devices that support postcopy will
->> +     * skip this step.
->> +     *
->> +     * @f: QEMUFile where the handler can synchronously send data before returning
->> +     * @opaque: data pointer passed to register_savevm_live()
->> +     *
->> +     * Returns zero to indicate success and negative for error
->> +     */
->> +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
+>> +    migration->save_iterate_run = false;
+>> +    migration->save_iterate_empty_hit = false;
+>> +
+>>       if (vfio_precopy_supported(vbasedev)) {
+>>           switch (migration->device_state) {
+>>           case VFIO_DEVICE_STATE_RUNNING:
+>> @@ -605,9 +608,17 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
+>>       VFIOMigration *migration = vbasedev->migration;
+>>       ssize_t data_size;
+>>
+>> +    if (!migration->save_iterate_run) {
+>> +        trace_vfio_save_iterate_started(vbasedev->name);
+>> +        migration->save_iterate_run = true;
 > 
-> Is this handler necessary now that migration core is responsible for the threads and joins them? I don't see VFIO implementing it later on.
+> Maybe rename save_iterate_run to save_iterate_started so it's aligned with trace_vfio_save_iterate_started and trace_vfio_save_complete_precopy_started?
 
-It's not 100% necessary for the current implementation but preserved
-for future usage and code consistency with the "_begin" handler
-(which IS necessary).
+Will do.
 
+>> +    }
+>> +
+>>       data_size = vfio_save_block(f, migration);
+>>       if (data_size < 0) {
+>>           return data_size;
+>> +    } else if (data_size == 0 && !migration->save_iterate_empty_hit) {
+>> +        trace_vfio_save_iterate_empty_hit(vbasedev->name);
+>> +        migration->save_iterate_empty_hit = true;
+> 
+> During precopy we could hit empty multiple times. Any reason why only the first time should be traced?
+
+This trace point is supposed to indicate whether the device state
+transfer during the time the VM was still running likely has
+exhausted the amount of data that can be transferred during
+that phase.
+
+In other words, the stopped-time device state transfer likely
+only had to transfer the data which the device does not support
+transferring during the live VM phase (with just a small possible
+residual accrued since that trace point was hit).
+
+If that trace point was hit then delaying the switch over point
+further likely wouldn't help the device transfer less data during
+the downtime.
+
+>>       }
+>>
+>>       vfio_update_estimated_pending_data(migration, data_size);
+>> @@ -633,6 +644,8 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>>       int ret;
+>>       Error *local_err = NULL;
+>>
+>> +    trace_vfio_save_complete_precopy_started(vbasedev->name);
+>> +
+>>       /* We reach here with device state STOP or STOP_COPY only */
+>>       ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+>>                                      VFIO_DEVICE_STATE_STOP, &local_err);
+>> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+>> index 98bd4dcceadc..013c602f30fa 100644
+>> --- a/hw/vfio/trace-events
+>> +++ b/hw/vfio/trace-events
+>> @@ -159,8 +159,11 @@ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
+>>   vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+>>   vfio_save_cleanup(const char *name) " (%s)"
+>>   vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
+>> +vfio_save_complete_precopy_started(const char *name) " (%s)"
+>>   vfio_save_device_config_state(const char *name) " (%s)"
+>>   vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
+>> +vfio_save_iterate_started(const char *name) " (%s)"
+>> +vfio_save_iterate_empty_hit(const char *name) " (%s)"
+> 
+> Let's keep it sorted in alphabetical order.
+
+Ack.
+  
 > Thanks.
 
 Thanks,
