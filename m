@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8122ECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5411ECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniZD-0007jX-4D; Mon, 09 Sep 2024 13:52:47 -0400
+	id 1sniZk-0001oI-8N; Mon, 09 Sep 2024 13:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniZ4-00075Z-5s
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:52:38 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniZU-0000Xr-4f
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:53:07 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniZ1-0008Td-AN
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:52:36 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5c3d87dd4c3so2087548a12.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:52:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sniZP-0008V2-TN
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:53:02 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5becd359800so4327888a12.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725904353; x=1726509153; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725904377; x=1726509177; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=q+H6rs+ItgsedqXQR6BT1tgoIknxzO4oov6O/T3RK7w=;
- b=CkWywX+FTUPL1SBLPE7xHa+bBr6olccc9Z+DFSHkCH+m6qJwHilZkPZ9xnHwfusjhL
- KQK0tXhBsi8pkxVqqJTEVnRbZf6itVAtCBaPiDvUXfK/gN1llBuUI67l9q2fDp4+tJ+O
- cIlq5kYkBP/UOFaClF9+NNJP3IjzV8X1X0GZDMQFHoOAeo3QO2FqtSGcK41gLzW7NbxI
- mhcrm9JhWuOFcJNeVs4N3etkXLStB4XPiKRHy0EamgbfjJ6F9W8hJEqTjQUKovM8ETA9
- SCbB21l1WYaJ4n7wTT3yc0FKz+uSvgOXJZ8s5UAVRLMohhuXs7IJLAHSssOr9l0lmvxL
- gRFQ==
+ bh=NfV9SQXAHLo9/KAtRORQWx31pG/kb2qFRuacXqEj+7c=;
+ b=NIjMrAhFHO0tPmP3/OOt/VpQbOhdefHCTIo33Cgu2FS4Q+JdwUA991fwHQzgy3ojaH
+ +Tfsq8MCRn/3kn3WesONwmgkK3bEwWw9raKwDXeaS7Hk5kpsSO0m6GzWgYd66B7qgUqG
+ +0pvjbQBr6GRuTMAlQhX73W/j3+khbyM8aHT4GjFytV4eCNFHoiAShOzmiU9PQTWVsdx
+ y4GJCeJ5GRSrqscrgjwGBrDmJrEgFa53ZyvouDJT9rwE7csJ4yABKLRS4h5lMFlNnScq
+ nnk5Z9of054YfuRxX+FlsTe8zqX5+8vmxouHfnsO0RKjMykINRGKibKDatwkjWpAJf/D
+ ZNQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725904353; x=1726509153;
+ d=1e100.net; s=20230601; t=1725904377; x=1726509177;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q+H6rs+ItgsedqXQR6BT1tgoIknxzO4oov6O/T3RK7w=;
- b=KodBSG+zy7kyD+Z6hlTFbdiSO4OQBBLKuYSImP1OAP2+DdnB/oA4pAgf7tdBxou6Yf
- smki0OWTaICgVVsHG+WgxiFPsi1Xc5H2k37rEBHcddjO+rxt7nSpcLLsoQh/iHuqxJ/R
- BOM2iVqkwaes4OwvmlInpeCR+LV9VzL+Fl6iVRhuTbarqyc4Sxc81oGdDkQciqB2Xd30
- 8oUp+7DnhNT78xKVv5lSaOIUAESJEdRNWKHkVqTF217XH4pKXUeLBbRMEXf5En4ql1+E
- T6RgYTlXYHHPrJNhJhUoBJ8hWgZAggbRr4TALKtQaRgS+QxbRY/OQPddUmXu9L4ugQkn
- uf0g==
+ bh=NfV9SQXAHLo9/KAtRORQWx31pG/kb2qFRuacXqEj+7c=;
+ b=F1Dr4KmXnCWxYJW+jHVYP2Rn+Nm8r7QkUVAyQIUi/MZh0kz2QEqhj86GBMAHDMCpHx
+ /5H7oVn5MyHcs0q4BLjTjtFmUU8wmdx+ukA7sgQMR91zthWMSxhVwpeGFPfTu0Igs2Du
+ oPAN64aBUYhoB31tGxDS2hAVxOTv30SnX0jZe6zsvTSWO3zYEedGpNxM8pT30Skso1/o
+ rfX4c/JizhfOq84jw3G8Ay0MdGPTLCT01crGks136+i5UOQgeAhZ/ntX8ILbQWPCkIRG
+ Y56uNmNwLp3TqaPTk3yzTTMIO7dDF19dQvdOPz6HDkC8dJYJbWpFO0VsUkrrpoW3bJFQ
+ /3QA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgZDGyj+4cYWt+Z2qZbQSNy8lXIzirUFdyYMpyQ+pNS7ViFiuWfRmBE/r6i/XJRjv4p2ikeOH6TwTG@nongnu.org
-X-Gm-Message-State: AOJu0YwurISpwN95Vpc8tRvzOcx4Wuq72AlQ7cY2A2GMA77xD68+ADYX
- Xc1U2tq1NPqoFnVLANOoMu8u1+1zdT/+DgUo7WhoR08K7zaL4uw3NEWS1KPnnNY=
-X-Google-Smtp-Source: AGHT+IHMpnubMxGJE6CkiAtLoSIGIln6jBiNFF+UqQB12mkoLGlG5zAZScuLfdHmXj+Z/ouHY3NEtQ==
-X-Received: by 2002:a05:6402:3510:b0:5c3:c4d1:83d with SMTP id
- 4fb4d7f45d1cf-5c3dc7b7d5dmr9021668a12.26.1725904353438; 
- Mon, 09 Sep 2024 10:52:33 -0700 (PDT)
+ AJvYcCXdzxwbJ6tDkO4mpxDKdZXNeV4pJp32AhDJIuyXZBmo97qvakqN+ueejgul1OX9tdXuGiWprtAL+Q8l@nongnu.org
+X-Gm-Message-State: AOJu0YwnbX9onh0w2+xJwV+pdhjOvVRTiLDTJI1B06A0/7jKqnEoaExC
+ pA3yukjxPiWi9TnfyEH+fOt/6qle7P359i0WCdj8/t617IJyQWsN2D8e3c6vDVQ=
+X-Google-Smtp-Source: AGHT+IEEGnl2CQpFEvmMLQ6RI8us1Sy+l9erSY64h7WdCMtUFPjI1on5HWjNKhq4VE9MM8CYUFTj/Q==
+X-Received: by 2002:a05:6402:5203:b0:5c2:6311:8478 with SMTP id
+ 4fb4d7f45d1cf-5c3dc7bb4e1mr8106278a12.25.1725904376693; 
+ Mon, 09 Sep 2024 10:52:56 -0700 (PDT)
 Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
  [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd5245dsm3302697a12.52.2024.09.09.10.52.32
+ 4fb4d7f45d1cf-5c3ebd76ec1sm3259768a12.70.2024.09.09.10.52.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 10:52:33 -0700 (PDT)
-Message-ID: <9489b46a-9ae5-46c0-b2b8-72a27112b205@linaro.org>
-Date: Mon, 9 Sep 2024 19:52:31 +0200
+ Mon, 09 Sep 2024 10:52:56 -0700 (PDT)
+Message-ID: <07d667cc-8f34-423b-b5f2-f6e2378a25a0@linaro.org>
+Date: Mon, 9 Sep 2024 19:52:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 38/53] hw/gpio: Remove TYPE_OMAP2_GPIO
+Subject: Re: [PATCH for-9.2 39/53] hw/char: Remove omap2_uart
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240903160751.4100218-1-peter.maydell@linaro.org>
- <20240903160751.4100218-39-peter.maydell@linaro.org>
+ <20240903160751.4100218-40-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240903160751.4100218-39-peter.maydell@linaro.org>
+In-Reply-To: <20240903160751.4100218-40-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,15 +97,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/9/24 18:07, Peter Maydell wrote:
-> We've removed the OMAP2 SoC, so we can remove the OMAP2 GPIO
-> device. (The source file remains, as it also has the model of
-> the OMAP1 GPIO device.)
+> Remove the OMAP2 specific code from omap_uart.c.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   include/hw/arm/omap.h |   8 -
->   hw/gpio/omap_gpio.c   | 557 ------------------------------------------
->   2 files changed, 565 deletions(-)
+>   include/hw/arm/omap.h |   5 --
+>   hw/char/omap_uart.c   | 113 ------------------------------------------
+>   2 files changed, 118 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
