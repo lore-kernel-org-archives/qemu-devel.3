@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12BE0ECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 16:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83529ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 16:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snhAE-0002Tw-3K; Mon, 09 Sep 2024 12:22:54 -0400
+	id 1snhWf-0003Nq-Pj; Mon, 09 Sep 2024 12:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snhAB-0002Kz-Vg
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:22:51 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snhAA-0007hY-8W
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:22:51 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2068bee21d8so44264145ad.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 09:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725898969; x=1726503769; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GWjrw04iELmAczfBPyWyqBTlFr8LUX7vWfkc1TSxNTY=;
- b=YD3Tbsa7uCGX/CpiyTNNO9U98+cWuuDOXSNPTu9vRcQMVfuLS5HX86rq6BnaH9rPg1
- Crd4/HFt92kGPhWug4hL9pcE2SKDpWqgcnpOVLNPnmKz8aqfFMI8i54LsE2f50rF10ck
- AuKhTAjbE9fyS3sVACxHv3oHS1tewjLqMuPSZDKNDyNBxh4dLz8DPg9lCtwk4KTZKfV+
- QLtpGjf+zmFfPjrrmzHWrbVMJrdoNsb6OeWuDHyVC9L5AVMJtVdDrioHSi4OgU75TE6a
- apvg0zmioxld3Df0nNadRGLqq61t3GXxGvhxSxwHZ5HkGEbtSTjn5nwqUwKpHsQH0KPX
- aHhQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snhWd-0003Go-UK
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:46:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snhWa-0001ot-A2
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:46:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725900357;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CHaoMf2F8hbpm0qZK255Q57r1VUNQsaLBGFFCbM6kI0=;
+ b=DaZRVW+LxehmFUSYHepXk/STG37Tv8wIqn1MAKZowwHxACKCZfnLxww5lmy06WR3Ns2Y/g
+ rby8TQkf82LwFZ7U37XASBFneIaFLr/ELrbzSYltgwhzUVq/zGvpd4UY1xLe8iuHlPUB/Y
+ j5EJ0bvXWxJzEIHYuDBZG9QnNeIx42s=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-290-UV7OrH7qOJGxUJLMGHcotA-1; Mon, 09 Sep 2024 12:45:55 -0400
+X-MC-Unique: UV7OrH7qOJGxUJLMGHcotA-1
+Received: by mail-oo1-f69.google.com with SMTP id
+ 006d021491bc7-5e1d7e1a846so1269682eaf.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 09:45:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725898969; x=1726503769;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GWjrw04iELmAczfBPyWyqBTlFr8LUX7vWfkc1TSxNTY=;
- b=YTYH009HGJ3sJqdZCrKLdjG31v23/72s6qgsX30+KJeI+epopWQdgtTDVZzSZ5SOtS
- ksDgoiXvalCz82pOf40nudI3N7ady0H4nbtGlUqQGqEYnHUlC/BiqShlImjWZR69bzy2
- 8FzT1nl2ayLbXUnn8jz7d+RW1QfLWqVhHb6h9hLlNRhYGEiquFpfXY34nL49QvmSn6Sv
- /inktxC8Fu+Ft/vm3udC8ZukujrYADGw2GX/rPe98ETZx3JTLjblwuO5GaP/ao72OnLt
- AQefyOygZQYfIu/h0z/aRew9dSbngE6WHLtyUQ+nv9dNMailAojWGXq40g8giRFhnrLr
- y95g==
-X-Gm-Message-State: AOJu0YzJeLn8SFjkxAmgjFo0zUFxzTRHGimcNERLCe5b6DvpBm9e7vpm
- oxTjXJzVmQM4A9hg8PK2eIcXHVuw6U1gkwWdsxqZWEDSgCZ5SV8NakZjIeDX1n5/4Q6ud8hGB4o
- K
-X-Google-Smtp-Source: AGHT+IHsizqFdEWuZWExeyeTyD1OUcMD2h+/K/DrhKPNUS+a95bpkC3mkCLGxufCQ2yQImjPxB+9Tg==
-X-Received: by 2002:a17:903:1211:b0:207:14e9:eb22 with SMTP id
- d9443c01a7336-20714e9eb35mr107820135ad.6.1725898968888; 
- Mon, 09 Sep 2024 09:22:48 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f35d79sm35753305ad.288.2024.09.09.09.22.48
+ d=1e100.net; s=20230601; t=1725900354; x=1726505154;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CHaoMf2F8hbpm0qZK255Q57r1VUNQsaLBGFFCbM6kI0=;
+ b=qR2iAjKdy56mVpjwRvz/3ac5HjIBFwm3yAN+i7odtLsjaJVCXUWfGtEXXwEHU0JN7C
+ P0FeyoJYbgxm1pyZldLTVh08eMz6/YHa5XnCWTJAHDNmOIlhib0cmgaaSxFF+0bYVmJr
+ Rm1kTCrOobH0cHNBY6GuONK5zbqsZEc4Kkrpdb5+mAf5iIDBtm7z5ISUI6C97h/zjLo6
+ M49XClJSHckHe8qAoVYVtr1MBaWPYT6/i0UArrx0tyMMTlVP8BQpWdNBa3r6BH9eI50p
+ jDDrleyuUHllgC2uHxkB2V3mzhxYBV4W7r5j/TGk8UEiRbqyYKbkXmPl2mIAT7DQEt6P
+ VkTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWOuqsioHfHRFFc2DAVpRJ7O9I/3MpkmqyIk5hK5pqWq+1PFq1ZjbXkxgknNfA70WN3MSrFRurOzTuL@nongnu.org
+X-Gm-Message-State: AOJu0YyVZ8wJ0x3DydKgKX7EcLO2toCOxpdl9BYVkYNyOaax5eAnib1X
+ WGjGadAs5uVucElNkl1ozbO9LyBGg4R0h58lP4kZ8tsjTNaEnsrQ6z7/TShULfboaq7vQJywFFx
+ P0Ir8pmqXNLHxSzLO2ral+K8SxspwM/VXBNELptSWjDl+p+h1O47O
+X-Received: by 2002:a05:6358:248f:b0:1b5:f973:1e9d with SMTP id
+ e5c5f4694b2df-1b84beae8d4mr1197900455d.19.1725900353946; 
+ Mon, 09 Sep 2024 09:45:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJn5E977anOPGeYVWB1q9GS1FzqzNskMiHAoD11kQeQzBxdSeJsUOzhDD8/pvRebHFYtwS1g==
+X-Received: by 2002:a05:6358:248f:b0:1b5:f973:1e9d with SMTP id
+ e5c5f4694b2df-1b84beae8d4mr1197895955d.19.1725900353503; 
+ Mon, 09 Sep 2024 09:45:53 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a9a7945585sm232676585a.15.2024.09.09.09.45.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 09:22:48 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 07/29] target/arm: Convert TBL, TBX to decodetree
-Date: Mon,  9 Sep 2024 09:22:17 -0700
-Message-ID: <20240909162240.647173-8-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240909162240.647173-1-richard.henderson@linaro.org>
-References: <20240909162240.647173-1-richard.henderson@linaro.org>
+ Mon, 09 Sep 2024 09:45:52 -0700 (PDT)
+Date: Mon, 9 Sep 2024 12:45:50 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 05/17] thread-pool: Implement non-AIO (generic) pool
+ support
+Message-ID: <Zt8mPlBLO9FUHgxG@x1n>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <54947c3a1df713f5b69d8296938f3da41116ffe0.1724701542.git.maciej.szmigiero@oracle.com>
+ <CAJSP0QU+dhh_e2LJRoGCxtCEh6C2-GBoZoFZL2W-SMSQPzUtYg@mail.gmail.com>
+ <d6e7dbd4-634f-4f62-8516-7bbf404b7adf@maciej.szmigiero.name>
+ <CAJSP0QXURSS4cHj0i6xy27HMbtF2D4ckL4fwDk5rHA3vFFtHUg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJSP0QXURSS4cHj0i6xy27HMbtF2D4ckL4fwDk5rHA3vFFtHUg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,98 +113,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-a64.c | 47 ++++++++++------------------------
- target/arm/tcg/a64.decode      |  4 +++
- 2 files changed, 18 insertions(+), 33 deletions(-)
+Hi, Stefan, Maciej,
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 48188d4116..70173c67c2 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4680,6 +4680,20 @@ static bool trans_EXTR(DisasContext *s, arg_extract *a)
-     return true;
- }
- 
-+static bool trans_TBL_TBX(DisasContext *s, arg_TBL_TBX *a)
-+{
-+    if (fp_access_check(s)) {
-+        int len = (a->len + 1) * 16;
-+
-+        tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, a->rd),
-+                           vec_full_reg_offset(s, a->rm), tcg_env,
-+                           a->q ? 16 : 8, vec_full_reg_size(s),
-+                           (len << 6) | (a->tbx << 5) | a->rn,
-+                           gen_helper_simd_tblx);
-+    }
-+    return true;
-+}
-+
- /*
-  * Cryptographic AES, SHA, SHA512
-  */
-@@ -8938,38 +8952,6 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
-     }
- }
- 
--/* TBL/TBX
-- *   31  30 29         24 23 22  21 20  16 15  14 13  12  11 10 9    5 4    0
-- * +---+---+-------------+-----+---+------+---+-----+----+-----+------+------+
-- * | 0 | Q | 0 0 1 1 1 0 | op2 | 0 |  Rm  | 0 | len | op | 0 0 |  Rn  |  Rd  |
-- * +---+---+-------------+-----+---+------+---+-----+----+-----+------+------+
-- */
--static void disas_simd_tb(DisasContext *s, uint32_t insn)
--{
--    int op2 = extract32(insn, 22, 2);
--    int is_q = extract32(insn, 30, 1);
--    int rm = extract32(insn, 16, 5);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--    int is_tbx = extract32(insn, 12, 1);
--    int len = (extract32(insn, 13, 2) + 1) * 16;
--
--    if (op2 != 0) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, rd),
--                       vec_full_reg_offset(s, rm), tcg_env,
--                       is_q ? 16 : 8, vec_full_reg_size(s),
--                       (len << 6) | (is_tbx << 5) | rn,
--                       gen_helper_simd_tblx);
--}
--
- /* ZIP/UZP/TRN
-  *   31  30 29         24 23  22  21 20   16 15 14 12 11 10 9    5 4    0
-  * +---+---+-------------+------+---+------+---+------------------+------+
-@@ -11834,7 +11816,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     /* simd_mod_imm decode is a subset of simd_shift_imm, so must precede it */
-     { 0x0f000400, 0x9ff80400, disas_simd_mod_imm },
-     { 0x0f000400, 0x9f800400, disas_simd_shift_imm },
--    { 0x0e000000, 0xbf208c00, disas_simd_tb },
-     { 0x0e000800, 0xbf208c00, disas_simd_zip_trn },
-     { 0x5e200800, 0xdf3e0c00, disas_simd_scalar_two_reg_misc },
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index f72f95865f..e2a3ef62ef 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1141,3 +1141,7 @@ FNMSUB          0001 1111 .. 1 ..... 1 ..... ..... .....    @rrrr_hsd
- 
- EXT_d           0010 1110 00 0 rm:5 00 imm:3 0 rn:5 rd:5
- EXT_q           0110 1110 00 0 rm:5 0  imm:4 0 rn:5 rd:5
-+
-+# Advanced SIMD Table Lookup
-+
-+TBL_TBX         0 q:1 00 1110 000 rm:5 0 len:2 tbx:1 00 rn:5 rd:5
+Sorry to be slow on responding.
+
+On Tue, Sep 03, 2024 at 03:04:54PM -0400, Stefan Hajnoczi wrote:
+> On Tue, 3 Sept 2024 at 12:54, Maciej S. Szmigiero
+> <mail@maciej.szmigiero.name> wrote:
+> >
+> > On 3.09.2024 15:55, Stefan Hajnoczi wrote:
+> > > On Tue, 27 Aug 2024 at 13:58, Maciej S. Szmigiero
+> > > <mail@maciej.szmigiero.name> wrote:
+> > >>
+> > >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > >>
+> > >> Migration code wants to manage device data sending threads in one place.
+> > >>
+> > >> QEMU has an existing thread pool implementation, however it was limited
+> > >> to queuing AIO operations only and essentially had a 1:1 mapping between
+> > >> the current AioContext and the ThreadPool in use.
+> > >>
+> > >> Implement what is necessary to queue generic (non-AIO) work on a ThreadPool
+> > >> too.
+> > >>
+> > >> This brings a few new operations on a pool:
+> > >> * thread_pool_set_minmax_threads() explicitly sets the minimum and maximum
+> > >> thread count in the pool.
+> > >>
+> > >> * thread_pool_join() operation waits until all the submitted work requests
+> > >> have finished.
+> > >>
+> > >> * thread_pool_poll() lets the new thread and / or thread completion bottom
+> > >> halves run (if they are indeed scheduled to be run).
+> > >> It is useful for thread pool users that need to launch or terminate new
+> > >> threads without returning to the QEMU main loop.
+> > >
+> > > Did you consider glib's GThreadPool?
+> > > https://docs.gtk.org/glib/struct.ThreadPool.html
+> > >
+> > > QEMU's thread pool is integrated into the QEMU event loop. If your
+> > > goal is to bypass the QEMU event loop, then you may as well use the
+> > > glib API instead.
+> > >
+> > > thread_pool_join() and thread_pool_poll() will lead to code that
+> > > blocks the event loop. QEMU's aio_poll() and nested event loops in
+> > > general are a source of hangs and re-entrancy bugs. I would prefer not
+> > > introducing these issues in the QEMU ThreadPool API.
+> > >
+> >
+> > Unfortunately, the problem with the migration code is that it is
+> > synchronous - it does not return to the main event loop until the
+> > migration is done.
+> >
+> > So the only way to handle things that need working event loop is to
+> > pump it manually from inside the migration code.
+> >
+> > The reason why I used the QEMU thread pool in the first place in this
+> > patch set version is because Peter asked me to do so during the review
+> > of its previous iteration [1].
+> >
+> > Peter also asked me previously to move to QEMU synchronization
+> > primitives from using the Glib ones in the early version of this
+> > patch set [2].
+> >
+> > I personally would rather use something common to many applications,
+> > well tested and with more pairs of eyes looking at it rather to
+> > re-invent things in QEMU.
+> >
+> > Looking at GThreadPool it seems that it lacks ability to wait until
+> > all queued work have finished, so this would need to be open-coded
+> > in the migration code.
+> >
+> > @Peter, what's your opinion on using Glib's thread pool instead of
+> > QEMU's one, considering the above things?
+> 
+> I'll add a bit more about my thinking:
+> 
+> Using QEMU's event-driven model is usually preferred because it makes
+> integrating with the rest of QEMU easy and avoids having lots of
+> single-purpose threads that are hard to observe/manage (e.g. through
+> the QMP monitor).
+> 
+> When there is a genuine need to spawn a thread and write synchronous
+> code (e.g. a blocking ioctl(2) call or something CPU-intensive), then
+
+Right, AFAIU this is the current use case for VFIO, and anything beyond in
+migration context, where we want to use genuine threads with no need to
+integrate with the main even loop.
+
+Currently the VFIO workfn should read() the VFIO fd in a blocked way, then
+dump them to multifd threads (further dump to migration channels), during
+which it can wait on a semaphore.
+
+> it's okay to do that. Use QEMUBH, EventNotifier, or other QEMU APIs to
+> synchronize between event loop threads and special-purpose synchronous
+> threads.
+> 
+> I haven't looked at the patch series enough to have an opinion about
+> whether this use case needs a special-purpose thread or not. I am
+> assuming it really needs to be a special-purpose thread. Peter and you
+> could discuss that further if you want.
+> 
+> I agree with Peter's request to use QEMU's synchronization primitives.
+> They do not depend on the event loop so they can be used outside the
+> event loop.
+> 
+> The issue I'm raising with this patch is that adding new join()/poll()
+> APIs that shouldn't be called from the event loop is bug-prone. It
+> will make the QEMU ThreadPool code harder to understand and maintain
+> because now there are two different contexts where different subsets
+> of this API can be used and mixing them leads to problems. To me the
+> non-event loop case is beyond the scope of QEMU's ThreadPool. I have
+> CCed Paolo, who wrote the thread pool in its current form in case he
+> wants to participate in the discussion.
+> 
+> Using glib's ThreadPool solves the issue while still reusing an
+> existing thread pool implementation. Waiting for all work to complete
+> can be done using QemuSemaphore.
+
+Right.  It's a pity that g_thread_pool_unprocessed() only monitors
+unqueuing of tasks, and looks like there's no g_thread_pool_flush().
+
+Indeed the current thread poll is very aio-centric, and if we worry about
+misuse of the APIs we can switch to glib's threadpool.  Sorry Maciej, looks
+like I routed you to a direction that I didn't see the side effects..
+
+I think the fundamental request from my side (on behalf of migration) is we
+should avoid a specific vmstate handler managing threads on its own.  E.g.,
+any future devices (vdpa, vcpu, etc.) that may also be able to offload
+save() processes concurrently to threads (just like what VFIO can already
+do right now) should share the same pool of threads.  As long as that can
+be achieved I am ok.
+
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
