@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5212CE7AB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 03:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA3DCD4F4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 03:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snVDy-0000jK-Fq; Sun, 08 Sep 2024 23:37:58 -0400
+	id 1snVRP-0006CU-1B; Sun, 08 Sep 2024 23:51:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snVDw-0000h5-EG; Sun, 08 Sep 2024 23:37:56 -0400
-Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
+ id 1snVRJ-0006BI-G4; Sun, 08 Sep 2024 23:51:45 -0400
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snVDu-0001Wq-RP; Sun, 08 Sep 2024 23:37:56 -0400
-Received: by mail-vs1-xe31.google.com with SMTP id
- ada2fe7eead31-49bd27b3507so1039528137.2; 
- Sun, 08 Sep 2024 20:37:54 -0700 (PDT)
+ id 1snVRF-0002sC-7c; Sun, 08 Sep 2024 23:51:45 -0400
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-846bc787b3dso1120004241.2; 
+ Sun, 08 Sep 2024 20:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725853073; x=1726457873; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1725853898; x=1726458698; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gRHlXSEu1mrsCQ3j/cH0duvaXhLZZSVknBPv8ucgyzk=;
- b=NnF86VD4iUaD85+aX50XssUAYJItm6mbndm/FFUGUowOTsyZuqzx4BYFD1HI7OPqn3
- J6DjhFy40Bc67Q8EpUBNVIjad38Vw/03MuLDjzH9XZCeOfDIOvOl3kU2GYxXnKp3U935
- APaj3Cp3aKskqXGML3mtmpJZW4rufJ7oFbb4sG79Q7QwfzQgSsKf7yiDWJewrYji+B6c
- kE38R5vElIBLJwA2aftfjJbKwnumyHh7hIpwx9lJSw0f4h2V6/pAsVdvLFPJxI+Q2khx
- Z7c+HAqfM78bwgDv9dELNGeQPCwGnaoXd0DewatKxCbpYpMftO5gV/a2ew0sHMxbM/Y8
- wX7A==
+ bh=abUmh1cb6LfNs6LKJnqLJS08eWgphPpsDew9XEqrAo0=;
+ b=hBckH2NrNIgER1bx6041xFworAtEV/D82lFvnf287hTugESXMvazt5VRZerkjC/DJo
+ wuS3UkAwvIp2r8+9HHq7qQUfs8TaO5CQzEycKgoMCBlQOK86n7HPLtKh+xTeP3NI+1b8
+ 7wNT/kDGHH+0Kg4lcrfIJTSczQe+ZjsElkzAMjgs7fNaaGvD4FBAXr0OE5DK5LtM+Wum
+ AxhgYZnshY1R4qVXuZllT7AtF5ZfV4zUGSQvcs2cDGWEz4Xo4NJYAX+AiY0m9AgkvIpe
+ 7mVXg0fpsx6EqmZKXCrf9gPa63p7rWff07ldN+Jlmj1nHCrpXE59QaLV9GQKbrAuypVj
+ rRpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725853073; x=1726457873;
+ d=1e100.net; s=20230601; t=1725853898; x=1726458698;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gRHlXSEu1mrsCQ3j/cH0duvaXhLZZSVknBPv8ucgyzk=;
- b=dN3A0NVp28dOdEmnK9gghw2wjX61a7Ump0C4+nSOrc2QAaNqimg71nT+hdb4l1uIXE
- sVWm/z15I6LBLYWm2z/rm/Tz2qnFWzYAWkOIfoyNFSw2anljnt+HF5Ou3NqiuGouMrl6
- WyPPLPQdvjXvT8rF0GNPWNCZy5di1V2RU3ayTnlfCCFpBlWqvelhHf1PgBuk9qcbSRL7
- Nnll0aPNrgqwk4n8kpw2tKQUMDFT32Hxc8vuauvbPt0vRz94+3ttMv8lnDMrRjyyY5E8
- TmUMgALh7miOPXWWxaKXHXC5b52P34gaXQNV6zuHv6qAWHjWFX6HEK2SINmMSRlMHmt6
- T2cg==
+ bh=abUmh1cb6LfNs6LKJnqLJS08eWgphPpsDew9XEqrAo0=;
+ b=b+8HDe3aHqnFDGVjQ+2JDP+UJMrGe35NcTQHFRdUqD+xAc4tY5JNun5TzqqczgDHJR
+ sbk15H23NBgBxNYYJV7fHymBMf4KsY2N8PIL4/bpB4KgL3mWxQHBmMlDURgWjQ+FTN+e
+ NfuWfTVojpc7utm73RP4h6Y2rvFWerDV+JecdEnoutUfCqR/WVMYgk1AcyQRDR2io9Rt
+ RlR/vGJBlv8I9gCXxSxe0mA3YMLnc73ZUQRST3muLEtknlSNt8uHgX2gmXt/oiInOeTU
+ NkIGz8ZpuRb4Ld5292Jw3yx26I5MKQFIGCKN8mMsjot9LcSOVDuMTKcZaV7B2f4V0Gpw
+ xCwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtHs20PJ+Mew5y76gswUJc6LNVr6p0ALrmUxW7/MXIvuvNrufU7ppv1o5txD712FJy0RILXip/rnA+qQ==@nongnu.org,
- AJvYcCX2QiL5gnMi/vvuvSKb2wLzQhMGnCpf5/g3WRfL6gk8kgXTC5RwCYOOwCh6mbL4jw8b9MLTdtTWn56l@nongnu.org
-X-Gm-Message-State: AOJu0Yxbe6kpDhxut6bpL0cj7gdAspeFoMi219kRnZzLetWX6ikTK7xl
- OGKxTv1uY8yQ70vQaWu/5SIDqsqmoBTPCZSdOoMuh4YE9XKIiT8nbtzQWrq+dPYTJTsVVufIFxd
- tDOfBijOiIHSV2xc/FzeiDRu6zgU=
-X-Google-Smtp-Source: AGHT+IG5LqgyhdeB6JT8Q3018zAG9aCyo3tzpN+lYqaObGNuDayUVLe87wajuRNWuU3Nf+oAsnheipfsblSG0hHtdPM=
-X-Received: by 2002:a05:6102:32cd:b0:493:f097:e5b7 with SMTP id
- ada2fe7eead31-49bde130e3dmr8447128137.1.1725853073198; Sun, 08 Sep 2024
- 20:37:53 -0700 (PDT)
+ AJvYcCUA40fIp2SK9hMhb5habutknTIU4EsUZ3Htjd7oSUpFQdEwZoR5EHWSVeKnUNHYhJZk+8Iy3RLC8Y3T@nongnu.org
+X-Gm-Message-State: AOJu0YywVQ6BQBQqco23kMerUMrF7BPLNmnbSsmQK0m5CC+jrzr6GmkL
+ /NmznT+UxUQ3KIhQ8SpNBox8NepSCO1kHjZmn3QltmtsLclKWp2UpWAw7/kB2gBAPUGtmlq5iSa
+ GUqwticn3WJe+LGJPNVTsXmN+MM8=
+X-Google-Smtp-Source: AGHT+IG9FG4lF7EFBnXMCido4/kaW1zJihmcfocFVl7q0hmTRVet1X8HtyzDklxm2G1fMd0BDwK24+oUU7OgNGpyZXw=
+X-Received: by 2002:a05:6102:f14:b0:493:b916:aaa6 with SMTP id
+ ada2fe7eead31-49bde2e68f8mr10262161137.24.1725853897990; Sun, 08 Sep 2024
+ 20:51:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240828083651.203861-1-alexghiti@rivosinc.com>
-In-Reply-To: <20240828083651.203861-1-alexghiti@rivosinc.com>
+References: <20240906094858.718105-1-thuth@redhat.com>
+In-Reply-To: <20240906094858.718105-1-thuth@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Sep 2024 13:37:27 +1000
-Message-ID: <CAKmqyKOTgTYqrN1gBxfugfeFS3FgKBHXJR8JqqcfC8b2f_M9PQ@mail.gmail.com>
-Subject: Re: [PATCH v3] target: riscv: Add Svvptc extension support
-To: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+Date: Mon, 9 Sep 2024 13:51:12 +1000
+Message-ID: <CAKmqyKPKfhLa9=0K=_u++wvgHg7FM93YxM=fT+BYqyEU=oK6mQ@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv/cpu_helper: Fix linking problem with
+ semihosting disabled
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,74 +98,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 28, 2024 at 6:37=E2=80=AFPM Alexandre Ghiti <alexghiti@rivosinc=
-.com> wrote:
+On Fri, Sep 6, 2024 at 7:50=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrote=
+:
 >
-> The Svvptc extension describes a uarch that does not cache invalid TLB
-> entries: that's the case for qemu so there is nothing particular to
-> implement other than the introduction of this extension.
+> If QEMU has been configured with "--without-default-devices", the build
+> is currently failing with:
 >
-> Since qemu already exposes Svvptc behaviour, let's enable it by default
-> since it allows to drastically reduce the number of sfence.vma emitted
-> by S-mode.
+>  /usr/bin/ld: libqemu-riscv32-softmmu.a.p/target_riscv_cpu_helper.c.o:
+>   in function `riscv_cpu_do_interrupt':
+>  .../qemu/target/riscv/cpu_helper.c:1678:(.text+0x2214): undefined
+>   reference to `do_common_semihosting'
 >
-> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> We always want semihosting to be enabled if TCG is available, so change
+> the "imply" statements in the Kconfig file to "select", and make sure to
+> avoid calling into do_common_semihosting() if TCG is not available.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
+>  v2: Use "select" in the Kconfig file, and "CONFIG_TCG" in the #ifdef
 >
-> Changes in v3:
-> - Rebase on top of master
-> - Change 1.12 to 1.13 spec version (drew)
+>  target/riscv/cpu_helper.c | 2 ++
+>  target/riscv/Kconfig      | 4 ++--
+>  2 files changed, 4 insertions(+), 2 deletions(-)
 >
-> Changes in v2:
-> - Rebase on top of master
-> - Enable Svvptc by default
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 395a1d9140..dc147181a3 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1674,10 +1674,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      if (!async) {
+>          /* set tval to badaddr for traps with address information */
+>          switch (cause) {
+> +#ifdef CONFIG_TCG
+>          case RISCV_EXCP_SEMIHOST:
+>              do_common_semihosting(cs);
+>              env->pc +=3D 4;
+>              return;
+> +#endif
+>          case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
+>          case RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT:
+>          case RISCV_EXCP_LOAD_ADDR_MIS:
+> diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
+> index c332616d36..11bc09b414 100644
+> --- a/target/riscv/Kconfig
+> +++ b/target/riscv/Kconfig
+> @@ -1,9 +1,9 @@
+>  config RISCV32
+>      bool
+> -    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
+> +    select ARM_COMPATIBLE_SEMIHOSTING if TCG
+>      select DEVICE_TREE # needed by boot.c
 >
->  target/riscv/cpu.c     | 2 ++
->  target/riscv/cpu_cfg.h | 1 +
->  2 files changed, 3 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index a90808a3ba..cabe698f2f 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -197,6 +197,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
->      ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
->      ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
-> +    ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
->      ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
->      ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
->      ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-> @@ -1509,6 +1510,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
- =3D {
->      MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
->      MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
->      MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
-> +    MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
->
->      MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
->      MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 8b272fb826..7d16048a76 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -81,6 +81,7 @@ struct RISCVCPUConfig {
->      bool ext_svinval;
->      bool ext_svnapot;
->      bool ext_svpbmt;
-> +    bool ext_svvptc;
->      bool ext_zdinx;
->      bool ext_zaamo;
->      bool ext_zacas;
+>  config RISCV64
+>      bool
+> -    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
+> +    select ARM_COMPATIBLE_SEMIHOSTING if TCG
+>      select DEVICE_TREE # needed by boot.c
 > --
-> 2.39.2
+> 2.46.0
 >
 >
 
