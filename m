@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFDFCD4F4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 01:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8CDCD4F4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 01:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snTPd-0005ne-0f; Sun, 08 Sep 2024 21:41:53 -0400
+	id 1snTTv-0001hV-Qu; Sun, 08 Sep 2024 21:46:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=lpTo=QH=zx2c4.com=Jason@kernel.org>)
- id 1snTPa-0005mN-Nu
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 21:41:50 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=lpTo=QH=zx2c4.com=Jason@kernel.org>)
- id 1snTPZ-0006zo-0F
- for qemu-devel@nongnu.org; Sun, 08 Sep 2024 21:41:50 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id BD5835C53FC
- for <qemu-devel@nongnu.org>; Mon,  9 Sep 2024 01:41:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0390C4CEC9
- for <qemu-devel@nongnu.org>; Mon,  9 Sep 2024 01:41:45 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="h5mgg8pM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1725846102;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w1I5L+YOou9JS/ZZtOodgGokkVkYbrdJq7nRqvEmHKs=;
- b=h5mgg8pMaZobHBDc/cgS6JtFI/ndlif3yyIUaqJxikQQNBS87StMtNynI467NNs+kdyUk4
- 503NKYSZvf3YNB0JHoWMSTcEwy9HP+v3UhPkOOwkX3ZzpA/lRS5Os5SSAWvpFJDzqfkwY0
- HJDbSMjor4CREhrcwE9oEoMHWTY+Dxg=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 213b6bd1
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO) for <qemu-devel@nongnu.org>;
- Mon, 9 Sep 2024 01:41:41 +0000 (UTC)
-Received: by mail-oa1-f53.google.com with SMTP id
- 586e51a60fabf-2705d31a35cso2330243fac.0
- for <qemu-devel@nongnu.org>; Sun, 08 Sep 2024 18:41:41 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXetVsPa1m00s+9eqQ4mMMpDTWet2+Mr5i6T1ID0WKLTqTv1kvfWFf5kJLXoo1FmnvVlB2ylOTOaidW@nongnu.org
-X-Gm-Message-State: AOJu0YymHx0+ndQktpSMAxSXR9fqsYI6ideMqtBrlguHJWMmSrJb63Zi
- FpMWuoJKpXPE5OeKRsP58lGeAwyOkGtAtONgHidkdNWEpgHBk6JsienflhmGgWu+FNcqyMyOUxH
- Frn4zNsjmP647Qfsrw9iQdQlb6x4=
-X-Google-Smtp-Source: AGHT+IE4L4TdeL1QnWdW4Jm8+ZQjeQNdexoLuBd7vG01dF/uLxwZ+r+RbRwBcGdYTBk9RJ2rGpjqOb3ABnXqc0Sx9oY=
-X-Received: by 2002:a05:687c:2bea:b0:261:211:9d0d with SMTP id
- 586e51a60fabf-27b83029fbcmr9727051fac.40.1725846100748; Sun, 08 Sep 2024
- 18:41:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1snTTt-0001gu-R5
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 21:46:17 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1snTTq-0007OJ-QI
+ for qemu-devel@nongnu.org; Sun, 08 Sep 2024 21:46:17 -0400
+Received: from loongson.cn (unknown [10.20.42.17])
+ by gateway (Coremail) with SMTP id _____8DxF+lkU95mZl4CAA--.4414S3;
+ Mon, 09 Sep 2024 09:46:12 +0800 (CST)
+Received: from [10.20.42.17] (unknown [10.20.42.17])
+ by front1 (Coremail) with SMTP id qMiowMCxLeRhU95mNQQCAA--.12265S3;
+ Mon, 09 Sep 2024 09:46:11 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: Add compatible support about VM reboot
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20240827035807.3326293-1-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <99140ee4-0369-e0f0-e9b4-14225512b0f7@loongson.cn>
+Date: Mon, 9 Sep 2024 09:46:05 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240905153316.2038769-1-Jason@zx2c4.com>
- <73975d81-763b-fe04-5aa9-626a7767a3f0@loongson.cn>
-In-Reply-To: <73975d81-763b-fe04-5aa9-626a7767a3f0@loongson.cn>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 9 Sep 2024 03:41:28 +0200
-X-Gmail-Original-Message-ID: <CAHmME9q3CeJ0tPW3QbSEuvRFgQLpgFstEhif5qLGqbMi-R_Ehw@mail.gmail.com>
-Message-ID: <CAHmME9q3CeJ0tPW3QbSEuvRFgQLpgFstEhif5qLGqbMi-R_Ehw@mail.gmail.com>
-Subject: Re: [PATCH] hw/loongarch: virt: pass random seed to fdt
-To: gaosong <gaosong@loongson.cn>
-Cc: jiaxun.yang@flygoat.com, qemu-devel@nongnu.org, thomas@t-8ch.de, 
- xry111@xry111.site, maobibo@loongson.cn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=SRS0=lpTo=QH=zx2c4.com=Jason@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -67
-X-Spam_score: -6.8
-X-Spam_bar: ------
-X-Spam_report: (-6.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+In-Reply-To: <20240827035807.3326293-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCxLeRhU95mNQQCAA--.12265S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CrWrtw4ftrykuw1UCr17Jwc_yoW8Ww1rpw
+ nYkFWUArWrJrZrAa13Aa4Ygr9rXF1xtr4I9a9xGFyrC390qw48XF40gr98KFy7A34rAr40
+ vF12vrWY9F48AFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j8CztU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-3.046, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,42 +81,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 9, 2024 at 3:38=E2=80=AFAM gaosong <gaosong@loongson.cn> wrote:
->
->
->
-> =E5=9C=A8 2024/9/5 =E4=B8=8B=E5=8D=8811:33, Jason A. Donenfeld =E5=86=99=
-=E9=81=93:
-> > If the FDT contains /chosen/rng-seed, then the Linux RNG will use it to
-> > initialize early. Set this using the usual guest random number
-> > generation function.
-> >
-> > This is the same procedure that's done in b91b6b5a2c ("hw/microblaze:
-> > pass random seed to fdt"), e4b4f0b71c ("hw/riscv: virt: pass random see=
-d
-> > to fdt"), c6fe3e6b4c ("hw/openrisc: virt: pass random seed to fdt"),
-> > 67f7e426e5 ("hw/i386: pass RNG seed via setup_data entry"), c287941a4d
-> > ("hw/rx: pass random seed to fdt"), 5e19cc68fb ("hw/mips: boston: pass
-> > random seed to fdt"), 6b23a67916 ("hw/nios2: virt: pass random seed to =
-fdt")
-> > c4b075318e ("hw/ppc: pass random seed to fdt"), and 5242876f37
-> > ("hw/arm/virt: dt: add rng-seed property").
-> >
-> > These earlier commits later were amended to rerandomize the RNG seed on
-> > snapshot load, but the LoongArch code somehow already does that, despit=
-e
-> > not having this patch here, presumably due to some lucky copy and
-> > pasting.
-> >
-> > Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> > ---
-> >   hw/loongarch/virt.c | 6 ++++++
-> >   1 file changed, 6 insertions(+)
-> >
->
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Do you generally queue these up in
-https://gitlab.com/gaosong/qemu/-/commits/loongarch-next/?ref_type=3Dheads
-? Or is it a different branch?
+
+ÔÚ 2024/8/27 ÉÏÎç11:58, Bibo Mao Ð´µÀ:
+> With edk2-stable202408 LoongArch UEFI bios, CSR PGD register is set only
+> if its value is equal to zero for boot cpu, it causes reboot issue. Since
+> CSR PGD register is changed with linux kernel, UEFI BIOS cannot use it.
+> 
+> Add workaround to clear CSR registers relative with TLB in function
+> loongarch_cpu_reset_hold(), so that VM can reboot with edk2-stable202408
+> UEFI bios.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/cpu.c | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
+> 
+
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+
+Thanks
+Song Gao
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 5e85b9dbef..2f4d635d03 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -549,6 +549,20 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>       env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+>       env->CSR_MERRCTL = FIELD_DP64(env->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
+>       env->CSR_TID = cs->cpu_index;
+> +    /*
+> +     * Workaround for edk2-stable202408, CSR PGD register is set only if
+> +     * its value is equal to zero for boot cpu, it causes reboot issue.
+> +     *
+> +     * Here clear CSR registers relative with TLB.
+> +     */
+> +    env->CSR_PGDH = 0;
+> +    env->CSR_PGDL = 0;
+> +    env->CSR_PWCL = 0;
+> +    env->CSR_PWCH = 0;
+> +    env->CSR_STLBPS = 0;
+> +    env->CSR_EENTRY = 0;
+> +    env->CSR_TLBRENTRY = 0;
+> +    env->CSR_MERRENTRY = 0;
+>   
+>       for (n = 0; n < 4; n++) {
+>           env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV0, 0);
+> 
+> base-commit: f259e4cb8a8b4ef5463326fc214a7d8d7703d5de
+> 
+
 
