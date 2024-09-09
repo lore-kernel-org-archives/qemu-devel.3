@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E30ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C63ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sngQC-0008Js-Rn; Mon, 09 Sep 2024 11:35:20 -0400
+	id 1sngWI-0004OT-Vh; Mon, 09 Sep 2024 11:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sngQB-0008JH-2C
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:35:19 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sngQ9-0003Dr-CR
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:35:18 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2f760f7e25bso16184261fa.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:35:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725896115; x=1726500915; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GxfKZP8Ad2FL8b3Zz2/iX/CT1VxdkYPkw7K654YdQMk=;
- b=fR0UokHp78qDbDGYFRh8GXdJm+jVH4tDo3s/9WwX+tdPEvpGti9DB97+PLi5crvFXN
- 6BbcJQnPEloMyRd0jfYZh1/DU0jtWrz0X4vLV2EthgAGiIdba4WF6Hgewocsnrg9ZqXv
- qB0FE108/0mHW0skuKX6Gbh1OkGFWwLZAl7MNSoGT4ppjcWb1QMcswJYtSBqRC4DEO7j
- NvxW8qdP+MubLYieqtN466wmYF4rFxWtbP42/1s0OWmM8ux8ISLs7zHtvPQBEp3HPt22
- m2obU2KP3piwr1eB9RuKKtmcdARSCr/AxF0UTA3Axnohxt9Lj6iNNf5N4kBmv6anTC1e
- Ndiw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sngWH-0004Nu-7b
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:41:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sngWF-0003y2-0D
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:41:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725896493;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=INjtO/NFBs49SCboRR+JNXBjH1xGtekL1LMYUJhHFss=;
+ b=K735MJk+IHFCM4ZTmTipM4xRjSmBOh5KxZ6T460eFornu54y4dgPbjGpGB6SI02dPrTeDa
+ x5gXS1G7qkh4UfkSyjJVW9OivMv8wfPALF2ftR1mjknxswWkBnlbXswACyZsJX7tvC3C7J
+ ibRKuiZLbJgYtEWJwyaP+stfRo1FsrI=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-321-zgi4f5XKNVGI-TgxkDWMbA-1; Mon, 09 Sep 2024 11:41:30 -0400
+X-MC-Unique: zgi4f5XKNVGI-TgxkDWMbA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-45832b277d9so13042581cf.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:41:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725896115; x=1726500915;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GxfKZP8Ad2FL8b3Zz2/iX/CT1VxdkYPkw7K654YdQMk=;
- b=CqADqN6Ef5L2nYC/vQeIVWx1Qv38and30u164ruQgKGpY39ClS20ShvwNexu549oQm
- HuLpj1Is/KXRW3gZEAG6Qti/DZ4JjewTXujytsfOnkBwWgH+y6ExAY4wNHgtMVJvd1PD
- 3VpuC9nsUwov06X7rIlB6B+AScdOIC24GgkIpIbHhfpmN5kJRUhktwLjLO06WhfiMLI7
- czyhnG12Sm38RScRyYC50dKOGGt+m9/7lqMdjAKtBxk0ZpJxaYb6Oi7f6V38n5dtgbrr
- pUhAQm0BJ5uspC7CHwAxP1BjC+ZHFAWIgYP/ekc1LYM3tVjawGHnGjtg1Mz71VxVuoyg
- MgjQ==
-X-Gm-Message-State: AOJu0YykTIx+mslEzlYUYiVLc7cfSoCXwwswcm49L61S0+X1BxDUq6o5
- qK6aYIecxCKGn8MpPqF2pFg+b5XgoHqviMWDYoVffihkUgMN+6FUUyhM/5hW6aNReaVTW6MiItk
- c+1/HFDY882VnLLFNmiEbIWrW51r+gOfFuqXARQ==
-X-Google-Smtp-Source: AGHT+IGlhkC8G3tq8kD39qWek5YouLgD0KnA+wlHGmq4p9wadY2tVtnott5enignH3VYFSHK1lbL8Rn5O+DAXxcPk9c=
-X-Received: by 2002:a2e:b8c7:0:b0:2ef:20ae:d111 with SMTP id
- 38308e7fff4ca-2f752209e68mr73037761fa.6.1725896115266; Mon, 09 Sep 2024
- 08:35:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725896490; x=1726501290;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=INjtO/NFBs49SCboRR+JNXBjH1xGtekL1LMYUJhHFss=;
+ b=xBbM2lR5pVU4Fi55OzTODAoCtr4vOrowYal7nA9MoTBgToCWuUfMFll27tAwth87vI
+ NPTaPuI9kCKyIy3mcM3Gku6u+OjEUKBx509frpr0ZfLqswRGtX+CAXjgym9vE0sCoFRb
+ ki3BEHIIrdalGQIVfoZl3c5Arsc+Due1DyWbyv8jiKlDBPZVqBS2CufPGvNjYO68Iq3f
+ JZ3eKXAZdJmcpck61cX90ZqChSlRqD2i6Jl5iar7fPdksEN/QhuZp3IxIKfV0CAuzdxc
+ E7eiTQLcbk7kWm0avlxA2lkaY842IURMF4RGVp1qy7RhcWYjT++m7fVH/prEtK0kN4jm
+ NJLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMaPd6TvPEcaFrxD0FIYkpAiiJKy4pQrl5gPdDOFRNFv0ux/hLDWxf6pMeb4oEl4fFykoLyvQnq2VM@nongnu.org
+X-Gm-Message-State: AOJu0Yxi34Rb4qh6X1qPmMPAYLrl6idIFJ3+NoJge3l2xGufhm661HLO
+ XAYzmFGrSnmSV+w0+/4LTO5kQfD70UBb1DqV9YHxUZEXOccdudbE9+hjV/Mphdb+YYnjwRU6r6g
+ 1AaxwAIeEGZBj0rn8zo862VhLLsGkX4Ljf32r0Rz47A2QldbsLF/K
+X-Received: by 2002:a05:6214:8d2:b0:6c5:5080:bbb1 with SMTP id
+ 6a1803df08f44-6c55080bbeemr16816806d6.13.1725896490222; 
+ Mon, 09 Sep 2024 08:41:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcy3+pE9t9QuI21OL4Kyce7rUA/OIobfBm5gnBIZgRY0iGw5BTnl6lnkJimJpRYfmD8TkaQA==
+X-Received: by 2002:a05:6214:8d2:b0:6c5:5080:bbb1 with SMTP id
+ 6a1803df08f44-6c55080bbeemr16816466d6.13.1725896489772; 
+ Mon, 09 Sep 2024 08:41:29 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c53474d793sm21416116d6.101.2024.09.09.08.41.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Sep 2024 08:41:29 -0700 (PDT)
+Date: Mon, 9 Sep 2024 11:41:26 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 03/17] migration/multifd: Zero p->flags before
+ starting filling a packet
+Message-ID: <Zt8XJmPT3gHzTcAM@x1n>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <6230f70a9d11f5b5efd2811ebdebc722318c6b15.1724701542.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-References: <20240909133921.1141067-1-peter.maydell@linaro.org>
- <87cylcyhp3.fsf@draig.linaro.org>
-In-Reply-To: <87cylcyhp3.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Sep 2024 16:34:56 +0100
-Message-ID: <CAFEAcA_+FGsrR8CY_chzyk6+RAsM91HYUnNK4oR+uEXwAbAV4A@mail.gmail.com>
-Subject: Re: [RFC PATCH] tests/qtest: Don't parallelize migration-test
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6230f70a9d11f5b5efd2811ebdebc722318c6b15.1724701542.git.maciej.szmigiero@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,23 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Sept 2024 at 16:23, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
-> I guess one question is are we getting value from all the extra
-> migration tests? There certainly seem to be some sub-tests that are
-> slower than the others and I assume testing a small delta on the tests
-> before it.
->
-> On s390x it seems the native test runs pretty much to the same time as
-> the other TCG guests. Do we exercise any extra migration code by running
-> tests for every architecture as opposed to one KVM/native hyp and one
-> TCG one?
+On Tue, Aug 27, 2024 at 07:54:22PM +0200, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> 
+> This way there aren't stale flags there.
+> 
+> p->flags can't contain SYNC to be sent at the next RAM packet since syncs
+> are now handled separately in multifd_send_thread.
+> 
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-s390 is an interesting one because Christian pointed out that
-although it has "KVM" support, we're actually running on a
-VM under z/VM, and so when we run a CI test under "-accel KVM"
-that's actually nested-KVM and its effects on the host CPU's
-TLB could be such that it's actually worse than using TCG...
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
--- PMM
+-- 
+Peter Xu
+
 
