@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 242C0ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA4BECE57E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snfLb-0002Ya-O0; Mon, 09 Sep 2024 10:26:31 -0400
+	id 1snfLG-0001M8-PX; Mon, 09 Sep 2024 10:26:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1snfLS-00028L-BG
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:26:22 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1snfLF-0001Fc-DO
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:26:09 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1snfLO-0004Un-BV
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:26:20 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7163489149eso3529633a12.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:26:17 -0700 (PDT)
+ id 1snfLD-0004U1-MC
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:26:09 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3e033e66a31so1521596b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1725891976; x=1726496776;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1725891966; x=1726496766;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PMsMrxXIYF55uyEUpAg6oCulZa95qOnP3qJj8dOgMPY=;
- b=MGBDKqVf7zq8wAW3+BY7XkO/pil5AP3J+ti/4GeFhh9q5UA3zmI5gSJEQBNUApmOJb
- vpE/rHwKulVSGhl28tNhsDonNsNGdmdPrQsTu/Hh9NGDCMA17y0aWTcAyEBJrmFil0XK
- nGngOZTybIc4hb8+uxJOXrrneK7uHiWNDnCGVZssLs/MiSRG+Fkzid08hBk9kSQkefwt
- lRqElvgu1xFkqQmq5ihY8dfMnwNlp6hhpX8XPgD51OPaZZSO7i6J47TNmGbB2olgv/pF
- GS1hMkqI768SEt0r54ca0daQR+xiybs259BIKDJhLo1WhD8QP6rR434ekLz+8+ziKIIb
- FJZA==
+ bh=A4+6JdQYvda/1Hm0Qzqic1h3nzIQOs1z0LtM+uvLl5s=;
+ b=uhnqUVhsAthcEiwJUVBVWETejxaOcKdm/BU33CZJzDMZcpohdMmpwamR9CziX6twRb
+ bZj1evOzyXB1w9EJbIazl3TSHDWKZ4VPKcDkhqd79Jovlra4RxfgjWxJI+LxJD+2NYNm
+ X+WEb9zRDdxMgQYg4krn2J6PtaI24vktYUi5s/zAFxFrzbWO8LQfSjj6MgceidchdbWr
+ nNnuudeskXIODWaKZU0fRV7dBMa6QTycekAU8PjpemRuwKAd9dKJCpc9DCVElhb9hACu
+ DPsnnHQbivVa5s8WTk69wSbKgRxsy9pb4bXqC3ARBVu0gt6bQS6Fmi9FZnn5udUBaxIW
+ 4jQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725891976; x=1726496776;
+ d=1e100.net; s=20230601; t=1725891966; x=1726496766;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PMsMrxXIYF55uyEUpAg6oCulZa95qOnP3qJj8dOgMPY=;
- b=xQm9FOJgb9U2qPkfW2OKOyhg6zlhXm3mgOp5lIirOvKeWEg8yEbIxK5FAmT0LnV2BZ
- S19Bjkmw2K4ISbUOW7vgRiVod+0L6wuGL51VIGMVglXZe/F0MD2buxVy67TZq/T/GOXw
- Nh3/uyfLkNjzyMG+5oU05Hcj7bNAg4rx8aEETreyZKr8huJDYJnVkMOnPa/AlWQEMPyu
- 7Ned2dNUdTyFLSricOodZSSC91kp6c/Bze3hc2rw1QsAOXUMP+B7KQP6oqXaozQC/G/9
- 9l4v8JdUvOPsf7adTd8KxFqxHUTBoV/j04ym1P/P2eFVAx1v/51Rp7rjr3x+prDMjfu+
- q4BA==
-X-Gm-Message-State: AOJu0YymySucwhvn0EJ6AeDwN+zAiVWIhAmNPt7wysOkpsGV8URHvLhE
- 9FUW2uGUZelqyX7sFis7NB2Cfn0zpgvWS0iOx+Mg69LxzJ9M95D3l8B/qW9JwbrGuOB0yypVKSA
- GX0vitg==
-X-Google-Smtp-Source: AGHT+IEMbRYQFUUG8WXjkKSYiGzZOuXV4BZYZPDJVrOdXLDhURhSEXi6aehjLoqkl7nz0x3xD8X6sA==
-X-Received: by 2002:a05:6a20:4387:b0:1cf:41aa:f6a1 with SMTP id
- adf61e73a8af0-1cf41ab0323mr3357398637.20.1725891975541; 
- Mon, 09 Sep 2024 07:26:15 -0700 (PDT)
+ bh=A4+6JdQYvda/1Hm0Qzqic1h3nzIQOs1z0LtM+uvLl5s=;
+ b=ar3ppsClkDErwg+I1eR7uQB/cjYjHQslr/vY+2Uiu2MZO0QDeNrtzH3s/hDa8W5f5Z
+ dp+BArZJ9n2X3YhJnPpuD6AbIRRTO4QSB4Ayhs12Mrd/033KpsOvJtOaHLorfbed3P10
+ MJKELAbGRZnU0cDhmBAcBL3/4S70EV+L44rizkw+49VdgtunOqZZkmRKgEu8awAOGG7t
+ C+33KpB2k48g3V6+OJwfNM27tuaKm6pMWjfvD3XQQ5vJH8VJV6axClbyUvaeBcSlcsaw
+ rNbJlk/6okGrD9to5qS/pDhThbE/T6BFNCqzNqx+xJyNQDwNHk7rQoLy3XpTVf+sqp10
+ nQ1g==
+X-Gm-Message-State: AOJu0YwfTbGvharxwnmYe5U7DDLUTrzI+HQOhuBNv3S+Az6uS2lNMg6r
+ +2uMTZwofvMOsynpm2Y8NRscIdX3kSi21WnWDp/Y+f/YeSfiNalneUSWITk/azb76gw0V7xiY37
+ GTf0vlQ==
+X-Google-Smtp-Source: AGHT+IH76pZoBbETP32Ke1fH3vmV1055l/ejb7q4fQ43imhs6kNFFnvibA9y9NCOnvzO5+Luij3Fow==
+X-Received: by 2002:a05:6870:9f08:b0:277:e641:5659 with SMTP id
+ 586e51a60fabf-27b9daecd2cmr3397826fac.35.1725891965569; 
+ Mon, 09 Sep 2024 07:26:05 -0700 (PDT)
 Received: from localhost.localdomain ([118.114.94.226])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-718e58b2a88sm3561164b3a.46.2024.09.09.07.26.12
+ d2e1a72fcca58-718e58b2a88sm3561164b3a.46.2024.09.09.07.26.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 07:26:15 -0700 (PDT)
+ Mon, 09 Sep 2024 07:26:05 -0700 (PDT)
 From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -67,17 +67,16 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, yong.huang@smartx.com
-Subject: [PATCH RESEND RFC 07/10] tests/migration-tests: Add test case for
- periodic throttle
-Date: Mon,  9 Sep 2024 22:25:40 +0800
-Message-Id: <8eae7759cdef113ff2fd5a77c9374b51dcd72284.1725891841.git.yong.huang@smartx.com>
+Subject: [PATCH RESEND RFC 04/10] qapi/migration: Introduce the iteration-count
+Date: Mon,  9 Sep 2024 22:25:37 +0800
+Message-Id: <9f16a57bd430fd99807a57454780c7e0a90e739c.1725891841.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <cover.1725891841.git.yong.huang@smartx.com>
 References: <cover.1725891841.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=yong.huang@smartx.com; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=yong.huang@smartx.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,136 +98,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To make sure periodic throttle feature doesn't regression
-any features and functionalities, enable this feature in
-the auto-converge migration test.
+The original migration information dirty-sync-count
+could no longer reflect iteration count due to the
+introduction of periodic synchronization in the next
+commit; add the iteration count to compensate.
 
 Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 ---
- tests/qtest/migration-test.c | 56 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
+ migration/migration-stats.h  |  4 ++++
+ migration/migration.c        |  1 +
+ migration/ram.c              | 12 ++++++++----
+ qapi/migration.json          |  6 +++++-
+ tests/qtest/migration-test.c |  2 +-
+ 5 files changed, 19 insertions(+), 6 deletions(-)
 
+diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+index 05290ade76..43ee0f4f05 100644
+--- a/migration/migration-stats.h
++++ b/migration/migration-stats.h
+@@ -50,6 +50,10 @@ typedef struct {
+      * Number of times we have synchronized guest bitmaps.
+      */
+     Stat64 dirty_sync_count;
++    /*
++     * Number of migration iteration processed.
++     */
++    Stat64 iteration_count;
+     /*
+      * Number of times zero copy failed to send any page using zero
+      * copy.
+diff --git a/migration/migration.c b/migration/migration.c
+index 3dea06d577..055d527ff6 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1197,6 +1197,7 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
+     info->ram->mbps = s->mbps;
+     info->ram->dirty_sync_count =
+         stat64_get(&mig_stats.dirty_sync_count);
++    info->ram->iteration_count = stat64_get(&mig_stats.iteration_count);
+     info->ram->dirty_sync_missed_zero_copy =
+         stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
+     info->ram->postcopy_requests =
+diff --git a/migration/ram.c b/migration/ram.c
+index a56634eb46..23471c9e5a 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -594,7 +594,7 @@ static void xbzrle_cache_zero_page(ram_addr_t current_addr)
+     /* We don't care if this fails to allocate a new cache page
+      * as long as it updated an old one */
+     cache_insert(XBZRLE.cache, current_addr, XBZRLE.zero_target_page,
+-                 stat64_get(&mig_stats.dirty_sync_count));
++                 stat64_get(&mig_stats.iteration_count));
+ }
+ 
+ #define ENCODING_FLAG_XBZRLE 0x1
+@@ -620,7 +620,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
+     int encoded_len = 0, bytes_xbzrle;
+     uint8_t *prev_cached_page;
+     QEMUFile *file = pss->pss_channel;
+-    uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
++    uint64_t generation = stat64_get(&mig_stats.iteration_count);
+ 
+     if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
+         xbzrle_counters.cache_miss++;
+@@ -1075,6 +1075,10 @@ static void migration_bitmap_sync(RAMState *rs,
+     RAMBlock *block;
+     int64_t end_time;
+ 
++    if (!periodic) {
++        stat64_add(&mig_stats.iteration_count, 1);
++    }
++
+     stat64_add(&mig_stats.dirty_sync_count, 1);
+ 
+     if (!rs->time_last_bitmap_sync) {
+@@ -1111,8 +1115,8 @@ static void migration_bitmap_sync(RAMState *rs,
+         rs->num_dirty_pages_period = 0;
+         rs->bytes_xfer_prev = migration_transferred_bytes();
+     }
+-    if (migrate_events()) {
+-        uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
++    if (!periodic && migrate_events()) {
++        uint64_t generation = stat64_get(&mig_stats.iteration_count);
+         qapi_event_send_migration_pass(generation);
+     }
+ }
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8281d4a83b..6d8358c202 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -60,6 +60,9 @@
+ #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+ #     7.1)
+ #
++# @iteration-count: The number of iterations since migration started.
++#     (since 9.2)
++#
+ # Since: 0.14
+ ##
+ { 'struct': 'MigrationStats',
+@@ -72,7 +75,8 @@
+            'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
+            'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
+            'postcopy-bytes': 'uint64',
+-           'dirty-sync-missed-zero-copy': 'uint64' } }
++           'dirty-sync-missed-zero-copy': 'uint64',
++           'iteration-count' : 'int' } }
+ 
+ ##
+ # @XBZRLECacheStats:
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 2fb10658d4..61d7182f88 100644
+index 9d08101643..2fb10658d4 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -281,6 +281,11 @@ static uint64_t get_migration_pass(QTestState *who)
-     return read_ram_property_int(who, "iteration-count");
+@@ -278,7 +278,7 @@ static int64_t read_migrate_property_int(QTestState *who, const char *property)
+ 
+ static uint64_t get_migration_pass(QTestState *who)
+ {
+-    return read_ram_property_int(who, "dirty-sync-count");
++    return read_ram_property_int(who, "iteration-count");
  }
  
-+static uint64_t get_migration_dirty_sync_count(QTestState *who)
-+{
-+    return read_ram_property_int(who, "dirty-sync-count");
-+}
-+
  static void read_blocktime(QTestState *who)
- {
-     QDict *rsp_return;
-@@ -710,6 +715,11 @@ typedef struct {
-     PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
- } MigrateCommon;
- 
-+typedef struct {
-+    /* CPU throttle parameters */
-+    bool periodic;
-+} AutoConvergeArgs;
-+
- static int test_migrate_start(QTestState **from, QTestState **to,
-                               const char *uri, MigrateStart *args)
- {
-@@ -2778,12 +2788,13 @@ static void test_validate_uri_channels_none_set(void)
-  * To make things even worse, we need to run the initial stage at
-  * 3MB/s so we enter autoconverge even when host is (over)loaded.
-  */
--static void test_migrate_auto_converge(void)
-+static void test_migrate_auto_converge_args(AutoConvergeArgs *input_args)
- {
-     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-     MigrateStart args = {};
-     QTestState *from, *to;
-     int64_t percentage;
-+    bool periodic = (input_args && input_args->periodic);
- 
-     /*
-      * We want the test to be stable and as fast as possible.
-@@ -2791,6 +2802,7 @@ static void test_migrate_auto_converge(void)
-      * so we need to decrease a bandwidth.
-      */
-     const int64_t init_pct = 5, inc_pct = 25, max_pct = 95;
-+    const int64_t periodic_throttle_interval = 2;
- 
-     if (test_migrate_start(&from, &to, uri, &args)) {
-         return;
-@@ -2801,6 +2813,12 @@ static void test_migrate_auto_converge(void)
-     migrate_set_parameter_int(from, "cpu-throttle-increment", inc_pct);
-     migrate_set_parameter_int(from, "max-cpu-throttle", max_pct);
- 
-+    if (periodic) {
-+        migrate_set_parameter_bool(from, "cpu-periodic-throttle", true);
-+        migrate_set_parameter_int(from, "cpu-periodic-throttle-interval",
-+                periodic_throttle_interval);
-+    }
-+
-     /*
-      * Set the initial parameters so that the migration could not converge
-      * without throttling.
-@@ -2827,6 +2845,29 @@ static void test_migrate_auto_converge(void)
-     } while (true);
-     /* The first percentage of throttling should be at least init_pct */
-     g_assert_cmpint(percentage, >=, init_pct);
-+
-+    if (periodic) {
-+        /*
-+         * Check if periodic sync take effect, set the timeout with 20s
-+         * (max_try_count * 1s), if extra sync doesn't show up, fail test.
-+         */
-+        uint64_t iteration_count, dirty_sync_count;
-+        bool extra_sync = false;
-+        int max_try_count = 20;
-+
-+        /* Check if periodic sync take effect */
-+        while (--max_try_count) {
-+            usleep(1000 * 1000);
-+            iteration_count = get_migration_pass(from);
-+            dirty_sync_count = get_migration_dirty_sync_count(from);
-+            if (dirty_sync_count > iteration_count) {
-+                extra_sync = true;
-+                break;
-+            }
-+        }
-+        g_assert(extra_sync);
-+    }
-+
-     /* Now, when we tested that throttling works, let it converge */
-     migrate_ensure_converge(from);
- 
-@@ -2849,6 +2890,17 @@ static void test_migrate_auto_converge(void)
-     test_migrate_end(from, to, true);
- }
- 
-+static void test_migrate_auto_converge(void)
-+{
-+    test_migrate_auto_converge_args(NULL);
-+}
-+
-+static void test_migrate_auto_converge_periodic_throttle(void)
-+{
-+    AutoConvergeArgs args = {.periodic = true};
-+    test_migrate_auto_converge_args(&args);
-+}
-+
- static void *
- test_migrate_precopy_tcp_multifd_start_common(QTestState *from,
-                                               QTestState *to,
-@@ -3900,6 +3952,8 @@ int main(int argc, char **argv)
-     if (g_test_slow()) {
-         migration_test_add("/migration/auto_converge",
-                            test_migrate_auto_converge);
-+        migration_test_add("/migration/auto_converge_periodic_throttle",
-+                           test_migrate_auto_converge_periodic_throttle);
-         if (g_str_equal(arch, "x86_64") &&
-             has_kvm && kvm_dirty_ring_supported()) {
-             migration_test_add("/migration/dirty_limit",
 -- 
 2.39.1
 
