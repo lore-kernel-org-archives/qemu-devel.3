@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AEBECE587
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 19:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE48ECE588
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 19:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snkFh-0005mc-OT; Mon, 09 Sep 2024 15:40:45 -0400
+	id 1snkQw-0002Li-Qd; Mon, 09 Sep 2024 15:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkFg-0005lZ-Ba
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:40:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkQv-0002L2-9R
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:52:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkFe-0002Nc-SD
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:40:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snkQt-0003NV-JI
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:52:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725910841;
+ s=mimecast20190719; t=1725911537;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=zDqMnkKHebw8PXTELmFNGxNcEBnXHbaf56eOXLwVQcc=;
- b=GjW8MWak/wKf8OPehMsCxl4NdyVVqvXSZOHLHJ6EgcIFbWVBHGw8NFltWH1WagFIlgCiTg
- YTKl9tOE2h+XOuwI8obTcIdYtISyAbq8Ft25F4cSRmKkbpopTlCemIRa4VLPngkocSub+u
- kVwvEfbH5UOsMqSarqA22/GuCEbBJz8=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5/3U3yDu8PUdzY29AlsktKBxoQ/xZmZZdqf5GHA6PLs=;
+ b=g2Nx54fsLjkkfkhqCjaFnkbbQ4Tz+5s1XFaYYIybT3peWcy1jBW8c38kh1Y0FSHFuHJhYL
+ 0rBUAztSp8SrBv34ans9g7tn/EitiqnxU6gacm3bneje/NzPbCldd4nbDBZV+pLwjlZAg1
+ 6VbwJ0017gFgKsLvPXic7+/p3efXqPg=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-B2StdRp9P6i7y4iu2klrQw-1; Mon, 09 Sep 2024 15:40:38 -0400
-X-MC-Unique: B2StdRp9P6i7y4iu2klrQw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6c3643faf9dso81789426d6.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 12:40:38 -0700 (PDT)
+ us-mta-562-l0CbS49oMNS1j0ciajjQWQ-1; Mon, 09 Sep 2024 15:52:16 -0400
+X-MC-Unique: l0CbS49oMNS1j0ciajjQWQ-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7a66b52c944so644719485a.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 12:52:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725910838; x=1726515638;
+ d=1e100.net; s=20230601; t=1725911536; x=1726516336;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zDqMnkKHebw8PXTELmFNGxNcEBnXHbaf56eOXLwVQcc=;
- b=V3ahI9xOBTFNF+lx0DLtpQXbIyDDJcarvwZUnA410qnZiaILALOmBZCBHYupB+Fzc+
- eoskR90wV2mYx+ssglUOB8TAfCPaMszQ0lb6Lj2agvyQp/zhE0uibJGEI0Xf8Q3pIh60
- vd2g4OUjllIehD97D4KUxntt83kexWO8mtHZxIabNs4Kb5+HVi+He8I5JmoKUl96E1jM
- x1KDXBZPZ8+ghoy+F3sEKpoteJI2F6/40lRZRHicOTiEwpd0eGa0TMBjF2N7nRCn8zT2
- BJ8utgTLbciOtExCJmjBLgCKrQ7InXdCSqDTj8Ohw/spDHL7x5lYlH8rVjMWtZAOEObh
- 5Ctw==
+ bh=5/3U3yDu8PUdzY29AlsktKBxoQ/xZmZZdqf5GHA6PLs=;
+ b=PYRNSUYm+6ejGDi5H5rpvJ5lxR6WT2Ti14YHfpSg/GtAVMM9jfeFQzefINMyOG67m1
+ 14sGif7cQIoL9/NdjBDQnDH8vwj2s1xyIi/US2BvYEbXkiJCR7wsDifLDH8UGbe5KLEQ
+ CnuTK2qYb/Wdaf5CIsH0OuOXM+zqgnasi+avIyXozyUUbhcioMQySUGv+fXGiV76yC1V
+ jV1o9cmcjZQx8RVOlVvrZqwHDywdl5wiLVUqI9AqiIKOQFvMNmWwEBm1GdqlxGNa52dZ
+ qlDbibMHkplIs8SCY6RlpmKCq32YQJ74R5Y5dCLvHLOxkHWTvi3GFyR/yFcPx1VLM5xc
+ SrUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVXEW+x010oVAHsCAiYiyQNXhphs7/IrVj3Oc5y6Ph68gK7PCA7TwR/5jQI4ceNPvaFaMzm0CL1MxV@nongnu.org
-X-Gm-Message-State: AOJu0Yx/wlQRpBtKQrRd/WAo/1dmQLEJveTnL30ux5r1ppJNPzxfWoVL
- aTyXsRs/gxidybpGGbxZ5x5NF7kqQhb08kiGD2Rt8ngq+5laxIm6jZCsQ+Y13RdEyYg3UDCE98F
- A2CQhq1G67E/mtzkTagZfxYGfw9MAP35CG8tLGDk86cRtWUr6iqKp
-X-Received: by 2002:a05:6214:5403:b0:6c5:1614:9c59 with SMTP id
- 6a1803df08f44-6c52850056emr156976586d6.31.1725910837964; 
- Mon, 09 Sep 2024 12:40:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMBJgtrRSwWRWm7O95VKNK49noc1c+Y+ukriRnDFboVb3R7xJo5oq3dKm5GSVeHm5RYrVK7Q==
-X-Received: by 2002:a05:6214:5403:b0:6c5:1614:9c59 with SMTP id
- 6a1803df08f44-6c52850056emr156976396d6.31.1725910837604; 
- Mon, 09 Sep 2024 12:40:37 -0700 (PDT)
+ AJvYcCUv52Z4D/OgLTu4VPbXlkTMcc/TfVxyKERxR5Ma2e9/dWeRjPkoogEQOeBOJ3/MCwI1No535XFl75+J@nongnu.org
+X-Gm-Message-State: AOJu0Yw/ThFDTi97qf8uwq5vPv91I36Ual+Z8cIogWoPb/hYXDEociZj
+ 1MmXr8myV/+eaR7rtyI7MgK0/693wKxFKSxy6eBY2y4Wbk0YfB//fEs5H5S7FkfIbBHBXEnpFPm
+ MvYPaxlWyQjQ6wO37HgXO3nWfdmJJAONz7gVOtYoLPxpAkA9T/Nb1
+X-Received: by 2002:a05:620a:470b:b0:7a9:b8d1:a1d with SMTP id
+ af79cd13be357-7a9b8d10be5mr514100385a.38.1725911534208; 
+ Mon, 09 Sep 2024 12:52:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNP5q9TBNM/J6mkAq0msAt4gYMKDBX5U1sEdnvknvsWaLvHhENfzdI5AkTUvLyv33TbbrSjQ==
+X-Received: by 2002:a05:620a:470b:b0:7a9:b8d1:a1d with SMTP id
+ af79cd13be357-7a9b8d10be5mr514097185a.38.1725911533785; 
+ Mon, 09 Sep 2024 12:52:13 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c5343471b8sm23494916d6.66.2024.09.09.12.40.36
+ af79cd13be357-7a9a7a042c8sm245036985a.83.2024.09.09.12.52.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 12:40:37 -0700 (PDT)
-Date: Mon, 9 Sep 2024 15:40:34 -0400
+ Mon, 09 Sep 2024 12:52:13 -0700 (PDT)
+Date: Mon, 9 Sep 2024 15:52:10 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer
- support - send side
-Message-ID: <Zt9PMrRXZN_qkSQ6@x1n>
+Subject: Re: [PATCH v2 09/17] migration/multifd: Device state transfer
+ support - receive side
+Message-ID: <Zt9R6hJSTRtB7s9e@x1n>
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
- <87h6b4nosy.fsf@suse.de>
- <bbdac26f-4a38-4cee-a9aa-cfae61b16dea@maciej.szmigiero.name>
- <87bk1anoy7.fsf@suse.de>
+ <84141182083a8417c25b4d82a9c4b6228b22ac67.1724701542.git.maciej.szmigiero@oracle.com>
+ <87ttf1n4lm.fsf@suse.de>
+ <00eeacd5-ad27-4899-8526-0941b30e759d@maciej.szmigiero.name>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87bk1anoy7.fsf@suse.de>
+In-Reply-To: <00eeacd5-ad27-4899-8526-0941b30e759d@maciej.szmigiero.name>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -93,8 +92,8 @@ X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,53 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 30, 2024 at 10:02:40AM -0300, Fabiano Rosas wrote:
-> >>> @@ -397,20 +404,16 @@ bool multifd_send(MultiFDSendData **send_data)
-> >>>   
-> >>>           p = &multifd_send_state->params[i];
-> >>>           /*
-> >>> -         * Lockless read to p->pending_job is safe, because only multifd
-> >>> -         * sender thread can clear it.
-> >>> +         * Lockless RMW on p->pending_job_preparing is safe, because only multifd
-> >>> +         * sender thread can clear it after it had seen p->pending_job being set.
-> >>> +         *
-> >>> +         * Pairs with qatomic_store_release() in multifd_send_thread().
-> >>>            */
-> >>> -        if (qatomic_read(&p->pending_job) == false) {
-> >>> +        if (qatomic_cmpxchg(&p->pending_job_preparing, false, true) == false) {
-> >> 
-> >> What's the motivation for this change? It would be better to have it in
-> >> a separate patch with a proper justification.
-> >
-> > The original RFC patch set used dedicated device state multifd channels.
-> >
-> > Peter and other people wanted this functionality removed, however this caused
-> > a performance (downtime) regression.
-> >
-> > One of the things that seemed to help mitigate this regression was making
-> > the multifd channel selection more fair via this change.
-> >
-> > But I can split out it to a separate commit in the next patch set version and
-> > then see what performance improvement it currently brings.
+On Mon, Sep 02, 2024 at 10:12:01PM +0200, Maciej S. Szmigiero wrote:
+> > > diff --git a/migration/multifd.h b/migration/multifd.h
+> > > index a3e35196d179..a8f3e4838c01 100644
+> > > --- a/migration/multifd.h
+> > > +++ b/migration/multifd.h
+> > > @@ -45,6 +45,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
+> > >   #define MULTIFD_FLAG_QPL (4 << 1)
+> > >   #define MULTIFD_FLAG_UADK (8 << 1)
+> > > +/*
+> > > + * If set it means that this packet contains device state
+> > > + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
+> > > + */
+> > > +#define MULTIFD_FLAG_DEVICE_STATE (1 << 4)
+> > 
+> > Overlaps with UADK. I assume on purpose because device_state doesn't
+> > support compression? Might be worth a comment.
+> > 
 > 
-> Yes, better to have it separate if anything for documentation of the
-> rationale.
+> Yes, the device state transfer bit stream does not support compression
+> so it is not a problem since these "compression type" flags will never
+> be set in such bit stream anyway.
+> 
+> Will add a relevant comment here.
 
-And when drafting that patch, please add a comment explaining the field.
-Currently it's missing:
-
-    /*
-     * The sender thread has work to do if either of below boolean is set.
-     *
-     * @pending_job:  a job is pending
-     * @pending_sync: a sync request is pending
-     *
-     * For both of these fields, they're only set by the requesters, and
-     * cleared by the multifd sender threads.
-     */
-    bool pending_job;
-    bool pending_job_preparing;
-    bool pending_sync;
+Why reuse?  Would using a new bit easier if we still have plenty of bits
+(just to tell what is what directly from a stream dump)?
 
 -- 
 Peter Xu
