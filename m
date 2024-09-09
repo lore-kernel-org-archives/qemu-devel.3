@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B80AECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 16:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 493C7ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 16:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snhA7-00024o-Ff; Mon, 09 Sep 2024 12:22:47 -0400
+	id 1snhAN-00038f-CZ; Mon, 09 Sep 2024 12:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snhA5-00022j-F4
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:22:45 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1snhAL-00031a-J7
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:23:01 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snhA3-0007fk-4R
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:22:44 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-718a3b8a2dcso2546793b3a.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 09:22:42 -0700 (PDT)
+ id 1snhAJ-0007lZ-PT
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:23:01 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2054e22ce3fso39172245ad.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 09:22:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725898961; x=1726503761; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lOQChnUkVXUAx+y325Z3070TgSIayRy3/U0PP6+k2eQ=;
- b=QVYeO3FIIRQoxu3ylzAJF1i6s5asbRJRZTTY5UBRiS34gZct3XhOWowwlb+wsZ46Or
- 88h7++ZCVKTEHYY7nc8Do564A8g8n79u7NCegQLu4ojPuaXMK9K/W7CY7vOB0QHiwBTM
- E6YJ/pSs6HS3ZqbP6NXt3xmBWfFWy2muhirWclzVnwweHTH/RUdhYtJYIcAfMIzu7IJC
- Zb8r9FITO6uNlhne1umCfX0MvKun1mmqrMsv8rFJiLx4jYURgDuTGTkBJ4dGqCqOsLvT
- UcJctbk6MXpbklQU6lHRoecsn81REFJbPrK88UH5MQ8ptBwJqlY6ihrf0dL5BhUhRCvq
- e3Kg==
+ d=linaro.org; s=google; t=1725898978; x=1726503778; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KLV5QacygPLKfVWBa93d9ZxgoSwEsczlHxuXIXCNBYM=;
+ b=mQyHILvv3J/GafelTC3bTr8uWFs2w1JixFbOU01nJmWXGa1EVDU+521YOLcNeycdn1
+ /SKGqsRjRWA3x61lcpKCoFpOWUxS5OJB/0oyb3NX21GVCdqaWsL63/R228YQbTOHfaBM
+ e9NBBoY3/93pAU08ITOSkUEKkHLwC7+EBUjSuqwx3pqDL4TAIAgRkXtSLfJPQO6tyUTO
+ w00mzOleoNKJ2BSbRCVd4oNYepWOc5SXhUV9+ch6xwgQdSeuB/HS7LeQAtCVKhUyN4np
+ d4u4GF0WeUmVHO9X8aaVDgH3THhbMsvcxBQchjNMta14YR8dTnPWtYzGJCXS/ZmaFLTW
+ K8tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725898961; x=1726503761;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lOQChnUkVXUAx+y325Z3070TgSIayRy3/U0PP6+k2eQ=;
- b=ufu+UcFT4UeBZohYr0joMsHkR59t0iwp/d4DbnN0KYIRhCAFjsFDqteRyJE3CYHKgi
- rw74MNeOaqBndGO5HW8MBCn8YRCAzdcH+0GXMJAM95leQwHz9PQK9rv71+IhQtdCc8QN
- btzGH+KTDB/ukU1BfxS3AU4kdWxVmQh5e/hC37hxmpo4P8kGP72hLWKGktsZSwmFCx4U
- GvnYI61v1pH29tA0os1WeR5syaKd3UdjiLyaey35XczVKrQ0VQT4GKkKRLxlXvlN84Wx
- ycJKVxzTmPIAuD2QsJueFqrqFnhhZS62T47d9tUDQKElLHcUZtlk5zxBz/m2m2iZrpJw
- g+Vg==
-X-Gm-Message-State: AOJu0YwN2c/B3iJ6NNL08hN36bGfKbDd/9JMtiDVXx3ZKp6jJwCyIiND
- a0gtDuVgEjto8ENAccTkUpr63dzVUp4d8EMvhql0oiIgXV0/9WzecWfJuVrz32EGwSA8GeyWC5+
- w
-X-Google-Smtp-Source: AGHT+IGKLn+aVxxq5Rs1EG/tEqxIEn8arKX1qv6lIyzOzPZvLJT0nXIDVaZbyzMB/vu2MCuN7k1pBA==
-X-Received: by 2002:a05:6a20:43a0:b0:1cf:36dd:32e5 with SMTP id
- adf61e73a8af0-1cf36dd3526mr4864704637.15.1725898961310; 
- Mon, 09 Sep 2024 09:22:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725898978; x=1726503778;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KLV5QacygPLKfVWBa93d9ZxgoSwEsczlHxuXIXCNBYM=;
+ b=DyE13YHeGXi81OEUe9DWH85dolL2ZrLw0fsGfw8KFrcbucze6ySboIwbi3HQMBb3AW
+ IuWv9gzBXUzUtcth5lxI+bARLGUFT1GhnxlM5vrWbg6uGAltSfewnnK/Hsw4B2HAX/Lu
+ tk4XwmSM2fOxu8FyhfKoogZDyWN6S8g2rAAhCCMd+UGJY5etDuKTZzDrT4AbY86P+oyo
+ QXwugs6zmuT0nSbYEC9rfnCj2FBsrX/yWrk+8brpvWja4tDMGugy9tcVgCjqdrvPC0BT
+ z6vWNg42gPg/Y7xlxQ6dvUc8bquTjftlCnLGNCBzdOIArnwPc1IS91MbDuQzRcB8MWXS
+ Vo4g==
+X-Gm-Message-State: AOJu0Yzs6mCSepXjUY5f1d2Trp7ql5H2vTub4xKeW1HCjTMPv7YCp9nw
+ bVzRQZc6YKGZ4yhDzESlH7Hs2WUlmzKpZMcL+e0vUu584OSwpXTwT6qH5gkfmXPqCKUZNWi+FrS
+ P
+X-Google-Smtp-Source: AGHT+IExFKJ9eurc1cE4SZLqAwrF0SVGP2JaS/Xx9mxPeUz7XihzOQm2Wjykh90jUUR9oiX/TOiPkA==
+X-Received: by 2002:a17:902:c94b:b0:202:330f:1512 with SMTP id
+ d9443c01a7336-206f05f6772mr113427935ad.44.1725898978505; 
+ Mon, 09 Sep 2024 09:22:58 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f35d79sm35753305ad.288.2024.09.09.09.22.40
+ d9443c01a7336-20710f35d79sm35753305ad.288.2024.09.09.09.22.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 09:22:40 -0700 (PDT)
+ Mon, 09 Sep 2024 09:22:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 00/29] target/arm: AdvSIMD decodetree conversion, part 4
-Date: Mon,  9 Sep 2024 09:22:10 -0700
-Message-ID: <20240909162240.647173-1-richard.henderson@linaro.org>
+Subject: [PATCH v2 18/29] target/arm: Use {, s}extract in handle_vec_simd_wshli
+Date: Mon,  9 Sep 2024 09:22:28 -0700
+Message-ID: <20240909162240.647173-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240909162240.647173-1-richard.henderson@linaro.org>
+References: <20240909162240.647173-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,55 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-First post-9.1 queue flush.
+Combine the right shift with the extension via
+the tcg extract operations.
 
-r~
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-Richard Henderson (29):
-  target/arm: Replace tcg_gen_dupi_vec with constants in gengvec.c
-  target/arm: Replace tcg_gen_dupi_vec with constants in translate-sve.c
-  target/arm: Use cmpsel in gen_ushl_vec
-  target/arm: Use cmpsel in gen_sshl_vec
-  target/arm: Use tcg_gen_extract2_i64 for EXT
-  target/arm: Convert EXT to decodetree
-  target/arm: Convert TBL, TBX to decodetree
-  target/arm: Convert UZP, TRN, ZIP to decodetree
-  target/arm: Simplify do_reduction_op
-  target/arm: Convert ADDV, *ADDLV, *MAXV, *MINV to decodetree
-  target/arm: Convert FMAXNMV, FMINNMV, FMAXV, FMINV to decodetree
-  target/arm: Convert FMOVI (scalar, immediate) to decodetree
-  target/arm: Convert MOVI, FMOV, ORR, BIC (vector immediate) to
-    decodetree
-  target/arm: Introduce gen_gvec_sshr, gen_gvec_ushr
-  target/arm: Fix whitespace near gen_srshr64_i64
-  target/arm: Convert handle_vec_simd_shri to decodetree
-  target/arm: Convert handle_vec_simd_shli to decodetree
-  target/arm: Use {,s}extract in handle_vec_simd_wshli
-  target/arm: Convert SSHLL, USHLL to decodetree
-  target/arm: Push tcg_rnd into handle_shri_with_rndacc
-  target/arm: Split out subroutines of handle_shri_with_rndacc
-  target/arm: Convert SHRN, RSHRN to decodetree
-  target/arm: Convert handle_scalar_simd_shri to decodetree
-  target/arm: Convert handle_scalar_simd_shli to decodetree
-  target/arm: Convert VQSHL, VQSHLU to gvec
-  target/arm: Widen NeonGenNarrowEnvFn return to 64 bits
-  target/arm: Convert SQSHL, UQSHL, SQSHLU (immediate) to decodetree
-  target/arm: Convert vector [US]QSHRN, [US]QRSHRN, SQSHRUN to
-    decodetree
-  target/arm: Convert scalar [US]QSHRN, [US]QRSHRN, SQSHRUN to
-    decodetree
-
- target/arm/helper.h             |   34 +-
- target/arm/tcg/translate.h      |   14 +-
- target/arm/tcg/gengvec.c        |  121 +-
- target/arm/tcg/neon_helper.c    |   55 +-
- target/arm/tcg/translate-a64.c  | 2081 +++++++++++++------------------
- target/arm/tcg/translate-neon.c |  179 +--
- target/arm/tcg/translate-sve.c  |  128 +-
- target/arm/tcg/a64.decode       |  257 ++++
- target/arm/tcg/neon-dp.decode   |    6 +-
- 9 files changed, 1377 insertions(+), 1498 deletions(-)
-
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 1225aac665..740620074a 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10477,8 +10477,11 @@ static void handle_vec_simd_wshli(DisasContext *s, bool is_q, bool is_u,
+     read_vec_element(s, tcg_rn, rn, is_q ? 1 : 0, MO_64);
+ 
+     for (i = 0; i < elements; i++) {
+-        tcg_gen_shri_i64(tcg_rd, tcg_rn, i * esize);
+-        ext_and_shift_reg(tcg_rd, tcg_rd, size | (!is_u << 2), 0);
++        if (is_u) {
++            tcg_gen_extract_i64(tcg_rd, tcg_rn, i * esize, esize);
++        } else {
++            tcg_gen_sextract_i64(tcg_rd, tcg_rn, i * esize, esize);
++        }
+         tcg_gen_shli_i64(tcg_rd, tcg_rd, shift);
+         write_vec_element(s, tcg_rd, rd, i, size + 1);
+     }
 -- 
 2.43.0
 
