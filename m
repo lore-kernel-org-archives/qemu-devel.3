@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0A41ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C26ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snfme-0005Qb-3x; Mon, 09 Sep 2024 10:54:28 -0400
+	id 1snfmj-0005lX-WA; Mon, 09 Sep 2024 10:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfmY-0005PI-81
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:54:22 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfmd-0005R2-UO
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:54:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfmW-00071d-9c
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:54:21 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfmb-00072G-OY
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:54:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725893658;
+ s=mimecast20190719; t=1725893664;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2LJHrkMFkVqUqwCRKMfyXGti6QS9Ge6bXTyXZ1MCtBw=;
- b=aMiYzUPhZIFOC+1xzsSo9K61/NS94J6/8FrwdV0k/E6sTgv0a72fV7/Hf5/SJCMyuttRPQ
- EV/oWhT+O39GJ6Fn2bwYfUY9PWvNtjAIF2QlmqHiC5Rrfiu0mPNg/d2DxYdDC7udIOHI51
- kkIaqenfFM10GYvOxjyrI0FZVL6ISaU=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=muYuhVo8+jXYQG+i6YJIJ3ax/FpbTBxwSGmzcCzGN5c=;
+ b=T0CVXYs9uORhZ8TcIrjEHZg6p8tBAYS0TEbiCDhAwQkADEMoI3220PiwrzFeilBeq+R5Ju
+ V0lxc29j+Ohz6H+0bj/gybgFzSh4sotkz3oDj75SRQKp+ssSVSJ2jtbu36j9Tjofo0gXNs
+ 7KdT4uG2aAobcQhL69xLMOY+yWzof2c=
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
+ [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-0E6gpztZPIS5EpGWssTpOA-1; Mon, 09 Sep 2024 10:54:17 -0400
-X-MC-Unique: 0E6gpztZPIS5EpGWssTpOA-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7a9a74d39b5so547373985a.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:54:17 -0700 (PDT)
+ us-mta-300-VYQGZvV4OzSgKlkDLSf7jw-1; Mon, 09 Sep 2024 10:54:20 -0400
+X-MC-Unique: VYQGZvV4OzSgKlkDLSf7jw-1
+Received: by mail-oo1-f70.google.com with SMTP id
+ 006d021491bc7-5df9375c3b1so3551924eaf.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:54:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725893656; x=1726498456;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2LJHrkMFkVqUqwCRKMfyXGti6QS9Ge6bXTyXZ1MCtBw=;
- b=TSF12rQF+VFkbi3g0KF23y+8Y/d/SmpxamsmjteT4fy7KpEaoDL9xR7sjI5NP8BrF2
- eo9csNvEAiJE93nGeoRXxZdc+N00IabdnJsPV7SzsmoeUBH2nI2yCdxJadwfQYVm/FKK
- EFkcN692UFF9jIOQ3tZW8yHypRnw5GWOfKKcU8Yy6duBWUkX7G5wduFMCc7gLCVWjf2b
- BHpWlPCFjj+mCeKx6yEhMDT/+t9SWjvWjtc4GRQZRsH94eYN9UC/ZpJHdDf5GA6XaOll
- 2cBwctn6Jwl2CDDYxVKfc0CsS26toiWD0Amram07vwnc/17KR543I4zBCiUNPodWUaNO
- L9Fg==
-X-Gm-Message-State: AOJu0Yys8scxurZITI+PHdKxR2Zm7IcrKEX6WOFA3cTHh0R9T20Cn1VM
- l/FfGJ6mp8nrUiIew2xL+CeQ3nfw4OmnlWZlb97IlgBHZ4njrvMb1Fn4o+rztb8c0d9I3u1zysL
- EGDQ2hB81tivtyT0DQNDi0dKmrHhu/DbHpxjCA9BYL5AbU9i1h+TQRQzyQ77QZSNb1pqhKRGIbF
- iKeIWfqzPnfC2HPPTui25VA/4sycTLHRx/rdyc
-X-Received: by 2002:a05:620a:24c3:b0:7a2:bb:31d3 with SMTP id
- af79cd13be357-7a9a38847d6mr1371758685a.22.1725893656548; 
- Mon, 09 Sep 2024 07:54:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE0lo25OCxjsA4r3ErLnp6Liwr/CRHB3B/i1Ho/SH4Nbo+c1TozjtAsvbHtVpFF4YggOtncQA==
-X-Received: by 2002:a05:620a:24c3:b0:7a2:bb:31d3 with SMTP id
- af79cd13be357-7a9a38847d6mr1371755085a.22.1725893656159; 
- Mon, 09 Sep 2024 07:54:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725893660; x=1726498460;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=muYuhVo8+jXYQG+i6YJIJ3ax/FpbTBxwSGmzcCzGN5c=;
+ b=nWrTQP4wKOYwbQveeSqfArOjhQoG1w5T65niM4IH1KGoJrmfl1FelX8Q8826GZJ/Wk
+ EyBA3lEeLVkSXpLsINDNmKwzgvaKiNDmCH+Rx1mvwTxo1XasN+MxjsU5X1A9+YXHXZGc
+ uG+US70M2NKWEqyIEaRWnaIYOuhRSwszDEDFMI1bjFMjZud9iCuyIdJ+4qg6YSMKbsI4
+ USWl/v4cA5TyjYJlMTgDvDOyPy06I3knJaTwh8J4KWS1x4MXNb/hAMYkKvR/2f/EEWOD
+ GzOk+uL2huCqDzUsYdCTiEaPUfMgpBc/sE8DGsxl6OSIqgZt1p9hDmmoKMNPP5M0tMLe
+ tJpQ==
+X-Gm-Message-State: AOJu0YxTqZocXC5gvLHLkMmUOHDyVFXjrKvOutW9wFAvRTVh/3f2lHym
+ +NGbtzd/frEoduLDDa2G5H8CxrndrbWiyPHoDq56E6LkKeGtBvRTHsumMUW0N7gzMXVLeTQ3Evz
+ qhMseGj0kXK49gRjXBpHhYCU1flBqbH5ilfmCV2yBnhEZNkc2HtbGGEzCdONmx6ARMbCsC3I4tu
+ kzo8wCpFhrAgrIKf/D6e2tBMehWgQWwp6lXh1H
+X-Received: by 2002:a05:6358:5699:b0:1aa:c9ba:4330 with SMTP id
+ e5c5f4694b2df-1b838594932mr900867755d.4.1725893659857; 
+ Mon, 09 Sep 2024 07:54:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IES5WhyBmF3sil484vp7OgwsJAW2XD+suHtu9rSq+4peKLE8F1Ftmss6TZ3kRCSJ07u5mIsBA==
+X-Received: by 2002:a05:6358:5699:b0:1aa:c9ba:4330 with SMTP id
+ e5c5f4694b2df-1b838594932mr900863755d.4.1725893659338; 
+ Mon, 09 Sep 2024 07:54:19 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a9a79455b1sm225387585a.19.2024.09.09.07.54.14
+ af79cd13be357-7a9a79455b1sm225387585a.19.2024.09.09.07.54.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 07:54:15 -0700 (PDT)
+ Mon, 09 Sep 2024 07:54:18 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vitaly Kuznetsov <vkuznets@redhat.com>,
@@ -70,11 +71,12 @@ Cc: Vitaly Kuznetsov <vkuznets@redhat.com>,
  peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>,
  Juraj Marcin <jmarcin@redhat.com>, Julia Suvorova <jusual@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v3 0/4] KVM: Dynamic sized memslots array
-Date: Mon,  9 Sep 2024 10:54:09 -0400
-Message-ID: <20240909145413.3748429-1-peterx@redhat.com>
+Subject: [PATCH v3 2/4] KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
+Date: Mon,  9 Sep 2024 10:54:11 -0400
+Message-ID: <20240909145413.3748429-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240909145413.3748429-1-peterx@redhat.com>
+References: <20240909145413.3748429-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
@@ -101,32 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3:
-- In kvm_get_free_slot(), avoid re-search when slots array grows [Juraj]
+Make the default max nr_slots a macro, it's only used when KVM reports
+nothing.
 
-v1: https://lore.kernel.org/r/20240904191635.3045606-1-peterx@redhat.com
-v2: https://lore.kernel.org/r/20240904223510.3519358-1-peterx@redhat.com
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ accel/kvm/kvm-all.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-This series make KVM memslots to be allocated dynamically in QEMU.  It
-fixes a migration performance regression that I observed, reducing precopy
-dirty sync process from ~86ms to ~3ms each time.
-
-Patch 1 is the fix to the problem, while the rest three patches are
-cleanups.
-
-Thanks,
-
-Peter Xu (4):
-  KVM: Dynamic sized kvm memslots array
-  KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
-  KVM: Rename KVMMemoryListener.nr_used_slots to nr_slots_used
-  KVM: Rename KVMState->nr_slots to nr_slots_max
-
- include/sysemu/kvm_int.h |   7 ++-
- accel/kvm/kvm-all.c      | 117 +++++++++++++++++++++++++++++++--------
- accel/kvm/trace-events   |   1 +
- 3 files changed, 99 insertions(+), 26 deletions(-)
-
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index c51a3f18db..2a2ee4e7d7 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -71,6 +71,8 @@
+ 
+ /* Default num of memslots to be allocated when VM starts */
+ #define  KVM_MEMSLOTS_NR_ALLOC_DEFAULT                      16
++/* Default max allowed memslots if kernel reported nothing */
++#define  KVM_MEMSLOTS_NR_MAX_DEFAULT                        32
+ 
+ struct KVMParkedVcpu {
+     unsigned long vcpu_id;
+@@ -2515,7 +2517,7 @@ static int kvm_init(MachineState *ms)
+ 
+     /* If unspecified, use the default value */
+     if (!s->nr_slots) {
+-        s->nr_slots = 32;
++        s->nr_slots_max = KVM_MEMSLOTS_NR_MAX_DEFAULT;
+     }
+ 
+     /*
 -- 
 2.45.0
 
