@@ -4,137 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC654ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 12:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 186B5ECE57A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 12:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sndCD-0001GX-6k; Mon, 09 Sep 2024 08:08:41 -0400
+	id 1sndcD-00020b-Dx; Mon, 09 Sep 2024 08:35:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sndCB-0001Fq-F6
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 08:08:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sndcB-0001yq-Uk
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 08:35:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sndC9-0004nt-N2
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 08:08:39 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sndc9-0000Sf-Cz
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 08:35:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725883716;
+ s=mimecast20190719; t=1725885327;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gwDgPdxGKPNd6tju7GNdoPGP/+VxNcQql+ZPtivw/5s=;
- b=b8kW3KmuM6odWvIYvXmwAmdpvsfOYikU+0+Tu10iB4xgz6vQfw+yN5MaT5yuW7O0+GY0yb
- oYaK0Kj8s1tCSHw8nEwGWyU7YZxiDFHm/CUWGRG9kq49XrSBFP9iDv+MdHMS96Z5iISoJe
- SE3Uw4rW8PVDrgu36w6PqKFoso/9OhQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=Do4vcB6e2lbVbQmsy5zwyRk2AujZCywh2UhuYIo4si0=;
+ b=ShVbrDtWLb6Jilvuy6dxNQoGulweHg92aWBKr8XO4FVBYDWGU4m253Lz9RjqLjUNw5Dsdp
+ WPcfaNHOEJ5QnxqofUQaPJmPdpmNFE1Puxo6mUvmwLI+h9NtHNAX+wW5kEh0Xc7aUq7Kew
+ qxCizDWMv/S6fQ7LrEkka49qjW1FLMo=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-Npzamg_MPYqaVvlejch3Cg-1; Mon, 09 Sep 2024 08:08:35 -0400
-X-MC-Unique: Npzamg_MPYqaVvlejch3Cg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42cb374f0cdso6743345e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 05:08:34 -0700 (PDT)
+ us-mta-582-T8ZKDaMdO3OyhzbPbDKlSw-1; Mon, 09 Sep 2024 08:35:23 -0400
+X-MC-Unique: T8ZKDaMdO3OyhzbPbDKlSw-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-6db791c41daso23401327b3.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 05:35:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725883714; x=1726488514;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=gwDgPdxGKPNd6tju7GNdoPGP/+VxNcQql+ZPtivw/5s=;
- b=l2L0AK39SnZOP8jNKnVKjm506j2HCr2VDP+lRy1/7aJEWSG0wT5IrAKdjAdezg6o5j
- WAJPxL5Jkpn3EY9cBWgKVXwN87rv/YLtRyuXOW8cPVfZm/xyJYAw5SAR6rRk/NJFB+JL
- Erzxy6XLVYgD/GUxG7yb7ypyraPKt1Za1sE4Wtsg3EYWxEiACaPLqj1YSaNzqL8OZrnt
- 2ecbq2afD1hYNS0RK1AE4kFQa+Y7cncGWZXcV3iJe8XCX016rq7uIJO94hXCm8RdO0r6
- s2bV7VgFFE9pxeyiwkSoub6Q/z/iFcuVYKBXw6qO2M88VuNYkNmiouI9Lu0CVQqXo4ac
- 77gA==
+ d=1e100.net; s=20230601; t=1725885323; x=1726490123;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Do4vcB6e2lbVbQmsy5zwyRk2AujZCywh2UhuYIo4si0=;
+ b=pFgfh00GC5vpFBFLbJePybKHd4f9Sx6gacxT2Adr4nlTWmrbaG0Q88F5dujSX55QVd
+ nz/lp8TOB6urWmpqhodLOxsLcWpiQYr19FZmdIa3drfoyuM1GEKyM+UnuSfYqMC7Ijl9
+ IvcdxYc3TSEDJu5mYNKqXlVCs4e3lHWO16wmATp2O4u8ATzdLQz6adxFiiID4tcxdLN8
+ xzzsZp6zeLGYPDISTbwZve5Is8H5rLClC4WdIvirBsD1tcDxjIdDVLMcAmb9L7zhtkfB
+ AYAeQp3DscPqFyODT9OFKDAHKZiTums6nG2FYl140U8bvhLLaEnZRdtVuKgeZJSChuas
+ 6wgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeCW5JZHpcA8mr1mBnSicDjC5siZ9j0QptBGbEq+hphHBWm9YP2CXF9BgcLNN0nZpccXqZZp7jY+W6@nongnu.org
-X-Gm-Message-State: AOJu0YwLMXdsMkBn0TUFqFT17iauBL5fBUTmnspogKeUq6XoEMn1kUp6
- UPrLlUg0fHAb+PHIAy6J1zaTTxogxSCBRHx8C5YwP+XrDZfKY4xcBYfgrEx2YPby1/b73+FyTCa
- MRumvDmAe/fbAxK5BOddXS24qFj/5w9wfTO+CiwVBe9eP+52aKYXh
-X-Received: by 2002:a05:600c:1d19:b0:42c:b991:98bc with SMTP id
- 5b1f17b1804b1-42cb9919abbmr11009915e9.0.1725883713873; 
- Mon, 09 Sep 2024 05:08:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHMjh1BGrpn9AT8aNccMo//CPkIQI1UQ0fE96uj64iK+ivfTVK74EOj5fZwYiduYPDduS9+vw==
-X-Received: by 2002:a05:600c:1d19:b0:42c:b991:98bc with SMTP id
- 5b1f17b1804b1-42cb9919abbmr11009585e9.0.1725883712945; 
- Mon, 09 Sep 2024 05:08:32 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c729:d800:d3b6:a549:7878:a6ee?
- (p200300cbc729d800d3b6a5497878a6ee.dip0.t-ipconnect.de.
- [2003:cb:c729:d800:d3b6:a549:7878:a6ee])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42ca8cebd35sm90698815e9.0.2024.09.09.05.08.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 05:08:32 -0700 (PDT)
-Message-ID: <5ff32b7e-0db7-4f10-8a8d-2c4f1f3a95df@redhat.com>
-Date: Mon, 9 Sep 2024 14:08:31 +0200
+ AJvYcCVvmhiAezr8SiC6QvQxcD+sjdnw0gYa/sTPePpQbNJJjPKgKtrZ0IKcvH3fIyud2fii4JhXCk05gB6a@nongnu.org
+X-Gm-Message-State: AOJu0Ywis4iNSRRP42F4j2ecqrzFo0CWMg3UBiotnfVyqtBUw3m3XwyJ
+ xoUoPPKrFwmrkf0g9+p2nik3aFm18svFcLyCHVxojfgcdApbYgNYUAwprMVsXirL6V9pyHqe6ow
+ tFeJEExBhoFkMXJxXOyQOeFZEFscgw28qdm/oI+2rC+1pooIIfV7TK0q9LG9TkNuPuWaH+V0RN4
+ 9wJ6uCWRahXLEBSZKnCfVVEPMgIOk=
+X-Received: by 2002:a05:690c:2a83:b0:6b0:39dd:48e with SMTP id
+ 00721157ae682-6db44f1b953mr68693907b3.27.1725885323223; 
+ Mon, 09 Sep 2024 05:35:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRwaoSbdcqvkkvDSj4R/57OeIxAiQX+hWJR3NpD7LNinfN6WvvgDWJiFebJKqQfOr9BoC70s6Wz9JaUDnnKRI=
+X-Received: by 2002:a05:690c:2a83:b0:6b0:39dd:48e with SMTP id
+ 00721157ae682-6db44f1b953mr68693617b3.27.1725885322597; Mon, 09 Sep 2024
+ 05:35:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] virtio-mem: Implement support for suspend+wake-up
- with plugged memory
-To: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20240904103722.946194-1-jmarcin@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240904103722.946194-1-jmarcin@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+References: <20240802112138.46831-1-sahilcdq@proton.me>
+ <2620452.Lt9SDvczpP@valdaarhun>
+ <CAJaqyWdno3yzuxpCMQN1CyLTt1SOv+oHHwB0Jze28gGqLicscQ@mail.gmail.com>
+ <9355562.CDJkKcVGEf@valdaarhun>
+In-Reply-To: <9355562.CDJkKcVGEf@valdaarhun>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 9 Sep 2024 14:34:45 +0200
+Message-ID: <CAJaqyWdFB=UfxV8LNoajP2+CC=8h98Wuow6oaiHcfjU8d69hpg@mail.gmail.com>
+Subject: Re: [RFC v3 3/3] vhost: Allocate memory for packed vring
+To: Sahil <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ Sahil Siddiq <sahilcdq@proton.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,40 +102,386 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.09.24 12:37, Juraj Marcin wrote:
-> Currently, the virtio-mem device would unplug all the memory with any
-> reset request, including when the machine wakes up from a suspended
-> state (deep sleep). This would lead to a loss of the contents of the
-> guest memory and therefore is disabled by the virtio-mem Linux Kernel
-> driver unless the VIRTIO_MEM_F_PERSISTENT_SUSPEND virtio feature is
-> exposed. [1]
-> 
-> To make deep sleep with virtio-mem possible, we need to differentiate
-> cold start reset from wake-up reset. The first patch updates
-> qemu_system_reset() and MachineClass children to accept ResetType
-> instead of ShutdownCause, which then could be passed down the device
-> tree. The second patch then introduces the new reset type for the
-> wake-up event and updates the i386 wake-up method (only architecture
-> using the explicit wake-up method).
-> 
-> The third patch replaces LegacyReset with the Resettable interface in
-> virtio-mem, so the memory device can access the reset type in the hold
-> phase. The last patch of the series implements the final support in the
-> hold phase of the virtio-mem reset callback and exposes
-> VIRTIO_MEM_F_PERSISTENT_SUSPEND to the kernel.
-> 
-> [1]: https://lore.kernel.org/all/20240318120645.105664-1-david@redhat.com/
+On Sun, Sep 8, 2024 at 9:47=E2=80=AFPM Sahil <icegambit91@gmail.com> wrote:
+>
+> Hi,
+>
+> On Friday, August 30, 2024 4:18:31=E2=80=AFPM GMT+5:30 Eugenio Perez Mart=
+in wrote:
+> > On Fri, Aug 30, 2024 at 12:20=E2=80=AFPM Sahil <icegambit91@gmail.com> =
+wrote:
+> > > Hi,
+> > >
+> > > On Tuesday, August 27, 2024 9:00:36=E2=80=AFPM GMT+5:30 Eugenio Perez=
+ Martin wrote:
+> > > > On Wed, Aug 21, 2024 at 2:20=E2=80=AFPM Sahil <icegambit91@gmail.co=
+m> wrote:
+> > > > > [...]
+> > > > > I have been trying to test my changes so far as well. I am not ve=
+ry
+> > > > > clear
+> > > > > on a few things.
+> > > > >
+> > > > > Q1.
+> > > > > I built QEMU from source with my changes and followed the vdpa_si=
+m +
+> > > > > vhost_vdpa tutorial [1]. The VM seems to be running fine. How do =
+I
+> > > > > check
+> > > > > if the packed format is being used instead of the split vq format=
+ for
+> > > > > shadow virtqueues? I know the packed format is used when virtio_v=
+dev
+> > > > > has
+> > > > > got the VIRTIO_F_RING_PACKED bit enabled. Is there a way of check=
+ing
+> > > > > that
+> > > > > this is the case?
+> > > >
+> > > > You can see the features that the driver acked from the guest by
+> > > > checking sysfs. Once you know the PCI BFN from lspci:
+> > > > # lspci -nn|grep '\[1af4:1041\]'
+> > > > 01:00.0 Ethernet controller [0200]: Red Hat, Inc. Virtio 1.0 networ=
+k
+> > > > device [1af4:1041] (rev 01)
+> > > > # cut -c 35
+> > > > /sys/devices/pci0000:00/0000:00:02.0/0000:01:00.0/virtio0/features =
+0
+> > > >
+> > > > Also, you can check from QEMU by simply tracing if your functions a=
+re
+> > > > being called.
+> > > >
+> > > > > Q2.
+> > > > > What's the recommended way to see what's going on under the hood?=
+ I
+> > > > > tried
+> > > > > using the -D option so QEMU's logs are written to a file but the =
+file
+> > > > > was
+> > > > > empty. Would using qemu with -monitor stdio or attaching gdb to t=
+he
+> > > > > QEMU
+> > > > > VM be worthwhile?
+> > > >
+> > > > You need to add --trace options with the regex you want to get to
+> > > > enable any output. For example, --trace 'vhost_vdpa_*' print all th=
+e
+> > > > trace_vhost_vdpa_* functions.
+> > > >
+> > > > If you want to speed things up, you can just replace the interestin=
+g
+> > > > trace_... functions with fprintf(stderr, ...). We can add the trace
+> > > > ones afterwards.
+> > >
+> > > Understood. I am able to trace the functions that are being called wi=
+th
+> > > fprintf. I'll stick with fprintf for now.
+> > >
+> > > I realized that packed vqs are not being used in the test environment=
+. I
+> > > see that in "hw/virtio/vhost-shadow-virtqueue.c", svq->is_packed is s=
+et
+> > > to 0 and that calls vhost_svq_add_split(). I am not sure how one enab=
+les
+> > > the packed feature bit. I don't know if this is an environment issue.
+> > >
+> > > I built qemu from the latest source with my changes on top of it. I
+> > > followed this article [1] to set up the environment.
+> > >
+> > > On the host machine:
+> > >
+> > > $ uname -a
+> > > Linux fedora 6.10.5-100.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Wed Aug 14
+> > > 15:49:25 UTC 2024 x86_64 GNU/Linux
+> > >
+> > > $ ./qemu/build/qemu-system-x86_64 --version
+> > > QEMU emulator version 9.0.91
+> > >
+> > > $ vdpa -V
+> > > vdpa utility, iproute2-6.4.0
+> > >
+> > > All the relevant vdpa modules have been loaded in accordance with [1]=
+.
+> > >
+> > > $ lsmod | grep -iE "(vdpa|virtio)"
+> > > vdpa_sim_net    12288  0
+> > > vdpa_sim                24576  1 vdpa_sim_net
+> > > vringh          32768  2 vdpa_sim,vdpa_sim_net
+> > > vhost_vdpa              32768  2
+> > > vhost           65536  1 vhost_vdpa
+> > > vhost_iotlb             16384  4 vdpa_sim,vringh,vhost_vdpa,vhost
+> > > vdpa            36864  3 vdpa_sim,vhost_vdpa,vdpa_sim_net
+> > >
+> > > $ ls -l /sys/bus/vdpa/devices/vdpa0/driver
+> > > lrwxrwxrwx. 1 root root 0 Aug 30 11:25 /sys/bus/vdpa/devices/vdpa0/dr=
+iver
+> > > -> ../../bus/vdpa/drivers/vhost_vdpa
+> > >
+> > > In the output of the following command, I see ANY_LAYOUT is supported=
+.
+> > > According to virtio_config.h [2] in the linux kernel, this represents=
+ the
+> > > layout of descriptors. This refers to split and packed vqs, right?
+> > >
+> > > $ vdpa mgmtdev show
+> > >
+> > > vdpasim_net:
+> > >   supported_classes net
+> > >   max_supported_vqs 3
+> > >   dev_features MTU MAC STATUS CTRL_VQ CTRL_MAC_ADDR ANY_LAYOUT VERSIO=
+N_1
+> > >   ACCESS_PLATFORM>
+> > > $ vdpa dev show -jp
+> > > {
+> > >
+> > >     "dev": {
+> > >
+> > >         "vdpa0": {
+> > >
+> > >             "type": "network",
+> > >             "mgmtdev": "vdpasim_net",
+> > >             "vendor_id": 0,
+> > >             "max_vqs": 3,
+> > >             "max_vq_size": 256
+> > >
+> > >         }
+> > >
+> > >     }
+> > >
+> > > }
+> > >
+> > > I started the VM by running:
+> > >
+> > > $ sudo ./qemu/build/qemu-system-x86_64 \
+> > > -enable-kvm \
+> > > -drive file=3D//home/ig91/fedora_qemu_test_vm/L1.qcow2,media=3Ddisk,i=
+f=3Dvirtio
+> > > \
+> > > -net nic,model=3Dvirtio \
+> > > -net user,hostfwd=3Dtcp::2226-:22 \
+> > > -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdp=
+a0 \
+> > > -device
+> > > virtio-net-pci,netdev=3Dvhost-vdpa0,bus=3Dpci.0,addr=3D0x7,disable-le=
+gacy=3Don,di
+> > > sable-modern=3Doff,page-per-vq=3Don,event_idx=3Doff,packed=3Don \ -no=
+graphic \
+> > > -m 2G \
+> > > -smp 2 \
+> > > -cpu host \
+> > > 2>&1 | tee vm.log
+> > >
+> > > I added the packed=3Don option to -device virtio-net-pci.
+> > >
+> > > In the VM:
+> > >
+> > > # uname -a
+> > > Linux fedora 6.8.5-201.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Apr 11
+> > > 18:25:26 UTC 2024 x86_64 GNU/Linux
+> > >
+> > > # lspci -nn | grep -i -A15 "\[1af4:1041\]"
+> > > 00:07.0 Ethernet controller [0200]: Red Hat, Inc. Virtio 1.0 network
+> > > device [1af4:1041] (rev 01)
+> > >
+> > > # cut -c 35 /sys/devices/pci0000:00/0000:00:07.0/virtio1/features
+> > > 0
+> > >
+> > > The packed vq feature bit hasn't been set. Am I missing something her=
+e?
+> >
+> > vdpa_sim does not support packed vq at the moment. You need to build
+> > the use case #3 of the second part of that blog [1]. It's good that
+> > you build the vdpa_sim earlier as it is a simpler setup.
+> >
+> > If you have problems with the vp_vdpa environment please let me know
+> > so we can find alternative setups.
+>
+> Thank you for the clarification. I tried setting up the vp_vdpa
+> environment (scenario 3) but I ended up running into a problem
+> in the L1 VM.
+>
+> I verified that nesting is enabled in KVM (L0):
+>
+> $ grep -oE "(vmx|svm)" /proc/cpuinfo | sort | uniq
+> vmx
+>
+> $ cat /sys/module/kvm_intel/parameters/nested
+> Y
+>
+> There are no issues when booting L1. I start the VM by running:
+>
+> $ sudo ./qemu/build/qemu-system-x86_64 \
+> -enable-kvm \
+> -drive file=3D//home/ig91/fedora_qemu_test_vm/L1.qcow2,media=3Ddisk,if=3D=
+virtio \
+> -net nic,model=3Dvirtio \
+> -net user,hostfwd=3Dtcp::2222-:22 \
+> -device intel-iommu,snoop-control=3Don \
+> -device virtio-net-pci,netdev=3Dnet0,disable-legacy=3Don,disable-modern=
+=3Doff,iommu_platform=3Don,event_idx=3Doff,packed=3Don,bus=3Dpcie.0,addr=3D=
+0x4 \
+> -netdev tap,id=3Dnet0,script=3Dno,downscript=3Dno \
+> -nographic \
+> -m 2G \
+> -smp 2 \
+> -M q35 \
+> -cpu host \
+> 2>&1 | tee vm.log
+>
+> Kernel version in L1:
+>
+> # uname -a
+> Linux fedora 6.8.5-201.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Apr 11 18:2=
+5:26 UTC 2024 x86_64 GNU/Linux
+>
 
-Thanks, I'll queue this to
+Did you run the kernels with the arguments "iommu=3Dpt intel_iommu=3Don"?
+You can print them with cat /proc/cmdline.
 
-https://github.com/davidhildenbrand/qemu.git mem-next
-
-@Peter, it would be great if you could have another look at patch #2, 
-thanks.
-
--- 
-Cheers,
-
-David / dhildenb
+> The following variables are set in the kernel's config as
+> described in the blog [1]:
+>
+> CONFIG_VIRTIO_VDPA=3Dm
+> CONFIG_VDPA=3Dm
+> CONFIG_VP_VDPA=3Dm
+> CONFIG_VHOST_VDPA=3Dm
+>
+> The vDPA tool also satisfies the version criterion.
+>
+> # vdpa -V
+> vdpa utility, iproute2-6.10.0
+>
+> I built QEMU from source with my changes on top of it.
+>
+> # ./qemu/build/qemu-system-x86_64 --version
+> QEMU emulator version 9.0.91
+>
+> The relevant vdpa modules are loaded successfully as
+> explained in the blog.
+>
+> # lsmod | grep -i vdpa
+> vp_vdpa         20480  0
+> vhost_vdpa      32768  0
+> vhost                   65536  1 vhost_vdpa
+> vhost_iotlb    16384  2 vhost_vdpa,vhost
+> vdpa               36864  2 vp_vdpa,vhost_vdpa
+> irqbypass       12288  2 vhost_vdpa,kvm
+>
+> # lspci | grep -i virtio
+> 00:03.0 SCSI storage controller: Red Hat, Inc. Virtio block device
+> 00:04.0 Ethernet controller: Red Hat, Inc. Virtio 1.0 network device (rev=
+ 01)
+>
+> # lspci -n |grep 00:04.0
+> 00:04.0 0200: 1af4:1041 (rev 01)
+>
+> I then unbind the virtio-pci device from the virtio-pci
+> driver and bind it to the vp_vdpa driver.
+>
+> # echo 0000:00:04.0 > /sys/bus/pci/drivers/virtio-pci/unbind
+> # echo 1af4 1041 > /sys/bus/pci/drivers/vp-vdpa/new_id
+>
+> I then create the vDPA device without any issues.
+>
+> # vdpa mgmtdev show
+> pci/0000:00:04.0:
+>   supported_classes net
+>   max_supported_vqs 3
+>   dev_features CSUM GUEST_CSUM CTRL_GUEST_OFFLOADS MAC GUEST_TSO4 GUEST_T=
+SO6 GUEST_ECN GUEST_UFO HOST_TSO4 HOST_TSO6 HOST_ECN HOST_UFO MRG_RXBUF STA=
+TUS CTRL_VQ CTRL_RX CTRL_VLAN CTRL_RX_EXTRA GUEST_ANNOUNCE CTRL_MAC_ADDR RI=
+NG_INDIRECT_DE6
+>
+> # vdpa dev add name vdpa0 mgmtdev pci/0000:00:04.0
+> # vdpa dev show -jp
+> {
+>     "dev": {
+>         "vdpa0": {
+>             "type": "network",
+>             "mgmtdev": "pci/0000:00:04.0",
+>             "vendor_id": 6900,
+>             "max_vqs": 3,
+>             "max_vq_size": 256
+>         }
+>     }
+> }
+>
+> # ls -l /sys/bus/vdpa/devices/vdpa0/driver
+> lrwxrwxrwx. 1 root root 0 Sep  8 18:58 /sys/bus/vdpa/devices/vdpa0/driver=
+ -> ../../../../bus/vdpa/drivers/vhost_vdpa
+>
+> # ls -l /dev/ |grep vdpa
+> crw-------. 1 root root    239,   0 Sep  8 18:58 vhost-vdpa-0
+>
+> # driverctl -b vdpa list-devices
+> vdpa0 vhost_vdpa
+>
+> I have a qcow2 image L2.qcow in L1. QEMU throws an error
+> when trying to launch L2.
+>
+> # sudo ./qemu/build/qemu-system-x86_64 \
+> -enable-kvm \
+> -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
+> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0 \
+> -device virtio-net-pci,netdev=3Dvhost-vdpa0,bus=3Dpcie.0,addr=3D0x7,disab=
+le-legacy=3Don,disable-modern=3Doff,event_idx=3Doff,packed=3Don \
+> -nographic \
+> -m 2G \
+> -smp 2 \
+> -M q35 \
+> -cpu host \
+> 2>&1 | tee vm.log
+>
+> qemu-system-x86_64: -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-=
+0,id=3Dvhost-vdpa0: Could not open '/dev/vhost-vdpa-0': Unknown error 524
+>
+> I get the same error when trying to launch L2 with qemu-kvm
+> which I installed using "dnf install".
+>
+> # qemu-kvm --version
+> QEMU emulator version 8.1.3 (qemu-8.1.3-5.fc39)
+>
+> The minimum version of QEMU required is v7.0.0-rc4.
+>
+> According to "include/linux/errno.h" [2], errno 524 is
+> ENOTSUPP (operation is not supported). I am not sure
+> where I am going wrong.
+>
+> However, I managed to set up scenario 4 successfully
+> and I see that packed vq is enabled in this case.
+>
+> # cut -c 35 /sys/devices/pci0000:00/0000:00:04.0/virtio1/features
+> 1
+>
+> For the time being, shall I simply continue testing with
+> scenario 4?
+>
+> > Thanks!
+> >
+> > [1]
+> > https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-=
+got-
+> > hardware-part-2
+> > > Thanks,
+> > > Sahil
+> > >
+> > > [1]
+> > > https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-ain=
+t-go
+> > > t-hardware-part-1 [2]
+> > > https://github.com/torvalds/linux/blob/master/include/uapi/linux/virt=
+io_c
+> > > onfig.h#L63
+>
+> Thanks,
+> Sahil
+>
+> [1] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-ain=
+t-got-hardware-part-2
+> [2] https://github.com/torvalds/linux/blob/master/include/linux/errno.h#L=
+27
+>
+>
 
 
