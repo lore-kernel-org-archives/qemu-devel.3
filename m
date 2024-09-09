@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A82ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2372DECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 14:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snfoM-00067Q-Sw; Mon, 09 Sep 2024 10:56:14 -0400
+	id 1snfod-0007U5-2e; Mon, 09 Sep 2024 10:56:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfoC-0005LV-UP
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:56:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfoZ-00078G-Kf
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:56:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfoB-0007JB-Ii
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:56:04 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snfoY-0007Kc-8x
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 10:56:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725893762;
+ s=mimecast20190719; t=1725893785;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=1jZIYevxV+tb1TR90gcBjUz9AFzt7m9SZOK+3LxVqnE=;
- b=KqmF/Tq1in/Np100iU8x6wPQ1A5bPAxCzK6neJLKAvflopdJcfR8YKqZ4TcPnrXEem9F7E
- ucwM0GtvOS9RLZbmS0lqZWkw878fqblnSIl8DZKxmIWukhFE1UBJmAJHSUbiKbAAFCBuvh
- QBN+8TfQPM8SttjY+6eY22E1SKLQEfM=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BuxrjxHGQTYa+u1Cw9dei7iRdM/WtZ08bIlmaNCMj08=;
+ b=HZyE54FPjAW3HN8Z7gdr2INf75eDsOdZc9Yho/+7+4vCmueu6URQ6l6obR+deGxPsPcmwr
+ yi+n1katNkdacMow5WEaoTeVUuLq+uUFyzIf1fwKnQqbpww2Cy1QSs+haJhZdZFaBtQZaG
+ uIFdIyOQKhyILYj+qKZd3eJ+6gfBON8=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-hkKrq716OtCpq1EHOHvpCQ-1; Mon, 09 Sep 2024 10:55:59 -0400
-X-MC-Unique: hkKrq716OtCpq1EHOHvpCQ-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6bf6d3e210eso50610326d6.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:55:59 -0700 (PDT)
+ us-mta-341-_4K64KqgMzOqHsVQDaJmVQ-1; Mon, 09 Sep 2024 10:56:24 -0400
+X-MC-Unique: _4K64KqgMzOqHsVQDaJmVQ-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-7092fa5079eso3681141a34.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 07:56:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725893759; x=1726498559;
+ d=1e100.net; s=20230601; t=1725893783; x=1726498583;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1jZIYevxV+tb1TR90gcBjUz9AFzt7m9SZOK+3LxVqnE=;
- b=fLbgjidmub9lrkEPlEqmGO9B7B4gAHfjJbh0IwOCAjb8IS28rgjR6nO6GU/u7DbMz4
- tj3XkHp1Iqvf0ox/SmKf3qWn2JXa+tNVgUPrf0X8VIQ27ZxxyXCl2Z2kt16ig2YNVu6Z
- TA/pzLuK0hk0zRqAiF0kd2m2cCsKREo6VZGxQQZtqqw2iqTH2Yc9tnkT2hyAiXv2cAJc
- BG8NYHzYYmgSxoQiLP4lhOjIkpahK49IEuI/KlfkTXap51PWbN7Jg8IzWxXCF0ufrStz
- fxBClqsJnclCNzTc0a3ZCqOmmgwhCyrfJNtOEE4ZWgAa2NErAe/GkruCFESgVtEn9eIE
- Ke2g==
-X-Gm-Message-State: AOJu0YxzKNNwChLj8+rWklHkpIgwHjIU4QHtq247ghxHwZYPSof9qAIB
- fOOJBh9Xa71AxjOqXquix7dGNGtljoybAf/2kzupP9R1j+bEOyuDXHvVux8X5K/2pj76i6ziyng
- /O1dKmg3kEo4VUGsV7oF3gcKMoILDLAGRuhW/+oAgtQrk3cioybjC
-X-Received: by 2002:a05:6214:5887:b0:6c5:50ed:ac3d with SMTP id
- 6a1803df08f44-6c550edac9cmr22613236d6.16.1725893758861; 
- Mon, 09 Sep 2024 07:55:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtipRWU2Kn192Lu3XNS1OHe1kg/dtqBrswmgcSM1XE91pRvMV6DL9g77PJhU18JP+XfC1V8A==
-X-Received: by 2002:a05:6214:5887:b0:6c5:50ed:ac3d with SMTP id
- 6a1803df08f44-6c550edac9cmr22612996d6.16.1725893758492; 
- Mon, 09 Sep 2024 07:55:58 -0700 (PDT)
+ bh=BuxrjxHGQTYa+u1Cw9dei7iRdM/WtZ08bIlmaNCMj08=;
+ b=mwenDxrK0nP5KZ5QVOEwddaY2czNDtiP2QQ1zNoRPSx+7lzYDezDO64zaCBQQ1S0MV
+ qPXZkORQjWaRFi7peDzpjyNTg6jl/rAK6LnUPgqL+EY1MFFPNXL6rEf8bsyOBTe2v2F5
+ zkPBSl35x0IiqJBGFFQyBzsySB7bPBkf9NxXCVh9LbZQ5Cy08kSl5iFpFwRaN6wxNLm+
+ dRWUgthYAFWH7NT8AaFMTui7PEMw9SQX/SWaoEhGp4mWpWcWc1GWSR++uuuxw/M/fBXO
+ YuAILyvqh+Tbg4NWwLhu+gBBJPSd70YlRgMOVXoh5ccEd8cgvs5SypJxIeiAMCG6UUp5
+ H4hA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUprcUWyQ4b0mff68FFxBnK/ieW1Dy6RSgzhJ3CjmO2J9U+F7FOO+EJ7GDUg39Cd+0K6nuy0odtsAaj@nongnu.org
+X-Gm-Message-State: AOJu0Yz1EUh69y1t0EXx80RKi+fajcNn/xxZjbAB3nXor2ClJFChekpI
+ Cetu2eR8WIPdepA3VG1GRkbd/EwDjdO8sPdWjOKmiQ3Wp+riPpU9Vfcv2bOutqhzQ/QR/I8qAO8
+ kmX2RCtAetluQS4+MS/DwaOOajT6MK3KPMJ4S+jqyT5OjjCBJTuyfP6ya5462sCk=
+X-Received: by 2002:a05:6830:2d83:b0:710:db4f:8efd with SMTP id
+ 46e09a7af769-710db4f9120mr3627986a34.21.1725893783610; 
+ Mon, 09 Sep 2024 07:56:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdSRsTKXUhnMGuJ+2I1MrhtXfyGuMAZ/BfquaG4fN9wh7xvdjOHKToS73c18rB960UMQBESQ==
+X-Received: by 2002:a05:6830:2d83:b0:710:db4f:8efd with SMTP id
+ 46e09a7af769-710db4f9120mr3627959a34.21.1725893783275; 
+ Mon, 09 Sep 2024 07:56:23 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c53477416esm21288646d6.107.2024.09.09.07.55.57
+ d75a77b69052e-45822e8ba52sm20936421cf.38.2024.09.09.07.56.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 07:55:57 -0700 (PDT)
-Date: Mon, 9 Sep 2024 10:55:52 -0400
+ Mon, 09 Sep 2024 07:56:22 -0700 (PDT)
+Date: Mon, 9 Sep 2024 10:56:20 -0400
 From: Peter Xu <peterx@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 1/1] system: improve migration debug
-Message-ID: <Zt8MeHIUCdu3LqLE@x1n>
-References: <20240905191941.310592-1-den@openvz.org>
+To: Yichen Wang <yichen.wang@bytedance.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ Xiaoning Ding <xiaoning.ding@bytedance.com>
+Subject: Re: [PATCH v9 0/5] Implement QATzip compression method
+Message-ID: <Zt8MlDBb5Kfn6v12@x1n>
+References: <20240830232722.58272-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240905191941.310592-1-den@openvz.org>
+In-Reply-To: <20240830232722.58272-1-yichen.wang@bytedance.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -98,22 +110,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 05, 2024 at 09:19:41PM +0200, Denis V. Lunev wrote:
-> Right now migration_throttle() tracepoint lacks very important
-> important information, i.e. no one could easily say how much the guest
-> is throttled. This makes difficult to debug guest quality of service
-> during migration.
-> 
-> This patch adds one more tracepoint into cpu_throttle_set() which is
-> actually doing this job.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Peter Xu <peterx@redhat.com>
-> CC: Fabiano Rosas <farosas@suse.de>
-> CC: Paolo Bonzini <pbonzini@redhat.com>
-> ---
-> Changes from v1:
-> - adding tracepoint directly to cpu_throttle_set() as suggested by Peter
+On Fri, Aug 30, 2024 at 04:27:17PM -0700, Yichen Wang wrote:
+> v9:
+> - Rebase changes on top of cec99171931ea79215c79661d33423ac84e63b6e;
+> - Address comments and add Review-by in commit messages; 
 
 queued, thanks.
 
