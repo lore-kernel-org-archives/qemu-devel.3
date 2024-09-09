@@ -4,107 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E418DECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 13:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 849E4ECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 13:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snejZ-000496-2p; Mon, 09 Sep 2024 09:47:13 -0400
+	id 1snelB-0000lE-0K; Mon, 09 Sep 2024 09:48:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1snejY-000481-0I; Mon, 09 Sep 2024 09:47:12 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1snejV-0008Ty-OQ; Mon, 09 Sep 2024 09:47:11 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4899roPY009441;
- Mon, 9 Sep 2024 13:47:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- UX5LxD75F5V6f+mThubcVR13u+fc7BXAvExsBS4dra0=; b=NtvKuTmk/l7oUa8g
- nzg4cyhde3szPIkeRQ8DmCido7Ns6iKtpb9swvcW3DoxKsfQY9Y9rKZkKCToFP5Y
- Xy6VCtH4v0ZRPEoe92ul130gkE2PJDggGz/DEhcz7HQDx32Cn0g4gRUqpWpqNZeb
- wK7ukIw9yD0rEprWBvCJTvILKlQhh/hMh9x/f4LaOI0I6bCO2paUPB6if/jsL1G4
- RqkNuU2e3UHinDeRKzcQ9O+/q4t00PF1KVMsUcXsip8g+7ySRyyysYaiLRIP73jj
- jwp1SmlXLSrBRrZsPLet2lFpzbsZi7vdkn4BMMaazMlZj/RrMWwRopgDf8FSxYT4
- c11gTw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41geba24eh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 13:47:04 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 489Dl4HW031606;
- Mon, 9 Sep 2024 13:47:04 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41geba24ec-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 13:47:04 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 489Ce5gB013458;
- Mon, 9 Sep 2024 13:47:03 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h3ckxcbd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Sep 2024 13:47:03 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 489Dl01u42795374
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Sep 2024 13:47:00 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5A7520043;
- Mon,  9 Sep 2024 13:46:59 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 917B020040;
- Mon,  9 Sep 2024 13:46:59 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.152.224.238])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Sep 2024 13:46:59 +0000 (GMT)
-Message-ID: <a5f652ee4c6563cc10daf650fdaff34d738f2da1.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 00/11] s390: Convert virtio-ccw, cpu to three-phase
- reset, and followup cleanup
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, David Hildenbrand <david@redhat.com>, Ilya Leoshkevich
- <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Nico Boehr <nrb@linux.ibm.com>
-Date: Mon, 09 Sep 2024 15:47:01 +0200
-In-Reply-To: <CAFEAcA_pHTRTDwH0dG3QAKx3x9xdJgG5xtrwo5diV6QgBqf+8Q@mail.gmail.com>
-References: <20240830145812.1967042-1-peter.maydell@linaro.org>
- <CAFEAcA_pHTRTDwH0dG3QAKx3x9xdJgG5xtrwo5diV6QgBqf+8Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1snel9-0000eO-Ho
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:48:51 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1snel7-0000AU-O9
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:48:51 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2da4ea973bdso3145927a91.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 06:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1725889728; x=1726494528;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A4+6JdQYvda/1Hm0Qzqic1h3nzIQOs1z0LtM+uvLl5s=;
+ b=oPGJTCsOOaxq9O3nXP6ljQSozmzTYPr2Gexw49v97d5ToMdo9jyujURTwIHMMgU3Pl
+ 3XsmZeWSJkzvPysfQt4ZqFIUD4edkpKzGJBb72Gn/kiiN+Edzk/7PpTDvn8dw5jZjiNJ
+ yj7HDAoQ3xIviEAdZI99yRYYlnnMEOtsPKN2MmI5xKhc48y0ItvKyXFN0yFjuyQBNU+h
+ fin2ow+EGKp6qXdf4O+IH5dKOpXhR5sDeLCB+dRf9bDlSWzd/Sf6a6/xtITSgqlugs9o
+ MWWyWi12c0hmyKe3evqtSYKGwRAKfwtOFtkMNKHQFK3/yoYR4Ql/QUmJAlAQibQavFSL
+ Ha5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725889728; x=1726494528;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=A4+6JdQYvda/1Hm0Qzqic1h3nzIQOs1z0LtM+uvLl5s=;
+ b=uoDDkVAcll5zD0mGzVzAWePHEczwSOWtR27fDZBF5YofNfNmpmK+cRwIE4KSXeI45a
+ L8uCgaUhmqH8UeJlEtsC2x81vh4lo17k3VTL7i1uuy0N7MujuJimeODCDG8/KM9+NQVF
+ dCSN2vQJXhfWxrwVGNvFb5Fb0NRwknwzb1GB2m/mxslg3pXkQKoD7B6eQeqNsiS52iCr
+ U9VBLRrfWQwhPkmr+YUl5ddSvRSEIdfeTc/5gJ6ElmQymCz+X5Gi+QYJYfcgCjd46WTi
+ nZLmeW3/OeoXWI54n75uvJ0Wai/+N8qO7ddn+WDQA9U+eRDlvZXsjTzTlaejAIqCDp9q
+ pyFQ==
+X-Gm-Message-State: AOJu0YwypArgMPji89+pWaiefA1ybiqcxctSjHN/Ul7unKm2/4NM0Tro
+ MLssF0YDb6tXtgTZHEvos9kWz+VZBHz5zhs0QJNndc+SX8v6dDB4MiynJBqupKOibANtVqJFgb+
+ aGm9mDg==
+X-Google-Smtp-Source: AGHT+IESCKcOO4LVfEP9Ndg7n2I2JOagqHf46h1y0dkJYnnSKHxfKI6gV+ISspCMp7qbYrUtSpAH3w==
+X-Received: by 2002:a17:90b:4c48:b0:2d8:8d34:5b8 with SMTP id
+ 98e67ed59e1d1-2dafcf1b325mr9328266a91.10.1725889727508; 
+ Mon, 09 Sep 2024 06:48:47 -0700 (PDT)
+Received: from localhost.localdomain ([118.114.94.226])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2dab2c6b0b9sm7841031a91.0.2024.09.09.06.48.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Sep 2024 06:48:47 -0700 (PDT)
+From: Hyman Huang <yong.huang@smartx.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, yong.huang@smartx.com
+Subject: [PATCH RFC 04/10] qapi/migration: Introduce the iteration-count
+Date: Mon,  9 Sep 2024 21:47:16 +0800
+Message-Id: <8d2b0314e4c9d8be52f50ed41d60dd6c2bbd5804.1725889277.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <cover.1725889277.git.yong.huang@smartx.com>
+References: <cover.1725889277.git.yong.huang@smartx.com>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: D8SBDzhJmhCtQo-oAbzuFB_dToNGECdq
-X-Proofpoint-GUID: O7FRnRloHwR952wnnsPk2SkCf637EqA2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-09_06,2024-09-09_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- mlxscore=0 mlxlogscore=876 impostorscore=0 clxscore=1015 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409090109
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=yong.huang@smartx.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,41 +98,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2024-09-06 at 15:38 +0100, Peter Maydell wrote:
-> On Fri, 30 Aug 2024 at 15:58, Peter Maydell <peter.maydell@linaro.org> wr=
-ote:
-> >=20
-> > The main aim of this patchseries is to remove the two remaining uses
-> > of device_class_set_parent_reset() in the tree, which are virtio-ccw
-> > and the s390 CPU class. Doing that lets us do some followup cleanup.
-> > (The diffstat looks alarming but is almost all coccinelle automated
-> > changes.)
-> >=20
-> > Changes v1->v2:
-> >  * new patch 1 to convert hw/s390/ccw-device
-> >    (fixes bug discovered via s390 CI testing in v1)
-> >  * a couple of patches are already upstream
-> >  * in the target/s390 cpu patch, fix sigp_cpu_reset() to use
-> >    RESET_TYPE_S390_CPU_NORMAL
-> >  * new patches 10, 11 which take advantage of the new function
-> >    device_class_set_legacy_reset() to allow us to replace the
-> >    generic Resettable transitional_function machinery with a
-> >    simple wrapper that adapts from the API of the hold method
-> >    to the one used by the legacy reset method
-> >=20
-> > Patches 1, 10, 11 need review. I believe that patch 1 should have
-> > fixed the intermittent s390 issue we found with v1 of the patchset,
-> > but if you could run these through the s390 CI again I'd
-> > appreciate it.
->=20
-> I'm going to apply this series to my target-arm.next queue.
->=20
-> Let me know if you need more time to CI/test/whatever it on
-> the s390 side before it goes upstream.
+The original migration information dirty-sync-count
+could no longer reflect iteration count due to the
+introduction of periodic synchronization in the next
+commit; add the iteration count to compensate.
 
-CI looks good.
->=20
-> thanks
-> -- PMM
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+---
+ migration/migration-stats.h  |  4 ++++
+ migration/migration.c        |  1 +
+ migration/ram.c              | 12 ++++++++----
+ qapi/migration.json          |  6 +++++-
+ tests/qtest/migration-test.c |  2 +-
+ 5 files changed, 19 insertions(+), 6 deletions(-)
+
+diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+index 05290ade76..43ee0f4f05 100644
+--- a/migration/migration-stats.h
++++ b/migration/migration-stats.h
+@@ -50,6 +50,10 @@ typedef struct {
+      * Number of times we have synchronized guest bitmaps.
+      */
+     Stat64 dirty_sync_count;
++    /*
++     * Number of migration iteration processed.
++     */
++    Stat64 iteration_count;
+     /*
+      * Number of times zero copy failed to send any page using zero
+      * copy.
+diff --git a/migration/migration.c b/migration/migration.c
+index 3dea06d577..055d527ff6 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1197,6 +1197,7 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
+     info->ram->mbps = s->mbps;
+     info->ram->dirty_sync_count =
+         stat64_get(&mig_stats.dirty_sync_count);
++    info->ram->iteration_count = stat64_get(&mig_stats.iteration_count);
+     info->ram->dirty_sync_missed_zero_copy =
+         stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
+     info->ram->postcopy_requests =
+diff --git a/migration/ram.c b/migration/ram.c
+index a56634eb46..23471c9e5a 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -594,7 +594,7 @@ static void xbzrle_cache_zero_page(ram_addr_t current_addr)
+     /* We don't care if this fails to allocate a new cache page
+      * as long as it updated an old one */
+     cache_insert(XBZRLE.cache, current_addr, XBZRLE.zero_target_page,
+-                 stat64_get(&mig_stats.dirty_sync_count));
++                 stat64_get(&mig_stats.iteration_count));
+ }
+ 
+ #define ENCODING_FLAG_XBZRLE 0x1
+@@ -620,7 +620,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
+     int encoded_len = 0, bytes_xbzrle;
+     uint8_t *prev_cached_page;
+     QEMUFile *file = pss->pss_channel;
+-    uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
++    uint64_t generation = stat64_get(&mig_stats.iteration_count);
+ 
+     if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
+         xbzrle_counters.cache_miss++;
+@@ -1075,6 +1075,10 @@ static void migration_bitmap_sync(RAMState *rs,
+     RAMBlock *block;
+     int64_t end_time;
+ 
++    if (!periodic) {
++        stat64_add(&mig_stats.iteration_count, 1);
++    }
++
+     stat64_add(&mig_stats.dirty_sync_count, 1);
+ 
+     if (!rs->time_last_bitmap_sync) {
+@@ -1111,8 +1115,8 @@ static void migration_bitmap_sync(RAMState *rs,
+         rs->num_dirty_pages_period = 0;
+         rs->bytes_xfer_prev = migration_transferred_bytes();
+     }
+-    if (migrate_events()) {
+-        uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
++    if (!periodic && migrate_events()) {
++        uint64_t generation = stat64_get(&mig_stats.iteration_count);
+         qapi_event_send_migration_pass(generation);
+     }
+ }
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8281d4a83b..6d8358c202 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -60,6 +60,9 @@
+ #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+ #     7.1)
+ #
++# @iteration-count: The number of iterations since migration started.
++#     (since 9.2)
++#
+ # Since: 0.14
+ ##
+ { 'struct': 'MigrationStats',
+@@ -72,7 +75,8 @@
+            'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
+            'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
+            'postcopy-bytes': 'uint64',
+-           'dirty-sync-missed-zero-copy': 'uint64' } }
++           'dirty-sync-missed-zero-copy': 'uint64',
++           'iteration-count' : 'int' } }
+ 
+ ##
+ # @XBZRLECacheStats:
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 9d08101643..2fb10658d4 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -278,7 +278,7 @@ static int64_t read_migrate_property_int(QTestState *who, const char *property)
+ 
+ static uint64_t get_migration_pass(QTestState *who)
+ {
+-    return read_ram_property_int(who, "dirty-sync-count");
++    return read_ram_property_int(who, "iteration-count");
+ }
+ 
+ static void read_blocktime(QTestState *who)
+-- 
+2.39.1
 
 
