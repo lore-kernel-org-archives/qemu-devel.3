@@ -4,96 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F6A2ECE587
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 19:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9517FECE587
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 19:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snk7y-0002qV-5Y; Mon, 09 Sep 2024 15:32:46 -0400
+	id 1snkDi-0001g5-5c; Mon, 09 Sep 2024 15:38:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snk7x-0002nQ-7b
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:32:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1snkDg-0001ey-DA
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:38:40 -0400
+Received: from mailout09.t-online.de ([194.25.134.84])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1snk7v-0001Vk-BB
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:32:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725910362;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=q8B886or0Pd0rGDg/WH2ReE8wV0SFAgueRfA3OnYLVw=;
- b=FO4K/wmpxmPrSdJYdCZ5XM69RhI3qs5fRJpgEfonyDfn3dxvY6qn3eqcjPC5+F1+xQF4xl
- yXDd7jwkcyifxwgejNXgPhS0FJsvJYeXAMtQpxb2YPLujVJP15fPZAY566J5/sn6mm0jen
- 3ooNa3vb+JrTwdi0jJ/90lKu5irlENs=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-yZHLEiLAPumcsK-SnUeeBw-1; Mon, 09 Sep 2024 15:32:41 -0400
-X-MC-Unique: yZHLEiLAPumcsK-SnUeeBw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6c3649bca89so59125266d6.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 12:32:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725910360; x=1726515160;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q8B886or0Pd0rGDg/WH2ReE8wV0SFAgueRfA3OnYLVw=;
- b=vVkZL3qLu5+wt9PdFjpljEeOqBz7M1Rjn/Z8Jt1DJC5mV8Ke7DaF/fnOP9GsrJjiy/
- EPw8YHmLd67Iv1XUwYHhocqXIh/gQlEB0UW5uPJ+Xp7rpZRj3a8MWXB4EvFeBpAFRVI0
- VGXdGJLp24xc7wkwwKg8EcmB+Q01ep7TaI9onnPkHLDZdBBt3lEM3Ko2yUhzrHnNZpPw
- 01l5UOM/axvbszfbPchmYibEjVQ4NH/1NYvCiw4xaMZXcoY4wJuU/SLoDXmRmlMy33Yd
- b/BTw2d3m+7PKTRLj3AydN+WVVIzEKF0hXYJcm/3TkoqOEF/msuKVF0MN0X0fQTBj7dz
- jOuA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYJD+La/oy7gmF7K07lZnar3ZhBf+aOgBbCxFUG0mhaPL++bXBLKKYQgtZXJ319hjx1SDg7C0WRnzv@nongnu.org
-X-Gm-Message-State: AOJu0YzTr4TnIJIymC10tEJvXlKg0ST9rbGW/8Aio0xylbYlmI9VyYmP
- XMLJKImhPuwRi11NuRvT3cGyremyNO1hh4a/ukkoxYDFTSS0guQ8ofT3QbSj0XuBeGIX+q8gVJv
- 79scvQB2IOrZYQVlFsBnIxj68X9wwXQ8fjwerKXS1QXSqMn9DvybB
-X-Received: by 2002:a05:6214:3f8c:b0:6c3:5597:406d with SMTP id
- 6a1803df08f44-6c5281b766dmr183018286d6.0.1725910360337; 
- Mon, 09 Sep 2024 12:32:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFIC+CGyffClrDzXBeeL/aRTvXa82ukBIi2W5JE8YtUtJkP3yxPcDR9RPrxCzjlpo0VRxbi+Q==
-X-Received: by 2002:a05:6214:3f8c:b0:6c3:5597:406d with SMTP id
- 6a1803df08f44-6c5281b766dmr183017986d6.0.1725910359900; 
- Mon, 09 Sep 2024 12:32:39 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c534329544sm23357966d6.22.2024.09.09.12.32.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 12:32:39 -0700 (PDT)
-Date: Mon, 9 Sep 2024 15:32:37 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 06/17] migration: Add
- save_live_complete_precopy_{begin,end} handlers
-Message-ID: <Zt9NVdcpFTsJPkt4@x1n>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
- <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
- <Zt83mWWlMomX4mRD@x1n>
- <fa64bf51-7fec-454b-b204-f92f5d06f731@maciej.szmigiero.name>
- <Zt9HuA3QtP0E93X1@x1n>
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1snkDe-000234-4p
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 15:38:40 -0400
+Received: from fwd73.aul.t-online.de (fwd73.aul.t-online.de [10.223.144.99])
+ by mailout09.t-online.de (Postfix) with SMTP id 6A7AE532AE;
+ Mon,  9 Sep 2024 21:38:32 +0200 (CEST)
+Received: from [192.168.211.200] ([93.236.144.183]) by fwd73.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1snkDS-0BrImH0; Mon, 9 Sep 2024 21:38:26 +0200
+Message-ID: <69b15684-0d00-4a74-aeac-2d98f7e88d95@t-online.de>
+Date: Mon, 9 Sep 2024 21:38:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Zt9HuA3QtP0E93X1@x1n>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] ui/sdl2: reenable the SDL2 Windows keyboard hook
+ procedure
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: Stefan Weil <sw@weilnetz.de>, Howard Spoelstra <hsp.cat7@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+References: <ae9b2c56-dab2-4b8f-bb5e-2087e9ccaa92@t-online.de>
+ <20240909061552.6122-1-vr_qemu@t-online.de>
+ <CAMxuvay4vRm6ZYQoUx=cmD5mr-8-qR4Z4iLEJ6-f0m2eUSbdOg@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+In-Reply-To: <CAMxuvay4vRm6ZYQoUx=cmD5mr-8-qR4Z4iLEJ6-f0m2eUSbdOg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TOI-EXPURGATEID: 150726::1725910706-22FFB40A-21A06E74/0/0 CLEAN NORMAL
+X-TOI-MSGID: 95b42bc7-7f69-419f-9324-9e5279f50ea9
+Received-SPF: pass client-ip=194.25.134.84; envelope-from=vr_qemu@t-online.de;
+ helo=mailout09.t-online.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,151 +68,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 09, 2024 at 03:08:40PM -0400, Peter Xu wrote:
-> On Mon, Sep 09, 2024 at 08:32:45PM +0200, Maciej S. Szmigiero wrote:
-> > On 9.09.2024 19:59, Peter Xu wrote:
-> > > On Thu, Sep 05, 2024 at 04:45:48PM +0300, Avihai Horon wrote:
-> > > > 
-> > > > On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
-> > > > > External email: Use caution opening links or attachments
-> > > > > 
-> > > > > 
-> > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > > > > 
-> > > > > These SaveVMHandlers help device provide its own asynchronous
-> > > > > transmission of the remaining data at the end of a precopy phase.
-> > > > > 
-> > > > > In this use case the save_live_complete_precopy_begin handler might
-> > > > > be used to mark the stream boundary before proceeding with asynchronous
-> > > > > transmission of the remaining data while the
-> > > > > save_live_complete_precopy_end handler might be used to mark the
-> > > > > stream boundary after performing the asynchronous transmission.
-> > > > > 
-> > > > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> > > > > ---
-> > > > >    include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
-> > > > >    migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
-> > > > >    2 files changed, 71 insertions(+)
-> > > > > 
-> > > > > diff --git a/include/migration/register.h b/include/migration/register.h
-> > > > > index f60e797894e5..9de123252edf 100644
-> > > > > --- a/include/migration/register.h
-> > > > > +++ b/include/migration/register.h
-> > > > > @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
-> > > > >         */
-> > > > >        int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
-> > > > > 
-> > > > > +    /**
-> > > > > +     * @save_live_complete_precopy_begin
-> > > > > +     *
-> > > > > +     * Called at the end of a precopy phase, before all
-> > > > > +     * @save_live_complete_precopy handlers and before launching
-> > > > > +     * all @save_live_complete_precopy_thread threads.
-> > > > > +     * The handler might, for example, mark the stream boundary before
-> > > > > +     * proceeding with asynchronous transmission of the remaining data via
-> > > > > +     * @save_live_complete_precopy_thread.
-> > > > > +     * When postcopy is enabled, devices that support postcopy will skip this step.
-> > > > > +     *
-> > > > > +     * @f: QEMUFile where the handler can synchronously send data before returning
-> > > > > +     * @idstr: this device section idstr
-> > > > > +     * @instance_id: this device section instance_id
-> > > > > +     * @opaque: data pointer passed to register_savevm_live()
-> > > > > +     *
-> > > > > +     * Returns zero to indicate success and negative for error
-> > > > > +     */
-> > > > > +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
-> > > > > +                                            char *idstr, uint32_t instance_id,
-> > > > > +                                            void *opaque);
-> > > > > +    /**
-> > > > > +     * @save_live_complete_precopy_end
-> > > > > +     *
-> > > > > +     * Called at the end of a precopy phase, after @save_live_complete_precopy
-> > > > > +     * handlers and after all @save_live_complete_precopy_thread threads have
-> > > > > +     * finished. When postcopy is enabled, devices that support postcopy will
-> > > > > +     * skip this step.
-> > > > > +     *
-> > > > > +     * @f: QEMUFile where the handler can synchronously send data before returning
-> > > > > +     * @opaque: data pointer passed to register_savevm_live()
-> > > > > +     *
-> > > > > +     * Returns zero to indicate success and negative for error
-> > > > > +     */
-> > > > > +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
-> > > > 
-> > > > Is this handler necessary now that migration core is responsible for the
-> > > > threads and joins them? I don't see VFIO implementing it later on.
-> > > 
-> > > Right, I spot the same thing.
-> > > 
-> > > This series added three hooks: begin, end, precopy_thread.
-> > > 
-> > > What I think is it only needs one, which is precopy_async.  My vague memory
-> > > was that was what we used to discuss too, so that when migration precopy
-> > > flushes the final round of iterable data, it does:
-> > > 
-> > >    (1) loop over all complete_precopy_async() and enqueue the tasks if
-> > >        existed into the migration worker pool.  Then,
-> > > 
-> > >    (2) loop over all complete_precopy() like before.
-> > > 
-> > > Optionally, we can enforce one vmstate handler only provides either
-> > > complete_precopy_async() or complete_precopy().  In this case VFIO can
-> > > update the two hooks during setup() by detecting multifd && !mapped_ram &&
-> > > nocomp.
-> > > 
-> > 
-> > The "_begin" hook is still necessary to mark the end of the device state
-> > sent via the main migration stream (during the phase VM is still running)
-> > since we can't start loading the multifd sent device state until all of
-> > that earlier data finishes loading first.
-> 
-> Ah I remembered some more now, thanks.
-> 
-> If vfio can send data during iterations this new hook will also not be
-> needed, right?
-> 
-> I remember you mentioned you'd have a look and see the challenges there, is
-> there any conclusion yet on whether we can use multifd even during that?
-> 
-> It's also a pity that we introduce this hook only because we want a
-> boundary between "iterable stage" and "final stage".  IIUC if we have any
-> kind of message telling dest before hand that "we're going to the last
-> stage" then this hook can be avoided.  Now it's at least inefficient
-> because we need to trigger begin() per-device, even if I think it's more of
-> a global request saying that "we need to load all main stream data first
-> before moving on".
+Am 09.09.24 um 09:26 schrieb Marc-André Lureau:
+> Hi
+>
+> On Mon, Sep 9, 2024 at 10:22 AM Volker Rümelin <vr_qemu@t-online.de> wrote:
+>> Windows only:
+>>
+>> The libSDL2 Windows message loop needs the libSDL2 Windows low
+>> level keyboard hook procedure to grab the left and right Windows
+>> keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
+>>
+>> Because the QEMU Windows keyboard hook procedure is still needed
+>> to filter out the special left Control key event for every Alt Gr
+>> key event, it's important to install the two keyboard hook
+>> procedures in the following order. First the SDL2 procedure, then
+>> the QEMU procedure.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
+>> Tested-by: Howard Spoelstra <hsp.cat7@gmail.com>
+>> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+>> ---
+>>  ui/sdl2.c           | 53 ++++++++++++++++++++++++++++++---------------
+>>  ui/win32-kbd-hook.c |  3 +++
+>>  2 files changed, 38 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/ui/sdl2.c b/ui/sdl2.c
+>> index 98ed974371..ac37c173a1 100644
+>> --- a/ui/sdl2.c
+>> +++ b/ui/sdl2.c
+>> @@ -42,6 +42,7 @@ static SDL_Surface *guest_sprite_surface;
+>>  static int gui_grab; /* if true, all keyboard/mouse events are grabbed */
+>>  static bool alt_grab;
+>>  static bool ctrl_grab;
+>> +static bool win32_kbd_grab;
+>>
+>>  static int gui_saved_grab;
+>>  static int gui_fullscreen;
+>> @@ -202,6 +203,19 @@ static void sdl_update_caption(struct sdl2_console *scon)
+>>      }
+>>  }
+>>
+>> +static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
+>> +{
+>> +#ifdef CONFIG_WIN32
+>> +    SDL_SysWMinfo info;
+>> +
+>> +    SDL_VERSION(&info.version);
+>> +    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
+>> +        return info.info.win.window;
+>> +    }
+>> +#endif
+>> +    return NULL;
+>> +}
+>> +
+>>  static void sdl_hide_cursor(struct sdl2_console *scon)
+>>  {
+>>      if (scon->opts->has_show_cursor && scon->opts->show_cursor) {
+>> @@ -259,9 +273,16 @@ static void sdl_grab_start(struct sdl2_console *scon)
+>>      } else {
+>>          sdl_hide_cursor(scon);
+>>      }
+>> +    /*
+>> +     * Windows: To ensure that QEMU's low level keyboard hook procedure is
+>> +     * called before SDL2's, the QEMU procedure must first be removed and
+>> +     * then the SDL2 and QEMU procedures must be installed in this order.
+>> +     */
+>> +    win32_kbd_set_window(NULL);
+>>      SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
+>> +    win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
+>>      gui_grab = 1;
+>> -    win32_kbd_set_grab(true);
+>> +    win32_kbd_set_grab(win32_kbd_grab);
+>>      sdl_update_caption(scon);
+>>  }
+>>
+>> @@ -370,19 +391,6 @@ static int get_mod_state(void)
+>>      }
+>>  }
+>>
+>> -static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
+>> -{
+>> -#ifdef CONFIG_WIN32
+>> -    SDL_SysWMinfo info;
+>> -
+>> -    SDL_VERSION(&info.version);
+>> -    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
+>> -        return info.info.win.window;
+>> -    }
+>> -#endif
+>> -    return NULL;
+>> -}
+>> -
+>>  static void handle_keydown(SDL_Event *ev)
+>>  {
+>>      int win;
+>> @@ -605,7 +613,7 @@ static void handle_windowevent(SDL_Event *ev)
+>>          sdl2_redraw(scon);
+>>          break;
+>>      case SDL_WINDOWEVENT_FOCUS_GAINED:
+>> -        win32_kbd_set_grab(gui_grab);
+>> +        win32_kbd_set_grab(win32_kbd_grab && gui_grab);
+>>          if (qemu_console_is_graphic(scon->dcl.con)) {
+>>              win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
+>>          }
+>> @@ -849,6 +857,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>>      uint8_t data = 0;
+>>      int i;
+>>      SDL_SysWMinfo info;
+>> +    SDL_version ver;
+>>      SDL_Surface *icon = NULL;
+>>      char *dir;
+>>
+>> @@ -866,10 +875,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>>  #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available since SDL 2.0.8 */
+>>      SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
+>>  #endif
+>> -#ifndef CONFIG_WIN32
+>> -    /* QEMU uses its own low level keyboard hook procedure on Windows */
+>>      SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
+>> -#endif
+>>  #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
+>>      SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+>>  #endif
+>> @@ -877,6 +883,17 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>>      SDL_EnableScreenSaver();
+>>      memset(&info, 0, sizeof(info));
+>>      SDL_VERSION(&info.version);
+>> +    /*
+>> +     * Since version 2.16.0 under Windows, SDL2 has its own low level
+>> +     * keyboard hook procedure to grab the keyboard. The remaining task of
+>> +     * QEMU's low level keyboard hook procedure is to filter out the special
+>> +     * left Control up/down key event for every Alt Gr key event on keyboards
+>> +     * with an international layout.
+>> +     */
+>> +    SDL_GetVersion(&ver);
+>> +    if (ver.major == 2 && ver.minor < 16) {
+>> +        win32_kbd_grab = true;
+>> +    }
+>>
+> Note: there is no 2.16 release. They jumped from 2.0.22 to 2.24 (see
+> https://github.com/libsdl-org/SDL/releases/tag/release-2.24.0)
 
-Or, we could add one MIG_CMD_SWITCHOVER under QEMU_VM_COMMAND, then send it
-at the beginning of the switchover phase.  Then we can have a generic
-marker on destination to be the boundary of "iterations" v.s. "switchover".
-Then I think we can also drop the begin() here, just to avoid one such sync
-per-device (also in case if others may have such need, like vdpa, then vdpa
-doesn't need that flag too).
+Hi Marc-André
 
-Fundamentally, that makes the VFIO_MIG_FLAG_DEV_DATA_STATE_COMPLETE to be a
-migration flag..
+Oh. This means that the comparison I wrote is true for SDL2 versions <
+2.24.0.
 
-But for sure the best is still if VFIO can enable multifd even during
-iterations.  Then the boundary guard may not be needed.
+>
+> The windows hook was indeed added in 2.0.16, released on Aug 10, 2021.
+>
+> Given the distribution nature of the Windows binaries, I think we
+> could simply depend on a much recent version without worrying about
+> compatibility with < 2.0.16. This would help reduce the potential
+> combinations of versions and bugs reports.
 
-> 
-> > 
-> > We shouldn't send that boundary marker in .save_live_complete_precopy
-> > either since it would meant unnecessary waiting for other devices
-> > (not necessary VFIO ones) .save_live_complete_precopy bulk data.
-> > 
-> > And VFIO SaveVMHandlers are shared for all VFIO devices (and const) so
-> > we can't really change them at runtime.
-> 
-> In all cases, please consider dropping end() if it's never used; IMO it's
-> fine if there is only begin(), and we shouldn't keep hooks that are never
-> used.
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
+Okay, I'll send a version 2 patch series.
 
--- 
-Peter Xu
+With best regards
+Volker
+
+>
+>>      gui_fullscreen = o->has_full_screen && o->full_screen;
+>>
+>> diff --git a/ui/win32-kbd-hook.c b/ui/win32-kbd-hook.c
+>> index 1ac237db9e..39d42134a2 100644
+>> --- a/ui/win32-kbd-hook.c
+>> +++ b/ui/win32-kbd-hook.c
+>> @@ -91,6 +91,9 @@ void win32_kbd_set_window(void *hwnd)
+>>              win32_unhook_notifier.notify = keyboard_hook_unhook;
+>>              qemu_add_exit_notifier(&win32_unhook_notifier);
+>>          }
+>> +    } else if (!hwnd && win32_keyboard_hook) {
+>> +        keyboard_hook_unhook(&win32_unhook_notifier, NULL);
+>> +        qemu_remove_exit_notifier(&win32_unhook_notifier);
+>>      }
+>>
+>>      win32_window = hwnd;
+>> --
+>> 2.35.3
+>>
 
 
