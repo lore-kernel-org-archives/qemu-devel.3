@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D95ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 15:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF0DECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 16:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sngbG-0000sc-EF; Mon, 09 Sep 2024 11:46:46 -0400
+	id 1snguJ-0000Wj-5N; Mon, 09 Sep 2024 12:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sngbF-0000pg-LA
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:46:45 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1snguF-0000VI-IJ
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:06:23 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sngbE-0004Pn-3A
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 11:46:45 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-717911ef035so3487600b3a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 08:46:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1snguC-000680-Uj
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:06:22 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5c27067b81aso4453468a12.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 09:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725896802; x=1726501602; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=quVd7PvWgaRhlBSJNDXFPD4W++YWwtHNUiT+1RsmpJI=;
- b=ue3nuu4/F4i8pk4OIvyXCHAD5iYd/PkqKNrQ3bMlCigckQ4jbhSbg2uZIBFAbKGO3x
- fJs5qWPwBqciwdPXxyEa0dHlj1ymxCYJbUFEq9qwWCImb7TiwLHqmTGkXrsTXHZ/Nzyr
- 760dGljqqGOZPrIY0nS6jQ50rtIKJcpCWsc7UBxTpINI+/zInKv3KA8+a4YROVG3TzRn
- dxnnN0d8llybPgaUqGfKUVuVFNxYXaqOyoPSY4eYfcllqJZrh6Ki+rnA2BN4kC+4wJPv
- j20LKvG/vauR8JHCGgQc/lUF/RhHOJ33hdbGot1/FifjXvAjjO4Z65ybDn/qBogeqMOj
- +jZA==
+ d=linaro.org; s=google; t=1725897978; x=1726502778; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TID65MnU7tJsbvdN8LmH6fBLK18mHHzrBBE0A/HJHKM=;
+ b=cGnEKSQmECkr3GmeNHsvldh1JCv93cCTJXn+oB8x/iPYT54HA7EFJ7yv1EJ9t3WesR
+ koL4EQ+es+iiCah9X6hDd62rDAsNA7dbbDfaU+N6DuAncjoFIDQ1dkS0L8X260h775/8
+ sbTiDG/FI2IurgJphWJeuAEMvTnmfWEQdVUDW41kcqEX8wyplPKFSZqHlmgXcZO+gqRS
+ aqINFcXd3RNSI+Nf72NajF6DxdbR5f8k/HrJH2EOYXDlvwm/00iqEvfD/y0mikVJ/4Vc
+ TJ5Wpp2twVE1EdlYg8c/IeoWYDkunuCKD6NeqlDWbHhHZM3SzdVL/wOA8bRAPbrYqXIh
+ HihA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725896802; x=1726501602;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=quVd7PvWgaRhlBSJNDXFPD4W++YWwtHNUiT+1RsmpJI=;
- b=NwmiOSmXG10hPULgehLBKDOAeYNQOwRqk6vHUs40880sxmGTdJTUyWtKXCVCensIbZ
- HPTGMNWxryOM+J6hl/S00E4tcfl09ZbKxp1lXcUNudLQhg85Fm42IAoEMKfNJv4V+EI+
- ci/oCsTC56jOl2jSr003rDenafA1N+wf9Z8UZvqSARdJveB5RnTUgsCYsaDEnGzG2J1E
- Rm8JmhrAKqzYA5AfbosF7B05x7/4vpyfa00Dzl/P66DSw1V/2C8Ua27qD3HRuUOzliJY
- el8DcPP5SnniXdXO0uyA044tpSIw3Av8A25ZKtW3YMfHeXZwA9tfzBuKwr+xz8IshrWe
- UP2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXskz2VDRjZ4LWAAf43Vyr9CgHTnFD/FwAZa14OROsjgHmu6Iv2vZeYTgtRQ9nt0aGU9zZ/O6eDOXjm@nongnu.org
-X-Gm-Message-State: AOJu0Yz21UxQHiSX+ZZ0Ss/L4dxQP8rGdmMelJrzfK5FWYxM1MZy2e4W
- AXE4yRbMxZgM6vBk/SvdKPAwjWSY9P2cDmennkN7e8Xnt2RaL+uPtmwns9bxJqM=
-X-Google-Smtp-Source: AGHT+IEQjKFQVTiYcNR3XMZRvI9PXzA48uGY07R8mCSQ1FGBbHG6nqM/5uPIfmJmVFMTuHpA08GJvQ==
-X-Received: by 2002:a05:6a20:d80c:b0:1cf:2843:f798 with SMTP id
- adf61e73a8af0-1cf2843f932mr8706977637.47.1725896802303; 
- Mon, 09 Sep 2024 08:46:42 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-718e5990bf2sm3676380b3a.195.2024.09.09.08.46.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 08:46:41 -0700 (PDT)
-Message-ID: <80b90332-58dd-4ba6-95b6-171790239d80@linaro.org>
-Date: Mon, 9 Sep 2024 08:46:39 -0700
+ d=1e100.net; s=20230601; t=1725897978; x=1726502778;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TID65MnU7tJsbvdN8LmH6fBLK18mHHzrBBE0A/HJHKM=;
+ b=O6t7bs+wuq0vGaLpr0EXWydCCvAznNXy1O9YKR66UZYvAZO/bO7F/eYKPQnB7FUMj+
+ TxHcG2MmnIvQUoSK2G8g1fs3TVfxmq1PQERhIVXo2yOAZe+DuNMN2q4N7D1Jz8fYF7N8
+ 3oXiYrtCl21ZW2FXngYLJbViy17d7ngeWDH15q+TyLckU0PUqFwoHRHI9vBLR0WRgWKl
+ UGsRBGBxKAqxNHAq+M3g8aPD827l2OdB+hldGmjAkgeUkLNjh3BIiN9ef4ractCDsTX1
+ TQADjTHYVlerZVAvPhtdwQ+5z5EGQlK54mP4TkdeWM6sx5fRyGgl5D2PzDGyJKR5Po0U
+ lAfQ==
+X-Gm-Message-State: AOJu0Yx/Zkv79lbvCvAXOQWa80tzyi5jLfqAYbA/G/F+Ql5zX2r26+o4
+ jS+tJ1UXR/fNeV64tYAdD8HqCc1eoOmfEP26toas21K16gWYc3CPbwl1dHf4UOwdo2NwuyCAmQx
+ ta77sZsUdaiAnH151vU51dZ6GPtvbyJOrw8b0HUYg8KXd6TdQ
+X-Google-Smtp-Source: AGHT+IHjoWWzOSzYxmqWrcOGoIz3bW/9510Wn84XxA6U9YXbSIh1QLteiSzYl5bD4a9YMiP8Zpa8ewzw16dHkVDzyp4=
+X-Received: by 2002:a05:6402:2345:b0:5c3:cd1a:144c with SMTP id
+ 4fb4d7f45d1cf-5c3eac276a8mr5545069a12.32.1725897978167; Mon, 09 Sep 2024
+ 09:06:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv32: Fix masking of physical address
-To: Andrew Jones <ajones@ventanamicro.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
- zong.li@sifive.com, liwei1518@gmail.com, cwshu@andestech.com,
- dbarboza@ventanamicro.com, philmd@linaro.org
-References: <20240909083241.43836-2-ajones@ventanamicro.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240909083241.43836-2-ajones@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+References: <20240909141635.1459701-1-berrange@redhat.com>
+In-Reply-To: <20240909141635.1459701-1-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Sep 2024 17:06:06 +0100
+Message-ID: <CAFEAcA_q3FUj2gGW6VRbbn_Z2SvSV7kCZFGyueyQ7Bab_5kWgg@mail.gmail.com>
+Subject: Re: [PULL 00/10] Crypto fixes patches
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,24 +96,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 01:32, Andrew Jones wrote:
-> C doesn't extend the sign bit for unsigned types since there isn't a
-> sign bit to extend. This means a promotion of a u32 to a u64 results
-> in the upper 32 bits of the u64 being zero. If that result is then
-> used as a mask on another u64 the upper 32 bits will be cleared. rv32
-> physical addresses may be up to 34 bits wide, so we don't want to
-> clear the high bits while page aligning the address. The fix is to
-> use hwaddr for the mask, which, even on rv32, is 64-bits wide.
-> 
-> Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on PMP entries.")
-> Signed-off-by: Andrew Jones<ajones@ventanamicro.com>
-> ---
-> -v2: Switch from signed long to hwaddr
-> 
->   target/riscv/cpu_helper.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+On Mon, 9 Sept 2024 at 15:17, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> The following changes since commit f2aee60305a1e40374b2fc1093e4d04404e780=
+ee:
+>
+>   Merge tag 'pull-request-2024-09-08' of https://gitlab.com/huth/qemu int=
+o staging (2024-09-09 10:47:24 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/berrange/qemu tags/crypto-fixes-pull-request
+>
+> for you to fetch changes up to 10a1d34fc0d4dfe0dd6f5ec73f62dc1afa04af6c:
+>
+>   crypto: Introduce x509 utils (2024-09-09 15:13:38 +0100)
+>
+> ----------------------------------------------------------------
+> Various crypto fixes
+>
+>  * Support sha384 with glib crypto backend
+>  * Improve error reporting for unsupported cipher modes
+>  * Avoid memory leak when bad cipher mode is given
+>  * Run pbkdf tests on macOS
+>  * Runtime check for pbkdf hash impls with gnutls & gcrypt
+>  * Avoid hangs counter pbkdf iterations on some Linux kernels
+>    by using a throwaway thread for benchmarking performance
+>  * Fix iotests expected output from gnutls errors
+>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
+-- PMM
 
