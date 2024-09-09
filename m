@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC48ECE577
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB11EECE579
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:32:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniBr-0004RT-Pw; Mon, 09 Sep 2024 13:28:40 -0400
+	id 1sniBu-0004bK-3x; Mon, 09 Sep 2024 13:28:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBo-0004Fb-Py
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:37 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1sniBq-0004KU-0H
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:38 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBn-00061S-5E
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:36 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7d50a42ce97so1789373a12.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:34 -0700 (PDT)
+ id 1sniBo-00061d-I2
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:37 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2054feabfc3so40721075ad.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725902913; x=1726507713; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725902914; x=1726507714; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5NpWMRaUttZysT7ctorThVWZZbQJ9A1Lvzw3v01P5hI=;
- b=NPQYPQAbHyfEX8E1cOxOPAw8N5KvIE/VIO4w8PKFm6dSSg2uQI/A6pUudUcO/k23IW
- JJ3r5TE7xOWizYOpn2QV6HdNnOfPT9+0is9h1nxKJhMGBrVuqpc6gBITe9UwNaIvj+QD
- +2t6yLDFqljRhstvEMEd5AJJJrbWNtaeX1UGzWBPR/SaLUih8fCMMz5S0tVTsH5L38RO
- lMRvM/vXw49s+4hQknHpzyllwJmApMdkQd6Fz0fMSujS2ZiOO8lB9RSzmscmlPO0mNcC
- CXEaMFiSqBNs4AgEgoyXu5ii+aQmR+C6+8vKdj4SwCDp2npBbNrxNzmFwIDxhoitlrC5
- lYOQ==
+ bh=nMzYtP5qPR90CaUOV42z01PghnM+kK6Tb+IUF2wbyXM=;
+ b=esy2v8V5svuvQzcIuIPCHSE3NxxeoHmlVq18Hab/3avNUUzr20n4edghvUDChEMKpO
+ M9y8CjdN9jxDZTyHf7yqzfYZcPWdpVlifU+2XtKU4jqwsO1did4iettZuGiI/12yEHgR
+ DMwbubYZaha2dSZOL2cAuqT2Hwg6X1WpigSnqpjROFK81RQQ1jUfyiaoE0l6Da12nDWv
+ br14O9dqosCI1ED1aBZdijtOS1UJY+nesbVGa+4oEhgvFjD0RUFOnyOgoe93eEdKicCL
+ X6H2hmI+HCEnqHQaKOrNmTmhB5H+CW1KZriQHfXN6/TS0p2HgJTODavzQ4IpXmvf8kfa
+ x9GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725902913; x=1726507713;
+ d=1e100.net; s=20230601; t=1725902914; x=1726507714;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5NpWMRaUttZysT7ctorThVWZZbQJ9A1Lvzw3v01P5hI=;
- b=ZrTr2bW9xb7gYAoaZnPERq29yjn9AuWkC8kNS0mkMkSoALJgoO2NrXdbbJ9C+PFaKp
- FA9/inznZBnL+audvhjBy0C+lfRkUVKoJEtSZeZbqrMDEYNNa/0teHTx4vptc1b5vb13
- kSO6UWRbmBlhPa7fsN3oGHsbi9DOaK5/cC/fwCstNiTRwUFQISzyJdeUIx1DW5K/jRDZ
- W9tFw6LSffAoqHTOgiEDg+FXgS3UAMUK4ud3Qe4fEAWAyAgAByYi2sabO5xbRiwvyRTw
- vyI4s/fw5l67+6bOC685w/A+YdM3Oy26LiDlc9u6IfvDn2xDlYgSmaAlq6qkSCA2KCYt
- U9hg==
-X-Gm-Message-State: AOJu0YwFftkGKLm/aeFJLclR3sNP3IDCUll9I+9UAlubrITps7tWLzM/
- TbaSAwIzxTt/RC6y9rS7lCtN6V8KXI9V7WiHhroPjMxmL1Exzkn0toVSlBMreOw0devbvrhh2gP
- Z
-X-Google-Smtp-Source: AGHT+IFY/3YCYnxqPoaT+tVle9mLnuClRp/yR6BW8hxjFbIZfhZUGjUVLOP1JJIBFQt4cHmMW1lZFw==
-X-Received: by 2002:a17:902:ce8d:b0:206:bec6:485f with SMTP id
- d9443c01a7336-2070a7e4179mr104023175ad.52.1725902913502; 
- Mon, 09 Sep 2024 10:28:33 -0700 (PDT)
+ bh=nMzYtP5qPR90CaUOV42z01PghnM+kK6Tb+IUF2wbyXM=;
+ b=m3IJbkbcorQyWh7kkwm5U/Wpvoc7L9rTnF7h5NqKeF564lNqw8yYjN9TYUYdndWc/z
+ KnW9OfjVCSe0taUUmNJ4boWfucW2nm9MG37ATMjIUQINwd4U2bLSRPIgcbFRQTdvCrBd
+ lBQ86VykhwkFoXErW8wiDE35X7kYT2ynEEGzADmJgUVQadZsprw0kLRF7aWIYXzVy016
+ VdVSDhkzuugKVqjvhbFYwhs2FMjeK/Aah6M3kgrAW0ihTlVx7SGcKOuZFzkM36sqgUvJ
+ 21ALim12T9toHVFbuUWm3cnjNnjivfzAJCLsyjEWFv5OBPuqRanlrWPCqlyVcNvf/ips
+ 59Cw==
+X-Gm-Message-State: AOJu0YwnFW/PPbSa1/wO1QeJptZ8SWMnVdjlubSHYgq96GmLxDQYkE6/
+ twt0Pbzlbw9V100tWUNImwwpwXxroDuifcBg9Xz1pqcgQEMOVXb0q9uy3ZzqoYF00DLe3WvlZaj
+ 7
+X-Google-Smtp-Source: AGHT+IHkQWSNjDG76X+iNhNTeq3VIgw7vwCklQJK53In0ek7LJfiEk2XGiRa6r/n6KVTaDQuAJJ+kA==
+X-Received: by 2002:a17:902:d551:b0:1fd:9c2d:2f27 with SMTP id
+ d9443c01a7336-206f05428e1mr162715015ad.24.1725902914299; 
+ Mon, 09 Sep 2024 10:28:34 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.32
+ d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 09 Sep 2024 10:28:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	daniel@0x0f.com
-Subject: [PATCH v3 09/26] target/m68k: Merge gen_ea into SRC_EA and DEST_EA
-Date: Mon,  9 Sep 2024 10:28:06 -0700
-Message-ID: <20240909172823.649837-10-richard.henderson@linaro.org>
+Subject: [PATCH v3 10/26] target/m68k: Use g_assert_not_reached in
+ gen_lea_mode and gen_ea_mode
+Date: Mon,  9 Sep 2024 10:28:07 -0700
+Message-ID: <20240909172823.649837-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240909172823.649837-1-richard.henderson@linaro.org>
 References: <20240909172823.649837-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,61 +96,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will enable further cleanups further down the call chain.
+The mode argument is extracted from 3 bits, and all cases are covered.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ target/m68k/translate.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 003318163c..1ba1220b21 100644
+index 1ba1220b21..71dfa6d9a2 100644
 --- a/target/m68k/translate.c
 +++ b/target/m68k/translate.c
-@@ -896,14 +896,6 @@ static TCGv gen_ea_mode(CPUM68KState *env, DisasContext *s, int mode, int reg0,
-     return NULL_QREG;
+@@ -767,8 +767,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
+         tcg_gen_movi_i32(tmp, offset);
+         return tmp;
+     }
+-    /* Should never happen.  */
+-    return NULL_QREG;
++    g_assert_not_reached();
  }
  
--static TCGv gen_ea(CPUM68KState *env, DisasContext *s, uint16_t insn,
--                   int opsize, TCGv val, TCGv *addrp, ea_what what, int index)
--{
--    int mode = extract32(insn, 3, 3);
--    int reg0 = REG(insn, 0);
--    return gen_ea_mode(env, s, mode, reg0, opsize, val, addrp, what, index);
--}
--
+ static TCGv gen_lea(CPUM68KState *env, DisasContext *s, uint16_t insn,
+@@ -892,8 +891,7 @@ static TCGv gen_ea_mode(CPUM68KState *env, DisasContext *s, int mode, int reg0,
+             return NULL_QREG;
+         }
+     }
+-    /* Should never happen.  */
+-    return NULL_QREG;
++    g_assert_not_reached();
+ }
+ 
  static TCGv_ptr gen_fp_ptr(int freg)
- {
-     TCGv_ptr fp = tcg_temp_new_ptr();
-@@ -1367,18 +1359,22 @@ static void gen_exit_tb(DisasContext *s)
-     s->base.is_jmp = DISAS_EXIT;
- }
- 
--#define SRC_EA(env, result, opsize, op_sign, addrp) do {                \
--        result = gen_ea(env, s, insn, opsize, NULL_QREG, addrp,         \
--                        op_sign ? EA_LOADS : EA_LOADU, IS_USER(s));     \
-+#define SRC_EA(env, result, opsize, op_sign, addrp)                     \
-+    do {                                                                \
-+        result = gen_ea_mode(env, s, extract32(insn, 3, 3),             \
-+                             REG(insn, 0), opsize, NULL_QREG, addrp,    \
-+                             op_sign ? EA_LOADS : EA_LOADU, IS_USER(s)); \
-         if (IS_NULL_QREG(result)) {                                     \
-             gen_addr_fault(s);                                          \
-             return;                                                     \
-         }                                                               \
-     } while (0)
- 
--#define DEST_EA(env, insn, opsize, val, addrp) do {                     \
--        TCGv ea_result = gen_ea(env, s, insn, opsize, val, addrp,       \
--                                EA_STORE, IS_USER(s));                  \
-+#define DEST_EA(env, insn, opsize, val, addrp)                          \
-+    do {                                                                \
-+        TCGv ea_result = gen_ea_mode(env, s, extract32(insn, 3, 3),     \
-+                                     REG(insn, 0), opsize, val, addrp,  \
-+                                     EA_STORE, IS_USER(s));             \
-         if (IS_NULL_QREG(ea_result)) {                                  \
-             gen_addr_fault(s);                                          \
-             return;                                                     \
 -- 
 2.43.0
 
