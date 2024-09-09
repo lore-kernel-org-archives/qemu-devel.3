@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FDCECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 13:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D1CECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 13:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sneCh-000108-VF; Mon, 09 Sep 2024 09:13:15 -0400
+	id 1sneOB-0007RR-81; Mon, 09 Sep 2024 09:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sneCe-0000za-5r
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:13:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sneCa-0004xS-B4
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:13:11 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxPute9N5m8tcCAA--.7278S3;
- Mon, 09 Sep 2024 21:13:02 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front2 (Coremail) with SMTP id qciowMDx_OVc9N5mmoYCAA--.11830S3;
- Mon, 09 Sep 2024 21:13:01 +0800 (CST)
-Subject: Re: [PATCH v4 2/2] target/loongarch: Implement lbt registers
- save/restore function
-From: gaosong <gaosong@loongson.cn>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Huacai Chen <chenhuacai@kernel.org>, qemu-devel@nongnu.org
-References: <20240904061859.86615-1-maobibo@loongson.cn>
- <20240904061859.86615-3-maobibo@loongson.cn>
- <c14c8927-bb9b-9c3f-dca7-c86f79e73770@loongson.cn>
-Message-ID: <7ddb45a0-e685-2af0-749a-821cc08f22e8@loongson.cn>
-Date: Mon, 9 Sep 2024 21:13:33 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sneOA-0007PS-2S
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:25:06 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sneO8-0006AJ-8C
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:25:05 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52f01b8738dso2879355e87.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 06:25:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725888302; x=1726493102; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=H+L+VHehX9ZnuFGA5oNM9gVj2qG7LomNJ49FnJV9T5M=;
+ b=kBdstfmGkC7IPPtV7k0W5qE8icDg3WtmRNBhRfmOYlafsYaFsvzCDbNUfWbA3Z8SRo
+ E42VnEng6p8KgbgkoplBkBUu8KYtord0B9n9V5U3jKSqiXwTn9agayXVV+xR+JKllkv9
+ cuirY0HU0R2+RIUZzBGHDBeUUR3JBcHV/tvWQ8BalXRmDtlBcfJtspeLHvivgrhBHwIy
+ veg7wEZzN/RqAtQi5znOJxxEffjW3xSjioJmsT2mU+WmWWxMU5QmYCpzmQdexr1ZXfhl
+ 1oelomx1P0F3otxOvKYd2935lempSx1eXRyZeL8TpNFIELX53V76q9tzjLfCIDWuZAeT
+ Yu6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725888302; x=1726493102;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H+L+VHehX9ZnuFGA5oNM9gVj2qG7LomNJ49FnJV9T5M=;
+ b=LiRpTWa11JFx6bxHY8tDeNQOMelM3wi/qlOfcklod89rzkoWhJYIf5EHdZmFKx0WCK
+ Mrhg/Lt0V+//MQmcFSXxs3QYZ2504ar8oWemLv2F7/wO+WjIT1r+Ln4ZpoC0Ye5UQkVQ
+ JT71Fkby3nv2m34OgLZ/yfdVQaUUmGhz/i43tpx1tAAGfIuoRxg9QXkMIir7vsRPu6pW
+ jnCHDoctJUBvkXKoyobAuGHv/gff8/gKFamBCAAVD60wjGg0IrAziTv3uGuqIh3OmmQF
+ FvGEH3cKl0OLooVnOZflnKzjuFJ3lsN1a0DgM5L66Z4pUV5QKMGnZbiz62Q8dXoy1PTh
+ csPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4XgxyXrf6KCPpaJyD/agH3itcSsF89vXtfG0f+buGa0S6lKswdsDpFcg9qXjZ9duWw/BUsN58bGh3@nongnu.org
+X-Gm-Message-State: AOJu0Yyc9tIwy4U15aX80PW8ja+BakZvTIMXdfRzr0DJUhf3wFvVpaCl
+ SUGJTALV6q5v/FUnDlkpQ+kD0u+n9ARLD1y/Ak37G/KSUDS1BsgH9rr/c7qWt1I=
+X-Google-Smtp-Source: AGHT+IFgC7fOd4wtnv78KdC4ofBpBRbvyNTQhTo/uii5XIWDK5Fli8cuGYp/2GZM2ZU99mcVowXbww==
+X-Received: by 2002:a05:6512:39c8:b0:535:6cef:ffb8 with SMTP id
+ 2adb3069b0e04-5365881366emr7041621e87.54.1725888302007; 
+ Mon, 09 Sep 2024 06:25:02 -0700 (PDT)
+Received: from [192.168.69.100] (nsg93-h02-176-184-54-166.dsl.sta.abo.bbox.fr.
+ [176.184.54.166]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25d5dda8sm339771766b.211.2024.09.09.06.25.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Sep 2024 06:25:01 -0700 (PDT)
+Message-ID: <c2bfdb7f-52ff-4650-a171-663925194682@linaro.org>
+Date: Mon, 9 Sep 2024 15:24:59 +0200
 MIME-Version: 1.0
-In-Reply-To: <c14c8927-bb9b-9c3f-dca7-c86f79e73770@loongson.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/15] target/cris: Remove the deprecated CRIS target
+To: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ devel@lists.libvirt.org, qemu-devel@nongnu.org
+References: <20240904143603.52934-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240904143603.52934-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qciowMDx_OVc9N5mmoYCAA--.11830S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWruw1DAryDJr18WFW3Kr1ktFc_yoWDWrcEya
- 4IkrykWr1UWa18GFyYv3y5Ja45Ja18t3Z0vFWDXr48Kry8XrZ8Gws0q3Z5Z3W0gr48Arn8
- AFnaqr1fAr13KosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JV
- WxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUrNtx
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -52
-X-Spam_score: -5.3
-X-Spam_bar: -----
-X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.396,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,36 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/9/9 下午7:52, gaosong 写道:
->
->
-> 在 2024/9/4 下午2:18, Bibo Mao 写道:
->> Six registers scr0 - scr3, eflags and ftop are added in percpu vmstate.
->> And two functions kvm_loongarch_get_lbt/kvm_loongarch_put_lbt are added
->> to save/restore lbt registers.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   target/loongarch/cpu.h     | 12 ++++++++
->>   target/loongarch/kvm/kvm.c | 60 ++++++++++++++++++++++++++++++++++++++
->>   target/loongarch/machine.c | 24 +++++++++++++++
->>   3 files changed, 96 insertions(+)
->>
->
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
->
-> Thanks
-> Song Gao
-Hi,  this patch need rebase.
+Hi Edgar,
 
-Applying: target/loongarch: Implement lbt registers save/restore function
-error: sha1 information is lacking or useless (target/loongarch/kvm/kvm.c).
-error: could not build fake ancestor
-Patch failed at 0001 target/loongarch: Implement lbt registers 
-save/restore function
+On 4/9/24 16:35, Philippe Mathieu-Daudé wrote:
+> Since v1:
+> - Split in smaller patches (pm215)
+> 
+> The CRIS target is deprecated since v9.0 (commit
+> c7bbef40234 "docs: mark CRIS support as deprecated").
+> 
+> Remove:
+> - Buildsys / CI infra
+> - User emulation
+> - System emulation (axis-dev88 machine and ETRAX devices)
+> - Tests
 
+You acked the deprecation commit (c7bbef4023).
+No objection for the removal? I'd rather have your
+explicit Acked-by before merging this.
 
-Thanks.
-Song Gao.
+Thanks,
+
+Phil.
+
+> Philippe Mathieu-Daudé (15):
+>    tests/tcg: Remove CRIS libc test files
+>    tests/tcg: Remove CRIS bare test files
+>    buildsys: Remove CRIS cross container
+>    linux-user: Remove support for CRIS target
+>    hw/cris: Remove the axis-dev88 machine
+>    hw/cris: Remove image loader helper
+>    hw/intc: Remove TYPE_ETRAX_FS_PIC device
+>    hw/char: Remove TYPE_ETRAX_FS_SERIAL device
+>    hw/net: Remove TYPE_ETRAX_FS_ETH device
+>    hw/dma: Remove ETRAX_FS DMA device
+>    hw/timer: Remove TYPE_ETRAX_FS_TIMER device
+>    system: Remove support for CRIS target
+>    target/cris: Remove the deprecated CRIS target
+>    disas: Remove CRIS disassembler
+>    seccomp: Remove check for CRIS host
 
 
