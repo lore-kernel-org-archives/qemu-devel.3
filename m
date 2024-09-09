@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 731C8ECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4416EECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 18:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snisc-0004iV-0x; Mon, 09 Sep 2024 14:12:51 -0400
+	id 1sniw7-0002Kg-78; Mon, 09 Sep 2024 14:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snisZ-0004de-Cd
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:12:47 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1snivz-0001tl-4A
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:16:19 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1snisX-0002T7-Qh
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:12:47 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-277ef9a4d11so2574822fac.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 11:12:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1snivu-0002oG-Gu
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 14:16:18 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3ed267a7bso2311713a12.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 11:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725905563; x=1726510363; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bgWFiWE4QVhUO+143r49gPc4CxlKLZPWhuBZO2rCSxE=;
- b=A/w2J632DuOYX3/Cw0DY2+/Sd31v/GCpsDnLfFgDrBrmz0mZA11D76hSpoFIiNhNQd
- 3X1fhiFxBr7lXJcg5elPQzsHx/azH4tqfXQg4v5gjYsOq3/5Oh9eSJ4zWrbTPZFFoCoX
- URRLsCZRiQOLYDwbEuJNOH6vgT1XRDYl8WfxXU+wey77nstY0T/aOYct5nxGsEY1vf5f
- z7b7K+v8HTp2ixahJjHukR8U6qFOWJgbLxPkJfxp8DVYeE8ITcUujOGROX30CLm4Kgp0
- 3+jqIHKYlAEkKtL+m480tWEGvD4lb4fN4ChigzSqphIgCG65qkCghicL3ZaTgtYieoJk
- noZg==
+ d=linaro.org; s=google; t=1725905773; x=1726510573; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VDcXcsdeFEjrXienQpg6mBkczDT4wivM5vmM2cMi1Kk=;
+ b=i6Qew7dDg5N5H3RJ2sw6WLh2ssZgKUNPCwxtHC4Yu2lT0DnJvCis0iVVd34FIOBffE
+ zk5fFYuBd9wVsCJhRm165FhD21++3G/YLNzKHHbVLccYIwKjcOvB5LtvQTZACqtLOW1K
+ iNUPHbY3ZUV+9o1SZ/BQH/vb8FO0oVQe7bG4BtTp2QodcLUsg/tCOy0jM9oadtQsMCF6
+ lTzgeBW1Yktje6MlGkubYohkweuIKCUTC9O1ZbNaAMdP1lRf6q3i1SKe/W+3Fg60T+MM
+ 55cpkkNgvjoHnnsGL7/AAos4vUgj5yvRwJ/16VYlAb7nUCpQ1arPq9fJOesPVOdh4Jxl
+ 4z+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725905563; x=1726510363;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bgWFiWE4QVhUO+143r49gPc4CxlKLZPWhuBZO2rCSxE=;
- b=NiHX4ULY1h3HslxH0APrQY1+AP0mESUMD9IvYqX/uzaWZurJGGfkvsta5HBBnESDSa
- 8OFdoSmuleemJH/nRtsgEh4wg9v1iLzh/EgkPfEDeDjUOnOo4K1OcGHN5Cp8PMIx6LD3
- 0L92Jfze0sgRzOQ0rWZoIUrQ2oeWk+284df/KrLsgbp2ZwEGFmshmc5RiJNjhU7DUX98
- bEdeh7YueagaF8c0V7JBtI9aG3zREBWl/UFTanJZKv3+GPjRsvlx3f2381LKApi06FnP
- +NRP5mGX4VrwhzhFl9tQndPTA0N2EGAvRrfo7/OLj/Rul4kuhqedBqgQMluqxn7Y8zG3
- n8Ng==
+ d=1e100.net; s=20230601; t=1725905773; x=1726510573;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VDcXcsdeFEjrXienQpg6mBkczDT4wivM5vmM2cMi1Kk=;
+ b=IiRjRfofReS1ERqKWNFABhnJi0iuFp/1qfn8g/+xCM7Lqcspd7ei4nd5Dw07Kjwds4
+ bWWqnOoHM9bUrByH5sDSe3E5MByaAVy30NuQyCCdU4/cvEMNgS2TPar6hMR7No2goSwy
+ cmtHZWvh1HYbLRSCzGiBn4uM3lPDXLHFziBQgiROR25s6ApaY03/ZpiNRhj9o5uLzQA7
+ biFVs+0ZcUZuo7f85yHYtL/zwu0mlaE9PEceER7DfQTiYmNKvnPiGUTa6y+kOOmZSwrD
+ l8F1gA00vW6qu3GWxkSLgT3HsNUL07FDvd/PR4GK8hQutLNSVvxYZU60HN0HbK2E7i97
+ EXcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbdlHWLvQeu/VAP6WnkyaN9Qevd+k+wQlNruEQTFdxtKiU8oYgRH5ybKi/HNsC+GF0TSLs/2orYeA0@nongnu.org
-X-Gm-Message-State: AOJu0Yy0jQjXIHpHkEJF4v3z7ep3ODgpaIMZeZ9Vjt8zIAoRwhMV1ptm
- 1/T57XkCVIDxLK5Bf9hqyb5yp1bIwbCgNlGx4MjQDfWHfu5IvAM4FvocPDDTr9w=
-X-Google-Smtp-Source: AGHT+IHmI0DwqJq+TiW2awMWIVnyjR7uggJ+9P+WvGXrzXwc2iCkOfI/LtNXE7TESiwj/XU35kHTzQ==
-X-Received: by 2002:a05:6870:3913:b0:264:9161:82cb with SMTP id
- 586e51a60fabf-27b82f9f4e4mr13206334fac.31.1725905563216; 
- Mon, 09 Sep 2024 11:12:43 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fe2106sm28685b3a.46.2024.09.09.11.12.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 11:12:42 -0700 (PDT)
-Message-ID: <78b6e29d-5ffc-4c31-86e4-33d34bc77518@linaro.org>
-Date: Mon, 9 Sep 2024 11:12:41 -0700
+ AJvYcCUBZqac+fVGhj0TdZK94oH9RtCMKLnzRsfC/Oe13UhynLFzcMeT/a8lR8XQ6RD/XxLCAoO5kXvMP1vi@nongnu.org
+X-Gm-Message-State: AOJu0YwaDo+KtZ9EaWy/Vy0VmLm8kzQIZDCkR2vJ9xb1UtPGjA+K7Qer
+ zp2us+ZeSdaL90AMs12eGBWmaZtGbIL6goDneuhd/jLswN7V4QaVvPoRqFwDhWm1SoMphq77SuW
+ jNKyndB6Ydeq5CTT749vynaxXtAk/IEyVRhq0gA==
+X-Google-Smtp-Source: AGHT+IEjfpze4KYQMINrno7rGzgOez0J4+Z75yTraUfeFlndfTFQMFwUEkxFDcSV3ht70+dhkRJEAHQXfZhdjUOohnw=
+X-Received: by 2002:a05:6402:3903:b0:5be:fdc0:e704 with SMTP id
+ 4fb4d7f45d1cf-5c3dc79323dmr7951048a12.10.1725905772817; Mon, 09 Sep 2024
+ 11:16:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/i386: Implement vector TST{EQ,NE} for avx512
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240908185110.485573-1-richard.henderson@linaro.org>
- <9f9b2305-da3a-4215-bf97-462bd1ade4c8@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <9f9b2305-da3a-4215-bf97-462bd1ade4c8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+ <fabedae0-d748-4a9d-b802-14d15f3cd44a@linaro.org>
+ <CAFEAcA9z9Mf52pOVCHv_Y1hvPPWt7Me5CDcxYS_cXvj7OFDuSw@mail.gmail.com>
+ <3d622822-b4a9-49b1-950e-8f33b6532d8f@linaro.org>
+In-Reply-To: <3d622822-b4a9-49b1-950e-8f33b6532d8f@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Sep 2024 19:16:01 +0100
+Message-ID: <CAFEAcA-osC-uuC+6+vskYVSEXfqmzbEFUFfgFAwxzQkju1i9Sw@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Guenter Roeck <linux@roeck-us.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,23 +96,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 02:53, Philippe Mathieu-Daudé wrote:
->> @@ -3145,6 +3153,13 @@ static void tcg_out_cmp_vec_k1(TCGContext *s, TCGType type, 
->> unsigned vece,
->>           { OPC_VPCMPB, OPC_VPCMPW, OPC_VPCMPD, OPC_VPCMPQ },
->>           { OPC_VPCMPUB, OPC_VPCMPUW, OPC_VPCMPUD, OPC_VPCMPUQ }
->>       };
->> +    static const int testm_insn[4] = {
->> +        OPC_VPTESTMB, OPC_VPTESTMW, OPC_VPTESTMD, OPC_VPTESTMQ
->> +    };
->> +    static const int testnm_insn[4] = {
->> +        OPC_VPTESTMB, OPC_VPTESTMW, OPC_VPTESTMD, OPC_VPTESTMQ
-> 
-> OPC_VPTESTNMB, OPC_VPTESTNMW, OPC_VPTESTNMD, OPC_VPTESTNMQ ;)
+On Mon, 9 Sept 2024 at 18:25, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Hi Peter,
+>
+> On 9/9/24 15:44, Peter Maydell wrote:
+> > On Mon, 9 Sept 2024 at 14:41, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
+o.org> wrote:
+> >>
+> >> Hi,
+> >>
+> >> On 3/9/24 18:06, Peter Maydell wrote:
+> >>> This patchset removes the various Arm machines which we deprecated
+> >>> for the 9.0 release and are therefore allowed to remove for the 9.2
+> >>> release:
+> >>>    akita, borzoi, cheetah, connex, mainstone, n800, n810,
+> >>>    spitz, terrier, tosa, verdex, z2
+> >>
+> >>> The series includes removal of some code which while not strictly
+> >>> specific to these machines was in practice used only by them:
+> >>>    * the OneNAND flash memory device
+> >>>    * the PCMCIA subsystem
+> >>>    * the MUSB USB2.0 OTG USB controller chip (hcd-musb)
+> >>
+> >>> thanks
+> >>> -- PMM
+> >>>
+> >>> Peter Maydell (53):
+> >>>     hw/input: Drop ADS7846 device
+> >>>     hw/adc: Remove MAX111X device
+> >>>     hw/gpio: Remove MAX7310 device
+> >>>     hw/input: Remove tsc2005 touchscreen controller
+> >>>     hw/input: Remove tsc210x device
+> >>>     hw/rtc: Remove twl92230 device
+> >>>     hw/input: Remove lm832x device
+> >>>     hw/usb: Remove tusb6010 USB controller
+> >>>     hw/usb: Remove MUSB USB host controller
+> >>
+> >> Some of these devices are user-creatable and only rely on a bus
+> >> (not a particular removed machine), so could potentially be used
+> >> on other maintained machines which expose a similar bus.
+> >
+> > Which ones in particular? Almost all of them are sysbus.
+> > At least one of them that I looked at (lm832x) is an I2C
+> > device but it also requires the board to wire up a GPIO line
+> > and to call a specific C function to inject key events, so it's
+> > not actually generally usable.
+> >
+> >> We don't have in-tree (tests/) examples, but I wonder if it is OK
+> >> to remove them without first explicitly deprecating them in
+> >> docs/about/deprecated.rst. I wouldn't surprise users when 9.2 is
+> >> release. Maybe this isn't an issue, but I prefer to mention it
+> >> now to be sure.
+> >
+> > I think this is unlikely to be a problem, but if you have
+> > a specific device you think might be a problem we can
+> > look at whether it seems likely (e.g. whether a web search
+> > turns up users using it in odd ways).
+>
+> I don't have specific example and am happy to remove these
+> legacy devices.
+>
+> I'm wondering more generically about removing user-creatable &
+> on-bus devices, when explicit use is removed (deprecated board
+> removed), but we can still use them elsewhere. IMHO for clarity
+> in the future we should list them in deprecated.rst along with
+> some lines like "this device is explicitly used by the FOO machine which
+> is being deprecated; if you want to keep them, provide test cases".
 
-Oops, yes.  There are not so many uses of this in target/ yet,
-and I happened to pick one that used testm.  :-/
+Yes, I think that would be a good idea going forward. I didn't
+realise in this case that some of the boards used devices that
+were i2c or whatever and at least nominally usable elsewhere.
 
-
-r~
+-- PMM
 
