@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 626DFECE585
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199FAECE584
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniC2-0005EF-Ov; Mon, 09 Sep 2024 13:28:50 -0400
+	id 1sniC4-0005Mc-Ki; Mon, 09 Sep 2024 13:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBn-00049y-Df
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:35 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sniBz-0004zq-Li
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:48 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniBl-00061A-9d
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:35 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7178df70f28so3738119b3a.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:32 -0700 (PDT)
+ id 1sniBx-000643-9o
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:47 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20543fdb7acso31749265ad.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725902912; x=1726507712; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725902924; x=1726507724; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dSotwpVP0Set/QuWa40e5OXb7QO8R2QJLi2VvBAPNm8=;
- b=dLJr0qA2moSlIrBpbjvs02C06pmcjI4aPsnFspdaDMNsWfbKlUbc+YR5GaL/I4kai4
- yjEVm6oymvz3F8SmmtrfHyCXdIVClfm2pGRAVKR5P5iNVSoz5rm/LIac6ZSnrU63gK+X
- 1NUuWvzZrP2p+4Y0F7RvDhU/edz5Zvihgr8nJYEYe+UWwjX2lPjaabG6crmmQKS8di2q
- V7FHk5g5jr3aX3XxHBKBIa/cZ8CMxqt8ZuU3u5fF3kqYoj4DsiJpNcpQqB2LfjmmlfR9
- wbxP3Rx8BvyFOvmr9gs7lUNpeokxJ6cLcXtokAaWW8L9MK++S8z7p11rYKfTXLCwwnMw
- bHVw==
+ bh=IVrsW+o3FMgR3VpWI1k5gdQknpFqVu925X71ufmaWs0=;
+ b=N2vxc4UUsy+T8XRSG/OH953qawfbJ36AN+SDxOihMj1uEwXqbxz1J4tcii+KrElJgR
+ i3sRFYL4h2WuNGos3lYZLtyijREeuEyYsRcE0x7SGytm/rIz4aNm3p/exGDxC3kHud4c
+ PHov+sSja3kiJ91iAIWS0sphdmYgOl9AYP5tw2EIsAlVhzn0+dxzVVd3+Akx9b24XJ7H
+ 7HLiPwK435rGCIrEKZo9B8nw5aUjyynf+14zuNPJNYX+GABNUJ00e7ydxbNZo58KfAuO
+ 0+pLgtksRUXDjgtmfgaGyrqe0ga5vHZlPXaoTVesCg/DlkXxrkvS+KItTvxE5MmXgrtx
+ 4jgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725902912; x=1726507712;
+ d=1e100.net; s=20230601; t=1725902924; x=1726507724;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dSotwpVP0Set/QuWa40e5OXb7QO8R2QJLi2VvBAPNm8=;
- b=Qq84Wn2OsZoJQx+b8muXA7pHseRbKPZQQHY0e4mzO7TvY/ESgBwkuBVgDpFRyqKod4
- MEzO70H7sR8Yl/OcQRtblgXK4RANoyQ0eRHq38lyoRuUXFjvHx0OaSbbcXYfOSas5R1T
- dd30JfnzkFOPZ8GJEOlssh6YSndXtSBNG3+swClW9O8oTPE+kF1/IVNDFpYCysaLKQsZ
- cVzoipVjUwzFCjHBpEx3mPc7VgvdFeR3stO6fBzcjFLoKG5k36sdbRBoJCAFUCHfl3Mf
- tEGJrbwdicFEpTZh/SxUwngSq3RmEFbAgVqBHOW3HFKTEzUEe5OradIjH/zNXXfrDd9Y
- T29Q==
-X-Gm-Message-State: AOJu0YzilmK24c4a4aaMKfOeITFHsvMG3xtXxwx0DQLTTJGXeQeOPIr2
- ivY/j91KuxBpav2GHjdLUS9e20o611yFT/MBnqjOE0671UxpAKOmbO8wVIVSM6hmDfJhh4UyP3U
+ bh=IVrsW+o3FMgR3VpWI1k5gdQknpFqVu925X71ufmaWs0=;
+ b=wnMfgpOhM/ZGNT3C5VVJekYnhCZFzR3gslyr1UVtblw2DYshHbjBA7ygpHAcNyVRCh
+ epDvWWT4kQbJk4cuXs5AKUii/4ObRM3hq5MahaDMP9yNV9rG9U5loCoIQ9O4fLNtjkvK
+ Fe67knW3UUO2paPgAQ5yCJFVPiWySpKYC07Q3UZqnZyNt3X+GaTd6BdUbuLQDmXAs27F
+ WA2xnNKtHXHeETI0AlcnUwNw/Srznfd4iXnqj1w6d7qn9aXY/gtwsVRjZSOjBERyIg+d
+ 2sNW7+ItiitFv2xmCAxn7PsIlb4HMe5nLh0PNVj9Z9Xpdz+y/mZ5uhwMT8ZGEr9WWSc+
+ f0Sw==
+X-Gm-Message-State: AOJu0YxbLfQzORWYLjRJEuPJJMcabH6cMphhrs2mfhi3/XKwedwwLjlj
+ qNn5QL6q+kkrWLVOmAUakbDFEKtbWNJ/3qWImZW0zQ/7xWVOce9oMV0AC+iP8YWyvufYin0W0uX
  S
-X-Google-Smtp-Source: AGHT+IHSsscpubQYG834BkxrkoSaVP1pquROrMdoyFMiqiSs/IS2y/WBiRcef6haxkx8o4yyxFMULQ==
-X-Received: by 2002:a05:6a20:43a2:b0:1c2:905c:dc2 with SMTP id
- adf61e73a8af0-1cf2a031b07mr7949432637.15.1725902911791; 
- Mon, 09 Sep 2024 10:28:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXJD+ataaLMgV8niKGD6kVjHer/7ZL6KW5ck7HBUMsTeusaXbauvHUQ1Eko1QZAqgH5KqG2A==
+X-Received: by 2002:a17:903:22d0:b0:206:cbf0:3089 with SMTP id
+ d9443c01a7336-206f062366emr118764175ad.54.1725902924060; 
+ Mon, 09 Sep 2024 10:28:44 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.31
+ d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 10:28:31 -0700 (PDT)
+ Mon, 09 Sep 2024 10:28:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	daniel@0x0f.com
-Subject: [PATCH v3 07/26] target/m68k: Invoke update_fpsr for FMOVECR
-Date: Mon,  9 Sep 2024 10:28:04 -0700
-Message-ID: <20240909172823.649837-8-richard.henderson@linaro.org>
+Subject: [PATCH v3 21/26] target/m68k: Merge gen_load_fp, gen_load_mode_fp
+Date: Mon,  9 Sep 2024 10:28:18 -0700
+Message-ID: <20240909172823.649837-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240909172823.649837-1-richard.henderson@linaro.org>
 References: <20240909172823.649837-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,27 +95,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This instruction sets CC and EXC bits just like any other.
-So far we do not properly emulate inexact for the various
-rom entries, but we can certainly update CC correctly.
+This enables the exceptions raised by the actual load
+to be reflected as a failure.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/m68k/translate.c | 104 ++++++++++++++++++++--------------------
+ 1 file changed, 51 insertions(+), 53 deletions(-)
 
 diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 423c663607..003318163c 100644
+index df886ed062..e966d2c929 100644
 --- a/target/m68k/translate.c
 +++ b/target/m68k/translate.c
-@@ -4955,6 +4955,7 @@ DISAS_INSN(fpu)
-             TCGv rom_offset = tcg_constant_i32(opmode);
-             cpu_dest = gen_fp_ptr(REG(ext, 7));
-             gen_helper_fconst(tcg_env, cpu_dest, rom_offset);
-+            gen_helper_update_fpsr(tcg_env, cpu_dest);
+@@ -901,53 +901,6 @@ static void gen_fp_move(TCGv_ptr dest, TCGv_ptr src)
+     tcg_gen_st_i64(t64, dest, offsetof(FPReg, l.lower));
+ }
+ 
+-static void gen_load_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+-                        int index)
+-{
+-    TCGv tmp;
+-    TCGv_i64 t64;
+-
+-    t64 = tcg_temp_new_i64();
+-    tmp = tcg_temp_new();
+-    switch (opsize) {
+-    case OS_BYTE:
+-    case OS_WORD:
+-    case OS_LONG:
+-        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
+-        gen_helper_exts32(tcg_env, fp, tmp);
+-        break;
+-    case OS_SINGLE:
+-        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
+-        gen_helper_extf32(tcg_env, fp, tmp);
+-        break;
+-    case OS_DOUBLE:
+-        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
+-        gen_helper_extf64(tcg_env, fp, t64);
+-        break;
+-    case OS_EXTENDED:
+-        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
+-            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
+-            break;
+-        }
+-        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
+-        tcg_gen_shri_i32(tmp, tmp, 16);
+-        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
+-        tcg_gen_addi_i32(tmp, addr, 4);
+-        tcg_gen_qemu_ld_i64(t64, tmp, index, MO_TEUQ);
+-        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
+-        break;
+-    case OS_PACKED:
+-        /*
+-         * unimplemented data type on 68040/ColdFire
+-         * FIXME if needed for another FPU
+-         */
+-        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+                          int index)
+ {
+@@ -995,8 +948,8 @@ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+     }
+ }
+ 
+-static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+-                             TCGv_ptr fp, int index)
++static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
++                        TCGv_ptr fp, int index)
+ {
+     int mode = extract32(insn, 3, 3);
+     int reg0 = REG(insn, 0);
+@@ -1083,10 +1036,55 @@ static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+             gen_addr_fault(s);
+             return false;
+         }
+-        gen_load_fp(s, opsize, addr, fp, index);
+-        return true;
++        break;
++
++    default:
++        g_assert_not_reached();
+     }
+-    g_assert_not_reached();
++
++    switch (opsize) {
++    case OS_BYTE:
++    case OS_WORD:
++    case OS_LONG:
++        tmp = tcg_temp_new();
++        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
++        gen_helper_exts32(tcg_env, fp, tmp);
++        break;
++    case OS_SINGLE:
++        tmp = tcg_temp_new();
++        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
++        gen_helper_extf32(tcg_env, fp, tmp);
++        break;
++    case OS_DOUBLE:
++        t64 = tcg_temp_new_i64();
++        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
++        gen_helper_extf64(tcg_env, fp, t64);
++        break;
++    case OS_EXTENDED:
++        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
++            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
++            return false;
++        }
++        tmp = tcg_temp_new();
++        t64 = tcg_temp_new_i64();
++        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
++        tcg_gen_addi_i32(addr, addr, 4);
++        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
++        tcg_gen_shri_i32(tmp, tmp, 16);
++        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
++        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
++        break;
++    case OS_PACKED:
++        /*
++         * unimplemented data type on 68040/ColdFire
++         * FIXME if needed for another FPU
++         */
++        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
++        return false;
++    default:
++        g_assert_not_reached();
++    }
++    return true;
+ }
+ 
+ static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+@@ -4911,7 +4909,7 @@ DISAS_INSN(fpu)
+         /* Source effective address.  */
+         opsize = ext_opsize(ext, 10);
+         cpu_src = gen_fp_result_ptr();
+-        if (!gen_load_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
++        if (!gen_load_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
              return;
          }
-         break;
+     } else {
 -- 
 2.43.0
 
