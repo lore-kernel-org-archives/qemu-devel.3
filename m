@@ -4,80 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5C4CE7AB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 07:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D512CE7AB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 07:19:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snYcR-0002o4-G4; Mon, 09 Sep 2024 03:15:27 -0400
+	id 1snYgC-00076F-Vb; Mon, 09 Sep 2024 03:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
- id 1snYcL-0002me-Rn
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:15:22 -0400
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
- id 1snYc8-0000xf-Km
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 03:15:21 -0400
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-2053616fa36so41963895ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 00:15:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1snYgB-00075I-Jh; Mon, 09 Sep 2024 03:19:19 -0400
+Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1snYg9-0001Mp-4u; Mon, 09 Sep 2024 03:19:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725866105; x=1726470905; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=WacMwpDGM/3qUlwy+SBbNApQAZ6DjbUiTpOgdKzrWs8=;
- b=L3htkqdzj/5mVI/Hque295T9W12rkjMM5tlyQpnaQgopi2QTFBM6URmS0QNTHMH3wv
- XlOZ9PJo1BibXamWM/TqP+D7EZq1vS8eE7nrWB7vXGabVuYVQj9GzZs+E3uGywBftK3w
- R1EIj3lkzdqyijPBJ0MTu8zkSGzkgPkcFQU6SPmNtDkWkACTwJecQ2N4l7ERE1WJYILe
- LPdHUog5lusy3bG006HRh8LL/it4eKPJAxYsAxxiwxijlNucVP/7Gsdvi8tkr6QRc9Ng
- MtqMvu6kcabRhIWuDmhAWMGfS3B5vDGCD2ce5njwBWpdfHYs/2zOItcQ+e0Hqd80QzOv
- KJMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725866105; x=1726470905;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WacMwpDGM/3qUlwy+SBbNApQAZ6DjbUiTpOgdKzrWs8=;
- b=cVcOxmGR6Q2n23/hBJ5MYtqQ3I84GNJF1yIgCPMuHihsRhUxAljEPXo5mX+Wmg4qRX
- YssZ8OFvQTsmyAhwv4fjyTp60DN9qYgmo2rKHT7bGQZhaPvyfXrAx2v+drOFQ4AkHF9X
- GOoAihu/FHNfd95L9DvZXV55NYr+Z1CsuOFV8sf6rz8B1HI5hV9nya4yYzZ9b/3U2Dcl
- 6zoP1CbOgf4XORLlsdYV04+IfsX+ZIaREeOP+w6rEDUW7vhVuVhYs5ootzDUr1zQ8lLm
- nFwRKrjz6L9GU+th3L/KlvjrRUQZ6zsk3whehjo7z40/n7QIaRd4Ae6RBYXIR1WBuZs6
- rceg==
-X-Gm-Message-State: AOJu0Ywjds/l6jO4L98L04W1hXXvJD4DP1oV3OweEVq8yWgKvo9b/lf2
- wKcKDK/RmmrZiEn5wJ5O3PH1dDzZeyB0t+pqXHUUb3NuSYvP3deCQyNBbVRF4Ko=
-X-Google-Smtp-Source: AGHT+IHkjJ09Md7Xm7Sl0AbbVqyALiBsULPkBZ+9yUuiMD4oRXUS2qoLOjgoWQ2lWA9nP6L6K9Oqeg==
-X-Received: by 2002:a17:902:e745:b0:207:1616:60db with SMTP id
- d9443c01a7336-207161660edmr73116135ad.6.1725866104752; 
- Mon, 09 Sep 2024 00:15:04 -0700 (PDT)
-Received: from localhost.localdomain ([223.104.132.8])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f1e279sm28125015ad.205.2024.09.09.00.15.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 00:15:04 -0700 (PDT)
-From: luzhixing12345 <luzhixing12345@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Jonathan.Cameron@huawei.com, mjt@tls.msk.ru, mst@redhat.com,
- fan.ni@samsung.com, hyeongtak.ji@gmail.com,
- luzhixing12345 <luzhixing12345@gmail.com>
-Subject: [PATCH] cxl: update kernel config requirement
-Date: Mon,  9 Sep 2024 15:14:50 +0800
-Message-Id: <20240909071450.13124-1-luzhixing12345@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ d=linux.alibaba.com; s=default;
+ t=1725866344; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=91UqSUGPqnK8sfGg8ZBzhZ7uHkSSjpGo3rGOV76rL3A=;
+ b=O/i2u/TsgAgCaXUVAOtx5y57yVEClq7N9elnZx6q2IBTycZqTqMYPoh70kNX8v4JRdkchKYI0ST4RfXpl0L0MpS5dOIYvvu4PULcRINfwxNPc+z0BvzPG+w6xtaxurgUMC3lUVI9RJukShsjDaETb3tUlcdW4Nbq2Hzcj2Ic4dQ=
+Received: from 30.251.160.182(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WEYZMmP_1725866342) by smtp.aliyun-inc.com;
+ Mon, 09 Sep 2024 15:19:03 +0800
+Message-ID: <5fc48f87-b233-40b9-a0e1-4de920d97957@linux.alibaba.com>
+Date: Mon, 9 Sep 2024 15:18:06 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/14] util: Add RISC-V vector extension probe in
+ cpuinfo
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
+ <20240904142739.854-3-zhiwei_liu@linux.alibaba.com>
+ <286685da-74e3-401a-afe4-fed0831fd97c@linaro.org>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <286685da-74e3-401a-afe4-fed0831fd97c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=luzhixing12345@gmail.com; helo=mail-pl1-x644.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.100;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-100.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,35 +70,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add CXL_PMEM config dependence LIBNVIDIMM
 
-CXL_REGION config is not enabled in 5.18, and it was introduced 
-into kernel in 6.0 by commit 779dd20c for dynamic provisioning of new memory region
+On 2024/9/5 11:34, Richard Henderson wrote:
+> On 9/4/24 07:27, LIU Zhiwei wrote:
+>> +    if (info & CPUINFO_ZVE64X) {
+>> +        /*
+>> +         * Get vlenb for Vector: vsetvli rd, x0, e64.
+>> +         * VLMAX = LMUL * VLEN / SEW.
+>> +         * The "vsetvli rd, x0, e64" means "LMUL = 1, SEW = 64, rd = 
+>> VLMAX",
+>> +         * so "vlenb = VLMAX * 64 / 8".
+>> +         */
+>> +        unsigned long vlmax = 0;
+>> +        asm volatile(".insn i 0x57, 7, %0, zero, (3 << 3)" : 
+>> "=r"(vlmax));
+>> +        if (vlmax) {
+>> +            riscv_vlenb = vlmax * 8;
+>> +            assert(riscv_vlen >= 64 && !(riscv_vlen & (riscv_vlen - 
+>> 1)));
+>> +        } else {
+>> +            info &= ~CPUINFO_ZVE64X;
+>> +        }
+>> +    }
+>
+> Surely this does not compile, since the riscv_vlen referenced in the 
+> assert does not exist.
+riscv_vlen is macro about riscv_vlenb. I think you miss it.
+>
+> That said, I've done some experimentation and I believe there is a 
+> further simplification to be had in instead saving log2(vlenb).
+>
+>     if (info & CPUINFO_ZVE64X) {
+>         /*
+>          * We are guaranteed by RVV-1.0 that VLEN is a power of 2.
+>          * We are guaranteed by Zve64x that VLEN >= 64, and that
+>          * EEW of {8,16,32,64} are supported.
+>          *
+>          * Cache VLEN in a convenient form.
+>          */
+>         unsigned long vlenb;
+>         asm("csrr %0, vlenb" : "=r"(vlenb));
 
-Signed-off-by: luzhixing12345 <luzhixing12345@gmail.com>
----
- docs/system/devices/cxl.rst | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Should we use the .insn format here? Maybe we are having a compiler 
+doesn't support vector.
 
-diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
-index 882b036f5e..ccbe47749f 100644
---- a/docs/system/devices/cxl.rst
-+++ b/docs/system/devices/cxl.rst
-@@ -401,9 +401,12 @@ OS management of CXL memory devices as described here.
- * CONFIG_CXL_BUS
- * CONFIG_CXL_PCI
- * CONFIG_CXL_ACPI
--* CONFIG_CXL_PMEM
-+* CONFIG_CXL_PMEM(depends on LIBNVDIMM)
- * CONFIG_CXL_MEM
- * CONFIG_CXL_PORT
-+
-+Dynamic provisioning of new memory region since Linux 6.0
-+
- * CONFIG_CXL_REGION
- 
- References
--- 
-2.34.1
+> riscv_lg2_vlenb = ctz32(vlenb);
+>     }
+>
+OK.
 
+Thanks,
+Zhiwei
+
+> I'll talk about how this can be used against the next patch with vsetvl.
+
+>
+>
+> r~
 
