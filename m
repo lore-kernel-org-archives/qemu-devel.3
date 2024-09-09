@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64676ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98CCECE577
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 17:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sniC9-0005q4-A9; Mon, 09 Sep 2024 13:28:57 -0400
+	id 1sniBn-00046H-9K; Mon, 09 Sep 2024 13:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniC4-0005K2-29
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:52 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sniBi-0003vw-Lg
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:30 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sniC2-00064k-Br
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:51 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2055136b612so55186765ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:48 -0700 (PDT)
+ id 1sniBg-00060I-KT
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 13:28:30 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2054feabfc3so40719945ad.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 10:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725902928; x=1726507728; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725902907; x=1726507707; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JJE3DAs7T3oH0GbJsFZTv8MmDA7pEO0/Bzfp6DqKShg=;
- b=BYDooAgt3WoJOXtetuCfHdnbbpYQep5CtShOaoZPfk8lIs3Lfql9miWvZDF80akOuI
- E7oT38XB44KtHUpiTeGmlFlNghdGQ8prILUHk8FArQLUksA4H8oKY0s7HgwyOnXNtMG4
- +HDJxdOomHiQ6T7VHgVfDugTp0c13Qh+LEZcSq/OVK3+jWI2W5Q2FSCJHhyJVcT2dlQW
- uWsyajk0mFMLdSktMd7/32KqFVxFi4CN4dFdjWjaDN2byKsQL2Ii7oGjJF51QTz6l118
- Xk3pYzHIvSGfNr4Iw3GqYH+yLs52SvOzSKMmhzWUR2iaQEvHl+xxx7Fe1fx+K0b25q93
- kA0A==
+ bh=m7w703O79/DTa7nR13RVyKW4XTiaiYluVn4vLct/9bg=;
+ b=xMaccUGloF3Wcy44le+WHndM1atlQ6a/2zkXGieO0EybkKh2d8jWpRif0i2bQ2v3NE
+ jKkd5zFaZFnR3n3FadrsOkhVu+7AwCyJshQGHQU4c6/RCrtTbHQULp3sQBaJNsUoPbek
+ prXJwlHpcTvl0SRDP8qjzvrtKfaXNNwN38o3A0OFBM4sVyQYxdsY3LQRmtvxl8RbGeve
+ mn+GgJsPyVp+hM71z07dSDYXbUEdlcMUX4owsIEac/gEBICczyHwdUu5rrZQ19Rxmg/m
+ icYGq8Fe95F5T+3Ab9DsG7EZEP+s16iUdU81qufPd9bFf1PE6wwyb/IHbUCZzOQKBa3E
+ 9zWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725902928; x=1726507728;
+ d=1e100.net; s=20230601; t=1725902907; x=1726507707;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JJE3DAs7T3oH0GbJsFZTv8MmDA7pEO0/Bzfp6DqKShg=;
- b=gSHg7uVEZJ6T++1IUXOd0Nf+elj0l94jSsjIrxggSB8L7MlVZuK5zTiCGBO06nMigh
- grHRh3Vekeh3w4lQNWXTpU+SuT6WQ0oZZ3pOfGSYxSMHiWOztjwWcUXCc4nYTJj+AEoW
- xY7Z41GPR1AqtlmQD3jYhgo9ao7+Mx029859xqzCoEY+TjGyRYRjNR6nh0Kl6NWashHe
- TwKNrmwlpm+xNZG2yU1PuH7Tl2vOhvJ9u7XqcRaTfrg0BqnKgYf1qQ6Y4IlFpS4mF0uc
- pbhs6VHkxQZq8qmQIsF/12Xusl5Krx+zQ2HsskNasvlisPQlm8nxJbXTal9ERgYR/Bgb
- lpqg==
-X-Gm-Message-State: AOJu0YyUINHFUByspxf0S31yhDRbv/CiutpuesyO5LKOWm8VMdtom45y
- l6/KkpU1QGfYavyuZS2JVedXlJBwQQADz54SwUymVZxD7gsjAMPBPM4iqNZep5mVQHyHrieUcOW
- T
-X-Google-Smtp-Source: AGHT+IHlKA7VTr6+FrQP+jO+P4xcY+N9cH13zMrlmYvvVn8v7W3nsm4Mkf+HH4Vak2BGQwwVjKdCtw==
-X-Received: by 2002:a17:902:c941:b0:205:7835:38dc with SMTP id
- d9443c01a7336-206f0654f62mr137132475ad.60.1725902927920; 
- Mon, 09 Sep 2024 10:28:47 -0700 (PDT)
+ bh=m7w703O79/DTa7nR13RVyKW4XTiaiYluVn4vLct/9bg=;
+ b=UUutE/NhVtc1MuXKxTZS/6ofM6ts0/x2MdEGs0NvBOZGfUas5xiAfvPTQYzNCuIlEY
+ lyAReUuRrVbMrX8vJuFO0TfhvtKYiBCXLMHsr3amIfFgePk7e+nXbNw2WYEzNm+NbZDO
+ WhOurbNUCyI1Y34kbW+M0s3FQ6eHvWSo3nQ+dyOgpDRC3cRceDc+EMJ/T0tWFH24wx2m
+ GRefaRNzuy1x6Mwqn3socP9XPRWr0ibcKrAWzISspH6P+RwqgX8rZ36oOH4SEtwdckPo
+ A2H+vJgDgNGN0EMN/iTIswjGhGfsxdRVMfPuoC7R7FdJr1Hc/yJ9nyj4HXzFezknKvqr
+ ALNA==
+X-Gm-Message-State: AOJu0YzBcDUuUgUPTtujBdaN8l/ssRhOxz0fFYaOWQgMhkdfJOnClhWn
+ HB/wiasX/LvUTs/Lu4qP2T5xzBUvODsY/YSngUW9+GOX2Hh4v9jj71gIqfviJK8n9C00fWTQwgb
+ p
+X-Google-Smtp-Source: AGHT+IFELZCDbTWnrlI0HmUXb/9+eTndAyqf81KnblWmUwOaIRp4Py832GWZvtZeby/AEqmqu97g1A==
+X-Received: by 2002:a17:902:d2c5:b0:206:d8c2:4a94 with SMTP id
+ d9443c01a7336-206f0542c38mr192047795ad.25.1725902907062; 
+ Mon, 09 Sep 2024 10:28:27 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.47
+ d9443c01a7336-20710e11e02sm36539875ad.14.2024.09.09.10.28.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 10:28:47 -0700 (PDT)
+ Mon, 09 Sep 2024 10:28:26 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, daniel@0x0f.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 24/26] tests/tcg/m68k: Add packed decimal tests
-Date: Mon,  9 Sep 2024 10:28:21 -0700
-Message-ID: <20240909172823.649837-25-richard.henderson@linaro.org>
+Cc: laurent@vivier.eu,
+	daniel@0x0f.com
+Subject: [PATCH v3 02/26] target/m68k: Add FPSR exception bit defines
+Date: Mon,  9 Sep 2024 10:27:59 -0700
+Message-ID: <20240909172823.649837-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240909172823.649837-1-richard.henderson@linaro.org>
 References: <20240909172823.649837-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,127 +95,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/m68k/packeddecimal-1.c | 41 ++++++++++++++++++++++++++++
- tests/tcg/m68k/packeddecimal-2.c | 46 ++++++++++++++++++++++++++++++++
- tests/tcg/m68k/Makefile.target   |  4 ++-
- 3 files changed, 90 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/m68k/packeddecimal-1.c
- create mode 100644 tests/tcg/m68k/packeddecimal-2.c
+ target/m68k/cpu.h        | 21 +++++++++++++++++++++
+ target/m68k/fpu_helper.c | 22 +++++++++++-----------
+ 2 files changed, 32 insertions(+), 11 deletions(-)
 
-diff --git a/tests/tcg/m68k/packeddecimal-1.c b/tests/tcg/m68k/packeddecimal-1.c
-new file mode 100644
-index 0000000000..5433acd17b
---- /dev/null
-+++ b/tests/tcg/m68k/packeddecimal-1.c
-@@ -0,0 +1,41 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Test packed decimal real conversion to long double. */
-+
-+#include <stdio.h>
-+
-+struct T {
-+    unsigned int d[3];
-+    long double f;
-+};
-+
-+static const struct T tests[] = {
-+    { { 0x00000001, 0x00000000, 0x00000000 }, 1.0e0l },
-+    { { 0x01000001, 0x00000000, 0x00000000 }, 1.0e1l },
-+    { { 0x00100001, 0x00000000, 0x00000000 }, 1.0e10l },
-+    { { 0x00000000, 0x10000000, 0x00000000 }, 0.1e0l },
-+    { { 0x41000001, 0x00000000, 0x00000000 }, 1.0e-1l },
-+    { { 0x85000005, 0x55550000, 0x00000000 }, -5.5555e5l },
-+    { { 0x09990009, 0x99999999, 0x99999999 }, 9.9999999999999999e999l },
-+    { { 0x03210001, 0x23456789, 0x12345678 }, 1.2345678912345678e123l },
-+    { { 0x00000000, 0x00000000, 0x00000000 }, 0.0l },
-+    { { 0x80000000, 0x00000000, 0x00000000 }, -0.0l },
-+    { { 0x09990000, 0x00000000, 0x00000000 }, 0.0e999l },
-+};
-+
-+int main()
-+{
-+    int ret = 0;
-+
-+    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++) {
-+        const struct T *t = &tests[i];
-+        long double f;
-+
-+        asm("fmove.p (%1),%0" : "=f"(f) : "a"(t->d));
-+
-+        if (f != t->f) {
-+            fprintf(stderr, "Mismatch at %d: %.17Le != %.17Le\n", i, f, t->f);
-+            ret = 1;
-+        }
-+    }
-+    return ret;
-+}
-diff --git a/tests/tcg/m68k/packeddecimal-2.c b/tests/tcg/m68k/packeddecimal-2.c
-new file mode 100644
-index 0000000000..448e97ce89
---- /dev/null
-+++ b/tests/tcg/m68k/packeddecimal-2.c
-@@ -0,0 +1,46 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Test packed decimal real conversion from long double, dynamic k-factor */
-+
-+#include <stdio.h>
-+#include <float.h>
-+
-+struct T {
-+    unsigned int d[3];
-+    long double lf;
-+    int kfactor;
-+};
-+
-+static const struct T tests[] = {
-+    { { 0x00000001, 0x00000000, 0x00000000 }, 1.0e0l, 0 },
-+    { { 0x00100001, 0x00000000, 0x00000000 }, 1.0e10l, 0 },
-+    { { 0x41000001, 0x00000000, 0x00000000 }, 1.0e-1l, 0 },
-+    { { 0x85000005, 0x55550000, 0x00000000 }, -5.5555e5l, 5 },
-+    { { 0x45000005, 0x55550000, 0x00000000 }, 5.5555e-5l, 5 },
-+    { { 0x05000002, 0x22220000, 0x00000000 }, 2.2222e5, 99 },
-+    { { 0x05000002, 0x22220000, 0x00000000 }, 2.2222e5, 5 },
-+    { { 0x05000002, 0x20000000, 0x00000000 }, 2.2222e5, 2 },
-+    { { 0x02394001, 0x18973149, 0x53572318 }, LDBL_MAX, 17 },
-+    { { 0x42394001, 0x68105157, 0x15560468 }, LDBL_MIN, 17 },
-+    { { 0x41594001, 0x82259976, 0x59412373 }, LDBL_TRUE_MIN, 17 },
-+};
-+
-+int main()
-+{
-+    int ret = 0;
-+
-+    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++) {
-+        const struct T *t = &tests[i];
-+        unsigned int out[3];
-+
-+        asm("fmove.p %1,(%0),%2"
-+            : : "a"(out), "f"(t->lf), "d"(t->kfactor) : "memory");
-+
-+        if (out[0] != t->d[0] || out[1] != t->d[1] || out[2] != t->d[2]) {
-+            fprintf(stderr, "Mismatch at %d: %08x%08x%08x != %08x%08x%08x\n",
-+                    i, out[0], out[1], out[2],
-+                    t->d[0], t->d[1], t->d[2]);
-+            ret = 1;
-+        }
-+    }
-+    return ret;
-+}
-diff --git a/tests/tcg/m68k/Makefile.target b/tests/tcg/m68k/Makefile.target
-index 33f7b1b127..b505260b79 100644
---- a/tests/tcg/m68k/Makefile.target
-+++ b/tests/tcg/m68k/Makefile.target
-@@ -4,4 +4,6 @@
- #
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index b5bbeedb7a..e8dd75d242 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -440,6 +440,27 @@ typedef enum {
+ #define FPSR_QT_MASK  0x00ff0000
+ #define FPSR_QT_SHIFT 16
  
- VPATH += $(SRC_PATH)/tests/tcg/m68k
--TESTS += trap denormal
-+TESTS += trap denormal packeddecimal-1 packeddecimal-2
++/* Exception Status Byte */
 +
-+run-packeddecimal-%: QEMU_OPTS += -cpu m68020
++#define FPSR_EXC_MASK     0xff00
++#define FPSR_EXC_INEX1    0x0100
++#define FPSR_EXC_INEX2    0x0200
++#define FPSR_EXC_DZ       0x0400
++#define FPSR_EXC_UNFL     0x0800
++#define FPSR_EXC_OVFL     0x1000
++#define FPSR_EXC_OPERR    0x2000
++#define FPSR_EXC_SNAN     0x4000
++#define FPSR_EXC_BSUN     0x8000
++
++/* Accrued Exception Byte */
++
++#define FPSR_AEXC_MASK    0xf8
++#define FPSR_AEXC_INEX    0x08
++#define FPSR_AEXP_DZ      0x10
++#define FPSR_AEXP_UNFL    0x20
++#define FPSR_AEXP_OVFL    0x40
++#define FPSR_AEXP_IOP     0x80
++
+ /* Floating-Point Control Register */
+ /* Rounding mode */
+ #define FPCR_RND_MASK   0x0030
+diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
+index 8314791f50..c6d93b56a0 100644
+--- a/target/m68k/fpu_helper.c
++++ b/target/m68k/fpu_helper.c
+@@ -170,19 +170,19 @@ static int cpu_m68k_exceptbits_from_host(int host_bits)
+     int target_bits = 0;
+ 
+     if (host_bits & float_flag_invalid) {
+-        target_bits |= 0x80;
++        target_bits |= FPSR_AEXP_IOP;
+     }
+     if (host_bits & float_flag_overflow) {
+-        target_bits |= 0x40;
++        target_bits |= FPSR_AEXP_OVFL;
+     }
+     if (host_bits & (float_flag_underflow | float_flag_output_denormal)) {
+-        target_bits |= 0x20;
++        target_bits |= FPSR_AEXP_UNFL;
+     }
+     if (host_bits & float_flag_divbyzero) {
+-        target_bits |= 0x10;
++        target_bits |= FPSR_AEXP_DZ;
+     }
+     if (host_bits & float_flag_inexact) {
+-        target_bits |= 0x08;
++        target_bits |= FPSR_AEXC_INEX;
+     }
+     return target_bits;
+ }
+@@ -192,19 +192,19 @@ static int cpu_m68k_exceptbits_to_host(int target_bits)
+ {
+     int host_bits = 0;
+ 
+-    if (target_bits & 0x80) {
++    if (target_bits & FPSR_AEXP_IOP) {
+         host_bits |= float_flag_invalid;
+     }
+-    if (target_bits & 0x40) {
++    if (target_bits & FPSR_AEXP_OVFL) {
+         host_bits |= float_flag_overflow;
+     }
+-    if (target_bits & 0x20) {
++    if (target_bits & FPSR_AEXP_UNFL) {
+         host_bits |= float_flag_underflow;
+     }
+-    if (target_bits & 0x10) {
++    if (target_bits & FPSR_AEXP_DZ) {
+         host_bits |= float_flag_divbyzero;
+     }
+-    if (target_bits & 0x08) {
++    if (target_bits & FPSR_AEXC_INEX) {
+         host_bits |= float_flag_inexact;
+     }
+     return host_bits;
+@@ -214,7 +214,7 @@ uint32_t cpu_m68k_get_fpsr(CPUM68KState *env)
+ {
+     int host_flags = get_float_exception_flags(&env->fp_status);
+     int target_flags = cpu_m68k_exceptbits_from_host(host_flags);
+-    int except = (env->fpsr & ~(0xf8)) | target_flags;
++    int except = (env->fpsr & ~FPSR_AEXC_MASK) | target_flags;
+     return except;
+ }
+ 
 -- 
 2.43.0
 
