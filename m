@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2174ECE577
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 16:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B80AECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 16:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snh7z-0003zP-LD; Mon, 09 Sep 2024 12:20:35 -0400
+	id 1snhA7-00024o-Ff; Mon, 09 Sep 2024 12:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snh7w-0003qC-H0
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:20:32 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1snhA5-00022j-F4
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:22:45 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snh7v-0007U3-0i
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:20:32 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c26311c6f0so5459394a12.3
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 09:20:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1snhA3-0007fk-4R
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 12:22:44 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-718a3b8a2dcso2546793b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 09:22:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725898829; x=1726503629; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=B/BwuFHMJKNeqTcLpLg2oMdWzrcYxK83zX3fMgRJ3M0=;
- b=E4qVYnTr9zYZ9y06sVbkbfD9k/DbTgBOPPE03mpZzemFZEt5tLjYvHr9t5Ut+x+5jk
- n/9W+ceUGVL33U9MJd26qlsjrFwMZK6uFESAJp0mdUvWiy6b5UdbAVmp9wLwBoKdRILl
- x5CiQgCwqpHDsaJuLON9IcsqmdvVpPPTH5eNJSeGMAyaCOgS/PHbX5tjxvQ7ulMC2Fa2
- 2SaqrEMDKWXf9csBwqHDc8X6UIgK7EkRCoYpVpsrqiV5cbZOVvcMz2rPWIIe3r7DTuYc
- GZDxxHJ/r9Aw2TP8k1KAZ9j9yp667WKb2eb/peDFxp2jFlRaqXVNVfd0xrbgcyLE953K
- kYDg==
+ d=linaro.org; s=google; t=1725898961; x=1726503761; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lOQChnUkVXUAx+y325Z3070TgSIayRy3/U0PP6+k2eQ=;
+ b=QVYeO3FIIRQoxu3ylzAJF1i6s5asbRJRZTTY5UBRiS34gZct3XhOWowwlb+wsZ46Or
+ 88h7++ZCVKTEHYY7nc8Do564A8g8n79u7NCegQLu4ojPuaXMK9K/W7CY7vOB0QHiwBTM
+ E6YJ/pSs6HS3ZqbP6NXt3xmBWfFWy2muhirWclzVnwweHTH/RUdhYtJYIcAfMIzu7IJC
+ Zb8r9FITO6uNlhne1umCfX0MvKun1mmqrMsv8rFJiLx4jYURgDuTGTkBJ4dGqCqOsLvT
+ UcJctbk6MXpbklQU6lHRoecsn81REFJbPrK88UH5MQ8ptBwJqlY6ihrf0dL5BhUhRCvq
+ e3Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725898829; x=1726503629;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1725898961; x=1726503761;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=B/BwuFHMJKNeqTcLpLg2oMdWzrcYxK83zX3fMgRJ3M0=;
- b=fvvp4QKR9DtvYkf0YJrH7tCiwTGNkH2OWg/9dVPpQa16a5TwiCe7ydQ2bGn2psp6SU
- xbNKqvJj1xGGeIQkNq1dzkFt92iljEV/6jeBz0BgfHF/TV57vgM6Qa5TuaBi/5h6WO+x
- I45F+qsph8UE4UoVKNqQ/v0Zp5jo/WjAZMI5FV4iKBHvWhs0A/NSy3HF0jZFdFiyfqzY
- IydgMF8QwluB7A5ZNJMwavn7Bk3j8Nl/lElj5BuOx7jb+hvUNy7Szjb7xrdwvVLMqmIu
- akNEMi9pci63OFJUTbND746plN+0GMAC55qQv+FaiMdQdqhqnDuUWajRMDJ0shMdyUvj
- t01g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBEPtsf4qqDPHmgaChBcnCXu/IbH+wZ2qOYsn6SXynet4sMYM/IiXM//LU97tQwIl6ShVBi1Vr0l3U@nongnu.org
-X-Gm-Message-State: AOJu0YxGA2N4OMH7J3qZQmCUvTIYTygidHfBTL7aalhm+Q6fjgID5tTN
- T9VSqNrRQngCSprsGabrDD0C2F1TpY3lIrKqJ3Dzc3Y6DQDshyDilEgzvkIiq9fRSkosX6VucKQ
- FMgddhmw21VchCeKQxVmDEm3bhV5rk8g9rp87Yw==
-X-Google-Smtp-Source: AGHT+IFc2in0twyejbqn9agpJ1y/Cb2+Jv/QTkGJEAf8iN+DwCCDRwF6lmDQ+rdGG5Dv3BwXevTJjoZno0D71RWfLFo=
-X-Received: by 2002:a05:6402:2110:b0:5c2:2b1d:31e6 with SMTP id
- 4fb4d7f45d1cf-5c3dc7c3e8emr7821139a12.29.1725898829174; Mon, 09 Sep 2024
- 09:20:29 -0700 (PDT)
+ bh=lOQChnUkVXUAx+y325Z3070TgSIayRy3/U0PP6+k2eQ=;
+ b=ufu+UcFT4UeBZohYr0joMsHkR59t0iwp/d4DbnN0KYIRhCAFjsFDqteRyJE3CYHKgi
+ rw74MNeOaqBndGO5HW8MBCn8YRCAzdcH+0GXMJAM95leQwHz9PQK9rv71+IhQtdCc8QN
+ btzGH+KTDB/ukU1BfxS3AU4kdWxVmQh5e/hC37hxmpo4P8kGP72hLWKGktsZSwmFCx4U
+ GvnYI61v1pH29tA0os1WeR5syaKd3UdjiLyaey35XczVKrQ0VQT4GKkKRLxlXvlN84Wx
+ ycJKVxzTmPIAuD2QsJueFqrqFnhhZS62T47d9tUDQKElLHcUZtlk5zxBz/m2m2iZrpJw
+ g+Vg==
+X-Gm-Message-State: AOJu0YwN2c/B3iJ6NNL08hN36bGfKbDd/9JMtiDVXx3ZKp6jJwCyIiND
+ a0gtDuVgEjto8ENAccTkUpr63dzVUp4d8EMvhql0oiIgXV0/9WzecWfJuVrz32EGwSA8GeyWC5+
+ w
+X-Google-Smtp-Source: AGHT+IGKLn+aVxxq5Rs1EG/tEqxIEn8arKX1qv6lIyzOzPZvLJT0nXIDVaZbyzMB/vu2MCuN7k1pBA==
+X-Received: by 2002:a05:6a20:43a0:b0:1cf:36dd:32e5 with SMTP id
+ adf61e73a8af0-1cf36dd3526mr4864704637.15.1725898961310; 
+ Mon, 09 Sep 2024 09:22:41 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20710f35d79sm35753305ad.288.2024.09.09.09.22.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Sep 2024 09:22:40 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v2 00/29] target/arm: AdvSIMD decodetree conversion, part 4
+Date: Mon,  9 Sep 2024 09:22:10 -0700
+Message-ID: <20240909162240.647173-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20240908071600.430410-1-mjt@tls.msk.ru>
- <08b5c803-cfcc-49bd-910b-61934fa2d1e6@linaro.org>
- <096e96cc-d126-4f71-a05f-eaef1f8f4a4f@tls.msk.ru>
- <95b74368-8e3b-43a2-8185-e95ae89c9f6c@linaro.org>
-In-Reply-To: <95b74368-8e3b-43a2-8185-e95ae89c9f6c@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Sep 2024 17:20:17 +0100
-Message-ID: <CAFEAcA9cPxhM1b-3oEX9Mt8nNDpkV0tOuewEhFd3h4PpFPt7rQ@mail.gmail.com>
-Subject: Re: [PATCH trvivial] linux-user/syscall.c: replace function pointers
- for flock64 fcntl with macros
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,31 +91,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Sept 2024 at 17:19, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 9/8/24 22:26, Michael Tokarev wrote:
-> >> Why do you think this is an improvement?
-> >
-> > It just feels more natural, so to say.
-> >
-> >> What was wrong with the function pointers?
-> >
-> > Not exactly wrong.  It just hurts my eyes when I see an address
-> > is taken of a function marked `inline`
->
-> I'm certainly happy to fix that!
->
-> > (though I understand well
-> > this keyword is just a hint and the compiler is free to omit
-> > inlining).  Also the typedefs are a bit ugly.
->
-> I think the macro is uglier than the typedef.
+First post-9.1 queue flush.
 
-This was my opinion also. Plus the compiler generates
-reasonable code with our current source, and the
-code path isn't a hot one.
+r~
 
-thanks
--- PMM
+Richard Henderson (29):
+  target/arm: Replace tcg_gen_dupi_vec with constants in gengvec.c
+  target/arm: Replace tcg_gen_dupi_vec with constants in translate-sve.c
+  target/arm: Use cmpsel in gen_ushl_vec
+  target/arm: Use cmpsel in gen_sshl_vec
+  target/arm: Use tcg_gen_extract2_i64 for EXT
+  target/arm: Convert EXT to decodetree
+  target/arm: Convert TBL, TBX to decodetree
+  target/arm: Convert UZP, TRN, ZIP to decodetree
+  target/arm: Simplify do_reduction_op
+  target/arm: Convert ADDV, *ADDLV, *MAXV, *MINV to decodetree
+  target/arm: Convert FMAXNMV, FMINNMV, FMAXV, FMINV to decodetree
+  target/arm: Convert FMOVI (scalar, immediate) to decodetree
+  target/arm: Convert MOVI, FMOV, ORR, BIC (vector immediate) to
+    decodetree
+  target/arm: Introduce gen_gvec_sshr, gen_gvec_ushr
+  target/arm: Fix whitespace near gen_srshr64_i64
+  target/arm: Convert handle_vec_simd_shri to decodetree
+  target/arm: Convert handle_vec_simd_shli to decodetree
+  target/arm: Use {,s}extract in handle_vec_simd_wshli
+  target/arm: Convert SSHLL, USHLL to decodetree
+  target/arm: Push tcg_rnd into handle_shri_with_rndacc
+  target/arm: Split out subroutines of handle_shri_with_rndacc
+  target/arm: Convert SHRN, RSHRN to decodetree
+  target/arm: Convert handle_scalar_simd_shri to decodetree
+  target/arm: Convert handle_scalar_simd_shli to decodetree
+  target/arm: Convert VQSHL, VQSHLU to gvec
+  target/arm: Widen NeonGenNarrowEnvFn return to 64 bits
+  target/arm: Convert SQSHL, UQSHL, SQSHLU (immediate) to decodetree
+  target/arm: Convert vector [US]QSHRN, [US]QRSHRN, SQSHRUN to
+    decodetree
+  target/arm: Convert scalar [US]QSHRN, [US]QRSHRN, SQSHRUN to
+    decodetree
+
+ target/arm/helper.h             |   34 +-
+ target/arm/tcg/translate.h      |   14 +-
+ target/arm/tcg/gengvec.c        |  121 +-
+ target/arm/tcg/neon_helper.c    |   55 +-
+ target/arm/tcg/translate-a64.c  | 2081 +++++++++++++------------------
+ target/arm/tcg/translate-neon.c |  179 +--
+ target/arm/tcg/translate-sve.c  |  128 +-
+ target/arm/tcg/a64.decode       |  257 ++++
+ target/arm/tcg/neon-dp.decode   |    6 +-
+ 9 files changed, 1377 insertions(+), 1498 deletions(-)
+
+-- 
+2.43.0
+
 
