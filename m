@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B66D7ECE579
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 12:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FDCECE579
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Sep 2024 13:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sndt1-0007RB-9k; Mon, 09 Sep 2024 08:52:55 -0400
+	id 1sneCh-000108-VF; Mon, 09 Sep 2024 09:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sndsy-0007Q7-JW
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 08:52:52 -0400
+ id 1sneCe-0000za-5r
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:13:12 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sndsw-0002XR-04
- for qemu-devel@nongnu.org; Mon, 09 Sep 2024 08:52:52 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sneCa-0004xS-B4
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 09:13:11 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Cxyumb795m59QCAA--.6475S3;
- Mon, 09 Sep 2024 20:52:44 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxPute9N5m8tcCAA--.7278S3;
+ Mon, 09 Sep 2024 21:13:02 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front2 (Coremail) with SMTP id qciowMBxe8aY795meoMCAA--.11615S3;
- Mon, 09 Sep 2024 20:52:40 +0800 (CST)
-Subject: Re: [PATCH] hw/loongarch: Add acpi SPCR table support
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- "Jason A . Donenfeld" <Jason@zx2c4.com>
-References: <20240907073037.243353-1-maobibo@loongson.cn>
+ by front2 (Coremail) with SMTP id qciowMDx_OVc9N5mmoYCAA--.11830S3;
+ Mon, 09 Sep 2024 21:13:01 +0800 (CST)
+Subject: Re: [PATCH v4 2/2] target/loongarch: Implement lbt registers
+ save/restore function
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <08e4eacd-bc37-13a7-e5db-a41168f02af0@loongson.cn>
-Date: Mon, 9 Sep 2024 20:53:12 +0800
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Huacai Chen <chenhuacai@kernel.org>, qemu-devel@nongnu.org
+References: <20240904061859.86615-1-maobibo@loongson.cn>
+ <20240904061859.86615-3-maobibo@loongson.cn>
+ <c14c8927-bb9b-9c3f-dca7-c86f79e73770@loongson.cn>
+Message-ID: <7ddb45a0-e685-2af0-749a-821cc08f22e8@loongson.cn>
+Date: Mon, 9 Sep 2024 21:13:33 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20240907073037.243353-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
+In-Reply-To: <c14c8927-bb9b-9c3f-dca7-c86f79e73770@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qciowMBxe8aY795meoMCAA--.11615S3
+X-CM-TRANSID: qciowMDx_OVc9N5mmoYCAA--.11830S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJw1DWryDKrWUGF4kCF4rJFc_yoW5XryUpF
- W8GF98tr4aqryfJ3ZxJF1jvF1rJr48Gayaqwn7t3yvgan0gryvqr4xt39Iya4DAw1kJrWx
- ZF1qyryI9a18AwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU1Ek
- sDUUUUU==
+X-Coremail-Antispam: 1Uk129KBj9xXoWruw1DAryDJr18WFW3Kr1ktFc_yoWDWrcEya
+ 4IkrykWr1UWa18GFyYv3y5Ja45Ja18t3Z0vFWDXr48Kry8XrZ8Gws0q3Z5Z3W0gr48Arn8
+ AFnaqr1fAr13KosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JV
+ WxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUrNtx
+ DUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-3.396, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.396,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,81 +83,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-�� 2024/9/7 ����3:30, Bibo Mao д��:
-> Serial port console redirection table can be used for default serial
-> port selection, like chosen stdout-path selection with FDT method.
+在 2024/9/9 下午7:52, gaosong 写道:
 >
-> With acpi SPCR table added, early debug console can be parsed from
-> SPCR table with simple kernel parameter earlycon rather than
-> earlycon=uart,mmio,0x1fe001e0
 >
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   hw/loongarch/acpi-build.c | 40 +++++++++++++++++++++++++++++++++++++++
->   1 file changed, 40 insertions(+)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+> 在 2024/9/4 下午2:18, Bibo Mao 写道:
+>> Six registers scr0 - scr3, eflags and ftop are added in percpu vmstate.
+>> And two functions kvm_loongarch_get_lbt/kvm_loongarch_put_lbt are added
+>> to save/restore lbt registers.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   target/loongarch/cpu.h     | 12 ++++++++
+>>   target/loongarch/kvm/kvm.c | 60 ++++++++++++++++++++++++++++++++++++++
+>>   target/loongarch/machine.c | 24 +++++++++++++++
+>>   3 files changed, 96 insertions(+)
+>>
+>
+> Reviewed-by: Song Gao <gaosong@loongson.cn>
+>
+> Thanks
+> Song Gao
+Hi,  this patch need rebase.
 
-Thanks
-Song Gao
-> diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-> index 2638f87434..3912c8d307 100644
-> --- a/hw/loongarch/acpi-build.c
-> +++ b/hw/loongarch/acpi-build.c
-> @@ -241,6 +241,44 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
->       acpi_table_end(linker, &table);
->   }
->   
-> +/*
-> + * Serial Port Console Redirection Table (SPCR)
-> + * https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
-> + */
-> +static void
-> +spcr_setup(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-> +{
-> +    LoongArchVirtMachineState *lvms;
-> +    AcpiSpcrData serial = {
-> +        .interface_type = 0,       /* 16550 compatible */
-> +        .base_addr.id = AML_AS_SYSTEM_MEMORY,
-> +        .base_addr.width = 32,
-> +        .base_addr.offset = 0,
-> +        .base_addr.size = 1,
-> +        .base_addr.addr = VIRT_UART_BASE,
-> +        .interrupt_type = 0,       /* Interrupt not supported */
-> +        .pc_interrupt = 0,
-> +        .interrupt = VIRT_UART_IRQ,
-> +        .baud_rate = 7,            /* 115200 */
-> +        .parity = 0,
-> +        .stop_bits = 1,
-> +        .flow_control = 0,
-> +        .terminal_type = 3,        /* ANSI */
-> +        .language = 0,             /* Language */
-> +        .pci_device_id = 0xffff,   /* not a PCI device*/
-> +        .pci_vendor_id = 0xffff,   /* not a PCI device*/
-> +        .pci_bus = 0,
-> +        .pci_device = 0,
-> +        .pci_function = 0,
-> +        .pci_flags = 0,
-> +        .pci_segment = 0,
-> +    };
-> +
-> +    lvms = LOONGARCH_VIRT_MACHINE(machine);
-> +    build_spcr(table_data, linker, &serial, 2, lvms->oem_id,
-> +               lvms->oem_table_id);
-> +}
-> +
->   typedef
->   struct AcpiBuildState {
->       /* Copy of table in RAM (for patching). */
-> @@ -477,6 +515,8 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
->   
->       acpi_add_table(table_offsets, tables_blob);
->       build_srat(tables_blob, tables->linker, machine);
-> +    acpi_add_table(table_offsets, tables_blob);
-> +    spcr_setup(tables_blob, tables->linker, machine);
->   
->       if (machine->numa_state->num_nodes) {
->           if (machine->numa_state->have_numa_distance) {
->
-> base-commit: 7b87a25f49a301d3377f3e71e0b4a62540c6f6e4
+Applying: target/loongarch: Implement lbt registers save/restore function
+error: sha1 information is lacking or useless (target/loongarch/kvm/kvm.c).
+error: could not build fake ancestor
+Patch failed at 0001 target/loongarch: Implement lbt registers 
+save/restore function
+
+
+Thanks.
+Song Gao.
 
 
