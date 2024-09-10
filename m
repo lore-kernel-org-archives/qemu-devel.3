@@ -4,81 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D794EE01E9
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 21:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2736EE01EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 21:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so8WO-0004a8-CM; Tue, 10 Sep 2024 17:35:36 -0400
+	id 1so8Wn-0006HX-Aq; Tue, 10 Sep 2024 17:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1so8WM-0004Up-Sl
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 17:35:34 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1so8Wl-00069r-BG
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 17:35:59 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1so8WK-00036f-M0
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 17:35:34 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-7cd967d8234so3909889a12.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 14:35:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1726004130; x=1726608930;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jGi+lHOpgT/ylVqXhI7nLVR4vBTcqPZgS5ONhF4/Ujg=;
- b=mihkPUVoON3Ukrq8Sq4iPZ0yUfolex073zfbr65yO7UDnknSxrYSgYf+M0eVjmEVAE
- Srg0ZZBcTKKdeFDXs6j9mInAFeanhzN/sJnuJMyfu4IepjjuBnKKiLXYPsWsvULxHK0q
- T+pucaIrRLbP7l3zjUErUN6jByLXpl0d6305ViP3gBiUP7WF9nrckxuW9Ie6ezAkCLd9
- hExuIT4cAv5BTDUTdR50IFpay8razKVtFkD3gKAhHuIBVeGc/ZLIJyqX9V8hyKwWdukR
- N+j+bWgYI9/VQio+a1AgVe3GdiBI76SItQHMmao6Z2qr4e1+AB20UJDl4HhG5YzHC33a
- p6vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726004130; x=1726608930;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jGi+lHOpgT/ylVqXhI7nLVR4vBTcqPZgS5ONhF4/Ujg=;
- b=OiD4sE8FAbC7pL3L+2dzuuXEO5ja/TqJ4OkwG46nzvTu7RVIVwVscriom4fhGpczkV
- cbPnJkQK7Zi4Z2l0lnNjkRQKfio91bN4uAQN5NP0vlFKd2FRiDYHq+8X7gq6tZ/KT9zi
- yB/Jh0LzkVNOxElUaitoPTUrvasgZhtzlJxmOxfBG9pM6j9jJRwXCF8BWohNq1f6f1i9
- lONybrdcOGM+e9sP1Q2X2jd95h9h8ygT8K9a40M2I/HqTvWf5Uer4yIvbDM5L8oLHme9
- kr2vjk+siU9He4LUSpK6T0NwW2BEnalSUeeWeWtRv5GA3YWSivqp5CNlHyZb5qp2vmui
- oYIQ==
-X-Gm-Message-State: AOJu0YzgVNT72X0hJv+tb01Mc4vS1Te2mnyBFVHkMbcro2WSkO6VLrv0
- 0OJ6JRsJzuD2rsuF/ZM6XT9TSox2OdbyLlQ6bo3a1b4xHCLvzqDt+Zm00d3kT1kjkGj7jV7iGV5
- v
-X-Google-Smtp-Source: AGHT+IGBNqA3K7WJPDRSXFKY8dE+GL3RpCg80n+V9lRoTbwDgNeEEQdzIiqziqFVG5wf+YgtL1CXmw==
-X-Received: by 2002:a05:6a20:c888:b0:1cf:122b:37d1 with SMTP id
- adf61e73a8af0-1cf5e114436mr3384247637.30.1726004130293; 
- Tue, 10 Sep 2024 14:35:30 -0700 (PDT)
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-719090b029csm1842451b3a.173.2024.09.10.14.35.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 14:35:29 -0700 (PDT)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH] softmmu: Expand comments describing max_bounce_buffer_size
-Date: Tue, 10 Sep 2024 14:35:12 -0700
-Message-Id: <20240910213512.843130-1-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1so8Wj-00038N-05
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 17:35:58 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 935C621A2F;
+ Tue, 10 Sep 2024 21:35:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726004153; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WPeI3SYpj/tSmfnq6FL5AzpFXymNjk2cUudiISFxXYg=;
+ b=xOo65f4/dNJCx45mM5/Re+45/TJAozXC6odyeeeQaiGzrJW34UPd4ZmRja1EBkIMbbyP/0
+ ZbG7F+QcxOb6KoTAZB38JrxRZiQdHc3hHW1+PcbSnDO8UY/8cV19TExZ+LxUX9YVbebtOJ
+ boobXOeaH1BHyQT+9lhVlxAI14lMcrY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726004153;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WPeI3SYpj/tSmfnq6FL5AzpFXymNjk2cUudiISFxXYg=;
+ b=bnAH7K/2iKg97v5nN2tLt82UGS0S+JwU79b8dRGPVxeJN2oFHY9MI0oBNcUwfNdE2qkGdS
+ 0xRP36Rp5+EkRuCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="xOo65f4/";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="bnAH7K/2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726004153; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WPeI3SYpj/tSmfnq6FL5AzpFXymNjk2cUudiISFxXYg=;
+ b=xOo65f4/dNJCx45mM5/Re+45/TJAozXC6odyeeeQaiGzrJW34UPd4ZmRja1EBkIMbbyP/0
+ ZbG7F+QcxOb6KoTAZB38JrxRZiQdHc3hHW1+PcbSnDO8UY/8cV19TExZ+LxUX9YVbebtOJ
+ boobXOeaH1BHyQT+9lhVlxAI14lMcrY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726004153;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WPeI3SYpj/tSmfnq6FL5AzpFXymNjk2cUudiISFxXYg=;
+ b=bnAH7K/2iKg97v5nN2tLt82UGS0S+JwU79b8dRGPVxeJN2oFHY9MI0oBNcUwfNdE2qkGdS
+ 0xRP36Rp5+EkRuCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 042CD13A3A;
+ Tue, 10 Sep 2024 21:35:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qBmwLLi74GaVLAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 10 Sep 2024 21:35:52 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>, Yichen Wang
+ <yichen.wang@bytedance.com>, Bryan Zhang <bryan.zhang@bytedance.com>, Hao
+ Xiang <hao.xiang@linux.dev>, Yuan Liu <yuan1.liu@intel.com>
+Subject: Re: [PATCH] migration/multifd: Fix build for qatzip
+In-Reply-To: <20240910210450.3835123-1-peterx@redhat.com>
+References: <20240910210450.3835123-1-peterx@redhat.com>
+Date: Tue, 10 Sep 2024 18:35:50 -0300
+Message-ID: <87v7z3qjih.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=mnissler@rivosinc.com; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 935C621A2F
+X-Spamd-Result: default: False [-6.50 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[8];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,53 +128,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clarify how the parameter gets configured and how it is used when
-servicing DMA mapping requests targeting indirect memory regions.
+Peter Xu <peterx@redhat.com> writes:
 
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
----
- include/exec/memory.h       | 9 ++++++++-
- include/hw/pci/pci_device.h | 6 +++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
+> The qatzip series was based on an older commit, it applied cleanly even
+> though it has conflicts.  Neither CI nor myself found the build will break
+> as it's skipped by default when qatzip library was missing.
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index e5e865d1a9..9458e2801d 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1104,7 +1104,14 @@ struct AddressSpace {
-     QTAILQ_HEAD(, MemoryListener) listeners;
-     QTAILQ_ENTRY(AddressSpace) address_spaces_link;
- 
--    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    /*
-+     * Maximum DMA bounce buffer size used for indirect memory map requests.
-+     * This limits the total size of bounce buffer allocations made for
-+     * DMA requests to indirect memory regions within this AddressSpace. DMA
-+     * requests that exceed the limit (e.g. due to overly large requested size
-+     * or concurrent DMA requests having claimed too much buffer space) will be
-+     * rejected and left to the caller to handle.
-+     */
-     size_t max_bounce_buffer_size;
-     /* Total size of bounce buffers currently allocated, atomically accessed */
-     size_t bounce_buffer_size;
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 91df40f989..8eaf0d58bb 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -168,7 +168,11 @@ struct PCIDevice {
-     char *failover_pair_id;
-     uint32_t acpi_index;
- 
--    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    /*
-+     * Indirect DMA region bounce buffer size as configured for the device. This
-+     * is a configuration parameter that is reflected into bus_master_as when
-+     * realizing the device.
-+     */
-     uint32_t max_bounce_buffer_size;
- };
- 
--- 
-2.34.1
+It took longer than I expected.
 
+Do you think it would work if we wrapped all calls to external functions
+in a header and stubbed them out when there's no accelerator support?
 
