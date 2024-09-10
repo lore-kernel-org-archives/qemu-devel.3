@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE805EE01EB
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA07EE01EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so9Ak-0002of-13; Tue, 10 Sep 2024 18:17:18 -0400
+	id 1so9AS-00018B-RM; Tue, 10 Sep 2024 18:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so9AB-0008Cl-Qc
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:45 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1so99r-0006mn-HP
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:24 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so9A8-0006eB-Aw
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:43 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-717914d6c95so3988211b3a.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:16:39 -0700 (PDT)
+ id 1so99o-0006U2-GH
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:23 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7191901abd6so124458b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:16:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726006599; x=1726611399; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726006578; x=1726611378; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5e7jM2SGiugZIDj7hvcHvckpF7J0ao6gx5zsDNU5OmE=;
- b=wduGhNEUW654bI5J5WjytgxOJ/DUmkzd1a4bCa6xp5jIMaPPS8DwZ+5ytCc1YCeifk
- SMZjcVeENF3XDQZRjYoZpkeRZ2w3cZKwzn7ugVLPq3l5u2eC07t9hYVnIJ1ikHhzGQPF
- lZVUVydpCFasXRtu4BCzVDLZeAgwXAHoEFsNzgsbSbPxfX1qLwwOnrYEuTWJwoe5u6Zc
- lvH70jsqI9CECxc7udypkPjn/gxZbIGs6iYwATxXds8WG+GTfYL8tq3CAULQzs2tkExB
- olF3LCQWTNQkzWIxTbPOBp5DZyvgu99bTjcqbWHCo11De2GcKRy3Nf+zcnv44AKvBc1K
- cJeA==
+ bh=rtg/fsM266byh2SMTyHSqLuDJEbiLWNPpLD5jMD37ko=;
+ b=vU7HUxHRd07I/fSccd80dgOMFcFUKJ19JMOlQ2Jo/ioNpUR9UF1ADDHHshr35NANir
+ mG6C/Nb1Q1UW/RzsG+7Z+usBFxYtBMbAC8KeouomsQ+iF6FhyRkC677zvsoOfPLFLFU4
+ NXJt+r8CNXR5lesVMreKRrXl+u0ZrLFLo2nYotIlBFoksqXkidLocsFpRGhA97dBmp4O
+ xgLPjV7uO59ZrYh9UKEga9CcDYpNt2Zyl4dHjBXvSV+TuNoVOz3uyVtRtRLpw3dwBxtz
+ hKEXRisAlyT6OEbhw33zVk8i+3VVZVAWg0jcfQQYRWeVQxslcv6TBe2RRdAw1b635zDO
+ NWyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726006599; x=1726611399;
+ d=1e100.net; s=20230601; t=1726006578; x=1726611378;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5e7jM2SGiugZIDj7hvcHvckpF7J0ao6gx5zsDNU5OmE=;
- b=VkOG6hH+9q+5h/kj+aFNWvxkj+J57jpKgUmK/uVzN9jckivHlx5qW1PRtBiG5lo4JT
- R6/cVthPhEWMszw6JwckX2fPO5hglooZvcP8YKMRxMYkJ968sxWNAlRfEh/y9ER+D/xn
- v6qZEthK9dRQYEwA9Gbz8Wuo8Vv1jKLjkO/h2sc2Z+MQZtX6RM2yhc10t2tv9I7iwrIu
- EqRQ6u2l9ChSbMHKYCJPG39qXbEcXAI94jVZT5/Hznu2BZIs/6o0pMa6P32lbsTfU0YE
- rSqjTWhHFWcrXCMlgAdBWw/WQz0AauN0/FqZ38oxKWl4eVb3Q6nWj4krKVuJ//m9Uhv4
- i6GA==
-X-Gm-Message-State: AOJu0YxRoNQVwAyuHI3EmJM83M6zaFdxnZ+oiRI6ScvbiC0BTEgpDTOL
- UYEvdvmurIsuM3cIEzwI+6s9qfxoWXpeHTjx4GVR24hTcoB5Pkf5s6clKhFDQd6g4ARKNJ+CkMG
- ADiFuSeTe
-X-Google-Smtp-Source: AGHT+IGmTWAlHqohfvDcmF4lhCn4e0s9xwSiGMy/9LUB1RgrtDOx1fMalziLV42CXKlDan+123/d1Q==
-X-Received: by 2002:a05:6a20:289e:b0:1cf:4348:d5c8 with SMTP id
- adf61e73a8af0-1cf5e157922mr2270616637.39.1726006598631; 
- Tue, 10 Sep 2024 15:16:38 -0700 (PDT)
+ bh=rtg/fsM266byh2SMTyHSqLuDJEbiLWNPpLD5jMD37ko=;
+ b=SShY7FywicdMtKYHYfgqoubT/XAA8YDOU1g/THKwEJLiZtIXMh27xY1w6xB/DuA6XB
+ /PE2wPy2W1G7bq9cHJFfXVec+5rBnY9HdThC7yFxdfc2ETR2TgthS04LsVBJdRWVGHQO
+ c5thRsqZFzyDZcxmt5dhvTpz3lzKTKR7dIkfH2CaPKKAN1lF3GQ1J0k0sSa8nMSYyStB
+ NOnezznwRXV/KjptxXl84FIfkmcI2xg5O+dGmhjKh0mELK37ExNAiJen2UODoJLnGPVN
+ 53wQ5uU7m2f+hkBLSQj7p0PY15LvpZLstPpc3CCirpSrPDGzOUZeMIyC6YijuLUAyZk4
+ JojA==
+X-Gm-Message-State: AOJu0YyG3tyS9lmOFgwsQnlhr0nSBBTRWanOVDVYhyuQHrKIE4+zrw72
+ 45VGDlKAudEBbXY7mIWrIEus4blZni2pGl9tphv+W8KvtGMWDdlyPHzBUmAH4CwZw7RhNAl0dNk
+ l7HXQCxrU
+X-Google-Smtp-Source: AGHT+IHWOSynm87dcJ/e3spTuAWJklvasOkQ7Uz80yLy824x7t0cXJiqR3CMOljYmSMNtVZtD8XWTA==
+X-Received: by 2002:a05:6a21:b8b:b0:1cf:51a1:8e89 with SMTP id
+ adf61e73a8af0-1cf5e1c5ef2mr2725772637.47.1726006578083; 
+ Tue, 10 Sep 2024 15:16:18 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.16.36
+ d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.16.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 15:16:38 -0700 (PDT)
+ Tue, 10 Sep 2024 15:16:17 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
@@ -105,17 +105,16 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Jason Wang <jasowang@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 12/39] tests/qtest: replace assert(0) with
- g_assert_not_reached()
-Date: Tue, 10 Sep 2024 15:15:39 -0700
-Message-Id: <20240910221606.1817478-13-pierrick.bouvier@linaro.org>
+Subject: [PATCH 03/39] hw/arm: replace assert(0) with g_assert_not_reached()
+Date: Tue, 10 Sep 2024 15:15:30 -0700
+Message-Id: <20240910221606.1817478-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,59 +139,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/qtest/ipmi-bt-test.c  | 2 +-
- tests/qtest/ipmi-kcs-test.c | 4 ++--
- tests/qtest/rtl8139-test.c  | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ hw/arm/highbank.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qtest/ipmi-bt-test.c b/tests/qtest/ipmi-bt-test.c
-index 383239bcd48..13f7c841f59 100644
---- a/tests/qtest/ipmi-bt-test.c
-+++ b/tests/qtest/ipmi-bt-test.c
-@@ -251,7 +251,7 @@ static void emu_msg_handler(void)
-         msg[msg_len++] = 0xa0;
-         write_emu_msg(msg, msg_len);
-     } else {
--        g_assert(0);
-+        g_assert_not_reached();
-     }
- }
- 
-diff --git a/tests/qtest/ipmi-kcs-test.c b/tests/qtest/ipmi-kcs-test.c
-index afc24dd3e46..3186c6ad64b 100644
---- a/tests/qtest/ipmi-kcs-test.c
-+++ b/tests/qtest/ipmi-kcs-test.c
-@@ -145,7 +145,7 @@ static void kcs_cmd(uint8_t *cmd, unsigned int cmd_len,
+diff --git a/hw/arm/highbank.c b/hw/arm/highbank.c
+index c71b1a8db32..72c4cbff39d 100644
+--- a/hw/arm/highbank.c
++++ b/hw/arm/highbank.c
+@@ -199,7 +199,7 @@ static void calxeda_init(MachineState *machine, enum cxmachines machine_id)
+         machine->cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
          break;
- 
      default:
--        g_assert(0);
-+        g_assert_not_reached();
-     }
-     *rsp_len = j;
- }
-@@ -184,7 +184,7 @@ static void kcs_abort(uint8_t *cmd, unsigned int cmd_len,
-         break;
- 
-     default:
--        g_assert(0);
+-        assert(0);
 +        g_assert_not_reached();
      }
  
-     /* Start the abort here */
-diff --git a/tests/qtest/rtl8139-test.c b/tests/qtest/rtl8139-test.c
-index eedf90f65af..55f671f2f59 100644
---- a/tests/qtest/rtl8139-test.c
-+++ b/tests/qtest/rtl8139-test.c
-@@ -65,7 +65,7 @@ PORT(IntrMask, w, 0x3c)
- PORT(IntrStatus, w, 0x3E)
- PORT(TimerInt, l, 0x54)
- 
--#define fatal(...) do { g_test_message(__VA_ARGS__); g_assert(0); } while (0)
-+#define fatal(...) do { g_test_message(__VA_ARGS__); g_assert_not_reached(); } while (0)
- 
- static void test_timer(void)
- {
+     for (n = 0; n < smp_cpus; n++) {
 -- 
 2.39.2
 
