@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19647ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63738ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1d2-0002t8-CI; Tue, 10 Sep 2024 10:14:00 -0400
+	id 1so1d4-0003Cd-Pl; Tue, 10 Sep 2024 10:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1d1-0002mZ-HG
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:13:59 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1so1d2-0002xU-Ul
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:14:00 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1cz-0007Vl-Qu
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:13:59 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c40942358eso746300a12.1
+ id 1so1d1-0007Vq-4r
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:14:00 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a8d6ac24a3bso27825066b.1
  for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1725977636; x=1726582436; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cRFhj2SyvQ/EIwHMRij/KsWIl6x9+a8v4XWFbD+c1P0=;
- b=KgandcclTTA7JUISr/s1Py/KBi6AnHZW5BEsTRWNbdoLy7oH9i6AlrQVkZ+7Yv/C5T
- Vx0pTHxifAvl1AGCleEuBvGCyqjN5GGLixvJGHii37LNTcsy4jJEN0ZGSHizTCJe2IHa
- P0SgdOOeXpVF5Z/bpDI2AnqTPNBWfFIkACq+YJ/rDpKZ5D89sV/sRRJ8uGemJozmBaAK
- 6U/HQmEbUmqSTpdfaz1ILRngrjkZAIih4K0CgP50MFvVDW8U1IVBiiryAK1fXi+W1QzW
- NXQaD2YNay0LWaIczfuB+gmqj5nKS6vZTurleTkhbvoQSvwd8e1Q0pmSUKVUv7TODPvX
- en+w==
+ bh=VkzJlS4txjflyKkh4CCHIuVaip6qn2yADs/S0X5KKR8=;
+ b=RNKA/M8m4PM+OZSubSJ6YOY/OyokkKEotNLgR1Xs3kpZZyL/vpSvQ5oJkNp0/GaazA
+ mLxjAj/cZr9t0q10f16VreTvNMc38j5lWUq78MfLjT0znKyde6zDqLFDHojtZeL40YU4
+ E5UJy+tfruWKVfxNV8EoAB/ivT7mi4SLk3N3YIVHYDAMXihD4Zx3Q3zkg52slLuHOGkA
+ nUxlwRRLUVqOYAlyjvT9HeDtJGsliOO32wrTTHLSzDbzApYDptT1h2BbhNXKF+z5axQ1
+ QGmDZGSAapdyEaHTHunAe5cpj4hcsjPo8GUHDwDGTd0rUWflg1/WSB6388sH5hhbhzYF
+ HbHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1725977636; x=1726582436;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cRFhj2SyvQ/EIwHMRij/KsWIl6x9+a8v4XWFbD+c1P0=;
- b=m70t36B+ciFW0KkxBjVBKmZcJOFF3rvOc7qJzIWEjtH1ObFemWD/0xEIY/Sjb2b3BY
- KlBSeFsRRoGgVdry1hIjmvdzZTL4jqz2Qlq+vIo7Jzw7yZKV4C82DvB2chEFpeRcnnsM
- npAUvajMgb7foL0DMmLmNzJHcTxur45nSravBHGN5vofjoF10/olWV9Kir6m6nnuX3ke
- 1DOFgSKALWieS1HSofwRfvmauF7gxk1DWajicKRUq/rhLfYAm7MgvPXQRGxTxgjW8Cvf
- MBXC/j4xBzESpDayriZ0i+tYbuS89i8+LrCvvu/iZBQhL4xiJiOgpkUJ1GuxnrG4fSSB
- REzg==
-X-Gm-Message-State: AOJu0Yxx++ifEUspsYiWJw3W4qZfyRM+8Xy/VgyoZKIoOivdjPAYvqWJ
- RbRcMttR4Lr350aVUfEc3LtO9xoKD3jMIk19o0RxeozqvOqlee9U687Qxpcy52I=
-X-Google-Smtp-Source: AGHT+IGqyOALW4jSP1JBXx3YmjSCxwI7FGeD6xXprKRUMj5B+BRwN5RJL9njKC53FVAO2Otc50xf4Q==
-X-Received: by 2002:a05:6402:3596:b0:5c0:c559:ad6 with SMTP id
- 4fb4d7f45d1cf-5c4015df1d1mr3218510a12.6.1725977635809; 
- Tue, 10 Sep 2024 07:13:55 -0700 (PDT)
+ bh=VkzJlS4txjflyKkh4CCHIuVaip6qn2yADs/S0X5KKR8=;
+ b=fcMq2MdVy9+Vd6O8ySERtBUKwg4xXfKVTlJV+aD+YqXwdYSulwCOGhD9E6r7lUcqJy
+ H/YSzxGE5gNe9ZWpeWCg5HbJ9B38A7PkrMQIRXjM+TQ479NCO8HMXmNkKbIdRVkMxrMG
+ 412jHFhVJcdFaqRm9PzLpiHSHDnlHlDNHMWpQXbSUxLYEWLwf0tTDyLhqMVR1FLP7AWH
+ Wlw3an6FDo2xLkEZN73eJ4KZ+bguWeJLtENlOJ5uLSZmyeorj137TPXzvC6REHwwJN5b
+ nhvYklFjyhtmCIm5tN6KMz2+40p3M8FuUXHH1vSB4R9jr7gBIQSlOseL8Km5emjEQMWT
+ 9iJQ==
+X-Gm-Message-State: AOJu0Yz6hG5igd1c2Ad/SJt026ADH/76jXBMfbtMseQK/I2F9VdhXxWR
+ OxuhTXe0eSOyTV2kDgsCmChSuvAZJGBYgE6nCtF4hNmFcVBInYijp0UptKq/RNA=
+X-Google-Smtp-Source: AGHT+IF0n41cF7B1EFfMC4EoXC2MXohjR9xo5rsGQgQXXAcqKVCZIXQA9xUQ/GKhQak3g2247joROQ==
+X-Received: by 2002:a17:907:e291:b0:a8d:505a:5458 with SMTP id
+ a640c23a62f3a-a8ffb20f42amr123827766b.10.1725977636389; 
+ Tue, 10 Sep 2024 07:13:56 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd46909sm4504892a12.25.2024.09.10.07.13.49
+ a640c23a62f3a-a8d259c1fa3sm487925166b.80.2024.09.10.07.13.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 10 Sep 2024 07:13:53 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D603D6349A;
+ by draig.lan (Postfix) with ESMTP id A628E63460;
  Tue, 10 Sep 2024 15:07:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,19 +75,19 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
  qemu-arm@nongnu.org, devel@lists.libvirt.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Elisha Hollander <just4now666666@gmail.com>
-Subject: [PATCH 22/26] util/timer: avoid deadlock when shutting down
-Date: Tue, 10 Sep 2024 15:07:29 +0100
-Message-Id: <20240910140733.4007719-23-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH 20/26] tests/tcg: only read/write 64 bit words on 64 bit
+ systems
+Date: Tue, 10 Sep 2024 15:07:27 +0100
+Message-Id: <20240910140733.4007719-21-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910140733.4007719-1-alex.bennee@linaro.org>
 References: <20240910140733.4007719-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,52 +110,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we shut down a guest we disable the timers. However this can
-cause deadlock if the guest has queued some async work that is trying
-to advance system time and spins forever trying to wind time forward.
-Pay attention to the return code and bail early if we can't wind time
-forward.
+While the compilers will generally happily synthesise a 64 bit value
+for you on 32 bit systems it doesn't exercise anything on QEMU. It
+also makes it hard to accurately compare the accesses to test_data
+when instrumenting.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reported-by: Elisha Hollander <just4now666666@gmail.com>
 ---
- util/qemu-timer.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ tests/tcg/multiarch/system/memory.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 213114be68..6b1533bc2a 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -685,10 +685,17 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
+diff --git a/tests/tcg/multiarch/system/memory.c b/tests/tcg/multiarch/system/memory.c
+index 8f2371975d..680dd4800b 100644
+--- a/tests/tcg/multiarch/system/memory.c
++++ b/tests/tcg/multiarch/system/memory.c
+@@ -163,6 +163,7 @@ static void init_test_data_u32(int offset)
+     ml_printf("done %d @ %p\n", i, ptr);
+ }
+ 
++#if __SIZEOF_POINTER__ == 8
+ static void init_test_data_u64(int offset)
  {
-     int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     AioContext *aio_context;
-+    int64_t deadline;
-+
-     aio_context = qemu_get_aio_context();
--    while (clock < dest) {
--        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-+
-+    deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-                                                       QEMU_TIMER_ATTR_ALL);
-+    /*
-+     * A deadline of < 0 indicates this timer is not enabled, so we
-+     * won't get far trying to run it forward.
-+     */
-+    while (deadline >= 0 && clock < dest) {
-         int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
- 
-         qemu_virtual_clock_set_ns(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + warp);
-@@ -696,6 +703,9 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
-         qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
-         timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
-         clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+
-+        deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-+                                              QEMU_TIMER_ATTR_ALL);
+     uint8_t count = 0;
+@@ -187,6 +188,7 @@ static void init_test_data_u64(int offset)
      }
-     qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
+     ml_printf("done %d @ %p\n", i, ptr);
+ }
++#endif
  
+ static bool read_test_data_u16(int offset)
+ {
+@@ -254,6 +256,7 @@ static bool read_test_data_u32(int offset)
+     return true;
+ }
+ 
++#if __SIZEOF_POINTER__ == 8
+ static bool read_test_data_u64(int offset)
+ {
+     uint64_t word, *ptr = (uint64_t *)&test_data[offset];
+@@ -307,11 +310,16 @@ static bool read_test_data_u64(int offset)
+     ml_printf("done %d @ %p\n", i, ptr);
+     return true;
+ }
++#endif
+ 
+ /* Read the test data and verify at various offsets */
+-read_ufn read_ufns[] = { read_test_data_u16,
+-                         read_test_data_u32,
+-                         read_test_data_u64 };
++read_ufn read_ufns[] = {
++    read_test_data_u16,
++    read_test_data_u32,
++#if __SIZEOF_POINTER__ == 8
++    read_test_data_u64
++#endif
++};
+ 
+ bool do_unsigned_reads(int start_off)
+ {
+@@ -476,10 +484,14 @@ bool do_signed_reads(bool neg_first)
+     return ok;
+ }
+ 
+-init_ufn init_ufns[] = { init_test_data_u8,
+-                         init_test_data_u16,
+-                         init_test_data_u32,
+-                         init_test_data_u64 };
++init_ufn init_ufns[] = {
++    init_test_data_u8,
++    init_test_data_u16,
++    init_test_data_u32,
++#if __SIZEOF_POINTER__ == 8
++    init_test_data_u64
++#endif
++};
+ 
+ int main(void)
+ {
 -- 
 2.39.2
 
