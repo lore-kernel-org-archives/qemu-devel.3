@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 767E1EB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464CCECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:42:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so084-0001RU-FQ; Tue, 10 Sep 2024 08:37:56 -0400
+	id 1so08R-0003fB-Qr; Tue, 10 Sep 2024 08:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so07r-0008K0-0r
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08B-0002II-5K
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so07n-000581-PD
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so084-00059U-6u
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725971857;
+ s=mimecast20190719; t=1725971869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eZJnuK2h81KcY66kd08hYy3F+YH70C9Bsh4bBdmoAuQ=;
- b=dUbgZm3hfijWgJHEyI9dvMHyr/6uYcpPVoFV6E4x2Ym1VBnlvZBAr+wND/ToN41s7J8y1H
- b/cxW0CS6s5hqQlzbwKAj79B8T4mR4GsztPluF1sR/nDVfm4V/vvftkrN5sCw54Wm0UVML
- gSQ9Pyky5gNJHmfjuagrHGMLw133M5w=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RtRLAuvqf+JeUxfTMm7H0IZIsVPZvbApHU6YhP9jrU0=;
+ b=i5hoUJZQEjmFZpCEbWibVGDOMtPecNSYBQ8Lmlwt5oqoxtvqdJmQjofgN/A+PsvJpLHjFq
+ 4Y5r2ElcqYwNe8WR7L036ucsgCi1D2YA5RZ43KSapIiCg4UP3WfhBjsDRQAOU/Pxt+LqqO
+ R+byrbv19mFKjYoVrRcJFyXZepzGWV8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-t_yedJesOGejhof5mDoQLg-1; Tue,
- 10 Sep 2024 08:37:35 -0400
-X-MC-Unique: t_yedJesOGejhof5mDoQLg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-zyQliyLZPR23YntrdvbUhQ-1; Tue,
+ 10 Sep 2024 08:37:46 -0400
+X-MC-Unique: zyQliyLZPR23YntrdvbUhQ-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B9F6193E8CE; Tue, 10 Sep 2024 12:37:34 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A368A1944DDE; Tue, 10 Sep 2024 12:37:44 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.120])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D640119560B0; Tue, 10 Sep 2024 12:37:32 +0000 (UTC)
+ id 4012B19560AB; Tue, 10 Sep 2024 12:37:43 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 02/22] meson: Move -fsanitize=undefined into normal configuraton
-Date: Tue, 10 Sep 2024 14:37:03 +0200
-Message-ID: <20240910123726.182975-3-thuth@redhat.com>
+Subject: [PULL 07/22] tests/functional: Add the LinuxKernelTest for testing
+ the Linux boot process
+Date: Tue, 10 Sep 2024 14:37:08 +0200
+Message-ID: <20240910123726.182975-8-thuth@redhat.com>
 In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
 References: <20240910123726.182975-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -79,76 +81,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Copy the LinuxKernelTest from tests/acceptance/boot_linux_console.py
+to be able to convert the related tests to the functional test framework
+in the following patches.
 
-With 8e466dd09246 and 23ef50ae2d0c, we disable function pointer
-sanitization in CI because the qemu code base does not support it.
-We must disable this for normal usage of --enable-ubsan as well,
-so move it there.
-
-Append options rather than prepend, since all of this requires
-proper ordering of options.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240813095216.306555-3-richard.henderson@linaro.org>
+Message-ID: <20240906180549.792832-2-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- meson.build                | 11 +++++++++--
- .gitlab-ci.d/buildtest.yml | 10 ++++------
- 2 files changed, 13 insertions(+), 8 deletions(-)
+ tests/functional/qemu_test/__init__.py    |  1 +
+ tests/functional/qemu_test/linuxkernel.py | 41 +++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
+ create mode 100644 tests/functional/qemu_test/linuxkernel.py
 
-diff --git a/meson.build b/meson.build
-index f6b8060b72..4701ee3aab 100644
---- a/meson.build
-+++ b/meson.build
-@@ -493,8 +493,15 @@ if get_option('ubsan')
-   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
-   if cc.links('int main(int argc, char **argv) { return argc + 1; }',
-               args: [qemu_ldflags, '-fsanitize=undefined'])
--    qemu_cflags = ['-fsanitize=undefined'] + qemu_cflags
--    qemu_ldflags = ['-fsanitize=undefined'] + qemu_ldflags
-+    qemu_cflags += ['-fsanitize=undefined']
-+    qemu_ldflags += ['-fsanitize=undefined']
+diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+index f33282efe8..67f87be9c4 100644
+--- a/tests/functional/qemu_test/__init__.py
++++ b/tests/functional/qemu_test/__init__.py
+@@ -12,3 +12,4 @@
+     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
+     exec_command, exec_command_and_wait_for_pattern, get_qemu_img
+ from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
++from .linuxkernel import LinuxKernelTest
+diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
+new file mode 100644
+index 0000000000..fdd5307629
+--- /dev/null
++++ b/tests/functional/qemu_test/linuxkernel.py
+@@ -0,0 +1,41 @@
++# Test class for testing the boot process of a Linux kernel
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
 +
-+    # Suppress undefined behaviour from function call to mismatched type.
-+    # In addition, tcg prologue does not emit function type prefix
-+    # required by function call sanitizer.
-+    if cc.has_argument('-fno-sanitize=function')
-+      qemu_cflags += ['-fno-sanitize=function']
-+    endif
-   else
-     error('Your compiler does not support -fsanitize=undefined')
-   endif
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 1d2afae996..9ac0776b94 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -428,9 +428,8 @@ clang-system:
-     job: amd64-fedora-container
-   variables:
-     IMAGE: fedora
--    CONFIGURE_ARGS: --cc=clang --cxx=clang++
--      --extra-cflags=-fsanitize=undefined --extra-cflags=-fno-sanitize-recover=undefined
--      --extra-cflags=-fno-sanitize=function
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan
-+      --extra-cflags=-fno-sanitize-recover=undefined
-     TARGETS: alpha-softmmu arm-softmmu m68k-softmmu mips64-softmmu s390x-softmmu
-     MAKE_CHECK_ARGS: check-qtest check-tcg
- 
-@@ -441,10 +440,9 @@ clang-user:
-   timeout: 70m
-   variables:
-     IMAGE: debian-all-test-cross
--    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-system
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-system --enable-ubsan
-       --target-list-exclude=alpha-linux-user,microblazeel-linux-user,aarch64_be-linux-user,i386-linux-user,m68k-linux-user,mipsn32el-linux-user,xtensaeb-linux-user
--      --extra-cflags=-fsanitize=undefined --extra-cflags=-fno-sanitize-recover=undefined
--      --extra-cflags=-fno-sanitize=function
-+      --extra-cflags=-fno-sanitize-recover=undefined
-     MAKE_CHECK_ARGS: check-unit check-tcg
- 
- # Set LD_JOBS=1 because this requires LTO and ld consumes a large amount of memory.
++import os
++
++from .testcase import QemuSystemTest
++from .cmd import run_cmd, wait_for_console_pattern
++from .utils import archive_extract
++
++class LinuxKernelTest(QemuSystemTest):
++    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
++
++    def wait_for_console_pattern(self, success_message, vm=None):
++        wait_for_console_pattern(self, success_message,
++                                 failure_message='Kernel panic - not syncing',
++                                 vm=vm)
++
++    def extract_from_deb(self, deb_path, path):
++        """
++        Extracts a file from a deb package into the test workdir
++
++        :param deb_path: path to the deb archive
++        :param path: path within the deb archive of the file to be extracted
++        :returns: path of the extracted file
++        """
++        cwd = os.getcwd()
++        os.chdir(self.workdir)
++        (stdout, stderr, ret) = run_cmd(['ar', 't', deb_path])
++        file_path = stdout.split()[2]
++        run_cmd(['ar', 'x', deb_path, file_path])
++        archive_extract(file_path, self.workdir)
++        os.chdir(cwd)
++        # Return complete path to extracted file.  Because callers to
++        # extract_from_deb() specify 'path' with a leading slash, it is
++        # necessary to use os.path.relpath() as otherwise os.path.join()
++        # interprets it as an absolute path and drops the self.workdir part.
++        return os.path.normpath(os.path.join(self.workdir,
++                                             os.path.relpath(path, '/')))
++
 -- 
 2.46.0
 
