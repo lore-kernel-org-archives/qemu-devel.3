@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A4BEB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 04:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90C5ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 04:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snsQt-0002J6-0z; Tue, 10 Sep 2024 00:24:51 -0400
+	id 1snsaZ-0008Kz-LK; Tue, 10 Sep 2024 00:34:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1snsQr-0002Ia-Ku
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:24:49 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1snsaW-0008Jn-TV
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:34:48 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1snsQp-0000HI-8t
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:24:49 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2055f630934so2812465ad.1
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 21:24:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1snsaU-0000yy-Ud
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:34:48 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7178df70f28so282904b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 21:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1725942286; x=1726547086;
- darn=nongnu.org; 
+ d=gmail.com; s=20230601; t=1725942884; x=1726547684; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KAbDjVp1Qggo+5s3MomGv6/yycwyItBlD9tpI24DWhY=;
- b=EOVsXuWoiphPqlJl7ITGizjYUDkJdL60LqhObF8KYFJtFMljk2vTPcXtsYgn4g+V75
- fOVSbeHq3Ke2TrWICji9awTpqNdN64V5dUdP5weQvXRUj0cBJBv+xIfw5qsObq/2p6q7
- 3+OaX2AyBwdblYMqqRIl3VRrJDS++SuIB3spfRz+HLp+I/f88jDIYXWFDtlbjlnKvT3n
- PKELPOMXjCht0YerhhLNwsWN4v2VoqbNeLFwypd8cnSZQP7qDJKLORWy88UDuUMtsNn6
- AIn8Ya7mWl4Elte3n+/Fmqy6yLA5oXC7OW4VTJzg0fJ4ph1lJvtRbUCmoqNGfSKxb273
- VAxw==
+ bh=K6AHWxSeRTjnS+Qk+H/LEcAaKszVpbimWiqz6NXQMF8=;
+ b=BiMIau9MhtilA4p1nLK067qVfxpfUP061KB88V/V2eVTsY4u+ftIi65xKhzTGUdbeE
+ 7vnOaqUv4Lgegv+ANK7OBpKIB1wTuocM50GGwhzS9t7U+ScVoxQFBY8BRTQhJ6O1x2u4
+ llTsCR8LM8C4Q2EHrQNZEJvjPRvaGwrH50UtENVf7n9QKYkDvfqJIjy4dyP8E7RpEnqT
+ 2DrmIigLEMWYUlA1BQEn3dLL4ZhQK6tb575Pafy6ofnhxsa4MkDA5uuEbTpAX9AnTQ9/
+ M/lkB6fO7PXgoSW4bmQpYwxyVM/HNvNf177lBAhVKsbhEyCqb8zrGEq6wQ7HiEraogaC
+ A8TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725942286; x=1726547086;
+ d=1e100.net; s=20230601; t=1725942884; x=1726547684;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KAbDjVp1Qggo+5s3MomGv6/yycwyItBlD9tpI24DWhY=;
- b=bCyuD05jbgMYtwk0TeYadbJd9nbIO/zANnm6EU45DmmEI2ikhbo6VZ8Kf1m9L/VZmM
- wyiIzk0eltuGvJz9U/1Ema6N3M/uYqO8TozjyLiTljEAdFILSjBJlTj3cGO9RYUz27q3
- QALtY6wuIAMFaXdktlRuEqdxH3El3n4c8TIw3labNe7EF2S6LTH65bfDCFNzSe2SXR72
- s6RGlpVaA1VSCBRzmIHJ4OW4CJLA22+rUaOLuMW6hteQfzQ45lW8k5p0Bxl/L3wm9F1a
- KhHyWutNR3F6VMl36BFPV2gFM49wwNGZsAxKVEu+Y6k5K9oLsxEd9/hZxMvtV1USaQh6
- DYzA==
-X-Gm-Message-State: AOJu0YwC9mD9fIgMyLx1RrZt0NmU0Xscmn+qPwmBbQJw1aRI925mhPp2
- 5+1EP3BTP93rpnsxPyYE+8xOjPpvGLKjLiTfd60TBzdXG2DKCx8ZgitCxNc9J2c=
-X-Google-Smtp-Source: AGHT+IFKQV+BC7YjgQBbSSKfo0TwTeDPuTVwyXUSe0n/4ZLAOVZ5OmnrrbI8OmzOcr9PfocjNn3+VQ==
-X-Received: by 2002:a17:903:230f:b0:205:9112:efea with SMTP id
- d9443c01a7336-2070a578bdemr98893135ad.35.1725942285525; 
- Mon, 09 Sep 2024 21:24:45 -0700 (PDT)
-Received: from [157.82.204.48] ([157.82.204.48])
+ bh=K6AHWxSeRTjnS+Qk+H/LEcAaKszVpbimWiqz6NXQMF8=;
+ b=h8+IeU4p0rok9LH37q/HRsRcUjmTkhw3lCGNl/VL2TwA4TLDJvq7zzsPqNc4v0A7Zh
+ tp3S0w08NbWUinLY/D/xSkkRM8p2TuZ6R9EM3U8ykwFRmudkivWGezTJ514QxYMrpeaW
+ bWsL5/Bn6wiePYcLfEb3tNHY8W29n98jYz9jiyZQq+jn7kInhm750spwwIgBUfC9Pq/N
+ ZiD8BZqCoBG7VlRMPh2Hb47Y2fjdm1MRjU2mSurMACwGSCmxKdxDkUXIwtxt0147asPc
+ 2SX3XCZWM3Npl4uIIDeIjTDnGbg4xHbBiuj8GqXiQVw5iMxcgxeorHbwEUPaCpZyFpdO
+ op1g==
+X-Gm-Message-State: AOJu0YwPNiVU8CtDxSlyo0ZrFXeEeqGJWVZ9OOotOtgWXYEFKh/OoyPR
+ +KwqfqnNpr4+lGbcw7qPUAneGu8xhs8MyIeiIFMPHfaXOfxiRDwMd+Luv8a75gg=
+X-Google-Smtp-Source: AGHT+IEsWa8lolslUlIep0SQYy060UZoKdF21P7BThLY2c23gPggA/T4XCODcR5YZ2nYo83HZmopiw==
+X-Received: by 2002:a05:6a00:2ea5:b0:714:241d:a323 with SMTP id
+ d2e1a72fcca58-718d5ef9935mr15559087b3a.17.1725942884423; 
+ Mon, 09 Sep 2024 21:34:44 -0700 (PDT)
+Received: from ?IPV6:2600:1700:88b2:a50:e138:436a:6892:a724?
+ ([2600:1700:88b2:a50:e138:436a:6892:a724])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f1f4a3sm40711395ad.221.2024.09.09.21.24.43
+ d2e1a72fcca58-71909092662sm510891b3a.120.2024.09.09.21.34.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 21:24:45 -0700 (PDT)
-Message-ID: <bd5eb810-cddd-418e-828e-efc8b0fe01ec@daynix.com>
-Date: Tue, 10 Sep 2024 13:24:41 +0900
+ Mon, 09 Sep 2024 21:34:43 -0700 (PDT)
+Message-ID: <adb2d9d0-5088-4df8-a1aa-4572af92d877@gmail.com>
+Date: Mon, 9 Sep 2024 21:34:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: support locking on change medium
-To: Joelle van Dyne <j@getutm.app>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-References: <20240909015847.40377-1-j@getutm.app>
- <dab54af1-cf9d-401c-a11f-657334b52d5a@daynix.com>
- <CA+E+eSAu1T_juXxyu9VZMmNtbcais3GJX_vomk5MFOLjCCKo3Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/char/stm32l4x5_usart.c: Fix ACK and min access size
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>
+References: <20240902061944.526873-1-satur9nine@gmail.com>
+ <CAFEAcA9wP7f_yPYNJmaTDe1bB8cPifErAGpjtsNPKsR0s_65Sg@mail.gmail.com>
+ <667c28a5-3c00-4de2-b37e-566dc7ffca14@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CA+E+eSAu1T_juXxyu9VZMmNtbcais3GJX_vomk5MFOLjCCKo3Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Jacob Abrams <satur9nine@gmail.com>
+In-Reply-To: <667c28a5-3c00-4de2-b37e-566dc7ffca14@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=satur9nine@gmail.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,153 +100,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/09/09 23:18, Joelle van Dyne wrote:
-> On Mon, Sep 9, 2024 at 12:36 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> On 2024/09/09 10:58, Joelle van Dyne wrote:
->>> New optional argument for 'blockdev-change-medium' QAPI command to allow
->>> the caller to specify if they wish to enable file locking.
+
+
+On 9/9/24 10:40, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> (Cc'ing Arnaud & Inès who are listed as maintainers)
+> 
+> On 6/9/24 18:12, Peter Maydell wrote:
+>> On Mon, 2 Sept 2024 at 14:38, Jacob Abrams <satur9nine@gmail.com> wrote:
 >>>
->>> Signed-off-by: Joelle van Dyne <j@getutm.app>
+>>> These changes allow the official STM32L4xx HAL UART driver to function
+>>> properly with the b-l475e-iot01a machine.
+>>>
+>>> Modifying USART_CR1 TE bit should alter USART_ISR TEACK bit, and
+>>> likewise for RE and REACK bit.
+>>>
+>>> USART registers may be accessed via 16-bit instructions.
+>>>
+>>> Reseting USART_CR1 UE bit should restore ISR to default value.
+>>>
+>>> Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and write")
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
+>>> Signed-off-by: Jacob Abrams <satur9nine@gmail.com>
+>>
+>> Thanks for this patch. I have one question below, and one
+>> minor nit.
+>>
 >>> ---
->>>    qapi/block.json                | 23 ++++++++++++++++++++++-
->>>    block/monitor/block-hmp-cmds.c |  2 +-
->>>    block/qapi-sysemu.c            | 22 ++++++++++++++++++++++
->>>    ui/cocoa.m                     |  1 +
->>>    4 files changed, 46 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/qapi/block.json b/qapi/block.json
->>> index e66666f5c6..35e8e2e191 100644
->>> --- a/qapi/block.json
->>> +++ b/qapi/block.json
->>> @@ -309,6 +309,23 @@
->>>    { 'enum': 'BlockdevChangeReadOnlyMode',
->>>      'data': ['retain', 'read-only', 'read-write'] }
->>>
->>> +##
->>> +# @BlockdevChangeFileLockingMode:
->>> +#
->>> +# Specifies the new locking mode of a file image passed to the
->>> +# @blockdev-change-medium command.
->>> +#
->>> +# @auto: Use locking if API is available
->>> +#
->>> +# @off: Disable file image locking
->>> +#
->>> +# @on: Enable file image locking
->>> +#
->>> +# Since: 9.2
->>> +##
->>> +{ 'enum': 'BlockdevChangeFileLockingMode',
->>> +  'data': ['auto', 'off', 'on'] }
->>
->> You can use OnOffAuto type instead of defining your own.
+>>>   hw/char/stm32l4x5_usart.c          | 29 +++++++++++++++++++---
+>>>   tests/qtest/stm32l4x5_usart-test.c | 39 +++++++++++++++++++++++++++++-
+>>>   2 files changed, 64 insertions(+), 4 deletions(-)
 > 
-> This can be done. I had thought that defining a new type makes the
-> argument more explicit about the meaning.
-
-Speaking of semantics, it would be better to use OnOffAuto to match 
-BlockdevOptionsFile's locking property.
-
-We could also argue that having a dedicated type would make this 
-consistent with the read-only-mode property, which has such a type, but 
-there are other properties that use existing types like str and bool so 
-I think it is fine to use an existing type here too.
-
 > 
+>>>   static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
+>>>   {
+>>>       if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))        ||
+>>> @@ -367,7 +389,7 @@ static void stm32l4x5_usart_base_reset_hold(Object *obj, ResetType type)
+>>>       s->brr = 0x00000000;
+>>>       s->gtpr = 0x00000000;
+>>>       s->rtor = 0x00000000;
+>>> -    s->isr = 0x020000C0;
+>>> +    s->isr = ISR_RESET_VALUE;
+>>>       s->rdr = 0x00000000;
+>>>       s->tdr = 0x00000000;
+>>>
+>>> @@ -456,6 +478,7 @@ static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
+>>>       case A_CR1:
+>>>           s->cr1 = value;
+>>>           stm32l4x5_update_params(s);
+>>> +        stm32l4x5_update_isr(s);
+>>>           stm32l4x5_update_irq(s);
+>>>           return;
+>>>       case A_CR2:
+>>> @@ -508,12 +531,12 @@ static const MemoryRegionOps stm32l4x5_usart_base_ops = {
+>>>       .endianness = DEVICE_NATIVE_ENDIAN,
+>>>       .valid = {
+>>>           .max_access_size = 4,
+>>> -        .min_access_size = 4,
+>>> +        .min_access_size = 2,
+>>>           .unaligned = false
+>>>       },
+>>>       .impl = {
+>>>           .max_access_size = 4,
+>>> -        .min_access_size = 4,
+>>> +        .min_access_size = 2,
+>>>           .unaligned = false
+>>>       },
 >>
->>> +
->>>    ##
->>>    # @blockdev-change-medium:
->>>    #
->>> @@ -330,6 +347,9 @@
->>>    # @read-only-mode: change the read-only mode of the device; defaults
->>>    #     to 'retain'
->>>    #
->>> +# @file-locking-mode: change the locking mode of the file image; defaults
->>> +#     to 'auto' (since: 9.2)
->>> +#
->>>    # @force: if false (the default), an eject request through
->>>    #     blockdev-open-tray will be sent to the guest if it has locked
->>>    #     the tray (and the tray will not be opened immediately); if true,
->>> @@ -378,7 +398,8 @@
->>>                'filename': 'str',
->>>                '*format': 'str',
->>>                '*force': 'bool',
->>> -            '*read-only-mode': 'BlockdevChangeReadOnlyMode' } }
->>> +            '*read-only-mode': 'BlockdevChangeReadOnlyMode',
->>> +            '*file-locking-mode': 'BlockdevChangeFileLockingMode' } }
->>>
->>>    ##
->>>    # @DEVICE_TRAY_MOVED:
->>> diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
->>> index bdf2eb50b6..ff64020a80 100644
->>> --- a/block/monitor/block-hmp-cmds.c
->>> +++ b/block/monitor/block-hmp-cmds.c
->>> @@ -1007,5 +1007,5 @@ void hmp_change_medium(Monitor *mon, const char *device, const char *target,
->>>        }
->>>
->>>        qmp_blockdev_change_medium(device, NULL, target, arg, true, force,
->>> -                               !!read_only, read_only_mode, errp);
->>> +                               !!read_only, read_only_mode, false, 0, errp);
->>>    }
->>> diff --git a/block/qapi-sysemu.c b/block/qapi-sysemu.c
->>> index e4282631d2..8064bdfb3a 100644
->>> --- a/block/qapi-sysemu.c
->>> +++ b/block/qapi-sysemu.c
->>> @@ -311,6 +311,8 @@ void qmp_blockdev_change_medium(const char *device,
->>>                                    bool has_force, bool force,
->>>                                    bool has_read_only,
->>>                                    BlockdevChangeReadOnlyMode read_only,
->>> +                                bool has_file_locking_mode,
->>> +                                BlockdevChangeFileLockingMode file_locking_mode,
->>>                                    Error **errp)
->>>    {
->>>        BlockBackend *blk;
->>> @@ -362,6 +364,26 @@ void qmp_blockdev_change_medium(const char *device,
->>>            qdict_put_str(options, "driver", format);
->>>        }
->>>
->>> +    if (!has_file_locking_mode) {
->>> +        file_locking_mode = BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO;
->>> +    }
->>> +
->>> +    switch (file_locking_mode) {
->>> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO:
->>> +        break;
->>> +
->>> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_OFF:
->>> +        qdict_put_str(options, "file.locking", "off");
->>> +        break;
->>> +
->>> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_ON:
->>> +        qdict_put_str(options, "file.locking", "on");
->>> +        break;
->>> +
->>> +    default:
->>> +        abort();
->>> +    }
->>> +
->>>        medium_bs = bdrv_open(filename, NULL, options, bdrv_flags, errp);
->>>
->>>        if (!medium_bs) {
->>> diff --git a/ui/cocoa.m b/ui/cocoa.m
->>> index 4c2dd33532..6e73c6e13e 100644
->>> --- a/ui/cocoa.m
->>> +++ b/ui/cocoa.m
->>> @@ -1611,6 +1611,7 @@ - (void)changeDeviceMedia:(id)sender
->>>                                           "raw",
->>>                                           true, false,
->>>                                           false, 0,
->>> +                                       false, 0,
->>
->> This change is irrelevant.
+>> The effect of these is that a 16-bit write not aligned
+>> to a (4-aligned) register offset will generate a GUEST_ERROR
+>> logged message, and a 16-bit write aligned to a 4-aligned
+>> register offset will write the value zero-extended to 32 bits.
+>> That seems reasonable to me.
 > 
-> This change is needed otherwise QEMU will not compile.
+> Peter, are you describing the .valid.min_access_size 4 -> 2 change
+> or the .impl.min_access_size one?
+> 
+> My understanding of the implementation is a 32-bit one:
+> 
+>   REG32(CR1, 0x00)
+> 
+>   struct Stm32l4x5UsartBaseState {
+>       ...
+>       uint32_t cr1;
+> 
+>   static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
+>                                   uint64_t val64, unsigned int size)
+>   {
+>       ...
+>       switch (addr) {
+>       case A_CR1:
+>           s->cr1 = value;
+> 
+> Am I missing something?
+> 
+> Now, back to .valid.min_access_size, per the section "40.8 USART
+> registers" of the reference manual:
+> 
+>   The peripheral registers have to be accessed by words (32 bits).
+> 
+> So I don't get the "USART registers may be accessed via 16-bit
+> instructions." part of this patch.
+> 
+> Jacob, for clarity, can you split this patch in 3 distinct parts
+> (TE bit, UE bit, unaligned access) so this discussion doesn't delay
+> the part which are OK?
+> 
+> Thanks,
+> 
+> Phil.
 
-I misread the code. I thought of it is a whitespace change for an 
-existing line but it is adding a line. This change in cocoa.m is fine.
+Hmm it does appear to be a documentation error in RM0351 section 40.8.
+
+I have an STM32L476 board (chip is nearly identical to the STM32L475 minus the display module) which is functioning with the USART driver code provided by STM in their examples that uses 16-bit access for several of the USART registers, see:
+
+https://github.com/STMicroelectronics/cmsis_device_l4/blob/a2530753e86dd326a75467d28feb92e2ba7d0df2/Include/stm32l475xx.h#L950
+
+I have a contact at STM through my work that I can mention this to just to double check.
+
+Ultimately my goal is to get an STM32CubeL4 example such as UART_Printf running as-is in Qemu and it was only while attempting to run such a project in Qemu that I ran into this problem, see:
+
+https://github.com/STMicroelectronics/STM32CubeL4/tree/master/Projects/STM32L476G-EVAL/Examples/UART/UART_Printf
+
+This project works on my HW dev board just fine.
+
+Of course if you still desire I don't mind splitting this change into 3 parts.
 
 Regards,
-Akihiko Odaki
+Jacob
 
