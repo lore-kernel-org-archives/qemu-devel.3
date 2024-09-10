@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D3CDEDE98A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 01:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE35CEDE98C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 01:24:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snpWP-0003TT-Qb; Mon, 09 Sep 2024 21:18:21 -0400
+	id 1snpcQ-0000AF-2O; Mon, 09 Sep 2024 21:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1snpWO-0003Pv-61; Mon, 09 Sep 2024 21:18:20 -0400
-Received: from out30-99.freemail.mail.aliyun.com ([115.124.30.99])
+ (Exim 4.90_1) (envelope-from <wangzhou1@hisilicon.com>)
+ id 1snpcL-00006x-Ax; Mon, 09 Sep 2024 21:24:29 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1snpWL-0007ST-DK; Mon, 09 Sep 2024 21:18:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1725931091; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=ARNilNE2YM9SNm+pbtULnv5xSyliHHJvU0ek3qDhbU4=;
- b=UC/LZsHqdpRR0Cr6AqtNUV/XuBHVHK3E/FwREGcjFmCT6dMRYv6lUwk3LciIbAQ0EPf3eKion57PqUOcHIggsILTSPuCdLjW9qME6oRNldvzDm/1rg9pi9UWpuW/LncoeIr90C502Ngd1j17ClLsb9b5yKnt25dI/VpIZZ7OyKg=
-Received: from 30.251.160.182(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WEhvYg5_1725931089) by smtp.aliyun-inc.com;
- Tue, 10 Sep 2024 09:18:10 +0800
-Message-ID: <1eb26532-98fb-4cb5-b5a8-7da5d24e03d7@linux.alibaba.com>
-Date: Tue, 10 Sep 2024 09:17:12 +0800
+ (Exim 4.90_1) (envelope-from <wangzhou1@hisilicon.com>)
+ id 1snpcI-0007xT-8r; Mon, 09 Sep 2024 21:24:28 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4X2mF403LBz2DbxW;
+ Tue, 10 Sep 2024 09:23:52 +0800 (CST)
+Received: from kwepemd200012.china.huawei.com (unknown [7.221.188.145])
+ by mail.maildlp.com (Postfix) with ESMTPS id 88BB91401F0;
+ Tue, 10 Sep 2024 09:24:19 +0800 (CST)
+Received: from [10.67.121.115] (10.67.121.115) by
+ kwepemd200012.china.huawei.com (7.221.188.145) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.34; Tue, 10 Sep 2024 09:24:18 +0800
+Message-ID: <cbd29bc4-c5ab-22d7-8a3e-fd7646f16fd5@hisilicon.com>
+Date: Tue, 10 Sep 2024 09:24:18 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/14] tcg/riscv: Implement vector cmp ops
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
- <20240904142739.854-9-zhiwei_liu@linux.alibaba.com>
- <9d40d3f4-731d-478f-81ba-1c380ef9d0ae@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [Bug Report] smmuv3 event 0x10 report when running virtio-blk-pci
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <9d40d3f4-731d-478f-81ba-1c380ef9d0ae@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.99;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-99.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Shameer Kolothum
+ <shameerali.kolothum.thodi@huawei.com>, Eric Auger <eric.auger@redhat.com>,
+ Mostafa Saleh <smostafa@google.com>
+References: <447984db-8c52-c911-d7bd-6616edaaefa5@hisilicon.com>
+ <CAFEAcA-qBKn=42SYwU1X_7QrwWZYA1G1Hbf-iUP4GOFu0LwLzw@mail.gmail.com>
+In-Reply-To: <CAFEAcA-qBKn=42SYwU1X_7QrwWZYA1G1Hbf-iUP4GOFu0LwLzw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.121.115]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemd200012.china.huawei.com (7.221.188.145)
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=wangzhou1@hisilicon.com; helo=szxga04-in.huawei.com
+X-Spam_score_int: -75
+X-Spam_score: -7.6
+X-Spam_bar: -------
+X-Spam_report: (-7.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.396,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,66 +67,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Zhou Wang <wangzhou1@hisilicon.com>
+From:  Zhou Wang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2024/9/9 22:31, Peter Maydell wrote:
+> On Mon, 9 Sept 2024 at 15:22, Zhou Wang via <qemu-devel@nongnu.org> wrote:
+>>
+>> Hi All,
+>>
+>> When I tested mainline qemu(commit 7b87a25f49), it reports smmuv3 event 0x10
+>> during kernel booting up.
+> 
+> Does it still do this if you either:
+>  (1) use the v9.1.0 release (commit fd1952d814da)
+>  (2) use "-machine virt-9.1" instead of "-machine virt"
 
-On 2024/9/5 15:12, Richard Henderson wrote:
-> On 9/4/24 07:27, LIU Zhiwei wrote:
->> @@ -2322,6 +2411,51 @@ static void tcg_out_vec_op(TCGContext *s, 
->> TCGOpcode opc,
->>           riscv_set_vec_config_vl(s, type);
->>           tcg_out_opc_vi(s, OPC_VXOR_VI, a0, a1, -1, true);
->>           break;
->> +    case INDEX_op_cmpsel_vec:
->> +        TCGArg a3, a4;
->> +        int c3, c4;
->> +        TCGCond cond;
->
-> While I suppose this compiles, it's not great to have new variables 
-> added randomly within a switch.  At minimum, add { } around the block, 
-> but consider breaking out a separate tcg_out_cmpsel function, akin to 
-> tcg_out_movcond et al.
-OK.
->
->> @@ -2332,10 +2466,27 @@ static void tcg_out_vec_op(TCGContext *s, 
->> TCGOpcode opc,
->>   void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
->>                          TCGArg a0, ...)
->>   {
->> +    va_list va;
->> +    TCGv_vec v0, v1;
->> +    TCGArg a2, a3;
->> +
->> +    va_start(va, a0);
->> +    v0 = temp_tcgv_vec(arg_temp(a0));
->> +    v1 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
->> +    a2 = va_arg(va, TCGArg);
->> +
->>       switch (opc) {
->> +    case INDEX_op_cmp_vec:
->> +        a3 = va_arg(va, TCGArg);
->> +        vec_gen_6(INDEX_op_cmpsel_vec, type, vece, tcgv_vec_arg(v0),
->> +                    tcgv_vec_arg(v1), a2,
->> +                    tcgv_i64_arg(tcg_constant_i64(-1)),
->> +                    tcgv_i64_arg(tcg_constant_i64(0)), a3);
->> +        break;
->>       default:
->>           g_assert_not_reached();
->>       }
->> +    va_end(va);
->>   }
->
-> Better to use "TCGArg a0, a1".  Converting through arg_tmp + 
-> temp_tcgv_vec to v0/v1 and then undoing that with tcgv_vec_arg is 
-> confusing.
+I tested above two cases, the problem is still there.
 
-OK.
-
-Thanks,
-Zhiwei
-
->
->
-> r~
+> 
+> ?
+> 
+> My suspicion is that this will have started happening now that
+> we expose an SMMU with two-stage translation support to the guest
+> in the "virt" machine type (which we do not if you either
+> use virt-9.1 or in the v9.1.0 release).
+> 
+> I've cc'd Eric (smmuv3 maintainer) and Mostafa (author of
+> the two-stage support).
+> 
+>> qemu command which I use is as below:
+>>
+>> qemu-system-aarch64 -machine virt,kernel_irqchip=on,gic-version=3,iommu=smmuv3 \
+>> -kernel Image -initrd minifs.cpio.gz \
+>> -enable-kvm -net none -nographic -m 3G -smp 6 -cpu host \
+>> -append 'rdinit=init console=ttyAMA0 ealycon=pl0ll,0x90000000 maxcpus=3' \
+>> -device pcie-root-port,port=0x8,chassis=0,id=pci.0,bus=pcie.0,multifunction=on,addr=0x2 \
+>> -device pcie-root-port,port=0x9,chassis=1,id=pci.1,bus=pcie.0,addr=0x2.0x1 \
+>> -device virtio-blk-pci,drive=drive0,id=virtblk0,num-queues=8,packed=on,bus=pci.1 \
+>> -drive file=/home/boot.img,if=none,id=drive0,format=raw
+>>
+>> smmuv3 event 0x10 log:
+>> [...]
+>> [    1.962656] virtio-pci 0000:02:00.0: Adding to iommu group 0
+>> [    1.963150] virtio-pci 0000:02:00.0: enabling device (0000 -> 0002)
+>> [    1.964707] virtio_blk virtio0: 6/0/0 default/read/poll queues
+>> [    1.965759] virtio_blk virtio0: [vda] 2097152 512-byte logical blocks (1.07 GB/1.00 GiB)
+>> [    1.966934] arm-smmu-v3 9050000.smmuv3: event 0x10 received:
+>> [    1.967442] input: gpio-keys as /devices/platform/gpio-keys/input/input0
+>> [    1.967478] arm-smmu-v3 9050000.smmuv3:      0x0000020000000010
+>> [    1.968381] clk: Disabling unused clocks
+>> [    1.968677] arm-smmu-v3 9050000.smmuv3:      0x0000020000000000
+>> [    1.968990] PM: genpd: Disabling unused power domains
+>> [    1.969424] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+>> [    1.969814] ALSA device list:
+>> [    1.970240] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+>> [    1.970471]   No soundcards found.
+>> [    1.970902] arm-smmu-v3 9050000.smmuv3: event 0x10 received:
+>> [    1.971600] arm-smmu-v3 9050000.smmuv3:      0x0000020000000010
+>> [    1.971601] arm-smmu-v3 9050000.smmuv3:      0x0000020000000000
+>> [    1.971601] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+>> [    1.971602] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+>> [    1.971606] arm-smmu-v3 9050000.smmuv3: event 0x10 received:
+>> [    1.971607] arm-smmu-v3 9050000.smmuv3:      0x0000020000000010
+>> [    1.974202] arm-smmu-v3 9050000.smmuv3:      0x0000020000000000
+>> [    1.974634] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+>> [    1.975005] Freeing unused kernel memory: 10112K
+>> [    1.975062] arm-smmu-v3 9050000.smmuv3:      0x0000000000000000
+>> [    1.975442] Run init as init process
+>>
+>> Another information is that if "maxcpus=3" is removed from the kernel command line,
+>> it will be OK.
+>>
+>> I am not sure if there is a bug about vsmmu. It will be very appreciated if anyone
+>> know this issue or can take a look at it.
+> 
+> thanks
+> -- PMM
+> .
 
