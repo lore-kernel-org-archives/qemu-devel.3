@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E5DECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 11:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED472ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 11:15:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snycj-0006IA-ID; Tue, 10 Sep 2024 07:01:29 -0400
+	id 1snyoz-0005RX-FX; Tue, 10 Sep 2024 07:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1snycf-0006Dg-91; Tue, 10 Sep 2024 07:01:25 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1snycc-0007zB-CG; Tue, 10 Sep 2024 07:01:24 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4X30yb1Bwkz6K9BJ;
- Tue, 10 Sep 2024 18:57:11 +0800 (CST)
-Received: from frapeml500005.china.huawei.com (unknown [7.182.85.13])
- by mail.maildlp.com (Postfix) with ESMTPS id 6980E140A36;
- Tue, 10 Sep 2024 19:01:06 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- frapeml500005.china.huawei.com (7.182.85.13) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 10 Sep 2024 13:01:06 +0200
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Tue, 10 Sep 2024 12:01:05 +0100
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: Gavin Shan <gshan@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "mst@redhat.com" <mst@redhat.com>, "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>, Jonathan Cameron
- <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
- <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
- <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
- "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "npiggin@gmail.com"
- <npiggin@gmail.com>, "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
- <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
- <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
- <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>, Linuxarm <linuxarm@huawei.com>
-Subject: RE: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
- {socket,cluster,core,thread}-id property
-Thread-Topic: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
- {socket,cluster,core,thread}-id property
-Thread-Index: AQHaverDPpQr1lKFK0SrrcqBF6W41rIjVaUAgAuCoZCAGUx/gIAAE3TggAfVAICAAA0+UA==
-Date: Tue, 10 Sep 2024 11:01:05 +0000
-Message-ID: <cff9b8f407044deb8ed4b1aa5acea5f4@huawei.com>
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-2-salil.mehta@huawei.com>
- <11e627ef-d75e-4114-9b93-14d80ec0526b@redhat.com>
- <c889781d3eb048d19bae4ceff8646a4e@huawei.com> <Zthx3dQInrcgly6+@intel.com>
- <9376341923d94a2bbd8d24f4f6844585@huawei.com> <Zt8UGd9YRANnBPVT@intel.com>
-In-Reply-To: <Zt8UGd9YRANnBPVT@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.149.160]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snyow-0005Qn-O1
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 07:14:06 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snyou-0001dD-RR
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 07:14:06 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5c26852aff1so6297761a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 04:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725966841; x=1726571641; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7LUNBCFMOK1dnFjHo5WjzcQB0Uw9vV8fJUBWXvZgEHM=;
+ b=HspC5rZb/+VbKzmTaJcqLAI9OwHojdJ1mZyVpSxz7Ho4uYRrjuoElEPN2YUnZg05Yp
+ nr0sj4OStKexCafyKKS578+F+XGxaRCo3wu/vT0An1T5LKCUViIzHGIpt5OQTEsLyT45
+ eQdZJBLD+vbFeRhT7E/1fezBaxHC0ccw+cvXepfAYThnEkFWdcPvPSTl807x/xrWy4kB
+ MZ7mGHv5aH0eAxV67OV/ijlq8GC00YPzXKjnk9uuy0WtL1Ybl+zP5Q2rqpYdMYJRMgfK
+ RnDmTE5aywaL8zxDMoeseA+qYXSF6/dwtiZv328r1GlmA6W4pZ1yFnDxEv3FpMyZXb2k
+ JEOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725966841; x=1726571641;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7LUNBCFMOK1dnFjHo5WjzcQB0Uw9vV8fJUBWXvZgEHM=;
+ b=VSNC9oE4Bkr8UjNSDKXP2fvwfRgWZZ1NiUWkXsM0lwKORzwB1IR00EGLSTnVMI4xtK
+ 1B0e9TpndvLZKRg4vLxCdFDN6/P6w5DhEriNKFIRFZbBjFH056bWXFaYlBG8aWjnoYB5
+ e8gcvBCFE+LiR14ERE/O3Rt2suQMenBL3GS3pjjPamJ9ncLrUzZob79jYnGNPInYUjFf
+ DNcv7NASVHvO1kki5WsawEAR3yM7REE6BjcT78XR9k1pCDobD3SkOy5n00jZNWK7vKJX
+ jnVIJe8ejhYml+4zkG+ADA3zfppd9dRKq/bEySUSAPJV4D5/iEJESMaaRq9rR/eeDr9a
+ rUoA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/lzXk5ePiT4HT0/gTkH4y5vZ5OjrkZGtliWuBsSVCFERmxfZbgJpA3RcfWZrjS7Bj+2UsuXd7erso@nongnu.org
+X-Gm-Message-State: AOJu0YwA6KHnjRRvO+0RFRu/xnkIr5T0/gAj7GAx2jzW+ltSW3X0nsUK
+ UpUqLaKmFmB0cVbSlWHLTzw5MCF6y+sVlil1zvQ2oPMpjzJJTjmNLW5dn0hZ/Z7NwRGDtUOldab
+ B
+X-Google-Smtp-Source: AGHT+IG4og8CAuPi60U3dXsmknyBdkw1Bt7XtwFHqlk5i4FkoIiujKvwNYFvYBe4EsLQQEFb4c7qIw==
+X-Received: by 2002:a05:6402:13d0:b0:5c2:6e5f:3bf9 with SMTP id
+ 4fb4d7f45d1cf-5c3e9742e64mr9451189a12.28.1725966841165; 
+ Tue, 10 Sep 2024 04:14:01 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.217.32])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c3ebd46909sm4305742a12.25.2024.09.10.04.14.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Sep 2024 04:14:00 -0700 (PDT)
+Message-ID: <79f8ca1e-a626-43e8-8b08-4fb231dca07f@linaro.org>
+Date: Tue, 10 Sep 2024 13:13:58 +0200
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: check-functional skipUnless failure
+To: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <5f193fa1-89ec-4424-b6fd-c7ae1a4beedf@linaro.org>
+ <4942adc4-68f5-4d26-acfc-f47f531c9c43@linaro.org>
+ <b04d662f-0ec1-4c93-a67a-d0e77df271cd@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b04d662f-0ec1-4c93-a67a-d0e77df271cd@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,239 +96,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HI Zhao,
-
->  From: Zhao Liu <zhao1.liu@intel.com>
->  Sent: Monday, September 9, 2024 4:28 PM
->  To: Salil Mehta <salil.mehta@huawei.com>
-> =20
->  On Wed, Sep 04, 2024 at 05:37:21PM +0000, Salil Mehta wrote:
->  > Date: Wed, 4 Sep 2024 17:37:21 +0000
->  > From: Salil Mehta <salil.mehta@huawei.com>
->  > Subject: RE: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
->  > {socket,cluster,core,thread}-id property
->  >
->  > Hi Zhao,
->  >
->  > >  From: zhao1.liu@intel.com <zhao1.liu@intel.com>
->  > >  Sent: Wednesday, September 4, 2024 3:43 PM
->  > >  To: Salil Mehta <salil.mehta@huawei.com>
->  > >
->  > >  Hi Salil,
->  > >
->  > >  On Mon, Aug 19, 2024 at 11:53:52AM +0000, Salil Mehta wrote:
->  > >  > Date: Mon, 19 Aug 2024 11:53:52 +0000  > From: Salil Mehta
->  > > <salil.mehta@huawei.com>  > Subject: RE: [PATCH RFC V3 01/29]
->  > > arm/virt,target/arm: Add new ARMCPU  >
->  > > {socket,cluster,core,thread}-id property
->  > >
->  > >  [snip]
->  > >
->  > >  > >  > NULL); @@ -2708,6 +2716,7 @@ static const CPUArchIdList  > >
->  > > *virt_possible_cpu_arch_ids(MachineState *ms)
->  > >  > >  >   {
->  > >  > >  >       int n;
->  > >  > >  >       unsigned int max_cpus =3D ms->smp.max_cpus;
->  > >  > >  > +    unsigned int smp_threads =3D ms->smp.threads;
->  > >  > >  >       VirtMachineState *vms =3D VIRT_MACHINE(ms);
->  > >  > >  >       MachineClass *mc =3D MACHINE_GET_CLASS(vms);
->  > >  > >  >
->  > >  > >  > @@ -2721,6 +2730,7 @@ static const CPUArchIdList  > >
->  > > *virt_possible_cpu_arch_ids(MachineState *ms)
->  > >  > >  >       ms->possible_cpus->len =3D max_cpus;
->  > >  > >  >       for (n =3D 0; n < ms->possible_cpus->len; n++) {
->  > >  > >  >           ms->possible_cpus->cpus[n].type =3D ms->cpu_type;
->  > >  > >  > +        ms->possible_cpus->cpus[n].vcpus_count =3D smp_thre=
-ads;
->  > >  > >  >           ms->possible_cpus->cpus[n].arch_id =3D
->  > >  > >  >               virt_cpu_mp_affinity(vms, n);
->  > >  > >  >
->  > >  > >
->  > >  > >  Why @vcpus_count is initialized to @smp_threads? it needs to
->  > > be  > > documented in the commit log.
->  > >  >
->  > >  >
->  > >  > Because every thread internally amounts to a vCPU in QOM and
->  > > which is  > in 1:1 relationship with KVM vCPU. AFAIK, QOM does not
->  > > strictly  > follows any architecture. Once you start to get into
->  > > details of  > threads there are many aspects of shared resources one
->  > > will have to  > consider and these can vary across different
->  > > implementations of  architecture.
->  > >
->  > >  For SPAPR CPU, the granularity of >possible_cpus->cpus[] is "core",
->  > > and for  x86, it's "thread" granularity.
->  >
->  >
->  > We have threads per-core at microarchitecture level in ARM as well.
->  > But each thread appears like a vCPU to OS and AFAICS there are no
->  > special attributes attached to it. SMT can be enabled/disabled at
->  > firmware and should get reflected in the configuration accordingly
->  > i.e. value of *threads-per-core* changes between 1 and 'N'.  This
->  > means 'vcpus_count' has to reflect the correct configuration. But I
->  > think threads lack proper representation in Qemu QOM.
-> =20
->  In topology related part, SMT (of x86) usually represents the logical
->  processor level. And thread has the same meaning.
+On 10/9/24 09:36, Thomas Huth wrote:
+> On 10/09/2024 08.41, Philippe Mathieu-Daudé wrote:
+>>> line 16, in tesseract_available
+>>>      (stdout, stderr, ret) = run_cmd([ 'tesseract', '--version'])
+>>>    File "/home/rth/qemu/src/tests/functional/qemu_test/cmd.py", line 
+>>> 69, in run_cmd
+>>>      subp = subprocess.Popen(args,
+>>>    File "/usr/lib64/python3.9/subprocess.py", line 951, in __init__
+>>>      self._execute_child(args, executable, preexec_fn, close_fds,
+>>>    File "/usr/lib64/python3.9/subprocess.py", line 1837, in 
+>>> _execute_child
+>>>      raise child_exception_type(errno_num, err_msg, err_filename)
+>>> FileNotFoundError: [Errno 2] No such file or directory: 'tesseract'
 
 
-Agreed. It is same in ARM as well. The difference could be in how hardware
-threads are implemented at microarchitecture level.  Nevertheless, we do
-have such virtual configurations, and the meaning of *threads* as-in QOM
-topology (socket,cluster,core,thread) is virtualized similar to the hardwar=
-e
-threads in host. And One should be able to configure threads support in the
-virtual environment,  regardless whether or not underlying hardware
-supports threads. That's my take.
+>> While looking at this, I'm surprised to notice has_cmd() actually
+>> *runs* the command by calling run_cmd(). I'd have expected it solely
+>> checks for binary presence and RX perms, avoiding unexpected side
+>> effects.
+> 
+> It uses "which" to search for the binary ... that could be done better 
+> for sure (especially since "which" might not be available on all 
+> systems), but it already was done this way in the Avocado tests, so at 
+> least that's not a regression.
 
-Other aspect is how we then expose these threads to the guest. The guest
-kernel (just like host kernel) should gather topology information using
-ACPI PPTT Table (This is ARM specific?). Later is populated by the Qemu
-(just like by firmware for the host kernel) by making use of the virtual
-topology. ARM guest kernel, in absence of PPTT support can detect
-presence of hardware threads by reading MT Bit within the MPIDR_EL1
-register.
-
-Every property in 'ms->possible_cpus->cpus[n].props should be exactly
-same as finalized and part of the MachineState::CpuTopology.
-Hence, number of threads-per-core 'vcpus_count'  should not be treated
-differently.=20
-
-But there is  a catch! (I explained that earlier)
-
-
- To change these
->  meanings is also possible, but I think it should be based on the actual =
-use
->  case. we can consider the complexity of the implementation when there is=
- a
->  need.
-
-
-Agreed. There is no ambiguity in the meaning of hardware threads or the=20
-virtualized MachineState::CpuTopology. Properties of all the possible vCPUs
-should exactly be same as part of MachineState. This includes the number
-of threads-per-core.
-
-You mentioned 'vcpus_count' should be 1 but does that mean user can never
-specify threads > 1 in virtual configuration for x86?
-
-
-> =20
->  > In Qemu, each vCPU reflects an execution context (which gets uniquely
->  > mapped to KVM vCPU). AFAICS, we only have *CPUState* (Struct
->  ArchCPU)
->  > as a placeholder for this execution context and there is no
->  > *ThreadState* (derived out of Struct CPUState). Hence, we've  to map
->  > all the threads as QOM vCPUs. This means the array of present or
->  > possible CPUs represented by 'struct CPUArchIdList' contains all
->  > execution contexts which actually might be vCPU or a thread. Hence,
->  > usage of
->  > *vcpus_count* seems quite superficial to me frankly.
->  >
->  > Also, AFAICS, KVM does not have the concept of the threads and only
->  > has KVM vCPUs, but you are still allowed to specify the topology with
->  > sockets, dies, clusters, cores, threads in most architectures.
-> =20
->  There are some uses for topology, such as it affects scheduling behavior=
-,
->  and it affects feature emulation, etc.
-
-
-True. And we should be flexible at the VMM level. We should let Admin of
-the VMM control how he creates the virtual topology which best fits
-on the underlying hardware features of the host. This includes, NUMA,
-sub-NUMA, cores, hardware, threads, cache topology etc.=20
-
-
-> =20
->  > >  And smp.threads means how many threads in one core, so for x86, the
->  > > vcpus_count of a "thread" is 1, and for spapr, the vcpus_count of a
->  "core" equals to smp.threads.
->  >
->  >
->  > Sure, but does the KVM specifies this?
-> =20
->  At least as you said, KVM (for x86) doesn't consider higher-level topolo=
-gies
->  at the moment, but that's not to say that it won't in the future, as cer=
-tain
->  registers do have topology dependencies.
-
-
-sure. so you mean for x86 virtual topology, smp.threads =3D 1 always?
-
-
-> =20
->  > and how does these threads map to the QOM vCPU objects or execution
->  context?
-> =20
->  Each CPU object will create a (software) thread, you can refer the funct=
-ion
->  "kvm_start_vcpu_thread(CPUState *cpu)", which will be called when CPU
->  object realizes.
-
-
-Yes, sure, and each such QOM vCPU thread and 'struct CPUState' is mapped to
-the lowest granularity of execution specified within the QOM virtual topolo=
-gy.
-It could be a 'thread' or a 'core'. And all these will run as a KVM vCPU sc=
-heduled
-on some hardware core and maybe hardware thread (if enabled).
-
-So there is no difference across architectures regarding this part. I was t=
-rying
-to point that in QOM, even the threads will have their own 'struct CPUState=
-'
-and each one will be part of the "CPUArchIdList *possible_cpus" maintained
-at the MachineState. At this level we loose the relationship information of
-the cores and their corresponding threads (given by 'vcpus_count').
-
-
->  > AFAICS there is nothing but 'CPUState'
->  > which will be made part of the  possible vCPU list 'struct CPUArchIdLi=
-st'.
-> =20
->  As I said, an example is spapr ("spapr_possible_cpu_arch_ids()"), which
->  maps possible_cpu to core object. However, this is a very specific examp=
-le,
->  and like Igor's slides said, I understand it's an architectural requirem=
-ent.
-
-
-I'm sure there must have been some. I'm trying to understand it. Can you
-share the slides?
-
-
-> =20
->  > >
->  > >  IIUC, your granularity is still "thread", so that this filed should=
- be 1.
->  >
->  >
->  > Well, again we need more discussion on this. I've stated my concerns
->  > against doing this. User should be allowed to create virtual topology
->  > which will include 'threads' as one of the parameter.
->  >
-> =20
->  I don't seem to understand...There is a "threads" parameter in -smp, doe=
-s
->  this not satisfy your use case?
-
-It certainly does. But this is what should get reflected in the 'vcpus_coun=
-t' as well?=20
-
-
-Best regards
-Salil
-
-> =20
->  Regards,
->  Zhao
-> =20
+Sure, I just wanted to share my surprise before forgetting ;)
 
 
