@@ -4,52 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4C9EDE9AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 659D7EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so5JI-0003lX-EX; Tue, 10 Sep 2024 14:09:52 -0400
+	id 1so5QK-0006wg-BD; Tue, 10 Sep 2024 14:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <git@dprinz.de>) id 1so5JH-0003gN-5B
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:09:51 -0400
-Received: from mail.dprinz.de ([62.171.170.140])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <git@dprinz.de>) id 1so5JD-0007pK-Tc
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:09:50 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
- with ESMTPSA id 48DFF1BD; Tue, 10 Sep 2024 20:09:38 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dprinz.de; s=dkim;
- t=1725991780; h=from:subject:date:message-id:to:cc:mime-version:
- content-transfer-encoding:in-reply-to:references;
- bh=UElSgIew27IKEkvI804tLfULXFMFcMBQRfNiXzPXqtA=;
- b=svxDtS2uXRVtd7fGM5D0n5SNTNr1jHI7Yc/mMHqKI91NR+TcV6QD/evHnaBDw6bYEXZ/hM
- QY6yLJpqwIgC/tnVEZAoHAt0Ux+6JrG9kKG95yZTkfIRRt6g3RI7joZPkVQpykRpu0RqgH
- htskOYDnWIXnnecXjbdipWJ4UNYi97OWgIVRxtGvdFGyWI3P+7ZxzvZN/tsfllY0AhUJme
- Cu4RO0ekdswnIczlOie1vY5bIasVClVr+noEksL3gHT+G2b8eNIyWTaVCIsTzmgusmvMHc
- dfD2DLdKf6mcN2Zi67pDe6qWvyG754E90u3Q8RM+wTT7XKy/gGZvQJqSKkPXTQ==
-From: Dominic Prinz <git@dprinz.de>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Dominic Prinz <git@dprinz.de>
-Subject: [PATCH v3] hw/acpi/ich9: Add periodic and swsmi timer
-Date: Tue, 10 Sep 2024 20:08:20 +0200
-Message-ID: <1d90ea69e01ab71a0f2ced116801dc78e04f4448.1725991505.git.git@dprinz.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240910111914-mutt-send-email-mst@kernel.org>
-References: <20240910111914-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so5QJ-0006s4-55
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:17:07 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so5QH-0000GQ-Fp
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:17:06 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a83562f9be9so107759066b.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:17:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725992224; x=1726597024; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZNpInoAnaoFw/b6JC0InJhjKIpedK1j64nWnGbkzwe8=;
+ b=pMFBBQ2j/F8v11Ly6s+NnqOszW1o9o87RoysG9uVGY5VMJeYyYcvgrfum9KEP9PQvu
+ 8vkbgnAy2nxP/ZMonM6F3SPRd98AmJv9O2qgGxhyfzPt3r4XZX4XZRBQTwsywn1ny5Gl
+ IouuAC3EjVbqbV62KloMXqnYGikgPz9jL3qSV+cwscr8dDabgGG3Q3tg9vD0iWNcBWar
+ aAj5jbLvpdg3cYilwpq6QA6hOxCa5/91CCOgQFU3KJ3Q1/9phAz6SrmPZbUtsHHNIhsc
+ 2ov0ORLmUmHMJ6QgrGnt3sjaExDcCtO5PsCuxKQI+x4j4o4TVdm78LVAySTImvKw1siD
+ lDlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725992224; x=1726597024;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZNpInoAnaoFw/b6JC0InJhjKIpedK1j64nWnGbkzwe8=;
+ b=FVncLOHKWpdwOxqBknCMV2PSSi6gdtpN78UjnuAh/tHl6JeyOnLXU9bg28XrCaEROr
+ Lc1Q7PyeYX3aQOQguyPt7tqZQM1kCprkAPTxDTOdRLeoKVtYJtdgiEJIEs/bOm4obl8m
+ /Q7Jbx0cpB9fHbFsy/HZjFluRqrFEqnPcLYOby2Zrit7AnDmRYcWG6S7lL8C1BcAU52y
+ PLatHgR9bMoJJeWTAR6wgAiemEfIhC+sZ6O+0RJCMSMSH3DjPUFKwYtyCoHo7L015jxK
+ cUtdcxgRctpo0giBqaupsGul61KnSJJ98sRW9IDsHtnILgnINKwK23iYSPgdNtLuoIbj
+ yZkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCViuLNPy5kkZXCAq+pvCHOzdIJR5TZ+MU+uyd8kViUOpQRIXaBd8m5ZXcUFTMPPB3OeJ81sE02bpALn@nongnu.org
+X-Gm-Message-State: AOJu0YxWnXCf/xQNCBH9GqhgAGZNREokqjklEfOlwEu1fLUP17vuiob0
+ nLjdkTzRSEQ6btiWD7EzXTHgXBTwPGJGBaKH8SNqCja8seuptgiYcedpgSbjW1M=
+X-Google-Smtp-Source: AGHT+IHVBAS7aoNz98tml5HNyb5wUj8Kc52IBzujPkjYyxzcZdwbjvBFkiRx/JtImA3ubIeoEer34w==
+X-Received: by 2002:a17:907:7f25:b0:a7d:e5b1:bf65 with SMTP id
+ a640c23a62f3a-a9004818013mr46073066b.21.1725992223484; 
+ Tue, 10 Sep 2024 11:17:03 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.217.32])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25ced20csm514193866b.172.2024.09.10.11.17.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Sep 2024 11:17:02 -0700 (PDT)
+Message-ID: <8f93171c-2964-48dc-b742-72c73e57d917@linaro.org>
+Date: Tue, 10 Sep 2024 20:16:59 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/10] tests/docker: remove debian-armel-cross
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-arm@nongnu.org, devel@lists.libvirt.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Beraldo Leal <bleal@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Yanan Wang
+ <wangyanan55@huawei.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20240910173900.4154726-1-alex.bennee@linaro.org>
+ <20240910173900.4154726-2-alex.bennee@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240910173900.4154726-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
-Received-SPF: pass client-ip=62.171.170.140; envelope-from=git@dprinz.de;
- helo=mail.dprinz.de
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,330 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements the periodic and the swsmi ICH9 chipset timers. They are
-especially useful when prototyping UEFI firmware (e.g. with EDK2's OVMF)
-using QEMU.
+On 10/9/24 19:38, Alex Bennée wrote:
+> As debian-11 transitions to LTS we are starting to have problems
+> building the image. While we could update to a later Debian building a
+> 32 bit QEMU without modern floating point is niche host amongst the
+> few remaining 32 bit hosts we regularly build for. For now we still
+> have armhf-debian-cross-container which is currently built from the
+> more recent debian-12.
 
-For backwards compatibility, the compat properties "x-smi-swsmi-timer",
-and "x-smi-periodic-timer" are introduced.
+Indeed I can't remember a armel build failure that wasn't also
+happening on the armhf container.
 
-Additionally, writes to the SMI_STS register are enabled for the
-corresponding two bits using a write mask to make future work easier.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Signed-off-by: Dominic Prinz <git@dprinz.de>
----
-Changes from v2 to v3 (this):
-  - Updated compat properties to reflect new minor release (9.1)
+> Message-Id: <20240910140733.4007719-2-alex.bennee@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   .gitlab-ci.d/container-cross.yml              |   6 -
+>   .gitlab-ci.d/crossbuilds.yml                  |   7 -
+>   .../dockerfiles/debian-armel-cross.docker     | 179 ------------------
+>   tests/lcitool/refresh                         |   6 -
+>   4 files changed, 198 deletions(-)
+>   delete mode 100644 tests/docker/dockerfiles/debian-armel-cross.docker
 
-Changes from v1 to v2:
-  - Ensured backwards compatablity by introducing two compat properties
-  - Introduced write mask for SMI_STS register to make future work easier
-
- hw/acpi/ich9.c                | 23 +++++++++
- hw/acpi/ich9_timer.c          | 93 +++++++++++++++++++++++++++++++++++
- hw/acpi/meson.build           |  2 +-
- hw/i386/pc.c                  |  5 +-
- hw/isa/lpc_ich9.c             | 14 ++++++
- include/hw/acpi/ich9.h        |  6 +++
- include/hw/acpi/ich9_timer.h  | 23 +++++++++
- include/hw/southbridge/ich9.h |  4 ++
- 8 files changed, 168 insertions(+), 2 deletions(-)
- create mode 100644 hw/acpi/ich9_timer.c
- create mode 100644 include/hw/acpi/ich9_timer.h
-
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 02d8546bd3..c15e5b8281 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -35,6 +35,7 @@
- #include "sysemu/runstate.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/ich9_tco.h"
-+#include "hw/acpi/ich9_timer.h"
- 
- #include "hw/southbridge/ich9.h"
- #include "hw/mem/pc-dimm.h"
-@@ -108,6 +109,18 @@ static void ich9_smi_writel(void *opaque, hwaddr addr, uint64_t val,
-         }
-         pm->smi_en &= ~pm->smi_en_wmask;
-         pm->smi_en |= (val & pm->smi_en_wmask);
-+        if (pm->swsmi_timer_enabled) {
-+            ich9_pm_update_swsmi_timer(pm, pm->smi_en &
-+                                               ICH9_PMIO_SMI_EN_SWSMI_EN);
-+        }
-+        if (pm->periodic_timer_enabled) {
-+            ich9_pm_update_periodic_timer(pm, pm->smi_en &
-+                                                  ICH9_PMIO_SMI_EN_PERIODIC_EN);
-+        }
-+        break;
-+    case 4:
-+        pm->smi_sts &= ~pm->smi_sts_wmask;
-+        pm->smi_sts |= (val & pm->smi_sts_wmask);
-         break;
-     }
- }
-@@ -286,6 +299,8 @@ static void pm_powerdown_req(Notifier *n, void *opaque)
- 
- void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
- {
-+    pm->smi_sts_wmask = 0;
-+
-     memory_region_init(&pm->io, OBJECT(lpc_pci), "ich9-pm", ICH9_PMIO_SIZE);
-     memory_region_set_enabled(&pm->io, false);
-     memory_region_add_subregion(pci_address_space_io(lpc_pci),
-@@ -305,6 +320,14 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
-                           "acpi-smi", 8);
-     memory_region_add_subregion(&pm->io, ICH9_PMIO_SMI_EN, &pm->io_smi);
- 
-+    if (pm->swsmi_timer_enabled) {
-+        ich9_pm_swsmi_timer_init(pm);
-+    }
-+
-+    if (pm->periodic_timer_enabled) {
-+        ich9_pm_periodic_timer_init(pm);
-+    }
-+
-     if (pm->enable_tco) {
-         acpi_pm_tco_init(&pm->tco_regs, &pm->io);
-     }
-diff --git a/hw/acpi/ich9_timer.c b/hw/acpi/ich9_timer.c
-new file mode 100644
-index 0000000000..5b1c910156
---- /dev/null
-+++ b/hw/acpi/ich9_timer.c
-@@ -0,0 +1,93 @@
-+/*
-+ * QEMU ICH9 Timer emulation
-+ *
-+ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/core/cpu.h"
-+#include "hw/pci/pci.h"
-+#include "hw/southbridge/ich9.h"
-+#include "qemu/timer.h"
-+
-+#include "hw/acpi/ich9_timer.h"
-+
-+void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable)
-+{
-+    uint16_t swsmi_rate_sel;
-+    int64_t expire_time;
-+    ICH9LPCState *lpc;
-+
-+    if (enable) {
-+        lpc = container_of(pm, ICH9LPCState, pm);
-+        swsmi_rate_sel =
-+            (pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_3) & 0xc0) >> 6;
-+
-+        if (swsmi_rate_sel == 0) {
-+            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 1500000LL;
-+        } else {
-+            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-+                          8 * (1 << swsmi_rate_sel) * 1000000LL;
-+        }
-+
-+        timer_mod(pm->swsmi_timer, expire_time);
-+    } else {
-+        timer_del(pm->swsmi_timer);
-+    }
-+}
-+
-+static void ich9_pm_swsmi_timer_expired(void *opaque)
-+{
-+    ICH9LPCPMRegs *pm = opaque;
-+
-+    pm->smi_sts |= ICH9_PMIO_SMI_STS_SWSMI_STS;
-+    ich9_generate_smi();
-+
-+    ich9_pm_update_swsmi_timer(pm, pm->smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
-+}
-+
-+void ich9_pm_swsmi_timer_init(ICH9LPCPMRegs *pm)
-+{
-+    pm->smi_sts_wmask |= ICH9_PMIO_SMI_STS_SWSMI_STS;
-+    pm->swsmi_timer =
-+        timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_pm_swsmi_timer_expired, pm);
-+}
-+
-+void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable)
-+{
-+    uint16_t per_smi_sel;
-+    int64_t expire_time;
-+    ICH9LPCState *lpc;
-+
-+    if (enable) {
-+        lpc = container_of(pm, ICH9LPCState, pm);
-+        per_smi_sel = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1) & 3;
-+        expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-+                      8 * (1 << (3 - per_smi_sel)) * NANOSECONDS_PER_SECOND;
-+
-+        timer_mod(pm->periodic_timer, expire_time);
-+    } else {
-+        timer_del(pm->periodic_timer);
-+    }
-+}
-+
-+static void ich9_pm_periodic_timer_expired(void *opaque)
-+{
-+    ICH9LPCPMRegs *pm = opaque;
-+
-+    pm->smi_sts = ICH9_PMIO_SMI_STS_PERIODIC_STS;
-+    ich9_generate_smi();
-+
-+    ich9_pm_update_periodic_timer(pm,
-+                                  pm->smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
-+}
-+
-+void ich9_pm_periodic_timer_init(ICH9LPCPMRegs *pm)
-+{
-+    pm->smi_sts_wmask |= ICH9_PMIO_SMI_STS_PERIODIC_STS;
-+    pm->periodic_timer =
-+        timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_pm_periodic_timer_expired, pm);
-+}
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index fa5c07db90..7f8ccc9b7a 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
--acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
- acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
- acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index ba0ff51183..8d84c22458 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -79,7 +79,10 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
--GlobalProperty pc_compat_9_1[] = {};
-+GlobalProperty pc_compat_9_1[] = {
-+    { "ICH9-LPC", "x-smi-swsmi-timer", "off" },
-+    { "ICH9-LPC", "x-smi-periodic-timer", "off" },
-+};
- const size_t pc_compat_9_1_len = G_N_ELEMENTS(pc_compat_9_1);
- 
- GlobalProperty pc_compat_9_0[] = {
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index bd727b2320..ab17b76f54 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -43,6 +43,7 @@
- #include "hw/southbridge/ich9.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/ich9.h"
-+#include "hw/acpi/ich9_timer.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/qdev-properties.h"
- #include "sysemu/runstate.h"
-@@ -531,6 +532,15 @@ ich9_lpc_pmcon_update(ICH9LPCState *lpc)
-     uint16_t gen_pmcon_1 = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1);
-     uint16_t wmask;
- 
-+    if (lpc->pm.swsmi_timer_enabled) {
-+        ich9_pm_update_swsmi_timer(
-+            &lpc->pm, lpc->pm.smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
-+    }
-+    if (lpc->pm.periodic_timer_enabled) {
-+        ich9_pm_update_periodic_timer(
-+            &lpc->pm, lpc->pm.smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
-+    }
-+
-     if (gen_pmcon_1 & ICH9_LPC_GEN_PMCON_1_SMI_LOCK) {
-         wmask = pci_get_word(lpc->d.wmask + ICH9_LPC_GEN_PMCON_1);
-         wmask &= ~ICH9_LPC_GEN_PMCON_1_SMI_LOCK;
-@@ -826,6 +836,10 @@ static Property ich9_lpc_properties[] = {
-                       ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT, true),
-     DEFINE_PROP_BIT64("x-smi-cpu-hotunplug", ICH9LPCState, smi_host_features,
-                       ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT, true),
-+    DEFINE_PROP_BOOL("x-smi-swsmi-timer", ICH9LPCState,
-+                     pm.swsmi_timer_enabled, true),
-+    DEFINE_PROP_BOOL("x-smi-periodic-timer", ICH9LPCState,
-+                     pm.periodic_timer_enabled, true),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
-index 2faf7f0cae..245fe08dc2 100644
---- a/include/hw/acpi/ich9.h
-+++ b/include/hw/acpi/ich9.h
-@@ -46,6 +46,7 @@ typedef struct ICH9LPCPMRegs {
-     uint32_t smi_en;
-     uint32_t smi_en_wmask;
-     uint32_t smi_sts;
-+    uint32_t smi_sts_wmask;
- 
-     qemu_irq irq;      /* SCI */
- 
-@@ -68,6 +69,11 @@ typedef struct ICH9LPCPMRegs {
-     bool smm_compat;
-     bool enable_tco;
-     TCOIORegs tco_regs;
-+
-+    bool swsmi_timer_enabled;
-+    bool periodic_timer_enabled;
-+    QEMUTimer *swsmi_timer;
-+    QEMUTimer *periodic_timer;
- } ICH9LPCPMRegs;
- 
- #define ACPI_PM_PROP_TCO_ENABLED "enable_tco"
-diff --git a/include/hw/acpi/ich9_timer.h b/include/hw/acpi/ich9_timer.h
-new file mode 100644
-index 0000000000..5112df4385
---- /dev/null
-+++ b/include/hw/acpi/ich9_timer.h
-@@ -0,0 +1,23 @@
-+/*
-+ * QEMU ICH9 Timer emulation
-+ *
-+ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_ACPI_ICH9_TIMER_H
-+#define HW_ACPI_ICH9_TIMER_H
-+
-+#include "hw/acpi/ich9.h"
-+
-+void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable);
-+
-+void ich9_pm_swsmi_timer_init(ICH9LPCPMRegs *pm);
-+
-+void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable);
-+
-+void ich9_pm_periodic_timer_init(ICH9LPCPMRegs *pm);
-+
-+#endif
-diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
-index fd01649d04..6c60017024 100644
---- a/include/hw/southbridge/ich9.h
-+++ b/include/hw/southbridge/ich9.h
-@@ -196,8 +196,12 @@ struct ICH9LPCState {
- #define ICH9_PMIO_GPE0_LEN                      16
- #define ICH9_PMIO_SMI_EN                        0x30
- #define ICH9_PMIO_SMI_EN_APMC_EN                (1 << 5)
-+#define ICH9_PMIO_SMI_EN_SWSMI_EN               (1 << 6)
- #define ICH9_PMIO_SMI_EN_TCO_EN                 (1 << 13)
-+#define ICH9_PMIO_SMI_EN_PERIODIC_EN            (1 << 14)
- #define ICH9_PMIO_SMI_STS                       0x34
-+#define ICH9_PMIO_SMI_STS_SWSMI_STS             (1 << 6)
-+#define ICH9_PMIO_SMI_STS_PERIODIC_STS          (1 << 14)
- #define ICH9_PMIO_TCO_RLD                       0x60
- #define ICH9_PMIO_TCO_LEN                       32
- 
--- 
-2.43.0
 
 
