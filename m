@@ -4,74 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D55EEDE9BA
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 20:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A03CEDE9BA
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 20:35:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so7PL-0002qu-PO; Tue, 10 Sep 2024 16:24:15 -0400
+	id 1so7Zz-0002Qf-Qs; Tue, 10 Sep 2024 16:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1so7PI-0002pd-5J
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:24:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1so7Zw-0002PQ-Ds; Tue, 10 Sep 2024 16:35:12 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1so7PF-0004ql-6A
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:24:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725999847;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QouquCTMI5hjuDyEugG3+uJOuiJnK8QDr7vVuOAjxv0=;
- b=J8Y2++xA9uiO4856Ow6LjXfmQ56Rr+jPqmvzaaPVkgZQLHJNOiTttxRYvuJqnw0SYXenXG
- /6MPOvyRbDULdQUIxe9hepe5gHgeSf9PBhkP7ysge6RGL+GgLypvHm27ostYrDcwPFSEDU
- oYhTlCaPXrXkX167TdNnqB4aUQKjvCk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-ar6232YjPbGb19T7Afk29Q-1; Tue,
- 10 Sep 2024 16:24:02 -0400
-X-MC-Unique: ar6232YjPbGb19T7Afk29Q-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C14021933E9F; Tue, 10 Sep 2024 20:23:50 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.193])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E26A2196BFD0; Tue, 10 Sep 2024 20:23:44 +0000 (UTC)
-Date: Tue, 10 Sep 2024 16:23:38 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Changqi Lu <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
- pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
- its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, k.jensen@samsung.com
-Subject: Re: [PATCH v11 09/10] hw/nvme: add reservation protocal command
-Message-ID: <20240910202338.GB42677@fedora.redhat.com>
-References: <20240909113453.64527-1-luchangqi.123@bytedance.com>
- <20240909113453.64527-10-luchangqi.123@bytedance.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1so7Zu-0005uq-6z; Tue, 10 Sep 2024 16:35:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=zHnOqHVEQJmkInTlASwxCPY5g9ucz3r3LlAQPP57ncc=; b=hYD9MOKnjK+t75WzTYHlmPj3Bo
+ NTikCEg+jWRuNHXMuG+fnLgWUBpVTl5TPtOUoMbgHGWdVtuGJMgXxMdJMcx3CNCbgJxnm85OQfkJJ
+ et0Xsi0pQmlEqbjorAlcaMsIUxbU9iT+V0Ym/A6RKf+sns1tr/VASRgqVuUKo+JMcY+yto367oVuv
+ QDQlX9U6YowAgmRfRmsCeVR8jTdajJLuXT8czawKB7QWIt7TgbvG8VGbPBabWEJeyw2o2sQrVoG9l
+ leLXBwR7sZ5pRF6kiXdU+0DR+f1VfUxEgEW7ynJnrkOJs6YWWj5/Il8jv4GygY6zDm9rPunpWPjFi
+ S0UEL21zSW4ZjSr4uQqt2j+E1JVAkrUIryR10IvgMqqPZ+iOZVLHVg8CDAUQRoVNp4vCCHjsdM47Z
+ y9b9ecvyDEIlJE9n8b4p+tuhND0hVVcmqQn44B9LKm70gjPvJ7Y0O7a0fUXWvjZ2TW3u3q11WTSLJ
+ 2u2p3yLAbkTvVLIHlmZFKP8Ju5EkXUQygMXbV5ZKkGcjm2m274IOsMDPQDw7ZU2TW08Zp4qZlDpJd
+ W4r2pkRMzlnLxD9/klCWebtoHJftwVX+RxHYwnxxRqJ1aV3zIWtSVOjiuFlDM4WMEOodVoXAWEGlD
+ 6uB5rTxVN+9qqBZDEaDZt7Ib45FMgFLNkWpBhJsec=;
+Received: from [2a00:23c4:8bb8:1400:b001:a616:651c:c1d5]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1so7Zk-0000r1-RT; Tue, 10 Sep 2024 21:35:04 +0100
+Message-ID: <1eadf79e-ffe3-4d46-93a8-bebebf38e03c@ilande.co.uk>
+Date: Tue, 10 Sep 2024 21:34:59 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="T2CBQSG9KrDUsCNc"
-Content-Disposition: inline
-In-Reply-To: <20240909113453.64527-10-luchangqi.123@bytedance.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, peter.maydell@linaro.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, palmer@dabbelt.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ atishp@rivosinc.com, dbarboza@ventanamicro.com,
+ Thomas Huth <thuth@redhat.com>
+References: <20240910045419.1252277-1-alistair.francis@wdc.com>
+ <20240910045419.1252277-3-alistair.francis@wdc.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240910045419.1252277-3-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:1400:b001:a616:651c:c1d5
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v4 2/2] hw/char: sifive_uart: Print uart characters async
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,596 +109,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/09/2024 05:54, Alistair Francis wrote:
 
---T2CBQSG9KrDUsCNc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The current approach of using qemu_chr_fe_write() and ignoring the
+> return values results in dropped characters [1].
+> 
+> Let's update the SiFive UART to use a async sifive_uart_xmit() function
+> to transmit the characters and apply back pressure to the guest with
+> the SIFIVE_UART_TXFIFO_FULL status.
+> 
+> This should avoid dropped characters and more realisticly model the
+> hardware.
 
-On Mon, Sep 09, 2024 at 07:34:52PM +0800, Changqi Lu wrote:
-> Add reservation acquire, reservation register,
-> reservation release and reservation report commands
-> in the nvme device layer.
->=20
-> By introducing these commands, this enables the nvme
-> device to perform reservation-related tasks, including
-> querying keys, querying reservation status, registering
-> reservation keys, initiating and releasing reservations,
-> as well as clearing and preempting reservations held by
-> other keys.
->=20
-> These commands are crucial for management and control of
-> shared storage resources in a persistent manner.
-> Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-> Acked-by: Klaus Jensen <k.jensen@samsung.com>
+Does the UART work reliably using the fifo8_*_bufptr() functions? One of the 
+motivations for my recent Fifo8 series is that these functions don't handle the 
+wraparound correctly, unlike the fifo8_*_buf() functions in my recent Fifo8 series 
+which do. This was the cause of Phil's async issue in 
+https://mail.gnu.org/archive/html/qemu-devel/2024-07/msg05028.html.
+
+> 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+> 
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Tested-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/nvme/ctrl.c       | 346 +++++++++++++++++++++++++++++++++++++++++++
->  hw/nvme/ns.c         |   6 +
->  hw/nvme/nvme.h       |   9 ++
->  include/block/nvme.h |  44 ++++++
->  4 files changed, 405 insertions(+)
->=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index ad212de723..ba98b86f9c 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -294,6 +294,10 @@ static const uint32_t nvme_cse_iocs_nvm[256] =3D {
->      [NVME_CMD_COMPARE]              =3D NVME_CMD_EFF_CSUPP,
->      [NVME_CMD_IO_MGMT_RECV]         =3D NVME_CMD_EFF_CSUPP,
->      [NVME_CMD_IO_MGMT_SEND]         =3D NVME_CMD_EFF_CSUPP | NVME_CMD_EF=
-F_LBCC,
-> +    [NVME_CMD_RESV_REGISTER]        =3D NVME_CMD_EFF_CSUPP,
-> +    [NVME_CMD_RESV_REPORT]          =3D NVME_CMD_EFF_CSUPP,
-> +    [NVME_CMD_RESV_ACQUIRE]         =3D NVME_CMD_EFF_CSUPP,
-> +    [NVME_CMD_RESV_RELEASE]         =3D NVME_CMD_EFF_CSUPP,
->  };
-> =20
->  static const uint32_t nvme_cse_iocs_zoned[256] =3D {
-> @@ -308,6 +312,10 @@ static const uint32_t nvme_cse_iocs_zoned[256] =3D {
->      [NVME_CMD_ZONE_APPEND]          =3D NVME_CMD_EFF_CSUPP | NVME_CMD_EF=
-F_LBCC,
->      [NVME_CMD_ZONE_MGMT_SEND]       =3D NVME_CMD_EFF_CSUPP | NVME_CMD_EF=
-F_LBCC,
->      [NVME_CMD_ZONE_MGMT_RECV]       =3D NVME_CMD_EFF_CSUPP,
-> +    [NVME_CMD_RESV_REGISTER]        =3D NVME_CMD_EFF_CSUPP,
-> +    [NVME_CMD_RESV_REPORT]          =3D NVME_CMD_EFF_CSUPP,
-> +    [NVME_CMD_RESV_ACQUIRE]         =3D NVME_CMD_EFF_CSUPP,
-> +    [NVME_CMD_RESV_RELEASE]         =3D NVME_CMD_EFF_CSUPP,
->  };
-> =20
->  static void nvme_process_sq(void *opaque);
-> @@ -1747,6 +1755,13 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
->      case NVME_CMD_READ:
->          status =3D NVME_UNRECOVERED_READ;
->          break;
-> +    case NVME_CMD_RESV_REPORT:
-> +        if (ret =3D=3D -ENOTSUP) {
-> +            status =3D NVME_INVALID_OPCODE;
-> +        } else {
-> +            status =3D NVME_UNRECOVERED_READ;
-> +        }
-> +        break;
->      case NVME_CMD_FLUSH:
->      case NVME_CMD_WRITE:
->      case NVME_CMD_WRITE_ZEROES:
-> @@ -1754,6 +1769,15 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
->      case NVME_CMD_COPY:
->          status =3D NVME_WRITE_FAULT;
->          break;
-> +    case NVME_CMD_RESV_REGISTER:
-> +    case NVME_CMD_RESV_ACQUIRE:
-> +    case NVME_CMD_RESV_RELEASE:
-> +        if (ret =3D=3D -ENOTSUP) {
-> +            status =3D NVME_INVALID_OPCODE;
-> +        } else {
-> +            status =3D NVME_WRITE_FAULT;
-> +        }
-> +        break;
->      default:
->          status =3D NVME_INTERNAL_DEV_ERROR;
->          break;
-> @@ -2692,6 +2716,320 @@ static uint16_t nvme_verify(NvmeCtrl *n, NvmeRequ=
-est *req)
->      return NVME_NO_COMPLETE;
->  }
-> =20
-> +typedef struct NvmeKeyInfo {
-> +    uint64_t cr_key;
-> +    uint64_t nr_key;
-> +} NvmeKeyInfo;
+>   include/hw/char/sifive_uart.h | 16 +++++-
+>   hw/char/sifive_uart.c         | 94 ++++++++++++++++++++++++++++++++---
+>   2 files changed, 102 insertions(+), 8 deletions(-)
+> 
+> diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.h
+> index 7f6c79f8bd..0846cf6218 100644
+> --- a/include/hw/char/sifive_uart.h
+> +++ b/include/hw/char/sifive_uart.h
+> @@ -24,6 +24,7 @@
+>   #include "hw/qdev-properties.h"
+>   #include "hw/sysbus.h"
+>   #include "qom/object.h"
+> +#include "qemu/fifo8.h"
+>   
+>   enum {
+>       SIFIVE_UART_TXFIFO        = 0,
+> @@ -48,9 +49,13 @@ enum {
+>       SIFIVE_UART_IP_RXWM       = 2  /* Receive watermark interrupt pending */
+>   };
+>   
+> +#define SIFIVE_UART_TXFIFO_FULL    0x80000000
 > +
-> +static uint16_t nvme_resv_register(NvmeCtrl *n, NvmeRequest *req)
+>   #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
+>   #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
+> +
+>   #define SIFIVE_UART_RX_FIFO_SIZE 8
+> +#define SIFIVE_UART_TX_FIFO_SIZE 8
+>   
+>   #define TYPE_SIFIVE_UART "riscv.sifive.uart"
+>   OBJECT_DECLARE_SIMPLE_TYPE(SiFiveUARTState, SIFIVE_UART)
+> @@ -63,13 +68,20 @@ struct SiFiveUARTState {
+>       qemu_irq irq;
+>       MemoryRegion mmio;
+>       CharBackend chr;
+> -    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
+> -    uint8_t rx_fifo_len;
+> +
+> +    uint32_t txfifo;
+>       uint32_t ie;
+>       uint32_t ip;
+>       uint32_t txctrl;
+>       uint32_t rxctrl;
+>       uint32_t div;
+> +
+> +    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
+> +    uint8_t rx_fifo_len;
+> +
+> +    Fifo8 tx_fifo;
+> +
+> +    QEMUTimer *fifo_trigger_handle;
+>   };
+>   
+>   SiFiveUARTState *sifive_uart_create(MemoryRegion *address_space, hwaddr base,
+> diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+> index 7fc6787f69..16a70c7ad7 100644
+> --- a/hw/char/sifive_uart.c
+> +++ b/hw/char/sifive_uart.c
+> @@ -64,6 +64,71 @@ static void sifive_uart_update_irq(SiFiveUARTState *s)
+>       }
+>   }
+>   
+> +static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
+> +                                 void *opaque)
 > +{
+> +    SiFiveUARTState *s = opaque;
 > +    int ret;
-> +    NvmeKeyInfo key_info;
-> +    NvmeNamespace *ns =3D req->ns;
-> +    uint32_t cdw10 =3D le32_to_cpu(req->cmd.cdw10);
-> +    bool ignore_key =3D cdw10 >> 3 & 0x1;
-> +    uint8_t action =3D cdw10 & 0x7;
-> +    uint8_t ptpl =3D cdw10 >> 30 & 0x3;
-> +    bool aptpl;
+> +    const uint8_t *characters;
+> +    uint32_t numptr = 0;
 > +
-> +    if (!nvme_support_pr(ns)) {
-> +        return NVME_INVALID_OPCODE;
+> +    /* instant drain the fifo when there's no back-end */
+> +    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+> +        fifo8_reset(&s->tx_fifo);
+> +        return G_SOURCE_REMOVE;
 > +    }
 > +
-> +    switch (ptpl) {
-> +    case NVME_RESV_PTPL_NO_CHANGE:
-> +        aptpl =3D (ns->id_ns.rescap & NVME_PR_CAP_PTPL) ? true : false;
-> +        break;
-> +    case NVME_RESV_PTPL_DISABLE:
-> +        aptpl =3D false;
-> +        break;
-> +    case NVME_RESV_PTPL_ENABLE:
-> +        aptpl =3D true;
-> +        break;
-> +    default:
-> +        return NVME_INVALID_FIELD;
+> +    if (fifo8_is_empty(&s->tx_fifo)) {
+> +        return G_SOURCE_REMOVE;
 > +    }
 > +
-> +    ret =3D nvme_h2c(n, (uint8_t *)&key_info, sizeof(NvmeKeyInfo), req);
-> +    if (ret) {
-> +        return ret;
+> +    /* Don't pop the FIFO in case the write fails */
+> +    characters = fifo8_peek_bufptr(&s->tx_fifo,
+> +                                   fifo8_num_used(&s->tx_fifo), &numptr);
+> +    ret = qemu_chr_fe_write(&s->chr, characters, numptr);
+> +
+> +    if (ret >= 0) {
+> +        /* We wrote the data, actually pop the fifo */
+> +        fifo8_pop_bufptr(&s->tx_fifo, ret, NULL);
 > +    }
 > +
-> +    switch (action) {
-> +    case NVME_RESV_REGISTER_ACTION_REGISTER:
-> +        req->aiocb =3D blk_aio_pr_register(ns->blkconf.blk, 0,
-> +                                         key_info.nr_key, 0, aptpl,
-
-Is le64_to_cpu() missing on key_info fields?
-
-> +                                         ignore_key, nvme_misc_cb,
-> +                                         req);
-> +        break;
-> +    case NVME_RESV_REGISTER_ACTION_UNREGISTER:
-> +        req->aiocb =3D blk_aio_pr_register(ns->blkconf.blk, key_info.cr_=
-key, 0,
-> +                                         0, aptpl, ignore_key,
-> +                                         nvme_misc_cb, req);
-> +        break;
-> +    case NVME_RESV_REGISTER_ACTION_REPLACE:
-> +        req->aiocb =3D blk_aio_pr_register(ns->blkconf.blk, key_info.cr_=
-key,
-> +                                         key_info.nr_key, 0, aptpl, igno=
-re_key,
-> +                                         nvme_misc_cb, req);
-> +        break;
-> +    default:
-> +        return NVME_INVALID_FIELD;
-> +    }
-> +
-> +    return NVME_NO_COMPLETE;
-> +}
-> +
-> +static uint16_t nvme_resv_release(NvmeCtrl *n, NvmeRequest *req)
-> +{
-> +    int ret;
-> +    uint64_t cr_key;
-> +    NvmeNamespace *ns =3D req->ns;
-> +    uint32_t cdw10 =3D le32_to_cpu(req->cmd.cdw10);
-> +    uint8_t action =3D cdw10 & 0x7;
-> +    NvmeResvType type =3D cdw10 >> 8 & 0xff;
-> +
-> +    if (!nvme_support_pr(ns)) {
-> +        return NVME_INVALID_OPCODE;
-> +    }
-> +
-> +    ret =3D nvme_h2c(n, (uint8_t *)&cr_key, sizeof(cr_key), req);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    switch (action) {
-> +    case NVME_RESV_RELEASE_ACTION_RELEASE:
-> +        req->aiocb =3D blk_aio_pr_release(ns->blkconf.blk, cr_key,
-
-le64_to_cpu() missing on cr_key?
-
-> +                                        nvme_pr_type_to_block(type),
-> +                                        nvme_misc_cb, req);
-> +        break;
-> +    case NVME_RESV_RELEASE_ACTION_CLEAR:
-> +        req->aiocb =3D blk_aio_pr_clear(ns->blkconf.blk, cr_key,
-> +                                      nvme_misc_cb, req);
-> +        break;
-> +    default:
-> +        return NVME_INVALID_FIELD;
-> +    }
-> +
-> +    return NVME_NO_COMPLETE;
-> +}
-> +
-> +static uint16_t nvme_resv_acquire(NvmeCtrl *n, NvmeRequest *req)
-> +{
-> +    int ret;
-> +    NvmeKeyInfo key_info;
-> +    NvmeNamespace *ns =3D req->ns;
-> +    uint32_t cdw10 =3D le32_to_cpu(req->cmd.cdw10);
-> +    uint8_t action =3D cdw10 & 0x7;
-> +    NvmeResvType type =3D cdw10 >> 8 & 0xff;
-> +
-> +    if (!nvme_support_pr(ns)) {
-> +        return NVME_INVALID_OPCODE;
-> +    }
-> +
-> +    ret =3D nvme_h2c(n, (uint8_t *)&key_info, sizeof(NvmeKeyInfo), req);
-> +    if (ret) {
-> +        return ret;
-> +    }
-
-le64_to_cpu() missing on key_info fields?
-
-> +
-> +    switch (action) {
-> +    case NVME_RESV_ACQUIRE_ACTION_ACQUIRE:
-> +        req->aiocb =3D blk_aio_pr_reserve(ns->blkconf.blk, key_info.cr_k=
-ey,
-> +                                        nvme_pr_type_to_block(type),
-> +                                        nvme_misc_cb, req);
-> +        break;
-> +    case NVME_RESV_ACQUIRE_ACTION_PREEMPT:
-> +        req->aiocb =3D blk_aio_pr_preempt(ns->blkconf.blk,
-> +                     key_info.cr_key, key_info.nr_key,
-> +                     nvme_pr_type_to_block(type),
-> +                     false, nvme_misc_cb, req);
-> +        break;
-> +    case NVME_RESV_ACQUIRE_ACTION_PREEMPT_AND_ABORT:
-> +        req->aiocb =3D blk_aio_pr_preempt(ns->blkconf.blk, key_info.cr_k=
-ey,
-> +                                        key_info.nr_key, type, true,
-> +                                        nvme_misc_cb, req);
-> +        break;
-> +    default:
-> +        return NVME_INVALID_FIELD;
-> +    }
-> +
-> +    return NVME_NO_COMPLETE;
-> +}
-> +
-> +typedef struct NvmeResvKeys {
-> +    uint32_t generation;
-> +    uint32_t num_keys;
-> +    uint64_t *keys;
-> +    NvmeRequest *req;
-> +} NvmeResvKeys;
-> +
-> +typedef struct NvmeReadReservation {
-> +    uint32_t generation;
-> +    uint64_t key;
-> +    BlockPrType type;
-> +    NvmeRequest *req;
-> +    NvmeResvKeys *keys_info;
-> +} NvmeReadReservation;
-> +
-> +static int nvme_read_reservation_cb(NvmeReadReservation *reservation)
-> +{
-> +    int rc;
-> +    NvmeReservationStatus *nvme_status;
-> +    NvmeRequest *req =3D reservation->req;
-> +    NvmeCtrl *n =3D req->sq->ctrl;
-> +    NvmeResvKeys *keys_info =3D reservation->keys_info;
-> +    int len =3D sizeof(NvmeReservationStatusHeader) +
-> +              sizeof(NvmeRegisteredCtrl) * keys_info->num_keys;
-> +
-> +    nvme_status =3D g_malloc(len);
-> +    nvme_status->header.gen =3D reservation->generation;
-> +    nvme_status->header.rtype =3D block_pr_type_to_nvme(reservation->typ=
-e);
-> +    nvme_status->header.regctl =3D keys_info->num_keys;
-> +    for (int i =3D 0; i < keys_info->num_keys; i++) {
-> +        nvme_status->regctl_ds[i].cntlid =3D nvme_ctrl(req)->cntlid;
-> +        nvme_status->regctl_ds[i].rkey =3D keys_info->keys[i];
-> +        nvme_status->regctl_ds[i].rcsts =3D keys_info->keys[i] =3D=3D
-> +                                          reservation->key ? 1 : 0;
-> +        /* hostid is not supported currently */
-> +        memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
-> +    }
-> +
-> +    rc =3D nvme_c2h(n, (uint8_t *)nvme_status, len, req);
-> +    g_free(nvme_status);
-> +    return rc;
-> +}
-> +
-> +static int nvme_read_reservation_ext_cb(NvmeReadReservation *reservation)
-> +{
-> +    int rc;
-> +    NvmeReservationStatusExt *nvme_status_ext;
-> +    NvmeRequest *req =3D reservation->req;
-> +    NvmeCtrl *n =3D req->sq->ctrl;
-> +    NvmeResvKeys *keys_info =3D reservation->keys_info;
-> +    int len =3D sizeof(NvmeReservationStatusHeader) +
-> +              sizeof(uint8_t) * 40 +
-> +              sizeof(NvmeRegisteredCtrlExt) * keys_info->num_keys;
-> +
-> +    nvme_status_ext =3D g_malloc(len);
-> +    nvme_status_ext->header.gen =3D cpu_to_be32(reservation->generation);
-> +    nvme_status_ext->header.rtype =3D block_pr_type_to_nvme(reservation-=
->type);
-> +    nvme_status_ext->header.regctl =3D cpu_to_be16(keys_info->num_keys);
-> +
-> +    for (int i =3D 0; i < keys_info->num_keys; i++) {
-> +        uint16_t ctnlid =3D nvme_ctrl(req)->cntlid;
-> +        nvme_status_ext->regctl_eds[i].cntlid =3D cpu_to_be16(ctnlid);
-> +        nvme_status_ext->regctl_eds[i].rkey =3D cpu_to_be64(keys_info->k=
-eys[i]);
-> +        nvme_status_ext->regctl_eds[i].rcsts =3D keys_info->keys[i] =3D=
-=3D
-> +                                               reservation->key ? 1 : 0;
-> +        /* hostid is not supported currently */
-> +        memset(&nvme_status_ext->regctl_eds[i].hostid, 0, 16);
-> +    }
-> +
-> +    rc =3D nvme_c2h(n, (uint8_t *)nvme_status_ext, len, req);
-> +    g_free(nvme_status_ext);
-> +    return rc;
-> +}
-> +
-> +static void nvme_resv_read_reservation_cb(void *opaque, int ret)
-> +{
-> +    NvmeReadReservation *reservation =3D opaque;
-> +    NvmeRequest *req =3D reservation->req;
-> +    bool eds =3D req->cmd.cdw11 & 0x1;
-
-Missing le32_to_cpu()?
-
-> +    NvmeResvKeys *keys_info =3D reservation->keys_info;
-> +
-> +    if (ret < 0) {
-> +        goto out;
-> +    }
-> +
-> +    if (eds) {
-> +        ret =3D nvme_read_reservation_ext_cb(reservation);
-> +    } else {
-> +        ret =3D nvme_read_reservation_cb(reservation);
-> +    }
-> +
-> +out:
-> +    g_free(keys_info->keys);
-> +    g_free(keys_info);
-> +    g_free(reservation);
-> +    nvme_misc_cb(req, ret);
-> +}
-> +
-> +static void nvme_resv_read_keys_cb(void *opaque, int ret)
-> +{
-> +    NvmeResvKeys *keys_info =3D opaque;
-> +    NvmeRequest *req =3D keys_info->req;
-> +    NvmeNamespace *ns =3D req->ns;
-> +    NvmeReadReservation *reservation;
-> +
-> +    if (ret < 0) {
-> +        goto out;
-> +    }
-> +
-> +    keys_info->num_keys =3D MIN(ret, keys_info->num_keys);
-> +    reservation =3D g_new0(NvmeReadReservation, 1);
-> +    memset(reservation, 0, sizeof(*reservation));
-> +    reservation->req =3D req;
-> +    reservation->keys_info =3D keys_info;
-> +
-> +    req->aiocb =3D blk_aio_pr_read_reservation(ns->blkconf.blk,
-> +                 &reservation->generation, &reservation->key,
-> +                 &reservation->type, nvme_resv_read_reservation_cb,
-> +                 reservation);
-> +    return;
-> +
-> +out:
-> +    g_free(keys_info->keys);
-> +    g_free(keys_info);
-> +    nvme_misc_cb(req, ret);
-> +}
-> +
-> +
-> +static uint16_t nvme_resv_report(NvmeCtrl *n, NvmeRequest *req)
-> +{
-> +    int num_keys;
-> +    uint32_t cdw10 =3D req->cmd.cdw10;
-> +    uint32_t cdw11 =3D req->cmd.cdw11;
-
-le32_to_cpu() missing on cmd fields?
-
-> +    int buflen =3D (cdw10 + 1) * sizeof(uint32_t);
-
-Please use size_t buflen to avoid 32 vs 64 and signed vs unsigned issues be=
-low.
-
-> +    bool eds =3D cdw11 & 0x1;
-> +    NvmeNamespace *ns =3D req->ns;
-> +    NvmeResvKeys *keys_info;
-> +
-> +    if (!nvme_support_pr(ns)) {
-> +        return NVME_INVALID_OPCODE;
-> +    }
-> +
-> +    if (eds) {
-> +        if (buflen < sizeof(NvmeReservationStatusHeader) +
-> +           sizeof(uint8_t) * 40) {
-> +            return NVME_INVALID_FIELD;
+> +    if (!fifo8_is_empty(&s->tx_fifo)) {
+> +        guint r = qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP,
+> +                                        sifive_uart_xmit, s);
+> +        if (!r) {
+> +            fifo8_reset(&s->tx_fifo);
+> +            return G_SOURCE_REMOVE;
 > +        }
-> +
-> +        num_keys =3D (buflen - sizeof(NvmeReservationStatusHeader) -
-> +                   sizeof(uint8_t) * 40) /
-> +                   sizeof(struct NvmeRegisteredCtrlExt);
-> +    } else {
-> +        if (buflen < sizeof(NvmeReservationStatusHeader)) {
-> +            return NVME_INVALID_FIELD;
-> +        }
-> +
-> +        num_keys =3D (buflen - sizeof(NvmeReservationStatusHeader)) /
-> +                   sizeof(struct NvmeRegisteredCtrl);
 > +    }
-
-Is it possible to validate num_keys against the actual request sg size?
-Or maybe there should be a reasonable maximum so that we don't have to
-worry about g_malloc() failing and aborting the process, integer
-overflows, etc?
-
 > +
-> +    keys_info =3D g_new0(NvmeResvKeys, 1);
-> +    keys_info->generation =3D 0;
-> +    /* num_keys is the maximum number of keys that can be transmitted */
-> +    keys_info->num_keys =3D num_keys;
-> +    keys_info->keys =3D g_malloc(sizeof(uint64_t) * num_keys);
-> +    keys_info->req =3D req;
+> +    /* Clear the TX Full bit */
+> +    if (!fifo8_is_full(&s->tx_fifo)) {
+> +        s->txfifo &= ~SIFIVE_UART_TXFIFO_FULL;
+> +    }
 > +
-> +    req->aiocb =3D blk_aio_pr_read_keys(ns->blkconf.blk, &keys_info->gen=
-eration,
-> +                                      keys_info->num_keys, keys_info->ke=
-ys,
-> +                                      nvme_resv_read_keys_cb, keys_info);
-> +
-> +    return NVME_NO_COMPLETE;
+> +    sifive_uart_update_irq(s);
+> +    return G_SOURCE_REMOVE;
 > +}
 > +
->  typedef struct NvmeCopyAIOCB {
->      BlockAIOCB common;
->      BlockAIOCB *aiocb;
-> @@ -4469,6 +4807,14 @@ static uint16_t nvme_io_cmd(NvmeCtrl *n, NvmeReque=
-st *req)
->          return nvme_dsm(n, req);
->      case NVME_CMD_VERIFY:
->          return nvme_verify(n, req);
-> +    case NVME_CMD_RESV_REGISTER:
-> +        return nvme_resv_register(n, req);
-> +    case NVME_CMD_RESV_REPORT:
-> +        return nvme_resv_report(n, req);
-> +    case NVME_CMD_RESV_ACQUIRE:
-> +        return nvme_resv_acquire(n, req);
-> +    case NVME_CMD_RESV_RELEASE:
-> +        return nvme_resv_release(n, req);
->      case NVME_CMD_COPY:
->          return nvme_copy(n, req);
->      case NVME_CMD_ZONE_MGMT_SEND:
-> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-> index a5c903d727..833bcbae08 100644
-> --- a/hw/nvme/ns.c
-> +++ b/hw/nvme/ns.c
-> @@ -60,6 +60,12 @@ void nvme_ns_init_format(NvmeNamespace *ns)
-> =20
->      blk_pr_cap =3D blk_bs(ns->blkconf.blk)->bl.pr_cap;
->      id_ns->rescap =3D block_pr_cap_to_nvme(blk_pr_cap);
-> +    if (id_ns->rescap !=3D NVME_PR_CAP_ALL &&
-> +        id_ns->rescap !=3D NVME_PR_CAP_RW) {
-> +
-> +        /* Rescap either supports all or none of them */
-> +        id_ns->rescap =3D 0;
-> +    }
->  }
-> =20
->  static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-> diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-> index 6d0e456348..23d7173a36 100644
-> --- a/hw/nvme/nvme.h
-> +++ b/hw/nvme/nvme.h
-> @@ -470,6 +470,10 @@ static inline const char *nvme_io_opc_str(uint8_t op=
-c)
->      case NVME_CMD_ZONE_MGMT_SEND:   return "NVME_ZONED_CMD_MGMT_SEND";
->      case NVME_CMD_ZONE_MGMT_RECV:   return "NVME_ZONED_CMD_MGMT_RECV";
->      case NVME_CMD_ZONE_APPEND:      return "NVME_ZONED_CMD_ZONE_APPEND";
-> +    case NVME_CMD_RESV_REGISTER:    return "NVME_CMD_RESV_REGISTER";
-> +    case NVME_CMD_RESV_REPORT:      return "NVME_CMD_RESV_REPORT";
-> +    case NVME_CMD_RESV_ACQUIRE:     return "NVME_CMD_RESV_ACQUIRE";
-> +    case NVME_CMD_RESV_RELEASE:     return "NVME_CMD_RESV_RELEASE";
->      default:                        return "NVME_NVM_CMD_UNKNOWN";
->      }
->  }
-> @@ -558,6 +562,11 @@ static inline uint8_t block_pr_cap_to_nvme(uint8_t b=
-lock_pr_cap)
->      return res;
->  }
-> =20
-> +static inline bool nvme_support_pr(NvmeNamespace *ns)
+> +static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+> +                                      int size)
 > +{
-> +    return (ns->id_ns.rescap & NVME_PR_CAP_RW) =3D=3D NVME_PR_CAP_RW;
+> +    uint64_t current_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> +
+> +    if (size > fifo8_num_free(&s->tx_fifo)) {
+> +        size = fifo8_num_free(&s->tx_fifo);
+> +        qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow");
+> +    }
+> +
+> +    fifo8_push_all(&s->tx_fifo, buf, size);
+> +
+> +    if (fifo8_is_full(&s->tx_fifo)) {
+> +        s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
+> +    }
+> +
+> +    timer_mod(s->fifo_trigger_handle, current_time + 100);
 > +}
 > +
->  typedef struct NvmeSQueue {
->      struct NvmeCtrl *ctrl;
->      uint16_t    sqid;
-> diff --git a/include/block/nvme.h b/include/block/nvme.h
-> index 9b9eaeb3a7..2eec339028 100644
-> --- a/include/block/nvme.h
-> +++ b/include/block/nvme.h
-> @@ -692,6 +692,13 @@ typedef enum NVMEPrCap {
->      NVME_PR_CAP_WR_EX_AR =3D 1 << 5,
->      /* Exclusive Access All Registrants reservation type */
->      NVME_PR_CAP_EX_AC_AR =3D 1 << 6,
-> +    /* Write and Read reservation type */
-> +    NVME_PR_CAP_RW =3D (NVME_PR_CAP_WR_EX |
-> +                      NVME_PR_CAP_EX_AC |
-> +                      NVME_PR_CAP_WR_EX_RO |
-> +                      NVME_PR_CAP_EX_AC_RO |
-> +                      NVME_PR_CAP_WR_EX_AR |
-> +                      NVME_PR_CAP_EX_AC_AR),
-> =20
->      NVME_PR_CAP_ALL =3D (NVME_PR_CAP_PTPL |
->                        NVME_PR_CAP_WR_EX |
-> @@ -702,6 +709,43 @@ typedef enum NVMEPrCap {
->                        NVME_PR_CAP_EX_AC_AR),
->  } NvmePrCap;
-> =20
-> +typedef struct QEMU_PACKED NvmeRegisteredCtrl {
-> +    uint16_t    cntlid;
-> +    uint8_t     rcsts;
-> +    uint8_t     rsvd3[5];
-> +    uint8_t     hostid[8];
-> +    uint64_t    rkey;
-> +} NvmeRegisteredCtrl;
+>   static uint64_t
+>   sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
+>   {
+> @@ -82,7 +147,7 @@ sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
+>           return 0x80000000;
+>   
+>       case SIFIVE_UART_TXFIFO:
+> -        return 0; /* Should check tx fifo */
+> +        return s->txfifo;
+>       case SIFIVE_UART_IE:
+>           return s->ie;
+>       case SIFIVE_UART_IP:
+> @@ -106,12 +171,10 @@ sifive_uart_write(void *opaque, hwaddr addr,
+>   {
+>       SiFiveUARTState *s = opaque;
+>       uint32_t value = val64;
+> -    unsigned char ch = value;
+>   
+>       switch (addr) {
+>       case SIFIVE_UART_TXFIFO:
+> -        qemu_chr_fe_write(&s->chr, &ch, 1);
+> -        sifive_uart_update_irq(s);
+> +        sifive_uart_write_tx_fifo(s, (uint8_t *) &value, 1);
+>           return;
+>       case SIFIVE_UART_IE:
+>           s->ie = val64;
+> @@ -131,6 +194,13 @@ sifive_uart_write(void *opaque, hwaddr addr,
+>                     __func__, (int)addr, (int)value);
+>   }
+>   
+> +static void fifo_trigger_update(void *opaque)
+> +{
+> +    SiFiveUARTState *s = opaque;
 > +
-> +typedef struct QEMU_PACKED NvmeRegisteredCtrlExt {
-> +    uint16_t  cntlid;
-> +    uint8_t   rcsts;
-> +    uint8_t   rsvd3[5];
-> +    uint64_t  rkey;
-> +    uint8_t   hostid[16];
-> +    uint8_t   rsvd32[32];
-> +} NvmeRegisteredCtrlExt;
+> +    sifive_uart_xmit(NULL, G_IO_OUT, s);
+> +}
 > +
-> +typedef struct QEMU_PACKED NvmeReservationStatusHeader {
-> +    uint32_t  gen;
-> +    uint8_t   rtype;
-> +    uint16_t  regctl;
-> +    uint16_t  resv5;
-> +    uint8_t   ptpls;
-> +    uint8_t   resv10[14];
-> +} NvmeReservationStatusHeader;
+>   static const MemoryRegionOps sifive_uart_ops = {
+>       .read = sifive_uart_read,
+>       .write = sifive_uart_write,
+> @@ -197,6 +267,9 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
+>   {
+>       SiFiveUARTState *s = SIFIVE_UART(dev);
+>   
+> +    s->fifo_trigger_handle = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> +                                          fifo_trigger_update, s);
 > +
-> +typedef struct QEMU_PACKED NvmeReservationStatus {
-> +    struct NvmeReservationStatusHeader header;
-> +    struct NvmeRegisteredCtrl regctl_ds[];
-> +} NvmeReservationStatus;
+>       qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
+>                                sifive_uart_event, sifive_uart_be_change, s,
+>                                NULL, true);
+> @@ -206,12 +279,18 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
+>   static void sifive_uart_reset_enter(Object *obj, ResetType type)
+>   {
+>       SiFiveUARTState *s = SIFIVE_UART(obj);
 > +
-> +typedef struct QEMU_PACKED NvmeReservationStatusExt {
-> +    struct NvmeReservationStatusHeader header;
-> +    uint8_t   rsvd24[40];
-> +    struct NvmeRegisteredCtrlExt regctl_eds[];
-> +} NvmeReservationStatusExt;
+> +    s->txfifo = 0;
+>       s->ie = 0;
+>       s->ip = 0;
+>       s->txctrl = 0;
+>       s->rxctrl = 0;
+>       s->div = 0;
 > +
->  typedef struct QEMU_PACKED NvmeDeleteQ {
->      uint8_t     opcode;
->      uint8_t     flags;
-> --=20
-> 2.20.1
->=20
+>       s->rx_fifo_len = 0;
+> +
+> +    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
+> +    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
+>   }
+>   
+>   static void sifive_uart_reset_hold(Object *obj, ResetType type)
+> @@ -222,8 +301,8 @@ static void sifive_uart_reset_hold(Object *obj, ResetType type)
+>   
+>   static const VMStateDescription vmstate_sifive_uart = {
+>       .name = TYPE_SIFIVE_UART,
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT8_ARRAY(rx_fifo, SiFiveUARTState,
+>                               SIFIVE_UART_RX_FIFO_SIZE),
+> @@ -233,6 +312,9 @@ static const VMStateDescription vmstate_sifive_uart = {
+>           VMSTATE_UINT32(txctrl, SiFiveUARTState),
+>           VMSTATE_UINT32(rxctrl, SiFiveUARTState),
+>           VMSTATE_UINT32(div, SiFiveUARTState),
+> +        VMSTATE_UINT32(txfifo, SiFiveUARTState),
+> +        VMSTATE_FIFO8(tx_fifo, SiFiveUARTState),
+> +        VMSTATE_TIMER_PTR(fifo_trigger_handle, SiFiveUARTState),
+>           VMSTATE_END_OF_LIST()
+>       },
+>   };
 
---T2CBQSG9KrDUsCNc
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+ATB,
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmbgqsoACgkQnKSrs4Gr
-c8jD5ggArhvWYrZaPKj2V4vCC3p5BrRErYWwjWncVc1OX6ubGCMZg6/rv5pk1jcf
-1MAOwAKgty2vvyUup5xK48z4a4tfLWhDr4Az9mwVJZtmpScYAFnwX9RC/noI8Yno
-Fh+7tAgF32eo4vbuIlJnSE5WfESgTBesvYBSgCczIWObNVq89gnbdfORkAy12bLC
-Z679QECQG8KSPMKXptSwkZpXm4gwOHK25aIAS4MOO8c6K38s5mtJPMIDlJKPavNj
-BB755Ldr0U0XMoGajo9BIs5sJYPc81pf1Od7YQBPUZlVMHQfdnuabuHPG2QwQn6V
-cs6lDvkfvF6THmBP9S+nuuPgwbQpJA==
-=tz11
------END PGP SIGNATURE-----
-
---T2CBQSG9KrDUsCNc--
+Mark.
 
 
