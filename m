@@ -4,86 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF30EB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:28:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF32EB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snzxa-0000Fb-2w; Tue, 10 Sep 2024 08:27:06 -0400
+	id 1so05m-00081B-D2; Tue, 10 Sep 2024 08:35:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snzxY-00007n-6p
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:27:04 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1so05l-00080E-Ew
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:35:33 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snzxT-0003gt-8n
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:27:03 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c3c30e6649so668635a12.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 05:26:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1so05h-0004oE-Ca
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:35:33 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5bef295a45bso2409361a12.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 05:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725971210; x=1726576010; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NxicRzYkmvOskoD/w+UVeNTJwRS2R7t5eol06ROza4s=;
- b=Lytm0O25CYaJEPtzl8PssjB07zGLrJuAmXSUnu9R5WP3kq9QxzG0HN3TDZjekfNJC6
- emYEL5KfljC0TQST7TKsbeB0eM0bcIKrPTzRgMwzkl3vhtPHiNZd6nGyCVbtba4SYHLJ
- jBqIjibrlVAVLJrYfc38k4SIQVi4Zb8ErJlW7ONngCXQrQWZOIh+++CQdX6BFCp9fOKZ
- 78VaYhEoyBO9BGw3HSY2ROqPIF7pjE8AzQMaT5uCOQv87V5s77CtiM+vJwFZzfXrQL+M
- qyFDUdE5fr+p76UKLS/mj1Sl3253jtH/EevH5TP3hyMxtvsWCJ/pJl0+f0XIhUTudsCQ
- kHGg==
+ d=linaro.org; s=google; t=1725971727; x=1726576527; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jw9Kt1/j18KEn0dBPVo8RQ0uYOA7WgovrrOOH5x0suY=;
+ b=qpJnAtUijx5/mDjH/t71xtNkY7MoaY6FHHCwZKFu770XVS4tMtVG515CunVpnGo5BQ
+ 0tW8duII+L9jZ+KwsdLWsLKkBUBwDNm0HyWB31uo/G7MQes1m3rNvZGFoJVcNGM5nYdX
+ Q9FFVXncmme2AfNrvBMTOsP5hrCgLgNBP6Q1vnTmZnqY889tZ/ABoT//m2XOtwxDHRIw
+ wdXEUkWGmAz+zTEUvugdy7sPYpd4e/WTXgfhgF3g6pn6Awdu8l8LCcXcaaGHFdbVPI8n
+ yzspZg+INBPAABdghY973laqssuPEOu1djkJ2Z8rA0lk/ik/AsufI3M0Su3ufxXXnFXf
+ SuhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725971210; x=1726576010;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NxicRzYkmvOskoD/w+UVeNTJwRS2R7t5eol06ROza4s=;
- b=si8zuBwcses/PPivMAYkQBxD4XX7axINAczWUNtj7RwKBhw0MsAT4EKfzQ8N29lfLT
- LNE/HBnKTGaea1wCySwiGsLUod86bJVGGKEp9Cr8o23zSkD2SIx1xKlt0pHPbJ5ezoH9
- P/nCEBv0UsDi79ItQQOfsY85uOloTFcXagt69dUwurCiTppmcbXoqkpO7Ls4KEbtn/HW
- EgOIwNNUL9YJwPS5XME2VZ8rGnfDRX9AVuwXl2JJLBv7LC5HHy30mJ/wDw+V7hrJ1SR9
- BQebVOIfDlqJRkWlLezeOajtRQn4EN40oeKZHlksrB3rIp6RPXRVLNtDcxzKuXekIief
- nsxA==
-X-Gm-Message-State: AOJu0YzCAVJeDG49bNACMYCaQF5RSHfq0x0h8uFuJl0NLRSJCy5C6JSt
- M2Ya+JMeoueb5s7l1TvAwHbywEUG5qdfEy2C8OHUWAUlH/0IxdhiwAsVPZ6u2bwZyP2OWcUJfH9
- S
-X-Google-Smtp-Source: AGHT+IEWbmqCW4isrelMC/Q812pWqlHTYlksWqqGqXgNFrfbtU0CScphGUh8LevT1TFKyigx8C4fuA==
-X-Received: by 2002:a05:6402:3903:b0:5be:fdc0:e704 with SMTP id
- 4fb4d7f45d1cf-5c3dc79323dmr9566347a12.10.1725971209820; 
- Tue, 10 Sep 2024 05:26:49 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.217.32])
+ d=1e100.net; s=20230601; t=1725971727; x=1726576527;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jw9Kt1/j18KEn0dBPVo8RQ0uYOA7WgovrrOOH5x0suY=;
+ b=k+DX3x9QnYcwOOtPVbWU8pb+VzBfn/Y7TwcJ0G+ITkHyK9yx0VgRPsxkH5sG299QX/
+ nzSUHgEkOAsaa1uuNbsO/xygQbc+Z9lONR2VL39Lf779fSarJ5B9p1Ku2jCRTTcd32ug
+ E1E5y4pF+HVZgRUMjWxTo8YagoKW0R0a0o8QUc5fXg/lLz6KFM99/DUROQ2PhlgGSW4r
+ d7JqSRchWkC2yxw8xpkuBA4sZPSNC3bdU+CBs4ojS5lBz7HcOpuC9etkUwDu667AgcDz
+ 43JudZkWiNsHq3/GUjvCzg8EjdMD+ed19VvpBLgw8c/5taKxwbw/ycIjtQ2CBis27FPj
+ 1YLw==
+X-Gm-Message-State: AOJu0YwNXpBCoWRB4tui1Whq6eTlL9uu8syy3OmBTe+IDraKKu1d4l9n
+ VoYKHyCIE9aTxKxEkSwCFuDJy20U8wTBjTYxW179OFoU1uLbHnIFiQRLmXIc6ADd/Ai/UC9WZyT
+ iDkI=
+X-Google-Smtp-Source: AGHT+IEBk09MHc2M6ZJYPCTOPxeTAiyR6ywJkvAMJ0VqUo7wqdmS//bNRqA/RRPunddvECsmaHvpuA==
+X-Received: by 2002:a05:6402:524f:b0:5c2:6090:4049 with SMTP id
+ 4fb4d7f45d1cf-5c3dc7b7c28mr14486939a12.24.1725971726672; 
+ Tue, 10 Sep 2024 05:35:26 -0700 (PDT)
+Received: from [127.0.1.1] (adsl-234.109.242.225.tellas.gr. [109.242.225.234])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd523casm4207838a12.58.2024.09.10.05.26.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Sep 2024 05:26:49 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Stefan Weil <sw@weilnetz.de>,
- qemu-trivial@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 4/5] license: Update deprecated SPDX tag GPL-2.0+ to
- GPL-2.0-or-later
-Date: Tue, 10 Sep 2024 14:26:17 +0200
-Message-ID: <20240910122618.33056-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240910122618.33056-1-philmd@linaro.org>
-References: <20240910122618.33056-1-philmd@linaro.org>
+ 4fb4d7f45d1cf-5c3ebd41cd7sm4242994a12.3.2024.09.10.05.35.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 05:35:26 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v10 0/9] Add Rust build support, ARM PL011 device impl
+Date: Tue, 10 Sep 2024 15:35:06 +0300
+Message-Id: <20240910-rust-pl011-v10-0-85a89ee33c40@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+X-B4-Tracking: v=1; b=H4sIAPo84GYC/2XNywqDMBAF0F+RrJuShzFJV/2P0oWPRAeKkcRKi
+ /jvnQoFQ5f3MufOSpKL4BK5FCuJboEEYcTA2akg7VCPvaPQYUEEEyUzvKTxmWY6PRjndNEEz6b
+ oPLz2jdsd8wBpDvG9T+IFtj+sckwZtVpxqZw1RvLrA8Y6hnOIPfnuLOZghcysQdtYr3RZNV3t5
+ Z+1R6sza9E6yxrbCuNNlf/dtu0DXzjcLhQBAAA=
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Junjie Mao <junjie.mao@intel.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, John Snow <jsnow@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org
+X-Mailer: b4 0.15-dev-c2c95
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8677;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=52NHtVjT0ogV9qScAuRiTTKX9OXFbFsdSp17o/dO5MQ=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQm00RDBKdHQyWWhrS2ViSzVuQWErRDNwTno0U3hWCm9jZGZKTmZsRVBDTjkzQzRt
+ eENKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnVBOUNRQUt
+ DUkIzS2Nkd2YzNEowSFZNRC85SlVqM0tHbUVQMXJ3NEZ1K25wMVlTRDY5ZUVMRWp2SldnZ2ovVA
+ pyRldwSGlsbVBiblEvREp6N2N6WkhGTUJkcVlvckZzVFp6RjdNdmZpRzBlL3AxekdmRkZxcXk1c
+ Ewwb3JxZmUvCkVYMmZsREpnaFZYekgwT2dGNHYxcG9tSlBjTWVEeWF2aUZjNEZReVhrUWZGdXBr
+ NEJaY0g0TGhwQXhFZ0huOVoKd3B5UnVNb3ZrSHJJTDRWeU9PMy94Q045d0RSVTlPVTMxeEEwYkd
+ xeGRQdmptNndYd1RMTW54SWVmZmgvUXBaRAp3bmVrU29oa0xkUTRqQnM5cnFUaWVEZmRaNkR0Nk
+ ZraXNMNXBVaHJTVUROUDZFNS9oRCttMVhGTFlFbDllWG41CmpGb0I2RWt3OTdFMGhxcytqQ210S
+ zRXdjhIRjM2ZlVKTkdsS2p2RmloNWJUYXcxQjl4VExoT1RYLzBIOFJONVIKT1lUWWhEMis5NVFt
+ anBEaWl3T1MvOTZxTllvdVU0QWthM0JiUFptYUZodFo1SUlwM1FGRnVZamZ3dmsxTy9FWAoyQVp
+ rSFBNZXJQeityUUQ3enNhbG1QVVhKeG1wZW1JS1BMalZDblc4c0NKaWlTeHE4eFprcVJ5TXplbn
+ BJaHlWCkZCQ2FjRmVzRlR2aXdXNnBVR1A0WFZrekRhKzJuWEJRenVpNStYUVFMS3RNTEtxZXRaW
+ mtlWmVEbVdxMFRoTjcKWnNlc2t3V3g1MEo4SjA5SGVEQmJlU2M0OE5IdndicW9YVFV5RGQwWkRI
+ bmw2UmozVG1jM0xGUk9VY3dEQnFwVQpZdkNNZDVWWkQxbmp3ajZDVndvcDlnV3JmWDlRUm5zVDN
+ rZ01hcDhlNGE4U0VQSC8yZGZTVFJZZnMwZ3UwMUNECi94RE5jUT09Cj1PcFJlCi0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,119 +130,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'GPL-2.0+' license identifier has been deprecated since license
-list version 2.0rc2 [1] and replaced by the 'GPL-2.0-or-later' [2]
-tag.
+WARNING: This series contains a patch with blob diffs and thus problems
+may arise with your patch workflow. The revision is available at
+https://gitlab.com/epilys/qemu/-/tree/rust-v10 for you to fetch.
 
-[1] https://spdx.org/licenses/GPL-2.0+.html
-[2] https://spdx.org/licenses/GPL-2.0-or-later.html
+rust-v10 head: 29f226178b5af97612cc8d1c8401959c6f41f027
 
-Mechanical patch running:
+Hello everyone,
 
-  $ sed -i -e s/GPL-2.0+/GPL-2.0-or-later/ \
-    $(git grep -lP 'SPDX-License-Identifier: \W+GPL-2.0\+[ $]' \
-        | egrep -v '^linux-headers|^include/standard-headers')
+This series adds:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+- build system support for the Rust compiler
+- a small Rust library, qemu-api, which includes bindings to QEMU's C
+  interface generated with bindgen, and qemu-api-macros, a procedural
+  macro library.
+- a proof of concept ARM PL011 device implementation in Rust, chosen for
+  its low complexity. The device is used in the arm virt machine if qemu
+  is compiled with rust enabled (./configure --enable-rust [...])
+
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- hw/core/uboot_image.h           | 2 +-
- include/hw/nvram/fw_cfg_acpi.h  | 2 +-
- include/hw/usb/dwc2-regs.h      | 2 +-
- include/hw/virtio/virtio-acpi.h | 2 +-
- target/riscv/cpu-param.h        | 2 +-
- target/s390x/cpu-param.h        | 2 +-
- hw/nvram/fw_cfg-acpi.c          | 2 +-
- hw/virtio/virtio-acpi.c         | 2 +-
- 8 files changed, 8 insertions(+), 8 deletions(-)
+Changes in v10:
+- Removed unnecessary meson version check (thanks Alex)
+- Added warning in `configure` when Rust is not disabled about what to
+  do if bindgen does not detect the correct libclang and fails to find
+  certain system header files.
+- Disabled rust qemu allocator by default
+- Added changes by Paolo to detect the correct rust target for cross
+  compilation in `configure` script.
+- Made PL011State::init fn unsafe (Paolo)
+- Link to v9: https://lore.kernel.org/r/20240827-rust-pl011-v9-0-e90b9c28f861@linaro.org
 
-diff --git a/hw/core/uboot_image.h b/hw/core/uboot_image.h
-index 18ac293359..e4dcfb08f0 100644
---- a/hw/core/uboot_image.h
-+++ b/hw/core/uboot_image.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * (C) Copyright 2008 Semihalf
-  *
-diff --git a/include/hw/nvram/fw_cfg_acpi.h b/include/hw/nvram/fw_cfg_acpi.h
-index b39eb0490f..dfd2a44ef0 100644
---- a/include/hw/nvram/fw_cfg_acpi.h
-+++ b/include/hw/nvram/fw_cfg_acpi.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * ACPI support for fw_cfg
-  *
-diff --git a/include/hw/usb/dwc2-regs.h b/include/hw/usb/dwc2-regs.h
-index 0bf3f2aa17..523b112c5e 100644
---- a/include/hw/usb/dwc2-regs.h
-+++ b/include/hw/usb/dwc2-regs.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
-+/* SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-3-Clause) */
- /*
-  * Imported from the Linux kernel file drivers/usb/dwc2/hw.h, commit
-  * a89bae709b3492b478480a2c9734e7e9393b279c ("usb: dwc2: Move
-diff --git a/include/hw/virtio/virtio-acpi.h b/include/hw/virtio/virtio-acpi.h
-index cace2a315f..cdfbd943ae 100644
---- a/include/hw/virtio/virtio-acpi.h
-+++ b/include/hw/virtio/virtio-acpi.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * ACPI support for virtio
-  */
-diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-index 1fbd64939d..25686192c0 100644
---- a/target/riscv/cpu-param.h
-+++ b/target/riscv/cpu-param.h
-@@ -2,7 +2,7 @@
-  * RISC-V cpu parameters for qemu.
-  *
-  * Copyright (c) 2017-2018 SiFive, Inc.
-- * SPDX-License-Identifier: GPL-2.0+
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #ifndef RISCV_CPU_PARAM_H
-diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-index 11d23b600d..a05ffcf78d 100644
---- a/target/s390x/cpu-param.h
-+++ b/target/s390x/cpu-param.h
-@@ -2,7 +2,7 @@
-  * S/390 cpu parameters for qemu.
-  *
-  * Copyright (c) 2009 Ulrich Hecht
-- * SPDX-License-Identifier: GPL-2.0+
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #ifndef S390_CPU_PARAM_H
-diff --git a/hw/nvram/fw_cfg-acpi.c b/hw/nvram/fw_cfg-acpi.c
-index 58cdcd3121..2e6ef89b98 100644
---- a/hw/nvram/fw_cfg-acpi.c
-+++ b/hw/nvram/fw_cfg-acpi.c
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0+
-+// SPDX-License-Identifier: GPL-2.0-or-later
- /*
-  * Add fw_cfg device in DSDT
-  *
-diff --git a/hw/virtio/virtio-acpi.c b/hw/virtio/virtio-acpi.c
-index 230a669500..85becef03c 100644
---- a/hw/virtio/virtio-acpi.c
-+++ b/hw/virtio/virtio-acpi.c
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0+
-+// SPDX-License-Identifier: GPL-2.0-or-later
- /*
-  * virtio ACPI Support
-  *
+Changes in v9:
+- Addressed v8 review comment: removed rustfmt.toml symlink (Junjie Mao)
+- Addressed v8 review comment: removed unused cstr files (Junjie Mao)
+- Addressed v8 review comment: added HAVE_GLIB_WITH_ALIGNED_ALLOC config
+  host def to check whether glib's aligned alloc functions are available (Junjie Mao)
+- qemu_api: Changed default alignment condition in allocator (alignment
+  is always nonzero)
+- qemu_api: Enabled allocator by default in builds
+- pl011: fixed invalid cast of byte buffer to u32 in pl011_receive()
+  leading to misaligned read
+
+- Link to v8: https://lore.kernel.org/r/20240823-rust-pl011-v8-0-b9f5746bdaf3@linaro.org
+
+Changes in v8:
+- Allow for compilation of more than one Rust-based component in Meson
+  by compiling all Rust static libraries into one "root" library before
+  linking it to each target emulation executable.
+- Added a qemu_api_macros procedural macro library.
+- (minor) Moved generated bindings.rs to qemu_api crate using meson's
+  structured_source() instead of compiling it as a standalone crate
+  which was unnecessary.
+- (minor) Removed unnecessary rustc optimization/debug flags (should be handled
+  by meson instead).
+- (minor) Moved build scripts under scripts/rust/
+- (minor) Fixed license issues
+
+Previous version was: <20240815-rust-pl011-v7-0-975135e98831@linaro.org>
+
+https://lore.kernel.org/qemu-devel/20240815-rust-pl011-v7-0-975135e98831@linaro.org/
+
+Outstanding issues that are not blocking for merge are:
+
+- Cross-compilation for aarch64 is not possible out-of-the-box because of this bug:
+  <https://github.com/rust-lang/rust/issues/125619> in llvm which when
+  fixed, must be ported to upstream rust's llvm fork. Since the problem
+  is an extraneous symbol we could strip it with objcopy -N|--strip-symbol
+  Fix is in upstream llvm, we're awaiting for rust upstream to pick it up.
+
+---
+Manos Pitsidianakis (7):
+      build-sys: Add rust feature option
+      rust: add bindgen step as a meson dependency
+      .gitattributes: add Rust diff and merge attributes
+      meson.build: add HAVE_GLIB_WITH_ALIGNED_ALLOC flag
+      rust: add crate to expose bindings and interfaces
+      rust: add utility procedural macro crate
+      rust: add PL011 device model
+
+Paolo Bonzini (2):
+      Require meson version 1.5.0
+      configure, meson: detect Rust toolchain
+
+ MAINTAINERS                                        |  21 +
+ configure                                          | 170 +++++-
+ meson.build                                        |  98 +++-
+ rust/wrapper.h                                     |  47 ++
+ .gitattributes                                     |   3 +
+ Kconfig                                            |   1 +
+ Kconfig.host                                       |   3 +
+ hw/arm/Kconfig                                     |  33 +-
+ meson_options.txt                                  |   3 +
+ python/scripts/vendor.py                           |   4 +-
+ python/wheels/meson-1.2.3-py3-none-any.whl         | Bin 964928 -> 0 bytes
+ python/wheels/meson-1.5.0-py3-none-any.whl         | Bin 0 -> 959846 bytes
+ pythondeps.toml                                    |   2 +-
+ rust/.gitignore                                    |   3 +
+ rust/Kconfig                                       |   1 +
+ rust/hw/Kconfig                                    |   2 +
+ rust/hw/char/Kconfig                               |   3 +
+ rust/hw/char/meson.build                           |   1 +
+ rust/hw/char/pl011/.gitignore                      |   2 +
+ rust/hw/char/pl011/Cargo.lock                      | 134 +++++
+ rust/hw/char/pl011/Cargo.toml                      |  26 +
+ rust/hw/char/pl011/README.md                       |  31 ++
+ rust/hw/char/pl011/meson.build                     |  26 +
+ rust/hw/char/pl011/src/definitions.rs              |  20 +
+ rust/hw/char/pl011/src/device.rs                   | 600 +++++++++++++++++++++
+ rust/hw/char/pl011/src/device_class.rs             |  63 +++
+ rust/hw/char/pl011/src/lib.rs                      | 586 ++++++++++++++++++++
+ rust/hw/char/pl011/src/memory_ops.rs               |  59 ++
+ rust/hw/meson.build                                |   1 +
+ rust/meson.build                                   |   4 +
+ rust/qemu-api-macros/Cargo.lock                    |  47 ++
+ rust/qemu-api-macros/Cargo.toml                    |  25 +
+ rust/qemu-api-macros/README.md                     |   1 +
+ rust/qemu-api-macros/meson.build                   |  25 +
+ rust/qemu-api-macros/src/lib.rs                    |  43 ++
+ rust/qemu-api/.gitignore                           |   2 +
+ rust/qemu-api/Cargo.lock                           |   7 +
+ rust/qemu-api/Cargo.toml                           |  26 +
+ rust/qemu-api/README.md                            |  17 +
+ rust/qemu-api/build.rs                             |  14 +
+ rust/qemu-api/meson.build                          |  24 +
+ rust/qemu-api/src/definitions.rs                   | 109 ++++
+ rust/qemu-api/src/device_class.rs                  | 128 +++++
+ rust/qemu-api/src/lib.rs                           | 154 ++++++
+ rust/qemu-api/src/tests.rs                         |  49 ++
+ rust/rustfmt.toml                                  |   7 +
+ scripts/archive-source.sh                          |   6 +-
+ scripts/make-release                               |   5 +-
+ scripts/meson-buildoptions.sh                      |   3 +
+ scripts/rust/rust_root_crate.sh                    |  13 +
+ scripts/rust/rustc_args.py                         |  84 +++
+ subprojects/.gitignore                             |  11 +
+ subprojects/arbitrary-int-1-rs.wrap                |   7 +
+ subprojects/bilge-0.2-rs.wrap                      |   7 +
+ subprojects/bilge-impl-0.2-rs.wrap                 |   7 +
+ subprojects/either-1-rs.wrap                       |   7 +
+ subprojects/itertools-0.11-rs.wrap                 |   7 +
+ .../packagefiles/arbitrary-int-1-rs/meson.build    |  19 +
+ subprojects/packagefiles/bilge-0.2-rs/meson.build  |  29 +
+ .../packagefiles/bilge-impl-0.2-rs/meson.build     |  45 ++
+ subprojects/packagefiles/either-1-rs/meson.build   |  24 +
+ .../packagefiles/itertools-0.11-rs/meson.build     |  30 ++
+ .../packagefiles/proc-macro-error-1-rs/meson.build |  40 ++
+ .../proc-macro-error-attr-1-rs/meson.build         |  32 ++
+ .../packagefiles/proc-macro2-1-rs/meson.build      |  31 ++
+ subprojects/packagefiles/quote-1-rs/meson.build    |  29 +
+ subprojects/packagefiles/syn-2-rs/meson.build      |  40 ++
+ .../packagefiles/unicode-ident-1-rs/meson.build    |  20 +
+ subprojects/proc-macro-error-1-rs.wrap             |   7 +
+ subprojects/proc-macro-error-attr-1-rs.wrap        |   7 +
+ subprojects/proc-macro2-1-rs.wrap                  |   7 +
+ subprojects/quote-1-rs.wrap                        |   7 +
+ subprojects/syn-2-rs.wrap                          |   7 +
+ subprojects/unicode-ident-1-rs.wrap                |   7 +
+ subprojects/unicode-ident-1-rs/meson.build         |  20 +
+ tests/lcitool/mappings.yml                         |   2 +-
+ 76 files changed, 3163 insertions(+), 22 deletions(-)
+---
+base-commit: a733f37aef3b7d1d33bfe2716af88cdfd67ba64e
+change-id: 20240814-rust-pl011-v7
+
+Best regards,
 -- 
-2.45.2
+γαῖα πυρί μιχθήτω
 
 
