@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8762ECE57A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 13:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A4FEB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 13:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so0oz-00042U-Cy; Tue, 10 Sep 2024 09:22:17 -0400
+	id 1so11S-0006Vs-8g; Tue, 10 Sep 2024 09:35:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1so0oy-00041K-Pw
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 09:22:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so11Q-0006Ut-V8
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 09:35:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1so0ox-0001he-5b
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 09:22:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so11O-00030N-Pq
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 09:35:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725974533;
+ s=mimecast20190719; t=1725975305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p5DIdtdfJn5kMtn8D4tl/LJy99xguNSg3eD7ePVbuaw=;
- b=er6TYlaZyTOGrvRuiHWFk+qvLD3AnmHvVnLdOkea/Sn6ZjGIQ5fQWbfTH4KtLbXB2lwj2p
- nneh4RYSYdVW5SFrxmOrk7AfGq01eKaertU8T8tR0I99wh9nG3DL9J6PHcHrq7IZ9OwvW9
- CZpkapr3lwUKzw2XyGmIqJKPfbQ5XaI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=p3iYod1LP+NvrgaAgNQI1w++daTf+uRij0TzPl7NgCQ=;
+ b=Cj65q8JneC6myehKWIWSq2jj6O2q0Y2T/3Fj1MO13TcU7boyCWfTCGvHFBU6rgpzPwpo+e
+ mvqurqByQpa4HFX9RP6Vm7JQTMCxAZpmzJud6orEUIaphhY2EgAe4HsxQVzhFPPl5IS6ha
+ w9aBN1luHgmJnlAnh3j7EulNl+mmXDA=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-flXQw4SjOzmjZ5Akg6LqrQ-1; Tue, 10 Sep 2024 09:22:12 -0400
-X-MC-Unique: flXQw4SjOzmjZ5Akg6LqrQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42cb115566eso26609235e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 06:22:11 -0700 (PDT)
+ us-mta-614-z8g8XRz9PieCGtR-3PGqxQ-1; Tue, 10 Sep 2024 09:35:03 -0400
+X-MC-Unique: z8g8XRz9PieCGtR-3PGqxQ-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2f7593fbcecso39608791fa.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 06:35:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725974531; x=1726579331;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1725975302; x=1726580102;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p5DIdtdfJn5kMtn8D4tl/LJy99xguNSg3eD7ePVbuaw=;
- b=UQNPqabMSC1Q9P8n6WDD58rwkW/B8bEOJIeT53G8fasIBf52pZmbQpGQvpyUa54O16
- 2f8XfRt1c9ZijM173EIV96BN0JnCKI7TUe9JVWI5RMbZuL3PgEjWABBuBBrTBH5ZaDMI
- lmnNrjMYyhsD0a5b2buKPkxa7WDPf8ZCweDkYaS7f78SAnh+fvpX/bfEYVgcnF5kcAH7
- 71PXfOkT8y1S24AQkGS7etbCa7fZPgCqafbaDm21pSVFZWQegMd2EZcDukzeldRGDUMT
- a7wZx3RwDie2jq5WfijhZXFJCJMC9SVNqnOfmeNFhNXVQgTkoI9X+BTCcvFpVXetwd7l
- Ee0Q==
-X-Gm-Message-State: AOJu0Yy4ZXff90dcbl4V/dLkP7zeEzScXUoEPGBMImfGNoEdtRB5LIrm
- PNeUWUjQHUmefFK8DUII708cKRuTA4H9FsH4HBi4K1vjjT2HA8IX/2gZ0xUCjzvVs4rO54yyJMa
- HbWlP6G447eaN2i+q3WLOxSx/8DEjWDVVRkQV1HjPkE/8aXnzPrFU
-X-Received: by 2002:a05:600c:1c17:b0:42c:bb58:a077 with SMTP id
- 5b1f17b1804b1-42cbb58a491mr53594565e9.14.1725974530644; 
- Tue, 10 Sep 2024 06:22:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxdtg5eHBnNdWf4WHzY2NPlHjO5vs/o+FJutSr3G4u6yrgnxgzvtIFNFIhm5uKSNLBX6zfuw==
-X-Received: by 2002:a05:600c:1c17:b0:42c:bb58:a077 with SMTP id
- 5b1f17b1804b1-42cbb58a491mr53594165e9.14.1725974530217; 
- Tue, 10 Sep 2024 06:22:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3789564af1asm8919014f8f.18.2024.09.10.06.22.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 06:22:09 -0700 (PDT)
-Message-ID: <3589d479-cd8a-4d18-959a-480c55182a7f@redhat.com>
-Date: Tue, 10 Sep 2024 15:22:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 v15 04/11] s390x/pci: Check for multifunction
- after device realization
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+ bh=p3iYod1LP+NvrgaAgNQI1w++daTf+uRij0TzPl7NgCQ=;
+ b=CT2iCn4c0fAS5vQNro7BqSvynSDqk6Qxm0JiUPf1DRzhz583+r8X6xDcQhV1/D8Dba
+ MORvTsi8imGVc6n+2A/itiLbSREcPosE7UR8eWIy3WG/VK0KHR15VFbudwBL4/nA97o/
+ 6OhzDkxsFKScqIa3kEP1NH0pZvJamvr163Sy94bFBghZy+l3aWaFB31cz0ZVogQ1ORzG
+ O5P8txlQQg1sSxLVdA9GJV5pMbJ+ezepYG4wKlurhzRFV87QtD70qnC7HhgHNho5uQnH
+ VbYiUzp2JGHjjz1z34gorHBXkylIDbQRkryCTcQc7WiczvFFgZ85lG3LAJPLXMz8TYu1
+ zP9w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaH+vXPXmoPshtwjN7p0vABdoxss8Jo31zfRjk4IJfBzUaATXnqzqanm+UlyknrLOp2T3FRFEnFp6M@nongnu.org
+X-Gm-Message-State: AOJu0Yy8rNz7YChISygaSygL//GgvIRStn288ZedXtqsVwZ9MS3g7/4U
+ THDotG0Sue4RO3XX6jlK8fGAZsOMZqb7PCImbOyP5DIdignf97xRkk9m6lGMyXefoGejjvaA7cY
+ s3eEJS2PSoazJZg0w8NIKM5Gf9r1R3F0KSDI/fej0RewTcUykye9l
+X-Received: by 2002:a2e:619:0:b0:2f7:712d:d08 with SMTP id
+ 38308e7fff4ca-2f7749e9fb7mr14497551fa.23.1725975302245; 
+ Tue, 10 Sep 2024 06:35:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9q/sM6gVnnSpQMvIzPMz3Db4OPEzkrrdjvlES/BCkzl6oXbPV2uPLeRplNwNHhiWuRT53Sw==
+X-Received: by 2002:a2e:619:0:b0:2f7:712d:d08 with SMTP id
+ 38308e7fff4ca-2f7749e9fb7mr14497081fa.23.1725975301156; 
+ Tue, 10 Sep 2024 06:35:01 -0700 (PDT)
+Received: from redhat.com ([2.55.8.249]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25d3eef7sm483767566b.192.2024.09.10.06.34.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 06:35:00 -0700 (PDT)
+Date: Tue, 10 Sep 2024 09:34:55 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+ Klaus Jensen <its@irrelevant.dk>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH for-9.2 v15 00/11] hw/pci: SR-IOV related fixes and
+ improvements
+Message-ID: <20240910093440-mutt-send-email-mst@kernel.org>
 References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
- <20240823-reuse-v15-4-eddcb960e289@daynix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240823-reuse-v15-4-eddcb960e289@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20240910052046-mutt-send-email-mst@kernel.org>
+ <08975798-2484-4aac-a032-5ab8a6475bde@daynix.com>
+ <4adc32d0-02c1-4375-8618-2692a9b1da76@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+In-Reply-To: <4adc32d0-02c1-4375-8618-2692a9b1da76@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -96,7 +99,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,64 +115,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/23/24 07:00, Akihiko Odaki wrote:
-> The SR-IOV PFs set the multifunction bits during device realization so
-> check them after that. This forbids adding SR-IOV devices to s390x.
+On Tue, Sep 10, 2024 at 03:21:54PM +0200, Cédric Le Goater wrote:
+> On 9/10/24 11:33, Akihiko Odaki wrote:
+> > On 2024/09/10 18:21, Michael S. Tsirkin wrote:
+> > > On Fri, Aug 23, 2024 at 02:00:37PM +0900, Akihiko Odaki wrote:
+> > > > Supersedes: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+> > > > ("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
+> > > > 
+> > > > I submitted a RFC series[1] to add support for SR-IOV emulation to
+> > > > virtio-net-pci. During the development of the series, I fixed some
+> > > > trivial bugs and made improvements that I think are independently
+> > > > useful. This series extracts those fixes and improvements from the RFC
+> > > > series.
+> > > > 
+> > > > [1]: https://patchew.org/QEMU/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com/
+> > > > 
+> > > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > 
+> > > I don't think Cédric's issues have been addressed, am I wrong?
+> > > Cédric, what is your take?
+> > 
+> > I put the URI to Cédric's report here:
+> > https://lore.kernel.org/r/75cbc7d9-b48e-4235-85cf-49dacf3c7483@redhat.com
+> > 
+> > This issue was dealt with patch "s390x/pci: Check for multifunction after device realization". I found that s390x on QEMU does not support multifunction and SR-IOV devices accidentally circumvent this restriction, which means igb was never supposed to work with s390x. The patch prevents adding SR-IOV devices to s390x to ensure the restriction is properly enforced.
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
-May be add :
-
-Fixes: 6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug handler")
-
-?
-
-Anyhow,
-
-Tested-by: CÃ©dric Le Goater <clg@redhat.com>
-Reviewed-by: CÃ©dric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/s390x/s390-pci-bus.c | 14 ++++++--------
->   1 file changed, 6 insertions(+), 8 deletions(-)
+> yes, indeed and it seems to fix :
 > 
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index 3e57d5faca18..00b2c1f6157b 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -971,14 +971,7 @@ static void s390_pcihost_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
->                       "this device");
->       }
->   
-> -    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
-> -        PCIDevice *pdev = PCI_DEVICE(dev);
-> -
-> -        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-> -            error_setg(errp, "multifunction not supported in s390");
-> -            return;
-> -        }
-> -    } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
-> +    if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
->           S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
->   
->           if (!s390_pci_alloc_idx(s, pbdev)) {
-> @@ -1069,6 +1062,11 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
->           pdev = PCI_DEVICE(dev);
->   
-> +        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-> +            error_setg(errp, "multifunction not supported in s390");
-> +            return;
-> +        }
-> +
->           if (!dev->id) {
->               /* In the case the PCI device does not define an id */
->               /* we generate one based on the PCI address         */
+>   6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug handler")
 > 
+> I will update patch 4.
+> 
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> That said, the igb device worked perfectly fine under the s390x machine.
+
+And it works for you after this patchset, yes?
 
 
