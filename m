@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E51EDE9AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F0BEDE9AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so5rV-0006Pi-K5; Tue, 10 Sep 2024 14:45:13 -0400
+	id 1so5sJ-0007ZA-FE; Tue, 10 Sep 2024 14:46:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so5rQ-0006Ol-Ol
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:45:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so5sG-0007QS-7D
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:46:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so5rO-0002xg-VY
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:45:08 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so5sE-0003DB-IR
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:45:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725993904;
+ s=mimecast20190719; t=1725993957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kqvs3C90iGzm135MXlx1sXrGkv4nj93AotCP0HHWwpY=;
- b=gZr5xCguC4Pc/KXDmftOLBqw1a+IgtB2bKsyg6NuTF5dHX57YddALLHv1uwP2XUuVQ0vad
- tJlS+J1iL5X5gnLKTYM+Ak0Y5uXeeOclmeWjRfC2gcRD5BpcncuEruScRMMMCY57f4/N11
- bzMVXkII/O6GjknmPkxPLHpCR8ZlF1s=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XazKTCHVCR0h0gWd5J/3zah2/8aKU1d3lDvkrDsdl74=;
+ b=InArRkpRtcuTBSPTfxJT9cal573uQORZgJcFkmrDit+4cKxRZvA0Lt+594tYyFmL4uaGRu
+ AMsfMGt+jzAijpTotRbZv08cK83sFtSz60Jf9MlmNQLHoMZNlfVGc3KIgYo6lHW9MHyRA9
+ xnWWTzwyya2eerOzXjbIM8D4shOH/UI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-JY_aux3pMkyhFdCLw-9Y5g-1; Tue, 10 Sep 2024 14:45:03 -0400
-X-MC-Unique: JY_aux3pMkyhFdCLw-9Y5g-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42cb635b108so8732965e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:45:03 -0700 (PDT)
+ us-mta-171-PtQPjWNkNamxEg4CqzH2fQ-1; Tue, 10 Sep 2024 14:45:56 -0400
+X-MC-Unique: PtQPjWNkNamxEg4CqzH2fQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42cb08ed3a6so601485e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:45:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725993902; x=1726598702;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=kqvs3C90iGzm135MXlx1sXrGkv4nj93AotCP0HHWwpY=;
- b=AFgocG14ts/7Wby28C5dLcf3D5c7s0B2SgNSRL+qGbDznh4VKTrDc5oBpsF4ZiZQTl
- WgDQG4OtNlh1LktIFfJ8u9hbNAU4nXYYHpcXbTbzWAGQoLcRAAHgk1MaHWDSGELPb+Kp
- rc938lHHGbjaZMCHVKByNhOjM+Q5QbWA7M1ztn/wtT2mcLfNsGbuPefrY5+8rqw8cwi2
- ce77vkFNCfI+uOcFw83GWakvqYqNRk7f+dMWMiJmTgdw8Gq8H88bnqbYDliAaDkqVczc
- CVYh271NHVP7TsXiRWx6Gd2zaLB0m9qXki1H+VZYKxjK1m8Ba/WH9mVZwkYLk79VDBn7
- MzLQ==
-X-Gm-Message-State: AOJu0Yx8chD95DohItYHBinaPFzHpft3qos5UpUA2Rr1IfrTM+YVjVXb
- +maFuA0hwjpyJnAQJEtgniptiajxsoBlexfyufiIHddcRes/w0+SqmxKX9zJXtT6CfIcwR0tkTw
- cCzlFb4z4yx8qzw0US7EY/DopuxWzQx2Y6h+VldW25P596qdPVSRf
-X-Received: by 2002:a5d:4b41:0:b0:374:c945:2569 with SMTP id
- ffacd0b85a97d-378b07acbf5mr414913f8f.15.1725993902151; 
- Tue, 10 Sep 2024 11:45:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGL0YWazQw2YCqVYbw7fBRzj1BZNp5xXXGg7SJQjOwx0VRSc/4VZDbYy0DPNEIyRlqyKl9chA==
-X-Received: by 2002:a5d:4b41:0:b0:374:c945:2569 with SMTP id
- ffacd0b85a97d-378b07acbf5mr414887f8f.15.1725993900752; 
- Tue, 10 Sep 2024 11:45:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725993955; x=1726598755;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XazKTCHVCR0h0gWd5J/3zah2/8aKU1d3lDvkrDsdl74=;
+ b=asKhKllvS/mmltAmflLvDTlo9Elyrw4BnqQFNFLHMaWuKpQn8iqQCliNMsPeNJNDzd
+ Mff+CHgLQNv3tBvD/vVpAZtB+bTflDa46eXE9MWyoq0fqoLx4LMwDVNrsE9KbKCvU5j/
+ OLgG8UQM8VZmpQcsaz+7pE0bJcDtshICy048zjiAMsFmOfxZSzdRy2N9sn/Y0iKLsaDY
+ U8k9VK99vVLsWA3ejTWUHawnNcJ5QQ4rx387GJY+ZVIl9gOvQh2sXvCLZWqV8fU81Q77
+ barzyBMiNx36vZ5Km3rKEFYYVA94/gM/gjfFYKB05HY3+th1tyQbo7BNpmB7Tqz6jmpf
+ xjHg==
+X-Gm-Message-State: AOJu0YxBSs8pv4dT0Sye65lHeydmhFumBjyCF2M/Bm1A02KTZO8+BR0O
+ aWHr+S3BLvBCtELU9Tt6VpTpOCF1EjZ7yvZY2tOS13KabA33DvW4UMeaFJK7UNlHPoeL6ueqITG
+ Fn+nwet1lPUTPCNnVuwtnYTwSGsSz5KmjkVcIjRp/GQmB4nuUi9//
+X-Received: by 2002:a05:6000:178e:b0:374:cde8:20d9 with SMTP id
+ ffacd0b85a97d-378a8a7ab29mr3352226f8f.23.1725993955313; 
+ Tue, 10 Sep 2024 11:45:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRh6i0F4fngQn1S+j879Aj0iS2aBrjlodlg9cx0n0+WZGKY64QhBG+2ZR4vjxhGvM7HZNfZA==
+X-Received: by 2002:a05:6000:178e:b0:374:cde8:20d9 with SMTP id
+ ffacd0b85a97d-378a8a7ab29mr3352209f8f.23.1725993954808; 
+ Tue, 10 Sep 2024 11:45:54 -0700 (PDT)
 Received: from [192.168.3.141] (p4ff237ad.dip0.t-ipconnect.de. [79.242.55.173])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42cb58d815esm90463485e9.31.2024.09.10.11.44.59
+ 5b1f17b1804b1-42cb73ab096sm82813525e9.22.2024.09.10.11.45.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 11:45:00 -0700 (PDT)
-Message-ID: <56233de5-69b3-4274-a995-7529221fedbb@redhat.com>
-Date: Tue, 10 Sep 2024 20:44:59 +0200
+ Tue, 10 Sep 2024 11:45:54 -0700 (PDT)
+Message-ID: <393855d4-10fb-446f-a391-ee7cc7cc5556@redhat.com>
+Date: Tue, 10 Sep 2024 20:45:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] virtio-mem: don't warn about THP sizes on a kernel
- without THP support
+Subject: Re: [PATCH v1 00/14] s390x: virtio-mem support
 To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>
-References: <20240910163433.2100295-1-david@redhat.com>
- <20240910142458-mutt-send-email-mst@kernel.org>
-From: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910143224-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
  dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
@@ -122,10 +127,10 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240910142458-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240910143224-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -149,48 +154,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.09.24 20:26, Michael S. Tsirkin wrote:
-> On Tue, Sep 10, 2024 at 06:34:33PM +0200, David Hildenbrand wrote:
->> If the config directory in sysfs does not exist at all, we are dealing
->> with a system that does not support THPs. Simply use 1 MiB block size
->> then, instead of warning "Could not detect THP size, falling back to
->> ..." and falling back to the default THP size.
+On 10.09.24 20:33, Michael S. Tsirkin wrote:
+> On Tue, Sep 10, 2024 at 07:57:55PM +0200, David Hildenbrand wrote:
+>> This series is based on:
+>>      [PATCH v2] virtio: kconfig: memory devices are PCI only [1]
 >>
->> Cc: "Michael S. Tsirkin" <mst@redhat.com>
->> Cc: Gavin Shan <gshan@redhat.com>
->> Cc: Juraj Marcin <jmarcin@redhat.com>
->> Signed-off-by: David Hildenbrand <david@redhat.com>
-> 
-> Okay, I picked it up. But I have a question
-
-Thanks, I can also route it via my memory device tree, whatever you prefer.
-
-> 
->> ---
->>   hw/virtio/virtio-mem.c | 7 +++++++
->>   1 file changed, 7 insertions(+)
+>> I finally found the time (IOW forced myself) to finish virtio-mem
+>> support on s390x. The last RFC was from 2020, so I won't talk about
+>> what changed -- a lot changed in the meantime :)
 >>
->> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
->> index ef64bf1b4a..4075f3d4ce 100644
->> --- a/hw/virtio/virtio-mem.c
->> +++ b/hw/virtio/virtio-mem.c
->> @@ -88,6 +88,7 @@ static uint32_t virtio_mem_default_thp_size(void)
->>   static uint32_t thp_size;
->>   
->>   #define HPAGE_PMD_SIZE_PATH "/sys/kernel/mm/transparent_hugepage/hpage_pmd_size"
->> +#define HPAGE_PATH "/sys/kernel/mm/transparent_hugepage/"
+>> There is really not much left to do on s390x, because virtio-mem already
+>> implements most things we need today (e.g., early-migration,
+>> unplugged-inaccessible). The biggest part of this series is just doing what
+>> we do with virtio-pci, wiring it up in the machine hotplug handler and ...
+>> well, messing with the physical memory layout where we can now exceed
+>> initial RAM size and have sparsity (memory holes).
+>>
+>> I tested a lot of things, including:
+>>   * Memory hotplug/unplug
+>>   * Device hotplug/unplug
+>>   * System resets / reboots
+>>   * Migrate to/from file (including storage attributes under KVM)
+>>   * Basic live migration
+>>   * Basic postcopy live migration
+>>
+>> More details on how to use it on s390x -- which is pretty much how
+>> we use it on other architectures, except
+>> s/virtio-mem-pci/virtio-mem-ccw/ --- is in the last patch.
+>>
+>> This series introduces a new diag(500) "STORAGE LIMIT" subcode that will
+>> be documented at [2] once this+kernel part go upstream.
+>>
+>> There are not many s390x-specific virtio-mem future work items, except:
+>> * Storage attribute migration might be improved
+>> * We might want to reset storage attributes of unplugged memory
+>>    (might or might not be required for upcoming page table reclaim in
+>>     Linux; TBD)
 > 
 > 
-> If this code runs e.g. on windows, it will poke at cwd root with
-> unpredictable results.
-> It doesn't look like this is linux specific, did I miss anything?
+> I don't see anything needing virtio specific here, let me know if
+> I missed anything.
 
+No, it's really just wiring up virtio-mem.
 
-VIRTIO_MEM has
-
-"depends on LINUX"
-
-so that code will never run on Windows.
+> A quick look is fine so I guess you can add
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
 Thanks!
 
