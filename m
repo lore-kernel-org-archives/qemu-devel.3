@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624E8EB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 04:20:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A4BEB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 04:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snsM5-0006Gl-1T; Tue, 10 Sep 2024 00:19:53 -0400
+	id 1snsQt-0002J6-0z; Tue, 10 Sep 2024 00:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1snsM3-0006GB-RM
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:19:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1snsM2-0008Cq-5R
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:19:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725941988;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=4qUmWSa6b5VQp+2FGujuogOvk9JroMLFbD1cgl37dRY=;
- b=RVXIV3Z/IuwBwFibOkVPOXZggaePV0xE8ebKs/Nu3my1pCgausAGTVqzRreQUZFBWYcOk9
- +zIcdsEdua8e0FGIQZbVXxSmUn4EVvhkVaO+yIIU7DwSiXlfhJdpfUnp4QudHILfD/OYWD
- yvzVCoPAT5JAuZLjCHw3WStkVfZo57A=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-43-9G4d3EJuOYqxRuSv4iu4Jg-1; Tue, 10 Sep 2024 00:19:46 -0400
-X-MC-Unique: 9G4d3EJuOYqxRuSv4iu4Jg-1
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-1fc6db23c74so67279795ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 21:19:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1snsQr-0002Ia-Ku
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:24:49 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1snsQp-0000HI-8t
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 00:24:49 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2055f630934so2812465ad.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 21:24:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1725942286; x=1726547086;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KAbDjVp1Qggo+5s3MomGv6/yycwyItBlD9tpI24DWhY=;
+ b=EOVsXuWoiphPqlJl7ITGizjYUDkJdL60LqhObF8KYFJtFMljk2vTPcXtsYgn4g+V75
+ fOVSbeHq3Ke2TrWICji9awTpqNdN64V5dUdP5weQvXRUj0cBJBv+xIfw5qsObq/2p6q7
+ 3+OaX2AyBwdblYMqqRIl3VRrJDS++SuIB3spfRz+HLp+I/f88jDIYXWFDtlbjlnKvT3n
+ PKELPOMXjCht0YerhhLNwsWN4v2VoqbNeLFwypd8cnSZQP7qDJKLORWy88UDuUMtsNn6
+ AIn8Ya7mWl4Elte3n+/Fmqy6yLA5oXC7OW4VTJzg0fJ4ph1lJvtRbUCmoqNGfSKxb273
+ VAxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725941985; x=1726546785;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4qUmWSa6b5VQp+2FGujuogOvk9JroMLFbD1cgl37dRY=;
- b=Vjo7GpXcSsWEtNB2uOWZhNjhrc1Nk2uFL4YssWqFxtGlzKgT/r7FHPX1apE8TF27tG
- Qbv11n71DIlHknqO223ZhkngLFkfI8n458vWaXDJJZfIZLzE20jinv/L8cpnn2G+y8qJ
- h7fPNU8m86NEL8kEuIkXcF0Vp2Z5xQWZ/Ncsu2jDGVnrIS1wa8RiYjxCgCQ16xqs7bMd
- +FkNzWjXJoa5sRBXdC6VB1KJNKW6LgzEFWOr4UxReUkeUaQHik2l0PD2uLGyy3a3u9GT
- 1Rmwzg2gnL80/wRUAgacXlHGESO/CSz1Fwwzglvuuod5dlNLSe62p23LLLmWSURzU+iv
- kjBA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX96iJeA/C5GrluaF+lMfYa0mEmoimAeN/bwmSp3MX2p/wKdj66d4wOUDcHOOSLa5cOcsZsSyn/0NwP@nongnu.org
-X-Gm-Message-State: AOJu0Yyns0hfBZefQeIak+S3jFifxM5T72eSD0XLTUiJSxjxk4Mwdiou
- gZRr+s5Vk/luFDuKz7gHQpVb6kp2WopS6tbV0pfImuUfeHo7ep/X5IdZbDUVlrurXUTe6oFg1Ok
- Zq+4XjPScvIMkI+TF3UCLCRDNf5l+ASJpLOyw31gKktUMI4w6JTP/
-X-Received: by 2002:a17:903:24f:b0:207:182c:8a52 with SMTP id
- d9443c01a7336-207182c8abemr78837285ad.58.1725941984974; 
- Mon, 09 Sep 2024 21:19:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuSAnUUZyd0l0+6YKxlaUchBXjLgONWzFzhkET7PqBPyCXWRlybcmvGa5iN5OeUL/VRSK0hA==
-X-Received: by 2002:a17:903:24f:b0:207:182c:8a52 with SMTP id
- d9443c01a7336-207182c8abemr78836935ad.58.1725941984402; 
- Mon, 09 Sep 2024 21:19:44 -0700 (PDT)
-Received: from localhost.localdomain ([115.96.78.44])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-20710eea8d8sm40611025ad.165.2024.09.09.21.19.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Sep 2024 21:19:43 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] memory: notify hypervisor of all eventfds during listener
- (de)registration
-Date: Tue, 10 Sep 2024 09:49:36 +0530
-Message-ID: <20240910041936.5142-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
+ d=1e100.net; s=20230601; t=1725942286; x=1726547086;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KAbDjVp1Qggo+5s3MomGv6/yycwyItBlD9tpI24DWhY=;
+ b=bCyuD05jbgMYtwk0TeYadbJd9nbIO/zANnm6EU45DmmEI2ikhbo6VZ8Kf1m9L/VZmM
+ wyiIzk0eltuGvJz9U/1Ema6N3M/uYqO8TozjyLiTljEAdFILSjBJlTj3cGO9RYUz27q3
+ QALtY6wuIAMFaXdktlRuEqdxH3El3n4c8TIw3labNe7EF2S6LTH65bfDCFNzSe2SXR72
+ s6RGlpVaA1VSCBRzmIHJ4OW4CJLA22+rUaOLuMW6hteQfzQ45lW8k5p0Bxl/L3wm9F1a
+ KhHyWutNR3F6VMl36BFPV2gFM49wwNGZsAxKVEu+Y6k5K9oLsxEd9/hZxMvtV1USaQh6
+ DYzA==
+X-Gm-Message-State: AOJu0YwC9mD9fIgMyLx1RrZt0NmU0Xscmn+qPwmBbQJw1aRI925mhPp2
+ 5+1EP3BTP93rpnsxPyYE+8xOjPpvGLKjLiTfd60TBzdXG2DKCx8ZgitCxNc9J2c=
+X-Google-Smtp-Source: AGHT+IFKQV+BC7YjgQBbSSKfo0TwTeDPuTVwyXUSe0n/4ZLAOVZ5OmnrrbI8OmzOcr9PfocjNn3+VQ==
+X-Received: by 2002:a17:903:230f:b0:205:9112:efea with SMTP id
+ d9443c01a7336-2070a578bdemr98893135ad.35.1725942285525; 
+ Mon, 09 Sep 2024 21:24:45 -0700 (PDT)
+Received: from [157.82.204.48] ([157.82.204.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20710f1f4a3sm40711395ad.221.2024.09.09.21.24.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Sep 2024 21:24:45 -0700 (PDT)
+Message-ID: <bd5eb810-cddd-418e-828e-efc8b0fe01ec@daynix.com>
+Date: Tue, 10 Sep 2024 13:24:41 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block: support locking on change medium
+To: Joelle van Dyne <j@getutm.app>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+References: <20240909015847.40377-1-j@getutm.app>
+ <dab54af1-cf9d-401c-a11f-657334b52d5a@daynix.com>
+ <CA+E+eSAu1T_juXxyu9VZMmNtbcais3GJX_vomk5MFOLjCCKo3Q@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CA+E+eSAu1T_juXxyu9VZMmNtbcais3GJX_vomk5MFOLjCCKo3Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,143 +104,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a new listener for an address space is registered, the hypervisor must be
-informed of all existing eventfds for that address space by calling
-eventfd_add() for that listener. Similarly, when a listener is de-registered
-from an address space, the hypervisor must be informed of all existing eventfds
-for that address space with a call to eventfd_del().
+On 2024/09/09 23:18, Joelle van Dyne wrote:
+> On Mon, Sep 9, 2024 at 12:36 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> On 2024/09/09 10:58, Joelle van Dyne wrote:
+>>> New optional argument for 'blockdev-change-medium' QAPI command to allow
+>>> the caller to specify if they wish to enable file locking.
+>>>
+>>> Signed-off-by: Joelle van Dyne <j@getutm.app>
+>>> ---
+>>>    qapi/block.json                | 23 ++++++++++++++++++++++-
+>>>    block/monitor/block-hmp-cmds.c |  2 +-
+>>>    block/qapi-sysemu.c            | 22 ++++++++++++++++++++++
+>>>    ui/cocoa.m                     |  1 +
+>>>    4 files changed, 46 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/qapi/block.json b/qapi/block.json
+>>> index e66666f5c6..35e8e2e191 100644
+>>> --- a/qapi/block.json
+>>> +++ b/qapi/block.json
+>>> @@ -309,6 +309,23 @@
+>>>    { 'enum': 'BlockdevChangeReadOnlyMode',
+>>>      'data': ['retain', 'read-only', 'read-write'] }
+>>>
+>>> +##
+>>> +# @BlockdevChangeFileLockingMode:
+>>> +#
+>>> +# Specifies the new locking mode of a file image passed to the
+>>> +# @blockdev-change-medium command.
+>>> +#
+>>> +# @auto: Use locking if API is available
+>>> +#
+>>> +# @off: Disable file image locking
+>>> +#
+>>> +# @on: Enable file image locking
+>>> +#
+>>> +# Since: 9.2
+>>> +##
+>>> +{ 'enum': 'BlockdevChangeFileLockingMode',
+>>> +  'data': ['auto', 'off', 'on'] }
+>>
+>> You can use OnOffAuto type instead of defining your own.
+> 
+> This can be done. I had thought that defining a new type makes the
+> argument more explicit about the meaning.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- system/memory.c | 74 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+Speaking of semantics, it would be better to use OnOffAuto to match 
+BlockdevOptionsFile's locking property.
 
-diff --git a/system/memory.c b/system/memory.c
-index 5e6eb459d5..ac1b809491 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -941,6 +941,41 @@ static void flat_range_coalesced_io_add(FlatRange *fr, AddressSpace *as)
-     }
- }
- 
-+static void
-+flat_range_coalesced_io_notify_listener_add_del(FlatRange *fr,
-+                                                MemoryListener *listener,
-+                                                AddressSpace *as, bool add)
-+{
-+   CoalescedMemoryRange *cmr;
-+   MemoryRegion *mr = fr->mr;
-+   FlatView *fw = address_space_to_flatview(as);
-+
-+   QTAILQ_FOREACH(cmr, &mr->coalesced, link) {
-+       AddrRange tmp;
-+       MemoryRegionSection mrs = section_from_flat_range(fr, fw);
-+
-+       tmp = addrrange_shift(cmr->addr,
-+                             int128_sub(fr->addr.start,
-+                                        int128_make64(fr->offset_in_region)));
-+
-+       if (!addrrange_intersects(tmp, fr->addr)) {
-+           return;
-+       }
-+       tmp = addrrange_intersection(tmp, fr->addr);
-+
-+       if (add) {
-+           listener->coalesced_io_add(listener, &mrs,
-+                                      int128_get64(tmp.start),
-+                                      int128_get64(tmp.size));
-+       } else {
-+           listener->coalesced_io_del(listener, &mrs,
-+                                      int128_get64(tmp.start),
-+                                      int128_get64(tmp.size));
-+       }
-+   }
-+}
-+
-+
- static void address_space_update_topology_pass(AddressSpace *as,
-                                                const FlatView *old_view,
-                                                const FlatView *new_view,
-@@ -3015,8 +3050,10 @@ void memory_global_dirty_log_stop(unsigned int flags)
- static void listener_add_address_space(MemoryListener *listener,
-                                        AddressSpace *as)
- {
-+    unsigned i;
-     FlatView *view;
-     FlatRange *fr;
-+    MemoryRegionIoeventfd *fd;
- 
-     if (listener->begin) {
-         listener->begin(listener);
-@@ -3041,10 +3078,27 @@ static void listener_add_address_space(MemoryListener *listener,
-         if (listener->region_add) {
-             listener->region_add(listener, &section);
-         }
-+        flat_range_coalesced_io_notify_listener_add_del(fr, listener, as, true);
-         if (fr->dirty_log_mask && listener->log_start) {
-             listener->log_start(listener, &section, 0, fr->dirty_log_mask);
-         }
-     }
-+
-+    /*
-+     * register all eventfds for this address space for the newly registered
-+     * listener.
-+     */
-+    for (i = 0; i < as->ioeventfd_nb; i++) {
-+        fd = &as->ioeventfds[i];
-+        MemoryRegionSection section = (MemoryRegionSection) {
-+            .fv = address_space_to_flatview(as),
-+            .offset_within_address_space = int128_get64(fd->addr.start),
-+            .size = fd->addr.size,
-+        };
-+        listener->eventfd_add(listener, &section,
-+                              fd->match_data, fd->data, fd->e);
-+    }
-+
-     if (listener->commit) {
-         listener->commit(listener);
-     }
-@@ -3054,8 +3108,10 @@ static void listener_add_address_space(MemoryListener *listener,
- static void listener_del_address_space(MemoryListener *listener,
-                                        AddressSpace *as)
- {
-+    unsigned i;
-     FlatView *view;
-     FlatRange *fr;
-+    MemoryRegionIoeventfd *fd;
- 
-     if (listener->begin) {
-         listener->begin(listener);
-@@ -3067,10 +3123,28 @@ static void listener_del_address_space(MemoryListener *listener,
-         if (fr->dirty_log_mask && listener->log_stop) {
-             listener->log_stop(listener, &section, fr->dirty_log_mask, 0);
-         }
-+        flat_range_coalesced_io_notify_listener_add_del(fr, listener,
-+                                                        as, false);
-         if (listener->region_del) {
-             listener->region_del(listener, &section);
-         }
-     }
-+
-+    /*
-+     * de-register all eventfds for this address space for the current
-+     * listener.
-+     */
-+    for (i = 0; i < as->ioeventfd_nb; i++) {
-+        fd = &as->ioeventfds[i];
-+        MemoryRegionSection section = (MemoryRegionSection) {
-+            .fv = address_space_to_flatview(as),
-+            .offset_within_address_space = int128_get64(fd->addr.start),
-+            .size = fd->addr.size,
-+        };
-+        listener->eventfd_del(listener, &section,
-+                              fd->match_data, fd->data, fd->e);
-+    }
-+
-     if (listener->commit) {
-         listener->commit(listener);
-     }
--- 
-2.42.0
+We could also argue that having a dedicated type would make this 
+consistent with the read-only-mode property, which has such a type, but 
+there are other properties that use existing types like str and bool so 
+I think it is fine to use an existing type here too.
 
+> 
+>>
+>>> +
+>>>    ##
+>>>    # @blockdev-change-medium:
+>>>    #
+>>> @@ -330,6 +347,9 @@
+>>>    # @read-only-mode: change the read-only mode of the device; defaults
+>>>    #     to 'retain'
+>>>    #
+>>> +# @file-locking-mode: change the locking mode of the file image; defaults
+>>> +#     to 'auto' (since: 9.2)
+>>> +#
+>>>    # @force: if false (the default), an eject request through
+>>>    #     blockdev-open-tray will be sent to the guest if it has locked
+>>>    #     the tray (and the tray will not be opened immediately); if true,
+>>> @@ -378,7 +398,8 @@
+>>>                'filename': 'str',
+>>>                '*format': 'str',
+>>>                '*force': 'bool',
+>>> -            '*read-only-mode': 'BlockdevChangeReadOnlyMode' } }
+>>> +            '*read-only-mode': 'BlockdevChangeReadOnlyMode',
+>>> +            '*file-locking-mode': 'BlockdevChangeFileLockingMode' } }
+>>>
+>>>    ##
+>>>    # @DEVICE_TRAY_MOVED:
+>>> diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+>>> index bdf2eb50b6..ff64020a80 100644
+>>> --- a/block/monitor/block-hmp-cmds.c
+>>> +++ b/block/monitor/block-hmp-cmds.c
+>>> @@ -1007,5 +1007,5 @@ void hmp_change_medium(Monitor *mon, const char *device, const char *target,
+>>>        }
+>>>
+>>>        qmp_blockdev_change_medium(device, NULL, target, arg, true, force,
+>>> -                               !!read_only, read_only_mode, errp);
+>>> +                               !!read_only, read_only_mode, false, 0, errp);
+>>>    }
+>>> diff --git a/block/qapi-sysemu.c b/block/qapi-sysemu.c
+>>> index e4282631d2..8064bdfb3a 100644
+>>> --- a/block/qapi-sysemu.c
+>>> +++ b/block/qapi-sysemu.c
+>>> @@ -311,6 +311,8 @@ void qmp_blockdev_change_medium(const char *device,
+>>>                                    bool has_force, bool force,
+>>>                                    bool has_read_only,
+>>>                                    BlockdevChangeReadOnlyMode read_only,
+>>> +                                bool has_file_locking_mode,
+>>> +                                BlockdevChangeFileLockingMode file_locking_mode,
+>>>                                    Error **errp)
+>>>    {
+>>>        BlockBackend *blk;
+>>> @@ -362,6 +364,26 @@ void qmp_blockdev_change_medium(const char *device,
+>>>            qdict_put_str(options, "driver", format);
+>>>        }
+>>>
+>>> +    if (!has_file_locking_mode) {
+>>> +        file_locking_mode = BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO;
+>>> +    }
+>>> +
+>>> +    switch (file_locking_mode) {
+>>> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_AUTO:
+>>> +        break;
+>>> +
+>>> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_OFF:
+>>> +        qdict_put_str(options, "file.locking", "off");
+>>> +        break;
+>>> +
+>>> +    case BLOCKDEV_CHANGE_FILE_LOCKING_MODE_ON:
+>>> +        qdict_put_str(options, "file.locking", "on");
+>>> +        break;
+>>> +
+>>> +    default:
+>>> +        abort();
+>>> +    }
+>>> +
+>>>        medium_bs = bdrv_open(filename, NULL, options, bdrv_flags, errp);
+>>>
+>>>        if (!medium_bs) {
+>>> diff --git a/ui/cocoa.m b/ui/cocoa.m
+>>> index 4c2dd33532..6e73c6e13e 100644
+>>> --- a/ui/cocoa.m
+>>> +++ b/ui/cocoa.m
+>>> @@ -1611,6 +1611,7 @@ - (void)changeDeviceMedia:(id)sender
+>>>                                           "raw",
+>>>                                           true, false,
+>>>                                           false, 0,
+>>> +                                       false, 0,
+>>
+>> This change is irrelevant.
+> 
+> This change is needed otherwise QEMU will not compile.
+
+I misread the code. I thought of it is a whitespace change for an 
+existing line but it is adding a line. This change in cocoa.m is fine.
+
+Regards,
+Akihiko Odaki
 
