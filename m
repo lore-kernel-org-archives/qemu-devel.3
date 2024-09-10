@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFA3EDE9A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 16:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15AE5EDE99A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 16:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so41k-00078Z-N7; Tue, 10 Sep 2024 12:47:40 -0400
+	id 1so41n-0007KD-NT; Tue, 10 Sep 2024 12:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41Z-0006mG-0i
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41Z-0006mH-7M
  for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:47:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41U-0007Yz-Pf
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41V-0007ZC-1Z
  for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:47:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1725986844;
@@ -24,42 +24,42 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z7skFJZCEQ+/qGT73BeWIdkvXRnSdSNsKlxhz2l2CaQ=;
- b=fb44cXulWV2UArW1NQH4myhdEt8lmxmdvImGtQViAL2r+WrS8+n8mFOz0Q+9KrKee50eLC
- NqEEZV/ygHxRBtHs4f4o2aVMvPMqiD9Ep8j5sHMXK4Qrwf1yo//2vNCkkXztp/Ev61LCaO
- +37pYCIx+kRgSm00kaQA97Uzws6n4tE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vRYYtntswjaQMtqf/VLLPL1q7rDvK6d2rmfKXxnrSmI=;
+ b=LNJWn/yTv+R1bNc79i1/UthsDND7SPW3xwBSk4AnEfiYbJ/PK2pzMchyg3MbhOHsKEWJvJ
+ z9GEzwpmtTbtT5K0qtQNgrtDjUShL/5DH0OZS4dUAn84d8rxqiOb8bg8SA4CeT3vfcOGSi
+ jQxKvrglQZGO4N88p0YO/jvPpPVW3Jc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-TfHpH4kNPP6ExrdaIus-Tw-1; Tue,
- 10 Sep 2024 12:47:21 -0400
-X-MC-Unique: TfHpH4kNPP6ExrdaIus-Tw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-444-sqJXt8ksOpGfWyd4eVYHWQ-1; Tue,
+ 10 Sep 2024 12:47:23 -0400
+X-MC-Unique: sqJXt8ksOpGfWyd4eVYHWQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DFC581953956; Tue, 10 Sep 2024 16:47:19 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 341CB1955BCD; Tue, 10 Sep 2024 16:47:22 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 055B43000239; Tue, 10 Sep 2024 16:47:19 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 928ED19560A3; Tue, 10 Sep 2024 16:47:21 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 826C721E688F; Tue, 10 Sep 2024 18:47:14 +0200 (CEST)
+ id A66B121E682E; Tue, 10 Sep 2024 18:47:14 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 05/19] qapi/crypto: Drop temporary 'prefix'
-Date: Tue, 10 Sep 2024 18:47:00 +0200
-Message-ID: <20240910164714.1993531-6-armbru@redhat.com>
+Subject: [PULL 16/19] qapi/crypto: Rename QCryptoAFAlg to QCryptoAFAlgo
+Date: Tue, 10 Sep 2024 18:47:11 +0200
+Message-ID: <20240910164714.1993531-17-armbru@redhat.com>
 In-Reply-To: <20240910164714.1993531-1-armbru@redhat.com>
 References: <20240910164714.1993531-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -83,248 +83,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent commit "qapi: Smarter camel_to_upper() to reduce need for
-'prefix'" added two temporary 'prefix' to delay changing the generated
-code.
-
-Revert them.  This improves QCryptoBlockFormat's generated enumeration
-constant prefix from Q_CRYPTO_BLOCK_FORMAT to QCRYPTO_BLOCK_FORMAT,
-and QCryptoBlockLUKSKeyslotState's from
-Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE to QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE.
+For consistency with other types names *Algo.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240904111836.3273842-6-armbru@redhat.com>
+Message-ID: <20240904111836.3273842-17-armbru@redhat.com>
 ---
- qapi/crypto.json               |  2 --
- block/crypto.c                 | 10 +++++-----
- block/qcow.c                   |  2 +-
- block/qcow2.c                  | 10 +++++-----
- crypto/block-luks.c            |  4 ++--
- crypto/block.c                 |  4 ++--
- tests/unit/test-crypto-block.c | 14 +++++++-------
- 7 files changed, 22 insertions(+), 24 deletions(-)
+ crypto/afalgpriv.h    | 14 +++++++-------
+ crypto/hmacpriv.h     |  2 +-
+ crypto/afalg.c        |  8 ++++----
+ crypto/cipher-afalg.c | 12 ++++++------
+ crypto/hash-afalg.c   | 14 +++++++-------
+ 5 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index a192641a03..fb00c706b2 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -157,7 +157,6 @@
- # Since: 2.6
- ##
- { 'enum': 'QCryptoBlockFormat',
--  'prefix': 'Q_CRYPTO_BLOCK_FORMAT', # TODO drop
-   'data': ['qcow', 'luks']}
+diff --git a/crypto/afalgpriv.h b/crypto/afalgpriv.h
+index 5a2393f1b7..3fdcc0f831 100644
+--- a/crypto/afalgpriv.h
++++ b/crypto/afalgpriv.h
+@@ -30,9 +30,9 @@
+ #define ALG_OPTYPE_LEN 4
+ #define ALG_MSGIV_LEN(len) (sizeof(struct af_alg_iv) + (len))
  
- ##
-@@ -360,7 +359,6 @@
- # Since: 5.1
- ##
- { 'enum': 'QCryptoBlockLUKSKeyslotState',
--  'prefix': 'Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE', # TODO drop
-   'data': [ 'active', 'inactive' ] }
+-typedef struct QCryptoAFAlg QCryptoAFAlg;
++typedef struct QCryptoAFAlgo QCryptoAFAlgo;
  
- ##
-diff --git a/block/crypto.c b/block/crypto.c
-index 4eed3ffa6a..80b2dba17a 100644
---- a/block/crypto.c
-+++ b/block/crypto.c
-@@ -682,7 +682,7 @@ err:
- static int block_crypto_probe_luks(const uint8_t *buf,
-                                    int buf_size,
-                                    const char *filename) {
--    return block_crypto_probe_generic(Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    return block_crypto_probe_generic(QCRYPTO_BLOCK_FORMAT_LUKS,
-                                       buf, buf_size, filename);
- }
+-struct QCryptoAFAlg {
++struct QCryptoAFAlgo {
+     QCryptoCipher base;
  
-@@ -691,7 +691,7 @@ static int block_crypto_open_luks(BlockDriverState *bs,
-                                   int flags,
-                                   Error **errp)
- {
--    return block_crypto_open_generic(Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    return block_crypto_open_generic(QCRYPTO_BLOCK_FORMAT_LUKS,
-                                      &block_crypto_runtime_opts_luks,
-                                      bs, options, flags, errp);
- }
-@@ -724,7 +724,7 @@ block_crypto_co_create_luks(BlockdevCreateOptions *create_options, Error **errp)
-     }
+     int tfmfd;
+@@ -46,22 +46,22 @@ struct QCryptoAFAlg {
+  * @type: the type of crypto operation
+  * @name: the name of crypto operation
+  *
+- * Allocate a QCryptoAFAlg object and bind itself to
++ * Allocate a QCryptoAFAlgo object and bind itself to
+  * a AF_ALG socket.
+  *
+  * Returns:
+- *  a new QCryptoAFAlg object, or NULL in error.
++ *  a new QCryptoAFAlgo object, or NULL in error.
+  */
+-QCryptoAFAlg *
++QCryptoAFAlgo *
+ qcrypto_afalg_comm_alloc(const char *type, const char *name,
+                          Error **errp);
  
-     create_opts = (QCryptoBlockCreateOptions) {
--        .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+        .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-         .u.luks = *qapi_BlockdevCreateOptionsLUKS_base(luks_opts),
-     };
+ /**
+  * afalg_comm_free:
+- * @afalg: the QCryptoAFAlg object
++ * @afalg: the QCryptoAFAlgo object
+  *
+  * Free the @afalg.
+  */
+-void qcrypto_afalg_comm_free(QCryptoAFAlg *afalg);
++void qcrypto_afalg_comm_free(QCryptoAFAlgo *afalg);
  
-@@ -889,7 +889,7 @@ block_crypto_get_specific_info_luks(BlockDriverState *bs, Error **errp)
-     if (!info) {
-         return NULL;
-     }
--    assert(info->format == Q_CRYPTO_BLOCK_FORMAT_LUKS);
-+    assert(info->format == QCRYPTO_BLOCK_FORMAT_LUKS);
- 
-     spec_info = g_new(ImageInfoSpecific, 1);
-     spec_info->type = IMAGE_INFO_SPECIFIC_KIND_LUKS;
-@@ -1002,7 +1002,7 @@ coroutine_fn block_crypto_co_amend_luks(BlockDriverState *bs,
-     QCryptoBlockAmendOptions amend_opts;
- 
-     amend_opts = (QCryptoBlockAmendOptions) {
--        .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+        .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-         .u.luks = *qapi_BlockdevAmendOptionsLUKS_base(&opts->u.luks),
-     };
-     return block_crypto_amend_options_generic_luks(bs, &amend_opts,
-diff --git a/block/qcow.c b/block/qcow.c
-index c2f89db055..84d1cca296 100644
---- a/block/qcow.c
-+++ b/block/qcow.c
-@@ -831,7 +831,7 @@ qcow_co_create(BlockdevCreateOptions *opts, Error **errp)
-     }
- 
-     if (qcow_opts->encrypt &&
--        qcow_opts->encrypt->format != Q_CRYPTO_BLOCK_FORMAT_QCOW)
-+        qcow_opts->encrypt->format != QCRYPTO_BLOCK_FORMAT_QCOW)
-     {
-         error_setg(errp, "Unsupported encryption format");
-         return -EINVAL;
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 70b19730a3..dd359d241b 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -3214,10 +3214,10 @@ qcow2_set_up_encryption(BlockDriverState *bs,
-     int fmt, ret;
- 
-     switch (cryptoopts->format) {
--    case Q_CRYPTO_BLOCK_FORMAT_LUKS:
-+    case QCRYPTO_BLOCK_FORMAT_LUKS:
-         fmt = QCOW_CRYPT_LUKS;
-         break;
--    case Q_CRYPTO_BLOCK_FORMAT_QCOW:
-+    case QCRYPTO_BLOCK_FORMAT_QCOW:
-         fmt = QCOW_CRYPT_AES;
-         break;
-     default:
-@@ -5306,10 +5306,10 @@ qcow2_get_specific_info(BlockDriverState *bs, Error **errp)
-         ImageInfoSpecificQCow2Encryption *qencrypt =
-             g_new(ImageInfoSpecificQCow2Encryption, 1);
-         switch (encrypt_info->format) {
--        case Q_CRYPTO_BLOCK_FORMAT_QCOW:
-+        case QCRYPTO_BLOCK_FORMAT_QCOW:
-             qencrypt->format = BLOCKDEV_QCOW2_ENCRYPTION_FORMAT_AES;
-             break;
--        case Q_CRYPTO_BLOCK_FORMAT_LUKS:
-+        case QCRYPTO_BLOCK_FORMAT_LUKS:
-             qencrypt->format = BLOCKDEV_QCOW2_ENCRYPTION_FORMAT_LUKS;
-             qencrypt->u.luks = encrypt_info->u.luks;
-             break;
-@@ -5948,7 +5948,7 @@ static int coroutine_fn qcow2_co_amend(BlockDriverState *bs,
-             return -EOPNOTSUPP;
-         }
- 
--        if (qopts->encrypt->format != Q_CRYPTO_BLOCK_FORMAT_LUKS) {
-+        if (qopts->encrypt->format != QCRYPTO_BLOCK_FORMAT_LUKS) {
-             error_setg(errp,
-                        "Amend can't be used to change the qcow2 encryption format");
-             return -EOPNOTSUPP;
-diff --git a/crypto/block-luks.c b/crypto/block-luks.c
-index 45347adeeb..7b9c7b292d 100644
---- a/crypto/block-luks.c
-+++ b/crypto/block-luks.c
-@@ -1861,11 +1861,11 @@ qcrypto_block_luks_amend_options(QCryptoBlock *block,
-     QCryptoBlockAmendOptionsLUKS *opts_luks = &options->u.luks;
- 
-     switch (opts_luks->state) {
--    case Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE_ACTIVE:
-+    case QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE_ACTIVE:
-         return qcrypto_block_luks_amend_add_keyslot(block, readfunc,
-                                                     writefunc, opaque,
-                                                     opts_luks, force, errp);
--    case Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE_INACTIVE:
-+    case QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE_INACTIVE:
-         return qcrypto_block_luks_amend_erase_keyslots(block, readfunc,
-                                                        writefunc, opaque,
-                                                        opts_luks, force, errp);
-diff --git a/crypto/block.c b/crypto/block.c
-index 3bcc4270c3..899561a080 100644
---- a/crypto/block.c
-+++ b/crypto/block.c
-@@ -26,8 +26,8 @@
- #include "block-luks.h"
- 
- static const QCryptoBlockDriver *qcrypto_block_drivers[] = {
--    [Q_CRYPTO_BLOCK_FORMAT_QCOW] = &qcrypto_block_driver_qcow,
--    [Q_CRYPTO_BLOCK_FORMAT_LUKS] = &qcrypto_block_driver_luks,
-+    [QCRYPTO_BLOCK_FORMAT_QCOW] = &qcrypto_block_driver_qcow,
-+    [QCRYPTO_BLOCK_FORMAT_LUKS] = &qcrypto_block_driver_luks,
- };
- 
- 
-diff --git a/tests/unit/test-crypto-block.c b/tests/unit/test-crypto-block.c
-index 42cfab6067..2a6c6e99e5 100644
---- a/tests/unit/test-crypto-block.c
-+++ b/tests/unit/test-crypto-block.c
-@@ -39,14 +39,14 @@
  #endif
+diff --git a/crypto/hmacpriv.h b/crypto/hmacpriv.h
+index bd4c498c62..f339596bd9 100644
+--- a/crypto/hmacpriv.h
++++ b/crypto/hmacpriv.h
+@@ -37,7 +37,7 @@ extern QCryptoHmacDriver qcrypto_hmac_lib_driver;
  
- static QCryptoBlockCreateOptions qcow_create_opts = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_QCOW,
-+    .format = QCRYPTO_BLOCK_FORMAT_QCOW,
-     .u.qcow = {
-         .key_secret = (char *)"sec0",
-     },
- };
+ #include "afalgpriv.h"
  
- static QCryptoBlockOpenOptions qcow_open_opts = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_QCOW,
-+    .format = QCRYPTO_BLOCK_FORMAT_QCOW,
-     .u.qcow = {
-         .key_secret = (char *)"sec0",
-     },
-@@ -55,7 +55,7 @@ static QCryptoBlockOpenOptions qcow_open_opts = {
+-QCryptoAFAlg *qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
++QCryptoAFAlgo *qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
+                                          const uint8_t *key, size_t nkey,
+                                          Error **errp);
+ extern QCryptoHmacDriver qcrypto_hmac_afalg_driver;
+diff --git a/crypto/afalg.c b/crypto/afalg.c
+index 52a491dbb5..246d0679d4 100644
+--- a/crypto/afalg.c
++++ b/crypto/afalg.c
+@@ -66,13 +66,13 @@ qcrypto_afalg_socket_bind(const char *type, const char *name,
+     return sbind;
+ }
  
- #ifdef TEST_LUKS
- static QCryptoBlockOpenOptions luks_open_opts = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-     },
-@@ -64,7 +64,7 @@ static QCryptoBlockOpenOptions luks_open_opts = {
+-QCryptoAFAlg *
++QCryptoAFAlgo *
+ qcrypto_afalg_comm_alloc(const char *type, const char *name,
+                          Error **errp)
+ {
+-    QCryptoAFAlg *afalg;
++    QCryptoAFAlgo *afalg;
  
- /* Creation with all default values */
- static QCryptoBlockCreateOptions luks_create_opts_default = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-     },
-@@ -73,7 +73,7 @@ static QCryptoBlockCreateOptions luks_create_opts_default = {
+-    afalg = g_new0(QCryptoAFAlg, 1);
++    afalg = g_new0(QCryptoAFAlgo, 1);
+     /* initialize crypto API socket */
+     afalg->opfd = -1;
+     afalg->tfmfd = qcrypto_afalg_socket_bind(type, name, errp);
+@@ -93,7 +93,7 @@ error:
+     return NULL;
+ }
  
- /* ...and with explicit values */
- static QCryptoBlockCreateOptions luks_create_opts_aes256_cbc_plain64 = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-         .has_cipher_alg = true,
-@@ -87,7 +87,7 @@ static QCryptoBlockCreateOptions luks_create_opts_aes256_cbc_plain64 = {
+-void qcrypto_afalg_comm_free(QCryptoAFAlg *afalg)
++void qcrypto_afalg_comm_free(QCryptoAFAlgo *afalg)
+ {
+     if (!afalg) {
+         return;
+diff --git a/crypto/cipher-afalg.c b/crypto/cipher-afalg.c
+index c08eb7a39b..4980d419c4 100644
+--- a/crypto/cipher-afalg.c
++++ b/crypto/cipher-afalg.c
+@@ -65,7 +65,7 @@ qcrypto_afalg_cipher_ctx_new(QCryptoCipherAlgo alg,
+                              const uint8_t *key,
+                              size_t nkey, Error **errp)
+ {
+-    QCryptoAFAlg *afalg;
++    QCryptoAFAlgo *afalg;
+     size_t expect_niv;
+     char *name;
  
+@@ -119,7 +119,7 @@ qcrypto_afalg_cipher_setiv(QCryptoCipher *cipher,
+                            const uint8_t *iv,
+                            size_t niv, Error **errp)
+ {
+-    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
++    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
+     struct af_alg_iv *alg_iv;
+     size_t expect_niv;
  
- static QCryptoBlockCreateOptions luks_create_opts_aes256_cbc_essiv = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-         .has_cipher_alg = true,
-@@ -572,7 +572,7 @@ int main(int argc, char **argv)
-     g_assert(qcrypto_init(NULL) == 0);
+@@ -143,7 +143,7 @@ qcrypto_afalg_cipher_setiv(QCryptoCipher *cipher,
+ }
  
-     for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
--        if (test_data[i].open_opts->format == Q_CRYPTO_BLOCK_FORMAT_LUKS &&
-+        if (test_data[i].open_opts->format == QCRYPTO_BLOCK_FORMAT_LUKS &&
-             !qcrypto_hash_supports(test_data[i].hash_alg)) {
-             continue;
-         }
+ static int
+-qcrypto_afalg_cipher_op(QCryptoAFAlg *afalg,
++qcrypto_afalg_cipher_op(QCryptoAFAlgo *afalg,
+                         const void *in, void *out,
+                         size_t len, bool do_encrypt,
+                         Error **errp)
+@@ -202,7 +202,7 @@ qcrypto_afalg_cipher_encrypt(QCryptoCipher *cipher,
+                              const void *in, void *out,
+                              size_t len, Error **errp)
+ {
+-    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
++    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
+ 
+     return qcrypto_afalg_cipher_op(afalg, in, out, len, true, errp);
+ }
+@@ -212,14 +212,14 @@ qcrypto_afalg_cipher_decrypt(QCryptoCipher *cipher,
+                              const void *in, void *out,
+                              size_t len, Error **errp)
+ {
+-    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
++    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
+ 
+     return qcrypto_afalg_cipher_op(afalg, in, out, len, false, errp);
+ }
+ 
+ static void qcrypto_afalg_comm_ctx_free(QCryptoCipher *cipher)
+ {
+-    QCryptoAFAlg *afalg = container_of(cipher, QCryptoAFAlg, base);
++    QCryptoAFAlgo *afalg = container_of(cipher, QCryptoAFAlgo, base);
+ 
+     qcrypto_afalg_comm_free(afalg);
+ }
+diff --git a/crypto/hash-afalg.c b/crypto/hash-afalg.c
+index 8fc6bd0edf..28ab899b18 100644
+--- a/crypto/hash-afalg.c
++++ b/crypto/hash-afalg.c
+@@ -64,12 +64,12 @@ qcrypto_afalg_hash_format_name(QCryptoHashAlgo alg,
+     return name;
+ }
+ 
+-static QCryptoAFAlg *
++static QCryptoAFAlgo *
+ qcrypto_afalg_hash_hmac_ctx_new(QCryptoHashAlgo alg,
+                                 const uint8_t *key, size_t nkey,
+                                 bool is_hmac, Error **errp)
+ {
+-    QCryptoAFAlg *afalg;
++    QCryptoAFAlgo *afalg;
+     char *name;
+ 
+     name = qcrypto_afalg_hash_format_name(alg, is_hmac, errp);
+@@ -98,14 +98,14 @@ qcrypto_afalg_hash_hmac_ctx_new(QCryptoHashAlgo alg,
+     return afalg;
+ }
+ 
+-static QCryptoAFAlg *
++static QCryptoAFAlgo *
+ qcrypto_afalg_hash_ctx_new(QCryptoHashAlgo alg,
+                            Error **errp)
+ {
+     return qcrypto_afalg_hash_hmac_ctx_new(alg, NULL, 0, false, errp);
+ }
+ 
+-QCryptoAFAlg *
++QCryptoAFAlgo *
+ qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
+                            const uint8_t *key, size_t nkey,
+                            Error **errp)
+@@ -114,14 +114,14 @@ qcrypto_afalg_hmac_ctx_new(QCryptoHashAlgo alg,
+ }
+ 
+ static int
+-qcrypto_afalg_hash_hmac_bytesv(QCryptoAFAlg *hmac,
++qcrypto_afalg_hash_hmac_bytesv(QCryptoAFAlgo *hmac,
+                                QCryptoHashAlgo alg,
+                                const struct iovec *iov,
+                                size_t niov, uint8_t **result,
+                                size_t *resultlen,
+                                Error **errp)
+ {
+-    QCryptoAFAlg *afalg;
++    QCryptoAFAlgo *afalg;
+     struct iovec outv;
+     int ret = 0;
+     bool is_hmac = (hmac != NULL) ? true : false;
+@@ -197,7 +197,7 @@ qcrypto_afalg_hmac_bytesv(QCryptoHmac *hmac,
+ 
+ static void qcrypto_afalg_hmac_ctx_free(QCryptoHmac *hmac)
+ {
+-    QCryptoAFAlg *afalg;
++    QCryptoAFAlgo *afalg;
+ 
+     afalg = hmac->opaque;
+     qcrypto_afalg_comm_free(afalg);
 -- 
 2.46.0
 
