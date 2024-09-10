@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABC2EDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2241EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4qu-0003Oa-VC; Tue, 10 Sep 2024 13:40:33 -0400
+	id 1so4pv-0005p4-JJ; Tue, 10 Sep 2024 13:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so4qr-0002sI-26
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:29 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1so4pZ-0004me-V7
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:11 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so4qo-0004tI-Sw
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:28 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-7ae3d7222d4so850186a12.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:40:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1so4pX-0004Zm-D7
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:09 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a8a7b1c2f2bso167212066b.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725990025; x=1726594825; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725989946; x=1726594746; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IlCj2ixhxM/epvOBESU4I3HZLS9l35ap6tDyuxDs4dc=;
- b=JS5RIiPtYSDrEPH0Dl9bI4J1B5atixhhrbPxalBWNa09lKoJi1ddI2MYe+Dbsow+oU
- Jj1feojV+NBhUPYQDEdzFUQfFenPjiOUeQxIRorSVJFcI/gVS7ryK0l7H2eV2ZFyHiwF
- EfKjz7F02xBN2dsQQ8CFH0jdCbtCEP/FjsuyZbs9EK2uBLDYQ50E7899VPiZJECwtLO/
- 1auWxYk0fNHRh5vYfCcc/EhXPkxChJY5HIuOTKmQyd/Xj/h2ngTmUqmojwBnHy4nC4Bf
- Cdl5mrwrFCScKsHrimvR9tl9eOt4d7RF5VI8OavXJA+gfuhmxOabGF8o/LaUs7Xd30mb
- Nkyw==
+ bh=3rTxwacRyl+bWtsw8yvVr2/Byzv5V7eVXyx+MM0eORw=;
+ b=j7aYyE4Xa5FqddUOOkh/qeCGuEGRzjI/8SeU0hjB4xOdUKSvK8Lc8BiXIRCEGdYe7U
+ 0T3EU15uwD0JS7p+BnwX7TvEfrGWpWzjtdMpQ3QFPvvUK/xE0q9NMbDTtFcU2PG46EdE
+ GSnJ8E4Q2eKQrTdyuoK+xuDAqAKEbZdeKGKBgyMOlmng/V8r4NZbV5wb5fPWpcYjBGaK
+ ZQ7jQkHOxuk/BZGSBH+Fm+WJusgkTGentQG+s571StWxLmgLDc7DGmJTnzTTp86nKdmq
+ e7l12f4QnDb32FXeQOwXnGtx/ewrOoDHsOoDfqpv7YGBcXfVIGnqsA29KMyPBw9ZCxoa
+ CoMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725990025; x=1726594825;
+ d=1e100.net; s=20230601; t=1725989946; x=1726594746;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IlCj2ixhxM/epvOBESU4I3HZLS9l35ap6tDyuxDs4dc=;
- b=ONyUtFpcuaRLh5TY0+7+nRCyQtm7fZ/6B93mog7MT56ptV5Bvs8zSGT90oC4/q31KQ
- /6M/kYglfsHbZ5A06g6Wiq2xQcBqZWpOu3EMLS/pXMry/2rFZ0+TBGOIrHEvVWI9j8WC
- CM/vvwF2Jk6kWuILVuTMsZ5jxeMbASzaUc57YRVokbjhp+o0/58IOBXcAgZ/kz25/BFD
- rbnRtqJN5p7APyq6pR0XOWE2CP4oIhiMz9m8H17ENmzWIGPt3VMtAIDm6ZVF+LeVJQqw
- agTaEsOYZcEvfR+Lkb5wti6Rv0aKIUtWaFDNRrLGIUbuSsZreZUR1kjMJXfP91ollN64
- 9Lkg==
-X-Gm-Message-State: AOJu0YylW8MkIMY+Cf33EuHkXzXBg77kw/vCENEA0RxBqVx7pViIC98l
- n2ilJnNyZtwByR1hWbJnik8X8Aa66AwQ8iGf1JYGgjOfK6K42SVLO/tStE3dgDfH1m9a0sRoXQn
- nWN+gOA==
-X-Google-Smtp-Source: AGHT+IEDoWGBv7ts4eAbU+3GWSnN9KnHavnhQ7oMRWijIdyG4R93doDvhi7Ldov7owH5gTg/MhEDzw==
-X-Received: by 2002:a17:90a:4d81:b0:2d8:5b9f:75ab with SMTP id
- 98e67ed59e1d1-2db830582dfmr361931a91.29.1725990025406; 
- Tue, 10 Sep 2024 10:40:25 -0700 (PDT)
-Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2db04966d3asm6682751a91.38.2024.09.10.10.40.24
+ bh=3rTxwacRyl+bWtsw8yvVr2/Byzv5V7eVXyx+MM0eORw=;
+ b=Jsa32f3PK/vdn6+Lzf5SRl2tpildd5fC+uuXTdUZdoNtJXz1u4vCYdstabM2FCvHPR
+ 0K22SZAAGoJw5eeAu3k/Z3vqc5GPzl8AfY+f10StGirPSn5oFSVFySau+cE9KrKABPe6
+ MGuyZ/bxKY5Aak0yOh0kv3/YtOaBZ2mjS+6Ic/NQiupsJ3rRy5Vl07l38/Z1kZ6EOqtg
+ HjnIX+mW9F9Gp0DMHSpEHGq3C3z9uowqGTBIQB4X85BPwPhfIA8nBfxgoh2xsYe1qn0s
+ zKqHdv+4k0ridCvSteRSGgUtzKDUO8kXZWa2oAEIS5j7Ykgmg1pX6N06de7onM6dxsmi
+ Seug==
+X-Gm-Message-State: AOJu0YwACc1gne1C9ztmhhC5rssY2kwzdf6q4C8atbhyHIsVuiCJScIG
+ tltJO2Y3eVuqfRAWQttv5GBhNOQwDKjlzkqKBJBfQrmGCOVQUc3EqXmGvBgHAro=
+X-Google-Smtp-Source: AGHT+IE0k9TBw1KZtC5bnOYFS68MWn5Sz/qewV0BRe90PR3RY5lZ8Au07wLZwuup8S4m73snV6DoSQ==
+X-Received: by 2002:a17:907:7292:b0:a8d:2ab2:c990 with SMTP id
+ a640c23a62f3a-a9004aba7ebmr28322066b.64.1725989945877; 
+ Tue, 10 Sep 2024 10:39:05 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d2592647esm508348266b.48.2024.09.10.10.39.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 10:40:25 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Tue, 10 Sep 2024 10:39:04 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E07665F9CE;
+ Tue, 10 Sep 2024 18:39:00 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
+ devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 3/3] docs/devel: update tsan build documentation
-Date: Tue, 10 Sep 2024 10:40:13 -0700
-Message-Id: <20240910174013.1433331-4-pierrick.bouvier@linaro.org>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Beraldo Leal <bleal@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH v2 05/10] scripts/ci: update the gitlab-runner playbook
+Date: Tue, 10 Sep 2024 18:38:55 +0100
+Message-Id: <20240910173900.4154726-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
-References: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20240910173900.4154726-1-alex.bennee@linaro.org>
+References: <20240910173900.4154726-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,60 +109,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mention it's now possible to build with gcc, instead of clang, and
-explain how to build a sanitized glib version.
+The upstream install instructions:
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+  https://docs.gitlab.com/runner/install/linux-repository.html
+
+Now refer to repositories and a setup script. Modernise the playbook
+to use the preferred delivery method.
+
+Message-Id: <20240910140733.4007719-5-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/devel/testing/main.rst | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ scripts/ci/setup/gitlab-runner.yml | 39 +++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 9 deletions(-)
 
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index e9921a4b10a..2e57390d990 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -634,20 +634,38 @@ Building and Testing with TSan
- It is possible to build and test with TSan, with a few additional steps.
- These steps are normally done automatically in the docker.
+diff --git a/scripts/ci/setup/gitlab-runner.yml b/scripts/ci/setup/gitlab-runner.yml
+index 7bdafab511..57e7faebf1 100644
+--- a/scripts/ci/setup/gitlab-runner.yml
++++ b/scripts/ci/setup/gitlab-runner.yml
+@@ -49,30 +49,51 @@
+     - debug:
+         msg: gitlab-runner arch is {{ gitlab_runner_arch }}
  
--There is a one time patch needed in clang-9 or clang-10 at this time:
-+TSan is supported for clang and gcc.
-+One particularity of sanitizers is that all the code, including shared objects
-+dependencies, should be built with it.
-+In the case of TSan, any synchronization primitive from glib (GMutex for
-+instance) will not be recognized, and will lead to false positives.
+-    - name: Download the matching gitlab-runner (DEB)
++    # Debian/Ubuntu setup
++    - name: Get gitlab-runner repo setup script (DEB)
+       get_url:
+         dest: "/root/"
+-        url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_{{ gitlab_runner_arch }}.deb"
++        url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
++        mode: 0755
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
+ 
+-    - name: Download the matching gitlab-runner (RPM)
++    - name: Run gitlab-runner repo setup script (DEB)
++      shell: "/root/script.deb.sh"
++      when:
++        - ansible_facts['distribution'] == 'Ubuntu'
 +
-+To build a tsan version of glib:
- 
- .. code::
- 
--  sed -i 's/^const/static const/g' \
--      /usr/lib/llvm-10/lib/clang/10.0.0/include/sanitizer/tsan_interface.h
-+   $ git clone --depth=1 --branch=2.81.0 https://github.com/GNOME/glib.git
-+   $ cd glib
-+   $ CFLAGS="-O2 -g -fsanitize=thread" meson build
-+   $ ninja -C build
- 
- To configure the build for TSan:
- 
- .. code::
- 
--  ../configure --enable-tsan --cc=clang-10 --cxx=clang++-10 \
-+  ../configure --enable-tsan \
-                --disable-werror --extra-cflags="-O0"
- 
-+When executing qemu, don't forget to point to tsan glib:
++    - name: Install gitlab-runner (DEB)
++      ansible.builtin.apt:
++          name: gitlab-runner
++          update_cache: yes
++          state: present
++      when:
++        - ansible_facts['distribution'] == 'Ubuntu'
 +
-+.. code::
-+
-+   $ glib_dir=/path/to/glib
-+   $ export LD_LIBRARY_PATH=$glib_dir/build/gio:$glib_dir/build/glib:$glib_dir/build/gmodule:$glib_dir/build/gobject:$glib_dir/build/gthread
-+   # check correct version is used
-+   $ ldd build/qemu-x86_64 | grep glib
-+   $ qemu-system-x86_64 ...
-+
- The runtime behavior of TSAN is controlled by the TSAN_OPTIONS environment
- variable.
++    # RPM setup
++    - name: Get gitlab-runner repo setup script (RPM)
+       get_url:
+         dest: "/root/"
+-        url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_{{ gitlab_runner_arch }}.rpm"
++        url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh"
++        mode: 0755
+       when:
+         - ansible_facts['distribution'] == 'CentOS'
+ 
+-    - name: Install gitlab-runner via package manager (DEB)
+-      apt: deb="/root/gitlab-runner_{{ gitlab_runner_arch }}.deb"
++    - name: Run gitlab-runner repo setup script (RPM)
++      shell: "/root/script.rpm.sh"
+       when:
+-        - ansible_facts['distribution'] == 'Ubuntu'
++        - ansible_facts['distribution'] == 'CentOS'
+ 
+-    - name: Install gitlab-runner via package manager (RPM)
+-      yum: name="/root/gitlab-runner_{{ gitlab_runner_arch }}.rpm"
++    - name: Install gitlab-runner (RPM)
++      yum:
++        name: gitlab-runner
++        update_cache: yes
++        state: present
+       when:
+         - ansible_facts['distribution'] == 'CentOS'
+ 
++    # Register Runners
+     - name: Register the gitlab-runner
+       command: "/usr/bin/gitlab-runner register --non-interactive --url {{ gitlab_runner_server_url }} --registration-token {{ gitlab_runner_registration_token }} --executor shell --tag-list {{ ansible_facts[\"architecture\"] }},{{ ansible_facts[\"distribution\"]|lower }}_{{ ansible_facts[\"distribution_version\"] }} --description '{{ ansible_facts[\"distribution\"] }} {{ ansible_facts[\"distribution_version\"] }} {{ ansible_facts[\"architecture\"] }} ({{ ansible_facts[\"os_family\"] }})'"
  
 -- 
 2.39.2
