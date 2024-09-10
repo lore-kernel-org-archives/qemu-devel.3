@@ -4,96 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2241EDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38236EDE9AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4pv-0005p4-JJ; Tue, 10 Sep 2024 13:39:32 -0400
+	id 1so4rP-0004p7-Rr; Tue, 10 Sep 2024 13:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pZ-0004me-V7
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:11 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pX-0004Zm-D7
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:09 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a8a7b1c2f2bso167212066b.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725989946; x=1726594746; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3rTxwacRyl+bWtsw8yvVr2/Byzv5V7eVXyx+MM0eORw=;
- b=j7aYyE4Xa5FqddUOOkh/qeCGuEGRzjI/8SeU0hjB4xOdUKSvK8Lc8BiXIRCEGdYe7U
- 0T3EU15uwD0JS7p+BnwX7TvEfrGWpWzjtdMpQ3QFPvvUK/xE0q9NMbDTtFcU2PG46EdE
- GSnJ8E4Q2eKQrTdyuoK+xuDAqAKEbZdeKGKBgyMOlmng/V8r4NZbV5wb5fPWpcYjBGaK
- ZQ7jQkHOxuk/BZGSBH+Fm+WJusgkTGentQG+s571StWxLmgLDc7DGmJTnzTTp86nKdmq
- e7l12f4QnDb32FXeQOwXnGtx/ewrOoDHsOoDfqpv7YGBcXfVIGnqsA29KMyPBw9ZCxoa
- CoMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725989946; x=1726594746;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3rTxwacRyl+bWtsw8yvVr2/Byzv5V7eVXyx+MM0eORw=;
- b=Jsa32f3PK/vdn6+Lzf5SRl2tpildd5fC+uuXTdUZdoNtJXz1u4vCYdstabM2FCvHPR
- 0K22SZAAGoJw5eeAu3k/Z3vqc5GPzl8AfY+f10StGirPSn5oFSVFySau+cE9KrKABPe6
- MGuyZ/bxKY5Aak0yOh0kv3/YtOaBZ2mjS+6Ic/NQiupsJ3rRy5Vl07l38/Z1kZ6EOqtg
- HjnIX+mW9F9Gp0DMHSpEHGq3C3z9uowqGTBIQB4X85BPwPhfIA8nBfxgoh2xsYe1qn0s
- zKqHdv+4k0ridCvSteRSGgUtzKDUO8kXZWa2oAEIS5j7Ykgmg1pX6N06de7onM6dxsmi
- Seug==
-X-Gm-Message-State: AOJu0YwACc1gne1C9ztmhhC5rssY2kwzdf6q4C8atbhyHIsVuiCJScIG
- tltJO2Y3eVuqfRAWQttv5GBhNOQwDKjlzkqKBJBfQrmGCOVQUc3EqXmGvBgHAro=
-X-Google-Smtp-Source: AGHT+IE0k9TBw1KZtC5bnOYFS68MWn5Sz/qewV0BRe90PR3RY5lZ8Au07wLZwuup8S4m73snV6DoSQ==
-X-Received: by 2002:a17:907:7292:b0:a8d:2ab2:c990 with SMTP id
- a640c23a62f3a-a9004aba7ebmr28322066b.64.1725989945877; 
- Tue, 10 Sep 2024 10:39:05 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d2592647esm508348266b.48.2024.09.10.10.39.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 10:39:04 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E07665F9CE;
- Tue, 10 Sep 2024 18:39:00 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1so4qs-0003Aj-OG
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:30 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1so4qq-0004sa-GP
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:30 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48AHNa8L023332;
+ Tue, 10 Sep 2024 17:40:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ from:to:cc:subject:date:message-id; s=corp-2023-11-20; bh=wp5fR0
+ Hvu5Pg4Js2UfJnh38iG7sgPD+EZT7TLkdyAhI=; b=clYRs8jiKC+7Y1n0OCBhi2
+ X2fJK3PtswRDszdnLsFn2fhIgIoi6otdHvU1mHIPRgsS1RRdc9THww+KSk1o/mdB
+ T//epPgwnXeSh+eaIZuVyO9Qp4jPX4LSIyY/28I/yb/5LjQU2pmYKXB88IJz18bg
+ ldxJg9fxUOk6/0THE9Mjypam8uHmcrvEQ8MWcIOVkvyX9e2W6haehtHpljfh4rnd
+ 5RL6ouiZDrpujWz6tKcf87gdYEhCTWSer73Zr4UBBKVsdD+AdZfRhXa2YAFn1tdm
+ V68UAlpLCobhpTSrKVEZIhqPMBlM5flwLg8aqn0y1QxkBfXghgRjrp8zt6VXbbRQ
+ ==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41gevcp8nd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Sep 2024 17:40:23 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 48AHcbu2040856; Tue, 10 Sep 2024 17:40:22 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 41gd9ac5y2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Sep 2024 17:40:22 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48AHeLZN003903;
+ Tue, 10 Sep 2024 17:40:21 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 41gd9ac5xp-1; Tue, 10 Sep 2024 17:40:21 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
- devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Beraldo Leal <bleal@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH v2 05/10] scripts/ci: update the gitlab-runner playbook
-Date: Tue, 10 Sep 2024 18:38:55 +0100
-Message-Id: <20240910173900.4154726-6-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240910173900.4154726-1-alex.bennee@linaro.org>
-References: <20240910173900.4154726-1-alex.bennee@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH] vfio/iommufd: no hw_info for mediated devices
+Date: Tue, 10 Sep 2024 10:40:21 -0700
+Message-Id: <1725990021-107183-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-10_06,2024-09-09_02,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0
+ mlxlogscore=999 mlxscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2408220000 definitions=main-2409100131
+X-Proofpoint-ORIG-GUID: 0fJXsU_43uVZdn06Oa3D7NVXP8PVhW2H
+X-Proofpoint-GUID: 0fJXsU_43uVZdn06Oa3D7NVXP8PVhW2H
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,86 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The upstream install instructions:
+IOMMU_GET_HW_INFO fails for a vfio mediated device (aka mdev), because
+the devid is associated with kernel type IOMMUFD_OBJ_ACCESS, not
+IOMMUFD_OBJ_DEVICE.  Assume IOMMU_HW_INFO_TYPE_NONE and proceed.
 
-  https://docs.gitlab.com/runner/install/linux-repository.html
-
-Now refer to repositories and a setup script. Modernise the playbook
-to use the preferred delivery method.
-
-Message-Id: <20240910140733.4007719-5-alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- scripts/ci/setup/gitlab-runner.yml | 39 +++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+ hw/vfio/iommufd.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/ci/setup/gitlab-runner.yml b/scripts/ci/setup/gitlab-runner.yml
-index 7bdafab511..57e7faebf1 100644
---- a/scripts/ci/setup/gitlab-runner.yml
-+++ b/scripts/ci/setup/gitlab-runner.yml
-@@ -49,30 +49,51 @@
-     - debug:
-         msg: gitlab-runner arch is {{ gitlab_runner_arch }}
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index cb7257b..d8928d4 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -635,6 +635,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
+ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+                                       Error **errp)
+ {
++    Error *err = NULL;
+     VFIODevice *vdev = opaque;
+     HostIOMMUDeviceCaps *caps = &hiod->caps;
+     enum iommu_hw_info_type type;
+@@ -645,8 +646,9 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     hiod->agent = opaque;
  
--    - name: Download the matching gitlab-runner (DEB)
-+    # Debian/Ubuntu setup
-+    - name: Get gitlab-runner repo setup script (DEB)
-       get_url:
-         dest: "/root/"
--        url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_{{ gitlab_runner_arch }}.deb"
-+        url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
-+        mode: 0755
-       when:
-         - ansible_facts['distribution'] == 'Ubuntu'
+     if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+-                                         &type, &data, sizeof(data), errp)) {
+-        return false;
++                                         &type, &data, sizeof(data), &err)) {
++        warn_report_err(err);
++        type = IOMMU_HW_INFO_TYPE_NONE;
+     }
  
--    - name: Download the matching gitlab-runner (RPM)
-+    - name: Run gitlab-runner repo setup script (DEB)
-+      shell: "/root/script.deb.sh"
-+      when:
-+        - ansible_facts['distribution'] == 'Ubuntu'
-+
-+    - name: Install gitlab-runner (DEB)
-+      ansible.builtin.apt:
-+          name: gitlab-runner
-+          update_cache: yes
-+          state: present
-+      when:
-+        - ansible_facts['distribution'] == 'Ubuntu'
-+
-+    # RPM setup
-+    - name: Get gitlab-runner repo setup script (RPM)
-       get_url:
-         dest: "/root/"
--        url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_{{ gitlab_runner_arch }}.rpm"
-+        url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh"
-+        mode: 0755
-       when:
-         - ansible_facts['distribution'] == 'CentOS'
- 
--    - name: Install gitlab-runner via package manager (DEB)
--      apt: deb="/root/gitlab-runner_{{ gitlab_runner_arch }}.deb"
-+    - name: Run gitlab-runner repo setup script (RPM)
-+      shell: "/root/script.rpm.sh"
-       when:
--        - ansible_facts['distribution'] == 'Ubuntu'
-+        - ansible_facts['distribution'] == 'CentOS'
- 
--    - name: Install gitlab-runner via package manager (RPM)
--      yum: name="/root/gitlab-runner_{{ gitlab_runner_arch }}.rpm"
-+    - name: Install gitlab-runner (RPM)
-+      yum:
-+        name: gitlab-runner
-+        update_cache: yes
-+        state: present
-       when:
-         - ansible_facts['distribution'] == 'CentOS'
- 
-+    # Register Runners
-     - name: Register the gitlab-runner
-       command: "/usr/bin/gitlab-runner register --non-interactive --url {{ gitlab_runner_server_url }} --registration-token {{ gitlab_runner_registration_token }} --executor shell --tag-list {{ ansible_facts[\"architecture\"] }},{{ ansible_facts[\"distribution\"]|lower }}_{{ ansible_facts[\"distribution_version\"] }} --description '{{ ansible_facts[\"distribution\"] }} {{ ansible_facts[\"distribution_version\"] }} {{ ansible_facts[\"architecture\"] }} ({{ ansible_facts[\"os_family\"] }})'"
- 
+     hiod->name = g_strdup(vdev->name);
 -- 
-2.39.2
+1.8.3.1
 
 
